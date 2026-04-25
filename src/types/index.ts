@@ -6,6 +6,8 @@ export interface NewsSource {
   status: 'active' | 'inactive';
   lastSync: string;
   description: string;
+  newsCount?: number;
+  syncInterval?: string;
 }
 
 export interface NewsItem {
@@ -20,8 +22,13 @@ export interface NewsItem {
   riskLevel: 'low' | 'medium' | 'high' | 'critical';
   region: string;
   sentiment: 'positive' | 'neutral' | 'negative';
+  sentimentScore: number;
   url: string;
   read: boolean;
+  views: number;
+  shares: number;
+  comments: number;
+  hotScore: number;
 }
 
 export interface Keyword {
@@ -31,6 +38,8 @@ export interface Keyword {
   priority: 'high' | 'medium' | 'low';
   monitorStatus: 'active' | 'paused';
   matchCount: number;
+  trend?: 'up' | 'down' | 'stable';
+  trendPercent?: number;
 }
 
 export interface Region {
@@ -39,6 +48,9 @@ export interface Region {
   code: string;
   level: 'province' | 'city' | 'district';
   monitorStatus: 'active' | 'paused';
+  newsCount?: number;
+  lat?: number;
+  lng?: number;
 }
 
 export interface SubscriptionTopic {
@@ -50,6 +62,7 @@ export interface SubscriptionTopic {
   sources: string[];
   notifyMethods: ('email' | 'sms' | 'app')[];
   createdAt: string;
+  newsCount?: number;
 }
 
 export interface AlertRule {
@@ -60,9 +73,10 @@ export interface AlertRule {
   regions: string[];
   notifyMethods: ('email' | 'sms' | 'app')[];
   enabled: boolean;
+  alertCount?: number;
 }
 
-export interface Alert {
+export interface AlertRecord {
   id: string;
   ruleId: string;
   ruleName: string;
@@ -88,11 +102,120 @@ export interface WeatherData {
   weather: string;
   humidity: number;
   wind: string;
+  aqi: number;
+  aqiLevel: '优' | '良' | '轻度污染' | '中度污染' | '重度污染' | '严重污染';
   warning?: {
     type: string;
     level: string;
     description: string;
   };
+}
+
+export interface SentimentAnalysis {
+  positive: number;
+  neutral: number;
+  negative: number;
+  positivePercent: number;
+  neutralPercent: number;
+  negativePercent: number;
+  trend: 'improving' | 'worsening' | 'stable';
+}
+
+export interface SentimentTrendData {
+  date: string;
+  positive: number;
+  neutral: number;
+  negative: number;
+  positivePercent: number;
+  neutralPercent: number;
+  negativePercent: number;
+}
+
+export interface SourceSentimentDistribution {
+  name: string;
+  positive: number;
+  neutral: number;
+  negative: number;
+  positivePercent: number;
+  negativePercent: number;
+}
+
+export interface RegionSentimentDistribution {
+  region: string;
+  positive: number;
+  neutral: number;
+  negative: number;
+  total: number;
+  positivePercent: number;
+  negativePercent: number;
+}
+
+export interface RiskTrendData {
+  date: string;
+  low: number;
+  medium: number;
+  high: number;
+  critical: number;
+}
+
+export interface TopicDistribution {
+  topic: string;
+  count: number;
+  positive: number;
+  negative: number;
+  trend: 'up' | 'down' | 'stable';
+}
+
+export interface SourceDistribution {
+  name: string;
+  type: 'news' | 'rss' | 'weather';
+  count: number;
+  percent: number;
+}
+
+export interface KeywordTrend {
+  word: string;
+  data: { date: string; count: number }[];
+  trend: 'up' | 'down' | 'stable';
+}
+
+export interface HotEvent {
+  id: string;
+  title: string;
+  keywords: string[];
+  newsCount: number;
+  startDate: string;
+  hotScore: number;
+  trend: 'rising' | 'stable' | 'falling';
+  region: string;
+  sentiment: 'positive' | 'neutral' | 'negative';
+}
+
+export interface TimelineEvent {
+  id: string;
+  time: string;
+  title: string;
+  description: string;
+  type: 'news' | 'alert' | 'system';
+  level?: 'low' | 'medium' | 'high' | 'critical';
+}
+
+export interface RealTimeStream {
+  id: string;
+  time: string;
+  title: string;
+  source: string;
+  type: 'news' | 'alert' | 'weather';
+  riskLevel?: 'low' | 'medium' | 'high' | 'critical';
+}
+
+export interface ComparisonData {
+  period: string;
+  totalNews: number;
+  positiveNews: number;
+  negativeNews: number;
+  criticalAlerts: number;
+  avgSentiment: number;
 }
 
 export interface DashboardData {
@@ -102,25 +225,69 @@ export interface DashboardData {
     neutralNews: number;
     negativeNews: number;
     criticalAlerts: number;
+    activeSources: number;
+    monitoredKeywords: number;
+    activeSubscriptions: number;
+  };
+  comparisonStats: {
+    daily: {
+      previous: ComparisonData;
+      current: ComparisonData;
+    };
+    weekly: {
+      previous: ComparisonData;
+      current: ComparisonData;
+    };
+    monthly: {
+      previous: ComparisonData;
+      current: ComparisonData;
+    };
   };
   trendData: {
     date: string;
     positive: number;
     neutral: number;
     negative: number;
+    total: number;
+  }[];
+  hourlyTrend: {
+    hour: string;
+    count: number;
   }[];
   topKeywords: {
     word: string;
     count: number;
+    trend: 'up' | 'down' | 'stable';
+    trendPercent: number;
   }[];
+  keywordTrends: KeywordTrend[];
   regionDistribution: {
     region: string;
     count: number;
+    lat: number;
+    lng: number;
+    positive: number;
+    negative: number;
   }[];
   riskDistribution: {
     level: string;
     count: number;
+    percent: number;
   }[];
+  sentimentAnalysis: SentimentAnalysis;
+  sentimentTrendData: SentimentTrendData[];
+  sourceDistribution: SourceDistribution[];
+  sourceSentimentDistribution: SourceSentimentDistribution[];
+  regionSentimentDistribution: RegionSentimentDistribution[];
+  riskTrendData: RiskTrendData[];
+  topicDistribution: TopicDistribution[];
+  sourceTrendData: {
+    date: string;
+    [key: string]: string | number;
+  }[];
+  hotEvents: HotEvent[];
+  timelineEvents: TimelineEvent[];
+  realTimeStreams: RealTimeStream[];
 }
 
 export interface ReportTemplate {
@@ -141,4 +308,14 @@ export interface User {
   name: string;
   email: string;
   role: 'admin' | 'editor' | 'viewer';
+  avatar?: string;
+}
+
+export interface SystemStatus {
+  lastSyncTime: string;
+  nextSyncTime: string;
+  activeSources: number;
+  totalNewsToday: number;
+  alertsToday: number;
+  systemHealth: 'healthy' | 'warning' | 'error';
 }

@@ -1,14 +1,15 @@
 import { create } from 'zustand';
-import {
+import type {
   NewsSource,
   NewsItem,
   Keyword,
   Region,
   SubscriptionTopic,
   AlertRule,
-  Alert,
+  AlertRecord,
   DashboardData,
-  ReportTemplate
+  ReportTemplate,
+  WeatherData
 } from '../types';
 import {
   mockNewsSources,
@@ -19,7 +20,8 @@ import {
   mockAlertRules,
   mockAlerts,
   mockDashboardData,
-  mockReportTemplates
+  mockReportTemplates,
+  mockWeatherData
 } from '../data/mockData';
 
 interface AppState {
@@ -29,9 +31,10 @@ interface AppState {
   regions: Region[];
   subscriptionTopics: SubscriptionTopic[];
   alertRules: AlertRule[];
-  alerts: Alert[];
+  alerts: AlertRecord[];
   dashboardData: DashboardData;
   reportTemplates: ReportTemplate[];
+  weatherData: WeatherData[];
   selectedNewsItem: NewsItem | null;
   currentPage: string;
   
@@ -72,7 +75,7 @@ interface AppState {
   deleteReportTemplate: (id: string) => void;
 }
 
-export const useAppStore = create<AppState>((set, get) => ({
+export const useAppStore = create<AppState>((set) => ({
   newsSources: mockNewsSources,
   newsItems: mockNewsItems,
   keywords: mockKeywords,
@@ -82,6 +85,7 @@ export const useAppStore = create<AppState>((set, get) => ({
   alerts: mockAlerts,
   dashboardData: mockDashboardData,
   reportTemplates: mockReportTemplates,
+  weatherData: mockWeatherData,
   selectedNewsItem: null,
   currentPage: 'dashboard',
   
