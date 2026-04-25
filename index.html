@@ -1,742 +1,462 @@
 <!DOCTYPE html>
-<html lang="zh-CN">
+<html lang="zh-CN" data-theme="light">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>多语言语音翻译</title>
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            min-height: 100vh;
-            padding: 20px;
-        }
-
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            background: white;
-            border-radius: 20px;
-            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
-            overflow: hidden;
-        }
-
-        .header {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-            padding: 30px;
-            text-align: center;
-        }
-
-        .header h1 {
-            font-size: 2.5rem;
-            margin-bottom: 10px;
-            font-weight: 600;
-        }
-
-        .header p {
-            font-size: 1.1rem;
-            opacity: 0.9;
-        }
-
-        .content {
-            padding: 30px;
-        }
-
-        .language-section {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 30px;
-            flex-wrap: wrap;
-            gap: 20px;
-        }
-
-        .language-selector {
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
-            flex: 1;
-            min-width: 250px;
-        }
-
-        .language-selector label {
-            font-weight: 600;
-            color: #333;
-            font-size: 1.1rem;
-        }
-
-        .language-selector select {
-            padding: 12px 15px;
-            border: 2px solid #e0e0e0;
-            border-radius: 10px;
-            font-size: 1rem;
-            background: white;
-            transition: all 0.3s ease;
-            cursor: pointer;
-        }
-
-        .language-selector select:focus {
-            outline: none;
-            border-color: #667eea;
-            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.2);
-        }
-
-        .swap-btn {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-            border: none;
-            width: 50px;
-            height: 50px;
-            border-radius: 50%;
-            font-size: 1.5rem;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin-top: 20px;
-        }
-
-        .swap-btn:hover {
-            transform: rotate(180deg);
-            box-shadow: 0 5px 20px rgba(102, 126, 234, 0.4);
-        }
-
-        .translation-area {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 30px;
-            margin-bottom: 30px;
-        }
-
-        @media (max-width: 768px) {
-            .translation-area {
-                grid-template-columns: 1fr;
+    <meta name="description" content="多语言语音翻译工具 - 支持语音识别、语音合成的实时翻译网页应用">
+    <meta name="keywords" content="翻译,语音翻译,多语言,语音识别,语音合成,对话翻译">
+    <meta name="author" content="TranslateApp">
+    
+    <title>多语言语音翻译 | 实时语音翻译工具</title>
+    
+    <!-- CSS 变量文件 -->
+    <link rel="stylesheet" href="./css/variables.css">
+    
+    <!-- 组件样式文件 -->
+    <link rel="stylesheet" href="./css/components/conversation.css">
+    <link rel="stylesheet" href="./css/components/history.css">
+    <link rel="stylesheet" href="./css/components/toolbar.css">
+    
+    <!-- 主样式文件 -->
+    <link rel="stylesheet" href="./css/main.css">
+    
+    <!-- 预加载关键资源 -->
+    <link rel="preload" href="./css/main.css" as="style">
+    <link rel="preload" href="./js/app.js" as="script">
+    
+    <!-- 防止主题闪烁 -->
+    <script>
+        (function() {
+            try {
+                const theme = localStorage.getItem('theme_mode') || 'light';
+                const html = document.documentElement;
+                html.setAttribute('data-theme', theme);
+                if (theme === 'dark') {
+                    html.classList.add('theme--dark');
+                }
+            } catch (e) {
+                // 忽略错误，使用默认主题
             }
-        }
-
-        .text-box {
-            display: flex;
-            flex-direction: column;
-            gap: 15px;
-        }
-
-        .text-box h3 {
-            color: #333;
-            font-size: 1.2rem;
-            font-weight: 600;
-        }
-
-        .text-box textarea {
-            width: 100%;
-            min-height: 200px;
-            padding: 15px;
-            border: 2px solid #e0e0e0;
-            border-radius: 15px;
-            font-size: 1.1rem;
-            resize: vertical;
-            font-family: inherit;
-            transition: all 0.3s ease;
-            line-height: 1.6;
-        }
-
-        .text-box textarea:focus {
-            outline: none;
-            border-color: #667eea;
-            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.2);
-        }
-
-        .text-box textarea:disabled {
-            background: #f8f9fa;
-            color: #666;
-        }
-
-        .controls {
-            display: flex;
-            gap: 10px;
-            flex-wrap: wrap;
-        }
-
-        .control-btn {
-            padding: 12px 20px;
-            border: none;
-            border-radius: 10px;
-            font-size: 1rem;
-            font-weight: 500;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-
-        .mic-btn {
-            background: linear-gradient(135deg, #ff6b6b 0%, #ee5a6f 100%);
-            color: white;
-        }
-
-        .mic-btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 5px 20px rgba(255, 107, 107, 0.4);
-        }
-
-        .mic-btn.recording {
-            background: linear-gradient(135deg, #ee5a6f 0%, #d64550 100%);
-            animation: pulse 1s infinite;
-        }
-
-        @keyframes pulse {
-            0%, 100% {
-                box-shadow: 0 0 0 0 rgba(238, 90, 111, 0.7);
-            }
-            50% {
-                box-shadow: 0 0 0 15px rgba(238, 90, 111, 0);
-            }
-        }
-
-        .speak-btn {
-            background: linear-gradient(135deg, #4ecdc4 0%, #44a08d 100%);
-            color: white;
-        }
-
-        .speak-btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 5px 20px rgba(78, 205, 196, 0.4);
-        }
-
-        .copy-btn {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-        }
-
-        .copy-btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 5px 20px rgba(102, 126, 234, 0.4);
-        }
-
-        .clear-btn {
-            background: linear-gradient(135deg, #95a5a6 0%, #7f8c8d 100%);
-            color: white;
-        }
-
-        .clear-btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 5px 20px rgba(149, 165, 166, 0.4);
-        }
-
-        .translate-section {
-            text-align: center;
-            margin-bottom: 30px;
-        }
-
-        .translate-btn {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-            border: none;
-            padding: 15px 40px;
-            font-size: 1.2rem;
-            font-weight: 600;
-            border-radius: 50px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            box-shadow: 0 5px 20px rgba(102, 126, 234, 0.4);
-        }
-
-        .translate-btn:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 8px 30px rgba(102, 126, 234, 0.5);
-        }
-
-        .translate-btn:disabled {
-            opacity: 0.6;
-            cursor: not-allowed;
-            transform: none;
-        }
-
-        .status {
-            text-align: center;
-            padding: 15px;
-            border-radius: 10px;
-            margin-bottom: 20px;
-            font-weight: 500;
-            display: none;
-        }
-
-        .status.success {
-            background: #d4edda;
-            color: #155724;
-            display: block;
-        }
-
-        .status.error {
-            background: #f8d7da;
-            color: #721c24;
-            display: block;
-        }
-
-        .status.info {
-            background: #d1ecf1;
-            color: #0c5460;
-            display: block;
-        }
-
-        .footer {
-            text-align: center;
-            padding: 20px;
-            color: #666;
-            font-size: 0.9rem;
-            border-top: 1px solid #e0e0e0;
-        }
-
-        .footer a {
-            color: #667eea;
-            text-decoration: none;
-        }
-
-        .feature-icons {
-            display: flex;
-            justify-content: center;
-            gap: 40px;
-            margin-top: 20px;
-            flex-wrap: wrap;
-        }
-
-        .feature {
-            text-align: center;
-            color: white;
-            opacity: 0.9;
-        }
-
-        .feature-icon {
-            font-size: 2rem;
-            margin-bottom: 5px;
-        }
-
-        .feature-text {
-            font-size: 0.9rem;
-        }
-    </style>
+        })();
+    </script>
 </head>
 <body>
-    <div class="container">
-        <div class="header">
-            <h1>🌍 多语言语音翻译</h1>
-            <p>支持语音识别、语音合成的实时翻译工具</p>
-            <div class="feature-icons">
-                <div class="feature">
-                    <div class="feature-icon">🎤</div>
-                    <div class="feature-text">语音识别</div>
-                </div>
-                <div class="feature">
-                    <div class="feature-icon">🔄</div>
-                    <div class="feature-text">实时翻译</div>
-                </div>
-                <div class="feature">
-                    <div class="feature-icon">🔊</div>
-                    <div class="feature-text">语音合成</div>
-                </div>
-                <div class="feature">
-                    <div class="feature-icon">🌐</div>
-                    <div class="feature-text">多语言支持</div>
-                </div>
+    <!-- 顶部工具栏 -->
+    <nav class="toolbar" role="navigation" aria-label="工具栏">
+        <div class="toolbar__container">
+            <div class="toolbar__left">
+                <a href="#" class="toolbar__logo" aria-label="返回首页">
+                    <span class="toolbar__logo__icon" aria-hidden="true">🌍</span>
+                    <span class="toolbar__logo__text">语音翻译</span>
+                </a>
             </div>
-        </div>
-
-        <div class="content">
-            <div id="status" class="status"></div>
-
-            <div class="language-section">
-                <div class="language-selector">
-                    <label for="sourceLang">源语言</label>
-                    <select id="sourceLang">
-                        <option value="zh-CN">中文 (简体)</option>
-                        <option value="zh-TW">中文 (繁体)</option>
-                        <option value="en-US">英语 (美国)</option>
-                        <option value="en-GB">英语 (英国)</option>
-                        <option value="ja-JP">日语</option>
-                        <option value="ko-KR">韩语</option>
-                        <option value="fr-FR">法语</option>
-                        <option value="de-DE">德语</option>
-                        <option value="es-ES">西班牙语</option>
-                        <option value="pt-BR">葡萄牙语 (巴西)</option>
-                        <option value="pt-PT">葡萄牙语 (葡萄牙)</option>
-                        <option value="ru-RU">俄语</option>
-                        <option value="it-IT">意大利语</option>
-                        <option value="nl-NL">荷兰语</option>
-                        <option value="pl-PL">波兰语</option>
-                        <option value="tr-TR">土耳其语</option>
-                        <option value="ar-SA">阿拉伯语</option>
-                        <option value="hi-IN">印地语</option>
-                        <option value="th-TH">泰语</option>
-                        <option value="vi-VN">越南语</option>
-                    </select>
+            
+            <div class="toolbar__right">
+                <!-- 模式切换按钮 -->
+                <div class="mode-toggle" role="group" aria-label="翻译模式">
+                    <button type="button" class="mode-toggle__option mode-toggle__option--active" data-mode="standard" aria-pressed="true">
+                        <span class="mode-toggle__option__icon" aria-hidden="true">📝</span>
+                        <span class="mode-toggle__option__text">标准</span>
+                    </button>
+                    <button type="button" class="mode-toggle__option" data-mode="conversation" aria-pressed="false">
+                        <span class="mode-toggle__option__icon" aria-hidden="true">💬</span>
+                        <span class="mode-toggle__option__text">对话</span>
+                    </button>
                 </div>
-
-                <button class="swap-btn" id="swapBtn" title="交换语言">🔄</button>
-
-                <div class="language-selector">
-                    <label for="targetLang">目标语言</label>
-                    <select id="targetLang">
-                        <option value="en-US">英语 (美国)</option>
-                        <option value="en-GB">英语 (英国)</option>
-                        <option value="zh-CN">中文 (简体)</option>
-                        <option value="zh-TW">中文 (繁体)</option>
-                        <option value="ja-JP">日语</option>
-                        <option value="ko-KR">韩语</option>
-                        <option value="fr-FR">法语</option>
-                        <option value="de-DE">德语</option>
-                        <option value="es-ES">西班牙语</option>
-                        <option value="pt-BR">葡萄牙语 (巴西)</option>
-                        <option value="pt-PT">葡萄牙语 (葡萄牙)</option>
-                        <option value="ru-RU">俄语</option>
-                        <option value="it-IT">意大利语</option>
-                        <option value="nl-NL">荷兰语</option>
-                        <option value="pl-PL">波兰语</option>
-                        <option value="tr-TR">土耳其语</option>
-                        <option value="ar-SA">阿拉伯语</option>
-                        <option value="hi-IN">印地语</option>
-                        <option value="th-TH">泰语</option>
-                        <option value="vi-VN">越南语</option>
-                    </select>
-                </div>
-            </div>
-
-            <div class="translation-area">
-                <div class="text-box">
-                    <h3>📝 源文本</h3>
-                    <textarea id="sourceText" placeholder="在此输入文本，或点击麦克风按钮进行语音输入..."></textarea>
-                    <div class="controls">
-                        <button class="control-btn mic-btn" id="startMicBtn">
-                            <span>🎤</span>
-                            <span>开始录音</span>
+                
+                <!-- 历史记录按钮 -->
+                <button type="button" class="settings-btn" id="historyBtn" aria-label="历史记录">
+                    <span aria-hidden="true">📚</span>
+                </button>
+                
+                <!-- 主题切换 -->
+                <div class="theme-toggle">
+                    <button type="button" class="theme-toggle__btn" id="themeToggleBtn" aria-label="切换主题">
+                        <span class="theme-toggle__btn__icon" id="themeIcon" aria-hidden="true">☀️</span>
+                        <span class="theme-toggle__btn__text" id="themeText">浅色</span>
+                    </button>
+                    <div class="theme-toggle__menu" id="themeMenu" role="menu" aria-label="主题选择">
+                        <button type="button" class="theme-toggle__option" data-theme="light" role="menuitem">
+                            <span class="theme-toggle__option__icon" aria-hidden="true">☀️</span>
+                            <span>浅色模式</span>
+                            <span class="theme-toggle__option__check">✓</span>
                         </button>
-                        <button class="control-btn mic-btn" id="stopMicBtn" style="display: none;">
-                            <span>⏹️</span>
-                            <span>停止录音</span>
+                        <button type="button" class="theme-toggle__option" data-theme="dark" role="menuitem">
+                            <span class="theme-toggle__option__icon" aria-hidden="true">🌙</span>
+                            <span>深色模式</span>
+                            <span class="theme-toggle__option__check">✓</span>
                         </button>
-                        <button class="control-btn clear-btn" id="clearSourceBtn">
-                            <span>🗑️</span>
-                            <span>清空</span>
+                        <button type="button" class="theme-toggle__option" data-theme="system" role="menuitem">
+                            <span class="theme-toggle__option__icon" aria-hidden="true">💻</span>
+                            <span>跟随系统</span>
+                            <span class="theme-toggle__option__check">✓</span>
                         </button>
                     </div>
                 </div>
-
-                <div class="text-box">
-                    <h3>💬 翻译结果</h3>
-                    <textarea id="targetText" placeholder="翻译结果将显示在这里..." disabled></textarea>
-                    <div class="controls">
-                        <button class="control-btn speak-btn" id="speakTargetBtn">
-                            <span>🔊</span>
-                            <span>朗读</span>
-                        </button>
-                        <button class="control-btn copy-btn" id="copyTargetBtn">
-                            <span>📋</span>
-                            <span>复制</span>
-                        </button>
-                        <button class="control-btn clear-btn" id="clearTargetBtn">
-                            <span>🗑️</span>
-                            <span>清空</span>
-                        </button>
-                    </div>
-                </div>
-            </div>
-
-            <div class="translate-section">
-                <button class="translate-btn" id="translateBtn">
-                    🔄 翻译
+                
+                <!-- 设置按钮 -->
+                <button type="button" class="settings-btn" id="settingsBtn" aria-label="设置">
+                    <span aria-hidden="true">⚙️</span>
                 </button>
             </div>
         </div>
+    </nav>
 
-        <div class="footer">
-            <p>💡 提示：请使用现代浏览器（Chrome、Edge、Safari）以获得最佳体验</p>
-            <p>语音识别功能需要浏览器支持 Web Speech API</p>
+    <!-- 主内容区 -->
+    <main class="main-content" role="main">
+        <div class="container">
+            <!-- 状态提示区域 -->
+            <div id="status" class="status" role="alert" aria-live="polite"></div>
+            
+            <!-- 标准翻译模式 -->
+            <section id="standardMode" class="mode-section" aria-label="标准翻译模式">
+                <!-- 头部区域 -->
+                <header class="header">
+                    <h1 class="header__title">
+                        <span class="header__icon">🌍</span>
+                        多语言语音翻译
+                    </h1>
+                    <p class="header__subtitle">
+                        支持语音识别、语音合成的实时翻译工具
+                    </p>
+                    
+                    <!-- 功能图标区域 -->
+                    <div class="feature-icons" aria-label="功能特性">
+                        <div class="feature">
+                            <span class="feature__icon" aria-hidden="true">🎤</span>
+                            <span class="feature__text">语音识别</span>
+                        </div>
+                        <div class="feature">
+                            <span class="feature__icon" aria-hidden="true">🔄</span>
+                            <span class="feature__text">实时翻译</span>
+                        </div>
+                        <div class="feature">
+                            <span class="feature__icon" aria-hidden="true">🔊</span>
+                            <span class="feature__text">语音合成</span>
+                        </div>
+                        <div class="feature">
+                            <span class="feature__icon" aria-hidden="true">🌐</span>
+                            <span class="feature__text">多语言支持</span>
+                        </div>
+                    </div>
+                </header>
+                
+                <!-- 主要内容区域 -->
+                <div class="container__content">
+                    <!-- 语言选择区域 -->
+                    <section class="language-section" aria-label="语言选择">
+                        <!-- 源语言选择器 -->
+                        <div class="language-selector">
+                            <label for="sourceLang" class="language-selector__label">
+                                源语言
+                            </label>
+                            <select id="sourceLang" class="language-selector__select" aria-label="选择源语言">
+                                <!-- 语言选项将由 JavaScript 动态填充 -->
+                            </select>
+                        </div>
+                        
+                        <!-- 交换语言按钮 -->
+                        <div class="swap-container">
+                            <button 
+                                id="swapBtn" 
+                                class="swap-btn" 
+                                type="button"
+                                title="交换源语言和目标语言"
+                                aria-label="交换语言"
+                            >
+                                🔄
+                            </button>
+                        </div>
+                        
+                        <!-- 目标语言选择器 -->
+                        <div class="language-selector">
+                            <label for="targetLang" class="language-selector__label">
+                                目标语言
+                            </label>
+                            <select id="targetLang" class="language-selector__select" aria-label="选择目标语言">
+                                <!-- 语言选项将由 JavaScript 动态填充 -->
+                            </select>
+                        </div>
+                    </section>
+                    
+                    <!-- 翻译区域 -->
+                    <section class="translation-area" aria-label="翻译区域">
+                        <!-- 源文本输入框 -->
+                        <div class="text-box">
+                            <h3 class="text-box__title">
+                                <span class="text-box__icon" aria-hidden="true">📝</span>
+                                源文本
+                            </h3>
+                            <textarea 
+                                id="sourceText" 
+                                class="text-box__textarea"
+                                placeholder="在此输入文本，或点击麦克风按钮进行语音输入..."
+                                aria-label="输入要翻译的文本"
+                                rows="6"
+                            ></textarea>
+                            
+                            <!-- 源文本控制按钮 -->
+                            <div class="controls" role="group" aria-label="源文本操作">
+                                <button 
+                                    id="startMicBtn" 
+                                    class="control-btn mic-btn" 
+                                    type="button"
+                                    aria-label="开始语音输入"
+                                >
+                                    <span class="control-btn__icon" aria-hidden="true">🎤</span>
+                                    <span class="control-btn__text">开始录音</span>
+                                </button>
+                                <button 
+                                    id="stopMicBtn" 
+                                    class="control-btn mic-btn stop-mic-btn" 
+                                    type="button"
+                                    aria-label="停止语音输入"
+                                    style="display: none;"
+                                >
+                                    <span class="control-btn__icon" aria-hidden="true">⏹️</span>
+                                    <span class="control-btn__text">停止录音</span>
+                                </button>
+                                <button 
+                                    id="clearSourceBtn" 
+                                    class="control-btn clear-btn" 
+                                    type="button"
+                                    aria-label="清空源文本"
+                                >
+                                    <span class="control-btn__icon" aria-hidden="true">🗑️</span>
+                                    <span class="control-btn__text">清空</span>
+                                </button>
+                            </div>
+                        </div>
+                        
+                        <!-- 目标文本显示框 -->
+                        <div class="text-box">
+                            <h3 class="text-box__title">
+                                <span class="text-box__icon" aria-hidden="true">💬</span>
+                                翻译结果
+                            </h3>
+                            <textarea 
+                                id="targetText" 
+                                class="text-box__textarea"
+                                placeholder="翻译结果将显示在这里..."
+                                aria-label="翻译结果"
+                                readonly
+                                rows="6"
+                            ></textarea>
+                            
+                            <!-- 目标文本控制按钮 -->
+                            <div class="controls" role="group" aria-label="翻译结果操作">
+                                <button 
+                                    id="speakTargetBtn" 
+                                    class="control-btn speak-btn" 
+                                    type="button"
+                                    aria-label="朗读翻译结果"
+                                >
+                                    <span class="control-btn__icon" aria-hidden="true">🔊</span>
+                                    <span class="control-btn__text">朗读</span>
+                                </button>
+                                <button 
+                                    id="copyTargetBtn" 
+                                    class="control-btn copy-btn" 
+                                    type="button"
+                                    aria-label="复制翻译结果"
+                                >
+                                    <span class="control-btn__icon" aria-hidden="true">📋</span>
+                                    <span class="control-btn__text">复制</span>
+                                </button>
+                                <button 
+                                    id="clearTargetBtn" 
+                                    class="control-btn clear-btn" 
+                                    type="button"
+                                    aria-label="清空翻译结果"
+                                >
+                                    <span class="control-btn__icon" aria-hidden="true">🗑️</span>
+                                    <span class="control-btn__text">清空</span>
+                                </button>
+                            </div>
+                        </div>
+                    </section>
+                    
+                    <!-- 翻译按钮区域 -->
+                    <div class="translate-section">
+                        <button 
+                            id="translateBtn" 
+                            class="translate-btn" 
+                            type="button"
+                            aria-label="执行翻译"
+                        >
+                            <span aria-hidden="true">🔄</span>
+                            翻译
+                        </button>
+                    </div>
+                </div>
+            </section>
+            
+            <!-- 对话翻译模式 -->
+            <section id="conversationMode" class="mode-section" aria-label="对话翻译模式" style="display: none;">
+                <!-- 对话区域 -->
+                <div class="conversation">
+                    <!-- 对话头部 -->
+                    <header class="conversation__header">
+                        <div class="conversation__lang-container">
+                            <select id="convSourceLang" class="conversation__lang" aria-label="选择我的语言">
+                                <!-- 语言选项将由 JavaScript 动态填充 -->
+                            </select>
+                            <button type="button" class="conversation__swap-btn" id="convSwapBtn" aria-label="交换语言">
+                                🔄
+                            </button>
+                            <select id="convTargetLang" class="conversation__lang" aria-label="选择对方语言">
+                                <!-- 语言选项将由 JavaScript 动态填充 -->
+                            </select>
+                        </div>
+                        <div class="conversation__actions">
+                            <button type="button" class="conversation__action-btn" id="convNewBtn" aria-label="新建对话">
+                                <span class="conversation__action-btn__icon">➕</span>
+                                <span>新建</span>
+                            </button>
+                            <button type="button" class="conversation__action-btn" id="convSaveBtn" aria-label="保存对话">
+                                <span class="conversation__action-btn__icon">💾</span>
+                                <span>保存</span>
+                            </button>
+                        </div>
+                    </header>
+                    
+                    <!-- 消息区域 -->
+                    <div class="conversation__messages" id="conversationMessages" role="log" aria-live="polite">
+                        <!-- 消息将由 JavaScript 动态渲染 -->
+                        <div class="message message--system">
+                            <div class="message__content">
+                                欢迎使用对话翻译模式！输入文本进行翻译，翻译结果会自动显示在对话中。
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- 输入区域 -->
+                    <footer class="conversation__input-area">
+                        <div class="conversation__input-container">
+                            <textarea 
+                                id="convInput" 
+                                class="conversation__input"
+                                placeholder="输入要翻译的内容..."
+                                aria-label="对话输入"
+                            ></textarea>
+                            <button type="button" class="conversation__send-btn" id="convSendBtn" aria-label="发送" disabled>
+                                ➤
+                            </button>
+                        </div>
+                        
+                        <!-- 实时翻译预览区域 -->
+                        <div class="conversation__preview" id="convPreview" style="display: none;">
+                            <div class="conversation__preview__label">翻译预览：</div>
+                            <div class="conversation__preview__content" id="convPreviewContent"></div>
+                        </div>
+                        
+                        <div class="conversation__input-options">
+                            <button type="button" class="conversation__option-btn" id="convMicBtn" aria-label="语音输入">
+                                <span class="conversation__option-btn__icon">🎤</span>
+                                <span>语音</span>
+                            </button>
+                            <button type="button" class="conversation__option-btn" id="convClearBtn" aria-label="清空对话">
+                                <span class="conversation__option-btn__icon">🗑️</span>
+                                <span>清空</span>
+                            </button>
+                            <div class="conversation__auto-translate">
+                                <label class="conversation__auto-translate__label" for="autoTranslateToggle">
+                                    实时翻译
+                                </label>
+                                <input 
+                                    type="checkbox" 
+                                    id="autoTranslateToggle" 
+                                    class="conversation__auto-translate__toggle"
+                                    checked
+                                >
+                            </div>
+                        </div>
+                    </footer>
+                </div>
+            </section>
         </div>
-    </div>
+    </main>
 
-    <script>
-        // DOM 元素
-        const sourceLang = document.getElementById('sourceLang');
-        const targetLang = document.getElementById('targetLang');
-        const sourceText = document.getElementById('sourceText');
-        const targetText = document.getElementById('targetText');
-        const translateBtn = document.getElementById('translateBtn');
-        const swapBtn = document.getElementById('swapBtn');
-        const startMicBtn = document.getElementById('startMicBtn');
-        const stopMicBtn = document.getElementById('stopMicBtn');
-        const clearSourceBtn = document.getElementById('clearSourceBtn');
-        const clearTargetBtn = document.getElementById('clearTargetBtn');
-        const speakTargetBtn = document.getElementById('speakTargetBtn');
-        const copyTargetBtn = document.getElementById('copyTargetBtn');
-        const statusDiv = document.getElementById('status');
+    <!-- 历史记录面板 -->
+    <aside class="history-panel" id="historyPanel" aria-label="历史记录">
+        <header class="history-panel__header">
+            <h2 class="history-panel__title">
+                <span class="history-panel__title__icon" aria-hidden="true">📚</span>
+                <span>历史记录</span>
+            </h2>
+            <button type="button" class="history-panel__close-btn" id="closeHistoryBtn" aria-label="关闭">
+                ✕
+            </button>
+        </header>
+        
+        <!-- 搜索区域 -->
+        <div class="history-panel__search">
+            <input 
+                type="text" 
+                id="historySearch" 
+                class="history-panel__search-input" 
+                placeholder="搜索历史记录..."
+                aria-label="搜索历史记录"
+            >
+        </div>
+        
+        <!-- 标签切换 -->
+        <div class="history-panel__tabs" role="tablist">
+            <button type="button" class="history-panel__tab history-panel__tab--active" data-tab="conversations" role="tab" aria-selected="true">
+                对话 <span class="history-panel__tab-count" id="convCount">0</span>
+            </button>
+            <button type="button" class="history-panel__tab" data-tab="translations" role="tab" aria-selected="false">
+                翻译 <span class="history-panel__tab-count" id="transCount">0</span>
+            </button>
+        </div>
+        
+        <!-- 列表容器 -->
+        <div class="history-panel__list" id="historyList">
+            <!-- 历史记录将由 JavaScript 动态渲染 -->
+            <div class="history-panel__empty">
+                <div class="history-panel__empty-icon">📭</div>
+                <div class="history-panel__empty-text">暂无历史记录</div>
+            </div>
+        </div>
+        
+        <!-- 底部操作 -->
+        <footer class="history-panel__footer">
+            <button type="button" class="history-panel__footer-btn" id="exportHistoryBtn">
+                📤 导出
+            </button>
+            <button type="button" class="history-panel__footer-btn history-panel__footer-btn--danger" id="clearAllHistoryBtn">
+                🗑️ 清空
+            </button>
+        </footer>
+    </aside>
+    <div class="history-panel__overlay" id="historyOverlay"></div>
 
-        // 语音识别相关变量
-        let recognition = null;
-        let isRecording = false;
-
-        // 初始化语音识别
-        function initSpeechRecognition() {
-            if ('webkitSpeechRecognition' in window || 'SpeechRecognition' in window) {
-                const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
-                recognition = new SpeechRecognition();
-                recognition.continuous = true;
-                recognition.interimResults = true;
-                recognition.lang = sourceLang.value;
-
-                recognition.onstart = function() {
-                    showStatus('正在听...请说话', 'info');
-                    startMicBtn.style.display = 'none';
-                    stopMicBtn.style.display = 'flex';
-                    startMicBtn.classList.add('recording');
-                    isRecording = true;
-                };
-
-                recognition.onresult = function(event) {
-                    let interimTranscript = '';
-                    let finalTranscript = '';
-
-                    for (let i = event.resultIndex; i < event.results.length; i++) {
-                        const transcript = event.results[i][0].transcript;
-                        if (event.results[i].isFinal) {
-                            finalTranscript += transcript;
-                        } else {
-                            interimTranscript += transcript;
-                        }
-                    }
-
-                    sourceText.value = finalTranscript + interimTranscript;
-                };
-
-                recognition.onerror = function(event) {
-                    console.error('语音识别错误:', event.error);
-                    let errorMsg = '语音识别出错';
-                    switch(event.error) {
-                        case 'not-allowed':
-                            errorMsg = '请允许麦克风权限';
-                            break;
-                        case 'no-speech':
-                            errorMsg = '没有检测到语音';
-                            break;
-                        case 'audio-capture':
-                            errorMsg = '无法访问麦克风';
-                            break;
-                        case 'network':
-                            errorMsg = '网络连接失败';
-                            break;
-                    }
-                    showStatus(errorMsg, 'error');
-                    stopRecording();
-                };
-
-                recognition.onend = function() {
-                    if (isRecording) {
-                        // 如果还在录音状态，重新开始
-                        try {
-                            recognition.start();
-                        } catch(e) {
-                            console.log('无法重新启动识别:', e);
-                        }
-                    } else {
-                        showStatus('录音已停止', 'info');
-                        setTimeout(() => {
-                            hideStatus();
-                        }, 2000);
-                    }
-                };
-            } else {
-                showStatus('您的浏览器不支持语音识别，请使用 Chrome 或 Edge 浏览器', 'error');
-                startMicBtn.disabled = true;
-                startMicBtn.style.opacity = '0.5';
-            }
-        }
-
-        // 开始录音
-        function startRecording() {
-            if (!recognition) {
-                initSpeechRecognition();
-                if (!recognition) return;
-            }
-
-            recognition.lang = sourceLang.value;
-            try {
-                recognition.start();
-            } catch(e) {
-                console.error('启动录音失败:', e);
-                showStatus('启动录音失败: ' + e.message, 'error');
-            }
-        }
-
-        // 停止录音
-        function stopRecording() {
-            if (recognition) {
-                isRecording = false;
-                recognition.stop();
-                startMicBtn.style.display = 'flex';
-                stopMicBtn.style.display = 'none';
-                startMicBtn.classList.remove('recording');
-            }
-        }
-
-        // 显示状态信息
-        function showStatus(message, type) {
-            statusDiv.textContent = message;
-            statusDiv.className = 'status ' + type;
-        }
-
-        // 隐藏状态信息
-        function hideStatus() {
-            statusDiv.style.display = 'none';
-        }
-
-        // 交换语言
-        function swapLanguages() {
-            const tempLang = sourceLang.value;
-            const tempText = sourceText.value;
-            
-            sourceLang.value = targetLang.value;
-            targetLang.value = tempLang;
-            
-            sourceText.value = targetText.value;
-            targetText.value = tempText;
-
-            if (recognition) {
-                recognition.lang = sourceLang.value;
-            }
-
-            showStatus('语言已交换', 'success');
-            setTimeout(() => hideStatus(), 2000);
-        }
-
-        // 翻译文本
-        async function translateText() {
-            const text = sourceText.value.trim();
-            if (!text) {
-                showStatus('请输入要翻译的文本', 'error');
-                return;
-            }
-
-            translateBtn.disabled = true;
-            translateBtn.textContent = '🔄 翻译中...';
-            showStatus('正在翻译...', 'info');
-
-            try {
-                const sourceLangCode = sourceLang.value.split('-')[0];
-                const targetLangCode = targetLang.value.split('-')[0];
-
-                const url = `https://api.mymemory.translated.net/get?q=${encodeURIComponent(text)}&langpair=${sourceLangCode}|${targetLangCode}`;
-
-                const response = await fetch(url);
-                const data = await response.json();
-
-                if (data.responseStatus === 200 && data.responseData) {
-                    targetText.value = data.responseData.translatedText;
-                    showStatus('翻译完成！', 'success');
-                    setTimeout(() => hideStatus(), 2000);
-                } else {
-                    throw new Error(data.responseDetails || '翻译失败');
-                }
-            } catch (error) {
-                console.error('翻译错误:', error);
-                showStatus('翻译失败: ' + error.message + '。请稍后重试。', 'error');
-            } finally {
-                translateBtn.disabled = false;
-                translateBtn.textContent = '🔄 翻译';
-            }
-        }
-
-        // 语音合成
-        function speakText() {
-            const text = targetText.value.trim();
-            if (!text) {
-                showStatus('没有可朗读的文本', 'error');
-                return;
-            }
-
-            if ('speechSynthesis' in window) {
-                const utterance = new SpeechSynthesisUtterance(text);
-                utterance.lang = targetLang.value;
-                utterance.rate = 0.9;
-                utterance.pitch = 1;
-                utterance.volume = 1;
-
-                utterance.onerror = function(event) {
-                    console.error('语音合成错误:', event);
-                    showStatus('朗读失败', 'error');
-                };
-
-                utterance.onend = function() {
-                    showStatus('朗读完成', 'success');
-                    setTimeout(() => hideStatus(), 2000);
-                };
-
-                showStatus('正在朗读...', 'info');
-                speechSynthesis.speak(utterance);
-            } else {
-                showStatus('您的浏览器不支持语音合成', 'error');
-            }
-        }
-
-        // 复制文本
-        async function copyText() {
-            const text = targetText.value.trim();
-            if (!text) {
-                showStatus('没有可复制的文本', 'error');
-                return;
-            }
-
-            try {
-                await navigator.clipboard.writeText(text);
-                showStatus('已复制到剪贴板！', 'success');
-                setTimeout(() => hideStatus(), 2000);
-            } catch (error) {
-                console.error('复制失败:', error);
-                showStatus('复制失败', 'error');
-            }
-        }
-
-        // 清空源文本
-        function clearSourceText() {
-            sourceText.value = '';
-        }
-
-        // 清空目标文本
-        function clearTargetText() {
-            targetText.value = '';
-        }
-
-        // 事件监听
-        swapBtn.addEventListener('click', swapLanguages);
-        translateBtn.addEventListener('click', translateText);
-        startMicBtn.addEventListener('click', startRecording);
-        stopMicBtn.addEventListener('click', stopRecording);
-        clearSourceBtn.addEventListener('click', clearSourceText);
-        clearTargetBtn.addEventListener('click', clearTargetText);
-        speakTargetBtn.addEventListener('click', speakText);
-        copyTargetBtn.addEventListener('click', copyText);
-
-        // 源文本输入时的处理
-        sourceText.addEventListener('input', function() {
-            if (this.value.trim()) {
-                translateBtn.disabled = false;
+    <!-- 页脚区域 -->
+    <footer class="footer">
+        <div class="footer__content">
+            <p class="footer__text">
+                <span class="footer__icon" aria-hidden="true">💡</span>
+                提示：请使用现代浏览器（Chrome、Edge、Safari）以获得最佳体验
+            </p>
+            <p class="footer__text">
+                语音识别功能需要浏览器支持 Web Speech API
+            </p>
+        </div>
+    </footer>
+    
+    <!-- JavaScript 模块 -->
+    <script type="module" src="./js/app.js"></script>
+    
+    <!-- 降级处理（不支持 ES6 模块的浏览器） -->
+    <script nomodule>
+        document.addEventListener('DOMContentLoaded', function() {
+            var status = document.getElementById('status');
+            if (status) {
+                status.className = 'status status--error';
+                status.textContent = '您的浏览器不支持 ES6 模块，请使用现代浏览器访问此应用。';
+                status.style.display = 'block';
             }
         });
-
-        // 回车键翻译
-        sourceText.addEventListener('keydown', function(e) {
-            if (e.key === 'Enter' && e.ctrlKey) {
-                translateText();
-            }
-        });
-
-        // 初始化
-        initSpeechRecognition();
     </script>
 </body>
 </html>

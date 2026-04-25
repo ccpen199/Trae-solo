@@ -1,0 +1,727 @@
+/**
+ * @fileoverview 对话界面组件样式
+ * @description 对话翻译模式的界面样式，使用 BEM 命名规范
+ * @version 1.0.0
+ */
+
+/* ========== 对话容器 ========== */
+
+/**
+ * 对话容器
+ * @block conversation
+ */
+.conversation {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  max-height: 70vh;
+  background: var(--card-background);
+  border-radius: var(--radius-2xl);
+  overflow: hidden;
+  box-shadow: var(--card-shadow);
+}
+
+/* ========== 对话头部 ========== */
+
+/**
+ * 对话头部
+ * @element conversation__header
+ */
+.conversation__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: var(--spacing-md) var(--spacing-lg);
+  background: var(--gradient-primary);
+  color: var(--color-white);
+}
+
+/**
+ * 对话头部语言区域
+ * @element conversation__lang-container
+ */
+.conversation__lang-container {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-sm);
+}
+
+/**
+ * 语言选择器
+ * @element conversation__lang
+ */
+.conversation__lang {
+  padding: var(--spacing-xs) var(--spacing-md);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  border-radius: var(--radius-md);
+  background: rgba(255, 255, 255, 0.1);
+  color: var(--color-white);
+  font-size: var(--font-size-sm);
+  cursor: pointer;
+  transition: all var(--transition-normal);
+}
+
+.conversation__lang:hover {
+  background: rgba(255, 255, 255, 0.2);
+  border-color: rgba(255, 255, 255, 0.5);
+}
+
+.conversation__lang:focus-visible {
+  outline: 2px solid var(--color-white);
+  outline-offset: 2px;
+}
+
+/**
+ * 交换语言按钮
+ * @element conversation__swap-btn
+ */
+.conversation__swap-btn {
+  background: rgba(255, 255, 255, 0.2);
+  border: none;
+  width: 36px;
+  height: 36px;
+  border-radius: var(--radius-full);
+  color: var(--color-white);
+  font-size: var(--font-size-base);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all var(--transition-normal);
+}
+
+.conversation__swap-btn:hover {
+  background: rgba(255, 255, 255, 0.3);
+  transform: rotate(180deg);
+}
+
+.conversation__swap-btn:focus-visible {
+  outline: 2px solid var(--color-white);
+  outline-offset: 2px;
+}
+
+/**
+ * 对话头部操作按钮
+ * @element conversation__actions
+ */
+.conversation__actions {
+  display: flex;
+  gap: var(--spacing-sm);
+}
+
+/**
+ * 对话操作按钮
+ * @element conversation__action-btn
+ */
+.conversation__action-btn {
+  background: rgba(255, 255, 255, 0.15);
+  border: none;
+  padding: var(--spacing-xs) var(--spacing-sm);
+  border-radius: var(--radius-md);
+  color: var(--color-white);
+  font-size: var(--font-size-sm);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-xs);
+  transition: all var(--transition-normal);
+}
+
+.conversation__action-btn:hover {
+  background: rgba(255, 255, 255, 0.25);
+}
+
+.conversation__action-btn:focus-visible {
+  outline: 2px solid var(--color-white);
+  outline-offset: 2px;
+}
+
+.conversation__action-btn__icon {
+  font-size: var(--font-size-base);
+}
+
+/* ========== 消息区域 ========== */
+
+/**
+ * 消息容器
+ * @element conversation__messages
+ */
+.conversation__messages {
+  flex: 1;
+  overflow-y: auto;
+  padding: var(--spacing-lg);
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-md);
+  background: var(--color-gray-50);
+}
+
+/* 暗色主题消息背景 */
+.theme--dark .conversation__messages {
+  background: var(--color-gray-50);
+}
+
+/* ========== 消息气泡 ========== */
+
+/**
+ * 消息气泡
+ * @block message
+ */
+.message {
+  max-width: 75%;
+  display: flex;
+  flex-direction: column;
+  animation: messageSlideIn 0.3s ease;
+}
+
+@keyframes messageSlideIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/**
+ * 用户消息
+ * @modifier message--user
+ */
+.message--user {
+  align-self: flex-end;
+}
+
+/**
+ * 翻译消息
+ * @modifier message--translated
+ */
+.message--translated {
+  align-self: flex-start;
+}
+
+/**
+ * 系统消息
+ * @modifier message--system
+ */
+.message--system {
+  align-self: center;
+  max-width: 90%;
+}
+
+/**
+ * 加载状态消息
+ * @modifier message--loading
+ */
+.message--loading {
+  opacity: 0.8;
+}
+
+/**
+ * 错误状态消息
+ * @modifier message--error
+ */
+.message--error {
+  align-self: center;
+}
+
+/**
+ * 消息内容
+ * @element message__content
+ */
+.message__content {
+  padding: var(--spacing-sm) var(--spacing-md);
+  border-radius: var(--radius-xl);
+  word-wrap: break-word;
+  word-break: break-word;
+  line-height: var(--line-height-relaxed);
+  font-size: var(--font-size-base);
+}
+
+/* 用户消息内容 */
+.message--user .message__content {
+  background: var(--gradient-primary);
+  color: var(--color-white);
+  border-bottom-right-radius: var(--radius-sm);
+}
+
+/* 翻译消息内容 */
+.message--translated .message__content {
+  background: var(--color-white);
+  color: var(--color-gray-800);
+  border: 1px solid var(--color-gray-200);
+  border-bottom-left-radius: var(--radius-sm);
+}
+
+/* 暗色主题翻译消息 */
+.theme--dark .message--translated .message__content {
+  background: var(--color-gray-200);
+  color: var(--color-gray-700);
+  border-color: var(--color-gray-300);
+}
+
+/* 系统消息内容 */
+.message--system .message__content {
+  background: var(--color-gray-100);
+  color: var(--color-gray-500);
+  font-size: var(--font-size-sm);
+  text-align: center;
+  padding: var(--spacing-xs) var(--spacing-md);
+  border-radius: var(--radius-full);
+}
+
+/* 错误消息内容 */
+.message--error .message__content {
+  background: var(--color-error-light);
+  color: var(--color-error-dark);
+  border: 1px solid var(--color-error);
+}
+
+/* ========== 加载动画 ========== */
+
+/**
+ * 加载动画容器
+ * @element message__loading
+ */
+.message__loading {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-xs);
+}
+
+/**
+ * 加载动画点
+ * @element message__loading-dot
+ */
+.message__loading-dot {
+  width: 8px;
+  height: 8px;
+  background: var(--color-gray-400);
+  border-radius: var(--radius-full);
+  animation: loadingBounce 1.4s ease-in-out infinite both;
+}
+
+.message__loading-dot:nth-child(1) {
+  animation-delay: -0.32s;
+}
+
+.message__loading-dot:nth-child(2) {
+  animation-delay: -0.16s;
+}
+
+@keyframes loadingBounce {
+  0%, 80%, 100% {
+    transform: scale(0.8);
+    opacity: 0.5;
+  }
+  40% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+/* ========== 错误状态 ========== */
+
+/**
+ * 错误状态内容
+ * @element message__error
+ */
+.message__error {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-xs);
+}
+
+.message__error-icon {
+  font-size: var(--font-size-lg);
+}
+
+.message__error-text {
+  font-weight: var(--font-weight-medium);
+}
+
+.message__error-detail {
+  font-size: var(--font-size-sm);
+  opacity: 0.8;
+}
+
+/* ========== 消息元信息 ========== */
+
+/**
+ * 消息元信息（时间等）
+ * @element message__meta
+ */
+.message__meta {
+  font-size: var(--font-size-xs);
+  color: var(--color-gray-400);
+  margin-top: var(--spacing-xs);
+  padding: 0 var(--spacing-xs);
+}
+
+/* 用户消息元信息 */
+.message--user .message__meta {
+  text-align: right;
+}
+
+/* 翻译消息元信息 */
+.message--translated .message__meta {
+  text-align: left;
+}
+
+/* ========== 输入区域 ========== */
+
+/**
+ * 输入区域
+ * @element conversation__input-area
+ */
+.conversation__input-area {
+  padding: var(--spacing-md);
+  background: var(--card-background);
+  border-top: 1px solid var(--color-gray-200);
+}
+
+/* 暗色主题输入区域 */
+.theme--dark .conversation__input-area {
+  border-top-color: var(--color-gray-300);
+}
+
+/**
+ * 输入容器
+ * @element conversation__input-container
+ */
+.conversation__input-container {
+  display: flex;
+  align-items: flex-end;
+  gap: var(--spacing-sm);
+  background: var(--color-gray-50);
+  border: 2px solid var(--color-gray-200);
+  border-radius: var(--radius-xl);
+  padding: var(--spacing-sm);
+  transition: all var(--transition-normal);
+}
+
+.conversation__input-container:focus-within {
+  border-color: var(--color-primary-500);
+  box-shadow: var(--input-focus-shadow);
+}
+
+/* 暗色主题输入容器 */
+.theme--dark .conversation__input-container {
+  background: var(--color-gray-200);
+  border-color: var(--color-gray-300);
+}
+
+/**
+ * 输入文本框
+ * @element conversation__input
+ */
+.conversation__input {
+  flex: 1;
+  background: transparent;
+  border: none;
+  outline: none;
+  resize: none;
+  font-size: var(--font-size-base);
+  line-height: var(--line-height-normal);
+  color: var(--color-gray-800);
+  max-height: 120px;
+  min-height: 24px;
+  padding: var(--spacing-xs);
+}
+
+.conversation__input::placeholder {
+  color: var(--color-gray-400);
+}
+
+/* 暗色主题输入框 */
+.theme--dark .conversation__input {
+  color: var(--color-gray-700);
+}
+
+/**
+ * 发送按钮
+ * @element conversation__send-btn
+ */
+.conversation__send-btn {
+  background: var(--gradient-primary);
+  border: none;
+  width: 40px;
+  height: 40px;
+  border-radius: var(--radius-full);
+  color: var(--color-white);
+  font-size: var(--font-size-lg);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all var(--transition-normal);
+  flex-shrink: 0;
+}
+
+.conversation__send-btn:hover:not(:disabled) {
+  transform: scale(1.05);
+  box-shadow: var(--shadow-button);
+}
+
+.conversation__send-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.conversation__send-btn:focus-visible {
+  outline: 2px solid var(--color-primary-500);
+  outline-offset: 2px;
+}
+
+/* ========== 输入选项 ========== */
+
+/**
+ * 输入选项栏
+ * @element conversation__input-options
+ */
+.conversation__input-options {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-sm);
+  margin-top: var(--spacing-sm);
+}
+
+/**
+ * 输入选项按钮
+ * @element conversation__option-btn
+ */
+.conversation__option-btn {
+  background: transparent;
+  border: none;
+  padding: var(--spacing-xs) var(--spacing-sm);
+  border-radius: var(--radius-md);
+  color: var(--color-gray-500);
+  font-size: var(--font-size-sm);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-xs);
+  transition: all var(--transition-normal);
+}
+
+.conversation__option-btn:hover {
+  background: var(--color-gray-100);
+  color: var(--color-gray-700);
+}
+
+/* 暗色主题选项按钮 */
+.theme--dark .conversation__option-btn:hover {
+  background: var(--color-gray-200);
+  color: var(--color-gray-600);
+}
+
+.conversation__option-btn__icon {
+  font-size: var(--font-size-base);
+}
+
+/* ========== 自动翻译开关 ========== */
+
+/**
+ * 自动翻译开关容器
+ * @element conversation__auto-translate
+ */
+.conversation__auto-translate {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-sm);
+  margin-left: auto;
+}
+
+/**
+ * 自动翻译标签
+ * @element conversation__auto-translate__label
+ */
+.conversation__auto-translate__label {
+  font-size: var(--font-size-sm);
+  color: var(--color-gray-500);
+}
+
+/**
+ * 自动翻译开关
+ * @element conversation__auto-translate__toggle
+ */
+.conversation__auto-translate__toggle {
+  width: 40px;
+  height: 20px;
+  background: var(--color-gray-300);
+  border-radius: var(--radius-full);
+  position: relative;
+  cursor: pointer;
+  transition: background var(--transition-normal);
+  appearance: none;
+  -webkit-appearance: none;
+}
+
+.conversation__auto-translate__toggle:checked {
+  background: var(--color-primary-500);
+}
+
+.conversation__auto-translate__toggle::before {
+  content: '';
+  position: absolute;
+  top: 2px;
+  left: 2px;
+  width: 16px;
+  height: 16px;
+  background: var(--color-white);
+  border-radius: var(--radius-full);
+  transition: transform var(--transition-normal);
+}
+
+.conversation__auto-translate__toggle:checked::before {
+  transform: translateX(20px);
+}
+
+/* ========== 响应式样式 ========== */
+
+@media (max-width: 768px) {
+  .conversation {
+    max-height: 60vh;
+    border-radius: var(--radius-xl);
+  }
+
+  .conversation__header {
+    padding: var(--spacing-sm) var(--spacing-md);
+    flex-wrap: wrap;
+    gap: var(--spacing-sm);
+  }
+
+  .conversation__lang-container {
+    flex: 1;
+    min-width: 0;
+  }
+
+  .conversation__lang {
+    font-size: var(--font-size-xs);
+    padding: var(--spacing-xs);
+    max-width: 120px;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+  }
+
+  .conversation__messages {
+    padding: var(--spacing-md);
+  }
+
+  .message {
+    max-width: 85%;
+  }
+
+  .message__content {
+    font-size: var(--font-size-sm);
+    padding: var(--spacing-xs) var(--spacing-sm);
+  }
+
+  .conversation__input-area {
+    padding: var(--spacing-sm);
+  }
+
+  .conversation__input-container {
+    padding: var(--spacing-xs);
+  }
+
+  .conversation__send-btn {
+    width: 36px;
+    height: 36px;
+    font-size: var(--font-size-base);
+  }
+
+  .conversation__input-options {
+    flex-wrap: wrap;
+  }
+
+  .conversation__option-btn {
+    font-size: var(--font-size-xs);
+    padding: var(--spacing-xs);
+  }
+
+  .conversation__auto-translate {
+    margin-left: 0;
+    flex: 1 1 100%;
+    justify-content: flex-end;
+  }
+}
+
+/* ========== 实时翻译预览区域 ========== */
+
+/**
+ * 实时翻译预览区域
+ * @element conversation__preview
+ */
+.conversation__preview {
+  margin-top: var(--spacing-sm);
+  padding: var(--spacing-sm) var(--spacing-md);
+  background: var(--color-gray-50);
+  border: 1px dashed var(--color-gray-300);
+  border-radius: var(--radius-lg);
+}
+
+/* 暗色主题预览区域 */
+.theme--dark .conversation__preview {
+  background: var(--color-gray-200);
+  border-color: var(--color-gray-400);
+}
+
+/**
+ * 预览标签
+ * @element conversation__preview__label
+ */
+.conversation__preview__label {
+  font-size: var(--font-size-xs);
+  color: var(--color-gray-500);
+  margin-bottom: var(--spacing-xs);
+}
+
+/**
+ * 预览内容
+ * @element conversation__preview__content
+ */
+.conversation__preview__content {
+  font-size: var(--font-size-base);
+  color: var(--color-gray-800);
+  line-height: var(--line-height-relaxed);
+}
+
+/* 暗色主题预览内容 */
+.theme--dark .conversation__preview__content {
+  color: var(--color-gray-700);
+}
+
+@media (max-width: 480px) {
+  .conversation {
+    max-height: 75vh;
+  }
+
+  .conversation__header {
+    padding: var(--spacing-xs) var(--spacing-sm);
+  }
+
+  .conversation__swap-btn {
+    width: 28px;
+    height: 28px;
+    font-size: var(--font-size-sm);
+  }
+
+  .conversation__action-btn {
+    padding: var(--spacing-xs);
+  }
+
+  .conversation__action-btn__text {
+    display: none;
+  }
+
+  .message {
+    max-width: 90%;
+  }
+
+  .conversation__lang {
+    max-width: 100px;
+  }
+}
