@@ -76,26 +76,34 @@ interface HomeContextType {
 
 const HomeContext = createContext<HomeContextType | undefined>(undefined);
 
+const isArray = (value: any): value is any[] => {
+  return Array.isArray(value);
+};
+
 export const HomeProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const storedData = loadFromStorage();
   
+  const getSafeArray = <T,>(value: T[] | undefined, defaultValue: T[]): T[] => {
+    return isArray(value) ? value : defaultValue;
+  };
+  
   const [appliances, setAppliances] = useState<Appliance[]>(
-    storedData?.appliances || mockAppliances
+    getSafeArray(storedData?.appliances, mockAppliances)
   );
   const [tasks, setTasks] = useState<Task[]>(
-    storedData?.tasks || mockTasks
+    getSafeArray(storedData?.tasks, mockTasks)
   );
   const [budgetEntries, setBudgetEntries] = useState<BudgetEntry[]>(
-    storedData?.budgetEntries || mockBudgetEntries
+    getSafeArray(storedData?.budgetEntries, mockBudgetEntries)
   );
   const [recipes, setRecipes] = useState<Recipe[]>(
-    storedData?.recipes || mockRecipes
+    getSafeArray(storedData?.recipes, mockRecipes)
   );
   const [inventory, setInventory] = useState<InventoryItem[]>(
-    storedData?.inventory || mockInventory
+    getSafeArray(storedData?.inventory, mockInventory)
   );
   const [repairs, setRepairs] = useState<RepairRecord[]>(
-    storedData?.repairs || mockRepairRecords
+    getSafeArray(storedData?.repairs, mockRepairRecords)
   );
   const [activeTab, setActiveTab] = useState<ActiveTab>('dashboard');
 

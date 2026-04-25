@@ -43,18 +43,24 @@ export interface Recipe {
   id: string;
   name: string;
   category: string;
+  cuisine?: string;
   prepTime: number;
   cookTime: number;
   servings: number;
+  calories?: number;
   ingredients: {
     name: string;
     quantity: string;
   }[];
   instructions: string;
   applianceIds: string[];
+  equipment?: string[];
   difficulty: 'easy' | 'medium' | 'hard';
+  tags?: string[];
   favorite: boolean;
   createdAt: string;
+  lastCooked?: string;
+  cookCount?: number;
 }
 
 export interface InventoryItem {
