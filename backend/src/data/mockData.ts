@@ -156,20 +156,95 @@ export const mockRiskAlerts: RiskAlert[] = [
   }
 ];
 
-export const mockRehabilitationPlans: RehabilitationPlan[] = mockPatients.map(patient => ({
-  id: uuidv4(),
-  patientId: patient.id,
-  title: patient.condition + '康复计划',
-  description: `为患者${patient.name}制定的个性化康复计划，包含健康监测、运动指导、饮食管理和用药提醒。`,
-  startDate: '2024-01-20',
-  endDate: '2024-07-20',
-  goals: [
-    '控制血压在正常范围内',
-    '改善生活质量',
-    '提高运动能力',
-    '建立良好的生活习惯'
-  ],
-  status: 'active',
-  createdBy: '李医生',
-  createdAt: '2024-01-20T10:00:00.000Z'
-}));
+export const mockRehabilitationPlans: RehabilitationPlan[] = mockPatients.map(patient => {
+  let category: 'diet' | 'exercise' | 'sleep' | 'habit' | 'comprehensive' = 'comprehensive';
+  if (patient.condition.includes('高血压') || patient.condition.includes('糖尿病')) {
+    category = 'diet';
+  } else if (patient.condition.includes('康复')) {
+    category = 'exercise';
+  } else if (patient.condition.includes('脑卒中')) {
+    category = 'comprehensive';
+  }
+
+  return {
+    id: uuidv4(),
+    patientId: patient.id,
+    title: patient.condition + '康复计划',
+    description: `为患者${patient.name}制定的个性化康复计划，包含健康监测、运动指导、饮食管理和用药提醒。`,
+    category,
+    startDate: '2024-01-20',
+    endDate: '2024-07-20',
+    goals: [
+      '控制血压在正常范围内',
+      '改善生活质量',
+      '提高运动能力',
+      '建立良好的生活习惯'
+    ],
+    status: 'active',
+    createdBy: '李医生',
+    createdAt: '2024-01-20T10:00:00.000Z',
+    reminders: [],
+    dietConfig: category === 'diet' || category === 'comprehensive' ? {
+      targetCalories: patient.condition.includes('糖尿病') ? 1600 : 1800,
+      targetProtein: patient.condition.includes('糖尿病') ? 80 : 90,
+      targetCarbs: patient.condition.includes('糖尿病') ? 200 : 225,
+      targetFat: patient.condition.includes('糖尿病') ? 53 : 60,
+      restrictions: patient.condition.includes('高血压') ? ['低盐', '低脂肪'] : ['低糖'],
+      mealSchedules: [
+        { mealType: 'breakfast', suggestedTime: '07:00', suggestedFoods: ['燕麦粥', '鸡蛋', '全麦面包'] },
+        { mealType: 'lunch', suggestedTime: '12:00', suggestedFoods: ['米饭', '蔬菜', '瘦肉'] },
+        { mealType: 'dinner', suggestedTime: '18:00', suggestedFoods: ['清淡晚餐', '蔬菜沙拉', '少量主食'] },
+        { mealType: 'snack', suggestedTime: '15:00', suggestedFoods: ['水果', '坚果', '酸奶'] }
+      ]
+    } : undefined,
+    exerciseConfig: category === 'exercise' || category === 'comprehensive' ? {
+      targetDuration: 150,
+      targetFrequency: 5,
+      preferredIntensity: 'medium',
+      exerciseTypes: ['快走', '太极拳', '散步'],
+      weeklySchedule: [
+        { dayOfWeek: 1, exercises: [{ name: '快走', duration: 30, intensity: 'medium' }] },
+        { dayOfWeek: 3, exercises: [{ name: '太极拳', duration: 45, intensity: 'medium' }] },
+        { dayOfWeek: 5, exercises: [{ name: '散步', duration: 30, intensity: 'low' }] }
+      ]
+    } : undefined,
+    sleepConfig: category === 'sleep' || category === 'comprehensive' ? {
+      targetDuration: 8,
+      targetBedTime: '22:00',
+      targetWakeUpTime: '06:00',
+      preSleepRoutine: [
+        '睡前1小时避免使用电子设备',
+        '可以进行轻度阅读或冥想',
+        '保持卧室安静、黑暗、凉爽'
+      ],
+      sleepHygieneRules: [
+        '保持规律的作息时间',
+        '避免睡前摄入咖啡因和酒精',
+        '白天避免长时间午睡',
+        '定期进行体育锻炼'
+      ]
+    } : undefined,
+    habitConfig: category === 'habit' || category === 'comprehensive' ? {
+      habits: [
+        {
+          name: '按时服药',
+          type: 'medication',
+          description: '按时按量服用医生开的药物',
+          frequency: 'daily',
+          targetDays: 7,
+          reminders: true,
+          reminderTime: '08:00'
+        },
+        {
+          name: '每天喝水',
+          type: 'diet',
+          description: '每天喝够1500-2000ml水',
+          frequency: 'daily',
+          targetDays: 7,
+          reminders: true,
+          reminderTime: '09:00'
+        }
+      ]
+    } : undefined
+  };
+});

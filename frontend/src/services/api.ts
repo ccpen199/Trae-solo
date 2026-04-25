@@ -8,7 +8,13 @@ import {
   HealthMetrics,
   Diet,
   Exercise,
-  Sleep
+  Sleep,
+  PlanCategory,
+  PlanProgressDetail,
+  DietPlanConfig,
+  ExercisePlanConfig,
+  SleepPlanConfig,
+  HabitPlanConfig
 } from '../types';
 
 const api = axios.create({
@@ -83,10 +89,15 @@ export const planApi = {
     patientId: string;
     title: string;
     description: string;
+    category: PlanCategory;
     startDate: string;
     endDate: string;
     goals: string[];
     createdBy: string;
+    dietConfig?: DietPlanConfig;
+    exerciseConfig?: ExercisePlanConfig;
+    sleepConfig?: SleepPlanConfig;
+    habitConfig?: HabitPlanConfig;
   }): Promise<RehabilitationPlan> =>
     api.post('/plans', planData).then(res => res.data),
   
@@ -102,14 +113,7 @@ export const planApi = {
   delete: (planId: string): Promise<void> =>
     api.delete(`/plans/${planId}`),
   
-  getProgress: (planId: string): Promise<{
-    plan: RehabilitationPlan;
-    progressPercentage: number;
-    dietProgress: number;
-    exerciseProgress: number;
-    sleepProgress: number;
-    goalProgress: { goal: string; completed: boolean; progress: number }[];
-  }> =>
+  getProgress: (planId: string): Promise<PlanProgressDetail> =>
     api.get(`/plans/${planId}/progress`).then(res => res.data),
   
   generateTemplate: (patientId: string, condition: string): Promise<{
@@ -117,6 +121,11 @@ export const planApi = {
     description: string;
     goals: string[];
     suggestedDuration: number;
+    category: PlanCategory;
+    dietConfig?: DietPlanConfig;
+    exerciseConfig?: ExercisePlanConfig;
+    sleepConfig?: SleepPlanConfig;
+    habitConfig?: HabitPlanConfig;
   }> =>
     api.post('/plans/template', { patientId, condition }).then(res => res.data),
 };

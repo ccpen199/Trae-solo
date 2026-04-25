@@ -79,17 +79,160 @@ export interface Reminder {
   status: 'pending' | 'completed' | 'cancelled';
 }
 
+export type PlanCategory = 'diet' | 'exercise' | 'sleep' | 'habit' | 'comprehensive';
+
+export interface DietPlanConfig {
+  targetCalories: number;
+  targetProtein: number;
+  targetCarbs: number;
+  targetFat: number;
+  restrictions: string[];
+  mealSchedules: {
+    mealType: 'breakfast' | 'lunch' | 'dinner' | 'snack';
+    suggestedTime: string;
+    suggestedFoods: string[];
+  }[];
+}
+
+export interface ExercisePlanConfig {
+  targetDuration: number;
+  targetFrequency: number;
+  preferredIntensity: 'low' | 'medium' | 'high';
+  exerciseTypes: string[];
+  weeklySchedule: {
+    dayOfWeek: number;
+    exercises: {
+      name: string;
+      duration: number;
+      intensity: 'low' | 'medium' | 'high';
+    }[];
+  }[];
+}
+
+export interface SleepPlanConfig {
+  targetDuration: number;
+  targetBedTime: string;
+  targetWakeUpTime: string;
+  preSleepRoutine: string[];
+  sleepHygieneRules: string[];
+}
+
+export interface HabitPlanConfig {
+  habits: {
+    name: string;
+    type: 'diet' | 'exercise' | 'sleep' | 'medication' | 'other';
+    description: string;
+    frequency: 'daily' | 'weekly' | 'monthly';
+    targetDays: number;
+    reminders: boolean;
+    reminderTime: string;
+  }[];
+}
+
+export interface PlanReminder {
+  id: string;
+  type: 'diet' | 'exercise' | 'sleep' | 'medication' | 'habit' | 'checkup';
+  title: string;
+  description: string;
+  scheduledTime: string;
+  repeat: boolean;
+  repeatPattern?: {
+    daysOfWeek?: number[];
+    time: string;
+  };
+}
+
 export interface RehabilitationPlan {
   id: string;
   patientId: string;
   title: string;
   description: string;
+  category: PlanCategory;
   startDate: string;
   endDate: string;
   goals: string[];
   status: 'active' | 'completed' | 'suspended';
   createdBy: string;
   createdAt: string;
+  
+  dietConfig?: DietPlanConfig;
+  exerciseConfig?: ExercisePlanConfig;
+  sleepConfig?: SleepPlanConfig;
+  habitConfig?: HabitPlanConfig;
+  
+  reminders: PlanReminder[];
+}
+
+export interface PlanProgressDetail {
+  plan: RehabilitationPlan;
+  overallProgress: number;
+  
+  dietProgress?: {
+    totalDays: number;
+    completedDays: number;
+    avgCalories: number;
+    targetCalories: number;
+    avgProtein: number;
+    avgCarbs: number;
+    avgFat: number;
+    dailyProgress: {
+      date: string;
+      calories: number;
+      protein: number;
+      carbs: number;
+      fat: number;
+      completed: boolean;
+    }[];
+  };
+  
+  exerciseProgress?: {
+    totalSessions: number;
+    completedSessions: number;
+    totalMinutes: number;
+    totalCaloriesBurned: number;
+    sessionProgress: {
+      date: string;
+      type: string;
+      duration: number;
+      caloriesBurned: number;
+      completed: boolean;
+    }[];
+  };
+  
+  sleepProgress?: {
+    totalNights: number;
+    goodQualityNights: number;
+    avgDuration: number;
+    targetDuration: number;
+    sleepHistory: {
+      date: string;
+      duration: number;
+      quality: 'poor' | 'fair' | 'good' | 'excellent';
+      onTime: boolean;
+    }[];
+  };
+  
+  habitProgress?: {
+    habits: {
+      name: string;
+      type: string;
+      totalDays: number;
+      completedDays: number;
+      currentStreak: number;
+      longestStreak: number;
+      dailyCheck: {
+        date: string;
+        completed: boolean;
+      }[];
+    }[];
+  };
+  
+  goalProgress: {
+    goal: string;
+    completed: boolean;
+    progress: number;
+    relatedCategory?: PlanCategory;
+  }[];
 }
 
 export interface HealthReport {
