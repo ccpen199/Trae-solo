@@ -3,6 +3,7 @@ import type { Appliance, Task, BudgetEntry, Recipe, InventoryItem, RepairRecord,
 import { mockAppliances, mockTasks, mockBudgetEntries, mockRecipes, mockInventory, mockRepairRecords } from '../data/mockData';
 
 interface StorageData {
+  version: number;
   appliances: Appliance[];
   tasks: Task[];
   budgetEntries: BudgetEntry[];
@@ -12,12 +13,122 @@ interface StorageData {
 }
 
 const STORAGE_KEY = 'smart_home_manager_data';
+const CURRENT_DATA_VERSION = 2;
 
-const loadFromStorage = (): Partial<StorageData> | null => {
+const isValidRecipe = (recipe: any): recipe is Recipe => {
+  if (!recipe || typeof recipe !== 'object') return false;
+  if (typeof recipe.id !== 'string' || !recipe.id) return false;
+  if (typeof recipe.name !== 'string' || !recipe.name) return false;
+  if (!Array.isArray(recipe.ingredients)) return false;
+  if (typeof recipe.instructions !== 'string') return false;
+  if (!['easy', 'medium', 'hard'].includes(recipe.difficulty)) return false;
+  if (typeof recipe.favorite !== 'boolean') return false;
+  return true;
+};
+
+const isValidAppliance = (appliance: any): appliance is Appliance => {
+  if (!appliance || typeof appliance !== 'object') return false;
+  if (typeof appliance.id !== 'string' || !appliance.id) return false;
+  if (typeof appliance.name !== 'string' || !appliance.name) return false;
+  return true;
+};
+
+const isValidTask = (task: any): task is Task => {
+  if (!task || typeof task !== 'object') return false;
+  if (typeof task.id !== 'string' || !task.id) return false;
+  if (typeof task.title !== 'string' || !task.title) return false;
+  return true;
+};
+
+const isValidBudgetEntry = (entry: any): entry is BudgetEntry => {
+  if (!entry || typeof entry !== 'object') return false;
+  if (typeof entry.id !== 'string' || !entry.id) return false;
+  return true;
+};
+
+const isValidInventoryItem = (item: any): item is InventoryItem => {
+  if (!item || typeof item !== 'object') return false;
+  if (typeof item.id !== 'string' || !item.id) return false;
+  return true;
+};
+
+const isValidRepairRecord = (record: any): record is RepairRecord => {
+  if (!record || typeof record !== 'object') return false;
+  if (typeof record.id !== 'string' || !record.id) return false;
+  return true;
+};
+
+const migrateRecipe = (recipe: any): Recipe => {
+  const today = new Date().toISOString().split('T')[0];
+  return {
+    id: recipe.id || Math.random().toString(36).substr(2, 9),
+    name: recipe.name || '未命名菜谱',
+    category: recipe.category || '家常菜',
+    cuisine: recipe.cuisine || undefined,
+    prepTime: typeof recipe.prepTime === 'number' ? recipe.prepTime : 10,
+    cookTime: typeof recipe.cookTime === 'number' ? recipe.cookTime : 20,
+    servings: typeof recipe.servings === 'number' ? recipe.servings : 2,
+    calories: typeof recipe.calories === 'number' ? recipe.calories : undefined,
+    ingredients: Array.isArray(recipe.ingredients) ? recipe.ingredients : [],
+    instructions: recipe.instructions || '',
+    applianceIds: Array.isArray(recipe.applianceIds) ? recipe.applianceIds : [],
+    equipment: Array.isArray(recipe.equipment) ? recipe.equipment : undefined,
+    difficulty: ['easy', 'medium', 'hard'].includes(recipe.difficulty) ? recipe.difficulty : 'easy',
+    tags: Array.isArray(recipe.tags) ? recipe.tags : undefined,
+    favorite: typeof recipe.favorite === 'boolean' ? recipe.favorite : false,
+    createdAt: recipe.createdAt || today,
+  };
+};
+
+const loadFromStorage = (): StorageData | null => {
   try {
     const stored = localStorage.getItem(STORAGE_KEY);
     if (stored) {
-      return JSON.parse(stored);
+      const parsed = JSON.parse(stored) as any;
+      
+      if (!parsed) return null;
+      
+      const version = typeof parsed.version === 'number' ? parsed.version : 0;
+      
+      if (version < CURRENT_DATA_VERSION) {
+        console.log(`数据版本旧 (v${version})，使用默认数据...`);
+        return null;
+      }
+      
+      let recipes: Recipe[] = [];
+      if (Array.isArray(parsed.recipes)) {
+        recipes = parsed.recipes.filter(isValidRecipe).map(migrateRecipe);
+      }
+      
+      const appliances: Appliance[] = Array.isArray(parsed.appliances) 
+        ? parsed.appliances.filter(isValidAppliance) 
+        : [];
+      
+      const tasks: Task[] = Array.isArray(parsed.tasks) 
+        ? parsed.tasks.filter(isValidTask) 
+        : [];
+      
+      const budgetEntries: BudgetEntry[] = Array.isArray(parsed.budgetEntries) 
+        ? parsed.budgetEntries.filter(isValidBudgetEntry) 
+        : [];
+      
+      const inventory: InventoryItem[] = Array.isArray(parsed.inventory) 
+        ? parsed.inventory.filter(isValidInventoryItem) 
+        : [];
+      
+      const repairs: RepairRecord[] = Array.isArray(parsed.repairs) 
+        ? parsed.repairs.filter(isValidRepairRecord) 
+        : [];
+      
+      return {
+        version: CURRENT_DATA_VERSION,
+        appliances,
+        tasks,
+        budgetEntries,
+        recipes,
+        inventory,
+        repairs,
+      };
     }
   } catch (e) {
     console.error('Failed to load from storage:', e);
@@ -27,7 +138,11 @@ const loadFromStorage = (): Partial<StorageData> | null => {
 
 const saveToStorage = (data: StorageData) => {
   try {
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
+    const dataWithVersion = {
+      ...data,
+      version: CURRENT_DATA_VERSION,
+    };
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(dataWithVersion));
   } catch (e) {
     console.error('Failed to save to storage:', e);
   }
@@ -76,39 +191,32 @@ interface HomeContextType {
 
 const HomeContext = createContext<HomeContextType | undefined>(undefined);
 
-const isArray = (value: any): value is any[] => {
-  return Array.isArray(value);
-};
-
 export const HomeProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const storedData = loadFromStorage();
   
-  const getSafeArray = <T,>(value: T[] | undefined, defaultValue: T[]): T[] => {
-    return isArray(value) ? value : defaultValue;
-  };
-  
   const [appliances, setAppliances] = useState<Appliance[]>(
-    getSafeArray(storedData?.appliances, mockAppliances)
+    storedData && storedData.appliances.length > 0 ? storedData.appliances : mockAppliances
   );
   const [tasks, setTasks] = useState<Task[]>(
-    getSafeArray(storedData?.tasks, mockTasks)
+    storedData && storedData.tasks.length > 0 ? storedData.tasks : mockTasks
   );
   const [budgetEntries, setBudgetEntries] = useState<BudgetEntry[]>(
-    getSafeArray(storedData?.budgetEntries, mockBudgetEntries)
+    storedData && storedData.budgetEntries.length > 0 ? storedData.budgetEntries : mockBudgetEntries
   );
   const [recipes, setRecipes] = useState<Recipe[]>(
-    getSafeArray(storedData?.recipes, mockRecipes)
+    storedData && storedData.recipes.length > 0 ? storedData.recipes : mockRecipes
   );
   const [inventory, setInventory] = useState<InventoryItem[]>(
-    getSafeArray(storedData?.inventory, mockInventory)
+    storedData && storedData.inventory.length > 0 ? storedData.inventory : mockInventory
   );
   const [repairs, setRepairs] = useState<RepairRecord[]>(
-    getSafeArray(storedData?.repairs, mockRepairRecords)
+    storedData && storedData.repairs.length > 0 ? storedData.repairs : mockRepairRecords
   );
   const [activeTab, setActiveTab] = useState<ActiveTab>('dashboard');
 
   useEffect(() => {
     saveToStorage({
+      version: CURRENT_DATA_VERSION,
       appliances,
       tasks,
       budgetEntries,
@@ -201,6 +309,7 @@ export const HomeProvider: React.FC<{ children: React.ReactNode }> = ({ children
 
   const exportData = useCallback((format: 'json' | 'csv') => {
     const data: StorageData = {
+      version: CURRENT_DATA_VERSION,
       appliances,
       tasks,
       budgetEntries,
