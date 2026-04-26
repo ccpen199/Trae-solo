@@ -1,0 +1,403 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum Role {
+  BUYER
+  FARMER
+  OPERATOR
+  FINANCE
+  STORAGE
+}
+
+enum OrderStatus {
+  DRAFT
+  PENDING_PREPAYMENT
+  PREPAYMENT_PAID
+  IN_COLLECTION
+  QUALITY_CHECKED
+  IN_TRANSPORT
+  DELIVERED
+  SETTLED
+  CANCELLED
+  EXCEPTION_HANDLING
+  STORAGE_TRANSFERRED
+}
+
+enum QualityLevel {
+  PREMIUM
+  GRADE_A
+  GRADE_B
+  GRADE_C
+  REJECTED
+}
+
+enum ColdChainStatus {
+  NORMAL
+  WARNING
+  EXCEPTION
+}
+
+enum SettlementStatus {
+  PENDING
+  PROCESSING
+  COMPLETED
+  CANCELLED
+  REFUNDED
+}
+
+enum LogAction {
+  CREATE
+  UPDATE
+  DELETE
+  CANCEL
+  PAYMENT
+  REFUND
+  TRANSFER
+  APPROVE
+  REJECT
+  NOTIFY
+  EXCEPTION
+}
+
+model User {
+  id              String    @id @default(cuid())
+  username        String    @unique
+  password        String
+  realName        String
+  phone           String    @unique
+  email           String?   @unique
+  role            Role
+  avatar          String?
+  isActive        Boolean   @default(true)
+  createdAt       DateTime  @default(now())
+  updatedAt       DateTime  @updatedAt
+  virtualAccount  VirtualAccount?
+  
+  buyerOrders    Order[]    @relation("BuyerOrders")
+  farmerSubOrders SubOrder[] @relation("FarmerSubOrders")
+  operatorAuditLogs AuditLog[] @relation("OperatorAuditLogs")
+  
+  @@index([role])
+  @@index([isActive])
+}
+
+model VirtualAccount {
+  id              String    @id @default(cuid())
+  userId          String    @unique
+  balance         Decimal   @default(0)
+  frozenAmount    Decimal   @default(0)
+  status          String    @default("ACTIVE")
+  createdAt       DateTime  @default(now())
+  updatedAt       DateTime  @updatedAt
+  user            User      @relation(fields: [userId], references: [id])
+  
+  transactions    AccountTransaction[]
+  
+  @@index([userId])
+}
+
+model AccountTransaction {
+  id              String    @id @default(cuid())
+  accountId       String
+  amount          Decimal
+  type            String
+  status          String
+  referenceId     String?
+  description     String?
+  createdAt       DateTime  @default(now())
+  account         VirtualAccount @relation(fields: [accountId], references: [id])
+  
+  @@index([accountId])
+  @@index([createdAt])
+}
+
+model Order {
+  id              String      @id @default(cuid())
+  orderNo         String      @unique
+  buyerId         String
+  status          OrderStatus @default(DRAFT)
+  productName     String
+  productCategory String
+  expectedWeight  Decimal
+  expectedPrice   Decimal
+  expectedAmount  Decimal
+  actualWeight    Decimal?
+  actualPrice     Decimal?
+  actualAmount    Decimal?
+  prepaidAmount   Decimal     @default(0)
+  settlementAmount Decimal?
+  contractNo      String?
+  originProvince  String
+  originCity      String
+  originDistrict  String
+  originDetail    String?
+  destinationProvince String
+  destinationCity String
+  destinationDistrict String
+  destinationDetail String?
+  expectedPickupDate DateTime?
+  actualPickupDate   DateTime?
+  expectedDeliveryDate DateTime?
+  actualDeliveryDate   DateTime?
+  toleranceRate   Decimal     @default(0.05)
+  hasColdChain    Boolean     @default(false)
+  qualityStandard String?
+  remark          String?
+  createdAt       DateTime    @default(now())
+  updatedAt       DateTime    @updatedAt
+  buyer           User        @relation("BuyerOrders", fields: [buyerId], references: [id])
+  
+  subOrders       SubOrder[]
+  qualityChecks   QualityCheck[]
+  settlements     Settlement[]
+  coldChainRecords ColdChainRecord[]
+  auditLogs       AuditLog[]
+  notifications   Notification[]
+  
+  @@index([buyerId])
+  @@index([status])
+  @@index([createdAt])
+}
+
+model SubOrder {
+  id              String      @id @default(cuid())
+  subOrderNo      String      @unique
+  mainOrderId     String
+  farmerId        String
+  status          OrderStatus @default(PENDING_PREPAYMENT)
+  productName     String
+  expectedWeight  Decimal
+  expectedPrice   Decimal
+  expectedAmount  Decimal
+  actualWeight    Decimal?
+  actualPrice     Decimal?
+  actualAmount    Decimal?
+  prepaidAmount   Decimal     @default(0)
+  farmProvince    String
+  farmCity        String
+  farmDistrict    String
+  farmDetail      String?
+  qualityGrade    QualityLevel?
+  remark          String?
+  createdAt       DateTime    @default(now())
+  updatedAt       DateTime    @updatedAt
+  mainOrder       Order       @relation(fields: [mainOrderId], references: [id])
+  farmer          User        @relation("FarmerSubOrders", fields: [farmerId], references: [id])
+  
+  qualityChecks   QualityCheck[]
+  settlements     Settlement[]
+  auditLogs       AuditLog[]
+  
+  @@index([mainOrderId])
+  @@index([farmerId])
+  @@index([status])
+}
+
+model QualityCheck {
+  id              String       @id @default(cuid())
+  orderId         String?
+  subOrderId      String?
+  inspectorId     String
+  checkTime       DateTime     @default(now())
+  totalWeight     Decimal
+  premiumWeight   Decimal      @default(0)
+  gradeAWeight    Decimal      @default(0)
+  gradeBWeight    Decimal      @default(0)
+  gradeCWeight    Decimal      @default(0)
+  rejectedWeight  Decimal      @default(0)
+  premiumPrice    Decimal?
+  gradeAPrice     Decimal?
+  gradeBPrice     Decimal?
+  gradeCPrice     Decimal?
+  rejectedPrice   Decimal?
+  qualityReport   String?
+  images          String[]
+  remark          String?
+  createdAt       DateTime     @default(now())
+  updatedAt       DateTime     @updatedAt
+  order           Order?       @relation(fields: [orderId], references: [id])
+  subOrder        SubOrder?    @relation(fields: [subOrderId], references: [id])
+  
+  @@index([orderId])
+  @@index([subOrderId])
+  @@index([inspectorId])
+}
+
+model ColdChainRecord {
+  id              String          @id @default(cuid())
+  orderId         String
+  deviceId        String
+  temperature     Decimal
+  humidity        Decimal?
+  status          ColdChainStatus @default(NORMAL)
+  locationLat     Decimal?
+  locationLng     Decimal?
+  locationName    String?
+  recordTime      DateTime        @default(now())
+  createdAt       DateTime        @default(now())
+  order           Order           @relation(fields: [orderId], references: [id])
+  
+  @@index([orderId])
+  @@index([recordTime])
+  @@index([status])
+}
+
+model Settlement {
+  id              String           @id @default(cuid())
+  settlementNo    String           @unique
+  orderId         String?
+  subOrderId      String?
+  type            String
+  status          SettlementStatus @default(PENDING)
+  totalAmount     Decimal
+  taxAmount       Decimal          @default(0)
+  netAmount       Decimal
+  taxRate         Decimal          @default(0)
+  paymentMethod   String?
+  payerId         String?
+  payeeId         String?
+  referenceNo     String?
+  remark          String?
+  settledAt       DateTime?
+  createdAt       DateTime         @default(now())
+  updatedAt       DateTime         @updatedAt
+  order           Order?           @relation(fields: [orderId], references: [id])
+  subOrder        SubOrder?        @relation(fields: [subOrderId], references: [id])
+  
+  @@index([orderId])
+  @@index([subOrderId])
+  @@index([status])
+  @@index([createdAt])
+}
+
+model AuditLog {
+  id              String    @id @default(cuid())
+  entityType      String
+  entityId        String
+  action          LogAction
+  operatorId      String
+  operatorName    String
+  operatorRole    Role
+  oldValue        Json?
+  newValue        Json?
+  changeSummary   String?
+  ipAddress       String?
+  userAgent       String?
+  remark          String?
+  createdAt       DateTime  @default(now())
+  operator        User      @relation("OperatorAuditLogs", fields: [operatorId], references: [id])
+  
+  @@index([entityType, entityId])
+  @@index([operatorId])
+  @@index([createdAt])
+}
+
+model Notification {
+  id              String    @id @default(cuid())
+  userId          String
+  title           String
+  content         String
+  type            String
+  isRead          Boolean   @default(false)
+  readAt          DateTime?
+  entityType      String?
+  entityId        String?
+  createdAt       DateTime  @default(now())
+  
+  @@index([userId])
+  @@index([isRead])
+  @@index([createdAt])
+}
+
+model PriceAdjustmentRule {
+  id              String    @id @default(cuid())
+  name            String
+  description     String?
+  productCategory String?
+  baseCondition   Json
+  priceFactors    Json
+  isActive        Boolean   @default(true)
+  createdAt       DateTime  @default(now())
+  updatedAt       DateTime  @updatedAt
+  
+  @@index([productCategory])
+  @@index([isActive])
+}
+
+model ColdChainException {
+  id              String    @id @default(cuid())
+  orderId         String
+  recordId        String
+  exceptionType   String
+  severity        String
+  durationMinutes Int?
+  temperatureDeviation Decimal?
+  compensationAmount Decimal @default(0)
+  isCompensated   Boolean   @default(false)
+  remark          String?
+  handledAt       DateTime?
+  createdAt       DateTime  @default(now())
+  updatedAt       DateTime  @updatedAt
+  
+  @@index([orderId])
+  @@index([isCompensated])
+}
+
+model Pledge {
+  id              String    @id @default(cuid())
+  pledgeNo        String    @unique
+  orderId         String
+  buyerId         String
+  status          String    @default("PENDING")
+  pledgeAmount    Decimal
+  loanAmount      Decimal
+  interestRate    Decimal
+  termDays        Int
+  digitalWaybillNo String?
+  approvedAt      DateTime?
+  expiredAt       DateTime?
+  settledAt       DateTime?
+  remark          String?
+  createdAt       DateTime  @default(now())
+  updatedAt       DateTime  @updatedAt
+  
+  @@index([orderId])
+  @@index([buyerId])
+  @@index([status])
+}
+
+model StorageTransfer {
+  id              String    @id @default(cuid())
+  transferNo      String    @unique
+  orderId         String
+  storageId       String
+  status          String    @default("PENDING")
+  transferReason  String
+  transferredWeight Decimal?
+  storageFee      Decimal?
+  resaleOrderNo   String?
+  resaleAmount    Decimal?
+  remark          String?
+  completedAt     DateTime?
+  createdAt       DateTime  @default(now())
+  updatedAt       DateTime  @updatedAt
+  
+  @@index([orderId])
+  @@index([storageId])
+  @@index([status])
+}
+
+model SystemConfig {
+  id              String    @id @default(cuid())
+  key             String    @unique
+  value           String
+  description     String?
+  createdAt       DateTime  @default(now())
+  updatedAt       DateTime  @updatedAt
+}
