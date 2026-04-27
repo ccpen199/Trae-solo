@@ -1,0 +1,583 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum UserRole {
+  CUSTOMER
+  DESIGNER
+  SPLITTER
+  FACTORY
+  INSTALLER
+  ADMIN
+}
+
+enum OrderStatus {
+  DEMAND_SUBMITTED
+  DEMAND_ASSIGNED
+  MEASURING_SCHEDULED
+  MEASURING_COMPLETED
+  DESIGN_IN_PROGRESS
+  DESIGN_SUBMITTED
+  QUOTE_GENERATED
+  QUOTE_CONFIRMED
+  CONTRACT_SIGNED
+  PAYMENT_RECEIVED
+  SPLIT_IN_PROGRESS
+  SPLIT_COMPLETED
+  PRODUCTION_SCHEDULED
+  PRODUCTION_IN_PROGRESS
+  PRODUCTION_COMPLETED
+  INSTALLATION_ASSIGNED
+  INSTALLATION_SCHEDULED
+  INSTALLATION_IN_PROGRESS
+  INSTALLATION_COMPLETED
+  ACCEPTED
+  COMPLETED
+  CANCELLED
+  REFUNDED
+}
+
+enum DemandStatus {
+  PENDING_ASSIGNMENT
+  ASSIGNED
+  MEASURING
+  MEASURED
+  DESIGNING
+  CONVERTED_TO_ORDER
+  CANCELLED
+}
+
+enum MeasurementStatus {
+  PENDING
+  IN_PROGRESS
+  COMPLETED
+  REJECTED
+  APPROVED
+}
+
+enum DesignStatus {
+  PENDING
+  IN_PROGRESS
+  SUBMITTED
+  REJECTED
+  APPROVED
+}
+
+enum QuoteStatus {
+  DRAFT
+  SUBMITTED
+  NEGOTIATING
+  CONFIRMED
+  REJECTED
+}
+
+enum SplitStatus {
+  PENDING
+  IN_PROGRESS
+  SUBMITTED
+  REVIEWING
+  APPROVED
+  REJECTED
+}
+
+enum ProductionStatus {
+  PENDING
+  SCHEDULED
+  IN_PRODUCTION
+  QUALITY_CHECK
+  COMPLETED
+  ON_HOLD
+  CANCELLED
+}
+
+enum InstallationStatus {
+  PENDING_ASSIGNMENT
+  ASSIGNED
+  SCHEDULED
+  IN_PROGRESS
+  COMPLETED
+  ACCEPTED
+  REJECTED
+  REWORK_REQUIRED
+}
+
+enum DifficultyLevel {
+  EASY
+  MEDIUM
+  HARD
+  EXPERT
+}
+
+model User {
+  id              String    @id @default(uuid())
+  phone           String    @unique
+  password        String
+  name            String
+  avatar          String?
+  role            UserRole  @default(CUSTOMER)
+  email           String?
+  isActive        Boolean   @default(true)
+  createdAt       DateTime  @default(now())
+  updatedAt       DateTime  @updatedAt
+
+  customerProfile CustomerProfile?
+  designerProfile DesignerProfile?
+  splitterProfile SplitterProfile?
+  factoryProfile  FactoryProfile?
+  installerProfile InstallerProfile?
+
+  demands         Demand[]     @relation("CustomerDemands")
+  assignedDemands Demand[]     @relation("DesignerDemands")
+  measurements    Measurement[]
+  designs         Design[]
+  splits          Split[]
+  productionTasks ProductionTask[]
+  installations   Installation[] @relation("InstallerTasks")
+  auditLogs       AuditLog[]
+  
+  @@index([phone])
+  @@index([role])
+}
+
+model CustomerProfile {
+  id            String   @id @default(uuid())
+  userId        String   @unique
+  address       String?
+  province      String?
+  city          String?
+  district      String?
+  totalOrders   Int      @default(0)
+  totalSpent    Decimal  @default(0) @db.Decimal(12, 2)
+  memberLevel   String   @default("BRONZE")
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+
+  user          User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model DesignerProfile {
+  id            String   @id @default(uuid())
+  userId        String   @unique
+  employeeId    String?
+  department    String?
+  specializations String[]
+  rating        Decimal  @default(0) @db.Decimal(3, 2)
+  totalDesigns  Int      @default(0)
+  isAvailable   Boolean  @default(true)
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+
+  user          User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model SplitterProfile {
+  id            String   @id @default(uuid())
+  userId        String   @unique
+  employeeId    String?
+  department    String?
+  specializations String[]
+  rating        Decimal  @default(0) @db.Decimal(3, 2)
+  totalSplits   Int      @default(0)
+  isAvailable   Boolean  @default(true)
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+
+  user          User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model FactoryProfile {
+  id            String   @id @default(uuid())
+  userId        String   @unique
+  factoryName   String
+  factoryCode   String
+  location      String?
+  province      String?
+  city          String?
+  district      String?
+  capacity      Int?
+  specialization String[]
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+
+  user          User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model InstallerProfile {
+  id            String   @id @default(uuid())
+  userId        String   @unique
+  employeeId    String?
+  skills        String[]
+  rating        Decimal  @default(0) @db.Decimal(3, 2)
+  totalInstallations Int @default(0)
+  serviceProvinces String[]
+  serviceCities  String[]
+  isAvailable   Boolean  @default(true)
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+
+  user          User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model Demand {
+  id            String        @id @default(uuid())
+  demandNumber  String        @unique
+  customerId    String
+  designerId    String?
+  status        DemandStatus  @default(PENDING_ASSIGNMENT)
+  houseType     String?
+  area          Decimal?      @db.Decimal(10, 2)
+  style         String?
+  budgetRange   String?
+  address       String
+  province      String?
+  city          String?
+  district      String?
+  contactName   String
+  contactPhone  String
+  description   String?
+  images        String[]
+  assignedAt    DateTime?
+  completedAt   DateTime?
+  createdAt     DateTime      @default(now())
+  updatedAt     DateTime      @updatedAt
+
+  customer      User          @relation("CustomerDemands", fields: [customerId], references: [id], onDelete: Cascade)
+  designer      User?         @relation("DesignerDemands", fields: [designerId], references: [id], onDelete: SetNull)
+  measurement   Measurement?
+  design        Design?
+  order         Order?
+  
+  @@index([demandNumber])
+  @@index([customerId])
+  @@index([designerId])
+  @@index([status])
+}
+
+model Measurement {
+  id            String           @id @default(uuid())
+  demandId      String           @unique
+  designerId    String
+  status        MeasurementStatus @default(PENDING)
+  scheduledDate DateTime?
+  measuredAt    DateTime?
+  houseArea     Decimal?         @db.Decimal(10, 2)
+  roomMeasurements Json
+  sitePhotos    String[]
+  customerPreferences String?
+  notes         String?
+  rejectedReason String?
+  reviewedBy    String?
+  reviewedAt    DateTime?
+  createdAt     DateTime         @default(now())
+  updatedAt     DateTime         @updatedAt
+
+  demand        Demand           @relation(fields: [demandId], references: [id], onDelete: Cascade)
+  designer      User             @relation(fields: [designerId], references: [id], onDelete: Cascade)
+  
+  @@index([demandId])
+  @@index([designerId])
+  @@index([status])
+}
+
+model Design {
+  id            String       @id @default(uuid())
+  demandId      String       @unique
+  designerId    String
+  status        DesignStatus @default(PENDING)
+  title         String
+  description   String?
+  renderings    String[]
+  blueprints    String[]
+  designData    Json
+  submittedAt   DateTime?
+  reviewedBy    String?
+  reviewedAt    DateTime?
+  rejectedReason String?
+  createdAt     DateTime     @default(now())
+  updatedAt     DateTime     @updatedAt
+
+  demand        Demand       @relation(fields: [demandId], references: [id], onDelete: Cascade)
+  designer      User         @relation(fields: [designerId], references: [id], onDelete: Cascade)
+  quote         Quote?
+  
+  @@index([demandId])
+  @@index([designerId])
+  @@index([status])
+}
+
+model Quote {
+  id                String        @id @default(uuid())
+  designId          String        @unique
+  quoteNumber       String        @unique
+  status            QuoteStatus   @default(DRAFT)
+  totalAmount       Decimal       @db.Decimal(12, 2)
+  materialCost      Decimal       @db.Decimal(12, 2)
+  laborCost         Decimal       @db.Decimal(12, 2)
+  hardwareCost      Decimal       @db.Decimal(12, 2)
+  processCost       Decimal       @db.Decimal(12, 2)
+  discountAmount    Decimal       @default(0) @db.Decimal(12, 2)
+  additionalFees    Decimal       @default(0) @db.Decimal(12, 2)
+  taxAmount         Decimal       @default(0) @db.Decimal(12, 2)
+  finalAmount       Decimal       @db.Decimal(12, 2)
+  items             Json
+  discounts         Json
+  fees              Json
+  submittedAt       DateTime?
+  confirmedAt       DateTime?
+  rejectedReason    String?
+  createdAt         DateTime      @default(now())
+  updatedAt         DateTime      @updatedAt
+
+  design            Design        @relation(fields: [designId], references: [id], onDelete: Cascade)
+  order             Order?
+  
+  @@index([designId])
+  @@index([quoteNumber])
+  @@index([status])
+}
+
+model Order {
+  id                String       @id @default(uuid())
+  orderNumber       String       @unique
+  demandId          String       @unique
+  quoteId           String?      @unique
+  customerId        String
+  status            OrderStatus  @default(DEMAND_SUBMITTED)
+  title             String
+  totalAmount       Decimal      @db.Decimal(12, 2)
+  paidAmount        Decimal      @default(0) @db.Decimal(12, 2)
+  outstandingAmount Decimal      @db.Decimal(12, 2)
+  address           String
+  province          String?
+  city              String?
+  district          String?
+  contactName       String
+  contactPhone      String
+  contractSignedAt  DateTime?
+  paymentReceivedAt DateTime?
+  completedAt       DateTime?
+  createdAt         DateTime     @default(now())
+  updatedAt         DateTime     @updatedAt
+
+  demand            Demand       @relation(fields: [demandId], references: [id], onDelete: Cascade)
+  quote             Quote?       @relation(fields: [quoteId], references: [id], onDelete: SetNull)
+  customer          User         @relation(fields: [customerId], references: [id], onDelete: Cascade)
+  split             Split?
+  productionTasks   ProductionTask[]
+  installations     Installation[]
+  orderStatusHistory OrderStatusHistory[]
+  payments          Payment[]
+  
+  @@index([orderNumber])
+  @@index([customerId])
+  @@index([status])
+  @@index([createdAt])
+}
+
+model OrderStatusHistory {
+  id              String      @id @default(uuid())
+  orderId         String
+  previousStatus  OrderStatus?
+  newStatus       OrderStatus
+  actorId         String
+  actorRole       UserRole
+  reason          String?
+  metadata        Json
+  createdAt       DateTime    @default(now())
+
+  order           Order       @relation(fields: [orderId], references: [id], onDelete: Cascade)
+  
+  @@index([orderId])
+  @@index([createdAt])
+}
+
+model Payment {
+  id              String      @id @default(uuid())
+  orderId         String
+  paymentNumber   String      @unique
+  amount          Decimal     @db.Decimal(12, 2)
+  paymentMethod   String
+  paymentStatus   String
+  transactionId   String?
+  paidAt          DateTime?
+  createdAt       DateTime    @default(now())
+  updatedAt       DateTime    @updatedAt
+
+  order           Order       @relation(fields: [orderId], references: [id], onDelete: Cascade)
+  
+  @@index([orderId])
+  @@index([paymentNumber])
+}
+
+model Split {
+  id                String      @id @default(uuid())
+  orderId           String      @unique
+  splitterId        String
+  status            SplitStatus @default(PENDING)
+  components        Json
+  materialBom       Json
+  hardwareBom       Json
+  processingInstructions Json
+  drawings          String[]
+  notes             String?
+  submittedAt       DateTime?
+  reviewedBy        String?
+  reviewedAt        DateTime?
+  rejectedReason    String?
+  createdAt         DateTime    @default(now())
+  updatedAt         DateTime    @updatedAt
+
+  order             Order       @relation(fields: [orderId], references: [id], onDelete: Cascade)
+  splitter          User        @relation(fields: [splitterId], references: [id], onDelete: Cascade)
+  
+  @@index([orderId])
+  @@index([splitterId])
+  @@index([status])
+}
+
+model ProductionTask {
+  id                String           @id @default(uuid())
+  taskNumber        String           @unique
+  orderId           String
+  factoryId         String
+  status            ProductionStatus @default(PENDING)
+  title             String
+  description       String?
+  splitData         Json?
+  scheduledStartAt  DateTime?
+  scheduledEndAt    DateTime?
+  actualStartAt     DateTime?
+  actualEndAt       DateTime?
+  progress          Int              @default(0)
+  progressNotes     String?
+  qualityCheckNotes String?
+  rejectedReason    String?
+  createdAt         DateTime         @default(now())
+  updatedAt         DateTime         @updatedAt
+
+  order             Order            @relation(fields: [orderId], references: [id], onDelete: Cascade)
+  factory           User             @relation(fields: [factoryId], references: [id], onDelete: Cascade)
+  progressHistory   ProductionProgress[]
+  
+  @@index([taskNumber])
+  @@index([orderId])
+  @@index([factoryId])
+  @@index([status])
+}
+
+model ProductionProgress {
+  id              String      @id @default(uuid())
+  taskId          String
+  previousProgress Int        @default(0)
+  newProgress     Int
+  status          ProductionStatus
+  actorId         String
+  notes           String?
+  createdAt       DateTime    @default(now())
+
+  task            ProductionTask @relation(fields: [taskId], references: [id], onDelete: Cascade)
+  
+  @@index([taskId])
+  @@index([createdAt])
+}
+
+model Installation {
+  id                String             @id @default(uuid())
+  orderId           String
+  installerId       String?
+  taskNumber        String             @unique
+  status            InstallationStatus @default(PENDING_ASSIGNMENT)
+  address           String
+  province          String?
+  city              String?
+  district          String?
+  contactName       String
+  contactPhone      String
+  difficultyLevel   DifficultyLevel    @default(MEDIUM)
+  estimatedDuration Int?
+  specialRequirements String?
+  items             Json
+  scheduledDate     DateTime?
+  timeSlot          String?
+  actualStartAt     DateTime?
+  actualEndAt       DateTime?
+  installationPhotos String[]
+  notes             String?
+  customerFeedback  String?
+  customerRating    Int?
+  rejectedReason    String?
+  createdAt         DateTime           @default(now())
+  updatedAt         DateTime           @updatedAt
+
+  order             Order              @relation(fields: [orderId], references: [id], onDelete: Cascade)
+  installer         User?              @relation("InstallerTasks", fields: [installerId], references: [id], onDelete: SetNull)
+  progressHistory   InstallationProgress[]
+  
+  @@index([taskNumber])
+  @@index([orderId])
+  @@index([installerId])
+  @@index([status])
+  @@index([scheduledDate])
+}
+
+model InstallationProgress {
+  id              String             @id @default(uuid())
+  installationId  String
+  previousStatus  InstallationStatus?
+  newStatus       InstallationStatus
+  actorId         String
+  notes           String?
+  createdAt       DateTime           @default(now())
+
+  installation    Installation       @relation(fields: [installationId], references: [id], onDelete: Cascade)
+  
+  @@index([installationId])
+  @@index([createdAt])
+}
+
+model AuditLog {
+  id              String   @id @default(uuid())
+  entityType      String
+  entityId        String
+  action          String
+  actorId         String
+  actorRole       UserRole
+  previousState   Json
+  newState        Json
+  changes         Json
+  reason          String?
+  metadata        Json
+  createdAt       DateTime @default(now())
+
+  actor           User     @relation(fields: [actorId], references: [id], onDelete: Cascade)
+  
+  @@index([entityType, entityId])
+  @@index([actorId])
+  @@index([createdAt])
+}
+
+model ExceptionLog {
+  id              String   @id @default(uuid())
+  orderId         String?
+  entityType      String?
+  entityId        String?
+  exceptionType   String
+  message         String
+  stackTrace      String?
+  context         Json
+  handled         Boolean  @default(false)
+  handledBy       String?
+  handledAt       DateTime?
+  handllingNotes  String?
+  createdAt       DateTime @default(now())
+  
+  @@index([orderId])
+  @@index([entityType, entityId])
+  @@index([handled])
+  @@index([createdAt])
+}
