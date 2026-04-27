@@ -186,11 +186,11 @@ export const getAbnormals = async (req: Request, res: Response) => {
     }
 
     if (reporterId) {
-      where.reporterId = parseInt(reporterId as string);
+      where.reporterId = reporterId as string;
     }
 
     if (assigneeId) {
-      where.assignedToId = parseInt(assigneeId as string);
+      where.assignedToId = assigneeId as string;
     }
 
     const skip = (parseInt(page as string) - 1) * parseInt(pageSize as string);

@@ -70,7 +70,7 @@ export const createInspection = async (req: Request, res: Response) => {
           workOrderId,
           workOrderProcessId,
           workOrderNo: workOrder.workOrderNo,
-          inspectorId: parseInt(req.user!.id),
+          inspectorId: req.user!.id,
           inspectorName: inspector?.name,
           type,
           sampleQty,
@@ -85,7 +85,7 @@ export const createInspection = async (req: Request, res: Response) => {
 
       await tx.operationLog.create({
         data: {
-          userId: parseInt(req.user!.id),
+          userId: req.user!.id,
           userName: req.user!.name,
           userRole: req.user!.role,
           operationType: OperationType.CREATE,
@@ -154,7 +154,7 @@ export const updateInspectionResult = async (req: Request, res: Response) => {
       return res.status(404).json({ error: '质检记录不存在' });
     }
 
-    if (inspection.inspectorId !== parseInt(req.user.id)) {
+    if (inspection.inspectorId !== req.user.id) {
       return res.status(403).json({ error: '您不是该检验的质检员' });
     }
 
@@ -171,7 +171,7 @@ export const updateInspectionResult = async (req: Request, res: Response) => {
 
       await tx.operationLog.create({
         data: {
-          userId: parseInt(req.user!.id),
+          userId: req.user!.id,
           userName: req.user!.name,
           userRole: req.user!.role,
           operationType: OperationType.UPDATE,
@@ -233,7 +233,7 @@ export const getInspections = async (req: Request, res: Response) => {
     }
 
     if (inspectorId) {
-      where.inspectorId = parseInt(inspectorId as string);
+      where.inspectorId = inspectorId as string;
     }
 
     const skip = (parseInt(page as string) - 1) * parseInt(pageSize as string);

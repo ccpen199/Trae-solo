@@ -60,14 +60,14 @@ export class AbnormalDashboardEngine {
             title,
             description,
             status: AbnormalStatus.REPORTED,
-            reporterId: parseInt(reporterId),
+            reporterId: reporterId,
             reporterName: reporter?.name,
           },
         });
 
         await tx.operationLog.create({
           data: {
-            userId: parseInt(reporterId),
+            userId: reporterId,
             userName: reporter?.name,
             userRole: reporter?.role,
             operationType: OperationType.CREATE,
@@ -117,14 +117,14 @@ export class AbnormalDashboardEngine {
           where: { id: abnormalReportId },
           data: {
             status: AbnormalStatus.ASSIGNED,
-            assignedToId: parseInt(assigneeId),
+            assignedToId: assigneeId,
             assignedToName: assignee.name,
           },
         });
 
         await tx.operationLog.create({
           data: {
-            userId: parseInt(assignerId),
+            userId: assignerId,
             userName: assigner?.name,
             userRole: assigner?.role,
             operationType: OperationType.STATUS_CHANGE,
@@ -153,7 +153,7 @@ export class AbnormalDashboardEngine {
         return { success: false, error: '异常报告不存在' };
       }
 
-      if (abnormal.assignedToId !== parseInt(processorId)) {
+      if (abnormal.assignedToId !== processorId) {
         return { success: false, error: '您不是该异常报告的处理人' };
       }
 
@@ -173,7 +173,7 @@ export class AbnormalDashboardEngine {
 
         await tx.operationLog.create({
           data: {
-            userId: parseInt(processorId),
+            userId: processorId,
             userName: processor?.name,
             userRole: processor?.role,
             operationType: OperationType.STATUS_CHANGE,
@@ -204,7 +204,7 @@ export class AbnormalDashboardEngine {
         return { success: false, error: '异常报告不存在' };
       }
 
-      if (abnormal.assignedToId !== parseInt(processorId)) {
+      if (abnormal.assignedToId !== processorId) {
         return { success: false, error: '您不是该异常报告的处理人' };
       }
 
@@ -234,7 +234,7 @@ export class AbnormalDashboardEngine {
 
         await tx.operationLog.create({
           data: {
-            userId: parseInt(processorId),
+            userId: processorId,
             userName: processor?.name,
             userRole: processor?.role,
             operationType: OperationType.RESOLVED,
@@ -280,7 +280,7 @@ export class AbnormalDashboardEngine {
 
         await tx.operationLog.create({
           data: {
-            userId: parseInt(closerId),
+            userId: closerId,
             userName: closer?.name,
             userRole: closer?.role,
             operationType: OperationType.CLOSE,

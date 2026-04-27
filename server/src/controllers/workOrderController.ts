@@ -61,11 +61,11 @@ export const createWorkOrder = async (req: Request, res: Response) => {
           productSpec,
           plannedQty,
           priority: priority || 'MEDIUM',
-          processRouteId: parseInt(processRouteId),
+          processRouteId: processRouteId,
           plannedStartDate,
           plannedEndDate,
           status: WorkOrderStatus.DRAFT,
-          createdBy: parseInt(req.user!.id),
+          createdBy: req.user!.id,
         },
       });
 
@@ -85,7 +85,7 @@ export const createWorkOrder = async (req: Request, res: Response) => {
 
       await tx.operationLog.create({
         data: {
-          userId: parseInt(req.user!.id),
+          userId: req.user!.id,
           userName: req.user!.name,
           userRole: req.user!.role,
           operationType: OperationType.CREATE,
@@ -180,7 +180,6 @@ export const issueWorkOrder = async (req: Request, res: Response) => {
           status: WorkOrderStatus.PENDING_PRODUCTION,
         },
         include: {
-          processRoute: { include: { processes: true } },
           materials: true,
           processes: {
             orderBy: { sequence: 'asc' },
@@ -191,7 +190,7 @@ export const issueWorkOrder = async (req: Request, res: Response) => {
 
       await tx.operationLog.create({
         data: {
-          userId: parseInt(req.user!.id),
+          userId: req.user!.id,
           userName: req.user!.name,
           userRole: req.user!.role,
           operationType: OperationType.STATUS_CHANGE,
@@ -375,8 +374,8 @@ export const assignProcess = async (req: Request, res: Response) => {
       const assn = await tx.processAssignment.create({
         data: {
           workOrderProcessId: processId,
-          userId: parseInt(userId),
-          equipmentId: equipmentId ? parseInt(equipmentId) : null,
+          userId: userId,
+          equipmentId: equipmentId,
           plannedQty,
         },
       });
@@ -385,16 +384,16 @@ export const assignProcess = async (req: Request, res: Response) => {
         where: { id: processId },
         data: {
           status: ProcessStatus.ASSIGNED,
-          assignedUserId: parseInt(userId),
+          assignedUserId: userId,
           assignedUserName: user.name,
-          assignedEquipmentId: equipmentId ? parseInt(equipmentId) : null,
+          assignedEquipmentId: equipmentId,
           assignedEquipmentName: equipment?.name,
         },
       });
 
       await tx.operationLog.create({
         data: {
-          userId: parseInt(req.user!.id),
+          userId: req.user!.id,
           userName: req.user!.name,
           userRole: req.user!.role,
           operationType: OperationType.CREATE,

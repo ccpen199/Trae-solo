@@ -66,7 +66,7 @@ export class RealtimeReportEngine {
         const report = await tx.productionReport.create({
           data: {
             workOrderProcessId,
-            reporterId: parseInt(reporterId),
+            reporterId: reporterId,
             reporterName: reporter?.name,
             passQty,
             failQty,
@@ -104,7 +104,7 @@ export class RealtimeReportEngine {
 
         await tx.operationLog.create({
           data: {
-            userId: parseInt(reporterId),
+            userId: reporterId,
             userName: reporter?.name,
             userRole: reporter?.role,
             operationType: OperationType.REPORT,
