@@ -1,0 +1,416 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum Role {
+  PURCHASER
+  WAREHOUSE_MANAGER
+  PRODUCTION_LEADER
+  QUALITY_INSPECTOR
+  ADMIN
+}
+
+enum OrderStatus {
+  DRAFT
+  PENDING
+  IN_PROGRESS
+  COMPLETED
+  CANCELLED
+}
+
+enum InspectionStatus {
+  PENDING
+  IN_PROGRESS
+  PASSED
+  FAILED
+  ISOLATED
+}
+
+enum InventoryType {
+  MATERIAL
+  PRODUCT
+}
+
+enum InventoryOpType {
+  INBOUND
+  OUTBOUND
+  ADJUST
+}
+
+model User {
+  id            String   @id @default(uuid())
+  username      String   @unique
+  password      String
+  name          String
+  role          Role
+  isActive      Boolean  @default(true)
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+
+  @@map("users")
+}
+
+model Supplier {
+  id            String   @id @default(uuid())
+  code          String   @unique
+  name          String
+  contactPerson String?
+  contactPhone  String?
+  address       String?
+  remark        String?
+  isActive      Boolean  @default(true)
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+
+  materialBatches MaterialBatch[]
+
+  @@map("suppliers")
+}
+
+model Material {
+  id            String   @id @default(uuid())
+  code          String   @unique
+  name          String
+  specification String?
+  unit          String
+  category      String?
+  safetyStock   Decimal  @default(0)
+  isActive      Boolean  @default(true)
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+
+  batches       MaterialBatch[]
+  bomMaterials  BomMaterial[]
+  inventory     Inventory[]
+
+  @@map("materials")
+}
+
+model MaterialBatch {
+  id            String   @id @default(uuid())
+  batchNo       String   @unique
+  materialId    String
+  supplierId    String?
+  quantity      Decimal
+  unit          String
+  productionDate DateTime?
+  expiryDate    DateTime?
+  inboundDate   DateTime
+  operatorId    String
+  remark        String?
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+
+  material      Material     @relation(fields: [materialId], references: [id])
+  supplier      Supplier?    @relation(fields: [supplierId], references: [id])
+  requisitionItems MaterialRequisitionItem[]
+
+  @@map("material_batches")
+}
+
+model Bom {
+  id            String   @id @default(uuid())
+  code          String   @unique
+  name          String
+  productId     String   @unique
+  version       String   @default("1.0")
+  description   String?
+  isActive      Boolean  @default(true)
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+
+  product       Product    @relation(fields: [productId], references: [id])
+  materials     BomMaterial[]
+
+  @@map("boms")
+}
+
+model BomMaterial {
+  id            String   @id @default(uuid())
+  bomId         String
+  materialId    String
+  quantity      Decimal
+  unit          String
+  lossRate      Decimal  @default(0)
+  sortOrder     Int      @default(0)
+  remark        String?
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+
+  bom           Bom        @relation(fields: [bomId], references: [id], onDelete: Cascade)
+  material      Material   @relation(fields: [materialId], references: [id])
+
+  @@unique([bomId, materialId])
+  @@map("bom_materials")
+}
+
+model Product {
+  id            String   @id @default(uuid())
+  code          String   @unique
+  name          String
+  specification String?
+  unit          String
+  category      String?
+  safetyStock   Decimal  @default(0)
+  isActive      Boolean  @default(true)
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+
+  bom           Bom?
+  batches       ProductBatch[]
+  workOrders    WorkOrder[]
+  inventory     Inventory[]
+
+  @@map("products")
+}
+
+model WorkOrder {
+  id            String   @id @default(uuid())
+  orderNo       String   @unique
+  productId     String
+  plannedQty    Decimal
+  actualQty     Decimal  @default(0)
+  unit          String
+  status        OrderStatus @default(DRAFT)
+  plannedStartDate DateTime?
+  plannedEndDate   DateTime?
+  actualStartDate  DateTime?
+  actualEndDate    DateTime?
+  operatorId    String?
+  remark        String?
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+
+  product       Product     @relation(fields: [productId], references: [id])
+  processes     WorkOrderProcess[]
+  requisitions  MaterialRequisition[]
+  inspections   InspectionRecord[]
+  productionRecords ProductionRecord[]
+
+  @@map("work_orders")
+}
+
+model WorkOrderProcess {
+  id            String   @id @default(uuid())
+  workOrderId   String
+  processName   String
+  processCode   String
+  sortOrder     Int
+  plannedHours  Decimal?
+  actualHours   Decimal?
+  status        OrderStatus @default(PENDING)
+  operatorId    String?
+  remark        String?
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+
+  workOrder     WorkOrder   @relation(fields: [workOrderId], references: [id], onDelete: Cascade)
+
+  @@map("work_order_processes")
+}
+
+model MaterialRequisition {
+  id            String   @id @default(uuid())
+  requisitionNo String   @unique
+  workOrderId   String
+  status        OrderStatus @default(DRAFT)
+  operatorId    String?
+  approvedBy    String?
+  approvedAt    DateTime?
+  remark        String?
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+
+  workOrder     WorkOrder   @relation(fields: [workOrderId], references: [id])
+  items         MaterialRequisitionItem[]
+
+  @@map("material_requisitions")
+}
+
+model MaterialRequisitionItem {
+  id                      String   @id @default(uuid())
+  requisitionId           String
+  materialId              String
+  materialBatchId         String?
+  requiredQty             Decimal
+  actualQty               Decimal?
+  unit                    String
+  bomRequired             Boolean  @default(true)
+  remark                  String?
+  createdAt               DateTime @default(now())
+  updatedAt               DateTime @updatedAt
+
+  requisition             MaterialRequisition   @relation(fields: [requisitionId], references: [id], onDelete: Cascade)
+  material                Material              @relation(fields: [materialId], references: [id])
+  materialBatch           MaterialBatch?        @relation(fields: [materialBatchId], references: [id])
+
+  @@map("material_requisition_items")
+}
+
+model ProductionRecord {
+  id            String   @id @default(uuid())
+  workOrderId   String
+  processId     String?
+  processName   String?
+  productQty    Decimal
+  scrapQty      Decimal  @default(0)
+  unit          String
+  operatorId    String
+  equipmentId   String?
+  equipmentName String?
+  remark        String?
+  recordedAt    DateTime @default(now())
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+
+  workOrder     WorkOrder   @relation(fields: [workOrderId], references: [id])
+
+  @@map("production_records")
+}
+
+model InspectionRecord {
+  id            String   @id @default(uuid())
+  inspectionNo  String   @unique
+  workOrderId   String?
+  productBatchId String?
+  inspectionType String
+  status        InspectionStatus @default(PENDING)
+  inspectorId   String
+  inspectionDate DateTime @default(now())
+  conclusion    String?
+  isolatedReason String?
+  disposalPlan  String?
+  remark        String?
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+
+  workOrder     WorkOrder?      @relation(fields: [workOrderId], references: [id])
+  productBatch  ProductBatch?   @relation(fields: [productBatchId], references: [id])
+  items         InspectionItem[]
+
+  @@map("inspection_records")
+}
+
+model InspectionItem {
+  id            String   @id @default(uuid())
+  inspectionId  String
+  itemName      String
+  itemCode      String?
+  standardValue String?
+  actualValue   String?
+  isPassed      Boolean?
+  remark        String?
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+
+  inspection    InspectionRecord @relation(fields: [inspectionId], references: [id], onDelete: Cascade)
+
+  @@map("inspection_items")
+}
+
+model ProductBatch {
+  id            String   @id @default(uuid())
+  batchNo       String   @unique
+  productId     String
+  workOrderId   String?
+  quantity      Decimal
+  unit          String
+  productionDate DateTime @default(now())
+  expiryDate    DateTime?
+  inboundDate   DateTime?
+  isQualified   Boolean  @default(true)
+  remark        String?
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+
+  product       Product        @relation(fields: [productId], references: [id])
+  workOrder     WorkOrder?     @relation(fields: [workOrderId], references: [id])
+  inspections   InspectionRecord[]
+  shipmentItems ShipmentItem[]
+
+  @@map("product_batches")
+}
+
+model Inventory {
+  id            String   @id @default(uuid())
+  type          InventoryType
+  materialId    String?
+  productId     String?
+  totalQty      Decimal  @default(0)
+  availableQty  Decimal  @default(0)
+  lockedQty     Decimal  @default(0)
+  unit          String
+  lastUpdatedAt DateTime @default(now())
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+
+  material      Material? @relation(fields: [materialId], references: [id])
+  product       Product?  @relation(fields: [productId], references: [id])
+  logs          InventoryLog[]
+
+  @@unique([type, materialId])
+  @@unique([type, productId])
+  @@map("inventory")
+}
+
+model InventoryLog {
+  id            String   @id @default(uuid())
+  inventoryId   String
+  opType        InventoryOpType
+  beforeQty     Decimal
+  changeQty     Decimal
+  afterQty      Decimal
+  unit          String
+  referenceType String?
+  referenceId   String?
+  remark        String?
+  operatorId    String
+  operatedAt    DateTime @default(now())
+  createdAt     DateTime @default(now())
+
+  inventory     Inventory @relation(fields: [inventoryId], references: [id])
+
+  @@map("inventory_logs")
+}
+
+model Shipment {
+  id            String   @id @default(uuid())
+  shipmentNo    String   @unique
+  customerName  String
+  customerPhone String?
+  address       String?
+  logisticsCompany String?
+  trackingNo    String?
+  totalQty      Decimal
+  unit          String
+  operatorId    String
+  shippedAt     DateTime @default(now())
+  remark        String?
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+
+  items         ShipmentItem[]
+
+  @@map("shipments")
+}
+
+model ShipmentItem {
+  id            String   @id @default(uuid())
+  shipmentId    String
+  productBatchId String
+  quantity      Decimal
+  unit          String
+  remark        String?
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+
+  shipment      Shipment     @relation(fields: [shipmentId], references: [id], onDelete: Cascade)
+  productBatch  ProductBatch @relation(fields: [productBatchId], references: [id])
+
+  @@map("shipment_items")
+}
