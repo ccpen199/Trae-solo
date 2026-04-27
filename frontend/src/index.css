@@ -1,0 +1,104 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html, body, #root {
+  height: 100%;
+  width: 100%;
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial,
+    'Noto Sans', sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol',
+    'Noto Color Emoji';
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.ant-layout {
+  min-height: 100vh;
+}
+
+.ant-layout-sider {
+  background: #001529;
+}
+
+.ant-menu-dark.ant-menu-inline,
+.ant-menu-dark > .ant-menu.ant-menu-inline {
+  border-right: none;
+}
+
+.ant-layout-header {
+  background: #fff;
+  box-shadow: 0 1px 4px rgba(0, 21, 41, 0.08);
+}
+
+.logo {
+  text-align: center;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.card-hover:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  transition: all 0.3s ease;
+}
+
+.stat-card {
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.stat-card:hover {
+  background: #fafafa;
+}
+
+.priority-critical {
+  color: #ff4d4f;
+  font-weight: bold;
+}
+
+.priority-high {
+  color: #fa8c16;
+  font-weight: bold;
+}
+
+.priority-medium {
+  color: #1890ff;
+}
+
+.priority-low {
+  color: #8c8c8c;
+}
+
+.anomaly-tag {
+  border-radius: 4px;
+}
+
+.ear-tag-input {
+  font-family: 'Courier New', monospace;
+  letter-spacing: 2px;
+}
+
+.weight-input {
+  text-align: right;
+}
+
+.table-scroll {
+  overflow-x: auto;
+}
+
+@media (max-width: 768px) {
+  .ant-layout-content {
+    margin: 16px 8px !important;
+    padding: 16px !important;
+  }
+  
+  .stat-card {
+    margin-bottom: 16px;
+  }
+}
