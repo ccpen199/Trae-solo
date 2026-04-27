@@ -1,11 +1,11 @@
 import { Router, Request, Response } from 'express';
 import { AppDataSource } from '../data-source.js';
-import { Order, OrderStatus, PaymentMethod, DeliveryMethod } from '../entities/Order.js';
+import { Order, PaymentMethod, DeliveryMethod } from '../entities/Order.js';
 import { Farmer } from '../entities/Farmer.js';
 import { CreditAccount } from '../entities/CreditAccount.js';
 import { farmerOrderService, CreateFarmerOrderDto } from '../services/farmer-order.service.js';
 import { authMiddleware } from '../middleware/auth.middleware.js';
-import { UserRole } from '../types/common.js';
+import { UserRole, OrderStatus } from '../types/common.js';
 
 const router = Router();
 const orderRepository = AppDataSource.getRepository(Order);

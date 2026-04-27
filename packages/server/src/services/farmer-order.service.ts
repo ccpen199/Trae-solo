@@ -3,11 +3,11 @@ import { Order, PaymentMethod, DeliveryMethod } from '../entities/Order.js';
 import { OrderItem } from '../entities/OrderItem.js';
 import { Farmer } from '../entities/Farmer.js';
 import { CreditAccount, CreditAccountType } from '../entities/CreditAccount.js';
-import { CreditApplication, CreditApplicationStatus, CreditApplicationType } from '../entities/CreditApplication.js';
+import { CreditApplication, CreditApplicationType } from '../entities/CreditApplication.js';
 import { CreditRecord, CreditRecordType, CreditRecordStatus } from '../entities/CreditRecord.js';
 import { RetailStore } from '../entities/RetailStore.js';
-import { Inventory, InventoryStatus } from '../entities/Inventory.js';
-import { OrderStatus, CreditAccountStatus } from '../types/common.js';
+import { Inventory } from '../entities/Inventory.js';
+import { OrderStatus, CreditAccountStatus, CreditApplicationStatus, InventoryStatus } from '../types/common.js';
 import { creditRiskEngine, CreditEvaluationResult } from '../engines/credit-risk.engine.js';
 import { In } from 'typeorm';
 
