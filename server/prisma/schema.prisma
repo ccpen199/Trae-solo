@@ -1,0 +1,342 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id          String   @id @default(uuid())
+  username    String   @unique
+  password    String
+  name        String
+  role        String
+  email       String?
+  phone       String?
+  department  String?
+  isActive    Boolean  @default(true)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  
+  @@index([username])
+  @@index([role])
+}
+
+model Material {
+  id            String   @id @default(uuid())
+  code          String   @unique
+  name          String
+  type          String
+  unit          String
+  specification String?
+  description   String?
+  stock         Int      @default(0)
+  minStock      Int      @default(0)
+  maxStock      Int      @default(999999)
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+  
+  bomItems BomItem[]
+  
+  @@index([code])
+  @@index([name])
+}
+
+model Equipment {
+  id          String   @id @default(uuid())
+  code        String   @unique
+  name        String
+  type        String?
+  model       String?
+  status      String   @default("AVAILABLE")
+  location    String?
+  description String?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  
+  @@index([code])
+  @@index([status])
+}
+
+model Bom {
+  id          String   @id @default(uuid())
+  code        String   @unique
+  name        String
+  description String?
+  isActive    Boolean  @default(true)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  
+  items BomItem[]
+}
+
+model BomItem {
+  id         String @id @default(uuid())
+  bomId      String
+  materialId String
+  quantity   Int
+  unit       String
+  sequence   Int
+  
+  bom      Bom      @relation(fields: [bomId], references: [id], onDelete: Cascade)
+  material Material @relation(fields: [materialId], references: [id], onDelete: Cascade)
+  
+  @@unique([bomId, sequence])
+  @@index([bomId])
+}
+
+model ProcessRoute {
+  id          String   @id @default(uuid())
+  code        String   @unique
+  name        String
+  description String?
+  bomId       String?
+  isActive    Boolean  @default(true)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  
+  processes RouteProcess[]
+  
+  @@index([code])
+}
+
+model RouteProcess {
+  id             String @id @default(uuid())
+  processRouteId String
+  sequence       Int
+  name           String
+  description    String?
+  standardTime   Int?
+  isQualityCheck Boolean @default(false)
+  
+  processRoute ProcessRoute @relation(fields: [processRouteId], references: [id], onDelete: Cascade)
+  
+  @@unique([processRouteId, sequence])
+  @@index([processRouteId])
+}
+
+model WorkOrder {
+  id              String   @id @default(uuid())
+  workOrderNo     String   @unique
+  productName     String
+  productSpec     String?
+  plannedQty      Int
+  actualQty       Int      @default(0)
+  failedQty       Int      @default(0)
+  status          String   @default("DRAFT")
+  priority        String   @default("MEDIUM")
+  processRouteId  String?
+  plannedStartDate String?
+  plannedEndDate   String?
+  actualStartDate  String?
+  actualEndDate    String?
+  createdBy       String?
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+  
+  processes WorkOrderProcess[]
+  materials WorkOrderMaterial[]
+  
+  @@index([workOrderNo])
+  @@index([status])
+  @@index([createdAt])
+}
+
+model WorkOrderMaterial {
+  id           String @id @default(uuid())
+  workOrderId  String
+  materialId   String
+  materialName String
+  qty          Int
+  unit         String?
+  
+  workOrder WorkOrder @relation(fields: [workOrderId], references: [id], onDelete: Cascade)
+  
+  @@index([workOrderId])
+}
+
+model WorkOrderProcess {
+  id               String   @id @default(uuid())
+  workOrderId      String
+  processRouteProcessId String?
+  sequence         Int
+  processName      String
+  processDesc      String?
+  plannedQty       Int
+  actualQty        Int      @default(0)
+  passQty          Int      @default(0)
+  failQty          Int      @default(0)
+  status           String   @default("PENDING")
+  assignedUserId   String?
+  assignedUserName String?
+  assignedEquipmentId String?
+  assignedEquipmentName String?
+  startedAt        DateTime?
+  completedAt      DateTime?
+  isQualityCheck   Boolean  @default(false)
+  createdAt        DateTime @default(now())
+  updatedAt        DateTime @updatedAt
+  
+  workOrder   WorkOrder          @relation(fields: [workOrderId], references: [id], onDelete: Cascade)
+  assignments ProcessAssignment[]
+  reports     ProductionReport[]
+  inspections QualityInspection[]
+  logs        ProcessLog[]
+  
+  @@index([workOrderId])
+  @@index([status])
+}
+
+model ProcessAssignment {
+  id                 String   @id @default(uuid())
+  workOrderProcessId String
+  userId             String
+  equipmentId        String?
+  plannedQty         Int
+  assignedAt         DateTime @default(now())
+  
+  workOrderProcess WorkOrderProcess @relation(fields: [workOrderProcessId], references: [id], onDelete: Cascade)
+  
+  @@index([workOrderProcessId])
+}
+
+model ProcessLog {
+  id                 String   @id @default(uuid())
+  workOrderProcessId String
+  action             String
+  userId             String?
+  userName           String?
+  equipmentId        String?
+  equipmentName      String?
+  passQty            Int      @default(0)
+  failQty            Int      @default(0)
+  workMinutes        Int?
+  remark             String?
+  createdAt          DateTime @default(now())
+  
+  workOrderProcess WorkOrderProcess @relation(fields: [workOrderProcessId], references: [id], onDelete: Cascade)
+  
+  @@index([workOrderProcessId])
+  @@index([createdAt])
+}
+
+model ProductionReport {
+  id                 String   @id @default(uuid())
+  workOrderProcessId String
+  reporterId         String
+  reporterName       String?
+  passQty            Int      @default(0)
+  failQty            Int      @default(0)
+  workMinutes        Int?
+  yieldRate          Float?
+  remark             String?
+  createdAt          DateTime @default(now())
+  updatedAt          DateTime @updatedAt
+  
+  workOrderProcess WorkOrderProcess @relation(fields: [workOrderProcessId], references: [id], onDelete: Cascade)
+  
+  @@index([workOrderProcessId])
+  @@index([createdAt])
+}
+
+model QualityInspection {
+  id                 String   @id @default(uuid())
+  inspectionNo       String   @unique
+  workOrderId        String
+  workOrderProcessId String?
+  workOrderNo        String?
+  type               String
+  inspectorId        String
+  inspectorName      String?
+  sampleQty          Int?
+  passQty            Int      @default(0)
+  failQty            Int      @default(0)
+  result             String
+  failReason         String?
+  treatment          String?
+  remark             String?
+  inspectionAt       DateTime @default(now())
+  createdAt          DateTime @default(now())
+  updatedAt          DateTime @updatedAt
+  
+  workOrderProcess WorkOrderProcess? @relation(fields: [workOrderProcessId], references: [id], onDelete: SetNull)
+  
+  @@index([workOrderId])
+  @@index([result])
+  @@index([inspectionAt])
+}
+
+model AbnormalReport {
+  id                String   @id @default(uuid())
+  abnormalNo        String   @unique
+  type              String
+  title             String
+  description       String?
+  priority          String   @default("MEDIUM")
+  status            String   @default("PENDING")
+  workOrderId       String?
+  workOrderProcessId String?
+  workOrderNo       String?
+  processName       String?
+  reporterId        String
+  reporterName      String?
+  assignedToId      String?
+  assignedToName    String?
+  treatment         String?
+  reportedAt        DateTime @default(now())
+  resolvedAt        DateTime?
+  closedAt          DateTime?
+  handleDuration    Int?
+  createdAt         DateTime @default(now())
+  updatedAt         DateTime @updatedAt
+  
+  @@index([workOrderId])
+  @@index([type])
+  @@index([status])
+  @@index([reportedAt])
+}
+
+model OperationLog {
+  id           String   @id @default(uuid())
+  userId       String?
+  userName     String?
+  userRole     String?
+  module       String?
+  operationType String
+  action       String
+  targetType   String?
+  targetId     String?
+  details      String?
+  ipAddress    String?
+  userAgent    String?
+  createdAt    DateTime @default(now())
+  
+  @@index([userId])
+  @@index([operationType])
+  @@index([createdAt])
+}
+
+model ProductionHistory {
+  id             String   @id @default(uuid())
+  workOrderId    String
+  workOrderNo    String
+  productName    String
+  productSpec    String?
+  processName    String?
+  operatorName   String?
+  equipmentName  String?
+  plannedQty     Int
+  actualQty      Int
+  passQty        Int
+  failQty        Int
+  yieldRate      Float?
+  workMinutes    Int?
+  status         String
+  createdAt      DateTime @default(now())
+  completedAt    DateTime?
+  
+  @@index([workOrderId])
+  @@index([createdAt])
+}
