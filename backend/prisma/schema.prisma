@@ -1,0 +1,280 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum UserRole {
+  FARMER
+  MACHINERY_OPERATOR
+  PLATFORM_DISPATCHER
+  MAINTENANCE_WORKER
+}
+
+enum DemandStatus {
+  DRAFT
+  PENDING_MATCH
+  MATCHING
+  MATCHED
+  DISPATCHED
+  CANCELLED
+}
+
+enum OrderStatus {
+  PENDING_ACCEPT
+  ACCEPTED
+  ARRIVED
+  IN_PROGRESS
+  COMPLETED
+  VERIFIED
+  SETTLED
+  CANCELLED
+}
+
+enum RepairOrderStatus {
+  PENDING
+  ASSIGNED
+  IN_PROGRESS
+  COMPLETED
+  VERIFIED
+  CANCELLED
+}
+
+enum BillingMode {
+  PER_MU
+  PER_HOUR
+  FIXED_PRICE
+}
+
+enum MachineryStatus {
+  AVAILABLE
+  IN_USE
+  UNDER_MAINTENANCE
+  UNAVAILABLE
+}
+
+model User {
+  id           String     @id @default(uuid())
+  phone        String     @unique
+  password     String
+  name         String
+  avatar       String?
+  role         UserRole
+  creditScore  Int        @default(100)
+  creditLevel  String     @default("A")
+  
+  createdAt    DateTime   @default(now())
+  updatedAt    DateTime   @updatedAt
+  
+  demands      Demand[]
+  orders       Order[]       @relation("OperatorOrders")
+  assignedOrders Order[]    @relation("DispatcherOrders")
+  repairOrders RepairOrder[] @relation("WorkerRepairOrders")
+  assignedRepairOrders RepairOrder[] @relation("DispatcherRepairOrders")
+  reviewsGiven Review[]    @relation("Reviewer")
+  reviewsReceived Review[] @relation("Reviewee")
+  creditRecords CreditRecord[]
+  auditLogs    AuditLog[]
+  
+  @@map("users")
+}
+
+model Machinery {
+  id           String          @id @default(uuid())
+  name         String
+  type         String
+  brand        String
+  model        String
+  plateNumber  String?
+  capacity     Float?
+  status       MachineryStatus @default(AVAILABLE)
+  locationLng  Float?
+  locationLat  Float?
+  operatorId   String?
+  
+  createdAt    DateTime        @default(now())
+  updatedAt    DateTime        @updatedAt
+  
+  operator     User?           @relation(fields: [operatorId], references: [id])
+  orders       Order[]
+  repairOrders RepairOrder[]
+  
+  @@map("machineries")
+}
+
+model Demand {
+  id           String         @id @default(uuid())
+  farmerId     String
+  cropType     String
+  area         Float
+  locationLng  Float
+  locationLat  Float
+  address      String
+  startTime    DateTime?
+  endTime      DateTime?
+  requirements String?
+  status       DemandStatus   @default(DRAFT)
+  billingMode  BillingMode?
+  pricePerUnit Float?
+  totalPrice   Float?
+  
+  createdAt    DateTime       @default(now())
+  updatedAt    DateTime       @updatedAt
+  
+  farmer       User           @relation(fields: [farmerId], references: [id])
+  order        Order?
+  
+  @@map("demands")
+}
+
+model Order {
+  id              String        @id @default(uuid())
+  demandId        String
+  machineryId     String
+  operatorId      String
+  dispatcherId    String?
+  status          OrderStatus   @default(PENDING_ACCEPT)
+  billingMode     BillingMode
+  pricePerUnit    Float
+  estimatedArea   Float?
+  estimatedHours  Float?
+  estimatedPrice  Float
+  actualArea      Float?
+  actualHours     Float?
+  actualPrice     Float?
+  
+  arrivedAt       DateTime?
+  startedAt       DateTime?
+  completedAt     DateTime?
+  verifiedAt      DateTime?
+  settledAt       DateTime?
+  
+  createdAt       DateTime      @default(now())
+  updatedAt       DateTime      @updatedAt
+  
+  demand          Demand        @relation(fields: [demandId], references: [id])
+  machinery       Machinery     @relation(fields: [machineryId], references: [id])
+  operator        User          @relation("OperatorOrders", fields: [operatorId], references: [id])
+  dispatcher      User?         @relation("DispatcherOrders", fields: [dispatcherId], references: [id])
+  workTracks      WorkTrack[]
+  settlement      Settlement?
+  reviews         Review[]
+  
+  @@map("orders")
+}
+
+model WorkTrack {
+  id           String    @id @default(uuid())
+  orderId      String
+  lng          Float
+  lat          Float
+  timestamp    DateTime
+  speed        Float?
+  altitude     Float?
+  accuracy     Float?
+  
+  createdAt    DateTime  @default(now())
+  
+  order        Order     @relation(fields: [orderId], references: [id])
+  
+  @@map("work_tracks")
+}
+
+model Settlement {
+  id           String    @id @default(uuid())
+  orderId      String
+  amount       Float
+  platformFee  Float
+  operatorAmount Float
+  paymentMethod String?
+  paidAt       DateTime?
+  
+  createdAt    DateTime  @default(now())
+  updatedAt    DateTime  @updatedAt
+  
+  order        Order     @relation(fields: [orderId], references: [id])
+  
+  @@map("settlements")
+}
+
+model RepairOrder {
+  id              String             @id @default(uuid())
+  machineryId     String
+  reporterId      String
+  assigneeId      String?
+  dispatcherId    String?
+  status          RepairOrderStatus  @default(PENDING)
+  faultType       String
+  faultDescription String
+  locationLng     Float?
+  locationLat     Float?
+  locationAddress String?
+  
+  assignedAt      DateTime?
+  startedAt       DateTime?
+  completedAt     DateTime?
+  verifiedAt      DateTime?
+  
+  createdAt       DateTime           @default(now())
+  updatedAt       DateTime           @updatedAt
+  
+  machinery       Machinery          @relation(fields: [machineryId], references: [id])
+  reporter        User               @relation(fields: [reporterId], references: [id])
+  assignee        User?              @relation("WorkerRepairOrders", fields: [assigneeId], references: [id])
+  dispatcher      User?              @relation("DispatcherRepairOrders", fields: [dispatcherId], references: [id])
+  
+  @@map("repair_orders")
+}
+
+model Review {
+  id           String    @id @default(uuid())
+  orderId      String
+  reviewerId   String
+  revieweeId   String
+  rating       Int
+  comment      String?
+  
+  createdAt    DateTime  @default(now())
+  
+  order        Order     @relation(fields: [orderId], references: [id])
+  reviewer     User      @relation("Reviewer", fields: [reviewerId], references: [id])
+  reviewee     User      @relation("Reviewee", fields: [revieweeId], references: [id])
+  
+  @@map("reviews")
+}
+
+model CreditRecord {
+  id           String    @id @default(uuid())
+  userId       String
+  change       Int
+  reason       String
+  relatedType  String?
+  relatedId    String?
+  
+  createdAt    DateTime  @default(now())
+  
+  user         User      @relation(fields: [userId], references: [id])
+  
+  @@map("credit_records")
+}
+
+model AuditLog {
+  id           String    @id @default(uuid())
+  userId       String?
+  action       String
+  targetType   String
+  targetId     String
+  beforeData   Json?
+  afterData    Json?
+  ip           String?
+  userAgent    String?
+  
+  createdAt    DateTime  @default(now())
+  
+  user         User?     @relation(fields: [userId], references: [id])
+  
+  @@map("audit_logs")
+}

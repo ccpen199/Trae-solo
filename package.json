@@ -1,0 +1,13 @@
+{
+  "name": "agri-machinery-rental-platform",
+  "version": "1.0.0",
+  "description": "农机租赁调度平台 - 农业服务平台级多端业务系统",
+  "scripts": {
+    "start:backend": "cd backend && npm run start:dev",
+    "start:frontend": "cd frontend && npm run dev",
+    "postinstall": "cd backend && npm install && cd ../frontend && npm install"
+  },
+  "keywords": ["agriculture", "rental", "scheduling", "platform"],
+  "author": "",
+  "license": "ISC"
+}
