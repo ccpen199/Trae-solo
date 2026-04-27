@@ -11,6 +11,7 @@ import { TraceabilityModule } from './traceability/traceability.module';
 import { AuditModule } from './audit/audit.module';
 import { WebsocketModule } from './websocket/websocket.module';
 import { MqttModule } from './mqtt/mqtt.module';
+import { TestModule } from './test/test.module';
 
 @Module({
   imports: [
@@ -37,6 +38,7 @@ import { MqttModule } from './mqtt/mqtt.module';
     AuditModule,
     WebsocketModule,
     MqttModule,
+    TestModule,
   ],
   controllers: [AppController],
   providers: [AppService],

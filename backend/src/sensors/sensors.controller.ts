@@ -19,6 +19,11 @@ export class SensorsController {
     private readonly auditService: AuditService,
   ) {}
 
+  @Get()
+  async getAllSensors(): Promise<Sensor[]> {
+    return this.sensorsService.getAllSensors();
+  }
+
   @Get(':id')
   async getSensorById(@Param('id') id: string): Promise<Sensor> {
     return this.sensorsService.getSensorById(id);

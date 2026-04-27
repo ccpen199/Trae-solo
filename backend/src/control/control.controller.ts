@@ -25,10 +25,13 @@ export class ControlController {
   }
 
   @Get('devices')
-  async getDevicesInZone(
-    @Query('zone') zone: string,
+  async getDevices(
+    @Query('zone') zone?: string,
   ): Promise<ControlDevice[]> {
-    return this.controlService.getDevicesInZone(zone);
+    if (zone) {
+      return this.controlService.getDevicesInZone(zone);
+    }
+    return this.controlService.getAllDevices();
   }
 
   @Post('devices')

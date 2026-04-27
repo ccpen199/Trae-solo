@@ -94,6 +94,8 @@ export const agronomyApi = {
 };
 
 export const sensorsApi = {
+  getAllSensors: (): Promise<Sensor[]> =>
+    api.get('/sensors').then((r) => r.data),
   getSensorById: (id: string): Promise<Sensor> =>
     api.get(`/sensors/${id}`).then((r) => r.data),
   createSensor: (data: Partial<Sensor>, operatorName?: string): Promise<Sensor> =>
@@ -158,6 +160,10 @@ export const alarmsApi = {
 };
 
 export const controlApi = {
+  getAllDevices: (zone?: string): Promise<ControlDevice[]> =>
+    zone 
+      ? api.get('/control/devices', { params: { zone } }).then((r) => r.data)
+      : api.get('/control/devices').then((r) => r.data),
   getDeviceById: (id: string): Promise<ControlDevice> =>
     api.get(`/control/devices/${id}`).then((r) => r.data),
   getDevicesInZone: (zone: string): Promise<ControlDevice[]> =>
@@ -291,6 +297,62 @@ export const auditApi = {
     api
       .get('/audit/statistics/resources', { params: { startTime, endTime } })
       .then((r) => r.data),
+};
+
+export const testApi = {
+  getSystemStatus: (): Promise<{
+    sensors: any[];
+    devices: any[];
+    openAlarms: any[];
+  }> =>
+    api.get('/test/status').then((r) => r.data),
+
+  setupDemoData: (): Promise<{
+    crop: any;
+    growthStages: any[];
+    sensors: any[];
+    devices: any[];
+    thresholds: any[];
+  }> =>
+    api.post('/test/setup-demo').then((r) => r.data),
+
+  simulateSensorReading: (data: {
+    sensorId: string;
+    value: number;
+    operatorName?: string;
+  }): Promise<{
+    reading: any;
+    alarm: any | null;
+  }> =>
+    api.post('/test/sensor-reading', data).then((r) => r.data),
+
+  simulateAlarmTrigger: (data: {
+    sensorId: string;
+    value: number;
+    cropId?: string;
+    growthDay?: number;
+  }): Promise<{
+    alarm: any | null;
+    actions: any[];
+  }> =>
+    api.post('/test/alarm-trigger', data).then((r) => r.data),
+
+  executeControlCommand: (data: {
+    deviceId: string;
+    targetValue: number;
+    operatorName: string;
+    usePid?: boolean;
+    reason?: string;
+  }): Promise<any> =>
+    api.post('/test/control-command', data).then((r) => r.data),
+
+  runFullWorkflow: (): Promise<{
+    sensorReading: any;
+    alarm: any | null;
+    controlCommand: any | null;
+    auditLogs: any[];
+  }> =>
+    api.post('/test/full-workflow').then((r) => r.data),
 };
 
 export default api;

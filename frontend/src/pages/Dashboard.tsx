@@ -19,6 +19,8 @@ import {
   Empty,
   Descriptions,
   Popconfirm,
+  Spin,
+  Alert,
 } from 'antd';
 import {
   DashboardOutlined,
@@ -31,6 +33,10 @@ import {
   EnvironmentOutlined,
   CloudOutlined,
   BulbOutlined,
+  RocketOutlined,
+  ApiOutlined,
+  ExperimentOutlined,
+  DatabaseOutlined,
 } from '@ant-design/icons';
 import {
   LineChart,
@@ -60,7 +66,7 @@ import {
   AlarmActionStatus,
   AlarmActionType,
 } from '../types';
-import { alarmsApi, controlApi, sensorsApi } from '../services/api';
+import { alarmsApi, controlApi, sensorsApi, testApi } from '../services/api';
 import { webSocketService } from '../services/websocket';
 import { useFarmStore } from '../store/farmStore';
 
@@ -69,6 +75,7 @@ const { TabPane } = Tabs;
 
 const Dashboard: React.FC = () => {
   const [loading, setLoading] = useState(false);
+  const [testLoading, setTestLoading] = useState(false);
   const [alarms, setAlarms] = useState<Alarm[]>([]);
   const [sensors, setSensors] = useState<Sensor[]>([]);
   const [devices, setDevices] = useState<ControlDevice[]>([]);
@@ -80,6 +87,9 @@ const Dashboard: React.FC = () => {
   const [selectedAlarm, setSelectedAlarm] = useState<Alarm | null>(null);
   const [alarmActions, setAlarmActions] = useState<AlarmAction[]>([]);
   const [controlForm] = Form.useForm();
+  const [testForm] = Form.useForm();
+  const [testModalVisible, setTestModalVisible] = useState(false);
+  const [testResult, setTestResult] = useState<any>(null);
 
   const {
     selectedZone,
@@ -87,151 +97,66 @@ const Dashboard: React.FC = () => {
     latestReadings,
   } = useFarmStore();
 
-  const mockSensors: Sensor[] = [
-    {
-      id: 'sensor-1',
-      name: '温度传感器-区域A',
-      code: 'TEMP-A-001',
-      type: SensorType.TEMPERATURE,
-      status: SensorStatus.ONLINE,
-      locationZone: 'zone-a',
-      unit: '°C',
-      minValue: -10,
-      maxValue: 50,
-      createdAt: new Date(),
-      updatedAt: new Date(),
-    },
-    {
-      id: 'sensor-2',
-      name: '湿度传感器-区域A',
-      code: 'HUM-A-001',
-      type: SensorType.HUMIDITY,
-      status: SensorStatus.ONLINE,
-      locationZone: 'zone-a',
-      unit: '%',
-      minValue: 0,
-      maxValue: 100,
-      createdAt: new Date(),
-      updatedAt: new Date(),
-    },
-    {
-      id: 'sensor-3',
-      name: '土壤湿度传感器-区域A',
-      code: 'SOIL-A-001',
-      type: SensorType.SOIL_MOISTURE,
-      status: SensorStatus.ONLINE,
-      locationZone: 'zone-a',
-      unit: '%',
-      minValue: 0,
-      maxValue: 100,
-      createdAt: new Date(),
-      updatedAt: new Date(),
-    },
-    {
-      id: 'sensor-4',
-      name: '光照传感器-区域A',
-      code: 'LIGHT-A-001',
-      type: SensorType.LIGHT_INTENSITY,
-      status: SensorStatus.ONLINE,
-      locationZone: 'zone-a',
-      unit: 'lux',
-      minValue: 0,
-      maxValue: 200000,
-      createdAt: new Date(),
-      updatedAt: new Date(),
-    },
-  ];
+  const loadAllData = useCallback(async () => {
+    try {
+      setLoading(true);
+      
+      const [sensorsData, devicesData, alarmsData] = await Promise.all([
+        sensorsApi.getAllSensors().catch(() => []),
+        controlApi.getAllDevices().catch(() => []),
+        alarmsApi.getOpenAlarms().catch(() => []),
+      ]);
 
-  const mockDevices: ControlDevice[] = [
-    {
-      id: 'device-1',
-      name: '灌溉阀门-区域A',
-      code: 'IRR-A-001',
-      type: 'irrigation_valve' as any,
-      status: DeviceStatus.IDLE,
-      locationZone: 'zone-a',
-      currentValue: 0,
-      targetValue: 50,
-      maxCapacity: 100,
-      unit: 'L/min',
-      createdAt: new Date(),
-      updatedAt: new Date(),
-    },
-    {
-      id: 'device-2',
-      name: '卷帘设备-区域A',
-      code: 'ROLL-A-001',
-      type: 'roller_curtain' as any,
-      status: DeviceStatus.IDLE,
-      locationZone: 'zone-a',
-      currentValue: 100,
-      targetValue: 50,
-      maxCapacity: 100,
-      unit: '%',
-      createdAt: new Date(),
-      updatedAt: new Date(),
-    },
-    {
-      id: 'device-3',
-      name: '通风风扇-区域A',
-      code: 'VENT-A-001',
-      type: 'ventilation_fan' as any,
-      status: DeviceStatus.RUNNING,
-      locationZone: 'zone-a',
-      currentValue: 70,
-      targetValue: 70,
-      maxCapacity: 100,
-      unit: '%',
-      createdAt: new Date(),
-      updatedAt: new Date(),
-    },
-  ];
-
-  const generateMockHistory = useCallback(() => {
-    const now = Date.now();
-    const history: Record<string, any[]> = {};
-
-    mockSensors.forEach((sensor) => {
-      const data: any[] = [];
-      for (let i = 24; i >= 0; i--) {
-        const timestamp = now - i * 3600000;
-        let value: number;
-
-        switch (sensor.type) {
-          case SensorType.TEMPERATURE:
-            value = 20 + Math.sin(i / 12 * Math.PI) * 8 + Math.random() * 2;
-            break;
-          case SensorType.HUMIDITY:
-            value = 60 + Math.cos(i / 12 * Math.PI) * 15 + Math.random() * 5;
-            break;
-          case SensorType.SOIL_MOISTURE:
-            value = 45 + Math.sin(i / 24 * Math.PI) * 10 + Math.random() * 3;
-            break;
-          case SensorType.LIGHT_INTENSITY:
-            const hour = (new Date(timestamp).getHours());
-            value = hour >= 6 && hour <= 18 ? (hour - 6) / 12 * 80000 + 10000 : 50;
-            value += Math.random() * 5000;
-            break;
-          default:
-            value = 50;
-        }
-
-        data.push({
-          time: dayjs(timestamp).format('HH:mm'),
-          timestamp,
-          value: Number(value.toFixed(1)),
-        });
+      if (sensorsData && sensorsData.length > 0) {
+        setSensors(sensorsData);
       }
-      history[sensor.id] = data;
-    });
 
-    return history;
+      if (devicesData && devicesData.length > 0) {
+        setDevices(devicesData);
+      }
+
+      if (alarmsData && alarmsData.length > 0) {
+        setAlarms(alarmsData);
+      }
+
+      const initialHistory: Record<string, any[]> = {};
+      sensorsData.forEach((sensor) => {
+        initialHistory[sensor.id] = [];
+      });
+      setSensorHistory(initialHistory);
+
+    } catch (error) {
+      console.error('Failed to load data:', error);
+    } finally {
+      setLoading(false);
+    }
+  }, []);
+
+  const loadSensorHistory = useCallback(async (sensorId: string) => {
+    try {
+      const now = new Date();
+      const startTime = new Date(now.getTime() - 24 * 60 * 60 * 1000).toISOString();
+      const endTime = now.toISOString();
+
+      const readings = await sensorsApi.getReadingsInRange(sensorId, startTime, endTime);
+      
+      const historyData = readings.map((r) => ({
+        time: dayjs(r.timestamp).format('HH:mm'),
+        timestamp: new Date(r.timestamp).getTime(),
+        value: r.filteredValue ?? r.rawValue,
+      }));
+
+      setSensorHistory((prev) => ({
+        ...prev,
+        [sensorId]: historyData,
+      }));
+    } catch (error) {
+      console.error('Failed to load sensor history:', error);
+    }
   }, []);
 
   useEffect(() => {
-    setSensors(mockSensors);
-    setDevices(mockDevices);
-    setSensorHistory(generateMockHistory());
+    loadAllData();
 
     const unsubscribeSensorReading = webSocketService.on('sensor_reading', (data) => {
       const { sensorReading } = data;
@@ -240,14 +165,13 @@ const Dashboard: React.FC = () => {
           const newHistory = { ...prev };
           const sensorId = sensorReading.sensorId;
           if (newHistory[sensorId]) {
-            newHistory[sensorId] = [
-              ...newHistory[sensorId].slice(1),
-              {
-                time: dayjs(sensorReading.timestamp).format('HH:mm'),
-                timestamp: new Date(sensorReading.timestamp).getTime(),
-                value: sensorReading.filteredValue ?? sensorReading.rawValue,
-              },
-            ];
+            const newData = {
+              time: dayjs(sensorReading.timestamp).format('HH:mm'),
+              timestamp: new Date(sensorReading.timestamp).getTime(),
+              value: sensorReading.filteredValue ?? sensorReading.rawValue,
+            };
+            const updated = [...newHistory[sensorId], newData];
+            newHistory[sensorId] = updated.slice(-50);
           }
           return newHistory;
         });
@@ -258,28 +182,137 @@ const Dashboard: React.FC = () => {
       const { alarm } = data;
       if (alarm) {
         setAlarms((prev) => [alarm, ...prev]);
+        message.warning(`新告警: ${alarm.title}`);
       }
     });
 
-    loadOpenAlarms();
+    const unsubscribeControlExecuted = webSocketService.on('control_executed', (data) => {
+      const { command } = data;
+      if (command) {
+        message.success(`控制指令已执行: ${command.commandType}`);
+        loadAllData();
+      }
+    });
 
     return () => {
       unsubscribeSensorReading();
       unsubscribeAlarmCreated();
+      unsubscribeControlExecuted();
     };
-  }, [generateMockHistory]);
+  }, [loadAllData]);
+
+  useEffect(() => {
+    sensors.forEach((sensor) => {
+      if (!sensorHistory[sensor.id] || sensorHistory[sensor.id].length === 0) {
+        loadSensorHistory(sensor.id);
+      }
+    });
+  }, [sensors, loadSensorHistory, sensorHistory]);
 
   const loadOpenAlarms = async () => {
     try {
       setLoading(true);
       const data = await alarmsApi.getOpenAlarms();
-      if (data && data.length > 0) {
+      if (data) {
         setAlarms(data);
       }
     } catch (error) {
       console.error('Failed to load alarms:', error);
     } finally {
       setLoading(false);
+    }
+  };
+
+  const handleSetupDemoData = async () => {
+    try {
+      setTestLoading(true);
+      const result = await testApi.setupDemoData();
+      setTestResult(result);
+      message.success('演示数据设置成功！');
+      loadAllData();
+    } catch (error) {
+      message.error('设置演示数据失败');
+      console.error(error);
+    } finally {
+      setTestLoading(false);
+    }
+  };
+
+  const handleSimulateSensorReading = async (values: any) => {
+    try {
+      setTestLoading(true);
+      const result = await testApi.simulateSensorReading({
+        sensorId: values.sensorId,
+        value: values.value,
+        operatorName: '农场主',
+      });
+      setTestResult(result);
+      message.success('传感器读数模拟成功！');
+      loadSensorHistory(values.sensorId);
+      loadOpenAlarms();
+    } catch (error) {
+      message.error('模拟传感器读数失败');
+      console.error(error);
+    } finally {
+      setTestLoading(false);
+    }
+  };
+
+  const handleSimulateAlarmTrigger = async (values: any) => {
+    try {
+      setTestLoading(true);
+      const result = await testApi.simulateAlarmTrigger({
+        sensorId: values.sensorId,
+        value: values.value,
+      });
+      setTestResult(result);
+      if (result.alarm) {
+        message.success('告警触发成功！');
+        loadOpenAlarms();
+      } else {
+        message.info('未触发告警（值在正常范围内）');
+      }
+    } catch (error) {
+      message.error('触发告警失败');
+      console.error(error);
+    } finally {
+      setTestLoading(false);
+    }
+  };
+
+  const handleExecuteControlCommand = async (values: any) => {
+    try {
+      setTestLoading(true);
+      const result = await testApi.executeControlCommand({
+        deviceId: values.deviceId,
+        targetValue: values.targetValue,
+        operatorName: '农场主',
+        usePid: values.usePid || false,
+        reason: values.reason,
+      });
+      setTestResult(result);
+      message.success('控制指令执行成功！');
+      loadAllData();
+    } catch (error) {
+      message.error('执行控制指令失败');
+      console.error(error);
+    } finally {
+      setTestLoading(false);
+    }
+  };
+
+  const handleRunFullWorkflow = async () => {
+    try {
+      setTestLoading(true);
+      const result = await testApi.runFullWorkflow();
+      setTestResult(result);
+      message.success('完整工作流测试执行成功！');
+      loadAllData();
+    } catch (error) {
+      message.error('执行完整工作流失败');
+      console.error(error);
+    } finally {
+      setTestLoading(false);
     }
   };
 
@@ -346,6 +379,11 @@ const Dashboard: React.FC = () => {
 
   const handleViewSensorDetail = (sensor: Sensor) => {
     setSelectedSensor(sensor);
+    setTestModalVisible(true);
+    testForm.setFieldsValue({
+      testType: 'sensorReading',
+      sensorId: sensor.id,
+    });
   };
 
   const handleControlDevice = (device: ControlDevice) => {
@@ -404,26 +442,8 @@ const Dashboard: React.FC = () => {
             : a
         )
       );
-
-      if (selectedAlarm) {
-        await executeControlFromAction(action);
-      }
     } catch (error) {
       message.error('确认建议失败');
-    }
-  };
-
-  const executeControlFromAction = async (action: AlarmAction) => {
-    try {
-      if (selectedDevice) {
-        const command = await controlApi.executePidControl({
-          deviceId: selectedDevice.id,
-          operatorName: '农场主',
-        });
-        message.info(`控制指令已下发: ${command.commandType}`);
-      }
-    } catch (error) {
-      console.error('Failed to execute control:', error);
     }
   };
 
@@ -673,8 +693,50 @@ const Dashboard: React.FC = () => {
     (d) => d.status === DeviceStatus.RUNNING
   ).length;
 
+  const hasDemoData = sensors.length > 0 && devices.length > 0;
+
+  const handleTestSubmit = (values: any) => {
+    switch (values.testType) {
+      case 'sensorReading':
+        handleSimulateSensorReading(values);
+        break;
+      case 'alarmTrigger':
+        handleSimulateAlarmTrigger(values);
+        break;
+      case 'controlCommand':
+        handleExecuteControlCommand(values);
+        break;
+      default:
+        break;
+    }
+  };
+
   return (
     <div className="dashboard">
+      {!hasDemoData && (
+        <Alert
+          message="系统检测"
+          description={
+            <div>
+              <p>当前系统尚未配置演示数据。请点击下方按钮设置演示数据，以体验完整的智慧农场监测平台功能。</p>
+              <p>演示数据包含：作物、生长期、环境阈值、传感器、控制设备等。</p>
+              <Button
+                type="primary"
+                icon={<DatabaseOutlined />}
+                onClick={handleSetupDemoData}
+                loading={testLoading}
+                style={{ marginTop: 8 }}
+              >
+                设置演示数据
+              </Button>
+            </div>
+          }
+          type="info"
+          showIcon
+          style={{ marginBottom: 16 }}
+        />
+      )}
+
       <Row gutter={[16, 16]}>
         <Col span={6}>
           <Card>
@@ -718,85 +780,241 @@ const Dashboard: React.FC = () => {
         </Col>
       </Row>
 
-      <Divider orientation="left">实时传感器数据</Divider>
-      <Row gutter={[16, 16]}>
-        {sensors.map((sensor) => (
-          <Col span={6} key={sensor.id}>
-            <Card
-              hoverable
-              onClick={() => handleViewSensorDetail(sensor)}
-              actions={[
-                <Button type="link" size="small" icon={<ReloadOutlined />}>
-                  刷新
-                </Button>,
-              ]}
-            >
-              <div style={{ display: 'flex', alignItems: 'center', marginBottom: 12 }}>
-                <span style={{ fontSize: 24, marginRight: 12, color: '#1890ff' }}>
-                  {getSensorTypeIcon(sensor.type)}
-                </span>
-                <div>
-                  <div style={{ fontWeight: 500 }}>{sensor.name}</div>
-                  <div style={{ fontSize: 12, color: '#999' }}>
-                    {getSensorTypeName(sensor.type)}
-                  </div>
-                </div>
+      <Divider orientation="left">
+        <Space>
+          <ExperimentOutlined />
+          链路测试面板
+        </Space>
+      </Divider>
+      <Card>
+        <Row gutter={[16, 16]} align="middle">
+          <Col span={3}>
+            <div style={{ textAlign: 'center' }}>
+              <div style={{ fontSize: 20, marginBottom: 8 }}>
+                <ApiOutlined style={{ color: '#1890ff' }} />
               </div>
-              <div style={{ fontSize: 28, fontWeight: 'bold', color: '#52c41a' }}>
-                {getCurrentValue(sensor.id)}
-                <span style={{ fontSize: 14, fontWeight: 'normal' }}>{sensor.unit}</span>
-              </div>
-              <ResponsiveContainer width="100%" height={60}>
-                <AreaChart data={sensorHistory[sensor.id]?.slice(-12) || []}>
-                  <Area
-                    type="monotone"
-                    dataKey="value"
-                    stroke="#52c41a"
-                    fill="#e6f7ff"
-                    strokeWidth={2}
-                  />
-                </AreaChart>
-              </ResponsiveContainer>
-            </Card>
+              <div style={{ fontSize: 12, color: '#666' }}>数据采集层</div>
+              <Tag color="blue">Sensor Data</Tag>
+            </div>
           </Col>
-        ))}
-      </Row>
+          <Col span={1}>
+            <div style={{ textAlign: 'center', fontSize: 20, color: '#1890ff' }}>→</div>
+          </Col>
+          <Col span={3}>
+            <div style={{ textAlign: 'center' }}>
+              <div style={{ fontSize: 20, marginBottom: 8 }}>
+                <WarningOutlined style={{ color: '#faad14' }} />
+              </div>
+              <div style={{ fontSize: 12, color: '#666' }}>智能告警层</div>
+              <Tag color="orange">Alarm</Tag>
+            </div>
+          </Col>
+          <Col span={1}>
+            <div style={{ textAlign: 'center', fontSize: 20, color: '#faad14' }}>→</div>
+          </Col>
+          <Col span={3}>
+            <div style={{ textAlign: 'center' }}>
+              <div style={{ fontSize: 20, marginBottom: 8 }}>
+                <SettingOutlined style={{ color: '#52c41a' }} />
+              </div>
+              <div style={{ fontSize: 12, color: '#666' }}>联动控制层</div>
+              <Tag color="green">Control</Tag>
+            </div>
+          </Col>
+          <Col span={1}>
+            <div style={{ textAlign: 'center', fontSize: 20, color: '#52c41a' }}>→</div>
+          </Col>
+          <Col span={3}>
+            <div style={{ textAlign: 'center' }}>
+              <div style={{ fontSize: 20, marginBottom: 8 }}>
+                <DatabaseOutlined style={{ color: '#722ed1' }} />
+              </div>
+              <div style={{ fontSize: 12, color: '#666' }}>溯源审计层</div>
+              <Tag color="purple">Audit</Tag>
+            </div>
+          </Col>
+          <Col span={9}>
+            <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap' }}>
+              <Button
+                type="primary"
+                icon={<RocketOutlined />}
+                onClick={handleRunFullWorkflow}
+                loading={testLoading}
+              >
+                一键执行完整工作流
+              </Button>
+              <Button
+                icon={<ApiOutlined />}
+                onClick={() => {
+                  setTestModalVisible(true);
+                  testForm.setFieldsValue({ testType: 'sensorReading' });
+                  setTestResult(null);
+                }}
+              >
+                模拟传感器数据
+              </Button>
+              <Button
+                icon={<WarningOutlined />}
+                onClick={() => {
+                  setTestModalVisible(true);
+                  testForm.setFieldsValue({ testType: 'alarmTrigger' });
+                  setTestResult(null);
+                }}
+              >
+                触发告警测试
+              </Button>
+              <Button
+                icon={<SettingOutlined />}
+                onClick={() => {
+                  setTestModalVisible(true);
+                  testForm.setFieldsValue({ testType: 'controlCommand' });
+                  setTestResult(null);
+                }}
+              >
+                设备控制测试
+              </Button>
+            </div>
+          </Col>
+        </Row>
+      </Card>
+
+      <Divider orientation="left">实时传感器数据</Divider>
+      <Spin spinning={loading && sensors.length === 0}>
+        {sensors.length > 0 ? (
+          <Row gutter={[16, 16]}>
+            {sensors.map((sensor) => (
+              <Col span={6} key={sensor.id}>
+                <Card
+                  hoverable
+                  onClick={() => {
+                    setTestModalVisible(true);
+                    testForm.setFieldsValue({
+                      testType: 'sensorReading',
+                      sensorId: sensor.id,
+                    });
+                  }}
+                  actions={[
+                    <Button
+                      type="link"
+                      size="small"
+                      icon={<ReloadOutlined />}
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        loadSensorHistory(sensor.id);
+                      }}
+                    >
+                      刷新
+                    </Button>,
+                    <Button
+                      type="link"
+                      size="small"
+                      icon={<ExperimentOutlined />}
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        setTestModalVisible(true);
+                        testForm.setFieldsValue({
+                          testType: 'sensorReading',
+                          sensorId: sensor.id,
+                        });
+                      }}
+                    >
+                      测试
+                    </Button>,
+                  ]}
+                >
+                  <div style={{ display: 'flex', alignItems: 'center', marginBottom: 12 }}>
+                    <span style={{ fontSize: 24, marginRight: 12, color: '#1890ff' }}>
+                      {getSensorTypeIcon(sensor.type)}
+                    </span>
+                    <div>
+                      <div style={{ fontWeight: 500 }}>{sensor.name}</div>
+                      <div style={{ fontSize: 12, color: '#999' }}>
+                        {getSensorTypeName(sensor.type)}
+                      </div>
+                    </div>
+                  </div>
+                  <div style={{ fontSize: 28, fontWeight: 'bold', color: '#52c41a' }}>
+                    {getCurrentValue(sensor.id)}
+                    <span style={{ fontSize: 14, fontWeight: 'normal' }}>{sensor.unit}</span>
+                  </div>
+                  <ResponsiveContainer width="100%" height={60}>
+                    <AreaChart data={sensorHistory[sensor.id]?.slice(-12) || []}>
+                      <Area
+                        type="monotone"
+                        dataKey="value"
+                        stroke="#52c41a"
+                        fill="#e6f7ff"
+                        strokeWidth={2}
+                      />
+                    </AreaChart>
+                  </ResponsiveContainer>
+                </Card>
+              </Col>
+            ))}
+          </Row>
+        ) : (
+          <Card>
+            <Empty description="暂无传感器数据，请先设置演示数据" />
+          </Card>
+        )}
+      </Spin>
 
       <Divider orientation="left">传感器历史趋势</Divider>
       <Card>
         <Tabs defaultActiveKey="all">
           <TabPane tab="所有传感器" key="all">
-            <Row gutter={[16, 16]}>
-              {sensors.map((sensor) => (
-                <Col span={12} key={sensor.id}>
-                  <Card
-                    size="small"
-                    title={
-                      <span>
-                        {getSensorTypeIcon(sensor.type)} {sensor.name}
-                      </span>
-                    }
-                  >
-                    <ResponsiveContainer width="100%" height={200}>
-                      <LineChart data={sensorHistory[sensor.id] || []}>
-                        <CartesianGrid strokeDasharray="3 3" />
-                        <XAxis dataKey="time" />
-                        <YAxis />
-                        <Tooltip />
-                        <Line
-                          type="monotone"
-                          dataKey="value"
-                          stroke="#1890ff"
-                          dot={false}
-                          strokeWidth={2}
-                          name={getSensorTypeName(sensor.type)}
-                        />
-                      </LineChart>
-                    </ResponsiveContainer>
-                  </Card>
-                </Col>
-              ))}
-            </Row>
+            <Spin spinning={loading}>
+              {sensors.length > 0 ? (
+                <Row gutter={[16, 16]}>
+                  {sensors.map((sensor) => (
+                    <Col span={12} key={sensor.id}>
+                      <Card
+                        size="small"
+                        title={
+                          <span>
+                            {getSensorTypeIcon(sensor.type)} {sensor.name}
+                          </span>
+                        }
+                        extra={
+                          <Button
+                            size="small"
+                            icon={<ExperimentOutlined />}
+                            onClick={() => {
+                              setTestModalVisible(true);
+                              testForm.setFieldsValue({
+                                testType: 'alarmTrigger',
+                                sensorId: sensor.id,
+                              });
+                            }}
+                          >
+                            告警测试
+                          </Button>
+                        }
+                      >
+                        <ResponsiveContainer width="100%" height={200}>
+                          <LineChart data={sensorHistory[sensor.id] || []}>
+                            <CartesianGrid strokeDasharray="3 3" />
+                            <XAxis dataKey="time" />
+                            <YAxis />
+                            <Tooltip />
+                            <Line
+                              type="monotone"
+                              dataKey="value"
+                              stroke="#1890ff"
+                              dot={false}
+                              strokeWidth={2}
+                              name={getSensorTypeName(sensor.type)}
+                            />
+                          </LineChart>
+                        </ResponsiveContainer>
+                      </Card>
+                    </Col>
+                  ))}
+                </Row>
+              ) : (
+                <Empty description="暂无传感器数据" />
+              )}
+            </Spin>
           </TabPane>
         </Tabs>
       </Card>
@@ -817,12 +1035,18 @@ const Dashboard: React.FC = () => {
 
       <Divider orientation="left">设备控制</Divider>
       <Card>
-        <Table
-          columns={deviceColumns}
-          dataSource={devices}
-          rowKey="id"
-          pagination={false}
-        />
+        <Spin spinning={loading}>
+          {devices.length > 0 ? (
+            <Table
+              columns={deviceColumns}
+              dataSource={devices}
+              rowKey="id"
+              pagination={false}
+            />
+          ) : (
+            <Empty description="暂无设备数据" />
+          )}
+        </Spin>
       </Card>
 
       <Modal
@@ -1056,6 +1280,193 @@ const Dashboard: React.FC = () => {
             )}
           </div>
         )}
+      </Modal>
+
+      <Modal
+        title={
+          <Space>
+            <ExperimentOutlined />
+            链路测试工具
+          </Space>
+        }
+        open={testModalVisible}
+        onCancel={() => setTestModalVisible(false)}
+        footer={null}
+        width={600}
+      >
+        <Form
+          form={testForm}
+          layout="vertical"
+          onFinish={handleTestSubmit}
+          initialValues={{
+            testType: 'sensorReading',
+          }}
+        >
+          <Form.Item name="testType" label="测试类型">
+            <Select>
+              <Option value="sensorReading">
+                <Space>
+                  <ApiOutlined />
+                  模拟传感器数据上报
+                </Space>
+              </Option>
+              <Option value="alarmTrigger">
+                <Space>
+                  <WarningOutlined />
+                  触发告警（超阈值数据）
+                </Space>
+              </Option>
+              <Option value="controlCommand">
+                <Space>
+                  <SettingOutlined />
+                  执行设备控制指令
+                </Space>
+              </Option>
+            </Select>
+          </Form.Item>
+
+          <Form.Item
+            shouldUpdate
+            noStyle
+          >
+            {({ getFieldValue }) => {
+              const testType = getFieldValue('testType');
+
+              if (testType === 'sensorReading' || testType === 'alarmTrigger') {
+                return (
+                  <>
+                    <Form.Item
+                      name="sensorId"
+                      label="选择传感器"
+                      rules={[{ required: true, message: '请选择传感器' }]}
+                    >
+                      <Select placeholder="请选择传感器">
+                        {sensors.map((s) => (
+                          <Option key={s.id} value={s.id}>
+                            {s.name} ({getSensorTypeName(s.type)})
+                          </Option>
+                        ))}
+                      </Select>
+                    </Form.Item>
+
+                    <Form.Item
+                      name="value"
+                      label={`输入测试值${testType === 'alarmTrigger' ? '（建议输入超出正常范围的值以触发告警）' : ''}`}
+                      rules={[{ required: true, message: '请输入测试值' }]}
+                    >
+                      <Input.Number
+                        style={{ width: '100%' }}
+                        placeholder="请输入数值"
+                      />
+                    </Form.Item>
+
+                    {testType === 'alarmTrigger' && (
+                      <Alert
+                        message="告警触发说明"
+                        description="输入超出作物生长期环境阈值的值，系统将自动触发告警并生成建议操作。例如：温度传感器正常范围是15-30℃，输入35℃会触发高温告警。"
+                        type="info"
+                        showIcon
+                        style={{ marginBottom: 16 }}
+                      />
+                    )}
+                  </>
+                );
+              }
+
+              if (testType === 'controlCommand') {
+                return (
+                  <>
+                    <Form.Item
+                      name="deviceId"
+                      label="选择设备"
+                      rules={[{ required: true, message: '请选择设备' }]}
+                    >
+                      <Select placeholder="请选择设备">
+                        {devices.map((d) => (
+                          <Option key={d.id} value={d.id}>
+                            {d.name} ({getDeviceTypeName(d.type)})
+                          </Option>
+                        ))}
+                      </Select>
+                    </Form.Item>
+
+                    <Form.Item
+                      name="targetValue"
+                      label="目标值"
+                      rules={[{ required: true, message: '请输入目标值' }]}
+                    >
+                      <Input.Number
+                        style={{ width: '100%' }}
+                        placeholder="请输入目标值（0-100）"
+                        min={0}
+                        max={100}
+                      />
+                    </Form.Item>
+
+                    <Form.Item name="usePid" valuePropName="checked">
+                      <Select>
+                        <Option value={false}>手动控制</Option>
+                        <Option value={true}>PID智能控制</Option>
+                      </Select>
+                    </Form.Item>
+
+                    <Form.Item name="reason" label="操作原因">
+                      <Input.TextArea rows={2} placeholder="请输入操作原因（可选）" />
+                    </Form.Item>
+                  </>
+                );
+              }
+
+              return null;
+            }}
+          </Form.Item>
+
+          <Form.Item>
+            <Space>
+              <Button type="primary" htmlType="submit" loading={testLoading}>
+                执行测试
+              </Button>
+              <Button
+                icon={<RocketOutlined />}
+                onClick={() => {
+                  setTestModalVisible(false);
+                  handleRunFullWorkflow();
+                }}
+              >
+                一键执行完整工作流
+              </Button>
+            </Space>
+          </Form.Item>
+        </Form>
+
+        {testResult && (
+          <Card
+            title="测试结果"
+            size="small"
+            style={{ marginTop: 16 }}
+          >
+            <pre style={{ fontSize: 12, whiteSpace: 'pre-wrap' }}>
+              {JSON.stringify(testResult, null, 2)}
+            </pre>
+          </Card>
+        )}
+
+        <Card
+          title="完整工作流说明"
+          size="small"
+          style={{ marginTop: 16 }}
+          type="inner"
+        >
+          <div style={{ fontSize: 12, lineHeight: 1.8 }}>
+            <p><strong>完整工作流包含以下步骤：</strong></p>
+            <ol>
+              <li><strong>数据采集层</strong>：模拟传感器上报超阈值数据（如温度过高）</li>
+              <li><strong>智能告警层</strong>：后端自动检测阈值超限，结合气象预测调整告警等级</li>
+              <li><strong>联动控制层</strong>：系统生成建议操作，农场主确认后执行PID控制指令</li>
+              <li><strong>溯源审计层</strong>：所有操作记录到审计日志，支持后续追溯</li>
+            </ol>
+          </div>
+        </Card>
       </Modal>
     </div>
   );

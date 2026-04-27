@@ -406,6 +406,12 @@ export class ControlService {
     return this.deviceRepository.save(device);
   }
 
+  async getAllDevices(): Promise<ControlDevice[]> {
+    return this.deviceRepository.find({
+      where: { isDeleted: false },
+    });
+  }
+
   resetPidState(deviceId: string): void {
     this.pidStates.delete(deviceId);
     this.logger.log(`PID state reset for device: ${deviceId}`);

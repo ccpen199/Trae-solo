@@ -157,6 +157,13 @@ export class AgronomyService {
     return this.cropRepository.save(crop);
   }
 
+  async getAllCrops(): Promise<Crop[]> {
+    return this.cropRepository.find({
+      where: { isDeleted: false },
+      relations: ['growthStages', 'growthStages.thresholds'],
+    });
+  }
+
   async createGrowthStage(stageData: Partial<GrowthStage>): Promise<GrowthStage> {
     const stage = this.growthStageRepository.create(stageData);
     return this.growthStageRepository.save(stage);

@@ -298,4 +298,10 @@ export class SensorsService {
     const sensor = this.sensorRepository.create(sensorData);
     return this.sensorRepository.save(sensor);
   }
+
+  async getAllSensors(): Promise<Sensor[]> {
+    return this.sensorRepository.find({
+      where: { isDeleted: false },
+    });
+  }
 }
