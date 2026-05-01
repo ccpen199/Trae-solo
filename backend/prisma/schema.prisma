@@ -1,0 +1,362 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = "file:./dev.db"
+}
+
+enum UserRole {
+  USER
+  MODERATOR
+  AUDITOR
+  ADMIN
+}
+
+enum UserStatus {
+  ACTIVE
+  MUTED
+  BANNED
+}
+
+enum PostStatus {
+  DRAFT
+  PENDING
+  PUBLISHED
+  REJECTED
+  DELETED
+}
+
+enum CommentStatus {
+  PUBLISHED
+  DELETED
+}
+
+enum ReportStatus {
+  PENDING
+  REVIEWING
+  RESOLVED
+  DISMISSED
+}
+
+enum ReportType {
+  SPAM
+  HATE
+  HARASSMENT
+  VIOLENCE
+  ADULT
+  ILLEGAL
+  OTHER
+}
+
+enum ModerationAction {
+  DELETE_POST
+  DELETE_COMMENT
+  MUTE_USER
+  BAN_USER
+  ISSUE_WARNING
+}
+
+model User {
+  id            String    @id @default(uuid())
+  username      String    @unique
+  email         String    @unique
+  passwordHash  String
+  role          UserRole  @default(USER)
+  status        UserStatus @default(ACTIVE)
+  avatarUrl     String?
+  bio           String?
+  
+  reputation    Int       @default(0)
+  totalPosts    Int       @default(0)
+  totalComments Int       @default(0)
+  totalLikes    Int       @default(0)
+  level         Int       @default(1)
+  experience    Int       @default(0)
+  
+  mutedUntil    DateTime?
+  mutedReason   String?
+  bannedAt      DateTime?
+  bannedReason  String?
+  
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+  lastLoginAt   DateTime?
+  
+  posts         Post[]
+  comments      Comment[]
+  likes         Like[]
+  notifications Notification[]
+  reports       Report[]        @relation("Reporter")
+  handledReports Report[]       @relation("Handler")
+  badges        UserBadge[]
+  postSnapshots PostSnapshot[]  @relation("SnapshotEditor")
+  auditLogs     AuditLog[]
+  sessions      Session[]
+  
+  @@index([role])
+  @@index([status])
+  @@index([reputation])
+}
+
+model Session {
+  id        String   @id @default(uuid())
+  userId    String
+  token     String   @unique
+  ipAddress String?
+  userAgent String?
+  createdAt DateTime @default(now())
+  expiresAt DateTime
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  
+  @@index([userId])
+  @@index([token])
+}
+
+model Category {
+  id          String    @id @default(uuid())
+  name        String
+  slug        String    @unique
+  description String?
+  sortOrder   Int       @default(0)
+  isActive    Boolean   @default(true)
+  parentId    String?
+  
+  parent      Category? @relation("CategoryParent", fields: [parentId], references: [id])
+  children    Category[] @relation("CategoryParent")
+  posts       Post[]
+  
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+}
+
+model Post {
+  id               String     @id @default(uuid())
+  title            String
+  content          String
+  categoryId       String
+  authorId         String
+  status           PostStatus @default(PENDING)
+  
+  viewCount        Int        @default(0)
+  likeCount        Int        @default(0)
+  commentCount     Int        @default(0)
+  shareCount       Int        @default(0)
+  
+  hotScore         Float      @default(0)
+  isPinned         Boolean    @default(false)
+  isFeatured       Boolean    @default(false)
+  
+  deletedAt        DateTime?
+  deletedBy        String?
+  deletedReason    String?
+  
+  createdAt        DateTime   @default(now())
+  updatedAt        DateTime   @updatedAt
+  lastBumpedAt     DateTime   @default(now())
+  
+  category         Category   @relation(fields: [categoryId], references: [id])
+  author           User       @relation(fields: [authorId], references: [id])
+  comments         Comment[]
+  likes            Like[]
+  snapshots        PostSnapshot[]
+  reports          Report[]
+  
+  @@index([categoryId])
+  @@index([authorId])
+  @@index([status])
+  @@index([hotScore])
+  @@index([createdAt])
+}
+
+model PostSnapshot {
+  id           String   @id @default(uuid())
+  postId       String
+  editorId     String
+  title        String
+  content      String
+  changeReason String?
+  version      Int      @default(1)
+  
+  post         Post     @relation(fields: [postId], references: [id], onDelete: Cascade)
+  editor       User     @relation("SnapshotEditor", fields: [editorId], references: [id])
+  
+  createdAt    DateTime @default(now())
+  
+  @@index([postId])
+  @@index([editorId])
+}
+
+model Comment {
+  id           String        @id @default(uuid())
+  postId       String
+  authorId     String
+  parentId     String?
+  content      String
+  status       CommentStatus @default(PUBLISHED)
+  
+  likeCount    Int           @default(0)
+  
+  deletedAt    DateTime?
+  deletedBy    String?
+  deletedReason String?
+  
+  createdAt    DateTime      @default(now())
+  updatedAt    DateTime      @updatedAt
+  
+  post         Post          @relation(fields: [postId], references: [id])
+  author       User          @relation(fields: [authorId], references: [id])
+  parent       Comment?      @relation("CommentParent", fields: [parentId], references: [id])
+  children     Comment[]     @relation("CommentParent")
+  likes        CommentLike[]
+  reports      Report[]
+  
+  @@index([postId])
+  @@index([authorId])
+  @@index([parentId])
+}
+
+model Like {
+  id        String   @id @default(uuid())
+  postId    String
+  userId    String
+  createdAt DateTime @default(now())
+  
+  post      Post     @relation(fields: [postId], references: [id], onDelete: Cascade)
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  
+  @@unique([postId, userId])
+  @@index([postId])
+  @@index([userId])
+}
+
+model CommentLike {
+  id        String   @id @default(uuid())
+  commentId String
+  userId    String
+  createdAt DateTime @default(now())
+  
+  comment   Comment  @relation(fields: [commentId], references: [id], onDelete: Cascade)
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  
+  @@unique([commentId, userId])
+  @@index([commentId])
+  @@index([userId])
+}
+
+model Report {
+  id             String       @id @default(uuid())
+  postId         String?
+  commentId      String?
+  reporterId     String
+  handlerId      String?
+  type           ReportType
+  reason         String
+  status         ReportStatus @default(PENDING)
+  
+  moderatorAction ModerationAction?
+  resolutionNote String?
+  
+  createdAt      DateTime     @default(now())
+  handledAt      DateTime?
+  
+  post           Post?        @relation(fields: [postId], references: [id])
+  comment        Comment?     @relation(fields: [commentId], references: [id])
+  reporter       User         @relation("Reporter", fields: [reporterId], references: [id])
+  handler        User?        @relation("Handler", fields: [handlerId], references: [id])
+  
+  @@index([postId])
+  @@index([commentId])
+  @@index([reporterId])
+  @@index([status])
+}
+
+model Notification {
+  id            String   @id @default(uuid())
+  userId        String
+  type          String
+  title         String
+  content       String?
+  relatedPostId String?
+  relatedUserId String?
+  isRead        Boolean  @default(false)
+  readAt        DateTime?
+  
+  user          User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  
+  createdAt     DateTime @default(now())
+  
+  @@index([userId])
+  @@index([isRead])
+}
+
+model Badge {
+  id           String   @id @default(uuid())
+  name         String
+  slug         String   @unique
+  description  String
+  iconUrl      String?
+  requirementType String
+  requirementValue Int
+  sortOrder    Int      @default(0)
+  isActive     Boolean  @default(true)
+  
+  users        UserBadge[]
+  
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+}
+
+model UserBadge {
+  id        String   @id @default(uuid())
+  userId    String
+  badgeId   String
+  awardedAt DateTime @default(now())
+  
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  badge     Badge    @relation(fields: [badgeId], references: [id], onDelete: Cascade)
+  
+  @@unique([userId, badgeId])
+  @@index([userId])
+}
+
+model AuditLog {
+  id           String   @id @default(uuid())
+  userId       String?
+  action       String
+  targetType   String
+  targetId     String?
+  oldValue     String?
+  newValue     String?
+  ipAddress    String?
+  userAgent    String?
+  
+  createdAt    DateTime @default(now())
+  
+  @@index([userId])
+  @@index([action])
+  @@index([targetType])
+  @@index([createdAt])
+}
+
+model DailyStats {
+  id            String   @id @default(uuid())
+  date          DateTime @unique
+  
+  activeUsers   Int      @default(0)
+  newUsers      Int      @default(0)
+  postsCreated  Int      @default(0)
+  commentsCreated Int    @default(0)
+  likesCreated  Int      @default(0)
+  reportsCreated Int     @default(0)
+  
+  postsDeleted  Int      @default(0)
+  usersMuted    Int      @default(0)
+  usersBanned   Int      @default(0)
+  
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+  
+  @@index([date])
+}
