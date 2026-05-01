@@ -1,0 +1,177 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', 'Hiragino Sans GB',
+    'Microsoft YaHei', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+#root {
+  min-height: 100vh;
+}
+
+.ant-layout {
+  min-height: 100vh;
+}
+
+.ant-layout-sider {
+  background: #001529;
+}
+
+.ant-menu-dark {
+  background: #001529;
+}
+
+.ant-layout-header {
+  background: #fff;
+  padding: 0 24px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  box-shadow: 0 1px 4px rgba(0, 21, 41, 0.08);
+  z-index: 10;
+}
+
+.ant-layout-content {
+  background: #f0f2f5;
+  padding: 24px;
+  margin: 24px;
+  border-radius: 8px;
+}
+
+.page-header {
+  margin-bottom: 24px;
+}
+
+.card-stat {
+  text-align: center;
+}
+
+.card-stat .ant-statistic-title {
+  color: rgba(0, 0, 0, 0.45);
+  font-size: 14px;
+}
+
+.card-stat .ant-statistic-content {
+  font-size: 32px;
+  font-weight: 600;
+}
+
+.status-draft {
+  background: #e0e0e0;
+  color: #424242;
+}
+
+.status-pending {
+  background: #fff3cd;
+  color: #856404;
+}
+
+.status-approved {
+  background: #d4edda;
+  color: #155724;
+}
+
+.status-published {
+  background: #cce5ff;
+  color: #004085;
+}
+
+.status-rejected {
+  background: #f8d7da;
+  color: #721c24;
+}
+
+.ant-tag {
+  border: none;
+  border-radius: 4px;
+}
+
+.login-container {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+}
+
+.login-card {
+  width: 400px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.15);
+}
+
+.login-title {
+  text-align: center;
+  margin-bottom: 32px;
+}
+
+.login-title h1 {
+  margin: 0;
+  color: #1890ff;
+  font-size: 28px;
+  font-weight: 600;
+}
+
+.login-title p {
+  margin: 8px 0 0;
+  color: rgba(0, 0, 0, 0.45);
+  font-size: 14px;
+}
+
+.header-right {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.logo {
+  height: 32px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 16px;
+  color: #fff;
+  font-size: 16px;
+  font-weight: 600;
+  white-space: nowrap;
+  overflow: hidden;
+}
+
+.logo-icon {
+  font-size: 24px;
+  color: #1890ff;
+}
+
+.table-actions {
+  display: flex;
+  gap: 8px;
+}
+
+.chart-container {
+  padding: 16px;
+}
+
+.ql-editor {
+  min-height: 400px;
+}
+
+.diff-viewer {
+  font-family: 'Consolas', 'Monaco', monospace;
+  font-size: 13px;
+  line-height: 1.5;
+}
+
+.diff-added {
+  background: #e6ffed;
+  color: #2c662d;
+}
+
+.diff-removed {
+  background: #ffeef0;
+  color: #b31d28;
+}

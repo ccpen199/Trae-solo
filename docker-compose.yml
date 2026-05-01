@@ -1,0 +1,87 @@
+version: '3.8'
+
+services:
+  postgres:
+    image: postgres:15-alpine
+    container_name: cms_postgres
+    environment:
+      POSTGRES_USER: cms_admin
+      POSTGRES_PASSWORD: CMS_Admin_2024_Secure
+      POSTGRES_DB: cms_platform
+    ports:
+      - "15432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+      - ./backend/init-db.sql:/docker-entrypoint-initdb.d/init-db.sql
+    networks:
+      - cms_network
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U cms_admin"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  redis:
+    image: redis:7-alpine
+    container_name: cms_redis
+    command: redis-server --requirepass CMS_Redis_2024_Secure
+    ports:
+      - "16379:6379"
+    volumes:
+      - redis_data:/data
+    networks:
+      - cms_network
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  rabbitmq:
+    image: rabbitmq:3.12-management-alpine
+    container_name: cms_rabbitmq
+    environment:
+      RABBITMQ_DEFAULT_USER: cms_mq
+      RABBITMQ_DEFAULT_PASS: CMS_MQ_2024_Secure
+    ports:
+      - "25672:5672"
+      - "35672:15672"
+    volumes:
+      - rabbitmq_data:/var/lib/rabbitmq
+    networks:
+      - cms_network
+    healthcheck:
+      test: ["CMD", "rabbitmq-diagnostics", "-q", "ping"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+
+  minio:
+    image: minio/minio:latest
+    container_name: cms_minio
+    command: server /data --console-address ":9001"
+    environment:
+      MINIO_ROOT_USER: cms_minio_admin
+      MINIO_ROOT_PASSWORD: CMS_Minio_2024_Secure
+    ports:
+      - "49000:9000"
+      - "49001:9001"
+    volumes:
+      - minio_data:/data
+    networks:
+      - cms_network
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:9000/minio/health/live"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+
+networks:
+  cms_network:
+    driver: bridge
+
+volumes:
+  postgres_data:
+  redis_data:
+  rabbitmq_data:
+  minio_data:

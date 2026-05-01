@@ -1,0 +1,30 @@
+{
+  "name": "cms-platform",
+  "version": "1.0.0",
+  "description": "企业级数字化内容平台",
+  "private": true,
+  "workspaces": [
+    "backend",
+    "frontend"
+  ],
+  "scripts": {
+    "docker:up": "docker-compose up -d",
+    "docker:down": "docker-compose down",
+    "docker:logs": "docker-compose logs -f",
+    "install:all": "cd backend && npm install && cd ../frontend && npm install",
+    "dev:backend": "cd backend && npm run start:dev",
+    "dev:frontend": "cd frontend && npm run dev",
+    "build:backend": "cd backend && npm run build",
+    "build:frontend": "cd frontend && npm run build",
+    "seed:users": "cd backend && npx ts-node src/seeders/init-users.ts"
+  },
+  "keywords": [
+    "cms",
+    "content-management",
+    "editorial-workflow",
+    "media-asset",
+    "multi-platform-distribution"
+  ],
+  "author": "CMS Platform Team",
+  "license": "UNLICENSED"
+}
