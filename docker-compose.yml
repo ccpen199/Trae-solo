@@ -1,0 +1,134 @@
+version: '3.8'
+
+services:
+  mongodb:
+    image: mongo:7.0.4
+    container_name: qa-community-mongodb
+    restart: unless-stopped
+    ports:
+      - "27017:27017"
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: qa_admin
+      MONGO_INITDB_ROOT_PASSWORD: QaSecure2024!
+      MONGO_INITDB_DATABASE: qa_community
+    volumes:
+      - mongodb_data:/data/db
+      - ./docker/mongo-init.js:/docker-entrypoint-initdb.d/mongo-init.js:ro
+    networks:
+      - qa-network
+    healthcheck:
+      test: echo 'db.runCommand("ping").ok' | mongosh localhost:27017/test --quiet
+      interval: 10s
+      timeout: 10s
+      retries: 5
+      start_period: 40s
+
+  redis:
+    image: redis:7.2.3-alpine
+    container_name: qa-community-redis
+    restart: unless-stopped
+    ports:
+      - "6379:6379"
+    command: redis-server --requirepass RedisSecure2024! --appendonly yes
+    volumes:
+      - redis_data:/data
+    networks:
+      - qa-network
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  rabbitmq:
+    image: rabbitmq:3.12.12-management-alpine
+    container_name: qa-community-rabbitmq
+    restart: unless-stopped
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+    environment:
+      RABBITMQ_DEFAULT_USER: qa_mq_user
+      RABBITMQ_DEFAULT_PASS: MqSecure2024!
+      RABBITMQ_DEFAULT_VHOST: qa_vhost
+    volumes:
+      - rabbitmq_data:/var/lib/rabbitmq
+    networks:
+      - qa-network
+    healthcheck:
+      test: ["CMD", "rabbitmq-diagnostics", "check_running"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 60s
+
+  api-server:
+    build:
+      context: ./server
+      dockerfile: Dockerfile
+    container_name: qa-community-api
+    restart: unless-stopped
+    ports:
+      - "8765:8765"
+    environment:
+      NODE_ENV: development
+      PORT: 8765
+      MONGODB_URI: mongodb://qa_admin:QaSecure2024!@mongodb:27017/qa_community?authSource=admin
+      MONGODB_DB_NAME: qa_community
+      REDIS_URL: redis://:RedisSecure2024!@redis:6379
+      RABBITMQ_URL: amqp://qa_mq_user:MqSecure2024!@rabbitmq:5672/qa_vhost
+      JWT_SECRET: QaCommunityJwtSecret2024VeryLongSecretKeyForProduction
+      JWT_EXPIRES_IN: 24h
+      CORS_ORIGIN: http://localhost:8766
+      LOG_LEVEL: debug
+      EXPERT_MATCH_MIN_SCORE: 0.6
+      EXPERT_MATCH_MAX_EXPERTS: 5
+      CREDIT_BASE_SCORE: 100
+      CREDIT_VOTE_WEIGHT: 0.5
+      CREDIT_ANSWER_WEIGHT: 2.0
+      CREDIT_ACCEPTED_WEIGHT: 10.0
+      SETTLEMENT_FEE_PERCENTAGE: 0.1
+      SETTLEMENT_MIN_AMOUNT: 10
+    depends_on:
+      mongodb:
+        condition: service_healthy
+      redis:
+        condition: service_started
+      rabbitmq:
+        condition: service_started
+    networks:
+      - qa-network
+    volumes:
+      - ./server/src:/app/src:ro
+      - ./server/package.json:/app/package.json:ro
+
+  frontend:
+    build:
+      context: ./client
+      dockerfile: Dockerfile
+    container_name: qa-community-frontend
+    restart: unless-stopped
+    ports:
+      - "8766:8766"
+    environment:
+      - NODE_ENV=development
+      - VITE_API_BASE_URL=http://localhost:8765
+    depends_on:
+      - api-server
+    networks:
+      - qa-network
+    volumes:
+      - ./client/src:/app/src:ro
+
+networks:
+  qa-network:
+    driver: bridge
+    name: qa-community-network
+
+volumes:
+  mongodb_data:
+    name: qa-mongodb-data
+  redis_data:
+    name: qa-redis-data
+  rabbitmq_data:
+    name: qa-rabbitmq-data

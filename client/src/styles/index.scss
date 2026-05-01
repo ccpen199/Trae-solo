@@ -1,0 +1,37 @@
+@use './variables' as *;
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html, body, #app {
+  height: 100%;
+}
+
+body {
+  font-family: $font-family;
+  font-size: $font-size-base;
+  color: $text-color-primary;
+  background-color: $bg-color-page;
+}
+
+a {
+  color: $primary-color;
+  text-decoration: none;
+  
+  &:hover {
+    text-decoration: underline;
+  }
+}
+
+.el-card {
+  margin-bottom: $spacing-medium;
+}
+
+.pagination-container {
+  display: flex;
+  justify-content: center;
+  margin-top: $spacing-medium;
+}
