@@ -1,0 +1,26 @@
+{
+  "name": "sms-platform",
+  "version": "1.0.0",
+  "description": "短信营销与通知平台",
+  "private": true,
+  "workspaces": [
+    "services/*",
+    "web-portal"
+  ],
+  "scripts": {
+    "start:gateway": "cd services/gateway-service && npm run start",
+    "start:template": "cd services/template-service && npm run start",
+    "start:sender": "cd services/sms-sender-service && npm run start",
+    "start:routing": "cd services/routing-engine && npm run start",
+    "start:frequency": "cd services/frequency-engine && npm run start",
+    "start:receipt": "cd services/receipt-engine && npm run start",
+    "start:compliance": "cd services/compliance-engine && npm run start",
+    "start:audit": "cd services/audit-service && npm run start",
+    "start:finance": "cd services/finance-service && npm run start",
+    "start:web": "cd web-portal && npm run dev",
+    "start:all": "concurrently \"npm run start:gateway\" \"npm run start:template\" \"npm run start:sender\" \"npm run start:routing\" \"npm run start:frequency\" \"npm run start:receipt\" \"npm run start:compliance\" \"npm run start:audit\" \"npm run start:finance\" \"npm run start:web\""
+  },
+  "devDependencies": {
+    "concurrently": "^8.2.0"
+  }
+}
