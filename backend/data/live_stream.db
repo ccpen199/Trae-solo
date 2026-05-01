@@ -1,0 +1,166 @@
+{
+  "users": [
+    {
+      "id": "admin_001",
+      "username": "admin",
+      "password": "$2a$10$di1sYSyhodsDEq5.SpoVVuWxjZ6MVE/w205c2MdWQiA5oI7P6KHZq",
+      "role": "platform_admin",
+      "nickname": "平台管理员",
+      "avatar": null,
+      "created_at": 1777473106998,
+      "updated_at": 1777473106998
+    },
+    {
+      "id": "streamer_001",
+      "username": "streamer1",
+      "password": "$2a$10$Dci/StdMEi.iqn4Ya6XW6ehNd5fPQCb59l31Rg3r2L.31jBavr0rO",
+      "role": "streamer",
+      "nickname": "主播小美",
+      "avatar": null,
+      "created_at": 1777473106998,
+      "updated_at": 1777473106998
+    },
+    {
+      "id": "streamer_002",
+      "username": "streamer2",
+      "password": "$2a$10$Dci/StdMEi.iqn4Ya6XW6ehNd5fPQCb59l31Rg3r2L.31jBavr0rO",
+      "role": "streamer",
+      "nickname": "主播阿强",
+      "avatar": null,
+      "created_at": 1777473106998,
+      "updated_at": 1777473106998
+    },
+    {
+      "id": "merchant_001",
+      "username": "merchant1",
+      "password": "$2a$10$vqIfF8CO5q4DJR1tJMeEAevdrsCh8/xdALro.H6q34/R.CIqXSD02",
+      "role": "merchant",
+      "nickname": "优品商城",
+      "avatar": null,
+      "created_at": 1777473106998,
+      "updated_at": 1777473106998
+    },
+    {
+      "id": "merchant_002",
+      "username": "merchant2",
+      "password": "$2a$10$vqIfF8CO5q4DJR1tJMeEAevdrsCh8/xdALro.H6q34/R.CIqXSD02",
+      "role": "merchant",
+      "nickname": "数码之家",
+      "avatar": null,
+      "created_at": 1777473106998,
+      "updated_at": 1777473106998
+    },
+    {
+      "id": "viewer_001",
+      "username": "viewer1",
+      "password": "$2a$10$4Pc4oaD7zs4O6nHdy7muUOr/GNQp9OdZjJWO5qhZuNXZ8yTnh2JPG",
+      "role": "viewer",
+      "nickname": "观众1号",
+      "avatar": null,
+      "created_at": 1777473106998,
+      "updated_at": 1777473106998
+    },
+    {
+      "id": "viewer_002",
+      "username": "viewer2",
+      "password": "$2a$10$4Pc4oaD7zs4O6nHdy7muUOr/GNQp9OdZjJWO5qhZuNXZ8yTnh2JPG",
+      "role": "viewer",
+      "nickname": "观众2号",
+      "avatar": null,
+      "created_at": 1777473106998,
+      "updated_at": 1777473106998
+    },
+    {
+      "id": "viewer_003",
+      "username": "viewer3",
+      "password": "$2a$10$4Pc4oaD7zs4O6nHdy7muUOr/GNQp9OdZjJWO5qhZuNXZ8yTnh2JPG",
+      "role": "viewer",
+      "nickname": "观众3号",
+      "avatar": null,
+      "created_at": 1777473106998,
+      "updated_at": 1777473106998
+    },
+    {
+      "id": "viewer_004",
+      "username": "viewer4",
+      "password": "$2a$10$4Pc4oaD7zs4O6nHdy7muUOr/GNQp9OdZjJWO5qhZuNXZ8yTnh2JPG",
+      "role": "viewer",
+      "nickname": "观众4号",
+      "avatar": null,
+      "created_at": 1777473106998,
+      "updated_at": 1777473106998
+    },
+    {
+      "id": "viewer_005",
+      "username": "viewer5",
+      "password": "$2a$10$4Pc4oaD7zs4O6nHdy7muUOr/GNQp9OdZjJWO5qhZuNXZ8yTnh2JPG",
+      "role": "viewer",
+      "nickname": "观众5号",
+      "avatar": null,
+      "created_at": 1777473106998,
+      "updated_at": 1777473106998
+    }
+  ],
+  "liveStreams": [],
+  "products": [
+    {
+      "id": "prod_001",
+      "name": "网红爆款口红",
+      "description": "持久不脱色，滋润保湿，多色号可选",
+      "price": 99,
+      "original_price": 199,
+      "image_url": "https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=luxury%20red%20lipstick%20product%20photo%20professional%20studio%20lighting&image_size=square",
+      "merchant_id": "merchant_001",
+      "stock": 1000,
+      "status": "active",
+      "created_at": 1777473106998,
+      "updated_at": 1777473106998
+    },
+    {
+      "id": "prod_002",
+      "name": "智能无线蓝牙耳机",
+      "description": "降噪功能，续航48小时，舒适佩戴",
+      "price": 199,
+      "original_price": 399,
+      "image_url": "https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=wireless%20bluetooth%20earbuds%20charging%20case%20modern%20tech%20product&image_size=square",
+      "merchant_id": "merchant_002",
+      "stock": 500,
+      "status": "active",
+      "created_at": 1777473106998,
+      "updated_at": 1777473106998
+    },
+    {
+      "id": "prod_003",
+      "name": "天然护肤套装",
+      "description": "洁面乳+爽肤水+精华液，补水保湿",
+      "price": 299,
+      "original_price": 599,
+      "image_url": "https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=skincare%20product%20set%20elegant%20packaging%20natural%20cosmetics&image_size=square",
+      "merchant_id": "merchant_001",
+      "stock": 300,
+      "status": "active",
+      "created_at": 1777473106998,
+      "updated_at": 1777473106998
+    },
+    {
+      "id": "prod_004",
+      "name": "便携式充电宝",
+      "description": "20000mAh大容量，快充支持",
+      "price": 129,
+      "original_price": 259,
+      "image_url": "https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=portable%20power%20bank%20sleek%20design%20LED%20display&image_size=square",
+      "merchant_id": "merchant_002",
+      "stock": 800,
+      "status": "active",
+      "created_at": 1777473106998,
+      "updated_at": 1777473106998
+    }
+  ],
+  "liveProducts": [],
+  "flashSales": [],
+  "orders": [],
+  "inventoryLogs": [],
+  "timelineEvents": [],
+  "chatMessages": [],
+  "productMarkers": []
+}
