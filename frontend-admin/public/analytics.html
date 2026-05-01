@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>数据分析 - 新闻资讯管理系统</title>
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+  <div class="app-layout">
+    <nav class="sidebar" id="sidebar">
+      <div class="sidebar-header">
+        <h1>📰 新闻资讯</h1>
+        <p>运营管理后台</p>
+      </div>
+      <div class="sidebar-menu">
+        <a href="/dashboard" class="menu-item">
+          <span class="icon">📊</span>
+          <span>数据仪表盘</span>
+        </a>
+        <a href="/contents" class="menu-item">
+          <span class="icon">📝</span>
+          <span>内容管理</span>
+        </a>
+        <a href="/ads" class="menu-item">
+          <span class="icon">📢</span>
+          <span>广告管理</span>
+        </a>
+        <a href="/users" class="menu-item">
+          <span class="icon">👥</span>
+          <span>用户管理</span>
+        </a>
+        <a href="/analytics" class="menu-item active">
+          <span class="icon">📈</span>
+          <span>数据分析</span>
+        </a>
+        <a href="/audit" class="menu-item">
+          <span class="icon">🔍</span>
+          <span>审计日志</span>
+        </a>
+      </div>
+    </nav>
+
+    <main class="main-content">
+      <header class="top-navbar">
+        <div class="navbar-left">
+          <h2>数据分析</h2>
+        </div>
+        <div class="navbar-right">
+          <div class="user-info">
+            <div class="user-avatar" id="userAvatar">A</div>
+            <span id="userName" style="font-weight: 500;">用户</span>
+          </div>
+        </div>
+      </header>
+
+      <div class="page-content">
+        <div class="page-header">
+          <h1 class="page-title">数据分析报表</h1>
+          <div class="page-actions">
+            <button class="btn btn-primary" onclick="loadAnalyticsData()">
+              🔄 刷新数据
+            </button>
+          </div>
+        </div>
+
+        <div class="tabs">
+          <div class="tab active" onclick="switchTab('overview')">数据概览</div>
+          <div class="tab" onclick="switchTab('dau')">DAU 趋势</div>
+          <div class="tab" onclick="switchTab('retention')">留存分析</div>
+          <div class="tab" onclick="switchTab('realtime')">实时统计</div>
+        </div>
+
+        <div id="tab-overview" class="tab-content">
+          <div class="card">
+            <div class="card-header">
+              <h3 class="card-title">核心指标</h3>
+            </div>
+            <div class="card-body">
+              <div class="stats-grid">
+                <div class="stat-card">
+                  <div class="stat-card-header">
+                    <div>
+                      <div class="stat-card-title">总内容数</div>
+                      <div class="stat-card-value" id="totalContents">-</div>
+                    </div>
+                    <div class="stat-card-icon icon-primary">📝</div>
+                  </div>
+                </div>
+                <div class="stat-card">
+                  <div class="stat-card-header">
+                    <div>
+                      <div class="stat-card-title">已发布</div>
+                      <div class="stat-card-value" id="publishedContents">-</div>
+                    </div>
+                    <div class="stat-card-icon icon-success">✅</div>
+                  </div>
+                </div>
+                <div class="stat-card">
+                  <div class="stat-card-header">
+                    <div>
+                      <div class="stat-card-title">总用户数</div>
+                      <div class="stat-card-value" id="totalUsers">-</div>
+                    </div>
+                    <div class="stat-card-icon icon-warning">👥</div>
+                  </div>
+                </div>
+                <div class="stat-card">
+                  <div class="stat-card-header">
+                    <div>
+                      <div class="stat-card-title">活跃用户</div>
+                      <div class="stat-card-value" id="activeUsers">-</div>
+                    </div>
+                    <div class="stat-card-icon icon-danger">🔥</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="card">
+            <div class="card-header">
+              <h3 class="card-title">统计操作</h3>
+            </div>
+            <div class="card-body">
+              <div class="form-row">
+                <div class="form-group">
+                  <label>计算今日 DAU</label>
+                  <button class="btn btn-primary btn-block" onclick="calculateDAU()">
+                    📊 执行统计
+                  </button>
+                </div>
+                <div class="form-group">
+                  <label>计算留存数据</label>
+                  <button class="btn btn-success btn-block" onclick="calculateRetention()">
+                    📈 计算留存
+                  </button>
+                </div>
+                <div class="form-group">
+                  <label>查看健康状态</label>
+                  <button class="btn btn-secondary btn-block" onclick="checkHealth()">
+                    ❤️ 系统健康
+                  </button>
+                </div>
+                <div class="form-group">
+                  <label>实时仪表盘</label>
+                  <a href="/dashboard" class="btn btn-warning btn-block" style="display: block; text-decoration: none;">
+                    🚀 前往查看
+                  </a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div id="tab-dau" class="tab-content d-none">
+          <div class="card">
+            <div class="card-header">
+              <h3 class="card-title">DAU 统计说明</h3>
+            </div>
+            <div class="card-body">
+              <div class="alert alert-info">
+                <strong>DAU (Daily Active Users) 日活跃用户数</strong><br><br>
+                <ul style="margin-top: 12px; padding-left: 20px;">
+                  <li>统计每日有互动行为的用户数量</li>
+                  <li>包括浏览、点赞、评论、分享等行为</li>
+                  <li>按小时统计用户分布，用于分析活跃时段</li>
+                  <li>支持按日期范围查询历史趋势</li>
+                </ul>
+              </div>
+              <div class="chart-container">
+                <div class="chart-placeholder">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M18 20V10M12 20V4M6 20v-6"/>
+                  </svg>
+                  <div>图表组件</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div id="tab-retention" class="tab-content d-none">
+          <div class="card">
+            <div class="card-header">
+              <h3 class="card-title">留存分析说明</h3>
+            </div>
+            <div class="card-body">
+              <div class="alert alert-info">
+                <strong>用户留存分析</strong><br><br>
+                <ul style="margin-top: 12px; padding-left: 20px;">
+                  <li>次日留存率 (Day 1)：注册后次日活跃用户占比</li>
+                  <li>3日留存率 (Day 3)：注册后第3天活跃用户占比</li>
+                  <li>7日留存率 (Day 7)：注册后第7天活跃用户占比</li>
+                  <li>14日/30日留存率：衡量用户长期粘性</li>
+                </ul>
+              </div>
+              <div class="chart-container">
+                <div class="chart-placeholder">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <circle cx="12" cy="12" r="10"/>
+                    <polyline points="12 6 12 12 16 14"/>
+                  </svg>
+                  <div>留存漏斗图</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div id="tab-realtime" class="tab-content d-none">
+          <div class="card">
+            <div class="card-header">
+              <h3 class="card-title">实时统计说明</h3>
+            </div>
+            <div class="card-body">
+              <div class="alert alert-success">
+                <strong>实时数据看板功能</strong><br><br>
+                <ul style="margin-top: 12px; padding-left: 20px;">
+                  <li>今日活跃用户数</li>
+                  <li>今日内容浏览量、点赞数、评论数</li>
+                  <li>今日推荐分发量</li>
+                  <li>今日广告曝光量、点击量、CTR</li>
+                  <li>系统运行状态监控</li>
+                </ul>
+              </div>
+              <div class="mt-4">
+                <a href="/dashboard" class="btn btn-primary">
+                  🚀 前往实时数据仪表盘
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <script src="/js/api.js"></script>
+  <script>
+    async function checkAuth() {
+      if (!api.token) {
+        window.location.href = '/login';
+        return;
+      }
+      
+      try {
+        const result = await api.getProfile();
+        if (result.success) {
+          const user = result.data.user;
+          document.getElementById('userName').textContent = user.nickname || user.username;
+          document.getElementById('userAvatar').textContent = (user.nickname || user.username).charAt(0).toUpperCase();
+        }
+      } catch (e) {
+        api.setToken(null);
+        window.location.href = '/login';
+      }
+    }
+
+    function switchTab(tabName) {
+      document.querySelectorAll('.tab').forEach(tab => tab.classList.remove('active'));
+      document.querySelectorAll('.tab-content').forEach(content => content.classList.add('d-none'));
+      
+      document.querySelector(`.tab[onclick="switchTab('${tabName}')"]`).classList.add('active');
+      document.getElementById(`tab-${tabName}`).classList.remove('d-none');
+    }
+
+    async function loadAnalyticsData() {
+      try {
+        const [overviewResult] = await Promise.all([
+          api.getOverview()
+        ]);
+
+        if (overviewResult.success) {
+          const content = overviewResult.data.content;
+          const user = overviewResult.data.user;
+          
+          document.getElementById('totalContents').textContent = content.total?.toLocaleString() || '-';
+          document.getElementById('publishedContents').textContent = content.published?.toLocaleString() || '-';
+          document.getElementById('totalUsers').textContent = user.total?.toLocaleString() || '-';
+          document.getElementById('activeUsers').textContent = user.active?.toLocaleString() || '-';
+        }
+      } catch (e) {
+        console.error('Failed to load analytics:', e);
+      }
+    }
+
+    async function calculateDAU() {
+      try {
+        const result = await api.post('/analytics/dau/calculate', {});
+        if (result.success) {
+          alert('DAU 统计完成！');
+          loadAnalyticsData();
+        }
+      } catch (e) {
+        alert('统计失败: ' + e.message);
+      }
+    }
+
+    async function calculateRetention() {
+      const cohortDate = prompt('请输入分组日期 (YYYY-MM-DD)，例如 2026-04-20');
+      if (!cohortDate) return;
+      
+      try {
+        const result = await api.post('/analytics/retention/calculate', { cohortDate });
+        if (result.success && result.data) {
+          alert('留存统计完成！留存率: ' + (result.data.retention.day1Retention * 100).toFixed(2) + '%');
+        } else {
+          alert(result.message || '统计完成');
+        }
+      } catch (e) {
+        alert('统计失败: ' + e.message);
+      }
+    }
+
+    async function checkHealth() {
+      try {
+        const result = await api.getHealth();
+        if (result.success) {
+          alert('系统状态正常！\n数据库: ' + (result.data.database?.status || 'N/A') + 
+                '\nRedis: ' + (result.data.redis?.status || 'N/A'));
+        }
+      } catch (e) {
+        alert('健康检查失败: ' + e.message);
+      }
+    }
+
+    document.addEventListener('DOMContentLoaded', async () => {
+      await checkAuth();
+      await loadAnalyticsData();
+    });
+  </script>
+</body>
+</html>

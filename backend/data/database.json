@@ -1,0 +1,526 @@
+{
+  "users": [
+    {
+      "id": "343da6d4-d01e-4bff-aaf9-19fee90a73df",
+      "username": "admin",
+      "password": "$2a$10$uNhj6z9UnwMrkkHF.F3FKOGdmjVze/A.hDmjhznOZOp898h3fquJ2",
+      "nickname": "超级管理员",
+      "role": "admin",
+      "status": "active",
+      "email": "admin@newsapp.com",
+      "createdAt": "2026-04-29T14:10:12.330Z",
+      "updatedAt": "2026-04-29T14:10:12.330Z"
+    },
+    {
+      "id": "1687c8c4-dd46-4bad-b14e-4a54a3670fad",
+      "username": "operator",
+      "password": "$2a$10$NZrAVVG9TNdxOtRDyGQlxOqgxAH/a/MJFTHO/ePDRzPN6kGcgXfMW",
+      "nickname": "内容运营",
+      "role": "operator",
+      "status": "active",
+      "createdAt": "2026-04-29T14:10:12.330Z",
+      "updatedAt": "2026-04-29T14:10:12.330Z"
+    },
+    {
+      "id": "ba99eb1a-9520-4442-af20-1c310594b7de",
+      "username": "algorithm",
+      "password": "$2a$10$ztiPlysgeeVmVC/nEZJpo.RB.2qaw2jVyUir8Nc3r.ZrVI4bEMlY2",
+      "nickname": "算法工程师",
+      "role": "algorithm",
+      "status": "active",
+      "createdAt": "2026-04-29T14:10:12.330Z",
+      "updatedAt": "2026-04-29T14:10:12.330Z"
+    },
+    {
+      "id": "98689568-3c48-4617-8db0-fdf89ff6d78b",
+      "username": "advertiser",
+      "password": "$2a$10$ydOMRMwKpZ6nBgsR1XpBRuFplIBjV7/1VgnmIN7sNrxcPX1j9WTlm",
+      "nickname": "广告主",
+      "role": "advertiser",
+      "status": "active",
+      "createdAt": "2026-04-29T14:10:12.330Z",
+      "updatedAt": "2026-04-29T14:10:12.330Z"
+    },
+    {
+      "id": "bd63b9fc-c148-4cd1-854e-440822ab7eae",
+      "username": "reader",
+      "password": "$2a$10$pqE7TRuImJbybFpYSmmkGedaT6mEc2Nm3SF5a1P7Uy5GqTD.uDL9C",
+      "nickname": "测试读者",
+      "role": "reader",
+      "status": "active",
+      "createdAt": "2026-04-29T14:10:12.330Z",
+      "updatedAt": "2026-04-29T14:10:12.330Z"
+    }
+  ],
+  "categories": [
+    {
+      "id": "12f8b8b9-4681-493b-aa56-e02e828c97cc",
+      "name": "科技",
+      "code": "tech",
+      "keywords": "科技,互联网,人工智能,AI,云计算,大数据,5G,区块链,手机,电脑,软件,硬件,程序,开发",
+      "sortOrder": 1,
+      "status": "active",
+      "createdAt": "2026-04-29T14:10:12.330Z",
+      "updatedAt": "2026-04-29T14:10:12.330Z"
+    },
+    {
+      "id": "72af6ea4-3607-4ff7-92fe-523d308d0838",
+      "name": "财经",
+      "code": "finance",
+      "keywords": "财经,股票,基金,投资,理财,银行,保险,证券,经济,金融,货币,汇率,股市",
+      "sortOrder": 2,
+      "status": "active",
+      "createdAt": "2026-04-29T14:10:12.330Z",
+      "updatedAt": "2026-04-29T14:10:12.330Z"
+    },
+    {
+      "id": "78f07c43-3271-4cc9-843f-ded8d1096388",
+      "name": "体育",
+      "code": "sports",
+      "keywords": "体育,足球,篮球,NBA,CBA,奥运会,世界杯,网球,运动,运动员,比赛,冠军",
+      "sortOrder": 3,
+      "status": "active",
+      "createdAt": "2026-04-29T14:10:12.330Z",
+      "updatedAt": "2026-04-29T14:10:12.330Z"
+    },
+    {
+      "id": "c4702468-4667-480d-b605-ee653aea1a73",
+      "name": "娱乐",
+      "code": "entertainment",
+      "keywords": "娱乐,明星,电影,电视剧,音乐,综艺,演唱会,演员,歌手,节目,影视",
+      "sortOrder": 4,
+      "status": "active",
+      "createdAt": "2026-04-29T14:10:12.330Z",
+      "updatedAt": "2026-04-29T14:10:12.330Z"
+    },
+    {
+      "id": "b611be4b-bc27-4871-9e7a-9bbb16c3d3cc",
+      "name": "健康",
+      "code": "health",
+      "keywords": "健康,医疗,养生,健身,减肥,饮食,运动,医院,医生,药品",
+      "sortOrder": 5,
+      "status": "active",
+      "createdAt": "2026-04-29T14:10:12.330Z",
+      "updatedAt": "2026-04-29T14:10:12.330Z"
+    },
+    {
+      "id": "02188034-5875-4236-a4c5-8891ac039207",
+      "name": "教育",
+      "code": "education",
+      "keywords": "教育,学习,学校,高考,考研,留学,培训,课程,学生,老师",
+      "sortOrder": 6,
+      "status": "active",
+      "createdAt": "2026-04-29T14:10:12.330Z",
+      "updatedAt": "2026-04-29T14:10:12.330Z"
+    },
+    {
+      "id": "8643f589-ea67-4fe4-8e87-60534a14660a",
+      "name": "汽车",
+      "code": "auto",
+      "keywords": "汽车,新能源,特斯拉,电动车,SUV,轿车,跑车,驾驶,车展",
+      "sortOrder": 7,
+      "status": "active",
+      "createdAt": "2026-04-29T14:10:12.330Z",
+      "updatedAt": "2026-04-29T14:10:12.330Z"
+    },
+    {
+      "id": "ddb1c189-052c-40fe-8dda-ff234b17c2b1",
+      "name": "房产",
+      "code": "house",
+      "keywords": "房产,房价,买房,租房,装修,家具,家居,物业,地产",
+      "sortOrder": 8,
+      "status": "active",
+      "createdAt": "2026-04-29T14:10:12.330Z",
+      "updatedAt": "2026-04-29T14:10:12.330Z"
+    },
+    {
+      "id": "746980a8-b24b-4700-9aa7-f023a39742b6",
+      "name": "美食",
+      "code": "food",
+      "keywords": "美食,烹饪,菜谱,餐厅,美食推荐,食材,料理,甜品",
+      "sortOrder": 9,
+      "status": "active",
+      "createdAt": "2026-04-29T14:10:12.330Z",
+      "updatedAt": "2026-04-29T14:10:12.330Z"
+    },
+    {
+      "id": "0a2ce3d7-7ba0-4b80-8adc-e2604606af94",
+      "name": "旅游",
+      "code": "travel",
+      "keywords": "旅游,旅行,景点,酒店,机票,攻略,游记,度假,航班",
+      "sortOrder": 10,
+      "status": "active",
+      "createdAt": "2026-04-29T14:10:12.330Z",
+      "updatedAt": "2026-04-29T14:10:12.330Z"
+    },
+    {
+      "id": "b855c9e0-209f-4c25-b4f2-22cf3fb09eb3",
+      "name": "游戏",
+      "code": "game",
+      "keywords": "游戏,电竞,手游,端游,王者荣耀,原神,吃鸡,玩家",
+      "sortOrder": 11,
+      "status": "active",
+      "createdAt": "2026-04-29T14:10:12.330Z",
+      "updatedAt": "2026-04-29T14:10:12.330Z"
+    },
+    {
+      "id": "82162bfe-7b67-4312-a2b9-aac59ea8f30e",
+      "name": "军事",
+      "code": "military",
+      "keywords": "军事,武器,军队,国防,战争,战略,装备,部队",
+      "sortOrder": 12,
+      "status": "active",
+      "createdAt": "2026-04-29T14:10:12.330Z",
+      "updatedAt": "2026-04-29T14:10:12.330Z"
+    }
+  ],
+  "weightTags": [
+    {
+      "id": "532741c5-1d4e-4ef4-9f82-944a181aabe3",
+      "name": "头条推荐",
+      "code": "headline",
+      "weightValue": 3,
+      "category": "quality",
+      "description": "头条推荐内容",
+      "status": "active",
+      "createdAt": "2026-04-29T14:10:12.330Z",
+      "updatedAt": "2026-04-29T14:10:12.330Z"
+    },
+    {
+      "id": "aaa1ff83-17d3-4730-8987-b60c5c83987a",
+      "name": "独家原创",
+      "code": "original",
+      "weightValue": 2.5,
+      "category": "quality",
+      "description": "独家原创内容",
+      "status": "active",
+      "createdAt": "2026-04-29T14:10:12.330Z",
+      "updatedAt": "2026-04-29T14:10:12.330Z"
+    },
+    {
+      "id": "e12cb0dc-8336-497e-90f9-5c5b6b46feb2",
+      "name": "权威来源",
+      "code": "authoritative",
+      "weightValue": 2,
+      "category": "quality",
+      "description": "权威媒体来源",
+      "status": "active",
+      "createdAt": "2026-04-29T14:10:12.330Z",
+      "updatedAt": "2026-04-29T14:10:12.330Z"
+    },
+    {
+      "id": "4f37187c-e38a-40a0-b8b6-bcf65ad193ac",
+      "name": "实时热点",
+      "code": "hot",
+      "weightValue": 2,
+      "category": "hot",
+      "description": "实时热点内容",
+      "status": "active",
+      "createdAt": "2026-04-29T14:10:12.330Z",
+      "updatedAt": "2026-04-29T14:10:12.330Z"
+    },
+    {
+      "id": "e555d842-6f80-4b7d-a216-8e38b90db85e",
+      "name": "突发新闻",
+      "code": "breaking",
+      "weightValue": 2.5,
+      "category": "timeliness",
+      "description": "突发新闻",
+      "status": "active",
+      "createdAt": "2026-04-29T14:10:12.330Z",
+      "updatedAt": "2026-04-29T14:10:12.330Z"
+    },
+    {
+      "id": "59788d25-9442-4ee1-b0ba-2b5a4ad7301f",
+      "name": "深度报道",
+      "code": "depth",
+      "weightValue": 1.8,
+      "category": "quality",
+      "description": "深度分析报道",
+      "status": "active",
+      "createdAt": "2026-04-29T14:10:12.330Z",
+      "updatedAt": "2026-04-29T14:10:12.330Z"
+    },
+    {
+      "id": "904fd30d-06af-47e1-93a0-f575a7f568dd",
+      "name": "推荐置顶",
+      "code": "top",
+      "weightValue": 3.5,
+      "category": "custom",
+      "description": "运营置顶推荐",
+      "status": "active",
+      "createdAt": "2026-04-29T14:10:12.330Z",
+      "updatedAt": "2026-04-29T14:10:12.330Z"
+    }
+  ],
+  "contents": [
+    {
+      "id": "c5da5455-5d73-470f-86f2-afaecbc6ba78",
+      "title": "人工智能技术突破：新一代大语言模型发布",
+      "content": "近日，科技巨头发布了新一代大语言模型，在多项基准测试中取得了突破性进展。该模型在理解能力、推理能力和生成能力方面都有显著提升，预计将广泛应用于智能客服、内容生成、代码辅助等领域。",
+      "summary": "新一代大语言模型发布，多项技术指标突破",
+      "author": "科技日报",
+      "source": "官方发布",
+      "categoryCode": "tech",
+      "categoryName": "科技",
+      "status": "published",
+      "semanticTags": [
+        "人工智能",
+        "AI",
+        "科技"
+      ],
+      "weightTags": [
+        "hot"
+      ],
+      "weightScore": 2,
+      "hotScore": 85,
+      "viewCount": 1250,
+      "likeCount": 89,
+      "commentCount": 23,
+      "shareCount": 15,
+      "collectCount": 56,
+      "readCount": 890,
+      "createdBy": "343da6d4-d01e-4bff-aaf9-19fee90a73df",
+      "publishedAt": "2026-04-29T14:10:12.330Z",
+      "deduplicationHash": "e061990f787af1d06361bb2e293dcacb4cc42f39751312cd555564c5c10bb576",
+      "createdAt": "2026-04-29T14:10:12.330Z",
+      "updatedAt": "2026-04-29T14:10:12.330Z"
+    },
+    {
+      "id": "71678493-e339-47a0-9c4d-d518beb86998",
+      "title": "股票市场分析：科技股引领大盘上涨",
+      "content": "今日股市迎来开门红，科技板块表现强势。分析人士认为，随着人工智能技术的快速发展，相关产业链将持续受益。投资者应关注具有核心技术优势的企业。",
+      "summary": "科技股领涨，市场情绪回暖",
+      "author": "财经周刊",
+      "source": "市场分析",
+      "categoryCode": "finance",
+      "categoryName": "财经",
+      "status": "published",
+      "semanticTags": [
+        "股票",
+        "财经",
+        "投资"
+      ],
+      "weightTags": [],
+      "weightScore": 1,
+      "hotScore": 42,
+      "viewCount": 890,
+      "likeCount": 45,
+      "commentCount": 12,
+      "shareCount": 8,
+      "collectCount": 34,
+      "readCount": 620,
+      "createdBy": "343da6d4-d01e-4bff-aaf9-19fee90a73df",
+      "publishedAt": "2026-04-29T14:10:12.330Z",
+      "deduplicationHash": "829b73a564995c427f4d43c84f205918bfe7acfd567fda00b9dd8edb1e3533a6",
+      "createdAt": "2026-04-29T14:10:12.330Z",
+      "updatedAt": "2026-04-29T14:10:12.330Z"
+    },
+    {
+      "id": "b65d54d0-fe61-4e81-b41a-e1e3bd23471c",
+      "title": "世界杯预选赛：国足客场逼平对手",
+      "content": "在昨晚进行的世界杯预选赛中，中国国家男子足球队客场挑战强敌。虽然场面被动，但球员们顽强拼搏，最终凭借一次反击机会扳平比分，取得宝贵的一分。",
+      "summary": "国足客场逼平，保持出线希望",
+      "author": "体育时报",
+      "source": "赛事报道",
+      "categoryCode": "sports",
+      "categoryName": "体育",
+      "status": "published",
+      "semanticTags": [
+        "体育",
+        "足球",
+        "世界杯"
+      ],
+      "weightTags": [],
+      "weightScore": 1,
+      "hotScore": 67,
+      "viewCount": 2100,
+      "likeCount": 156,
+      "commentCount": 89,
+      "shareCount": 34,
+      "collectCount": 12,
+      "readCount": 1580,
+      "createdBy": "343da6d4-d01e-4bff-aaf9-19fee90a73df",
+      "publishedAt": "2026-04-29T14:10:12.330Z",
+      "deduplicationHash": "429d4498fef82925a7488fb2f4a978bc535286520186ebc289a629997ad456a5",
+      "createdAt": "2026-04-29T14:10:12.330Z",
+      "updatedAt": "2026-04-29T14:10:12.330Z"
+    },
+    {
+      "id": "c1ed9c02-08aa-41f5-b369-651ac76eda19",
+      "title": "健康生活指南：如何科学减肥",
+      "content": "随着生活水平的提高，越来越多的人关注健康管理。科学减肥需要均衡饮食和适量运动的结合。专家建议，每周至少进行150分钟中等强度有氧运动，同时控制热量摄入。",
+      "summary": "均衡饮食+适量运动是健康减肥的关键",
+      "author": "健康生活",
+      "source": "专家解读",
+      "categoryCode": "health",
+      "categoryName": "健康",
+      "status": "published",
+      "semanticTags": [
+        "健康",
+        "减肥",
+        "运动",
+        "饮食"
+      ],
+      "weightTags": [],
+      "weightScore": 1,
+      "hotScore": 35,
+      "viewCount": 680,
+      "likeCount": 67,
+      "commentCount": 8,
+      "shareCount": 23,
+      "collectCount": 145,
+      "readCount": 520,
+      "createdBy": "343da6d4-d01e-4bff-aaf9-19fee90a73df",
+      "publishedAt": "2026-04-29T14:10:12.330Z",
+      "deduplicationHash": "50914f388a81c3b95800c335b856440a42891b5fc218d27e052b3a717d144923",
+      "createdAt": "2026-04-29T14:10:12.330Z",
+      "updatedAt": "2026-04-29T14:10:12.330Z"
+    },
+    {
+      "id": "583c48f9-227d-42fb-8104-cd3176a6a1cc",
+      "title": "娱乐圈动态：某知名导演新作首映",
+      "content": "备受期待的某知名导演新作今日在京举行首映礼。影片讲述了一个关于成长与救赎的故事，画面精美，情感真挚。业内人士预测，该片有望成为年度票房黑马。",
+      "summary": "知名导演新作首映，口碑爆棚",
+      "author": "娱乐头条",
+      "source": "现场报道",
+      "categoryCode": "entertainment",
+      "categoryName": "娱乐",
+      "status": "published",
+      "semanticTags": [
+        "娱乐",
+        "电影",
+        "明星"
+      ],
+      "weightTags": [],
+      "weightScore": 1,
+      "hotScore": 55,
+      "viewCount": 1890,
+      "likeCount": 234,
+      "commentCount": 67,
+      "shareCount": 89,
+      "collectCount": 23,
+      "readCount": 1450,
+      "createdBy": "343da6d4-d01e-4bff-aaf9-19fee90a73df",
+      "publishedAt": "2026-04-29T14:10:12.330Z",
+      "deduplicationHash": "b546db755b949fee0a0b3ff7df361b00d6522427261fc47afffef7b98da58d78",
+      "createdAt": "2026-04-29T14:10:12.330Z",
+      "updatedAt": "2026-04-29T14:10:12.330Z"
+    }
+  ],
+  "userProfiles": [
+    {
+      "id": "21b3bdcd-8231-457a-a796-bda6e2525930",
+      "userId": "343da6d4-d01e-4bff-aaf9-19fee90a73df",
+      "interestTags": [],
+      "categoryPreferences": {},
+      "readHistory": [],
+      "negativeFeedbackTags": [],
+      "createdAt": "2026-04-29T14:10:12.330Z",
+      "updatedAt": "2026-04-29T14:10:12.330Z"
+    },
+    {
+      "id": "bb924ec0-5a3c-4a4a-995e-9b3fce98ca13",
+      "userId": "1687c8c4-dd46-4bad-b14e-4a54a3670fad",
+      "interestTags": [],
+      "categoryPreferences": {},
+      "readHistory": [],
+      "negativeFeedbackTags": [],
+      "createdAt": "2026-04-29T14:10:12.330Z",
+      "updatedAt": "2026-04-29T14:10:12.330Z"
+    },
+    {
+      "id": "3718f15a-84bf-4fd1-938c-d9bf45194900",
+      "userId": "ba99eb1a-9520-4442-af20-1c310594b7de",
+      "interestTags": [],
+      "categoryPreferences": {},
+      "readHistory": [],
+      "negativeFeedbackTags": [],
+      "createdAt": "2026-04-29T14:10:12.330Z",
+      "updatedAt": "2026-04-29T14:10:12.330Z"
+    },
+    {
+      "id": "d193e19a-4935-42f1-a194-1a44c4c487a0",
+      "userId": "98689568-3c48-4617-8db0-fdf89ff6d78b",
+      "interestTags": [],
+      "categoryPreferences": {},
+      "readHistory": [],
+      "negativeFeedbackTags": [],
+      "createdAt": "2026-04-29T14:10:12.330Z",
+      "updatedAt": "2026-04-29T14:10:12.330Z"
+    },
+    {
+      "id": "6ae5603e-d803-4493-9fb2-d527ec1ed1dc",
+      "userId": "bd63b9fc-c148-4cd1-854e-440822ab7eae",
+      "interestTags": [],
+      "categoryPreferences": {},
+      "readHistory": [],
+      "negativeFeedbackTags": [],
+      "createdAt": "2026-04-29T14:10:12.330Z",
+      "updatedAt": "2026-04-29T14:10:12.330Z"
+    }
+  ],
+  "recommendationRecords": [],
+  "advertisers": [],
+  "campaigns": [
+    {
+      "id": "2601d4ac-46a5-42ea-bb82-9148cb3d15ed",
+      "advertiserId": "98689568-3c48-4617-8db0-fdf89ff6d78b",
+      "name": "新品上市推广",
+      "description": "2024年春季新品上市推广活动",
+      "startDate": "2026-04-29T14:10:12.330Z",
+      "endDate": null,
+      "budget": 10000,
+      "spentAmount": 1580,
+      "cpcBid": 0.5,
+      "targeting": {
+        "categories": [
+          "tech",
+          "entertainment"
+        ],
+        "minAge": null,
+        "maxAge": null,
+        "gender": null,
+        "regions": [],
+        "interestTags": [
+          "科技",
+          "手机",
+          "数码"
+        ]
+      },
+      "placementPositions": [
+        3,
+        7,
+        11,
+        15
+      ],
+      "status": "active",
+      "createdAt": "2026-04-29T14:10:12.330Z",
+      "updatedAt": "2026-04-29T14:10:12.330Z"
+    }
+  ],
+  "adMaterials": [
+    {
+      "id": "32b0a670-76f0-4750-966c-df357cabb4bc",
+      "campaignId": "2601d4ac-46a5-42ea-bb82-9148cb3d15ed",
+      "title": "全新旗舰手机震撼发布",
+      "description": "搭载最新处理器，超强续航，卓越拍照体验",
+      "imageUrl": "",
+      "linkUrl": "https://example.com/product",
+      "ctaText": "立即了解",
+      "status": "active",
+      "createdAt": "2026-04-29T14:10:12.330Z",
+      "updatedAt": "2026-04-29T14:10:12.330Z"
+    }
+  ],
+  "adDeliveries": [],
+  "interactions": [],
+  "comments": [],
+  "contentLikes": [],
+  "contentCollects": [],
+  "negativeFeedbacks": [],
+  "dailyStats": [],
+  "retentionStats": [],
+  "auditLogs": [],
+  "adReconciliations": []
+}

@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>注册 - 新闻资讯</title>
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+  <div class="login-container">
+    <div class="login-card">
+      <div class="login-header">
+        <div class="login-logo">📰</div>
+        <h1 class="login-title">注册账号</h1>
+        <p class="login-subtitle">开启个性化资讯之旅</p>
+      </div>
+      
+      <form id="registerForm">
+        <div class="form-group">
+          <label for="username">用户名</label>
+          <input type="text" id="username" class="form-control" placeholder="请输入用户名" required>
+        </div>
+        
+        <div class="form-group">
+          <label for="nickname">昵称</label>
+          <input type="text" id="nickname" class="form-control" placeholder="请输入昵称">
+        </div>
+        
+        <div class="form-group">
+          <label for="password">密码</label>
+          <input type="password" id="password" class="form-control" placeholder="请输入密码" required>
+        </div>
+        
+        <div class="form-group">
+          <label for="confirmPassword">确认密码</label>
+          <input type="password" id="confirmPassword" class="form-control" placeholder="请再次输入密码" required>
+        </div>
+        
+        <div id="errorMessage" class="alert alert-error d-none"></div>
+        <div id="successMessage" class="alert alert-success d-none"></div>
+        
+        <button type="submit" class="btn btn-primary">
+          注册
+        </button>
+      </form>
+      
+      <div class="login-footer">
+        已有账号？<a href="/login">立即登录</a>
+      </div>
+    </div>
+  </div>
+
+  <script src="/js/api.js"></script>
+  <script>
+    document.getElementById('registerForm').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      
+      const username = document.getElementById('username').value;
+      const nickname = document.getElementById('nickname').value;
+      const password = document.getElementById('password').value;
+      const confirmPassword = document.getElementById('confirmPassword').value;
+      const errorDiv = document.getElementById('errorMessage');
+      const successDiv = document.getElementById('successMessage');
+      
+      errorDiv.classList.add('d-none');
+      successDiv.classList.add('d-none');
+      
+      if (password !== confirmPassword) {
+        errorDiv.textContent = '两次输入的密码不一致';
+        errorDiv.classList.remove('d-none');
+        return;
+      }
+      
+      if (password.length < 6) {
+        errorDiv.textContent = '密码长度至少6位';
+        errorDiv.classList.remove('d-none');
+        return;
+      }
+      
+      try {
+        const result = await api.register(username, password, 'reader');
+        
+        if (result.success) {
+          successDiv.textContent = '注册成功！正在跳转登录...';
+          successDiv.classList.remove('d-none');
+          
+          setTimeout(async () => {
+            await api.login(username, password);
+            window.location.href = '/';
+          }, 1000);
+        }
+      } catch (error) {
+        errorDiv.textContent = error.message || '注册失败，请稍后重试';
+        errorDiv.classList.remove('d-none');
+      }
+    });
+  </script>
+</body>
+</html>

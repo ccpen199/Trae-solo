@@ -1,0 +1,18 @@
+{
+  "name": "news-app-reader-frontend",
+  "version": "1.0.0",
+  "description": "新闻资讯 App 读者端前端",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node server.js"
+  },
+  "keywords": ["news", "reader", "feed"],
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "express": "^4.18.2",
+    "cors": "^2.8.5",
+    "http-proxy-middleware": "^2.0.6"
+  }
+}

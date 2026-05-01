@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>广告管理 - 新闻资讯管理系统</title>
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+  <div class="app-layout">
+    <nav class="sidebar" id="sidebar">
+      <div class="sidebar-header">
+        <h1>📰 新闻资讯</h1>
+        <p>运营管理后台</p>
+      </div>
+      <div class="sidebar-menu">
+        <a href="/dashboard" class="menu-item">
+          <span class="icon">📊</span>
+          <span>数据仪表盘</span>
+        </a>
+        <a href="/contents" class="menu-item">
+          <span class="icon">📝</span>
+          <span>内容管理</span>
+        </a>
+        <a href="/ads" class="menu-item active">
+          <span class="icon">📢</span>
+          <span>广告管理</span>
+        </a>
+        <a href="/users" class="menu-item">
+          <span class="icon">👥</span>
+          <span>用户管理</span>
+        </a>
+        <a href="/analytics" class="menu-item">
+          <span class="icon">📈</span>
+          <span>数据分析</span>
+        </a>
+        <a href="/audit" class="menu-item">
+          <span class="icon">🔍</span>
+          <span>审计日志</span>
+        </a>
+      </div>
+    </nav>
+
+    <main class="main-content">
+      <header class="top-navbar">
+        <div class="navbar-left">
+          <h2>广告管理</h2>
+        </div>
+        <div class="navbar-right">
+          <div class="user-info">
+            <div class="user-avatar" id="userAvatar">A</div>
+            <span id="userName" style="font-weight: 500;">用户</span>
+          </div>
+        </div>
+      </header>
+
+      <div class="page-content">
+        <div class="page-header">
+          <h1 class="page-title">广告管理</h1>
+        </div>
+
+        <div class="stats-grid">
+          <div class="stat-card">
+            <div class="stat-card-header">
+              <div>
+                <div class="stat-card-title">总曝光量</div>
+                <div class="stat-card-value">-</div>
+              </div>
+              <div class="stat-card-icon icon-primary">👁️</div>
+            </div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-card-header">
+              <div>
+                <div class="stat-card-title">总点击量</div>
+                <div class="stat-card-value">-</div>
+              </div>
+              <div class="stat-card-icon icon-success">👆</div>
+            </div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-card-header">
+              <div>
+                <div class="stat-card-title">点击率 CTR</div>
+                <div class="stat-card-value">-%</div>
+              </div>
+              <div class="stat-card-icon icon-warning">📈</div>
+            </div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-card-header">
+              <div>
+                <div class="stat-card-title">总消耗金额</div>
+                <div class="stat-card-value">-</div>
+              </div>
+              <div class="stat-card-icon icon-danger">💰</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-header">
+            <h3 class="card-title">广告投放说明</h3>
+          </div>
+          <div class="card-body">
+            <div class="alert alert-info">
+              <strong>Ad-Matching 广告引擎功能</strong><br><br>
+              <div class="form-row" style="margin-top: 16px;">
+                <div class="form-group">
+                  <div style="padding: 12px; background: white; border-radius: 8px; border: 1px solid #e2e8f0;">
+                    <h4 style="margin-bottom: 8px;">🎯 智能匹配</h4>
+                    <p style="font-size: 13px; color: #64748b; margin: 0;">
+                      根据用户画像和广告定向条件，智能计算匹配分数
+                    </p>
+                  </div>
+                </div>
+                <div class="form-group">
+                  <div style="padding: 12px; background: white; border-radius: 8px; border: 1px solid #e2e8f0;">
+                    <h4 style="margin-bottom: 8px;">💰 竞价排序</h4>
+                    <p style="font-size: 13px; color: #64748b; margin: 0;">
+                      综合CTR历史、出价、相关性计算最终得分排序
+                    </p>
+                  </div>
+                </div>
+                <div class="form-group">
+                  <div style="padding: 12px; background: white; border-radius: 8px; border: 1px solid #e2e8f0;">
+                    <h4 style="margin-bottom: 8px;">📊 曝光计费</h4>
+                    <p style="font-size: 13px; color: #64748b; margin: 0;">
+                      支持 CPC/CPM 计费方式，实时记录曝光点击数据
+                    </p>
+                  </div>
+                </div>
+                <div class="form-group">
+                  <div style="padding: 12px; background: white; border-radius: 8px; border: 1px solid #e2e8f0;">
+                    <h4 style="margin-bottom: 8px;">📋 对账审计</h4>
+                    <p style="font-size: 13px; color: #64748b; margin: 0;">
+                      支持广告对账，全链路投放数据可追溯
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="form-row" style="margin-top: 24px;">
+              <div class="form-group">
+                <label>广告位置配置</label>
+                <div style="margin-top: 8px;">
+                  <div class="tag tag-primary">Feed 第3位</div>
+                  <div class="tag tag-primary">Feed 第7位</div>
+                  <div class="tag tag-primary">Feed 第11位</div>
+                  <div class="tag tag-primary">Feed 第15位</div>
+                </div>
+              </div>
+              <div class="form-group">
+                <label>出价策略</label>
+                <div style="margin-top: 8px;">
+                  <div class="tag tag-success">CPC 点击计费</div>
+                  <div class="tag tag-warning">CPM 曝光计费</div>
+                  <div class="tag tag-info">CPA 转化计费</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <script src="/js/api.js"></script>
+  <script>
+    async function checkAuth() {
+      if (!api.token) {
+        window.location.href = '/login';
+        return;
+      }
+      
+      try {
+        const result = await api.getProfile();
+        if (result.success) {
+          const user = result.data.user;
+          document.getElementById('userName').textContent = user.nickname || user.username;
+          document.getElementById('userAvatar').textContent = (user.nickname || user.username).charAt(0).toUpperCase();
+        }
+      } catch (e) {
+        api.setToken(null);
+        window.location.href = '/login';
+      }
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+      checkAuth();
+    });
+  </script>
+</body>
+</html>

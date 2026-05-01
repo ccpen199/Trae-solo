@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>审计日志 - 新闻资讯管理系统</title>
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+  <div class="app-layout">
+    <nav class="sidebar" id="sidebar">
+      <div class="sidebar-header">
+        <h1>📰 新闻资讯</h1>
+        <p>运营管理后台</p>
+      </div>
+      <div class="sidebar-menu">
+        <a href="/dashboard" class="menu-item">
+          <span class="icon">📊</span>
+          <span>数据仪表盘</span>
+        </a>
+        <a href="/contents" class="menu-item">
+          <span class="icon">📝</span>
+          <span>内容管理</span>
+        </a>
+        <a href="/ads" class="menu-item">
+          <span class="icon">📢</span>
+          <span>广告管理</span>
+        </a>
+        <a href="/users" class="menu-item">
+          <span class="icon">👥</span>
+          <span>用户管理</span>
+        </a>
+        <a href="/analytics" class="menu-item">
+          <span class="icon">📈</span>
+          <span>数据分析</span>
+        </a>
+        <a href="/audit" class="menu-item active">
+          <span class="icon">🔍</span>
+          <span>审计日志</span>
+        </a>
+      </div>
+    </nav>
+
+    <main class="main-content">
+      <header class="top-navbar">
+        <div class="navbar-left">
+          <h2>审计日志</h2>
+        </div>
+        <div class="navbar-right">
+          <div class="user-info">
+            <div class="user-avatar" id="userAvatar">A</div>
+            <span id="userName" style="font-weight: 500;">用户</span>
+          </div>
+        </div>
+      </header>
+
+      <div class="page-content">
+        <div class="page-header">
+          <h1 class="page-title">全链路审计日志</h1>
+        </div>
+
+        <div class="card">
+          <div class="card-body">
+            <div class="alert alert-info">
+              <strong>全链路审计追踪功能</strong><br><br>
+              <ul style="margin-top: 12px; padding-left: 20px;">
+                <li><strong>内容全链路追踪</strong>：入库 → 分析 → 发布 → 推荐 → 互动，每个环节可追溯</li>
+                <li><strong>推荐分发追踪</strong>：推荐ID唯一标识，记录分发路径、点击、互动全流程</li>
+                <li><strong>广告对账</strong>：广告主端看板实时展示，支持日对账和差异追踪</li>
+                <li><strong>负反馈追踪</strong>：用户"不感兴趣"操作追踪，影响权重调整可审计</li>
+              </ul>
+            </div>
+
+            <div class="form-row" style="margin-top: 24px;">
+              <div class="form-group">
+                <div style="padding: 16px; background: rgba(102, 126, 234, 0.05); border-radius: 8px;">
+                  <h4 style="margin-bottom: 12px;">📝 内容操作事件</h4>
+                  <div style="display: flex; flex-wrap: wrap; gap: 6px;">
+                    <span class="tag tag-primary">content_import</span>
+                    <span class="tag tag-primary">content_analyze</span>
+                    <span class="tag tag-primary">content_change</span>
+                    <span class="tag tag-primary">config_change</span>
+                  </div>
+                </div>
+              </div>
+              <div class="form-group">
+                <div style="padding: 16px; background: rgba(16, 185, 129, 0.05); border-radius: 8px;">
+                  <h4 style="margin-bottom: 12px;">🎯 推荐广告事件</h4>
+                  <div style="display: flex; flex-wrap: wrap; gap: 6px;">
+                    <span class="tag tag-success">recommendation</span>
+                    <span class="tag tag-success">ad_delivery</span>
+                    <span class="tag tag-success">user_interaction</span>
+                  </div>
+                </div>
+              </div>
+              <div class="form-group">
+                <div style="padding: 16px; background: rgba(239, 68, 68, 0.05); border-radius: 8px;">
+                  <h4 style="margin-bottom: 12px;">⚠️ 负反馈事件</h4>
+                  <div style="display: flex; flex-wrap: wrap; gap: 6px;">
+                    <span class="tag tag-danger">negative_feedback</span>
+                    <span class="tag tag-danger">audit</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-header">
+            <h3 class="card-title">审计日志列表</h3>
+          </div>
+          <div class="card-body">
+            <div class="table-wrapper">
+              <table>
+                <thead>
+                  <tr>
+                    <th>追踪ID</th>
+                    <th>事件类型</th>
+                    <th>操作</th>
+                    <th>目标类型</th>
+                    <th>状态</th>
+                    <th>时间</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td><span class="tag tag-primary">TRACE-xxx</span></td>
+                    <td>content_import</td>
+                    <td>内容入库</td>
+                    <td>content</td>
+                    <td><span class="status-badge status-active">success</span></td>
+                    <td>-</td>
+                  </tr>
+                  <tr>
+                    <td><span class="tag tag-primary">TRACE-xxx</span></td>
+                    <td>recommendation</td>
+                    <td>推荐下发</td>
+                    <td>content</td>
+                    <td><span class="status-badge status-active">success</span></td>
+                    <td>-</td>
+                  </tr>
+                  <tr>
+                    <td><span class="tag tag-primary">TRACE-xxx</span></td>
+                    <td>ad_delivery</td>
+                    <td>广告分发</td>
+                    <td>ad_material</td>
+                    <td><span class="status-badge status-active">success</span></td>
+                    <td>-</td>
+                  </tr>
+                  <tr>
+                    <td><span class="tag tag-primary">TRACE-xxx</span></td>
+                    <td>user_interaction</td>
+                    <td>用户点赞</td>
+                    <td>content</td>
+                    <td><span class="status-badge status-active">success</span></td>
+                    <td>-</td>
+                  </tr>
+                  <tr>
+                    <td><span class="tag tag-primary">TRACE-xxx</span></td>
+                    <td>negative_feedback</td>
+                    <td>提交负反馈</td>
+                    <td>content</td>
+                    <td><span class="status-badge status-active">success</span></td>
+                    <td>-</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <script src="/js/api.js"></script>
+  <script>
+    async function checkAuth() {
+      if (!api.token) {
+        window.location.href = '/login';
+        return;
+      }
+      
+      try {
+        const result = await api.getProfile();
+        if (result.success) {
+          const user = result.data.user;
+          document.getElementById('userName').textContent = user.nickname || user.username;
+          document.getElementById('userAvatar').textContent = (user.nickname || user.username).charAt(0).toUpperCase();
+        }
+      } catch (e) {
+        api.setToken(null);
+        window.location.href = '/login';
+      }
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+      checkAuth();
+    });
+  </script>
+</body>
+</html>

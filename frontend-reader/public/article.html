@@ -1,0 +1,401 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>文章详情 - 新闻资讯</title>
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+  <div id="loadingState" class="loading" style="padding-top: 100px;">
+    <div class="spinner"></div>
+  </div>
+
+  <div id="articleContainer" class="article-container d-none">
+    <header class="header">
+      <div class="header-content">
+        <button class="header-btn" onclick="goBack()">←</button>
+        <h1 class="header-title" style="font-size: 16px;">文章详情</h1>
+        <button class="header-btn" onclick="openFeedbackModal()">⛔</button>
+      </div>
+    </header>
+
+    <div class="article-header">
+      <h1 class="article-title" id="articleTitle">文章标题</h1>
+      <div class="article-meta">
+        <span id="articleAuthor">作者</span>
+        <span id="articleSource">来源</span>
+        <span id="articleTime">时间</span>
+      </div>
+    </div>
+
+    <div class="article-content" id="articleContent">
+      文章内容...
+    </div>
+
+    <div class="comment-section" id="commentSection">
+      <h3 class="comment-title">评论区</h3>
+      
+      <div class="comment-input">
+        <input type="text" id="commentInput" placeholder="发表你的看法...">
+        <button onclick="submitComment()">发送</button>
+      </div>
+      
+      <div id="commentsList">
+      </div>
+    </div>
+  </div>
+
+  <div class="article-actions" id="articleActions">
+    <button class="action-btn" id="likeBtn" onclick="toggleLike()">
+      <span class="action-icon">❤️</span>
+      <span class="action-text" id="likeCount">0</span>
+    </button>
+    <button class="action-btn" id="collectBtn" onclick="toggleCollect()">
+      <span class="action-icon">⭐</span>
+      <span class="action-text" id="collectCount">收藏</span>
+    </button>
+    <button class="action-btn" onclick="scrollToComments()">
+      <span class="action-icon">💬</span>
+      <span class="action-text" id="commentCount">0</span>
+    </button>
+    <button class="action-btn" onclick="shareArticle()">
+      <span class="action-icon">📤</span>
+      <span class="action-text">分享</span>
+    </button>
+  </div>
+
+  <div id="feedbackModal" class="modal-overlay d-none">
+    <div class="modal">
+      <h3 class="modal-title">不感兴趣</h3>
+      <div class="feedback-options" id="feedbackOptions">
+        <div class="feedback-option" data-type="not_interested">
+          <div class="feedback-option-title">不感兴趣</div>
+          <div class="feedback-option-desc">对此类内容不感兴趣</div>
+        </div>
+        <div class="feedback-option" data-type="already_seen">
+          <div class="feedback-option-title">已经看过</div>
+          <div class="feedback-option-desc">已经看过此内容</div>
+        </div>
+        <div class="feedback-option" data-type="low_quality">
+          <div class="feedback-option-title">内容质量差</div>
+          <div class="feedback-option-desc">内容质量低下</div>
+        </div>
+        <div class="feedback-option" data-type="misleading">
+          <div class="feedback-option-title">误导性内容</div>
+          <div class="feedback-option-desc">内容具有误导性</div>
+        </div>
+        <div class="feedback-option" data-type="offensive">
+          <div class="feedback-option-title">令人反感</div>
+          <div class="feedback-option-desc">内容令人反感</div>
+        </div>
+        <div class="feedback-option" data-type="other">
+          <div class="feedback-option-title">其他原因</div>
+          <div class="feedback-option-desc">其他原因</div>
+        </div>
+      </div>
+      <div class="modal-actions">
+        <button class="modal-btn cancel" onclick="closeFeedbackModal()">取消</button>
+        <button class="modal-btn confirm" onclick="submitFeedback()">提交</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="/js/api.js"></script>
+  <script>
+    let currentArticle = null;
+    let currentContentId = null;
+    let isLiked = false;
+    let isCollected = false;
+    let selectedFeedbackType = null;
+
+    document.addEventListener('DOMContentLoaded', async () => {
+      initFeedbackOptions();
+      await loadArticle();
+    });
+
+    function initFeedbackOptions() {
+      document.querySelectorAll('.feedback-option').forEach(option => {
+        option.addEventListener('click', () => {
+          document.querySelectorAll('.feedback-option').forEach(o => o.classList.remove('selected'));
+          option.classList.add('selected');
+          selectedFeedbackType = option.dataset.type;
+        });
+      });
+    }
+
+    async function loadArticle() {
+      const path = window.location.pathname;
+      const match = path.match(/\/article\/(.+)/);
+      
+      if (match) {
+        currentContentId = match[1];
+      }
+
+      if (!currentContentId) {
+        showDemoArticle();
+        return;
+      }
+
+      try {
+        const result = await api.getContent(currentContentId);
+        
+        if (result.success && result.data.content) {
+          currentArticle = result.data.content;
+          renderArticle();
+          await loadComments();
+          
+          document.getElementById('loadingState').classList.add('d-none');
+          document.getElementById('articleContainer').classList.remove('d-none');
+        }
+      } catch (error) {
+        console.error('Failed to load article:', error);
+        showDemoArticle();
+      }
+    }
+
+    function showDemoArticle() {
+      document.getElementById('articleTitle').textContent = '人工智能技术最新进展：GPT系列模型引领AI新时代';
+      document.getElementById('articleAuthor').textContent = '✍️ 科技日报';
+      document.getElementById('articleSource').textContent = '📰 科技';
+      document.getElementById('articleTime').textContent = '🕐 刚刚';
+      document.getElementById('likeCount').textContent = '3420';
+      document.getElementById('commentCount').textContent = '856';
+      
+      document.getElementById('articleContent').innerHTML = `
+        <p>随着人工智能技术的快速发展，各大科技公司纷纷推出新一代AI模型。本文将深入探讨当前AI技术的发展趋势和未来展望。</p>
+        
+        <p><strong>一、GPT系列模型的突破</strong></p>
+        
+        <p>GPT系列模型在自然语言处理领域取得了重大突破。从GPT-1到最新版本，模型的参数规模不断扩大，能力也在持续提升。这些模型不仅能够理解复杂的语言任务，还能生成流畅自然的文本内容。</p>
+        
+        <p><strong>二、多模态AI的兴起</strong></p>
+        
+        <p>除了文本处理，最新的AI模型已经开始向多模态方向发展。这些模型能够同时处理文本、图像、音频等多种类型的数据，展现出更接近人类智能的能力。</p>
+        
+        <p><strong>三、AI技术的应用场景</strong></p>
+        
+        <p>AI技术正在深入各个领域。在医疗领域，AI辅助诊断已经成为现实；在教育领域，个性化学习系统正在改变传统教学方式；在金融领域，AI算法被广泛应用于风险评估和投资决策。</p>
+        
+        <p><strong>四、未来展望</strong></p>
+        
+        <p>展望未来，AI技术将继续快速发展。我们可以期待看到更强大的模型、更广泛的应用场景，以及AI与人类更加深度的融合。同时，AI伦理和安全问题也将受到更多关注。</p>
+        
+        <p>感谢您阅读本文，欢迎在评论区分享您的观点！</p>
+      `;
+      
+      renderDemoComments();
+      
+      document.getElementById('loadingState').classList.add('d-none');
+      document.getElementById('articleContainer').classList.remove('d-none');
+    }
+
+    function renderArticle() {
+      if (!currentArticle) return;
+      
+      document.getElementById('articleTitle').textContent = currentArticle.title;
+      document.getElementById('articleAuthor').textContent = '✍️ ' + (currentArticle.author || '未知作者');
+      document.getElementById('articleSource').textContent = '📰 ' + (currentArticle.source || '新闻资讯');
+      document.getElementById('articleTime').textContent = '🕐 ' + (currentArticle.publishTime ? new Date(currentArticle.publishTime).toLocaleDateString() : '刚刚');
+      document.getElementById('likeCount').textContent = (currentArticle.likeCount || 0).toLocaleString();
+      document.getElementById('commentCount').textContent = (currentArticle.commentCount || 0).toLocaleString();
+      
+      document.getElementById('articleContent').innerHTML = currentArticle.content
+        .replace(/\n/g, '<br>')
+        .split('\n').map(p => p.trim() ? `<p>${p}</p>` : '').join('');
+    }
+
+    async function loadComments() {
+      if (!currentContentId) return;
+      
+      try {
+        const result = await api.getComments(currentContentId, { pageSize: 20 });
+        
+        if (result.success && result.data.comments) {
+          renderComments(result.data.comments);
+        }
+      } catch (error) {
+        console.error('Failed to load comments:', error);
+      }
+    }
+
+    function renderDemoComments() {
+      const demoComments = [
+        {
+          user: { nickname: 'AI爱好者', avatar: 'A' },
+          content: '这篇文章写得很好，让我对AI技术有了更深入的了解。期待看到更多相关内容！',
+          createdAt: new Date(),
+          likeCount: 128
+        },
+        {
+          user: { nickname: '技术达人', avatar: '技' },
+          content: 'GPT系列确实是目前最先进的模型之一，但我认为多模态AI才是未来的发展方向。',
+          createdAt: new Date(),
+          likeCount: 86
+        },
+        {
+          user: { nickname: '普通读者', avatar: '普' },
+          content: '文章通俗易懂，希望能多一些这样的科普内容。',
+          createdAt: new Date(),
+          likeCount: 45
+        }
+      ];
+      
+      renderComments(demoComments);
+    }
+
+    function renderComments(comments) {
+      const container = document.getElementById('commentsList');
+      
+      if (!comments || comments.length === 0) {
+        container.innerHTML = '<div class="empty-state" style="padding: 30px;"><div class="empty-state-icon">💬</div><div class="empty-state-text">暂无评论，快来抢沙发吧！</div></div>';
+        return;
+      }
+      
+      container.innerHTML = comments.map(comment => `
+        <div class="comment-item">
+          <div class="comment-user">
+            <div class="comment-avatar">${comment.user?.nickname?.charAt(0) || '用'}</div>
+            <div>
+              <div class="comment-username">${comment.user?.nickname || '用户'}</div>
+              <div class="comment-time">${comment.createdAt ? new Date(comment.createdAt).toLocaleDateString() : '刚刚'}</div>
+            </div>
+          </div>
+          <div class="comment-content">${comment.content}</div>
+          <div style="margin-top: 8px; font-size: 12px; color: #94a3b8;">
+            ❤️ ${comment.likeCount || 0}
+          </div>
+        </div>
+      `).join('');
+    }
+
+    async function toggleLike() {
+      if (!currentContentId && !currentArticle) {
+        isLiked = !isLiked;
+        const btn = document.getElementById('likeBtn');
+        btn.classList.toggle('liked', isLiked);
+        showToast(isLiked ? '已点赞' : '已取消点赞');
+        return;
+      }
+      
+      try {
+        const result = await api.toggleLike(currentContentId);
+        
+        if (result.success) {
+          isLiked = result.data.liked;
+          const btn = document.getElementById('likeBtn');
+          btn.classList.toggle('liked', isLiked);
+          showToast(isLiked ? '已点赞' : '已取消点赞');
+        }
+      } catch (error) {
+        showToast('操作失败: ' + error.message);
+      }
+    }
+
+    async function toggleCollect() {
+      if (!currentContentId && !currentArticle) {
+        isCollected = !isCollected;
+        const btn = document.getElementById('collectBtn');
+        btn.classList.toggle('collected', isCollected);
+        document.getElementById('collectCount').textContent = isCollected ? '已收藏' : '收藏';
+        showToast(isCollected ? '已收藏' : '已取消收藏');
+        return;
+      }
+      
+      try {
+        const result = await api.toggleCollect(currentContentId);
+        
+        if (result.success) {
+          isCollected = result.data.collected;
+          const btn = document.getElementById('collectBtn');
+          btn.classList.toggle('collected', isCollected);
+          document.getElementById('collectCount').textContent = isCollected ? '已收藏' : '收藏';
+          showToast(isCollected ? '已收藏' : '已取消收藏');
+        }
+      } catch (error) {
+        showToast('操作失败: ' + error.message);
+      }
+    }
+
+    async function submitComment() {
+      const input = document.getElementById('commentInput');
+      const content = input.value.trim();
+      
+      if (!content) {
+        showToast('请输入评论内容');
+        return;
+      }
+      
+      if (!currentContentId) {
+        showToast('评论已发送（演示模式）');
+        input.value = '';
+        return;
+      }
+      
+      try {
+        const result = await api.submitComment(currentContentId, content);
+        
+        if (result.success) {
+          showToast('评论已发送');
+          input.value = '';
+          await loadComments();
+        }
+      } catch (error) {
+        showToast('发送失败: ' + error.message);
+      }
+    }
+
+    function scrollToComments() {
+      document.getElementById('commentSection').scrollIntoView({ behavior: 'smooth' });
+    }
+
+    function shareArticle() {
+      if (navigator.share) {
+        navigator.share({
+          title: currentArticle?.title || '新闻资讯',
+          url: window.location.href
+        });
+      } else {
+        navigator.clipboard.writeText(window.location.href);
+        showToast('链接已复制');
+      }
+    }
+
+    function goBack() {
+      window.history.back();
+    }
+
+    function openFeedbackModal() {
+      selectedFeedbackType = null;
+      document.querySelectorAll('.feedback-option').forEach(o => o.classList.remove('selected'));
+      document.getElementById('feedbackModal').classList.remove('d-none');
+    }
+
+    function closeFeedbackModal() {
+      document.getElementById('feedbackModal').classList.add('d-none');
+      selectedFeedbackType = null;
+    }
+
+    async function submitFeedback() {
+      if (!selectedFeedbackType) {
+        showToast('请选择不感兴趣的原因');
+        return;
+      }
+      
+      if (!currentContentId) {
+        showToast('已提交，将优化后续推荐（演示模式）');
+        closeFeedbackModal();
+        return;
+      }
+      
+      try {
+        await api.submitNegativeFeedback(currentContentId, selectedFeedbackType);
+        showToast('已提交，将优化后续推荐');
+        closeFeedbackModal();
+      } catch (error) {
+        showToast('提交失败: ' + error.message);
+      }
+    }
+  </script>
+</body>
+</html>

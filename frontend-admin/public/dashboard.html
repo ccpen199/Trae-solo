@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>仪表盘 - 新闻资讯管理系统</title>
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+  <div class="app-layout">
+    <nav class="sidebar" id="sidebar">
+      <div class="sidebar-header">
+        <h1>📰 新闻资讯</h1>
+        <p>运营管理后台</p>
+      </div>
+      <div class="sidebar-menu">
+        <a href="/dashboard" class="menu-item active">
+          <span class="icon">📊</span>
+          <span>数据仪表盘</span>
+        </a>
+        <a href="/contents" class="menu-item">
+          <span class="icon">📝</span>
+          <span>内容管理</span>
+        </a>
+        <a href="/ads" class="menu-item">
+          <span class="icon">📢</span>
+          <span>广告管理</span>
+        </a>
+        <a href="/users" class="menu-item">
+          <span class="icon">👥</span>
+          <span>用户管理</span>
+        </a>
+        <a href="/analytics" class="menu-item">
+          <span class="icon">📈</span>
+          <span>数据分析</span>
+        </a>
+        <a href="/audit" class="menu-item">
+          <span class="icon">🔍</span>
+          <span>审计日志</span>
+        </a>
+      </div>
+    </nav>
+
+    <main class="main-content">
+      <header class="top-navbar">
+        <div class="navbar-left">
+          <h2 id="pageTitle">数据仪表盘</h2>
+        </div>
+        <div class="navbar-right">
+          <div class="user-info">
+            <div class="user-avatar" id="userAvatar">A</div>
+            <div class="dropdown">
+              <span id="userName" style="cursor: pointer; font-weight: 500;">用户</span>
+              <div class="dropdown-menu" id="userDropdown">
+                <div class="dropdown-item" onclick="logout()">
+                  <span>🚪</span> 退出登录
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </header>
+
+      <div class="page-content">
+        <div class="page-header">
+          <h1 class="page-title">实时数据概览</h1>
+          <div class="page-actions">
+            <button class="btn btn-primary" onclick="refreshDashboard()">
+              🔄 刷新数据
+            </button>
+          </div>
+        </div>
+
+        <div id="loadingState" class="loading">
+          <div class="spinner"></div>
+        </div>
+
+        <div id="dashboardContent" class="d-none">
+          <div class="stats-grid" id="statsGrid">
+            <div class="stat-card">
+              <div class="stat-card-header">
+                <div>
+                  <div class="stat-card-title">今日活跃用户</div>
+                  <div class="stat-card-value" id="todayActiveUsers">0</div>
+                </div>
+                <div class="stat-card-icon icon-primary">👥</div>
+              </div>
+              <div class="stat-card-trend trend-up">
+                较昨日 +0%
+              </div>
+            </div>
+
+            <div class="stat-card">
+              <div class="stat-card-header">
+                <div>
+                  <div class="stat-card-title">今日浏览量</div>
+                  <div class="stat-card-value" id="todayViews">0</div>
+                </div>
+                <div class="stat-card-icon icon-success">👁️</div>
+              </div>
+              <div class="stat-card-trend trend-up">
+                较昨日 +0%
+              </div>
+            </div>
+
+            <div class="stat-card">
+              <div class="stat-card-header">
+                <div>
+                  <div class="stat-card-title">今日推荐量</div>
+                  <div class="stat-card-value" id="todayRecommendations">0</div>
+                </div>
+                <div class="stat-card-icon icon-warning">🎯</div>
+              </div>
+              <div class="stat-card-trend trend-up">
+                较昨日 +0%
+              </div>
+            </div>
+
+            <div class="stat-card">
+              <div class="stat-card-header">
+                <div>
+                  <div class="stat-card-title">今日广告曝光</div>
+                  <div class="stat-card-value" id="todayAdImpressions">0</div>
+                </div>
+                <div class="stat-card-icon icon-danger">📢</div>
+              </div>
+              <div class="stat-card-trend trend-up">
+                CTR: 0%
+              </div>
+            </div>
+          </div>
+
+          <div class="card">
+            <div class="card-header">
+              <h3 class="card-title">系统运行状态</h3>
+            </div>
+            <div class="card-body">
+              <div class="form-row">
+                <div class="form-group">
+                  <label>数据库状态</label>
+                  <div id="dbStatus">
+                    <span class="status-badge status-pending">检查中...</span>
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label>Redis 状态</label>
+                  <div id="redisStatus">
+                    <span class="status-badge status-pending">检查中...</span>
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label>API 版本</label>
+                  <div id="apiVersion">
+                    <span class="status-badge status-active">v1.0.0</span>
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label>运行时间</label>
+                  <div id="uptime">
+                    <span class="tag tag-primary">0秒</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="card">
+            <div class="card-header">
+              <h3 class="card-title">快速操作</h3>
+            </div>
+            <div class="card-body">
+              <div class="form-row">
+                <div class="form-group">
+                  <a href="/content/new" class="btn btn-primary btn-block">
+                    📝 新增内容
+                  </a>
+                </div>
+                <div class="form-group">
+                  <a href="/contents?status=pending_analysis" class="btn btn-warning btn-block">
+                    🔬 待分析内容
+                  </a>
+                </div>
+                <div class="form-group">
+                  <a href="/contents?status=to_recommend" class="btn btn-success btn-block">
+                    ⚡ 待推荐内容
+                  </a>
+                </div>
+                <div class="form-group">
+                  <a href="/analytics" class="btn btn-secondary btn-block">
+                    📊 查看详细报表
+                  </a>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="card">
+            <div class="card-header">
+              <h3 class="card-title">系统流程说明</h3>
+            </div>
+            <div class="card-body">
+              <div class="form-row">
+                <div class="form-group">
+                  <div style="padding: 16px; background: rgba(102, 126, 234, 0.05); border-radius: 8px; border-left: 4px solid #667eea;">
+                    <h4 style="margin-bottom: 8px;">1. 内容入库</h4>
+                    <p style="font-size: 13px; color: #64748b; margin: 0;">
+                      执行语义分析、去重、分类。状态置为"待推荐"。运营在前端配置权重标签。
+                    </p>
+                  </div>
+                </div>
+                <div class="form-group">
+                  <div style="padding: 16px; background: rgba(16, 185, 129, 0.05); border-radius: 8px; border-left: 4px solid #10b981;">
+                    <h4 style="margin-bottom: 8px;">2. 个性化推荐</h4>
+                    <p style="font-size: 13px; color: #64748b; margin: 0;">
+                      读者刷新。后端"推荐引擎"根据画像个性化下发 Feed 流。状态更新并记录分发路径。
+                    </p>
+                  </div>
+                </div>
+                <div class="form-group">
+                  <div style="padding: 16px; background: rgba(245, 158, 11, 0.05); border-radius: 8px; border-left: 4px solid #f59e0b;">
+                    <h4 style="margin-bottom: 8px;">3. 广告投放</h4>
+                    <p style="font-size: 13px; color: #64748b; margin: 0;">
+                      后端按比例插入推广位。后端记录曝光数据同步至广告主端。
+                    </p>
+                  </div>
+                </div>
+                <div class="form-group">
+                  <div style="padding: 16px; background: rgba(239, 68, 68, 0.05); border-radius: 8px; border-left: 4px solid #ef4444;">
+                    <h4 style="margin-bottom: 8px;">4. 互动与负反馈</h4>
+                    <p style="font-size: 13px; color: #64748b; margin: 0;">
+                      读者点赞评论实时计算热度。点击"不感兴趣"实时捕获负反馈并更新画像模型。
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <script src="/js/api.js"></script>
+  <script>
+    async function checkAuth() {
+      if (!api.token) {
+        window.location.href = '/login';
+        return;
+      }
+      
+      try {
+        const result = await api.getProfile();
+        if (result.success) {
+          const user = result.data.user;
+          document.getElementById('userName').textContent = user.nickname || user.username;
+          document.getElementById('userAvatar').textContent = (user.nickname || user.username).charAt(0).toUpperCase();
+        }
+      } catch (e) {
+        api.setToken(null);
+        window.location.href = '/login';
+      }
+    }
+
+    async function loadDashboard() {
+      try {
+        const [healthResult, overviewResult] = await Promise.all([
+          api.getHealth(),
+          api.getOverview()
+        ]);
+
+        document.getElementById('dbStatus').innerHTML = 
+          `<span class="status-badge status-active">正常</span>`;
+        
+        if (healthResult.data && healthResult.data.database) {
+          document.getElementById('dbStatus').innerHTML = 
+            `<span class="status-badge ${healthResult.data.database.status === 'healthy' ? 'status-active' : 'status-pending'}">${healthResult.data.database.status}</span>
+             <span class="tag tag-primary" style="margin-left: 8px;">${healthResult.data.database.latencyMs}ms</span>`;
+        }
+        
+        if (healthResult.data && healthResult.data.redis) {
+          document.getElementById('redisStatus').innerHTML = 
+            `<span class="status-badge ${healthResult.data.redis.status === 'healthy' ? 'status-active' : 'status-inactive'}">${healthResult.data.redis.status}</span>
+             <span class="tag tag-primary" style="margin-left: 8px;">${healthResult.data.redis.latencyMs}ms</span>`;
+        }
+        
+        if (healthResult.data && healthResult.data.uptime) {
+          const hours = Math.floor(healthResult.data.uptime / 3600);
+          const minutes = Math.floor((healthResult.data.uptime % 3600) / 60);
+          document.getElementById('uptime').innerHTML = 
+            `<span class="tag tag-primary">${hours}小时 ${minutes}分钟</span>`;
+        }
+
+        try {
+          const realtimeResult = await api.getRealtimeDashboard();
+          if (realtimeResult.success && realtimeResult.data && realtimeResult.data.today) {
+            const today = realtimeResult.data.today;
+            document.getElementById('todayActiveUsers').textContent = today.activeUsers.toLocaleString();
+            document.getElementById('todayViews').textContent = today.views.toLocaleString();
+            document.getElementById('todayRecommendations').textContent = today.recommendations.toLocaleString();
+            document.getElementById('todayAdImpressions').textContent = today.adImpressions.toLocaleString();
+          }
+        } catch (e) {
+          console.log('Realtime dashboard not available:', e.message);
+        }
+
+        document.getElementById('loadingState').classList.add('d-none');
+        document.getElementById('dashboardContent').classList.remove('d-none');
+      } catch (error) {
+        console.error('Failed to load dashboard:', error);
+        document.getElementById('loadingState').innerHTML = 
+          `<div class="alert alert-error">加载数据失败: ${error.message}</div>`;
+        document.getElementById('dashboardContent').classList.remove('d-none');
+      }
+    }
+
+    async function refreshDashboard() {
+      document.getElementById('loadingState').classList.remove('d-none');
+      document.getElementById('dashboardContent').classList.add('d-none');
+      await loadDashboard();
+    }
+
+    async function logout() {
+      await api.logout();
+      window.location.href = '/login';
+    }
+
+    document.addEventListener('DOMContentLoaded', async () => {
+      await checkAuth();
+      await loadDashboard();
+    });
+
+    document.getElementById('userName')?.addEventListener('click', (e) => {
+      const dropdown = document.getElementById('userDropdown');
+      dropdown.classList.toggle('show');
+      e.stopPropagation();
+    });
+
+    document.addEventListener('click', () => {
+      const dropdown = document.getElementById('userDropdown');
+      if (dropdown) {
+        dropdown.classList.remove('show');
+      }
+    });
+  </script>
+</body>
+</html>

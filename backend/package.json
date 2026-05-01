@@ -1,0 +1,35 @@
+{
+  "name": "news-app-backend",
+  "version": "1.0.0",
+  "description": "新闻资讯 App 后端服务",
+  "main": "src/server.js",
+  "scripts": {
+    "start": "node src/server.js",
+    "dev": "nodemon src/server.js",
+    "init-db": "node src/scripts/init-db.js",
+    "seed": "node src/scripts/seed-data.js"
+  },
+  "keywords": [
+    "news",
+    "recommendation",
+    "advertising"
+  ],
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "bcryptjs": "^2.4.3",
+    "body-parser": "^1.20.5",
+    "cors": "^2.8.6",
+    "dotenv": "^16.6.1",
+    "express": "^4.22.1",
+    "jsonwebtoken": "^9.0.3",
+    "lodash": "^4.18.1",
+    "lowdb": "^6.1.1",
+    "moment": "^2.30.1",
+    "node-cron": "^3.0.3",
+    "uuid": "^9.0.1"
+  },
+  "devDependencies": {
+    "nodemon": "^3.0.2"
+  }
+}

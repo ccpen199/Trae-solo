@@ -1,0 +1,406 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>新闻资讯</title>
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+  <header class="header">
+    <div class="header-content">
+      <h1 class="header-title">📰 新闻资讯</h1>
+      <div class="header-actions">
+        <button class="header-btn" onclick="refreshFeed()">🔄</button>
+        <button class="header-btn" onclick="goToProfile()">👤</button>
+      </div>
+    </div>
+  </header>
+
+  <div class="tabs" id="categoryTabs">
+    <div class="tab active" data-category="recommend">推荐</div>
+    <div class="tab" data-category="hot">热门</div>
+    <div class="tab" data-category="tech">科技</div>
+    <div class="tab" data-category="finance">财经</div>
+    <div class="tab" data-category="sports">体育</div>
+    <div class="tab" data-category="entertainment">娱乐</div>
+  </div>
+
+  <div class="container">
+    <div id="loadingState" class="loading">
+      <div class="spinner"></div>
+    </div>
+
+    <div id="feedContainer" class="d-none">
+    </div>
+
+    <div id="emptyState" class="empty-state d-none">
+      <div class="empty-state-icon">📭</div>
+      <div class="empty-state-title">暂无内容</div>
+      <div class="empty-state-text">下拉刷新获取最新内容</div>
+    </div>
+  </div>
+
+  <nav class="bottom-nav">
+    <div class="nav-item active" onclick="switchTab('home')">
+      <div class="nav-icon">🏠</div>
+      <div class="nav-label">首页</div>
+    </div>
+    <div class="nav-item" onclick="switchTab('hot')">
+      <div class="nav-icon">🔥</div>
+      <div class="nav-label">热门</div>
+    </div>
+    <div class="nav-item" onclick="goToProfile()">
+      <div class="nav-icon">👤</div>
+      <div class="nav-label">我的</div>
+    </div>
+  </nav>
+
+  <div id="feedbackModal" class="modal-overlay d-none">
+    <div class="modal">
+      <h3 class="modal-title">不感兴趣</h3>
+      <div class="feedback-options" id="feedbackOptions">
+        <div class="feedback-option" data-type="not_interested">
+          <div class="feedback-option-title">不感兴趣</div>
+          <div class="feedback-option-desc">对此类内容不感兴趣</div>
+        </div>
+        <div class="feedback-option" data-type="already_seen">
+          <div class="feedback-option-title">已经看过</div>
+          <div class="feedback-option-desc">已经看过此内容</div>
+        </div>
+        <div class="feedback-option" data-type="low_quality">
+          <div class="feedback-option-title">内容质量差</div>
+          <div class="feedback-option-desc">内容质量低下</div>
+        </div>
+        <div class="feedback-option" data-type="misleading">
+          <div class="feedback-option-title">误导性内容</div>
+          <div class="feedback-option-desc">内容具有误导性</div>
+        </div>
+        <div class="feedback-option" data-type="offensive">
+          <div class="feedback-option-title">令人反感</div>
+          <div class="feedback-option-desc">内容令人反感</div>
+        </div>
+        <div class="feedback-option" data-type="other">
+          <div class="feedback-option-title">其他原因</div>
+          <div class="feedback-option-desc">其他原因</div>
+        </div>
+      </div>
+      <div class="modal-actions">
+        <button class="modal-btn cancel" onclick="closeFeedbackModal()">取消</button>
+        <button class="modal-btn confirm" onclick="submitFeedback()">提交</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="/js/api.js"></script>
+  <script>
+    let currentCategory = 'recommend';
+    let feedItems = [];
+    let currentContentId = null;
+    let selectedFeedbackType = null;
+
+    document.addEventListener('DOMContentLoaded', async () => {
+      initCategoryTabs();
+      await loadFeed();
+    });
+
+    function initCategoryTabs() {
+      const tabs = document.querySelectorAll('.tab');
+      tabs.forEach(tab => {
+        tab.addEventListener('click', () => {
+          tabs.forEach(t => t.classList.remove('active'));
+          tab.classList.add('active');
+          currentCategory = tab.dataset.category;
+          loadFeed();
+        });
+      });
+    }
+
+    async function loadFeed() {
+      const loadingState = document.getElementById('loadingState');
+      const feedContainer = document.getElementById('feedContainer');
+      const emptyState = document.getElementById('emptyState');
+      
+      loadingState.classList.remove('d-none');
+      feedContainer.classList.add('d-none');
+      emptyState.classList.add('d-none');
+
+      try {
+        let result;
+        
+        if (currentCategory === 'hot') {
+          result = await api.getHotFeed({ pageSize: 20 });
+        } else {
+          result = await api.getFeed({ pageSize: 20 });
+        }
+
+        if (result.success && result.data.feed) {
+          feedItems = result.data.feed;
+          
+          if (feedItems.length === 0) {
+            loadingState.classList.add('d-none');
+            emptyState.classList.remove('d-none');
+            return;
+          }
+          
+          renderFeed();
+          
+          const recommendationIds = feedItems
+            .filter(item => !item.type || item.type !== 'ad')
+            .filter(item => item.recommendationId)
+            .map(item => item.recommendationId);
+          
+          const adDeliveryIds = feedItems
+            .filter(item => item.type === 'ad')
+            .filter(item => item.deliveryId)
+            .map(item => item.deliveryId);
+          
+          if (recommendationIds.length > 0 || adDeliveryIds.length > 0) {
+            try {
+              await api.markDelivered(recommendationIds, adDeliveryIds);
+            } catch (e) {
+              console.log('Failed to mark delivered:', e);
+            }
+          }
+          
+          loadingState.classList.add('d-none');
+          feedContainer.classList.remove('d-none');
+        }
+      } catch (error) {
+        console.error('Failed to load feed:', error);
+        loadingState.classList.add('d-none');
+        showDemoFeed();
+      }
+    }
+
+    function showDemoFeed() {
+      const feedContainer = document.getElementById('feedContainer');
+      const loadingState = document.getElementById('loadingState');
+      
+      const demoItems = [
+        {
+          id: 'demo1',
+          title: '人工智能技术最新进展：GPT系列模型引领AI新时代',
+          summary: '随着人工智能技术的快速发展，各大科技公司纷纷推出新一代AI模型。本文将深入探讨当前AI技术的发展趋势和未来展望。',
+          author: '科技日报',
+          source: '科技',
+          viewCount: 12580,
+          likeCount: 3420,
+          commentCount: 856,
+          semanticTags: ['AI', '人工智能', 'GPT', '科技']
+        },
+        {
+          id: 'demo2',
+          title: '2026年全球经济展望：新兴市场迎来新机遇',
+          summary: '经济学家预测，2026年全球经济将保持稳定增长。新兴市场国家在数字化转型和绿色经济领域将迎来前所未有的发展机遇。',
+          author: '财经周刊',
+          source: '财经',
+          viewCount: 8920,
+          likeCount: 2150,
+          commentCount: 543,
+          semanticTags: ['经济', '投资', '新兴市场']
+        },
+        {
+          type: 'ad',
+          material: {
+            title: '限时优惠！新款智能手机首发抢购',
+            description: '最新旗舰手机，顶级配置，限时优惠中！点击了解详情',
+            imageUrl: null,
+            landingUrl: '#'
+          }
+        },
+        {
+          id: 'demo3',
+          title: '世界杯预选赛最新战况：多支强队晋级决赛圈',
+          summary: '随着世界杯预选赛的进行，多支传统强队已经成功晋级决赛圈。本届世界杯有望上演精彩对决。',
+          author: '体育新闻',
+          source: '体育',
+          viewCount: 15680,
+          likeCount: 4230,
+          commentCount: 1256,
+          semanticTags: ['世界杯', '足球', '体育', '赛事']
+        },
+        {
+          id: 'demo4',
+          title: '健康饮食指南：如何科学搭配一日三餐',
+          summary: '现代人越来越注重健康饮食。本文将为您介绍如何科学搭配一日三餐，确保营养均衡，保持健康体魄。',
+          author: '健康生活',
+          source: '健康',
+          viewCount: 6890,
+          likeCount: 1890,
+          commentCount: 345,
+          semanticTags: ['健康', '饮食', '营养', '养生']
+        }
+      ];
+      
+      feedItems = demoItems;
+      renderFeed();
+      
+      loadingState.classList.add('d-none');
+      feedContainer.classList.remove('d-none');
+    }
+
+    function renderFeed() {
+      const container = document.getElementById('feedContainer');
+      container.innerHTML = '';
+      
+      feedItems.forEach((item, index) => {
+        const feedItem = document.createElement('div');
+        
+        if (item.type === 'ad') {
+          feedItem.className = 'feed-item ad-item';
+          feedItem.innerHTML = `
+            <div class="ad-tag">广告</div>
+            <h3 class="feed-title">${item.material?.title || item.title || '广告内容'}</h3>
+            <p class="feed-summary">${item.material?.description || ''}</p>
+            <div class="feed-meta">
+              <span class="feed-meta-item">📱 推广</span>
+            </div>
+          `;
+          
+          feedItem.addEventListener('click', () => handleAdClick(item));
+        } else {
+          feedItem.className = 'feed-item';
+          feedItem.innerHTML = `
+            <h3 class="feed-title">${item.title || item.content?.title}</h3>
+            <p class="feed-summary">${item.summary || item.content?.summary || ''}</p>
+            ${item.semanticTags || item.content?.semanticTags ? `
+              <div class="feed-tags">
+                ${(item.semanticTags || item.content?.semanticTags || []).slice(0, 3).map(tag => 
+                  `<span class="feed-tag">${tag}</span>`
+                ).join('')}
+              </div>
+            ` : ''}
+            <div class="feed-meta">
+              <span class="feed-meta-item">✍️ ${item.author || item.content?.author || '未知作者'}</span>
+              <span class="feed-meta-item">👁️ ${(item.viewCount || item.content?.viewCount || 0).toLocaleString()}</span>
+              <span class="feed-meta-item">❤️ ${(item.likeCount || item.content?.likeCount || 0).toLocaleString()}</span>
+              <span class="feed-meta-item negative-feedback-btn" onclick="event.stopPropagation(); openFeedbackModal('${item.id || item.contentId}')">
+                ⛔ 不感兴趣
+              </span>
+            </div>
+          `;
+          
+          feedItem.addEventListener('click', () => handleItemClick(item));
+        }
+        
+        container.appendChild(feedItem);
+      });
+    }
+
+    async function handleItemClick(item) {
+      const contentId = item.id || item.contentId;
+      const recommendationId = item.recommendationId;
+      
+      if (!contentId) {
+        showToast('演示数据，详情页面待开发');
+        return;
+      }
+      
+      try {
+        if (recommendationId) {
+          await api.markClicked(recommendationId, null);
+        }
+      } catch (e) {
+        console.log('Failed to mark clicked:', e);
+      }
+      
+      window.location.href = `/article/${contentId}`;
+    }
+
+    async function handleAdClick(item) {
+      const deliveryId = item.deliveryId;
+      
+      if (deliveryId) {
+        try {
+          await api.markClicked(null, deliveryId);
+        } catch (e) {
+          console.log('Failed to mark ad clicked:', e);
+        }
+      }
+      
+      showToast('广告点击已记录');
+    }
+
+    function openFeedbackModal(contentId) {
+      currentContentId = contentId;
+      selectedFeedbackType = null;
+      
+      const options = document.querySelectorAll('.feedback-option');
+      options.forEach(opt => opt.classList.remove('selected'));
+      
+      document.getElementById('feedbackModal').classList.remove('d-none');
+    }
+
+    function closeFeedbackModal() {
+      document.getElementById('feedbackModal').classList.add('d-none');
+      currentContentId = null;
+      selectedFeedbackType = null;
+    }
+
+    document.querySelectorAll('.feedback-option').forEach(option => {
+      option.addEventListener('click', () => {
+        document.querySelectorAll('.feedback-option').forEach(o => o.classList.remove('selected'));
+        option.classList.add('selected');
+        selectedFeedbackType = option.dataset.type;
+      });
+    });
+
+    async function submitFeedback() {
+      if (!selectedFeedbackType) {
+        showToast('请选择不感兴趣的原因');
+        return;
+      }
+      
+      if (!currentContentId) {
+        showToast('演示数据，负反馈功能待开发');
+        closeFeedbackModal();
+        return;
+      }
+      
+      try {
+        await api.submitNegativeFeedback(currentContentId, selectedFeedbackType);
+        showToast('已提交，将优化后续推荐');
+        
+        feedItems = feedItems.filter(item => 
+          (item.id !== currentContentId && item.contentId !== currentContentId)
+        );
+        renderFeed();
+        
+        closeFeedbackModal();
+      } catch (e) {
+        showToast('提交失败: ' + e.message);
+      }
+    }
+
+    function refreshFeed() {
+      loadFeed();
+    }
+
+    function goToProfile() {
+      if (!api.token) {
+        window.location.href = '/login';
+      } else {
+        window.location.href = '/profile';
+      }
+    }
+
+    function switchTab(tab) {
+      const navItems = document.querySelectorAll('.nav-item');
+      navItems.forEach(item => item.classList.remove('active'));
+      
+      event.currentTarget.classList.add('active');
+      
+      if (tab === 'home') {
+        currentCategory = 'recommend';
+        document.querySelector('.tab[data-category="recommend"]').classList.add('active');
+      } else if (tab === 'hot') {
+        currentCategory = 'hot';
+        document.querySelector('.tab[data-category="hot"]').classList.add('active');
+      }
+      
+      loadFeed();
+    }
+  </script>
+</body>
+</html>

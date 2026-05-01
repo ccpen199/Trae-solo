@@ -1,0 +1,478 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>内容管理 - 新闻资讯管理系统</title>
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+  <div class="app-layout">
+    <nav class="sidebar" id="sidebar">
+      <div class="sidebar-header">
+        <h1>📰 新闻资讯</h1>
+        <p>运营管理后台</p>
+      </div>
+      <div class="sidebar-menu">
+        <a href="/dashboard" class="menu-item">
+          <span class="icon">📊</span>
+          <span>数据仪表盘</span>
+        </a>
+        <a href="/contents" class="menu-item active">
+          <span class="icon">📝</span>
+          <span>内容管理</span>
+        </a>
+        <a href="/ads" class="menu-item">
+          <span class="icon">📢</span>
+          <span>广告管理</span>
+        </a>
+        <a href="/users" class="menu-item">
+          <span class="icon">👥</span>
+          <span>用户管理</span>
+        </a>
+        <a href="/analytics" class="menu-item">
+          <span class="icon">📈</span>
+          <span>数据分析</span>
+        </a>
+        <a href="/audit" class="menu-item">
+          <span class="icon">🔍</span>
+          <span>审计日志</span>
+        </a>
+      </div>
+    </nav>
+
+    <main class="main-content">
+      <header class="top-navbar">
+        <div class="navbar-left">
+          <h2 id="pageTitle">内容管理</h2>
+        </div>
+        <div class="navbar-right">
+          <div class="user-info">
+            <div class="user-avatar" id="userAvatar">A</div>
+            <div class="dropdown">
+              <span id="userName" style="cursor: pointer; font-weight: 500;">用户</span>
+              <div class="dropdown-menu" id="userDropdown">
+                <div class="dropdown-item" onclick="logout()">
+                  <span>🚪</span> 退出登录
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </header>
+
+      <div class="page-content">
+        <div class="page-header">
+          <h1 class="page-title">内容列表</h1>
+          <div class="page-actions">
+            <a href="/content/new" class="btn btn-primary">
+              ➕ 新增内容
+            </a>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-body">
+            <div class="search-bar">
+              <input type="text" id="searchKeyword" class="search-input" placeholder="搜索标题、内容...">
+              <select id="filterStatus" class="filter-select">
+                <option value="">全部状态</option>
+                <option value="draft">草稿</option>
+                <option value="pending_analysis">待分析</option>
+                <option value="analyzing">分析中</option>
+                <option value="to_recommend">待推荐</option>
+                <option value="published">已发布</option>
+                <option value="archived">已归档</option>
+              </select>
+              <select id="filterCategory" class="filter-select">
+                <option value="">全部分类</option>
+              </select>
+              <button class="btn btn-primary" onclick="searchContents()">
+                🔍 搜索
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-body">
+            <div id="loadingState" class="loading">
+              <div class="spinner"></div>
+            </div>
+
+            <div id="contentsTable" class="d-none">
+              <div class="table-wrapper">
+                <table>
+                  <thead>
+                    <tr>
+                      <th style="width: 40%;">标题</th>
+                      <th style="width: 10%;">状态</th>
+                      <th style="width: 10%;">分类</th>
+                      <th style="width: 8%;">浏览</th>
+                      <th style="width: 8%;">点赞</th>
+                      <th style="width: 8%;">评论</th>
+                      <th style="width: 8%;">权重</th>
+                      <th style="width: 15%;">操作</th>
+                    </tr>
+                  </thead>
+                  <tbody id="contentsBody">
+                  </tbody>
+                </table>
+              </div>
+
+              <div id="emptyState" class="empty-state d-none">
+                <div class="empty-state-icon">📭</div>
+                <div class="empty-state-title">暂无内容</div>
+                <div class="empty-state-text">点击上方按钮添加新内容</div>
+              </div>
+
+              <div id="pagination" class="pagination d-none">
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <div id="weightTagsModal" class="modal-overlay d-none">
+    <div class="modal">
+      <div class="modal-header">
+        <h3 class="modal-title">设置权重标签</h3>
+        <button class="modal-close" onclick="closeWeightTagsModal()">&times;</button>
+      </div>
+      <div class="modal-body">
+        <p class="mb-3" style="color: #64748b;">选择权重标签来调整内容的推荐优先级：</p>
+        <div id="weightTagsList">
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-secondary" onclick="closeWeightTagsModal()">取消</button>
+        <button class="btn btn-primary" onclick="saveWeightTags()">保存</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="/js/api.js"></script>
+  <script>
+    let currentPage = 1;
+    let pageSize = 20;
+    let totalPages = 1;
+    let currentContentId = null;
+    let selectedWeightTags = [];
+    let categories = [];
+    let weightTags = [];
+
+    const statusMap = {
+      draft: { text: '草稿', class: 'status-draft' },
+      pending_analysis: { text: '待分析', class: 'status-pending' },
+      analyzing: { text: '分析中', class: 'status-analyzing' },
+      to_recommend: { text: '待推荐', class: 'status-to_recommend' },
+      published: { text: '已发布', class: 'status-published' },
+      archived: { text: '已归档', class: 'status-archived' },
+      rejected: { text: '已拒绝', class: 'status-inactive' }
+    };
+
+    async function checkAuth() {
+      if (!api.token) {
+        window.location.href = '/login';
+        return;
+      }
+      
+      try {
+        const result = await api.getProfile();
+        if (result.success) {
+          const user = result.data.user;
+          document.getElementById('userName').textContent = user.nickname || user.username;
+          document.getElementById('userAvatar').textContent = (user.nickname || user.username).charAt(0).toUpperCase();
+        }
+      } catch (e) {
+        api.setToken(null);
+        window.location.href = '/login';
+      }
+    }
+
+    async function loadCategories() {
+      try {
+        const result = await api.getCategories();
+        if (result.success) {
+          categories = result.data.categories;
+          const select = document.getElementById('filterCategory');
+          categories.forEach(cat => {
+            const option = document.createElement('option');
+            option.value = cat.id;
+            option.textContent = cat.name;
+            select.appendChild(option);
+          });
+        }
+      } catch (e) {
+        console.error('Failed to load categories:', e);
+      }
+    }
+
+    async function loadWeightTags() {
+      try {
+        const result = await api.getWeightTags();
+        if (result.success) {
+          weightTags = result.data.tags;
+        }
+      } catch (e) {
+        console.error('Failed to load weight tags:', e);
+      }
+    }
+
+    async function loadContents() {
+      document.getElementById('loadingState').classList.remove('d-none');
+      document.getElementById('contentsTable').classList.add('d-none');
+
+      const keyword = document.getElementById('searchKeyword').value;
+      const status = document.getElementById('filterStatus').value;
+      const categoryId = document.getElementById('filterCategory').value;
+
+      try {
+        const result = await api.getContents({
+          status: status || undefined,
+          categoryId: categoryId || undefined,
+          keyword: keyword || undefined,
+          page: currentPage,
+          pageSize
+        });
+
+        if (result.success) {
+          const contents = result.data.contents;
+          const pagination = result.data.pagination;
+          totalPages = pagination.totalPages;
+
+          if (contents.length === 0) {
+            document.getElementById('emptyState').classList.remove('d-none');
+            document.getElementById('pagination').classList.add('d-none');
+          } else {
+            document.getElementById('emptyState').classList.add('d-none');
+            renderContents(contents);
+            renderPagination(pagination);
+          }
+
+          document.getElementById('loadingState').classList.add('d-none');
+          document.getElementById('contentsTable').classList.remove('d-none');
+        }
+      } catch (e) {
+        console.error('Failed to load contents:', e);
+        document.getElementById('loadingState').innerHTML = 
+          `<div class="alert alert-error">加载失败: ${e.message}</div>`;
+      }
+    }
+
+    function renderContents(contents) {
+      const tbody = document.getElementById('contentsBody');
+      tbody.innerHTML = '';
+
+      contents.forEach(content => {
+        const statusInfo = statusMap[content.status] || { text: content.status, class: 'status-inactive' };
+        const isDuplicate = content.isDuplicate;
+        
+        const row = document.createElement('tr');
+        row.innerHTML = `
+          <td>
+            <div style="display: flex; align-items: center; gap: 12px;">
+              ${content.coverImage ? `<img src="${content.coverImage}" style="width: 60px; height: 40px; object-fit: cover; border-radius: 4px;">` : ''}
+              <div>
+                <div style="font-weight: 500; margin-bottom: 4px;">${content.title}</div>
+                <div style="font-size: 12px; color: #64748b;">
+                  ${content.author || '未知作者'} · ${content.source || ''}
+                  ${isDuplicate ? '<span class="status-badge status-duplicate" style="margin-left: 8px;">重复内容</span>' : ''}
+                </div>
+                ${content.weightTags && content.weightTags.length > 0 ? `
+                  <div style="margin-top: 4px;">
+                    ${content.weightTags.map(t => `<span class="tag tag-primary">${t.name}</span>`).join('')}
+                  </div>
+                ` : ''}
+              </div>
+            </div>
+          </td>
+          <td>
+            <span class="status-badge ${statusInfo.class}">${statusInfo.text}</span>
+          </td>
+          <td>${content.category?.name || '-'}</td>
+          <td>${content.viewCount.toLocaleString()}</td>
+          <td>${content.likeCount.toLocaleString()}</td>
+          <td>${content.commentCount.toLocaleString()}</td>
+          <td><span class="tag tag-primary">×${content.recommendationWeight}</span></td>
+          <td>
+            <div style="display: flex; gap: 6px; flex-wrap: wrap;">
+              ${content.status === 'pending_analysis' ? `
+                <button class="btn btn-sm btn-warning" onclick="analyzeContent('${content.id}')">分析</button>
+              ` : ''}
+              ${content.status === 'to_recommend' ? `
+                <button class="btn btn-sm btn-success" onclick="publishContent('${content.id}')">发布</button>
+                <button class="btn btn-sm btn-primary" onclick="openWeightTagsModal('${content.id}')">权重标签</button>
+              ` : ''}
+              ${content.status === 'published' ? `
+                <button class="btn btn-sm btn-primary" onclick="openWeightTagsModal('${content.id}')">权重标签</button>
+              ` : ''}
+              <button class="btn btn-sm btn-secondary" onclick="viewContent('${content.id}')">查看</button>
+              <button class="btn btn-sm btn-secondary" onclick="editContent('${content.id}')">编辑</button>
+            </div>
+          </td>
+        `;
+        tbody.appendChild(row);
+      });
+    }
+
+    function renderPagination(pagination) {
+      const paginationDiv = document.getElementById('pagination');
+      
+      if (pagination.totalPages <= 1) {
+        paginationDiv.classList.add('d-none');
+        return;
+      }
+
+      paginationDiv.classList.remove('d-none');
+      let html = '';
+      
+      html += `<button class="pagination-btn" onclick="goToPage(${currentPage - 1})" ${currentPage === 1 ? 'disabled' : ''}>上一页</button>`;
+      
+      for (let i = 1; i <= pagination.totalPages; i++) {
+        if (i === 1 || i === pagination.totalPages || (i >= currentPage - 2 && i <= currentPage + 2)) {
+          html += `<button class="pagination-btn ${i === currentPage ? 'active' : ''}" onclick="goToPage(${i})">${i}</button>`;
+        } else if (i === currentPage - 3 || i === currentPage + 3) {
+          html += `<span style="padding: 8px;">...</span>`;
+        }
+      }
+      
+      html += `<button class="pagination-btn" onclick="goToPage(${currentPage + 1})" ${currentPage === pagination.totalPages ? 'disabled' : ''}>下一页</button>`;
+      
+      paginationDiv.innerHTML = html;
+    }
+
+    function goToPage(page) {
+      if (page < 1 || page > totalPages) return;
+      currentPage = page;
+      loadContents();
+    }
+
+    function searchContents() {
+      currentPage = 1;
+      loadContents();
+    }
+
+    async function analyzeContent(id) {
+      try {
+        const result = await api.analyzeContent(id);
+        if (result.success) {
+          alert('内容分析完成！');
+          loadContents();
+        }
+      } catch (e) {
+        alert('分析失败: ' + e.message);
+      }
+    }
+
+    async function publishContent(id) {
+      try {
+        const result = await api.publishContent(id);
+        if (result.success) {
+          alert('内容发布成功！');
+          loadContents();
+        }
+      } catch (e) {
+        alert('发布失败: ' + e.message);
+      }
+    }
+
+    function viewContent(id) {
+      alert('查看内容详情功能开发中...');
+    }
+
+    function editContent(id) {
+      window.location.href = `/content/${id}`;
+    }
+
+    function openWeightTagsModal(contentId) {
+      currentContentId = contentId;
+      selectedWeightTags = [];
+      
+      const modal = document.getElementById('weightTagsModal');
+      const list = document.getElementById('weightTagsList');
+      
+      if (weightTags.length === 0) {
+        list.innerHTML = '<div class="empty-state"><div class="empty-state-icon">🏷️</div><div class="empty-state-text">暂无权重标签</div></div>';
+      } else {
+        list.innerHTML = weightTags.map(tag => `
+          <label style="display: flex; align-items: center; padding: 12px; border: 1px solid #e2e8f0; border-radius: 8px; margin-bottom: 8px; cursor: pointer;">
+            <input type="checkbox" style="margin-right: 12px; width: 18px; height: 18px;" onchange="toggleWeightTag('${tag.id}')">
+            <div>
+              <div style="font-weight: 500;">${tag.name}</div>
+              <div style="font-size: 12px; color: #64748b;">
+                ${tag.description || tag.category} · 权重 ×${tag.weightValue}
+              </div>
+            </div>
+          </label>
+        `).join('');
+      }
+      
+      modal.classList.remove('d-none');
+    }
+
+    function closeWeightTagsModal() {
+      document.getElementById('weightTagsModal').classList.add('d-none');
+      currentContentId = null;
+      selectedWeightTags = [];
+    }
+
+    function toggleWeightTag(tagId) {
+      const index = selectedWeightTags.indexOf(tagId);
+      if (index > -1) {
+        selectedWeightTags.splice(index, 1);
+      } else {
+        selectedWeightTags.push(tagId);
+      }
+    }
+
+    async function saveWeightTags() {
+      if (!currentContentId) return;
+      
+      try {
+        const result = await api.setContentWeightTags(currentContentId, selectedWeightTags);
+        if (result.success) {
+          alert('权重标签设置成功！');
+          closeWeightTagsModal();
+          loadContents();
+        }
+      } catch (e) {
+        alert('设置失败: ' + e.message);
+      }
+    }
+
+    async function logout() {
+      await api.logout();
+      window.location.href = '/login';
+    }
+
+    document.addEventListener('DOMContentLoaded', async () => {
+      await checkAuth();
+      await loadCategories();
+      await loadWeightTags();
+      await loadContents();
+    });
+
+    document.getElementById('searchKeyword')?.addEventListener('keypress', (e) => {
+      if (e.key === 'Enter') {
+        searchContents();
+      }
+    });
+
+    document.getElementById('userName')?.addEventListener('click', (e) => {
+      const dropdown = document.getElementById('userDropdown');
+      dropdown.classList.toggle('show');
+      e.stopPropagation();
+    });
+
+    document.addEventListener('click', () => {
+      const dropdown = document.getElementById('userDropdown');
+      if (dropdown) {
+        dropdown.classList.remove('show');
+      }
+    });
+  </script>
+</body>
+</html>

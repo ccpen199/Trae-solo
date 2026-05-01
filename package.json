@@ -1,0 +1,34 @@
+{
+  "name": "news-app-platform",
+  "version": "1.0.0",
+  "description": "新闻资讯 App 完整系统 - 包含后端服务、运营管理前端、读者端前端、广告主看板",
+  "main": "index.js",
+  "scripts": {
+    "install:all": "npm run install:backend && npm run install:admin && npm run install:reader && npm run install:advertiser",
+    "install:backend": "cd backend && npm install",
+    "install:admin": "cd frontend-admin && npm install",
+    "install:reader": "cd frontend-reader && npm install",
+    "install:advertiser": "cd frontend-advertiser && npm install",
+    "start": "concurrently \"npm run start:backend\" \"npm run start:admin\" \"npm run start:reader\" \"npm run start:advertiser\"",
+    "start:backend": "cd backend && npm start",
+    "start:admin": "cd frontend-admin && npm start",
+    "start:reader": "cd frontend-reader && npm start",
+    "start:advertiser": "cd frontend-advertiser && npm start",
+    "dev": "concurrently \"npm run dev:backend\" \"npm run dev:admin\" \"npm run dev:reader\" \"npm run dev:advertiser\"",
+    "dev:backend": "cd backend && npm run dev",
+    "dev:admin": "cd frontend-admin && npm run dev",
+    "dev:reader": "cd frontend-reader && npm run dev",
+    "dev:advertiser": "cd frontend-advertiser && npm run dev",
+    "init:db": "cd backend && npm run init-db",
+    "seed": "cd backend && npm run seed"
+  },
+  "keywords": ["news", "recommendation", "advertising", "platform"],
+  "author": "",
+  "license": "MIT",
+  "devDependencies": {
+    "concurrently": "^8.2.2"
+  },
+  "engines": {
+    "node": ">=16.0.0"
+  }
+}

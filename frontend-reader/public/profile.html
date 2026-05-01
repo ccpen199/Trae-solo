@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>个人中心 - 新闻资讯</title>
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+  <div id="guestView" class="d-none">
+    <div class="login-container">
+      <div class="login-card">
+        <div class="login-header">
+          <div class="login-logo">👤</div>
+          <h1 class="login-title">登录后体验更多功能</h1>
+          <p class="login-subtitle">个性化推荐、收藏、互动等</p>
+        </div>
+        
+        <button class="btn btn-primary" onclick="goToLogin()">
+          立即登录
+        </button>
+        
+        <div class="login-footer">
+          还没有账号？<a href="/register">立即注册</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div id="userView">
+    <div class="profile-header">
+      <div class="profile-avatar" id="userAvatar">用</div>
+      <div class="profile-name" id="userName">用户</div>
+      <div class="profile-role" id="userRole">读者</div>
+      
+      <div class="profile-stats">
+        <div class="profile-stat">
+          <div class="profile-stat-value" id="viewCount">0</div>
+          <div class="profile-stat-label">阅读</div>
+        </div>
+        <div class="profile-stat">
+          <div class="profile-stat-value" id="likeCount">0</div>
+          <div class="profile-stat-label">点赞</div>
+        </div>
+        <div class="profile-stat">
+          <div class="profile-stat-value" id="commentCount">0</div>
+          <div class="profile-stat-label">评论</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="profile-menu">
+      <div class="profile-menu-item" onclick="showMyLikes()">
+        <div class="profile-menu-left">
+          <span class="profile-menu-icon">❤️</span>
+          <span class="profile-menu-text">我的点赞</span>
+        </div>
+        <span class="profile-menu-arrow">›</span>
+      </div>
+      
+      <div class="profile-menu-item" onclick="showMyCollects()">
+        <div class="profile-menu-left">
+          <span class="profile-menu-icon">⭐</span>
+          <span class="profile-menu-text">我的收藏</span>
+        </div>
+        <span class="profile-menu-arrow">›</span>
+      </div>
+      
+      <div class="profile-menu-item" onclick="showMyComments()">
+        <div class="profile-menu-left">
+          <span class="profile-menu-icon">💬</span>
+          <span class="profile-menu-text">我的评论</span>
+        </div>
+        <span class="profile-menu-arrow">›</span>
+      </div>
+      
+      <div class="profile-menu-item" onclick="showFeedbackHistory()">
+        <div class="profile-menu-left">
+          <span class="profile-menu-icon">⛔</span>
+          <span class="profile-menu-text">负反馈记录</span>
+        </div>
+        <span class="profile-menu-arrow">›</span>
+      </div>
+    </div>
+
+    <div class="profile-menu">
+      <div class="profile-menu-item" onclick="showSettings()">
+        <div class="profile-menu-left">
+          <span class="profile-menu-icon">⚙️</span>
+          <span class="profile-menu-text">设置</span>
+        </div>
+        <span class="profile-menu-arrow">›</span>
+      </div>
+      
+      <div class="profile-menu-item" onclick="showAbout()">
+        <div class="profile-menu-left">
+          <span class="profile-menu-icon">ℹ️</span>
+          <span class="profile-menu-text">关于</span>
+        </div>
+        <span class="profile-menu-arrow">›</span>
+      </div>
+    </div>
+
+    <button class="logout-btn" onclick="logout()">
+      退出登录
+    </button>
+  </div>
+
+  <nav class="bottom-nav">
+    <div class="nav-item" onclick="goToHome()">
+      <div class="nav-icon">🏠</div>
+      <div class="nav-label">首页</div>
+    </div>
+    <div class="nav-item" onclick="goToHot()">
+      <div class="nav-icon">🔥</div>
+      <div class="nav-label">热门</div>
+    </div>
+    <div class="nav-item active">
+      <div class="nav-icon">👤</div>
+      <div class="nav-label">我的</div>
+    </div>
+  </nav>
+
+  <script src="/js/api.js"></script>
+  <script>
+    let userProfile = null;
+
+    document.addEventListener('DOMContentLoaded', async () => {
+      await checkAuth();
+    });
+
+    async function checkAuth() {
+      const guestView = document.getElementById('guestView');
+      const userView = document.getElementById('userView');
+      
+      if (!api.token) {
+        guestView.classList.remove('d-none');
+        userView.classList.add('d-none');
+        return;
+      }
+      
+      try {
+        const result = await api.getProfile();
+        
+        if (result.success) {
+          userProfile = result.data.user;
+          renderProfile();
+          
+          guestView.classList.add('d-none');
+          userView.classList.remove('d-none');
+          
+          await loadInteractionStats();
+        }
+      } catch (error) {
+        api.setToken(null);
+        guestView.classList.remove('d-none');
+        userView.classList.add('d-none');
+      }
+    }
+
+    function renderProfile() {
+      if (!userProfile) return;
+      
+      document.getElementById('userAvatar').textContent = (userProfile.nickname || userProfile.username).charAt(0).toUpperCase();
+      document.getElementById('userName').textContent = userProfile.nickname || userProfile.username;
+      
+      const roleMap = {
+        'reader': '读者',
+        'operator': '内容运营',
+        'algorithm': '算法工程师',
+        'advertiser': '广告主',
+        'admin': '管理员'
+      };
+      document.getElementById('userRole').textContent = roleMap[userProfile.role] || userProfile.role;
+    }
+
+    async function loadInteractionStats() {
+      try {
+        const result = await api.getInteractionStats();
+        
+        if (result.success && result.data.stats) {
+          const stats = result.data.stats;
+          document.getElementById('viewCount').textContent = stats.viewCount?.toLocaleString() || '0';
+          document.getElementById('likeCount').textContent = stats.likeCount?.toLocaleString() || '0';
+          document.getElementById('commentCount').textContent = stats.commentCount?.toLocaleString() || '0';
+        }
+      } catch (error) {
+        console.error('Failed to load interaction stats:', error);
+      }
+    }
+
+    function goToLogin() {
+      window.location.href = '/login';
+    }
+
+    function goToHome() {
+      window.location.href = '/';
+    }
+
+    function goToHot() {
+      window.location.href = '/?category=hot';
+    }
+
+    async function logout() {
+      if (confirm('确定要退出登录吗？')) {
+        await api.logout();
+        window.location.href = '/login';
+      }
+    }
+
+    function showMyLikes() {
+      showToast('我的点赞功能开发中');
+    }
+
+    function showMyCollects() {
+      showToast('我的收藏功能开发中');
+    }
+
+    function showMyComments() {
+      showToast('我的评论功能开发中');
+    }
+
+    function showFeedbackHistory() {
+      showToast('负反馈记录功能开发中');
+    }
+
+    function showSettings() {
+      showToast('设置功能开发中');
+    }
+
+    function showAbout() {
+      showToast('新闻资讯 App v1.0.0\n\n核心功能：\n• 个性化推荐\n• 广告投放\n• 用户互动\n• 负反馈优化\n• 数据统计');
+    }
+  </script>
+</body>
+</html>

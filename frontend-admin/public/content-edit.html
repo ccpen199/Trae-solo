@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>编辑内容 - 新闻资讯管理系统</title>
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+  <div class="app-layout">
+    <nav class="sidebar" id="sidebar">
+      <div class="sidebar-header">
+        <h1>📰 新闻资讯</h1>
+        <p>运营管理后台</p>
+      </div>
+      <div class="sidebar-menu">
+        <a href="/dashboard" class="menu-item">
+          <span class="icon">📊</span>
+          <span>数据仪表盘</span>
+        </a>
+        <a href="/contents" class="menu-item active">
+          <span class="icon">📝</span>
+          <span>内容管理</span>
+        </a>
+        <a href="/ads" class="menu-item">
+          <span class="icon">📢</span>
+          <span>广告管理</span>
+        </a>
+        <a href="/users" class="menu-item">
+          <span class="icon">👥</span>
+          <span>用户管理</span>
+        </a>
+        <a href="/analytics" class="menu-item">
+          <span class="icon">📈</span>
+          <span>数据分析</span>
+        </a>
+        <a href="/audit" class="menu-item">
+          <span class="icon">🔍</span>
+          <span>审计日志</span>
+        </a>
+      </div>
+    </nav>
+
+    <main class="main-content">
+      <header class="top-navbar">
+        <div class="navbar-left">
+          <h2 id="pageTitle">编辑内容</h2>
+        </div>
+        <div class="navbar-right">
+          <div class="user-info">
+            <div class="user-avatar" id="userAvatar">A</div>
+            <div class="dropdown">
+              <span id="userName" style="cursor: pointer; font-weight: 500;">用户</span>
+              <div class="dropdown-menu" id="userDropdown">
+                <div class="dropdown-item" onclick="logout()">
+                  <span>🚪</span> 退出登录
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </header>
+
+      <div class="page-content">
+        <div class="page-header">
+          <h1 class="page-title" id="contentTitle">新增内容</h1>
+          <div class="page-actions">
+            <a href="/contents" class="btn btn-secondary">
+              ← 返回列表
+            </a>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-body">
+            <form id="contentForm">
+              <div class="form-row">
+                <div class="form-group" style="grid-column: 1 / -1;">
+                  <label for="title">标题 *</label>
+                  <input type="text" id="title" class="form-control" placeholder="请输入内容标题" required>
+                </div>
+              </div>
+
+              <div class="form-row">
+                <div class="form-group">
+                  <label for="author">作者</label>
+                  <input type="text" id="author" class="form-control" placeholder="请输入作者名称">
+                </div>
+                <div class="form-group">
+                  <label for="source">来源</label>
+                  <input type="text" id="source" class="form-control" placeholder="请输入内容来源">
+                </div>
+                <div class="form-group">
+                  <label for="sourceUrl">来源链接</label>
+                  <input type="url" id="sourceUrl" class="form-control" placeholder="请输入来源链接">
+                </div>
+              </div>
+
+              <div class="form-row">
+                <div class="form-group">
+                  <label for="coverImage">封面图片 URL</label>
+                  <input type="url" id="coverImage" class="form-control" placeholder="请输入封面图片链接">
+                </div>
+              </div>
+
+              <div class="form-group-full">
+                <label for="content">正文内容 *</label>
+                <textarea id="content" class="form-control" rows="15" placeholder="请输入正文内容..." required></textarea>
+                <div style="margin-top: 8px; font-size: 12px; color: #64748b;">
+                  提示：系统会自动对内容进行语义分析、去重检测和分类
+                </div>
+              </div>
+
+              <div class="form-row">
+                <div class="form-group">
+                  <label>内容处理流程</label>
+                  <div style="display: flex; flex-direction: column; gap: 8px; margin-top: 8px;">
+                    <div style="display: flex; align-items: center; gap: 8px; padding: 12px; background: rgba(102, 126, 234, 0.05); border-radius: 8px;">
+                      <span style="font-size: 20px;">🔬</span>
+                      <div>
+                        <div style="font-weight: 500;">语义分析</div>
+                        <div style="font-size: 12px; color: #64748b;">自动提取关键词和语义标签</div>
+                      </div>
+                    </div>
+                    <div style="display: flex; align-items: center; gap: 8px; padding: 12px; background: rgba(16, 185, 129, 0.05); border-radius: 8px;">
+                      <span style="font-size: 20px;">🔍</span>
+                      <div>
+                        <div style="font-weight: 500;">去重检测</div>
+                        <div style="font-size: 12px; color: #64748b;">检测内容哈希，标记重复内容</div>
+                      </div>
+                    </div>
+                    <div style="display: flex; align-items: center; gap: 8px; padding: 12px; background: rgba(245, 158, 11, 0.05); border-radius: 8px;">
+                      <span style="font-size: 20px;">📂</span>
+                      <div>
+                        <div style="font-weight: 500;">智能分类</div>
+                        <div style="font-size: 12px; color: #64748b;">基于关键词自动归类</div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label>操作提示</label>
+                  <div style="margin-top: 8px;">
+                    <div class="alert alert-info">
+                      <strong>入库流程：</strong><br>
+                      1. 提交后内容进入"待分析"状态<br>
+                      2. 执行语义分析、去重、分类<br>
+                      3. 分析完成后状态变为"待推荐"<br>
+                      4. 运营可配置权重标签后发布
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div id="errorMessage" class="alert alert-error d-none"></div>
+              <div id="successMessage" class="alert alert-success d-none"></div>
+
+              <div style="display: flex; gap: 12px; margin-top: 24px;">
+                <button type="submit" class="btn btn-primary">
+                  💾 提交入库
+                </button>
+                <button type="button" class="btn btn-secondary" onclick="window.location.href='/contents'">
+                  取消
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <script src="/js/api.js"></script>
+  <script>
+    let contentId = null;
+    let isEdit = false;
+
+    async function checkAuth() {
+      if (!api.token) {
+        window.location.href = '/login';
+        return;
+      }
+      
+      try {
+        const result = await api.getProfile();
+        if (result.success) {
+          const user = result.data.user;
+          document.getElementById('userName').textContent = user.nickname || user.username;
+          document.getElementById('userAvatar').textContent = (user.nickname || user.username).charAt(0).toUpperCase();
+        }
+      } catch (e) {
+        api.setToken(null);
+        window.location.href = '/login';
+      }
+    }
+
+    async function loadContent() {
+      const path = window.location.pathname;
+      const match = path.match(/\/content\/(.+)/);
+      
+      if (match && match[1] !== 'new') {
+        contentId = match[1];
+        isEdit = true;
+        document.getElementById('contentTitle').textContent = '编辑内容';
+        
+        try {
+          const result = await api.getContent(contentId);
+          if (result.success && result.data.content) {
+            const content = result.data.content;
+            document.getElementById('title').value = content.title || '';
+            document.getElementById('author').value = content.author || '';
+            document.getElementById('source').value = content.source || '';
+            document.getElementById('sourceUrl').value = content.sourceUrl || '';
+            document.getElementById('coverImage').value = content.coverImage || '';
+            document.getElementById('content').value = content.content || '';
+          }
+        } catch (e) {
+          console.error('Failed to load content:', e);
+        }
+      }
+    }
+
+    async function submitContent(e) {
+      e.preventDefault();
+      
+      const errorDiv = document.getElementById('errorMessage');
+      const successDiv = document.getElementById('successMessage');
+      errorDiv.classList.add('d-none');
+      successDiv.classList.add('d-none');
+      
+      const data = {
+        title: document.getElementById('title').value,
+        content: document.getElementById('content').value,
+        author: document.getElementById('author').value || null,
+        source: document.getElementById('source').value || null,
+        sourceUrl: document.getElementById('sourceUrl').value || null,
+        coverImage: document.getElementById('coverImage').value || null
+      };
+      
+      if (!data.title || !data.content) {
+        errorDiv.textContent = '标题和内容不能为空';
+        errorDiv.classList.remove('d-none');
+        return;
+      }
+      
+      try {
+        const result = await api.createContent(data);
+        
+        if (result.success) {
+          successDiv.textContent = `内容入库成功！ID: ${result.data.content.id}`;
+          successDiv.classList.remove('d-none');
+          
+          setTimeout(() => {
+            window.location.href = '/contents';
+          }, 1500);
+        }
+      } catch (e) {
+        errorDiv.textContent = '入库失败: ' + (e.message || '未知错误');
+        errorDiv.classList.remove('d-none');
+      }
+    }
+
+    async function logout() {
+      await api.logout();
+      window.location.href = '/login';
+    }
+
+    document.addEventListener('DOMContentLoaded', async () => {
+      await checkAuth();
+      await loadContent();
+    });
+
+    document.getElementById('contentForm')?.addEventListener('submit', submitContent);
+
+    document.getElementById('userName')?.addEventListener('click', (e) => {
+      const dropdown = document.getElementById('userDropdown');
+      dropdown.classList.toggle('show');
+      e.stopPropagation();
+    });
+
+    document.addEventListener('click', () => {
+      const dropdown = document.getElementById('userDropdown');
+      if (dropdown) {
+        dropdown.classList.remove('show');
+      }
+    });
+  </script>
+</body>
+</html>

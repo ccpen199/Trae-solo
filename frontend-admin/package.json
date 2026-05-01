@@ -1,0 +1,22 @@
+{
+  "name": "news-app-admin-frontend",
+  "version": "1.0.0",
+  "description": "新闻资讯 App 运营管理前端",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node server.js"
+  },
+  "keywords": [
+    "news",
+    "admin",
+    "dashboard"
+  ],
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "cors": "^2.8.6",
+    "express": "^4.22.1",
+    "http-proxy-middleware": "^2.0.9"
+  }
+}
