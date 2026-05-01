@@ -1,0 +1,414 @@
+version: '3.8'
+
+services:
+  postgres:
+    image: postgres:15-alpine
+    container_name: video_platform_postgres
+    environment:
+      POSTGRES_DB: video_platform
+      POSTGRES_USER: vp_admin
+      POSTGRES_PASSWORD: Vp_Admin_2024_Secure
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+      - ./scripts/init-db.sql:/docker-entrypoint-initdb.d/init-db.sql
+    networks:
+      - video_platform_network
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U vp_admin -d video_platform"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  redis:
+    image: redis:7-alpine
+    container_name: video_platform_redis
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis_data:/data
+    networks:
+      - video_platform_network
+    command: redis-server --appendonly yes --requirepass Redis_Secure_2024_Pass
+
+  rabbitmq:
+    image: rabbitmq:3-management-alpine
+    container_name: video_platform_rabbitmq
+    environment:
+      RABBITMQ_DEFAULT_USER: mq_admin
+      RABBITMQ_DEFAULT_PASS: Mq_Admin_2024_Secure
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+    volumes:
+      - rabbitmq_data:/var/lib/rabbitmq
+    networks:
+      - video_platform_network
+    healthcheck:
+      test: ["CMD", "rabbitmqctl", "status"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+  minio:
+    image: minio/minio:latest
+    container_name: video_platform_minio
+    environment:
+      MINIO_ROOT_USER: minio_admin
+      MINIO_ROOT_PASSWORD: Minio_Admin_2024_Secure
+    ports:
+      - "9000:9000"
+      - "9001:9001"
+    volumes:
+      - minio_data:/data
+    networks:
+      - video_platform_network
+    command: server /data --console-address ":9001"
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:9000/minio/health/live"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+  api-gateway:
+    build:
+      context: ./backend/api-gateway
+      dockerfile: Dockerfile
+    container_name: video_platform_api_gateway
+    ports:
+      - "9876:9876"
+    environment:
+      - PORT=9876
+      - NODE_ENV=development
+      - DB_HOST=postgres
+      - DB_PORT=5432
+      - DB_NAME=video_platform
+      - DB_USER=vp_admin
+      - DB_PASSWORD=Vp_Admin_2024_Secure
+      - REDIS_HOST=redis
+      - REDIS_PORT=6379
+      - REDIS_PASSWORD=Redis_Secure_2024_Pass
+      - RABBITMQ_HOST=rabbitmq
+      - RABBITMQ_PORT=5672
+      - RABBITMQ_USER=mq_admin
+      - RABBITMQ_PASSWORD=Mq_Admin_2024_Secure
+      - JWT_SECRET=Video_Platform_JWT_Secret_2024_Very_Long_Key_For_Security
+      - USER_SERVICE_URL=http://user-service:9877
+      - VIDEO_SERVICE_URL=http://video-service:9878
+      - TRANSCODING_ENGINE_URL=http://transcoding-engine:9879
+      - RECOMMEND_ENGINE_URL=http://recommend-engine:9880
+      - SAFETY_ENGINE_URL=http://safety-engine:9881
+      - ENGAGEMENT_ENGINE_URL=http://engagement-engine:9882
+      - AD_SERVICE_URL=http://ad-service:9883
+    depends_on:
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_started
+      rabbitmq:
+        condition: service_healthy
+    networks:
+      - video_platform_network
+
+  user-service:
+    build:
+      context: ./backend/user-service
+      dockerfile: Dockerfile
+    container_name: video_platform_user_service
+    ports:
+      - "9877:9877"
+    environment:
+      - PORT=9877
+      - NODE_ENV=development
+      - DB_HOST=postgres
+      - DB_PORT=5432
+      - DB_NAME=video_platform
+      - DB_USER=vp_admin
+      - DB_PASSWORD=Vp_Admin_2024_Secure
+      - REDIS_HOST=redis
+      - REDIS_PORT=6379
+      - REDIS_PASSWORD=Redis_Secure_2024_Pass
+      - JWT_SECRET=Video_Platform_JWT_Secret_2024_Very_Long_Key_For_Security
+    depends_on:
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_started
+    networks:
+      - video_platform_network
+
+  video-service:
+    build:
+      context: ./backend/video-service
+      dockerfile: Dockerfile
+    container_name: video_platform_video_service
+    ports:
+      - "9878:9878"
+    environment:
+      - PORT=9878
+      - NODE_ENV=development
+      - DB_HOST=postgres
+      - DB_PORT=5432
+      - DB_NAME=video_platform
+      - DB_USER=vp_admin
+      - DB_PASSWORD=Vp_Admin_2024_Secure
+      - REDIS_HOST=redis
+      - REDIS_PORT=6379
+      - REDIS_PASSWORD=Redis_Secure_2024_Pass
+      - RABBITMQ_HOST=rabbitmq
+      - RABBITMQ_PORT=5672
+      - RABBITMQ_USER=mq_admin
+      - RABBITMQ_PASSWORD=Mq_Admin_2024_Secure
+      - MINIO_ENDPOINT=minio
+      - MINIO_PORT=9000
+      - MINIO_ACCESS_KEY=minio_admin
+      - MINIO_SECRET_KEY=Minio_Admin_2024_Secure
+      - MINIO_BUCKET=videos
+      - JWT_SECRET=Video_Platform_JWT_Secret_2024_Very_Long_Key_For_Security
+      - TRANSCODING_ENGINE_URL=http://transcoding-engine:9879
+      - SAFETY_ENGINE_URL=http://safety-engine:9881
+    depends_on:
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_started
+      rabbitmq:
+        condition: service_healthy
+      minio:
+        condition: service_healthy
+    networks:
+      - video_platform_network
+
+  transcoding-engine:
+    build:
+      context: ./engines/transcoding-engine
+      dockerfile: Dockerfile
+    container_name: video_platform_transcoding_engine
+    ports:
+      - "9879:9879"
+    environment:
+      - PORT=9879
+      - NODE_ENV=development
+      - DB_HOST=postgres
+      - DB_PORT=5432
+      - DB_NAME=video_platform
+      - DB_USER=vp_admin
+      - DB_PASSWORD=Vp_Admin_2024_Secure
+      - REDIS_HOST=redis
+      - REDIS_PORT=6379
+      - REDIS_PASSWORD=Redis_Secure_2024_Pass
+      - RABBITMQ_HOST=rabbitmq
+      - RABBITMQ_PORT=5672
+      - RABBITMQ_USER=mq_admin
+      - RABBITMQ_PASSWORD=Mq_Admin_2024_Secure
+      - MINIO_ENDPOINT=minio
+      - MINIO_PORT=9000
+      - MINIO_ACCESS_KEY=minio_admin
+      - MINIO_SECRET_KEY=Minio_Admin_2024_Secure
+      - MINIO_BUCKET=videos
+    depends_on:
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_started
+      rabbitmq:
+        condition: service_healthy
+      minio:
+        condition: service_healthy
+    networks:
+      - video_platform_network
+
+  recommend-engine:
+    build:
+      context: ./engines/recommend-engine
+      dockerfile: Dockerfile
+    container_name: video_platform_recommend_engine
+    ports:
+      - "9880:9880"
+    environment:
+      - PORT=9880
+      - NODE_ENV=development
+      - DB_HOST=postgres
+      - DB_PORT=5432
+      - DB_NAME=video_platform
+      - DB_USER=vp_admin
+      - DB_PASSWORD=Vp_Admin_2024_Secure
+      - REDIS_HOST=redis
+      - REDIS_PORT=6379
+      - REDIS_PASSWORD=Redis_Secure_2024_Pass
+    depends_on:
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_started
+    networks:
+      - video_platform_network
+
+  safety-engine:
+    build:
+      context: ./engines/safety-engine
+      dockerfile: Dockerfile
+    container_name: video_platform_safety_engine
+    ports:
+      - "9881:9881"
+    environment:
+      - PORT=9881
+      - NODE_ENV=development
+      - DB_HOST=postgres
+      - DB_PORT=5432
+      - DB_NAME=video_platform
+      - DB_USER=vp_admin
+      - DB_PASSWORD=Vp_Admin_2024_Secure
+      - REDIS_HOST=redis
+      - REDIS_PORT=6379
+      - REDIS_PASSWORD=Redis_Secure_2024_Pass
+      - RABBITMQ_HOST=rabbitmq
+      - RABBITMQ_PORT=5672
+      - RABBITMQ_USER=mq_admin
+      - RABBITMQ_PASSWORD=Mq_Admin_2024_Secure
+      - MINIO_ENDPOINT=minio
+      - MINIO_PORT=9000
+      - MINIO_ACCESS_KEY=minio_admin
+      - MINIO_SECRET_KEY=Minio_Admin_2024_Secure
+      - MINIO_BUCKET=videos
+    depends_on:
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_started
+      rabbitmq:
+        condition: service_healthy
+      minio:
+        condition: service_healthy
+    networks:
+      - video_platform_network
+
+  engagement-engine:
+    build:
+      context: ./engines/engagement-engine
+      dockerfile: Dockerfile
+    container_name: video_platform_engagement_engine
+    ports:
+      - "9882:9882"
+    environment:
+      - PORT=9882
+      - NODE_ENV=development
+      - DB_HOST=postgres
+      - DB_PORT=5432
+      - DB_NAME=video_platform
+      - DB_USER=vp_admin
+      - DB_PASSWORD=Vp_Admin_2024_Secure
+      - REDIS_HOST=redis
+      - REDIS_PORT=6379
+      - REDIS_PASSWORD=Redis_Secure_2024_Pass
+      - RABBITMQ_HOST=rabbitmq
+      - RABBITMQ_PORT=5672
+      - RABBITMQ_USER=mq_admin
+      - RABBITMQ_PASSWORD=Mq_Admin_2024_Secure
+    depends_on:
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_started
+      rabbitmq:
+        condition: service_healthy
+    networks:
+      - video_platform_network
+
+  ad-service:
+    build:
+      context: ./backend/ad-service
+      dockerfile: Dockerfile
+    container_name: video_platform_ad_service
+    ports:
+      - "9883:9883"
+    environment:
+      - PORT=9883
+      - NODE_ENV=development
+      - DB_HOST=postgres
+      - DB_PORT=5432
+      - DB_NAME=video_platform
+      - DB_USER=vp_admin
+      - DB_PASSWORD=Vp_Admin_2024_Secure
+      - REDIS_HOST=redis
+      - REDIS_PORT=6379
+      - REDIS_PASSWORD=Redis_Secure_2024_Pass
+      - JWT_SECRET=Video_Platform_JWT_Secret_2024_Very_Long_Key_For_Security
+    depends_on:
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_started
+    networks:
+      - video_platform_network
+
+  creator-app:
+    build:
+      context: ./frontend/creator-app
+      dockerfile: Dockerfile
+    container_name: video_platform_creator_app
+    ports:
+      - "9884:9884"
+    environment:
+      - PORT=9884
+      - API_BASE_URL=http://localhost:9876
+    depends_on:
+      - api-gateway
+    networks:
+      - video_platform_network
+
+  viewer-app:
+    build:
+      context: ./frontend/viewer-app
+      dockerfile: Dockerfile
+    container_name: video_platform_viewer_app
+    ports:
+      - "9885:9885"
+    environment:
+      - PORT=9885
+      - API_BASE_URL=http://localhost:9876
+    depends_on:
+      - api-gateway
+    networks:
+      - video_platform_network
+
+  auditor-app:
+    build:
+      context: ./frontend/auditor-app
+      dockerfile: Dockerfile
+    container_name: video_platform_auditor_app
+    ports:
+      - "9886:9886"
+    environment:
+      - PORT=9886
+      - API_BASE_URL=http://localhost:9876
+    depends_on:
+      - api-gateway
+    networks:
+      - video_platform_network
+
+  advertiser-app:
+    build:
+      context: ./frontend/advertiser-app
+      dockerfile: Dockerfile
+    container_name: video_platform_advertiser_app
+    ports:
+      - "9887:9887"
+    environment:
+      - PORT=9887
+      - API_BASE_URL=http://localhost:9876
+    depends_on:
+      - api-gateway
+    networks:
+      - video_platform_network
+
+volumes:
+  postgres_data:
+  redis_data:
+  rabbitmq_data:
+  minio_data:
+
+networks:
+  video_platform_network:
+    driver: bridge
