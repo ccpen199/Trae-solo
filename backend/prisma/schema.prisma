@@ -1,0 +1,473 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+// 用户角色枚举
+enum UserRole {
+  END_USER
+  DISTRIBUTOR
+  OPERATOR
+  FINANCE
+  ADMIN
+}
+
+// 分销关系状态
+enum DistributionStatus {
+  ACTIVE
+  SUSPENDED
+  TERMINATED
+}
+
+// 订单状态
+enum OrderStatus {
+  PENDING_PAYMENT
+  PAID
+  SHIPPED
+  DELIVERED
+  AFTER_SALE_PERIOD
+  COMPLETED
+  CANCELLED
+  REFUNDED
+}
+
+// 佣金状态
+enum CommissionStatus {
+  FROZEN
+  PENDING_SETTLEMENT
+  SETTLED
+  CANCELLED
+  DEDUCTED
+}
+
+// 提现状态
+enum WithdrawStatus {
+  PENDING_REVIEW
+  APPROVED
+  REJECTED
+  PENDING_PAYMENT
+  PAID
+  FAILED
+}
+
+// 欺诈检测状态
+enum FraudStatus {
+  SUSPECTED
+  CONFIRMED
+  CLEARED
+  APPEALED
+}
+
+// 用户表 - 支持多角色
+model User {
+  id              String    @id @default(uuid())
+  phone           String    @unique
+  passwordHash    String
+  nickname        String?
+  avatar          String?
+  role            UserRole  @default(END_USER)
+  
+  // 分销员相关字段
+  distributorId   String?   @unique
+  referralCode    String?   @unique
+  joinDate        DateTime?
+  distributorStatus DistributionStatus?
+  
+  // 运营/财务相关字段
+  department      String?
+  
+  // 反作弊字段
+  registerIp      String?
+  registerDevice  String?
+  
+  createdAt       DateTime  @default(now())
+  updatedAt       DateTime  @updatedAt
+  deletedAt       DateTime?
+  
+  // 关系
+  distributionRelations   DistributionRelation[] @relation("Downline")
+  parentRelation          DistributionRelation?  @relation("Upline")
+  virtualAccount          VirtualAccount?
+  commissions             Commission[]
+  withdrawRequests        WithdrawRequest[]
+  fraudRecords            FraudDetection[]
+  orderAttributions       OrderAttribution[]
+  
+  @@index([phone])
+  @@index([referralCode])
+  @@index([role])
+}
+
+// 分销关系表 - 记录拓扑关系
+model DistributionRelation {
+  id              String    @id @default(uuid())
+  parentId        String
+  childId         String
+  level           Int       // 层级：1=直接推荐，2=间接1级，以此类推
+  
+  status          DistributionStatus @default(ACTIVE)
+  joinTime        DateTime  @default(now())
+  lastActiveTime  DateTime?
+  
+  createdAt       DateTime  @default(now())
+  updatedAt       DateTime  @updatedAt
+  
+  // 关系
+  parent          User      @relation("Upline", fields: [parentId], references: [id])
+  child           User      @relation("Downline", fields: [childId], references: [id])
+  
+  @@unique([parentId, childId])
+  @@index([parentId])
+  @@index([childId])
+  @@index([level])
+}
+
+// 商品表
+model Product {
+  id              String    @id @default(uuid())
+  name            String
+  description     String?
+  price           Decimal   @db.Decimal(18, 2)
+  costPrice       Decimal   @db.Decimal(18, 2)
+  sku             String?   @unique
+  stock           Int       @default(0)
+  
+  // 分销配置
+  commissionRate  Decimal   @db.Decimal(5, 4) // 基础佣金比例，如0.10表示10%
+  levelRates      Json?     // 多级佣金比例，如 {1: 0.10, 2: 0.05, 3: 0.02}
+  
+  status          String    @default("active")
+  createdAt       DateTime  @default(now())
+  updatedAt       DateTime  @updatedAt
+  deletedAt       DateTime?
+}
+
+// 订单表
+model Order {
+  id              String      @id @default(uuid())
+  orderNo         String      @unique
+  userId          String
+  
+  totalAmount     Decimal     @db.Decimal(18, 2)
+  payAmount       Decimal     @db.Decimal(18, 2)
+  payTime         DateTime?
+  deliverTime     DateTime?
+  receiveTime     DateTime?
+  afterSaleEndTime DateTime?   // 售后期结束时间
+  
+  status          OrderStatus @default(PENDING_PAYMENT)
+  
+  // 反作弊字段
+  orderIp         String?
+  orderDevice     String?
+  
+  createdAt       DateTime    @default(now())
+  updatedAt       DateTime    @updatedAt
+  deletedAt       DateTime?
+  
+  // 关系
+  items           OrderItem[]
+  attribution     OrderAttribution?
+  commissions     Commission[]
+  
+  @@index([orderNo])
+  @@index([userId])
+  @@index([status])
+  @@index([createdAt])
+}
+
+// 订单项
+model OrderItem {
+  id              String    @id @default(uuid())
+  orderId         String
+  productId       String
+  productName     String
+  productSku      String?
+  
+  quantity        Int
+  unitPrice       Decimal   @db.Decimal(18, 2)
+  totalPrice      Decimal   @db.Decimal(18, 2)
+  
+  // 该商品的佣金配置快照（防止后续配置变更影响已下单）
+  commissionSnapshot Json?   // 记录下单时的佣金规则
+  
+  createdAt       DateTime  @default(now())
+  updatedAt       DateTime  @updatedAt
+  
+  // 关系
+  order           Order     @relation(fields: [orderId], references: [id])
+  
+  @@index([orderId])
+}
+
+// 订单归因表 - 记录推荐关系
+model OrderAttribution {
+  id              String    @id @default(uuid())
+  orderId         String    @unique
+  buyerId         String
+  
+  // 归因到的推荐人链路
+  uplineId        String?   // 直接推荐人
+  upline2Id       String?   // 间接推荐人1
+  upline3Id       String?   // 间接推荐人2
+  
+  // 归因来源
+  sourceType      String    // referral_code, share_link, qrcode 等
+  sourceValue     String?   // 具体的码值或链接ID
+  
+  // 归因时间
+  attributedAt    DateTime  @default(now())
+  
+  createdAt       DateTime  @default(now())
+  updatedAt       DateTime  @updatedAt
+  
+  // 关系
+  order           Order     @relation(fields: [orderId], references: [id])
+  upline          User?     @relation(fields: [uplineId], references: [id])
+  
+  @@index([orderId])
+  @@index([uplineId])
+  @@index([sourceValue])
+}
+
+// 佣金单表
+model Commission {
+  id              String            @id @default(uuid())
+  commissionNo    String            @unique
+  
+  orderId         String
+  orderItemId     String?
+  userId          String            // 获得佣金的分销员ID
+  
+  // 金额相关（单位：分）
+  orderAmount     Decimal           @db.Decimal(18, 2)
+  frozenAmount    Decimal           @db.Decimal(18, 2)  // 冻结金额
+  actualAmount    Decimal?          @db.Decimal(18, 2)  // 实发金额
+  
+  // 层级信息
+  distributionLevel Int             // 分销层级：1=直接，2=间接1级
+  commissionRate  Decimal           @db.Decimal(5, 4)    // 佣金比例
+  
+  status          CommissionStatus  @default(FROZEN)
+  
+  // 时间节点
+  frozenAt        DateTime          @default(now())
+  settlementDueAt DateTime?         // 预计结算时间
+  settledAt       DateTime?         // 实际结算时间
+  
+  // 取消/扣减原因
+  cancelReason    String?
+  cancelledAt     DateTime?
+  
+  createdAt       DateTime          @default(now())
+  updatedAt       DateTime          @updatedAt
+  
+  // 关系
+  user            User              @relation(fields: [userId], references: [id])
+  order           Order             @relation(fields: [orderId], references: [id])
+  transactions    CommissionTransaction[]
+  
+  @@index([commissionNo])
+  @@index([userId])
+  @@index([orderId])
+  @@index([status])
+  @@index([frozenAt])
+}
+
+// 佣金流水表 - 记录每一笔变动
+model CommissionTransaction {
+  id              String    @id @default(uuid())
+  transactionNo   String    @unique
+  
+  userId          String
+  commissionId    String?
+  
+  // 金额（单位：分）
+  amount          Decimal   @db.Decimal(18, 2)
+  balanceBefore   Decimal   @db.Decimal(18, 2)
+  balanceAfter    Decimal   @db.Decimal(18, 2)
+  
+  // 类型
+  type            String    // FROZEN, SETTLE, CANCEL, WITHDRAW, ADJUST
+  
+  // 关联订单（用于对账）
+  orderId         String?
+  orderNo         String?
+  
+  // 备注
+  remark          String?
+  
+  createdAt       DateTime  @default(now())
+  
+  @@index([transactionNo])
+  @@index([userId])
+  @@index([orderId])
+  @@index([createdAt])
+}
+
+// 虚拟账户表
+model VirtualAccount {
+  id              String    @id @default(uuid())
+  userId          String    @unique
+  
+  // 余额（单位：分）
+  totalBalance    Decimal   @db.Decimal(18, 2) @default(0)
+  frozenBalance   Decimal   @db.Decimal(18, 2) @default(0)
+  availableBalance Decimal  @db.Decimal(18, 2) @default(0)
+  
+  // 累计统计
+  totalEarnings   Decimal   @db.Decimal(18, 2) @default(0)
+  totalWithdrawn  Decimal   @db.Decimal(18, 2) @default(0)
+  
+  createdAt       DateTime  @default(now())
+  updatedAt       DateTime  @updatedAt
+  
+  // 关系
+  user            User      @relation(fields: [userId], references: [id])
+  
+  @@index([userId])
+}
+
+// 提现申请表
+model WithdrawRequest {
+  id              String          @id @default(uuid())
+  withdrawNo      String          @unique
+  userId          String
+  
+  // 金额（单位：分）
+  amount          Decimal         @db.Decimal(18, 2)
+  fee             Decimal         @db.Decimal(18, 2) @default(0)
+  actualAmount    Decimal         @db.Decimal(18, 2)
+  
+  // 收款信息
+  bankName        String?
+  bankAccount     String?
+  bankAccountName String?
+  alipayAccount   String?
+  
+  status          WithdrawStatus  @default(PENDING_REVIEW)
+  
+  // 审核信息
+  reviewerId      String?
+  reviewTime      DateTime?
+  reviewRemark    String?
+  
+  // 打款信息
+  paymentNo       String?
+  paymentTime     DateTime?
+  paymentFailReason String?
+  
+  createdAt       DateTime        @default(now())
+  updatedAt       DateTime        @updatedAt
+  
+  // 关系
+  user            User            @relation(fields: [userId], references: [id])
+  
+  @@index([withdrawNo])
+  @@index([userId])
+  @@index([status])
+  @@index([createdAt])
+}
+
+// 反作弊检测记录表
+model FraudDetection {
+  id              String        @id @default(uuid())
+  detectionNo     String        @unique
+  
+  // 嫌疑用户
+  suspectUserId   String?
+  suspectPhone    String?
+  suspectIp       String?
+  suspectDevice   String?
+  
+  // 检测类型
+  detectionType   String        // IP_CLUSTER, DEVICE_CLUSTER, ABNORMAL_ORDER, RAPID_REGISTER
+  
+  // 检测分数
+  riskScore       Decimal       @db.Decimal(5, 2)  // 0-100分
+  
+  // 详细信息
+  detail          Json?
+  
+  // 状态
+  status          FraudStatus   @default(SUSPECTED)
+  
+  // 处理信息
+  handlerId       String?
+  handleTime      DateTime?
+  handleAction    String?       // WARNING, SUSPEND, TERMINATE, NO_ACTION
+  handleRemark    String?
+  
+  createdAt       DateTime      @default(now())
+  updatedAt       DateTime      @updatedAt
+  
+  // 关系
+  user            User?         @relation(fields: [suspectUserId], references: [id])
+  
+  @@index([detectionNo])
+  @@index([suspectUserId])
+  @@index([suspectIp])
+  @@index([status])
+  @@index([createdAt])
+}
+
+// 推广素材表
+model PromotionMaterial {
+  id              String    @id @default(uuid())
+  name            String
+  type            String    // IMAGE, LINK, QRCODE, VIDEO
+  
+  // 素材内容
+  content         String?   // 图片URL、链接地址等
+  thumbnail       String?
+  
+  // 关联商品（可选）
+  productId       String?
+  
+  // 统计
+  viewCount       Int       @default(0)
+  clickCount      Int       @default(0)
+  convertCount    Int       @default(0)
+  
+  status          String    @default("active")
+  
+  createdAt       DateTime  @default(now())
+  updatedAt       DateTime  @updatedAt
+  deletedAt       DateTime?
+  
+  @@index([type])
+  @@index([status])
+}
+
+// 系统操作日志
+model SystemLog {
+  id              String    @id @default(uuid())
+  logNo           String    @unique
+  
+  userId          String?
+  userRole        String?
+  
+  module          String    // USER, DISTRIBUTION, ORDER, COMMISSION, WITHDRAW, FRAUD
+  action          String    // CREATE, UPDATE, DELETE, REVIEW, APPROVE, REJECT
+  targetId        String?
+  
+  // 请求信息
+  requestIp       String?
+  requestMethod   String?
+  requestPath     String?
+  userAgent       String?
+  
+  // 详细信息
+  detail          Json?
+  
+  createdAt       DateTime  @default(now())
+  
+  @@index([logNo])
+  @@index([userId])
+  @@index([module, action])
+  @@index([createdAt])
+}
