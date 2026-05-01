@@ -1,0 +1,50 @@
+version: '3.8'
+
+services:
+  postgres:
+    image: postgres:15-alpine
+    container_name: coupon-marketing-postgres
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: coupon_marketing
+      POSTGRES_USER: coupon_admin
+      POSTGRES_PASSWORD: Coupon@Admin2024
+    ports:
+      - "25432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+      - ./init-db.sql:/docker-entrypoint-initdb.d/init-db.sql:ro
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U coupon_admin -d coupon_marketing"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    networks:
+      - coupon-network
+
+  redis:
+    image: redis:7-alpine
+    container_name: coupon-marketing-redis
+    restart: unless-stopped
+    command: redis-server --appendonly yes
+    ports:
+      - "26379:6379"
+    volumes:
+      - redis_data:/data
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    networks:
+      - coupon-network
+
+networks:
+  coupon-network:
+    driver: bridge
+
+volumes:
+  postgres_data:
+    driver: local
+  redis_data:
+    driver: local

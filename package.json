@@ -1,0 +1,38 @@
+{
+  "name": "coupon-marketing-system",
+  "version": "1.0.0",
+  "description": "优惠券营销系统 - 全栈应用",
+  "private": true,
+  "workspaces": [
+    "server",
+    "client"
+  ],
+  "scripts": {
+    "start:db": "docker-compose up -d",
+    "stop:db": "docker-compose down",
+    "restart:db": "docker-compose restart",
+    "dev:server": "cd server && npm run dev",
+    "dev:client": "cd client && npm run dev",
+    "install:all": "npm run install:server && npm run install:client",
+    "install:server": "cd server && npm install",
+    "install:client": "cd client && npm install",
+    "build:server": "cd server && npm run build",
+    "build:client": "cd client && npm run build",
+    "clean": "docker-compose down -v && rm -rf server/node_modules client/node_modules node_modules"
+  },
+  "keywords": [
+    "coupon",
+    "marketing",
+    "typescript",
+    "react",
+    "nodejs",
+    "express",
+    "postgresql",
+    "redis"
+  ],
+  "author": "",
+  "license": "MIT",
+  "engines": {
+    "node": ">=18.0.0"
+  }
+}
