@@ -1,0 +1,106 @@
+version: '3.8'
+
+services:
+  postgres:
+    image: postgres:16-alpine
+    container_name: email-marketing-db
+    ports:
+      - "47294:5432"
+    environment:
+      POSTGRES_USER: email_marketing
+      POSTGRES_PASSWORD: EmailMarketing@2024
+      POSTGRES_DB: email_marketing
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+      - ./docker/init-db:/docker-entrypoint-initdb.d
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U email_marketing"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    networks:
+      - email-marketing-network
+
+  redis:
+    image: redis:7-alpine
+    container_name: email-marketing-redis
+    ports:
+      - "47293:6379"
+    command: redis-server --requirepass RedisPassword@2024
+    volumes:
+      - redis_data:/data
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    networks:
+      - email-marketing-network
+
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: email-marketing-backend
+    ports:
+      - "47291:47291"
+    environment:
+      - NODE_ENV=development
+      - PORT=47291
+      - DATABASE_URL=postgresql://email_marketing:EmailMarketing@2024@postgres:5432/email_marketing?schema=public
+      - REDIS_HOST=redis
+      - REDIS_PORT=6379
+      - REDIS_PASSWORD=RedisPassword@2024
+      - JWT_SECRET=EmailMarketingJwtSecretKey2024VeryLongAndSecure
+      - JWT_EXPIRES_IN=7d
+      - SMTP_HOST=smtp.example.com
+      - SMTP_PORT=587
+      - SMTP_USER=marketing@example.com
+      - SMTP_PASSWORD=SmtpPassword@2024
+      - SMTP_FROM=no-reply@example.com
+      - LOG_LEVEL=info
+      - RATE_LIMIT_WINDOW_MS=900000
+      - RATE_LIMIT_MAX_REQUESTS=100
+      - TRACKING_BASE_URL=http://localhost:47291
+    depends_on:
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+    volumes:
+      - ./backend/src:/app/src
+      - ./backend/prisma:/app/prisma
+    networks:
+      - email-marketing-network
+
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    container_name: email-marketing-frontend
+    ports:
+      - "47292:47292"
+    environment:
+      - VITE_PORT=47292
+      - VITE_API_URL=http://localhost:47291
+    depends_on:
+      - backend
+    networks:
+      - email-marketing-network
+
+  mailhog:
+    image: mailhog/mailhog:latest
+    container_name: email-marketing-mailhog
+    ports:
+      - "47295:1025"
+      - "47296:8025"
+    networks:
+      - email-marketing-network
+
+volumes:
+  postgres_data:
+  redis_data:
+
+networks:
+  email-marketing-network:
+    driver: bridge

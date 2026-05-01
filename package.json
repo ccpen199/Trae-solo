@@ -1,0 +1,25 @@
+{
+  "name": "email-marketing-system",
+  "version": "1.0.0",
+  "private": true,
+  "workspaces": [
+    "backend",
+    "frontend"
+  ],
+  "scripts": {
+    "dev": "concurrently \"npm run dev:backend\" \"npm run dev:frontend\"",
+    "dev:backend": "npm run dev --workspace=backend",
+    "dev:frontend": "npm run dev --workspace=frontend",
+    "test": "npm run test --workspace=backend",
+    "build": "npm run build --workspace=backend && npm run build --workspace=frontend",
+    "preview:backend": "npm run preview --workspace=backend",
+    "preview:frontend": "npm run preview --workspace=frontend",
+    "mock": "npm run mock --workspace=backend"
+  },
+  "devDependencies": {
+    "concurrently": "^8.2.2"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  }
+}

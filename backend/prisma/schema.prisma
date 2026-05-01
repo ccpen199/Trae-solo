@@ -1,0 +1,486 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum UserRole {
+  ADMIN
+  MARKETING_OPERATOR
+  COPYWRITER
+  DATA_ANALYST
+  VIEWER
+}
+
+enum CampaignStatus {
+  DRAFT
+  PENDING_REVIEW
+  REVIEW_REJECTED
+  REVIEW_APPROVED
+  PENDING_SEND
+  SENDING
+  COMPLETED
+  PAUSED
+  CANCELLED
+}
+
+enum SendStatus {
+  PENDING
+  SENDING
+  SENT
+  DELIVERED
+  BOUNCED
+  OPENED
+  CLICKED
+  UNSUBSCRIBED
+  FAILED
+  SPAM
+}
+
+enum ReviewStatus {
+  PENDING
+  APPROVED
+  REJECTED
+}
+
+enum JourneyNodeType {
+  START
+  EMAIL
+  CONDITION
+  WAIT
+  A_B_TEST
+  END
+}
+
+model User {
+  id              String   @id @default(uuid())
+  email           String   @unique
+  password        String
+  name            String
+  role            UserRole @default(VIEWER)
+  isActive        Boolean  @default(true)
+  lastLoginAt     DateTime?
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+  
+  createdCampaigns    Campaign[]       @relation("CampaignCreator")
+  reviewedCampaigns   Review[]         @relation("Reviewer")
+  sentEmails          SendLog[]
+  auditLogs           AuditLog[]
+  
+  @@map("users")
+}
+
+model Audience {
+  id              String   @id @default(uuid())
+  name            String
+  description     String?
+  filters         Json
+  totalCount      Int      @default(0)
+  isActive        Boolean  @default(true)
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+  
+  campaigns       Campaign[]
+  sendBatches     SendBatch[]
+  
+  @@map("audiences")
+}
+
+model AudienceMember {
+  id              String   @id @default(uuid())
+  audienceId      String
+  externalUserId  String?
+  
+  email           String
+  name            String?
+  firstName       String?
+  lastName        String?
+  phone           String?
+  company         String?
+  position        String?
+  country         String?
+  city            String?
+  
+  tags            Json
+  profileData     Json
+  customFields    Json
+  
+  isSubscribed    Boolean  @default(true)
+  subscribedAt    DateTime?
+  unsubscribedAt  DateTime?
+  
+  lastActivityAt  DateTime?
+  totalOpens      Int      @default(0)
+  totalClicks     Int      @default(0)
+  totalSent       Int      @default(0)
+  
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+  
+  audience        Audience @relation(fields: [audienceId], references: [id], onDelete: Cascade)
+  sendLogs        SendLog[]
+  clickLogs       ClickLog[]
+  
+  @@unique([audienceId, email])
+  @@map("audience_members")
+}
+
+model Template {
+  id              String   @id @default(uuid())
+  name            String
+  description     String?
+  category        String?
+  
+  subject         String
+  htmlContent     String
+  textContent     String?
+  
+  placeholders    Json
+  variables       Json
+  
+  isActive        Boolean  @default(true)
+  isPublic        Boolean  @default(false)
+  
+  creatorId       String
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+  
+  campaigns       Campaign[]
+  
+  @@map("templates")
+}
+
+model Campaign {
+  id              String   @id @default(uuid())
+  name            String
+  description     String?
+  
+  status          CampaignStatus @default(DRAFT)
+  
+  templateId      String?
+  audienceId      String?
+  
+  subject         String?
+  fromName        String?
+  fromEmail       String?
+  replyTo         String?
+  
+  scheduledAt     DateTime?
+  startedAt       DateTime?
+  completedAt     DateTime?
+  
+  priority        Int      @default(0)
+  
+  tags            Json
+  metadata        Json
+  
+  enableTracking  Boolean  @default(true)
+  enableAbtesting Boolean  @default(false)
+  
+  abTestConfig    Json?
+  
+  stats           Json     @default("{}")
+  
+  creatorId       String
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+  
+  creator         User     @relation("CampaignCreator", fields: [creatorId], references: [id], onDelete: Cascade)
+  template        Template? @relation(fields: [templateId], references: [id], onDelete: SetNull)
+  audience        Audience? @relation(fields: [audienceId], references: [id], onDelete: SetNull)
+  
+  reviews         Review[]
+  sendBatches     SendBatch[]
+  journeys        Journey[]
+  auditLogs       AuditLog[]
+  
+  @@map("campaigns")
+}
+
+model Review {
+  id              String   @id @default(uuid())
+  campaignId      String
+  
+  reviewerId      String?
+  status          ReviewStatus @default(PENDING)
+  
+  comment         String?
+  changesRequested Json?
+  
+  reviewedAt      DateTime?
+  createdAt       DateTime @default(now())
+  
+  campaign        Campaign @relation(fields: [campaignId], references: [id], onDelete: Cascade)
+  reviewer        User?    @relation("Reviewer", fields: [reviewerId], references: [id], onDelete: SetNull)
+  
+  @@map("reviews")
+}
+
+model SendBatch {
+  id              String   @id @default(uuid())
+  campaignId      String
+  audienceId      String?
+  
+  batchNumber     Int
+  totalEmails     Int
+  sentEmails      Int      @default(0)
+  failedEmails    Int      @default(0)
+  
+  status          String   @default("PENDING")
+  
+  startedAt       DateTime?
+  completedAt     DateTime?
+  
+  config          Json
+  errorLog        String?
+  
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+  
+  campaign        Campaign @relation(fields: [campaignId], references: [id], onDelete: Cascade)
+  audience        Audience? @relation(fields: [audienceId], references: [id], onDelete: SetNull)
+  sendLogs        SendLog[]
+  
+  @@map("send_batches")
+}
+
+model SendLog {
+  id              String   @id @default(uuid())
+  batchId         String
+  memberId        String
+  campaignId      String
+  senderId        String?
+  
+  email           String
+  subject         String?
+  
+  status          SendStatus @default(PENDING)
+  
+  sentAt          DateTime?
+  deliveredAt     DateTime?
+  openedAt        DateTime?
+  clickedAt       DateTime?
+  bouncedAt       DateTime?
+  unsubscribedAt  DateTime?
+  
+  trackingId      String   @unique
+  openTrackingPixel String?
+  clickTrackingLinks Json?
+  
+  errorMessage    String?
+  bounceReason    String?
+  
+  ipAddress       String?
+  userAgent       String?
+  
+  metadata        Json
+  
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+  
+  batch           SendBatch @relation(fields: [batchId], references: [id], onDelete: Cascade)
+  member          AudienceMember @relation(fields: [memberId], references: [id], onDelete: Cascade)
+  campaign        Campaign @relation(fields: [campaignId], references: [id], onDelete: Cascade)
+  sender          User? @relation(fields: [senderId], references: [id], onDelete: SetNull)
+  clickLogs       ClickLog[]
+  
+  @@index([trackingId])
+  @@index([email])
+  @@index([status])
+  @@map("send_logs")
+}
+
+model ClickLog {
+  id              String   @id @default(uuid())
+  sendLogId       String
+  memberId        String
+  
+  trackingId      String
+  linkIndex       Int      @default(0)
+  originalUrl     String
+  redirectUrl     String?
+  
+  clickedAt       DateTime @default(now())
+  ipAddress       String?
+  userAgent       String?
+  referrer        String?
+  deviceInfo      Json
+  
+  isUnique        Boolean  @default(true)
+  
+  sendLog         SendLog @relation(fields: [sendLogId], references: [id], onDelete: Cascade)
+  member          AudienceMember @relation(fields: [memberId], references: [id], onDelete: Cascade)
+  
+  @@index([trackingId])
+  @@map("click_logs")
+}
+
+model Journey {
+  id              String   @id @default(uuid())
+  name            String
+  description     String?
+  
+  campaignId      String?
+  
+  status          String   @default("DRAFT")
+  isActive        Boolean  @default(false)
+  
+  nodes           Json
+  edges           Json
+  config          Json
+  
+  startedAt       DateTime?
+  completedAt     DateTime?
+  
+  creatorId       String
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+  
+  campaign        Campaign? @relation(fields: [campaignId], references: [id], onDelete: SetNull)
+  executions      JourneyExecution[]
+  
+  @@map("journeys")
+}
+
+model JourneyExecution {
+  id              String   @id @default(uuid())
+  journeyId       String
+  memberId        String
+  
+  status          String   @default("RUNNING")
+  
+  currentNodeId   String?
+  visitedNodes    Json     @default("[]")
+  
+  abTestGroup     String?
+  variables       Json     @default("{}")
+  
+  startedAt       DateTime @default(now())
+  endedAt         DateTime?
+  lastActiveAt    DateTime @default(now())
+  
+  journey         Journey @relation(fields: [journeyId], references: [id], onDelete: Cascade)
+  member          AudienceMember @relation(fields: [memberId], references: [id], onDelete: Cascade)
+  logs            JourneyLog[]
+  
+  @@map("journey_executions")
+}
+
+model JourneyLog {
+  id              String   @id @default(uuid())
+  executionId     String
+  
+  nodeId          String?
+  action          String
+  details         Json?
+  
+  error           String?
+  
+  createdAt       DateTime @default(now())
+  
+  execution       JourneyExecution @relation(fields: [executionId], references: [id], onDelete: Cascade)
+  
+  @@map("journey_logs")
+}
+
+model ROIReport {
+  id              String   @id @default(uuid())
+  name            String
+  description     String?
+  
+  periodStart     DateTime
+  periodEnd       DateTime
+  
+  campaignIds     Json?
+  audienceFilters Json?
+  
+  totalSent       Int      @default(0)
+  totalDelivered  Int      @default(0)
+  totalOpens      Int      @default(0)
+  totalClicks     Int      @default(0)
+  totalUnsubscribes Int    @default(0)
+  totalBounces    Int      @default(0)
+  
+  metrics         Json
+  breakdown       Json
+  
+  createdAt       DateTime @default(now())
+  
+  @@map("roi_reports")
+}
+
+model AuditLog {
+  id              String   @id @default(uuid())
+  
+  action          String
+  entityType      String
+  entityId        String?
+  
+  userId          String?
+  userEmail       String?
+  
+  oldValue        Json?
+  newValue        Json?
+  
+  ipAddress       String?
+  userAgent       String?
+  
+  details         String?
+  metadata        Json
+  
+  createdAt       DateTime @default(now())
+  
+  user            User? @relation(fields: [userId], references: [id], onDelete: SetNull)
+  campaign        Campaign? @relation(fields: [entityId], references: [id])
+  
+  @@index([action])
+  @@index([entityType, entityId])
+  @@index([userId])
+  @@index([createdAt])
+  @@map("audit_logs")
+}
+
+model Alert {
+  id              String   @id @default(uuid())
+  
+  type            String
+  severity        String
+  message         String
+  
+  relatedEntityType String?
+  relatedEntityId   String?
+  
+  isAcknowledged  Boolean  @default(false)
+  acknowledgedBy  String?
+  acknowledgedAt  DateTime?
+  
+  details         Json?
+  
+  createdAt       DateTime @default(now())
+  
+  @@index([type])
+  @@index([severity])
+  @@index([isAcknowledged])
+  @@map("alerts")
+}
+
+model SystemConfig {
+  id              String   @id @default(uuid())
+  
+  key             String   @unique
+  value           Json
+  description     String?
+  
+  isSensitive     Boolean  @default(false)
+  isReadOnly      Boolean  @default(false)
+  
+  updatedBy       String?
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+  
+  @@map("system_configs")
+}
