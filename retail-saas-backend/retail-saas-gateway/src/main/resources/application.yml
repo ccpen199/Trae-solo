@@ -1,0 +1,29 @@
+server:
+  port: ${PORT:${SERVER_PORT:${APP_PORT:19080}}}
+
+spring:
+  application:
+    name: retail-saas-gateway
+  
+  profiles:
+    active: ${SPRING_PROFILES_ACTIVE:dev}
+  
+  cloud:
+    gateway:
+      discovery:
+        locator:
+          enabled: true
+          lower-case-service-id: true
+      
+      routes:
+        - id: admin-service
+          uri: lb://retail-saas-admin
+          predicates:
+            - Path=/api/**
+          filters:
+            - StripPrefix=0
+
+logging:
+  level:
+    com.retail: debug
+    org.springframework.cloud.gateway: debug

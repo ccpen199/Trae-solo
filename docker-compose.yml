@@ -1,0 +1,95 @@
+version: '3.8'
+
+services:
+  mysql:
+    image: mysql:8.0
+    container_name: retail-mysql
+    ports:
+      - "3306:3306"
+    environment:
+      MYSQL_ROOT_PASSWORD: retail@2024
+      MYSQL_DATABASE: retail_saas
+      MYSQL_USER: retail
+      MYSQL_PASSWORD: retail@2024
+      TZ: Asia/Shanghai
+    volumes:
+      - ./data/mysql:/var/lib/mysql
+      - ./deploy/init/sql:/docker-entrypoint-initdb.d
+    command:
+      - --default-authentication-plugin=mysql_native_password
+      - --character-set-server=utf8mb4
+      - --collation-server=utf8mb4_unicode_ci
+      - --max_connections=1000
+      - --innodb_buffer_pool_size=256M
+    networks:
+      - retail-network
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  redis:
+    image: redis:7-alpine
+    container_name: retail-redis
+    ports:
+      - "6379:6379"
+    command: redis-server --requirepass retail@2024 --appendonly yes
+    volumes:
+      - ./data/redis:/data
+    networks:
+      - retail-network
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  rabbitmq:
+    image: rabbitmq:3.12-management-alpine
+    container_name: retail-rabbitmq
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+    environment:
+      RABBITMQ_DEFAULT_USER: retail
+      RABBITMQ_DEFAULT_PASS: retail@2024
+    volumes:
+      - ./data/rabbitmq:/var/lib/rabbitmq
+    networks:
+      - retail-network
+    healthcheck:
+      test: ["CMD", "rabbitmqctl", "status"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+
+  minio:
+    image: minio/minio:latest
+    container_name: retail-minio
+    ports:
+      - "9000:9000"
+      - "9001:9001"
+    environment:
+      MINIO_ROOT_USER: minioadmin
+      MINIO_ROOT_PASSWORD: minioadmin@2024
+    volumes:
+      - ./data/minio:/data
+    command: server /data --console-address ":9001"
+    networks:
+      - retail-network
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:9000/minio/health/live"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+networks:
+  retail-network:
+    driver: bridge
+
+volumes:
+  mysql-data:
+  redis-data:
+  rabbitmq-data:
+  minio-data:

@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <parent>
+        <artifactId>retail-saas</artifactId>
+        <groupId>com.retail</groupId>
+        <version>1.0.0</version>
+    </parent>
+    <modelVersion>4.0.0</modelVersion>
+
+    <artifactId>retail-saas-engine</artifactId>
+    <description>核心引擎模块 - 组织权限引擎、价格策略引擎、库存调拨引擎、数据同步引擎</description>
+
+    <dependencies>
+        <dependency>
+            <groupId>com.retail</groupId>
+            <artifactId>retail-saas-mapper</artifactId>
+        </dependency>
+    </dependencies>
+
+</project>
