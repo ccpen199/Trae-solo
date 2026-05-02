@@ -1,38 +1,41 @@
-import { createBrowserRouter, Navigate } from 'react-router-dom';
+import { createBrowserRouter, Navigate, Link } from 'react-router-dom';
 import { lazy, Suspense } from 'react';
-import { Spin } from 'antd';
+import { Spin, Result, Button } from 'antd';
 import MainLayout from '@/components/layout/MainLayout';
 import Login from '@/pages/Login';
+import Dashboard from '@/pages/Dashboard';
+import LivestockList from '@/pages/Livestock/List';
+import LivestockAdmission from '@/pages/Livestock/Admission';
+import LivestockDetail from '@/pages/Livestock/Detail';
+import FeedingRecord from '@/pages/Feeding/Record';
+import FeedingPlan from '@/pages/Feeding/Plan';
+import VaccinationRecord from '@/pages/Vaccination/Record';
+import VaccinationCalendar from '@/pages/Vaccination/Calendar';
+import VaccinationCompliance from '@/pages/Vaccination/Compliance';
 import { useUserStore } from '@/store/userStore';
-
-const Dashboard = lazy(() => import('@/pages/Dashboard'));
-const LivestockList = lazy(() => import('@/pages/Livestock/List'));
-const LivestockAdmission = lazy(() => import('@/pages/Livestock/Admission'));
-const LivestockDetail = lazy(() => import('@/pages/Livestock/Detail'));
-const FeedingRecord = lazy(() => import('@/pages/Feeding/Record'));
-const FeedingPlan = lazy(() => import('@/pages/Feeding/Plan'));
-const VaccinationRecord = lazy(() => import('@/pages/Vaccination/Record'));
-const VaccinationCalendar = lazy(() => import('@/pages/Vaccination/Calendar'));
-const VaccinationCompliance = lazy(() => import('@/pages/Vaccination/Compliance'));
-const SettlementSlaughter = lazy(() => import('@/pages/Settlement/Slaughter'));
-const SettlementProfit = lazy(() => import('@/pages/Settlement/ProfitBoard'));
-const AnomalyQueue = lazy(() => import('@/pages/Anomaly/Queue'));
-const AnomalyHealthCheck = lazy(() => import('@/pages/Anomaly/HealthCheck'));
-const AnomalyHistory = lazy(() => import('@/pages/Anomaly/History'));
-const StatisticsOverview = lazy(() => import('@/pages/Statistics/Overview'));
-const StatisticsProduction = lazy(() => import('@/pages/Statistics/Production'));
-const StatisticsCost = lazy(() => import('@/pages/Statistics/Cost'));
-const StatisticsAnomaly = lazy(() => import('@/pages/Statistics/Anomaly'));
-const SystemUser = lazy(() => import('@/pages/System/User'));
-const SystemRole = lazy(() => import('@/pages/System/Role'));
-const SystemBarn = lazy(() => import('@/pages/System/Barn'));
-const SystemSettings = lazy(() => import('@/pages/System/Settings'));
 
 const LazyWrapper = ({ children }: { children: React.ReactNode }) => (
   <Suspense fallback={<div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '80vh' }}><Spin size="large" /></div>}>
     {children}
   </Suspense>
 );
+
+const PlaceholderPage = ({ title }: { title: string }) => {
+  return (
+    <Result
+      status="info"
+      title={title}
+      subTitle="该页面正在开发中，敬请期待..."
+      extra={
+        <Link to="/">
+          <Button type="primary">
+            返回工作台
+          </Button>
+        </Link>
+      }
+    />
+  );
+};
 
 const PrivateRoute = ({ children }: { children: React.ReactNode }) => {
   const { isAuthenticated } = useUserStore.getState();
@@ -54,7 +57,7 @@ export const router = createBrowserRouter([
     children: [
       {
         index: true,
-        element: <LazyWrapper><Dashboard /></LazyWrapper>,
+        element: <Dashboard />,
       },
       {
         path: 'livestock',
@@ -65,15 +68,15 @@ export const router = createBrowserRouter([
           },
           {
             path: 'list',
-            element: <LazyWrapper><LivestockList /></LazyWrapper>,
+            element: <LivestockList />,
           },
           {
             path: 'admission',
-            element: <LazyWrapper><LivestockAdmission /></LazyWrapper>,
+            element: <LivestockAdmission />,
           },
           {
             path: 'detail/:id',
-            element: <LazyWrapper><LivestockDetail /></LazyWrapper>,
+            element: <LivestockDetail />,
           },
         ],
       },
@@ -86,11 +89,11 @@ export const router = createBrowserRouter([
           },
           {
             path: 'record',
-            element: <LazyWrapper><FeedingRecord /></LazyWrapper>,
+            element: <FeedingRecord />,
           },
           {
             path: 'plan',
-            element: <LazyWrapper><FeedingPlan /></LazyWrapper>,
+            element: <FeedingPlan />,
           },
         ],
       },
@@ -103,15 +106,15 @@ export const router = createBrowserRouter([
           },
           {
             path: 'record',
-            element: <LazyWrapper><VaccinationRecord /></LazyWrapper>,
+            element: <VaccinationRecord />,
           },
           {
             path: 'calendar',
-            element: <LazyWrapper><VaccinationCalendar /></LazyWrapper>,
+            element: <VaccinationCalendar />,
           },
           {
             path: 'compliance',
-            element: <LazyWrapper><VaccinationCompliance /></LazyWrapper>,
+            element: <VaccinationCompliance />,
           },
         ],
       },
@@ -124,11 +127,11 @@ export const router = createBrowserRouter([
           },
           {
             path: 'slaughter',
-            element: <LazyWrapper><SettlementSlaughter /></LazyWrapper>,
+            element: <PlaceholderPage title="出栏结算页面" />,
           },
           {
             path: 'profit',
-            element: <LazyWrapper><SettlementProfit /></LazyWrapper>,
+            element: <PlaceholderPage title="毛利看板页面" />,
           },
         ],
       },
@@ -141,15 +144,15 @@ export const router = createBrowserRouter([
           },
           {
             path: 'queue',
-            element: <LazyWrapper><AnomalyQueue /></LazyWrapper>,
+            element: <PlaceholderPage title="异常队列页面" />,
           },
           {
             path: 'health-check',
-            element: <LazyWrapper><AnomalyHealthCheck /></LazyWrapper>,
+            element: <PlaceholderPage title="健康排查页面" />,
           },
           {
             path: 'history',
-            element: <LazyWrapper><AnomalyHistory /></LazyWrapper>,
+            element: <PlaceholderPage title="异常历史页面" />,
           },
         ],
       },
@@ -162,19 +165,19 @@ export const router = createBrowserRouter([
           },
           {
             path: 'overview',
-            element: <LazyWrapper><StatisticsOverview /></LazyWrapper>,
+            element: <PlaceholderPage title="全场概览页面" />,
           },
           {
             path: 'production',
-            element: <LazyWrapper><StatisticsProduction /></LazyWrapper>,
+            element: <PlaceholderPage title="生产性能页面" />,
           },
           {
             path: 'cost',
-            element: <LazyWrapper><StatisticsCost /></LazyWrapper>,
+            element: <PlaceholderPage title="成本毛利页面" />,
           },
           {
             path: 'anomaly',
-            element: <LazyWrapper><StatisticsAnomaly /></LazyWrapper>,
+            element: <PlaceholderPage title="异常监控页面" />,
           },
         ],
       },
@@ -187,19 +190,19 @@ export const router = createBrowserRouter([
           },
           {
             path: 'user',
-            element: <LazyWrapper><SystemUser /></LazyWrapper>,
+            element: <PlaceholderPage title="用户管理页面" />,
           },
           {
             path: 'role',
-            element: <LazyWrapper><SystemRole /></LazyWrapper>,
+            element: <PlaceholderPage title="角色权限页面" />,
           },
           {
             path: 'barn',
-            element: <LazyWrapper><SystemBarn /></LazyWrapper>,
+            element: <PlaceholderPage title="栏舍管理页面" />,
           },
           {
             path: 'settings',
-            element: <LazyWrapper><SystemSettings /></LazyWrapper>,
+            element: <PlaceholderPage title="系统设置页面" />,
           },
         ],
       },
