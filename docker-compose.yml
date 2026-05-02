@@ -1,0 +1,60 @@
+version: '3.8'
+
+services:
+  pos-backend:
+    build: ./backend
+    ports:
+      - "${BACKEND_PORT:-18888}:18080"
+    environment:
+      - SPRING_PROFILES_ACTIVE=docker
+      - SERVER_PORT=18080
+      - DB_HOST=pos-db
+      - DB_PORT=5432
+      - DB_USER=${DB_USER:-posuser}
+      - DB_PASSWORD=${DB_PASSWORD:-pos2024secure}
+      - DB_NAME=${DB_NAME:-retailpos}
+      - REDIS_HOST=pos-redis
+      - REDIS_PORT=6379
+    depends_on:
+      - pos-db
+      - pos-redis
+    restart: always
+
+  pos-frontend-pc:
+    build: ./frontend/pc
+    ports:
+      - "${PC_PORT:-13000}:8081"
+    restart: always
+
+  pos-frontend-mobile:
+    build: ./frontend/mobile
+    ports:
+      - "${MOBILE_PORT:-14000}:8082"
+    restart: always
+
+  pos-db:
+    image: postgres:14
+    ports:
+      - "${DB_PORT:-55543}:5432"
+    environment:
+      - POSTGRES_PASSWORD=${DB_PASSWORD:-pos2024secure}
+      - POSTGRES_USER=${DB_USER:-posuser}
+      - POSTGRES_DB=${DB_NAME:-retailpos}
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+      - ./docker/init.sql:/docker-entrypoint-initdb.d/init.sql
+    restart: always
+
+  pos-redis:
+    image: redis:7-alpine
+    ports:
+      - "${REDIS_PORT:-66637}:6379"
+    command: redis-server /usr/local/etc/redis/redis.conf
+    volumes:
+      - redis_data:/data
+      - ./redis/conf/redis.conf:/usr/local/etc/redis/redis.conf
+    restart: always
+
+volumes:
+  postgres_data:
+  redis_data:
