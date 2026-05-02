@@ -1,0 +1,221 @@
+export const SERVICE_PORTS = {
+  GATEWAY: 9876,
+  USER_SERVICE: 9877,
+  CONSULTATION_SERVICE: 9878,
+  PRESCRIPTION_SERVICE: 9879,
+  PAYMENT_SERVICE: 9880,
+  COMMUNICATION_SERVICE: 9881,
+  COMPLIANCE_SERVICE: 9882,
+  FOLLOWUP_SERVICE: 9883,
+  FRONTEND: 9884,
+} as const;
+
+export const SERVICE_NAMES = {
+  GATEWAY: 'gateway',
+  USER_SERVICE: 'user-service',
+  CONSULTATION_SERVICE: 'consultation-service',
+  PRESCRIPTION_SERVICE: 'prescription-service',
+  PAYMENT_SERVICE: 'payment-service',
+  COMMUNICATION_SERVICE: 'communication-service',
+  COMPLIANCE_SERVICE: 'compliance-service',
+  FOLLOWUP_SERVICE: 'followup-service',
+} as const;
+
+export const CONSULTATION_TIMEOUT_MINUTES = 30;
+
+export const MAX_RETRY_COUNT = 3;
+
+export const RETRY_INTERVAL_MINUTES = 5;
+
+export const FOLLOWUP_DEFAULT_DAYS = [3, 7, 14, 30];
+
+export const PAYMENT_SETTLEMENT_DAYS = 7;
+
+export const PLATFORM_FEE_RATE = 0.2;
+
+export const TAX_RATE = 0.06;
+
+export const MINIMUM_CONSULTATION_FEE = 50;
+
+export const MAXIMUM_CONSULTATION_FEE = 5000;
+
+export const DEFAULT_PAGE_SIZE = 20;
+
+export const MAX_PAGE_SIZE = 100;
+
+export const JWT_EXPIRES_IN = '24h';
+
+export const JWT_REFRESH_EXPIRES_IN = '7d';
+
+export const PASSWORD_SALT_ROUNDS = 10;
+
+export const MAX_FILE_SIZE = 10 * 1024 * 1024;
+
+export const ALLOWED_IMAGE_TYPES = ['image/jpeg', 'image/png', 'image/gif', 'image/webp'];
+
+export const ALLOWED_FILE_TYPES = [
+  ...ALLOWED_IMAGE_TYPES,
+  'application/pdf',
+  'application/msword',
+  'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
+];
+
+export const SOCKET_IO_NAMESPACES = {
+  CONSULTATION: '/consultation',
+  MESSAGE: '/message',
+  NOTIFICATION: '/notification',
+} as const;
+
+export const SOCKET_IO_EVENTS = {
+  CONNECTION: 'connection',
+  DISCONNECT: 'disconnect',
+  JOIN_ROOM: 'join:room',
+  LEAVE_ROOM: 'leave:room',
+  MESSAGE_SEND: 'message:send',
+  MESSAGE_RECEIVE: 'message:receive',
+  CONSULTATION_CREATE: 'consultation:create',
+  CONSULTATION_ACCEPT: 'consultation:accept',
+  CONSULTATION_CANCEL: 'consultation:cancel',
+  CONSULTATION_TIMEOUT: 'consultation:timeout',
+  PRESCRIPTION_REVIEW: 'prescription:review',
+  PAYMENT_COMPLETE: 'payment:complete',
+  TYPING_START: 'typing:start',
+  TYPING_STOP: 'typing:stop',
+  READ_RECEIPT: 'read:receipt',
+} as const;
+
+export const ERROR_CODES = {
+  VALIDATION_ERROR: 'VALIDATION_ERROR',
+  AUTHENTICATION_ERROR: 'AUTHENTICATION_ERROR',
+  AUTHORIZATION_ERROR: 'AUTHORIZATION_ERROR',
+  RESOURCE_NOT_FOUND: 'RESOURCE_NOT_FOUND',
+  RESOURCE_ALREADY_EXISTS: 'RESOURCE_ALREADY_EXISTS',
+  INVALID_STATE_TRANSITION: 'INVALID_STATE_TRANSITION',
+  BUSINESS_RULE_VIOLATION: 'BUSINESS_RULE_VIOLATION',
+  PAYMENT_ERROR: 'PAYMENT_ERROR',
+  EXTERNAL_SERVICE_ERROR: 'EXTERNAL_SERVICE_ERROR',
+  CONCURRENCY_ERROR: 'CONCURRENCY_ERROR',
+  TIMEOUT_ERROR: 'TIMEOUT_ERROR',
+  RATE_LIMIT_EXCEEDED: 'RATE_LIMIT_EXCEEDED',
+  INTERNAL_SERVER_ERROR: 'INTERNAL_SERVER_ERROR',
+  SERVICE_UNAVAILABLE: 'SERVICE_UNAVAILABLE',
+} as const;
+
+export const HTTP_STATUS_CODES = {
+  OK: 200,
+  CREATED: 201,
+  ACCEPTED: 202,
+  NO_CONTENT: 204,
+  BAD_REQUEST: 400,
+  UNAUTHORIZED: 401,
+  PAYMENT_REQUIRED: 402,
+  FORBIDDEN: 403,
+  NOT_FOUND: 404,
+  METHOD_NOT_ALLOWED: 405,
+  CONFLICT: 409,
+  GONE: 410,
+  PRECONDITION_FAILED: 412,
+  UNSUPPORTED_MEDIA_TYPE: 415,
+  UNPROCESSABLE_ENTITY: 422,
+  TOO_MANY_REQUESTS: 429,
+  INTERNAL_SERVER_ERROR: 500,
+  NOT_IMPLEMENTED: 501,
+  BAD_GATEWAY: 502,
+  SERVICE_UNAVAILABLE: 503,
+  GATEWAY_TIMEOUT: 504,
+} as const;
+
+export const CONSULTATION_STATUS_TRANSITIONS: Record<string, string[]> = {
+  PENDING_ACCEPT: ['ACCEPTED', 'CANCELLED', 'TIMEOUT'],
+  ACCEPTED: ['IN_PROGRESS', 'CANCELLED', 'RETURNED'],
+  IN_PROGRESS: ['PRESCRIPTION_PENDING', 'CANCELLED', 'RETURNED'],
+  PRESCRIPTION_PENDING: ['PRESCRIPTION_REVIEWING', 'CANCELLED'],
+  PRESCRIPTION_REVIEWING: ['PRESCRIPTION_APPROVED', 'RETURNED'],
+  PRESCRIPTION_APPROVED: ['PAYMENT_PENDING', 'CANCELLED'],
+  PAYMENT_PENDING: ['COMPLETED', 'CANCELLED'],
+  COMPLETED: [],
+  CANCELLED: [],
+  REJECTED: [],
+  RETURNED: ['PENDING_ACCEPT', 'CANCELLED'],
+  TIMEOUT: [],
+};
+
+export const PRESCRIPTION_STATUS_TRANSITIONS: Record<string, string[]> = {
+  DRAFT: ['PENDING_REVIEW', 'CANCELLED'],
+  PENDING_REVIEW: ['REVIEWING', 'CANCELLED'],
+  REVIEWING: ['APPROVED', 'REJECTED', 'RETURNED'],
+  APPROVED: ['DISPENSED', 'CANCELLED'],
+  REJECTED: ['DRAFT'],
+  RETURNED: ['DRAFT', 'CANCELLED'],
+  DISPENSED: [],
+  CANCELLED: [],
+};
+
+export const PAYMENT_STATUS_TRANSITIONS: Record<string, string[]> = {
+  FROZEN: ['PENDING', 'REFUND_PENDING', 'CANCELLED'],
+  PENDING: ['COMPLETED', 'FAILED', 'CANCELLED'],
+  COMPLETED: ['REFUND_PENDING'],
+  FAILED: ['PENDING'],
+  REFUND_PENDING: ['REFUNDED', 'PARTIALLY_REFUNDED', 'FAILED'],
+  REFUNDED: [],
+  PARTIALLY_REFUNDED: [],
+  CANCELLED: [],
+};
+
+export const DEPARTMENT_NAMES: Record<string, string> = {
+  INTERNAL_MEDICINE: '内科',
+  SURGERY: '外科',
+  PEDIATRICS: '儿科',
+  OBSTETRICS_GYNECOLOGY: '妇产科',
+  DERMATOLOGY: '皮肤科',
+  OPHTHALMOLOGY: '眼科',
+  OTORHINOLARYNGOLOGY: '耳鼻喉科',
+  PSYCHIATRY: '精神科',
+  TRADITIONAL_CHINESE_MEDICINE: '中医科',
+  DENTISTRY: '口腔科',
+};
+
+export const USER_ROLE_NAMES: Record<string, string> = {
+  PATIENT: '患者',
+  DOCTOR: '医生',
+  PHARMACIST: '审方药师',
+  CUSTOMER_SERVICE: '平台客服',
+  ADMIN: '管理员',
+};
+
+export const CONSULTATION_STATUS_NAMES: Record<string, string> = {
+  PENDING_ACCEPT: '待接单',
+  ACCEPTED: '已接单',
+  IN_PROGRESS: '问诊中',
+  PRESCRIPTION_PENDING: '处方待审方',
+  PRESCRIPTION_REVIEWING: '处方审核中',
+  PRESCRIPTION_APPROVED: '处方已审核',
+  PAYMENT_PENDING: '待支付',
+  COMPLETED: '已完成',
+  CANCELLED: '已取消',
+  REJECTED: '已拒绝',
+  RETURNED: '已退回',
+  TIMEOUT: '已超时',
+};
+
+export const PRESCRIPTION_STATUS_NAMES: Record<string, string> = {
+  DRAFT: '草稿',
+  PENDING_REVIEW: '待审核',
+  REVIEWING: '审核中',
+  APPROVED: '已通过',
+  REJECTED: '已拒绝',
+  RETURNED: '已退回',
+  DISPENSED: '已发药',
+  CANCELLED: '已取消',
+};
+
+export const PAYMENT_STATUS_NAMES: Record<string, string> = {
+  FROZEN: '已冻结',
+  PENDING: '待支付',
+  COMPLETED: '已完成',
+  FAILED: '支付失败',
+  REFUND_PENDING: '退款中',
+  REFUNDED: '已退款',
+  PARTIALLY_REFUNDED: '部分退款',
+  CANCELLED: '已取消',
+};

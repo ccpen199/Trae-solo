@@ -1,0 +1,30 @@
+{
+  "name": "telemedicine-platform",
+  "version": "1.0.0",
+  "private": true,
+  "workspaces": [
+    "services/*",
+    "frontend"
+  ],
+  "scripts": {
+    "dev": "concurrently \"npm run dev:gateway\" \"npm run dev:user\" \"npm run dev:consultation\" \"npm run dev:prescription\" \"npm run dev:payment\" \"npm run dev:communication\" \"npm run dev:compliance\" \"npm run dev:followup\" \"npm run dev:frontend\"",
+    "dev:gateway": "npm run dev --workspace=@telemedicine/gateway",
+    "dev:user": "npm run dev --workspace=@telemedicine/user-service",
+    "dev:consultation": "npm run dev --workspace=@telemedicine/consultation-service",
+    "dev:prescription": "npm run dev --workspace=@telemedicine/prescription-service",
+    "dev:payment": "npm run dev --workspace=@telemedicine/payment-service",
+    "dev:communication": "npm run dev --workspace=@telemedicine/communication-service",
+    "dev:compliance": "npm run dev --workspace=@telemedicine/compliance-service",
+    "dev:followup": "npm run dev --workspace=@telemedicine/followup-service",
+    "dev:frontend": "npm run dev --workspace=@telemedicine/frontend",
+    "build": "npm run build --workspaces",
+    "lint": "npm run lint --workspaces"
+  },
+  "devDependencies": {
+    "concurrently": "^8.2.2",
+    "typescript": "^5.3.3"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  }
+}
