@@ -1,0 +1,353 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id            String    @id @default(uuid())
+  username      String    @unique
+  password      String
+  name          String
+  role          String
+  department    String?
+  email         String?
+  phone         String?
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+  isActive      Boolean   @default(true)
+  
+  declarationsCreated Declaration[] @relation("Creator")
+  declarationsAssigned Declaration[] @relation("Assignee")
+  operationLogs     OperationLog[]
+  todoItems         TodoItem[]
+  messages          Message[]
+}
+
+model Declaration {
+  id              String          @id @default(uuid())
+  mainOrderNo     String          @unique
+  status          String          @default("PENDING_DATA_ENTRY")
+  previousStatus  String?
+  
+  declarationType String
+  tradeMode       String
+  customsCode     String
+  iePort          String
+  
+  shipper         String
+  consignee       String
+  notifyParty     String?
+  
+  transportMode   String
+  voyageNo        String?
+  billOfLadingNo  String?
+  
+  entryDate       DateTime?
+  expectedDate    DateTime?
+  actualDate      DateTime?
+  
+  creatorId       String
+  assigneeId      String?
+  lockedBy        String?
+  lockedAt        DateTime?
+  
+  totalValue      Decimal?
+  totalTax        Decimal?
+  currency        String?
+  
+  isLocked        Boolean         @default(false)
+  
+  createdAt       DateTime        @default(now())
+  updatedAt       DateTime        @updatedAt
+  
+  creator         User            @relation("Creator", fields: [creatorId], references: [id])
+  assignee        User?           @relation("Assignee", fields: [assigneeId], references: [id])
+  
+  items           DeclarationItem[]
+  documents       Document[]
+  taxes           TaxRecord[]
+  inspections     Inspection[]
+  operationLogs   OperationLog[]
+  statusHistory   StatusHistory[]
+  todoItems       TodoItem[]
+  messages        Message[]
+  exceptions      ExceptionRecord[]
+  
+  @@index([mainOrderNo])
+  @@index([status])
+  @@index([creatorId])
+  @@index([assigneeId])
+  @@index([createdAt])
+}
+
+model DeclarationItem {
+  id              String    @id @default(uuid())
+  declarationId   String
+  lineNo          Int
+  
+  hsCode          String?
+  productName     String
+  specification   String?
+  originCountry   String?
+  
+  quantity        Decimal?
+  unit            String?
+  unitPrice       Decimal?
+  totalAmount     Decimal?
+  currency        String?
+  
+  taxRate         Decimal?
+  taxAmount       Decimal?
+  
+  status          String    @default("PENDING_DATA_ENTRY")
+  
+  createdAt       DateTime  @default(now())
+  updatedAt       DateTime  @updatedAt
+  
+  declaration     Declaration @relation(fields: [declarationId], references: [id], onDelete: Cascade)
+  
+  @@index([declarationId])
+}
+
+model Document {
+  id              String        @id @default(uuid())
+  declarationId   String
+  docType         String
+  docNo           String?
+  title           String
+  description     String?
+  
+  filePath        String?
+  fileType        String?
+  fileSize        Int?
+  
+  isLocked        Boolean       @default(false)
+  verified        Boolean       @default(false)
+  verifiedBy      String?
+  verifiedAt      DateTime?
+  
+  createdAt       DateTime      @default(now())
+  updatedAt       DateTime      @updatedAt
+  
+  declaration     Declaration   @relation(fields: [declarationId], references: [id], onDelete: Cascade)
+  
+  @@index([declarationId])
+}
+
+model TaxRecord {
+  id              String    @id @default(uuid())
+  declarationId   String
+  itemId          String?
+  
+  taxType         String
+  taxBase         Decimal?
+  taxRate         Decimal?
+  taxAmount       Decimal
+  
+  currency        String
+  exchangeRate    Decimal?
+  
+  paidStatus      String    @default("UNPAID")
+  paidAt          DateTime?
+  paymentRef      String?
+  
+  createdAt       DateTime  @default(now())
+  updatedAt       DateTime  @updatedAt
+  
+  declaration     Declaration @relation(fields: [declarationId], references: [id], onDelete: Cascade)
+  
+  @@index([declarationId])
+}
+
+model Inspection {
+  id              String          @id @default(uuid())
+  declarationId   String
+  inspectionNo    String
+  
+  inspectionType  String
+  inspector       String?
+  inspectionDate  DateTime?
+  
+  result          String?
+  conclusion      String?
+  
+  needSupplement  Boolean         @default(false)
+  supplementItems String?
+  
+  createdAt       DateTime        @default(now())
+  updatedAt       DateTime        @updatedAt
+  
+  declaration     Declaration     @relation(fields: [declarationId], references: [id], onDelete: Cascade)
+  
+  @@index([declarationId])
+}
+
+model StatusHistory {
+  id              String          @id @default(uuid())
+  declarationId   String
+  fromStatus      String?
+  toStatus        String
+  
+  operatorId      String
+  operatorName    String
+  operatorRole    String
+  
+  reason          String?
+  comment         String?
+  
+  createdAt       DateTime        @default(now())
+  
+  declaration     Declaration     @relation(fields: [declarationId], references: [id], onDelete: Cascade)
+  
+  @@index([declarationId])
+  @@index([createdAt])
+}
+
+model OperationLog {
+  id              String    @id @default(uuid())
+  declarationId   String?
+  userId          String
+  
+  action          String
+  targetType      String?
+  targetId        String?
+  
+  details         String?
+  ipAddress       String?
+  
+  createdAt       DateTime  @default(now())
+  
+  user            User      @relation(fields: [userId], references: [id])
+  declaration     Declaration? @relation(fields: [declarationId], references: [id], onDelete: SetNull)
+  
+  @@index([userId])
+  @@index([declarationId])
+  @@index([createdAt])
+}
+
+model TodoItem {
+  id              String          @id @default(uuid())
+  declarationId   String
+  assigneeId      String
+  
+  title           String
+  description     String?
+  actionType      String
+  
+  status          String          @default("PENDING")
+  priority        Int             @default(1)
+  
+  dueDate         DateTime?
+  completedAt     DateTime?
+  
+  createdAt       DateTime        @default(now())
+  updatedAt       DateTime        @updatedAt
+  
+  assignee        User            @relation(fields: [assigneeId], references: [id])
+  declaration     Declaration     @relation(fields: [declarationId], references: [id], onDelete: Cascade)
+  
+  @@index([assigneeId])
+  @@index([status])
+  @@index([dueDate])
+}
+
+model Message {
+  id              String          @id @default(uuid())
+  declarationId   String?
+  receiverId      String
+  
+  title           String
+  content         String?
+  msgType         String
+  
+  isRead          Boolean         @default(false)
+  readAt          DateTime?
+  
+  createdAt       DateTime        @default(now())
+  
+  receiver        User            @relation(fields: [receiverId], references: [id])
+  declaration     Declaration?    @relation(fields: [declarationId], references: [id], onDelete: SetNull)
+  
+  @@index([receiverId])
+  @@index([isRead])
+}
+
+model ExceptionRecord {
+  id              String          @id @default(uuid())
+  declarationId   String
+  
+  exceptionType   String
+  severity        String
+  
+  title           String
+  description     String?
+  
+  status          String          @default("OPEN")
+  handlerId       String?
+  handledAt       DateTime?
+  resolution      String?
+  
+  createdAt       DateTime        @default(now())
+  updatedAt       DateTime        @updatedAt
+  
+  declaration     Declaration     @relation(fields: [declarationId], references: [id], onDelete: Cascade)
+  
+  @@index([declarationId])
+  @@index([status])
+  @@index([createdAt])
+}
+
+model ConfigRule {
+  id              String          @id @default(uuid())
+  ruleType        String
+  ruleName        String
+  ruleCode        String          @unique
+  
+  condition       String
+  action          String
+  priority        Int             @default(1)
+  
+  isActive        Boolean         @default(true)
+  version         Int             @default(1)
+  
+  description     String?
+  
+  createdAt       DateTime        @default(now())
+  updatedAt       DateTime        @updatedAt
+}
+
+model ExchangeRate {
+  id              String          @id @default(uuid())
+  currencyPair    String
+  rate            Decimal
+  rateDate        DateTime
+  
+  source          String?
+  
+  createdAt       DateTime        @default(now())
+  @@unique([currencyPair, rateDate])
+}
+
+model CreditLimit {
+  id              String          @id @default(uuid())
+  entityType      String
+  entityId        String
+  
+  totalLimit      Decimal
+  usedLimit       Decimal         @default(0)
+  availableLimit  Decimal
+  
+  riskScore       Int             @default(50)
+  riskLevel       String          @default("MEDIUM")
+  
+  isActive        Boolean         @default(true)
+  
+  createdAt       DateTime        @default(now())
+  updatedAt       DateTime        @updatedAt
+  
+  @@unique([entityType, entityId])
+}
