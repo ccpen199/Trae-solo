@@ -1,0 +1,120 @@
+server:
+  port: ${SERVER_PORT:8362}
+
+spring:
+  application:
+    name: order-aggregation-system
+  
+  datasource:
+    url: jdbc:mysql://${MYSQL_HOST:localhost}:${MYSQL_PORT:3306}/${MYSQL_DATABASE:food_delivery}?useUnicode=true&characterEncoding=utf8&useSSL=false&serverTimezone=Asia/Shanghai&allowPublicKeyRetrieval=true
+    username: ${MYSQL_USERNAME:delivery_admin}
+    password: ${MYSQL_PASSWORD:Delivery@2024}
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    hikari:
+      connection-timeout: 30000
+      validation-timeout: 5000
+      max-lifetime: 60000
+      connection-test-query: SELECT 1
+      minimum-idle: 5
+      maximum-pool-size: 20
+      pool-name: DeliveryHikariPool
+  
+  data:
+    redis:
+      host: ${REDIS_HOST:localhost}
+      port: ${REDIS_PORT:6379}
+      password: ${REDIS_PASSWORD:}
+      database: ${REDIS_DATABASE:0}
+      lettuce:
+        pool:
+          min-idle: 5
+          max-idle: 20
+          max-active: 50
+          max-wait: -1ms
+  
+  rabbitmq:
+    host: ${RABBITMQ_HOST:localhost}
+    port: ${RABBITMQ_PORT:5672}
+    username: ${RABBITMQ_USERNAME:guest}
+    password: ${RABBITMQ_PASSWORD:guest}
+    virtual-host: ${RABBITMQ_VHOST:/}
+    publisher-confirm-type: correlated
+    publisher-returns: true
+    listener:
+      simple:
+        acknowledge-mode: manual
+        prefetch: 10
+        retry:
+          enabled: true
+          max-attempts: 3
+  
+  servlet:
+    multipart:
+      max-file-size: 50MB
+      max-request-size: 100MB
+
+mybatis-plus:
+  mapper-locations: classpath*:/mapper/**/*.xml
+  type-aliases-package: com.fooddelivery.entity
+  configuration:
+    map-underscore-to-camel-case: true
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+  global-config:
+    db-config:
+      id-type: ASSIGN_ID
+      logic-delete-field: deleted
+      logic-delete-value: 1
+      logic-not-delete-value: 0
+
+jwt:
+  secret: ${JWT_SECRET:FoodDeliveryOrderAggregationSystemJwtSecretKey2024VeryLongSecret}
+  expiration: ${JWT_EXPIRATION:86400000}
+  header: ${JWT_HEADER:Authorization}
+  prefix: ${JWT_PREFIX:Bearer }
+
+system:
+  config:
+    frontend-url: ${FRONTEND_URL:http://localhost:9471}
+    callback-base-url: ${CALLBACK_BASE_URL:http://localhost:8362}
+    cors-allowed-origins: ${CORS_ALLOWED_ORIGINS:http://localhost:9471,http://localhost:8362}
+    cors-allowed-methods: GET,POST,PUT,DELETE,OPTIONS
+    cors-allowed-headers: *
+    cors-allow-credentials: true
+    cors-max-age: 3600
+
+print:
+  engine:
+    enabled: true
+    default-copies: 2
+    kitchen-template: default-kitchen
+    receipt-template: default-receipt
+
+order:
+  aggregation:
+    pull-interval-seconds: 10
+    max-batch-size: 100
+    platforms:
+      meituan:
+        enabled: true
+        api-base-url: ${MEITUAN_API_URL:https://waimai.meituan.com/openapi}
+        callback-path: /api/callback/meituan
+      eleme:
+        enabled: true
+        api-base-url: ${ELEME_API_URL:https://open-api.shop.ele.me}
+        callback-path: /api/callback/eleme
+
+statistics:
+  engine:
+    cache-ttl-seconds: 300
+    auto-calculate: true
+    calculate-interval-minutes: 5
+
+logging:
+  level:
+    com.fooddelivery: DEBUG
+    org.springframework.statemachine: INFO
+    com.baomidou: DEBUG
+  pattern:
+    console: "%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level %logger{50} - %msg%n"
+  file:
+    name: logs/delivery-system.log

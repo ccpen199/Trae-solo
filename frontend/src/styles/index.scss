@@ -1,0 +1,146 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html, body {
+  width: 100%;
+  height: 100%;
+  font-family: 'PingFang SC', 'Microsoft YaHei', sans-serif;
+  font-size: 14px;
+  color: #333;
+  background-color: #f5f7fa;
+}
+
+#app {
+  width: 100%;
+  height: 100%;
+}
+
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: #c1c1c1;
+  border-radius: 3px;
+}
+
+::-webkit-scrollbar-track {
+  background-color: #f1f1f1;
+}
+
+.el-table {
+  th {
+    background-color: #fafafa !important;
+  }
+}
+
+.el-dialog {
+  .el-dialog__header {
+    border-bottom: 1px solid #dcdfe6;
+    padding-bottom: 16px;
+  }
+  .el-dialog__body {
+    padding: 20px 24px;
+  }
+  .el-dialog__footer {
+    border-top: 1px solid #dcdfe6;
+    padding-top: 16px;
+  }
+}
+
+.form-item-required {
+  .el-form-item__label::before {
+    content: '*';
+    color: #f56c6c;
+    margin-right: 4px;
+  }
+}
+
+.page-container {
+  padding: 20px;
+  background-color: #fff;
+  border-radius: 4px;
+}
+
+.status-tag {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 60px;
+  height: 24px;
+  padding: 0 8px;
+  font-size: 12px;
+  border-radius: 4px;
+}
+
+.status-pending {
+  background-color: #ecf5ff;
+  color: #409eff;
+}
+
+.status-processing {
+  background-color: #fdf6ec;
+  color: #e6a23c;
+}
+
+.status-success {
+  background-color: #f0f9eb;
+  color: #67c23a;
+}
+
+.status-danger {
+  background-color: #fef0f0;
+  color: #f56c6c;
+}
+
+.status-info {
+  background-color: #f4f4f5;
+  color: #909399;
+}
+
+.card-title {
+  font-size: 16px;
+  font-weight: 600;
+  color: #303133;
+  margin-bottom: 16px;
+}
+
+.stat-card {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 24px;
+  background-color: #fff;
+  border-radius: 8px;
+  box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.05);
+  
+  .stat-value {
+    font-size: 32px;
+    font-weight: 600;
+    color: #303133;
+  }
+  
+  .stat-label {
+    font-size: 14px;
+    color: #909399;
+    margin-top: 8px;
+  }
+  
+  .stat-trend {
+    font-size: 12px;
+    margin-top: 8px;
+    
+    &.up {
+      color: #67c23a;
+    }
+    
+    &.down {
+      color: #f56c6c;
+    }
+  }
+}
