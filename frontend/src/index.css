@@ -1,0 +1,287 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+  background-color: #f0f2f5;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.login-page {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+}
+
+.login-card {
+  width: 400px;
+  padding: 40px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+  border-radius: 12px;
+}
+
+.login-title {
+  text-align: center;
+  margin-bottom: 32px;
+  font-size: 24px;
+  font-weight: 600;
+  color: #333;
+}
+
+.plan-card {
+  transition: all 0.3s ease;
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+.plan-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+}
+
+.plan-card.featured {
+  border: 2px solid #1890ff;
+}
+
+.plan-features {
+  margin-top: 16px;
+}
+
+.plan-feature {
+  display: flex;
+  align-items: center;
+  margin-bottom: 8px;
+}
+
+.plan-feature-icon {
+  color: #52c41a;
+  margin-right: 8px;
+}
+
+.dashboard-card {
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+}
+
+.stat-card {
+  text-align: center;
+  padding: 24px;
+}
+
+.stat-value {
+  font-size: 32px;
+  font-weight: 700;
+  color: #1890ff;
+}
+
+.stat-label {
+  font-size: 14px;
+  color: #666;
+  margin-top: 8px;
+}
+
+.growth-indicator {
+  margin-top: 8px;
+  font-size: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.subscription-status-active {
+  color: #52c41a;
+  font-weight: 600;
+}
+
+.subscription-status-past-due {
+  color: #faad14;
+  font-weight: 600;
+}
+
+.subscription-status-pending {
+  color: #1890ff;
+  font-weight: 600;
+}
+
+.subscription-status-cancelled {
+  color: #ff4d4f;
+  font-weight: 600;
+}
+
+.invoice-status-paid {
+  color: #52c41a;
+  font-weight: 600;
+}
+
+.invoice-status-open {
+  color: #faad14;
+  font-weight: 600;
+}
+
+.invoice-status-draft {
+  color: #999;
+  font-weight: 600;
+}
+
+.churn-risk-high {
+  color: #ff4d4f;
+  font-weight: 600;
+}
+
+.churn-risk-medium {
+  color: #faad14;
+  font-weight: 600;
+}
+
+.churn-risk-low {
+  color: #52c41a;
+  font-weight: 600;
+}
+
+.table-actions {
+  display: flex;
+  gap: 8px;
+}
+
+.notification-badge {
+  margin-right: 24px;
+}
+
+.user-dropdown {
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+}
+
+.user-avatar {
+  margin-right: 8px;
+}
+
+.sider-logo {
+  height: 64px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-size: 18px;
+  font-weight: 600;
+}
+
+.layout-content {
+  margin: 24px;
+  min-height: 280px;
+}
+
+.page-header {
+  margin-bottom: 24px;
+}
+
+.empty-state {
+  padding: 60px;
+  text-align: center;
+}
+
+.loading-spinner {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 40px;
+}
+
+.price-tag {
+  font-size: 28px;
+  font-weight: 700;
+  color: #1890ff;
+}
+
+.price-period {
+  font-size: 14px;
+  color: #666;
+}
+
+.trial-badge {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  padding: 4px 12px;
+  border-radius: 4px;
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.entitlement-card {
+  padding: 16px;
+  border-radius: 8px;
+  background: #fafafa;
+}
+
+.entitlement-active {
+  border-left: 4px solid #52c41a;
+}
+
+.entitlement-inactive {
+  border-left: 4px solid #d9d9d9;
+  opacity: 0.6;
+}
+
+.audit-detail {
+  background: #fafafa;
+  padding: 16px;
+  border-radius: 8px;
+  font-family: monospace;
+  font-size: 12px;
+}
+
+.chart-container {
+  width: 100%;
+  height: 300px;
+}
+
+.notification-item {
+  background: white;
+  transition: background 0.3s ease;
+}
+
+.notification-item:hover {
+  background: #fafafa;
+}
+
+.notification-item.unread {
+  background: #f6ffed;
+}
+
+.notification-unread-dot {
+  display: inline-block;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #1890ff;
+  flex-shrink: 0;
+}
+
+.invoice-amount {
+  font-weight: 600;
+  color: #333;
+}
+
+.ant-card-head-title {
+  font-weight: 600;
+}
+
+.ant-statistic-title {
+  font-size: 14px;
+  color: #666;
+}
+
+.ant-list-item-meta-title {
+  margin-bottom: 4px !important;
+}
+
+.ant-list-item-meta-description {
+  color: #666;
+}
