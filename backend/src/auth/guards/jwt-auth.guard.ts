@@ -14,17 +14,15 @@ export class JwtAuthGuard extends AuthGuard('jwt') {
       context.getHandler(),
       context.getClass(),
     ]);
-
     if (isPublic) {
       return true;
     }
-
     return super.canActivate(context);
   }
 
-  handleRequest(err: unknown, user: unknown) {
+  handleRequest(err, user, info) {
     if (err || !user) {
-      throw err || new UnauthorizedException('请先登录');
+      throw err || new UnauthorizedException('认证失败');
     }
     return user;
   }

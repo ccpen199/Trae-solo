@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, UnauthorizedException } from '@nestjs/common';
 import { PassportStrategy } from '@nestjs/passport';
 import { ExtractJwt, Strategy } from 'passport-jwt';
 import { ConfigService } from '@nestjs/config';
@@ -17,22 +17,24 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
     });
   }
 
-  async validate(payload: { sub: string; phone: string; role: string }) {
+  async validate(payload: any) {
     const user = await this.prisma.user.findUnique({
       where: { id: payload.sub },
+      select: {
+        id: true,
+        phone: true,
+        name: true,
+        role: true,
+        avatar: true,
+        creditScore: true,
+        creditLevel: true,
+      },
     });
 
     if (!user) {
-      return null;
+      throw new UnauthorizedException('用户不存在');
     }
 
-    return {
-      id: user.id,
-      phone: user.phone,
-      name: user.name,
-      role: user.role,
-      creditScore: user.creditScore,
-      creditLevel: user.creditLevel,
-    };
+    return user;
   }
 }

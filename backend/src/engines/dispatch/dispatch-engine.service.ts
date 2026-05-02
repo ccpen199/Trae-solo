@@ -6,7 +6,7 @@ import {
   DispatchRequest,
   DispatchResult,
 } from './types/dispatch.types';
-import { MachineryStatus } from '@prisma/client';
+import { MachineryStatus } from '../../types/enums';
 
 @Injectable()
 export class DispatchEngineService {

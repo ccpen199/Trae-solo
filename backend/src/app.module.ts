@@ -19,6 +19,7 @@ import { BillingEngineModule } from './engines/billing/billing-engine.module';
 import { CreditEngineModule } from './engines/credit/credit-engine.module';
 import { PrismaModule } from './prisma/prisma.module';
 import { RedisModule } from './redis/redis.module';
+import { HomeModule } from './home/home.module';
 import { JwtAuthGuard } from './auth/guards/jwt-auth.guard';
 
 @Module({
@@ -38,6 +39,7 @@ import { JwtAuthGuard } from './auth/guards/jwt-auth.guard';
     }),
     PrismaModule,
     RedisModule,
+    HomeModule,
     AuthModule,
     UsersModule,
     MachineriesModule,

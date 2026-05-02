@@ -7,7 +7,7 @@ import { CreditEngineService } from '../engines/credit/credit-engine.service';
 import { AuditLogService } from '../audit-log/audit-log.service';
 import { DispatchEngineService } from '../engines/dispatch/dispatch-engine.service';
 import { CreateOrderDto, TrackPointDto } from './dto/create-order.dto';
-import { OrderStatus, UserRole, BillingMode, DemandStatus, MachineryStatus } from '@prisma/client';
+import { OrderStatus, UserRole, BillingMode, DemandStatus, MachineryStatus } from '../types/enums';
 import { TransitionContext } from '../state-machine/types/state-machine.types';
 import { TrackPoint } from '../engines/track-verify/types/track-verify.types';
 
@@ -549,12 +549,12 @@ export class OrdersService {
   ) {
     const order = await this.findOne(id, userId, userRole);
 
-    const allowedStatuses = [
+    const allowedStatuses: OrderStatus[] = [
       OrderStatus.PENDING_ACCEPT,
       OrderStatus.ACCEPTED,
     ];
 
-    if (!allowedStatuses.includes(order.status)) {
+    if (!allowedStatuses.includes(order.status as OrderStatus)) {
       throw new BadRequestException('订单状态不允许取消');
     }
 

@@ -3,7 +3,7 @@ import { PrismaService } from '../prisma/prisma.service';
 import { StateMachineService } from '../state-machine/state-machine.service';
 import { AuditLogService } from '../audit-log/audit-log.service';
 import { CreateRepairOrderDto, AssignRepairOrderDto } from './dto/create-repair-order.dto';
-import { RepairOrderStatus, UserRole, MachineryStatus } from '@prisma/client';
+import { RepairOrderStatus, UserRole, MachineryStatus } from '../types/enums';
 import { TransitionContext } from '../state-machine/types/state-machine.types';
 
 @Injectable()
@@ -318,13 +318,13 @@ export class RepairOrdersService {
   ) {
     const order = await this.findOne(id, userId, userRole);
 
-    const allowedStatuses = [
+    const allowedStatuses: RepairOrderStatus[] = [
       RepairOrderStatus.PENDING,
       RepairOrderStatus.ASSIGNED,
       RepairOrderStatus.IN_PROGRESS,
     ];
 
-    if (!allowedStatuses.includes(order.status)) {
+    if (!allowedStatuses.includes(order.status as RepairOrderStatus)) {
       throw new BadRequestException('维修工单状态不允许取消');
     }
 

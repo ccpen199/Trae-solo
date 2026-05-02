@@ -1,5 +1,6 @@
 import { Module } from '@nestjs/common';
 import { OrdersService } from './orders.service';
+import { OrdersController } from './orders.controller';
 import { PrismaModule } from '../prisma/prisma.module';
 import { StateMachineModule } from '../state-machine/state-machine.module';
 import { TrackVerifyEngineModule } from '../engines/track-verify/track-verify-engine.module';
@@ -18,6 +19,7 @@ import { DispatchEngineModule } from '../engines/dispatch/dispatch-engine.module
     AuditLogModule,
     DispatchEngineModule,
   ],
+  controllers: [OrdersController],
   providers: [OrdersService],
   exports: [OrdersService],
 })

@@ -1,6 +1,6 @@
 import { Injectable, NotFoundException, ForbiddenException } from '@nestjs/common';
 import { PrismaService } from '../prisma/prisma.service';
-import { UserRole, MachineryStatus } from '@prisma/client';
+import { UserRole, MachineryStatus } from '../types/enums';
 
 @Injectable()
 export class MachineriesService {

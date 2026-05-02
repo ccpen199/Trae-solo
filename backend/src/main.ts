@@ -7,7 +7,7 @@ async function bootstrap() {
   const app = await NestFactory.create(AppModule);
   
   app.enableCors();
-  app.setGlobalPrefix('api');
+  app.setGlobalPrefix('api', { exclude: ['/', '/health'] });
   
   app.useGlobalPipes(
     new ValidationPipe({
@@ -26,7 +26,7 @@ async function bootstrap() {
   const document = SwaggerModule.createDocument(app, config);
   SwaggerModule.setup('api/docs', app, document);
   
-  const port = process.env.PORT || 3000;
+  const port = process.env.PORT || 3847;
   await app.listen(port);
   console.log(`🚀 农机租赁调度平台已启动，端口: ${port}`);
   console.log(`📚 API 文档: http://localhost:${port}/api/docs`);

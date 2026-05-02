@@ -2,7 +2,7 @@ import { Injectable, BadRequestException, NotFoundException, ForbiddenException 
 import { PrismaService } from '../prisma/prisma.service';
 import { CreditEngineService } from '../engines/credit/credit-engine.service';
 import { CreateReviewDto } from './dto/create-review.dto';
-import { UserRole, OrderStatus } from '@prisma/client';
+import { UserRole, OrderStatus } from '../types/enums';
 
 @Injectable()
 export class ReviewsService {

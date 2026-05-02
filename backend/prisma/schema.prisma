@@ -3,57 +3,8 @@ generator client {
 }
 
 datasource db {
-  provider = "postgresql"
+  provider = "sqlite"
   url      = env("DATABASE_URL")
-}
-
-enum UserRole {
-  FARMER
-  MACHINERY_OPERATOR
-  PLATFORM_DISPATCHER
-  MAINTENANCE_WORKER
-}
-
-enum DemandStatus {
-  DRAFT
-  PENDING_MATCH
-  MATCHING
-  MATCHED
-  DISPATCHED
-  CANCELLED
-}
-
-enum OrderStatus {
-  PENDING_ACCEPT
-  ACCEPTED
-  ARRIVED
-  IN_PROGRESS
-  COMPLETED
-  VERIFIED
-  SETTLED
-  CANCELLED
-}
-
-enum RepairOrderStatus {
-  PENDING
-  ASSIGNED
-  IN_PROGRESS
-  COMPLETED
-  VERIFIED
-  CANCELLED
-}
-
-enum BillingMode {
-  PER_MU
-  PER_HOUR
-  FIXED_PRICE
-}
-
-enum MachineryStatus {
-  AVAILABLE
-  IN_USE
-  UNDER_MAINTENANCE
-  UNAVAILABLE
 }
 
 model User {
@@ -62,7 +13,7 @@ model User {
   password     String
   name         String
   avatar       String?
-  role         UserRole
+  role         String     @default("FARMER")
   creditScore  Int        @default(100)
   creditLevel  String     @default("A")
   
@@ -74,6 +25,8 @@ model User {
   assignedOrders Order[]    @relation("DispatcherOrders")
   repairOrders RepairOrder[] @relation("WorkerRepairOrders")
   assignedRepairOrders RepairOrder[] @relation("DispatcherRepairOrders")
+  reportedRepairOrders RepairOrder[] @relation("RepairOrderReporter")
+  machineries  Machinery[]   @relation("MachineryOperator")
   reviewsGiven Review[]    @relation("Reviewer")
   reviewsReceived Review[] @relation("Reviewee")
   creditRecords CreditRecord[]
@@ -90,7 +43,7 @@ model Machinery {
   model        String
   plateNumber  String?
   capacity     Float?
-  status       MachineryStatus @default(AVAILABLE)
+  status       String          @default("AVAILABLE")
   locationLng  Float?
   locationLat  Float?
   operatorId   String?
@@ -98,7 +51,7 @@ model Machinery {
   createdAt    DateTime        @default(now())
   updatedAt    DateTime        @updatedAt
   
-  operator     User?           @relation(fields: [operatorId], references: [id])
+  operator     User?           @relation("MachineryOperator", fields: [operatorId], references: [id])
   orders       Order[]
   repairOrders RepairOrder[]
   
@@ -116,8 +69,8 @@ model Demand {
   startTime    DateTime?
   endTime      DateTime?
   requirements String?
-  status       DemandStatus   @default(DRAFT)
-  billingMode  BillingMode?
+  status       String         @default("DRAFT")
+  billingMode  String?
   pricePerUnit Float?
   totalPrice   Float?
   
@@ -132,12 +85,12 @@ model Demand {
 
 model Order {
   id              String        @id @default(uuid())
-  demandId        String
+  demandId        String        @unique
   machineryId     String
   operatorId      String
   dispatcherId    String?
-  status          OrderStatus   @default(PENDING_ACCEPT)
-  billingMode     BillingMode
+  status          String        @default("PENDING_ACCEPT")
+  billingMode     String
   pricePerUnit    Float
   estimatedArea   Float?
   estimatedHours  Float?
@@ -185,7 +138,7 @@ model WorkTrack {
 
 model Settlement {
   id           String    @id @default(uuid())
-  orderId      String
+  orderId      String    @unique
   amount       Float
   platformFee  Float
   operatorAmount Float
@@ -206,7 +159,7 @@ model RepairOrder {
   reporterId      String
   assigneeId      String?
   dispatcherId    String?
-  status          RepairOrderStatus  @default(PENDING)
+  status          String             @default("PENDING")
   faultType       String
   faultDescription String
   locationLng     Float?
@@ -222,7 +175,7 @@ model RepairOrder {
   updatedAt       DateTime           @updatedAt
   
   machinery       Machinery          @relation(fields: [machineryId], references: [id])
-  reporter        User               @relation(fields: [reporterId], references: [id])
+  reporter        User               @relation("RepairOrderReporter", fields: [reporterId], references: [id])
   assignee        User?              @relation("WorkerRepairOrders", fields: [assigneeId], references: [id])
   dispatcher      User?              @relation("DispatcherRepairOrders", fields: [dispatcherId], references: [id])
   
@@ -267,8 +220,8 @@ model AuditLog {
   action       String
   targetType   String
   targetId     String
-  beforeData   Json?
-  afterData    Json?
+  beforeData   String?
+  afterData    String?
   ip           String?
   userAgent    String?
   

@@ -4,7 +4,7 @@ import { StateMachineService } from '../state-machine/state-machine.service';
 import { DispatchEngineService } from '../engines/dispatch/dispatch-engine.service';
 import { AuditLogService } from '../audit-log/audit-log.service';
 import { CreateDemandDto, UpdateDemandDto } from './dto/create-demand.dto';
-import { DemandStatus, UserRole, BillingMode } from '@prisma/client';
+import { DemandStatus, UserRole, BillingMode } from '../types/enums';
 import { TransitionContext } from '../state-machine/types/state-machine.types';
 
 @Injectable()
@@ -260,14 +260,14 @@ export class DemandsService {
   async cancel(id: string, userId: string, userRole: UserRole, context: TransitionContext) {
     const demand = await this.findOne(id, userId, userRole);
 
-    const allowedStatuses = [
+    const allowedStatuses: DemandStatus[] = [
       DemandStatus.DRAFT,
       DemandStatus.PENDING_MATCH,
       DemandStatus.MATCHING,
       DemandStatus.MATCHED,
     ];
 
-    if (!allowedStatuses.includes(demand.status)) {
+    if (!allowedStatuses.includes(demand.status as DemandStatus)) {
       throw new BadRequestException('需求单状态不允许取消');
     }
 

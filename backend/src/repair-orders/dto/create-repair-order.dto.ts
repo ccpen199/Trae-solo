@@ -1,38 +1,16 @@
-import { IsString, IsNumber, IsOptional } from 'class-validator';
-
 export class CreateRepairOrderDto {
-  @IsString()
   machineryId: string;
-
-  @IsString()
   faultType: string;
-
-  @IsString()
   faultDescription: string;
-
-  @IsOptional()
-  @IsNumber()
-  locationLng?: number;
-
-  @IsOptional()
-  @IsNumber()
-  locationLat?: number;
-
-  @IsOptional()
-  @IsString()
+  locationLng: number;
+  locationLat: number;
   locationAddress?: string;
+  contactPhone: string;
+  priority?: 'LOW' | 'MEDIUM' | 'HIGH';
 }
 
 export class AssignRepairOrderDto {
-  @IsString()
   assigneeId: string;
-}
-
-export class CompleteRepairOrderDto {
-  @IsString()
-  result: string;
-
-  @IsOptional()
-  @IsNumber()
-  cost?: number;
+  estimatedTime?: string;
+  notes?: string;
 }
