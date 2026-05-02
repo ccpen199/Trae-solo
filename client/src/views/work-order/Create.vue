@@ -153,9 +153,9 @@
     <el-dialog v-model="showMaterialDialog" title="选择物料" width="600px">
       <el-table :data="materials" v-loading="materialLoading" @selection-change="handleMaterialSelection">
         <el-table-column type="selection" width="50" />
-        <el-table-column prop="materialNo" label="物料编号" />
-        <el-table-column prop="name" label="物料名称" />
-        <el-table-column prop="spec" label="规格" />
+        <el-table-column prop="code" label="物料编号" />
+            <el-table-column prop="name" label="物料名称" />
+            <el-table-column prop="specification" label="规格" />
       </el-table>
       <template #footer>
         <el-button @click="showMaterialDialog = false">取消</el-button>
@@ -166,8 +166,8 @@
     <el-dialog v-model="showEquipmentDialog" title="选择设备" width="600px">
       <el-table :data="equipments" v-loading="equipmentLoading" @selection-change="handleEquipmentSelection">
         <el-table-column type="selection" width="50" />
-        <el-table-column prop="equipmentNo" label="设备编号" />
-        <el-table-column prop="name" label="设备名称" />
+        <el-table-column prop="code" label="设备编号" />
+            <el-table-column prop="name" label="设备名称" />
         <el-table-column prop="status" label="状态">
           <template #default="scope">
             <span :class="'status-tag status-tag-' + getEquipmentStatusClass(scope.row.status)">
@@ -213,7 +213,7 @@ const form = reactive({
   priority: 'MEDIUM',
   plannedStartDate: '',
   plannedEndDate: '',
-  processRouteId: 0,
+  processRouteId: '',
   remark: '',
   materials: [] as any[],
   equipmentIds: [] as any[],
@@ -227,8 +227,8 @@ const rules: FormRules = {
 
 const loadProcessRoutes = async () => {
   try {
-    const response = await masterDataApi.listProcessRoutes({ limit: 100 });
-    processRoutes.value = response.data?.items || [];
+    const response = await masterDataApi.getProcessRoutes();
+    processRoutes.value = response.data || [];
   } catch {
     // ignore
   }
@@ -237,8 +237,8 @@ const loadProcessRoutes = async () => {
 const loadMaterials = async () => {
   materialLoading.value = true;
   try {
-    const response = await masterDataApi.listMaterials({ limit: 100 });
-    materials.value = response.data?.items || [];
+    const response = await masterDataApi.getMaterials();
+    materials.value = response.data || [];
   } finally {
     materialLoading.value = false;
   }
@@ -247,8 +247,8 @@ const loadMaterials = async () => {
 const loadEquipments = async () => {
   equipmentLoading.value = true;
   try {
-    const response = await masterDataApi.listEquipments({ limit: 100 });
-    equipments.value = response.data?.items || [];
+    const response = await masterDataApi.getEquipment();
+    equipments.value = response.data || [];
   } finally {
     equipmentLoading.value = false;
   }
@@ -270,6 +270,7 @@ const confirmMaterialSelection = () => {
         materialId: m.id,
         materialName: m.name,
         qty: 1,
+        unit: m.unit
       });
     }
   });
@@ -311,7 +312,12 @@ const handleSubmit = async () => {
         plannedEndDate: form.plannedEndDate || undefined,
         processRouteId: form.processRouteId,
         remark: form.remark || undefined,
-        materialIds: form.materials.map((m: any) => ({ id: m.materialId, qty: m.qty })),
+        materials: form.materials.map((m: any) => ({
+          materialId: m.materialId,
+          materialName: m.materialName,
+          qty: m.qty,
+          unit: m.unit
+        })),
         equipmentIds: form.equipmentIds.map((e: any) => e.id),
       };
 

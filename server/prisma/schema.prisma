@@ -70,6 +70,7 @@ model Bom {
   updatedAt   DateTime @updatedAt
   
   items BomItem[]
+  processRoutes ProcessRoute[]
 }
 
 model BomItem {
@@ -98,6 +99,7 @@ model ProcessRoute {
   updatedAt   DateTime @updatedAt
   
   processes RouteProcess[]
+  bom       Bom?     @relation(fields: [bomId], references: [id])
   
   @@index([code])
 }

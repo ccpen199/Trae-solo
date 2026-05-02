@@ -14,7 +14,7 @@ export const useUserStore = defineStore('user', () => {
 
   async function login(username: string, password: string) {
     const response = await authApi.login({ username, password });
-    if (response.data) {
+    if (response.success && response.data) {
       token.value = response.data.token;
       user.value = response.data.user;
       localStorage.setItem('token', response.data.token);

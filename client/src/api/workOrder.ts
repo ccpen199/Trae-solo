@@ -2,15 +2,21 @@ import request from './http';
 import { WorkOrder, WorkOrderProcess, ProcessRoute, PaginatedResponse } from '@/types';
 
 export interface CreateWorkOrderData {
-  name: string;
-  description?: string;
-  quantity: number;
-  priority?: number;
+  productName: string;
+  productSpec?: string;
+  plannedQty: number;
+  priority: string;
+  plannedStartDate?: string;
+  plannedEndDate?: string;
   processRouteId: string;
-  bomId?: string;
-  equipmentId?: string;
-  plannedStartAt?: Date;
-  plannedEndAt?: Date;
+  remark?: string;
+  materials: Array<{
+    materialId: string;
+    materialName: string;
+    qty: number;
+    unit?: string;
+  }>;
+  equipmentIds: string[];
 }
 
 export interface AssignProcessData {
