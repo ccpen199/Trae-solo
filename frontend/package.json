@@ -1,0 +1,26 @@
+{
+  "name": "api-gateway-frontend",
+  "private": true,
+  "version": "1.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite --port 9166",
+    "build": "tsc && vite build",
+    "preview": "vite preview --port 9166"
+  },
+  "dependencies": {
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "react-router-dom": "^6.22.3",
+    "axios": "^1.6.7",
+    "recharts": "^2.12.2",
+    "zustand": "^4.5.1"
+  },
+  "devDependencies": {
+    "@types/react": "^18.2.58",
+    "@types/react-dom": "^18.2.19",
+    "@vitejs/plugin-react": "^4.2.1",
+    "typescript": "^5.3.3",
+    "vite": "^5.1.4"
+  }
+}
