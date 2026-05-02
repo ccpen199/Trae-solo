@@ -1,0 +1,410 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id        String   @id @default(uuid())
+  username  String   @unique
+  password  String
+  realName  String?
+  email     String?
+  role      String   @default("CASHIER")
+  department String?
+  isActive  Boolean  @default(true)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  approvalFlows   ApprovalFlow[]
+  auditLogs       AuditLog[]
+  paymentRequests PaymentRequest[]
+  reconciliations Reconciliation[]
+
+  @@map("users")
+}
+
+model BankAccount {
+  id              String   @id @default(uuid())
+  accountNumber   String   @unique
+  accountName     String
+  bankName        String
+  bankCode        String?
+  accountType     String   @default("GENERAL")
+  currency        String   @default("CNY")
+  status          String   @default("ACTIVE")
+  initialBalance  Decimal  @default(0)
+  currentBalance  Decimal  @default(0)
+  availableBalance Decimal @default(0)
+  lastSyncTime    DateTime?
+  createdBy       String
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+
+  transactions    Transaction[]
+  balanceHistory  BalanceHistory[]
+  paymentRequests PaymentRequest[]
+  bankReceipts    BankReceipt[]
+  reconciliations Reconciliation[]
+  cashForecasts   CashForecast[]
+
+  @@map("bank_accounts")
+}
+
+model BalanceHistory {
+  id              String   @id @default(uuid())
+  bankAccountId   String
+  balance         Decimal
+  availableBalance Decimal
+  recordTime      DateTime
+  source          String   @default("BANK_SYNC")
+  syncStatus      String?
+
+  bankAccount     BankAccount @relation(fields: [bankAccountId], references: [id])
+
+  @@map("balance_history")
+}
+
+model Transaction {
+  id              String   @id @default(uuid())
+  bankAccountId   String
+  transactionDate DateTime
+  transactionRef  String?
+  counterParty    String?
+  counterPartyAccount String?
+  amount          Decimal
+  balanceAfter    Decimal?
+  transactionType String   @default("CREDIT")
+  purpose         String?
+  remark          String?
+  bankReference   String?
+  isReconciled    Boolean  @default(false)
+  reconciledAt    DateTime?
+  createdAt       DateTime @default(now())
+
+  bankAccount         BankAccount          @relation(fields: [bankAccountId], references: [id])
+  reconciliationItems ReconciliationItem[]
+  exceptionReports    ExceptionReport[]
+  paymentRequestId    String?
+
+  @@map("transactions")
+}
+
+model ErpDocument {
+  id              String   @id @default(uuid())
+  erpNumber       String?
+  documentNumber  String   @unique
+  documentType    String   @default("INVOICE")
+  bankAccountId   String?
+  amount          Decimal
+  currency        String   @default("CNY")
+  counterParty    String?
+  counterPartyAccount String?
+  documentDate    DateTime @default(now())
+  businessDate    DateTime @default(now())
+  department      String?
+  reconcileStatus String   @default("PENDING")
+  isReconciled    Boolean  @default(false)
+  reconciledAt    DateTime?
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+
+  writeOffRecords     WriteOffRecord[]
+  reconciliationItems ReconciliationItem[]
+
+  @@map("erp_documents")
+}
+
+model PaymentRequest {
+  id                String   @id @default(uuid())
+  requestNumber     String?
+  requesterId       String
+  bankAccountId     String?
+  payeeName         String
+  payeeAccount      String
+  payeeBank         String
+  payeeBankAccount  String?
+  amount            Decimal
+  currency          String   @default("CNY")
+  paymentPurpose    String?
+  purpose           String   @default("")
+  remark            String?
+  notes             String?
+  status            String   @default("DRAFT")
+  requiredLevel     Int      @default(1)
+  approvalLevel     Int      @default(1)
+  maxApprovalLevel  Int      @default(1)
+  currentApprovalLevel Int?
+  currentApprover   String?
+  certificateVerified Boolean @default(false)
+  paymentTime       DateTime?
+  bankTransactionRef String?
+  transactionRef    String?
+  isWrittenOff      Boolean  @default(false)
+  writtenOffAt      DateTime?
+  submittedAt       DateTime?
+  completedAt       DateTime?
+  errorMessage      String?
+  rejectReason      String?
+  createdAt         DateTime @default(now())
+  updatedAt         DateTime @updatedAt
+
+  requester     User           @relation(fields: [requesterId], references: [id])
+  bankAccount   BankAccount?   @relation(fields: [bankAccountId], references: [id])
+  approvalFlows ApprovalFlow[]
+  bankReceipt   BankReceipt?
+
+  @@map("payment_requests")
+}
+
+model ApprovalFlow {
+  id              String   @id @default(uuid())
+  paymentRequestId String
+  approverId      String?
+  level           Int      @default(1)
+  status          String   @default("PENDING")
+  comment         String?
+  remark          String?
+  approvedAt      DateTime?
+  createdAt       DateTime @default(now())
+
+  paymentRequest PaymentRequest @relation(fields: [paymentRequestId], references: [id])
+  approver       User?          @relation(fields: [approverId], references: [id])
+
+  @@map("approval_flows")
+}
+
+model Reconciliation {
+  id              String   @id @default(uuid())
+  reconDate       DateTime
+  bankAccountId   String?
+  reconNumber     String?
+  status          String   @default("PENDING")
+  periodStart     DateTime?
+  periodEnd       DateTime?
+  totalTransactions Int    @default(0)
+  totalErpRecords Int    @default(0)
+  matchedCount    Int      @default(0)
+  unmatchedCount  Int      @default(0)
+  exceptionCount  Int      @default(0)
+  startedAt       DateTime @default(now())
+  completedAt     DateTime?
+  initiatedBy     String?
+  createdAt       DateTime @default(now())
+
+  initiator        User?               @relation(fields: [initiatedBy], references: [id])
+  bankAccount      BankAccount?        @relation(fields: [bankAccountId], references: [id])
+  items            ReconciliationItem[]
+  exceptionReports ExceptionReport[]
+
+  @@map("reconciliations")
+}
+
+model ReconciliationItem {
+  id              String   @id @default(uuid())
+  reconciliationId String
+  itemType        String   @default("UNMATCHED")
+  transactionId   String?
+  erpDocumentId   String?
+  source          String?
+  matchRule       String?
+  matchScore      Float?
+  matchedAmount   Decimal?
+  tolerance       Decimal?
+  difference      Decimal?
+  status          String   @default("PENDING")
+  exceptionReportId String?
+  description     String?
+  createdAt       DateTime @default(now())
+
+  reconciliation Reconciliation @relation(fields: [reconciliationId], references: [id])
+  transaction    Transaction?   @relation(fields: [transactionId], references: [id])
+  erpDocument    ErpDocument?   @relation(fields: [erpDocumentId], references: [id])
+
+  @@map("reconciliation_items")
+}
+
+model ExceptionReport {
+  id              String   @id @default(uuid())
+  reconciliationId String?
+  transactionId   String?
+  reportNumber    String?
+  exceptionType   String?
+  severity        String   @default("MEDIUM")
+  status          String   @default("GENERATED")
+  totalExceptions Int      @default(0)
+  resolvedCount   Int      @default(0)
+  pendingCount    Int      @default(0)
+  description     String?
+  resolution      String?
+  remark          String?
+  generatedAt     DateTime @default(now())
+  resolvedAt      DateTime?
+  resolvedBy      String?
+  assignedTo      String?
+  createdAt       DateTime @default(now())
+
+  reconciliation Reconciliation? @relation(fields: [reconciliationId], references: [id])
+  transaction    Transaction?   @relation(fields: [transactionId], references: [id])
+
+  @@map("exception_reports")
+}
+
+model WriteOffRecord {
+  id              String   @id @default(uuid())
+  erpDocumentId   String
+  transactionId   String?
+  paymentRequestId String?
+  amount          Decimal
+  writtenOffBy    String
+  writtenOffAt    DateTime @default(now())
+  remark          String?
+
+  erpDocument ErpDocument @relation(fields: [erpDocumentId], references: [id])
+
+  @@map("write_off_records")
+}
+
+model BankReceipt {
+  id              String   @id @default(uuid())
+  receiptNumber   String?
+  paymentRequestId String?  @unique
+  bankAccountId   String?
+  transactionType String   @default("DEBIT")
+  amount          Decimal
+  currency        String   @default("CNY")
+  transactionRef  String?
+  bankReference   String?
+  receiptTime     DateTime?
+  receiptData     String?
+  counterParty    String?
+  counterPartyAccount String?
+  status          String   @default("VALID")
+  createdAt       DateTime @default(now())
+
+  bankAccount    BankAccount?    @relation(fields: [bankAccountId], references: [id])
+  paymentRequest PaymentRequest? @relation(fields: [paymentRequestId], references: [id])
+
+  @@map("bank_receipts")
+}
+
+model AuditLog {
+  id              String   @id @default(uuid())
+  userId          String
+  action          String   @default("VIEW")
+  module          String   @default("SYSTEM")
+  actionType      String?
+  targetType      String
+  targetId        String?
+  description     String?
+  oldValue        String?
+  newValue        String?
+  ipAddress       String?
+  userAgent       String?
+  requestId       String?
+  riskLevel       String   @default("LOW")
+  status          String   @default("SUCCESS")
+  errorMessage    String?
+  createdAt       DateTime @default(now())
+
+  user User @relation(fields: [userId], references: [id])
+
+  @@map("audit_logs")
+}
+
+model CashForecast {
+  id              String   @id @default(uuid())
+  bankAccountId   String?
+  forecastNumber  String?
+  forecastDate    DateTime
+  periodType      String   @default("DAILY")
+  periodCount     Int      @default(30)
+  startDate       DateTime?
+  endDate         DateTime?
+  forecastDays    Int      @default(30)
+  startingBalance Decimal  @default(0)
+  projectedEndingBalance Decimal @default(0)
+  totalProjectedInflow Decimal @default(0)
+  totalProjectedOutflow Decimal @default(0)
+  netChange       Decimal  @default(0)
+  source          String   @default("SYSTEM")
+  status          String   @default("GENERATED")
+  generatedAt     DateTime @default(now())
+  generatedBy     String?
+  createdAt       DateTime @default(now())
+
+  bankAccount BankAccount?       @relation(fields: [bankAccountId], references: [id])
+  items       CashForecastItem[]
+  report      ForecastReport?
+
+  @@map("cash_forecasts")
+}
+
+model CashForecastItem {
+  id              String   @id @default(uuid())
+  forecastId      String
+  forecastDate    DateTime
+  openingBalance  Decimal   @default(0)
+  projectedInflow Decimal   @default(0)
+  projectedOutflow Decimal  @default(0)
+  inflowAmount    Decimal   @default(0)
+  outflowAmount   Decimal   @default(0)
+  netAmount       Decimal   @default(0)
+  closingBalance  Decimal   @default(0)
+  confidenceLevel Float?
+  dataPoints      Int?
+  patternIds      String?
+  source          String   @default("HISTORICAL")
+  remark          String?
+  createdAt       DateTime @default(now())
+
+  forecast CashForecast @relation(fields: [forecastId], references: [id])
+
+  @@map("cash_forecast_items")
+}
+
+model ForecastReport {
+  id              String   @id @default(uuid())
+  forecastId      String  @unique
+  reportNumber    String?
+  department      String?
+  interestExpense Decimal? @default(0)
+  bankFee         Decimal? @default(0)
+  allocationRule  String?
+  generatedAt     DateTime @default(now())
+
+  forecast CashForecast @relation(fields: [forecastId], references: [id])
+
+  @@map("forecast_reports")
+}
+
+model SecurityCertificate {
+  id              String   @id @default(uuid())
+  name            String
+  type            String   @default("BANK_UKEY")
+  serialNumber    String?
+  issuer          String?
+  validFrom       DateTime
+  validTo         DateTime
+  status          String   @default("ACTIVE")
+  isVerified      Boolean  @default(false)
+  verifiedAt      DateTime?
+  createdAt       DateTime @default(now())
+
+  @@map("security_certificates")
+}
+
+model CashPositionSnapshot {
+  id              String   @id @default(uuid())
+  snapshotTime    DateTime @unique
+  totalBalance    Decimal
+  totalAvailable  Decimal
+  accountCount    Int
+  currency        String   @default("CNY")
+  createdAt       DateTime @default(now())
+
+  @@map("cash_position_snapshots")
+}
