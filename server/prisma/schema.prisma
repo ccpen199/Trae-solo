@@ -1,0 +1,337 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id           String   @id @default(uuid())
+  username     String   @unique
+  password     String
+  name         String
+  phone        String?
+  email        String?  @unique
+  role         String   @default("TOURIST")
+  avatar       String?
+  isActive     Boolean  @default(true)
+  agencyId     String?
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  agency       Agency?       @relation(fields: [agencyId], references: [id])
+  createdTours Tour[]        @relation("TourCreator")
+  orders       Order[]
+  guideTasks   TourGroup[]   @relation("GuideTasks")
+  salesGroups  TourGroup[]   @relation("SalesGroups")
+  reports      TripReport[]
+  auditLogs    AuditLog[]
+
+  @@index([username])
+  @@index([role])
+  @@index([email])
+}
+
+model Agency {
+  id          String   @id @default(uuid())
+  name        String
+  code        String   @unique
+  contact     String?
+  phone       String?
+  address     String?
+  isActive    Boolean  @default(true)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  users       User[]
+  tours       Tour[]
+  settlements Settlement[]
+}
+
+model Tour {
+  id                String   @id @default(uuid())
+  code              String   @unique
+  name              String
+  description       String?
+  destination       String
+  days              Int
+  nights            Int
+  routeDetails      String?
+  includeItems      String?
+  excludeItems      String?
+  notes             String?
+  status            String   @default("DRAFT")
+  category          String?
+  image             String?
+  basePrice         Decimal
+  childPrice        Decimal
+  minGroupSize      Int      @default(10)
+  maxGroupSize      Int      @default(50)
+  creatorId         String
+  agencyId          String?
+  createdAt         DateTime @default(now())
+  updatedAt         DateTime @updatedAt
+  isArchived        Boolean  @default(false)
+
+  creator           User            @relation("TourCreator", fields: [creatorId], references: [id])
+  agency            Agency?         @relation(fields: [agencyId], references: [id])
+  groups            TourGroup[]
+  formTemplate      FormTemplate?
+  settlements       Settlement[]
+
+  @@index([status])
+  @@index([destination])
+}
+
+model TourGroup {
+  id              String   @id @default(uuid())
+  tourId          String
+  code            String   @unique
+  startDate       DateTime
+  endDate         DateTime
+  price           Decimal
+  childPrice      Decimal
+  totalStock      Int
+  soldStock       Int      @default(0)
+  minGroupSize    Int
+  maxGroupSize    Int
+  status          String   @default("DRAFT")
+  guideId         String?
+  salesId         String?
+  departurePoint  String?
+  returnPoint     String?
+  meetingTime     String?
+  notes           String?
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+  isArchived      Boolean  @default(false)
+
+  tour            Tour            @relation(fields: [tourId], references: [id])
+  guide           User?           @relation("GuideTasks", fields: [guideId], references: [id])
+  sales           User?           @relation("SalesGroups", fields: [salesId], references: [id])
+  orders          Order[]
+  itineraryDays   ItineraryDay[]
+  reports         TripReport[]
+  settlement      Settlement?
+
+  @@index([tourId])
+  @@index([status])
+  @@index([startDate])
+}
+
+model ItineraryDay {
+  id          String   @id @default(uuid())
+  groupId     String
+  dayNumber   Int
+  title       String
+  description String?
+  breakfast   String?
+  lunch       String?
+  dinner      String?
+  hotel       String?
+  transport   String?
+  attractions String?
+  notes       String?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  group       TourGroup @relation(fields: [groupId], references: [id])
+
+  @@unique([groupId, dayNumber])
+}
+
+model Order {
+  id              String   @id @default(uuid())
+  orderNo         String   @unique
+  groupId         String
+  touristId       String
+  contactName     String
+  contactPhone    String
+  totalAmount     Decimal
+  paidAmount      Decimal  @default(0)
+  status          String   @default("DRAFT")
+  paymentMethod   String?
+  paymentTime     DateTime?
+  adultCount      Int      @default(1)
+  childCount      Int      @default(0)
+  specialRequests String?
+  isArchived      Boolean  @default(false)
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+
+  group           TourGroup   @relation(fields: [groupId], references: [id])
+  tourist         User        @relation(fields: [touristId], references: [id])
+  passengers      Passenger[]
+  contracts       Contract[]
+  payments        Payment[]
+  insurance       Insurance[]
+
+  @@index([orderNo])
+  @@index([status])
+  @@index([touristId])
+}
+
+model Passenger {
+  id              String   @id @default(uuid())
+  orderId         String
+  name            String
+  idType          String   @default("ID")
+  idNumber        String
+  phone           String?
+  isChild         Boolean  @default(false)
+  birthDate       DateTime?
+  gender          String?
+  specialNeeds    String?
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+
+  order           Order    @relation(fields: [orderId], references: [id])
+
+  @@index([idNumber])
+}
+
+model FormTemplate {
+  id           String   @id @default(uuid())
+  tourId       String   @unique
+  name         String
+  fields       String
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  tour         Tour     @relation(fields: [tourId], references: [id])
+}
+
+model Contract {
+  id           String   @id @default(uuid())
+  orderId      String
+  contractNo   String   @unique
+  version      String
+  content      String
+  signedAt     DateTime?
+  signedBy     String?
+  filePath     String?
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  order        Order    @relation(fields: [orderId], references: [id])
+}
+
+model Insurance {
+  id           String   @id @default(uuid())
+  orderId      String
+  insuranceNo  String   @unique
+  company      String
+  policyType   String
+  coverage     Decimal
+  premium      Decimal
+  startDate    DateTime
+  endDate      DateTime
+  status       String   @default("ACTIVE")
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  order        Order    @relation(fields: [orderId], references: [id])
+}
+
+model Payment {
+  id           String   @id @default(uuid())
+  orderId      String
+  paymentNo    String   @unique
+  amount       Decimal
+  method       String
+  status       String   @default("PENDING")
+  transactionId String?
+  paidAt       DateTime?
+  notes        String?
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  order        Order    @relation(fields: [orderId], references: [id])
+}
+
+model TripReport {
+  id            String   @id @default(uuid())
+  groupId       String
+  reporterId    String
+  reportDate    DateTime
+  dayNumber     Int      @default(1)
+  title         String
+  content       String
+  weather       String?
+  issues        String?
+  touristStatus String?
+  attachments   String?
+  isArchived    Boolean  @default(false)
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+
+  group         TourGroup @relation(fields: [groupId], references: [id])
+  reporter      User      @relation(fields: [reporterId], references: [id])
+
+  @@index([groupId])
+}
+
+model Settlement {
+  id              String   @id @default(uuid())
+  settlementNo    String   @unique
+  groupId         String   @unique
+  tourId          String?
+  agencyId        String?
+  totalRevenue    Decimal
+  totalCost       Decimal
+  commission      Decimal
+  profit          Decimal
+  touristCount    Int
+  status          String   @default("PENDING")
+  completedAt     DateTime?
+  notes           String?
+  isArchived      Boolean  @default(false)
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+
+  group           TourGroup        @relation(fields: [groupId], references: [id])
+  tour            Tour?            @relation(fields: [tourId], references: [id])
+  agency          Agency?          @relation(fields: [agencyId], references: [id])
+  costItems       SettlementCost[]
+
+  @@index([status])
+}
+
+model SettlementCost {
+  id           String  @id @default(uuid())
+  settlementId String
+  category     String
+  description  String
+  amount       Decimal
+  payee        String?
+  invoiceNo    String?
+  notes        String?
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  settlement   Settlement @relation(fields: [settlementId], references: [id])
+}
+
+model AuditLog {
+  id              String   @id @default(uuid())
+  userId          String
+  action          String
+  entityType      String
+  entityId        String
+  entityName      String?
+  oldValue        String?
+  newValue        String?
+  changes         String?
+  ipAddress       String?
+  userAgent       String?
+  createdAt       DateTime @default(now())
+
+  user            User     @relation(fields: [userId], references: [id])
+
+  @@index([entityType, entityId])
+  @@index([userId])
+  @@index([action])
+  @@index([createdAt])
+}
