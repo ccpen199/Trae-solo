@@ -1,0 +1,27 @@
+{
+  "name": "campus-edu-management-system",
+  "version": "1.0.0",
+  "description": "校园教务管理系统 - 完整的学籍建档、选课排课、上课考勤、成绩录入、档案归档业务闭环",
+  "main": "backend/src/index.js",
+  "scripts": {
+    "dev": "concurrently \"npm run dev:backend\" \"npm run dev:frontend\"",
+    "dev:backend": "cd backend && npm run dev",
+    "dev:frontend": "cd frontend && npm run dev",
+    "install:all": "cd backend && npm install && cd ../frontend && npm install",
+    "start": "npm run dev",
+    "start:backend": "cd backend && npm start",
+    "build:frontend": "cd frontend && npm run build"
+  },
+  "keywords": [
+    "education",
+    "campus",
+    "management",
+    "school",
+    "教务系统"
+  ],
+  "author": "",
+  "license": "MIT",
+  "devDependencies": {
+    "concurrently": "^8.2.2"
+  }
+}
