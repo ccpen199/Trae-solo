@@ -1,0 +1,294 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial,
+    'Noto Sans', sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol',
+    'Noto Color Emoji';
+  background-color: #f5f7fa;
+  min-height: 100vh;
+}
+
+#root {
+  min-height: 100vh;
+}
+
+.ant-layout {
+  min-height: 100vh;
+}
+
+.ant-layout-header {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  padding: 0 24px;
+  display: flex;
+  align-items: center;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+}
+
+.header-title {
+  color: white;
+  font-size: 20px;
+  font-weight: 600;
+  margin-left: 12px;
+}
+
+.header-user {
+  color: white;
+  margin-right: 16px;
+}
+
+.login-container {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+}
+
+.login-card {
+  width: 400px;
+  border-radius: 12px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+}
+
+.login-title {
+  text-align: center;
+  margin-bottom: 32px;
+}
+
+.login-title h1 {
+  color: #333;
+  margin-bottom: 8px;
+}
+
+.login-title p {
+  color: #666;
+  margin: 0;
+}
+
+.status-tag {
+  font-size: 12px;
+  padding: 4px 12px;
+  border-radius: 4px;
+}
+
+.status-draft {
+  background-color: #e6f7ff;
+  color: #1890ff;
+}
+
+.status-pending {
+  background-color: #fff7e6;
+  color: #fa8c16;
+}
+
+.status-signed {
+  background-color: #f6ffed;
+  color: #52c41a;
+}
+
+.status-completed {
+  background-color: #f6ffed;
+  color: #52c41a;
+}
+
+.status-rejected {
+  background-color: #fff2f0;
+  color: #ff4d4f;
+}
+
+.page-header {
+  background: white;
+  padding: 16px 24px;
+  margin-bottom: 24px;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+}
+
+.page-title {
+  font-size: 20px;
+  font-weight: 600;
+  color: #333;
+  margin: 0;
+}
+
+.card-container {
+  background: white;
+  border-radius: 8px;
+  padding: 24px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+}
+
+.stats-card {
+  text-align: center;
+  padding: 24px;
+  border-radius: 8px;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+}
+
+.stats-card .number {
+  font-size: 36px;
+  font-weight: 700;
+  margin-bottom: 8px;
+}
+
+.stats-card .label {
+  font-size: 14px;
+  opacity: 0.9;
+}
+
+.timeline-item {
+  padding: 16px;
+  background: #fafafa;
+  border-radius: 8px;
+  margin-bottom: 12px;
+}
+
+.timeline-item .action {
+  font-weight: 600;
+  color: #333;
+  margin-bottom: 4px;
+}
+
+.timeline-item .operator {
+  font-size: 13px;
+  color: #666;
+}
+
+.timeline-item .time {
+  font-size: 12px;
+  color: #999;
+  margin-top: 4px;
+}
+
+.hash-display {
+  font-family: 'SF Mono', 'Monaco', 'Inconsolata', 'Fira Code', monospace;
+  font-size: 12px;
+  background: #f5f5f5;
+  padding: 8px 12px;
+  border-radius: 4px;
+  word-break: break-all;
+  color: #333;
+}
+
+.signature-area {
+  border: 2px dashed #d9d9d9;
+  border-radius: 8px;
+  padding: 32px;
+  text-align: center;
+  background: #fafafa;
+  cursor: pointer;
+  transition: all 0.3s;
+}
+
+.signature-area:hover {
+  border-color: #1890ff;
+  background: #e6f7ff;
+}
+
+.signature-area.disabled {
+  cursor: not-allowed;
+  opacity: 0.6;
+}
+
+.upload-area {
+  border: 2px dashed #d9d9d9;
+  border-radius: 8px;
+  padding: 40px;
+  text-align: center;
+  cursor: pointer;
+  transition: all 0.3s;
+}
+
+.upload-area:hover {
+  border-color: #1890ff;
+  background: #e6f7ff;
+}
+
+.upload-area.drag-over {
+  border-color: #1890ff;
+  background: #e6f7ff;
+}
+
+.evidence-block {
+  background: #fafafa;
+  border-radius: 8px;
+  padding: 16px;
+  margin-bottom: 12px;
+  border-left: 4px solid #667eea;
+}
+
+.evidence-block .operation {
+  font-weight: 600;
+  color: #333;
+}
+
+.evidence-block .hash {
+  font-size: 11px;
+  font-family: monospace;
+  color: #666;
+  margin-top: 8px;
+}
+
+.seal-card {
+  border: 1px solid #d9d9d9;
+  border-radius: 8px;
+  padding: 16px;
+  text-align: center;
+  cursor: pointer;
+  transition: all 0.3s;
+}
+
+.seal-card:hover {
+  border-color: #1890ff;
+  box-shadow: 0 2px 8px rgba(24, 144, 255, 0.2);
+}
+
+.seal-card.selected {
+  border-color: #1890ff;
+  box-shadow: 0 2px 8px rgba(24, 144, 255, 0.35);
+  background: #e6f7ff;
+}
+
+.seal-image {
+  width: 100px;
+  height: 100px;
+  margin: 0 auto 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.progress-steps {
+  margin-bottom: 32px;
+}
+
+.contract-detail-section {
+  margin-bottom: 24px;
+}
+
+.contract-detail-section .section-title {
+  font-size: 16px;
+  font-weight: 600;
+  color: #333;
+  margin-bottom: 16px;
+  padding-bottom: 8px;
+  border-bottom: 1px solid #f0f0f0;
+}
+
+.sider-menu {
+  height: 100%;
+  border-right: 0;
+}
+
+.sider-menu .ant-menu-item-selected {
+  background-color: #667eea !important;
+}
+
+.sider-menu .ant-menu-item:hover {
+  color: #667eea !important;
+}
