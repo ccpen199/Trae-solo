@@ -1,0 +1,19 @@
+{
+  "name": "game-match-backend",
+  "version": "1.0.0",
+  "description": "游戏匹配对战系统后端",
+  "main": "src/index.js",
+  "type": "module",
+  "scripts": {
+    "start": "node src/index.js",
+    "dev": "node src/index.js"
+  },
+  "dependencies": {
+    "express": "^4.18.2",
+    "better-sqlite3": "^11.0.0",
+    "cors": "^2.8.5",
+    "dotenv": "^16.3.1",
+    "uuid": "^9.0.0",
+    "express-validator": "^7.0.1"
+  }
+}
