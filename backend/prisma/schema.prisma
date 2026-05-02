@@ -1,0 +1,280 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = "file:./dev.db"
+}
+
+model User {
+  id            String   @id @default(uuid())
+  username      String   @unique
+  password      String
+  name          String
+  role          String
+  phone         String?
+  email         String?
+  isActive      Boolean  @default(true)
+  lastLoginAt   DateTime?
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+
+  purchases         Purchase[]       @relation("PurchaseUser")
+  inventoryAudits   InventoryAudit[]
+  prescriptionReviews Prescription[] @relation("ReviewPharmacist")
+  sales             Sale[]           @relation("SaleCashier")
+  createdNotifications Notification[]
+}
+
+model Supplier {
+  id             String   @id @default(uuid())
+  name           String
+  code           String   @unique
+  contactPerson  String?
+  phone          String?
+  address        String?
+  licenseNumber  String?
+  licenseExpiry  DateTime?
+  isQualified    Boolean  @default(true)
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+
+  purchases Purchase[]
+}
+
+model Drug {
+  id              String   @id @default(uuid())
+  name            String
+  code            String   @unique
+  genericName     String?
+  manufacturer    String?
+  specification   String?
+  unit            String?
+  isPrescription  Boolean  @default(false)
+  category        String?
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+
+  purchaseItems   PurchaseItem[]
+  inventoryBatches InventoryBatch[]
+  saleItems       SaleItem[]
+}
+
+model Purchase {
+  id              String   @id @default(uuid())
+  purchaseNo      String   @unique
+  supplierId      String
+  status          String   @default("DRAFT")
+  totalAmount     Float    @default(0)
+  requestedById   String
+  approvedById    String?
+  approvedAt      DateTime?
+  receivedAt      DateTime?
+  inspectedAt     DateTime?
+  completedAt     DateTime?
+  remark          String?
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+
+  supplier        Supplier       @relation(fields: [supplierId], references: [id])
+  requestedBy     User           @relation("PurchaseUser", fields: [requestedById], references: [id])
+  items           PurchaseItem[]
+}
+
+model PurchaseItem {
+  id              String   @id @default(uuid())
+  purchaseId      String
+  drugId          String
+  quantity        Int
+  unitPrice       Float
+  batchNo         String?
+  expiryDate      DateTime?
+  receivedQty     Int      @default(0)
+  inspectionStatus String?
+  purchase        Purchase @relation(fields: [purchaseId], references: [id])
+  drug            Drug     @relation(fields: [drugId], references: [id])
+
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+}
+
+model InventoryBatch {
+  id              String  @id @default(uuid())
+  drugId          String
+  batchNo         String
+  expiryDate      DateTime
+  totalQuantity   Int
+  availableQty    Int
+  lockedQty       Int     @default(0)
+  unitCost        Float
+  status          String  @default("IN_STOCK")
+  purchaseItemId  String?
+  location        String?
+  lastCountedAt   DateTime?
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+
+  drug            Drug            @relation(fields: [drugId], references: [id])
+  expiryAlerts    ExpiryAlert[]
+  saleItems       SaleItem[]
+  inventoryAudits InventoryAudit[]
+  recallItems     RecallItem[]
+}
+
+model ExpiryAlert {
+  id              String   @id @default(uuid())
+  inventoryBatchId String
+  alertLevel      Int
+  message         String
+  isRead          Boolean  @default(false)
+  triggeredAt     DateTime @default(now())
+  resolvedAt      DateTime?
+
+  inventoryBatch  InventoryBatch @relation(fields: [inventoryBatchId], references: [id])
+}
+
+model Prescription {
+  id              String  @id @default(uuid())
+  prescriptionNo  String  @unique
+  patientName     String
+  patientIdNo     String?
+  patientPhone    String?
+  drugNames       String
+  uploadedImage   String?
+  extractedData   String?
+  status          String  @default("UPLOADED")
+  uploadedById    String?
+  reviewedById    String?
+  reviewedAt      DateTime?
+  reviewComment   String?
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+
+  reviewedBy      User?   @relation("ReviewPharmacist", fields: [reviewedById], references: [id])
+  sales           Sale[]
+}
+
+model Sale {
+  id              String  @id @default(uuid())
+  saleNo          String  @unique
+  status          String  @default("DRAFT")
+  totalAmount     Float   @default(0)
+  paidAmount      Float   @default(0)
+  patientName     String?
+  patientPhone    String?
+  prescriptionId  String?
+  cashierId       String
+  paidAt          DateTime?
+  completedAt     DateTime?
+  invoiceNo       String?
+  medicationGuide String?
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+
+  cashier         User        @relation("SaleCashier", fields: [cashierId], references: [id])
+  prescription    Prescription? @relation(fields: [prescriptionId], references: [id])
+  items           SaleItem[]
+}
+
+model SaleItem {
+  id              String  @id @default(uuid())
+  saleId          String
+  drugId          String
+  inventoryBatchId String
+  quantity        Int
+  unitPrice       Float
+  subtotal        Float
+  batchNo         String
+  expiryDate      DateTime
+
+  sale            Sale           @relation(fields: [saleId], references: [id])
+  drug            Drug           @relation(fields: [drugId], references: [id])
+  inventoryBatch  InventoryBatch @relation(fields: [inventoryBatchId], references: [id])
+}
+
+model InventoryAudit {
+  id              String   @id @default(uuid())
+  auditNo         String   @unique
+  inventoryBatchId String
+  type            String
+  beforeQty       Int
+  afterQty        Int
+  changeQty       Int
+  reason          String?
+  relatedBizNo    String?
+  operatorId      String
+  createdAt       DateTime @default(now())
+
+  inventoryBatch  InventoryBatch @relation(fields: [inventoryBatchId], references: [id])
+  operator        User           @relation(fields: [operatorId], references: [id])
+}
+
+model DrugRecall {
+  id              String   @id @default(uuid())
+  recallNo        String   @unique
+  batchNo         String
+  reason          String
+  isUrgent        Boolean  @default(false)
+  status          String   @default("INITIATED")
+  initiatedById   String
+  initiatedAt     DateTime @default(now())
+  completedAt     DateTime?
+
+  items           RecallItem[]
+  notifications   Notification[]
+}
+
+model RecallItem {
+  id              String  @id @default(uuid())
+  recallId        String
+  inventoryBatchId String
+  saleItemId      String?
+  patientName     String?
+  patientPhone    String?
+  status          String  @default("PENDING")
+  notifiedAt      DateTime?
+  recalledAt      DateTime?
+
+  recall          DrugRecall     @relation(fields: [recallId], references: [id])
+  inventoryBatch  InventoryBatch @relation(fields: [inventoryBatchId], references: [id])
+}
+
+model Notification {
+  id              String   @id @default(uuid())
+  type            String
+  title           String
+  content         String
+  targetRole      String?
+  targetUserId    String?
+  isRead          Boolean  @default(false)
+  relatedRecallId String?
+  createdById     String?
+  createdAt       DateTime @default(now())
+  readAt          DateTime?
+
+  relatedRecall   DrugRecall? @relation(fields: [relatedRecallId], references: [id])
+  createdBy       User?       @relation(fields: [createdById], references: [id])
+}
+
+model AuditLog {
+  id              String   @id @default(uuid())
+  action          String
+  tableName       String
+  recordId        String
+  oldValues       String?
+  newValues       String?
+  operatorId      String?
+  operatorName    String?
+  remark          String?
+  createdAt       DateTime @default(now())
+}
+
+model SystemConfig {
+  id              String   @id @default(uuid())
+  key             String   @unique
+  value           String
+  description     String?
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+}
