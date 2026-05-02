@@ -18,7 +18,7 @@ const server = http.createServer(app);
 const wss = new WebSocketServer({ server, path: '/ws' });
 
 app.use(cors({
-  origin: ['http://localhost:3000', 'http://localhost:3001'],
+  origin: ['http://localhost:3000', 'http://localhost:3001', 'http://localhost:3002', 'http://localhost:3003'],
   credentials: true,
 }));
 app.use(express.json());
@@ -379,10 +379,48 @@ app.post('/api/acoustic-data', (req, res) => {
   res.json(result);
 });
 
-const PORT = process.env.PORT || 3001;
+function findAvailablePort(startPort: number, maxAttempts: number = 10): number | null {
+  const net = require('net');
+  let foundPort: number | null = null;
+  
+  for (let port = startPort; port < startPort + maxAttempts; port++) {
+    const server = net.createServer();
+    
+    try {
+      server.listen(port, 'localhost');
+      server.close();
+      foundPort = port;
+      break;
+    } catch (error) {
+      // 端口被占用，继续尝试
+    }
+  }
+  
+  return foundPort;
+}
+
+const PORT = findAvailablePort(3001) || 3001;
 
 server.listen(PORT, () => {
-  console.log(`水产养殖监控系统后端服务已启动`);
+  console.log('水产养殖监控系统后端服务已启动');
   console.log(`HTTP 服务器: http://localhost:${PORT}`);
   console.log(`WebSocket 端点: ws://localhost:${PORT}/ws`);
+  
+  // 保存端口信息到文件，供前端参考
+  const fs = require('fs');
+  const path = require('path');
+  const portInfo = {
+    backendPort: PORT,
+    timestamp: new Date().toISOString()
+  };
+  
+  try {
+    fs.writeFileSync(
+      path.join(__dirname, '..', 'port-info.json'),
+      JSON.stringify(portInfo, null, 2)
+    );
+    console.log('端口信息已保存到 port-info.json');
+  } catch (error) {
+    console.warn('无法保存端口信息:', error.message);
+  }
 });

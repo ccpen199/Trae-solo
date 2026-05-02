@@ -25,6 +25,7 @@ class WebSocketService {
     if (url) {
       this.url = url;
     } else {
+      // 通过 Vite 代理连接，不需要知道后端具体端口
       const protocol = window.location.protocol === 'https:' ? 'wss:' : 'ws:';
       const host = window.location.host;
       this.url = `${protocol}//${host}/ws`;
