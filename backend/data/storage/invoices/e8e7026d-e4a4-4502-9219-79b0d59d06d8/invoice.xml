@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Invoice>
+  <BasicInfo>
+    <InvoiceCode>011073716407</InvoiceCode>
+    <InvoiceNo>INV7536170301</InvoiceNo>
+    <IssueDate>2026-04-30T08:02:50.303Z</IssueDate>
+    <CheckCode>MUXVBS9TO9HPRCEMWH84</CheckCode>
+    <MachineNo>00777</MachineNo>
+  </BasicInfo>
+  <TaxAuthority>国家税务总局</TaxAuthority>
+  <QRCode>https://inv-veri.chinatax.gov.cn/INV7536170301</QRCode>
+</Invoice>

@@ -1,0 +1,41 @@
+{
+  "title": "增值税电子专用发票",
+  "invoice_code": "011030439281",
+  "invoice_no": "INV7549282970",
+  "date": "2026-04-30T11:41:22.970Z",
+  "check_code": "QPXVAB3NGSHDYVQOV7YX",
+  "machine_no": "00003",
+  "purchaser": {
+    "name": "chen",
+    "tax_no": "12345678901234567",
+    "bank_account": "",
+    "bank_name": "招商银行",
+    "address": "",
+    "phone": ""
+  },
+  "seller": {
+    "name": "开票方企业有限公司",
+    "tax_no": "91110000MA001ABC12",
+    "bank_account": "11001234567890123456",
+    "bank_name": "中国建设银行北京分行",
+    "address": "北京市朝阳区建国路88号",
+    "phone": "010-12345678"
+  },
+  "items": [
+    {
+      "name": "哈喽项目",
+      "spec": "2x",
+      "unit": "件",
+      "quantity": 100,
+      "price": 22
+    }
+  ],
+  "amount": 1000,
+  "tax_amount": 130,
+  "total_amount": 1130,
+  "remarks": "",
+  "payee": "张三",
+  "reviewer": "李四",
+  "issuer": "开票系统",
+  "tax_authority": "国家税务总局"
+}

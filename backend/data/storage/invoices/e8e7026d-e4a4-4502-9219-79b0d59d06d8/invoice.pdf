@@ -1,0 +1,41 @@
+{
+  "title": "增值税电子专用发票",
+  "invoice_code": "011073716407",
+  "invoice_no": "INV7536170301",
+  "date": "2026-04-30T08:02:50.303Z",
+  "check_code": "MUXVBS9TO9HPRCEMWH84",
+  "machine_no": "00777",
+  "purchaser": {
+    "name": "张三客户有限公司",
+    "tax_no": "91110000MA00ABC12",
+    "bank_account": "11001234567890123456",
+    "bank_name": "中国建设银行北京分行",
+    "address": "北京市朝阳区建国路88号",
+    "phone": "010-12345678"
+  },
+  "seller": {
+    "name": "开票方企业有限公司",
+    "tax_no": "91110000MA001ABC12",
+    "bank_account": "11001234567890123456",
+    "bank_name": "中国建设银行北京分行",
+    "address": "北京市朝阳区建国路88号",
+    "phone": "010-12345678"
+  },
+  "items": [
+    {
+      "name": "技术服务费",
+      "spec": "标准",
+      "unit": "项",
+      "quantity": 1,
+      "price": 88888.88
+    }
+  ],
+  "amount": 88888.88,
+  "tax_amount": 11555.5544,
+  "total_amount": 100444.4344,
+  "remarks": "",
+  "payee": "张三",
+  "reviewer": "李四",
+  "issuer": "开票系统",
+  "tax_authority": "国家税务总局"
+}

@@ -1,0 +1,12 @@
+{
+  "doc_id": "a0867647-ca56-4d7d-bae2-0cf53c21d10b",
+  "invoice_id": "e8e7026d-e4a4-4502-9219-79b0d59d06d8",
+  "invoice_no": "INV7536170301",
+  "invoice_code": "011073716407",
+  "stored_at": "2026-04-30T08:02:50.307Z",
+  "files": {
+    "metadata": "/Users/chen/Documents/trae_projects/local_projects/xm-9175/backend/data/storage/invoices/e8e7026d-e4a4-4502-9219-79b0d59d06d8/metadata.json",
+    "pdf": "/Users/chen/Documents/trae_projects/local_projects/xm-9175/backend/data/storage/invoices/e8e7026d-e4a4-4502-9219-79b0d59d06d8/invoice.pdf",
+    "xml": "/Users/chen/Documents/trae_projects/local_projects/xm-9175/backend/data/storage/invoices/e8e7026d-e4a4-4502-9219-79b0d59d06d8/invoice.xml"
+  }
+}
