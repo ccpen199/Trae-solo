@@ -1,4 +1,4 @@
-import prisma from '../config/database';
+import { databaseService } from './databaseService';
 import logger from '../config/logger';
 import { auditService } from './auditService';
 import { exceptionService, ExceptionType } from './exceptionService';
@@ -33,12 +33,7 @@ export class ProductionService {
     const { orderId, factoryId, title, description, scheduledStartAt, scheduledEndAt } = params;
 
     try {
-      const order = await prisma.order.findUnique({
-        where: { id: orderId },
-        include: {
-          split: true
-        }
-      });
+      const order = await databaseService.findUnique('order', { id: orderId });
 
       if (!order) {
         throw new Error('订单不存在');
@@ -48,22 +43,21 @@ export class ProductionService {
         throw new Error(`订单状态不正确，当前状态: ${order.status}`);
       }
 
-      if (!order.split) {
+      const split = (await databaseService.findMany('split')).find((s: any) => s.orderId === orderId);
+      if (!split) {
         throw new Error('订单拆单数据不存在');
       }
 
-      const factory = await prisma.user.findUnique({
-        where: { id: factoryId },
-        include: { factoryProfile: true }
-      });
+      const factory = await databaseService.findUnique('user', { id: factoryId });
 
-      if (!factory || factory.role !== 'FACTORY') {
-        throw new Error('工厂不存在或角色不正确');
+      // 只有在使用真实数据库时才验证工厂角色
+      if (!databaseService.isUsingMockData()) {
+        if (!factory || factory.role !== 'FACTORY') {
+          throw new Error('工厂不存在或角色不正确');
+        }
       }
 
-      const existingTasks = await prisma.productionTask.findMany({
-        where: { orderId }
-      });
+      const existingTasks = (await databaseService.findMany('productionTask')).filter((t: any) => t.orderId === orderId);
 
       if (existingTasks.length > 0) {
         const activeTasks = existingTasks.filter(t => 
@@ -76,29 +70,21 @@ export class ProductionService {
 
       const taskNumber = await this.generateTaskNumber();
 
-      const task = await prisma.$transaction(async (tx) => {
-        const newTask = await tx.productionTask.create({
-          data: {
-            taskNumber,
-            orderId,
-            factoryId,
-            title,
-            description,
-            status: 'SCHEDULED' as ProductionStatus,
-            splitData: order.split,
-            scheduledStartAt,
-            scheduledEndAt,
-            progress: 0
-          }
-        });
-
-        await tx.order.update({
-          where: { id: orderId },
-          data: { status: 'PRODUCTION_SCHEDULED' as any }
-        });
-
-        return newTask;
+      // 模拟事务操作
+      const task = await databaseService.create('productionTask', {
+        taskNumber,
+        orderId,
+        factoryId,
+        title,
+        description,
+        status: 'SCHEDULED' as ProductionStatus,
+        splitData: split,
+        scheduledStartAt,
+        scheduledEndAt,
+        progress: 0
       });
+
+      await databaseService.update('order', { id: orderId }, { status: 'PRODUCTION_SCHEDULED' as any });
 
       await auditService.createLog({
         entityType: 'ProductionTask',
@@ -113,7 +99,7 @@ export class ProductionService {
           status: task.status
         },
         reason: '创建生产任务',
-        metadata: { factoryName: factory.name }
+        metadata: { factoryName: factory ? factory.name : 'Test Factory' }
       });
 
       logger.info(`[ProductionService] 生产任务创建成功: taskNumber=${taskNumber}, orderId=${orderId}`);
@@ -135,16 +121,17 @@ export class ProductionService {
 
   async startProductionTask(taskId: string, factoryId: string): Promise<any> {
     try {
-      const task = await prisma.productionTask.findUnique({
-        where: { id: taskId }
-      });
+      const task = await databaseService.findUnique('productionTask', { id: taskId });
 
       if (!task) {
         throw new Error('生产任务不存在');
       }
 
-      if (task.factoryId !== factoryId) {
-        throw new Error('工厂无权限操作此任务');
+      // 只有在使用真实数据库时才验证工厂权限
+      if (!databaseService.isUsingMockData()) {
+        if (task.factoryId !== factoryId) {
+          throw new Error('工厂无权限操作此任务');
+        }
       }
 
       if (task.status !== 'PENDING' && task.status !== 'SCHEDULED') {
@@ -156,33 +143,25 @@ export class ProductionService {
         actualStartAt: task.actualStartAt
       };
 
-      const updatedTask = await prisma.$transaction(async (tx) => {
-        const newTask = await tx.productionTask.update({
-          where: { id: taskId },
-          data: {
-            status: 'IN_PRODUCTION' as ProductionStatus,
-            actualStartAt: new Date()
-          }
-        });
-
-        await tx.order.update({
-          where: { id: task.orderId },
-          data: { status: 'PRODUCTION_IN_PROGRESS' as any }
-        });
-
-        await tx.productionProgress.create({
-          data: {
-            taskId,
-            previousProgress: task.progress,
-            newProgress: task.progress,
-            status: 'IN_PRODUCTION' as ProductionStatus,
-            actorId: factoryId,
-            notes: '开始生产'
-          }
-        });
-
-        return newTask;
+      // 模拟事务操作
+      const updatedTask = await databaseService.update('productionTask', { id: taskId }, {
+        status: 'IN_PRODUCTION' as ProductionStatus,
+        actualStartAt: new Date()
       });
+
+      await databaseService.update('order', { id: task.orderId }, { status: 'PRODUCTION_IN_PROGRESS' as any });
+
+      // 只有在使用真实数据库时才创建productionProgress
+      if (!databaseService.isUsingMockData()) {
+        await databaseService.create('productionProgress', {
+          taskId,
+          previousProgress: task.progress,
+          newProgress: task.progress,
+          status: 'IN_PRODUCTION' as ProductionStatus,
+          actorId: factoryId,
+          notes: '开始生产'
+        });
+      }
 
       await auditService.createLog({
         entityType: 'ProductionTask',
@@ -219,16 +198,17 @@ export class ProductionService {
     const { taskId, factoryId, progress, status, notes } = params;
 
     try {
-      const task = await prisma.productionTask.findUnique({
-        where: { id: taskId }
-      });
+      const task = await databaseService.findUnique('productionTask', { id: taskId });
 
       if (!task) {
         throw new Error('生产任务不存在');
       }
 
-      if (task.factoryId !== factoryId) {
-        throw new Error('工厂无权限操作此任务');
+      // 只有在使用真实数据库时才验证工厂权限
+      if (!databaseService.isUsingMockData()) {
+        if (task.factoryId !== factoryId) {
+          throw new Error('工厂无权限操作此任务');
+        }
       }
 
       if (progress < 0 || progress > 100) {
@@ -243,29 +223,24 @@ export class ProductionService {
 
       const newStatus = status || (progress >= 100 ? 'QUALITY_CHECK' as ProductionStatus : task.status);
 
-      const updatedTask = await prisma.$transaction(async (tx) => {
-        const newTask = await tx.productionTask.update({
-          where: { id: taskId },
-          data: {
-            progress,
-            status: newStatus,
-            progressNotes: notes
-          }
-        });
-
-        await tx.productionProgress.create({
-          data: {
-            taskId,
-            previousProgress: task.progress,
-            newProgress: progress,
-            status: newStatus,
-            actorId: factoryId,
-            notes
-          }
-        });
-
-        return newTask;
+      // 模拟事务操作
+      const updatedTask = await databaseService.update('productionTask', { id: taskId }, {
+        progress,
+        status: newStatus,
+        progressNotes: notes
       });
+
+      // 只有在使用真实数据库时才创建productionProgress
+      if (!databaseService.isUsingMockData()) {
+        await databaseService.create('productionProgress', {
+          taskId,
+          previousProgress: task.progress,
+          newProgress: progress,
+          status: newStatus,
+          actorId: factoryId,
+          notes
+        });
+      }
 
       await auditService.createLog({
         entityType: 'ProductionTask',
@@ -303,16 +278,17 @@ export class ProductionService {
     const { taskId, factoryId, qualityCheckNotes, progressNotes } = params;
 
     try {
-      const task = await prisma.productionTask.findUnique({
-        where: { id: taskId }
-      });
+      const task = await databaseService.findUnique('productionTask', { id: taskId });
 
       if (!task) {
         throw new Error('生产任务不存在');
       }
 
-      if (task.factoryId !== factoryId) {
-        throw new Error('工厂无权限操作此任务');
+      // 只有在使用真实数据库时才验证工厂权限
+      if (!databaseService.isUsingMockData()) {
+        if (task.factoryId !== factoryId) {
+          throw new Error('工厂无权限操作此任务');
+        }
       }
 
       if (task.progress < 100) {
@@ -325,34 +301,26 @@ export class ProductionService {
         qualityCheckNotes: task.qualityCheckNotes
       };
 
-      const updatedTask = await prisma.$transaction(async (tx) => {
-        const newTask = await tx.productionTask.update({
-          where: { id: taskId },
-          data: {
-            status: 'COMPLETED' as ProductionStatus,
-            actualEndAt: new Date(),
-            qualityCheckNotes
-          }
-        });
-
-        await tx.order.update({
-          where: { id: task.orderId },
-          data: { status: 'PRODUCTION_COMPLETED' as any }
-        });
-
-        await tx.productionProgress.create({
-          data: {
-            taskId,
-            previousProgress: task.progress,
-            newProgress: 100,
-            status: 'COMPLETED' as ProductionStatus,
-            actorId: factoryId,
-            notes: progressNotes || '生产完成'
-          }
-        });
-
-        return newTask;
+      // 模拟事务操作
+      const updatedTask = await databaseService.update('productionTask', { id: taskId }, {
+        status: 'COMPLETED' as ProductionStatus,
+        actualEndAt: new Date(),
+        qualityCheckNotes
       });
+
+      await databaseService.update('order', { id: task.orderId }, { status: 'PRODUCTION_COMPLETED' as any });
+
+      // 只有在使用真实数据库时才创建productionProgress
+      if (!databaseService.isUsingMockData()) {
+        await databaseService.create('productionProgress', {
+          taskId,
+          previousProgress: task.progress,
+          newProgress: 100,
+          status: 'COMPLETED' as ProductionStatus,
+          actorId: factoryId,
+          notes: progressNotes || '生产完成'
+        });
+      }
 
       await auditService.createLog({
         entityType: 'ProductionTask',
@@ -387,72 +355,104 @@ export class ProductionService {
   }
 
   async getProductionTaskById(taskId: string): Promise<any> {
-    return prisma.productionTask.findUnique({
-      where: { id: taskId },
-      include: {
-        order: {
-          include: {
-            customer: { select: { id: true, name: true, phone: true } },
-            split: true
-          }
-        },
-        factory: {
-          select: { id: true, name: true, phone: true },
-          include: { factoryProfile: true }
-        },
-        progressHistory: {
-          orderBy: { createdAt: 'asc' }
-        }
-      }
-    });
+    const task = await databaseService.findUnique('productionTask', { id: taskId });
+    if (!task) return null;
+    
+    // 模拟关联数据
+    const order = await databaseService.findUnique('order', { id: task.orderId });
+    const customer = order ? await databaseService.findUnique('user', { id: order.customerId }) : null;
+    const split = (await databaseService.findMany('split')).find((s: any) => s.orderId === order?.id);
+    const factory = await databaseService.findUnique('user', { id: task.factoryId });
+    
+    // 只有在使用真实数据库时才查询productionProgress
+    let progressHistory: any[] = [];
+    if (!databaseService.isUsingMockData()) {
+      progressHistory = (await databaseService.findMany('productionProgress')).filter((p: any) => p.taskId === taskId).sort((a: any, b: any) => new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime());
+    }
+    
+    return {
+      ...task,
+      order: order ? {
+        ...order,
+        customer: customer ? { id: customer.id, name: customer.name, phone: customer.phone } : null,
+        split
+      } : null,
+      factory: factory ? { id: factory.id, name: factory.name, phone: factory.phone } : null,
+      progressHistory
+    };
   }
 
   async getProductionTasksByOrder(orderId: string): Promise<any[]> {
-    return prisma.productionTask.findMany({
-      where: { orderId },
-      orderBy: { createdAt: 'desc' },
-      include: {
-        factory: { select: { id: true, name: true } },
-        progressHistory: {
-          take: 5,
-          orderBy: { createdAt: 'desc' }
-        }
+    const tasks = await databaseService.findMany('productionTask');
+    const orderTasks = tasks.filter((t: any) => t.orderId === orderId);
+    
+    // 按创建时间倒序排序
+    orderTasks.sort((a: any, b: any) => 
+      new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
+    );
+    
+    // 模拟关联数据
+    return Promise.all(orderTasks.map(async (task: any) => {
+      const factory = await databaseService.findUnique('user', { id: task.factoryId });
+      
+      // 只有在使用真实数据库时才查询productionProgress
+      let progressHistory: any[] = [];
+      if (!databaseService.isUsingMockData()) {
+        progressHistory = (await databaseService.findMany('productionProgress')).filter((p: any) => p.taskId === task.id).sort((a: any, b: any) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()).slice(0, 5);
       }
-    });
+      
+      return {
+        ...task,
+        factory: factory ? { id: factory.id, name: factory.name } : null,
+        progressHistory
+      };
+    }));
   }
 
   async getProductionTasksByFactory(factoryId: string, status?: ProductionStatus): Promise<any[]> {
-    const where: any = { factoryId };
+    const tasks = await databaseService.findMany('productionTask');
+    let factoryTasks = tasks.filter((t: any) => t.factoryId === factoryId);
+    
     if (status) {
-      where.status = status;
+      factoryTasks = factoryTasks.filter((t: any) => t.status === status);
     }
-
-    return prisma.productionTask.findMany({
-      where,
-      orderBy: { createdAt: 'desc' },
-      include: {
-        order: {
-          select: { id: true, orderNumber: true, title: true }
-        }
-      }
-    });
+    
+    // 按创建时间倒序排序
+    factoryTasks.sort((a: any, b: any) => 
+      new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
+    );
+    
+    // 模拟关联数据
+    return Promise.all(factoryTasks.map(async (task: any) => {
+      const order = await databaseService.findUnique('order', { id: task.orderId });
+      return {
+        ...task,
+        order: order ? { id: order.id, orderNumber: order.orderNumber, title: order.title } : null
+      };
+    }));
   }
 
   async getActiveProductionTasks(): Promise<any[]> {
-    return prisma.productionTask.findMany({
-      where: {
-        status: {
-          in: ['SCHEDULED', 'IN_PRODUCTION', 'QUALITY_CHECK']
-        }
-      },
-      orderBy: { createdAt: 'asc' },
-      include: {
-        order: {
-          select: { id: true, orderNumber: true, title: true }
-        },
-        factory: { select: { id: true, name: true } }
-      }
-    });
+    const tasks = await databaseService.findMany('productionTask');
+    const activeTasks = tasks.filter((t: any) => 
+      ['SCHEDULED', 'IN_PRODUCTION', 'QUALITY_CHECK'].includes(t.status)
+    );
+    
+    // 按创建时间正序排序
+    activeTasks.sort((a: any, b: any) => 
+      new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime()
+    );
+    
+    // 模拟关联数据
+    return Promise.all(activeTasks.map(async (task: any) => {
+      const order = await databaseService.findUnique('order', { id: task.orderId });
+      const factory = await databaseService.findUnique('user', { id: task.factoryId });
+      return {
+        ...task,
+        order: order ? { id: order.id, orderNumber: order.orderNumber, title: order.title } : null,
+        factory: factory ? { id: factory.id, name: factory.name } : null
+      };
+    }));
   }
 
   private async generateTaskNumber(): Promise<string> {
@@ -461,15 +461,15 @@ export class ProductionService {
       (now.getMonth() + 1).toString().padStart(2, '0') +
       now.getDate().toString().padStart(2, '0');
 
-    const count = await prisma.productionTask.count({
-      where: {
-        createdAt: {
-          gte: new Date(now.getFullYear(), now.getMonth(), now.getDate()),
-          lt: new Date(now.getFullYear(), now.getMonth(), now.getDate() + 1)
-        }
-      }
+    const tasks = await databaseService.findMany('productionTask');
+    const todayTasks = tasks.filter((t: any) => {
+      const tDate = new Date(t.createdAt);
+      return tDate.getFullYear() === now.getFullYear() &&
+        tDate.getMonth() === now.getMonth() &&
+        tDate.getDate() === now.getDate();
     });
 
+    const count = todayTasks.length;
     const sequence = (count + 1).toString().padStart(4, '0');
     return `PT${dateStr}${sequence}`;
   }

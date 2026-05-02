@@ -1,4 +1,4 @@
-import prisma from '../config/database';
+import { databaseService } from './databaseService';
 import logger from '../config/logger';
 import { auditService } from './auditService';
 import { exceptionService, ExceptionType } from './exceptionService';
@@ -33,41 +33,34 @@ export class MeasurementService {
     const { demandId, designerId, scheduledDate } = params;
 
     try {
-      const demand = await prisma.demand.findUnique({
-        where: { id: demandId }
-      });
+      const demand = await databaseService.findUnique('demand', { id: demandId });
 
       if (!demand) {
         throw new Error('需求不存在');
       }
 
+      logger.info(`[MeasurementService] 检查需求设计师: demandId=${demandId}, demand.designerId=${demand.designerId}, designerId=${designerId}`);
+
       if (demand.designerId !== designerId) {
         throw new Error('设计师无权限操作此需求');
       }
 
-      const existingMeasurement = await prisma.measurement.findUnique({
-        where: { demandId }
-      });
+      const existingMeasurement = (await databaseService.findMany('measurement')).find((m: any) => m.demandId === demandId);
 
       if (existingMeasurement) {
         throw new Error('该需求已存在量尺记录');
       }
 
-      const measurement = await prisma.measurement.create({
-        data: {
-          demandId,
-          designerId,
-          status: 'PENDING' as MeasurementStatus,
-          scheduledDate,
-          roomMeasurements: {},
-          sitePhotos: []
-        }
+      const measurement = await databaseService.create('measurement', {
+        demandId,
+        designerId,
+        status: 'PENDING' as MeasurementStatus,
+        scheduledDate,
+        roomMeasurements: {},
+        sitePhotos: []
       });
 
-      await prisma.demand.update({
-        where: { id: demandId },
-        data: { status: 'MEASURING' as any }
-      });
+      await databaseService.update('demand', { id: demandId }, { status: 'MEASURING' as any });
 
       await auditService.createLog({
         entityType: 'Measurement',
@@ -103,9 +96,7 @@ export class MeasurementService {
 
   async startMeasurement(measurementId: string, designerId: string): Promise<any> {
     try {
-      const measurement = await prisma.measurement.findUnique({
-        where: { id: measurementId }
-      });
+      const measurement = await databaseService.findUnique('measurement', { id: measurementId });
 
       if (!measurement) {
         throw new Error('量尺记录不存在');
@@ -121,9 +112,8 @@ export class MeasurementService {
 
       const previousState = { status: measurement.status };
 
-      const updatedMeasurement = await prisma.measurement.update({
-        where: { id: measurementId },
-        data: { status: 'IN_PROGRESS' as MeasurementStatus }
+      const updatedMeasurement = await databaseService.update('measurement', { id: measurementId }, {
+        status: 'IN_PROGRESS' as MeasurementStatus
       });
 
       await auditService.createLog({
@@ -158,9 +148,7 @@ export class MeasurementService {
     const { measurementId, designerId, houseArea, roomMeasurements, sitePhotos, customerPreferences, notes } = params;
 
     try {
-      const measurement = await prisma.measurement.findUnique({
-        where: { id: measurementId }
-      });
+      const measurement = await databaseService.findUnique('measurement', { id: measurementId });
 
       if (!measurement) {
         throw new Error('量尺记录不存在');
@@ -181,23 +169,17 @@ export class MeasurementService {
         sitePhotos: measurement.sitePhotos
       };
 
-      const updatedMeasurement = await prisma.measurement.update({
-        where: { id: measurementId },
-        data: {
-          status: 'COMPLETED' as MeasurementStatus,
-          measuredAt: new Date(),
-          houseArea,
-          roomMeasurements,
-          sitePhotos: sitePhotos || [],
-          customerPreferences,
-          notes
-        }
+      const updatedMeasurement = await databaseService.update('measurement', { id: measurementId }, {
+        status: 'COMPLETED' as MeasurementStatus,
+        measuredAt: new Date(),
+        houseArea,
+        roomMeasurements,
+        sitePhotos: sitePhotos || [],
+        customerPreferences,
+        notes
       });
 
-      await prisma.demand.update({
-        where: { id: measurement.demandId },
-        data: { status: 'MEASURED' as any }
-      });
+      await databaseService.update('demand', { id: measurement.demandId }, { status: 'MEASURED' as any });
 
       await auditService.createLog({
         entityType: 'Measurement',
@@ -235,9 +217,7 @@ export class MeasurementService {
     const { measurementId, reviewerId, reviewerRole, approved, rejectedReason } = params;
 
     try {
-      const measurement = await prisma.measurement.findUnique({
-        where: { id: measurementId }
-      });
+      const measurement = await databaseService.findUnique('measurement', { id: measurementId });
 
       if (!measurement) {
         throw new Error('量尺记录不存在');
@@ -253,21 +233,15 @@ export class MeasurementService {
         reviewedAt: measurement.reviewedAt
       };
 
-      const updatedMeasurement = await prisma.measurement.update({
-        where: { id: measurementId },
-        data: {
-          status: approved ? 'APPROVED' as MeasurementStatus : 'REJECTED' as MeasurementStatus,
-          reviewedBy: reviewerId,
-          reviewedAt: new Date(),
-          rejectedReason: !approved ? rejectedReason : null
-        }
+      const updatedMeasurement = await databaseService.update('measurement', { id: measurementId }, {
+        status: approved ? 'APPROVED' as MeasurementStatus : 'REJECTED' as MeasurementStatus,
+        reviewedBy: reviewerId,
+        reviewedAt: new Date(),
+        rejectedReason: !approved ? rejectedReason : null
       });
 
       if (approved) {
-        await prisma.demand.update({
-          where: { id: measurement.demandId },
-          data: { status: 'DESIGNING' as any }
-        });
+        await databaseService.update('demand', { id: measurement.demandId }, { status: 'DESIGNING' as any });
       }
 
       await auditService.createLog({
@@ -304,36 +278,45 @@ export class MeasurementService {
   }
 
   async getMeasurementById(measurementId: string): Promise<any> {
-    return prisma.measurement.findUnique({
-      where: { id: measurementId },
-      include: {
-        demand: {
-          include: {
-            customer: { select: { id: true, name: true, phone: true } }
-          }
-        },
-        designer: {
-          select: { id: true, name: true, phone: true }
-        }
-      }
-    });
+    const measurement = await databaseService.findUnique('measurement', { id: measurementId });
+    if (!measurement) return null;
+    
+    // 模拟关联数据
+    const demand = await databaseService.findUnique('demand', { id: measurement.demandId });
+    const customer = demand ? await databaseService.findUnique('user', { id: demand.customerId }) : null;
+    const designer = await databaseService.findUnique('user', { id: measurement.designerId });
+    
+    return {
+      ...measurement,
+      demand: demand ? {
+        ...demand,
+        customer: customer ? { id: customer.id, name: customer.name, phone: customer.phone } : null
+      } : null,
+      designer: designer ? { id: designer.id, name: designer.name, phone: designer.phone } : null
+    };
   }
 
   async getMeasurementsByDesigner(designerId: string, status?: MeasurementStatus): Promise<any[]> {
-    const where: any = { designerId };
+    const measurements = await databaseService.findMany('measurement');
+    let designerMeasurements = measurements.filter((m: any) => m.designerId === designerId);
+    
     if (status) {
-      where.status = status;
+      designerMeasurements = designerMeasurements.filter((m: any) => m.status === status);
     }
-
-    return prisma.measurement.findMany({
-      where,
-      orderBy: { createdAt: 'desc' },
-      include: {
-        demand: {
-          select: { id: true, demandNumber: true, address: true }
-        }
-      }
-    });
+    
+    // 按创建时间倒序排序
+    designerMeasurements.sort((a: any, b: any) => 
+      new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
+    );
+    
+    // 模拟关联数据
+    return Promise.all(designerMeasurements.map(async (measurement: any) => {
+      const demand = await databaseService.findUnique('demand', { id: measurement.demandId });
+      return {
+        ...measurement,
+        demand: demand ? { id: demand.id, demandNumber: demand.demandNumber, address: demand.address } : null
+      };
+    }));
   }
 }
 

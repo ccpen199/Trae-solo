@@ -1,4 +1,4 @@
-import prisma from '../config/database';
+import { databaseService } from './databaseService';
 import logger from '../config/logger';
 import { UserRole, AuditLogEntry } from '../types';
 
@@ -31,19 +31,17 @@ export class AuditService {
     } = params;
 
     try {
-      const auditLog = await prisma.auditLog.create({
-        data: {
-          entityType,
-          entityId,
-          action,
-          actorId,
-          actorRole,
-          previousState,
-          newState,
-          changes,
-          reason,
-          metadata
-        }
+      const auditLog = await databaseService.create('auditLog', {
+        entityType,
+        entityId,
+        action,
+        actorId,
+        actorRole,
+        previousState,
+        newState,
+        changes,
+        reason,
+        metadata
       });
 
       logger.info(`[AUDIT] ${actorRole}(${actorId}) executed ${action} on ${entityType}(${entityId})`);
@@ -56,7 +54,7 @@ export class AuditService {
   }
 
   async getLogsByEntity(entityType: string, entityId: string): Promise<AuditLogEntry[]> {
-    const logs = await prisma.auditLog.findMany({
+    const logs = await databaseService.findMany('auditLog', {
       where: {
         entityType,
         entityId
@@ -70,7 +68,7 @@ export class AuditService {
   }
 
   async getLogsByActor(actorId: string): Promise<AuditLogEntry[]> {
-    const logs = await prisma.auditLog.findMany({
+    const logs = await databaseService.findMany('auditLog', {
       where: {
         actorId
       },
@@ -83,7 +81,7 @@ export class AuditService {
   }
 
   async getLogsByAction(action: string): Promise<AuditLogEntry[]> {
-    const logs = await prisma.auditLog.findMany({
+    const logs = await databaseService.findMany('auditLog', {
       where: {
         action
       },
@@ -96,7 +94,7 @@ export class AuditService {
   }
 
   async getLogsByTimeRange(startDate: Date, endDate: Date): Promise<AuditLogEntry[]> {
-    const logs = await prisma.auditLog.findMany({
+    const logs = await databaseService.findMany('auditLog', {
       where: {
         createdAt: {
           gte: startDate,
@@ -112,24 +110,21 @@ export class AuditService {
   }
 
   async getOrderAuditTrail(orderId: string): Promise<AuditLogEntry[]> {
-    const logs = await prisma.auditLog.findMany({
-      where: {
-        OR: [
-          { entityType: 'Order', entityId: orderId },
-          { entityType: 'Demand', entityId: orderId },
-          { entityType: 'Design', entityId: orderId },
-          { entityType: 'Quote', entityId: orderId },
-          { entityType: 'Split', entityId: orderId },
-          { entityType: 'ProductionTask', entityId: orderId },
-          { entityType: 'Installation', entityId: orderId }
-        ]
-      },
-      orderBy: {
-        createdAt: 'asc'
-      }
+    const logs = await databaseService.findMany('auditLog');
+    
+    const filteredLogs = logs.filter(log => {
+      const entityType = (log as any).entityType;
+      const entityId = (log as any).entityId;
+      return [
+        'Order', 'Demand', 'Design', 'Quote', 'Split', 'ProductionTask', 'Installation'
+      ].includes(entityType) && entityId === orderId;
     });
 
-    return logs.map(this.mapToAuditLogEntry);
+    filteredLogs.sort((a, b) => {
+      return new Date((a as any).createdAt).getTime() - new Date((b as any).createdAt).getTime();
+    });
+
+    return filteredLogs.map(this.mapToAuditLogEntry);
   }
 
   private computeChanges(

@@ -1,4 +1,4 @@
-import prisma from '../config/database';
+import { databaseService } from './databaseService';
 import logger from '../config/logger';
 
 export type ExceptionType = 
@@ -52,16 +52,14 @@ export class ExceptionService {
     } = params;
 
     try {
-      const exception = await prisma.exceptionLog.create({
-        data: {
-          orderId,
-          entityType,
-          entityId,
-          exceptionType,
-          message,
-          stackTrace,
-          context
-        }
+      const exception = await databaseService.create('exceptionLog', {
+        orderId,
+        entityType,
+        entityId,
+        exceptionType,
+        message,
+        stackTrace,
+        context
       });
 
       logger.error(`[EXCEPTION] ${exceptionType}: ${message}`, {
@@ -84,14 +82,11 @@ export class ExceptionService {
     handlingNotes: string
   ): Promise<ExceptionLogEntry> {
     try {
-      const exception = await prisma.exceptionLog.update({
-        where: { id: exceptionId },
-        data: {
-          handled: true,
-          handledBy,
-          handledAt: new Date(),
-          handllingNotes: handlingNotes
-        }
+      const exception = await databaseService.update('exceptionLog', { id: exceptionId }, {
+        handled: true,
+        handledBy,
+        handledAt: new Date(),
+        handllingNotes: handlingNotes
       });
 
       logger.info(`[EXCEPTION] Exception ${exceptionId} handled by ${handledBy}`);
@@ -104,30 +99,30 @@ export class ExceptionService {
   }
 
   async getUnhandledExceptions(): Promise<ExceptionLogEntry[]> {
-    const exceptions = await prisma.exceptionLog.findMany({
-      where: { handled: false },
-      orderBy: { createdAt: 'desc' }
-    });
-
-    return exceptions.map(this.mapToExceptionLogEntry);
+    const exceptions = await databaseService.findMany('exceptionLog');
+    const unhandledExceptions = exceptions.filter((ex: any) => !ex.handled);
+    unhandledExceptions.sort((a: any, b: any) => 
+      new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
+    );
+    return unhandledExceptions.map(this.mapToExceptionLogEntry);
   }
 
   async getExceptionsByOrder(orderId: string): Promise<ExceptionLogEntry[]> {
-    const exceptions = await prisma.exceptionLog.findMany({
-      where: { orderId },
-      orderBy: { createdAt: 'desc' }
-    });
-
-    return exceptions.map(this.mapToExceptionLogEntry);
+    const exceptions = await databaseService.findMany('exceptionLog');
+    const orderExceptions = exceptions.filter((ex: any) => ex.orderId === orderId);
+    orderExceptions.sort((a: any, b: any) => 
+      new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
+    );
+    return orderExceptions.map(this.mapToExceptionLogEntry);
   }
 
   async getExceptionsByType(exceptionType: ExceptionType): Promise<ExceptionLogEntry[]> {
-    const exceptions = await prisma.exceptionLog.findMany({
-      where: { exceptionType },
-      orderBy: { createdAt: 'desc' }
-    });
-
-    return exceptions.map(this.mapToExceptionLogEntry);
+    const exceptions = await databaseService.findMany('exceptionLog');
+    const typeExceptions = exceptions.filter((ex: any) => ex.exceptionType === exceptionType);
+    typeExceptions.sort((a: any, b: any) => 
+      new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
+    );
+    return typeExceptions.map(this.mapToExceptionLogEntry);
   }
 
   async getExceptionsByTimeRange(
@@ -135,23 +130,21 @@ export class ExceptionService {
     endDate: Date,
     handled?: boolean
   ): Promise<ExceptionLogEntry[]> {
-    const where: any = {
-      createdAt: {
-        gte: startDate,
-        lte: endDate
-      }
-    };
-
-    if (typeof handled !== 'undefined') {
-      where.handled = handled;
-    }
-
-    const exceptions = await prisma.exceptionLog.findMany({
-      where,
-      orderBy: { createdAt: 'desc' }
+    const exceptions = await databaseService.findMany('exceptionLog');
+    let filteredExceptions = exceptions.filter((ex: any) => {
+      const exDate = new Date(ex.createdAt);
+      return exDate >= startDate && exDate <= endDate;
     });
 
-    return exceptions.map(this.mapToExceptionLogEntry);
+    if (typeof handled !== 'undefined') {
+      filteredExceptions = filteredExceptions.filter((ex: any) => ex.handled === handled);
+    }
+
+    filteredExceptions.sort((a: any, b: any) => 
+      new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
+    );
+
+    return filteredExceptions.map(this.mapToExceptionLogEntry);
   }
 
   async getExceptionStats(): Promise<{
@@ -159,8 +152,9 @@ export class ExceptionService {
     unhandled: number;
     byType: Record<ExceptionType, number>;
   }> {
-    const total = await prisma.exceptionLog.count();
-    const unhandled = await prisma.exceptionLog.count({ where: { handled: false } });
+    const exceptions = await databaseService.findMany('exceptionLog');
+    const total = exceptions.length;
+    const unhandled = exceptions.filter((ex: any) => !ex.handled).length;
     
     const types: ExceptionType[] = [
       'VALIDATION_ERROR',
@@ -178,7 +172,7 @@ export class ExceptionService {
     const byType: Record<ExceptionType, number> = {} as any;
     
     for (const type of types) {
-      byType[type] = await prisma.exceptionLog.count({ where: { exceptionType: type } });
+      byType[type] = exceptions.filter((ex: any) => ex.exceptionType === type).length;
     }
 
     return { total, unhandled, byType };

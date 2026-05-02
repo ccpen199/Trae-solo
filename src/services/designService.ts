@@ -1,4 +1,4 @@
-import prisma from '../config/database';
+import { databaseService } from './databaseService';
 import logger from '../config/logger';
 import { auditService } from './auditService';
 import { exceptionService, ExceptionType } from './exceptionService';
@@ -34,10 +34,7 @@ export class DesignService {
     const { demandId, designerId, title, description } = params;
 
     try {
-      const demand = await prisma.demand.findUnique({
-        where: { id: demandId },
-        include: { measurement: true }
-      });
+      const demand = await databaseService.findUnique('demand', { id: demandId });
 
       if (!demand) {
         throw new Error('需求不存在');
@@ -51,31 +48,24 @@ export class DesignService {
         throw new Error(`需求状态不正确，当前状态: ${demand.status}`);
       }
 
-      const existingDesign = await prisma.design.findUnique({
-        where: { demandId }
-      });
+      const existingDesign = (await databaseService.findMany('design')).find((d: any) => d.demandId === demandId);
 
       if (existingDesign) {
         throw new Error('该需求已存在设计方案');
       }
 
-      const design = await prisma.design.create({
-        data: {
-          demandId,
-          designerId,
-          title,
-          description,
-          status: 'IN_PROGRESS' as DesignStatus,
-          renderings: [],
-          blueprints: [],
-          designData: {}
-        }
+      const design = await databaseService.create('design', {
+        demandId,
+        designerId,
+        title,
+        description,
+        status: 'IN_PROGRESS' as DesignStatus,
+        renderings: [],
+        blueprints: [],
+        designData: {}
       });
 
-      await prisma.demand.update({
-        where: { id: demandId },
-        data: { status: 'DESIGNING' as any }
-      });
+      await databaseService.update('demand', { id: demandId }, { status: 'DESIGNING' as any });
 
       await auditService.createLog({
         entityType: 'Design',
@@ -117,9 +107,7 @@ export class DesignService {
     designData?: Record<string, any>;
   }): Promise<any> {
     try {
-      const design = await prisma.design.findUnique({
-        where: { id: designId }
-      });
+      const design = await databaseService.findUnique('design', { id: designId });
 
       if (!design) {
         throw new Error('设计方案不存在');
@@ -147,10 +135,7 @@ export class DesignService {
       if (updates.blueprints !== undefined) updateData.blueprints = updates.blueprints;
       if (updates.designData !== undefined) updateData.designData = updates.designData;
 
-      const updatedDesign = await prisma.design.update({
-        where: { id: designId },
-        data: updateData
-      });
+      const updatedDesign = await databaseService.update('design', { id: designId }, updateData);
 
       await auditService.createLog({
         entityType: 'Design',
@@ -187,9 +172,7 @@ export class DesignService {
     const { designId, designerId, title, description, renderings, blueprints, designData } = params;
 
     try {
-      const design = await prisma.design.findUnique({
-        where: { id: designId }
-      });
+      const design = await databaseService.findUnique('design', { id: designId });
 
       if (!design) {
         throw new Error('设计方案不存在');
@@ -220,15 +203,9 @@ export class DesignService {
       if (blueprints !== undefined) updateData.blueprints = blueprints;
       if (designData !== undefined) updateData.designData = designData;
 
-      const updatedDesign = await prisma.design.update({
-        where: { id: designId },
-        data: updateData
-      });
+      const updatedDesign = await databaseService.update('design', { id: designId }, updateData);
 
-      await prisma.demand.update({
-        where: { id: updatedDesign.demandId },
-        data: { status: 'DESIGNING' as any }
-      });
+      await databaseService.update('demand', { id: updatedDesign.demandId }, { status: 'DESIGNING' as any });
 
       await auditService.createLog({
         entityType: 'Design',
@@ -266,9 +243,7 @@ export class DesignService {
     const { designId, reviewerId, reviewerRole, approved, rejectedReason } = params;
 
     try {
-      const design = await prisma.design.findUnique({
-        where: { id: designId }
-      });
+      const design = await databaseService.findUnique('design', { id: designId });
 
       if (!design) {
         throw new Error('设计方案不存在');
@@ -284,14 +259,11 @@ export class DesignService {
         reviewedAt: design.reviewedAt
       };
 
-      const updatedDesign = await prisma.design.update({
-        where: { id: designId },
-        data: {
-          status: approved ? 'APPROVED' as DesignStatus : 'REJECTED' as DesignStatus,
-          reviewedBy: reviewerId,
-          reviewedAt: new Date(),
-          rejectedReason: !approved ? rejectedReason : null
-        }
+      const updatedDesign = await databaseService.update('design', { id: designId }, {
+        status: approved ? 'APPROVED' as DesignStatus : 'REJECTED' as DesignStatus,
+        reviewedBy: reviewerId,
+        reviewedAt: new Date(),
+        rejectedReason: !approved ? rejectedReason : null
       });
 
       await auditService.createLog({
@@ -328,56 +300,74 @@ export class DesignService {
   }
 
   async getDesignById(designId: string): Promise<any> {
-    return prisma.design.findUnique({
-      where: { id: designId },
-      include: {
-        demand: {
-          include: {
-            customer: { select: { id: true, name: true, phone: true } },
-            measurement: true
-          }
-        },
-        designer: {
-          select: { id: true, name: true, phone: true }
-        },
-        quote: true
-      }
-    });
+    const design = await databaseService.findUnique('design', { id: designId });
+    if (!design) return null;
+    
+    // 模拟关联数据
+    const demand = await databaseService.findUnique('demand', { id: design.demandId });
+    const customer = demand ? await databaseService.findUnique('user', { id: demand.customerId }) : null;
+    const measurement = demand ? (await databaseService.findMany('measurement')).find((m: any) => m.demandId === demand.id) : null;
+    const designer = await databaseService.findUnique('user', { id: design.designerId });
+    const quote = (await databaseService.findMany('quote')).find((q: any) => q.designId === designId);
+    
+    return {
+      ...design,
+      demand: demand ? {
+        ...demand,
+        customer: customer ? { id: customer.id, name: customer.name, phone: customer.phone } : null,
+        measurement
+      } : null,
+      designer: designer ? { id: designer.id, name: designer.name, phone: designer.phone } : null,
+      quote
+    };
   }
 
   async getDesignsByDesigner(designerId: string, status?: DesignStatus): Promise<any[]> {
-    const where: any = { designerId };
+    const designs = await databaseService.findMany('design');
+    let designerDesigns = designs.filter((d: any) => d.designerId === designerId);
+    
     if (status) {
-      where.status = status;
+      designerDesigns = designerDesigns.filter((d: any) => d.status === status);
     }
-
-    return prisma.design.findMany({
-      where,
-      orderBy: { createdAt: 'desc' },
-      include: {
-        demand: {
-          select: { id: true, demandNumber: true, address: true }
-        }
-      }
-    });
+    
+    // 按创建时间倒序排序
+    designerDesigns.sort((a: any, b: any) => 
+      new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
+    );
+    
+    // 模拟关联数据
+    return Promise.all(designerDesigns.map(async (design: any) => {
+      const demand = await databaseService.findUnique('demand', { id: design.demandId });
+      return {
+        ...design,
+        demand: demand ? { id: demand.id, demandNumber: demand.demandNumber, address: demand.address } : null
+      };
+    }));
   }
 
   async getDesignsForReview(): Promise<any[]> {
-    return prisma.design.findMany({
-      where: { status: 'SUBMITTED' },
-      orderBy: { submittedAt: 'asc' },
-      include: {
-        demand: {
-          select: { id: true, demandNumber: true, address: true },
-          include: {
-            customer: { select: { id: true, name: true, phone: true } }
-          }
-        },
-        designer: {
-          select: { id: true, name: true, phone: true }
-        }
-      }
-    });
+    const designs = await databaseService.findMany('design');
+    const submittedDesigns = designs.filter((d: any) => d.status === 'SUBMITTED');
+    
+    // 按提交时间正序排序
+    submittedDesigns.sort((a: any, b: any) => 
+      new Date(a.submittedAt).getTime() - new Date(b.submittedAt).getTime()
+    );
+    
+    // 模拟关联数据
+    return Promise.all(submittedDesigns.map(async (design: any) => {
+      const demand = await databaseService.findUnique('demand', { id: design.demandId });
+      const customer = demand ? await databaseService.findUnique('user', { id: demand.customerId }) : null;
+      const designer = await databaseService.findUnique('user', { id: design.designerId });
+      return {
+        ...design,
+        demand: demand ? {
+          ...demand,
+          customer: customer ? { id: customer.id, name: customer.name, phone: customer.phone } : null
+        } : null,
+        designer: designer ? { id: designer.id, name: designer.name, phone: designer.phone } : null
+      };
+    }));
   }
 }
 

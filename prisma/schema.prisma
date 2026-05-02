@@ -139,6 +139,7 @@ model User {
   productionTasks ProductionTask[]
   installations   Installation[] @relation("InstallerTasks")
   auditLogs       AuditLog[]
+  orders          Order[]
   
   @@index([phone])
   @@index([role])

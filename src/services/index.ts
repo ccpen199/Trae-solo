@@ -8,3 +8,5 @@ export { orderService, OrderService } from './orderService';
 export { splitService, SplitService } from './splitService';
 export { productionService, ProductionService } from './productionService';
 export { installationService, InstallationService } from './installationService';
+export { databaseService } from './databaseService';
+export { mockDataService } from './mockDataService';

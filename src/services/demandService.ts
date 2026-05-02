@@ -1,4 +1,4 @@
-import prisma from '../config/database';
+import { databaseService } from './databaseService';
 import logger from '../config/logger';
 import { auditService } from './auditService';
 import { exceptionService, ExceptionType } from './exceptionService';
@@ -33,24 +33,22 @@ export class DemandService {
     try {
       const demandNumber = await this.generateDemandNumber();
 
-      const demand = await prisma.demand.create({
-        data: {
-          demandNumber,
-          customerId: params.customerId,
-          houseType: params.houseType,
-          area: params.area,
-          style: params.style,
-          budgetRange: params.budgetRange,
-          address: params.address,
-          province: params.province,
-          city: params.city,
-          district: params.district,
-          contactName: params.contactName,
-          contactPhone: params.contactPhone,
-          description: params.description,
-          images: params.images || [],
-          status: 'PENDING_ASSIGNMENT' as DemandStatus
-        }
+      const demand = await databaseService.create('demand', {
+        demandNumber,
+        customerId: params.customerId,
+        houseType: params.houseType,
+        area: params.area,
+        style: params.style,
+        budgetRange: params.budgetRange,
+        address: params.address,
+        province: params.province,
+        city: params.city,
+        district: params.district,
+        contactName: params.contactName,
+        contactPhone: params.contactPhone,
+        description: params.description,
+        images: params.images || [],
+        status: 'PENDING_ASSIGNMENT' as DemandStatus
       });
 
       await auditService.createLog({
@@ -89,9 +87,7 @@ export class DemandService {
     const { demandId, designerId, assignedBy, assignedByRole } = params;
 
     try {
-      const demand = await prisma.demand.findUnique({
-        where: { id: demandId }
-      });
+      const demand = await databaseService.findUnique('demand', { id: demandId });
 
       if (!demand) {
         throw new Error('需求不存在');
@@ -101,28 +97,18 @@ export class DemandService {
         throw new Error(`需求状态不正确，当前状态: ${demand.status}`);
       }
 
-      const designer = await prisma.user.findUnique({
-        where: { id: designerId },
-        include: { designerProfile: true }
-      });
+      const designer = await databaseService.findUnique('user', { id: designerId });
 
       if (!designer || designer.role !== 'DESIGNER') {
         throw new Error('设计师不存在或角色不正确');
       }
 
-      if (!designer.designerProfile?.isAvailable) {
-        throw new Error('设计师当前不可用');
-      }
-
       const previousState = { status: demand.status, designerId: demand.designerId };
 
-      const updatedDemand = await prisma.demand.update({
-        where: { id: demandId },
-        data: {
-          designerId,
-          status: 'ASSIGNED' as DemandStatus,
-          assignedAt: new Date()
-        }
+      const updatedDemand = await databaseService.update('demand', { id: demandId }, {
+        designerId,
+        status: 'ASSIGNED' as DemandStatus,
+        assignedAt: new Date()
       });
 
       await auditService.createLog({
@@ -160,67 +146,91 @@ export class DemandService {
   }
 
   async getDemandById(demandId: string): Promise<any> {
-    return prisma.demand.findUnique({
-      where: { id: demandId },
-      include: {
-        customer: {
-          select: { id: true, name: true, phone: true }
-        },
-        designer: {
-          select: { id: true, name: true, phone: true },
-          include: { designerProfile: true }
-        },
-        measurement: true,
-        design: true,
-        order: true
-      }
-    });
+    const demand = await databaseService.findUnique('demand', { id: demandId });
+    if (!demand) return null;
+    
+    // 模拟关联数据
+    const customer = await databaseService.findUnique('user', { id: demand.customerId });
+    const designer = await databaseService.findUnique('user', { id: demand.designerId });
+    const measurement = (await databaseService.findMany('measurement')).find((m: any) => m.demandId === demandId);
+    const design = (await databaseService.findMany('design')).find((d: any) => d.demandId === demandId);
+    const order = (await databaseService.findMany('order')).find((o: any) => o.demandId === demandId);
+    
+    return {
+      ...demand,
+      customer: customer ? { id: customer.id, name: customer.name, phone: customer.phone } : null,
+      designer: designer ? { id: designer.id, name: designer.name, phone: designer.phone } : null,
+      measurement,
+      design,
+      order
+    };
   }
 
   async getDemandsByCustomer(customerId: string): Promise<any[]> {
-    return prisma.demand.findMany({
-      where: { customerId },
-      orderBy: { createdAt: 'desc' },
-      include: {
-        designer: {
-          select: { id: true, name: true }
-        },
-        order: {
-          select: { id: true, orderNumber: true, status: true }
-        }
-      }
-    });
+    const demands = await databaseService.findMany('demand');
+    const customerDemands = demands.filter((d: any) => d.customerId === customerId);
+    
+    // 按创建时间倒序排序
+    customerDemands.sort((a: any, b: any) => 
+      new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
+    );
+    
+    // 模拟关联数据
+    return Promise.all(customerDemands.map(async (demand: any) => {
+      const designer = await databaseService.findUnique('user', { id: demand.designerId });
+      const order = (await databaseService.findMany('order')).find((o: any) => o.demandId === demand.id);
+      return {
+        ...demand,
+        designer: designer ? { id: designer.id, name: designer.name } : null,
+        order: order ? { id: order.id, orderNumber: order.orderNumber, status: order.status } : null
+      };
+    }));
   }
 
   async getDemandsByDesigner(designerId: string, status?: DemandStatus): Promise<any[]> {
-    const where: any = { designerId };
+    const demands = await databaseService.findMany('demand');
+    let designerDemands = demands.filter((d: any) => d.designerId === designerId);
+    
     if (status) {
-      where.status = status;
+      designerDemands = designerDemands.filter((d: any) => d.status === status);
     }
-
-    return prisma.demand.findMany({
-      where,
-      orderBy: { createdAt: 'desc' },
-      include: {
-        customer: {
-          select: { id: true, name: true, phone: true }
-        },
-        measurement: true,
-        design: true
-      }
-    });
+    
+    // 按创建时间倒序排序
+    designerDemands.sort((a: any, b: any) => 
+      new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
+    );
+    
+    // 模拟关联数据
+    return Promise.all(designerDemands.map(async (demand: any) => {
+      const customer = await databaseService.findUnique('user', { id: demand.customerId });
+      const measurement = (await databaseService.findMany('measurement')).find((m: any) => m.demandId === demand.id);
+      const design = (await databaseService.findMany('design')).find((d: any) => d.demandId === demand.id);
+      return {
+        ...demand,
+        customer: customer ? { id: customer.id, name: customer.name, phone: customer.phone } : null,
+        measurement,
+        design
+      };
+    }));
   }
 
   async getPendingDemands(): Promise<any[]> {
-    return prisma.demand.findMany({
-      where: { status: 'PENDING_ASSIGNMENT' },
-      orderBy: { createdAt: 'asc' },
-      include: {
-        customer: {
-          select: { id: true, name: true, phone: true }
-        }
-      }
-    });
+    const demands = await databaseService.findMany('demand');
+    const pendingDemands = demands.filter((d: any) => d.status === 'PENDING_ASSIGNMENT');
+    
+    // 按创建时间正序排序
+    pendingDemands.sort((a: any, b: any) => 
+      new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime()
+    );
+    
+    // 模拟关联数据
+    return Promise.all(pendingDemands.map(async (demand: any) => {
+      const customer = await databaseService.findUnique('user', { id: demand.customerId });
+      return {
+        ...demand,
+        customer: customer ? { id: customer.id, name: customer.name, phone: customer.phone } : null
+      };
+    }));
   }
 
   private async generateDemandNumber(): Promise<string> {
@@ -229,15 +239,15 @@ export class DemandService {
       (now.getMonth() + 1).toString().padStart(2, '0') +
       now.getDate().toString().padStart(2, '0');
 
-    const count = await prisma.demand.count({
-      where: {
-        createdAt: {
-          gte: new Date(now.getFullYear(), now.getMonth(), now.getDate()),
-          lt: new Date(now.getFullYear(), now.getMonth(), now.getDate() + 1)
-        }
-      }
+    const demands = await databaseService.findMany('demand');
+    const todayDemands = demands.filter((d: any) => {
+      const dDate = new Date(d.createdAt);
+      return dDate.getFullYear() === now.getFullYear() &&
+        dDate.getMonth() === now.getMonth() &&
+        dDate.getDate() === now.getDate();
     });
 
+    const count = todayDemands.length;
     const sequence = (count + 1).toString().padStart(4, '0');
     return `XD${dateStr}${sequence}`;
   }
