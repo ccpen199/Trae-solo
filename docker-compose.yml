@@ -1,0 +1,70 @@
+version: '3.8'
+
+services:
+  postgres:
+    image: postgres:15-alpine
+    container_name: edu-timetable-postgres
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: edu_user
+      POSTGRES_PASSWORD: edu_password123
+      POSTGRES_DB: edu_timetable
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U edu_user -d edu_timetable"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  redis:
+    image: redis:7-alpine
+    container_name: edu-timetable-redis
+    restart: unless-stopped
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis_data:/data
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  api:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: edu-timetable-api
+    restart: unless-stopped
+    ports:
+      - "8765:8765"
+    environment:
+      - NODE_ENV=production
+      - PORT=8765
+      - DATABASE_URL=postgresql://edu_user:edu_password123@postgres:5432/edu_timetable?schema=public
+      - REDIS_URL=redis://redis:6379
+      - JWT_SECRET=edu-timetable-jwt-secret-key-2024-production-safe
+      - JWT_EXPIRES_IN=7d
+      - JWT_REFRESH_EXPIRES_IN=30d
+    depends_on:
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD", "wget", "--quiet", "--tries=1", "--spider", "http://localhost:8765/health"]
+      interval: 30s
+      timeout: 10s
+      start_period: 40s
+      retries: 3
+
+volumes:
+  postgres_data:
+  redis_data:
+
+networks:
+  default:
+    name: edu-timetable-network

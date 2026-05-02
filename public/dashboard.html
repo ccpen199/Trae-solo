@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>教培机构排课系统</title>
+  <link rel="stylesheet" href="/static/css/style.css">
+</head>
+<body class="app-layout">
+  <aside class="sidebar" id="sidebar">
+    <div class="sidebar-header">
+      <div class="sidebar-logo">
+        <span class="sidebar-logo-icon">🎓</span>
+        <span class="sidebar-logo-text">教培管理</span>
+      </div>
+    </div>
+    <nav class="sidebar-menu" id="sidebarMenu">
+    </nav>
+    <div class="sidebar-footer">
+      <div class="user-info">
+        <div class="user-avatar" id="userAvatar">管</div>
+        <div class="user-details">
+          <div class="user-name" id="userName">管理员</div>
+          <div class="user-role" id="userRole">教务管理员</div>
+        </div>
+      </div>
+      <button type="button" class="logout-btn" id="logoutBtn">
+        <span>🚪</span>
+        <span>退出登录</span>
+      </button>
+    </div>
+  </aside>
+
+  <main class="main-content">
+    <header class="header">
+      <div class="header-left">
+        <h1 class="page-title" id="pageTitle">工作台</h1>
+      </div>
+      <div class="header-right">
+        <div class="header-actions">
+          <button type="button" class="btn btn-secondary btn-sm" id="refreshBtn">
+            <span>🔄</span>
+            <span>刷新</span>
+          </button>
+        </div>
+      </div>
+    </header>
+
+    <div class="content" id="contentArea">
+    </div>
+  </main>
+
+  <div id="modalContainer"></div>
+
+  <script src="/static/js/api.js"></script>
+  <script src="/static/js/auth.js"></script>
+  <script src="/static/js/app.js"></script>
+</body>
+</html>

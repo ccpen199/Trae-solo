@@ -1,0 +1,387 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model Organization {
+  id              String     @id @default(cuid())
+  name            String
+  contactName     String?
+  contactPhone    String?
+  address         String?
+  description     String?
+  isActive        Boolean    @default(true)
+  createdAt       DateTime   @default(now())
+  updatedAt       DateTime   @updatedAt
+  
+  users           User[]
+  classrooms      Classroom[]
+  courses         Course[]
+  enrollments     Enrollment[]
+  schedules       Schedule[]
+  attendances     Attendance[]
+  consumptions    Consumption[]
+  payments        Payment[]
+  leaves          Leave[]
+  makeups         Makeup[]
+  notifications   Notification[]
+  reports         Report[]
+  auditLogs       AuditLog[]
+  scheduleConflicts ScheduleConflict[]
+}
+
+model User {
+  id              String     @id @default(cuid())
+  organizationId  String
+  username        String     @unique
+  passwordHash    String
+  realName        String?
+  phone           String?
+  email           String?
+  avatar          String?
+  role            String
+  gender          String     @default("UNKNOWN")
+  birthDate       DateTime?
+  isActive        Boolean    @default(true)
+  lastLoginAt     DateTime?
+  createdAt       DateTime   @default(now())
+  updatedAt       DateTime   @updatedAt
+  
+  organization    Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  
+  teacherProfile  TeacherProfile?
+  studentProfile  StudentProfile?
+  parentProfile   ParentProfile?
+  
+  schedules       Schedule[]  @relation("TeacherSchedules")
+  enrollments     Enrollment[] @relation("StudentEnrollments")
+  attendances     Attendance[]
+  leaves          Leave[] @relation("StudentLeaves")
+  leaveApprovals  Leave[] @relation("LeaveApprovals")
+  makeups         Makeup[] @relation("StudentMakeups")
+  notifications   Notification[]
+  auditLogs       AuditLog[]
+}
+
+model TeacherProfile {
+  id              String   @id @default(cuid())
+  userId          String   @unique
+  teacherNo       String?  @unique
+  subjects        String
+  certifications  String
+  description     String?
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+  
+  user            User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model StudentProfile {
+  id              String   @id @default(cuid())
+  userId          String   @unique
+  studentNo       String?  @unique
+  grade           String?
+  school          String?
+  parentId        String?
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+  
+  user            User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model ParentProfile {
+  id              String   @id @default(cuid())
+  userId          String   @unique
+  relation        String?
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+  
+  user            User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model Classroom {
+  id              String   @id @default(cuid())
+  organizationId  String
+  name            String
+  capacity        Int      @default(20)
+  equipment       String
+  description     String?
+  isActive        Boolean  @default(true)
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+  
+  organization    Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  schedules       Schedule[]
+}
+
+model Course {
+  id              String     @id @default(cuid())
+  organizationId  String
+  name            String
+  type            String     @default("SMALL_GROUP")
+  subject         String?
+  description     String?
+  defaultDuration Int      @default(60)
+  defaultPrice    Float    @default(0)
+  maxStudents     Int      @default(20)
+  isActive        Boolean  @default(true)
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+  
+  organization    Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  coursePackages  CoursePackage[]
+  enrollments     Enrollment[]
+  schedules       Schedule[]
+}
+
+model CoursePackage {
+  id              String   @id @default(cuid())
+  courseId        String
+  name            String
+  totalHours      Int
+  price           Float
+  validMonths     Int      @default(12)
+  description     String?
+  isActive        Boolean  @default(true)
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+  
+  course          Course   @relation(fields: [courseId], references: [id], onDelete: Cascade)
+  enrollments     Enrollment[]
+}
+
+model Enrollment {
+  id              String   @id @default(cuid())
+  organizationId  String
+  studentId       String
+  courseId        String
+  coursePackageId String?
+  totalHours      Int
+  remainingHours  Int
+  usedHours       Int      @default(0)
+  startDate       DateTime
+  endDate         DateTime
+  status          String   @default("ACTIVE")
+  lastRenewalAt   DateTime?
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+  
+  organization    Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  student         User     @relation("StudentEnrollments", fields: [studentId], references: [id], onDelete: Cascade)
+  course          Course   @relation(fields: [courseId], references: [id], onDelete: Cascade)
+  coursePackage   CoursePackage? @relation(fields: [coursePackageId], references: [id], onDelete: SetNull)
+  
+  payments        Payment[]
+  consumptions    Consumption[]
+  attendances     Attendance[]
+}
+
+model Schedule {
+  id              String     @id @default(cuid())
+  organizationId  String
+  courseId        String
+  teacherId       String
+  classroomId     String?
+  date            DateTime
+  startTime       String
+  endTime         String
+  duration        Int
+  status          String     @default("DRAFT")
+  maxStudents     Int        @default(20)
+  actualStudents  Int        @default(0)
+  notes           String?
+  isRecurring     Boolean    @default(false)
+  recurringRule   String?
+  createdAt       DateTime   @default(now())
+  updatedAt       DateTime   @updatedAt
+  
+  organization    Organization   @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  course          Course         @relation(fields: [courseId], references: [id], onDelete: Cascade)
+  teacher         User           @relation("TeacherSchedules", fields: [teacherId], references: [id], onDelete: Cascade)
+  classroom       Classroom?     @relation(fields: [classroomId], references: [id], onDelete: SetNull)
+  
+  attendances     Attendance[]
+}
+
+model Attendance {
+  id              String           @id @default(cuid())
+  organizationId  String
+  scheduleId      String
+  studentId       String
+  enrollmentId    String
+  status          String           @default("PRESENT")
+  checkInTime     DateTime?
+  checkOutTime    DateTime?
+  notes           String?
+  isMakeup        Boolean          @default(false)
+  createdAt       DateTime         @default(now())
+  updatedAt       DateTime         @updatedAt
+  
+  organization    Organization     @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  schedule        Schedule         @relation(fields: [scheduleId], references: [id], onDelete: Cascade)
+  student         User             @relation(fields: [studentId], references: [id], onDelete: Cascade)
+  enrollment      Enrollment       @relation(fields: [enrollmentId], references: [id], onDelete: Cascade)
+  
+  consumption     Consumption?
+}
+
+model Consumption {
+  id              String   @id @default(cuid())
+  organizationId  String
+  attendanceId    String   @unique
+  enrollmentId    String
+  studentId       String
+  scheduleId      String
+  hoursConsumed   Float
+  pricePerHour    Float
+  totalAmount     Float
+  notes           String?
+  consumedAt      DateTime @default(now())
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+  
+  organization    Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  attendance      Attendance @relation(fields: [attendanceId], references: [id], onDelete: Cascade)
+  enrollment      Enrollment @relation(fields: [enrollmentId], references: [id], onDelete: Cascade)
+}
+
+model Payment {
+  id              String        @id @default(cuid())
+  organizationId  String
+  enrollmentId    String?
+  studentId       String
+  amount          Float
+  paidAmount      Float         @default(0)
+  discount        Float         @default(0)
+  paymentMethod   String?
+  transactionId   String?
+  status          String        @default("PENDING")
+  paidAt          DateTime?
+  notes           String?
+  createdAt       DateTime      @default(now())
+  updatedAt       DateTime      @updatedAt
+  
+  organization    Organization  @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  enrollment      Enrollment?   @relation(fields: [enrollmentId], references: [id], onDelete: SetNull)
+}
+
+model Leave {
+  id              String      @id @default(cuid())
+  organizationId  String
+  studentId       String
+  scheduleId      String?
+  leaveDate       DateTime
+  startTime       String?
+  endTime         String?
+  reason          String
+  status          String      @default("PENDING")
+  approvedBy      String?
+  approvedAt      DateTime?
+  rejectionReason String?
+  needsMakeup     Boolean     @default(true)
+  createdAt       DateTime    @default(now())
+  updatedAt       DateTime    @updatedAt
+  
+  organization    Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  student         User        @relation("StudentLeaves", fields: [studentId], references: [id], onDelete: Cascade)
+  approver        User?       @relation("LeaveApprovals", fields: [approvedBy], references: [id], onDelete: SetNull)
+  
+  makeup          Makeup?
+}
+
+model Makeup {
+  id              String        @id @default(cuid())
+  organizationId  String
+  studentId       String
+  leaveId         String        @unique
+  originalScheduleId String?
+  makeupScheduleId   String?
+  status          String        @default("PENDING")
+  scheduledDate   DateTime?
+  scheduledTime   String?
+  notes           String?
+  scheduledBy     String?
+  completedAt     DateTime?
+  createdAt       DateTime      @default(now())
+  updatedAt       DateTime      @updatedAt
+  
+  organization    Organization  @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  student         User          @relation("StudentMakeups", fields: [studentId], references: [id], onDelete: Cascade)
+  leave           Leave         @relation(fields: [leaveId], references: [id], onDelete: Cascade)
+}
+
+model Notification {
+  id              String            @id @default(cuid())
+  organizationId  String
+  userId          String
+  type            String
+  title           String
+  content         String
+  status          String            @default("PENDING")
+  scheduleId      String?
+  sentAt          DateTime?
+  readAt          DateTime?
+  metadata        String?
+  createdAt       DateTime          @default(now())
+  updatedAt       DateTime          @updatedAt
+  
+  organization    Organization      @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  user            User              @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model Report {
+  id              String   @id @default(cuid())
+  organizationId  String
+  reportType      String
+  periodStart     DateTime
+  periodEnd       DateTime
+  data            String
+  generatedAt     DateTime @default(now())
+  generatedBy     String?
+  createdAt       DateTime @default(now())
+  
+  organization    Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+}
+
+model AuditLog {
+  id              String   @id @default(cuid())
+  organizationId  String
+  userId          String
+  action          String
+  entityType      String
+  entityId        String?
+  oldValue        String?
+  newValue        String?
+  details         String?
+  ipAddress       String?
+  userAgent       String?
+  createdAt       DateTime @default(now())
+  
+  organization    Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  user            User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model ScheduleConflict {
+  id              String   @id @default(cuid())
+  organizationId  String
+  conflictType    String
+  conflictDetails String?
+  scheduleId1     String?
+  scheduleId2     String?
+  teacherId       String?
+  classroomId     String?
+  date            DateTime
+  startTime       String
+  endTime         String
+  resolved        Boolean  @default(false)
+  resolvedBy      String?
+  resolvedAt      DateTime?
+  resolutionNotes String?
+  createdAt       DateTime @default(now())
+  
+  organization    Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+}

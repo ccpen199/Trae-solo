@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>教培机构排课系统 - 登录</title>
+  <link rel="stylesheet" href="/static/css/style.css">
+</head>
+<body class="login-page">
+  <div class="login-container">
+    <div class="login-header">
+      <div class="login-logo">
+        <span class="logo-icon">🎓</span>
+        <h1>教培机构排课系统</h1>
+      </div>
+      <p class="login-subtitle">Edu Timetable Management System</p>
+    </div>
+    
+    <form id="loginForm" class="login-form">
+      <div class="form-group">
+        <label for="username">用户名</label>
+        <div class="input-wrapper">
+          <span class="input-icon">👤</span>
+          <input type="text" id="username" name="username" placeholder="请输入用户名" required autocomplete="username">
+        </div>
+      </div>
+      
+      <div class="form-group">
+        <label for="password">密码</label>
+        <div class="input-wrapper">
+          <span class="input-icon">🔒</span>
+          <input type="password" id="password" name="password" placeholder="请输入密码" required autocomplete="current-password">
+        </div>
+      </div>
+      
+      <div class="form-group">
+        <label>选择角色</label>
+        <div class="role-selector">
+          <div class="role-option active" data-role="all">
+            <span class="role-icon">🌐</span>
+            <span class="role-name">自动识别</span>
+          </div>
+          <div class="role-option" data-role="ADMIN">
+            <span class="role-icon">👨‍💼</span>
+            <span class="role-name">管理员</span>
+          </div>
+          <div class="role-option" data-role="TEACHER">
+            <span class="role-icon">👨‍🏫</span>
+            <span class="role-name">教师</span>
+          </div>
+          <div class="role-option" data-role="STUDENT">
+            <span class="role-icon">👨‍🎓</span>
+            <span class="role-name">学员</span>
+          </div>
+          <div class="role-option" data-role="PARENT">
+            <span class="role-icon">👩‍👦</span>
+            <span class="role-name">家长</span>
+          </div>
+        </div>
+      </div>
+      
+      <div id="errorMessage" class="error-message" style="display: none;"></div>
+      
+      <button type="submit" id="loginBtn" class="btn btn-primary btn-full">
+        <span class="btn-text">登 录</span>
+        <span class="btn-loading" style="display: none;">
+          <span class="spinner"></span>
+          登录中...
+        </span>
+      </button>
+    </form>
+    
+    <div class="login-footer">
+      <p class="quick-login-title">快速测试账号：</p>
+      <div class="quick-login">
+        <button type="button" class="quick-login-btn" data-username="admin" data-password="123456">
+          <span class="quick-icon">👨‍💼</span>
+          <span class="quick-text">管理员</span>
+        </button>
+        <button type="button" class="quick-login-btn" data-username="teacher01" data-password="123456">
+          <span class="quick-icon">👨‍🏫</span>
+          <span class="quick-text">教师</span>
+        </button>
+        <button type="button" class="quick-login-btn" data-username="student01" data-password="123456">
+          <span class="quick-icon">👨‍🎓</span>
+          <span class="quick-text">学员</span>
+        </button>
+        <button type="button" class="quick-login-btn" data-username="parent01" data-password="123456">
+          <span class="quick-icon">👩‍👦</span>
+          <span class="quick-text">家长</span>
+        </button>
+      </div>
+      <p class="copyright">© 2026 教培机构排课系统 v1.0.0</p>
+    </div>
+  </div>
+
+  <script src="/static/js/api.js"></script>
+  <script src="/static/js/auth.js"></script>
+  <script src="/static/js/login.js"></script>
+</body>
+</html>
