@@ -1,0 +1,19 @@
+{
+  "name": "game-task-achievement-backend",
+  "version": "1.0.0",
+  "description": "游戏任务与成就系统后端服务",
+  "main": "src/index.js",
+  "scripts": {
+    "start": "node src/index.js",
+    "dev": "node src/index.js"
+  },
+  "dependencies": {
+    "express": "^4.18.2",
+    "cors": "^2.8.5",
+    "better-sqlite3": "^9.2.2",
+    "uuid": "^9.0.0",
+    "dotenv": "^16.3.1",
+    "dayjs": "^1.11.10",
+    "xstate": "^4.38.3"
+  }
+}
