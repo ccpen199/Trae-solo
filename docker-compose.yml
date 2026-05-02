@@ -1,0 +1,90 @@
+version: '3.8'
+
+services:
+  postgres:
+    image: postgres:15-alpine
+    container_name: exam_system_db
+    environment:
+      POSTGRES_USER: exam_admin
+      POSTGRES_PASSWORD: ExamSecurePass2024
+      POSTGRES_DB: online_exam_system
+    ports:
+      - "25432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+      - ./docker/init.sql:/docker-entrypoint-initdb.d/init.sql
+    networks:
+      - exam_network
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U exam_admin -d online_exam_system"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  redis:
+    image: redis:7-alpine
+    container_name: exam_system_redis
+    ports:
+      - "26379:6379"
+    volumes:
+      - redis_data:/data
+    networks:
+      - exam_network
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  server:
+    build:
+      context: ./server
+      dockerfile: Dockerfile
+    container_name: exam_system_server
+    environment:
+      NODE_ENV: development
+      PORT: 28765
+      DB_HOST: postgres
+      DB_PORT: 5432
+      DB_USER: exam_admin
+      DB_PASSWORD: ExamSecurePass2024
+      DB_NAME: online_exam_system
+      REDIS_HOST: redis
+      REDIS_PORT: 6379
+      JWT_SECRET: ExamJwtSecretKey2024VeryLongKey
+      JWT_EXPIRES_IN: 24h
+    ports:
+      - "28765:28765"
+    depends_on:
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+    networks:
+      - exam_network
+    volumes:
+      - ./server:/app
+      - /app/node_modules
+
+  client:
+    build:
+      context: ./client
+      dockerfile: Dockerfile
+    container_name: exam_system_client
+    ports:
+      - "29876:29876"
+    depends_on:
+      - server
+    networks:
+      - exam_network
+    volumes:
+      - ./client:/app
+      - /app/node_modules
+
+volumes:
+  postgres_data:
+  redis_data:
+
+networks:
+  exam_network:
+    driver: bridge

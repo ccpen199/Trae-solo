@@ -1,0 +1,31 @@
+{
+  "name": "online-exam-system",
+  "version": "1.0.0",
+  "description": "在线考试系统 - 支持题库维护、智能组卷、防作弊、自动阅卷、成绩分析",
+  "scripts": {
+    "dev:server": "npm run dev --prefix server",
+    "dev:client": "npm run dev --prefix client",
+    "build:server": "npm run build --prefix server",
+    "build:client": "npm run build --prefix client",
+    "start:server": "npm run start --prefix server",
+    "start:client": "npm run start --prefix client",
+    "install:all": "npm install && npm install --prefix server && npm install --prefix client",
+    "docker:up": "docker-compose up -d",
+    "docker:down": "docker-compose down",
+    "docker:build": "docker-compose build",
+    "db:init": "cd server && npm run db:init",
+    "db:seed": "cd server && npm run db:seed"
+  },
+  "keywords": [
+    "exam",
+    "online-exam",
+    "quiz",
+    "education"
+  ],
+  "author": "",
+  "license": "MIT",
+  "workspaces": [
+    "server",
+    "client"
+  ]
+}
