@@ -1,0 +1,181 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  background-color: #f0f2f5;
+}
+
+#root {
+  min-height: 100vh;
+}
+
+.login-container {
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+}
+
+.login-card {
+  width: 400px;
+  padding: 40px;
+  border-radius: 12px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+}
+
+.login-title {
+  text-align: center;
+  margin-bottom: 32px;
+  font-size: 24px;
+  font-weight: 600;
+  color: #1890ff;
+}
+
+.layout {
+  min-height: 100vh;
+}
+
+.layout-header {
+  display: flex;
+  align-items: center;
+  padding: 0 24px;
+  background: #001529;
+}
+
+.layout-logo {
+  color: white;
+  font-size: 18px;
+  font-weight: 600;
+  margin-right: 24px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.layout-user {
+  margin-left: auto;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  color: white;
+}
+
+.layout-sider {
+  background: #fff;
+}
+
+.sider-menu {
+  height: 100%;
+  border-right: none;
+}
+
+.layout-content {
+  margin: 24px;
+  padding: 24px;
+  background: #fff;
+  min-height: 280px;
+  border-radius: 8px;
+}
+
+.page-title {
+  font-size: 20px;
+  font-weight: 600;
+  margin-bottom: 24px;
+  color: #262626;
+}
+
+.dashboard-card {
+  text-align: center;
+  padding: 24px;
+}
+
+.dashboard-card h3 {
+  margin: 8px 0;
+  color: #595959;
+  font-size: 14px;
+}
+
+.dashboard-card .stat-value {
+  font-size: 28px;
+  font-weight: 600;
+  color: #1890ff;
+}
+
+.status-tag {
+  border-radius: 4px;
+  font-size: 12px;
+  padding: 2px 8px;
+}
+
+.application-detail-section {
+  margin-bottom: 24px;
+}
+
+.application-detail-section h4 {
+  margin-bottom: 16px;
+  color: #262626;
+  font-weight: 600;
+}
+
+.repayment-schedule {
+  margin-top: 16px;
+}
+
+.approval-comments {
+  margin-top: 24px;
+}
+
+.comment-item {
+  padding: 16px;
+  background: #fafafa;
+  border-radius: 8px;
+  margin-bottom: 12px;
+}
+
+.comment-header {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 8px;
+  font-size: 12px;
+  color: #8c8c8c;
+}
+
+.comment-content {
+  color: #262626;
+}
+
+.fraud-risk-section {
+  margin-top: 16px;
+}
+
+.contract-section {
+  margin-top: 24px;
+  padding: 16px;
+  background: #e6f7ff;
+  border-radius: 8px;
+  border: 1px solid #91d5ff;
+}
+
+.create-application-form {
+  max-width: 600px;
+}
+
+.timeline-step {
+  padding: 8px 0;
+}
+
+.timeline-status {
+  font-weight: 600;
+}
+
+.timeline-time {
+  font-size: 12px;
+  color: #8c8c8c;
+}
