@@ -1,0 +1,22 @@
+{
+  "name": "risk-control-engine-backend",
+  "version": "1.0.0",
+  "description": "企业风控中台后端服务 - Rule-Tree规则引擎、Variable-Factory特征引擎、Action-Handler处置引擎、Backtest-Simulator回测引擎",
+  "main": "src/app.js",
+  "scripts": {
+    "start": "node src/app.js",
+    "dev": "node src/app.js"
+  },
+  "keywords": ["risk-control", "rule-engine", "enterprise"],
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "express": "^4.18.2",
+    "cors": "^2.8.5",
+    "better-sqlite3": "^9.4.3",
+    "dotenv": "^16.4.5",
+    "uuid": "^9.0.1",
+    "lodash": "^4.17.21",
+    "moment": "^2.30.1"
+  }
+}
