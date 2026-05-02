@@ -1,5 +1,5 @@
 import { Injectable, Inject } from '@nestjs/common';
-import * as dayjs from 'dayjs';
+import dayjs from 'dayjs';
 import Redis from 'ioredis';
 
 export type BatchType = 'MATERIAL' | 'PRODUCT' | 'WORK_ORDER' | 'REQUISITION' | 'INSPECTION' | 'SHIPMENT';

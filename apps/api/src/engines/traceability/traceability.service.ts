@@ -62,8 +62,8 @@ export interface InspectionTrace {
 
 export interface InspectionItemTrace {
   itemName: string;
-  standardValue?: string;
-  actualValue?: string;
+  standardValue?: string | null;
+  actualValue?: string | null;
   isPassed?: boolean;
 }
 
@@ -145,8 +145,8 @@ export class TraceabilityService {
               quantity: item.actualQty?.toNumber() || item.requiredQty.toNumber(),
               unit: item.unit,
               supplierName: item.materialBatch.supplier?.name,
-              productionDate: item.materialBatch.productionDate,
-              expiryDate: item.materialBatch.expiryDate,
+              productionDate: item.materialBatch.productionDate ?? undefined,
+              expiryDate: item.materialBatch.expiryDate ?? undefined,
               inboundDate: item.materialBatch.inboundDate,
             });
           }
@@ -159,7 +159,7 @@ export class TraceabilityService {
       inspectionType: ins.inspectionType,
       status: ins.status,
       inspectionDate: ins.inspectionDate,
-      conclusion: ins.conclusion,
+      conclusion: ins.conclusion ?? undefined,
       items: ins.items.map((item) => ({
         itemName: item.itemName,
         standardValue: item.standardValue,
@@ -230,7 +230,7 @@ export class TraceabilityService {
                 workOrder: {
                   include: {
                     product: true,
-                    batches: true,
+                    productBatches: true,
                   },
                 },
               },
@@ -253,8 +253,8 @@ export class TraceabilityService {
 
     for (const item of materialBatch.requisitionItems) {
       const workOrder = item.requisition.workOrder;
-      if (workOrder?.batches) {
-        for (const batch of workOrder.batches) {
+      if (workOrder?.productBatches) {
+        for (const batch of workOrder.productBatches) {
           affectedProducts.push({
             batchNo: batch.batchNo,
             productName: workOrder.product.name,

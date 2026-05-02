@@ -3,51 +3,18 @@ generator client {
 }
 
 datasource db {
-  provider = "postgresql"
-  url      = env("DATABASE_URL")
+  provider = "sqlite"
+  url      = "file:./dev.db"
 }
 
-enum Role {
-  PURCHASER
-  WAREHOUSE_MANAGER
-  PRODUCTION_LEADER
-  QUALITY_INSPECTOR
-  ADMIN
-}
-
-enum OrderStatus {
-  DRAFT
-  PENDING
-  IN_PROGRESS
-  COMPLETED
-  CANCELLED
-}
-
-enum InspectionStatus {
-  PENDING
-  IN_PROGRESS
-  PASSED
-  FAILED
-  ISOLATED
-}
-
-enum InventoryType {
-  MATERIAL
-  PRODUCT
-}
-
-enum InventoryOpType {
-  INBOUND
-  OUTBOUND
-  ADJUST
-}
+// Using string types instead of enums for SQLite compatibility
 
 model User {
   id            String   @id @default(uuid())
   username      String   @unique
   password      String
   name          String
-  role          Role
+  role          String
   isActive      Boolean  @default(true)
   createdAt     DateTime @default(now())
   updatedAt     DateTime @updatedAt
@@ -68,6 +35,7 @@ model Supplier {
   updatedAt     DateTime @updatedAt
 
   materialBatches MaterialBatch[]
+  inbounds        Inbound[]
 
   @@map("suppliers")
 }
@@ -87,6 +55,8 @@ model Material {
   batches       MaterialBatch[]
   bomMaterials  BomMaterial[]
   inventory     Inventory[]
+  requisitionItems MaterialRequisitionItem[]
+  inbounds      Inbound[]
 
   @@map("materials")
 }
@@ -157,6 +127,7 @@ model Product {
   unit          String
   category      String?
   safetyStock   Decimal  @default(0)
+  sellingPrice  Decimal?
   isActive      Boolean  @default(true)
   createdAt     DateTime @default(now())
   updatedAt     DateTime @updatedAt
@@ -176,7 +147,7 @@ model WorkOrder {
   plannedQty    Decimal
   actualQty     Decimal  @default(0)
   unit          String
-  status        OrderStatus @default(DRAFT)
+  status        String   @default("DRAFT")
   plannedStartDate DateTime?
   plannedEndDate   DateTime?
   actualStartDate  DateTime?
@@ -191,6 +162,7 @@ model WorkOrder {
   requisitions  MaterialRequisition[]
   inspections   InspectionRecord[]
   productionRecords ProductionRecord[]
+  productBatches ProductBatch[]
 
   @@map("work_orders")
 }
@@ -203,7 +175,7 @@ model WorkOrderProcess {
   sortOrder     Int
   plannedHours  Decimal?
   actualHours   Decimal?
-  status        OrderStatus @default(PENDING)
+  status        String   @default("PENDING")
   operatorId    String?
   remark        String?
   createdAt     DateTime @default(now())
@@ -218,7 +190,7 @@ model MaterialRequisition {
   id            String   @id @default(uuid())
   requisitionNo String   @unique
   workOrderId   String
-  status        OrderStatus @default(DRAFT)
+  status        String   @default("DRAFT")
   operatorId    String?
   approvedBy    String?
   approvedAt    DateTime?
@@ -279,7 +251,7 @@ model InspectionRecord {
   workOrderId   String?
   productBatchId String?
   inspectionType String
-  status        InspectionStatus @default(PENDING)
+  status        String   @default("PENDING")
   inspectorId   String
   inspectionDate DateTime @default(now())
   conclusion    String?
@@ -338,7 +310,7 @@ model ProductBatch {
 
 model Inventory {
   id            String   @id @default(uuid())
-  type          InventoryType
+  type          String
   materialId    String?
   productId     String?
   totalQty      Decimal  @default(0)
@@ -361,7 +333,7 @@ model Inventory {
 model InventoryLog {
   id            String   @id @default(uuid())
   inventoryId   String
-  opType        InventoryOpType
+  opType        String
   beforeQty     Decimal
   changeQty     Decimal
   afterQty      Decimal
@@ -376,6 +348,26 @@ model InventoryLog {
   inventory     Inventory @relation(fields: [inventoryId], references: [id])
 
   @@map("inventory_logs")
+}
+
+model Inbound {
+  id            String   @id @default(uuid())
+  inboundNo     String   @unique
+  materialId    String
+  supplierId    String?
+  quantity      Decimal
+  unit          String
+  batchNumber   String
+  expiryDate    DateTime
+  remark        String?
+  operatorId    String?
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+
+  material      Material? @relation(fields: [materialId], references: [id])
+  supplier      Supplier? @relation(fields: [supplierId], references: [id])
+
+  @@map("inbounds")
 }
 
 model Shipment {

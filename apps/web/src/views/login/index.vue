@@ -57,6 +57,7 @@ import { useRouter } from 'vue-router'
 import { useUserStore } from '@/stores/user'
 import type { FormInstance, FormRules } from 'element-plus'
 import { ElMessage } from 'element-plus'
+import { post } from '@/utils/request'
 
 const router = useRouter()
 const userStore = useUserStore()
@@ -82,17 +83,29 @@ const handleLogin = async () => {
 
     loading.value = true
     try {
-      userStore.setToken('mock-token-' + Date.now())
+      const response = await post<{
+        token: string
+        user: {
+          id: string
+          username: string
+          name: string
+          role: string
+          isActive: boolean
+        }
+      }>('/auth/login', loginForm)
+
+      userStore.setToken(response.data.token)
       userStore.setUserInfo({
-        id: '1',
-        username: loginForm.username,
-        name: '管理员',
-        role: 'ADMIN',
+        id: response.data.user.id,
+        username: response.data.user.username,
+        name: response.data.user.name,
+        role: response.data.user.role as any,
       })
+
       ElMessage.success('登录成功')
       router.push('/dashboard')
-    } catch (error) {
-      ElMessage.error('登录失败')
+    } catch (error: any) {
+      ElMessage.error(error.response?.data?.message || '登录失败')
     } finally {
       loading.value = false
     }

@@ -1,7 +1,9 @@
 import { Injectable, Inject, BadRequestException, ConflictException } from '@nestjs/common';
 import { PrismaService } from '../../common/prisma/prisma.service';
 import Redis from 'ioredis';
-import { InventoryType, InventoryOpType } from '@prisma/client';
+
+type InventoryType = 'MATERIAL' | 'PRODUCT';
+type InventoryOpType = 'INBOUND' | 'OUTBOUND' | 'ADJUST';
 
 export interface InventoryOpResult {
   inventoryId: string;
@@ -23,8 +25,8 @@ export class InventoryEngineService {
 
   async lockMaterial(materialId: string, quantity: number): Promise<boolean> {
     const lockKey = `lock:inventory:material:${materialId}`;
-    const locked = await this.redis.set(lockKey, '1', 'NX', 'PX', 30000);
-    return locked === 'OK';
+    const result = await this.redis.set(lockKey, '1');
+    return result === 'OK';
   }
 
   async unlockMaterial(materialId: string): Promise<void> {
