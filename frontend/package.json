@@ -1,0 +1,14 @@
+{
+  "name": "map-navigation-frontend",
+  "version": "1.0.0",
+  "description": "地图导航与路线规划系统前端",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "dependencies": {
+    "cors": "^2.8.6",
+    "dotenv": "^16.6.1",
+    "express": "^4.22.1"
+  }
+}

@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>地图导航与路线规划系统</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <div id="app">
+        <header class="header">
+            <div class="header-content">
+                <h1>🗺️ 地图导航与路线规划系统</h1>
+                <div class="header-actions">
+                    <select id="roleSelector" class="role-selector">
+                        <option value="OPERATOR">运营</option>
+                        <option value="USER">用户</option>
+                        <option value="DRIVER">司机</option>
+                        <option value="DISPATCHER">调度员</option>
+                        <option value="MAP_PROVIDER">地图服务商</option>
+                    </select>
+                    <select id="userSelector" class="user-selector" style="display:none;">
+                    </select>
+                </div>
+            </div>
+        </header>
+
+        <nav class="nav">
+            <div class="nav-tabs">
+                <button class="nav-tab active" data-page="dashboard">📊 看板</button>
+                <button class="nav-tab" data-page="orders">📋 订单列表</button>
+                <button class="nav-tab" data-page="create">➕ 新建订单</button>
+                <button class="nav-tab" data-page="exceptions">⚠️ 异常处理</button>
+                <button class="nav-tab" data-page="reports">📈 报表中心</button>
+                <button class="nav-tab" data-page="messages">💬 消息中心</button>
+            </div>
+        </nav>
+
+        <main class="main">
+            <div id="page-dashboard" class="page active">
+                <div class="page-header">
+                    <h2>数据看板</h2>
+                </div>
+                <div id="dashboard-content" class="dashboard-content">
+                </div>
+            </div>
+
+            <div id="page-orders" class="page">
+                <div class="page-header">
+                    <h2>订单列表</h2>
+                    <div class="filter-bar">
+                        <select id="status-filter">
+                            <option value="">全部状态</option>
+                        </select>
+                        <button class="btn btn-primary" id="refresh-orders">🔄 刷新</button>
+                    </div>
+                </div>
+                <div id="orders-table" class="table-container">
+                </div>
+            </div>
+
+            <div id="page-create" class="page">
+                <div class="page-header">
+                    <h2>新建导航订单</h2>
+                </div>
+                <div class="form-container">
+                    <form id="create-order-form">
+                        <div class="form-section">
+                            <h3>📍 位置信息</h3>
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label>起点纬度 *</label>
+                                    <input type="number" step="any" id="origin_lat" value="39.8947" required>
+                                </div>
+                                <div class="form-group">
+                                    <label>起点经度 *</label>
+                                    <input type="number" step="any" id="origin_lng" value="116.3225" required>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label>起点地址</label>
+                                <input type="text" id="origin_address" placeholder="如：北京西站" value="北京西站">
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label>终点纬度 *</label>
+                                    <input type="number" step="any" id="dest_lat" value="39.9055" required>
+                                </div>
+                                <div class="form-group">
+                                    <label>终点经度 *</label>
+                                    <input type="number" step="any" id="dest_lng" value="116.3976" required>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label>终点地址</label>
+                                <input type="text" id="dest_address" placeholder="如：天安门广场" value="天安门广场">
+                            </div>
+                        </div>
+
+                        <div class="form-section">
+                            <h3>📋 订单信息</h3>
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label>期望到达时间</label>
+                                    <input type="datetime-local" id="expected_arrival_time">
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-actions">
+                            <button type="submit" class="btn btn-primary btn-large">创建订单</button>
+                            <button type="reset" class="btn btn-secondary">重置</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+            <div id="page-order-detail" class="page">
+                <div class="page-header">
+                    <button class="btn btn-secondary" id="back-to-orders">← 返回列表</button>
+                    <h2 id="detail-order-no">订单详情</h2>
+                </div>
+                <div id="order-detail-content">
+                </div>
+            </div>
+
+            <div id="page-exceptions" class="page">
+                <div class="page-header">
+                    <h2>异常处理</h2>
+                    <button class="btn btn-primary" id="refresh-exceptions">🔄 刷新</button>
+                </div>
+                <div id="exceptions-table" class="table-container">
+                </div>
+            </div>
+
+            <div id="page-reports" class="page">
+                <div class="page-header">
+                    <h2>报表中心</h2>
+                </div>
+                <div class="reports-menu">
+                    <button class="btn btn-secondary report-type" data-report="order-summary">订单汇总</button>
+                    <button class="btn btn-secondary report-type" data-report="exception-analysis">异常分析</button>
+                </div>
+                <div id="report-content" class="table-container">
+                </div>
+            </div>
+
+            <div id="page-messages" class="page">
+                <div class="page-header">
+                    <h2>消息中心</h2>
+                    <div class="filter-bar">
+                        <label>
+                            <input type="checkbox" id="unread-only" checked> 仅显示未读
+                        </label>
+                        <button class="btn btn-primary" id="refresh-messages">🔄 刷新</button>
+                    </div>
+                </div>
+                <div id="messages-list">
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <div id="modal-overlay" class="modal-overlay hidden">
+        <div class="modal" id="modal-content">
+        </div>
+    </div>
+
+    <div id="toast-container" class="toast-container"></div>
+
+    <script src="js/config.js"></script>
+    <script src="js/api.js"></script>
+    <script src="js/app.js"></script>
+</body>
+</html>

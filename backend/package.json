@@ -1,0 +1,17 @@
+{
+  "name": "map-navigation-backend",
+  "version": "1.0.0",
+  "description": "地图导航与路线规划系统后端",
+  "main": "src/app.js",
+  "scripts": {
+    "start": "node src/app.js",
+    "dev": "node src/app.js"
+  },
+  "dependencies": {
+    "cors": "^2.8.6",
+    "dotenv": "^16.6.1",
+    "express": "^4.22.1",
+    "joi": "^17.13.3",
+    "uuid": "^9.0.1"
+  }
+}
