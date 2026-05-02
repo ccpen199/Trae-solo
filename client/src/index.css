@@ -1,0 +1,372 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  background-color: #f5f5f5;
+}
+
+#root {
+  min-height: 100vh;
+}
+
+.ant-layout {
+  min-height: 100vh;
+}
+
+.ant-layout-sider {
+  background: #001529;
+}
+
+.ant-menu-dark {
+  background: #001529;
+}
+
+.ant-layout-content {
+  background: #f5f5f5;
+  padding: 24px;
+}
+
+.page-header {
+  background: #fff;
+  padding: 16px 24px;
+  margin: -24px -24px 24px -24px;
+  border-bottom: 1px solid #f0f0f0;
+}
+
+.card-hover:hover {
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  transform: translateY(-2px);
+  transition: all 0.3s ease;
+}
+
+.course-card {
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.course-card:hover {
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.video-player-container {
+  background: #000;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.progress-bar {
+  height: 8px;
+  border-radius: 4px;
+}
+
+.status-tag {
+  font-size: 12px;
+}
+
+.login-container {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+}
+
+.login-card {
+  width: 400px;
+  padding: 40px;
+  border-radius: 12px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+}
+
+.login-header {
+  text-align: center;
+  margin-bottom: 32px;
+}
+
+.login-header h1 {
+  margin-bottom: 8px;
+  color: #1890ff;
+}
+
+.login-header p {
+  color: #666;
+  margin: 0;
+}
+
+.role-selector {
+  display: flex;
+  gap: 12px;
+  margin-bottom: 24px;
+}
+
+.role-card {
+  flex: 1;
+  padding: 16px;
+  border: 2px solid #e8e8e8;
+  border-radius: 8px;
+  text-align: center;
+  cursor: pointer;
+  transition: all 0.3s;
+}
+
+.role-card:hover {
+  border-color: #1890ff;
+}
+
+.role-card.active {
+  border-color: #1890ff;
+  background: #e6f7ff;
+}
+
+.role-card .role-icon {
+  font-size: 32px;
+  margin-bottom: 8px;
+}
+
+.role-card .role-name {
+  font-weight: 600;
+  margin-bottom: 4px;
+}
+
+.role-card .role-desc {
+  font-size: 12px;
+  color: #999;
+}
+
+.dashboard-stat-card {
+  text-align: center;
+  padding: 24px;
+}
+
+.dashboard-stat-card .stat-value {
+  font-size: 32px;
+  font-weight: bold;
+  color: #1890ff;
+}
+
+.dashboard-stat-card .stat-label {
+  color: #666;
+  margin-top: 8px;
+}
+
+.chapter-list {
+  max-height: 600px;
+  overflow-y: auto;
+}
+
+.lesson-item {
+  display: flex;
+  align-items: center;
+  padding: 12px 16px;
+  cursor: pointer;
+  border-radius: 4px;
+  transition: background 0.2s;
+}
+
+.lesson-item:hover {
+  background: #f5f5f5;
+}
+
+.lesson-item.active {
+  background: #e6f7ff;
+  border-left: 3px solid #1890ff;
+}
+
+.lesson-item.completed {
+  color: #52c41a;
+}
+
+.question-card {
+  margin-bottom: 16px;
+}
+
+.question-card .question-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 12px;
+}
+
+.question-card .question-content {
+  margin-bottom: 16px;
+}
+
+.question-card .question-footer {
+  display: flex;
+  gap: 16px;
+  color: #999;
+  font-size: 14px;
+}
+
+.answer-card {
+  background: #fafafa;
+  border-left: 3px solid #1890ff;
+  padding: 16px;
+  margin-bottom: 12px;
+}
+
+.answer-card.accepted {
+  border-left-color: #52c41a;
+  background: #f6ffed;
+}
+
+.answer-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 12px;
+}
+
+.answer-content {
+  margin-bottom: 12px;
+}
+
+.answer-footer {
+  display: flex;
+  gap: 16px;
+  color: #999;
+  font-size: 14px;
+}
+
+.certificate-card {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: #fff;
+  padding: 40px;
+  text-align: center;
+  border-radius: 12px;
+}
+
+.certificate-card .certificate-title {
+  font-size: 24px;
+  font-weight: bold;
+  margin-bottom: 16px;
+}
+
+.certificate-card .certificate-no {
+  font-size: 14px;
+  opacity: 0.8;
+  margin-bottom: 24px;
+}
+
+.certificate-card .certificate-content {
+  background: rgba(255, 255, 255, 0.1);
+  padding: 24px;
+  border-radius: 8px;
+  margin-bottom: 24px;
+}
+
+.assignment-preview {
+  padding: 24px;
+  background: #fff;
+  border-radius: 8px;
+}
+
+.question-item {
+  margin-bottom: 24px;
+  padding: 16px;
+  background: #fafafa;
+  border-radius: 8px;
+}
+
+.question-item .question-number {
+  font-weight: bold;
+  color: #1890ff;
+  margin-right: 8px;
+}
+
+.question-item .question-type {
+  font-size: 12px;
+  color: #999;
+  margin-left: 8px;
+}
+
+.question-item .question-content {
+  margin: 12px 0;
+  font-size: 15px;
+}
+
+.question-item .options {
+  margin-top: 12px;
+}
+
+.question-item .option-item {
+  padding: 8px 12px;
+  margin: 8px 0;
+  border: 1px solid #d9d9d9;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.question-item .option-item:hover {
+  border-color: #1890ff;
+  background: #e6f7ff;
+}
+
+.question-item .option-item.selected {
+  border-color: #1890ff;
+  background: #e6f7ff;
+}
+
+.question-item .option-item.correct {
+  border-color: #52c41a;
+  background: #f6ffed;
+}
+
+.question-item .option-item.wrong {
+  border-color: #ff4d4f;
+  background: #fff2f0;
+}
+
+.student-list-table .ant-table-thead > tr > th {
+  background: #fafafa;
+}
+
+.action-buttons {
+  display: flex;
+  gap: 8px;
+}
+
+.stat-card {
+  text-align: center;
+  padding: 24px;
+  border-radius: 8px;
+}
+
+.stat-card.blue {
+  background: #e6f7ff;
+}
+
+.stat-card.green {
+  background: #f6ffed;
+}
+
+.stat-card.orange {
+  background: #fff7e6;
+}
+
+.stat-card.purple {
+  background: #f9f0ff;
+}
+
+.stat-card .stat-icon {
+  font-size: 32px;
+  margin-bottom: 12px;
+}
+
+.stat-card .stat-value {
+  font-size: 28px;
+  font-weight: bold;
+  margin-bottom: 8px;
+}
+
+.stat-card .stat-label {
+  color: #666;
+  font-size: 14px;
+}
