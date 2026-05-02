@@ -1,0 +1,21 @@
+{
+  "name": "cicd-platform-backend",
+  "version": "1.0.0",
+  "description": "CI/CD 持续集成平台 - 后端服务",
+  "main": "src/index.js",
+  "scripts": {
+    "start": "node src/index.js",
+    "dev": "node src/index.js"
+  },
+  "dependencies": {
+    "express": "^4.18.2",
+    "cors": "^2.8.5",
+    "better-sqlite3": "^9.2.2",
+    "uuid": "^9.0.0",
+    "bcryptjs": "^2.4.3",
+    "dotenv": "^16.3.1",
+    "body-parser": "^1.20.2",
+    "express-validator": "^7.0.1"
+  },
+  "keywords": ["cicd", "pipeline", "continuous-integration", "continuous-deployment"]
+}
