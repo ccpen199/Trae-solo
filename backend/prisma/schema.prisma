@@ -1,0 +1,365 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum RoomStatus {
+  VACANT
+  OCCUPIED
+  DIRTY
+  MAINTENANCE
+  RESERVED
+}
+
+enum RoomType {
+  STANDARD
+  DELUXE
+  SUITE
+  FAMILY
+}
+
+enum ReservationStatus {
+  PENDING
+  CONFIRMED
+  CHECKED_IN
+  CHECKED_OUT
+  CANCELLED
+  NO_SHOW
+}
+
+enum ChannelType {
+  DIRECT
+  OTA_CTRIP
+  OTA_FLIGGY
+  OTA_MEITUAN
+  OTA_BOOKING
+}
+
+enum BillStatus {
+  OPEN
+  PARTIAL_PAID
+  SETTLED
+  REFUNDED
+}
+
+enum CleanTaskStatus {
+  PENDING
+  ASSIGNED
+  IN_PROGRESS
+  COMPLETED
+  INSPECTED
+  CANCELLED
+}
+
+enum UserRole {
+  FRONT_DESK
+  HOUSEKEEPING
+  CHANNEL_MANAGER
+  ADMIN
+}
+
+model User {
+  id              String    @id @default(uuid())
+  username        String    @unique
+  password        String
+  name            String
+  role            UserRole
+  isActive        Boolean   @default(true)
+  createdAt       DateTime  @default(now())
+  updatedAt       DateTime  @updatedAt
+  cleanTasks      CleanTask[]
+
+  @@index([role])
+}
+
+model Room {
+  id              String      @id @default(uuid())
+  roomNumber      String      @unique
+  floor           Int
+  type            RoomType
+  status          RoomStatus  @default(VACANT)
+  maxGuests       Int         @default(2)
+  basePrice       Decimal     @db.Decimal(10, 2)
+  description     String?
+  amenities       String[]
+  createdAt       DateTime    @default(now())
+  updatedAt       DateTime    @updatedAt
+  reservations    Reservation[]
+  checkIns        CheckIn[]
+  cleanTasks      CleanTask[]
+
+  @@index([status])
+  @@index([floor])
+  @@index([type])
+}
+
+model Guest {
+  id              String      @id @default(uuid())
+  name            String
+  idCardNumber    String?     @unique
+  phone           String?
+  email           String?
+  address         String?
+  nationality     String?     @default("CN")
+  createdAt       DateTime    @default(now())
+  updatedAt       DateTime    @updatedAt
+  reservations    Reservation[]
+  checkIns        CheckIn[]
+  guestLedgers    GuestLedger[]
+
+  @@index([idCardNumber])
+  @@index([phone])
+}
+
+model Channel {
+  id              String      @id @default(uuid())
+  name            String
+  type            ChannelType @unique
+  isActive        Boolean     @default(true)
+  commissionRate  Decimal     @db.Decimal(5, 4)
+  config          Json?
+  createdAt       DateTime    @default(now())
+  updatedAt       DateTime    @updatedAt
+  reservations    Reservation[]
+}
+
+model Reservation {
+  id              String            @id @default(uuid())
+  reservationNo   String            @unique
+  channelId       String
+  channel         Channel           @relation(fields: [channelId], references: [id])
+  guestId         String
+  guest           Guest             @relation(fields: [guestId], references: [id])
+  roomId          String?
+  room            Room?             @relation(fields: [roomId], references: [id])
+  roomType        RoomType
+  status          ReservationStatus @default(PENDING)
+  checkInDate     DateTime
+  checkOutDate    DateTime
+  adultCount      Int               @default(1)
+  childCount      Int               @default(0)
+  totalNights     Int
+  roomRate        Decimal           @db.Decimal(10, 2)
+  totalAmount     Decimal           @db.Decimal(10, 2)
+  depositAmount   Decimal           @db.Decimal(10, 2) @default(0)
+  specialRequests String?
+  sourceOrderNo   String?
+  isSync          Boolean           @default(false)
+  syncError       String?
+  createdAt       DateTime          @default(now())
+  updatedAt       DateTime          @updatedAt
+  checkIn         CheckIn?
+  bill            Bill?
+
+  @@index([status])
+  @@index([checkInDate])
+  @@index([checkOutDate])
+  @@index([channelId])
+  @@index([guestId])
+}
+
+model CheckIn {
+  id              String      @id @default(uuid())
+  reservationId   String?
+  reservation     Reservation? @relation(fields: [reservationId], references: [id])
+  roomId          String
+  room            Room        @relation(fields: [roomId], references: [id])
+  guestId         String
+  guest           Guest       @relation(fields: [guestId], references: [id])
+  checkInNo       String      @unique
+  checkInTime     DateTime    @default(now())
+  expectedCheckOutTime DateTime
+  actualCheckOutTime DateTime?
+  adultCount      Int         @default(1)
+  childCount      Int         @default(0)
+  depositAmount   Decimal     @db.Decimal(10, 2) @default(0)
+  idCardVerified  Boolean     @default(false)
+  isGroup         Boolean     @default(false)
+  groupId         String?
+  createdAt       DateTime    @default(now())
+  updatedAt       DateTime    @updatedAt
+  bill            Bill?
+
+  @@index([checkInTime])
+  @@index([roomId])
+  @@index([guestId])
+}
+
+model Bill {
+  id              String      @id @default(uuid())
+  billNo          String      @unique
+  reservationId   String?
+  reservation     Reservation? @relation(fields: [reservationId], references: [id])
+  checkInId       String?
+  checkIn         CheckIn?    @relation(fields: [checkInId], references: [id])
+  guestId         String
+  status          BillStatus  @default(OPEN)
+  totalAmount     Decimal     @db.Decimal(10, 2) @default(0)
+  paidAmount      Decimal     @db.Decimal(10, 2) @default(0)
+  discountAmount  Decimal     @db.Decimal(10, 2) @default(0)
+  balance         Decimal     @db.Decimal(10, 2) @default(0)
+  settleTime      DateTime?
+  createdAt       DateTime    @default(now())
+  updatedAt       DateTime    @updatedAt
+  items           BillItem[]
+  payments        Payment[]
+
+  @@index([status])
+  @@index([guestId])
+}
+
+model BillItem {
+  id              String      @id @default(uuid())
+  billId          String
+  bill            Bill        @relation(fields: [billId], references: [id])
+  itemType        String
+  description     String
+  quantity        Int         @default(1)
+  unitPrice       Decimal     @db.Decimal(10, 2)
+  amount          Decimal     @db.Decimal(10, 2)
+  operatorId      String?
+  operatorName    String?
+  transactionTime DateTime    @default(now())
+  remark          String?
+  createdAt       DateTime    @default(now())
+
+  @@index([billId])
+  @@index([itemType])
+}
+
+model Payment {
+  id              String      @id @default(uuid())
+  billId          String
+  bill            Bill        @relation(fields: [billId], references: [id])
+  paymentMethod   String
+  amount          Decimal     @db.Decimal(10, 2)
+  transactionNo   String?
+  operatorId      String?
+  operatorName    String?
+  paymentTime     DateTime    @default(now())
+  remark          String?
+  createdAt       DateTime    @default(now())
+
+  @@index([billId])
+}
+
+model GuestLedger {
+  id              String      @id @default(uuid())
+  guestId         String
+  guest           Guest       @relation(fields: [guestId], references: [id])
+  transactionType String
+  amount          Decimal     @db.Decimal(10, 2)
+  balance         Decimal     @db.Decimal(10, 2)
+  referenceType   String?
+  referenceId     String?
+  description     String?
+  operatorId      String?
+  operatorName    String?
+  transactionTime DateTime    @default(now())
+  createdAt       DateTime    @default(now())
+
+  @@index([guestId])
+}
+
+model CleanTask {
+  id              String          @id @default(uuid())
+  taskNo          String          @unique
+  roomId          String
+  room            Room            @relation(fields: [roomId], references: [id])
+  assigneeId      String?
+  assignee        User?           @relation(fields: [assigneeId], references: [id])
+  status          CleanTaskStatus @default(PENDING)
+  taskType        String
+  priority        Int             @default(1)
+  dueTime         DateTime?
+  startTime       DateTime?
+  completeTime    DateTime?
+  inspectTime     DateTime?
+  remark          String?
+  createdAt       DateTime        @default(now())
+  updatedAt       DateTime        @updatedAt
+
+  @@index([status])
+  @@index([roomId])
+  @@index([assigneeId])
+}
+
+model RoomStatusHistory {
+  id              String      @id @default(uuid())
+  roomId          String
+  fromStatus      RoomStatus
+  toStatus        RoomStatus
+  operatorId      String?
+  operatorName    String?
+  reason          String?
+  referenceType   String?
+  referenceId     String?
+  createdAt       DateTime    @default(now())
+
+  @@index([roomId])
+  @@index([createdAt])
+}
+
+model ChannelSyncLog {
+  id              String      @id @default(uuid())
+  channelId       String
+  syncType        String
+  referenceType   String?
+  referenceId     String?
+  isSuccess       Boolean
+  errorMessage    String?
+  requestData     Json?
+  responseData    Json?
+  syncTime        DateTime    @default(now())
+  createdAt       DateTime    @default(now())
+
+  @@index([channelId])
+  @@index([syncTime])
+}
+
+model AuditLog {
+  id              String      @id @default(uuid())
+  operatorId      String?
+  operatorName    String?
+  operatorRole    String?
+  action          String
+  module          String
+  targetType      String?
+  targetId        String?
+  oldValue        Json?
+  newValue        Json?
+  ipAddress       String?
+  userAgent       String?
+  createdAt       DateTime    @default(now())
+
+  @@index([operatorId])
+  @@index([module])
+  @@index([createdAt])
+}
+
+model DailyReport {
+  id              String      @id @default(uuid())
+  reportDate      DateTime    @unique
+  totalRooms      Int
+  occupiedRooms   Int
+  vacantRooms     Int
+  occupancyRate   Decimal     @db.Decimal(5, 4)
+  totalRevenue    Decimal     @db.Decimal(12, 2)
+  roomRevenue     Decimal     @db.Decimal(12, 2)
+  otherRevenue    Decimal     @db.Decimal(12, 2)
+  avgDailyRate    Decimal     @db.Decimal(10, 2)
+  revpar          Decimal     @db.Decimal(10, 2)
+  checkIns        Int
+  checkOuts       Int
+  reservations    Int
+  cancellations   Int
+  noShows         Int
+  createdAt       DateTime    @default(now())
+  updatedAt       DateTime    @updatedAt
+
+  @@index([reportDate])
+}

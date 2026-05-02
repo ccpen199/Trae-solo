@@ -1,0 +1,171 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  background-color: #f5f5f5;
+}
+
+#root {
+  min-height: 100vh;
+}
+
+.room-status-card {
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.room-status-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.room-status-vacant {
+  background: linear-gradient(135deg, #52c41a 0%, #73d13d 100%) !important;
+  border-color: #389e0d !important;
+}
+
+.room-status-occupied {
+  background: linear-gradient(135deg, #1890ff 0%, #40a9ff 100%) !important;
+  border-color: #096dd9 !important;
+}
+
+.room-status-dirty {
+  background: linear-gradient(135deg, #faad14 0%, #ffc53d 100%) !important;
+  border-color: #d48806 !important;
+}
+
+.room-status-maintenance {
+  background: linear-gradient(135deg, #ff4d4f 0%, #ff7875 100%) !important;
+  border-color: #cf1322 !important;
+}
+
+.room-status-reserved {
+  background: linear-gradient(135deg, #722ed1 0%, #9254de 100%) !important;
+  border-color: #531dab !important;
+}
+
+.room-status-text-white {
+  color: white !important;
+}
+
+.ant-layout {
+  min-height: 100vh;
+}
+
+.ant-layout-sider {
+  background: #001529 !important;
+}
+
+.ant-menu-dark {
+  background: #001529 !important;
+}
+
+.ant-layout-header {
+  background: #fff !important;
+  padding: 0 24px;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.08);
+}
+
+.ant-layout-content {
+  margin: 24px;
+  background: #fff;
+  padding: 24px;
+  border-radius: 8px;
+  min-height: auto;
+}
+
+.login-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+}
+
+.login-card {
+  width: 400px;
+  padding: 40px;
+  border-radius: 12px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+}
+
+.login-title {
+  text-align: center;
+  margin-bottom: 32px;
+}
+
+.dashboard-stats-card {
+  text-align: center;
+}
+
+.dashboard-stats-card .ant-statistic-title {
+  margin-bottom: 8px;
+}
+
+.room-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+  gap: 12px;
+}
+
+.room-card {
+  height: 80px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.room-card:hover {
+  transform: scale(1.05);
+}
+
+.room-number {
+  font-size: 20px;
+  font-weight: bold;
+  color: white;
+}
+
+.room-type {
+  font-size: 12px;
+  color: rgba(255, 255, 255, 0.9);
+  margin-top: 4px;
+}
+
+.status-legend {
+  display: flex;
+  gap: 16px;
+  flex-wrap: wrap;
+  margin-bottom: 16px;
+}
+
+.status-legend-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.status-legend-color {
+  width: 16px;
+  height: 16px;
+  border-radius: 4px;
+}
+
+.floor-selector {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 16px;
+}
+
+.floor-btn {
+  min-width: 60px;
+}
