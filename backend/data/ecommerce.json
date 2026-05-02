@@ -1,0 +1,363 @@
+{
+  "users": [
+    {
+      "id": 1,
+      "username": "operation",
+      "password": "$2a$10$54rtZcfLeYHwNtV3dckok.wpAs5CijWQ3RJRNGyNZYD5bfFsPJ.zK",
+      "role": "operation",
+      "name": "运营主管",
+      "email": "operation@example.com",
+      "phone": "13800138001",
+      "status": "active",
+      "created_at": "2026-04-27T12:56:26.764Z",
+      "updated_at": "2026-04-27T12:56:26.769Z"
+    },
+    {
+      "id": 2,
+      "username": "purchase",
+      "password": "$2a$10$54rtZcfLeYHwNtV3dckok.wpAs5CijWQ3RJRNGyNZYD5bfFsPJ.zK",
+      "role": "purchase",
+      "name": "采购专员",
+      "email": "purchase@example.com",
+      "phone": "13800138002",
+      "status": "active",
+      "created_at": "2026-04-27T12:56:26.769Z",
+      "updated_at": "2026-04-27T12:56:26.769Z"
+    },
+    {
+      "id": 3,
+      "username": "warehouse",
+      "password": "$2a$10$54rtZcfLeYHwNtV3dckok.wpAs5CijWQ3RJRNGyNZYD5bfFsPJ.zK",
+      "role": "warehouse",
+      "name": "仓库管理员",
+      "email": "warehouse@example.com",
+      "phone": "13800138003",
+      "status": "active",
+      "created_at": "2026-04-27T12:56:26.769Z",
+      "updated_at": "2026-04-27T12:56:26.769Z"
+    },
+    {
+      "id": 4,
+      "username": "customer_service",
+      "password": "$2a$10$54rtZcfLeYHwNtV3dckok.wpAs5CijWQ3RJRNGyNZYD5bfFsPJ.zK",
+      "role": "customer_service",
+      "name": "客服专员",
+      "email": "customer_service@example.com",
+      "phone": "13800138004",
+      "status": "active",
+      "created_at": "2026-04-27T12:56:26.769Z",
+      "updated_at": "2026-04-27T12:56:26.769Z"
+    }
+  ],
+  "shops": [
+    {
+      "id": 1,
+      "name": "Amazon美国站",
+      "platform": "amazon",
+      "status": "active",
+      "auth_token": "mock_token_amazon",
+      "refresh_token": "mock_refresh",
+      "token_expires_at": "2026-04-28T12:56:26.769Z",
+      "shop_config": {
+        "processing_chain": []
+      },
+      "created_at": "2026-04-27T12:56:26.769Z",
+      "updated_at": "2026-04-27T12:56:26.769Z"
+    },
+    {
+      "id": 2,
+      "name": "eBay英国站",
+      "platform": "ebay",
+      "status": "active",
+      "auth_token": "mock_token_ebay",
+      "refresh_token": "mock_refresh",
+      "token_expires_at": "2026-04-28T12:56:26.769Z",
+      "shop_config": {
+        "processing_chain": []
+      },
+      "created_at": "2026-04-27T12:56:26.769Z",
+      "updated_at": "2026-04-27T12:56:26.769Z"
+    }
+  ],
+  "products": [
+    {
+      "id": 1,
+      "name": "无线蓝牙耳机",
+      "description": "高品质无线蓝牙耳机，支持降噪功能",
+      "category": "电子产品",
+      "brand": "AudioTech",
+      "images": [],
+      "attributes": {
+        "color": "黑色",
+        "noise_cancellation": true
+      },
+      "status": "active",
+      "created_at": "2026-04-27T12:56:26.769Z",
+      "updated_at": "2026-04-27T12:56:26.769Z"
+    },
+    {
+      "id": 2,
+      "name": "智能手表",
+      "description": "多功能智能手表，支持心率监测",
+      "category": "电子产品",
+      "brand": "SmartWatch",
+      "images": [],
+      "attributes": {
+        "color": "银色",
+        "size": "42mm"
+      },
+      "status": "active",
+      "created_at": "2026-04-27T12:56:26.769Z",
+      "updated_at": "2026-04-27T12:56:26.769Z"
+    }
+  ],
+  "skus": [
+    {
+      "id": 1,
+      "product_id": 1,
+      "sku_code": "SKU-BT-HP-001",
+      "attributes": {
+        "color": "黑色"
+      },
+      "price": 79.99,
+      "cost": 35,
+      "stock": 150,
+      "min_stock": 20,
+      "platform_skus": {
+        "amazon": "AMZ-BT-HP-001",
+        "ebay": "EBY-BT-HP-001"
+      },
+      "created_at": "2026-04-27T12:56:26.769Z",
+      "updated_at": "2026-04-27T12:56:26.769Z"
+    },
+    {
+      "id": 2,
+      "product_id": 1,
+      "sku_code": "SKU-BT-HP-002",
+      "attributes": {
+        "color": "白色"
+      },
+      "price": 79.99,
+      "cost": 35,
+      "stock": 8,
+      "min_stock": 20,
+      "platform_skus": {
+        "amazon": "AMZ-BT-HP-002",
+        "ebay": "EBY-BT-HP-002"
+      },
+      "created_at": "2026-04-27T12:56:26.769Z",
+      "updated_at": "2026-04-27T12:56:26.769Z"
+    },
+    {
+      "id": 3,
+      "product_id": 2,
+      "sku_code": "SKU-SW-001",
+      "attributes": {
+        "color": "银色",
+        "size": "42mm"
+      },
+      "price": 199.99,
+      "cost": 85,
+      "stock": 44,
+      "min_stock": 10,
+      "platform_skus": {
+        "amazon": "AMZ-SW-001",
+        "ebay": "EBY-SW-001"
+      },
+      "created_at": "2026-04-27T12:56:26.769Z",
+      "updated_at": "2026-04-29T07:05:38.462Z"
+    }
+  ],
+  "orders": [
+    {
+      "id": 1,
+      "shop_id": 1,
+      "platform_order_id": "AMZN-2024-001234",
+      "platform": "amazon",
+      "customer_info": {
+        "name": "John Smith",
+        "email": "john.smith@email.com",
+        "address": {
+          "street": "123 Main St",
+          "city": "New York",
+          "state": "NY",
+          "zip": "10001",
+          "country": "US"
+        }
+      },
+      "items": [
+        {
+          "sku_id": 1,
+          "sku_code": "SKU-BT-HP-001",
+          "name": "无线蓝牙耳机",
+          "price": 79.99,
+          "quantity": 1
+        }
+      ],
+      "total_amount": 79.99,
+      "currency": "USD",
+      "status": "processing",
+      "payment_status": "paid",
+      "shipping_status": "unshipped",
+      "sync_status": "synced",
+      "merge_order_id": null,
+      "processing_chain": [
+        {
+          "action": "sync",
+          "message": "Order synced from Amazon",
+          "timestamp": "2026-04-27T12:56:26.769Z"
+        },
+        {
+          "action": "auto_review",
+          "message": "Order auto-reviewed and confirmed",
+          "timestamp": "2026-04-27T12:56:26.769Z"
+        }
+      ],
+      "platform_created_at": "2026-04-25T12:56:26.769Z",
+      "created_at": "2026-04-27T12:56:26.769Z",
+      "updated_at": "2026-04-27T12:56:26.769Z"
+    },
+    {
+      "id": 2,
+      "shop_id": 2,
+      "platform_order_id": "EBY-2024-005678",
+      "platform": "ebay",
+      "customer_info": {
+        "name": "Emma Johnson",
+        "email": "emma.j@email.com",
+        "address": {
+          "street": "456 Oak Ave",
+          "city": "London",
+          "state": "England",
+          "zip": "SW1A",
+          "country": "UK"
+        }
+      },
+      "items": [
+        {
+          "sku_id": 3,
+          "sku_code": "SKU-SW-001",
+          "name": "智能手表",
+          "price": 199.99,
+          "quantity": 1
+        }
+      ],
+      "total_amount": 199.99,
+      "currency": "USD",
+      "status": "shipped",
+      "payment_status": "paid",
+      "shipping_status": "shipped",
+      "sync_status": "synced",
+      "merge_order_id": null,
+      "processing_chain": [
+        {
+          "action": "sync",
+          "message": "Order synced from eBay",
+          "timestamp": "2026-04-27T12:56:26.769Z"
+        },
+        {
+          "action": "confirm",
+          "message": "Order confirmed by operation",
+          "timestamp": "2026-04-29T07:05:24.301Z"
+        },
+        {
+          "action": "process",
+          "message": "Order processed by operation, stock deducted",
+          "timestamp": "2026-04-29T07:05:38.462Z"
+        },
+        {
+          "action": "ship",
+          "message": "Order shipped via DHL by warehouse",
+          "timestamp": "2026-04-29T07:05:50.393Z"
+        }
+      ],
+      "platform_created_at": "2026-04-26T12:56:26.769Z",
+      "created_at": "2026-04-27T12:56:26.769Z",
+      "updated_at": "2026-04-29T07:05:50.393Z"
+    }
+  ],
+  "shipments": [
+    {
+      "id": 1,
+      "order_id": 2,
+      "tracking_number": "DHL-789012345",
+      "carrier": "DHL",
+      "status": "picked",
+      "shipping_address": {
+        "street": "456 Oak Ave",
+        "city": "London",
+        "state": "England",
+        "zip": "SW1A",
+        "country": "UK"
+      },
+      "estimated_delivery": "2026-05-06T07:05:50.393Z",
+      "actual_delivery": null,
+      "package_info": {},
+      "created_at": "2026-04-29T07:05:50.394Z",
+      "updated_at": "2026-04-29T07:05:50.394Z"
+    }
+  ],
+  "after_sales": [],
+  "costs": [
+    {
+      "id": 1,
+      "type": "purchase",
+      "amount": 35,
+      "currency": "USD",
+      "related_type": "sku",
+      "related_id": 1,
+      "description": "Purchase cost for SKU-BT-HP-001",
+      "cost_date": "2026-04-27",
+      "created_at": "2026-04-27T12:56:26.769Z"
+    },
+    {
+      "id": 2,
+      "type": "shipping",
+      "amount": 5,
+      "currency": "USD",
+      "related_type": "order",
+      "related_id": 1,
+      "description": "Shipping cost",
+      "cost_date": "2026-04-27",
+      "created_at": "2026-04-27T12:56:26.769Z"
+    },
+    {
+      "id": 3,
+      "type": "platform_fee",
+      "amount": 12,
+      "currency": "USD",
+      "related_type": "order",
+      "related_id": 1,
+      "description": "Amazon platform fee",
+      "cost_date": "2026-04-27",
+      "created_at": "2026-04-27T12:56:26.769Z"
+    },
+    {
+      "id": 4,
+      "type": "shipping",
+      "amount": 5,
+      "currency": "USD",
+      "related_type": "order",
+      "related_id": 2,
+      "description": "Shipping cost via DHL",
+      "cost_date": "2026-04-29",
+      "created_at": "2026-04-29T07:05:50.395Z"
+    }
+  ],
+  "alerts": [
+    {
+      "id": 1,
+      "type": "inventory",
+      "message": "Low stock alert for SKU-BT-HP-002: 8 (min: 20)",
+      "level": "warning",
+      "status": "pending",
+      "related_type": "sku",
+      "related_id": 2,
+      "assigned_to": null,
+      "resolved_at": null,
+      "created_at": "2026-04-27T12:56:26.769Z",
+      "updated_at": "2026-04-27T12:56:26.769Z"
+    }
+  ],
+  "logs": []
+}
