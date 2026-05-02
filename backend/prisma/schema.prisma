@@ -1,0 +1,291 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = "file:./dev.db"
+}
+
+model User {
+  id              String    @id @default(uuid())
+  username        String    @unique
+  password        String
+  name            String
+  role            String    @default("PATIENT")
+  email           String?
+  phone           String?
+  avatar          String?
+  gender          String?   @default("UNKNOWN")
+  birthDate       DateTime?
+  idNumber        String?
+  address         String?
+  emergencyContact String?
+  emergencyPhone  String?
+  isActive        Boolean   @default(true)
+  lastLoginAt     DateTime?
+  createdAt       DateTime  @default(now())
+  updatedAt       DateTime  @updatedAt
+
+  doctor          Doctor?
+  appointments    Appointment[]
+  registrations   Registration[]
+  payments        Payment[]
+  auditLogs       AuditLog[]
+  notifications   Notification[]
+}
+
+model Department {
+  id              String    @id @default(uuid())
+  name            String
+  code            String    @unique
+  description     String?
+  parentId        String?
+  sortOrder       Int       @default(0)
+  isActive        Boolean   @default(true)
+  floor           String?
+  roomNumber      String?
+  createdAt       DateTime  @default(now())
+  updatedAt       DateTime  @updatedAt
+
+  parent          Department? @relation("DepartmentHierarchy", fields: [parentId], references: [id])
+  children        Department[] @relation("DepartmentHierarchy")
+  doctors         Doctor[]
+  schedules       Schedule[]
+  appointments    Appointment[]
+  registrations   Registration[]
+  queueItems      QueueItem[]
+}
+
+model Doctor {
+  id              String    @id @default(uuid())
+  userId          String    @unique
+  departmentId    String
+  title           String    @default("ATTENDING")
+  specialties     String
+  introduction    String?
+  consultationFee Decimal   @default(50.00)
+  isActive        Boolean   @default(true)
+  createdAt       DateTime  @default(now())
+  updatedAt       DateTime  @updatedAt
+
+  user            User      @relation(fields: [userId], references: [id])
+  department      Department @relation(fields: [departmentId], references: [id])
+  schedules       Schedule[]
+  appointments    Appointment[]
+  registrations   Registration[]
+  queueItems      QueueItem[]
+}
+
+model Schedule {
+  id              String    @id @default(uuid())
+  doctorId        String
+  departmentId    String
+  date            DateTime
+  type            String    @default("MORNING")
+  startTime       String
+  endTime         String
+  totalSlots      Int       @default(20)
+  availableSlots  Int       @default(20)
+  roomNumber      String?
+  isActive        Boolean   @default(true)
+  createdAt       DateTime  @default(now())
+  updatedAt       DateTime  @updatedAt
+
+  doctor          Doctor    @relation(fields: [doctorId], references: [id])
+  department      Department @relation(fields: [departmentId], references: [id])
+  slots           TimeSlot[]
+  appointments    Appointment[]
+  registrations   Registration[]
+}
+
+model TimeSlot {
+  id              String    @id @default(uuid())
+  doctorId        String
+  scheduleId      String
+  startTime       String
+  endTime         String
+  status          String    @default("AVAILABLE")
+  lockedBy        String?
+  lockedAt        DateTime?
+  lockExpiresAt   DateTime?
+  createdAt       DateTime  @default(now())
+  updatedAt       DateTime  @updatedAt
+
+  schedule        Schedule  @relation(fields: [scheduleId], references: [id])
+  appointments    Appointment[]
+  registrations   Registration[]
+}
+
+model Appointment {
+  id              String    @id @default(uuid())
+  patientId       String
+  doctorId        String
+  departmentId    String
+  scheduleId      String
+  slotId          String
+  appointmentDate DateTime
+  status          String    @default("PENDING")
+  queueNumber     Int?
+  estimatedTime   String?
+  notes           String?
+  cancelReason    String?
+  cancelledAt     DateTime?
+  createdAt       DateTime  @default(now())
+  updatedAt       DateTime  @updatedAt
+
+  patient         User      @relation(fields: [patientId], references: [id])
+  doctor          Doctor    @relation(fields: [doctorId], references: [id])
+  department      Department @relation(fields: [departmentId], references: [id])
+  schedule        Schedule  @relation(fields: [scheduleId], references: [id])
+  slot            TimeSlot  @relation(fields: [slotId], references: [id])
+  registration    Registration?
+  payment         Payment?
+}
+
+model Registration {
+  id              String    @id @default(uuid())
+  appointmentId   String?   @unique
+  patientId       String
+  doctorId        String
+  departmentId    String
+  scheduleId      String
+  slotId          String
+  registrationDate DateTime
+  queueNumber     Int
+  status          String    @default("PENDING")
+  registrationType String   @default("ONLINE")
+  isInsurance     Boolean   @default(false)
+  fee             Decimal   @default(0.00)
+  checkedInAt     DateTime?
+  consultationStartTime DateTime?
+  consultationEndTime DateTime?
+  notes           String?
+  createdAt       DateTime  @default(now())
+  updatedAt       DateTime  @updatedAt
+
+  appointment     Appointment? @relation(fields: [appointmentId], references: [id])
+  patient         User      @relation(fields: [patientId], references: [id])
+  doctor          Doctor    @relation(fields: [doctorId], references: [id])
+  department      Department @relation(fields: [departmentId], references: [id])
+  schedule        Schedule  @relation(fields: [scheduleId], references: [id])
+  slot            TimeSlot  @relation(fields: [slotId], references: [id])
+  payment         Payment?
+  queueItem       QueueItem?
+  refunds         Refund[]
+}
+
+model Payment {
+  id              String    @id @default(uuid())
+  registrationId  String?   @unique
+  appointmentId   String?   @unique
+  patientId       String
+  amount          Decimal   @default(0.00)
+  status          String    @default("PENDING")
+  method          String?
+  transactionId   String?
+  paidAt          DateTime?
+  refundAmount    Decimal   @default(0.00)
+  refundedAt      DateTime?
+  notes           String?
+  createdAt       DateTime  @default(now())
+  updatedAt       DateTime  @updatedAt
+
+  registration    Registration? @relation(fields: [registrationId], references: [id])
+  appointment     Appointment? @relation(fields: [appointmentId], references: [id])
+  patient         User      @relation(fields: [patientId], references: [id])
+  refunds         Refund[]
+}
+
+model Refund {
+  id              String    @id @default(uuid())
+  paymentId       String
+  registrationId  String?
+  appointmentId   String?
+  amount          Decimal   @default(0.00)
+  status          String    @default("PENDING")
+  reason          String    @default("PATIENT_REQUEST")
+  reasonDetail    String?
+  transactionId   String?
+  processedAt     DateTime?
+  processedBy     String?
+  notes           String?
+  createdAt       DateTime  @default(now())
+  updatedAt       DateTime  @updatedAt
+
+  payment         Payment   @relation(fields: [paymentId], references: [id])
+  registration    Registration? @relation(fields: [registrationId], references: [id])
+}
+
+model QueueItem {
+  id              String    @id @default(uuid())
+  registrationId  String    @unique
+  doctorId        String
+  departmentId    String
+  queueDate       DateTime
+  queueNumber     Int
+  displayNumber   String
+  status          String    @default("WAITING")
+  calledAt        DateTime?
+  calledBy        String?
+  consultationStartTime DateTime?
+  consultationEndTime DateTime?
+  sortOrder       Int       @default(0)
+  isPriority      Boolean   @default(false)
+  priorityReason  String?
+  createdAt       DateTime  @default(now())
+  updatedAt       DateTime  @updatedAt
+
+  registration    Registration @relation(fields: [registrationId], references: [id])
+  doctor          Doctor    @relation(fields: [doctorId], references: [id])
+  department      Department @relation(fields: [departmentId], references: [id])
+}
+
+model AuditLog {
+  id              String    @id @default(uuid())
+  module          String
+  action          String
+  userId          String?
+  userName        String?
+  userRole        String?
+  resourceType    String?
+  resourceId      String?
+  entityId        String?
+  entityType      String?
+  resourceName    String?
+  oldValue        String?
+  newValue        String?
+  changes         String?
+  details         String?
+  ipAddress       String?
+  userAgent       String?
+  requestId       String?
+  createdAt       DateTime  @default(now())
+
+  user            User?     @relation(fields: [userId], references: [id])
+}
+
+model SystemConfig {
+  id              String    @id @default(uuid())
+  key             String    @unique
+  value           String
+  description     String?
+  isEncrypted     Boolean   @default(false)
+  createdAt       DateTime  @default(now())
+  updatedAt       DateTime  @updatedAt
+}
+
+model Notification {
+  id              String    @id @default(uuid())
+  userId          String
+  title           String
+  content         String
+  type            String    @default("INFO")
+  isRead          Boolean   @default(false)
+  readAt          DateTime?
+  resourceType    String?
+  resourceId      String?
+  createdAt       DateTime  @default(now())
+
+  user            User      @relation(fields: [userId], references: [id])
+}
