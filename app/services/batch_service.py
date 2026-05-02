@@ -63,7 +63,7 @@ class BatchService:
             status=BatchStatus.DRAFT,
             tags_enabled=False,
             tags_count=0,
-            metadata=metadata,
+            extra_data=extra_data,
         )
         
         self.session.add(batch)
