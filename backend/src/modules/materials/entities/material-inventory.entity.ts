@@ -53,10 +53,10 @@ export class MaterialInventory extends BaseEntity {
   @Column({ name: 'currency', default: 'CNY' })
   currency: string;
 
-  @Column({ name: 'expiry_date', type: 'timestamp', nullable: true })
+  @Column({ name: 'expiry_date', type: 'datetime', nullable: true })
   expiryDate: Date;
 
-  @Column({ name: 'received_date', type: 'timestamp', nullable: true })
+  @Column({ name: 'received_date', type: 'datetime', nullable: true })
   receivedDate: Date;
 
   @Column({ name: 'status', default: 'active' })
@@ -68,7 +68,7 @@ export class MaterialInventory extends BaseEntity {
   @Column({ name: 'quality_status', nullable: true })
   qualityStatus: string;
 
-  @Column({ name: 'quality_check_date', type: 'timestamp', nullable: true })
+  @Column({ name: 'quality_check_date', type: 'datetime', nullable: true })
   qualityCheckDate: Date;
 
   @Column({ name: 'quality_check_by', type: 'uuid', nullable: true })
@@ -77,6 +77,6 @@ export class MaterialInventory extends BaseEntity {
   @Column({ name: 'notes', type: 'text', nullable: true })
   notes: string;
 
-  @Column({ name: 'custom_attributes', type: 'jsonb', nullable: true })
+  @Column({ name: 'custom_attributes', type: 'json', nullable: true })
   customAttributes: { [key: string]: any };
 }

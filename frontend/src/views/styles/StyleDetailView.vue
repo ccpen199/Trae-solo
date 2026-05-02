@@ -269,10 +269,8 @@ const bomStatusOptions: Record<string, string> = {
 
 const fetchStyleDetail = async () => {
   try {
-    const res = await stylesApi.findOne(styleId.value)
-    if (res.success && res.data) {
-      style.value = res.data
-    }
+    const data = await stylesApi.findOne(styleId.value)
+    style.value = data
   } catch (error) {
     console.error('获取款式详情失败:', error)
   }
@@ -284,10 +282,8 @@ const handleEdit = () => {
 
 const handleSubmitPattern = async () => {
   try {
-    const res = await stylesApi.submitForPattern(styleId.value)
-    if (res.success) {
-      fetchStyleDetail()
-    }
+    await stylesApi.submitForPattern(styleId.value)
+    fetchStyleDetail()
   } catch (error) {
     console.error('提交打版失败:', error)
   }
@@ -295,10 +291,8 @@ const handleSubmitPattern = async () => {
 
 const handleConfirmPattern = async () => {
   try {
-    const res = await stylesApi.confirmPattern(styleId.value)
-    if (res.success) {
-      fetchStyleDetail()
-    }
+    await stylesApi.confirmPattern(styleId.value)
+    fetchStyleDetail()
   } catch (error) {
     console.error('确认打版失败:', error)
   }
@@ -306,11 +300,9 @@ const handleConfirmPattern = async () => {
 
 const handleViewHistory = async () => {
   try {
-    const res = await stylesApi.getHistory(styleId.value)
-    if (res.success && res.data) {
-      styleHistory.value = res.data
-      historyDialogVisible.value = true
-    }
+    const data = await stylesApi.getHistory(styleId.value)
+    styleHistory.value = data
+    historyDialogVisible.value = true
   } catch (error) {
     console.error('获取历史记录失败:', error)
   }

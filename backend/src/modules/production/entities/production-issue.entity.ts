@@ -53,16 +53,16 @@ export class ProductionIssue extends BaseEntity {
   @JoinColumn({ name: 'assignee_id' })
   assignee: User;
 
-  @Column({ name: 'due_date', type: 'timestamp', nullable: true })
+  @Column({ name: 'due_date', type: 'datetime', nullable: true })
   dueDate: Date;
 
-  @Column({ name: 'reported_at', type: 'timestamp', nullable: true })
+  @Column({ name: 'reported_at', type: 'datetime', nullable: true })
   reportedAt: Date;
 
-  @Column({ name: 'resolved_at', type: 'timestamp', nullable: true })
+  @Column({ name: 'resolved_at', type: 'datetime', nullable: true })
   resolvedAt: string;
 
-  @Column({ name: 'closed_at', type: 'timestamp', nullable: true })
+  @Column({ name: 'closed_at', type: 'datetime', nullable: true })
   closedAt: Date;
 
   @Column({ name: 'resolution', type: 'text', nullable: true })
@@ -71,10 +71,10 @@ export class ProductionIssue extends BaseEntity {
   @Column({ name: 'preventive_measures', type: 'text', nullable: true })
   preventiveMeasures: string;
 
-  @Column({ name: 'image_urls', type: 'jsonb', nullable: true })
+  @Column({ name: 'image_urls', type: 'json', nullable: true })
   imageUrls: string[];
 
-  @Column({ name: 'attachment_urls', type: 'jsonb', nullable: true })
+  @Column({ name: 'attachment_urls', type: 'json', nullable: true })
   attachmentUrls: string[];
 
   @Column({ name: 'estimated_delay_hours', type: 'int', nullable: true })
@@ -86,9 +86,9 @@ export class ProductionIssue extends BaseEntity {
   @Column({ name: 'cost_impact', type: 'decimal', precision: 12, scale: 2, nullable: true })
   costImpact: number;
 
-  @Column({ name: 'tags', type: 'jsonb', nullable: true })
+  @Column({ name: 'tags', type: 'json', nullable: true })
   tags: string[];
 
-  @Column({ name: 'custom_attributes', type: 'jsonb', nullable: true })
+  @Column({ name: 'custom_attributes', type: 'json', nullable: true })
   customAttributes: { [key: string]: any };
 }

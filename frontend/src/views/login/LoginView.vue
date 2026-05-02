@@ -106,15 +106,13 @@ const handleLogin = async () => {
           password: loginForm.password,
         })
         
-        if (res.success && res.data) {
-          userStore.setToken(res.data.accessToken)
-          userStore.setUserInfo(res.data.user)
-          
-          ElMessage.success('登录成功')
-          
-          const redirect = (route.query.redirect as string) || '/dashboard'
-          router.push(redirect)
-        }
+        userStore.setToken(res.accessToken)
+        userStore.setUserInfo(res.user)
+        
+        ElMessage.success('登录成功')
+        
+        const redirect = (route.query.redirect as string) || '/dashboard'
+        router.push(redirect)
       } catch (error) {
         console.error('登录失败:', error)
       } finally {

@@ -61,7 +61,7 @@ export class PurchaseOrderItem extends BaseEntity {
   @Column({ name: 'supplier_item_code', nullable: true })
   supplierItemCode: string;
 
-  @Column({ name: 'expected_delivery_date', type: 'timestamp', nullable: true })
+  @Column({ name: 'expected_delivery_date', type: 'datetime', nullable: true })
   expectedDeliveryDate: Date;
 
   @Column({ name: 'is_received', default: false })
@@ -73,6 +73,6 @@ export class PurchaseOrderItem extends BaseEntity {
   @Column({ name: 'notes', type: 'text', nullable: true })
   notes: string;
 
-  @Column({ name: 'custom_attributes', type: 'jsonb', nullable: true })
+  @Column({ name: 'custom_attributes', type: 'json', nullable: true })
   customAttributes: { [key: string]: any };
 }

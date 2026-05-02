@@ -40,13 +40,13 @@ export class ProductionProgress extends BaseEntity {
   @Column({ name: 'progress_percentage', type: 'decimal', precision: 5, scale: 2, default: 0 })
   progressPercentage: number;
 
-  @Column({ name: 'started_at', type: 'timestamp', nullable: true })
+  @Column({ name: 'started_at', type: 'datetime', nullable: true })
   startedAt: Date;
 
-  @Column({ name: 'completed_at', type: 'timestamp', nullable: true })
+  @Column({ name: 'completed_at', type: 'datetime', nullable: true })
   completedAt: Date;
 
-  @Column({ name: 'estimated_completion_at', type: 'timestamp', nullable: true })
+  @Column({ name: 'estimated_completion_at', type: 'datetime', nullable: true })
   estimatedCompletionAt: Date;
 
   @Column({ name: 'workstation', nullable: true })
@@ -61,9 +61,9 @@ export class ProductionProgress extends BaseEntity {
   @Column({ name: 'notes', type: 'text', nullable: true })
   notes: string;
 
-  @Column({ name: 'image_urls', type: 'jsonb', nullable: true })
+  @Column({ name: 'image_urls', type: 'json', nullable: true })
   imageUrls: string[];
 
-  @Column({ name: 'custom_attributes', type: 'jsonb', nullable: true })
+  @Column({ name: 'custom_attributes', type: 'json', nullable: true })
   customAttributes: { [key: string]: any };
 }

@@ -321,29 +321,26 @@ const fetchStyleDetail = async () => {
   if (!isEdit.value) return
   
   try {
-    const res = await stylesApi.findOne(styleId.value)
-    if (res.success && res.data) {
-      const style = res.data
-      formData.name = style.name || ''
-      formData.styleCategory = style.styleCategory || ''
-      formData.season = style.season || ''
-      formData.year = style.year || currentYear
-      formData.targetGender = style.targetGender || ''
-      formData.ageGroup = style.ageGroup || ''
-      formData.description = style.description || ''
-      formData.processRequirements = style.processRequirements || ''
-      formData.detailNotes = style.detailNotes || ''
-      formData.referenceNumber = style.referenceNumber || ''
-      formData.sampleSize = style.sampleSize || ''
-      formData.estimatedProductionQuantity = style.estimatedProductionQuantity || 0
-      formData.targetUnitCost = style.targetUnitCost || 0
-      formData.targetRetailPrice = style.targetRetailPrice || 0
-      formData.priority = style.priority || 3
-      formData.tags = style.tags || []
-      formData.effectImageUrls = style.effectImageUrls || []
-      formData.detailImageUrls = style.detailImageUrls || []
-      formData.sizeChartUrl = style.sizeChartUrl || ''
-    }
+    const style = await stylesApi.findOne(styleId.value)
+    formData.name = style.name || ''
+    formData.styleCategory = style.styleCategory || ''
+    formData.season = style.season || ''
+    formData.year = style.year || currentYear
+    formData.targetGender = style.targetGender || ''
+    formData.ageGroup = style.ageGroup || ''
+    formData.description = style.description || ''
+    formData.processRequirements = style.processRequirements || ''
+    formData.detailNotes = style.detailNotes || ''
+    formData.referenceNumber = style.referenceNumber || ''
+    formData.sampleSize = style.sampleSize || ''
+    formData.estimatedProductionQuantity = style.estimatedProductionQuantity || 0
+    formData.targetUnitCost = style.targetUnitCost || 0
+    formData.targetRetailPrice = style.targetRetailPrice || 0
+    formData.priority = style.priority || 3
+    formData.tags = style.tags || []
+    formData.effectImageUrls = style.effectImageUrls || []
+    formData.detailImageUrls = style.detailImageUrls || []
+    formData.sizeChartUrl = style.sizeChartUrl || ''
   } catch (error) {
     console.error('获取款式详情失败:', error)
   }
@@ -417,15 +414,12 @@ const handleSaveAndSubmit = async () => {
           tags: formData.tags,
         }
         
-        let styleRes
         if (isEdit.value) {
           await stylesApi.update(styleId.value, params)
           await stylesApi.submitForPattern(styleId.value)
         } else {
-          styleRes = await stylesApi.create(params)
-          if (styleRes.success && styleRes.data) {
-            await stylesApi.submitForPattern(styleRes.data.id)
-          }
+          const newStyle = await stylesApi.create(params)
+          await stylesApi.submitForPattern(newStyle.id)
         }
         
         router.push('/styles')

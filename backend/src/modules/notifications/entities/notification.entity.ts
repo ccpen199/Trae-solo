@@ -13,8 +13,7 @@ export class Notification extends BaseEntity {
   user: User;
 
   @Column({
-    type: 'enum',
-    enum: NotificationType,
+    type: 'varchar', length: 50,
   })
   type: NotificationType;
 
@@ -27,7 +26,7 @@ export class Notification extends BaseEntity {
   @Column({ name: 'is_read', default: false })
   isRead: boolean;
 
-  @Column({ name: 'read_at', type: 'timestamp', nullable: true })
+  @Column({ name: 'read_at', type: 'datetime', nullable: true })
   readAt: Date;
 
   @Column({ name: 'related_entity_type', nullable: true })
@@ -51,12 +50,12 @@ export class Notification extends BaseEntity {
   @Column({ name: 'priority', type: 'int', default: 1 })
   priority: number;
 
-  @Column({ name: 'expires_at', type: 'timestamp', nullable: true })
+  @Column({ name: 'expires_at', type: 'datetime', nullable: true })
   expiresAt: Date;
 
-  @Column({ name: 'data', type: 'jsonb', nullable: true })
+  @Column({ name: 'data', type: 'json', nullable: true })
   data: { [key: string]: any };
 
-  @Column({ name: 'tags', type: 'jsonb', nullable: true })
+  @Column({ name: 'tags', type: 'json', nullable: true })
   tags: string[];
 }

@@ -1,8 +1,8 @@
 import { Injectable, Logger } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository, Like, In } from 'typeorm';
-import { Style } from '../../styles/entities/style.entity';
-import { StyleStatus } from '../../common/enums/style-status.enum';
+import { Style } from '@/modules/styles/entities/style.entity';
+import { StyleStatus } from '@/common/enums/style-status.enum';
 
 @Injectable()
 export class StyleLibraryEngine {

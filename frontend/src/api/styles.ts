@@ -1,5 +1,5 @@
-import request from './index'
-import type { Style, StyleHistory, PaginatedResponse, ApiResponse } from '@/types'
+import { api } from './index'
+import type { Style, StyleHistory, PaginatedResponse } from '@/types'
 
 export interface CreateStyleParams {
   name: string;
@@ -52,39 +52,39 @@ export interface ConfirmPatternParams {
 
 export const stylesApi = {
   create: (params: CreateStyleParams) => {
-    return request.post<ApiResponse<Style>>('/styles', params)
+    return api.post<Style>('/styles', params)
   },
 
   findAll: (params?: QueryStylesParams) => {
-    return request.get<ApiResponse<PaginatedResponse<Style>>>('/styles', { params })
+    return api.get<PaginatedResponse<Style>>('/styles', params)
   },
 
   findOne: (id: string) => {
-    return request.get<ApiResponse<Style>>(`/styles/${id}`)
+    return api.get<Style>(`/styles/${id}`)
   },
 
   findByNumber: (styleNumber: string) => {
-    return request.get<ApiResponse<Style>>(`/styles/by-number/${styleNumber}`)
+    return api.get<Style>(`/styles/by-number/${styleNumber}`)
   },
 
   update: (id: string, params: UpdateStyleParams) => {
-    return request.patch<ApiResponse<Style>>(`/styles/${id}`, params)
+    return api.patch<Style>(`/styles/${id}`, params)
   },
 
   remove: (id: string) => {
-    return request.delete<ApiResponse<void>>(`/styles/${id}`)
+    return api.delete<void>(`/styles/${id}`)
   },
 
   submitForPattern: (id: string, params?: SubmitForPatternParams) => {
-    return request.post<ApiResponse<Style>>(`/styles/${id}/submit-for-pattern`, params)
+    return api.post<Style>(`/styles/${id}/submit-for-pattern`, params)
   },
 
   confirmPattern: (id: string, params?: ConfirmPatternParams) => {
-    return request.post<ApiResponse<Style>>(`/styles/${id}/confirm-pattern`, params)
+    return api.post<Style>(`/styles/${id}/confirm-pattern`, params)
   },
 
   getHistory: (id: string) => {
-    return request.get<ApiResponse<StyleHistory[]>>(`/styles/${id}/history`)
+    return api.get<StyleHistory[]>(`/styles/${id}/history`)
   },
 
   searchLibrary: (params?: {
@@ -96,23 +96,23 @@ export const stylesApi = {
     page?: number;
     pageSize?: number;
   }) => {
-    return request.get<ApiResponse<PaginatedResponse<Style>>>('/styles/library/search', { params })
+    return api.get<PaginatedResponse<Style>>('/styles/library/search', params)
   },
 
   markAsReusable: (id: string, params?: { tags?: string[] }) => {
-    return request.post<ApiResponse<Style>>(`/styles/${id}/mark-reusable`, params)
+    return api.post<Style>(`/styles/${id}/mark-reusable`, params)
   },
 
   getSimilar: (id: string, limit?: number) => {
-    return request.get<ApiResponse<Style[]>>(`/styles/${id}/similar`, { params: { limit } })
+    return api.get<Style[]>(`/styles/${id}/similar`, { limit })
   },
 
   getStatistics: () => {
-    return request.get<ApiResponse<{
+    return api.get<{
       total: number;
       byStatus: Record<string, number>;
       bySeason: Record<string, number>;
       byCategory: Record<string, number>;
-    }>>('/styles/statistics')
+    }>('/styles/statistics')
   },
 }

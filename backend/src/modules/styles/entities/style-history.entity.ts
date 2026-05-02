@@ -22,16 +22,14 @@ export class StyleHistory extends BaseEntity {
 
   @Column({
     name: 'old_status',
-    type: 'enum',
-    enum: StyleStatus,
+    type: 'varchar', length: 50,
     nullable: true,
   })
   oldStatus: StyleStatus;
 
   @Column({
     name: 'new_status',
-    type: 'enum',
-    enum: StyleStatus,
+    type: 'varchar', length: 50,
   })
   newStatus: StyleStatus;
 
@@ -41,12 +39,12 @@ export class StyleHistory extends BaseEntity {
   @Column({ name: 'action_description', type: 'text', nullable: true })
   actionDescription: string;
 
-  @Column({ name: 'changed_fields', type: 'jsonb', nullable: true })
+  @Column({ name: 'changed_fields', type: 'json', nullable: true })
   changedFields: { [key: string]: { old: any; new: any } };
 
   @Column({ name: 'remarks', type: 'text', nullable: true })
   remarks: string;
 
-  @Column({ name: 'attachment_urls', type: 'jsonb', nullable: true })
+  @Column({ name: 'attachment_urls', type: 'json', nullable: true })
   attachmentUrls: string[];
 }

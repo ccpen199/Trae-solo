@@ -1,9 +1,9 @@
 import { Injectable, Logger } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository, EntityManager } from 'typeorm';
-import { ProductionOrder } from '../../production/entities/production-order.entity';
-import { ProductionProgress } from '../../production/entities/production-progress.entity';
-import { ProductionOrderStatus } from '../../common/enums/production-status.enum';
+import { ProductionOrder } from '@/modules/production/entities/production-order.entity';
+import { ProductionProgress } from '@/modules/production/entities/production-progress.entity';
+import { ProductionOrderStatus } from '@/common/enums/production-status.enum';
 
 @Injectable()
 export class ProductionSyncEngine {
@@ -137,8 +137,8 @@ export class ProductionSyncEngine {
     }
 
     if (allStagesCompleted && totalCompleted >= productionOrder.orderQuantity) {
-      if (productionOrder.status !== ProductionOrderStatus.PRODUCTION_COMPLETED) {
-        productionOrder.status = ProductionOrderStatus.PRODUCTION_COMPLETED;
+      if (productionOrder.status !== ProductionOrderStatus.COMPLETED) {
+        productionOrder.status = ProductionOrderStatus.COMPLETED;
         productionOrder.completedAt = new Date();
       }
     } else if (totalCompleted > 0) {
@@ -224,7 +224,7 @@ export class ProductionSyncEngine {
       }
 
       if (
-        productionOrder.status !== ProductionOrderStatus.PENDING_PRODUCTION &&
+        productionOrder.status !== ProductionOrderStatus.MATERIALS_READY &&
         productionOrder.status !== ProductionOrderStatus.SCHEDULED
       ) {
         throw new Error(`生产工单状态不允许开始生产: ${productionOrder.status}`);
@@ -263,7 +263,7 @@ export class ProductionSyncEngine {
         throw new Error(`生产工单状态不允许完成: ${productionOrder.status}`);
       }
 
-      productionOrder.status = ProductionOrderStatus.PRODUCTION_COMPLETED;
+      productionOrder.status = ProductionOrderStatus.COMPLETED;
       productionOrder.completedAt = new Date();
       productionOrder.quantityProduced = productionOrder.orderQuantity;
       productionOrder.quantityQualityPassed =

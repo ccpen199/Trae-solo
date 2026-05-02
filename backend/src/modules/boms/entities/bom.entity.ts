@@ -26,8 +26,7 @@ export class Bom extends BaseEntity {
   pattern: Pattern;
 
   @Column({
-    type: 'enum',
-    enum: BomStatus,
+    type: 'varchar', length: 50,
     default: BomStatus.DRAFT,
   })
   status: BomStatus;
@@ -41,7 +40,7 @@ export class Bom extends BaseEntity {
   @Column({ name: 'parent_bom_id', type: 'uuid', nullable: true })
   parentBomId: string;
 
-  @Column({ name: 'sizes', type: 'jsonb', nullable: true })
+  @Column({ name: 'sizes', type: 'json', nullable: true })
   sizes: string[];
 
   @Column({ name: 'production_quantity', type: 'int', default: 0 })
@@ -53,13 +52,13 @@ export class Bom extends BaseEntity {
   @Column({ name: 'generated_by', type: 'uuid', nullable: true })
   generatedBy: string;
 
-  @Column({ name: 'generated_at', type: 'timestamp', nullable: true })
+  @Column({ name: 'generated_at', type: 'datetime', nullable: true })
   generatedAt: Date;
 
   @Column({ name: 'confirmed_by', type: 'uuid', nullable: true })
   confirmedBy: string;
 
-  @Column({ name: 'confirmed_at', type: 'timestamp', nullable: true })
+  @Column({ name: 'confirmed_at', type: 'datetime', nullable: true })
   confirmedAt: Date;
 
   @Column({ name: 'total_fabric_cost', type: 'decimal', precision: 15, scale: 2, default: 0 })
@@ -83,7 +82,7 @@ export class Bom extends BaseEntity {
   @Column({ name: 'special_instructions', type: 'text', nullable: true })
   specialInstructions: string;
 
-  @Column({ name: 'tags', type: 'jsonb', nullable: true })
+  @Column({ name: 'tags', type: 'json', nullable: true })
   tags: string[];
 
   @OneToMany(() => BomItem, (item) => item.bom, { cascade: true })

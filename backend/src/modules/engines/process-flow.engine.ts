@@ -1,13 +1,13 @@
 import { Injectable, Logger } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository, EntityManager } from 'typeorm';
-import { Style } from '../../styles/entities/style.entity';
-import { StyleStatus } from '../../common/enums/style-status.enum';
-import { PatternStatus } from '../../common/enums/pattern-status.enum';
-import { BomStatus } from '../../common/enums/bom-status.enum';
-import { PurchaseOrderStatus } from '../../common/enums/purchase-status.enum';
-import { ProductionOrderStatus } from '../../common/enums/production-status.enum';
-import { StyleHistory } from '../../styles/entities/style-history.entity';
+import { Style } from '@/modules/styles/entities/style.entity';
+import { StyleStatus } from '@/common/enums/style-status.enum';
+import { PatternStatus } from '@/common/enums/pattern-status.enum';
+import { BomStatus } from '@/common/enums/bom-status.enum';
+import { PurchaseOrderStatus } from '@/common/enums/purchase-status.enum';
+import { ProductionOrderStatus } from '@/common/enums/production-status.enum';
+import { StyleHistory } from '@/modules/styles/entities/style-history.entity';
 
 @Injectable()
 export class ProcessFlowEngine {
@@ -167,9 +167,8 @@ export class ProcessFlowEngine {
   ): StyleStatus | null {
     const mapping: { [key in ProductionOrderStatus]?: StyleStatus } = {
       [ProductionOrderStatus.IN_PRODUCTION]: StyleStatus.PRODUCTION_IN_PROGRESS,
-      [ProductionOrderStatus.PRODUCTION_COMPLETED]: StyleStatus.PRODUCTION_COMPLETED,
-      [ProductionOrderStatus.SHIPPED]: StyleStatus.SHIPPED,
       [ProductionOrderStatus.COMPLETED]: StyleStatus.COMPLETED,
+      [ProductionOrderStatus.SHIPPED]: StyleStatus.SHIPPED,
     };
 
     return mapping[productionStatus] || null;

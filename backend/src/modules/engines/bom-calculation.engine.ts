@@ -1,10 +1,10 @@
 import { Injectable, Logger } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
-import { Bom } from '../../boms/entities/bom.entity';
-import { BomItem } from '../../boms/entities/bom-item.entity';
-import { Pattern } from '../../patterns/entities/pattern.entity';
-import { Material } from '../../materials/entities/material.entity';
+import { Bom } from '@/modules/boms/entities/bom.entity';
+import { BomItem } from '@/modules/boms/entities/bom-item.entity';
+import { Pattern } from '@/modules/patterns/entities/pattern.entity';
+import { Material } from '@/modules/materials/entities/material.entity';
 import { NumberGeneratorService } from './number-generator.service';
 
 @Injectable()

@@ -34,8 +34,7 @@ export class ProductionOrder extends BaseEntity {
   factory: User;
 
   @Column({
-    type: 'enum',
-    enum: ProductionOrderStatus,
+    type: 'varchar', length: 50,
     default: ProductionOrderStatus.DRAFT,
   })
   status: ProductionOrderStatus;
@@ -43,22 +42,22 @@ export class ProductionOrder extends BaseEntity {
   @Column({ name: 'order_quantity', type: 'int', default: 0 })
   orderQuantity: number;
 
-  @Column({ name: 'sizes_breakdown', type: 'jsonb', nullable: true })
+  @Column({ name: 'sizes_breakdown', type: 'json', nullable: true })
   sizesBreakdown: SizeBreakdown[];
 
-  @Column({ name: 'scheduled_start_date', type: 'timestamp', nullable: true })
+  @Column({ name: 'scheduled_start_date', type: 'datetime', nullable: true })
   scheduledStartDate: Date;
 
-  @Column({ name: 'scheduled_end_date', type: 'timestamp', nullable: true })
+  @Column({ name: 'scheduled_end_date', type: 'datetime', nullable: true })
   scheduledEndDate: Date;
 
-  @Column({ name: 'actual_start_date', type: 'timestamp', nullable: true })
+  @Column({ name: 'actual_start_date', type: 'datetime', nullable: true })
   actualStartDate: Date;
 
-  @Column({ name: 'actual_end_date', type: 'timestamp', nullable: true })
+  @Column({ name: 'actual_end_date', type: 'datetime', nullable: true })
   actualEndDate: Date;
 
-  @Column({ name: 'delivery_date', type: 'timestamp', nullable: true })
+  @Column({ name: 'delivery_date', type: 'datetime', nullable: true })
   deliveryDate: Date;
 
   @Column({ name: 'production_line', nullable: true })
@@ -100,16 +99,16 @@ export class ProductionOrder extends BaseEntity {
   @Column({ name: 'assigned_by', type: 'uuid', nullable: true })
   assignedBy: string;
 
-  @Column({ name: 'assigned_at', type: 'timestamp', nullable: true })
+  @Column({ name: 'assigned_at', type: 'datetime', nullable: true })
   assignedAt: Date;
 
-  @Column({ name: 'started_at', type: 'timestamp', nullable: true })
+  @Column({ name: 'started_at', type: 'datetime', nullable: true })
   startedAt: Date;
 
-  @Column({ name: 'completed_at', type: 'timestamp', nullable: true })
+  @Column({ name: 'completed_at', type: 'datetime', nullable: true })
   completedAt: Date;
 
-  @Column({ name: 'shipped_at', type: 'timestamp', nullable: true })
+  @Column({ name: 'shipped_at', type: 'datetime', nullable: true })
   shippedAt: Date;
 
   @Column({ name: 'shipping_method', nullable: true })
@@ -124,10 +123,10 @@ export class ProductionOrder extends BaseEntity {
   @Column({ name: 'special_instructions', type: 'text', nullable: true })
   specialInstructions: string;
 
-  @Column({ name: 'tags', type: 'jsonb', nullable: true })
+  @Column({ name: 'tags', type: 'json', nullable: true })
   tags: string[];
 
-  @Column({ name: 'custom_attributes', type: 'jsonb', nullable: true })
+  @Column({ name: 'custom_attributes', type: 'json', nullable: true })
   customAttributes: { [key: string]: any };
 
   @OneToMany(() => ProductionProgress, (progress) => progress.productionOrder)

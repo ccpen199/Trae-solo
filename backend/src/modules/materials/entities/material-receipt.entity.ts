@@ -82,13 +82,13 @@ export class MaterialReceipt extends BaseEntity {
   @Column({ name: 'location', nullable: true })
   location: string;
 
-  @Column({ name: 'received_at', type: 'timestamp', nullable: true })
+  @Column({ name: 'received_at', type: 'datetime', nullable: true })
   receivedAt: Date;
 
   @Column({ name: 'received_by', type: 'uuid', nullable: true })
   receivedBy: string;
 
-  @Column({ name: 'inspected_at', type: 'timestamp', nullable: true })
+  @Column({ name: 'inspected_at', type: 'datetime', nullable: true })
   inspectedAt: Date;
 
   @Column({ name: 'inspected_by', type: 'uuid', nullable: true })
@@ -106,12 +106,12 @@ export class MaterialReceipt extends BaseEntity {
   @Column({ name: 'quality_report_url', nullable: true })
   qualityReportUrl: string;
 
-  @Column({ name: 'expiry_date', type: 'timestamp', nullable: true })
+  @Column({ name: 'expiry_date', type: 'datetime', nullable: true })
   expiryDate: Date;
 
   @Column({ name: 'notes', type: 'text', nullable: true })
   notes: string;
 
-  @Column({ name: 'custom_attributes', type: 'jsonb', nullable: true })
+  @Column({ name: 'custom_attributes', type: 'json', nullable: true })
   customAttributes: { [key: string]: any };
 }

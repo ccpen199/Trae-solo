@@ -1,5 +1,5 @@
-import request from './index'
-import type { User, LoginResult, ApiResponse } from '@/types'
+import { api } from './index'
+import type { User, LoginResult } from '@/types'
 
 export interface LoginParams {
   username: string;
@@ -19,14 +19,14 @@ export interface CreateUserParams {
 
 export const authApi = {
   login: (params: LoginParams) => {
-    return request.post<ApiResponse<LoginResult>>('/auth/login', params)
+    return api.post<LoginResult>('/auth/login', params)
   },
 
   register: (params: CreateUserParams) => {
-    return request.post<ApiResponse<User>>('/auth/register', params)
+    return api.post<User>('/auth/register', params)
   },
 
   getProfile: () => {
-    return request.get<ApiResponse<User>>('/auth/profile')
+    return api.get<User>('/auth/profile')
   },
 }

@@ -99,13 +99,13 @@ export class Material extends BaseEntity {
   @Column({ name: 'image_url', nullable: true })
   imageUrl: string;
 
-  @Column({ name: 'attachment_urls', type: 'jsonb', nullable: true })
+  @Column({ name: 'attachment_urls', type: 'json', nullable: true })
   attachmentUrls: string[];
 
-  @Column({ name: 'tags', type: 'jsonb', nullable: true })
+  @Column({ name: 'tags', type: 'json', nullable: true })
   tags: string[];
 
-  @Column({ name: 'custom_attributes', type: 'jsonb', nullable: true })
+  @Column({ name: 'custom_attributes', type: 'json', nullable: true })
   customAttributes: { [key: string]: any };
 
   @OneToMany(() => BomItem, (item) => item.material)

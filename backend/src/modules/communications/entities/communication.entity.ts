@@ -50,7 +50,7 @@ export class Communication extends BaseEntity {
   @Column({ name: 'is_read', default: false })
   isRead: boolean;
 
-  @Column({ name: 'read_at', type: 'timestamp', nullable: true })
+  @Column({ name: 'read_at', type: 'datetime', nullable: true })
   readAt: Date;
 
   @Column({ name: 'parent_id', type: 'uuid', nullable: true })
@@ -74,21 +74,21 @@ export class Communication extends BaseEntity {
   @Column({ name: 'resolution', type: 'text', nullable: true })
   resolution: string;
 
-  @Column({ name: 'resolved_at', type: 'timestamp', nullable: true })
+  @Column({ name: 'resolved_at', type: 'datetime', nullable: true })
   resolvedAt: Date;
 
   @Column({ name: 'resolved_by', type: 'uuid', nullable: true })
   resolvedBy: string;
 
-  @Column({ name: 'attachment_urls', type: 'jsonb', nullable: true })
+  @Column({ name: 'attachment_urls', type: 'json', nullable: true })
   attachmentUrls: string[];
 
-  @Column({ name: 'image_urls', type: 'jsonb', nullable: true })
+  @Column({ name: 'image_urls', type: 'json', nullable: true })
   imageUrls: string[];
 
-  @Column({ name: 'tags', type: 'jsonb', nullable: true })
+  @Column({ name: 'tags', type: 'json', nullable: true })
   tags: string[];
 
-  @Column({ name: 'custom_attributes', type: 'jsonb', nullable: true })
+  @Column({ name: 'custom_attributes', type: 'json', nullable: true })
   customAttributes: { [key: string]: any };
 }

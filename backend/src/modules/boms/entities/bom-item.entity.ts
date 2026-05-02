@@ -70,10 +70,10 @@ export class BomItem extends BaseEntity {
   @Column({ name: 'placement', nullable: true })
   placement: string;
 
-  @Column({ name: 'sizes_applicable', type: 'jsonb', nullable: true })
+  @Column({ name: 'sizes_applicable', type: 'json', nullable: true })
   sizesApplicable: string[];
 
-  @Column({ name: 'alternative_materials', type: 'jsonb', nullable: true })
+  @Column({ name: 'alternative_materials', type: 'json', nullable: true })
   alternativeMaterials: AlternativeMaterial[];
 
   @Column({ name: 'supplier_id', type: 'uuid', nullable: true })
@@ -97,7 +97,7 @@ export class BomItem extends BaseEntity {
   @Column({ name: 'reference_image_url', nullable: true })
   referenceImageUrl: string;
 
-  @Column({ name: 'tags', type: 'jsonb', nullable: true })
+  @Column({ name: 'tags', type: 'json', nullable: true })
   tags: string[];
 }
 

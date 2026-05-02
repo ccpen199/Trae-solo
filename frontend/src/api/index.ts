@@ -1,6 +1,7 @@
-import axios, { type AxiosInstance, type AxiosRequestConfig } from 'axios'
+import axios, { type AxiosInstance, type AxiosResponse } from 'axios'
 import { ElMessage } from 'element-plus'
 import { useUserStore } from '@/stores/user'
+import type { ApiResponse } from '@/types'
 
 const request: AxiosInstance = axios.create({
   baseURL: '/api',
@@ -25,14 +26,8 @@ request.interceptors.request.use(
 )
 
 request.interceptors.response.use(
-  (response) => {
-    const res = response.data
-    if (res.success) {
-      return res
-    } else {
-      ElMessage.error(res.message || '请求失败')
-      return Promise.reject(new Error(res.message || '请求失败'))
-    }
+  (response: AxiosResponse<ApiResponse<unknown>>) => {
+    return response
   },
   (error) => {
     if (error.response) {
@@ -63,5 +58,48 @@ request.interceptors.response.use(
     return Promise.reject(error)
   },
 )
+
+export const api = {
+  get: async <T>(url: string, params?: unknown) => {
+    const response = await request.get<ApiResponse<T>>(url, { params })
+    const res = response.data as { success: boolean; data?: T; message?: string }
+    if (res.success) {
+      return res.data as T
+    } else {
+      ElMessage.error(res.message || '请求失败')
+      throw new Error(res.message || '请求失败')
+    }
+  },
+  post: async <T>(url: string, data?: unknown) => {
+    const response = await request.post<ApiResponse<T>>(url, data)
+    const res = response.data as { success: boolean; data?: T; message?: string }
+    if (res.success) {
+      return res.data as T
+    } else {
+      ElMessage.error(res.message || '请求失败')
+      throw new Error(res.message || '请求失败')
+    }
+  },
+  patch: async <T>(url: string, data?: unknown) => {
+    const response = await request.patch<ApiResponse<T>>(url, data)
+    const res = response.data as { success: boolean; data?: T; message?: string }
+    if (res.success) {
+      return res.data as T
+    } else {
+      ElMessage.error(res.message || '请求失败')
+      throw new Error(res.message || '请求失败')
+    }
+  },
+  delete: async <T>(url: string) => {
+    const response = await request.delete<ApiResponse<T>>(url)
+    const res = response.data as { success: boolean; data?: T; message?: string }
+    if (res.success) {
+      return res.data as T
+    } else {
+      ElMessage.error(res.message || '请求失败')
+      throw new Error(res.message || '请求失败')
+    }
+  },
+}
 
 export default request

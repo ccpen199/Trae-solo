@@ -14,6 +14,7 @@ import { NotificationsModule } from './modules/notifications/notifications.modul
 import { CommunicationsModule } from './modules/communications/communications.module';
 import { ReportsModule } from './modules/reports/reports.module';
 import { EnginesModule } from './modules/engines/engines.module';
+import { SeedModule } from './modules/seed/seed.module';
 import { JwtAuthGuard } from './modules/auth/guards/jwt-auth.guard';
 import { RolesGuard } from './modules/auth/guards/roles.guard';
 
@@ -23,20 +24,12 @@ import { RolesGuard } from './modules/auth/guards/roles.guard';
       isGlobal: true,
       envFilePath: '.env',
     }),
-    TypeOrmModule.forRootAsync({
-      imports: [ConfigModule],
-      useFactory: (configService: ConfigService) => ({
-        type: 'postgres',
-        host: configService.get('DB_HOST', 'localhost'),
-        port: configService.get('DB_PORT', 5432),
-        username: configService.get('DB_USERNAME', 'postgres'),
-        password: configService.get('DB_PASSWORD', ''),
-        database: configService.get('DB_DATABASE', 'garment_erp'),
-        entities: [__dirname + '/**/*.entity{.ts,.js}'],
-        synchronize: configService.get('NODE_ENV') !== 'production',
-        logging: configService.get('NODE_ENV') === 'development',
-      }),
-      inject: [ConfigService],
+    TypeOrmModule.forRoot({
+      type: 'sqlite',
+      database: 'garment_erp.db',
+      entities: [__dirname + '/**/*.entity{.ts,.js}'],
+      synchronize: true,
+      logging: true,
     }),
     AuthModule,
     UsersModule,
@@ -50,6 +43,7 @@ import { RolesGuard } from './modules/auth/guards/roles.guard';
     CommunicationsModule,
     ReportsModule,
     EnginesModule,
+    SeedModule,
   ],
   providers: [
     {

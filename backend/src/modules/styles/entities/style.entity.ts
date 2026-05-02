@@ -27,8 +27,7 @@ export class Style extends BaseEntity {
   year: number;
 
   @Column({
-    type: 'enum',
-    enum: StyleStatus,
+    type: 'varchar', length: 50,
     default: StyleStatus.DRAFT,
   })
   status: StyleStatus;
@@ -42,16 +41,16 @@ export class Style extends BaseEntity {
   @Column({ name: 'description', type: 'text', nullable: true })
   description: string;
 
-  @Column({ name: 'effect_image_urls', type: 'jsonb', nullable: true })
+  @Column({ name: 'effect_image_urls', type: 'json', nullable: true })
   effectImageUrls: string[];
 
-  @Column({ name: 'detail_image_urls', type: 'jsonb', nullable: true })
+  @Column({ name: 'detail_image_urls', type: 'json', nullable: true })
   detailImageUrls: string[];
 
   @Column({ name: 'size_chart_url', nullable: true })
   sizeChartUrl: string;
 
-  @Column({ name: 'size_specs', type: 'jsonb', nullable: true })
+  @Column({ name: 'size_specs', type: 'json', nullable: true })
   sizeSpecs: SizeSpec[];
 
   @Column({ name: 'process_requirements', type: 'text', nullable: true })
@@ -84,7 +83,7 @@ export class Style extends BaseEntity {
   @Column({ name: 'is_reusable', default: false })
   isReusable: boolean;
 
-  @Column({ name: 'tags', type: 'jsonb', nullable: true })
+  @Column({ name: 'tags', type: 'json', nullable: true })
   tags: string[];
 
   @Column({ name: 'designer_id', type: 'uuid', nullable: true })

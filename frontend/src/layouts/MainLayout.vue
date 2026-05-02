@@ -50,48 +50,7 @@
             <span>物料管理</span>
           </template>
           <el-menu-item v-if="userStore.isPurchaser || userStore.isAdmin" index="/materials">物料列表</el-menu-item>
-          <el-menu-item index="/materials/inventory">库存管理</el-menu-item>
         </el-sub-menu>
-
-        <el-sub-menu v-if="userStore.isPurchaser || userStore.isAdmin" index="purchases">
-          <template #title>
-            <el-icon><ShoppingCart /></el-icon>
-            <span>采购管理</span>
-          </template>
-          <el-menu-item index="/purchases">采购订单</el-menu-item>
-          <el-menu-item index="/purchases/create">新建采购单</el-menu-item>
-        </el-sub-menu>
-
-        <el-sub-menu v-if="userStore.isFactory || userStore.isDesigner || userStore.isAdmin" index="production">
-          <template #title>
-            <el-icon><Connection /></el-icon>
-            <span>生产管理</span>
-          </template>
-          <el-menu-item v-if="userStore.isFactory || userStore.isAdmin" index="/production">生产工单</el-menu-item>
-          <el-menu-item index="/production/issues">异常问题</el-menu-item>
-        </el-sub-menu>
-
-        <el-sub-menu v-if="userStore.isAdmin" index="reports">
-          <template #title>
-            <el-icon><DataAnalysis /></el-icon>
-            <span>报表中心</span>
-          </template>
-          <el-menu-item index="/reports/styles">款式报表</el-menu-item>
-          <el-menu-item index="/reports/production">生产报表</el-menu-item>
-        </el-sub-menu>
-
-        <el-menu-item index="/notifications">
-          <el-icon><Bell /></el-icon>
-          <template #title>
-            通知消息
-            <el-badge v-if="unreadCount > 0" :value="unreadCount" class="notification-badge" />
-          </template>
-        </el-menu-item>
-
-        <el-menu-item index="/communications">
-          <el-icon><ChatDotRound /></el-icon>
-          <template #title>协同沟通</template>
-        </el-menu-item>
       </el-menu>
     </el-aside>
 

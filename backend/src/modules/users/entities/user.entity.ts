@@ -26,8 +26,7 @@ export class User extends BaseEntity {
   name: string;
 
   @Column({
-    type: 'enum',
-    enum: Role,
+    type: 'varchar', length: 50,
     default: Role.DESIGNER,
   })
   role: Role;

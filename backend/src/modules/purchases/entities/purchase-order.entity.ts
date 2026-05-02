@@ -34,8 +34,7 @@ export class PurchaseOrder extends BaseEntity {
   purchaser: User;
 
   @Column({
-    type: 'enum',
-    enum: PurchaseOrderStatus,
+    type: 'varchar', length: 50,
     default: PurchaseOrderStatus.DRAFT,
   })
   status: PurchaseOrderStatus;
@@ -55,13 +54,13 @@ export class PurchaseOrder extends BaseEntity {
   @Column({ name: 'supplier_email', nullable: true })
   supplierEmail: string;
 
-  @Column({ name: 'order_date', type: 'timestamp', nullable: true })
+  @Column({ name: 'order_date', type: 'datetime', nullable: true })
   orderDate: Date;
 
-  @Column({ name: 'expected_delivery_date', type: 'timestamp', nullable: true })
+  @Column({ name: 'expected_delivery_date', type: 'datetime', nullable: true })
   expectedDeliveryDate: Date;
 
-  @Column({ name: 'actual_delivery_date', type: 'timestamp', nullable: true })
+  @Column({ name: 'actual_delivery_date', type: 'datetime', nullable: true })
   actualDeliveryDate: Date;
 
   @Column({ name: 'payment_terms', nullable: true })
@@ -109,13 +108,13 @@ export class PurchaseOrder extends BaseEntity {
   @Column({ name: 'approved_by', type: 'uuid', nullable: true })
   approvedBy: string;
 
-  @Column({ name: 'approved_at', type: 'timestamp', nullable: true })
+  @Column({ name: 'approved_at', type: 'datetime', nullable: true })
   approvedAt: Date;
 
-  @Column({ name: 'sent_to_supplier_at', type: 'timestamp', nullable: true })
+  @Column({ name: 'sent_to_supplier_at', type: 'datetime', nullable: true })
   sentToSupplierAt: Date;
 
-  @Column({ name: 'supplier_confirmed_at', type: 'timestamp', nullable: true })
+  @Column({ name: 'supplier_confirmed_at', type: 'datetime', nullable: true })
   supplierConfirmedAt: Date;
 
   @Column({ name: 'notes', type: 'text', nullable: true })
@@ -124,10 +123,10 @@ export class PurchaseOrder extends BaseEntity {
   @Column({ name: 'internal_notes', type: 'text', nullable: true })
   internalNotes: string;
 
-  @Column({ name: 'tags', type: 'jsonb', nullable: true })
+  @Column({ name: 'tags', type: 'json', nullable: true })
   tags: string[];
 
-  @Column({ name: 'custom_attributes', type: 'jsonb', nullable: true })
+  @Column({ name: 'custom_attributes', type: 'json', nullable: true })
   customAttributes: { [key: string]: any };
 
   @OneToMany(() => PurchaseOrderItem, (item) => item.purchaseOrder, { cascade: true })

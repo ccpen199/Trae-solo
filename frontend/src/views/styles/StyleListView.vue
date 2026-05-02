@@ -63,7 +63,7 @@
         :data="styleList"
         stripe
         @row-click="handleRowClick"
-        :row-class-name="(row) => (row.row.isArchived ? 'archived-row' : '')"
+        :row-class-name="getRowClassName"
       >
         <el-table-column prop="styleNumber" label="款号" width="130" fixed>
           <template #default="{ row }">
@@ -113,7 +113,7 @@
             >
               编辑
             </el-button>
-            <el-dropdown @command="(command) => handleCommand(command, row)">
+            <el-dropdown @command="(command: string) => handleCommand(command, row)">
               <el-button type="primary" text size="small">
                 更多
                 <el-icon><ArrowDown /></el-icon>
@@ -254,10 +254,8 @@ const fetchData = async () => {
     if (queryForm.keyword) params.keyword = queryForm.keyword
 
     const res = await stylesApi.findAll(params)
-    if (res.success && res.data) {
-      styleList.value = res.data.data
-      total.value = res.data.total
-    }
+    styleList.value = res.data
+    total.value = res.total
   } catch (error) {
     console.error('获取款式列表失败:', error)
   } finally {
@@ -291,6 +289,10 @@ const handleEdit = (row: Style) => {
   router.push(`/styles/${row.id}/edit`)
 }
 
+const getRowClassName = ({ row }: { row: Style }) => {
+  return row.isArchived ? 'archived-row' : ''
+}
+
 const handleRowClick = (row: Style) => {
   router.push(`/styles/${row.id}`)
 }
@@ -303,20 +305,16 @@ const handleCommand = async (command: string, row: Style) => {
   switch (command) {
     case 'submitForPattern':
       try {
-        const res = await stylesApi.submitForPattern(row.id)
-        if (res.success) {
-          fetchData()
-        }
+        await stylesApi.submitForPattern(row.id)
+        fetchData()
       } catch (error) {
         console.error('提交打版失败:', error)
       }
       break
     case 'confirmPattern':
       try {
-        const res = await stylesApi.confirmPattern(row.id)
-        if (res.success) {
-          fetchData()
-        }
+        await stylesApi.confirmPattern(row.id)
+        fetchData()
       } catch (error) {
         console.error('确认打版失败:', error)
       }
@@ -324,21 +322,16 @@ const handleCommand = async (command: string, row: Style) => {
     case 'viewHistory':
       currentStyle.value = row
       try {
-        const res = await stylesApi.getHistory(row.id)
-        if (res.success && res.data) {
-          styleHistory.value = res.data
-          historyDialogVisible.value = true
-        }
+        styleHistory.value = await stylesApi.getHistory(row.id)
+        historyDialogVisible.value = true
       } catch (error) {
         console.error('获取历史记录失败:', error)
       }
       break
     case 'markReusable':
       try {
-        const res = await stylesApi.markAsReusable(row.id)
-        if (res.success) {
-          fetchData()
-        }
+        await stylesApi.markAsReusable(row.id)
+        fetchData()
       } catch (error) {
         console.error('标记可复用失败:', error)
       }

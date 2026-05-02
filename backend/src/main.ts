@@ -7,7 +7,7 @@ import { TransformInterceptor } from './common/interceptors/transform.intercepto
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
   
-  app.setGlobalPrefix('api/v1');
+  app.setGlobalPrefix('api');
   
   app.useGlobalPipes(
     new ValidationPipe({
@@ -25,7 +25,7 @@ async function bootstrap() {
     credentials: true,
   });
   
-  const port = process.env.PORT || 3000;
+  const port = process.env.PORT || 9000;
   await app.listen(port);
   console.log(`服装打版与生产协同系统已启动，端口: ${port}`);
 }

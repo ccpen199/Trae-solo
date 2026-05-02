@@ -132,6 +132,7 @@ import { ref, reactive, onMounted } from 'vue'
 import { useRouter } from 'vue-router'
 import { useUserStore } from '@/stores/user'
 import type { Pattern } from '@/types'
+import { PatternStatus } from '@/types'
 import dayjs from 'dayjs'
 
 const router = useRouter()
@@ -166,14 +167,14 @@ const fetchData = async () => {
         id: '1',
         patternNumber: 'PT250001',
         styleId: '1',
-        status: 'submitted',
+        status: PatternStatus.SUBMITTED,
         version: 1,
         isLatest: true,
         sewingDifficulty: 3,
         sizesAvailable: ['S', 'M', 'L', 'XL'],
-        createdAt: '2025-01-15T10:30:00Z',
-        updatedAt: '2025-01-15T14:20:00Z',
-      } as Pattern,
+        createdAt: new Date('2025-01-15T10:30:00Z'),
+        updatedAt: new Date('2025-01-15T14:20:00Z'),
+      },
     ]
     total.value = 1
   } catch (error) {

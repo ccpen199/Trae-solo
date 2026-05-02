@@ -25,8 +25,7 @@ export class Pattern extends BaseEntity {
   patternMaker: User;
 
   @Column({
-    type: 'enum',
-    enum: PatternStatus,
+    type: 'varchar', length: 50,
     default: PatternStatus.PENDING,
   })
   status: PatternStatus;
@@ -40,28 +39,28 @@ export class Pattern extends BaseEntity {
   @Column({ name: 'parent_pattern_id', type: 'uuid', nullable: true })
   parentPatternId: string;
 
-  @Column({ name: 'pattern_file_urls', type: 'jsonb', nullable: true })
+  @Column({ name: 'pattern_file_urls', type: 'json', nullable: true })
   patternFileUrls: string[];
 
   @Column({ name: 'measurement_table_url', nullable: true })
   measurementTableUrl: string;
 
-  @Column({ name: 'measurements', type: 'jsonb', nullable: true })
+  @Column({ name: 'measurements', type: 'json', nullable: true })
   measurements: Measurement[];
 
   @Column({ name: 'process_spec_url', nullable: true })
   processSpecUrl: string;
 
-  @Column({ name: 'process_specs', type: 'jsonb', nullable: true })
+  @Column({ name: 'process_specs', type: 'json', nullable: true })
   processSpecs: ProcessSpec[];
 
-  @Column({ name: 'pattern_pieces', type: 'jsonb', nullable: true })
+  @Column({ name: 'pattern_pieces', type: 'json', nullable: true })
   patternPieces: PatternPiece[];
 
-  @Column({ name: 'grading_rules', type: 'jsonb', nullable: true })
+  @Column({ name: 'grading_rules', type: 'json', nullable: true })
   gradingRules: GradingRule[];
 
-  @Column({ name: 'sizes_available', type: 'jsonb', nullable: true })
+  @Column({ name: 'sizes_available', type: 'json', nullable: true })
   sizesAvailable: string[];
 
   @Column({ name: 'base_size', nullable: true })
@@ -79,7 +78,7 @@ export class Pattern extends BaseEntity {
   @Column({ name: 'interfacing_consumption', type: 'decimal', precision: 10, scale: 2, nullable: true })
   interfacingConsumption: number;
 
-  @Column({ name: 'estimated_materials', type: 'jsonb', nullable: true })
+  @Column({ name: 'estimated_materials', type: 'json', nullable: true })
   estimatedMaterials: EstimatedMaterial[];
 
   @Column({ name: 'sewing_difficulty', type: 'int', default: 1 })
@@ -88,7 +87,7 @@ export class Pattern extends BaseEntity {
   @Column({ name: 'estimated_sewing_time', type: 'int', nullable: true })
   estimatedSewingTime: number;
 
-  @Column({ name: 'special_equipment', type: 'jsonb', nullable: true })
+  @Column({ name: 'special_equipment', type: 'json', nullable: true })
   specialEquipment: string[];
 
   @Column({ name: 'quality_requirements', type: 'text', nullable: true })
@@ -97,10 +96,10 @@ export class Pattern extends BaseEntity {
   @Column({ name: 'pattern_notes', type: 'text', nullable: true })
   patternNotes: string;
 
-  @Column({ name: 'submitted_at', type: 'timestamp', nullable: true })
+  @Column({ name: 'submitted_at', type: 'datetime', nullable: true })
   submittedAt: Date;
 
-  @Column({ name: 'confirmed_at', type: 'timestamp', nullable: true })
+  @Column({ name: 'confirmed_at', type: 'datetime', nullable: true })
   confirmedAt: Date;
 
   @Column({ name: 'confirmed_by', type: 'uuid', nullable: true })
