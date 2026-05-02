@@ -1,0 +1,6 @@
+export { MAP_PROVIDERS, MAP_CONFIG, setMapProvider, getMapProvider, setAmapKey, setBmapAk, getAmapKey, getBmapAk } from './config'
+export { BaseMapAdapter } from './baseAdapter'
+export { SimulatedMapAdapter } from './simulatedAdapter'
+export { AmapAdapter, loadAmapScript } from './amapAdapter'
+export { BmapAdapter, loadBmapScript } from './bmapAdapter'
+export { MapFactory } from './factory'
