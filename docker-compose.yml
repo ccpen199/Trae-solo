@@ -1,0 +1,81 @@
+version: '3.8'
+
+services:
+  postgres:
+    image: postgres:15-alpine
+    container_name: homestay_postgres
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: homestay123
+      POSTGRES_DB: homestay
+    ports:
+      - "5433:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    networks:
+      - homestay_network
+
+  redis:
+    image: redis:7-alpine
+    container_name: homestay_redis
+    command: redis-server --appendonly yes
+    ports:
+      - "6380:6379"
+    volumes:
+      - redis_data:/data
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    networks:
+      - homestay_network
+
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: homestay_backend
+    environment:
+      NODE_ENV: production
+      PORT: 8432
+      DATABASE_URL: postgresql://postgres:homestay123@postgres:5432/homestay?schema=public
+      REDIS_URL: redis://redis:6379
+      JWT_SECRET: homestay-jwt-secret-key-production-2024
+      LOG_LEVEL: info
+    ports:
+      - "8432:8432"
+    depends_on:
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+    networks:
+      - homestay_network
+    restart: unless-stopped
+
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    container_name: homestay_frontend
+    ports:
+      - "5188:80"
+    depends_on:
+      - backend
+    networks:
+      - homestay_network
+    restart: unless-stopped
+
+volumes:
+  postgres_data:
+  redis_data:
+
+networks:
+  homestay_network:
+    driver: bridge

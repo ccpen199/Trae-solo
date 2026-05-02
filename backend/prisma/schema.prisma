@@ -1,0 +1,350 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id              String    @id @default(cuid())
+  username        String    @unique
+  email           String    @unique
+  password        String
+  phone           String?
+  avatar          String?
+  realName        String?
+  idCard          String?
+  role            String    @default("GUEST")
+  isActive        Boolean   @default(true)
+  isVerified      Boolean   @default(false)
+  extraInfo       String?
+  createdAt       DateTime  @default(now())
+  updatedAt       DateTime  @updatedAt
+  lastLoginAt     DateTime?
+  
+  properties      Property[]
+  orders          Order[]
+  payments        Payment[]
+  reviewsAsReviewer Review[] @relation("Reviewer")
+  reviewsAsOwner  Review[]  @relation("Owner")
+  cleaningTasks   CleaningTask[]
+  channelSyncs    ChannelSync[]
+  auditLogs       AuditLog[]
+  
+  @@index([email])
+  @@index([username])
+  @@index([phone])
+  @@index([role])
+}
+
+model Property {
+  id                String        @id @default(cuid())
+  ownerId           String
+  name              String
+  description       String?
+  address           String
+  latitude          Float?
+  longitude         Float?
+  propertyType      String
+  roomCount         Int           @default(1)
+  bedCount          Int           @default(1)
+  bathCount         Int           @default(1)
+  maxGuests         Int           @default(2)
+  pricePerNight     Float
+  depositAmount     Float         @default(0)
+  cleaningFee       Float         @default(0)
+  checkInTime       String        @default("14:00")
+  checkOutTime      String        @default("12:00")
+  amenities         String        @default("[]")
+  houseRules        String        @default("[]")
+  images            String        @default("[]")
+  isActive          Boolean       @default(true)
+  isVerified        Boolean       @default(false)
+  rating            Float         @default(5.0)
+  reviewCount       Int           @default(0)
+  cancellationPolicy String       @default("flexible")
+  extraInfo         String?
+  createdAt         DateTime      @default(now())
+  updatedAt         DateTime      @updatedAt
+  
+  owner             User          @relation(fields: [ownerId], references: [id])
+  calendars         RoomCalendar[]
+  orders            Order[]
+  prices            PriceRule[]
+  cleaningTasks     CleaningTask[]
+  reviews           Review[]
+  channelSyncs      ChannelSync[]
+  
+  @@index([ownerId])
+  @@index([isActive])
+  @@index([pricePerNight])
+}
+
+model RoomCalendar {
+  id              String        @id @default(cuid())
+  propertyId      String
+  date            DateTime
+  status          String        @default("AVAILABLE")
+  price           Float
+  originalPrice   Float
+  isBlocked       Boolean       @default(false)
+  blockReason     String?
+  orderId         String?
+  version         Int           @default(1)
+  createdAt       DateTime      @default(now())
+  updatedAt       DateTime      @updatedAt
+  
+  property        Property      @relation(fields: [propertyId], references: [id])
+  order           Order?        @relation(fields: [orderId], references: [id])
+  
+  @@unique([propertyId, date])
+  @@index([propertyId, date])
+  @@index([status])
+  @@index([orderId])
+}
+
+model Order {
+  id                String          @id @default(cuid())
+  orderNo           String          @unique
+  propertyId        String
+  guestId           String
+  checkInDate       DateTime
+  checkOutDate      DateTime
+  nights            Int
+  guestCount        Int             @default(1)
+  roomPrice         Float
+  cleaningFee       Float           @default(0)
+  depositAmount     Float           @default(0)
+  totalAmount       Float
+  paidAmount        Float           @default(0)
+  refundAmount      Float           @default(0)
+  status            String          @default("PENDING")
+  specialRequests   String?
+  guestInfo         String          @default("{}")
+  checkInCode       String?
+  doorLockCode      String?
+  isLocked          Boolean         @default(false)
+  lockReason        String?
+  cancelledReason   String?
+  cancelledAt       DateTime?
+  confirmedAt       DateTime?
+  checkedInAt       DateTime?
+  checkedOutAt      DateTime?
+  version           Int             @default(1)
+  extraInfo         String?
+  createdAt         DateTime        @default(now())
+  updatedAt         DateTime        @updatedAt
+  
+  property          Property        @relation(fields: [propertyId], references: [id])
+  guest             User            @relation(fields: [guestId], references: [id])
+  calendars         RoomCalendar[]
+  payments          Payment[]
+  cleaningTask      CleaningTask?
+  reviews           Review[]
+  
+  @@index([guestId])
+  @@index([propertyId])
+  @@index([orderNo])
+  @@index([status])
+  @@index([checkInDate])
+  @@index([checkOutDate])
+  @@index([createdAt])
+}
+
+model Payment {
+  id              String          @id @default(cuid())
+  paymentNo       String          @unique
+  orderId         String
+  userId          String
+  amount          Float
+  paymentMethod   String
+  status          String          @default("PENDING")
+  transactionId   String?
+  gatewayResponse String?
+  paidAt          DateTime?
+  refundReason    String?
+  refundedAt      DateTime?
+  extraInfo       String?
+  createdAt       DateTime        @default(now())
+  updatedAt       DateTime        @updatedAt
+  
+  order           Order           @relation(fields: [orderId], references: [id])
+  user            User            @relation(fields: [userId], references: [id])
+  
+  @@index([orderId])
+  @@index([userId])
+  @@index([status])
+}
+
+model CleaningTask {
+  id                String          @id @default(cuid())
+  taskNo            String          @unique
+  orderId           String          @unique
+  propertyId        String
+  cleanerId         String?
+  checkOutDate      DateTime
+  scheduledTime     DateTime?
+  estimatedHours    Float           @default(2.0)
+  status            String          @default("PENDING")
+  priority          Int             @default(5)
+  notes             String?
+  inspectionNotes   String?
+  completedAt       DateTime?
+  verifiedAt        DateTime?
+  extraInfo         String?
+  createdAt         DateTime        @default(now())
+  updatedAt         DateTime        @updatedAt
+  
+  order             Order           @relation(fields: [orderId], references: [id])
+  property          Property        @relation(fields: [propertyId], references: [id])
+  cleaner           User?           @relation(fields: [cleanerId], references: [id])
+  
+  @@index([orderId])
+  @@index([propertyId])
+  @@index([cleanerId])
+  @@index([status])
+  @@index([checkOutDate])
+}
+
+model Review {
+  id              String        @id @default(cuid())
+  orderId         String
+  propertyId      String
+  reviewerId      String
+  ownerId         String
+  rating          Int
+  cleanliness     Int?
+  communication   Int?
+  accuracy        Int?
+  location        Int?
+  checkIn         Int?
+  content         String?
+  images          String        @default("[]")
+  ownerReply      String?
+  ownerRepliedAt  DateTime?
+  status          String        @default("DRAFT")
+  isAnonymous     Boolean       @default(false)
+  extraInfo       String?
+  createdAt       DateTime      @default(now())
+  updatedAt       DateTime      @updatedAt
+  
+  order           Order         @relation(fields: [orderId], references: [id])
+  property        Property      @relation(fields: [propertyId], references: [id])
+  reviewer        User          @relation("Reviewer", fields: [reviewerId], references: [id])
+  owner           User          @relation("Owner", fields: [ownerId], references: [id])
+  
+  @@index([orderId])
+  @@index([propertyId])
+  @@index([reviewerId])
+  @@index([status])
+  @@index([createdAt])
+}
+
+model ChannelSync {
+  id              String          @id @default(cuid())
+  propertyId      String
+  ownerId         String
+  platform        String
+  externalId      String
+  syncStatus      String          @default("idle")
+  lastSyncAt      DateTime?
+  nextSyncAt      DateTime?
+  syncError       String?
+  syncConfig      String          @default("{}")
+  isActive        Boolean         @default(true)
+  extraInfo       String?
+  createdAt       DateTime        @default(now())
+  updatedAt       DateTime        @updatedAt
+  
+  property        Property        @relation(fields: [propertyId], references: [id])
+  owner           User            @relation(fields: [ownerId], references: [id])
+  
+  @@unique([propertyId, platform])
+  @@index([propertyId])
+  @@index([ownerId])
+  @@index([platform])
+  @@index([syncStatus])
+}
+
+model PriceRule {
+  id              String        @id @default(cuid())
+  propertyId      String
+  name            String
+  ruleType        String
+  priceAdjustment Float
+  percentage      Float?
+  startDate       DateTime?
+  endDate         DateTime?
+  daysOfWeek      String?
+  minNights       Int?
+  maxNights       Int?
+  priority        Int           @default(0)
+  isActive        Boolean       @default(true)
+  extraInfo       String?
+  createdAt       DateTime      @default(now())
+  updatedAt       DateTime      @updatedAt
+  
+  property        Property      @relation(fields: [propertyId], references: [id])
+  
+  @@index([propertyId])
+  @@index([isActive])
+}
+
+model IdempotentRequest {
+  id              String    @id @default(cuid())
+  requestId       String    @unique
+  userId          String
+  resourceType    String
+  resourceId      String?
+  status          String
+  response        String?
+  createdAt       DateTime  @default(now())
+  expiresAt       DateTime
+  
+  @@index([requestId])
+  @@index([userId])
+  @@index([expiresAt])
+}
+
+model ManualReview {
+  id              String    @id @default(cuid())
+  referenceType   String
+  referenceId     String
+  requestReason   String
+  requestData     String
+  status          String    @default("PENDING")
+  reviewerId      String?
+  reviewNotes     String?
+  reviewedAt      DateTime?
+  actionTaken     String?
+  extraInfo       String?
+  createdAt       DateTime  @default(now())
+  updatedAt       DateTime  @updatedAt
+  
+  @@index([referenceType, referenceId])
+  @@index([status])
+  @@index([reviewerId])
+}
+
+model AuditLog {
+  id              String      @id @default(cuid())
+  userId          String?
+  action          String
+  resourceType    String
+  resourceId      String
+  previousValue   String?
+  newValue        String?
+  ipAddress       String?
+  userAgent       String?
+  extraInfo       String?
+  createdAt       DateTime    @default(now())
+  
+  user            User?       @relation(fields: [userId], references: [id])
+  
+  @@index([userId])
+  @@index([resourceType, resourceId])
+  @@index([createdAt])
+  @@index([action])
+}
