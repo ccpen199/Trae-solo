@@ -1,0 +1,21 @@
+{
+  "name": "bike-sharing-backend",
+  "version": "1.0.0",
+  "description": "共享单车运营系统后端",
+  "main": "src/index.js",
+  "scripts": {
+    "start": "node src/index.js",
+    "dev": "node src/index.js"
+  },
+  "dependencies": {
+    "express": "^4.18.2",
+    "cors": "^2.8.5",
+    "dotenv": "^16.3.1",
+    "better-sqlite3": "^9.2.2",
+    "uuid": "^9.0.1",
+    "bcryptjs": "^2.4.3",
+    "jsonwebtoken": "^9.0.2",
+    "moment": "^2.29.4",
+    "joi": "^17.11.0"
+  }
+}
