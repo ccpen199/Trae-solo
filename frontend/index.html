@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>充电桩运营平台</title>
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+    <div class="container">
+        <!-- 头部导航 -->
+        <header class="header">
+            <h1>充电桩运营平台</h1>
+            <div class="user-info">
+                <span>欢迎：车主用户</span>
+            </div>
+        </header>
+
+        <!-- 角色选择面板 -->
+        <div class="role-panels">
+            <button class="role-btn active" data-role="owner">车主</button>
+            <button class="role-btn" data-role="operator">桩站运营商</button>
+            <button class="role-btn" data-role="venue">场地方</button>
+            <button class="role-btn" data-role="maintenance">运维工程师</button>
+            <button class="role-btn" data-role="admin">系统管理员</button>
+        </div>
+
+        <!-- 车主流程区域 -->
+        <div id="owner-flow" class="flow-container">
+            <!-- 流程步骤指示器 -->
+            <div class="flow-steps">
+                <div class="step active" id="step-stations">
+                    <span class="step-number">1</span>
+                    <span class="step-label">选择充电站</span>
+                </div>
+                <div class="step" id="step-chargers">
+                    <span class="step-number">2</span>
+                    <span class="step-label">选择充电桩</span>
+                </div>
+                <div class="step" id="step-charging">
+                    <span class="step-number">3</span>
+                    <span class="step-label">充电中</span>
+                </div>
+                <div class="step" id="step-payment">
+                    <span class="step-number">4</span>
+                    <span class="step-label">支付评价</span>
+                </div>
+            </div>
+
+            <!-- 步骤1：充电站列表 -->
+            <div id="stations-section" class="section">
+                <div class="section-header">
+                    <h2>附近充电站</h2>
+                    <div class="filter-bar">
+                        <input type="text" id="search-address" placeholder="输入地址搜索..." class="search-input">
+                        <button id="search-btn" class="btn btn-primary">搜索</button>
+                        <button id="refresh-stations" class="btn btn-secondary">刷新列表</button>
+                    </div>
+                </div>
+                <div id="stations-list" class="stations-grid">
+                    <div class="loading">正在加载充电站列表...</div>
+                </div>
+            </div>
+
+            <!-- 步骤2：充电桩列表 -->
+            <div id="chargers-section" class="section" style="display: none;">
+                <div class="section-header">
+                    <button id="back-to-stations" class="btn btn-secondary">← 返回充电站列表</button>
+                    <h2 id="selected-station-name"></h2>
+                </div>
+                <div class="station-info-detail" id="station-detail">
+                    <!-- 充电站详细信息 -->
+                </div>
+                <div class="section-subheader">
+                    <h3>可用充电桩</h3>
+                    <div class="charger-status-filter">
+                        <button class="status-filter-btn active" data-status="all">全部</button>
+                        <button class="status-filter-btn" data-status="idle">空闲</button>
+                        <button class="status-filter-btn" data-status="charging">充电中</button>
+                        <button class="status-filter-btn" data-status="fault">故障</button>
+                    </div>
+                </div>
+                <div id="chargers-list" class="chargers-grid">
+                    <div class="loading">正在加载充电桩列表...</div>
+                </div>
+            </div>
+
+            <!-- 步骤3：充电中 -->
+            <div id="charging-section" class="section" style="display: none;">
+                <div class="charging-container">
+                    <div class="charging-status-card">
+                        <div class="charging-animation">
+                            <div class="charging-circle"></div>
+                            <div class="charging-icon">⚡</div>
+                        </div>
+                        <h2 id="charging-status-text">充电进行中</h2>
+                        <div class="charger-info-mini" id="charging-charger-info">
+                            <!-- 充电桩信息 -->
+                        </div>
+                    </div>
+                    
+                    <div class="charging-metrics">
+                        <div class="metric-card">
+                            <label>当前功率</label>
+                            <div class="metric-value" id="current-power">0 kW</div>
+                        </div>
+                        <div class="metric-card">
+                            <label>已充电量</label>
+                            <div class="metric-value" id="charged-energy">0 kWh</div>
+                        </div>
+                        <div class="metric-card">
+                            <label>充电时长</label>
+                            <div class="metric-value" id="charging-duration">00:00:00</div>
+                        </div>
+                        <div class="metric-card">
+                            <label>预估费用</label>
+                            <div class="metric-value highlight" id="estimated-cost">¥ 0.00</div>
+                        </div>
+                    </div>
+
+                    <div class="charging-progress">
+                        <div class="progress-label">
+                            <span>充电进度</span>
+                            <span id="progress-percent">0%</span>
+                        </div>
+                        <div class="progress-bar">
+                            <div class="progress-fill" id="progress-fill" style="width: 0%"></div>
+                        </div>
+                    </div>
+
+                    <div class="charging-actions">
+                        <button id="stop-charging-btn" class="btn btn-danger btn-lg">结束充电</button>
+                    </div>
+
+                    <div class="billing-info" id="billing-info-panel">
+                        <h3>实时计费详情</h3>
+                        <div class="billing-detail" id="billing-detail">
+                            <!-- 计费详情 -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 步骤4：支付与评价 -->
+            <div id="payment-section" class="section" style="display: none;">
+                <div class="payment-container">
+                    <div class="payment-summary-card">
+                        <h2>充电完成</h2>
+                        <div class="payment-summary" id="payment-summary">
+                            <!-- 订单摘要 -->
+                        </div>
+                    </div>
+
+                    <div class="payment-method">
+                        <h3>选择支付方式</h3>
+                        <div class="payment-options">
+                            <label class="payment-option">
+                                <input type="radio" name="payment" value="wechat" checked>
+                                <span class="payment-icon">💚</span>
+                                <span>微信支付</span>
+                            </label>
+                            <label class="payment-option">
+                                <input type="radio" name="payment" value="alipay">
+                                <span class="payment-icon">💙</span>
+                                <span>支付宝</span>
+                            </label>
+                            <label class="payment-option">
+                                <input type="radio" name="payment" value="balance">
+                                <span class="payment-icon">💰</span>
+                                <span>余额支付</span>
+                            </label>
+                        </div>
+                        <button id="pay-btn" class="btn btn-primary btn-lg btn-pay">立即支付</button>
+                    </div>
+
+                    <div id="review-section" class="review-section" style="display: none;">
+                        <h3>服务评价</h3>
+                        <div class="rating-stars" id="rating-stars">
+                            <span class="star" data-rating="1">★</span>
+                            <span class="star" data-rating="2">★</span>
+                            <span class="star" data-rating="3">★</span>
+                            <span class="star" data-rating="4">★</span>
+                            <span class="star" data-rating="5">★</span>
+                        </div>
+                        <textarea id="review-content" placeholder="请输入您的评价内容..." rows="4"></textarea>
+                        <button id="submit-review-btn" class="btn btn-primary">提交评价</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 其他角色面板（简要展示） -->
+        <div id="operator-panel" class="role-panel-content" style="display: none;">
+            <h2>桩站运营商面板</h2>
+            <div class="panel-stats">
+                <div class="stat-card">
+                    <label>今日订单</label>
+                    <div class="stat-value" id="operator-today-orders">0</div>
+                </div>
+                <div class="stat-card">
+                    <label>今日收入</label>
+                    <div class="stat-value" id="operator-today-revenue">¥0</div>
+                </div>
+                <div class="stat-card">
+                    <label>待结算</label>
+                    <div class="stat-value" id="operator-pending-settlement">¥0</div>
+                </div>
+            </div>
+            <div id="operator-stations-list" class="stations-list-mini">
+                <!-- 运营商充电站列表 -->
+            </div>
+        </div>
+
+        <div id="venue-panel" class="role-panel-content" style="display: none;">
+            <h2>场地方面板</h2>
+            <div class="panel-stats">
+                <div class="stat-card">
+                    <label>累计分账</label>
+                    <div class="stat-value" id="venue-total-share">¥0</div>
+                </div>
+                <div class="stat-card">
+                    <label>本月分账</label>
+                    <div class="stat-value" id="venue-month-share">¥0</div>
+                </div>
+            </div>
+            <div id="venue-settlement-list" class="settlement-list">
+                <!-- 分账明细 -->
+            </div>
+        </div>
+
+        <div id="maintenance-panel" class="role-panel-content" style="display: none;">
+            <h2>运维工程师面板</h2>
+            <div class="panel-stats">
+                <div class="stat-card">
+                    <label>待处理工单</label>
+                    <div class="stat-value" id="maintenance-pending-tickets">0</div>
+                </div>
+                <div class="stat-card">
+                    <label>今日已处理</label>
+                    <div class="stat-value" id="maintenance-completed-today">0</div>
+                </div>
+            </div>
+            <div id="maintenance-tickets-list" class="tickets-list">
+                <!-- 工单列表 -->
+            </div>
+        </div>
+
+        <div id="admin-panel" class="role-panel-content" style="display: none;">
+            <h2>系统管理员面板</h2>
+            <div class="admin-actions">
+                <button id="view-audit" class="btn btn-primary">查看审计日志</button>
+                <button id="view-hash-chain" class="btn btn-secondary">验证哈希链</button>
+            </div>
+            <div id="audit-result" class="audit-result" style="display: none;">
+                <!-- 审计结果 -->
+            </div>
+        </div>
+    </div>
+
+    <!-- 消息提示 -->
+    <div id="toast" class="toast"></div>
+
+    <script type="module" src="/js/app.js"></script>
+</body>
+</html>

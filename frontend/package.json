@@ -1,0 +1,13 @@
+{
+  "name": "charging-platform-frontend",
+  "version": "1.0.0",
+  "description": "充电桩运营平台前端",
+  "type": "module",
+  "scripts": {
+    "start": "vite",
+    "dev": "vite"
+  },
+  "dependencies": {
+    "vite": "^5.0.0"
+  }
+}
