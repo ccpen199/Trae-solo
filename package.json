@@ -1,0 +1,26 @@
+{
+  "name": "medical-examination-system",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "dev": "concurrently \"npm run dev:backend\" \"npm run dev:client\" \"npm run dev:reception\" \"npm run dev:doctor\" \"npm run dev:dashboard\"",
+    "dev:backend": "cd apps/backend && npm run dev",
+    "dev:client": "cd apps/client-web && npm run dev",
+    "dev:reception": "cd apps/reception-web && npm run dev",
+    "dev:doctor": "cd apps/doctor-web && npm run dev",
+    "dev:dashboard": "cd apps/dashboard-web && npm run dev",
+    "install:all": "npm install && cd apps/backend && npm install && cd ../client-web && npm install && cd ../reception-web && npm install && cd ../doctor-web && npm install && cd ../dashboard-web && npm install",
+    "build": "npm run build --workspaces",
+    "start": "cd apps/backend && npm run start",
+    "lint": "eslint . --ext .ts,.tsx"
+  },
+  "devDependencies": {
+    "@types/node": "^20.10.0",
+    "concurrently": "^8.2.2",
+    "eslint": "^8.55.0",
+    "typescript": "^5.3.2"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  }
+}

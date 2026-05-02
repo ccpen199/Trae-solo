@@ -1,0 +1,65 @@
+version: '3.8'
+
+services:
+  postgres:
+    image: postgres:15-alpine
+    container_name: medical-exam-postgres
+    environment:
+      POSTGRES_DB: ${DB_NAME:-medical_exam}
+      POSTGRES_USER: ${DB_USER:-exam_admin}
+      POSTGRES_PASSWORD: ${DB_PASSWORD:-ExamPass2026!}
+    ports:
+      - "${DB_PORT:-5432}:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${DB_USER:-exam_admin} -d ${DB_NAME:-medical_exam}"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+  redis:
+    image: redis:7-alpine
+    container_name: medical-exam-redis
+    ports:
+      - "${REDIS_PORT:-6379}:6379"
+    volumes:
+      - redis_data:/data
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 5s
+      timeout: 3s
+      retries: 5
+
+  backend:
+    build:
+      context: .
+      dockerfile: Dockerfile.backend
+    container_name: medical-exam-backend
+    environment:
+      - NODE_ENV=${NODE_ENV:-development}
+      - PORT_API=${PORT_API:-18443}
+      - PORT_SOCKET=${PORT_SOCKET:-18444}
+      - DB_HOST=postgres
+      - DB_PORT=5432
+      - DB_NAME=${DB_NAME:-medical_exam}
+      - DB_USER=${DB_USER:-exam_admin}
+      - DB_PASSWORD=${DB_PASSWORD:-ExamPass2026!}
+      - REDIS_HOST=redis
+      - REDIS_PORT=6379
+      - JWT_SECRET=${JWT_SECRET:-MedicalExamJwtSecretKey2026VerySecure}
+      - JWT_EXPIRES_IN=${JWT_EXPIRES_IN:-24h}
+    ports:
+      - "${PORT_API:-18443}:${PORT_API:-18443}"
+    depends_on:
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+    volumes:
+      - reports_data:/app/reports
+
+volumes:
+  postgres_data:
+  redis_data:
+  reports_data:
