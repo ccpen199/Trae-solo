@@ -1,0 +1,112 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model Channel {
+  id           String   @id @default(uuid())
+  channelCode  String   @unique
+  channelName  String
+  productId    String
+  isActive     Boolean  @default(true)
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  @@index([channelCode])
+}
+
+model Product {
+  id              String   @id @default(uuid())
+  productId       String   @unique
+  productName     String
+  isTargetProduct Boolean  @default(false)
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+}
+
+model AccessConfig {
+  id              String   @id @default(uuid())
+  configName      String   @unique
+  unUsedUserPass  Boolean  @default(true)
+  riskLevelAPass  Boolean  @default(true)
+  riskLevelBPass  Boolean  @default(true)
+  riskLevelCPass  Boolean  @default(true)
+  riskLevelDPass  Boolean  @default(true)
+  riskLevelEPass  Boolean  @default(true)
+  riskLevelZPass  Boolean  @default(true)
+  emptyLevelPass  Boolean  @default(true)
+  failedLevelPass Boolean  @default(true)
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+}
+
+model CollisionConfig {
+  id              String   @id @default(uuid())
+  configName      String   @unique
+  blacklistDays   Int      @default(90)
+  minClearDays    Int      @default(30)
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+}
+
+model Blacklist {
+  id           String   @id @default(uuid())
+  phoneMd5     String   @unique
+  phonePlain   String?
+  reason       String?
+  expireAt     DateTime?
+  createdAt    DateTime @default(now())
+
+  @@index([phoneMd5])
+}
+
+model UserRecord {
+  id              String   @id @default(uuid())
+  channelCode     String
+  productId       String
+  phonePlain      String?
+  phoneMd5        String
+  accessResult    String?
+  accessCode      Int?
+  collisionResult String?
+  collisionCode   Int?
+  registerResult  String?
+  registerCode    Int?
+  returnCode      Int
+  returnMessage   String
+  isOldUser       Boolean?
+  downloadUrl     String?
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+
+  @@index([channelCode])
+  @@index([phoneMd5])
+  @@index([createdAt])
+}
+
+model ApiFailure {
+  id           String   @id @default(uuid())
+  apiName      String
+  phoneMd5     String?
+  errorMessage String
+  errorCount   Int      @default(1)
+  isAlerted    Boolean  @default(false)
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  @@index([apiName])
+  @@index([createdAt])
+}
+
+model SystemConfig {
+  id           String   @id @default(uuid())
+  configKey    String   @unique
+  configValue  String
+  description  String?
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+}
