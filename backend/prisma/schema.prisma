@@ -1,0 +1,172 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+// 用户表
+model User {
+  id        String   @id @default(uuid())
+  username  String   @unique
+  password  String
+  nickname  String?
+  avatar    String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  pointsAccount  PointsAccount?
+  prizes         UserPrize[]
+  participations ActivityParticipation[]
+
+  @@map("users")
+}
+
+// 积分账户
+model PointsAccount {
+  id        String   @id @default(uuid())
+  userId    String   @unique
+  balance   Int      @default(0)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  user         User                @relation(fields: [userId], references: [id], onDelete: Cascade)
+  transactions PointsTransaction[]
+
+  @@map("points_accounts")
+}
+
+// 积分交易记录
+model PointsTransaction {
+  id            String          @id @default(uuid())
+  accountId     String
+  type          TransactionType
+  amount        Int
+  balanceBefore Int
+  balanceAfter  Int
+  description   String?
+  referenceId   String?
+  referenceType String?
+  createdAt     DateTime        @default(now())
+
+  account PointsAccount @relation(fields: [accountId], references: [id], onDelete: Cascade)
+
+  @@map("points_transactions")
+}
+
+enum TransactionType {
+  EARN
+  SPEND
+  REFUND
+  BONUS
+}
+
+// 活动表
+model Activity {
+  id          String         @id @default(uuid())
+  type        ActivityType
+  name        String
+  description String?
+  startTime   DateTime
+  endTime     DateTime
+  pointsCost  Int            @default(0)
+  maxChances  Int            @default(1)
+  status      ActivityStatus @default(DRAFT)
+  createdAt   DateTime       @default(now())
+  updatedAt   DateTime       @updatedAt
+
+  prizes         ActivityPrize[]
+  participations ActivityParticipation[]
+
+  @@map("activities")
+}
+
+enum ActivityType {
+  WHEEL
+  EGG
+}
+
+enum ActivityStatus {
+  DRAFT
+  ACTIVE
+  PAUSED
+  EXPIRED
+}
+
+// 活动奖品
+model ActivityPrize {
+  id          String    @id @default(uuid())
+  activityId  String
+  name        String
+  description String?
+  imageUrl    String?
+  type        PrizeType
+  pointsValue Int?
+  probability Decimal
+  stock       Int       @default(0)
+  used        Int       @default(0)
+  sortOrder   Int       @default(0)
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+
+  activity   Activity    @relation(fields: [activityId], references: [id], onDelete: Cascade)
+  userPrizes UserPrize[]
+
+  @@map("activity_prizes")
+}
+
+enum PrizeType {
+  POINTS
+  COUPON
+  PHYSICAL
+  THANKYOU
+}
+
+// 用户中奖记录
+model UserPrize {
+  id              String        @id @default(uuid())
+  userId          String
+  activityId      String
+  prizeId         String
+  participationId String?
+  prizeName       String
+  prizeType       PrizeType
+  pointsValue     Int?
+  receiveStatus   ReceiveStatus @default(PENDING)
+  receiveTime     DateTime?
+  createdAt       DateTime      @default(now())
+  updatedAt       DateTime      @updatedAt
+
+  user          User                   @relation(fields: [userId], references: [id], onDelete: Cascade)
+  prize         ActivityPrize          @relation(fields: [prizeId], references: [id], onDelete: Cascade)
+  participation ActivityParticipation? @relation(fields: [participationId], references: [id])
+
+  @@map("user_prizes")
+}
+
+enum ReceiveStatus {
+  PENDING
+  RECEIVED
+  EXPIRED
+}
+
+// 活动参与记录
+model ActivityParticipation {
+  id              String   @id @default(uuid())
+  userId          String
+  activityId      String
+  participationNo String   @unique
+  chancesUsed     Int      @default(0)
+  chancesTotal    Int      @default(1)
+  pointsSpent     Int      @default(0)
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+
+  user     User        @relation(fields: [userId], references: [id], onDelete: Cascade)
+  activity Activity    @relation(fields: [activityId], references: [id], onDelete: Cascade)
+  prizes   UserPrize[]
+
+  @@map("activity_participations")
+}
