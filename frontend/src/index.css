@@ -1,0 +1,122 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', 'Hiragino Sans GB',
+    'Microsoft YaHei', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+.ant-layout {
+  min-height: 100vh;
+}
+
+.ant-card-hoverable:hover {
+  transform: translateY(-4px);
+  transition: all 0.3s ease;
+}
+
+.ant-layout-header {
+  padding-inline: 50px !important;
+}
+
+.ant-menu-dark {
+  background: transparent !important;
+}
+
+.ant-menu-item-selected {
+  background-color: rgba(255, 255, 255, 0.15) !important;
+}
+
+.ant-table-tbody > tr:hover > td {
+  background: rgba(196, 30, 58, 0.02) !important;
+}
+
+.ant-btn-primary {
+  background: #c41e3a;
+  border-color: #c41e3a;
+}
+
+.ant-btn-primary:hover {
+  background: #a01830 !important;
+  border-color: #a01830 !important;
+}
+
+.ant-btn-primary:focus {
+  background: #a01830;
+  border-color: #a01830;
+}
+
+.ant-input:focus,
+.ant-input-focused,
+.ant-input-number:focus,
+.ant-input-number-focused,
+.ant-select-focused .ant-select-selector {
+  border-color: #c41e3a !important;
+  box-shadow: 0 0 0 2px rgba(196, 30, 58, 0.1) !important;
+}
+
+.ant-tabs-tab.ant-tabs-tab-active .ant-tabs-tab-btn {
+  color: #c41e3a !important;
+}
+
+.ant-tabs-ink-bar {
+  background: #c41e3a !important;
+}
+
+.ant-tag-checkable-checked {
+  background: #c41e3a !important;
+  border-color: #c41e3a !important;
+}
+
+.ant-pagination-item-active {
+  border-color: #c41e3a !important;
+}
+
+.ant-pagination-item-active a {
+  color: #c41e3a !important;
+}
+
+.ant-radio-button-wrapper-checked:not(.ant-radio-button-wrapper-disabled) {
+  background: #c41e3a !important;
+  border-color: #c41e3a !important;
+}
+
+.ant-radio-button-wrapper-checked:not(.ant-radio-button-wrapper-disabled)::before {
+  background: #c41e3a !important;
+}
+
+.ant-dropdown-menu-item-selected {
+  color: #c41e3a !important;
+  background: rgba(196, 30, 58, 0.04) !important;
+}
+
+.ant-popover-arrow-content {
+  --antd-arrow-background-color: #fff;
+}
+
+.ant-popover-inner {
+  box-shadow: 0 6px 16px -8px rgba(0, 0, 0, 0.08),
+    0 9px 28px rgba(0, 0, 0, 0.05);
+}
+
+.ant-message-success .anticon {
+  color: #52c41a;
+}
+
+.ant-message-error .anticon {
+  color: #ff4d4f;
+}
+
+.ant-message-warning .anticon {
+  color: #faad14;
+}
