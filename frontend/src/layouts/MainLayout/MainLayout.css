@@ -1,0 +1,85 @@
+.main-layout {
+  min-height: 100vh;
+}
+
+.main-sider {
+  background: #001529;
+}
+
+.logo {
+  height: 64px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.logo-mini {
+  font-size: 16px;
+  font-weight: bold;
+  color: #fff;
+}
+
+.logo-full {
+  font-size: 18px;
+  font-weight: bold;
+  color: #fff;
+}
+
+.main-content-layout {
+  display: flex;
+  flex-direction: column;
+}
+
+.main-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 16px;
+  box-shadow: 0 1px 4px rgba(0, 21, 41, 0.08);
+}
+
+.trigger-btn {
+  font-size: 16px;
+  width: 48px;
+  height: 48px;
+}
+
+.header-right {
+  display: flex;
+  align-items: center;
+}
+
+.user-info {
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  padding: 8px 12px;
+  border-radius: 4px;
+  transition: background 0.3s;
+
+  &:hover {
+    background: rgba(0, 0, 0, 0.02);
+  }
+}
+
+.user-name {
+  margin-left: 8px;
+  color: rgba(0, 0, 0, 0.85);
+}
+
+.main-content {
+  margin: 24px;
+  padding: 24px;
+  min-height: calc(100vh - 64px - 48px);
+  background: #fff;
+  border-radius: 8px;
+}
+
+.loading-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  background: #f0f2f5;
+}

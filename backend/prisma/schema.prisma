@@ -1,0 +1,709 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+// ==================== 权限管理模块 ====================
+
+model User {
+  id              String   @id @default(uuid())
+  username        String   @unique
+  password        String
+  realName        String?
+  phone           String?
+  email           String?
+  status          Int      @default(1)
+  departmentId    String?
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+  lastLoginAt     DateTime?
+  lastLoginIp     String?
+
+  userRoles       UserRole[]
+  createdPlans    TransportPlan[]  @relation("PlanCreator")
+  createdOrders   TransportOrder[] @relation("OrderCreator")
+
+  @@map("users")
+}
+
+model Role {
+  id              String   @id @default(uuid())
+  name            String   @unique
+  description     String?
+  status          Int      @default(1)
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+
+  userRoles       UserRole[]
+  roleMenus       RoleMenu[]
+
+  @@map("roles")
+}
+
+model UserRole {
+  id        String   @id @default(uuid())
+  userId    String
+  roleId    String
+  createdAt DateTime @default(now())
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  role Role @relation(fields: [roleId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, roleId])
+  @@map("user_roles")
+}
+
+model Menu {
+  id          String   @id @default(uuid())
+  parentId    String?
+  name        String
+  path        String?
+  icon        String?
+  sortOrder   Int      @default(0)
+  type        Int
+  permission  String?
+  status      Int      @default(1)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  children    Menu[]   @relation("MenuParent")
+  parent      Menu?    @relation("MenuParent", fields: [parentId], references: [id])
+  roleMenus   RoleMenu[]
+
+  @@map("menus")
+}
+
+model RoleMenu {
+  id        String   @id @default(uuid())
+  roleId    String
+  menuId    String
+  createdAt DateTime @default(now())
+
+  role Role @relation(fields: [roleId], references: [id], onDelete: Cascade)
+  menu Menu @relation(fields: [menuId], references: [id], onDelete: Cascade)
+
+  @@unique([roleId, menuId])
+  @@map("role_menus")
+}
+
+model DataPermission {
+  id          String   @id @default(uuid())
+  name        String
+  type        Int
+  scope       String?
+  description String?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  @@map("data_permissions")
+}
+
+model FieldPermission {
+  id          String   @id @default(uuid())
+  tableName   String
+  fieldName   String
+  fieldLabel  String
+  canView     Boolean  @default(true)
+  canEdit     Boolean  @default(true)
+  roleId      String?
+  userId      String?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  @@map("field_permissions")
+}
+
+// ==================== 系统设置模块 ====================
+
+model Department {
+  id        String   @id @default(uuid())
+  parentId  String?
+  name      String
+  code      String?  @unique
+  manager   String?
+  phone     String?
+  sortOrder Int      @default(0)
+  status    Int      @default(1)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  children  Department[] @relation("DeptParent")
+  parent    Department?  @relation("DeptParent", fields: [parentId], references: [id])
+
+  @@map("departments")
+}
+
+model City {
+  id          String   @id @default(uuid())
+  code        String   @unique
+  name        String
+  province    String
+  city        String
+  district    String?
+  level       Int
+  parentCode  String?
+  sortOrder   Int      @default(0)
+  status      Int      @default(1)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  @@map("cities")
+}
+
+model Node {
+  id          String   @id @default(uuid())
+  code        String   @unique
+  name        String
+  type        Int
+  cityCode    String?
+  address     String?
+  longitude   Decimal?
+  latitude    Decimal?
+  manager     String?
+  phone       String?
+  status      Int      @default(1)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  @@map("nodes")
+}
+
+model VehicleType {
+  id          String   @id @default(uuid())
+  code        String   @unique
+  name        String
+  loadWeight  Decimal?
+  volume      Decimal?
+  length      Decimal?
+  width       Decimal?
+  height      Decimal?
+  axleCount   Int?
+  description String?
+  status      Int      @default(1)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  @@map("vehicle_types")
+}
+
+model Vehicle {
+  id              String   @id @default(uuid())
+  plateNumber     String   @unique
+  vehicleTypeId   String?
+  typeName        String?
+  loadWeight      Decimal?
+  volume          Decimal?
+  engineNumber    String?
+  frameNumber     String?
+  registerDate    DateTime?
+  validDate       DateTime?
+  insuranceDate   DateTime?
+  inspectionDate  DateTime?
+  owner           String?
+  ownerPhone      String?
+  status          Int      @default(1)
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+
+  @@map("vehicles")
+}
+
+model Driver {
+  id          String   @id @default(uuid())
+  name        String
+  idCard      String   @unique
+  phone       String?
+  licenseType String?
+  licenseNumber String?
+  licenseValidDate DateTime?
+  status      Int      @default(1)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  @@map("drivers")
+}
+
+model CargoType {
+  id          String   @id @default(uuid())
+  code        String   @unique
+  name        String
+  category    String?
+  unit        String?
+  description String?
+  status      Int      @default(1)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  @@map("cargo_types")
+}
+
+model BusinessType {
+  id          String   @id @default(uuid())
+  code        String   @unique
+  name        String
+  description String?
+  template    String?
+  status      Int      @default(1)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  @@map("business_types")
+}
+
+model GpsDepartment {
+  id          String   @id @default(uuid())
+  code        String   @unique
+  name        String
+  parentCode  String?
+  manager     String?
+  phone       String?
+  status      Int      @default(1)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  @@map("gps_departments")
+}
+
+model GpsVehicle {
+  id              String   @id @default(uuid())
+  vehicleId       String?
+  plateNumber     String
+  deviceId        String   @unique
+  simCard         String?
+  departmentCode  String?
+  installDate     DateTime?
+  lastOnlineTime  DateTime?
+  lastLongitude   Decimal?
+  lastLatitude    Decimal?
+  lastSpeed       Decimal?
+  status          Int      @default(1)
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+
+  @@map("gps_vehicles")
+}
+
+// ==================== 运输网络管理模块 ====================
+
+model Carrier {
+  id              String   @id @default(uuid())
+  code            String   @unique
+  name            String
+  shortName       String?
+  type            Int
+  contactPerson   String?
+  contactPhone    String?
+  businessLicense String?
+  taxNumber       String?
+  bankAccount     String?
+  bankName        String?
+  address         String?
+  creditRating    Int?
+  status          Int      @default(1)
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+
+  routes          TransportRoute[]
+  rates           FreightRate[]
+  orders          TransportOrder[]
+
+  @@map("carriers")
+}
+
+model TransportType {
+  id          String   @id @default(uuid())
+  code        String   @unique
+  name        String
+  type        Int
+  description String?
+  billingMode String?
+  status      Int      @default(1)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  @@map("transport_types")
+}
+
+model TransportRoute {
+  id              String   @id @default(uuid())
+  code            String   @unique
+  name            String
+  carrierId       String
+  fromCityCode    String?
+  toCityCode      String?
+  fromNodeId      String?
+  toNodeId        String?
+  transportType   Int
+  estimatedDays   Int?
+  distance        Decimal?
+  status          Int      @default(1)
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+
+  carrier         Carrier @relation(fields: [carrierId], references: [id])
+
+  @@map("transport_routes")
+}
+
+model FreightRate {
+  id              String   @id @default(uuid())
+  code            String   @unique
+  name            String
+  carrierId       String
+  routeId         String?
+  transportType   Int
+  fromCityCode    String?
+  toCityCode      String?
+  vehicleTypeId   String?
+  billingMode     String
+  basePrice       Decimal
+  pricePerUnit    Decimal?
+  minCharge       Decimal?
+  fuelSurcharge   Decimal?
+  validFrom       DateTime?
+  validTo         DateTime?
+  status          Int      @default(1)
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+
+  carrier         Carrier @relation(fields: [carrierId], references: [id])
+
+  @@map("freight_rates")
+}
+
+// ==================== 发运管理模块 ====================
+
+model TransportPlan {
+  id              String   @id @default(uuid())
+  planNo          String   @unique
+  businessType    String?
+  sourceType      Int
+  fromCityCode    String?
+  toCityCode      String?
+  fromNodeId      String?
+  toNodeId        String?
+  cargoTypeId     String?
+  cargoName       String?
+  cargoWeight     Decimal?
+  cargoVolume     Decimal?
+  cargoQuantity   Int?
+  planDate        DateTime
+  deadline        DateTime?
+  status          Int      @default(0)
+  creatorId       String
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+
+  creator         User           @relation("PlanCreator", fields: [creatorId], references: [id])
+  orders          TransportOrder[]
+
+  @@map("transport_plans")
+}
+
+model TransportOrder {
+  id              String   @id @default(uuid())
+  orderNo         String   @unique
+  planId          String?
+  businessType    String?
+  sourceType      Int
+  transportType   Int
+  status          Int      @default(0)
+
+  fromCityCode    String?
+  toCityCode      String?
+  fromNodeId      String?
+  toNodeId        String?
+  shipperName     String?
+  shipperPhone    String?
+  shipperAddress  String?
+  consigneeName   String?
+  consigneePhone  String?
+  consigneeAddress String?
+
+  carrierId       String?
+  routeId         String?
+  vehicleId       String?
+  plateNumber     String?
+  driverId        String?
+  driverName      String?
+  driverPhone     String?
+
+  cargoTypeId     String?
+  cargoName       String?
+  cargoWeight     Decimal?
+  cargoVolume     Decimal?
+  cargoQuantity   Int?
+  packaging       String?
+  temperature     String?
+  isDangerous     Boolean  @default(false)
+
+  planDeparture   DateTime?
+  actualDeparture DateTime?
+  planArrival     DateTime?
+  actualArrival   DateTime?
+  signTime        DateTime?
+
+  estimatedCost   Decimal?
+  actualCost      Decimal?
+
+  creatorId       String
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+
+  creator         User                    @relation("OrderCreator", fields: [creatorId], references: [id])
+  plan            TransportPlan?          @relation(fields: [planId], references: [id])
+  carrier         Carrier?                @relation(fields: [carrierId], references: [id])
+  monitorings     InTransitMonitoring[]
+  exceptions      ExceptionRecord[]
+  claims          Claim[]
+  arrivalForecast ArrivalForecast?
+  sign            OrderSign?
+  freightCalc     FreightCalculation?
+  logs            OrderChangeLog[]
+
+  @@map("transport_orders")
+}
+
+model InTransitMonitoring {
+  id              String   @id @default(uuid())
+  orderId         String
+  monitorTime     DateTime
+  longitude       Decimal?
+  latitude        Decimal?
+  address         String?
+  speed           Decimal?
+  mileage         Decimal?
+  temperature     Decimal?
+  status          Int
+  remark          String?
+  sourceType      Int
+  createdAt       DateTime @default(now())
+
+  order           TransportOrder @relation(fields: [orderId], references: [id], onDelete: Cascade)
+
+  @@map("in_transit_monitorings")
+}
+
+model ExceptionRecord {
+  id              String   @id @default(uuid())
+  orderId         String
+  exceptionType   Int
+  exceptionLevel  Int
+  title           String
+  description     String?
+  happenTime      DateTime
+  location        String?
+  handlerId       String?
+  handleStatus    Int      @default(0)
+  handleResult    String?
+  handleTime      DateTime?
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+
+  order           TransportOrder @relation(fields: [orderId], references: [id], onDelete: Cascade)
+
+  @@map("exception_records")
+}
+
+model OrderChangeLog {
+  id              String   @id @default(uuid())
+  orderId         String
+  changeType      Int
+  fieldName       String?
+  oldValue        String?
+  newValue        String?
+  reason          String?
+  operatorId      String
+  operatorName    String?
+  createdAt       DateTime @default(now())
+
+  order           TransportOrder @relation(fields: [orderId], references: [id], onDelete: Cascade)
+
+  @@map("order_change_logs")
+}
+
+// ==================== 到货管理模块 ====================
+
+model ArrivalForecast {
+  id              String   @id @default(uuid())
+  orderId         String   @unique
+  forecastTime    DateTime
+  forecastAddress String?
+  contactPerson   String?
+  contactPhone    String?
+  remark          String?
+  status          Int      @default(0)
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+
+  order           TransportOrder @relation(fields: [orderId], references: [id], onDelete: Cascade)
+
+  @@map("arrival_forecasts")
+}
+
+model OrderSign {
+  id              String   @id @default(uuid())
+  orderId         String   @unique
+  signType        Int
+  signTime        DateTime
+  signPerson      String?
+  signPhone       String?
+  idCard          String?
+  signImage       String?
+  abnormalReason  String?
+  damageQty       Int?
+  lossQty         Int?
+  remark          String?
+  createdAt       DateTime @default(now())
+
+  order           TransportOrder @relation(fields: [orderId], references: [id], onDelete: Cascade)
+
+  @@map("order_signs")
+}
+
+model Claim {
+  id              String   @id @default(uuid())
+  claimNo         String   @unique
+  orderId         String
+  claimType       Int
+  title           String
+  description     String?
+  happenTime      DateTime
+  claimAmount     Decimal
+  evidenceImage   String?
+  applicantId     String
+  applicantName   String?
+  status          Int      @default(0)
+  auditId         String?
+  auditOpinion    String?
+  auditTime       DateTime?
+  payAmount       Decimal?
+  payTime         DateTime?
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+
+  order           TransportOrder @relation(fields: [orderId], references: [id], onDelete: Cascade)
+
+  @@map("claims")
+}
+
+model DelayAudit {
+  id              String   @id @default(uuid())
+  orderId         String
+  delayReason     String
+  delayHours      Decimal
+  originalDeadline DateTime
+  newDeadline     DateTime
+  applicantId     String
+  status          Int      @default(0)
+  auditId         String?
+  auditOpinion    String?
+  auditTime       DateTime?
+  createdAt       DateTime @default(now())
+
+  @@map("delay_audits")
+}
+
+model BillAdjustment {
+  id              String   @id @default(uuid())
+  orderId         String
+  adjustmentType  Int
+  amount          Decimal
+  reason          String
+  applicantId     String
+  status          Int      @default(0)
+  auditId         String?
+  auditOpinion    String?
+  auditTime       DateTime?
+  createdAt       DateTime @default(now())
+
+  @@map("bill_adjustments")
+}
+
+model FreightCalculation {
+  id              String   @id @default(uuid())
+  orderId         String   @unique
+  transportType   Int
+  routeId         String?
+  rateId          String?
+
+  cargoWeight     Decimal?
+  cargoVolume     Decimal?
+  cargoQuantity   Int?
+
+  billingMode     String
+  basePrice       Decimal?
+  pricePerWeight  Decimal?
+  pricePerVolume  Decimal?
+  fuelSurcharge   Decimal?
+  otherFee        Decimal?
+
+  weightCost      Decimal?
+  volumeCost      Decimal?
+  baseCost        Decimal?
+  totalCost       Decimal
+
+  adjustedCost    Decimal?
+  adjustReason    String?
+
+  status          Int      @default(0)
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+
+  order           TransportOrder @relation(fields: [orderId], references: [id], onDelete: Cascade)
+
+  @@map("freight_calculations")
+}
+
+model Reconciliation {
+  id              String   @id @default(uuid())
+  reconNo         String   @unique
+  carrierId       String?
+  startTime       DateTime
+  endTime         DateTime
+  orderCount      Int      @default(0)
+  totalAmount     Decimal  @default(0)
+  confirmedAmount Decimal?
+  status          Int      @default(0)
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+
+  @@map("reconciliations")
+}
+
+model ReconciliationDetail {
+  id              String   @id @default(uuid())
+  reconId         String
+  orderId         String
+  orderNo         String
+  transportType   Int
+  fromCity        String?
+  toCity          String?
+  cargoInfo       String?
+  estimatedCost   Decimal?
+  actualCost      Decimal?
+  adjustedCost    Decimal?
+  reconciled      Boolean  @default(false)
+  createdAt       DateTime @default(now())
+
+  @@map("reconciliation_details")
+}
+
+model AuditLog {
+  id              String   @id @default(uuid())
+  userId          String?
+  userName        String?
+  module          String?
+  action          String?
+  targetType      String?
+  targetId        String?
+  detail          String?
+  ipAddress       String?
+  createdAt       DateTime @default(now())
+
+  @@map("audit_logs")
+}
