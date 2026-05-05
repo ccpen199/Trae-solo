@@ -1,0 +1,84 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum UserStatus {
+  ACTIVE
+  INACTIVE
+  SUSPENDED
+}
+
+enum RoleCode {
+  ADMIN
+  USER
+}
+
+model Role {
+  id        String   @id @default(uuid())
+  name      String   @unique
+  code      RoleCode @unique
+  description String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  users     User[]
+
+  @@map("roles")
+}
+
+model User {
+  id           String     @id @default(uuid())
+  account      String     @unique
+  passwordHash String
+  nickname     String?
+  email        String?    @unique
+  phone        String?    @unique
+  avatar       String?
+  status       UserStatus @default(ACTIVE)
+  roleId       String
+  createdAt    DateTime   @default(now())
+  updatedAt    DateTime   @updatedAt
+  lastLoginAt  DateTime?
+
+  role         Role       @relation(fields: [roleId], references: [id])
+  sessions     Session[]
+  operationLogs OperationLog[]
+
+  @@map("users")
+}
+
+model Session {
+  id        String   @id @default(uuid())
+  userId    String
+  token     String   @unique
+  userAgent String?
+  ipAddress String?
+  createdAt DateTime @default(now())
+  expiresAt DateTime
+
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@map("sessions")
+}
+
+model OperationLog {
+  id          String   @id @default(uuid())
+  userId      String
+  operation   String
+  module      String
+  targetId    String?
+  targetType  String?
+  detail      String?
+  ipAddress   String?
+  userAgent   String?
+  createdAt   DateTime @default(now())
+
+  user        User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@map("operation_logs")
+}
