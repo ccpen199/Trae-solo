@@ -1,0 +1,208 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id              String   @id @default(uuid())
+  phone           String   @unique
+  password        String
+  realName        String?
+  idCardNumber    String?  @unique
+  idCardFront     String?
+  studentCardPage String?
+  faceVerified    Boolean  @default(false)
+  emergencyContact String?
+  emergencyPhone  String?
+  cityId          String?
+  schoolId        String?
+  status          String   @default("pending")
+  role            String   @default("user")
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+
+  rider           Rider?
+  audits          Audit[]
+  ordersAsOffsite Order[]  @relation("OffsiteRider")
+  ordersAsOnsite  Order[]  @relation("OnsiteRider")
+  schedules       Schedule[]
+  riderSettings   RiderSetting?
+
+  @@map("users")
+}
+
+model Rider {
+  id              String   @id @default(uuid())
+  userId          String   @unique
+  isOffsite       Boolean  @default(false)
+  isOnsite        Boolean  @default(true)
+  hasInsurance    Boolean  @default(false)
+  insuranceExpiry DateTime?
+  hasDeposit      Boolean  @default(false)
+  depositAmount   Float    @default(0)
+  isOnline        Boolean  @default(false)
+  currentOrders   Int      @default(0)
+  maxOrders       Int      @default(3)
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+
+  user            User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@map("riders")
+}
+
+model RiderSetting {
+  id              String   @id @default(uuid())
+  userId          String   @unique
+  autoAccept      Boolean  @default(false)
+  maxSimultaneous Int      @default(3)
+  workStartTime   String   @default("08:00")
+  workEndTime     String   @default("22:00")
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+
+  user            User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@map("rider_settings")
+}
+
+model Schedule {
+  id              String   @id @default(uuid())
+  userId          String
+  scheduleDate    DateTime
+  startTime       String
+  endTime         String
+  status          String   @default("confirmed")
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+
+  user            User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, scheduleDate, startTime, endTime])
+  @@map("schedules")
+}
+
+model Audit {
+  id              String   @id @default(uuid())
+  userId          String
+  auditType       String
+  status          String   @default("pending")
+  reason          String?
+  auditorId       String?
+  auditedAt       DateTime?
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+
+  user            User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@map("audits")
+}
+
+model City {
+  id              String   @id @default(uuid())
+  name            String   @unique
+  province        String
+  createdAt       DateTime @default(now())
+
+  schools         School[]
+
+  @@map("cities")
+}
+
+model School {
+  id              String   @id @default(uuid())
+  cityId          String
+  name            String
+  address         String?
+  createdAt       DateTime @default(now())
+
+  city            City     @relation(fields: [cityId], references: [id], onDelete: Cascade)
+  dormitories     Dormitory[]
+
+  @@map("schools")
+}
+
+model Dormitory {
+  id              String   @id @default(uuid())
+  schoolId        String
+  buildingNumber  String
+  floor           Int?
+  createdAt       DateTime @default(now())
+
+  school          School   @relation(fields: [schoolId], references: [id], onDelete: Cascade)
+  orders          Order[]
+
+  @@map("dormitories")
+}
+
+model Order {
+  id                    String    @id @default(uuid())
+  orderNumber           String    @unique
+  merchantName          String
+  offsiteRiderId        String?
+  onsiteRiderId         String?
+  dormitoryId           String?
+  deliveryAddress       String
+  customerName          String
+  customerPhone         String
+  estimatedDeliveryTime DateTime
+  riderEarnings         Float
+  offsiteArrivalTime    DateTime?
+  pickupConfirmTime     DateTime?
+  deliveryTime          DateTime?
+  status                String    @default("available")
+  createdAt             DateTime  @default(now())
+  updatedAt             DateTime  @updatedAt
+
+  offsiteRider          User?     @relation("OffsiteRider", fields: [offsiteRiderId], references: [id], onDelete: SetNull)
+  onsiteRider           User?     @relation("OnsiteRider", fields: [onsiteRiderId], references: [id], onDelete: SetNull)
+  dormitory             Dormitory? @relation(fields: [dormitoryId], references: [id], onDelete: SetNull)
+  refund                Refund?
+  orderLogs             OrderLog[]
+
+  @@map("orders")
+}
+
+model OrderLog {
+  id              String   @id @default(uuid())
+  orderId         String
+  action          String
+  description     String?
+  operatorId      String?
+  createdAt       DateTime @default(now())
+
+  order           Order    @relation(fields: [orderId], references: [id], onDelete: Cascade)
+
+  @@map("order_logs")
+}
+
+model Refund {
+  id              String   @id @default(uuid())
+  orderId         String   @unique
+  reason          String
+  description     String?
+  status          String   @default("pending")
+  approvedById    String?
+  approvedAt      DateTime?
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+
+  order           Order    @relation(fields: [orderId], references: [id], onDelete: Cascade)
+
+  @@map("refunds")
+}
+
+model VerificationCode {
+  id              String   @id @default(uuid())
+  phone           String
+  code            String
+  expiresAt       DateTime
+  used            Boolean  @default(false)
+  createdAt       DateTime @default(now())
+
+  @@map("verification_codes")
+}
