@@ -1,0 +1,103 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+// 使用 SQLite 作为默认数据库（降级方案）
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+// 用户表
+model User {
+  id        String   @id @default(uuid())
+  username  String   @unique
+  email     String   @unique
+  password  String
+  name      String
+  role      String   @default("EMPLOYEE") // ADMIN, SUPERVISOR, EMPLOYEE
+  isActive  Boolean  @default(true)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  // 关系：主管创建的任务
+  createdTasks Task[] @relation("Creator")
+  // 关系：分配给员工的任务
+  assignedTasks Task[] @relation("Assignee")
+  // 关系：员工制定的计划
+  plans Plan[]
+  // 关系：员工的反馈
+  feedbacks Feedback[]
+
+  @@map("users")
+}
+
+// 任务表
+model Task {
+  id          String   @id @default(uuid())
+  title       String
+  description String?
+  startTime   DateTime
+  endTime     DateTime
+  status      String   @default("PENDING") // PENDING, IN_PROGRESS, COMPLETED, CONFIRMED, ARCHIVED
+  
+  // 创建人（主管）
+  creatorId   String
+  creator     User     @relation("Creator", fields: [creatorId], references: [id])
+  
+  // 实施人（员工）
+  assigneeId  String
+  assignee    User     @relation("Assignee", fields: [assigneeId], references: [id])
+
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  // 关系：任务下的计划
+  plans Plan[]
+  // 关系：任务下的反馈
+  feedbacks Feedback[]
+
+  @@map("tasks")
+}
+
+// 计划表
+model Plan {
+  id          String   @id @default(uuid())
+  taskId      String
+  title       String
+  description String?
+  startTime   DateTime
+  endTime     DateTime
+  status      String   @default("DRAFT") // DRAFT, IN_PROGRESS, COMPLETED
+  
+  // 创建人（员工）
+  creatorId   String
+  creator     User     @relation(fields: [creatorId], references: [id])
+  
+  // 所属任务
+  task        Task     @relation(fields: [taskId], references: [id])
+
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  @@map("plans")
+}
+
+// 反馈表
+model Feedback {
+  id          String   @id @default(uuid())
+  taskId      String
+  content     String
+  
+  // 创建人（员工）
+  creatorId   String
+  creator     User     @relation(fields: [creatorId], references: [id])
+  
+  // 所属任务
+  task        Task     @relation(fields: [taskId], references: [id])
+
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  @@map("feedbacks")
+}
