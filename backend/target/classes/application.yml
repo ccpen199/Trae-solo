@@ -1,0 +1,60 @@
+server:
+  port: ${SERVER_PORT:12176}
+
+spring:
+  application:
+    name: bbs-forum
+
+  h2:
+    console:
+      enabled: true
+      path: /h2-console
+      settings:
+        web-allow-others: true
+
+  datasource:
+    url: jdbc:h2:file:${H2_DB_PATH:./data/bbsdb};DB_CLOSE_ON_EXIT=FALSE;AUTO_RECONNECT=TRUE
+    username: sa
+    password: 
+    driver-class-name: org.h2.Driver
+    hikari:
+      maximum-pool-size: 10
+      minimum-idle: 5
+      idle-timeout: 30000
+      connection-timeout: 30000
+
+  sql:
+    init:
+      mode: always
+      schema-locations: classpath:schema-h2.sql
+      data-locations: classpath:data-h2.sql
+
+  data:
+    redis:
+      host: ${REDIS_HOST:localhost}
+      port: ${REDIS_PORT:6379}
+      password: ${REDIS_PASSWORD:}
+      database: ${REDIS_DATABASE:0}
+      enabled: ${REDIS_ENABLED:false}
+
+mybatis-plus:
+  mapper-locations: classpath:mapper/*.xml
+  type-aliases-package: com.bbs.entity
+  configuration:
+    map-underscore-to-camel-case: true
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+  global-config:
+    db-config:
+      id-type: auto
+      logic-delete-field: deleted
+      logic-delete-value: "true"
+      logic-not-delete-value: "false"
+
+jwt:
+  secret: ${JWT_SECRET:BBSForumJwtSecretKey2024VeryLongSecretKeyForSecurity}
+  expiration: ${JWT_EXPIRATION:86400000}
+
+logging:
+  level:
+    com.bbs: ${LOG_LEVEL:INFO}
+    org.springframework.security: INFO
