@@ -1,0 +1,204 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id          String    @id @default(uuid())
+  userNo      String    @unique @map("user_no")
+  username    String    @unique
+  password    String
+  name        String
+  email       String?
+  phone       String?
+  avatar      String?
+  status      Int       @default(1)
+  orgId       String?   @map("org_id")
+  lastLoginAt DateTime? @map("last_login_at")
+  lastLoginIp String?   @map("last_login_ip")
+  createdAt   DateTime  @default(now()) @map("created_at")
+  updatedAt   DateTime  @updatedAt @map("updated_at")
+  deletedAt   DateTime? @map("deleted_at")
+
+  userRoles   UserRole[]
+  org         Organization?  @relation(fields: [orgId], references: [id], onDelete: SetNull)
+
+  @@map("users")
+}
+
+model Role {
+  id          String    @id @default(uuid())
+  name        String
+  code        String    @unique
+  description String?
+  parentId    String?   @map("parent_id")
+  sortOrder   Int       @default(0) @map("sort_order")
+  status      Int       @default(1)
+  createdAt   DateTime  @default(now()) @map("created_at")
+  updatedAt   DateTime  @updatedAt @map("updated_at")
+  deletedAt   DateTime? @map("deleted_at")
+
+  parent      Role?       @relation("RoleHierarchy", fields: [parentId], references: [id], onDelete: Cascade)
+  children    Role[]      @relation("RoleHierarchy")
+  userRoles   UserRole[]
+  rolePerms   RolePermission[]
+  roleResources RoleResource[]
+  roleOperations RoleOperation[]
+
+  @@map("roles")
+}
+
+model UserRole {
+  id        String   @id @default(uuid())
+  userId    String   @map("user_id")
+  roleId    String   @map("role_id")
+  createdAt DateTime @default(now()) @map("created_at")
+
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  role      Role     @relation(fields: [roleId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, roleId])
+  @@map("user_roles")
+}
+
+model Permission {
+  id          String    @id @default(uuid())
+  name        String
+  code        String    @unique
+  type        String
+  parentId    String?   @map("parent_id")
+  path        String?
+  icon        String?
+  sortOrder   Int       @default(0) @map("sort_order")
+  status      Int       @default(1)
+  createdAt   DateTime  @default(now()) @map("created_at")
+  updatedAt   DateTime  @updatedAt @map("updated_at")
+  deletedAt   DateTime? @map("deleted_at")
+
+  rolePerms   RolePermission[]
+
+  @@map("permissions")
+}
+
+model RolePermission {
+  id           String   @id @default(uuid())
+  roleId       String   @map("role_id")
+  permissionId String   @map("permission_id")
+  createdAt    DateTime @default(now()) @map("created_at")
+
+  role         Role       @relation(fields: [roleId], references: [id], onDelete: Cascade)
+  permission   Permission @relation(fields: [permissionId], references: [id], onDelete: Cascade)
+
+  @@unique([roleId, permissionId])
+  @@map("role_permissions")
+}
+
+model Organization {
+  id          String    @id @default(uuid())
+  orgNo       String    @unique @map("org_no")
+  name        String
+  parentId    String?   @map("parent_id")
+  description String?
+  sortOrder   Int       @default(0) @map("sort_order")
+  status      Int       @default(1)
+  createdAt   DateTime  @default(now()) @map("created_at")
+  updatedAt   DateTime  @updatedAt @map("updated_at")
+  deletedAt   DateTime? @map("deleted_at")
+
+  parent      Organization? @relation("OrgHierarchy", fields: [parentId], references: [id], onDelete: Cascade)
+  children    Organization[] @relation("OrgHierarchy")
+  users       User[]
+
+  @@map("organizations")
+}
+
+model Resource {
+  id          String    @id @default(uuid())
+  name        String
+  code        String    @unique
+  type        String
+  path        String
+  description String?
+  status      Int       @default(1)
+  createdAt   DateTime  @default(now()) @map("created_at")
+  updatedAt   DateTime  @updatedAt @map("updated_at")
+  deletedAt   DateTime? @map("deleted_at")
+
+  roleResources RoleResource[]
+
+  @@map("resources")
+}
+
+model RoleResource {
+  id         String   @id @default(uuid())
+  roleId     String   @map("role_id")
+  resourceId String   @map("resource_id")
+  createdAt  DateTime @default(now()) @map("created_at")
+
+  role       Role     @relation(fields: [roleId], references: [id], onDelete: Cascade)
+  resource   Resource @relation(fields: [resourceId], references: [id], onDelete: Cascade)
+
+  @@unique([roleId, resourceId])
+  @@map("role_resources")
+}
+
+model Operation {
+  id          String    @id @default(uuid())
+  name        String
+  code        String    @unique
+  module      String
+  action      String
+  description String?
+  status      Int       @default(1)
+  createdAt   DateTime  @default(now()) @map("created_at")
+  updatedAt   DateTime  @updatedAt @map("updated_at")
+  deletedAt   DateTime? @map("deleted_at")
+
+  roleOperations RoleOperation[]
+
+  @@map("operations")
+}
+
+model RoleOperation {
+  id          String   @id @default(uuid())
+  roleId      String   @map("role_id")
+  operationId String   @map("operation_id")
+  createdAt   DateTime @default(now()) @map("created_at")
+
+  role        Role      @relation(fields: [roleId], references: [id], onDelete: Cascade)
+  operation   Operation @relation(fields: [operationId], references: [id], onDelete: Cascade)
+
+  @@unique([roleId, operationId])
+  @@map("role_operations")
+}
+
+model IPBlacklist {
+  id          String    @id @default(uuid())
+  ip          String    @unique
+  reason      String?
+  expiresAt   DateTime? @map("expires_at")
+  createdAt   DateTime  @default(now()) @map("created_at")
+
+  @@map("ip_blacklist")
+}
+
+model AuditLog {
+  id          String    @id @default(uuid())
+  userId      String?   @map("user_id")
+  username    String?
+  action      String
+  module      String
+  ip          String?
+  userAgent   String?   @map("user_agent")
+  requestData String?   @map("request_data")
+  responseData String?  @map("response_data")
+  status      Int       @default(1)
+  message     String?
+  createdAt   DateTime  @default(now()) @map("created_at")
+
+  @@map("audit_logs")
+}
