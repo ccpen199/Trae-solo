@@ -1,0 +1,119 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id              String    @id @default(uuid())
+  username        String    @unique
+  password        String
+  name            String
+  role            String    @default("STUDENT")
+  email           String?   @unique
+  phone           String?
+  studentId       String?   @unique
+  department      String?
+  classId         String?
+  createdAt       DateTime  @default(now())
+  updatedAt       DateTime  @updatedAt
+
+  leaves          Leave[]           @relation("Applicant")
+  approvedLeaves  Leave[]           @relation("Approver")
+  announcements   Announcement[]
+  evaluations     Evaluation[]      @relation("EvaluationStudent")
+  evaluatedItems  Evaluation[]      @relation("EvaluationEvaluator")
+  feedbacks       Feedback[]        @relation("FeedbackAuthor")
+  processedFeedbacks Feedback[]    @relation("FeedbackProcessor")
+  classFeeRecords ClassFeeRecord[]
+}
+
+model Announcement {
+  id          String   @id @default(uuid())
+  title       String
+  content     String
+  type        String   @default("DEPARTMENT")
+  authorId    String
+  targetClass String?
+  isPinned    Boolean  @default(false)
+  isPublished Boolean  @default(true)
+  viewCount   Int      @default(0)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  author      User     @relation(fields: [authorId], references: [id])
+}
+
+model Leave {
+  id              String   @id @default(uuid())
+  applicantId     String
+  approverId      String?
+  leaveType       String   @default("PERSONAL")
+  reason          String
+  startTime       DateTime
+  endTime         DateTime
+  days            Float
+  status          String   @default("DRAFT")
+  parentLeaveId   String?
+  approvalComment String?
+  checkInTime     DateTime?
+  attachmentUrl   String?
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+
+  applicant       User     @relation("Applicant", fields: [applicantId], references: [id])
+  approver        User?    @relation("Approver", fields: [approverId], references: [id])
+  parentLeave     Leave?   @relation("ParentLeave", fields: [parentLeaveId], references: [id])
+  childLeaves     Leave[]  @relation("ParentLeave")
+}
+
+model Evaluation {
+  id          String   @id @default(uuid())
+  studentId   String
+  semester    String
+  type        String
+  score       Float
+  maxScore    Float    @default(100)
+  comment     String?
+  evaluatorId String?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  student     User     @relation("EvaluationStudent", fields: [studentId], references: [id])
+  evaluator   User?    @relation("EvaluationEvaluator", fields: [evaluatorId], references: [id])
+
+  @@unique([studentId, semester, type])
+}
+
+model ClassFeeRecord {
+  id          String   @id @default(uuid())
+  classId     String
+  amount      Float
+  type        String
+  description String?
+  operatorId  String
+  balance     Float
+  createdAt   DateTime @default(now())
+
+  operator    User     @relation(fields: [operatorId], references: [id])
+}
+
+model Feedback {
+  id          String   @id @default(uuid())
+  authorId    String
+  title       String
+  content     String
+  status      String   @default("PENDING")
+  priority    Int      @default(1)
+  processorId String?
+  response    String?
+  isAnonymous Boolean  @default(false)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  author      User     @relation("FeedbackAuthor", fields: [authorId], references: [id])
+  processor   User?    @relation("FeedbackProcessor", fields: [processorId], references: [id])
+}
