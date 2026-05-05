@@ -1,0 +1,309 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id           String     @id @default(uuid())
+  phone        String     @unique
+  password     String
+  nickname     String?
+  avatar       String?
+  role         String     @default("GUEST")
+  createdAt    DateTime   @default(now())
+  updatedAt    DateTime   @updatedAt
+  
+  bookings     Booking[]
+  favorites    Favorite[]
+  searchHistory SearchHistory[]
+  host         Host?
+  
+  @@map("users")
+}
+
+model Host {
+  id           String     @id @default(uuid())
+  userId       String     @unique
+  realName     String
+  idCard       String     @unique
+  verifyStatus Boolean    @default(false)
+  intro        String?
+  responseRate Float      @default(100.0)
+  responseTime Int        @default(15)
+  createdAt    DateTime   @default(now())
+  updatedAt    DateTime   @updatedAt
+  
+  user         User       @relation(fields: [userId], references: [id], onDelete: Cascade)
+  properties   Property[]
+  
+  @@map("hosts")
+}
+
+model City {
+  id           String     @id @default(uuid())
+  name         String
+  nameEn       String?
+  country      String     @default("中国")
+  province     String?
+  pinyin       String?
+  isHot        Boolean    @default(false)
+  isDomestic   Boolean    @default(true)
+  lat          Float?
+  lng          Float?
+  sort         Int        @default(0)
+  banner       String?
+  
+  properties   Property[]
+  searchHistory SearchHistory[]
+  
+  @@map("cities")
+  @@index([name])
+  @@index([pinyin])
+  @@index([isHot])
+}
+
+model Location {
+  id           String     @id @default(uuid())
+  name         String
+  type         String
+  typeLabel    String
+  cityId       String
+  lat          Float?
+  lng          Float?
+  sort         Int        @default(0)
+  
+  @@map("locations")
+  @@index([name])
+  @@index([type])
+}
+
+model Property {
+  id           String     @id @default(uuid())
+  title        String
+  subtitle     String?
+  type         String     @default("APARTMENT")
+  typeLabel    String?
+  
+  cityId       String
+  address      String
+  lat          Float?
+  lng          Float?
+  
+  bedrooms     Int        @default(1)
+  beds         Int        @default(1)
+  baths        Int        @default(1)
+  maxGuests    Int        @default(2)
+  area         Float?
+  
+  pricePerNight Int       @default(200)
+  cleaningFee  Int        @default(0)
+  serviceFee   Int        @default(0)
+  deposit      Int        @default(0)
+  
+  intro        String?
+  facilities   String
+  houseRules   String?
+  
+  mainImage    String
+  images       String
+  
+  hostId       String
+  isActive     Boolean    @default(true)
+  viewCount    Int        @default(0)
+  likeCount    Int        @default(0)
+  rating       Float      @default(4.8)
+  reviewCount  Int        @default(0)
+  
+  createdAt    DateTime   @default(now())
+  updatedAt    DateTime   @updatedAt
+  
+  host         Host       @relation(fields: [hostId], references: [id], onDelete: Cascade)
+  city         City       @relation(fields: [cityId], references: [id], onDelete: Cascade)
+  bookings     Booking[]
+  favorites    Favorite[]
+  reviews      Review[]
+  availabilities Availability[]
+  
+  @@map("properties")
+  @@index([cityId])
+  @@index([pricePerNight])
+  @@index([rating])
+}
+
+model Availability {
+  id           String     @id @default(uuid())
+  propertyId   String
+  date         DateTime
+  isAvailable  Boolean    @default(true)
+  price        Int?
+  
+  property     Property   @relation(fields: [propertyId], references: [id], onDelete: Cascade)
+  
+  @@map("availabilities")
+  @@unique([propertyId, date])
+  @@index([propertyId, date])
+}
+
+model Booking {
+  id           String     @id @default(uuid())
+  orderNo      String     @unique
+  userId       String
+  propertyId   String
+  
+  checkIn      DateTime
+  checkOut     DateTime
+  nights       Int
+  guests       Int        @default(2)
+  
+  pricePerNight Int
+  cleaningFee  Int
+  serviceFee   Int
+  deposit      Int
+  totalAmount  Int
+  
+  status       String     @default("PENDING")
+  guestName    String?
+  guestPhone   String?
+  specialRequest String?
+  
+  paidAt       DateTime?
+  confirmedAt  DateTime?
+  cancelledAt  DateTime?
+  completedAt  DateTime?
+  
+  createdAt    DateTime   @default(now())
+  updatedAt    DateTime   @updatedAt
+  
+  user         User       @relation(fields: [userId], references: [id], onDelete: Cascade)
+  property     Property   @relation(fields: [propertyId], references: [id], onDelete: Cascade)
+  review       Review?
+  payments     Payment[]
+  
+  @@map("bookings")
+  @@index([userId])
+  @@index([propertyId])
+  @@index([status])
+}
+
+model Payment {
+  id           String     @id @default(uuid())
+  bookingId    String
+  amount       Int
+  method       String
+  tradeNo      String?
+  status       String     @default("PENDING")
+  paidAt       DateTime?
+  
+  booking      Booking    @relation(fields: [bookingId], references: [id], onDelete: Cascade)
+  
+  @@map("payments")
+}
+
+model Review {
+  id           String     @id @default(uuid())
+  bookingId    String     @unique
+  userId       String
+  propertyId   String
+  rating       Int        @default(5)
+  content      String
+  images       String?
+  
+  createdAt    DateTime   @default(now())
+  
+  booking      Booking    @relation(fields: [bookingId], references: [id], onDelete: Cascade)
+  property     Property   @relation(fields: [propertyId], references: [id], onDelete: Cascade)
+  
+  @@map("reviews")
+}
+
+model Favorite {
+  id           String     @id @default(uuid())
+  userId       String
+  propertyId   String
+  createdAt    DateTime   @default(now())
+  
+  user         User       @relation(fields: [userId], references: [id], onDelete: Cascade)
+  property     Property   @relation(fields: [propertyId], references: [id], onDelete: Cascade)
+  
+  @@map("favorites")
+  @@unique([userId, propertyId])
+}
+
+model SearchHistory {
+  id           String     @id @default(uuid())
+  userId       String?
+  keyword      String
+  type         String     @default("DESTINATION")
+  cityId       String?
+  checkIn      DateTime?
+  checkOut     DateTime?
+  
+  createdAt    DateTime   @default(now())
+  
+  user         User?      @relation(fields: [userId], references: [id], onDelete: SetNull)
+  city         City?      @relation(fields: [cityId], references: [id], onDelete: SetNull)
+  
+  @@map("search_history")
+  @@index([userId])
+}
+
+model Banner {
+  id           String     @id @default(uuid())
+  title        String
+  subtitle     String?
+  image        String
+  link         String?
+  linkType     String?
+  sort         Int        @default(0)
+  isActive     Boolean    @default(true)
+  startDate    DateTime?
+  endDate      DateTime?
+  
+  @@map("banners")
+}
+
+model ActivityTopic {
+  id           String     @id @default(uuid())
+  title        String
+  subtitle     String?
+  icon         String?
+  image        String?
+  sort         Int        @default(0)
+  isActive     Boolean    @default(true)
+  
+  @@map("activity_topics")
+}
+
+model Coupon {
+  id           String     @id @default(uuid())
+  name         String
+  code         String     @unique
+  discountType String
+  discountValue Int
+  minAmount    Int        @default(0)
+  maxDiscount  Int?
+  
+  totalCount   Int        @default(-1)
+  usedCount    Int        @default(0)
+  perUserLimit Int        @default(1)
+  
+  startDate    DateTime
+  endDate      DateTime
+  isActive     Boolean    @default(true)
+  
+  @@map("coupons")
+}
+
+model InviteCode {
+  id           String     @id @default(uuid())
+  userId       String     @unique
+  code         String     @unique
+  inviteCount  Int        @default(0)
+  createdAt    DateTime   @default(now())
+  
+  @@map("invite_codes")
+}
