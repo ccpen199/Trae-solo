@@ -1,0 +1,233 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+}
+
+model Department {
+  id        String   @id @default(cuid())
+  name      String   @unique
+  code      String   @unique
+  managerId String?
+  parentId  String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  parent   Department?  @relation("DepartmentHierarchy", fields: [parentId], references: [id], onDelete: SetNull)
+  children Department[] @relation("DepartmentHierarchy")
+  manager  Employee?    @relation("DeptManager", fields: [managerId], references: [id], onDelete: SetNull)
+  employees Employee[]  @relation("DeptEmployees")
+  transfersFrom Transfer[] @relation("TransferFromDept")
+  transfersTo   Transfer[] @relation("TransferToDept")
+
+  @@map("departments")
+}
+
+model Employee {
+  id              String     @id @default(cuid())
+  employeeNo      String     @unique
+  name            String
+  gender          String
+  birthDate       DateTime?
+  idCard          String?    @unique
+  phone           String?
+  email           String?
+  address         String?
+  departmentId    String?
+  position        String?
+  entryDate       DateTime?
+  status          EmployeeStatus @default(ACTIVE)
+  baseSalary      Float    @default(0)
+  createdAt       DateTime   @default(now())
+  updatedAt       DateTime   @updatedAt
+
+  department    Department?    @relation("DeptEmployees", fields: [departmentId], references: [id], onDelete: SetNull)
+  managesDept   Department[]   @relation("DeptManager")
+  education     Education[]
+  trainings     Training[]
+  transfers     Transfer[]
+  rewardsPunishments RewardPunishment[]
+  attendances   Attendance[]
+  salaries      Salary[]
+  users         User[]
+
+  @@map("employees")
+}
+
+model Education {
+  id         String   @id @default(cuid())
+  employeeId String
+  school     String
+  degree     String
+  major      String?
+  startDate  DateTime?
+  endDate    DateTime?
+  certificateNo String?
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+
+  employee Employee @relation(fields: [employeeId], references: [id], onDelete: Cascade)
+
+  @@map("educations")
+}
+
+model Training {
+  id          String   @id @default(cuid())
+  employeeId  String
+  name        String
+  provider    String?
+  content     String?
+  startDate   DateTime?
+  endDate     DateTime?
+  duration    Int?
+  result      String?
+  certificateNo String?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  employee Employee @relation(fields: [employeeId], references: [id], onDelete: Cascade)
+
+  @@map("trainings")
+}
+
+model Transfer {
+  id              String   @id @default(cuid())
+  employeeId      String
+  fromDepartmentId String?
+  toDepartmentId   String?
+  fromPosition    String?
+  toPosition      String?
+  transferDate    DateTime?
+  reason          String?
+  approvedBy      String?
+  status          TransferStatus @default(PENDING)
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+
+  employee      Employee   @relation(fields: [employeeId], references: [id], onDelete: Cascade)
+  fromDepartment Department? @relation("TransferFromDept", fields: [fromDepartmentId], references: [id], onDelete: SetNull)
+  toDepartment   Department? @relation("TransferToDept", fields: [toDepartmentId], references: [id], onDelete: SetNull)
+
+  @@map("transfers")
+}
+
+model RewardPunishment {
+  id         String   @id @default(cuid())
+  employeeId String
+  type       RewardPunishmentType
+  category   String?
+  reason     String?
+  amount     Float  @default(0)
+  date       DateTime?
+  approvedBy String?
+  remark     String?
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+
+  employee Employee @relation(fields: [employeeId], references: [id], onDelete: Cascade)
+
+  @@map("rewards_punishments")
+}
+
+model Attendance {
+  id               String   @id @default(cuid())
+  employeeId       String
+  year             Int
+  month            Int
+  totalDays        Int      @default(0)
+  workDays         Int      @default(0)
+  publicHolidays   Int      @default(0)
+  shouldAttend     Int      @default(0)
+  actualAttend     Int      @default(0)
+  leaveDays        Float  @default(0)
+  sickLeave        Float  @default(0)
+  personalLeave    Float  @default(0)
+  annualLeave      Float  @default(0)
+  overtimeHoliday  Float  @default(0)
+  overtimeNormal   Float  @default(0)
+  lateTimes        Int      @default(0)
+  earlyLeaveTimes  Int      @default(0)
+  absentDays       Float  @default(0)
+  status           String   @default("DRAFT")
+  createdAt        DateTime @default(now())
+  updatedAt        DateTime @updatedAt
+
+  employee Employee @relation(fields: [employeeId], references: [id], onDelete: Cascade)
+
+  @@unique([employeeId, year, month])
+  @@map("attendances")
+}
+
+model Salary {
+  id                String   @id @default(cuid())
+  employeeId        String
+  year              Int
+  month             Int
+  baseSalary        Float  @default(0)
+  performanceSalary Float  @default(0)
+  allowance         Float  @default(0)
+  bonus             Float  @default(0)
+  overtimePay       Float  @default(0)
+  housingFund       Float  @default(0)
+  pension           Float  @default(0)
+  medicalInsurance  Float  @default(0)
+  unemployment      Float  @default(0)
+  tax               Float  @default(0)
+  otherDeduction    Float  @default(0)
+  attendanceDeduction Float @default(0)
+  totalIncome       Float  @default(0)
+  totalDeduction    Float  @default(0)
+  netSalary         Float  @default(0)
+  status            String   @default("DRAFT")
+  paidDate          DateTime?
+  createdAt         DateTime @default(now())
+  updatedAt         DateTime @updatedAt
+
+  employee Employee @relation(fields: [employeeId], references: [id], onDelete: Cascade)
+
+  @@unique([employeeId, year, month])
+  @@map("salaries")
+}
+
+model User {
+  id          String   @id @default(cuid())
+  username    String   @unique
+  password    String
+  role        UserRole @default(USER)
+  employeeId  String?
+  isActive    Boolean  @default(true)
+  lastLoginAt DateTime?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  employee Employee? @relation(fields: [employeeId], references: [id], onDelete: SetNull)
+
+  @@map("users")
+}
+
+enum EmployeeStatus {
+  ACTIVE
+  RESIGNED
+  RETIRED
+  DISMISSED
+  ON_LEAVE
+  PROBATION
+}
+
+enum TransferStatus {
+  PENDING
+  APPROVED
+  REJECTED
+}
+
+enum RewardPunishmentType {
+  REWARD
+  PUNISHMENT
+}
+
+enum UserRole {
+  ADMIN
+  USER
+}
