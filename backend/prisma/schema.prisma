@@ -1,0 +1,248 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum DeveloperLevel {
+  REGULAR
+  ADVANCED
+  PLATINUM
+  CERTIFIED
+}
+
+enum ApplicationType {
+  WEB_APP
+  NATIVE_APP
+  SERVICE_PROVIDER
+  THIRD_PARTY_SYSTEM
+}
+
+enum AppStatus {
+  DRAFT
+  PENDING_REVIEW
+  ACTIVE
+  SUSPENDED
+  BANNED
+  DELETED
+}
+
+enum RoleType {
+  BUYER
+  SELLER
+  VIP_SELLER
+  MERCHANT_ADMIN
+  PLATFORM_ADMIN
+}
+
+enum ApiScope {
+  USER_READ
+  USER_WRITE
+  ORDER_READ
+  ORDER_WRITE
+  PRODUCT_READ
+  PRODUCT_WRITE
+  TRADE_READ
+  TRADE_WRITE
+  LOGISTICS_READ
+  LOGISTICS_WRITE
+  FINANCE_READ
+  FINANCE_WRITE
+  MESSAGE_SEND
+  MESSAGE_RECEIVE
+}
+
+enum EventType {
+  ORDER_CREATED
+  ORDER_PAID
+  ORDER_SHIPPED
+  ORDER_COMPLETED
+  ORDER_CANCELLED
+  PRODUCT_UPDATED
+  PRODUCT_CREATED
+  RENEWAL_DUE
+  SUBSCRIPTION_PAUSED
+  SUBSCRIPTION_RESUMED
+}
+
+model Developer {
+  id            String    @id @default(uuid())
+  name          String
+  email         String    @unique
+  phone         String?
+  level         DeveloperLevel @default(REGULAR)
+  companyName   String?
+  description   String?
+  isVerified    Boolean   @default(false)
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+  applications  Application[]
+  apiKeys       ApiKey[]
+  auditLogs     AuditLog[]
+
+  @@index([email])
+  @@index([level])
+}
+
+model Application {
+  id              String        @id @default(uuid())
+  name            String
+  appKey          String        @unique
+  appSecret       String
+  type            ApplicationType
+  description     String?
+  developerId     String
+  status          AppStatus     @default(DRAFT)
+  callbackUrl     String?
+  notifyUrl       String?
+  defaultScopes   ApiScope[]
+  approvedScopes  ApiScope[]
+  requestedScopes ApiScope[]
+  rateLimitPerMin Int           @default(100)
+  dailyLimit      Int           @default(10000)
+  isSandbox       Boolean       @default(true)
+  approvedAt      DateTime?
+  suspendedAt     DateTime?
+  createdAt       DateTime      @default(now())
+  updatedAt       DateTime      @updatedAt
+  developer       Developer     @relation(fields: [developerId], references: [id])
+  apiKeys         ApiKey[]
+  userGrants      UserApiGrant[]
+  apiCalls        ApiCallLog[]
+  auditLogs       AuditLog[]
+  webhookSubscriptions WebhookSubscription[]
+
+  @@index([appKey])
+  @@index([developerId])
+  @@index([status])
+}
+
+model ApiKey {
+  id              String    @id @default(uuid())
+  key             String    @unique
+  applicationId   String
+  developerId     String
+  isActive        Boolean   @default(true)
+  lastUsedAt      DateTime?
+  expiresAt       DateTime?
+  createdAt       DateTime  @default(now())
+  application     Application @relation(fields: [applicationId], references: [id])
+  developer       Developer @relation(fields: [developerId], references: [id])
+
+  @@index([key])
+  @@index([applicationId])
+}
+
+model Role {
+  id              String    @id @default(uuid())
+  type            RoleType  @unique
+  name            String
+  description     String?
+  defaultApiScopes ApiScope[]
+  createdAt       DateTime  @default(now())
+  updatedAt       DateTime  @updatedAt
+  userGrants      UserApiGrant[]
+}
+
+model UserApiGrant {
+  id              String    @id @default(uuid())
+  userId          String
+  roleId          String
+  applicationId   String
+  grantedScopes   ApiScope[]
+  isActive        Boolean   @default(true)
+  grantedAt       DateTime  @default(now())
+  revokedAt       DateTime?
+  role            Role      @relation(fields: [roleId], references: [id])
+  application     Application @relation(fields: [applicationId], references: [id])
+
+  @@unique([userId, applicationId])
+  @@index([userId])
+  @@index([applicationId])
+}
+
+model WebhookSubscription {
+  id              String    @id @default(uuid())
+  applicationId   String
+  eventTypes      EventType[]
+  endpointUrl     String
+  secretKey       String
+  isActive        Boolean   @default(true)
+  lastTriggeredAt DateTime?
+  createdAt       DateTime  @default(now())
+  application     Application @relation(fields: [applicationId], references: [id])
+
+  @@index([applicationId])
+}
+
+model ApiCallLog {
+  id              String    @id @default(uuid())
+  timestamp       DateTime  @default(now())
+  appKey          String
+  applicationId   String?
+  userId          String?
+  roleType        RoleType?
+  apiEndpoint     String
+  apiMethod       String
+  requestedScopes ApiScope[]
+  responseStatus  Int
+  responseTimeMs  Int
+  ipAddress       String?
+  userAgent       String?
+  isSuccess       Boolean
+  application     Application? @relation(fields: [applicationId], references: [id])
+
+  @@index([timestamp])
+  @@index([appKey])
+  @@index([userId])
+}
+
+model AuditLog {
+  id              String    @id @default(uuid())
+  timestamp       DateTime  @default(now())
+  action          String
+  targetType      String?
+  targetId        String?
+  operatorType    String?
+  operatorId      String?
+  applicationId   String?
+  developerId     String?
+  details         String?
+  ipAddress       String?
+  isSuccess       Boolean   @default(true)
+  developer       Developer? @relation(fields: [developerId], references: [id])
+  application     Application? @relation(fields: [applicationId], references: [id])
+
+  @@index([timestamp])
+  @@index([action])
+  @@index([applicationId])
+  @@index([developerId])
+}
+
+model RateLimitRule {
+  id              String    @id @default(uuid())
+  name            String
+  scope           String
+  limitType       String
+  windowMs        Int
+  maxRequests     Int
+  isActive        Boolean   @default(true)
+  createdAt       DateTime  @default(now())
+  updatedAt       DateTime  @updatedAt
+}
+
+model Notification {
+  id              String    @id @default(uuid())
+  eventType       EventType
+  applicationId   String?
+  developerId     String?
+  payload         String
+  status          String    @default("PENDING")
+  sentAt          DateTime?
+  failedAt        DateTime?
+  retryCount      Int       @default(0)
+  createdAt       DateTime  @default(now())
+}
