@@ -1,0 +1,132 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = "file:./dev.db"
+}
+
+model User {
+  id            String          @id @default(uuid())
+  username      String          @unique
+  passwordHash  String
+  name          String
+  phone         String?         @unique
+  email         String?         @unique
+  createdAt     DateTime        @default(now())
+  updatedAt     DateTime        @updatedAt
+
+  accountBalance AccountBalance?
+  fundShare    FundShare?
+  transactions Transaction[]
+  orders       Order[]
+  dPlans       DPlan[]
+  dailyIncomes DailyIncome[]
+
+  @@map("users")
+}
+
+model AccountBalance {
+  id            String          @id @default(uuid())
+  userId        String          @unique
+  available     Decimal         @default(0)
+  frozen        Decimal         @default(0)
+  totalIncome   Decimal         @default(0)
+  createdAt     DateTime        @default(now())
+  updatedAt     DateTime        @updatedAt
+
+  user          User            @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@map("account_balances")
+}
+
+model FundShare {
+  id            String          @id @default(uuid())
+  userId        String          @unique
+  totalShares   Decimal         @default(0)
+  availableShares Decimal       @default(0)
+  frozenShares  Decimal         @default(0)
+  nav           Decimal         @default(1.0)
+  createdAt     DateTime        @default(now())
+  updatedAt     DateTime        @updatedAt
+
+  user          User            @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@map("fund_shares")
+}
+
+model Transaction {
+  id              String          @id @default(uuid())
+  userId          String
+  orderNo         String?         @unique
+  type            String
+  channel         String?
+  amount          Decimal
+  shares          Decimal?
+  nav             Decimal?
+  status          String          @default("PENDING")
+  description     String?
+  failReason      String?
+  externalOrderNo String?
+  createdAt       DateTime        @default(now())
+  updatedAt       DateTime        @updatedAt
+
+  user            User            @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId, createdAt])
+  @@index([orderNo])
+  @@map("transactions")
+}
+
+model Order {
+  id              String          @id @default(uuid())
+  userId          String
+  orderNo         String          @unique
+  type            String
+  amount          Decimal
+  shares          Decimal?
+  nav             Decimal?
+  status          String          @default("PENDING")
+  failReason      String?
+  externalOrderNo String?
+  createdAt       DateTime        @default(now())
+  updatedAt       DateTime        @updatedAt
+
+  user            User            @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId, createdAt])
+  @@index([orderNo])
+  @@map("orders")
+}
+
+model DailyIncome {
+  id              String          @id @default(uuid())
+  userId          String
+  date            DateTime
+  amount          Decimal
+  shares          Decimal
+  nav             Decimal
+  createdAt       DateTime        @default(now())
+
+  user            User            @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, date])
+  @@map("daily_incomes")
+}
+
+model DPlan {
+  id              String          @id @default(uuid())
+  userId          String
+  planNo          String          @unique
+  amount          Decimal
+  cycleDay        Int
+  nextExecuteDate DateTime
+  status          String          @default("ACTIVE")
+  createdAt       DateTime        @default(now())
+  updatedAt       DateTime        @updatedAt
+
+  user            User            @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@map("d_plans")
+}
