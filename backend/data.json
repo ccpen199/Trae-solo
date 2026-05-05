@@ -1,0 +1,25 @@
+{
+  "users": [
+    {
+      "id": 1,
+      "username": "admin",
+      "password": "$2a$10$MTTl4TqkZaODUInCkgSBVuqo5ZUCSDVireiAb8tWcB2sCKFZGcn8m",
+      "role": "admin",
+      "age": 30,
+      "gender": "male",
+      "created_at": "2026-05-02T20:41:37.180Z",
+      "updated_at": "2026-05-02T20:41:37.180Z"
+    },
+    {
+      "id": 2,
+      "username": "user",
+      "password": "$2a$10$h0DHfKvOQBl4NjxYdGInduXk2VN1FosjUY6B7ZqKF.X9G3HAXkKVy",
+      "role": "user",
+      "age": 25,
+      "gender": "female",
+      "created_at": "2026-05-02T20:41:37.180Z",
+      "updated_at": "2026-05-02T20:41:37.180Z"
+    }
+  ],
+  "nextId": 3
+}
