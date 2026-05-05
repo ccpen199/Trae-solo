@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>太空射击</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div id="game-container">
+        <canvas id="gameCanvas" width="800" height="600"></canvas>
+        
+        <div id="start-screen" class="screen active">
+            <h1 class="title">太空射击</h1>
+            <p class="subtitle">SPACE SHOOTER</p>
+            <div class="menu">
+                <button id="startBtn" class="menu-btn">开始游戏</button>
+                <button id="leaderboardBtn" class="menu-btn">排行榜</button>
+                <button id="exitBtn" class="menu-btn">退出</button>
+            </div>
+            <div class="controls-info">
+                <p>操作说明:</p>
+                <p>↑↓←→ 或 WASD - 移动飞船</p>
+                <p>空格键 - 发射子弹</p>
+            </div>
+        </div>
+
+        <div id="game-screen" class="screen">
+            <div class="hud">
+                <div class="hud-item">
+                    <span class="hud-label">生命值:</span>
+                    <span id="health-display" class="hud-value">❤️❤️❤️</span>
+                </div>
+                <div class="hud-item">
+                    <span class="hud-label">得分:</span>
+                    <span id="score-display" class="hud-value">0</span>
+                </div>
+                <div class="hud-item">
+                    <span class="hud-label">关卡:</span>
+                    <span id="level-display" class="hud-value">1</span>
+                </div>
+            </div>
+        </div>
+
+        <div id="gameover-screen" class="screen">
+            <h2 id="gameover-title">游戏结束</h2>
+            <p class="final-score">最终得分: <span id="final-score-value">0</span></p>
+            <p class="final-level">到达关卡: <span id="final-level-value">1</span></p>
+            <div class="name-input-container">
+                <input type="text" id="playerName" placeholder="输入你的姓名..." maxlength="20">
+                <button id="submitBtn" class="menu-btn">提交分数</button>
+            </div>
+            <div id="submit-status" class="status-message"></div>
+            <div class="menu">
+                <button id="restartBtn" class="menu-btn">重新开始</button>
+                <button id="gameoverLeaderboardBtn" class="menu-btn">查看排行榜</button>
+                <button id="gameoverExitBtn" class="menu-btn">返回主菜单</button>
+            </div>
+        </div>
+
+        <div id="leaderboard-screen" class="screen">
+            <h2>排行榜</h2>
+            <div id="leaderboard-container" class="leaderboard-container">
+                <table class="leaderboard-table">
+                    <thead>
+                        <tr>
+                            <th>排名</th>
+                            <th>姓名</th>
+                            <th>得分</th>
+                            <th>关卡</th>
+                            <th>时间</th>
+                        </tr>
+                    </thead>
+                    <tbody id="leaderboard-body">
+                    </tbody>
+                </table>
+            </div>
+            <div id="leaderboard-loading" class="loading">加载中...</div>
+            <button id="backBtn" class="menu-btn">返回</button>
+        </div>
+    </div>
+
+    <script src="config.js"></script>
+    <script src="api.js"></script>
+    <script src="game.js"></script>
+</body>
+</html>

@@ -1,0 +1,12 @@
+{
+  "name": "space-shooter-frontend",
+  "version": "1.0.0",
+  "description": "太空射击游戏前端",
+  "main": "index.html",
+  "scripts": {
+    "start": "npx serve -l 22112 ."
+  },
+  "devDependencies": {
+    "serve": "^14.2.1"
+  }
+}
