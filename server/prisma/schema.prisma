@@ -1,0 +1,133 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+// 用户表
+model User {
+  id           String        @id @default(uuid())
+  username     String        @unique
+  email        String?       @unique
+  passwordHash String
+  nickname     String
+  avatar       String?
+  status       Int           @default(1) // 1: 正常, 0: 禁用
+  createdAt    DateTime      @default(now())
+  updatedAt    DateTime      @updatedAt
+  
+  // 关系
+  createdUnions Union[]      @relation("UnionCreator")
+  unionMembers  UnionMember[]
+  
+  @@map("users")
+}
+
+// 联盟表
+model Union {
+  id           String        @id @default(uuid())
+  name         String        @unique
+  description  String?
+  avatar       String?
+  creatorId    String
+  leaderId     String        // 当前盟主ID
+  level        Int           @default(1)
+  reputation   Int           @default(0) // 声望
+  memberCount  Int           @default(1)
+  maxMembers   Int           @default(50) // 最大人数，根据等级变化
+  isRecommend  Boolean       @default(false) // 是否推荐
+  status       Int           @default(1) // 1: 正常, 0: 已解散
+  createdAt    DateTime      @default(now())
+  updatedAt    DateTime      @updatedAt
+  
+  // 关系
+  creator      User          @relation("UnionCreator", fields: [creatorId], references: [id])
+  leader       User          @relation("UnionLeader", fields: [leaderId], references: [id])
+  members      UnionMember[]
+  reputationLogs ReputationLog[]
+  contributionLogs ContributionLog[]
+  
+  @@map("unions")
+  @@index([level])
+  @@index([reputation])
+  @@index([isRecommend])
+}
+
+// 联盟成员表
+model UnionMember {
+  id           String        @id @default(uuid())
+  unionId      String
+  userId       String
+  role         Int           @default(3) // 1: 盟主, 2: 副盟主, 3: 普通成员
+  contribution Int           @default(0) // 贡献度
+  joinAt       DateTime      @default(now())
+  lastActiveAt DateTime      @default(now())
+  status       Int           @default(1) // 1: 正常, 0: 已退出
+  
+  // 关系
+  union        Union         @relation(fields: [unionId], references: [id])
+  user         User          @relation(fields: [userId], references: [id])
+  
+  @@map("union_members")
+  @@unique([unionId, userId])
+  @@index([unionId])
+  @@index([userId])
+  @@index([contribution])
+}
+
+// 联盟等级配置表
+model UnionLevelConfig {
+  id           Int           @id @default(autoincrement())
+  level        Int           @unique
+  name         String        // 等级名称，如"新手联盟"、"精英联盟"等
+  minReputation Int          // 升级所需最小声望
+  maxReputation Int          // 该等级最大声望
+  maxMembers   Int           // 该等级最大人数
+  dailyCost    Int           // 每日维护消耗
+  rewardRatio  Float         @default(1.0) // 奖励倍率
+  
+  @@map("union_level_configs")
+}
+
+// 声望流水表
+model ReputationLog {
+  id           String        @id @default(uuid())
+  unionId      String
+  userId       String?
+  type         Int           // 1: 发帖, 2: 回帖, 3: 登录, 4: 成员加入, 5: 退出/开除, 6: 删帖, 7: 删回复, 8: 等级维护
+  action       String        // 操作描述
+  amount       Int           // 变化量（正数增加，负数减少）
+  balance      Int           // 变化后余额
+  createdAt    DateTime      @default(now())
+  
+  // 关系
+  union        Union         @relation(fields: [unionId], references: [id])
+  
+  @@map("reputation_logs")
+  @@index([unionId])
+  @@index([userId])
+  @@index([createdAt])
+}
+
+// 贡献流水表
+model ContributionLog {
+  id           String        @id @default(uuid())
+  unionId      String
+  userId       String
+  type         Int           // 1: 发帖, 2: 回帖, 3: 登录, 4: 邀请成员
+  action       String        // 操作描述
+  amount       Int           // 变化量
+  balance      Int           // 变化后余额
+  createdAt    DateTime      @default(now())
+  
+  // 关系
+  union        Union         @relation(fields: [unionId], references: [id])
+  
+  @@map("contribution_logs")
+  @@index([unionId])
+  @@index([userId])
+  @@index([createdAt])
+}
