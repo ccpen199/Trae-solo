@@ -1,0 +1,209 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum OrderType {
+  SMALL_MEDIUM
+  BULK
+  SELF_PICKUP
+}
+
+enum OrderStatus {
+  PENDING_ENTRY
+  ENTRY_REJECTED
+  WAITING_SCHEDULE
+  SCHEDULING
+  SCHEDULED
+  COMPLETED
+  CANCELLED
+  REJECTED
+}
+
+enum ScheduleStatus {
+  PENDING
+  PROCESSING
+  COMPLETED
+  EXPIRED
+  RELEASED
+}
+
+model User {
+  id            String    @id @default(uuid())
+  username      String    @unique
+  password      String
+  name          String
+  role          String    @default("scheduler")
+  isActive      Boolean   @default(true)
+  lastLoginAt   DateTime?
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+  
+  schedules     Schedule[]
+  
+  @@map("users")
+}
+
+model DistributionCenter {
+  id            String    @id @default(uuid())
+  code          String    @unique
+  name          String
+  isActive      Boolean   @default(true)
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+  
+  warehouses    Warehouse[]
+  scheduleConfigs ScheduleConfig[]
+  
+  @@map("distribution_centers")
+}
+
+model Warehouse {
+  id                    String    @id @default(uuid())
+  code                  String    @unique
+  name                  String
+  distributionCenterId  String
+  isActive              Boolean   @default(true)
+  createdAt             DateTime  @default(now())
+  updatedAt             DateTime  @updatedAt
+  
+  distributionCenter    DistributionCenter @relation(fields: [distributionCenterId], references: [id], onDelete: Cascade)
+  scheduleConfigs       ScheduleConfig[]
+  
+  @@map("warehouses")
+}
+
+model ScheduleConfig {
+  id                    String    @id @default(uuid())
+  name                  String
+  distributionCenterId  String?
+  warehouseId           String?
+  orderType             OrderType?
+  minPieceCount         Int?
+  maxPieceCount         Int?
+  minVolume             Float?
+  maxVolume             Float?
+  minWeight             Float?
+  maxWeight             Float?
+  isActive              Boolean   @default(true)
+  createdAt             DateTime  @default(now())
+  updatedAt             DateTime  @updatedAt
+  createdBy             String?
+  
+  distributionCenter    DistributionCenter? @relation(fields: [distributionCenterId], references: [id])
+  warehouse             Warehouse? @relation(fields: [warehouseId], references: [id])
+  
+  @@map("schedule_configs")
+}
+
+model Order {
+  id                    String    @id @default(uuid())
+  orderNo               String    @unique
+  orderType             OrderType
+  orderStatus           OrderStatus
+  
+  distributionCenterId  String?
+  warehouseId           String?
+  
+  pieceCount            Int       @default(0)
+  volume                Float     @default(0)
+  weight                Float     @default(0)
+  
+  receiverName          String?
+  receiverPhone         String?
+  receiverFixedPhone    String?
+  appointmentCalendar   String?
+  
+  isSelfPickup          Boolean   @default(false)
+  isSameDayDelivery     Boolean   @default(false)
+  hasTimingCalculated   Boolean   @default(true)
+  appointmentConsistent Boolean   @default(true)
+  
+  entryCheckTime        DateTime?
+  entryCheckResult      String?
+  
+  createdAt             DateTime  @default(now())
+  updatedAt             DateTime  @updatedAt
+  
+  schedules             Schedule[]
+  
+  @@map("orders")
+}
+
+model Schedule {
+  id                String          @id @default(uuid())
+  orderId           String
+  userId            String?
+  status            ScheduleStatus  @default(PENDING)
+  
+  claimedAt         DateTime?
+  expiresAt         DateTime?
+  warningAt         DateTime?
+  releasedAt        DateTime?
+  completedAt       DateTime?
+  
+  beforeReceiverName        String?
+  beforeReceiverPhone       String?
+  beforeReceiverFixedPhone  String?
+  beforeAppointmentCalendar String?
+  
+  afterReceiverName         String?
+  afterReceiverPhone        String?
+  afterReceiverFixedPhone   String?
+  afterAppointmentCalendar  String?
+  
+  confirmTime         DateTime?
+  isConfirmed         Boolean         @default(false)
+  rejectReason        String?
+  isMaliciousReject   Boolean         @default(false)
+  
+  processingTime      Int?
+  
+  createdAt           DateTime        @default(now())
+  updatedAt           DateTime        @updatedAt
+  
+  order               Order           @relation(fields: [orderId], references: [id], onDelete: Cascade)
+  user                User?           @relation(fields: [userId], references: [id])
+  
+  @@map("schedules")
+}
+
+model ScheduleReport {
+  id                String    @id @default(uuid())
+  reportDate        DateTime
+  distributionCenterId String?
+  warehouseId       String?
+  
+  totalOrders       Int       @default(0)
+  scheduledOrders   Int       @default(0)
+  completedOrders   Int       @default(0)
+  expiredOrders     Int       @default(0)
+  
+  avgProcessingTime Float     @default(0)
+  maliciousRejects  Int       @default(0)
+  
+  createdAt         DateTime  @default(now())
+  updatedAt         DateTime  @updatedAt
+  
+  @@map("schedule_reports")
+  @@unique([reportDate, distributionCenterId, warehouseId])
+}
+
+model RiskCustomer {
+  id                String    @id @default(uuid())
+  receiverPhone     String    @unique
+  rejectCount       Int       @default(0)
+  maliciousRejectCount Int    @default(0)
+  isRiskCustomer    Boolean   @default(false)
+  riskLevel         Int       @default(0)
+  lastRejectTime    DateTime?
+  
+  createdAt         DateTime  @default(now())
+  updatedAt         DateTime  @updatedAt
+  
+  @@map("risk_customers")
+}
