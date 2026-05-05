@@ -1,0 +1,22 @@
+{
+  "name": "enterprise-website",
+  "version": "1.0.0",
+  "private": true,
+  "workspaces": [
+    "backend",
+    "frontend"
+  ],
+  "scripts": {
+    "dev:backend": "cd backend && npm run dev",
+    "dev:frontend": "cd frontend && npm run dev",
+    "start:backend": "cd backend && npm run start:pm2",
+    "start:frontend": "cd frontend && npm run start:pm2",
+    "stop:backend": "cd backend && npm run stop:pm2",
+    "stop:frontend": "cd frontend && npm run stop:pm2",
+    "logs:backend": "cd backend && npm run logs:pm2",
+    "logs:frontend": "cd frontend && npm run logs:pm2"
+  },
+  "devDependencies": {
+    "pm2": "^5.3.0"
+  }
+}
