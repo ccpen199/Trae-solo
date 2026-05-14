@@ -1,0 +1,57 @@
+:root {
+  --primary-color: #ff6b35;
+  --success-color: #07c160;
+  --warning-color: #ff976a;
+  --danger-color: #ee0a24;
+  --text-color: #323233;
+  --text-color-2: #646566;
+  --text-color-3: #969799;
+  --border-color: #ebedf0;
+  --background-color: #f7f8fa;
+  --white: #ffffff;
+}
+
+.page-container {
+  min-height: 100vh;
+  background-color: var(--background-color);
+}
+
+.safe-area-bottom {
+  padding-bottom: env(safe-area-inset-bottom);
+}
+
+.text-primary {
+  color: var(--primary-color);
+}
+
+.text-success {
+  color: var(--success-color);
+}
+
+.text-warning {
+  color: var(--warning-color);
+}
+
+.text-danger {
+  color: var(--danger-color);
+}
+
+.flex {
+  display: flex;
+}
+
+.flex-center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.flex-between {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.flex-1 {
+  flex: 1;
+}
