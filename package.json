@@ -1,0 +1,26 @@
+{
+  "name": "may-996-ecommerce",
+  "version": "1.0.0",
+  "description": "综合电商购物端",
+  "scripts": {
+    "start": "node server/index.js",
+    "dev": "nodemon server/index.js",
+    "build": "cd frontend && npm install && npm run build",
+    "start:backend": "nohup node server/index.js > logs/backend.log 2>&1 &",
+    "start:frontend": "cd frontend && nohup npm run dev > ../logs/frontend.log 2>&1 &",
+    "stop:backend": "lsof -ti:9961 | xargs -r kill -9",
+    "stop:frontend": "lsof -ti:9962 | xargs -r kill -9",
+    "restart": "npm run stop:backend && npm run stop:frontend && npm run start:backend && npm run start:frontend"
+  },
+  "dependencies": {
+    "bcryptjs": "^2.4.3",
+    "better-sqlite3": "^11.0.0",
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.5",
+    "express": "^4.19.2",
+    "jsonwebtoken": "^9.0.2"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.4"
+  }
+}
