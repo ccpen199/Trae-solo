@@ -1,0 +1,228 @@
+{
+  "users": [],
+  "products": [
+    {
+      "id": 1,
+      "title": "精选进口水果礼盒",
+      "description": "新鲜进口水果，精选礼盒装",
+      "price": 99,
+      "originalPrice": 129,
+      "image": "https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=fresh%20fruit%20gift%20box&image_size=square",
+      "category": "food",
+      "stock": 100,
+      "freight": 0,
+      "sales": 123
+    },
+    {
+      "id": 2,
+      "title": "智能保温杯",
+      "description": "304不锈钢真空保温杯",
+      "price": 59,
+      "originalPrice": 89,
+      "image": "https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=smart%20thermos%20cup&image_size=square",
+      "category": "home",
+      "stock": 200,
+      "freight": 8,
+      "sales": 456
+    },
+    {
+      "id": 3,
+      "title": "有机大米5kg装",
+      "description": "东北优质有机大米",
+      "price": 49.9,
+      "originalPrice": 69.9,
+      "image": "https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=organic%20rice%20package&image_size=square",
+      "category": "food",
+      "stock": 150,
+      "freight": 0,
+      "sales": 789
+    },
+    {
+      "id": 4,
+      "title": "护肤套装",
+      "description": "保湿补水护肤五件套",
+      "price": 299,
+      "originalPrice": 399,
+      "image": "https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=skincare%20set%20cosmetics&image_size=square",
+      "category": "beauty",
+      "stock": 80,
+      "freight": 0,
+      "sales": 234
+    },
+    {
+      "id": 5,
+      "title": "蓝牙耳机",
+      "description": "无线降噪蓝牙耳机",
+      "price": 199,
+      "originalPrice": 299,
+      "image": "https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=wireless%20bluetooth%20earphone&image_size=square",
+      "category": "digital",
+      "stock": 120,
+      "freight": 0,
+      "sales": 567
+    },
+    {
+      "id": 6,
+      "title": "精选进口奶粉",
+      "description": "新西兰进口婴幼儿奶粉",
+      "price": 268,
+      "originalPrice": 328,
+      "image": "https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=baby%20milk%20powder%20can&image_size=square",
+      "category": "food",
+      "stock": 90,
+      "freight": 10,
+      "sales": 345
+    },
+    {
+      "id": 7,
+      "title": "纯棉T恤",
+      "description": "100%纯棉休闲T恤",
+      "price": 49,
+      "originalPrice": 79,
+      "image": "https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=cotton%20t-shirt%20clothing&image_size=square",
+      "category": "clothing",
+      "stock": 200,
+      "freight": 6,
+      "sales": 890
+    },
+    {
+      "id": 8,
+      "title": "高端口红礼盒",
+      "description": "限定版口红礼盒套装",
+      "price": 368,
+      "originalPrice": 458,
+      "image": "https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=luxury%20lipstick%20gift%20box&image_size=square",
+      "category": "beauty",
+      "stock": 60,
+      "freight": 0,
+      "sales": 178
+    }
+  ],
+  "carts": [],
+  "orders": [],
+  "coupons": [
+    {
+      "id": 1,
+      "title": "新人专享券",
+      "discount": 20,
+      "minAmount": 100,
+      "expireTime": "2026-12-31",
+      "type": "new"
+    },
+    {
+      "id": 2,
+      "title": "满200减30",
+      "discount": 30,
+      "minAmount": 200,
+      "expireTime": "2026-06-30",
+      "type": "general"
+    },
+    {
+      "id": 3,
+      "title": "会员专享券",
+      "discount": 50,
+      "minAmount": 300,
+      "expireTime": "2026-07-15",
+      "type": "vip"
+    },
+    {
+      "id": 4,
+      "title": "食品类券",
+      "discount": 15,
+      "minAmount": 80,
+      "expireTime": "2026-05-31",
+      "type": "food"
+    },
+    {
+      "id": 5,
+      "title": "美妆满减券",
+      "discount": 40,
+      "minAmount": 250,
+      "expireTime": "2026-06-10",
+      "type": "beauty"
+    }
+  ],
+  "banners": [
+    {
+      "id": 1,
+      "image": "https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=ecommerce%20banner%20sale%20shopping&image_size=landscape_16_9",
+      "link": "/products"
+    },
+    {
+      "id": 2,
+      "image": "https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=promotion%20discount%20deal&image_size=landscape_16_9",
+      "link": "/products"
+    }
+  ],
+  "flashSales": [
+    {
+      "id": 1,
+      "productId": 2,
+      "price": 39,
+      "originalPrice": 59,
+      "stock": 50,
+      "sold": 28,
+      "startTime": "2026-05-10T11:37:03.596Z",
+      "endTime": "2026-05-10T14:37:03.602Z"
+    },
+    {
+      "id": 2,
+      "productId": 7,
+      "price": 29.9,
+      "originalPrice": 49,
+      "stock": 100,
+      "sold": 65,
+      "startTime": "2026-05-10T12:07:03.602Z",
+      "endTime": "2026-05-10T14:07:03.602Z"
+    },
+    {
+      "id": 3,
+      "productId": 5,
+      "price": 149,
+      "originalPrice": 199,
+      "stock": 30,
+      "sold": 12,
+      "startTime": "2026-05-10T12:27:03.602Z",
+      "endTime": "2026-05-10T15:37:03.602Z"
+    }
+  ],
+  "groupDeals": [
+    {
+      "id": 1,
+      "productId": 1,
+      "price": 79,
+      "originalPrice": 99,
+      "minPeople": 3,
+      "currentPeople": 12,
+      "expireTime": "2026-05-11T12:37:03.602Z"
+    },
+    {
+      "id": 2,
+      "productId": 3,
+      "price": 39.9,
+      "originalPrice": 49.9,
+      "minPeople": 5,
+      "currentPeople": 8,
+      "expireTime": "2026-05-12T12:37:03.602Z"
+    },
+    {
+      "id": 3,
+      "productId": 6,
+      "price": 199,
+      "originalPrice": 268,
+      "minPeople": 2,
+      "currentPeople": 25,
+      "expireTime": "2026-05-13T12:37:03.602Z"
+    },
+    {
+      "id": 4,
+      "productId": 8,
+      "price": 299,
+      "originalPrice": 368,
+      "minPeople": 3,
+      "currentPeople": 6,
+      "expireTime": "2026-05-15T12:37:03.602Z"
+    }
+  ],
+  "userCoupons": []
+}
