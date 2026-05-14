@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 60 60" width="60" height="60">
+  <circle cx="30" cy="30" r="28" fill="#fff1f0"/>
+  <path d="M20 20 L40 20 L40 40 L20 40 Z" fill="#ff4d4f"/>
+  <path d="M25 25 L25 35 L35 35 L35 25 Z" fill="white"/>
+  <path d="M20 25 L15 25 L15 35 L20 35 Z" fill="#ff4d4f" opacity="0.7"/>
+  <path d="M40 25 L45 25 L45 35 L40 35 Z" fill="#ff4d4f" opacity="0.7"/>
+  <text x="30" y="55" text-anchor="middle" fill="#ff4d4f" font-size="8" font-weight="bold">秒杀</text>
+</svg>
