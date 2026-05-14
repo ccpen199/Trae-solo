@@ -1,0 +1,15 @@
+{
+  "name": "join-social-app",
+  "version": "1.0.0",
+  "description": "JOIN - 社交应用",
+  "scripts": {
+    "dev:backend": "cd backend && npm run dev",
+    "dev:frontend": "cd frontend && npm run dev",
+    "build:frontend": "cd frontend && npm run build",
+    "start:backend": "cd backend && npm start",
+    "start:frontend": "cd frontend && npm run preview"
+  },
+  "keywords": ["social", "dating", "networking"],
+  "author": "",
+  "license": "MIT"
+}
