@@ -1,0 +1,135 @@
+.message-center-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 1000;
+  background: rgba(0,0,0,0.3);
+  display: flex;
+  justify-content: flex-end;
+  animation: fadeIn 0.2s ease;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+.message-center {
+  width: 400px;
+  max-width: 100%;
+  height: 100%;
+  background: #fff;
+  display: flex;
+  flex-direction: column;
+  animation: slideIn 0.3s ease;
+}
+
+@keyframes slideIn {
+  from { transform: translateX(100%); }
+  to { transform: translateX(0); }
+}
+
+.message-center-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 16px 20px;
+  border-bottom: 1px solid #f0f0f0;
+}
+
+.message-center-header h3 {
+  font-size: 16px;
+  font-weight: 600;
+}
+
+.close-btn {
+  font-size: 24px;
+  color: #999;
+  cursor: pointer;
+}
+
+.close-btn:hover {
+  color: #666;
+}
+
+.message-tabs {
+  display: flex;
+  border-bottom: 1px solid #f0f0f0;
+}
+
+.message-tab {
+  flex: 1;
+  padding: 12px;
+  text-align: center;
+  color: #666;
+  cursor: pointer;
+  border-bottom: 2px solid transparent;
+}
+
+.message-tab.active {
+  color: #ff4d4f;
+  border-bottom-color: #ff4d4f;
+  font-weight: 500;
+}
+
+.message-center-body {
+  flex: 1;
+  overflow-y: auto;
+}
+
+.message-empty {
+  text-align: center;
+  padding: 60px 20px;
+  color: #999;
+}
+
+.message-empty .btn {
+  margin-top: 16px;
+}
+
+.message-list {
+  padding: 12px;
+}
+
+.message-item {
+  padding: 12px;
+  border-bottom: 1px solid #f5f5f5;
+  cursor: pointer;
+}
+
+.message-item:hover {
+  background: #fafafa;
+}
+
+.message-item.unread {
+  background: #fff9f9;
+}
+
+.message-title {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-weight: 500;
+  margin-bottom: 8px;
+}
+
+.unread-dot {
+  width: 6px;
+  height: 6px;
+  background: #ff4d4f;
+  border-radius: 50%;
+}
+
+.message-content {
+  color: #666;
+  font-size: 13px;
+  line-height: 1.5;
+  margin-bottom: 4px;
+}
+
+.message-time {
+  color: #999;
+  font-size: 12px;
+}

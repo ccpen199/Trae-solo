@@ -1,0 +1,90 @@
+.all-channels-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 1000;
+  background: rgba(0,0,0,0.3);
+  animation: fadeIn 0.2s ease;
+}
+
+.all-channels {
+  background: #fff;
+  max-width: 600px;
+  margin: 100px auto 0;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.all-channels-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 16px 20px;
+  border-bottom: 1px solid #f0f0f0;
+}
+
+.all-channels-header h3 {
+  font-size: 16px;
+  font-weight: 600;
+}
+
+.close-btn {
+  font-size: 24px;
+  color: #999;
+  cursor: pointer;
+}
+
+.close-btn:hover {
+  color: #666;
+}
+
+.all-channels-body {
+  padding: 20px;
+}
+
+.channel-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 16px;
+}
+
+.channel-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  padding: 16px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.channel-item:hover {
+  background: #f5f5f5;
+}
+
+.channel-item.active {
+  background: #fff2f0;
+}
+
+.channel-icon {
+  font-size: 32px;
+}
+
+.channel-name {
+  font-size: 14px;
+  color: #333;
+}
+
+.channel-item.active .channel-name {
+  color: #ff4d4f;
+  font-weight: 500;
+}
+
+@media (max-width: 768px) {
+  .channel-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}

@@ -1,0 +1,168 @@
+.orders-page {
+  padding: 20px 0;
+}
+
+.page-title {
+  font-size: 24px;
+  font-weight: 600;
+  margin-bottom: 20px;
+}
+
+.orders-tabs {
+  display: flex;
+  background: #fff;
+  padding: 0 20px;
+  border-radius: 8px 8px 0 0;
+  border-bottom: 1px solid #f0f0f0;
+}
+
+.order-tab {
+  padding: 16px 24px;
+  color: #666;
+  font-size: 14px;
+  cursor: pointer;
+  border-bottom: 2px solid transparent;
+  transition: all 0.2s;
+}
+
+.order-tab:hover {
+  color: #ff4d4f;
+}
+
+.order-tab.active {
+  color: #ff4d4f;
+  border-bottom-color: #ff4d4f;
+  font-weight: 500;
+}
+
+.orders-list {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  padding-top: 16px;
+}
+
+.order-card {
+  background: #fff;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.order-header {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 12px 20px;
+  background: #fafafa;
+  border-bottom: 1px solid #f0f0f0;
+}
+
+.order-no {
+  color: #333;
+}
+
+.order-time {
+  color: #999;
+  font-size: 13px;
+  flex: 1;
+}
+
+.order-status {
+  font-weight: 500;
+}
+
+.status-pending {
+  color: #faad14;
+}
+
+.status-paid {
+  color: #1890ff;
+}
+
+.status-shipped {
+  color: #1890ff;
+}
+
+.status-completed {
+  color: #52c41a;
+}
+
+.status-cancelled {
+  color: #999;
+}
+
+.order-body {
+  display: flex;
+  padding: 20px;
+}
+
+.order-items {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.order-item-mini {
+  display: flex;
+  align-items: center;
+}
+
+.order-item-mini .item-image {
+  width: 60px;
+  height: 60px;
+  background: #f5f5f5;
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 24px;
+}
+
+.order-item-mini .item-info {
+  padding-left: 12px;
+}
+
+.order-item-mini .item-name {
+  font-size: 14px;
+  color: #333;
+  margin-bottom: 4px;
+}
+
+.order-item-mini .item-name:hover {
+  color: #ff4d4f;
+}
+
+.order-item-mini .item-price {
+  font-size: 13px;
+  color: #666;
+}
+
+.order-total {
+  width: 200px;
+  padding-left: 20px;
+  border-left: 1px solid #f0f0f0;
+  display: flex;
+  flex-direction: column;
+}
+
+.total-info {
+  text-align: right;
+  margin-bottom: 16px;
+}
+
+.total-info .price {
+  color: #ff4d4f;
+  font-size: 20px;
+  font-weight: 600;
+}
+
+.order-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.order-actions .btn {
+  justify-content: center;
+}
