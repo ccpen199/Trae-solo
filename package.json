@@ -1,0 +1,14 @@
+{
+  "name": "yanxuan-platform",
+  "version": "1.0.0",
+  "description": "网易严选风格生活电商平台",
+  "scripts": {
+    "start:backend": "cd backend && node server.js",
+    "start:frontend": "cd frontend && npm start",
+    "dev:backend": "cd backend && nodemon server.js",
+    "dev:frontend": "cd frontend && npm run dev"
+  },
+  "keywords": ["ecommerce", "yanxuan"],
+  "author": "",
+  "license": "MIT"
+}
