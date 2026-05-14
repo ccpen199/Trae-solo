@@ -1,0 +1,14 @@
+{
+  "name": "me-tao-web",
+  "version": "1.0.0",
+  "description": "ME 淘 Web 端 - 秒杀提醒 + 物流提醒工具",
+  "scripts": {
+    "backend": "cd backend && npm run start",
+    "backend:dev": "cd backend && npm run dev",
+    "frontend": "cd frontend && npm run start",
+    "frontend:dev": "cd frontend && npm run dev",
+    "install:all": "npm install && cd backend && npm install && cd ../frontend && npm install"
+  },
+  "author": "",
+  "license": "MIT"
+}
