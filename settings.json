@@ -1,0 +1,14 @@
+{
+ "ai_assistant.request.env": "ppe",
+ "ai_assistant.request.ppe": "ppe_trae_seed_code_internal",
+ "max_thread_per_instance": 2,
+"disable_gpu_inference": true,
+"disable_real_time_index": true,
+"disable_background_log": true,
+"model_cache_share": true,
+"swap_memory_limit": 0,
+"context_switch_priority": "low",
+"auto_unload_idle_model": true,
+"electron_hardware_acceleration": false,
+"update.mode": "manual"
+}
