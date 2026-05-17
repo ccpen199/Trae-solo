@@ -1,0 +1,224 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id        Int      @id @default(autoincrement())
+  username  String   @unique
+  email     String?  @unique
+  phone     String?  @unique
+  password  String
+  avatar    String?
+  nickname  String?
+  bio       String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  posts         Post[]
+  questions     Question[]
+  answers       Answer[]
+  comments      Comment[]
+  likes         Like[]
+  favorites     Favorite[]
+  activities    ActivityRegistration[]
+  pets          Pet[]
+  messagesSent  Message[]  @relation("Sender")
+  messagesReceived Message[] @relation("Receiver")
+}
+
+model Post {
+  id        Int      @id @default(autoincrement())
+  userId    Int
+  content   String
+  images    String?
+  video     String?
+  location  String?
+  topics    String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  user      User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  comments  Comment[]
+  likes     Like[]
+  favorites Favorite[]
+}
+
+model Question {
+  id        Int      @id @default(autoincrement())
+  userId    Int
+  title     String
+  content   String
+  images    String?
+  topics    String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  answers   Answer[]
+  likes     Like[]
+  favorites Favorite[]
+}
+
+model Answer {
+  id          Int      @id @default(autoincrement())
+  questionId  Int
+  userId      Int
+  content     String
+  images      String?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  question Question  @relation(fields: [questionId], references: [id], onDelete: Cascade)
+  user     User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  comments Comment[]
+  likes    Like[]
+}
+
+model Comment {
+  id        Int      @id @default(autoincrement())
+  postId    Int?
+  answerId  Int?
+  userId    Int
+  content   String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  post    Post?   @relation(fields: [postId], references: [id], onDelete: Cascade)
+  answer  Answer? @relation(fields: [answerId], references: [id], onDelete: Cascade)
+  user    User    @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model Like {
+  id        Int      @id @default(autoincrement())
+  postId    Int?
+  questionId Int?
+  answerId  Int?
+  userId    Int
+  createdAt DateTime @default(now())
+
+  post     Post?     @relation(fields: [postId], references: [id], onDelete: Cascade)
+  question Question? @relation(fields: [questionId], references: [id], onDelete: Cascade)
+  answer   Answer?   @relation(fields: [answerId], references: [id], onDelete: Cascade)
+  user     User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, postId], name: "unique_post_like")
+  @@unique([userId, questionId], name: "unique_question_like")
+  @@unique([userId, answerId], name: "unique_answer_like")
+}
+
+model Favorite {
+  id        Int      @id @default(autoincrement())
+  postId    Int?
+  questionId Int?
+  userId    Int
+  createdAt DateTime @default(now())
+
+  post     Post?     @relation(fields: [postId], references: [id], onDelete: Cascade)
+  question Question? @relation(fields: [questionId], references: [id], onDelete: Cascade)
+  user     User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, postId], name: "unique_post_favorite")
+  @@unique([userId, questionId], name: "unique_question_favorite")
+}
+
+model Activity {
+  id          Int      @id @default(autoincrement())
+  title       String
+  description String
+  coverImage  String?
+  location    String?
+  startTime   DateTime
+  endTime     DateTime
+  status      String   @default("upcoming")
+  maxParticipants Int?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  registrations ActivityRegistration[]
+}
+
+model ActivityRegistration {
+  id         Int      @id @default(autoincrement())
+  activityId Int
+  userId     Int
+  status     String   @default("registered")
+  registeredAt DateTime @default(now())
+
+  activity Activity @relation(fields: [activityId], references: [id], onDelete: Cascade)
+  user     User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([activityId, userId], name: "unique_activity_registration")
+}
+
+model Pet {
+  id           Int      @id @default(autoincrement())
+  userId       Int
+  name         String
+  avatar       String?
+  gender       String?
+  age          Int?
+  birthday     DateTime?
+  breed        String?
+  healthStatus String?
+  licenseNumber String?
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  healthRecords HealthRecord[]
+  dailyTasks    DailyTask[]
+  growthDiaries GrowthDiary[]
+}
+
+model HealthRecord {
+  id        Int      @id @default(autoincrement())
+  petId     Int
+  type      String
+  date      DateTime
+  notes     String?
+  createdAt DateTime @default(now())
+
+  pet Pet @relation(fields: [petId], references: [id], onDelete: Cascade)
+}
+
+model DailyTask {
+  id        Int      @id @default(autoincrement())
+  petId     Int
+  type      String
+  time      String?
+  completed Boolean  @default(false)
+  date      DateTime
+  createdAt DateTime @default(now())
+
+  pet Pet @relation(fields: [petId], references: [id], onDelete: Cascade)
+}
+
+model GrowthDiary {
+  id        Int      @id @default(autoincrement())
+  petId     Int
+  title     String
+  content   String
+  images    String?
+  date      DateTime
+  createdAt DateTime @default(now())
+
+  pet Pet @relation(fields: [petId], references: [id], onDelete: Cascade)
+}
+
+model Message {
+  id           Int      @id @default(autoincrement())
+  senderId     Int
+  receiverId   Int
+  content      String
+  isRead       Boolean  @default(false)
+  createdAt    DateTime @default(now())
+
+  sender   User @relation("Sender", fields: [senderId], references: [id], onDelete: Cascade)
+  receiver User @relation("Receiver", fields: [receiverId], references: [id], onDelete: Cascade)
+}
