@@ -1,0 +1,16 @@
+{
+  "name": "kuaiwen-lawyer",
+  "version": "1.0.0",
+  "description": "快问律师 - 在线法律咨询平台",
+  "scripts": {
+    "dev:backend": "cd backend && node src/server.js",
+    "dev:frontend": "cd frontend && npm run dev",
+    "build:frontend": "cd frontend && npm run build",
+    "start:backend": "cd backend && pm2 start src/server.js --name kuaiwen-backend",
+    "start:frontend": "cd frontend && pm2 start npm --name kuaiwen-frontend -- run dev",
+    "stop:all": "pm2 stop kuaiwen-backend kuaiwen-frontend && pm2 delete kuaiwen-backend kuaiwen-frontend"
+  },
+  "keywords": ["lawyer", "consultation", "legal"],
+  "author": "",
+  "license": "MIT"
+}
