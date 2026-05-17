@@ -1,0 +1,136 @@
+.profile-page {
+  min-height: 100vh;
+  background: #f5f5f5;
+  padding-bottom: 80px;
+}
+
+.profile-header {
+  background: linear-gradient(135deg, #ff2442, #ff6b81);
+  padding: 40px 20px;
+  text-align: center;
+}
+
+.avatar {
+  font-size: 64px;
+  margin-bottom: 12px;
+}
+
+.username {
+  margin: 0;
+  font-size: 20px;
+  font-weight: 600;
+  color: white;
+}
+
+.tabs-container {
+  background: white;
+  margin: -20px 20px 0;
+  border-radius: 12px 12px 0 0;
+  padding: 16px 0;
+}
+
+.tabs {
+  display: flex;
+  justify-content: center;
+  gap: 32px;
+}
+
+.tab {
+  padding: 8px 0;
+  background: none;
+  border: none;
+  font-size: 15px;
+  color: #666;
+  cursor: pointer;
+  position: relative;
+}
+
+.tab.active {
+  color: #ff2442;
+  font-weight: 600;
+}
+
+.tab.active::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 24px;
+  height: 2px;
+  background: #ff2442;
+  border-radius: 1px;
+}
+
+.content-section {
+  padding: 0 20px;
+}
+
+.followed-topics,
+.recommend-topics {
+  background: white;
+  border-radius: 12px;
+  margin-top: 16px;
+  padding: 16px;
+}
+
+.section-title {
+  margin: 0 0 16px 0;
+  font-size: 16px;
+  font-weight: 600;
+  color: #333;
+}
+
+.topics-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.topic-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px;
+  background: #f8f9fa;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.topic-item:hover {
+  background: #f0f0f0;
+}
+
+.topic-info {
+  flex: 1;
+}
+
+.topic-name {
+  margin: 0 0 4px 0;
+  font-size: 14px;
+  font-weight: 500;
+  color: #333;
+}
+
+.topic-meta {
+  margin: 0;
+  font-size: 12px;
+  color: #999;
+}
+
+.followed-badge {
+  padding: 4px 10px;
+  background: #e8f5e9;
+  color: #4caf50;
+  font-size: 11px;
+  border-radius: 10px;
+}
+
+.recommend-badge {
+  padding: 4px 10px;
+  background: #fff3e0;
+  color: #ff9800;
+  font-size: 11px;
+  border-radius: 10px;
+}
