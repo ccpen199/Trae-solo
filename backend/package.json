@@ -1,0 +1,19 @@
+{
+  "name": "nowhere-backend",
+  "version": "1.0.0",
+  "description": "NowHere Meditation Platform Backend",
+  "main": "src/server.js",
+  "scripts": {
+    "start": "node src/server.js",
+    "dev": "node src/server.js"
+  },
+  "dependencies": {
+    "express": "^4.18.2",
+    "sqlite3": "^5.1.7",
+    "cors": "^2.8.5",
+    "bcryptjs": "^2.4.3",
+    "jsonwebtoken": "^9.0.2",
+    "dotenv": "^16.3.1",
+    "express-validator": "^7.0.1"
+  }
+}
