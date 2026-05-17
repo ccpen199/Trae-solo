@@ -1,0 +1,90 @@
+:root {
+  --primary-color: #8b5a2b;
+  --secondary-color: #d4a574;
+  --bg-color: #faf8f5;
+  --text-color: #333;
+  --text-light: #666;
+  --border-color: #e5e5e5;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html, body {
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', sans-serif;
+  background-color: var(--bg-color);
+  color: var(--text-color);
+}
+
+.page-container {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  background-color: var(--bg-color);
+}
+
+.page-content {
+  flex: 1;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+.van-tabbar {
+  background-color: #fff;
+  border-top: 1px solid var(--border-color);
+  z-index: 999 !important;
+  position: relative;
+}
+
+.van-tabbar-item {
+  cursor: pointer;
+}
+
+.van-tabbar-item--active {
+  color: var(--primary-color);
+}
+
+.van-button--primary {
+  background-color: var(--primary-color);
+  border-color: var(--primary-color);
+}
+
+.van-nav-bar {
+  background-color: #fff;
+}
+
+.van-nav-bar__title {
+  color: var(--text-color);
+}
+
+.loading-state,
+.error-state,
+.empty-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 60px 20px;
+  color: var(--text-light);
+}
+
+.loading-state .van-loading {
+  margin-bottom: 16px;
+}
+
+.error-state .retry-btn {
+  margin-top: 16px;
+}
+
+.empty-state .empty-icon {
+  font-size: 48px;
+  margin-bottom: 12px;
+  opacity: 0.5;
+}
