@@ -1,0 +1,14 @@
+{
+  "name": "m4v2-12662-ball-booking-platform",
+  "version": "1.0.0",
+  "description": "在线约球平台 - Web全栈业务系统",
+  "scripts": {
+    "start": "concurrently \"npm run start:backend\" \"npm run start:frontend\"",
+    "start:backend": "cd backend && node server.js >> ../backend.log 2>&1 &",
+    "start:frontend": "cd frontend && npm run dev >> ../frontend.log 2>&1 &",
+    "install:all": "npm install && cd backend && npm install && cd ../frontend && npm install"
+  },
+  "devDependencies": {
+    "concurrently": "^8.2.2"
+  }
+}
