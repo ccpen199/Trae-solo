@@ -1,0 +1,17 @@
+{
+  "name": "optical-shop-backend",
+  "version": "1.0.0",
+  "description": "验光配镜系统后端API",
+  "main": "src/index.js",
+  "scripts": {
+    "start": "node src/index.js",
+    "dev": "node --watch src/index.js"
+  },
+  "dependencies": {
+    "express": "^4.18.2",
+    "cors": "^2.8.5",
+    "better-sqlite3": "^9.2.2",
+    "dotenv": "^16.3.1",
+    "morgan": "^1.10.0"
+  }
+}
