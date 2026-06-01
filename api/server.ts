@@ -1,0 +1,30 @@
+import dotenv from 'dotenv'
+dotenv.config()
+
+import app from './app.js'
+
+const PORT = Number(process.env.BACKEND_PORT) || 53440
+const HOST = process.env.HOST || '127.0.0.1'
+
+const server = app.listen(PORT, HOST, () => {
+  console.log(`Server ready on http://${HOST}:${PORT}`)
+  console.log(`API health check: http://${HOST}:${PORT}/api/health`)
+})
+
+process.on('SIGTERM', () => {
+  console.log('SIGTERM signal received')
+  server.close(() => {
+    console.log('Server closed')
+    process.exit(0)
+  })
+})
+
+process.on('SIGINT', () => {
+  console.log('SIGINT signal received')
+  server.close(() => {
+    console.log('Server closed')
+    process.exit(0)
+  })
+})
+
+export default app
