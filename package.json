@@ -1,0 +1,11 @@
+{
+  "name": "may-63474-local-service",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Local frontend/backend/SQLite service for may-63474",
+  "scripts": {
+    "start": "bash scripts/start.sh",
+    "check": "bash scripts/check.sh"
+  }
+}
+
