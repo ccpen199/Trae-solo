@@ -1,0 +1,89 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+  background: #f0f2f5;
+}
+
+#root {
+  min-height: 100vh;
+}
+
+.app-container {
+  display: flex;
+  min-height: 100vh;
+}
+
+.sider {
+  background: #001529;
+  width: 220px;
+  flex-shrink: 0;
+}
+
+.sider .logo {
+  color: #fff;
+  font-size: 18px;
+  font-weight: bold;
+  padding: 16px;
+  text-align: center;
+  border-bottom: 1px solid #1f3a58;
+}
+
+.main-content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.header {
+  background: #fff;
+  padding: 0 24px;
+  height: 56px;
+  display: flex;
+  align-items: center;
+  border-bottom: 1px solid #e8e8e8;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.08);
+}
+
+.content {
+  flex: 1;
+  padding: 24px;
+  overflow: auto;
+}
+
+.page-title {
+  font-size: 20px;
+  font-weight: 600;
+  margin-bottom: 16px;
+}
+
+.stat-card {
+  text-align: center;
+}
+
+.metric-tag {
+  margin-left: 8px;
+}
+
+.version-diff {
+  background: #fffbe6;
+  border: 1px solid #ffe58f;
+  border-radius: 4px;
+  padding: 12px;
+}
+
+.hit-scope-panel {
+  background: #e6f7ff;
+  border: 1px solid #91d5ff;
+  border-radius: 4px;
+  padding: 16px;
+}
+
+.rollback-form .ant-form-item {
+  margin-bottom: 16px;
+}
