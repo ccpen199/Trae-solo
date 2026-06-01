@@ -1,0 +1,754 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>婚礼筹备交易协作系统</title>
+    <link rel="stylesheet" href="/styles.css">
+  </head>
+  <body>
+    <aside>
+      <div class="brand"><span>W</span><strong>Wedding Ops</strong></div>
+      <nav id="nav">
+        <a href="#overview" data-view="overview">总览</a>
+        <a href="#requirements" data-view="requirements">新人需求</a>
+        <a href="#suppliers" data-view="suppliers">供应商</a>
+        <a href="#matchmaking" data-view="matchmaking">撮合管理</a>
+        <a href="#contracts" data-view="contracts">合同支付</a>
+        <a href="#fulfillment" data-view="fulfillment">履约任务</a>
+        <a href="#aftersales" data-view="aftersales">售后评价</a>
+        <a href="#tasks" data-view="tasks">基础任务</a>
+        <a href="#guests" data-view="guests">宾客</a>
+        <a href="#admin" data-view="admin">运营后台</a>
+      </nav>
+    </aside>
+    <main>
+      <header>
+        <div>
+          <h1 id="pageTitle">婚礼筹备管理台</h1>
+          <p id="pageSubtitle">档期、预算、供应商、宾客和任务统一跟进</p>
+        </div>
+        <div class="header-right">
+          <button class="btn-sm" onclick="refreshCurrentView()" title="刷新当前视图">↻ 刷新</button>
+          <span id="serviceStatus">检测中</span>
+        </div>
+      </header>
+
+      <div id="toast" class="toast"></div>
+
+      <!-- 总览 -->
+      <section id="view-overview" class="view active">
+        <div class="metrics">
+          <article onclick="showView('requirements');filterRequirementsByStatus('matched')" class="clickable" title="点击查看近期婚礼需求"><span>最近婚礼</span><strong id="ov-couple">--</strong></article>
+          <article onclick="showView('suppliers')" class="clickable" title="点击查看供应商预算"><span>供应商预算</span><strong id="ov-vendorTotal">--</strong></article>
+          <article onclick="showView('fulfillment');filterFulfillmentByStatus('in_progress')" class="clickable" title="点击查看未完成任务"><span>未完成任务</span><strong id="ov-openTasks">--</strong></article>
+          <article onclick="showView('guests')" class="clickable" title="点击查看宾客名单"><span>已确认宾客</span><strong id="ov-confirmedGuests">--</strong></article>
+          <article onclick="showView('requirements')" class="clickable" title="点击查看新人需求"><span>需求总数</span><strong id="ov-requirements">--</strong></article>
+          <article onclick="showView('suppliers')" class="clickable" title="点击查看供应商档案"><span>活跃供应商</span><strong id="ov-suppliers">--</strong></article>
+          <article onclick="showView('matchmaking');switchMatchTab('invitations')" class="clickable highlight" title="点击查看待处理邀请"><span>待处理邀请</span><strong id="ov-invitations">--</strong><em>去处理 →</em></article>
+          <article onclick="showView('fulfillment');filterFulfillmentByStatus('pending')" class="clickable highlight" title="点击查看待履约任务"><span>待履约</span><strong id="ov-fulfillment">--</strong><em>去处理 →</em></article>
+        </div>
+
+        <div class="workflow-pipeline">
+          <h3 class="workflow-title">🔗 全链路业务流转状态</h3>
+          <div id="workflow-pipeline" class="workflow-stages"></div>
+        </div>
+
+        <div class="grid">
+          <div class="panel wide">
+            <div class="panel-head"><h2>近期婚礼</h2><button onclick="loadOverview()">刷新</button></div>
+            <div id="ov-bookings" class="cards"></div>
+          </div>
+          <div class="panel">
+            <h2>快捷操作</h2>
+            <div class="quick-actions">
+              <button class="btn-primary" onclick="openQuickModal('requirementForm', 'requirements')">+ 发布需求</button>
+              <button class="btn-primary" onclick="openQuickModal('supplierForm', 'suppliers')">+ 添加供应商</button>
+              <button class="btn-primary" onclick="openQuickModal('fulfillmentForm', 'fulfillment')">+ 创建履约任务</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="grid">
+          <div class="panel">
+            <h2>供应商列表</h2>
+            <div id="ov-vendors" class="list"></div>
+          </div>
+          <div class="panel">
+            <h2>履约任务</h2>
+            <div id="ov-ftasks" class="list"></div>
+          </div>
+          <div class="panel">
+            <h2>待处理报价</h2>
+            <div id="ov-quotes" class="list"></div>
+          </div>
+        </div>
+      </section>
+
+      <!-- 新人需求 -->
+      <section id="view-requirements" class="view">
+        <div class="panel-head">
+          <h2>新人需求管理</h2>
+          <div class="filters">
+            <select id="req-filter-status" onchange="loadRequirements()">
+              <option value="">全部状态</option>
+              <option value="draft">草稿</option>
+              <option value="published">已发布</option>
+              <option value="matched">已匹配</option>
+              <option value="fulfilled">履约中</option>
+              <option value="closed">已关闭</option>
+            </select>
+            <button class="btn-primary" onclick="openModal('requirementForm')">+ 发布需求</button>
+          </div>
+        </div>
+        <div id="requirements-list" class="cards"></div>
+      </section>
+
+      <!-- 供应商 -->
+      <section id="view-suppliers" class="view">
+        <div class="panel-head">
+          <h2>供应商档案</h2>
+          <div class="filters">
+            <select id="sup-filter-type" onchange="loadSuppliers()">
+              <option value="">全部类型</option>
+              <option value="planner">策划师</option>
+              <option value="photographer">摄影</option>
+              <option value="venue">场地</option>
+              <option value="florist">花艺</option>
+            </select>
+            <select id="sup-filter-status" onchange="loadSuppliers()">
+              <option value="">全部状态</option>
+              <option value="active">活跃</option>
+              <option value="inactive">停用</option>
+            </select>
+            <button class="btn-primary" onclick="openModal('supplierForm')">+ 添加供应商</button>
+          </div>
+        </div>
+        <div id="suppliers-list" class="cards"></div>
+      </section>
+
+      <!-- 撮合管理 -->
+      <section id="view-matchmaking" class="view">
+        <div class="tabs">
+          <button class="tab active" data-tab="invitations" onclick="switchMatchTab('invitations')">邀请报价</button>
+          <button class="tab" data-tab="quotes" onclick="switchMatchTab('quotes')">比价列表</button>
+          <button class="tab" data-tab="communications" onclick="switchMatchTab('communications')">沟通记录</button>
+        </div>
+        <div id="tab-invitations" class="tab-content active">
+          <div class="panel-head">
+            <h2>邀请报价</h2>
+            <button class="btn-primary" onclick="openModal('invitationForm')">+ 发送邀请</button>
+          </div>
+          <div id="invitations-list" class="table-container"></div>
+        </div>
+        <div id="tab-quotes" class="tab-content">
+          <div class="panel-head">
+            <h2>比价管理</h2>
+            <select id="quote-filter-req" onchange="loadQuotes()"><option value="">全部需求</option></select>
+          </div>
+          <div id="quotes-list" class="table-container"></div>
+        </div>
+        <div id="tab-communications" class="tab-content">
+          <div class="panel-head">
+            <h2>沟通记录</h2>
+            <select id="comm-filter-req" onchange="loadCommunications()"><option value="">选择需求</option></select>
+          </div>
+          <div id="communications-list" class="chat-container"></div>
+          <form id="commForm" class="chat-form" onsubmit="sendMessage(event)">
+            <input name="message" placeholder="输入消息..." required>
+            <button type="submit">发送</button>
+          </form>
+        </div>
+      </section>
+
+      <!-- 合同支付 -->
+      <section id="view-contracts" class="view">
+        <div class="tabs">
+          <button class="tab active" data-tab="contracts" onclick="switchContractTab('contracts')">合同管理</button>
+          <button class="tab" data-tab="payments" onclick="switchContractTab('payments')">支付记录</button>
+        </div>
+        <div id="tab-contracts" class="tab-content active">
+          <div class="panel-head">
+            <h2>合同列表</h2>
+            <button class="btn-primary" onclick="openModal('contractForm')">+ 创建合同</button>
+          </div>
+          <div id="contracts-list" class="table-container"></div>
+        </div>
+        <div id="tab-payments" class="tab-content">
+          <div class="panel-head">
+            <h2>支付记录</h2>
+            <button class="btn-primary" onclick="openModal('paymentForm')">+ 记录支付</button>
+          </div>
+          <div id="payments-list" class="table-container"></div>
+        </div>
+      </section>
+
+      <!-- 履约任务 -->
+      <section id="view-fulfillment" class="view">
+        <div class="panel-head">
+          <h2>履约任务管理</h2>
+          <div class="filters">
+            <select id="ft-filter-category" onchange="loadFulfillment()">
+              <option value="">全部分类</option>
+              <option value="preparation">婚礼前准备</option>
+              <option value="materials">物料</option>
+              <option value="arrival">到场</option>
+              <option value="change">变更</option>
+              <option value="acceptance">验收</option>
+            </select>
+            <select id="ft-filter-status" onchange="loadFulfillment()">
+              <option value="">全部状态</option>
+              <option value="pending">待处理</option>
+              <option value="in_progress">进行中</option>
+              <option value="completed">已完成</option>
+              <option value="delayed">已延迟</option>
+            </select>
+            <select id="ft-filter-party" onchange="loadFulfillment()">
+              <option value="">全部责任方</option>
+              <option value="couple">新人</option>
+              <option value="supplier">供应商</option>
+              <option value="planner">策划师</option>
+              <option value="admin">运营</option>
+            </select>
+            <button class="btn-primary" onclick="openModal('fulfillmentForm')">+ 创建任务</button>
+          </div>
+        </div>
+        <div id="fulfillment-list" class="kanban">
+          <div class="kanban-col">
+            <h3>待处理 <span id="cnt-pending">0</span></h3>
+            <div id="col-pending" class="kanban-cards"></div>
+          </div>
+          <div class="kanban-col">
+            <h3>进行中 <span id="cnt-in_progress">0</span></h3>
+            <div id="col-in_progress" class="kanban-cards"></div>
+          </div>
+          <div class="kanban-col">
+            <h3>已完成 <span id="cnt-completed">0</span></h3>
+            <div id="col-completed" class="kanban-cards"></div>
+          </div>
+          <div class="kanban-col">
+            <h3>已延迟 <span id="cnt-delayed">0</span></h3>
+            <div id="col-delayed" class="kanban-cards"></div>
+          </div>
+        </div>
+      </section>
+
+      <!-- 售后评价 -->
+      <section id="view-aftersales" class="view">
+        <div class="metrics">
+          <article onclick="switchAfterTab('aftersales');filterAftersalesByStatus('open')" class="clickable" title="点击查看待处理工单">
+            <span>待处理售后</span><strong id="as-open">--</strong>
+          </article>
+          <article onclick="switchAfterTab('aftersales');filterAftersalesByStatus('investigating')" class="clickable" title="点击查看处理中工单">
+            <span>处理中</span><strong id="as-investigating">--</strong>
+          </article>
+          <article onclick="switchAfterTab('aftersales');filterAftersalesByStatus('resolved')" class="clickable" title="点击查看已解决工单">
+            <span>已解决</span><strong id="as-resolved">--</strong>
+          </article>
+          <article onclick="switchAfterTab('reviews')" class="clickable" title="点击查看评价">
+            <span>评价总数</span><strong id="as-reviews">--</strong>
+          </article>
+          <article class="clickable" title="累计退款金额">
+            <span>累计退款</span><strong id="as-refunds">--</strong>
+          </article>
+          <article onclick="switchAfterTab('credit')" class="clickable" title="点击查看信用记录">
+            <span>平均信用分</span><strong id="as-avg-credit">--</strong>
+          </article>
+        </div>
+        <div class="tabs">
+          <button class="tab active" data-tab="aftersales" onclick="switchAfterTab('aftersales')">售后工单</button>
+          <button class="tab" data-tab="reviews" onclick="switchAfterTab('reviews')">评价管理</button>
+          <button class="tab" data-tab="credit" onclick="switchAfterTab('credit')">信用记录</button>
+        </div>
+        <div id="tab-aftersales" class="tab-content active">
+          <div class="panel-head">
+            <h2>售后工单</h2>
+            <div class="filters">
+              <select id="as-status-filter" onchange="filterAftersalesByStatus(this.value)">
+                <option value="">全部状态</option>
+                <option value="open">待处理</option>
+                <option value="investigating">处理中</option>
+                <option value="resolved">已解决</option>
+                <option value="closed">已关闭</option>
+              </select>
+              <select id="as-type-filter" onchange="filterAftersalesByType(this.value)">
+                <option value="">全部类型</option>
+                <option value="complaint">投诉</option>
+                <option value="delay">延期</option>
+                <option value="refund">退款</option>
+                <option value="service_mismatch">服务不符</option>
+              </select>
+            </div>
+            <button class="btn-primary" onclick="openModal('aftersaleForm')">+ 提交工单</button>
+          </div>
+          <div id="aftersales-list" class="table-container"></div>
+        </div>
+        <div id="tab-reviews" class="tab-content">
+          <div class="panel-head">
+            <h2>评价管理</h2>
+            <button class="btn-primary" onclick="openModal('reviewForm')">+ 提交评价</button>
+          </div>
+          <div id="reviews-list" class="cards"></div>
+        </div>
+        <div id="tab-credit" class="tab-content">
+          <h2>供应商信用记录</h2>
+          <div id="credit-list" class="table-container"></div>
+        </div>
+      </section>
+
+      <!-- 基础任务 -->
+      <section id="view-tasks" class="view">
+        <div class="grid">
+          <div class="panel wide">
+            <div class="panel-head"><h2>任务列表</h2><button onclick="loadTasks()">刷新</button></div>
+            <div id="tasks-list" class="list"></div>
+          </div>
+          <div class="panel">
+            <h2>新增任务</h2>
+            <form id="taskForm" onsubmit="submitTask(event)">
+              <input name="title" placeholder="任务标题" required>
+              <input name="owner" placeholder="负责人" required>
+              <input name="due_date" type="date" required>
+              <select name="priority"><option>中</option><option>高</option><option>低</option></select>
+              <button type="submit" class="btn-primary">创建任务</button>
+            </form>
+            <p id="taskMsg"></p>
+          </div>
+        </div>
+      </section>
+
+      <!-- 宾客 -->
+      <section id="view-guests" class="view">
+        <div class="panel-head"><h2>宾客 RSVP</h2></div>
+        <div id="guests-list" class="table-container"></div>
+      </section>
+
+      <!-- 运营后台 -->
+      <section id="view-admin" class="view">
+        <div class="metrics">
+          <article><span>需求总数</span><strong id="ad-req">--</strong></article>
+          <article><span>活跃供应商</span><strong id="ad-sup">--</strong></article>
+          <article><span>已签合同</span><strong id="ad-ctr">--</strong></article>
+          <article><span>累计收入</span><strong id="ad-rev">--</strong></article>
+          <article><span>待签署合同</span><strong id="ad-ctr-pending">--</strong></article>
+          <article><span>待支付</span><strong id="ad-pay-pending">--</strong></article>
+        </div>
+
+        <div class="panel">
+          <h2>📊 业务运营总览</h2>
+          <div id="admin-business-overview" class="admin-stats-grid"></div>
+        </div>
+
+        <div class="panel">
+          <h2>📝 合同归档与支付复查</h2>
+          <div class="panel-head">
+            <div></div>
+            <div class="filters">
+              <select id="ad-contract-filter" onchange="loadAdminContractAudit()">
+                <option value="">全部状态</option>
+                <option value="pending_signature">待签署</option>
+                <option value="signed">已签署</option>
+                <option value="archived">已归档</option>
+              </select>
+            </div>
+          </div>
+          <div id="admin-contract-audit" class="table-container"></div>
+        </div>
+
+        <div class="panel">
+          <h2>💰 支付结果追踪</h2>
+          <div id="admin-payment-audit" class="table-container"></div>
+        </div>
+
+        <div class="panel">
+          <h2>🔍 售后投诉处理状态</h2>
+          <div id="admin-aftersale-audit" class="table-container"></div>
+        </div>
+
+        <div class="panel">
+          <h2>⭐ 评价沉淀与信用记录</h2>
+          <div id="admin-credit-audit" class="table-container"></div>
+        </div>
+
+        <div class="panel">
+          <h2>👥 用户管理</h2>
+          <div class="panel-head">
+            <div></div>
+            <button class="btn-primary" onclick="openModal('userForm')">+ 添加用户</button>
+          </div>
+          <div id="users-list" class="table-container"></div>
+        </div>
+      </section>
+
+      <!-- Modals -->
+      <div id="modal" class="modal-overlay" onclick="if(event.target===this)closeModal()">
+        <div class="modal">
+          <div class="modal-head">
+            <h3 id="modalTitle">标题</h3>
+            <button onclick="closeModal()">&times;</button>
+          </div>
+          <div class="modal-body">
+            <!-- 需求表单 -->
+            <form id="requirementForm" class="modal-form hidden" onsubmit="submitRequirement(event)">
+              <label>婚期<input name="wedding_date" type="date" required></label>
+              <label>城市<input name="city" placeholder="如: 杭州" required></label>
+              <label>预算(元)<input name="budget" type="number" placeholder="200000" required></label>
+              <label>人数<input name="guest_count" type="number" placeholder="150" required></label>
+              <label>风格
+                <select name="style" required>
+                  <option value="现代简约">现代简约</option>
+                  <option value="法式浪漫">法式浪漫</option>
+                  <option value="中式传统">中式传统</option>
+                  <option value="美式复古">美式复古</option>
+                  <option value="森系自然">森系自然</option>
+                </select>
+              </label>
+              <label>服务清单(逗号分隔)<input name="service_list" placeholder="策划,摄影,场地,花艺,司仪" required></label>
+              <label>优先级
+                <select name="priority" required>
+                  <option value="高">高</option>
+                  <option value="中">中</option>
+                  <option value="低">低</option>
+                </select>
+              </label>
+              <label>状态
+                <select name="status">
+                  <option value="published">已发布</option>
+                  <option value="draft">草稿</option>
+                </select>
+              </label>
+              <label>需求描述<textarea name="description" rows="3" placeholder="详细描述..."></textarea></label>
+              <button type="submit" class="btn-primary">发布需求</button>
+            </form>
+
+            <!-- 供应商表单 -->
+            <form id="supplierForm" class="modal-form hidden" onsubmit="submitSupplier(event)">
+              <label>服务类型
+                <select name="service_type" required>
+                  <option value="planner">策划师</option>
+                  <option value="photographer">摄影</option>
+                  <option value="venue">场地</option>
+                  <option value="florist">花艺</option>
+                  <option value="host">司仪</option>
+                  <option value="band">乐队</option>
+                  <option value="dessert">甜品</option>
+                </select>
+              </label>
+              <label>公司名称<input name="company_name" required></label>
+              <label>联系人<input name="contact_name" required></label>
+              <label>联系电话<input name="phone" required></label>
+              <div class="row-2">
+                <label>价格下限(元)<input name="price_min" type="number"></label>
+                <label>价格上限(元)<input name="price_max" type="number"></label>
+              </div>
+              <label>可服务区域<input name="service_area" placeholder="杭州,上海,苏州"></label>
+              <label>合同模板<textarea name="contract_template" rows="3"></textarea></label>
+              <label>供应商简介<textarea name="description" rows="3"></textarea></label>
+              <button type="submit" class="btn-primary">添加供应商</button>
+            </form>
+
+            <!-- 邀请表单 -->
+            <form id="invitationForm" class="modal-form hidden" onsubmit="submitInvitation(event)">
+              <div id="inv-process-guide" class="process-guide">
+                <div class="process-guide-step active"><span>1</span><b>选择需求</b></div>
+                <div class="process-guide-step" id="inv-step-2"><span>2</span><b>选择供应商</b></div>
+                <div class="process-guide-step" id="inv-step-3"><span>3</span><b>档期校验</b></div>
+                <div class="process-guide-step" id="inv-step-4"><span>4</span><b>发送邀请</b></div>
+              </div>
+
+              <label>选择需求
+                <select name="requirement_id" id="inv-req" required onchange="onInvRequirementChange()"></select>
+              </label>
+              <div id="inv-req-info" class="info-card hidden"></div>
+
+              <label>选择供应商
+                <select name="supplier_id" id="inv-sup" required onchange="onInvSupplierChange()"></select>
+              </label>
+              <div id="inv-sup-info" class="info-card hidden"></div>
+
+              <div id="inv-schedule-check" class="schedule-check hidden">
+                <div id="inv-schedule-result"></div>
+              </div>
+
+              <label>邀请消息<textarea name="message" rows="3" placeholder="请提供该需求的报价方案，包括服务内容、交付周期等"></textarea></label>
+              <label>有效期<input name="expires_at" type="date" id="inv-expires"></label>
+
+              <div id="inv-price-guide" class="price-guide hidden">
+                <strong>💰 价格区间参考</strong>
+                <p id="inv-price-range"></p>
+              </div>
+
+              <button type="submit" class="btn-primary" id="inv-submit-btn" disabled>✉️ 发送报价邀请</button>
+            </form>
+
+            <!-- 报价表单 -->
+            <form id="quoteForm" class="modal-form hidden" onsubmit="submitQuote(event)">
+              <label>选择邀请
+                <select name="invitation_id" id="qt-inv" required></select>
+              </label>
+              <label>总报价(元)<input name="total_price" type="number" required></label>
+              <label>交付周期(天)<input name="delivery_days" type="number"></label>
+              <label>报价明细<textarea name="breakdown" rows="4" placeholder="分项报价明细"></textarea></label>
+              <label>备注<textarea name="notes" rows="3"></textarea></label>
+              <button type="submit" class="btn-primary">提交报价</button>
+            </form>
+
+            <!-- 合同表单 -->
+            <form id="contractForm" class="modal-form hidden" onsubmit="submitContract(event)">
+              <label>关联需求
+                <select name="requirement_id" id="ctr-req" required></select>
+              </label>
+              <label>关联供应商
+                <select name="supplier_id" id="ctr-sup" required></select>
+              </label>
+              <label>关联报价
+                <select name="quote_id" id="ctr-qt"></select>
+              </label>
+              <label>合同内容<textarea name="content" rows="8" required>合同条款...</textarea></label>
+              <button type="submit" class="btn-primary">创建合同</button>
+            </form>
+
+            <!-- 支付表单 -->
+            <form id="paymentForm" class="modal-form hidden" onsubmit="submitPayment(event)">
+              <label>关联合同
+                <select name="contract_id" id="pay-ctr" required></select>
+              </label>
+              <label>支付类型
+                <select name="payment_type" required>
+                  <option value="deposit">定金</option>
+                  <option value="installment">分期</option>
+                  <option value="final">尾款</option>
+                  <option value="refund">退款</option>
+                </select>
+              </label>
+              <label>金额(元)<input name="amount" type="number" required></label>
+              <label>交易号<input name="transaction_id" placeholder="TXN..."></label>
+              <label>状态
+                <select name="status">
+                  <option value="pending">待支付</option>
+                  <option value="paid">已支付</option>
+                </select>
+              </label>
+              <label>备注<textarea name="notes" rows="2"></textarea></label>
+              <button type="submit" class="btn-primary">记录支付</button>
+            </form>
+
+            <!-- 履约任务表单 -->
+            <form id="fulfillmentForm" class="modal-form hidden" onsubmit="submitFulfillment(event)">
+              <label>关联需求
+                <select name="requirement_id" id="ft-req" required></select>
+              </label>
+              <label>关联合同
+                <select name="contract_id" id="ft-ctr"></select>
+              </label>
+              <label>任务标题<input name="title" required></label>
+              <label>任务分类
+                <select name="category" required>
+                  <option value="preparation">婚礼前准备</option>
+                  <option value="materials">物料</option>
+                  <option value="arrival">到场</option>
+                  <option value="change">变更</option>
+                  <option value="acceptance">验收</option>
+                </select>
+              </label>
+              <label>责任方
+                <select name="responsible_party" required>
+                  <option value="supplier">供应商</option>
+                  <option value="couple">新人</option>
+                  <option value="planner">策划师</option>
+                  <option value="admin">运营</option>
+                </select>
+              </label>
+              <label>负责人ID<input name="responsible_id" type="number"></label>
+              <label>截止日期<input name="due_date" type="date"></label>
+              <label>任务描述<textarea name="description" rows="3"></textarea></label>
+              <label>父任务ID<input name="parent_task_id" type="number"></label>
+              <button type="submit" class="btn-primary">创建任务</button>
+            </form>
+
+            <!-- 售后工单表单 -->
+            <form id="aftersaleForm" class="modal-form hidden" onsubmit="submitAftersale(event)">
+              <label>关联需求
+                <select name="requirement_id" id="as-req" required></select>
+              </label>
+              <label>关联供应商
+                <select name="supplier_id" id="as-sup" required></select>
+              </label>
+              <label>关联合同
+                <select name="contract_id" id="as-ctr"></select>
+              </label>
+              <label>类型
+                <select name="type" required>
+                  <option value="complaint">投诉</option>
+                  <option value="delay">延期</option>
+                  <option value="refund">退款</option>
+                  <option value="service_mismatch">服务不符</option>
+                </select>
+              </label>
+              <label>标题<input name="title" required></label>
+              <label>详细描述<textarea name="description" rows="4" required></textarea></label>
+              <label>退款金额(元)<input name="refund_amount" type="number" value="0"></label>
+              <label>提交人ID<input name="filed_by" type="number" value="1"></label>
+              <button type="submit" class="btn-primary">提交工单</button>
+            </form>
+
+            <!-- 评价表单 -->
+            <form id="reviewForm" class="modal-form hidden" onsubmit="submitReview(event)">
+              <label>供应商
+                <select name="supplier_id" id="rv-sup" required></select>
+              </label>
+              <label>关联需求
+                <select name="requirement_id" id="rv-req"></select>
+              </label>
+              <label>评分
+                <select name="rating" required>
+                  <option value="5">★★★★★ 5分</option>
+                  <option value="4">★★★★☆ 4分</option>
+                  <option value="3">★★★☆☆ 3分</option>
+                  <option value="2">★★☆☆☆ 2分</option>
+                  <option value="1">★☆☆☆☆ 1分</option>
+                </select>
+              </label>
+              <label>评价人ID<input name="reviewer_id" type="number" value="1" required></label>
+              <label>评价内容<textarea name="content" rows="4"></textarea></label>
+              <button type="submit" class="btn-primary">提交评价</button>
+            </form>
+
+            <!-- 用户表单 -->
+            <form id="userForm" class="modal-form hidden" onsubmit="submitUser(event)">
+              <label>角色
+                <select name="role" required>
+                  <option value="couple">新人</option>
+                  <option value="planner">策划师</option>
+                  <option value="photographer">摄影</option>
+                  <option value="venue">场地</option>
+                  <option value="florist">花艺</option>
+                  <option value="admin">运营</option>
+                </select>
+              </label>
+              <label>姓名<input name="name" required></label>
+              <label>手机<input name="phone"></label>
+              <label>邮箱<input name="email" type="email"></label>
+              <button type="submit" class="btn-primary">添加用户</button>
+            </form>
+
+            <!-- 需求详情 -->
+            <div id="requirementDetail" class="modal-detail hidden">
+              <div class="detail-header">
+                <h3 id="rd-title">需求详情</h3>
+                <div style="display:flex;gap:8px;align-items:center">
+                  <span class="badge" id="rd-status"></span>
+                  <button class="btn-sm" id="rd-edit-btn" onclick="toggleRequirementEdit()">✎ 编辑</button>
+                </div>
+              </div>
+
+              <div id="rd-matchmaking-progress" class="process-flow">
+                <div class="process-step active"><span>1</span><b>发布需求</b></div>
+                <div class="process-step" id="step-invite"><span>2</span><b>邀请报价</b></div>
+                <div class="process-step" id="step-quote"><span>3</span><b>比价确认</b></div>
+                <div class="process-step" id="step-contract"><span>4</span><b>合同定金</b></div>
+                <div class="process-step" id="step-fulfill"><span>5</span><b>履约验收</b></div>
+                <div class="process-step" id="step-review"><span>6</span><b>评价沉淀</b></div>
+              </div>
+
+              <div id="rd-view-mode">
+                <div class="detail-grid">
+                  <div><label>婚期</label><span id="rd-date"></span></div>
+                  <div><label>城市</label><span id="rd-city"></span></div>
+                  <div><label>预算</label><span id="rd-budget"></span></div>
+                  <div><label>人数</label><span id="rd-guests"></span></div>
+                  <div><label>风格</label><span id="rd-style"></span></div>
+                  <div><label>优先级</label><span id="rd-priority"></span></div>
+                  <div class="full"><label>服务清单</label><span id="rd-services"></span></div>
+                  <div class="full"><label>需求描述</label><span id="rd-desc"></span></div>
+                </div>
+              </div>
+
+              <form id="rd-edit-form" class="hidden" onsubmit="saveRequirementEdit(event)">
+                <input type="hidden" name="id" id="rd-edit-id">
+                <div class="detail-grid">
+                  <div><label>婚期</label><input name="wedding_date" type="date" required></div>
+                  <div><label>城市</label><input name="city" required></div>
+                  <div><label>预算(元)</label><input name="budget" type="number" required></div>
+                  <div><label>人数</label><input name="guest_count" type="number" required></div>
+                  <div><label>风格</label><input name="style" required></div>
+                  <div><label>优先级
+                    <select name="priority" required>
+                      <option value="高">高</option>
+                      <option value="中">中</option>
+                      <option value="低">低</option>
+                    </select>
+                  </label></div>
+                  <div class="full"><label>服务清单</label><input name="service_list" placeholder="如: 策划,摄影,场地,花艺" required></div>
+                  <div class="full"><label>需求描述</label><textarea name="description" rows="3"></textarea></div>
+                </div>
+                <div style="display:flex;gap:8px;justify-content:flex-end;margin-top:16px">
+                  <button type="button" class="btn-sm" onclick="toggleRequirementEdit()">取消</button>
+                  <button type="submit" class="btn-primary">保存修改</button>
+                </div>
+              </form>
+
+              <div class="detail-section">
+                <h4>撮合流程指引</h4>
+                <div id="rd-next-action" class="next-action"></div>
+              </div>
+
+              <div class="detail-section">
+                <h4>收到的报价</h4>
+                <div id="rd-quotes" class="list"></div>
+              </div>
+              <div class="detail-section">
+                <h4>合同支付</h4>
+                <div id="rd-contracts" class="list"></div>
+              </div>
+              <div class="detail-section">
+                <h4>履约任务</h4>
+                <div id="rd-tasks" class="list"></div>
+              </div>
+              <div class="detail-section">
+                <h4>沟通记录</h4>
+                <div id="rd-comms" class="chat-mini"></div>
+                <div style="margin-top:12px">
+                  <input id="rd-comm-input" placeholder="输入消息..." style="width:100%;padding:8px;border:1px solid #e5e7eb;border-radius:6px;margin-right:8px">
+                  <button class="btn-sm" style="margin-top:8px" onclick="sendRequirementComm()">发送</button>
+                </div>
+              </div>
+            </div>
+
+            <!-- 供应商详情 -->
+            <div id="supplierDetail" class="modal-detail hidden">
+              <div class="detail-header">
+                <h3 id="sd-name">供应商详情</h3>
+                <div class="rating" id="sd-rating"></div>
+              </div>
+              <div class="detail-grid">
+                <div><label>服务类型</label><span id="sd-type"></span></div>
+                <div><label>信用分</label><span id="sd-credit"></span></div>
+                <div><label>价格区间</label><span id="sd-price"></span></div>
+                <div><label>可服务区域</label><span id="sd-area"></span></div>
+                <div><label>联系人</label><span id="sd-contact"></span></div>
+                <div><label>电话</label><span id="sd-phone"></span></div>
+                <div class="full"><label>简介</label><span id="sd-desc"></span></div>
+              </div>
+              <div class="detail-section">
+                <h4>服务案例</h4>
+                <div id="sd-cases" class="cards-mini"></div>
+              </div>
+              <div class="detail-section">
+                <h4>档期</h4>
+                <div id="sd-schedules" class="list"></div>
+              </div>
+              <div class="detail-section">
+                <h4>信用记录</h4>
+                <div id="sd-credit-list" class="list"></div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </main>
+    <script src="/config.js"></script>
+    <script src="/app.js"></script>
+  </body>
+</html>

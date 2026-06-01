@@ -1,0 +1,9 @@
+{
+  "name": "wedding-planning-console",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "start": "node frontend/server.js",
+    "backend:start": "node backend/server.js"
+  }
+}
