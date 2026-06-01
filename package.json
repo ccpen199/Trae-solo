@@ -1,0 +1,10 @@
+{
+  "name": "may-63454",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "start": "bash scripts/start.sh",
+    "check": "bash scripts/check.sh",
+    "stop": "bash scripts/stop.sh"
+  }
+}
