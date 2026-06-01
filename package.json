@@ -1,0 +1,17 @@
+{
+  "name": "pharma-visit-system",
+  "version": "1.0.0",
+  "description": "医药代表拜访管理系统",
+  "scripts": {
+    "install:all": "npm install && cd frontend && npm install && cd ../backend && npm install",
+    "dev": "concurrently \"npm run dev:backend\" \"npm run dev:frontend\"",
+    "dev:frontend": "cd frontend && npm run dev",
+    "dev:backend": "cd backend && npm run dev",
+    "start:frontend": "cd frontend && nohup npm run dev > ../frontend.log 2>&1 &",
+    "start:backend": "cd backend && nohup npm run dev > ../backend.log 2>&1 &",
+    "start": "npm run start:backend && sleep 3 && npm run start:frontend"
+  },
+  "devDependencies": {
+    "concurrently": "^8.2.2"
+  }
+}
