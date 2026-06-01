@@ -1,0 +1,21 @@
+{
+  "name": "enterprise-im",
+  "version": "1.0.0",
+  "description": "Enterprise Collaboration Message Module",
+  "scripts": {
+    "dev": "concurrently \"npm run dev:backend\" \"npm run dev:frontend\"",
+    "dev:backend": "cd backend && npm run dev",
+    "dev:frontend": "cd frontend && npm run dev",
+    "start": "concurrently \"npm run start:backend\" \"npm run start:frontend\"",
+    "start:backend": "cd backend && npm start",
+    "start:frontend": "cd frontend && npm start",
+    "install:all": "npm install && cd backend && npm install && cd ../frontend && npm install",
+    "stop": "lsof -ti tcp:44866 | xargs kill -9; lsof -ti tcp:54866 | xargs kill -9"
+  },
+  "keywords": ["im", "enterprise", "collaboration"],
+  "author": "",
+  "license": "MIT",
+  "devDependencies": {
+    "concurrently": "^8.2.2"
+  }
+}
