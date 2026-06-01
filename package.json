@@ -1,0 +1,15 @@
+{
+  "name": "e-certificate-system",
+  "version": "1.0.0",
+  "description": "电子证照管理系统",
+  "scripts": {
+    "dev:backend": "cd backend && node --watch server.js",
+    "dev:frontend": "cd frontend && npm run dev",
+    "start:backend": "cd backend && node server.js",
+    "start:frontend": "cd frontend && npm run build && npm run preview",
+    "install:all": "npm install && cd backend && npm install && cd ../frontend && npm install"
+  },
+  "keywords": ["certificate", "government", "e-certificate"],
+  "author": "",
+  "license": "MIT"
+}
