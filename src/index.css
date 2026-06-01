@@ -1,0 +1,83 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --color-primary: #1e40af;
+  --color-primary-light: #3b82f6;
+  --color-cyan: #06b6d4;
+  --color-cyan-light: #22d3ee;
+  --color-amber: #f59e0b;
+  --color-emerald: #10b981;
+  --color-red: #ef4444;
+  --color-sidebar: #0f172a;
+  --color-sidebar-hover: #1e293b;
+  --color-bg: #f1f5f9;
+  --color-card: #ffffff;
+  --color-border: #e2e8f0;
+  --color-text: #1e293b;
+  --color-text-muted: #64748b;
+
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Noto Sans", Helvetica, Arial, sans-serif;
+  line-height: 1.5;
+  font-weight: 400;
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+@layer base {
+  body {
+    @apply bg-slate-100 text-slate-800 m-0 p-0;
+  }
+}
+
+@layer components {
+  .status-badge {
+    @apply inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium;
+  }
+  .status-badge-green {
+    @apply bg-emerald-100 text-emerald-800;
+  }
+  .status-badge-red {
+    @apply bg-red-100 text-red-800;
+  }
+  .status-badge-amber {
+    @apply bg-amber-100 text-amber-800;
+  }
+  .status-badge-blue {
+    @apply bg-blue-100 text-blue-800;
+  }
+  .status-badge-gray {
+    @apply bg-slate-100 text-slate-800;
+  }
+
+  .data-table {
+    @apply w-full border-collapse;
+  }
+  .data-table th {
+    @apply bg-slate-50 text-left text-xs font-semibold text-slate-600 uppercase tracking-wider px-4 py-3 border-b border-slate-200;
+  }
+  .data-table td {
+    @apply px-4 py-3 border-b border-slate-100 text-sm text-slate-700;
+  }
+  .data-table tbody tr {
+    @apply hover:bg-slate-50 transition-colors cursor-pointer;
+  }
+}
+
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background: #cbd5e1;
+  border-radius: 3px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #94a3b8;
+}
