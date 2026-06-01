@@ -1,0 +1,18 @@
+{
+  "name": "training-center-backend",
+  "version": "1.0.0",
+  "type": "module",
+  "description": "培训机构课消系统后端API",
+  "main": "src/index.js",
+  "scripts": {
+    "start": "node src/index.js",
+    "dev": "node --watch src/index.js"
+  },
+  "dependencies": {
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.5",
+    "express": "^4.19.2",
+    "multer": "^1.4.5-lts.1",
+    "dayjs": "^1.11.11"
+  }
+}
