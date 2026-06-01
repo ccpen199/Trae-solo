@@ -1,0 +1,5 @@
+Frontend HTTP 200
+Backend Health 200 {"status":"ok","timestamp":"2026-05-29T21:37:17.844Z"}
+Login via proxy 200 {"success":true,"data":{"id":1,"phone":"13800138001","name":"张货主","role":"shipper","status":"active"
+Driver login via proxy 200 {"success":true,"data":{"id":2,"phone":"13800138002","name":"李司机","role":"driver","status":"active",
+Admin login via proxy 200 {"success":true,"data":{"id":3,"phone":"13800138003","name":"王管理员","role":"admin","status":"active",
