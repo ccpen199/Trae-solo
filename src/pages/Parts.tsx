@@ -1,0 +1,329 @@
+import { useEffect, useState } from 'react';
+import { Plus, Search, Edit, Trash2, Eye } from 'lucide-react';
+import { api, Part, ApiResponse } from '@/lib/api';
+
+export default function Parts() {
+  const [parts, setParts] = useState<Part[]>([]);
+  const [loading, setLoading] = useState(false);
+  const [showModal, setShowModal] = useState(false);
+  const [editingPart, setEditingPart] = useState<Part | null>(null);
+  const [form, setForm] = useState({
+    sku: '',
+    name: '',
+    model: '',
+    category: '',
+    compatible_devices: '',
+    supplier_id: 1,
+    purchase_price: 0,
+    shelf_life_months: 12,
+    safety_stock: 10,
+    alternative_parts: '',
+    specifications: '',
+    unit: '个',
+  });
+
+  useEffect(() => {
+    loadParts();
+  }, []);
+
+  const loadParts = async () => {
+    setLoading(true);
+    try {
+      const res = await api.get<ApiResponse<Part[]>>('/parts');
+      setParts(res.data || []);
+    } catch (err) {
+      console.error(err);
+    }
+    setLoading(false);
+  };
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    try {
+      if (editingPart) {
+        await api.put(`/parts/${editingPart.id}`, form);
+      } else {
+        await api.post('/parts', form);
+      }
+      setShowModal(false);
+      loadParts();
+      resetForm();
+    } catch (err: any) {
+      alert(err.message);
+    }
+  };
+
+  const resetForm = () => {
+    setForm({
+      sku: '',
+      name: '',
+      model: '',
+      category: '',
+      compatible_devices: '',
+      supplier_id: 1,
+      purchase_price: 0,
+      shelf_life_months: 12,
+      safety_stock: 10,
+      alternative_parts: '',
+      specifications: '',
+      unit: '个',
+    });
+    setEditingPart(null);
+  };
+
+  const handleEdit = (part: Part) => {
+    setEditingPart(part);
+    setForm({
+      sku: part.sku,
+      name: part.name,
+      model: part.model,
+      category: part.category,
+      compatible_devices: part.compatible_devices,
+      supplier_id: part.supplier_id,
+      purchase_price: part.purchase_price,
+      shelf_life_months: part.shelf_life_months,
+      safety_stock: part.safety_stock,
+      alternative_parts: part.alternative_parts,
+      specifications: part.specifications,
+      unit: part.unit,
+    });
+    setShowModal(true);
+  };
+
+  const handleDelete = async (id: number) => {
+    if (!confirm('确定删除该备件吗？')) return;
+    try {
+      await api.delete(`/parts/${id}`);
+      loadParts();
+    } catch (err: any) {
+      alert(err.message);
+    }
+  };
+
+  const categories = ['电子元件', '机械配件', '电气元件', '液压元件', '密封件', '其他'];
+
+  return (
+    <div className="space-y-6">
+      <div className="flex justify-between items-center">
+        <div className="relative">
+          <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" size={18} />
+          <input
+            type="text"
+            placeholder="搜索备件名称/SKU..."
+            className="pl-10 pr-4 py-2 border border-gray-300 rounded-lg w-80"
+          />
+        </div>
+        <button
+          onClick={() => { resetForm(); setShowModal(true); }}
+          className="bg-blue-600 text-white px-4 py-2 rounded-lg flex items-center gap-2 hover:bg-blue-700"
+        >
+          <Plus size={18} />
+          新增备件
+        </button>
+      </div>
+
+      <div className="bg-white rounded-lg shadow-sm overflow-hidden">
+        <table className="w-full">
+          <thead className="bg-gray-50">
+            <tr>
+              <th className="px-4 py-3 text-left font-medium text-gray-600">SKU</th>
+              <th className="px-4 py-3 text-left font-medium text-gray-600">名称</th>
+              <th className="px-4 py-3 text-left font-medium text-gray-600">型号</th>
+              <th className="px-4 py-3 text-left font-medium text-gray-600">分类</th>
+              <th className="px-4 py-3 text-left font-medium text-gray-600">采购价</th>
+              <th className="px-4 py-3 text-left font-medium text-gray-600">库存</th>
+              <th className="px-4 py-3 text-left font-medium text-gray-600">安全库存</th>
+              <th className="px-4 py-3 text-left font-medium text-gray-600">状态</th>
+              <th className="px-4 py-3 text-left font-medium text-gray-600">操作</th>
+            </tr>
+          </thead>
+          <tbody>
+            {parts.map((part) => (
+              <tr key={part.id} className="border-t border-gray-100 hover:bg-gray-50">
+                <td className="px-4 py-3 font-mono text-sm">{part.sku}</td>
+                <td className="px-4 py-3">{part.name}</td>
+                <td className="px-4 py-3 text-gray-600">{part.model}</td>
+                <td className="px-4 py-3">
+                  <span className="px-2 py-1 bg-gray-100 rounded text-sm">{part.category}</span>
+                </td>
+                <td className="px-4 py-3">¥{part.purchase_price.toFixed(2)}</td>
+                <td className="px-4 py-3">
+                  <span className={(part.total_stock || 0) < part.safety_stock ? 'text-red-500 font-medium' : ''}>
+                    {part.total_stock || 0} {part.unit}
+                  </span>
+                </td>
+                <td className="px-4 py-3">{part.safety_stock} {part.unit}</td>
+                <td className="px-4 py-3">
+                  <span className={part.status === 1
+                    ? 'px-2 py-1 bg-green-100 text-green-700 rounded text-sm'
+                    : 'px-2 py-1 bg-red-100 text-red-700 rounded text-sm'}>
+                    {part.status === 1 ? '启用' : '禁用'}
+                  </span>
+                </td>
+                <td className="px-4 py-3">
+                  <div className="flex gap-2">
+                    <button className="text-blue-600 hover:text-blue-800" title="查看">
+                      <Eye size={16} />
+                    </button>
+                    <button
+                      onClick={() => handleEdit(part)}
+                      className="text-gray-600 hover:text-gray-800"
+                      title="编辑"
+                    >
+                      <Edit size={16} />
+                    </button>
+                    <button
+                      onClick={() => handleDelete(part.id)}
+                      className="text-red-600 hover:text-red-800"
+                      title="删除"
+                    >
+                      <Trash2 size={16} />
+                    </button>
+                  </div>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+        {parts.length === 0 && !loading && (
+          <div className="text-center py-12 text-gray-400">
+            暂无备件数据，点击右上角"新增备件"创建第一个备件
+          </div>
+        )}
+      </div>
+
+      {showModal && (
+        <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50">
+          <div className="bg-white rounded-lg p-6 w-full max-w-2xl max-h-[90vh] overflow-y-auto">
+            <h3 className="text-lg font-semibold mb-4">
+              {editingPart ? '编辑备件' : '新增备件'}
+            </h3>
+            <form onSubmit={handleSubmit} className="space-y-4">
+              <div className="grid grid-cols-2 gap-4">
+                <div>
+                  <label className="block text-sm font-medium mb-1">SKU *</label>
+                  <input
+                    type="text"
+                    value={form.sku}
+                    onChange={e => setForm({ ...form, sku: e.target.value })}
+                    className="w-full border border-gray-300 rounded-lg px-3 py-2"
+                    required
+                  />
+                </div>
+                <div>
+                  <label className="block text-sm font-medium mb-1">名称 *</label>
+                  <input
+                    type="text"
+                    value={form.name}
+                    onChange={e => setForm({ ...form, name: e.target.value })}
+                    className="w-full border border-gray-300 rounded-lg px-3 py-2"
+                    required
+                  />
+                </div>
+                <div>
+                  <label className="block text-sm font-medium mb-1">型号</label>
+                  <input
+                    type="text"
+                    value={form.model}
+                    onChange={e => setForm({ ...form, model: e.target.value })}
+                    className="w-full border border-gray-300 rounded-lg px-3 py-2"
+                  />
+                </div>
+                <div>
+                  <label className="block text-sm font-medium mb-1">分类</label>
+                  <select
+                    value={form.category}
+                    onChange={e => setForm({ ...form, category: e.target.value })}
+                    className="w-full border border-gray-300 rounded-lg px-3 py-2"
+                  >
+                    {categories.map(c => <option key={c} value={c}>{c}</option>)}
+                  </select>
+                </div>
+                <div>
+                  <label className="block text-sm font-medium mb-1">适配设备</label>
+                  <input
+                    type="text"
+                    value={form.compatible_devices}
+                    onChange={e => setForm({ ...form, compatible_devices: e.target.value })}
+                    className="w-full border border-gray-300 rounded-lg px-3 py-2"
+                  />
+                </div>
+                <div>
+                  <label className="block text-sm font-medium mb-1">采购价 *</label>
+                  <input
+                    type="number"
+                    step="0.01"
+                    value={form.purchase_price}
+                    onChange={e => setForm({ ...form, purchase_price: parseFloat(e.target.value) })}
+                    className="w-full border border-gray-300 rounded-lg px-3 py-2"
+                    required
+                  />
+                </div>
+                <div>
+                  <label className="block text-sm font-medium mb-1">保质期(月)</label>
+                  <input
+                    type="number"
+                    value={form.shelf_life_months}
+                    onChange={e => setForm({ ...form, shelf_life_months: parseInt(e.target.value) })}
+                    className="w-full border border-gray-300 rounded-lg px-3 py-2"
+                  />
+                </div>
+                <div>
+                  <label className="block text-sm font-medium mb-1">安全库存</label>
+                  <input
+                    type="number"
+                    value={form.safety_stock}
+                    onChange={e => setForm({ ...form, safety_stock: parseInt(e.target.value) })}
+                    className="w-full border border-gray-300 rounded-lg px-3 py-2"
+                  />
+                </div>
+                <div>
+                  <label className="block text-sm font-medium mb-1">单位</label>
+                  <input
+                    type="text"
+                    value={form.unit}
+                    onChange={e => setForm({ ...form, unit: e.target.value })}
+                    className="w-full border border-gray-300 rounded-lg px-3 py-2"
+                  />
+                </div>
+                <div>
+                  <label className="block text-sm font-medium mb-1">替代件</label>
+                  <input
+                    type="text"
+                    value={form.alternative_parts}
+                    onChange={e => setForm({ ...form, alternative_parts: e.target.value })}
+                    className="w-full border border-gray-300 rounded-lg px-3 py-2"
+                  />
+                </div>
+              </div>
+              <div>
+                <label className="block text-sm font-medium mb-1">规格参数</label>
+                <textarea
+                  value={form.specifications}
+                  onChange={e => setForm({ ...form, specifications: e.target.value })}
+                  className="w-full border border-gray-300 rounded-lg px-3 py-2"
+                  rows={3}
+                />
+              </div>
+              <div className="flex justify-end gap-3 pt-4">
+                <button
+                  type="button"
+                  onClick={() => setShowModal(false)}
+                  className="px-4 py-2 border border-gray-300 rounded-lg hover:bg-gray-50"
+                >
+                  取消
+                </button>
+                <button
+                  type="submit"
+                  className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700"
+                >
+                  {editingPart ? '保存' : '创建'}
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      )}
+    </div>
+  );
+}
