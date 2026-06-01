@@ -1,0 +1,16 @@
+import Database from 'better-sqlite3';
+const db = new Database('data/app.sqlite');
+const dramas = db.prepare('SELECT * FROM dramas').all();
+console.log('DRAMAS:', dramas.length);
+dramas.forEach(d => console.log(' ', d.id, d.title, d.shelf_status));
+const eps = db.prepare('SELECT * FROM episodes').all();
+console.log('EPISODES:', eps.length);
+eps.slice(0,5).forEach(e => console.log(' ', e.id, e.drama_id, e.episode_number, e.status));
+const reviews = db.prepare('SELECT * FROM reviews').all();
+console.log('REVIEWS:', reviews.length);
+reviews.slice(0,3).forEach(r => console.log(' ', r.id, r.drama_id, r.episode_id, r.overall_result));
+const dists = db.prepare('SELECT * FROM distributions').all();
+console.log('DISTRIBUTIONS:', dists.length);
+dists.slice(0,3).forEach(d => console.log(' ', d.id, d.drama_id, d.episode_id, d.version));
+const analytics = db.prepare('SELECT * FROM analytics').all();
+console.log('ANALYTICS:', analytics.length);
