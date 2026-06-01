@@ -1,0 +1,16 @@
+import Database from 'better-sqlite3';
+const db = new Database('./data/app.sqlite');
+console.log('Test 1 - UTC -7 days:');
+const rows1 = db.prepare("SELECT DATE(joined_at) as date, COUNT(*) as cnt FROM room_sessions WHERE joined_at >= datetime('now', '-7 days') GROUP BY DATE(joined_at)").all();
+console.log('  Rows:', rows1.length);
+rows1.forEach(r => console.log('   ', r));
+console.log('Test 2 - Local -7 days:');
+const rows2 = db.prepare("SELECT DATE(joined_at) as date, COUNT(*) as cnt FROM room_sessions WHERE joined_at >= datetime('now', '-7 days', 'localtime') GROUP BY DATE(joined_at)").all();
+console.log('  Rows:', rows2.length);
+rows2.forEach(r => console.log('   ', r));
+console.log('Sample joined_at:');
+const rows3 = db.prepare("SELECT joined_at FROM room_sessions LIMIT 3").all();
+console.log(rows3);
+console.log('Now times:');
+const rows4 = db.prepare("SELECT datetime('now') as n1, datetime('now','localtime') as n2, datetime('now', '-7 days') as n3").get();
+console.log(rows4);
