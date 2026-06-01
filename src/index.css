@@ -1,0 +1,141 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Noto Sans", Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji";
+  line-height: 1.5;
+  font-weight: 400;
+
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+@layer base {
+  body {
+    @apply bg-cinema-bg text-cinema-text;
+  }
+
+  ::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+  }
+
+  ::-webkit-scrollbar-track {
+    @apply bg-cinema-bg-light;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    @apply bg-cinema-border rounded-full;
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    @apply bg-cinema-red;
+  }
+}
+
+@layer components {
+  .cinema-gradient {
+    background: linear-gradient(135deg, #0F172A 0%, #1E293B 50%, #0F172A 100%);
+  }
+
+  .card-hover {
+    @apply transition-all duration-300 hover:scale-[1.02] hover:shadow-xl hover:shadow-cinema-red/20;
+  }
+
+  .btn-primary {
+    @apply bg-gradient-to-r from-cinema-red to-cinema-red-light text-white font-medium py-2 px-6 rounded-lg transition-all duration-300 hover:shadow-lg hover:shadow-cinema-red/30 active:scale-95;
+  }
+
+  .btn-secondary {
+    @apply bg-cinema-bg-light border border-cinema-border text-cinema-text font-medium py-2 px-6 rounded-lg transition-all duration-300 hover:bg-cinema-border hover:border-cinema-red;
+  }
+
+  .btn-gold {
+    @apply bg-gradient-to-r from-cinema-gold to-cinema-gold-light text-white font-medium py-2 px-6 rounded-lg transition-all duration-300 hover:shadow-lg hover:shadow-cinema-gold/30 active:scale-95;
+  }
+
+  .glass-effect {
+    @apply bg-white/5 backdrop-blur-lg border border-white/10;
+  }
+
+  .text-gradient {
+    @apply bg-gradient-to-r from-cinema-red to-cinema-red-light bg-clip-text text-transparent;
+  }
+
+  .text-gradient-gold {
+    @apply bg-gradient-to-r from-cinema-gold to-cinema-gold-light bg-clip-text text-transparent;
+  }
+
+  .watermark {
+    position: relative;
+  }
+
+  .watermark::after {
+    content: attr(data-watermark);
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) rotate(-30deg);
+    font-size: 2.5rem;
+    color: rgba(255, 255, 255, 0.08);
+    font-weight: bold;
+    white-space: nowrap;
+    pointer-events: none;
+    z-index: 1;
+  }
+
+  .skeleton {
+    background: linear-gradient(90deg, #1E293B 25%, #334155 50%, #1E293B 75%);
+    background-size: 200% 100%;
+    animation: shimmer 1.5s infinite;
+  }
+
+  .seat-available {
+    @apply bg-cinema-bg-light border border-cinema-border hover:border-cinema-red hover:bg-cinema-red/20 cursor-pointer transition-all duration-200;
+  }
+
+  .seat-selected {
+    @apply bg-cinema-red border-cinema-red text-white;
+  }
+
+  .seat-occupied {
+    @apply bg-cinema-border cursor-not-allowed opacity-50;
+  }
+
+  .seat-wheelchair {
+    @apply border-cinema-gold;
+  }
+
+  .seat-vip {
+    @apply border-cinema-gold bg-cinema-gold/10;
+  }
+
+  .heat-high {
+    @apply bg-gradient-to-r from-red-500 to-red-600;
+  }
+
+  .heat-medium {
+    @apply bg-gradient-to-r from-orange-500 to-orange-600;
+  }
+
+  .heat-low {
+    @apply bg-gradient-to-r from-green-500 to-green-600;
+  }
+}
+
+@layer utilities {
+  .content-auto {
+    content-visibility: auto;
+  }
+
+  .text-shadow-glow {
+    text-shadow: 0 0 10px rgba(220, 38, 38, 0.5);
+  }
+
+  .text-shadow-glow-gold {
+    text-shadow: 0 0 10px rgba(217, 119, 6, 0.5);
+  }
+}
