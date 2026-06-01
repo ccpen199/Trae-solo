@@ -1,0 +1,60 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>may-86937 Local App</title>
+    <link rel="stylesheet" href="/styles.css">
+    <script src="/config.js" defer></script>
+    <script src="/app.js" defer></script>
+  </head>
+  <body>
+    <main class="shell">
+      <section class="hero" aria-labelledby="page-title">
+        <div>
+          <p class="eyebrow">Local full-stack service</p>
+          <h1 id="page-title">may-86937</h1>
+          <p class="lede">
+            Browser UI, backend API, and SQLite storage are running from this project.
+          </p>
+        </div>
+        <div class="status">
+          <span class="status-dot" data-status-dot data-state="loading"></span>
+          <span data-status-text>Checking services</span>
+        </div>
+      </section>
+
+      <section class="toolbar" aria-label="Service controls">
+        <div>
+          <span class="label">Backend</span>
+          <strong data-backend-url>Loading</strong>
+        </div>
+        <button type="button" data-refresh>Refresh</button>
+      </section>
+
+      <section class="metrics" aria-label="Runtime summary">
+        <article>
+          <span class="metric-label">Entries</span>
+          <strong data-total-entries>0</strong>
+        </article>
+        <article>
+          <span class="metric-label">Ready</span>
+          <strong data-ready-entries>0</strong>
+        </article>
+        <article>
+          <span class="metric-label">SQLite</span>
+          <strong data-database>n/a</strong>
+        </article>
+        <article>
+          <span class="metric-label">Updated</span>
+          <strong data-updated-at>n/a</strong>
+        </article>
+      </section>
+
+      <section class="records" aria-labelledby="records-title">
+        <h2 id="records-title">Live records</h2>
+        <ul data-entries class="entries" aria-live="polite"></ul>
+      </section>
+    </main>
+  </body>
+</html>
