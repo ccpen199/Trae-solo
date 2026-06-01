@@ -1,0 +1,13 @@
+{
+  "name": "pet-recovery-system",
+  "version": "1.0.0",
+  "description": "城市宠物寻回协作系统",
+  "scripts": {
+    "install:all": "cd backend && npm install && cd ../frontend && npm install",
+    "start:backend": "cd backend && nohup node src/index.js > ../backend.log 2>&1 &",
+    "start:frontend": "cd frontend && nohup npx vite --host 127.0.0.1 --strictPort > ../frontend.log 2>&1 &",
+    "start": "bash scripts/start.sh",
+    "stop": "bash scripts/stop.sh",
+    "check": "bash scripts/check.sh"
+  }
+}
