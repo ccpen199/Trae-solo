@@ -1,0 +1,70 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html, body, #root {
+  height: 100%;
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+  background-color: #f0f2f5;
+}
+
+.watermark-overlay {
+  position: relative;
+}
+
+.watermark-overlay::before {
+  content: attr(data-watermark);
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) rotate(-30deg);
+  font-size: 24px;
+  color: rgba(0, 0, 0, 0.1);
+  pointer-events: none;
+  white-space: nowrap;
+  z-index: 1000;
+}
+
+.credential-masked {
+  font-family: 'Courier New', monospace;
+  letter-spacing: 1px;
+}
+
+.login-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+}
+
+.login-card {
+  width: 400px;
+  padding: 40px;
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+}
+
+.dashboard-stat {
+  padding: 24px;
+  background: white;
+  border-radius: 8px;
+  text-align: center;
+}
+
+.dashboard-stat .value {
+  font-size: 32px;
+  font-weight: bold;
+  margin-bottom: 8px;
+}
+
+.dashboard-stat .label {
+  color: #666;
+  font-size: 14px;
+}
