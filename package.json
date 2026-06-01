@@ -1,0 +1,17 @@
+{
+  "name": "tide-app",
+  "version": "1.0.0",
+  "description": "白噪音专注睡眠工具 - 潮汐",
+  "scripts": {
+    "dev:backend": "cd backend && npm run dev",
+    "dev:frontend": "cd frontend && npm run dev",
+    "build:backend": "cd backend && npm run build",
+    "build:frontend": "cd frontend && npm run build",
+    "start:backend": "cd backend && npm start",
+    "start:frontend": "cd frontend && npm run preview",
+    "install:all": "npm install && cd backend && npm install && cd ../frontend && npm install"
+  },
+  "keywords": ["focus", "sleep", "white-noise", "pomodoro"],
+  "author": "",
+  "license": "MIT"
+}
