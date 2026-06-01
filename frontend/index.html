@@ -1,0 +1,114 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+<meta http-equiv="Pragma" content="no-cache">
+<meta http-equiv="Expires" content="0">
+<title>暖窝宠物救助领养平台</title>
+<link rel="stylesheet" href="/styles.css">
+</head>
+<body>
+<aside class="sidebar">
+  <div class="brand"><span>暖</span><strong>暖窝领养</strong></div>
+  <nav>
+    <a href="#" class="nav-link active" data-page="dashboard">运营看板</a>
+    <a href="#" class="nav-link" data-page="pets">宠物档案</a>
+    <a href="#" class="nav-link" data-page="apply">领养申请</a>
+    <a href="#" class="nav-link" data-page="review">审核管理</a>
+    <a href="#" class="nav-link" data-page="follow">回访任务</a>
+  </nav>
+</aside>
+<main>
+  <header class="topbar">
+    <div>
+      <h1 id="pageTitle">运营看板</h1>
+      <p id="pageSubtitle">实时掌握领养进展与运营数据</p>
+    </div>
+    <div class="topbar-right">
+      <button id="refreshAllBtn" class="btn-secondary">刷新数据</button>
+      <span id="serviceStatus" class="status">检测中</span>
+    </div>
+  </header>
+
+  <section id="page-dashboard" class="page-content active">
+    <div class="metrics">
+      <article class="metric-card metric-available"><div class="metric-icon">🐾</div><div><span>待领养</span><strong id="availablePets">--</strong></div></article>
+      <article class="metric-card metric-pending"><div class="metric-icon">📋</div><div><span>待审核</span><strong id="pendingApplications">--</strong></div></article>
+      <article class="metric-card metric-success"><div class="metric-icon">✅</div><div><span>已成功领养</span><strong id="adoptedCount">--</strong></div></article>
+      <article class="metric-card metric-rate"><div class="metric-icon">📊</div><div><span>成功率</span><strong id="successRate">--</strong></div></article>
+      <article class="metric-card metric-follow"><div class="metric-icon">📞</div><div><span>待回访</span><strong id="pendingFollowUps">--</strong></div></article>
+      <article class="metric-card metric-trial"><div class="metric-icon">🏠</div><div><span>试养中</span><strong id="trialCount">--</strong></div></article>
+    </div>
+    <div class="dashboard-grid">
+      <div class="panel"><div class="panel-head"><h2>退养原因分析</h2></div><div id="returnReasons" class="reason-chart"><p style="color:#94a3b8;">加载中...</p></div></div>
+      <div class="panel"><div class="panel-head"><h2>待处理任务</h2><span id="taskCount">0 项</span></div><div id="taskList" class="task-list"><p style="color:#94a3b8;">加载中...</p></div></div>
+      <div class="panel panel-wide"><div class="panel-head"><h2>机构资源缺口</h2></div><div id="resourceGaps" class="resource-grid"><p style="color:#94a3b8;grid-column:1/-1;">加载中...</p></div></div>
+      <div class="panel"><div class="panel-head"><h2>最新申请</h2></div><div id="recentApplications" class="app-list"><p style="color:#94a3b8;">加载中...</p></div></div>
+    </div>
+  </section>
+
+  <section id="page-pets" class="page-content">
+    <div class="panel">
+      <div class="panel-head">
+        <div><h2>宠物档案</h2><p id="petCount">共 -- 份档案</p></div>
+        <div class="filters">
+          <select id="speciesFilter"><option value="">全部类型</option><option value="猫">猫</option><option value="狗">狗</option></select>
+          <select id="statusFilter"><option value="">全部状态</option><option value="available">待领养</option><option value="trial">试养中</option><option value="adopted">已领养</option></select>
+          <select id="orgFilter"><option value="">全部机构</option></select>
+          <input id="keyword" placeholder="搜索名字、品种、性格">
+        </div>
+      </div>
+      <div id="petGrid" class="pet-grid"><p style="color:#94a3b8;grid-column:1/-1;text-align:center;padding:40px;">加载中...</p></div>
+    </div>
+    <div id="petDetailModal" class="modal"><div class="modal-content modal-large"><div class="modal-header"><h2 id="petDetailTitle">宠物详情</h2><button class="modal-close">&times;</button></div><div class="modal-body" id="petDetailBody"></div></div></div>
+  </section>
+
+  <section id="page-apply" class="page-content">
+    <div class="split">
+      <form id="applyForm" class="panel">
+        <h2>提交领养申请</h2>
+        <label>意向宠物<select name="pet_id" id="petSelect" required><option value="">请选择宠物</option></select></label>
+        <label>申请人<input name="applicant_name" required placeholder="请输入您的姓名"></label>
+        <label>联系电话<input name="contact_phone" required placeholder="请输入手机号"></label>
+        <label>家庭条件<textarea name="home_condition" required placeholder="例如：三口之家，自有房产，家人均同意领养"></textarea></label>
+        <label>养宠经验<textarea name="pet_experience" required placeholder="例如：有多年养猫经验，了解疫苗和绝育要求"></textarea></label>
+        <label>居住环境<textarea name="living_environment" required placeholder="例如：已封窗两居室，有独立活动空间"></textarea></label>
+        <label class="check"><input type="checkbox" name="agreement_signed" required>我已阅读并同意《领养承诺书》，愿意接受回访和监督</label>
+        <button type="submit" class="btn-primary">提交申请</button>
+        <p id="formMessage" class="form-message"></p>
+      </form>
+      <div class="panel">
+        <div class="panel-head"><h2>我的申请</h2><button id="loadMyApps" class="btn-small">刷新</button></div>
+        <div id="myApplications" class="my-apps"><p style="color:#94a3b8;text-align:center;padding:40px;">加载中...</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section id="page-review" class="page-content">
+    <div class="panel">
+      <div class="panel-head">
+        <h2>待审核申请</h2>
+        <div class="filters">
+          <select id="reviewStageFilter"><option value="">全部阶段</option><option value="initial_screening">初筛</option><option value="interview">面谈</option><option value="home_visit">家访</option><option value="trial">试养</option></select>
+        </div>
+      </div>
+      <div id="reviewList" class="review-list"><p style="color:#94a3b8;text-align:center;padding:40px;">加载中...</p></div>
+    </div>
+    <div id="reviewModal" class="modal"><div class="modal-content"><div class="modal-header"><h2 id="reviewModalTitle">审核处理</h2><button class="modal-close">&times;</button></div><div class="modal-body" id="reviewModalBody"></div></div></div>
+  </section>
+
+  <section id="page-follow" class="page-content">
+    <div class="panel">
+      <div class="panel-head"><h2>回访计划</h2><button id="createFollowUp" class="btn-primary">新建回访</button></div>
+      <div id="followUpList" class="follow-list"><p style="color:#94a3b8;text-align:center;padding:40px;">加载中...</p></div>
+    </div>
+    <div id="followUpModal" class="modal"><div class="modal-content modal-large"><div class="modal-header"><h2 id="followUpModalTitle">回访详情</h2><button class="modal-close">&times;</button></div><div class="modal-body" id="followUpModalBody"></div></div></div>
+  </section>
+
+</main>
+<script src="/config.js"></script>
+<script src="/app.js"></script>
+</body>
+</html>
