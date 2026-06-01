@@ -1,0 +1,23 @@
+{
+  "name": "parcel-lifecycle-platform",
+  "version": "1.0.0",
+  "private": true,
+  "workspaces": [
+    "backend",
+    "frontend"
+  ],
+  "scripts": {
+    "dev": "concurrently -n backend,frontend -c cyan,magenta \"npm run dev -w backend\" \"npm run dev -w frontend\"",
+    "dev:backend": "npm run dev -w backend",
+    "dev:frontend": "npm run dev -w frontend",
+    "start:backend": "cd backend && nohup npm run dev > ../backend.log 2>&1 &",
+    "start:frontend": "cd frontend && nohup npm run dev > ../frontend.log 2>&1 &",
+    "stop:backend": "./scripts/stop.sh backend",
+    "stop:frontend": "./scripts/stop.sh frontend",
+    "install:all": "npm install && npm install -w backend && npm install -w frontend",
+    "check": "./scripts/check.sh"
+  },
+  "devDependencies": {
+    "concurrently": "^8.2.2"
+  }
+}
