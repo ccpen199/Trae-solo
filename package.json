@@ -1,0 +1,11 @@
+{
+  "name": "hospital-transfer-web",
+  "version": "1.0.0",
+  "private": true,
+  "description": "医院转诊管理系统本地前端",
+  "scripts": {
+    "start": "node scripts/static-server.js",
+    "backend:build": "npm --prefix backend run build",
+    "backend:start": "npm --prefix backend run start"
+  }
+}

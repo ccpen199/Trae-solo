@@ -1,0 +1,6 @@
+{
+  "name": "hospital-transfer-frontend",
+  "version": "1.0.0",
+  "private": true,
+  "description": "医院转诊管理系统静态前端"
+}

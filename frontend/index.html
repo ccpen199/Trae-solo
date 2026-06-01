@@ -1,0 +1,511 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>医院转诊管理系统</title>
+    <link rel="stylesheet" href="/styles.css">
+  </head>
+  <body>
+    <div class="app-shell">
+      <aside class="sidebar">
+        <div class="brand">
+          <div class="brand-mark">转</div>
+          <div>
+            <strong>医院转诊管理</strong>
+            <span>Transfer Console</span>
+          </div>
+        </div>
+        <nav class="nav">
+          <a href="#dashboard" class="active" data-view="dashboard">工作台</a>
+          <a href="#transfers" data-view="transfers">转诊列表</a>
+          <a href="#create" data-view="create">新增申请</a>
+          <a href="#hospitals" data-view="hospitals">医院资源</a>
+          <a href="#reports" data-view="reports">管理报表</a>
+        </nav>
+      </aside>
+
+      <main class="workspace">
+        <header class="topbar">
+          <div>
+            <h1>区域转诊协同工作台</h1>
+            <p>申请、审核、协调与接诊结果统一跟踪</p>
+          </div>
+          <div class="status-pill" id="serviceStatus">服务检测中</div>
+        </header>
+
+        <section class="metrics" id="dashboard">
+          <div class="metric">
+            <span>总转诊量</span>
+            <strong id="metricTotal">--</strong>
+          </div>
+          <div class="metric">
+            <span>已完成</span>
+            <strong id="metricCompleted">--</strong>
+          </div>
+          <div class="metric">
+            <span>成功率</span>
+            <strong id="metricRate">--</strong>
+          </div>
+          <div class="metric">
+            <span>平均等待</span>
+            <strong id="metricWait">--</strong>
+          </div>
+          <div class="metric highlight">
+            <span>待审核</span>
+            <strong id="metricPending">--</strong>
+          </div>
+          <div class="metric highlight">
+            <span>协调中</span>
+            <strong id="metricCoordinating">--</strong>
+          </div>
+          <div class="metric highlight">
+            <span>拒收数</span>
+            <span class="metric-details" id="metricRejectReason">--</span>
+          </div>
+          <div class="metric highlight">
+            <span>TOP科室</span>
+            <span class="metric-details" id="metricTopDept">--</span>
+          </div>
+        </section>
+        <section class="dashboard-cards">
+          <div class="dashboard-card">
+            <div class="card-header">
+              <span>📊 拒收原因分布</span>
+              <small>近30天</small>
+            </div>
+            <div id="rejectReasonsMini" class="mini-chart">加载中...</div>
+          </div>
+          <div class="dashboard-card">
+            <div class="card-header">
+              <span>🏥 科室负载TOP5</span>
+              <small>近30天</small>
+            </div>
+            <div id="departmentLoadMini" class="mini-chart">加载中...</div>
+          </div>
+          <div class="dashboard-card">
+            <div class="card-header">
+              <span>🔗 区域协作效果</span>
+              <small>热门转诊路线</small>
+            </div>
+            <div id="collaborationMini" class="mini-chart">加载中...</div>
+          </div>
+        </section>
+
+        <section class="panel" id="transfers-panel">
+          <div class="panel-heading">
+            <div>
+              <h2>转诊列表</h2>
+              <p id="transferCount">正在读取转诊数据</p>
+            </div>
+            <div class="toolbar">
+              <select id="statusFilter" aria-label="按状态筛选">
+                <option value="">全部状态</option>
+                <option value="pending">待审核</option>
+                <option value="accepted">审核通过</option>
+                <option value="supplement">需补充资料</option>
+                <option value="rejected">已拒绝</option>
+                <option value="coordinating">协调中</option>
+                <option value="completed">已完成</option>
+                <option value="cancelled">已取消</option>
+              </select>
+              <select id="urgencyFilter" aria-label="按紧急程度筛选">
+                <option value="">全部紧急程度</option>
+                <option value="emergency">紧急</option>
+                <option value="urgent">加急</option>
+                <option value="normal">普通</option>
+              </select>
+              <input id="keywordFilter" type="search" placeholder="搜索患者、编号、诊断">
+              <button id="refreshBtn" type="button">刷新</button>
+            </div>
+          </div>
+          <div class="table-wrap">
+            <table>
+              <thead>
+                <tr>
+                  <th>编号</th>
+                  <th>患者</th>
+                  <th>诊断</th>
+                  <th>转出/转入医院</th>
+                  <th>科室</th>
+                  <th>紧急程度</th>
+                  <th>状态</th>
+                  <th>审核意见/原因</th>
+                  <th>申请时间</th>
+                  <th>操作</th>
+                </tr>
+              </thead>
+              <tbody id="transferRows">
+                <tr><td colspan="10">正在加载</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </section>
+
+        <section class="split-layout" id="create">
+          <form class="panel form-panel" id="createForm">
+            <div class="panel-heading compact">
+              <div>
+                <h2>新增转诊申请</h2>
+                <p>从已登记患者和医院资源中创建申请</p>
+              </div>
+            </div>
+            <div id="successBanner" class="success-banner" hidden>
+              <strong id="successTitle">✅ 申请提交成功</strong>
+              <div class="success-info">
+                <div><span>转诊编号：</span><strong id="successTransferNo" class="success-no"></strong></div>
+                <div><span>当前状态：</span><span id="successStatus" class="badge"></span></div>
+              </div>
+              <div id="successHint" class="success-hint"></div>
+              <div class="success-actions">
+                <button type="button" class="btn-secondary" id="viewDetailBtn">查看申请详情</button>
+                <button type="button" class="btn-secondary" id="goToListBtn">返回转诊列表</button>
+                <button type="button" class="btn-secondary" id="continueCreateBtn">继续新建申请</button>
+              </div>
+            </div>
+            <div id="validationSummary" class="validation-summary" hidden>
+              <div class="validation-header">
+                <strong>❌ 表单校验未通过</strong>
+                <span id="validationCount">0 项必填项未填写</span>
+              </div>
+              <ul id="validationList" class="validation-list"></ul>
+              <div class="validation-footer">
+                <small>请修正上述问题后重新提交</small>
+              </div>
+            </div>
+            <div class="form-grid">
+              <label>
+                患者 <span class="required">*</span>
+                <select id="patientSelect" name="patient_id" required>
+                  <option value="">请选择患者</option>
+                </select>
+                <span class="field-error" id="error-patient_id"></span>
+              </label>
+              <label>
+                紧急程度 <span class="required">*</span>
+                <select name="urgency" required>
+                  <option value="">请选择紧急程度</option>
+                  <option value="normal">普通</option>
+                  <option value="urgent">加急</option>
+                  <option value="emergency">紧急</option>
+                </select>
+                <span class="field-error" id="error-urgency"></span>
+              </label>
+              <label>
+                转出医院 <span class="required">*</span>
+                <select id="fromHospitalSelect" name="from_hospital_id" required>
+                  <option value="">请选择转出医院</option>
+                </select>
+                <span class="field-error" id="error-from_hospital_id"></span>
+              </label>
+              <label>
+                转入医院 <span class="required">*</span>
+                <select id="toHospitalSelect" name="to_hospital_id" required>
+                  <option value="">请选择转入医院</option>
+                </select>
+                <span class="field-error" id="error-to_hospital_id"></span>
+              </label>
+              <label>
+                转出医生 <span class="required">*</span>
+                <select id="fromDoctorSelect" name="from_doctor_id" required>
+                  <option value="">请先选择转出医院</option>
+                </select>
+                <span class="field-error" id="error-from_doctor_id"></span>
+              </label>
+              <label>
+                转入医生 <span class="required">*</span>
+                <select id="toDoctorSelect" name="to_doctor_id" required>
+                  <option value="">请先选择转入医院</option>
+                </select>
+                <span class="field-error" id="error-to_doctor_id"></span>
+              </label>
+              <label class="wide">
+                初步诊断 <span class="required">*</span>
+                <input name="primary_diagnosis" required placeholder="例如：急性心衰伴呼吸困难" maxlength="200">
+                <span class="field-error" id="error-primary_diagnosis"></span>
+              </label>
+              <label class="wide">
+                转诊原因 <span class="required">*</span>
+                <textarea name="transfer_reason" required placeholder="说明上转或转入需求" maxlength="500"></textarea>
+                <span class="field-error" id="error-transfer_reason"></span>
+              </label>
+              <label class="wide">
+                当前病情 <span class="required">*</span>
+                <textarea name="current_condition" required placeholder="生命体征、处理情况、风险点" maxlength="500"></textarea>
+                <span class="field-error" id="error-current_condition"></span>
+              </label>
+              <label class="wide">
+                诊疗经过
+                <textarea name="treatment_history" placeholder="已进行的检查、用药和处理措施" maxlength="500"></textarea>
+              </label>
+              <label class="wide">
+                检查资料
+                <textarea name="examination_results" placeholder="主要检查结果、影像报告摘要" maxlength="500"></textarea>
+              </label>
+            </div>
+            <div class="form-actions">
+              <span id="formMessage"></span>
+              <button type="submit" id="submitBtn">提交申请</button>
+            </div>
+          </form>
+
+          <section class="panel" id="hospitals">
+            <div class="panel-heading compact">
+              <div>
+                <h2>医院资源</h2>
+                <p>可转入医院与科室概览</p>
+              </div>
+              <button id="refreshHospitals" type="button" class="btn-secondary">刷新</button>
+            </div>
+            <div class="resource-list" id="hospitalList">
+              正在加载
+            </div>
+          </section>
+        </section>
+
+        <section class="panel" id="reports-panel" hidden>
+          <div class="panel-heading">
+            <div>
+              <h2>管理报表</h2>
+              <p id="reportSummary">运营数据分析与区域协作效果</p>
+            </div>
+            <div class="toolbar">
+              <select id="reportPeriod">
+                <option value="7">近7天</option>
+                <option value="30" selected>近30天</option>
+                <option value="90">近90天</option>
+                <option value="365">近一年</option>
+              </select>
+              <button id="exportReportBtn" type="button" class="btn-secondary">导出数据</button>
+              <button id="refreshReportBtn" type="button">刷新报表</button>
+            </div>
+          </div>
+          <div class="reports-grid">
+            <div class="report-card">
+              <h3>转诊成功率趋势</h3>
+              <div id="successRateChart" class="chart-container"></div>
+            </div>
+            <div class="report-card">
+              <h3>平均等待时长</h3>
+              <div id="waitTimeChart" class="chart-container"></div>
+            </div>
+            <div class="report-card">
+              <h3>拒收原因分布</h3>
+              <div id="rejectReasonsChart" class="chart-container"></div>
+            </div>
+            <div class="report-card">
+              <h3>科室负载</h3>
+              <div id="departmentLoadChart" class="chart-container"></div>
+            </div>
+            <div class="report-card wide">
+              <h3>区域协作效果</h3>
+              <div id="collaborationChart" class="chart-container"></div>
+            </div>
+            <div class="report-card wide">
+              <h3>紧急程度分布</h3>
+              <div id="urgencyChart" class="chart-container"></div>
+            </div>
+          </div>
+        </section>
+      </main>
+    </div>
+
+    <dialog id="detailDialog">
+      <div class="dialog-head">
+        <div>
+          <h2 id="detailTitle">转诊详情</h2>
+          <p id="detailSubtitle"></p>
+        </div>
+        <button id="closeDetail" type="button" aria-label="关闭">关闭</button>
+      </div>
+
+      <div class="detail-tabs">
+        <button class="tab-btn active" data-tab="info">基本信息</button>
+        <button class="tab-btn" data-tab="review">资料审核</button>
+        <button class="tab-btn" data-tab="coordination">协调登记</button>
+        <button class="tab-btn" data-tab="result">接诊结果</button>
+        <button class="tab-btn" data-tab="logs">操作记录</button>
+      </div>
+
+      <div class="tab-content" data-tab="info">
+        <div class="detail-grid" id="detailBody"></div>
+      </div>
+
+      <div class="tab-content" data-tab="review" hidden>
+        <form id="reviewForm" class="action-form">
+          <div class="form-grid">
+            <label class="wide">
+              审核结果 <span class="required">*</span>
+              <select name="result" required>
+                <option value="">请选择审核结果</option>
+                <option value="accepted">同意接收</option>
+                <option value="supplement">退回补充资料</option>
+                <option value="rejected">拒收</option>
+              </select>
+            </label>
+            <label class="wide">
+              科室能力审核
+              <select name="department_check">
+                <option value="ok">科室具备诊疗能力</option>
+                <option value="limited">科室能力有限</option>
+                <option value="no">无对应科室</option>
+              </select>
+            </label>
+            <label class="wide">
+              医生资质审核
+              <select name="doctor_check">
+                <option value="ok">主治医生具备资质</option>
+                <option value="limited">需会诊确认</option>
+                <option value="no">无对应专业医生</option>
+              </select>
+            </label>
+            <label class="wide">
+              床位情况
+              <select name="bed_check">
+                <option value="ok">床位充足</option>
+                <option value="limited">床位紧张</option>
+                <option value="no">无床位</option>
+              </select>
+            </label>
+            <label class="wide">
+              检查能力
+              <select name="exam_check">
+                <option value="ok">可完成所需检查</option>
+                <option value="limited">部分检查需外送</option>
+                <option value="no">缺乏检查能力</option>
+              </select>
+            </label>
+            <label class="wide">
+              资料完整性
+              <select name="data_check">
+                <option value="complete">资料完整</option>
+                <option value="partial">部分缺失</option>
+                <option value="incomplete">严重缺失</option>
+              </select>
+            </label>
+            <label class="wide">
+              审核意见 <span class="required">*</span>
+              <textarea name="comments" required placeholder="请填写详细审核意见，说明接收、补充或拒收原因"></textarea>
+            </label>
+          </div>
+          <div class="form-actions">
+            <span id="reviewMessage"></span>
+            <button type="submit">提交审核</button>
+          </div>
+        </form>
+        <div id="reviewHistory" class="history-list"></div>
+      </div>
+
+      <div class="tab-content" data-tab="coordination" hidden>
+        <form id="coordinationForm" class="action-form">
+          <div class="form-grid">
+            <label>
+              预约时间
+              <input type="datetime-local" name="appointment_time">
+            </label>
+            <label>
+              交通安排
+              <select name="transport_arrangement">
+                <option value="">请选择</option>
+                <option value="ambulance">120救护车</option>
+                <option value="hospital_vehicle">医院转运车</option>
+                <option value="family">家属自行接送</option>
+                <option value="other">其他方式</option>
+              </select>
+            </label>
+            <label>
+              联系人 <span class="required">*</span>
+              <input name="contact_person" required placeholder="转诊协调员姓名">
+            </label>
+            <label>
+              联系电话 <span class="required">*</span>
+              <input name="contact_phone" required placeholder="协调员联系电话" maxlength="11">
+            </label>
+            <label class="wide">
+              患者确认
+              <select name="patient_confirm">
+                <option value="0">待确认</option>
+                <option value="1">已确认</option>
+                <option value="2">需家属确认</option>
+                <option value="3">拒绝转诊</option>
+              </select>
+            </label>
+            <label class="wide">
+              转运风险评估
+              <textarea name="transport_risk" placeholder="评估转运途中可能的风险及应对措施"></textarea>
+            </label>
+            <label class="wide">
+              协调备注
+              <textarea name="notes" placeholder="其他需要说明的协调事项"></textarea>
+            </label>
+          </div>
+          <div class="form-actions">
+            <span id="coordinationMessage"></span>
+            <button type="submit">保存协调信息</button>
+          </div>
+        </form>
+        <div id="coordinationInfo" class="info-panel"></div>
+      </div>
+
+      <div class="tab-content" data-tab="result" hidden>
+        <form id="resultForm" class="action-form">
+          <div class="form-grid">
+            <label>
+              入院状态
+              <select name="admission_status">
+                <option value="">请选择</option>
+                <option value="admitted">已入院</option>
+                <option value="observation">留观</option>
+                <option value="outpatient">门诊处理</option>
+                <option value="referred">转其他科室</option>
+              </select>
+            </label>
+            <label>
+              入院时间
+              <input type="datetime-local" name="admission_time">
+            </label>
+            <label>
+              病区
+              <input name="ward" placeholder="收治病区">
+            </label>
+            <label>
+              床号
+              <input name="bed_no" placeholder="床位号">
+            </label>
+            <label class="wide">
+              诊疗结论
+              <textarea name="diagnosis_conclusion" placeholder="最终诊断结论"></textarea>
+            </label>
+            <label class="wide">
+              治疗方案
+              <textarea name="treatment_plan" placeholder="后续治疗方案"></textarea>
+            </label>
+            <label class="wide">
+              回转建议
+              <textarea name="transfer_back_suggestion" placeholder="是否建议转回原医院及条件"></textarea>
+            </label>
+            <label class="wide">
+              随访计划
+              <textarea name="follow_up_plan" placeholder="后续随访安排"></textarea>
+            </label>
+          </div>
+          <div class="form-actions">
+            <span id="resultMessage"></span>
+            <button type="submit">保存接诊结果</button>
+          </div>
+        </form>
+        <div id="resultInfo" class="info-panel"></div>
+      </div>
+
+      <div class="tab-content" data-tab="logs" hidden>
+        <div id="logsList" class="history-list"></div>
+      </div>
+
+      <p class="action-message" id="detailMessage"></p>
+    </dialog>
+
+    <div class="toast" id="toast" hidden></div>
+    <script src="/config.js"></script>
+    <script src="/app.js"></script>
+  </body>
+</html>
