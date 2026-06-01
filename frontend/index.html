@@ -1,0 +1,76 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>文娱消费决策与履约一体化平台</title>
+  <link rel="stylesheet" href="./styles.css" />
+</head>
+<body>
+  <nav id="sidebar">
+    <div class="sidebar-brand">
+      <div class="brand-icon">🎭</div>
+      <div class="brand-text">文娱消费平台</div>
+    </div>
+    <div class="nav-section">
+      <div class="nav-label">核心业务</div>
+      <a href="#/" class="nav-item active" data-page="home">
+        <span class="nav-icon">🏠</span><span class="nav-text">首页概览</span>
+      </a>
+      <a href="#/shows" class="nav-item" data-page="shows">
+        <span class="nav-icon">🎬</span><span class="nav-text">演出/电影</span>
+      </a>
+      <a href="#/seats" class="nav-item" data-page="seats">
+        <span class="nav-icon">💺</span><span class="nav-text">智能选座</span>
+      </a>
+      <a href="#/flash-sale" class="nav-item" data-page="flash-sale">
+        <span class="nav-icon">⚡</span><span class="nav-text">秒杀购票</span>
+      </a>
+    </div>
+    <div class="nav-section">
+      <div class="nav-label">票务管理</div>
+      <a href="#/tickets" class="nav-item" data-page="tickets">
+        <span class="nav-icon">🎫</span><span class="nav-text">我的票务</span>
+      </a>
+      <a href="#/profile" class="nav-item" data-page="profile">
+        <span class="nav-icon">👤</span><span class="nav-text">观众画像</span>
+      </a>
+    </div>
+    <div class="nav-section">
+      <div class="nav-label">内容与玩乐</div>
+      <a href="#/seeding" class="nav-item" data-page="seeding">
+        <span class="nav-icon">🌱</span><span class="nav-text">内容种草</span>
+      </a>
+      <a href="#/local-fun" class="nav-item" data-page="local-fun">
+        <span class="nav-icon">🎮</span><span class="nav-text">本地玩乐</span>
+      </a>
+    </div>
+    <div class="nav-section">
+      <div class="nav-label">运营管理</div>
+      <a href="#/admin" class="nav-item" data-page="admin">
+        <span class="nav-icon">📊</span><span class="nav-text">管理后台</span>
+      </a>
+    </div>
+    <div class="sidebar-footer">
+      <div class="user-badge" id="currentUser">当前用户：张三</div>
+    </div>
+  </nav>
+  <main id="main-content">
+    <header id="topbar">
+      <div class="topbar-left">
+        <button id="menuToggle" class="menu-toggle">☰</button>
+        <h1 id="pageTitle">首页概览</h1>
+      </div>
+      <div class="topbar-right">
+        <span class="topbar-status" id="apiStatus">连接中...</span>
+      </div>
+    </header>
+    <div id="page-content"></div>
+  </main>
+  <div id="modal-overlay" class="modal-overlay hidden">
+    <div class="modal-box" id="modalBox"></div>
+  </div>
+  <div id="toast" class="toast hidden"></div>
+  <script src="./app.js"></script>
+</body>
+</html>
