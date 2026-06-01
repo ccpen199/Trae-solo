@@ -1,0 +1,12 @@
+{
+  "watch": ["api", ".env"],
+  "ext": "ts,mts,js,json",
+  "ignore": ["api/dist/*", "uploads/*", "data/*"],
+  "exec": "tsx api/server.ts",
+  "env": {
+    "NODE_ENV": "development"
+  },
+  "delay": 1000,
+  "stdin": false,
+  "quiet": false
+}
