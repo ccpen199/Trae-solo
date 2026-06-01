@@ -1,0 +1,205 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>头脑风暴协作平台</title>
+    <link rel="stylesheet" href="/styles.css" />
+  </head>
+  <body>
+    <main class="app-shell">
+      <header class="top-bar">
+        <div class="brand">
+          <svg viewBox="0 0 24 24" class="brand-icon">
+            <path fill="currentColor" d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16H5V5h14v14z"/>
+            <path fill="currentColor" d="M7 7h10v2H7zm0 4h10v2H7zm0 4h7v2H7z"/>
+          </svg>
+          <h1>头脑风暴协作平台</h1>
+        </div>
+        <div class="top-bar-actions">
+          <div class="health-pill" id="health">连接中...</div>
+          <button type="button" id="refreshButton" class="btn-secondary">刷新</button>
+        </div>
+      </header>
+
+      <div class="main-layout" id="mainLayout">
+        <aside class="sidebar" id="sidebar">
+          <div class="sidebar-section">
+            <div class="sidebar-heading">
+              <h2>白板空间</h2>
+              <button type="button" id="createBoardBtn" class="btn-primary btn-sm">新建</button>
+            </div>
+            <div id="boardList" class="board-list"></div>
+          </div>
+
+          <div class="sidebar-section" id="boardTools" style="display:none;">
+            <div class="sidebar-heading">
+              <h2>工具</h2>
+            </div>
+            <div class="tool-buttons">
+              <button type="button" class="tool-btn active" data-tool="select" title="选择">
+                <svg viewBox="0 0 24 24"><path fill="currentColor" d="M4 4h7v7H4zm9 0h7v7h-7zm-9 9h7v7H4zm9 0h7v7h-7z"/></svg>
+              </button>
+              <button type="button" class="tool-btn" data-tool="note" title="添加便签">
+                <svg viewBox="0 0 24 24"><path fill="currentColor" d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h9l5-5V5c0-1.1-.9-2-2-2zm0 11h-4v4H5V5h14v9z"/></svg>
+              </button>
+              <button type="button" class="tool-btn" data-tool="group" title="添加分组">
+                <svg viewBox="0 0 24 24"><path fill="currentColor" d="M3 13h8V3H3v10zm0 8h8v-6H3v6zm10 0h8V11h-8v10zm0-18v6h8V3h-8z"/></svg>
+              </button>
+              <button type="button" class="tool-btn" data-tool="connect" title="连线">
+                <svg viewBox="0 0 24 24"><path fill="currentColor" d="M14 2H6c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V8l-6-6zm4 18H6V4h7v5h5v11z"/></svg>
+              </button>
+            </div>
+            <div class="color-picker">
+              <span>颜色:</span>
+              <div class="colors">
+                <button type="button" class="color-btn active" data-color="#fff9c4" style="background:#fff9c4"></button>
+                <button type="button" class="color-btn" data-color="#ffecb3" style="background:#ffecb3"></button>
+                <button type="button" class="color-btn" data-color="#dcedc8" style="background:#dcedc8"></button>
+                <button type="button" class="color-btn" data-color="#b3e5fc" style="background:#b3e5fc"></button>
+                <button type="button" class="color-btn" data-color="#f8bbd9" style="background:#f8bbd9"></button>
+              </div>
+            </div>
+          </div>
+
+          <div class="sidebar-section" id="boardSettings" style="display:none;">
+            <div class="sidebar-heading">
+              <h2>白板设置</h2>
+            </div>
+            <div class="setting-row">
+              <label>匿名模式</label>
+              <input type="checkbox" id="anonymousMode" />
+            </div>
+            <div class="setting-row">
+              <label>主持人锁定</label>
+              <input type="checkbox" id="hostLock" />
+            </div>
+            <div class="setting-row">
+              <label>阶段状态</label>
+              <select id="boardStatus">
+                <option value="setup">准备中</option>
+                <option value="brainstorm">头脑风暴</option>
+                <option value="organize">整理归类</option>
+                <option value="vote">投票筛选</option>
+                <option value="output">产出整理</option>
+                <option value="review">复盘总结</option>
+              </select>
+            </div>
+          </div>
+        </aside>
+
+        <section class="content-area">
+          <div class="view-tabs" id="viewTabs" style="display:none;">
+            <button type="button" class="tab-btn active" data-view="canvas">协作画布</button>
+            <button type="button" class="tab-btn" data-view="output">产出整理</button>
+            <button type="button" class="tab-btn" data-view="review">复盘分析</button>
+          </div>
+
+          <div class="empty-state" id="emptyState">
+            <svg viewBox="0 0 24 24" class="empty-icon">
+              <path fill="currentColor" d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16H5V5h14v14z"/>
+              <path fill="currentColor" d="M7 7h10v2H7zm0 4h10v2H7zm0 4h7v2H7z"/>
+            </svg>
+            <h2>选择或创建一个白板开始</h2>
+            <p>支持多人实时协作、便签分组、投票筛选和行动项输出</p>
+            <button type="button" id="createBoardEmptyBtn" class="btn-primary">创建第一个白板</button>
+          </div>
+
+          <div class="canvas-container" id="canvasContainer" style="display:none;">
+            <div class="canvas-header">
+              <div class="canvas-title">
+                <h2 id="currentBoardTitle">白板标题</h2>
+                <span class="status-badge" id="currentBoardStatus">准备中</span>
+              </div>
+              <div class="canvas-actions">
+                <button type="button" id="addNoteBtn" class="btn-secondary">添加便签</button>
+                <button type="button" id="addGroupBtn" class="btn-secondary">添加分组</button>
+                <button type="button" id="viewHistoryBtn" class="btn-secondary">操作历史</button>
+              </div>
+            </div>
+            <div class="canvas" id="canvas">
+              <svg class="connections-svg" id="connectionsSvg"></svg>
+            </div>
+          </div>
+
+          <div class="output-container" id="outputContainer" style="display:none;">
+            <div class="output-header">
+              <h2>产出整理</h2>
+              <button type="button" id="addActionBtn" class="btn-primary">新增行动项</button>
+            </div>
+            <div class="output-grid">
+              <div class="output-section">
+                <h3>机会点</h3>
+                <div id="opportunitiesList" class="item-list"></div>
+              </div>
+              <div class="output-section">
+                <h3>问题</h3>
+                <div id="problemsList" class="item-list"></div>
+              </div>
+              <div class="output-section">
+                <h3>需求</h3>
+                <div id="needsList" class="item-list"></div>
+              </div>
+              <div class="output-section">
+                <h3>行动项</h3>
+                <div id="actionsList" class="item-list"></div>
+              </div>
+            </div>
+          </div>
+
+          <div class="review-container" id="reviewContainer" style="display:none;">
+            <div class="review-header">
+              <h2>复盘分析</h2>
+            </div>
+            <div class="review-stats">
+              <div class="stat-card">
+                <span class="stat-label">参与人数</span>
+                <span class="stat-value" id="statParticipants">0</span>
+              </div>
+              <div class="stat-card">
+                <span class="stat-label">便签总数</span>
+                <span class="stat-value" id="statNotes">0</span>
+              </div>
+              <div class="stat-card">
+                <span class="stat-label">总投票数</span>
+                <span class="stat-value" id="statVotes">0</span>
+              </div>
+              <div class="stat-card">
+                <span class="stat-label">行动项数</span>
+                <span class="stat-value" id="statActions">0</span>
+              </div>
+            </div>
+            <div class="review-content">
+              <div class="review-section">
+                <h3>热门便签 Top 5</h3>
+                <div id="topNotesList" class="ranked-list"></div>
+              </div>
+              <div class="review-section">
+                <h3>参与度统计</h3>
+                <div id="participationStats" class="participation-list"></div>
+              </div>
+              <div class="review-section">
+                <h3>任务进度</h3>
+                <div id="taskProgress" class="progress-list"></div>
+              </div>
+            </div>
+          </div>
+        </section>
+      </div>
+    </main>
+
+    <div class="modal-overlay" id="modalOverlay" style="display:none;">
+      <div class="modal" id="modal">
+        <div class="modal-header">
+          <h3 id="modalTitle">标题</h3>
+          <button type="button" class="modal-close" id="modalClose">&times;</button>
+        </div>
+        <div class="modal-body" id="modalBody"></div>
+        <div class="modal-footer" id="modalFooter"></div>
+      </div>
+    </div>
+
+    <script src="/config.js?v=TIMESTAMP"></script>
+    <script src="/app.js?v=TIMESTAMP"></script>
+  </body>
+</html>

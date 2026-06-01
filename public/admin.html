@@ -1,0 +1,306 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>管理后台 - 头脑风暴协作平台</title>
+    <link rel="stylesheet" href="/styles.css" />
+    <style>
+      .admin-container {
+        padding: 24px;
+        overflow-y: auto;
+        flex: 1;
+      }
+      .admin-header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        margin-bottom: 24px;
+      }
+      .admin-header h1 {
+        margin: 0;
+        font-size: 24px;
+      }
+      .stats-grid {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 16px;
+        margin-bottom: 24px;
+      }
+      .admin-table {
+        width: 100%;
+        border-collapse: collapse;
+        background: var(--bg-primary);
+        border-radius: var(--radius-lg);
+        overflow: hidden;
+      }
+      .admin-table th,
+      .admin-table td {
+        padding: 12px 16px;
+        text-align: left;
+        border-bottom: 1px solid var(--border);
+      }
+      .admin-table th {
+        background: var(--bg-secondary);
+        font-weight: 600;
+        font-size: 13px;
+        color: var(--text-secondary);
+      }
+      .admin-table tr:hover {
+        background: var(--bg-secondary);
+      }
+      .badge {
+        display: inline-block;
+        padding: 2px 8px;
+        border-radius: 999px;
+        font-size: 12px;
+        font-weight: 500;
+      }
+      .badge-success { background: #dcfce7; color: #166534; }
+      .badge-warning { background: #fef3c7; color: #92400e; }
+      .badge-info { background: #dbeafe; color: #1e40af; }
+      .badge-gray { background: var(--bg-tertiary); color: var(--text-secondary); }
+      .action-btn {
+        padding: 4px 8px;
+        font-size: 12px;
+        border: 1px solid var(--border);
+        border-radius: var(--radius-sm);
+        background: var(--bg-primary);
+        cursor: pointer;
+        margin-right: 4px;
+      }
+      .action-btn:hover {
+        background: var(--bg-secondary);
+      }
+      .action-btn.danger {
+        color: var(--danger);
+        border-color: #fecaca;
+      }
+      .section-title {
+        font-size: 16px;
+        font-weight: 600;
+        margin: 24px 0 16px;
+      }
+      .back-link {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        color: var(--primary);
+        text-decoration: none;
+        font-size: 14px;
+      }
+      .back-link:hover {
+        text-decoration: underline;
+      }
+    </style>
+  </head>
+  <body>
+    <main class="app-shell">
+      <header class="top-bar">
+        <div class="brand">
+          <svg viewBox="0 0 24 24" class="brand-icon">
+            <path fill="currentColor" d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16H5V5h14v14z"/>
+            <path fill="currentColor" d="M7 7h10v2H7zm0 4h10v2H7zm0 4h7v2H7z"/>
+          </svg>
+          <h1>管理后台</h1>
+        </div>
+        <div class="top-bar-actions">
+          <a href="/" class="back-link">返回前台</a>
+          <button type="button" id="refreshBtn" class="btn-secondary">刷新数据</button>
+        </div>
+      </header>
+
+      <div class="admin-container">
+        <div class="stats-grid" id="statsGrid">
+          <div class="stat-card">
+            <span class="stat-label">白板总数</span>
+            <span class="stat-value" id="totalBoards">0</span>
+          </div>
+          <div class="stat-card">
+            <span class="stat-label">便签总数</span>
+            <span class="stat-value" id="totalNotes">0</span>
+          </div>
+          <div class="stat-card">
+            <span class="stat-label">行动项总数</span>
+            <span class="stat-value" id="totalActions">0</span>
+          </div>
+          <div class="stat-card">
+            <span class="stat-label">参与人次</span>
+            <span class="stat-value" id="totalParticipants">0</span>
+          </div>
+        </div>
+
+        <h2 class="section-title">白板列表</h2>
+        <table class="admin-table">
+          <thead>
+            <tr>
+              <th>ID</th>
+              <th>标题</th>
+              <th>主题</th>
+              <th>状态</th>
+              <th>创建者</th>
+              <th>创建时间</th>
+              <th>操作</th>
+            </tr>
+          </thead>
+          <tbody id="boardsTableBody"></tbody>
+        </table>
+
+        <h2 class="section-title">用户列表</h2>
+        <table class="admin-table">
+          <thead>
+            <tr>
+              <th>ID</th>
+              <th>用户名</th>
+              <th>显示名</th>
+              <th>角色</th>
+              <th>创建时间</th>
+            </tr>
+          </thead>
+          <tbody id="usersTableBody"></tbody>
+        </table>
+
+        <h2 class="section-title">最近操作日志</h2>
+        <table class="admin-table">
+          <thead>
+            <tr>
+              <th>ID</th>
+              <th>白板ID</th>
+              <th>操作类型</th>
+              <th>操作者</th>
+              <th>时间</th>
+            </tr>
+          </thead>
+          <tbody id="historyTableBody"></tbody>
+        </table>
+      </div>
+    </main>
+
+    <script src="/config.js"></script>
+    <script>
+      const backendUrl = window.APP_CONFIG?.backendUrl || "http://127.0.0.1:53476";
+      
+      async function api(path, options = {}) {
+        const response = await fetch(`${backendUrl}${path}`, {
+          headers: { "Content-Type": "application/json", ...(options.headers || {}) },
+          ...options,
+        });
+        const text = await response.text();
+        const data = text ? JSON.parse(text) : null;
+        if (!response.ok) {
+          throw new Error(data?.error || `${response.status} ${response.statusText}`);
+        }
+        return data;
+      }
+
+      function escapeHtml(value) {
+        return String(value ?? "")
+          .replaceAll("&", "&amp;")
+          .replaceAll("<", "&lt;")
+          .replaceAll(">", "&gt;")
+          .replaceAll('"', "&quot;")
+          .replaceAll("'", "&#039;");
+      }
+
+      function getStatusBadge(status) {
+        const badges = {
+          setup: 'badge-info',
+          brainstorm: 'badge-success',
+          organize: 'badge-warning',
+          vote: 'badge-info',
+          output: 'badge-success',
+          review: 'badge-gray'
+        };
+        return `<span class="badge ${badges[status] || 'badge-gray'}">${status}</span>`;
+      }
+
+      async function loadStats() {
+        const res = await api("/api/boards/stats");
+        const data = res.data;
+        document.getElementById("totalBoards").textContent = data.total_boards;
+        document.getElementById("totalNotes").textContent = data.total_notes;
+        document.getElementById("totalActions").textContent = data.total_actions;
+        document.getElementById("totalParticipants").textContent = data.total_participants;
+      }
+
+      async function loadBoards() {
+        const res = await api("/api/boards");
+        const tbody = document.getElementById("boardsTableBody");
+        tbody.innerHTML = res.data.map(board => `
+          <tr>
+            <td>${board.id}</td>
+            <td><strong>${escapeHtml(board.title)}</strong></td>
+            <td>${escapeHtml(board.theme || "-")}</td>
+            <td>${getStatusBadge(board.status)}</td>
+            <td>${escapeHtml(board.created_by || "-")}</td>
+            <td>${escapeHtml(board.created_at || "-")}</td>
+            <td>
+              <button class="action-btn" onclick="window.open('/?board=${board.id}', '_blank')">查看</button>
+              <button class="action-btn danger" onclick="deleteBoard(${board.id})">删除</button>
+            </td>
+          </tr>
+        `).join("");
+      }
+
+      async function loadUsers() {
+        const res = await api("/api/users");
+        const tbody = document.getElementById("usersTableBody");
+        tbody.innerHTML = res.data.map(user => `
+          <tr>
+            <td>${user.id}</td>
+            <td>${escapeHtml(user.username)}</td>
+            <td>${escapeHtml(user.display_name || "-")}</td>
+            <td><span class="badge ${user.role === 'host' ? 'badge-info' : 'badge-gray'}">${user.role}</span></td>
+            <td>${escapeHtml(user.created_at || "-")}</td>
+          </tr>
+        `).join("");
+      }
+
+      async function loadHistory() {
+        const allHistory = [];
+        const boardsRes = await api("/api/boards");
+        for (const board of boardsRes.data) {
+          try {
+            const res = await api(`/api/boards/${board.id}/history`);
+            allHistory.push(...res.data.slice(0, 5));
+          } catch (e) {}
+        }
+        allHistory.sort((a, b) => new Date(b.created_at) - new Date(a.created_at));
+        
+        const tbody = document.getElementById("historyTableBody");
+        tbody.innerHTML = allHistory.slice(0, 20).map(h => `
+          <tr>
+            <td>${h.id}</td>
+            <td>${h.board_id}</td>
+            <td><code>${escapeHtml(h.operation)}</code></td>
+            <td>${escapeHtml(h.created_by || "-")}</td>
+            <td>${escapeHtml(h.created_at || "-")}</td>
+          </tr>
+        `).join("");
+      }
+
+      async function deleteBoard(id) {
+        if (!confirm(`确定要删除白板 #${id} 吗？此操作不可恢复。`)) return;
+        try {
+          await api(`/api/boards/${id}`, { method: "DELETE" });
+          loadAll();
+        } catch (e) {
+          alert("删除失败: " + e.message);
+        }
+      }
+
+      async function loadAll() {
+        await Promise.all([
+          loadStats(),
+          loadBoards(),
+          loadUsers(),
+          loadHistory()
+        ]);
+      }
+
+      document.getElementById("refreshBtn").onclick = loadAll;
+      
+      loadAll().catch(e => console.error(e));
+    </script>
+  </body>
+</html>
