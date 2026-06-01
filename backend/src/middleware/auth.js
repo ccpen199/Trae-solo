@@ -1,21 +1,20 @@
-const { error } = require('../utils/response');
-const { get } = require('../models/database');
+const jwt = require('jsonwebtoken');
 
-const auth = async (req, res, next) => {
-  const userId = req.headers['x-user-id'];
+const authMiddleware = (req, res, next) => {
+  const token = req.headers.authorization?.split(' ')[1];
   
-  if (!userId) {
-    return res.status(401).json(error('未登录，请先登录'));
+  if (!token) {
+    return res.status(401).json({ code: 401, message: '未登录' });
   }
 
-  const user = await get('SELECT * FROM users WHERE id = ?', [userId]);
-  
-  if (!user) {
-    return res.status(401).json(error('用户不存在'));
+  try {
+    const decoded = jwt.verify(token, process.env.JWT_SECRET);
+    req.userId = decoded.userId;
+    req.phone = decoded.phone;
+    next();
+  } catch (error) {
+    return res.status(401).json({ code: 401, message: '登录已过期' });
   }
-
-  req.user = user;
-  next();
 };
 
-module.exports = auth;
+module.exports = authMiddleware;

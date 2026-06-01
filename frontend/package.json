@@ -1,5 +1,5 @@
 {
-  "name": "commission-advance-frontend",
+  "name": "credit-h5-frontend",
   "version": "1.0.0",
   "type": "module",
   "scripts": {
@@ -8,16 +8,13 @@
     "preview": "vite preview"
   },
   "dependencies": {
-    "react": "^18.2.0",
-    "react-dom": "^18.2.0",
-    "react-router-dom": "^6.20.0",
-    "antd": "^5.12.0",
-    "axios": "^1.6.0",
-    "dayjs": "^1.11.10",
-    "@ant-design/icons": "^5.2.6"
+    "vue": "^3.3.8",
+    "vue-router": "^4.2.5",
+    "axios": "^1.6.2",
+    "vant": "^4.8.0"
   },
   "devDependencies": {
-    "@vitejs/plugin-react": "^4.2.0",
+    "@vitejs/plugin-vue": "^4.5.0",
     "vite": "^5.0.0"
   }
 }

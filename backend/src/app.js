@@ -1,35 +1,41 @@
 require('dotenv').config();
 const express = require('express');
 const cors = require('cors');
-const bodyParser = require('body-parser');
-const routes = require('./routes');
-const errorHandler = require('./middleware/errorHandler');
+const path = require('path');
+
+const { initDatabase } = require('./database/init');
+const whitelistRoutes = require('./routes/whitelist');
+const userRoutes = require('./routes/user');
+const commissionRoutes = require('./routes/commission');
+const creditRoutes = require('./routes/credit');
+const bankRoutes = require('./routes/bank');
+const advanceRoutes = require('./routes/advance');
 
 const app = express();
-const PORT = 48371;
+const PORT = process.env.PORT || 44837;
 
 app.use(cors({
-  origin: process.env.FRONTEND_URL || 'http://localhost:48372',
+  origin: [`http://localhost:${process.env.FRONTEND_PORT || 45837}`],
   credentials: true
 }));
 
-app.use(bodyParser.json({ limit: '10mb' }));
-app.use(bodyParser.urlencoded({ extended: true, limit: '10mb' }));
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 
-app.use('/api', routes);
+initDatabase();
 
-app.get('/health', (req, res) => {
-  res.json({ success: true, message: 'Commission Advance Service is running' });
-});
+app.use('/api/whitelist', whitelistRoutes);
+app.use('/api/user', userRoutes);
+app.use('/api/commission', commissionRoutes);
+app.use('/api/credit', creditRoutes);
+app.use('/api/bank', bankRoutes);
+app.use('/api/advance', advanceRoutes);
 
-app.use(errorHandler);
-
-app.use((req, res) => {
-  res.status(404).json({ success: false, message: '接口不存在' });
+app.get('/api/health', (req, res) => {
+  res.json({ code: 200, message: '服务运行正常', timestamp: new Date().toISOString() });
 });
 
 app.listen(PORT, () => {
-  console.log(`Server is running on http://localhost:${PORT}`);
+  console.log(`🚀 后端服务已启动: http://localhost:${PORT}`);
+  console.log(`📊 健康检查: http://localhost:${PORT}/api/health`);
 });
-
-module.exports = app;
