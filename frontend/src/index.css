@@ -1,0 +1,56 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+#root {
+  min-height: 100vh;
+}
+
+.page-header {
+  margin-bottom: 24px;
+}
+
+.card-shadow {
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.09);
+}
+
+.risk-warning {
+  background: #fff2e8;
+  border-left: 4px solid #fa8c16;
+  padding: 12px;
+  margin-bottom: 16px;
+}
+
+.risk-danger {
+  background: #fff1f0;
+  border-left: 4px solid #ff4d4f;
+  padding: 12px;
+  margin-bottom: 16px;
+}
+
+.stat-card {
+  text-align: center;
+  padding: 24px;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  border-radius: 8px;
+}
+
+.stat-card h3 {
+  color: white;
+  font-size: 32px;
+  margin-bottom: 8px;
+}
+
+.stat-card p {
+  color: rgba(255, 255, 255, 0.85);
+  margin: 0;
+}
