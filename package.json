@@ -1,0 +1,11 @@
+{
+  "name": "serious-dating-platform",
+  "version": "1.0.0",
+  "description": "严肃婚恋相亲平台",
+  "scripts": {
+    "install:all": "cd backend && npm install && cd ../frontend && npm install",
+    "start": "bash scripts/start.sh",
+    "start:backend": "cd backend && nohup npm start > ../backend.log 2>&1 &",
+    "start:frontend": "cd frontend && nohup npm run dev -- --host 127.0.0.1 --strictPort > ../frontend.log 2>&1 &"
+  }
+}
