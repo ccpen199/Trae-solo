@@ -1,0 +1,280 @@
+generator client {
+  provider = "prisma-client-js"
+  output   = "../src/generated/prisma"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = "file:../data/app.sqlite"
+}
+
+model User {
+  id        Int      @id @default(autoincrement())
+  username  String   @unique
+  password  String
+  name      String
+  role      String
+  phone     String?
+  email     String?
+  avatar    String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  customers       Customer[]
+  handledApps     QualificationApplication[] @relation("Handler")
+  processNodes    ProcessNode[]
+  assignedTodos   TodoItem[]                 @relation("Assignee")
+  createdTodos    TodoItem[]                 @relation("Creator")
+  uploadedMaterials CustomerMaterial[]
+}
+
+model Customer {
+  id                  Int                      @id @default(autoincrement())
+  name                String
+  unifiedSocialCode   String                   @unique
+  legalRepresentative String
+  contactPerson       String
+  contactPhone        String
+  address             String?
+  industry            String?
+  registeredCapital   Float?
+  establishedDate     DateTime?
+  userId              Int?
+  createdAt           DateTime                 @default(now())
+  updatedAt           DateTime                 @updatedAt
+
+  user              User?                       @relation(fields: [userId], references: [id])
+  applications      QualificationApplication[]
+  materials         CustomerMaterial[]
+  certificates      PersonnelCertificate[]
+  qualificationCerts QualificationCertificate[]
+}
+
+model QualificationProduct {
+  id                Int                     @id @default(autoincrement())
+  name              String
+  qualificationType String
+  region            String
+  estimatedCycle    Int
+  description       String?
+  price             Float?
+  isActive          Boolean                 @default(true)
+  createdAt         DateTime                @default(now())
+  updatedAt         DateTime                @updatedAt
+
+  personnelRequirements   PersonnelRequirement[]
+  performanceRequirements PerformanceRequirement[]
+  materialTemplates       MaterialTemplate[]
+  applications            QualificationApplication[]
+}
+
+model PersonnelRequirement {
+  id             Int      @id @default(autoincrement())
+  productId      Int
+  certificateType String
+  count          Int
+  level          String?
+  position       String?
+  workExperience Int?
+  description    String?
+  createdAt      DateTime @default(now())
+
+  product QualificationProduct @relation(fields: [productId], references: [id], onDelete: Cascade)
+}
+
+model PerformanceRequirement {
+  id           Int      @id @default(autoincrement())
+  productId    Int
+  projectType  String
+  projectCount Int
+  amount       Float?
+  description  String?
+  createdAt    DateTime @default(now())
+
+  product QualificationProduct @relation(fields: [productId], references: [id], onDelete: Cascade)
+}
+
+model MaterialTemplate {
+  id           Int      @id @default(autoincrement())
+  productId    Int
+  name         String
+  type         String
+  description  String?
+  isRequired   Boolean  @default(true)
+  templatePath String?
+  exampleUrl   String?
+  createdAt    DateTime @default(now())
+
+  product QualificationProduct @relation(fields: [productId], references: [id], onDelete: Cascade)
+  materials CustomerMaterial[]
+}
+
+model QualificationApplication {
+  id             Int                 @id @default(autoincrement())
+  customerId     Int
+  productId      Int
+  applicationNo  String              @unique
+  status         String   @default("DRAFT")
+  currentNode    String?
+  planStartDate  DateTime?
+  planEndDate    DateTime?
+  actualStartDate DateTime?
+  actualEndDate  DateTime?
+  agentId        Int?
+  handleBy       Int?
+  remark         String?
+  createdAt      DateTime            @default(now())
+  updatedAt      DateTime            @updatedAt
+
+  customer      Customer               @relation(fields: [customerId], references: [id], onDelete: Cascade)
+  product       QualificationProduct   @relation(fields: [productId], references: [id], onDelete: Cascade)
+  handler       User?                  @relation("Handler", fields: [handleBy], references: [id], onDelete: SetNull)
+  processNodes  ProcessNode[]
+  certificates  PersonnelCertificate[]
+  qualificationCert QualificationCertificate?
+  todoItems     TodoItem[]
+}
+
+model ProcessNode {
+  id            Int       @id @default(autoincrement())
+  applicationId Int
+  nodeType      String
+  nodeName      String
+  status        String
+  operatorId    Int?
+  handleDate    DateTime?
+  remark        String?
+  rejectReason  String?
+  createdAt     DateTime  @default(now())
+
+  application QualificationApplication @relation(fields: [applicationId], references: [id], onDelete: Cascade)
+  operator    User?                     @relation(fields: [operatorId], references: [id], onDelete: SetNull)
+}
+
+model CustomerMaterial {
+  id         Int            @id @default(autoincrement())
+  customerId Int
+  templateId Int?
+  name       String
+  type       String
+  fileUrl    String
+  fileSize   Float?
+  fileType   String?
+  status     String @default("PENDING")
+  expireDate DateTime?
+  uploaderId Int?
+  remark     String?
+  createdAt  DateTime       @default(now())
+  updatedAt  DateTime       @updatedAt
+
+  customer Customer         @relation(fields: [customerId], references: [id], onDelete: Cascade)
+  template MaterialTemplate? @relation(fields: [templateId], references: [id], onDelete: SetNull)
+  uploader User?            @relation(fields: [uploaderId], references: [id], onDelete: SetNull)
+}
+
+model PersonnelCertificate {
+  id              Int                      @id @default(autoincrement())
+  customerId      Int
+  applicationId   Int?
+  name            String
+  idCard          String
+  certificateType String
+  certificateNo   String
+  position        String?
+  professionalTitle String?
+  issueDate       DateTime
+  expireDate      DateTime
+  issuingAuthority String?
+  fileUrl         String?
+  status          String                   @default("VALID")
+  isOccupied      Boolean                  @default(false)
+  createdAt       DateTime                 @default(now())
+  updatedAt       DateTime                 @updatedAt
+
+  customer        Customer                 @relation(fields: [customerId], references: [id], onDelete: Cascade)
+  application     QualificationApplication? @relation(fields: [applicationId], references: [id], onDelete: SetNull)
+  continuingEducation ContinuingEducation[]
+}
+
+model QualificationCertificate {
+  id               Int                @id @default(autoincrement())
+  customerId       Int
+  applicationId    Int                @unique
+  certificateNo    String             @unique
+  certificateName  String
+  qualificationType String
+  issueDate        DateTime
+  expireDate       DateTime
+  issuingAuthority String?
+  issuerId         Int?
+  status           String  @default("VALID")
+  fileUrl          String?
+  createdAt        DateTime           @default(now())
+  updatedAt        DateTime           @updatedAt
+
+  customer          Customer          @relation(fields: [customerId], references: [id], onDelete: Cascade)
+  application       QualificationApplication @relation(fields: [applicationId], references: [id], onDelete: Cascade)
+  annualInspections AnnualInspection[]
+  renewalRecords    RenewalRecord[]
+}
+
+model AnnualInspection {
+  id             Int      @id @default(autoincrement())
+  certificateId  Int
+  year           Int
+  inspectionDate DateTime?
+  result         String?
+  fileUrl        String?
+  remark         String?
+  createdAt      DateTime @default(now())
+
+  certificate QualificationCertificate @relation(fields: [certificateId], references: [id], onDelete: Cascade)
+}
+
+model RenewalRecord {
+  id             Int      @id @default(autoincrement())
+  certificateId  Int
+  oldExpireDate  DateTime
+  newExpireDate  DateTime
+  renewalDate    DateTime?
+  status         String
+  fileUrl        String?
+  remark         String?
+  createdAt      DateTime @default(now())
+
+  certificate QualificationCertificate @relation(fields: [certificateId], references: [id], onDelete: Cascade)
+}
+
+model ContinuingEducation {
+  id              Int      @id @default(autoincrement())
+  certificateId   Int
+  personnelName   String?
+  courseName      String
+  studyHours      Int?
+  completionDate  DateTime?
+  result          String?
+  fileUrl         String?
+  createdAt       DateTime @default(now())
+
+  certificate PersonnelCertificate @relation(fields: [certificateId], references: [id], onDelete: Cascade)
+}
+
+model TodoItem {
+  id            Int        @id @default(autoincrement())
+  title         String
+  description   String?
+  type          String
+  status        String @default("PENDING")
+  priority      String?
+  applicationId Int?
+  assigneeId    Int?
+  creatorId     Int?
+  dueDate       DateTime?
+  completedDate DateTime?
+  createdAt     DateTime   @default(now())
+  updatedAt     DateTime   @updatedAt
+
+  application QualificationApplication? @relation(fields: [applicationId], references: [id], onDelete: Cascade)
+  assignee    User?                     @relation("Assignee", fields: [assigneeId], references: [id], onDelete: SetNull)
+  creator     User?                     @relation("Creator", fields: [creatorId], references: [id], onDelete: SetNull)
+}
