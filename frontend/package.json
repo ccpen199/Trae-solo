@@ -1,0 +1,22 @@
+{
+  "name": "jobmatch-frontend",
+  "private": true,
+  "version": "1.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite --host 127.0.0.1 --strictPort >> ../frontend.log 2>&1",
+    "build": "vite build",
+    "preview": "vite preview --host 127.0.0.1 --strictPort --port $FRONTEND_PORT >> ../frontend.log 2>&1"
+  },
+  "dependencies": {
+    "axios": "^1.6.7",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "react-router-dom": "^6.22.3",
+    "socket.io-client": "^4.7.4"
+  },
+  "devDependencies": {
+    "@vitejs/plugin-react": "^4.2.1",
+    "vite": "^5.1.6"
+  }
+}
