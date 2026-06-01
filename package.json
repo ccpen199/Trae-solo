@@ -1,0 +1,17 @@
+{
+  "name": "ssl-cert-manager",
+  "version": "1.0.0",
+  "description": "SSL证书管理系统 - 域名与证书全生命周期管理平台",
+  "scripts": {
+    "install:all": "cd backend && npm install && cd ../frontend && npm install",
+    "init:db": "cd backend && npm run init-db && npm run seed",
+    "dev:backend": "cd backend && npm run dev",
+    "dev:frontend": "cd frontend && npm run dev",
+    "start:backend": "cd backend && npm start",
+    "start:frontend": "cd frontend && npm run dev",
+    "test": "cd backend && npm test"
+  },
+  "keywords": ["ssl", "certificate", "domain", "management"],
+  "author": "",
+  "license": "MIT"
+}

@@ -1,0 +1,272 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+  background-color: #f5f7fa;
+}
+
+#app {
+  min-height: 100vh;
+}
+
+.page-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.page-title {
+  font-size: 20px;
+  font-weight: 600;
+  color: #303133;
+}
+
+.status-tag {
+  padding: 4px 12px;
+  border-radius: 4px;
+  font-size: 12px;
+}
+
+.status-valid {
+  background-color: #f0f9eb;
+  color: #67c23a;
+}
+
+.status-expiring {
+  background-color: #fdf6ec;
+  color: #e6a23c;
+}
+
+.status-expired {
+  background-color: #fef0f0;
+  color: #f56c6c;
+}
+
+.status-pending {
+  background-color: #f4f4f5;
+  color: #909399;
+}
+
+.status-in-progress {
+  background-color: #ecf5ff;
+  color: #409eff;
+}
+
+.status-failed {
+  background-color: #fef0f0;
+  color: #f56c6c;
+}
+
+.status-completed {
+  background-color: #f0f9eb;
+  color: #67c23a;
+}
+
+.priority-high {
+  background-color: #fef0f0;
+  color: #f56c6c;
+}
+
+.priority-medium {
+  background-color: #fdf6ec;
+  color: #e6a23c;
+}
+
+.priority-low {
+  background-color: #f0f9eb;
+  color: #67c23a;
+}
+
+.days-badge {
+  padding: 2px 8px;
+  border-radius: 10px;
+  font-size: 12px;
+  font-weight: 500;
+}
+
+.days-critical {
+  background-color: #f56c6c;
+  color: white;
+}
+
+.days-warning {
+  background-color: #e6a23c;
+  color: white;
+}
+
+.days-normal {
+  background-color: #67c23a;
+  color: white;
+}
+
+.card-stats {
+  text-align: center;
+  padding: 20px;
+}
+
+.card-stats .stat-value {
+  font-size: 32px;
+  font-weight: 700;
+  margin-bottom: 8px;
+}
+
+.card-stats .stat-label {
+  font-size: 14px;
+  color: #909399;
+}
+
+.risk-card {
+  margin-bottom: 20px;
+}
+
+.risk-card .el-card__header {
+  font-weight: 600;
+}
+
+.risk-item {
+  padding: 12px;
+  border-bottom: 1px solid #ebeef5;
+}
+
+.risk-item:last-child {
+  border-bottom: none;
+}
+
+.el-table {
+  font-size: 14px;
+}
+
+.el-table .cell {
+  line-height: 22px;
+}
+
+.filter-bar {
+  margin-bottom: 16px;
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+  align-items: center;
+}
+
+.dialog-form {
+  .el-form-item {
+    margin-bottom: 18px;
+  }
+}
+
+.detail-item {
+  display: flex;
+  padding: 12px 0;
+  border-bottom: 1px solid #ebeef5;
+}
+
+.detail-item:last-child {
+  border-bottom: none;
+}
+
+.detail-label {
+  width: 120px;
+  color: #909399;
+  flex-shrink: 0;
+}
+
+.detail-value {
+  flex: 1;
+  color: #303133;
+}
+
+.log-item {
+  padding: 16px;
+  border-bottom: 1px solid #ebeef5;
+}
+
+.log-item:last-child {
+  border-bottom: none;
+}
+
+.log-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 8px;
+}
+
+.log-type {
+  font-weight: 600;
+  color: #409eff;
+}
+
+.log-time {
+  font-size: 12px;
+  color: #909399;
+}
+
+.log-content {
+  color: #606266;
+  margin-bottom: 8px;
+}
+
+.log-operator {
+  font-size: 12px;
+  color: #909399;
+}
+
+.task-steps {
+  padding: 20px 0;
+}
+
+.task-step {
+  display: flex;
+  margin-bottom: 16px;
+}
+
+.step-number {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 600;
+  margin-right: 12px;
+  flex-shrink: 0;
+}
+
+.step-number.completed {
+  background-color: #67c23a;
+  color: white;
+}
+
+.step-number.in-progress {
+  background-color: #409eff;
+  color: white;
+}
+
+.step-number.pending {
+  background-color: #c0c4cc;
+  color: white;
+}
+
+.step-number.failed {
+  background-color: #f56c6c;
+  color: white;
+}
+
+.step-content {
+  flex: 1;
+}
+
+.step-title {
+  font-weight: 600;
+  margin-bottom: 4px;
+}
+
+.step-status {
+  font-size: 12px;
+  color: #909399;
+}
