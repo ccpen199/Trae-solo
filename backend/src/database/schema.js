@@ -1,0 +1,148 @@
+const createTables = `
+CREATE TABLE IF NOT EXISTS cities (
+  id INTEGER PRIMARY KEY AUTOINCREMENT,
+  name VARCHAR(50) NOT NULL,
+  code VARCHAR(20) NOT NULL UNIQUE,
+  pinyin VARCHAR(100),
+  is_hot BOOLEAN DEFAULT 0,
+  sort_order INTEGER DEFAULT 0,
+  created_at DATETIME DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE TABLE IF NOT EXISTS users (
+  id INTEGER PRIMARY KEY AUTOINCREMENT,
+  phone VARCHAR(20) UNIQUE,
+  username VARCHAR(50),
+  nickname VARCHAR(50),
+  avatar VARCHAR(255),
+  password VARCHAR(255),
+  gender INTEGER DEFAULT 0,
+  city_id INTEGER,
+  created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+  updated_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+  FOREIGN KEY (city_id) REFERENCES cities(id)
+);
+
+CREATE TABLE IF NOT EXISTS movies (
+  id INTEGER PRIMARY KEY AUTOINCREMENT,
+  title VARCHAR(100) NOT NULL,
+  original_title VARCHAR(100),
+  poster VARCHAR(255),
+  backdrop VARCHAR(255),
+  rating DECIMAL(3,1) DEFAULT 0,
+  rating_count INTEGER DEFAULT 0,
+  wish_count INTEGER DEFAULT 0,
+  release_date DATE,
+  duration INTEGER,
+  description TEXT,
+  director VARCHAR(100),
+  actors TEXT,
+  genres VARCHAR(200),
+  country VARCHAR(50),
+  language VARCHAR(50),
+  status INTEGER DEFAULT 1,
+  is_showing BOOLEAN DEFAULT 1,
+  created_at DATETIME DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE TABLE IF NOT EXISTS cinemas (
+  id INTEGER PRIMARY KEY AUTOINCREMENT,
+  name VARCHAR(100) NOT NULL,
+  address VARCHAR(255),
+  phone VARCHAR(50),
+  city_id INTEGER,
+  district VARCHAR(50),
+  business_area VARCHAR(100),
+  latitude DECIMAL(10,6),
+  longitude DECIMAL(10,6),
+  features VARCHAR(200),
+  min_price DECIMAL(10,2) DEFAULT 0,
+  rating DECIMAL(3,1) DEFAULT 0,
+  created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+  FOREIGN KEY (city_id) REFERENCES cities(id)
+);
+
+CREATE TABLE IF NOT EXISTS halls (
+  id INTEGER PRIMARY KEY AUTOINCREMENT,
+  cinema_id INTEGER NOT NULL,
+  name VARCHAR(50) NOT NULL,
+  type VARCHAR(50),
+  seats_count INTEGER DEFAULT 0,
+  rows INTEGER DEFAULT 0,
+  cols INTEGER DEFAULT 0,
+  created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+  FOREIGN KEY (cinema_id) REFERENCES cinemas(id)
+);
+
+CREATE TABLE IF NOT EXISTS seats (
+  id INTEGER PRIMARY KEY AUTOINCREMENT,
+  hall_id INTEGER NOT NULL,
+  row_num INTEGER NOT NULL,
+  col_num INTEGER NOT NULL,
+  seat_code VARCHAR(20),
+  seat_type INTEGER DEFAULT 1,
+  is_available BOOLEAN DEFAULT 1,
+  created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+  FOREIGN KEY (hall_id) REFERENCES halls(id)
+);
+
+CREATE TABLE IF NOT EXISTS schedules (
+  id INTEGER PRIMARY KEY AUTOINCREMENT,
+  movie_id INTEGER NOT NULL,
+  cinema_id INTEGER NOT NULL,
+  hall_id INTEGER NOT NULL,
+  start_time DATETIME NOT NULL,
+  end_time DATETIME NOT NULL,
+  language VARCHAR(50),
+  dimension VARCHAR(20),
+  price DECIMAL(10,2) NOT NULL,
+  status INTEGER DEFAULT 1,
+  created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+  FOREIGN KEY (movie_id) REFERENCES movies(id),
+  FOREIGN KEY (cinema_id) REFERENCES cinemas(id),
+  FOREIGN KEY (hall_id) REFERENCES halls(id)
+);
+
+CREATE TABLE IF NOT EXISTS orders (
+  id INTEGER PRIMARY KEY AUTOINCREMENT,
+  order_no VARCHAR(50) UNIQUE NOT NULL,
+  user_id INTEGER NOT NULL,
+  schedule_id INTEGER NOT NULL,
+  seats TEXT NOT NULL,
+  seats_count INTEGER NOT NULL,
+  total_amount DECIMAL(10,2) NOT NULL,
+  status INTEGER DEFAULT 0,
+  pay_time DATETIME,
+  cancel_time DATETIME,
+  ticket_code VARCHAR(50),
+  created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+  updated_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+  FOREIGN KEY (user_id) REFERENCES users(id),
+  FOREIGN KEY (schedule_id) REFERENCES schedules(id)
+);
+
+CREATE TABLE IF NOT EXISTS reviews (
+  id INTEGER PRIMARY KEY AUTOINCREMENT,
+  movie_id INTEGER NOT NULL,
+  user_id INTEGER NOT NULL,
+  rating DECIMAL(3,1) NOT NULL,
+  content TEXT,
+  likes_count INTEGER DEFAULT 0,
+  is_wish BOOLEAN DEFAULT 0,
+  created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+  FOREIGN KEY (movie_id) REFERENCES movies(id),
+  FOREIGN KEY (user_id) REFERENCES users(id)
+);
+
+CREATE TABLE IF NOT EXISTS banners (
+  id INTEGER PRIMARY KEY AUTOINCREMENT,
+  title VARCHAR(100),
+  image_url VARCHAR(255) NOT NULL,
+  link_url VARCHAR(255),
+  sort_order INTEGER DEFAULT 0,
+  status INTEGER DEFAULT 1,
+  created_at DATETIME DEFAULT CURRENT_TIMESTAMP
+);
+`;
+
+module.exports = createTables;
