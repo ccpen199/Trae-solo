@@ -1,0 +1,13 @@
+{
+  "name": "park-merchant-system",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "install:all": "npm install && cd frontend && npm install && cd ../backend && npm install",
+    "dev": "npm run dev:backend && npm run dev:frontend",
+    "dev:frontend": "cd frontend && npm run dev",
+    "dev:backend": "cd backend && npm run dev",
+    "start:frontend": "cd frontend && nohup npm run dev > ../frontend.log 2>&1 &",
+    "start:backend": "cd backend && nohup npm run dev > ../backend.log 2>&1 &"
+  }
+}
