@@ -1,0 +1,171 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html, body {
+  height: 100%;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+}
+
+#app {
+  height: 100%;
+}
+
+.page-container {
+  background: #fff;
+  border-radius: 8px;
+  padding: 20px;
+  margin-bottom: 20px;
+}
+
+.page-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.page-title {
+  font-size: 20px;
+  font-weight: 600;
+  color: #303133;
+}
+
+.stat-card {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  border-radius: 8px;
+  padding: 20px;
+  color: #fff;
+}
+
+.stat-card.danger {
+  background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+}
+
+.stat-card.warning {
+  background: linear-gradient(135deg, #fa709a 0%, #fee140 100%);
+}
+
+.stat-card.success {
+  background: linear-gradient(135deg, #a8edea 0%, #fed6e3 100%);
+}
+
+.stat-card.info {
+  background: linear-gradient(135deg, #5ee7df 0%, #b490ca 100%);
+}
+
+.stat-value {
+  font-size: 32px;
+  font-weight: 700;
+  margin-bottom: 8px;
+}
+
+.stat-label {
+  font-size: 14px;
+  opacity: 0.9;
+}
+
+.section-title {
+  font-size: 16px;
+  font-weight: 600;
+  margin: 16px 0;
+  color: #303133;
+  border-left: 4px solid #e53935;
+  padding-left: 12px;
+}
+
+.detail-row {
+  display: flex;
+  gap: 24px;
+  margin-bottom: 12px;
+}
+
+.detail-item {
+  display: flex;
+  gap: 8px;
+}
+
+.detail-label {
+  color: #909399;
+  min-width: 80px;
+}
+
+.detail-value {
+  color: #303133;
+  font-weight: 500;
+}
+
+.magnitude-high {
+  color: #f56c6c;
+  font-weight: 700;
+}
+
+.status-tag {
+  padding: 4px 12px;
+  border-radius: 4px;
+  font-size: 12px;
+  font-weight: 500;
+}
+
+.status-pending {
+  background: #fdf6ec;
+  color: #e6a23c;
+}
+
+.status-processing {
+  background: #ecf5ff;
+  color: #409eff;
+}
+
+.status-completed {
+  background: #f0f9eb;
+  color: #67c23a;
+}
+
+.status-cancelled {
+  background: #f4f4f5;
+  color: #909399;
+}
+
+.risk-high {
+  color: #f56c6c;
+}
+
+.risk-medium {
+  color: #e6a23c;
+}
+
+.risk-low {
+  color: #67c23a;
+}
+
+.card-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  gap: 16px;
+}
+
+:deep(.el-table) {
+  font-size: 13px;
+}
+
+:deep(.el-card__body) {
+  padding: 16px;
+}
+
+.filter-bar {
+  display: flex;
+  gap: 12px;
+  margin-bottom: 16px;
+  flex-wrap: wrap;
+  align-items: center;
+}
+
+.action-bar {
+  display: flex;
+  gap: 12px;
+  margin-bottom: 16px;
+  justify-content: flex-end;
+}
