@@ -1,0 +1,17 @@
+{
+  "name": "labor-arbitration-system",
+  "version": "1.0.0",
+  "description": "劳动仲裁案件管理系统",
+  "scripts": {
+    "install:all": "cd backend && npm install && cd ../frontend && npm install",
+    "dev": "concurrently \"npm run dev:backend\" \"npm run dev:frontend\"",
+    "dev:backend": "cd backend && node server.js >> backend.log 2>&1 &",
+    "dev:frontend": "cd frontend && npm run dev >> frontend.log 2>&1 &"
+  },
+  "keywords": ["labor", "arbitration", "case-management"],
+  "author": "",
+  "license": "MIT",
+  "devDependencies": {
+    "concurrently": "^8.2.2"
+  }
+}
