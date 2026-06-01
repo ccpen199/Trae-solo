@@ -1,0 +1,13 @@
+{
+  "name": "bus-dispatch-frontend",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "vite --host 127.0.0.1",
+    "start": "vite --host 127.0.0.1"
+  },
+  "dependencies": {
+    "vite": "^7.1.0"
+  }
+}

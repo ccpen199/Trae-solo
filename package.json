@@ -1,0 +1,14 @@
+{
+  "name": "bus-dispatch-platform",
+  "version": "1.0.0",
+  "private": true,
+  "description": "公交调度本地全栈服务",
+  "scripts": {
+    "install:all": "npm install --prefix backend && npm install --prefix frontend",
+    "start": "./scripts/start.sh",
+    "stop": "./scripts/stop.sh",
+    "check": "./scripts/check.sh",
+    "seed": "cd backend && node server.js --seed-only"
+  },
+  "license": "MIT"
+}
