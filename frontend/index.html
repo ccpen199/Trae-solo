@@ -1,0 +1,361 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>医疗科研病例队列管理平台</title>
+    <link rel="stylesheet" href="/styles.css">
+  </head>
+  <body>
+    <header class="topbar">
+      <div>
+        <p class="eyebrow">Medical Cohort System</p>
+        <h1>医疗科研病例队列管理平台</h1>
+      </div>
+      <div class="user-info">
+        <span class="role-badge">研究助理</span>
+        <span class="role-badge">质控员</span>
+        <button id="refreshButton" type="button">刷新</button>
+      </div>
+    </header>
+
+    <nav class="main-nav">
+      <button class="nav-btn active" data-page="dashboard">控制台</button>
+      <button class="nav-btn" data-page="projects">研究项目</button>
+      <button class="nav-btn" data-page="screening">病例筛选</button>
+      <button class="nav-btn" data-page="patients">病例管理</button>
+      <button class="nav-btn" data-page="followup">随访任务</button>
+      <button class="nav-btn" data-page="quality">数据质控</button>
+      <button class="nav-btn" data-page="export">脱敏导出</button>
+    </nav>
+
+    <main>
+      <section class="status-strip" aria-live="polite">
+        <span id="serviceState" class="state-dot"></span>
+        <span id="serviceText">正在连接服务...</span>
+      </section>
+
+      <div id="page-dashboard" class="page active">
+        <section class="metrics" id="metrics"></section>
+        <div class="page-header">
+          <h2>快捷操作</h2>
+        </div>
+        <div class="quick-actions">
+          <button class="nav-btn small-btn" data-page="screening">病例筛选</button>
+          <button class="nav-btn small-btn" data-page="followup">随访任务</button>
+          <button class="nav-btn small-btn" data-page="quality">数据质控</button>
+          <button class="nav-btn small-btn" data-page="export">脱敏导出</button>
+        </div>
+        <section class="workspace">
+          <div class="panel">
+            <div class="panel-header">
+              <h2>随访任务</h2>
+              <select id="statusFilter" aria-label="随访状态筛选">
+                <option value="">全部状态</option>
+                <option value="pending">待随访</option>
+                <option value="overdue">已逾期</option>
+                <option value="completed">已完成</option>
+                <option value="cancelled">已取消</option>
+              </select>
+            </div>
+            <div class="table-wrap">
+              <table>
+                <thead>
+                  <tr>
+                    <th>计划日期</th>
+                    <th>受试者</th>
+                    <th>项目</th>
+                    <th>访视</th>
+                    <th>窗口期</th>
+                    <th>状态</th>
+                    <th>操作</th>
+                  </tr>
+                </thead>
+                <tbody id="taskRows"></tbody>
+              </table>
+            </div>
+          </div>
+          <aside class="panel side-panel">
+            <div class="panel-header">
+              <h2>病例队列</h2>
+            </div>
+            <div id="patientList" class="patient-list"></div>
+          </aside>
+        </section>
+      </div>
+
+      <div id="page-projects" class="page">
+        <div class="page-header">
+          <h2>研究项目</h2>
+          <button id="addProjectBtn" type="button" class="primary-btn">新建项目</button>
+        </div>
+        <div class="panel">
+          <div class="table-wrap">
+            <table>
+              <thead>
+                <tr>
+                  <th>项目编号</th>
+                  <th>项目名称</th>
+                  <th>主要研究者</th>
+                  <th>疾病领域</th>
+                  <th>伦理批件号</th>
+                  <th>状态</th>
+                  <th>目标入组</th>
+                  <th>已入组</th>
+                  <th>操作</th>
+                </tr>
+              </thead>
+              <tbody id="projectRows"></tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <div id="page-screening" class="page">
+        <div class="page-header">
+          <h2>病例筛选</h2>
+        </div>
+        <div class="panel">
+          <div class="filter-bar">
+            <select id="screenProject" class="filter-select" aria-label="研究项目">
+              <option value="">选择研究项目</option>
+            </select>
+            <input id="diagnosisFilter" class="filter-input" type="text" placeholder="诊断关键词">
+            <input id="dateFrom" type="date" aria-label="诊断日期起">
+            <input id="dateTo" type="date" aria-label="诊断日期止">
+            <button id="searchBtn" type="button">搜索</button>
+          </div>
+          <div class="table-wrap">
+            <table>
+              <thead>
+                <tr>
+                  <th><input type="checkbox" id="selectAll" aria-label="全选"></th>
+                  <th>编号</th>
+                  <th>姓名</th>
+                  <th>诊断</th>
+                  <th>诊断日期</th>
+                  <th>年龄</th>
+                  <th>筛选状态</th>
+                  <th>操作</th>
+                </tr>
+              </thead>
+              <tbody id="candidateRows"></tbody>
+            </table>
+          </div>
+          <div class="action-bar">
+            <button id="batchEnrollBtn" type="button" class="primary-btn">批量入组</button>
+            <button id="batchExcludeBtn" type="button" class="secondary-btn">批量排除</button>
+          </div>
+        </div>
+      </div>
+
+      <div id="page-patients" class="page">
+        <div class="page-header">
+          <h2>病例管理</h2>
+        </div>
+        <div class="panel">
+          <div class="table-wrap">
+            <table>
+              <thead>
+                <tr>
+                  <th>编号</th>
+                  <th>姓名</th>
+                  <th>性别</th>
+                  <th>诊断</th>
+                  <th>所属项目</th>
+                  <th>入组状态</th>
+                  <th>入组日期</th>
+                  <th>操作</th>
+                </tr>
+              </thead>
+              <tbody id="patientRows"></tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <div id="page-patientDetail" class="page">
+        <div class="page-header">
+          <button id="backToList" type="button" class="back-btn">&#8592; 返回病例列表</button>
+        </div>
+        <div class="panel patient-detail">
+          <div class="patient-info-card patient-basic">
+            <h3 id="detailPatientName"></h3>
+            <p>编号 <span id="detailPatientCode"></span></p>
+            <p>性别 <span id="detailPatientGender"></span></p>
+            <p>出生日期 <span id="detailPatientBirth"></span></p>
+            <p>诊断 <span id="detailPatientDiagnosis"></span></p>
+            <p>联系电话 <span id="detailPatientPhone"></span></p>
+          </div>
+          <div class="panel-header detail-tabs">
+            <button class="tab-btn active" data-tab="baseline">基线数据</button>
+            <button class="tab-btn" data-tab="lab">检验检查</button>
+            <button class="tab-btn" data-tab="treatment">治疗过程</button>
+            <button class="tab-btn" data-tab="surgery">手术记录</button>
+            <button class="tab-btn" data-tab="outcome">结局事件</button>
+            <button class="tab-btn" data-tab="attachment">附件</button>
+            <button class="tab-btn" data-tab="followup">随访记录</button>
+          </div>
+          <div id="tab-baseline" class="tab-pane active"></div>
+          <div id="tab-lab" class="tab-pane"></div>
+          <div id="tab-treatment" class="tab-pane"></div>
+          <div id="tab-surgery" class="tab-pane"></div>
+          <div id="tab-outcome" class="tab-pane"></div>
+          <div id="tab-attachment" class="tab-pane"></div>
+          <div id="tab-followup" class="tab-pane"></div>
+        </div>
+      </div>
+
+      <div id="page-followup" class="page">
+        <div class="page-header">
+          <h2>随访任务</h2>
+          <select id="followStatusFilter" aria-label="随访状态筛选">
+            <option value="">全部</option>
+            <option value="pending">待随访</option>
+            <option value="overdue">已逾期</option>
+            <option value="completed">已完成</option>
+            <option value="cancelled">已取消</option>
+            <option value="lost">失访</option>
+            <option value="dead">死亡</option>
+            <option value="withdrawn">撤回</option>
+            <option value="missed">补访</option>
+          </select>
+        </div>
+        <div class="panel">
+          <div class="table-wrap">
+            <table>
+              <thead>
+                <tr>
+                  <th>计划日期</th>
+                  <th>受试者</th>
+                  <th>项目</th>
+                  <th>访视名称</th>
+                  <th>窗口期</th>
+                  <th>状态</th>
+                  <th>操作</th>
+                </tr>
+              </thead>
+              <tbody id="followupTaskRows"></tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <div id="page-quality" class="page">
+        <div class="page-header">
+          <h2>数据质控</h2>
+          <button id="runQcBtn" type="button" class="primary-btn">执行质控检查</button>
+        </div>
+        <section id="qcMetrics" class="metrics"></section>
+        <div class="panel">
+          <div class="panel-header">
+            <h2>质控问题</h2>
+          </div>
+          <div class="table-wrap">
+            <table>
+              <thead>
+                <tr>
+                  <th>问题类型</th>
+                  <th>描述</th>
+                  <th>相关病例</th>
+                  <th>字段</th>
+                  <th>严重程度</th>
+                  <th>状态</th>
+                  <th>操作</th>
+                </tr>
+              </thead>
+              <tbody id="qcRows"></tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <div id="page-export" class="page">
+        <div class="page-header">
+          <h2>脱敏导出</h2>
+        </div>
+        <div class="panel">
+          <div class="panel-header">
+            <h2>导出配置</h2>
+          </div>
+          <form id="exportForm" class="export-form">
+            <div class="form-group">
+              <label>项目</label>
+              <select id="exportProject">
+                <option value="">全部项目</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label>导出内容</label>
+              <div class="checkbox-group">
+                <label><input type="checkbox" name="content" value="baseline"> 基线</label>
+                <label><input type="checkbox" name="content" value="lab"> 检验</label>
+                <label><input type="checkbox" name="content" value="treatment"> 治疗</label>
+                <label><input type="checkbox" name="content" value="followup"> 随访</label>
+                <label><input type="checkbox" name="content" value="outcome"> 结局</label>
+              </div>
+            </div>
+            <div class="checkbox-group">
+              <label><input type="checkbox" id="maskData"> 脱敏</label>
+              <label><input type="checkbox" id="includeQcReport"> 含质控报告</label>
+            </div>
+            <button type="submit" class="primary-btn">生成导出</button>
+          </form>
+        </div>
+        <div class="panel" style="margin-top: 18px;">
+          <div class="panel-header">
+            <h2>导出记录</h2>
+          </div>
+          <div class="table-wrap">
+            <table>
+              <thead>
+                <tr>
+                  <th>时间</th>
+                  <th>文件名</th>
+                  <th>记录数</th>
+                  <th>脱敏</th>
+                  <th>操作人</th>
+                  <th>操作</th>
+                </tr>
+              </thead>
+              <tbody id="exportRows"></tbody>
+            </table>
+          </div>
+        </div>
+        <div class="panel" style="margin-top: 18px;">
+          <div class="panel-header">
+            <h2>审计日志</h2>
+          </div>
+          <div class="table-wrap">
+            <table>
+              <thead>
+                <tr>
+                  <th>时间</th>
+                  <th>操作人</th>
+                  <th>模块</th>
+                  <th>操作</th>
+                  <th>详情</th>
+                  <th>IP</th>
+                </tr>
+              </thead>
+              <tbody id="auditRows"></tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </main>
+
+    <div id="modal" class="modal-overlay hidden">
+      <div class="modal">
+        <div class="modal-header">
+          <h3 id="modalTitle"></h3>
+          <button id="closeModal" type="button" class="close-btn">&#10005;</button>
+        </div>
+        <div id="modalBody" class="modal-body"></div>
+      </div>
+    </div>
+
+    <script src="/env.js"></script>
+    <script src="/app.js"></script>
+  </body>
+</html>
