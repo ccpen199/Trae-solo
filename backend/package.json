@@ -1,0 +1,23 @@
+{
+  "name": "agro-credit-backend",
+  "version": "1.0.0",
+  "description": "农资赊销授信系统后端API",
+  "main": "src/server.js",
+  "scripts": {
+    "dev": "nodemon src/server.js",
+    "start": "node src/server.js",
+    "init-db": "node scripts/init-db.js",
+    "init-test-data": "node scripts/init-test-data.js"
+  },
+  "dependencies": {
+    "cors": "^2.8.5",
+    "dotenv": "^16.3.1",
+    "express": "^4.18.2",
+    "better-sqlite3": "^9.2.2",
+    "joi": "^17.11.0",
+    "morgan": "^1.10.0"
+  },
+  "devDependencies": {
+    "nodemon": "^3.0.2"
+  }
+}

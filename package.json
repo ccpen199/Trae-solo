@@ -1,0 +1,21 @@
+{
+  "name": "agro-credit-system",
+  "version": "1.0.0",
+  "description": "农资赊销授信系统 - 服务农户购买农资的信用授信和账期管理平台",
+  "scripts": {
+    "dev": "concurrently \"npm run dev:backend\" \"npm run dev:frontend\"",
+    "dev:backend": "cd backend && npm run dev",
+    "dev:frontend": "cd frontend && npm run dev",
+    "build": "cd frontend && npm run build",
+    "start": "cd backend && npm start",
+    "install:all": "npm install && cd backend && npm install && cd ../frontend && npm install",
+    "port-check": "node scripts/port-check.js",
+    "test:data": "node backend/scripts/init-test-data.js"
+  },
+  "keywords": ["agriculture", "credit", "loan", "management"],
+  "author": "",
+  "license": "MIT",
+  "devDependencies": {
+    "concurrently": "^8.2.2"
+  }
+}
