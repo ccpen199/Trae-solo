@@ -1,0 +1,224 @@
+:root {
+  color: #172033;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Noto Sans SC", sans-serif;
+  background: #f4f7fb;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+}
+
+button {
+  border: 0;
+  border-radius: 6px;
+  background: #176b87;
+  color: #fff;
+  cursor: pointer;
+  font: inherit;
+  padding: 10px 16px;
+}
+
+.shell {
+  margin: 0 auto;
+  max-width: 1180px;
+  padding: 28px;
+}
+
+.topbar {
+  align-items: flex-start;
+  border-bottom: 1px solid #d8e0ea;
+  display: flex;
+  gap: 24px;
+  justify-content: space-between;
+  margin-bottom: 22px;
+  padding-bottom: 18px;
+}
+
+.eyebrow {
+  color: #176b87;
+  font-size: 14px;
+  font-weight: 700;
+  margin: 0 0 4px;
+}
+
+h1,
+h2,
+p {
+  margin: 0;
+}
+
+h1 {
+  font-size: 30px;
+}
+
+h2 {
+  font-size: 18px;
+}
+
+.subtle {
+  color: #65758b;
+  margin-top: 8px;
+}
+
+.metrics {
+  display: grid;
+  gap: 14px;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  margin-bottom: 18px;
+}
+
+.metrics article,
+.panel {
+  background: #fff;
+  border: 1px solid #dce4ee;
+  border-radius: 8px;
+  box-shadow: 0 1px 2px rgba(15, 23, 42, 0.05);
+}
+
+.metrics article {
+  padding: 18px;
+}
+
+.metrics span {
+  color: #65758b;
+  display: block;
+  font-size: 14px;
+}
+
+.metrics strong {
+  display: block;
+  font-size: 28px;
+  margin-top: 8px;
+}
+
+.grid {
+  display: grid;
+  gap: 18px;
+  grid-template-columns: 2fr 1fr;
+  margin-bottom: 18px;
+}
+
+.panel {
+  padding: 18px;
+}
+
+.panel-head {
+  align-items: center;
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 14px;
+}
+
+.panel-head span {
+  color: #65758b;
+  font-size: 14px;
+}
+
+table {
+  border-collapse: collapse;
+  width: 100%;
+}
+
+th,
+td {
+  border-bottom: 1px solid #eef2f6;
+  padding: 11px 8px;
+  text-align: left;
+}
+
+th {
+  color: #65758b;
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.badge {
+  border-radius: 999px;
+  display: inline-flex;
+  font-size: 12px;
+  font-weight: 700;
+  padding: 4px 10px;
+  white-space: nowrap;
+}
+
+.badge.ok {
+  background: #e5f7ec;
+  color: #177245;
+}
+
+.badge.warn {
+  background: #fff4d9;
+  color: #8a5b00;
+}
+
+.badge.info {
+  background: #e7f0ff;
+  color: #2457a6;
+}
+
+.list {
+  display: grid;
+  gap: 12px;
+}
+
+.row {
+  align-items: center;
+  border-bottom: 1px solid #eef2f6;
+  display: flex;
+  gap: 12px;
+  justify-content: space-between;
+  padding-bottom: 12px;
+}
+
+.row p {
+  color: #65758b;
+  font-size: 13px;
+  margin-top: 4px;
+}
+
+.cards {
+  display: grid;
+  gap: 12px;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.patient {
+  border: 1px solid #e3e9f1;
+  border-radius: 8px;
+  padding: 14px;
+}
+
+.patient p {
+  color: #65758b;
+  margin-top: 6px;
+}
+
+.patient .badge {
+  margin-top: 10px;
+}
+
+.error {
+  border-color: #f2b8b5;
+  color: #9b1c1c;
+}
+
+@media (max-width: 860px) {
+  .topbar,
+  .grid {
+    display: block;
+  }
+
+  .metrics,
+  .cards {
+    grid-template-columns: 1fr;
+  }
+
+  .panel {
+    margin-top: 14px;
+    overflow-x: auto;
+  }
+}

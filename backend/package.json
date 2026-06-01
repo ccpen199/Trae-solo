@@ -1,0 +1,21 @@
+{
+  "name": "escort-backend",
+  "version": "1.0.0",
+  "description": "陪诊服务平台后端",
+  "main": "src/server.js",
+  "scripts": {
+    "start": "node src/server.js",
+    "dev": "node --watch src/server.js"
+  },
+  "dependencies": {
+    "bcryptjs": "^2.4.3",
+    "better-sqlite3": "^9.6.0",
+    "cors": "^2.8.6",
+    "dotenv": "^16.6.1",
+    "express": "^4.22.2",
+    "multer": "^1.4.5-lts.1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC"
+}
