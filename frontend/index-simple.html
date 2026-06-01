@@ -1,0 +1,372 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>社交关系链服务</title>
+    <script src="https://cdn.jsdelivr.net/npm/react@18/umd/react.production.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/react-dom@18/umd/react-dom.production.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/react-router-dom@6.3.0/umd/react-router-dom.production.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@babel/standalone@7.23.5/babel.min.js"></script>
+    <style>
+      * { margin: 0; padding: 0; box-sizing: border-box; }
+      body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background: #f5f5f5; color: #333; line-height: 1.6; }
+      .app { min-height: 100vh; display: flex; }
+      .sidebar { width: 200px; background: #fff; border-right: 1px solid #e8e8e8; padding: 20px 0; }
+      .sidebar h2 { padding: 0 20px 20px; font-size: 18px; border-bottom: 1px solid #e8e8e8; }
+      .sidebar nav a { display: block; padding: 12px 20px; color: #666; text-decoration: none; transition: all 0.2s; }
+      .sidebar nav a:hover, .sidebar nav a.active { background: #f5f5f5; color: #1890ff; }
+      .main { flex: 1; padding: 24px; overflow-y: auto; }
+      .header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 24px; padding-bottom: 16px; border-bottom: 1px solid #e8e8e8; }
+      .header h1 { font-size: 24px; }
+      .user-select { display: flex; align-items: center; gap: 12px; }
+      .user-select select { padding: 8px 12px; border: 1px solid #e8e8e8; border-radius: 4px; background: #fff; }
+      .card { background: #fff; border-radius: 8px; padding: 20px; margin-bottom: 20px; box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06); }
+      .card h3 { margin-bottom: 16px; font-size: 16px; }
+      .stats-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; }
+      .stat-card { text-align: center; padding: 20px; background: #f5f5f5; border-radius: 8px; }
+      .stat-card .value { font-size: 32px; font-weight: bold; color: #1890ff; }
+      .stat-card .label { color: #666; margin-top: 8px; }
+      .tabs { display: flex; gap: 8px; margin-bottom: 20px; border-bottom: 1px solid #e8e8e8; }
+      .tab { padding: 10px 20px; border: none; background: none; cursor: pointer; font-size: 14px; color: #666; border-bottom: 2px solid transparent; margin-bottom: -1px; }
+      .tab.active { color: #1890ff; border-bottom-color: #1890ff; }
+      .empty { text-align: center; padding: 40px; color: #999; }
+      .user-list { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 16px; }
+      .user-card { background: #fff; border: 1px solid #e8e8e8; border-radius: 8px; padding: 16px; }
+      .user-card .user-info { display: flex; align-items: center; gap: 12px; margin-bottom: 12px; }
+      .user-card .avatar { width: 48px; height: 48px; border-radius: 50%; background: #1890ff; color: #fff; display: flex; align-items: center; justify-content: center; font-size: 20px; font-weight: bold; }
+      .user-card .user-name { font-weight: 600; }
+      .user-card .user-username { color: #666; font-size: 14px; }
+      .user-card .user-stats { display: flex; gap: 16px; font-size: 13px; color: #666; margin-bottom: 12px; }
+      .user-card .user-actions { display: flex; gap: 8px; }
+      .btn { padding: 6px 16px; border: 1px solid #e8e8e8; border-radius: 4px; background: #fff; cursor: pointer; font-size: 14px; transition: all 0.2s; }
+      .btn:hover { border-color: #1890ff; color: #1890ff; }
+      .btn-primary { background: #1890ff; color: #fff; border-color: #1890ff; }
+      .btn-primary:hover { background: #40a9ff; border-color: #40a9ff; color: #fff; }
+      .mutual { color: #52c41a; font-size: 12px; }
+      .pagination { display: flex; justify-content: center; align-items: center; gap: 12px; margin-top: 20px; }
+      .pagination button { padding: 6px 12px; border: 1px solid #e8e8e8; border-radius: 4px; background: #fff; cursor: pointer; }
+      .pagination button:disabled { opacity: 0.5; cursor: not-allowed; }
+      .pagination span { color: #666; }
+    </style>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="text/babel" data-presets="react">
+      const { useState, useEffect } = React;
+      const { BrowserRouter, Routes, Route, NavLink } = window.ReactRouterDOM;
+
+      const API_BASE_URL = 'http://127.0.0.1:53408/api';
+
+      const api = {
+        get: async (url) => {
+          const userId = localStorage.getItem('userId') || '2';
+          const response = await fetch(API_BASE_URL + url, {
+            headers: {
+              'X-User-Id': userId,
+              'Content-Type': 'application/json'
+            },
+            credentials: 'include'
+          });
+          const data = await response.json();
+          if (!response.ok) throw new Error(data.error || '请求失败');
+          return { data };
+        },
+        post: async (url, body) => {
+          const userId = localStorage.getItem('userId') || '2';
+          const response = await fetch(API_BASE_URL + url, {
+            method: 'POST',
+            headers: {
+              'X-User-Id': userId,
+              'Content-Type': 'application/json'
+            },
+            credentials: 'include',
+            body: JSON.stringify(body)
+          });
+          const data = await response.json();
+          if (!response.ok) throw new Error(data.error || '请求失败');
+          return { data };
+        },
+        delete: async (url) => {
+          const userId = localStorage.getItem('userId') || '2';
+          const response = await fetch(API_BASE_URL + url, {
+            method: 'DELETE',
+            headers: {
+              'X-User-Id': userId,
+              'Content-Type': 'application/json'
+            },
+            credentials: 'include'
+          });
+          const data = await response.json();
+          if (!response.ok) throw new Error(data.error || '请求失败');
+          return { data };
+        }
+      };
+
+      function RelationsPage({ currentUser, onRefresh }) {
+        const [activeTab, setActiveTab] = useState('following');
+        const [data, setData] = useState({ list: [], total: 0 });
+        const [page, setPage] = useState(1);
+        const [pageSize] = useState(10);
+        const [loading, setLoading] = useState(false);
+
+        const tabs = [
+          { key: 'following', label: '关注' },
+          { key: 'followers', label: '粉丝' },
+          { key: 'friends', label: '好友' },
+          { key: 'blacklist', label: '黑名单' }
+        ];
+
+        useEffect(() => {
+          loadData();
+        }, [activeTab, page]);
+
+        const loadData = async () => {
+          setLoading(true);
+          try {
+            let endpoint;
+            switch (activeTab) {
+              case 'following':
+                endpoint = `/relations/following?page=${page}&pageSize=${pageSize}`;
+                break;
+              case 'followers':
+                endpoint = `/relations/followers?page=${page}&pageSize=${pageSize}`;
+                break;
+              case 'friends':
+                endpoint = `/relations/friends?page=${page}&pageSize=${pageSize}`;
+                break;
+              case 'blacklist':
+                endpoint = `/relations/blacklist?page=${page}&pageSize=${pageSize}`;
+                break;
+              default:
+                endpoint = `/relations/following?page=${page}&pageSize=${pageSize}`;
+            }
+            const res = await api.get(endpoint);
+            setData(res.data);
+          } catch (err) {
+            console.error('加载数据失败:', err);
+          }
+          setLoading(false);
+        };
+
+        const handleUnfollow = async (userId) => {
+          if (!confirm('确定要取消关注吗？')) return;
+          try {
+            await api.delete(`/relations/unfollow/${userId}`);
+            alert('已取消关注');
+            loadData();
+            onRefresh && onRefresh();
+          } catch (err) {
+            alert(err.message || '操作失败');
+          }
+        };
+
+        const handleFollow = async (userId) => {
+          try {
+            await api.post(`/relations/follow/${userId}`);
+            alert('关注成功');
+            loadData();
+            onRefresh && onRefresh();
+          } catch (err) {
+            alert(err.message || '操作失败');
+          }
+        };
+
+        return (
+          <div>
+            <div className="card">
+              <h3>我的关系概览</h3>
+              <div className="stats-grid">
+                <div className="stat-card">
+                  <div className="value">{currentUser?.following_count || 0}</div>
+                  <div className="label">关注</div>
+                </div>
+                <div className="stat-card">
+                  <div className="value">{currentUser?.follower_count || 0}</div>
+                  <div className="label">粉丝</div>
+                </div>
+                <div className="stat-card">
+                  <div className="value">{currentUser?.friend_count || 0}</div>
+                  <div className="label">好友</div>
+                </div>
+                <div className="stat-card">
+                  <div className="value">{currentUser?.blacklist_count || 0}</div>
+                  <div className="label">黑名单</div>
+                </div>
+              </div>
+            </div>
+
+            <div className="card">
+              <div className="tabs">
+                {tabs.map(tab => (
+                  <button
+                    key={tab.key}
+                    className={`tab ${activeTab === tab.key ? 'active' : ''}`}
+                    onClick={() => { setActiveTab(tab.key); setPage(1); }}
+                  >
+                    {tab.label}
+                  </button>
+                ))}
+              </div>
+
+              {loading ? (
+                <div className="empty">加载中...</div>
+              ) : data.list.length === 0 ? (
+                <div className="empty">暂无数据</div>
+              ) : (
+                <div>
+                  <div className="user-list">
+                    {data.list.map(item => (
+                      <div key={item.id} className="user-card">
+                        <div className="user-info">
+                          <div className="avatar">{item.nickname?.[0] || '?'}</div>
+                          <div>
+                            <div className="user-name">
+                              {item.nickname}
+                              {item.is_mutual && <span className="mutual"> 互相关注</span>}
+                            </div>
+                            <div className="user-username">@{item.username}</div>
+                          </div>
+                        </div>
+                        {activeTab !== 'blacklist' && (
+                          <div className="user-stats">
+                            {item.intimacy_score !== undefined && (
+                              <span>亲密度: {item.intimacy_score}</span>
+                            )}
+                            {item.updated_at && (
+                              <span>更新: {new Date(item.updated_at).toLocaleDateString()}</span>
+                            )}
+                          </div>
+                        )}
+                        {activeTab === 'blacklist' ? (
+                          <div className="user-actions">
+                            <button className="btn" onClick={() => api.delete(`/relations/unblock/${item.id}`).then(() => { alert('已解除拉黑'); loadData(); })}>解除拉黑</button>
+                          </div>
+                        ) : (
+                          <div className="user-actions">
+                            {activeTab === 'following' ? (
+                              <button className="btn" onClick={() => handleUnfollow(item.id)}>取消关注</button>
+                            ) : activeTab === 'followers' && !item.is_following ? (
+                              <button className="btn btn-primary" onClick={() => handleFollow(item.id)}>回关</button>
+                            ) : activeTab === 'friends' ? (
+                              <button className="btn" onClick={() => handleUnfollow(item.id)}>解除好友</button>
+                            ) : null}
+                          </div>
+                        )}
+                      </div>
+                    ))}
+                  </div>
+                  <div className="pagination">
+                    <button disabled={page <= 1} onClick={() => setPage(page - 1)}>上一页</button>
+                    <span>第 {page} 页 / 共 {Math.ceil(data.total / pageSize) || 1} 页</span>
+                    <button disabled={page >= Math.ceil(data.total / pageSize)} onClick={() => setPage(page + 1)}>下一页</button>
+                  </div>
+                </div>
+              )}
+            </div>
+          </div>
+        );
+      }
+
+      function App() {
+        const [currentUser, setCurrentUser] = useState(null);
+        const [currentUserId, setCurrentUserId] = useState('2');
+        const [users, setUsers] = useState([]);
+        const [loading, setLoading] = useState(true);
+
+        useEffect(() => {
+          const savedUserId = localStorage.getItem('userId') || '2';
+          localStorage.setItem('userId', savedUserId);
+          setCurrentUserId(savedUserId);
+          loadUsers(savedUserId);
+        }, []);
+
+        const loadUsers = async (selectedUserId) => {
+          setLoading(true);
+          try {
+            const res = await api.get('/users/list?pageSize=100');
+            setUsers(res.data.list || []);
+            const userRes = await api.get(`/users/${selectedUserId}`);
+            setCurrentUser(userRes.data);
+          } catch (err) {
+            console.error('加载用户失败:', err);
+          }
+          setLoading(false);
+        };
+
+        const handleUserChange = async (e) => {
+          const userId = e.target.value;
+          localStorage.setItem('userId', userId);
+          setCurrentUserId(userId);
+          setLoading(true);
+          try {
+            const res = await api.get(`/users/${userId}`);
+            setCurrentUser(res.data);
+          } catch (err) {
+            console.error('切换用户失败:', err);
+          }
+          setLoading(false);
+        };
+
+        const refreshCurrentUser = async () => {
+          try {
+            const res = await api.get(`/users/${currentUserId}`);
+            setCurrentUser(res.data);
+          } catch (err) {
+            console.error('刷新用户数据失败:', err);
+          }
+        };
+
+        if (loading) {
+          return (
+            <div className="app">
+              <main className="main">
+                <div className="card" style={{ textAlign: 'center', padding: '40px' }}>
+                  加载中...
+                </div>
+              </main>
+            </div>
+          );
+        }
+
+        return (
+          <div className="app">
+            <aside className="sidebar">
+              <h2>社交关系链</h2>
+              <nav>
+                <NavLink to="/" end>关系管理</NavLink>
+              </nav>
+            </aside>
+            <main className="main">
+              <div className="header">
+                <h1>社交关系链服务</h1>
+                <div className="user-select">
+                  <span>当前用户：</span>
+                  <select 
+                    value={currentUser?.id || currentUserId} 
+                    onChange={handleUserChange}
+                  >
+                    {users.map(user => (
+                      <option key={user.id} value={user.id}>
+                        {user.nickname} (@{user.username})
+                      </option>
+                    ))}
+                  </select>
+                </div>
+              </div>
+              <Routes>
+                <Route path="/" element={<RelationsPage key={currentUserId} currentUser={currentUser} onRefresh={refreshCurrentUser} />} />
+              </Routes>
+            </main>
+          </div>
+        );
+      }
+
+      ReactDOM.createRoot(document.getElementById('root')).render(
+        <BrowserRouter>
+          <App />
+        </BrowserRouter>
+      );
+    </script>
+  </body>
+</html>

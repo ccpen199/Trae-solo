@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>简单测试</title>
+    <script src="./react.min.js"></script>
+    <script src="./react-dom.min.js"></script>
+    <style>
+      body { font-family: sans-serif; padding: 20px; }
+      .test { background: #f0f5ff; padding: 20px; border-radius: 8px; }
+    </style>
+  </head>
+  <body>
+    <h1>React 测试页面</h1>
+    <div id="root"></div>
+    <script>
+      console.log('React:', typeof React);
+      console.log('ReactDOM:', typeof ReactDOM);
+      
+      function Test() {
+        const [count, setCount] = React.useState(0);
+        return React.createElement('div', { className: 'test' },
+          React.createElement('h2', null, 'React 工作正常！'),
+          React.createElement('p', null, '计数: ' + count),
+          React.createElement('button', { onClick: () => setCount(count + 1) }, '增加')
+        );
+      }
+      
+      ReactDOM.createRoot(document.getElementById('root')).render(React.createElement(Test));
+    </script>
+  </body>
+</html>

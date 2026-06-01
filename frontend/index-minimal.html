@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>社交关系链服务</title>
+    <script src="./react.min.js"></script>
+    <script src="./react-dom.min.js"></script>
+    <style>
+      * { margin: 0; padding: 0; box-sizing: border-box; }
+      body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background: #f5f5f5; color: #333; line-height: 1.6; }
+      .app { min-height: 100vh; display: flex; }
+      .sidebar { width: 200px; background: #fff; border-right: 1px solid #e8e8e8; padding: 20px 0; }
+      .sidebar h2 { padding: 0 20px 20px; font-size: 18px; border-bottom: 1px solid #e8e8e8; }
+      .sidebar nav a { display: block; padding: 12px 20px; color: #666; text-decoration: none; transition: all 0.2s; cursor: pointer; }
+      .sidebar nav a:hover, .sidebar nav a.active { background: #f5f5f5; color: #1890ff; }
+      .main { flex: 1; padding: 24px; overflow-y: auto; }
+      .header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 24px; padding-bottom: 16px; border-bottom: 1px solid #e8e8e8; }
+      .header h1 { font-size: 24px; }
+      .card { background: #fff; border-radius: 8px; padding: 20px; margin-bottom: 20px; box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06); }
+      .card h3 { margin-bottom: 16px; font-size: 16px; }
+      .loading { text-align: center; padding: 40px; color: #999; }
+    </style>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script>
+      const { useState, useEffect } = React;
+      const API_BASE_URL = 'http://127.0.0.1:53408/api';
+
+      const api = {
+        get: async (url) => {
+          const userId = localStorage.getItem('userId') || '2';
+          const response = await fetch(API_BASE_URL + url, {
+            headers: {
+              'X-User-Id': userId,
+              'Content-Type': 'application/json'
+            }
+          });
+          const data = await response.json();
+          if (!response.ok) throw new Error(data.error || '请求失败');
+          return { data };
+        }
+      };
+
+      function App() {
+        const [currentPage, setCurrentPage] = useState('relations');
+        const [currentUser, setCurrentUser] = useState(null);
+        const [users, setUsers] = useState([]);
+        const [loading, setLoading] = useState(true);
+
+        const navItems = [
+          { key: 'relations', label: '关系管理' },
+          { key: 'recommendations', label: '推荐' },
+          { key: 'reports', label: '举报' },
+          { key: 'risk', label: '风控中心' },
+          { key: 'dashboard', label: '运营看板' }
+        ];
+
+        useEffect(() => {
+          loadData();
+        }, []);
+
+        const loadData = async () => {
+          try {
+            const usersRes = await api.get('/users/list?pageSize=100');
+            setUsers(usersRes.data.list || []);
+            const userRes = await api.get('/users/2');
+            setCurrentUser(userRes.data);
+          } catch (err) {
+            console.error('加载失败:', err);
+          }
+          setLoading(false);
+        };
+
+        if (loading) {
+          return React.createElement('div', { className: 'app' },
+            React.createElement('main', { className: 'main' },
+              React.createElement('div', { className: 'card', style: { textAlign: 'center', padding: '40px' } }, '加载中...')
+            )
+          );
+        }
+
+        return React.createElement('div', { className: 'app' },
+          React.createElement('aside', { className: 'sidebar' },
+            React.createElement('h2', null, '社交关系链'),
+            React.createElement('nav', null,
+              navItems.map(item => 
+                React.createElement('a', {
+                  key: item.key,
+                  className: currentPage === item.key ? 'active' : '',
+                  onClick: () => setCurrentPage(item.key)
+                }, item.label)
+              )
+            )
+          ),
+          React.createElement('main', { className: 'main' },
+            React.createElement('div', { className: 'header' },
+              React.createElement('h1', null, '社交关系链服务'),
+              React.createElement('div', null, '当前用户: ' + (currentUser?.nickname || '未知'))
+            ),
+            React.createElement('div', { className: 'card' },
+              React.createElement('h3', null, '当前页面: ' + navItems.find(n => n.key === currentPage)?.label),
+              React.createElement('p', null, '关注: ' + (currentUser?.following_count || 0)),
+              React.createElement('p', null, '粉丝: ' + (currentUser?.follower_count || 0)),
+              React.createElement('p', null, '好友: ' + (currentUser?.friend_count || 0)),
+              React.createElement('p', null, '黑名单: ' + (currentUser?.blacklist_count || 0))
+            )
+          )
+        );
+      }
+
+      ReactDOM.createRoot(document.getElementById('root')).render(React.createElement(App));
+    </script>
+  </body>
+</html>

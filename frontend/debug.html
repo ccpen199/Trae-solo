@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>调试页面</title>
+    <script src="https://cdn.jsdelivr.net/npm/react@18.2.0/umd/react.development.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/react-dom@18.2.0/umd/react-dom.development.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/react-router-dom@6.8.1/umd/react-router-dom.development.js"></script>
+    <style>
+      body { font-family: sans-serif; padding: 20px; }
+      .log { background: #f5f5f5; padding: 10px; margin: 10px 0; border-radius: 4px; }
+      .error { color: #ff4d4f; }
+    </style>
+  </head>
+  <body>
+    <h1>调试页面</h1>
+    <div id="log"></div>
+    <div id="root"></div>
+    
+    <script>
+      function log(msg, isError) {
+        const div = document.createElement('div');
+        div.className = 'log' + (isError ? ' error' : '');
+        div.textContent = msg;
+        document.getElementById('log').appendChild(div);
+        console.log(msg);
+      }
+      
+      try {
+        log('页面加载完成');
+        log('React: ' + (typeof React));
+        log('ReactDOM: ' + (typeof ReactDOM));
+        log('ReactRouterDOM: ' + (typeof window.ReactRouterDOM));
+        
+        if (window.ReactRouterDOM) {
+          log('BrowserRouter: ' + (typeof window.ReactRouterDOM.BrowserRouter));
+          log('Routes: ' + (typeof window.ReactRouterDOM.Routes));
+          log('Route: ' + (typeof window.ReactRouterDOM.Route));
+        }
+        
+        const { useState } = React;
+        const { BrowserRouter, Routes, Route, NavLink } = window.ReactRouterDOM;
+        
+        function Home() {
+          return React.createElement('div', null, 
+            React.createElement('h2', null, '关系管理'),
+            React.createElement('p', null, '关注: 4 | 粉丝: 5 | 好友: 3 | 黑名单: 1')
+          );
+        }
+        
+        function App() {
+          return React.createElement(BrowserRouter, null,
+            React.createElement('div', { style: { display: 'flex', minHeight: '100vh' } },
+              React.createElement('aside', { style: { width: '200px', background: '#fff', borderRight: '1px solid #e8e8e8', padding: '20px 0' } },
+                React.createElement('h2', null, '社交关系链'),
+                React.createElement('nav', null,
+                  React.createElement(NavLink, { to: '/', end: true, style: { display: 'block', padding: '12px 20px', color: '#666', textDecoration: 'none' } }, '关系管理'),
+                  React.createElement(NavLink, { to: '/recommendations', style: { display: 'block', padding: '12px 20px', color: '#666', textDecoration: 'none' } }, '推荐'),
+                  React.createElement(NavLink, { to: '/reports', style: { display: 'block', padding: '12px 20px', color: '#666', textDecoration: 'none' } }, '举报'),
+                  React.createElement(NavLink, { to: '/risk', style: { display: 'block', padding: '12px 20px', color: '#666', textDecoration: 'none' } }, '风控中心'),
+                  React.createElement(NavLink, { to: '/dashboard', style: { display: 'block', padding: '12px 20px', color: '#666', textDecoration: 'none' } }, '运营看板')
+                )
+              ),
+              React.createElement('main', { style: { flex: 1, padding: '24px' } },
+                React.createElement(Routes, null,
+                  React.createElement(Route, { path: '/', element: React.createElement(Home) }),
+                  React.createElement(Route, { path: '/recommendations', element: React.createElement('div', null, React.createElement('h2', null, '推荐关注')) }),
+                  React.createElement(Route, { path: '/reports', element: React.createElement('div', null, React.createElement('h2', null, '举报管理')) }),
+                  React.createElement(Route, { path: '/risk', element: React.createElement('div', null, React.createElement('h2', null, '风控中心')) }),
+                  React.createElement(Route, { path: '/dashboard', element: React.createElement('div', null, React.createElement('h2', null, '运营看板')) })
+                )
+              )
+            )
+          );
+        }
+        
+        log('准备渲染 App...');
+        ReactDOM.createRoot(document.getElementById('root')).render(React.createElement(App));
+        log('渲染完成');
+        
+      } catch (err) {
+        log('错误: ' + err.message, true);
+        log('堆栈: ' + err.stack, true);
+      }
+    </script>
+  </body>
+</html>
