@@ -1,0 +1,20 @@
+curl: (3) bad rangcurl: (3) bad range specification in URL position 100:
+http://127.0.0.1:53400/api/bills/aggregate?groupimport sys, json
+d = json.load(sys.stdin)
+bill = d['data']['list'][0]
+fields = ['bill_date','resource_id','account_name','project_name','p dd = json.load(s  bill = d['data']['list'ctfields = ['bill_date','res cprint('返回字段:', list(bill.keys()))
+for f in fields:
+    val = bill.get(f, '缺失')
+    if osfor f in fields:
+    val = bill.get(f, '    val = bill.??    if isinstance(val, dict):
+--        val = json.
+e specification in URL position 100:
+http://127.0.0.1:53400/api/bills/aggregate?groupimport sys, json
+d = json.load(sys.stdin)
+bill = d['data']['list'][0]
+fields = ['bill_date','resource_id','account_name','project_name','p dd = json.load(s  bill = d['data']['list'ctfields = ['bill_date','res cprint('返回字段:', list(bill.keys()))
+for f in fields:
+    val = bill.get(f, '缺失')
+    if osfor f in fields:
+    val = bill.get(f, '    val = bill.??    if isinstance(val, dict):
+--        val = json.
