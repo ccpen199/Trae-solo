@@ -1,0 +1,1158 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🧭</text></svg>" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>旅行僧 - 发现世界的美好</title>
+    <style>
+      * { margin: 0; padding: 0; box-sizing: border-box; }
+      body { 
+        font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif; 
+        background: #f8fafc; 
+        min-height: 100vh;
+      }
+      
+      /* 导航栏 */
+      .nav {
+        background: white;
+        padding: 0 40px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+        position: sticky;
+        top: 0;
+        z-index: 100;
+        height: 64px;
+      }
+      .nav-logo {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        font-weight: 700;
+        font-size: 20px;
+        color: #3b82f6;
+        cursor: pointer;
+      }
+      .nav-links {
+        display: flex;
+        gap: 32px;
+      }
+      .nav-links a {
+        color: #6b7280;
+        text-decoration: none;
+        font-weight: 500;
+        padding: 20px 0;
+        position: relative;
+        transition: color 0.2s;
+      }
+      .nav-links a:hover, .nav-links a.active {
+        color: #3b82f6;
+      }
+      .nav-links a.active::after {
+        content: '';
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        height: 2px;
+        background: #3b82f6;
+      }
+      .nav-actions {
+        display: flex;
+        gap: 12px;
+        align-items: center;
+      }
+      .btn {
+        padding: 8px 20px;
+        border-radius: 8px;
+        font-weight: 500;
+        cursor: pointer;
+        border: none;
+        font-size: 14px;
+        transition: all 0.2s;
+      }
+      .btn-primary {
+        background: #3b82f6;
+        color: white;
+      }
+      .btn-primary:hover {
+        background: #2563eb;
+      }
+      .btn-secondary {
+        background: transparent;
+        color: #6b7280;
+      }
+      .btn-secondary:hover {
+        color: #3b82f6;
+      }
+      .user-avatar {
+        width: 36px;
+        height: 36px;
+        border-radius: 50%;
+        background: linear-gradient(135deg, #3b82f6, #8b5cf6);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: white;
+        font-weight: 600;
+        cursor: pointer;
+      }
+
+      /* Banner */
+      .banner {
+        background: linear-gradient(135deg, #3b82f6 0%, #8b5cf6 100%);
+        padding: 60px 40px;
+        color: white;
+        text-align: center;
+      }
+      .banner h1 {
+        font-size: 42px;
+        font-weight: 700;
+        margin-bottom: 12px;
+      }
+      .banner p {
+        font-size: 18px;
+        opacity: 0.9;
+        margin-bottom: 32px;
+      }
+      .search-box {
+        max-width: 600px;
+        margin: 0 auto;
+        display: flex;
+        gap: 12px;
+      }
+      .search-box input {
+        flex: 1;
+        padding: 14px 20px;
+        border: none;
+        border-radius: 12px;
+        font-size: 16px;
+        outline: none;
+      }
+      .search-box button {
+        padding: 14px 28px;
+        background: white;
+        color: #3b82f6;
+        border: none;
+        border-radius: 12px;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.2s;
+      }
+      .search-box button:hover {
+        background: #f1f5f9;
+      }
+
+      /* 内容区域 */
+      .container {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 40px 20px;
+      }
+      .section-title {
+        font-size: 24px;
+        font-weight: 700;
+        color: #1f2937;
+        margin-bottom: 24px;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+      }
+
+      /* 目的地标签 */
+      .destinations {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 12px;
+        margin-bottom: 32px;
+      }
+      .dest-tag {
+        padding: 10px 20px;
+        background: white;
+        border-radius: 24px;
+        border: 1px solid #e5e7eb;
+        cursor: pointer;
+        font-weight: 500;
+        color: #6b7280;
+        transition: all 0.2s;
+      }
+      .dest-tag:hover, .dest-tag.active {
+        background: #3b82f6;
+        color: white;
+        border-color: #3b82f6;
+      }
+
+      /* 攻略卡片网格 */
+      .guides-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+        gap: 24px;
+      }
+      .guide-card {
+        background: white;
+        border-radius: 16px;
+        overflow: hidden;
+        box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+        cursor: pointer;
+        transition: all 0.3s;
+      }
+      .guide-card:hover {
+        transform: translateY(-4px);
+        box-shadow: 0 8px 24px rgba(0,0,0,0.1);
+      }
+      .guide-image {
+        width: 100%;
+        height: 180px;
+        background: linear-gradient(45deg, #dbeafe, #e0e7ff);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 48px;
+        position: relative;
+      }
+      .guide-dest {
+        position: absolute;
+        top: 12px;
+        left: 12px;
+        background: rgba(255,255,255,0.95);
+        padding: 6px 12px;
+        border-radius: 16px;
+        font-size: 13px;
+        font-weight: 600;
+        color: #3b82f6;
+      }
+      .guide-content {
+        padding: 16px;
+      }
+      .guide-title {
+        font-weight: 600;
+        color: #1f2937;
+        margin-bottom: 12px;
+        font-size: 16px;
+        line-height: 1.5;
+        display: -webkit-box;
+        -webkit-line-clamp: 2;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+      }
+      .guide-meta {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+      }
+      .guide-stats {
+        display: flex;
+        gap: 16px;
+        color: #9ca3af;
+        font-size: 14px;
+      }
+      .guide-author {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+      }
+      .guide-author-avatar {
+        width: 28px;
+        height: 28px;
+        border-radius: 50%;
+        background: linear-gradient(135deg, #f59e0b, #ef4444);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: white;
+        font-size: 12px;
+        font-weight: 600;
+      }
+      .guide-author-name {
+        font-size: 14px;
+        color: #6b7280;
+      }
+
+      /* 旅吧页面 */
+      .bar-list {
+        display: flex;
+        flex-direction: column;
+        gap: 16px;
+      }
+      .bar-item {
+        background: white;
+        border-radius: 16px;
+        padding: 24px;
+        box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+        cursor: pointer;
+        transition: all 0.2s;
+      }
+      .bar-item:hover {
+        box-shadow: 0 4px 16px rgba(0,0,0,0.08);
+      }
+      .bar-header {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        margin-bottom: 12px;
+      }
+      .bar-author-avatar {
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        background: linear-gradient(135deg, #10b981, #3b82f6);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: white;
+        font-weight: 600;
+      }
+      .bar-author-info h4 {
+        font-weight: 600;
+        color: #1f2937;
+        font-size: 15px;
+      }
+      .bar-author-info span {
+        font-size: 13px;
+        color: #9ca3af;
+      }
+      .bar-title {
+        font-size: 18px;
+        font-weight: 600;
+        color: #1f2937;
+        margin-bottom: 8px;
+      }
+      .bar-content {
+        color: #6b7280;
+        line-height: 1.6;
+        margin-bottom: 16px;
+        display: -webkit-box;
+        -webkit-line-clamp: 2;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+      }
+      .bar-footer {
+        display: flex;
+        gap: 24px;
+        color: #9ca3af;
+        font-size: 14px;
+      }
+      .bar-footer-item {
+        display: flex;
+        align-items: center;
+        gap: 6px;
+      }
+
+      /* 攻略详情页 */
+      .detail-container {
+        max-width: 800px;
+        margin: 0 auto;
+      }
+      .detail-hero {
+        width: 100%;
+        height: 300px;
+        background: linear-gradient(45deg, #dbeafe, #e0e7ff);
+        border-radius: 16px;
+        margin-bottom: 24px;
+        display: flex;
+        align-items: flex-end;
+        padding: 24px;
+      }
+      .detail-title-box {
+        background: rgba(255,255,255,0.95);
+        padding: 20px;
+        border-radius: 12px;
+        width: 100%;
+      }
+      .detail-title {
+        font-size: 28px;
+        font-weight: 700;
+        color: #1f2937;
+        margin-bottom: 12px;
+      }
+      .detail-meta {
+        display: flex;
+        align-items: center;
+        gap: 16px;
+        color: #6b7280;
+      }
+      .detail-content {
+        background: white;
+        border-radius: 16px;
+        padding: 32px;
+        margin-bottom: 24px;
+      }
+      .detail-section {
+        margin-bottom: 24px;
+      }
+      .detail-section h3 {
+        font-size: 18px;
+        font-weight: 600;
+        color: #1f2937;
+        margin-bottom: 12px;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+      }
+      .detail-section p {
+        color: #4b5563;
+        line-height: 1.8;
+      }
+      .detail-actions {
+        display: flex;
+        gap: 12px;
+        margin-top: 24px;
+      }
+      .action-btn {
+        padding: 10px 20px;
+        border-radius: 8px;
+        border: 1px solid #e5e7eb;
+        background: white;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        gap: 6px;
+        font-weight: 500;
+        color: #6b7280;
+        transition: all 0.2s;
+      }
+      .action-btn:hover {
+        border-color: #3b82f6;
+        color: #3b82f6;
+      }
+      .action-btn.liked {
+        background: #fee2e2;
+        border-color: #f87171;
+        color: #ef4444;
+      }
+      .action-btn.saved {
+        background: #fef3c7;
+        border-color: #fbbf24;
+        color: #f59e0b;
+      }
+
+      /* 登录模态框 */
+      .modal-overlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: rgba(0,0,0,0.5);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        z-index: 1000;
+        display: none;
+      }
+      .modal-overlay.show {
+        display: flex;
+      }
+      .modal {
+        background: white;
+        border-radius: 16px;
+        padding: 32px;
+        width: 400px;
+        max-width: 90%;
+      }
+      .modal h2 {
+        font-size: 24px;
+        font-weight: 700;
+        color: #1f2937;
+        margin-bottom: 24px;
+        text-align: center;
+      }
+      .form-group {
+        margin-bottom: 16px;
+      }
+      .form-group label {
+        display: block;
+        font-weight: 500;
+        color: #374151;
+        margin-bottom: 8px;
+        font-size: 14px;
+      }
+      .form-group input {
+        width: 100%;
+        padding: 12px 16px;
+        border: 1px solid #d1d5db;
+        border-radius: 8px;
+        font-size: 14px;
+        outline: none;
+        transition: border-color 0.2s;
+      }
+      .form-group input:focus {
+        border-color: #3b82f6;
+      }
+      .modal-footer {
+        margin-top: 24px;
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+      }
+      .modal-footer .btn {
+        width: 100%;
+        padding: 12px;
+        font-size: 15px;
+      }
+      .modal-switch {
+        text-align: center;
+        font-size: 14px;
+        color: #6b7280;
+      }
+      .modal-switch a {
+        color: #3b82f6;
+        cursor: pointer;
+        text-decoration: none;
+      }
+
+      /* 加载状态 */
+      .loading {
+        text-align: center;
+        padding: 40px;
+        color: #9ca3af;
+      }
+      .spinner {
+        width: 40px;
+        height: 40px;
+        border: 3px solid #e5e7eb;
+        border-top-color: #3b82f6;
+        border-radius: 50%;
+        animation: spin 0.8s linear infinite;
+        margin: 0 auto 16px;
+      }
+      @keyframes spin {
+        to { transform: rotate(360deg); }
+      }
+
+      /* 空状态 */
+      .empty-state {
+        text-align: center;
+        padding: 60px 20px;
+        color: #9ca3af;
+      }
+      .empty-state-icon {
+        font-size: 64px;
+        margin-bottom: 16px;
+      }
+
+      /* 页面切换 */
+      .page {
+        display: none;
+      }
+      .page.active {
+        display: block;
+      }
+
+      /* 返回按钮 */
+      .back-btn {
+        display: flex;
+        align-items: center;
+        gap: 6px;
+        color: #6b7280;
+        cursor: pointer;
+        margin-bottom: 20px;
+        font-weight: 500;
+        transition: color 0.2s;
+      }
+      .back-btn:hover {
+        color: #3b82f6;
+      }
+    </style>
+  </head>
+  <body>
+    <!-- 导航栏 -->
+    <nav class="nav">
+      <div class="nav-logo" onclick="navigateTo('home')">
+        <span>🧭</span>
+        <span>旅行僧</span>
+      </div>
+      <div class="nav-links">
+        <a href="#" onclick="navigateTo('home')" class="active" data-page="home">首页</a>
+        <a href="#" onclick="navigateTo('guides')" data-page="guides">攻略</a>
+        <a href="#" onclick="navigateTo('bar')" data-page="bar">旅吧</a>
+      </div>
+      <div class="nav-actions" id="nav-actions">
+        <button class="btn btn-secondary" onclick="showLoginModal()">登录</button>
+        <button class="btn btn-primary" onclick="showLoginModal()">注册</button>
+      </div>
+    </nav>
+
+    <!-- 首页 -->
+    <div id="page-home" class="page active">
+      <div class="banner">
+        <h1>发现世界的美好</h1>
+        <p>探索精彩旅行攻略，分享您的旅行故事</p>
+        <div class="search-box">
+          <input type="text" placeholder="搜索目的地、攻略..." id="home-search">
+          <button onclick="searchGuides()">搜索</button>
+        </div>
+      </div>
+      <div class="container">
+        <h2 class="section-title">🔥 热门目的地</h2>
+        <div class="destinations" id="destinations-list">
+          <!-- 动态加载 -->
+        </div>
+        <h2 class="section-title">✨ 精选攻略</h2>
+        <div class="guides-grid" id="guides-list">
+          <!-- 动态加载 -->
+        </div>
+      </div>
+    </div>
+
+    <!-- 攻略列表页 -->
+    <div id="page-guides" class="page">
+      <div class="banner" style="padding: 40px;">
+        <h1>旅行攻略</h1>
+        <p>发现世界各地的精彩旅行经验</p>
+      </div>
+      <div class="container">
+        <div class="destinations" id="guides-destinations">
+          <!-- 动态加载 -->
+        </div>
+        <div class="guides-grid" id="all-guides-list">
+          <!-- 动态加载 -->
+        </div>
+      </div>
+    </div>
+
+    <!-- 攻略详情页 -->
+    <div id="page-guide-detail" class="page">
+      <div class="container" style="padding-top: 30px;">
+        <div class="back-btn" onclick="navigateTo('guides')">
+          <span>←</span> 返回攻略列表
+        </div>
+        <div id="guide-detail-content">
+          <!-- 动态加载 -->
+        </div>
+      </div>
+    </div>
+
+    <!-- 旅吧页面 -->
+    <div id="page-bar" class="page">
+      <div class="banner" style="padding: 40px;">
+        <h1>旅吧</h1>
+        <p>与旅行者一起讨论，分享您的旅行心得</p>
+      </div>
+      <div class="container">
+        <div class="bar-list" id="bar-list">
+          <!-- 动态加载 -->
+        </div>
+      </div>
+    </div>
+
+    <!-- 登录模态框 -->
+    <div class="modal-overlay" id="login-modal">
+      <div class="modal">
+        <h2 id="modal-title">登录账号</h2>
+        <div class="form-group">
+          <label>用户名</label>
+          <input type="text" id="login-username" placeholder="请输入用户名">
+        </div>
+        <div id="register-email-group" class="form-group" style="display: none;">
+          <label>邮箱</label>
+          <input type="email" id="login-email" placeholder="请输入邮箱">
+        </div>
+        <div class="form-group">
+          <label>密码</label>
+          <input type="password" id="login-password" placeholder="请输入密码">
+        </div>
+        <div class="modal-footer">
+          <button class="btn btn-primary" onclick="handleLogin()">登录</button>
+          <div class="modal-switch">
+            还没有账号？<a onclick="toggleRegisterMode()">立即注册</a>
+          </div>
+        </div>
+        <div style="margin-top: 16px; padding: 12px; background: #f0f9ff; border-radius: 8px; font-size: 13px; color: #374151;">
+          <strong>测试账号：</strong><br>
+          用户名：旅行家1号<br>
+          密码：123456
+        </div>
+      </div>
+    </div>
+
+    <script>
+      const API_BASE = 'http://localhost:44856/api';
+      let currentUser = null;
+      let isRegisterMode = false;
+      let currentDestination = null;
+      let guidesData = [];
+      let barData = [];
+      let destinationsData = [];
+
+      // 页面导航
+      function navigateTo(page) {
+        document.querySelectorAll('.nav-links a').forEach(a => {
+          a.classList.remove('active');
+          if (a.dataset.page === page) a.classList.add('active');
+        });
+        document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+        document.getElementById(`page-${page}`).classList.add('active');
+        
+        if (page === 'home') loadHomeData();
+        if (page === 'guides') loadAllGuides();
+        if (page === 'bar') loadBarData();
+      }
+
+      let currentGuideId = null;
+      let guideComments = [];
+
+      // 打开攻略详情
+      async function openGuideDetail(guideId) {
+        currentGuideId = guideId;
+        const guide = guidesData.find(g => g.id === guideId);
+        if (!guide) return;
+        
+        const content = document.getElementById('guide-detail-content');
+        content.innerHTML = `
+          <div class="detail-hero">
+            <div class="detail-title-box">
+              <h1 class="detail-title">${guide.title}</h1>
+              <div class="detail-meta">
+                <span>📍 ${guide.destination_name || '未标注'}</span>
+                <span>👁️ ${guide.views || 0}</span>
+                <span>❤️ ${guide.likes || 0}</span>
+              </div>
+            </div>
+          </div>
+          <div class="detail-content">
+            <div class="detail-section">
+              <h3>📋 行程安排</h3>
+              <p>${guide.itinerary || '暂无详细行程安排'}</p>
+            </div>
+            <div class="detail-section">
+              <h3>💰 预算说明</h3>
+              <p>${guide.budget || '暂无预算说明'}</p>
+            </div>
+            <div class="detail-section">
+              <h3>🎒 出行准备</h3>
+              <p>${guide.preparation || '暂无出行准备说明'}</p>
+            </div>
+            <div class="detail-section">
+              <h3>📝 攻略详情</h3>
+              <p>${guide.content || '暂无详细内容'}</p>
+            </div>
+            <div class="detail-actions">
+              <button class="action-btn" onclick="handleLike(${guide.id})">❤️ 点赞</button>
+              <button class="action-btn" onclick="handleSave(${guide.id})">⭐ 收藏</button>
+              <button class="action-btn" onclick="scrollToComments()">💬 评论</button>
+            </div>
+          </div>
+
+          <!-- 评论区域 -->
+          <div class="detail-content" id="comments-section">
+            <h3 style="font-size: 20px; font-weight: 600; color: #1f2937; margin-bottom: 20px;">💬 用户评论</h3>
+            
+            <!-- 评论输入框 -->
+            <div class="comment-input-box" style="margin-bottom: 30px;">
+              <textarea id="comment-input" placeholder="分享你的想法..." style="width: 100%; min-height: 100px; padding: 12px; border: 1px solid #e5e7eb; border-radius: 8px; font-size: 14px; resize: vertical; outline: none; font-family: inherit;"></textarea>
+              <div style="display: flex; justify-content: flex-end; margin-top: 12px;">
+                <button class="btn btn-primary" onclick="submitComment()" style="padding: 8px 24px;">发布评论</button>
+              </div>
+            </div>
+
+            <!-- 评论列表 -->
+            <div id="comments-list">
+              <div class="loading"><div class="spinner"></div><p>加载评论中...</p></div>
+            </div>
+          </div>
+        `;
+        navigateTo('guide-detail');
+        await loadComments();
+      }
+
+      // 滚动到评论区域
+      function scrollToComments() {
+        const section = document.getElementById('comments-section');
+        if (section) {
+          section.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+      }
+
+      // 加载评论
+      async function loadComments() {
+        if (!currentGuideId) return;
+        
+        const listEl = document.getElementById('comments-list');
+        if (!listEl) return;
+        
+        try {
+          const res = await fetch(`${API_BASE}/comments?guide_id=${currentGuideId}`);
+          guideComments = await res.json();
+          renderComments();
+        } catch (e) {
+          listEl.innerHTML = '<p style="text-align: center; color: #9ca3af; padding: 20px;">加载评论失败</p>';
+        }
+      }
+
+      // 渲染评论列表
+      function renderComments() {
+        const listEl = document.getElementById('comments-list');
+        if (!listEl) return;
+        
+        if (!guideComments || guideComments.length === 0) {
+          listEl.innerHTML = `
+            <div style="text-align: center; padding: 40px; color: #9ca3af;">
+              <div style="font-size: 48px; margin-bottom: 12px;">💭</div>
+              <p>暂无评论，来抢沙发吧！</p>
+            </div>
+          `;
+          return;
+        }
+        
+        listEl.innerHTML = guideComments.map(comment => `
+          <div class="comment-item" style="padding: 16px 0; border-bottom: 1px solid #f3f4f6;">
+            <div style="display: flex; gap: 12px;">
+              <div style="width: 40px; height: 40px; border-radius: 50%; background: linear-gradient(135deg, #3b82f6, #8b5cf6); display: flex; align-items: center; justify-content: center; color: white; font-weight: 600; flex-shrink: 0;">
+                ${(comment.author_name || 'U')[0]}
+              </div>
+              <div style="flex: 1;">
+                <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 8px;">
+                  <span style="font-weight: 600; color: #1f2937;">${comment.author_name || '匿名用户'}</span>
+                  <span style="font-size: 13px; color: #9ca3af;">${new Date(comment.created_at).toLocaleString()}</span>
+                </div>
+                <p style="color: #374151; line-height: 1.6;">${comment.content}</p>
+                <div style="margin-top: 8px; display: flex; gap: 16px;">
+                  <button style="background: none; border: none; color: #6b7280; cursor: pointer; font-size: 13px;" onmouseover="this.style.color='#3b82f6'" onmouseout="this.style.color='#6b7280'">👍 ${comment.likes || 0}</button>
+                  <button style="background: none; border: none; color: #6b7280; cursor: pointer; font-size: 13px;" onmouseover="this.style.color='#3b82f6'" onmouseout="this.style.color='#6b7280'">回复</button>
+                </div>
+                ${comment.replies && comment.replies.length > 0 ? `
+                  <div style="margin-top: 12px; margin-left: 12px; padding-left: 12px; border-left: 2px solid #e5e7eb;">
+                    ${comment.replies.map(reply => `
+                      <div style="padding: 8px 0;">
+                        <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 4px;">
+                          <span style="font-weight: 600; color: #1f2937; font-size: 14px;">${reply.author_name || '匿名'}</span>
+                          <span style="font-size: 12px; color: #9ca3af;">${new Date(reply.created_at).toLocaleString()}</span>
+                        </div>
+                        <p style="color: #4b5563; font-size: 14px;">${reply.content}</p>
+                      </div>
+                    `).join('')}
+                  </div>
+                ` : ''}
+              </div>
+            </div>
+          </div>
+        `).join('');
+      }
+
+      // 提交评论
+      async function submitComment() {
+        const input = document.getElementById('comment-input');
+        const content = input.value.trim();
+        
+        if (!content) {
+          alert('请输入评论内容');
+          return;
+        }
+        
+        if (!currentUser) {
+          showLoginModal();
+          return;
+        }
+        
+        try {
+          const res = await fetch(`${API_BASE}/comments`, {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+              'Authorization': `Bearer ${currentUser.token}`
+            },
+            body: JSON.stringify({
+              guide_id: currentGuideId,
+              content: content
+            })
+          });
+          
+          const data = await res.json();
+          if (data.id) {
+            input.value = '';
+            alert('评论发布成功！');
+            await loadComments();
+          } else {
+            alert(data.error || '评论失败，请重试');
+          }
+        } catch (e) {
+          alert('评论失败，请稍后重试');
+        }
+      }
+
+      // 初始化数据
+      async function init() {
+        await loadDestinations();
+        await loadHomeData();
+        checkAuth();
+      }
+
+      // 加载目的地
+      async function loadDestinations() {
+        try {
+          const res = await fetch(`${API_BASE}/destinations`);
+          destinationsData = await res.json();
+          renderDestinations();
+        } catch (e) {
+          console.error('加载目的地失败', e);
+        }
+      }
+
+      // 渲染目的地标签
+      function renderDestinations() {
+        const allTag = '<div class="dest-tag active" onclick="filterByDestination(null)">全部</div>';
+        const tags = destinationsData.map((d, i) => 
+          `<div class="dest-tag" onclick="filterByDestination(${d.id})" data-id="${d.id}">${d.name}</div>`
+        ).join('');
+        
+        document.getElementById('destinations-list').innerHTML = allTag + tags;
+        document.getElementById('guides-destinations').innerHTML = allTag + tags;
+      }
+
+      // 按目的地筛选
+      function filterByDestination(destId) {
+        currentDestination = destId;
+        document.querySelectorAll('.dest-tag').forEach(tag => {
+          tag.classList.remove('active');
+          if ((destId === null && tag.textContent === '全部') || 
+              (destId !== null && parseInt(tag.dataset.id) === destId)) {
+            tag.classList.add('active');
+          }
+        });
+        loadHomeData();
+        loadAllGuides();
+      }
+
+      // 加载首页数据
+      async function loadHomeData() {
+        const listEl = document.getElementById('guides-list');
+        listEl.innerHTML = '<div class="loading"><div class="spinner"></div><p>加载中...</p></div>';
+        
+        try {
+          let url = `${API_BASE}/guides?limit=8`;
+          if (currentDestination) url += `&destination_id=${currentDestination}`;
+          const res = await fetch(url);
+          const data = await res.json();
+          guidesData = data.guides || [];
+          renderGuides('guides-list', guidesData);
+        } catch (e) {
+          listEl.innerHTML = '<div class="empty-state"><div class="empty-state-icon">😔</div><p>加载失败，请稍后重试</p></div>';
+        }
+      }
+
+      // 加载全部攻略
+      async function loadAllGuides() {
+        const listEl = document.getElementById('all-guides-list');
+        listEl.innerHTML = '<div class="loading"><div class="spinner"></div><p>加载中...</p></div>';
+        
+        try {
+          let url = `${API_BASE}/guides?limit=20`;
+          if (currentDestination) url += `&destination_id=${currentDestination}`;
+          const res = await fetch(url);
+          const data = await res.json();
+          guidesData = data.guides || [];
+          renderGuides('all-guides-list', guidesData);
+        } catch (e) {
+          listEl.innerHTML = '<div class="empty-state"><div class="empty-state-icon">😔</div><p>加载失败，请稍后重试</p></div>';
+        }
+      }
+
+      // 渲染攻略卡片
+      function renderGuides(elementId, guides) {
+        const listEl = document.getElementById(elementId);
+        if (!guides || guides.length === 0) {
+          listEl.innerHTML = '<div class="empty-state"><div class="empty-state-icon">🗺️</div><p>暂无攻略，成为第一个分享者吧！</p></div>';
+          return;
+        }
+        
+        listEl.innerHTML = guides.map(guide => `
+          <div class="guide-card" onclick="openGuideDetail(${guide.id})">
+            <div class="guide-image">
+              <span>🗺️</span>
+              <span class="guide-dest">📍 ${guide.destination_name || '未知'}</span>
+            </div>
+            <div class="guide-content">
+              <div class="guide-title">${guide.title}</div>
+              <div class="guide-meta">
+                <div class="guide-stats">
+                  <span>👁️ ${guide.views || 0}</span>
+                  <span>❤️ ${guide.likes || 0}</span>
+                </div>
+                <div class="guide-author">
+                  <div class="guide-author-avatar">${(guide.author_name || 'U')[0]}</div>
+                  <span class="guide-author-name">${guide.author_name || '匿名'}</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        `).join('');
+      }
+
+      // 加载旅吧数据
+      async function loadBarData() {
+        const listEl = document.getElementById('bar-list');
+        listEl.innerHTML = '<div class="loading"><div class="spinner"></div><p>加载中...</p></div>';
+        
+        try {
+          const res = await fetch(`${API_BASE}/travel-bars?limit=20`);
+          const data = await res.json();
+          barData = data.travel_bars || [];
+          renderBar();
+        } catch (e) {
+          listEl.innerHTML = '<div class="empty-state"><div class="empty-state-icon">😔</div><p>加载失败，请稍后重试</p></div>';
+        }
+      }
+
+      // 渲染旅吧列表
+      function renderBar() {
+        const listEl = document.getElementById('bar-list');
+        if (!barData || barData.length === 0) {
+          listEl.innerHTML = '<div class="empty-state"><div class="empty-state-icon">💬</div><p>暂无话题，来发起第一个讨论吧！</p></div>';
+          return;
+        }
+        
+        listEl.innerHTML = barData.map(item => `
+          <div class="bar-item">
+            <div class="bar-header">
+              <div class="bar-author-avatar">${(item.author_name || 'U')[0]}</div>
+              <div class="bar-author-info">
+                <h4>${item.author_name || '匿名用户'}</h4>
+                <span>${new Date(item.created_at).toLocaleDateString()}</span>
+              </div>
+            </div>
+            <h3 class="bar-title">${item.title}</h3>
+            <p class="bar-content">${item.content}</p>
+            <div class="bar-footer">
+              <span class="bar-footer-item">❤️ ${item.likes || 0}</span>
+              <span class="bar-footer-item">💬 ${item.comments_count || 0}</span>
+            </div>
+          </div>
+        `).join('');
+      }
+
+      // 搜索攻略
+      async function searchGuides() {
+        const keyword = document.getElementById('home-search').value.trim();
+        if (!keyword) {
+          loadHomeData();
+          return;
+        }
+        
+        const listEl = document.getElementById('guides-list');
+        listEl.innerHTML = '<div class="loading"><div class="spinner"></div><p>搜索中...</p></div>';
+        
+        try {
+          const res = await fetch(`${API_BASE}/guides?search=${encodeURIComponent(keyword)}&limit=10`);
+          const data = await res.json();
+          guidesData = data.guides || [];
+          renderGuides('guides-list', guidesData);
+        } catch (e) {
+          console.error('搜索失败', e);
+        }
+      }
+
+      // 登录相关
+      function showLoginModal() {
+        document.getElementById('login-modal').classList.add('show');
+      }
+
+      function hideLoginModal() {
+        document.getElementById('login-modal').classList.remove('show');
+      }
+
+      function toggleRegisterMode() {
+        isRegisterMode = !isRegisterMode;
+        document.getElementById('modal-title').textContent = isRegisterMode ? '注册账号' : '登录账号';
+        document.getElementById('register-email-group').style.display = isRegisterMode ? 'block' : 'none';
+        document.querySelector('#login-modal .btn-primary').textContent = isRegisterMode ? '注册' : '登录';
+        document.querySelector('#login-modal .modal-switch').innerHTML = isRegisterMode 
+          ? '已有账号？<a onclick="toggleRegisterMode()">立即登录</a>' 
+          : '还没有账号？<a onclick="toggleRegisterMode()">立即注册</a>';
+      }
+
+      async function handleLogin() {
+        const username = document.getElementById('login-username').value;
+        const password = document.getElementById('login-password').value;
+        const email = document.getElementById('login-email').value;
+        
+        if (!username || !password) {
+          alert('请填写用户名和密码');
+          return;
+        }
+        
+        try {
+          const url = isRegisterMode ? `${API_BASE}/auth/register` : `${API_BASE}/auth/login`;
+          const body = isRegisterMode 
+            ? { username, email: email || username + '@test.com', password }
+            : { username, password };
+            
+          const res = await fetch(url, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(body)
+          });
+          
+          const data = await res.json();
+          if (data.user && data.token) {
+            currentUser = { ...data.user, token: data.token };
+            localStorage.setItem('travelUser', JSON.stringify(currentUser));
+            updateNavUser();
+            hideLoginModal();
+            alert(isRegisterMode ? '注册成功！' : '登录成功！');
+          } else {
+            alert(data.error || '操作失败');
+          }
+        } catch (e) {
+          alert('操作失败，请稍后重试');
+        }
+      }
+
+      function updateNavUser() {
+        const actionsEl = document.getElementById('nav-actions');
+        if (currentUser) {
+          actionsEl.innerHTML = `
+            <button class="btn btn-primary" onclick="showLoginModal()">+ 发布攻略</button>
+            <div class="user-avatar" onclick="alert('用户：${currentUser.username}')" title="${currentUser.username}">
+              ${currentUser.username[0]}
+            </div>
+          `;
+        } else {
+          actionsEl.innerHTML = `
+            <button class="btn btn-secondary" onclick="showLoginModal()">登录</button>
+            <button class="btn btn-primary" onclick="showLoginModal()">注册</button>
+          `;
+        }
+      }
+
+      function checkAuth() {
+        const saved = localStorage.getItem('travelUser');
+        if (saved) {
+          try {
+            currentUser = JSON.parse(saved);
+          } catch (e) {
+            currentUser = null;
+          }
+        }
+        updateNavUser();
+      }
+
+      // 点赞、收藏
+      function handleLike(id) {
+        if (!currentUser) {
+          showLoginModal();
+          return;
+        }
+        alert('点赞成功！');
+      }
+
+      function handleSave(id) {
+        if (!currentUser) {
+          showLoginModal();
+          return;
+        }
+        alert('收藏成功！');
+      }
+
+      // 点击模态框外部关闭
+      document.getElementById('login-modal').addEventListener('click', function(e) {
+        if (e.target === this) hideLoginModal();
+      });
+
+      // 初始化
+      init();
+    </script>
+  </body>
+</html>
