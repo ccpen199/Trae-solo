@@ -1,0 +1,5 @@
+ID,操作,实体类型,实体ID,详情,操作人,IP地址,创建时间
+4,notification,notification,1,"{""expert_name"":""孙八"",""status"":""accepted""}",admin,127.0.0.1,2026-05-22 19:00:48
+2,create,project,2,"{""name"":""全国计算机领域评审项目"",""type"":""项目评审"",""professional_field"":""计算机科学"",""expert_count"":3}",admin,127.0.0.1,2026-05-22 19:00:32
+3,extract,project,2,"{""seed"":""a29c4e418530abfc4c7f8eb061c767ba"",""candidate_count"":3,""selected_count"":3,""alternate_count"":0}",admin,127.0.0.1,2026-05-22 19:00:32
+1,create,project,1,"{""name"":""2024年度科研项目评审"",""type"":""科研评审"",""professional_field"":""计算机科学"",""expert_count"":3}",admin,127.0.0.1,2026-05-22 18:58:24
