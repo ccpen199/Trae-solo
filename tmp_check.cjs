@@ -1,0 +1,22 @@
+const d = JSON.parse(require("fs").readFileSync(0, "utf-8")).data;
+console.log("电池总数:", d.totalBatteries);
+console.log("告警数(未处理):", d.openAlerts);
+console.log("高风险/严重未处理:", d.openHighCriticalAlerts);
+console.log("高风险电池数:", d.highRiskCount);
+console.log("待复查电池数:", d.pendingReviewCount);
+console.log("召回批次电池数:", d.recallCount);
+console.log("待报废电池数:", d.pendingRetireCount);
+console.log("待梯次电池数:", d.pendingCascadeCount);
+console.log("待维护任务数:", d.pendingMaintenance);
+console.log("");
+console.log("待办维护任务:");
+const ids = [];
+d.recentMaintenance.forEach(t => {
+  ids.push(t.id);
+  const alert = t.alert_id ? ` alert=${t.alert_type}/${t.severity}` : " (无高风险)";
+  console.log(`  ${t.task_type.padEnd(8)} ${t.battery_code.padEnd(15)} priority=${t.priority.padEnd(6)} status=${t.status}${alert}`);
+});
+console.log("任务ID:", ids);
+console.log("有重复?", ids.length !== new Set(ids).size);
+console.log("");
+console.log("BAT-2024-001 维护任务优先级:", d.recentMaintenance.find(t => t.battery_code === "BAT-2024-001")?.priority);
