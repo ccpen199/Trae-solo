@@ -1,0 +1,503 @@
+{
+  "ok": true,
+  "generatedAt": "2026-06-04T20:48:02.624Z",
+  "order": "may-89036",
+  "roundIndex": 4,
+  "captureId": "may-89036-final",
+  "url": "http://127.0.0.1:49036/",
+  "initialUrl": "http://127.0.0.1:49036/",
+  "finalUrl": "http://127.0.0.1:49036/login",
+  "status": 200,
+  "title": "云南省一体化政务服务平台",
+  "initialTitle": "云南省一体化政务服务平台",
+  "navigationError": "",
+  "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89036/probe/codex-final-20260604-2344/may-89036-final-frontend.png",
+  "screenshotPaths": [
+    "/Users/chen/Documents/trae_projects/local_projects/may-89036/probe/codex-final-20260604-2344/may-89036-final-structure-01-首屏.png"
+  ],
+  "issueTextPreview": "登录注册相关问题；后台管理相关问题",
+  "targetReason": "登录注册相关问题；后台管理相关问题",
+  "targetKind": "auth",
+  "targetMatched": true,
+  "targetActions": [
+    {
+      "action": "click",
+      "label": "登录注册相关问题",
+      "ok": true
+    },
+    {
+      "action": "target-verify",
+      "label": "登录注册相关问题",
+      "ok": true,
+      "finalUrl": "http://127.0.0.1:49036/login"
+    }
+  ],
+  "authFlow": {
+    "detected": true,
+    "attempted": true,
+    "success": false,
+    "finalUrl": "http://127.0.0.1:49036/login",
+    "message": "已尝试登录但仍停留在登录页",
+    "actions": [
+      {
+        "action": "login-fill-username",
+        "label": "admin",
+        "ok": true
+      },
+      {
+        "action": "login-fill-password",
+        "label": "admin:******",
+        "ok": true
+      },
+      {
+        "action": "click",
+        "label": "登录:admin",
+        "ok": true
+      },
+      {
+        "action": "login-submit",
+        "label": "admin",
+        "ok": true,
+        "beforeUrl": "http://127.0.0.1:49036/login"
+      },
+      {
+        "action": "login-result",
+        "label": "admin",
+        "ok": false,
+        "finalUrl": "http://127.0.0.1:49036/login",
+        "feedback": []
+      },
+      {
+        "action": "login-fill-username",
+        "label": "platform",
+        "ok": true
+      },
+      {
+        "action": "login-fill-password",
+        "label": "platform:******",
+        "ok": true
+      },
+      {
+        "action": "click",
+        "label": "登录:platform",
+        "ok": true
+      },
+      {
+        "action": "login-submit",
+        "label": "platform",
+        "ok": true,
+        "beforeUrl": "http://127.0.0.1:49036/login"
+      },
+      {
+        "action": "login-result",
+        "label": "platform",
+        "ok": false,
+        "finalUrl": "http://127.0.0.1:49036/login",
+        "feedback": []
+      },
+      {
+        "action": "login-fill-username",
+        "label": "ops",
+        "ok": true
+      },
+      {
+        "action": "login-fill-password",
+        "label": "ops:******",
+        "ok": true
+      },
+      {
+        "action": "click",
+        "label": "登录:ops",
+        "ok": true
+      },
+      {
+        "action": "login-submit",
+        "label": "ops",
+        "ok": true,
+        "beforeUrl": "http://127.0.0.1:49036/login"
+      },
+      {
+        "action": "login-result",
+        "label": "ops",
+        "ok": false,
+        "finalUrl": "http://127.0.0.1:49036/login",
+        "feedback": []
+      }
+    ]
+  },
+  "businessAudit": {
+    "actions": [],
+    "snapshots": [
+      {
+        "label": "首屏",
+        "url": "http://127.0.0.1:49036/login",
+        "title": "云南省一体化政务服务平台",
+        "headings": [
+          "云南省一体化政务服务平台"
+        ],
+        "navLabels": [],
+        "buttons": [
+          "登 录",
+          "CA证书登录",
+          "人脸识别登录"
+        ],
+        "links": [
+          "立即注册"
+        ],
+        "inputs": [
+          {
+            "tag": "input",
+            "type": "text",
+            "placeholder": "请输入用户名",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "password",
+            "placeholder": "请输入密码",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "checkbox",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          }
+        ],
+        "tables": [],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "云云南省一体化政务服务平台统一身份认证 · 对接省政务云CA记住我CA认证与人脸识别可在登录后完成登 录其他方式CA证书登录人脸识别登录还没有账号？立即注册演示账号：超级管理员：admin / admin123平台管理员：platform / admin123经办人员：ops / admin123审核人员：reviewer / admin123办事人：citizen / admin123",
+        "layout": {
+          "viewportWidth": 1504,
+          "viewportHeight": 1000,
+          "scrollWidth": 1504,
+          "scrollHeight": 1000,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89036-final-structure-01-首屏",
+          "label": "首屏",
+          "finalUrl": "http://127.0.0.1:49036/login",
+          "title": "云南省一体化政务服务平台",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89036/probe/codex-final-20260604-2344/may-89036-final-structure-01-首屏.json",
+          "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89036/probe/codex-final-20260604-2344/may-89036-final-structure-01-首屏.png",
+          "elementCount": 90,
+          "interactiveCount": 7,
+          "interactiveLabels": [
+            "请输入用户名",
+            "请输入密码",
+            "on",
+            "登 录",
+            "CA证书登录",
+            "人脸识别登录",
+            "立即注册"
+          ]
+        }
+      }
+    ],
+    "findings": [
+      "登录页可见，但自动填充可见演示账号后仍停留在登录页，没有进入登录后的首页或工作台。"
+    ],
+    "actionHints": [
+      "优先修复登录表单、演示账号、登录接口和登录后跳转，让自动化能先完成登录再复验首页业务链路。"
+    ],
+    "emptyPages": [],
+    "overflowPages": [],
+    "blankPages": [],
+    "apiFailurePaths": [],
+    "goalTerms": [],
+    "clickedActionDescriptors": [],
+    "secondaryActionClicks": 0,
+    "structureCaptures": [
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89036-final-structure-01-首屏",
+        "label": "首屏",
+        "finalUrl": "http://127.0.0.1:49036/login",
+        "title": "云南省一体化政务服务平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89036/probe/codex-final-20260604-2344/may-89036-final-structure-01-首屏.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89036/probe/codex-final-20260604-2344/may-89036-final-structure-01-首屏.png",
+        "elementCount": 90,
+        "interactiveCount": 7,
+        "interactiveLabels": [
+          "请输入用户名",
+          "请输入密码",
+          "on",
+          "登 录",
+          "CA证书登录",
+          "人脸识别登录",
+          "立即注册"
+        ]
+      }
+    ],
+    "representativeScreenshotUrl": "http://127.0.0.1:49036/login",
+    "representativeScreenshotLabel": "云南省一体化政务服务平台"
+  },
+  "websiteStructureCapture": {
+    "module": "website_structure_capture",
+    "captureCount": 1,
+    "captures": [
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89036-final-structure-01-首屏",
+        "label": "首屏",
+        "finalUrl": "http://127.0.0.1:49036/login",
+        "title": "云南省一体化政务服务平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89036/probe/codex-final-20260604-2344/may-89036-final-structure-01-首屏.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89036/probe/codex-final-20260604-2344/may-89036-final-structure-01-首屏.png",
+        "elementCount": 90,
+        "interactiveCount": 7,
+        "interactiveLabels": [
+          "请输入用户名",
+          "请输入密码",
+          "on",
+          "登 录",
+          "CA证书登录",
+          "人脸识别登录",
+          "立即注册"
+        ]
+      }
+    ]
+  },
+  "screenshotMetrics": {
+    "width": 1536,
+    "height": 1000,
+    "scrollWidth": 1504,
+    "scrollHeight": 1000
+  },
+  "initialBodyTextPreview": "云\n云南省一体化政务服务平台\n\n统一身份认证 · 对接省政务云CA\n\n记住我\nCA认证与人脸识别可在登录后完成\n登 录\n其他方式\nCA证书登录\n人脸识别登录\n还没有账号？立即注册\n演示账号：\n超级管理员：admin / admin123\n平台管理员：platform / admin123\n经办人员：ops / admin123\n审核人员：reviewer / admin123\n办事人：citizen / admin123",
+  "bodyTextPreview": "云\n云南省一体化政务服务平台\n\n统一身份认证 · 对接省政务云CA\n\n记住我\nCA认证与人脸识别可在登录后完成\n登 录\n其他方式\nCA证书登录\n人脸识别登录\n还没有账号？立即注册\n演示账号：\n超级管理员：admin / admin123\n平台管理员：platform / admin123\n经办人员：ops / admin123\n审核人员：reviewer / admin123\n办事人：citizen / admin123",
+  "apiBase": "http://127.0.0.1:59036",
+  "businessGoalPreview": "",
+  "apiResponses": [],
+  "apiChecks": [
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59036/api/health",
+      "path": "/api/health",
+      "status": 200,
+      "ok": true,
+      "bodyPreview": "{\"status\":\"ok\",\"timestamp\":\"2026-06-04T20:47:53.562Z\",\"db\":\"connected\"}"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59036/api/auth/me",
+      "path": "/api/auth/me",
+      "status": 200,
+      "ok": true,
+      "bodyPreview": "{\"id\":1,\"username\":\"admin\",\"real_name\":\"系统管理员\",\"id_number\":null,\"phone\":null,\"email\":null,\"user_type\":\"admin\",\"department_id\":40,\"role\":\"super_admin\",\"avatar\":null,\"status\":\"active\",\"last_login_at\":\"2026-06-04 23:40:05\",\"created_at\":\"2026-06-04 01:11:25\",\"updated_at\":\"2026-06-04 01:11:25\",\"department_name\":\"政务服务管理局\"}"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59036/api/users/profile",
+      "path": "/api/users/profile",
+      "status": 200,
+      "ok": true,
+      "bodyPreview": "{\"user\":{\"id\":1,\"username\":\"admin\",\"real_name\":\"系统管理员\",\"id_number\":null,\"phone\":null,\"email\":null,\"user_type\":\"admin\",\"department_id\":40,\"role\":\"super_admin\",\"avatar\":null,\"status\":\"active\",\"last_login_at\":\"2026-06-04 23:40:05\",\"created_at\":\"2026-06-04 01:11:25\",\"updated_at\":\"2026-06-04 01:11:25\",\"department_name\":\"政务服务管理局\"},\"profile\":{\"id\":1,\"username\":\"admin\",\"real_name\":\"系统管理员\",\"id_number\":null,\"phone\":null,\"email\":null,\"user_type\":\"admin\",\"department_id\":40,\"role\":\"super_admin\",\"avatar\":null"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59036/api/user/profile",
+      "path": "/api/user/profile",
+      "status": 200,
+      "ok": true,
+      "bodyPreview": "{\"user\":{\"id\":1,\"username\":\"admin\",\"real_name\":\"系统管理员\",\"id_number\":null,\"phone\":null,\"email\":null,\"user_type\":\"admin\",\"department_id\":40,\"role\":\"super_admin\",\"avatar\":null,\"status\":\"active\",\"last_login_at\":\"2026-06-04 23:40:05\",\"created_at\":\"2026-06-04 01:11:25\",\"updated_at\":\"2026-06-04 01:11:25\",\"department_name\":\"政务服务管理局\"},\"profile\":{\"id\":1,\"username\":\"admin\",\"real_name\":\"系统管理员\",\"id_number\":null,\"phone\":null,\"email\":null,\"user_type\":\"admin\",\"department_id\":40,\"role\":\"super_admin\",\"avatar\":null"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59036/api/admin/stats",
+      "path": "/api/admin/stats",
+      "status": 200,
+      "ok": true,
+      "bodyPreview": "{\"totalItems\":20,\"totalCases\":9,\"totalCertificates\":0,\"totalUsers\":6,\"pendingCases\":5,\"status\":\"ok\"}"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59036/api/admin/dashboard",
+      "path": "/api/admin/dashboard",
+      "status": 200,
+      "ok": true,
+      "bodyPreview": "{\"stats\":{\"totalItems\":20,\"totalCases\":9,\"totalCertificates\":0,\"totalUsers\":6,\"pendingCases\":5},\"recentCases\":[{\"id\":7,\"case_no\":\"YN20260604000006\",\"applicant_name\":\"张三\",\"status\":\"submitted\",\"created_at\":\"2026-06-04 15:27:48\",\"item_name\":\"居民身份证换领\"},{\"id\":8,\"case_no\":\"YN20260604000007\",\"applicant_name\":\"张三\",\"status\":\"reviewing\",\"created_at\":\"2026-06-04 15:27:48\",\"item_name\":\"医保异地就医备案\"},{\"id\":9,\"case_no\":\"YN20260604000008\",\"applicant_name\":\"张三\",\"status\":\"completed\",\"created_at\":\"2026-06-04 15:27:4"
+    }
+  ],
+  "dialogs": [],
+  "consoleMessages": [
+    {
+      "type": "debug",
+      "text": "[vite] connecting...",
+      "location": {
+        "url": "http://127.0.0.1:49036/@vite/client",
+        "lineNumber": 494,
+        "columnNumber": 8
+      }
+    },
+    {
+      "type": "debug",
+      "text": "[vite] connected.",
+      "location": {
+        "url": "http://127.0.0.1:49036/@vite/client",
+        "lineNumber": 617,
+        "columnNumber": 14
+      }
+    },
+    {
+      "type": "info",
+      "text": "%cDownload the React DevTools for a better development experience: https://reactjs.org/link/react-devtools font-weight:bold",
+      "location": {
+        "url": "http://127.0.0.1:49036/node_modules/.vite/deps/chunk-PJEEZAML.js?v=0912bb94",
+        "lineNumber": 21550,
+        "columnNumber": 24
+      }
+    },
+    {
+      "type": "warning",
+      "text": "⚠️ React Router Future Flag Warning: React Router will begin wrapping state updates in `React.startTransition` in v7. You can use the `v7_startTransition` future flag to opt-in early. For more information, see https://reactrouter.com/v6/upgrading/future#v7_starttransition.",
+      "location": {
+        "url": "http://127.0.0.1:49036/node_modules/.vite/deps/react-router-dom.js?v=0912bb94",
+        "lineNumber": 4426,
+        "columnNumber": 12
+      }
+    },
+    {
+      "type": "warning",
+      "text": "⚠️ React Router Future Flag Warning: Relative route resolution within Splat routes is changing in v7. You can use the `v7_relativeSplatPath` future flag to opt-in early. For more information, see https://reactrouter.com/v6/upgrading/future#v7_relativesplatpath.",
+      "location": {
+        "url": "http://127.0.0.1:49036/node_modules/.vite/deps/react-router-dom.js?v=0912bb94",
+        "lineNumber": 4426,
+        "columnNumber": 12
+      }
+    },
+    {
+      "type": "error",
+      "text": "Failed to load resource: the server responded with a status of 404 (Not Found)",
+      "location": {
+        "url": "http://127.0.0.1:49036/favicon.ico",
+        "lineNumber": 0,
+        "columnNumber": 0
+      }
+    },
+    {
+      "type": "error",
+      "text": "Failed to load resource: the server responded with a status of 404 (Not Found)",
+      "location": {
+        "url": "http://127.0.0.1:49036/favicon.ico",
+        "lineNumber": 0,
+        "columnNumber": 0
+      }
+    },
+    {
+      "type": "error",
+      "text": "Warning: [antd: message] Static function can not consume context like dynamic theme. Please use 'App' component instead.",
+      "location": {
+        "url": "http://127.0.0.1:49036/node_modules/.vite/deps/chunk-D2XKH6ZM.js?v=0912bb94",
+        "lineNumber": 1247,
+        "columnNumber": 14
+      }
+    },
+    {
+      "type": "debug",
+      "text": "[vite] connecting...",
+      "location": {
+        "url": "http://127.0.0.1:49036/@vite/client",
+        "lineNumber": 494,
+        "columnNumber": 8
+      }
+    },
+    {
+      "type": "info",
+      "text": "%cDownload the React DevTools for a better development experience: https://reactjs.org/link/react-devtools font-weight:bold",
+      "location": {
+        "url": "http://127.0.0.1:49036/node_modules/.vite/deps/chunk-PJEEZAML.js?v=0912bb94",
+        "lineNumber": 21550,
+        "columnNumber": 24
+      }
+    },
+    {
+      "type": "debug",
+      "text": "[vite] connected.",
+      "location": {
+        "url": "http://127.0.0.1:49036/@vite/client",
+        "lineNumber": 617,
+        "columnNumber": 14
+      }
+    },
+    {
+      "type": "warning",
+      "text": "⚠️ React Router Future Flag Warning: React Router will begin wrapping state updates in `React.startTransition` in v7. You can use the `v7_startTransition` future flag to opt-in early. For more information, see https://reactrouter.com/v6/upgrading/future#v7_starttransition.",
+      "location": {
+        "url": "http://127.0.0.1:49036/node_modules/.vite/deps/react-router-dom.js?v=0912bb94",
+        "lineNumber": 4426,
+        "columnNumber": 12
+      }
+    },
+    {
+      "type": "warning",
+      "text": "⚠️ React Router Future Flag Warning: Relative route resolution within Splat routes is changing in v7. You can use the `v7_relativeSplatPath` future flag to opt-in early. For more information, see https://reactrouter.com/v6/upgrading/future#v7_relativesplatpath.",
+      "location": {
+        "url": "http://127.0.0.1:49036/node_modules/.vite/deps/react-router-dom.js?v=0912bb94",
+        "lineNumber": 4426,
+        "columnNumber": 12
+      }
+    },
+    {
+      "type": "error",
+      "text": "Warning: [antd: message] Static function can not consume context like dynamic theme. Please use 'App' component instead.",
+      "location": {
+        "url": "http://127.0.0.1:49036/node_modules/.vite/deps/chunk-D2XKH6ZM.js?v=0912bb94",
+        "lineNumber": 1247,
+        "columnNumber": 14
+      }
+    },
+    {
+      "type": "debug",
+      "text": "[vite] connecting...",
+      "location": {
+        "url": "http://127.0.0.1:49036/@vite/client",
+        "lineNumber": 494,
+        "columnNumber": 8
+      }
+    },
+    {
+      "type": "info",
+      "text": "%cDownload the React DevTools for a better development experience: https://reactjs.org/link/react-devtools font-weight:bold",
+      "location": {
+        "url": "http://127.0.0.1:49036/node_modules/.vite/deps/chunk-PJEEZAML.js?v=0912bb94",
+        "lineNumber": 21550,
+        "columnNumber": 24
+      }
+    },
+    {
+      "type": "debug",
+      "text": "[vite] connected.",
+      "location": {
+        "url": "http://127.0.0.1:49036/@vite/client",
+        "lineNumber": 617,
+        "columnNumber": 14
+      }
+    },
+    {
+      "type": "warning",
+      "text": "⚠️ React Router Future Flag Warning: React Router will begin wrapping state updates in `React.startTransition` in v7. You can use the `v7_startTransition` future flag to opt-in early. For more information, see https://reactrouter.com/v6/upgrading/future#v7_starttransition.",
+      "location": {
+        "url": "http://127.0.0.1:49036/node_modules/.vite/deps/react-router-dom.js?v=0912bb94",
+        "lineNumber": 4426,
+        "columnNumber": 12
+      }
+    },
+    {
+      "type": "warning",
+      "text": "⚠️ React Router Future Flag Warning: Relative route resolution within Splat routes is changing in v7. You can use the `v7_relativeSplatPath` future flag to opt-in early. For more information, see https://reactrouter.com/v6/upgrading/future#v7_relativesplatpath.",
+      "location": {
+        "url": "http://127.0.0.1:49036/node_modules/.vite/deps/react-router-dom.js?v=0912bb94",
+        "lineNumber": 4426,
+        "columnNumber": 12
+      }
+    }
+  ],
+  "requestFailures": [],
+  "responseErrors": []
+}
