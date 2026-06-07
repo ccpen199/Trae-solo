@@ -1,0 +1,1037 @@
+{
+  "ok": true,
+  "generatedAt": "2026-06-04T07:54:24.886Z",
+  "order": "may-89025",
+  "roundIndex": 9,
+  "captureId": "codex-may-89025-current",
+  "url": "http://127.0.0.1:49025/",
+  "initialUrl": "http://127.0.0.1:49025/",
+  "finalUrl": "http://127.0.0.1:49025/",
+  "status": 200,
+  "title": "省级一体化移动政务服务平台",
+  "initialTitle": "省级一体化移动政务服务平台",
+  "navigationError": "",
+  "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89025/probe/codex-runtime-current/codex-may-89025-current-frontend.png",
+  "screenshotPaths": [
+    "/Users/chen/Documents/trae_projects/local_projects/may-89025/probe/codex-runtime-current/codex-may-89025-current-structure-01-首屏.png",
+    "/Users/chen/Documents/trae_projects/local_projects/may-89025/probe/codex-runtime-current/codex-may-89025-current-structure-02-导航-首页.png",
+    "/Users/chen/Documents/trae_projects/local_projects/may-89025/probe/codex-runtime-current/codex-may-89025-current-structure-03-操作-社保查询-人力资源....png",
+    "/Users/chen/Documents/trae_projects/local_projects/may-89025/probe/codex-runtime-current/codex-may-89025-current-structure-04-二层操作-社保查询-人力资源...-立即办理.png"
+  ],
+  "issueTextPreview": "",
+  "targetReason": "页面存在后台入口，优先复验后台管理链路；页面存在我的/账号入口，优先复验个人中心链路",
+  "targetKind": "admin",
+  "targetMatched": true,
+  "targetActions": [
+    {
+      "action": "click",
+      "label": "页面存在后台入口，优先复验后台管理链路",
+      "ok": true
+    },
+    {
+      "action": "target-verify",
+      "label": "页面存在后台入口，优先复验后台管理链路",
+      "ok": true,
+      "finalUrl": "http://127.0.0.1:49025/"
+    }
+  ],
+  "authFlow": {
+    "detected": false,
+    "attempted": false,
+    "success": false,
+    "finalUrl": "http://127.0.0.1:49025/",
+    "message": "",
+    "actions": []
+  },
+  "businessAudit": {
+    "actions": [
+      {
+        "action": "click",
+        "label": "导航:首页",
+        "ok": false,
+        "error": "locator.click: Timeout 900ms exceeded.\nCall log:\n\u001b[2m  - waiting for locator('a,button,[role=\"button\"],[role=\"menuitem\"],[onclick],[tabindex]:not([tabindex=\"-1\"]),[class*=\"nav-item\" i],[class*=\"menu-item\" i],[class*=\"men"
+      },
+      {
+        "action": "click",
+        "label": "导航:首页",
+        "ok": true
+      },
+      {
+        "action": "click",
+        "label": "操作:社保查询 人力资源...",
+        "ok": true,
+        "result": {
+          "ok": true,
+          "matched": 1
+        }
+      },
+      {
+        "action": "click",
+        "label": "二层操作:社保查询 人力资源...:立即办理",
+        "ok": true,
+        "result": {
+          "ok": true,
+          "matched": 2
+        }
+      }
+    ],
+    "snapshots": [
+      {
+        "label": "首屏",
+        "url": "http://127.0.0.1:49025/",
+        "title": "省级一体化移动政务服务平台",
+        "headings": [
+          "欢迎使用政务服务平台"
+        ],
+        "navLabels": [
+          "首页 电子证照 服务大厅 智能导办 我的办件 政策速递 城市服务 个人中心 管理后台",
+          "首页",
+          "home",
+          "电子证照",
+          "idcard",
+          "服务大厅",
+          "appstore",
+          "智能导办",
+          "file-search",
+          "我的办件",
+          "file-text",
+          "政策速递",
+          "城市服务",
+          "cloud",
+          "个人中心",
+          "user",
+          "管理后台",
+          "dashboard"
+        ],
+        "buttons": [
+          "更多",
+          "身份证办理 公安厅",
+          "居住证申领 公安厅",
+          "户口迁移 公安厅",
+          "社保查询 人力资源...",
+          "养老保险转移 人力资源...",
+          "失业保险金申领 人力资源...",
+          "医保报销 医疗保障...",
+          "异地就医备案 医疗保障...",
+          "公安服务",
+          "人社服务",
+          "医保服务",
+          "教育服务",
+          "民政服务",
+          "税务服务",
+          "住房服务",
+          "交通服务"
+        ],
+        "links": [],
+        "inputs": [
+          {
+            "tag": "input",
+            "type": "search",
+            "placeholder": "搜索服务事项、政策...",
+            "name": "",
+            "label": ""
+          }
+        ],
+        "tables": [],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "省级一体化移动政务服务平台标准版演示管理员首页电子证照服务大厅智能导办我的办件政策速递城市服务个人中心管理后台欢迎使用政务服务平台让数据多跑路，让群众少跑腿27°C晴电子证照证照管理服务大厅办事服务我的办件进度查询政策速递政策查询热门服务更多 身份证办理公安厅居住证申领公安厅户口迁移公安厅社保查询人力资源...养老保险转移人力资源...失业保险金申领人力资源...医保报销医疗保障...异地就医备案医疗保障...政策速递更多 置顶关于优化营商环境的若干政策措施省政府办公厅2024年度社保缴费基数调整通知人力资源和社会保障厅医保跨省异地就医直接结算政策解读医疗保障局关于加强政务服务\"一网通办\"的实施意见政务服务管理局居民身份证电子证照全面推广应用公安厅部门服务公安服务人社服务医保服务教育服务民政服务税务服务住房服务交通服务",
+        "layout": {
+          "viewportWidth": 1504,
+          "viewportHeight": 1181,
+          "scrollWidth": 1504,
+          "scrollHeight": 1181,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "codex-may-89025-current-structure-01-首屏",
+          "label": "首屏",
+          "finalUrl": "http://127.0.0.1:49025/",
+          "title": "省级一体化移动政务服务平台",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89025/probe/codex-runtime-current/codex-may-89025-current-structure-01-首屏.json",
+          "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89025/probe/codex-runtime-current/codex-may-89025-current-structure-01-首屏.png",
+          "elementCount": 277,
+          "interactiveCount": 31,
+          "interactiveLabels": [
+            "首页 电子证照 服务大厅 智能导办 我的办件 政策速递 城市服务 个人中心 管理后台",
+            "首页",
+            "电子证照",
+            "服务大厅",
+            "智能导办",
+            "我的办件",
+            "政策速递",
+            "城市服务",
+            "个人中心",
+            "管理后台",
+            "搜索服务事项、政策...",
+            "更多",
+            "身份证办理 公安厅",
+            "居住证申领 公安厅",
+            "户口迁移 公安厅",
+            "社保查询 人力资源...",
+            "养老保险转移 人力资源...",
+            "失业保险金申领 人力资源...",
+            "医保报销 医疗保障...",
+            "异地就医备案 医疗保障...",
+            "公安服务",
+            "人社服务",
+            "医保服务",
+            "教育服务",
+            "民政服务",
+            "税务服务",
+            "住房服务",
+            "交通服务"
+          ]
+        }
+      },
+      {
+        "label": "导航:首页",
+        "url": "http://127.0.0.1:49025/",
+        "title": "省级一体化移动政务服务平台",
+        "headings": [
+          "欢迎使用政务服务平台"
+        ],
+        "navLabels": [
+          "首页 电子证照 服务大厅 智能导办 我的办件 政策速递 城市服务 个人中心 管理后台",
+          "首页",
+          "home",
+          "电子证照",
+          "idcard",
+          "服务大厅",
+          "appstore",
+          "智能导办",
+          "file-search",
+          "我的办件",
+          "file-text",
+          "政策速递",
+          "城市服务",
+          "cloud",
+          "个人中心",
+          "user",
+          "管理后台",
+          "dashboard"
+        ],
+        "buttons": [
+          "更多",
+          "身份证办理 公安厅",
+          "居住证申领 公安厅",
+          "户口迁移 公安厅",
+          "社保查询 人力资源...",
+          "养老保险转移 人力资源...",
+          "失业保险金申领 人力资源...",
+          "医保报销 医疗保障...",
+          "异地就医备案 医疗保障...",
+          "公安服务",
+          "人社服务",
+          "医保服务",
+          "教育服务",
+          "民政服务",
+          "税务服务",
+          "住房服务",
+          "交通服务"
+        ],
+        "links": [],
+        "inputs": [
+          {
+            "tag": "input",
+            "type": "search",
+            "placeholder": "搜索服务事项、政策...",
+            "name": "",
+            "label": ""
+          }
+        ],
+        "tables": [],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "省级一体化移动政务服务平台标准版演示管理员首页电子证照服务大厅智能导办我的办件政策速递城市服务个人中心管理后台欢迎使用政务服务平台让数据多跑路，让群众少跑腿27°C晴电子证照证照管理服务大厅办事服务我的办件进度查询政策速递政策查询热门服务更多 身份证办理公安厅居住证申领公安厅户口迁移公安厅社保查询人力资源...养老保险转移人力资源...失业保险金申领人力资源...医保报销医疗保障...异地就医备案医疗保障...政策速递更多 置顶关于优化营商环境的若干政策措施省政府办公厅2024年度社保缴费基数调整通知人力资源和社会保障厅医保跨省异地就医直接结算政策解读医疗保障局关于加强政务服务\"一网通办\"的实施意见政务服务管理局居民身份证电子证照全面推广应用公安厅部门服务公安服务人社服务医保服务教育服务民政服务税务服务住房服务交通服务",
+        "layout": {
+          "viewportWidth": 1536,
+          "viewportHeight": 1181,
+          "scrollWidth": 1536,
+          "scrollHeight": 1181,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "codex-may-89025-current-structure-02-导航-首页",
+          "label": "导航:首页",
+          "finalUrl": "http://127.0.0.1:49025/",
+          "title": "省级一体化移动政务服务平台",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89025/probe/codex-runtime-current/codex-may-89025-current-structure-02-导航-首页.json",
+          "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89025/probe/codex-runtime-current/codex-may-89025-current-structure-02-导航-首页.png",
+          "elementCount": 277,
+          "interactiveCount": 31,
+          "interactiveLabels": [
+            "首页 电子证照 服务大厅 智能导办 我的办件 政策速递 城市服务 个人中心 管理后台",
+            "首页",
+            "电子证照",
+            "服务大厅",
+            "智能导办",
+            "我的办件",
+            "政策速递",
+            "城市服务",
+            "个人中心",
+            "管理后台",
+            "搜索服务事项、政策...",
+            "更多",
+            "身份证办理 公安厅",
+            "居住证申领 公安厅",
+            "户口迁移 公安厅",
+            "社保查询 人力资源...",
+            "养老保险转移 人力资源...",
+            "失业保险金申领 人力资源...",
+            "医保报销 医疗保障...",
+            "异地就医备案 医疗保障...",
+            "公安服务",
+            "人社服务",
+            "医保服务",
+            "教育服务",
+            "民政服务",
+            "税务服务",
+            "住房服务",
+            "交通服务"
+          ]
+        }
+      },
+      {
+        "label": "操作:社保查询 人力资源...",
+        "url": "http://127.0.0.1:49025/services/22",
+        "title": "省级一体化移动政务服务平台",
+        "headings": [],
+        "navLabels": [
+          "首页 电子证照 服务大厅 智能导办 我的办件 政策速递 城市服务 个人中心 管理后台",
+          "首页",
+          "home",
+          "电子证照",
+          "idcard",
+          "服务大厅",
+          "appstore",
+          "智能导办",
+          "file-search",
+          "我的办件",
+          "file-text",
+          "政策速递",
+          "城市服务",
+          "cloud",
+          "个人中心",
+          "user",
+          "管理后台",
+          "dashboard"
+        ],
+        "buttons": [
+          "我的证照",
+          "立即办理"
+        ],
+        "links": [],
+        "inputs": [],
+        "tables": [
+          {
+            "headers": [
+              "服务编码",
+              "所属部门",
+              "服务分类",
+              "办理时限",
+              "服务说明"
+            ],
+            "rowCount": 3,
+            "hasEmptyText": false,
+            "textPreview": "服务编码 social_security_query 所属部门 人力资源和社会保障厅 服务分类 人社服务 办理时限 即时办理 服务说明 本服务由人力资源和社会保障厅提供，用于办理社保查询相关业务。办理过程中需要提供相关证明材料，请确保材料真实有效。"
+          }
+        ],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "省级一体化移动政务服务平台标准版演示管理员首页电子证照服务大厅智能导办我的办件政策速递城市服务个人中心管理后台社保查询热门我的证照立即办理服务编码social_security_query所属部门人力资源和社会保障厅服务分类人社服务办理时限即时办理服务说明本服务由人力资源和社会保障厅提供，用于办理社保查询相关业务。办理过程中需要提供相关证明材料，请确保材料真实有效。已有证照0我的办件0办理环节4满意度4.8/ 5.0办理流程材料清单证照核验政策补贴试算进度追踪在线提交申请填写基本信息，上传所需材料电子证照核验系统自动核验电子证照有效性材料智能预检AI检查材料完整性和规范性部门审核办理工作人员审核并办理业务结果反馈送达在线查看结果，电子证照自动入库提交申请在线填写申请表格，上传相关材料扫描件证照核验系统自动调用电子证照库进行真实性核验材料预检智能检查材料是否齐全、格式是否正确部门办理工作人员进行实质性审核和业务办理结果反馈通过短信、APP推送办理结果，电子证照自动生成立即办理",
+        "layout": {
+          "viewportWidth": 1568,
+          "viewportHeight": 1181,
+          "scrollWidth": 1568,
+          "scrollHeight": 1181,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "codex-may-89025-current-structure-03-操作-社保查询-人力资源...",
+          "label": "操作:社保查询 人力资源...",
+          "finalUrl": "http://127.0.0.1:49025/services/22",
+          "title": "省级一体化移动政务服务平台",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89025/probe/codex-runtime-current/codex-may-89025-current-structure-03-操作-社保查询-人力资源....json",
+          "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89025/probe/codex-runtime-current/codex-may-89025-current-structure-03-操作-社保查询-人力资源....png",
+          "elementCount": 306,
+          "interactiveCount": 17,
+          "interactiveLabels": [
+            "首页 电子证照 服务大厅 智能导办 我的办件 政策速递 城市服务 个人中心 管理后台",
+            "首页",
+            "电子证照",
+            "服务大厅",
+            "智能导办",
+            "我的办件",
+            "政策速递",
+            "城市服务",
+            "个人中心",
+            "管理后台",
+            "我的证照",
+            "立即办理",
+            "办理流程",
+            "在线提交申请 填写基本信息，上传所需材料 电子证照核验 系统自动核验电子证照有效性 材料智能预检 AI检查材料完整性和规范性 部门审核办理 工作人员审核并办理业务 结果反馈送达 在线查看结果，电子证照自动入库 提交申请 在线填写申请表格，上传相关材料扫描件 证照核验 系统自动调用电子证照库进行真实性核验 材料预检 智能检查材料是否齐全、格式是否正确 部门办理"
+          ]
+        }
+      },
+      {
+        "label": "二层操作:社保查询 人力资源...->立即办理",
+        "url": "http://127.0.0.1:49025/apply/22",
+        "title": "省级一体化移动政务服务平台",
+        "headings": [
+          "请选择办理方式",
+          "个人办理",
+          "法人办理"
+        ],
+        "navLabels": [
+          "首页 电子证照 服务大厅 智能导办 我的办件 政策速递 城市服务 个人中心 管理后台",
+          "首页",
+          "home",
+          "电子证照",
+          "idcard",
+          "服务大厅",
+          "appstore",
+          "智能导办",
+          "file-search",
+          "我的办件",
+          "file-text",
+          "政策速递",
+          "城市服务",
+          "cloud",
+          "个人中心",
+          "user",
+          "管理后台",
+          "dashboard"
+        ],
+        "buttons": [
+          "下一步"
+        ],
+        "links": [],
+        "inputs": [],
+        "tables": [],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "省级一体化移动政务服务平台标准版演示管理员首页电子证照服务大厅智能导办我的办件政策速递城市服务个人中心管理后台办理：社保查询人力资源和社会保障厅1选择办理方式个人/法人2证照调用电子证照核验3材料上传材料清单确认4填写信息表单填写5提交成功申请完成请选择办理方式个人办理以个人身份办理业务法人办理以企业/机构身份办理业务下一步",
+        "layout": {
+          "viewportWidth": 1600,
+          "viewportHeight": 1181,
+          "scrollWidth": 1600,
+          "scrollHeight": 1181,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "codex-may-89025-current-structure-04-二层操作-社保查询-人力资源...-立即办理",
+          "label": "二层操作:社保查询 人力资源...->立即办理",
+          "finalUrl": "http://127.0.0.1:49025/apply/22",
+          "title": "省级一体化移动政务服务平台",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89025/probe/codex-runtime-current/codex-may-89025-current-structure-04-二层操作-社保查询-人力资源...-立即办理.json",
+          "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89025/probe/codex-runtime-current/codex-may-89025-current-structure-04-二层操作-社保查询-人力资源...-立即办理.png",
+          "elementCount": 168,
+          "interactiveCount": 13,
+          "interactiveLabels": [
+            "首页 电子证照 服务大厅 智能导办 我的办件 政策速递 城市服务 个人中心 管理后台",
+            "首页",
+            "电子证照",
+            "服务大厅",
+            "智能导办",
+            "我的办件",
+            "政策速递",
+            "城市服务",
+            "个人中心",
+            "管理后台",
+            "下一步"
+          ]
+        }
+      }
+    ],
+    "findings": [],
+    "actionHints": [],
+    "emptyPages": [],
+    "overflowPages": [],
+    "blankPages": [],
+    "apiFailurePaths": [],
+    "goalTerms": [],
+    "clickedActionDescriptors": [
+      {
+        "nav": "首页",
+        "label": "社保查询 人力资源...",
+        "ordinal": 0,
+        "unsafe": false
+      },
+      {
+        "nav": "首页",
+        "label": "社保查询 人力资源...->立即办理",
+        "ordinal": 0,
+        "secondary": true,
+        "unsafe": false
+      }
+    ],
+    "secondaryActionClicks": 1,
+    "structureCaptures": [
+      {
+        "module": "website_structure_capture",
+        "runId": "codex-may-89025-current-structure-01-首屏",
+        "label": "首屏",
+        "finalUrl": "http://127.0.0.1:49025/",
+        "title": "省级一体化移动政务服务平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89025/probe/codex-runtime-current/codex-may-89025-current-structure-01-首屏.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89025/probe/codex-runtime-current/codex-may-89025-current-structure-01-首屏.png",
+        "elementCount": 277,
+        "interactiveCount": 31,
+        "interactiveLabels": [
+          "首页 电子证照 服务大厅 智能导办 我的办件 政策速递 城市服务 个人中心 管理后台",
+          "首页",
+          "电子证照",
+          "服务大厅",
+          "智能导办",
+          "我的办件",
+          "政策速递",
+          "城市服务",
+          "个人中心",
+          "管理后台",
+          "搜索服务事项、政策...",
+          "更多",
+          "身份证办理 公安厅",
+          "居住证申领 公安厅",
+          "户口迁移 公安厅",
+          "社保查询 人力资源...",
+          "养老保险转移 人力资源...",
+          "失业保险金申领 人力资源...",
+          "医保报销 医疗保障...",
+          "异地就医备案 医疗保障...",
+          "公安服务",
+          "人社服务",
+          "医保服务",
+          "教育服务",
+          "民政服务",
+          "税务服务",
+          "住房服务",
+          "交通服务"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "codex-may-89025-current-structure-02-导航-首页",
+        "label": "导航:首页",
+        "finalUrl": "http://127.0.0.1:49025/",
+        "title": "省级一体化移动政务服务平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89025/probe/codex-runtime-current/codex-may-89025-current-structure-02-导航-首页.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89025/probe/codex-runtime-current/codex-may-89025-current-structure-02-导航-首页.png",
+        "elementCount": 277,
+        "interactiveCount": 31,
+        "interactiveLabels": [
+          "首页 电子证照 服务大厅 智能导办 我的办件 政策速递 城市服务 个人中心 管理后台",
+          "首页",
+          "电子证照",
+          "服务大厅",
+          "智能导办",
+          "我的办件",
+          "政策速递",
+          "城市服务",
+          "个人中心",
+          "管理后台",
+          "搜索服务事项、政策...",
+          "更多",
+          "身份证办理 公安厅",
+          "居住证申领 公安厅",
+          "户口迁移 公安厅",
+          "社保查询 人力资源...",
+          "养老保险转移 人力资源...",
+          "失业保险金申领 人力资源...",
+          "医保报销 医疗保障...",
+          "异地就医备案 医疗保障...",
+          "公安服务",
+          "人社服务",
+          "医保服务",
+          "教育服务",
+          "民政服务",
+          "税务服务",
+          "住房服务",
+          "交通服务"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "codex-may-89025-current-structure-03-操作-社保查询-人力资源...",
+        "label": "操作:社保查询 人力资源...",
+        "finalUrl": "http://127.0.0.1:49025/services/22",
+        "title": "省级一体化移动政务服务平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89025/probe/codex-runtime-current/codex-may-89025-current-structure-03-操作-社保查询-人力资源....json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89025/probe/codex-runtime-current/codex-may-89025-current-structure-03-操作-社保查询-人力资源....png",
+        "elementCount": 306,
+        "interactiveCount": 17,
+        "interactiveLabels": [
+          "首页 电子证照 服务大厅 智能导办 我的办件 政策速递 城市服务 个人中心 管理后台",
+          "首页",
+          "电子证照",
+          "服务大厅",
+          "智能导办",
+          "我的办件",
+          "政策速递",
+          "城市服务",
+          "个人中心",
+          "管理后台",
+          "我的证照",
+          "立即办理",
+          "办理流程",
+          "在线提交申请 填写基本信息，上传所需材料 电子证照核验 系统自动核验电子证照有效性 材料智能预检 AI检查材料完整性和规范性 部门审核办理 工作人员审核并办理业务 结果反馈送达 在线查看结果，电子证照自动入库 提交申请 在线填写申请表格，上传相关材料扫描件 证照核验 系统自动调用电子证照库进行真实性核验 材料预检 智能检查材料是否齐全、格式是否正确 部门办理"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "codex-may-89025-current-structure-04-二层操作-社保查询-人力资源...-立即办理",
+        "label": "二层操作:社保查询 人力资源...->立即办理",
+        "finalUrl": "http://127.0.0.1:49025/apply/22",
+        "title": "省级一体化移动政务服务平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89025/probe/codex-runtime-current/codex-may-89025-current-structure-04-二层操作-社保查询-人力资源...-立即办理.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89025/probe/codex-runtime-current/codex-may-89025-current-structure-04-二层操作-社保查询-人力资源...-立即办理.png",
+        "elementCount": 168,
+        "interactiveCount": 13,
+        "interactiveLabels": [
+          "首页 电子证照 服务大厅 智能导办 我的办件 政策速递 城市服务 个人中心 管理后台",
+          "首页",
+          "电子证照",
+          "服务大厅",
+          "智能导办",
+          "我的办件",
+          "政策速递",
+          "城市服务",
+          "个人中心",
+          "管理后台",
+          "下一步"
+        ]
+      }
+    ],
+    "representativeScreenshotUrl": "http://127.0.0.1:49025/",
+    "representativeScreenshotLabel": "欢迎使用政务服务平台"
+  },
+  "websiteStructureCapture": {
+    "module": "website_structure_capture",
+    "captureCount": 4,
+    "captures": [
+      {
+        "module": "website_structure_capture",
+        "runId": "codex-may-89025-current-structure-01-首屏",
+        "label": "首屏",
+        "finalUrl": "http://127.0.0.1:49025/",
+        "title": "省级一体化移动政务服务平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89025/probe/codex-runtime-current/codex-may-89025-current-structure-01-首屏.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89025/probe/codex-runtime-current/codex-may-89025-current-structure-01-首屏.png",
+        "elementCount": 277,
+        "interactiveCount": 31,
+        "interactiveLabels": [
+          "首页 电子证照 服务大厅 智能导办 我的办件 政策速递 城市服务 个人中心 管理后台",
+          "首页",
+          "电子证照",
+          "服务大厅",
+          "智能导办",
+          "我的办件",
+          "政策速递",
+          "城市服务",
+          "个人中心",
+          "管理后台",
+          "搜索服务事项、政策...",
+          "更多",
+          "身份证办理 公安厅",
+          "居住证申领 公安厅",
+          "户口迁移 公安厅",
+          "社保查询 人力资源...",
+          "养老保险转移 人力资源...",
+          "失业保险金申领 人力资源...",
+          "医保报销 医疗保障...",
+          "异地就医备案 医疗保障...",
+          "公安服务",
+          "人社服务",
+          "医保服务",
+          "教育服务",
+          "民政服务",
+          "税务服务",
+          "住房服务",
+          "交通服务"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "codex-may-89025-current-structure-02-导航-首页",
+        "label": "导航:首页",
+        "finalUrl": "http://127.0.0.1:49025/",
+        "title": "省级一体化移动政务服务平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89025/probe/codex-runtime-current/codex-may-89025-current-structure-02-导航-首页.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89025/probe/codex-runtime-current/codex-may-89025-current-structure-02-导航-首页.png",
+        "elementCount": 277,
+        "interactiveCount": 31,
+        "interactiveLabels": [
+          "首页 电子证照 服务大厅 智能导办 我的办件 政策速递 城市服务 个人中心 管理后台",
+          "首页",
+          "电子证照",
+          "服务大厅",
+          "智能导办",
+          "我的办件",
+          "政策速递",
+          "城市服务",
+          "个人中心",
+          "管理后台",
+          "搜索服务事项、政策...",
+          "更多",
+          "身份证办理 公安厅",
+          "居住证申领 公安厅",
+          "户口迁移 公安厅",
+          "社保查询 人力资源...",
+          "养老保险转移 人力资源...",
+          "失业保险金申领 人力资源...",
+          "医保报销 医疗保障...",
+          "异地就医备案 医疗保障...",
+          "公安服务",
+          "人社服务",
+          "医保服务",
+          "教育服务",
+          "民政服务",
+          "税务服务",
+          "住房服务",
+          "交通服务"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "codex-may-89025-current-structure-03-操作-社保查询-人力资源...",
+        "label": "操作:社保查询 人力资源...",
+        "finalUrl": "http://127.0.0.1:49025/services/22",
+        "title": "省级一体化移动政务服务平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89025/probe/codex-runtime-current/codex-may-89025-current-structure-03-操作-社保查询-人力资源....json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89025/probe/codex-runtime-current/codex-may-89025-current-structure-03-操作-社保查询-人力资源....png",
+        "elementCount": 306,
+        "interactiveCount": 17,
+        "interactiveLabels": [
+          "首页 电子证照 服务大厅 智能导办 我的办件 政策速递 城市服务 个人中心 管理后台",
+          "首页",
+          "电子证照",
+          "服务大厅",
+          "智能导办",
+          "我的办件",
+          "政策速递",
+          "城市服务",
+          "个人中心",
+          "管理后台",
+          "我的证照",
+          "立即办理",
+          "办理流程",
+          "在线提交申请 填写基本信息，上传所需材料 电子证照核验 系统自动核验电子证照有效性 材料智能预检 AI检查材料完整性和规范性 部门审核办理 工作人员审核并办理业务 结果反馈送达 在线查看结果，电子证照自动入库 提交申请 在线填写申请表格，上传相关材料扫描件 证照核验 系统自动调用电子证照库进行真实性核验 材料预检 智能检查材料是否齐全、格式是否正确 部门办理"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "codex-may-89025-current-structure-04-二层操作-社保查询-人力资源...-立即办理",
+        "label": "二层操作:社保查询 人力资源...->立即办理",
+        "finalUrl": "http://127.0.0.1:49025/apply/22",
+        "title": "省级一体化移动政务服务平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89025/probe/codex-runtime-current/codex-may-89025-current-structure-04-二层操作-社保查询-人力资源...-立即办理.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89025/probe/codex-runtime-current/codex-may-89025-current-structure-04-二层操作-社保查询-人力资源...-立即办理.png",
+        "elementCount": 168,
+        "interactiveCount": 13,
+        "interactiveLabels": [
+          "首页 电子证照 服务大厅 智能导办 我的办件 政策速递 城市服务 个人中心 管理后台",
+          "首页",
+          "电子证照",
+          "服务大厅",
+          "智能导办",
+          "我的办件",
+          "政策速递",
+          "城市服务",
+          "个人中心",
+          "管理后台",
+          "下一步"
+        ]
+      }
+    ]
+  },
+  "screenshotMetrics": {
+    "width": 1632,
+    "height": 1181,
+    "scrollWidth": 1600,
+    "scrollHeight": 1181
+  },
+  "initialBodyTextPreview": "省级一体化移动政务服务平台\n标准版\n演示管理员\n首页\n电子证照\n服务大厅\n智能导办\n我的办件\n政策速递\n城市服务\n个人中心\n管理后台\n欢迎使用政务服务平台\n\n让数据多跑路，让群众少跑腿\n\n27°C\n晴\n电子证照\n证照管理\n服务大厅\n办事服务\n我的办件\n进度查询\n政策速递\n政策查询\n热门服务\n更多\n身份证办理\n公安厅\n居住证申领\n公安厅\n户口迁移\n公安厅\n社保查询\n人力资源...\n养老保险转移\n人力资源...\n失业保险金申领\n人力资源...\n医保报销\n医疗保障...\n异地就医备案\n医疗保障...\n政策速递\n更多\n置顶\n关于优化营商环境的若干政策措施\n省政府办公厅\n2024年度社保缴费基数调整通知\n人力资源和社会保障厅\n医保跨省异地就医直接结算政策解读\n医疗保障局\n关于加强政务服务\"一网通办\"的实施意见\n政务服务管理局\n居民身份证电子证照全面推广应用\n公安厅\n部门服务\n公安服务\n人社服务\n医保服务\n教育服务\n民政服务\n税务服务\n住房服务\n交通服务",
+  "bodyTextPreview": "省级一体化移动政务服务平台\n标准版\n演示管理员\n首页\n电子证照\n服务大厅\n智能导办\n我的办件\n政策速递\n城市服务\n个人中心\n管理后台\n欢迎使用政务服务平台\n\n让数据多跑路，让群众少跑腿\n\n32°C\n多云\n电子证照\n证照管理\n服务大厅\n办事服务\n我的办件\n进度查询\n政策速递\n政策查询\n热门服务\n更多\n身份证办理\n公安厅\n居住证申领\n公安厅\n户口迁移\n公安厅\n社保查询\n人力资源...\n养老保险转移\n人力资源...\n失业保险金申领\n人力资源...\n医保报销\n医疗保障...\n异地就医备案\n医疗保障...\n政策速递\n更多\n置顶\n关于优化营商环境的若干政策措施\n省政府办公厅\n2024年度社保缴费基数调整通知\n人力资源和社会保障厅\n医保跨省异地就医直接结算政策解读\n医疗保障局\n关于加强政务服务\"一网通办\"的实施意见\n政务服务管理局\n居民身份证电子证照全面推广应用\n公安厅\n部门服务\n公安服务\n人社服务\n医保服务\n教育服务\n民政服务\n税务服务\n住房服务\n交通服务",
+  "apiBase": "",
+  "businessGoalPreview": "",
+  "apiResponses": [
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:59025/api/services/items?hot=1"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:59025/api/policy/news?limit=5"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:59025/api/city/weather"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:59025/api/services/items?hot=1"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:59025/api/policy/news?limit=5"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:59025/api/city/weather"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:59025/api/services/items/22"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:59025/api/certificates"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:59025/api/applications"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:59025/api/services/items/22"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:59025/api/certificates"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:59025/api/applications"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:59025/api/services/items/22"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:59025/api/certificates"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:59025/api/services/items/22"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:59025/api/certificates"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:59025/api/services/items?hot=1"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:59025/api/city/weather"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:59025/api/policy/news?limit=5"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:59025/api/services/items?hot=1"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:59025/api/policy/news?limit=5"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:59025/api/city/weather"
+    }
+  ],
+  "apiChecks": [],
+  "dialogs": [],
+  "consoleMessages": [
+    {
+      "type": "debug",
+      "text": "[vite] connecting...",
+      "location": {
+        "url": "http://127.0.0.1:49025/@vite/client",
+        "lineNumber": 494,
+        "columnNumber": 8
+      }
+    },
+    {
+      "type": "debug",
+      "text": "[vite] connected.",
+      "location": {
+        "url": "http://127.0.0.1:49025/@vite/client",
+        "lineNumber": 617,
+        "columnNumber": 14
+      }
+    },
+    {
+      "type": "info",
+      "text": "%cDownload the React DevTools for a better development experience: https://reactjs.org/link/react-devtools font-weight:bold",
+      "location": {
+        "url": "http://127.0.0.1:49025/node_modules/.vite/deps/chunk-6GSFWH52.js?v=8237ad6a",
+        "lineNumber": 21550,
+        "columnNumber": 24
+      }
+    },
+    {
+      "type": "error",
+      "text": "Warning: [antd: Card] `bodyStyle` is deprecated. Please use `styles.body` instead.",
+      "location": {
+        "url": "http://127.0.0.1:49025/node_modules/.vite/deps/chunk-HBO3DFOV.js?v=8237ad6a",
+        "lineNumber": 1247,
+        "columnNumber": 14
+      }
+    },
+    {
+      "type": "warning",
+      "text": "⚠️ React Router Future Flag Warning: React Router will begin wrapping state updates in `React.startTransition` in v7. You can use the `v7_startTransition` future flag to opt-in early. For more information, see https://reactrouter.com/v6/upgrading/future#v7_starttransition.",
+      "location": {
+        "url": "http://127.0.0.1:49025/node_modules/.vite/deps/react-router-dom.js?v=8237ad6a",
+        "lineNumber": 4426,
+        "columnNumber": 12
+      }
+    },
+    {
+      "type": "warning",
+      "text": "⚠️ React Router Future Flag Warning: Relative route resolution within Splat routes is changing in v7. You can use the `v7_relativeSplatPath` future flag to opt-in early. For more information, see https://reactrouter.com/v6/upgrading/future#v7_relativesplatpath.",
+      "location": {
+        "url": "http://127.0.0.1:49025/node_modules/.vite/deps/react-router-dom.js?v=8237ad6a",
+        "lineNumber": 4426,
+        "columnNumber": 12
+      }
+    },
+    {
+      "type": "error",
+      "text": "Failed to load resource: the server responded with a status of 404 (Not Found)",
+      "location": {
+        "url": "http://127.0.0.1:49025/favicon.ico",
+        "lineNumber": 0,
+        "columnNumber": 0
+      }
+    },
+    {
+      "type": "error",
+      "text": "Warning: [antd: Tabs] `Tabs.TabPane` is deprecated. Please use `items` instead.",
+      "location": {
+        "url": "http://127.0.0.1:49025/node_modules/.vite/deps/chunk-HBO3DFOV.js?v=8237ad6a",
+        "lineNumber": 1247,
+        "columnNumber": 14
+      }
+    },
+    {
+      "type": "error",
+      "text": "Warning: [antd: Timeline] `Timeline.Item` is deprecated. Please use `items` instead.",
+      "location": {
+        "url": "http://127.0.0.1:49025/node_modules/.vite/deps/chunk-HBO3DFOV.js?v=8237ad6a",
+        "lineNumber": 1247,
+        "columnNumber": 14
+      }
+    },
+    {
+      "type": "error",
+      "text": "Warning: [antd: Card] `bordered` is deprecated. Please use `variant` instead.",
+      "location": {
+        "url": "http://127.0.0.1:49025/node_modules/.vite/deps/chunk-HBO3DFOV.js?v=8237ad6a",
+        "lineNumber": 1247,
+        "columnNumber": 14
+      }
+    },
+    {
+      "type": "debug",
+      "text": "[vite] connecting...",
+      "location": {
+        "url": "http://127.0.0.1:49025/@vite/client",
+        "lineNumber": 494,
+        "columnNumber": 8
+      }
+    },
+    {
+      "type": "debug",
+      "text": "[vite] connected.",
+      "location": {
+        "url": "http://127.0.0.1:49025/@vite/client",
+        "lineNumber": 617,
+        "columnNumber": 14
+      }
+    },
+    {
+      "type": "debug",
+      "text": "[vite] connecting...",
+      "location": {
+        "url": "http://127.0.0.1:49025/@vite/client",
+        "lineNumber": 494,
+        "columnNumber": 8
+      }
+    },
+    {
+      "type": "debug",
+      "text": "[vite] connected.",
+      "location": {
+        "url": "http://127.0.0.1:49025/@vite/client",
+        "lineNumber": 617,
+        "columnNumber": 14
+      }
+    },
+    {
+      "type": "info",
+      "text": "%cDownload the React DevTools for a better development experience: https://reactjs.org/link/react-devtools font-weight:bold",
+      "location": {
+        "url": "http://127.0.0.1:49025/node_modules/.vite/deps/chunk-6GSFWH52.js?v=8237ad6a",
+        "lineNumber": 21550,
+        "columnNumber": 24
+      }
+    },
+    {
+      "type": "error",
+      "text": "Warning: [antd: Card] `bodyStyle` is deprecated. Please use `styles.body` instead.",
+      "location": {
+        "url": "http://127.0.0.1:49025/node_modules/.vite/deps/chunk-HBO3DFOV.js?v=8237ad6a",
+        "lineNumber": 1247,
+        "columnNumber": 14
+      }
+    },
+    {
+      "type": "warning",
+      "text": "⚠️ React Router Future Flag Warning: React Router will begin wrapping state updates in `React.startTransition` in v7. You can use the `v7_startTransition` future flag to opt-in early. For more information, see https://reactrouter.com/v6/upgrading/future#v7_starttransition.",
+      "location": {
+        "url": "http://127.0.0.1:49025/node_modules/.vite/deps/react-router-dom.js?v=8237ad6a",
+        "lineNumber": 4426,
+        "columnNumber": 12
+      }
+    },
+    {
+      "type": "warning",
+      "text": "⚠️ React Router Future Flag Warning: Relative route resolution within Splat routes is changing in v7. You can use the `v7_relativeSplatPath` future flag to opt-in early. For more information, see https://reactrouter.com/v6/upgrading/future#v7_relativesplatpath.",
+      "location": {
+        "url": "http://127.0.0.1:49025/node_modules/.vite/deps/react-router-dom.js?v=8237ad6a",
+        "lineNumber": 4426,
+        "columnNumber": 12
+      }
+    }
+  ],
+  "requestFailures": [],
+  "responseErrors": []
+}

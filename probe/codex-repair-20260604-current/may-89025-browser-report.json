@@ -1,0 +1,1484 @@
+{
+  "ok": true,
+  "generatedAt": "2026-06-04T11:17:50.164Z",
+  "order": "may-89025",
+  "roundIndex": 99,
+  "captureId": "may-89025-codex-repair",
+  "url": "http://127.0.0.1:49025/",
+  "initialUrl": "http://127.0.0.1:49025/",
+  "finalUrl": "http://127.0.0.1:49025/",
+  "status": 200,
+  "title": "省级一体化移动政务服务平台",
+  "initialTitle": "省级一体化移动政务服务平台",
+  "navigationError": "",
+  "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89025/probe/codex-repair-20260604-current/may-89025-codex-repair-frontend.png",
+  "screenshotPaths": [
+    "/Users/chen/Documents/trae_projects/local_projects/may-89025/probe/codex-repair-20260604-current/may-89025-codex-repair-structure-01-首屏.png",
+    "/Users/chen/Documents/trae_projects/local_projects/may-89025/probe/codex-repair-20260604-current/may-89025-codex-repair-structure-02-导航-首页.png",
+    "/Users/chen/Documents/trae_projects/local_projects/may-89025/probe/codex-repair-20260604-current/may-89025-codex-repair-structure-03-操作-事项配置中心.png",
+    "/Users/chen/Documents/trae_projects/local_projects/may-89025/probe/codex-repair-20260604-current/may-89025-codex-repair-structure-04-二层操作-事项配置中心-编辑.png",
+    "/Users/chen/Documents/trae_projects/local_projects/may-89025/probe/codex-repair-20260604-current/may-89025-codex-repair-structure-05-操作-办-理.png"
+  ],
+  "issueTextPreview": "",
+  "targetReason": "页面存在后台入口，优先复验后台管理链路；页面存在我的/账号入口，优先复验个人中心链路",
+  "targetKind": "admin",
+  "targetMatched": true,
+  "targetActions": [
+    {
+      "action": "click",
+      "label": "页面存在后台入口，优先复验后台管理链路",
+      "ok": false,
+      "error": "locator.click: Timeout 900ms exceeded.\nCall log:\n\u001b[2m  - waiting for locator('a,button,[role=\"button\"],[role=\"menuitem\"],[onclick],[tabindex]:not([tabindex=\"-1\"]),[class*=\"nav-item\" i],[class*=\"menu-item\" i],[class*=\"men"
+    },
+    {
+      "action": "click",
+      "label": "页面存在后台入口，优先复验后台管理链路",
+      "ok": false,
+      "error": "locator.click: Timeout 900ms exceeded.\nCall log:\n\u001b[2m  - waiting for getByText(/管理后台/).first()\u001b[22m\n\u001b[2m    - locator resolved to <span class=\"ant-menu-title-content\">管理后台</span>\u001b[22m\n\u001b[2m  - attempting click action\u001b[22m"
+    },
+    {
+      "action": "click",
+      "label": "页面存在后台入口，优先复验后台管理链路",
+      "ok": false,
+      "error": "locator.click: Timeout 900ms exceeded.\nCall log:\n\u001b[2m  - waiting for locator('a,button,[role=\"button\"],[role=\"menuitem\"],[onclick],[tabindex]:not([tabindex=\"-1\"]),[class*=\"nav-item\" i],[class*=\"menu-item\" i],[class*=\"men"
+    },
+    {
+      "action": "click",
+      "label": "页面存在后台入口，优先复验后台管理链路",
+      "ok": false,
+      "error": "locator.click: Timeout 900ms exceeded.\nCall log:\n\u001b[2m  - waiting for getByText(/后台/).first()\u001b[22m\n\u001b[2m    - locator resolved to <span class=\"ant-menu-title-content\">管理后台</span>\u001b[22m\n\u001b[2m  - attempting click action\u001b[22m\n\u001b"
+    },
+    {
+      "action": "target-already-visible",
+      "label": "页面存在后台入口，优先复验后台管理链路",
+      "ok": true
+    },
+    {
+      "action": "target-verify",
+      "label": "页面存在后台入口，优先复验后台管理链路",
+      "ok": true,
+      "finalUrl": "http://127.0.0.1:49025/"
+    }
+  ],
+  "authFlow": {
+    "detected": false,
+    "attempted": false,
+    "success": false,
+    "finalUrl": "http://127.0.0.1:49025/",
+    "message": "",
+    "actions": []
+  },
+  "businessAudit": {
+    "actions": [
+      {
+        "action": "click",
+        "label": "导航:首页",
+        "ok": true
+      },
+      {
+        "action": "click",
+        "label": "操作:事项配置中心",
+        "ok": true,
+        "result": {
+          "ok": true,
+          "matched": 1
+        }
+      },
+      {
+        "action": "click",
+        "label": "二层操作:事项配置中心:编辑",
+        "ok": true,
+        "result": {
+          "ok": true,
+          "matched": 15
+        }
+      },
+      {
+        "action": "click",
+        "label": "关闭弹窗/抽屉",
+        "ok": false,
+        "error": "locator.click: Timeout 900ms exceeded.\nCall log:\n\u001b[2m  - waiting for getByRole('button', { name: /^Close$/ }).first()\u001b[22m\n\u001b[2m    - locator resolved to <button type=\"button\" aria-label=\"Close\" class=\"ant-modal-close\">…<"
+      },
+      {
+        "action": "click",
+        "label": "操作:办 理",
+        "ok": true,
+        "result": {
+          "ok": true,
+          "matched": 8
+        }
+      }
+    ],
+    "snapshots": [
+      {
+        "label": "首屏",
+        "url": "http://127.0.0.1:49025/",
+        "title": "省级一体化移动政务服务平台",
+        "headings": [
+          "演示管理员，您好"
+        ],
+        "navLabels": [
+          "首页 电子证照 服务大厅 我的办件 管理后台",
+          "首页",
+          "home",
+          "电子证照",
+          "idcard",
+          "服务大厅",
+          "appstore",
+          "我的办件",
+          "file-text",
+          "管理后台",
+          "safety"
+        ],
+        "buttons": [
+          "申 领",
+          "亮 证",
+          "核 验",
+          "进入大厅",
+          "智能导办",
+          "进度追踪",
+          "评价反馈",
+          "政策计算器",
+          "城市服务",
+          "管理看板",
+          "事项配置中心",
+          "跨部门网关",
+          "办件质量审计",
+          "更多",
+          "办 理",
+          "全部",
+          "进入服务大厅",
+          "天气",
+          "政务地图",
+          "常用电话",
+          "切换适老版"
+        ],
+        "links": [],
+        "inputs": [
+          {
+            "tag": "input",
+            "type": "search",
+            "placeholder": "搜索服务事项、政策...",
+            "name": "",
+            "label": ""
+          }
+        ],
+        "tables": [],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "省级一体化移动政务服务平台管理员标准版演示管理员首页电子证照服务大厅我的办件管理后台演示管理员，您好省级一体化移动政务服务平台 · 让数据多跑路，让群众少跑腿25°C中雨22件待办电子证照4张有效证照亮证/核验申 领亮 证核 验服务大厅91项可办 个人办事 法人办事进入大厅智能导办我的办件2件办理中审核中进度追踪评价反馈政策速递5条更新补贴试算个税计算政策计算器城市服务管理后台入口（仅管理员可见）管理看板事项配置中心跨部门网关办件质量审计热门服务更多 身份证办理公安厅15个工作日3份材料办 理居住证申领公安厅7个工作日3份材料办 理户口迁移公安厅10个工作日3份材料办 理社保查询人力资源即时办理3份材料办 理养老保险转移人力资源30个工作日3份材料办 理失业保险金申领人力资源10个工作日3份材料办 理医保报销医疗保障15个工作日3份材料办 理异地就医备案医疗保障3个工作日3份材料办 理办件动态全部 …个人所得税申报审核中…医保报销办理中✗公积金提取已驳回 2星✓社保查询已办结 4星✓身份证办理已办结 5星28类委办局服务进入服务大厅 公安服务5项服务3热门人社服务5项服务3热门医保服务4项服务3热门教育服务4项服务3热门民政服务4项服务2热门税务服务4项服务2热门住房服务3项服务2热门交通服务4项服务2热门市场监管4项服务3热门司法服务4项服务2热门自然资源3项服务1热门生态环境3项服务卫生健康4项服务2热门应急管理3项服务文化旅游3项服务1热门体育服务3项服务科技服务3项服务工信服务3项服务财政服务3项服务审计服务2项服务统计服务2项服务林业服务2项服务水利服务2项服务农业农村3项服务1热门商务服务3项服务退役军人3项服务1热门外事服务2项服务档案服务3项服务政策速递更多 置顶关于优化营商环境的若干政策措施省政府办公厅 · 2026-06-032024年度社保缴费基数调整通知人力资源和社会保障厅 · 2026-06-03医保跨省异地就医直接结算政策解读医疗保障局 · 2026-06-03关于加强政务服务\"一网通办\"的实施意见政务服务管理局 · 2026-06-03城市服务更多 当前温度25°C空气质量优天气政务地图常用电话等保三级合规数据加密隐私保护审计留痕标准版切换适老版",
+        "layout": {
+          "viewportWidth": 1504,
+          "viewportHeight": 1600,
+          "scrollWidth": 1504,
+          "scrollHeight": 2120,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89025-codex-repair-structure-01-首屏",
+          "label": "首屏",
+          "finalUrl": "http://127.0.0.1:49025/",
+          "title": "省级一体化移动政务服务平台",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89025/probe/codex-repair-20260604-current/may-89025-codex-repair-structure-01-首屏.json",
+          "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89025/probe/codex-repair-20260604-current/may-89025-codex-repair-structure-01-首屏.png",
+          "elementCount": 849,
+          "interactiveCount": 51,
+          "interactiveLabels": [
+            "首页 电子证照 服务大厅 我的办件 管理后台",
+            "首页",
+            "电子证照",
+            "服务大厅",
+            "我的办件",
+            "管理后台",
+            "搜索服务事项、政策...",
+            "申 领",
+            "亮 证",
+            "核 验",
+            "进入大厅",
+            "智能导办",
+            "进度追踪",
+            "评价反馈",
+            "政策计算器",
+            "城市服务",
+            "管理看板",
+            "事项配置中心",
+            "跨部门网关",
+            "办件质量审计",
+            "更多",
+            "身份证办理",
+            "办 理",
+            "居住证申领",
+            "户口迁移",
+            "社保查询",
+            "养老保险转移",
+            "失业保险金申领",
+            "医保报销",
+            "异地就医备案"
+          ]
+        }
+      },
+      {
+        "label": "导航:首页",
+        "url": "http://127.0.0.1:49025/",
+        "title": "省级一体化移动政务服务平台",
+        "headings": [
+          "演示管理员，您好"
+        ],
+        "navLabels": [
+          "首页 电子证照 服务大厅 我的办件 管理后台",
+          "首页",
+          "home",
+          "电子证照",
+          "idcard",
+          "服务大厅",
+          "appstore",
+          "我的办件",
+          "file-text",
+          "管理后台",
+          "safety"
+        ],
+        "buttons": [
+          "申 领",
+          "亮 证",
+          "核 验",
+          "进入大厅",
+          "智能导办",
+          "进度追踪",
+          "评价反馈",
+          "政策计算器",
+          "城市服务",
+          "管理看板",
+          "事项配置中心",
+          "跨部门网关",
+          "办件质量审计",
+          "更多",
+          "办 理",
+          "全部",
+          "进入服务大厅",
+          "天气",
+          "政务地图",
+          "常用电话",
+          "切换适老版"
+        ],
+        "links": [],
+        "inputs": [
+          {
+            "tag": "input",
+            "type": "search",
+            "placeholder": "搜索服务事项、政策...",
+            "name": "",
+            "label": ""
+          }
+        ],
+        "tables": [],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "省级一体化移动政务服务平台管理员标准版演示管理员首页电子证照服务大厅我的办件管理后台演示管理员，您好省级一体化移动政务服务平台 · 让数据多跑路，让群众少跑腿25°C中雨22件待办电子证照4张有效证照亮证/核验申 领亮 证核 验服务大厅91项可办 个人办事 法人办事进入大厅智能导办我的办件2件办理中审核中进度追踪评价反馈政策速递5条更新补贴试算个税计算政策计算器城市服务管理后台入口（仅管理员可见）管理看板事项配置中心跨部门网关办件质量审计热门服务更多 身份证办理公安厅15个工作日3份材料办 理居住证申领公安厅7个工作日3份材料办 理户口迁移公安厅10个工作日3份材料办 理社保查询人力资源即时办理3份材料办 理养老保险转移人力资源30个工作日3份材料办 理失业保险金申领人力资源10个工作日3份材料办 理医保报销医疗保障15个工作日3份材料办 理异地就医备案医疗保障3个工作日3份材料办 理办件动态全部 …个人所得税申报审核中…医保报销办理中✗公积金提取已驳回 2星✓社保查询已办结 4星✓身份证办理已办结 5星28类委办局服务进入服务大厅 公安服务5项服务3热门人社服务5项服务3热门医保服务4项服务3热门教育服务4项服务3热门民政服务4项服务2热门税务服务4项服务2热门住房服务3项服务2热门交通服务4项服务2热门市场监管4项服务3热门司法服务4项服务2热门自然资源3项服务1热门生态环境3项服务卫生健康4项服务2热门应急管理3项服务文化旅游3项服务1热门体育服务3项服务科技服务3项服务工信服务3项服务财政服务3项服务审计服务2项服务统计服务2项服务林业服务2项服务水利服务2项服务农业农村3项服务1热门商务服务3项服务退役军人3项服务1热门外事服务2项服务档案服务3项服务政策速递更多 置顶关于优化营商环境的若干政策措施省政府办公厅 · 2026-06-032024年度社保缴费基数调整通知人力资源和社会保障厅 · 2026-06-03医保跨省异地就医直接结算政策解读医疗保障局 · 2026-06-03关于加强政务服务\"一网通办\"的实施意见政务服务管理局 · 2026-06-03城市服务更多 当前温度25°C空气质量优天气政务地图常用电话等保三级合规数据加密隐私保护审计留痕标准版切换适老版",
+        "layout": {
+          "viewportWidth": 1536,
+          "viewportHeight": 1600,
+          "scrollWidth": 1536,
+          "scrollHeight": 2120,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89025-codex-repair-structure-02-导航-首页",
+          "label": "导航:首页",
+          "finalUrl": "http://127.0.0.1:49025/",
+          "title": "省级一体化移动政务服务平台",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89025/probe/codex-repair-20260604-current/may-89025-codex-repair-structure-02-导航-首页.json",
+          "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89025/probe/codex-repair-20260604-current/may-89025-codex-repair-structure-02-导航-首页.png",
+          "elementCount": 848,
+          "interactiveCount": 51,
+          "interactiveLabels": [
+            "首页 电子证照 服务大厅 我的办件 管理后台",
+            "首页",
+            "电子证照",
+            "服务大厅",
+            "我的办件",
+            "管理后台",
+            "搜索服务事项、政策...",
+            "申 领",
+            "亮 证",
+            "核 验",
+            "进入大厅",
+            "智能导办",
+            "进度追踪",
+            "评价反馈",
+            "政策计算器",
+            "城市服务",
+            "管理看板",
+            "事项配置中心",
+            "跨部门网关",
+            "办件质量审计",
+            "更多",
+            "身份证办理",
+            "办 理",
+            "居住证申领",
+            "户口迁移",
+            "社保查询",
+            "养老保险转移",
+            "失业保险金申领",
+            "医保报销",
+            "异地就医备案"
+          ]
+        }
+      },
+      {
+        "label": "操作:事项配置中心",
+        "url": "http://127.0.0.1:49025/admin/services",
+        "title": "省级一体化移动政务服务平台",
+        "headings": [],
+        "navLabels": [
+          "首页 电子证照 服务大厅 我的办件 管理后台",
+          "首页",
+          "home",
+          "电子证照",
+          "idcard",
+          "服务大厅",
+          "appstore",
+          "我的办件",
+          "file-text",
+          "管理后台",
+          "safety"
+        ],
+        "buttons": [
+          "新增事项",
+          "配 置",
+          "编辑"
+        ],
+        "links": [],
+        "inputs": [
+          {
+            "tag": "input",
+            "type": "search",
+            "placeholder": "",
+            "name": "",
+            "label": "页码"
+          }
+        ],
+        "tables": [
+          {
+            "headers": [
+              "ID",
+              "事项名称",
+              "编码",
+              "所属部门",
+              "时限",
+              "状态",
+              "热门",
+              "操作"
+            ],
+            "rowCount": 15,
+            "hasEmptyText": false,
+            "textPreview": "ID 事项名称 编码 所属部门 时限 状态 热门 操作 17 身份证办理 id_card_apply 公安厅 15个工作日 启用 热门 配 置 编辑 18 居住证申领 residence_permit 公安厅 7个工作日 启用 热门 配 置 编辑 19 户口迁移 household_migration 公安厅 10个工作日 启用 热门 配 置 编辑 20 护照办理 passport_apply 公安厅 7个工作日 启用 普通 配 置 编辑 21 港澳通行证 hk_macau_pass 公安厅 7个工作日 启用 普通 配 置 编辑 22 社保查询 social_security_query 人力"
+          }
+        ],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "省级一体化移动政务服务平台管理员标准版演示管理员首页电子证照服务大厅我的办件管理后台事项配置中心新增事项总事项数91启用中91热门事项31服务分类28ID事项名称编码所属部门时限状态热门操作17身份证办理id_card_apply公安厅15个工作日启用热门配 置编辑18居住证申领residence_permit公安厅7个工作日启用热门配 置编辑19户口迁移household_migration公安厅10个工作日启用热门配 置编辑20护照办理passport_apply公安厅7个工作日启用普通配 置编辑21港澳通行证hk_macau_pass公安厅7个工作日启用普通配 置编辑22社保查询social_security_query人力资源和社会保即时办理启用热门配 置编辑23养老保险转移pension_transfer人力资源和社会保30个工作日启用热门配 置编辑24失业保险金申领unemployment_benefit人力资源和社会保10个工作日启用热门配 置编辑25工伤认定申请injury_recognition人力资源和社会保60个工作日启用普通配 置编辑26技能补贴申领skill_subsidy人力资源和社会保15个工作日启用普通配 置编辑27医保报销medical_reimbursement医疗保障局15个工作日启用热门配 置编辑28异地就医备案remote_medical_record医疗保障局3个工作日启用热门配 置编辑29医保参保登记medical_registration医疗保障局5个工作日启用热门配 置编辑30慢性病认定chronic_disease医疗保障局20个工作日启用普通配 置编辑31学历认证degree_verification教育厅7个工作日启用热门配 置编辑123456715 条/页",
+        "layout": {
+          "viewportWidth": 1568,
+          "viewportHeight": 1600,
+          "scrollWidth": 1568,
+          "scrollHeight": 1600,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89025-codex-repair-structure-03-操作-事项配置中心",
+          "label": "操作:事项配置中心",
+          "finalUrl": "http://127.0.0.1:49025/admin/services",
+          "title": "省级一体化移动政务服务平台",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89025/probe/codex-repair-20260604-current/may-89025-codex-repair-structure-03-操作-事项配置中心.json",
+          "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89025/probe/codex-repair-20260604-current/may-89025-codex-repair-structure-03-操作-事项配置中心.png",
+          "elementCount": 526,
+          "interactiveCount": 56,
+          "interactiveLabels": [
+            "首页 电子证照 服务大厅 我的办件 管理后台",
+            "首页",
+            "电子证照",
+            "服务大厅",
+            "我的办件",
+            "管理后台",
+            "新增事项",
+            "配 置",
+            "编辑",
+            "1",
+            "2",
+            "3",
+            "4",
+            "5",
+            "6",
+            "7",
+            "下一页",
+            "页码"
+          ]
+        }
+      },
+      {
+        "label": "二层操作:事项配置中心->编辑",
+        "url": "http://127.0.0.1:49025/admin/services",
+        "title": "省级一体化移动政务服务平台",
+        "headings": [],
+        "navLabels": [
+          "首页 电子证照 服务大厅 我的办件 管理后台",
+          "首页",
+          "home",
+          "电子证照",
+          "idcard",
+          "服务大厅",
+          "appstore",
+          "我的办件",
+          "file-text",
+          "管理后台",
+          "safety"
+        ],
+        "buttons": [
+          "新增事项",
+          "配 置",
+          "编辑",
+          "Close",
+          "取 消",
+          "确 定"
+        ],
+        "links": [],
+        "inputs": [
+          {
+            "tag": "input",
+            "type": "search",
+            "placeholder": "",
+            "name": "",
+            "label": "页码"
+          },
+          {
+            "tag": "input",
+            "type": "search",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "text",
+            "placeholder": "如 social_security_query",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "text",
+            "placeholder": "如 社保查询",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "text",
+            "placeholder": "如 7个工作日",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "text",
+            "placeholder": "如 人力资源和社会保障厅",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "textarea",
+            "type": "",
+            "placeholder": "详细描述该服务事项",
+            "name": "",
+            "label": ""
+          }
+        ],
+        "tables": [
+          {
+            "headers": [
+              "ID",
+              "事项名称",
+              "编码",
+              "所属部门",
+              "时限",
+              "状态",
+              "热门",
+              "操作"
+            ],
+            "rowCount": 15,
+            "hasEmptyText": false,
+            "textPreview": "ID 事项名称 编码 所属部门 时限 状态 热门 操作 17 身份证办理 id_card_apply 公安厅 15个工作日 启用 热门 配 置 编辑 18 居住证申领 residence_permit 公安厅 7个工作日 启用 热门 配 置 编辑 19 户口迁移 household_migration 公安厅 10个工作日 启用 热门 配 置 编辑 20 护照办理 passport_apply 公安厅 7个工作日 启用 普通 配 置 编辑 21 港澳通行证 hk_macau_pass 公安厅 7个工作日 启用 普通 配 置 编辑 22 社保查询 social_security_query 人力"
+          }
+        ],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "省级一体化移动政务服务平台管理员标准版演示管理员首页电子证照服务大厅我的办件管理后台事项配置中心新增事项总事项数91启用中91热门事项31服务分类28ID事项名称编码所属部门时限状态热门操作17身份证办理id_card_apply公安厅15个工作日启用热门配 置编辑18居住证申领residence_permit公安厅7个工作日启用热门配 置编辑19户口迁移household_migration公安厅10个工作日启用热门配 置编辑20护照办理passport_apply公安厅7个工作日启用普通配 置编辑21港澳通行证hk_macau_pass公安厅7个工作日启用普通配 置编辑22社保查询social_security_query人力资源和社会保即时办理启用热门配 置编辑23养老保险转移pension_transfer人力资源和社会保30个工作日启用热门配 置编辑24失业保险金申领unemployment_benefit人力资源和社会保10个工作日启用热门配 置编辑25工伤认定申请injury_recognition人力资源和社会保60个工作日启用普通配 置编辑26技能补贴申领skill_subsidy人力资源和社会保15个工作日启用普通配 置编辑27医保报销medical_reimbursement医疗保障局15个工作日启用热门配 置编辑28异地就医备案remote_medical_record医疗保障局3个工作日启用热门配 置编辑29医保参保登记medical_registration医疗保障局5个工作日启用热门配 置编辑30慢性病认定chronic_disease医疗保障局20个工作日启用普通配 置编辑31学历认证degree_verification教育厅7个工作日启用热门配 置编辑123456715 条/页 编辑事项服务分类公安服务事项编码事项名称办理时限所属部门事项说明取 消确 定",
+        "layout": {
+          "viewportWidth": 1600,
+          "viewportHeight": 1600,
+          "scrollWidth": 1600,
+          "scrollHeight": 1600,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89025-codex-repair-structure-04-二层操作-事项配置中心-编辑",
+          "label": "二层操作:事项配置中心->编辑",
+          "finalUrl": "http://127.0.0.1:49025/admin/services",
+          "title": "省级一体化移动政务服务平台",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89025/probe/codex-repair-20260604-current/may-89025-codex-repair-structure-04-二层操作-事项配置中心-编辑.json",
+          "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89025/probe/codex-repair-20260604-current/may-89025-codex-repair-structure-04-二层操作-事项配置中心-编辑.png",
+          "elementCount": 611,
+          "interactiveCount": 67,
+          "interactiveLabels": [
+            "首页 电子证照 服务大厅 我的办件 管理后台",
+            "首页",
+            "电子证照",
+            "服务大厅",
+            "我的办件",
+            "管理后台",
+            "新增事项",
+            "配 置",
+            "编辑",
+            "1",
+            "2",
+            "3",
+            "4",
+            "5",
+            "6",
+            "7",
+            "下一页",
+            "页码",
+            "编辑事项 服务分类 公安服务 事项编码 事项名称 办理时限 所属部门 事项说明 取 消 确 定",
+            "Close",
+            "id_card_apply",
+            "身份证办理",
+            "15个工作日",
+            "公安厅",
+            "详细描述该服务事项",
+            "取 消",
+            "确 定"
+          ]
+        }
+      },
+      {
+        "label": "操作:办 理",
+        "url": "http://127.0.0.1:49025/apply/17",
+        "title": "省级一体化移动政务服务平台",
+        "headings": [
+          "请选择办理方式",
+          "个人办理",
+          "法人办理"
+        ],
+        "navLabels": [
+          "首页 电子证照 服务大厅 我的办件 管理后台",
+          "首页",
+          "home",
+          "电子证照",
+          "idcard",
+          "服务大厅",
+          "appstore",
+          "我的办件",
+          "file-text",
+          "管理后台",
+          "safety"
+        ],
+        "buttons": [
+          "下一步"
+        ],
+        "links": [],
+        "inputs": [],
+        "tables": [],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "省级一体化移动政务服务平台管理员标准版演示管理员首页电子证照服务大厅我的办件管理后台办理：身份证办理公安厅1选择办理方式个人/法人2证照调用电子证照核验3材料上传材料清单确认4填写信息表单填写5提交成功申请完成请选择办理方式个人办理以个人身份办理业务法人办理以企业/机构身份办理业务下一步",
+        "layout": {
+          "viewportWidth": 1632,
+          "viewportHeight": 1600,
+          "scrollWidth": 1632,
+          "scrollHeight": 1600,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89025-codex-repair-structure-05-操作-办-理",
+          "label": "操作:办 理",
+          "finalUrl": "http://127.0.0.1:49025/apply/17",
+          "title": "省级一体化移动政务服务平台",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89025/probe/codex-repair-20260604-current/may-89025-codex-repair-structure-05-操作-办-理.json",
+          "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89025/probe/codex-repair-20260604-current/may-89025-codex-repair-structure-05-操作-办-理.png",
+          "elementCount": 154,
+          "interactiveCount": 9,
+          "interactiveLabels": [
+            "首页 电子证照 服务大厅 我的办件 管理后台",
+            "首页",
+            "电子证照",
+            "服务大厅",
+            "我的办件",
+            "管理后台",
+            "下一步"
+          ]
+        }
+      }
+    ],
+    "findings": [],
+    "actionHints": [],
+    "emptyPages": [],
+    "overflowPages": [],
+    "blankPages": [],
+    "apiFailurePaths": [],
+    "goalTerms": [],
+    "clickedActionDescriptors": [
+      {
+        "nav": "首页",
+        "label": "事项配置中心",
+        "ordinal": 0,
+        "unsafe": false
+      },
+      {
+        "nav": "首页",
+        "label": "事项配置中心->编辑",
+        "ordinal": 0,
+        "secondary": true,
+        "unsafe": false
+      },
+      {
+        "nav": "首页",
+        "label": "办 理",
+        "ordinal": 0,
+        "unsafe": false
+      }
+    ],
+    "secondaryActionClicks": 1,
+    "structureCaptures": [
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89025-codex-repair-structure-01-首屏",
+        "label": "首屏",
+        "finalUrl": "http://127.0.0.1:49025/",
+        "title": "省级一体化移动政务服务平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89025/probe/codex-repair-20260604-current/may-89025-codex-repair-structure-01-首屏.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89025/probe/codex-repair-20260604-current/may-89025-codex-repair-structure-01-首屏.png",
+        "elementCount": 849,
+        "interactiveCount": 51,
+        "interactiveLabels": [
+          "首页 电子证照 服务大厅 我的办件 管理后台",
+          "首页",
+          "电子证照",
+          "服务大厅",
+          "我的办件",
+          "管理后台",
+          "搜索服务事项、政策...",
+          "申 领",
+          "亮 证",
+          "核 验",
+          "进入大厅",
+          "智能导办",
+          "进度追踪",
+          "评价反馈",
+          "政策计算器",
+          "城市服务",
+          "管理看板",
+          "事项配置中心",
+          "跨部门网关",
+          "办件质量审计",
+          "更多",
+          "身份证办理",
+          "办 理",
+          "居住证申领",
+          "户口迁移",
+          "社保查询",
+          "养老保险转移",
+          "失业保险金申领",
+          "医保报销",
+          "异地就医备案"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89025-codex-repair-structure-02-导航-首页",
+        "label": "导航:首页",
+        "finalUrl": "http://127.0.0.1:49025/",
+        "title": "省级一体化移动政务服务平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89025/probe/codex-repair-20260604-current/may-89025-codex-repair-structure-02-导航-首页.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89025/probe/codex-repair-20260604-current/may-89025-codex-repair-structure-02-导航-首页.png",
+        "elementCount": 848,
+        "interactiveCount": 51,
+        "interactiveLabels": [
+          "首页 电子证照 服务大厅 我的办件 管理后台",
+          "首页",
+          "电子证照",
+          "服务大厅",
+          "我的办件",
+          "管理后台",
+          "搜索服务事项、政策...",
+          "申 领",
+          "亮 证",
+          "核 验",
+          "进入大厅",
+          "智能导办",
+          "进度追踪",
+          "评价反馈",
+          "政策计算器",
+          "城市服务",
+          "管理看板",
+          "事项配置中心",
+          "跨部门网关",
+          "办件质量审计",
+          "更多",
+          "身份证办理",
+          "办 理",
+          "居住证申领",
+          "户口迁移",
+          "社保查询",
+          "养老保险转移",
+          "失业保险金申领",
+          "医保报销",
+          "异地就医备案"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89025-codex-repair-structure-03-操作-事项配置中心",
+        "label": "操作:事项配置中心",
+        "finalUrl": "http://127.0.0.1:49025/admin/services",
+        "title": "省级一体化移动政务服务平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89025/probe/codex-repair-20260604-current/may-89025-codex-repair-structure-03-操作-事项配置中心.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89025/probe/codex-repair-20260604-current/may-89025-codex-repair-structure-03-操作-事项配置中心.png",
+        "elementCount": 526,
+        "interactiveCount": 56,
+        "interactiveLabels": [
+          "首页 电子证照 服务大厅 我的办件 管理后台",
+          "首页",
+          "电子证照",
+          "服务大厅",
+          "我的办件",
+          "管理后台",
+          "新增事项",
+          "配 置",
+          "编辑",
+          "1",
+          "2",
+          "3",
+          "4",
+          "5",
+          "6",
+          "7",
+          "下一页",
+          "页码"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89025-codex-repair-structure-04-二层操作-事项配置中心-编辑",
+        "label": "二层操作:事项配置中心->编辑",
+        "finalUrl": "http://127.0.0.1:49025/admin/services",
+        "title": "省级一体化移动政务服务平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89025/probe/codex-repair-20260604-current/may-89025-codex-repair-structure-04-二层操作-事项配置中心-编辑.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89025/probe/codex-repair-20260604-current/may-89025-codex-repair-structure-04-二层操作-事项配置中心-编辑.png",
+        "elementCount": 611,
+        "interactiveCount": 67,
+        "interactiveLabels": [
+          "首页 电子证照 服务大厅 我的办件 管理后台",
+          "首页",
+          "电子证照",
+          "服务大厅",
+          "我的办件",
+          "管理后台",
+          "新增事项",
+          "配 置",
+          "编辑",
+          "1",
+          "2",
+          "3",
+          "4",
+          "5",
+          "6",
+          "7",
+          "下一页",
+          "页码",
+          "编辑事项 服务分类 公安服务 事项编码 事项名称 办理时限 所属部门 事项说明 取 消 确 定",
+          "Close",
+          "id_card_apply",
+          "身份证办理",
+          "15个工作日",
+          "公安厅",
+          "详细描述该服务事项",
+          "取 消",
+          "确 定"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89025-codex-repair-structure-05-操作-办-理",
+        "label": "操作:办 理",
+        "finalUrl": "http://127.0.0.1:49025/apply/17",
+        "title": "省级一体化移动政务服务平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89025/probe/codex-repair-20260604-current/may-89025-codex-repair-structure-05-操作-办-理.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89025/probe/codex-repair-20260604-current/may-89025-codex-repair-structure-05-操作-办-理.png",
+        "elementCount": 154,
+        "interactiveCount": 9,
+        "interactiveLabels": [
+          "首页 电子证照 服务大厅 我的办件 管理后台",
+          "首页",
+          "电子证照",
+          "服务大厅",
+          "我的办件",
+          "管理后台",
+          "下一步"
+        ]
+      }
+    ],
+    "representativeScreenshotUrl": "http://127.0.0.1:49025/",
+    "representativeScreenshotLabel": "演示管理员，您好"
+  },
+  "websiteStructureCapture": {
+    "module": "website_structure_capture",
+    "captureCount": 5,
+    "captures": [
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89025-codex-repair-structure-01-首屏",
+        "label": "首屏",
+        "finalUrl": "http://127.0.0.1:49025/",
+        "title": "省级一体化移动政务服务平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89025/probe/codex-repair-20260604-current/may-89025-codex-repair-structure-01-首屏.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89025/probe/codex-repair-20260604-current/may-89025-codex-repair-structure-01-首屏.png",
+        "elementCount": 849,
+        "interactiveCount": 51,
+        "interactiveLabels": [
+          "首页 电子证照 服务大厅 我的办件 管理后台",
+          "首页",
+          "电子证照",
+          "服务大厅",
+          "我的办件",
+          "管理后台",
+          "搜索服务事项、政策...",
+          "申 领",
+          "亮 证",
+          "核 验",
+          "进入大厅",
+          "智能导办",
+          "进度追踪",
+          "评价反馈",
+          "政策计算器",
+          "城市服务",
+          "管理看板",
+          "事项配置中心",
+          "跨部门网关",
+          "办件质量审计",
+          "更多",
+          "身份证办理",
+          "办 理",
+          "居住证申领",
+          "户口迁移",
+          "社保查询",
+          "养老保险转移",
+          "失业保险金申领",
+          "医保报销",
+          "异地就医备案"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89025-codex-repair-structure-02-导航-首页",
+        "label": "导航:首页",
+        "finalUrl": "http://127.0.0.1:49025/",
+        "title": "省级一体化移动政务服务平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89025/probe/codex-repair-20260604-current/may-89025-codex-repair-structure-02-导航-首页.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89025/probe/codex-repair-20260604-current/may-89025-codex-repair-structure-02-导航-首页.png",
+        "elementCount": 848,
+        "interactiveCount": 51,
+        "interactiveLabels": [
+          "首页 电子证照 服务大厅 我的办件 管理后台",
+          "首页",
+          "电子证照",
+          "服务大厅",
+          "我的办件",
+          "管理后台",
+          "搜索服务事项、政策...",
+          "申 领",
+          "亮 证",
+          "核 验",
+          "进入大厅",
+          "智能导办",
+          "进度追踪",
+          "评价反馈",
+          "政策计算器",
+          "城市服务",
+          "管理看板",
+          "事项配置中心",
+          "跨部门网关",
+          "办件质量审计",
+          "更多",
+          "身份证办理",
+          "办 理",
+          "居住证申领",
+          "户口迁移",
+          "社保查询",
+          "养老保险转移",
+          "失业保险金申领",
+          "医保报销",
+          "异地就医备案"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89025-codex-repair-structure-03-操作-事项配置中心",
+        "label": "操作:事项配置中心",
+        "finalUrl": "http://127.0.0.1:49025/admin/services",
+        "title": "省级一体化移动政务服务平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89025/probe/codex-repair-20260604-current/may-89025-codex-repair-structure-03-操作-事项配置中心.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89025/probe/codex-repair-20260604-current/may-89025-codex-repair-structure-03-操作-事项配置中心.png",
+        "elementCount": 526,
+        "interactiveCount": 56,
+        "interactiveLabels": [
+          "首页 电子证照 服务大厅 我的办件 管理后台",
+          "首页",
+          "电子证照",
+          "服务大厅",
+          "我的办件",
+          "管理后台",
+          "新增事项",
+          "配 置",
+          "编辑",
+          "1",
+          "2",
+          "3",
+          "4",
+          "5",
+          "6",
+          "7",
+          "下一页",
+          "页码"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89025-codex-repair-structure-04-二层操作-事项配置中心-编辑",
+        "label": "二层操作:事项配置中心->编辑",
+        "finalUrl": "http://127.0.0.1:49025/admin/services",
+        "title": "省级一体化移动政务服务平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89025/probe/codex-repair-20260604-current/may-89025-codex-repair-structure-04-二层操作-事项配置中心-编辑.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89025/probe/codex-repair-20260604-current/may-89025-codex-repair-structure-04-二层操作-事项配置中心-编辑.png",
+        "elementCount": 611,
+        "interactiveCount": 67,
+        "interactiveLabels": [
+          "首页 电子证照 服务大厅 我的办件 管理后台",
+          "首页",
+          "电子证照",
+          "服务大厅",
+          "我的办件",
+          "管理后台",
+          "新增事项",
+          "配 置",
+          "编辑",
+          "1",
+          "2",
+          "3",
+          "4",
+          "5",
+          "6",
+          "7",
+          "下一页",
+          "页码",
+          "编辑事项 服务分类 公安服务 事项编码 事项名称 办理时限 所属部门 事项说明 取 消 确 定",
+          "Close",
+          "id_card_apply",
+          "身份证办理",
+          "15个工作日",
+          "公安厅",
+          "详细描述该服务事项",
+          "取 消",
+          "确 定"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89025-codex-repair-structure-05-操作-办-理",
+        "label": "操作:办 理",
+        "finalUrl": "http://127.0.0.1:49025/apply/17",
+        "title": "省级一体化移动政务服务平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89025/probe/codex-repair-20260604-current/may-89025-codex-repair-structure-05-操作-办-理.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89025/probe/codex-repair-20260604-current/may-89025-codex-repair-structure-05-操作-办-理.png",
+        "elementCount": 154,
+        "interactiveCount": 9,
+        "interactiveLabels": [
+          "首页 电子证照 服务大厅 我的办件 管理后台",
+          "首页",
+          "电子证照",
+          "服务大厅",
+          "我的办件",
+          "管理后台",
+          "下一步"
+        ]
+      }
+    ]
+  },
+  "screenshotMetrics": {
+    "width": 1664,
+    "height": 1600,
+    "scrollWidth": 1632,
+    "scrollHeight": 2120
+  },
+  "initialBodyTextPreview": "省级一体化移动政务服务平台\n管理员\n标准版\n演示管理员\n首页\n电子证照\n服务大厅\n我的办件\n管理后台\n演示管理员，您好\n\n省级一体化移动政务服务平台 · 让数据多跑路，让群众少跑腿\n\n25°C\n中雨\n2\n2件待办\n电子证照\n4张有效证照\n亮证/核验\n申 领\n亮 证\n核 验\n服务大厅\n91项可办\n 个人办事\n 法人办事\n进入大厅\n智能导办\n我的办件\n2件办理中\n审核中\n进度追踪\n评价反馈\n政策速递\n5条更新\n补贴试算\n个税计算\n政策计算器\n城市服务\n管理后台入口（仅管理员可见）\n管理看板\n事项配置中心\n跨部门网关\n办件质量审计\n热门服务\n更多\n身份证办理\n公安厅\n15个工作日\n3份材料\n办 理\n居住证申领\n公安厅\n7个工作日\n3份材料\n办 理\n户口迁移\n公安厅\n10个工作日\n3份材料\n办 理\n社保查询\n人力资源\n即时办理\n3份材料\n办 理\n养老保险转移\n人力资源\n30个工作日\n3份材料\n办 理\n失业保险金申领\n人力资源\n10个工作日\n3份材料\n办 理\n医保报销\n医疗保障\n15个工作日\n3份材料\n办 理\n异地就医备案\n医疗保障\n3个工作日\n3份材料\n办 理\n办件动态\n全部\n…\n个人所得税申报\n审核中\n…\n医保报销\n办理中\n✗\n公积金提取\n已驳回\n 2星\n✓\n社保查询\n已办结\n 4星\n✓\n身份证办理\n已办结\n 5星\n28类委办局服务\n进入服务大厅\n公安服务\n5项服务\n3热门\n人社服务\n5项服务\n3热门\n医保服务\n4项服务\n3热门\n教育服务\n4项服务\n3热门\n民政服务\n4项服务\n2热门\n税务服务\n4项服务\n2热门\n住房服务\n3项服务\n2热门\n交通服务\n4项服务\n2热门\n市场监管\n4项服务\n3热门\n司法服务\n4项服务\n2热门\n自然资源\n3项服务\n1热门\n生态环境\n3项服务\n卫生健康\n4项服务\n2热门\n应急管理\n3项服务\n文化旅游\n3项服务\n1热门\n体育服务\n3项服务\n科技服务\n3项服务\n工信服务\n3项服务\n财政服务\n3项服务\n审计服务\n2项服务\n统计服务\n2项服务\n林业服务\n2项服务\n水利服务\n2项服务\n农业农村\n3项服务\n1热门\n商务服务\n3项服务\n退役军人\n3项服务\n1热门\n外事服务\n2项服务\n档案服务\n3项服务\n政策速递\n更多\n置顶\n关于优化营商环境的若干政策措施\n省政府办公厅 · 2026-06-03\n2024年度社保缴费基数调整通知\n人力资源和社会保障厅 · 2026-06-03\n医保跨省异地就医直接结算政策解读\n医疗保障局 · 2026-06-03\n关于加强政务服务\"一网通办\"的实施意见\n政务服务管理局 · 2026-06-03\n城市服务\n更多\n当前温度\n25°C\n空气质量\n优\n天气\n政务地图\n常用电话\n等保三级合规\n数据加密\n隐私保护\n审计留痕\n标准版\n切换适老版",
+  "bodyTextPreview": "省级一体化移动政务服务平台\n管理员\n标准版\n演示管理员\n首页\n电子证照\n服务大厅\n我的办件\n管理后台\n演示管理员，您好\n\n省级一体化移动政务服务平台 · 让数据多跑路，让群众少跑腿\n\n29°C\n雷阵雨\n2\n2件待办\n电子证照\n4张有效证照\n亮证/核验\n申 领\n亮 证\n核 验\n服务大厅\n91项可办\n 个人办事\n 法人办事\n进入大厅\n智能导办\n我的办件\n2件办理中\n审核中\n进度追踪\n评价反馈\n政策速递\n5条更新\n补贴试算\n个税计算\n政策计算器\n城市服务\n管理后台入口（仅管理员可见）\n管理看板\n事项配置中心\n跨部门网关\n办件质量审计\n热门服务\n更多\n身份证办理\n公安厅\n15个工作日\n3份材料\n办 理\n居住证申领\n公安厅\n7个工作日\n3份材料\n办 理\n户口迁移\n公安厅\n10个工作日\n3份材料\n办 理\n社保查询\n人力资源\n即时办理\n3份材料\n办 理\n养老保险转移\n人力资源\n30个工作日\n3份材料\n办 理\n失业保险金申领\n人力资源\n10个工作日\n3份材料\n办 理\n医保报销\n医疗保障\n15个工作日\n3份材料\n办 理\n异地就医备案\n医疗保障\n3个工作日\n3份材料\n办 理\n办件动态\n全部\n…\n个人所得税申报\n审核中\n…\n医保报销\n办理中\n✗\n公积金提取\n已驳回\n 2星\n✓\n社保查询\n已办结\n 4星\n✓\n身份证办理\n已办结\n 5星\n28类委办局服务\n进入服务大厅\n公安服务\n5项服务\n3热门\n人社服务\n5项服务\n3热门\n医保服务\n4项服务\n3热门\n教育服务\n4项服务\n3热门\n民政服务\n4项服务\n2热门\n税务服务\n4项服务\n2热门\n住房服务\n3项服务\n2热门\n交通服务\n4项服务\n2热门\n市场监管\n4项服务\n3热门\n司法服务\n4项服务\n2热门\n自然资源\n3项服务\n1热门\n生态环境\n3项服务\n卫生健康\n4项服务\n2热门\n应急管理\n3项服务\n文化旅游\n3项服务\n1热门\n体育服务\n3项服务\n科技服务\n3项服务\n工信服务\n3项服务\n财政服务\n3项服务\n审计服务\n2项服务\n统计服务\n2项服务\n林业服务\n2项服务\n水利服务\n2项服务\n农业农村\n3项服务\n1热门\n商务服务\n3项服务\n退役军人\n3项服务\n1热门\n外事服务\n2项服务\n档案服务\n3项服务\n政策速递\n更多\n置顶\n关于优化营商环境的若干政策措施\n省政府办公厅 · 2026-06-03\n2024年度社保缴费基数调整通知\n人力资源和社会保障厅 · 2026-06-03\n医保跨省异地就医直接结算政策解读\n医疗保障局 · 2026-06-03\n关于加强政务服务\"一网通办\"的实施意见\n政务服务管理局 · 2026-06-03\n城市服务\n更多\n当前温度\n29°C\n空气质量\n优\n天气\n政务地图\n常用电话\n等保三级合规\n数据加密\n隐私保护\n审计留痕\n标准版\n切换适老版",
+  "apiBase": "",
+  "businessGoalPreview": "",
+  "apiResponses": [
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:59025/api/services/items?hot=1"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:59025/api/services/items?hot=1"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:59025/api/policy/news?limit=5"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:59025/api/policy/news?limit=5"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:59025/api/city/weather"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:59025/api/city/weather"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:59025/api/certificates"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:59025/api/certificates"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:59025/api/applications"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:59025/api/applications"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:59025/api/services/categories"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:59025/api/services/categories"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:59025/api/services/items"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:59025/api/services/items"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:59025/api/admin/services"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:59025/api/services/categories"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:59025/api/admin/services"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:59025/api/services/categories"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:59025/api/services/items?hot=1"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:59025/api/services/items?hot=1"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:59025/api/policy/news?limit=5"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:59025/api/policy/news?limit=5"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:59025/api/city/weather"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:59025/api/city/weather"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:59025/api/certificates"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:59025/api/certificates"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:59025/api/applications"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:59025/api/applications"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:59025/api/services/categories"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:59025/api/services/categories"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:59025/api/services/items"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:59025/api/services/items"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:59025/api/services/items/17"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:59025/api/certificates"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:59025/api/services/items/17"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:59025/api/certificates"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:59025/api/services/items?hot=1"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:59025/api/services/items?hot=1"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:59025/api/policy/news?limit=5"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:59025/api/policy/news?limit=5"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:59025/api/city/weather"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:59025/api/city/weather"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:59025/api/certificates"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:59025/api/certificates"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:59025/api/applications"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:59025/api/applications"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:59025/api/services/categories"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:59025/api/services/categories"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:59025/api/services/items"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:59025/api/services/items"
+    }
+  ],
+  "apiChecks": [],
+  "dialogs": [],
+  "consoleMessages": [
+    {
+      "type": "debug",
+      "text": "[vite] connecting...",
+      "location": {
+        "url": "http://127.0.0.1:49025/@vite/client",
+        "lineNumber": 494,
+        "columnNumber": 8
+      }
+    },
+    {
+      "type": "debug",
+      "text": "[vite] connected.",
+      "location": {
+        "url": "http://127.0.0.1:49025/@vite/client",
+        "lineNumber": 617,
+        "columnNumber": 14
+      }
+    },
+    {
+      "type": "info",
+      "text": "%cDownload the React DevTools for a better development experience: https://reactjs.org/link/react-devtools font-weight:bold",
+      "location": {
+        "url": "http://127.0.0.1:49025/node_modules/.vite/deps/chunk-6GSFWH52.js?v=ec1cbbab",
+        "lineNumber": 21550,
+        "columnNumber": 24
+      }
+    },
+    {
+      "type": "warning",
+      "text": "⚠️ React Router Future Flag Warning: React Router will begin wrapping state updates in `React.startTransition` in v7. You can use the `v7_startTransition` future flag to opt-in early. For more information, see https://reactrouter.com/v6/upgrading/future#v7_starttransition.",
+      "location": {
+        "url": "http://127.0.0.1:49025/node_modules/.vite/deps/react-router-dom.js?v=ec1cbbab",
+        "lineNumber": 4426,
+        "columnNumber": 12
+      }
+    },
+    {
+      "type": "warning",
+      "text": "⚠️ React Router Future Flag Warning: Relative route resolution within Splat routes is changing in v7. You can use the `v7_relativeSplatPath` future flag to opt-in early. For more information, see https://reactrouter.com/v6/upgrading/future#v7_relativesplatpath.",
+      "location": {
+        "url": "http://127.0.0.1:49025/node_modules/.vite/deps/react-router-dom.js?v=ec1cbbab",
+        "lineNumber": 4426,
+        "columnNumber": 12
+      }
+    },
+    {
+      "type": "error",
+      "text": "Failed to load resource: the server responded with a status of 404 (Not Found)",
+      "location": {
+        "url": "http://127.0.0.1:49025/favicon.ico",
+        "lineNumber": 0,
+        "columnNumber": 0
+      }
+    },
+    {
+      "type": "error",
+      "text": "Failed to load resource: the server responded with a status of 500 (Internal Server Error)",
+      "location": {
+        "url": "http://127.0.0.1:49025/src/pages/Certificates.jsx?t=1780571467117",
+        "lineNumber": 0,
+        "columnNumber": 0
+      }
+    },
+    {
+      "type": "error",
+      "text": "[hmr] Failed to reload /src/pages/Certificates.jsx. This could be due to syntax errors or importing non-existent modules. (see errors above)",
+      "location": {
+        "url": "http://127.0.0.1:49025/@vite/client",
+        "lineNumber": 175,
+        "columnNumber": 16
+      }
+    },
+    {
+      "type": "debug",
+      "text": "[vite] hot updated: /src/pages/Certificates.jsx",
+      "location": {
+        "url": "http://127.0.0.1:49025/@vite/client",
+        "lineNumber": 222,
+        "columnNumber": 18
+      }
+    },
+    {
+      "type": "debug",
+      "text": "[vite] hot updated: /src/pages/Certificates.jsx",
+      "location": {
+        "url": "http://127.0.0.1:49025/@vite/client",
+        "lineNumber": 222,
+        "columnNumber": 18
+      }
+    },
+    {
+      "type": "debug",
+      "text": "[vite] connecting...",
+      "location": {
+        "url": "http://127.0.0.1:49025/@vite/client",
+        "lineNumber": 494,
+        "columnNumber": 8
+      }
+    },
+    {
+      "type": "debug",
+      "text": "[vite] connected.",
+      "location": {
+        "url": "http://127.0.0.1:49025/@vite/client",
+        "lineNumber": 617,
+        "columnNumber": 14
+      }
+    },
+    {
+      "type": "info",
+      "text": "%cDownload the React DevTools for a better development experience: https://reactjs.org/link/react-devtools font-weight:bold",
+      "location": {
+        "url": "http://127.0.0.1:49025/node_modules/.vite/deps/chunk-6GSFWH52.js?v=ec1cbbab",
+        "lineNumber": 21550,
+        "columnNumber": 24
+      }
+    },
+    {
+      "type": "warning",
+      "text": "⚠️ React Router Future Flag Warning: React Router will begin wrapping state updates in `React.startTransition` in v7. You can use the `v7_startTransition` future flag to opt-in early. For more information, see https://reactrouter.com/v6/upgrading/future#v7_starttransition.",
+      "location": {
+        "url": "http://127.0.0.1:49025/node_modules/.vite/deps/react-router-dom.js?v=ec1cbbab",
+        "lineNumber": 4426,
+        "columnNumber": 12
+      }
+    },
+    {
+      "type": "warning",
+      "text": "⚠️ React Router Future Flag Warning: Relative route resolution within Splat routes is changing in v7. You can use the `v7_relativeSplatPath` future flag to opt-in early. For more information, see https://reactrouter.com/v6/upgrading/future#v7_relativesplatpath.",
+      "location": {
+        "url": "http://127.0.0.1:49025/node_modules/.vite/deps/react-router-dom.js?v=ec1cbbab",
+        "lineNumber": 4426,
+        "columnNumber": 12
+      }
+    },
+    {
+      "type": "error",
+      "text": "Warning: [antd: Card] `bordered` is deprecated. Please use `variant` instead.",
+      "location": {
+        "url": "http://127.0.0.1:49025/node_modules/.vite/deps/chunk-5JXVXGVQ.js?v=ec1cbbab",
+        "lineNumber": 1247,
+        "columnNumber": 14
+      }
+    },
+    {
+      "type": "debug",
+      "text": "[vite] connecting...",
+      "location": {
+        "url": "http://127.0.0.1:49025/@vite/client",
+        "lineNumber": 494,
+        "columnNumber": 8
+      }
+    },
+    {
+      "type": "debug",
+      "text": "[vite] connected.",
+      "location": {
+        "url": "http://127.0.0.1:49025/@vite/client",
+        "lineNumber": 617,
+        "columnNumber": 14
+      }
+    },
+    {
+      "type": "info",
+      "text": "%cDownload the React DevTools for a better development experience: https://reactjs.org/link/react-devtools font-weight:bold",
+      "location": {
+        "url": "http://127.0.0.1:49025/node_modules/.vite/deps/chunk-6GSFWH52.js?v=ec1cbbab",
+        "lineNumber": 21550,
+        "columnNumber": 24
+      }
+    },
+    {
+      "type": "warning",
+      "text": "⚠️ React Router Future Flag Warning: React Router will begin wrapping state updates in `React.startTransition` in v7. You can use the `v7_startTransition` future flag to opt-in early. For more information, see https://reactrouter.com/v6/upgrading/future#v7_starttransition.",
+      "location": {
+        "url": "http://127.0.0.1:49025/node_modules/.vite/deps/react-router-dom.js?v=ec1cbbab",
+        "lineNumber": 4426,
+        "columnNumber": 12
+      }
+    },
+    {
+      "type": "warning",
+      "text": "⚠️ React Router Future Flag Warning: Relative route resolution within Splat routes is changing in v7. You can use the `v7_relativeSplatPath` future flag to opt-in early. For more information, see https://reactrouter.com/v6/upgrading/future#v7_relativesplatpath.",
+      "location": {
+        "url": "http://127.0.0.1:49025/node_modules/.vite/deps/react-router-dom.js?v=ec1cbbab",
+        "lineNumber": 4426,
+        "columnNumber": 12
+      }
+    }
+  ],
+  "requestFailures": [
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:49025/src/pages/Certificates.jsx?t=1780571467117",
+      "errorText": "net::ERR_ABORTED"
+    }
+  ],
+  "responseErrors": [
+    {
+      "status": 500,
+      "url": "http://127.0.0.1:49025/src/pages/Certificates.jsx?t=1780571467117"
+    }
+  ]
+}
