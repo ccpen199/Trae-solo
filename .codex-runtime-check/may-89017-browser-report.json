@@ -1,0 +1,686 @@
+{
+  "ok": false,
+  "generatedAt": "2026-06-04T02:04:27.323Z",
+  "order": "may-89017",
+  "roundIndex": 99,
+  "captureId": "codex-may-89017",
+  "url": "http://127.0.0.1:50017/",
+  "initialUrl": "http://127.0.0.1:50017/",
+  "finalUrl": "http://127.0.0.1:50017/",
+  "status": null,
+  "title": "中国邮政 - 统一数字服务门户",
+  "initialTitle": "",
+  "navigationError": "page.goto: Timeout 15000ms exceeded.\nCall log:\n\u001b[2m  - navigating to \"http://127.0.0.1:50017/\", waiting until \"domcontentloaded\"\u001b[22m\n",
+  "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89017/.codex-runtime-check/codex-may-89017-frontend.png",
+  "screenshotPaths": [
+    "/Users/chen/Documents/trae_projects/local_projects/may-89017/.codex-runtime-check/codex-may-89017-structure-01-首屏.png"
+  ],
+  "issueTextPreview": "",
+  "targetReason": "页面存在后台入口，优先复验后台管理链路；页面存在购买/商品入口，优先复验交易链路；页面存在我的/账号入口，优先复验个人中心链路",
+  "targetKind": "admin",
+  "targetMatched": true,
+  "targetActions": [
+    {
+      "action": "click",
+      "label": "页面存在后台入口，优先复验后台管理链路",
+      "ok": false,
+      "error": "locator.click: Timeout 900ms exceeded.\nCall log:\n\u001b[2m  - waiting for getByRole('link', { name: /管理后台/ }).first()\u001b[22m\n\u001b[2m    - locator resolved to <a href=\"/login\">…</a>\u001b[22m\n\u001b[2m  - attempting click action\u001b[22m\n\u001b[2m   "
+    },
+    {
+      "action": "click",
+      "label": "页面存在后台入口，优先复验后台管理链路",
+      "ok": false,
+      "error": "locator.click: Timeout 900ms exceeded.\nCall log:\n\u001b[2m  - waiting for getByRole('button', { name: /管理后台/ }).first()\u001b[22m\n\u001b[2m    - locator resolved to <button type=\"button\" class=\"ant-btn css-dev-only-do-not-override-cnbq"
+    },
+    {
+      "action": "click",
+      "label": "页面存在后台入口，优先复验后台管理链路",
+      "ok": false,
+      "error": "locator.click: Timeout 900ms exceeded.\nCall log:\n\u001b[2m  - waiting for getByText(/管理后台/).first()\u001b[22m\n\u001b[2m    - locator resolved to <span>…</span>\u001b[22m\n\u001b[2m  - attempting click action\u001b[22m\n\u001b[2m    - waiting for element to "
+    },
+    {
+      "action": "click",
+      "label": "页面存在后台入口，优先复验后台管理链路",
+      "ok": false,
+      "error": "locator.click: Timeout 900ms exceeded.\nCall log:\n\u001b[2m  - waiting for getByText(/后台管理/).first()\u001b[22m\n\u001b[2m    - locator resolved to <div class=\"ant-card-body\">…</div>\u001b[22m\n\u001b[2m  - attempting click action\u001b[22m\n\u001b[2m    - wai"
+    },
+    {
+      "action": "click",
+      "label": "页面存在后台入口，优先复验后台管理链路",
+      "ok": true
+    },
+    {
+      "action": "target-verify",
+      "label": "页面存在后台入口，优先复验后台管理链路",
+      "ok": true,
+      "finalUrl": "http://127.0.0.1:50017/login"
+    }
+  ],
+  "authFlow": {
+    "detected": false,
+    "attempted": false,
+    "success": false,
+    "finalUrl": "http://127.0.0.1:50017/",
+    "message": "",
+    "actions": []
+  },
+  "businessAudit": {
+    "actions": [
+      {
+        "action": "click",
+        "label": "导航:首页",
+        "ok": false,
+        "error": "locator.click: Timeout 900ms exceeded.\nCall log:\n\u001b[2m  - waiting for getByRole('link', { name: /^\\s*首页\\s*$/ }).first()\u001b[22m\n\u001b[2m    - locator resolved to <a href=\"/\">首页</a>\u001b[22m\n\u001b[2m  - attempting click action\u001b[22m\n\u001b[2m "
+      },
+      {
+        "action": "click",
+        "label": "导航:首页",
+        "ok": false,
+        "error": "locator.click: Timeout 900ms exceeded.\nCall log:\n\u001b[2m  - waiting for locator('a,button,[role=\"button\"],[role=\"menuitem\"],[onclick],[tabindex]:not([tabindex=\"-1\"]),[class*=\"nav-item\" i],[class*=\"menu-item\" i],[class*=\"men"
+      },
+      {
+        "action": "click",
+        "label": "导航:首页",
+        "ok": false,
+        "error": "locator.click: Timeout 900ms exceeded.\nCall log:\n\u001b[2m  - waiting for locator('a,button,[role=\"button\"],[role=\"menuitem\"],[onclick],[tabindex]:not([tabindex=\"-1\"]),[class*=\"nav-item\" i],[class*=\"menu-item\" i],[class*=\"men"
+      },
+      {
+        "action": "click",
+        "label": "导航:邮品商城",
+        "ok": false,
+        "error": "locator.click: Timeout 900ms exceeded.\nCall log:\n\u001b[2m  - waiting for getByRole('link', { name: /^\\s*邮品商城\\s*$/ }).first()\u001b[22m\n\u001b[2m    - locator resolved to <a href=\"/products\">邮品商城</a>\u001b[22m\n\u001b[2m  - attempting click actio"
+      },
+      {
+        "action": "click",
+        "label": "导航:邮品商城",
+        "ok": false,
+        "error": "locator.click: Timeout 900ms exceeded.\nCall log:\n\u001b[2m  - waiting for locator('a,button,[role=\"button\"],[role=\"menuitem\"],[onclick],[tabindex]:not([tabindex=\"-1\"]),[class*=\"nav-item\" i],[class*=\"menu-item\" i],[class*=\"men"
+      },
+      {
+        "action": "click",
+        "label": "导航:邮品商城",
+        "ok": false,
+        "error": "locator.click: Timeout 900ms exceeded.\nCall log:\n\u001b[2m  - waiting for locator('a,button,[role=\"button\"],[role=\"menuitem\"],[onclick],[tabindex]:not([tabindex=\"-1\"]),[class*=\"nav-item\" i],[class*=\"menu-item\" i],[class*=\"men"
+      }
+    ],
+    "snapshots": [
+      {
+        "label": "首屏",
+        "url": "http://127.0.0.1:50017/",
+        "title": "中国邮政 - 统一数字服务门户",
+        "headings": [
+          "EMS特快专递",
+          "2024龙年生肖邮票限量发售",
+          "报刊订阅优惠季"
+        ],
+        "navLabels": [
+          "首页",
+          "邮品商城",
+          "包裹查询",
+          "报刊订阅",
+          "售后服务",
+          "数字邮戳",
+          "管理后台 管理员",
+          "管理后台",
+          "管理员"
+        ],
+        "buttons": [
+          "1",
+          "2",
+          "3",
+          "查询"
+        ],
+        "links": [
+          "首页",
+          "邮品商城",
+          "包裹查询",
+          "报刊订阅",
+          "售后服务",
+          "数字邮戳",
+          "管理后台 管理员",
+          "集邮票品",
+          "数字藏品",
+          "查看更多",
+          "2024龙年生肖邮票 ¥128 限量",
+          "2023兔年生肖邮票 ¥98 限量",
+          "长城主题特种邮票 ¥68 0",
+          "航天成就纪念邮票 ¥158 限量",
+          "名画珍品邮票系列 ¥288 限量",
+          "花卉主题邮票册 ¥78 0",
+          "人民日报年度订阅 ¥360 0",
+          "光明日报年度订阅 ¥300 0"
+        ],
+        "inputs": [
+          {
+            "tag": "input",
+            "type": "search",
+            "placeholder": "请输入运单号查询物流信息（支持普邮/EMS/国际件）",
+            "name": "",
+            "label": ""
+          }
+        ],
+        "tables": [],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "邮中国邮政首页邮品商城包裹查询报刊订阅售后服务数字邮戳管理后台管理员3管理员演示管理员EMS特快专递全国次日达，时效保障2024龙年生肖邮票限量发售珍藏级邮品，限量编号报刊订阅优惠季全年订阅立享8折优惠EMS特快专递全国次日达，时效保障2024龙年生肖邮票限量发售珍藏级邮品，限量编号报刊订阅优惠季全年订阅立享8折优惠EMS特快专递全国次日达，时效保障123集邮票品报刊订阅包裹查询数字藏品快速查件查询普邮EMS国际件热门邮品查看更多2024龙年生肖邮票¥128限量2023兔年生肖邮票¥98限量长城主题特种邮票¥680航天成就纪念邮票¥158限量名画珍品邮票系列¥288限量花卉主题邮票册¥780人民日报年度订阅¥3600光明日报年度订阅¥3000数据统计注册用户8,888在售商品500日均订单1,200服务网点3,200个服务公告关于2024年春节期间物流服务调整通知新邮预告：下月将发行航天主题纪念邮票报刊订阅APP上线，随时随地管理您的订阅EMS国际物流新增5国直达线路中国邮政集团有限公司|客服热线：11185|邮政编码：100808中国邮政集团统一数字服务门户平台 ©2026 版权所有",
+        "layout": {
+          "viewportWidth": 1504,
+          "viewportHeight": 1600,
+          "scrollWidth": 1504,
+          "scrollHeight": 1948,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "codex-may-89017-structure-01-首屏",
+          "label": "首屏",
+          "finalUrl": "http://127.0.0.1:50017/",
+          "title": "中国邮政 - 统一数字服务门户",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89017/.codex-runtime-check/codex-may-89017-structure-01-首屏.json",
+          "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89017/.codex-runtime-check/codex-may-89017-structure-01-首屏.png",
+          "elementCount": 410,
+          "interactiveCount": 34,
+          "interactiveLabels": [
+            "首页 邮品商城 包裹查询 报刊订阅 售后服务 数字邮戳 管理后台 管理员",
+            "首页",
+            "邮品商城",
+            "包裹查询",
+            "报刊订阅",
+            "售后服务",
+            "数字邮戳",
+            "管理后台 管理员",
+            "1",
+            "2",
+            "3",
+            "集邮票品",
+            "数字藏品",
+            "请输入运单号查询物流信息（支持普邮/EMS/国际件）",
+            "查询",
+            "查看更多",
+            "2024龙年生肖邮票 ¥128 限量",
+            "2023兔年生肖邮票 ¥98 限量",
+            "长城主题特种邮票 ¥68 0",
+            "航天成就纪念邮票 ¥158 限量",
+            "名画珍品邮票系列 ¥288 限量",
+            "花卉主题邮票册 ¥78 0",
+            "人民日报年度订阅 ¥360 0",
+            "光明日报年度订阅 ¥300 0"
+          ]
+        }
+      }
+    ],
+    "findings": [
+      "接口 POST /api/auth/login 请求失败，页面无法加载对应业务数据。",
+      "接口 /api/admin/dashboard 返回 HTTP 403，对应业务模块无法完成数据读取。"
+    ],
+    "actionHints": [
+      "修复 /api/auth/login 的前端地址、CORS 或后端路由，并让页面渲染真实业务数据。",
+      "补齐 /api/admin/dashboard 后端接口、SQLite 数据和前端错误处理。"
+    ],
+    "emptyPages": [],
+    "overflowPages": [],
+    "blankPages": [],
+    "apiFailurePaths": [
+      "/api/auth/login",
+      "/api/admin/dashboard"
+    ],
+    "goalTerms": [],
+    "clickedActionDescriptors": [],
+    "secondaryActionClicks": 0,
+    "structureCaptures": [
+      {
+        "module": "website_structure_capture",
+        "runId": "codex-may-89017-structure-01-首屏",
+        "label": "首屏",
+        "finalUrl": "http://127.0.0.1:50017/",
+        "title": "中国邮政 - 统一数字服务门户",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89017/.codex-runtime-check/codex-may-89017-structure-01-首屏.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89017/.codex-runtime-check/codex-may-89017-structure-01-首屏.png",
+        "elementCount": 410,
+        "interactiveCount": 34,
+        "interactiveLabels": [
+          "首页 邮品商城 包裹查询 报刊订阅 售后服务 数字邮戳 管理后台 管理员",
+          "首页",
+          "邮品商城",
+          "包裹查询",
+          "报刊订阅",
+          "售后服务",
+          "数字邮戳",
+          "管理后台 管理员",
+          "1",
+          "2",
+          "3",
+          "集邮票品",
+          "数字藏品",
+          "请输入运单号查询物流信息（支持普邮/EMS/国际件）",
+          "查询",
+          "查看更多",
+          "2024龙年生肖邮票 ¥128 限量",
+          "2023兔年生肖邮票 ¥98 限量",
+          "长城主题特种邮票 ¥68 0",
+          "航天成就纪念邮票 ¥158 限量",
+          "名画珍品邮票系列 ¥288 限量",
+          "花卉主题邮票册 ¥78 0",
+          "人民日报年度订阅 ¥360 0",
+          "光明日报年度订阅 ¥300 0"
+        ]
+      }
+    ],
+    "representativeScreenshotUrl": "http://127.0.0.1:50017/",
+    "representativeScreenshotLabel": "EMS特快专递"
+  },
+  "websiteStructureCapture": {
+    "module": "website_structure_capture",
+    "captureCount": 1,
+    "captures": [
+      {
+        "module": "website_structure_capture",
+        "runId": "codex-may-89017-structure-01-首屏",
+        "label": "首屏",
+        "finalUrl": "http://127.0.0.1:50017/",
+        "title": "中国邮政 - 统一数字服务门户",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89017/.codex-runtime-check/codex-may-89017-structure-01-首屏.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89017/.codex-runtime-check/codex-may-89017-structure-01-首屏.png",
+        "elementCount": 410,
+        "interactiveCount": 34,
+        "interactiveLabels": [
+          "首页 邮品商城 包裹查询 报刊订阅 售后服务 数字邮戳 管理后台 管理员",
+          "首页",
+          "邮品商城",
+          "包裹查询",
+          "报刊订阅",
+          "售后服务",
+          "数字邮戳",
+          "管理后台 管理员",
+          "1",
+          "2",
+          "3",
+          "集邮票品",
+          "数字藏品",
+          "请输入运单号查询物流信息（支持普邮/EMS/国际件）",
+          "查询",
+          "查看更多",
+          "2024龙年生肖邮票 ¥128 限量",
+          "2023兔年生肖邮票 ¥98 限量",
+          "长城主题特种邮票 ¥68 0",
+          "航天成就纪念邮票 ¥158 限量",
+          "名画珍品邮票系列 ¥288 限量",
+          "花卉主题邮票册 ¥78 0",
+          "人民日报年度订阅 ¥360 0",
+          "光明日报年度订阅 ¥300 0"
+        ]
+      }
+    ]
+  },
+  "screenshotMetrics": {
+    "width": 1536,
+    "height": 1600,
+    "scrollWidth": 1504,
+    "scrollHeight": 1948
+  },
+  "initialBodyTextPreview": "ERR:locator.innerText: Timeout 3000ms exceeded.\nCall log:\n\u001b[2m  - waiting for locator('body')\u001b[22m\n",
+  "bodyTextPreview": "邮\n中国邮政\n首页\n邮品商城\n包裹查询\n报刊订阅\n售后服务\n数字邮戳\n管理后台\n管理员\n3\n管理员\n演示管理员\nEMS特快专递\n\n全国次日达，时效保障\n\n2024龙年生肖邮票限量发售\n\n珍藏级邮品，限量编号\n\n报刊订阅优惠季\n\n全年订阅立享8折优惠\n\nEMS特快专递\n\n全国次日达，时效保障\n\n2024龙年生肖邮票限量发售\n\n珍藏级邮品，限量编号\n\n报刊订阅优惠季\n\n全年订阅立享8折优惠\n\nEMS特快专递\n\n全国次日达，时效保障\n\n1\n2\n3\n集邮票品\n报刊订阅\n包裹查询\n数字藏品\n快速查件\n查询\n普邮\nEMS\n国际件\n热门邮品\n查看更多\n2024龙年生肖邮票\n¥128\n限量\n2023兔年生肖邮票\n¥98\n限量\n长城主题特种邮票\n¥68\n0\n航天成就纪念邮票\n¥158\n限量\n名画珍品邮票系列\n¥288\n限量\n花卉主题邮票册\n¥78\n0\n人民日报年度订阅\n¥360\n0\n光明日报年度订阅\n¥300\n0\n数据统计\n注册用户\n8,888\n在售商品\n500\n日均订单\n1,200\n服务网点\n3,200个\n服务公告\n关于2024年春节期间物流服务调整通知\n新邮预告：下月将发行航天主题纪念邮票\n报刊订阅APP上线，随时随地管理您的订阅\nEMS国际物流新增5国直达线路\n中国邮政集团有限公司\n|\n客服热线：11185\n|\n邮政编码：100808\n中国邮政集团统一数字服务门户平台 ©2026 版权所有",
+  "apiBase": "",
+  "businessGoalPreview": "",
+  "apiResponses": [
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:50017/api/products?limit=8"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:50017/api/products?limit=8"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:50017/api/products?limit=8"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:50017/api/products?limit=8"
+    },
+    {
+      "method": "GET",
+      "status": 403,
+      "url": "http://127.0.0.1:50017/api/admin/dashboard"
+    },
+    {
+      "method": "GET",
+      "status": 403,
+      "url": "http://127.0.0.1:50017/api/admin/dashboard"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:50017/api/products/categories"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:50017/api/products?page=1&limit=12"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:50017/api/products/categories"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:50017/api/products?page=1&limit=12"
+    },
+    {
+      "method": "GET",
+      "status": 403,
+      "url": "http://127.0.0.1:50017/api/admin/dashboard"
+    },
+    {
+      "method": "GET",
+      "status": 403,
+      "url": "http://127.0.0.1:50017/api/admin/dashboard"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:50017/api/products?limit=8"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:50017/api/products?limit=8"
+    }
+  ],
+  "apiChecks": [],
+  "dialogs": [],
+  "consoleMessages": [
+    {
+      "type": "debug",
+      "text": "[vite] connecting...",
+      "location": {
+        "url": "http://127.0.0.1:50017/@vite/client",
+        "lineNumber": 494,
+        "columnNumber": 8
+      }
+    },
+    {
+      "type": "debug",
+      "text": "[vite] connected.",
+      "location": {
+        "url": "http://127.0.0.1:50017/@vite/client",
+        "lineNumber": 617,
+        "columnNumber": 14
+      }
+    },
+    {
+      "type": "info",
+      "text": "%cDownload the React DevTools for a better development experience: https://reactjs.org/link/react-devtools font-weight:bold",
+      "location": {
+        "url": "http://127.0.0.1:50017/node_modules/.vite/deps/chunk-PJEEZAML.js?v=b2fd3a8b",
+        "lineNumber": 21550,
+        "columnNumber": 24
+      }
+    },
+    {
+      "type": "warning",
+      "text": "⚠️ React Router Future Flag Warning: React Router will begin wrapping state updates in `React.startTransition` in v7. You can use the `v7_startTransition` future flag to opt-in early. For more information, see https://reactrouter.com/v6/upgrading/future#v7_starttransition.",
+      "location": {
+        "url": "http://127.0.0.1:50017/node_modules/.vite/deps/react-router-dom.js?v=b2fd3a8b",
+        "lineNumber": 4426,
+        "columnNumber": 12
+      }
+    },
+    {
+      "type": "warning",
+      "text": "⚠️ React Router Future Flag Warning: Relative route resolution within Splat routes is changing in v7. You can use the `v7_relativeSplatPath` future flag to opt-in early. For more information, see https://reactrouter.com/v6/upgrading/future#v7_relativesplatpath.",
+      "location": {
+        "url": "http://127.0.0.1:50017/node_modules/.vite/deps/react-router-dom.js?v=b2fd3a8b",
+        "lineNumber": 4426,
+        "columnNumber": 12
+      }
+    },
+    {
+      "type": "error",
+      "text": "Failed to load resource: the server responded with a status of 404 (Not Found)",
+      "location": {
+        "url": "http://127.0.0.1:50017/favicon.ico",
+        "lineNumber": 0,
+        "columnNumber": 0
+      }
+    },
+    {
+      "type": "error",
+      "text": "Warning: [antd: Tabs] `Tabs.TabPane` is deprecated. Please use `items` instead.",
+      "location": {
+        "url": "http://127.0.0.1:50017/node_modules/.vite/deps/chunk-ZDBJOGHJ.js?v=b2fd3a8b",
+        "lineNumber": 1247,
+        "columnNumber": 14
+      }
+    },
+    {
+      "type": "verbose",
+      "text": "[DOM] Input elements should have autocomplete attributes (suggested: \"current-password\"): (More info: https://goo.gl/9p2vKq)",
+      "location": {
+        "url": "http://127.0.0.1:50017/login",
+        "lineNumber": 0,
+        "columnNumber": 0
+      }
+    },
+    {
+      "type": "verbose",
+      "text": "[DOM] Input elements should have autocomplete attributes (suggested: \"current-password\"): (More info: https://goo.gl/9p2vKq)",
+      "location": {
+        "url": "http://127.0.0.1:50017/login",
+        "lineNumber": 0,
+        "columnNumber": 0
+      }
+    },
+    {
+      "type": "debug",
+      "text": "[vite] connecting...",
+      "location": {
+        "url": "http://127.0.0.1:50017/@vite/client",
+        "lineNumber": 494,
+        "columnNumber": 8
+      }
+    },
+    {
+      "type": "debug",
+      "text": "[vite] connected.",
+      "location": {
+        "url": "http://127.0.0.1:50017/@vite/client",
+        "lineNumber": 617,
+        "columnNumber": 14
+      }
+    },
+    {
+      "type": "debug",
+      "text": "[vite] connecting...",
+      "location": {
+        "url": "http://127.0.0.1:50017/@vite/client",
+        "lineNumber": 494,
+        "columnNumber": 8
+      }
+    },
+    {
+      "type": "debug",
+      "text": "[vite] connected.",
+      "location": {
+        "url": "http://127.0.0.1:50017/@vite/client",
+        "lineNumber": 617,
+        "columnNumber": 14
+      }
+    },
+    {
+      "type": "info",
+      "text": "%cDownload the React DevTools for a better development experience: https://reactjs.org/link/react-devtools font-weight:bold",
+      "location": {
+        "url": "http://127.0.0.1:50017/node_modules/.vite/deps/chunk-PJEEZAML.js?v=b2fd3a8b",
+        "lineNumber": 21550,
+        "columnNumber": 24
+      }
+    },
+    {
+      "type": "warning",
+      "text": "⚠️ React Router Future Flag Warning: React Router will begin wrapping state updates in `React.startTransition` in v7. You can use the `v7_startTransition` future flag to opt-in early. For more information, see https://reactrouter.com/v6/upgrading/future#v7_starttransition.",
+      "location": {
+        "url": "http://127.0.0.1:50017/node_modules/.vite/deps/react-router-dom.js?v=b2fd3a8b",
+        "lineNumber": 4426,
+        "columnNumber": 12
+      }
+    },
+    {
+      "type": "warning",
+      "text": "⚠️ React Router Future Flag Warning: Relative route resolution within Splat routes is changing in v7. You can use the `v7_relativeSplatPath` future flag to opt-in early. For more information, see https://reactrouter.com/v6/upgrading/future#v7_relativesplatpath.",
+      "location": {
+        "url": "http://127.0.0.1:50017/node_modules/.vite/deps/react-router-dom.js?v=b2fd3a8b",
+        "lineNumber": 4426,
+        "columnNumber": 12
+      }
+    },
+    {
+      "type": "error",
+      "text": "Failed to load resource: the server responded with a status of 403 (Forbidden)",
+      "location": {
+        "url": "http://127.0.0.1:50017/api/admin/dashboard",
+        "lineNumber": 0,
+        "columnNumber": 0
+      }
+    },
+    {
+      "type": "error",
+      "text": "加载仪表盘失败 AxiosError: Request failed with status code 403\n    at settle (http://127.0.0.1:50017/node_modules/.vite/deps/axios.js?v=b2fd3a8b:1457:12)\n    at XMLHttpRequest.onloadend (http://127.0.0.1:50017/node_modules/.vite/deps/axios.js?v=b2fd3a8b:1862:7)",
+      "location": {
+        "url": "http://127.0.0.1:50017/src/pages/admin/Dashboard.jsx",
+        "lineNumber": 48,
+        "columnNumber": 14
+      }
+    },
+    {
+      "type": "error",
+      "text": "Failed to load resource: the server responded with a status of 403 (Forbidden)",
+      "location": {
+        "url": "http://127.0.0.1:50017/api/admin/dashboard",
+        "lineNumber": 0,
+        "columnNumber": 0
+      }
+    },
+    {
+      "type": "error",
+      "text": "加载仪表盘失败 AxiosError: Request failed with status code 403\n    at settle (http://127.0.0.1:50017/node_modules/.vite/deps/axios.js?v=b2fd3a8b:1457:12)\n    at XMLHttpRequest.onloadend (http://127.0.0.1:50017/node_modules/.vite/deps/axios.js?v=b2fd3a8b:1862:7)",
+      "location": {
+        "url": "http://127.0.0.1:50017/src/pages/admin/Dashboard.jsx",
+        "lineNumber": 48,
+        "columnNumber": 14
+      }
+    },
+    {
+      "type": "error",
+      "text": "Failed to load resource: the server responded with a status of 403 (Forbidden)",
+      "location": {
+        "url": "http://127.0.0.1:50017/api/admin/dashboard",
+        "lineNumber": 0,
+        "columnNumber": 0
+      }
+    },
+    {
+      "type": "error",
+      "text": "加载仪表盘失败 AxiosError: Request failed with status code 403\n    at settle (http://127.0.0.1:50017/node_modules/.vite/deps/axios.js?v=b2fd3a8b:1457:12)\n    at XMLHttpRequest.onloadend (http://127.0.0.1:50017/node_modules/.vite/deps/axios.js?v=b2fd3a8b:1862:7)",
+      "location": {
+        "url": "http://127.0.0.1:50017/src/pages/admin/Dashboard.jsx",
+        "lineNumber": 48,
+        "columnNumber": 14
+      }
+    },
+    {
+      "type": "error",
+      "text": "Failed to load resource: the server responded with a status of 403 (Forbidden)",
+      "location": {
+        "url": "http://127.0.0.1:50017/api/admin/dashboard",
+        "lineNumber": 0,
+        "columnNumber": 0
+      }
+    },
+    {
+      "type": "error",
+      "text": "加载仪表盘失败 AxiosError: Request failed with status code 403\n    at settle (http://127.0.0.1:50017/node_modules/.vite/deps/axios.js?v=b2fd3a8b:1457:12)\n    at XMLHttpRequest.onloadend (http://127.0.0.1:50017/node_modules/.vite/deps/axios.js?v=b2fd3a8b:1862:7)",
+      "location": {
+        "url": "http://127.0.0.1:50017/src/pages/admin/Dashboard.jsx",
+        "lineNumber": 48,
+        "columnNumber": 14
+      }
+    },
+    {
+      "type": "debug",
+      "text": "[vite] connecting...",
+      "location": {
+        "url": "http://127.0.0.1:50017/@vite/client",
+        "lineNumber": 494,
+        "columnNumber": 8
+      }
+    },
+    {
+      "type": "debug",
+      "text": "[vite] connected.",
+      "location": {
+        "url": "http://127.0.0.1:50017/@vite/client",
+        "lineNumber": 617,
+        "columnNumber": 14
+      }
+    },
+    {
+      "type": "info",
+      "text": "%cDownload the React DevTools for a better development experience: https://reactjs.org/link/react-devtools font-weight:bold",
+      "location": {
+        "url": "http://127.0.0.1:50017/node_modules/.vite/deps/chunk-PJEEZAML.js?v=b2fd3a8b",
+        "lineNumber": 21550,
+        "columnNumber": 24
+      }
+    },
+    {
+      "type": "warning",
+      "text": "⚠️ React Router Future Flag Warning: React Router will begin wrapping state updates in `React.startTransition` in v7. You can use the `v7_startTransition` future flag to opt-in early. For more information, see https://reactrouter.com/v6/upgrading/future#v7_starttransition.",
+      "location": {
+        "url": "http://127.0.0.1:50017/node_modules/.vite/deps/react-router-dom.js?v=b2fd3a8b",
+        "lineNumber": 4426,
+        "columnNumber": 12
+      }
+    },
+    {
+      "type": "warning",
+      "text": "⚠️ React Router Future Flag Warning: Relative route resolution within Splat routes is changing in v7. You can use the `v7_relativeSplatPath` future flag to opt-in early. For more information, see https://reactrouter.com/v6/upgrading/future#v7_relativesplatpath.",
+      "location": {
+        "url": "http://127.0.0.1:50017/node_modules/.vite/deps/react-router-dom.js?v=b2fd3a8b",
+        "lineNumber": 4426,
+        "columnNumber": 12
+      }
+    }
+  ],
+  "requestFailures": [
+    {
+      "method": "POST",
+      "url": "http://127.0.0.1:50017/api/auth/login",
+      "errorText": "net::ERR_ABORTED"
+    }
+  ],
+  "responseErrors": [
+    {
+      "status": 403,
+      "url": "http://127.0.0.1:50017/api/admin/dashboard"
+    },
+    {
+      "status": 403,
+      "url": "http://127.0.0.1:50017/api/admin/dashboard"
+    },
+    {
+      "status": 403,
+      "url": "http://127.0.0.1:50017/api/admin/dashboard"
+    },
+    {
+      "status": 403,
+      "url": "http://127.0.0.1:50017/api/admin/dashboard"
+    }
+  ]
+}

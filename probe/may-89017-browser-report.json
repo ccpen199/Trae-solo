@@ -1,0 +1,1527 @@
+{
+  "ok": true,
+  "generatedAt": "2026-06-04T02:20:45.779Z",
+  "order": "may-89017",
+  "roundIndex": 99,
+  "captureId": "codex-may-89017",
+  "url": "http://127.0.0.1:50017/",
+  "initialUrl": "http://127.0.0.1:50017/",
+  "finalUrl": "http://127.0.0.1:50017/login",
+  "status": 200,
+  "title": "中国邮政 - 统一数字服务门户",
+  "initialTitle": "中国邮政 - 统一数字服务门户",
+  "navigationError": "",
+  "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89017/probe/codex-may-89017-frontend.png",
+  "screenshotPaths": [
+    "/Users/chen/Documents/trae_projects/local_projects/may-89017/probe/codex-may-89017-structure-01-首屏.png",
+    "/Users/chen/Documents/trae_projects/local_projects/may-89017/probe/codex-may-89017-structure-02-导航-首页.png",
+    "/Users/chen/Documents/trae_projects/local_projects/may-89017/probe/codex-may-89017-structure-03-导航-邮品商城.png",
+    "/Users/chen/Documents/trae_projects/local_projects/may-89017/probe/codex-may-89017-structure-04-操作-查看全部商品.png",
+    "/Users/chen/Documents/trae_projects/local_projects/may-89017/probe/codex-may-89017-structure-05-操作-搜索.png"
+  ],
+  "issueTextPreview": "",
+  "targetReason": "页面存在后台入口，优先复验后台管理链路；页面存在购买/商品入口，优先复验交易链路",
+  "targetKind": "admin",
+  "targetMatched": true,
+  "targetActions": [
+    {
+      "action": "click",
+      "label": "页面存在后台入口，优先复验后台管理链路",
+      "ok": false,
+      "error": "locator.click: Timeout 900ms exceeded.\nCall log:\n\u001b[2m  - waiting for getByRole('link', { name: /管理后台/ }).first()\u001b[22m\n"
+    },
+    {
+      "action": "click",
+      "label": "页面存在后台入口，优先复验后台管理链路",
+      "ok": false,
+      "error": "locator.click: Timeout 900ms exceeded.\nCall log:\n\u001b[2m  - waiting for locator('a,button,[role=\"button\"],[role=\"menuitem\"],[onclick],[tabindex]:not([tabindex=\"-1\"]),[class*=\"nav-item\" i],[class*=\"menu-item\" i],[class*=\"men"
+    },
+    {
+      "action": "click",
+      "label": "页面存在后台入口，优先复验后台管理链路",
+      "ok": false,
+      "error": "locator.click: Timeout 900ms exceeded.\nCall log:\n\u001b[2m  - waiting for getByText(/管理后台/).first()\u001b[22m\n\u001b[2m    - locator resolved to <div class=\"ant-space-item\">管理后台</div>\u001b[22m\n\u001b[2m  - attempting click action\u001b[22m\n\u001b[2m    -"
+    },
+    {
+      "action": "click",
+      "label": "页面存在后台入口，优先复验后台管理链路",
+      "ok": false,
+      "error": "locator.click: Timeout 900ms exceeded.\nCall log:\n\u001b[2m  - waiting for locator('a,button,[role=\"button\"],[role=\"menuitem\"],[onclick],[tabindex]:not([tabindex=\"-1\"]),[class*=\"nav-item\" i],[class*=\"menu-item\" i],[class*=\"men"
+    },
+    {
+      "action": "click",
+      "label": "页面存在后台入口，优先复验后台管理链路",
+      "ok": true
+    },
+    {
+      "action": "target-verify",
+      "label": "页面存在后台入口，优先复验后台管理链路",
+      "ok": true,
+      "finalUrl": "http://127.0.0.1:50017/admin/dashboard"
+    }
+  ],
+  "authFlow": {
+    "detected": false,
+    "attempted": false,
+    "success": false,
+    "finalUrl": "http://127.0.0.1:50017/",
+    "message": "",
+    "actions": []
+  },
+  "businessAudit": {
+    "actions": [
+      {
+        "action": "click",
+        "label": "导航:首页",
+        "ok": false,
+        "error": "locator.click: Timeout 900ms exceeded.\nCall log:\n\u001b[2m  - waiting for getByRole('link', { name: /^\\s*首页\\s*$/ }).first()\u001b[22m\n\u001b[2m    - locator resolved to <a href=\"/\">首页</a>\u001b[22m\n\u001b[2m  - attempting click action\u001b[22m\n\u001b[2m "
+      },
+      {
+        "action": "click",
+        "label": "导航:首页",
+        "ok": false,
+        "error": "locator.click: Timeout 900ms exceeded.\nCall log:\n\u001b[2m  - waiting for locator('a,button,[role=\"button\"],[role=\"menuitem\"],[onclick],[tabindex]:not([tabindex=\"-1\"]),[class*=\"nav-item\" i],[class*=\"menu-item\" i],[class*=\"men"
+      },
+      {
+        "action": "click",
+        "label": "导航:首页",
+        "ok": true
+      },
+      {
+        "action": "click",
+        "label": "导航:邮品商城",
+        "ok": false,
+        "error": "locator.click: Timeout 900ms exceeded.\nCall log:\n\u001b[2m  - waiting for getByRole('link', { name: /^\\s*邮品商城\\s*$/ }).first()\u001b[22m\n\u001b[2m    - locator resolved to <a href=\"/products\">邮品商城</a>\u001b[22m\n\u001b[2m  - attempting click actio"
+      },
+      {
+        "action": "click",
+        "label": "导航:邮品商城",
+        "ok": true
+      },
+      {
+        "action": "click",
+        "label": "操作:查看全部商品",
+        "ok": true,
+        "result": {
+          "ok": true,
+          "matched": 1
+        }
+      },
+      {
+        "action": "click",
+        "label": "操作:搜索",
+        "ok": true,
+        "result": {
+          "ok": true,
+          "matched": 1
+        }
+      }
+    ],
+    "snapshots": [
+      {
+        "label": "首屏",
+        "url": "http://127.0.0.1:50017/",
+        "title": "中国邮政 - 统一数字服务门户",
+        "headings": [
+          "EMS特快专递",
+          "2024龙年生肖邮票限量发售",
+          "报刊订阅优惠季"
+        ],
+        "navLabels": [
+          "首页",
+          "邮品商城",
+          "包裹查询",
+          "报刊订阅",
+          "售后服务",
+          "数字邮戳",
+          "管理后台 管理员",
+          "管理后台",
+          "管理员"
+        ],
+        "buttons": [
+          "1",
+          "2",
+          "3",
+          "查询"
+        ],
+        "links": [
+          "首页",
+          "邮品商城",
+          "包裹查询",
+          "报刊订阅",
+          "售后服务",
+          "数字邮戳",
+          "管理后台 管理员",
+          "集邮票品",
+          "数字藏品",
+          "查看更多"
+        ],
+        "inputs": [
+          {
+            "tag": "input",
+            "type": "search",
+            "placeholder": "请输入运单号查询物流信息（支持普邮/EMS/国际件）",
+            "name": "",
+            "label": ""
+          }
+        ],
+        "tables": [],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "邮中国邮政首页邮品商城包裹查询报刊订阅售后服务数字邮戳管理后台管理员3管理员演示管理员EMS特快专递全国次日达，时效保障2024龙年生肖邮票限量发售珍藏级邮品，限量编号报刊订阅优惠季全年订阅立享8折优惠EMS特快专递全国次日达，时效保障2024龙年生肖邮票限量发售珍藏级邮品，限量编号报刊订阅优惠季全年订阅立享8折优惠EMS特快专递全国次日达，时效保障123集邮票品报刊订阅包裹查询数字藏品快速查件查询普邮EMS国际件热门邮品查看更多数据统计注册用户8,888在售商品500日均订单1,200服务网点3,200个服务公告关于2024年春节期间物流服务调整通知新邮预告：下月将发行航天主题纪念邮票报刊订阅APP上线，随时随地管理您的订阅EMS国际物流新增5国直达线路中国邮政集团有限公司|客服热线：11185|邮政编码：100808中国邮政集团统一数字服务门户平台 ©2026 版权所有",
+        "layout": {
+          "viewportWidth": 1504,
+          "viewportHeight": 1395,
+          "scrollWidth": 1504,
+          "scrollHeight": 1417,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "codex-may-89017-structure-01-首屏",
+          "label": "首屏",
+          "finalUrl": "http://127.0.0.1:50017/",
+          "title": "中国邮政 - 统一数字服务门户",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89017/probe/codex-may-89017-structure-01-首屏.json",
+          "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89017/probe/codex-may-89017-structure-01-首屏.png",
+          "elementCount": 270,
+          "interactiveCount": 26,
+          "interactiveLabels": [
+            "首页 邮品商城 包裹查询 报刊订阅 售后服务 数字邮戳 管理后台 管理员",
+            "首页",
+            "邮品商城",
+            "包裹查询",
+            "报刊订阅",
+            "售后服务",
+            "数字邮戳",
+            "管理后台 管理员",
+            "1",
+            "2",
+            "3",
+            "集邮票品",
+            "数字藏品",
+            "请输入运单号查询物流信息（支持普邮/EMS/国际件）",
+            "查询",
+            "查看更多"
+          ]
+        }
+      },
+      {
+        "label": "导航:首页",
+        "url": "http://127.0.0.1:50017/admin/dashboard",
+        "title": "中国邮政 - 统一数字服务门户",
+        "headings": [
+          "管理后台"
+        ],
+        "navLabels": [
+          "首页",
+          "邮品商城",
+          "包裹查询",
+          "报刊订阅",
+          "售后服务",
+          "数字邮戳",
+          "管理后台 管理员",
+          "管理后台",
+          "管理员",
+          "数据概览",
+          "bar-chart",
+          "内容审核",
+          "audit",
+          "订阅健康度",
+          "file-text",
+          "地址变更审批",
+          "environment",
+          "网点管理",
+          "工单管理",
+          "广告管理",
+          "sound",
+          "数字藏品"
+        ],
+        "buttons": [],
+        "links": [
+          "首页",
+          "邮品商城",
+          "包裹查询",
+          "报刊订阅",
+          "售后服务",
+          "数字邮戳",
+          "管理后台 管理员",
+          "数据概览",
+          "内容审核",
+          "订阅健康度",
+          "地址变更审批",
+          "网点管理",
+          "工单管理",
+          "广告管理",
+          "数字藏品"
+        ],
+        "inputs": [],
+        "tables": [
+          {
+            "headers": [
+              "订单号",
+              "用户",
+              "金额",
+              "状态",
+              "时间"
+            ],
+            "rowCount": 1,
+            "hasEmptyText": true,
+            "textPreview": "订单号 用户 金额 状态 时间 暂无数据"
+          }
+        ],
+        "emptyTextCount": 1,
+        "bodyTextPreview": "邮中国邮政首页邮品商城包裹查询报刊订阅售后服务数字邮戳管理后台管理员3管理员演示管理员数据概览内容审核订阅健康度地址变更审批网点管理工单管理广告管理数字藏品管理后台注册用户0在售商品0订单总数0待处理工单0销售统计最近订单订单号用户金额状态时间暂无数据中国邮政集团有限公司|客服热线：11185|邮政编码：100808中国邮政集团统一数字服务门户平台 ©2026 版权所有",
+        "layout": {
+          "viewportWidth": 1536,
+          "viewportHeight": 1417,
+          "scrollWidth": 1536,
+          "scrollHeight": 1439,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "codex-may-89017-structure-02-导航-首页",
+          "label": "导航:首页",
+          "finalUrl": "http://127.0.0.1:50017/admin/dashboard",
+          "title": "中国邮政 - 统一数字服务门户",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89017/probe/codex-may-89017-structure-02-导航-首页.json",
+          "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89017/probe/codex-may-89017-structure-02-导航-首页.png",
+          "elementCount": 235,
+          "interactiveCount": 33,
+          "interactiveLabels": [
+            "首页 邮品商城 包裹查询 报刊订阅 售后服务 数字邮戳 管理后台 管理员",
+            "首页",
+            "邮品商城",
+            "包裹查询",
+            "报刊订阅",
+            "售后服务",
+            "数字邮戳",
+            "管理后台 管理员",
+            "数据概览 内容审核 订阅健康度 地址变更审批 网点管理 工单管理 广告管理 数字藏品",
+            "数据概览",
+            "内容审核",
+            "订阅健康度",
+            "地址变更审批",
+            "网点管理",
+            "工单管理",
+            "广告管理",
+            "数字藏品"
+          ]
+        }
+      },
+      {
+        "label": "导航:邮品商城",
+        "url": "http://127.0.0.1:50017/products",
+        "title": "中国邮政 - 统一数字服务门户",
+        "headings": [
+          "邮品商城"
+        ],
+        "navLabels": [
+          "首页",
+          "邮品商城",
+          "包裹查询",
+          "报刊订阅",
+          "售后服务",
+          "数字邮戳",
+          "管理后台 管理员",
+          "管理后台",
+          "管理员"
+        ],
+        "buttons": [
+          "搜索",
+          "查看全部商品"
+        ],
+        "links": [
+          "首页",
+          "邮品商城",
+          "包裹查询",
+          "报刊订阅",
+          "售后服务",
+          "数字邮戳",
+          "管理后台 管理员"
+        ],
+        "inputs": [
+          {
+            "tag": "input",
+            "type": "search",
+            "placeholder": "搜索商品名称、描述...",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "search",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          }
+        ],
+        "tables": [],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "邮中国邮政首页邮品商城包裹查询报刊订阅售后服务数字邮戳管理后台管理员3管理员演示管理员邮品商城精选集邮票品、报刊杂志、定制文创等邮政特色产品全部商品搜索高级筛选当前分类商品0件限量发售0件库存紧张0件暂无符合条件的商品查看全部商品中国邮政集团有限公司|客服热线：11185|邮政编码：100808中国邮政集团统一数字服务门户平台 ©2026 版权所有",
+        "layout": {
+          "viewportWidth": 1568,
+          "viewportHeight": 1439,
+          "scrollWidth": 1568,
+          "scrollHeight": 1461,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "codex-may-89017-structure-03-导航-邮品商城",
+          "label": "导航:邮品商城",
+          "finalUrl": "http://127.0.0.1:50017/products",
+          "title": "中国邮政 - 统一数字服务门户",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89017/probe/codex-may-89017-structure-03-导航-邮品商城.json",
+          "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89017/probe/codex-may-89017-structure-03-导航-邮品商城.png",
+          "elementCount": 191,
+          "interactiveCount": 20,
+          "interactiveLabels": [
+            "首页 邮品商城 包裹查询 报刊订阅 售后服务 数字邮戳 管理后台 管理员",
+            "首页",
+            "邮品商城",
+            "包裹查询",
+            "报刊订阅",
+            "售后服务",
+            "数字邮戳",
+            "管理后台 管理员",
+            "搜索商品名称、描述...",
+            "搜索",
+            "查看全部商品"
+          ]
+        }
+      },
+      {
+        "label": "操作:查看全部商品",
+        "url": "http://127.0.0.1:50017/products",
+        "title": "中国邮政 - 统一数字服务门户",
+        "headings": [
+          "邮品商城"
+        ],
+        "navLabels": [
+          "首页",
+          "邮品商城",
+          "包裹查询",
+          "报刊订阅",
+          "售后服务",
+          "数字邮戳",
+          "管理后台 管理员",
+          "管理后台",
+          "管理员"
+        ],
+        "buttons": [
+          "搜索",
+          "查看全部商品"
+        ],
+        "links": [
+          "首页",
+          "邮品商城",
+          "包裹查询",
+          "报刊订阅",
+          "售后服务",
+          "数字邮戳",
+          "管理后台 管理员"
+        ],
+        "inputs": [
+          {
+            "tag": "input",
+            "type": "search",
+            "placeholder": "搜索商品名称、描述...",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "search",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          }
+        ],
+        "tables": [],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "邮中国邮政首页邮品商城包裹查询报刊订阅售后服务数字邮戳管理后台管理员3管理员演示管理员邮品商城精选集邮票品、报刊杂志、定制文创等邮政特色产品全部商品搜索高级筛选当前分类商品0件限量发售0件库存紧张0件暂无符合条件的商品查看全部商品中国邮政集团有限公司|客服热线：11185|邮政编码：100808中国邮政集团统一数字服务门户平台 ©2026 版权所有",
+        "layout": {
+          "viewportWidth": 1600,
+          "viewportHeight": 1461,
+          "scrollWidth": 1600,
+          "scrollHeight": 1483,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "codex-may-89017-structure-04-操作-查看全部商品",
+          "label": "操作:查看全部商品",
+          "finalUrl": "http://127.0.0.1:50017/products",
+          "title": "中国邮政 - 统一数字服务门户",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89017/probe/codex-may-89017-structure-04-操作-查看全部商品.json",
+          "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89017/probe/codex-may-89017-structure-04-操作-查看全部商品.png",
+          "elementCount": 191,
+          "interactiveCount": 20,
+          "interactiveLabels": [
+            "首页 邮品商城 包裹查询 报刊订阅 售后服务 数字邮戳 管理后台 管理员",
+            "首页",
+            "邮品商城",
+            "包裹查询",
+            "报刊订阅",
+            "售后服务",
+            "数字邮戳",
+            "管理后台 管理员",
+            "搜索商品名称、描述...",
+            "搜索",
+            "查看全部商品"
+          ]
+        }
+      },
+      {
+        "label": "操作:搜索",
+        "url": "http://127.0.0.1:50017/products",
+        "title": "中国邮政 - 统一数字服务门户",
+        "headings": [
+          "邮品商城"
+        ],
+        "navLabels": [
+          "首页",
+          "邮品商城",
+          "包裹查询",
+          "报刊订阅",
+          "售后服务",
+          "数字邮戳",
+          "管理后台 管理员",
+          "管理后台",
+          "管理员"
+        ],
+        "buttons": [
+          "搜索",
+          "查看全部商品"
+        ],
+        "links": [
+          "首页",
+          "邮品商城",
+          "包裹查询",
+          "报刊订阅",
+          "售后服务",
+          "数字邮戳",
+          "管理后台 管理员"
+        ],
+        "inputs": [
+          {
+            "tag": "input",
+            "type": "search",
+            "placeholder": "搜索商品名称、描述...",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "search",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          }
+        ],
+        "tables": [],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "邮中国邮政首页邮品商城包裹查询报刊订阅售后服务数字邮戳管理后台管理员3管理员演示管理员邮品商城精选集邮票品、报刊杂志、定制文创等邮政特色产品全部商品搜索高级筛选当前分类商品0件限量发售0件库存紧张0件暂无符合条件的商品查看全部商品中国邮政集团有限公司|客服热线：11185|邮政编码：100808中国邮政集团统一数字服务门户平台 ©2026 版权所有",
+        "layout": {
+          "viewportWidth": 1632,
+          "viewportHeight": 1483,
+          "scrollWidth": 1632,
+          "scrollHeight": 1505,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "codex-may-89017-structure-05-操作-搜索",
+          "label": "操作:搜索",
+          "finalUrl": "http://127.0.0.1:50017/products",
+          "title": "中国邮政 - 统一数字服务门户",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89017/probe/codex-may-89017-structure-05-操作-搜索.json",
+          "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89017/probe/codex-may-89017-structure-05-操作-搜索.png",
+          "elementCount": 191,
+          "interactiveCount": 20,
+          "interactiveLabels": [
+            "首页 邮品商城 包裹查询 报刊订阅 售后服务 数字邮戳 管理后台 管理员",
+            "首页",
+            "邮品商城",
+            "包裹查询",
+            "报刊订阅",
+            "售后服务",
+            "数字邮戳",
+            "管理后台 管理员",
+            "搜索商品名称、描述...",
+            "搜索",
+            "查看全部商品"
+          ]
+        }
+      }
+    ],
+    "findings": [
+      "接口 /api/products 返回 HTTP 500，对应业务模块无法完成数据读取。",
+      "接口 /api/admin/dashboard 返回 HTTP 500，对应业务模块无法完成数据读取。",
+      "接口 /api/products/categories 返回 HTTP 500，对应业务模块无法完成数据读取。",
+      "首页 页面只显示空列表或“暂无数据”，缺少可复查的业务记录。",
+      "多个核心页面同时空列表且接口失败，当前系统没有形成“页面操作 - API - SQLite 数据”的闭环。"
+    ],
+    "actionHints": [
+      "补齐 /api/products 后端接口、SQLite 数据和前端错误处理。",
+      "补齐 /api/admin/dashboard 后端接口、SQLite 数据和前端错误处理。",
+      "补齐 /api/products/categories 后端接口、SQLite 数据和前端错误处理。",
+      "为 首页 补齐 SQLite 种子数据、列表接口和空状态引导，确保核心记录可新增、可查看、可复查。",
+      "优先打通版本、策略、发布、监控和回滚的核心接口与 SQLite 落库链路。"
+    ],
+    "emptyPages": [
+      "首页"
+    ],
+    "overflowPages": [],
+    "blankPages": [],
+    "apiFailurePaths": [
+      "/api/products",
+      "/api/admin/dashboard",
+      "/api/products/categories"
+    ],
+    "goalTerms": [],
+    "clickedActionDescriptors": [
+      {
+        "nav": "邮品商城",
+        "label": "查看全部商品",
+        "ordinal": 0,
+        "unsafe": false
+      },
+      {
+        "nav": "邮品商城",
+        "label": "搜索",
+        "ordinal": 0,
+        "unsafe": false
+      }
+    ],
+    "secondaryActionClicks": 0,
+    "structureCaptures": [
+      {
+        "module": "website_structure_capture",
+        "runId": "codex-may-89017-structure-01-首屏",
+        "label": "首屏",
+        "finalUrl": "http://127.0.0.1:50017/",
+        "title": "中国邮政 - 统一数字服务门户",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89017/probe/codex-may-89017-structure-01-首屏.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89017/probe/codex-may-89017-structure-01-首屏.png",
+        "elementCount": 270,
+        "interactiveCount": 26,
+        "interactiveLabels": [
+          "首页 邮品商城 包裹查询 报刊订阅 售后服务 数字邮戳 管理后台 管理员",
+          "首页",
+          "邮品商城",
+          "包裹查询",
+          "报刊订阅",
+          "售后服务",
+          "数字邮戳",
+          "管理后台 管理员",
+          "1",
+          "2",
+          "3",
+          "集邮票品",
+          "数字藏品",
+          "请输入运单号查询物流信息（支持普邮/EMS/国际件）",
+          "查询",
+          "查看更多"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "codex-may-89017-structure-02-导航-首页",
+        "label": "导航:首页",
+        "finalUrl": "http://127.0.0.1:50017/admin/dashboard",
+        "title": "中国邮政 - 统一数字服务门户",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89017/probe/codex-may-89017-structure-02-导航-首页.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89017/probe/codex-may-89017-structure-02-导航-首页.png",
+        "elementCount": 235,
+        "interactiveCount": 33,
+        "interactiveLabels": [
+          "首页 邮品商城 包裹查询 报刊订阅 售后服务 数字邮戳 管理后台 管理员",
+          "首页",
+          "邮品商城",
+          "包裹查询",
+          "报刊订阅",
+          "售后服务",
+          "数字邮戳",
+          "管理后台 管理员",
+          "数据概览 内容审核 订阅健康度 地址变更审批 网点管理 工单管理 广告管理 数字藏品",
+          "数据概览",
+          "内容审核",
+          "订阅健康度",
+          "地址变更审批",
+          "网点管理",
+          "工单管理",
+          "广告管理",
+          "数字藏品"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "codex-may-89017-structure-03-导航-邮品商城",
+        "label": "导航:邮品商城",
+        "finalUrl": "http://127.0.0.1:50017/products",
+        "title": "中国邮政 - 统一数字服务门户",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89017/probe/codex-may-89017-structure-03-导航-邮品商城.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89017/probe/codex-may-89017-structure-03-导航-邮品商城.png",
+        "elementCount": 191,
+        "interactiveCount": 20,
+        "interactiveLabels": [
+          "首页 邮品商城 包裹查询 报刊订阅 售后服务 数字邮戳 管理后台 管理员",
+          "首页",
+          "邮品商城",
+          "包裹查询",
+          "报刊订阅",
+          "售后服务",
+          "数字邮戳",
+          "管理后台 管理员",
+          "搜索商品名称、描述...",
+          "搜索",
+          "查看全部商品"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "codex-may-89017-structure-04-操作-查看全部商品",
+        "label": "操作:查看全部商品",
+        "finalUrl": "http://127.0.0.1:50017/products",
+        "title": "中国邮政 - 统一数字服务门户",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89017/probe/codex-may-89017-structure-04-操作-查看全部商品.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89017/probe/codex-may-89017-structure-04-操作-查看全部商品.png",
+        "elementCount": 191,
+        "interactiveCount": 20,
+        "interactiveLabels": [
+          "首页 邮品商城 包裹查询 报刊订阅 售后服务 数字邮戳 管理后台 管理员",
+          "首页",
+          "邮品商城",
+          "包裹查询",
+          "报刊订阅",
+          "售后服务",
+          "数字邮戳",
+          "管理后台 管理员",
+          "搜索商品名称、描述...",
+          "搜索",
+          "查看全部商品"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "codex-may-89017-structure-05-操作-搜索",
+        "label": "操作:搜索",
+        "finalUrl": "http://127.0.0.1:50017/products",
+        "title": "中国邮政 - 统一数字服务门户",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89017/probe/codex-may-89017-structure-05-操作-搜索.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89017/probe/codex-may-89017-structure-05-操作-搜索.png",
+        "elementCount": 191,
+        "interactiveCount": 20,
+        "interactiveLabels": [
+          "首页 邮品商城 包裹查询 报刊订阅 售后服务 数字邮戳 管理后台 管理员",
+          "首页",
+          "邮品商城",
+          "包裹查询",
+          "报刊订阅",
+          "售后服务",
+          "数字邮戳",
+          "管理后台 管理员",
+          "搜索商品名称、描述...",
+          "搜索",
+          "查看全部商品"
+        ]
+      }
+    ],
+    "representativeScreenshotUrl": "http://127.0.0.1:50017/admin/dashboard",
+    "representativeScreenshotLabel": "首页"
+  },
+  "websiteStructureCapture": {
+    "module": "website_structure_capture",
+    "captureCount": 5,
+    "captures": [
+      {
+        "module": "website_structure_capture",
+        "runId": "codex-may-89017-structure-01-首屏",
+        "label": "首屏",
+        "finalUrl": "http://127.0.0.1:50017/",
+        "title": "中国邮政 - 统一数字服务门户",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89017/probe/codex-may-89017-structure-01-首屏.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89017/probe/codex-may-89017-structure-01-首屏.png",
+        "elementCount": 270,
+        "interactiveCount": 26,
+        "interactiveLabels": [
+          "首页 邮品商城 包裹查询 报刊订阅 售后服务 数字邮戳 管理后台 管理员",
+          "首页",
+          "邮品商城",
+          "包裹查询",
+          "报刊订阅",
+          "售后服务",
+          "数字邮戳",
+          "管理后台 管理员",
+          "1",
+          "2",
+          "3",
+          "集邮票品",
+          "数字藏品",
+          "请输入运单号查询物流信息（支持普邮/EMS/国际件）",
+          "查询",
+          "查看更多"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "codex-may-89017-structure-02-导航-首页",
+        "label": "导航:首页",
+        "finalUrl": "http://127.0.0.1:50017/admin/dashboard",
+        "title": "中国邮政 - 统一数字服务门户",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89017/probe/codex-may-89017-structure-02-导航-首页.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89017/probe/codex-may-89017-structure-02-导航-首页.png",
+        "elementCount": 235,
+        "interactiveCount": 33,
+        "interactiveLabels": [
+          "首页 邮品商城 包裹查询 报刊订阅 售后服务 数字邮戳 管理后台 管理员",
+          "首页",
+          "邮品商城",
+          "包裹查询",
+          "报刊订阅",
+          "售后服务",
+          "数字邮戳",
+          "管理后台 管理员",
+          "数据概览 内容审核 订阅健康度 地址变更审批 网点管理 工单管理 广告管理 数字藏品",
+          "数据概览",
+          "内容审核",
+          "订阅健康度",
+          "地址变更审批",
+          "网点管理",
+          "工单管理",
+          "广告管理",
+          "数字藏品"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "codex-may-89017-structure-03-导航-邮品商城",
+        "label": "导航:邮品商城",
+        "finalUrl": "http://127.0.0.1:50017/products",
+        "title": "中国邮政 - 统一数字服务门户",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89017/probe/codex-may-89017-structure-03-导航-邮品商城.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89017/probe/codex-may-89017-structure-03-导航-邮品商城.png",
+        "elementCount": 191,
+        "interactiveCount": 20,
+        "interactiveLabels": [
+          "首页 邮品商城 包裹查询 报刊订阅 售后服务 数字邮戳 管理后台 管理员",
+          "首页",
+          "邮品商城",
+          "包裹查询",
+          "报刊订阅",
+          "售后服务",
+          "数字邮戳",
+          "管理后台 管理员",
+          "搜索商品名称、描述...",
+          "搜索",
+          "查看全部商品"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "codex-may-89017-structure-04-操作-查看全部商品",
+        "label": "操作:查看全部商品",
+        "finalUrl": "http://127.0.0.1:50017/products",
+        "title": "中国邮政 - 统一数字服务门户",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89017/probe/codex-may-89017-structure-04-操作-查看全部商品.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89017/probe/codex-may-89017-structure-04-操作-查看全部商品.png",
+        "elementCount": 191,
+        "interactiveCount": 20,
+        "interactiveLabels": [
+          "首页 邮品商城 包裹查询 报刊订阅 售后服务 数字邮戳 管理后台 管理员",
+          "首页",
+          "邮品商城",
+          "包裹查询",
+          "报刊订阅",
+          "售后服务",
+          "数字邮戳",
+          "管理后台 管理员",
+          "搜索商品名称、描述...",
+          "搜索",
+          "查看全部商品"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "codex-may-89017-structure-05-操作-搜索",
+        "label": "操作:搜索",
+        "finalUrl": "http://127.0.0.1:50017/products",
+        "title": "中国邮政 - 统一数字服务门户",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89017/probe/codex-may-89017-structure-05-操作-搜索.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89017/probe/codex-may-89017-structure-05-操作-搜索.png",
+        "elementCount": 191,
+        "interactiveCount": 20,
+        "interactiveLabels": [
+          "首页 邮品商城 包裹查询 报刊订阅 售后服务 数字邮戳 管理后台 管理员",
+          "首页",
+          "邮品商城",
+          "包裹查询",
+          "报刊订阅",
+          "售后服务",
+          "数字邮戳",
+          "管理后台 管理员",
+          "搜索商品名称、描述...",
+          "搜索",
+          "查看全部商品"
+        ]
+      }
+    ]
+  },
+  "screenshotMetrics": {
+    "width": 1664,
+    "height": 1483,
+    "scrollWidth": 1632,
+    "scrollHeight": 1483
+  },
+  "initialBodyTextPreview": "邮\n中国邮政\n首页\n邮品商城\n包裹查询\n报刊订阅\n售后服务\n数字邮戳\n管理后台\n管理员\n3\n管理员\n演示管理员\nEMS特快专递\n\n全国次日达，时效保障\n\n2024龙年生肖邮票限量发售\n\n珍藏级邮品，限量编号\n\n报刊订阅优惠季\n\n全年订阅立享8折优惠\n\nEMS特快专递\n\n全国次日达，时效保障\n\n2024龙年生肖邮票限量发售\n\n珍藏级邮品，限量编号\n\n报刊订阅优惠季\n\n全年订阅立享8折优惠\n\nEMS特快专递\n\n全国次日达，时效保障\n\n1\n2\n3\n集邮票品\n报刊订阅\n包裹查询\n数字藏品\n快速查件\n查询\n普邮\nEMS\n国际件\n热门邮品\n查看更多\n数据统计\n注册用户\n8,888\n在售商品\n500\n日均订单\n1,200\n服务网点\n3,200个\n服务公告\n关于2024年春节期间物流服务调整通知\n新邮预告：下月将发行航天主题纪念邮票\n报刊订阅APP上线，随时随地管理您的订阅\nEMS国际物流新增5国直达线路\n中国邮政集团有限公司\n|\n客服热线：11185\n|\n邮政编码：100808\n中国邮政集团统一数字服务门户平台 ©2026 版权所有",
+  "bodyTextPreview": "中国邮政\n统一数字服务门户平台\n邮品商城\n集邮票品、报刊订阅、文创产品一站式选购\n包裹查询\n普邮、EMS、国际邮件全程追踪\n安全保障\n邮政级安全加密，保障您的信息安全\n 个人用户\n 企业用户\n 管理后台\n个人账户\n个人账户适用于个人用户购买邮品、查询包裹、管理订阅等服务\n安全登录\n还没有账户？\n立即注册个人账户\n演示账号\n• 管理员：admin / admin123\n• 企业用户：admin / admin123\n• 个人用户：user1 / 123456",
+  "apiBase": "http://127.0.0.1:59017",
+  "businessGoalPreview": "",
+  "apiResponses": [
+    {
+      "method": "GET",
+      "status": 500,
+      "url": "http://127.0.0.1:50017/api/products?limit=8"
+    },
+    {
+      "method": "GET",
+      "status": 500,
+      "url": "http://127.0.0.1:50017/api/products?limit=8"
+    },
+    {
+      "method": "GET",
+      "status": 500,
+      "url": "http://127.0.0.1:50017/api/admin/dashboard"
+    },
+    {
+      "method": "GET",
+      "status": 500,
+      "url": "http://127.0.0.1:50017/api/admin/dashboard"
+    },
+    {
+      "method": "GET",
+      "status": 500,
+      "url": "http://127.0.0.1:50017/api/products?limit=8"
+    },
+    {
+      "method": "GET",
+      "status": 500,
+      "url": "http://127.0.0.1:50017/api/products?limit=8"
+    },
+    {
+      "method": "GET",
+      "status": 500,
+      "url": "http://127.0.0.1:50017/api/admin/dashboard"
+    },
+    {
+      "method": "GET",
+      "status": 500,
+      "url": "http://127.0.0.1:50017/api/admin/dashboard"
+    },
+    {
+      "method": "GET",
+      "status": 500,
+      "url": "http://127.0.0.1:50017/api/products/categories"
+    },
+    {
+      "method": "GET",
+      "status": 500,
+      "url": "http://127.0.0.1:50017/api/products?page=1&limit=12"
+    },
+    {
+      "method": "GET",
+      "status": 500,
+      "url": "http://127.0.0.1:50017/api/products/categories"
+    },
+    {
+      "method": "GET",
+      "status": 500,
+      "url": "http://127.0.0.1:50017/api/products?page=1&limit=12"
+    },
+    {
+      "method": "GET",
+      "status": 500,
+      "url": "http://127.0.0.1:50017/api/products?page=1&limit=12"
+    }
+  ],
+  "apiChecks": [
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59017/api/health",
+      "path": "/api/health",
+      "status": 0,
+      "ok": false,
+      "error": "apiRequestContext.get: connect ECONNREFUSED 127.0.0.1:59017\nCall log:\n\u001b[2m  - → GET http://127.0.0.1:59017/api/health\u001b[22m\n\u001b[2m    - user-agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/148.0.0.0 Saf"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59017/api/products?limit=8",
+      "path": "/api/products?limit=8",
+      "status": 0,
+      "ok": false,
+      "error": "apiRequestContext.get: connect ECONNREFUSED 127.0.0.1:59017\nCall log:\n\u001b[2m  - → GET http://127.0.0.1:59017/api/products?limit=8\u001b[22m\n\u001b[2m    - user-agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/148"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59017/api/admin/dashboard",
+      "path": "/api/admin/dashboard",
+      "status": 0,
+      "ok": false,
+      "error": "apiRequestContext.get: connect ECONNREFUSED 127.0.0.1:59017\nCall log:\n\u001b[2m  - → GET http://127.0.0.1:59017/api/admin/dashboard\u001b[22m\n\u001b[2m    - user-agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/148."
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59017/api/products/categories",
+      "path": "/api/products/categories",
+      "status": 0,
+      "ok": false,
+      "error": "apiRequestContext.get: connect ECONNREFUSED 127.0.0.1:59017\nCall log:\n\u001b[2m  - → GET http://127.0.0.1:59017/api/products/categories\u001b[22m\n\u001b[2m    - user-agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59017/api/products?page=1&limit=12",
+      "path": "/api/products?page=1&limit=12",
+      "status": 0,
+      "ok": false,
+      "error": "apiRequestContext.get: connect ECONNREFUSED 127.0.0.1:59017\nCall log:\n\u001b[2m  - → GET http://127.0.0.1:59017/api/products?page=1&limit=12\u001b[22m\n\u001b[2m    - user-agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessCh"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59017/api/auth/me",
+      "path": "/api/auth/me",
+      "status": 0,
+      "ok": false,
+      "error": "apiRequestContext.get: connect ECONNREFUSED 127.0.0.1:59017\nCall log:\n\u001b[2m  - → GET http://127.0.0.1:59017/api/auth/me\u001b[22m\n\u001b[2m    - user-agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/148.0.0.0 Sa"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59017/api/users/profile",
+      "path": "/api/users/profile",
+      "status": 0,
+      "ok": false,
+      "error": "apiRequestContext.get: connect ECONNREFUSED 127.0.0.1:59017\nCall log:\n\u001b[2m  - → GET http://127.0.0.1:59017/api/users/profile\u001b[22m\n\u001b[2m    - user-agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/148.0."
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59017/api/user/profile",
+      "path": "/api/user/profile",
+      "status": 0,
+      "ok": false,
+      "error": "apiRequestContext.get: connect ECONNREFUSED 127.0.0.1:59017\nCall log:\n\u001b[2m  - → GET http://127.0.0.1:59017/api/user/profile\u001b[22m\n\u001b[2m    - user-agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/148.0.0"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59017/api/search?q=%E6%B5%8B%E8%AF%95",
+      "path": "/api/search?q=%E6%B5%8B%E8%AF%95",
+      "status": 0,
+      "ok": false,
+      "error": "apiRequestContext.get: connect ECONNREFUSED 127.0.0.1:59017\nCall log:\n\u001b[2m  - → GET http://127.0.0.1:59017/api/search?q=%E6%B5%8B%E8%AF%95\u001b[22m\n\u001b[2m    - user-agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Headles"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59017/api/admin/stats",
+      "path": "/api/admin/stats",
+      "status": 0,
+      "ok": false,
+      "error": "apiRequestContext.get: connect ECONNREFUSED 127.0.0.1:59017\nCall log:\n\u001b[2m  - → GET http://127.0.0.1:59017/api/admin/stats\u001b[22m\n\u001b[2m    - user-agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/148.0.0."
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59017/api/products",
+      "path": "/api/products",
+      "status": 0,
+      "ok": false,
+      "error": "apiRequestContext.get: connect ECONNREFUSED 127.0.0.1:59017\nCall log:\n\u001b[2m  - → GET http://127.0.0.1:59017/api/products\u001b[22m\n\u001b[2m    - user-agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/148.0.0.0 S"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59017/api/orders",
+      "path": "/api/orders",
+      "status": 0,
+      "ok": false,
+      "error": "apiRequestContext.get: connect ECONNREFUSED 127.0.0.1:59017\nCall log:\n\u001b[2m  - → GET http://127.0.0.1:59017/api/orders\u001b[22m\n\u001b[2m    - user-agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/148.0.0.0 Saf"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59017/api/cart",
+      "path": "/api/cart",
+      "status": 0,
+      "ok": false,
+      "error": "apiRequestContext.get: connect ECONNREFUSED 127.0.0.1:59017\nCall log:\n\u001b[2m  - → GET http://127.0.0.1:59017/api/cart\u001b[22m\n\u001b[2m    - user-agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/148.0.0.0 Safar"
+    }
+  ],
+  "dialogs": [],
+  "consoleMessages": [
+    {
+      "type": "debug",
+      "text": "[vite] connecting...",
+      "location": {
+        "url": "http://127.0.0.1:50017/@vite/client",
+        "lineNumber": 494,
+        "columnNumber": 8
+      }
+    },
+    {
+      "type": "debug",
+      "text": "[vite] connected.",
+      "location": {
+        "url": "http://127.0.0.1:50017/@vite/client",
+        "lineNumber": 617,
+        "columnNumber": 14
+      }
+    },
+    {
+      "type": "info",
+      "text": "%cDownload the React DevTools for a better development experience: https://reactjs.org/link/react-devtools font-weight:bold",
+      "location": {
+        "url": "http://127.0.0.1:50017/node_modules/.vite/deps/chunk-PJEEZAML.js?v=b2fd3a8b",
+        "lineNumber": 21550,
+        "columnNumber": 24
+      }
+    },
+    {
+      "type": "warning",
+      "text": "⚠️ React Router Future Flag Warning: React Router will begin wrapping state updates in `React.startTransition` in v7. You can use the `v7_startTransition` future flag to opt-in early. For more information, see https://reactrouter.com/v6/upgrading/future#v7_starttransition.",
+      "location": {
+        "url": "http://127.0.0.1:50017/node_modules/.vite/deps/react-router-dom.js?v=b2fd3a8b",
+        "lineNumber": 4426,
+        "columnNumber": 12
+      }
+    },
+    {
+      "type": "warning",
+      "text": "⚠️ React Router Future Flag Warning: Relative route resolution within Splat routes is changing in v7. You can use the `v7_relativeSplatPath` future flag to opt-in early. For more information, see https://reactrouter.com/v6/upgrading/future#v7_relativesplatpath.",
+      "location": {
+        "url": "http://127.0.0.1:50017/node_modules/.vite/deps/react-router-dom.js?v=b2fd3a8b",
+        "lineNumber": 4426,
+        "columnNumber": 12
+      }
+    },
+    {
+      "type": "error",
+      "text": "Failed to load resource: the server responded with a status of 404 (Not Found)",
+      "location": {
+        "url": "http://127.0.0.1:50017/favicon.ico",
+        "lineNumber": 0,
+        "columnNumber": 0
+      }
+    },
+    {
+      "type": "error",
+      "text": "Failed to load resource: the server responded with a status of 500 (Internal Server Error)",
+      "location": {
+        "url": "http://127.0.0.1:50017/api/products?limit=8",
+        "lineNumber": 0,
+        "columnNumber": 0
+      }
+    },
+    {
+      "type": "error",
+      "text": "加载商品失败 AxiosError: Request failed with status code 500\n    at settle (http://127.0.0.1:50017/node_modules/.vite/deps/axios.js?v=b2fd3a8b:1457:12)\n    at XMLHttpRequest.onloadend (http://127.0.0.1:50017/node_modules/.vite/deps/axios.js?v=b2fd3a8b:1862:7)",
+      "location": {
+        "url": "http://127.0.0.1:50017/src/pages/Home.jsx",
+        "lineNumber": 39,
+        "columnNumber": 14
+      }
+    },
+    {
+      "type": "error",
+      "text": "Failed to load resource: the server responded with a status of 500 (Internal Server Error)",
+      "location": {
+        "url": "http://127.0.0.1:50017/api/products?limit=8",
+        "lineNumber": 0,
+        "columnNumber": 0
+      }
+    },
+    {
+      "type": "error",
+      "text": "加载商品失败 AxiosError: Request failed with status code 500\n    at settle (http://127.0.0.1:50017/node_modules/.vite/deps/axios.js?v=b2fd3a8b:1457:12)\n    at XMLHttpRequest.onloadend (http://127.0.0.1:50017/node_modules/.vite/deps/axios.js?v=b2fd3a8b:1862:7)",
+      "location": {
+        "url": "http://127.0.0.1:50017/src/pages/Home.jsx",
+        "lineNumber": 39,
+        "columnNumber": 14
+      }
+    },
+    {
+      "type": "error",
+      "text": "Failed to load resource: the server responded with a status of 500 (Internal Server Error)",
+      "location": {
+        "url": "http://127.0.0.1:50017/api/admin/dashboard",
+        "lineNumber": 0,
+        "columnNumber": 0
+      }
+    },
+    {
+      "type": "error",
+      "text": "加载仪表盘失败 AxiosError: Request failed with status code 500\n    at settle (http://127.0.0.1:50017/node_modules/.vite/deps/axios.js?v=b2fd3a8b:1457:12)\n    at XMLHttpRequest.onloadend (http://127.0.0.1:50017/node_modules/.vite/deps/axios.js?v=b2fd3a8b:1862:7)",
+      "location": {
+        "url": "http://127.0.0.1:50017/src/pages/admin/Dashboard.jsx",
+        "lineNumber": 48,
+        "columnNumber": 14
+      }
+    },
+    {
+      "type": "error",
+      "text": "Failed to load resource: the server responded with a status of 500 (Internal Server Error)",
+      "location": {
+        "url": "http://127.0.0.1:50017/api/admin/dashboard",
+        "lineNumber": 0,
+        "columnNumber": 0
+      }
+    },
+    {
+      "type": "error",
+      "text": "加载仪表盘失败 AxiosError: Request failed with status code 500\n    at settle (http://127.0.0.1:50017/node_modules/.vite/deps/axios.js?v=b2fd3a8b:1457:12)\n    at XMLHttpRequest.onloadend (http://127.0.0.1:50017/node_modules/.vite/deps/axios.js?v=b2fd3a8b:1862:7)",
+      "location": {
+        "url": "http://127.0.0.1:50017/src/pages/admin/Dashboard.jsx",
+        "lineNumber": 48,
+        "columnNumber": 14
+      }
+    },
+    {
+      "type": "debug",
+      "text": "[vite] connecting...",
+      "location": {
+        "url": "http://127.0.0.1:50017/@vite/client",
+        "lineNumber": 494,
+        "columnNumber": 8
+      }
+    },
+    {
+      "type": "debug",
+      "text": "[vite] connected.",
+      "location": {
+        "url": "http://127.0.0.1:50017/@vite/client",
+        "lineNumber": 617,
+        "columnNumber": 14
+      }
+    },
+    {
+      "type": "debug",
+      "text": "[vite] connecting...",
+      "location": {
+        "url": "http://127.0.0.1:50017/@vite/client",
+        "lineNumber": 494,
+        "columnNumber": 8
+      }
+    },
+    {
+      "type": "debug",
+      "text": "[vite] connected.",
+      "location": {
+        "url": "http://127.0.0.1:50017/@vite/client",
+        "lineNumber": 617,
+        "columnNumber": 14
+      }
+    },
+    {
+      "type": "info",
+      "text": "%cDownload the React DevTools for a better development experience: https://reactjs.org/link/react-devtools font-weight:bold",
+      "location": {
+        "url": "http://127.0.0.1:50017/node_modules/.vite/deps/chunk-PJEEZAML.js?v=b2fd3a8b",
+        "lineNumber": 21550,
+        "columnNumber": 24
+      }
+    },
+    {
+      "type": "warning",
+      "text": "⚠️ React Router Future Flag Warning: React Router will begin wrapping state updates in `React.startTransition` in v7. You can use the `v7_startTransition` future flag to opt-in early. For more information, see https://reactrouter.com/v6/upgrading/future#v7_starttransition.",
+      "location": {
+        "url": "http://127.0.0.1:50017/node_modules/.vite/deps/react-router-dom.js?v=b2fd3a8b",
+        "lineNumber": 4426,
+        "columnNumber": 12
+      }
+    },
+    {
+      "type": "warning",
+      "text": "⚠️ React Router Future Flag Warning: Relative route resolution within Splat routes is changing in v7. You can use the `v7_relativeSplatPath` future flag to opt-in early. For more information, see https://reactrouter.com/v6/upgrading/future#v7_relativesplatpath.",
+      "location": {
+        "url": "http://127.0.0.1:50017/node_modules/.vite/deps/react-router-dom.js?v=b2fd3a8b",
+        "lineNumber": 4426,
+        "columnNumber": 12
+      }
+    },
+    {
+      "type": "error",
+      "text": "Failed to load resource: the server responded with a status of 500 (Internal Server Error)",
+      "location": {
+        "url": "http://127.0.0.1:50017/api/products?limit=8",
+        "lineNumber": 0,
+        "columnNumber": 0
+      }
+    },
+    {
+      "type": "error",
+      "text": "加载商品失败 AxiosError: Request failed with status code 500\n    at settle (http://127.0.0.1:50017/node_modules/.vite/deps/axios.js?v=b2fd3a8b:1457:12)\n    at XMLHttpRequest.onloadend (http://127.0.0.1:50017/node_modules/.vite/deps/axios.js?v=b2fd3a8b:1862:7)",
+      "location": {
+        "url": "http://127.0.0.1:50017/src/pages/Home.jsx",
+        "lineNumber": 39,
+        "columnNumber": 14
+      }
+    },
+    {
+      "type": "error",
+      "text": "Failed to load resource: the server responded with a status of 500 (Internal Server Error)",
+      "location": {
+        "url": "http://127.0.0.1:50017/api/products?limit=8",
+        "lineNumber": 0,
+        "columnNumber": 0
+      }
+    },
+    {
+      "type": "error",
+      "text": "加载商品失败 AxiosError: Request failed with status code 500\n    at settle (http://127.0.0.1:50017/node_modules/.vite/deps/axios.js?v=b2fd3a8b:1457:12)\n    at XMLHttpRequest.onloadend (http://127.0.0.1:50017/node_modules/.vite/deps/axios.js?v=b2fd3a8b:1862:7)",
+      "location": {
+        "url": "http://127.0.0.1:50017/src/pages/Home.jsx",
+        "lineNumber": 39,
+        "columnNumber": 14
+      }
+    },
+    {
+      "type": "error",
+      "text": "Failed to load resource: the server responded with a status of 500 (Internal Server Error)",
+      "location": {
+        "url": "http://127.0.0.1:50017/api/admin/dashboard",
+        "lineNumber": 0,
+        "columnNumber": 0
+      }
+    },
+    {
+      "type": "error",
+      "text": "加载仪表盘失败 AxiosError: Request failed with status code 500\n    at settle (http://127.0.0.1:50017/node_modules/.vite/deps/axios.js?v=b2fd3a8b:1457:12)\n    at XMLHttpRequest.onloadend (http://127.0.0.1:50017/node_modules/.vite/deps/axios.js?v=b2fd3a8b:1862:7)",
+      "location": {
+        "url": "http://127.0.0.1:50017/src/pages/admin/Dashboard.jsx",
+        "lineNumber": 48,
+        "columnNumber": 14
+      }
+    },
+    {
+      "type": "error",
+      "text": "Failed to load resource: the server responded with a status of 500 (Internal Server Error)",
+      "location": {
+        "url": "http://127.0.0.1:50017/api/admin/dashboard",
+        "lineNumber": 0,
+        "columnNumber": 0
+      }
+    },
+    {
+      "type": "error",
+      "text": "加载仪表盘失败 AxiosError: Request failed with status code 500\n    at settle (http://127.0.0.1:50017/node_modules/.vite/deps/axios.js?v=b2fd3a8b:1457:12)\n    at XMLHttpRequest.onloadend (http://127.0.0.1:50017/node_modules/.vite/deps/axios.js?v=b2fd3a8b:1862:7)",
+      "location": {
+        "url": "http://127.0.0.1:50017/src/pages/admin/Dashboard.jsx",
+        "lineNumber": 48,
+        "columnNumber": 14
+      }
+    },
+    {
+      "type": "error",
+      "text": "Failed to load resource: the server responded with a status of 500 (Internal Server Error)",
+      "location": {
+        "url": "http://127.0.0.1:50017/api/products/categories",
+        "lineNumber": 0,
+        "columnNumber": 0
+      }
+    },
+    {
+      "type": "error",
+      "text": "加载分类失败 AxiosError: Request failed with status code 500\n    at settle (http://127.0.0.1:50017/node_modules/.vite/deps/axios.js?v=b2fd3a8b:1457:12)\n    at XMLHttpRequest.onloadend (http://127.0.0.1:50017/node_modules/.vite/deps/axios.js?v=b2fd3a8b:1862:7)",
+      "location": {
+        "url": "http://127.0.0.1:50017/src/pages/Products.jsx",
+        "lineNumber": 45,
+        "columnNumber": 14
+      }
+    },
+    {
+      "type": "error",
+      "text": "Failed to load resource: the server responded with a status of 500 (Internal Server Error)",
+      "location": {
+        "url": "http://127.0.0.1:50017/api/products?page=1&limit=12",
+        "lineNumber": 0,
+        "columnNumber": 0
+      }
+    },
+    {
+      "type": "error",
+      "text": "加载商品失败 AxiosError: Request failed with status code 500\n    at settle (http://127.0.0.1:50017/node_modules/.vite/deps/axios.js?v=b2fd3a8b:1457:12)\n    at XMLHttpRequest.onloadend (http://127.0.0.1:50017/node_modules/.vite/deps/axios.js?v=b2fd3a8b:1862:7)",
+      "location": {
+        "url": "http://127.0.0.1:50017/src/pages/Products.jsx",
+        "lineNumber": 65,
+        "columnNumber": 14
+      }
+    },
+    {
+      "type": "error",
+      "text": "Failed to load resource: the server responded with a status of 500 (Internal Server Error)",
+      "location": {
+        "url": "http://127.0.0.1:50017/api/products/categories",
+        "lineNumber": 0,
+        "columnNumber": 0
+      }
+    },
+    {
+      "type": "error",
+      "text": "加载分类失败 AxiosError: Request failed with status code 500\n    at settle (http://127.0.0.1:50017/node_modules/.vite/deps/axios.js?v=b2fd3a8b:1457:12)\n    at XMLHttpRequest.onloadend (http://127.0.0.1:50017/node_modules/.vite/deps/axios.js?v=b2fd3a8b:1862:7)",
+      "location": {
+        "url": "http://127.0.0.1:50017/src/pages/Products.jsx",
+        "lineNumber": 45,
+        "columnNumber": 14
+      }
+    },
+    {
+      "type": "error",
+      "text": "Failed to load resource: the server responded with a status of 500 (Internal Server Error)",
+      "location": {
+        "url": "http://127.0.0.1:50017/api/products?page=1&limit=12",
+        "lineNumber": 0,
+        "columnNumber": 0
+      }
+    },
+    {
+      "type": "error",
+      "text": "加载商品失败 AxiosError: Request failed with status code 500\n    at settle (http://127.0.0.1:50017/node_modules/.vite/deps/axios.js?v=b2fd3a8b:1457:12)\n    at XMLHttpRequest.onloadend (http://127.0.0.1:50017/node_modules/.vite/deps/axios.js?v=b2fd3a8b:1862:7)",
+      "location": {
+        "url": "http://127.0.0.1:50017/src/pages/Products.jsx",
+        "lineNumber": 65,
+        "columnNumber": 14
+      }
+    },
+    {
+      "type": "error",
+      "text": "Failed to load resource: the server responded with a status of 500 (Internal Server Error)",
+      "location": {
+        "url": "http://127.0.0.1:50017/api/products?page=1&limit=12",
+        "lineNumber": 0,
+        "columnNumber": 0
+      }
+    },
+    {
+      "type": "error",
+      "text": "加载商品失败 AxiosError: Request failed with status code 500\n    at settle (http://127.0.0.1:50017/node_modules/.vite/deps/axios.js?v=b2fd3a8b:1457:12)\n    at XMLHttpRequest.onloadend (http://127.0.0.1:50017/node_modules/.vite/deps/axios.js?v=b2fd3a8b:1862:7)",
+      "location": {
+        "url": "http://127.0.0.1:50017/src/pages/Products.jsx",
+        "lineNumber": 65,
+        "columnNumber": 14
+      }
+    },
+    {
+      "type": "debug",
+      "text": "[vite] connecting...",
+      "location": {
+        "url": "http://127.0.0.1:50017/@vite/client",
+        "lineNumber": 494,
+        "columnNumber": 8
+      }
+    },
+    {
+      "type": "debug",
+      "text": "[vite] connected.",
+      "location": {
+        "url": "http://127.0.0.1:50017/@vite/client",
+        "lineNumber": 617,
+        "columnNumber": 14
+      }
+    },
+    {
+      "type": "info",
+      "text": "%cDownload the React DevTools for a better development experience: https://reactjs.org/link/react-devtools font-weight:bold",
+      "location": {
+        "url": "http://127.0.0.1:50017/node_modules/.vite/deps/chunk-PJEEZAML.js?v=b2fd3a8b",
+        "lineNumber": 21550,
+        "columnNumber": 24
+      }
+    },
+    {
+      "type": "warning",
+      "text": "⚠️ React Router Future Flag Warning: React Router will begin wrapping state updates in `React.startTransition` in v7. You can use the `v7_startTransition` future flag to opt-in early. For more information, see https://reactrouter.com/v6/upgrading/future#v7_starttransition.",
+      "location": {
+        "url": "http://127.0.0.1:50017/node_modules/.vite/deps/react-router-dom.js?v=b2fd3a8b",
+        "lineNumber": 4426,
+        "columnNumber": 12
+      }
+    },
+    {
+      "type": "warning",
+      "text": "⚠️ React Router Future Flag Warning: Relative route resolution within Splat routes is changing in v7. You can use the `v7_relativeSplatPath` future flag to opt-in early. For more information, see https://reactrouter.com/v6/upgrading/future#v7_relativesplatpath.",
+      "location": {
+        "url": "http://127.0.0.1:50017/node_modules/.vite/deps/react-router-dom.js?v=b2fd3a8b",
+        "lineNumber": 4426,
+        "columnNumber": 12
+      }
+    },
+    {
+      "type": "error",
+      "text": "Warning: [antd: Tabs] `Tabs.TabPane` is deprecated. Please use `items` instead.",
+      "location": {
+        "url": "http://127.0.0.1:50017/node_modules/.vite/deps/chunk-ZDBJOGHJ.js?v=b2fd3a8b",
+        "lineNumber": 1247,
+        "columnNumber": 14
+      }
+    },
+    {
+      "type": "verbose",
+      "text": "[DOM] Input elements should have autocomplete attributes (suggested: \"current-password\"): (More info: https://goo.gl/9p2vKq)",
+      "location": {
+        "url": "http://127.0.0.1:50017/login",
+        "lineNumber": 0,
+        "columnNumber": 0
+      }
+    }
+  ],
+  "requestFailures": [],
+  "responseErrors": [
+    {
+      "status": 500,
+      "url": "http://127.0.0.1:50017/api/products?limit=8"
+    },
+    {
+      "status": 500,
+      "url": "http://127.0.0.1:50017/api/products?limit=8"
+    },
+    {
+      "status": 500,
+      "url": "http://127.0.0.1:50017/api/admin/dashboard"
+    },
+    {
+      "status": 500,
+      "url": "http://127.0.0.1:50017/api/admin/dashboard"
+    },
+    {
+      "status": 500,
+      "url": "http://127.0.0.1:50017/api/products?limit=8"
+    },
+    {
+      "status": 500,
+      "url": "http://127.0.0.1:50017/api/products?limit=8"
+    },
+    {
+      "status": 500,
+      "url": "http://127.0.0.1:50017/api/admin/dashboard"
+    },
+    {
+      "status": 500,
+      "url": "http://127.0.0.1:50017/api/admin/dashboard"
+    },
+    {
+      "status": 500,
+      "url": "http://127.0.0.1:50017/api/products/categories"
+    },
+    {
+      "status": 500,
+      "url": "http://127.0.0.1:50017/api/products?page=1&limit=12"
+    },
+    {
+      "status": 500,
+      "url": "http://127.0.0.1:50017/api/products/categories"
+    },
+    {
+      "status": 500,
+      "url": "http://127.0.0.1:50017/api/products?page=1&limit=12"
+    },
+    {
+      "status": 500,
+      "url": "http://127.0.0.1:50017/api/products?page=1&limit=12"
+    }
+  ]
+}
