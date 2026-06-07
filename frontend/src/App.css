@@ -1,0 +1,60 @@
+.ant-layout {
+  background: transparent !important;
+}
+
+.ant-menu {
+  background: transparent !important;
+  border-bottom: none !important;
+}
+
+.ant-menu-item {
+  color: #1E3A5F !important;
+  font-weight: 500;
+}
+
+.ant-menu-item:hover {
+  color: #FF7A45 !important;
+}
+
+.ant-menu-item-selected {
+  color: #FF7A45 !important;
+  background-color: rgba(255, 122, 69, 0.1) !important;
+}
+
+.ant-btn-primary {
+  background: linear-gradient(135deg, #FF7A45, #EA580C);
+  border: none;
+  box-shadow: 0 4px 12px rgba(255, 122, 69, 0.3);
+}
+
+.ant-btn-primary:hover {
+  background: linear-gradient(135deg, #EA580C, #C2410C) !important;
+  box-shadow: 0 6px 16px rgba(255, 122, 69, 0.4);
+  transform: translateY(-1px);
+}
+
+.ant-card {
+  border-radius: 16px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+}
+
+.ant-card:hover {
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+}
+
+.ant-input,
+.ant-select-selector,
+.ant-picker {
+  border-radius: 10px !important;
+}
+
+.ant-tag {
+  border-radius: 8px;
+  padding: 4px 12px;
+  font-weight: 500;
+}
+
+.ant-statistic-content-value {
+  font-family: 'Noto Serif SC', serif;
+  font-weight: 700;
+}
