@@ -1,0 +1,3868 @@
+{
+  "ok": true,
+  "generatedAt": "2026-06-05T13:50:38.999Z",
+  "order": "may-89046",
+  "roundIndex": 60605,
+  "captureId": "may-89046-codex-reverify-20260605",
+  "url": "http://127.0.0.1:49046/",
+  "initialUrl": "http://127.0.0.1:49046/",
+  "finalUrl": "http://127.0.0.1:49046/dashboard",
+  "status": 200,
+  "title": "影院娱乐服务聚合平台",
+  "initialTitle": "影院娱乐服务聚合平台",
+  "navigationError": "",
+  "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89046/probe/codex-reverify-20260605-1640/may-89046-codex-reverify-20260605-frontend.png",
+  "screenshotPaths": [
+    "/Users/chen/Documents/trae_projects/local_projects/may-89046/probe/codex-reverify-20260605-1640/may-89046-codex-reverify-20260605-structure-01-首屏.png",
+    "/Users/chen/Documents/trae_projects/local_projects/may-89046/probe/codex-reverify-20260605-1640/may-89046-codex-reverify-20260605-structure-02-导航-仪表盘.png",
+    "/Users/chen/Documents/trae_projects/local_projects/may-89046/probe/codex-reverify-20260605-1640/may-89046-codex-reverify-20260605-structure-03-操作-刷新.png",
+    "/Users/chen/Documents/trae_projects/local_projects/may-89046/probe/codex-reverify-20260605-1640/may-89046-codex-reverify-20260605-structure-04-操作-展开行.png",
+    "/Users/chen/Documents/trae_projects/local_projects/may-89046/probe/codex-reverify-20260605-1640/may-89046-codex-reverify-20260605-structure-05-二层操作-展开行-关闭行.png",
+    "/Users/chen/Documents/trae_projects/local_projects/may-89046/probe/codex-reverify-20260605-1640/may-89046-codex-reverify-20260605-structure-06-导航-影院管理.png",
+    "/Users/chen/Documents/trae_projects/local_projects/may-89046/probe/codex-reverify-20260605-1640/may-89046-codex-reverify-20260605-structure-07-操作-Add-Cinema.png",
+    "/Users/chen/Documents/trae_projects/local_projects/may-89046/probe/codex-reverify-20260605-1640/may-89046-codex-reverify-20260605-structure-08-二层操作-Add-Cinema-取-消.png",
+    "/Users/chen/Documents/trae_projects/local_projects/may-89046/probe/codex-reverify-20260605-1640/may-89046-codex-reverify-20260605-structure-09-操作-View-Detail.png",
+    "/Users/chen/Documents/trae_projects/local_projects/may-89046/probe/codex-reverify-20260605-1640/may-89046-codex-reverify-20260605-structure-10-二层操作-View-Detail-Close.png",
+    "/Users/chen/Documents/trae_projects/local_projects/may-89046/probe/codex-reverify-20260605-1640/may-89046-codex-reverify-20260605-structure-11-导航-发现分类.png",
+    "/Users/chen/Documents/trae_projects/local_projects/may-89046/probe/codex-reverify-20260605-1640/may-89046-codex-reverify-20260605-structure-12-操作-Add-Movie.png"
+  ],
+  "issueTextPreview": "",
+  "targetReason": "页面存在后台入口，优先复验后台管理链路；页面存在搜索/发现入口，优先复验检索链路；页面存在购买/商品入口，优先复验交易链路",
+  "targetKind": "admin",
+  "targetMatched": true,
+  "targetActions": [
+    {
+      "action": "target-already-visible",
+      "label": "页面存在后台入口，优先复验后台管理链路",
+      "ok": true
+    },
+    {
+      "action": "target-verify",
+      "label": "页面存在后台入口，优先复验后台管理链路",
+      "ok": true,
+      "finalUrl": "http://127.0.0.1:49046/dashboard"
+    }
+  ],
+  "authFlow": {
+    "detected": false,
+    "attempted": false,
+    "success": false,
+    "finalUrl": "http://127.0.0.1:49046/dashboard",
+    "message": "",
+    "actions": []
+  },
+  "businessAudit": {
+    "actions": [
+      {
+        "action": "click",
+        "label": "导航:仪表盘",
+        "ok": true
+      },
+      {
+        "action": "click",
+        "label": "操作:刷新",
+        "ok": true,
+        "result": {
+          "ok": true,
+          "matched": 1
+        }
+      },
+      {
+        "action": "click",
+        "label": "操作:展开行",
+        "ok": true,
+        "result": {
+          "ok": true,
+          "matched": 6
+        }
+      },
+      {
+        "action": "click",
+        "label": "二层操作:展开行:关闭行",
+        "ok": true,
+        "result": {
+          "ok": true,
+          "matched": 1
+        }
+      },
+      {
+        "action": "click",
+        "label": "导航:影院管理",
+        "ok": true
+      },
+      {
+        "action": "click",
+        "label": "操作:Add Cinema",
+        "ok": true,
+        "result": {
+          "ok": true,
+          "matched": 1
+        }
+      },
+      {
+        "action": "click",
+        "label": "二层操作:Add Cinema:取 消",
+        "ok": true,
+        "result": {
+          "ok": true,
+          "matched": 1
+        }
+      },
+      {
+        "action": "click",
+        "label": "操作:View Detail",
+        "ok": true,
+        "result": {
+          "ok": true,
+          "matched": 4
+        }
+      },
+      {
+        "action": "click",
+        "label": "二层操作:View Detail:Close",
+        "ok": true,
+        "result": {
+          "ok": true,
+          "matched": 1
+        }
+      },
+      {
+        "action": "click",
+        "label": "导航:发现分类",
+        "ok": true
+      },
+      {
+        "action": "click",
+        "label": "操作:Add Movie",
+        "ok": true,
+        "result": {
+          "ok": true,
+          "matched": 1
+        }
+      },
+      {
+        "action": "click",
+        "label": "二层操作:Add Movie:取 消",
+        "ok": true,
+        "result": {
+          "ok": true,
+          "matched": 1
+        }
+      },
+      {
+        "action": "click",
+        "label": "导航:影片管理",
+        "ok": true
+      },
+      {
+        "action": "click",
+        "label": "操作:Add Movie",
+        "ok": true,
+        "result": {
+          "ok": true,
+          "matched": 1
+        }
+      },
+      {
+        "action": "click",
+        "label": "关闭弹窗/抽屉",
+        "ok": true
+      },
+      {
+        "action": "click",
+        "label": "导航:场次管理",
+        "ok": true
+      },
+      {
+        "action": "click",
+        "label": "操作:座位",
+        "ok": true,
+        "result": {
+          "ok": true,
+          "matched": 10
+        }
+      },
+      {
+        "action": "click",
+        "label": "关闭弹窗/抽屉",
+        "ok": true
+      }
+    ],
+    "snapshots": [
+      {
+        "label": "首屏",
+        "url": "http://127.0.0.1:49046/dashboard",
+        "title": "影院娱乐服务聚合平台",
+        "headings": [],
+        "navLabels": [
+          "仪表盘",
+          "dashboard",
+          "影院管理",
+          "bank",
+          "发现分类",
+          "video-camera",
+          "影片管理",
+          "场次管理",
+          "clock-circle",
+          "订单管理",
+          "shopping-cart",
+          "观众管理",
+          "team",
+          "观众注册",
+          "卖座卡钱包",
+          "wallet",
+          "众筹包场",
+          "rocket",
+          "小卖品管理",
+          "coffee",
+          "智能排片",
+          "schedule",
+          "数据分析",
+          "bar-chart"
+        ],
+        "buttons": [
+          "刷新",
+          "展开行"
+        ],
+        "links": [],
+        "inputs": [],
+        "tables": [
+          {
+            "headers": [
+              "订单号",
+              "渠道来源",
+              "影片",
+              "影院信息",
+              "场次信息",
+              "座位",
+              "金额",
+              "支付方式",
+              "关联信息",
+              "核销结果",
+              "状态",
+              "创建时间"
+            ],
+            "rowCount": 6,
+            "hasEmptyText": false,
+            "textPreview": "订单号 渠道来源 影片 影院信息 场次信息 座位 金额 支付方式 关联信息 核销结果 状态 创建时间 订单号 渠道来源 影片 影院信息 场次信息 座位 金额 支付方式 关联信息 核销结果 状态 创建时间 ORD202606051623472336 自有系统 The Last Dynasty Stellar Cineplex Beijing · Hall 3 - Standard 2026-06-05 14:00 3排1座 3排2座 ¥116.00 现金 - 待核销 pending 2026-06-05 16:23 ORD202606051622350106 自有系统 The Last Dyna"
+          }
+        ],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "影院聚合平台仪表盘影院管理发现分类影片管理场次管理订单管理观众管理观众注册卖座卡钱包众筹包场小卖品管理智能排片数据分析影院娱乐服务聚合平台影院总数4热映影片4今日场次7观众总数3近期订单 (6)刷新订单号渠道来源影片影院信息场次信息座位金额支付方式关联信息核销结果状态创建时间 订单号渠道来源影片影院信息场次信息座位金额支付方式关联信息核销结果状态创建时间ORD202606051623472336自有系统The Last DynastyStellar Cineplex Beijing · Hall 3 - Standard2026-06-05 14:003排1座3排2座¥116.00现金-待核销pending2026-06-05 16:23ORD202606051622350106自有系统The Last DynastyStellar Cineplex Beijing · Hall 3 - Standard2026-06-05 14:002排1座2排2座¥116.00现金-待核销pending2026-06-05 16:22ORD202606051622249685自有系统The Last DynastyStellar Cineplex Beijing · Hall 3 - Standard2026-06-05 14:001排1座1排2座¥116.00现金-待核销pending2026-06-05 16:22ORD202606051415007494小程序The Last DynastyStellar Cineplex Beijing · Hall 3 - Standard2026-06-05 14:001排5座1排6座¥116.00现金-待核销pending2026-06-05 14:15ORD202606051401481775自有系统The Last DynastyStellar Cineplex Beijing · Hall 3 - Standard2026-06-05 14:001排3座1排4座¥180.00卖座卡卡·****待核销pending2026-06-05 14:01ORD202606042357573533自有系统Galactic HorizonStellar Cineplex Beijing · Hall 1 - IMAX2026-06-05 19:001排1座1排2座¥136.00卖座卡-待核销pending2026-06-04 23:57",
+        "layout": {
+          "viewportWidth": 1504,
+          "viewportHeight": 1000,
+          "scrollWidth": 1504,
+          "scrollHeight": 1000,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89046-codex-reverify-20260605-structure-01-首屏",
+          "label": "首屏",
+          "finalUrl": "http://127.0.0.1:49046/dashboard",
+          "title": "影院娱乐服务聚合平台",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89046/probe/codex-reverify-20260605-1640/may-89046-codex-reverify-20260605-structure-01-首屏.json",
+          "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89046/probe/codex-reverify-20260605-1640/may-89046-codex-reverify-20260605-structure-01-首屏.png",
+          "elementCount": 429,
+          "interactiveCount": 27,
+          "interactiveLabels": [
+            "仪表盘 影院管理 发现分类 影片管理 场次管理 订单管理 观众管理 观众注册 卖座卡钱包 众筹包场 小卖品管理 智能排片 数据分析",
+            "仪表盘",
+            "影院管理",
+            "发现分类",
+            "影片管理",
+            "场次管理",
+            "订单管理",
+            "观众管理",
+            "观众注册",
+            "卖座卡钱包",
+            "众筹包场",
+            "小卖品管理",
+            "智能排片",
+            "数据分析",
+            "刷新",
+            "展开行"
+          ]
+        }
+      },
+      {
+        "label": "导航:仪表盘",
+        "url": "http://127.0.0.1:49046/dashboard",
+        "title": "影院娱乐服务聚合平台",
+        "headings": [],
+        "navLabels": [
+          "仪表盘",
+          "dashboard",
+          "影院管理",
+          "bank",
+          "发现分类",
+          "video-camera",
+          "影片管理",
+          "场次管理",
+          "clock-circle",
+          "订单管理",
+          "shopping-cart",
+          "观众管理",
+          "team",
+          "观众注册",
+          "卖座卡钱包",
+          "wallet",
+          "众筹包场",
+          "rocket",
+          "小卖品管理",
+          "coffee",
+          "智能排片",
+          "schedule",
+          "数据分析",
+          "bar-chart"
+        ],
+        "buttons": [
+          "刷新",
+          "展开行"
+        ],
+        "links": [],
+        "inputs": [],
+        "tables": [
+          {
+            "headers": [
+              "订单号",
+              "渠道来源",
+              "影片",
+              "影院信息",
+              "场次信息",
+              "座位",
+              "金额",
+              "支付方式",
+              "关联信息",
+              "核销结果",
+              "状态",
+              "创建时间"
+            ],
+            "rowCount": 6,
+            "hasEmptyText": false,
+            "textPreview": "订单号 渠道来源 影片 影院信息 场次信息 座位 金额 支付方式 关联信息 核销结果 状态 创建时间 订单号 渠道来源 影片 影院信息 场次信息 座位 金额 支付方式 关联信息 核销结果 状态 创建时间 ORD202606051623472336 自有系统 The Last Dynasty Stellar Cineplex Beijing · Hall 3 - Standard 2026-06-05 14:00 3排1座 3排2座 ¥116.00 现金 - 待核销 pending 2026-06-05 16:23 ORD202606051622350106 自有系统 The Last Dyna"
+          }
+        ],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "影院聚合平台仪表盘影院管理发现分类影片管理场次管理订单管理观众管理观众注册卖座卡钱包众筹包场小卖品管理智能排片数据分析影院娱乐服务聚合平台影院总数4热映影片4今日场次7观众总数3近期订单 (6)刷新订单号渠道来源影片影院信息场次信息座位金额支付方式关联信息核销结果状态创建时间 订单号渠道来源影片影院信息场次信息座位金额支付方式关联信息核销结果状态创建时间ORD202606051623472336自有系统The Last DynastyStellar Cineplex Beijing · Hall 3 - Standard2026-06-05 14:003排1座3排2座¥116.00现金-待核销pending2026-06-05 16:23ORD202606051622350106自有系统The Last DynastyStellar Cineplex Beijing · Hall 3 - Standard2026-06-05 14:002排1座2排2座¥116.00现金-待核销pending2026-06-05 16:22ORD202606051622249685自有系统The Last DynastyStellar Cineplex Beijing · Hall 3 - Standard2026-06-05 14:001排1座1排2座¥116.00现金-待核销pending2026-06-05 16:22ORD202606051415007494小程序The Last DynastyStellar Cineplex Beijing · Hall 3 - Standard2026-06-05 14:001排5座1排6座¥116.00现金-待核销pending2026-06-05 14:15ORD202606051401481775自有系统The Last DynastyStellar Cineplex Beijing · Hall 3 - Standard2026-06-05 14:001排3座1排4座¥180.00卖座卡卡·****待核销pending2026-06-05 14:01ORD202606042357573533自有系统Galactic HorizonStellar Cineplex Beijing · Hall 1 - IMAX2026-06-05 19:001排1座1排2座¥136.00卖座卡-待核销pending2026-06-04 23:57",
+        "layout": {
+          "viewportWidth": 1536,
+          "viewportHeight": 1000,
+          "scrollWidth": 1536,
+          "scrollHeight": 1000,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89046-codex-reverify-20260605-structure-02-导航-仪表盘",
+          "label": "导航:仪表盘",
+          "finalUrl": "http://127.0.0.1:49046/dashboard",
+          "title": "影院娱乐服务聚合平台",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89046/probe/codex-reverify-20260605-1640/may-89046-codex-reverify-20260605-structure-02-导航-仪表盘.json",
+          "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89046/probe/codex-reverify-20260605-1640/may-89046-codex-reverify-20260605-structure-02-导航-仪表盘.png",
+          "elementCount": 429,
+          "interactiveCount": 27,
+          "interactiveLabels": [
+            "仪表盘 影院管理 发现分类 影片管理 场次管理 订单管理 观众管理 观众注册 卖座卡钱包 众筹包场 小卖品管理 智能排片 数据分析",
+            "仪表盘",
+            "影院管理",
+            "发现分类",
+            "影片管理",
+            "场次管理",
+            "订单管理",
+            "观众管理",
+            "观众注册",
+            "卖座卡钱包",
+            "众筹包场",
+            "小卖品管理",
+            "智能排片",
+            "数据分析",
+            "刷新",
+            "展开行"
+          ]
+        }
+      },
+      {
+        "label": "操作:刷新",
+        "url": "http://127.0.0.1:49046/dashboard",
+        "title": "影院娱乐服务聚合平台",
+        "headings": [],
+        "navLabels": [
+          "仪表盘",
+          "dashboard",
+          "影院管理",
+          "bank",
+          "发现分类",
+          "video-camera",
+          "影片管理",
+          "场次管理",
+          "clock-circle",
+          "订单管理",
+          "shopping-cart",
+          "观众管理",
+          "team",
+          "观众注册",
+          "卖座卡钱包",
+          "wallet",
+          "众筹包场",
+          "rocket",
+          "小卖品管理",
+          "coffee",
+          "智能排片",
+          "schedule",
+          "数据分析",
+          "bar-chart"
+        ],
+        "buttons": [
+          "刷新",
+          "展开行"
+        ],
+        "links": [],
+        "inputs": [],
+        "tables": [
+          {
+            "headers": [
+              "订单号",
+              "渠道来源",
+              "影片",
+              "影院信息",
+              "场次信息",
+              "座位",
+              "金额",
+              "支付方式",
+              "关联信息",
+              "核销结果",
+              "状态",
+              "创建时间"
+            ],
+            "rowCount": 6,
+            "hasEmptyText": false,
+            "textPreview": "订单号 渠道来源 影片 影院信息 场次信息 座位 金额 支付方式 关联信息 核销结果 状态 创建时间 订单号 渠道来源 影片 影院信息 场次信息 座位 金额 支付方式 关联信息 核销结果 状态 创建时间 ORD202606051623472336 自有系统 The Last Dynasty Stellar Cineplex Beijing · Hall 3 - Standard 2026-06-05 14:00 3排1座 3排2座 ¥116.00 现金 - 待核销 pending 2026-06-05 16:23 ORD202606051622350106 自有系统 The Last Dyna"
+          }
+        ],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "影院聚合平台仪表盘影院管理发现分类影片管理场次管理订单管理观众管理观众注册卖座卡钱包众筹包场小卖品管理智能排片数据分析影院娱乐服务聚合平台影院总数4热映影片4今日场次7观众总数3近期订单 (6)刷新订单号渠道来源影片影院信息场次信息座位金额支付方式关联信息核销结果状态创建时间 订单号渠道来源影片影院信息场次信息座位金额支付方式关联信息核销结果状态创建时间ORD202606051623472336自有系统The Last DynastyStellar Cineplex Beijing · Hall 3 - Standard2026-06-05 14:003排1座3排2座¥116.00现金-待核销pending2026-06-05 16:23ORD202606051622350106自有系统The Last DynastyStellar Cineplex Beijing · Hall 3 - Standard2026-06-05 14:002排1座2排2座¥116.00现金-待核销pending2026-06-05 16:22ORD202606051622249685自有系统The Last DynastyStellar Cineplex Beijing · Hall 3 - Standard2026-06-05 14:001排1座1排2座¥116.00现金-待核销pending2026-06-05 16:22ORD202606051415007494小程序The Last DynastyStellar Cineplex Beijing · Hall 3 - Standard2026-06-05 14:001排5座1排6座¥116.00现金-待核销pending2026-06-05 14:15ORD202606051401481775自有系统The Last DynastyStellar Cineplex Beijing · Hall 3 - Standard2026-06-05 14:001排3座1排4座¥180.00卖座卡卡·****待核销pending2026-06-05 14:01ORD202606042357573533自有系统Galactic HorizonStellar Cineplex Beijing · Hall 1 - IMAX2026-06-05 19:001排1座1排2座¥136.00卖座卡-待核销pending2026-06-04 23:57",
+        "layout": {
+          "viewportWidth": 1568,
+          "viewportHeight": 1000,
+          "scrollWidth": 1568,
+          "scrollHeight": 1000,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89046-codex-reverify-20260605-structure-03-操作-刷新",
+          "label": "操作:刷新",
+          "finalUrl": "http://127.0.0.1:49046/dashboard",
+          "title": "影院娱乐服务聚合平台",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89046/probe/codex-reverify-20260605-1640/may-89046-codex-reverify-20260605-structure-03-操作-刷新.json",
+          "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89046/probe/codex-reverify-20260605-1640/may-89046-codex-reverify-20260605-structure-03-操作-刷新.png",
+          "elementCount": 429,
+          "interactiveCount": 27,
+          "interactiveLabels": [
+            "仪表盘 影院管理 发现分类 影片管理 场次管理 订单管理 观众管理 观众注册 卖座卡钱包 众筹包场 小卖品管理 智能排片 数据分析",
+            "仪表盘",
+            "影院管理",
+            "发现分类",
+            "影片管理",
+            "场次管理",
+            "订单管理",
+            "观众管理",
+            "观众注册",
+            "卖座卡钱包",
+            "众筹包场",
+            "小卖品管理",
+            "智能排片",
+            "数据分析",
+            "刷新",
+            "展开行"
+          ]
+        }
+      },
+      {
+        "label": "操作:展开行",
+        "url": "http://127.0.0.1:49046/dashboard",
+        "title": "影院娱乐服务聚合平台",
+        "headings": [],
+        "navLabels": [
+          "仪表盘",
+          "dashboard",
+          "影院管理",
+          "bank",
+          "发现分类",
+          "video-camera",
+          "影片管理",
+          "场次管理",
+          "clock-circle",
+          "订单管理",
+          "shopping-cart",
+          "观众管理",
+          "team",
+          "观众注册",
+          "卖座卡钱包",
+          "wallet",
+          "众筹包场",
+          "rocket",
+          "小卖品管理",
+          "coffee",
+          "智能排片",
+          "schedule",
+          "数据分析",
+          "bar-chart"
+        ],
+        "buttons": [
+          "刷新",
+          "关闭行",
+          "展开行"
+        ],
+        "links": [],
+        "inputs": [],
+        "tables": [
+          {
+            "headers": [
+              "订单号",
+              "渠道来源",
+              "影片",
+              "影院信息",
+              "场次信息",
+              "座位",
+              "金额",
+              "支付方式",
+              "关联信息",
+              "核销结果",
+              "状态",
+              "创建时间"
+            ],
+            "rowCount": 10,
+            "hasEmptyText": false,
+            "textPreview": "订单号 渠道来源 影片 影院信息 场次信息 座位 金额 支付方式 关联信息 核销结果 状态 创建时间 订单号 渠道来源 影片 影院信息 场次信息 座位 金额 支付方式 关联信息 核销结果 状态 创建时间 ORD202606051623472336 自有系统 The Last Dynasty Stellar Cineplex Beijing · Hall 3 - Standard 2026-06-05 14:00 3排1座 3排2座 ¥116.00 现金 - 待核销 pending 2026-06-05 16:23 支付ID - 核销时间 - 核销渠道 - 票项明细 项目名称 类型 数量 单价 "
+          },
+          {
+            "headers": [
+              "项目名称",
+              "类型",
+              "数量",
+              "单价",
+              "小计"
+            ],
+            "rowCount": 3,
+            "hasEmptyText": false,
+            "textPreview": "项目名称 类型 数量 单价 小计 Ticket - Row 3 Col 1 ticket 1 ¥58.00 ¥58.00 Ticket - Row 3 Col 2 ticket 1 ¥58.00 ¥58.00"
+          }
+        ],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "影院聚合平台仪表盘影院管理发现分类影片管理场次管理订单管理观众管理观众注册卖座卡钱包众筹包场小卖品管理智能排片数据分析影院娱乐服务聚合平台影院总数4热映影片4今日场次7观众总数3近期订单 (6)刷新订单号渠道来源影片影院信息场次信息座位金额支付方式关联信息核销结果状态创建时间 订单号渠道来源影片影院信息场次信息座位金额支付方式关联信息核销结果状态创建时间ORD202606051623472336自有系统The Last DynastyStellar Cineplex Beijing · Hall 3 - Standard2026-06-05 14:003排1座3排2座¥116.00现金-待核销pending2026-06-05 16:23支付ID-核销时间-核销渠道-票项明细项目名称类型数量单价小计Ticket - Row 3 Col 1ticket1¥58.00¥58.00Ticket - Row 3 Col 2ticket1¥58.00¥58.00ORD202606051622350106自有系统The Last DynastyStellar Cineplex Beijing · Hall 3 - Standard2026-06-05 14:002排1座2排2座¥116.00现金-待核销pending2026-06-05 16:22ORD202606051622249685自有系统The Last DynastyStellar Cineplex Beijing · Hall 3 - Standard2026-06-05 14:001排1座1排2座¥116.00现金-待核销pending2026-06-05 16:22ORD202606051415007494小程序The Last DynastyStellar Cineplex Beijing · Hall 3 - Standard2026-06-05 14:001排5座1排6座¥116.00现金-待核销pending2026-06-05 14:15ORD202606051401481775自有系统The Last DynastyStellar Cineplex Beijing · Hall 3 - Standard2026-06-05 14:001排3座1排4座¥180.00卖座卡卡·****待核销pending2026-06-05 14:01ORD202606042357573533自有系统Galactic HorizonStellar Cineplex Beijing · Hall 1 - IMAX2026-06-05 19:001排1座1排2座¥136.00卖座卡-待核销pending2026-06-04 23:57",
+        "layout": {
+          "viewportWidth": 1600,
+          "viewportHeight": 1018,
+          "scrollWidth": 1600,
+          "scrollHeight": 1018,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89046-codex-reverify-20260605-structure-04-操作-展开行",
+          "label": "操作:展开行",
+          "finalUrl": "http://127.0.0.1:49046/dashboard",
+          "title": "影院娱乐服务聚合平台",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89046/probe/codex-reverify-20260605-1640/may-89046-codex-reverify-20260605-structure-04-操作-展开行.json",
+          "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89046/probe/codex-reverify-20260605-1640/may-89046-codex-reverify-20260605-structure-04-操作-展开行.png",
+          "elementCount": 471,
+          "interactiveCount": 27,
+          "interactiveLabels": [
+            "仪表盘 影院管理 发现分类 影片管理 场次管理 订单管理 观众管理 观众注册 卖座卡钱包 众筹包场 小卖品管理 智能排片 数据分析",
+            "仪表盘",
+            "影院管理",
+            "发现分类",
+            "影片管理",
+            "场次管理",
+            "订单管理",
+            "观众管理",
+            "观众注册",
+            "卖座卡钱包",
+            "众筹包场",
+            "小卖品管理",
+            "智能排片",
+            "数据分析",
+            "刷新",
+            "关闭行",
+            "展开行"
+          ]
+        }
+      },
+      {
+        "label": "二层操作:展开行->关闭行",
+        "url": "http://127.0.0.1:49046/dashboard",
+        "title": "影院娱乐服务聚合平台",
+        "headings": [],
+        "navLabels": [
+          "仪表盘",
+          "dashboard",
+          "影院管理",
+          "bank",
+          "发现分类",
+          "video-camera",
+          "影片管理",
+          "场次管理",
+          "clock-circle",
+          "订单管理",
+          "shopping-cart",
+          "观众管理",
+          "team",
+          "观众注册",
+          "卖座卡钱包",
+          "wallet",
+          "众筹包场",
+          "rocket",
+          "小卖品管理",
+          "coffee",
+          "智能排片",
+          "schedule",
+          "数据分析",
+          "bar-chart"
+        ],
+        "buttons": [
+          "刷新",
+          "展开行"
+        ],
+        "links": [],
+        "inputs": [],
+        "tables": [
+          {
+            "headers": [
+              "订单号",
+              "渠道来源",
+              "影片",
+              "影院信息",
+              "场次信息",
+              "座位",
+              "金额",
+              "支付方式",
+              "关联信息",
+              "核销结果",
+              "状态",
+              "创建时间"
+            ],
+            "rowCount": 6,
+            "hasEmptyText": false,
+            "textPreview": "订单号 渠道来源 影片 影院信息 场次信息 座位 金额 支付方式 关联信息 核销结果 状态 创建时间 订单号 渠道来源 影片 影院信息 场次信息 座位 金额 支付方式 关联信息 核销结果 状态 创建时间 ORD202606051623472336 自有系统 The Last Dynasty Stellar Cineplex Beijing · Hall 3 - Standard 2026-06-05 14:00 3排1座 3排2座 ¥116.00 现金 - 待核销 pending 2026-06-05 16:23 ORD202606051622350106 自有系统 The Last Dyna"
+          }
+        ],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "影院聚合平台仪表盘影院管理发现分类影片管理场次管理订单管理观众管理观众注册卖座卡钱包众筹包场小卖品管理智能排片数据分析影院娱乐服务聚合平台影院总数4热映影片4今日场次7观众总数3近期订单 (6)刷新订单号渠道来源影片影院信息场次信息座位金额支付方式关联信息核销结果状态创建时间 订单号渠道来源影片影院信息场次信息座位金额支付方式关联信息核销结果状态创建时间ORD202606051623472336自有系统The Last DynastyStellar Cineplex Beijing · Hall 3 - Standard2026-06-05 14:003排1座3排2座¥116.00现金-待核销pending2026-06-05 16:23支付ID-核销时间-核销渠道-票项明细项目名称类型数量单价小计Ticket - Row 3 Col 1ticket1¥58.00¥58.00Ticket - Row 3 Col 2ticket1¥58.00¥58.00ORD202606051622350106自有系统The Last DynastyStellar Cineplex Beijing · Hall 3 - Standard2026-06-05 14:002排1座2排2座¥116.00现金-待核销pending2026-06-05 16:22ORD202606051622249685自有系统The Last DynastyStellar Cineplex Beijing · Hall 3 - Standard2026-06-05 14:001排1座1排2座¥116.00现金-待核销pending2026-06-05 16:22ORD202606051415007494小程序The Last DynastyStellar Cineplex Beijing · Hall 3 - Standard2026-06-05 14:001排5座1排6座¥116.00现金-待核销pending2026-06-05 14:15ORD202606051401481775自有系统The Last DynastyStellar Cineplex Beijing · Hall 3 - Standard2026-06-05 14:001排3座1排4座¥180.00卖座卡卡·****待核销pending2026-06-05 14:01ORD202606042357573533自有系统Galactic HorizonStellar Cineplex Beijing · Hall 1 - IMAX2026-06-05 19:001排1座1排2座¥136.00卖座卡-待核销pending2026-06-04 23:57",
+        "layout": {
+          "viewportWidth": 1632,
+          "viewportHeight": 1018,
+          "scrollWidth": 1632,
+          "scrollHeight": 1018,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89046-codex-reverify-20260605-structure-05-二层操作-展开行-关闭行",
+          "label": "二层操作:展开行->关闭行",
+          "finalUrl": "http://127.0.0.1:49046/dashboard",
+          "title": "影院娱乐服务聚合平台",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89046/probe/codex-reverify-20260605-1640/may-89046-codex-reverify-20260605-structure-05-二层操作-展开行-关闭行.json",
+          "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89046/probe/codex-reverify-20260605-1640/may-89046-codex-reverify-20260605-structure-05-二层操作-展开行-关闭行.png",
+          "elementCount": 471,
+          "interactiveCount": 27,
+          "interactiveLabels": [
+            "仪表盘 影院管理 发现分类 影片管理 场次管理 订单管理 观众管理 观众注册 卖座卡钱包 众筹包场 小卖品管理 智能排片 数据分析",
+            "仪表盘",
+            "影院管理",
+            "发现分类",
+            "影片管理",
+            "场次管理",
+            "订单管理",
+            "观众管理",
+            "观众注册",
+            "卖座卡钱包",
+            "众筹包场",
+            "小卖品管理",
+            "智能排片",
+            "数据分析",
+            "刷新",
+            "展开行"
+          ]
+        }
+      },
+      {
+        "label": "导航:影院管理",
+        "url": "http://127.0.0.1:49046/cinemas",
+        "title": "影院娱乐服务聚合平台",
+        "headings": [],
+        "navLabels": [
+          "仪表盘",
+          "dashboard",
+          "影院管理",
+          "bank",
+          "发现分类",
+          "video-camera",
+          "影片管理",
+          "场次管理",
+          "clock-circle",
+          "订单管理",
+          "shopping-cart",
+          "观众管理",
+          "team",
+          "观众注册",
+          "卖座卡钱包",
+          "wallet",
+          "众筹包场",
+          "rocket",
+          "小卖品管理",
+          "coffee",
+          "智能排片",
+          "schedule",
+          "数据分析",
+          "bar-chart"
+        ],
+        "buttons": [
+          "Add Cinema",
+          "View Detail"
+        ],
+        "links": [],
+        "inputs": [
+          {
+            "tag": "input",
+            "type": "search",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "search",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          }
+        ],
+        "tables": [
+          {
+            "headers": [
+              "Name",
+              "City",
+              "District",
+              "Hall Count",
+              "Equipment Level",
+              "Scheduling Protocol",
+              "Status",
+              "Actions"
+            ],
+            "rowCount": 4,
+            "hasEmptyText": false,
+            "textPreview": "Name City District Hall Count Equipment Level Scheduling Protocol Status Actions Stellar Cineplex Beijing Beijing Chaoyang 6 Dolby auto Active View Detail Stellar Cineplex Shanghai Shanghai Pudong 8 IMAX auto Active View Detail Stellar Cineplex Guangzhou Guangzhou Tianhe 5 4DX manual Active View Det"
+          }
+        ],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "影院聚合平台仪表盘影院管理发现分类影片管理场次管理订单管理观众管理观众注册卖座卡钱包众筹包场小卖品管理智能排片数据分析影院娱乐服务聚合平台Filter by cityFilter by statusAdd CinemaNameCityDistrictHall CountEquipment LevelScheduling ProtocolStatusActionsStellar Cineplex BeijingBeijingChaoyang6DolbyautoActiveView DetailStellar Cineplex ShanghaiShanghaiPudong8IMAXautoActiveView DetailStellar Cineplex GuangzhouGuangzhouTianhe54DXmanualActiveView DetailTest Cinema ShenzhenShenzhenNanshan2IMAXautoActiveView Detail1",
+        "layout": {
+          "viewportWidth": 1664,
+          "viewportHeight": 1018,
+          "scrollWidth": 1664,
+          "scrollHeight": 1018,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89046-codex-reverify-20260605-structure-06-导航-影院管理",
+          "label": "导航:影院管理",
+          "finalUrl": "http://127.0.0.1:49046/cinemas",
+          "title": "影院娱乐服务聚合平台",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89046/probe/codex-reverify-20260605-1640/may-89046-codex-reverify-20260605-structure-06-导航-影院管理.json",
+          "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89046/probe/codex-reverify-20260605-1640/may-89046-codex-reverify-20260605-structure-06-导航-影院管理.png",
+          "elementCount": 269,
+          "interactiveCount": 33,
+          "interactiveLabels": [
+            "仪表盘 影院管理 发现分类 影片管理 场次管理 订单管理 观众管理 观众注册 卖座卡钱包 众筹包场 小卖品管理 智能排片 数据分析",
+            "仪表盘",
+            "影院管理",
+            "发现分类",
+            "影片管理",
+            "场次管理",
+            "订单管理",
+            "观众管理",
+            "观众注册",
+            "卖座卡钱包",
+            "众筹包场",
+            "小卖品管理",
+            "智能排片",
+            "数据分析",
+            "Add Cinema",
+            "View Detail",
+            "1"
+          ]
+        }
+      },
+      {
+        "label": "操作:Add Cinema",
+        "url": "http://127.0.0.1:49046/cinemas",
+        "title": "影院娱乐服务聚合平台",
+        "headings": [],
+        "navLabels": [
+          "仪表盘",
+          "dashboard",
+          "影院管理",
+          "bank",
+          "发现分类",
+          "video-camera",
+          "影片管理",
+          "场次管理",
+          "clock-circle",
+          "订单管理",
+          "shopping-cart",
+          "观众管理",
+          "team",
+          "观众注册",
+          "卖座卡钱包",
+          "wallet",
+          "众筹包场",
+          "rocket",
+          "小卖品管理",
+          "coffee",
+          "智能排片",
+          "schedule",
+          "数据分析",
+          "bar-chart"
+        ],
+        "buttons": [
+          "Add Cinema",
+          "View Detail",
+          "Close",
+          "取 消",
+          "确 定"
+        ],
+        "links": [],
+        "inputs": [
+          {
+            "tag": "input",
+            "type": "search",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "search",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "text",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "text",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "text",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "text",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "search",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          }
+        ],
+        "tables": [
+          {
+            "headers": [
+              "Name",
+              "City",
+              "District",
+              "Hall Count",
+              "Equipment Level",
+              "Scheduling Protocol",
+              "Status",
+              "Actions"
+            ],
+            "rowCount": 4,
+            "hasEmptyText": false,
+            "textPreview": "Name City District Hall Count Equipment Level Scheduling Protocol Status Actions Stellar Cineplex Beijing Beijing Chaoyang 6 Dolby auto Active View Detail Stellar Cineplex Shanghai Shanghai Pudong 8 IMAX auto Active View Detail Stellar Cineplex Guangzhou Guangzhou Tianhe 5 4DX manual Active View Det"
+          }
+        ],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "影院聚合平台仪表盘影院管理发现分类影片管理场次管理订单管理观众管理观众注册卖座卡钱包众筹包场小卖品管理智能排片数据分析影院娱乐服务聚合平台Filter by cityFilter by statusAdd CinemaNameCityDistrictHall CountEquipment LevelScheduling ProtocolStatusActionsStellar Cineplex BeijingBeijingChaoyang6DolbyautoActiveView DetailStellar Cineplex ShanghaiShanghaiPudong8IMAXautoActiveView DetailStellar Cineplex GuangzhouGuangzhouTianhe54DXmanualActiveView DetailTest Cinema ShenzhenShenzhenNanshan2IMAXautoActiveView Detail1 Add Cinema基础信息影厅明细设备等级与排片协议运营复查NameCityDistrictAddressStatus取 消确 定",
+        "layout": {
+          "viewportWidth": 1696,
+          "viewportHeight": 1018,
+          "scrollWidth": 1696,
+          "scrollHeight": 1018,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89046-codex-reverify-20260605-structure-07-操作-Add-Cinema",
+          "label": "操作:Add Cinema",
+          "finalUrl": "http://127.0.0.1:49046/cinemas",
+          "title": "影院娱乐服务聚合平台",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89046/probe/codex-reverify-20260605-1640/may-89046-codex-reverify-20260605-structure-07-操作-Add-Cinema.json",
+          "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89046/probe/codex-reverify-20260605-1640/may-89046-codex-reverify-20260605-structure-07-操作-Add-Cinema.png",
+          "elementCount": 385,
+          "interactiveCount": 46,
+          "interactiveLabels": [
+            "仪表盘 影院管理 发现分类 影片管理 场次管理 订单管理 观众管理 观众注册 卖座卡钱包 众筹包场 小卖品管理 智能排片 数据分析",
+            "仪表盘",
+            "影院管理",
+            "发现分类",
+            "影片管理",
+            "场次管理",
+            "订单管理",
+            "观众管理",
+            "观众注册",
+            "卖座卡钱包",
+            "众筹包场",
+            "小卖品管理",
+            "智能排片",
+            "数据分析",
+            "Add Cinema",
+            "View Detail",
+            "1",
+            "Add Cinema 基础信息 影厅明细 设备等级与排片协议 运营复查 Name City District Address Status 取 消 确 定",
+            "Close",
+            "基础信息",
+            "取 消",
+            "确 定"
+          ]
+        }
+      },
+      {
+        "label": "二层操作:Add Cinema->取 消",
+        "url": "http://127.0.0.1:49046/cinemas",
+        "title": "影院娱乐服务聚合平台",
+        "headings": [],
+        "navLabels": [
+          "仪表盘",
+          "dashboard",
+          "影院管理",
+          "bank",
+          "发现分类",
+          "video-camera",
+          "影片管理",
+          "场次管理",
+          "clock-circle",
+          "订单管理",
+          "shopping-cart",
+          "观众管理",
+          "team",
+          "观众注册",
+          "卖座卡钱包",
+          "wallet",
+          "众筹包场",
+          "rocket",
+          "小卖品管理",
+          "coffee",
+          "智能排片",
+          "schedule",
+          "数据分析",
+          "bar-chart"
+        ],
+        "buttons": [
+          "Add Cinema",
+          "View Detail"
+        ],
+        "links": [],
+        "inputs": [
+          {
+            "tag": "input",
+            "type": "search",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "search",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          }
+        ],
+        "tables": [
+          {
+            "headers": [
+              "Name",
+              "City",
+              "District",
+              "Hall Count",
+              "Equipment Level",
+              "Scheduling Protocol",
+              "Status",
+              "Actions"
+            ],
+            "rowCount": 4,
+            "hasEmptyText": false,
+            "textPreview": "Name City District Hall Count Equipment Level Scheduling Protocol Status Actions Stellar Cineplex Beijing Beijing Chaoyang 6 Dolby auto Active View Detail Stellar Cineplex Shanghai Shanghai Pudong 8 IMAX auto Active View Detail Stellar Cineplex Guangzhou Guangzhou Tianhe 5 4DX manual Active View Det"
+          }
+        ],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "影院聚合平台仪表盘影院管理发现分类影片管理场次管理订单管理观众管理观众注册卖座卡钱包众筹包场小卖品管理智能排片数据分析影院娱乐服务聚合平台Filter by cityFilter by statusAdd CinemaNameCityDistrictHall CountEquipment LevelScheduling ProtocolStatusActionsStellar Cineplex BeijingBeijingChaoyang6DolbyautoActiveView DetailStellar Cineplex ShanghaiShanghaiPudong8IMAXautoActiveView DetailStellar Cineplex GuangzhouGuangzhouTianhe54DXmanualActiveView DetailTest Cinema ShenzhenShenzhenNanshan2IMAXautoActiveView Detail1",
+        "layout": {
+          "viewportWidth": 1728,
+          "viewportHeight": 1018,
+          "scrollWidth": 1728,
+          "scrollHeight": 1018,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89046-codex-reverify-20260605-structure-08-二层操作-Add-Cinema-取-消",
+          "label": "二层操作:Add Cinema->取 消",
+          "finalUrl": "http://127.0.0.1:49046/cinemas",
+          "title": "影院娱乐服务聚合平台",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89046/probe/codex-reverify-20260605-1640/may-89046-codex-reverify-20260605-structure-08-二层操作-Add-Cinema-取-消.json",
+          "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89046/probe/codex-reverify-20260605-1640/may-89046-codex-reverify-20260605-structure-08-二层操作-Add-Cinema-取-消.png",
+          "elementCount": 269,
+          "interactiveCount": 33,
+          "interactiveLabels": [
+            "仪表盘 影院管理 发现分类 影片管理 场次管理 订单管理 观众管理 观众注册 卖座卡钱包 众筹包场 小卖品管理 智能排片 数据分析",
+            "仪表盘",
+            "影院管理",
+            "发现分类",
+            "影片管理",
+            "场次管理",
+            "订单管理",
+            "观众管理",
+            "观众注册",
+            "卖座卡钱包",
+            "众筹包场",
+            "小卖品管理",
+            "智能排片",
+            "数据分析",
+            "Add Cinema",
+            "View Detail",
+            "1"
+          ]
+        }
+      },
+      {
+        "label": "操作:View Detail",
+        "url": "http://127.0.0.1:49046/cinemas",
+        "title": "影院娱乐服务聚合平台",
+        "headings": [],
+        "navLabels": [
+          "仪表盘",
+          "dashboard",
+          "影院管理",
+          "bank",
+          "发现分类",
+          "video-camera",
+          "影片管理",
+          "场次管理",
+          "clock-circle",
+          "订单管理",
+          "shopping-cart",
+          "观众管理",
+          "team",
+          "观众注册",
+          "卖座卡钱包",
+          "wallet",
+          "众筹包场",
+          "rocket",
+          "小卖品管理",
+          "coffee",
+          "智能排片",
+          "schedule",
+          "数据分析",
+          "bar-chart"
+        ],
+        "buttons": [
+          "Add Cinema",
+          "View Detail",
+          "Close"
+        ],
+        "links": [],
+        "inputs": [
+          {
+            "tag": "input",
+            "type": "search",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "search",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          }
+        ],
+        "tables": [
+          {
+            "headers": [
+              "Name",
+              "City",
+              "District",
+              "Hall Count",
+              "Equipment Level",
+              "Scheduling Protocol",
+              "Status",
+              "Actions"
+            ],
+            "rowCount": 4,
+            "hasEmptyText": false,
+            "textPreview": "Name City District Hall Count Equipment Level Scheduling Protocol Status Actions Stellar Cineplex Beijing Beijing Chaoyang 6 Dolby auto Active View Detail Stellar Cineplex Shanghai Shanghai Pudong 8 IMAX auto Active View Detail Stellar Cineplex Guangzhou Guangzhou Tianhe 5 4DX manual Active View Det"
+          },
+          {
+            "headers": [
+              "Name",
+              "City",
+              "District",
+              "Address",
+              "Status",
+              "Hall Count",
+              "Equipment Level",
+              "Equipment Verify Date",
+              "Equipment Verify By",
+              "Equipment Verify Status",
+              "Scheduling Protocol",
+              "Protocol Start Date"
+            ],
+            "rowCount": 11,
+            "hasEmptyText": false,
+            "textPreview": "Name Stellar Cineplex Beijing City Beijing District Chaoyang Address 88 Jianguo Road, Chaoyang District Status Active Hall Count 6 Equipment Level Dolby Equipment Verify Date Equipment Verify By Equipment Verify Status Scheduling Protocol auto Protocol Start Date Protocol End Date Min Schedule Ratio"
+          }
+        ],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "影院聚合平台仪表盘影院管理发现分类影片管理场次管理订单管理观众管理观众注册卖座卡钱包众筹包场小卖品管理智能排片数据分析影院娱乐服务聚合平台Filter by cityFilter by statusAdd CinemaNameCityDistrictHall CountEquipment LevelScheduling ProtocolStatusActionsStellar Cineplex BeijingBeijingChaoyang6DolbyautoActiveView DetailStellar Cineplex ShanghaiShanghaiPudong8IMAXautoActiveView DetailStellar Cineplex GuangzhouGuangzhouTianhe54DXmanualActiveView DetailTest Cinema ShenzhenShenzhenNanshan2IMAXautoActiveView Detail1 Cinema Detail: Stellar Cineplex BeijingNameStellar Cineplex BeijingCityBeijingDistrictChaoyangAddress88 Jianguo Road, Chaoyang DistrictStatusActiveHall Count6Equipment LevelDolbyEquipment Verify DateEquipment Verify ByEquipment Verify StatusScheduling ProtocolautoProtocol Start DateProtocol End DateMin Schedule RatioMax Daily ShowtimesLast Review DateNext Review DateReview StatusReviewed ByReview Notes",
+        "layout": {
+          "viewportWidth": 1760,
+          "viewportHeight": 1018,
+          "scrollWidth": 1760,
+          "scrollHeight": 1018,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89046-codex-reverify-20260605-structure-09-操作-View-Detail",
+          "label": "操作:View Detail",
+          "finalUrl": "http://127.0.0.1:49046/cinemas",
+          "title": "影院娱乐服务聚合平台",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89046/probe/codex-reverify-20260605-1640/may-89046-codex-reverify-20260605-structure-09-操作-View-Detail.json",
+          "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89046/probe/codex-reverify-20260605-1640/may-89046-codex-reverify-20260605-structure-09-操作-View-Detail.png",
+          "elementCount": 374,
+          "interactiveCount": 36,
+          "interactiveLabels": [
+            "仪表盘 影院管理 发现分类 影片管理 场次管理 订单管理 观众管理 观众注册 卖座卡钱包 众筹包场 小卖品管理 智能排片 数据分析",
+            "仪表盘",
+            "影院管理",
+            "发现分类",
+            "影片管理",
+            "场次管理",
+            "订单管理",
+            "观众管理",
+            "观众注册",
+            "卖座卡钱包",
+            "众筹包场",
+            "小卖品管理",
+            "智能排片",
+            "数据分析",
+            "Add Cinema",
+            "View Detail",
+            "1",
+            "Cinema Detail: Stellar Cineplex Beijing Name Stellar Cineplex Beijing City Beijing District Chaoyang Address 88 Jianguo Road, Chaoyang District Status Active Hall Count 6 Equipment",
+            "Close"
+          ]
+        }
+      },
+      {
+        "label": "二层操作:View Detail->Close",
+        "url": "http://127.0.0.1:49046/cinemas",
+        "title": "影院娱乐服务聚合平台",
+        "headings": [],
+        "navLabels": [
+          "仪表盘",
+          "dashboard",
+          "影院管理",
+          "bank",
+          "发现分类",
+          "video-camera",
+          "影片管理",
+          "场次管理",
+          "clock-circle",
+          "订单管理",
+          "shopping-cart",
+          "观众管理",
+          "team",
+          "观众注册",
+          "卖座卡钱包",
+          "wallet",
+          "众筹包场",
+          "rocket",
+          "小卖品管理",
+          "coffee",
+          "智能排片",
+          "schedule",
+          "数据分析",
+          "bar-chart"
+        ],
+        "buttons": [
+          "Add Cinema",
+          "View Detail"
+        ],
+        "links": [],
+        "inputs": [
+          {
+            "tag": "input",
+            "type": "search",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "search",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          }
+        ],
+        "tables": [
+          {
+            "headers": [
+              "Name",
+              "City",
+              "District",
+              "Hall Count",
+              "Equipment Level",
+              "Scheduling Protocol",
+              "Status",
+              "Actions"
+            ],
+            "rowCount": 4,
+            "hasEmptyText": false,
+            "textPreview": "Name City District Hall Count Equipment Level Scheduling Protocol Status Actions Stellar Cineplex Beijing Beijing Chaoyang 6 Dolby auto Active View Detail Stellar Cineplex Shanghai Shanghai Pudong 8 IMAX auto Active View Detail Stellar Cineplex Guangzhou Guangzhou Tianhe 5 4DX manual Active View Det"
+          }
+        ],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "影院聚合平台仪表盘影院管理发现分类影片管理场次管理订单管理观众管理观众注册卖座卡钱包众筹包场小卖品管理智能排片数据分析影院娱乐服务聚合平台Filter by cityFilter by statusAdd CinemaNameCityDistrictHall CountEquipment LevelScheduling ProtocolStatusActionsStellar Cineplex BeijingBeijingChaoyang6DolbyautoActiveView DetailStellar Cineplex ShanghaiShanghaiPudong8IMAXautoActiveView DetailStellar Cineplex GuangzhouGuangzhouTianhe54DXmanualActiveView DetailTest Cinema ShenzhenShenzhenNanshan2IMAXautoActiveView Detail1",
+        "layout": {
+          "viewportWidth": 1792,
+          "viewportHeight": 1018,
+          "scrollWidth": 1792,
+          "scrollHeight": 1018,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89046-codex-reverify-20260605-structure-10-二层操作-View-Detail-Close",
+          "label": "二层操作:View Detail->Close",
+          "finalUrl": "http://127.0.0.1:49046/cinemas",
+          "title": "影院娱乐服务聚合平台",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89046/probe/codex-reverify-20260605-1640/may-89046-codex-reverify-20260605-structure-10-二层操作-View-Detail-Close.json",
+          "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89046/probe/codex-reverify-20260605-1640/may-89046-codex-reverify-20260605-structure-10-二层操作-View-Detail-Close.png",
+          "elementCount": 269,
+          "interactiveCount": 33,
+          "interactiveLabels": [
+            "仪表盘 影院管理 发现分类 影片管理 场次管理 订单管理 观众管理 观众注册 卖座卡钱包 众筹包场 小卖品管理 智能排片 数据分析",
+            "仪表盘",
+            "影院管理",
+            "发现分类",
+            "影片管理",
+            "场次管理",
+            "订单管理",
+            "观众管理",
+            "观众注册",
+            "卖座卡钱包",
+            "众筹包场",
+            "小卖品管理",
+            "智能排片",
+            "数据分析",
+            "Add Cinema",
+            "View Detail",
+            "1"
+          ]
+        }
+      },
+      {
+        "label": "导航:发现分类",
+        "url": "http://127.0.0.1:49046/movies?discover",
+        "title": "影院娱乐服务聚合平台",
+        "headings": [],
+        "navLabels": [
+          "仪表盘",
+          "dashboard",
+          "影院管理",
+          "bank",
+          "发现分类",
+          "video-camera",
+          "影片管理",
+          "场次管理",
+          "clock-circle",
+          "订单管理",
+          "shopping-cart",
+          "观众管理",
+          "team",
+          "观众注册",
+          "卖座卡钱包",
+          "wallet",
+          "众筹包场",
+          "rocket",
+          "小卖品管理",
+          "coffee",
+          "智能排片",
+          "schedule",
+          "数据分析",
+          "bar-chart"
+        ],
+        "buttons": [
+          "Add Movie"
+        ],
+        "links": [],
+        "inputs": [
+          {
+            "tag": "input",
+            "type": "search",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "search",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          }
+        ],
+        "tables": [
+          {
+            "headers": [
+              "Title",
+              "Genre",
+              "Duration(min)",
+              "Director",
+              "Release Date",
+              "Revenue Share(%)",
+              "Pre-show Package",
+              "Status",
+              "Actions"
+            ],
+            "rowCount": 6,
+            "hasEmptyText": false,
+            "textPreview": "Title Genre Duration(min) Director Release Date Revenue Share(%) Pre-show Package Status Actions Galactic Horizon Sci-Fi 142 Zhang Wei 2026-05-15 55 premium showing The Last Dynasty Historical 156 Li Mei 2026-04-20 50 standard showing Midnight Echo Thriller 118 Wang Jun 2026-06-01 52 standard showin"
+          }
+        ],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "影院聚合平台仪表盘影院管理发现分类影片管理场次管理订单管理观众管理观众注册卖座卡钱包众筹包场小卖品管理智能排片数据分析影院娱乐服务聚合平台Filter by statusFilter by genreAdd MovieTitleGenreDuration(min)DirectorRelease DateRevenue Share(%)Pre-show PackageStatusActionsGalactic HorizonSci-Fi142Zhang Wei2026-05-1555premiumshowingThe Last DynastyHistorical156Li Mei2026-04-2050standardshowingMidnight EchoThriller118Wang Jun2026-06-0152standardshowingDreamscapeAnimation96Chen Yu2026-07-1048familyupcomingCode ZeroAction130Zhao Feng2026-03-0153premiumshowingTest New MovieSci-Fi135Test Director2026-06-1055premiumupcoming1",
+        "layout": {
+          "viewportWidth": 1824,
+          "viewportHeight": 1018,
+          "scrollWidth": 1824,
+          "scrollHeight": 1018,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89046-codex-reverify-20260605-structure-11-导航-发现分类",
+          "label": "导航:发现分类",
+          "finalUrl": "http://127.0.0.1:49046/movies?discover",
+          "title": "影院娱乐服务聚合平台",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89046/probe/codex-reverify-20260605-1640/may-89046-codex-reverify-20260605-structure-11-导航-发现分类.json",
+          "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89046/probe/codex-reverify-20260605-1640/may-89046-codex-reverify-20260605-structure-11-导航-发现分类.png",
+          "elementCount": 326,
+          "interactiveCount": 39,
+          "interactiveLabels": [
+            "仪表盘 影院管理 发现分类 影片管理 场次管理 订单管理 观众管理 观众注册 卖座卡钱包 众筹包场 小卖品管理 智能排片 数据分析",
+            "仪表盘",
+            "影院管理",
+            "发现分类",
+            "影片管理",
+            "场次管理",
+            "订单管理",
+            "观众管理",
+            "观众注册",
+            "卖座卡钱包",
+            "众筹包场",
+            "小卖品管理",
+            "智能排片",
+            "数据分析",
+            "Add Movie",
+            "1"
+          ]
+        }
+      },
+      {
+        "label": "操作:Add Movie",
+        "url": "http://127.0.0.1:49046/movies?discover",
+        "title": "影院娱乐服务聚合平台",
+        "headings": [],
+        "navLabels": [
+          "仪表盘",
+          "dashboard",
+          "影院管理",
+          "bank",
+          "发现分类",
+          "video-camera",
+          "影片管理",
+          "场次管理",
+          "clock-circle",
+          "订单管理",
+          "shopping-cart",
+          "观众管理",
+          "team",
+          "观众注册",
+          "卖座卡钱包",
+          "wallet",
+          "众筹包场",
+          "rocket",
+          "小卖品管理",
+          "coffee",
+          "智能排片",
+          "schedule",
+          "数据分析",
+          "bar-chart"
+        ],
+        "buttons": [
+          "Add Movie",
+          "Close",
+          "取 消",
+          "确 定"
+        ],
+        "links": [],
+        "inputs": [
+          {
+            "tag": "input",
+            "type": "search",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "search",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "text",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "search",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "text",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "",
+            "placeholder": "请选择日期",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "text",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "search",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "textarea",
+            "type": "",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "text",
+            "placeholder": "主演列表，逗号分隔",
+            "name": "",
+            "label": ""
+          }
+        ],
+        "tables": [
+          {
+            "headers": [
+              "Title",
+              "Genre",
+              "Duration(min)",
+              "Director",
+              "Release Date",
+              "Revenue Share(%)",
+              "Pre-show Package",
+              "Status",
+              "Actions"
+            ],
+            "rowCount": 6,
+            "hasEmptyText": false,
+            "textPreview": "Title Genre Duration(min) Director Release Date Revenue Share(%) Pre-show Package Status Actions Galactic Horizon Sci-Fi 142 Zhang Wei 2026-05-15 55 premium showing The Last Dynasty Historical 156 Li Mei 2026-04-20 50 standard showing Midnight Echo Thriller 118 Wang Jun 2026-06-01 52 standard showin"
+          }
+        ],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "影院聚合平台仪表盘影院管理发现分类影片管理场次管理订单管理观众管理观众注册卖座卡钱包众筹包场小卖品管理智能排片数据分析影院娱乐服务聚合平台Filter by statusFilter by genreAdd MovieTitleGenreDuration(min)DirectorRelease DateRevenue Share(%)Pre-show PackageStatusActionsGalactic HorizonSci-Fi142Zhang Wei2026-05-1555premiumshowingThe Last DynastyHistorical156Li Mei2026-04-2050standardshowingMidnight EchoThriller118Wang Jun2026-06-0152standardshowingDreamscapeAnimation96Chen Yu2026-07-1048familyupcomingCode ZeroAction130Zhao Feng2026-03-0153premiumshowingTest New MovieSci-Fi135Test Director2026-06-1055premiumupcoming1 Add Movie基础信息版权有效期映前物料包分账与生命周期TitleGenreDuration(min)DirectorRelease DatePoster URLStatusSynopsisCast取 消确 定",
+        "layout": {
+          "viewportWidth": 1856,
+          "viewportHeight": 1018,
+          "scrollWidth": 1856,
+          "scrollHeight": 1018,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89046-codex-reverify-20260605-structure-12-操作-Add-Movie",
+          "label": "操作:Add Movie",
+          "finalUrl": "http://127.0.0.1:49046/movies?discover",
+          "title": "影院娱乐服务聚合平台",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89046/probe/codex-reverify-20260605-1640/may-89046-codex-reverify-20260605-structure-12-操作-Add-Movie.json",
+          "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89046/probe/codex-reverify-20260605-1640/may-89046-codex-reverify-20260605-structure-12-操作-Add-Movie.png",
+          "elementCount": 497,
+          "interactiveCount": 58,
+          "interactiveLabels": [
+            "仪表盘 影院管理 发现分类 影片管理 场次管理 订单管理 观众管理 观众注册 卖座卡钱包 众筹包场 小卖品管理 智能排片 数据分析",
+            "仪表盘",
+            "影院管理",
+            "发现分类",
+            "影片管理",
+            "场次管理",
+            "订单管理",
+            "观众管理",
+            "观众注册",
+            "卖座卡钱包",
+            "众筹包场",
+            "小卖品管理",
+            "智能排片",
+            "数据分析",
+            "Add Movie",
+            "1",
+            "Add Movie 基础信息 版权有效期 映前物料包 分账与生命周期 Title Genre Duration(min) Director Release Date Poster URL Status Synopsis Cast 取 消 确 定",
+            "Close",
+            "基础信息",
+            "Title Genre Duration(min) Director Release Date Poster URL Status Synopsis Cast",
+            "Increase Value",
+            "Decrease Value",
+            "请选择日期",
+            "主演列表，逗号分隔",
+            "取 消",
+            "确 定"
+          ]
+        }
+      },
+      {
+        "label": "二层操作:Add Movie->取 消",
+        "url": "http://127.0.0.1:49046/movies?discover",
+        "title": "影院娱乐服务聚合平台",
+        "headings": [],
+        "navLabels": [
+          "仪表盘",
+          "dashboard",
+          "影院管理",
+          "bank",
+          "发现分类",
+          "video-camera",
+          "影片管理",
+          "场次管理",
+          "clock-circle",
+          "订单管理",
+          "shopping-cart",
+          "观众管理",
+          "team",
+          "观众注册",
+          "卖座卡钱包",
+          "wallet",
+          "众筹包场",
+          "rocket",
+          "小卖品管理",
+          "coffee",
+          "智能排片",
+          "schedule",
+          "数据分析",
+          "bar-chart"
+        ],
+        "buttons": [
+          "Add Movie"
+        ],
+        "links": [],
+        "inputs": [
+          {
+            "tag": "input",
+            "type": "search",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "search",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          }
+        ],
+        "tables": [
+          {
+            "headers": [
+              "Title",
+              "Genre",
+              "Duration(min)",
+              "Director",
+              "Release Date",
+              "Revenue Share(%)",
+              "Pre-show Package",
+              "Status",
+              "Actions"
+            ],
+            "rowCount": 6,
+            "hasEmptyText": false,
+            "textPreview": "Title Genre Duration(min) Director Release Date Revenue Share(%) Pre-show Package Status Actions Galactic Horizon Sci-Fi 142 Zhang Wei 2026-05-15 55 premium showing The Last Dynasty Historical 156 Li Mei 2026-04-20 50 standard showing Midnight Echo Thriller 118 Wang Jun 2026-06-01 52 standard showin"
+          }
+        ],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "影院聚合平台仪表盘影院管理发现分类影片管理场次管理订单管理观众管理观众注册卖座卡钱包众筹包场小卖品管理智能排片数据分析影院娱乐服务聚合平台Filter by statusFilter by genreAdd MovieTitleGenreDuration(min)DirectorRelease DateRevenue Share(%)Pre-show PackageStatusActionsGalactic HorizonSci-Fi142Zhang Wei2026-05-1555premiumshowingThe Last DynastyHistorical156Li Mei2026-04-2050standardshowingMidnight EchoThriller118Wang Jun2026-06-0152standardshowingDreamscapeAnimation96Chen Yu2026-07-1048familyupcomingCode ZeroAction130Zhao Feng2026-03-0153premiumshowingTest New MovieSci-Fi135Test Director2026-06-1055premiumupcoming1",
+        "layout": {
+          "viewportWidth": 1888,
+          "viewportHeight": 1018,
+          "scrollWidth": 1888,
+          "scrollHeight": 1018,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89046-codex-reverify-20260605-structure-13-二层操作-Add-Movie-取-消",
+          "label": "二层操作:Add Movie->取 消",
+          "finalUrl": "http://127.0.0.1:49046/movies?discover",
+          "title": "影院娱乐服务聚合平台",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89046/probe/codex-reverify-20260605-1640/may-89046-codex-reverify-20260605-structure-13-二层操作-Add-Movie-取-消.json",
+          "screenshotPath": "",
+          "elementCount": 326,
+          "interactiveCount": 39,
+          "interactiveLabels": [
+            "仪表盘 影院管理 发现分类 影片管理 场次管理 订单管理 观众管理 观众注册 卖座卡钱包 众筹包场 小卖品管理 智能排片 数据分析",
+            "仪表盘",
+            "影院管理",
+            "发现分类",
+            "影片管理",
+            "场次管理",
+            "订单管理",
+            "观众管理",
+            "观众注册",
+            "卖座卡钱包",
+            "众筹包场",
+            "小卖品管理",
+            "智能排片",
+            "数据分析",
+            "Add Movie",
+            "1"
+          ]
+        }
+      },
+      {
+        "label": "导航:影片管理",
+        "url": "http://127.0.0.1:49046/movies",
+        "title": "影院娱乐服务聚合平台",
+        "headings": [],
+        "navLabels": [
+          "仪表盘",
+          "dashboard",
+          "影院管理",
+          "bank",
+          "发现分类",
+          "video-camera",
+          "影片管理",
+          "场次管理",
+          "clock-circle",
+          "订单管理",
+          "shopping-cart",
+          "观众管理",
+          "team",
+          "观众注册",
+          "卖座卡钱包",
+          "wallet",
+          "众筹包场",
+          "rocket",
+          "小卖品管理",
+          "coffee",
+          "智能排片",
+          "schedule",
+          "数据分析",
+          "bar-chart"
+        ],
+        "buttons": [
+          "Add Movie"
+        ],
+        "links": [],
+        "inputs": [
+          {
+            "tag": "input",
+            "type": "search",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "search",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          }
+        ],
+        "tables": [
+          {
+            "headers": [
+              "Title",
+              "Genre",
+              "Duration(min)",
+              "Director",
+              "Release Date",
+              "Revenue Share(%)",
+              "Pre-show Package",
+              "Status",
+              "Actions"
+            ],
+            "rowCount": 6,
+            "hasEmptyText": false,
+            "textPreview": "Title Genre Duration(min) Director Release Date Revenue Share(%) Pre-show Package Status Actions Galactic Horizon Sci-Fi 142 Zhang Wei 2026-05-15 55 premium showing The Last Dynasty Historical 156 Li Mei 2026-04-20 50 standard showing Midnight Echo Thriller 118 Wang Jun 2026-06-01 52 standard showin"
+          }
+        ],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "影院聚合平台仪表盘影院管理发现分类影片管理场次管理订单管理观众管理观众注册卖座卡钱包众筹包场小卖品管理智能排片数据分析影院娱乐服务聚合平台Filter by statusFilter by genreAdd MovieTitleGenreDuration(min)DirectorRelease DateRevenue Share(%)Pre-show PackageStatusActionsGalactic HorizonSci-Fi142Zhang Wei2026-05-1555premiumshowingThe Last DynastyHistorical156Li Mei2026-04-2050standardshowingMidnight EchoThriller118Wang Jun2026-06-0152standardshowingDreamscapeAnimation96Chen Yu2026-07-1048familyupcomingCode ZeroAction130Zhao Feng2026-03-0153premiumshowingTest New MovieSci-Fi135Test Director2026-06-1055premiumupcoming1",
+        "layout": {
+          "viewportWidth": 1920,
+          "viewportHeight": 1018,
+          "scrollWidth": 1920,
+          "scrollHeight": 1018,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89046-codex-reverify-20260605-structure-14-导航-影片管理",
+          "label": "导航:影片管理",
+          "finalUrl": "http://127.0.0.1:49046/movies",
+          "title": "影院娱乐服务聚合平台",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89046/probe/codex-reverify-20260605-1640/may-89046-codex-reverify-20260605-structure-14-导航-影片管理.json",
+          "screenshotPath": "",
+          "elementCount": 326,
+          "interactiveCount": 39,
+          "interactiveLabels": [
+            "仪表盘 影院管理 发现分类 影片管理 场次管理 订单管理 观众管理 观众注册 卖座卡钱包 众筹包场 小卖品管理 智能排片 数据分析",
+            "仪表盘",
+            "影院管理",
+            "发现分类",
+            "影片管理",
+            "场次管理",
+            "订单管理",
+            "观众管理",
+            "观众注册",
+            "卖座卡钱包",
+            "众筹包场",
+            "小卖品管理",
+            "智能排片",
+            "数据分析",
+            "Add Movie",
+            "1"
+          ]
+        }
+      },
+      {
+        "label": "操作:Add Movie",
+        "url": "http://127.0.0.1:49046/movies",
+        "title": "影院娱乐服务聚合平台",
+        "headings": [],
+        "navLabels": [
+          "仪表盘",
+          "dashboard",
+          "影院管理",
+          "bank",
+          "发现分类",
+          "video-camera",
+          "影片管理",
+          "场次管理",
+          "clock-circle",
+          "订单管理",
+          "shopping-cart",
+          "观众管理",
+          "team",
+          "观众注册",
+          "卖座卡钱包",
+          "wallet",
+          "众筹包场",
+          "rocket",
+          "小卖品管理",
+          "coffee",
+          "智能排片",
+          "schedule",
+          "数据分析",
+          "bar-chart"
+        ],
+        "buttons": [
+          "Add Movie",
+          "Close",
+          "取 消",
+          "确 定"
+        ],
+        "links": [],
+        "inputs": [
+          {
+            "tag": "input",
+            "type": "search",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "search",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "text",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "search",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "text",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "",
+            "placeholder": "请选择日期",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "text",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "search",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "textarea",
+            "type": "",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "text",
+            "placeholder": "主演列表，逗号分隔",
+            "name": "",
+            "label": ""
+          }
+        ],
+        "tables": [
+          {
+            "headers": [
+              "Title",
+              "Genre",
+              "Duration(min)",
+              "Director",
+              "Release Date",
+              "Revenue Share(%)",
+              "Pre-show Package",
+              "Status",
+              "Actions"
+            ],
+            "rowCount": 6,
+            "hasEmptyText": false,
+            "textPreview": "Title Genre Duration(min) Director Release Date Revenue Share(%) Pre-show Package Status Actions Galactic Horizon Sci-Fi 142 Zhang Wei 2026-05-15 55 premium showing The Last Dynasty Historical 156 Li Mei 2026-04-20 50 standard showing Midnight Echo Thriller 118 Wang Jun 2026-06-01 52 standard showin"
+          }
+        ],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "影院聚合平台仪表盘影院管理发现分类影片管理场次管理订单管理观众管理观众注册卖座卡钱包众筹包场小卖品管理智能排片数据分析影院娱乐服务聚合平台Filter by statusFilter by genreAdd MovieTitleGenreDuration(min)DirectorRelease DateRevenue Share(%)Pre-show PackageStatusActionsGalactic HorizonSci-Fi142Zhang Wei2026-05-1555premiumshowingThe Last DynastyHistorical156Li Mei2026-04-2050standardshowingMidnight EchoThriller118Wang Jun2026-06-0152standardshowingDreamscapeAnimation96Chen Yu2026-07-1048familyupcomingCode ZeroAction130Zhao Feng2026-03-0153premiumshowingTest New MovieSci-Fi135Test Director2026-06-1055premiumupcoming1 Add Movie基础信息版权有效期映前物料包分账与生命周期TitleGenreDuration(min)DirectorRelease DatePoster URLStatusSynopsisCast取 消确 定",
+        "layout": {
+          "viewportWidth": 1952,
+          "viewportHeight": 1018,
+          "scrollWidth": 1952,
+          "scrollHeight": 1018,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89046-codex-reverify-20260605-structure-15-操作-Add-Movie",
+          "label": "操作:Add Movie",
+          "finalUrl": "http://127.0.0.1:49046/movies",
+          "title": "影院娱乐服务聚合平台",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89046/probe/codex-reverify-20260605-1640/may-89046-codex-reverify-20260605-structure-15-操作-Add-Movie.json",
+          "screenshotPath": "",
+          "elementCount": 497,
+          "interactiveCount": 58,
+          "interactiveLabels": [
+            "仪表盘 影院管理 发现分类 影片管理 场次管理 订单管理 观众管理 观众注册 卖座卡钱包 众筹包场 小卖品管理 智能排片 数据分析",
+            "仪表盘",
+            "影院管理",
+            "发现分类",
+            "影片管理",
+            "场次管理",
+            "订单管理",
+            "观众管理",
+            "观众注册",
+            "卖座卡钱包",
+            "众筹包场",
+            "小卖品管理",
+            "智能排片",
+            "数据分析",
+            "Add Movie",
+            "1",
+            "Add Movie 基础信息 版权有效期 映前物料包 分账与生命周期 Title Genre Duration(min) Director Release Date Poster URL Status Synopsis Cast 取 消 确 定",
+            "Close",
+            "基础信息",
+            "Title Genre Duration(min) Director Release Date Poster URL Status Synopsis Cast",
+            "Increase Value",
+            "Decrease Value",
+            "请选择日期",
+            "主演列表，逗号分隔",
+            "取 消",
+            "确 定"
+          ]
+        }
+      },
+      {
+        "label": "导航:场次管理",
+        "url": "http://127.0.0.1:49046/showtimes",
+        "title": "影院娱乐服务聚合平台",
+        "headings": [],
+        "navLabels": [
+          "仪表盘",
+          "dashboard",
+          "影院管理",
+          "bank",
+          "发现分类",
+          "video-camera",
+          "影片管理",
+          "场次管理",
+          "clock-circle",
+          "订单管理",
+          "shopping-cart",
+          "观众管理",
+          "team",
+          "观众注册",
+          "卖座卡钱包",
+          "wallet",
+          "众筹包场",
+          "rocket",
+          "小卖品管理",
+          "coffee",
+          "智能排片",
+          "schedule",
+          "数据分析",
+          "bar-chart"
+        ],
+        "buttons": [
+          "座位"
+        ],
+        "links": [],
+        "inputs": [
+          {
+            "tag": "input",
+            "type": "search",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "search",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "",
+            "placeholder": "选择日期",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "search",
+            "placeholder": "",
+            "name": "",
+            "label": "页码"
+          }
+        ],
+        "tables": [
+          {
+            "headers": [
+              "影片",
+              "影院",
+              "影厅",
+              "日期",
+              "时间",
+              "基础价",
+              "当前价",
+              "退票规则",
+              "最少座位",
+              "最多座位",
+              "状态",
+              "操作"
+            ],
+            "rowCount": 10,
+            "hasEmptyText": false,
+            "textPreview": "影片 影院 影厅 日期 时间 基础价 当前价 退票规则 最少座位 最多座位 状态 操作 影片 影院 影厅 日期 时间 基础价 当前价 退票规则 最少座位 最多座位 状态 操作 The Last Dynasty Stellar Cineplex Beijing Hall 3 - Standard 2026-06-05 14:00 ¥58 ¥58 严格退 1 4 售票中 座位 Code Zero Stellar Cineplex Beijing Hall 5 - VIP 2026-06-05 16:00 ¥78 ¥78 灵活退 1 4 售票中 座位 Galactic Horizon Stellar"
+          }
+        ],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "影院聚合平台仪表盘影院管理发现分类影片管理场次管理订单管理观众管理观众注册卖座卡钱包众筹包场小卖品管理智能排片数据分析影院娱乐服务聚合平台选择影院选择影片影片影院影厅日期时间基础价当前价退票规则最少座位最多座位状态操作影片影院影厅日期时间基础价当前价退票规则最少座位最多座位状态操作The Last DynastyStellar Cineplex BeijingHall 3 - Standard2026-06-0514:00¥58¥58严格退14售票中座位Code ZeroStellar Cineplex BeijingHall 5 - VIP2026-06-0516:00¥78¥78灵活退14售票中座位Galactic HorizonStellar Cineplex ShanghaiHall 1 - IMAX2026-06-0518:30¥75¥75灵活退16售票中座位Galactic HorizonStellar Cineplex BeijingHall 1 - IMAX2026-06-0519:00¥68¥68灵活退16售票中座位Galactic HorizonStellar Cineplex GuangzhouHall 1 - IMAX2026-06-0520:00¥72¥72灵活退16售票中座位Galactic HorizonStellar Cineplex BeijingHall 2 - Dolby Atmos2026-06-0521:30¥68¥68灵活退16售票中座位Midnight EchoStellar Cineplex BeijingHall 4 - 4DX2026-06-0522:00¥55¥55不可退16售票中座位The Last DynastyStellar Cineplex ShanghaiHall 2 - Dolby Atmos2026-06-0615:00¥65¥65严格退14售票中座位Code ZeroStellar Cineplex GuangzhouHall 2 - Dolby Atmos2026-06-0619:30¥82¥82严格退14售票中座位Midnight EchoStellar Cineplex ShanghaiHall 3 - Standard2026-06-0621:00¥60¥60灵活退16售票中座位共 10 条110 条/页",
+        "layout": {
+          "viewportWidth": 1984,
+          "viewportHeight": 1027,
+          "scrollWidth": 1984,
+          "scrollHeight": 1027,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89046-codex-reverify-20260605-structure-16-导航-场次管理",
+          "label": "导航:场次管理",
+          "finalUrl": "http://127.0.0.1:49046/showtimes",
+          "title": "影院娱乐服务聚合平台",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89046/probe/codex-reverify-20260605-1640/may-89046-codex-reverify-20260605-structure-16-导航-场次管理.json",
+          "screenshotPath": "",
+          "elementCount": 399,
+          "interactiveCount": 32,
+          "interactiveLabels": [
+            "仪表盘 影院管理 发现分类 影片管理 场次管理 订单管理 观众管理 观众注册 卖座卡钱包 众筹包场 小卖品管理 智能排片 数据分析",
+            "仪表盘",
+            "影院管理",
+            "发现分类",
+            "影片管理",
+            "场次管理",
+            "订单管理",
+            "观众管理",
+            "观众注册",
+            "卖座卡钱包",
+            "众筹包场",
+            "小卖品管理",
+            "智能排片",
+            "数据分析",
+            "选择日期",
+            "座位",
+            "1",
+            "页码"
+          ]
+        }
+      },
+      {
+        "label": "操作:座位",
+        "url": "http://127.0.0.1:49046/showtimes",
+        "title": "影院娱乐服务聚合平台",
+        "headings": [],
+        "navLabels": [
+          "仪表盘",
+          "dashboard",
+          "影院管理",
+          "bank",
+          "发现分类",
+          "video-camera",
+          "影片管理",
+          "场次管理",
+          "clock-circle",
+          "订单管理",
+          "shopping-cart",
+          "观众管理",
+          "team",
+          "观众注册",
+          "卖座卡钱包",
+          "wallet",
+          "众筹包场",
+          "rocket",
+          "小卖品管理",
+          "coffee",
+          "智能排片",
+          "schedule",
+          "数据分析",
+          "bar-chart"
+        ],
+        "buttons": [
+          "座位",
+          "Close",
+          "关 闭",
+          "释放锁定",
+          "锁定座位"
+        ],
+        "links": [],
+        "inputs": [
+          {
+            "tag": "input",
+            "type": "search",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "search",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "",
+            "placeholder": "选择日期",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "search",
+            "placeholder": "",
+            "name": "",
+            "label": "页码"
+          }
+        ],
+        "tables": [
+          {
+            "headers": [
+              "影片",
+              "影院",
+              "影厅",
+              "日期",
+              "时间",
+              "基础价",
+              "当前价",
+              "退票规则",
+              "最少座位",
+              "最多座位",
+              "状态",
+              "操作"
+            ],
+            "rowCount": 10,
+            "hasEmptyText": false,
+            "textPreview": "影片 影院 影厅 日期 时间 基础价 当前价 退票规则 最少座位 最多座位 状态 操作 影片 影院 影厅 日期 时间 基础价 当前价 退票规则 最少座位 最多座位 状态 操作 The Last Dynasty Stellar Cineplex Beijing Hall 3 - Standard 2026-06-05 14:00 ¥58 ¥58 严格退 1 4 售票中 座位 Code Zero Stellar Cineplex Beijing Hall 5 - VIP 2026-06-05 16:00 ¥78 ¥78 灵活退 1 4 售票中 座位 Galactic Horizon Stellar"
+          },
+          {
+            "headers": [
+              "影片",
+              "影院",
+              "影厅",
+              "时间",
+              "当前票价",
+              "退票规则"
+            ],
+            "rowCount": 3,
+            "hasEmptyText": false,
+            "textPreview": "影片 The Last Dynasty 影院 Stellar Cineplex Beijing 影厅 Hall 3 - Standard 时间 2026-06-05 14:00 当前票价 ¥58 退票规则 严格退"
+          }
+        ],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "影院聚合平台仪表盘影院管理发现分类影片管理场次管理订单管理观众管理观众注册卖座卡钱包众筹包场小卖品管理智能排片数据分析影院娱乐服务聚合平台选择影院选择影片影片影院影厅日期时间基础价当前价退票规则最少座位最多座位状态操作影片影院影厅日期时间基础价当前价退票规则最少座位最多座位状态操作The Last DynastyStellar Cineplex BeijingHall 3 - Standard2026-06-0514:00¥58¥58严格退14售票中座位Code ZeroStellar Cineplex BeijingHall 5 - VIP2026-06-0516:00¥78¥78灵活退14售票中座位Galactic HorizonStellar Cineplex ShanghaiHall 1 - IMAX2026-06-0518:30¥75¥75灵活退16售票中座位Galactic HorizonStellar Cineplex BeijingHall 1 - IMAX2026-06-0519:00¥68¥68灵活退16售票中座位Galactic HorizonStellar Cineplex GuangzhouHall 1 - IMAX2026-06-0520:00¥72¥72灵活退16售票中座位Galactic HorizonStellar Cineplex BeijingHall 2 - Dolby Atmos2026-06-0521:30¥68¥68灵活退16售票中座位Midnight EchoStellar Cineplex BeijingHall 4 - 4DX2026-06-0522:00¥55¥55不可退16售票中座位The Last DynastyStellar Cineplex ShanghaiHall 2 - Dolby Atmos2026-06-0615:00¥65¥65严格退14售票中座位Code ZeroStellar Cineplex GuangzhouHall 2 - Dolby Atmos2026-06-0619:30¥82¥82严格退14售票中座位Midnight EchoStellar Cineplex ShanghaiHall 3 - Standard2026-06-0621:00¥60¥60灵活退16售票中座位共 10 条110 条/页 座位图 - The Last Dynasty影片The Last Dynasty影院Stellar Cineplex Beijing影厅Hall 3 - Standard时间2026-06-05 14:00当前票价¥58退票规则严格退退票规则: 开场前24小时可退，收取10%手续费▲ 银 幕 ▲12345678910111213141123456789101112131421234567891011121314312345678910111213144123456789101112131451234567891011121314612345678910111213147123456789101112131481234567891011121314可选 (102)锁定 (0)已售 (10)已选 (0)关 闭释放锁定锁定座位",
+        "layout": {
+          "viewportWidth": 2016,
+          "viewportHeight": 1027,
+          "scrollWidth": 2016,
+          "scrollHeight": 1027,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89046-codex-reverify-20260605-structure-17-操作-座位",
+          "label": "操作:座位",
+          "finalUrl": "http://127.0.0.1:49046/showtimes",
+          "title": "影院娱乐服务聚合平台",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89046/probe/codex-reverify-20260605-1640/may-89046-codex-reverify-20260605-structure-17-操作-座位.json",
+          "screenshotPath": "",
+          "elementCount": 648,
+          "interactiveCount": 38,
+          "interactiveLabels": [
+            "仪表盘 影院管理 发现分类 影片管理 场次管理 订单管理 观众管理 观众注册 卖座卡钱包 众筹包场 小卖品管理 智能排片 数据分析",
+            "仪表盘",
+            "影院管理",
+            "发现分类",
+            "影片管理",
+            "场次管理",
+            "订单管理",
+            "观众管理",
+            "观众注册",
+            "卖座卡钱包",
+            "众筹包场",
+            "小卖品管理",
+            "智能排片",
+            "数据分析",
+            "选择日期",
+            "座位",
+            "1",
+            "页码",
+            "座位图 - The Last Dynasty 影片 The Last Dynasty 影院 Stellar Cineplex Beijing 影厅 Hall 3 - Standard 时间 2026-06-05 14:00 当前票价 ¥58 退票规则 严格退 退票规则: 开场前24小时可退，收取10%手续费 ▲ 银 幕 ▲ 1 2 3 4 5 6 7 8 9",
+            "Close",
+            "关 闭",
+            "释放锁定",
+            "锁定座位"
+          ]
+        }
+      }
+    ],
+    "findings": [],
+    "actionHints": [],
+    "emptyPages": [],
+    "overflowPages": [],
+    "blankPages": [],
+    "apiFailurePaths": [],
+    "goalTerms": [],
+    "clickedActionDescriptors": [
+      {
+        "nav": "仪表盘",
+        "label": "刷新",
+        "ordinal": 0,
+        "unsafe": false
+      },
+      {
+        "nav": "仪表盘",
+        "label": "展开行",
+        "ordinal": 0,
+        "unsafe": false
+      },
+      {
+        "nav": "仪表盘",
+        "label": "展开行->关闭行",
+        "ordinal": 0,
+        "secondary": true,
+        "unsafe": false
+      },
+      {
+        "nav": "影院管理",
+        "label": "Add Cinema",
+        "ordinal": 0,
+        "unsafe": false
+      },
+      {
+        "nav": "影院管理",
+        "label": "Add Cinema->取 消",
+        "ordinal": 0,
+        "secondary": true,
+        "unsafe": false
+      },
+      {
+        "nav": "影院管理",
+        "label": "View Detail",
+        "ordinal": 0,
+        "unsafe": false
+      },
+      {
+        "nav": "影院管理",
+        "label": "View Detail->Close",
+        "ordinal": 0,
+        "secondary": true,
+        "unsafe": false
+      },
+      {
+        "nav": "发现分类",
+        "label": "Add Movie",
+        "ordinal": 0,
+        "unsafe": false
+      },
+      {
+        "nav": "发现分类",
+        "label": "Add Movie->取 消",
+        "ordinal": 0,
+        "secondary": true,
+        "unsafe": false
+      },
+      {
+        "nav": "影片管理",
+        "label": "Add Movie",
+        "ordinal": 0,
+        "unsafe": false
+      },
+      {
+        "nav": "场次管理",
+        "label": "座位",
+        "ordinal": 0,
+        "unsafe": false
+      }
+    ],
+    "secondaryActionClicks": 4,
+    "structureCaptures": [
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89046-codex-reverify-20260605-structure-01-首屏",
+        "label": "首屏",
+        "finalUrl": "http://127.0.0.1:49046/dashboard",
+        "title": "影院娱乐服务聚合平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89046/probe/codex-reverify-20260605-1640/may-89046-codex-reverify-20260605-structure-01-首屏.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89046/probe/codex-reverify-20260605-1640/may-89046-codex-reverify-20260605-structure-01-首屏.png",
+        "elementCount": 429,
+        "interactiveCount": 27,
+        "interactiveLabels": [
+          "仪表盘 影院管理 发现分类 影片管理 场次管理 订单管理 观众管理 观众注册 卖座卡钱包 众筹包场 小卖品管理 智能排片 数据分析",
+          "仪表盘",
+          "影院管理",
+          "发现分类",
+          "影片管理",
+          "场次管理",
+          "订单管理",
+          "观众管理",
+          "观众注册",
+          "卖座卡钱包",
+          "众筹包场",
+          "小卖品管理",
+          "智能排片",
+          "数据分析",
+          "刷新",
+          "展开行"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89046-codex-reverify-20260605-structure-02-导航-仪表盘",
+        "label": "导航:仪表盘",
+        "finalUrl": "http://127.0.0.1:49046/dashboard",
+        "title": "影院娱乐服务聚合平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89046/probe/codex-reverify-20260605-1640/may-89046-codex-reverify-20260605-structure-02-导航-仪表盘.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89046/probe/codex-reverify-20260605-1640/may-89046-codex-reverify-20260605-structure-02-导航-仪表盘.png",
+        "elementCount": 429,
+        "interactiveCount": 27,
+        "interactiveLabels": [
+          "仪表盘 影院管理 发现分类 影片管理 场次管理 订单管理 观众管理 观众注册 卖座卡钱包 众筹包场 小卖品管理 智能排片 数据分析",
+          "仪表盘",
+          "影院管理",
+          "发现分类",
+          "影片管理",
+          "场次管理",
+          "订单管理",
+          "观众管理",
+          "观众注册",
+          "卖座卡钱包",
+          "众筹包场",
+          "小卖品管理",
+          "智能排片",
+          "数据分析",
+          "刷新",
+          "展开行"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89046-codex-reverify-20260605-structure-03-操作-刷新",
+        "label": "操作:刷新",
+        "finalUrl": "http://127.0.0.1:49046/dashboard",
+        "title": "影院娱乐服务聚合平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89046/probe/codex-reverify-20260605-1640/may-89046-codex-reverify-20260605-structure-03-操作-刷新.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89046/probe/codex-reverify-20260605-1640/may-89046-codex-reverify-20260605-structure-03-操作-刷新.png",
+        "elementCount": 429,
+        "interactiveCount": 27,
+        "interactiveLabels": [
+          "仪表盘 影院管理 发现分类 影片管理 场次管理 订单管理 观众管理 观众注册 卖座卡钱包 众筹包场 小卖品管理 智能排片 数据分析",
+          "仪表盘",
+          "影院管理",
+          "发现分类",
+          "影片管理",
+          "场次管理",
+          "订单管理",
+          "观众管理",
+          "观众注册",
+          "卖座卡钱包",
+          "众筹包场",
+          "小卖品管理",
+          "智能排片",
+          "数据分析",
+          "刷新",
+          "展开行"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89046-codex-reverify-20260605-structure-04-操作-展开行",
+        "label": "操作:展开行",
+        "finalUrl": "http://127.0.0.1:49046/dashboard",
+        "title": "影院娱乐服务聚合平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89046/probe/codex-reverify-20260605-1640/may-89046-codex-reverify-20260605-structure-04-操作-展开行.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89046/probe/codex-reverify-20260605-1640/may-89046-codex-reverify-20260605-structure-04-操作-展开行.png",
+        "elementCount": 471,
+        "interactiveCount": 27,
+        "interactiveLabels": [
+          "仪表盘 影院管理 发现分类 影片管理 场次管理 订单管理 观众管理 观众注册 卖座卡钱包 众筹包场 小卖品管理 智能排片 数据分析",
+          "仪表盘",
+          "影院管理",
+          "发现分类",
+          "影片管理",
+          "场次管理",
+          "订单管理",
+          "观众管理",
+          "观众注册",
+          "卖座卡钱包",
+          "众筹包场",
+          "小卖品管理",
+          "智能排片",
+          "数据分析",
+          "刷新",
+          "关闭行",
+          "展开行"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89046-codex-reverify-20260605-structure-05-二层操作-展开行-关闭行",
+        "label": "二层操作:展开行->关闭行",
+        "finalUrl": "http://127.0.0.1:49046/dashboard",
+        "title": "影院娱乐服务聚合平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89046/probe/codex-reverify-20260605-1640/may-89046-codex-reverify-20260605-structure-05-二层操作-展开行-关闭行.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89046/probe/codex-reverify-20260605-1640/may-89046-codex-reverify-20260605-structure-05-二层操作-展开行-关闭行.png",
+        "elementCount": 471,
+        "interactiveCount": 27,
+        "interactiveLabels": [
+          "仪表盘 影院管理 发现分类 影片管理 场次管理 订单管理 观众管理 观众注册 卖座卡钱包 众筹包场 小卖品管理 智能排片 数据分析",
+          "仪表盘",
+          "影院管理",
+          "发现分类",
+          "影片管理",
+          "场次管理",
+          "订单管理",
+          "观众管理",
+          "观众注册",
+          "卖座卡钱包",
+          "众筹包场",
+          "小卖品管理",
+          "智能排片",
+          "数据分析",
+          "刷新",
+          "展开行"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89046-codex-reverify-20260605-structure-06-导航-影院管理",
+        "label": "导航:影院管理",
+        "finalUrl": "http://127.0.0.1:49046/cinemas",
+        "title": "影院娱乐服务聚合平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89046/probe/codex-reverify-20260605-1640/may-89046-codex-reverify-20260605-structure-06-导航-影院管理.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89046/probe/codex-reverify-20260605-1640/may-89046-codex-reverify-20260605-structure-06-导航-影院管理.png",
+        "elementCount": 269,
+        "interactiveCount": 33,
+        "interactiveLabels": [
+          "仪表盘 影院管理 发现分类 影片管理 场次管理 订单管理 观众管理 观众注册 卖座卡钱包 众筹包场 小卖品管理 智能排片 数据分析",
+          "仪表盘",
+          "影院管理",
+          "发现分类",
+          "影片管理",
+          "场次管理",
+          "订单管理",
+          "观众管理",
+          "观众注册",
+          "卖座卡钱包",
+          "众筹包场",
+          "小卖品管理",
+          "智能排片",
+          "数据分析",
+          "Add Cinema",
+          "View Detail",
+          "1"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89046-codex-reverify-20260605-structure-07-操作-Add-Cinema",
+        "label": "操作:Add Cinema",
+        "finalUrl": "http://127.0.0.1:49046/cinemas",
+        "title": "影院娱乐服务聚合平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89046/probe/codex-reverify-20260605-1640/may-89046-codex-reverify-20260605-structure-07-操作-Add-Cinema.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89046/probe/codex-reverify-20260605-1640/may-89046-codex-reverify-20260605-structure-07-操作-Add-Cinema.png",
+        "elementCount": 385,
+        "interactiveCount": 46,
+        "interactiveLabels": [
+          "仪表盘 影院管理 发现分类 影片管理 场次管理 订单管理 观众管理 观众注册 卖座卡钱包 众筹包场 小卖品管理 智能排片 数据分析",
+          "仪表盘",
+          "影院管理",
+          "发现分类",
+          "影片管理",
+          "场次管理",
+          "订单管理",
+          "观众管理",
+          "观众注册",
+          "卖座卡钱包",
+          "众筹包场",
+          "小卖品管理",
+          "智能排片",
+          "数据分析",
+          "Add Cinema",
+          "View Detail",
+          "1",
+          "Add Cinema 基础信息 影厅明细 设备等级与排片协议 运营复查 Name City District Address Status 取 消 确 定",
+          "Close",
+          "基础信息",
+          "取 消",
+          "确 定"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89046-codex-reverify-20260605-structure-08-二层操作-Add-Cinema-取-消",
+        "label": "二层操作:Add Cinema->取 消",
+        "finalUrl": "http://127.0.0.1:49046/cinemas",
+        "title": "影院娱乐服务聚合平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89046/probe/codex-reverify-20260605-1640/may-89046-codex-reverify-20260605-structure-08-二层操作-Add-Cinema-取-消.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89046/probe/codex-reverify-20260605-1640/may-89046-codex-reverify-20260605-structure-08-二层操作-Add-Cinema-取-消.png",
+        "elementCount": 269,
+        "interactiveCount": 33,
+        "interactiveLabels": [
+          "仪表盘 影院管理 发现分类 影片管理 场次管理 订单管理 观众管理 观众注册 卖座卡钱包 众筹包场 小卖品管理 智能排片 数据分析",
+          "仪表盘",
+          "影院管理",
+          "发现分类",
+          "影片管理",
+          "场次管理",
+          "订单管理",
+          "观众管理",
+          "观众注册",
+          "卖座卡钱包",
+          "众筹包场",
+          "小卖品管理",
+          "智能排片",
+          "数据分析",
+          "Add Cinema",
+          "View Detail",
+          "1"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89046-codex-reverify-20260605-structure-09-操作-View-Detail",
+        "label": "操作:View Detail",
+        "finalUrl": "http://127.0.0.1:49046/cinemas",
+        "title": "影院娱乐服务聚合平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89046/probe/codex-reverify-20260605-1640/may-89046-codex-reverify-20260605-structure-09-操作-View-Detail.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89046/probe/codex-reverify-20260605-1640/may-89046-codex-reverify-20260605-structure-09-操作-View-Detail.png",
+        "elementCount": 374,
+        "interactiveCount": 36,
+        "interactiveLabels": [
+          "仪表盘 影院管理 发现分类 影片管理 场次管理 订单管理 观众管理 观众注册 卖座卡钱包 众筹包场 小卖品管理 智能排片 数据分析",
+          "仪表盘",
+          "影院管理",
+          "发现分类",
+          "影片管理",
+          "场次管理",
+          "订单管理",
+          "观众管理",
+          "观众注册",
+          "卖座卡钱包",
+          "众筹包场",
+          "小卖品管理",
+          "智能排片",
+          "数据分析",
+          "Add Cinema",
+          "View Detail",
+          "1",
+          "Cinema Detail: Stellar Cineplex Beijing Name Stellar Cineplex Beijing City Beijing District Chaoyang Address 88 Jianguo Road, Chaoyang District Status Active Hall Count 6 Equipment",
+          "Close"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89046-codex-reverify-20260605-structure-10-二层操作-View-Detail-Close",
+        "label": "二层操作:View Detail->Close",
+        "finalUrl": "http://127.0.0.1:49046/cinemas",
+        "title": "影院娱乐服务聚合平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89046/probe/codex-reverify-20260605-1640/may-89046-codex-reverify-20260605-structure-10-二层操作-View-Detail-Close.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89046/probe/codex-reverify-20260605-1640/may-89046-codex-reverify-20260605-structure-10-二层操作-View-Detail-Close.png",
+        "elementCount": 269,
+        "interactiveCount": 33,
+        "interactiveLabels": [
+          "仪表盘 影院管理 发现分类 影片管理 场次管理 订单管理 观众管理 观众注册 卖座卡钱包 众筹包场 小卖品管理 智能排片 数据分析",
+          "仪表盘",
+          "影院管理",
+          "发现分类",
+          "影片管理",
+          "场次管理",
+          "订单管理",
+          "观众管理",
+          "观众注册",
+          "卖座卡钱包",
+          "众筹包场",
+          "小卖品管理",
+          "智能排片",
+          "数据分析",
+          "Add Cinema",
+          "View Detail",
+          "1"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89046-codex-reverify-20260605-structure-11-导航-发现分类",
+        "label": "导航:发现分类",
+        "finalUrl": "http://127.0.0.1:49046/movies?discover",
+        "title": "影院娱乐服务聚合平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89046/probe/codex-reverify-20260605-1640/may-89046-codex-reverify-20260605-structure-11-导航-发现分类.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89046/probe/codex-reverify-20260605-1640/may-89046-codex-reverify-20260605-structure-11-导航-发现分类.png",
+        "elementCount": 326,
+        "interactiveCount": 39,
+        "interactiveLabels": [
+          "仪表盘 影院管理 发现分类 影片管理 场次管理 订单管理 观众管理 观众注册 卖座卡钱包 众筹包场 小卖品管理 智能排片 数据分析",
+          "仪表盘",
+          "影院管理",
+          "发现分类",
+          "影片管理",
+          "场次管理",
+          "订单管理",
+          "观众管理",
+          "观众注册",
+          "卖座卡钱包",
+          "众筹包场",
+          "小卖品管理",
+          "智能排片",
+          "数据分析",
+          "Add Movie",
+          "1"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89046-codex-reverify-20260605-structure-12-操作-Add-Movie",
+        "label": "操作:Add Movie",
+        "finalUrl": "http://127.0.0.1:49046/movies?discover",
+        "title": "影院娱乐服务聚合平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89046/probe/codex-reverify-20260605-1640/may-89046-codex-reverify-20260605-structure-12-操作-Add-Movie.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89046/probe/codex-reverify-20260605-1640/may-89046-codex-reverify-20260605-structure-12-操作-Add-Movie.png",
+        "elementCount": 497,
+        "interactiveCount": 58,
+        "interactiveLabels": [
+          "仪表盘 影院管理 发现分类 影片管理 场次管理 订单管理 观众管理 观众注册 卖座卡钱包 众筹包场 小卖品管理 智能排片 数据分析",
+          "仪表盘",
+          "影院管理",
+          "发现分类",
+          "影片管理",
+          "场次管理",
+          "订单管理",
+          "观众管理",
+          "观众注册",
+          "卖座卡钱包",
+          "众筹包场",
+          "小卖品管理",
+          "智能排片",
+          "数据分析",
+          "Add Movie",
+          "1",
+          "Add Movie 基础信息 版权有效期 映前物料包 分账与生命周期 Title Genre Duration(min) Director Release Date Poster URL Status Synopsis Cast 取 消 确 定",
+          "Close",
+          "基础信息",
+          "Title Genre Duration(min) Director Release Date Poster URL Status Synopsis Cast",
+          "Increase Value",
+          "Decrease Value",
+          "请选择日期",
+          "主演列表，逗号分隔",
+          "取 消",
+          "确 定"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89046-codex-reverify-20260605-structure-13-二层操作-Add-Movie-取-消",
+        "label": "二层操作:Add Movie->取 消",
+        "finalUrl": "http://127.0.0.1:49046/movies?discover",
+        "title": "影院娱乐服务聚合平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89046/probe/codex-reverify-20260605-1640/may-89046-codex-reverify-20260605-structure-13-二层操作-Add-Movie-取-消.json",
+        "screenshotPath": "",
+        "elementCount": 326,
+        "interactiveCount": 39,
+        "interactiveLabels": [
+          "仪表盘 影院管理 发现分类 影片管理 场次管理 订单管理 观众管理 观众注册 卖座卡钱包 众筹包场 小卖品管理 智能排片 数据分析",
+          "仪表盘",
+          "影院管理",
+          "发现分类",
+          "影片管理",
+          "场次管理",
+          "订单管理",
+          "观众管理",
+          "观众注册",
+          "卖座卡钱包",
+          "众筹包场",
+          "小卖品管理",
+          "智能排片",
+          "数据分析",
+          "Add Movie",
+          "1"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89046-codex-reverify-20260605-structure-14-导航-影片管理",
+        "label": "导航:影片管理",
+        "finalUrl": "http://127.0.0.1:49046/movies",
+        "title": "影院娱乐服务聚合平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89046/probe/codex-reverify-20260605-1640/may-89046-codex-reverify-20260605-structure-14-导航-影片管理.json",
+        "screenshotPath": "",
+        "elementCount": 326,
+        "interactiveCount": 39,
+        "interactiveLabels": [
+          "仪表盘 影院管理 发现分类 影片管理 场次管理 订单管理 观众管理 观众注册 卖座卡钱包 众筹包场 小卖品管理 智能排片 数据分析",
+          "仪表盘",
+          "影院管理",
+          "发现分类",
+          "影片管理",
+          "场次管理",
+          "订单管理",
+          "观众管理",
+          "观众注册",
+          "卖座卡钱包",
+          "众筹包场",
+          "小卖品管理",
+          "智能排片",
+          "数据分析",
+          "Add Movie",
+          "1"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89046-codex-reverify-20260605-structure-15-操作-Add-Movie",
+        "label": "操作:Add Movie",
+        "finalUrl": "http://127.0.0.1:49046/movies",
+        "title": "影院娱乐服务聚合平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89046/probe/codex-reverify-20260605-1640/may-89046-codex-reverify-20260605-structure-15-操作-Add-Movie.json",
+        "screenshotPath": "",
+        "elementCount": 497,
+        "interactiveCount": 58,
+        "interactiveLabels": [
+          "仪表盘 影院管理 发现分类 影片管理 场次管理 订单管理 观众管理 观众注册 卖座卡钱包 众筹包场 小卖品管理 智能排片 数据分析",
+          "仪表盘",
+          "影院管理",
+          "发现分类",
+          "影片管理",
+          "场次管理",
+          "订单管理",
+          "观众管理",
+          "观众注册",
+          "卖座卡钱包",
+          "众筹包场",
+          "小卖品管理",
+          "智能排片",
+          "数据分析",
+          "Add Movie",
+          "1",
+          "Add Movie 基础信息 版权有效期 映前物料包 分账与生命周期 Title Genre Duration(min) Director Release Date Poster URL Status Synopsis Cast 取 消 确 定",
+          "Close",
+          "基础信息",
+          "Title Genre Duration(min) Director Release Date Poster URL Status Synopsis Cast",
+          "Increase Value",
+          "Decrease Value",
+          "请选择日期",
+          "主演列表，逗号分隔",
+          "取 消",
+          "确 定"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89046-codex-reverify-20260605-structure-16-导航-场次管理",
+        "label": "导航:场次管理",
+        "finalUrl": "http://127.0.0.1:49046/showtimes",
+        "title": "影院娱乐服务聚合平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89046/probe/codex-reverify-20260605-1640/may-89046-codex-reverify-20260605-structure-16-导航-场次管理.json",
+        "screenshotPath": "",
+        "elementCount": 399,
+        "interactiveCount": 32,
+        "interactiveLabels": [
+          "仪表盘 影院管理 发现分类 影片管理 场次管理 订单管理 观众管理 观众注册 卖座卡钱包 众筹包场 小卖品管理 智能排片 数据分析",
+          "仪表盘",
+          "影院管理",
+          "发现分类",
+          "影片管理",
+          "场次管理",
+          "订单管理",
+          "观众管理",
+          "观众注册",
+          "卖座卡钱包",
+          "众筹包场",
+          "小卖品管理",
+          "智能排片",
+          "数据分析",
+          "选择日期",
+          "座位",
+          "1",
+          "页码"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89046-codex-reverify-20260605-structure-17-操作-座位",
+        "label": "操作:座位",
+        "finalUrl": "http://127.0.0.1:49046/showtimes",
+        "title": "影院娱乐服务聚合平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89046/probe/codex-reverify-20260605-1640/may-89046-codex-reverify-20260605-structure-17-操作-座位.json",
+        "screenshotPath": "",
+        "elementCount": 648,
+        "interactiveCount": 38,
+        "interactiveLabels": [
+          "仪表盘 影院管理 发现分类 影片管理 场次管理 订单管理 观众管理 观众注册 卖座卡钱包 众筹包场 小卖品管理 智能排片 数据分析",
+          "仪表盘",
+          "影院管理",
+          "发现分类",
+          "影片管理",
+          "场次管理",
+          "订单管理",
+          "观众管理",
+          "观众注册",
+          "卖座卡钱包",
+          "众筹包场",
+          "小卖品管理",
+          "智能排片",
+          "数据分析",
+          "选择日期",
+          "座位",
+          "1",
+          "页码",
+          "座位图 - The Last Dynasty 影片 The Last Dynasty 影院 Stellar Cineplex Beijing 影厅 Hall 3 - Standard 时间 2026-06-05 14:00 当前票价 ¥58 退票规则 严格退 退票规则: 开场前24小时可退，收取10%手续费 ▲ 银 幕 ▲ 1 2 3 4 5 6 7 8 9",
+          "Close",
+          "关 闭",
+          "释放锁定",
+          "锁定座位"
+        ]
+      }
+    ],
+    "representativeScreenshotUrl": "http://127.0.0.1:49046/dashboard",
+    "representativeScreenshotLabel": "首屏"
+  },
+  "websiteStructureCapture": {
+    "module": "website_structure_capture",
+    "captureCount": 17,
+    "captures": [
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89046-codex-reverify-20260605-structure-01-首屏",
+        "label": "首屏",
+        "finalUrl": "http://127.0.0.1:49046/dashboard",
+        "title": "影院娱乐服务聚合平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89046/probe/codex-reverify-20260605-1640/may-89046-codex-reverify-20260605-structure-01-首屏.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89046/probe/codex-reverify-20260605-1640/may-89046-codex-reverify-20260605-structure-01-首屏.png",
+        "elementCount": 429,
+        "interactiveCount": 27,
+        "interactiveLabels": [
+          "仪表盘 影院管理 发现分类 影片管理 场次管理 订单管理 观众管理 观众注册 卖座卡钱包 众筹包场 小卖品管理 智能排片 数据分析",
+          "仪表盘",
+          "影院管理",
+          "发现分类",
+          "影片管理",
+          "场次管理",
+          "订单管理",
+          "观众管理",
+          "观众注册",
+          "卖座卡钱包",
+          "众筹包场",
+          "小卖品管理",
+          "智能排片",
+          "数据分析",
+          "刷新",
+          "展开行"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89046-codex-reverify-20260605-structure-02-导航-仪表盘",
+        "label": "导航:仪表盘",
+        "finalUrl": "http://127.0.0.1:49046/dashboard",
+        "title": "影院娱乐服务聚合平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89046/probe/codex-reverify-20260605-1640/may-89046-codex-reverify-20260605-structure-02-导航-仪表盘.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89046/probe/codex-reverify-20260605-1640/may-89046-codex-reverify-20260605-structure-02-导航-仪表盘.png",
+        "elementCount": 429,
+        "interactiveCount": 27,
+        "interactiveLabels": [
+          "仪表盘 影院管理 发现分类 影片管理 场次管理 订单管理 观众管理 观众注册 卖座卡钱包 众筹包场 小卖品管理 智能排片 数据分析",
+          "仪表盘",
+          "影院管理",
+          "发现分类",
+          "影片管理",
+          "场次管理",
+          "订单管理",
+          "观众管理",
+          "观众注册",
+          "卖座卡钱包",
+          "众筹包场",
+          "小卖品管理",
+          "智能排片",
+          "数据分析",
+          "刷新",
+          "展开行"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89046-codex-reverify-20260605-structure-03-操作-刷新",
+        "label": "操作:刷新",
+        "finalUrl": "http://127.0.0.1:49046/dashboard",
+        "title": "影院娱乐服务聚合平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89046/probe/codex-reverify-20260605-1640/may-89046-codex-reverify-20260605-structure-03-操作-刷新.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89046/probe/codex-reverify-20260605-1640/may-89046-codex-reverify-20260605-structure-03-操作-刷新.png",
+        "elementCount": 429,
+        "interactiveCount": 27,
+        "interactiveLabels": [
+          "仪表盘 影院管理 发现分类 影片管理 场次管理 订单管理 观众管理 观众注册 卖座卡钱包 众筹包场 小卖品管理 智能排片 数据分析",
+          "仪表盘",
+          "影院管理",
+          "发现分类",
+          "影片管理",
+          "场次管理",
+          "订单管理",
+          "观众管理",
+          "观众注册",
+          "卖座卡钱包",
+          "众筹包场",
+          "小卖品管理",
+          "智能排片",
+          "数据分析",
+          "刷新",
+          "展开行"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89046-codex-reverify-20260605-structure-04-操作-展开行",
+        "label": "操作:展开行",
+        "finalUrl": "http://127.0.0.1:49046/dashboard",
+        "title": "影院娱乐服务聚合平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89046/probe/codex-reverify-20260605-1640/may-89046-codex-reverify-20260605-structure-04-操作-展开行.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89046/probe/codex-reverify-20260605-1640/may-89046-codex-reverify-20260605-structure-04-操作-展开行.png",
+        "elementCount": 471,
+        "interactiveCount": 27,
+        "interactiveLabels": [
+          "仪表盘 影院管理 发现分类 影片管理 场次管理 订单管理 观众管理 观众注册 卖座卡钱包 众筹包场 小卖品管理 智能排片 数据分析",
+          "仪表盘",
+          "影院管理",
+          "发现分类",
+          "影片管理",
+          "场次管理",
+          "订单管理",
+          "观众管理",
+          "观众注册",
+          "卖座卡钱包",
+          "众筹包场",
+          "小卖品管理",
+          "智能排片",
+          "数据分析",
+          "刷新",
+          "关闭行",
+          "展开行"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89046-codex-reverify-20260605-structure-05-二层操作-展开行-关闭行",
+        "label": "二层操作:展开行->关闭行",
+        "finalUrl": "http://127.0.0.1:49046/dashboard",
+        "title": "影院娱乐服务聚合平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89046/probe/codex-reverify-20260605-1640/may-89046-codex-reverify-20260605-structure-05-二层操作-展开行-关闭行.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89046/probe/codex-reverify-20260605-1640/may-89046-codex-reverify-20260605-structure-05-二层操作-展开行-关闭行.png",
+        "elementCount": 471,
+        "interactiveCount": 27,
+        "interactiveLabels": [
+          "仪表盘 影院管理 发现分类 影片管理 场次管理 订单管理 观众管理 观众注册 卖座卡钱包 众筹包场 小卖品管理 智能排片 数据分析",
+          "仪表盘",
+          "影院管理",
+          "发现分类",
+          "影片管理",
+          "场次管理",
+          "订单管理",
+          "观众管理",
+          "观众注册",
+          "卖座卡钱包",
+          "众筹包场",
+          "小卖品管理",
+          "智能排片",
+          "数据分析",
+          "刷新",
+          "展开行"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89046-codex-reverify-20260605-structure-06-导航-影院管理",
+        "label": "导航:影院管理",
+        "finalUrl": "http://127.0.0.1:49046/cinemas",
+        "title": "影院娱乐服务聚合平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89046/probe/codex-reverify-20260605-1640/may-89046-codex-reverify-20260605-structure-06-导航-影院管理.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89046/probe/codex-reverify-20260605-1640/may-89046-codex-reverify-20260605-structure-06-导航-影院管理.png",
+        "elementCount": 269,
+        "interactiveCount": 33,
+        "interactiveLabels": [
+          "仪表盘 影院管理 发现分类 影片管理 场次管理 订单管理 观众管理 观众注册 卖座卡钱包 众筹包场 小卖品管理 智能排片 数据分析",
+          "仪表盘",
+          "影院管理",
+          "发现分类",
+          "影片管理",
+          "场次管理",
+          "订单管理",
+          "观众管理",
+          "观众注册",
+          "卖座卡钱包",
+          "众筹包场",
+          "小卖品管理",
+          "智能排片",
+          "数据分析",
+          "Add Cinema",
+          "View Detail",
+          "1"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89046-codex-reverify-20260605-structure-07-操作-Add-Cinema",
+        "label": "操作:Add Cinema",
+        "finalUrl": "http://127.0.0.1:49046/cinemas",
+        "title": "影院娱乐服务聚合平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89046/probe/codex-reverify-20260605-1640/may-89046-codex-reverify-20260605-structure-07-操作-Add-Cinema.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89046/probe/codex-reverify-20260605-1640/may-89046-codex-reverify-20260605-structure-07-操作-Add-Cinema.png",
+        "elementCount": 385,
+        "interactiveCount": 46,
+        "interactiveLabels": [
+          "仪表盘 影院管理 发现分类 影片管理 场次管理 订单管理 观众管理 观众注册 卖座卡钱包 众筹包场 小卖品管理 智能排片 数据分析",
+          "仪表盘",
+          "影院管理",
+          "发现分类",
+          "影片管理",
+          "场次管理",
+          "订单管理",
+          "观众管理",
+          "观众注册",
+          "卖座卡钱包",
+          "众筹包场",
+          "小卖品管理",
+          "智能排片",
+          "数据分析",
+          "Add Cinema",
+          "View Detail",
+          "1",
+          "Add Cinema 基础信息 影厅明细 设备等级与排片协议 运营复查 Name City District Address Status 取 消 确 定",
+          "Close",
+          "基础信息",
+          "取 消",
+          "确 定"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89046-codex-reverify-20260605-structure-08-二层操作-Add-Cinema-取-消",
+        "label": "二层操作:Add Cinema->取 消",
+        "finalUrl": "http://127.0.0.1:49046/cinemas",
+        "title": "影院娱乐服务聚合平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89046/probe/codex-reverify-20260605-1640/may-89046-codex-reverify-20260605-structure-08-二层操作-Add-Cinema-取-消.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89046/probe/codex-reverify-20260605-1640/may-89046-codex-reverify-20260605-structure-08-二层操作-Add-Cinema-取-消.png",
+        "elementCount": 269,
+        "interactiveCount": 33,
+        "interactiveLabels": [
+          "仪表盘 影院管理 发现分类 影片管理 场次管理 订单管理 观众管理 观众注册 卖座卡钱包 众筹包场 小卖品管理 智能排片 数据分析",
+          "仪表盘",
+          "影院管理",
+          "发现分类",
+          "影片管理",
+          "场次管理",
+          "订单管理",
+          "观众管理",
+          "观众注册",
+          "卖座卡钱包",
+          "众筹包场",
+          "小卖品管理",
+          "智能排片",
+          "数据分析",
+          "Add Cinema",
+          "View Detail",
+          "1"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89046-codex-reverify-20260605-structure-09-操作-View-Detail",
+        "label": "操作:View Detail",
+        "finalUrl": "http://127.0.0.1:49046/cinemas",
+        "title": "影院娱乐服务聚合平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89046/probe/codex-reverify-20260605-1640/may-89046-codex-reverify-20260605-structure-09-操作-View-Detail.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89046/probe/codex-reverify-20260605-1640/may-89046-codex-reverify-20260605-structure-09-操作-View-Detail.png",
+        "elementCount": 374,
+        "interactiveCount": 36,
+        "interactiveLabels": [
+          "仪表盘 影院管理 发现分类 影片管理 场次管理 订单管理 观众管理 观众注册 卖座卡钱包 众筹包场 小卖品管理 智能排片 数据分析",
+          "仪表盘",
+          "影院管理",
+          "发现分类",
+          "影片管理",
+          "场次管理",
+          "订单管理",
+          "观众管理",
+          "观众注册",
+          "卖座卡钱包",
+          "众筹包场",
+          "小卖品管理",
+          "智能排片",
+          "数据分析",
+          "Add Cinema",
+          "View Detail",
+          "1",
+          "Cinema Detail: Stellar Cineplex Beijing Name Stellar Cineplex Beijing City Beijing District Chaoyang Address 88 Jianguo Road, Chaoyang District Status Active Hall Count 6 Equipment",
+          "Close"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89046-codex-reverify-20260605-structure-10-二层操作-View-Detail-Close",
+        "label": "二层操作:View Detail->Close",
+        "finalUrl": "http://127.0.0.1:49046/cinemas",
+        "title": "影院娱乐服务聚合平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89046/probe/codex-reverify-20260605-1640/may-89046-codex-reverify-20260605-structure-10-二层操作-View-Detail-Close.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89046/probe/codex-reverify-20260605-1640/may-89046-codex-reverify-20260605-structure-10-二层操作-View-Detail-Close.png",
+        "elementCount": 269,
+        "interactiveCount": 33,
+        "interactiveLabels": [
+          "仪表盘 影院管理 发现分类 影片管理 场次管理 订单管理 观众管理 观众注册 卖座卡钱包 众筹包场 小卖品管理 智能排片 数据分析",
+          "仪表盘",
+          "影院管理",
+          "发现分类",
+          "影片管理",
+          "场次管理",
+          "订单管理",
+          "观众管理",
+          "观众注册",
+          "卖座卡钱包",
+          "众筹包场",
+          "小卖品管理",
+          "智能排片",
+          "数据分析",
+          "Add Cinema",
+          "View Detail",
+          "1"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89046-codex-reverify-20260605-structure-11-导航-发现分类",
+        "label": "导航:发现分类",
+        "finalUrl": "http://127.0.0.1:49046/movies?discover",
+        "title": "影院娱乐服务聚合平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89046/probe/codex-reverify-20260605-1640/may-89046-codex-reverify-20260605-structure-11-导航-发现分类.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89046/probe/codex-reverify-20260605-1640/may-89046-codex-reverify-20260605-structure-11-导航-发现分类.png",
+        "elementCount": 326,
+        "interactiveCount": 39,
+        "interactiveLabels": [
+          "仪表盘 影院管理 发现分类 影片管理 场次管理 订单管理 观众管理 观众注册 卖座卡钱包 众筹包场 小卖品管理 智能排片 数据分析",
+          "仪表盘",
+          "影院管理",
+          "发现分类",
+          "影片管理",
+          "场次管理",
+          "订单管理",
+          "观众管理",
+          "观众注册",
+          "卖座卡钱包",
+          "众筹包场",
+          "小卖品管理",
+          "智能排片",
+          "数据分析",
+          "Add Movie",
+          "1"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89046-codex-reverify-20260605-structure-12-操作-Add-Movie",
+        "label": "操作:Add Movie",
+        "finalUrl": "http://127.0.0.1:49046/movies?discover",
+        "title": "影院娱乐服务聚合平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89046/probe/codex-reverify-20260605-1640/may-89046-codex-reverify-20260605-structure-12-操作-Add-Movie.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89046/probe/codex-reverify-20260605-1640/may-89046-codex-reverify-20260605-structure-12-操作-Add-Movie.png",
+        "elementCount": 497,
+        "interactiveCount": 58,
+        "interactiveLabels": [
+          "仪表盘 影院管理 发现分类 影片管理 场次管理 订单管理 观众管理 观众注册 卖座卡钱包 众筹包场 小卖品管理 智能排片 数据分析",
+          "仪表盘",
+          "影院管理",
+          "发现分类",
+          "影片管理",
+          "场次管理",
+          "订单管理",
+          "观众管理",
+          "观众注册",
+          "卖座卡钱包",
+          "众筹包场",
+          "小卖品管理",
+          "智能排片",
+          "数据分析",
+          "Add Movie",
+          "1",
+          "Add Movie 基础信息 版权有效期 映前物料包 分账与生命周期 Title Genre Duration(min) Director Release Date Poster URL Status Synopsis Cast 取 消 确 定",
+          "Close",
+          "基础信息",
+          "Title Genre Duration(min) Director Release Date Poster URL Status Synopsis Cast",
+          "Increase Value",
+          "Decrease Value",
+          "请选择日期",
+          "主演列表，逗号分隔",
+          "取 消",
+          "确 定"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89046-codex-reverify-20260605-structure-13-二层操作-Add-Movie-取-消",
+        "label": "二层操作:Add Movie->取 消",
+        "finalUrl": "http://127.0.0.1:49046/movies?discover",
+        "title": "影院娱乐服务聚合平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89046/probe/codex-reverify-20260605-1640/may-89046-codex-reverify-20260605-structure-13-二层操作-Add-Movie-取-消.json",
+        "screenshotPath": "",
+        "elementCount": 326,
+        "interactiveCount": 39,
+        "interactiveLabels": [
+          "仪表盘 影院管理 发现分类 影片管理 场次管理 订单管理 观众管理 观众注册 卖座卡钱包 众筹包场 小卖品管理 智能排片 数据分析",
+          "仪表盘",
+          "影院管理",
+          "发现分类",
+          "影片管理",
+          "场次管理",
+          "订单管理",
+          "观众管理",
+          "观众注册",
+          "卖座卡钱包",
+          "众筹包场",
+          "小卖品管理",
+          "智能排片",
+          "数据分析",
+          "Add Movie",
+          "1"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89046-codex-reverify-20260605-structure-14-导航-影片管理",
+        "label": "导航:影片管理",
+        "finalUrl": "http://127.0.0.1:49046/movies",
+        "title": "影院娱乐服务聚合平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89046/probe/codex-reverify-20260605-1640/may-89046-codex-reverify-20260605-structure-14-导航-影片管理.json",
+        "screenshotPath": "",
+        "elementCount": 326,
+        "interactiveCount": 39,
+        "interactiveLabels": [
+          "仪表盘 影院管理 发现分类 影片管理 场次管理 订单管理 观众管理 观众注册 卖座卡钱包 众筹包场 小卖品管理 智能排片 数据分析",
+          "仪表盘",
+          "影院管理",
+          "发现分类",
+          "影片管理",
+          "场次管理",
+          "订单管理",
+          "观众管理",
+          "观众注册",
+          "卖座卡钱包",
+          "众筹包场",
+          "小卖品管理",
+          "智能排片",
+          "数据分析",
+          "Add Movie",
+          "1"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89046-codex-reverify-20260605-structure-15-操作-Add-Movie",
+        "label": "操作:Add Movie",
+        "finalUrl": "http://127.0.0.1:49046/movies",
+        "title": "影院娱乐服务聚合平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89046/probe/codex-reverify-20260605-1640/may-89046-codex-reverify-20260605-structure-15-操作-Add-Movie.json",
+        "screenshotPath": "",
+        "elementCount": 497,
+        "interactiveCount": 58,
+        "interactiveLabels": [
+          "仪表盘 影院管理 发现分类 影片管理 场次管理 订单管理 观众管理 观众注册 卖座卡钱包 众筹包场 小卖品管理 智能排片 数据分析",
+          "仪表盘",
+          "影院管理",
+          "发现分类",
+          "影片管理",
+          "场次管理",
+          "订单管理",
+          "观众管理",
+          "观众注册",
+          "卖座卡钱包",
+          "众筹包场",
+          "小卖品管理",
+          "智能排片",
+          "数据分析",
+          "Add Movie",
+          "1",
+          "Add Movie 基础信息 版权有效期 映前物料包 分账与生命周期 Title Genre Duration(min) Director Release Date Poster URL Status Synopsis Cast 取 消 确 定",
+          "Close",
+          "基础信息",
+          "Title Genre Duration(min) Director Release Date Poster URL Status Synopsis Cast",
+          "Increase Value",
+          "Decrease Value",
+          "请选择日期",
+          "主演列表，逗号分隔",
+          "取 消",
+          "确 定"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89046-codex-reverify-20260605-structure-16-导航-场次管理",
+        "label": "导航:场次管理",
+        "finalUrl": "http://127.0.0.1:49046/showtimes",
+        "title": "影院娱乐服务聚合平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89046/probe/codex-reverify-20260605-1640/may-89046-codex-reverify-20260605-structure-16-导航-场次管理.json",
+        "screenshotPath": "",
+        "elementCount": 399,
+        "interactiveCount": 32,
+        "interactiveLabels": [
+          "仪表盘 影院管理 发现分类 影片管理 场次管理 订单管理 观众管理 观众注册 卖座卡钱包 众筹包场 小卖品管理 智能排片 数据分析",
+          "仪表盘",
+          "影院管理",
+          "发现分类",
+          "影片管理",
+          "场次管理",
+          "订单管理",
+          "观众管理",
+          "观众注册",
+          "卖座卡钱包",
+          "众筹包场",
+          "小卖品管理",
+          "智能排片",
+          "数据分析",
+          "选择日期",
+          "座位",
+          "1",
+          "页码"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89046-codex-reverify-20260605-structure-17-操作-座位",
+        "label": "操作:座位",
+        "finalUrl": "http://127.0.0.1:49046/showtimes",
+        "title": "影院娱乐服务聚合平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89046/probe/codex-reverify-20260605-1640/may-89046-codex-reverify-20260605-structure-17-操作-座位.json",
+        "screenshotPath": "",
+        "elementCount": 648,
+        "interactiveCount": 38,
+        "interactiveLabels": [
+          "仪表盘 影院管理 发现分类 影片管理 场次管理 订单管理 观众管理 观众注册 卖座卡钱包 众筹包场 小卖品管理 智能排片 数据分析",
+          "仪表盘",
+          "影院管理",
+          "发现分类",
+          "影片管理",
+          "场次管理",
+          "订单管理",
+          "观众管理",
+          "观众注册",
+          "卖座卡钱包",
+          "众筹包场",
+          "小卖品管理",
+          "智能排片",
+          "数据分析",
+          "选择日期",
+          "座位",
+          "1",
+          "页码",
+          "座位图 - The Last Dynasty 影片 The Last Dynasty 影院 Stellar Cineplex Beijing 影厅 Hall 3 - Standard 时间 2026-06-05 14:00 当前票价 ¥58 退票规则 严格退 退票规则: 开场前24小时可退，收取10%手续费 ▲ 银 幕 ▲ 1 2 3 4 5 6 7 8 9",
+          "Close",
+          "关 闭",
+          "释放锁定",
+          "锁定座位"
+        ]
+      }
+    ]
+  },
+  "screenshotMetrics": {
+    "width": 2048,
+    "height": 1027,
+    "scrollWidth": 2016,
+    "scrollHeight": 1027
+  },
+  "initialBodyTextPreview": "影院聚合平台\n仪表盘\n影院管理\n发现分类\n影片管理\n场次管理\n订单管理\n观众管理\n观众注册\n卖座卡钱包\n众筹包场\n小卖品管理\n智能排片\n数据分析\n影院娱乐服务聚合平台\n影院总数\n4\n热映影片\n4\n今日场次\n7\n观众总数\n3\n近期订单 (6)\n刷新\n\t订单号\t渠道来源\t影片\t影院信息\t场次信息\t座位\t金额\t支付方式\t关联信息\t核销结果\t状态\t创建时间\n\n \n\t\n订单号\n\t\n渠道来源\n\t\n影片\n\t\n影院信息\n\t\n场次信息\n\t\n座位\n\t\n金额\n\t\n支付方式\n\t\n关联信息\n\t\n核销结果\n\t\n状态\n\t\n创建时间\n\n\t\nORD202606051623472336\n\t\n自有系统\tThe Last Dynasty\tStellar Cineplex Beijing · Hall 3 - Standard\t2026-06-05 14:00\t\n3排1座\n3排2座\n\t¥116.00\t现金\t-\t待核销\tpending\t2026-06-05 16:23\n\t\nORD202606051622350106\n\t\n自有系统\tThe Last Dynasty\tStellar Cineplex Beijing · Hall 3 - Standard\t2026-06-05 14:00\t\n2排1座\n2排2座\n\t¥116.00\t现金\t-\t待核销\tpending\t2026-06-05 16:22\n\t\nORD202606051622249685\n\t\n自有系统\tThe Last Dynasty\tStellar Cineplex Beijing · Hall 3 - Standard\t2026-06-05 14:00\t\n1排1座\n1排2座\n\t¥116.00\t现金\t-\t待核销\tpending\t2026-06-05 16:22\n\t\nORD202606051415007494\n\t\n小程序\tThe Last Dynasty\tStellar Cineplex Beijing · Hall 3 - Standard\t2026-06-05 14:00\t\n1排5座\n1排6座\n\t¥116.00\t现金\t-\t待核销\tpending\t2026-06-05 14:15\n\t\nORD202606051401481775\n\t\n自有系统\tThe Last Dynasty\tStellar Cineplex Beijing · Hall 3 - Standard\t2026-06-05 14:00\t\n1排3座\n1排4座\n\t¥180.00\t卖座卡\t\n卡·****\n\t待核销\tpending\t2026-06-05 14:01\n\t\nORD202606042357573533\n\t\n自有系统\tGalactic Horizon\tStellar Cineplex Beijing · Hall 1 - IMAX\t2026-06-05 19:00\t\n1排1座\n1排2座\n\t¥136.00\t卖座卡\t-\t待核销\tpending\t2026-06-04 23:57",
+  "bodyTextPreview": "影院聚合平台\n仪表盘\n影院管理\n发现分类\n影片管理\n场次管理\n订单管理\n观众管理\n观众注册\n卖座卡钱包\n众筹包场\n小卖品管理\n智能排片\n数据分析\n影院娱乐服务聚合平台\n影院总数\n4\n热映影片\n4\n今日场次\n7\n观众总数\n3\n近期订单 (6)\n刷新\n\t订单号\t渠道来源\t影片\t影院信息\t场次信息\t座位\t金额\t支付方式\t关联信息\t核销结果\t状态\t创建时间\n\n \n\t\n订单号\n\t\n渠道来源\n\t\n影片\n\t\n影院信息\n\t\n场次信息\n\t\n座位\n\t\n金额\n\t\n支付方式\n\t\n关联信息\n\t\n核销结果\n\t\n状态\n\t\n创建时间\n\n\t\nORD202606051623472336\n\t\n自有系统\tThe Last Dynasty\tStellar Cineplex Beijing · Hall 3 - Standard\t2026-06-05 14:00\t\n3排1座\n3排2座\n\t¥116.00\t现金\t-\t待核销\tpending\t2026-06-05 16:23\n\t\nORD202606051622350106\n\t\n自有系统\tThe Last Dynasty\tStellar Cineplex Beijing · Hall 3 - Standard\t2026-06-05 14:00\t\n2排1座\n2排2座\n\t¥116.00\t现金\t-\t待核销\tpending\t2026-06-05 16:22\n\t\nORD202606051622249685\n\t\n自有系统\tThe Last Dynasty\tStellar Cineplex Beijing · Hall 3 - Standard\t2026-06-05 14:00\t\n1排1座\n1排2座\n\t¥116.00\t现金\t-\t待核销\tpending\t2026-06-05 16:22\n\t\nORD202606051415007494\n\t\n小程序\tThe Last Dynasty\tStellar Cineplex Beijing · Hall 3 - Standard\t2026-06-05 14:00\t\n1排5座\n1排6座\n\t¥116.00\t现金\t-\t待核销\tpending\t2026-06-05 14:15\n\t\nORD202606051401481775\n\t\n自有系统\tThe Last Dynasty\tStellar Cineplex Beijing · Hall 3 - Standard\t2026-06-05 14:00\t\n1排3座\n1排4座\n\t¥180.00\t卖座卡\t\n卡·****\n\t待核销\tpending\t2026-06-05 14:01\n\t\nORD202606042357573533\n\t\n自有系统\tGalactic Horizon\tStellar Cineplex Beijing · Hall 1 - IMAX\t2026-06-05 19:00\t\n1排1座\n1排2座\n\t¥136.00\t卖座卡\t-\t待核销\tpending\t2026-06-04 23:57",
+  "apiBase": "",
+  "businessGoalPreview": "",
+  "apiResponses": [
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49046/api/cinemas"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49046/api/movies?status=showing"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49046/api/showtimes?date=2026-06-05"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49046/api/orders"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49046/api/audiences"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49046/api/cinemas"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49046/api/movies?status=showing"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49046/api/showtimes?date=2026-06-05"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49046/api/orders"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49046/api/audiences"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49046/api/cinemas"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49046/api/movies?status=showing"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49046/api/showtimes?date=2026-06-05"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49046/api/orders"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49046/api/audiences"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49046/api/cinemas"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49046/api/movies?status=showing"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49046/api/showtimes?date=2026-06-05"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49046/api/orders"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49046/api/audiences"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49046/api/cinemas"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49046/api/movies?status=showing"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49046/api/showtimes?date=2026-06-05"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49046/api/orders"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49046/api/audiences"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49046/api/cinemas"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49046/api/cinemas"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49046/api/movies"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49046/api/movies"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49046/api/showtimes"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49046/api/cinemas"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49046/api/movies"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49046/api/showtimes"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49046/api/cinemas"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49046/api/movies"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49046/api/showtimes/3/seats"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49046/api/cinemas"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49046/api/movies?status=showing"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49046/api/showtimes?date=2026-06-05"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49046/api/orders"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49046/api/audiences"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49046/api/cinemas"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49046/api/movies?status=showing"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49046/api/showtimes?date=2026-06-05"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49046/api/orders"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49046/api/audiences"
+    }
+  ],
+  "apiChecks": [],
+  "dialogs": [],
+  "consoleMessages": [
+    {
+      "type": "debug",
+      "text": "[vite] connecting...",
+      "location": {
+        "url": "http://127.0.0.1:49046/@vite/client",
+        "lineNumber": 494,
+        "columnNumber": 8
+      }
+    },
+    {
+      "type": "debug",
+      "text": "[vite] connected.",
+      "location": {
+        "url": "http://127.0.0.1:49046/@vite/client",
+        "lineNumber": 617,
+        "columnNumber": 14
+      }
+    },
+    {
+      "type": "info",
+      "text": "%cDownload the React DevTools for a better development experience: https://reactjs.org/link/react-devtools font-weight:bold",
+      "location": {
+        "url": "http://127.0.0.1:49046/node_modules/.vite/deps/chunk-PJEEZAML.js?v=26797046",
+        "lineNumber": 21550,
+        "columnNumber": 24
+      }
+    },
+    {
+      "type": "warning",
+      "text": "⚠️ React Router Future Flag Warning: React Router will begin wrapping state updates in `React.startTransition` in v7. You can use the `v7_startTransition` future flag to opt-in early. For more information, see https://reactrouter.com/v6/upgrading/future#v7_starttransition.",
+      "location": {
+        "url": "http://127.0.0.1:49046/node_modules/.vite/deps/react-router-dom.js?v=26797046",
+        "lineNumber": 4426,
+        "columnNumber": 12
+      }
+    },
+    {
+      "type": "warning",
+      "text": "⚠️ React Router Future Flag Warning: Relative route resolution within Splat routes is changing in v7. You can use the `v7_relativeSplatPath` future flag to opt-in early. For more information, see https://reactrouter.com/v6/upgrading/future#v7_relativesplatpath.",
+      "location": {
+        "url": "http://127.0.0.1:49046/node_modules/.vite/deps/react-router-dom.js?v=26797046",
+        "lineNumber": 4426,
+        "columnNumber": 12
+      }
+    },
+    {
+      "type": "error",
+      "text": "Failed to load resource: the server responded with a status of 404 (Not Found)",
+      "location": {
+        "url": "http://127.0.0.1:49046/favicon.ico",
+        "lineNumber": 0,
+        "columnNumber": 0
+      }
+    },
+    {
+      "type": "error",
+      "text": "Failed to load resource: the server responded with a status of 404 (Not Found)",
+      "location": {
+        "url": "http://127.0.0.1:49046/favicon.ico",
+        "lineNumber": 0,
+        "columnNumber": 0
+      }
+    },
+    {
+      "type": "debug",
+      "text": "[vite] connecting...",
+      "location": {
+        "url": "http://127.0.0.1:49046/@vite/client",
+        "lineNumber": 494,
+        "columnNumber": 8
+      }
+    },
+    {
+      "type": "debug",
+      "text": "[vite] connected.",
+      "location": {
+        "url": "http://127.0.0.1:49046/@vite/client",
+        "lineNumber": 617,
+        "columnNumber": 14
+      }
+    },
+    {
+      "type": "info",
+      "text": "%cDownload the React DevTools for a better development experience: https://reactjs.org/link/react-devtools font-weight:bold",
+      "location": {
+        "url": "http://127.0.0.1:49046/node_modules/.vite/deps/chunk-PJEEZAML.js?v=26797046",
+        "lineNumber": 21550,
+        "columnNumber": 24
+      }
+    },
+    {
+      "type": "warning",
+      "text": "⚠️ React Router Future Flag Warning: React Router will begin wrapping state updates in `React.startTransition` in v7. You can use the `v7_startTransition` future flag to opt-in early. For more information, see https://reactrouter.com/v6/upgrading/future#v7_starttransition.",
+      "location": {
+        "url": "http://127.0.0.1:49046/node_modules/.vite/deps/react-router-dom.js?v=26797046",
+        "lineNumber": 4426,
+        "columnNumber": 12
+      }
+    },
+    {
+      "type": "warning",
+      "text": "⚠️ React Router Future Flag Warning: Relative route resolution within Splat routes is changing in v7. You can use the `v7_relativeSplatPath` future flag to opt-in early. For more information, see https://reactrouter.com/v6/upgrading/future#v7_relativesplatpath.",
+      "location": {
+        "url": "http://127.0.0.1:49046/node_modules/.vite/deps/react-router-dom.js?v=26797046",
+        "lineNumber": 4426,
+        "columnNumber": 12
+      }
+    },
+    {
+      "type": "error",
+      "text": "Warning: [antd: Table] `index` parameter of `rowKey` function is deprecated. There is no guarantee that it will work as expected.",
+      "location": {
+        "url": "http://127.0.0.1:49046/node_modules/.vite/deps/chunk-D2XKH6ZM.js?v=26797046",
+        "lineNumber": 1247,
+        "columnNumber": 14
+      }
+    },
+    {
+      "type": "error",
+      "text": "Warning: [antd: Modal] `destroyOnClose` is deprecated. Please use `destroyOnHidden` instead.",
+      "location": {
+        "url": "http://127.0.0.1:49046/node_modules/.vite/deps/chunk-D2XKH6ZM.js?v=26797046",
+        "lineNumber": 1247,
+        "columnNumber": 14
+      }
+    },
+    {
+      "type": "error",
+      "text": "Warning: Instance created by `useForm` is not connected to any Form element. Forget to pass `form` prop?",
+      "location": {
+        "url": "http://127.0.0.1:49046/node_modules/.vite/deps/chunk-D2XKH6ZM.js?v=26797046",
+        "lineNumber": 1247,
+        "columnNumber": 14
+      }
+    },
+    {
+      "type": "error",
+      "text": "Warning: [antd: Descriptions] Sum of column `span` in a line not match `column` of Descriptions.",
+      "location": {
+        "url": "http://127.0.0.1:49046/node_modules/.vite/deps/chunk-D2XKH6ZM.js?v=26797046",
+        "lineNumber": 1247,
+        "columnNumber": 14
+      }
+    },
+    {
+      "type": "debug",
+      "text": "[vite] connecting...",
+      "location": {
+        "url": "http://127.0.0.1:49046/@vite/client",
+        "lineNumber": 494,
+        "columnNumber": 8
+      }
+    },
+    {
+      "type": "debug",
+      "text": "[vite] connected.",
+      "location": {
+        "url": "http://127.0.0.1:49046/@vite/client",
+        "lineNumber": 617,
+        "columnNumber": 14
+      }
+    },
+    {
+      "type": "info",
+      "text": "%cDownload the React DevTools for a better development experience: https://reactjs.org/link/react-devtools font-weight:bold",
+      "location": {
+        "url": "http://127.0.0.1:49046/node_modules/.vite/deps/chunk-PJEEZAML.js?v=26797046",
+        "lineNumber": 21550,
+        "columnNumber": 24
+      }
+    },
+    {
+      "type": "warning",
+      "text": "⚠️ React Router Future Flag Warning: React Router will begin wrapping state updates in `React.startTransition` in v7. You can use the `v7_startTransition` future flag to opt-in early. For more information, see https://reactrouter.com/v6/upgrading/future#v7_starttransition.",
+      "location": {
+        "url": "http://127.0.0.1:49046/node_modules/.vite/deps/react-router-dom.js?v=26797046",
+        "lineNumber": 4426,
+        "columnNumber": 12
+      }
+    },
+    {
+      "type": "warning",
+      "text": "⚠️ React Router Future Flag Warning: Relative route resolution within Splat routes is changing in v7. You can use the `v7_relativeSplatPath` future flag to opt-in early. For more information, see https://reactrouter.com/v6/upgrading/future#v7_relativesplatpath.",
+      "location": {
+        "url": "http://127.0.0.1:49046/node_modules/.vite/deps/react-router-dom.js?v=26797046",
+        "lineNumber": 4426,
+        "columnNumber": 12
+      }
+    }
+  ],
+  "requestFailures": [],
+  "responseErrors": []
+}

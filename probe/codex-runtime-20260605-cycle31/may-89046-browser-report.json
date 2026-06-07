@@ -1,0 +1,3800 @@
+{
+  "ok": true,
+  "generatedAt": "2026-06-05T15:53:27.130Z",
+  "order": "may-89046",
+  "roundIndex": 31,
+  "captureId": "may-89046-cycle31",
+  "url": "http://127.0.0.1:49046/",
+  "initialUrl": "http://127.0.0.1:49046/",
+  "finalUrl": "http://127.0.0.1:49046/dashboard",
+  "status": 200,
+  "title": "影院娱乐服务聚合平台",
+  "initialTitle": "影院娱乐服务聚合平台",
+  "navigationError": "",
+  "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89046/probe/codex-runtime-20260605-cycle31/may-89046-cycle31-frontend.png",
+  "screenshotPaths": [
+    "/Users/chen/Documents/trae_projects/local_projects/may-89046/probe/codex-runtime-20260605-cycle31/may-89046-cycle31-structure-01-首屏.png",
+    "/Users/chen/Documents/trae_projects/local_projects/may-89046/probe/codex-runtime-20260605-cycle31/may-89046-cycle31-structure-02-导航-工作台.png",
+    "/Users/chen/Documents/trae_projects/local_projects/may-89046/probe/codex-runtime-20260605-cycle31/may-89046-cycle31-structure-03-操作-查看报表.png",
+    "/Users/chen/Documents/trae_projects/local_projects/may-89046/probe/codex-runtime-20260605-cycle31/may-89046-cycle31-structure-04-二层操作-查看报表-查看订单.png",
+    "/Users/chen/Documents/trae_projects/local_projects/may-89046/probe/codex-runtime-20260605-cycle31/may-89046-cycle31-structure-05-操作-刷新数据.png",
+    "/Users/chen/Documents/trae_projects/local_projects/may-89046/probe/codex-runtime-20260605-cycle31/may-89046-cycle31-structure-06-导航-仪表盘.png",
+    "/Users/chen/Documents/trae_projects/local_projects/may-89046/probe/codex-runtime-20260605-cycle31/may-89046-cycle31-structure-07-操作-查看报表.png",
+    "/Users/chen/Documents/trae_projects/local_projects/may-89046/probe/codex-runtime-20260605-cycle31/may-89046-cycle31-structure-08-二层操作-查看报表-查看订单.png",
+    "/Users/chen/Documents/trae_projects/local_projects/may-89046/probe/codex-runtime-20260605-cycle31/may-89046-cycle31-structure-09-操作-刷新数据.png",
+    "/Users/chen/Documents/trae_projects/local_projects/may-89046/probe/codex-runtime-20260605-cycle31/may-89046-cycle31-structure-10-导航-票务协同.png",
+    "/Users/chen/Documents/trae_projects/local_projects/may-89046/probe/codex-runtime-20260605-cycle31/may-89046-cycle31-structure-11-操作-查看报表.png",
+    "/Users/chen/Documents/trae_projects/local_projects/may-89046/probe/codex-runtime-20260605-cycle31/may-89046-cycle31-structure-12-二层操作-查看报表-查看订单.png"
+  ],
+  "issueTextPreview": "登录注册相关问题；后台管理相关问题；发现/分类相关问题",
+  "targetReason": "登录注册相关问题；后台管理相关问题；发现/分类相关问题",
+  "targetKind": "auth",
+  "targetMatched": true,
+  "targetActions": [
+    {
+      "action": "click",
+      "label": "登录注册相关问题",
+      "ok": true
+    },
+    {
+      "action": "target-verify",
+      "label": "登录注册相关问题",
+      "ok": true,
+      "finalUrl": "http://127.0.0.1:49046/crowdfunding"
+    }
+  ],
+  "authFlow": {
+    "detected": false,
+    "attempted": false,
+    "success": false,
+    "finalUrl": "http://127.0.0.1:49046/dashboard",
+    "message": "",
+    "actions": []
+  },
+  "businessAudit": {
+    "actions": [
+      {
+        "action": "click",
+        "label": "导航:工作台",
+        "ok": true
+      },
+      {
+        "action": "click",
+        "label": "操作:查看报表",
+        "ok": true,
+        "result": {
+          "ok": true,
+          "matched": 4
+        }
+      },
+      {
+        "action": "click",
+        "label": "二层操作:查看报表:查看订单",
+        "ok": true,
+        "result": {
+          "ok": true,
+          "matched": 4
+        }
+      },
+      {
+        "action": "click",
+        "label": "操作:刷新数据",
+        "ok": true,
+        "result": {
+          "ok": true,
+          "matched": 1
+        }
+      },
+      {
+        "action": "click",
+        "label": "导航:仪表盘",
+        "ok": true
+      },
+      {
+        "action": "click",
+        "label": "操作:查看报表",
+        "ok": true,
+        "result": {
+          "ok": true,
+          "matched": 4
+        }
+      },
+      {
+        "action": "click",
+        "label": "二层操作:查看报表:查看订单",
+        "ok": true,
+        "result": {
+          "ok": true,
+          "matched": 4
+        }
+      },
+      {
+        "action": "click",
+        "label": "操作:刷新数据",
+        "ok": true,
+        "result": {
+          "ok": true,
+          "matched": 1
+        }
+      },
+      {
+        "action": "click",
+        "label": "导航:票务协同",
+        "ok": true
+      },
+      {
+        "action": "click",
+        "label": "操作:查看报表",
+        "ok": true,
+        "result": {
+          "ok": true,
+          "matched": 4
+        }
+      },
+      {
+        "action": "click",
+        "label": "二层操作:查看报表:查看订单",
+        "ok": true,
+        "result": {
+          "ok": true,
+          "matched": 4
+        }
+      },
+      {
+        "action": "click",
+        "label": "操作:刷新数据",
+        "ok": true,
+        "result": {
+          "ok": true,
+          "matched": 1
+        }
+      }
+    ],
+    "snapshots": [
+      {
+        "label": "首屏",
+        "url": "http://127.0.0.1:49046/dashboard",
+        "title": "影院娱乐服务聚合平台",
+        "headings": [
+          "运营工作台"
+        ],
+        "navLabels": [
+          "工作台 仪表盘",
+          "工作台",
+          "仪表盘",
+          "dashboard",
+          "票务协同 影院管理 影片管理 场次管理 订单管理 观众管理",
+          "票务协同",
+          "影院管理 影片管理 场次管理 订单管理 观众管理",
+          "影院管理",
+          "bank",
+          "影片管理",
+          "video-camera",
+          "场次管理",
+          "clock-circle",
+          "订单管理",
+          "shopping-cart",
+          "观众管理",
+          "team",
+          "智能运营 智能排片 卖座卡钱包 众筹包场 小卖品管理",
+          "智能运营",
+          "智能排片 卖座卡钱包 众筹包场 小卖品管理",
+          "智能排片",
+          "schedule",
+          "卖座卡钱包",
+          "wallet"
+        ],
+        "buttons": [
+          "刷新数据",
+          "去管理 →",
+          "查看报表",
+          "展开行"
+        ],
+        "links": [],
+        "inputs": [
+          {
+            "tag": "input",
+            "type": "search",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          }
+        ],
+        "tables": [
+          {
+            "headers": [
+              "订单号",
+              "渠道来源",
+              "影片",
+              "影院信息",
+              "场次信息",
+              "座位",
+              "金额",
+              "支付方式",
+              "关联信息",
+              "核销结果",
+              "状态",
+              "创建时间"
+            ],
+            "rowCount": 6,
+            "hasEmptyText": false,
+            "textPreview": "订单号 渠道来源 影片 影院信息 场次信息 座位 金额 支付方式 关联信息 核销结果 状态 创建时间 订单号 渠道来源 影片 影院信息 场次信息 座位 金额 支付方式 关联信息 核销结果 状态 创建时间 ORD202606051623472336 自有系统 The Last Dynasty Stellar Cineplex Beijing · Hall 3 - Standard 2026-06-05 14:00 3排1座 3排2座 ¥116.00 现金 - 待核销 pending 2026-06-05 16:23 ORD202606051622350106 自有系统 The Last Dyna"
+          }
+        ],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "影院聚合平台工作台仪表盘票务协同影院管理影片管理场次管理订单管理观众管理智能运营智能排片卖座卡钱包众筹包场小卖品管理数据分析区域票房热力图影片生命周期观众LTV预测营销A/B测试系统管理登录注册发现分类观众注册影院娱乐服务聚合平台后台管理运营工作台2026年06月05日 · 欢迎使用影院娱乐服务聚合平台运营工作台业务快捷入口刷新数据影院管理全国4000+影院协同4去管理 →影片管理版权/物料/分账全追踪4去管理 →场次管理座位图/锁位/退改联动7去管理 →观众管理会员/偏好/画像分析3去管理 →订单管理多渠道票务分发6去管理 →智能排片上座率预测/黄金时段去管理 →卖座卡钱包企业福利/消费核销去管理 →众筹包场活动成团/座位预留去管理 →小卖品管理套餐绑定/组合销售去管理 →数据分析报表区域票房热力图城市票房分布分析查看报表影片生命周期上映曲线/生命周期追踪查看报表观众LTV预测长期价值预测/分层运营查看报表营销A/B测试活动效果对比/数据验证查看报表业务异常反馈待处理异常订单6即将超时场次0今日申诉工单0业务闭环验收指南选座锁位场次管理 → 座位 → 锁定座位/释放退改规则场次详情 → 退改规则面板消费核销订单管理 → 核销状态追踪活动成团众筹包场 → 目标达成自动成团卖座卡消费卖座卡钱包 → 余额/交易记录近期订单 (6条)订单号渠道来源影片影院信息场次信息座位金额支付方式关联信息核销结果状态创建时间 订单号渠道来源影片影院信息场次信息座位金额支付方式关联信息核销结果状态创建时间ORD202606051623472336自有系统The Last DynastyStellar Cineplex Beijing · Hall 3 - Standard2026-06-05 14:003排1座3排2座¥116.00现金-待核销pending2026-06-05 16:23ORD202606051622350106自有系统The Last DynastyStellar Cineplex Beijing · Hall 3 - Standard2026-06-05 14:002排1座2排2座¥116.00现金-待核销pending2026-06-05 16:22ORD202606051622249685自有系统The Last DynastyStellar Cineplex Beijing · Hall 3 - Standard2026-06-05 14:001排1座1排2座¥116.00现金-待核销pending2026-06-05 16:22ORD202606051415007494小程序The Last DynastyStellar Cineplex Beijing · Hall 3 - Standard2026-06-05 14:001排5座1排6座¥116.00现金-待核销pending2026-06-05 14:15ORD202606051401481775自有系统The Last DynastyStellar Cineplex Beijing · Hall 3 - Standard2026-06-05 14:001排3座1排4座¥180.00卖座卡卡·****待核销pending2026-06-05 14:01ORD202606042357573533自有系统Galactic HorizonStellar Cineplex Beijing · Hall 1 - IMAX2026-06-05 19:001排1座1排2座¥136.00卖座卡-待核销pending2026-06-04 23:57",
+        "layout": {
+          "viewportWidth": 1504,
+          "viewportHeight": 1600,
+          "scrollWidth": 1504,
+          "scrollHeight": 2136,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89046-cycle31-structure-01-首屏",
+          "label": "首屏",
+          "finalUrl": "http://127.0.0.1:49046/dashboard",
+          "title": "影院娱乐服务聚合平台",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89046/probe/codex-runtime-20260605-cycle31/may-89046-cycle31-structure-01-首屏.json",
+          "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89046/probe/codex-runtime-20260605-cycle31/may-89046-cycle31-structure-01-首屏.png",
+          "elementCount": 736,
+          "interactiveCount": 45,
+          "interactiveLabels": [
+            "工作台 仪表盘 票务协同 影院管理 影片管理 场次管理 订单管理 观众管理 智能运营 智能排片 卖座卡钱包 众筹包场 小卖品管理 数据分析 区域票房热力图 影片生命周期 观众LTV预测 营销A/B测试 系统管理 登录注册 发现分类 观众注册",
+            "仪表盘",
+            "影院管理",
+            "影片管理",
+            "场次管理",
+            "订单管理",
+            "观众管理",
+            "智能排片",
+            "卖座卡钱包",
+            "众筹包场",
+            "小卖品管理",
+            "区域票房热力图",
+            "影片生命周期",
+            "观众LTV预测",
+            "营销A/B测试",
+            "登录注册",
+            "发现分类",
+            "观众注册",
+            "刷新数据",
+            "去管理 →",
+            "查看报表",
+            "展开行"
+          ]
+        }
+      },
+      {
+        "label": "导航:工作台",
+        "url": "http://127.0.0.1:49046/dashboard",
+        "title": "影院娱乐服务聚合平台",
+        "headings": [
+          "运营工作台"
+        ],
+        "navLabels": [
+          "工作台 仪表盘",
+          "工作台",
+          "仪表盘",
+          "dashboard",
+          "票务协同 影院管理 影片管理 场次管理 订单管理 观众管理",
+          "票务协同",
+          "影院管理 影片管理 场次管理 订单管理 观众管理",
+          "影院管理",
+          "bank",
+          "影片管理",
+          "video-camera",
+          "场次管理",
+          "clock-circle",
+          "订单管理",
+          "shopping-cart",
+          "观众管理",
+          "team",
+          "智能运营 智能排片 卖座卡钱包 众筹包场 小卖品管理",
+          "智能运营",
+          "智能排片 卖座卡钱包 众筹包场 小卖品管理",
+          "智能排片",
+          "schedule",
+          "卖座卡钱包",
+          "wallet"
+        ],
+        "buttons": [
+          "刷新数据",
+          "去管理 →",
+          "查看报表",
+          "展开行"
+        ],
+        "links": [],
+        "inputs": [
+          {
+            "tag": "input",
+            "type": "search",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          }
+        ],
+        "tables": [
+          {
+            "headers": [
+              "订单号",
+              "渠道来源",
+              "影片",
+              "影院信息",
+              "场次信息",
+              "座位",
+              "金额",
+              "支付方式",
+              "关联信息",
+              "核销结果",
+              "状态",
+              "创建时间"
+            ],
+            "rowCount": 6,
+            "hasEmptyText": false,
+            "textPreview": "订单号 渠道来源 影片 影院信息 场次信息 座位 金额 支付方式 关联信息 核销结果 状态 创建时间 订单号 渠道来源 影片 影院信息 场次信息 座位 金额 支付方式 关联信息 核销结果 状态 创建时间 ORD202606051623472336 自有系统 The Last Dynasty Stellar Cineplex Beijing · Hall 3 - Standard 2026-06-05 14:00 3排1座 3排2座 ¥116.00 现金 - 待核销 pending 2026-06-05 16:23 ORD202606051622350106 自有系统 The Last Dyna"
+          }
+        ],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "影院聚合平台工作台仪表盘票务协同影院管理影片管理场次管理订单管理观众管理智能运营智能排片卖座卡钱包众筹包场小卖品管理数据分析区域票房热力图影片生命周期观众LTV预测营销A/B测试系统管理登录注册发现分类观众注册影院娱乐服务聚合平台后台管理运营工作台2026年06月05日 · 欢迎使用影院娱乐服务聚合平台运营工作台业务快捷入口刷新数据影院管理全国4000+影院协同4去管理 →影片管理版权/物料/分账全追踪4去管理 →场次管理座位图/锁位/退改联动7去管理 →观众管理会员/偏好/画像分析3去管理 →订单管理多渠道票务分发6去管理 →智能排片上座率预测/黄金时段去管理 →卖座卡钱包企业福利/消费核销去管理 →众筹包场活动成团/座位预留去管理 →小卖品管理套餐绑定/组合销售去管理 →数据分析报表区域票房热力图城市票房分布分析查看报表影片生命周期上映曲线/生命周期追踪查看报表观众LTV预测长期价值预测/分层运营查看报表营销A/B测试活动效果对比/数据验证查看报表业务异常反馈待处理异常订单6即将超时场次0今日申诉工单0业务闭环验收指南选座锁位场次管理 → 座位 → 锁定座位/释放退改规则场次详情 → 退改规则面板消费核销订单管理 → 核销状态追踪活动成团众筹包场 → 目标达成自动成团卖座卡消费卖座卡钱包 → 余额/交易记录近期订单 (6条)订单号渠道来源影片影院信息场次信息座位金额支付方式关联信息核销结果状态创建时间 订单号渠道来源影片影院信息场次信息座位金额支付方式关联信息核销结果状态创建时间ORD202606051623472336自有系统The Last DynastyStellar Cineplex Beijing · Hall 3 - Standard2026-06-05 14:003排1座3排2座¥116.00现金-待核销pending2026-06-05 16:23ORD202606051622350106自有系统The Last DynastyStellar Cineplex Beijing · Hall 3 - Standard2026-06-05 14:002排1座2排2座¥116.00现金-待核销pending2026-06-05 16:22ORD202606051622249685自有系统The Last DynastyStellar Cineplex Beijing · Hall 3 - Standard2026-06-05 14:001排1座1排2座¥116.00现金-待核销pending2026-06-05 16:22ORD202606051415007494小程序The Last DynastyStellar Cineplex Beijing · Hall 3 - Standard2026-06-05 14:001排5座1排6座¥116.00现金-待核销pending2026-06-05 14:15ORD202606051401481775自有系统The Last DynastyStellar Cineplex Beijing · Hall 3 - Standard2026-06-05 14:001排3座1排4座¥180.00卖座卡卡·****待核销pending2026-06-05 14:01ORD202606042357573533自有系统Galactic HorizonStellar Cineplex Beijing · Hall 1 - IMAX2026-06-05 19:001排1座1排2座¥136.00卖座卡-待核销pending2026-06-04 23:57",
+        "layout": {
+          "viewportWidth": 1536,
+          "viewportHeight": 1600,
+          "scrollWidth": 1536,
+          "scrollHeight": 2136,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89046-cycle31-structure-02-导航-工作台",
+          "label": "导航:工作台",
+          "finalUrl": "http://127.0.0.1:49046/dashboard",
+          "title": "影院娱乐服务聚合平台",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89046/probe/codex-runtime-20260605-cycle31/may-89046-cycle31-structure-02-导航-工作台.json",
+          "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89046/probe/codex-runtime-20260605-cycle31/may-89046-cycle31-structure-02-导航-工作台.png",
+          "elementCount": 736,
+          "interactiveCount": 45,
+          "interactiveLabels": [
+            "工作台 仪表盘 票务协同 影院管理 影片管理 场次管理 订单管理 观众管理 智能运营 智能排片 卖座卡钱包 众筹包场 小卖品管理 数据分析 区域票房热力图 影片生命周期 观众LTV预测 营销A/B测试 系统管理 登录注册 发现分类 观众注册",
+            "仪表盘",
+            "影院管理",
+            "影片管理",
+            "场次管理",
+            "订单管理",
+            "观众管理",
+            "智能排片",
+            "卖座卡钱包",
+            "众筹包场",
+            "小卖品管理",
+            "区域票房热力图",
+            "影片生命周期",
+            "观众LTV预测",
+            "营销A/B测试",
+            "登录注册",
+            "发现分类",
+            "观众注册",
+            "刷新数据",
+            "去管理 →",
+            "查看报表",
+            "展开行"
+          ]
+        }
+      },
+      {
+        "label": "操作:查看报表",
+        "url": "http://127.0.0.1:49046/analytics?tab=heatmap",
+        "title": "影院娱乐服务聚合平台",
+        "headings": [],
+        "navLabels": [
+          "工作台 仪表盘",
+          "工作台",
+          "仪表盘",
+          "dashboard",
+          "票务协同 影院管理 影片管理 场次管理 订单管理 观众管理",
+          "票务协同",
+          "影院管理 影片管理 场次管理 订单管理 观众管理",
+          "影院管理",
+          "bank",
+          "影片管理",
+          "video-camera",
+          "场次管理",
+          "clock-circle",
+          "订单管理",
+          "shopping-cart",
+          "观众管理",
+          "team",
+          "智能运营 智能排片 卖座卡钱包 众筹包场 小卖品管理",
+          "智能运营",
+          "智能排片 卖座卡钱包 众筹包场 小卖品管理",
+          "智能排片",
+          "schedule",
+          "卖座卡钱包",
+          "wallet"
+        ],
+        "buttons": [
+          "Load",
+          "Sync Data",
+          "展开行",
+          "查看订单"
+        ],
+        "links": [],
+        "inputs": [
+          {
+            "tag": "input",
+            "type": "",
+            "placeholder": "开始日期",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "",
+            "placeholder": "结束日期",
+            "name": "",
+            "label": ""
+          }
+        ],
+        "tables": [
+          {
+            "headers": [
+              "城市",
+              "总票房",
+              "总订单数",
+              "操作"
+            ],
+            "rowCount": 4,
+            "hasEmptyText": false,
+            "textPreview": "城市 总票房 总订单数 操作 Beijing ¥780.00 6 查看订单 Shanghai ¥0.00 0 查看订单 Guangzhou ¥0.00 0 查看订单 Shenzhen ¥0.00 0 查看订单"
+          }
+        ],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "影院聚合平台工作台仪表盘票务协同影院管理影片管理场次管理订单管理观众管理智能运营智能排片卖座卡钱包众筹包场小卖品管理数据分析区域票房热力图影片生命周期观众LTV预测营销A/B测试系统管理登录注册发现分类观众注册影院娱乐服务聚合平台后台管理 票房热力图 影片生命周期 观众LTV A/B测试LoadSync Data总票房¥780.00总订单数6城市数4渠道分布官方渠道订单数: 5¥664.00小程序订单数: 1¥116.00H5页面订单数: 0¥0.00第三方平台订单数: 0¥0.00Top 5 影片#1The Last Dynasty订单数: 5¥644.00#2Galactic Horizon订单数: 1¥136.00Top 5 影院#1Stellar Cineplex BeijingBeijing · 订单数: 6¥780.00今日场次表现The Last DynastyStellar Cineplex Beijing · 14:00¥644.00Galactic HorizonStellar Cineplex Beijing · 19:00¥136.00Galactic HorizonStellar Cineplex Beijing · 21:30¥0.00Midnight EchoStellar Cineplex Beijing · 22:00¥0.00Code ZeroStellar Cineplex Beijing · 16:00¥0.00票房热力图城市总票房总订单数操作Beijing¥780.006查看订单Shanghai¥0.000查看订单Guangzhou¥0.000查看订单Shenzhen¥0.000查看订单",
+        "layout": {
+          "viewportWidth": 1568,
+          "viewportHeight": 1600,
+          "scrollWidth": 1568,
+          "scrollHeight": 1805,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89046-cycle31-structure-03-操作-查看报表",
+          "label": "操作:查看报表",
+          "finalUrl": "http://127.0.0.1:49046/analytics?tab=heatmap",
+          "title": "影院娱乐服务聚合平台",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89046/probe/codex-runtime-20260605-cycle31/may-89046-cycle31-structure-03-操作-查看报表.json",
+          "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89046/probe/codex-runtime-20260605-cycle31/may-89046-cycle31-structure-03-操作-查看报表.png",
+          "elementCount": 497,
+          "interactiveCount": 34,
+          "interactiveLabels": [
+            "工作台 仪表盘 票务协同 影院管理 影片管理 场次管理 订单管理 观众管理 智能运营 智能排片 卖座卡钱包 众筹包场 小卖品管理 数据分析 区域票房热力图 影片生命周期 观众LTV预测 营销A/B测试 系统管理 登录注册 发现分类 观众注册",
+            "仪表盘",
+            "影院管理",
+            "影片管理",
+            "场次管理",
+            "订单管理",
+            "观众管理",
+            "智能排片",
+            "卖座卡钱包",
+            "众筹包场",
+            "小卖品管理",
+            "区域票房热力图",
+            "影片生命周期",
+            "观众LTV预测",
+            "营销A/B测试",
+            "登录注册",
+            "发现分类",
+            "观众注册",
+            "票房热力图",
+            "Load Sync Data 总票房 ¥780.00 总订单数 6 城市数 4 渠道分布 官方渠道 订单数: 5 ¥664.00 小程序 订单数: 1 ¥116.00 H5页面 订单数: 0 ¥0.00 第三方平台 订单数: 0 ¥0.00 Top 5 影片 #1 The Last Dynasty 订单数: 5 ¥644.00 #2 Galactic Hor",
+            "2026-05-06",
+            "2026-06-05",
+            "Load",
+            "Sync Data",
+            "展开行",
+            "查看订单"
+          ]
+        }
+      },
+      {
+        "label": "二层操作:查看报表->查看订单",
+        "url": "http://127.0.0.1:49046/orders?city=Beijing",
+        "title": "影院娱乐服务聚合平台",
+        "headings": [],
+        "navLabels": [
+          "工作台 仪表盘",
+          "工作台",
+          "仪表盘",
+          "dashboard",
+          "票务协同 影院管理 影片管理 场次管理 订单管理 观众管理",
+          "票务协同",
+          "影院管理 影片管理 场次管理 订单管理 观众管理",
+          "影院管理",
+          "bank",
+          "影片管理",
+          "video-camera",
+          "场次管理",
+          "clock-circle",
+          "订单管理",
+          "shopping-cart",
+          "观众管理",
+          "team",
+          "智能运营 智能排片 卖座卡钱包 众筹包场 小卖品管理",
+          "智能运营",
+          "智能排片 卖座卡钱包 众筹包场 小卖品管理",
+          "智能排片",
+          "schedule",
+          "卖座卡钱包",
+          "wallet"
+        ],
+        "buttons": [
+          "Create Order",
+          "Detail"
+        ],
+        "links": [],
+        "inputs": [
+          {
+            "tag": "input",
+            "type": "search",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "search",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "search",
+            "placeholder": "",
+            "name": "",
+            "label": "页码"
+          }
+        ],
+        "tables": [
+          {
+            "headers": [
+              "Order No",
+              "Movie",
+              "Total Amount",
+              "Status",
+              "Payment",
+              "Created At",
+              "Actions"
+            ],
+            "rowCount": 6,
+            "hasEmptyText": false,
+            "textPreview": "Order No Movie Total Amount Status Payment Created At Actions ORD202606051623472336 The Last Dynasty ¥116 Pending Cash 2026-06-05 16:23:47 Detail ORD202606051622350106 The Last Dynasty ¥116 Pending Cash 2026-06-05 16:22:35 Detail ORD202606051622249685 The Last Dynasty ¥116 Pending Cash 2026-06-05 16"
+          }
+        ],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "影院聚合平台工作台仪表盘票务协同影院管理影片管理场次管理订单管理观众管理智能运营智能排片卖座卡钱包众筹包场小卖品管理数据分析区域票房热力图影片生命周期观众LTV预测营销A/B测试系统管理登录注册发现分类观众注册影院娱乐服务聚合平台后台管理Filter by audienceFilter by statusCreate OrderOrder NoMovieTotal AmountStatusPaymentCreated AtActionsORD202606051623472336The Last Dynasty¥116PendingCash2026-06-05 16:23:47DetailORD202606051622350106The Last Dynasty¥116PendingCash2026-06-05 16:22:35DetailORD202606051622249685The Last Dynasty¥116PendingCash2026-06-05 16:22:24DetailORD202606051415007494The Last Dynasty¥116PendingCash2026-06-05 14:15:00DetailORD202606051401481775The Last Dynasty¥180PendingWallet2026-06-05 14:01:48DetailORD202606042357573533Galactic Horizon¥136PendingWallet2026-06-04 23:57:57DetailTotal 6110 条/页",
+        "layout": {
+          "viewportWidth": 1600,
+          "viewportHeight": 1600,
+          "scrollWidth": 1600,
+          "scrollHeight": 1600,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89046-cycle31-structure-04-二层操作-查看报表-查看订单",
+          "label": "二层操作:查看报表->查看订单",
+          "finalUrl": "http://127.0.0.1:49046/orders?city=Beijing",
+          "title": "影院娱乐服务聚合平台",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89046/probe/codex-runtime-20260605-cycle31/may-89046-cycle31-structure-04-二层操作-查看报表-查看订单.json",
+          "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89046/probe/codex-runtime-20260605-cycle31/may-89046-cycle31-structure-04-二层操作-查看报表-查看订单.png",
+          "elementCount": 295,
+          "interactiveCount": 32,
+          "interactiveLabels": [
+            "工作台 仪表盘 票务协同 影院管理 影片管理 场次管理 订单管理 观众管理 智能运营 智能排片 卖座卡钱包 众筹包场 小卖品管理 数据分析 区域票房热力图 影片生命周期 观众LTV预测 营销A/B测试 系统管理 登录注册 发现分类 观众注册",
+            "仪表盘",
+            "影院管理",
+            "影片管理",
+            "场次管理",
+            "订单管理",
+            "观众管理",
+            "智能排片",
+            "卖座卡钱包",
+            "众筹包场",
+            "小卖品管理",
+            "区域票房热力图",
+            "影片生命周期",
+            "观众LTV预测",
+            "营销A/B测试",
+            "登录注册",
+            "发现分类",
+            "观众注册",
+            "Create Order",
+            "Detail",
+            "1",
+            "页码"
+          ]
+        }
+      },
+      {
+        "label": "操作:刷新数据",
+        "url": "http://127.0.0.1:49046/dashboard",
+        "title": "影院娱乐服务聚合平台",
+        "headings": [
+          "运营工作台"
+        ],
+        "navLabels": [
+          "工作台 仪表盘",
+          "工作台",
+          "仪表盘",
+          "dashboard",
+          "票务协同 影院管理 影片管理 场次管理 订单管理 观众管理",
+          "票务协同",
+          "影院管理 影片管理 场次管理 订单管理 观众管理",
+          "影院管理",
+          "bank",
+          "影片管理",
+          "video-camera",
+          "场次管理",
+          "clock-circle",
+          "订单管理",
+          "shopping-cart",
+          "观众管理",
+          "team",
+          "智能运营 智能排片 卖座卡钱包 众筹包场 小卖品管理",
+          "智能运营",
+          "智能排片 卖座卡钱包 众筹包场 小卖品管理",
+          "智能排片",
+          "schedule",
+          "卖座卡钱包",
+          "wallet"
+        ],
+        "buttons": [
+          "刷新数据",
+          "去管理 →",
+          "查看报表",
+          "展开行"
+        ],
+        "links": [],
+        "inputs": [
+          {
+            "tag": "input",
+            "type": "search",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          }
+        ],
+        "tables": [
+          {
+            "headers": [
+              "订单号",
+              "渠道来源",
+              "影片",
+              "影院信息",
+              "场次信息",
+              "座位",
+              "金额",
+              "支付方式",
+              "关联信息",
+              "核销结果",
+              "状态",
+              "创建时间"
+            ],
+            "rowCount": 6,
+            "hasEmptyText": false,
+            "textPreview": "订单号 渠道来源 影片 影院信息 场次信息 座位 金额 支付方式 关联信息 核销结果 状态 创建时间 订单号 渠道来源 影片 影院信息 场次信息 座位 金额 支付方式 关联信息 核销结果 状态 创建时间 ORD202606051623472336 自有系统 The Last Dynasty Stellar Cineplex Beijing · Hall 3 - Standard 2026-06-05 14:00 3排1座 3排2座 ¥116.00 现金 - 待核销 pending 2026-06-05 16:23 ORD202606051622350106 自有系统 The Last Dyna"
+          }
+        ],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "影院聚合平台工作台仪表盘票务协同影院管理影片管理场次管理订单管理观众管理智能运营智能排片卖座卡钱包众筹包场小卖品管理数据分析区域票房热力图影片生命周期观众LTV预测营销A/B测试系统管理登录注册发现分类观众注册影院娱乐服务聚合平台后台管理运营工作台2026年06月05日 · 欢迎使用影院娱乐服务聚合平台运营工作台业务快捷入口刷新数据影院管理全国4000+影院协同4去管理 →影片管理版权/物料/分账全追踪4去管理 →场次管理座位图/锁位/退改联动7去管理 →观众管理会员/偏好/画像分析3去管理 →订单管理多渠道票务分发6去管理 →智能排片上座率预测/黄金时段去管理 →卖座卡钱包企业福利/消费核销去管理 →众筹包场活动成团/座位预留去管理 →小卖品管理套餐绑定/组合销售去管理 →数据分析报表区域票房热力图城市票房分布分析查看报表影片生命周期上映曲线/生命周期追踪查看报表观众LTV预测长期价值预测/分层运营查看报表营销A/B测试活动效果对比/数据验证查看报表业务异常反馈待处理异常订单6即将超时场次0今日申诉工单0业务闭环验收指南选座锁位场次管理 → 座位 → 锁定座位/释放退改规则场次详情 → 退改规则面板消费核销订单管理 → 核销状态追踪活动成团众筹包场 → 目标达成自动成团卖座卡消费卖座卡钱包 → 余额/交易记录近期订单 (6条)订单号渠道来源影片影院信息场次信息座位金额支付方式关联信息核销结果状态创建时间 订单号渠道来源影片影院信息场次信息座位金额支付方式关联信息核销结果状态创建时间ORD202606051623472336自有系统The Last DynastyStellar Cineplex Beijing · Hall 3 - Standard2026-06-05 14:003排1座3排2座¥116.00现金-待核销pending2026-06-05 16:23ORD202606051622350106自有系统The Last DynastyStellar Cineplex Beijing · Hall 3 - Standard2026-06-05 14:002排1座2排2座¥116.00现金-待核销pending2026-06-05 16:22ORD202606051622249685自有系统The Last DynastyStellar Cineplex Beijing · Hall 3 - Standard2026-06-05 14:001排1座1排2座¥116.00现金-待核销pending2026-06-05 16:22ORD202606051415007494小程序The Last DynastyStellar Cineplex Beijing · Hall 3 - Standard2026-06-05 14:001排5座1排6座¥116.00现金-待核销pending2026-06-05 14:15ORD202606051401481775自有系统The Last DynastyStellar Cineplex Beijing · Hall 3 - Standard2026-06-05 14:001排3座1排4座¥180.00卖座卡卡·****待核销pending2026-06-05 14:01ORD202606042357573533自有系统Galactic HorizonStellar Cineplex Beijing · Hall 1 - IMAX2026-06-05 19:001排1座1排2座¥136.00卖座卡-待核销pending2026-06-04 23:57",
+        "layout": {
+          "viewportWidth": 1632,
+          "viewportHeight": 1600,
+          "scrollWidth": 1632,
+          "scrollHeight": 2136,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89046-cycle31-structure-05-操作-刷新数据",
+          "label": "操作:刷新数据",
+          "finalUrl": "http://127.0.0.1:49046/dashboard",
+          "title": "影院娱乐服务聚合平台",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89046/probe/codex-runtime-20260605-cycle31/may-89046-cycle31-structure-05-操作-刷新数据.json",
+          "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89046/probe/codex-runtime-20260605-cycle31/may-89046-cycle31-structure-05-操作-刷新数据.png",
+          "elementCount": 736,
+          "interactiveCount": 45,
+          "interactiveLabels": [
+            "工作台 仪表盘 票务协同 影院管理 影片管理 场次管理 订单管理 观众管理 智能运营 智能排片 卖座卡钱包 众筹包场 小卖品管理 数据分析 区域票房热力图 影片生命周期 观众LTV预测 营销A/B测试 系统管理 登录注册 发现分类 观众注册",
+            "仪表盘",
+            "影院管理",
+            "影片管理",
+            "场次管理",
+            "订单管理",
+            "观众管理",
+            "智能排片",
+            "卖座卡钱包",
+            "众筹包场",
+            "小卖品管理",
+            "区域票房热力图",
+            "影片生命周期",
+            "观众LTV预测",
+            "营销A/B测试",
+            "登录注册",
+            "发现分类",
+            "观众注册",
+            "刷新数据",
+            "去管理 →",
+            "查看报表",
+            "展开行"
+          ]
+        }
+      },
+      {
+        "label": "导航:仪表盘",
+        "url": "http://127.0.0.1:49046/dashboard",
+        "title": "影院娱乐服务聚合平台",
+        "headings": [
+          "运营工作台"
+        ],
+        "navLabels": [
+          "工作台 仪表盘",
+          "工作台",
+          "仪表盘",
+          "dashboard",
+          "票务协同 影院管理 影片管理 场次管理 订单管理 观众管理",
+          "票务协同",
+          "影院管理 影片管理 场次管理 订单管理 观众管理",
+          "影院管理",
+          "bank",
+          "影片管理",
+          "video-camera",
+          "场次管理",
+          "clock-circle",
+          "订单管理",
+          "shopping-cart",
+          "观众管理",
+          "team",
+          "智能运营 智能排片 卖座卡钱包 众筹包场 小卖品管理",
+          "智能运营",
+          "智能排片 卖座卡钱包 众筹包场 小卖品管理",
+          "智能排片",
+          "schedule",
+          "卖座卡钱包",
+          "wallet"
+        ],
+        "buttons": [
+          "刷新数据",
+          "去管理 →",
+          "查看报表",
+          "展开行"
+        ],
+        "links": [],
+        "inputs": [
+          {
+            "tag": "input",
+            "type": "search",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          }
+        ],
+        "tables": [
+          {
+            "headers": [
+              "订单号",
+              "渠道来源",
+              "影片",
+              "影院信息",
+              "场次信息",
+              "座位",
+              "金额",
+              "支付方式",
+              "关联信息",
+              "核销结果",
+              "状态",
+              "创建时间"
+            ],
+            "rowCount": 6,
+            "hasEmptyText": false,
+            "textPreview": "订单号 渠道来源 影片 影院信息 场次信息 座位 金额 支付方式 关联信息 核销结果 状态 创建时间 订单号 渠道来源 影片 影院信息 场次信息 座位 金额 支付方式 关联信息 核销结果 状态 创建时间 ORD202606051623472336 自有系统 The Last Dynasty Stellar Cineplex Beijing · Hall 3 - Standard 2026-06-05 14:00 3排1座 3排2座 ¥116.00 现金 - 待核销 pending 2026-06-05 16:23 ORD202606051622350106 自有系统 The Last Dyna"
+          }
+        ],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "影院聚合平台工作台仪表盘票务协同影院管理影片管理场次管理订单管理观众管理智能运营智能排片卖座卡钱包众筹包场小卖品管理数据分析区域票房热力图影片生命周期观众LTV预测营销A/B测试系统管理登录注册发现分类观众注册影院娱乐服务聚合平台后台管理运营工作台2026年06月05日 · 欢迎使用影院娱乐服务聚合平台运营工作台业务快捷入口刷新数据影院管理全国4000+影院协同4去管理 →影片管理版权/物料/分账全追踪4去管理 →场次管理座位图/锁位/退改联动7去管理 →观众管理会员/偏好/画像分析3去管理 →订单管理多渠道票务分发6去管理 →智能排片上座率预测/黄金时段去管理 →卖座卡钱包企业福利/消费核销去管理 →众筹包场活动成团/座位预留去管理 →小卖品管理套餐绑定/组合销售去管理 →数据分析报表区域票房热力图城市票房分布分析查看报表影片生命周期上映曲线/生命周期追踪查看报表观众LTV预测长期价值预测/分层运营查看报表营销A/B测试活动效果对比/数据验证查看报表业务异常反馈待处理异常订单6即将超时场次0今日申诉工单0业务闭环验收指南选座锁位场次管理 → 座位 → 锁定座位/释放退改规则场次详情 → 退改规则面板消费核销订单管理 → 核销状态追踪活动成团众筹包场 → 目标达成自动成团卖座卡消费卖座卡钱包 → 余额/交易记录近期订单 (6条)订单号渠道来源影片影院信息场次信息座位金额支付方式关联信息核销结果状态创建时间 订单号渠道来源影片影院信息场次信息座位金额支付方式关联信息核销结果状态创建时间ORD202606051623472336自有系统The Last DynastyStellar Cineplex Beijing · Hall 3 - Standard2026-06-05 14:003排1座3排2座¥116.00现金-待核销pending2026-06-05 16:23ORD202606051622350106自有系统The Last DynastyStellar Cineplex Beijing · Hall 3 - Standard2026-06-05 14:002排1座2排2座¥116.00现金-待核销pending2026-06-05 16:22ORD202606051622249685自有系统The Last DynastyStellar Cineplex Beijing · Hall 3 - Standard2026-06-05 14:001排1座1排2座¥116.00现金-待核销pending2026-06-05 16:22ORD202606051415007494小程序The Last DynastyStellar Cineplex Beijing · Hall 3 - Standard2026-06-05 14:001排5座1排6座¥116.00现金-待核销pending2026-06-05 14:15ORD202606051401481775自有系统The Last DynastyStellar Cineplex Beijing · Hall 3 - Standard2026-06-05 14:001排3座1排4座¥180.00卖座卡卡·****待核销pending2026-06-05 14:01ORD202606042357573533自有系统Galactic HorizonStellar Cineplex Beijing · Hall 1 - IMAX2026-06-05 19:001排1座1排2座¥136.00卖座卡-待核销pending2026-06-04 23:57",
+        "layout": {
+          "viewportWidth": 1664,
+          "viewportHeight": 1600,
+          "scrollWidth": 1664,
+          "scrollHeight": 2136,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89046-cycle31-structure-06-导航-仪表盘",
+          "label": "导航:仪表盘",
+          "finalUrl": "http://127.0.0.1:49046/dashboard",
+          "title": "影院娱乐服务聚合平台",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89046/probe/codex-runtime-20260605-cycle31/may-89046-cycle31-structure-06-导航-仪表盘.json",
+          "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89046/probe/codex-runtime-20260605-cycle31/may-89046-cycle31-structure-06-导航-仪表盘.png",
+          "elementCount": 736,
+          "interactiveCount": 45,
+          "interactiveLabels": [
+            "工作台 仪表盘 票务协同 影院管理 影片管理 场次管理 订单管理 观众管理 智能运营 智能排片 卖座卡钱包 众筹包场 小卖品管理 数据分析 区域票房热力图 影片生命周期 观众LTV预测 营销A/B测试 系统管理 登录注册 发现分类 观众注册",
+            "仪表盘",
+            "影院管理",
+            "影片管理",
+            "场次管理",
+            "订单管理",
+            "观众管理",
+            "智能排片",
+            "卖座卡钱包",
+            "众筹包场",
+            "小卖品管理",
+            "区域票房热力图",
+            "影片生命周期",
+            "观众LTV预测",
+            "营销A/B测试",
+            "登录注册",
+            "发现分类",
+            "观众注册",
+            "刷新数据",
+            "去管理 →",
+            "查看报表",
+            "展开行"
+          ]
+        }
+      },
+      {
+        "label": "操作:查看报表",
+        "url": "http://127.0.0.1:49046/analytics?tab=heatmap",
+        "title": "影院娱乐服务聚合平台",
+        "headings": [],
+        "navLabels": [
+          "工作台 仪表盘",
+          "工作台",
+          "仪表盘",
+          "dashboard",
+          "票务协同 影院管理 影片管理 场次管理 订单管理 观众管理",
+          "票务协同",
+          "影院管理 影片管理 场次管理 订单管理 观众管理",
+          "影院管理",
+          "bank",
+          "影片管理",
+          "video-camera",
+          "场次管理",
+          "clock-circle",
+          "订单管理",
+          "shopping-cart",
+          "观众管理",
+          "team",
+          "智能运营 智能排片 卖座卡钱包 众筹包场 小卖品管理",
+          "智能运营",
+          "智能排片 卖座卡钱包 众筹包场 小卖品管理",
+          "智能排片",
+          "schedule",
+          "卖座卡钱包",
+          "wallet"
+        ],
+        "buttons": [
+          "Load",
+          "Sync Data",
+          "展开行",
+          "查看订单"
+        ],
+        "links": [],
+        "inputs": [
+          {
+            "tag": "input",
+            "type": "",
+            "placeholder": "开始日期",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "",
+            "placeholder": "结束日期",
+            "name": "",
+            "label": ""
+          }
+        ],
+        "tables": [
+          {
+            "headers": [
+              "城市",
+              "总票房",
+              "总订单数",
+              "操作"
+            ],
+            "rowCount": 4,
+            "hasEmptyText": false,
+            "textPreview": "城市 总票房 总订单数 操作 Beijing ¥780.00 6 查看订单 Shanghai ¥0.00 0 查看订单 Guangzhou ¥0.00 0 查看订单 Shenzhen ¥0.00 0 查看订单"
+          }
+        ],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "影院聚合平台工作台仪表盘票务协同影院管理影片管理场次管理订单管理观众管理智能运营智能排片卖座卡钱包众筹包场小卖品管理数据分析区域票房热力图影片生命周期观众LTV预测营销A/B测试系统管理登录注册发现分类观众注册影院娱乐服务聚合平台后台管理 票房热力图 影片生命周期 观众LTV A/B测试LoadSync Data总票房¥780.00总订单数6城市数4渠道分布官方渠道订单数: 5¥664.00小程序订单数: 1¥116.00H5页面订单数: 0¥0.00第三方平台订单数: 0¥0.00Top 5 影片#1The Last Dynasty订单数: 5¥644.00#2Galactic Horizon订单数: 1¥136.00Top 5 影院#1Stellar Cineplex BeijingBeijing · 订单数: 6¥780.00今日场次表现The Last DynastyStellar Cineplex Beijing · 14:00¥644.00Galactic HorizonStellar Cineplex Beijing · 19:00¥136.00Galactic HorizonStellar Cineplex Beijing · 21:30¥0.00Midnight EchoStellar Cineplex Beijing · 22:00¥0.00Code ZeroStellar Cineplex Beijing · 16:00¥0.00票房热力图城市总票房总订单数操作Beijing¥780.006查看订单Shanghai¥0.000查看订单Guangzhou¥0.000查看订单Shenzhen¥0.000查看订单",
+        "layout": {
+          "viewportWidth": 1696,
+          "viewportHeight": 1600,
+          "scrollWidth": 1696,
+          "scrollHeight": 1805,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89046-cycle31-structure-07-操作-查看报表",
+          "label": "操作:查看报表",
+          "finalUrl": "http://127.0.0.1:49046/analytics?tab=heatmap",
+          "title": "影院娱乐服务聚合平台",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89046/probe/codex-runtime-20260605-cycle31/may-89046-cycle31-structure-07-操作-查看报表.json",
+          "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89046/probe/codex-runtime-20260605-cycle31/may-89046-cycle31-structure-07-操作-查看报表.png",
+          "elementCount": 497,
+          "interactiveCount": 34,
+          "interactiveLabels": [
+            "工作台 仪表盘 票务协同 影院管理 影片管理 场次管理 订单管理 观众管理 智能运营 智能排片 卖座卡钱包 众筹包场 小卖品管理 数据分析 区域票房热力图 影片生命周期 观众LTV预测 营销A/B测试 系统管理 登录注册 发现分类 观众注册",
+            "仪表盘",
+            "影院管理",
+            "影片管理",
+            "场次管理",
+            "订单管理",
+            "观众管理",
+            "智能排片",
+            "卖座卡钱包",
+            "众筹包场",
+            "小卖品管理",
+            "区域票房热力图",
+            "影片生命周期",
+            "观众LTV预测",
+            "营销A/B测试",
+            "登录注册",
+            "发现分类",
+            "观众注册",
+            "票房热力图",
+            "Load Sync Data 总票房 ¥780.00 总订单数 6 城市数 4 渠道分布 官方渠道 订单数: 5 ¥664.00 小程序 订单数: 1 ¥116.00 H5页面 订单数: 0 ¥0.00 第三方平台 订单数: 0 ¥0.00 Top 5 影片 #1 The Last Dynasty 订单数: 5 ¥644.00 #2 Galactic Hor",
+            "2026-05-06",
+            "2026-06-05",
+            "Load",
+            "Sync Data",
+            "展开行",
+            "查看订单"
+          ]
+        }
+      },
+      {
+        "label": "二层操作:查看报表->查看订单",
+        "url": "http://127.0.0.1:49046/orders?city=Beijing",
+        "title": "影院娱乐服务聚合平台",
+        "headings": [],
+        "navLabels": [
+          "工作台 仪表盘",
+          "工作台",
+          "仪表盘",
+          "dashboard",
+          "票务协同 影院管理 影片管理 场次管理 订单管理 观众管理",
+          "票务协同",
+          "影院管理 影片管理 场次管理 订单管理 观众管理",
+          "影院管理",
+          "bank",
+          "影片管理",
+          "video-camera",
+          "场次管理",
+          "clock-circle",
+          "订单管理",
+          "shopping-cart",
+          "观众管理",
+          "team",
+          "智能运营 智能排片 卖座卡钱包 众筹包场 小卖品管理",
+          "智能运营",
+          "智能排片 卖座卡钱包 众筹包场 小卖品管理",
+          "智能排片",
+          "schedule",
+          "卖座卡钱包",
+          "wallet"
+        ],
+        "buttons": [
+          "Create Order",
+          "Detail"
+        ],
+        "links": [],
+        "inputs": [
+          {
+            "tag": "input",
+            "type": "search",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "search",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "search",
+            "placeholder": "",
+            "name": "",
+            "label": "页码"
+          }
+        ],
+        "tables": [
+          {
+            "headers": [
+              "Order No",
+              "Movie",
+              "Total Amount",
+              "Status",
+              "Payment",
+              "Created At",
+              "Actions"
+            ],
+            "rowCount": 6,
+            "hasEmptyText": false,
+            "textPreview": "Order No Movie Total Amount Status Payment Created At Actions ORD202606051623472336 The Last Dynasty ¥116 Pending Cash 2026-06-05 16:23:47 Detail ORD202606051622350106 The Last Dynasty ¥116 Pending Cash 2026-06-05 16:22:35 Detail ORD202606051622249685 The Last Dynasty ¥116 Pending Cash 2026-06-05 16"
+          }
+        ],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "影院聚合平台工作台仪表盘票务协同影院管理影片管理场次管理订单管理观众管理智能运营智能排片卖座卡钱包众筹包场小卖品管理数据分析区域票房热力图影片生命周期观众LTV预测营销A/B测试系统管理登录注册发现分类观众注册影院娱乐服务聚合平台后台管理Filter by audienceFilter by statusCreate OrderOrder NoMovieTotal AmountStatusPaymentCreated AtActionsORD202606051623472336The Last Dynasty¥116PendingCash2026-06-05 16:23:47DetailORD202606051622350106The Last Dynasty¥116PendingCash2026-06-05 16:22:35DetailORD202606051622249685The Last Dynasty¥116PendingCash2026-06-05 16:22:24DetailORD202606051415007494The Last Dynasty¥116PendingCash2026-06-05 14:15:00DetailORD202606051401481775The Last Dynasty¥180PendingWallet2026-06-05 14:01:48DetailORD202606042357573533Galactic Horizon¥136PendingWallet2026-06-04 23:57:57DetailTotal 6110 条/页",
+        "layout": {
+          "viewportWidth": 1728,
+          "viewportHeight": 1600,
+          "scrollWidth": 1728,
+          "scrollHeight": 1600,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89046-cycle31-structure-08-二层操作-查看报表-查看订单",
+          "label": "二层操作:查看报表->查看订单",
+          "finalUrl": "http://127.0.0.1:49046/orders?city=Beijing",
+          "title": "影院娱乐服务聚合平台",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89046/probe/codex-runtime-20260605-cycle31/may-89046-cycle31-structure-08-二层操作-查看报表-查看订单.json",
+          "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89046/probe/codex-runtime-20260605-cycle31/may-89046-cycle31-structure-08-二层操作-查看报表-查看订单.png",
+          "elementCount": 295,
+          "interactiveCount": 32,
+          "interactiveLabels": [
+            "工作台 仪表盘 票务协同 影院管理 影片管理 场次管理 订单管理 观众管理 智能运营 智能排片 卖座卡钱包 众筹包场 小卖品管理 数据分析 区域票房热力图 影片生命周期 观众LTV预测 营销A/B测试 系统管理 登录注册 发现分类 观众注册",
+            "仪表盘",
+            "影院管理",
+            "影片管理",
+            "场次管理",
+            "订单管理",
+            "观众管理",
+            "智能排片",
+            "卖座卡钱包",
+            "众筹包场",
+            "小卖品管理",
+            "区域票房热力图",
+            "影片生命周期",
+            "观众LTV预测",
+            "营销A/B测试",
+            "登录注册",
+            "发现分类",
+            "观众注册",
+            "Create Order",
+            "Detail",
+            "1",
+            "页码"
+          ]
+        }
+      },
+      {
+        "label": "操作:刷新数据",
+        "url": "http://127.0.0.1:49046/dashboard",
+        "title": "影院娱乐服务聚合平台",
+        "headings": [
+          "运营工作台"
+        ],
+        "navLabels": [
+          "工作台 仪表盘",
+          "工作台",
+          "仪表盘",
+          "dashboard",
+          "票务协同 影院管理 影片管理 场次管理 订单管理 观众管理",
+          "票务协同",
+          "影院管理 影片管理 场次管理 订单管理 观众管理",
+          "影院管理",
+          "bank",
+          "影片管理",
+          "video-camera",
+          "场次管理",
+          "clock-circle",
+          "订单管理",
+          "shopping-cart",
+          "观众管理",
+          "team",
+          "智能运营 智能排片 卖座卡钱包 众筹包场 小卖品管理",
+          "智能运营",
+          "智能排片 卖座卡钱包 众筹包场 小卖品管理",
+          "智能排片",
+          "schedule",
+          "卖座卡钱包",
+          "wallet"
+        ],
+        "buttons": [
+          "刷新数据",
+          "去管理 →",
+          "查看报表",
+          "展开行"
+        ],
+        "links": [],
+        "inputs": [
+          {
+            "tag": "input",
+            "type": "search",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          }
+        ],
+        "tables": [
+          {
+            "headers": [
+              "订单号",
+              "渠道来源",
+              "影片",
+              "影院信息",
+              "场次信息",
+              "座位",
+              "金额",
+              "支付方式",
+              "关联信息",
+              "核销结果",
+              "状态",
+              "创建时间"
+            ],
+            "rowCount": 6,
+            "hasEmptyText": false,
+            "textPreview": "订单号 渠道来源 影片 影院信息 场次信息 座位 金额 支付方式 关联信息 核销结果 状态 创建时间 订单号 渠道来源 影片 影院信息 场次信息 座位 金额 支付方式 关联信息 核销结果 状态 创建时间 ORD202606051623472336 自有系统 The Last Dynasty Stellar Cineplex Beijing · Hall 3 - Standard 2026-06-05 14:00 3排1座 3排2座 ¥116.00 现金 - 待核销 pending 2026-06-05 16:23 ORD202606051622350106 自有系统 The Last Dyna"
+          }
+        ],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "影院聚合平台工作台仪表盘票务协同影院管理影片管理场次管理订单管理观众管理智能运营智能排片卖座卡钱包众筹包场小卖品管理数据分析区域票房热力图影片生命周期观众LTV预测营销A/B测试系统管理登录注册发现分类观众注册影院娱乐服务聚合平台后台管理运营工作台2026年06月05日 · 欢迎使用影院娱乐服务聚合平台运营工作台业务快捷入口刷新数据影院管理全国4000+影院协同4去管理 →影片管理版权/物料/分账全追踪4去管理 →场次管理座位图/锁位/退改联动7去管理 →观众管理会员/偏好/画像分析3去管理 →订单管理多渠道票务分发6去管理 →智能排片上座率预测/黄金时段去管理 →卖座卡钱包企业福利/消费核销去管理 →众筹包场活动成团/座位预留去管理 →小卖品管理套餐绑定/组合销售去管理 →数据分析报表区域票房热力图城市票房分布分析查看报表影片生命周期上映曲线/生命周期追踪查看报表观众LTV预测长期价值预测/分层运营查看报表营销A/B测试活动效果对比/数据验证查看报表业务异常反馈待处理异常订单6即将超时场次0今日申诉工单0业务闭环验收指南选座锁位场次管理 → 座位 → 锁定座位/释放退改规则场次详情 → 退改规则面板消费核销订单管理 → 核销状态追踪活动成团众筹包场 → 目标达成自动成团卖座卡消费卖座卡钱包 → 余额/交易记录近期订单 (6条)订单号渠道来源影片影院信息场次信息座位金额支付方式关联信息核销结果状态创建时间 订单号渠道来源影片影院信息场次信息座位金额支付方式关联信息核销结果状态创建时间ORD202606051623472336自有系统The Last DynastyStellar Cineplex Beijing · Hall 3 - Standard2026-06-05 14:003排1座3排2座¥116.00现金-待核销pending2026-06-05 16:23ORD202606051622350106自有系统The Last DynastyStellar Cineplex Beijing · Hall 3 - Standard2026-06-05 14:002排1座2排2座¥116.00现金-待核销pending2026-06-05 16:22ORD202606051622249685自有系统The Last DynastyStellar Cineplex Beijing · Hall 3 - Standard2026-06-05 14:001排1座1排2座¥116.00现金-待核销pending2026-06-05 16:22ORD202606051415007494小程序The Last DynastyStellar Cineplex Beijing · Hall 3 - Standard2026-06-05 14:001排5座1排6座¥116.00现金-待核销pending2026-06-05 14:15ORD202606051401481775自有系统The Last DynastyStellar Cineplex Beijing · Hall 3 - Standard2026-06-05 14:001排3座1排4座¥180.00卖座卡卡·****待核销pending2026-06-05 14:01ORD202606042357573533自有系统Galactic HorizonStellar Cineplex Beijing · Hall 1 - IMAX2026-06-05 19:001排1座1排2座¥136.00卖座卡-待核销pending2026-06-04 23:57",
+        "layout": {
+          "viewportWidth": 1760,
+          "viewportHeight": 1600,
+          "scrollWidth": 1760,
+          "scrollHeight": 2136,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89046-cycle31-structure-09-操作-刷新数据",
+          "label": "操作:刷新数据",
+          "finalUrl": "http://127.0.0.1:49046/dashboard",
+          "title": "影院娱乐服务聚合平台",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89046/probe/codex-runtime-20260605-cycle31/may-89046-cycle31-structure-09-操作-刷新数据.json",
+          "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89046/probe/codex-runtime-20260605-cycle31/may-89046-cycle31-structure-09-操作-刷新数据.png",
+          "elementCount": 736,
+          "interactiveCount": 45,
+          "interactiveLabels": [
+            "工作台 仪表盘 票务协同 影院管理 影片管理 场次管理 订单管理 观众管理 智能运营 智能排片 卖座卡钱包 众筹包场 小卖品管理 数据分析 区域票房热力图 影片生命周期 观众LTV预测 营销A/B测试 系统管理 登录注册 发现分类 观众注册",
+            "仪表盘",
+            "影院管理",
+            "影片管理",
+            "场次管理",
+            "订单管理",
+            "观众管理",
+            "智能排片",
+            "卖座卡钱包",
+            "众筹包场",
+            "小卖品管理",
+            "区域票房热力图",
+            "影片生命周期",
+            "观众LTV预测",
+            "营销A/B测试",
+            "登录注册",
+            "发现分类",
+            "观众注册",
+            "刷新数据",
+            "去管理 →",
+            "查看报表",
+            "展开行"
+          ]
+        }
+      },
+      {
+        "label": "导航:票务协同",
+        "url": "http://127.0.0.1:49046/dashboard",
+        "title": "影院娱乐服务聚合平台",
+        "headings": [
+          "运营工作台"
+        ],
+        "navLabels": [
+          "工作台 仪表盘",
+          "工作台",
+          "仪表盘",
+          "dashboard",
+          "票务协同 影院管理 影片管理 场次管理 订单管理 观众管理",
+          "票务协同",
+          "影院管理 影片管理 场次管理 订单管理 观众管理",
+          "影院管理",
+          "bank",
+          "影片管理",
+          "video-camera",
+          "场次管理",
+          "clock-circle",
+          "订单管理",
+          "shopping-cart",
+          "观众管理",
+          "team",
+          "智能运营 智能排片 卖座卡钱包 众筹包场 小卖品管理",
+          "智能运营",
+          "智能排片 卖座卡钱包 众筹包场 小卖品管理",
+          "智能排片",
+          "schedule",
+          "卖座卡钱包",
+          "wallet"
+        ],
+        "buttons": [
+          "刷新数据",
+          "去管理 →",
+          "查看报表",
+          "展开行"
+        ],
+        "links": [],
+        "inputs": [
+          {
+            "tag": "input",
+            "type": "search",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          }
+        ],
+        "tables": [
+          {
+            "headers": [
+              "订单号",
+              "渠道来源",
+              "影片",
+              "影院信息",
+              "场次信息",
+              "座位",
+              "金额",
+              "支付方式",
+              "关联信息",
+              "核销结果",
+              "状态",
+              "创建时间"
+            ],
+            "rowCount": 6,
+            "hasEmptyText": false,
+            "textPreview": "订单号 渠道来源 影片 影院信息 场次信息 座位 金额 支付方式 关联信息 核销结果 状态 创建时间 订单号 渠道来源 影片 影院信息 场次信息 座位 金额 支付方式 关联信息 核销结果 状态 创建时间 ORD202606051623472336 自有系统 The Last Dynasty Stellar Cineplex Beijing · Hall 3 - Standard 2026-06-05 14:00 3排1座 3排2座 ¥116.00 现金 - 待核销 pending 2026-06-05 16:23 ORD202606051622350106 自有系统 The Last Dyna"
+          }
+        ],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "影院聚合平台工作台仪表盘票务协同影院管理影片管理场次管理订单管理观众管理智能运营智能排片卖座卡钱包众筹包场小卖品管理数据分析区域票房热力图影片生命周期观众LTV预测营销A/B测试系统管理登录注册发现分类观众注册影院娱乐服务聚合平台后台管理运营工作台2026年06月05日 · 欢迎使用影院娱乐服务聚合平台运营工作台业务快捷入口刷新数据影院管理全国4000+影院协同4去管理 →影片管理版权/物料/分账全追踪4去管理 →场次管理座位图/锁位/退改联动7去管理 →观众管理会员/偏好/画像分析3去管理 →订单管理多渠道票务分发6去管理 →智能排片上座率预测/黄金时段去管理 →卖座卡钱包企业福利/消费核销去管理 →众筹包场活动成团/座位预留去管理 →小卖品管理套餐绑定/组合销售去管理 →数据分析报表区域票房热力图城市票房分布分析查看报表影片生命周期上映曲线/生命周期追踪查看报表观众LTV预测长期价值预测/分层运营查看报表营销A/B测试活动效果对比/数据验证查看报表业务异常反馈待处理异常订单6即将超时场次0今日申诉工单0业务闭环验收指南选座锁位场次管理 → 座位 → 锁定座位/释放退改规则场次详情 → 退改规则面板消费核销订单管理 → 核销状态追踪活动成团众筹包场 → 目标达成自动成团卖座卡消费卖座卡钱包 → 余额/交易记录近期订单 (6条)订单号渠道来源影片影院信息场次信息座位金额支付方式关联信息核销结果状态创建时间 订单号渠道来源影片影院信息场次信息座位金额支付方式关联信息核销结果状态创建时间ORD202606051623472336自有系统The Last DynastyStellar Cineplex Beijing · Hall 3 - Standard2026-06-05 14:003排1座3排2座¥116.00现金-待核销pending2026-06-05 16:23ORD202606051622350106自有系统The Last DynastyStellar Cineplex Beijing · Hall 3 - Standard2026-06-05 14:002排1座2排2座¥116.00现金-待核销pending2026-06-05 16:22ORD202606051622249685自有系统The Last DynastyStellar Cineplex Beijing · Hall 3 - Standard2026-06-05 14:001排1座1排2座¥116.00现金-待核销pending2026-06-05 16:22ORD202606051415007494小程序The Last DynastyStellar Cineplex Beijing · Hall 3 - Standard2026-06-05 14:001排5座1排6座¥116.00现金-待核销pending2026-06-05 14:15ORD202606051401481775自有系统The Last DynastyStellar Cineplex Beijing · Hall 3 - Standard2026-06-05 14:001排3座1排4座¥180.00卖座卡卡·****待核销pending2026-06-05 14:01ORD202606042357573533自有系统Galactic HorizonStellar Cineplex Beijing · Hall 1 - IMAX2026-06-05 19:001排1座1排2座¥136.00卖座卡-待核销pending2026-06-04 23:57",
+        "layout": {
+          "viewportWidth": 1792,
+          "viewportHeight": 1600,
+          "scrollWidth": 1792,
+          "scrollHeight": 2136,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89046-cycle31-structure-10-导航-票务协同",
+          "label": "导航:票务协同",
+          "finalUrl": "http://127.0.0.1:49046/dashboard",
+          "title": "影院娱乐服务聚合平台",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89046/probe/codex-runtime-20260605-cycle31/may-89046-cycle31-structure-10-导航-票务协同.json",
+          "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89046/probe/codex-runtime-20260605-cycle31/may-89046-cycle31-structure-10-导航-票务协同.png",
+          "elementCount": 736,
+          "interactiveCount": 45,
+          "interactiveLabels": [
+            "工作台 仪表盘 票务协同 影院管理 影片管理 场次管理 订单管理 观众管理 智能运营 智能排片 卖座卡钱包 众筹包场 小卖品管理 数据分析 区域票房热力图 影片生命周期 观众LTV预测 营销A/B测试 系统管理 登录注册 发现分类 观众注册",
+            "仪表盘",
+            "影院管理",
+            "影片管理",
+            "场次管理",
+            "订单管理",
+            "观众管理",
+            "智能排片",
+            "卖座卡钱包",
+            "众筹包场",
+            "小卖品管理",
+            "区域票房热力图",
+            "影片生命周期",
+            "观众LTV预测",
+            "营销A/B测试",
+            "登录注册",
+            "发现分类",
+            "观众注册",
+            "刷新数据",
+            "去管理 →",
+            "查看报表",
+            "展开行"
+          ]
+        }
+      },
+      {
+        "label": "操作:查看报表",
+        "url": "http://127.0.0.1:49046/analytics?tab=heatmap",
+        "title": "影院娱乐服务聚合平台",
+        "headings": [],
+        "navLabels": [
+          "工作台 仪表盘",
+          "工作台",
+          "仪表盘",
+          "dashboard",
+          "票务协同 影院管理 影片管理 场次管理 订单管理 观众管理",
+          "票务协同",
+          "影院管理 影片管理 场次管理 订单管理 观众管理",
+          "影院管理",
+          "bank",
+          "影片管理",
+          "video-camera",
+          "场次管理",
+          "clock-circle",
+          "订单管理",
+          "shopping-cart",
+          "观众管理",
+          "team",
+          "智能运营 智能排片 卖座卡钱包 众筹包场 小卖品管理",
+          "智能运营",
+          "智能排片 卖座卡钱包 众筹包场 小卖品管理",
+          "智能排片",
+          "schedule",
+          "卖座卡钱包",
+          "wallet"
+        ],
+        "buttons": [
+          "Load",
+          "Sync Data",
+          "展开行",
+          "查看订单"
+        ],
+        "links": [],
+        "inputs": [
+          {
+            "tag": "input",
+            "type": "",
+            "placeholder": "开始日期",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "",
+            "placeholder": "结束日期",
+            "name": "",
+            "label": ""
+          }
+        ],
+        "tables": [
+          {
+            "headers": [
+              "城市",
+              "总票房",
+              "总订单数",
+              "操作"
+            ],
+            "rowCount": 4,
+            "hasEmptyText": false,
+            "textPreview": "城市 总票房 总订单数 操作 Beijing ¥780.00 6 查看订单 Shanghai ¥0.00 0 查看订单 Guangzhou ¥0.00 0 查看订单 Shenzhen ¥0.00 0 查看订单"
+          }
+        ],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "影院聚合平台工作台仪表盘票务协同影院管理影片管理场次管理订单管理观众管理智能运营智能排片卖座卡钱包众筹包场小卖品管理数据分析区域票房热力图影片生命周期观众LTV预测营销A/B测试系统管理登录注册发现分类观众注册影院娱乐服务聚合平台后台管理 票房热力图 影片生命周期 观众LTV A/B测试LoadSync Data总票房¥780.00总订单数6城市数4渠道分布官方渠道订单数: 5¥664.00小程序订单数: 1¥116.00H5页面订单数: 0¥0.00第三方平台订单数: 0¥0.00Top 5 影片#1The Last Dynasty订单数: 5¥644.00#2Galactic Horizon订单数: 1¥136.00Top 5 影院#1Stellar Cineplex BeijingBeijing · 订单数: 6¥780.00今日场次表现The Last DynastyStellar Cineplex Beijing · 14:00¥644.00Galactic HorizonStellar Cineplex Beijing · 19:00¥136.00Galactic HorizonStellar Cineplex Beijing · 21:30¥0.00Midnight EchoStellar Cineplex Beijing · 22:00¥0.00Code ZeroStellar Cineplex Beijing · 16:00¥0.00票房热力图城市总票房总订单数操作Beijing¥780.006查看订单Shanghai¥0.000查看订单Guangzhou¥0.000查看订单Shenzhen¥0.000查看订单",
+        "layout": {
+          "viewportWidth": 1824,
+          "viewportHeight": 1600,
+          "scrollWidth": 1824,
+          "scrollHeight": 1805,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89046-cycle31-structure-11-操作-查看报表",
+          "label": "操作:查看报表",
+          "finalUrl": "http://127.0.0.1:49046/analytics?tab=heatmap",
+          "title": "影院娱乐服务聚合平台",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89046/probe/codex-runtime-20260605-cycle31/may-89046-cycle31-structure-11-操作-查看报表.json",
+          "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89046/probe/codex-runtime-20260605-cycle31/may-89046-cycle31-structure-11-操作-查看报表.png",
+          "elementCount": 497,
+          "interactiveCount": 34,
+          "interactiveLabels": [
+            "工作台 仪表盘 票务协同 影院管理 影片管理 场次管理 订单管理 观众管理 智能运营 智能排片 卖座卡钱包 众筹包场 小卖品管理 数据分析 区域票房热力图 影片生命周期 观众LTV预测 营销A/B测试 系统管理 登录注册 发现分类 观众注册",
+            "仪表盘",
+            "影院管理",
+            "影片管理",
+            "场次管理",
+            "订单管理",
+            "观众管理",
+            "智能排片",
+            "卖座卡钱包",
+            "众筹包场",
+            "小卖品管理",
+            "区域票房热力图",
+            "影片生命周期",
+            "观众LTV预测",
+            "营销A/B测试",
+            "登录注册",
+            "发现分类",
+            "观众注册",
+            "票房热力图",
+            "Load Sync Data 总票房 ¥780.00 总订单数 6 城市数 4 渠道分布 官方渠道 订单数: 5 ¥664.00 小程序 订单数: 1 ¥116.00 H5页面 订单数: 0 ¥0.00 第三方平台 订单数: 0 ¥0.00 Top 5 影片 #1 The Last Dynasty 订单数: 5 ¥644.00 #2 Galactic Hor",
+            "2026-05-06",
+            "2026-06-05",
+            "Load",
+            "Sync Data",
+            "展开行",
+            "查看订单"
+          ]
+        }
+      },
+      {
+        "label": "二层操作:查看报表->查看订单",
+        "url": "http://127.0.0.1:49046/orders?city=Beijing",
+        "title": "影院娱乐服务聚合平台",
+        "headings": [],
+        "navLabels": [
+          "工作台 仪表盘",
+          "工作台",
+          "仪表盘",
+          "dashboard",
+          "票务协同 影院管理 影片管理 场次管理 订单管理 观众管理",
+          "票务协同",
+          "影院管理 影片管理 场次管理 订单管理 观众管理",
+          "影院管理",
+          "bank",
+          "影片管理",
+          "video-camera",
+          "场次管理",
+          "clock-circle",
+          "订单管理",
+          "shopping-cart",
+          "观众管理",
+          "team",
+          "智能运营 智能排片 卖座卡钱包 众筹包场 小卖品管理",
+          "智能运营",
+          "智能排片 卖座卡钱包 众筹包场 小卖品管理",
+          "智能排片",
+          "schedule",
+          "卖座卡钱包",
+          "wallet"
+        ],
+        "buttons": [
+          "Create Order",
+          "Detail"
+        ],
+        "links": [],
+        "inputs": [
+          {
+            "tag": "input",
+            "type": "search",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "search",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "search",
+            "placeholder": "",
+            "name": "",
+            "label": "页码"
+          }
+        ],
+        "tables": [
+          {
+            "headers": [
+              "Order No",
+              "Movie",
+              "Total Amount",
+              "Status",
+              "Payment",
+              "Created At",
+              "Actions"
+            ],
+            "rowCount": 6,
+            "hasEmptyText": false,
+            "textPreview": "Order No Movie Total Amount Status Payment Created At Actions ORD202606051623472336 The Last Dynasty ¥116 Pending Cash 2026-06-05 16:23:47 Detail ORD202606051622350106 The Last Dynasty ¥116 Pending Cash 2026-06-05 16:22:35 Detail ORD202606051622249685 The Last Dynasty ¥116 Pending Cash 2026-06-05 16"
+          }
+        ],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "影院聚合平台工作台仪表盘票务协同影院管理影片管理场次管理订单管理观众管理智能运营智能排片卖座卡钱包众筹包场小卖品管理数据分析区域票房热力图影片生命周期观众LTV预测营销A/B测试系统管理登录注册发现分类观众注册影院娱乐服务聚合平台后台管理Filter by audienceFilter by statusCreate OrderOrder NoMovieTotal AmountStatusPaymentCreated AtActionsORD202606051623472336The Last Dynasty¥116PendingCash2026-06-05 16:23:47DetailORD202606051622350106The Last Dynasty¥116PendingCash2026-06-05 16:22:35DetailORD202606051622249685The Last Dynasty¥116PendingCash2026-06-05 16:22:24DetailORD202606051415007494The Last Dynasty¥116PendingCash2026-06-05 14:15:00DetailORD202606051401481775The Last Dynasty¥180PendingWallet2026-06-05 14:01:48DetailORD202606042357573533Galactic Horizon¥136PendingWallet2026-06-04 23:57:57DetailTotal 6110 条/页",
+        "layout": {
+          "viewportWidth": 1856,
+          "viewportHeight": 1600,
+          "scrollWidth": 1856,
+          "scrollHeight": 1600,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89046-cycle31-structure-12-二层操作-查看报表-查看订单",
+          "label": "二层操作:查看报表->查看订单",
+          "finalUrl": "http://127.0.0.1:49046/orders?city=Beijing",
+          "title": "影院娱乐服务聚合平台",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89046/probe/codex-runtime-20260605-cycle31/may-89046-cycle31-structure-12-二层操作-查看报表-查看订单.json",
+          "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89046/probe/codex-runtime-20260605-cycle31/may-89046-cycle31-structure-12-二层操作-查看报表-查看订单.png",
+          "elementCount": 295,
+          "interactiveCount": 32,
+          "interactiveLabels": [
+            "工作台 仪表盘 票务协同 影院管理 影片管理 场次管理 订单管理 观众管理 智能运营 智能排片 卖座卡钱包 众筹包场 小卖品管理 数据分析 区域票房热力图 影片生命周期 观众LTV预测 营销A/B测试 系统管理 登录注册 发现分类 观众注册",
+            "仪表盘",
+            "影院管理",
+            "影片管理",
+            "场次管理",
+            "订单管理",
+            "观众管理",
+            "智能排片",
+            "卖座卡钱包",
+            "众筹包场",
+            "小卖品管理",
+            "区域票房热力图",
+            "影片生命周期",
+            "观众LTV预测",
+            "营销A/B测试",
+            "登录注册",
+            "发现分类",
+            "观众注册",
+            "Create Order",
+            "Detail",
+            "1",
+            "页码"
+          ]
+        }
+      },
+      {
+        "label": "操作:刷新数据",
+        "url": "http://127.0.0.1:49046/dashboard",
+        "title": "影院娱乐服务聚合平台",
+        "headings": [
+          "运营工作台"
+        ],
+        "navLabels": [
+          "工作台 仪表盘",
+          "工作台",
+          "仪表盘",
+          "dashboard",
+          "票务协同 影院管理 影片管理 场次管理 订单管理 观众管理",
+          "票务协同",
+          "影院管理 影片管理 场次管理 订单管理 观众管理",
+          "影院管理",
+          "bank",
+          "影片管理",
+          "video-camera",
+          "场次管理",
+          "clock-circle",
+          "订单管理",
+          "shopping-cart",
+          "观众管理",
+          "team",
+          "智能运营 智能排片 卖座卡钱包 众筹包场 小卖品管理",
+          "智能运营",
+          "智能排片 卖座卡钱包 众筹包场 小卖品管理",
+          "智能排片",
+          "schedule",
+          "卖座卡钱包",
+          "wallet"
+        ],
+        "buttons": [
+          "刷新数据",
+          "去管理 →",
+          "查看报表",
+          "展开行"
+        ],
+        "links": [],
+        "inputs": [
+          {
+            "tag": "input",
+            "type": "search",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          }
+        ],
+        "tables": [
+          {
+            "headers": [
+              "订单号",
+              "渠道来源",
+              "影片",
+              "影院信息",
+              "场次信息",
+              "座位",
+              "金额",
+              "支付方式",
+              "关联信息",
+              "核销结果",
+              "状态",
+              "创建时间"
+            ],
+            "rowCount": 6,
+            "hasEmptyText": false,
+            "textPreview": "订单号 渠道来源 影片 影院信息 场次信息 座位 金额 支付方式 关联信息 核销结果 状态 创建时间 订单号 渠道来源 影片 影院信息 场次信息 座位 金额 支付方式 关联信息 核销结果 状态 创建时间 ORD202606051623472336 自有系统 The Last Dynasty Stellar Cineplex Beijing · Hall 3 - Standard 2026-06-05 14:00 3排1座 3排2座 ¥116.00 现金 - 待核销 pending 2026-06-05 16:23 ORD202606051622350106 自有系统 The Last Dyna"
+          }
+        ],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "影院聚合平台工作台仪表盘票务协同影院管理影片管理场次管理订单管理观众管理智能运营智能排片卖座卡钱包众筹包场小卖品管理数据分析区域票房热力图影片生命周期观众LTV预测营销A/B测试系统管理登录注册发现分类观众注册影院娱乐服务聚合平台后台管理运营工作台2026年06月05日 · 欢迎使用影院娱乐服务聚合平台运营工作台业务快捷入口刷新数据影院管理全国4000+影院协同4去管理 →影片管理版权/物料/分账全追踪4去管理 →场次管理座位图/锁位/退改联动7去管理 →观众管理会员/偏好/画像分析3去管理 →订单管理多渠道票务分发6去管理 →智能排片上座率预测/黄金时段去管理 →卖座卡钱包企业福利/消费核销去管理 →众筹包场活动成团/座位预留去管理 →小卖品管理套餐绑定/组合销售去管理 →数据分析报表区域票房热力图城市票房分布分析查看报表影片生命周期上映曲线/生命周期追踪查看报表观众LTV预测长期价值预测/分层运营查看报表营销A/B测试活动效果对比/数据验证查看报表业务异常反馈待处理异常订单6即将超时场次0今日申诉工单0业务闭环验收指南选座锁位场次管理 → 座位 → 锁定座位/释放退改规则场次详情 → 退改规则面板消费核销订单管理 → 核销状态追踪活动成团众筹包场 → 目标达成自动成团卖座卡消费卖座卡钱包 → 余额/交易记录近期订单 (6条)订单号渠道来源影片影院信息场次信息座位金额支付方式关联信息核销结果状态创建时间 订单号渠道来源影片影院信息场次信息座位金额支付方式关联信息核销结果状态创建时间ORD202606051623472336自有系统The Last DynastyStellar Cineplex Beijing · Hall 3 - Standard2026-06-05 14:003排1座3排2座¥116.00现金-待核销pending2026-06-05 16:23ORD202606051622350106自有系统The Last DynastyStellar Cineplex Beijing · Hall 3 - Standard2026-06-05 14:002排1座2排2座¥116.00现金-待核销pending2026-06-05 16:22ORD202606051622249685自有系统The Last DynastyStellar Cineplex Beijing · Hall 3 - Standard2026-06-05 14:001排1座1排2座¥116.00现金-待核销pending2026-06-05 16:22ORD202606051415007494小程序The Last DynastyStellar Cineplex Beijing · Hall 3 - Standard2026-06-05 14:001排5座1排6座¥116.00现金-待核销pending2026-06-05 14:15ORD202606051401481775自有系统The Last DynastyStellar Cineplex Beijing · Hall 3 - Standard2026-06-05 14:001排3座1排4座¥180.00卖座卡卡·****待核销pending2026-06-05 14:01ORD202606042357573533自有系统Galactic HorizonStellar Cineplex Beijing · Hall 1 - IMAX2026-06-05 19:001排1座1排2座¥136.00卖座卡-待核销pending2026-06-04 23:57",
+        "layout": {
+          "viewportWidth": 1888,
+          "viewportHeight": 1600,
+          "scrollWidth": 1888,
+          "scrollHeight": 2136,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89046-cycle31-structure-13-操作-刷新数据",
+          "label": "操作:刷新数据",
+          "finalUrl": "http://127.0.0.1:49046/dashboard",
+          "title": "影院娱乐服务聚合平台",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89046/probe/codex-runtime-20260605-cycle31/may-89046-cycle31-structure-13-操作-刷新数据.json",
+          "screenshotPath": "",
+          "elementCount": 736,
+          "interactiveCount": 45,
+          "interactiveLabels": [
+            "工作台 仪表盘 票务协同 影院管理 影片管理 场次管理 订单管理 观众管理 智能运营 智能排片 卖座卡钱包 众筹包场 小卖品管理 数据分析 区域票房热力图 影片生命周期 观众LTV预测 营销A/B测试 系统管理 登录注册 发现分类 观众注册",
+            "仪表盘",
+            "影院管理",
+            "影片管理",
+            "场次管理",
+            "订单管理",
+            "观众管理",
+            "智能排片",
+            "卖座卡钱包",
+            "众筹包场",
+            "小卖品管理",
+            "区域票房热力图",
+            "影片生命周期",
+            "观众LTV预测",
+            "营销A/B测试",
+            "登录注册",
+            "发现分类",
+            "观众注册",
+            "刷新数据",
+            "去管理 →",
+            "查看报表",
+            "展开行"
+          ]
+        }
+      }
+    ],
+    "findings": [],
+    "actionHints": [],
+    "emptyPages": [],
+    "overflowPages": [],
+    "blankPages": [],
+    "apiFailurePaths": [],
+    "goalTerms": [],
+    "clickedActionDescriptors": [
+      {
+        "nav": "工作台",
+        "label": "查看报表",
+        "ordinal": 0,
+        "unsafe": false
+      },
+      {
+        "nav": "工作台",
+        "label": "查看报表->查看订单",
+        "ordinal": 0,
+        "secondary": true,
+        "unsafe": false
+      },
+      {
+        "nav": "工作台",
+        "label": "刷新数据",
+        "ordinal": 0,
+        "unsafe": false
+      },
+      {
+        "nav": "仪表盘",
+        "label": "查看报表",
+        "ordinal": 0,
+        "unsafe": false
+      },
+      {
+        "nav": "仪表盘",
+        "label": "查看报表->查看订单",
+        "ordinal": 0,
+        "secondary": true,
+        "unsafe": false
+      },
+      {
+        "nav": "仪表盘",
+        "label": "刷新数据",
+        "ordinal": 0,
+        "unsafe": false
+      },
+      {
+        "nav": "票务协同",
+        "label": "查看报表",
+        "ordinal": 0,
+        "unsafe": false
+      },
+      {
+        "nav": "票务协同",
+        "label": "查看报表->查看订单",
+        "ordinal": 0,
+        "secondary": true,
+        "unsafe": false
+      },
+      {
+        "nav": "票务协同",
+        "label": "刷新数据",
+        "ordinal": 0,
+        "unsafe": false
+      }
+    ],
+    "secondaryActionClicks": 3,
+    "structureCaptures": [
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89046-cycle31-structure-01-首屏",
+        "label": "首屏",
+        "finalUrl": "http://127.0.0.1:49046/dashboard",
+        "title": "影院娱乐服务聚合平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89046/probe/codex-runtime-20260605-cycle31/may-89046-cycle31-structure-01-首屏.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89046/probe/codex-runtime-20260605-cycle31/may-89046-cycle31-structure-01-首屏.png",
+        "elementCount": 736,
+        "interactiveCount": 45,
+        "interactiveLabels": [
+          "工作台 仪表盘 票务协同 影院管理 影片管理 场次管理 订单管理 观众管理 智能运营 智能排片 卖座卡钱包 众筹包场 小卖品管理 数据分析 区域票房热力图 影片生命周期 观众LTV预测 营销A/B测试 系统管理 登录注册 发现分类 观众注册",
+          "仪表盘",
+          "影院管理",
+          "影片管理",
+          "场次管理",
+          "订单管理",
+          "观众管理",
+          "智能排片",
+          "卖座卡钱包",
+          "众筹包场",
+          "小卖品管理",
+          "区域票房热力图",
+          "影片生命周期",
+          "观众LTV预测",
+          "营销A/B测试",
+          "登录注册",
+          "发现分类",
+          "观众注册",
+          "刷新数据",
+          "去管理 →",
+          "查看报表",
+          "展开行"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89046-cycle31-structure-02-导航-工作台",
+        "label": "导航:工作台",
+        "finalUrl": "http://127.0.0.1:49046/dashboard",
+        "title": "影院娱乐服务聚合平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89046/probe/codex-runtime-20260605-cycle31/may-89046-cycle31-structure-02-导航-工作台.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89046/probe/codex-runtime-20260605-cycle31/may-89046-cycle31-structure-02-导航-工作台.png",
+        "elementCount": 736,
+        "interactiveCount": 45,
+        "interactiveLabels": [
+          "工作台 仪表盘 票务协同 影院管理 影片管理 场次管理 订单管理 观众管理 智能运营 智能排片 卖座卡钱包 众筹包场 小卖品管理 数据分析 区域票房热力图 影片生命周期 观众LTV预测 营销A/B测试 系统管理 登录注册 发现分类 观众注册",
+          "仪表盘",
+          "影院管理",
+          "影片管理",
+          "场次管理",
+          "订单管理",
+          "观众管理",
+          "智能排片",
+          "卖座卡钱包",
+          "众筹包场",
+          "小卖品管理",
+          "区域票房热力图",
+          "影片生命周期",
+          "观众LTV预测",
+          "营销A/B测试",
+          "登录注册",
+          "发现分类",
+          "观众注册",
+          "刷新数据",
+          "去管理 →",
+          "查看报表",
+          "展开行"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89046-cycle31-structure-03-操作-查看报表",
+        "label": "操作:查看报表",
+        "finalUrl": "http://127.0.0.1:49046/analytics?tab=heatmap",
+        "title": "影院娱乐服务聚合平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89046/probe/codex-runtime-20260605-cycle31/may-89046-cycle31-structure-03-操作-查看报表.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89046/probe/codex-runtime-20260605-cycle31/may-89046-cycle31-structure-03-操作-查看报表.png",
+        "elementCount": 497,
+        "interactiveCount": 34,
+        "interactiveLabels": [
+          "工作台 仪表盘 票务协同 影院管理 影片管理 场次管理 订单管理 观众管理 智能运营 智能排片 卖座卡钱包 众筹包场 小卖品管理 数据分析 区域票房热力图 影片生命周期 观众LTV预测 营销A/B测试 系统管理 登录注册 发现分类 观众注册",
+          "仪表盘",
+          "影院管理",
+          "影片管理",
+          "场次管理",
+          "订单管理",
+          "观众管理",
+          "智能排片",
+          "卖座卡钱包",
+          "众筹包场",
+          "小卖品管理",
+          "区域票房热力图",
+          "影片生命周期",
+          "观众LTV预测",
+          "营销A/B测试",
+          "登录注册",
+          "发现分类",
+          "观众注册",
+          "票房热力图",
+          "Load Sync Data 总票房 ¥780.00 总订单数 6 城市数 4 渠道分布 官方渠道 订单数: 5 ¥664.00 小程序 订单数: 1 ¥116.00 H5页面 订单数: 0 ¥0.00 第三方平台 订单数: 0 ¥0.00 Top 5 影片 #1 The Last Dynasty 订单数: 5 ¥644.00 #2 Galactic Hor",
+          "2026-05-06",
+          "2026-06-05",
+          "Load",
+          "Sync Data",
+          "展开行",
+          "查看订单"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89046-cycle31-structure-04-二层操作-查看报表-查看订单",
+        "label": "二层操作:查看报表->查看订单",
+        "finalUrl": "http://127.0.0.1:49046/orders?city=Beijing",
+        "title": "影院娱乐服务聚合平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89046/probe/codex-runtime-20260605-cycle31/may-89046-cycle31-structure-04-二层操作-查看报表-查看订单.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89046/probe/codex-runtime-20260605-cycle31/may-89046-cycle31-structure-04-二层操作-查看报表-查看订单.png",
+        "elementCount": 295,
+        "interactiveCount": 32,
+        "interactiveLabels": [
+          "工作台 仪表盘 票务协同 影院管理 影片管理 场次管理 订单管理 观众管理 智能运营 智能排片 卖座卡钱包 众筹包场 小卖品管理 数据分析 区域票房热力图 影片生命周期 观众LTV预测 营销A/B测试 系统管理 登录注册 发现分类 观众注册",
+          "仪表盘",
+          "影院管理",
+          "影片管理",
+          "场次管理",
+          "订单管理",
+          "观众管理",
+          "智能排片",
+          "卖座卡钱包",
+          "众筹包场",
+          "小卖品管理",
+          "区域票房热力图",
+          "影片生命周期",
+          "观众LTV预测",
+          "营销A/B测试",
+          "登录注册",
+          "发现分类",
+          "观众注册",
+          "Create Order",
+          "Detail",
+          "1",
+          "页码"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89046-cycle31-structure-05-操作-刷新数据",
+        "label": "操作:刷新数据",
+        "finalUrl": "http://127.0.0.1:49046/dashboard",
+        "title": "影院娱乐服务聚合平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89046/probe/codex-runtime-20260605-cycle31/may-89046-cycle31-structure-05-操作-刷新数据.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89046/probe/codex-runtime-20260605-cycle31/may-89046-cycle31-structure-05-操作-刷新数据.png",
+        "elementCount": 736,
+        "interactiveCount": 45,
+        "interactiveLabels": [
+          "工作台 仪表盘 票务协同 影院管理 影片管理 场次管理 订单管理 观众管理 智能运营 智能排片 卖座卡钱包 众筹包场 小卖品管理 数据分析 区域票房热力图 影片生命周期 观众LTV预测 营销A/B测试 系统管理 登录注册 发现分类 观众注册",
+          "仪表盘",
+          "影院管理",
+          "影片管理",
+          "场次管理",
+          "订单管理",
+          "观众管理",
+          "智能排片",
+          "卖座卡钱包",
+          "众筹包场",
+          "小卖品管理",
+          "区域票房热力图",
+          "影片生命周期",
+          "观众LTV预测",
+          "营销A/B测试",
+          "登录注册",
+          "发现分类",
+          "观众注册",
+          "刷新数据",
+          "去管理 →",
+          "查看报表",
+          "展开行"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89046-cycle31-structure-06-导航-仪表盘",
+        "label": "导航:仪表盘",
+        "finalUrl": "http://127.0.0.1:49046/dashboard",
+        "title": "影院娱乐服务聚合平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89046/probe/codex-runtime-20260605-cycle31/may-89046-cycle31-structure-06-导航-仪表盘.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89046/probe/codex-runtime-20260605-cycle31/may-89046-cycle31-structure-06-导航-仪表盘.png",
+        "elementCount": 736,
+        "interactiveCount": 45,
+        "interactiveLabels": [
+          "工作台 仪表盘 票务协同 影院管理 影片管理 场次管理 订单管理 观众管理 智能运营 智能排片 卖座卡钱包 众筹包场 小卖品管理 数据分析 区域票房热力图 影片生命周期 观众LTV预测 营销A/B测试 系统管理 登录注册 发现分类 观众注册",
+          "仪表盘",
+          "影院管理",
+          "影片管理",
+          "场次管理",
+          "订单管理",
+          "观众管理",
+          "智能排片",
+          "卖座卡钱包",
+          "众筹包场",
+          "小卖品管理",
+          "区域票房热力图",
+          "影片生命周期",
+          "观众LTV预测",
+          "营销A/B测试",
+          "登录注册",
+          "发现分类",
+          "观众注册",
+          "刷新数据",
+          "去管理 →",
+          "查看报表",
+          "展开行"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89046-cycle31-structure-07-操作-查看报表",
+        "label": "操作:查看报表",
+        "finalUrl": "http://127.0.0.1:49046/analytics?tab=heatmap",
+        "title": "影院娱乐服务聚合平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89046/probe/codex-runtime-20260605-cycle31/may-89046-cycle31-structure-07-操作-查看报表.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89046/probe/codex-runtime-20260605-cycle31/may-89046-cycle31-structure-07-操作-查看报表.png",
+        "elementCount": 497,
+        "interactiveCount": 34,
+        "interactiveLabels": [
+          "工作台 仪表盘 票务协同 影院管理 影片管理 场次管理 订单管理 观众管理 智能运营 智能排片 卖座卡钱包 众筹包场 小卖品管理 数据分析 区域票房热力图 影片生命周期 观众LTV预测 营销A/B测试 系统管理 登录注册 发现分类 观众注册",
+          "仪表盘",
+          "影院管理",
+          "影片管理",
+          "场次管理",
+          "订单管理",
+          "观众管理",
+          "智能排片",
+          "卖座卡钱包",
+          "众筹包场",
+          "小卖品管理",
+          "区域票房热力图",
+          "影片生命周期",
+          "观众LTV预测",
+          "营销A/B测试",
+          "登录注册",
+          "发现分类",
+          "观众注册",
+          "票房热力图",
+          "Load Sync Data 总票房 ¥780.00 总订单数 6 城市数 4 渠道分布 官方渠道 订单数: 5 ¥664.00 小程序 订单数: 1 ¥116.00 H5页面 订单数: 0 ¥0.00 第三方平台 订单数: 0 ¥0.00 Top 5 影片 #1 The Last Dynasty 订单数: 5 ¥644.00 #2 Galactic Hor",
+          "2026-05-06",
+          "2026-06-05",
+          "Load",
+          "Sync Data",
+          "展开行",
+          "查看订单"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89046-cycle31-structure-08-二层操作-查看报表-查看订单",
+        "label": "二层操作:查看报表->查看订单",
+        "finalUrl": "http://127.0.0.1:49046/orders?city=Beijing",
+        "title": "影院娱乐服务聚合平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89046/probe/codex-runtime-20260605-cycle31/may-89046-cycle31-structure-08-二层操作-查看报表-查看订单.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89046/probe/codex-runtime-20260605-cycle31/may-89046-cycle31-structure-08-二层操作-查看报表-查看订单.png",
+        "elementCount": 295,
+        "interactiveCount": 32,
+        "interactiveLabels": [
+          "工作台 仪表盘 票务协同 影院管理 影片管理 场次管理 订单管理 观众管理 智能运营 智能排片 卖座卡钱包 众筹包场 小卖品管理 数据分析 区域票房热力图 影片生命周期 观众LTV预测 营销A/B测试 系统管理 登录注册 发现分类 观众注册",
+          "仪表盘",
+          "影院管理",
+          "影片管理",
+          "场次管理",
+          "订单管理",
+          "观众管理",
+          "智能排片",
+          "卖座卡钱包",
+          "众筹包场",
+          "小卖品管理",
+          "区域票房热力图",
+          "影片生命周期",
+          "观众LTV预测",
+          "营销A/B测试",
+          "登录注册",
+          "发现分类",
+          "观众注册",
+          "Create Order",
+          "Detail",
+          "1",
+          "页码"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89046-cycle31-structure-09-操作-刷新数据",
+        "label": "操作:刷新数据",
+        "finalUrl": "http://127.0.0.1:49046/dashboard",
+        "title": "影院娱乐服务聚合平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89046/probe/codex-runtime-20260605-cycle31/may-89046-cycle31-structure-09-操作-刷新数据.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89046/probe/codex-runtime-20260605-cycle31/may-89046-cycle31-structure-09-操作-刷新数据.png",
+        "elementCount": 736,
+        "interactiveCount": 45,
+        "interactiveLabels": [
+          "工作台 仪表盘 票务协同 影院管理 影片管理 场次管理 订单管理 观众管理 智能运营 智能排片 卖座卡钱包 众筹包场 小卖品管理 数据分析 区域票房热力图 影片生命周期 观众LTV预测 营销A/B测试 系统管理 登录注册 发现分类 观众注册",
+          "仪表盘",
+          "影院管理",
+          "影片管理",
+          "场次管理",
+          "订单管理",
+          "观众管理",
+          "智能排片",
+          "卖座卡钱包",
+          "众筹包场",
+          "小卖品管理",
+          "区域票房热力图",
+          "影片生命周期",
+          "观众LTV预测",
+          "营销A/B测试",
+          "登录注册",
+          "发现分类",
+          "观众注册",
+          "刷新数据",
+          "去管理 →",
+          "查看报表",
+          "展开行"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89046-cycle31-structure-10-导航-票务协同",
+        "label": "导航:票务协同",
+        "finalUrl": "http://127.0.0.1:49046/dashboard",
+        "title": "影院娱乐服务聚合平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89046/probe/codex-runtime-20260605-cycle31/may-89046-cycle31-structure-10-导航-票务协同.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89046/probe/codex-runtime-20260605-cycle31/may-89046-cycle31-structure-10-导航-票务协同.png",
+        "elementCount": 736,
+        "interactiveCount": 45,
+        "interactiveLabels": [
+          "工作台 仪表盘 票务协同 影院管理 影片管理 场次管理 订单管理 观众管理 智能运营 智能排片 卖座卡钱包 众筹包场 小卖品管理 数据分析 区域票房热力图 影片生命周期 观众LTV预测 营销A/B测试 系统管理 登录注册 发现分类 观众注册",
+          "仪表盘",
+          "影院管理",
+          "影片管理",
+          "场次管理",
+          "订单管理",
+          "观众管理",
+          "智能排片",
+          "卖座卡钱包",
+          "众筹包场",
+          "小卖品管理",
+          "区域票房热力图",
+          "影片生命周期",
+          "观众LTV预测",
+          "营销A/B测试",
+          "登录注册",
+          "发现分类",
+          "观众注册",
+          "刷新数据",
+          "去管理 →",
+          "查看报表",
+          "展开行"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89046-cycle31-structure-11-操作-查看报表",
+        "label": "操作:查看报表",
+        "finalUrl": "http://127.0.0.1:49046/analytics?tab=heatmap",
+        "title": "影院娱乐服务聚合平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89046/probe/codex-runtime-20260605-cycle31/may-89046-cycle31-structure-11-操作-查看报表.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89046/probe/codex-runtime-20260605-cycle31/may-89046-cycle31-structure-11-操作-查看报表.png",
+        "elementCount": 497,
+        "interactiveCount": 34,
+        "interactiveLabels": [
+          "工作台 仪表盘 票务协同 影院管理 影片管理 场次管理 订单管理 观众管理 智能运营 智能排片 卖座卡钱包 众筹包场 小卖品管理 数据分析 区域票房热力图 影片生命周期 观众LTV预测 营销A/B测试 系统管理 登录注册 发现分类 观众注册",
+          "仪表盘",
+          "影院管理",
+          "影片管理",
+          "场次管理",
+          "订单管理",
+          "观众管理",
+          "智能排片",
+          "卖座卡钱包",
+          "众筹包场",
+          "小卖品管理",
+          "区域票房热力图",
+          "影片生命周期",
+          "观众LTV预测",
+          "营销A/B测试",
+          "登录注册",
+          "发现分类",
+          "观众注册",
+          "票房热力图",
+          "Load Sync Data 总票房 ¥780.00 总订单数 6 城市数 4 渠道分布 官方渠道 订单数: 5 ¥664.00 小程序 订单数: 1 ¥116.00 H5页面 订单数: 0 ¥0.00 第三方平台 订单数: 0 ¥0.00 Top 5 影片 #1 The Last Dynasty 订单数: 5 ¥644.00 #2 Galactic Hor",
+          "2026-05-06",
+          "2026-06-05",
+          "Load",
+          "Sync Data",
+          "展开行",
+          "查看订单"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89046-cycle31-structure-12-二层操作-查看报表-查看订单",
+        "label": "二层操作:查看报表->查看订单",
+        "finalUrl": "http://127.0.0.1:49046/orders?city=Beijing",
+        "title": "影院娱乐服务聚合平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89046/probe/codex-runtime-20260605-cycle31/may-89046-cycle31-structure-12-二层操作-查看报表-查看订单.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89046/probe/codex-runtime-20260605-cycle31/may-89046-cycle31-structure-12-二层操作-查看报表-查看订单.png",
+        "elementCount": 295,
+        "interactiveCount": 32,
+        "interactiveLabels": [
+          "工作台 仪表盘 票务协同 影院管理 影片管理 场次管理 订单管理 观众管理 智能运营 智能排片 卖座卡钱包 众筹包场 小卖品管理 数据分析 区域票房热力图 影片生命周期 观众LTV预测 营销A/B测试 系统管理 登录注册 发现分类 观众注册",
+          "仪表盘",
+          "影院管理",
+          "影片管理",
+          "场次管理",
+          "订单管理",
+          "观众管理",
+          "智能排片",
+          "卖座卡钱包",
+          "众筹包场",
+          "小卖品管理",
+          "区域票房热力图",
+          "影片生命周期",
+          "观众LTV预测",
+          "营销A/B测试",
+          "登录注册",
+          "发现分类",
+          "观众注册",
+          "Create Order",
+          "Detail",
+          "1",
+          "页码"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89046-cycle31-structure-13-操作-刷新数据",
+        "label": "操作:刷新数据",
+        "finalUrl": "http://127.0.0.1:49046/dashboard",
+        "title": "影院娱乐服务聚合平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89046/probe/codex-runtime-20260605-cycle31/may-89046-cycle31-structure-13-操作-刷新数据.json",
+        "screenshotPath": "",
+        "elementCount": 736,
+        "interactiveCount": 45,
+        "interactiveLabels": [
+          "工作台 仪表盘 票务协同 影院管理 影片管理 场次管理 订单管理 观众管理 智能运营 智能排片 卖座卡钱包 众筹包场 小卖品管理 数据分析 区域票房热力图 影片生命周期 观众LTV预测 营销A/B测试 系统管理 登录注册 发现分类 观众注册",
+          "仪表盘",
+          "影院管理",
+          "影片管理",
+          "场次管理",
+          "订单管理",
+          "观众管理",
+          "智能排片",
+          "卖座卡钱包",
+          "众筹包场",
+          "小卖品管理",
+          "区域票房热力图",
+          "影片生命周期",
+          "观众LTV预测",
+          "营销A/B测试",
+          "登录注册",
+          "发现分类",
+          "观众注册",
+          "刷新数据",
+          "去管理 →",
+          "查看报表",
+          "展开行"
+        ]
+      }
+    ],
+    "representativeScreenshotUrl": "http://127.0.0.1:49046/dashboard",
+    "representativeScreenshotLabel": "运营工作台"
+  },
+  "websiteStructureCapture": {
+    "module": "website_structure_capture",
+    "captureCount": 13,
+    "captures": [
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89046-cycle31-structure-01-首屏",
+        "label": "首屏",
+        "finalUrl": "http://127.0.0.1:49046/dashboard",
+        "title": "影院娱乐服务聚合平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89046/probe/codex-runtime-20260605-cycle31/may-89046-cycle31-structure-01-首屏.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89046/probe/codex-runtime-20260605-cycle31/may-89046-cycle31-structure-01-首屏.png",
+        "elementCount": 736,
+        "interactiveCount": 45,
+        "interactiveLabels": [
+          "工作台 仪表盘 票务协同 影院管理 影片管理 场次管理 订单管理 观众管理 智能运营 智能排片 卖座卡钱包 众筹包场 小卖品管理 数据分析 区域票房热力图 影片生命周期 观众LTV预测 营销A/B测试 系统管理 登录注册 发现分类 观众注册",
+          "仪表盘",
+          "影院管理",
+          "影片管理",
+          "场次管理",
+          "订单管理",
+          "观众管理",
+          "智能排片",
+          "卖座卡钱包",
+          "众筹包场",
+          "小卖品管理",
+          "区域票房热力图",
+          "影片生命周期",
+          "观众LTV预测",
+          "营销A/B测试",
+          "登录注册",
+          "发现分类",
+          "观众注册",
+          "刷新数据",
+          "去管理 →",
+          "查看报表",
+          "展开行"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89046-cycle31-structure-02-导航-工作台",
+        "label": "导航:工作台",
+        "finalUrl": "http://127.0.0.1:49046/dashboard",
+        "title": "影院娱乐服务聚合平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89046/probe/codex-runtime-20260605-cycle31/may-89046-cycle31-structure-02-导航-工作台.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89046/probe/codex-runtime-20260605-cycle31/may-89046-cycle31-structure-02-导航-工作台.png",
+        "elementCount": 736,
+        "interactiveCount": 45,
+        "interactiveLabels": [
+          "工作台 仪表盘 票务协同 影院管理 影片管理 场次管理 订单管理 观众管理 智能运营 智能排片 卖座卡钱包 众筹包场 小卖品管理 数据分析 区域票房热力图 影片生命周期 观众LTV预测 营销A/B测试 系统管理 登录注册 发现分类 观众注册",
+          "仪表盘",
+          "影院管理",
+          "影片管理",
+          "场次管理",
+          "订单管理",
+          "观众管理",
+          "智能排片",
+          "卖座卡钱包",
+          "众筹包场",
+          "小卖品管理",
+          "区域票房热力图",
+          "影片生命周期",
+          "观众LTV预测",
+          "营销A/B测试",
+          "登录注册",
+          "发现分类",
+          "观众注册",
+          "刷新数据",
+          "去管理 →",
+          "查看报表",
+          "展开行"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89046-cycle31-structure-03-操作-查看报表",
+        "label": "操作:查看报表",
+        "finalUrl": "http://127.0.0.1:49046/analytics?tab=heatmap",
+        "title": "影院娱乐服务聚合平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89046/probe/codex-runtime-20260605-cycle31/may-89046-cycle31-structure-03-操作-查看报表.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89046/probe/codex-runtime-20260605-cycle31/may-89046-cycle31-structure-03-操作-查看报表.png",
+        "elementCount": 497,
+        "interactiveCount": 34,
+        "interactiveLabels": [
+          "工作台 仪表盘 票务协同 影院管理 影片管理 场次管理 订单管理 观众管理 智能运营 智能排片 卖座卡钱包 众筹包场 小卖品管理 数据分析 区域票房热力图 影片生命周期 观众LTV预测 营销A/B测试 系统管理 登录注册 发现分类 观众注册",
+          "仪表盘",
+          "影院管理",
+          "影片管理",
+          "场次管理",
+          "订单管理",
+          "观众管理",
+          "智能排片",
+          "卖座卡钱包",
+          "众筹包场",
+          "小卖品管理",
+          "区域票房热力图",
+          "影片生命周期",
+          "观众LTV预测",
+          "营销A/B测试",
+          "登录注册",
+          "发现分类",
+          "观众注册",
+          "票房热力图",
+          "Load Sync Data 总票房 ¥780.00 总订单数 6 城市数 4 渠道分布 官方渠道 订单数: 5 ¥664.00 小程序 订单数: 1 ¥116.00 H5页面 订单数: 0 ¥0.00 第三方平台 订单数: 0 ¥0.00 Top 5 影片 #1 The Last Dynasty 订单数: 5 ¥644.00 #2 Galactic Hor",
+          "2026-05-06",
+          "2026-06-05",
+          "Load",
+          "Sync Data",
+          "展开行",
+          "查看订单"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89046-cycle31-structure-04-二层操作-查看报表-查看订单",
+        "label": "二层操作:查看报表->查看订单",
+        "finalUrl": "http://127.0.0.1:49046/orders?city=Beijing",
+        "title": "影院娱乐服务聚合平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89046/probe/codex-runtime-20260605-cycle31/may-89046-cycle31-structure-04-二层操作-查看报表-查看订单.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89046/probe/codex-runtime-20260605-cycle31/may-89046-cycle31-structure-04-二层操作-查看报表-查看订单.png",
+        "elementCount": 295,
+        "interactiveCount": 32,
+        "interactiveLabels": [
+          "工作台 仪表盘 票务协同 影院管理 影片管理 场次管理 订单管理 观众管理 智能运营 智能排片 卖座卡钱包 众筹包场 小卖品管理 数据分析 区域票房热力图 影片生命周期 观众LTV预测 营销A/B测试 系统管理 登录注册 发现分类 观众注册",
+          "仪表盘",
+          "影院管理",
+          "影片管理",
+          "场次管理",
+          "订单管理",
+          "观众管理",
+          "智能排片",
+          "卖座卡钱包",
+          "众筹包场",
+          "小卖品管理",
+          "区域票房热力图",
+          "影片生命周期",
+          "观众LTV预测",
+          "营销A/B测试",
+          "登录注册",
+          "发现分类",
+          "观众注册",
+          "Create Order",
+          "Detail",
+          "1",
+          "页码"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89046-cycle31-structure-05-操作-刷新数据",
+        "label": "操作:刷新数据",
+        "finalUrl": "http://127.0.0.1:49046/dashboard",
+        "title": "影院娱乐服务聚合平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89046/probe/codex-runtime-20260605-cycle31/may-89046-cycle31-structure-05-操作-刷新数据.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89046/probe/codex-runtime-20260605-cycle31/may-89046-cycle31-structure-05-操作-刷新数据.png",
+        "elementCount": 736,
+        "interactiveCount": 45,
+        "interactiveLabels": [
+          "工作台 仪表盘 票务协同 影院管理 影片管理 场次管理 订单管理 观众管理 智能运营 智能排片 卖座卡钱包 众筹包场 小卖品管理 数据分析 区域票房热力图 影片生命周期 观众LTV预测 营销A/B测试 系统管理 登录注册 发现分类 观众注册",
+          "仪表盘",
+          "影院管理",
+          "影片管理",
+          "场次管理",
+          "订单管理",
+          "观众管理",
+          "智能排片",
+          "卖座卡钱包",
+          "众筹包场",
+          "小卖品管理",
+          "区域票房热力图",
+          "影片生命周期",
+          "观众LTV预测",
+          "营销A/B测试",
+          "登录注册",
+          "发现分类",
+          "观众注册",
+          "刷新数据",
+          "去管理 →",
+          "查看报表",
+          "展开行"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89046-cycle31-structure-06-导航-仪表盘",
+        "label": "导航:仪表盘",
+        "finalUrl": "http://127.0.0.1:49046/dashboard",
+        "title": "影院娱乐服务聚合平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89046/probe/codex-runtime-20260605-cycle31/may-89046-cycle31-structure-06-导航-仪表盘.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89046/probe/codex-runtime-20260605-cycle31/may-89046-cycle31-structure-06-导航-仪表盘.png",
+        "elementCount": 736,
+        "interactiveCount": 45,
+        "interactiveLabels": [
+          "工作台 仪表盘 票务协同 影院管理 影片管理 场次管理 订单管理 观众管理 智能运营 智能排片 卖座卡钱包 众筹包场 小卖品管理 数据分析 区域票房热力图 影片生命周期 观众LTV预测 营销A/B测试 系统管理 登录注册 发现分类 观众注册",
+          "仪表盘",
+          "影院管理",
+          "影片管理",
+          "场次管理",
+          "订单管理",
+          "观众管理",
+          "智能排片",
+          "卖座卡钱包",
+          "众筹包场",
+          "小卖品管理",
+          "区域票房热力图",
+          "影片生命周期",
+          "观众LTV预测",
+          "营销A/B测试",
+          "登录注册",
+          "发现分类",
+          "观众注册",
+          "刷新数据",
+          "去管理 →",
+          "查看报表",
+          "展开行"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89046-cycle31-structure-07-操作-查看报表",
+        "label": "操作:查看报表",
+        "finalUrl": "http://127.0.0.1:49046/analytics?tab=heatmap",
+        "title": "影院娱乐服务聚合平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89046/probe/codex-runtime-20260605-cycle31/may-89046-cycle31-structure-07-操作-查看报表.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89046/probe/codex-runtime-20260605-cycle31/may-89046-cycle31-structure-07-操作-查看报表.png",
+        "elementCount": 497,
+        "interactiveCount": 34,
+        "interactiveLabels": [
+          "工作台 仪表盘 票务协同 影院管理 影片管理 场次管理 订单管理 观众管理 智能运营 智能排片 卖座卡钱包 众筹包场 小卖品管理 数据分析 区域票房热力图 影片生命周期 观众LTV预测 营销A/B测试 系统管理 登录注册 发现分类 观众注册",
+          "仪表盘",
+          "影院管理",
+          "影片管理",
+          "场次管理",
+          "订单管理",
+          "观众管理",
+          "智能排片",
+          "卖座卡钱包",
+          "众筹包场",
+          "小卖品管理",
+          "区域票房热力图",
+          "影片生命周期",
+          "观众LTV预测",
+          "营销A/B测试",
+          "登录注册",
+          "发现分类",
+          "观众注册",
+          "票房热力图",
+          "Load Sync Data 总票房 ¥780.00 总订单数 6 城市数 4 渠道分布 官方渠道 订单数: 5 ¥664.00 小程序 订单数: 1 ¥116.00 H5页面 订单数: 0 ¥0.00 第三方平台 订单数: 0 ¥0.00 Top 5 影片 #1 The Last Dynasty 订单数: 5 ¥644.00 #2 Galactic Hor",
+          "2026-05-06",
+          "2026-06-05",
+          "Load",
+          "Sync Data",
+          "展开行",
+          "查看订单"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89046-cycle31-structure-08-二层操作-查看报表-查看订单",
+        "label": "二层操作:查看报表->查看订单",
+        "finalUrl": "http://127.0.0.1:49046/orders?city=Beijing",
+        "title": "影院娱乐服务聚合平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89046/probe/codex-runtime-20260605-cycle31/may-89046-cycle31-structure-08-二层操作-查看报表-查看订单.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89046/probe/codex-runtime-20260605-cycle31/may-89046-cycle31-structure-08-二层操作-查看报表-查看订单.png",
+        "elementCount": 295,
+        "interactiveCount": 32,
+        "interactiveLabels": [
+          "工作台 仪表盘 票务协同 影院管理 影片管理 场次管理 订单管理 观众管理 智能运营 智能排片 卖座卡钱包 众筹包场 小卖品管理 数据分析 区域票房热力图 影片生命周期 观众LTV预测 营销A/B测试 系统管理 登录注册 发现分类 观众注册",
+          "仪表盘",
+          "影院管理",
+          "影片管理",
+          "场次管理",
+          "订单管理",
+          "观众管理",
+          "智能排片",
+          "卖座卡钱包",
+          "众筹包场",
+          "小卖品管理",
+          "区域票房热力图",
+          "影片生命周期",
+          "观众LTV预测",
+          "营销A/B测试",
+          "登录注册",
+          "发现分类",
+          "观众注册",
+          "Create Order",
+          "Detail",
+          "1",
+          "页码"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89046-cycle31-structure-09-操作-刷新数据",
+        "label": "操作:刷新数据",
+        "finalUrl": "http://127.0.0.1:49046/dashboard",
+        "title": "影院娱乐服务聚合平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89046/probe/codex-runtime-20260605-cycle31/may-89046-cycle31-structure-09-操作-刷新数据.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89046/probe/codex-runtime-20260605-cycle31/may-89046-cycle31-structure-09-操作-刷新数据.png",
+        "elementCount": 736,
+        "interactiveCount": 45,
+        "interactiveLabels": [
+          "工作台 仪表盘 票务协同 影院管理 影片管理 场次管理 订单管理 观众管理 智能运营 智能排片 卖座卡钱包 众筹包场 小卖品管理 数据分析 区域票房热力图 影片生命周期 观众LTV预测 营销A/B测试 系统管理 登录注册 发现分类 观众注册",
+          "仪表盘",
+          "影院管理",
+          "影片管理",
+          "场次管理",
+          "订单管理",
+          "观众管理",
+          "智能排片",
+          "卖座卡钱包",
+          "众筹包场",
+          "小卖品管理",
+          "区域票房热力图",
+          "影片生命周期",
+          "观众LTV预测",
+          "营销A/B测试",
+          "登录注册",
+          "发现分类",
+          "观众注册",
+          "刷新数据",
+          "去管理 →",
+          "查看报表",
+          "展开行"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89046-cycle31-structure-10-导航-票务协同",
+        "label": "导航:票务协同",
+        "finalUrl": "http://127.0.0.1:49046/dashboard",
+        "title": "影院娱乐服务聚合平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89046/probe/codex-runtime-20260605-cycle31/may-89046-cycle31-structure-10-导航-票务协同.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89046/probe/codex-runtime-20260605-cycle31/may-89046-cycle31-structure-10-导航-票务协同.png",
+        "elementCount": 736,
+        "interactiveCount": 45,
+        "interactiveLabels": [
+          "工作台 仪表盘 票务协同 影院管理 影片管理 场次管理 订单管理 观众管理 智能运营 智能排片 卖座卡钱包 众筹包场 小卖品管理 数据分析 区域票房热力图 影片生命周期 观众LTV预测 营销A/B测试 系统管理 登录注册 发现分类 观众注册",
+          "仪表盘",
+          "影院管理",
+          "影片管理",
+          "场次管理",
+          "订单管理",
+          "观众管理",
+          "智能排片",
+          "卖座卡钱包",
+          "众筹包场",
+          "小卖品管理",
+          "区域票房热力图",
+          "影片生命周期",
+          "观众LTV预测",
+          "营销A/B测试",
+          "登录注册",
+          "发现分类",
+          "观众注册",
+          "刷新数据",
+          "去管理 →",
+          "查看报表",
+          "展开行"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89046-cycle31-structure-11-操作-查看报表",
+        "label": "操作:查看报表",
+        "finalUrl": "http://127.0.0.1:49046/analytics?tab=heatmap",
+        "title": "影院娱乐服务聚合平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89046/probe/codex-runtime-20260605-cycle31/may-89046-cycle31-structure-11-操作-查看报表.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89046/probe/codex-runtime-20260605-cycle31/may-89046-cycle31-structure-11-操作-查看报表.png",
+        "elementCount": 497,
+        "interactiveCount": 34,
+        "interactiveLabels": [
+          "工作台 仪表盘 票务协同 影院管理 影片管理 场次管理 订单管理 观众管理 智能运营 智能排片 卖座卡钱包 众筹包场 小卖品管理 数据分析 区域票房热力图 影片生命周期 观众LTV预测 营销A/B测试 系统管理 登录注册 发现分类 观众注册",
+          "仪表盘",
+          "影院管理",
+          "影片管理",
+          "场次管理",
+          "订单管理",
+          "观众管理",
+          "智能排片",
+          "卖座卡钱包",
+          "众筹包场",
+          "小卖品管理",
+          "区域票房热力图",
+          "影片生命周期",
+          "观众LTV预测",
+          "营销A/B测试",
+          "登录注册",
+          "发现分类",
+          "观众注册",
+          "票房热力图",
+          "Load Sync Data 总票房 ¥780.00 总订单数 6 城市数 4 渠道分布 官方渠道 订单数: 5 ¥664.00 小程序 订单数: 1 ¥116.00 H5页面 订单数: 0 ¥0.00 第三方平台 订单数: 0 ¥0.00 Top 5 影片 #1 The Last Dynasty 订单数: 5 ¥644.00 #2 Galactic Hor",
+          "2026-05-06",
+          "2026-06-05",
+          "Load",
+          "Sync Data",
+          "展开行",
+          "查看订单"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89046-cycle31-structure-12-二层操作-查看报表-查看订单",
+        "label": "二层操作:查看报表->查看订单",
+        "finalUrl": "http://127.0.0.1:49046/orders?city=Beijing",
+        "title": "影院娱乐服务聚合平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89046/probe/codex-runtime-20260605-cycle31/may-89046-cycle31-structure-12-二层操作-查看报表-查看订单.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89046/probe/codex-runtime-20260605-cycle31/may-89046-cycle31-structure-12-二层操作-查看报表-查看订单.png",
+        "elementCount": 295,
+        "interactiveCount": 32,
+        "interactiveLabels": [
+          "工作台 仪表盘 票务协同 影院管理 影片管理 场次管理 订单管理 观众管理 智能运营 智能排片 卖座卡钱包 众筹包场 小卖品管理 数据分析 区域票房热力图 影片生命周期 观众LTV预测 营销A/B测试 系统管理 登录注册 发现分类 观众注册",
+          "仪表盘",
+          "影院管理",
+          "影片管理",
+          "场次管理",
+          "订单管理",
+          "观众管理",
+          "智能排片",
+          "卖座卡钱包",
+          "众筹包场",
+          "小卖品管理",
+          "区域票房热力图",
+          "影片生命周期",
+          "观众LTV预测",
+          "营销A/B测试",
+          "登录注册",
+          "发现分类",
+          "观众注册",
+          "Create Order",
+          "Detail",
+          "1",
+          "页码"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89046-cycle31-structure-13-操作-刷新数据",
+        "label": "操作:刷新数据",
+        "finalUrl": "http://127.0.0.1:49046/dashboard",
+        "title": "影院娱乐服务聚合平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89046/probe/codex-runtime-20260605-cycle31/may-89046-cycle31-structure-13-操作-刷新数据.json",
+        "screenshotPath": "",
+        "elementCount": 736,
+        "interactiveCount": 45,
+        "interactiveLabels": [
+          "工作台 仪表盘 票务协同 影院管理 影片管理 场次管理 订单管理 观众管理 智能运营 智能排片 卖座卡钱包 众筹包场 小卖品管理 数据分析 区域票房热力图 影片生命周期 观众LTV预测 营销A/B测试 系统管理 登录注册 发现分类 观众注册",
+          "仪表盘",
+          "影院管理",
+          "影片管理",
+          "场次管理",
+          "订单管理",
+          "观众管理",
+          "智能排片",
+          "卖座卡钱包",
+          "众筹包场",
+          "小卖品管理",
+          "区域票房热力图",
+          "影片生命周期",
+          "观众LTV预测",
+          "营销A/B测试",
+          "登录注册",
+          "发现分类",
+          "观众注册",
+          "刷新数据",
+          "去管理 →",
+          "查看报表",
+          "展开行"
+        ]
+      }
+    ]
+  },
+  "screenshotMetrics": {
+    "width": 1920,
+    "height": 1600,
+    "scrollWidth": 1888,
+    "scrollHeight": 2136
+  },
+  "initialBodyTextPreview": "影院聚合平台\n工作台\n仪表盘\n票务协同\n影院管理\n影片管理\n场次管理\n订单管理\n观众管理\n智能运营\n智能排片\n卖座卡钱包\n众筹包场\n小卖品管理\n数据分析\n区域票房热力图\n影片生命周期\n观众LTV预测\n营销A/B测试\n系统管理\n登录注册\n发现分类\n观众注册\n影院娱乐服务聚合平台\n后台管理\n运营工作台\n2026年06月05日 · 欢迎使用影院娱乐服务聚合平台\n运营工作台\n业务快捷入口\n刷新数据\n影院管理\n全国4000+影院协同\n4\n去管理 →\n影片管理\n版权/物料/分账全追踪\n4\n去管理 →\n场次管理\n座位图/锁位/退改联动\n7\n去管理 →\n观众管理\n会员/偏好/画像分析\n3\n去管理 →\n订单管理\n多渠道票务分发\n6\n去管理 →\n智能排片\n上座率预测/黄金时段\n去管理 →\n卖座卡钱包\n企业福利/消费核销\n去管理 →\n众筹包场\n活动成团/座位预留\n去管理 →\n小卖品管理\n套餐绑定/组合销售\n去管理 →\n数据分析报表\n区域票房热力图\n城市票房分布分析\n查看报表\n影片生命周期\n上映曲线/生命周期追踪\n查看报表\n观众LTV预测\n长期价值预测/分层运营\n查看报表\n营销A/B测试\n活动效果对比/数据验证\n查看报表\n业务异常反馈\n待处理异常订单\n6\n即将超时场次\n0\n今日申诉工单\n0\n业务闭环验收指南\n选座锁位\n场次管理 → 座位 → 锁定座位/释放\n退改规则\n场次详情 → 退改规则面板\n消费核销\n订单管理 → 核销状态追踪\n活动成团\n众筹包场 → 目标达成自动成团\n卖座卡消费\n卖座卡钱包 → 余额/交易记录\n近期订单 (6条)\n\t订单号\t渠道来源\t影片\t影院信息\t场次信息\t座位\t金额\t支付方式\t关联信息\t核销结果\t状态\t创建时间\n\n \n\t\n订单号\n\t\n渠道来源\n\t\n影片\n\t\n影院信息\n\t\n场次信息\n\t\n座位\n\t\n金额\n\t\n支付方式\n\t\n关联信息\n\t\n核销结果\n\t\n状态\n\t\n创建时间\n\n\t\nORD202606051623472336\n\t\n自有系统\tThe Last Dynasty\tStellar Cineplex Beijing · Hall 3 - Standard\t2026-06-05 14:00\t\n3排1座\n3排2座\n\t¥116.00\t现金\t-\t待核销\tpending\t2026-06-05 16:23\n\t\nORD202606051622350106\n\t\n自有系统\tThe Last Dynasty\tStellar Cineplex Beijing · Hall 3 - Standard\t2026-06-05 14:00\t\n2排1座\n2排2座\n\t¥116.00\t现金\t-\t待核销\tpending\t2026-06-05 16:22\n\t\nORD202606051622249685\n\t\n自有系统\tThe Last Dynasty\tStellar Cineplex Beijing · Hall 3 - Standard\t2026-06-05 14:00\t\n1排1座\n1排2座\n\t¥116.00\t现金\t-\t待核销\tpending\t2026-06-05 16:22\n\t\nORD202606051415007494\n\t\n小程序\tThe Last Dynasty\tStellar Cineplex Beijing · Hall 3 - Standard\t2026-06-05 14:00\t\n1排5座\n1排6座\n\t¥116.00\t现金\t-\t待核销\tpending\t2026-06-05 14:15\n\t\nORD202606051401481775\n\t\n自有系统\tThe Last Dynasty\tStellar Cineplex Beijing · Hall 3 - Standard\t2026-06-05 14:00\t\n1排3座\n1排4座\n\t¥180.00\t卖座卡\t\n卡·****\n\t待核销\t",
+  "bodyTextPreview": "影院聚合平台\n工作台\n仪表盘\n票务协同\n影院管理\n影片管理\n场次管理\n订单管理\n观众管理\n智能运营\n智能排片\n卖座卡钱包\n众筹包场\n小卖品管理\n数据分析\n区域票房热力图\n影片生命周期\n观众LTV预测\n营销A/B测试\n系统管理\n登录注册\n发现分类\n观众注册\n影院娱乐服务聚合平台\n后台管理\n运营工作台\n2026年06月05日 · 欢迎使用影院娱乐服务聚合平台\n运营工作台\n业务快捷入口\n刷新数据\n影院管理\n全国4000+影院协同\n4\n去管理 →\n影片管理\n版权/物料/分账全追踪\n4\n去管理 →\n场次管理\n座位图/锁位/退改联动\n7\n去管理 →\n观众管理\n会员/偏好/画像分析\n3\n去管理 →\n订单管理\n多渠道票务分发\n6\n去管理 →\n智能排片\n上座率预测/黄金时段\n去管理 →\n卖座卡钱包\n企业福利/消费核销\n去管理 →\n众筹包场\n活动成团/座位预留\n去管理 →\n小卖品管理\n套餐绑定/组合销售\n去管理 →\n数据分析报表\n区域票房热力图\n城市票房分布分析\n查看报表\n影片生命周期\n上映曲线/生命周期追踪\n查看报表\n观众LTV预测\n长期价值预测/分层运营\n查看报表\n营销A/B测试\n活动效果对比/数据验证\n查看报表\n业务异常反馈\n待处理异常订单\n6\n即将超时场次\n0\n今日申诉工单\n0\n业务闭环验收指南\n选座锁位\n场次管理 → 座位 → 锁定座位/释放\n退改规则\n场次详情 → 退改规则面板\n消费核销\n订单管理 → 核销状态追踪\n活动成团\n众筹包场 → 目标达成自动成团\n卖座卡消费\n卖座卡钱包 → 余额/交易记录\n近期订单 (6条)\n\t订单号\t渠道来源\t影片\t影院信息\t场次信息\t座位\t金额\t支付方式\t关联信息\t核销结果\t状态\t创建时间\n\n \n\t\n订单号\n\t\n渠道来源\n\t\n影片\n\t\n影院信息\n\t\n场次信息\n\t\n座位\n\t\n金额\n\t\n支付方式\n\t\n关联信息\n\t\n核销结果\n\t\n状态\n\t\n创建时间\n\n\t\nORD202606051623472336\n\t\n自有系统\tThe Last Dynasty\tStellar Cineplex Beijing · Hall 3 - Standard\t2026-06-05 14:00\t\n3排1座\n3排2座\n\t¥116.00\t现金\t-\t待核销\tpending\t2026-06-05 16:23\n\t\nORD202606051622350106\n\t\n自有系统\tThe Last Dynasty\tStellar Cineplex Beijing · Hall 3 - Standard\t2026-06-05 14:00\t\n2排1座\n2排2座\n\t¥116.00\t现金\t-\t待核销\tpending\t2026-06-05 16:22\n\t\nORD202606051622249685\n\t\n自有系统\tThe Last Dynasty\tStellar Cineplex Beijing · Hall 3 - Standard\t2026-06-05 14:00\t\n1排1座\n1排2座\n\t¥116.00\t现金\t-\t待核销\tpending\t2026-06-05 16:22\n\t\nORD202606051415007494\n\t\n小程序\tThe Last Dynasty\tStellar Cineplex Beijing · Hall 3 - Standard\t2026-06-05 14:00\t\n1排5座\n1排6座\n\t¥116.00\t现金\t-\t待核销\tpending\t2026-06-05 14:15\n\t\nORD202606051401481775\n\t\n自有系统\tThe Last Dynasty\tStellar Cineplex Beijing · Hall 3 - Standard\t2026-06-05 14:00\t\n1排3座\n1排4座\n\t¥180.00\t卖座卡\t\n卡·****\n\t待核销\tpending\t2026-06-05 14:01\n\t\nORD202606042357573533\n\t\n自有系统\tGalactic Horizon\tStellar Cineplex Beijing · Hall 1 - IMAX\t2026-06-05 19:00\t\n1排1座\n1排2座\n\t¥136.00\t卖座卡\t-\t待核销\tpending\t2026-06-04 23:57",
+  "apiBase": "http://127.0.0.1:59046",
+  "businessGoalPreview": "",
+  "apiResponses": [
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49046/api/cinemas"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49046/api/movies?status=showing"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49046/api/showtimes?date=2026-06-05"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49046/api/orders"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49046/api/audiences"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49046/api/cinemas"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49046/api/movies?status=showing"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49046/api/showtimes?date=2026-06-05"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49046/api/orders"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49046/api/audiences"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49046/api/crowdfunding"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49046/api/movies"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49046/api/cinemas"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49046/api/audiences"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49046/api/crowdfunding"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49046/api/movies"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49046/api/cinemas"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49046/api/audiences"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49046/api/cinemas"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49046/api/movies?status=showing"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49046/api/showtimes?date=2026-06-05"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49046/api/orders"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49046/api/audiences"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49046/api/cinemas"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49046/api/movies?status=showing"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49046/api/showtimes?date=2026-06-05"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49046/api/orders"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49046/api/audiences"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49046/api/analytics/box-office-heatmap?start_date=2026-05-06&end_date=2026-06-05"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49046/api/orders"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49046/api/analytics/box-office-heatmap?start_date=2026-05-06&end_date=2026-06-05"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49046/api/orders"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49046/api/orders"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49046/api/audiences"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49046/api/orders"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49046/api/audiences"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49046/api/cinemas"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49046/api/movies?status=showing"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49046/api/showtimes?date=2026-06-05"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49046/api/orders"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49046/api/audiences"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49046/api/cinemas"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49046/api/movies?status=showing"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49046/api/showtimes?date=2026-06-05"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49046/api/orders"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49046/api/audiences"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49046/api/cinemas"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49046/api/movies?status=showing"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49046/api/showtimes?date=2026-06-05"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49046/api/orders"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49046/api/audiences"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49046/api/analytics/box-office-heatmap?start_date=2026-05-06&end_date=2026-06-05"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49046/api/orders"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49046/api/analytics/box-office-heatmap?start_date=2026-05-06&end_date=2026-06-05"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49046/api/orders"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49046/api/orders"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49046/api/audiences"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49046/api/orders"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49046/api/audiences"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49046/api/cinemas"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49046/api/movies?status=showing"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49046/api/showtimes?date=2026-06-05"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49046/api/orders"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49046/api/audiences"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49046/api/cinemas"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49046/api/movies?status=showing"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49046/api/showtimes?date=2026-06-05"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49046/api/orders"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49046/api/audiences"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49046/api/cinemas"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49046/api/movies?status=showing"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49046/api/showtimes?date=2026-06-05"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49046/api/orders"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49046/api/audiences"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49046/api/analytics/box-office-heatmap?start_date=2026-05-06&end_date=2026-06-05"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49046/api/orders"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49046/api/analytics/box-office-heatmap?start_date=2026-05-06&end_date=2026-06-05"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49046/api/orders"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49046/api/orders"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49046/api/audiences"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49046/api/orders"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49046/api/audiences"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49046/api/cinemas"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49046/api/movies?status=showing"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49046/api/showtimes?date=2026-06-05"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49046/api/orders"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49046/api/audiences"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49046/api/cinemas"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49046/api/movies?status=showing"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49046/api/showtimes?date=2026-06-05"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49046/api/orders"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49046/api/audiences"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49046/api/cinemas"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49046/api/movies?status=showing"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49046/api/showtimes?date=2026-06-05"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49046/api/orders"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49046/api/audiences"
+    }
+  ],
+  "apiChecks": [
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59046/api/health",
+      "path": "/api/health",
+      "status": 200,
+      "ok": true,
+      "bodyPreview": "{\"status\":\"ok\",\"service\":\"cinema-aggregation\",\"db\":\"connected\",\"timestamp\":\"2026-06-05T15:53:18.974Z\"}"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59046/api/cinemas",
+      "path": "/api/cinemas",
+      "status": 200,
+      "ok": true,
+      "bodyPreview": "[{\"id\":1,\"name\":\"Stellar Cineplex Beijing\",\"city\":\"Beijing\",\"district\":\"Chaoyang\",\"address\":\"88 Jianguo Road, Chaoyang District\",\"hall_count\":6,\"equipment_level\":\"dolby\",\"scheduling_protocol\":\"auto\",\"status\":\"active\",\"created_at\":\"2026-06-04 23:57:36\",\"updated_at\":\"2026-06-04 23:57:36\",\"equipment_verify_date\":null,\"equipment_verify_by\":null,\"equipment_verify_status\":null,\"protocol_start_date\":null,\"protocol_end_date\":null,\"min_schedule_ratio\":null,\"max_daily_showtimes\":null,\"last_review_date\":nu"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59046/api/movies?status=showing",
+      "path": "/api/movies?status=showing",
+      "status": 200,
+      "ok": true,
+      "bodyPreview": "[{\"id\":1,\"title\":\"Galactic Horizon\",\"genre\":\"Sci-Fi\",\"duration\":142,\"director\":\"Zhang Wei\",\"release_date\":\"2026-05-15\",\"copyright_expiry\":\"2028-05-15\",\"revenue_share_ratio\":0.55,\"pre_show_package\":\"premium\",\"poster_url\":\"/posters/galactic-horizon.jpg\",\"status\":\"showing\",\"created_at\":\"2026-06-04 23:57:36\",\"updated_at\":\"2026-06-04 23:57:36\",\"synopsis\":null,\"cast\":null,\"copyright_holder\":null,\"copyright_reg_no\":null,\"copyright_region\":null,\"copyright_terms\":null,\"pre_show_ad_duration\":null,\"pre_sho"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59046/api/showtimes?date=2026-06-05",
+      "path": "/api/showtimes?date=2026-06-05",
+      "status": 200,
+      "ok": true,
+      "bodyPreview": "[{\"id\":3,\"movie_id\":2,\"hall_id\":3,\"cinema_id\":1,\"show_date\":\"2026-06-05\",\"show_time\":\"14:00\",\"base_price\":58,\"current_price\":58,\"seat_map\":\"{}\",\"refund_rule\":\"strict\",\"min_seats\":1,\"max_seats\":4,\"status\":\"open\",\"created_at\":\"2026-06-04 23:57:36\",\"updated_at\":\"2026-06-04 23:57:36\",\"movie_title\":\"The Last Dynasty\",\"hall_name\":\"Hall 3 - Standard\",\"cinema_name\":\"Stellar Cineplex Beijing\"},{\"id\":5,\"movie_id\":5,\"hall_id\":5,\"cinema_id\":1,\"show_date\":\"2026-06-05\",\"show_time\":\"16:00\",\"base_price\":78,\"cur"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59046/api/orders",
+      "path": "/api/orders",
+      "status": 200,
+      "ok": true,
+      "bodyPreview": "[{\"id\":4,\"order_no\":\"ORD202606051623472336\",\"audience_id\":2,\"showtime_id\":3,\"seat_info\":\"[{\\\"row\\\":3,\\\"col\\\":1},{\\\"row\\\":3,\\\"col\\\":2}]\",\"total_amount\":116,\"status\":\"pending\",\"payment_method\":\"cash\",\"pay_card_id\":null,\"created_at\":\"2026-06-05 16:23:47\",\"updated_at\":\"2026-06-05 16:23:47\",\"channel\":\"official\",\"verification_status\":\"not_verified\",\"verification_time\":null,\"verification_channel\":null,\"payment_id\":null,\"crowdfunding_id\":null,\"insurance_fee\":0,\"movie_title\":\"The Last Dynasty\",\"cinema_na"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59046/api/audiences",
+      "path": "/api/audiences",
+      "status": 200,
+      "ok": true,
+      "bodyPreview": "[{\"id\":1,\"name\":\"Test User\",\"phone\":\"13800001111\",\"email\":\"test@example.com\",\"preference_tags\":\"[\\\"sci-fi\\\",\\\"action\\\"]\",\"member_level\":\"regular\",\"points_balance\":0,\"created_at\":\"2026-06-04 23:57:57\",\"updated_at\":\"2026-06-04 23:57:57\"},{\"id\":2,\"name\":\"张三\",\"phone\":\"13900001234\",\"email\":\"zhang@test.com\",\"preference_tags\":\"[\\\"Sci-Fi\\\",\\\"Action\\\"]\",\"member_level\":\"gold\",\"points_balance\":0,\"created_at\":\"2026-06-05 16:21:50\",\"updated_at\":\"2026-06-05 16:21:50\"},{\"id\":3,\"name\":\"李四\",\"phone\":\"13900005678\""
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59046/api/crowdfunding",
+      "path": "/api/crowdfunding",
+      "status": 200,
+      "ok": true,
+      "bodyPreview": "[{\"id\":1,\"title\":\"Test CF\",\"movie_id\":1,\"cinema_id\":1,\"hall_id\":1,\"target_audience_count\":50,\"current_count\":50,\"base_price\":45,\"min_price\":35,\"max_price\":60,\"price_strategy\":\"dynamic\",\"target_show_date\":\"2026-07-01\",\"status\":\"success\",\"auto_confirm\":1,\"created_at\":\"2026-06-04 23:58:15\",\"updated_at\":\"2026-06-05 18:24:16\",\"movie_title\":\"Galactic Horizon\",\"cinema_name\":\"Stellar Cineplex Beijing\"}]"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59046/api/movies",
+      "path": "/api/movies",
+      "status": 200,
+      "ok": true,
+      "bodyPreview": "[{\"id\":1,\"title\":\"Galactic Horizon\",\"genre\":\"Sci-Fi\",\"duration\":142,\"director\":\"Zhang Wei\",\"release_date\":\"2026-05-15\",\"copyright_expiry\":\"2028-05-15\",\"revenue_share_ratio\":0.55,\"pre_show_package\":\"premium\",\"poster_url\":\"/posters/galactic-horizon.jpg\",\"status\":\"showing\",\"created_at\":\"2026-06-04 23:57:36\",\"updated_at\":\"2026-06-04 23:57:36\",\"synopsis\":null,\"cast\":null,\"copyright_holder\":null,\"copyright_reg_no\":null,\"copyright_region\":null,\"copyright_terms\":null,\"pre_show_ad_duration\":null,\"pre_sho"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59046/api/analytics/box-office-heatmap?start_date=2026-05-06&end_date=2026-06-05",
+      "path": "/api/analytics/box-office-heatmap?start_date=2026-05-06&end_date=2026-06-05",
+      "status": 200,
+      "ok": true,
+      "bodyPreview": "{\"cities\":[{\"city\":\"Beijing\",\"total_revenue\":780,\"total_orders\":6,\"districts\":[{\"district\":\"Chaoyang\",\"cinema_name\":\"Stellar Cineplex Beijing\",\"revenue\":780,\"order_count\":6,\"showtime_count\":5}]},{\"city\":\"Shanghai\",\"total_revenue\":0,\"total_orders\":0,\"districts\":[{\"district\":\"Pudong\",\"cinema_name\":\"Stellar Cineplex Shanghai\",\"revenue\":0,\"order_count\":0,\"showtime_count\":1}]},{\"city\":\"Guangzhou\",\"total_revenue\":0,\"total_orders\":0,\"districts\":[{\"district\":\"Tianhe\",\"cinema_name\":\"Stellar Cineplex Guan"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59046/api/auth/me",
+      "path": "/api/auth/me",
+      "status": 200,
+      "ok": true,
+      "bodyPreview": "{\"user\":{\"id\":1,\"username\":\"admin\",\"role\":\"admin\",\"real_name\":\"影院平台管理员\"},\"mode\":\"demo-no-login\"}"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59046/api/users/profile",
+      "path": "/api/users/profile",
+      "status": 200,
+      "ok": true,
+      "bodyPreview": "{\"user\":{\"id\":1,\"username\":\"admin\",\"role\":\"admin\",\"real_name\":\"影院平台管理员\"}}"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59046/api/user/profile",
+      "path": "/api/user/profile",
+      "status": 200,
+      "ok": true,
+      "bodyPreview": "{\"user\":{\"id\":1,\"username\":\"admin\",\"role\":\"admin\",\"real_name\":\"影院平台管理员\"}}"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59046/api/admin/stats",
+      "path": "/api/admin/stats",
+      "status": 200,
+      "ok": true,
+      "bodyPreview": "{\"cinema_count\":4,\"movie_count\":6,\"showtime_count\":10,\"order_count\":6,\"audience_count\":3}"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59046/api/admin/dashboard",
+      "path": "/api/admin/dashboard",
+      "status": 200,
+      "ok": true,
+      "bodyPreview": "{\"service\":\"cinema-admin-dashboard\",\"recentOrders\":[{\"id\":4,\"order_no\":\"ORD202606051623472336\",\"total_amount\":116,\"status\":\"pending\",\"movie_title\":\"The Last Dynasty\",\"cinema_name\":\"Stellar Cineplex Beijing\"},{\"id\":3,\"order_no\":\"ORD202606051622350106\",\"total_amount\":116,\"status\":\"pending\",\"movie_title\":\"The Last Dynasty\",\"cinema_name\":\"Stellar Cineplex Beijing\"},{\"id\":2,\"order_no\":\"ORD202606051622249685\",\"total_amount\":116,\"status\":\"pending\",\"movie_title\":\"The Last Dynasty\",\"cinema_name\":\"Stellar"
+    }
+  ],
+  "dialogs": [],
+  "consoleMessages": [
+    {
+      "type": "debug",
+      "text": "[vite] connecting...",
+      "location": {
+        "url": "http://127.0.0.1:49046/@vite/client",
+        "lineNumber": 494,
+        "columnNumber": 8
+      }
+    },
+    {
+      "type": "debug",
+      "text": "[vite] connected.",
+      "location": {
+        "url": "http://127.0.0.1:49046/@vite/client",
+        "lineNumber": 617,
+        "columnNumber": 14
+      }
+    },
+    {
+      "type": "info",
+      "text": "%cDownload the React DevTools for a better development experience: https://reactjs.org/link/react-devtools font-weight:bold",
+      "location": {
+        "url": "http://127.0.0.1:49046/node_modules/.vite/deps/chunk-PJEEZAML.js?v=26797046",
+        "lineNumber": 21550,
+        "columnNumber": 24
+      }
+    },
+    {
+      "type": "warning",
+      "text": "⚠️ React Router Future Flag Warning: React Router will begin wrapping state updates in `React.startTransition` in v7. You can use the `v7_startTransition` future flag to opt-in early. For more information, see https://reactrouter.com/v6/upgrading/future#v7_starttransition.",
+      "location": {
+        "url": "http://127.0.0.1:49046/node_modules/.vite/deps/react-router-dom.js?v=26797046",
+        "lineNumber": 4426,
+        "columnNumber": 12
+      }
+    },
+    {
+      "type": "warning",
+      "text": "⚠️ React Router Future Flag Warning: Relative route resolution within Splat routes is changing in v7. You can use the `v7_relativeSplatPath` future flag to opt-in early. For more information, see https://reactrouter.com/v6/upgrading/future#v7_relativesplatpath.",
+      "location": {
+        "url": "http://127.0.0.1:49046/node_modules/.vite/deps/react-router-dom.js?v=26797046",
+        "lineNumber": 4426,
+        "columnNumber": 12
+      }
+    },
+    {
+      "type": "error",
+      "text": "Failed to load resource: the server responded with a status of 404 (Not Found)",
+      "location": {
+        "url": "http://127.0.0.1:49046/favicon.ico",
+        "lineNumber": 0,
+        "columnNumber": 0
+      }
+    },
+    {
+      "type": "error",
+      "text": "Failed to load resource: the server responded with a status of 404 (Not Found)",
+      "location": {
+        "url": "http://127.0.0.1:49046/favicon.ico",
+        "lineNumber": 0,
+        "columnNumber": 0
+      }
+    },
+    {
+      "type": "debug",
+      "text": "[vite] connecting...",
+      "location": {
+        "url": "http://127.0.0.1:49046/@vite/client",
+        "lineNumber": 494,
+        "columnNumber": 8
+      }
+    },
+    {
+      "type": "debug",
+      "text": "[vite] connected.",
+      "location": {
+        "url": "http://127.0.0.1:49046/@vite/client",
+        "lineNumber": 617,
+        "columnNumber": 14
+      }
+    },
+    {
+      "type": "info",
+      "text": "%cDownload the React DevTools for a better development experience: https://reactjs.org/link/react-devtools font-weight:bold",
+      "location": {
+        "url": "http://127.0.0.1:49046/node_modules/.vite/deps/chunk-PJEEZAML.js?v=26797046",
+        "lineNumber": 21550,
+        "columnNumber": 24
+      }
+    },
+    {
+      "type": "warning",
+      "text": "⚠️ React Router Future Flag Warning: React Router will begin wrapping state updates in `React.startTransition` in v7. You can use the `v7_startTransition` future flag to opt-in early. For more information, see https://reactrouter.com/v6/upgrading/future#v7_starttransition.",
+      "location": {
+        "url": "http://127.0.0.1:49046/node_modules/.vite/deps/react-router-dom.js?v=26797046",
+        "lineNumber": 4426,
+        "columnNumber": 12
+      }
+    },
+    {
+      "type": "warning",
+      "text": "⚠️ React Router Future Flag Warning: Relative route resolution within Splat routes is changing in v7. You can use the `v7_relativeSplatPath` future flag to opt-in early. For more information, see https://reactrouter.com/v6/upgrading/future#v7_relativesplatpath.",
+      "location": {
+        "url": "http://127.0.0.1:49046/node_modules/.vite/deps/react-router-dom.js?v=26797046",
+        "lineNumber": 4426,
+        "columnNumber": 12
+      }
+    },
+    {
+      "type": "error",
+      "text": "Warning: [antd: Tabs] `destroyInactiveTabPane` is deprecated. Please use `destroyOnHidden` instead.",
+      "location": {
+        "url": "http://127.0.0.1:49046/node_modules/.vite/deps/chunk-D2XKH6ZM.js?v=26797046",
+        "lineNumber": 1247,
+        "columnNumber": 14
+      }
+    },
+    {
+      "type": "log",
+      "text": "[BoxOfficeHeatmap] Calling analyticsApi.boxOfficeHeatmap with params: {start_date: 2026-05-06, end_date: 2026-06-05}",
+      "location": {
+        "url": "http://127.0.0.1:49046/src/pages/Analytics.jsx",
+        "lineNumber": 87,
+        "columnNumber": 12
+      }
+    },
+    {
+      "type": "log",
+      "text": "[BoxOfficeHeatmap] Calling analyticsApi.boxOfficeHeatmap with params: {start_date: 2026-05-06, end_date: 2026-06-05}",
+      "location": {
+        "url": "http://127.0.0.1:49046/src/pages/Analytics.jsx",
+        "lineNumber": 87,
+        "columnNumber": 12
+      }
+    },
+    {
+      "type": "log",
+      "text": "[BoxOfficeHeatmap] API Response received: {cities: Array(4), aggregation: Object}",
+      "location": {
+        "url": "http://127.0.0.1:49046/src/pages/Analytics.jsx",
+        "lineNumber": 101,
+        "columnNumber": 14
+      }
+    },
+    {
+      "type": "log",
+      "text": "[BoxOfficeHeatmap] Raw orders for aggregation: [Object, Object, Object, Object, Object, Object]",
+      "location": {
+        "url": "http://127.0.0.1:49046/src/pages/Analytics.jsx",
+        "lineNumber": 102,
+        "columnNumber": 14
+      }
+    },
+    {
+      "type": "log",
+      "text": "[BoxOfficeHeatmap] API Response received: {cities: Array(4), aggregation: Object}",
+      "location": {
+        "url": "http://127.0.0.1:49046/src/pages/Analytics.jsx",
+        "lineNumber": 101,
+        "columnNumber": 14
+      }
+    },
+    {
+      "type": "log",
+      "text": "[BoxOfficeHeatmap] Raw orders for aggregation: [Object, Object, Object, Object, Object, Object]",
+      "location": {
+        "url": "http://127.0.0.1:49046/src/pages/Analytics.jsx",
+        "lineNumber": 102,
+        "columnNumber": 14
+      }
+    },
+    {
+      "type": "error",
+      "text": "Warning: Instance created by `useForm` is not connected to any Form element. Forget to pass `form` prop?",
+      "location": {
+        "url": "http://127.0.0.1:49046/node_modules/.vite/deps/chunk-D2XKH6ZM.js?v=26797046",
+        "lineNumber": 1247,
+        "columnNumber": 14
+      }
+    },
+    {
+      "type": "debug",
+      "text": "[vite] connecting...",
+      "location": {
+        "url": "http://127.0.0.1:49046/@vite/client",
+        "lineNumber": 494,
+        "columnNumber": 8
+      }
+    },
+    {
+      "type": "debug",
+      "text": "[vite] connected.",
+      "location": {
+        "url": "http://127.0.0.1:49046/@vite/client",
+        "lineNumber": 617,
+        "columnNumber": 14
+      }
+    },
+    {
+      "type": "info",
+      "text": "%cDownload the React DevTools for a better development experience: https://reactjs.org/link/react-devtools font-weight:bold",
+      "location": {
+        "url": "http://127.0.0.1:49046/node_modules/.vite/deps/chunk-PJEEZAML.js?v=26797046",
+        "lineNumber": 21550,
+        "columnNumber": 24
+      }
+    },
+    {
+      "type": "warning",
+      "text": "⚠️ React Router Future Flag Warning: React Router will begin wrapping state updates in `React.startTransition` in v7. You can use the `v7_startTransition` future flag to opt-in early. For more information, see https://reactrouter.com/v6/upgrading/future#v7_starttransition.",
+      "location": {
+        "url": "http://127.0.0.1:49046/node_modules/.vite/deps/react-router-dom.js?v=26797046",
+        "lineNumber": 4426,
+        "columnNumber": 12
+      }
+    },
+    {
+      "type": "warning",
+      "text": "⚠️ React Router Future Flag Warning: Relative route resolution within Splat routes is changing in v7. You can use the `v7_relativeSplatPath` future flag to opt-in early. For more information, see https://reactrouter.com/v6/upgrading/future#v7_relativesplatpath.",
+      "location": {
+        "url": "http://127.0.0.1:49046/node_modules/.vite/deps/react-router-dom.js?v=26797046",
+        "lineNumber": 4426,
+        "columnNumber": 12
+      }
+    },
+    {
+      "type": "error",
+      "text": "Warning: Maximum update depth exceeded. This can happen when a component calls setState inside useEffect, but useEffect either doesn't have a dependency array, or one of the dependencies changes on every render.",
+      "location": {
+        "url": "http://127.0.0.1:49046/node_modules/.vite/deps/chunk-PJEEZAML.js?v=26797046",
+        "lineNumber": 520,
+        "columnNumber": 37
+      }
+    },
+    {
+      "type": "error",
+      "text": "Warning: Maximum update depth exceeded. This can happen when a component calls setState inside useEffect, but useEffect either doesn't have a dependency array, or one of the dependencies changes on every render.",
+      "location": {
+        "url": "http://127.0.0.1:49046/node_modules/.vite/deps/chunk-PJEEZAML.js?v=26797046",
+        "lineNumber": 520,
+        "columnNumber": 37
+      }
+    },
+    {
+      "type": "error",
+      "text": "Warning: [antd: Tabs] `destroyInactiveTabPane` is deprecated. Please use `destroyOnHidden` instead.",
+      "location": {
+        "url": "http://127.0.0.1:49046/node_modules/.vite/deps/chunk-D2XKH6ZM.js?v=26797046",
+        "lineNumber": 1247,
+        "columnNumber": 14
+      }
+    },
+    {
+      "type": "log",
+      "text": "[BoxOfficeHeatmap] Calling analyticsApi.boxOfficeHeatmap with params: {start_date: 2026-05-06, end_date: 2026-06-05}",
+      "location": {
+        "url": "http://127.0.0.1:49046/src/pages/Analytics.jsx",
+        "lineNumber": 87,
+        "columnNumber": 12
+      }
+    },
+    {
+      "type": "log",
+      "text": "[BoxOfficeHeatmap] Calling analyticsApi.boxOfficeHeatmap with params: {start_date: 2026-05-06, end_date: 2026-06-05}",
+      "location": {
+        "url": "http://127.0.0.1:49046/src/pages/Analytics.jsx",
+        "lineNumber": 87,
+        "columnNumber": 12
+      }
+    },
+    {
+      "type": "log",
+      "text": "[BoxOfficeHeatmap] API Response received: {cities: Array(4), aggregation: Object}",
+      "location": {
+        "url": "http://127.0.0.1:49046/src/pages/Analytics.jsx",
+        "lineNumber": 101,
+        "columnNumber": 14
+      }
+    },
+    {
+      "type": "log",
+      "text": "[BoxOfficeHeatmap] Raw orders for aggregation: [Object, Object, Object, Object, Object, Object]",
+      "location": {
+        "url": "http://127.0.0.1:49046/src/pages/Analytics.jsx",
+        "lineNumber": 102,
+        "columnNumber": 14
+      }
+    },
+    {
+      "type": "log",
+      "text": "[BoxOfficeHeatmap] API Response received: {cities: Array(4), aggregation: Object}",
+      "location": {
+        "url": "http://127.0.0.1:49046/src/pages/Analytics.jsx",
+        "lineNumber": 101,
+        "columnNumber": 14
+      }
+    },
+    {
+      "type": "log",
+      "text": "[BoxOfficeHeatmap] Raw orders for aggregation: [Object, Object, Object, Object, Object, Object]",
+      "location": {
+        "url": "http://127.0.0.1:49046/src/pages/Analytics.jsx",
+        "lineNumber": 102,
+        "columnNumber": 14
+      }
+    },
+    {
+      "type": "error",
+      "text": "Warning: Instance created by `useForm` is not connected to any Form element. Forget to pass `form` prop?",
+      "location": {
+        "url": "http://127.0.0.1:49046/node_modules/.vite/deps/chunk-D2XKH6ZM.js?v=26797046",
+        "lineNumber": 1247,
+        "columnNumber": 14
+      }
+    },
+    {
+      "type": "debug",
+      "text": "[vite] connecting...",
+      "location": {
+        "url": "http://127.0.0.1:49046/@vite/client",
+        "lineNumber": 494,
+        "columnNumber": 8
+      }
+    },
+    {
+      "type": "debug",
+      "text": "[vite] connected.",
+      "location": {
+        "url": "http://127.0.0.1:49046/@vite/client",
+        "lineNumber": 617,
+        "columnNumber": 14
+      }
+    },
+    {
+      "type": "info",
+      "text": "%cDownload the React DevTools for a better development experience: https://reactjs.org/link/react-devtools font-weight:bold",
+      "location": {
+        "url": "http://127.0.0.1:49046/node_modules/.vite/deps/chunk-PJEEZAML.js?v=26797046",
+        "lineNumber": 21550,
+        "columnNumber": 24
+      }
+    },
+    {
+      "type": "warning",
+      "text": "⚠️ React Router Future Flag Warning: React Router will begin wrapping state updates in `React.startTransition` in v7. You can use the `v7_startTransition` future flag to opt-in early. For more information, see https://reactrouter.com/v6/upgrading/future#v7_starttransition.",
+      "location": {
+        "url": "http://127.0.0.1:49046/node_modules/.vite/deps/react-router-dom.js?v=26797046",
+        "lineNumber": 4426,
+        "columnNumber": 12
+      }
+    },
+    {
+      "type": "warning",
+      "text": "⚠️ React Router Future Flag Warning: Relative route resolution within Splat routes is changing in v7. You can use the `v7_relativeSplatPath` future flag to opt-in early. For more information, see https://reactrouter.com/v6/upgrading/future#v7_relativesplatpath.",
+      "location": {
+        "url": "http://127.0.0.1:49046/node_modules/.vite/deps/react-router-dom.js?v=26797046",
+        "lineNumber": 4426,
+        "columnNumber": 12
+      }
+    },
+    {
+      "type": "error",
+      "text": "Warning: Maximum update depth exceeded. This can happen when a component calls setState inside useEffect, but useEffect either doesn't have a dependency array, or one of the dependencies changes on every render.",
+      "location": {
+        "url": "http://127.0.0.1:49046/node_modules/.vite/deps/chunk-PJEEZAML.js?v=26797046",
+        "lineNumber": 520,
+        "columnNumber": 37
+      }
+    },
+    {
+      "type": "error",
+      "text": "Warning: Maximum update depth exceeded. This can happen when a component calls setState inside useEffect, but useEffect either doesn't have a dependency array, or one of the dependencies changes on every render.",
+      "location": {
+        "url": "http://127.0.0.1:49046/node_modules/.vite/deps/chunk-PJEEZAML.js?v=26797046",
+        "lineNumber": 520,
+        "columnNumber": 37
+      }
+    },
+    {
+      "type": "error",
+      "text": "Warning: [antd: Tabs] `destroyInactiveTabPane` is deprecated. Please use `destroyOnHidden` instead.",
+      "location": {
+        "url": "http://127.0.0.1:49046/node_modules/.vite/deps/chunk-D2XKH6ZM.js?v=26797046",
+        "lineNumber": 1247,
+        "columnNumber": 14
+      }
+    },
+    {
+      "type": "log",
+      "text": "[BoxOfficeHeatmap] Calling analyticsApi.boxOfficeHeatmap with params: {start_date: 2026-05-06, end_date: 2026-06-05}",
+      "location": {
+        "url": "http://127.0.0.1:49046/src/pages/Analytics.jsx",
+        "lineNumber": 87,
+        "columnNumber": 12
+      }
+    },
+    {
+      "type": "log",
+      "text": "[BoxOfficeHeatmap] Calling analyticsApi.boxOfficeHeatmap with params: {start_date: 2026-05-06, end_date: 2026-06-05}",
+      "location": {
+        "url": "http://127.0.0.1:49046/src/pages/Analytics.jsx",
+        "lineNumber": 87,
+        "columnNumber": 12
+      }
+    },
+    {
+      "type": "log",
+      "text": "[BoxOfficeHeatmap] API Response received: {cities: Array(4), aggregation: Object}",
+      "location": {
+        "url": "http://127.0.0.1:49046/src/pages/Analytics.jsx",
+        "lineNumber": 101,
+        "columnNumber": 14
+      }
+    },
+    {
+      "type": "log",
+      "text": "[BoxOfficeHeatmap] Raw orders for aggregation: [Object, Object, Object, Object, Object, Object]",
+      "location": {
+        "url": "http://127.0.0.1:49046/src/pages/Analytics.jsx",
+        "lineNumber": 102,
+        "columnNumber": 14
+      }
+    },
+    {
+      "type": "log",
+      "text": "[BoxOfficeHeatmap] API Response received: {cities: Array(4), aggregation: Object}",
+      "location": {
+        "url": "http://127.0.0.1:49046/src/pages/Analytics.jsx",
+        "lineNumber": 101,
+        "columnNumber": 14
+      }
+    },
+    {
+      "type": "log",
+      "text": "[BoxOfficeHeatmap] Raw orders for aggregation: [Object, Object, Object, Object, Object, Object]",
+      "location": {
+        "url": "http://127.0.0.1:49046/src/pages/Analytics.jsx",
+        "lineNumber": 102,
+        "columnNumber": 14
+      }
+    },
+    {
+      "type": "error",
+      "text": "Warning: Instance created by `useForm` is not connected to any Form element. Forget to pass `form` prop?",
+      "location": {
+        "url": "http://127.0.0.1:49046/node_modules/.vite/deps/chunk-D2XKH6ZM.js?v=26797046",
+        "lineNumber": 1247,
+        "columnNumber": 14
+      }
+    },
+    {
+      "type": "debug",
+      "text": "[vite] connecting...",
+      "location": {
+        "url": "http://127.0.0.1:49046/@vite/client",
+        "lineNumber": 494,
+        "columnNumber": 8
+      }
+    },
+    {
+      "type": "info",
+      "text": "%cDownload the React DevTools for a better development experience: https://reactjs.org/link/react-devtools font-weight:bold",
+      "location": {
+        "url": "http://127.0.0.1:49046/node_modules/.vite/deps/chunk-PJEEZAML.js?v=26797046",
+        "lineNumber": 21550,
+        "columnNumber": 24
+      }
+    },
+    {
+      "type": "warning",
+      "text": "⚠️ React Router Future Flag Warning: React Router will begin wrapping state updates in `React.startTransition` in v7. You can use the `v7_startTransition` future flag to opt-in early. For more information, see https://reactrouter.com/v6/upgrading/future#v7_starttransition.",
+      "location": {
+        "url": "http://127.0.0.1:49046/node_modules/.vite/deps/react-router-dom.js?v=26797046",
+        "lineNumber": 4426,
+        "columnNumber": 12
+      }
+    },
+    {
+      "type": "warning",
+      "text": "⚠️ React Router Future Flag Warning: Relative route resolution within Splat routes is changing in v7. You can use the `v7_relativeSplatPath` future flag to opt-in early. For more information, see https://reactrouter.com/v6/upgrading/future#v7_relativesplatpath.",
+      "location": {
+        "url": "http://127.0.0.1:49046/node_modules/.vite/deps/react-router-dom.js?v=26797046",
+        "lineNumber": 4426,
+        "columnNumber": 12
+      }
+    },
+    {
+      "type": "debug",
+      "text": "[vite] connected.",
+      "location": {
+        "url": "http://127.0.0.1:49046/@vite/client",
+        "lineNumber": 617,
+        "columnNumber": 14
+      }
+    },
+    {
+      "type": "error",
+      "text": "Warning: Maximum update depth exceeded. This can happen when a component calls setState inside useEffect, but useEffect either doesn't have a dependency array, or one of the dependencies changes on every render.",
+      "location": {
+        "url": "http://127.0.0.1:49046/node_modules/.vite/deps/chunk-PJEEZAML.js?v=26797046",
+        "lineNumber": 520,
+        "columnNumber": 37
+      }
+    }
+  ],
+  "requestFailures": [],
+  "responseErrors": []
+}
