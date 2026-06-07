@@ -1,0 +1,2228 @@
+{
+  "ok": true,
+  "generatedAt": "2026-06-06T01:41:38.165Z",
+  "order": "may-89055",
+  "roundIndex": 17,
+  "captureId": "may-89055-codex-cycle17",
+  "url": "http://127.0.0.1:49055/",
+  "initialUrl": "http://127.0.0.1:49055/",
+  "finalUrl": "http://127.0.0.1:49055/",
+  "status": 200,
+  "title": "同城即时配送调度中台",
+  "initialTitle": "同城即时配送调度中台",
+  "navigationError": "",
+  "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89055/repair-browser-check/codex-20260606-cycle17/may-89055-codex-cycle17-frontend.png",
+  "screenshotPaths": [
+    "/Users/chen/Documents/trae_projects/local_projects/may-89055/repair-browser-check/codex-20260606-cycle17/may-89055-codex-cycle17-structure-01-首屏.png",
+    "/Users/chen/Documents/trae_projects/local_projects/may-89055/repair-browser-check/codex-20260606-cycle17/may-89055-codex-cycle17-structure-02-导航-数据看板.png",
+    "/Users/chen/Documents/trae_projects/local_projects/may-89055/repair-browser-check/codex-20260606-cycle17/may-89055-codex-cycle17-structure-03-导航-运单管理.png",
+    "/Users/chen/Documents/trae_projects/local_projects/may-89055/repair-browser-check/codex-20260606-cycle17/may-89055-codex-cycle17-structure-04-操作-新建运单.png",
+    "/Users/chen/Documents/trae_projects/local_projects/may-89055/repair-browser-check/codex-20260606-cycle17/may-89055-codex-cycle17-structure-05-二层操作-新建运单-创建运单.png",
+    "/Users/chen/Documents/trae_projects/local_projects/may-89055/repair-browser-check/codex-20260606-cycle17/may-89055-codex-cycle17-structure-06-操作-详情.png",
+    "/Users/chen/Documents/trae_projects/local_projects/may-89055/repair-browser-check/codex-20260606-cycle17/may-89055-codex-cycle17-structure-07-二层操作-详情-返回.png"
+  ],
+  "issueTextPreview": "登录流程已完成，继续复验登录后的首页和业务导航",
+  "targetReason": "登录流程已完成，继续复验登录后的首页和业务导航",
+  "targetKind": "auth",
+  "targetMatched": true,
+  "targetActions": [
+    {
+      "action": "login-fill-username",
+      "label": "admin",
+      "ok": true
+    },
+    {
+      "action": "login-fill-password",
+      "label": "admin:******",
+      "ok": true
+    },
+    {
+      "action": "click",
+      "label": "登录:admin",
+      "ok": true
+    },
+    {
+      "action": "login-submit",
+      "label": "admin",
+      "ok": true,
+      "beforeUrl": "http://127.0.0.1:49055/login"
+    },
+    {
+      "action": "login-result",
+      "label": "admin",
+      "ok": true,
+      "finalUrl": "http://127.0.0.1:49055/dashboard"
+    },
+    {
+      "action": "target-verify",
+      "label": "登录后首页",
+      "ok": true,
+      "finalUrl": "http://127.0.0.1:49055/dashboard"
+    }
+  ],
+  "authFlow": {
+    "detected": true,
+    "attempted": true,
+    "success": true,
+    "finalUrl": "http://127.0.0.1:49055/dashboard",
+    "message": "登录成功:admin",
+    "actions": [
+      {
+        "action": "login-fill-username",
+        "label": "admin",
+        "ok": true
+      },
+      {
+        "action": "login-fill-password",
+        "label": "admin:******",
+        "ok": true
+      },
+      {
+        "action": "click",
+        "label": "登录:admin",
+        "ok": true
+      },
+      {
+        "action": "login-submit",
+        "label": "admin",
+        "ok": true,
+        "beforeUrl": "http://127.0.0.1:49055/login"
+      },
+      {
+        "action": "login-result",
+        "label": "admin",
+        "ok": true,
+        "finalUrl": "http://127.0.0.1:49055/dashboard"
+      }
+    ],
+    "username": "admin",
+    "credentialSource": "visible-demo-text"
+  },
+  "businessAudit": {
+    "actions": [
+      {
+        "action": "click",
+        "label": "导航:数据看板",
+        "ok": true
+      },
+      {
+        "action": "click",
+        "label": "导航:运单管理",
+        "ok": true
+      },
+      {
+        "action": "click",
+        "label": "关闭弹窗/抽屉",
+        "ok": true
+      },
+      {
+        "action": "click",
+        "label": "操作:新建运单",
+        "ok": true,
+        "result": {
+          "ok": true,
+          "matched": 1
+        }
+      },
+      {
+        "action": "click",
+        "label": "二层操作:新建运单:创建运单",
+        "ok": true,
+        "result": {
+          "ok": true,
+          "matched": 1
+        }
+      },
+      {
+        "action": "click",
+        "label": "关闭弹窗/抽屉",
+        "ok": false,
+        "error": "locator.click: Timeout 900ms exceeded.\nCall log:\n\u001b[2m  - waiting for locator('a,button,[role=\"button\"],[role=\"menuitem\"],[onclick],[tabindex]:not([tabindex=\"-1\"]),[class*=\"nav-item\" i],[class*=\"menu-item\" i],[class*=\"men"
+      },
+      {
+        "action": "click",
+        "label": "关闭弹窗/抽屉",
+        "ok": false,
+        "error": "locator.click: Timeout 900ms exceeded.\nCall log:\n\u001b[2m  - waiting for getByText(/^取消$/).first()\u001b[22m\n\u001b[2m    - locator resolved to <span>取消</span>\u001b[22m\n\u001b[2m  - attempting click action\u001b[22m\n\u001b[2m    2 × waiting for element "
+      },
+      {
+        "action": "click",
+        "label": "关闭弹窗/抽屉",
+        "ok": false,
+        "error": "locator.click: Timeout 900ms exceeded.\nCall log:\n\u001b[2m  - waiting for getByRole('button', { name: /^Close$/ }).first()\u001b[22m\n\u001b[2m    - locator resolved to <button type=\"button\" aria-label=\"Close\" class=\"ant-modal-close\">…<"
+      },
+      {
+        "action": "click",
+        "label": "关闭弹窗/抽屉",
+        "ok": false,
+        "error": "locator.click: Timeout 900ms exceeded.\nCall log:\n\u001b[2m  - waiting for locator('a,button,[role=\"button\"],[role=\"menuitem\"],[onclick],[tabindex]:not([tabindex=\"-1\"]),[class*=\"nav-item\" i],[class*=\"menu-item\" i],[class*=\"men"
+      },
+      {
+        "action": "click",
+        "label": "关闭弹窗/抽屉",
+        "ok": false,
+        "error": "locator.click: Timeout 900ms exceeded.\nCall log:\n\u001b[2m  - waiting for getByText(/^取消$/).first()\u001b[22m\n\u001b[2m    - locator resolved to <span>取消</span>\u001b[22m\n\u001b[2m  - attempting click action\u001b[22m\n\u001b[2m    2 × waiting for element "
+      },
+      {
+        "action": "click",
+        "label": "操作:详情",
+        "ok": true,
+        "result": {
+          "ok": true,
+          "matched": 6
+        }
+      },
+      {
+        "action": "click",
+        "label": "二层操作:详情:返回",
+        "ok": true,
+        "result": {
+          "ok": true,
+          "matched": 1
+        }
+      },
+      {
+        "action": "click",
+        "label": "关闭弹窗/抽屉",
+        "ok": true
+      },
+      {
+        "action": "click",
+        "label": "关闭弹窗/抽屉",
+        "ok": false,
+        "error": "locator.click: Timeout 900ms exceeded.\nCall log:\n\u001b[2m  - waiting for locator('a,button,[role=\"button\"],[role=\"menuitem\"],[onclick],[tabindex]:not([tabindex=\"-1\"]),[class*=\"nav-item\" i],[class*=\"menu-item\" i],[class*=\"men"
+      },
+      {
+        "action": "click",
+        "label": "关闭弹窗/抽屉",
+        "ok": false,
+        "error": "locator.click: Timeout 900ms exceeded.\nCall log:\n\u001b[2m  - waiting for getByText(/^取消$/).first()\u001b[22m\n\u001b[2m    - locator resolved to <span>取消</span>\u001b[22m\n\u001b[2m  - attempting click action\u001b[22m\n\u001b[2m    2 × waiting for element "
+      }
+    ],
+    "snapshots": [
+      {
+        "label": "首屏",
+        "url": "http://127.0.0.1:49055/",
+        "title": "同城即时配送调度中台",
+        "headings": [],
+        "navLabels": [],
+        "buttons": [],
+        "links": [],
+        "inputs": [],
+        "tables": [],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "",
+        "layout": {
+          "viewportWidth": 1504,
+          "viewportHeight": 1032,
+          "scrollWidth": 1504,
+          "scrollHeight": 1048,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89055-codex-cycle17-structure-01-首屏",
+          "label": "首屏",
+          "finalUrl": "http://127.0.0.1:49055/",
+          "title": "同城即时配送调度中台",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89055/repair-browser-check/codex-20260606-cycle17/may-89055-codex-cycle17-structure-01-首屏.json",
+          "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89055/repair-browser-check/codex-20260606-cycle17/may-89055-codex-cycle17-structure-01-首屏.png",
+          "elementCount": 15,
+          "interactiveCount": 0,
+          "interactiveLabels": []
+        }
+      },
+      {
+        "label": "导航:数据看板",
+        "url": "http://127.0.0.1:49055/dashboard",
+        "title": "同城即时配送调度中台",
+        "headings": [
+          "管理员数据看板"
+        ],
+        "navLabels": [
+          "数据看板 运单管理 骑手管理 调度中心 实时追踪 热力地图 信用体系 异常处理 结算管理",
+          "数据看板",
+          "dashboard",
+          "运单管理",
+          "shopping",
+          "骑手管理",
+          "user",
+          "调度中心",
+          "car",
+          "实时追踪",
+          "environment",
+          "热力地图",
+          "heat-map",
+          "信用体系",
+          "credit-card",
+          "异常处理",
+          "warning",
+          "结算管理",
+          "money-collect"
+        ],
+        "buttons": [],
+        "links": [
+          "数据看板",
+          "运单管理",
+          "骑手管理",
+          "调度中心",
+          "实时追踪",
+          "热力地图",
+          "信用体系",
+          "异常处理",
+          "结算管理",
+          "DD17807078832844724",
+          "DD17807065826616622",
+          "DD17807064960270001",
+          "DD17807064960300002",
+          "DD17807064960300003",
+          "DD17807064960300004"
+        ],
+        "inputs": [],
+        "tables": [
+          {
+            "headers": [
+              "运单号",
+              "寄件人",
+              "收件人",
+              "品类",
+              "状态",
+              "费用",
+              "创建时间"
+            ],
+            "rowCount": 6,
+            "hasEmptyText": false,
+            "textPreview": "运单号 寄件人 收件人 品类 状态 费用 创建时间 DD17807078832844724 Zhang San Li Si 美食 待调度 ¥25.00 2026-06-06 04:04:43 DD17807065826616622 Zhang San Li Si 美食 配送中 ¥25.00 2026-06-06 03:43:02 DD17807064960270001 Zhang Wei Wang Fang 美食 待调度 ¥15.00 2026-06-06 03:41:36 DD17807064960300002 Zhang Wei Li Hua 生鲜 已接单 ¥20.00 2026-06-0"
+          }
+        ],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "同城配送调度数据看板运单管理骑手管理调度中心实时追踪热力地图信用体系异常处理结算管理admin管理员数据看板今日运单总数6活跃骑手0待处理订单2准时送达率25.00%运单状态分布最近运单运单号寄件人收件人品类状态费用创建时间DD17807078832844724Zhang SanLi Si美食待调度¥25.002026-06-06 04:04:43DD17807065826616622Zhang SanLi Si美食配送中¥25.002026-06-06 03:43:02DD17807064960270001Zhang WeiWang Fang美食待调度¥15.002026-06-06 03:41:36DD17807064960300002Zhang WeiLi Hua生鲜已接单¥20.002026-06-06 03:31:36DD17807064960300003Li NaChen Ming文件已接单¥25.002026-06-06 03:11:36DD17807064960300004Zhang WeiZhao Ying礼品已完成¥30.002026-06-06 02:11:36",
+        "layout": {
+          "viewportWidth": 1536,
+          "viewportHeight": 1048,
+          "scrollWidth": 1536,
+          "scrollHeight": 1064,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89055-codex-cycle17-structure-02-导航-数据看板",
+          "label": "导航:数据看板",
+          "finalUrl": "http://127.0.0.1:49055/dashboard",
+          "title": "同城即时配送调度中台",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89055/repair-browser-check/codex-20260606-cycle17/may-89055-codex-cycle17-structure-02-导航-数据看板.json",
+          "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89055/repair-browser-check/codex-20260606-cycle17/may-89055-codex-cycle17-structure-02-导航-数据看板.png",
+          "elementCount": 248,
+          "interactiveCount": 26,
+          "interactiveLabels": [
+            "数据看板 运单管理 骑手管理 调度中心 实时追踪 热力地图 信用体系 异常处理 结算管理",
+            "数据看板",
+            "运单管理",
+            "骑手管理",
+            "调度中心",
+            "实时追踪",
+            "热力地图",
+            "信用体系",
+            "异常处理",
+            "结算管理",
+            "DD17807078832844724",
+            "DD17807065826616622",
+            "DD17807064960270001",
+            "DD17807064960300002",
+            "DD17807064960300003",
+            "DD17807064960300004"
+          ]
+        }
+      },
+      {
+        "label": "导航:运单管理",
+        "url": "http://127.0.0.1:49055/waybills",
+        "title": "同城即时配送调度中台",
+        "headings": [
+          "运单管理"
+        ],
+        "navLabels": [
+          "数据看板 运单管理 骑手管理 调度中心 实时追踪 热力地图 信用体系 异常处理 结算管理",
+          "数据看板",
+          "dashboard",
+          "运单管理",
+          "shopping",
+          "骑手管理",
+          "user",
+          "调度中心",
+          "car",
+          "实时追踪",
+          "environment",
+          "热力地图",
+          "heat-map",
+          "信用体系",
+          "credit-card",
+          "异常处理",
+          "warning",
+          "结算管理",
+          "money-collect"
+        ],
+        "buttons": [
+          "新建运单",
+          "详情",
+          "取消"
+        ],
+        "links": [
+          "数据看板",
+          "运单管理",
+          "骑手管理",
+          "调度中心",
+          "实时追踪",
+          "热力地图",
+          "信用体系",
+          "异常处理",
+          "结算管理",
+          "DD17807078832844724",
+          "详情",
+          "DD17807065826616622",
+          "DD17807064960270001",
+          "DD17807064960300002",
+          "DD17807064960300003",
+          "DD17807064960300004"
+        ],
+        "inputs": [
+          {
+            "tag": "input",
+            "type": "search",
+            "placeholder": "搜索运单号",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "search",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "search",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "",
+            "placeholder": "开始日期",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "",
+            "placeholder": "结束日期",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "search",
+            "placeholder": "",
+            "name": "",
+            "label": "页码"
+          }
+        ],
+        "tables": [
+          {
+            "headers": [
+              "运单号",
+              "寄件人",
+              "收件人",
+              "品类",
+              "状态",
+              "骑手",
+              "费用",
+              "创建时间",
+              "操作"
+            ],
+            "rowCount": 6,
+            "hasEmptyText": false,
+            "textPreview": "运单号 寄件人 收件人 品类 状态 骑手 费用 创建时间 操作 DD17807078832844724 Zhang San Li Si 美食 待调度 - ¥25.00 2026-06-06 04:04:43 详情 取消 DD17807065826616622 Zhang San Li Si 美食 配送中 Wang Qiang ¥25.00 2026-06-06 03:43:02 详情 取消 DD17807064960270001 Zhang Wei Wang Fang 美食 待调度 - ¥15.00 2026-06-06 03:41:36 详情 取消 DD17807064960300002 Z"
+          }
+        ],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "同城配送调度数据看板运单管理骑手管理调度中心实时追踪热力地图信用体系异常处理结算管理admin运单管理新建运单状态筛选品类筛选运单号寄件人收件人品类状态骑手费用创建时间操作DD17807078832844724Zhang SanLi Si美食待调度-¥25.002026-06-06 04:04:43详情取消DD17807065826616622Zhang SanLi Si美食配送中Wang Qiang¥25.002026-06-06 03:43:02详情取消DD17807064960270001Zhang WeiWang Fang美食待调度-¥15.002026-06-06 03:41:36详情取消DD17807064960300002Zhang WeiLi Hua生鲜已接单Wang Qiang¥20.002026-06-06 03:31:36详情取消DD17807064960300003Li NaChen Ming文件已接单Wang Qiang¥25.002026-06-06 03:11:36详情取消DD17807064960300004Zhang WeiZhao Ying礼品已完成Liu Ming¥30.002026-06-06 02:11:36详情共 6 条110 条/页",
+        "layout": {
+          "viewportWidth": 1568,
+          "viewportHeight": 1064,
+          "scrollWidth": 1568,
+          "scrollHeight": 1080,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89055-codex-cycle17-structure-03-导航-运单管理",
+          "label": "导航:运单管理",
+          "finalUrl": "http://127.0.0.1:49055/waybills",
+          "title": "同城即时配送调度中台",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89055/repair-browser-check/codex-20260606-cycle17/may-89055-codex-cycle17-structure-03-导航-运单管理.json",
+          "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89055/repair-browser-check/codex-20260606-cycle17/may-89055-codex-cycle17-structure-03-导航-运单管理.png",
+          "elementCount": 372,
+          "interactiveCount": 56,
+          "interactiveLabels": [
+            "数据看板 运单管理 骑手管理 调度中心 实时追踪 热力地图 信用体系 异常处理 结算管理",
+            "数据看板",
+            "运单管理",
+            "骑手管理",
+            "调度中心",
+            "实时追踪",
+            "热力地图",
+            "信用体系",
+            "异常处理",
+            "结算管理",
+            "新建运单",
+            "搜索运单号",
+            "开始日期",
+            "结束日期",
+            "DD17807078832844724",
+            "详情",
+            "取消",
+            "DD17807065826616622",
+            "DD17807064960270001",
+            "DD17807064960300002",
+            "DD17807064960300003",
+            "DD17807064960300004",
+            "1",
+            "页码"
+          ]
+        }
+      },
+      {
+        "label": "操作:新建运单",
+        "url": "http://127.0.0.1:49055/waybills",
+        "title": "同城即时配送调度中台",
+        "headings": [
+          "运单管理"
+        ],
+        "navLabels": [
+          "数据看板 运单管理 骑手管理 调度中心 实时追踪 热力地图 信用体系 异常处理 结算管理",
+          "数据看板",
+          "dashboard",
+          "运单管理",
+          "shopping",
+          "骑手管理",
+          "user",
+          "调度中心",
+          "car",
+          "实时追踪",
+          "environment",
+          "热力地图",
+          "heat-map",
+          "信用体系",
+          "credit-card",
+          "异常处理",
+          "warning",
+          "结算管理",
+          "money-collect"
+        ],
+        "buttons": [
+          "新建运单",
+          "详情",
+          "取消",
+          "取 消",
+          "确 定",
+          "Close",
+          "创建运单"
+        ],
+        "links": [
+          "数据看板",
+          "运单管理",
+          "骑手管理",
+          "调度中心",
+          "实时追踪",
+          "热力地图",
+          "信用体系",
+          "异常处理",
+          "结算管理",
+          "DD17807078832844724",
+          "详情",
+          "DD17807065826616622",
+          "DD17807064960270001",
+          "DD17807064960300002",
+          "DD17807064960300003",
+          "DD17807064960300004"
+        ],
+        "inputs": [
+          {
+            "tag": "input",
+            "type": "search",
+            "placeholder": "搜索运单号",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "search",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "search",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "",
+            "placeholder": "开始日期",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "",
+            "placeholder": "结束日期",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "search",
+            "placeholder": "",
+            "name": "",
+            "label": "页码"
+          },
+          {
+            "tag": "input",
+            "type": "text",
+            "placeholder": "请输入姓名",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "text",
+            "placeholder": "请输入电话",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "text",
+            "placeholder": "请输入地址",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "text",
+            "placeholder": "请输入姓名",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "text",
+            "placeholder": "请输入电话",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "text",
+            "placeholder": "请输入地址",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "search",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "search",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          }
+        ],
+        "tables": [
+          {
+            "headers": [
+              "运单号",
+              "寄件人",
+              "收件人",
+              "品类",
+              "状态",
+              "骑手",
+              "费用",
+              "创建时间",
+              "操作"
+            ],
+            "rowCount": 6,
+            "hasEmptyText": false,
+            "textPreview": "运单号 寄件人 收件人 品类 状态 骑手 费用 创建时间 操作 DD17807078832844724 Zhang San Li Si 美食 待调度 - ¥25.00 2026-06-06 04:04:43 详情 取消 DD17807065826616622 Zhang San Li Si 美食 配送中 Wang Qiang ¥25.00 2026-06-06 03:43:02 详情 取消 DD17807064960270001 Zhang Wei Wang Fang 美食 待调度 - ¥15.00 2026-06-06 03:41:36 详情 取消 DD17807064960300002 Z"
+          },
+          {
+            "headers": [
+              "预估费用",
+              "SLA 承诺"
+            ],
+            "rowCount": 2,
+            "hasEmptyText": false,
+            "textPreview": "预估费用 ¥17.24 SLA 承诺 1分钟响应8分钟取件60分钟送达 超时自动转派，超时必赔"
+          }
+        ],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "同城配送调度数据看板运单管理骑手管理调度中心实时追踪热力地图信用体系异常处理结算管理admin运单管理新建运单状态筛选品类筛选运单号寄件人收件人品类状态骑手费用创建时间操作DD17807078832844724Zhang SanLi Si美食待调度-¥25.002026-06-06 04:04:43详情取消DD17807065826616622Zhang SanLi Si美食配送中Wang Qiang¥25.002026-06-06 03:43:02详情取消DD17807064960270001Zhang WeiWang Fang美食待调度-¥15.002026-06-06 03:41:36详情取消DD17807064960300002Zhang WeiLi Hua生鲜已接单Wang Qiang¥20.002026-06-06 03:31:36详情取消DD17807064960300003Li NaChen Ming文件已接单Wang Qiang¥25.002026-06-06 03:11:36详情取消DD17807064960300004Zhang WeiZhao Ying礼品已完成Liu Ming¥30.002026-06-06 02:11:36详情共 6 条110 条/页 确认取消运单确认取消运单取消后运单将无法恢复，是否继续？取 消确 定新建运单寄件人信息姓名电话地址收件人信息姓名电话地址配送信息物品品类美食保险等级基础版预估费用¥17.24SLA 承诺1分钟响应8分钟取件60分钟送达超时自动转派，超时必赔取 消创建运单",
+        "layout": {
+          "viewportWidth": 1600,
+          "viewportHeight": 1080,
+          "scrollWidth": 1600,
+          "scrollHeight": 1096,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89055-codex-cycle17-structure-04-操作-新建运单",
+          "label": "操作:新建运单",
+          "finalUrl": "http://127.0.0.1:49055/waybills",
+          "title": "同城即时配送调度中台",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89055/repair-browser-check/codex-20260606-cycle17/may-89055-codex-cycle17-structure-04-操作-新建运单.json",
+          "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89055/repair-browser-check/codex-20260606-cycle17/may-89055-codex-cycle17-structure-04-操作-新建运单.png",
+          "elementCount": 556,
+          "interactiveCount": 73,
+          "interactiveLabels": [
+            "数据看板 运单管理 骑手管理 调度中心 实时追踪 热力地图 信用体系 异常处理 结算管理",
+            "数据看板",
+            "运单管理",
+            "骑手管理",
+            "调度中心",
+            "实时追踪",
+            "热力地图",
+            "信用体系",
+            "异常处理",
+            "结算管理",
+            "新建运单",
+            "搜索运单号",
+            "开始日期",
+            "结束日期",
+            "DD17807078832844724",
+            "详情",
+            "取消",
+            "DD17807065826616622",
+            "DD17807064960270001",
+            "DD17807064960300002",
+            "DD17807064960300003",
+            "DD17807064960300004",
+            "1",
+            "页码",
+            "确认取消运单 取消后运单将无法恢复，是否继续？ 取 消 确 定",
+            "取 消",
+            "确 定",
+            "新建运单 寄件人信息 姓名 电话 地址 收件人信息 姓名 电话 地址 配送信息 物品品类 美食 保险等级 基础版 预估费用 ¥17.24 SLA 承诺 1分钟响应8分钟取件60分钟送达 超时自动转派，超时必赔 取 消 创建运单",
+            "Close",
+            "请输入姓名"
+          ]
+        }
+      },
+      {
+        "label": "二层操作:新建运单->创建运单",
+        "url": "http://127.0.0.1:49055/waybills",
+        "title": "同城即时配送调度中台",
+        "headings": [
+          "运单管理"
+        ],
+        "navLabels": [
+          "数据看板 运单管理 骑手管理 调度中心 实时追踪 热力地图 信用体系 异常处理 结算管理",
+          "数据看板",
+          "dashboard",
+          "运单管理",
+          "shopping",
+          "骑手管理",
+          "user",
+          "调度中心",
+          "car",
+          "实时追踪",
+          "environment",
+          "热力地图",
+          "heat-map",
+          "信用体系",
+          "credit-card",
+          "异常处理",
+          "warning",
+          "结算管理",
+          "money-collect"
+        ],
+        "buttons": [
+          "新建运单",
+          "详情",
+          "取消",
+          "取 消",
+          "确 定",
+          "Close",
+          "创建运单"
+        ],
+        "links": [
+          "数据看板",
+          "运单管理",
+          "骑手管理",
+          "调度中心",
+          "实时追踪",
+          "热力地图",
+          "信用体系",
+          "异常处理",
+          "结算管理",
+          "DD17807078832844724",
+          "详情",
+          "DD17807065826616622",
+          "DD17807064960270001",
+          "DD17807064960300002",
+          "DD17807064960300003",
+          "DD17807064960300004"
+        ],
+        "inputs": [
+          {
+            "tag": "input",
+            "type": "search",
+            "placeholder": "搜索运单号",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "search",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "search",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "",
+            "placeholder": "开始日期",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "",
+            "placeholder": "结束日期",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "search",
+            "placeholder": "",
+            "name": "",
+            "label": "页码"
+          },
+          {
+            "tag": "input",
+            "type": "text",
+            "placeholder": "请输入姓名",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "text",
+            "placeholder": "请输入电话",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "text",
+            "placeholder": "请输入地址",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "text",
+            "placeholder": "请输入姓名",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "text",
+            "placeholder": "请输入电话",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "text",
+            "placeholder": "请输入地址",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "search",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "search",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          }
+        ],
+        "tables": [
+          {
+            "headers": [
+              "运单号",
+              "寄件人",
+              "收件人",
+              "品类",
+              "状态",
+              "骑手",
+              "费用",
+              "创建时间",
+              "操作"
+            ],
+            "rowCount": 6,
+            "hasEmptyText": false,
+            "textPreview": "运单号 寄件人 收件人 品类 状态 骑手 费用 创建时间 操作 DD17807078832844724 Zhang San Li Si 美食 待调度 - ¥25.00 2026-06-06 04:04:43 详情 取消 DD17807065826616622 Zhang San Li Si 美食 配送中 Wang Qiang ¥25.00 2026-06-06 03:43:02 详情 取消 DD17807064960270001 Zhang Wei Wang Fang 美食 待调度 - ¥15.00 2026-06-06 03:41:36 详情 取消 DD17807064960300002 Z"
+          },
+          {
+            "headers": [
+              "预估费用",
+              "SLA 承诺"
+            ],
+            "rowCount": 2,
+            "hasEmptyText": false,
+            "textPreview": "预估费用 ¥17.24 SLA 承诺 1分钟响应8分钟取件60分钟送达 超时自动转派，超时必赔"
+          }
+        ],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "同城配送调度数据看板运单管理骑手管理调度中心实时追踪热力地图信用体系异常处理结算管理admin运单管理新建运单状态筛选品类筛选运单号寄件人收件人品类状态骑手费用创建时间操作DD17807078832844724Zhang SanLi Si美食待调度-¥25.002026-06-06 04:04:43详情取消DD17807065826616622Zhang SanLi Si美食配送中Wang Qiang¥25.002026-06-06 03:43:02详情取消DD17807064960270001Zhang WeiWang Fang美食待调度-¥15.002026-06-06 03:41:36详情取消DD17807064960300002Zhang WeiLi Hua生鲜已接单Wang Qiang¥20.002026-06-06 03:31:36详情取消DD17807064960300003Li NaChen Ming文件已接单Wang Qiang¥25.002026-06-06 03:11:36详情取消DD17807064960300004Zhang WeiZhao Ying礼品已完成Liu Ming¥30.002026-06-06 02:11:36详情共 6 条110 条/页 确认取消运单确认取消运单取消后运单将无法恢复，是否继续？取 消确 定新建运单寄件人信息姓名请输入姓名电话请输入电话地址请输入地址收件人信息姓名请输入姓名电话请输入电话地址请输入地址配送信息物品品类美食保险等级基础版预估费用¥17.24SLA 承诺1分钟响应8分钟取件60分钟送达超时自动转派，超时必赔取 消创建运单创建失败：请输入姓名; 请输入电话; 请输入地址; 请输入姓名; 请输入电话; 请输入地址",
+        "layout": {
+          "viewportWidth": 1632,
+          "viewportHeight": 1096,
+          "scrollWidth": 1632,
+          "scrollHeight": 1112,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89055-codex-cycle17-structure-05-二层操作-新建运单-创建运单",
+          "label": "二层操作:新建运单->创建运单",
+          "finalUrl": "http://127.0.0.1:49055/waybills",
+          "title": "同城即时配送调度中台",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89055/repair-browser-check/codex-20260606-cycle17/may-89055-codex-cycle17-structure-05-二层操作-新建运单-创建运单.json",
+          "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89055/repair-browser-check/codex-20260606-cycle17/may-89055-codex-cycle17-structure-05-二层操作-新建运单-创建运单.png",
+          "elementCount": 589,
+          "interactiveCount": 73,
+          "interactiveLabels": [
+            "数据看板 运单管理 骑手管理 调度中心 实时追踪 热力地图 信用体系 异常处理 结算管理",
+            "数据看板",
+            "运单管理",
+            "骑手管理",
+            "调度中心",
+            "实时追踪",
+            "热力地图",
+            "信用体系",
+            "异常处理",
+            "结算管理",
+            "新建运单",
+            "搜索运单号",
+            "开始日期",
+            "结束日期",
+            "DD17807078832844724",
+            "详情",
+            "取消",
+            "DD17807065826616622",
+            "DD17807064960270001",
+            "DD17807064960300002",
+            "DD17807064960300003",
+            "DD17807064960300004",
+            "1",
+            "页码",
+            "确认取消运单 取消后运单将无法恢复，是否继续？ 取 消 确 定",
+            "取 消",
+            "确 定",
+            "新建运单 寄件人信息 姓名 请输入姓名 电话 请输入电话 地址 请输入地址 收件人信息 姓名 请输入姓名 电话 请输入电话 地址 请输入地址 配送信息 物品品类 美食 保险等级 基础版 预估费用 ¥17.24 SLA 承诺 1分钟响应8分钟取件60分钟送达 超时自动转派，超时必赔 取 消 创建运单",
+            "Close",
+            "请输入姓名"
+          ]
+        }
+      },
+      {
+        "label": "操作:详情",
+        "url": "http://127.0.0.1:49055/waybills/6",
+        "title": "同城即时配送调度中台",
+        "headings": [
+          "运单详情 - DD17807078832844724"
+        ],
+        "navLabels": [
+          "数据看板 运单管理 骑手管理 调度中心 实时追踪 热力地图 信用体系 异常处理 结算管理",
+          "数据看板",
+          "dashboard",
+          "运单管理",
+          "shopping",
+          "骑手管理",
+          "user",
+          "调度中心",
+          "car",
+          "实时追踪",
+          "environment",
+          "热力地图",
+          "heat-map",
+          "信用体系",
+          "credit-card",
+          "异常处理",
+          "warning",
+          "结算管理",
+          "money-collect"
+        ],
+        "buttons": [
+          "返回",
+          "接 单",
+          "取消运单"
+        ],
+        "links": [
+          "数据看板",
+          "运单管理",
+          "骑手管理",
+          "调度中心",
+          "实时追踪",
+          "热力地图",
+          "信用体系",
+          "异常处理",
+          "结算管理"
+        ],
+        "inputs": [],
+        "tables": [
+          {
+            "headers": [],
+            "rowCount": 4,
+            "hasEmptyText": false,
+            "textPreview": "姓名 Zhang San 电话 13800000001 地址 123 Nanjing Road 坐标 31.2304, 121.4737"
+          },
+          {
+            "headers": [],
+            "rowCount": 4,
+            "hasEmptyText": false,
+            "textPreview": "姓名 Li Si 电话 13700000001 地址 456 Yanan Road 坐标 31.2350, 121.4680"
+          },
+          {
+            "headers": [],
+            "rowCount": 4,
+            "hasEmptyText": false,
+            "textPreview": "品类 美食 费用 ¥25.00 保险 尊享版 核验中 创建时间 2026-06-06 04:04:43"
+          },
+          {
+            "headers": [
+              "操作",
+              "骑手",
+              "综合评分",
+              "距离分",
+              "负载分",
+              "历史分",
+              "保险分",
+              "时间"
+            ],
+            "rowCount": 1,
+            "hasEmptyText": true,
+            "textPreview": "操作 骑手 综合评分 距离分 负载分 历史分 保险分 时间 暂无数据"
+          },
+          {
+            "headers": [
+              "异常类型",
+              "原骑手",
+              "新骑手",
+              "状态",
+              "创建时间",
+              "解决时间"
+            ],
+            "rowCount": 20,
+            "hasEmptyText": false,
+            "textPreview": "异常类型 原骑手 新骑手 状态 创建时间 解决时间 配送超时 Wang Qiang - 处理中 2026-06-06 01:13:09 - 取件超时 Wang Qiang - 处理中 2026-06-06 00:53:36 - 取件超时 Wang Qiang - 处理中 2026-06-06 00:53:36 - 骑手离线 Wang Qiang - 处理中 2026-06-06 00:53:36 - 骑手离线 Wang Qiang - 处理中 2026-06-06 00:53:36 - 骑手离线 Wang Qiang - 处理中 2026-06-06 00:53:36 - 取件超时 Sun T"
+          }
+        ],
+        "emptyTextCount": 1,
+        "bodyTextPreview": "同城配送调度数据看板运单管理骑手管理调度中心实时追踪热力地图信用体系异常处理结算管理admin返回运单详情 - DD17807078832844724待调度接 单取消运单状态进度订单创建2骑手接单3已取件4配送中5已签收6已完成寄件人信息姓名Zhang San电话13800000001地址123 Nanjing Road坐标31.2304, 121.4737收件人信息姓名Li Si电话13700000001地址456 Yanan Road坐标31.2350, 121.4680配送信息品类美食费用¥25.00保险尊享版核验中创建时间2026-06-06 04:04:43配送轨迹暂无轨迹数据调度日志操作骑手综合评分距离分负载分历史分保险分时间暂无数据异常记录异常类型原骑手新骑手状态创建时间解决时间配送超时Wang Qiang-处理中2026-06-06 01:13:09-取件超时Wang Qiang-处理中2026-06-06 00:53:36-取件超时Wang Qiang-处理中2026-06-06 00:53:36-骑手离线Wang Qiang-处理中2026-06-06 00:53:36-骑手离线Wang Qiang-处理中2026-06-06 00:53:36-骑手离线Wang Qiang-处理中2026-06-06 00:53:36-取件超时Sun TaoWang Qiang已自动转派备用运力: Wang Qiang2026-06-06 00:53:062026-06-06 03:53:06取件超时Sun TaoWang Qiang已自动转派备用运力: Wang Qiang2026-06-06 00:53:062026-06-06 03:53:06骑手离线Sun TaoWang Qiang已自动转派备用运力: Wang Qiang2026-06-06 00:53:062026-06-06 03:53:06骑手离线Sun TaoWang Qiang已自动转派备用运力: Wang Qiang2026-06-06 00:53:062026-06-06 03:53:06取件超时Feng BinSun Tao已自动转派备用运力: Sun Tao2026-06-06 00:52:362026-06-06 03:52:36取件超时Liu MingSun Tao已自动转派备用运力: Sun Tao2026-06-06 00:52:362026-06-06 03:52:36骑手离线Liu MingSun Tao已自动转派备用运力: Sun Tao2026-06-06 00:52:362026-06-06 03:52:36骑手离线Feng BinSun Tao已自动转派备用运力: Sun Tao2026-06-06 00:52:362026-06-06 03:52:36取件超时Zhou PingFeng Bin已自动转派备用运力: Feng Bin2026-06-06 00:52:062026-06-06 03:52:06取件超时Yang YangLiu Ming已自动转派备用运力: Liu Ming2026-06-06 00:52:062026-06-06 03:52:06骑手离线Yang YangLiu Ming已自动转派备用运力: Liu Ming2026-06-06 00:52:062026-06-06 03:52:06骑手离线Zhou PingFeng Bin已自动转派备用运力: Feng Bin2026-06-06 00:52:062026-06-06 03:52:06取件超时Wang QiangZhou Ping已自动转派备用运力: Zhou Ping2026-06-06 00:51:362026-06-06 03:51:36骑手离线Chen JieYang Yang已自动转派备用运力: Yang Yang2026-06-06 00:51:362026-06-06 03:51:36状态变更记录运单创建 - 2026-06-06 04:04:43",
+        "layout": {
+          "viewportWidth": 1664,
+          "viewportHeight": 1600,
+          "scrollWidth": 1664,
+          "scrollHeight": 2844,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89055-codex-cycle17-structure-06-操作-详情",
+          "label": "操作:详情",
+          "finalUrl": "http://127.0.0.1:49055/waybills/6",
+          "title": "同城即时配送调度中台",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89055/repair-browser-check/codex-20260606-cycle17/may-89055-codex-cycle17-structure-06-操作-详情.json",
+          "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89055/repair-browser-check/codex-20260606-cycle17/may-89055-codex-cycle17-structure-06-操作-详情.png",
+          "elementCount": 610,
+          "interactiveCount": 23,
+          "interactiveLabels": [
+            "数据看板 运单管理 骑手管理 调度中心 实时追踪 热力地图 信用体系 异常处理 结算管理",
+            "数据看板",
+            "运单管理",
+            "骑手管理",
+            "调度中心",
+            "实时追踪",
+            "热力地图",
+            "信用体系",
+            "异常处理",
+            "结算管理",
+            "返回",
+            "接 单",
+            "取消运单"
+          ]
+        }
+      },
+      {
+        "label": "二层操作:详情->返回",
+        "url": "http://127.0.0.1:49055/waybills",
+        "title": "同城即时配送调度中台",
+        "headings": [
+          "运单管理"
+        ],
+        "navLabels": [
+          "数据看板 运单管理 骑手管理 调度中心 实时追踪 热力地图 信用体系 异常处理 结算管理",
+          "数据看板",
+          "dashboard",
+          "运单管理",
+          "shopping",
+          "骑手管理",
+          "user",
+          "调度中心",
+          "car",
+          "实时追踪",
+          "environment",
+          "热力地图",
+          "heat-map",
+          "信用体系",
+          "credit-card",
+          "异常处理",
+          "warning",
+          "结算管理",
+          "money-collect"
+        ],
+        "buttons": [
+          "新建运单",
+          "详情",
+          "取消"
+        ],
+        "links": [
+          "数据看板",
+          "运单管理",
+          "骑手管理",
+          "调度中心",
+          "实时追踪",
+          "热力地图",
+          "信用体系",
+          "异常处理",
+          "结算管理",
+          "DD17807078832844724",
+          "详情",
+          "DD17807065826616622",
+          "DD17807064960270001",
+          "DD17807064960300002",
+          "DD17807064960300003",
+          "DD17807064960300004"
+        ],
+        "inputs": [
+          {
+            "tag": "input",
+            "type": "search",
+            "placeholder": "搜索运单号",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "search",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "search",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "",
+            "placeholder": "开始日期",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "",
+            "placeholder": "结束日期",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "search",
+            "placeholder": "",
+            "name": "",
+            "label": "页码"
+          }
+        ],
+        "tables": [
+          {
+            "headers": [
+              "运单号",
+              "寄件人",
+              "收件人",
+              "品类",
+              "状态",
+              "骑手",
+              "费用",
+              "创建时间",
+              "操作"
+            ],
+            "rowCount": 6,
+            "hasEmptyText": false,
+            "textPreview": "运单号 寄件人 收件人 品类 状态 骑手 费用 创建时间 操作 DD17807078832844724 Zhang San Li Si 美食 待调度 - ¥25.00 2026-06-06 04:04:43 详情 取消 DD17807065826616622 Zhang San Li Si 美食 配送中 Wang Qiang ¥25.00 2026-06-06 03:43:02 详情 取消 DD17807064960270001 Zhang Wei Wang Fang 美食 待调度 - ¥15.00 2026-06-06 03:41:36 详情 取消 DD17807064960300002 Z"
+          }
+        ],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "同城配送调度数据看板运单管理骑手管理调度中心实时追踪热力地图信用体系异常处理结算管理admin运单管理新建运单状态筛选品类筛选运单号寄件人收件人品类状态骑手费用创建时间操作DD17807078832844724Zhang SanLi Si美食待调度-¥25.002026-06-06 04:04:43详情取消DD17807065826616622Zhang SanLi Si美食配送中Wang Qiang¥25.002026-06-06 03:43:02详情取消DD17807064960270001Zhang WeiWang Fang美食待调度-¥15.002026-06-06 03:41:36详情取消DD17807064960300002Zhang WeiLi Hua生鲜已接单Wang Qiang¥20.002026-06-06 03:31:36详情取消DD17807064960300003Li NaChen Ming文件已接单Wang Qiang¥25.002026-06-06 03:11:36详情取消DD17807064960300004Zhang WeiZhao Ying礼品已完成Liu Ming¥30.002026-06-06 02:11:36详情共 6 条110 条/页",
+        "layout": {
+          "viewportWidth": 1696,
+          "viewportHeight": 1600,
+          "scrollWidth": 1696,
+          "scrollHeight": 1616,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89055-codex-cycle17-structure-07-二层操作-详情-返回",
+          "label": "二层操作:详情->返回",
+          "finalUrl": "http://127.0.0.1:49055/waybills",
+          "title": "同城即时配送调度中台",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89055/repair-browser-check/codex-20260606-cycle17/may-89055-codex-cycle17-structure-07-二层操作-详情-返回.json",
+          "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89055/repair-browser-check/codex-20260606-cycle17/may-89055-codex-cycle17-structure-07-二层操作-详情-返回.png",
+          "elementCount": 372,
+          "interactiveCount": 56,
+          "interactiveLabels": [
+            "数据看板 运单管理 骑手管理 调度中心 实时追踪 热力地图 信用体系 异常处理 结算管理",
+            "数据看板",
+            "运单管理",
+            "骑手管理",
+            "调度中心",
+            "实时追踪",
+            "热力地图",
+            "信用体系",
+            "异常处理",
+            "结算管理",
+            "新建运单",
+            "搜索运单号",
+            "开始日期",
+            "结束日期",
+            "DD17807078832844724",
+            "详情",
+            "取消",
+            "DD17807065826616622",
+            "DD17807064960270001",
+            "DD17807064960300002",
+            "DD17807064960300003",
+            "DD17807064960300004",
+            "1",
+            "页码"
+          ]
+        }
+      }
+    ],
+    "findings": [
+      "详情入口 页面只显示空列表或“暂无数据”，缺少可复查的业务记录。",
+      "首屏 页面打开后是空白，没有渲染业务内容、表单或列表。"
+    ],
+    "actionHints": [
+      "为 详情入口 补齐 SQLite 种子数据、列表接口和空状态引导，确保核心记录可新增、可查看、可复查。",
+      "修复 首屏 的路由组件挂载、接口初始化和错误兜底，确保进入页面后直接显示可操作内容。"
+    ],
+    "emptyPages": [
+      "详情入口"
+    ],
+    "overflowPages": [],
+    "blankPages": [
+      "首屏"
+    ],
+    "apiFailurePaths": [],
+    "goalTerms": [],
+    "clickedActionDescriptors": [
+      {
+        "nav": "运单管理",
+        "label": "新建运单",
+        "ordinal": 0,
+        "unsafe": false
+      },
+      {
+        "nav": "运单管理",
+        "label": "新建运单->创建运单",
+        "ordinal": 0,
+        "secondary": true,
+        "unsafe": false
+      },
+      {
+        "nav": "运单管理",
+        "label": "详情",
+        "ordinal": 0,
+        "unsafe": false
+      },
+      {
+        "nav": "运单管理",
+        "label": "详情->返回",
+        "ordinal": 0,
+        "secondary": true,
+        "unsafe": false
+      }
+    ],
+    "secondaryActionClicks": 2,
+    "structureCaptures": [
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89055-codex-cycle17-structure-01-首屏",
+        "label": "首屏",
+        "finalUrl": "http://127.0.0.1:49055/",
+        "title": "同城即时配送调度中台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89055/repair-browser-check/codex-20260606-cycle17/may-89055-codex-cycle17-structure-01-首屏.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89055/repair-browser-check/codex-20260606-cycle17/may-89055-codex-cycle17-structure-01-首屏.png",
+        "elementCount": 15,
+        "interactiveCount": 0,
+        "interactiveLabels": []
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89055-codex-cycle17-structure-02-导航-数据看板",
+        "label": "导航:数据看板",
+        "finalUrl": "http://127.0.0.1:49055/dashboard",
+        "title": "同城即时配送调度中台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89055/repair-browser-check/codex-20260606-cycle17/may-89055-codex-cycle17-structure-02-导航-数据看板.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89055/repair-browser-check/codex-20260606-cycle17/may-89055-codex-cycle17-structure-02-导航-数据看板.png",
+        "elementCount": 248,
+        "interactiveCount": 26,
+        "interactiveLabels": [
+          "数据看板 运单管理 骑手管理 调度中心 实时追踪 热力地图 信用体系 异常处理 结算管理",
+          "数据看板",
+          "运单管理",
+          "骑手管理",
+          "调度中心",
+          "实时追踪",
+          "热力地图",
+          "信用体系",
+          "异常处理",
+          "结算管理",
+          "DD17807078832844724",
+          "DD17807065826616622",
+          "DD17807064960270001",
+          "DD17807064960300002",
+          "DD17807064960300003",
+          "DD17807064960300004"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89055-codex-cycle17-structure-03-导航-运单管理",
+        "label": "导航:运单管理",
+        "finalUrl": "http://127.0.0.1:49055/waybills",
+        "title": "同城即时配送调度中台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89055/repair-browser-check/codex-20260606-cycle17/may-89055-codex-cycle17-structure-03-导航-运单管理.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89055/repair-browser-check/codex-20260606-cycle17/may-89055-codex-cycle17-structure-03-导航-运单管理.png",
+        "elementCount": 372,
+        "interactiveCount": 56,
+        "interactiveLabels": [
+          "数据看板 运单管理 骑手管理 调度中心 实时追踪 热力地图 信用体系 异常处理 结算管理",
+          "数据看板",
+          "运单管理",
+          "骑手管理",
+          "调度中心",
+          "实时追踪",
+          "热力地图",
+          "信用体系",
+          "异常处理",
+          "结算管理",
+          "新建运单",
+          "搜索运单号",
+          "开始日期",
+          "结束日期",
+          "DD17807078832844724",
+          "详情",
+          "取消",
+          "DD17807065826616622",
+          "DD17807064960270001",
+          "DD17807064960300002",
+          "DD17807064960300003",
+          "DD17807064960300004",
+          "1",
+          "页码"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89055-codex-cycle17-structure-04-操作-新建运单",
+        "label": "操作:新建运单",
+        "finalUrl": "http://127.0.0.1:49055/waybills",
+        "title": "同城即时配送调度中台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89055/repair-browser-check/codex-20260606-cycle17/may-89055-codex-cycle17-structure-04-操作-新建运单.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89055/repair-browser-check/codex-20260606-cycle17/may-89055-codex-cycle17-structure-04-操作-新建运单.png",
+        "elementCount": 556,
+        "interactiveCount": 73,
+        "interactiveLabels": [
+          "数据看板 运单管理 骑手管理 调度中心 实时追踪 热力地图 信用体系 异常处理 结算管理",
+          "数据看板",
+          "运单管理",
+          "骑手管理",
+          "调度中心",
+          "实时追踪",
+          "热力地图",
+          "信用体系",
+          "异常处理",
+          "结算管理",
+          "新建运单",
+          "搜索运单号",
+          "开始日期",
+          "结束日期",
+          "DD17807078832844724",
+          "详情",
+          "取消",
+          "DD17807065826616622",
+          "DD17807064960270001",
+          "DD17807064960300002",
+          "DD17807064960300003",
+          "DD17807064960300004",
+          "1",
+          "页码",
+          "确认取消运单 取消后运单将无法恢复，是否继续？ 取 消 确 定",
+          "取 消",
+          "确 定",
+          "新建运单 寄件人信息 姓名 电话 地址 收件人信息 姓名 电话 地址 配送信息 物品品类 美食 保险等级 基础版 预估费用 ¥17.24 SLA 承诺 1分钟响应8分钟取件60分钟送达 超时自动转派，超时必赔 取 消 创建运单",
+          "Close",
+          "请输入姓名"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89055-codex-cycle17-structure-05-二层操作-新建运单-创建运单",
+        "label": "二层操作:新建运单->创建运单",
+        "finalUrl": "http://127.0.0.1:49055/waybills",
+        "title": "同城即时配送调度中台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89055/repair-browser-check/codex-20260606-cycle17/may-89055-codex-cycle17-structure-05-二层操作-新建运单-创建运单.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89055/repair-browser-check/codex-20260606-cycle17/may-89055-codex-cycle17-structure-05-二层操作-新建运单-创建运单.png",
+        "elementCount": 589,
+        "interactiveCount": 73,
+        "interactiveLabels": [
+          "数据看板 运单管理 骑手管理 调度中心 实时追踪 热力地图 信用体系 异常处理 结算管理",
+          "数据看板",
+          "运单管理",
+          "骑手管理",
+          "调度中心",
+          "实时追踪",
+          "热力地图",
+          "信用体系",
+          "异常处理",
+          "结算管理",
+          "新建运单",
+          "搜索运单号",
+          "开始日期",
+          "结束日期",
+          "DD17807078832844724",
+          "详情",
+          "取消",
+          "DD17807065826616622",
+          "DD17807064960270001",
+          "DD17807064960300002",
+          "DD17807064960300003",
+          "DD17807064960300004",
+          "1",
+          "页码",
+          "确认取消运单 取消后运单将无法恢复，是否继续？ 取 消 确 定",
+          "取 消",
+          "确 定",
+          "新建运单 寄件人信息 姓名 请输入姓名 电话 请输入电话 地址 请输入地址 收件人信息 姓名 请输入姓名 电话 请输入电话 地址 请输入地址 配送信息 物品品类 美食 保险等级 基础版 预估费用 ¥17.24 SLA 承诺 1分钟响应8分钟取件60分钟送达 超时自动转派，超时必赔 取 消 创建运单",
+          "Close",
+          "请输入姓名"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89055-codex-cycle17-structure-06-操作-详情",
+        "label": "操作:详情",
+        "finalUrl": "http://127.0.0.1:49055/waybills/6",
+        "title": "同城即时配送调度中台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89055/repair-browser-check/codex-20260606-cycle17/may-89055-codex-cycle17-structure-06-操作-详情.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89055/repair-browser-check/codex-20260606-cycle17/may-89055-codex-cycle17-structure-06-操作-详情.png",
+        "elementCount": 610,
+        "interactiveCount": 23,
+        "interactiveLabels": [
+          "数据看板 运单管理 骑手管理 调度中心 实时追踪 热力地图 信用体系 异常处理 结算管理",
+          "数据看板",
+          "运单管理",
+          "骑手管理",
+          "调度中心",
+          "实时追踪",
+          "热力地图",
+          "信用体系",
+          "异常处理",
+          "结算管理",
+          "返回",
+          "接 单",
+          "取消运单"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89055-codex-cycle17-structure-07-二层操作-详情-返回",
+        "label": "二层操作:详情->返回",
+        "finalUrl": "http://127.0.0.1:49055/waybills",
+        "title": "同城即时配送调度中台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89055/repair-browser-check/codex-20260606-cycle17/may-89055-codex-cycle17-structure-07-二层操作-详情-返回.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89055/repair-browser-check/codex-20260606-cycle17/may-89055-codex-cycle17-structure-07-二层操作-详情-返回.png",
+        "elementCount": 372,
+        "interactiveCount": 56,
+        "interactiveLabels": [
+          "数据看板 运单管理 骑手管理 调度中心 实时追踪 热力地图 信用体系 异常处理 结算管理",
+          "数据看板",
+          "运单管理",
+          "骑手管理",
+          "调度中心",
+          "实时追踪",
+          "热力地图",
+          "信用体系",
+          "异常处理",
+          "结算管理",
+          "新建运单",
+          "搜索运单号",
+          "开始日期",
+          "结束日期",
+          "DD17807078832844724",
+          "详情",
+          "取消",
+          "DD17807065826616622",
+          "DD17807064960270001",
+          "DD17807064960300002",
+          "DD17807064960300003",
+          "DD17807064960300004",
+          "1",
+          "页码"
+        ]
+      }
+    ],
+    "representativeScreenshotUrl": "http://127.0.0.1:49055/",
+    "representativeScreenshotLabel": "首屏"
+  },
+  "websiteStructureCapture": {
+    "module": "website_structure_capture",
+    "captureCount": 7,
+    "captures": [
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89055-codex-cycle17-structure-01-首屏",
+        "label": "首屏",
+        "finalUrl": "http://127.0.0.1:49055/",
+        "title": "同城即时配送调度中台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89055/repair-browser-check/codex-20260606-cycle17/may-89055-codex-cycle17-structure-01-首屏.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89055/repair-browser-check/codex-20260606-cycle17/may-89055-codex-cycle17-structure-01-首屏.png",
+        "elementCount": 15,
+        "interactiveCount": 0,
+        "interactiveLabels": []
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89055-codex-cycle17-structure-02-导航-数据看板",
+        "label": "导航:数据看板",
+        "finalUrl": "http://127.0.0.1:49055/dashboard",
+        "title": "同城即时配送调度中台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89055/repair-browser-check/codex-20260606-cycle17/may-89055-codex-cycle17-structure-02-导航-数据看板.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89055/repair-browser-check/codex-20260606-cycle17/may-89055-codex-cycle17-structure-02-导航-数据看板.png",
+        "elementCount": 248,
+        "interactiveCount": 26,
+        "interactiveLabels": [
+          "数据看板 运单管理 骑手管理 调度中心 实时追踪 热力地图 信用体系 异常处理 结算管理",
+          "数据看板",
+          "运单管理",
+          "骑手管理",
+          "调度中心",
+          "实时追踪",
+          "热力地图",
+          "信用体系",
+          "异常处理",
+          "结算管理",
+          "DD17807078832844724",
+          "DD17807065826616622",
+          "DD17807064960270001",
+          "DD17807064960300002",
+          "DD17807064960300003",
+          "DD17807064960300004"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89055-codex-cycle17-structure-03-导航-运单管理",
+        "label": "导航:运单管理",
+        "finalUrl": "http://127.0.0.1:49055/waybills",
+        "title": "同城即时配送调度中台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89055/repair-browser-check/codex-20260606-cycle17/may-89055-codex-cycle17-structure-03-导航-运单管理.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89055/repair-browser-check/codex-20260606-cycle17/may-89055-codex-cycle17-structure-03-导航-运单管理.png",
+        "elementCount": 372,
+        "interactiveCount": 56,
+        "interactiveLabels": [
+          "数据看板 运单管理 骑手管理 调度中心 实时追踪 热力地图 信用体系 异常处理 结算管理",
+          "数据看板",
+          "运单管理",
+          "骑手管理",
+          "调度中心",
+          "实时追踪",
+          "热力地图",
+          "信用体系",
+          "异常处理",
+          "结算管理",
+          "新建运单",
+          "搜索运单号",
+          "开始日期",
+          "结束日期",
+          "DD17807078832844724",
+          "详情",
+          "取消",
+          "DD17807065826616622",
+          "DD17807064960270001",
+          "DD17807064960300002",
+          "DD17807064960300003",
+          "DD17807064960300004",
+          "1",
+          "页码"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89055-codex-cycle17-structure-04-操作-新建运单",
+        "label": "操作:新建运单",
+        "finalUrl": "http://127.0.0.1:49055/waybills",
+        "title": "同城即时配送调度中台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89055/repair-browser-check/codex-20260606-cycle17/may-89055-codex-cycle17-structure-04-操作-新建运单.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89055/repair-browser-check/codex-20260606-cycle17/may-89055-codex-cycle17-structure-04-操作-新建运单.png",
+        "elementCount": 556,
+        "interactiveCount": 73,
+        "interactiveLabels": [
+          "数据看板 运单管理 骑手管理 调度中心 实时追踪 热力地图 信用体系 异常处理 结算管理",
+          "数据看板",
+          "运单管理",
+          "骑手管理",
+          "调度中心",
+          "实时追踪",
+          "热力地图",
+          "信用体系",
+          "异常处理",
+          "结算管理",
+          "新建运单",
+          "搜索运单号",
+          "开始日期",
+          "结束日期",
+          "DD17807078832844724",
+          "详情",
+          "取消",
+          "DD17807065826616622",
+          "DD17807064960270001",
+          "DD17807064960300002",
+          "DD17807064960300003",
+          "DD17807064960300004",
+          "1",
+          "页码",
+          "确认取消运单 取消后运单将无法恢复，是否继续？ 取 消 确 定",
+          "取 消",
+          "确 定",
+          "新建运单 寄件人信息 姓名 电话 地址 收件人信息 姓名 电话 地址 配送信息 物品品类 美食 保险等级 基础版 预估费用 ¥17.24 SLA 承诺 1分钟响应8分钟取件60分钟送达 超时自动转派，超时必赔 取 消 创建运单",
+          "Close",
+          "请输入姓名"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89055-codex-cycle17-structure-05-二层操作-新建运单-创建运单",
+        "label": "二层操作:新建运单->创建运单",
+        "finalUrl": "http://127.0.0.1:49055/waybills",
+        "title": "同城即时配送调度中台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89055/repair-browser-check/codex-20260606-cycle17/may-89055-codex-cycle17-structure-05-二层操作-新建运单-创建运单.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89055/repair-browser-check/codex-20260606-cycle17/may-89055-codex-cycle17-structure-05-二层操作-新建运单-创建运单.png",
+        "elementCount": 589,
+        "interactiveCount": 73,
+        "interactiveLabels": [
+          "数据看板 运单管理 骑手管理 调度中心 实时追踪 热力地图 信用体系 异常处理 结算管理",
+          "数据看板",
+          "运单管理",
+          "骑手管理",
+          "调度中心",
+          "实时追踪",
+          "热力地图",
+          "信用体系",
+          "异常处理",
+          "结算管理",
+          "新建运单",
+          "搜索运单号",
+          "开始日期",
+          "结束日期",
+          "DD17807078832844724",
+          "详情",
+          "取消",
+          "DD17807065826616622",
+          "DD17807064960270001",
+          "DD17807064960300002",
+          "DD17807064960300003",
+          "DD17807064960300004",
+          "1",
+          "页码",
+          "确认取消运单 取消后运单将无法恢复，是否继续？ 取 消 确 定",
+          "取 消",
+          "确 定",
+          "新建运单 寄件人信息 姓名 请输入姓名 电话 请输入电话 地址 请输入地址 收件人信息 姓名 请输入姓名 电话 请输入电话 地址 请输入地址 配送信息 物品品类 美食 保险等级 基础版 预估费用 ¥17.24 SLA 承诺 1分钟响应8分钟取件60分钟送达 超时自动转派，超时必赔 取 消 创建运单",
+          "Close",
+          "请输入姓名"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89055-codex-cycle17-structure-06-操作-详情",
+        "label": "操作:详情",
+        "finalUrl": "http://127.0.0.1:49055/waybills/6",
+        "title": "同城即时配送调度中台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89055/repair-browser-check/codex-20260606-cycle17/may-89055-codex-cycle17-structure-06-操作-详情.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89055/repair-browser-check/codex-20260606-cycle17/may-89055-codex-cycle17-structure-06-操作-详情.png",
+        "elementCount": 610,
+        "interactiveCount": 23,
+        "interactiveLabels": [
+          "数据看板 运单管理 骑手管理 调度中心 实时追踪 热力地图 信用体系 异常处理 结算管理",
+          "数据看板",
+          "运单管理",
+          "骑手管理",
+          "调度中心",
+          "实时追踪",
+          "热力地图",
+          "信用体系",
+          "异常处理",
+          "结算管理",
+          "返回",
+          "接 单",
+          "取消运单"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89055-codex-cycle17-structure-07-二层操作-详情-返回",
+        "label": "二层操作:详情->返回",
+        "finalUrl": "http://127.0.0.1:49055/waybills",
+        "title": "同城即时配送调度中台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89055/repair-browser-check/codex-20260606-cycle17/may-89055-codex-cycle17-structure-07-二层操作-详情-返回.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89055/repair-browser-check/codex-20260606-cycle17/may-89055-codex-cycle17-structure-07-二层操作-详情-返回.png",
+        "elementCount": 372,
+        "interactiveCount": 56,
+        "interactiveLabels": [
+          "数据看板 运单管理 骑手管理 调度中心 实时追踪 热力地图 信用体系 异常处理 结算管理",
+          "数据看板",
+          "运单管理",
+          "骑手管理",
+          "调度中心",
+          "实时追踪",
+          "热力地图",
+          "信用体系",
+          "异常处理",
+          "结算管理",
+          "新建运单",
+          "搜索运单号",
+          "开始日期",
+          "结束日期",
+          "DD17807078832844724",
+          "详情",
+          "取消",
+          "DD17807065826616622",
+          "DD17807064960270001",
+          "DD17807064960300002",
+          "DD17807064960300003",
+          "DD17807064960300004",
+          "1",
+          "页码"
+        ]
+      }
+    ]
+  },
+  "screenshotMetrics": {
+    "width": 1728,
+    "height": 1600,
+    "scrollWidth": 1696,
+    "scrollHeight": 1616
+  },
+  "initialBodyTextPreview": "同城即时配送调度中台\n\n请登录您的账号\n\n登 录\n默认账号：admin / admin123",
+  "bodyTextPreview": "",
+  "apiBase": "http://127.0.0.1:59055",
+  "businessGoalPreview": "",
+  "apiResponses": [
+    {
+      "method": "POST",
+      "status": 200,
+      "url": "http://127.0.0.1:49055/api/auth/login"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49055/api/auth/me"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49055/api/auth/me"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49055/api/dashboard/admin"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49055/api/waybills?pageSize=10"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49055/api/dashboard/admin"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49055/api/waybills?pageSize=10"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49055/api/auth/me"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49055/api/auth/me"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49055/api/dashboard/admin"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49055/api/waybills?pageSize=10"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49055/api/dashboard/admin"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49055/api/waybills?pageSize=10"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49055/api/waybills?page=1&pageSize=10"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49055/api/waybills?page=1&pageSize=10"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49055/api/waybills/6"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49055/api/tracking/6"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49055/api/dispatch/logs/6"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49055/api/exceptions?waybill_id=6"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49055/api/insurance/6"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49055/api/waybills/6"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49055/api/tracking/6"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49055/api/dispatch/logs/6"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49055/api/exceptions?waybill_id=6"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49055/api/insurance/6"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49055/api/waybills?page=1&pageSize=10"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49055/api/waybills?page=1&pageSize=10"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49055/api/auth/me"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49055/api/auth/me"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49055/api/dashboard/admin"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49055/api/waybills?pageSize=10"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49055/api/dashboard/admin"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49055/api/waybills?pageSize=10"
+    }
+  ],
+  "apiChecks": [
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59055/api/health",
+      "path": "/api/health",
+      "status": 200,
+      "ok": true,
+      "bodyPreview": "{\"status\":\"ok\",\"timestamp\":\"2026-06-06T01:41:28.593Z\"}"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59055/api/auth/me",
+      "path": "/api/auth/me",
+      "status": 200,
+      "ok": true,
+      "bodyPreview": "{\"code\":-1,\"message\":\"Authorization header required\"}"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59055/api/dashboard/admin",
+      "path": "/api/dashboard/admin",
+      "status": 200,
+      "ok": true,
+      "bodyPreview": "{\"code\":-1,\"message\":\"Authorization header required\"}"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59055/api/waybills?pageSize=10",
+      "path": "/api/waybills?pageSize=10",
+      "status": 200,
+      "ok": true,
+      "bodyPreview": "{\"code\":-1,\"message\":\"Authorization header required\"}"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59055/api/waybills?page=1&pageSize=10",
+      "path": "/api/waybills?page=1&pageSize=10",
+      "status": 200,
+      "ok": true,
+      "bodyPreview": "{\"code\":-1,\"message\":\"Authorization header required\"}"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59055/api/waybills/6",
+      "path": "/api/waybills/6",
+      "status": 200,
+      "ok": true,
+      "bodyPreview": "{\"code\":-1,\"message\":\"Authorization header required\"}"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59055/api/tracking/6",
+      "path": "/api/tracking/6",
+      "status": 200,
+      "ok": true,
+      "bodyPreview": "{\"code\":-1,\"message\":\"Authorization header required\"}"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59055/api/dispatch/logs/6",
+      "path": "/api/dispatch/logs/6",
+      "status": 200,
+      "ok": true,
+      "bodyPreview": "{\"code\":-1,\"message\":\"Authorization header required\"}"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59055/api/exceptions?waybill_id=6",
+      "path": "/api/exceptions?waybill_id=6",
+      "status": 200,
+      "ok": true,
+      "bodyPreview": "{\"code\":-1,\"message\":\"Authorization header required\"}"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59055/api/insurance/6",
+      "path": "/api/insurance/6",
+      "status": 200,
+      "ok": true,
+      "bodyPreview": "{\"code\":-1,\"message\":\"Authorization header required\"}"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59055/api/users/profile",
+      "path": "/api/users/profile",
+      "status": 404,
+      "ok": false,
+      "bodyPreview": "<!DOCTYPE html>\n<html lang=\"en\">\n<head>\n<meta charset=\"utf-8\">\n<title>Error</title>\n</head>\n<body>\n<pre>Cannot GET /api/users/profile</pre>\n</body>\n</html>\n"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59055/api/user/profile",
+      "path": "/api/user/profile",
+      "status": 404,
+      "ok": false,
+      "bodyPreview": "<!DOCTYPE html>\n<html lang=\"en\">\n<head>\n<meta charset=\"utf-8\">\n<title>Error</title>\n</head>\n<body>\n<pre>Cannot GET /api/user/profile</pre>\n</body>\n</html>\n"
+    }
+  ],
+  "dialogs": [],
+  "consoleMessages": [
+    {
+      "type": "debug",
+      "text": "[vite] connecting...",
+      "location": {
+        "url": "http://127.0.0.1:49055/@vite/client",
+        "lineNumber": 494,
+        "columnNumber": 8
+      }
+    },
+    {
+      "type": "debug",
+      "text": "[vite] connected.",
+      "location": {
+        "url": "http://127.0.0.1:49055/@vite/client",
+        "lineNumber": 617,
+        "columnNumber": 14
+      }
+    },
+    {
+      "type": "info",
+      "text": "%cDownload the React DevTools for a better development experience: https://reactjs.org/link/react-devtools font-weight:bold",
+      "location": {
+        "url": "http://127.0.0.1:49055/node_modules/.vite/deps/chunk-UXDD7MME.js?v=8b0b8ce1",
+        "lineNumber": 21550,
+        "columnNumber": 24
+      }
+    },
+    {
+      "type": "warning",
+      "text": "⚠️ React Router Future Flag Warning: React Router will begin wrapping state updates in `React.startTransition` in v7. You can use the `v7_startTransition` future flag to opt-in early. For more information, see https://reactrouter.com/v6/upgrading/future#v7_starttransition.",
+      "location": {
+        "url": "http://127.0.0.1:49055/node_modules/.vite/deps/react-router-dom.js?v=8b0b8ce1",
+        "lineNumber": 4426,
+        "columnNumber": 12
+      }
+    },
+    {
+      "type": "warning",
+      "text": "⚠️ React Router Future Flag Warning: Relative route resolution within Splat routes is changing in v7. You can use the `v7_relativeSplatPath` future flag to opt-in early. For more information, see https://reactrouter.com/v6/upgrading/future#v7_relativesplatpath.",
+      "location": {
+        "url": "http://127.0.0.1:49055/node_modules/.vite/deps/react-router-dom.js?v=8b0b8ce1",
+        "lineNumber": 4426,
+        "columnNumber": 12
+      }
+    },
+    {
+      "type": "error",
+      "text": "Warning: [antd: Card] `bodyStyle` is deprecated. Please use `styles.body` instead.",
+      "location": {
+        "url": "http://127.0.0.1:49055/node_modules/.vite/deps/chunk-QUEWO35D.js?v=8b0b8ce1",
+        "lineNumber": 1117,
+        "columnNumber": 14
+      }
+    },
+    {
+      "type": "verbose",
+      "text": "[DOM] Input elements should have autocomplete attributes (suggested: \"current-password\"): (More info: https://goo.gl/9p2vKq)",
+      "location": {
+        "url": "http://127.0.0.1:49055/login",
+        "lineNumber": 0,
+        "columnNumber": 0
+      }
+    },
+    {
+      "type": "error",
+      "text": "Failed to load resource: the server responded with a status of 404 (Not Found)",
+      "location": {
+        "url": "http://127.0.0.1:49055/favicon.ico",
+        "lineNumber": 0,
+        "columnNumber": 0
+      }
+    },
+    {
+      "type": "debug",
+      "text": "[vite] connecting...",
+      "location": {
+        "url": "http://127.0.0.1:49055/@vite/client",
+        "lineNumber": 494,
+        "columnNumber": 8
+      }
+    },
+    {
+      "type": "debug",
+      "text": "[vite] connected.",
+      "location": {
+        "url": "http://127.0.0.1:49055/@vite/client",
+        "lineNumber": 617,
+        "columnNumber": 14
+      }
+    },
+    {
+      "type": "info",
+      "text": "%cDownload the React DevTools for a better development experience: https://reactjs.org/link/react-devtools font-weight:bold",
+      "location": {
+        "url": "http://127.0.0.1:49055/node_modules/.vite/deps/chunk-UXDD7MME.js?v=8b0b8ce1",
+        "lineNumber": 21550,
+        "columnNumber": 24
+      }
+    },
+    {
+      "type": "warning",
+      "text": "⚠️ React Router Future Flag Warning: React Router will begin wrapping state updates in `React.startTransition` in v7. You can use the `v7_startTransition` future flag to opt-in early. For more information, see https://reactrouter.com/v6/upgrading/future#v7_starttransition.",
+      "location": {
+        "url": "http://127.0.0.1:49055/node_modules/.vite/deps/react-router-dom.js?v=8b0b8ce1",
+        "lineNumber": 4426,
+        "columnNumber": 12
+      }
+    },
+    {
+      "type": "warning",
+      "text": "⚠️ React Router Future Flag Warning: Relative route resolution within Splat routes is changing in v7. You can use the `v7_relativeSplatPath` future flag to opt-in early. For more information, see https://reactrouter.com/v6/upgrading/future#v7_relativesplatpath.",
+      "location": {
+        "url": "http://127.0.0.1:49055/node_modules/.vite/deps/react-router-dom.js?v=8b0b8ce1",
+        "lineNumber": 4426,
+        "columnNumber": 12
+      }
+    },
+    {
+      "type": "error",
+      "text": "Warning: [antd: Modal] `destroyOnClose` is deprecated. Please use `destroyOnHidden` instead.",
+      "location": {
+        "url": "http://127.0.0.1:49055/node_modules/.vite/deps/chunk-QUEWO35D.js?v=8b0b8ce1",
+        "lineNumber": 1117,
+        "columnNumber": 14
+      }
+    },
+    {
+      "type": "error",
+      "text": "Warning: Instance created by `useForm` is not connected to any Form element. Forget to pass `form` prop?",
+      "location": {
+        "url": "http://127.0.0.1:49055/node_modules/.vite/deps/chunk-QUEWO35D.js?v=8b0b8ce1",
+        "lineNumber": 1117,
+        "columnNumber": 14
+      }
+    },
+    {
+      "type": "debug",
+      "text": "[vite] connecting...",
+      "location": {
+        "url": "http://127.0.0.1:49055/@vite/client",
+        "lineNumber": 494,
+        "columnNumber": 8
+      }
+    },
+    {
+      "type": "debug",
+      "text": "[vite] connected.",
+      "location": {
+        "url": "http://127.0.0.1:49055/@vite/client",
+        "lineNumber": 617,
+        "columnNumber": 14
+      }
+    },
+    {
+      "type": "info",
+      "text": "%cDownload the React DevTools for a better development experience: https://reactjs.org/link/react-devtools font-weight:bold",
+      "location": {
+        "url": "http://127.0.0.1:49055/node_modules/.vite/deps/chunk-UXDD7MME.js?v=8b0b8ce1",
+        "lineNumber": 21550,
+        "columnNumber": 24
+      }
+    },
+    {
+      "type": "warning",
+      "text": "⚠️ React Router Future Flag Warning: React Router will begin wrapping state updates in `React.startTransition` in v7. You can use the `v7_startTransition` future flag to opt-in early. For more information, see https://reactrouter.com/v6/upgrading/future#v7_starttransition.",
+      "location": {
+        "url": "http://127.0.0.1:49055/node_modules/.vite/deps/react-router-dom.js?v=8b0b8ce1",
+        "lineNumber": 4426,
+        "columnNumber": 12
+      }
+    },
+    {
+      "type": "warning",
+      "text": "⚠️ React Router Future Flag Warning: Relative route resolution within Splat routes is changing in v7. You can use the `v7_relativeSplatPath` future flag to opt-in early. For more information, see https://reactrouter.com/v6/upgrading/future#v7_relativesplatpath.",
+      "location": {
+        "url": "http://127.0.0.1:49055/node_modules/.vite/deps/react-router-dom.js?v=8b0b8ce1",
+        "lineNumber": 4426,
+        "columnNumber": 12
+      }
+    }
+  ],
+  "requestFailures": [],
+  "responseErrors": []
+}
