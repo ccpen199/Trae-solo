@@ -1,0 +1,224 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --traffic-blue: #0052D9;
+  --traffic-blue-light: #1C6DE8;
+  --traffic-blue-dark: #003DA8;
+  --traffic-bg: #F5F7FA;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Noto Sans", Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji";
+  line-height: 1.5;
+  font-weight: 400;
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  background-color: var(--traffic-bg);
+  min-height: 100vh;
+}
+
+#root {
+  min-height: 100vh;
+}
+
+.login-container {
+  min-height: 100vh;
+  background: linear-gradient(135deg, #0052D9 0%, #003DA8 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+}
+
+.login-card {
+  background: white;
+  border-radius: 16px;
+  padding: 48px;
+  width: 100%;
+  max-width: 480px;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+}
+
+.dashboard-layout {
+  min-height: 100vh;
+  background: var(--traffic-bg);
+}
+
+.layout-header {
+  background: var(--traffic-blue);
+  padding: 0 24px;
+  height: 64px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 100;
+  box-shadow: 0 2px 8px rgba(0, 82, 217, 0.15);
+}
+
+.layout-sidebar {
+  width: 240px;
+  background: white;
+  position: fixed;
+  top: 64px;
+  left: 0;
+  bottom: 0;
+  border-right: 1px solid #E8EDF3;
+  overflow-y: auto;
+  padding: 16px 0;
+  z-index: 99;
+}
+
+.layout-content {
+  margin-left: 240px;
+  margin-top: 64px;
+  padding: 24px;
+  min-height: calc(100vh - 64px);
+}
+
+.mobile-tabbar {
+  display: none;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: white;
+  border-top: 1px solid #E8EDF3;
+  z-index: 100;
+  padding-bottom: env(safe-area-inset-bottom);
+}
+
+@media (max-width: 768px) {
+  .layout-sidebar {
+    display: none;
+  }
+
+  .layout-content {
+    margin-left: 0;
+    padding: 16px;
+    padding-bottom: 80px;
+  }
+
+  .mobile-tabbar {
+    display: block;
+  }
+
+  .login-card {
+    padding: 32px 24px;
+  }
+
+  .layout-header {
+    padding: 0 16px;
+    height: 56px;
+  }
+
+  .layout-content {
+    margin-top: 56px;
+  }
+}
+
+.service-card {
+  background: white;
+  border-radius: 12px;
+  padding: 20px;
+  text-align: center;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  border: 1px solid #E8EDF3;
+}
+
+.service-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 24px rgba(0, 82, 217, 0.12);
+  border-color: var(--traffic-blue);
+}
+
+.service-icon {
+  width: 48px;
+  height: 48px;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 12px;
+  font-size: 24px;
+}
+
+.welcome-banner {
+  background: linear-gradient(135deg, #0052D9 0%, #1C6DE8 100%);
+  border-radius: 16px;
+  padding: 32px;
+  color: white;
+  margin-bottom: 24px;
+  position: relative;
+  overflow: hidden;
+}
+
+.welcome-banner::before {
+  content: '';
+  position: absolute;
+  right: -50px;
+  top: -50px;
+  width: 200px;
+  height: 200px;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 50%;
+}
+
+.welcome-banner::after {
+  content: '';
+  position: absolute;
+  right: 50px;
+  bottom: -80px;
+  width: 160px;
+  height: 160px;
+  background: rgba(255, 255, 255, 0.08);
+  border-radius: 50%;
+}
+
+.status-card {
+  background: white;
+  border-radius: 12px;
+  padding: 20px;
+  border: 1px solid #E8EDF3;
+}
+
+.menu-item {
+  display: flex;
+  align-items: center;
+  padding: 12px 20px;
+  cursor: pointer;
+  color: #4E5969;
+  transition: all 0.2s;
+  border-left: 3px solid transparent;
+}
+
+.menu-item:hover {
+  background: #F0F7FF;
+  color: var(--traffic-blue);
+}
+
+.menu-item.active {
+  background: #F0F7FF;
+  color: var(--traffic-blue);
+  border-left-color: var(--traffic-blue);
+}
+
+.menu-item svg {
+  width: 20px;
+  height: 20px;
+  margin-right: 12px;
+}
