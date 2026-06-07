@@ -1,0 +1,383 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+  background-color: #f5f7fa;
+  color: #303133;
+  line-height: 1.6;
+}
+
+#app {
+  min-height: 100vh;
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 20px;
+}
+
+.card {
+  background: #fff;
+  border-radius: 8px;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.06);
+  padding: 20px;
+  margin-bottom: 20px;
+}
+
+.page-header {
+  margin-bottom: 24px;
+}
+
+.page-header h1 {
+  font-size: 28px;
+  font-weight: 600;
+  color: #1f2f3d;
+  margin-bottom: 8px;
+}
+
+.page-header p {
+  color: #606266;
+  font-size: 14px;
+}
+
+.brand-logo {
+  width: 60px;
+  height: 60px;
+  object-fit: cover;
+  border-radius: 8px;
+  background: #f0f2f5;
+}
+
+.badge-level {
+  display: inline-block;
+  padding: 2px 8px;
+  border-radius: 4px;
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.badge-level-S {
+  background: linear-gradient(135deg, #fcc200, #ff9500);
+  color: #fff;
+}
+
+.badge-level-A {
+  background: linear-gradient(135deg, #67c23a, #2f9e44);
+  color: #fff;
+}
+
+.badge-level-B {
+  background: linear-gradient(135deg, #409eff, #1890ff);
+  color: #fff;
+}
+
+.badge-level-C {
+  background: #909399;
+  color: #fff;
+}
+
+.sentiment-positive {
+  color: #67c23a;
+}
+
+.sentiment-negative {
+  color: #f56c6c;
+}
+
+.sentiment-neutral {
+  color: #909399;
+}
+
+.rank-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  font-weight: 700;
+  font-size: 14px;
+  color: #fff;
+}
+
+.rank-badge-1 {
+  background: linear-gradient(135deg, #ffd700, #ffb700);
+  box-shadow: 0 2px 8px rgba(255, 215, 0, 0.4);
+}
+
+.rank-badge-2 {
+  background: linear-gradient(135deg, #c0c0c0, #a8a8a8);
+}
+
+.rank-badge-3 {
+  background: linear-gradient(135deg, #cd7f32, #b87333);
+}
+
+.rank-badge-other {
+  background: #909399;
+}
+
+.knowledge-card {
+  transition: all 0.3s ease;
+  cursor: pointer;
+}
+
+.knowledge-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+}
+
+.filter-bar {
+  background: #fff;
+  padding: 16px 20px;
+  border-radius: 8px;
+  margin-bottom: 20px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+}
+
+.filter-item {
+  display: flex;
+  align-items: center;
+  margin-bottom: 12px;
+}
+
+.filter-item:last-child {
+  margin-bottom: 0;
+}
+
+.filter-label {
+  width: 80px;
+  color: #606266;
+  font-size: 14px;
+  flex-shrink: 0;
+}
+
+.letter-filter {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.letter-btn {
+  width: 32px;
+  height: 32px;
+  border: 1px solid #dcdfe6;
+  border-radius: 4px;
+  background: #fff;
+  cursor: pointer;
+  font-size: 13px;
+  color: #606266;
+  transition: all 0.2s;
+}
+
+.letter-btn:hover,
+.letter-btn.active {
+  background: #409eff;
+  border-color: #409eff;
+  color: #fff;
+}
+
+.empty-state {
+  text-align: center;
+  padding: 60px 20px;
+  color: #909399;
+}
+
+.loading-state {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 40px;
+}
+
+.admin-layout .el-aside {
+  background: #001529;
+}
+
+.admin-layout .el-menu {
+  border-right: none;
+}
+
+.admin-header {
+  background: #fff;
+  padding: 0 24px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.08);
+}
+
+.admin-content {
+  padding: 24px;
+  background: #f0f2f5;
+}
+
+.stat-card {
+  background: #fff;
+  border-radius: 8px;
+  padding: 24px;
+  text-align: center;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+}
+
+.stat-card .stat-value {
+  font-size: 36px;
+  font-weight: 700;
+  color: #1f2f3d;
+  margin-bottom: 8px;
+}
+
+.stat-card .stat-label {
+  color: #909399;
+  font-size: 14px;
+}
+
+.stat-card.primary .stat-value {
+  color: #409eff;
+}
+
+.stat-card.success .stat-value {
+  color: #67c23a;
+}
+
+.stat-card.warning .stat-value {
+  color: #e6a23c;
+}
+
+.stat-card.danger .stat-value {
+  color: #f56c6c;
+}
+
+.trace-item {
+  border-left: 3px solid #409eff;
+  padding: 12px 16px;
+  margin-bottom: 12px;
+  background: #f8f9fa;
+  border-radius: 0 4px 4px 0;
+}
+
+.trace-item .trace-source {
+  font-weight: 600;
+  color: #409eff;
+  margin-bottom: 4px;
+}
+
+.trace-item .trace-time {
+  font-size: 12px;
+  color: #909399;
+}
+
+.trace-item .trace-data {
+  font-family: monospace;
+  font-size: 12px;
+  background: #f0f2f5;
+  padding: 8px;
+  border-radius: 4px;
+  margin-top: 8px;
+  max-height: 100px;
+  overflow-y: auto;
+}
+
+.graph-container {
+  width: 100%;
+  height: 500px;
+  background: #fff;
+  border-radius: 8px;
+}
+
+.comparison-table .el-table th {
+  background: #f5f7fa;
+  font-weight: 600;
+}
+
+.comparison-table .highlight-row {
+  background: #f0f9ff;
+}
+
+.breadcrumb-nav {
+  margin-bottom: 20px;
+}
+
+.fab-btn {
+  position: fixed;
+  right: 24px;
+  bottom: 24px;
+  z-index: 1000;
+}
+
+.auth-page {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+}
+
+.auth-card {
+  width: 400px;
+  padding: 40px;
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.15);
+}
+
+.auth-card h2 {
+  text-align: center;
+  margin-bottom: 32px;
+  color: #1f2f3d;
+}
+
+.tag-cloud {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.tag-item {
+  padding: 4px 12px;
+  background: #ecf5ff;
+  color: #409eff;
+  border-radius: 16px;
+  font-size: 13px;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.tag-item:hover {
+  background: #409eff;
+  color: #fff;
+}
+
+.alert-badge {
+  display: inline-block;
+  min-width: 20px;
+  height: 20px;
+  line-height: 20px;
+  text-align: center;
+  padding: 0 6px;
+  background: #f56c6c;
+  color: #fff;
+  border-radius: 10px;
+  font-size: 12px;
+  font-weight: 600;
+}
+
+@media (max-width: 768px) {
+  .container {
+    padding: 0 12px;
+  }
+  
+  .page-header h1 {
+    font-size: 22px;
+  }
+  
+  .filter-label {
+    width: 60px;
+    font-size: 13px;
+  }
+}

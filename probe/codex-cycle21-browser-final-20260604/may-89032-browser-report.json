@@ -1,0 +1,2741 @@
+{
+  "ok": true,
+  "generatedAt": "2026-06-04T18:12:04.487Z",
+  "order": "may-89032",
+  "roundIndex": 4,
+  "captureId": "may-89032-codex-cycle21-final",
+  "url": "http://127.0.0.1:49032/",
+  "initialUrl": "http://127.0.0.1:49032/",
+  "finalUrl": "http://127.0.0.1:49032/rankings/compare",
+  "status": 200,
+  "title": "品牌与生活知识研究平台",
+  "initialTitle": "品牌与生活知识研究平台",
+  "navigationError": "",
+  "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89032/probe/codex-cycle21-browser-final-20260604/may-89032-codex-cycle21-final-frontend.png",
+  "screenshotPaths": [
+    "/Users/chen/Documents/trae_projects/local_projects/may-89032/probe/codex-cycle21-browser-final-20260604/may-89032-codex-cycle21-final-structure-01-首屏.png",
+    "/Users/chen/Documents/trae_projects/local_projects/may-89032/probe/codex-cycle21-browser-final-20260604/may-89032-codex-cycle21-final-structure-02-导航-首页.png",
+    "/Users/chen/Documents/trae_projects/local_projects/may-89032/probe/codex-cycle21-browser-final-20260604/may-89032-codex-cycle21-final-structure-03-操作-查看榜单.png",
+    "/Users/chen/Documents/trae_projects/local_projects/may-89032/probe/codex-cycle21-browser-final-20260604/may-89032-codex-cycle21-final-structure-04-二层操作-查看榜单-品牌对比工具.png"
+  ],
+  "issueTextPreview": "个人中心/我的相关问题；搜索/筛选相关问题；后台管理相关问题；详情/内容页相关问题；发现/分类相关问题",
+  "targetReason": "个人中心/我的相关问题；搜索/筛选相关问题；后台管理相关问题；详情/内容页相关问题；发现/分类相关问题",
+  "targetKind": "discover",
+  "targetMatched": true,
+  "targetActions": [
+    {
+      "action": "click",
+      "label": "详情/内容页相关问题",
+      "ok": true
+    },
+    {
+      "action": "target-verify",
+      "label": "详情/内容页相关问题",
+      "ok": false,
+      "finalUrl": "http://127.0.0.1:49032/rankings"
+    },
+    {
+      "action": "click",
+      "label": "发现/分类相关问题",
+      "ok": true
+    },
+    {
+      "action": "target-verify",
+      "label": "发现/分类相关问题",
+      "ok": true,
+      "finalUrl": "http://127.0.0.1:49032/rankings"
+    }
+  ],
+  "authFlow": {
+    "detected": false,
+    "attempted": false,
+    "success": false,
+    "finalUrl": "http://127.0.0.1:49032/",
+    "message": "",
+    "actions": []
+  },
+  "businessAudit": {
+    "actions": [
+      {
+        "action": "click",
+        "label": "导航:首页",
+        "ok": true
+      },
+      {
+        "action": "click",
+        "label": "操作:查看榜单",
+        "ok": true,
+        "result": {
+          "ok": true,
+          "matched": 1
+        }
+      },
+      {
+        "action": "click",
+        "label": "二层操作:查看榜单:品牌对比工具",
+        "ok": true,
+        "result": {
+          "ok": true,
+          "matched": 1
+        }
+      },
+      {
+        "action": "click",
+        "label": "操作:查看全部",
+        "ok": true,
+        "result": {
+          "ok": true,
+          "matched": 3
+        }
+      },
+      {
+        "action": "click",
+        "label": "二层操作:查看全部:A",
+        "ok": true,
+        "result": {
+          "ok": true,
+          "matched": 1
+        }
+      },
+      {
+        "action": "click",
+        "label": "导航:品牌库",
+        "ok": true
+      },
+      {
+        "action": "click",
+        "label": "操作:登录",
+        "ok": true,
+        "result": {
+          "ok": true,
+          "matched": 1
+        }
+      },
+      {
+        "action": "click",
+        "label": "二层操作:登录:登录#2",
+        "ok": true,
+        "result": {
+          "ok": true,
+          "matched": 2
+        }
+      },
+      {
+        "action": "click",
+        "label": "操作:A",
+        "ok": true,
+        "result": {
+          "ok": true,
+          "matched": 1
+        }
+      },
+      {
+        "action": "click",
+        "label": "导航:榜单",
+        "ok": true
+      },
+      {
+        "action": "click",
+        "label": "操作:品牌对比工具",
+        "ok": true,
+        "result": {
+          "ok": true,
+          "matched": 1
+        }
+      },
+      {
+        "action": "click",
+        "label": "操作:登录",
+        "ok": true,
+        "result": {
+          "ok": true,
+          "matched": 1
+        }
+      },
+      {
+        "action": "click",
+        "label": "二层操作:登录:登录#2",
+        "ok": true,
+        "result": {
+          "ok": true,
+          "matched": 2
+        }
+      }
+    ],
+    "snapshots": [
+      {
+        "label": "首屏",
+        "url": "http://127.0.0.1:49032/",
+        "title": "品牌与生活知识研究平台",
+        "headings": [
+          "专业品牌数据平台",
+          "热门品牌",
+          "华为",
+          "小米",
+          "苹果",
+          "比亚迪",
+          "特斯拉",
+          "海尔",
+          "美的",
+          "格力",
+          "茅台",
+          "五粮液"
+        ],
+        "navLabels": [
+          "首页",
+          "品牌库",
+          "榜单"
+        ],
+        "buttons": [
+          "登录",
+          "探索品牌库",
+          "查看榜单",
+          "查看全部"
+        ],
+        "links": [
+          "关于我们",
+          "使用条款",
+          "隐私政策",
+          "联系我们"
+        ],
+        "inputs": [],
+        "tables": [],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "品牌智库首页品牌库榜单 登录 专业品牌数据平台汇聚全球品牌信息，多维数据分析，智能榜单排名探索品牌库 查看榜单 15收录品牌8榜单分类5知识文章4数据来源 热门品牌 查看全部 S级华为消费电子 · 0.00A级小米消费电子 · 0.00S级苹果消费电子 · 0.00A级比亚迪汽车 · 0.00S级特斯拉汽车 · 0.00A级海尔家电 · 0.00A级美的家电 · 0.00A级格力家电 · 0.00S级茅台食品 · 0.00A级五粮液食品 · 0.00S级阿里互联网 · 0.00S级腾讯互联网 · 0.00A级京东互联网 · 0.00A级美团互联网 · 0.00S级字节跳动互联网 · 0.00 热门榜单 查看全部 最新知识 查看全部 美食中国传统美食文化探索中国八大菜系的历史渊源与特色美食...美食文化研究中心0节气二十四节气之立春立春的由来、习俗与养生建议...传统文化研究中心0汽车新能源汽车技术解析深入了解电动汽车的三电系统与核心技术...汽车科技研究院0手机智能手机发展简史从功能机到智能机的演进历程与未来趋势...科技评论部0装修装修材料选购指南如何选择环保、耐用的装修材料，打造健康舒适的家居环境...家居研究院0© 2024 品牌智库 - 专业品牌数据平台关于我们|使用条款|隐私政策|联系我们 知识",
+        "layout": {
+          "viewportWidth": 1504,
+          "viewportHeight": 1600,
+          "scrollWidth": 1504,
+          "scrollHeight": 2497,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89032-codex-cycle21-final-structure-01-首屏",
+          "label": "首屏",
+          "finalUrl": "http://127.0.0.1:49032/",
+          "title": "品牌与生活知识研究平台",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89032/probe/codex-cycle21-browser-final-20260604/may-89032-codex-cycle21-final-structure-01-首屏.json",
+          "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89032/probe/codex-cycle21-browser-final-20260604/may-89032-codex-cycle21-final-structure-01-首屏.png",
+          "elementCount": 440,
+          "interactiveCount": 15,
+          "interactiveLabels": [
+            "首页",
+            "品牌库",
+            "榜单",
+            "登录",
+            "探索品牌库",
+            "查看榜单",
+            "查看全部",
+            "关于我们",
+            "使用条款",
+            "隐私政策",
+            "联系我们",
+            "知识"
+          ]
+        }
+      },
+      {
+        "label": "导航:首页",
+        "url": "http://127.0.0.1:49032/",
+        "title": "品牌与生活知识研究平台",
+        "headings": [
+          "专业品牌数据平台",
+          "热门品牌",
+          "华为",
+          "小米",
+          "苹果",
+          "比亚迪",
+          "特斯拉",
+          "海尔",
+          "美的",
+          "格力",
+          "茅台",
+          "五粮液"
+        ],
+        "navLabels": [
+          "首页",
+          "品牌库",
+          "榜单"
+        ],
+        "buttons": [
+          "登录",
+          "探索品牌库",
+          "查看榜单",
+          "查看全部"
+        ],
+        "links": [
+          "关于我们",
+          "使用条款",
+          "隐私政策",
+          "联系我们"
+        ],
+        "inputs": [],
+        "tables": [],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "品牌智库首页品牌库榜单 登录 专业品牌数据平台汇聚全球品牌信息，多维数据分析，智能榜单排名探索品牌库 查看榜单 15收录品牌8榜单分类5知识文章4数据来源 热门品牌 查看全部 S级华为消费电子 · 0.00A级小米消费电子 · 0.00S级苹果消费电子 · 0.00A级比亚迪汽车 · 0.00S级特斯拉汽车 · 0.00A级海尔家电 · 0.00A级美的家电 · 0.00A级格力家电 · 0.00S级茅台食品 · 0.00A级五粮液食品 · 0.00S级阿里互联网 · 0.00S级腾讯互联网 · 0.00A级京东互联网 · 0.00A级美团互联网 · 0.00S级字节跳动互联网 · 0.00 热门榜单 查看全部 最新知识 查看全部 美食中国传统美食文化探索中国八大菜系的历史渊源与特色美食...美食文化研究中心0节气二十四节气之立春立春的由来、习俗与养生建议...传统文化研究中心0汽车新能源汽车技术解析深入了解电动汽车的三电系统与核心技术...汽车科技研究院0手机智能手机发展简史从功能机到智能机的演进历程与未来趋势...科技评论部0装修装修材料选购指南如何选择环保、耐用的装修材料，打造健康舒适的家居环境...家居研究院0© 2024 品牌智库 - 专业品牌数据平台关于我们|使用条款|隐私政策|联系我们 知识",
+        "layout": {
+          "viewportWidth": 1536,
+          "viewportHeight": 1600,
+          "scrollWidth": 1536,
+          "scrollHeight": 2497,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89032-codex-cycle21-final-structure-02-导航-首页",
+          "label": "导航:首页",
+          "finalUrl": "http://127.0.0.1:49032/",
+          "title": "品牌与生活知识研究平台",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89032/probe/codex-cycle21-browser-final-20260604/may-89032-codex-cycle21-final-structure-02-导航-首页.json",
+          "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89032/probe/codex-cycle21-browser-final-20260604/may-89032-codex-cycle21-final-structure-02-导航-首页.png",
+          "elementCount": 440,
+          "interactiveCount": 15,
+          "interactiveLabels": [
+            "首页",
+            "品牌库",
+            "榜单",
+            "登录",
+            "探索品牌库",
+            "查看榜单",
+            "查看全部",
+            "关于我们",
+            "使用条款",
+            "隐私政策",
+            "联系我们",
+            "知识"
+          ]
+        }
+      },
+      {
+        "label": "操作:查看榜单",
+        "url": "http://127.0.0.1:49032/rankings",
+        "title": "品牌与生活知识研究平台",
+        "headings": [
+          "榜单中心"
+        ],
+        "navLabels": [
+          "首页",
+          "品牌库",
+          "榜单"
+        ],
+        "buttons": [
+          "登录",
+          "品牌对比工具"
+        ],
+        "links": [
+          "关于我们",
+          "使用条款",
+          "隐私政策",
+          "联系我们"
+        ],
+        "inputs": [],
+        "tables": [],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "品牌智库首页品牌库榜单 登录 榜单中心30+专业榜单分类，多维度品牌排名分析分类筛选：全部共 0 个榜单品牌对比工具 暂无符合条件的榜单© 2024 品牌智库 - 专业品牌数据平台关于我们|使用条款|隐私政策|联系我们 知识",
+        "layout": {
+          "viewportWidth": 1568,
+          "viewportHeight": 1600,
+          "scrollWidth": 1568,
+          "scrollHeight": 1600,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89032-codex-cycle21-final-structure-03-操作-查看榜单",
+          "label": "操作:查看榜单",
+          "finalUrl": "http://127.0.0.1:49032/rankings",
+          "title": "品牌与生活知识研究平台",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89032/probe/codex-cycle21-browser-final-20260604/may-89032-codex-cycle21-final-structure-03-操作-查看榜单.json",
+          "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89032/probe/codex-cycle21-browser-final-20260604/may-89032-codex-cycle21-final-structure-03-操作-查看榜单.png",
+          "elementCount": 96,
+          "interactiveCount": 11,
+          "interactiveLabels": [
+            "首页",
+            "品牌库",
+            "榜单",
+            "登录",
+            "品牌对比工具",
+            "关于我们",
+            "使用条款",
+            "隐私政策",
+            "联系我们",
+            "知识"
+          ]
+        }
+      },
+      {
+        "label": "二层操作:查看榜单->品牌对比工具",
+        "url": "http://127.0.0.1:49032/rankings/compare",
+        "title": "品牌与生活知识研究平台",
+        "headings": [
+          "品牌对比",
+          "选择对比品牌（最多5个）",
+          "快速对比（从历史记录选择）"
+        ],
+        "navLabels": [
+          "首页",
+          "品牌库",
+          "榜单"
+        ],
+        "buttons": [
+          "登录",
+          "清空全部",
+          "保存对比"
+        ],
+        "links": [
+          "关于我们",
+          "使用条款",
+          "隐私政策",
+          "联系我们"
+        ],
+        "inputs": [
+          {
+            "tag": "input",
+            "type": "text",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          }
+        ],
+        "tables": [],
+        "emptyTextCount": 1,
+        "bodyTextPreview": "品牌智库首页品牌库榜单 登录 品牌对比多维度数据对比，直观分析品牌差异新建对比对比历史 选择对比品牌（最多5个） 搜索品牌名称... 清空全部 保存对比 💡 从上方搜索框选择品牌，至少选择2个品牌开始对比🔍 支持按品牌名称模糊搜索📊 可对比品牌实力、产品质量、创新能力等5个维度 快速对比（从历史记录选择） 智能手机十大品牌2026-06-04 16:18华为小米苹果点击加载对比 →新能源汽车十大品牌2026-06-04 15:18比亚迪特斯拉点击加载对比 →白色家电十大品牌2026-06-04 14:18海尔美的格力点击加载对比 →白酒品牌十大排行榜2026-06-04 13:18茅台五粮液点击加载对比 → 历史对比记录 智能手机十大品牌2026-06-04 16:18 查看详情 对比品牌：华为小米苹果新能源汽车十大品牌2026-06-04 15:18 查看详情 对比品牌：比亚迪特斯拉白色家电十大品牌2026-06-04 14:18 查看详情 对比品牌：海尔美的格力白酒品牌十大排行榜2026-06-04 13:18 查看详情 对比品牌：茅台五粮液智能手机十大品牌2026-06-04 17:58 查看详情 对比品牌：华为小米苹果请至少选择2个品牌进行对比© 2024 品牌智库 - 专业品牌数据平台关于我们|使用条款|隐私政策|联系我们 知识No data",
+        "layout": {
+          "viewportWidth": 1600,
+          "viewportHeight": 1600,
+          "scrollWidth": 1600,
+          "scrollHeight": 1693,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89032-codex-cycle21-final-structure-04-二层操作-查看榜单-品牌对比工具",
+          "label": "二层操作:查看榜单->品牌对比工具",
+          "finalUrl": "http://127.0.0.1:49032/rankings/compare",
+          "title": "品牌与生活知识研究平台",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89032/probe/codex-cycle21-browser-final-20260604/may-89032-codex-cycle21-final-structure-04-二层操作-查看榜单-品牌对比工具.json",
+          "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89032/probe/codex-cycle21-browser-final-20260604/may-89032-codex-cycle21-final-structure-04-二层操作-查看榜单-品牌对比工具.png",
+          "elementCount": 291,
+          "interactiveCount": 19,
+          "interactiveLabels": [
+            "首页",
+            "品牌库",
+            "榜单",
+            "登录",
+            "新建对比",
+            "清空全部",
+            "保存对比",
+            "查看详情",
+            "关于我们",
+            "使用条款",
+            "隐私政策",
+            "联系我们",
+            "知识"
+          ]
+        }
+      },
+      {
+        "label": "操作:查看全部",
+        "url": "http://127.0.0.1:49032/brands",
+        "title": "品牌与生活知识研究平台",
+        "headings": [
+          "品牌库",
+          "华为",
+          "小米",
+          "苹果",
+          "比亚迪",
+          "特斯拉",
+          "海尔",
+          "美的",
+          "格力",
+          "茅台",
+          "五粮液",
+          "阿里"
+        ],
+        "navLabels": [
+          "首页",
+          "品牌库",
+          "榜单"
+        ],
+        "buttons": [
+          "登录",
+          "#",
+          "A",
+          "B",
+          "C",
+          "D",
+          "E",
+          "F",
+          "G",
+          "H",
+          "I",
+          "J",
+          "K",
+          "L",
+          "M",
+          "N",
+          "O",
+          "P",
+          "Q",
+          "R",
+          "S",
+          "T",
+          "U",
+          "V"
+        ],
+        "links": [
+          "关于我们",
+          "使用条款",
+          "隐私政策",
+          "联系我们"
+        ],
+        "inputs": [
+          {
+            "tag": "input",
+            "type": "text",
+            "placeholder": "搜索品牌名称...",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "text",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          }
+        ],
+        "tables": [],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "品牌智库首页品牌库榜单 登录 品牌库汇聚全球优质品牌，多维筛选找到您关注的品牌行业：全部互联网家电汽车消费电子食品地区：全部等级：全部S级A级B级C级首字母：#ABCDEFGHIJKLMNOPQRSTUVWXYZ共 0 个品牌综合排序S级华为消费电子 · 0.000A级小米消费电子 · 0.000S级苹果消费电子 · 0.000A级比亚迪汽车 · 0.000S级特斯拉汽车 · 0.000A级海尔家电 · 0.000A级美的家电 · 0.000A级格力家电 · 0.000S级茅台食品 · 0.000A级五粮液食品 · 0.000S级阿里互联网 · 0.000S级腾讯互联网 · 0.000A级京东互联网 · 0.000A级美团互联网 · 0.000S级字节跳动互联网 · 0.000© 2024 品牌智库 - 专业品牌数据平台关于我们|使用条款|隐私政策|联系我们 知识综合排序热度最高最新收录",
+        "layout": {
+          "viewportWidth": 1632,
+          "viewportHeight": 1600,
+          "scrollWidth": 1632,
+          "scrollHeight": 1682,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89032-codex-cycle21-final-structure-05-操作-查看全部",
+          "label": "操作:查看全部",
+          "finalUrl": "http://127.0.0.1:49032/brands",
+          "title": "品牌与生活知识研究平台",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89032/probe/codex-cycle21-browser-final-20260604/may-89032-codex-cycle21-final-structure-05-操作-查看全部.json",
+          "screenshotPath": "",
+          "elementCount": 466,
+          "interactiveCount": 40,
+          "interactiveLabels": [
+            "首页",
+            "品牌库",
+            "榜单",
+            "登录",
+            "搜索品牌名称...",
+            "A",
+            "B",
+            "C",
+            "D",
+            "E",
+            "F",
+            "G",
+            "H",
+            "I",
+            "J",
+            "K",
+            "L",
+            "M",
+            "N",
+            "O",
+            "P",
+            "Q",
+            "R",
+            "S",
+            "T",
+            "U",
+            "V",
+            "W",
+            "X",
+            "Y"
+          ]
+        }
+      },
+      {
+        "label": "二层操作:查看全部->A",
+        "url": "http://127.0.0.1:49032/brands",
+        "title": "品牌与生活知识研究平台",
+        "headings": [
+          "品牌库",
+          "华为",
+          "小米",
+          "苹果",
+          "比亚迪",
+          "特斯拉",
+          "海尔",
+          "美的",
+          "格力",
+          "茅台",
+          "五粮液",
+          "阿里"
+        ],
+        "navLabels": [
+          "首页",
+          "品牌库",
+          "榜单"
+        ],
+        "buttons": [
+          "登录",
+          "#",
+          "A",
+          "B",
+          "C",
+          "D",
+          "E",
+          "F",
+          "G",
+          "H",
+          "I",
+          "J",
+          "K",
+          "L",
+          "M",
+          "N",
+          "O",
+          "P",
+          "Q",
+          "R",
+          "S",
+          "T",
+          "U",
+          "V"
+        ],
+        "links": [
+          "关于我们",
+          "使用条款",
+          "隐私政策",
+          "联系我们"
+        ],
+        "inputs": [
+          {
+            "tag": "input",
+            "type": "text",
+            "placeholder": "搜索品牌名称...",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "text",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          }
+        ],
+        "tables": [],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "品牌智库首页品牌库榜单 登录 品牌库汇聚全球优质品牌，多维筛选找到您关注的品牌行业：全部互联网家电汽车消费电子食品地区：全部等级：全部S级A级B级C级首字母：#ABCDEFGHIJKLMNOPQRSTUVWXYZ共 0 个品牌综合排序S级华为消费电子 · 0.000A级小米消费电子 · 0.000S级苹果消费电子 · 0.000A级比亚迪汽车 · 0.000S级特斯拉汽车 · 0.000A级海尔家电 · 0.000A级美的家电 · 0.000A级格力家电 · 0.000S级茅台食品 · 0.000A级五粮液食品 · 0.000S级阿里互联网 · 0.000S级腾讯互联网 · 0.000A级京东互联网 · 0.000A级美团互联网 · 0.000S级字节跳动互联网 · 0.000© 2024 品牌智库 - 专业品牌数据平台关于我们|使用条款|隐私政策|联系我们 知识综合排序热度最高最新收录",
+        "layout": {
+          "viewportWidth": 1664,
+          "viewportHeight": 1600,
+          "scrollWidth": 1664,
+          "scrollHeight": 1682,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89032-codex-cycle21-final-structure-06-二层操作-查看全部-A",
+          "label": "二层操作:查看全部->A",
+          "finalUrl": "http://127.0.0.1:49032/brands",
+          "title": "品牌与生活知识研究平台",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89032/probe/codex-cycle21-browser-final-20260604/may-89032-codex-cycle21-final-structure-06-二层操作-查看全部-A.json",
+          "screenshotPath": "",
+          "elementCount": 466,
+          "interactiveCount": 40,
+          "interactiveLabels": [
+            "首页",
+            "品牌库",
+            "榜单",
+            "登录",
+            "搜索品牌名称...",
+            "A",
+            "B",
+            "C",
+            "D",
+            "E",
+            "F",
+            "G",
+            "H",
+            "I",
+            "J",
+            "K",
+            "L",
+            "M",
+            "N",
+            "O",
+            "P",
+            "Q",
+            "R",
+            "S",
+            "T",
+            "U",
+            "V",
+            "W",
+            "X",
+            "Y"
+          ]
+        }
+      },
+      {
+        "label": "导航:品牌库",
+        "url": "http://127.0.0.1:49032/brands",
+        "title": "品牌与生活知识研究平台",
+        "headings": [
+          "品牌库",
+          "华为",
+          "小米",
+          "苹果",
+          "比亚迪",
+          "特斯拉",
+          "海尔",
+          "美的",
+          "格力",
+          "茅台",
+          "五粮液",
+          "阿里"
+        ],
+        "navLabels": [
+          "首页",
+          "品牌库",
+          "榜单"
+        ],
+        "buttons": [
+          "登录",
+          "#",
+          "A",
+          "B",
+          "C",
+          "D",
+          "E",
+          "F",
+          "G",
+          "H",
+          "I",
+          "J",
+          "K",
+          "L",
+          "M",
+          "N",
+          "O",
+          "P",
+          "Q",
+          "R",
+          "S",
+          "T",
+          "U",
+          "V"
+        ],
+        "links": [
+          "关于我们",
+          "使用条款",
+          "隐私政策",
+          "联系我们"
+        ],
+        "inputs": [
+          {
+            "tag": "input",
+            "type": "text",
+            "placeholder": "搜索品牌名称...",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "text",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          }
+        ],
+        "tables": [],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "品牌智库首页品牌库榜单 登录 品牌库汇聚全球优质品牌，多维筛选找到您关注的品牌行业：全部互联网家电汽车消费电子食品地区：全部等级：全部S级A级B级C级首字母：#ABCDEFGHIJKLMNOPQRSTUVWXYZ共 0 个品牌综合排序S级华为消费电子 · 0.000A级小米消费电子 · 0.000S级苹果消费电子 · 0.000A级比亚迪汽车 · 0.000S级特斯拉汽车 · 0.000A级海尔家电 · 0.000A级美的家电 · 0.000A级格力家电 · 0.000S级茅台食品 · 0.000A级五粮液食品 · 0.000S级阿里互联网 · 0.000S级腾讯互联网 · 0.000A级京东互联网 · 0.000A级美团互联网 · 0.000S级字节跳动互联网 · 0.000© 2024 品牌智库 - 专业品牌数据平台关于我们|使用条款|隐私政策|联系我们 知识综合排序热度最高最新收录",
+        "layout": {
+          "viewportWidth": 1696,
+          "viewportHeight": 1600,
+          "scrollWidth": 1696,
+          "scrollHeight": 1682,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89032-codex-cycle21-final-structure-07-导航-品牌库",
+          "label": "导航:品牌库",
+          "finalUrl": "http://127.0.0.1:49032/brands",
+          "title": "品牌与生活知识研究平台",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89032/probe/codex-cycle21-browser-final-20260604/may-89032-codex-cycle21-final-structure-07-导航-品牌库.json",
+          "screenshotPath": "",
+          "elementCount": 466,
+          "interactiveCount": 40,
+          "interactiveLabels": [
+            "首页",
+            "品牌库",
+            "榜单",
+            "登录",
+            "搜索品牌名称...",
+            "A",
+            "B",
+            "C",
+            "D",
+            "E",
+            "F",
+            "G",
+            "H",
+            "I",
+            "J",
+            "K",
+            "L",
+            "M",
+            "N",
+            "O",
+            "P",
+            "Q",
+            "R",
+            "S",
+            "T",
+            "U",
+            "V",
+            "W",
+            "X",
+            "Y"
+          ]
+        }
+      },
+      {
+        "label": "操作:登录",
+        "url": "http://127.0.0.1:49032/login",
+        "title": "品牌与生活知识研究平台",
+        "headings": [
+          "欢迎登录"
+        ],
+        "navLabels": [
+          "首页",
+          "品牌库",
+          "榜单"
+        ],
+        "buttons": [
+          "登录"
+        ],
+        "links": [
+          "立即注册",
+          "关于我们",
+          "使用条款",
+          "隐私政策",
+          "联系我们"
+        ],
+        "inputs": [
+          {
+            "tag": "input",
+            "type": "text",
+            "placeholder": "请输入用户名",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "password",
+            "placeholder": "请输入密码",
+            "name": "",
+            "label": ""
+          }
+        ],
+        "tables": [],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "品牌智库首页品牌库榜单 登录 欢迎登录用户名密码记住我 登录 还没有账号？立即注册或测试账号：admin / admin123普通账号：user / user123© 2024 品牌智库 - 专业品牌数据平台关于我们|使用条款|隐私政策|联系我们 知识",
+        "layout": {
+          "viewportWidth": 1728,
+          "viewportHeight": 1600,
+          "scrollWidth": 1728,
+          "scrollHeight": 1874,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89032-codex-cycle21-final-structure-08-操作-登录",
+          "label": "操作:登录",
+          "finalUrl": "http://127.0.0.1:49032/login",
+          "title": "品牌与生活知识研究平台",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89032/probe/codex-cycle21-browser-final-20260604/may-89032-codex-cycle21-final-structure-08-操作-登录.json",
+          "screenshotPath": "",
+          "elementCount": 115,
+          "interactiveCount": 15,
+          "interactiveLabels": [
+            "首页",
+            "品牌库",
+            "榜单",
+            "登录",
+            "请输入用户名",
+            "请输入密码",
+            "on",
+            "立即注册",
+            "关于我们",
+            "使用条款",
+            "隐私政策",
+            "联系我们",
+            "知识"
+          ]
+        }
+      },
+      {
+        "label": "二层操作:登录->登录",
+        "url": "http://127.0.0.1:49032/login",
+        "title": "品牌与生活知识研究平台",
+        "headings": [
+          "欢迎登录"
+        ],
+        "navLabels": [
+          "首页",
+          "品牌库",
+          "榜单"
+        ],
+        "buttons": [
+          "登录"
+        ],
+        "links": [
+          "立即注册",
+          "关于我们",
+          "使用条款",
+          "隐私政策",
+          "联系我们"
+        ],
+        "inputs": [
+          {
+            "tag": "input",
+            "type": "text",
+            "placeholder": "请输入用户名",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "password",
+            "placeholder": "请输入密码",
+            "name": "",
+            "label": ""
+          }
+        ],
+        "tables": [],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "品牌智库首页品牌库榜单 登录 欢迎登录用户名请输入用户名密码请输入密码记住我 登录 还没有账号？立即注册或测试账号：admin / admin123普通账号：user / user123© 2024 品牌智库 - 专业品牌数据平台关于我们|使用条款|隐私政策|联系我们 知识",
+        "layout": {
+          "viewportWidth": 1760,
+          "viewportHeight": 1600,
+          "scrollWidth": 1760,
+          "scrollHeight": 1874,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89032-codex-cycle21-final-structure-09-二层操作-登录-登录",
+          "label": "二层操作:登录->登录",
+          "finalUrl": "http://127.0.0.1:49032/login",
+          "title": "品牌与生活知识研究平台",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89032/probe/codex-cycle21-browser-final-20260604/may-89032-codex-cycle21-final-structure-09-二层操作-登录-登录.json",
+          "screenshotPath": "",
+          "elementCount": 117,
+          "interactiveCount": 15,
+          "interactiveLabels": [
+            "首页",
+            "品牌库",
+            "榜单",
+            "登录",
+            "请输入用户名",
+            "请输入密码",
+            "on",
+            "立即注册",
+            "关于我们",
+            "使用条款",
+            "隐私政策",
+            "联系我们",
+            "知识"
+          ]
+        }
+      },
+      {
+        "label": "操作:A",
+        "url": "http://127.0.0.1:49032/brands",
+        "title": "品牌与生活知识研究平台",
+        "headings": [
+          "品牌库",
+          "华为",
+          "小米",
+          "苹果",
+          "比亚迪",
+          "特斯拉",
+          "海尔",
+          "美的",
+          "格力",
+          "茅台",
+          "五粮液",
+          "阿里"
+        ],
+        "navLabels": [
+          "首页",
+          "品牌库",
+          "榜单"
+        ],
+        "buttons": [
+          "登录",
+          "#",
+          "A",
+          "B",
+          "C",
+          "D",
+          "E",
+          "F",
+          "G",
+          "H",
+          "I",
+          "J",
+          "K",
+          "L",
+          "M",
+          "N",
+          "O",
+          "P",
+          "Q",
+          "R",
+          "S",
+          "T",
+          "U",
+          "V"
+        ],
+        "links": [
+          "关于我们",
+          "使用条款",
+          "隐私政策",
+          "联系我们"
+        ],
+        "inputs": [
+          {
+            "tag": "input",
+            "type": "text",
+            "placeholder": "搜索品牌名称...",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "text",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          }
+        ],
+        "tables": [],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "品牌智库首页品牌库榜单 登录 品牌库汇聚全球优质品牌，多维筛选找到您关注的品牌行业：全部互联网家电汽车消费电子食品地区：全部等级：全部S级A级B级C级首字母：#ABCDEFGHIJKLMNOPQRSTUVWXYZ共 0 个品牌综合排序S级华为消费电子 · 0.000A级小米消费电子 · 0.000S级苹果消费电子 · 0.000A级比亚迪汽车 · 0.000S级特斯拉汽车 · 0.000A级海尔家电 · 0.000A级美的家电 · 0.000A级格力家电 · 0.000S级茅台食品 · 0.000A级五粮液食品 · 0.000S级阿里互联网 · 0.000S级腾讯互联网 · 0.000A级京东互联网 · 0.000A级美团互联网 · 0.000S级字节跳动互联网 · 0.000© 2024 品牌智库 - 专业品牌数据平台关于我们|使用条款|隐私政策|联系我们 综合排序热度最高最新收录知识",
+        "layout": {
+          "viewportWidth": 1792,
+          "viewportHeight": 1600,
+          "scrollWidth": 1792,
+          "scrollHeight": 1682,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89032-codex-cycle21-final-structure-10-操作-A",
+          "label": "操作:A",
+          "finalUrl": "http://127.0.0.1:49032/brands",
+          "title": "品牌与生活知识研究平台",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89032/probe/codex-cycle21-browser-final-20260604/may-89032-codex-cycle21-final-structure-10-操作-A.json",
+          "screenshotPath": "",
+          "elementCount": 466,
+          "interactiveCount": 40,
+          "interactiveLabels": [
+            "首页",
+            "品牌库",
+            "榜单",
+            "登录",
+            "搜索品牌名称...",
+            "A",
+            "B",
+            "C",
+            "D",
+            "E",
+            "F",
+            "G",
+            "H",
+            "I",
+            "J",
+            "K",
+            "L",
+            "M",
+            "N",
+            "O",
+            "P",
+            "Q",
+            "R",
+            "S",
+            "T",
+            "U",
+            "V",
+            "W",
+            "X",
+            "Y"
+          ]
+        }
+      },
+      {
+        "label": "导航:榜单",
+        "url": "http://127.0.0.1:49032/rankings",
+        "title": "品牌与生活知识研究平台",
+        "headings": [
+          "榜单中心"
+        ],
+        "navLabels": [
+          "首页",
+          "品牌库",
+          "榜单"
+        ],
+        "buttons": [
+          "登录",
+          "品牌对比工具"
+        ],
+        "links": [
+          "关于我们",
+          "使用条款",
+          "隐私政策",
+          "联系我们"
+        ],
+        "inputs": [],
+        "tables": [],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "品牌智库首页品牌库榜单 登录 榜单中心30+专业榜单分类，多维度品牌排名分析分类筛选：全部共 0 个榜单品牌对比工具 暂无符合条件的榜单© 2024 品牌智库 - 专业品牌数据平台关于我们|使用条款|隐私政策|联系我们 知识",
+        "layout": {
+          "viewportWidth": 1824,
+          "viewportHeight": 1600,
+          "scrollWidth": 1824,
+          "scrollHeight": 1600,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89032-codex-cycle21-final-structure-11-导航-榜单",
+          "label": "导航:榜单",
+          "finalUrl": "http://127.0.0.1:49032/rankings",
+          "title": "品牌与生活知识研究平台",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89032/probe/codex-cycle21-browser-final-20260604/may-89032-codex-cycle21-final-structure-11-导航-榜单.json",
+          "screenshotPath": "",
+          "elementCount": 96,
+          "interactiveCount": 11,
+          "interactiveLabels": [
+            "首页",
+            "品牌库",
+            "榜单",
+            "登录",
+            "品牌对比工具",
+            "关于我们",
+            "使用条款",
+            "隐私政策",
+            "联系我们",
+            "知识"
+          ]
+        }
+      },
+      {
+        "label": "操作:品牌对比工具",
+        "url": "http://127.0.0.1:49032/rankings/compare",
+        "title": "品牌与生活知识研究平台",
+        "headings": [
+          "品牌对比",
+          "选择对比品牌（最多5个）",
+          "快速对比（从历史记录选择）"
+        ],
+        "navLabels": [
+          "首页",
+          "品牌库",
+          "榜单"
+        ],
+        "buttons": [
+          "登录",
+          "清空全部",
+          "保存对比"
+        ],
+        "links": [
+          "关于我们",
+          "使用条款",
+          "隐私政策",
+          "联系我们"
+        ],
+        "inputs": [
+          {
+            "tag": "input",
+            "type": "text",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          }
+        ],
+        "tables": [],
+        "emptyTextCount": 1,
+        "bodyTextPreview": "品牌智库首页品牌库榜单 登录 品牌对比多维度数据对比，直观分析品牌差异新建对比对比历史 选择对比品牌（最多5个） 搜索品牌名称... 清空全部 保存对比 💡 从上方搜索框选择品牌，至少选择2个品牌开始对比🔍 支持按品牌名称模糊搜索📊 可对比品牌实力、产品质量、创新能力等5个维度 快速对比（从历史记录选择） 智能手机十大品牌2026-06-04 16:18华为小米苹果点击加载对比 →新能源汽车十大品牌2026-06-04 15:18比亚迪特斯拉点击加载对比 →白色家电十大品牌2026-06-04 14:18海尔美的格力点击加载对比 →白酒品牌十大排行榜2026-06-04 13:18茅台五粮液点击加载对比 → 历史对比记录 智能手机十大品牌2026-06-04 16:18 查看详情 对比品牌：华为小米苹果新能源汽车十大品牌2026-06-04 15:18 查看详情 对比品牌：比亚迪特斯拉白色家电十大品牌2026-06-04 14:18 查看详情 对比品牌：海尔美的格力白酒品牌十大排行榜2026-06-04 13:18 查看详情 对比品牌：茅台五粮液智能手机十大品牌2026-06-04 17:58 查看详情 对比品牌：华为小米苹果请至少选择2个品牌进行对比© 2024 品牌智库 - 专业品牌数据平台关于我们|使用条款|隐私政策|联系我们 知识No data",
+        "layout": {
+          "viewportWidth": 1856,
+          "viewportHeight": 1600,
+          "scrollWidth": 1856,
+          "scrollHeight": 1693,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89032-codex-cycle21-final-structure-12-操作-品牌对比工具",
+          "label": "操作:品牌对比工具",
+          "finalUrl": "http://127.0.0.1:49032/rankings/compare",
+          "title": "品牌与生活知识研究平台",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89032/probe/codex-cycle21-browser-final-20260604/may-89032-codex-cycle21-final-structure-12-操作-品牌对比工具.json",
+          "screenshotPath": "",
+          "elementCount": 291,
+          "interactiveCount": 19,
+          "interactiveLabels": [
+            "首页",
+            "品牌库",
+            "榜单",
+            "登录",
+            "新建对比",
+            "清空全部",
+            "保存对比",
+            "查看详情",
+            "关于我们",
+            "使用条款",
+            "隐私政策",
+            "联系我们",
+            "知识"
+          ]
+        }
+      },
+      {
+        "label": "操作:登录",
+        "url": "http://127.0.0.1:49032/login",
+        "title": "品牌与生活知识研究平台",
+        "headings": [
+          "欢迎登录"
+        ],
+        "navLabels": [
+          "首页",
+          "品牌库",
+          "榜单"
+        ],
+        "buttons": [
+          "登录"
+        ],
+        "links": [
+          "立即注册",
+          "关于我们",
+          "使用条款",
+          "隐私政策",
+          "联系我们"
+        ],
+        "inputs": [
+          {
+            "tag": "input",
+            "type": "text",
+            "placeholder": "请输入用户名",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "password",
+            "placeholder": "请输入密码",
+            "name": "",
+            "label": ""
+          }
+        ],
+        "tables": [],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "品牌智库首页品牌库榜单 登录 欢迎登录用户名密码记住我 登录 还没有账号？立即注册或测试账号：admin / admin123普通账号：user / user123© 2024 品牌智库 - 专业品牌数据平台关于我们|使用条款|隐私政策|联系我们 知识",
+        "layout": {
+          "viewportWidth": 1888,
+          "viewportHeight": 1600,
+          "scrollWidth": 1888,
+          "scrollHeight": 1874,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89032-codex-cycle21-final-structure-13-操作-登录",
+          "label": "操作:登录",
+          "finalUrl": "http://127.0.0.1:49032/login",
+          "title": "品牌与生活知识研究平台",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89032/probe/codex-cycle21-browser-final-20260604/may-89032-codex-cycle21-final-structure-13-操作-登录.json",
+          "screenshotPath": "",
+          "elementCount": 115,
+          "interactiveCount": 15,
+          "interactiveLabels": [
+            "首页",
+            "品牌库",
+            "榜单",
+            "登录",
+            "请输入用户名",
+            "请输入密码",
+            "on",
+            "立即注册",
+            "关于我们",
+            "使用条款",
+            "隐私政策",
+            "联系我们",
+            "知识"
+          ]
+        }
+      },
+      {
+        "label": "二层操作:登录->登录",
+        "url": "http://127.0.0.1:49032/login",
+        "title": "品牌与生活知识研究平台",
+        "headings": [
+          "欢迎登录"
+        ],
+        "navLabels": [
+          "首页",
+          "品牌库",
+          "榜单"
+        ],
+        "buttons": [
+          "登录"
+        ],
+        "links": [
+          "立即注册",
+          "关于我们",
+          "使用条款",
+          "隐私政策",
+          "联系我们"
+        ],
+        "inputs": [
+          {
+            "tag": "input",
+            "type": "text",
+            "placeholder": "请输入用户名",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "password",
+            "placeholder": "请输入密码",
+            "name": "",
+            "label": ""
+          }
+        ],
+        "tables": [],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "品牌智库首页品牌库榜单 登录 欢迎登录用户名请输入用户名密码请输入密码记住我 登录 还没有账号？立即注册或测试账号：admin / admin123普通账号：user / user123© 2024 品牌智库 - 专业品牌数据平台关于我们|使用条款|隐私政策|联系我们 知识",
+        "layout": {
+          "viewportWidth": 1920,
+          "viewportHeight": 1600,
+          "scrollWidth": 1920,
+          "scrollHeight": 1874,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89032-codex-cycle21-final-structure-14-二层操作-登录-登录",
+          "label": "二层操作:登录->登录",
+          "finalUrl": "http://127.0.0.1:49032/login",
+          "title": "品牌与生活知识研究平台",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89032/probe/codex-cycle21-browser-final-20260604/may-89032-codex-cycle21-final-structure-14-二层操作-登录-登录.json",
+          "screenshotPath": "",
+          "elementCount": 117,
+          "interactiveCount": 15,
+          "interactiveLabels": [
+            "首页",
+            "品牌库",
+            "榜单",
+            "登录",
+            "请输入用户名",
+            "请输入密码",
+            "on",
+            "立即注册",
+            "关于我们",
+            "使用条款",
+            "隐私政策",
+            "联系我们",
+            "知识"
+          ]
+        }
+      }
+    ],
+    "findings": [
+      "查看榜单 的 品牌对比工具结果 页面只显示空列表或“暂无数据”，缺少可复查的业务记录。"
+    ],
+    "actionHints": [
+      "为 查看榜单 的 品牌对比工具结果 补齐 SQLite 种子数据、列表接口和空状态引导，确保核心记录可新增、可查看、可复查。"
+    ],
+    "emptyPages": [
+      "查看榜单 的 品牌对比工具结果"
+    ],
+    "overflowPages": [],
+    "blankPages": [],
+    "apiFailurePaths": [],
+    "goalTerms": [],
+    "clickedActionDescriptors": [
+      {
+        "nav": "首页",
+        "label": "查看榜单",
+        "ordinal": 0,
+        "unsafe": false
+      },
+      {
+        "nav": "首页",
+        "label": "查看榜单->品牌对比工具",
+        "ordinal": 0,
+        "secondary": true,
+        "unsafe": false
+      },
+      {
+        "nav": "首页",
+        "label": "查看全部",
+        "ordinal": 0,
+        "unsafe": false
+      },
+      {
+        "nav": "首页",
+        "label": "查看全部->A",
+        "ordinal": 0,
+        "secondary": true,
+        "unsafe": false
+      },
+      {
+        "nav": "品牌库",
+        "label": "登录",
+        "ordinal": 0,
+        "unsafe": false
+      },
+      {
+        "nav": "品牌库",
+        "label": "登录->登录",
+        "ordinal": 1,
+        "secondary": true,
+        "unsafe": false
+      },
+      {
+        "nav": "品牌库",
+        "label": "A",
+        "ordinal": 0,
+        "unsafe": false
+      },
+      {
+        "nav": "榜单",
+        "label": "品牌对比工具",
+        "ordinal": 0,
+        "unsafe": false
+      },
+      {
+        "nav": "榜单",
+        "label": "登录",
+        "ordinal": 0,
+        "unsafe": false
+      },
+      {
+        "nav": "榜单",
+        "label": "登录->登录",
+        "ordinal": 1,
+        "secondary": true,
+        "unsafe": false
+      }
+    ],
+    "secondaryActionClicks": 4,
+    "structureCaptures": [
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89032-codex-cycle21-final-structure-01-首屏",
+        "label": "首屏",
+        "finalUrl": "http://127.0.0.1:49032/",
+        "title": "品牌与生活知识研究平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89032/probe/codex-cycle21-browser-final-20260604/may-89032-codex-cycle21-final-structure-01-首屏.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89032/probe/codex-cycle21-browser-final-20260604/may-89032-codex-cycle21-final-structure-01-首屏.png",
+        "elementCount": 440,
+        "interactiveCount": 15,
+        "interactiveLabels": [
+          "首页",
+          "品牌库",
+          "榜单",
+          "登录",
+          "探索品牌库",
+          "查看榜单",
+          "查看全部",
+          "关于我们",
+          "使用条款",
+          "隐私政策",
+          "联系我们",
+          "知识"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89032-codex-cycle21-final-structure-02-导航-首页",
+        "label": "导航:首页",
+        "finalUrl": "http://127.0.0.1:49032/",
+        "title": "品牌与生活知识研究平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89032/probe/codex-cycle21-browser-final-20260604/may-89032-codex-cycle21-final-structure-02-导航-首页.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89032/probe/codex-cycle21-browser-final-20260604/may-89032-codex-cycle21-final-structure-02-导航-首页.png",
+        "elementCount": 440,
+        "interactiveCount": 15,
+        "interactiveLabels": [
+          "首页",
+          "品牌库",
+          "榜单",
+          "登录",
+          "探索品牌库",
+          "查看榜单",
+          "查看全部",
+          "关于我们",
+          "使用条款",
+          "隐私政策",
+          "联系我们",
+          "知识"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89032-codex-cycle21-final-structure-03-操作-查看榜单",
+        "label": "操作:查看榜单",
+        "finalUrl": "http://127.0.0.1:49032/rankings",
+        "title": "品牌与生活知识研究平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89032/probe/codex-cycle21-browser-final-20260604/may-89032-codex-cycle21-final-structure-03-操作-查看榜单.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89032/probe/codex-cycle21-browser-final-20260604/may-89032-codex-cycle21-final-structure-03-操作-查看榜单.png",
+        "elementCount": 96,
+        "interactiveCount": 11,
+        "interactiveLabels": [
+          "首页",
+          "品牌库",
+          "榜单",
+          "登录",
+          "品牌对比工具",
+          "关于我们",
+          "使用条款",
+          "隐私政策",
+          "联系我们",
+          "知识"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89032-codex-cycle21-final-structure-04-二层操作-查看榜单-品牌对比工具",
+        "label": "二层操作:查看榜单->品牌对比工具",
+        "finalUrl": "http://127.0.0.1:49032/rankings/compare",
+        "title": "品牌与生活知识研究平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89032/probe/codex-cycle21-browser-final-20260604/may-89032-codex-cycle21-final-structure-04-二层操作-查看榜单-品牌对比工具.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89032/probe/codex-cycle21-browser-final-20260604/may-89032-codex-cycle21-final-structure-04-二层操作-查看榜单-品牌对比工具.png",
+        "elementCount": 291,
+        "interactiveCount": 19,
+        "interactiveLabels": [
+          "首页",
+          "品牌库",
+          "榜单",
+          "登录",
+          "新建对比",
+          "清空全部",
+          "保存对比",
+          "查看详情",
+          "关于我们",
+          "使用条款",
+          "隐私政策",
+          "联系我们",
+          "知识"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89032-codex-cycle21-final-structure-05-操作-查看全部",
+        "label": "操作:查看全部",
+        "finalUrl": "http://127.0.0.1:49032/brands",
+        "title": "品牌与生活知识研究平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89032/probe/codex-cycle21-browser-final-20260604/may-89032-codex-cycle21-final-structure-05-操作-查看全部.json",
+        "screenshotPath": "",
+        "elementCount": 466,
+        "interactiveCount": 40,
+        "interactiveLabels": [
+          "首页",
+          "品牌库",
+          "榜单",
+          "登录",
+          "搜索品牌名称...",
+          "A",
+          "B",
+          "C",
+          "D",
+          "E",
+          "F",
+          "G",
+          "H",
+          "I",
+          "J",
+          "K",
+          "L",
+          "M",
+          "N",
+          "O",
+          "P",
+          "Q",
+          "R",
+          "S",
+          "T",
+          "U",
+          "V",
+          "W",
+          "X",
+          "Y"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89032-codex-cycle21-final-structure-06-二层操作-查看全部-A",
+        "label": "二层操作:查看全部->A",
+        "finalUrl": "http://127.0.0.1:49032/brands",
+        "title": "品牌与生活知识研究平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89032/probe/codex-cycle21-browser-final-20260604/may-89032-codex-cycle21-final-structure-06-二层操作-查看全部-A.json",
+        "screenshotPath": "",
+        "elementCount": 466,
+        "interactiveCount": 40,
+        "interactiveLabels": [
+          "首页",
+          "品牌库",
+          "榜单",
+          "登录",
+          "搜索品牌名称...",
+          "A",
+          "B",
+          "C",
+          "D",
+          "E",
+          "F",
+          "G",
+          "H",
+          "I",
+          "J",
+          "K",
+          "L",
+          "M",
+          "N",
+          "O",
+          "P",
+          "Q",
+          "R",
+          "S",
+          "T",
+          "U",
+          "V",
+          "W",
+          "X",
+          "Y"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89032-codex-cycle21-final-structure-07-导航-品牌库",
+        "label": "导航:品牌库",
+        "finalUrl": "http://127.0.0.1:49032/brands",
+        "title": "品牌与生活知识研究平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89032/probe/codex-cycle21-browser-final-20260604/may-89032-codex-cycle21-final-structure-07-导航-品牌库.json",
+        "screenshotPath": "",
+        "elementCount": 466,
+        "interactiveCount": 40,
+        "interactiveLabels": [
+          "首页",
+          "品牌库",
+          "榜单",
+          "登录",
+          "搜索品牌名称...",
+          "A",
+          "B",
+          "C",
+          "D",
+          "E",
+          "F",
+          "G",
+          "H",
+          "I",
+          "J",
+          "K",
+          "L",
+          "M",
+          "N",
+          "O",
+          "P",
+          "Q",
+          "R",
+          "S",
+          "T",
+          "U",
+          "V",
+          "W",
+          "X",
+          "Y"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89032-codex-cycle21-final-structure-08-操作-登录",
+        "label": "操作:登录",
+        "finalUrl": "http://127.0.0.1:49032/login",
+        "title": "品牌与生活知识研究平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89032/probe/codex-cycle21-browser-final-20260604/may-89032-codex-cycle21-final-structure-08-操作-登录.json",
+        "screenshotPath": "",
+        "elementCount": 115,
+        "interactiveCount": 15,
+        "interactiveLabels": [
+          "首页",
+          "品牌库",
+          "榜单",
+          "登录",
+          "请输入用户名",
+          "请输入密码",
+          "on",
+          "立即注册",
+          "关于我们",
+          "使用条款",
+          "隐私政策",
+          "联系我们",
+          "知识"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89032-codex-cycle21-final-structure-09-二层操作-登录-登录",
+        "label": "二层操作:登录->登录",
+        "finalUrl": "http://127.0.0.1:49032/login",
+        "title": "品牌与生活知识研究平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89032/probe/codex-cycle21-browser-final-20260604/may-89032-codex-cycle21-final-structure-09-二层操作-登录-登录.json",
+        "screenshotPath": "",
+        "elementCount": 117,
+        "interactiveCount": 15,
+        "interactiveLabels": [
+          "首页",
+          "品牌库",
+          "榜单",
+          "登录",
+          "请输入用户名",
+          "请输入密码",
+          "on",
+          "立即注册",
+          "关于我们",
+          "使用条款",
+          "隐私政策",
+          "联系我们",
+          "知识"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89032-codex-cycle21-final-structure-10-操作-A",
+        "label": "操作:A",
+        "finalUrl": "http://127.0.0.1:49032/brands",
+        "title": "品牌与生活知识研究平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89032/probe/codex-cycle21-browser-final-20260604/may-89032-codex-cycle21-final-structure-10-操作-A.json",
+        "screenshotPath": "",
+        "elementCount": 466,
+        "interactiveCount": 40,
+        "interactiveLabels": [
+          "首页",
+          "品牌库",
+          "榜单",
+          "登录",
+          "搜索品牌名称...",
+          "A",
+          "B",
+          "C",
+          "D",
+          "E",
+          "F",
+          "G",
+          "H",
+          "I",
+          "J",
+          "K",
+          "L",
+          "M",
+          "N",
+          "O",
+          "P",
+          "Q",
+          "R",
+          "S",
+          "T",
+          "U",
+          "V",
+          "W",
+          "X",
+          "Y"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89032-codex-cycle21-final-structure-11-导航-榜单",
+        "label": "导航:榜单",
+        "finalUrl": "http://127.0.0.1:49032/rankings",
+        "title": "品牌与生活知识研究平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89032/probe/codex-cycle21-browser-final-20260604/may-89032-codex-cycle21-final-structure-11-导航-榜单.json",
+        "screenshotPath": "",
+        "elementCount": 96,
+        "interactiveCount": 11,
+        "interactiveLabels": [
+          "首页",
+          "品牌库",
+          "榜单",
+          "登录",
+          "品牌对比工具",
+          "关于我们",
+          "使用条款",
+          "隐私政策",
+          "联系我们",
+          "知识"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89032-codex-cycle21-final-structure-12-操作-品牌对比工具",
+        "label": "操作:品牌对比工具",
+        "finalUrl": "http://127.0.0.1:49032/rankings/compare",
+        "title": "品牌与生活知识研究平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89032/probe/codex-cycle21-browser-final-20260604/may-89032-codex-cycle21-final-structure-12-操作-品牌对比工具.json",
+        "screenshotPath": "",
+        "elementCount": 291,
+        "interactiveCount": 19,
+        "interactiveLabels": [
+          "首页",
+          "品牌库",
+          "榜单",
+          "登录",
+          "新建对比",
+          "清空全部",
+          "保存对比",
+          "查看详情",
+          "关于我们",
+          "使用条款",
+          "隐私政策",
+          "联系我们",
+          "知识"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89032-codex-cycle21-final-structure-13-操作-登录",
+        "label": "操作:登录",
+        "finalUrl": "http://127.0.0.1:49032/login",
+        "title": "品牌与生活知识研究平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89032/probe/codex-cycle21-browser-final-20260604/may-89032-codex-cycle21-final-structure-13-操作-登录.json",
+        "screenshotPath": "",
+        "elementCount": 115,
+        "interactiveCount": 15,
+        "interactiveLabels": [
+          "首页",
+          "品牌库",
+          "榜单",
+          "登录",
+          "请输入用户名",
+          "请输入密码",
+          "on",
+          "立即注册",
+          "关于我们",
+          "使用条款",
+          "隐私政策",
+          "联系我们",
+          "知识"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89032-codex-cycle21-final-structure-14-二层操作-登录-登录",
+        "label": "二层操作:登录->登录",
+        "finalUrl": "http://127.0.0.1:49032/login",
+        "title": "品牌与生活知识研究平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89032/probe/codex-cycle21-browser-final-20260604/may-89032-codex-cycle21-final-structure-14-二层操作-登录-登录.json",
+        "screenshotPath": "",
+        "elementCount": 117,
+        "interactiveCount": 15,
+        "interactiveLabels": [
+          "首页",
+          "品牌库",
+          "榜单",
+          "登录",
+          "请输入用户名",
+          "请输入密码",
+          "on",
+          "立即注册",
+          "关于我们",
+          "使用条款",
+          "隐私政策",
+          "联系我们",
+          "知识"
+        ]
+      }
+    ],
+    "representativeScreenshotUrl": "http://127.0.0.1:49032/rankings/compare",
+    "representativeScreenshotLabel": "查看榜单 的 品牌对比工具结果"
+  },
+  "websiteStructureCapture": {
+    "module": "website_structure_capture",
+    "captureCount": 14,
+    "captures": [
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89032-codex-cycle21-final-structure-01-首屏",
+        "label": "首屏",
+        "finalUrl": "http://127.0.0.1:49032/",
+        "title": "品牌与生活知识研究平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89032/probe/codex-cycle21-browser-final-20260604/may-89032-codex-cycle21-final-structure-01-首屏.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89032/probe/codex-cycle21-browser-final-20260604/may-89032-codex-cycle21-final-structure-01-首屏.png",
+        "elementCount": 440,
+        "interactiveCount": 15,
+        "interactiveLabels": [
+          "首页",
+          "品牌库",
+          "榜单",
+          "登录",
+          "探索品牌库",
+          "查看榜单",
+          "查看全部",
+          "关于我们",
+          "使用条款",
+          "隐私政策",
+          "联系我们",
+          "知识"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89032-codex-cycle21-final-structure-02-导航-首页",
+        "label": "导航:首页",
+        "finalUrl": "http://127.0.0.1:49032/",
+        "title": "品牌与生活知识研究平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89032/probe/codex-cycle21-browser-final-20260604/may-89032-codex-cycle21-final-structure-02-导航-首页.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89032/probe/codex-cycle21-browser-final-20260604/may-89032-codex-cycle21-final-structure-02-导航-首页.png",
+        "elementCount": 440,
+        "interactiveCount": 15,
+        "interactiveLabels": [
+          "首页",
+          "品牌库",
+          "榜单",
+          "登录",
+          "探索品牌库",
+          "查看榜单",
+          "查看全部",
+          "关于我们",
+          "使用条款",
+          "隐私政策",
+          "联系我们",
+          "知识"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89032-codex-cycle21-final-structure-03-操作-查看榜单",
+        "label": "操作:查看榜单",
+        "finalUrl": "http://127.0.0.1:49032/rankings",
+        "title": "品牌与生活知识研究平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89032/probe/codex-cycle21-browser-final-20260604/may-89032-codex-cycle21-final-structure-03-操作-查看榜单.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89032/probe/codex-cycle21-browser-final-20260604/may-89032-codex-cycle21-final-structure-03-操作-查看榜单.png",
+        "elementCount": 96,
+        "interactiveCount": 11,
+        "interactiveLabels": [
+          "首页",
+          "品牌库",
+          "榜单",
+          "登录",
+          "品牌对比工具",
+          "关于我们",
+          "使用条款",
+          "隐私政策",
+          "联系我们",
+          "知识"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89032-codex-cycle21-final-structure-04-二层操作-查看榜单-品牌对比工具",
+        "label": "二层操作:查看榜单->品牌对比工具",
+        "finalUrl": "http://127.0.0.1:49032/rankings/compare",
+        "title": "品牌与生活知识研究平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89032/probe/codex-cycle21-browser-final-20260604/may-89032-codex-cycle21-final-structure-04-二层操作-查看榜单-品牌对比工具.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89032/probe/codex-cycle21-browser-final-20260604/may-89032-codex-cycle21-final-structure-04-二层操作-查看榜单-品牌对比工具.png",
+        "elementCount": 291,
+        "interactiveCount": 19,
+        "interactiveLabels": [
+          "首页",
+          "品牌库",
+          "榜单",
+          "登录",
+          "新建对比",
+          "清空全部",
+          "保存对比",
+          "查看详情",
+          "关于我们",
+          "使用条款",
+          "隐私政策",
+          "联系我们",
+          "知识"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89032-codex-cycle21-final-structure-05-操作-查看全部",
+        "label": "操作:查看全部",
+        "finalUrl": "http://127.0.0.1:49032/brands",
+        "title": "品牌与生活知识研究平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89032/probe/codex-cycle21-browser-final-20260604/may-89032-codex-cycle21-final-structure-05-操作-查看全部.json",
+        "screenshotPath": "",
+        "elementCount": 466,
+        "interactiveCount": 40,
+        "interactiveLabels": [
+          "首页",
+          "品牌库",
+          "榜单",
+          "登录",
+          "搜索品牌名称...",
+          "A",
+          "B",
+          "C",
+          "D",
+          "E",
+          "F",
+          "G",
+          "H",
+          "I",
+          "J",
+          "K",
+          "L",
+          "M",
+          "N",
+          "O",
+          "P",
+          "Q",
+          "R",
+          "S",
+          "T",
+          "U",
+          "V",
+          "W",
+          "X",
+          "Y"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89032-codex-cycle21-final-structure-06-二层操作-查看全部-A",
+        "label": "二层操作:查看全部->A",
+        "finalUrl": "http://127.0.0.1:49032/brands",
+        "title": "品牌与生活知识研究平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89032/probe/codex-cycle21-browser-final-20260604/may-89032-codex-cycle21-final-structure-06-二层操作-查看全部-A.json",
+        "screenshotPath": "",
+        "elementCount": 466,
+        "interactiveCount": 40,
+        "interactiveLabels": [
+          "首页",
+          "品牌库",
+          "榜单",
+          "登录",
+          "搜索品牌名称...",
+          "A",
+          "B",
+          "C",
+          "D",
+          "E",
+          "F",
+          "G",
+          "H",
+          "I",
+          "J",
+          "K",
+          "L",
+          "M",
+          "N",
+          "O",
+          "P",
+          "Q",
+          "R",
+          "S",
+          "T",
+          "U",
+          "V",
+          "W",
+          "X",
+          "Y"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89032-codex-cycle21-final-structure-07-导航-品牌库",
+        "label": "导航:品牌库",
+        "finalUrl": "http://127.0.0.1:49032/brands",
+        "title": "品牌与生活知识研究平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89032/probe/codex-cycle21-browser-final-20260604/may-89032-codex-cycle21-final-structure-07-导航-品牌库.json",
+        "screenshotPath": "",
+        "elementCount": 466,
+        "interactiveCount": 40,
+        "interactiveLabels": [
+          "首页",
+          "品牌库",
+          "榜单",
+          "登录",
+          "搜索品牌名称...",
+          "A",
+          "B",
+          "C",
+          "D",
+          "E",
+          "F",
+          "G",
+          "H",
+          "I",
+          "J",
+          "K",
+          "L",
+          "M",
+          "N",
+          "O",
+          "P",
+          "Q",
+          "R",
+          "S",
+          "T",
+          "U",
+          "V",
+          "W",
+          "X",
+          "Y"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89032-codex-cycle21-final-structure-08-操作-登录",
+        "label": "操作:登录",
+        "finalUrl": "http://127.0.0.1:49032/login",
+        "title": "品牌与生活知识研究平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89032/probe/codex-cycle21-browser-final-20260604/may-89032-codex-cycle21-final-structure-08-操作-登录.json",
+        "screenshotPath": "",
+        "elementCount": 115,
+        "interactiveCount": 15,
+        "interactiveLabels": [
+          "首页",
+          "品牌库",
+          "榜单",
+          "登录",
+          "请输入用户名",
+          "请输入密码",
+          "on",
+          "立即注册",
+          "关于我们",
+          "使用条款",
+          "隐私政策",
+          "联系我们",
+          "知识"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89032-codex-cycle21-final-structure-09-二层操作-登录-登录",
+        "label": "二层操作:登录->登录",
+        "finalUrl": "http://127.0.0.1:49032/login",
+        "title": "品牌与生活知识研究平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89032/probe/codex-cycle21-browser-final-20260604/may-89032-codex-cycle21-final-structure-09-二层操作-登录-登录.json",
+        "screenshotPath": "",
+        "elementCount": 117,
+        "interactiveCount": 15,
+        "interactiveLabels": [
+          "首页",
+          "品牌库",
+          "榜单",
+          "登录",
+          "请输入用户名",
+          "请输入密码",
+          "on",
+          "立即注册",
+          "关于我们",
+          "使用条款",
+          "隐私政策",
+          "联系我们",
+          "知识"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89032-codex-cycle21-final-structure-10-操作-A",
+        "label": "操作:A",
+        "finalUrl": "http://127.0.0.1:49032/brands",
+        "title": "品牌与生活知识研究平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89032/probe/codex-cycle21-browser-final-20260604/may-89032-codex-cycle21-final-structure-10-操作-A.json",
+        "screenshotPath": "",
+        "elementCount": 466,
+        "interactiveCount": 40,
+        "interactiveLabels": [
+          "首页",
+          "品牌库",
+          "榜单",
+          "登录",
+          "搜索品牌名称...",
+          "A",
+          "B",
+          "C",
+          "D",
+          "E",
+          "F",
+          "G",
+          "H",
+          "I",
+          "J",
+          "K",
+          "L",
+          "M",
+          "N",
+          "O",
+          "P",
+          "Q",
+          "R",
+          "S",
+          "T",
+          "U",
+          "V",
+          "W",
+          "X",
+          "Y"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89032-codex-cycle21-final-structure-11-导航-榜单",
+        "label": "导航:榜单",
+        "finalUrl": "http://127.0.0.1:49032/rankings",
+        "title": "品牌与生活知识研究平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89032/probe/codex-cycle21-browser-final-20260604/may-89032-codex-cycle21-final-structure-11-导航-榜单.json",
+        "screenshotPath": "",
+        "elementCount": 96,
+        "interactiveCount": 11,
+        "interactiveLabels": [
+          "首页",
+          "品牌库",
+          "榜单",
+          "登录",
+          "品牌对比工具",
+          "关于我们",
+          "使用条款",
+          "隐私政策",
+          "联系我们",
+          "知识"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89032-codex-cycle21-final-structure-12-操作-品牌对比工具",
+        "label": "操作:品牌对比工具",
+        "finalUrl": "http://127.0.0.1:49032/rankings/compare",
+        "title": "品牌与生活知识研究平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89032/probe/codex-cycle21-browser-final-20260604/may-89032-codex-cycle21-final-structure-12-操作-品牌对比工具.json",
+        "screenshotPath": "",
+        "elementCount": 291,
+        "interactiveCount": 19,
+        "interactiveLabels": [
+          "首页",
+          "品牌库",
+          "榜单",
+          "登录",
+          "新建对比",
+          "清空全部",
+          "保存对比",
+          "查看详情",
+          "关于我们",
+          "使用条款",
+          "隐私政策",
+          "联系我们",
+          "知识"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89032-codex-cycle21-final-structure-13-操作-登录",
+        "label": "操作:登录",
+        "finalUrl": "http://127.0.0.1:49032/login",
+        "title": "品牌与生活知识研究平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89032/probe/codex-cycle21-browser-final-20260604/may-89032-codex-cycle21-final-structure-13-操作-登录.json",
+        "screenshotPath": "",
+        "elementCount": 115,
+        "interactiveCount": 15,
+        "interactiveLabels": [
+          "首页",
+          "品牌库",
+          "榜单",
+          "登录",
+          "请输入用户名",
+          "请输入密码",
+          "on",
+          "立即注册",
+          "关于我们",
+          "使用条款",
+          "隐私政策",
+          "联系我们",
+          "知识"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89032-codex-cycle21-final-structure-14-二层操作-登录-登录",
+        "label": "二层操作:登录->登录",
+        "finalUrl": "http://127.0.0.1:49032/login",
+        "title": "品牌与生活知识研究平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89032/probe/codex-cycle21-browser-final-20260604/may-89032-codex-cycle21-final-structure-14-二层操作-登录-登录.json",
+        "screenshotPath": "",
+        "elementCount": 117,
+        "interactiveCount": 15,
+        "interactiveLabels": [
+          "首页",
+          "品牌库",
+          "榜单",
+          "登录",
+          "请输入用户名",
+          "请输入密码",
+          "on",
+          "立即注册",
+          "关于我们",
+          "使用条款",
+          "隐私政策",
+          "联系我们",
+          "知识"
+        ]
+      }
+    ]
+  },
+  "screenshotMetrics": {
+    "width": 1952,
+    "height": 1600,
+    "scrollWidth": 1920,
+    "scrollHeight": 1693
+  },
+  "initialBodyTextPreview": "品牌智库\n首页\n品牌库\n榜单\n登录\n专业品牌数据平台\n\n汇聚全球品牌信息，多维数据分析，智能榜单排名\n\n探索品牌库\n查看榜单\n15\n收录品牌\n8\n榜单分类\n5\n知识文章\n4\n数据来源\n热门品牌\n查看全部\nS级\n华为\n\n消费电子 ·\n\n0.0\n0\nA级\n小米\n\n消费电子 ·\n\n0.0\n0\nS级\n苹果\n\n消费电子 ·\n\n0.0\n0\nA级\n比亚迪\n\n汽车 ·\n\n0.0\n0\nS级\n特斯拉\n\n汽车 ·\n\n0.0\n0\nA级\n海尔\n\n家电 ·\n\n0.0\n0\nA级\n美的\n\n家电 ·\n\n0.0\n0\nA级\n格力\n\n家电 ·\n\n0.0\n0\nS级\n茅台\n\n食品 ·\n\n0.0\n0\nA级\n五粮液\n\n食品 ·\n\n0.0\n0\nS级\n阿里\n\n互联网 ·\n\n0.0\n0\nS级\n腾讯\n\n互联网 ·\n\n0.0\n0\nA级\n京东\n\n互联网 ·\n\n0.0\n0\nA级\n美团\n\n互联网 ·\n\n0.0\n0\nS级\n字节跳动\n\n互联网 ·\n\n0.0\n0\n热门榜单\n查看全部\n最新知识\n查看全部\n美食\n中国传统美食文化\n\n探索中国八大菜系的历史渊源与特色美食...\n\n美食文化研究中心\n0\n节气\n二十四节气之立春\n\n立春的由来、习俗与养生建议...\n\n传统文化研究中心\n0\n汽车\n新能源汽车技术解析\n\n深入了解电动汽车的三电系统与核心技术...\n\n汽车科技研究院\n0\n手机\n智能手机发展简史\n\n从功能机到智能机的演进历程与未来趋势...\n\n科技评论部\n0\n装修\n装修材料选购指南\n\n如何选择环保、耐用的装修材料，打造健康舒适的家居环境...\n\n家居研究院\n0\n\n© 2024 品牌智库 - 专业品牌数据平台\n\n关于我们|使用条款|隐私政策|联系我们",
+  "bodyTextPreview": "品牌智库\n首页\n品牌库\n榜单\n登录\n品牌对比\n\n多维度数据对比，直观分析品牌差异\n\n新建对比\n对比历史\n选择对比品牌（最多5个）\n搜索品牌名称...\n清空全部\n保存对比\n\n💡 从上方搜索框选择品牌，至少选择2个品牌开始对比\n\n🔍 支持按品牌名称模糊搜索\n\n📊 可对比品牌实力、产品质量、创新能力等5个维度\n\n快速对比（从历史记录选择）\n智能手机十大品牌\n2026-06-04 16:18\n华为\n小米\n苹果\n点击加载对比 →\n新能源汽车十大品牌\n2026-06-04 15:18\n比亚迪\n特斯拉\n点击加载对比 →\n白色家电十大品牌\n2026-06-04 14:18\n海尔\n美的\n格力\n点击加载对比 →\n白酒品牌十大排行榜\n2026-06-04 13:18\n茅台\n五粮液\n点击加载对比 →\n\n请至少选择2个品牌进行对比\n\n© 2024 品牌智库 - 专业品牌数据平台\n\n关于我们|使用条款|隐私政策|联系我们",
+  "apiBase": "http://127.0.0.1:59032/api",
+  "businessGoalPreview": "",
+  "apiResponses": [
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:59032/api/stats"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:59032/api/brands?pageSize=8&sortBy=score"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:59032/api/rankings/categories?pageSize=8"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:59032/api/knowledge?pageSize=8&sortBy=createdAt"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:59032/api/rankings/categories?pageSize=100"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:59032/api/stats"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:59032/api/brands?pageSize=8&sortBy=score"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:59032/api/rankings/categories?pageSize=8"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:59032/api/knowledge?pageSize=8&sortBy=createdAt"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:59032/api/rankings/categories?pageSize=100"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:59032/api/rankings/compare/history?limit=20"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:59032/api/stats"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:59032/api/brands?pageSize=8&sortBy=score"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:59032/api/rankings/categories?pageSize=8"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:59032/api/knowledge?pageSize=8&sortBy=createdAt"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:59032/api/brands/filters"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:59032/api/brands?page=1&pageSize=12&sortBy=score&keyword=&industry=&country=&level=&letter="
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:59032/api/brands?page=1&pageSize=12&sortBy=score&keyword=&industry=&country=&level=&letter=A"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:59032/api/stats"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:59032/api/brands?pageSize=8&sortBy=score"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:59032/api/rankings/categories?pageSize=8"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:59032/api/knowledge?pageSize=8&sortBy=createdAt"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:59032/api/brands/filters"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:59032/api/brands?page=1&pageSize=12&sortBy=score&keyword=&industry=&country=&level=&letter="
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:59032/api/brands/filters"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:59032/api/brands?page=1&pageSize=12&sortBy=score&keyword=&industry=&country=&level=&letter="
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:59032/api/brands?page=1&pageSize=12&sortBy=score&keyword=&industry=&country=&level=&letter=A"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:59032/api/rankings/categories?pageSize=100"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:59032/api/rankings/compare/history?limit=20"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:59032/api/rankings/categories?pageSize=100"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:59032/api/rankings/categories?pageSize=100"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:59032/api/rankings/compare/history?limit=20"
+    }
+  ],
+  "apiChecks": [
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59032/api/health",
+      "path": "/api/health",
+      "status": 200,
+      "ok": true,
+      "bodyPreview": "{\"status\":\"healthy\",\"timestamp\":\"2026-06-04T18:12:01.324Z\",\"port\":59032,\"database\":\"connected\"}"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59032/api/stats",
+      "path": "/api/stats",
+      "status": 200,
+      "ok": true,
+      "bodyPreview": "{\"brands\":15,\"topics\":5,\"rankings\":15,\"categories\":8,\"dataSources\":4,\"brandCount\":15,\"knowledgeCount\":5,\"rankingCount\":8,\"dataSourceCount\":4}"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59032/api/brands?pageSize=8&sortBy=score",
+      "path": "/api/brands?pageSize=8&sortBy=score",
+      "status": 200,
+      "ok": true,
+      "bodyPreview": "{\"data\":[{\"id\":1,\"name\":\"华为\",\"english_name\":\"Huawei\",\"logo_url\":\"https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=Huawei%20brand%20logo%20minimalist%20red%20color&image_size=square\",\"industry\":\"消费电子\",\"category\":\"手机\",\"region\":\"广东\",\"established_year\":1987,\"registered_capital\":null,\"legal_person\":null,\"unified_social_code\":null,\"website\":null,\"description\":\"全球领先的ICT基础设施和智能终端提供商\",\"level\":\"S\",\"first_letter\":\"H\",\"status\":\"active\",\"overall_score\":\"57.3\",\"sales_volume\":6555,\"reputation_sc"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59032/api/rankings/categories?pageSize=8",
+      "path": "/api/rankings/categories?pageSize=8",
+      "status": 200,
+      "ok": true,
+      "bodyPreview": "[{\"id\":1,\"name\":\"智能手机十大品牌\",\"code\":\"smartphone_top10\",\"description\":\"中国智能手机市场品牌综合排名\",\"category_type\":\"top10\",\"icon\":null,\"sort_order\":0,\"is_active\":1,\"last_calculated_at\":null,\"ranking_count\":15,\"group\":\"top10\",\"brandCount\":15,\"viewCount\":15,\"updatedAt\":\"2026-06-04T18:12:01.340Z\"},{\"id\":2,\"name\":\"新能源汽车十大品牌\",\"code\":\"ev_top10\",\"description\":\"中国新能源汽车市场品牌综合排名\",\"category_type\":\"top10\",\"icon\":null,\"sort_order\":1,\"is_active\":1,\"last_calculated_at\":null,\"ranking_count\":0,\"group\":\"top10\",\"brandCount\":0,\"v"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59032/api/knowledge?pageSize=8&sortBy=createdAt",
+      "path": "/api/knowledge?pageSize=8&sortBy=createdAt",
+      "status": 200,
+      "ok": true,
+      "bodyPreview": "{\"data\":[{\"id\":2,\"title\":\"中国传统美食文化\",\"summary\":\"探索中国八大菜系的历史渊源与特色美食\",\"content\":\"中国饮食文化源远流长，八大菜系各具特色。鲁菜讲究调味醇正，川菜以麻辣鲜香见长，粤菜追求原汁原味，苏菜注重刀工火候...\",\"category\":\"美食\",\"tags\":\"美食,八大菜系,传统文化\",\"cover_image\":null,\"author\":\"美食文化研究中心\",\"view_count\":7343,\"like_count\":143,\"needs_review\":0,\"review_reason\":null,\"published_at\":\"2026-06-03T21:25:51.972Z\",\"created_at\":\"2026-06-03 21:25:51\",\"updated_at\":\"2026-06-03 21:25:51\"},{\"id\":3,\"title\":\"二十四节气之立春\",\"summary\":\"立春的由来、习俗与养生建议\",\"content\":\"立春是二十四节气之首，标志着春季的开始。这一天有咬春、打春牛、迎春等"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59032/api/rankings/categories?pageSize=100",
+      "path": "/api/rankings/categories?pageSize=100",
+      "status": 200,
+      "ok": true,
+      "bodyPreview": "[{\"id\":1,\"name\":\"智能手机十大品牌\",\"code\":\"smartphone_top10\",\"description\":\"中国智能手机市场品牌综合排名\",\"category_type\":\"top10\",\"icon\":null,\"sort_order\":0,\"is_active\":1,\"last_calculated_at\":null,\"ranking_count\":15,\"group\":\"top10\",\"brandCount\":15,\"viewCount\":15,\"updatedAt\":\"2026-06-04T18:12:01.345Z\"},{\"id\":2,\"name\":\"新能源汽车十大品牌\",\"code\":\"ev_top10\",\"description\":\"中国新能源汽车市场品牌综合排名\",\"category_type\":\"top10\",\"icon\":null,\"sort_order\":1,\"is_active\":1,\"last_calculated_at\":null,\"ranking_count\":0,\"group\":\"top10\",\"brandCount\":0,\"v"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59032/api/rankings/compare/history?limit=20",
+      "path": "/api/rankings/compare/history?limit=20",
+      "status": 200,
+      "ok": true,
+      "bodyPreview": "{\"data\":[{\"id\":1,\"user_id\":3,\"category_id\":1,\"brand_ids\":[1,2,3],\"comparison_data\":[{\"id\":1,\"name\":\"华为\",\"english_name\":\"Huawei\",\"logo_url\":\"https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=Huawei%20brand%20logo%20minimalist%20red%20color&image_size=square\",\"industry\":\"消费电子\",\"category\":\"手机\",\"region\":\"广东\",\"established_year\":1987,\"registered_capital\":null,\"legal_person\":null,\"unified_social_code\":null,\"website\":null,\"description\":\"全球领先的ICT基础设施和智能终端提供商\",\"level\":\"S\",\"first_letter\":\"H\","
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59032/api/brands/filters",
+      "path": "/api/brands/filters",
+      "status": 200,
+      "ok": true,
+      "bodyPreview": "{\"industries\":[\"互联网\",\"家电\",\"汽车\",\"消费电子\",\"食品\"],\"regions\":[\"北京\",\"四川\",\"山东\",\"广东\",\"浙江\",\"海外\",\"贵州\"],\"levels\":[\"A\",\"S\"],\"first_letters\":[\"A\",\"B\",\"G\",\"H\",\"J\",\"M\",\"P\",\"T\",\"W\",\"X\",\"Z\"]}"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59032/api/brands?page=1&pageSize=12&sortBy=score&keyword=&industry=&country=&level=&letter=",
+      "path": "/api/brands?page=1&pageSize=12&sortBy=score&keyword=&industry=&country=&level=&letter=",
+      "status": 200,
+      "ok": true,
+      "bodyPreview": "{\"data\":[{\"id\":1,\"name\":\"华为\",\"english_name\":\"Huawei\",\"logo_url\":\"https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=Huawei%20brand%20logo%20minimalist%20red%20color&image_size=square\",\"industry\":\"消费电子\",\"category\":\"手机\",\"region\":\"广东\",\"established_year\":1987,\"registered_capital\":null,\"legal_person\":null,\"unified_social_code\":null,\"website\":null,\"description\":\"全球领先的ICT基础设施和智能终端提供商\",\"level\":\"S\",\"first_letter\":\"H\",\"status\":\"active\",\"overall_score\":\"57.3\",\"sales_volume\":6555,\"reputation_sc"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59032/api/brands?page=1&pageSize=12&sortBy=score&keyword=&industry=&country=&level=&letter=A",
+      "path": "/api/brands?page=1&pageSize=12&sortBy=score&keyword=&industry=&country=&level=&letter=A",
+      "status": 200,
+      "ok": true,
+      "bodyPreview": "{\"data\":[{\"id\":1,\"name\":\"华为\",\"english_name\":\"Huawei\",\"logo_url\":\"https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=Huawei%20brand%20logo%20minimalist%20red%20color&image_size=square\",\"industry\":\"消费电子\",\"category\":\"手机\",\"region\":\"广东\",\"established_year\":1987,\"registered_capital\":null,\"legal_person\":null,\"unified_social_code\":null,\"website\":null,\"description\":\"全球领先的ICT基础设施和智能终端提供商\",\"level\":\"S\",\"first_letter\":\"H\",\"status\":\"active\",\"overall_score\":\"57.3\",\"sales_volume\":6555,\"reputation_sc"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59032/api/auth/me",
+      "path": "/api/auth/me",
+      "status": 200,
+      "ok": true,
+      "bodyPreview": "{\"user\":{\"id\":1,\"username\":\"admin\",\"role\":\"admin\",\"name\":\"admin\",\"createdAt\":\"2026-06-03 21:25:51\"},\"message\":\"品牌智库演示账号资料\"}"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59032/api/users/profile",
+      "path": "/api/users/profile",
+      "status": 200,
+      "ok": true,
+      "bodyPreview": "{\"user\":{\"id\":1,\"username\":\"admin\",\"role\":\"admin\",\"name\":\"admin\",\"createdAt\":\"2026-06-03 21:25:51\"},\"message\":\"品牌智库演示账号资料\"}"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59032/api/user/profile",
+      "path": "/api/user/profile",
+      "status": 200,
+      "ok": true,
+      "bodyPreview": "{\"user\":{\"id\":1,\"username\":\"admin\",\"role\":\"admin\",\"name\":\"admin\",\"createdAt\":\"2026-06-03 21:25:51\"},\"message\":\"品牌智库演示账号资料\"}"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59032/api/search?q=%E6%B5%8B%E8%AF%95",
+      "path": "/api/search?q=%E6%B5%8B%E8%AF%95",
+      "status": 200,
+      "ok": true,
+      "bodyPreview": "{\"keyword\":\"测试\",\"brands\":[],\"topics\":[],\"total\":0,\"message\":\"品牌与知识搜索结果\"}"
+    }
+  ],
+  "dialogs": [],
+  "consoleMessages": [
+    {
+      "type": "debug",
+      "text": "[vite] connecting...",
+      "location": {
+        "url": "http://127.0.0.1:49032/@vite/client",
+        "lineNumber": 494,
+        "columnNumber": 8
+      }
+    },
+    {
+      "type": "debug",
+      "text": "[vite] connected.",
+      "location": {
+        "url": "http://127.0.0.1:49032/@vite/client",
+        "lineNumber": 617,
+        "columnNumber": 14
+      }
+    },
+    {
+      "type": "debug",
+      "text": "[vite] connecting...",
+      "location": {
+        "url": "http://127.0.0.1:49032/@vite/client",
+        "lineNumber": 494,
+        "columnNumber": 8
+      }
+    },
+    {
+      "type": "debug",
+      "text": "[vite] connected.",
+      "location": {
+        "url": "http://127.0.0.1:49032/@vite/client",
+        "lineNumber": 617,
+        "columnNumber": 14
+      }
+    },
+    {
+      "type": "debug",
+      "text": "[vite] connecting...",
+      "location": {
+        "url": "http://127.0.0.1:49032/@vite/client",
+        "lineNumber": 494,
+        "columnNumber": 8
+      }
+    },
+    {
+      "type": "debug",
+      "text": "[vite] connected.",
+      "location": {
+        "url": "http://127.0.0.1:49032/@vite/client",
+        "lineNumber": 617,
+        "columnNumber": 14
+      }
+    },
+    {
+      "type": "debug",
+      "text": "[vite] connecting...",
+      "location": {
+        "url": "http://127.0.0.1:49032/@vite/client",
+        "lineNumber": 494,
+        "columnNumber": 8
+      }
+    },
+    {
+      "type": "debug",
+      "text": "[vite] connected.",
+      "location": {
+        "url": "http://127.0.0.1:49032/@vite/client",
+        "lineNumber": 617,
+        "columnNumber": 14
+      }
+    },
+    {
+      "type": "debug",
+      "text": "[vite] connecting...",
+      "location": {
+        "url": "http://127.0.0.1:49032/@vite/client",
+        "lineNumber": 494,
+        "columnNumber": 8
+      }
+    },
+    {
+      "type": "debug",
+      "text": "[vite] connected.",
+      "location": {
+        "url": "http://127.0.0.1:49032/@vite/client",
+        "lineNumber": 617,
+        "columnNumber": 14
+      }
+    },
+    {
+      "type": "debug",
+      "text": "[vite] connecting...",
+      "location": {
+        "url": "http://127.0.0.1:49032/@vite/client",
+        "lineNumber": 494,
+        "columnNumber": 8
+      }
+    },
+    {
+      "type": "debug",
+      "text": "[vite] connected.",
+      "location": {
+        "url": "http://127.0.0.1:49032/@vite/client",
+        "lineNumber": 617,
+        "columnNumber": 14
+      }
+    },
+    {
+      "type": "debug",
+      "text": "[vite] connecting...",
+      "location": {
+        "url": "http://127.0.0.1:49032/@vite/client",
+        "lineNumber": 494,
+        "columnNumber": 8
+      }
+    },
+    {
+      "type": "debug",
+      "text": "[vite] connected.",
+      "location": {
+        "url": "http://127.0.0.1:49032/@vite/client",
+        "lineNumber": 617,
+        "columnNumber": 14
+      }
+    },
+    {
+      "type": "debug",
+      "text": "[vite] connecting...",
+      "location": {
+        "url": "http://127.0.0.1:49032/@vite/client",
+        "lineNumber": 494,
+        "columnNumber": 8
+      }
+    },
+    {
+      "type": "debug",
+      "text": "[vite] connected.",
+      "location": {
+        "url": "http://127.0.0.1:49032/@vite/client",
+        "lineNumber": 617,
+        "columnNumber": 14
+      }
+    }
+  ],
+  "requestFailures": [],
+  "responseErrors": []
+}
