@@ -1,0 +1,1374 @@
+{
+  "ok": true,
+  "generatedAt": "2026-06-04T12:16:05.558Z",
+  "order": "may-89020",
+  "roundIndex": 6,
+  "captureId": "may-89020-codex-repair",
+  "url": "http://127.0.0.1:49020/",
+  "initialUrl": "http://127.0.0.1:49020/",
+  "finalUrl": "http://127.0.0.1:49020/",
+  "status": 200,
+  "title": "兼职招聘平台",
+  "initialTitle": "兼职招聘平台",
+  "navigationError": "",
+  "screenshotPath": "probe/codex-repair-20260604-1508/may-89020-codex-repair-frontend.png",
+  "screenshotPaths": [
+    "/Users/chen/Documents/trae_projects/local_projects/may-89020/probe/codex-repair-20260604-1508/may-89020-codex-repair-structure-01-首屏.png",
+    "/Users/chen/Documents/trae_projects/local_projects/may-89020/probe/codex-repair-20260604-1508/may-89020-codex-repair-structure-02-导航-控制面板.png",
+    "/Users/chen/Documents/trae_projects/local_projects/may-89020/probe/codex-repair-20260604-1508/may-89020-codex-repair-structure-03-操作-搜索筛选.png",
+    "/Users/chen/Documents/trae_projects/local_projects/may-89020/probe/codex-repair-20260604-1508/may-89020-codex-repair-structure-04-二层操作-搜索筛选-核验详情.png",
+    "/Users/chen/Documents/trae_projects/local_projects/may-89020/probe/codex-repair-20260604-1508/may-89020-codex-repair-structure-05-操作-订单提交.png"
+  ],
+  "issueTextPreview": "后台管理相关问题；购买/提交相关问题",
+  "targetReason": "后台管理相关问题；购买/提交相关问题",
+  "targetKind": "admin",
+  "targetMatched": true,
+  "targetActions": [
+    {
+      "action": "click",
+      "label": "后台管理相关问题",
+      "ok": false,
+      "error": "locator.click: Timeout 900ms exceeded.\nCall log:\n\u001b[2m  - waiting for getByRole('button', { name: /后台管理/ }).first()\u001b[22m\n\u001b[2m    - locator resolved to <button type=\"button\" class=\"ant-btn css-dev-only-do-not-override-mncu"
+    },
+    {
+      "action": "click",
+      "label": "后台管理相关问题",
+      "ok": false,
+      "error": "locator.click: Timeout 900ms exceeded.\nCall log:\n\u001b[2m  - waiting for locator('a,button,[role=\"button\"],[role=\"menuitem\"],[onclick],[tabindex]:not([tabindex=\"-1\"]),[class*=\"nav-item\" i],[class*=\"menu-item\" i],[class*=\"men"
+    },
+    {
+      "action": "click",
+      "label": "后台管理相关问题",
+      "ok": true
+    },
+    {
+      "action": "target-verify",
+      "label": "后台管理相关问题",
+      "ok": true,
+      "finalUrl": "http://127.0.0.1:49020/admin/dashboard"
+    }
+  ],
+  "authFlow": {
+    "detected": false,
+    "attempted": false,
+    "success": false,
+    "finalUrl": "http://127.0.0.1:49020/",
+    "message": "",
+    "actions": []
+  },
+  "businessAudit": {
+    "actions": [
+      {
+        "action": "click",
+        "label": "导航:控制面板",
+        "ok": false,
+        "error": "locator.click: Timeout 900ms exceeded.\nCall log:\n\u001b[2m  - waiting for locator('a,button,[role=\"button\"],[role=\"menuitem\"],[onclick],[tabindex]:not([tabindex=\"-1\"]),[class*=\"nav-item\" i],[class*=\"menu-item\" i],[class*=\"men"
+      },
+      {
+        "action": "click",
+        "label": "导航:控制面板",
+        "ok": true
+      },
+      {
+        "action": "click",
+        "label": "操作:搜索筛选",
+        "ok": true,
+        "result": {
+          "ok": true,
+          "matched": 1
+        }
+      },
+      {
+        "action": "click",
+        "label": "二层操作:搜索筛选:核验详情",
+        "ok": true,
+        "result": {
+          "ok": true,
+          "matched": 5
+        }
+      },
+      {
+        "action": "click",
+        "label": "关闭弹窗/抽屉",
+        "ok": true
+      },
+      {
+        "action": "click",
+        "label": "操作:订单提交",
+        "ok": true,
+        "result": {
+          "ok": true,
+          "matched": 1
+        }
+      }
+    ],
+    "snapshots": [
+      {
+        "label": "首屏",
+        "url": "http://127.0.0.1:49020/",
+        "title": "兼职招聘平台",
+        "headings": [],
+        "navLabels": [
+          "控制面板 健康中心 学生运营 财务审计 岗位审核 仲裁管理",
+          "控制面板",
+          "dashboard",
+          "健康中心",
+          "heart",
+          "学生运营",
+          "team",
+          "财务审计",
+          "audit",
+          "岗位审核",
+          "flag",
+          "仲裁管理",
+          "sound"
+        ],
+        "buttons": [
+          "个人中心",
+          "搜索筛选",
+          "订单提交",
+          "后台管理",
+          "搜索/筛选岗位",
+          "个人中心/我的订单",
+          "发布岗位/提交需求",
+          "后台管理/运营审核",
+          "筛 选",
+          "运营后台",
+          "审核岗位",
+          "举报",
+          "核验详情"
+        ],
+        "links": [],
+        "inputs": [
+          {
+            "tag": "input",
+            "type": "search",
+            "placeholder": "搜索岗位关键词",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "search",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "search",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          }
+        ],
+        "tables": [],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "兼职招聘平台控制面板健康中心学生运营财务审计岗位审核仲裁管理兼职招聘平台个人中心搜索筛选订单提交后台管理演示管理员管理员搜索/筛选岗位个人中心/我的订单发布岗位/提交需求后台管理/运营审核全部分类不限筛 选运营后台Frontend Development InternTechnology招聘中已核验已审核 35元/时 Zhongguancun, Beijing Mon-Fri 9:00-18:00 浏览 0次雇主：StarTech Co., Ltd. 斗米保障T+0结算 一键确认审核岗位举报核验详情UI Design AssistantDesign招聘中已核验已审核 40元/时 Haidian, Beijing Sat-Sun 10:00-16:00 浏览 0次雇主：StarTech Co., Ltd. 斗米保障T+0结算 一键确认审核岗位举报核验详情Data Entry ClerkClerical招聘中已核验已审核 25元/时 Chaoyang, Beijing Mon-Wed-Fri 14:00-18:00 浏览 0次雇主：CloudWave Inc. 斗米保障T+0结算 一键确认审核岗位举报核验详情English TranslatorTranslation招聘中已核验已审核 50元/时 Remote Remote flexible hours 浏览 0次雇主：CloudWave Inc. 斗米保障T+0结算 一键确认审核岗位举报核验详情Coffee Shop BaristaFood & Beverage招聘中已核验已审核 22元/时 Xidan, Beijing Weekday mornings 7:00-11:00 浏览 0次雇主：StarTech Co., Ltd. 斗米保障T+0结算 一键确认审核岗位举报核验详情",
+        "layout": {
+          "viewportWidth": 1504,
+          "viewportHeight": 1106,
+          "scrollWidth": 1504,
+          "scrollHeight": 1106,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89020-codex-repair-structure-01-首屏",
+          "label": "首屏",
+          "finalUrl": "http://127.0.0.1:49020/",
+          "title": "兼职招聘平台",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89020/probe/codex-repair-20260604-1508/may-89020-codex-repair-structure-01-首屏.json",
+          "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89020/probe/codex-repair-20260604-1508/may-89020-codex-repair-structure-01-首屏.png",
+          "elementCount": 576,
+          "interactiveCount": 37,
+          "interactiveLabels": [
+            "控制面板 健康中心 学生运营 财务审计 岗位审核 仲裁管理",
+            "控制面板",
+            "健康中心",
+            "学生运营",
+            "财务审计",
+            "岗位审核",
+            "仲裁管理",
+            "个人中心",
+            "搜索筛选",
+            "订单提交",
+            "后台管理",
+            "搜索/筛选岗位",
+            "个人中心/我的订单",
+            "发布岗位/提交需求",
+            "后台管理/运营审核",
+            "搜索岗位关键词",
+            "筛 选",
+            "运营后台",
+            "审核岗位",
+            "举报",
+            "核验详情"
+          ]
+        }
+      },
+      {
+        "label": "导航:控制面板",
+        "url": "http://127.0.0.1:49020/admin/dashboard",
+        "title": "兼职招聘平台",
+        "headings": [],
+        "navLabels": [
+          "控制面板 健康中心 学生运营 财务审计 岗位审核 仲裁管理",
+          "控制面板",
+          "dashboard",
+          "健康中心",
+          "heart",
+          "学生运营",
+          "team",
+          "财务审计",
+          "audit",
+          "岗位审核",
+          "flag",
+          "仲裁管理",
+          "sound"
+        ],
+        "buttons": [
+          "个人中心",
+          "搜索筛选",
+          "订单提交",
+          "后台管理"
+        ],
+        "links": [],
+        "inputs": [],
+        "tables": [],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "兼职招聘平台控制面板健康中心学生运营财务审计岗位审核仲裁管理兼职招聘平台个人中心搜索筛选订单提交后台管理演示管理员管理员控制面板总用户数0兼职者 0雇主 0总岗位数0在招 0总订单数0进行中 0已完成 0平台收入(服务费)0.00 无争议运营后台入口健康中心岗位存活率·履约时长·投诉聚类岗位审核待审核岗位·审核记录学生运营假期预测·校园大使·学分认证财务审计资金池·提现·异常拦截仲裁管理争议处理·先行赔付",
+        "layout": {
+          "viewportWidth": 1536,
+          "viewportHeight": 1106,
+          "scrollWidth": 1536,
+          "scrollHeight": 1106,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89020-codex-repair-structure-02-导航-控制面板",
+          "label": "导航:控制面板",
+          "finalUrl": "http://127.0.0.1:49020/admin/dashboard",
+          "title": "兼职招聘平台",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89020/probe/codex-repair-20260604-1508/may-89020-codex-repair-structure-02-导航-控制面板.json",
+          "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89020/probe/codex-repair-20260604-1508/may-89020-codex-repair-structure-02-导航-控制面板.png",
+          "elementCount": 184,
+          "interactiveCount": 12,
+          "interactiveLabels": [
+            "控制面板 健康中心 学生运营 财务审计 岗位审核 仲裁管理",
+            "控制面板",
+            "健康中心",
+            "学生运营",
+            "财务审计",
+            "岗位审核",
+            "仲裁管理",
+            "个人中心",
+            "搜索筛选",
+            "订单提交",
+            "后台管理"
+          ]
+        }
+      },
+      {
+        "label": "操作:搜索筛选",
+        "url": "http://127.0.0.1:49020/",
+        "title": "兼职招聘平台",
+        "headings": [],
+        "navLabels": [
+          "控制面板 健康中心 学生运营 财务审计 岗位审核 仲裁管理",
+          "控制面板",
+          "dashboard",
+          "健康中心",
+          "heart",
+          "学生运营",
+          "team",
+          "财务审计",
+          "audit",
+          "岗位审核",
+          "flag",
+          "仲裁管理",
+          "sound"
+        ],
+        "buttons": [
+          "个人中心",
+          "搜索筛选",
+          "订单提交",
+          "后台管理",
+          "搜索/筛选岗位",
+          "个人中心/我的订单",
+          "发布岗位/提交需求",
+          "后台管理/运营审核",
+          "筛 选",
+          "运营后台",
+          "审核岗位",
+          "举报",
+          "核验详情"
+        ],
+        "links": [],
+        "inputs": [
+          {
+            "tag": "input",
+            "type": "search",
+            "placeholder": "搜索岗位关键词",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "search",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "search",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          }
+        ],
+        "tables": [],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "兼职招聘平台控制面板健康中心学生运营财务审计岗位审核仲裁管理兼职招聘平台个人中心搜索筛选订单提交后台管理演示管理员管理员搜索/筛选岗位个人中心/我的订单发布岗位/提交需求后台管理/运营审核全部分类不限筛 选运营后台Frontend Development InternTechnology招聘中已核验已审核 35元/时 Zhongguancun, Beijing Mon-Fri 9:00-18:00 浏览 0次雇主：StarTech Co., Ltd. 斗米保障T+0结算 一键确认审核岗位举报核验详情UI Design AssistantDesign招聘中已核验已审核 40元/时 Haidian, Beijing Sat-Sun 10:00-16:00 浏览 0次雇主：StarTech Co., Ltd. 斗米保障T+0结算 一键确认审核岗位举报核验详情Data Entry ClerkClerical招聘中已核验已审核 25元/时 Chaoyang, Beijing Mon-Wed-Fri 14:00-18:00 浏览 0次雇主：CloudWave Inc. 斗米保障T+0结算 一键确认审核岗位举报核验详情English TranslatorTranslation招聘中已核验已审核 50元/时 Remote Remote flexible hours 浏览 0次雇主：CloudWave Inc. 斗米保障T+0结算 一键确认审核岗位举报核验详情Coffee Shop BaristaFood & Beverage招聘中已核验已审核 22元/时 Xidan, Beijing Weekday mornings 7:00-11:00 浏览 0次雇主：StarTech Co., Ltd. 斗米保障T+0结算 一键确认审核岗位举报核验详情",
+        "layout": {
+          "viewportWidth": 1568,
+          "viewportHeight": 1106,
+          "scrollWidth": 1568,
+          "scrollHeight": 1106,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89020-codex-repair-structure-03-操作-搜索筛选",
+          "label": "操作:搜索筛选",
+          "finalUrl": "http://127.0.0.1:49020/",
+          "title": "兼职招聘平台",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89020/probe/codex-repair-20260604-1508/may-89020-codex-repair-structure-03-操作-搜索筛选.json",
+          "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89020/probe/codex-repair-20260604-1508/may-89020-codex-repair-structure-03-操作-搜索筛选.png",
+          "elementCount": 576,
+          "interactiveCount": 37,
+          "interactiveLabels": [
+            "控制面板 健康中心 学生运营 财务审计 岗位审核 仲裁管理",
+            "控制面板",
+            "健康中心",
+            "学生运营",
+            "财务审计",
+            "岗位审核",
+            "仲裁管理",
+            "个人中心",
+            "搜索筛选",
+            "订单提交",
+            "后台管理",
+            "搜索/筛选岗位",
+            "个人中心/我的订单",
+            "发布岗位/提交需求",
+            "后台管理/运营审核",
+            "搜索岗位关键词",
+            "筛 选",
+            "运营后台",
+            "审核岗位",
+            "举报",
+            "核验详情"
+          ]
+        }
+      },
+      {
+        "label": "二层操作:搜索筛选->核验详情",
+        "url": "http://127.0.0.1:49020/",
+        "title": "兼职招聘平台",
+        "headings": [],
+        "navLabels": [
+          "控制面板 健康中心 学生运营 财务审计 岗位审核 仲裁管理",
+          "控制面板",
+          "dashboard",
+          "健康中心",
+          "heart",
+          "学生运营",
+          "team",
+          "财务审计",
+          "audit",
+          "岗位审核",
+          "flag",
+          "仲裁管理",
+          "sound"
+        ],
+        "buttons": [
+          "个人中心",
+          "搜索筛选",
+          "订单提交",
+          "后台管理",
+          "搜索/筛选岗位",
+          "个人中心/我的订单",
+          "发布岗位/提交需求",
+          "后台管理/运营审核",
+          "筛 选",
+          "运营后台",
+          "审核岗位",
+          "举报",
+          "核验详情",
+          "Close",
+          "关 闭"
+        ],
+        "links": [],
+        "inputs": [
+          {
+            "tag": "input",
+            "type": "search",
+            "placeholder": "搜索岗位关键词",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "search",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "search",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          }
+        ],
+        "tables": [
+          {
+            "headers": [
+              "企业名称",
+              "核验状态",
+              "营业执照号",
+              "统一社会信用代码"
+            ],
+            "rowCount": 2,
+            "hasEmptyText": false,
+            "textPreview": "企业名称 StarTech Co., Ltd. 核验状态 已通过官方核验 营业执照号 BL20240001 统一社会信用代码 91110000MA000001DE"
+          }
+        ],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "兼职招聘平台控制面板健康中心学生运营财务审计岗位审核仲裁管理兼职招聘平台个人中心搜索筛选订单提交后台管理演示管理员管理员搜索/筛选岗位个人中心/我的订单发布岗位/提交需求后台管理/运营审核全部分类不限筛 选运营后台Frontend Development InternTechnology招聘中已核验已审核 35元/时 Zhongguancun, Beijing Mon-Fri 9:00-18:00 浏览 0次雇主：StarTech Co., Ltd. 斗米保障T+0结算 一键确认审核岗位举报核验详情UI Design AssistantDesign招聘中已核验已审核 40元/时 Haidian, Beijing Sat-Sun 10:00-16:00 浏览 0次雇主：StarTech Co., Ltd. 斗米保障T+0结算 一键确认审核岗位举报核验详情Data Entry ClerkClerical招聘中已核验已审核 25元/时 Chaoyang, Beijing Mon-Wed-Fri 14:00-18:00 浏览 0次雇主：CloudWave Inc. 斗米保障T+0结算 一键确认审核岗位举报核验详情English TranslatorTranslation招聘中已核验已审核 50元/时 Remote Remote flexible hours 浏览 0次雇主：CloudWave Inc. 斗米保障T+0结算 一键确认审核岗位举报核验详情Coffee Shop BaristaFood & Beverage招聘中已核验已审核 22元/时 Xidan, Beijing Weekday mornings 7:00-11:00 浏览 0次雇主：StarTech Co., Ltd. 斗米保障T+0结算 一键确认审核岗位举报核验详情 雇主营业执照核验详情企业名称StarTech Co., Ltd.核验状态 已通过官方核验营业执照号BL20240001统一社会信用代码91110000MA000001DE岗位发布频次限流月度发布限额20个/月近30天已发布3个剩余额度17个人工抽检记录rate_limit_review岗位发布频次限流、人工抽检、举报加权和复查记录已归档操作员: admin · 2026/6/4 18:15:00抽检Follow-up inspection: work conditions verified操作员: admin · 2024/6/1 09:30:00审核Audit result: approved, job meets all requirements操作员: admin · 2024/5/28 11:00:00抽检Initial job inspection passed操作员: admin · 2024/5/28 10:00:00举报加权下架记录待审核举报#1权重: 1/3 原因: 虚假岗位举报人: worker1 · 2026/6/4 12:02:32处理中举报#2权重: 2/3 原因: 薪资描述不一致举报人: worker1 · 2026/6/4 12:02:32已处理举报#3权重: 3/3 (触发自动下架)原因: 联系不上雇主举报人: worker1 · 2026/6/4 12:02:32复查记录下架复查复查中复查原因: 薪资描述不一致举报人: worker1 · 2026/6/4 12:02:32下架复查复查完成复查原因: 联系不上雇主举报人: worker1 · 2026/6/4 12:02:32平台核验说明斗米平台对企业营业执照进行人工核验和定期抽检，确保雇主身份真实。举报累计3次自动触发下架机制，平台运营将在24小时内复查。如发现虚假信息，请立即举报。关 闭",
+        "layout": {
+          "viewportWidth": 1600,
+          "viewportHeight": 1106,
+          "scrollWidth": 1600,
+          "scrollHeight": 1106,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89020-codex-repair-structure-04-二层操作-搜索筛选-核验详情",
+          "label": "二层操作:搜索筛选->核验详情",
+          "finalUrl": "http://127.0.0.1:49020/",
+          "title": "兼职招聘平台",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89020/probe/codex-repair-20260604-1508/may-89020-codex-repair-structure-04-二层操作-搜索筛选-核验详情.json",
+          "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89020/probe/codex-repair-20260604-1508/may-89020-codex-repair-structure-04-二层操作-搜索筛选-核验详情.png",
+          "elementCount": 797,
+          "interactiveCount": 41,
+          "interactiveLabels": [
+            "控制面板 健康中心 学生运营 财务审计 岗位审核 仲裁管理",
+            "控制面板",
+            "健康中心",
+            "学生运营",
+            "财务审计",
+            "岗位审核",
+            "仲裁管理",
+            "个人中心",
+            "搜索筛选",
+            "订单提交",
+            "后台管理",
+            "搜索/筛选岗位",
+            "个人中心/我的订单",
+            "发布岗位/提交需求",
+            "后台管理/运营审核",
+            "搜索岗位关键词",
+            "筛 选",
+            "运营后台",
+            "审核岗位",
+            "举报",
+            "核验详情",
+            "雇主营业执照核验详情 企业名称 StarTech Co., Ltd. 核验状态 已通过官方核验 营业执照号 BL20240001 统一社会信用代码 91110000MA000001DE 岗位发布频次限流 月度发布限额 20个/月 近30天已发布 3个 剩余额度 17个 人工抽检记录 rate_limit_review 岗位发布频次限流、人工抽检、举报加权和复",
+            "Close",
+            "关 闭"
+          ]
+        }
+      },
+      {
+        "label": "操作:订单提交",
+        "url": "http://127.0.0.1:49020/orders",
+        "title": "兼职招聘平台",
+        "headings": [],
+        "navLabels": [
+          "岗位列表 个人资料 我的订单 消息中心 结算中心 权益保障",
+          "岗位列表",
+          "home",
+          "个人资料",
+          "user",
+          "我的订单",
+          "shopping",
+          "消息中心",
+          "message",
+          "结算中心",
+          "dollar",
+          "权益保障",
+          "safety-certificate"
+        ],
+        "buttons": [
+          "个人中心",
+          "搜索筛选",
+          "订单提交",
+          "后台管理",
+          "详情"
+        ],
+        "links": [],
+        "inputs": [],
+        "tables": [
+          {
+            "headers": [
+              "订单编号",
+              "岗位名称",
+              "雇主",
+              "时薪",
+              "状态",
+              "创建时间",
+              "操作"
+            ],
+            "rowCount": 3,
+            "hasEmptyText": false,
+            "textPreview": "订单编号 岗位名称 雇主 时薪 状态 创建时间 操作 1 Frontend Development Intern employer1 35元/时 工作中 2026/6/4 12:02:32 详情 2 UI Design Assistant employer1 40元/时 已申请 2026/6/4 12:02:32 详情 3 Data Entry Clerk employer2 25元/时 已完成 2026/6/4 12:02:32 详情"
+          }
+        ],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "兼职招聘平台岗位列表个人资料我的订单消息中心结算中心权益保障兼职招聘平台个人中心搜索筛选订单提交后台管理演示求职者求职者我的订单订单编号岗位名称雇主时薪状态创建时间操作1Frontend Development Internemployer135元/时工作中2026/6/4 12:02:32详情2UI Design Assistantemployer140元/时已申请2026/6/4 12:02:32详情3Data Entry Clerkemployer225元/时已完成2026/6/4 12:02:32详情共 3 条1",
+        "layout": {
+          "viewportWidth": 1632,
+          "viewportHeight": 1106,
+          "scrollWidth": 1632,
+          "scrollHeight": 1106,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89020-codex-repair-structure-05-操作-订单提交",
+          "label": "操作:订单提交",
+          "finalUrl": "http://127.0.0.1:49020/orders",
+          "title": "兼职招聘平台",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89020/probe/codex-repair-20260604-1508/may-89020-codex-repair-structure-05-操作-订单提交.json",
+          "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89020/probe/codex-repair-20260604-1508/may-89020-codex-repair-structure-05-操作-订单提交.png",
+          "elementCount": 162,
+          "interactiveCount": 19,
+          "interactiveLabels": [
+            "岗位列表 个人资料 我的订单 消息中心 结算中心 权益保障",
+            "岗位列表",
+            "个人资料",
+            "我的订单",
+            "消息中心",
+            "结算中心",
+            "权益保障",
+            "个人中心",
+            "搜索筛选",
+            "订单提交",
+            "后台管理",
+            "详情",
+            "1"
+          ]
+        }
+      }
+    ],
+    "findings": [],
+    "actionHints": [],
+    "emptyPages": [],
+    "overflowPages": [],
+    "blankPages": [],
+    "apiFailurePaths": [],
+    "goalTerms": [],
+    "clickedActionDescriptors": [
+      {
+        "nav": "控制面板",
+        "label": "搜索筛选",
+        "ordinal": 0,
+        "unsafe": false
+      },
+      {
+        "nav": "控制面板",
+        "label": "搜索筛选->核验详情",
+        "ordinal": 0,
+        "secondary": true,
+        "unsafe": false
+      },
+      {
+        "nav": "控制面板",
+        "label": "订单提交",
+        "ordinal": 0,
+        "unsafe": false
+      }
+    ],
+    "secondaryActionClicks": 1,
+    "structureCaptures": [
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89020-codex-repair-structure-01-首屏",
+        "label": "首屏",
+        "finalUrl": "http://127.0.0.1:49020/",
+        "title": "兼职招聘平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89020/probe/codex-repair-20260604-1508/may-89020-codex-repair-structure-01-首屏.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89020/probe/codex-repair-20260604-1508/may-89020-codex-repair-structure-01-首屏.png",
+        "elementCount": 576,
+        "interactiveCount": 37,
+        "interactiveLabels": [
+          "控制面板 健康中心 学生运营 财务审计 岗位审核 仲裁管理",
+          "控制面板",
+          "健康中心",
+          "学生运营",
+          "财务审计",
+          "岗位审核",
+          "仲裁管理",
+          "个人中心",
+          "搜索筛选",
+          "订单提交",
+          "后台管理",
+          "搜索/筛选岗位",
+          "个人中心/我的订单",
+          "发布岗位/提交需求",
+          "后台管理/运营审核",
+          "搜索岗位关键词",
+          "筛 选",
+          "运营后台",
+          "审核岗位",
+          "举报",
+          "核验详情"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89020-codex-repair-structure-02-导航-控制面板",
+        "label": "导航:控制面板",
+        "finalUrl": "http://127.0.0.1:49020/admin/dashboard",
+        "title": "兼职招聘平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89020/probe/codex-repair-20260604-1508/may-89020-codex-repair-structure-02-导航-控制面板.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89020/probe/codex-repair-20260604-1508/may-89020-codex-repair-structure-02-导航-控制面板.png",
+        "elementCount": 184,
+        "interactiveCount": 12,
+        "interactiveLabels": [
+          "控制面板 健康中心 学生运营 财务审计 岗位审核 仲裁管理",
+          "控制面板",
+          "健康中心",
+          "学生运营",
+          "财务审计",
+          "岗位审核",
+          "仲裁管理",
+          "个人中心",
+          "搜索筛选",
+          "订单提交",
+          "后台管理"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89020-codex-repair-structure-03-操作-搜索筛选",
+        "label": "操作:搜索筛选",
+        "finalUrl": "http://127.0.0.1:49020/",
+        "title": "兼职招聘平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89020/probe/codex-repair-20260604-1508/may-89020-codex-repair-structure-03-操作-搜索筛选.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89020/probe/codex-repair-20260604-1508/may-89020-codex-repair-structure-03-操作-搜索筛选.png",
+        "elementCount": 576,
+        "interactiveCount": 37,
+        "interactiveLabels": [
+          "控制面板 健康中心 学生运营 财务审计 岗位审核 仲裁管理",
+          "控制面板",
+          "健康中心",
+          "学生运营",
+          "财务审计",
+          "岗位审核",
+          "仲裁管理",
+          "个人中心",
+          "搜索筛选",
+          "订单提交",
+          "后台管理",
+          "搜索/筛选岗位",
+          "个人中心/我的订单",
+          "发布岗位/提交需求",
+          "后台管理/运营审核",
+          "搜索岗位关键词",
+          "筛 选",
+          "运营后台",
+          "审核岗位",
+          "举报",
+          "核验详情"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89020-codex-repair-structure-04-二层操作-搜索筛选-核验详情",
+        "label": "二层操作:搜索筛选->核验详情",
+        "finalUrl": "http://127.0.0.1:49020/",
+        "title": "兼职招聘平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89020/probe/codex-repair-20260604-1508/may-89020-codex-repair-structure-04-二层操作-搜索筛选-核验详情.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89020/probe/codex-repair-20260604-1508/may-89020-codex-repair-structure-04-二层操作-搜索筛选-核验详情.png",
+        "elementCount": 797,
+        "interactiveCount": 41,
+        "interactiveLabels": [
+          "控制面板 健康中心 学生运营 财务审计 岗位审核 仲裁管理",
+          "控制面板",
+          "健康中心",
+          "学生运营",
+          "财务审计",
+          "岗位审核",
+          "仲裁管理",
+          "个人中心",
+          "搜索筛选",
+          "订单提交",
+          "后台管理",
+          "搜索/筛选岗位",
+          "个人中心/我的订单",
+          "发布岗位/提交需求",
+          "后台管理/运营审核",
+          "搜索岗位关键词",
+          "筛 选",
+          "运营后台",
+          "审核岗位",
+          "举报",
+          "核验详情",
+          "雇主营业执照核验详情 企业名称 StarTech Co., Ltd. 核验状态 已通过官方核验 营业执照号 BL20240001 统一社会信用代码 91110000MA000001DE 岗位发布频次限流 月度发布限额 20个/月 近30天已发布 3个 剩余额度 17个 人工抽检记录 rate_limit_review 岗位发布频次限流、人工抽检、举报加权和复",
+          "Close",
+          "关 闭"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89020-codex-repair-structure-05-操作-订单提交",
+        "label": "操作:订单提交",
+        "finalUrl": "http://127.0.0.1:49020/orders",
+        "title": "兼职招聘平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89020/probe/codex-repair-20260604-1508/may-89020-codex-repair-structure-05-操作-订单提交.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89020/probe/codex-repair-20260604-1508/may-89020-codex-repair-structure-05-操作-订单提交.png",
+        "elementCount": 162,
+        "interactiveCount": 19,
+        "interactiveLabels": [
+          "岗位列表 个人资料 我的订单 消息中心 结算中心 权益保障",
+          "岗位列表",
+          "个人资料",
+          "我的订单",
+          "消息中心",
+          "结算中心",
+          "权益保障",
+          "个人中心",
+          "搜索筛选",
+          "订单提交",
+          "后台管理",
+          "详情",
+          "1"
+        ]
+      }
+    ],
+    "representativeScreenshotUrl": "http://127.0.0.1:49020/",
+    "representativeScreenshotLabel": "首屏"
+  },
+  "websiteStructureCapture": {
+    "module": "website_structure_capture",
+    "captureCount": 5,
+    "captures": [
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89020-codex-repair-structure-01-首屏",
+        "label": "首屏",
+        "finalUrl": "http://127.0.0.1:49020/",
+        "title": "兼职招聘平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89020/probe/codex-repair-20260604-1508/may-89020-codex-repair-structure-01-首屏.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89020/probe/codex-repair-20260604-1508/may-89020-codex-repair-structure-01-首屏.png",
+        "elementCount": 576,
+        "interactiveCount": 37,
+        "interactiveLabels": [
+          "控制面板 健康中心 学生运营 财务审计 岗位审核 仲裁管理",
+          "控制面板",
+          "健康中心",
+          "学生运营",
+          "财务审计",
+          "岗位审核",
+          "仲裁管理",
+          "个人中心",
+          "搜索筛选",
+          "订单提交",
+          "后台管理",
+          "搜索/筛选岗位",
+          "个人中心/我的订单",
+          "发布岗位/提交需求",
+          "后台管理/运营审核",
+          "搜索岗位关键词",
+          "筛 选",
+          "运营后台",
+          "审核岗位",
+          "举报",
+          "核验详情"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89020-codex-repair-structure-02-导航-控制面板",
+        "label": "导航:控制面板",
+        "finalUrl": "http://127.0.0.1:49020/admin/dashboard",
+        "title": "兼职招聘平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89020/probe/codex-repair-20260604-1508/may-89020-codex-repair-structure-02-导航-控制面板.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89020/probe/codex-repair-20260604-1508/may-89020-codex-repair-structure-02-导航-控制面板.png",
+        "elementCount": 184,
+        "interactiveCount": 12,
+        "interactiveLabels": [
+          "控制面板 健康中心 学生运营 财务审计 岗位审核 仲裁管理",
+          "控制面板",
+          "健康中心",
+          "学生运营",
+          "财务审计",
+          "岗位审核",
+          "仲裁管理",
+          "个人中心",
+          "搜索筛选",
+          "订单提交",
+          "后台管理"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89020-codex-repair-structure-03-操作-搜索筛选",
+        "label": "操作:搜索筛选",
+        "finalUrl": "http://127.0.0.1:49020/",
+        "title": "兼职招聘平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89020/probe/codex-repair-20260604-1508/may-89020-codex-repair-structure-03-操作-搜索筛选.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89020/probe/codex-repair-20260604-1508/may-89020-codex-repair-structure-03-操作-搜索筛选.png",
+        "elementCount": 576,
+        "interactiveCount": 37,
+        "interactiveLabels": [
+          "控制面板 健康中心 学生运营 财务审计 岗位审核 仲裁管理",
+          "控制面板",
+          "健康中心",
+          "学生运营",
+          "财务审计",
+          "岗位审核",
+          "仲裁管理",
+          "个人中心",
+          "搜索筛选",
+          "订单提交",
+          "后台管理",
+          "搜索/筛选岗位",
+          "个人中心/我的订单",
+          "发布岗位/提交需求",
+          "后台管理/运营审核",
+          "搜索岗位关键词",
+          "筛 选",
+          "运营后台",
+          "审核岗位",
+          "举报",
+          "核验详情"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89020-codex-repair-structure-04-二层操作-搜索筛选-核验详情",
+        "label": "二层操作:搜索筛选->核验详情",
+        "finalUrl": "http://127.0.0.1:49020/",
+        "title": "兼职招聘平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89020/probe/codex-repair-20260604-1508/may-89020-codex-repair-structure-04-二层操作-搜索筛选-核验详情.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89020/probe/codex-repair-20260604-1508/may-89020-codex-repair-structure-04-二层操作-搜索筛选-核验详情.png",
+        "elementCount": 797,
+        "interactiveCount": 41,
+        "interactiveLabels": [
+          "控制面板 健康中心 学生运营 财务审计 岗位审核 仲裁管理",
+          "控制面板",
+          "健康中心",
+          "学生运营",
+          "财务审计",
+          "岗位审核",
+          "仲裁管理",
+          "个人中心",
+          "搜索筛选",
+          "订单提交",
+          "后台管理",
+          "搜索/筛选岗位",
+          "个人中心/我的订单",
+          "发布岗位/提交需求",
+          "后台管理/运营审核",
+          "搜索岗位关键词",
+          "筛 选",
+          "运营后台",
+          "审核岗位",
+          "举报",
+          "核验详情",
+          "雇主营业执照核验详情 企业名称 StarTech Co., Ltd. 核验状态 已通过官方核验 营业执照号 BL20240001 统一社会信用代码 91110000MA000001DE 岗位发布频次限流 月度发布限额 20个/月 近30天已发布 3个 剩余额度 17个 人工抽检记录 rate_limit_review 岗位发布频次限流、人工抽检、举报加权和复",
+          "Close",
+          "关 闭"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89020-codex-repair-structure-05-操作-订单提交",
+        "label": "操作:订单提交",
+        "finalUrl": "http://127.0.0.1:49020/orders",
+        "title": "兼职招聘平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89020/probe/codex-repair-20260604-1508/may-89020-codex-repair-structure-05-操作-订单提交.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89020/probe/codex-repair-20260604-1508/may-89020-codex-repair-structure-05-操作-订单提交.png",
+        "elementCount": 162,
+        "interactiveCount": 19,
+        "interactiveLabels": [
+          "岗位列表 个人资料 我的订单 消息中心 结算中心 权益保障",
+          "岗位列表",
+          "个人资料",
+          "我的订单",
+          "消息中心",
+          "结算中心",
+          "权益保障",
+          "个人中心",
+          "搜索筛选",
+          "订单提交",
+          "后台管理",
+          "详情",
+          "1"
+        ]
+      }
+    ]
+  },
+  "screenshotMetrics": {
+    "width": 1664,
+    "height": 1108,
+    "scrollWidth": 1632,
+    "scrollHeight": 1108
+  },
+  "initialBodyTextPreview": "兼职招聘平台\n个人中心\n订单提交\n发布岗位\n后台管理\n登 录\n注 册\n搜索/筛选岗位\n个人中心/我的订单\n发布岗位/提交需求\n后台管理/运营审核\n全部分类\n不限\n筛 选\n个人中心 / 我的订单\n发布岗位 / 提交需求\n后台管理\nFrontend Development Intern\nTechnology\n招聘中\n已核验\n已审核\n 35元/时\n Zhongguancun, Beijing\n Mon-Fri 9:00-18:00\n 浏览 0次\n雇主：StarTech Co., Ltd.\n 斗米保障\nT+0结算\n 一键确认\n举报\n核验详情\nUI Design Assistant\nDesign\n招聘中\n已核验\n已审核\n 40元/时\n Haidian, Beijing\n Sat-Sun 10:00-16:00\n 浏览 0次\n雇主：StarTech Co., Ltd.\n 斗米保障\nT+0结算\n 一键确认\n举报\n核验详情\nData Entry Clerk\nClerical\n招聘中\n已核验\n已审核\n 25元/时\n Chaoyang, Beijing\n Mon-Wed-Fri 14:00-18:00\n 浏览 0次\n雇主：CloudWave Inc.\n 斗米保障\nT+0结算\n 一键确认\n举报\n核验详情\nEnglish Translator\nTranslation\n招聘中\n已核验\n已审核\n 50元/时\n Remote\n Remote flexible hours\n 浏览 0次\n雇主：CloudWave Inc.\n 斗米保障\nT+0结算\n 一键确认\n举报\n核验详情\nCoffee Shop Barista\nFood & Beverage\n招聘中\n已核验\n已审核\n 22元/时\n Xidan, Beijing\n Weekday mornings 7:00-11:00\n 浏览 0次\n雇主：StarTech Co., Ltd.\n 斗米保障\nT+0结算\n 一键确认\n举报\n核验详情",
+  "bodyTextPreview": "兼职招聘平台\n岗位列表\n个人资料\n我的订单\n消息中心\n结算中心\n权益保障\n兼职招聘平台\n个人中心\n搜索筛选\n订单提交\n后台管理\n演示求职者\n求职者\n搜索/筛选岗位\n个人中心/我的订单\n发布岗位/提交需求\n后台管理/运营审核\n全部分类\n不限\n筛 选",
+  "apiBase": "http://127.0.0.1:59020",
+  "businessGoalPreview": "",
+  "apiResponses": [
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49020/api/jobs?page=1&pageSize=12"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49020/api/jobs?page=1&pageSize=12"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49020/api/admin/dashboard"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49020/api/admin/dashboard"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49020/api/jobs?page=1&pageSize=12"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49020/api/jobs?page=1&pageSize=12"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49020/api/admin/dashboard"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49020/api/admin/dashboard"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49020/api/jobs?page=1&pageSize=12"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49020/api/jobs?page=1&pageSize=12"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49020/api/jobs/1/employer-verification"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49020/api/admin/dashboard"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49020/api/admin/dashboard"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49020/api/orders?page=1&pageSize=10"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49020/api/orders?page=1&pageSize=10"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49020/api/jobs?page=1&pageSize=12"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49020/api/jobs?page=1&pageSize=12"
+    }
+  ],
+  "apiChecks": [
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59020/api/health",
+      "path": "/api/health",
+      "status": 200,
+      "ok": true,
+      "bodyPreview": "{\"code\":0,\"data\":{\"status\":\"ok\",\"timestamp\":\"2026-06-04T12:16:01.623Z\"},\"message\":\"ok\"}"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59020/api/jobs?page=1&pageSize=12",
+      "path": "/api/jobs?page=1&pageSize=12",
+      "status": 200,
+      "ok": true,
+      "bodyPreview": "{\"code\":0,\"data\":{\"list\":[{\"id\":1,\"employer_id\":2,\"title\":\"Frontend Development Intern\",\"description\":\"Develop and maintain company website frontend using React\",\"work_time\":\"Mon-Fri 9:00-18:00\",\"work_location\":\"Zhongguancun, Beijing\",\"hourly_wage\":35,\"category\":\"Technology\",\"status\":\"open\",\"audit_status\":\"approved\",\"audit_note\":null,\"report_count\":0,\"view_count\":0,\"created_at\":\"2026-06-04 12:02:32\",\"updated_at\":\"2026-06-04 12:02:32\",\"employer_name\":\"employer1\",\"company_name\":\"StarTech Co., Ltd."
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59020/api/admin/dashboard",
+      "path": "/api/admin/dashboard",
+      "status": 200,
+      "ok": true,
+      "bodyPreview": "{\"code\":0,\"data\":{\"jobs\":[{\"id\":1,\"employer_id\":2,\"title\":\"Frontend Development Intern\",\"description\":\"Develop and maintain company website frontend using React\",\"work_time\":\"Mon-Fri 9:00-18:00\",\"work_location\":\"Zhongguancun, Beijing\",\"hourly_wage\":35,\"category\":\"Technology\",\"status\":\"open\",\"audit_status\":\"approved\",\"audit_note\":null,\"report_count\":0,\"view_count\":0,\"created_at\":\"2026-06-04 12:02:32\",\"updated_at\":\"2026-06-04 12:02:32\",\"employer_name\":\"employer1\",\"company_name\":\"StarTech Co., Ltd."
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59020/api/jobs/1/employer-verification",
+      "path": "/api/jobs/1/employer-verification",
+      "status": 200,
+      "ok": true,
+      "bodyPreview": "{\"code\":0,\"data\":{\"profile\":{\"id\":1,\"user_id\":2,\"company_name\":\"StarTech Co., Ltd.\",\"business_license\":\"BL20240001\",\"verified\":1,\"publish_limit\":20,\"publish_count\":3,\"created_at\":\"2026-06-04 12:02:32\",\"username\":\"employer1\",\"user_created_at\":\"2026-06-04 12:02:32\"},\"auditLogs\":[{\"id\":11,\"operator_id\":1,\"target_type\":\"employer\",\"target_id\":2,\"action\":\"inspect\",\"detail\":\"Employer profile inspection: company info validated\",\"created_at\":\"2024-05-27 10:00:00\",\"operator_name\":\"admin\"},{\"id\":10,\"operat"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59020/api/orders?page=1&pageSize=10",
+      "path": "/api/orders?page=1&pageSize=10",
+      "status": 200,
+      "ok": true,
+      "bodyPreview": "{\"code\":0,\"data\":[{\"id\":1,\"job_id\":1,\"worker_id\":4,\"employer_id\":2,\"status\":\"working\",\"work_start\":\"2026-06-04 09:00\",\"work_end\":\"2026-06-04 18:00\",\"check_in_lat\":39.9842,\"check_in_lng\":116.3074,\"check_in_time\":\"2026-06-04 08:55\",\"check_in_geofence\":1,\"employer_confirm_time\":null,\"dispute_status\":\"none\",\"dispute_reason\":null,\"created_at\":\"2026-06-04 12:02:32\",\"updated_at\":\"2026-06-04 12:06:17\",\"job_title\":\"Frontend Development Intern\",\"hourly_wage\":35,\"worker_name\":\"worker1\",\"employer_name\":\"emp"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59020/api/auth/me",
+      "path": "/api/auth/me",
+      "status": 200,
+      "ok": true,
+      "bodyPreview": "{\"code\":0,\"data\":{\"id\":1,\"username\":\"admin\",\"role\":\"admin\",\"phone\":\"13800000000\",\"avatar\":null},\"message\":\"ok\"}"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59020/api/users/profile",
+      "path": "/api/users/profile",
+      "status": 200,
+      "ok": true,
+      "bodyPreview": "{\"code\":0,\"data\":{\"id\":4,\"username\":\"worker1\",\"role\":\"worker\",\"phone\":\"13900000001\",\"avatar\":null},\"message\":\"ok\"}"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59020/api/user/profile",
+      "path": "/api/user/profile",
+      "status": 200,
+      "ok": true,
+      "bodyPreview": "{\"code\":0,\"data\":{\"id\":4,\"username\":\"worker1\",\"role\":\"worker\",\"phone\":\"13900000001\",\"avatar\":null},\"message\":\"ok\"}"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59020/api/search?q=%E6%B5%8B%E8%AF%95",
+      "path": "/api/search?q=%E6%B5%8B%E8%AF%95",
+      "status": 200,
+      "ok": true,
+      "bodyPreview": "{\"code\":0,\"data\":{\"list\":[{\"id\":1,\"employer_id\":2,\"title\":\"Frontend Development Intern\",\"description\":\"Develop and maintain company website frontend using React\",\"work_time\":\"Mon-Fri 9:00-18:00\",\"work_location\":\"Zhongguancun, Beijing\",\"hourly_wage\":35,\"category\":\"Technology\",\"status\":\"open\",\"audit_status\":\"approved\",\"audit_note\":null,\"report_count\":0,\"view_count\":0,\"created_at\":\"2026-06-04 12:02:32\",\"updated_at\":\"2026-06-04 12:02:32\",\"employer_name\":\"employer1\",\"company_name\":\"StarTech Co., Ltd."
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59020/api/admin/stats",
+      "path": "/api/admin/stats",
+      "status": 200,
+      "ok": true,
+      "bodyPreview": "{\"code\":0,\"data\":{\"totalUsers\":6,\"totalJobs\":5,\"totalOrders\":3,\"totalSettlements\":2,\"workers\":3,\"employers\":2},\"message\":\"ok\"}"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59020/api/products",
+      "path": "/api/products",
+      "status": 200,
+      "ok": true,
+      "bodyPreview": "{\"code\":0,\"data\":{\"products\":[{\"id\":1,\"employer_id\":2,\"title\":\"Frontend Development Intern\",\"description\":\"Develop and maintain company website frontend using React\",\"work_time\":\"Mon-Fri 9:00-18:00\",\"work_location\":\"Zhongguancun, Beijing\",\"hourly_wage\":35,\"category\":\"Technology\",\"status\":\"open\",\"audit_status\":\"approved\",\"audit_note\":null,\"report_count\":0,\"view_count\":0,\"created_at\":\"2026-06-04 12:02:32\",\"updated_at\":\"2026-06-04 12:02:32\",\"employer_name\":\"employer1\",\"company_name\":\"StarTech Co., "
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59020/api/orders",
+      "path": "/api/orders",
+      "status": 200,
+      "ok": true,
+      "bodyPreview": "{\"code\":0,\"data\":[{\"id\":1,\"job_id\":1,\"worker_id\":4,\"employer_id\":2,\"status\":\"working\",\"work_start\":\"2026-06-04 09:00\",\"work_end\":\"2026-06-04 18:00\",\"check_in_lat\":39.9842,\"check_in_lng\":116.3074,\"check_in_time\":\"2026-06-04 08:55\",\"check_in_geofence\":1,\"employer_confirm_time\":null,\"dispute_status\":\"none\",\"dispute_reason\":null,\"created_at\":\"2026-06-04 12:02:32\",\"updated_at\":\"2026-06-04 12:06:17\",\"job_title\":\"Frontend Development Intern\",\"hourly_wage\":35,\"worker_name\":\"worker1\",\"employer_name\":\"emp"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59020/api/cart",
+      "path": "/api/cart",
+      "status": 200,
+      "ok": true,
+      "bodyPreview": "{\"code\":0,\"data\":{\"items\":[],\"total\":0},\"message\":\"兼职招聘平台使用岗位申请流程，无购物车\"}"
+    }
+  ],
+  "dialogs": [],
+  "consoleMessages": [
+    {
+      "type": "debug",
+      "text": "[vite] connecting...",
+      "location": {
+        "url": "http://127.0.0.1:49020/@vite/client",
+        "lineNumber": 494,
+        "columnNumber": 8
+      }
+    },
+    {
+      "type": "debug",
+      "text": "[vite] connected.",
+      "location": {
+        "url": "http://127.0.0.1:49020/@vite/client",
+        "lineNumber": 617,
+        "columnNumber": 14
+      }
+    },
+    {
+      "type": "info",
+      "text": "%cDownload the React DevTools for a better development experience: https://reactjs.org/link/react-devtools font-weight:bold",
+      "location": {
+        "url": "http://127.0.0.1:49020/node_modules/.vite/deps/chunk-PJEEZAML.js?v=18aba840",
+        "lineNumber": 21550,
+        "columnNumber": 24
+      }
+    },
+    {
+      "type": "warning",
+      "text": "⚠️ React Router Future Flag Warning: React Router will begin wrapping state updates in `React.startTransition` in v7. You can use the `v7_startTransition` future flag to opt-in early. For more information, see https://reactrouter.com/v6/upgrading/future#v7_starttransition.",
+      "location": {
+        "url": "http://127.0.0.1:49020/node_modules/.vite/deps/react-router-dom.js?v=18aba840",
+        "lineNumber": 4426,
+        "columnNumber": 12
+      }
+    },
+    {
+      "type": "warning",
+      "text": "⚠️ React Router Future Flag Warning: Relative route resolution within Splat routes is changing in v7. You can use the `v7_relativeSplatPath` future flag to opt-in early. For more information, see https://reactrouter.com/v6/upgrading/future#v7_relativesplatpath.",
+      "location": {
+        "url": "http://127.0.0.1:49020/node_modules/.vite/deps/react-router-dom.js?v=18aba840",
+        "lineNumber": 4426,
+        "columnNumber": 12
+      }
+    },
+    {
+      "type": "debug",
+      "text": "[vite] connecting...",
+      "location": {
+        "url": "http://127.0.0.1:49020/@vite/client",
+        "lineNumber": 494,
+        "columnNumber": 8
+      }
+    },
+    {
+      "type": "debug",
+      "text": "[vite] connected.",
+      "location": {
+        "url": "http://127.0.0.1:49020/@vite/client",
+        "lineNumber": 617,
+        "columnNumber": 14
+      }
+    },
+    {
+      "type": "info",
+      "text": "%cDownload the React DevTools for a better development experience: https://reactjs.org/link/react-devtools font-weight:bold",
+      "location": {
+        "url": "http://127.0.0.1:49020/node_modules/.vite/deps/chunk-PJEEZAML.js?v=18aba840",
+        "lineNumber": 21550,
+        "columnNumber": 24
+      }
+    },
+    {
+      "type": "warning",
+      "text": "⚠️ React Router Future Flag Warning: React Router will begin wrapping state updates in `React.startTransition` in v7. You can use the `v7_startTransition` future flag to opt-in early. For more information, see https://reactrouter.com/v6/upgrading/future#v7_starttransition.",
+      "location": {
+        "url": "http://127.0.0.1:49020/node_modules/.vite/deps/react-router-dom.js?v=18aba840",
+        "lineNumber": 4426,
+        "columnNumber": 12
+      }
+    },
+    {
+      "type": "warning",
+      "text": "⚠️ React Router Future Flag Warning: Relative route resolution within Splat routes is changing in v7. You can use the `v7_relativeSplatPath` future flag to opt-in early. For more information, see https://reactrouter.com/v6/upgrading/future#v7_relativesplatpath.",
+      "location": {
+        "url": "http://127.0.0.1:49020/node_modules/.vite/deps/react-router-dom.js?v=18aba840",
+        "lineNumber": 4426,
+        "columnNumber": 12
+      }
+    },
+    {
+      "type": "debug",
+      "text": "[vite] connecting...",
+      "location": {
+        "url": "http://127.0.0.1:49020/@vite/client",
+        "lineNumber": 494,
+        "columnNumber": 8
+      }
+    },
+    {
+      "type": "debug",
+      "text": "[vite] connected.",
+      "location": {
+        "url": "http://127.0.0.1:49020/@vite/client",
+        "lineNumber": 617,
+        "columnNumber": 14
+      }
+    },
+    {
+      "type": "info",
+      "text": "%cDownload the React DevTools for a better development experience: https://reactjs.org/link/react-devtools font-weight:bold",
+      "location": {
+        "url": "http://127.0.0.1:49020/node_modules/.vite/deps/chunk-PJEEZAML.js?v=18aba840",
+        "lineNumber": 21550,
+        "columnNumber": 24
+      }
+    },
+    {
+      "type": "warning",
+      "text": "⚠️ React Router Future Flag Warning: React Router will begin wrapping state updates in `React.startTransition` in v7. You can use the `v7_startTransition` future flag to opt-in early. For more information, see https://reactrouter.com/v6/upgrading/future#v7_starttransition.",
+      "location": {
+        "url": "http://127.0.0.1:49020/node_modules/.vite/deps/react-router-dom.js?v=18aba840",
+        "lineNumber": 4426,
+        "columnNumber": 12
+      }
+    },
+    {
+      "type": "warning",
+      "text": "⚠️ React Router Future Flag Warning: Relative route resolution within Splat routes is changing in v7. You can use the `v7_relativeSplatPath` future flag to opt-in early. For more information, see https://reactrouter.com/v6/upgrading/future#v7_relativesplatpath.",
+      "location": {
+        "url": "http://127.0.0.1:49020/node_modules/.vite/deps/react-router-dom.js?v=18aba840",
+        "lineNumber": 4426,
+        "columnNumber": 12
+      }
+    },
+    {
+      "type": "debug",
+      "text": "[vite] connecting...",
+      "location": {
+        "url": "http://127.0.0.1:49020/@vite/client",
+        "lineNumber": 494,
+        "columnNumber": 8
+      }
+    },
+    {
+      "type": "debug",
+      "text": "[vite] connected.",
+      "location": {
+        "url": "http://127.0.0.1:49020/@vite/client",
+        "lineNumber": 617,
+        "columnNumber": 14
+      }
+    },
+    {
+      "type": "info",
+      "text": "%cDownload the React DevTools for a better development experience: https://reactjs.org/link/react-devtools font-weight:bold",
+      "location": {
+        "url": "http://127.0.0.1:49020/node_modules/.vite/deps/chunk-PJEEZAML.js?v=18aba840",
+        "lineNumber": 21550,
+        "columnNumber": 24
+      }
+    },
+    {
+      "type": "warning",
+      "text": "⚠️ React Router Future Flag Warning: React Router will begin wrapping state updates in `React.startTransition` in v7. You can use the `v7_startTransition` future flag to opt-in early. For more information, see https://reactrouter.com/v6/upgrading/future#v7_starttransition.",
+      "location": {
+        "url": "http://127.0.0.1:49020/node_modules/.vite/deps/react-router-dom.js?v=18aba840",
+        "lineNumber": 4426,
+        "columnNumber": 12
+      }
+    },
+    {
+      "type": "warning",
+      "text": "⚠️ React Router Future Flag Warning: Relative route resolution within Splat routes is changing in v7. You can use the `v7_relativeSplatPath` future flag to opt-in early. For more information, see https://reactrouter.com/v6/upgrading/future#v7_relativesplatpath.",
+      "location": {
+        "url": "http://127.0.0.1:49020/node_modules/.vite/deps/react-router-dom.js?v=18aba840",
+        "lineNumber": 4426,
+        "columnNumber": 12
+      }
+    },
+    {
+      "type": "debug",
+      "text": "[vite] connecting...",
+      "location": {
+        "url": "http://127.0.0.1:49020/@vite/client",
+        "lineNumber": 494,
+        "columnNumber": 8
+      }
+    },
+    {
+      "type": "info",
+      "text": "%cDownload the React DevTools for a better development experience: https://reactjs.org/link/react-devtools font-weight:bold",
+      "location": {
+        "url": "http://127.0.0.1:49020/node_modules/.vite/deps/chunk-PJEEZAML.js?v=18aba840",
+        "lineNumber": 21550,
+        "columnNumber": 24
+      }
+    },
+    {
+      "type": "warning",
+      "text": "⚠️ React Router Future Flag Warning: React Router will begin wrapping state updates in `React.startTransition` in v7. You can use the `v7_startTransition` future flag to opt-in early. For more information, see https://reactrouter.com/v6/upgrading/future#v7_starttransition.",
+      "location": {
+        "url": "http://127.0.0.1:49020/node_modules/.vite/deps/react-router-dom.js?v=18aba840",
+        "lineNumber": 4426,
+        "columnNumber": 12
+      }
+    },
+    {
+      "type": "warning",
+      "text": "⚠️ React Router Future Flag Warning: Relative route resolution within Splat routes is changing in v7. You can use the `v7_relativeSplatPath` future flag to opt-in early. For more information, see https://reactrouter.com/v6/upgrading/future#v7_relativesplatpath.",
+      "location": {
+        "url": "http://127.0.0.1:49020/node_modules/.vite/deps/react-router-dom.js?v=18aba840",
+        "lineNumber": 4426,
+        "columnNumber": 12
+      }
+    },
+    {
+      "type": "debug",
+      "text": "[vite] connected.",
+      "location": {
+        "url": "http://127.0.0.1:49020/@vite/client",
+        "lineNumber": 617,
+        "columnNumber": 14
+      }
+    }
+  ],
+  "requestFailures": [
+    {
+      "method": "POST",
+      "url": "http://127.0.0.1:49020/api/auth/login",
+      "errorText": "net::ERR_ABORTED"
+    },
+    {
+      "method": "POST",
+      "url": "http://127.0.0.1:49020/api/auth/login",
+      "errorText": "net::ERR_ABORTED"
+    }
+  ],
+  "responseErrors": []
+}

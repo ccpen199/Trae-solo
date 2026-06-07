@@ -1,0 +1,29 @@
+{
+  "order": "may-89020",
+  "ok": true,
+  "frontendUrl": "http://127.0.0.1:49020/",
+  "backendUrl": "http://127.0.0.1:59020",
+  "frontendStatus": 200,
+  "title": "兼职招聘平台",
+  "textLength": 836,
+  "apiChecks": [
+    {
+      "path": "/api/health",
+      "status": 200,
+      "ok": true,
+      "bodySample": "{\"code\":0,\"data\":{\"status\":\"ok\",\"timestamp\":\"2026-06-04T12:49:16.135Z\"},\"message\":\"ok\"}",
+      "error": ""
+    },
+    {
+      "path": "/api/jobs?limit=2",
+      "status": 200,
+      "ok": true,
+      "bodySample": "{\"code\":0,\"data\":{\"list\":[{\"id\":1,\"employer_id\":2,\"title\":\"Frontend Development Intern\",\"description\":\"Develop and maintain company website frontend using React",
+      "error": ""
+    }
+  ],
+  "responseErrors": [],
+  "requestFailures": [],
+  "pageErrors": [],
+  "frontendError": ""
+}

@@ -1,0 +1,16 @@
+{
+  "name": "parttime-job-platform",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "install:all": "cd backend && npm install && cd ../frontend && npm install",
+    "dev": "concurrently \"npm run dev:backend\" \"npm run dev:frontend\"",
+    "dev:backend": "cd backend && npm run dev",
+    "dev:frontend": "cd frontend && npx vite --host 127.0.0.1 --port 49020 --strictPort",
+    "start:backend": "cd backend && nohup npm start > ../backend.log 2>&1 & echo $!",
+    "start:frontend": "cd frontend && nohup npx vite --host 127.0.0.1 --port 49020 --strictPort > ../frontend.log 2>&1 & echo $!"
+  },
+  "devDependencies": {
+    "concurrently": "^8.2.2"
+  }
+}
