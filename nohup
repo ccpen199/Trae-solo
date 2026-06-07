@@ -1,0 +1,126 @@
+
+> may-89059@0.0.0 dev
+> concurrently "npm run client:dev" "npm run server:dev" npm run dev npm run dev n
+
+[4] /bin/sh: dev: command not found
+[3] /bin/sh: run: command not found
+[6] /bin/sh: run: command not found
+[3] run exited with code 127
+[4] dev exited with code 127
+[8] /bin/sh: n: command not found
+[7] /bin/sh: dev: command not found
+[6] run exited with code 127
+[7] dev exited with code 127
+[8] n exited with code 127
+[2] npm <command>
+[2] 
+[2] Usage:
+[2] 
+[2] npm install        install all the dependencies in your project
+[2] npm install <foo>  add the <foo> dependency to your project
+[2] npm test           run this project's tests
+[2] npm run <foo>      run the script named <foo>
+[2] npm <command> -h   quick help on <command>
+[2] npm -l             display usage info for all commands
+[2] npm help <term>    search for help on <term>
+[2] npm help npm       more involved overview
+[2] 
+[2] All commands:
+[2] 
+[2]     access, adduser, audit, bugs, cache, ci, completion,
+[2]     config, dedupe, deprecate, diff, dist-tag, docs, doctor,
+[2]     edit, exec, explain, explore, find-dupes, fund, get, help,
+[2]     help-search, hook, init, install, install-ci-test,
+[2]     install-test, link, ll, login, logout, ls, org, outdated,
+[2]     owner, pack, ping, pkg, prefix, profile, prune, publish,
+[2]     query, rebuild, repo, restart, root, run-script, sbom,
+[2]     search, set, shrinkwrap, star, stars, start, stop, team,
+[2]     test, token, uninstall, unpublish, unstar, update, version,
+[2]     view, whoami
+[2] 
+[2] Specify configs in the ini-formatted file:
+[2]     /Users/chen/.npmrc
+[2] or on the command line via: npm <command> --key=value
+[2] 
+[2] More configuration info: npm help config
+[2] Configuration fields: npm help 7 config
+[2] 
+[2] npm@10.9.4 /Users/chen/.nvm/versions/node/v22.22.0/lib/node_modules/npm
+[2] npm exited with code 1
+[5] npm <command>
+[5] 
+[5] Usage:
+[5] 
+[5] npm install        install all the dependencies in your project
+[5] npm install <foo>  add the <foo> dependency to your project
+[5] npm test           run this project's tests
+[5] npm run <foo>      run the script named <foo>
+[5] npm <command> -h   quick help on <command>
+[5] npm -l             display usage info for all commands
+[5] npm help <term>    search for help on <term>
+[5] npm help npm       more involved overview
+[5] 
+[5] All commands:
+[5] 
+[5]     access, adduser, audit, bugs, cache, ci, completion,
+[5]     config, dedupe, deprecate, diff, dist-tag, docs, doctor,
+[5]     edit, exec, explain, explore, find-dupes, fund, get, help,
+[5]     help-search, hook, init, install, install-ci-test,
+[5]     install-test, link, ll, login, logout, ls, org, outdated,
+[5]     owner, pack, ping, pkg, prefix, profile, prune, publish,
+[5]     query, rebuild, repo, restart, root, run-script, sbom,
+[5]     search, set, shrinkwrap, star, stars, start, stop, team,
+[5]     test, token, uninstall, unpublish, unstar, update, version,
+[5]     view, whoami
+[5] 
+[5] Specify configs in the ini-formatted file:
+[5]     /Users/chen/.npmrc
+[5] or on the command line via: npm <command> --key=value
+[5] 
+[5] More configuration info: npm help config
+[5] Configuration fields: npm help 7 config
+[5] 
+[5] npm@10.9.4 /Users/chen/.nvm/versions/node/v22.22.0/lib/node_modules/npm
+[5] npm exited with code 1
+[1] 
+[1] > may-89059@0.0.0 server:dev
+[1] > nodemon
+[1] 
+[0] 
+[0] > may-89059@0.0.0 client:dev
+[0] > vite
+[0] 
+[1] [33m[nodemon] 3.1.14[39m
+[1] [33m[nodemon] to restart at any time, enter `rs`[39m
+[1] [33m[nodemon] watching path(s): api/**/*[39m
+[1] [33m[nodemon] watching extensions: ts,mts,js,json[39m
+[1] [32m[nodemon] starting `tsx api/server.ts`[39m
+[0] error when starting dev server:
+[0] Error: Port 49059 is already in use
+[0]     at Server.onError (file:///Users/chen/Documents/trae_projects/local_projects/may-89059/node_modules/vite/dist/node/chunks/dep-Dm0c1Wj2.js:25119:18)
+[0]     at Server.emit (node:events:519:28)
+[0]     at emitErrorNT (node:net:1976:8)
+[0]     at process.processTicksAndRejections (node:internal/process/task_queues:90:21)
+[0] npm run client:dev exited with code 1
+[1] ◇ injected env (1) from .env // tip: ⌘ override existing { override: true }
+[1] node:events:497
+[1]       throw er; // Unhandled 'error' event
+[1]       ^
+[1] 
+[1] Error: listen EADDRINUSE: address already in use 127.0.0.1:59059
+[1]     at Server.setupListenHandle [as _listen2] (node:net:1940:16)
+[1]     at listenInCluster (node:net:1997:12)
+[1]     at node:net:2206:7
+[1]     at process.processTicksAndRejections (node:internal/process/task_queues:90:21)
+[1] Emitted 'error' event on Server instance at:
+[1]     at emitErrorNT (node:net:1976:8)
+[1]     at process.processTicksAndRejections (node:internal/process/task_queues:90:21) {
+[1]   code: 'EADDRINUSE',
+[1]   errno: -48,
+[1]   syscall: 'listen',
+[1]   address: '127.0.0.1',
+[1]   port: 59059
+[1] }
+[1] 
+[1] Node.js v22.22.0
+[1] [31m[nodemon] app crashed - waiting for file changes before starting...[39m
