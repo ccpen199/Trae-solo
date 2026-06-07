@@ -1,0 +1,2847 @@
+{
+  "ok": true,
+  "generatedAt": "2026-06-05T14:00:08.958Z",
+  "order": "may-89043",
+  "roundIndex": 99,
+  "captureId": "may-89043-codex-repair",
+  "url": "http://127.0.0.1:49043/",
+  "initialUrl": "http://127.0.0.1:49043/",
+  "finalUrl": "http://127.0.0.1:49043/",
+  "status": 200,
+  "title": "南方电网能源服务数字生态平台",
+  "initialTitle": "南方电网能源服务数字生态平台",
+  "navigationError": "",
+  "screenshotPath": "probe/codex-repair-20260605-1652/may-89043-codex-repair-frontend.png",
+  "screenshotPaths": [
+    "/Users/chen/Documents/trae_projects/local_projects/may-89043/probe/codex-repair-20260605-1652/may-89043-codex-repair-structure-01-首屏.png",
+    "/Users/chen/Documents/trae_projects/local_projects/may-89043/probe/codex-repair-20260605-1652/may-89043-codex-repair-structure-02-导航-首页总览.png",
+    "/Users/chen/Documents/trae_projects/local_projects/may-89043/probe/codex-repair-20260605-1652/may-89043-codex-repair-structure-03-操作-系统设置.png",
+    "/Users/chen/Documents/trae_projects/local_projects/may-89043/probe/codex-repair-20260605-1652/may-89043-codex-repair-structure-04-操作-补贴审批.png",
+    "/Users/chen/Documents/trae_projects/local_projects/may-89043/probe/codex-repair-20260605-1652/may-89043-codex-repair-structure-05-二层操作-补贴审批-补贴审批.png",
+    "/Users/chen/Documents/trae_projects/local_projects/may-89043/probe/codex-repair-20260605-1652/may-89043-codex-repair-structure-06-导航-用电服务.png",
+    "/Users/chen/Documents/trae_projects/local_projects/may-89043/probe/codex-repair-20260605-1652/may-89043-codex-repair-structure-07-操作-系统设置.png",
+    "/Users/chen/Documents/trae_projects/local_projects/may-89043/probe/codex-repair-20260605-1652/may-89043-codex-repair-structure-08-操作-查看详情.png",
+    "/Users/chen/Documents/trae_projects/local_projects/may-89043/probe/codex-repair-20260605-1652/may-89043-codex-repair-structure-09-二层操作-查看详情-添加设备.png",
+    "/Users/chen/Documents/trae_projects/local_projects/may-89043/probe/codex-repair-20260605-1652/may-89043-codex-repair-structure-10-导航-综合能源.png",
+    "/Users/chen/Documents/trae_projects/local_projects/may-89043/probe/codex-repair-20260605-1652/may-89043-codex-repair-structure-11-操作-系统设置.png",
+    "/Users/chen/Documents/trae_projects/local_projects/may-89043/probe/codex-repair-20260605-1652/may-89043-codex-repair-structure-12-操作-查看详情.png"
+  ],
+  "issueTextPreview": "runtime start report was not generated；页面结构采集已读取到业务内容",
+  "targetReason": "登录流程已完成，继续复验登录后的首页和业务导航",
+  "targetKind": "auth",
+  "targetMatched": true,
+  "targetActions": [
+    {
+      "action": "login-fill-username",
+      "label": "admin",
+      "ok": true
+    },
+    {
+      "action": "login-fill-password",
+      "label": "admin:******",
+      "ok": true
+    },
+    {
+      "action": "click",
+      "label": "登录:admin",
+      "ok": true
+    },
+    {
+      "action": "login-submit",
+      "label": "admin",
+      "ok": true,
+      "beforeUrl": "http://127.0.0.1:49043/login"
+    },
+    {
+      "action": "login-result",
+      "label": "admin",
+      "ok": true,
+      "finalUrl": "http://127.0.0.1:49043/"
+    },
+    {
+      "action": "target-verify",
+      "label": "登录后首页",
+      "ok": true,
+      "finalUrl": "http://127.0.0.1:49043/"
+    }
+  ],
+  "authFlow": {
+    "detected": true,
+    "attempted": true,
+    "success": true,
+    "finalUrl": "http://127.0.0.1:49043/",
+    "message": "登录成功:admin",
+    "actions": [
+      {
+        "action": "login-fill-username",
+        "label": "admin",
+        "ok": true
+      },
+      {
+        "action": "login-fill-password",
+        "label": "admin:******",
+        "ok": true
+      },
+      {
+        "action": "click",
+        "label": "登录:admin",
+        "ok": true
+      },
+      {
+        "action": "login-submit",
+        "label": "admin",
+        "ok": true,
+        "beforeUrl": "http://127.0.0.1:49043/login"
+      },
+      {
+        "action": "login-result",
+        "label": "admin",
+        "ok": true,
+        "finalUrl": "http://127.0.0.1:49043/"
+      }
+    ],
+    "username": "admin",
+    "credentialSource": "visible-demo-text"
+  },
+  "businessAudit": {
+    "actions": [
+      {
+        "action": "click",
+        "label": "导航:首页总览",
+        "ok": true
+      },
+      {
+        "action": "click",
+        "label": "操作:系统设置",
+        "ok": true,
+        "result": {
+          "ok": true,
+          "matched": 1
+        }
+      },
+      {
+        "action": "click",
+        "label": "操作:查看详情 →",
+        "ok": false,
+        "result": {
+          "ok": false,
+          "matched": 0,
+          "reason": "not-found"
+        }
+      },
+      {
+        "action": "click",
+        "label": "操作:查看详细核查报告",
+        "ok": false,
+        "result": {
+          "ok": false,
+          "matched": 0,
+          "reason": "not-found"
+        }
+      },
+      {
+        "action": "click",
+        "label": "操作:补贴审批",
+        "ok": true,
+        "result": {
+          "ok": true,
+          "matched": 1
+        }
+      },
+      {
+        "action": "click",
+        "label": "二层操作:补贴审批:补贴审批",
+        "ok": true,
+        "result": {
+          "ok": true,
+          "matched": 1
+        }
+      },
+      {
+        "action": "click",
+        "label": "导航:用电服务",
+        "ok": true
+      },
+      {
+        "action": "click",
+        "label": "操作:系统设置",
+        "ok": true,
+        "result": {
+          "ok": true,
+          "matched": 1
+        }
+      },
+      {
+        "action": "click",
+        "label": "操作:查看详情 →",
+        "ok": true,
+        "result": {
+          "ok": true,
+          "matched": 1
+        }
+      },
+      {
+        "action": "click",
+        "label": "二层操作:查看详情 →:添加设备",
+        "ok": true,
+        "result": {
+          "ok": true,
+          "matched": 1
+        }
+      },
+      {
+        "action": "click",
+        "label": "关闭弹窗/抽屉",
+        "ok": true
+      },
+      {
+        "action": "click",
+        "label": "导航:综合能源",
+        "ok": true
+      },
+      {
+        "action": "click",
+        "label": "操作:系统设置",
+        "ok": true,
+        "result": {
+          "ok": true,
+          "matched": 1
+        }
+      },
+      {
+        "action": "click",
+        "label": "操作:查看详情 →",
+        "ok": true,
+        "result": {
+          "ok": true,
+          "matched": 1
+        }
+      }
+    ],
+    "snapshots": [
+      {
+        "label": "首屏",
+        "url": "http://127.0.0.1:49043/",
+        "title": "南方电网能源服务数字生态平台",
+        "headings": [
+          "你好，系统管理员",
+          "用户类型分布",
+          "电价执行核查",
+          "审计异常预警",
+          "快捷操作"
+        ],
+        "navLabels": [
+          "南方电网 能源服务数字生态平台",
+          "首页总览",
+          "用电服务",
+          "综合能源",
+          "智慧生活",
+          "资讯知识",
+          "合规审计",
+          "运营管理",
+          "系统管理员 企业用户",
+          "退出登录"
+        ],
+        "buttons": [
+          "用电服务",
+          "综合能源",
+          "智慧生活",
+          "资讯知识",
+          "合规审计",
+          "退出登录",
+          "切换到暗色模式",
+          "立即处理 →",
+          "查看详情 →",
+          "查看详细核查报告",
+          "全部审计",
+          "用户管理",
+          "补贴审批",
+          "电价核查",
+          "系统设置"
+        ],
+        "links": [
+          "首页总览",
+          "运营管理"
+        ],
+        "inputs": [],
+        "tables": [],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "南方电网能源服务数字生态平台首页总览用电服务综合能源智慧生活资讯知识合规审计运营管理系统管理员企业用户系统管理员你好，系统管理员系统管理员 · 南方电网能源服务数字生态平台运营控制台平台总用户13较上月 +12.5%累计电费收入¥71,547较上月 +8.3%待审补贴申请2立即处理 →活跃设备告警0查看详情 →用户类型分布按客群分类个人用户数 : 3电价执行核查正常账单0异常账单0查看详细核查报告审计异常预警全部审计暂无审计异常快捷操作用户管理补贴审批电价核查系统设置 0",
+        "layout": {
+          "viewportWidth": 1504,
+          "viewportHeight": 1000,
+          "scrollWidth": 1504,
+          "scrollHeight": 1000,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89043-codex-repair-structure-01-首屏",
+          "label": "首屏",
+          "finalUrl": "http://127.0.0.1:49043/",
+          "title": "南方电网能源服务数字生态平台",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89043/probe/codex-repair-20260605-1652/may-89043-codex-repair-structure-01-首屏.json",
+          "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89043/probe/codex-repair-20260605-1652/may-89043-codex-repair-structure-01-首屏.png",
+          "elementCount": 350,
+          "interactiveCount": 20,
+          "interactiveLabels": [
+            "首页总览",
+            "用电服务",
+            "综合能源",
+            "智慧生活",
+            "资讯知识",
+            "合规审计",
+            "运营管理",
+            "退出登录",
+            "切换到暗色模式",
+            "立即处理 →",
+            "查看详情 →",
+            "企业家庭个人园区01234",
+            "查看详细核查报告",
+            "全部审计",
+            "用户管理",
+            "补贴审批",
+            "电价核查",
+            "系统设置"
+          ]
+        }
+      },
+      {
+        "label": "导航:首页总览",
+        "url": "http://127.0.0.1:49043/",
+        "title": "南方电网能源服务数字生态平台",
+        "headings": [
+          "你好，系统管理员",
+          "用户类型分布",
+          "电价执行核查",
+          "审计异常预警",
+          "快捷操作"
+        ],
+        "navLabels": [
+          "南方电网 能源服务数字生态平台",
+          "首页总览",
+          "用电服务",
+          "综合能源",
+          "智慧生活",
+          "资讯知识",
+          "合规审计",
+          "运营管理",
+          "系统管理员 企业用户",
+          "退出登录"
+        ],
+        "buttons": [
+          "用电服务",
+          "综合能源",
+          "智慧生活",
+          "资讯知识",
+          "合规审计",
+          "退出登录",
+          "切换到暗色模式",
+          "立即处理 →",
+          "查看详情 →",
+          "查看详细核查报告",
+          "全部审计",
+          "用户管理",
+          "补贴审批",
+          "电价核查",
+          "系统设置"
+        ],
+        "links": [
+          "首页总览",
+          "运营管理"
+        ],
+        "inputs": [],
+        "tables": [],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "南方电网能源服务数字生态平台首页总览用电服务综合能源智慧生活资讯知识合规审计运营管理系统管理员企业用户系统管理员你好，系统管理员系统管理员 · 南方电网能源服务数字生态平台运营控制台平台总用户13较上月 +12.5%累计电费收入¥71,547较上月 +8.3%待审补贴申请2立即处理 →活跃设备告警0查看详情 →用户类型分布按客群分类电价执行核查正常账单0异常账单0查看详细核查报告审计异常预警全部审计暂无审计异常快捷操作用户管理补贴审批电价核查系统设置 0",
+        "layout": {
+          "viewportWidth": 1536,
+          "viewportHeight": 1000,
+          "scrollWidth": 1536,
+          "scrollHeight": 1000,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89043-codex-repair-structure-02-导航-首页总览",
+          "label": "导航:首页总览",
+          "finalUrl": "http://127.0.0.1:49043/",
+          "title": "南方电网能源服务数字生态平台",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89043/probe/codex-repair-20260605-1652/may-89043-codex-repair-structure-02-导航-首页总览.json",
+          "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89043/probe/codex-repair-20260605-1652/may-89043-codex-repair-structure-02-导航-首页总览.png",
+          "elementCount": 343,
+          "interactiveCount": 20,
+          "interactiveLabels": [
+            "首页总览",
+            "用电服务",
+            "综合能源",
+            "智慧生活",
+            "资讯知识",
+            "合规审计",
+            "运营管理",
+            "退出登录",
+            "切换到暗色模式",
+            "立即处理 →",
+            "查看详情 →",
+            "企业家庭个人园区01234",
+            "查看详细核查报告",
+            "全部审计",
+            "用户管理",
+            "补贴审批",
+            "电价核查",
+            "系统设置"
+          ]
+        }
+      },
+      {
+        "label": "操作:系统设置",
+        "url": "http://127.0.0.1:49043/admin",
+        "title": "南方电网能源服务数字生态平台",
+        "headings": [
+          "运营管理",
+          "用户类型分布",
+          "月度营收趋势",
+          "API 接口健康状态",
+          "系统指标"
+        ],
+        "navLabels": [
+          "南方电网 能源服务数字生态平台",
+          "首页总览",
+          "用电服务",
+          "综合能源",
+          "智慧生活",
+          "资讯知识",
+          "合规审计",
+          "运营管理",
+          "系统管理员 企业用户",
+          "退出登录"
+        ],
+        "buttons": [
+          "用电服务",
+          "综合能源",
+          "智慧生活",
+          "资讯知识",
+          "合规审计",
+          "退出登录",
+          "切换到暗色模式"
+        ],
+        "links": [
+          "首页总览",
+          "运营管理"
+        ],
+        "inputs": [],
+        "tables": [
+          {
+            "headers": [
+              "服务名称",
+              "状态",
+              "可用率",
+              "平均延迟"
+            ],
+            "rowCount": 6,
+            "hasEmptyText": false,
+            "textPreview": "服务名称 状态 可用率 平均延迟 认证服务 正常 99.98% 45 ms 账单服务 正常 99.95% 62 ms 支付服务 正常 99.99% 80 ms 数据分析 降级 98.5% 210 ms 通知服务 正常 99.7% 35 ms 文件存储 正常 99.9% 120 ms"
+          }
+        ],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "南方电网能源服务数字生态平台首页总览用电服务综合能源智慧生活资讯知识合规审计运营管理系统管理员企业用户系统管理员运营管理平台运营数据概览与系统管理总用户数24,40024h活跃 8,920累计营收¥1880.0万较上月 +10.1%平均响应78 ms较上月 -12.5%连接设备32,150累计账单 45,820 用户类型分布 月度营收趋势用户数营收(元) API 接口健康状态服务名称状态可用率平均延迟认证服务 正常99.98%45 ms账单服务 正常99.95%62 ms支付服务 正常99.99%80 ms数据分析 降级98.5%210 ms通知服务 正常99.7%35 ms文件存储 正常99.9%120 ms系统指标营收(元) 950000",
+        "layout": {
+          "viewportWidth": 1568,
+          "viewportHeight": 1000,
+          "scrollWidth": 1568,
+          "scrollHeight": 1000,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89043-codex-repair-structure-03-操作-系统设置",
+          "label": "操作:系统设置",
+          "finalUrl": "http://127.0.0.1:49043/admin",
+          "title": "南方电网能源服务数字生态平台",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89043/probe/codex-repair-20260605-1652/may-89043-codex-repair-structure-03-操作-系统设置.json",
+          "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89043/probe/codex-repair-20260605-1652/may-89043-codex-repair-structure-03-操作-系统设置.png",
+          "elementCount": 564,
+          "interactiveCount": 15,
+          "interactiveLabels": [
+            "首页总览",
+            "用电服务",
+            "综合能源",
+            "智慧生活",
+            "资讯知识",
+            "合规审计",
+            "运营管理",
+            "退出登录",
+            "切换到暗色模式",
+            "1月2月3月4月5月6月0万95万190万285万380万",
+            "1月2月3月4月5月6月0950000190000028500003800000"
+          ]
+        }
+      },
+      {
+        "label": "操作:补贴审批",
+        "url": "http://127.0.0.1:49043/",
+        "title": "南方电网能源服务数字生态平台",
+        "headings": [
+          "你好，系统管理员",
+          "用户类型分布",
+          "电价执行核查",
+          "审计异常预警",
+          "快捷操作"
+        ],
+        "navLabels": [
+          "南方电网 能源服务数字生态平台",
+          "首页总览",
+          "用电服务",
+          "综合能源",
+          "智慧生活",
+          "资讯知识",
+          "合规审计",
+          "运营管理",
+          "系统管理员 企业用户",
+          "退出登录"
+        ],
+        "buttons": [
+          "用电服务",
+          "综合能源",
+          "智慧生活",
+          "资讯知识",
+          "合规审计",
+          "退出登录",
+          "切换到暗色模式",
+          "立即处理 →",
+          "查看详情 →",
+          "查看详细核查报告",
+          "全部审计",
+          "用户管理",
+          "补贴审批",
+          "电价核查",
+          "系统设置"
+        ],
+        "links": [
+          "首页总览",
+          "运营管理"
+        ],
+        "inputs": [],
+        "tables": [],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "南方电网能源服务数字生态平台首页总览用电服务综合能源智慧生活资讯知识合规审计运营管理系统管理员企业用户系统管理员你好，系统管理员系统管理员 · 南方电网能源服务数字生态平台运营控制台平台总用户13较上月 +12.5%累计电费收入¥71,547较上月 +8.3%待审补贴申请2立即处理 →活跃设备告警0查看详情 →用户类型分布按客群分类电价执行核查正常账单0异常账单0查看详细核查报告审计异常预警全部审计暂无审计异常快捷操作用户管理补贴审批电价核查系统设置 0",
+        "layout": {
+          "viewportWidth": 1600,
+          "viewportHeight": 1000,
+          "scrollWidth": 1600,
+          "scrollHeight": 1000,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89043-codex-repair-structure-04-操作-补贴审批",
+          "label": "操作:补贴审批",
+          "finalUrl": "http://127.0.0.1:49043/",
+          "title": "南方电网能源服务数字生态平台",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89043/probe/codex-repair-20260605-1652/may-89043-codex-repair-structure-04-操作-补贴审批.json",
+          "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89043/probe/codex-repair-20260605-1652/may-89043-codex-repair-structure-04-操作-补贴审批.png",
+          "elementCount": 343,
+          "interactiveCount": 20,
+          "interactiveLabels": [
+            "首页总览",
+            "用电服务",
+            "综合能源",
+            "智慧生活",
+            "资讯知识",
+            "合规审计",
+            "运营管理",
+            "退出登录",
+            "切换到暗色模式",
+            "立即处理 →",
+            "查看详情 →",
+            "企业家庭个人园区01234",
+            "查看详细核查报告",
+            "全部审计",
+            "用户管理",
+            "补贴审批",
+            "电价核查",
+            "系统设置"
+          ]
+        }
+      },
+      {
+        "label": "二层操作:补贴审批->补贴审批",
+        "url": "http://127.0.0.1:49043/",
+        "title": "南方电网能源服务数字生态平台",
+        "headings": [
+          "你好，系统管理员",
+          "用户类型分布",
+          "电价执行核查",
+          "审计异常预警",
+          "快捷操作"
+        ],
+        "navLabels": [
+          "南方电网 能源服务数字生态平台",
+          "首页总览",
+          "用电服务",
+          "综合能源",
+          "智慧生活",
+          "资讯知识",
+          "合规审计",
+          "运营管理",
+          "系统管理员 企业用户",
+          "退出登录"
+        ],
+        "buttons": [
+          "用电服务",
+          "综合能源",
+          "智慧生活",
+          "资讯知识",
+          "合规审计",
+          "退出登录",
+          "切换到暗色模式",
+          "立即处理 →",
+          "查看详情 →",
+          "查看详细核查报告",
+          "全部审计",
+          "用户管理",
+          "补贴审批",
+          "电价核查",
+          "系统设置"
+        ],
+        "links": [
+          "首页总览",
+          "运营管理"
+        ],
+        "inputs": [],
+        "tables": [],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "南方电网能源服务数字生态平台首页总览用电服务综合能源智慧生活资讯知识合规审计运营管理系统管理员企业用户系统管理员你好，系统管理员系统管理员 · 南方电网能源服务数字生态平台运营控制台平台总用户13较上月 +12.5%累计电费收入¥71,547较上月 +8.3%待审补贴申请2立即处理 →活跃设备告警0查看详情 →用户类型分布按客群分类电价执行核查正常账单0异常账单0查看详细核查报告审计异常预警全部审计暂无审计异常快捷操作用户管理补贴审批电价核查系统设置 0",
+        "layout": {
+          "viewportWidth": 1632,
+          "viewportHeight": 1000,
+          "scrollWidth": 1632,
+          "scrollHeight": 1000,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89043-codex-repair-structure-05-二层操作-补贴审批-补贴审批",
+          "label": "二层操作:补贴审批->补贴审批",
+          "finalUrl": "http://127.0.0.1:49043/",
+          "title": "南方电网能源服务数字生态平台",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89043/probe/codex-repair-20260605-1652/may-89043-codex-repair-structure-05-二层操作-补贴审批-补贴审批.json",
+          "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89043/probe/codex-repair-20260605-1652/may-89043-codex-repair-structure-05-二层操作-补贴审批-补贴审批.png",
+          "elementCount": 343,
+          "interactiveCount": 20,
+          "interactiveLabels": [
+            "首页总览",
+            "用电服务",
+            "综合能源",
+            "智慧生活",
+            "资讯知识",
+            "合规审计",
+            "运营管理",
+            "退出登录",
+            "切换到暗色模式",
+            "立即处理 →",
+            "查看详情 →",
+            "企业家庭个人园区01234",
+            "查看详细核查报告",
+            "全部审计",
+            "用户管理",
+            "补贴审批",
+            "电价核查",
+            "系统设置"
+          ]
+        }
+      },
+      {
+        "label": "导航:用电服务",
+        "url": "http://127.0.0.1:49043/",
+        "title": "南方电网能源服务数字生态平台",
+        "headings": [
+          "你好，系统管理员",
+          "用户类型分布",
+          "电价执行核查",
+          "审计异常预警",
+          "快捷操作"
+        ],
+        "navLabels": [
+          "南方电网 能源服务数字生态平台",
+          "首页总览",
+          "用电服务",
+          "电费查询",
+          "电费缴纳",
+          "账单分析",
+          "停电通知",
+          "综合能源",
+          "智慧生活",
+          "资讯知识",
+          "合规审计",
+          "运营管理",
+          "系统管理员 企业用户",
+          "退出登录"
+        ],
+        "buttons": [
+          "用电服务",
+          "综合能源",
+          "智慧生活",
+          "资讯知识",
+          "合规审计",
+          "退出登录",
+          "切换到暗色模式",
+          "立即处理 →",
+          "查看详情 →",
+          "查看详细核查报告",
+          "全部审计",
+          "用户管理",
+          "补贴审批",
+          "电价核查",
+          "系统设置"
+        ],
+        "links": [
+          "首页总览",
+          "电费查询",
+          "电费缴纳",
+          "账单分析",
+          "停电通知",
+          "运营管理"
+        ],
+        "inputs": [],
+        "tables": [],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "南方电网能源服务数字生态平台首页总览用电服务电费查询电费缴纳账单分析停电通知综合能源智慧生活资讯知识合规审计运营管理系统管理员企业用户系统管理员你好，系统管理员系统管理员 · 南方电网能源服务数字生态平台运营控制台平台总用户13较上月 +12.5%累计电费收入¥71,547较上月 +8.3%待审补贴申请2立即处理 →活跃设备告警0查看详情 →用户类型分布按客群分类电价执行核查正常账单0异常账单0查看详细核查报告审计异常预警全部审计暂无审计异常快捷操作用户管理补贴审批电价核查系统设置 0",
+        "layout": {
+          "viewportWidth": 1664,
+          "viewportHeight": 1000,
+          "scrollWidth": 1664,
+          "scrollHeight": 1000,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89043-codex-repair-structure-06-导航-用电服务",
+          "label": "导航:用电服务",
+          "finalUrl": "http://127.0.0.1:49043/",
+          "title": "南方电网能源服务数字生态平台",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89043/probe/codex-repair-20260605-1652/may-89043-codex-repair-structure-06-导航-用电服务.json",
+          "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89043/probe/codex-repair-20260605-1652/may-89043-codex-repair-structure-06-导航-用电服务.png",
+          "elementCount": 348,
+          "interactiveCount": 24,
+          "interactiveLabels": [
+            "首页总览",
+            "用电服务",
+            "电费查询",
+            "电费缴纳",
+            "账单分析",
+            "停电通知",
+            "综合能源",
+            "智慧生活",
+            "资讯知识",
+            "合规审计",
+            "运营管理",
+            "退出登录",
+            "切换到暗色模式",
+            "立即处理 →",
+            "查看详情 →",
+            "企业家庭个人园区01234",
+            "查看详细核查报告",
+            "全部审计",
+            "用户管理",
+            "补贴审批",
+            "电价核查",
+            "系统设置"
+          ]
+        }
+      },
+      {
+        "label": "操作:系统设置",
+        "url": "http://127.0.0.1:49043/admin",
+        "title": "南方电网能源服务数字生态平台",
+        "headings": [
+          "运营管理",
+          "用户类型分布",
+          "月度营收趋势",
+          "API 接口健康状态",
+          "系统指标"
+        ],
+        "navLabels": [
+          "南方电网 能源服务数字生态平台",
+          "首页总览",
+          "用电服务",
+          "电费查询",
+          "电费缴纳",
+          "账单分析",
+          "停电通知",
+          "综合能源",
+          "智慧生活",
+          "资讯知识",
+          "合规审计",
+          "运营管理",
+          "系统管理员 企业用户",
+          "退出登录"
+        ],
+        "buttons": [
+          "用电服务",
+          "综合能源",
+          "智慧生活",
+          "资讯知识",
+          "合规审计",
+          "退出登录",
+          "切换到暗色模式"
+        ],
+        "links": [
+          "首页总览",
+          "电费查询",
+          "电费缴纳",
+          "账单分析",
+          "停电通知",
+          "运营管理"
+        ],
+        "inputs": [],
+        "tables": [
+          {
+            "headers": [
+              "服务名称",
+              "状态",
+              "可用率",
+              "平均延迟"
+            ],
+            "rowCount": 4,
+            "hasEmptyText": false,
+            "textPreview": "服务名称 状态 可用率 平均延迟 认证服务 正常 99.98% 45 ms 账单服务 正常 99.95% 62 ms 能源服务 正常 99.9% 76 ms 管理后台 正常 99.96% 58 ms"
+          }
+        ],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "南方电网能源服务数字生态平台首页总览用电服务电费查询电费缴纳账单分析停电通知综合能源智慧生活资讯知识合规审计运营管理系统管理员企业用户系统管理员运营管理平台运营数据概览与系统管理总用户数1324h活跃 5累计营收¥14.8万较上月 +10.1%平均响应68 ms较上月 -12.5%连接设备10累计账单 13 用户类型分布 月度营收趋势用户数营收(元) API 接口健康状态服务名称状态可用率平均延迟认证服务 正常99.98%45 ms账单服务 正常99.95%62 ms能源服务 正常99.9%76 ms管理后台 正常99.96%58 ms系统指标营收(元) 300",
+        "layout": {
+          "viewportWidth": 1696,
+          "viewportHeight": 1000,
+          "scrollWidth": 1696,
+          "scrollHeight": 1000,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89043-codex-repair-structure-07-操作-系统设置",
+          "label": "操作:系统设置",
+          "finalUrl": "http://127.0.0.1:49043/admin",
+          "title": "南方电网能源服务数字生态平台",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89043/probe/codex-repair-20260605-1652/may-89043-codex-repair-structure-07-操作-系统设置.json",
+          "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89043/probe/codex-repair-20260605-1652/may-89043-codex-repair-structure-07-操作-系统设置.png",
+          "elementCount": 464,
+          "interactiveCount": 19,
+          "interactiveLabels": [
+            "首页总览",
+            "用电服务",
+            "电费查询",
+            "电费缴纳",
+            "账单分析",
+            "停电通知",
+            "综合能源",
+            "智慧生活",
+            "资讯知识",
+            "合规审计",
+            "运营管理",
+            "退出登录",
+            "切换到暗色模式",
+            "本月0万0.03万0.06万0.09万0.12万",
+            "本月03006009001200"
+          ]
+        }
+      },
+      {
+        "label": "操作:查看详情 →",
+        "url": "http://127.0.0.1:49043/smartlife/devices",
+        "title": "南方电网能源服务数字生态平台",
+        "headings": [
+          "智能设备"
+        ],
+        "navLabels": [
+          "南方电网 能源服务数字生态平台",
+          "首页总览",
+          "用电服务",
+          "综合能源",
+          "智慧生活",
+          "资讯知识",
+          "合规审计",
+          "运营管理",
+          "系统管理员 企业用户",
+          "退出登录"
+        ],
+        "buttons": [
+          "用电服务",
+          "综合能源",
+          "智慧生活",
+          "资讯知识",
+          "合规审计",
+          "退出登录",
+          "切换到暗色模式",
+          "添加设备"
+        ],
+        "links": [
+          "首页总览",
+          "运营管理"
+        ],
+        "inputs": [],
+        "tables": [],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "南方电网能源服务数字生态平台首页总览用电服务综合能源智慧生活资讯知识合规审计运营管理系统管理员企业用户系统管理员智能设备管理您的智能用电设备 添加设备在线W在线W离线W 0",
+        "layout": {
+          "viewportWidth": 1728,
+          "viewportHeight": 1000,
+          "scrollWidth": 1728,
+          "scrollHeight": 1000,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89043-codex-repair-structure-08-操作-查看详情",
+          "label": "操作:查看详情 →",
+          "finalUrl": "http://127.0.0.1:49043/smartlife/devices",
+          "title": "南方电网能源服务数字生态平台",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89043/probe/codex-repair-20260605-1652/may-89043-codex-repair-structure-08-操作-查看详情.json",
+          "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89043/probe/codex-repair-20260605-1652/may-89043-codex-repair-structure-08-操作-查看详情.png",
+          "elementCount": 197,
+          "interactiveCount": 21,
+          "interactiveLabels": [
+            "首页总览",
+            "用电服务",
+            "综合能源",
+            "智慧生活",
+            "资讯知识",
+            "合规审计",
+            "运营管理",
+            "退出登录",
+            "切换到暗色模式",
+            "添加设备"
+          ]
+        }
+      },
+      {
+        "label": "二层操作:查看详情 →->添加设备",
+        "url": "http://127.0.0.1:49043/smartlife/devices",
+        "title": "南方电网能源服务数字生态平台",
+        "headings": [
+          "智能设备",
+          "添加设备"
+        ],
+        "navLabels": [
+          "南方电网 能源服务数字生态平台",
+          "首页总览",
+          "用电服务",
+          "综合能源",
+          "智慧生活",
+          "资讯知识",
+          "合规审计",
+          "运营管理",
+          "系统管理员 企业用户",
+          "退出登录"
+        ],
+        "buttons": [
+          "用电服务",
+          "综合能源",
+          "智慧生活",
+          "资讯知识",
+          "合规审计",
+          "退出登录",
+          "切换到暗色模式",
+          "添加设备",
+          "取消",
+          "添加"
+        ],
+        "links": [
+          "首页总览",
+          "运营管理"
+        ],
+        "inputs": [
+          {
+            "tag": "input",
+            "type": "text",
+            "placeholder": "请输入设备名称",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "select",
+            "type": "",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "text",
+            "placeholder": "如：客厅",
+            "name": "",
+            "label": ""
+          }
+        ],
+        "tables": [],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "南方电网能源服务数字生态平台首页总览用电服务综合能源智慧生活资讯知识合规审计运营管理系统管理员企业用户系统管理员智能设备管理您的智能用电设备 添加设备在线W在线W离线W添加设备设备名称设备类型灯光空调风扇电视热水器其他位置取消添加 0",
+        "layout": {
+          "viewportWidth": 1760,
+          "viewportHeight": 1000,
+          "scrollWidth": 1760,
+          "scrollHeight": 1000,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89043-codex-repair-structure-09-二层操作-查看详情-添加设备",
+          "label": "二层操作:查看详情 →->添加设备",
+          "finalUrl": "http://127.0.0.1:49043/smartlife/devices",
+          "title": "南方电网能源服务数字生态平台",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89043/probe/codex-repair-20260605-1652/may-89043-codex-repair-structure-09-二层操作-查看详情-添加设备.json",
+          "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89043/probe/codex-repair-20260605-1652/may-89043-codex-repair-structure-09-二层操作-查看详情-添加设备.png",
+          "elementCount": 224,
+          "interactiveCount": 27,
+          "interactiveLabels": [
+            "首页总览",
+            "用电服务",
+            "综合能源",
+            "智慧生活",
+            "资讯知识",
+            "合规审计",
+            "运营管理",
+            "退出登录",
+            "切换到暗色模式",
+            "添加设备",
+            "请输入设备名称",
+            "灯光 空调 风扇 电视 热水器 其他",
+            "如：客厅",
+            "取消",
+            "添加"
+          ]
+        }
+      },
+      {
+        "label": "导航:综合能源",
+        "url": "http://127.0.0.1:49043/",
+        "title": "南方电网能源服务数字生态平台",
+        "headings": [
+          "你好，系统管理员",
+          "用户类型分布",
+          "电价执行核查",
+          "审计异常预警",
+          "快捷操作"
+        ],
+        "navLabels": [
+          "南方电网 能源服务数字生态平台",
+          "首页总览",
+          "用电服务",
+          "综合能源",
+          "能效诊断",
+          "光伏方案",
+          "碳足迹",
+          "智慧生活",
+          "资讯知识",
+          "合规审计",
+          "运营管理",
+          "系统管理员 企业用户",
+          "退出登录"
+        ],
+        "buttons": [
+          "用电服务",
+          "综合能源",
+          "智慧生活",
+          "资讯知识",
+          "合规审计",
+          "退出登录",
+          "切换到暗色模式",
+          "立即处理 →",
+          "查看详情 →",
+          "查看详细核查报告",
+          "全部审计",
+          "用户管理",
+          "补贴审批",
+          "电价核查",
+          "系统设置"
+        ],
+        "links": [
+          "首页总览",
+          "能效诊断",
+          "光伏方案",
+          "碳足迹",
+          "运营管理"
+        ],
+        "inputs": [],
+        "tables": [],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "南方电网能源服务数字生态平台首页总览用电服务综合能源能效诊断光伏方案碳足迹智慧生活资讯知识合规审计运营管理系统管理员企业用户系统管理员你好，系统管理员系统管理员 · 南方电网能源服务数字生态平台运营控制台平台总用户13较上月 +12.5%累计电费收入¥71,547较上月 +8.3%待审补贴申请2立即处理 →活跃设备告警0查看详情 →用户类型分布按客群分类电价执行核查正常账单0异常账单0查看详细核查报告审计异常预警全部审计暂无审计异常快捷操作用户管理补贴审批电价核查系统设置 0",
+        "layout": {
+          "viewportWidth": 1792,
+          "viewportHeight": 1000,
+          "scrollWidth": 1792,
+          "scrollHeight": 1000,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89043-codex-repair-structure-10-导航-综合能源",
+          "label": "导航:综合能源",
+          "finalUrl": "http://127.0.0.1:49043/",
+          "title": "南方电网能源服务数字生态平台",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89043/probe/codex-repair-20260605-1652/may-89043-codex-repair-structure-10-导航-综合能源.json",
+          "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89043/probe/codex-repair-20260605-1652/may-89043-codex-repair-structure-10-导航-综合能源.png",
+          "elementCount": 347,
+          "interactiveCount": 23,
+          "interactiveLabels": [
+            "首页总览",
+            "用电服务",
+            "综合能源",
+            "能效诊断",
+            "光伏方案",
+            "碳足迹",
+            "智慧生活",
+            "资讯知识",
+            "合规审计",
+            "运营管理",
+            "退出登录",
+            "切换到暗色模式",
+            "立即处理 →",
+            "查看详情 →",
+            "企业家庭个人园区01234",
+            "查看详细核查报告",
+            "全部审计",
+            "用户管理",
+            "补贴审批",
+            "电价核查",
+            "系统设置"
+          ]
+        }
+      },
+      {
+        "label": "操作:系统设置",
+        "url": "http://127.0.0.1:49043/admin",
+        "title": "南方电网能源服务数字生态平台",
+        "headings": [
+          "运营管理",
+          "用户类型分布",
+          "月度营收趋势",
+          "API 接口健康状态",
+          "系统指标"
+        ],
+        "navLabels": [
+          "南方电网 能源服务数字生态平台",
+          "首页总览",
+          "用电服务",
+          "综合能源",
+          "能效诊断",
+          "光伏方案",
+          "碳足迹",
+          "智慧生活",
+          "资讯知识",
+          "合规审计",
+          "运营管理",
+          "系统管理员 企业用户",
+          "退出登录"
+        ],
+        "buttons": [
+          "用电服务",
+          "综合能源",
+          "智慧生活",
+          "资讯知识",
+          "合规审计",
+          "退出登录",
+          "切换到暗色模式"
+        ],
+        "links": [
+          "首页总览",
+          "能效诊断",
+          "光伏方案",
+          "碳足迹",
+          "运营管理"
+        ],
+        "inputs": [],
+        "tables": [
+          {
+            "headers": [
+              "服务名称",
+              "状态",
+              "可用率",
+              "平均延迟"
+            ],
+            "rowCount": 4,
+            "hasEmptyText": false,
+            "textPreview": "服务名称 状态 可用率 平均延迟 认证服务 正常 99.98% 45 ms 账单服务 正常 99.95% 62 ms 能源服务 正常 99.9% 76 ms 管理后台 正常 99.96% 58 ms"
+          }
+        ],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "南方电网能源服务数字生态平台首页总览用电服务综合能源能效诊断光伏方案碳足迹智慧生活资讯知识合规审计运营管理系统管理员企业用户系统管理员运营管理平台运营数据概览与系统管理总用户数1324h活跃 5累计营收¥14.8万较上月 +10.1%平均响应68 ms较上月 -12.5%连接设备10累计账单 13 用户类型分布 月度营收趋势用户数营收(元) API 接口健康状态服务名称状态可用率平均延迟认证服务 正常99.98%45 ms账单服务 正常99.95%62 ms能源服务 正常99.9%76 ms管理后台 正常99.96%58 ms系统指标营收(元) 300",
+        "layout": {
+          "viewportWidth": 1824,
+          "viewportHeight": 1000,
+          "scrollWidth": 1824,
+          "scrollHeight": 1000,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89043-codex-repair-structure-11-操作-系统设置",
+          "label": "操作:系统设置",
+          "finalUrl": "http://127.0.0.1:49043/admin",
+          "title": "南方电网能源服务数字生态平台",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89043/probe/codex-repair-20260605-1652/may-89043-codex-repair-structure-11-操作-系统设置.json",
+          "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89043/probe/codex-repair-20260605-1652/may-89043-codex-repair-structure-11-操作-系统设置.png",
+          "elementCount": 463,
+          "interactiveCount": 18,
+          "interactiveLabels": [
+            "首页总览",
+            "用电服务",
+            "综合能源",
+            "能效诊断",
+            "光伏方案",
+            "碳足迹",
+            "智慧生活",
+            "资讯知识",
+            "合规审计",
+            "运营管理",
+            "退出登录",
+            "切换到暗色模式",
+            "本月0万0.03万0.06万0.09万0.12万",
+            "本月03006009001200"
+          ]
+        }
+      },
+      {
+        "label": "操作:查看详情 →",
+        "url": "http://127.0.0.1:49043/smartlife/devices",
+        "title": "南方电网能源服务数字生态平台",
+        "headings": [
+          "智能设备"
+        ],
+        "navLabels": [
+          "南方电网 能源服务数字生态平台",
+          "首页总览",
+          "用电服务",
+          "综合能源",
+          "智慧生活",
+          "资讯知识",
+          "合规审计",
+          "运营管理",
+          "系统管理员 企业用户",
+          "退出登录"
+        ],
+        "buttons": [
+          "用电服务",
+          "综合能源",
+          "智慧生活",
+          "资讯知识",
+          "合规审计",
+          "退出登录",
+          "切换到暗色模式",
+          "添加设备"
+        ],
+        "links": [
+          "首页总览",
+          "运营管理"
+        ],
+        "inputs": [],
+        "tables": [],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "南方电网能源服务数字生态平台首页总览用电服务综合能源智慧生活资讯知识合规审计运营管理系统管理员企业用户系统管理员智能设备管理您的智能用电设备 添加设备在线W在线W离线W 0",
+        "layout": {
+          "viewportWidth": 1856,
+          "viewportHeight": 1000,
+          "scrollWidth": 1856,
+          "scrollHeight": 1000,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89043-codex-repair-structure-12-操作-查看详情",
+          "label": "操作:查看详情 →",
+          "finalUrl": "http://127.0.0.1:49043/smartlife/devices",
+          "title": "南方电网能源服务数字生态平台",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89043/probe/codex-repair-20260605-1652/may-89043-codex-repair-structure-12-操作-查看详情.json",
+          "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89043/probe/codex-repair-20260605-1652/may-89043-codex-repair-structure-12-操作-查看详情.png",
+          "elementCount": 197,
+          "interactiveCount": 21,
+          "interactiveLabels": [
+            "首页总览",
+            "用电服务",
+            "综合能源",
+            "智慧生活",
+            "资讯知识",
+            "合规审计",
+            "运营管理",
+            "退出登录",
+            "切换到暗色模式",
+            "添加设备"
+          ]
+        }
+      }
+    ],
+    "findings": [
+      "接口 GET /api/admin/stats 请求失败，页面无法加载对应业务数据。",
+      "系统设置入口 点击后没有出现可填写表单、抽屉或明确下一步。"
+    ],
+    "actionHints": [
+      "修复 /api/admin/stats 的前端地址、CORS 或后端路由，并让页面渲染真实业务数据。",
+      "补齐 系统设置入口 的表单字段、校验、保存接口和成功后列表回写。"
+    ],
+    "emptyPages": [],
+    "overflowPages": [],
+    "blankPages": [],
+    "apiFailurePaths": [
+      "/api/admin/stats"
+    ],
+    "goalTerms": [],
+    "clickedActionDescriptors": [
+      {
+        "nav": "首页总览",
+        "label": "系统设置",
+        "ordinal": 0,
+        "unsafe": false
+      },
+      {
+        "nav": "首页总览",
+        "label": "补贴审批",
+        "ordinal": 0,
+        "unsafe": false
+      },
+      {
+        "nav": "首页总览",
+        "label": "补贴审批->补贴审批",
+        "ordinal": 0,
+        "secondary": true,
+        "unsafe": false
+      },
+      {
+        "nav": "用电服务",
+        "label": "系统设置",
+        "ordinal": 0,
+        "unsafe": false
+      },
+      {
+        "nav": "用电服务",
+        "label": "查看详情 →",
+        "ordinal": 0,
+        "unsafe": false
+      },
+      {
+        "nav": "用电服务",
+        "label": "查看详情 →->添加设备",
+        "ordinal": 0,
+        "secondary": true,
+        "unsafe": false
+      },
+      {
+        "nav": "综合能源",
+        "label": "系统设置",
+        "ordinal": 0,
+        "unsafe": false
+      },
+      {
+        "nav": "综合能源",
+        "label": "查看详情 →",
+        "ordinal": 0,
+        "unsafe": false
+      }
+    ],
+    "secondaryActionClicks": 2,
+    "structureCaptures": [
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89043-codex-repair-structure-01-首屏",
+        "label": "首屏",
+        "finalUrl": "http://127.0.0.1:49043/",
+        "title": "南方电网能源服务数字生态平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89043/probe/codex-repair-20260605-1652/may-89043-codex-repair-structure-01-首屏.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89043/probe/codex-repair-20260605-1652/may-89043-codex-repair-structure-01-首屏.png",
+        "elementCount": 350,
+        "interactiveCount": 20,
+        "interactiveLabels": [
+          "首页总览",
+          "用电服务",
+          "综合能源",
+          "智慧生活",
+          "资讯知识",
+          "合规审计",
+          "运营管理",
+          "退出登录",
+          "切换到暗色模式",
+          "立即处理 →",
+          "查看详情 →",
+          "企业家庭个人园区01234",
+          "查看详细核查报告",
+          "全部审计",
+          "用户管理",
+          "补贴审批",
+          "电价核查",
+          "系统设置"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89043-codex-repair-structure-02-导航-首页总览",
+        "label": "导航:首页总览",
+        "finalUrl": "http://127.0.0.1:49043/",
+        "title": "南方电网能源服务数字生态平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89043/probe/codex-repair-20260605-1652/may-89043-codex-repair-structure-02-导航-首页总览.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89043/probe/codex-repair-20260605-1652/may-89043-codex-repair-structure-02-导航-首页总览.png",
+        "elementCount": 343,
+        "interactiveCount": 20,
+        "interactiveLabels": [
+          "首页总览",
+          "用电服务",
+          "综合能源",
+          "智慧生活",
+          "资讯知识",
+          "合规审计",
+          "运营管理",
+          "退出登录",
+          "切换到暗色模式",
+          "立即处理 →",
+          "查看详情 →",
+          "企业家庭个人园区01234",
+          "查看详细核查报告",
+          "全部审计",
+          "用户管理",
+          "补贴审批",
+          "电价核查",
+          "系统设置"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89043-codex-repair-structure-03-操作-系统设置",
+        "label": "操作:系统设置",
+        "finalUrl": "http://127.0.0.1:49043/admin",
+        "title": "南方电网能源服务数字生态平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89043/probe/codex-repair-20260605-1652/may-89043-codex-repair-structure-03-操作-系统设置.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89043/probe/codex-repair-20260605-1652/may-89043-codex-repair-structure-03-操作-系统设置.png",
+        "elementCount": 564,
+        "interactiveCount": 15,
+        "interactiveLabels": [
+          "首页总览",
+          "用电服务",
+          "综合能源",
+          "智慧生活",
+          "资讯知识",
+          "合规审计",
+          "运营管理",
+          "退出登录",
+          "切换到暗色模式",
+          "1月2月3月4月5月6月0万95万190万285万380万",
+          "1月2月3月4月5月6月0950000190000028500003800000"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89043-codex-repair-structure-04-操作-补贴审批",
+        "label": "操作:补贴审批",
+        "finalUrl": "http://127.0.0.1:49043/",
+        "title": "南方电网能源服务数字生态平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89043/probe/codex-repair-20260605-1652/may-89043-codex-repair-structure-04-操作-补贴审批.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89043/probe/codex-repair-20260605-1652/may-89043-codex-repair-structure-04-操作-补贴审批.png",
+        "elementCount": 343,
+        "interactiveCount": 20,
+        "interactiveLabels": [
+          "首页总览",
+          "用电服务",
+          "综合能源",
+          "智慧生活",
+          "资讯知识",
+          "合规审计",
+          "运营管理",
+          "退出登录",
+          "切换到暗色模式",
+          "立即处理 →",
+          "查看详情 →",
+          "企业家庭个人园区01234",
+          "查看详细核查报告",
+          "全部审计",
+          "用户管理",
+          "补贴审批",
+          "电价核查",
+          "系统设置"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89043-codex-repair-structure-05-二层操作-补贴审批-补贴审批",
+        "label": "二层操作:补贴审批->补贴审批",
+        "finalUrl": "http://127.0.0.1:49043/",
+        "title": "南方电网能源服务数字生态平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89043/probe/codex-repair-20260605-1652/may-89043-codex-repair-structure-05-二层操作-补贴审批-补贴审批.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89043/probe/codex-repair-20260605-1652/may-89043-codex-repair-structure-05-二层操作-补贴审批-补贴审批.png",
+        "elementCount": 343,
+        "interactiveCount": 20,
+        "interactiveLabels": [
+          "首页总览",
+          "用电服务",
+          "综合能源",
+          "智慧生活",
+          "资讯知识",
+          "合规审计",
+          "运营管理",
+          "退出登录",
+          "切换到暗色模式",
+          "立即处理 →",
+          "查看详情 →",
+          "企业家庭个人园区01234",
+          "查看详细核查报告",
+          "全部审计",
+          "用户管理",
+          "补贴审批",
+          "电价核查",
+          "系统设置"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89043-codex-repair-structure-06-导航-用电服务",
+        "label": "导航:用电服务",
+        "finalUrl": "http://127.0.0.1:49043/",
+        "title": "南方电网能源服务数字生态平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89043/probe/codex-repair-20260605-1652/may-89043-codex-repair-structure-06-导航-用电服务.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89043/probe/codex-repair-20260605-1652/may-89043-codex-repair-structure-06-导航-用电服务.png",
+        "elementCount": 348,
+        "interactiveCount": 24,
+        "interactiveLabels": [
+          "首页总览",
+          "用电服务",
+          "电费查询",
+          "电费缴纳",
+          "账单分析",
+          "停电通知",
+          "综合能源",
+          "智慧生活",
+          "资讯知识",
+          "合规审计",
+          "运营管理",
+          "退出登录",
+          "切换到暗色模式",
+          "立即处理 →",
+          "查看详情 →",
+          "企业家庭个人园区01234",
+          "查看详细核查报告",
+          "全部审计",
+          "用户管理",
+          "补贴审批",
+          "电价核查",
+          "系统设置"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89043-codex-repair-structure-07-操作-系统设置",
+        "label": "操作:系统设置",
+        "finalUrl": "http://127.0.0.1:49043/admin",
+        "title": "南方电网能源服务数字生态平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89043/probe/codex-repair-20260605-1652/may-89043-codex-repair-structure-07-操作-系统设置.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89043/probe/codex-repair-20260605-1652/may-89043-codex-repair-structure-07-操作-系统设置.png",
+        "elementCount": 464,
+        "interactiveCount": 19,
+        "interactiveLabels": [
+          "首页总览",
+          "用电服务",
+          "电费查询",
+          "电费缴纳",
+          "账单分析",
+          "停电通知",
+          "综合能源",
+          "智慧生活",
+          "资讯知识",
+          "合规审计",
+          "运营管理",
+          "退出登录",
+          "切换到暗色模式",
+          "本月0万0.03万0.06万0.09万0.12万",
+          "本月03006009001200"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89043-codex-repair-structure-08-操作-查看详情",
+        "label": "操作:查看详情 →",
+        "finalUrl": "http://127.0.0.1:49043/smartlife/devices",
+        "title": "南方电网能源服务数字生态平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89043/probe/codex-repair-20260605-1652/may-89043-codex-repair-structure-08-操作-查看详情.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89043/probe/codex-repair-20260605-1652/may-89043-codex-repair-structure-08-操作-查看详情.png",
+        "elementCount": 197,
+        "interactiveCount": 21,
+        "interactiveLabels": [
+          "首页总览",
+          "用电服务",
+          "综合能源",
+          "智慧生活",
+          "资讯知识",
+          "合规审计",
+          "运营管理",
+          "退出登录",
+          "切换到暗色模式",
+          "添加设备"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89043-codex-repair-structure-09-二层操作-查看详情-添加设备",
+        "label": "二层操作:查看详情 →->添加设备",
+        "finalUrl": "http://127.0.0.1:49043/smartlife/devices",
+        "title": "南方电网能源服务数字生态平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89043/probe/codex-repair-20260605-1652/may-89043-codex-repair-structure-09-二层操作-查看详情-添加设备.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89043/probe/codex-repair-20260605-1652/may-89043-codex-repair-structure-09-二层操作-查看详情-添加设备.png",
+        "elementCount": 224,
+        "interactiveCount": 27,
+        "interactiveLabels": [
+          "首页总览",
+          "用电服务",
+          "综合能源",
+          "智慧生活",
+          "资讯知识",
+          "合规审计",
+          "运营管理",
+          "退出登录",
+          "切换到暗色模式",
+          "添加设备",
+          "请输入设备名称",
+          "灯光 空调 风扇 电视 热水器 其他",
+          "如：客厅",
+          "取消",
+          "添加"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89043-codex-repair-structure-10-导航-综合能源",
+        "label": "导航:综合能源",
+        "finalUrl": "http://127.0.0.1:49043/",
+        "title": "南方电网能源服务数字生态平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89043/probe/codex-repair-20260605-1652/may-89043-codex-repair-structure-10-导航-综合能源.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89043/probe/codex-repair-20260605-1652/may-89043-codex-repair-structure-10-导航-综合能源.png",
+        "elementCount": 347,
+        "interactiveCount": 23,
+        "interactiveLabels": [
+          "首页总览",
+          "用电服务",
+          "综合能源",
+          "能效诊断",
+          "光伏方案",
+          "碳足迹",
+          "智慧生活",
+          "资讯知识",
+          "合规审计",
+          "运营管理",
+          "退出登录",
+          "切换到暗色模式",
+          "立即处理 →",
+          "查看详情 →",
+          "企业家庭个人园区01234",
+          "查看详细核查报告",
+          "全部审计",
+          "用户管理",
+          "补贴审批",
+          "电价核查",
+          "系统设置"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89043-codex-repair-structure-11-操作-系统设置",
+        "label": "操作:系统设置",
+        "finalUrl": "http://127.0.0.1:49043/admin",
+        "title": "南方电网能源服务数字生态平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89043/probe/codex-repair-20260605-1652/may-89043-codex-repair-structure-11-操作-系统设置.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89043/probe/codex-repair-20260605-1652/may-89043-codex-repair-structure-11-操作-系统设置.png",
+        "elementCount": 463,
+        "interactiveCount": 18,
+        "interactiveLabels": [
+          "首页总览",
+          "用电服务",
+          "综合能源",
+          "能效诊断",
+          "光伏方案",
+          "碳足迹",
+          "智慧生活",
+          "资讯知识",
+          "合规审计",
+          "运营管理",
+          "退出登录",
+          "切换到暗色模式",
+          "本月0万0.03万0.06万0.09万0.12万",
+          "本月03006009001200"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89043-codex-repair-structure-12-操作-查看详情",
+        "label": "操作:查看详情 →",
+        "finalUrl": "http://127.0.0.1:49043/smartlife/devices",
+        "title": "南方电网能源服务数字生态平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89043/probe/codex-repair-20260605-1652/may-89043-codex-repair-structure-12-操作-查看详情.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89043/probe/codex-repair-20260605-1652/may-89043-codex-repair-structure-12-操作-查看详情.png",
+        "elementCount": 197,
+        "interactiveCount": 21,
+        "interactiveLabels": [
+          "首页总览",
+          "用电服务",
+          "综合能源",
+          "智慧生活",
+          "资讯知识",
+          "合规审计",
+          "运营管理",
+          "退出登录",
+          "切换到暗色模式",
+          "添加设备"
+        ]
+      }
+    ],
+    "representativeScreenshotUrl": "http://127.0.0.1:49043/",
+    "representativeScreenshotLabel": "你好，系统管理员"
+  },
+  "websiteStructureCapture": {
+    "module": "website_structure_capture",
+    "captureCount": 12,
+    "captures": [
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89043-codex-repair-structure-01-首屏",
+        "label": "首屏",
+        "finalUrl": "http://127.0.0.1:49043/",
+        "title": "南方电网能源服务数字生态平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89043/probe/codex-repair-20260605-1652/may-89043-codex-repair-structure-01-首屏.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89043/probe/codex-repair-20260605-1652/may-89043-codex-repair-structure-01-首屏.png",
+        "elementCount": 350,
+        "interactiveCount": 20,
+        "interactiveLabels": [
+          "首页总览",
+          "用电服务",
+          "综合能源",
+          "智慧生活",
+          "资讯知识",
+          "合规审计",
+          "运营管理",
+          "退出登录",
+          "切换到暗色模式",
+          "立即处理 →",
+          "查看详情 →",
+          "企业家庭个人园区01234",
+          "查看详细核查报告",
+          "全部审计",
+          "用户管理",
+          "补贴审批",
+          "电价核查",
+          "系统设置"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89043-codex-repair-structure-02-导航-首页总览",
+        "label": "导航:首页总览",
+        "finalUrl": "http://127.0.0.1:49043/",
+        "title": "南方电网能源服务数字生态平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89043/probe/codex-repair-20260605-1652/may-89043-codex-repair-structure-02-导航-首页总览.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89043/probe/codex-repair-20260605-1652/may-89043-codex-repair-structure-02-导航-首页总览.png",
+        "elementCount": 343,
+        "interactiveCount": 20,
+        "interactiveLabels": [
+          "首页总览",
+          "用电服务",
+          "综合能源",
+          "智慧生活",
+          "资讯知识",
+          "合规审计",
+          "运营管理",
+          "退出登录",
+          "切换到暗色模式",
+          "立即处理 →",
+          "查看详情 →",
+          "企业家庭个人园区01234",
+          "查看详细核查报告",
+          "全部审计",
+          "用户管理",
+          "补贴审批",
+          "电价核查",
+          "系统设置"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89043-codex-repair-structure-03-操作-系统设置",
+        "label": "操作:系统设置",
+        "finalUrl": "http://127.0.0.1:49043/admin",
+        "title": "南方电网能源服务数字生态平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89043/probe/codex-repair-20260605-1652/may-89043-codex-repair-structure-03-操作-系统设置.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89043/probe/codex-repair-20260605-1652/may-89043-codex-repair-structure-03-操作-系统设置.png",
+        "elementCount": 564,
+        "interactiveCount": 15,
+        "interactiveLabels": [
+          "首页总览",
+          "用电服务",
+          "综合能源",
+          "智慧生活",
+          "资讯知识",
+          "合规审计",
+          "运营管理",
+          "退出登录",
+          "切换到暗色模式",
+          "1月2月3月4月5月6月0万95万190万285万380万",
+          "1月2月3月4月5月6月0950000190000028500003800000"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89043-codex-repair-structure-04-操作-补贴审批",
+        "label": "操作:补贴审批",
+        "finalUrl": "http://127.0.0.1:49043/",
+        "title": "南方电网能源服务数字生态平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89043/probe/codex-repair-20260605-1652/may-89043-codex-repair-structure-04-操作-补贴审批.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89043/probe/codex-repair-20260605-1652/may-89043-codex-repair-structure-04-操作-补贴审批.png",
+        "elementCount": 343,
+        "interactiveCount": 20,
+        "interactiveLabels": [
+          "首页总览",
+          "用电服务",
+          "综合能源",
+          "智慧生活",
+          "资讯知识",
+          "合规审计",
+          "运营管理",
+          "退出登录",
+          "切换到暗色模式",
+          "立即处理 →",
+          "查看详情 →",
+          "企业家庭个人园区01234",
+          "查看详细核查报告",
+          "全部审计",
+          "用户管理",
+          "补贴审批",
+          "电价核查",
+          "系统设置"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89043-codex-repair-structure-05-二层操作-补贴审批-补贴审批",
+        "label": "二层操作:补贴审批->补贴审批",
+        "finalUrl": "http://127.0.0.1:49043/",
+        "title": "南方电网能源服务数字生态平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89043/probe/codex-repair-20260605-1652/may-89043-codex-repair-structure-05-二层操作-补贴审批-补贴审批.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89043/probe/codex-repair-20260605-1652/may-89043-codex-repair-structure-05-二层操作-补贴审批-补贴审批.png",
+        "elementCount": 343,
+        "interactiveCount": 20,
+        "interactiveLabels": [
+          "首页总览",
+          "用电服务",
+          "综合能源",
+          "智慧生活",
+          "资讯知识",
+          "合规审计",
+          "运营管理",
+          "退出登录",
+          "切换到暗色模式",
+          "立即处理 →",
+          "查看详情 →",
+          "企业家庭个人园区01234",
+          "查看详细核查报告",
+          "全部审计",
+          "用户管理",
+          "补贴审批",
+          "电价核查",
+          "系统设置"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89043-codex-repair-structure-06-导航-用电服务",
+        "label": "导航:用电服务",
+        "finalUrl": "http://127.0.0.1:49043/",
+        "title": "南方电网能源服务数字生态平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89043/probe/codex-repair-20260605-1652/may-89043-codex-repair-structure-06-导航-用电服务.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89043/probe/codex-repair-20260605-1652/may-89043-codex-repair-structure-06-导航-用电服务.png",
+        "elementCount": 348,
+        "interactiveCount": 24,
+        "interactiveLabels": [
+          "首页总览",
+          "用电服务",
+          "电费查询",
+          "电费缴纳",
+          "账单分析",
+          "停电通知",
+          "综合能源",
+          "智慧生活",
+          "资讯知识",
+          "合规审计",
+          "运营管理",
+          "退出登录",
+          "切换到暗色模式",
+          "立即处理 →",
+          "查看详情 →",
+          "企业家庭个人园区01234",
+          "查看详细核查报告",
+          "全部审计",
+          "用户管理",
+          "补贴审批",
+          "电价核查",
+          "系统设置"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89043-codex-repair-structure-07-操作-系统设置",
+        "label": "操作:系统设置",
+        "finalUrl": "http://127.0.0.1:49043/admin",
+        "title": "南方电网能源服务数字生态平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89043/probe/codex-repair-20260605-1652/may-89043-codex-repair-structure-07-操作-系统设置.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89043/probe/codex-repair-20260605-1652/may-89043-codex-repair-structure-07-操作-系统设置.png",
+        "elementCount": 464,
+        "interactiveCount": 19,
+        "interactiveLabels": [
+          "首页总览",
+          "用电服务",
+          "电费查询",
+          "电费缴纳",
+          "账单分析",
+          "停电通知",
+          "综合能源",
+          "智慧生活",
+          "资讯知识",
+          "合规审计",
+          "运营管理",
+          "退出登录",
+          "切换到暗色模式",
+          "本月0万0.03万0.06万0.09万0.12万",
+          "本月03006009001200"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89043-codex-repair-structure-08-操作-查看详情",
+        "label": "操作:查看详情 →",
+        "finalUrl": "http://127.0.0.1:49043/smartlife/devices",
+        "title": "南方电网能源服务数字生态平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89043/probe/codex-repair-20260605-1652/may-89043-codex-repair-structure-08-操作-查看详情.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89043/probe/codex-repair-20260605-1652/may-89043-codex-repair-structure-08-操作-查看详情.png",
+        "elementCount": 197,
+        "interactiveCount": 21,
+        "interactiveLabels": [
+          "首页总览",
+          "用电服务",
+          "综合能源",
+          "智慧生活",
+          "资讯知识",
+          "合规审计",
+          "运营管理",
+          "退出登录",
+          "切换到暗色模式",
+          "添加设备"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89043-codex-repair-structure-09-二层操作-查看详情-添加设备",
+        "label": "二层操作:查看详情 →->添加设备",
+        "finalUrl": "http://127.0.0.1:49043/smartlife/devices",
+        "title": "南方电网能源服务数字生态平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89043/probe/codex-repair-20260605-1652/may-89043-codex-repair-structure-09-二层操作-查看详情-添加设备.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89043/probe/codex-repair-20260605-1652/may-89043-codex-repair-structure-09-二层操作-查看详情-添加设备.png",
+        "elementCount": 224,
+        "interactiveCount": 27,
+        "interactiveLabels": [
+          "首页总览",
+          "用电服务",
+          "综合能源",
+          "智慧生活",
+          "资讯知识",
+          "合规审计",
+          "运营管理",
+          "退出登录",
+          "切换到暗色模式",
+          "添加设备",
+          "请输入设备名称",
+          "灯光 空调 风扇 电视 热水器 其他",
+          "如：客厅",
+          "取消",
+          "添加"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89043-codex-repair-structure-10-导航-综合能源",
+        "label": "导航:综合能源",
+        "finalUrl": "http://127.0.0.1:49043/",
+        "title": "南方电网能源服务数字生态平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89043/probe/codex-repair-20260605-1652/may-89043-codex-repair-structure-10-导航-综合能源.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89043/probe/codex-repair-20260605-1652/may-89043-codex-repair-structure-10-导航-综合能源.png",
+        "elementCount": 347,
+        "interactiveCount": 23,
+        "interactiveLabels": [
+          "首页总览",
+          "用电服务",
+          "综合能源",
+          "能效诊断",
+          "光伏方案",
+          "碳足迹",
+          "智慧生活",
+          "资讯知识",
+          "合规审计",
+          "运营管理",
+          "退出登录",
+          "切换到暗色模式",
+          "立即处理 →",
+          "查看详情 →",
+          "企业家庭个人园区01234",
+          "查看详细核查报告",
+          "全部审计",
+          "用户管理",
+          "补贴审批",
+          "电价核查",
+          "系统设置"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89043-codex-repair-structure-11-操作-系统设置",
+        "label": "操作:系统设置",
+        "finalUrl": "http://127.0.0.1:49043/admin",
+        "title": "南方电网能源服务数字生态平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89043/probe/codex-repair-20260605-1652/may-89043-codex-repair-structure-11-操作-系统设置.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89043/probe/codex-repair-20260605-1652/may-89043-codex-repair-structure-11-操作-系统设置.png",
+        "elementCount": 463,
+        "interactiveCount": 18,
+        "interactiveLabels": [
+          "首页总览",
+          "用电服务",
+          "综合能源",
+          "能效诊断",
+          "光伏方案",
+          "碳足迹",
+          "智慧生活",
+          "资讯知识",
+          "合规审计",
+          "运营管理",
+          "退出登录",
+          "切换到暗色模式",
+          "本月0万0.03万0.06万0.09万0.12万",
+          "本月03006009001200"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89043-codex-repair-structure-12-操作-查看详情",
+        "label": "操作:查看详情 →",
+        "finalUrl": "http://127.0.0.1:49043/smartlife/devices",
+        "title": "南方电网能源服务数字生态平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89043/probe/codex-repair-20260605-1652/may-89043-codex-repair-structure-12-操作-查看详情.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89043/probe/codex-repair-20260605-1652/may-89043-codex-repair-structure-12-操作-查看详情.png",
+        "elementCount": 197,
+        "interactiveCount": 21,
+        "interactiveLabels": [
+          "首页总览",
+          "用电服务",
+          "综合能源",
+          "智慧生活",
+          "资讯知识",
+          "合规审计",
+          "运营管理",
+          "退出登录",
+          "切换到暗色模式",
+          "添加设备"
+        ]
+      }
+    ]
+  },
+  "screenshotMetrics": {
+    "width": 1888,
+    "height": 1000,
+    "scrollWidth": 1856,
+    "scrollHeight": 1000
+  },
+  "initialBodyTextPreview": "南方电网\n\n能源服务数字生态平台\n\n登录\n用户名\n密码\n登录\n演示账号\nadmin:password123 / zhangsan:password123 / huawei_co:password123\n管理员\n个人用户\n企业用户\n没有账户？立即注册\n\n© 2026 南方电网能源服务股份有限公司",
+  "bodyTextPreview": "南方电网\n能源服务数字生态平台\n首页总览\n用电服务\n综合能源\n智慧生活\n资讯知识\n合规审计\n运营管理\n系统管理员\n企业用户\n系统管理员\n你好，系统管理员\n\n系统管理员 · 南方电网能源服务数字生态平台运营控制台\n\n平台总用户\n13\n较上月 +12.5%\n累计电费收入\n¥71,547\n较上月 +8.3%\n待审补贴申请\n2\n立即处理 →\n活跃设备告警\n0\n查看详情 →\n用户类型分布\n按客群分类\n企业\n家庭\n个人\n园区\n0\n1\n2\n3\n4\n电价执行核查\n正常账单\n0\n异常账单\n0\n查看详细核查报告\n审计异常预警\n全部审计\n\n暂无审计异常\n\n快捷操作\n用户管理\n补贴审批\n电价核查\n系统设置\n0",
+  "apiBase": "http://127.0.0.1:59043",
+  "businessGoalPreview": "",
+  "apiResponses": [
+    {
+      "method": "POST",
+      "status": 200,
+      "url": "http://127.0.0.1:49043/api/auth/login"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49043/api/energy/dashboard"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49043/api/energy/dashboard"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49043/api/auth/profile"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49043/api/energy/dashboard"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49043/api/energy/dashboard"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49043/api/energy/dashboard"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49043/api/energy/dashboard"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49043/api/energy/dashboard"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49043/api/energy/dashboard"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49043/api/admin/stats"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49043/api/admin/stats"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49043/api/auth/profile"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49043/api/energy/dashboard"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49043/api/energy/dashboard"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49043/api/smartlife/devices"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49043/api/smartlife/devices"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49043/api/auth/profile"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49043/api/energy/dashboard"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49043/api/energy/dashboard"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49043/api/admin/stats"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49043/api/admin/stats"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49043/api/auth/profile"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49043/api/energy/dashboard"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49043/api/energy/dashboard"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49043/api/smartlife/devices"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49043/api/smartlife/devices"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49043/api/auth/profile"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49043/api/energy/dashboard"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49043/api/energy/dashboard"
+    }
+  ],
+  "apiChecks": [
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59043/api/health",
+      "path": "/api/health",
+      "status": 200,
+      "ok": true,
+      "bodyPreview": "{\"success\":true,\"message\":\"ok\"}"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59043/api/energy/dashboard",
+      "path": "/api/energy/dashboard",
+      "status": 200,
+      "ok": true,
+      "bodyPreview": "{\"success\":true,\"data\":{\"baseData\":{\"latestBills\":[{\"billing_period\":\"2026-04\",\"total_kwh\":290,\"peak_kwh\":100,\"valley_kwh\":60,\"total_amount\":203},{\"billing_period\":\"2026-03\",\"total_kwh\":310,\"peak_kwh\":110,\"valley_kwh\":70,\"total_amount\":217},{\"billing_period\":\"2026-02\",\"total_kwh\":280,\"peak_kwh\":95,\"valley_kwh\":65,\"total_amount\":196},{\"billing_period\":\"2026-01\",\"total_kwh\":350,\"peak_kwh\":120,\"valley_kwh\":80,\"total_amount\":245}],\"peakValleyRatio\":{\"peak\":\"0.35\",\"valley\":\"0.22\",\"flat\":\"0.43\"},\"devi"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59043/api/auth/profile",
+      "path": "/api/auth/profile",
+      "status": 200,
+      "ok": true,
+      "bodyPreview": "{\"success\":true,\"data\":{\"id\":1,\"username\":\"admin\",\"real_name\":\"系统管理员\",\"customer_type\":\"enterprise\",\"role\":\"admin\",\"phone\":\"13800000001\",\"email\":\"admin@csg.cn\",\"company_name\":\"南方电网\",\"address\":\"广州市天河区珠江新城\",\"points_balance\":99999}}"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59043/api/admin/stats",
+      "path": "/api/admin/stats",
+      "status": 200,
+      "ok": true,
+      "bodyPreview": "{\"success\":true,\"data\":{\"users\":{\"total_users\":13,\"individual_count\":3,\"family_count\":3,\"enterprise_count\":4,\"park_count\":3,\"total_points\":145265},\"bills\":{\"total_bills\":13,\"total_kwh\":211930,\"total_revenue\":148351,\"paid_revenue\":71547,\"unpaid_revenue\":12404,\"overdue_revenue\":64400},\"energy\":{\"total_report_kwh\":1130250,\"avg_efficiency_score\":69.22222222222223},\"devices\":{\"total_devices\":10,\"online_devices\":8,\"total_power\":85.12},\"subsidies\":{\"total_subsidies\":5,\"approved_subsidies\":55000,\"disbur"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59043/api/smartlife/devices",
+      "path": "/api/smartlife/devices",
+      "status": 200,
+      "ok": true,
+      "bodyPreview": "{\"success\":true,\"data\":[{\"id\":1,\"user_id\":1,\"device_name\":\"客厅空调\",\"device_type\":\"air_conditioner\",\"status\":\"online\",\"power_consumption\":1.5,\"last_active\":\"2026-06-05 14:30:00\",\"created_at\":\"2026-06-05 10:55:10\"},{\"id\":2,\"user_id\":1,\"device_name\":\"智能电热水器\",\"device_type\":\"water_heater\",\"status\":\"online\",\"power_consumption\":2,\"last_active\":\"2026-06-05 12:00:00\",\"created_at\":\"2026-06-05 10:55:10\"},{\"id\":3,\"user_id\":1,\"device_name\":\"客厅照明\",\"device_type\":\"lighting\",\"status\":\"offline\",\"power_consumption\":"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59043/api/auth/me",
+      "path": "/api/auth/me",
+      "status": 404,
+      "ok": false,
+      "bodyPreview": "{\"success\":false,\"error\":\"API not found\"}"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59043/api/users/profile",
+      "path": "/api/users/profile",
+      "status": 404,
+      "ok": false,
+      "bodyPreview": "{\"success\":false,\"error\":\"API not found\"}"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59043/api/user/profile",
+      "path": "/api/user/profile",
+      "status": 404,
+      "ok": false,
+      "bodyPreview": "{\"success\":false,\"error\":\"API not found\"}"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59043/api/admin/dashboard",
+      "path": "/api/admin/dashboard",
+      "status": 404,
+      "ok": false,
+      "bodyPreview": "{\"success\":false,\"error\":\"API not found\"}"
+    }
+  ],
+  "dialogs": [],
+  "consoleMessages": [
+    {
+      "type": "debug",
+      "text": "[vite] connecting...",
+      "location": {
+        "url": "http://127.0.0.1:49043/@vite/client",
+        "lineNumber": 788,
+        "columnNumber": 8
+      }
+    },
+    {
+      "type": "debug",
+      "text": "[vite] connected.",
+      "location": {
+        "url": "http://127.0.0.1:49043/@vite/client",
+        "lineNumber": 911,
+        "columnNumber": 14
+      }
+    },
+    {
+      "type": "info",
+      "text": "%cDownload the React DevTools for a better development experience: https://reactjs.org/link/react-devtools font-weight:bold",
+      "location": {
+        "url": "http://127.0.0.1:49043/node_modules/.vite/deps/chunk-KDCVS43I.js?v=e4d4104b",
+        "lineNumber": 21608,
+        "columnNumber": 24
+      }
+    },
+    {
+      "type": "verbose",
+      "text": "[DOM] Input elements should have autocomplete attributes (suggested: \"current-password\"): (More info: https://goo.gl/9p2vKq) %o",
+      "location": {
+        "url": "http://127.0.0.1:49043/login",
+        "lineNumber": 0,
+        "columnNumber": 0
+      }
+    },
+    {
+      "type": "warning",
+      "text": "The width(-1) and height(-1) of chart should be greater than 0,\n       please check the style of container, or the props width(100%) and height(100%),\n       or add a minWidth(0) or minHeight(undefined) or use aspect(undefined) to control the\n       height and width.",
+      "location": {
+        "url": "http://127.0.0.1:49043/node_modules/.vite/deps/recharts.js?v=e4d4104b",
+        "lineNumber": 8705,
+        "columnNumber": 16
+      }
+    },
+    {
+      "type": "warning",
+      "text": "The width(-1) and height(-1) of chart should be greater than 0,\n       please check the style of container, or the props width(100%) and height(100%),\n       or add a minWidth(0) or minHeight(undefined) or use aspect(undefined) to control the\n       height and width.",
+      "location": {
+        "url": "http://127.0.0.1:49043/node_modules/.vite/deps/recharts.js?v=e4d4104b",
+        "lineNumber": 8705,
+        "columnNumber": 16
+      }
+    },
+    {
+      "type": "log",
+      "text": "[vite] server connection lost. Polling for restart...",
+      "location": {
+        "url": "http://127.0.0.1:49043/@vite/client",
+        "lineNumber": 963,
+        "columnNumber": 18
+      }
+    },
+    {
+      "type": "error",
+      "text": "Failed to load resource: net::ERR_CONNECTION_REFUSED",
+      "location": {
+        "url": "http://127.0.0.1:49043/api/admin/stats",
+        "lineNumber": 0,
+        "columnNumber": 0
+      }
+    },
+    {
+      "type": "error",
+      "text": "Failed to load resource: net::ERR_CONNECTION_REFUSED",
+      "location": {
+        "url": "http://127.0.0.1:49043/api/admin/stats",
+        "lineNumber": 0,
+        "columnNumber": 0
+      }
+    },
+    {
+      "type": "warning",
+      "text": "The width(-1) and height(-1) of chart should be greater than 0,\n       please check the style of container, or the props width(100%) and height(100%),\n       or add a minWidth(0) or minHeight(undefined) or use aspect(undefined) to control the\n       height and width.",
+      "location": {
+        "url": "http://127.0.0.1:49043/node_modules/.vite/deps/recharts.js?v=e4d4104b",
+        "lineNumber": 8705,
+        "columnNumber": 16
+      }
+    },
+    {
+      "type": "warning",
+      "text": "The width(-1) and height(-1) of chart should be greater than 0,\n       please check the style of container, or the props width(100%) and height(100%),\n       or add a minWidth(0) or minHeight(undefined) or use aspect(undefined) to control the\n       height and width.",
+      "location": {
+        "url": "http://127.0.0.1:49043/node_modules/.vite/deps/recharts.js?v=e4d4104b",
+        "lineNumber": 8705,
+        "columnNumber": 16
+      }
+    },
+    {
+      "type": "warning",
+      "text": "The width(-1) and height(-1) of chart should be greater than 0,\n       please check the style of container, or the props width(100%) and height(100%),\n       or add a minWidth(0) or minHeight(undefined) or use aspect(undefined) to control the\n       height and width.",
+      "location": {
+        "url": "http://127.0.0.1:49043/node_modules/.vite/deps/recharts.js?v=e4d4104b",
+        "lineNumber": 8705,
+        "columnNumber": 16
+      }
+    },
+    {
+      "type": "warning",
+      "text": "The width(-1) and height(-1) of chart should be greater than 0,\n       please check the style of container, or the props width(100%) and height(100%),\n       or add a minWidth(0) or minHeight(undefined) or use aspect(undefined) to control the\n       height and width.",
+      "location": {
+        "url": "http://127.0.0.1:49043/node_modules/.vite/deps/recharts.js?v=e4d4104b",
+        "lineNumber": 8705,
+        "columnNumber": 16
+      }
+    },
+    {
+      "type": "warning",
+      "text": "The width(-1) and height(-1) of chart should be greater than 0,\n       please check the style of container, or the props width(100%) and height(100%),\n       or add a minWidth(0) or minHeight(undefined) or use aspect(undefined) to control the\n       height and width.",
+      "location": {
+        "url": "http://127.0.0.1:49043/node_modules/.vite/deps/recharts.js?v=e4d4104b",
+        "lineNumber": 8705,
+        "columnNumber": 16
+      }
+    },
+    {
+      "type": "warning",
+      "text": "The width(-1) and height(-1) of chart should be greater than 0,\n       please check the style of container, or the props width(100%) and height(100%),\n       or add a minWidth(0) or minHeight(undefined) or use aspect(undefined) to control the\n       height and width.",
+      "location": {
+        "url": "http://127.0.0.1:49043/node_modules/.vite/deps/recharts.js?v=e4d4104b",
+        "lineNumber": 8705,
+        "columnNumber": 16
+      }
+    },
+    {
+      "type": "error",
+      "text": "Failed to load resource: net::ERR_CONNECTION_REFUSED",
+      "location": {
+        "url": "http://127.0.0.1:49043/favicon.svg",
+        "lineNumber": 0,
+        "columnNumber": 0
+      }
+    },
+    {
+      "type": "error",
+      "text": "WebSocket connection to 'ws://127.0.0.1:49043/' failed: Error in connection establishment: net::ERR_CONNECTION_REFUSED",
+      "location": {
+        "url": "http://127.0.0.1:49043/@vite/client",
+        "lineNumber": 1034,
+        "columnNumber": 0
+      }
+    },
+    {
+      "type": "error",
+      "text": "WebSocket connection to 'ws://127.0.0.1:49043/' failed: Error in connection establishment: net::ERR_CONNECTION_REFUSED",
+      "location": {
+        "url": "http://127.0.0.1:49043/@vite/client",
+        "lineNumber": 1034,
+        "columnNumber": 0
+      }
+    },
+    {
+      "type": "debug",
+      "text": "[vite] connecting...",
+      "location": {
+        "url": "http://127.0.0.1:49043/@vite/client",
+        "lineNumber": 788,
+        "columnNumber": 8
+      }
+    },
+    {
+      "type": "debug",
+      "text": "[vite] connected.",
+      "location": {
+        "url": "http://127.0.0.1:49043/@vite/client",
+        "lineNumber": 911,
+        "columnNumber": 14
+      }
+    },
+    {
+      "type": "info",
+      "text": "%cDownload the React DevTools for a better development experience: https://reactjs.org/link/react-devtools font-weight:bold",
+      "location": {
+        "url": "http://127.0.0.1:49043/node_modules/.vite/deps/chunk-KDCVS43I.js?v=e4d4104b",
+        "lineNumber": 21608,
+        "columnNumber": 24
+      }
+    },
+    {
+      "type": "warning",
+      "text": "The width(-1) and height(-1) of chart should be greater than 0,\n       please check the style of container, or the props width(100%) and height(100%),\n       or add a minWidth(0) or minHeight(undefined) or use aspect(undefined) to control the\n       height and width.",
+      "location": {
+        "url": "http://127.0.0.1:49043/node_modules/.vite/deps/recharts.js?v=e4d4104b",
+        "lineNumber": 8705,
+        "columnNumber": 16
+      }
+    },
+    {
+      "type": "warning",
+      "text": "The width(-1) and height(-1) of chart should be greater than 0,\n       please check the style of container, or the props width(100%) and height(100%),\n       or add a minWidth(0) or minHeight(undefined) or use aspect(undefined) to control the\n       height and width.",
+      "location": {
+        "url": "http://127.0.0.1:49043/node_modules/.vite/deps/recharts.js?v=e4d4104b",
+        "lineNumber": 8705,
+        "columnNumber": 16
+      }
+    },
+    {
+      "type": "warning",
+      "text": "The width(-1) and height(-1) of chart should be greater than 0,\n       please check the style of container, or the props width(100%) and height(100%),\n       or add a minWidth(0) or minHeight(undefined) or use aspect(undefined) to control the\n       height and width.",
+      "location": {
+        "url": "http://127.0.0.1:49043/node_modules/.vite/deps/recharts.js?v=e4d4104b",
+        "lineNumber": 8705,
+        "columnNumber": 16
+      }
+    },
+    {
+      "type": "warning",
+      "text": "The width(-1) and height(-1) of chart should be greater than 0,\n       please check the style of container, or the props width(100%) and height(100%),\n       or add a minWidth(0) or minHeight(undefined) or use aspect(undefined) to control the\n       height and width.",
+      "location": {
+        "url": "http://127.0.0.1:49043/node_modules/.vite/deps/recharts.js?v=e4d4104b",
+        "lineNumber": 8705,
+        "columnNumber": 16
+      }
+    },
+    {
+      "type": "warning",
+      "text": "The width(-1) and height(-1) of chart should be greater than 0,\n       please check the style of container, or the props width(100%) and height(100%),\n       or add a minWidth(0) or minHeight(undefined) or use aspect(undefined) to control the\n       height and width.",
+      "location": {
+        "url": "http://127.0.0.1:49043/node_modules/.vite/deps/recharts.js?v=e4d4104b",
+        "lineNumber": 8705,
+        "columnNumber": 16
+      }
+    },
+    {
+      "type": "warning",
+      "text": "The width(-1) and height(-1) of chart should be greater than 0,\n       please check the style of container, or the props width(100%) and height(100%),\n       or add a minWidth(0) or minHeight(undefined) or use aspect(undefined) to control the\n       height and width.",
+      "location": {
+        "url": "http://127.0.0.1:49043/node_modules/.vite/deps/recharts.js?v=e4d4104b",
+        "lineNumber": 8705,
+        "columnNumber": 16
+      }
+    },
+    {
+      "type": "warning",
+      "text": "The width(-1) and height(-1) of chart should be greater than 0,\n       please check the style of container, or the props width(100%) and height(100%),\n       or add a minWidth(0) or minHeight(undefined) or use aspect(undefined) to control the\n       height and width.",
+      "location": {
+        "url": "http://127.0.0.1:49043/node_modules/.vite/deps/recharts.js?v=e4d4104b",
+        "lineNumber": 8705,
+        "columnNumber": 16
+      }
+    },
+    {
+      "type": "warning",
+      "text": "The width(-1) and height(-1) of chart should be greater than 0,\n       please check the style of container, or the props width(100%) and height(100%),\n       or add a minWidth(0) or minHeight(undefined) or use aspect(undefined) to control the\n       height and width.",
+      "location": {
+        "url": "http://127.0.0.1:49043/node_modules/.vite/deps/recharts.js?v=e4d4104b",
+        "lineNumber": 8705,
+        "columnNumber": 16
+      }
+    },
+    {
+      "type": "warning",
+      "text": "The width(-1) and height(-1) of chart should be greater than 0,\n       please check the style of container, or the props width(100%) and height(100%),\n       or add a minWidth(0) or minHeight(undefined) or use aspect(undefined) to control the\n       height and width.",
+      "location": {
+        "url": "http://127.0.0.1:49043/node_modules/.vite/deps/recharts.js?v=e4d4104b",
+        "lineNumber": 8705,
+        "columnNumber": 16
+      }
+    },
+    {
+      "type": "warning",
+      "text": "The width(-1) and height(-1) of chart should be greater than 0,\n       please check the style of container, or the props width(100%) and height(100%),\n       or add a minWidth(0) or minHeight(undefined) or use aspect(undefined) to control the\n       height and width.",
+      "location": {
+        "url": "http://127.0.0.1:49043/node_modules/.vite/deps/recharts.js?v=e4d4104b",
+        "lineNumber": 8705,
+        "columnNumber": 16
+      }
+    },
+    {
+      "type": "warning",
+      "text": "The width(-1) and height(-1) of chart should be greater than 0,\n       please check the style of container, or the props width(100%) and height(100%),\n       or add a minWidth(0) or minHeight(undefined) or use aspect(undefined) to control the\n       height and width.",
+      "location": {
+        "url": "http://127.0.0.1:49043/node_modules/.vite/deps/recharts.js?v=e4d4104b",
+        "lineNumber": 8705,
+        "columnNumber": 16
+      }
+    },
+    {
+      "type": "warning",
+      "text": "The width(-1) and height(-1) of chart should be greater than 0,\n       please check the style of container, or the props width(100%) and height(100%),\n       or add a minWidth(0) or minHeight(undefined) or use aspect(undefined) to control the\n       height and width.",
+      "location": {
+        "url": "http://127.0.0.1:49043/node_modules/.vite/deps/recharts.js?v=e4d4104b",
+        "lineNumber": 8705,
+        "columnNumber": 16
+      }
+    },
+    {
+      "type": "debug",
+      "text": "[vite] connecting...",
+      "location": {
+        "url": "http://127.0.0.1:49043/@vite/client",
+        "lineNumber": 788,
+        "columnNumber": 8
+      }
+    },
+    {
+      "type": "debug",
+      "text": "[vite] connected.",
+      "location": {
+        "url": "http://127.0.0.1:49043/@vite/client",
+        "lineNumber": 911,
+        "columnNumber": 14
+      }
+    },
+    {
+      "type": "info",
+      "text": "%cDownload the React DevTools for a better development experience: https://reactjs.org/link/react-devtools font-weight:bold",
+      "location": {
+        "url": "http://127.0.0.1:49043/node_modules/.vite/deps/chunk-KDCVS43I.js?v=e4d4104b",
+        "lineNumber": 21608,
+        "columnNumber": 24
+      }
+    },
+    {
+      "type": "warning",
+      "text": "The width(-1) and height(-1) of chart should be greater than 0,\n       please check the style of container, or the props width(100%) and height(100%),\n       or add a minWidth(0) or minHeight(undefined) or use aspect(undefined) to control the\n       height and width.",
+      "location": {
+        "url": "http://127.0.0.1:49043/node_modules/.vite/deps/recharts.js?v=e4d4104b",
+        "lineNumber": 8705,
+        "columnNumber": 16
+      }
+    },
+    {
+      "type": "warning",
+      "text": "The width(-1) and height(-1) of chart should be greater than 0,\n       please check the style of container, or the props width(100%) and height(100%),\n       or add a minWidth(0) or minHeight(undefined) or use aspect(undefined) to control the\n       height and width.",
+      "location": {
+        "url": "http://127.0.0.1:49043/node_modules/.vite/deps/recharts.js?v=e4d4104b",
+        "lineNumber": 8705,
+        "columnNumber": 16
+      }
+    },
+    {
+      "type": "debug",
+      "text": "[vite] connecting...",
+      "location": {
+        "url": "http://127.0.0.1:49043/@vite/client",
+        "lineNumber": 788,
+        "columnNumber": 8
+      }
+    },
+    {
+      "type": "debug",
+      "text": "[vite] connected.",
+      "location": {
+        "url": "http://127.0.0.1:49043/@vite/client",
+        "lineNumber": 911,
+        "columnNumber": 14
+      }
+    },
+    {
+      "type": "info",
+      "text": "%cDownload the React DevTools for a better development experience: https://reactjs.org/link/react-devtools font-weight:bold",
+      "location": {
+        "url": "http://127.0.0.1:49043/node_modules/.vite/deps/chunk-KDCVS43I.js?v=e4d4104b",
+        "lineNumber": 21608,
+        "columnNumber": 24
+      }
+    },
+    {
+      "type": "warning",
+      "text": "The width(-1) and height(-1) of chart should be greater than 0,\n       please check the style of container, or the props width(100%) and height(100%),\n       or add a minWidth(0) or minHeight(undefined) or use aspect(undefined) to control the\n       height and width.",
+      "location": {
+        "url": "http://127.0.0.1:49043/node_modules/.vite/deps/recharts.js?v=e4d4104b",
+        "lineNumber": 8705,
+        "columnNumber": 16
+      }
+    },
+    {
+      "type": "warning",
+      "text": "The width(-1) and height(-1) of chart should be greater than 0,\n       please check the style of container, or the props width(100%) and height(100%),\n       or add a minWidth(0) or minHeight(undefined) or use aspect(undefined) to control the\n       height and width.",
+      "location": {
+        "url": "http://127.0.0.1:49043/node_modules/.vite/deps/recharts.js?v=e4d4104b",
+        "lineNumber": 8705,
+        "columnNumber": 16
+      }
+    },
+    {
+      "type": "warning",
+      "text": "The width(-1) and height(-1) of chart should be greater than 0,\n       please check the style of container, or the props width(100%) and height(100%),\n       or add a minWidth(0) or minHeight(undefined) or use aspect(undefined) to control the\n       height and width.",
+      "location": {
+        "url": "http://127.0.0.1:49043/node_modules/.vite/deps/recharts.js?v=e4d4104b",
+        "lineNumber": 8705,
+        "columnNumber": 16
+      }
+    },
+    {
+      "type": "warning",
+      "text": "The width(-1) and height(-1) of chart should be greater than 0,\n       please check the style of container, or the props width(100%) and height(100%),\n       or add a minWidth(0) or minHeight(undefined) or use aspect(undefined) to control the\n       height and width.",
+      "location": {
+        "url": "http://127.0.0.1:49043/node_modules/.vite/deps/recharts.js?v=e4d4104b",
+        "lineNumber": 8705,
+        "columnNumber": 16
+      }
+    },
+    {
+      "type": "warning",
+      "text": "The width(-1) and height(-1) of chart should be greater than 0,\n       please check the style of container, or the props width(100%) and height(100%),\n       or add a minWidth(0) or minHeight(undefined) or use aspect(undefined) to control the\n       height and width.",
+      "location": {
+        "url": "http://127.0.0.1:49043/node_modules/.vite/deps/recharts.js?v=e4d4104b",
+        "lineNumber": 8705,
+        "columnNumber": 16
+      }
+    },
+    {
+      "type": "warning",
+      "text": "The width(-1) and height(-1) of chart should be greater than 0,\n       please check the style of container, or the props width(100%) and height(100%),\n       or add a minWidth(0) or minHeight(undefined) or use aspect(undefined) to control the\n       height and width.",
+      "location": {
+        "url": "http://127.0.0.1:49043/node_modules/.vite/deps/recharts.js?v=e4d4104b",
+        "lineNumber": 8705,
+        "columnNumber": 16
+      }
+    },
+    {
+      "type": "warning",
+      "text": "The width(-1) and height(-1) of chart should be greater than 0,\n       please check the style of container, or the props width(100%) and height(100%),\n       or add a minWidth(0) or minHeight(undefined) or use aspect(undefined) to control the\n       height and width.",
+      "location": {
+        "url": "http://127.0.0.1:49043/node_modules/.vite/deps/recharts.js?v=e4d4104b",
+        "lineNumber": 8705,
+        "columnNumber": 16
+      }
+    },
+    {
+      "type": "warning",
+      "text": "The width(-1) and height(-1) of chart should be greater than 0,\n       please check the style of container, or the props width(100%) and height(100%),\n       or add a minWidth(0) or minHeight(undefined) or use aspect(undefined) to control the\n       height and width.",
+      "location": {
+        "url": "http://127.0.0.1:49043/node_modules/.vite/deps/recharts.js?v=e4d4104b",
+        "lineNumber": 8705,
+        "columnNumber": 16
+      }
+    },
+    {
+      "type": "debug",
+      "text": "[vite] connecting...",
+      "location": {
+        "url": "http://127.0.0.1:49043/@vite/client",
+        "lineNumber": 788,
+        "columnNumber": 8
+      }
+    },
+    {
+      "type": "debug",
+      "text": "[vite] connected.",
+      "location": {
+        "url": "http://127.0.0.1:49043/@vite/client",
+        "lineNumber": 911,
+        "columnNumber": 14
+      }
+    },
+    {
+      "type": "info",
+      "text": "%cDownload the React DevTools for a better development experience: https://reactjs.org/link/react-devtools font-weight:bold",
+      "location": {
+        "url": "http://127.0.0.1:49043/node_modules/.vite/deps/chunk-KDCVS43I.js?v=e4d4104b",
+        "lineNumber": 21608,
+        "columnNumber": 24
+      }
+    },
+    {
+      "type": "warning",
+      "text": "The width(-1) and height(-1) of chart should be greater than 0,\n       please check the style of container, or the props width(100%) and height(100%),\n       or add a minWidth(0) or minHeight(undefined) or use aspect(undefined) to control the\n       height and width.",
+      "location": {
+        "url": "http://127.0.0.1:49043/node_modules/.vite/deps/recharts.js?v=e4d4104b",
+        "lineNumber": 8705,
+        "columnNumber": 16
+      }
+    },
+    {
+      "type": "warning",
+      "text": "The width(-1) and height(-1) of chart should be greater than 0,\n       please check the style of container, or the props width(100%) and height(100%),\n       or add a minWidth(0) or minHeight(undefined) or use aspect(undefined) to control the\n       height and width.",
+      "location": {
+        "url": "http://127.0.0.1:49043/node_modules/.vite/deps/recharts.js?v=e4d4104b",
+        "lineNumber": 8705,
+        "columnNumber": 16
+      }
+    },
+    {
+      "type": "debug",
+      "text": "[vite] connecting...",
+      "location": {
+        "url": "http://127.0.0.1:49043/@vite/client",
+        "lineNumber": 788,
+        "columnNumber": 8
+      }
+    },
+    {
+      "type": "debug",
+      "text": "[vite] connected.",
+      "location": {
+        "url": "http://127.0.0.1:49043/@vite/client",
+        "lineNumber": 911,
+        "columnNumber": 14
+      }
+    },
+    {
+      "type": "info",
+      "text": "%cDownload the React DevTools for a better development experience: https://reactjs.org/link/react-devtools font-weight:bold",
+      "location": {
+        "url": "http://127.0.0.1:49043/node_modules/.vite/deps/chunk-KDCVS43I.js?v=e4d4104b",
+        "lineNumber": 21608,
+        "columnNumber": 24
+      }
+    },
+    {
+      "type": "warning",
+      "text": "The width(-1) and height(-1) of chart should be greater than 0,\n       please check the style of container, or the props width(100%) and height(100%),\n       or add a minWidth(0) or minHeight(undefined) or use aspect(undefined) to control the\n       height and width.",
+      "location": {
+        "url": "http://127.0.0.1:49043/node_modules/.vite/deps/recharts.js?v=e4d4104b",
+        "lineNumber": 8705,
+        "columnNumber": 16
+      }
+    },
+    {
+      "type": "warning",
+      "text": "The width(-1) and height(-1) of chart should be greater than 0,\n       please check the style of container, or the props width(100%) and height(100%),\n       or add a minWidth(0) or minHeight(undefined) or use aspect(undefined) to control the\n       height and width.",
+      "location": {
+        "url": "http://127.0.0.1:49043/node_modules/.vite/deps/recharts.js?v=e4d4104b",
+        "lineNumber": 8705,
+        "columnNumber": 16
+      }
+    }
+  ],
+  "requestFailures": [
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:49043/api/admin/stats",
+      "errorText": "net::ERR_CONNECTION_REFUSED"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:49043/api/admin/stats",
+      "errorText": "net::ERR_CONNECTION_REFUSED"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:49043/favicon.svg",
+      "errorText": "net::ERR_CONNECTION_REFUSED"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:49043/",
+      "errorText": "net::ERR_CONNECTION_REFUSED"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:49043/",
+      "errorText": "net::ERR_CONNECTION_REFUSED"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:49043/",
+      "errorText": "net::ERR_CONNECTION_REFUSED"
+    }
+  ],
+  "responseErrors": []
+}

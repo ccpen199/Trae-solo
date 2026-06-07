@@ -1,0 +1,2173 @@
+{
+  "ok": true,
+  "generatedAt": "2026-06-05T16:11:15.573Z",
+  "order": "may-89043",
+  "roundIndex": 2,
+  "captureId": "may-89043-codex-page-repair",
+  "url": "http://127.0.0.1:49043/",
+  "initialUrl": "http://127.0.0.1:49043/",
+  "finalUrl": "http://127.0.0.1:49043/",
+  "status": 200,
+  "title": "南方电网能源服务数字生态平台",
+  "initialTitle": "南方电网能源服务数字生态平台",
+  "navigationError": "",
+  "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89043/probe/codex-page-repair-20260605/may-89043-codex-page-repair-frontend.png",
+  "screenshotPaths": [
+    "/Users/chen/Documents/trae_projects/local_projects/may-89043/probe/codex-page-repair-20260605/may-89043-codex-page-repair-structure-01-首屏.png",
+    "/Users/chen/Documents/trae_projects/local_projects/may-89043/probe/codex-page-repair-20260605/may-89043-codex-page-repair-structure-02-导航-系统管理员.png",
+    "/Users/chen/Documents/trae_projects/local_projects/may-89043/probe/codex-page-repair-20260605/may-89043-codex-page-repair-structure-03-操作-账户设置.png",
+    "/Users/chen/Documents/trae_projects/local_projects/may-89043/probe/codex-page-repair-20260605/may-89043-codex-page-repair-structure-04-操作-查看全部.png",
+    "/Users/chen/Documents/trae_projects/local_projects/may-89043/probe/codex-page-repair-20260605/may-89043-codex-page-repair-structure-05-二层操作-查看全部-详情.png",
+    "/Users/chen/Documents/trae_projects/local_projects/may-89043/probe/codex-page-repair-20260605/may-89043-codex-page-repair-structure-06-导航-个人.png",
+    "/Users/chen/Documents/trae_projects/local_projects/may-89043/probe/codex-page-repair-20260605/may-89043-codex-page-repair-structure-07-操作-查看全部.png",
+    "/Users/chen/Documents/trae_projects/local_projects/may-89043/probe/codex-page-repair-20260605/may-89043-codex-page-repair-structure-08-二层操作-查看全部-详情.png"
+  ],
+  "issueTextPreview": "搜索/筛选相关问题；后台管理相关问题；发现/分类相关问题",
+  "targetReason": "搜索/筛选相关问题；后台管理相关问题；发现/分类相关问题",
+  "targetKind": "search",
+  "targetMatched": true,
+  "targetActions": [
+    {
+      "action": "click",
+      "label": "搜索/筛选相关问题",
+      "ok": false,
+      "error": "locator.click: Timeout 900ms exceeded.\nCall log:\n\u001b[2m  - waiting for getByRole('button', { name: /搜索/ }).first()\u001b[22m\n\u001b[2m    - locator resolved to <button trae-inspector-end-line=\"113\" trae-inspector-end-column=\"17\" tra"
+    },
+    {
+      "action": "click",
+      "label": "搜索/筛选相关问题",
+      "ok": true
+    },
+    {
+      "action": "fill-search",
+      "label": "搜索输入框",
+      "ok": true
+    },
+    {
+      "action": "target-verify",
+      "label": "搜索/筛选相关问题",
+      "ok": true,
+      "finalUrl": "http://127.0.0.1:49043/power/bills"
+    }
+  ],
+  "authFlow": {
+    "detected": false,
+    "attempted": false,
+    "success": false,
+    "finalUrl": "http://127.0.0.1:49043/",
+    "message": "",
+    "actions": []
+  },
+  "businessAudit": {
+    "actions": [
+      {
+        "action": "click",
+        "label": "导航:系统管理员",
+        "ok": true
+      },
+      {
+        "action": "click",
+        "label": "操作:账户设置",
+        "ok": true,
+        "result": {
+          "ok": true,
+          "matched": 1
+        }
+      },
+      {
+        "action": "click",
+        "label": "操作:查看全部",
+        "ok": true,
+        "result": {
+          "ok": true,
+          "matched": 1
+        }
+      },
+      {
+        "action": "click",
+        "label": "二层操作:查看全部:详情",
+        "ok": true,
+        "result": {
+          "ok": true,
+          "matched": 5
+        }
+      },
+      {
+        "action": "click",
+        "label": "导航:个人",
+        "ok": true
+      },
+      {
+        "action": "click",
+        "label": "操作:查看全部",
+        "ok": true,
+        "result": {
+          "ok": true,
+          "matched": 1
+        }
+      },
+      {
+        "action": "click",
+        "label": "二层操作:查看全部:详情",
+        "ok": true,
+        "result": {
+          "ok": true,
+          "matched": 5
+        }
+      }
+    ],
+    "snapshots": [
+      {
+        "label": "首屏",
+        "url": "http://127.0.0.1:49043/",
+        "title": "南方电网能源服务数字生态平台",
+        "headings": [
+          "总览",
+          "月度用电趋势",
+          "活跃告警",
+          "近期账单"
+        ],
+        "navLabels": [
+          "南网能源服务平台",
+          "系统管理员",
+          "个人",
+          "总览",
+          "用电服务",
+          "账单分析",
+          "停电通知",
+          "碳足迹",
+          "智能设备",
+          "积分商城",
+          "政策法规",
+          "安全百科",
+          "专家直播",
+          "居民分析",
+          "合规审计",
+          "绿色权益核销",
+          "企业能效看板",
+          "系统设置"
+        ],
+        "buttons": [
+          "个人",
+          "系 系统管理员 系统管理员",
+          "搜索/筛选用电账单 按账单周期、缴费状态查询结果并筛选待缴账单",
+          "发现分类能源资讯 发现政策、安全百科和专家直播分类频道",
+          "后台管理数据概览 查看运营数据、用户管理和接口健康状态",
+          "查看全部",
+          "我的账单",
+          "碳足迹",
+          "智能设备",
+          "节能建议"
+        ],
+        "links": [
+          "总览",
+          "用电服务",
+          "账单分析",
+          "停电通知",
+          "碳足迹",
+          "智能设备",
+          "积分商城",
+          "政策法规",
+          "安全百科",
+          "专家直播",
+          "居民分析",
+          "合规审计",
+          "绿色权益核销",
+          "企业能效看板",
+          "系统设置"
+        ],
+        "inputs": [
+          {
+            "tag": "input",
+            "type": "text",
+            "placeholder": "搜索服务...",
+            "name": "",
+            "label": ""
+          }
+        ],
+        "tables": [
+          {
+            "headers": [
+              "账单周期",
+              "金额",
+              "到期日",
+              "状态"
+            ],
+            "rowCount": 4,
+            "hasEmptyText": false,
+            "textPreview": "账单周期 金额 到期日 状态 2026-05 ¥116.61 2026-06-15 待缴 2026-04 ¥141.13 2026-06-15 待缴 2026-03 ¥155.87 2026-06-15 已缴 2026-02 ¥152.78 2026-06-15 已缴"
+          }
+        ],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "南网能源服务平台系统管理员个人总览用电服务账单分析停电通知碳足迹智能设备积分商城公共服务政策法规安全百科专家直播居民分析管理/运营合规审计绿色权益核销企业能效看板系统设置系系统管理员系统管理员总览2026年06月05日搜索/筛选用电账单按账单周期、缴费状态查询结果并筛选待缴账单发现分类能源资讯发现政策、安全百科和专家直播分类频道后台管理数据概览查看运营数据、用户管理和接口健康状态本月用电量217.6kWh本月电费¥116.61碳排放量155kg积分余额580分月度用电趋势活跃告警临时停电通知06-15 09:00计划检修停电通知06-10 08:00故障抢修停电通知06-05 14:00电费账单已生成，请及时缴纳06-15 00:00近期账单查看全部 账单周期金额到期日状态2026-05¥116.612026-06-15待缴2026-04¥141.132026-06-15待缴2026-03¥155.872026-06-15已缴2026-02¥152.782026-06-15已缴我的账单碳足迹智能设备节能建议 0",
+        "layout": {
+          "viewportWidth": 1504,
+          "viewportHeight": 1000,
+          "scrollWidth": 1504,
+          "scrollHeight": 1000,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89043-codex-page-repair-structure-01-首屏",
+          "label": "首屏",
+          "finalUrl": "http://127.0.0.1:49043/",
+          "title": "南方电网能源服务数字生态平台",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89043/probe/codex-page-repair-20260605/may-89043-codex-page-repair-structure-01-首屏.json",
+          "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89043/probe/codex-page-repair-20260605/may-89043-codex-page-repair-structure-01-首屏.png",
+          "elementCount": 420,
+          "interactiveCount": 30,
+          "interactiveLabels": [
+            "个人",
+            "总览",
+            "用电服务",
+            "账单分析",
+            "停电通知",
+            "碳足迹",
+            "智能设备",
+            "积分商城",
+            "政策法规",
+            "安全百科",
+            "专家直播",
+            "居民分析",
+            "合规审计",
+            "绿色权益核销",
+            "企业能效看板",
+            "系统设置",
+            "搜索服务...",
+            "系 系统管理员 系统管理员",
+            "搜索/筛选用电账单 按账单周期、缴费状态查询结果并筛选待缴账单",
+            "发现分类能源资讯 发现政策、安全百科和专家直播分类频道",
+            "后台管理数据概览 查看运营数据、用户管理和接口健康状态",
+            "01月02月03月04月05月065130195260",
+            "查看全部",
+            "我的账单",
+            "节能建议"
+          ]
+        }
+      },
+      {
+        "label": "导航:系统管理员",
+        "url": "http://127.0.0.1:49043/",
+        "title": "南方电网能源服务数字生态平台",
+        "headings": [
+          "总览",
+          "月度用电趋势",
+          "活跃告警",
+          "近期账单"
+        ],
+        "navLabels": [
+          "南网能源服务平台",
+          "系统管理员",
+          "个人",
+          "总览",
+          "用电服务",
+          "账单分析",
+          "停电通知",
+          "碳足迹",
+          "智能设备",
+          "积分商城",
+          "政策法规",
+          "安全百科",
+          "专家直播",
+          "居民分析",
+          "合规审计",
+          "绿色权益核销",
+          "企业能效看板",
+          "系统设置"
+        ],
+        "buttons": [
+          "个人",
+          "系 系统管理员 系统管理员",
+          "账户设置",
+          "退出登录",
+          "搜索/筛选用电账单 按账单周期、缴费状态查询结果并筛选待缴账单",
+          "发现分类能源资讯 发现政策、安全百科和专家直播分类频道",
+          "后台管理数据概览 查看运营数据、用户管理和接口健康状态",
+          "查看全部",
+          "我的账单",
+          "碳足迹",
+          "智能设备",
+          "节能建议"
+        ],
+        "links": [
+          "总览",
+          "用电服务",
+          "账单分析",
+          "停电通知",
+          "碳足迹",
+          "智能设备",
+          "积分商城",
+          "政策法规",
+          "安全百科",
+          "专家直播",
+          "居民分析",
+          "合规审计",
+          "绿色权益核销",
+          "企业能效看板",
+          "系统设置"
+        ],
+        "inputs": [
+          {
+            "tag": "input",
+            "type": "text",
+            "placeholder": "搜索服务...",
+            "name": "",
+            "label": ""
+          }
+        ],
+        "tables": [
+          {
+            "headers": [
+              "账单周期",
+              "金额",
+              "到期日",
+              "状态"
+            ],
+            "rowCount": 4,
+            "hasEmptyText": false,
+            "textPreview": "账单周期 金额 到期日 状态 2026-05 ¥116.61 2026-06-15 待缴 2026-04 ¥141.13 2026-06-15 待缴 2026-03 ¥155.87 2026-06-15 已缴 2026-02 ¥152.78 2026-06-15 已缴"
+          }
+        ],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "南网能源服务平台系统管理员个人总览用电服务账单分析停电通知碳足迹智能设备积分商城公共服务政策法规安全百科专家直播居民分析管理/运营合规审计绿色权益核销企业能效看板系统设置系系统管理员系统管理员账户设置退出登录总览2026年06月05日搜索/筛选用电账单按账单周期、缴费状态查询结果并筛选待缴账单发现分类能源资讯发现政策、安全百科和专家直播分类频道后台管理数据概览查看运营数据、用户管理和接口健康状态本月用电量217.6kWh本月电费¥116.61碳排放量155kg积分余额580分月度用电趋势活跃告警临时停电通知06-15 09:00计划检修停电通知06-10 08:00故障抢修停电通知06-05 14:00电费账单已生成，请及时缴纳06-15 00:00近期账单查看全部 账单周期金额到期日状态2026-05¥116.612026-06-15待缴2026-04¥141.132026-06-15待缴2026-03¥155.872026-06-15已缴2026-02¥152.782026-06-15已缴我的账单碳足迹智能设备节能建议 0",
+        "layout": {
+          "viewportWidth": 1536,
+          "viewportHeight": 1000,
+          "scrollWidth": 1536,
+          "scrollHeight": 1000,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89043-codex-page-repair-structure-02-导航-系统管理员",
+          "label": "导航:系统管理员",
+          "finalUrl": "http://127.0.0.1:49043/",
+          "title": "南方电网能源服务数字生态平台",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89043/probe/codex-page-repair-20260605/may-89043-codex-page-repair-structure-02-导航-系统管理员.json",
+          "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89043/probe/codex-page-repair-20260605/may-89043-codex-page-repair-structure-02-导航-系统管理员.png",
+          "elementCount": 432,
+          "interactiveCount": 32,
+          "interactiveLabels": [
+            "个人",
+            "总览",
+            "用电服务",
+            "账单分析",
+            "停电通知",
+            "碳足迹",
+            "智能设备",
+            "积分商城",
+            "政策法规",
+            "安全百科",
+            "专家直播",
+            "居民分析",
+            "合规审计",
+            "绿色权益核销",
+            "企业能效看板",
+            "系统设置",
+            "搜索服务...",
+            "系 系统管理员 系统管理员",
+            "账户设置",
+            "退出登录",
+            "搜索/筛选用电账单 按账单周期、缴费状态查询结果并筛选待缴账单",
+            "发现分类能源资讯 发现政策、安全百科和专家直播分类频道",
+            "后台管理数据概览 查看运营数据、用户管理和接口健康状态",
+            "01月02月03月04月05月065130195260",
+            "查看全部",
+            "我的账单",
+            "节能建议"
+          ]
+        }
+      },
+      {
+        "label": "操作:账户设置",
+        "url": "http://127.0.0.1:49043/admin/settings",
+        "title": "南方电网能源服务数字生态平台",
+        "headings": [
+          "系统管理",
+          "测试账号一览"
+        ],
+        "navLabels": [
+          "南网能源服务平台",
+          "系统管理员",
+          "个人",
+          "总览",
+          "用电服务",
+          "账单分析",
+          "停电通知",
+          "碳足迹",
+          "智能设备",
+          "积分商城",
+          "政策法规",
+          "安全百科",
+          "专家直播",
+          "居民分析",
+          "合规审计",
+          "绿色权益核销",
+          "企业能效看板",
+          "系统设置"
+        ],
+        "buttons": [
+          "个人",
+          "系 系统管理员 系统管理员"
+        ],
+        "links": [
+          "总览",
+          "用电服务",
+          "账单分析",
+          "停电通知",
+          "碳足迹",
+          "智能设备",
+          "积分商城",
+          "政策法规",
+          "安全百科",
+          "专家直播",
+          "居民分析",
+          "合规审计",
+          "绿色权益核销",
+          "企业能效看板",
+          "系统设置"
+        ],
+        "inputs": [
+          {
+            "tag": "input",
+            "type": "text",
+            "placeholder": "搜索服务...",
+            "name": "",
+            "label": ""
+          }
+        ],
+        "tables": [
+          {
+            "headers": [
+              "用户名",
+              "密码",
+              "角色",
+              "姓名",
+              "客群类型"
+            ],
+            "rowCount": 7,
+            "hasEmptyText": false,
+            "textPreview": "用户名 密码 角色 姓名 客群类型 admin Admin@123 管理员 系统管理员 全部 platform Platform@123 运营 平台运营员 全部 ops Ops@123 运维 运维工程师 全部 zhangsan 123456 用户 张三 个人 lisi 123456 用户 李四家庭 家庭 wangwu 123456 用户 王五 企业 zhaoliu 123456 用户 赵六 园区"
+          }
+        ],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "南网能源服务平台系统管理员个人总览用电服务账单分析停电通知碳足迹智能设备积分商城公共服务政策法规安全百科专家直播居民分析管理/运营合规审计绿色权益核销企业能效看板系统设置系系统管理员系统管理员系统管理管理后台、数据概览、用户管理和运营数据统一入口用户管理7 个演示账号管理员、平台运营、运维、个人、家庭、企业、园区运营数据20+ 服务模块用电服务、能效诊断、绿色权益、合规审计系统状态运行正常前端 49043 / 后端 59043 / SQLite WAL测试账号一览用户名密码角色姓名客群类型adminAdmin@123管理员系统管理员全部platformPlatform@123运营平台运营员全部opsOps@123运维运维工程师全部zhangsan123456用户张三个人lisi123456用户李四家庭家庭wangwu123456用户王五企业zhaoliu123456用户赵六园区 0",
+        "layout": {
+          "viewportWidth": 1568,
+          "viewportHeight": 1000,
+          "scrollWidth": 1568,
+          "scrollHeight": 1000,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89043-codex-page-repair-structure-03-操作-账户设置",
+          "label": "操作:账户设置",
+          "finalUrl": "http://127.0.0.1:49043/admin/settings",
+          "title": "南方电网能源服务数字生态平台",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89043/probe/codex-page-repair-20260605/may-89043-codex-page-repair-structure-03-操作-账户设置.json",
+          "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89043/probe/codex-page-repair-20260605/may-89043-codex-page-repair-structure-03-操作-账户设置.png",
+          "elementCount": 243,
+          "interactiveCount": 21,
+          "interactiveLabels": [
+            "个人",
+            "总览",
+            "用电服务",
+            "账单分析",
+            "停电通知",
+            "碳足迹",
+            "智能设备",
+            "积分商城",
+            "政策法规",
+            "安全百科",
+            "专家直播",
+            "居民分析",
+            "合规审计",
+            "绿色权益核销",
+            "企业能效看板",
+            "系统设置",
+            "搜索服务...",
+            "系 系统管理员 系统管理员"
+          ]
+        }
+      },
+      {
+        "label": "操作:查看全部",
+        "url": "http://127.0.0.1:49043/power/bills",
+        "title": "南方电网能源服务数字生态平台",
+        "headings": [
+          "电费账单"
+        ],
+        "navLabels": [
+          "南网能源服务平台",
+          "系统管理员",
+          "个人",
+          "总览",
+          "用电服务",
+          "账单分析",
+          "停电通知",
+          "碳足迹",
+          "智能设备",
+          "积分商城",
+          "政策法规",
+          "安全百科",
+          "专家直播",
+          "居民分析",
+          "合规审计",
+          "绿色权益核销",
+          "企业能效看板",
+          "系统设置"
+        ],
+        "buttons": [
+          "个人",
+          "系 系统管理员 系统管理员",
+          "详情",
+          "缴费"
+        ],
+        "links": [
+          "总览",
+          "用电服务",
+          "账单分析",
+          "停电通知",
+          "碳足迹",
+          "智能设备",
+          "积分商城",
+          "政策法规",
+          "安全百科",
+          "专家直播",
+          "居民分析",
+          "合规审计",
+          "绿色权益核销",
+          "企业能效看板",
+          "系统设置"
+        ],
+        "inputs": [
+          {
+            "tag": "input",
+            "type": "text",
+            "placeholder": "搜索服务...",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "select",
+            "type": "",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "text",
+            "placeholder": "搜索账单周期 (如 2025-05)",
+            "name": "",
+            "label": ""
+          }
+        ],
+        "tables": [
+          {
+            "headers": [
+              "账单周期",
+              "用电量",
+              "金额",
+              "到期日",
+              "状态",
+              "操作"
+            ],
+            "rowCount": 5,
+            "hasEmptyText": false,
+            "textPreview": "账单周期 用电量 金额 到期日 状态 操作 2026-05 217.58914242681334 kWh ¥116.61 2026-06-15 待缴 详情 缴费 2026-04 214.7846590387756 kWh ¥141.13 2026-06-15 待缴 详情 缴费 2026-03 245.32495750915893 kWh ¥155.87 2026-06-15 已缴 详情 2026-02 201.62888434862612 kWh ¥152.78 2026-06-15 已缴 详情 2026-01 195.74856041774564 kWh ¥127.30 2026-06-15"
+          }
+        ],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "南网能源服务平台系统管理员个人总览用电服务账单分析停电通知碳足迹智能设备积分商城公共服务政策法规安全百科专家直播居民分析管理/运营合规审计绿色权益核销企业能效看板系统设置系系统管理员系统管理员电费账单全部状态已缴待缴查询结果：5 条账单周期用电量金额到期日状态操作2026-05217.58914242681334 kWh¥116.612026-06-15待缴详情缴费2026-04214.7846590387756 kWh¥141.132026-06-15待缴详情缴费2026-03245.32495750915893 kWh¥155.872026-06-15已缴详情2026-02201.62888434862612 kWh¥152.782026-06-15已缴详情2026-01195.74856041774564 kWh¥127.302026-06-15已缴详情 0",
+        "layout": {
+          "viewportWidth": 1600,
+          "viewportHeight": 1000,
+          "scrollWidth": 1600,
+          "scrollHeight": 1000,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89043-codex-page-repair-structure-04-操作-查看全部",
+          "label": "操作:查看全部",
+          "finalUrl": "http://127.0.0.1:49043/power/bills",
+          "title": "南方电网能源服务数字生态平台",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89043/probe/codex-page-repair-20260605/may-89043-codex-page-repair-structure-04-操作-查看全部.json",
+          "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89043/probe/codex-page-repair-20260605/may-89043-codex-page-repair-structure-04-操作-查看全部.png",
+          "elementCount": 231,
+          "interactiveCount": 30,
+          "interactiveLabels": [
+            "个人",
+            "总览",
+            "用电服务",
+            "账单分析",
+            "停电通知",
+            "碳足迹",
+            "智能设备",
+            "积分商城",
+            "政策法规",
+            "安全百科",
+            "专家直播",
+            "居民分析",
+            "合规审计",
+            "绿色权益核销",
+            "企业能效看板",
+            "系统设置",
+            "搜索服务...",
+            "系 系统管理员 系统管理员",
+            "全部状态 已缴 待缴",
+            "搜索账单周期 (如 2025-05)",
+            "详情",
+            "缴费"
+          ]
+        }
+      },
+      {
+        "label": "二层操作:查看全部->详情",
+        "url": "http://127.0.0.1:49043/power/bills",
+        "title": "南方电网能源服务数字生态平台",
+        "headings": [
+          "电费账单",
+          "账单详情"
+        ],
+        "navLabels": [
+          "南网能源服务平台",
+          "系统管理员",
+          "个人",
+          "总览",
+          "用电服务",
+          "账单分析",
+          "停电通知",
+          "碳足迹",
+          "智能设备",
+          "积分商城",
+          "政策法规",
+          "安全百科",
+          "专家直播",
+          "居民分析",
+          "合规审计",
+          "绿色权益核销",
+          "企业能效看板",
+          "系统设置"
+        ],
+        "buttons": [
+          "个人",
+          "系 系统管理员 系统管理员",
+          "详情",
+          "缴费",
+          "立即缴费"
+        ],
+        "links": [
+          "总览",
+          "用电服务",
+          "账单分析",
+          "停电通知",
+          "碳足迹",
+          "智能设备",
+          "积分商城",
+          "政策法规",
+          "安全百科",
+          "专家直播",
+          "居民分析",
+          "合规审计",
+          "绿色权益核销",
+          "企业能效看板",
+          "系统设置"
+        ],
+        "inputs": [
+          {
+            "tag": "input",
+            "type": "text",
+            "placeholder": "搜索服务...",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "select",
+            "type": "",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "text",
+            "placeholder": "搜索账单周期 (如 2025-05)",
+            "name": "",
+            "label": ""
+          }
+        ],
+        "tables": [
+          {
+            "headers": [
+              "账单周期",
+              "用电量",
+              "金额",
+              "到期日",
+              "状态",
+              "操作"
+            ],
+            "rowCount": 5,
+            "hasEmptyText": false,
+            "textPreview": "账单周期 用电量 金额 到期日 状态 操作 2026-05 217.58914242681334 kWh ¥116.61 2026-06-15 待缴 详情 缴费 2026-04 214.7846590387756 kWh ¥141.13 2026-06-15 待缴 详情 缴费 2026-03 245.32495750915893 kWh ¥155.87 2026-06-15 已缴 详情 2026-02 201.62888434862612 kWh ¥152.78 2026-06-15 已缴 详情 2026-01 195.74856041774564 kWh ¥127.30 2026-06-15"
+          }
+        ],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "南网能源服务平台系统管理员个人总览用电服务账单分析停电通知碳足迹智能设备积分商城公共服务政策法规安全百科专家直播居民分析管理/运营合规审计绿色权益核销企业能效看板系统设置系系统管理员系统管理员电费账单全部状态已缴待缴查询结果：5 条账单周期用电量金额到期日状态操作2026-05217.58914242681334 kWh¥116.612026-06-15待缴详情缴费2026-04214.7846590387756 kWh¥141.132026-06-15待缴详情缴费2026-03245.32495750915893 kWh¥155.872026-06-15已缴详情2026-02201.62888434862612 kWh¥152.782026-06-15已缴详情2026-01195.74856041774564 kWh¥127.302026-06-15已缴详情账单详情账单周期2026-05用电量217.58914242681334 kWh金额¥116.61到期日2026-06-15状态待缴立即缴费 0",
+        "layout": {
+          "viewportWidth": 1632,
+          "viewportHeight": 1000,
+          "scrollWidth": 1632,
+          "scrollHeight": 1000,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89043-codex-page-repair-structure-05-二层操作-查看全部-详情",
+          "label": "二层操作:查看全部->详情",
+          "finalUrl": "http://127.0.0.1:49043/power/bills",
+          "title": "南方电网能源服务数字生态平台",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89043/probe/codex-page-repair-20260605/may-89043-codex-page-repair-structure-05-二层操作-查看全部-详情.json",
+          "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89043/probe/codex-page-repair-20260605/may-89043-codex-page-repair-structure-05-二层操作-查看全部-详情.png",
+          "elementCount": 256,
+          "interactiveCount": 32,
+          "interactiveLabels": [
+            "个人",
+            "总览",
+            "用电服务",
+            "账单分析",
+            "停电通知",
+            "碳足迹",
+            "智能设备",
+            "积分商城",
+            "政策法规",
+            "安全百科",
+            "专家直播",
+            "居民分析",
+            "合规审计",
+            "绿色权益核销",
+            "企业能效看板",
+            "系统设置",
+            "搜索服务...",
+            "系 系统管理员 系统管理员",
+            "全部状态 已缴 待缴",
+            "搜索账单周期 (如 2025-05)",
+            "详情",
+            "缴费",
+            "立即缴费"
+          ]
+        }
+      },
+      {
+        "label": "导航:个人",
+        "url": "http://127.0.0.1:49043/",
+        "title": "南方电网能源服务数字生态平台",
+        "headings": [
+          "总览",
+          "月度用电趋势",
+          "活跃告警",
+          "近期账单"
+        ],
+        "navLabels": [
+          "南网能源服务平台",
+          "系统管理员",
+          "个人",
+          "家庭",
+          "企业",
+          "园区",
+          "总览",
+          "用电服务",
+          "账单分析",
+          "停电通知",
+          "碳足迹",
+          "智能设备",
+          "积分商城",
+          "政策法规",
+          "安全百科",
+          "专家直播",
+          "居民分析",
+          "合规审计",
+          "绿色权益核销",
+          "企业能效看板",
+          "系统设置"
+        ],
+        "buttons": [
+          "个人",
+          "家庭",
+          "企业",
+          "园区",
+          "系 系统管理员 系统管理员",
+          "搜索/筛选用电账单 按账单周期、缴费状态查询结果并筛选待缴账单",
+          "发现分类能源资讯 发现政策、安全百科和专家直播分类频道",
+          "后台管理数据概览 查看运营数据、用户管理和接口健康状态",
+          "查看全部",
+          "我的账单",
+          "碳足迹",
+          "智能设备",
+          "节能建议"
+        ],
+        "links": [
+          "总览",
+          "用电服务",
+          "账单分析",
+          "停电通知",
+          "碳足迹",
+          "智能设备",
+          "积分商城",
+          "政策法规",
+          "安全百科",
+          "专家直播",
+          "居民分析",
+          "合规审计",
+          "绿色权益核销",
+          "企业能效看板",
+          "系统设置"
+        ],
+        "inputs": [
+          {
+            "tag": "input",
+            "type": "text",
+            "placeholder": "搜索服务...",
+            "name": "",
+            "label": ""
+          }
+        ],
+        "tables": [
+          {
+            "headers": [
+              "账单周期",
+              "金额",
+              "到期日",
+              "状态"
+            ],
+            "rowCount": 4,
+            "hasEmptyText": false,
+            "textPreview": "账单周期 金额 到期日 状态 2026-05 ¥116.61 2026-06-15 待缴 2026-04 ¥141.13 2026-06-15 待缴 2026-03 ¥155.87 2026-06-15 已缴 2026-02 ¥152.78 2026-06-15 已缴"
+          }
+        ],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "南网能源服务平台系统管理员个人个人家庭企业园区总览用电服务账单分析停电通知碳足迹智能设备积分商城公共服务政策法规安全百科专家直播居民分析管理/运营合规审计绿色权益核销企业能效看板系统设置系系统管理员系统管理员总览2026年06月05日搜索/筛选用电账单按账单周期、缴费状态查询结果并筛选待缴账单发现分类能源资讯发现政策、安全百科和专家直播分类频道后台管理数据概览查看运营数据、用户管理和接口健康状态本月用电量217.6kWh本月电费¥116.61碳排放量155kg积分余额580分月度用电趋势活跃告警临时停电通知06-15 09:00计划检修停电通知06-10 08:00故障抢修停电通知06-05 14:00电费账单已生成，请及时缴纳06-15 00:00近期账单查看全部 账单周期金额到期日状态2026-05¥116.612026-06-15待缴2026-04¥141.132026-06-15待缴2026-03¥155.872026-06-15已缴2026-02¥152.782026-06-15已缴我的账单碳足迹智能设备节能建议 0",
+        "layout": {
+          "viewportWidth": 1664,
+          "viewportHeight": 1000,
+          "scrollWidth": 1664,
+          "scrollHeight": 1000,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89043-codex-page-repair-structure-06-导航-个人",
+          "label": "导航:个人",
+          "finalUrl": "http://127.0.0.1:49043/",
+          "title": "南方电网能源服务数字生态平台",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89043/probe/codex-page-repair-20260605/may-89043-codex-page-repair-structure-06-导航-个人.json",
+          "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89043/probe/codex-page-repair-20260605/may-89043-codex-page-repair-structure-06-导航-个人.png",
+          "elementCount": 448,
+          "interactiveCount": 34,
+          "interactiveLabels": [
+            "个人",
+            "家庭",
+            "企业",
+            "园区",
+            "总览",
+            "用电服务",
+            "账单分析",
+            "停电通知",
+            "碳足迹",
+            "智能设备",
+            "积分商城",
+            "政策法规",
+            "安全百科",
+            "专家直播",
+            "居民分析",
+            "合规审计",
+            "绿色权益核销",
+            "企业能效看板",
+            "系统设置",
+            "搜索服务...",
+            "系 系统管理员 系统管理员",
+            "搜索/筛选用电账单 按账单周期、缴费状态查询结果并筛选待缴账单",
+            "发现分类能源资讯 发现政策、安全百科和专家直播分类频道",
+            "后台管理数据概览 查看运营数据、用户管理和接口健康状态",
+            "01月02月03月04月05月065130195260",
+            "查看全部",
+            "我的账单",
+            "节能建议"
+          ]
+        }
+      },
+      {
+        "label": "操作:查看全部",
+        "url": "http://127.0.0.1:49043/power/bills",
+        "title": "南方电网能源服务数字生态平台",
+        "headings": [
+          "电费账单"
+        ],
+        "navLabels": [
+          "南网能源服务平台",
+          "系统管理员",
+          "个人",
+          "家庭",
+          "企业",
+          "园区",
+          "总览",
+          "用电服务",
+          "账单分析",
+          "停电通知",
+          "碳足迹",
+          "智能设备",
+          "积分商城",
+          "政策法规",
+          "安全百科",
+          "专家直播",
+          "居民分析",
+          "合规审计",
+          "绿色权益核销",
+          "企业能效看板",
+          "系统设置"
+        ],
+        "buttons": [
+          "个人",
+          "家庭",
+          "企业",
+          "园区",
+          "系 系统管理员 系统管理员",
+          "详情",
+          "缴费"
+        ],
+        "links": [
+          "总览",
+          "用电服务",
+          "账单分析",
+          "停电通知",
+          "碳足迹",
+          "智能设备",
+          "积分商城",
+          "政策法规",
+          "安全百科",
+          "专家直播",
+          "居民分析",
+          "合规审计",
+          "绿色权益核销",
+          "企业能效看板",
+          "系统设置"
+        ],
+        "inputs": [
+          {
+            "tag": "input",
+            "type": "text",
+            "placeholder": "搜索服务...",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "select",
+            "type": "",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "text",
+            "placeholder": "搜索账单周期 (如 2025-05)",
+            "name": "",
+            "label": ""
+          }
+        ],
+        "tables": [
+          {
+            "headers": [
+              "账单周期",
+              "用电量",
+              "金额",
+              "到期日",
+              "状态",
+              "操作"
+            ],
+            "rowCount": 5,
+            "hasEmptyText": false,
+            "textPreview": "账单周期 用电量 金额 到期日 状态 操作 2026-05 217.58914242681334 kWh ¥116.61 2026-06-15 待缴 详情 缴费 2026-04 214.7846590387756 kWh ¥141.13 2026-06-15 待缴 详情 缴费 2026-03 245.32495750915893 kWh ¥155.87 2026-06-15 已缴 详情 2026-02 201.62888434862612 kWh ¥152.78 2026-06-15 已缴 详情 2026-01 195.74856041774564 kWh ¥127.30 2026-06-15"
+          }
+        ],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "南网能源服务平台系统管理员个人个人家庭企业园区总览用电服务账单分析停电通知碳足迹智能设备积分商城公共服务政策法规安全百科专家直播居民分析管理/运营合规审计绿色权益核销企业能效看板系统设置系系统管理员系统管理员电费账单全部状态已缴待缴查询结果：5 条账单周期用电量金额到期日状态操作2026-05217.58914242681334 kWh¥116.612026-06-15待缴详情缴费2026-04214.7846590387756 kWh¥141.132026-06-15待缴详情缴费2026-03245.32495750915893 kWh¥155.872026-06-15已缴详情2026-02201.62888434862612 kWh¥152.782026-06-15已缴详情2026-01195.74856041774564 kWh¥127.302026-06-15已缴详情 0",
+        "layout": {
+          "viewportWidth": 1696,
+          "viewportHeight": 1000,
+          "scrollWidth": 1696,
+          "scrollHeight": 1000,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89043-codex-page-repair-structure-07-操作-查看全部",
+          "label": "操作:查看全部",
+          "finalUrl": "http://127.0.0.1:49043/power/bills",
+          "title": "南方电网能源服务数字生态平台",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89043/probe/codex-page-repair-20260605/may-89043-codex-page-repair-structure-07-操作-查看全部.json",
+          "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89043/probe/codex-page-repair-20260605/may-89043-codex-page-repair-structure-07-操作-查看全部.png",
+          "elementCount": 259,
+          "interactiveCount": 34,
+          "interactiveLabels": [
+            "个人",
+            "家庭",
+            "企业",
+            "园区",
+            "总览",
+            "用电服务",
+            "账单分析",
+            "停电通知",
+            "碳足迹",
+            "智能设备",
+            "积分商城",
+            "政策法规",
+            "安全百科",
+            "专家直播",
+            "居民分析",
+            "合规审计",
+            "绿色权益核销",
+            "企业能效看板",
+            "系统设置",
+            "搜索服务...",
+            "系 系统管理员 系统管理员",
+            "全部状态 已缴 待缴",
+            "搜索账单周期 (如 2025-05)",
+            "详情",
+            "缴费"
+          ]
+        }
+      },
+      {
+        "label": "二层操作:查看全部->详情",
+        "url": "http://127.0.0.1:49043/power/bills",
+        "title": "南方电网能源服务数字生态平台",
+        "headings": [
+          "电费账单",
+          "账单详情"
+        ],
+        "navLabels": [
+          "南网能源服务平台",
+          "系统管理员",
+          "个人",
+          "家庭",
+          "企业",
+          "园区",
+          "总览",
+          "用电服务",
+          "账单分析",
+          "停电通知",
+          "碳足迹",
+          "智能设备",
+          "积分商城",
+          "政策法规",
+          "安全百科",
+          "专家直播",
+          "居民分析",
+          "合规审计",
+          "绿色权益核销",
+          "企业能效看板",
+          "系统设置"
+        ],
+        "buttons": [
+          "个人",
+          "家庭",
+          "企业",
+          "园区",
+          "系 系统管理员 系统管理员",
+          "详情",
+          "缴费",
+          "立即缴费"
+        ],
+        "links": [
+          "总览",
+          "用电服务",
+          "账单分析",
+          "停电通知",
+          "碳足迹",
+          "智能设备",
+          "积分商城",
+          "政策法规",
+          "安全百科",
+          "专家直播",
+          "居民分析",
+          "合规审计",
+          "绿色权益核销",
+          "企业能效看板",
+          "系统设置"
+        ],
+        "inputs": [
+          {
+            "tag": "input",
+            "type": "text",
+            "placeholder": "搜索服务...",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "select",
+            "type": "",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "text",
+            "placeholder": "搜索账单周期 (如 2025-05)",
+            "name": "",
+            "label": ""
+          }
+        ],
+        "tables": [
+          {
+            "headers": [
+              "账单周期",
+              "用电量",
+              "金额",
+              "到期日",
+              "状态",
+              "操作"
+            ],
+            "rowCount": 5,
+            "hasEmptyText": false,
+            "textPreview": "账单周期 用电量 金额 到期日 状态 操作 2026-05 217.58914242681334 kWh ¥116.61 2026-06-15 待缴 详情 缴费 2026-04 214.7846590387756 kWh ¥141.13 2026-06-15 待缴 详情 缴费 2026-03 245.32495750915893 kWh ¥155.87 2026-06-15 已缴 详情 2026-02 201.62888434862612 kWh ¥152.78 2026-06-15 已缴 详情 2026-01 195.74856041774564 kWh ¥127.30 2026-06-15"
+          }
+        ],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "南网能源服务平台系统管理员个人个人家庭企业园区总览用电服务账单分析停电通知碳足迹智能设备积分商城公共服务政策法规安全百科专家直播居民分析管理/运营合规审计绿色权益核销企业能效看板系统设置系系统管理员系统管理员电费账单全部状态已缴待缴查询结果：5 条账单周期用电量金额到期日状态操作2026-05217.58914242681334 kWh¥116.612026-06-15待缴详情缴费2026-04214.7846590387756 kWh¥141.132026-06-15待缴详情缴费2026-03245.32495750915893 kWh¥155.872026-06-15已缴详情2026-02201.62888434862612 kWh¥152.782026-06-15已缴详情2026-01195.74856041774564 kWh¥127.302026-06-15已缴详情账单详情账单周期2026-05用电量217.58914242681334 kWh金额¥116.61到期日2026-06-15状态待缴立即缴费 0",
+        "layout": {
+          "viewportWidth": 1728,
+          "viewportHeight": 1000,
+          "scrollWidth": 1728,
+          "scrollHeight": 1000,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89043-codex-page-repair-structure-08-二层操作-查看全部-详情",
+          "label": "二层操作:查看全部->详情",
+          "finalUrl": "http://127.0.0.1:49043/power/bills",
+          "title": "南方电网能源服务数字生态平台",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89043/probe/codex-page-repair-20260605/may-89043-codex-page-repair-structure-08-二层操作-查看全部-详情.json",
+          "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89043/probe/codex-page-repair-20260605/may-89043-codex-page-repair-structure-08-二层操作-查看全部-详情.png",
+          "elementCount": 284,
+          "interactiveCount": 36,
+          "interactiveLabels": [
+            "个人",
+            "家庭",
+            "企业",
+            "园区",
+            "总览",
+            "用电服务",
+            "账单分析",
+            "停电通知",
+            "碳足迹",
+            "智能设备",
+            "积分商城",
+            "政策法规",
+            "安全百科",
+            "专家直播",
+            "居民分析",
+            "合规审计",
+            "绿色权益核销",
+            "企业能效看板",
+            "系统设置",
+            "搜索服务...",
+            "系 系统管理员 系统管理员",
+            "全部状态 已缴 待缴",
+            "搜索账单周期 (如 2025-05)",
+            "详情",
+            "缴费",
+            "立即缴费"
+          ]
+        }
+      }
+    ],
+    "findings": [],
+    "actionHints": [],
+    "emptyPages": [],
+    "overflowPages": [],
+    "blankPages": [],
+    "apiFailurePaths": [],
+    "goalTerms": [],
+    "clickedActionDescriptors": [
+      {
+        "nav": "系统管理员",
+        "label": "账户设置",
+        "ordinal": 0,
+        "unsafe": false
+      },
+      {
+        "nav": "系统管理员",
+        "label": "查看全部",
+        "ordinal": 0,
+        "unsafe": false
+      },
+      {
+        "nav": "系统管理员",
+        "label": "查看全部->详情",
+        "ordinal": 0,
+        "secondary": true,
+        "unsafe": false
+      },
+      {
+        "nav": "个人",
+        "label": "查看全部",
+        "ordinal": 0,
+        "unsafe": false
+      },
+      {
+        "nav": "个人",
+        "label": "查看全部->详情",
+        "ordinal": 0,
+        "secondary": true,
+        "unsafe": false
+      }
+    ],
+    "secondaryActionClicks": 2,
+    "structureCaptures": [
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89043-codex-page-repair-structure-01-首屏",
+        "label": "首屏",
+        "finalUrl": "http://127.0.0.1:49043/",
+        "title": "南方电网能源服务数字生态平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89043/probe/codex-page-repair-20260605/may-89043-codex-page-repair-structure-01-首屏.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89043/probe/codex-page-repair-20260605/may-89043-codex-page-repair-structure-01-首屏.png",
+        "elementCount": 420,
+        "interactiveCount": 30,
+        "interactiveLabels": [
+          "个人",
+          "总览",
+          "用电服务",
+          "账单分析",
+          "停电通知",
+          "碳足迹",
+          "智能设备",
+          "积分商城",
+          "政策法规",
+          "安全百科",
+          "专家直播",
+          "居民分析",
+          "合规审计",
+          "绿色权益核销",
+          "企业能效看板",
+          "系统设置",
+          "搜索服务...",
+          "系 系统管理员 系统管理员",
+          "搜索/筛选用电账单 按账单周期、缴费状态查询结果并筛选待缴账单",
+          "发现分类能源资讯 发现政策、安全百科和专家直播分类频道",
+          "后台管理数据概览 查看运营数据、用户管理和接口健康状态",
+          "01月02月03月04月05月065130195260",
+          "查看全部",
+          "我的账单",
+          "节能建议"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89043-codex-page-repair-structure-02-导航-系统管理员",
+        "label": "导航:系统管理员",
+        "finalUrl": "http://127.0.0.1:49043/",
+        "title": "南方电网能源服务数字生态平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89043/probe/codex-page-repair-20260605/may-89043-codex-page-repair-structure-02-导航-系统管理员.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89043/probe/codex-page-repair-20260605/may-89043-codex-page-repair-structure-02-导航-系统管理员.png",
+        "elementCount": 432,
+        "interactiveCount": 32,
+        "interactiveLabels": [
+          "个人",
+          "总览",
+          "用电服务",
+          "账单分析",
+          "停电通知",
+          "碳足迹",
+          "智能设备",
+          "积分商城",
+          "政策法规",
+          "安全百科",
+          "专家直播",
+          "居民分析",
+          "合规审计",
+          "绿色权益核销",
+          "企业能效看板",
+          "系统设置",
+          "搜索服务...",
+          "系 系统管理员 系统管理员",
+          "账户设置",
+          "退出登录",
+          "搜索/筛选用电账单 按账单周期、缴费状态查询结果并筛选待缴账单",
+          "发现分类能源资讯 发现政策、安全百科和专家直播分类频道",
+          "后台管理数据概览 查看运营数据、用户管理和接口健康状态",
+          "01月02月03月04月05月065130195260",
+          "查看全部",
+          "我的账单",
+          "节能建议"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89043-codex-page-repair-structure-03-操作-账户设置",
+        "label": "操作:账户设置",
+        "finalUrl": "http://127.0.0.1:49043/admin/settings",
+        "title": "南方电网能源服务数字生态平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89043/probe/codex-page-repair-20260605/may-89043-codex-page-repair-structure-03-操作-账户设置.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89043/probe/codex-page-repair-20260605/may-89043-codex-page-repair-structure-03-操作-账户设置.png",
+        "elementCount": 243,
+        "interactiveCount": 21,
+        "interactiveLabels": [
+          "个人",
+          "总览",
+          "用电服务",
+          "账单分析",
+          "停电通知",
+          "碳足迹",
+          "智能设备",
+          "积分商城",
+          "政策法规",
+          "安全百科",
+          "专家直播",
+          "居民分析",
+          "合规审计",
+          "绿色权益核销",
+          "企业能效看板",
+          "系统设置",
+          "搜索服务...",
+          "系 系统管理员 系统管理员"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89043-codex-page-repair-structure-04-操作-查看全部",
+        "label": "操作:查看全部",
+        "finalUrl": "http://127.0.0.1:49043/power/bills",
+        "title": "南方电网能源服务数字生态平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89043/probe/codex-page-repair-20260605/may-89043-codex-page-repair-structure-04-操作-查看全部.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89043/probe/codex-page-repair-20260605/may-89043-codex-page-repair-structure-04-操作-查看全部.png",
+        "elementCount": 231,
+        "interactiveCount": 30,
+        "interactiveLabels": [
+          "个人",
+          "总览",
+          "用电服务",
+          "账单分析",
+          "停电通知",
+          "碳足迹",
+          "智能设备",
+          "积分商城",
+          "政策法规",
+          "安全百科",
+          "专家直播",
+          "居民分析",
+          "合规审计",
+          "绿色权益核销",
+          "企业能效看板",
+          "系统设置",
+          "搜索服务...",
+          "系 系统管理员 系统管理员",
+          "全部状态 已缴 待缴",
+          "搜索账单周期 (如 2025-05)",
+          "详情",
+          "缴费"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89043-codex-page-repair-structure-05-二层操作-查看全部-详情",
+        "label": "二层操作:查看全部->详情",
+        "finalUrl": "http://127.0.0.1:49043/power/bills",
+        "title": "南方电网能源服务数字生态平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89043/probe/codex-page-repair-20260605/may-89043-codex-page-repair-structure-05-二层操作-查看全部-详情.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89043/probe/codex-page-repair-20260605/may-89043-codex-page-repair-structure-05-二层操作-查看全部-详情.png",
+        "elementCount": 256,
+        "interactiveCount": 32,
+        "interactiveLabels": [
+          "个人",
+          "总览",
+          "用电服务",
+          "账单分析",
+          "停电通知",
+          "碳足迹",
+          "智能设备",
+          "积分商城",
+          "政策法规",
+          "安全百科",
+          "专家直播",
+          "居民分析",
+          "合规审计",
+          "绿色权益核销",
+          "企业能效看板",
+          "系统设置",
+          "搜索服务...",
+          "系 系统管理员 系统管理员",
+          "全部状态 已缴 待缴",
+          "搜索账单周期 (如 2025-05)",
+          "详情",
+          "缴费",
+          "立即缴费"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89043-codex-page-repair-structure-06-导航-个人",
+        "label": "导航:个人",
+        "finalUrl": "http://127.0.0.1:49043/",
+        "title": "南方电网能源服务数字生态平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89043/probe/codex-page-repair-20260605/may-89043-codex-page-repair-structure-06-导航-个人.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89043/probe/codex-page-repair-20260605/may-89043-codex-page-repair-structure-06-导航-个人.png",
+        "elementCount": 448,
+        "interactiveCount": 34,
+        "interactiveLabels": [
+          "个人",
+          "家庭",
+          "企业",
+          "园区",
+          "总览",
+          "用电服务",
+          "账单分析",
+          "停电通知",
+          "碳足迹",
+          "智能设备",
+          "积分商城",
+          "政策法规",
+          "安全百科",
+          "专家直播",
+          "居民分析",
+          "合规审计",
+          "绿色权益核销",
+          "企业能效看板",
+          "系统设置",
+          "搜索服务...",
+          "系 系统管理员 系统管理员",
+          "搜索/筛选用电账单 按账单周期、缴费状态查询结果并筛选待缴账单",
+          "发现分类能源资讯 发现政策、安全百科和专家直播分类频道",
+          "后台管理数据概览 查看运营数据、用户管理和接口健康状态",
+          "01月02月03月04月05月065130195260",
+          "查看全部",
+          "我的账单",
+          "节能建议"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89043-codex-page-repair-structure-07-操作-查看全部",
+        "label": "操作:查看全部",
+        "finalUrl": "http://127.0.0.1:49043/power/bills",
+        "title": "南方电网能源服务数字生态平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89043/probe/codex-page-repair-20260605/may-89043-codex-page-repair-structure-07-操作-查看全部.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89043/probe/codex-page-repair-20260605/may-89043-codex-page-repair-structure-07-操作-查看全部.png",
+        "elementCount": 259,
+        "interactiveCount": 34,
+        "interactiveLabels": [
+          "个人",
+          "家庭",
+          "企业",
+          "园区",
+          "总览",
+          "用电服务",
+          "账单分析",
+          "停电通知",
+          "碳足迹",
+          "智能设备",
+          "积分商城",
+          "政策法规",
+          "安全百科",
+          "专家直播",
+          "居民分析",
+          "合规审计",
+          "绿色权益核销",
+          "企业能效看板",
+          "系统设置",
+          "搜索服务...",
+          "系 系统管理员 系统管理员",
+          "全部状态 已缴 待缴",
+          "搜索账单周期 (如 2025-05)",
+          "详情",
+          "缴费"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89043-codex-page-repair-structure-08-二层操作-查看全部-详情",
+        "label": "二层操作:查看全部->详情",
+        "finalUrl": "http://127.0.0.1:49043/power/bills",
+        "title": "南方电网能源服务数字生态平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89043/probe/codex-page-repair-20260605/may-89043-codex-page-repair-structure-08-二层操作-查看全部-详情.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89043/probe/codex-page-repair-20260605/may-89043-codex-page-repair-structure-08-二层操作-查看全部-详情.png",
+        "elementCount": 284,
+        "interactiveCount": 36,
+        "interactiveLabels": [
+          "个人",
+          "家庭",
+          "企业",
+          "园区",
+          "总览",
+          "用电服务",
+          "账单分析",
+          "停电通知",
+          "碳足迹",
+          "智能设备",
+          "积分商城",
+          "政策法规",
+          "安全百科",
+          "专家直播",
+          "居民分析",
+          "合规审计",
+          "绿色权益核销",
+          "企业能效看板",
+          "系统设置",
+          "搜索服务...",
+          "系 系统管理员 系统管理员",
+          "全部状态 已缴 待缴",
+          "搜索账单周期 (如 2025-05)",
+          "详情",
+          "缴费",
+          "立即缴费"
+        ]
+      }
+    ],
+    "representativeScreenshotUrl": "http://127.0.0.1:49043/",
+    "representativeScreenshotLabel": "总览"
+  },
+  "websiteStructureCapture": {
+    "module": "website_structure_capture",
+    "captureCount": 8,
+    "captures": [
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89043-codex-page-repair-structure-01-首屏",
+        "label": "首屏",
+        "finalUrl": "http://127.0.0.1:49043/",
+        "title": "南方电网能源服务数字生态平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89043/probe/codex-page-repair-20260605/may-89043-codex-page-repair-structure-01-首屏.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89043/probe/codex-page-repair-20260605/may-89043-codex-page-repair-structure-01-首屏.png",
+        "elementCount": 420,
+        "interactiveCount": 30,
+        "interactiveLabels": [
+          "个人",
+          "总览",
+          "用电服务",
+          "账单分析",
+          "停电通知",
+          "碳足迹",
+          "智能设备",
+          "积分商城",
+          "政策法规",
+          "安全百科",
+          "专家直播",
+          "居民分析",
+          "合规审计",
+          "绿色权益核销",
+          "企业能效看板",
+          "系统设置",
+          "搜索服务...",
+          "系 系统管理员 系统管理员",
+          "搜索/筛选用电账单 按账单周期、缴费状态查询结果并筛选待缴账单",
+          "发现分类能源资讯 发现政策、安全百科和专家直播分类频道",
+          "后台管理数据概览 查看运营数据、用户管理和接口健康状态",
+          "01月02月03月04月05月065130195260",
+          "查看全部",
+          "我的账单",
+          "节能建议"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89043-codex-page-repair-structure-02-导航-系统管理员",
+        "label": "导航:系统管理员",
+        "finalUrl": "http://127.0.0.1:49043/",
+        "title": "南方电网能源服务数字生态平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89043/probe/codex-page-repair-20260605/may-89043-codex-page-repair-structure-02-导航-系统管理员.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89043/probe/codex-page-repair-20260605/may-89043-codex-page-repair-structure-02-导航-系统管理员.png",
+        "elementCount": 432,
+        "interactiveCount": 32,
+        "interactiveLabels": [
+          "个人",
+          "总览",
+          "用电服务",
+          "账单分析",
+          "停电通知",
+          "碳足迹",
+          "智能设备",
+          "积分商城",
+          "政策法规",
+          "安全百科",
+          "专家直播",
+          "居民分析",
+          "合规审计",
+          "绿色权益核销",
+          "企业能效看板",
+          "系统设置",
+          "搜索服务...",
+          "系 系统管理员 系统管理员",
+          "账户设置",
+          "退出登录",
+          "搜索/筛选用电账单 按账单周期、缴费状态查询结果并筛选待缴账单",
+          "发现分类能源资讯 发现政策、安全百科和专家直播分类频道",
+          "后台管理数据概览 查看运营数据、用户管理和接口健康状态",
+          "01月02月03月04月05月065130195260",
+          "查看全部",
+          "我的账单",
+          "节能建议"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89043-codex-page-repair-structure-03-操作-账户设置",
+        "label": "操作:账户设置",
+        "finalUrl": "http://127.0.0.1:49043/admin/settings",
+        "title": "南方电网能源服务数字生态平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89043/probe/codex-page-repair-20260605/may-89043-codex-page-repair-structure-03-操作-账户设置.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89043/probe/codex-page-repair-20260605/may-89043-codex-page-repair-structure-03-操作-账户设置.png",
+        "elementCount": 243,
+        "interactiveCount": 21,
+        "interactiveLabels": [
+          "个人",
+          "总览",
+          "用电服务",
+          "账单分析",
+          "停电通知",
+          "碳足迹",
+          "智能设备",
+          "积分商城",
+          "政策法规",
+          "安全百科",
+          "专家直播",
+          "居民分析",
+          "合规审计",
+          "绿色权益核销",
+          "企业能效看板",
+          "系统设置",
+          "搜索服务...",
+          "系 系统管理员 系统管理员"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89043-codex-page-repair-structure-04-操作-查看全部",
+        "label": "操作:查看全部",
+        "finalUrl": "http://127.0.0.1:49043/power/bills",
+        "title": "南方电网能源服务数字生态平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89043/probe/codex-page-repair-20260605/may-89043-codex-page-repair-structure-04-操作-查看全部.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89043/probe/codex-page-repair-20260605/may-89043-codex-page-repair-structure-04-操作-查看全部.png",
+        "elementCount": 231,
+        "interactiveCount": 30,
+        "interactiveLabels": [
+          "个人",
+          "总览",
+          "用电服务",
+          "账单分析",
+          "停电通知",
+          "碳足迹",
+          "智能设备",
+          "积分商城",
+          "政策法规",
+          "安全百科",
+          "专家直播",
+          "居民分析",
+          "合规审计",
+          "绿色权益核销",
+          "企业能效看板",
+          "系统设置",
+          "搜索服务...",
+          "系 系统管理员 系统管理员",
+          "全部状态 已缴 待缴",
+          "搜索账单周期 (如 2025-05)",
+          "详情",
+          "缴费"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89043-codex-page-repair-structure-05-二层操作-查看全部-详情",
+        "label": "二层操作:查看全部->详情",
+        "finalUrl": "http://127.0.0.1:49043/power/bills",
+        "title": "南方电网能源服务数字生态平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89043/probe/codex-page-repair-20260605/may-89043-codex-page-repair-structure-05-二层操作-查看全部-详情.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89043/probe/codex-page-repair-20260605/may-89043-codex-page-repair-structure-05-二层操作-查看全部-详情.png",
+        "elementCount": 256,
+        "interactiveCount": 32,
+        "interactiveLabels": [
+          "个人",
+          "总览",
+          "用电服务",
+          "账单分析",
+          "停电通知",
+          "碳足迹",
+          "智能设备",
+          "积分商城",
+          "政策法规",
+          "安全百科",
+          "专家直播",
+          "居民分析",
+          "合规审计",
+          "绿色权益核销",
+          "企业能效看板",
+          "系统设置",
+          "搜索服务...",
+          "系 系统管理员 系统管理员",
+          "全部状态 已缴 待缴",
+          "搜索账单周期 (如 2025-05)",
+          "详情",
+          "缴费",
+          "立即缴费"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89043-codex-page-repair-structure-06-导航-个人",
+        "label": "导航:个人",
+        "finalUrl": "http://127.0.0.1:49043/",
+        "title": "南方电网能源服务数字生态平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89043/probe/codex-page-repair-20260605/may-89043-codex-page-repair-structure-06-导航-个人.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89043/probe/codex-page-repair-20260605/may-89043-codex-page-repair-structure-06-导航-个人.png",
+        "elementCount": 448,
+        "interactiveCount": 34,
+        "interactiveLabels": [
+          "个人",
+          "家庭",
+          "企业",
+          "园区",
+          "总览",
+          "用电服务",
+          "账单分析",
+          "停电通知",
+          "碳足迹",
+          "智能设备",
+          "积分商城",
+          "政策法规",
+          "安全百科",
+          "专家直播",
+          "居民分析",
+          "合规审计",
+          "绿色权益核销",
+          "企业能效看板",
+          "系统设置",
+          "搜索服务...",
+          "系 系统管理员 系统管理员",
+          "搜索/筛选用电账单 按账单周期、缴费状态查询结果并筛选待缴账单",
+          "发现分类能源资讯 发现政策、安全百科和专家直播分类频道",
+          "后台管理数据概览 查看运营数据、用户管理和接口健康状态",
+          "01月02月03月04月05月065130195260",
+          "查看全部",
+          "我的账单",
+          "节能建议"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89043-codex-page-repair-structure-07-操作-查看全部",
+        "label": "操作:查看全部",
+        "finalUrl": "http://127.0.0.1:49043/power/bills",
+        "title": "南方电网能源服务数字生态平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89043/probe/codex-page-repair-20260605/may-89043-codex-page-repair-structure-07-操作-查看全部.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89043/probe/codex-page-repair-20260605/may-89043-codex-page-repair-structure-07-操作-查看全部.png",
+        "elementCount": 259,
+        "interactiveCount": 34,
+        "interactiveLabels": [
+          "个人",
+          "家庭",
+          "企业",
+          "园区",
+          "总览",
+          "用电服务",
+          "账单分析",
+          "停电通知",
+          "碳足迹",
+          "智能设备",
+          "积分商城",
+          "政策法规",
+          "安全百科",
+          "专家直播",
+          "居民分析",
+          "合规审计",
+          "绿色权益核销",
+          "企业能效看板",
+          "系统设置",
+          "搜索服务...",
+          "系 系统管理员 系统管理员",
+          "全部状态 已缴 待缴",
+          "搜索账单周期 (如 2025-05)",
+          "详情",
+          "缴费"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89043-codex-page-repair-structure-08-二层操作-查看全部-详情",
+        "label": "二层操作:查看全部->详情",
+        "finalUrl": "http://127.0.0.1:49043/power/bills",
+        "title": "南方电网能源服务数字生态平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89043/probe/codex-page-repair-20260605/may-89043-codex-page-repair-structure-08-二层操作-查看全部-详情.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89043/probe/codex-page-repair-20260605/may-89043-codex-page-repair-structure-08-二层操作-查看全部-详情.png",
+        "elementCount": 284,
+        "interactiveCount": 36,
+        "interactiveLabels": [
+          "个人",
+          "家庭",
+          "企业",
+          "园区",
+          "总览",
+          "用电服务",
+          "账单分析",
+          "停电通知",
+          "碳足迹",
+          "智能设备",
+          "积分商城",
+          "政策法规",
+          "安全百科",
+          "专家直播",
+          "居民分析",
+          "合规审计",
+          "绿色权益核销",
+          "企业能效看板",
+          "系统设置",
+          "搜索服务...",
+          "系 系统管理员 系统管理员",
+          "全部状态 已缴 待缴",
+          "搜索账单周期 (如 2025-05)",
+          "详情",
+          "缴费",
+          "立即缴费"
+        ]
+      }
+    ]
+  },
+  "screenshotMetrics": {
+    "width": 1760,
+    "height": 1000,
+    "scrollWidth": 1728,
+    "scrollHeight": 1000
+  },
+  "initialBodyTextPreview": "南网能源服务平台\n系统管理员\n个人\n总览\n用电服务\n账单分析\n停电通知\n碳足迹\n智能设备\n积分商城\n公共服务\n政策法规\n安全百科\n专家直播\n居民分析\n管理/运营\n合规审计\n绿色权益核销\n企业能效看板\n系统设置\n系\n系统管理员\n系统管理员\n总览\n2026年06月05日\n搜索/筛选用电账单\n按账单周期、缴费状态查询结果并筛选待缴账单\n发现分类能源资讯\n发现政策、安全百科和专家直播分类频道\n后台管理数据概览\n查看运营数据、用户管理和接口健康状态\n本月用电量\n217.6\nkWh\n本月电费\n¥116.61\n碳排放量\n155\nkg\n积分余额\n580\n分\n月度用电趋势\n01月\n02月\n03月\n04月\n05月\n0\n65\n130\n195\n260\n活跃告警\n\n临时停电通知\n\n06-15 09:00\n\n计划检修停电通知\n\n06-10 08:00\n\n故障抢修停电通知\n\n06-05 14:00\n\n电费账单已生成，请及时缴纳\n\n06-15 00:00\n\n近期账单\n查看全部\n账单周期\t金额\t到期日\t状态\n2026-05\t¥116.61\t2026-06-15\t待缴\n2026-04\t¥141.13\t2026-06-15\t待缴\n2026-03\t¥155.87\t2026-06-15\t已缴\n2026-02\t¥152.78\t2026-06-15\t已缴\n我的账单\n碳足迹\n智能设备\n节能建议\n0",
+  "bodyTextPreview": "南网能源服务平台\n系统管理员\n个人\n总览\n用电服务\n账单分析\n停电通知\n碳足迹\n智能设备\n积分商城\n公共服务\n政策法规\n安全百科\n专家直播\n居民分析\n管理/运营\n合规审计\n绿色权益核销\n企业能效看板\n系统设置\n系\n系统管理员\n系统管理员\n总览\n2026年06月05日\n搜索/筛选用电账单\n按账单周期、缴费状态查询结果并筛选待缴账单\n发现分类能源资讯\n发现政策、安全百科和专家直播分类频道\n后台管理数据概览\n查看运营数据、用户管理和接口健康状态\n本月用电量\n217.6\nkWh\n本月电费\n¥116.61\n碳排放量\n155\nkg\n积分余额\n580\n分\n月度用电趋势\n01月\n02月\n03月\n04月\n05月\n0\n65\n130\n195\n260\n活跃告警\n\n临时停电通知\n\n06-15 09:00\n\n计划检修停电通知\n\n06-10 08:00\n\n故障抢修停电通知\n\n06-05 14:00\n\n电费账单已生成，请及时缴纳\n\n06-15 00:00\n\n近期账单\n查看全部\n账单周期\t金额\t到期日\t状态\n2026-05\t¥116.61\t2026-06-15\t待缴\n2026-04\t¥141.13\t2026-06-15\t待缴\n2026-03\t¥155.87\t2026-06-15\t已缴\n2026-02\t¥152.78\t2026-06-15\t已缴\n我的账单\n碳足迹\n智能设备\n节能建议\n0",
+  "apiBase": "http://127.0.0.1:59043",
+  "businessGoalPreview": "",
+  "apiResponses": [
+    {
+      "method": "POST",
+      "status": 200,
+      "url": "http://127.0.0.1:49043/api/auth/login"
+    },
+    {
+      "method": "POST",
+      "status": 200,
+      "url": "http://127.0.0.1:49043/api/auth/login"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49043/api/dashboard"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49043/api/dashboard"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49043/api/power/bills"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49043/api/power/bills"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49043/api/dashboard"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49043/api/dashboard"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49043/api/auth/profile"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49043/api/auth/profile"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49043/api/dashboard"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49043/api/dashboard"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49043/api/power/bills"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49043/api/power/bills"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49043/api/dashboard"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49043/api/dashboard"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49043/api/power/bills"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49043/api/power/bills"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49043/api/dashboard"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49043/api/dashboard"
+    }
+  ],
+  "apiChecks": [
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59043/api/health",
+      "path": "/api/health",
+      "status": 200,
+      "ok": true,
+      "bodyPreview": "{\"success\":true,\"message\":\"ok\"}"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59043/api/dashboard",
+      "path": "/api/dashboard",
+      "status": 200,
+      "ok": true,
+      "bodyPreview": "{\"success\":true,\"data\":{\"monthlyUsage\":217.6,\"monthlyCost\":116.61,\"carbonEmission\":155,\"pointsBalance\":580,\"monthlyChart\":[{\"month\":\"01月\",\"usage\":195.7},{\"month\":\"02月\",\"usage\":201.6},{\"month\":\"03月\",\"usage\":245.3},{\"month\":\"04月\",\"usage\":214.8},{\"month\":\"05月\",\"usage\":217.6}],\"recentBills\":[{\"id\":\"17\",\"period\":\"2026-05\",\"amount\":116.60905917823747,\"status\":\"unpaid\",\"dueDate\":\"2026-06-15\"},{\"id\":\"13\",\"period\":\"2026-04\",\"amount\":141.12703636701062,\"status\":\"unpaid\",\"dueDate\":\"2026-06-15\"},{\"id\":\"9\",\""
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59043/api/power/bills",
+      "path": "/api/power/bills",
+      "status": 200,
+      "ok": true,
+      "bodyPreview": "{\"success\":true,\"data\":[{\"id\":\"17\",\"period\":\"2026-05\",\"amount\":116.60905917823747,\"usage\":217.58914242681334,\"status\":\"unpaid\",\"dueDate\":\"2026-06-15\",\"paidDate\":null,\"meterNo\":\"GD20240001\"},{\"id\":\"13\",\"period\":\"2026-04\",\"amount\":141.12703636701062,\"usage\":214.7846590387756,\"status\":\"unpaid\",\"dueDate\":\"2026-06-15\",\"paidDate\":null,\"meterNo\":\"GD20240001\"},{\"id\":\"9\",\"period\":\"2026-03\",\"amount\":155.87457041399512,\"usage\":245.32495750915893,\"status\":\"paid\",\"dueDate\":\"2026-06-15\",\"paidDate\":\"2026-06-10"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59043/api/auth/profile",
+      "path": "/api/auth/profile",
+      "status": 200,
+      "ok": true,
+      "bodyPreview": "{\"success\":true,\"data\":{\"id\":1,\"username\":\"admin\",\"name\":\"系统管理员\",\"email\":\"admin@csg.cn\",\"phone\":\"13800000000\",\"customer_type\":\"admin\",\"role\":\"admin\",\"company_name\":\"南方电网\",\"created_at\":\"2026-06-05 16:45:28\"}}"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59043/api/auth/me",
+      "path": "/api/auth/me",
+      "status": 200,
+      "ok": true,
+      "bodyPreview": "{\"success\":true,\"data\":{\"id\":1,\"username\":\"admin\",\"name\":\"系统管理员\",\"email\":\"admin@csg.cn\",\"phone\":\"13800000000\",\"customer_type\":\"admin\",\"role\":\"admin\",\"company_name\":\"南方电网\",\"created_at\":\"2026-06-05 16:45:28\"}}"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59043/api/users/profile",
+      "path": "/api/users/profile",
+      "status": 200,
+      "ok": true,
+      "bodyPreview": "{\"success\":true,\"data\":{\"id\":1,\"username\":\"admin\",\"name\":\"系统管理员\",\"email\":\"admin@csg.cn\",\"phone\":\"13800000000\",\"customer_type\":\"admin\",\"role\":\"admin\",\"company_name\":\"南方电网\",\"created_at\":\"2026-06-05 16:45:28\"}}"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59043/api/user/profile",
+      "path": "/api/user/profile",
+      "status": 200,
+      "ok": true,
+      "bodyPreview": "{\"success\":true,\"data\":{\"id\":1,\"username\":\"admin\",\"name\":\"系统管理员\",\"email\":\"admin@csg.cn\",\"phone\":\"13800000000\",\"customer_type\":\"admin\",\"role\":\"admin\",\"company_name\":\"南方电网\",\"created_at\":\"2026-06-05 16:45:28\"}}"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59043/api/search?q=%E6%B5%8B%E8%AF%95",
+      "path": "/api/search?q=%E6%B5%8B%E8%AF%95",
+      "status": 200,
+      "ok": true,
+      "bodyPreview": "{\"success\":true,\"data\":{\"keyword\":\"测试\",\"filters\":[\"账单周期\",\"缴费状态\",\"政策分类\",\"安全分类\",\"直播频道\"],\"results\":[]}}"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59043/api/admin/stats",
+      "path": "/api/admin/stats",
+      "status": 200,
+      "ok": true,
+      "bodyPreview": "{\"success\":true,\"data\":{\"usersCount\":7,\"billsCount\":20,\"unpaidBillsCount\":8,\"policiesCount\":4,\"devicesCount\":7,\"creditsCount\":6,\"auditsCount\":4,\"serviceModules\":20,\"status\":\"running\"}}"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59043/api/admin/dashboard",
+      "path": "/api/admin/dashboard",
+      "status": 200,
+      "ok": true,
+      "bodyPreview": "{\"success\":true,\"data\":{\"usersCount\":7,\"billsCount\":20,\"policiesCount\":4,\"creditsCount\":6,\"subsidyCount\":3,\"recentUsers\":[{\"username\":\"admin\",\"name\":\"系统管理员\",\"customer_type\":\"admin\",\"role\":\"admin\",\"created_at\":\"2026-06-05 16:45:28\"},{\"username\":\"platform\",\"name\":\"平台运营员\",\"customer_type\":\"admin\",\"role\":\"platform\",\"created_at\":\"2026-06-05 16:45:31\"},{\"username\":\"ops\",\"name\":\"运维工程师\",\"customer_type\":\"admin\",\"role\":\"ops\",\"created_at\":\"2026-06-05 16:45:35\"},{\"username\":\"zhangsan\",\"name\":\"张三\",\"customer_t"
+    }
+  ],
+  "dialogs": [],
+  "consoleMessages": [
+    {
+      "type": "debug",
+      "text": "[vite] connecting...",
+      "location": {
+        "url": "http://127.0.0.1:49043/@vite/client",
+        "lineNumber": 788,
+        "columnNumber": 8
+      }
+    },
+    {
+      "type": "info",
+      "text": "%cDownload the React DevTools for a better development experience: https://reactjs.org/link/react-devtools font-weight:bold",
+      "location": {
+        "url": "http://127.0.0.1:49043/node_modules/.vite/deps/chunk-KDCVS43I.js?v=692763b8",
+        "lineNumber": 21608,
+        "columnNumber": 24
+      }
+    },
+    {
+      "type": "debug",
+      "text": "[vite] connected.",
+      "location": {
+        "url": "http://127.0.0.1:49043/@vite/client",
+        "lineNumber": 911,
+        "columnNumber": 14
+      }
+    },
+    {
+      "type": "debug",
+      "text": "[vite] connecting...",
+      "location": {
+        "url": "http://127.0.0.1:49043/@vite/client",
+        "lineNumber": 788,
+        "columnNumber": 8
+      }
+    },
+    {
+      "type": "debug",
+      "text": "[vite] connected.",
+      "location": {
+        "url": "http://127.0.0.1:49043/@vite/client",
+        "lineNumber": 911,
+        "columnNumber": 14
+      }
+    },
+    {
+      "type": "info",
+      "text": "%cDownload the React DevTools for a better development experience: https://reactjs.org/link/react-devtools font-weight:bold",
+      "location": {
+        "url": "http://127.0.0.1:49043/node_modules/.vite/deps/chunk-KDCVS43I.js?v=692763b8",
+        "lineNumber": 21608,
+        "columnNumber": 24
+      }
+    },
+    {
+      "type": "debug",
+      "text": "[vite] connecting...",
+      "location": {
+        "url": "http://127.0.0.1:49043/@vite/client",
+        "lineNumber": 788,
+        "columnNumber": 8
+      }
+    },
+    {
+      "type": "info",
+      "text": "%cDownload the React DevTools for a better development experience: https://reactjs.org/link/react-devtools font-weight:bold",
+      "location": {
+        "url": "http://127.0.0.1:49043/node_modules/.vite/deps/chunk-KDCVS43I.js?v=692763b8",
+        "lineNumber": 21608,
+        "columnNumber": 24
+      }
+    },
+    {
+      "type": "debug",
+      "text": "[vite] connected.",
+      "location": {
+        "url": "http://127.0.0.1:49043/@vite/client",
+        "lineNumber": 911,
+        "columnNumber": 14
+      }
+    },
+    {
+      "type": "debug",
+      "text": "[vite] connecting...",
+      "location": {
+        "url": "http://127.0.0.1:49043/@vite/client",
+        "lineNumber": 788,
+        "columnNumber": 8
+      }
+    },
+    {
+      "type": "debug",
+      "text": "[vite] connected.",
+      "location": {
+        "url": "http://127.0.0.1:49043/@vite/client",
+        "lineNumber": 911,
+        "columnNumber": 14
+      }
+    },
+    {
+      "type": "info",
+      "text": "%cDownload the React DevTools for a better development experience: https://reactjs.org/link/react-devtools font-weight:bold",
+      "location": {
+        "url": "http://127.0.0.1:49043/node_modules/.vite/deps/chunk-KDCVS43I.js?v=692763b8",
+        "lineNumber": 21608,
+        "columnNumber": 24
+      }
+    },
+    {
+      "type": "debug",
+      "text": "[vite] connecting...",
+      "location": {
+        "url": "http://127.0.0.1:49043/@vite/client",
+        "lineNumber": 788,
+        "columnNumber": 8
+      }
+    },
+    {
+      "type": "debug",
+      "text": "[vite] connected.",
+      "location": {
+        "url": "http://127.0.0.1:49043/@vite/client",
+        "lineNumber": 911,
+        "columnNumber": 14
+      }
+    },
+    {
+      "type": "info",
+      "text": "%cDownload the React DevTools for a better development experience: https://reactjs.org/link/react-devtools font-weight:bold",
+      "location": {
+        "url": "http://127.0.0.1:49043/node_modules/.vite/deps/chunk-KDCVS43I.js?v=692763b8",
+        "lineNumber": 21608,
+        "columnNumber": 24
+      }
+    }
+  ],
+  "requestFailures": [],
+  "responseErrors": []
+}

@@ -1,0 +1,2425 @@
+{
+  "ok": true,
+  "generatedAt": "2026-06-05T11:29:00.184Z",
+  "order": "may-89043",
+  "roundIndex": 100,
+  "captureId": "may-89043-codex-runtime-final",
+  "url": "http://127.0.0.1:49043/",
+  "initialUrl": "http://127.0.0.1:49043/",
+  "finalUrl": "http://127.0.0.1:49043/",
+  "status": 200,
+  "title": "南方电网能源服务数字生态平台",
+  "initialTitle": "南方电网能源服务数字生态平台",
+  "navigationError": "",
+  "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89043/probe/codex-runtime-final-20260605-1127/may-89043-codex-runtime-final-frontend.png",
+  "screenshotPaths": [
+    "/Users/chen/Documents/trae_projects/local_projects/may-89043/probe/codex-runtime-final-20260605-1127/may-89043-codex-runtime-final-structure-01-首屏.png",
+    "/Users/chen/Documents/trae_projects/local_projects/may-89043/probe/codex-runtime-final-20260605-1127/may-89043-codex-runtime-final-structure-02-导航-首页总览.png",
+    "/Users/chen/Documents/trae_projects/local_projects/may-89043/probe/codex-runtime-final-20260605-1127/may-89043-codex-runtime-final-structure-03-操作-查看全部.png",
+    "/Users/chen/Documents/trae_projects/local_projects/may-89043/probe/codex-runtime-final-20260605-1127/may-89043-codex-runtime-final-structure-04-二层操作-查看全部-重置.png",
+    "/Users/chen/Documents/trae_projects/local_projects/may-89043/probe/codex-runtime-final-20260605-1127/may-89043-codex-runtime-final-structure-05-操作-查看详细报告.png",
+    "/Users/chen/Documents/trae_projects/local_projects/may-89043/probe/codex-runtime-final-20260605-1127/may-89043-codex-runtime-final-structure-06-二层操作-查看详细报告-2026-06-05.png"
+  ],
+  "issueTextPreview": "搜索/筛选相关问题；后台管理相关问题；发现/分类相关问题",
+  "targetReason": "登录流程已完成，继续复验登录后的首页和业务导航",
+  "targetKind": "auth",
+  "targetMatched": true,
+  "targetActions": [
+    {
+      "action": "login-fill-username",
+      "label": "admin",
+      "ok": true
+    },
+    {
+      "action": "login-fill-password",
+      "label": "admin:******",
+      "ok": true
+    },
+    {
+      "action": "click",
+      "label": "登录:admin",
+      "ok": true
+    },
+    {
+      "action": "login-submit",
+      "label": "admin",
+      "ok": true,
+      "beforeUrl": "http://127.0.0.1:49043/login"
+    },
+    {
+      "action": "login-result",
+      "label": "admin",
+      "ok": true,
+      "finalUrl": "http://127.0.0.1:49043/"
+    },
+    {
+      "action": "target-verify",
+      "label": "登录后首页",
+      "ok": true,
+      "finalUrl": "http://127.0.0.1:49043/"
+    }
+  ],
+  "authFlow": {
+    "detected": true,
+    "attempted": true,
+    "success": true,
+    "finalUrl": "http://127.0.0.1:49043/",
+    "message": "登录成功:admin",
+    "actions": [
+      {
+        "action": "login-fill-username",
+        "label": "admin",
+        "ok": true
+      },
+      {
+        "action": "login-fill-password",
+        "label": "admin:******",
+        "ok": true
+      },
+      {
+        "action": "click",
+        "label": "登录:admin",
+        "ok": true
+      },
+      {
+        "action": "login-submit",
+        "label": "admin",
+        "ok": true,
+        "beforeUrl": "http://127.0.0.1:49043/login"
+      },
+      {
+        "action": "login-result",
+        "label": "admin",
+        "ok": true,
+        "finalUrl": "http://127.0.0.1:49043/"
+      }
+    ],
+    "username": "admin",
+    "credentialSource": "visible-demo-text"
+  },
+  "businessAudit": {
+    "actions": [
+      {
+        "action": "click",
+        "label": "导航:首页总览",
+        "ok": true
+      },
+      {
+        "action": "click",
+        "label": "操作:查看全部",
+        "ok": true,
+        "result": {
+          "ok": true,
+          "matched": 2
+        }
+      },
+      {
+        "action": "click",
+        "label": "二层操作:查看全部:重置",
+        "ok": true,
+        "result": {
+          "ok": true,
+          "matched": 1
+        }
+      },
+      {
+        "action": "click",
+        "label": "操作:查看详细报告",
+        "ok": true,
+        "result": {
+          "ok": true,
+          "matched": 1
+        }
+      },
+      {
+        "action": "click",
+        "label": "二层操作:查看详细报告:2026-06-05",
+        "ok": true,
+        "result": {
+          "ok": true,
+          "matched": 2
+        }
+      },
+      {
+        "action": "click",
+        "label": "导航:用电服务",
+        "ok": true
+      },
+      {
+        "action": "click",
+        "label": "操作:查看全部",
+        "ok": true,
+        "result": {
+          "ok": true,
+          "matched": 2
+        }
+      },
+      {
+        "action": "click",
+        "label": "二层操作:查看全部:重置",
+        "ok": true,
+        "result": {
+          "ok": true,
+          "matched": 1
+        }
+      },
+      {
+        "action": "click",
+        "label": "操作:查看详细报告",
+        "ok": true,
+        "result": {
+          "ok": true,
+          "matched": 1
+        }
+      },
+      {
+        "action": "click",
+        "label": "二层操作:查看详细报告:2026-06-05",
+        "ok": true,
+        "result": {
+          "ok": true,
+          "matched": 2
+        }
+      }
+    ],
+    "snapshots": [
+      {
+        "label": "首屏",
+        "url": "http://127.0.0.1:49043/",
+        "title": "南方电网能源服务数字生态平台",
+        "headings": [
+          "你好，系统管理员",
+          "近期账单",
+          "能效评分",
+          "峰谷平用电分布",
+          "停电通知",
+          "用电结构"
+        ],
+        "navLabels": [
+          "南方电网 能源服务数字生态平台",
+          "首页总览",
+          "用电服务",
+          "综合能源",
+          "智慧生活",
+          "资讯知识",
+          "合规审计",
+          "运营管理",
+          "系统管理员 企业用户",
+          "退出登录"
+        ],
+        "buttons": [
+          "用电服务",
+          "综合能源",
+          "智慧生活",
+          "资讯知识",
+          "合规审计",
+          "退出登录",
+          "切换到暗色模式",
+          "去兑换 →",
+          "查看全部",
+          "查看详细报告",
+          "电费缴纳",
+          "能效诊断",
+          "碳足迹",
+          "积分商城"
+        ],
+        "links": [
+          "首页总览",
+          "运营管理"
+        ],
+        "inputs": [],
+        "tables": [
+          {
+            "headers": [
+              "账单周期",
+              "用电量",
+              "金额",
+              "状态"
+            ],
+            "rowCount": 3,
+            "hasEmptyText": false,
+            "textPreview": "账单周期 用电量 金额 状态 2026-04 290 kWh ¥203.0 待缴 2026-03 310 kWh ¥217.0 待缴 2026-02 280 kWh ¥196.0 已缴"
+          }
+        ],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "南方电网能源服务数字生态平台首页总览用电服务综合能源智慧生活资讯知识合规审计运营管理系统管理员企业用户系统管理员你好，系统管理员企业用户 · 欢迎使用南方电网能源服务数字生态平台本月电费¥203.0较上月 +8.1%本月用电量290 kWh较上月 -2.3%碳排放0.17 吨较上月 -5.2%积分余额99999去兑换 →近期账单查看全部 账单周期用电量金额状态2026-04290 kWh¥203.0待缴2026-03310 kWh¥217.0待缴2026-02280 kWh¥196.0已缴能效评分78能效良好查看详细报告峰谷平用电分布峰时平时谷时停电通知查看全部萝岗区计划检修停电通知计划中广州市萝岗区2026-06-20 06:00 ~ 12:00黄埔区计划检修停电通知计划中广州市黄埔区2026-06-15 07:00 ~ 17:00天河区计划检修停电通知计划中广州市天河区2026-06-10 08:00 ~ 18:00用电结构电费缴纳能效诊断碳足迹积分商城 0",
+        "layout": {
+          "viewportWidth": 1504,
+          "viewportHeight": 1000,
+          "scrollWidth": 1504,
+          "scrollHeight": 1000,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89043-codex-runtime-final-structure-01-首屏",
+          "label": "首屏",
+          "finalUrl": "http://127.0.0.1:49043/",
+          "title": "南方电网能源服务数字生态平台",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89043/probe/codex-runtime-final-20260605-1127/may-89043-codex-runtime-final-structure-01-首屏.json",
+          "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89043/probe/codex-runtime-final-20260605-1127/may-89043-codex-runtime-final-structure-01-首屏.png",
+          "elementCount": 466,
+          "interactiveCount": 22,
+          "interactiveLabels": [
+            "首页总览",
+            "用电服务",
+            "综合能源",
+            "智慧生活",
+            "资讯知识",
+            "合规审计",
+            "运营管理",
+            "退出登录",
+            "切换到暗色模式",
+            "去兑换 →",
+            "查看全部",
+            "查看详细报告",
+            "01月02月03月04月04080120160",
+            "电费缴纳",
+            "能效诊断",
+            "碳足迹",
+            "积分商城"
+          ]
+        }
+      },
+      {
+        "label": "导航:首页总览",
+        "url": "http://127.0.0.1:49043/",
+        "title": "南方电网能源服务数字生态平台",
+        "headings": [
+          "你好，系统管理员",
+          "近期账单",
+          "能效评分",
+          "峰谷平用电分布",
+          "停电通知",
+          "用电结构"
+        ],
+        "navLabels": [
+          "南方电网 能源服务数字生态平台",
+          "首页总览",
+          "用电服务",
+          "综合能源",
+          "智慧生活",
+          "资讯知识",
+          "合规审计",
+          "运营管理",
+          "系统管理员 企业用户",
+          "退出登录"
+        ],
+        "buttons": [
+          "用电服务",
+          "综合能源",
+          "智慧生活",
+          "资讯知识",
+          "合规审计",
+          "退出登录",
+          "切换到暗色模式",
+          "去兑换 →",
+          "查看全部",
+          "查看详细报告",
+          "电费缴纳",
+          "能效诊断",
+          "碳足迹",
+          "积分商城"
+        ],
+        "links": [
+          "首页总览",
+          "运营管理"
+        ],
+        "inputs": [],
+        "tables": [
+          {
+            "headers": [
+              "账单周期",
+              "用电量",
+              "金额",
+              "状态"
+            ],
+            "rowCount": 3,
+            "hasEmptyText": false,
+            "textPreview": "账单周期 用电量 金额 状态 2026-04 290 kWh ¥203.0 待缴 2026-03 310 kWh ¥217.0 待缴 2026-02 280 kWh ¥196.0 已缴"
+          }
+        ],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "南方电网能源服务数字生态平台首页总览用电服务综合能源智慧生活资讯知识合规审计运营管理系统管理员企业用户系统管理员你好，系统管理员企业用户 · 欢迎使用南方电网能源服务数字生态平台本月电费¥203.0较上月 +8.1%本月用电量290 kWh较上月 -2.3%碳排放0.17 吨较上月 -5.2%积分余额99999去兑换 →近期账单查看全部 账单周期用电量金额状态2026-04290 kWh¥203.0待缴2026-03310 kWh¥217.0待缴2026-02280 kWh¥196.0已缴能效评分78能效良好查看详细报告峰谷平用电分布峰时平时谷时停电通知查看全部萝岗区计划检修停电通知计划中广州市萝岗区2026-06-20 06:00 ~ 12:00黄埔区计划检修停电通知计划中广州市黄埔区2026-06-15 07:00 ~ 17:00天河区计划检修停电通知计划中广州市天河区2026-06-10 08:00 ~ 18:00用电结构电费缴纳能效诊断碳足迹积分商城 0",
+        "layout": {
+          "viewportWidth": 1536,
+          "viewportHeight": 1000,
+          "scrollWidth": 1536,
+          "scrollHeight": 1000,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89043-codex-runtime-final-structure-02-导航-首页总览",
+          "label": "导航:首页总览",
+          "finalUrl": "http://127.0.0.1:49043/",
+          "title": "南方电网能源服务数字生态平台",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89043/probe/codex-runtime-final-20260605-1127/may-89043-codex-runtime-final-structure-02-导航-首页总览.json",
+          "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89043/probe/codex-runtime-final-20260605-1127/may-89043-codex-runtime-final-structure-02-导航-首页总览.png",
+          "elementCount": 466,
+          "interactiveCount": 22,
+          "interactiveLabels": [
+            "首页总览",
+            "用电服务",
+            "综合能源",
+            "智慧生活",
+            "资讯知识",
+            "合规审计",
+            "运营管理",
+            "退出登录",
+            "切换到暗色模式",
+            "去兑换 →",
+            "查看全部",
+            "查看详细报告",
+            "01月02月03月04月04080120160",
+            "电费缴纳",
+            "能效诊断",
+            "碳足迹",
+            "积分商城"
+          ]
+        }
+      },
+      {
+        "label": "操作:查看全部",
+        "url": "http://127.0.0.1:49043/electricity/bills",
+        "title": "南方电网能源服务数字生态平台",
+        "headings": [
+          "电费查询"
+        ],
+        "navLabels": [
+          "南方电网 能源服务数字生态平台",
+          "首页总览",
+          "用电服务",
+          "综合能源",
+          "智慧生活",
+          "资讯知识",
+          "合规审计",
+          "运营管理",
+          "系统管理员 企业用户",
+          "退出登录"
+        ],
+        "buttons": [
+          "用电服务",
+          "综合能源",
+          "智慧生活",
+          "资讯知识",
+          "合规审计",
+          "退出登录",
+          "切换到暗色模式",
+          "重置"
+        ],
+        "links": [
+          "首页总览",
+          "运营管理"
+        ],
+        "inputs": [
+          {
+            "tag": "input",
+            "type": "text",
+            "placeholder": "如 2026-05",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "select",
+            "type": "",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          }
+        ],
+        "tables": [
+          {
+            "headers": [
+              "账单周期",
+              "用电量",
+              "峰时",
+              "谷时",
+              "平时",
+              "金额",
+              "到期日",
+              "状态"
+            ],
+            "rowCount": 4,
+            "hasEmptyText": false,
+            "textPreview": "账单周期 用电量 峰时 谷时 平时 金额 到期日 状态 2026-04 290 kWh 100 kWh 60 kWh 130 kWh ¥203.0 2026-05-15 待缴 2026-03 310 kWh 110 kWh 70 kWh 130 kWh ¥217.0 2026-04-15 待缴 2026-02 280 kWh 95 kWh 65 kWh 120 kWh ¥196.0 2026-03-15 已缴 2026-01 350 kWh 120 kWh 80 kWh 150 kWh ¥245.0 2026-02-15 已缴"
+          }
+        ],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "南方电网能源服务数字生态平台首页总览用电服务综合能源智慧生活资讯知识合规审计运营管理系统管理员企业用户系统管理员电费查询查询历史电费账单明细账单周期状态全部已缴待缴逾期重置账单周期 用电量 峰时谷时平时金额 到期日状态 2026-04290 kWh100 kWh60 kWh130 kWh¥203.02026-05-15待缴2026-03310 kWh110 kWh70 kWh130 kWh¥217.02026-04-15待缴2026-02280 kWh95 kWh65 kWh120 kWh¥196.02026-03-15已缴2026-01350 kWh120 kWh80 kWh150 kWh¥245.02026-02-15已缴 0",
+        "layout": {
+          "viewportWidth": 1568,
+          "viewportHeight": 1000,
+          "scrollWidth": 1568,
+          "scrollHeight": 1000,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89043-codex-runtime-final-structure-03-操作-查看全部",
+          "label": "操作:查看全部",
+          "finalUrl": "http://127.0.0.1:49043/electricity/bills",
+          "title": "南方电网能源服务数字生态平台",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89043/probe/codex-runtime-final-20260605-1127/may-89043-codex-runtime-final-structure-03-操作-查看全部.json",
+          "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89043/probe/codex-runtime-final-20260605-1127/may-89043-codex-runtime-final-structure-03-操作-查看全部.png",
+          "elementCount": 195,
+          "interactiveCount": 14,
+          "interactiveLabels": [
+            "首页总览",
+            "用电服务",
+            "综合能源",
+            "智慧生活",
+            "资讯知识",
+            "合规审计",
+            "运营管理",
+            "退出登录",
+            "切换到暗色模式",
+            "如 2026-05",
+            "全部 已缴 待缴 逾期",
+            "重置"
+          ]
+        }
+      },
+      {
+        "label": "二层操作:查看全部->重置",
+        "url": "http://127.0.0.1:49043/electricity/bills",
+        "title": "南方电网能源服务数字生态平台",
+        "headings": [
+          "电费查询"
+        ],
+        "navLabels": [
+          "南方电网 能源服务数字生态平台",
+          "首页总览",
+          "用电服务",
+          "综合能源",
+          "智慧生活",
+          "资讯知识",
+          "合规审计",
+          "运营管理",
+          "系统管理员 企业用户",
+          "退出登录"
+        ],
+        "buttons": [
+          "用电服务",
+          "综合能源",
+          "智慧生活",
+          "资讯知识",
+          "合规审计",
+          "退出登录",
+          "切换到暗色模式",
+          "重置"
+        ],
+        "links": [
+          "首页总览",
+          "运营管理"
+        ],
+        "inputs": [
+          {
+            "tag": "input",
+            "type": "text",
+            "placeholder": "如 2026-05",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "select",
+            "type": "",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          }
+        ],
+        "tables": [
+          {
+            "headers": [
+              "账单周期",
+              "用电量",
+              "峰时",
+              "谷时",
+              "平时",
+              "金额",
+              "到期日",
+              "状态"
+            ],
+            "rowCount": 4,
+            "hasEmptyText": false,
+            "textPreview": "账单周期 用电量 峰时 谷时 平时 金额 到期日 状态 2026-04 290 kWh 100 kWh 60 kWh 130 kWh ¥203.0 2026-05-15 待缴 2026-03 310 kWh 110 kWh 70 kWh 130 kWh ¥217.0 2026-04-15 待缴 2026-02 280 kWh 95 kWh 65 kWh 120 kWh ¥196.0 2026-03-15 已缴 2026-01 350 kWh 120 kWh 80 kWh 150 kWh ¥245.0 2026-02-15 已缴"
+          }
+        ],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "南方电网能源服务数字生态平台首页总览用电服务综合能源智慧生活资讯知识合规审计运营管理系统管理员企业用户系统管理员电费查询查询历史电费账单明细账单周期状态全部已缴待缴逾期重置账单周期 用电量 峰时谷时平时金额 到期日状态 2026-04290 kWh100 kWh60 kWh130 kWh¥203.02026-05-15待缴2026-03310 kWh110 kWh70 kWh130 kWh¥217.02026-04-15待缴2026-02280 kWh95 kWh65 kWh120 kWh¥196.02026-03-15已缴2026-01350 kWh120 kWh80 kWh150 kWh¥245.02026-02-15已缴 0",
+        "layout": {
+          "viewportWidth": 1600,
+          "viewportHeight": 1000,
+          "scrollWidth": 1600,
+          "scrollHeight": 1000,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89043-codex-runtime-final-structure-04-二层操作-查看全部-重置",
+          "label": "二层操作:查看全部->重置",
+          "finalUrl": "http://127.0.0.1:49043/electricity/bills",
+          "title": "南方电网能源服务数字生态平台",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89043/probe/codex-runtime-final-20260605-1127/may-89043-codex-runtime-final-structure-04-二层操作-查看全部-重置.json",
+          "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89043/probe/codex-runtime-final-20260605-1127/may-89043-codex-runtime-final-structure-04-二层操作-查看全部-重置.png",
+          "elementCount": 195,
+          "interactiveCount": 14,
+          "interactiveLabels": [
+            "首页总览",
+            "用电服务",
+            "综合能源",
+            "智慧生活",
+            "资讯知识",
+            "合规审计",
+            "运营管理",
+            "退出登录",
+            "切换到暗色模式",
+            "如 2026-05",
+            "全部 已缴 待缴 逾期",
+            "重置"
+          ]
+        }
+      },
+      {
+        "label": "操作:查看详细报告",
+        "url": "http://127.0.0.1:49043/energy/efficiency",
+        "title": "南方电网能源服务数字生态平台",
+        "headings": [
+          "能效诊断",
+          "综合能效评分",
+          "各项指标得分",
+          "优化建议"
+        ],
+        "navLabels": [
+          "南方电网 能源服务数字生态平台",
+          "首页总览",
+          "用电服务",
+          "综合能源",
+          "智慧生活",
+          "资讯知识",
+          "合规审计",
+          "运营管理",
+          "系统管理员 企业用户",
+          "退出登录"
+        ],
+        "buttons": [
+          "用电服务",
+          "综合能源",
+          "智慧生活",
+          "资讯知识",
+          "合规审计",
+          "退出登录",
+          "切换到暗色模式",
+          "2026-06-05",
+          "生成新报告"
+        ],
+        "links": [
+          "首页总览",
+          "运营管理"
+        ],
+        "inputs": [],
+        "tables": [],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "南方电网能源服务数字生态平台首页总览用电服务综合能源智慧生活资讯知识合规审计运营管理系统管理员企业用户系统管理员能效诊断全面评估用电效率并获取优化建议2026-06-052026-06-05生成新报告综合能效评分72良好各项指标得分用电效率72 分仍有用电效率优化空间峰谷用电75 分峰时占比 34%，谷时占比 23%设备能效68 分重点设备负载处于可监测范围照明系统77 分公共区域照明具备进一步节能空间优化建议预计年节省 ¥600建议将部分高耗电设备转移至谷电时段运高影响用电建议将部分高耗电设备转移至谷电时段运行，可节省约15%电费支出预计年节省¥600预计碳减排0.5 吨预计节电857 kWh 0",
+        "layout": {
+          "viewportWidth": 1632,
+          "viewportHeight": 1000,
+          "scrollWidth": 1632,
+          "scrollHeight": 1000,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89043-codex-runtime-final-structure-05-操作-查看详细报告",
+          "label": "操作:查看详细报告",
+          "finalUrl": "http://127.0.0.1:49043/energy/efficiency",
+          "title": "南方电网能源服务数字生态平台",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89043/probe/codex-runtime-final-20260605-1127/may-89043-codex-runtime-final-structure-05-操作-查看详细报告.json",
+          "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89043/probe/codex-runtime-final-20260605-1127/may-89043-codex-runtime-final-structure-05-操作-查看详细报告.png",
+          "elementCount": 214,
+          "interactiveCount": 14,
+          "interactiveLabels": [
+            "首页总览",
+            "用电服务",
+            "综合能源",
+            "智慧生活",
+            "资讯知识",
+            "合规审计",
+            "运营管理",
+            "退出登录",
+            "切换到暗色模式",
+            "2026-06-05",
+            "生成新报告"
+          ]
+        }
+      },
+      {
+        "label": "二层操作:查看详细报告->2026-06-05",
+        "url": "http://127.0.0.1:49043/energy/efficiency",
+        "title": "南方电网能源服务数字生态平台",
+        "headings": [
+          "能效诊断",
+          "综合能效评分",
+          "各项指标得分",
+          "优化建议"
+        ],
+        "navLabels": [
+          "南方电网 能源服务数字生态平台",
+          "首页总览",
+          "用电服务",
+          "综合能源",
+          "智慧生活",
+          "资讯知识",
+          "合规审计",
+          "运营管理",
+          "系统管理员 企业用户",
+          "退出登录"
+        ],
+        "buttons": [
+          "用电服务",
+          "综合能源",
+          "智慧生活",
+          "资讯知识",
+          "合规审计",
+          "退出登录",
+          "切换到暗色模式",
+          "2026-06-05",
+          "生成新报告"
+        ],
+        "links": [
+          "首页总览",
+          "运营管理"
+        ],
+        "inputs": [],
+        "tables": [],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "南方电网能源服务数字生态平台首页总览用电服务综合能源智慧生活资讯知识合规审计运营管理系统管理员企业用户系统管理员能效诊断全面评估用电效率并获取优化建议2026-06-052026-06-05生成新报告综合能效评分72良好各项指标得分用电效率72 分仍有用电效率优化空间峰谷用电75 分峰时占比 34%，谷时占比 23%设备能效68 分重点设备负载处于可监测范围照明系统77 分公共区域照明具备进一步节能空间优化建议预计年节省 ¥600建议将部分高耗电设备转移至谷电时段运高影响用电建议将部分高耗电设备转移至谷电时段运行，可节省约15%电费支出预计年节省¥600预计碳减排0.5 吨预计节电857 kWh 0",
+        "layout": {
+          "viewportWidth": 1664,
+          "viewportHeight": 1000,
+          "scrollWidth": 1664,
+          "scrollHeight": 1000,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89043-codex-runtime-final-structure-06-二层操作-查看详细报告-2026-06-05",
+          "label": "二层操作:查看详细报告->2026-06-05",
+          "finalUrl": "http://127.0.0.1:49043/energy/efficiency",
+          "title": "南方电网能源服务数字生态平台",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89043/probe/codex-runtime-final-20260605-1127/may-89043-codex-runtime-final-structure-06-二层操作-查看详细报告-2026-06-05.json",
+          "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89043/probe/codex-runtime-final-20260605-1127/may-89043-codex-runtime-final-structure-06-二层操作-查看详细报告-2026-06-05.png",
+          "elementCount": 214,
+          "interactiveCount": 14,
+          "interactiveLabels": [
+            "首页总览",
+            "用电服务",
+            "综合能源",
+            "智慧生活",
+            "资讯知识",
+            "合规审计",
+            "运营管理",
+            "退出登录",
+            "切换到暗色模式",
+            "2026-06-05",
+            "生成新报告"
+          ]
+        }
+      },
+      {
+        "label": "导航:用电服务",
+        "url": "http://127.0.0.1:49043/",
+        "title": "南方电网能源服务数字生态平台",
+        "headings": [
+          "你好，系统管理员",
+          "近期账单",
+          "能效评分",
+          "峰谷平用电分布",
+          "停电通知",
+          "用电结构"
+        ],
+        "navLabels": [
+          "南方电网 能源服务数字生态平台",
+          "首页总览",
+          "用电服务",
+          "电费查询",
+          "电费缴纳",
+          "账单分析",
+          "停电通知",
+          "综合能源",
+          "智慧生活",
+          "资讯知识",
+          "合规审计",
+          "运营管理",
+          "系统管理员 企业用户",
+          "退出登录"
+        ],
+        "buttons": [
+          "用电服务",
+          "综合能源",
+          "智慧生活",
+          "资讯知识",
+          "合规审计",
+          "退出登录",
+          "切换到暗色模式",
+          "去兑换 →",
+          "查看全部",
+          "查看详细报告",
+          "电费缴纳",
+          "能效诊断",
+          "碳足迹",
+          "积分商城"
+        ],
+        "links": [
+          "首页总览",
+          "电费查询",
+          "电费缴纳",
+          "账单分析",
+          "停电通知",
+          "运营管理"
+        ],
+        "inputs": [],
+        "tables": [
+          {
+            "headers": [
+              "账单周期",
+              "用电量",
+              "金额",
+              "状态"
+            ],
+            "rowCount": 3,
+            "hasEmptyText": false,
+            "textPreview": "账单周期 用电量 金额 状态 2026-04 290 kWh ¥203.0 待缴 2026-03 310 kWh ¥217.0 待缴 2026-02 280 kWh ¥196.0 已缴"
+          }
+        ],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "南方电网能源服务数字生态平台首页总览用电服务电费查询电费缴纳账单分析停电通知综合能源智慧生活资讯知识合规审计运营管理系统管理员企业用户系统管理员你好，系统管理员企业用户 · 欢迎使用南方电网能源服务数字生态平台本月电费¥203.0较上月 +8.1%本月用电量290 kWh较上月 -2.3%碳排放0.17 吨较上月 -5.2%积分余额99999去兑换 →近期账单查看全部 账单周期用电量金额状态2026-04290 kWh¥203.0待缴2026-03310 kWh¥217.0待缴2026-02280 kWh¥196.0已缴能效评分78能效良好查看详细报告峰谷平用电分布峰时平时谷时停电通知查看全部萝岗区计划检修停电通知计划中广州市萝岗区2026-06-20 06:00 ~ 12:00黄埔区计划检修停电通知计划中广州市黄埔区2026-06-15 07:00 ~ 17:00天河区计划检修停电通知计划中广州市天河区2026-06-10 08:00 ~ 18:00用电结构电费缴纳能效诊断碳足迹积分商城 0",
+        "layout": {
+          "viewportWidth": 1696,
+          "viewportHeight": 1000,
+          "scrollWidth": 1696,
+          "scrollHeight": 1000,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89043-codex-runtime-final-structure-07-导航-用电服务",
+          "label": "导航:用电服务",
+          "finalUrl": "http://127.0.0.1:49043/",
+          "title": "南方电网能源服务数字生态平台",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89043/probe/codex-runtime-final-20260605-1127/may-89043-codex-runtime-final-structure-07-导航-用电服务.json",
+          "screenshotPath": "",
+          "elementCount": 471,
+          "interactiveCount": 26,
+          "interactiveLabels": [
+            "首页总览",
+            "用电服务",
+            "电费查询",
+            "电费缴纳",
+            "账单分析",
+            "停电通知",
+            "综合能源",
+            "智慧生活",
+            "资讯知识",
+            "合规审计",
+            "运营管理",
+            "退出登录",
+            "切换到暗色模式",
+            "去兑换 →",
+            "查看全部",
+            "查看详细报告",
+            "01月02月03月04月04080120160",
+            "能效诊断",
+            "碳足迹",
+            "积分商城"
+          ]
+        }
+      },
+      {
+        "label": "操作:查看全部",
+        "url": "http://127.0.0.1:49043/electricity/bills",
+        "title": "南方电网能源服务数字生态平台",
+        "headings": [
+          "电费查询"
+        ],
+        "navLabels": [
+          "南方电网 能源服务数字生态平台",
+          "首页总览",
+          "用电服务",
+          "电费查询",
+          "电费缴纳",
+          "账单分析",
+          "停电通知",
+          "综合能源",
+          "智慧生活",
+          "资讯知识",
+          "合规审计",
+          "运营管理",
+          "系统管理员 企业用户",
+          "退出登录"
+        ],
+        "buttons": [
+          "用电服务",
+          "综合能源",
+          "智慧生活",
+          "资讯知识",
+          "合规审计",
+          "退出登录",
+          "切换到暗色模式",
+          "重置"
+        ],
+        "links": [
+          "首页总览",
+          "电费查询",
+          "电费缴纳",
+          "账单分析",
+          "停电通知",
+          "运营管理"
+        ],
+        "inputs": [
+          {
+            "tag": "input",
+            "type": "text",
+            "placeholder": "如 2026-05",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "select",
+            "type": "",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          }
+        ],
+        "tables": [
+          {
+            "headers": [
+              "账单周期",
+              "用电量",
+              "峰时",
+              "谷时",
+              "平时",
+              "金额",
+              "到期日",
+              "状态"
+            ],
+            "rowCount": 4,
+            "hasEmptyText": false,
+            "textPreview": "账单周期 用电量 峰时 谷时 平时 金额 到期日 状态 2026-04 290 kWh 100 kWh 60 kWh 130 kWh ¥203.0 2026-05-15 待缴 2026-03 310 kWh 110 kWh 70 kWh 130 kWh ¥217.0 2026-04-15 待缴 2026-02 280 kWh 95 kWh 65 kWh 120 kWh ¥196.0 2026-03-15 已缴 2026-01 350 kWh 120 kWh 80 kWh 150 kWh ¥245.0 2026-02-15 已缴"
+          }
+        ],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "南方电网能源服务数字生态平台首页总览用电服务电费查询电费缴纳账单分析停电通知综合能源智慧生活资讯知识合规审计运营管理系统管理员企业用户系统管理员电费查询查询历史电费账单明细账单周期状态全部已缴待缴逾期重置账单周期 用电量 峰时谷时平时金额 到期日状态 2026-04290 kWh100 kWh60 kWh130 kWh¥203.02026-05-15待缴2026-03310 kWh110 kWh70 kWh130 kWh¥217.02026-04-15待缴2026-02280 kWh95 kWh65 kWh120 kWh¥196.02026-03-15已缴2026-01350 kWh120 kWh80 kWh150 kWh¥245.02026-02-15已缴 0",
+        "layout": {
+          "viewportWidth": 1728,
+          "viewportHeight": 1000,
+          "scrollWidth": 1728,
+          "scrollHeight": 1000,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89043-codex-runtime-final-structure-08-操作-查看全部",
+          "label": "操作:查看全部",
+          "finalUrl": "http://127.0.0.1:49043/electricity/bills",
+          "title": "南方电网能源服务数字生态平台",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89043/probe/codex-runtime-final-20260605-1127/may-89043-codex-runtime-final-structure-08-操作-查看全部.json",
+          "screenshotPath": "",
+          "elementCount": 200,
+          "interactiveCount": 18,
+          "interactiveLabels": [
+            "首页总览",
+            "用电服务",
+            "电费查询",
+            "电费缴纳",
+            "账单分析",
+            "停电通知",
+            "综合能源",
+            "智慧生活",
+            "资讯知识",
+            "合规审计",
+            "运营管理",
+            "退出登录",
+            "切换到暗色模式",
+            "如 2026-05",
+            "全部 已缴 待缴 逾期",
+            "重置"
+          ]
+        }
+      },
+      {
+        "label": "二层操作:查看全部->重置",
+        "url": "http://127.0.0.1:49043/electricity/bills",
+        "title": "南方电网能源服务数字生态平台",
+        "headings": [
+          "电费查询"
+        ],
+        "navLabels": [
+          "南方电网 能源服务数字生态平台",
+          "首页总览",
+          "用电服务",
+          "电费查询",
+          "电费缴纳",
+          "账单分析",
+          "停电通知",
+          "综合能源",
+          "智慧生活",
+          "资讯知识",
+          "合规审计",
+          "运营管理",
+          "系统管理员 企业用户",
+          "退出登录"
+        ],
+        "buttons": [
+          "用电服务",
+          "综合能源",
+          "智慧生活",
+          "资讯知识",
+          "合规审计",
+          "退出登录",
+          "切换到暗色模式",
+          "重置"
+        ],
+        "links": [
+          "首页总览",
+          "电费查询",
+          "电费缴纳",
+          "账单分析",
+          "停电通知",
+          "运营管理"
+        ],
+        "inputs": [
+          {
+            "tag": "input",
+            "type": "text",
+            "placeholder": "如 2026-05",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "select",
+            "type": "",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          }
+        ],
+        "tables": [
+          {
+            "headers": [
+              "账单周期",
+              "用电量",
+              "峰时",
+              "谷时",
+              "平时",
+              "金额",
+              "到期日",
+              "状态"
+            ],
+            "rowCount": 4,
+            "hasEmptyText": false,
+            "textPreview": "账单周期 用电量 峰时 谷时 平时 金额 到期日 状态 2026-04 290 kWh 100 kWh 60 kWh 130 kWh ¥203.0 2026-05-15 待缴 2026-03 310 kWh 110 kWh 70 kWh 130 kWh ¥217.0 2026-04-15 待缴 2026-02 280 kWh 95 kWh 65 kWh 120 kWh ¥196.0 2026-03-15 已缴 2026-01 350 kWh 120 kWh 80 kWh 150 kWh ¥245.0 2026-02-15 已缴"
+          }
+        ],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "南方电网能源服务数字生态平台首页总览用电服务电费查询电费缴纳账单分析停电通知综合能源智慧生活资讯知识合规审计运营管理系统管理员企业用户系统管理员电费查询查询历史电费账单明细账单周期状态全部已缴待缴逾期重置账单周期 用电量 峰时谷时平时金额 到期日状态 2026-04290 kWh100 kWh60 kWh130 kWh¥203.02026-05-15待缴2026-03310 kWh110 kWh70 kWh130 kWh¥217.02026-04-15待缴2026-02280 kWh95 kWh65 kWh120 kWh¥196.02026-03-15已缴2026-01350 kWh120 kWh80 kWh150 kWh¥245.02026-02-15已缴 0",
+        "layout": {
+          "viewportWidth": 1760,
+          "viewportHeight": 1000,
+          "scrollWidth": 1760,
+          "scrollHeight": 1000,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89043-codex-runtime-final-structure-09-二层操作-查看全部-重置",
+          "label": "二层操作:查看全部->重置",
+          "finalUrl": "http://127.0.0.1:49043/electricity/bills",
+          "title": "南方电网能源服务数字生态平台",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89043/probe/codex-runtime-final-20260605-1127/may-89043-codex-runtime-final-structure-09-二层操作-查看全部-重置.json",
+          "screenshotPath": "",
+          "elementCount": 200,
+          "interactiveCount": 18,
+          "interactiveLabels": [
+            "首页总览",
+            "用电服务",
+            "电费查询",
+            "电费缴纳",
+            "账单分析",
+            "停电通知",
+            "综合能源",
+            "智慧生活",
+            "资讯知识",
+            "合规审计",
+            "运营管理",
+            "退出登录",
+            "切换到暗色模式",
+            "如 2026-05",
+            "全部 已缴 待缴 逾期",
+            "重置"
+          ]
+        }
+      },
+      {
+        "label": "操作:查看详细报告",
+        "url": "http://127.0.0.1:49043/energy/efficiency",
+        "title": "南方电网能源服务数字生态平台",
+        "headings": [
+          "能效诊断",
+          "综合能效评分",
+          "各项指标得分",
+          "优化建议"
+        ],
+        "navLabels": [
+          "南方电网 能源服务数字生态平台",
+          "首页总览",
+          "用电服务",
+          "综合能源",
+          "智慧生活",
+          "资讯知识",
+          "合规审计",
+          "运营管理",
+          "系统管理员 企业用户",
+          "退出登录"
+        ],
+        "buttons": [
+          "用电服务",
+          "综合能源",
+          "智慧生活",
+          "资讯知识",
+          "合规审计",
+          "退出登录",
+          "切换到暗色模式",
+          "2026-06-05",
+          "生成新报告"
+        ],
+        "links": [
+          "首页总览",
+          "运营管理"
+        ],
+        "inputs": [],
+        "tables": [],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "南方电网能源服务数字生态平台首页总览用电服务综合能源智慧生活资讯知识合规审计运营管理系统管理员企业用户系统管理员能效诊断全面评估用电效率并获取优化建议2026-06-052026-06-05生成新报告综合能效评分72良好各项指标得分用电效率72 分仍有用电效率优化空间峰谷用电75 分峰时占比 34%，谷时占比 23%设备能效68 分重点设备负载处于可监测范围照明系统77 分公共区域照明具备进一步节能空间优化建议预计年节省 ¥600建议将部分高耗电设备转移至谷电时段运高影响用电建议将部分高耗电设备转移至谷电时段运行，可节省约15%电费支出预计年节省¥600预计碳减排0.5 吨预计节电857 kWh 0",
+        "layout": {
+          "viewportWidth": 1792,
+          "viewportHeight": 1000,
+          "scrollWidth": 1792,
+          "scrollHeight": 1000,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89043-codex-runtime-final-structure-10-操作-查看详细报告",
+          "label": "操作:查看详细报告",
+          "finalUrl": "http://127.0.0.1:49043/energy/efficiency",
+          "title": "南方电网能源服务数字生态平台",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89043/probe/codex-runtime-final-20260605-1127/may-89043-codex-runtime-final-structure-10-操作-查看详细报告.json",
+          "screenshotPath": "",
+          "elementCount": 214,
+          "interactiveCount": 14,
+          "interactiveLabels": [
+            "首页总览",
+            "用电服务",
+            "综合能源",
+            "智慧生活",
+            "资讯知识",
+            "合规审计",
+            "运营管理",
+            "退出登录",
+            "切换到暗色模式",
+            "2026-06-05",
+            "生成新报告"
+          ]
+        }
+      },
+      {
+        "label": "二层操作:查看详细报告->2026-06-05",
+        "url": "http://127.0.0.1:49043/energy/efficiency",
+        "title": "南方电网能源服务数字生态平台",
+        "headings": [
+          "能效诊断",
+          "综合能效评分",
+          "各项指标得分",
+          "优化建议"
+        ],
+        "navLabels": [
+          "南方电网 能源服务数字生态平台",
+          "首页总览",
+          "用电服务",
+          "综合能源",
+          "智慧生活",
+          "资讯知识",
+          "合规审计",
+          "运营管理",
+          "系统管理员 企业用户",
+          "退出登录"
+        ],
+        "buttons": [
+          "用电服务",
+          "综合能源",
+          "智慧生活",
+          "资讯知识",
+          "合规审计",
+          "退出登录",
+          "切换到暗色模式",
+          "2026-06-05",
+          "生成新报告"
+        ],
+        "links": [
+          "首页总览",
+          "运营管理"
+        ],
+        "inputs": [],
+        "tables": [],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "南方电网能源服务数字生态平台首页总览用电服务综合能源智慧生活资讯知识合规审计运营管理系统管理员企业用户系统管理员能效诊断全面评估用电效率并获取优化建议2026-06-052026-06-05生成新报告综合能效评分72良好各项指标得分用电效率72 分仍有用电效率优化空间峰谷用电75 分峰时占比 34%，谷时占比 23%设备能效68 分重点设备负载处于可监测范围照明系统77 分公共区域照明具备进一步节能空间优化建议预计年节省 ¥600建议将部分高耗电设备转移至谷电时段运高影响用电建议将部分高耗电设备转移至谷电时段运行，可节省约15%电费支出预计年节省¥600预计碳减排0.5 吨预计节电857 kWh 0",
+        "layout": {
+          "viewportWidth": 1824,
+          "viewportHeight": 1000,
+          "scrollWidth": 1824,
+          "scrollHeight": 1000,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89043-codex-runtime-final-structure-11-二层操作-查看详细报告-2026-06-05",
+          "label": "二层操作:查看详细报告->2026-06-05",
+          "finalUrl": "http://127.0.0.1:49043/energy/efficiency",
+          "title": "南方电网能源服务数字生态平台",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89043/probe/codex-runtime-final-20260605-1127/may-89043-codex-runtime-final-structure-11-二层操作-查看详细报告-2026-06-05.json",
+          "screenshotPath": "",
+          "elementCount": 214,
+          "interactiveCount": 14,
+          "interactiveLabels": [
+            "首页总览",
+            "用电服务",
+            "综合能源",
+            "智慧生活",
+            "资讯知识",
+            "合规审计",
+            "运营管理",
+            "退出登录",
+            "切换到暗色模式",
+            "2026-06-05",
+            "生成新报告"
+          ]
+        }
+      }
+    ],
+    "findings": [],
+    "actionHints": [],
+    "emptyPages": [],
+    "overflowPages": [],
+    "blankPages": [],
+    "apiFailurePaths": [],
+    "goalTerms": [],
+    "clickedActionDescriptors": [
+      {
+        "nav": "首页总览",
+        "label": "查看全部",
+        "ordinal": 0,
+        "unsafe": false
+      },
+      {
+        "nav": "首页总览",
+        "label": "查看全部->重置",
+        "ordinal": 0,
+        "secondary": true,
+        "unsafe": true
+      },
+      {
+        "nav": "首页总览",
+        "label": "查看详细报告",
+        "ordinal": 0,
+        "unsafe": false
+      },
+      {
+        "nav": "首页总览",
+        "label": "查看详细报告->2026-06-05",
+        "ordinal": 0,
+        "secondary": true,
+        "unsafe": false
+      },
+      {
+        "nav": "用电服务",
+        "label": "查看全部",
+        "ordinal": 0,
+        "unsafe": false
+      },
+      {
+        "nav": "用电服务",
+        "label": "查看全部->重置",
+        "ordinal": 0,
+        "secondary": true,
+        "unsafe": true
+      },
+      {
+        "nav": "用电服务",
+        "label": "查看详细报告",
+        "ordinal": 0,
+        "unsafe": false
+      },
+      {
+        "nav": "用电服务",
+        "label": "查看详细报告->2026-06-05",
+        "ordinal": 0,
+        "secondary": true,
+        "unsafe": false
+      }
+    ],
+    "secondaryActionClicks": 4,
+    "structureCaptures": [
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89043-codex-runtime-final-structure-01-首屏",
+        "label": "首屏",
+        "finalUrl": "http://127.0.0.1:49043/",
+        "title": "南方电网能源服务数字生态平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89043/probe/codex-runtime-final-20260605-1127/may-89043-codex-runtime-final-structure-01-首屏.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89043/probe/codex-runtime-final-20260605-1127/may-89043-codex-runtime-final-structure-01-首屏.png",
+        "elementCount": 466,
+        "interactiveCount": 22,
+        "interactiveLabels": [
+          "首页总览",
+          "用电服务",
+          "综合能源",
+          "智慧生活",
+          "资讯知识",
+          "合规审计",
+          "运营管理",
+          "退出登录",
+          "切换到暗色模式",
+          "去兑换 →",
+          "查看全部",
+          "查看详细报告",
+          "01月02月03月04月04080120160",
+          "电费缴纳",
+          "能效诊断",
+          "碳足迹",
+          "积分商城"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89043-codex-runtime-final-structure-02-导航-首页总览",
+        "label": "导航:首页总览",
+        "finalUrl": "http://127.0.0.1:49043/",
+        "title": "南方电网能源服务数字生态平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89043/probe/codex-runtime-final-20260605-1127/may-89043-codex-runtime-final-structure-02-导航-首页总览.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89043/probe/codex-runtime-final-20260605-1127/may-89043-codex-runtime-final-structure-02-导航-首页总览.png",
+        "elementCount": 466,
+        "interactiveCount": 22,
+        "interactiveLabels": [
+          "首页总览",
+          "用电服务",
+          "综合能源",
+          "智慧生活",
+          "资讯知识",
+          "合规审计",
+          "运营管理",
+          "退出登录",
+          "切换到暗色模式",
+          "去兑换 →",
+          "查看全部",
+          "查看详细报告",
+          "01月02月03月04月04080120160",
+          "电费缴纳",
+          "能效诊断",
+          "碳足迹",
+          "积分商城"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89043-codex-runtime-final-structure-03-操作-查看全部",
+        "label": "操作:查看全部",
+        "finalUrl": "http://127.0.0.1:49043/electricity/bills",
+        "title": "南方电网能源服务数字生态平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89043/probe/codex-runtime-final-20260605-1127/may-89043-codex-runtime-final-structure-03-操作-查看全部.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89043/probe/codex-runtime-final-20260605-1127/may-89043-codex-runtime-final-structure-03-操作-查看全部.png",
+        "elementCount": 195,
+        "interactiveCount": 14,
+        "interactiveLabels": [
+          "首页总览",
+          "用电服务",
+          "综合能源",
+          "智慧生活",
+          "资讯知识",
+          "合规审计",
+          "运营管理",
+          "退出登录",
+          "切换到暗色模式",
+          "如 2026-05",
+          "全部 已缴 待缴 逾期",
+          "重置"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89043-codex-runtime-final-structure-04-二层操作-查看全部-重置",
+        "label": "二层操作:查看全部->重置",
+        "finalUrl": "http://127.0.0.1:49043/electricity/bills",
+        "title": "南方电网能源服务数字生态平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89043/probe/codex-runtime-final-20260605-1127/may-89043-codex-runtime-final-structure-04-二层操作-查看全部-重置.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89043/probe/codex-runtime-final-20260605-1127/may-89043-codex-runtime-final-structure-04-二层操作-查看全部-重置.png",
+        "elementCount": 195,
+        "interactiveCount": 14,
+        "interactiveLabels": [
+          "首页总览",
+          "用电服务",
+          "综合能源",
+          "智慧生活",
+          "资讯知识",
+          "合规审计",
+          "运营管理",
+          "退出登录",
+          "切换到暗色模式",
+          "如 2026-05",
+          "全部 已缴 待缴 逾期",
+          "重置"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89043-codex-runtime-final-structure-05-操作-查看详细报告",
+        "label": "操作:查看详细报告",
+        "finalUrl": "http://127.0.0.1:49043/energy/efficiency",
+        "title": "南方电网能源服务数字生态平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89043/probe/codex-runtime-final-20260605-1127/may-89043-codex-runtime-final-structure-05-操作-查看详细报告.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89043/probe/codex-runtime-final-20260605-1127/may-89043-codex-runtime-final-structure-05-操作-查看详细报告.png",
+        "elementCount": 214,
+        "interactiveCount": 14,
+        "interactiveLabels": [
+          "首页总览",
+          "用电服务",
+          "综合能源",
+          "智慧生活",
+          "资讯知识",
+          "合规审计",
+          "运营管理",
+          "退出登录",
+          "切换到暗色模式",
+          "2026-06-05",
+          "生成新报告"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89043-codex-runtime-final-structure-06-二层操作-查看详细报告-2026-06-05",
+        "label": "二层操作:查看详细报告->2026-06-05",
+        "finalUrl": "http://127.0.0.1:49043/energy/efficiency",
+        "title": "南方电网能源服务数字生态平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89043/probe/codex-runtime-final-20260605-1127/may-89043-codex-runtime-final-structure-06-二层操作-查看详细报告-2026-06-05.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89043/probe/codex-runtime-final-20260605-1127/may-89043-codex-runtime-final-structure-06-二层操作-查看详细报告-2026-06-05.png",
+        "elementCount": 214,
+        "interactiveCount": 14,
+        "interactiveLabels": [
+          "首页总览",
+          "用电服务",
+          "综合能源",
+          "智慧生活",
+          "资讯知识",
+          "合规审计",
+          "运营管理",
+          "退出登录",
+          "切换到暗色模式",
+          "2026-06-05",
+          "生成新报告"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89043-codex-runtime-final-structure-07-导航-用电服务",
+        "label": "导航:用电服务",
+        "finalUrl": "http://127.0.0.1:49043/",
+        "title": "南方电网能源服务数字生态平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89043/probe/codex-runtime-final-20260605-1127/may-89043-codex-runtime-final-structure-07-导航-用电服务.json",
+        "screenshotPath": "",
+        "elementCount": 471,
+        "interactiveCount": 26,
+        "interactiveLabels": [
+          "首页总览",
+          "用电服务",
+          "电费查询",
+          "电费缴纳",
+          "账单分析",
+          "停电通知",
+          "综合能源",
+          "智慧生活",
+          "资讯知识",
+          "合规审计",
+          "运营管理",
+          "退出登录",
+          "切换到暗色模式",
+          "去兑换 →",
+          "查看全部",
+          "查看详细报告",
+          "01月02月03月04月04080120160",
+          "能效诊断",
+          "碳足迹",
+          "积分商城"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89043-codex-runtime-final-structure-08-操作-查看全部",
+        "label": "操作:查看全部",
+        "finalUrl": "http://127.0.0.1:49043/electricity/bills",
+        "title": "南方电网能源服务数字生态平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89043/probe/codex-runtime-final-20260605-1127/may-89043-codex-runtime-final-structure-08-操作-查看全部.json",
+        "screenshotPath": "",
+        "elementCount": 200,
+        "interactiveCount": 18,
+        "interactiveLabels": [
+          "首页总览",
+          "用电服务",
+          "电费查询",
+          "电费缴纳",
+          "账单分析",
+          "停电通知",
+          "综合能源",
+          "智慧生活",
+          "资讯知识",
+          "合规审计",
+          "运营管理",
+          "退出登录",
+          "切换到暗色模式",
+          "如 2026-05",
+          "全部 已缴 待缴 逾期",
+          "重置"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89043-codex-runtime-final-structure-09-二层操作-查看全部-重置",
+        "label": "二层操作:查看全部->重置",
+        "finalUrl": "http://127.0.0.1:49043/electricity/bills",
+        "title": "南方电网能源服务数字生态平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89043/probe/codex-runtime-final-20260605-1127/may-89043-codex-runtime-final-structure-09-二层操作-查看全部-重置.json",
+        "screenshotPath": "",
+        "elementCount": 200,
+        "interactiveCount": 18,
+        "interactiveLabels": [
+          "首页总览",
+          "用电服务",
+          "电费查询",
+          "电费缴纳",
+          "账单分析",
+          "停电通知",
+          "综合能源",
+          "智慧生活",
+          "资讯知识",
+          "合规审计",
+          "运营管理",
+          "退出登录",
+          "切换到暗色模式",
+          "如 2026-05",
+          "全部 已缴 待缴 逾期",
+          "重置"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89043-codex-runtime-final-structure-10-操作-查看详细报告",
+        "label": "操作:查看详细报告",
+        "finalUrl": "http://127.0.0.1:49043/energy/efficiency",
+        "title": "南方电网能源服务数字生态平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89043/probe/codex-runtime-final-20260605-1127/may-89043-codex-runtime-final-structure-10-操作-查看详细报告.json",
+        "screenshotPath": "",
+        "elementCount": 214,
+        "interactiveCount": 14,
+        "interactiveLabels": [
+          "首页总览",
+          "用电服务",
+          "综合能源",
+          "智慧生活",
+          "资讯知识",
+          "合规审计",
+          "运营管理",
+          "退出登录",
+          "切换到暗色模式",
+          "2026-06-05",
+          "生成新报告"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89043-codex-runtime-final-structure-11-二层操作-查看详细报告-2026-06-05",
+        "label": "二层操作:查看详细报告->2026-06-05",
+        "finalUrl": "http://127.0.0.1:49043/energy/efficiency",
+        "title": "南方电网能源服务数字生态平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89043/probe/codex-runtime-final-20260605-1127/may-89043-codex-runtime-final-structure-11-二层操作-查看详细报告-2026-06-05.json",
+        "screenshotPath": "",
+        "elementCount": 214,
+        "interactiveCount": 14,
+        "interactiveLabels": [
+          "首页总览",
+          "用电服务",
+          "综合能源",
+          "智慧生活",
+          "资讯知识",
+          "合规审计",
+          "运营管理",
+          "退出登录",
+          "切换到暗色模式",
+          "2026-06-05",
+          "生成新报告"
+        ]
+      }
+    ],
+    "representativeScreenshotUrl": "http://127.0.0.1:49043/",
+    "representativeScreenshotLabel": "你好，系统管理员"
+  },
+  "websiteStructureCapture": {
+    "module": "website_structure_capture",
+    "captureCount": 11,
+    "captures": [
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89043-codex-runtime-final-structure-01-首屏",
+        "label": "首屏",
+        "finalUrl": "http://127.0.0.1:49043/",
+        "title": "南方电网能源服务数字生态平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89043/probe/codex-runtime-final-20260605-1127/may-89043-codex-runtime-final-structure-01-首屏.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89043/probe/codex-runtime-final-20260605-1127/may-89043-codex-runtime-final-structure-01-首屏.png",
+        "elementCount": 466,
+        "interactiveCount": 22,
+        "interactiveLabels": [
+          "首页总览",
+          "用电服务",
+          "综合能源",
+          "智慧生活",
+          "资讯知识",
+          "合规审计",
+          "运营管理",
+          "退出登录",
+          "切换到暗色模式",
+          "去兑换 →",
+          "查看全部",
+          "查看详细报告",
+          "01月02月03月04月04080120160",
+          "电费缴纳",
+          "能效诊断",
+          "碳足迹",
+          "积分商城"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89043-codex-runtime-final-structure-02-导航-首页总览",
+        "label": "导航:首页总览",
+        "finalUrl": "http://127.0.0.1:49043/",
+        "title": "南方电网能源服务数字生态平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89043/probe/codex-runtime-final-20260605-1127/may-89043-codex-runtime-final-structure-02-导航-首页总览.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89043/probe/codex-runtime-final-20260605-1127/may-89043-codex-runtime-final-structure-02-导航-首页总览.png",
+        "elementCount": 466,
+        "interactiveCount": 22,
+        "interactiveLabels": [
+          "首页总览",
+          "用电服务",
+          "综合能源",
+          "智慧生活",
+          "资讯知识",
+          "合规审计",
+          "运营管理",
+          "退出登录",
+          "切换到暗色模式",
+          "去兑换 →",
+          "查看全部",
+          "查看详细报告",
+          "01月02月03月04月04080120160",
+          "电费缴纳",
+          "能效诊断",
+          "碳足迹",
+          "积分商城"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89043-codex-runtime-final-structure-03-操作-查看全部",
+        "label": "操作:查看全部",
+        "finalUrl": "http://127.0.0.1:49043/electricity/bills",
+        "title": "南方电网能源服务数字生态平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89043/probe/codex-runtime-final-20260605-1127/may-89043-codex-runtime-final-structure-03-操作-查看全部.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89043/probe/codex-runtime-final-20260605-1127/may-89043-codex-runtime-final-structure-03-操作-查看全部.png",
+        "elementCount": 195,
+        "interactiveCount": 14,
+        "interactiveLabels": [
+          "首页总览",
+          "用电服务",
+          "综合能源",
+          "智慧生活",
+          "资讯知识",
+          "合规审计",
+          "运营管理",
+          "退出登录",
+          "切换到暗色模式",
+          "如 2026-05",
+          "全部 已缴 待缴 逾期",
+          "重置"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89043-codex-runtime-final-structure-04-二层操作-查看全部-重置",
+        "label": "二层操作:查看全部->重置",
+        "finalUrl": "http://127.0.0.1:49043/electricity/bills",
+        "title": "南方电网能源服务数字生态平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89043/probe/codex-runtime-final-20260605-1127/may-89043-codex-runtime-final-structure-04-二层操作-查看全部-重置.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89043/probe/codex-runtime-final-20260605-1127/may-89043-codex-runtime-final-structure-04-二层操作-查看全部-重置.png",
+        "elementCount": 195,
+        "interactiveCount": 14,
+        "interactiveLabels": [
+          "首页总览",
+          "用电服务",
+          "综合能源",
+          "智慧生活",
+          "资讯知识",
+          "合规审计",
+          "运营管理",
+          "退出登录",
+          "切换到暗色模式",
+          "如 2026-05",
+          "全部 已缴 待缴 逾期",
+          "重置"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89043-codex-runtime-final-structure-05-操作-查看详细报告",
+        "label": "操作:查看详细报告",
+        "finalUrl": "http://127.0.0.1:49043/energy/efficiency",
+        "title": "南方电网能源服务数字生态平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89043/probe/codex-runtime-final-20260605-1127/may-89043-codex-runtime-final-structure-05-操作-查看详细报告.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89043/probe/codex-runtime-final-20260605-1127/may-89043-codex-runtime-final-structure-05-操作-查看详细报告.png",
+        "elementCount": 214,
+        "interactiveCount": 14,
+        "interactiveLabels": [
+          "首页总览",
+          "用电服务",
+          "综合能源",
+          "智慧生活",
+          "资讯知识",
+          "合规审计",
+          "运营管理",
+          "退出登录",
+          "切换到暗色模式",
+          "2026-06-05",
+          "生成新报告"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89043-codex-runtime-final-structure-06-二层操作-查看详细报告-2026-06-05",
+        "label": "二层操作:查看详细报告->2026-06-05",
+        "finalUrl": "http://127.0.0.1:49043/energy/efficiency",
+        "title": "南方电网能源服务数字生态平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89043/probe/codex-runtime-final-20260605-1127/may-89043-codex-runtime-final-structure-06-二层操作-查看详细报告-2026-06-05.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89043/probe/codex-runtime-final-20260605-1127/may-89043-codex-runtime-final-structure-06-二层操作-查看详细报告-2026-06-05.png",
+        "elementCount": 214,
+        "interactiveCount": 14,
+        "interactiveLabels": [
+          "首页总览",
+          "用电服务",
+          "综合能源",
+          "智慧生活",
+          "资讯知识",
+          "合规审计",
+          "运营管理",
+          "退出登录",
+          "切换到暗色模式",
+          "2026-06-05",
+          "生成新报告"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89043-codex-runtime-final-structure-07-导航-用电服务",
+        "label": "导航:用电服务",
+        "finalUrl": "http://127.0.0.1:49043/",
+        "title": "南方电网能源服务数字生态平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89043/probe/codex-runtime-final-20260605-1127/may-89043-codex-runtime-final-structure-07-导航-用电服务.json",
+        "screenshotPath": "",
+        "elementCount": 471,
+        "interactiveCount": 26,
+        "interactiveLabels": [
+          "首页总览",
+          "用电服务",
+          "电费查询",
+          "电费缴纳",
+          "账单分析",
+          "停电通知",
+          "综合能源",
+          "智慧生活",
+          "资讯知识",
+          "合规审计",
+          "运营管理",
+          "退出登录",
+          "切换到暗色模式",
+          "去兑换 →",
+          "查看全部",
+          "查看详细报告",
+          "01月02月03月04月04080120160",
+          "能效诊断",
+          "碳足迹",
+          "积分商城"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89043-codex-runtime-final-structure-08-操作-查看全部",
+        "label": "操作:查看全部",
+        "finalUrl": "http://127.0.0.1:49043/electricity/bills",
+        "title": "南方电网能源服务数字生态平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89043/probe/codex-runtime-final-20260605-1127/may-89043-codex-runtime-final-structure-08-操作-查看全部.json",
+        "screenshotPath": "",
+        "elementCount": 200,
+        "interactiveCount": 18,
+        "interactiveLabels": [
+          "首页总览",
+          "用电服务",
+          "电费查询",
+          "电费缴纳",
+          "账单分析",
+          "停电通知",
+          "综合能源",
+          "智慧生活",
+          "资讯知识",
+          "合规审计",
+          "运营管理",
+          "退出登录",
+          "切换到暗色模式",
+          "如 2026-05",
+          "全部 已缴 待缴 逾期",
+          "重置"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89043-codex-runtime-final-structure-09-二层操作-查看全部-重置",
+        "label": "二层操作:查看全部->重置",
+        "finalUrl": "http://127.0.0.1:49043/electricity/bills",
+        "title": "南方电网能源服务数字生态平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89043/probe/codex-runtime-final-20260605-1127/may-89043-codex-runtime-final-structure-09-二层操作-查看全部-重置.json",
+        "screenshotPath": "",
+        "elementCount": 200,
+        "interactiveCount": 18,
+        "interactiveLabels": [
+          "首页总览",
+          "用电服务",
+          "电费查询",
+          "电费缴纳",
+          "账单分析",
+          "停电通知",
+          "综合能源",
+          "智慧生活",
+          "资讯知识",
+          "合规审计",
+          "运营管理",
+          "退出登录",
+          "切换到暗色模式",
+          "如 2026-05",
+          "全部 已缴 待缴 逾期",
+          "重置"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89043-codex-runtime-final-structure-10-操作-查看详细报告",
+        "label": "操作:查看详细报告",
+        "finalUrl": "http://127.0.0.1:49043/energy/efficiency",
+        "title": "南方电网能源服务数字生态平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89043/probe/codex-runtime-final-20260605-1127/may-89043-codex-runtime-final-structure-10-操作-查看详细报告.json",
+        "screenshotPath": "",
+        "elementCount": 214,
+        "interactiveCount": 14,
+        "interactiveLabels": [
+          "首页总览",
+          "用电服务",
+          "综合能源",
+          "智慧生活",
+          "资讯知识",
+          "合规审计",
+          "运营管理",
+          "退出登录",
+          "切换到暗色模式",
+          "2026-06-05",
+          "生成新报告"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89043-codex-runtime-final-structure-11-二层操作-查看详细报告-2026-06-05",
+        "label": "二层操作:查看详细报告->2026-06-05",
+        "finalUrl": "http://127.0.0.1:49043/energy/efficiency",
+        "title": "南方电网能源服务数字生态平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89043/probe/codex-runtime-final-20260605-1127/may-89043-codex-runtime-final-structure-11-二层操作-查看详细报告-2026-06-05.json",
+        "screenshotPath": "",
+        "elementCount": 214,
+        "interactiveCount": 14,
+        "interactiveLabels": [
+          "首页总览",
+          "用电服务",
+          "综合能源",
+          "智慧生活",
+          "资讯知识",
+          "合规审计",
+          "运营管理",
+          "退出登录",
+          "切换到暗色模式",
+          "2026-06-05",
+          "生成新报告"
+        ]
+      }
+    ]
+  },
+  "screenshotMetrics": {
+    "width": 1856,
+    "height": 1000,
+    "scrollWidth": 1824,
+    "scrollHeight": 1000
+  },
+  "initialBodyTextPreview": "南方电网\n\n能源服务数字生态平台\n\n登录\n用户名\n密码\n登录\n演示账号\nadmin:password123 / zhangsan:password123 / huawei_co:password123\n管理员\n个人用户\n企业用户\n没有账户？立即注册\n\n© 2026 南方电网能源服务股份有限公司",
+  "bodyTextPreview": "南方电网\n能源服务数字生态平台\n首页总览\n用电服务\n综合能源\n智慧生活\n资讯知识\n合规审计\n运营管理\n系统管理员\n企业用户\n系统管理员\n你好，系统管理员\n\n企业用户 · 欢迎使用南方电网能源服务数字生态平台\n\n本月电费\n¥203.0\n较上月 +8.1%\n本月用电量\n290 kWh\n较上月 -2.3%\n碳排放\n0.17 吨\n较上月 -5.2%\n积分余额\n99999\n去兑换 →\n近期账单\n查看全部\n账单周期\t用电量\t金额\t状态\n2026-04\t290 kWh\t¥203.0\t待缴\n2026-03\t310 kWh\t¥217.0\t待缴\n2026-02\t280 kWh\t¥196.0\t已缴\n能效评分\n78\n\n能效良好\n\n查看详细报告\n峰谷平用电分布\n峰时平时谷时\n01月\n02月\n03月\n04月\n0\n40\n80\n120\n160\n停电通知\n查看全部\n萝岗区计划检修停电通知\n计划中\n\n广州市萝岗区\n\n2026-06-20 06:00 ~ 12:00\n\n黄埔区计划检修停电通知\n计划中\n\n广州市黄埔区\n\n2026-06-15 07:00 ~ 17:00\n\n天河区计划检修停电通知\n计划中\n\n广州市天河区\n\n2026-06-10 08:00 ~ 18:00\n\n用电结构\n电费缴纳\n能效诊断\n碳足迹\n积分商城\n0",
+  "apiBase": "http://127.0.0.1:59043",
+  "businessGoalPreview": "南方电网能源服务数字生态平台：支持搜索/筛选用电账单、发现分类能源资讯、后台管理数据概览、用户管理和运营数据入口。",
+  "apiResponses": [
+    {
+      "method": "POST",
+      "status": 200,
+      "url": "http://127.0.0.1:49043/api/auth/login"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49043/api/dashboard"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49043/api/dashboard"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49043/api/electricity/bills"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49043/api/electricity/bills"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49043/api/auth/profile"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49043/api/dashboard"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49043/api/dashboard"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49043/api/energy/efficiency"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49043/api/energy/efficiency"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49043/api/auth/profile"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49043/api/dashboard"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49043/api/dashboard"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49043/api/electricity/bills"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49043/api/electricity/bills"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49043/api/auth/profile"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49043/api/dashboard"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49043/api/dashboard"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49043/api/energy/efficiency"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49043/api/energy/efficiency"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49043/api/auth/profile"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49043/api/dashboard"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49043/api/dashboard"
+    }
+  ],
+  "apiChecks": [
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59043/api/health",
+      "path": "/api/health",
+      "status": 200,
+      "ok": true,
+      "bodyPreview": "{\"success\":true,\"message\":\"ok\"}"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59043/api/dashboard",
+      "path": "/api/dashboard",
+      "status": 200,
+      "ok": true,
+      "bodyPreview": "{\"success\":true,\"data\":{\"currentBill\":203,\"currentUsage\":290,\"carbonEmission\":0.17,\"points\":99999,\"recentBills\":[{\"id\":\"4\",\"period\":\"2026-04\",\"amount\":203,\"usage\":290,\"status\":\"unpaid\"},{\"id\":\"3\",\"period\":\"2026-03\",\"amount\":217,\"usage\":310,\"status\":\"unpaid\"},{\"id\":\"2\",\"period\":\"2026-02\",\"amount\":196,\"usage\":280,\"status\":\"paid\"}],\"outages\":[{\"id\":\"7\",\"title\":\"萝岗区计划检修停电通知\",\"area\":\"广州市萝岗区\",\"startTime\":\"2026-06-20 06:00\",\"endTime\":\"2026-06-20 12:00\",\"status\":\"planned\"},{\"id\":\"4\",\"title\":\"黄埔区计划检修停电通知"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59043/api/electricity/bills",
+      "path": "/api/electricity/bills",
+      "status": 200,
+      "ok": true,
+      "bodyPreview": "{\"success\":true,\"data\":[{\"id\":4,\"user_id\":1,\"meter_no\":\"GD20250001\",\"billing_period\":\"2026-04\",\"total_kwh\":290,\"peak_kwh\":100,\"valley_kwh\":60,\"flat_kwh\":130,\"total_amount\":203,\"peak_amount\":84,\"valley_amount\":30,\"flat_amount\":89,\"status\":\"unpaid\",\"due_date\":\"2026-05-15\",\"paid_at\":null,\"created_at\":\"2026-06-05 10:55:10\"},{\"id\":3,\"user_id\":1,\"meter_no\":\"GD20250001\",\"billing_period\":\"2026-03\",\"total_kwh\":310,\"peak_kwh\":110,\"valley_kwh\":70,\"flat_kwh\":130,\"total_amount\":217,\"peak_amount\":92.4,\"valley"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59043/api/auth/profile",
+      "path": "/api/auth/profile",
+      "status": 200,
+      "ok": true,
+      "bodyPreview": "{\"success\":true,\"data\":{\"id\":1,\"username\":\"admin\",\"real_name\":\"系统管理员\",\"customer_type\":\"enterprise\",\"role\":\"admin\",\"phone\":\"13800000001\",\"email\":\"admin@csg.cn\",\"company_name\":\"南方电网\",\"address\":\"广州市天河区珠江新城\",\"points_balance\":99999}}"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59043/api/energy/efficiency",
+      "path": "/api/energy/efficiency",
+      "status": 200,
+      "ok": true,
+      "bodyPreview": "{\"success\":true,\"data\":[{\"id\":\"1\",\"date\":\"2026-06-05\",\"overallScore\":72,\"items\":[{\"category\":\"用电效率\",\"score\":72,\"description\":\"仍有用电效率优化空间\"},{\"category\":\"峰谷用电\",\"score\":75,\"description\":\"峰时占比 34%，谷时占比 23%\"},{\"category\":\"设备能效\",\"score\":68,\"description\":\"重点设备负载处于可监测范围\"},{\"category\":\"照明系统\",\"score\":77,\"description\":\"公共区域照明具备进一步节能空间\"}],\"recommendations\":[{\"id\":\"1-0\",\"title\":\"建议将部分高耗电设备转移至谷电时段运\",\"description\":\"建议将部分高耗电设备转移至谷电时段运行，可节省约15%电费支出\",\"impact\":\"high\",\"category\":\"用电\"}],\"estimatedSavings\":600},{\"id\""
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59043/api/auth/me",
+      "path": "/api/auth/me",
+      "status": 404,
+      "ok": false,
+      "bodyPreview": "{\"success\":false,\"error\":\"API not found\"}"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59043/api/users/profile",
+      "path": "/api/users/profile",
+      "status": 404,
+      "ok": false,
+      "bodyPreview": "{\"success\":false,\"error\":\"API not found\"}"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59043/api/user/profile",
+      "path": "/api/user/profile",
+      "status": 404,
+      "ok": false,
+      "bodyPreview": "{\"success\":false,\"error\":\"API not found\"}"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59043/api/search?q=%E6%B5%8B%E8%AF%95",
+      "path": "/api/search?q=%E6%B5%8B%E8%AF%95",
+      "status": 404,
+      "ok": false,
+      "bodyPreview": "{\"success\":false,\"error\":\"API not found\"}"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59043/api/admin/stats",
+      "path": "/api/admin/stats",
+      "status": 200,
+      "ok": true,
+      "bodyPreview": "{\"success\":true,\"data\":{\"users\":{\"total_users\":13,\"individual_count\":3,\"family_count\":3,\"enterprise_count\":4,\"park_count\":3,\"total_points\":145265},\"bills\":{\"total_bills\":13,\"total_kwh\":211930,\"total_revenue\":148351,\"paid_revenue\":71547,\"unpaid_revenue\":12404,\"overdue_revenue\":64400},\"energy\":{\"total_report_kwh\":1130250,\"avg_efficiency_score\":69.22222222222223},\"devices\":{\"total_devices\":10,\"online_devices\":8,\"total_power\":85.12},\"subsidies\":{\"total_subsidies\":5,\"approved_subsidies\":55000,\"disbur"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59043/api/admin/dashboard",
+      "path": "/api/admin/dashboard",
+      "status": 404,
+      "ok": false,
+      "bodyPreview": "{\"success\":false,\"error\":\"API not found\"}"
+    }
+  ],
+  "dialogs": [],
+  "consoleMessages": [
+    {
+      "type": "debug",
+      "text": "[vite] connecting...",
+      "location": {
+        "url": "http://127.0.0.1:49043/@vite/client",
+        "lineNumber": 788,
+        "columnNumber": 8
+      }
+    },
+    {
+      "type": "debug",
+      "text": "[vite] connected.",
+      "location": {
+        "url": "http://127.0.0.1:49043/@vite/client",
+        "lineNumber": 911,
+        "columnNumber": 14
+      }
+    },
+    {
+      "type": "info",
+      "text": "%cDownload the React DevTools for a better development experience: https://reactjs.org/link/react-devtools font-weight:bold",
+      "location": {
+        "url": "http://127.0.0.1:49043/node_modules/.vite/deps/chunk-KDCVS43I.js?v=e4d4104b",
+        "lineNumber": 21608,
+        "columnNumber": 24
+      }
+    },
+    {
+      "type": "verbose",
+      "text": "[DOM] Input elements should have autocomplete attributes (suggested: \"current-password\"): (More info: https://goo.gl/9p2vKq) %o",
+      "location": {
+        "url": "http://127.0.0.1:49043/login",
+        "lineNumber": 0,
+        "columnNumber": 0
+      }
+    },
+    {
+      "type": "warning",
+      "text": "The width(-1) and height(-1) of chart should be greater than 0,\n       please check the style of container, or the props width(100%) and height(100%),\n       or add a minWidth(0) or minHeight(undefined) or use aspect(undefined) to control the\n       height and width.",
+      "location": {
+        "url": "http://127.0.0.1:49043/node_modules/.vite/deps/recharts.js?v=e4d4104b",
+        "lineNumber": 8705,
+        "columnNumber": 16
+      }
+    },
+    {
+      "type": "warning",
+      "text": "The width(-1) and height(-1) of chart should be greater than 0,\n       please check the style of container, or the props width(100%) and height(100%),\n       or add a minWidth(0) or minHeight(undefined) or use aspect(undefined) to control the\n       height and width.",
+      "location": {
+        "url": "http://127.0.0.1:49043/node_modules/.vite/deps/recharts.js?v=e4d4104b",
+        "lineNumber": 8705,
+        "columnNumber": 16
+      }
+    },
+    {
+      "type": "warning",
+      "text": "The width(-1) and height(-1) of chart should be greater than 0,\n       please check the style of container, or the props width(100%) and height(100%),\n       or add a minWidth(0) or minHeight(undefined) or use aspect(undefined) to control the\n       height and width.",
+      "location": {
+        "url": "http://127.0.0.1:49043/node_modules/.vite/deps/recharts.js?v=e4d4104b",
+        "lineNumber": 8705,
+        "columnNumber": 16
+      }
+    },
+    {
+      "type": "warning",
+      "text": "The width(-1) and height(-1) of chart should be greater than 0,\n       please check the style of container, or the props width(100%) and height(100%),\n       or add a minWidth(0) or minHeight(undefined) or use aspect(undefined) to control the\n       height and width.",
+      "location": {
+        "url": "http://127.0.0.1:49043/node_modules/.vite/deps/recharts.js?v=e4d4104b",
+        "lineNumber": 8705,
+        "columnNumber": 16
+      }
+    },
+    {
+      "type": "debug",
+      "text": "[vite] connecting...",
+      "location": {
+        "url": "http://127.0.0.1:49043/@vite/client",
+        "lineNumber": 788,
+        "columnNumber": 8
+      }
+    },
+    {
+      "type": "debug",
+      "text": "[vite] connected.",
+      "location": {
+        "url": "http://127.0.0.1:49043/@vite/client",
+        "lineNumber": 911,
+        "columnNumber": 14
+      }
+    },
+    {
+      "type": "info",
+      "text": "%cDownload the React DevTools for a better development experience: https://reactjs.org/link/react-devtools font-weight:bold",
+      "location": {
+        "url": "http://127.0.0.1:49043/node_modules/.vite/deps/chunk-KDCVS43I.js?v=e4d4104b",
+        "lineNumber": 21608,
+        "columnNumber": 24
+      }
+    },
+    {
+      "type": "warning",
+      "text": "The width(-1) and height(-1) of chart should be greater than 0,\n       please check the style of container, or the props width(100%) and height(100%),\n       or add a minWidth(0) or minHeight(undefined) or use aspect(undefined) to control the\n       height and width.",
+      "location": {
+        "url": "http://127.0.0.1:49043/node_modules/.vite/deps/recharts.js?v=e4d4104b",
+        "lineNumber": 8705,
+        "columnNumber": 16
+      }
+    },
+    {
+      "type": "warning",
+      "text": "The width(-1) and height(-1) of chart should be greater than 0,\n       please check the style of container, or the props width(100%) and height(100%),\n       or add a minWidth(0) or minHeight(undefined) or use aspect(undefined) to control the\n       height and width.",
+      "location": {
+        "url": "http://127.0.0.1:49043/node_modules/.vite/deps/recharts.js?v=e4d4104b",
+        "lineNumber": 8705,
+        "columnNumber": 16
+      }
+    },
+    {
+      "type": "warning",
+      "text": "The width(-1) and height(-1) of chart should be greater than 0,\n       please check the style of container, or the props width(100%) and height(100%),\n       or add a minWidth(0) or minHeight(undefined) or use aspect(undefined) to control the\n       height and width.",
+      "location": {
+        "url": "http://127.0.0.1:49043/node_modules/.vite/deps/recharts.js?v=e4d4104b",
+        "lineNumber": 8705,
+        "columnNumber": 16
+      }
+    },
+    {
+      "type": "warning",
+      "text": "The width(-1) and height(-1) of chart should be greater than 0,\n       please check the style of container, or the props width(100%) and height(100%),\n       or add a minWidth(0) or minHeight(undefined) or use aspect(undefined) to control the\n       height and width.",
+      "location": {
+        "url": "http://127.0.0.1:49043/node_modules/.vite/deps/recharts.js?v=e4d4104b",
+        "lineNumber": 8705,
+        "columnNumber": 16
+      }
+    },
+    {
+      "type": "debug",
+      "text": "[vite] connecting...",
+      "location": {
+        "url": "http://127.0.0.1:49043/@vite/client",
+        "lineNumber": 788,
+        "columnNumber": 8
+      }
+    },
+    {
+      "type": "debug",
+      "text": "[vite] connected.",
+      "location": {
+        "url": "http://127.0.0.1:49043/@vite/client",
+        "lineNumber": 911,
+        "columnNumber": 14
+      }
+    },
+    {
+      "type": "info",
+      "text": "%cDownload the React DevTools for a better development experience: https://reactjs.org/link/react-devtools font-weight:bold",
+      "location": {
+        "url": "http://127.0.0.1:49043/node_modules/.vite/deps/chunk-KDCVS43I.js?v=e4d4104b",
+        "lineNumber": 21608,
+        "columnNumber": 24
+      }
+    },
+    {
+      "type": "warning",
+      "text": "The width(-1) and height(-1) of chart should be greater than 0,\n       please check the style of container, or the props width(100%) and height(100%),\n       or add a minWidth(0) or minHeight(undefined) or use aspect(undefined) to control the\n       height and width.",
+      "location": {
+        "url": "http://127.0.0.1:49043/node_modules/.vite/deps/recharts.js?v=e4d4104b",
+        "lineNumber": 8705,
+        "columnNumber": 16
+      }
+    },
+    {
+      "type": "warning",
+      "text": "The width(-1) and height(-1) of chart should be greater than 0,\n       please check the style of container, or the props width(100%) and height(100%),\n       or add a minWidth(0) or minHeight(undefined) or use aspect(undefined) to control the\n       height and width.",
+      "location": {
+        "url": "http://127.0.0.1:49043/node_modules/.vite/deps/recharts.js?v=e4d4104b",
+        "lineNumber": 8705,
+        "columnNumber": 16
+      }
+    },
+    {
+      "type": "warning",
+      "text": "The width(-1) and height(-1) of chart should be greater than 0,\n       please check the style of container, or the props width(100%) and height(100%),\n       or add a minWidth(0) or minHeight(undefined) or use aspect(undefined) to control the\n       height and width.",
+      "location": {
+        "url": "http://127.0.0.1:49043/node_modules/.vite/deps/recharts.js?v=e4d4104b",
+        "lineNumber": 8705,
+        "columnNumber": 16
+      }
+    },
+    {
+      "type": "warning",
+      "text": "The width(-1) and height(-1) of chart should be greater than 0,\n       please check the style of container, or the props width(100%) and height(100%),\n       or add a minWidth(0) or minHeight(undefined) or use aspect(undefined) to control the\n       height and width.",
+      "location": {
+        "url": "http://127.0.0.1:49043/node_modules/.vite/deps/recharts.js?v=e4d4104b",
+        "lineNumber": 8705,
+        "columnNumber": 16
+      }
+    },
+    {
+      "type": "debug",
+      "text": "[vite] connecting...",
+      "location": {
+        "url": "http://127.0.0.1:49043/@vite/client",
+        "lineNumber": 788,
+        "columnNumber": 8
+      }
+    },
+    {
+      "type": "debug",
+      "text": "[vite] connected.",
+      "location": {
+        "url": "http://127.0.0.1:49043/@vite/client",
+        "lineNumber": 911,
+        "columnNumber": 14
+      }
+    },
+    {
+      "type": "info",
+      "text": "%cDownload the React DevTools for a better development experience: https://reactjs.org/link/react-devtools font-weight:bold",
+      "location": {
+        "url": "http://127.0.0.1:49043/node_modules/.vite/deps/chunk-KDCVS43I.js?v=e4d4104b",
+        "lineNumber": 21608,
+        "columnNumber": 24
+      }
+    },
+    {
+      "type": "warning",
+      "text": "The width(-1) and height(-1) of chart should be greater than 0,\n       please check the style of container, or the props width(100%) and height(100%),\n       or add a minWidth(0) or minHeight(undefined) or use aspect(undefined) to control the\n       height and width.",
+      "location": {
+        "url": "http://127.0.0.1:49043/node_modules/.vite/deps/recharts.js?v=e4d4104b",
+        "lineNumber": 8705,
+        "columnNumber": 16
+      }
+    },
+    {
+      "type": "warning",
+      "text": "The width(-1) and height(-1) of chart should be greater than 0,\n       please check the style of container, or the props width(100%) and height(100%),\n       or add a minWidth(0) or minHeight(undefined) or use aspect(undefined) to control the\n       height and width.",
+      "location": {
+        "url": "http://127.0.0.1:49043/node_modules/.vite/deps/recharts.js?v=e4d4104b",
+        "lineNumber": 8705,
+        "columnNumber": 16
+      }
+    },
+    {
+      "type": "warning",
+      "text": "The width(-1) and height(-1) of chart should be greater than 0,\n       please check the style of container, or the props width(100%) and height(100%),\n       or add a minWidth(0) or minHeight(undefined) or use aspect(undefined) to control the\n       height and width.",
+      "location": {
+        "url": "http://127.0.0.1:49043/node_modules/.vite/deps/recharts.js?v=e4d4104b",
+        "lineNumber": 8705,
+        "columnNumber": 16
+      }
+    },
+    {
+      "type": "warning",
+      "text": "The width(-1) and height(-1) of chart should be greater than 0,\n       please check the style of container, or the props width(100%) and height(100%),\n       or add a minWidth(0) or minHeight(undefined) or use aspect(undefined) to control the\n       height and width.",
+      "location": {
+        "url": "http://127.0.0.1:49043/node_modules/.vite/deps/recharts.js?v=e4d4104b",
+        "lineNumber": 8705,
+        "columnNumber": 16
+      }
+    },
+    {
+      "type": "debug",
+      "text": "[vite] connecting...",
+      "location": {
+        "url": "http://127.0.0.1:49043/@vite/client",
+        "lineNumber": 788,
+        "columnNumber": 8
+      }
+    },
+    {
+      "type": "debug",
+      "text": "[vite] connected.",
+      "location": {
+        "url": "http://127.0.0.1:49043/@vite/client",
+        "lineNumber": 911,
+        "columnNumber": 14
+      }
+    },
+    {
+      "type": "info",
+      "text": "%cDownload the React DevTools for a better development experience: https://reactjs.org/link/react-devtools font-weight:bold",
+      "location": {
+        "url": "http://127.0.0.1:49043/node_modules/.vite/deps/chunk-KDCVS43I.js?v=e4d4104b",
+        "lineNumber": 21608,
+        "columnNumber": 24
+      }
+    },
+    {
+      "type": "warning",
+      "text": "The width(-1) and height(-1) of chart should be greater than 0,\n       please check the style of container, or the props width(100%) and height(100%),\n       or add a minWidth(0) or minHeight(undefined) or use aspect(undefined) to control the\n       height and width.",
+      "location": {
+        "url": "http://127.0.0.1:49043/node_modules/.vite/deps/recharts.js?v=e4d4104b",
+        "lineNumber": 8705,
+        "columnNumber": 16
+      }
+    },
+    {
+      "type": "warning",
+      "text": "The width(-1) and height(-1) of chart should be greater than 0,\n       please check the style of container, or the props width(100%) and height(100%),\n       or add a minWidth(0) or minHeight(undefined) or use aspect(undefined) to control the\n       height and width.",
+      "location": {
+        "url": "http://127.0.0.1:49043/node_modules/.vite/deps/recharts.js?v=e4d4104b",
+        "lineNumber": 8705,
+        "columnNumber": 16
+      }
+    },
+    {
+      "type": "warning",
+      "text": "The width(-1) and height(-1) of chart should be greater than 0,\n       please check the style of container, or the props width(100%) and height(100%),\n       or add a minWidth(0) or minHeight(undefined) or use aspect(undefined) to control the\n       height and width.",
+      "location": {
+        "url": "http://127.0.0.1:49043/node_modules/.vite/deps/recharts.js?v=e4d4104b",
+        "lineNumber": 8705,
+        "columnNumber": 16
+      }
+    },
+    {
+      "type": "warning",
+      "text": "The width(-1) and height(-1) of chart should be greater than 0,\n       please check the style of container, or the props width(100%) and height(100%),\n       or add a minWidth(0) or minHeight(undefined) or use aspect(undefined) to control the\n       height and width.",
+      "location": {
+        "url": "http://127.0.0.1:49043/node_modules/.vite/deps/recharts.js?v=e4d4104b",
+        "lineNumber": 8705,
+        "columnNumber": 16
+      }
+    }
+  ],
+  "requestFailures": [],
+  "responseErrors": []
+}

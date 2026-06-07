@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+  <key>Label</key>
+  <string>local.pinai.may-89043.backend</string>
+  <key>WorkingDirectory</key>
+  <string>/Users/chen/Documents/trae_projects/local_projects/may-89043</string>
+  <key>ProgramArguments</key>
+  <array>
+    <string>/opt/homebrew/bin/node</string>
+    <string>/Users/chen/Documents/trae_projects/local_projects/may-89043/node_modules/.bin/tsx</string>
+    <string>api/server.ts</string>
+  </array>
+  <key>RunAtLoad</key>
+  <true/>
+  <key>KeepAlive</key>
+  <true/>
+  <key>StandardOutPath</key>
+  <string>/Users/chen/Documents/trae_projects/local_projects/may-89043/backend.log</string>
+  <key>StandardErrorPath</key>
+  <string>/Users/chen/Documents/trae_projects/local_projects/may-89043/backend.err.log</string>
+</dict>
+</plist>
