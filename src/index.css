@@ -1,0 +1,24 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --primary: #0F6CBD;
+  --primary-light: #E0F2FE;
+  --secondary: #108043;
+  --secondary-light: #DCFCE7;
+  --bg: #F8FAFC;
+  --card: #FFFFFF;
+  --sidebar: #1E293B;
+  --text: #1E293B;
+  --text-muted: #64748B;
+  --border: #E2E8F0;
+  --danger: #DC2626;
+  --warning: #F59E0B;
+}
+
+body {
+  font-family: system-ui, sans-serif;
+  background-color: var(--bg);
+  color: var(--text);
+}
