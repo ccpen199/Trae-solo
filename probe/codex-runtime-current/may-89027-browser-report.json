@@ -1,0 +1,2476 @@
+{
+  "ok": true,
+  "generatedAt": "2026-06-04T07:00:37.377Z",
+  "order": "may-89027",
+  "roundIndex": 99,
+  "captureId": "codex-may-89027-current",
+  "url": "http://127.0.0.1:49027/",
+  "initialUrl": "http://127.0.0.1:49027/",
+  "finalUrl": "http://127.0.0.1:49027/home",
+  "status": 200,
+  "title": "浙江省一网通办平台",
+  "initialTitle": "浙江省一网通办平台",
+  "navigationError": "",
+  "screenshotPath": "probe/codex-runtime-current/codex-may-89027-current-frontend.png",
+  "screenshotPaths": [
+    "/Users/chen/Documents/trae_projects/local_projects/may-89027/probe/codex-runtime-current/codex-may-89027-current-structure-01-首屏.png",
+    "/Users/chen/Documents/trae_projects/local_projects/may-89027/probe/codex-runtime-current/codex-may-89027-current-structure-02-导航-首页.png",
+    "/Users/chen/Documents/trae_projects/local_projects/may-89027/probe/codex-runtime-current/codex-may-89027-current-structure-03-操作-更多.png",
+    "/Users/chen/Documents/trae_projects/local_projects/may-89027/probe/codex-runtime-current/codex-may-89027-current-structure-04-操作-预-约.png",
+    "/Users/chen/Documents/trae_projects/local_projects/may-89027/probe/codex-runtime-current/codex-may-89027-current-structure-05-导航-企业服务.png",
+    "/Users/chen/Documents/trae_projects/local_projects/may-89027/probe/codex-runtime-current/codex-may-89027-current-structure-06-操作-更多.png",
+    "/Users/chen/Documents/trae_projects/local_projects/may-89027/probe/codex-runtime-current/codex-may-89027-current-structure-07-操作-详-情.png",
+    "/Users/chen/Documents/trae_projects/local_projects/may-89027/probe/codex-runtime-current/codex-may-89027-current-structure-08-导航-惠企政策.png",
+    "/Users/chen/Documents/trae_projects/local_projects/may-89027/probe/codex-runtime-current/codex-may-89027-current-structure-09-操作-更多.png",
+    "/Users/chen/Documents/trae_projects/local_projects/may-89027/probe/codex-runtime-current/codex-may-89027-current-structure-10-操作-详-情.png",
+    "/Users/chen/Documents/trae_projects/local_projects/may-89027/probe/codex-runtime-current/codex-may-89027-current-structure-11-导航-我的申报.png",
+    "/Users/chen/Documents/trae_projects/local_projects/may-89027/probe/codex-runtime-current/codex-may-89027-current-structure-12-操作-更多.png"
+  ],
+  "issueTextPreview": "runtime start report was not generated；登录流程已完成，继续复验登录后的首页和业务导航",
+  "targetReason": "登录流程已完成，继续复验登录后的首页和业务导航",
+  "targetKind": "auth",
+  "targetMatched": true,
+  "targetActions": [
+    {
+      "action": "login-fill-username",
+      "label": "admin",
+      "ok": true
+    },
+    {
+      "action": "login-fill-password",
+      "label": "admin:******",
+      "ok": true
+    },
+    {
+      "action": "login-enter",
+      "label": "admin",
+      "ok": true
+    },
+    {
+      "action": "login-result",
+      "label": "admin",
+      "ok": true,
+      "finalUrl": "http://127.0.0.1:49027/home"
+    },
+    {
+      "action": "target-verify",
+      "label": "登录后首页",
+      "ok": true,
+      "finalUrl": "http://127.0.0.1:49027/home"
+    }
+  ],
+  "authFlow": {
+    "detected": true,
+    "attempted": true,
+    "success": true,
+    "finalUrl": "http://127.0.0.1:49027/home",
+    "message": "登录成功:admin",
+    "actions": [
+      {
+        "action": "login-fill-username",
+        "label": "admin",
+        "ok": true
+      },
+      {
+        "action": "login-fill-password",
+        "label": "admin:******",
+        "ok": true
+      },
+      {
+        "action": "login-enter",
+        "label": "admin",
+        "ok": true
+      },
+      {
+        "action": "login-result",
+        "label": "admin",
+        "ok": true,
+        "finalUrl": "http://127.0.0.1:49027/home"
+      }
+    ],
+    "username": "admin",
+    "credentialSource": "visible-demo-text"
+  },
+  "businessAudit": {
+    "actions": [
+      {
+        "action": "click",
+        "label": "导航:首页",
+        "ok": true
+      },
+      {
+        "action": "click",
+        "label": "操作:更多",
+        "ok": true,
+        "result": {
+          "ok": true,
+          "matched": 2
+        }
+      },
+      {
+        "action": "click",
+        "label": "操作:预 约",
+        "ok": true,
+        "result": {
+          "ok": true,
+          "matched": 6
+        }
+      },
+      {
+        "action": "click",
+        "label": "导航:企业服务",
+        "ok": true
+      },
+      {
+        "action": "click",
+        "label": "操作:更多",
+        "ok": true,
+        "result": {
+          "ok": true,
+          "matched": 2
+        }
+      },
+      {
+        "action": "click",
+        "label": "操作:详 情",
+        "ok": true,
+        "result": {
+          "ok": true,
+          "matched": 6
+        }
+      },
+      {
+        "action": "click",
+        "label": "导航:惠企政策",
+        "ok": true
+      },
+      {
+        "action": "click",
+        "label": "操作:更多",
+        "ok": true,
+        "result": {
+          "ok": true,
+          "matched": 2
+        }
+      },
+      {
+        "action": "click",
+        "label": "操作:详 情",
+        "ok": true,
+        "result": {
+          "ok": true,
+          "matched": 6
+        }
+      },
+      {
+        "action": "click",
+        "label": "导航:我的申报",
+        "ok": true
+      },
+      {
+        "action": "click",
+        "label": "操作:更多",
+        "ok": true,
+        "result": {
+          "ok": true,
+          "matched": 2
+        }
+      },
+      {
+        "action": "click",
+        "label": "操作:详 情",
+        "ok": true,
+        "result": {
+          "ok": true,
+          "matched": 6
+        }
+      }
+    ],
+    "snapshots": [
+      {
+        "label": "首屏",
+        "url": "http://127.0.0.1:49027/home",
+        "title": "浙江省一网通办平台",
+        "headings": [
+          "欢迎使用浙江省一网通办平台"
+        ],
+        "navLabels": [
+          "首页",
+          "企业服务",
+          "惠企政策",
+          "我的申报",
+          "预约办事",
+          "我的预约",
+          "智能导办",
+          "城市服务"
+        ],
+        "buttons": [
+          "更多",
+          "预 约"
+        ],
+        "links": [],
+        "inputs": [],
+        "tables": [],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "浙江省一网通办平台系统管理员🏠首页🏢企业服务📋惠企政策📝我的申报📅预约办事📆我的预约🤖智能导办🌆城市服务欢迎使用浙江省一网通办平台📊管理控制台数据概览、健康度监测✅申报审核政策申报、多级审核📋政策效能兑现评估、退单聚类⚙️服务管理事项维护、统一编码📈系统监控健康度、耗时、错误🌐多端发布系统/H5/小程序/终端热门服务事项更多住房公积金开户GG001 住房公积金管理中心预 约企业营业执照办理GS001 市场监管局预 约公章刻制备案GS002 公安厅预 约社保开户登记SB001 人社厅预 约税务登记办理SW001 税务局预 约不动产权证办理ZJ001 自然资源厅预 约为您推荐的惠企政策更多请绑定企业后获取政策推荐",
+        "layout": {
+          "viewportWidth": 1504,
+          "viewportHeight": 1128,
+          "scrollWidth": 1504,
+          "scrollHeight": 1192,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "codex-may-89027-current-structure-01-首屏",
+          "label": "首屏",
+          "finalUrl": "http://127.0.0.1:49027/home",
+          "title": "浙江省一网通办平台",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89027/probe/codex-runtime-current/codex-may-89027-current-structure-01-首屏.json",
+          "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89027/probe/codex-runtime-current/codex-may-89027-current-structure-01-首屏.png",
+          "elementCount": 183,
+          "interactiveCount": 17,
+          "interactiveLabels": [
+            "首页 🏢企业服务 📋惠企政策 📝我的申报 📅预约办事 📆我的预约 🤖智能导办 🌆城市服务",
+            "首页",
+            "企业服务",
+            "惠企政策",
+            "我的申报",
+            "预约办事",
+            "我的预约",
+            "智能导办",
+            "城市服务",
+            "更多",
+            "预 约"
+          ]
+        }
+      },
+      {
+        "label": "导航:首页",
+        "url": "http://127.0.0.1:49027/home",
+        "title": "浙江省一网通办平台",
+        "headings": [
+          "欢迎使用浙江省一网通办平台"
+        ],
+        "navLabels": [
+          "首页",
+          "企业服务",
+          "惠企政策",
+          "我的申报",
+          "预约办事",
+          "我的预约",
+          "智能导办",
+          "城市服务"
+        ],
+        "buttons": [
+          "更多",
+          "预 约"
+        ],
+        "links": [],
+        "inputs": [],
+        "tables": [],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "浙江省一网通办平台系统管理员🏠首页🏢企业服务📋惠企政策📝我的申报📅预约办事📆我的预约🤖智能导办🌆城市服务欢迎使用浙江省一网通办平台📊管理控制台数据概览、健康度监测✅申报审核政策申报、多级审核📋政策效能兑现评估、退单聚类⚙️服务管理事项维护、统一编码📈系统监控健康度、耗时、错误🌐多端发布系统/H5/小程序/终端热门服务事项更多住房公积金开户GG001 住房公积金管理中心预 约企业营业执照办理GS001 市场监管局预 约公章刻制备案GS002 公安厅预 约社保开户登记SB001 人社厅预 约税务登记办理SW001 税务局预 约不动产权证办理ZJ001 自然资源厅预 约为您推荐的惠企政策更多请绑定企业后获取政策推荐",
+        "layout": {
+          "viewportWidth": 1536,
+          "viewportHeight": 1192,
+          "scrollWidth": 1536,
+          "scrollHeight": 1256,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "codex-may-89027-current-structure-02-导航-首页",
+          "label": "导航:首页",
+          "finalUrl": "http://127.0.0.1:49027/home",
+          "title": "浙江省一网通办平台",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89027/probe/codex-runtime-current/codex-may-89027-current-structure-02-导航-首页.json",
+          "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89027/probe/codex-runtime-current/codex-may-89027-current-structure-02-导航-首页.png",
+          "elementCount": 183,
+          "interactiveCount": 17,
+          "interactiveLabels": [
+            "首页 🏢企业服务 📋惠企政策 📝我的申报 📅预约办事 📆我的预约 🤖智能导办 🌆城市服务",
+            "首页",
+            "企业服务",
+            "惠企政策",
+            "我的申报",
+            "预约办事",
+            "我的预约",
+            "智能导办",
+            "城市服务",
+            "更多",
+            "预 约"
+          ]
+        }
+      },
+      {
+        "label": "操作:更多",
+        "url": "http://127.0.0.1:49027/reservation",
+        "title": "浙江省一网通办平台",
+        "headings": [],
+        "navLabels": [
+          "首页",
+          "企业服务",
+          "惠企政策",
+          "我的申报",
+          "预约办事",
+          "我的预约",
+          "智能导办",
+          "城市服务"
+        ],
+        "buttons": [
+          "确认预约"
+        ],
+        "links": [],
+        "inputs": [
+          {
+            "tag": "input",
+            "type": "search",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "search",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "",
+            "placeholder": "请选择日期",
+            "name": "",
+            "label": ""
+          }
+        ],
+        "tables": [],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "浙江省一网通办平台系统管理员🏠首页🏢企业服务📋惠企政策📝我的申报📅预约办事📆我的预约🤖智能导办🌆城市服务在线预约选择网点请选择办事网点选择事项（可选）请选择办理事项选择日期选择时段可预约紧张已满请先选择网点和日期确认预约",
+        "layout": {
+          "viewportWidth": 1568,
+          "viewportHeight": 1256,
+          "scrollWidth": 1568,
+          "scrollHeight": 1320,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "codex-may-89027-current-structure-03-操作-更多",
+          "label": "操作:更多",
+          "finalUrl": "http://127.0.0.1:49027/reservation",
+          "title": "浙江省一网通办平台",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89027/probe/codex-runtime-current/codex-may-89027-current-structure-03-操作-更多.json",
+          "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89027/probe/codex-runtime-current/codex-may-89027-current-structure-03-操作-更多.png",
+          "elementCount": 128,
+          "interactiveCount": 13,
+          "interactiveLabels": [
+            "首页 🏢企业服务 📋惠企政策 📝我的申报 📅预约办事 📆我的预约 🤖智能导办 🌆城市服务",
+            "首页",
+            "企业服务",
+            "惠企政策",
+            "我的申报",
+            "预约办事",
+            "我的预约",
+            "智能导办",
+            "城市服务",
+            "请选择日期",
+            "确认预约"
+          ]
+        }
+      },
+      {
+        "label": "操作:预 约",
+        "url": "http://127.0.0.1:49027/reservation",
+        "title": "浙江省一网通办平台",
+        "headings": [],
+        "navLabels": [
+          "首页",
+          "企业服务",
+          "惠企政策",
+          "我的申报",
+          "预约办事",
+          "我的预约",
+          "智能导办",
+          "城市服务"
+        ],
+        "buttons": [
+          "确认预约"
+        ],
+        "links": [],
+        "inputs": [
+          {
+            "tag": "input",
+            "type": "search",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "search",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "",
+            "placeholder": "请选择日期",
+            "name": "",
+            "label": ""
+          }
+        ],
+        "tables": [],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "浙江省一网通办平台系统管理员🏠首页🏢企业服务📋惠企政策📝我的申报📅预约办事📆我的预约🤖智能导办🌆城市服务在线预约选择网点请选择办事网点选择事项（可选）请选择办理事项选择日期选择时段可预约紧张已满请先选择网点和日期确认预约",
+        "layout": {
+          "viewportWidth": 1600,
+          "viewportHeight": 1320,
+          "scrollWidth": 1600,
+          "scrollHeight": 1384,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "codex-may-89027-current-structure-04-操作-预-约",
+          "label": "操作:预 约",
+          "finalUrl": "http://127.0.0.1:49027/reservation",
+          "title": "浙江省一网通办平台",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89027/probe/codex-runtime-current/codex-may-89027-current-structure-04-操作-预-约.json",
+          "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89027/probe/codex-runtime-current/codex-may-89027-current-structure-04-操作-预-约.png",
+          "elementCount": 128,
+          "interactiveCount": 13,
+          "interactiveLabels": [
+            "首页 🏢企业服务 📋惠企政策 📝我的申报 📅预约办事 📆我的预约 🤖智能导办 🌆城市服务",
+            "首页",
+            "企业服务",
+            "惠企政策",
+            "我的申报",
+            "预约办事",
+            "我的预约",
+            "智能导办",
+            "城市服务",
+            "请选择日期",
+            "确认预约"
+          ]
+        }
+      },
+      {
+        "label": "导航:企业服务",
+        "url": "http://127.0.0.1:49027/home",
+        "title": "浙江省一网通办平台",
+        "headings": [
+          "欢迎使用浙江省一网通办平台"
+        ],
+        "navLabels": [
+          "首页",
+          "企业服务",
+          "惠企政策",
+          "我的申报",
+          "预约办事",
+          "我的预约",
+          "智能导办",
+          "城市服务"
+        ],
+        "buttons": [
+          "更多",
+          "详 情",
+          "预 约"
+        ],
+        "links": [],
+        "inputs": [],
+        "tables": [],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "浙江省一网通办平台系统管理员🏠首页🏢企业服务📋惠企政策📝我的申报📅预约办事📆我的预约🤖智能导办🌆城市服务欢迎使用浙江省一网通办平台📊管理控制台数据概览、健康度监测✅申报审核政策申报、多级审核📋政策效能兑现评估、退单聚类⚙️服务管理事项维护、统一编码📈系统监控健康度、耗时、错误🌐多端发布系统/H5/小程序/终端热门服务事项更多住房公积金开户GG001 住房公积金管理中心详 情预 约企业营业执照办理GS001 市场监管局详 情预 约公章刻制备案GS002 公安厅详 情预 约社保开户登记SB001 人社厅详 情预 约税务登记办理SW001 税务局详 情预 约不动产权证办理ZJ001 自然资源厅详 情预 约为您推荐的惠企政策更多请绑定企业后获取政策推荐",
+        "layout": {
+          "viewportWidth": 1632,
+          "viewportHeight": 1384,
+          "scrollWidth": 1632,
+          "scrollHeight": 1448,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "codex-may-89027-current-structure-05-导航-企业服务",
+          "label": "导航:企业服务",
+          "finalUrl": "http://127.0.0.1:49027/home",
+          "title": "浙江省一网通办平台",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89027/probe/codex-runtime-current/codex-may-89027-current-structure-05-导航-企业服务.json",
+          "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89027/probe/codex-runtime-current/codex-may-89027-current-structure-05-导航-企业服务.png",
+          "elementCount": 207,
+          "interactiveCount": 23,
+          "interactiveLabels": [
+            "首页 🏢企业服务 📋惠企政策 📝我的申报 📅预约办事 📆我的预约 🤖智能导办 🌆城市服务",
+            "首页",
+            "企业服务",
+            "惠企政策",
+            "我的申报",
+            "预约办事",
+            "我的预约",
+            "智能导办",
+            "城市服务",
+            "更多",
+            "详 情",
+            "预 约"
+          ]
+        }
+      },
+      {
+        "label": "操作:更多",
+        "url": "http://127.0.0.1:49027/home",
+        "title": "浙江省一网通办平台",
+        "headings": [
+          "欢迎使用浙江省一网通办平台"
+        ],
+        "navLabels": [
+          "首页",
+          "企业服务",
+          "惠企政策",
+          "我的申报",
+          "预约办事",
+          "我的预约",
+          "智能导办",
+          "城市服务"
+        ],
+        "buttons": [
+          "更多",
+          "详 情",
+          "预 约"
+        ],
+        "links": [],
+        "inputs": [],
+        "tables": [],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "浙江省一网通办平台系统管理员🏠首页🏢企业服务📋惠企政策📝我的申报📅预约办事📆我的预约🤖智能导办🌆城市服务欢迎使用浙江省一网通办平台📊管理控制台数据概览、健康度监测✅申报审核政策申报、多级审核📋政策效能兑现评估、退单聚类⚙️服务管理事项维护、统一编码📈系统监控健康度、耗时、错误🌐多端发布系统/H5/小程序/终端热门服务事项更多住房公积金开户GG001 住房公积金管理中心详 情预 约企业营业执照办理GS001 市场监管局详 情预 约公章刻制备案GS002 公安厅详 情预 约社保开户登记SB001 人社厅详 情预 约税务登记办理SW001 税务局详 情预 约不动产权证办理ZJ001 自然资源厅详 情预 约为您推荐的惠企政策更多请绑定企业后获取政策推荐",
+        "layout": {
+          "viewportWidth": 1664,
+          "viewportHeight": 1448,
+          "scrollWidth": 1664,
+          "scrollHeight": 1512,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "codex-may-89027-current-structure-06-操作-更多",
+          "label": "操作:更多",
+          "finalUrl": "http://127.0.0.1:49027/home",
+          "title": "浙江省一网通办平台",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89027/probe/codex-runtime-current/codex-may-89027-current-structure-06-操作-更多.json",
+          "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89027/probe/codex-runtime-current/codex-may-89027-current-structure-06-操作-更多.png",
+          "elementCount": 207,
+          "interactiveCount": 23,
+          "interactiveLabels": [
+            "首页 🏢企业服务 📋惠企政策 📝我的申报 📅预约办事 📆我的预约 🤖智能导办 🌆城市服务",
+            "首页",
+            "企业服务",
+            "惠企政策",
+            "我的申报",
+            "预约办事",
+            "我的预约",
+            "智能导办",
+            "城市服务",
+            "更多",
+            "详 情",
+            "预 约"
+          ]
+        }
+      },
+      {
+        "label": "操作:详 情",
+        "url": "http://127.0.0.1:49027/home",
+        "title": "浙江省一网通办平台",
+        "headings": [
+          "欢迎使用浙江省一网通办平台"
+        ],
+        "navLabels": [
+          "首页",
+          "企业服务",
+          "惠企政策",
+          "我的申报",
+          "预约办事",
+          "我的预约",
+          "智能导办",
+          "城市服务"
+        ],
+        "buttons": [
+          "更多",
+          "详 情",
+          "预 约"
+        ],
+        "links": [],
+        "inputs": [],
+        "tables": [],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "浙江省一网通办平台系统管理员🏠首页🏢企业服务📋惠企政策📝我的申报📅预约办事📆我的预约🤖智能导办🌆城市服务欢迎使用浙江省一网通办平台📊管理控制台数据概览、健康度监测✅申报审核政策申报、多级审核📋政策效能兑现评估、退单聚类⚙️服务管理事项维护、统一编码📈系统监控健康度、耗时、错误🌐多端发布系统/H5/小程序/终端热门服务事项更多住房公积金开户GG001 住房公积金管理中心详 情预 约企业营业执照办理GS001 市场监管局详 情预 约公章刻制备案GS002 公安厅详 情预 约社保开户登记SB001 人社厅详 情预 约税务登记办理SW001 税务局详 情预 约不动产权证办理ZJ001 自然资源厅详 情预 约为您推荐的惠企政策更多请绑定企业后获取政策推荐",
+        "layout": {
+          "viewportWidth": 1696,
+          "viewportHeight": 1512,
+          "scrollWidth": 1696,
+          "scrollHeight": 1576,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "codex-may-89027-current-structure-07-操作-详-情",
+          "label": "操作:详 情",
+          "finalUrl": "http://127.0.0.1:49027/home",
+          "title": "浙江省一网通办平台",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89027/probe/codex-runtime-current/codex-may-89027-current-structure-07-操作-详-情.json",
+          "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89027/probe/codex-runtime-current/codex-may-89027-current-structure-07-操作-详-情.png",
+          "elementCount": 207,
+          "interactiveCount": 23,
+          "interactiveLabels": [
+            "首页 🏢企业服务 📋惠企政策 📝我的申报 📅预约办事 📆我的预约 🤖智能导办 🌆城市服务",
+            "首页",
+            "企业服务",
+            "惠企政策",
+            "我的申报",
+            "预约办事",
+            "我的预约",
+            "智能导办",
+            "城市服务",
+            "更多",
+            "详 情",
+            "预 约"
+          ]
+        }
+      },
+      {
+        "label": "导航:惠企政策",
+        "url": "http://127.0.0.1:49027/home",
+        "title": "浙江省一网通办平台",
+        "headings": [
+          "欢迎使用浙江省一网通办平台"
+        ],
+        "navLabels": [
+          "首页",
+          "企业服务",
+          "惠企政策",
+          "我的申报",
+          "预约办事",
+          "我的预约",
+          "智能导办",
+          "城市服务"
+        ],
+        "buttons": [
+          "更多",
+          "详 情",
+          "预 约"
+        ],
+        "links": [],
+        "inputs": [],
+        "tables": [],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "浙江省一网通办平台系统管理员🏠首页🏢企业服务📋惠企政策📝我的申报📅预约办事📆我的预约🤖智能导办🌆城市服务欢迎使用浙江省一网通办平台📊管理控制台数据概览、健康度监测✅申报审核政策申报、多级审核📋政策效能兑现评估、退单聚类⚙️服务管理事项维护、统一编码📈系统监控健康度、耗时、错误🌐多端发布系统/H5/小程序/终端热门服务事项更多住房公积金开户GG001 住房公积金管理中心详 情预 约企业营业执照办理GS001 市场监管局详 情预 约公章刻制备案GS002 公安厅详 情预 约社保开户登记SB001 人社厅详 情预 约税务登记办理SW001 税务局详 情预 约不动产权证办理ZJ001 自然资源厅详 情预 约为您推荐的惠企政策更多请绑定企业后获取政策推荐",
+        "layout": {
+          "viewportWidth": 1728,
+          "viewportHeight": 1576,
+          "scrollWidth": 1728,
+          "scrollHeight": 1640,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "codex-may-89027-current-structure-08-导航-惠企政策",
+          "label": "导航:惠企政策",
+          "finalUrl": "http://127.0.0.1:49027/home",
+          "title": "浙江省一网通办平台",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89027/probe/codex-runtime-current/codex-may-89027-current-structure-08-导航-惠企政策.json",
+          "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89027/probe/codex-runtime-current/codex-may-89027-current-structure-08-导航-惠企政策.png",
+          "elementCount": 207,
+          "interactiveCount": 23,
+          "interactiveLabels": [
+            "首页 🏢企业服务 📋惠企政策 📝我的申报 📅预约办事 📆我的预约 🤖智能导办 🌆城市服务",
+            "首页",
+            "企业服务",
+            "惠企政策",
+            "我的申报",
+            "预约办事",
+            "我的预约",
+            "智能导办",
+            "城市服务",
+            "更多",
+            "详 情",
+            "预 约"
+          ]
+        }
+      },
+      {
+        "label": "操作:更多",
+        "url": "http://127.0.0.1:49027/home",
+        "title": "浙江省一网通办平台",
+        "headings": [
+          "欢迎使用浙江省一网通办平台"
+        ],
+        "navLabels": [
+          "首页",
+          "企业服务",
+          "惠企政策",
+          "我的申报",
+          "预约办事",
+          "我的预约",
+          "智能导办",
+          "城市服务"
+        ],
+        "buttons": [
+          "更多",
+          "详 情",
+          "预 约"
+        ],
+        "links": [],
+        "inputs": [],
+        "tables": [],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "浙江省一网通办平台系统管理员🏠首页🏢企业服务📋惠企政策📝我的申报📅预约办事📆我的预约🤖智能导办🌆城市服务欢迎使用浙江省一网通办平台📊管理控制台数据概览、健康度监测✅申报审核政策申报、多级审核📋政策效能兑现评估、退单聚类⚙️服务管理事项维护、统一编码📈系统监控健康度、耗时、错误🌐多端发布系统/H5/小程序/终端热门服务事项更多住房公积金开户GG001 住房公积金管理中心详 情预 约企业营业执照办理GS001 市场监管局详 情预 约公章刻制备案GS002 公安厅详 情预 约社保开户登记SB001 人社厅详 情预 约税务登记办理SW001 税务局详 情预 约不动产权证办理ZJ001 自然资源厅详 情预 约为您推荐的惠企政策更多请绑定企业后获取政策推荐",
+        "layout": {
+          "viewportWidth": 1760,
+          "viewportHeight": 1600,
+          "scrollWidth": 1760,
+          "scrollHeight": 1664,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "codex-may-89027-current-structure-09-操作-更多",
+          "label": "操作:更多",
+          "finalUrl": "http://127.0.0.1:49027/home",
+          "title": "浙江省一网通办平台",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89027/probe/codex-runtime-current/codex-may-89027-current-structure-09-操作-更多.json",
+          "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89027/probe/codex-runtime-current/codex-may-89027-current-structure-09-操作-更多.png",
+          "elementCount": 207,
+          "interactiveCount": 23,
+          "interactiveLabels": [
+            "首页 🏢企业服务 📋惠企政策 📝我的申报 📅预约办事 📆我的预约 🤖智能导办 🌆城市服务",
+            "首页",
+            "企业服务",
+            "惠企政策",
+            "我的申报",
+            "预约办事",
+            "我的预约",
+            "智能导办",
+            "城市服务",
+            "更多",
+            "详 情",
+            "预 约"
+          ]
+        }
+      },
+      {
+        "label": "操作:详 情",
+        "url": "http://127.0.0.1:49027/home",
+        "title": "浙江省一网通办平台",
+        "headings": [
+          "欢迎使用浙江省一网通办平台"
+        ],
+        "navLabels": [
+          "首页",
+          "企业服务",
+          "惠企政策",
+          "我的申报",
+          "预约办事",
+          "我的预约",
+          "智能导办",
+          "城市服务"
+        ],
+        "buttons": [
+          "更多",
+          "详 情",
+          "预 约"
+        ],
+        "links": [],
+        "inputs": [],
+        "tables": [],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "浙江省一网通办平台系统管理员🏠首页🏢企业服务📋惠企政策📝我的申报📅预约办事📆我的预约🤖智能导办🌆城市服务欢迎使用浙江省一网通办平台📊管理控制台数据概览、健康度监测✅申报审核政策申报、多级审核📋政策效能兑现评估、退单聚类⚙️服务管理事项维护、统一编码📈系统监控健康度、耗时、错误🌐多端发布系统/H5/小程序/终端热门服务事项更多住房公积金开户GG001 住房公积金管理中心详 情预 约企业营业执照办理GS001 市场监管局详 情预 约公章刻制备案GS002 公安厅详 情预 约社保开户登记SB001 人社厅详 情预 约税务登记办理SW001 税务局详 情预 约不动产权证办理ZJ001 自然资源厅详 情预 约为您推荐的惠企政策更多请绑定企业后获取政策推荐",
+        "layout": {
+          "viewportWidth": 1792,
+          "viewportHeight": 1600,
+          "scrollWidth": 1792,
+          "scrollHeight": 1664,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "codex-may-89027-current-structure-10-操作-详-情",
+          "label": "操作:详 情",
+          "finalUrl": "http://127.0.0.1:49027/home",
+          "title": "浙江省一网通办平台",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89027/probe/codex-runtime-current/codex-may-89027-current-structure-10-操作-详-情.json",
+          "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89027/probe/codex-runtime-current/codex-may-89027-current-structure-10-操作-详-情.png",
+          "elementCount": 207,
+          "interactiveCount": 23,
+          "interactiveLabels": [
+            "首页 🏢企业服务 📋惠企政策 📝我的申报 📅预约办事 📆我的预约 🤖智能导办 🌆城市服务",
+            "首页",
+            "企业服务",
+            "惠企政策",
+            "我的申报",
+            "预约办事",
+            "我的预约",
+            "智能导办",
+            "城市服务",
+            "更多",
+            "详 情",
+            "预 约"
+          ]
+        }
+      },
+      {
+        "label": "导航:我的申报",
+        "url": "http://127.0.0.1:49027/home",
+        "title": "浙江省一网通办平台",
+        "headings": [
+          "欢迎使用浙江省一网通办平台"
+        ],
+        "navLabels": [
+          "首页",
+          "企业服务",
+          "惠企政策",
+          "我的申报",
+          "预约办事",
+          "我的预约",
+          "智能导办",
+          "城市服务"
+        ],
+        "buttons": [
+          "更多",
+          "详 情",
+          "预 约"
+        ],
+        "links": [],
+        "inputs": [],
+        "tables": [],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "浙江省一网通办平台系统管理员🏠首页🏢企业服务📋惠企政策📝我的申报📅预约办事📆我的预约🤖智能导办🌆城市服务欢迎使用浙江省一网通办平台📊管理控制台数据概览、健康度监测✅申报审核政策申报、多级审核📋政策效能兑现评估、退单聚类⚙️服务管理事项维护、统一编码📈系统监控健康度、耗时、错误🌐多端发布系统/H5/小程序/终端热门服务事项更多住房公积金开户GG001 住房公积金管理中心详 情预 约企业营业执照办理GS001 市场监管局详 情预 约公章刻制备案GS002 公安厅详 情预 约社保开户登记SB001 人社厅详 情预 约税务登记办理SW001 税务局详 情预 约不动产权证办理ZJ001 自然资源厅详 情预 约为您推荐的惠企政策更多请绑定企业后获取政策推荐",
+        "layout": {
+          "viewportWidth": 1824,
+          "viewportHeight": 1600,
+          "scrollWidth": 1824,
+          "scrollHeight": 1664,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "codex-may-89027-current-structure-11-导航-我的申报",
+          "label": "导航:我的申报",
+          "finalUrl": "http://127.0.0.1:49027/home",
+          "title": "浙江省一网通办平台",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89027/probe/codex-runtime-current/codex-may-89027-current-structure-11-导航-我的申报.json",
+          "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89027/probe/codex-runtime-current/codex-may-89027-current-structure-11-导航-我的申报.png",
+          "elementCount": 207,
+          "interactiveCount": 23,
+          "interactiveLabels": [
+            "首页 🏢企业服务 📋惠企政策 📝我的申报 📅预约办事 📆我的预约 🤖智能导办 🌆城市服务",
+            "首页",
+            "企业服务",
+            "惠企政策",
+            "我的申报",
+            "预约办事",
+            "我的预约",
+            "智能导办",
+            "城市服务",
+            "更多",
+            "详 情",
+            "预 约"
+          ]
+        }
+      },
+      {
+        "label": "操作:更多",
+        "url": "http://127.0.0.1:49027/home",
+        "title": "浙江省一网通办平台",
+        "headings": [
+          "欢迎使用浙江省一网通办平台"
+        ],
+        "navLabels": [
+          "首页",
+          "企业服务",
+          "惠企政策",
+          "我的申报",
+          "预约办事",
+          "我的预约",
+          "智能导办",
+          "城市服务"
+        ],
+        "buttons": [
+          "更多",
+          "详 情",
+          "预 约"
+        ],
+        "links": [],
+        "inputs": [],
+        "tables": [],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "浙江省一网通办平台系统管理员🏠首页🏢企业服务📋惠企政策📝我的申报📅预约办事📆我的预约🤖智能导办🌆城市服务欢迎使用浙江省一网通办平台📊管理控制台数据概览、健康度监测✅申报审核政策申报、多级审核📋政策效能兑现评估、退单聚类⚙️服务管理事项维护、统一编码📈系统监控健康度、耗时、错误🌐多端发布系统/H5/小程序/终端热门服务事项更多住房公积金开户GG001 住房公积金管理中心详 情预 约企业营业执照办理GS001 市场监管局详 情预 约公章刻制备案GS002 公安厅详 情预 约社保开户登记SB001 人社厅详 情预 约税务登记办理SW001 税务局详 情预 约不动产权证办理ZJ001 自然资源厅详 情预 约为您推荐的惠企政策更多请绑定企业后获取政策推荐",
+        "layout": {
+          "viewportWidth": 1856,
+          "viewportHeight": 1600,
+          "scrollWidth": 1856,
+          "scrollHeight": 1664,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "codex-may-89027-current-structure-12-操作-更多",
+          "label": "操作:更多",
+          "finalUrl": "http://127.0.0.1:49027/home",
+          "title": "浙江省一网通办平台",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89027/probe/codex-runtime-current/codex-may-89027-current-structure-12-操作-更多.json",
+          "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89027/probe/codex-runtime-current/codex-may-89027-current-structure-12-操作-更多.png",
+          "elementCount": 207,
+          "interactiveCount": 23,
+          "interactiveLabels": [
+            "首页 🏢企业服务 📋惠企政策 📝我的申报 📅预约办事 📆我的预约 🤖智能导办 🌆城市服务",
+            "首页",
+            "企业服务",
+            "惠企政策",
+            "我的申报",
+            "预约办事",
+            "我的预约",
+            "智能导办",
+            "城市服务",
+            "更多",
+            "详 情",
+            "预 约"
+          ]
+        }
+      },
+      {
+        "label": "操作:详 情",
+        "url": "http://127.0.0.1:49027/home",
+        "title": "浙江省一网通办平台",
+        "headings": [
+          "欢迎使用浙江省一网通办平台"
+        ],
+        "navLabels": [
+          "首页",
+          "企业服务",
+          "惠企政策",
+          "我的申报",
+          "预约办事",
+          "我的预约",
+          "智能导办",
+          "城市服务"
+        ],
+        "buttons": [
+          "更多",
+          "详 情",
+          "预 约"
+        ],
+        "links": [],
+        "inputs": [],
+        "tables": [],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "浙江省一网通办平台系统管理员🏠首页🏢企业服务📋惠企政策📝我的申报📅预约办事📆我的预约🤖智能导办🌆城市服务欢迎使用浙江省一网通办平台📊管理控制台数据概览、健康度监测✅申报审核政策申报、多级审核📋政策效能兑现评估、退单聚类⚙️服务管理事项维护、统一编码📈系统监控健康度、耗时、错误🌐多端发布系统/H5/小程序/终端热门服务事项更多住房公积金开户GG001 住房公积金管理中心详 情预 约企业营业执照办理GS001 市场监管局详 情预 约公章刻制备案GS002 公安厅详 情预 约社保开户登记SB001 人社厅详 情预 约税务登记办理SW001 税务局详 情预 约不动产权证办理ZJ001 自然资源厅详 情预 约为您推荐的惠企政策更多请绑定企业后获取政策推荐",
+        "layout": {
+          "viewportWidth": 1888,
+          "viewportHeight": 1600,
+          "scrollWidth": 1888,
+          "scrollHeight": 1664,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "codex-may-89027-current-structure-13-操作-详-情",
+          "label": "操作:详 情",
+          "finalUrl": "http://127.0.0.1:49027/home",
+          "title": "浙江省一网通办平台",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89027/probe/codex-runtime-current/codex-may-89027-current-structure-13-操作-详-情.json",
+          "screenshotPath": "",
+          "elementCount": 207,
+          "interactiveCount": 23,
+          "interactiveLabels": [
+            "首页 🏢企业服务 📋惠企政策 📝我的申报 📅预约办事 📆我的预约 🤖智能导办 🌆城市服务",
+            "首页",
+            "企业服务",
+            "惠企政策",
+            "我的申报",
+            "预约办事",
+            "我的预约",
+            "智能导办",
+            "城市服务",
+            "更多",
+            "详 情",
+            "预 约"
+          ]
+        }
+      }
+    ],
+    "findings": [],
+    "actionHints": [],
+    "emptyPages": [],
+    "overflowPages": [],
+    "blankPages": [],
+    "apiFailurePaths": [],
+    "goalTerms": [],
+    "clickedActionDescriptors": [
+      {
+        "nav": "首页",
+        "label": "更多",
+        "ordinal": 0,
+        "unsafe": false
+      },
+      {
+        "nav": "首页",
+        "label": "预 约",
+        "ordinal": 0,
+        "unsafe": false
+      },
+      {
+        "nav": "企业服务",
+        "label": "更多",
+        "ordinal": 0,
+        "unsafe": false
+      },
+      {
+        "nav": "企业服务",
+        "label": "详 情",
+        "ordinal": 0,
+        "unsafe": false
+      },
+      {
+        "nav": "惠企政策",
+        "label": "更多",
+        "ordinal": 0,
+        "unsafe": false
+      },
+      {
+        "nav": "惠企政策",
+        "label": "详 情",
+        "ordinal": 0,
+        "unsafe": false
+      },
+      {
+        "nav": "我的申报",
+        "label": "更多",
+        "ordinal": 0,
+        "unsafe": false
+      },
+      {
+        "nav": "我的申报",
+        "label": "详 情",
+        "ordinal": 0,
+        "unsafe": false
+      }
+    ],
+    "secondaryActionClicks": 0,
+    "structureCaptures": [
+      {
+        "module": "website_structure_capture",
+        "runId": "codex-may-89027-current-structure-01-首屏",
+        "label": "首屏",
+        "finalUrl": "http://127.0.0.1:49027/home",
+        "title": "浙江省一网通办平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89027/probe/codex-runtime-current/codex-may-89027-current-structure-01-首屏.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89027/probe/codex-runtime-current/codex-may-89027-current-structure-01-首屏.png",
+        "elementCount": 183,
+        "interactiveCount": 17,
+        "interactiveLabels": [
+          "首页 🏢企业服务 📋惠企政策 📝我的申报 📅预约办事 📆我的预约 🤖智能导办 🌆城市服务",
+          "首页",
+          "企业服务",
+          "惠企政策",
+          "我的申报",
+          "预约办事",
+          "我的预约",
+          "智能导办",
+          "城市服务",
+          "更多",
+          "预 约"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "codex-may-89027-current-structure-02-导航-首页",
+        "label": "导航:首页",
+        "finalUrl": "http://127.0.0.1:49027/home",
+        "title": "浙江省一网通办平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89027/probe/codex-runtime-current/codex-may-89027-current-structure-02-导航-首页.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89027/probe/codex-runtime-current/codex-may-89027-current-structure-02-导航-首页.png",
+        "elementCount": 183,
+        "interactiveCount": 17,
+        "interactiveLabels": [
+          "首页 🏢企业服务 📋惠企政策 📝我的申报 📅预约办事 📆我的预约 🤖智能导办 🌆城市服务",
+          "首页",
+          "企业服务",
+          "惠企政策",
+          "我的申报",
+          "预约办事",
+          "我的预约",
+          "智能导办",
+          "城市服务",
+          "更多",
+          "预 约"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "codex-may-89027-current-structure-03-操作-更多",
+        "label": "操作:更多",
+        "finalUrl": "http://127.0.0.1:49027/reservation",
+        "title": "浙江省一网通办平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89027/probe/codex-runtime-current/codex-may-89027-current-structure-03-操作-更多.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89027/probe/codex-runtime-current/codex-may-89027-current-structure-03-操作-更多.png",
+        "elementCount": 128,
+        "interactiveCount": 13,
+        "interactiveLabels": [
+          "首页 🏢企业服务 📋惠企政策 📝我的申报 📅预约办事 📆我的预约 🤖智能导办 🌆城市服务",
+          "首页",
+          "企业服务",
+          "惠企政策",
+          "我的申报",
+          "预约办事",
+          "我的预约",
+          "智能导办",
+          "城市服务",
+          "请选择日期",
+          "确认预约"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "codex-may-89027-current-structure-04-操作-预-约",
+        "label": "操作:预 约",
+        "finalUrl": "http://127.0.0.1:49027/reservation",
+        "title": "浙江省一网通办平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89027/probe/codex-runtime-current/codex-may-89027-current-structure-04-操作-预-约.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89027/probe/codex-runtime-current/codex-may-89027-current-structure-04-操作-预-约.png",
+        "elementCount": 128,
+        "interactiveCount": 13,
+        "interactiveLabels": [
+          "首页 🏢企业服务 📋惠企政策 📝我的申报 📅预约办事 📆我的预约 🤖智能导办 🌆城市服务",
+          "首页",
+          "企业服务",
+          "惠企政策",
+          "我的申报",
+          "预约办事",
+          "我的预约",
+          "智能导办",
+          "城市服务",
+          "请选择日期",
+          "确认预约"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "codex-may-89027-current-structure-05-导航-企业服务",
+        "label": "导航:企业服务",
+        "finalUrl": "http://127.0.0.1:49027/home",
+        "title": "浙江省一网通办平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89027/probe/codex-runtime-current/codex-may-89027-current-structure-05-导航-企业服务.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89027/probe/codex-runtime-current/codex-may-89027-current-structure-05-导航-企业服务.png",
+        "elementCount": 207,
+        "interactiveCount": 23,
+        "interactiveLabels": [
+          "首页 🏢企业服务 📋惠企政策 📝我的申报 📅预约办事 📆我的预约 🤖智能导办 🌆城市服务",
+          "首页",
+          "企业服务",
+          "惠企政策",
+          "我的申报",
+          "预约办事",
+          "我的预约",
+          "智能导办",
+          "城市服务",
+          "更多",
+          "详 情",
+          "预 约"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "codex-may-89027-current-structure-06-操作-更多",
+        "label": "操作:更多",
+        "finalUrl": "http://127.0.0.1:49027/home",
+        "title": "浙江省一网通办平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89027/probe/codex-runtime-current/codex-may-89027-current-structure-06-操作-更多.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89027/probe/codex-runtime-current/codex-may-89027-current-structure-06-操作-更多.png",
+        "elementCount": 207,
+        "interactiveCount": 23,
+        "interactiveLabels": [
+          "首页 🏢企业服务 📋惠企政策 📝我的申报 📅预约办事 📆我的预约 🤖智能导办 🌆城市服务",
+          "首页",
+          "企业服务",
+          "惠企政策",
+          "我的申报",
+          "预约办事",
+          "我的预约",
+          "智能导办",
+          "城市服务",
+          "更多",
+          "详 情",
+          "预 约"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "codex-may-89027-current-structure-07-操作-详-情",
+        "label": "操作:详 情",
+        "finalUrl": "http://127.0.0.1:49027/home",
+        "title": "浙江省一网通办平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89027/probe/codex-runtime-current/codex-may-89027-current-structure-07-操作-详-情.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89027/probe/codex-runtime-current/codex-may-89027-current-structure-07-操作-详-情.png",
+        "elementCount": 207,
+        "interactiveCount": 23,
+        "interactiveLabels": [
+          "首页 🏢企业服务 📋惠企政策 📝我的申报 📅预约办事 📆我的预约 🤖智能导办 🌆城市服务",
+          "首页",
+          "企业服务",
+          "惠企政策",
+          "我的申报",
+          "预约办事",
+          "我的预约",
+          "智能导办",
+          "城市服务",
+          "更多",
+          "详 情",
+          "预 约"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "codex-may-89027-current-structure-08-导航-惠企政策",
+        "label": "导航:惠企政策",
+        "finalUrl": "http://127.0.0.1:49027/home",
+        "title": "浙江省一网通办平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89027/probe/codex-runtime-current/codex-may-89027-current-structure-08-导航-惠企政策.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89027/probe/codex-runtime-current/codex-may-89027-current-structure-08-导航-惠企政策.png",
+        "elementCount": 207,
+        "interactiveCount": 23,
+        "interactiveLabels": [
+          "首页 🏢企业服务 📋惠企政策 📝我的申报 📅预约办事 📆我的预约 🤖智能导办 🌆城市服务",
+          "首页",
+          "企业服务",
+          "惠企政策",
+          "我的申报",
+          "预约办事",
+          "我的预约",
+          "智能导办",
+          "城市服务",
+          "更多",
+          "详 情",
+          "预 约"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "codex-may-89027-current-structure-09-操作-更多",
+        "label": "操作:更多",
+        "finalUrl": "http://127.0.0.1:49027/home",
+        "title": "浙江省一网通办平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89027/probe/codex-runtime-current/codex-may-89027-current-structure-09-操作-更多.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89027/probe/codex-runtime-current/codex-may-89027-current-structure-09-操作-更多.png",
+        "elementCount": 207,
+        "interactiveCount": 23,
+        "interactiveLabels": [
+          "首页 🏢企业服务 📋惠企政策 📝我的申报 📅预约办事 📆我的预约 🤖智能导办 🌆城市服务",
+          "首页",
+          "企业服务",
+          "惠企政策",
+          "我的申报",
+          "预约办事",
+          "我的预约",
+          "智能导办",
+          "城市服务",
+          "更多",
+          "详 情",
+          "预 约"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "codex-may-89027-current-structure-10-操作-详-情",
+        "label": "操作:详 情",
+        "finalUrl": "http://127.0.0.1:49027/home",
+        "title": "浙江省一网通办平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89027/probe/codex-runtime-current/codex-may-89027-current-structure-10-操作-详-情.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89027/probe/codex-runtime-current/codex-may-89027-current-structure-10-操作-详-情.png",
+        "elementCount": 207,
+        "interactiveCount": 23,
+        "interactiveLabels": [
+          "首页 🏢企业服务 📋惠企政策 📝我的申报 📅预约办事 📆我的预约 🤖智能导办 🌆城市服务",
+          "首页",
+          "企业服务",
+          "惠企政策",
+          "我的申报",
+          "预约办事",
+          "我的预约",
+          "智能导办",
+          "城市服务",
+          "更多",
+          "详 情",
+          "预 约"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "codex-may-89027-current-structure-11-导航-我的申报",
+        "label": "导航:我的申报",
+        "finalUrl": "http://127.0.0.1:49027/home",
+        "title": "浙江省一网通办平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89027/probe/codex-runtime-current/codex-may-89027-current-structure-11-导航-我的申报.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89027/probe/codex-runtime-current/codex-may-89027-current-structure-11-导航-我的申报.png",
+        "elementCount": 207,
+        "interactiveCount": 23,
+        "interactiveLabels": [
+          "首页 🏢企业服务 📋惠企政策 📝我的申报 📅预约办事 📆我的预约 🤖智能导办 🌆城市服务",
+          "首页",
+          "企业服务",
+          "惠企政策",
+          "我的申报",
+          "预约办事",
+          "我的预约",
+          "智能导办",
+          "城市服务",
+          "更多",
+          "详 情",
+          "预 约"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "codex-may-89027-current-structure-12-操作-更多",
+        "label": "操作:更多",
+        "finalUrl": "http://127.0.0.1:49027/home",
+        "title": "浙江省一网通办平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89027/probe/codex-runtime-current/codex-may-89027-current-structure-12-操作-更多.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89027/probe/codex-runtime-current/codex-may-89027-current-structure-12-操作-更多.png",
+        "elementCount": 207,
+        "interactiveCount": 23,
+        "interactiveLabels": [
+          "首页 🏢企业服务 📋惠企政策 📝我的申报 📅预约办事 📆我的预约 🤖智能导办 🌆城市服务",
+          "首页",
+          "企业服务",
+          "惠企政策",
+          "我的申报",
+          "预约办事",
+          "我的预约",
+          "智能导办",
+          "城市服务",
+          "更多",
+          "详 情",
+          "预 约"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "codex-may-89027-current-structure-13-操作-详-情",
+        "label": "操作:详 情",
+        "finalUrl": "http://127.0.0.1:49027/home",
+        "title": "浙江省一网通办平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89027/probe/codex-runtime-current/codex-may-89027-current-structure-13-操作-详-情.json",
+        "screenshotPath": "",
+        "elementCount": 207,
+        "interactiveCount": 23,
+        "interactiveLabels": [
+          "首页 🏢企业服务 📋惠企政策 📝我的申报 📅预约办事 📆我的预约 🤖智能导办 🌆城市服务",
+          "首页",
+          "企业服务",
+          "惠企政策",
+          "我的申报",
+          "预约办事",
+          "我的预约",
+          "智能导办",
+          "城市服务",
+          "更多",
+          "详 情",
+          "预 约"
+        ]
+      }
+    ],
+    "representativeScreenshotUrl": "http://127.0.0.1:49027/home",
+    "representativeScreenshotLabel": "欢迎使用浙江省一网通办平台"
+  },
+  "websiteStructureCapture": {
+    "module": "website_structure_capture",
+    "captureCount": 13,
+    "captures": [
+      {
+        "module": "website_structure_capture",
+        "runId": "codex-may-89027-current-structure-01-首屏",
+        "label": "首屏",
+        "finalUrl": "http://127.0.0.1:49027/home",
+        "title": "浙江省一网通办平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89027/probe/codex-runtime-current/codex-may-89027-current-structure-01-首屏.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89027/probe/codex-runtime-current/codex-may-89027-current-structure-01-首屏.png",
+        "elementCount": 183,
+        "interactiveCount": 17,
+        "interactiveLabels": [
+          "首页 🏢企业服务 📋惠企政策 📝我的申报 📅预约办事 📆我的预约 🤖智能导办 🌆城市服务",
+          "首页",
+          "企业服务",
+          "惠企政策",
+          "我的申报",
+          "预约办事",
+          "我的预约",
+          "智能导办",
+          "城市服务",
+          "更多",
+          "预 约"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "codex-may-89027-current-structure-02-导航-首页",
+        "label": "导航:首页",
+        "finalUrl": "http://127.0.0.1:49027/home",
+        "title": "浙江省一网通办平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89027/probe/codex-runtime-current/codex-may-89027-current-structure-02-导航-首页.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89027/probe/codex-runtime-current/codex-may-89027-current-structure-02-导航-首页.png",
+        "elementCount": 183,
+        "interactiveCount": 17,
+        "interactiveLabels": [
+          "首页 🏢企业服务 📋惠企政策 📝我的申报 📅预约办事 📆我的预约 🤖智能导办 🌆城市服务",
+          "首页",
+          "企业服务",
+          "惠企政策",
+          "我的申报",
+          "预约办事",
+          "我的预约",
+          "智能导办",
+          "城市服务",
+          "更多",
+          "预 约"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "codex-may-89027-current-structure-03-操作-更多",
+        "label": "操作:更多",
+        "finalUrl": "http://127.0.0.1:49027/reservation",
+        "title": "浙江省一网通办平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89027/probe/codex-runtime-current/codex-may-89027-current-structure-03-操作-更多.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89027/probe/codex-runtime-current/codex-may-89027-current-structure-03-操作-更多.png",
+        "elementCount": 128,
+        "interactiveCount": 13,
+        "interactiveLabels": [
+          "首页 🏢企业服务 📋惠企政策 📝我的申报 📅预约办事 📆我的预约 🤖智能导办 🌆城市服务",
+          "首页",
+          "企业服务",
+          "惠企政策",
+          "我的申报",
+          "预约办事",
+          "我的预约",
+          "智能导办",
+          "城市服务",
+          "请选择日期",
+          "确认预约"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "codex-may-89027-current-structure-04-操作-预-约",
+        "label": "操作:预 约",
+        "finalUrl": "http://127.0.0.1:49027/reservation",
+        "title": "浙江省一网通办平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89027/probe/codex-runtime-current/codex-may-89027-current-structure-04-操作-预-约.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89027/probe/codex-runtime-current/codex-may-89027-current-structure-04-操作-预-约.png",
+        "elementCount": 128,
+        "interactiveCount": 13,
+        "interactiveLabels": [
+          "首页 🏢企业服务 📋惠企政策 📝我的申报 📅预约办事 📆我的预约 🤖智能导办 🌆城市服务",
+          "首页",
+          "企业服务",
+          "惠企政策",
+          "我的申报",
+          "预约办事",
+          "我的预约",
+          "智能导办",
+          "城市服务",
+          "请选择日期",
+          "确认预约"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "codex-may-89027-current-structure-05-导航-企业服务",
+        "label": "导航:企业服务",
+        "finalUrl": "http://127.0.0.1:49027/home",
+        "title": "浙江省一网通办平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89027/probe/codex-runtime-current/codex-may-89027-current-structure-05-导航-企业服务.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89027/probe/codex-runtime-current/codex-may-89027-current-structure-05-导航-企业服务.png",
+        "elementCount": 207,
+        "interactiveCount": 23,
+        "interactiveLabels": [
+          "首页 🏢企业服务 📋惠企政策 📝我的申报 📅预约办事 📆我的预约 🤖智能导办 🌆城市服务",
+          "首页",
+          "企业服务",
+          "惠企政策",
+          "我的申报",
+          "预约办事",
+          "我的预约",
+          "智能导办",
+          "城市服务",
+          "更多",
+          "详 情",
+          "预 约"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "codex-may-89027-current-structure-06-操作-更多",
+        "label": "操作:更多",
+        "finalUrl": "http://127.0.0.1:49027/home",
+        "title": "浙江省一网通办平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89027/probe/codex-runtime-current/codex-may-89027-current-structure-06-操作-更多.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89027/probe/codex-runtime-current/codex-may-89027-current-structure-06-操作-更多.png",
+        "elementCount": 207,
+        "interactiveCount": 23,
+        "interactiveLabels": [
+          "首页 🏢企业服务 📋惠企政策 📝我的申报 📅预约办事 📆我的预约 🤖智能导办 🌆城市服务",
+          "首页",
+          "企业服务",
+          "惠企政策",
+          "我的申报",
+          "预约办事",
+          "我的预约",
+          "智能导办",
+          "城市服务",
+          "更多",
+          "详 情",
+          "预 约"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "codex-may-89027-current-structure-07-操作-详-情",
+        "label": "操作:详 情",
+        "finalUrl": "http://127.0.0.1:49027/home",
+        "title": "浙江省一网通办平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89027/probe/codex-runtime-current/codex-may-89027-current-structure-07-操作-详-情.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89027/probe/codex-runtime-current/codex-may-89027-current-structure-07-操作-详-情.png",
+        "elementCount": 207,
+        "interactiveCount": 23,
+        "interactiveLabels": [
+          "首页 🏢企业服务 📋惠企政策 📝我的申报 📅预约办事 📆我的预约 🤖智能导办 🌆城市服务",
+          "首页",
+          "企业服务",
+          "惠企政策",
+          "我的申报",
+          "预约办事",
+          "我的预约",
+          "智能导办",
+          "城市服务",
+          "更多",
+          "详 情",
+          "预 约"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "codex-may-89027-current-structure-08-导航-惠企政策",
+        "label": "导航:惠企政策",
+        "finalUrl": "http://127.0.0.1:49027/home",
+        "title": "浙江省一网通办平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89027/probe/codex-runtime-current/codex-may-89027-current-structure-08-导航-惠企政策.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89027/probe/codex-runtime-current/codex-may-89027-current-structure-08-导航-惠企政策.png",
+        "elementCount": 207,
+        "interactiveCount": 23,
+        "interactiveLabels": [
+          "首页 🏢企业服务 📋惠企政策 📝我的申报 📅预约办事 📆我的预约 🤖智能导办 🌆城市服务",
+          "首页",
+          "企业服务",
+          "惠企政策",
+          "我的申报",
+          "预约办事",
+          "我的预约",
+          "智能导办",
+          "城市服务",
+          "更多",
+          "详 情",
+          "预 约"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "codex-may-89027-current-structure-09-操作-更多",
+        "label": "操作:更多",
+        "finalUrl": "http://127.0.0.1:49027/home",
+        "title": "浙江省一网通办平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89027/probe/codex-runtime-current/codex-may-89027-current-structure-09-操作-更多.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89027/probe/codex-runtime-current/codex-may-89027-current-structure-09-操作-更多.png",
+        "elementCount": 207,
+        "interactiveCount": 23,
+        "interactiveLabels": [
+          "首页 🏢企业服务 📋惠企政策 📝我的申报 📅预约办事 📆我的预约 🤖智能导办 🌆城市服务",
+          "首页",
+          "企业服务",
+          "惠企政策",
+          "我的申报",
+          "预约办事",
+          "我的预约",
+          "智能导办",
+          "城市服务",
+          "更多",
+          "详 情",
+          "预 约"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "codex-may-89027-current-structure-10-操作-详-情",
+        "label": "操作:详 情",
+        "finalUrl": "http://127.0.0.1:49027/home",
+        "title": "浙江省一网通办平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89027/probe/codex-runtime-current/codex-may-89027-current-structure-10-操作-详-情.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89027/probe/codex-runtime-current/codex-may-89027-current-structure-10-操作-详-情.png",
+        "elementCount": 207,
+        "interactiveCount": 23,
+        "interactiveLabels": [
+          "首页 🏢企业服务 📋惠企政策 📝我的申报 📅预约办事 📆我的预约 🤖智能导办 🌆城市服务",
+          "首页",
+          "企业服务",
+          "惠企政策",
+          "我的申报",
+          "预约办事",
+          "我的预约",
+          "智能导办",
+          "城市服务",
+          "更多",
+          "详 情",
+          "预 约"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "codex-may-89027-current-structure-11-导航-我的申报",
+        "label": "导航:我的申报",
+        "finalUrl": "http://127.0.0.1:49027/home",
+        "title": "浙江省一网通办平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89027/probe/codex-runtime-current/codex-may-89027-current-structure-11-导航-我的申报.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89027/probe/codex-runtime-current/codex-may-89027-current-structure-11-导航-我的申报.png",
+        "elementCount": 207,
+        "interactiveCount": 23,
+        "interactiveLabels": [
+          "首页 🏢企业服务 📋惠企政策 📝我的申报 📅预约办事 📆我的预约 🤖智能导办 🌆城市服务",
+          "首页",
+          "企业服务",
+          "惠企政策",
+          "我的申报",
+          "预约办事",
+          "我的预约",
+          "智能导办",
+          "城市服务",
+          "更多",
+          "详 情",
+          "预 约"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "codex-may-89027-current-structure-12-操作-更多",
+        "label": "操作:更多",
+        "finalUrl": "http://127.0.0.1:49027/home",
+        "title": "浙江省一网通办平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89027/probe/codex-runtime-current/codex-may-89027-current-structure-12-操作-更多.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89027/probe/codex-runtime-current/codex-may-89027-current-structure-12-操作-更多.png",
+        "elementCount": 207,
+        "interactiveCount": 23,
+        "interactiveLabels": [
+          "首页 🏢企业服务 📋惠企政策 📝我的申报 📅预约办事 📆我的预约 🤖智能导办 🌆城市服务",
+          "首页",
+          "企业服务",
+          "惠企政策",
+          "我的申报",
+          "预约办事",
+          "我的预约",
+          "智能导办",
+          "城市服务",
+          "更多",
+          "详 情",
+          "预 约"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "codex-may-89027-current-structure-13-操作-详-情",
+        "label": "操作:详 情",
+        "finalUrl": "http://127.0.0.1:49027/home",
+        "title": "浙江省一网通办平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89027/probe/codex-runtime-current/codex-may-89027-current-structure-13-操作-详-情.json",
+        "screenshotPath": "",
+        "elementCount": 207,
+        "interactiveCount": 23,
+        "interactiveLabels": [
+          "首页 🏢企业服务 📋惠企政策 📝我的申报 📅预约办事 📆我的预约 🤖智能导办 🌆城市服务",
+          "首页",
+          "企业服务",
+          "惠企政策",
+          "我的申报",
+          "预约办事",
+          "我的预约",
+          "智能导办",
+          "城市服务",
+          "更多",
+          "详 情",
+          "预 约"
+        ]
+      }
+    ]
+  },
+  "screenshotMetrics": {
+    "width": 1920,
+    "height": 1600,
+    "scrollWidth": 1888,
+    "scrollHeight": 1664
+  },
+  "initialBodyTextPreview": "浙江省一网通办平台\n\n让政务服务更便捷\n\n登录\n注册\n登 录\n\n测试账号：\n\n管理员：admin / 123456\n\n企业用户：enterprise1 / 123456\n\n个人用户：citizen1 / 123456",
+  "bodyTextPreview": "浙江省一网通办平台\n系统管理员\n🏠首页\n🏢企业服务\n📋惠企政策\n📝我的申报\n📅预约办事\n📆我的预约\n🤖智能导办\n🌆城市服务\n欢迎使用浙江省一网通办平台\n📊\n管理控制台\n数据概览、健康度监测\n✅\n申报审核\n政策申报、多级审核\n📋\n政策效能\n兑现评估、退单聚类\n⚙️\n服务管理\n事项维护、统一编码\n📈\n系统监控\n健康度、耗时、错误\n🌐\n多端发布\n系统/H5/小程序/终端\n热门服务事项\n更多\n住房公积金开户\nGG001 住房公积金管理中心\n详 情\n预 约\n企业营业执照办理\nGS001 市场监管局\n详 情\n预 约\n公章刻制备案\nGS002 公安厅\n详 情\n预 约\n社保开户登记\nSB001 人社厅\n详 情\n预 约\n税务登记办理\nSW001 税务局\n详 情\n预 约\n不动产权证办理\nZJ001 自然资源厅\n详 情\n预 约\n为您推荐的惠企政策\n更多\n请绑定企业后获取政策推荐",
+  "apiBase": "http://127.0.0.1:59027",
+  "businessGoalPreview": "",
+  "apiResponses": [
+    {
+      "method": "POST",
+      "status": 200,
+      "url": "http://127.0.0.1:49027/api/auth/login"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49027/api/policy/recommended"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49027/api/policy/recommended"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49027/api/enterprise/my"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49027/api/enterprise/my"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49027/api/service?pageSize=6"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49027/api/service?pageSize=6"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49027/api/policy/recommended"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49027/api/policy/recommended"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49027/api/enterprise/my"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49027/api/enterprise/my"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49027/api/service?pageSize=6"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49027/api/service?pageSize=6"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49027/api/reservation/branches"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49027/api/service?pageSize=20"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49027/api/reservation/branches"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49027/api/service?pageSize=20"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49027/api/policy/recommended"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49027/api/policy/recommended"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49027/api/enterprise/my"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49027/api/enterprise/my"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49027/api/service?pageSize=6"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49027/api/service?pageSize=6"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49027/api/reservation/branches"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49027/api/service?pageSize=20"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49027/api/reservation/branches"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49027/api/service?pageSize=20"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49027/api/policy/recommended"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49027/api/policy/recommended"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49027/api/enterprise/my"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49027/api/enterprise/my"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49027/api/service?pageSize=6"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49027/api/service?pageSize=6"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49027/api/policy/recommended"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49027/api/policy/recommended"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49027/api/enterprise/my"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49027/api/enterprise/my"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49027/api/service?pageSize=6"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49027/api/service?pageSize=6"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49027/api/policy/recommended"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49027/api/policy/recommended"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49027/api/enterprise/my"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49027/api/enterprise/my"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49027/api/service?pageSize=6"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49027/api/service?pageSize=6"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49027/api/policy/recommended"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49027/api/policy/recommended"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49027/api/enterprise/my"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49027/api/enterprise/my"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49027/api/service?pageSize=6"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49027/api/service?pageSize=6"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49027/api/policy/recommended"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49027/api/policy/recommended"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49027/api/enterprise/my"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49027/api/enterprise/my"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49027/api/service?pageSize=6"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49027/api/service?pageSize=6"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49027/api/policy/recommended"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49027/api/policy/recommended"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49027/api/enterprise/my"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49027/api/enterprise/my"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49027/api/service?pageSize=6"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49027/api/service?pageSize=6"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49027/api/policy/recommended"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49027/api/policy/recommended"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49027/api/enterprise/my"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49027/api/enterprise/my"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49027/api/service?pageSize=6"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49027/api/service?pageSize=6"
+    }
+  ],
+  "apiChecks": [
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59027/api/health",
+      "path": "/api/health",
+      "status": 200,
+      "ok": true,
+      "bodyPreview": "{\"status\":\"ok\",\"timestamp\":\"2026-06-04T07:00:23.692Z\",\"port\":\"59027\",\"metrics\":{\"requests_per_minute\":71,\"requests_per_hour\":74,\"requests_per_day\":74,\"success_rate\":100,\"failed_requests\":0,\"average_duration_ms\":3.03,\"error_clusters\":[],\"active_services\":8,\"database_status\":\"healthy\"}}"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59027/api/policy/recommended",
+      "path": "/api/policy/recommended",
+      "status": 200,
+      "ok": true,
+      "bodyPreview": "{\"list\":[],\"message\":\"请先绑定企业\"}"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59027/api/enterprise/my",
+      "path": "/api/enterprise/my",
+      "status": 200,
+      "ok": true,
+      "bodyPreview": "[]"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59027/api/service?pageSize=6",
+      "path": "/api/service?pageSize=6",
+      "status": 200,
+      "ok": true,
+      "bodyPreview": "{\"list\":[{\"id\":5,\"item_code\":\"GG001\",\"name\":\"住房公积金开户\",\"department\":\"住房公积金管理中心\",\"category\":\"住房公积金\",\"description\":\"企业住房公积金账户开立及缴存\",\"required_materials\":\"营业执照、法人身份证\",\"handling_time\":\"3个工作日\",\"online_available\":1,\"offline_available\":1,\"status\":\"active\",\"version\":1,\"created_at\":\"2026-06-03 18:22:40\",\"updated_at\":\"2026-06-03 18:22:40\"},{\"id\":1,\"item_code\":\"GS001\",\"name\":\"企业营业执照办理\",\"department\":\"市场监管局\",\"category\":\"企业登记\",\"description\":\"内资企业设立登记、变更登记、注销登记等业务\",\"required_materials\":\"身份证、公司章程、住所证明\",\"handling"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59027/api/reservation/branches",
+      "path": "/api/reservation/branches",
+      "status": 200,
+      "ok": true,
+      "bodyPreview": "[{\"id\":4,\"name\":\"宁波市行政服务中心\",\"address\":\"宁波市鄞州区宁穿路1901号\",\"district\":\"鄞州区\",\"phone\":\"0574-87187501\",\"work_hours\":\"周一至周五 9:00-17:00\",\"gis_latitude\":29.8672,\"gis_longitude\":121.5506,\"total_windows\":18,\"status\":\"active\",\"created_at\":\"2026-06-03 18:22:40\"},{\"id\":1,\"name\":\"杭州市民中心服务大厅\",\"address\":\"杭州市上城区新业路311号\",\"district\":\"上城区\",\"phone\":\"0571-87008700\",\"work_hours\":\"周一至周五 9:00-17:00\",\"gis_latitude\":30.2683,\"gis_longitude\":120.1675,\"total_windows\":20,\"status\":\"active\",\"created_at\":\"2026-06-03 18:22:40\"},{\"i"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59027/api/service?pageSize=20",
+      "path": "/api/service?pageSize=20",
+      "status": 200,
+      "ok": true,
+      "bodyPreview": "{\"list\":[{\"id\":5,\"item_code\":\"GG001\",\"name\":\"住房公积金开户\",\"department\":\"住房公积金管理中心\",\"category\":\"住房公积金\",\"description\":\"企业住房公积金账户开立及缴存\",\"required_materials\":\"营业执照、法人身份证\",\"handling_time\":\"3个工作日\",\"online_available\":1,\"offline_available\":1,\"status\":\"active\",\"version\":1,\"created_at\":\"2026-06-03 18:22:40\",\"updated_at\":\"2026-06-03 18:22:40\"},{\"id\":1,\"item_code\":\"GS001\",\"name\":\"企业营业执照办理\",\"department\":\"市场监管局\",\"category\":\"企业登记\",\"description\":\"内资企业设立登记、变更登记、注销登记等业务\",\"required_materials\":\"身份证、公司章程、住所证明\",\"handling"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59027/api/teachers",
+      "path": "/api/teachers",
+      "status": 404,
+      "ok": false,
+      "bodyPreview": "<!DOCTYPE html>\n<html lang=\"en\">\n<head>\n<meta charset=\"utf-8\">\n<title>Error</title>\n</head>\n<body>\n<pre>Cannot GET /api/teachers</pre>\n</body>\n</html>\n"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59027/api/courses",
+      "path": "/api/courses",
+      "status": 404,
+      "ok": false,
+      "bodyPreview": "<!DOCTYPE html>\n<html lang=\"en\">\n<head>\n<meta charset=\"utf-8\">\n<title>Error</title>\n</head>\n<body>\n<pre>Cannot GET /api/courses</pre>\n</body>\n</html>\n"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59027/api/bookings",
+      "path": "/api/bookings",
+      "status": 404,
+      "ok": false,
+      "bodyPreview": "<!DOCTYPE html>\n<html lang=\"en\">\n<head>\n<meta charset=\"utf-8\">\n<title>Error</title>\n</head>\n<body>\n<pre>Cannot GET /api/bookings</pre>\n</body>\n</html>\n"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59027/api/orders",
+      "path": "/api/orders",
+      "status": 404,
+      "ok": false,
+      "bodyPreview": "<!DOCTYPE html>\n<html lang=\"en\">\n<head>\n<meta charset=\"utf-8\">\n<title>Error</title>\n</head>\n<body>\n<pre>Cannot GET /api/orders</pre>\n</body>\n</html>\n"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59027/api/auth/me",
+      "path": "/api/auth/me",
+      "status": 404,
+      "ok": false,
+      "bodyPreview": "<!DOCTYPE html>\n<html lang=\"en\">\n<head>\n<meta charset=\"utf-8\">\n<title>Error</title>\n</head>\n<body>\n<pre>Cannot GET /api/auth/me</pre>\n</body>\n</html>\n"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59027/api/users/profile",
+      "path": "/api/users/profile",
+      "status": 404,
+      "ok": false,
+      "bodyPreview": "<!DOCTYPE html>\n<html lang=\"en\">\n<head>\n<meta charset=\"utf-8\">\n<title>Error</title>\n</head>\n<body>\n<pre>Cannot GET /api/users/profile</pre>\n</body>\n</html>\n"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59027/api/user/profile",
+      "path": "/api/user/profile",
+      "status": 404,
+      "ok": false,
+      "bodyPreview": "<!DOCTYPE html>\n<html lang=\"en\">\n<head>\n<meta charset=\"utf-8\">\n<title>Error</title>\n</head>\n<body>\n<pre>Cannot GET /api/user/profile</pre>\n</body>\n</html>\n"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59027/api/admin/stats",
+      "path": "/api/admin/stats",
+      "status": 403,
+      "ok": false,
+      "bodyPreview": "{\"error\":\"无权限访问\"}"
+    }
+  ],
+  "dialogs": [],
+  "consoleMessages": [
+    {
+      "type": "debug",
+      "text": "[vite] connecting...",
+      "location": {
+        "url": "http://127.0.0.1:49027/@vite/client",
+        "lineNumber": 494,
+        "columnNumber": 8
+      }
+    },
+    {
+      "type": "info",
+      "text": "%cDownload the React DevTools for a better development experience: https://reactjs.org/link/react-devtools font-weight:bold",
+      "location": {
+        "url": "http://127.0.0.1:49027/node_modules/.vite/deps/chunk-PJEEZAML.js?v=a75ab41c",
+        "lineNumber": 21550,
+        "columnNumber": 24
+      }
+    },
+    {
+      "type": "debug",
+      "text": "[vite] connected.",
+      "location": {
+        "url": "http://127.0.0.1:49027/@vite/client",
+        "lineNumber": 617,
+        "columnNumber": 14
+      }
+    },
+    {
+      "type": "warning",
+      "text": "⚠️ React Router Future Flag Warning: React Router will begin wrapping state updates in `React.startTransition` in v7. You can use the `v7_startTransition` future flag to opt-in early. For more information, see https://reactrouter.com/v6/upgrading/future#v7_starttransition.",
+      "location": {
+        "url": "http://127.0.0.1:49027/node_modules/.vite/deps/react-router-dom.js?v=a75ab41c",
+        "lineNumber": 4426,
+        "columnNumber": 12
+      }
+    },
+    {
+      "type": "warning",
+      "text": "⚠️ React Router Future Flag Warning: Relative route resolution within Splat routes is changing in v7. You can use the `v7_relativeSplatPath` future flag to opt-in early. For more information, see https://reactrouter.com/v6/upgrading/future#v7_relativesplatpath.",
+      "location": {
+        "url": "http://127.0.0.1:49027/node_modules/.vite/deps/react-router-dom.js?v=a75ab41c",
+        "lineNumber": 4426,
+        "columnNumber": 12
+      }
+    },
+    {
+      "type": "verbose",
+      "text": "[DOM] Input elements should have autocomplete attributes (suggested: \"current-password\"): (More info: https://goo.gl/9p2vKq) %o",
+      "location": {
+        "url": "http://127.0.0.1:49027/login",
+        "lineNumber": 0,
+        "columnNumber": 0
+      }
+    },
+    {
+      "type": "error",
+      "text": "Warning: [antd: message] Static function can not consume context like dynamic theme. Please use 'App' component instead.",
+      "location": {
+        "url": "http://127.0.0.1:49027/node_modules/.vite/deps/chunk-ZDBJOGHJ.js?v=a75ab41c",
+        "lineNumber": 1247,
+        "columnNumber": 14
+      }
+    },
+    {
+      "type": "error",
+      "text": "Warning: [antd: Menu] `children` is deprecated. Please use `items` instead.",
+      "location": {
+        "url": "http://127.0.0.1:49027/node_modules/.vite/deps/chunk-ZDBJOGHJ.js?v=a75ab41c",
+        "lineNumber": 1247,
+        "columnNumber": 14
+      }
+    },
+    {
+      "type": "error",
+      "text": "Warning: findDOMNode is deprecated and will be removed in the next major release. Instead, add a ref directly to the element you want to reference. Learn more about using refs safely here: https://reactjs.org/link/strict-mode-find-node%s \n    at SingleObserver (http://127.0.0.1:49027/node_modules/.vite/deps/antd.js?v=a75ab41c:1334:24)\n    at ResizeObserver3 (http://127.0.0.1:49027/node_modules/.vite/deps/antd.js?v=a75ab41c:1411:24)\n    at http://127.0.0.1:49027/node_modules/.vite/deps/antd.js?v=a75ab41c:23011:34\n    at Tooltip2 (http://127.0.0.1:49027/node_modules/.vite/deps/antd.js?v=a75ab41c:28659:32)\n    at http://127.0.0.1:49027/node_modules/.vite/deps/antd.js?v=a75ab41c:29329:16\n    at MenuItem2 (http://127.0.0.1:49027/node_modules/.vite/deps/antd.js?v=a75ab41c:33033:5)\n    at div\n    at InheritableContextProvider (http://127.0.0.1:49027/node_modules/.vite/deps/antd.js?v=a75ab41c:31144:23)\n    at http://127.0.0.1:49027/node_modules/.vite/deps/antd.js?v=a75ab41c:32313:43\n    at http://127.0.0.1:49027/node_modules/.vite/deps/antd.js?v=a75ab41c:34233:29\n    at http://127.0.0.1:49027/node_modules/.vite/deps/antd.js?v=a75ab41c:34340:45\n    at div\n    at aside\n    at http://127.0.0.1:49027/node_modules/.vite/deps/antd.js?v=a75ab41c:32861:16\n    at div\n    at http://127.0.0.1:49027/node_modules/.vite/deps/antd.js?v=a75ab41c:66319:16\n    at Layout\n    at div\n    at http://127.0.0.1:49027/node_modules/.vite/deps/antd.js?v=a75ab41c:66319:16\n    at Layout\n    at MainLayout (http://127.0.0.1:49027/src/App.jsx?t=1780556381148:58:20)\n    at RenderedRoute (http://127.0.0.1:49027/node_modules/.vite/deps/react-router-dom.js?v=a75ab41c:4122:5)\n    at Routes (http://127.0.0.1:49027/node_modules/.vite/deps/react-router-dom.js?v=a75ab41c:4592:5)\n    at Router (http://127.0.0.1:49027/node_modules/.vite/deps/react-router-dom.js?v=a75ab41c:4535:15)\n    at BrowserRouter (http://127.0.0.1:49027/node_modules/.vite/deps/react-router-dom.js?v=a75ab41c:5273:5)\n    at App (http://127.0.0.1:49027/src/App.jsx?t=1780556381148:344:49)\n    at LocaleProvider (http://127.0.0.1:49027/node_modules/.vite/deps/antd.js?v=a75ab41c:3732:13)\n    at MotionWrapper (http://127.0.0.1:49027/node_modules/.vite/deps/antd.js?v=a75ab41c:6266:32)\n    at ProviderChildren (http://127.0.0.1:49027/node_modules/.vite/deps/antd.js?v=a75ab41c:6374:5)\n    at ConfigProvider (http://127.0.0.1:49027/node_modules/.vite/deps/antd.js?v=a75ab41c:6665:27)",
+      "location": {
+        "url": "http://127.0.0.1:49027/node_modules/.vite/deps/chunk-PJEEZAML.js?v=a75ab41c",
+        "lineNumber": 520,
+        "columnNumber": 37
+      }
+    },
+    {
+      "type": "debug",
+      "text": "[vite] connecting...",
+      "location": {
+        "url": "http://127.0.0.1:49027/@vite/client",
+        "lineNumber": 494,
+        "columnNumber": 8
+      }
+    },
+    {
+      "type": "debug",
+      "text": "[vite] connected.",
+      "location": {
+        "url": "http://127.0.0.1:49027/@vite/client",
+        "lineNumber": 617,
+        "columnNumber": 14
+      }
+    },
+    {
+      "type": "info",
+      "text": "%cDownload the React DevTools for a better development experience: https://reactjs.org/link/react-devtools font-weight:bold",
+      "location": {
+        "url": "http://127.0.0.1:49027/node_modules/.vite/deps/chunk-PJEEZAML.js?v=a75ab41c",
+        "lineNumber": 21550,
+        "columnNumber": 24
+      }
+    },
+    {
+      "type": "error",
+      "text": "Warning: [antd: Menu] `children` is deprecated. Please use `items` instead.",
+      "location": {
+        "url": "http://127.0.0.1:49027/node_modules/.vite/deps/chunk-ZDBJOGHJ.js?v=a75ab41c",
+        "lineNumber": 1247,
+        "columnNumber": 14
+      }
+    },
+    {
+      "type": "error",
+      "text": "Warning: findDOMNode is deprecated and will be removed in the next major release. Instead, add a ref directly to the element you want to reference. Learn more about using refs safely here: https://reactjs.org/link/strict-mode-find-node%s \n    at SingleObserver (http://127.0.0.1:49027/node_modules/.vite/deps/antd.js?v=a75ab41c:1334:24)\n    at ResizeObserver3 (http://127.0.0.1:49027/node_modules/.vite/deps/antd.js?v=a75ab41c:1411:24)\n    at http://127.0.0.1:49027/node_modules/.vite/deps/antd.js?v=a75ab41c:23011:34\n    at Tooltip2 (http://127.0.0.1:49027/node_modules/.vite/deps/antd.js?v=a75ab41c:28659:32)\n    at http://127.0.0.1:49027/node_modules/.vite/deps/antd.js?v=a75ab41c:29329:16\n    at MenuItem2 (http://127.0.0.1:49027/node_modules/.vite/deps/antd.js?v=a75ab41c:33033:5)\n    at div\n    at InheritableContextProvider (http://127.0.0.1:49027/node_modules/.vite/deps/antd.js?v=a75ab41c:31144:23)\n    at http://127.0.0.1:49027/node_modules/.vite/deps/antd.js?v=a75ab41c:32313:43\n    at http://127.0.0.1:49027/node_modules/.vite/deps/antd.js?v=a75ab41c:34233:29\n    at http://127.0.0.1:49027/node_modules/.vite/deps/antd.js?v=a75ab41c:34340:45\n    at div\n    at aside\n    at http://127.0.0.1:49027/node_modules/.vite/deps/antd.js?v=a75ab41c:32861:16\n    at div\n    at http://127.0.0.1:49027/node_modules/.vite/deps/antd.js?v=a75ab41c:66319:16\n    at Layout\n    at div\n    at http://127.0.0.1:49027/node_modules/.vite/deps/antd.js?v=a75ab41c:66319:16\n    at Layout\n    at MainLayout (http://127.0.0.1:49027/src/App.jsx?t=1780556381148:58:20)\n    at RenderedRoute (http://127.0.0.1:49027/node_modules/.vite/deps/react-router-dom.js?v=a75ab41c:4122:5)\n    at Routes (http://127.0.0.1:49027/node_modules/.vite/deps/react-router-dom.js?v=a75ab41c:4592:5)\n    at Router (http://127.0.0.1:49027/node_modules/.vite/deps/react-router-dom.js?v=a75ab41c:4535:15)\n    at BrowserRouter (http://127.0.0.1:49027/node_modules/.vite/deps/react-router-dom.js?v=a75ab41c:5273:5)\n    at App (http://127.0.0.1:49027/src/App.jsx?t=1780556381148:344:49)\n    at LocaleProvider (http://127.0.0.1:49027/node_modules/.vite/deps/antd.js?v=a75ab41c:3732:13)\n    at MotionWrapper (http://127.0.0.1:49027/node_modules/.vite/deps/antd.js?v=a75ab41c:6266:32)\n    at ProviderChildren (http://127.0.0.1:49027/node_modules/.vite/deps/antd.js?v=a75ab41c:6374:5)\n    at ConfigProvider (http://127.0.0.1:49027/node_modules/.vite/deps/antd.js?v=a75ab41c:6665:27)",
+      "location": {
+        "url": "http://127.0.0.1:49027/node_modules/.vite/deps/chunk-PJEEZAML.js?v=a75ab41c",
+        "lineNumber": 520,
+        "columnNumber": 37
+      }
+    },
+    {
+      "type": "warning",
+      "text": "⚠️ React Router Future Flag Warning: React Router will begin wrapping state updates in `React.startTransition` in v7. You can use the `v7_startTransition` future flag to opt-in early. For more information, see https://reactrouter.com/v6/upgrading/future#v7_starttransition.",
+      "location": {
+        "url": "http://127.0.0.1:49027/node_modules/.vite/deps/react-router-dom.js?v=a75ab41c",
+        "lineNumber": 4426,
+        "columnNumber": 12
+      }
+    },
+    {
+      "type": "warning",
+      "text": "⚠️ React Router Future Flag Warning: Relative route resolution within Splat routes is changing in v7. You can use the `v7_relativeSplatPath` future flag to opt-in early. For more information, see https://reactrouter.com/v6/upgrading/future#v7_relativesplatpath.",
+      "location": {
+        "url": "http://127.0.0.1:49027/node_modules/.vite/deps/react-router-dom.js?v=a75ab41c",
+        "lineNumber": 4426,
+        "columnNumber": 12
+      }
+    },
+    {
+      "type": "error",
+      "text": "Failed to load resource: the server responded with a status of 404 (Not Found)",
+      "location": {
+        "url": "http://127.0.0.1:49027/favicon.ico",
+        "lineNumber": 0,
+        "columnNumber": 0
+      }
+    },
+    {
+      "type": "debug",
+      "text": "[vite] connecting...",
+      "location": {
+        "url": "http://127.0.0.1:49027/@vite/client",
+        "lineNumber": 494,
+        "columnNumber": 8
+      }
+    },
+    {
+      "type": "debug",
+      "text": "[vite] connected.",
+      "location": {
+        "url": "http://127.0.0.1:49027/@vite/client",
+        "lineNumber": 617,
+        "columnNumber": 14
+      }
+    },
+    {
+      "type": "info",
+      "text": "%cDownload the React DevTools for a better development experience: https://reactjs.org/link/react-devtools font-weight:bold",
+      "location": {
+        "url": "http://127.0.0.1:49027/node_modules/.vite/deps/chunk-PJEEZAML.js?v=a75ab41c",
+        "lineNumber": 21550,
+        "columnNumber": 24
+      }
+    },
+    {
+      "type": "error",
+      "text": "Warning: [antd: Menu] `children` is deprecated. Please use `items` instead.",
+      "location": {
+        "url": "http://127.0.0.1:49027/node_modules/.vite/deps/chunk-ZDBJOGHJ.js?v=a75ab41c",
+        "lineNumber": 1247,
+        "columnNumber": 14
+      }
+    },
+    {
+      "type": "error",
+      "text": "Warning: findDOMNode is deprecated and will be removed in the next major release. Instead, add a ref directly to the element you want to reference. Learn more about using refs safely here: https://reactjs.org/link/strict-mode-find-node%s \n    at SingleObserver (http://127.0.0.1:49027/node_modules/.vite/deps/antd.js?v=a75ab41c:1334:24)\n    at ResizeObserver3 (http://127.0.0.1:49027/node_modules/.vite/deps/antd.js?v=a75ab41c:1411:24)\n    at http://127.0.0.1:49027/node_modules/.vite/deps/antd.js?v=a75ab41c:23011:34\n    at Tooltip2 (http://127.0.0.1:49027/node_modules/.vite/deps/antd.js?v=a75ab41c:28659:32)\n    at http://127.0.0.1:49027/node_modules/.vite/deps/antd.js?v=a75ab41c:29329:16\n    at MenuItem2 (http://127.0.0.1:49027/node_modules/.vite/deps/antd.js?v=a75ab41c:33033:5)\n    at div\n    at InheritableContextProvider (http://127.0.0.1:49027/node_modules/.vite/deps/antd.js?v=a75ab41c:31144:23)\n    at http://127.0.0.1:49027/node_modules/.vite/deps/antd.js?v=a75ab41c:32313:43\n    at http://127.0.0.1:49027/node_modules/.vite/deps/antd.js?v=a75ab41c:34233:29\n    at http://127.0.0.1:49027/node_modules/.vite/deps/antd.js?v=a75ab41c:34340:45\n    at div\n    at aside\n    at http://127.0.0.1:49027/node_modules/.vite/deps/antd.js?v=a75ab41c:32861:16\n    at div\n    at http://127.0.0.1:49027/node_modules/.vite/deps/antd.js?v=a75ab41c:66319:16\n    at Layout\n    at div\n    at http://127.0.0.1:49027/node_modules/.vite/deps/antd.js?v=a75ab41c:66319:16\n    at Layout\n    at MainLayout (http://127.0.0.1:49027/src/App.jsx?t=1780556381148:58:20)\n    at RenderedRoute (http://127.0.0.1:49027/node_modules/.vite/deps/react-router-dom.js?v=a75ab41c:4122:5)\n    at Routes (http://127.0.0.1:49027/node_modules/.vite/deps/react-router-dom.js?v=a75ab41c:4592:5)\n    at Router (http://127.0.0.1:49027/node_modules/.vite/deps/react-router-dom.js?v=a75ab41c:4535:15)\n    at BrowserRouter (http://127.0.0.1:49027/node_modules/.vite/deps/react-router-dom.js?v=a75ab41c:5273:5)\n    at App (http://127.0.0.1:49027/src/App.jsx?t=1780556381148:344:49)\n    at LocaleProvider (http://127.0.0.1:49027/node_modules/.vite/deps/antd.js?v=a75ab41c:3732:13)\n    at MotionWrapper (http://127.0.0.1:49027/node_modules/.vite/deps/antd.js?v=a75ab41c:6266:32)\n    at ProviderChildren (http://127.0.0.1:49027/node_modules/.vite/deps/antd.js?v=a75ab41c:6374:5)\n    at ConfigProvider (http://127.0.0.1:49027/node_modules/.vite/deps/antd.js?v=a75ab41c:6665:27)",
+      "location": {
+        "url": "http://127.0.0.1:49027/node_modules/.vite/deps/chunk-PJEEZAML.js?v=a75ab41c",
+        "lineNumber": 520,
+        "columnNumber": 37
+      }
+    },
+    {
+      "type": "warning",
+      "text": "⚠️ React Router Future Flag Warning: React Router will begin wrapping state updates in `React.startTransition` in v7. You can use the `v7_startTransition` future flag to opt-in early. For more information, see https://reactrouter.com/v6/upgrading/future#v7_starttransition.",
+      "location": {
+        "url": "http://127.0.0.1:49027/node_modules/.vite/deps/react-router-dom.js?v=a75ab41c",
+        "lineNumber": 4426,
+        "columnNumber": 12
+      }
+    },
+    {
+      "type": "warning",
+      "text": "⚠️ React Router Future Flag Warning: Relative route resolution within Splat routes is changing in v7. You can use the `v7_relativeSplatPath` future flag to opt-in early. For more information, see https://reactrouter.com/v6/upgrading/future#v7_relativesplatpath.",
+      "location": {
+        "url": "http://127.0.0.1:49027/node_modules/.vite/deps/react-router-dom.js?v=a75ab41c",
+        "lineNumber": 4426,
+        "columnNumber": 12
+      }
+    },
+    {
+      "type": "debug",
+      "text": "[vite] hot updated: /src/pages/Home.jsx",
+      "location": {
+        "url": "http://127.0.0.1:49027/@vite/client",
+        "lineNumber": 222,
+        "columnNumber": 18
+      }
+    },
+    {
+      "type": "debug",
+      "text": "[vite] connecting...",
+      "location": {
+        "url": "http://127.0.0.1:49027/@vite/client",
+        "lineNumber": 494,
+        "columnNumber": 8
+      }
+    },
+    {
+      "type": "info",
+      "text": "%cDownload the React DevTools for a better development experience: https://reactjs.org/link/react-devtools font-weight:bold",
+      "location": {
+        "url": "http://127.0.0.1:49027/node_modules/.vite/deps/chunk-PJEEZAML.js?v=a75ab41c",
+        "lineNumber": 21550,
+        "columnNumber": 24
+      }
+    },
+    {
+      "type": "debug",
+      "text": "[vite] connected.",
+      "location": {
+        "url": "http://127.0.0.1:49027/@vite/client",
+        "lineNumber": 617,
+        "columnNumber": 14
+      }
+    },
+    {
+      "type": "error",
+      "text": "Warning: [antd: Menu] `children` is deprecated. Please use `items` instead.",
+      "location": {
+        "url": "http://127.0.0.1:49027/node_modules/.vite/deps/chunk-ZDBJOGHJ.js?v=a75ab41c",
+        "lineNumber": 1247,
+        "columnNumber": 14
+      }
+    },
+    {
+      "type": "error",
+      "text": "Warning: findDOMNode is deprecated and will be removed in the next major release. Instead, add a ref directly to the element you want to reference. Learn more about using refs safely here: https://reactjs.org/link/strict-mode-find-node%s \n    at SingleObserver (http://127.0.0.1:49027/node_modules/.vite/deps/antd.js?v=a75ab41c:1334:24)\n    at ResizeObserver3 (http://127.0.0.1:49027/node_modules/.vite/deps/antd.js?v=a75ab41c:1411:24)\n    at http://127.0.0.1:49027/node_modules/.vite/deps/antd.js?v=a75ab41c:23011:34\n    at Tooltip2 (http://127.0.0.1:49027/node_modules/.vite/deps/antd.js?v=a75ab41c:28659:32)\n    at http://127.0.0.1:49027/node_modules/.vite/deps/antd.js?v=a75ab41c:29329:16\n    at MenuItem2 (http://127.0.0.1:49027/node_modules/.vite/deps/antd.js?v=a75ab41c:33033:5)\n    at div\n    at InheritableContextProvider (http://127.0.0.1:49027/node_modules/.vite/deps/antd.js?v=a75ab41c:31144:23)\n    at http://127.0.0.1:49027/node_modules/.vite/deps/antd.js?v=a75ab41c:32313:43\n    at http://127.0.0.1:49027/node_modules/.vite/deps/antd.js?v=a75ab41c:34233:29\n    at http://127.0.0.1:49027/node_modules/.vite/deps/antd.js?v=a75ab41c:34340:45\n    at div\n    at aside\n    at http://127.0.0.1:49027/node_modules/.vite/deps/antd.js?v=a75ab41c:32861:16\n    at div\n    at http://127.0.0.1:49027/node_modules/.vite/deps/antd.js?v=a75ab41c:66319:16\n    at Layout\n    at div\n    at http://127.0.0.1:49027/node_modules/.vite/deps/antd.js?v=a75ab41c:66319:16\n    at Layout\n    at MainLayout (http://127.0.0.1:49027/src/App.jsx?t=1780556398666:58:20)\n    at RenderedRoute (http://127.0.0.1:49027/node_modules/.vite/deps/react-router-dom.js?v=a75ab41c:4122:5)\n    at Routes (http://127.0.0.1:49027/node_modules/.vite/deps/react-router-dom.js?v=a75ab41c:4592:5)\n    at Router (http://127.0.0.1:49027/node_modules/.vite/deps/react-router-dom.js?v=a75ab41c:4535:15)\n    at BrowserRouter (http://127.0.0.1:49027/node_modules/.vite/deps/react-router-dom.js?v=a75ab41c:5273:5)\n    at App (http://127.0.0.1:49027/src/App.jsx?t=1780556398666:344:49)\n    at LocaleProvider (http://127.0.0.1:49027/node_modules/.vite/deps/antd.js?v=a75ab41c:3732:13)\n    at MotionWrapper (http://127.0.0.1:49027/node_modules/.vite/deps/antd.js?v=a75ab41c:6266:32)\n    at ProviderChildren (http://127.0.0.1:49027/node_modules/.vite/deps/antd.js?v=a75ab41c:6374:5)\n    at ConfigProvider (http://127.0.0.1:49027/node_modules/.vite/deps/antd.js?v=a75ab41c:6665:27)",
+      "location": {
+        "url": "http://127.0.0.1:49027/node_modules/.vite/deps/chunk-PJEEZAML.js?v=a75ab41c",
+        "lineNumber": 520,
+        "columnNumber": 37
+      }
+    },
+    {
+      "type": "warning",
+      "text": "⚠️ React Router Future Flag Warning: React Router will begin wrapping state updates in `React.startTransition` in v7. You can use the `v7_startTransition` future flag to opt-in early. For more information, see https://reactrouter.com/v6/upgrading/future#v7_starttransition.",
+      "location": {
+        "url": "http://127.0.0.1:49027/node_modules/.vite/deps/react-router-dom.js?v=a75ab41c",
+        "lineNumber": 4426,
+        "columnNumber": 12
+      }
+    },
+    {
+      "type": "warning",
+      "text": "⚠️ React Router Future Flag Warning: Relative route resolution within Splat routes is changing in v7. You can use the `v7_relativeSplatPath` future flag to opt-in early. For more information, see https://reactrouter.com/v6/upgrading/future#v7_relativesplatpath.",
+      "location": {
+        "url": "http://127.0.0.1:49027/node_modules/.vite/deps/react-router-dom.js?v=a75ab41c",
+        "lineNumber": 4426,
+        "columnNumber": 12
+      }
+    }
+  ],
+  "requestFailures": [],
+  "responseErrors": []
+}

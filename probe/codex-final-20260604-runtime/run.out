@@ -1,0 +1,897 @@
+{
+  "ok": true,
+  "generatedAt": "2026-06-04T09:18:51.740Z",
+  "order": "may-89027",
+  "roundIndex": 99,
+  "captureId": "may-89027-final-runtime",
+  "url": "http://127.0.0.1:49027/",
+  "initialUrl": "http://127.0.0.1:49027/",
+  "finalUrl": "http://127.0.0.1:49027/home",
+  "status": 200,
+  "title": "浙江省一网通办平台",
+  "initialTitle": "浙江省一网通办平台",
+  "navigationError": "",
+  "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89027/probe/codex-final-20260604-runtime/may-89027-final-runtime-frontend.png",
+  "screenshotPaths": [
+    "/Users/chen/Documents/trae_projects/local_projects/may-89027/probe/codex-final-20260604-runtime/may-89027-final-runtime-structure-01-首屏.png",
+    "/Users/chen/Documents/trae_projects/local_projects/may-89027/probe/codex-final-20260604-runtime/may-89027-final-runtime-structure-02-导航-首页.png",
+    "/Users/chen/Documents/trae_projects/local_projects/may-89027/probe/codex-final-20260604-runtime/may-89027-final-runtime-structure-03-操作-待审核-28.png"
+  ],
+  "issueTextPreview": "页面结构采集已读取到业务内容；首页导航和业务操作链路复验",
+  "targetReason": "登录流程已完成，继续复验登录后的首页和业务导航",
+  "targetKind": "auth",
+  "targetMatched": true,
+  "targetActions": [
+    {
+      "action": "login-fill-username",
+      "label": "admin",
+      "ok": true
+    },
+    {
+      "action": "login-fill-password",
+      "label": "admin:******",
+      "ok": true
+    },
+    {
+      "action": "login-enter",
+      "label": "admin",
+      "ok": true
+    },
+    {
+      "action": "login-result",
+      "label": "admin",
+      "ok": true,
+      "finalUrl": "http://127.0.0.1:49027/home"
+    },
+    {
+      "action": "target-verify",
+      "label": "登录后首页",
+      "ok": true,
+      "finalUrl": "http://127.0.0.1:49027/home"
+    }
+  ],
+  "authFlow": {
+    "detected": true,
+    "attempted": true,
+    "success": true,
+    "finalUrl": "http://127.0.0.1:49027/home",
+    "message": "登录成功:admin",
+    "actions": [
+      {
+        "action": "login-fill-username",
+        "label": "admin",
+        "ok": true
+      },
+      {
+        "action": "login-fill-password",
+        "label": "admin:******",
+        "ok": true
+      },
+      {
+        "action": "login-enter",
+        "label": "admin",
+        "ok": true
+      },
+      {
+        "action": "login-result",
+        "label": "admin",
+        "ok": true,
+        "finalUrl": "http://127.0.0.1:49027/home"
+      }
+    ],
+    "username": "admin",
+    "credentialSource": "visible-demo-text"
+  },
+  "businessAudit": {
+    "actions": [
+      {
+        "action": "click",
+        "label": "导航:首页",
+        "ok": true
+      },
+      {
+        "action": "click",
+        "label": "操作:待审核 (28)",
+        "ok": true,
+        "result": {
+          "ok": true,
+          "matched": 1
+        }
+      }
+    ],
+    "snapshots": [
+      {
+        "label": "首屏",
+        "url": "http://127.0.0.1:49027/home",
+        "title": "浙江省一网通办平台",
+        "headings": [
+          "省级政务中枢 - 管理工作台"
+        ],
+        "navLabels": [
+          "首页 企业服务 惠企政策 我的申报 服务事项 预约办事 我的预约 智能导办 城市服务",
+          "首页",
+          "企业服务",
+          "惠企政策",
+          "我的申报",
+          "服务事项",
+          "预约办事",
+          "我的预约",
+          "智能导办",
+          "城市服务"
+        ],
+        "buttons": [
+          "待审核 (28)",
+          "运行概览",
+          "申报审核",
+          "政策效能",
+          "服务管理",
+          "系统监控",
+          "多端发布",
+          "全部待审 →",
+          "效能报表 →",
+          "分析 →",
+          "发布管理 →"
+        ],
+        "links": [],
+        "inputs": [],
+        "tables": [
+          {
+            "headers": [
+              "申报编号",
+              "政策名称",
+              "企业名称",
+              "提交时间",
+              "状态",
+              "操作"
+            ],
+            "rowCount": 1,
+            "hasEmptyText": false,
+            "textPreview": "申报编号 政策名称 企业名称 提交时间 状态 操作"
+          },
+          {
+            "headers": [
+              "申报编号",
+              "政策名称",
+              "企业名称",
+              "提交时间",
+              "状态",
+              "操作"
+            ],
+            "rowCount": 1,
+            "hasEmptyText": true,
+            "textPreview": "申报编号 政策名称 企业名称 提交时间 状态 操作 暂无数据"
+          },
+          {
+            "headers": [
+              "政策名称",
+              "申报数",
+              "通过数",
+              "兑付金额",
+              "通过率",
+              "操作"
+            ],
+            "rowCount": 1,
+            "hasEmptyText": true,
+            "textPreview": "政策名称 申报数 通过数 兑付金额 通过率 操作 暂无数据"
+          }
+        ],
+        "emptyTextCount": 4,
+        "bodyTextPreview": "浙江省一网通办平台系统管理员[管理员]首页企业服务惠企政策我的申报服务事项预约办事我的预约智能导办城市服务省级政务中枢 - 管理工作台全省政务服务运行监控、政策兑现效能评估、多端一致性管理待审核 (28) 系统运行正常运行概览申报审核政策效能服务管理系统监控多端发布申报失败率5.2%平均办理耗时4.8天目标：5个工作日内退单率12.3%政策兑现效能86.5%累计兑付：125,860万元待审核申报（实时）全部待审 →申报编号政策名称企业名称提交时间状态操作申报编号政策名称企业名称提交时间状态操作暂无数据政策兑现效能明细效能报表 →政策名称申报数通过数兑付金额通过率操作暂无数据退单原因聚类（近30天）分析 →暂无数据多端发布一致性发布管理 →暂无数据系统健康度API成功率99.8%平均响应156ms今日请求28,560失败请求3",
+        "layout": {
+          "viewportWidth": 1504,
+          "viewportHeight": 1128,
+          "scrollWidth": 1504,
+          "scrollHeight": 1192,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89027-final-runtime-structure-01-首屏",
+          "label": "首屏",
+          "finalUrl": "http://127.0.0.1:49027/home",
+          "title": "浙江省一网通办平台",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89027/probe/codex-final-20260604-runtime/may-89027-final-runtime-structure-01-首屏.json",
+          "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89027/probe/codex-final-20260604-runtime/may-89027-final-runtime-structure-01-首屏.png",
+          "elementCount": 370,
+          "interactiveCount": 21,
+          "interactiveLabels": [
+            "首页 企业服务 惠企政策 我的申报 服务事项 预约办事 我的预约 智能导办 城市服务",
+            "首页",
+            "企业服务",
+            "惠企政策",
+            "我的申报",
+            "服务事项",
+            "预约办事",
+            "我的预约",
+            "智能导办",
+            "城市服务",
+            "待审核 (28)",
+            "运行概览",
+            "申报审核",
+            "政策效能",
+            "服务管理",
+            "系统监控",
+            "多端发布",
+            "全部待审 →",
+            "效能报表 →",
+            "分析 →",
+            "发布管理 →"
+          ]
+        }
+      },
+      {
+        "label": "导航:首页",
+        "url": "http://127.0.0.1:49027/home",
+        "title": "浙江省一网通办平台",
+        "headings": [
+          "省级政务中枢 - 管理工作台"
+        ],
+        "navLabels": [
+          "首页 企业服务 惠企政策 我的申报 服务事项 预约办事 我的预约 智能导办 城市服务",
+          "首页",
+          "企业服务",
+          "惠企政策",
+          "我的申报",
+          "服务事项",
+          "预约办事",
+          "我的预约",
+          "智能导办",
+          "城市服务"
+        ],
+        "buttons": [
+          "待审核 (28)",
+          "运行概览",
+          "申报审核",
+          "政策效能",
+          "服务管理",
+          "系统监控",
+          "多端发布",
+          "全部待审 →",
+          "效能报表 →",
+          "分析 →",
+          "发布管理 →"
+        ],
+        "links": [],
+        "inputs": [],
+        "tables": [
+          {
+            "headers": [
+              "申报编号",
+              "政策名称",
+              "企业名称",
+              "提交时间",
+              "状态",
+              "操作"
+            ],
+            "rowCount": 1,
+            "hasEmptyText": false,
+            "textPreview": "申报编号 政策名称 企业名称 提交时间 状态 操作"
+          },
+          {
+            "headers": [
+              "申报编号",
+              "政策名称",
+              "企业名称",
+              "提交时间",
+              "状态",
+              "操作"
+            ],
+            "rowCount": 1,
+            "hasEmptyText": true,
+            "textPreview": "申报编号 政策名称 企业名称 提交时间 状态 操作 暂无数据"
+          },
+          {
+            "headers": [
+              "政策名称",
+              "申报数",
+              "通过数",
+              "兑付金额",
+              "通过率",
+              "操作"
+            ],
+            "rowCount": 1,
+            "hasEmptyText": true,
+            "textPreview": "政策名称 申报数 通过数 兑付金额 通过率 操作 暂无数据"
+          }
+        ],
+        "emptyTextCount": 4,
+        "bodyTextPreview": "浙江省一网通办平台系统管理员[管理员]首页企业服务惠企政策我的申报服务事项预约办事我的预约智能导办城市服务省级政务中枢 - 管理工作台全省政务服务运行监控、政策兑现效能评估、多端一致性管理待审核 (28) 系统运行正常运行概览申报审核政策效能服务管理系统监控多端发布申报失败率5.2%平均办理耗时4.8天目标：5个工作日内退单率12.3%政策兑现效能86.5%累计兑付：125,860万元待审核申报（实时）全部待审 →申报编号政策名称企业名称提交时间状态操作申报编号政策名称企业名称提交时间状态操作暂无数据政策兑现效能明细效能报表 →政策名称申报数通过数兑付金额通过率操作暂无数据退单原因聚类（近30天）分析 →暂无数据多端发布一致性发布管理 →暂无数据系统健康度API成功率99.8%平均响应156ms今日请求28,560失败请求3",
+        "layout": {
+          "viewportWidth": 1536,
+          "viewportHeight": 1192,
+          "scrollWidth": 1536,
+          "scrollHeight": 1256,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89027-final-runtime-structure-02-导航-首页",
+          "label": "导航:首页",
+          "finalUrl": "http://127.0.0.1:49027/home",
+          "title": "浙江省一网通办平台",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89027/probe/codex-final-20260604-runtime/may-89027-final-runtime-structure-02-导航-首页.json",
+          "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89027/probe/codex-final-20260604-runtime/may-89027-final-runtime-structure-02-导航-首页.png",
+          "elementCount": 370,
+          "interactiveCount": 21,
+          "interactiveLabels": [
+            "首页 企业服务 惠企政策 我的申报 服务事项 预约办事 我的预约 智能导办 城市服务",
+            "首页",
+            "企业服务",
+            "惠企政策",
+            "我的申报",
+            "服务事项",
+            "预约办事",
+            "我的预约",
+            "智能导办",
+            "城市服务",
+            "待审核 (28)",
+            "运行概览",
+            "申报审核",
+            "政策效能",
+            "服务管理",
+            "系统监控",
+            "多端发布",
+            "全部待审 →",
+            "效能报表 →",
+            "分析 →",
+            "发布管理 →"
+          ]
+        }
+      },
+      {
+        "label": "操作:待审核 (28)",
+        "url": "http://127.0.0.1:49027/admin/applications",
+        "title": "浙江省一网通办平台",
+        "headings": [],
+        "navLabels": [],
+        "buttons": [],
+        "links": [],
+        "inputs": [],
+        "tables": [],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "",
+        "layout": {
+          "viewportWidth": 1568,
+          "viewportHeight": 1192,
+          "scrollWidth": 1568,
+          "scrollHeight": 1192,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89027-final-runtime-structure-03-操作-待审核-28",
+          "label": "操作:待审核 (28)",
+          "finalUrl": "http://127.0.0.1:49027/admin/applications",
+          "title": "浙江省一网通办平台",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89027/probe/codex-final-20260604-runtime/may-89027-final-runtime-structure-03-操作-待审核-28.json",
+          "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89027/probe/codex-final-20260604-runtime/may-89027-final-runtime-structure-03-操作-待审核-28.png",
+          "elementCount": 7,
+          "interactiveCount": 0,
+          "interactiveLabels": []
+        }
+      }
+    ],
+    "findings": [
+      "省级政务中枢 - 管理工作台、首页 页面只显示空列表或“暂无数据”，缺少可复查的业务记录。",
+      "待审核 (28)入口 页面打开后是空白，没有渲染业务内容、表单或列表。"
+    ],
+    "actionHints": [
+      "为 省级政务中枢 - 管理工作台、首页 补齐 SQLite 种子数据、列表接口和空状态引导，确保核心记录可新增、可查看、可复查。",
+      "修复 待审核 (28)入口 的路由组件挂载、接口初始化和错误兜底，确保进入页面后直接显示可操作内容。"
+    ],
+    "emptyPages": [
+      "省级政务中枢 - 管理工作台",
+      "首页"
+    ],
+    "overflowPages": [],
+    "blankPages": [
+      "待审核 (28)入口"
+    ],
+    "apiFailurePaths": [],
+    "goalTerms": [],
+    "clickedActionDescriptors": [
+      {
+        "nav": "首页",
+        "label": "待审核 (28)",
+        "ordinal": 0,
+        "unsafe": false
+      }
+    ],
+    "secondaryActionClicks": 0,
+    "structureCaptures": [
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89027-final-runtime-structure-01-首屏",
+        "label": "首屏",
+        "finalUrl": "http://127.0.0.1:49027/home",
+        "title": "浙江省一网通办平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89027/probe/codex-final-20260604-runtime/may-89027-final-runtime-structure-01-首屏.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89027/probe/codex-final-20260604-runtime/may-89027-final-runtime-structure-01-首屏.png",
+        "elementCount": 370,
+        "interactiveCount": 21,
+        "interactiveLabels": [
+          "首页 企业服务 惠企政策 我的申报 服务事项 预约办事 我的预约 智能导办 城市服务",
+          "首页",
+          "企业服务",
+          "惠企政策",
+          "我的申报",
+          "服务事项",
+          "预约办事",
+          "我的预约",
+          "智能导办",
+          "城市服务",
+          "待审核 (28)",
+          "运行概览",
+          "申报审核",
+          "政策效能",
+          "服务管理",
+          "系统监控",
+          "多端发布",
+          "全部待审 →",
+          "效能报表 →",
+          "分析 →",
+          "发布管理 →"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89027-final-runtime-structure-02-导航-首页",
+        "label": "导航:首页",
+        "finalUrl": "http://127.0.0.1:49027/home",
+        "title": "浙江省一网通办平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89027/probe/codex-final-20260604-runtime/may-89027-final-runtime-structure-02-导航-首页.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89027/probe/codex-final-20260604-runtime/may-89027-final-runtime-structure-02-导航-首页.png",
+        "elementCount": 370,
+        "interactiveCount": 21,
+        "interactiveLabels": [
+          "首页 企业服务 惠企政策 我的申报 服务事项 预约办事 我的预约 智能导办 城市服务",
+          "首页",
+          "企业服务",
+          "惠企政策",
+          "我的申报",
+          "服务事项",
+          "预约办事",
+          "我的预约",
+          "智能导办",
+          "城市服务",
+          "待审核 (28)",
+          "运行概览",
+          "申报审核",
+          "政策效能",
+          "服务管理",
+          "系统监控",
+          "多端发布",
+          "全部待审 →",
+          "效能报表 →",
+          "分析 →",
+          "发布管理 →"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89027-final-runtime-structure-03-操作-待审核-28",
+        "label": "操作:待审核 (28)",
+        "finalUrl": "http://127.0.0.1:49027/admin/applications",
+        "title": "浙江省一网通办平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89027/probe/codex-final-20260604-runtime/may-89027-final-runtime-structure-03-操作-待审核-28.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89027/probe/codex-final-20260604-runtime/may-89027-final-runtime-structure-03-操作-待审核-28.png",
+        "elementCount": 7,
+        "interactiveCount": 0,
+        "interactiveLabels": []
+      }
+    ],
+    "representativeScreenshotUrl": "http://127.0.0.1:49027/home",
+    "representativeScreenshotLabel": "省级政务中枢 - 管理工作台"
+  },
+  "websiteStructureCapture": {
+    "module": "website_structure_capture",
+    "captureCount": 3,
+    "captures": [
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89027-final-runtime-structure-01-首屏",
+        "label": "首屏",
+        "finalUrl": "http://127.0.0.1:49027/home",
+        "title": "浙江省一网通办平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89027/probe/codex-final-20260604-runtime/may-89027-final-runtime-structure-01-首屏.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89027/probe/codex-final-20260604-runtime/may-89027-final-runtime-structure-01-首屏.png",
+        "elementCount": 370,
+        "interactiveCount": 21,
+        "interactiveLabels": [
+          "首页 企业服务 惠企政策 我的申报 服务事项 预约办事 我的预约 智能导办 城市服务",
+          "首页",
+          "企业服务",
+          "惠企政策",
+          "我的申报",
+          "服务事项",
+          "预约办事",
+          "我的预约",
+          "智能导办",
+          "城市服务",
+          "待审核 (28)",
+          "运行概览",
+          "申报审核",
+          "政策效能",
+          "服务管理",
+          "系统监控",
+          "多端发布",
+          "全部待审 →",
+          "效能报表 →",
+          "分析 →",
+          "发布管理 →"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89027-final-runtime-structure-02-导航-首页",
+        "label": "导航:首页",
+        "finalUrl": "http://127.0.0.1:49027/home",
+        "title": "浙江省一网通办平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89027/probe/codex-final-20260604-runtime/may-89027-final-runtime-structure-02-导航-首页.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89027/probe/codex-final-20260604-runtime/may-89027-final-runtime-structure-02-导航-首页.png",
+        "elementCount": 370,
+        "interactiveCount": 21,
+        "interactiveLabels": [
+          "首页 企业服务 惠企政策 我的申报 服务事项 预约办事 我的预约 智能导办 城市服务",
+          "首页",
+          "企业服务",
+          "惠企政策",
+          "我的申报",
+          "服务事项",
+          "预约办事",
+          "我的预约",
+          "智能导办",
+          "城市服务",
+          "待审核 (28)",
+          "运行概览",
+          "申报审核",
+          "政策效能",
+          "服务管理",
+          "系统监控",
+          "多端发布",
+          "全部待审 →",
+          "效能报表 →",
+          "分析 →",
+          "发布管理 →"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89027-final-runtime-structure-03-操作-待审核-28",
+        "label": "操作:待审核 (28)",
+        "finalUrl": "http://127.0.0.1:49027/admin/applications",
+        "title": "浙江省一网通办平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89027/probe/codex-final-20260604-runtime/may-89027-final-runtime-structure-03-操作-待审核-28.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89027/probe/codex-final-20260604-runtime/may-89027-final-runtime-structure-03-操作-待审核-28.png",
+        "elementCount": 7,
+        "interactiveCount": 0,
+        "interactiveLabels": []
+      }
+    ]
+  },
+  "screenshotMetrics": {
+    "width": 1600,
+    "height": 1256,
+    "scrollWidth": 1568,
+    "scrollHeight": 1256
+  },
+  "initialBodyTextPreview": "浙江省一网通办平台\n\n让政务服务更便捷\n\n登录\n注册\n登 录\n\n测试账号：\n\n管理员：admin / 123456\n\n企业用户：enterprise1 / 123456\n\n个人用户：citizen1 / 123456",
+  "bodyTextPreview": "浙江省一网通办平台\n系统管理员[管理员]\n首页\n企业服务\n惠企政策\n我的申报\n服务事项\n预约办事\n我的预约\n智能导办\n城市服务\n省级政务中枢 - 管理工作台\n\n全省政务服务运行监控、政策兑现效能评估、多端一致性管理\n\n待审核 (28)\n 系统运行正常\n运行概览\n申报审核\n政策效能\n服务管理\n系统监控\n多端发布\n申报失败率\n5.2%\n平均办理耗时\n4.8天\n\n目标：5个工作日内\n\n退单率\n12.3%\n政策兑现效能\n86.5%\n\n累计兑付：125,860万元\n\n待审核申报（实时）\n全部待审 →\n申报编号\t政策名称\t企业名称\t提交时间\t状态\t操作\n申报编号\n\t\n政策名称\n\t\n企业名称\n\t\n提交时间\n\t\n状态\n\t\n操作\n\n\n暂无数据\n政策兑现效能明细\n效能报表 →\n政策名称\t申报数\t通过数\t兑付金额\t通过率\t操作\n\n暂无数据\n退单原因聚类（近30天）\n分析 →\n暂无数据\n多端发布一致性\n发布管理 →\n暂无数据\n系统健康度\nAPI成功率\n99.8%\n平均响应\n156ms\n今日请求\n28,560\n失败请求\n3",
+  "apiBase": "http://127.0.0.1:59027",
+  "businessGoalPreview": "",
+  "apiResponses": [
+    {
+      "method": "POST",
+      "status": 200,
+      "url": "http://127.0.0.1:49027/api/auth/login"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49027/api/admin/overview"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49027/api/monitor/metrics"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49027/api/admin/overview"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49027/api/monitor/metrics"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49027/api/admin/overview"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49027/api/monitor/metrics"
+    }
+  ],
+  "apiChecks": [
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59027/api/health",
+      "path": "/api/health",
+      "status": 200,
+      "ok": true,
+      "bodyPreview": "{\"status\":\"ok\",\"timestamp\":\"2026-06-04T09:18:50.994Z\",\"port\":\"59027\",\"metrics\":{\"requests_per_minute\":3,\"requests_per_hour\":399,\"requests_per_day\":399,\"success_rate\":99.75,\"failed_requests\":1,\"average_duration_ms\":27.57,\"error_clusters\":[],\"active_services\":8,\"database_status\":\"healthy\"}}"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59027/api/admin/overview",
+      "path": "/api/admin/overview",
+      "status": 200,
+      "ok": true,
+      "bodyPreview": "{\"statistics\":{\"totalUsers\":3,\"totalEnterprises\":3,\"totalPolicies\":5,\"totalReservations\":0,\"todayReservations\":0,\"todayApplications\":0,\"pendingApplications\":0}}"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59027/api/monitor/metrics",
+      "path": "/api/monitor/metrics",
+      "status": 200,
+      "ok": true,
+      "bodyPreview": "{\"requests_per_minute\":5,\"requests_per_hour\":401,\"requests_per_day\":401,\"success_rate\":99.75,\"failed_requests\":1,\"average_duration_ms\":27.43,\"error_clusters\":[],\"active_services\":8,\"database_status\":\"healthy\"}"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59027/api/teachers",
+      "path": "/api/teachers",
+      "status": 404,
+      "ok": false,
+      "bodyPreview": "<!DOCTYPE html>\n<html lang=\"en\">\n<head>\n<meta charset=\"utf-8\">\n<title>Error</title>\n</head>\n<body>\n<pre>Cannot GET /api/teachers</pre>\n</body>\n</html>\n"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59027/api/courses",
+      "path": "/api/courses",
+      "status": 404,
+      "ok": false,
+      "bodyPreview": "<!DOCTYPE html>\n<html lang=\"en\">\n<head>\n<meta charset=\"utf-8\">\n<title>Error</title>\n</head>\n<body>\n<pre>Cannot GET /api/courses</pre>\n</body>\n</html>\n"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59027/api/bookings",
+      "path": "/api/bookings",
+      "status": 404,
+      "ok": false,
+      "bodyPreview": "<!DOCTYPE html>\n<html lang=\"en\">\n<head>\n<meta charset=\"utf-8\">\n<title>Error</title>\n</head>\n<body>\n<pre>Cannot GET /api/bookings</pre>\n</body>\n</html>\n"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59027/api/orders",
+      "path": "/api/orders",
+      "status": 200,
+      "ok": true,
+      "bodyPreview": "{\"orders\":[],\"reservations\":[],\"total\":0}"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59027/api/admin/stats",
+      "path": "/api/admin/stats",
+      "status": 200,
+      "ok": true,
+      "bodyPreview": "{\"totalUsers\":3,\"totalEnterprises\":3,\"totalPolicies\":5,\"totalServices\":6,\"totalReservations\":0,\"pendingApplications\":0}"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59027/api/admin/dashboard",
+      "path": "/api/admin/dashboard",
+      "status": 200,
+      "ok": true,
+      "bodyPreview": "{\"statistics\":{\"totalUsers\":3,\"totalEnterprises\":3,\"totalPolicies\":5,\"totalServices\":6,\"totalReservations\":0,\"pendingApplications\":0}}"
+    }
+  ],
+  "dialogs": [],
+  "consoleMessages": [
+    {
+      "type": "debug",
+      "text": "[vite] connecting...",
+      "location": {
+        "url": "http://127.0.0.1:49027/@vite/client",
+        "lineNumber": 494,
+        "columnNumber": 8
+      }
+    },
+    {
+      "type": "debug",
+      "text": "[vite] connected.",
+      "location": {
+        "url": "http://127.0.0.1:49027/@vite/client",
+        "lineNumber": 617,
+        "columnNumber": 14
+      }
+    },
+    {
+      "type": "info",
+      "text": "%cDownload the React DevTools for a better development experience: https://reactjs.org/link/react-devtools font-weight:bold",
+      "location": {
+        "url": "http://127.0.0.1:49027/node_modules/.vite/deps/chunk-PJEEZAML.js?v=a75ab41c",
+        "lineNumber": 21550,
+        "columnNumber": 24
+      }
+    },
+    {
+      "type": "warning",
+      "text": "⚠️ React Router Future Flag Warning: React Router will begin wrapping state updates in `React.startTransition` in v7. You can use the `v7_startTransition` future flag to opt-in early. For more information, see https://reactrouter.com/v6/upgrading/future#v7_starttransition.",
+      "location": {
+        "url": "http://127.0.0.1:49027/node_modules/.vite/deps/react-router-dom.js?v=a75ab41c",
+        "lineNumber": 4426,
+        "columnNumber": 12
+      }
+    },
+    {
+      "type": "warning",
+      "text": "⚠️ React Router Future Flag Warning: Relative route resolution within Splat routes is changing in v7. You can use the `v7_relativeSplatPath` future flag to opt-in early. For more information, see https://reactrouter.com/v6/upgrading/future#v7_relativesplatpath.",
+      "location": {
+        "url": "http://127.0.0.1:49027/node_modules/.vite/deps/react-router-dom.js?v=a75ab41c",
+        "lineNumber": 4426,
+        "columnNumber": 12
+      }
+    },
+    {
+      "type": "error",
+      "text": "Failed to load resource: the server responded with a status of 404 (Not Found)",
+      "location": {
+        "url": "http://127.0.0.1:49027/favicon.ico",
+        "lineNumber": 0,
+        "columnNumber": 0
+      }
+    },
+    {
+      "type": "verbose",
+      "text": "[DOM] Input elements should have autocomplete attributes (suggested: \"current-password\"): (More info: https://goo.gl/9p2vKq) %o",
+      "location": {
+        "url": "http://127.0.0.1:49027/login",
+        "lineNumber": 0,
+        "columnNumber": 0
+      }
+    },
+    {
+      "type": "error",
+      "text": "Failed to load resource: the server responded with a status of 404 (Not Found)",
+      "location": {
+        "url": "http://127.0.0.1:49027/favicon.ico",
+        "lineNumber": 0,
+        "columnNumber": 0
+      }
+    },
+    {
+      "type": "error",
+      "text": "TypeError: adminAPI.getPendingApplications is not a function\n    at loadData (http://127.0.0.1:49027/src/pages/Home.jsx?t=1780563375482:103:20)\n    at http://127.0.0.1:49027/src/pages/Home.jsx?t=1780563375482:95:5\n    at commitHookEffectListMount (http://127.0.0.1:49027/node_modules/.vite/deps/chunk-PJEEZAML.js?v=a75ab41c:16915:34)\n    at commitPassiveMountOnFiber (http://127.0.0.1:49027/node_modules/.vite/deps/chunk-PJEEZAML.js?v=a75ab41c:18156:19)\n    at commitPassiveMountEffects_complete (http://127.0.0.1:49027/node_modules/.vite/deps/chunk-PJEEZAML.js?v=a75ab41c:18129:17)\n    at commitPassiveMountEffects_begin (http://127.0.0.1:49027/node_modules/.vite/deps/chunk-PJEEZAML.js?v=a75ab41c:18119:15)\n    at commitPassiveMountEffects (http://127.0.0.1:49027/node_modules/.vite/deps/chunk-PJEEZAML.js?v=a75ab41c:18109:11)\n    at flushPassiveEffectsImpl (http://127.0.0.1:49027/node_modules/.vite/deps/chunk-PJEEZAML.js?v=a75ab41c:19490:11)\n    at flushPassiveEffects (http://127.0.0.1:49027/node_modules/.vite/deps/chunk-PJEEZAML.js?v=a75ab41c:19447:22)\n    at performSyncWorkOnRoot (http://127.0.0.1:49027/node_modules/.vite/deps/chunk-PJEEZAML.js?v=a75ab41c:18868:11)",
+      "location": {
+        "url": "http://127.0.0.1:49027/src/pages/Home.jsx?t=1780563375482",
+        "lineNumber": 130,
+        "columnNumber": 14
+      }
+    },
+    {
+      "type": "debug",
+      "text": "[vite] connecting...",
+      "location": {
+        "url": "http://127.0.0.1:49027/@vite/client",
+        "lineNumber": 494,
+        "columnNumber": 8
+      }
+    },
+    {
+      "type": "debug",
+      "text": "[vite] connected.",
+      "location": {
+        "url": "http://127.0.0.1:49027/@vite/client",
+        "lineNumber": 617,
+        "columnNumber": 14
+      }
+    },
+    {
+      "type": "info",
+      "text": "%cDownload the React DevTools for a better development experience: https://reactjs.org/link/react-devtools font-weight:bold",
+      "location": {
+        "url": "http://127.0.0.1:49027/node_modules/.vite/deps/chunk-PJEEZAML.js?v=a75ab41c",
+        "lineNumber": 21550,
+        "columnNumber": 24
+      }
+    },
+    {
+      "type": "warning",
+      "text": "⚠️ React Router Future Flag Warning: React Router will begin wrapping state updates in `React.startTransition` in v7. You can use the `v7_startTransition` future flag to opt-in early. For more information, see https://reactrouter.com/v6/upgrading/future#v7_starttransition.",
+      "location": {
+        "url": "http://127.0.0.1:49027/node_modules/.vite/deps/react-router-dom.js?v=a75ab41c",
+        "lineNumber": 4426,
+        "columnNumber": 12
+      }
+    },
+    {
+      "type": "warning",
+      "text": "⚠️ React Router Future Flag Warning: Relative route resolution within Splat routes is changing in v7. You can use the `v7_relativeSplatPath` future flag to opt-in early. For more information, see https://reactrouter.com/v6/upgrading/future#v7_relativesplatpath.",
+      "location": {
+        "url": "http://127.0.0.1:49027/node_modules/.vite/deps/react-router-dom.js?v=a75ab41c",
+        "lineNumber": 4426,
+        "columnNumber": 12
+      }
+    },
+    {
+      "type": "error",
+      "text": "TypeError: adminAPI.getPendingApplications is not a function\n    at loadData (http://127.0.0.1:49027/src/pages/Home.jsx?t=1780563375482:103:20)\n    at http://127.0.0.1:49027/src/pages/Home.jsx?t=1780563375482:95:5\n    at commitHookEffectListMount (http://127.0.0.1:49027/node_modules/.vite/deps/chunk-PJEEZAML.js?v=a75ab41c:16915:34)\n    at commitPassiveMountOnFiber (http://127.0.0.1:49027/node_modules/.vite/deps/chunk-PJEEZAML.js?v=a75ab41c:18156:19)\n    at commitPassiveMountEffects_complete (http://127.0.0.1:49027/node_modules/.vite/deps/chunk-PJEEZAML.js?v=a75ab41c:18129:17)\n    at commitPassiveMountEffects_begin (http://127.0.0.1:49027/node_modules/.vite/deps/chunk-PJEEZAML.js?v=a75ab41c:18119:15)\n    at commitPassiveMountEffects (http://127.0.0.1:49027/node_modules/.vite/deps/chunk-PJEEZAML.js?v=a75ab41c:18109:11)\n    at flushPassiveEffectsImpl (http://127.0.0.1:49027/node_modules/.vite/deps/chunk-PJEEZAML.js?v=a75ab41c:19490:11)\n    at flushPassiveEffects (http://127.0.0.1:49027/node_modules/.vite/deps/chunk-PJEEZAML.js?v=a75ab41c:19447:22)\n    at performSyncWorkOnRoot (http://127.0.0.1:49027/node_modules/.vite/deps/chunk-PJEEZAML.js?v=a75ab41c:18868:11)",
+      "location": {
+        "url": "http://127.0.0.1:49027/src/pages/Home.jsx?t=1780563375482",
+        "lineNumber": 130,
+        "columnNumber": 14
+      }
+    },
+    {
+      "type": "error",
+      "text": "The above error occurred in the <AdminApplications> component:\n\n    at AdminApplications (http://127.0.0.1:49027/src/pages/admin/Applications.jsx:23:27)\n    at RenderedRoute (http://127.0.0.1:49027/node_modules/.vite/deps/react-router-dom.js?v=a75ab41c:4122:5)\n    at Routes (http://127.0.0.1:49027/node_modules/.vite/deps/react-router-dom.js?v=a75ab41c:4592:5)\n    at main\n    at http://127.0.0.1:49027/node_modules/.vite/deps/antd.js?v=a75ab41c:66300:16\n    at Content\n    at div\n    at http://127.0.0.1:49027/node_modules/.vite/deps/antd.js?v=a75ab41c:66319:16\n    at Layout\n    at div\n    at http://127.0.0.1:49027/node_modules/.vite/deps/antd.js?v=a75ab41c:66319:16\n    at Layout\n    at div\n    at http://127.0.0.1:49027/node_modules/.vite/deps/antd.js?v=a75ab41c:66319:16\n    at Layout\n    at MainLayout (http://127.0.0.1:49027/src/App.jsx?t=1780564076654:66:20)\n    at RenderedRoute (http://127.0.0.1:49027/node_modules/.vite/deps/react-router-dom.js?v=a75ab41c:4122:5)\n    at Routes (http://127.0.0.1:49027/node_modules/.vite/deps/react-router-dom.js?v=a75ab41c:4592:5)\n    at Router (http://127.0.0.1:49027/node_modules/.vite/deps/react-router-dom.js?v=a75ab41c:4535:15)\n    at BrowserRouter (http://127.0.0.1:49027/node_modules/.vite/deps/react-router-dom.js?v=a75ab41c:5273:5)\n    at App (http://127.0.0.1:49027/src/App.jsx?t=1780564076654:393:49)\n    at LocaleProvider (http://127.0.0.1:49027/node_modules/.vite/deps/antd.js?v=a75ab41c:3732:13)\n    at MotionWrapper (http://127.0.0.1:49027/node_modules/.vite/deps/antd.js?v=a75ab41c:6266:32)\n    at ProviderChildren (http://127.0.0.1:49027/node_modules/.vite/deps/antd.js?v=a75ab41c:6374:5)\n    at ConfigProvider (http://127.0.0.1:49027/node_modules/.vite/deps/antd.js?v=a75ab41c:6665:27)\n\nConsider adding an error boundary to your tree to customize error handling behavior.\nVisit https://reactjs.org/link/error-boundaries to learn more about error boundaries.",
+      "location": {
+        "url": "http://127.0.0.1:49027/node_modules/.vite/deps/chunk-PJEEZAML.js?v=a75ab41c",
+        "lineNumber": 14031,
+        "columnNumber": 30
+      }
+    },
+    {
+      "type": "debug",
+      "text": "[vite] connecting...",
+      "location": {
+        "url": "http://127.0.0.1:49027/@vite/client",
+        "lineNumber": 494,
+        "columnNumber": 8
+      }
+    },
+    {
+      "type": "debug",
+      "text": "[vite] connected.",
+      "location": {
+        "url": "http://127.0.0.1:49027/@vite/client",
+        "lineNumber": 617,
+        "columnNumber": 14
+      }
+    },
+    {
+      "type": "info",
+      "text": "%cDownload the React DevTools for a better development experience: https://reactjs.org/link/react-devtools font-weight:bold",
+      "location": {
+        "url": "http://127.0.0.1:49027/node_modules/.vite/deps/chunk-PJEEZAML.js?v=a75ab41c",
+        "lineNumber": 21550,
+        "columnNumber": 24
+      }
+    },
+    {
+      "type": "error",
+      "text": "TypeError: adminAPI.getPendingApplications is not a function\n    at loadData (http://127.0.0.1:49027/src/pages/Home.jsx?t=1780563375482:103:20)\n    at http://127.0.0.1:49027/src/pages/Home.jsx?t=1780563375482:95:5\n    at commitHookEffectListMount (http://127.0.0.1:49027/node_modules/.vite/deps/chunk-PJEEZAML.js?v=a75ab41c:16915:34)\n    at commitPassiveMountOnFiber (http://127.0.0.1:49027/node_modules/.vite/deps/chunk-PJEEZAML.js?v=a75ab41c:18156:19)\n    at commitPassiveMountEffects_complete (http://127.0.0.1:49027/node_modules/.vite/deps/chunk-PJEEZAML.js?v=a75ab41c:18129:17)\n    at commitPassiveMountEffects_begin (http://127.0.0.1:49027/node_modules/.vite/deps/chunk-PJEEZAML.js?v=a75ab41c:18119:15)\n    at commitPassiveMountEffects (http://127.0.0.1:49027/node_modules/.vite/deps/chunk-PJEEZAML.js?v=a75ab41c:18109:11)\n    at flushPassiveEffectsImpl (http://127.0.0.1:49027/node_modules/.vite/deps/chunk-PJEEZAML.js?v=a75ab41c:19490:11)\n    at flushPassiveEffects (http://127.0.0.1:49027/node_modules/.vite/deps/chunk-PJEEZAML.js?v=a75ab41c:19447:22)\n    at performSyncWorkOnRoot (http://127.0.0.1:49027/node_modules/.vite/deps/chunk-PJEEZAML.js?v=a75ab41c:18868:11)",
+      "location": {
+        "url": "http://127.0.0.1:49027/src/pages/Home.jsx?t=1780563375482",
+        "lineNumber": 130,
+        "columnNumber": 14
+      }
+    },
+    {
+      "type": "warning",
+      "text": "⚠️ React Router Future Flag Warning: React Router will begin wrapping state updates in `React.startTransition` in v7. You can use the `v7_startTransition` future flag to opt-in early. For more information, see https://reactrouter.com/v6/upgrading/future#v7_starttransition.",
+      "location": {
+        "url": "http://127.0.0.1:49027/node_modules/.vite/deps/react-router-dom.js?v=a75ab41c",
+        "lineNumber": 4426,
+        "columnNumber": 12
+      }
+    },
+    {
+      "type": "warning",
+      "text": "⚠️ React Router Future Flag Warning: Relative route resolution within Splat routes is changing in v7. You can use the `v7_relativeSplatPath` future flag to opt-in early. For more information, see https://reactrouter.com/v6/upgrading/future#v7_relativesplatpath.",
+      "location": {
+        "url": "http://127.0.0.1:49027/node_modules/.vite/deps/react-router-dom.js?v=a75ab41c",
+        "lineNumber": 4426,
+        "columnNumber": 12
+      }
+    }
+  ],
+  "requestFailures": [],
+  "responseErrors": [],
+  "reportPath": "/Users/chen/Documents/trae_projects/local_projects/may-89027/probe/codex-final-20260604-runtime/may-89027-browser-report.json"
+}

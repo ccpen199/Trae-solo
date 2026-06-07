@@ -1,0 +1,543 @@
+{
+  "ok": true,
+  "generatedAt": "2026-06-04T08:29:31.064Z",
+  "order": "may-89027",
+  "roundIndex": 99,
+  "captureId": "codex-may-89027-latest",
+  "url": "http://127.0.0.1:49027/",
+  "initialUrl": "http://127.0.0.1:49027/",
+  "finalUrl": "http://127.0.0.1:49027/login",
+  "status": 200,
+  "title": "浙江省一网通办平台",
+  "initialTitle": "浙江省一网通办平台",
+  "navigationError": "",
+  "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89027/probe/latest-runtime/codex-may-89027-latest-frontend.png",
+  "screenshotPaths": [
+    "/Users/chen/Documents/trae_projects/local_projects/may-89027/probe/latest-runtime/codex-may-89027-latest-structure-01-首屏.png"
+  ],
+  "issueTextPreview": "登录流程已完成，继续复验登录后的首页和业务导航",
+  "targetReason": "登录注册相关问题",
+  "targetKind": "auth",
+  "targetMatched": true,
+  "targetActions": [
+    {
+      "action": "click",
+      "label": "登录注册相关问题",
+      "ok": true
+    },
+    {
+      "action": "target-verify",
+      "label": "登录注册相关问题",
+      "ok": true,
+      "finalUrl": "http://127.0.0.1:49027/login"
+    }
+  ],
+  "authFlow": {
+    "detected": true,
+    "attempted": true,
+    "success": false,
+    "finalUrl": "http://127.0.0.1:49027/login",
+    "message": "已尝试登录但仍停留在登录页",
+    "actions": [
+      {
+        "action": "login-fill-username",
+        "label": "admin",
+        "ok": true
+      },
+      {
+        "action": "login-fill-password",
+        "label": "admin:******",
+        "ok": true
+      },
+      {
+        "action": "login-enter",
+        "label": "admin",
+        "ok": true
+      },
+      {
+        "action": "login-result",
+        "label": "admin",
+        "ok": false,
+        "finalUrl": "http://127.0.0.1:49027/login",
+        "feedback": [
+          "登录失败"
+        ]
+      },
+      {
+        "action": "login-fill-username",
+        "label": "enterprise1",
+        "ok": true
+      },
+      {
+        "action": "login-fill-password",
+        "label": "enterprise1:******",
+        "ok": true
+      },
+      {
+        "action": "login-enter",
+        "label": "enterprise1",
+        "ok": true
+      },
+      {
+        "action": "login-result",
+        "label": "enterprise1",
+        "ok": false,
+        "finalUrl": "http://127.0.0.1:49027/login",
+        "feedback": [
+          "登录失败"
+        ]
+      },
+      {
+        "action": "login-fill-username",
+        "label": "citizen1",
+        "ok": true
+      },
+      {
+        "action": "login-fill-password",
+        "label": "citizen1:******",
+        "ok": true
+      },
+      {
+        "action": "login-enter",
+        "label": "citizen1",
+        "ok": true
+      },
+      {
+        "action": "login-result",
+        "label": "citizen1",
+        "ok": false,
+        "finalUrl": "http://127.0.0.1:49027/login",
+        "feedback": [
+          "登录失败"
+        ]
+      }
+    ]
+  },
+  "businessAudit": {
+    "actions": [],
+    "snapshots": [
+      {
+        "label": "首屏",
+        "url": "http://127.0.0.1:49027/login",
+        "title": "浙江省一网通办平台",
+        "headings": [
+          "浙江省一网通办平台"
+        ],
+        "navLabels": [],
+        "buttons": [
+          "登 录"
+        ],
+        "links": [],
+        "inputs": [
+          {
+            "tag": "input",
+            "type": "text",
+            "placeholder": "用户名",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "password",
+            "placeholder": "密码",
+            "name": "",
+            "label": ""
+          }
+        ],
+        "tables": [],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "浙江省一网通办平台让政务服务更便捷登录注册登 录测试账号：管理员：admin / 123456企业用户：enterprise1 / 123456个人用户：citizen1 / 123456",
+        "layout": {
+          "viewportWidth": 1504,
+          "viewportHeight": 1000,
+          "scrollWidth": 1504,
+          "scrollHeight": 1000,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "codex-may-89027-latest-structure-01-首屏",
+          "label": "首屏",
+          "finalUrl": "http://127.0.0.1:49027/login",
+          "title": "浙江省一网通办平台",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89027/probe/latest-runtime/codex-may-89027-latest-structure-01-首屏.json",
+          "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89027/probe/latest-runtime/codex-may-89027-latest-structure-01-首屏.png",
+          "elementCount": 70,
+          "interactiveCount": 6,
+          "interactiveLabels": [
+            "登录",
+            "登 录 测试账号： 管理员：admin / 123456 企业用户：enterprise1 / 123456 个人用户：citizen1 / 123456",
+            "用户名",
+            "密码",
+            "登 录"
+          ]
+        }
+      }
+    ],
+    "findings": [
+      "登录页可见，但自动填充可见演示账号后仍停留在登录页，没有进入登录后的首页或工作台。",
+      "接口 /api/auth/login 返回 HTTP 500，对应业务模块无法完成数据读取。"
+    ],
+    "actionHints": [
+      "优先修复登录表单、演示账号、登录接口和登录后跳转，让自动化能先完成登录再复验首页业务链路。",
+      "补齐 /api/auth/login 后端接口、SQLite 数据和前端错误处理。"
+    ],
+    "emptyPages": [],
+    "overflowPages": [],
+    "blankPages": [],
+    "apiFailurePaths": [
+      "/api/auth/login"
+    ],
+    "goalTerms": [],
+    "clickedActionDescriptors": [],
+    "secondaryActionClicks": 0,
+    "structureCaptures": [
+      {
+        "module": "website_structure_capture",
+        "runId": "codex-may-89027-latest-structure-01-首屏",
+        "label": "首屏",
+        "finalUrl": "http://127.0.0.1:49027/login",
+        "title": "浙江省一网通办平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89027/probe/latest-runtime/codex-may-89027-latest-structure-01-首屏.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89027/probe/latest-runtime/codex-may-89027-latest-structure-01-首屏.png",
+        "elementCount": 70,
+        "interactiveCount": 6,
+        "interactiveLabels": [
+          "登录",
+          "登 录 测试账号： 管理员：admin / 123456 企业用户：enterprise1 / 123456 个人用户：citizen1 / 123456",
+          "用户名",
+          "密码",
+          "登 录"
+        ]
+      }
+    ],
+    "representativeScreenshotUrl": "http://127.0.0.1:49027/login",
+    "representativeScreenshotLabel": "浙江省一网通办平台"
+  },
+  "websiteStructureCapture": {
+    "module": "website_structure_capture",
+    "captureCount": 1,
+    "captures": [
+      {
+        "module": "website_structure_capture",
+        "runId": "codex-may-89027-latest-structure-01-首屏",
+        "label": "首屏",
+        "finalUrl": "http://127.0.0.1:49027/login",
+        "title": "浙江省一网通办平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89027/probe/latest-runtime/codex-may-89027-latest-structure-01-首屏.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89027/probe/latest-runtime/codex-may-89027-latest-structure-01-首屏.png",
+        "elementCount": 70,
+        "interactiveCount": 6,
+        "interactiveLabels": [
+          "登录",
+          "登 录 测试账号： 管理员：admin / 123456 企业用户：enterprise1 / 123456 个人用户：citizen1 / 123456",
+          "用户名",
+          "密码",
+          "登 录"
+        ]
+      }
+    ]
+  },
+  "screenshotMetrics": {
+    "width": 1536,
+    "height": 1000,
+    "scrollWidth": 1504,
+    "scrollHeight": 1000
+  },
+  "initialBodyTextPreview": "浙江省一网通办平台\n\n让政务服务更便捷\n\n登录\n注册\n登 录\n\n测试账号：\n\n管理员：admin / 123456\n\n企业用户：enterprise1 / 123456\n\n个人用户：citizen1 / 123456",
+  "bodyTextPreview": "浙江省一网通办平台\n\n让政务服务更便捷\n\n登录\n注册\n登 录\n\n测试账号：\n\n管理员：admin / 123456\n\n企业用户：enterprise1 / 123456\n\n个人用户：citizen1 / 123456",
+  "apiBase": "http://127.0.0.1:59027",
+  "businessGoalPreview": "",
+  "apiResponses": [
+    {
+      "method": "POST",
+      "status": 500,
+      "url": "http://127.0.0.1:49027/api/auth/login"
+    },
+    {
+      "method": "POST",
+      "status": 500,
+      "url": "http://127.0.0.1:49027/api/auth/login"
+    },
+    {
+      "method": "POST",
+      "status": 500,
+      "url": "http://127.0.0.1:49027/api/auth/login"
+    }
+  ],
+  "apiChecks": [
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59027/api/health",
+      "path": "/api/health",
+      "status": 0,
+      "ok": false,
+      "error": "apiRequestContext.get: connect ECONNREFUSED 127.0.0.1:59027\nCall log:\n\u001b[2m  - → GET http://127.0.0.1:59027/api/health\u001b[22m\n\u001b[2m    - user-agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/148.0.0.0 Saf"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59027/api/auth/me",
+      "path": "/api/auth/me",
+      "status": 0,
+      "ok": false,
+      "error": "apiRequestContext.get: connect ECONNREFUSED 127.0.0.1:59027\nCall log:\n\u001b[2m  - → GET http://127.0.0.1:59027/api/auth/me\u001b[22m\n\u001b[2m    - user-agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/148.0.0.0 Sa"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59027/api/users/profile",
+      "path": "/api/users/profile",
+      "status": 0,
+      "ok": false,
+      "error": "apiRequestContext.get: connect ECONNREFUSED 127.0.0.1:59027\nCall log:\n\u001b[2m  - → GET http://127.0.0.1:59027/api/users/profile\u001b[22m\n\u001b[2m    - user-agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/148.0."
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59027/api/user/profile",
+      "path": "/api/user/profile",
+      "status": 0,
+      "ok": false,
+      "error": "apiRequestContext.get: connect ECONNREFUSED 127.0.0.1:59027\nCall log:\n\u001b[2m  - → GET http://127.0.0.1:59027/api/user/profile\u001b[22m\n\u001b[2m    - user-agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/148.0.0"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59027/api/admin/stats",
+      "path": "/api/admin/stats",
+      "status": 0,
+      "ok": false,
+      "error": "apiRequestContext.get: connect ECONNREFUSED 127.0.0.1:59027\nCall log:\n\u001b[2m  - → GET http://127.0.0.1:59027/api/admin/stats\u001b[22m\n\u001b[2m    - user-agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/148.0.0."
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59027/api/admin/dashboard",
+      "path": "/api/admin/dashboard",
+      "status": 0,
+      "ok": false,
+      "error": "apiRequestContext.get: connect ECONNREFUSED 127.0.0.1:59027\nCall log:\n\u001b[2m  - → GET http://127.0.0.1:59027/api/admin/dashboard\u001b[22m\n\u001b[2m    - user-agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/148."
+    }
+  ],
+  "dialogs": [],
+  "consoleMessages": [
+    {
+      "type": "debug",
+      "text": "[vite] connecting...",
+      "location": {
+        "url": "http://127.0.0.1:49027/@vite/client",
+        "lineNumber": 494,
+        "columnNumber": 8
+      }
+    },
+    {
+      "type": "debug",
+      "text": "[vite] connected.",
+      "location": {
+        "url": "http://127.0.0.1:49027/@vite/client",
+        "lineNumber": 617,
+        "columnNumber": 14
+      }
+    },
+    {
+      "type": "info",
+      "text": "%cDownload the React DevTools for a better development experience: https://reactjs.org/link/react-devtools font-weight:bold",
+      "location": {
+        "url": "http://127.0.0.1:49027/node_modules/.vite/deps/chunk-PJEEZAML.js?v=a75ab41c",
+        "lineNumber": 21550,
+        "columnNumber": 24
+      }
+    },
+    {
+      "type": "warning",
+      "text": "⚠️ React Router Future Flag Warning: React Router will begin wrapping state updates in `React.startTransition` in v7. You can use the `v7_startTransition` future flag to opt-in early. For more information, see https://reactrouter.com/v6/upgrading/future#v7_starttransition.",
+      "location": {
+        "url": "http://127.0.0.1:49027/node_modules/.vite/deps/react-router-dom.js?v=a75ab41c",
+        "lineNumber": 4426,
+        "columnNumber": 12
+      }
+    },
+    {
+      "type": "warning",
+      "text": "⚠️ React Router Future Flag Warning: Relative route resolution within Splat routes is changing in v7. You can use the `v7_relativeSplatPath` future flag to opt-in early. For more information, see https://reactrouter.com/v6/upgrading/future#v7_relativesplatpath.",
+      "location": {
+        "url": "http://127.0.0.1:49027/node_modules/.vite/deps/react-router-dom.js?v=a75ab41c",
+        "lineNumber": 4426,
+        "columnNumber": 12
+      }
+    },
+    {
+      "type": "verbose",
+      "text": "[DOM] Input elements should have autocomplete attributes (suggested: \"current-password\"): (More info: https://goo.gl/9p2vKq) %o",
+      "location": {
+        "url": "http://127.0.0.1:49027/login",
+        "lineNumber": 0,
+        "columnNumber": 0
+      }
+    },
+    {
+      "type": "error",
+      "text": "Failed to load resource: the server responded with a status of 404 (Not Found)",
+      "location": {
+        "url": "http://127.0.0.1:49027/favicon.ico",
+        "lineNumber": 0,
+        "columnNumber": 0
+      }
+    },
+    {
+      "type": "error",
+      "text": "Failed to load resource: the server responded with a status of 404 (Not Found)",
+      "location": {
+        "url": "http://127.0.0.1:49027/favicon.ico",
+        "lineNumber": 0,
+        "columnNumber": 0
+      }
+    },
+    {
+      "type": "error",
+      "text": "Failed to load resource: the server responded with a status of 500 (Internal Server Error)",
+      "location": {
+        "url": "http://127.0.0.1:49027/api/auth/login",
+        "lineNumber": 0,
+        "columnNumber": 0
+      }
+    },
+    {
+      "type": "error",
+      "text": "Failed to load resource: the server responded with a status of 500 (Internal Server Error)",
+      "location": {
+        "url": "http://127.0.0.1:49027/api/auth/login",
+        "lineNumber": 0,
+        "columnNumber": 0
+      }
+    },
+    {
+      "type": "error",
+      "text": "Failed to load resource: the server responded with a status of 500 (Internal Server Error)",
+      "location": {
+        "url": "http://127.0.0.1:49027/api/auth/login",
+        "lineNumber": 0,
+        "columnNumber": 0
+      }
+    },
+    {
+      "type": "debug",
+      "text": "[vite] connecting...",
+      "location": {
+        "url": "http://127.0.0.1:49027/@vite/client",
+        "lineNumber": 494,
+        "columnNumber": 8
+      }
+    },
+    {
+      "type": "debug",
+      "text": "[vite] connected.",
+      "location": {
+        "url": "http://127.0.0.1:49027/@vite/client",
+        "lineNumber": 617,
+        "columnNumber": 14
+      }
+    },
+    {
+      "type": "info",
+      "text": "%cDownload the React DevTools for a better development experience: https://reactjs.org/link/react-devtools font-weight:bold",
+      "location": {
+        "url": "http://127.0.0.1:49027/node_modules/.vite/deps/chunk-PJEEZAML.js?v=a75ab41c",
+        "lineNumber": 21550,
+        "columnNumber": 24
+      }
+    },
+    {
+      "type": "warning",
+      "text": "⚠️ React Router Future Flag Warning: React Router will begin wrapping state updates in `React.startTransition` in v7. You can use the `v7_startTransition` future flag to opt-in early. For more information, see https://reactrouter.com/v6/upgrading/future#v7_starttransition.",
+      "location": {
+        "url": "http://127.0.0.1:49027/node_modules/.vite/deps/react-router-dom.js?v=a75ab41c",
+        "lineNumber": 4426,
+        "columnNumber": 12
+      }
+    },
+    {
+      "type": "warning",
+      "text": "⚠️ React Router Future Flag Warning: Relative route resolution within Splat routes is changing in v7. You can use the `v7_relativeSplatPath` future flag to opt-in early. For more information, see https://reactrouter.com/v6/upgrading/future#v7_relativesplatpath.",
+      "location": {
+        "url": "http://127.0.0.1:49027/node_modules/.vite/deps/react-router-dom.js?v=a75ab41c",
+        "lineNumber": 4426,
+        "columnNumber": 12
+      }
+    },
+    {
+      "type": "verbose",
+      "text": "[DOM] Input elements should have autocomplete attributes (suggested: \"current-password\"): (More info: https://goo.gl/9p2vKq) %o",
+      "location": {
+        "url": "http://127.0.0.1:49027/login",
+        "lineNumber": 0,
+        "columnNumber": 0
+      }
+    },
+    {
+      "type": "debug",
+      "text": "[vite] connecting...",
+      "location": {
+        "url": "http://127.0.0.1:49027/@vite/client",
+        "lineNumber": 494,
+        "columnNumber": 8
+      }
+    },
+    {
+      "type": "debug",
+      "text": "[vite] connected.",
+      "location": {
+        "url": "http://127.0.0.1:49027/@vite/client",
+        "lineNumber": 617,
+        "columnNumber": 14
+      }
+    },
+    {
+      "type": "info",
+      "text": "%cDownload the React DevTools for a better development experience: https://reactjs.org/link/react-devtools font-weight:bold",
+      "location": {
+        "url": "http://127.0.0.1:49027/node_modules/.vite/deps/chunk-PJEEZAML.js?v=a75ab41c",
+        "lineNumber": 21550,
+        "columnNumber": 24
+      }
+    },
+    {
+      "type": "warning",
+      "text": "⚠️ React Router Future Flag Warning: React Router will begin wrapping state updates in `React.startTransition` in v7. You can use the `v7_startTransition` future flag to opt-in early. For more information, see https://reactrouter.com/v6/upgrading/future#v7_starttransition.",
+      "location": {
+        "url": "http://127.0.0.1:49027/node_modules/.vite/deps/react-router-dom.js?v=a75ab41c",
+        "lineNumber": 4426,
+        "columnNumber": 12
+      }
+    },
+    {
+      "type": "warning",
+      "text": "⚠️ React Router Future Flag Warning: Relative route resolution within Splat routes is changing in v7. You can use the `v7_relativeSplatPath` future flag to opt-in early. For more information, see https://reactrouter.com/v6/upgrading/future#v7_relativesplatpath.",
+      "location": {
+        "url": "http://127.0.0.1:49027/node_modules/.vite/deps/react-router-dom.js?v=a75ab41c",
+        "lineNumber": 4426,
+        "columnNumber": 12
+      }
+    },
+    {
+      "type": "verbose",
+      "text": "[DOM] Input elements should have autocomplete attributes (suggested: \"current-password\"): (More info: https://goo.gl/9p2vKq) %o",
+      "location": {
+        "url": "http://127.0.0.1:49027/login",
+        "lineNumber": 0,
+        "columnNumber": 0
+      }
+    }
+  ],
+  "requestFailures": [],
+  "responseErrors": [
+    {
+      "status": 500,
+      "url": "http://127.0.0.1:49027/api/auth/login"
+    },
+    {
+      "status": 500,
+      "url": "http://127.0.0.1:49027/api/auth/login"
+    },
+    {
+      "status": 500,
+      "url": "http://127.0.0.1:49027/api/auth/login"
+    }
+  ]
+}
