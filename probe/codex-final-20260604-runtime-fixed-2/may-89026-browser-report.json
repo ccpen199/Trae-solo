@@ -1,0 +1,559 @@
+{
+  "ok": true,
+  "generatedAt": "2026-06-04T09:40:32.465Z",
+  "order": "may-89026",
+  "roundIndex": 101,
+  "captureId": "may-89026-final-runtime-fixed-2",
+  "url": "http://127.0.0.1:49026/",
+  "initialUrl": "http://127.0.0.1:49026/",
+  "finalUrl": "http://127.0.0.1:49026/",
+  "status": 200,
+  "title": "家庭生活服务平台",
+  "initialTitle": "家庭生活服务平台",
+  "navigationError": "",
+  "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89026/probe/codex-final-20260604-runtime-fixed-2/may-89026-final-runtime-fixed-2-frontend.png",
+  "screenshotPaths": [
+    "/Users/chen/Documents/trae_projects/local_projects/may-89026/probe/codex-final-20260604-runtime-fixed-2/may-89026-final-runtime-fixed-2-structure-01-首屏.png"
+  ],
+  "issueTextPreview": "搜索/筛选相关问题；后台管理相关问题；购买/提交相关问题；详情/内容页相关问题",
+  "targetReason": "搜索/筛选相关问题；后台管理相关问题；购买/提交相关问题；详情/内容页相关问题",
+  "targetKind": "purchase",
+  "targetMatched": true,
+  "targetActions": [
+    {
+      "action": "click",
+      "label": "搜索/筛选相关问题",
+      "ok": false,
+      "error": "locator.click: Timeout 900ms exceeded.\nCall log:\n\u001b[2m  - waiting for getByRole('button', { name: /搜索/ }).first()\u001b[22m\n\u001b[2m    - locator resolved to <button type=\"button\" class=\"ant-btn css-dev-only-do-not-override-ypkju9"
+    },
+    {
+      "action": "click",
+      "label": "搜索/筛选相关问题",
+      "ok": false,
+      "error": "locator.click: Timeout 900ms exceeded.\nCall log:\n\u001b[2m  - waiting for locator('a,button,[role=\"button\"],[role=\"menuitem\"],[onclick],[tabindex]:not([tabindex=\"-1\"]),[class*=\"nav-item\" i],[class*=\"menu-item\" i],[class*=\"men"
+    },
+    {
+      "action": "click",
+      "label": "搜索/筛选相关问题",
+      "ok": true
+    },
+    {
+      "action": "target-verify",
+      "label": "搜索/筛选相关问题",
+      "ok": false,
+      "finalUrl": "http://127.0.0.1:49026/services"
+    },
+    {
+      "action": "click",
+      "label": "后台管理相关问题",
+      "ok": false,
+      "error": "locator.click: Timeout 900ms exceeded.\nCall log:\n\u001b[2m  - waiting for getByRole('button', { name: /后台管理/ }).first()\u001b[22m\n\u001b[2m    - locator resolved to <button type=\"button\" class=\"ant-btn css-dev-only-do-not-override-ypkj"
+    },
+    {
+      "action": "click",
+      "label": "后台管理相关问题",
+      "ok": false,
+      "error": "locator.click: Timeout 900ms exceeded.\nCall log:\n\u001b[2m  - waiting for getByText(/后台管理/).first()\u001b[22m\n\u001b[2m    - locator resolved to <span>后台管理</span>\u001b[22m\n"
+    },
+    {
+      "action": "click",
+      "label": "后台管理相关问题",
+      "ok": false,
+      "error": "locator.click: Timeout 900ms exceeded.\nCall log:\n\u001b[2m  - waiting for getByRole('button', { name: /后台/ }).first()\u001b[22m\n"
+    },
+    {
+      "action": "click",
+      "label": "后台管理相关问题",
+      "ok": false,
+      "error": "locator.click: Timeout 900ms exceeded.\nCall log:\n\u001b[2m  - waiting for locator('a,button,[role=\"button\"],[role=\"menuitem\"],[onclick],[tabindex]:not([tabindex=\"-1\"]),[class*=\"nav-item\" i],[class*=\"menu-item\" i],[class*=\"men"
+    },
+    {
+      "action": "target-already-visible",
+      "label": "购买/提交相关问题",
+      "ok": true
+    },
+    {
+      "action": "target-verify",
+      "label": "购买/提交相关问题",
+      "ok": true,
+      "finalUrl": "http://127.0.0.1:49026/admin"
+    }
+  ],
+  "authFlow": {
+    "detected": false,
+    "attempted": false,
+    "success": false,
+    "finalUrl": "http://127.0.0.1:49026/",
+    "message": "",
+    "actions": []
+  },
+  "businessAudit": {
+    "actions": [],
+    "snapshots": [
+      {
+        "label": "首屏",
+        "url": "http://127.0.0.1:49026/",
+        "title": "家庭生活服务平台",
+        "headings": [],
+        "navLabels": [],
+        "buttons": [],
+        "links": [],
+        "inputs": [],
+        "tables": [],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "",
+        "layout": {
+          "viewportWidth": 1504,
+          "viewportHeight": 1379,
+          "scrollWidth": 1504,
+          "scrollHeight": 1379,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89026-final-runtime-fixed-2-structure-01-首屏",
+          "label": "首屏",
+          "finalUrl": "http://127.0.0.1:49026/",
+          "title": "家庭生活服务平台",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89026/probe/codex-final-20260604-runtime-fixed-2/may-89026-final-runtime-fixed-2-structure-01-首屏.json",
+          "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89026/probe/codex-final-20260604-runtime-fixed-2/may-89026-final-runtime-fixed-2-structure-01-首屏.png",
+          "elementCount": 9,
+          "interactiveCount": 0,
+          "interactiveLabels": []
+        }
+      }
+    ],
+    "findings": [
+      "首屏 页面打开后是空白，没有渲染业务内容、表单或列表。"
+    ],
+    "actionHints": [
+      "修复 首屏 的路由组件挂载、接口初始化和错误兜底，确保进入页面后直接显示可操作内容。"
+    ],
+    "emptyPages": [],
+    "overflowPages": [],
+    "blankPages": [
+      "首屏"
+    ],
+    "apiFailurePaths": [],
+    "goalTerms": [],
+    "clickedActionDescriptors": [],
+    "secondaryActionClicks": 0,
+    "structureCaptures": [
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89026-final-runtime-fixed-2-structure-01-首屏",
+        "label": "首屏",
+        "finalUrl": "http://127.0.0.1:49026/",
+        "title": "家庭生活服务平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89026/probe/codex-final-20260604-runtime-fixed-2/may-89026-final-runtime-fixed-2-structure-01-首屏.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89026/probe/codex-final-20260604-runtime-fixed-2/may-89026-final-runtime-fixed-2-structure-01-首屏.png",
+        "elementCount": 9,
+        "interactiveCount": 0,
+        "interactiveLabels": []
+      }
+    ],
+    "representativeScreenshotUrl": "http://127.0.0.1:49026/",
+    "representativeScreenshotLabel": "首屏"
+  },
+  "websiteStructureCapture": {
+    "module": "website_structure_capture",
+    "captureCount": 1,
+    "captures": [
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89026-final-runtime-fixed-2-structure-01-首屏",
+        "label": "首屏",
+        "finalUrl": "http://127.0.0.1:49026/",
+        "title": "家庭生活服务平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89026/probe/codex-final-20260604-runtime-fixed-2/may-89026-final-runtime-fixed-2-structure-01-首屏.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89026/probe/codex-final-20260604-runtime-fixed-2/may-89026-final-runtime-fixed-2-structure-01-首屏.png",
+        "elementCount": 9,
+        "interactiveCount": 0,
+        "interactiveLabels": []
+      }
+    ]
+  },
+  "screenshotMetrics": {
+    "width": 1536,
+    "height": 1379,
+    "scrollWidth": 1504,
+    "scrollHeight": 1379
+  },
+  "initialBodyTextPreview": "家庭生活服务平台\n搜索筛选\n订单提交\n后台管理\n演示管理员\n数据概览\n订单管理\n服务商审核\n质检规则\n结算管理\n家庭生活服务平台\n保洁、维修、家居服务预约与后台运营一体化工作台\n预约服务\n我的订单\n后台管理\n订单总数\n5\n待派单\n0\n客户数\n1\n服务商\n5\n服务分类\n全部服务\n🧹 保洁服务\n🔧 家电维修\n💡 水电维修\n📦 搬家服务\n🚿 管道疏通\n🔐 锁具服务\n🎨 墙面翻新\n🪑 家具安装\n🚪 门窗维修\n👩‍🍳 家政服务\n🦟 除螨消杀\n🌿 园艺服务\n热门服务\n日常保洁2小时\n保洁服务 · 120 分钟\n¥99\n预约\n深度保洁3小时\n保洁服务 · 180 分钟\n¥199\n预约\n开荒保洁\n保洁服务 · 240 分钟\n¥399\n预约\n空调维修检测\n家电维修 · 60 分钟\n¥50\n预约\n冰箱维修\n家电维修 · 90 分钟\n¥80\n预约\n洗衣机维修\n家电维修 · 60 分钟\n¥60\n预约\n最近订单\n查看全部\n日常保洁2小时 · HS-DEMO-1001\n北京市朝阳区三里屯太古里 8 号楼\n已派单\n¥99\n查看详情\n深度保洁3小时 · HS-DEMO-1002\n北京市朝阳区三里屯太古里 12 号楼\n已接单\n¥199\n查看详情\n空调维修检测 · HS-DEMO-1003\n北京市海淀区中关村软件园 A 座\n服务中\n¥50\n查看详情\n开荒保洁 · HS-DEMO-1004\n北京市朝阳区望京 SOHO T3\n已完成\n¥399\n查看详情\n电路检修 · HS-DEMO-1005\n北京市海淀区五道口华联商厦\n已结算\n¥80\n查看详情",
+  "bodyTextPreview": "",
+  "apiBase": "http://127.0.0.1:59026",
+  "businessGoalPreview": "",
+  "apiResponses": [
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49026/api/categories"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49026/api/services"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49026/api/orders"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49026/api/admin/stats"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49026/api/categories"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49026/api/services"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49026/api/orders"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49026/api/admin/stats"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49026/api/categories"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49026/api/services"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49026/api/categories"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49026/api/services"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49026/api/admin/dashboard"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49026/api/admin/providers/pending"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49026/api/admin/dashboard"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49026/api/admin/providers/pending"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49026/api/admin/dashboard"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49026/api/admin/providers/pending"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49026/api/admin/dashboard"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49026/api/admin/providers/pending"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49026/api/admin/dashboard"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49026/api/admin/providers/pending"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49026/api/admin/dashboard"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49026/api/admin/providers/pending"
+    }
+  ],
+  "apiChecks": [
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59026/api/health",
+      "path": "/api/health",
+      "status": 200,
+      "ok": true,
+      "bodyPreview": "{\"status\":\"ok\",\"timestamp\":\"2026-06-04T09:40:26.463Z\"}"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59026/api/categories",
+      "path": "/api/categories",
+      "status": 200,
+      "ok": true,
+      "bodyPreview": "{\"categories\":[{\"id\":1,\"name\":\"保洁服务\",\"icon\":\"🧹\",\"description\":\"日常保洁、深度清洁、开荒保洁\",\"isActive\":true,\"sortOrder\":0,\"createdAt\":\"2026-06-04T08:58:32.000Z\",\"updatedAt\":\"2026-06-04T08:58:32.000Z\",\"skus\":[{\"id\":3,\"name\":\"开荒保洁\",\"description\":null,\"price\":399,\"originalPrice\":480,\"duration\":240,\"includedItems\":[\"装修后全面清洁\",\"墙面地面清洁\",\"窗户清洁\"],\"excludedItems\":[\"除甲醛\",\"家具搬运\"],\"isActive\":true,\"categoryId\":1,\"createdAt\":\"2026-06-04T08:58:32.000Z\",\"updatedAt\":\"2026-06-04T08:58:32.000Z\"},{\"id\":1,\"name\":\"日常保洁2小时\",\"descr"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59026/api/services",
+      "path": "/api/services",
+      "status": 200,
+      "ok": true,
+      "bodyPreview": "{\"skus\":[{\"id\":1,\"name\":\"日常保洁2小时\",\"description\":null,\"price\":99,\"originalPrice\":120,\"duration\":120,\"includedItems\":[\"客厅\",\"卧室\",\"厨房\",\"卫生间表面清洁\"],\"excludedItems\":[\"油烟机深度清洁\",\"玻璃外侧清洁\"],\"isActive\":true,\"categoryId\":1,\"createdAt\":\"2026-06-04T08:58:32.000Z\",\"updatedAt\":\"2026-06-04T08:58:32.000Z\",\"category\":{\"id\":1,\"name\":\"保洁服务\",\"icon\":\"🧹\",\"description\":\"日常保洁、深度清洁、开荒保洁\",\"isActive\":true,\"sortOrder\":0,\"createdAt\":\"2026-06-04T08:58:32.000Z\",\"updatedAt\":\"2026-06-04T08:58:32.000Z\"}},{\"id\":2,\"name\":\"深度保洁3小时\",\""
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59026/api/orders",
+      "path": "/api/orders",
+      "status": 200,
+      "ok": true,
+      "bodyPreview": "{\"orders\":[{\"id\":1,\"orderNo\":\"HS-DEMO-1001\",\"customerId\":7,\"providerId\":2,\"status\":\"dispatched\",\"totalAmount\":99,\"serviceFee\":0,\"platformFee\":9.9,\"customerAddress\":\"北京市朝阳区三里屯太古里 8 号楼\",\"latitude\":39.9339,\"longitude\":116.4521,\"scheduledTime\":\"2026-06-04T10:58:33.154Z\",\"acceptedTime\":\"2026-06-04T10:58:33.154Z\",\"arrivedTime\":null,\"startedTime\":null,\"completedTime\":null,\"customerNotes\":\"预约时间已确认，系统已派单给距离 3.2km 的张师傅。\",\"providerNotes\":null,\"createdAt\":\"2026-06-04T08:58:33.000Z\",\"updatedAt\":\"2026-06-04T0"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59026/api/admin/stats",
+      "path": "/api/admin/stats",
+      "status": 200,
+      "ok": true,
+      "bodyPreview": "{\"totalOrders\":5,\"totalUsers\":1,\"totalProviders\":5,\"pendingOrders\":0}"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59026/api/admin/dashboard",
+      "path": "/api/admin/dashboard",
+      "status": 200,
+      "ok": true,
+      "bodyPreview": "{\"stats\":{\"totalOrders\":5,\"todayOrders\":5,\"totalRevenue\":479,\"totalUsers\":1,\"totalProviders\":5,\"pendingSettlement\":359.1},\"orderTrend\":[{\"date\":\"05-29\",\"count\":0},{\"date\":\"05-30\",\"count\":0},{\"date\":\"05-31\",\"count\":0},{\"date\":\"06-01\",\"count\":0},{\"date\":\"06-02\",\"count\":0},{\"date\":\"06-03\",\"count\":0},{\"date\":\"06-04\",\"count\":5}],\"heatmapData\":{\"2026-05-06\":0,\"2026-05-07\":0,\"2026-05-08\":0,\"2026-05-09\":0,\"2026-05-10\":0,\"2026-05-11\":0,\"2026-05-12\":0,\"2026-05-13\":0,\"2026-05-14\":0,\"2026-05-15\":0,\"2026-05-"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59026/api/admin/providers/pending",
+      "path": "/api/admin/providers/pending",
+      "status": 200,
+      "ok": true,
+      "bodyPreview": "{\"providers\":[{\"id\":3,\"userId\":4,\"status\":\"pending_review\",\"companyName\":\"安心保洁服务部\",\"businessLicense\":\"DEMO-13900000010\",\"idCardFront\":\"demo-id-card-front.png\",\"idCardBack\":\"demo-id-card-back.png\",\"qualificationCertificate\":\"demo-certificate.png\",\"rejectionReason\":null,\"reviewerId\":null,\"reviewTime\":null,\"totalEarnings\":0,\"pendingSettlement\":0,\"settlementPeriod\":7,\"bankInfo\":{\"bankName\":\"演示银行\",\"accountNumber\":\"62220013900000010\",\"accountName\":\"王师傅\"},\"serviceAreas\":[\"北京市朝阳区\",\"北京市海淀区\"],\"createdAt\":"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59026/api/search?q=%E6%B5%8B%E8%AF%95",
+      "path": "/api/search?q=%E6%B5%8B%E8%AF%95",
+      "status": 200,
+      "ok": true,
+      "bodyPreview": "{\"services\":[],\"products\":[],\"total\":0,\"keyword\":\"测试\"}"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59026/api/products",
+      "path": "/api/products",
+      "status": 200,
+      "ok": true,
+      "bodyPreview": "{\"products\":[{\"id\":1,\"name\":\"厨房水龙头\",\"category\":\"kitchen\",\"description\":\"厨房水龙头 - 高品质自营商品\",\"price\":199,\"originalPrice\":259,\"stock\":50,\"image\":null,\"isActive\":true,\"createdAt\":\"2026-06-04T08:58:32.000Z\",\"updatedAt\":\"2026-06-04T08:58:32.000Z\"},{\"id\":2,\"name\":\"不锈钢洗菜盆\",\"category\":\"kitchen\",\"description\":\"不锈钢洗菜盆 - 高品质自营商品\",\"price\":399,\"originalPrice\":499,\"stock\":30,\"image\":null,\"isActive\":true,\"createdAt\":\"2026-06-04T08:58:32.000Z\",\"updatedAt\":\"2026-06-04T08:58:32.000Z\"},{\"id\":3,\"name\":\"智能马桶盖\",\"categor"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59026/api/cart",
+      "path": "/api/cart",
+      "status": 200,
+      "ok": true,
+      "bodyPreview": "{\"items\":[],\"total\":0,\"message\":\"家政平台使用服务预约下单流程，无独立购物车\"}"
+    }
+  ],
+  "dialogs": [],
+  "consoleMessages": [
+    {
+      "type": "debug",
+      "text": "[vite] connecting...",
+      "location": {
+        "url": "http://127.0.0.1:49026/@vite/client",
+        "lineNumber": 850,
+        "columnNumber": 8
+      }
+    },
+    {
+      "type": "debug",
+      "text": "[vite] connected.",
+      "location": {
+        "url": "http://127.0.0.1:49026/@vite/client",
+        "lineNumber": 954,
+        "columnNumber": 11
+      }
+    },
+    {
+      "type": "info",
+      "text": "%cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold",
+      "location": {
+        "url": "http://127.0.0.1:49026/node_modules/.vite/deps/client-C839dZfX.js?v=856af9ce",
+        "lineNumber": 14337,
+        "columnNumber": 48
+      }
+    },
+    {
+      "type": "error",
+      "text": "Warning: [antd: List] The `List` component is deprecated. And will be removed in next major version.",
+      "location": {
+        "url": "http://127.0.0.1:49026/@vite/client",
+        "lineNumber": 524,
+        "columnNumber": 3
+      }
+    },
+    {
+      "type": "debug",
+      "text": "[vite] connecting...",
+      "location": {
+        "url": "http://127.0.0.1:49026/@vite/client",
+        "lineNumber": 850,
+        "columnNumber": 8
+      }
+    },
+    {
+      "type": "debug",
+      "text": "[vite] connected.",
+      "location": {
+        "url": "http://127.0.0.1:49026/@vite/client",
+        "lineNumber": 954,
+        "columnNumber": 11
+      }
+    },
+    {
+      "type": "info",
+      "text": "%cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold",
+      "location": {
+        "url": "http://127.0.0.1:49026/node_modules/.vite/deps/client-C839dZfX.js?v=856af9ce",
+        "lineNumber": 14337,
+        "columnNumber": 48
+      }
+    },
+    {
+      "type": "debug",
+      "text": "[vite] connecting...",
+      "location": {
+        "url": "http://127.0.0.1:49026/@vite/client",
+        "lineNumber": 850,
+        "columnNumber": 8
+      }
+    },
+    {
+      "type": "debug",
+      "text": "[vite] connected.",
+      "location": {
+        "url": "http://127.0.0.1:49026/@vite/client",
+        "lineNumber": 954,
+        "columnNumber": 11
+      }
+    },
+    {
+      "type": "info",
+      "text": "%cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold",
+      "location": {
+        "url": "http://127.0.0.1:49026/node_modules/.vite/deps/client-C839dZfX.js?v=856af9ce",
+        "lineNumber": 14337,
+        "columnNumber": 48
+      }
+    },
+    {
+      "type": "error",
+      "text": "Failed to load resource: the server responded with a status of 500 (Internal Server Error)",
+      "location": {
+        "url": "http://127.0.0.1:49026/src/pages/Home.tsx?t=1780566010734",
+        "lineNumber": 0,
+        "columnNumber": 0
+      }
+    },
+    {
+      "type": "error",
+      "text": "[vite] Failed to reload /src/pages/Home.tsx. This could be due to syntax errors or importing non-existent modules. (see errors above)",
+      "location": {
+        "url": "http://127.0.0.1:49026/@vite/client",
+        "lineNumber": 524,
+        "columnNumber": 3
+      }
+    },
+    {
+      "type": "debug",
+      "text": "[vite] hot updated: /src/pages/Home.tsx",
+      "location": {
+        "url": "http://127.0.0.1:49026/@vite/client",
+        "lineNumber": 929,
+        "columnNumber": 28
+      }
+    },
+    {
+      "type": "debug",
+      "text": "[vite] connecting...",
+      "location": {
+        "url": "http://127.0.0.1:49026/@vite/client",
+        "lineNumber": 850,
+        "columnNumber": 8
+      }
+    },
+    {
+      "type": "debug",
+      "text": "[vite] connected.",
+      "location": {
+        "url": "http://127.0.0.1:49026/@vite/client",
+        "lineNumber": 954,
+        "columnNumber": 11
+      }
+    },
+    {
+      "type": "error",
+      "text": "Failed to load resource: the server responded with a status of 500 (Internal Server Error)",
+      "location": {
+        "url": "http://127.0.0.1:49026/src/pages/Home.tsx?t=1780566010734",
+        "lineNumber": 0,
+        "columnNumber": 0
+      }
+    }
+  ],
+  "requestFailures": [
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:49026/src/pages/Home.tsx?t=1780566010734",
+      "errorText": "net::ERR_ABORTED"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:49026/src/pages/Home.tsx?t=1780566010734",
+      "errorText": "net::ERR_ABORTED"
+    }
+  ],
+  "responseErrors": [
+    {
+      "status": 500,
+      "url": "http://127.0.0.1:49026/src/pages/Home.tsx?t=1780566010734"
+    },
+    {
+      "status": 500,
+      "url": "http://127.0.0.1:49026/src/pages/Home.tsx?t=1780566010734"
+    }
+  ]
+}
