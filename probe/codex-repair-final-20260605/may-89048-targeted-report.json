@@ -1,0 +1,42 @@
+{
+  "ok": true,
+  "pages": {
+    "dashboard": {
+      "url": "http://127.0.0.1:49048/admin/dashboard",
+      "marker": true,
+      "rowCount": 11,
+      "hasEmptyText": false
+    },
+    "couriers": {
+      "url": "http://127.0.0.1:49048/admin/couriers",
+      "marker": true,
+      "rowCount": 5,
+      "hasEmptyText": false
+    },
+    "qualityRules": {
+      "url": "http://127.0.0.1:49048/admin/quality",
+      "marker": true,
+      "rowCount": 5,
+      "hasEmptyText": false
+    }
+  },
+  "apis": {
+    "dashboard": {
+      "status": 200,
+      "count": 6
+    },
+    "couriers": {
+      "status": 200,
+      "count": 5
+    },
+    "qualityRules": {
+      "status": 200,
+      "count": 5
+    },
+    "orders": {
+      "status": 200,
+      "count": 12
+    }
+  },
+  "errors": []
+}

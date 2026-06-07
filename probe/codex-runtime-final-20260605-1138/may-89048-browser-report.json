@@ -1,0 +1,1634 @@
+{
+  "ok": true,
+  "generatedAt": "2026-06-05T11:39:28.889Z",
+  "order": "may-89048",
+  "roundIndex": 102,
+  "captureId": "may-89048-codex-runtime-final-rerun2",
+  "url": "http://127.0.0.1:49048/",
+  "initialUrl": "http://127.0.0.1:49048/",
+  "finalUrl": "http://127.0.0.1:49048/admin/dashboard",
+  "status": 200,
+  "title": "同城即时服务调度平台",
+  "initialTitle": "同城即时服务调度平台",
+  "navigationError": "",
+  "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89048/probe/codex-runtime-final-20260605-1138/may-89048-codex-runtime-final-rerun2-frontend.png",
+  "screenshotPaths": [
+    "/Users/chen/Documents/trae_projects/local_projects/may-89048/probe/codex-runtime-final-20260605-1138/may-89048-codex-runtime-final-rerun2-structure-01-首屏.png",
+    "/Users/chen/Documents/trae_projects/local_projects/may-89048/probe/codex-runtime-final-20260605-1138/may-89048-codex-runtime-final-rerun2-structure-02-导航-运营看板.png",
+    "/Users/chen/Documents/trae_projects/local_projects/may-89048/probe/codex-runtime-final-20260605-1138/may-89048-codex-runtime-final-rerun2-structure-03-导航-订单管理.png",
+    "/Users/chen/Documents/trae_projects/local_projects/may-89048/probe/codex-runtime-final-20260605-1138/may-89048-codex-runtime-final-rerun2-structure-04-操作-详情.png",
+    "/Users/chen/Documents/trae_projects/local_projects/may-89048/probe/codex-runtime-final-20260605-1138/may-89048-codex-runtime-final-rerun2-structure-05-操作-查-询.png",
+    "/Users/chen/Documents/trae_projects/local_projects/may-89048/probe/codex-runtime-final-20260605-1138/may-89048-codex-runtime-final-rerun2-structure-06-导航-跑腿员管理.png"
+  ],
+  "issueTextPreview": "个人中心/我的相关问题；搜索/筛选相关问题；后台管理相关问题；购买/提交相关问题",
+  "targetReason": "登录流程已完成，继续复验登录后的首页和业务导航",
+  "targetKind": "auth",
+  "targetMatched": true,
+  "targetActions": [
+    {
+      "action": "login-fill-username",
+      "label": "admin",
+      "ok": true
+    },
+    {
+      "action": "login-fill-password",
+      "label": "admin:******",
+      "ok": true
+    },
+    {
+      "action": "click",
+      "label": "登录:admin",
+      "ok": true
+    },
+    {
+      "action": "login-submit",
+      "label": "admin",
+      "ok": true,
+      "beforeUrl": "http://127.0.0.1:49048/login"
+    },
+    {
+      "action": "login-result",
+      "label": "admin",
+      "ok": true,
+      "finalUrl": "http://127.0.0.1:49048/admin/dashboard"
+    },
+    {
+      "action": "target-verify",
+      "label": "登录后首页",
+      "ok": true,
+      "finalUrl": "http://127.0.0.1:49048/admin/dashboard"
+    }
+  ],
+  "authFlow": {
+    "detected": true,
+    "attempted": true,
+    "success": true,
+    "finalUrl": "http://127.0.0.1:49048/admin/dashboard",
+    "message": "登录成功:admin",
+    "actions": [
+      {
+        "action": "login-fill-username",
+        "label": "admin",
+        "ok": true
+      },
+      {
+        "action": "login-fill-password",
+        "label": "admin:******",
+        "ok": true
+      },
+      {
+        "action": "click",
+        "label": "登录:admin",
+        "ok": true
+      },
+      {
+        "action": "login-submit",
+        "label": "admin",
+        "ok": true,
+        "beforeUrl": "http://127.0.0.1:49048/login"
+      },
+      {
+        "action": "login-result",
+        "label": "admin",
+        "ok": true,
+        "finalUrl": "http://127.0.0.1:49048/admin/dashboard"
+      }
+    ],
+    "username": "admin",
+    "credentialSource": "visible-demo-text"
+  },
+  "businessAudit": {
+    "actions": [
+      {
+        "action": "click",
+        "label": "导航:运营看板",
+        "ok": true
+      },
+      {
+        "action": "click",
+        "label": "导航:订单管理",
+        "ok": true
+      },
+      {
+        "action": "click",
+        "label": "操作:详情",
+        "ok": true,
+        "result": {
+          "ok": true,
+          "matched": 10
+        }
+      },
+      {
+        "action": "click",
+        "label": "关闭弹窗/抽屉",
+        "ok": true
+      },
+      {
+        "action": "click",
+        "label": "操作:查 询",
+        "ok": true,
+        "result": {
+          "ok": true,
+          "matched": 1
+        }
+      },
+      {
+        "action": "click",
+        "label": "导航:跑腿员管理",
+        "ok": true
+      }
+    ],
+    "snapshots": [
+      {
+        "label": "首屏",
+        "url": "http://127.0.0.1:49048/admin/dashboard",
+        "title": "同城即时服务调度平台",
+        "headings": [],
+        "navLabels": [
+          "运营看板 订单管理 跑腿员管理 调度中心 质检规则 信用管理 企业对接 服务区域",
+          "运营看板",
+          "dashboard",
+          "订单管理",
+          "ordered-list",
+          "跑腿员管理",
+          "team",
+          "调度中心",
+          "control",
+          "质检规则",
+          "safety-certificate",
+          "信用管理",
+          "credit-card",
+          "企业对接",
+          "api",
+          "服务区域",
+          "environment"
+        ],
+        "buttons": [],
+        "links": [],
+        "inputs": [],
+        "tables": [
+          {
+            "headers": [
+              "订单号",
+              "标题",
+              "类型",
+              "状态",
+              "费用",
+              "时间"
+            ],
+            "rowCount": 1,
+            "hasEmptyText": true,
+            "textPreview": "订单号 标题 类型 状态 费用 时间 暂无数据"
+          },
+          {
+            "headers": [
+              "区域",
+              "订单数",
+              "跑腿员",
+              "热度"
+            ],
+            "rowCount": 5,
+            "hasEmptyText": false,
+            "textPreview": "区域 订单数 跑腿员 热度 南山区 1 2 中 福田区 2 1 较高 罗湖区 1 1 较低 宝安区 0 0 低 龙岗区 0 1 低"
+          }
+        ],
+        "emptyTextCount": 1,
+        "bodyTextPreview": "即时服务调度平台运营工作台运营看板订单管理跑腿员管理调度中心质检规则信用管理企业对接服务区域平台运营权限: 8 项系统管理员今日订单12活跃跑腿员3平均履约时长90分钟超时率0%订单类型分布全能帮1 单 (8%)帮取送7 单 (58%)帮买3 单 (25%)帮排队1 单 (8%)订单状态分布已接单1已取消1已完成1已调度2进行中1待接单637分钟履约时效看板达标目标时效37分钟当前平均90分钟90min近期订单订单号标题类型状态费用时间暂无数据区域热度区域订单数跑腿员热度南山区12中福田区21较高罗湖区11较低宝安区00低龙岗区01低",
+        "layout": {
+          "viewportWidth": 1504,
+          "viewportHeight": 1192,
+          "scrollWidth": 1504,
+          "scrollHeight": 1192,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89048-codex-runtime-final-rerun2-structure-01-首屏",
+          "label": "首屏",
+          "finalUrl": "http://127.0.0.1:49048/admin/dashboard",
+          "title": "同城即时服务调度平台",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89048/probe/codex-runtime-final-20260605-1138/may-89048-codex-runtime-final-rerun2-structure-01-首屏.json",
+          "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89048/probe/codex-runtime-final-20260605-1138/may-89048-codex-runtime-final-rerun2-structure-01-首屏.png",
+          "elementCount": 330,
+          "interactiveCount": 9,
+          "interactiveLabels": [
+            "运营看板 订单管理 跑腿员管理 调度中心 质检规则 信用管理 企业对接 服务区域",
+            "运营看板",
+            "订单管理",
+            "跑腿员管理",
+            "调度中心",
+            "质检规则",
+            "信用管理",
+            "企业对接",
+            "服务区域"
+          ]
+        }
+      },
+      {
+        "label": "导航:运营看板",
+        "url": "http://127.0.0.1:49048/admin/dashboard",
+        "title": "同城即时服务调度平台",
+        "headings": [],
+        "navLabels": [
+          "运营看板 订单管理 跑腿员管理 调度中心 质检规则 信用管理 企业对接 服务区域",
+          "运营看板",
+          "dashboard",
+          "订单管理",
+          "ordered-list",
+          "跑腿员管理",
+          "team",
+          "调度中心",
+          "control",
+          "质检规则",
+          "safety-certificate",
+          "信用管理",
+          "credit-card",
+          "企业对接",
+          "api",
+          "服务区域",
+          "environment"
+        ],
+        "buttons": [],
+        "links": [],
+        "inputs": [],
+        "tables": [
+          {
+            "headers": [
+              "订单号",
+              "标题",
+              "类型",
+              "状态",
+              "费用",
+              "时间"
+            ],
+            "rowCount": 1,
+            "hasEmptyText": true,
+            "textPreview": "订单号 标题 类型 状态 费用 时间 暂无数据"
+          },
+          {
+            "headers": [
+              "区域",
+              "订单数",
+              "跑腿员",
+              "热度"
+            ],
+            "rowCount": 5,
+            "hasEmptyText": false,
+            "textPreview": "区域 订单数 跑腿员 热度 南山区 1 2 中 福田区 2 1 较高 罗湖区 1 1 较低 宝安区 0 0 低 龙岗区 0 1 低"
+          }
+        ],
+        "emptyTextCount": 1,
+        "bodyTextPreview": "即时服务调度平台运营工作台运营看板订单管理跑腿员管理调度中心质检规则信用管理企业对接服务区域平台运营权限: 8 项系统管理员今日订单12活跃跑腿员3平均履约时长90分钟超时率0%订单类型分布全能帮1 单 (8%)帮取送7 单 (58%)帮买3 单 (25%)帮排队1 单 (8%)订单状态分布已接单1已取消1已完成1已调度2进行中1待接单637分钟履约时效看板达标目标时效37分钟当前平均90分钟90min近期订单订单号标题类型状态费用时间暂无数据区域热度区域订单数跑腿员热度南山区12中福田区21较高罗湖区11较低宝安区00低龙岗区01低",
+        "layout": {
+          "viewportWidth": 1536,
+          "viewportHeight": 1192,
+          "scrollWidth": 1536,
+          "scrollHeight": 1192,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89048-codex-runtime-final-rerun2-structure-02-导航-运营看板",
+          "label": "导航:运营看板",
+          "finalUrl": "http://127.0.0.1:49048/admin/dashboard",
+          "title": "同城即时服务调度平台",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89048/probe/codex-runtime-final-20260605-1138/may-89048-codex-runtime-final-rerun2-structure-02-导航-运营看板.json",
+          "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89048/probe/codex-runtime-final-20260605-1138/may-89048-codex-runtime-final-rerun2-structure-02-导航-运营看板.png",
+          "elementCount": 330,
+          "interactiveCount": 9,
+          "interactiveLabels": [
+            "运营看板 订单管理 跑腿员管理 调度中心 质检规则 信用管理 企业对接 服务区域",
+            "运营看板",
+            "订单管理",
+            "跑腿员管理",
+            "调度中心",
+            "质检规则",
+            "信用管理",
+            "企业对接",
+            "服务区域"
+          ]
+        }
+      },
+      {
+        "label": "导航:订单管理",
+        "url": "http://127.0.0.1:49048/admin/orders",
+        "title": "同城即时服务调度平台",
+        "headings": [],
+        "navLabels": [
+          "运营看板 订单管理 跑腿员管理 调度中心 质检规则 信用管理 企业对接 服务区域",
+          "运营看板",
+          "dashboard",
+          "订单管理",
+          "ordered-list",
+          "跑腿员管理",
+          "team",
+          "调度中心",
+          "control",
+          "质检规则",
+          "safety-certificate",
+          "信用管理",
+          "credit-card",
+          "企业对接",
+          "api",
+          "服务区域",
+          "environment"
+        ],
+        "buttons": [
+          "查 询",
+          "重 置",
+          "ORD202606057583",
+          "详情",
+          "ORD202606050170",
+          "ORD202606052982",
+          "重分配",
+          "ORD202606055433",
+          "ORD202606052010",
+          "ORD2024060100001",
+          "ORD2024060100002",
+          "ORD2024060100003",
+          "ORD2024060100004",
+          "ORD2024060100005"
+        ],
+        "links": [],
+        "inputs": [
+          {
+            "tag": "input",
+            "type": "text",
+            "placeholder": "搜索订单号",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "search",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "search",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "",
+            "placeholder": "开始日期",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "",
+            "placeholder": "结束日期",
+            "name": "",
+            "label": ""
+          }
+        ],
+        "tables": [
+          {
+            "headers": [
+              "订单号",
+              "标题",
+              "类型",
+              "状态",
+              "费用",
+              "跑腿员",
+              "创建时间",
+              "操作",
+              "订单号",
+              "标题",
+              "类型",
+              "状态"
+            ],
+            "rowCount": 10,
+            "hasEmptyText": false,
+            "textPreview": "订单号 标题 类型 状态 费用 跑腿员 创建时间 操作 订单号 标题 类型 状态 费用 跑腿员 创建时间 操作 ORD202606057583 取快递 帮取送 待接单 ¥20 - 06-05 17:07 详情 ORD202606050170 取快递 帮取送 待接单 ¥20 - 06-05 16:46 详情 ORD202606052982 买咖啡 帮买 已调度 ¥15 - 06-05 16:43 详情 重分配 ORD202606055433 取文件 帮取送 待接单 ¥25 - 06-05 16:36 详情 ORD202606052010 取文件 帮取送 待接单 ¥25 - 06-05 16:36"
+          }
+        ],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "即时服务调度平台运营工作台运营看板订单管理跑腿员管理调度中心质检规则信用管理企业对接服务区域平台运营权限: 8 项系统管理员订单管理订单状态订单类型查 询重 置订单号标题类型状态费用跑腿员创建时间操作订单号标题类型状态费用跑腿员创建时间操作ORD202606057583取快递帮取送待接单¥20-06-05 17:07详情ORD202606050170取快递帮取送待接单¥20-06-05 16:46详情ORD202606052982买咖啡帮买已调度¥15-06-05 16:43详情重分配ORD202606055433取文件帮取送待接单¥25-06-05 16:36详情ORD202606052010取文件帮取送待接单¥25-06-05 16:36详情ORD2024060100001取送文件帮取送待接单¥15-06-05 16:17详情ORD2024060100002代购药品帮买已调度¥20-06-05 15:55详情重分配ORD2024060100003排队代取帮排队已接单¥30-06-05 15:55详情ORD2024060100004紧急送钥匙全能帮进行中¥25-06-05 15:55详情ORD2024060100005送蛋糕帮取送已完成¥18-06-05 14:17详情共 12 条12",
+        "layout": {
+          "viewportWidth": 1568,
+          "viewportHeight": 1192,
+          "scrollWidth": 1568,
+          "scrollHeight": 1192,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89048-codex-runtime-final-rerun2-structure-03-导航-订单管理",
+          "label": "导航:订单管理",
+          "finalUrl": "http://127.0.0.1:49048/admin/orders",
+          "title": "同城即时服务调度平台",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89048/probe/codex-runtime-final-20260605-1138/may-89048-codex-runtime-final-rerun2-structure-03-导航-订单管理.json",
+          "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89048/probe/codex-runtime-final-20260605-1138/may-89048-codex-runtime-final-rerun2-structure-03-导航-订单管理.png",
+          "elementCount": 426,
+          "interactiveCount": 45,
+          "interactiveLabels": [
+            "运营看板 订单管理 跑腿员管理 调度中心 质检规则 信用管理 企业对接 服务区域",
+            "运营看板",
+            "订单管理",
+            "跑腿员管理",
+            "调度中心",
+            "质检规则",
+            "信用管理",
+            "企业对接",
+            "服务区域",
+            "搜索订单号",
+            "开始日期",
+            "结束日期",
+            "查 询",
+            "重 置",
+            "ORD202606057583",
+            "详情",
+            "ORD202606050170",
+            "ORD202606052982",
+            "重分配",
+            "ORD202606055433",
+            "ORD202606052010",
+            "ORD2024060100001",
+            "ORD2024060100002",
+            "ORD2024060100003",
+            "ORD2024060100004",
+            "ORD2024060100005",
+            "1",
+            "2",
+            "下一页"
+          ]
+        }
+      },
+      {
+        "label": "操作:详情",
+        "url": "http://127.0.0.1:49048/admin/orders",
+        "title": "同城即时服务调度平台",
+        "headings": [],
+        "navLabels": [
+          "运营看板 订单管理 跑腿员管理 调度中心 质检规则 信用管理 企业对接 服务区域",
+          "运营看板",
+          "dashboard",
+          "订单管理",
+          "ordered-list",
+          "跑腿员管理",
+          "team",
+          "调度中心",
+          "control",
+          "质检规则",
+          "safety-certificate",
+          "信用管理",
+          "credit-card",
+          "企业对接",
+          "api",
+          "服务区域",
+          "environment"
+        ],
+        "buttons": [
+          "查 询",
+          "重 置",
+          "ORD202606057583",
+          "详情",
+          "ORD202606050170",
+          "ORD202606052982",
+          "重分配",
+          "ORD202606055433",
+          "ORD202606052010",
+          "ORD2024060100001",
+          "ORD2024060100002",
+          "ORD2024060100003",
+          "ORD2024060100004",
+          "ORD2024060100005",
+          "Close"
+        ],
+        "links": [],
+        "inputs": [
+          {
+            "tag": "input",
+            "type": "text",
+            "placeholder": "搜索订单号",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "search",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "search",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "",
+            "placeholder": "开始日期",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "",
+            "placeholder": "结束日期",
+            "name": "",
+            "label": ""
+          }
+        ],
+        "tables": [
+          {
+            "headers": [
+              "订单号",
+              "标题",
+              "类型",
+              "状态",
+              "费用",
+              "跑腿员",
+              "创建时间",
+              "操作",
+              "订单号",
+              "标题",
+              "类型",
+              "状态"
+            ],
+            "rowCount": 10,
+            "hasEmptyText": false,
+            "textPreview": "订单号 标题 类型 状态 费用 跑腿员 创建时间 操作 订单号 标题 类型 状态 费用 跑腿员 创建时间 操作 ORD202606057583 取快递 帮取送 待接单 ¥20 - 06-05 17:07 详情 ORD202606050170 取快递 帮取送 待接单 ¥20 - 06-05 16:46 详情 ORD202606052982 买咖啡 帮买 已调度 ¥15 - 06-05 16:43 详情 重分配 ORD202606055433 取文件 帮取送 待接单 ¥25 - 06-05 16:36 详情 ORD202606052010 取文件 帮取送 待接单 ¥25 - 06-05 16:36"
+          },
+          {
+            "headers": [
+              "订单号",
+              "状态",
+              "类型",
+              "费用",
+              "标题",
+              "描述",
+              "取件地址",
+              "送达地址",
+              "跑腿员",
+              "创建时间"
+            ],
+            "rowCount": 4,
+            "hasEmptyText": false,
+            "textPreview": "订单号 ORD202606057583 状态 待接单 类型 帮取送 费用 ¥20 标题 取快递 描述 帮我取个快递 取件地址 南山区 送达地址 福田区 跑腿员 未分配 创建时间 2026-06-05 17:07:56"
+          }
+        ],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "即时服务调度平台运营工作台运营看板订单管理跑腿员管理调度中心质检规则信用管理企业对接服务区域平台运营权限: 8 项系统管理员订单管理订单状态订单类型查 询重 置订单号标题类型状态费用跑腿员创建时间操作订单号标题类型状态费用跑腿员创建时间操作ORD202606057583取快递帮取送待接单¥20-06-05 17:07详情ORD202606050170取快递帮取送待接单¥20-06-05 16:46详情ORD202606052982买咖啡帮买已调度¥15-06-05 16:43详情重分配ORD202606055433取文件帮取送待接单¥25-06-05 16:36详情ORD202606052010取文件帮取送待接单¥25-06-05 16:36详情ORD2024060100001取送文件帮取送待接单¥15-06-05 16:17详情ORD2024060100002代购药品帮买已调度¥20-06-05 15:55详情重分配ORD2024060100003排队代取帮排队已接单¥30-06-05 15:55详情ORD2024060100004紧急送钥匙全能帮进行中¥25-06-05 15:55详情ORD2024060100005送蛋糕帮取送已完成¥18-06-05 14:17详情共 12 条12 订单详情订单号ORD202606057583状态待接单类型帮取送费用¥20标题取快递描述帮我取个快递取件地址南山区送达地址福田区跑腿员未分配创建时间2026-06-05 17:07:56",
+        "layout": {
+          "viewportWidth": 1600,
+          "viewportHeight": 1192,
+          "scrollWidth": 1600,
+          "scrollHeight": 1192,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89048-codex-runtime-final-rerun2-structure-04-操作-详情",
+          "label": "操作:详情",
+          "finalUrl": "http://127.0.0.1:49048/admin/orders",
+          "title": "同城即时服务调度平台",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89048/probe/codex-runtime-final-20260605-1138/may-89048-codex-runtime-final-rerun2-structure-04-操作-详情.json",
+          "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89048/probe/codex-runtime-final-20260605-1138/may-89048-codex-runtime-final-rerun2-structure-04-操作-详情.png",
+          "elementCount": 492,
+          "interactiveCount": 48,
+          "interactiveLabels": [
+            "运营看板 订单管理 跑腿员管理 调度中心 质检规则 信用管理 企业对接 服务区域",
+            "运营看板",
+            "订单管理",
+            "跑腿员管理",
+            "调度中心",
+            "质检规则",
+            "信用管理",
+            "企业对接",
+            "服务区域",
+            "搜索订单号",
+            "开始日期",
+            "结束日期",
+            "查 询",
+            "重 置",
+            "ORD202606057583",
+            "详情",
+            "ORD202606050170",
+            "ORD202606052982",
+            "重分配",
+            "ORD202606055433",
+            "ORD202606052010",
+            "ORD2024060100001",
+            "ORD2024060100002",
+            "ORD2024060100003",
+            "ORD2024060100004",
+            "ORD2024060100005",
+            "1",
+            "2",
+            "下一页",
+            "订单详情 订单号 ORD202606057583 状态 待接单 类型 帮取送 费用 ¥20 标题 取快递 描述 帮我取个快递 取件地址 南山区 送达地址 福田区 跑腿员 未分配 创建时间 2026-06-05 17:07:56"
+          ]
+        }
+      },
+      {
+        "label": "操作:查 询",
+        "url": "http://127.0.0.1:49048/admin/orders",
+        "title": "同城即时服务调度平台",
+        "headings": [],
+        "navLabels": [
+          "运营看板 订单管理 跑腿员管理 调度中心 质检规则 信用管理 企业对接 服务区域",
+          "运营看板",
+          "dashboard",
+          "订单管理",
+          "ordered-list",
+          "跑腿员管理",
+          "team",
+          "调度中心",
+          "control",
+          "质检规则",
+          "safety-certificate",
+          "信用管理",
+          "credit-card",
+          "企业对接",
+          "api",
+          "服务区域",
+          "environment"
+        ],
+        "buttons": [
+          "查 询",
+          "重 置",
+          "ORD202606057583",
+          "详情",
+          "ORD202606050170",
+          "ORD202606052982",
+          "重分配",
+          "ORD202606055433",
+          "ORD202606052010",
+          "ORD2024060100001",
+          "ORD2024060100002",
+          "ORD2024060100003",
+          "ORD2024060100004",
+          "ORD2024060100005"
+        ],
+        "links": [],
+        "inputs": [
+          {
+            "tag": "input",
+            "type": "text",
+            "placeholder": "搜索订单号",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "search",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "search",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "",
+            "placeholder": "开始日期",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "",
+            "placeholder": "结束日期",
+            "name": "",
+            "label": ""
+          }
+        ],
+        "tables": [
+          {
+            "headers": [
+              "订单号",
+              "标题",
+              "类型",
+              "状态",
+              "费用",
+              "跑腿员",
+              "创建时间",
+              "操作",
+              "订单号",
+              "标题",
+              "类型",
+              "状态"
+            ],
+            "rowCount": 10,
+            "hasEmptyText": false,
+            "textPreview": "订单号 标题 类型 状态 费用 跑腿员 创建时间 操作 订单号 标题 类型 状态 费用 跑腿员 创建时间 操作 ORD202606057583 取快递 帮取送 待接单 ¥20 - 06-05 17:07 详情 ORD202606050170 取快递 帮取送 待接单 ¥20 - 06-05 16:46 详情 ORD202606052982 买咖啡 帮买 已调度 ¥15 - 06-05 16:43 详情 重分配 ORD202606055433 取文件 帮取送 待接单 ¥25 - 06-05 16:36 详情 ORD202606052010 取文件 帮取送 待接单 ¥25 - 06-05 16:36"
+          }
+        ],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "即时服务调度平台运营工作台运营看板订单管理跑腿员管理调度中心质检规则信用管理企业对接服务区域平台运营权限: 8 项系统管理员订单管理订单状态订单类型查 询重 置订单号标题类型状态费用跑腿员创建时间操作订单号标题类型状态费用跑腿员创建时间操作ORD202606057583取快递帮取送待接单¥20-06-05 17:07详情ORD202606050170取快递帮取送待接单¥20-06-05 16:46详情ORD202606052982买咖啡帮买已调度¥15-06-05 16:43详情重分配ORD202606055433取文件帮取送待接单¥25-06-05 16:36详情ORD202606052010取文件帮取送待接单¥25-06-05 16:36详情ORD2024060100001取送文件帮取送待接单¥15-06-05 16:17详情ORD2024060100002代购药品帮买已调度¥20-06-05 15:55详情重分配ORD2024060100003排队代取帮排队已接单¥30-06-05 15:55详情ORD2024060100004紧急送钥匙全能帮进行中¥25-06-05 15:55详情ORD2024060100005送蛋糕帮取送已完成¥18-06-05 14:17详情共 12 条12 订单详情订单号ORD202606057583状态待接单类型帮取送费用¥20标题取快递描述帮我取个快递取件地址南山区送达地址福田区跑腿员未分配创建时间2026-06-05 17:07:56",
+        "layout": {
+          "viewportWidth": 1632,
+          "viewportHeight": 1192,
+          "scrollWidth": 1632,
+          "scrollHeight": 1192,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89048-codex-runtime-final-rerun2-structure-05-操作-查-询",
+          "label": "操作:查 询",
+          "finalUrl": "http://127.0.0.1:49048/admin/orders",
+          "title": "同城即时服务调度平台",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89048/probe/codex-runtime-final-20260605-1138/may-89048-codex-runtime-final-rerun2-structure-05-操作-查-询.json",
+          "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89048/probe/codex-runtime-final-20260605-1138/may-89048-codex-runtime-final-rerun2-structure-05-操作-查-询.png",
+          "elementCount": 493,
+          "interactiveCount": 48,
+          "interactiveLabels": [
+            "运营看板 订单管理 跑腿员管理 调度中心 质检规则 信用管理 企业对接 服务区域",
+            "运营看板",
+            "订单管理",
+            "跑腿员管理",
+            "调度中心",
+            "质检规则",
+            "信用管理",
+            "企业对接",
+            "服务区域",
+            "搜索订单号",
+            "开始日期",
+            "结束日期",
+            "查 询",
+            "重 置",
+            "ORD202606057583",
+            "详情",
+            "ORD202606050170",
+            "ORD202606052982",
+            "重分配",
+            "ORD202606055433",
+            "ORD202606052010",
+            "ORD2024060100001",
+            "ORD2024060100002",
+            "ORD2024060100003",
+            "ORD2024060100004",
+            "ORD2024060100005",
+            "1",
+            "2",
+            "下一页",
+            "订单详情订单号ORD202606057583状态待接单类型帮取送费用¥20标题取快递描述帮我取个快递取件地址南山区送达地址福田区跑腿员未分配创建时间2026-06-05 17:07:56"
+          ]
+        }
+      },
+      {
+        "label": "导航:跑腿员管理",
+        "url": "http://127.0.0.1:49048/admin/couriers",
+        "title": "同城即时服务调度平台",
+        "headings": [],
+        "navLabels": [
+          "运营看板 订单管理 跑腿员管理 调度中心 质检规则 信用管理 企业对接 服务区域",
+          "运营看板",
+          "dashboard",
+          "订单管理",
+          "ordered-list",
+          "跑腿员管理",
+          "team",
+          "调度中心",
+          "control",
+          "质检规则",
+          "safety-certificate",
+          "信用管理",
+          "credit-card",
+          "企业对接",
+          "api",
+          "服务区域",
+          "environment"
+        ],
+        "buttons": [],
+        "links": [],
+        "inputs": [],
+        "tables": [
+          {
+            "headers": [
+              "姓名",
+              "手机号",
+              "状态",
+              "在线",
+              "完成订单",
+              "评分",
+              "履约率",
+              "操作"
+            ],
+            "rowCount": 1,
+            "hasEmptyText": true,
+            "textPreview": "姓名 手机号 状态 在线 完成订单 评分 履约率 操作 暂无数据"
+          }
+        ],
+        "emptyTextCount": 1,
+        "bodyTextPreview": "即时服务调度平台运营工作台运营看板订单管理跑腿员管理调度中心质检规则信用管理企业对接服务区域平台运营权限: 8 项系统管理员跑腿员管理姓名手机号状态在线完成订单评分履约率操作暂无数据",
+        "layout": {
+          "viewportWidth": 1664,
+          "viewportHeight": 1192,
+          "scrollWidth": 1664,
+          "scrollHeight": 1192,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89048-codex-runtime-final-rerun2-structure-06-导航-跑腿员管理",
+          "label": "导航:跑腿员管理",
+          "finalUrl": "http://127.0.0.1:49048/admin/couriers",
+          "title": "同城即时服务调度平台",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89048/probe/codex-runtime-final-20260605-1138/may-89048-codex-runtime-final-rerun2-structure-06-导航-跑腿员管理.json",
+          "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89048/probe/codex-runtime-final-20260605-1138/may-89048-codex-runtime-final-rerun2-structure-06-导航-跑腿员管理.png",
+          "elementCount": 149,
+          "interactiveCount": 11,
+          "interactiveLabels": [
+            "运营看板 订单管理 跑腿员管理 调度中心 质检规则 信用管理 企业对接 服务区域",
+            "运营看板",
+            "订单管理",
+            "跑腿员管理",
+            "调度中心",
+            "质检规则",
+            "信用管理",
+            "企业对接",
+            "服务区域",
+            "完成订单",
+            "评分"
+          ]
+        }
+      }
+    ],
+    "findings": [
+      "首屏、运营看板、跑腿员管理 页面只显示空列表或“暂无数据”，缺少可复查的业务记录。"
+    ],
+    "actionHints": [
+      "为 首屏、运营看板、跑腿员管理 补齐 SQLite 种子数据、列表接口和空状态引导，确保核心记录可新增、可查看、可复查。"
+    ],
+    "emptyPages": [
+      "首屏",
+      "运营看板",
+      "跑腿员管理"
+    ],
+    "overflowPages": [],
+    "blankPages": [],
+    "apiFailurePaths": [],
+    "goalTerms": [],
+    "clickedActionDescriptors": [
+      {
+        "nav": "订单管理",
+        "label": "详情",
+        "ordinal": 0,
+        "unsafe": false
+      },
+      {
+        "nav": "订单管理",
+        "label": "查 询",
+        "ordinal": 0,
+        "unsafe": false
+      }
+    ],
+    "secondaryActionClicks": 0,
+    "structureCaptures": [
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89048-codex-runtime-final-rerun2-structure-01-首屏",
+        "label": "首屏",
+        "finalUrl": "http://127.0.0.1:49048/admin/dashboard",
+        "title": "同城即时服务调度平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89048/probe/codex-runtime-final-20260605-1138/may-89048-codex-runtime-final-rerun2-structure-01-首屏.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89048/probe/codex-runtime-final-20260605-1138/may-89048-codex-runtime-final-rerun2-structure-01-首屏.png",
+        "elementCount": 330,
+        "interactiveCount": 9,
+        "interactiveLabels": [
+          "运营看板 订单管理 跑腿员管理 调度中心 质检规则 信用管理 企业对接 服务区域",
+          "运营看板",
+          "订单管理",
+          "跑腿员管理",
+          "调度中心",
+          "质检规则",
+          "信用管理",
+          "企业对接",
+          "服务区域"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89048-codex-runtime-final-rerun2-structure-02-导航-运营看板",
+        "label": "导航:运营看板",
+        "finalUrl": "http://127.0.0.1:49048/admin/dashboard",
+        "title": "同城即时服务调度平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89048/probe/codex-runtime-final-20260605-1138/may-89048-codex-runtime-final-rerun2-structure-02-导航-运营看板.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89048/probe/codex-runtime-final-20260605-1138/may-89048-codex-runtime-final-rerun2-structure-02-导航-运营看板.png",
+        "elementCount": 330,
+        "interactiveCount": 9,
+        "interactiveLabels": [
+          "运营看板 订单管理 跑腿员管理 调度中心 质检规则 信用管理 企业对接 服务区域",
+          "运营看板",
+          "订单管理",
+          "跑腿员管理",
+          "调度中心",
+          "质检规则",
+          "信用管理",
+          "企业对接",
+          "服务区域"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89048-codex-runtime-final-rerun2-structure-03-导航-订单管理",
+        "label": "导航:订单管理",
+        "finalUrl": "http://127.0.0.1:49048/admin/orders",
+        "title": "同城即时服务调度平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89048/probe/codex-runtime-final-20260605-1138/may-89048-codex-runtime-final-rerun2-structure-03-导航-订单管理.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89048/probe/codex-runtime-final-20260605-1138/may-89048-codex-runtime-final-rerun2-structure-03-导航-订单管理.png",
+        "elementCount": 426,
+        "interactiveCount": 45,
+        "interactiveLabels": [
+          "运营看板 订单管理 跑腿员管理 调度中心 质检规则 信用管理 企业对接 服务区域",
+          "运营看板",
+          "订单管理",
+          "跑腿员管理",
+          "调度中心",
+          "质检规则",
+          "信用管理",
+          "企业对接",
+          "服务区域",
+          "搜索订单号",
+          "开始日期",
+          "结束日期",
+          "查 询",
+          "重 置",
+          "ORD202606057583",
+          "详情",
+          "ORD202606050170",
+          "ORD202606052982",
+          "重分配",
+          "ORD202606055433",
+          "ORD202606052010",
+          "ORD2024060100001",
+          "ORD2024060100002",
+          "ORD2024060100003",
+          "ORD2024060100004",
+          "ORD2024060100005",
+          "1",
+          "2",
+          "下一页"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89048-codex-runtime-final-rerun2-structure-04-操作-详情",
+        "label": "操作:详情",
+        "finalUrl": "http://127.0.0.1:49048/admin/orders",
+        "title": "同城即时服务调度平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89048/probe/codex-runtime-final-20260605-1138/may-89048-codex-runtime-final-rerun2-structure-04-操作-详情.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89048/probe/codex-runtime-final-20260605-1138/may-89048-codex-runtime-final-rerun2-structure-04-操作-详情.png",
+        "elementCount": 492,
+        "interactiveCount": 48,
+        "interactiveLabels": [
+          "运营看板 订单管理 跑腿员管理 调度中心 质检规则 信用管理 企业对接 服务区域",
+          "运营看板",
+          "订单管理",
+          "跑腿员管理",
+          "调度中心",
+          "质检规则",
+          "信用管理",
+          "企业对接",
+          "服务区域",
+          "搜索订单号",
+          "开始日期",
+          "结束日期",
+          "查 询",
+          "重 置",
+          "ORD202606057583",
+          "详情",
+          "ORD202606050170",
+          "ORD202606052982",
+          "重分配",
+          "ORD202606055433",
+          "ORD202606052010",
+          "ORD2024060100001",
+          "ORD2024060100002",
+          "ORD2024060100003",
+          "ORD2024060100004",
+          "ORD2024060100005",
+          "1",
+          "2",
+          "下一页",
+          "订单详情 订单号 ORD202606057583 状态 待接单 类型 帮取送 费用 ¥20 标题 取快递 描述 帮我取个快递 取件地址 南山区 送达地址 福田区 跑腿员 未分配 创建时间 2026-06-05 17:07:56"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89048-codex-runtime-final-rerun2-structure-05-操作-查-询",
+        "label": "操作:查 询",
+        "finalUrl": "http://127.0.0.1:49048/admin/orders",
+        "title": "同城即时服务调度平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89048/probe/codex-runtime-final-20260605-1138/may-89048-codex-runtime-final-rerun2-structure-05-操作-查-询.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89048/probe/codex-runtime-final-20260605-1138/may-89048-codex-runtime-final-rerun2-structure-05-操作-查-询.png",
+        "elementCount": 493,
+        "interactiveCount": 48,
+        "interactiveLabels": [
+          "运营看板 订单管理 跑腿员管理 调度中心 质检规则 信用管理 企业对接 服务区域",
+          "运营看板",
+          "订单管理",
+          "跑腿员管理",
+          "调度中心",
+          "质检规则",
+          "信用管理",
+          "企业对接",
+          "服务区域",
+          "搜索订单号",
+          "开始日期",
+          "结束日期",
+          "查 询",
+          "重 置",
+          "ORD202606057583",
+          "详情",
+          "ORD202606050170",
+          "ORD202606052982",
+          "重分配",
+          "ORD202606055433",
+          "ORD202606052010",
+          "ORD2024060100001",
+          "ORD2024060100002",
+          "ORD2024060100003",
+          "ORD2024060100004",
+          "ORD2024060100005",
+          "1",
+          "2",
+          "下一页",
+          "订单详情订单号ORD202606057583状态待接单类型帮取送费用¥20标题取快递描述帮我取个快递取件地址南山区送达地址福田区跑腿员未分配创建时间2026-06-05 17:07:56"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89048-codex-runtime-final-rerun2-structure-06-导航-跑腿员管理",
+        "label": "导航:跑腿员管理",
+        "finalUrl": "http://127.0.0.1:49048/admin/couriers",
+        "title": "同城即时服务调度平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89048/probe/codex-runtime-final-20260605-1138/may-89048-codex-runtime-final-rerun2-structure-06-导航-跑腿员管理.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89048/probe/codex-runtime-final-20260605-1138/may-89048-codex-runtime-final-rerun2-structure-06-导航-跑腿员管理.png",
+        "elementCount": 149,
+        "interactiveCount": 11,
+        "interactiveLabels": [
+          "运营看板 订单管理 跑腿员管理 调度中心 质检规则 信用管理 企业对接 服务区域",
+          "运营看板",
+          "订单管理",
+          "跑腿员管理",
+          "调度中心",
+          "质检规则",
+          "信用管理",
+          "企业对接",
+          "服务区域",
+          "完成订单",
+          "评分"
+        ]
+      }
+    ],
+    "representativeScreenshotUrl": "http://127.0.0.1:49048/admin/dashboard",
+    "representativeScreenshotLabel": "首屏"
+  },
+  "websiteStructureCapture": {
+    "module": "website_structure_capture",
+    "captureCount": 6,
+    "captures": [
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89048-codex-runtime-final-rerun2-structure-01-首屏",
+        "label": "首屏",
+        "finalUrl": "http://127.0.0.1:49048/admin/dashboard",
+        "title": "同城即时服务调度平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89048/probe/codex-runtime-final-20260605-1138/may-89048-codex-runtime-final-rerun2-structure-01-首屏.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89048/probe/codex-runtime-final-20260605-1138/may-89048-codex-runtime-final-rerun2-structure-01-首屏.png",
+        "elementCount": 330,
+        "interactiveCount": 9,
+        "interactiveLabels": [
+          "运营看板 订单管理 跑腿员管理 调度中心 质检规则 信用管理 企业对接 服务区域",
+          "运营看板",
+          "订单管理",
+          "跑腿员管理",
+          "调度中心",
+          "质检规则",
+          "信用管理",
+          "企业对接",
+          "服务区域"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89048-codex-runtime-final-rerun2-structure-02-导航-运营看板",
+        "label": "导航:运营看板",
+        "finalUrl": "http://127.0.0.1:49048/admin/dashboard",
+        "title": "同城即时服务调度平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89048/probe/codex-runtime-final-20260605-1138/may-89048-codex-runtime-final-rerun2-structure-02-导航-运营看板.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89048/probe/codex-runtime-final-20260605-1138/may-89048-codex-runtime-final-rerun2-structure-02-导航-运营看板.png",
+        "elementCount": 330,
+        "interactiveCount": 9,
+        "interactiveLabels": [
+          "运营看板 订单管理 跑腿员管理 调度中心 质检规则 信用管理 企业对接 服务区域",
+          "运营看板",
+          "订单管理",
+          "跑腿员管理",
+          "调度中心",
+          "质检规则",
+          "信用管理",
+          "企业对接",
+          "服务区域"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89048-codex-runtime-final-rerun2-structure-03-导航-订单管理",
+        "label": "导航:订单管理",
+        "finalUrl": "http://127.0.0.1:49048/admin/orders",
+        "title": "同城即时服务调度平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89048/probe/codex-runtime-final-20260605-1138/may-89048-codex-runtime-final-rerun2-structure-03-导航-订单管理.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89048/probe/codex-runtime-final-20260605-1138/may-89048-codex-runtime-final-rerun2-structure-03-导航-订单管理.png",
+        "elementCount": 426,
+        "interactiveCount": 45,
+        "interactiveLabels": [
+          "运营看板 订单管理 跑腿员管理 调度中心 质检规则 信用管理 企业对接 服务区域",
+          "运营看板",
+          "订单管理",
+          "跑腿员管理",
+          "调度中心",
+          "质检规则",
+          "信用管理",
+          "企业对接",
+          "服务区域",
+          "搜索订单号",
+          "开始日期",
+          "结束日期",
+          "查 询",
+          "重 置",
+          "ORD202606057583",
+          "详情",
+          "ORD202606050170",
+          "ORD202606052982",
+          "重分配",
+          "ORD202606055433",
+          "ORD202606052010",
+          "ORD2024060100001",
+          "ORD2024060100002",
+          "ORD2024060100003",
+          "ORD2024060100004",
+          "ORD2024060100005",
+          "1",
+          "2",
+          "下一页"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89048-codex-runtime-final-rerun2-structure-04-操作-详情",
+        "label": "操作:详情",
+        "finalUrl": "http://127.0.0.1:49048/admin/orders",
+        "title": "同城即时服务调度平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89048/probe/codex-runtime-final-20260605-1138/may-89048-codex-runtime-final-rerun2-structure-04-操作-详情.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89048/probe/codex-runtime-final-20260605-1138/may-89048-codex-runtime-final-rerun2-structure-04-操作-详情.png",
+        "elementCount": 492,
+        "interactiveCount": 48,
+        "interactiveLabels": [
+          "运营看板 订单管理 跑腿员管理 调度中心 质检规则 信用管理 企业对接 服务区域",
+          "运营看板",
+          "订单管理",
+          "跑腿员管理",
+          "调度中心",
+          "质检规则",
+          "信用管理",
+          "企业对接",
+          "服务区域",
+          "搜索订单号",
+          "开始日期",
+          "结束日期",
+          "查 询",
+          "重 置",
+          "ORD202606057583",
+          "详情",
+          "ORD202606050170",
+          "ORD202606052982",
+          "重分配",
+          "ORD202606055433",
+          "ORD202606052010",
+          "ORD2024060100001",
+          "ORD2024060100002",
+          "ORD2024060100003",
+          "ORD2024060100004",
+          "ORD2024060100005",
+          "1",
+          "2",
+          "下一页",
+          "订单详情 订单号 ORD202606057583 状态 待接单 类型 帮取送 费用 ¥20 标题 取快递 描述 帮我取个快递 取件地址 南山区 送达地址 福田区 跑腿员 未分配 创建时间 2026-06-05 17:07:56"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89048-codex-runtime-final-rerun2-structure-05-操作-查-询",
+        "label": "操作:查 询",
+        "finalUrl": "http://127.0.0.1:49048/admin/orders",
+        "title": "同城即时服务调度平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89048/probe/codex-runtime-final-20260605-1138/may-89048-codex-runtime-final-rerun2-structure-05-操作-查-询.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89048/probe/codex-runtime-final-20260605-1138/may-89048-codex-runtime-final-rerun2-structure-05-操作-查-询.png",
+        "elementCount": 493,
+        "interactiveCount": 48,
+        "interactiveLabels": [
+          "运营看板 订单管理 跑腿员管理 调度中心 质检规则 信用管理 企业对接 服务区域",
+          "运营看板",
+          "订单管理",
+          "跑腿员管理",
+          "调度中心",
+          "质检规则",
+          "信用管理",
+          "企业对接",
+          "服务区域",
+          "搜索订单号",
+          "开始日期",
+          "结束日期",
+          "查 询",
+          "重 置",
+          "ORD202606057583",
+          "详情",
+          "ORD202606050170",
+          "ORD202606052982",
+          "重分配",
+          "ORD202606055433",
+          "ORD202606052010",
+          "ORD2024060100001",
+          "ORD2024060100002",
+          "ORD2024060100003",
+          "ORD2024060100004",
+          "ORD2024060100005",
+          "1",
+          "2",
+          "下一页",
+          "订单详情订单号ORD202606057583状态待接单类型帮取送费用¥20标题取快递描述帮我取个快递取件地址南山区送达地址福田区跑腿员未分配创建时间2026-06-05 17:07:56"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89048-codex-runtime-final-rerun2-structure-06-导航-跑腿员管理",
+        "label": "导航:跑腿员管理",
+        "finalUrl": "http://127.0.0.1:49048/admin/couriers",
+        "title": "同城即时服务调度平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89048/probe/codex-runtime-final-20260605-1138/may-89048-codex-runtime-final-rerun2-structure-06-导航-跑腿员管理.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89048/probe/codex-runtime-final-20260605-1138/may-89048-codex-runtime-final-rerun2-structure-06-导航-跑腿员管理.png",
+        "elementCount": 149,
+        "interactiveCount": 11,
+        "interactiveLabels": [
+          "运营看板 订单管理 跑腿员管理 调度中心 质检规则 信用管理 企业对接 服务区域",
+          "运营看板",
+          "订单管理",
+          "跑腿员管理",
+          "调度中心",
+          "质检规则",
+          "信用管理",
+          "企业对接",
+          "服务区域",
+          "完成订单",
+          "评分"
+        ]
+      }
+    ]
+  },
+  "screenshotMetrics": {
+    "width": 1696,
+    "height": 1192,
+    "scrollWidth": 1664,
+    "scrollHeight": 1192
+  },
+  "initialBodyTextPreview": "同城即时服务调度平台\n快速 · 可靠 · 可追溯的同城跑腿服务调度系统\n登录进入\n权限边界说明：不同角色进入不同工作台，数据与菜单严格隔离\n演示账号 · 一键登录\n平台运营\n平台运营\n运营看板 · 调度 · 质检\nadmin:admin123 · 别名 platform / ops\n需求方\n需求方\n发布任务 · 查看订单\nrequester:user123 · 别名 user\n跑腿员\n跑腿员\n接单 · 打卡 · 留痕\ncourier:courier123 · 别名 runner\n演示账号：admin:admin123 / requester:user123 / courier:courier123\n💡 角色功能边界：\n平台运营管理台：看板 · 订单 · 跑腿员 · 调度 · 质检 · 信用 · 企业API · 区域\n需求方工作台：发布任务 · 我的订单 · 双向评价\n跑腿员工作台：待接订单 · 上门打卡 · 服务留痕 · 完成确认",
+  "bodyTextPreview": "即时服务调度\n平台运营工作台\n运营看板\n订单管理\n跑腿员管理\n调度中心\n质检规则\n信用管理\n企业对接\n服务区域\n平台运营\n权限: 8 项\n系统管理员\n今日订单\n12\n活跃跑腿员\n3\n平均履约时长\n90分钟\n超时率\n0%\n订单类型分布\n全能帮\n1 单 (8%)\n帮取送\n7 单 (58%)\n帮买\n3 单 (25%)\n帮排队\n1 单 (8%)\n订单状态分布\n已接单\n1\n已取消\n1\n已完成\n1\n已调度\n2\n进行中\n1\n待接单\n6\n37分钟履约时效看板\n达标\n目标时效\n37分钟\n当前平均\n90分钟\n90min\n近期订单\n订单号\t标题\t类型\t状态\t费用\t时间\n\n暂无数据\n区域热度\n区域\t订单数\t跑腿员\t热度\n南山区\t1\t2\t中\n福田区\t2\t1\t较高\n罗湖区\t1\t1\t较低\n宝安区\t0\t0\t低\n龙岗区\t0\t1\t低",
+  "apiBase": "http://127.0.0.1:59048",
+  "businessGoalPreview": "同城跑腿服务平台：支持用户登录、个人中心、任务搜索筛选、后台管理、订单购买提交和骑手接单。",
+  "apiResponses": [
+    {
+      "method": "POST",
+      "status": 200,
+      "url": "http://127.0.0.1:49048/api/auth/login"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49048/api/admin/dashboard"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49048/api/admin/dashboard"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49048/api/admin/dashboard"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49048/api/admin/dashboard"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49048/api/admin/orders?page=1&pageSize=10"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49048/api/admin/orders?page=1&pageSize=10"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49048/api/admin/orders?page=1&pageSize=10"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49048/api/admin/couriers"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49048/api/admin/couriers"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49048/api/admin/dashboard"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49048/api/admin/dashboard"
+    }
+  ],
+  "apiChecks": [
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59048/api/health",
+      "path": "/api/health",
+      "status": 200,
+      "ok": true,
+      "bodyPreview": "{\"status\":\"ok\",\"timestamp\":\"2026-06-05T11:39:25.086Z\"}"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59048/api/admin/dashboard",
+      "path": "/api/admin/dashboard",
+      "status": 401,
+      "ok": false,
+      "bodyPreview": "{\"error\":\"No token provided\"}"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59048/api/admin/orders?page=1&pageSize=10",
+      "path": "/api/admin/orders?page=1&pageSize=10",
+      "status": 401,
+      "ok": false,
+      "bodyPreview": "{\"error\":\"No token provided\"}"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59048/api/admin/couriers",
+      "path": "/api/admin/couriers",
+      "status": 401,
+      "ok": false,
+      "bodyPreview": "{\"error\":\"No token provided\"}"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59048/api/auth/me",
+      "path": "/api/auth/me",
+      "status": 401,
+      "ok": false,
+      "bodyPreview": "{\"error\":\"No token provided\"}"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59048/api/users/profile",
+      "path": "/api/users/profile",
+      "status": 404,
+      "ok": false,
+      "bodyPreview": "<!DOCTYPE html>\n<html lang=\"en\">\n<head>\n<meta charset=\"utf-8\">\n<title>Error</title>\n</head>\n<body>\n<pre>Cannot GET /api/users/profile</pre>\n</body>\n</html>\n"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59048/api/user/profile",
+      "path": "/api/user/profile",
+      "status": 404,
+      "ok": false,
+      "bodyPreview": "<!DOCTYPE html>\n<html lang=\"en\">\n<head>\n<meta charset=\"utf-8\">\n<title>Error</title>\n</head>\n<body>\n<pre>Cannot GET /api/user/profile</pre>\n</body>\n</html>\n"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59048/api/search?q=%E6%B5%8B%E8%AF%95",
+      "path": "/api/search?q=%E6%B5%8B%E8%AF%95",
+      "status": 404,
+      "ok": false,
+      "bodyPreview": "<!DOCTYPE html>\n<html lang=\"en\">\n<head>\n<meta charset=\"utf-8\">\n<title>Error</title>\n</head>\n<body>\n<pre>Cannot GET /api/search</pre>\n</body>\n</html>\n"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59048/api/admin/stats",
+      "path": "/api/admin/stats",
+      "status": 404,
+      "ok": false,
+      "bodyPreview": "<!DOCTYPE html>\n<html lang=\"en\">\n<head>\n<meta charset=\"utf-8\">\n<title>Error</title>\n</head>\n<body>\n<pre>Cannot GET /api/admin/stats</pre>\n</body>\n</html>\n"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59048/api/products",
+      "path": "/api/products",
+      "status": 404,
+      "ok": false,
+      "bodyPreview": "<!DOCTYPE html>\n<html lang=\"en\">\n<head>\n<meta charset=\"utf-8\">\n<title>Error</title>\n</head>\n<body>\n<pre>Cannot GET /api/products</pre>\n</body>\n</html>\n"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59048/api/orders",
+      "path": "/api/orders",
+      "status": 401,
+      "ok": false,
+      "bodyPreview": "{\"error\":\"No token provided\"}"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59048/api/cart",
+      "path": "/api/cart",
+      "status": 404,
+      "ok": false,
+      "bodyPreview": "<!DOCTYPE html>\n<html lang=\"en\">\n<head>\n<meta charset=\"utf-8\">\n<title>Error</title>\n</head>\n<body>\n<pre>Cannot GET /api/cart</pre>\n</body>\n</html>\n"
+    }
+  ],
+  "dialogs": [],
+  "consoleMessages": [
+    {
+      "type": "debug",
+      "text": "[vite] connecting...",
+      "location": {
+        "url": "http://127.0.0.1:49048/@vite/client",
+        "lineNumber": 494,
+        "columnNumber": 8
+      }
+    },
+    {
+      "type": "debug",
+      "text": "[vite] connected.",
+      "location": {
+        "url": "http://127.0.0.1:49048/@vite/client",
+        "lineNumber": 617,
+        "columnNumber": 14
+      }
+    },
+    {
+      "type": "info",
+      "text": "%cDownload the React DevTools for a better development experience: https://reactjs.org/link/react-devtools font-weight:bold",
+      "location": {
+        "url": "http://127.0.0.1:49048/node_modules/.vite/deps/chunk-PJEEZAML.js?v=e2ade660",
+        "lineNumber": 21550,
+        "columnNumber": 24
+      }
+    },
+    {
+      "type": "warning",
+      "text": "⚠️ React Router Future Flag Warning: React Router will begin wrapping state updates in `React.startTransition` in v7. You can use the `v7_startTransition` future flag to opt-in early. For more information, see https://reactrouter.com/v6/upgrading/future#v7_starttransition.",
+      "location": {
+        "url": "http://127.0.0.1:49048/node_modules/.vite/deps/react-router-dom.js?v=e2ade660",
+        "lineNumber": 4426,
+        "columnNumber": 12
+      }
+    },
+    {
+      "type": "warning",
+      "text": "⚠️ React Router Future Flag Warning: Relative route resolution within Splat routes is changing in v7. You can use the `v7_relativeSplatPath` future flag to opt-in early. For more information, see https://reactrouter.com/v6/upgrading/future#v7_relativesplatpath.",
+      "location": {
+        "url": "http://127.0.0.1:49048/node_modules/.vite/deps/react-router-dom.js?v=e2ade660",
+        "lineNumber": 4426,
+        "columnNumber": 12
+      }
+    },
+    {
+      "type": "verbose",
+      "text": "[DOM] Input elements should have autocomplete attributes (suggested: \"current-password\"): (More info: https://goo.gl/9p2vKq) %o",
+      "location": {
+        "url": "http://127.0.0.1:49048/login",
+        "lineNumber": 0,
+        "columnNumber": 0
+      }
+    },
+    {
+      "type": "error",
+      "text": "Failed to load resource: the server responded with a status of 404 (Not Found)",
+      "location": {
+        "url": "http://127.0.0.1:49048/favicon.ico",
+        "lineNumber": 0,
+        "columnNumber": 0
+      }
+    },
+    {
+      "type": "error",
+      "text": "Failed to load resource: the server responded with a status of 404 (Not Found)",
+      "location": {
+        "url": "http://127.0.0.1:49048/favicon.ico",
+        "lineNumber": 0,
+        "columnNumber": 0
+      }
+    },
+    {
+      "type": "debug",
+      "text": "[vite] connecting...",
+      "location": {
+        "url": "http://127.0.0.1:49048/@vite/client",
+        "lineNumber": 494,
+        "columnNumber": 8
+      }
+    },
+    {
+      "type": "debug",
+      "text": "[vite] connected.",
+      "location": {
+        "url": "http://127.0.0.1:49048/@vite/client",
+        "lineNumber": 617,
+        "columnNumber": 14
+      }
+    },
+    {
+      "type": "info",
+      "text": "%cDownload the React DevTools for a better development experience: https://reactjs.org/link/react-devtools font-weight:bold",
+      "location": {
+        "url": "http://127.0.0.1:49048/node_modules/.vite/deps/chunk-PJEEZAML.js?v=e2ade660",
+        "lineNumber": 21550,
+        "columnNumber": 24
+      }
+    },
+    {
+      "type": "warning",
+      "text": "⚠️ React Router Future Flag Warning: React Router will begin wrapping state updates in `React.startTransition` in v7. You can use the `v7_startTransition` future flag to opt-in early. For more information, see https://reactrouter.com/v6/upgrading/future#v7_starttransition.",
+      "location": {
+        "url": "http://127.0.0.1:49048/node_modules/.vite/deps/react-router-dom.js?v=e2ade660",
+        "lineNumber": 4426,
+        "columnNumber": 12
+      }
+    },
+    {
+      "type": "warning",
+      "text": "⚠️ React Router Future Flag Warning: Relative route resolution within Splat routes is changing in v7. You can use the `v7_relativeSplatPath` future flag to opt-in early. For more information, see https://reactrouter.com/v6/upgrading/future#v7_relativesplatpath.",
+      "location": {
+        "url": "http://127.0.0.1:49048/node_modules/.vite/deps/react-router-dom.js?v=e2ade660",
+        "lineNumber": 4426,
+        "columnNumber": 12
+      }
+    },
+    {
+      "type": "debug",
+      "text": "[vite] connecting...",
+      "location": {
+        "url": "http://127.0.0.1:49048/@vite/client",
+        "lineNumber": 494,
+        "columnNumber": 8
+      }
+    },
+    {
+      "type": "debug",
+      "text": "[vite] connected.",
+      "location": {
+        "url": "http://127.0.0.1:49048/@vite/client",
+        "lineNumber": 617,
+        "columnNumber": 14
+      }
+    },
+    {
+      "type": "info",
+      "text": "%cDownload the React DevTools for a better development experience: https://reactjs.org/link/react-devtools font-weight:bold",
+      "location": {
+        "url": "http://127.0.0.1:49048/node_modules/.vite/deps/chunk-PJEEZAML.js?v=e2ade660",
+        "lineNumber": 21550,
+        "columnNumber": 24
+      }
+    },
+    {
+      "type": "warning",
+      "text": "⚠️ React Router Future Flag Warning: React Router will begin wrapping state updates in `React.startTransition` in v7. You can use the `v7_startTransition` future flag to opt-in early. For more information, see https://reactrouter.com/v6/upgrading/future#v7_starttransition.",
+      "location": {
+        "url": "http://127.0.0.1:49048/node_modules/.vite/deps/react-router-dom.js?v=e2ade660",
+        "lineNumber": 4426,
+        "columnNumber": 12
+      }
+    },
+    {
+      "type": "warning",
+      "text": "⚠️ React Router Future Flag Warning: Relative route resolution within Splat routes is changing in v7. You can use the `v7_relativeSplatPath` future flag to opt-in early. For more information, see https://reactrouter.com/v6/upgrading/future#v7_relativesplatpath.",
+      "location": {
+        "url": "http://127.0.0.1:49048/node_modules/.vite/deps/react-router-dom.js?v=e2ade660",
+        "lineNumber": 4426,
+        "columnNumber": 12
+      }
+    }
+  ],
+  "requestFailures": [],
+  "responseErrors": []
+}

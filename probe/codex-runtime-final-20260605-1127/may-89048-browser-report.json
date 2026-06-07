@@ -1,0 +1,678 @@
+{
+  "ok": true,
+  "generatedAt": "2026-06-05T11:32:08.321Z",
+  "order": "may-89048",
+  "roundIndex": 100,
+  "captureId": "may-89048-codex-runtime-final",
+  "url": "http://127.0.0.1:49048/",
+  "initialUrl": "http://127.0.0.1:49048/",
+  "finalUrl": "http://127.0.0.1:49048/login",
+  "status": 200,
+  "title": "同城即时服务调度平台",
+  "initialTitle": "同城即时服务调度平台",
+  "navigationError": "",
+  "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89048/probe/codex-runtime-final-20260605-1127/may-89048-codex-runtime-final-frontend.png",
+  "screenshotPaths": [
+    "/Users/chen/Documents/trae_projects/local_projects/may-89048/probe/codex-runtime-final-20260605-1127/may-89048-codex-runtime-final-structure-01-首屏.png"
+  ],
+  "issueTextPreview": "个人中心/我的相关问题；搜索/筛选相关问题；后台管理相关问题；购买/提交相关问题",
+  "targetReason": "个人中心/我的相关问题；登录注册相关问题；搜索/筛选相关问题；后台管理相关问题；购买/提交相关问题",
+  "targetKind": "auth",
+  "targetMatched": true,
+  "targetActions": [
+    {
+      "action": "click",
+      "label": "个人中心/我的相关问题",
+      "ok": true
+    },
+    {
+      "action": "target-verify",
+      "label": "个人中心/我的相关问题",
+      "ok": false,
+      "finalUrl": "http://127.0.0.1:49048/login"
+    },
+    {
+      "action": "click",
+      "label": "登录注册相关问题",
+      "ok": true
+    },
+    {
+      "action": "target-verify",
+      "label": "登录注册相关问题",
+      "ok": true,
+      "finalUrl": "http://127.0.0.1:49048/login"
+    }
+  ],
+  "authFlow": {
+    "detected": true,
+    "attempted": true,
+    "success": false,
+    "finalUrl": "http://127.0.0.1:49048/login",
+    "message": "已尝试登录但仍停留在登录页",
+    "actions": [
+      {
+        "action": "login-fill-username",
+        "label": "admin",
+        "ok": true
+      },
+      {
+        "action": "login-fill-password",
+        "label": "admin:******",
+        "ok": true
+      },
+      {
+        "action": "click",
+        "label": "登录:admin",
+        "ok": true
+      },
+      {
+        "action": "login-submit",
+        "label": "admin",
+        "ok": true,
+        "beforeUrl": "http://127.0.0.1:49048/login"
+      },
+      {
+        "action": "login-result",
+        "label": "admin",
+        "ok": false,
+        "finalUrl": "http://127.0.0.1:49048/login",
+        "feedback": []
+      },
+      {
+        "action": "login-fill-username",
+        "label": "requester",
+        "ok": true
+      },
+      {
+        "action": "login-fill-password",
+        "label": "requester:******",
+        "ok": true
+      },
+      {
+        "action": "click",
+        "label": "登录:requester",
+        "ok": true
+      },
+      {
+        "action": "login-submit",
+        "label": "requester",
+        "ok": true,
+        "beforeUrl": "http://127.0.0.1:49048/login"
+      },
+      {
+        "action": "login-result",
+        "label": "requester",
+        "ok": false,
+        "finalUrl": "http://127.0.0.1:49048/login",
+        "feedback": []
+      },
+      {
+        "action": "login-fill-username",
+        "label": "courier",
+        "ok": true
+      },
+      {
+        "action": "login-fill-password",
+        "label": "courier:******",
+        "ok": true
+      },
+      {
+        "action": "click",
+        "label": "登录:courier",
+        "ok": true
+      },
+      {
+        "action": "login-submit",
+        "label": "courier",
+        "ok": true,
+        "beforeUrl": "http://127.0.0.1:49048/login"
+      },
+      {
+        "action": "login-result",
+        "label": "courier",
+        "ok": false,
+        "finalUrl": "http://127.0.0.1:49048/login",
+        "feedback": []
+      }
+    ]
+  },
+  "businessAudit": {
+    "actions": [],
+    "snapshots": [
+      {
+        "label": "首屏",
+        "url": "http://127.0.0.1:49048/login",
+        "title": "同城即时服务调度平台",
+        "headings": [
+          "同城即时服务调度平台"
+        ],
+        "navLabels": [],
+        "buttons": [
+          "登 录 进 入",
+          "需求方 需求方 发布任务 · 查看订单 用户名：requester / user",
+          "跑腿员 跑腿员 接单 · 打卡 · 留痕 用户名：courier / runner"
+        ],
+        "links": [],
+        "inputs": [
+          {
+            "tag": "input",
+            "type": "text",
+            "placeholder": "请输入账号：手机号 / admin / platform / ops / requester / courier",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "password",
+            "placeholder": "请输入密码（演示密码：admin123 / user123 / courier123）",
+            "name": "",
+            "label": ""
+          }
+        ],
+        "tables": [],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "同城即时服务调度平台快速 · 可靠 · 可追溯的同城跑腿服务调度系统登 录 进 入权限边界说明：不同角色进入不同工作台，数据与菜单严格隔离演示账号 · 一键登录平台运营平台运营运营看板 · 调度 · 质检用户名：admin / platform / ops需求方需求方发布任务 · 查看订单用户名：requester / user跑腿员跑腿员接单 · 打卡 · 留痕用户名：courier / runner💡 角色功能边界：平台运营管理台：看板 · 订单 · 跑腿员 · 调度 · 质检 · 信用 · 企业API · 区域需求方工作台：发布任务 · 我的订单 · 双向评价跑腿员工作台：待接订单 · 上门打卡 · 服务留痕 · 完成确认",
+        "layout": {
+          "viewportWidth": 1504,
+          "viewportHeight": 1000,
+          "scrollWidth": 1504,
+          "scrollHeight": 1000,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89048-codex-runtime-final-structure-01-首屏",
+          "label": "首屏",
+          "finalUrl": "http://127.0.0.1:49048/login",
+          "title": "同城即时服务调度平台",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89048/probe/codex-runtime-final-20260605-1127/may-89048-codex-runtime-final-structure-01-首屏.json",
+          "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89048/probe/codex-runtime-final-20260605-1127/may-89048-codex-runtime-final-structure-01-首屏.png",
+          "elementCount": 111,
+          "interactiveCount": 7,
+          "interactiveLabels": [
+            "请输入账号：手机号 / admin / platform / ops / requester / courier",
+            "请输入密码（演示密码：admin123 / user123 / courier123）",
+            "登 录 进 入",
+            "平台运营 平台运营 运营看板 · 调度 · 质检 用户名：admin / platform / ops",
+            "需求方 需求方 发布任务 · 查看订单 用户名：requester / user",
+            "跑腿员 跑腿员 接单 · 打卡 · 留痕 用户名：courier / runner"
+          ]
+        }
+      }
+    ],
+    "findings": [
+      "登录页可见，但自动填充可见演示账号后仍停留在登录页，没有进入登录后的首页或工作台。"
+    ],
+    "actionHints": [
+      "优先修复登录表单、演示账号、登录接口和登录后跳转，让自动化能先完成登录再复验首页业务链路。"
+    ],
+    "emptyPages": [],
+    "overflowPages": [],
+    "blankPages": [],
+    "apiFailurePaths": [],
+    "goalTerms": [],
+    "clickedActionDescriptors": [],
+    "secondaryActionClicks": 0,
+    "structureCaptures": [
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89048-codex-runtime-final-structure-01-首屏",
+        "label": "首屏",
+        "finalUrl": "http://127.0.0.1:49048/login",
+        "title": "同城即时服务调度平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89048/probe/codex-runtime-final-20260605-1127/may-89048-codex-runtime-final-structure-01-首屏.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89048/probe/codex-runtime-final-20260605-1127/may-89048-codex-runtime-final-structure-01-首屏.png",
+        "elementCount": 111,
+        "interactiveCount": 7,
+        "interactiveLabels": [
+          "请输入账号：手机号 / admin / platform / ops / requester / courier",
+          "请输入密码（演示密码：admin123 / user123 / courier123）",
+          "登 录 进 入",
+          "平台运营 平台运营 运营看板 · 调度 · 质检 用户名：admin / platform / ops",
+          "需求方 需求方 发布任务 · 查看订单 用户名：requester / user",
+          "跑腿员 跑腿员 接单 · 打卡 · 留痕 用户名：courier / runner"
+        ]
+      }
+    ],
+    "representativeScreenshotUrl": "http://127.0.0.1:49048/login",
+    "representativeScreenshotLabel": "同城即时服务调度平台"
+  },
+  "websiteStructureCapture": {
+    "module": "website_structure_capture",
+    "captureCount": 1,
+    "captures": [
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89048-codex-runtime-final-structure-01-首屏",
+        "label": "首屏",
+        "finalUrl": "http://127.0.0.1:49048/login",
+        "title": "同城即时服务调度平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89048/probe/codex-runtime-final-20260605-1127/may-89048-codex-runtime-final-structure-01-首屏.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89048/probe/codex-runtime-final-20260605-1127/may-89048-codex-runtime-final-structure-01-首屏.png",
+        "elementCount": 111,
+        "interactiveCount": 7,
+        "interactiveLabels": [
+          "请输入账号：手机号 / admin / platform / ops / requester / courier",
+          "请输入密码（演示密码：admin123 / user123 / courier123）",
+          "登 录 进 入",
+          "平台运营 平台运营 运营看板 · 调度 · 质检 用户名：admin / platform / ops",
+          "需求方 需求方 发布任务 · 查看订单 用户名：requester / user",
+          "跑腿员 跑腿员 接单 · 打卡 · 留痕 用户名：courier / runner"
+        ]
+      }
+    ]
+  },
+  "screenshotMetrics": {
+    "width": 1536,
+    "height": 1000,
+    "scrollWidth": 1504,
+    "scrollHeight": 1000
+  },
+  "initialBodyTextPreview": "同城即时服务调度平台\n快速 · 可靠 · 可追溯的同城跑腿服务调度系统\n登 录 进 入\n权限边界说明：不同角色进入不同工作台，数据与菜单严格隔离\n演示账号 · 一键登录\n平台运营\n平台运营\n运营看板 · 调度 · 质检\n用户名：admin / platform / ops\n需求方\n需求方\n发布任务 · 查看订单\n用户名：requester / user\n跑腿员\n跑腿员\n接单 · 打卡 · 留痕\n用户名：courier / runner\n💡 角色功能边界：\n平台运营管理台：看板 · 订单 · 跑腿员 · 调度 · 质检 · 信用 · 企业API · 区域\n需求方工作台：发布任务 · 我的订单 · 双向评价\n跑腿员工作台：待接订单 · 上门打卡 · 服务留痕 · 完成确认",
+  "bodyTextPreview": "同城即时服务调度平台\n快速 · 可靠 · 可追溯的同城跑腿服务调度系统\n登 录 进 入\n权限边界说明：不同角色进入不同工作台，数据与菜单严格隔离\n演示账号 · 一键登录\n平台运营\n平台运营\n运营看板 · 调度 · 质检\n用户名：admin / platform / ops\n需求方\n需求方\n发布任务 · 查看订单\n用户名：requester / user\n跑腿员\n跑腿员\n接单 · 打卡 · 留痕\n用户名：courier / runner\n💡 角色功能边界：\n平台运营管理台：看板 · 订单 · 跑腿员 · 调度 · 质检 · 信用 · 企业API · 区域\n需求方工作台：发布任务 · 我的订单 · 双向评价\n跑腿员工作台：待接订单 · 上门打卡 · 服务留痕 · 完成确认",
+  "apiBase": "http://127.0.0.1:59048",
+  "businessGoalPreview": "同城跑腿服务平台：支持用户登录、个人中心、任务搜索筛选、订单提交购买、骑手接单和后台运营管理。",
+  "apiResponses": [],
+  "apiChecks": [
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59048/api/health",
+      "path": "/api/health",
+      "status": 200,
+      "ok": true,
+      "bodyPreview": "{\"status\":\"ok\",\"timestamp\":\"2026-06-05T11:31:56.249Z\"}"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59048/api/auth/me",
+      "path": "/api/auth/me",
+      "status": 401,
+      "ok": false,
+      "bodyPreview": "{\"error\":\"No token provided\"}"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59048/api/users/profile",
+      "path": "/api/users/profile",
+      "status": 404,
+      "ok": false,
+      "bodyPreview": "<!DOCTYPE html>\n<html lang=\"en\">\n<head>\n<meta charset=\"utf-8\">\n<title>Error</title>\n</head>\n<body>\n<pre>Cannot GET /api/users/profile</pre>\n</body>\n</html>\n"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59048/api/user/profile",
+      "path": "/api/user/profile",
+      "status": 404,
+      "ok": false,
+      "bodyPreview": "<!DOCTYPE html>\n<html lang=\"en\">\n<head>\n<meta charset=\"utf-8\">\n<title>Error</title>\n</head>\n<body>\n<pre>Cannot GET /api/user/profile</pre>\n</body>\n</html>\n"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59048/api/search?q=%E6%B5%8B%E8%AF%95",
+      "path": "/api/search?q=%E6%B5%8B%E8%AF%95",
+      "status": 404,
+      "ok": false,
+      "bodyPreview": "<!DOCTYPE html>\n<html lang=\"en\">\n<head>\n<meta charset=\"utf-8\">\n<title>Error</title>\n</head>\n<body>\n<pre>Cannot GET /api/search</pre>\n</body>\n</html>\n"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59048/api/admin/stats",
+      "path": "/api/admin/stats",
+      "status": 404,
+      "ok": false,
+      "bodyPreview": "<!DOCTYPE html>\n<html lang=\"en\">\n<head>\n<meta charset=\"utf-8\">\n<title>Error</title>\n</head>\n<body>\n<pre>Cannot GET /api/admin/stats</pre>\n</body>\n</html>\n"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59048/api/admin/dashboard",
+      "path": "/api/admin/dashboard",
+      "status": 401,
+      "ok": false,
+      "bodyPreview": "{\"error\":\"No token provided\"}"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59048/api/products",
+      "path": "/api/products",
+      "status": 404,
+      "ok": false,
+      "bodyPreview": "<!DOCTYPE html>\n<html lang=\"en\">\n<head>\n<meta charset=\"utf-8\">\n<title>Error</title>\n</head>\n<body>\n<pre>Cannot GET /api/products</pre>\n</body>\n</html>\n"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59048/api/orders",
+      "path": "/api/orders",
+      "status": 401,
+      "ok": false,
+      "bodyPreview": "{\"error\":\"No token provided\"}"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59048/api/cart",
+      "path": "/api/cart",
+      "status": 404,
+      "ok": false,
+      "bodyPreview": "<!DOCTYPE html>\n<html lang=\"en\">\n<head>\n<meta charset=\"utf-8\">\n<title>Error</title>\n</head>\n<body>\n<pre>Cannot GET /api/cart</pre>\n</body>\n</html>\n"
+    }
+  ],
+  "dialogs": [],
+  "consoleMessages": [
+    {
+      "type": "debug",
+      "text": "[vite] connecting...",
+      "location": {
+        "url": "http://127.0.0.1:49048/@vite/client",
+        "lineNumber": 494,
+        "columnNumber": 8
+      }
+    },
+    {
+      "type": "debug",
+      "text": "[vite] connected.",
+      "location": {
+        "url": "http://127.0.0.1:49048/@vite/client",
+        "lineNumber": 617,
+        "columnNumber": 14
+      }
+    },
+    {
+      "type": "info",
+      "text": "%cDownload the React DevTools for a better development experience: https://reactjs.org/link/react-devtools font-weight:bold",
+      "location": {
+        "url": "http://127.0.0.1:49048/node_modules/.vite/deps/chunk-PJEEZAML.js?v=e2ade660",
+        "lineNumber": 21550,
+        "columnNumber": 24
+      }
+    },
+    {
+      "type": "warning",
+      "text": "⚠️ React Router Future Flag Warning: React Router will begin wrapping state updates in `React.startTransition` in v7. You can use the `v7_startTransition` future flag to opt-in early. For more information, see https://reactrouter.com/v6/upgrading/future#v7_starttransition.",
+      "location": {
+        "url": "http://127.0.0.1:49048/node_modules/.vite/deps/react-router-dom.js?v=e2ade660",
+        "lineNumber": 4426,
+        "columnNumber": 12
+      }
+    },
+    {
+      "type": "warning",
+      "text": "⚠️ React Router Future Flag Warning: Relative route resolution within Splat routes is changing in v7. You can use the `v7_relativeSplatPath` future flag to opt-in early. For more information, see https://reactrouter.com/v6/upgrading/future#v7_relativesplatpath.",
+      "location": {
+        "url": "http://127.0.0.1:49048/node_modules/.vite/deps/react-router-dom.js?v=e2ade660",
+        "lineNumber": 4426,
+        "columnNumber": 12
+      }
+    },
+    {
+      "type": "verbose",
+      "text": "[DOM] Input elements should have autocomplete attributes (suggested: \"current-password\"): (More info: https://goo.gl/9p2vKq) %o",
+      "location": {
+        "url": "http://127.0.0.1:49048/login",
+        "lineNumber": 0,
+        "columnNumber": 0
+      }
+    },
+    {
+      "type": "debug",
+      "text": "[vite] hot updated: /src/pages/Login.jsx",
+      "location": {
+        "url": "http://127.0.0.1:49048/@vite/client",
+        "lineNumber": 222,
+        "columnNumber": 18
+      }
+    },
+    {
+      "type": "debug",
+      "text": "[vite] hot updated: /src/pages/requester/PublishOrder.jsx",
+      "location": {
+        "url": "http://127.0.0.1:49048/@vite/client",
+        "lineNumber": 222,
+        "columnNumber": 18
+      }
+    },
+    {
+      "type": "debug",
+      "text": "[vite] hot updated: /src/pages/courier/AvailableOrders.jsx",
+      "location": {
+        "url": "http://127.0.0.1:49048/@vite/client",
+        "lineNumber": 222,
+        "columnNumber": 18
+      }
+    },
+    {
+      "type": "debug",
+      "text": "[vite] hot updated: /src/pages/requester/OrderDetail.jsx",
+      "location": {
+        "url": "http://127.0.0.1:49048/@vite/client",
+        "lineNumber": 222,
+        "columnNumber": 18
+      }
+    },
+    {
+      "type": "debug",
+      "text": "[vite] hot updated: /src/pages/courier/MyTasks.jsx",
+      "location": {
+        "url": "http://127.0.0.1:49048/@vite/client",
+        "lineNumber": 222,
+        "columnNumber": 18
+      }
+    },
+    {
+      "type": "debug",
+      "text": "[vite] hot updated: /src/pages/admin/OrderManage.jsx",
+      "location": {
+        "url": "http://127.0.0.1:49048/@vite/client",
+        "lineNumber": 222,
+        "columnNumber": 18
+      }
+    },
+    {
+      "type": "debug",
+      "text": "[vite] hot updated: /src/pages/courier/CheckIn.jsx",
+      "location": {
+        "url": "http://127.0.0.1:49048/@vite/client",
+        "lineNumber": 222,
+        "columnNumber": 18
+      }
+    },
+    {
+      "type": "debug",
+      "text": "[vite] hot updated: /src/pages/admin/CreditManage.jsx",
+      "location": {
+        "url": "http://127.0.0.1:49048/@vite/client",
+        "lineNumber": 222,
+        "columnNumber": 18
+      }
+    },
+    {
+      "type": "debug",
+      "text": "[vite] hot updated: /src/pages/admin/Dashboard.jsx",
+      "location": {
+        "url": "http://127.0.0.1:49048/@vite/client",
+        "lineNumber": 222,
+        "columnNumber": 18
+      }
+    },
+    {
+      "type": "debug",
+      "text": "[vite] hot updated: /src/pages/admin/DispatchCenter.jsx",
+      "location": {
+        "url": "http://127.0.0.1:49048/@vite/client",
+        "lineNumber": 222,
+        "columnNumber": 18
+      }
+    },
+    {
+      "type": "debug",
+      "text": "[vite] hot updated: /src/pages/admin/CourierManage.jsx",
+      "location": {
+        "url": "http://127.0.0.1:49048/@vite/client",
+        "lineNumber": 222,
+        "columnNumber": 18
+      }
+    },
+    {
+      "type": "debug",
+      "text": "[vite] hot updated: /src/pages/admin/EnterpriseAPI.jsx",
+      "location": {
+        "url": "http://127.0.0.1:49048/@vite/client",
+        "lineNumber": 222,
+        "columnNumber": 18
+      }
+    },
+    {
+      "type": "debug",
+      "text": "[vite] hot updated: /src/pages/requester/MyOrders.jsx",
+      "location": {
+        "url": "http://127.0.0.1:49048/@vite/client",
+        "lineNumber": 222,
+        "columnNumber": 18
+      }
+    },
+    {
+      "type": "debug",
+      "text": "[vite] hot updated: /src/pages/admin/QualityRules.jsx",
+      "location": {
+        "url": "http://127.0.0.1:49048/@vite/client",
+        "lineNumber": 222,
+        "columnNumber": 18
+      }
+    },
+    {
+      "type": "debug",
+      "text": "[vite] hot updated: /src/pages/admin/ServiceAreas.jsx",
+      "location": {
+        "url": "http://127.0.0.1:49048/@vite/client",
+        "lineNumber": 222,
+        "columnNumber": 18
+      }
+    },
+    {
+      "type": "debug",
+      "text": "[vite] hot updated: /src/pages/common/Profile.jsx",
+      "location": {
+        "url": "http://127.0.0.1:49048/@vite/client",
+        "lineNumber": 222,
+        "columnNumber": 18
+      }
+    },
+    {
+      "type": "error",
+      "text": "Failed to load resource: the server responded with a status of 404 (Not Found)",
+      "location": {
+        "url": "http://127.0.0.1:49048/favicon.ico",
+        "lineNumber": 0,
+        "columnNumber": 0
+      }
+    },
+    {
+      "type": "debug",
+      "text": "[vite] connecting...",
+      "location": {
+        "url": "http://127.0.0.1:49048/@vite/client",
+        "lineNumber": 494,
+        "columnNumber": 8
+      }
+    },
+    {
+      "type": "debug",
+      "text": "[vite] connected.",
+      "location": {
+        "url": "http://127.0.0.1:49048/@vite/client",
+        "lineNumber": 617,
+        "columnNumber": 14
+      }
+    },
+    {
+      "type": "info",
+      "text": "%cDownload the React DevTools for a better development experience: https://reactjs.org/link/react-devtools font-weight:bold",
+      "location": {
+        "url": "http://127.0.0.1:49048/node_modules/.vite/deps/chunk-PJEEZAML.js?v=e2ade660",
+        "lineNumber": 21550,
+        "columnNumber": 24
+      }
+    },
+    {
+      "type": "warning",
+      "text": "⚠️ React Router Future Flag Warning: React Router will begin wrapping state updates in `React.startTransition` in v7. You can use the `v7_startTransition` future flag to opt-in early. For more information, see https://reactrouter.com/v6/upgrading/future#v7_starttransition.",
+      "location": {
+        "url": "http://127.0.0.1:49048/node_modules/.vite/deps/react-router-dom.js?v=e2ade660",
+        "lineNumber": 4426,
+        "columnNumber": 12
+      }
+    },
+    {
+      "type": "warning",
+      "text": "⚠️ React Router Future Flag Warning: Relative route resolution within Splat routes is changing in v7. You can use the `v7_relativeSplatPath` future flag to opt-in early. For more information, see https://reactrouter.com/v6/upgrading/future#v7_relativesplatpath.",
+      "location": {
+        "url": "http://127.0.0.1:49048/node_modules/.vite/deps/react-router-dom.js?v=e2ade660",
+        "lineNumber": 4426,
+        "columnNumber": 12
+      }
+    },
+    {
+      "type": "verbose",
+      "text": "[DOM] Input elements should have autocomplete attributes (suggested: \"current-password\"): (More info: https://goo.gl/9p2vKq) %o",
+      "location": {
+        "url": "http://127.0.0.1:49048/login",
+        "lineNumber": 0,
+        "columnNumber": 0
+      }
+    },
+    {
+      "type": "debug",
+      "text": "[vite] connecting...",
+      "location": {
+        "url": "http://127.0.0.1:49048/@vite/client",
+        "lineNumber": 494,
+        "columnNumber": 8
+      }
+    },
+    {
+      "type": "debug",
+      "text": "[vite] connected.",
+      "location": {
+        "url": "http://127.0.0.1:49048/@vite/client",
+        "lineNumber": 617,
+        "columnNumber": 14
+      }
+    },
+    {
+      "type": "info",
+      "text": "%cDownload the React DevTools for a better development experience: https://reactjs.org/link/react-devtools font-weight:bold",
+      "location": {
+        "url": "http://127.0.0.1:49048/node_modules/.vite/deps/chunk-PJEEZAML.js?v=e2ade660",
+        "lineNumber": 21550,
+        "columnNumber": 24
+      }
+    },
+    {
+      "type": "warning",
+      "text": "⚠️ React Router Future Flag Warning: React Router will begin wrapping state updates in `React.startTransition` in v7. You can use the `v7_startTransition` future flag to opt-in early. For more information, see https://reactrouter.com/v6/upgrading/future#v7_starttransition.",
+      "location": {
+        "url": "http://127.0.0.1:49048/node_modules/.vite/deps/react-router-dom.js?v=e2ade660",
+        "lineNumber": 4426,
+        "columnNumber": 12
+      }
+    },
+    {
+      "type": "warning",
+      "text": "⚠️ React Router Future Flag Warning: Relative route resolution within Splat routes is changing in v7. You can use the `v7_relativeSplatPath` future flag to opt-in early. For more information, see https://reactrouter.com/v6/upgrading/future#v7_relativesplatpath.",
+      "location": {
+        "url": "http://127.0.0.1:49048/node_modules/.vite/deps/react-router-dom.js?v=e2ade660",
+        "lineNumber": 4426,
+        "columnNumber": 12
+      }
+    },
+    {
+      "type": "verbose",
+      "text": "[DOM] Input elements should have autocomplete attributes (suggested: \"current-password\"): (More info: https://goo.gl/9p2vKq) %o",
+      "location": {
+        "url": "http://127.0.0.1:49048/login",
+        "lineNumber": 0,
+        "columnNumber": 0
+      }
+    }
+  ],
+  "requestFailures": [],
+  "responseErrors": []
+}
