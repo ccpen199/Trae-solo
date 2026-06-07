@@ -1,0 +1,23 @@
+{
+  "name": "smart-locker-backend",
+  "version": "1.0.0",
+  "description": "Smart Locker Service Platform Backend",
+  "main": "src/server.js",
+  "scripts": {
+    "start": "node src/server.js",
+    "dev": "nodemon --watch src src/server.js"
+  },
+  "dependencies": {
+    "express": "^4.19.2",
+    "better-sqlite3": "^11.0.0",
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.5",
+    "bcryptjs": "^2.4.3",
+    "jsonwebtoken": "^9.0.2",
+    "uuid": "^9.0.1",
+    "dayjs": "^1.11.11"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.0"
+  }
+}
