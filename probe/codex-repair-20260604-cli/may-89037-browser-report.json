@@ -1,0 +1,2042 @@
+{
+  "ok": true,
+  "generatedAt": "2026-06-04T19:44:19.821Z",
+  "order": "may-89037",
+  "roundIndex": 3,
+  "captureId": "may-89037-codex-cli",
+  "url": "http://127.0.0.1:49037/",
+  "initialUrl": "http://127.0.0.1:49037/",
+  "finalUrl": "http://127.0.0.1:49037/dashboard",
+  "status": 200,
+  "title": "全国住房公积金统一服务中台",
+  "initialTitle": "全国住房公积金统一服务中台",
+  "navigationError": "",
+  "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89037/probe/codex-repair-20260604-cli/may-89037-codex-cli-frontend.png",
+  "screenshotPaths": [
+    "/Users/chen/Documents/trae_projects/local_projects/may-89037/probe/codex-repair-20260604-cli/may-89037-codex-cli-structure-01-首屏.png",
+    "/Users/chen/Documents/trae_projects/local_projects/may-89037/probe/codex-repair-20260604-cli/may-89037-codex-cli-structure-02-导航-首页.png",
+    "/Users/chen/Documents/trae_projects/local_projects/may-89037/probe/codex-repair-20260604-cli/may-89037-codex-cli-structure-03-导航-账户余额.png",
+    "/Users/chen/Documents/trae_projects/local_projects/may-89037/probe/codex-repair-20260604-cli/may-89037-codex-cli-structure-04-操作-同步账户.png"
+  ],
+  "issueTextPreview": "登录注册相关问题；后台管理相关问题",
+  "targetReason": "登录注册相关问题；后台管理相关问题",
+  "targetKind": "auth",
+  "targetMatched": true,
+  "targetActions": [
+    {
+      "action": "click",
+      "label": "登录注册相关问题",
+      "ok": true
+    },
+    {
+      "action": "target-verify",
+      "label": "登录注册相关问题",
+      "ok": true,
+      "finalUrl": "http://127.0.0.1:49037/dashboard"
+    }
+  ],
+  "authFlow": {
+    "detected": true,
+    "attempted": true,
+    "success": false,
+    "finalUrl": "http://127.0.0.1:49037/login",
+    "message": "已尝试登录但仍停留在登录页",
+    "actions": [
+      {
+        "action": "login-fill-username",
+        "label": "admin",
+        "ok": true
+      },
+      {
+        "action": "login-fill-password",
+        "label": "admin:******",
+        "ok": true
+      },
+      {
+        "action": "click",
+        "label": "登录:admin",
+        "ok": true
+      },
+      {
+        "action": "login-submit",
+        "label": "admin",
+        "ok": true,
+        "beforeUrl": "http://127.0.0.1:49037/login"
+      },
+      {
+        "action": "login-result",
+        "label": "admin",
+        "ok": false,
+        "finalUrl": "http://127.0.0.1:49037/login",
+        "feedback": [
+          "错误"
+        ]
+      },
+      {
+        "action": "login-fill-username",
+        "label": "platform",
+        "ok": true
+      },
+      {
+        "action": "login-fill-password",
+        "label": "platform:******",
+        "ok": true
+      },
+      {
+        "action": "click",
+        "label": "登录:platform",
+        "ok": true
+      },
+      {
+        "action": "login-submit",
+        "label": "platform",
+        "ok": true,
+        "beforeUrl": "http://127.0.0.1:49037/login"
+      },
+      {
+        "action": "login-result",
+        "label": "platform",
+        "ok": false,
+        "finalUrl": "http://127.0.0.1:49037/login",
+        "feedback": [
+          "错误"
+        ]
+      },
+      {
+        "action": "login-fill-username",
+        "label": "ops",
+        "ok": true
+      },
+      {
+        "action": "login-fill-password",
+        "label": "ops:******",
+        "ok": true
+      },
+      {
+        "action": "click",
+        "label": "登录:ops",
+        "ok": true
+      },
+      {
+        "action": "login-submit",
+        "label": "ops",
+        "ok": true,
+        "beforeUrl": "http://127.0.0.1:49037/login"
+      },
+      {
+        "action": "login-result",
+        "label": "ops",
+        "ok": false,
+        "finalUrl": "http://127.0.0.1:49037/login",
+        "feedback": [
+          "错误"
+        ]
+      }
+    ]
+  },
+  "businessAudit": {
+    "actions": [
+      {
+        "action": "click",
+        "label": "导航:首页",
+        "ok": true
+      },
+      {
+        "action": "click",
+        "label": "导航:账户余额",
+        "ok": true
+      },
+      {
+        "action": "click",
+        "label": "操作:同步账户",
+        "ok": true,
+        "result": {
+          "ok": true,
+          "matched": 1
+        }
+      },
+      {
+        "action": "click",
+        "label": "导航:交易明细",
+        "ok": true
+      },
+      {
+        "action": "click",
+        "label": "导航:贷款信息",
+        "ok": true
+      },
+      {
+        "action": "click",
+        "label": "操作:展开行",
+        "ok": true,
+        "result": {
+          "ok": true,
+          "matched": 1
+        }
+      },
+      {
+        "action": "click",
+        "label": "二层操作:展开行:关闭行",
+        "ok": true,
+        "result": {
+          "ok": true,
+          "matched": 1
+        }
+      },
+      {
+        "action": "click",
+        "label": "导航:提取申请",
+        "ok": true
+      },
+      {
+        "action": "click",
+        "label": "导航:申请记录",
+        "ok": true
+      }
+    ],
+    "snapshots": [
+      {
+        "label": "首屏",
+        "url": "http://127.0.0.1:49037/dashboard",
+        "title": "全国住房公积金统一服务中台",
+        "headings": [
+          "个人中心"
+        ],
+        "navLabels": [
+          "首页 账户余额 交易明细 贷款信息 提取申请 申请记录",
+          "首页",
+          "dashboard",
+          "账户余额",
+          "wallet",
+          "交易明细",
+          "file-text",
+          "贷款信息",
+          "提取申请",
+          "申请记录"
+        ],
+        "buttons": [],
+        "links": [],
+        "inputs": [],
+        "tables": [],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "全国住房公积金统一服务中台欢迎，缴存人1首页账户余额交易明细贷款信息提取申请申请记录个人中心账户余额60,000.00元月缴存额3,600.00元缴存基数15,000.00元账户状态正常最近提取申请暂无提取申请待办事项提取申请待审批审批年度对账确认确认",
+        "layout": {
+          "viewportWidth": 1504,
+          "viewportHeight": 1000,
+          "scrollWidth": 1504,
+          "scrollHeight": 1000,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89037-codex-cli-structure-01-首屏",
+          "label": "首屏",
+          "finalUrl": "http://127.0.0.1:49037/dashboard",
+          "title": "全国住房公积金统一服务中台",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89037/probe/codex-repair-20260604-cli/may-89037-codex-cli-structure-01-首屏.json",
+          "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89037/probe/codex-repair-20260604-cli/may-89037-codex-cli-structure-01-首屏.png",
+          "elementCount": 138,
+          "interactiveCount": 7,
+          "interactiveLabels": [
+            "首页 账户余额 交易明细 贷款信息 提取申请 申请记录",
+            "首页",
+            "账户余额",
+            "交易明细",
+            "贷款信息",
+            "提取申请",
+            "申请记录"
+          ]
+        }
+      },
+      {
+        "label": "导航:首页",
+        "url": "http://127.0.0.1:49037/dashboard",
+        "title": "全国住房公积金统一服务中台",
+        "headings": [
+          "个人中心"
+        ],
+        "navLabels": [
+          "首页 账户余额 交易明细 贷款信息 提取申请 申请记录",
+          "首页",
+          "dashboard",
+          "账户余额",
+          "wallet",
+          "交易明细",
+          "file-text",
+          "贷款信息",
+          "提取申请",
+          "申请记录"
+        ],
+        "buttons": [],
+        "links": [],
+        "inputs": [],
+        "tables": [],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "全国住房公积金统一服务中台欢迎，缴存人1首页账户余额交易明细贷款信息提取申请申请记录个人中心账户余额60,000.00元月缴存额3,600.00元缴存基数15,000.00元账户状态正常最近提取申请暂无提取申请待办事项提取申请待审批审批年度对账确认确认",
+        "layout": {
+          "viewportWidth": 1536,
+          "viewportHeight": 1000,
+          "scrollWidth": 1536,
+          "scrollHeight": 1000,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89037-codex-cli-structure-02-导航-首页",
+          "label": "导航:首页",
+          "finalUrl": "http://127.0.0.1:49037/dashboard",
+          "title": "全国住房公积金统一服务中台",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89037/probe/codex-repair-20260604-cli/may-89037-codex-cli-structure-02-导航-首页.json",
+          "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89037/probe/codex-repair-20260604-cli/may-89037-codex-cli-structure-02-导航-首页.png",
+          "elementCount": 138,
+          "interactiveCount": 7,
+          "interactiveLabels": [
+            "首页 账户余额 交易明细 贷款信息 提取申请 申请记录",
+            "首页",
+            "账户余额",
+            "交易明细",
+            "贷款信息",
+            "提取申请",
+            "申请记录"
+          ]
+        }
+      },
+      {
+        "label": "导航:账户余额",
+        "url": "http://127.0.0.1:49037/account/balance",
+        "title": "全国住房公积金统一服务中台",
+        "headings": [
+          "账户余额"
+        ],
+        "navLabels": [
+          "首页 账户余额 交易明细 贷款信息 提取申请 申请记录",
+          "首页",
+          "dashboard",
+          "账户余额",
+          "wallet",
+          "交易明细",
+          "file-text",
+          "贷款信息",
+          "提取申请",
+          "申请记录"
+        ],
+        "buttons": [
+          "同步账户"
+        ],
+        "links": [],
+        "inputs": [],
+        "tables": [
+          {
+            "headers": [
+              "账户编号",
+              "账户状态",
+              "姓名",
+              "身份证号",
+              "手机号码",
+              "所属中心",
+              "所属单位",
+              "最后同步时间"
+            ],
+            "rowCount": 4,
+            "hasEmptyText": false,
+            "textPreview": "账户编号 BJ0202400001 账户状态 正常 姓名 缴存人1 身份证号 110101199001012001 手机号码 13800138101 所属中心 北京住房公积金管理中心 所属单位 示例科技有限公司 最后同步时间 2026-06-04 19:26:37"
+          },
+          {
+            "headers": [
+              "账户余额",
+              "月缴存额",
+              "缴存基数",
+              "缴存比例"
+            ],
+            "rowCount": 2,
+            "hasEmptyText": false,
+            "textPreview": "账户余额 ¥60000.00 月缴存额 ¥3600.00 缴存基数 ¥15000.00 缴存比例 单位 12% / 个人 12%"
+          },
+          {
+            "headers": [
+              "中心名称",
+              "同步状态",
+              "差异金额",
+              "最后同步时间"
+            ],
+            "rowCount": 1,
+            "hasEmptyText": false,
+            "textPreview": "中心名称 同步状态 差异金额 最后同步时间 暂无多中心来源记录"
+          },
+          {
+            "headers": [
+              "源中心",
+              "目标中心",
+              "同步类型",
+              "状态",
+              "差异金额",
+              "差异详情",
+              "同步时间"
+            ],
+            "rowCount": 1,
+            "hasEmptyText": false,
+            "textPreview": "源中心 目标中心 同步类型 状态 差异金额 差异详情 同步时间 暂无跨中心同步记录"
+          },
+          {
+            "headers": [
+              "预计到账日期",
+              "实际到账日期",
+              "到账状态",
+              "来源类型",
+              "金额"
+            ],
+            "rowCount": 1,
+            "hasEmptyText": false,
+            "textPreview": "预计到账日期 实际到账日期 到账状态 来源类型 金额 暂无资金到账记录"
+          },
+          {
+            "headers": [
+              "操作",
+              "模块",
+              "IP地址",
+              "操作时间"
+            ],
+            "rowCount": 1,
+            "hasEmptyText": false,
+            "textPreview": "操作 模块 IP地址 操作时间 暂无审计记录"
+          }
+        ],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "全国住房公积金统一服务中台欢迎，缴存人1首页账户余额交易明细贷款信息提取申请申请记录账户余额同步账户基本信息账户编号BJ0202400001账户状态正常姓名缴存人1身份证号110101199001012001手机号码13800138101所属中心北京住房公积金管理中心所属单位示例科技有限公司最后同步时间2026-06-04 19:26:37缴存信息账户余额¥60000.00月缴存额¥3600.00缴存基数¥15000.00缴存比例单位 12% / 个人 12%多租户中心来源中心名称同步状态差异金额最后同步时间暂无多中心来源记录跨中心同步差异源中心目标中心同步类型状态差异金额差异详情同步时间暂无跨中心同步记录资金到账时效预计到账日期实际到账日期到账状态来源类型金额暂无资金到账记录操作审计记录操作模块IP地址操作时间暂无审计记录",
+        "layout": {
+          "viewportWidth": 1568,
+          "viewportHeight": 1600,
+          "scrollWidth": 1568,
+          "scrollHeight": 1751,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89037-codex-cli-structure-03-导航-账户余额",
+          "label": "导航:账户余额",
+          "finalUrl": "http://127.0.0.1:49037/account/balance",
+          "title": "全国住房公积金统一服务中台",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89037/probe/codex-repair-20260604-cli/may-89037-codex-cli-structure-03-导航-账户余额.json",
+          "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89037/probe/codex-repair-20260604-cli/may-89037-codex-cli-structure-03-导航-账户余额.png",
+          "elementCount": 225,
+          "interactiveCount": 8,
+          "interactiveLabels": [
+            "首页 账户余额 交易明细 贷款信息 提取申请 申请记录",
+            "首页",
+            "账户余额",
+            "交易明细",
+            "贷款信息",
+            "提取申请",
+            "申请记录",
+            "同步账户"
+          ]
+        }
+      },
+      {
+        "label": "操作:同步账户",
+        "url": "http://127.0.0.1:49037/account/balance",
+        "title": "全国住房公积金统一服务中台",
+        "headings": [
+          "账户余额"
+        ],
+        "navLabels": [
+          "首页 账户余额 交易明细 贷款信息 提取申请 申请记录",
+          "首页",
+          "dashboard",
+          "账户余额",
+          "wallet",
+          "交易明细",
+          "file-text",
+          "贷款信息",
+          "提取申请",
+          "申请记录"
+        ],
+        "buttons": [
+          "同步账户"
+        ],
+        "links": [],
+        "inputs": [],
+        "tables": [
+          {
+            "headers": [
+              "账户编号",
+              "账户状态",
+              "姓名",
+              "身份证号",
+              "手机号码",
+              "所属中心",
+              "所属单位",
+              "最后同步时间"
+            ],
+            "rowCount": 4,
+            "hasEmptyText": false,
+            "textPreview": "账户编号 BJ0202400001 账户状态 正常 姓名 缴存人1 身份证号 110101199001012001 手机号码 13800138101 所属中心 北京住房公积金管理中心 所属单位 示例科技有限公司 最后同步时间 2026-06-04 19:44:02"
+          },
+          {
+            "headers": [
+              "账户余额",
+              "月缴存额",
+              "缴存基数",
+              "缴存比例"
+            ],
+            "rowCount": 2,
+            "hasEmptyText": false,
+            "textPreview": "账户余额 ¥60000.00 月缴存额 ¥3600.00 缴存基数 ¥15000.00 缴存比例 单位 12% / 个人 12%"
+          },
+          {
+            "headers": [
+              "中心名称",
+              "同步状态",
+              "差异金额",
+              "最后同步时间"
+            ],
+            "rowCount": 1,
+            "hasEmptyText": false,
+            "textPreview": "中心名称 同步状态 差异金额 最后同步时间 暂无多中心来源记录"
+          },
+          {
+            "headers": [
+              "源中心",
+              "目标中心",
+              "同步类型",
+              "状态",
+              "差异金额",
+              "差异详情",
+              "同步时间"
+            ],
+            "rowCount": 1,
+            "hasEmptyText": false,
+            "textPreview": "源中心 目标中心 同步类型 状态 差异金额 差异详情 同步时间 暂无跨中心同步记录"
+          },
+          {
+            "headers": [
+              "预计到账日期",
+              "实际到账日期",
+              "到账状态",
+              "来源类型",
+              "金额"
+            ],
+            "rowCount": 1,
+            "hasEmptyText": false,
+            "textPreview": "预计到账日期 实际到账日期 到账状态 来源类型 金额 暂无资金到账记录"
+          },
+          {
+            "headers": [
+              "操作",
+              "模块",
+              "IP地址",
+              "操作时间"
+            ],
+            "rowCount": 1,
+            "hasEmptyText": false,
+            "textPreview": "操作 模块 IP地址 操作时间 暂无审计记录"
+          }
+        ],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "全国住房公积金统一服务中台欢迎，缴存人1首页账户余额交易明细贷款信息提取申请申请记录账户余额同步账户基本信息账户编号BJ0202400001账户状态正常姓名缴存人1身份证号110101199001012001手机号码13800138101所属中心北京住房公积金管理中心所属单位示例科技有限公司最后同步时间2026-06-04 19:44:02缴存信息账户余额¥60000.00月缴存额¥3600.00缴存基数¥15000.00缴存比例单位 12% / 个人 12%多租户中心来源中心名称同步状态差异金额最后同步时间暂无多中心来源记录跨中心同步差异源中心目标中心同步类型状态差异金额差异详情同步时间暂无跨中心同步记录资金到账时效预计到账日期实际到账日期到账状态来源类型金额暂无资金到账记录操作审计记录操作模块IP地址操作时间暂无审计记录 账户同步成功",
+        "layout": {
+          "viewportWidth": 1600,
+          "viewportHeight": 1600,
+          "scrollWidth": 1600,
+          "scrollHeight": 1751,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89037-codex-cli-structure-04-操作-同步账户",
+          "label": "操作:同步账户",
+          "finalUrl": "http://127.0.0.1:49037/account/balance",
+          "title": "全国住房公积金统一服务中台",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89037/probe/codex-repair-20260604-cli/may-89037-codex-cli-structure-04-操作-同步账户.json",
+          "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89037/probe/codex-repair-20260604-cli/may-89037-codex-cli-structure-04-操作-同步账户.png",
+          "elementCount": 234,
+          "interactiveCount": 8,
+          "interactiveLabels": [
+            "首页 账户余额 交易明细 贷款信息 提取申请 申请记录",
+            "首页",
+            "账户余额",
+            "交易明细",
+            "贷款信息",
+            "提取申请",
+            "申请记录",
+            "同步账户"
+          ]
+        }
+      },
+      {
+        "label": "导航:交易明细",
+        "url": "http://127.0.0.1:49037/account/transactions",
+        "title": "全国住房公积金统一服务中台",
+        "headings": [
+          "交易明细"
+        ],
+        "navLabels": [
+          "首页 账户余额 交易明细 贷款信息 提取申请 申请记录",
+          "首页",
+          "dashboard",
+          "账户余额",
+          "wallet",
+          "交易明细",
+          "file-text",
+          "贷款信息",
+          "提取申请",
+          "申请记录"
+        ],
+        "buttons": [],
+        "links": [],
+        "inputs": [
+          {
+            "tag": "input",
+            "type": "search",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          }
+        ],
+        "tables": [
+          {
+            "headers": [
+              "交易时间",
+              "交易类型",
+              "交易金额",
+              "交易后余额",
+              "备注"
+            ],
+            "rowCount": 1,
+            "hasEmptyText": false,
+            "textPreview": "交易时间 交易类型 交易金额 交易后余额 备注 2026-06-04 17:59:37 汇缴 ¥3600.00 ¥60000.00 月度汇缴"
+          }
+        ],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "全国住房公积金统一服务中台欢迎，缴存人1首页账户余额交易明细贷款信息提取申请申请记录交易明细交易时间交易类型交易金额交易后余额备注2026-06-04 17:59:37汇缴¥3600.00¥60000.00月度汇缴1",
+        "layout": {
+          "viewportWidth": 1632,
+          "viewportHeight": 1600,
+          "scrollWidth": 1632,
+          "scrollHeight": 1600,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89037-codex-cli-structure-05-导航-交易明细",
+          "label": "导航:交易明细",
+          "finalUrl": "http://127.0.0.1:49037/account/transactions",
+          "title": "全国住房公积金统一服务中台",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89037/probe/codex-repair-20260604-cli/may-89037-codex-cli-structure-05-导航-交易明细.json",
+          "screenshotPath": "",
+          "elementCount": 110,
+          "interactiveCount": 12,
+          "interactiveLabels": [
+            "首页 账户余额 交易明细 贷款信息 提取申请 申请记录",
+            "首页",
+            "账户余额",
+            "交易明细",
+            "贷款信息",
+            "提取申请",
+            "申请记录",
+            "1"
+          ]
+        }
+      },
+      {
+        "label": "导航:贷款信息",
+        "url": "http://127.0.0.1:49037/account/loan",
+        "title": "全国住房公积金统一服务中台",
+        "headings": [
+          "贷款信息"
+        ],
+        "navLabels": [
+          "首页 账户余额 交易明细 贷款信息 提取申请 申请记录",
+          "首页",
+          "dashboard",
+          "账户余额",
+          "wallet",
+          "交易明细",
+          "file-text",
+          "贷款信息",
+          "提取申请",
+          "申请记录"
+        ],
+        "buttons": [
+          "展开行"
+        ],
+        "links": [],
+        "inputs": [],
+        "tables": [
+          {
+            "headers": [
+              "贷款编号",
+              "贷款金额",
+              "贷款状态",
+              "起始日期",
+              "到期日期"
+            ],
+            "rowCount": 1,
+            "hasEmptyText": false,
+            "textPreview": "贷款编号 贷款金额 贷款状态 起始日期 到期日期 LOAN20240001 ¥800000.00 还款中 2020-01-01 2050-01-01"
+          }
+        ],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "全国住房公积金统一服务中台欢迎，缴存人1首页账户余额交易明细贷款信息提取申请申请记录贷款信息贷款编号贷款金额贷款状态起始日期到期日期LOAN20240001¥800000.00还款中2020-01-012050-01-011",
+        "layout": {
+          "viewportWidth": 1664,
+          "viewportHeight": 1600,
+          "scrollWidth": 1664,
+          "scrollHeight": 1600,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89037-codex-cli-structure-06-导航-贷款信息",
+          "label": "导航:贷款信息",
+          "finalUrl": "http://127.0.0.1:49037/account/loan",
+          "title": "全国住房公积金统一服务中台",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89037/probe/codex-repair-20260604-cli/may-89037-codex-cli-structure-06-导航-贷款信息.json",
+          "screenshotPath": "",
+          "elementCount": 98,
+          "interactiveCount": 12,
+          "interactiveLabels": [
+            "首页 账户余额 交易明细 贷款信息 提取申请 申请记录",
+            "首页",
+            "账户余额",
+            "交易明细",
+            "贷款信息",
+            "提取申请",
+            "申请记录",
+            "展开行",
+            "1"
+          ]
+        }
+      },
+      {
+        "label": "操作:展开行",
+        "url": "http://127.0.0.1:49037/account/loan",
+        "title": "全国住房公积金统一服务中台",
+        "headings": [
+          "贷款信息"
+        ],
+        "navLabels": [
+          "首页 账户余额 交易明细 贷款信息 提取申请 申请记录",
+          "首页",
+          "dashboard",
+          "账户余额",
+          "wallet",
+          "交易明细",
+          "file-text",
+          "贷款信息",
+          "提取申请",
+          "申请记录"
+        ],
+        "buttons": [
+          "关闭行"
+        ],
+        "links": [],
+        "inputs": [],
+        "tables": [
+          {
+            "headers": [
+              "贷款编号",
+              "贷款金额",
+              "贷款状态",
+              "起始日期",
+              "到期日期",
+              "贷款期限",
+              "贷款利率",
+              "月供金额",
+              "已还本金",
+              "已还利息",
+              "剩余本金",
+              "还款进度"
+            ],
+            "rowCount": 5,
+            "hasEmptyText": false,
+            "textPreview": "贷款编号 贷款金额 贷款状态 起始日期 到期日期 LOAN20240001 ¥800000.00 还款中 2020-01-01 2050-01-01 还款明细 贷款期限 360个月 贷款利率 3.10% 月供金额 ¥3420.00 已还本金 ¥100000.00 已还利息 ¥60000.00 剩余本金 ¥700000.00 还款进度 12.5% 加载详情中..."
+          },
+          {
+            "headers": [
+              "贷款期限",
+              "贷款利率",
+              "月供金额",
+              "已还本金",
+              "已还利息",
+              "剩余本金",
+              "还款进度"
+            ],
+            "rowCount": 3,
+            "hasEmptyText": false,
+            "textPreview": "贷款期限 360个月 贷款利率 3.10% 月供金额 ¥3420.00 已还本金 ¥100000.00 已还利息 ¥60000.00 剩余本金 ¥700000.00 还款进度 12.5%"
+          }
+        ],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "全国住房公积金统一服务中台欢迎，缴存人1首页账户余额交易明细贷款信息提取申请申请记录贷款信息贷款编号贷款金额贷款状态起始日期到期日期LOAN20240001¥800000.00还款中2020-01-012050-01-01还款明细贷款期限360个月贷款利率3.10%月供金额¥3420.00已还本金¥100000.00已还利息¥60000.00剩余本金¥700000.00还款进度12.5%加载详情中...1 加载贷款详情失败",
+        "layout": {
+          "viewportWidth": 1696,
+          "viewportHeight": 1600,
+          "scrollWidth": 1696,
+          "scrollHeight": 1600,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89037-codex-cli-structure-07-操作-展开行",
+          "label": "操作:展开行",
+          "finalUrl": "http://127.0.0.1:49037/account/loan",
+          "title": "全国住房公积金统一服务中台",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89037/probe/codex-repair-20260604-cli/may-89037-codex-cli-structure-07-操作-展开行.json",
+          "screenshotPath": "",
+          "elementCount": 161,
+          "interactiveCount": 12,
+          "interactiveLabels": [
+            "首页 账户余额 交易明细 贷款信息 提取申请 申请记录",
+            "首页",
+            "账户余额",
+            "交易明细",
+            "贷款信息",
+            "提取申请",
+            "申请记录",
+            "关闭行",
+            "1"
+          ]
+        }
+      },
+      {
+        "label": "二层操作:展开行->关闭行",
+        "url": "http://127.0.0.1:49037/account/loan",
+        "title": "全国住房公积金统一服务中台",
+        "headings": [
+          "贷款信息"
+        ],
+        "navLabels": [
+          "首页 账户余额 交易明细 贷款信息 提取申请 申请记录",
+          "首页",
+          "dashboard",
+          "账户余额",
+          "wallet",
+          "交易明细",
+          "file-text",
+          "贷款信息",
+          "提取申请",
+          "申请记录"
+        ],
+        "buttons": [
+          "展开行"
+        ],
+        "links": [],
+        "inputs": [],
+        "tables": [
+          {
+            "headers": [
+              "贷款编号",
+              "贷款金额",
+              "贷款状态",
+              "起始日期",
+              "到期日期",
+              "贷款期限",
+              "贷款利率",
+              "月供金额",
+              "已还本金",
+              "已还利息",
+              "剩余本金",
+              "还款进度"
+            ],
+            "rowCount": 1,
+            "hasEmptyText": false,
+            "textPreview": "贷款编号 贷款金额 贷款状态 起始日期 到期日期 LOAN20240001 ¥800000.00 还款中 2020-01-01 2050-01-01"
+          }
+        ],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "全国住房公积金统一服务中台欢迎，缴存人1首页账户余额交易明细贷款信息提取申请申请记录贷款信息贷款编号贷款金额贷款状态起始日期到期日期LOAN20240001¥800000.00还款中2020-01-012050-01-01还款明细贷款期限360个月贷款利率3.10%月供金额¥3420.00已还本金¥100000.00已还利息¥60000.00剩余本金¥700000.00还款进度12.5%加载详情中...1 加载贷款详情失败",
+        "layout": {
+          "viewportWidth": 1728,
+          "viewportHeight": 1600,
+          "scrollWidth": 1728,
+          "scrollHeight": 1600,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89037-codex-cli-structure-08-二层操作-展开行-关闭行",
+          "label": "二层操作:展开行->关闭行",
+          "finalUrl": "http://127.0.0.1:49037/account/loan",
+          "title": "全国住房公积金统一服务中台",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89037/probe/codex-repair-20260604-cli/may-89037-codex-cli-structure-08-二层操作-展开行-关闭行.json",
+          "screenshotPath": "",
+          "elementCount": 161,
+          "interactiveCount": 12,
+          "interactiveLabels": [
+            "首页 账户余额 交易明细 贷款信息 提取申请 申请记录",
+            "首页",
+            "账户余额",
+            "交易明细",
+            "贷款信息",
+            "提取申请",
+            "申请记录",
+            "展开行",
+            "1"
+          ]
+        }
+      },
+      {
+        "label": "导航:提取申请",
+        "url": "http://127.0.0.1:49037/withdrawal/apply",
+        "title": "全国住房公积金统一服务中台",
+        "headings": [
+          "提取申请"
+        ],
+        "navLabels": [
+          "首页 账户余额 交易明细 贷款信息 提取申请 申请记录",
+          "首页",
+          "dashboard",
+          "账户余额",
+          "wallet",
+          "交易明细",
+          "file-text",
+          "贷款信息",
+          "提取申请",
+          "申请记录"
+        ],
+        "buttons": [],
+        "links": [],
+        "inputs": [
+          {
+            "tag": "input",
+            "type": "search",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          }
+        ],
+        "tables": [],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "全国住房公积金统一服务中台欢迎，缴存人1首页账户余额交易明细贷款信息提取申请申请记录提取申请当前账户余额：¥60000.001选择提取类型2身份核验3填写申请4确认提交提取类型请选择提取类型",
+        "layout": {
+          "viewportWidth": 1760,
+          "viewportHeight": 1600,
+          "scrollWidth": 1760,
+          "scrollHeight": 1600,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89037-codex-cli-structure-09-导航-提取申请",
+          "label": "导航:提取申请",
+          "finalUrl": "http://127.0.0.1:49037/withdrawal/apply",
+          "title": "全国住房公积金统一服务中台",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89037/probe/codex-repair-20260604-cli/may-89037-codex-cli-structure-09-导航-提取申请.json",
+          "screenshotPath": "",
+          "elementCount": 112,
+          "interactiveCount": 8,
+          "interactiveLabels": [
+            "首页 账户余额 交易明细 贷款信息 提取申请 申请记录",
+            "首页",
+            "账户余额",
+            "交易明细",
+            "贷款信息",
+            "提取申请",
+            "申请记录"
+          ]
+        }
+      },
+      {
+        "label": "导航:申请记录",
+        "url": "http://127.0.0.1:49037/withdrawal/list",
+        "title": "全国住房公积金统一服务中台",
+        "headings": [
+          "申请记录"
+        ],
+        "navLabels": [
+          "首页 账户余额 交易明细 贷款信息 提取申请 申请记录",
+          "首页",
+          "dashboard",
+          "账户余额",
+          "wallet",
+          "交易明细",
+          "file-text",
+          "贷款信息",
+          "提取申请",
+          "申请记录"
+        ],
+        "buttons": [],
+        "links": [],
+        "inputs": [
+          {
+            "tag": "input",
+            "type": "search",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          }
+        ],
+        "tables": [
+          {
+            "headers": [
+              "申请编号",
+              "提取类型",
+              "提取金额",
+              "状态",
+              "申请时间",
+              "审批时间",
+              "驳回原因"
+            ],
+            "rowCount": 1,
+            "hasEmptyText": false,
+            "textPreview": "申请编号 提取类型 提取金额 状态 申请时间 审批时间 驳回原因 暂无申请记录"
+          }
+        ],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "全国住房公积金统一服务中台欢迎，缴存人1首页账户余额交易明细贷款信息提取申请申请记录申请记录申请编号提取类型提取金额状态申请时间审批时间驳回原因暂无申请记录",
+        "layout": {
+          "viewportWidth": 1792,
+          "viewportHeight": 1600,
+          "scrollWidth": 1792,
+          "scrollHeight": 1600,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89037-codex-cli-structure-10-导航-申请记录",
+          "label": "导航:申请记录",
+          "finalUrl": "http://127.0.0.1:49037/withdrawal/list",
+          "title": "全国住房公积金统一服务中台",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89037/probe/codex-repair-20260604-cli/may-89037-codex-cli-structure-10-导航-申请记录.json",
+          "screenshotPath": "",
+          "elementCount": 92,
+          "interactiveCount": 8,
+          "interactiveLabels": [
+            "首页 账户余额 交易明细 贷款信息 提取申请 申请记录",
+            "首页",
+            "账户余额",
+            "交易明细",
+            "贷款信息",
+            "提取申请",
+            "申请记录"
+          ]
+        }
+      }
+    ],
+    "findings": [
+      "登录页可见，但自动填充可见演示账号后仍停留在登录页，没有进入登录后的首页或工作台。",
+      "接口 /api/auth/login 返回 HTTP 401，对应业务模块无法完成数据读取。",
+      "接口 /api/account/loan-detail/1 返回 HTTP 404，对应业务模块无法完成数据读取。"
+    ],
+    "actionHints": [
+      "优先修复登录表单、演示账号、登录接口和登录后跳转，让自动化能先完成登录再复验首页业务链路。",
+      "补齐 /api/auth/login 后端接口、SQLite 数据和前端错误处理。",
+      "补齐 /api/account/loan-detail/1 后端接口、SQLite 数据和前端错误处理。"
+    ],
+    "emptyPages": [],
+    "overflowPages": [],
+    "blankPages": [],
+    "apiFailurePaths": [
+      "/api/auth/login",
+      "/api/account/loan-detail/1"
+    ],
+    "goalTerms": [],
+    "clickedActionDescriptors": [
+      {
+        "nav": "账户余额",
+        "label": "同步账户",
+        "ordinal": 0,
+        "unsafe": false
+      },
+      {
+        "nav": "贷款信息",
+        "label": "展开行",
+        "ordinal": 0,
+        "unsafe": false
+      },
+      {
+        "nav": "贷款信息",
+        "label": "展开行->关闭行",
+        "ordinal": 0,
+        "secondary": true,
+        "unsafe": false
+      }
+    ],
+    "secondaryActionClicks": 1,
+    "structureCaptures": [
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89037-codex-cli-structure-01-首屏",
+        "label": "首屏",
+        "finalUrl": "http://127.0.0.1:49037/dashboard",
+        "title": "全国住房公积金统一服务中台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89037/probe/codex-repair-20260604-cli/may-89037-codex-cli-structure-01-首屏.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89037/probe/codex-repair-20260604-cli/may-89037-codex-cli-structure-01-首屏.png",
+        "elementCount": 138,
+        "interactiveCount": 7,
+        "interactiveLabels": [
+          "首页 账户余额 交易明细 贷款信息 提取申请 申请记录",
+          "首页",
+          "账户余额",
+          "交易明细",
+          "贷款信息",
+          "提取申请",
+          "申请记录"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89037-codex-cli-structure-02-导航-首页",
+        "label": "导航:首页",
+        "finalUrl": "http://127.0.0.1:49037/dashboard",
+        "title": "全国住房公积金统一服务中台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89037/probe/codex-repair-20260604-cli/may-89037-codex-cli-structure-02-导航-首页.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89037/probe/codex-repair-20260604-cli/may-89037-codex-cli-structure-02-导航-首页.png",
+        "elementCount": 138,
+        "interactiveCount": 7,
+        "interactiveLabels": [
+          "首页 账户余额 交易明细 贷款信息 提取申请 申请记录",
+          "首页",
+          "账户余额",
+          "交易明细",
+          "贷款信息",
+          "提取申请",
+          "申请记录"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89037-codex-cli-structure-03-导航-账户余额",
+        "label": "导航:账户余额",
+        "finalUrl": "http://127.0.0.1:49037/account/balance",
+        "title": "全国住房公积金统一服务中台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89037/probe/codex-repair-20260604-cli/may-89037-codex-cli-structure-03-导航-账户余额.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89037/probe/codex-repair-20260604-cli/may-89037-codex-cli-structure-03-导航-账户余额.png",
+        "elementCount": 225,
+        "interactiveCount": 8,
+        "interactiveLabels": [
+          "首页 账户余额 交易明细 贷款信息 提取申请 申请记录",
+          "首页",
+          "账户余额",
+          "交易明细",
+          "贷款信息",
+          "提取申请",
+          "申请记录",
+          "同步账户"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89037-codex-cli-structure-04-操作-同步账户",
+        "label": "操作:同步账户",
+        "finalUrl": "http://127.0.0.1:49037/account/balance",
+        "title": "全国住房公积金统一服务中台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89037/probe/codex-repair-20260604-cli/may-89037-codex-cli-structure-04-操作-同步账户.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89037/probe/codex-repair-20260604-cli/may-89037-codex-cli-structure-04-操作-同步账户.png",
+        "elementCount": 234,
+        "interactiveCount": 8,
+        "interactiveLabels": [
+          "首页 账户余额 交易明细 贷款信息 提取申请 申请记录",
+          "首页",
+          "账户余额",
+          "交易明细",
+          "贷款信息",
+          "提取申请",
+          "申请记录",
+          "同步账户"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89037-codex-cli-structure-05-导航-交易明细",
+        "label": "导航:交易明细",
+        "finalUrl": "http://127.0.0.1:49037/account/transactions",
+        "title": "全国住房公积金统一服务中台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89037/probe/codex-repair-20260604-cli/may-89037-codex-cli-structure-05-导航-交易明细.json",
+        "screenshotPath": "",
+        "elementCount": 110,
+        "interactiveCount": 12,
+        "interactiveLabels": [
+          "首页 账户余额 交易明细 贷款信息 提取申请 申请记录",
+          "首页",
+          "账户余额",
+          "交易明细",
+          "贷款信息",
+          "提取申请",
+          "申请记录",
+          "1"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89037-codex-cli-structure-06-导航-贷款信息",
+        "label": "导航:贷款信息",
+        "finalUrl": "http://127.0.0.1:49037/account/loan",
+        "title": "全国住房公积金统一服务中台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89037/probe/codex-repair-20260604-cli/may-89037-codex-cli-structure-06-导航-贷款信息.json",
+        "screenshotPath": "",
+        "elementCount": 98,
+        "interactiveCount": 12,
+        "interactiveLabels": [
+          "首页 账户余额 交易明细 贷款信息 提取申请 申请记录",
+          "首页",
+          "账户余额",
+          "交易明细",
+          "贷款信息",
+          "提取申请",
+          "申请记录",
+          "展开行",
+          "1"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89037-codex-cli-structure-07-操作-展开行",
+        "label": "操作:展开行",
+        "finalUrl": "http://127.0.0.1:49037/account/loan",
+        "title": "全国住房公积金统一服务中台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89037/probe/codex-repair-20260604-cli/may-89037-codex-cli-structure-07-操作-展开行.json",
+        "screenshotPath": "",
+        "elementCount": 161,
+        "interactiveCount": 12,
+        "interactiveLabels": [
+          "首页 账户余额 交易明细 贷款信息 提取申请 申请记录",
+          "首页",
+          "账户余额",
+          "交易明细",
+          "贷款信息",
+          "提取申请",
+          "申请记录",
+          "关闭行",
+          "1"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89037-codex-cli-structure-08-二层操作-展开行-关闭行",
+        "label": "二层操作:展开行->关闭行",
+        "finalUrl": "http://127.0.0.1:49037/account/loan",
+        "title": "全国住房公积金统一服务中台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89037/probe/codex-repair-20260604-cli/may-89037-codex-cli-structure-08-二层操作-展开行-关闭行.json",
+        "screenshotPath": "",
+        "elementCount": 161,
+        "interactiveCount": 12,
+        "interactiveLabels": [
+          "首页 账户余额 交易明细 贷款信息 提取申请 申请记录",
+          "首页",
+          "账户余额",
+          "交易明细",
+          "贷款信息",
+          "提取申请",
+          "申请记录",
+          "展开行",
+          "1"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89037-codex-cli-structure-09-导航-提取申请",
+        "label": "导航:提取申请",
+        "finalUrl": "http://127.0.0.1:49037/withdrawal/apply",
+        "title": "全国住房公积金统一服务中台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89037/probe/codex-repair-20260604-cli/may-89037-codex-cli-structure-09-导航-提取申请.json",
+        "screenshotPath": "",
+        "elementCount": 112,
+        "interactiveCount": 8,
+        "interactiveLabels": [
+          "首页 账户余额 交易明细 贷款信息 提取申请 申请记录",
+          "首页",
+          "账户余额",
+          "交易明细",
+          "贷款信息",
+          "提取申请",
+          "申请记录"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89037-codex-cli-structure-10-导航-申请记录",
+        "label": "导航:申请记录",
+        "finalUrl": "http://127.0.0.1:49037/withdrawal/list",
+        "title": "全国住房公积金统一服务中台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89037/probe/codex-repair-20260604-cli/may-89037-codex-cli-structure-10-导航-申请记录.json",
+        "screenshotPath": "",
+        "elementCount": 92,
+        "interactiveCount": 8,
+        "interactiveLabels": [
+          "首页 账户余额 交易明细 贷款信息 提取申请 申请记录",
+          "首页",
+          "账户余额",
+          "交易明细",
+          "贷款信息",
+          "提取申请",
+          "申请记录"
+        ]
+      }
+    ],
+    "representativeScreenshotUrl": "http://127.0.0.1:49037/dashboard",
+    "representativeScreenshotLabel": "个人中心"
+  },
+  "websiteStructureCapture": {
+    "module": "website_structure_capture",
+    "captureCount": 10,
+    "captures": [
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89037-codex-cli-structure-01-首屏",
+        "label": "首屏",
+        "finalUrl": "http://127.0.0.1:49037/dashboard",
+        "title": "全国住房公积金统一服务中台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89037/probe/codex-repair-20260604-cli/may-89037-codex-cli-structure-01-首屏.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89037/probe/codex-repair-20260604-cli/may-89037-codex-cli-structure-01-首屏.png",
+        "elementCount": 138,
+        "interactiveCount": 7,
+        "interactiveLabels": [
+          "首页 账户余额 交易明细 贷款信息 提取申请 申请记录",
+          "首页",
+          "账户余额",
+          "交易明细",
+          "贷款信息",
+          "提取申请",
+          "申请记录"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89037-codex-cli-structure-02-导航-首页",
+        "label": "导航:首页",
+        "finalUrl": "http://127.0.0.1:49037/dashboard",
+        "title": "全国住房公积金统一服务中台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89037/probe/codex-repair-20260604-cli/may-89037-codex-cli-structure-02-导航-首页.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89037/probe/codex-repair-20260604-cli/may-89037-codex-cli-structure-02-导航-首页.png",
+        "elementCount": 138,
+        "interactiveCount": 7,
+        "interactiveLabels": [
+          "首页 账户余额 交易明细 贷款信息 提取申请 申请记录",
+          "首页",
+          "账户余额",
+          "交易明细",
+          "贷款信息",
+          "提取申请",
+          "申请记录"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89037-codex-cli-structure-03-导航-账户余额",
+        "label": "导航:账户余额",
+        "finalUrl": "http://127.0.0.1:49037/account/balance",
+        "title": "全国住房公积金统一服务中台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89037/probe/codex-repair-20260604-cli/may-89037-codex-cli-structure-03-导航-账户余额.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89037/probe/codex-repair-20260604-cli/may-89037-codex-cli-structure-03-导航-账户余额.png",
+        "elementCount": 225,
+        "interactiveCount": 8,
+        "interactiveLabels": [
+          "首页 账户余额 交易明细 贷款信息 提取申请 申请记录",
+          "首页",
+          "账户余额",
+          "交易明细",
+          "贷款信息",
+          "提取申请",
+          "申请记录",
+          "同步账户"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89037-codex-cli-structure-04-操作-同步账户",
+        "label": "操作:同步账户",
+        "finalUrl": "http://127.0.0.1:49037/account/balance",
+        "title": "全国住房公积金统一服务中台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89037/probe/codex-repair-20260604-cli/may-89037-codex-cli-structure-04-操作-同步账户.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89037/probe/codex-repair-20260604-cli/may-89037-codex-cli-structure-04-操作-同步账户.png",
+        "elementCount": 234,
+        "interactiveCount": 8,
+        "interactiveLabels": [
+          "首页 账户余额 交易明细 贷款信息 提取申请 申请记录",
+          "首页",
+          "账户余额",
+          "交易明细",
+          "贷款信息",
+          "提取申请",
+          "申请记录",
+          "同步账户"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89037-codex-cli-structure-05-导航-交易明细",
+        "label": "导航:交易明细",
+        "finalUrl": "http://127.0.0.1:49037/account/transactions",
+        "title": "全国住房公积金统一服务中台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89037/probe/codex-repair-20260604-cli/may-89037-codex-cli-structure-05-导航-交易明细.json",
+        "screenshotPath": "",
+        "elementCount": 110,
+        "interactiveCount": 12,
+        "interactiveLabels": [
+          "首页 账户余额 交易明细 贷款信息 提取申请 申请记录",
+          "首页",
+          "账户余额",
+          "交易明细",
+          "贷款信息",
+          "提取申请",
+          "申请记录",
+          "1"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89037-codex-cli-structure-06-导航-贷款信息",
+        "label": "导航:贷款信息",
+        "finalUrl": "http://127.0.0.1:49037/account/loan",
+        "title": "全国住房公积金统一服务中台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89037/probe/codex-repair-20260604-cli/may-89037-codex-cli-structure-06-导航-贷款信息.json",
+        "screenshotPath": "",
+        "elementCount": 98,
+        "interactiveCount": 12,
+        "interactiveLabels": [
+          "首页 账户余额 交易明细 贷款信息 提取申请 申请记录",
+          "首页",
+          "账户余额",
+          "交易明细",
+          "贷款信息",
+          "提取申请",
+          "申请记录",
+          "展开行",
+          "1"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89037-codex-cli-structure-07-操作-展开行",
+        "label": "操作:展开行",
+        "finalUrl": "http://127.0.0.1:49037/account/loan",
+        "title": "全国住房公积金统一服务中台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89037/probe/codex-repair-20260604-cli/may-89037-codex-cli-structure-07-操作-展开行.json",
+        "screenshotPath": "",
+        "elementCount": 161,
+        "interactiveCount": 12,
+        "interactiveLabels": [
+          "首页 账户余额 交易明细 贷款信息 提取申请 申请记录",
+          "首页",
+          "账户余额",
+          "交易明细",
+          "贷款信息",
+          "提取申请",
+          "申请记录",
+          "关闭行",
+          "1"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89037-codex-cli-structure-08-二层操作-展开行-关闭行",
+        "label": "二层操作:展开行->关闭行",
+        "finalUrl": "http://127.0.0.1:49037/account/loan",
+        "title": "全国住房公积金统一服务中台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89037/probe/codex-repair-20260604-cli/may-89037-codex-cli-structure-08-二层操作-展开行-关闭行.json",
+        "screenshotPath": "",
+        "elementCount": 161,
+        "interactiveCount": 12,
+        "interactiveLabels": [
+          "首页 账户余额 交易明细 贷款信息 提取申请 申请记录",
+          "首页",
+          "账户余额",
+          "交易明细",
+          "贷款信息",
+          "提取申请",
+          "申请记录",
+          "展开行",
+          "1"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89037-codex-cli-structure-09-导航-提取申请",
+        "label": "导航:提取申请",
+        "finalUrl": "http://127.0.0.1:49037/withdrawal/apply",
+        "title": "全国住房公积金统一服务中台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89037/probe/codex-repair-20260604-cli/may-89037-codex-cli-structure-09-导航-提取申请.json",
+        "screenshotPath": "",
+        "elementCount": 112,
+        "interactiveCount": 8,
+        "interactiveLabels": [
+          "首页 账户余额 交易明细 贷款信息 提取申请 申请记录",
+          "首页",
+          "账户余额",
+          "交易明细",
+          "贷款信息",
+          "提取申请",
+          "申请记录"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89037-codex-cli-structure-10-导航-申请记录",
+        "label": "导航:申请记录",
+        "finalUrl": "http://127.0.0.1:49037/withdrawal/list",
+        "title": "全国住房公积金统一服务中台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89037/probe/codex-repair-20260604-cli/may-89037-codex-cli-structure-10-导航-申请记录.json",
+        "screenshotPath": "",
+        "elementCount": 92,
+        "interactiveCount": 8,
+        "interactiveLabels": [
+          "首页 账户余额 交易明细 贷款信息 提取申请 申请记录",
+          "首页",
+          "账户余额",
+          "交易明细",
+          "贷款信息",
+          "提取申请",
+          "申请记录"
+        ]
+      }
+    ]
+  },
+  "screenshotMetrics": {
+    "width": 1824,
+    "height": 1600,
+    "scrollWidth": 1792,
+    "scrollHeight": 1600
+  },
+  "initialBodyTextPreview": "全国住房公积金统一服务中台\n\n欢迎登录，请选择您的角色\n\n选择身份角色\n缴存人\nperson1\n缴存人工作台\n个人缴存用户，可查询账户、申请提取、查看贷款\n用户名\n密码\n安全登录\n\n演示环境默认密码：123456\n\n所有操作均会记录审计日志，请遵守相关规定",
+  "bodyTextPreview": "全国住房公积金统一服务中台\n欢迎，缴存人1\n首页\n账户余额\n交易明细\n贷款信息\n提取申请\n申请记录\n个人中心\n账户余额\n60,000.00元\n月缴存额\n3,600.00元\n缴存基数\n15,000.00元\n账户状态\n正常\n最近提取申请\n暂无提取申请\n待办事项\n提取申请待审批\n审批\n年度对账确认\n确认",
+  "apiBase": "http://127.0.0.1:59037",
+  "businessGoalPreview": "",
+  "apiResponses": [
+    {
+      "method": "POST",
+      "status": 401,
+      "url": "http://127.0.0.1:49037/api/auth/login"
+    },
+    {
+      "method": "POST",
+      "status": 401,
+      "url": "http://127.0.0.1:49037/api/auth/login"
+    },
+    {
+      "method": "POST",
+      "status": 401,
+      "url": "http://127.0.0.1:49037/api/auth/login"
+    },
+    {
+      "method": "POST",
+      "status": 200,
+      "url": "http://127.0.0.1:49037/api/auth/login"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49037/api/account/balance"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49037/api/withdrawal/my-applications?pageSize=5"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49037/api/account/balance"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49037/api/withdrawal/my-applications?pageSize=5"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49037/api/account/balance"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49037/api/withdrawal/my-applications?pageSize=5"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49037/api/account/balance"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49037/api/withdrawal/my-applications?pageSize=5"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49037/api/account/balance"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49037/api/account/balance"
+    },
+    {
+      "method": "POST",
+      "status": 200,
+      "url": "http://127.0.0.1:49037/api/account/sync"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49037/api/account/balance"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49037/api/account/transactions?page=1&pageSize=20"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49037/api/account/transactions?page=1&pageSize=20"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49037/api/account/loan"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49037/api/account/loan"
+    },
+    {
+      "method": "GET",
+      "status": 404,
+      "url": "http://127.0.0.1:49037/api/account/loan-detail/1"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49037/api/withdrawal/types"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49037/api/account/balance"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49037/api/withdrawal/types"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49037/api/account/balance"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49037/api/withdrawal/my-applications"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49037/api/withdrawal/my-applications"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49037/api/account/balance"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49037/api/withdrawal/my-applications?pageSize=5"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49037/api/account/balance"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49037/api/withdrawal/my-applications?pageSize=5"
+    }
+  ],
+  "apiChecks": [
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59037/api/health",
+      "path": "/api/health",
+      "status": 200,
+      "ok": true,
+      "bodyPreview": "{\"status\":\"ok\",\"timestamp\":\"2026-06-04T19:44:17.828Z\"}"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59037/api/account/balance",
+      "path": "/api/account/balance",
+      "status": 200,
+      "ok": true,
+      "bodyPreview": "{\"id\":1,\"user_id\":5,\"account_no\":\"BJ0202400001\",\"balance\":60000,\"base_salary\":15000,\"monthly_pay\":3600,\"unit_id\":1,\"status\":\"normal\",\"last_sync_at\":\"2026-06-04 19:44:02\",\"created_at\":\"2026-06-04 17:59:37\",\"name\":\"缴存人1\",\"id_card\":\"110101199001012001\",\"phone\":\"13800138101\",\"center_name\":\"北京住房公积金管理中心\",\"unit_name\":\"示例科技有限公司\"}"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59037/api/withdrawal/my-applications?pageSize=5",
+      "path": "/api/withdrawal/my-applications?pageSize=5",
+      "status": 200,
+      "ok": true,
+      "bodyPreview": "[]"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59037/api/account/transactions?page=1&pageSize=20",
+      "path": "/api/account/transactions?page=1&pageSize=20",
+      "status": 200,
+      "ok": true,
+      "bodyPreview": "{\"records\":[{\"id\":1,\"account_id\":1,\"type\":\"deposit\",\"amount\":3600,\"balance_after\":60000,\"description\":\"月度汇缴\",\"source_type\":null,\"source_id\":null,\"created_at\":\"2026-06-04 17:59:37\",\"account_no\":\"BJ0202400001\"}],\"pagination\":{\"page\":1,\"pageSize\":20,\"total\":1}}"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59037/api/account/loan",
+      "path": "/api/account/loan",
+      "status": 200,
+      "ok": true,
+      "bodyPreview": "[{\"id\":1,\"user_id\":5,\"loan_no\":\"LOAN20240001\",\"amount\":800000,\"term_months\":360,\"interest_rate\":0.031,\"monthly_payment\":3420,\"paid_principal\":100000,\"paid_interest\":60000,\"remaining_principal\":700000,\"status\":\"repaying\",\"start_date\":\"2020-01-01\",\"end_date\":\"2050-01-01\",\"created_at\":\"2026-06-04 17:59:37\"}]"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59037/api/account/loan-detail/1",
+      "path": "/api/account/loan-detail/1",
+      "status": 404,
+      "ok": false,
+      "bodyPreview": "{\"error\":\"接口不存在\"}"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59037/api/withdrawal/types",
+      "path": "/api/withdrawal/types",
+      "status": 200,
+      "ok": true,
+      "bodyPreview": "{\"rent\":{\"name\":\"租房提取\",\"maxAmount\":1500,\"needMaterials\":[\"rent_contract\"]},\"house_purchase\":{\"name\":\"购房提取\",\"maxAmount\":null,\"needMaterials\":[\"house_contract\",\"invoice\"]},\"resignation\":{\"name\":\"离职提取\",\"maxAmount\":null,\"needMaterials\":[\"resignation_proof\"]},\"serious_illness\":{\"name\":\"大病提取\",\"maxAmount\":null,\"needMaterials\":[\"medical_certificate\",\"medical_bill\"]},\"renovation\":{\"name\":\"装修提取\",\"maxAmount\":100000,\"needMaterials\":[\"renovation_contract\"]},\"retirement\":{\"name\":\"退休提取\",\"maxAmount\":null,\"needM"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59037/api/withdrawal/my-applications",
+      "path": "/api/withdrawal/my-applications",
+      "status": 200,
+      "ok": true,
+      "bodyPreview": "[]"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59037/api/auth/me",
+      "path": "/api/auth/me",
+      "status": 404,
+      "ok": false,
+      "bodyPreview": "{\"error\":\"接口不存在\"}"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59037/api/users/profile",
+      "path": "/api/users/profile",
+      "status": 404,
+      "ok": false,
+      "bodyPreview": "{\"error\":\"接口不存在\"}"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59037/api/user/profile",
+      "path": "/api/user/profile",
+      "status": 404,
+      "ok": false,
+      "bodyPreview": "{\"error\":\"接口不存在\"}"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59037/api/admin/stats",
+      "path": "/api/admin/stats",
+      "status": 404,
+      "ok": false,
+      "bodyPreview": "{\"error\":\"接口不存在\"}"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59037/api/admin/dashboard",
+      "path": "/api/admin/dashboard",
+      "status": 403,
+      "ok": false,
+      "bodyPreview": "{\"error\":\"权限不足\"}"
+    }
+  ],
+  "dialogs": [],
+  "consoleMessages": [
+    {
+      "type": "debug",
+      "text": "[vite] connecting...",
+      "location": {
+        "url": "http://127.0.0.1:49037/@vite/client",
+        "lineNumber": 494,
+        "columnNumber": 8
+      }
+    },
+    {
+      "type": "debug",
+      "text": "[vite] connected.",
+      "location": {
+        "url": "http://127.0.0.1:49037/@vite/client",
+        "lineNumber": 617,
+        "columnNumber": 14
+      }
+    },
+    {
+      "type": "info",
+      "text": "%cDownload the React DevTools for a better development experience: https://reactjs.org/link/react-devtools font-weight:bold",
+      "location": {
+        "url": "http://127.0.0.1:49037/node_modules/.vite/deps/chunk-PJEEZAML.js?v=0a5f0ac7",
+        "lineNumber": 21550,
+        "columnNumber": 24
+      }
+    },
+    {
+      "type": "warning",
+      "text": "⚠️ React Router Future Flag Warning: React Router will begin wrapping state updates in `React.startTransition` in v7. You can use the `v7_startTransition` future flag to opt-in early. For more information, see https://reactrouter.com/v6/upgrading/future#v7_starttransition.",
+      "location": {
+        "url": "http://127.0.0.1:49037/node_modules/.vite/deps/react-router-dom.js?v=0a5f0ac7",
+        "lineNumber": 4426,
+        "columnNumber": 12
+      }
+    },
+    {
+      "type": "warning",
+      "text": "⚠️ React Router Future Flag Warning: Relative route resolution within Splat routes is changing in v7. You can use the `v7_relativeSplatPath` future flag to opt-in early. For more information, see https://reactrouter.com/v6/upgrading/future#v7_relativesplatpath.",
+      "location": {
+        "url": "http://127.0.0.1:49037/node_modules/.vite/deps/react-router-dom.js?v=0a5f0ac7",
+        "lineNumber": 4426,
+        "columnNumber": 12
+      }
+    },
+    {
+      "type": "verbose",
+      "text": "[DOM] Input elements should have autocomplete attributes (suggested: \"current-password\"): (More info: https://goo.gl/9p2vKq)",
+      "location": {
+        "url": "http://127.0.0.1:49037/login",
+        "lineNumber": 0,
+        "columnNumber": 0
+      }
+    },
+    {
+      "type": "error",
+      "text": "Failed to load resource: the server responded with a status of 401 (Unauthorized)",
+      "location": {
+        "url": "http://127.0.0.1:49037/api/auth/login",
+        "lineNumber": 0,
+        "columnNumber": 0
+      }
+    },
+    {
+      "type": "error",
+      "text": "Warning: [antd: message] Static function can not consume context like dynamic theme. Please use 'App' component instead.",
+      "location": {
+        "url": "http://127.0.0.1:49037/node_modules/.vite/deps/chunk-D2XKH6ZM.js?v=0a5f0ac7",
+        "lineNumber": 1247,
+        "columnNumber": 14
+      }
+    },
+    {
+      "type": "error",
+      "text": "Failed to load resource: the server responded with a status of 401 (Unauthorized)",
+      "location": {
+        "url": "http://127.0.0.1:49037/api/auth/login",
+        "lineNumber": 0,
+        "columnNumber": 0
+      }
+    },
+    {
+      "type": "error",
+      "text": "Failed to load resource: the server responded with a status of 401 (Unauthorized)",
+      "location": {
+        "url": "http://127.0.0.1:49037/api/auth/login",
+        "lineNumber": 0,
+        "columnNumber": 0
+      }
+    },
+    {
+      "type": "debug",
+      "text": "[vite] connecting...",
+      "location": {
+        "url": "http://127.0.0.1:49037/@vite/client",
+        "lineNumber": 494,
+        "columnNumber": 8
+      }
+    },
+    {
+      "type": "info",
+      "text": "%cDownload the React DevTools for a better development experience: https://reactjs.org/link/react-devtools font-weight:bold",
+      "location": {
+        "url": "http://127.0.0.1:49037/node_modules/.vite/deps/chunk-PJEEZAML.js?v=0a5f0ac7",
+        "lineNumber": 21550,
+        "columnNumber": 24
+      }
+    },
+    {
+      "type": "debug",
+      "text": "[vite] connected.",
+      "location": {
+        "url": "http://127.0.0.1:49037/@vite/client",
+        "lineNumber": 617,
+        "columnNumber": 14
+      }
+    },
+    {
+      "type": "warning",
+      "text": "⚠️ React Router Future Flag Warning: React Router will begin wrapping state updates in `React.startTransition` in v7. You can use the `v7_startTransition` future flag to opt-in early. For more information, see https://reactrouter.com/v6/upgrading/future#v7_starttransition.",
+      "location": {
+        "url": "http://127.0.0.1:49037/node_modules/.vite/deps/react-router-dom.js?v=0a5f0ac7",
+        "lineNumber": 4426,
+        "columnNumber": 12
+      }
+    },
+    {
+      "type": "warning",
+      "text": "⚠️ React Router Future Flag Warning: Relative route resolution within Splat routes is changing in v7. You can use the `v7_relativeSplatPath` future flag to opt-in early. For more information, see https://reactrouter.com/v6/upgrading/future#v7_relativesplatpath.",
+      "location": {
+        "url": "http://127.0.0.1:49037/node_modules/.vite/deps/react-router-dom.js?v=0a5f0ac7",
+        "lineNumber": 4426,
+        "columnNumber": 12
+      }
+    },
+    {
+      "type": "verbose",
+      "text": "[DOM] Input elements should have autocomplete attributes (suggested: \"current-password\"): (More info: https://goo.gl/9p2vKq)",
+      "location": {
+        "url": "http://127.0.0.1:49037/login",
+        "lineNumber": 0,
+        "columnNumber": 0
+      }
+    },
+    {
+      "type": "error",
+      "text": "Warning: [antd: message] Static function can not consume context like dynamic theme. Please use 'App' component instead.",
+      "location": {
+        "url": "http://127.0.0.1:49037/node_modules/.vite/deps/chunk-D2XKH6ZM.js?v=0a5f0ac7",
+        "lineNumber": 1247,
+        "columnNumber": 14
+      }
+    },
+    {
+      "type": "debug",
+      "text": "[vite] connecting...",
+      "location": {
+        "url": "http://127.0.0.1:49037/@vite/client",
+        "lineNumber": 494,
+        "columnNumber": 8
+      }
+    },
+    {
+      "type": "debug",
+      "text": "[vite] connected.",
+      "location": {
+        "url": "http://127.0.0.1:49037/@vite/client",
+        "lineNumber": 617,
+        "columnNumber": 14
+      }
+    },
+    {
+      "type": "info",
+      "text": "%cDownload the React DevTools for a better development experience: https://reactjs.org/link/react-devtools font-weight:bold",
+      "location": {
+        "url": "http://127.0.0.1:49037/node_modules/.vite/deps/chunk-PJEEZAML.js?v=0a5f0ac7",
+        "lineNumber": 21550,
+        "columnNumber": 24
+      }
+    },
+    {
+      "type": "warning",
+      "text": "⚠️ React Router Future Flag Warning: React Router will begin wrapping state updates in `React.startTransition` in v7. You can use the `v7_startTransition` future flag to opt-in early. For more information, see https://reactrouter.com/v6/upgrading/future#v7_starttransition.",
+      "location": {
+        "url": "http://127.0.0.1:49037/node_modules/.vite/deps/react-router-dom.js?v=0a5f0ac7",
+        "lineNumber": 4426,
+        "columnNumber": 12
+      }
+    },
+    {
+      "type": "warning",
+      "text": "⚠️ React Router Future Flag Warning: Relative route resolution within Splat routes is changing in v7. You can use the `v7_relativeSplatPath` future flag to opt-in early. For more information, see https://reactrouter.com/v6/upgrading/future#v7_relativesplatpath.",
+      "location": {
+        "url": "http://127.0.0.1:49037/node_modules/.vite/deps/react-router-dom.js?v=0a5f0ac7",
+        "lineNumber": 4426,
+        "columnNumber": 12
+      }
+    },
+    {
+      "type": "error",
+      "text": "Warning: [antd: message] Static function can not consume context like dynamic theme. Please use 'App' component instead.",
+      "location": {
+        "url": "http://127.0.0.1:49037/node_modules/.vite/deps/chunk-D2XKH6ZM.js?v=0a5f0ac7",
+        "lineNumber": 1247,
+        "columnNumber": 14
+      }
+    },
+    {
+      "type": "error",
+      "text": "Failed to load resource: the server responded with a status of 404 (Not Found)",
+      "location": {
+        "url": "http://127.0.0.1:49037/api/account/loan-detail/1",
+        "lineNumber": 0,
+        "columnNumber": 0
+      }
+    },
+    {
+      "type": "debug",
+      "text": "[vite] connecting...",
+      "location": {
+        "url": "http://127.0.0.1:49037/@vite/client",
+        "lineNumber": 494,
+        "columnNumber": 8
+      }
+    },
+    {
+      "type": "debug",
+      "text": "[vite] connected.",
+      "location": {
+        "url": "http://127.0.0.1:49037/@vite/client",
+        "lineNumber": 617,
+        "columnNumber": 14
+      }
+    },
+    {
+      "type": "info",
+      "text": "%cDownload the React DevTools for a better development experience: https://reactjs.org/link/react-devtools font-weight:bold",
+      "location": {
+        "url": "http://127.0.0.1:49037/node_modules/.vite/deps/chunk-PJEEZAML.js?v=0a5f0ac7",
+        "lineNumber": 21550,
+        "columnNumber": 24
+      }
+    },
+    {
+      "type": "warning",
+      "text": "⚠️ React Router Future Flag Warning: React Router will begin wrapping state updates in `React.startTransition` in v7. You can use the `v7_startTransition` future flag to opt-in early. For more information, see https://reactrouter.com/v6/upgrading/future#v7_starttransition.",
+      "location": {
+        "url": "http://127.0.0.1:49037/node_modules/.vite/deps/react-router-dom.js?v=0a5f0ac7",
+        "lineNumber": 4426,
+        "columnNumber": 12
+      }
+    },
+    {
+      "type": "warning",
+      "text": "⚠️ React Router Future Flag Warning: Relative route resolution within Splat routes is changing in v7. You can use the `v7_relativeSplatPath` future flag to opt-in early. For more information, see https://reactrouter.com/v6/upgrading/future#v7_relativesplatpath.",
+      "location": {
+        "url": "http://127.0.0.1:49037/node_modules/.vite/deps/react-router-dom.js?v=0a5f0ac7",
+        "lineNumber": 4426,
+        "columnNumber": 12
+      }
+    }
+  ],
+  "requestFailures": [],
+  "responseErrors": [
+    {
+      "status": 401,
+      "url": "http://127.0.0.1:49037/api/auth/login"
+    },
+    {
+      "status": 401,
+      "url": "http://127.0.0.1:49037/api/auth/login"
+    },
+    {
+      "status": 401,
+      "url": "http://127.0.0.1:49037/api/auth/login"
+    },
+    {
+      "status": 404,
+      "url": "http://127.0.0.1:49037/api/account/loan-detail/1"
+    }
+  ]
+}

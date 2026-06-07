@@ -1,0 +1,3039 @@
+{
+  "meta": {
+    "title": "全国住房公积金统一服务中台",
+    "url": "http://127.0.0.1:49037/withdrawal/list",
+    "timestamp": "2026-06-04T19:44:17.198Z",
+    "viewport": {
+      "width": 1792,
+      "height": 1600
+    },
+    "document": {
+      "scrollWidth": 1792,
+      "scrollHeight": 1600
+    }
+  },
+  "text": {
+    "bodyPreview": "全国住房公积金统一服务中台欢迎，缴存人1首页账户余额交易明细贷款信息提取申请申请记录申请记录申请编号提取类型提取金额状态申请时间审批时间驳回原因暂无申请记录",
+    "emptyTextCount": 0
+  },
+  "domTree": {
+    "tag": "html",
+    "id": "",
+    "className": "",
+    "selectorHint": "html",
+    "text": "全国住房公积金统一服务中台 欢迎，缴存人1 首页 账户余额 交易明细 贷款信息 提取申请 申请记录 申请记录 申请编号 提取类型 提取金额 状态 申请时间 审批",
+    "visible": true,
+    "childCount": 2,
+    "children": [
+      {
+        "tag": "head",
+        "id": "",
+        "className": "",
+        "selectorHint": "head",
+        "text": ":where(.css-dev-only-do-not-override-mgrif2)[class^=\"ant-form\"],:where(.css-dev-",
+        "visible": false,
+        "childCount": 57,
+        "children": []
+      },
+      {
+        "tag": "body",
+        "id": "",
+        "className": "",
+        "selectorHint": "body",
+        "text": "全国住房公积金统一服务中台 欢迎，缴存人1 首页 账户余额 交易明细 贷款信息 提取申请 申请记录 申请记录 申请编号 提取类型 提取金额 状态 申请时间 审批",
+        "visible": true,
+        "childCount": 2,
+        "children": [
+          {
+            "tag": "div",
+            "id": "root",
+            "className": "",
+            "selectorHint": "div#root",
+            "text": "全国住房公积金统一服务中台 欢迎，缴存人1 首页 账户余额 交易明细 贷款信息 提取申请 申请记录 申请记录 申请编号 提取类型 提取金额 状态 申请时间 审批",
+            "visible": true,
+            "childCount": 1,
+            "children": [
+              {
+                "tag": "div",
+                "id": "",
+                "className": "ant-layout layout-container css-dev-only-do-not-override-mgrif2",
+                "selectorHint": "div.ant-layout.layout-container.css-dev-only-do-not-override-mgrif2",
+                "text": "全国住房公积金统一服务中台 欢迎，缴存人1 首页 账户余额 交易明细 贷款信息 提取申请 申请记录 申请记录 申请编号 提取类型 提取金额 状态 申请时间 审批",
+                "visible": true,
+                "childCount": 2,
+                "children": [
+                  {
+                    "tag": "header",
+                    "id": "",
+                    "className": "ant-layout-header header css-dev-only-do-not-override-mgrif2",
+                    "selectorHint": "header.ant-layout-header.header.css-dev-only-do-not-override-mgrif2",
+                    "text": "全国住房公积金统一服务中台 欢迎，缴存人1",
+                    "visible": true,
+                    "childCount": 2,
+                    "children": [
+                      {
+                        "tag": "div",
+                        "id": "",
+                        "className": "header-title",
+                        "selectorHint": "div.header-title",
+                        "text": "全国住房公积金统一服务中台",
+                        "visible": true,
+                        "childCount": 0,
+                        "children": []
+                      },
+                      {
+                        "tag": "div",
+                        "id": "",
+                        "className": "header-user",
+                        "selectorHint": "div.header-user",
+                        "text": "欢迎，缴存人1",
+                        "visible": true,
+                        "childCount": 2,
+                        "children": []
+                      }
+                    ]
+                  },
+                  {
+                    "tag": "div",
+                    "id": "",
+                    "className": "ant-layout ant-layout-has-sider css-dev-only-do-not-override-mgrif2",
+                    "selectorHint": "div.ant-layout.ant-layout-has-sider.css-dev-only-do-not-override-mgrif2",
+                    "text": "首页 账户余额 交易明细 贷款信息 提取申请 申请记录 申请记录 申请编号 提取类型 提取金额 状态 申请时间 审批时间 驳回原因 暂无申请记录",
+                    "visible": true,
+                    "childCount": 2,
+                    "children": [
+                      {
+                        "tag": "aside",
+                        "id": "",
+                        "className": "ant-layout-sider ant-layout-sider-dark sidebar css-dev-only-do-not-override-mgrif2",
+                        "selectorHint": "aside.ant-layout-sider.ant-layout-sider-dark.sidebar",
+                        "text": "首页 账户余额 交易明细 贷款信息 提取申请 申请记录",
+                        "visible": true,
+                        "childCount": 1,
+                        "children": []
+                      },
+                      {
+                        "tag": "div",
+                        "id": "",
+                        "className": "ant-layout css-dev-only-do-not-override-mgrif2",
+                        "selectorHint": "div.ant-layout.css-dev-only-do-not-override-mgrif2",
+                        "text": "申请记录 申请编号 提取类型 提取金额 状态 申请时间 审批时间 驳回原因 暂无申请记录",
+                        "visible": true,
+                        "childCount": 1,
+                        "children": []
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  "allElements": [
+    {
+      "index": 0,
+      "tag": "html",
+      "id": "",
+      "className": "",
+      "selectorHint": "html",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "全国住房公积金统一服务中台 欢迎，缴存人1 首页 账户余额 交易明细 贷款信息 提取申请 申请记录 申请记录 申请编号 提取类型 提取金额 状态 申请时间 审批时间 驳回原因 暂无申请记录",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 2,
+      "rect": {
+        "x": 0,
+        "y": 0,
+        "width": 1792,
+        "height": 1600
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 1,
+      "tag": "head",
+      "id": "",
+      "className": "",
+      "selectorHint": "head",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": ":where(.css-dev-only-do-not-override-mgrif2)[class^=\"ant-form\"],:where(.css-dev-only-do-not-override-mgrif2)[class*=\" ant-form\"]{font-family:-apple-system,BlinkMacSystemFont,'Segoe",
+      "href": "",
+      "disabled": false,
+      "visible": false,
+      "childCount": 57,
+      "rect": {
+        "x": 0,
+        "y": 0,
+        "width": 0,
+        "height": 0
+      },
+      "style": {
+        "display": "none",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 2,
+      "tag": "meta",
+      "id": "",
+      "className": "",
+      "selectorHint": "meta",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "",
+      "href": "",
+      "disabled": false,
+      "visible": false,
+      "childCount": 0,
+      "rect": {
+        "x": 0,
+        "y": 0,
+        "width": 0,
+        "height": 0
+      },
+      "style": {
+        "display": "none",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 3,
+      "tag": "link",
+      "id": "",
+      "className": "",
+      "selectorHint": "link",
+      "name": "",
+      "type": "image/svg+xml",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "",
+      "href": "/vite.svg",
+      "disabled": false,
+      "visible": false,
+      "childCount": 0,
+      "rect": {
+        "x": 0,
+        "y": 0,
+        "width": 0,
+        "height": 0
+      },
+      "style": {
+        "display": "none",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 4,
+      "tag": "meta",
+      "id": "",
+      "className": "",
+      "selectorHint": "meta",
+      "name": "viewport",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "",
+      "href": "",
+      "disabled": false,
+      "visible": false,
+      "childCount": 0,
+      "rect": {
+        "x": 0,
+        "y": 0,
+        "width": 0,
+        "height": 0
+      },
+      "style": {
+        "display": "none",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 5,
+      "tag": "title",
+      "id": "",
+      "className": "",
+      "selectorHint": "title",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "全国住房公积金统一服务中台",
+      "href": "",
+      "disabled": false,
+      "visible": false,
+      "childCount": 0,
+      "rect": {
+        "x": 0,
+        "y": 0,
+        "width": 0,
+        "height": 0
+      },
+      "style": {
+        "display": "none",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 6,
+      "tag": "body",
+      "id": "",
+      "className": "",
+      "selectorHint": "body",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "全国住房公积金统一服务中台 欢迎，缴存人1 首页 账户余额 交易明细 贷款信息 提取申请 申请记录 申请记录 申请编号 提取类型 提取金额 状态 申请时间 审批时间 驳回原因 暂无申请记录",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 2,
+      "rect": {
+        "x": 0,
+        "y": 0,
+        "width": 1792,
+        "height": 1600
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 7,
+      "tag": "div",
+      "id": "root",
+      "className": "",
+      "selectorHint": "div#root",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "全国住房公积金统一服务中台 欢迎，缴存人1 首页 账户余额 交易明细 贷款信息 提取申请 申请记录 申请记录 申请编号 提取类型 提取金额 状态 申请时间 审批时间 驳回原因 暂无申请记录",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 1,
+      "rect": {
+        "x": 0,
+        "y": 0,
+        "width": 1792,
+        "height": 1600
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 8,
+      "tag": "div",
+      "id": "",
+      "className": "ant-layout layout-container css-dev-only-do-not-override-mgrif2",
+      "selectorHint": "div.ant-layout.layout-container.css-dev-only-do-not-override-mgrif2",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "全国住房公积金统一服务中台 欢迎，缴存人1 首页 账户余额 交易明细 贷款信息 提取申请 申请记录 申请记录 申请编号 提取类型 提取金额 状态 申请时间 审批时间 驳回原因 暂无申请记录",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 2,
+      "rect": {
+        "x": 0,
+        "y": 0,
+        "width": 1792,
+        "height": 1600
+      },
+      "style": {
+        "display": "flex",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 9,
+      "tag": "header",
+      "id": "",
+      "className": "ant-layout-header header css-dev-only-do-not-override-mgrif2",
+      "selectorHint": "header.ant-layout-header.header.css-dev-only-do-not-override-mgrif2",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "全国住房公积金统一服务中台 欢迎，缴存人1",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 2,
+      "rect": {
+        "x": 0,
+        "y": 0,
+        "width": 1792,
+        "height": 64
+      },
+      "style": {
+        "display": "flex",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 10,
+      "tag": "div",
+      "id": "",
+      "className": "header-title",
+      "selectorHint": "div.header-title",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "全国住房公积金统一服务中台",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 24,
+        "y": 0,
+        "width": 260,
+        "height": 64
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 11,
+      "tag": "div",
+      "id": "",
+      "className": "header-user",
+      "selectorHint": "div.header-user",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "欢迎，缴存人1",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 2,
+      "rect": {
+        "x": 1634,
+        "y": 0,
+        "width": 134,
+        "height": 64
+      },
+      "style": {
+        "display": "flex",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 12,
+      "tag": "span",
+      "id": "",
+      "className": "",
+      "selectorHint": "span",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "欢迎，缴存人1",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 1634,
+        "y": 0,
+        "width": 90,
+        "height": 64
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 13,
+      "tag": "span",
+      "id": "",
+      "className": "ant-avatar ant-avatar-circle ant-avatar-icon ant-dropdown-trigger css-dev-only-do-not-override-mgrif2",
+      "selectorHint": "span.ant-avatar.ant-avatar-circle.ant-avatar-icon",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 1,
+      "rect": {
+        "x": 1736,
+        "y": 16,
+        "width": 32,
+        "height": 32
+      },
+      "style": {
+        "display": "flex",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 14,
+      "tag": "span",
+      "id": "",
+      "className": "anticon anticon-user",
+      "selectorHint": "span.anticon.anticon-user",
+      "name": "",
+      "type": "",
+      "role": "img",
+      "ariaLabel": "user",
+      "title": "",
+      "placeholder": "",
+      "text": "user",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 1,
+      "rect": {
+        "x": 1743,
+        "y": 23,
+        "width": 18,
+        "height": 18
+      },
+      "style": {
+        "display": "flex",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 15,
+      "tag": "svg",
+      "id": "",
+      "className": "",
+      "selectorHint": "svg",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 1,
+      "rect": {
+        "x": 1743,
+        "y": 23,
+        "width": 18,
+        "height": 18
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 16,
+      "tag": "path",
+      "id": "",
+      "className": "",
+      "selectorHint": "path",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 1744,
+        "y": 24,
+        "width": 15,
+        "height": 16
+      },
+      "style": {
+        "display": "inline",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 17,
+      "tag": "div",
+      "id": "",
+      "className": "ant-layout ant-layout-has-sider css-dev-only-do-not-override-mgrif2",
+      "selectorHint": "div.ant-layout.ant-layout-has-sider.css-dev-only-do-not-override-mgrif2",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "首页 账户余额 交易明细 贷款信息 提取申请 申请记录 申请记录 申请编号 提取类型 提取金额 状态 申请时间 审批时间 驳回原因 暂无申请记录",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 2,
+      "rect": {
+        "x": 0,
+        "y": 64,
+        "width": 1792,
+        "height": 1536
+      },
+      "style": {
+        "display": "flex",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 18,
+      "tag": "aside",
+      "id": "",
+      "className": "ant-layout-sider ant-layout-sider-dark sidebar css-dev-only-do-not-override-mgrif2",
+      "selectorHint": "aside.ant-layout-sider.ant-layout-sider-dark.sidebar",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "首页 账户余额 交易明细 贷款信息 提取申请 申请记录",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 1,
+      "rect": {
+        "x": 0,
+        "y": 64,
+        "width": 200,
+        "height": 1536
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 19,
+      "tag": "div",
+      "id": "",
+      "className": "ant-layout-sider-children",
+      "selectorHint": "div.ant-layout-sider-children",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "首页 账户余额 交易明细 贷款信息 提取申请 申请记录",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 2,
+      "rect": {
+        "x": 0,
+        "y": 64,
+        "width": 200,
+        "height": 1536
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 20,
+      "tag": "ul",
+      "id": "",
+      "className": "ant-menu ant-menu-root ant-menu-inline ant-menu-dark css-dev-only-do-not-override-mgrif2",
+      "selectorHint": "ul.ant-menu.ant-menu-root.ant-menu-inline",
+      "name": "",
+      "type": "",
+      "role": "menu",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "首页 账户余额 交易明细 贷款信息 提取申请 申请记录",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 6,
+      "rect": {
+        "x": 0,
+        "y": 64,
+        "width": 200,
+        "height": 1536
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 21,
+      "tag": "li",
+      "id": "",
+      "className": "ant-menu-item",
+      "selectorHint": "li.ant-menu-item",
+      "name": "",
+      "type": "",
+      "role": "menuitem",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "首页",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 2,
+      "rect": {
+        "x": 4,
+        "y": 68,
+        "width": 192,
+        "height": 40
+      },
+      "style": {
+        "display": "flex",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 22,
+      "tag": "span",
+      "id": "",
+      "className": "anticon anticon-dashboard ant-menu-item-icon",
+      "selectorHint": "span.anticon.anticon-dashboard.ant-menu-item-icon",
+      "name": "",
+      "type": "",
+      "role": "img",
+      "ariaLabel": "dashboard",
+      "title": "",
+      "placeholder": "",
+      "text": "dashboard",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 1,
+      "rect": {
+        "x": 28,
+        "y": 81,
+        "width": 14,
+        "height": 14
+      },
+      "style": {
+        "display": "flex",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 23,
+      "tag": "svg",
+      "id": "",
+      "className": "",
+      "selectorHint": "svg",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 1,
+      "rect": {
+        "x": 28,
+        "y": 81,
+        "width": 14,
+        "height": 14
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 24,
+      "tag": "path",
+      "id": "",
+      "className": "",
+      "selectorHint": "path",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 28,
+        "y": 82,
+        "width": 14,
+        "height": 13
+      },
+      "style": {
+        "display": "inline",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 25,
+      "tag": "span",
+      "id": "",
+      "className": "ant-menu-title-content",
+      "selectorHint": "span.ant-menu-title-content",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "首页",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 52,
+        "y": 68,
+        "width": 128,
+        "height": 40
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 26,
+      "tag": "li",
+      "id": "",
+      "className": "ant-menu-item",
+      "selectorHint": "li.ant-menu-item",
+      "name": "",
+      "type": "",
+      "role": "menuitem",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "账户余额",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 2,
+      "rect": {
+        "x": 4,
+        "y": 112,
+        "width": 192,
+        "height": 40
+      },
+      "style": {
+        "display": "flex",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 27,
+      "tag": "span",
+      "id": "",
+      "className": "anticon anticon-wallet ant-menu-item-icon",
+      "selectorHint": "span.anticon.anticon-wallet.ant-menu-item-icon",
+      "name": "",
+      "type": "",
+      "role": "img",
+      "ariaLabel": "wallet",
+      "title": "",
+      "placeholder": "",
+      "text": "wallet",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 1,
+      "rect": {
+        "x": 28,
+        "y": 125,
+        "width": 14,
+        "height": 14
+      },
+      "style": {
+        "display": "flex",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 28,
+      "tag": "svg",
+      "id": "",
+      "className": "",
+      "selectorHint": "svg",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 1,
+      "rect": {
+        "x": 28,
+        "y": 125,
+        "width": 14,
+        "height": 14
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 29,
+      "tag": "path",
+      "id": "",
+      "className": "",
+      "selectorHint": "path",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 29,
+        "y": 126,
+        "width": 13,
+        "height": 13
+      },
+      "style": {
+        "display": "inline",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 30,
+      "tag": "span",
+      "id": "",
+      "className": "ant-menu-title-content",
+      "selectorHint": "span.ant-menu-title-content",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "账户余额",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 52,
+        "y": 112,
+        "width": 128,
+        "height": 40
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 31,
+      "tag": "li",
+      "id": "",
+      "className": "ant-menu-item",
+      "selectorHint": "li.ant-menu-item",
+      "name": "",
+      "type": "",
+      "role": "menuitem",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "交易明细",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 2,
+      "rect": {
+        "x": 4,
+        "y": 156,
+        "width": 192,
+        "height": 40
+      },
+      "style": {
+        "display": "flex",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 32,
+      "tag": "span",
+      "id": "",
+      "className": "anticon anticon-file-text ant-menu-item-icon",
+      "selectorHint": "span.anticon.anticon-file-text.ant-menu-item-icon",
+      "name": "",
+      "type": "",
+      "role": "img",
+      "ariaLabel": "file-text",
+      "title": "",
+      "placeholder": "",
+      "text": "file-text",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 1,
+      "rect": {
+        "x": 28,
+        "y": 169,
+        "width": 14,
+        "height": 14
+      },
+      "style": {
+        "display": "flex",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 33,
+      "tag": "svg",
+      "id": "",
+      "className": "",
+      "selectorHint": "svg",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 1,
+      "rect": {
+        "x": 28,
+        "y": 169,
+        "width": 14,
+        "height": 14
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 34,
+      "tag": "path",
+      "id": "",
+      "className": "",
+      "selectorHint": "path",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 30,
+        "y": 169,
+        "width": 11,
+        "height": 14
+      },
+      "style": {
+        "display": "inline",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 35,
+      "tag": "span",
+      "id": "",
+      "className": "ant-menu-title-content",
+      "selectorHint": "span.ant-menu-title-content",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "交易明细",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 52,
+        "y": 156,
+        "width": 128,
+        "height": 40
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 36,
+      "tag": "li",
+      "id": "",
+      "className": "ant-menu-item",
+      "selectorHint": "li.ant-menu-item",
+      "name": "",
+      "type": "",
+      "role": "menuitem",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "贷款信息",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 2,
+      "rect": {
+        "x": 4,
+        "y": 200,
+        "width": 192,
+        "height": 40
+      },
+      "style": {
+        "display": "flex",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 37,
+      "tag": "span",
+      "id": "",
+      "className": "anticon anticon-file-text ant-menu-item-icon",
+      "selectorHint": "span.anticon.anticon-file-text.ant-menu-item-icon",
+      "name": "",
+      "type": "",
+      "role": "img",
+      "ariaLabel": "file-text",
+      "title": "",
+      "placeholder": "",
+      "text": "file-text",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 1,
+      "rect": {
+        "x": 28,
+        "y": 213,
+        "width": 14,
+        "height": 14
+      },
+      "style": {
+        "display": "flex",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 38,
+      "tag": "svg",
+      "id": "",
+      "className": "",
+      "selectorHint": "svg",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 1,
+      "rect": {
+        "x": 28,
+        "y": 213,
+        "width": 14,
+        "height": 14
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 39,
+      "tag": "path",
+      "id": "",
+      "className": "",
+      "selectorHint": "path",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 30,
+        "y": 213,
+        "width": 11,
+        "height": 14
+      },
+      "style": {
+        "display": "inline",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 40,
+      "tag": "span",
+      "id": "",
+      "className": "ant-menu-title-content",
+      "selectorHint": "span.ant-menu-title-content",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "贷款信息",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 52,
+        "y": 200,
+        "width": 128,
+        "height": 40
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 41,
+      "tag": "li",
+      "id": "",
+      "className": "ant-menu-item",
+      "selectorHint": "li.ant-menu-item",
+      "name": "",
+      "type": "",
+      "role": "menuitem",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "提取申请",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 2,
+      "rect": {
+        "x": 4,
+        "y": 244,
+        "width": 192,
+        "height": 40
+      },
+      "style": {
+        "display": "flex",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 42,
+      "tag": "span",
+      "id": "",
+      "className": "anticon anticon-file-text ant-menu-item-icon",
+      "selectorHint": "span.anticon.anticon-file-text.ant-menu-item-icon",
+      "name": "",
+      "type": "",
+      "role": "img",
+      "ariaLabel": "file-text",
+      "title": "",
+      "placeholder": "",
+      "text": "file-text",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 1,
+      "rect": {
+        "x": 28,
+        "y": 257,
+        "width": 14,
+        "height": 14
+      },
+      "style": {
+        "display": "flex",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 43,
+      "tag": "svg",
+      "id": "",
+      "className": "",
+      "selectorHint": "svg",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 1,
+      "rect": {
+        "x": 28,
+        "y": 257,
+        "width": 14,
+        "height": 14
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 44,
+      "tag": "path",
+      "id": "",
+      "className": "",
+      "selectorHint": "path",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 30,
+        "y": 257,
+        "width": 11,
+        "height": 14
+      },
+      "style": {
+        "display": "inline",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 45,
+      "tag": "span",
+      "id": "",
+      "className": "ant-menu-title-content",
+      "selectorHint": "span.ant-menu-title-content",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "提取申请",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 52,
+        "y": 244,
+        "width": 128,
+        "height": 40
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 46,
+      "tag": "li",
+      "id": "",
+      "className": "ant-menu-item ant-menu-item-active ant-menu-item-selected",
+      "selectorHint": "li.ant-menu-item.ant-menu-item-active.ant-menu-item-selected",
+      "name": "",
+      "type": "",
+      "role": "menuitem",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "申请记录",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 2,
+      "rect": {
+        "x": 4,
+        "y": 288,
+        "width": 192,
+        "height": 40
+      },
+      "style": {
+        "display": "flex",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 47,
+      "tag": "span",
+      "id": "",
+      "className": "anticon anticon-file-text ant-menu-item-icon",
+      "selectorHint": "span.anticon.anticon-file-text.ant-menu-item-icon",
+      "name": "",
+      "type": "",
+      "role": "img",
+      "ariaLabel": "file-text",
+      "title": "",
+      "placeholder": "",
+      "text": "file-text",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 1,
+      "rect": {
+        "x": 28,
+        "y": 301,
+        "width": 14,
+        "height": 14
+      },
+      "style": {
+        "display": "flex",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 48,
+      "tag": "svg",
+      "id": "",
+      "className": "",
+      "selectorHint": "svg",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 1,
+      "rect": {
+        "x": 28,
+        "y": 301,
+        "width": 14,
+        "height": 14
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 49,
+      "tag": "path",
+      "id": "",
+      "className": "",
+      "selectorHint": "path",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 30,
+        "y": 301,
+        "width": 11,
+        "height": 14
+      },
+      "style": {
+        "display": "inline",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 50,
+      "tag": "span",
+      "id": "",
+      "className": "ant-menu-title-content",
+      "selectorHint": "span.ant-menu-title-content",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "申请记录",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 52,
+        "y": 288,
+        "width": 128,
+        "height": 40
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 51,
+      "tag": "div",
+      "id": "",
+      "className": "",
+      "selectorHint": "div",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "",
+      "href": "",
+      "disabled": false,
+      "visible": false,
+      "childCount": 0,
+      "rect": {
+        "x": 0,
+        "y": 0,
+        "width": 0,
+        "height": 0
+      },
+      "style": {
+        "display": "none",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 52,
+      "tag": "div",
+      "id": "",
+      "className": "ant-layout css-dev-only-do-not-override-mgrif2",
+      "selectorHint": "div.ant-layout.css-dev-only-do-not-override-mgrif2",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "申请记录 申请编号 提取类型 提取金额 状态 申请时间 审批时间 驳回原因 暂无申请记录",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 1,
+      "rect": {
+        "x": 200,
+        "y": 64,
+        "width": 1592,
+        "height": 1536
+      },
+      "style": {
+        "display": "flex",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 53,
+      "tag": "main",
+      "id": "",
+      "className": "ant-layout-content content css-dev-only-do-not-override-mgrif2",
+      "selectorHint": "main.ant-layout-content.content.css-dev-only-do-not-override-mgrif2",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "申请记录 申请编号 提取类型 提取金额 状态 申请时间 审批时间 驳回原因 暂无申请记录",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 1,
+      "rect": {
+        "x": 224,
+        "y": 88,
+        "width": 1544,
+        "height": 1488
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 54,
+      "tag": "div",
+      "id": "",
+      "className": "",
+      "selectorHint": "div",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "申请记录 申请编号 提取类型 提取金额 状态 申请时间 审批时间 驳回原因 暂无申请记录",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 2,
+      "rect": {
+        "x": 248,
+        "y": 112,
+        "width": 1496,
+        "height": 212
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 55,
+      "tag": "div",
+      "id": "",
+      "className": "",
+      "selectorHint": "div",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "申请记录",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 2,
+      "rect": {
+        "x": 248,
+        "y": 112,
+        "width": 1496,
+        "height": 32
+      },
+      "style": {
+        "display": "flex",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 56,
+      "tag": "h2",
+      "id": "",
+      "className": "",
+      "selectorHint": "h2",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "申请记录",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 248,
+        "y": 114,
+        "width": 84,
+        "height": 29
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 57,
+      "tag": "div",
+      "id": "",
+      "className": "ant-select ant-select-outlined css-dev-only-do-not-override-mgrif2 ant-select-single ant-select-allow-clear ant-select-show-arrow",
+      "selectorHint": "div.ant-select.ant-select-outlined.css-dev-only-do-not-override-mgrif2",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 3,
+      "rect": {
+        "x": 1594,
+        "y": 112,
+        "width": 150,
+        "height": 32
+      },
+      "style": {
+        "display": "flex",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 58,
+      "tag": "div",
+      "id": "",
+      "className": "ant-select-selector",
+      "selectorHint": "div.ant-select-selector",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 1,
+      "rect": {
+        "x": 1594,
+        "y": 112,
+        "width": 150,
+        "height": 32
+      },
+      "style": {
+        "display": "flex",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 59,
+      "tag": "span",
+      "id": "",
+      "className": "ant-select-selection-wrap",
+      "selectorHint": "span.ant-select-selection-wrap",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 2,
+      "rect": {
+        "x": 1606,
+        "y": 113,
+        "width": 126,
+        "height": 30
+      },
+      "style": {
+        "display": "flex",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 60,
+      "tag": "span",
+      "id": "",
+      "className": "ant-select-selection-search",
+      "selectorHint": "span.ant-select-selection-search",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 1,
+      "rect": {
+        "x": 1606,
+        "y": 113,
+        "width": 126,
+        "height": 30
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 61,
+      "tag": "input",
+      "id": "rc_select_5",
+      "className": "ant-select-selection-search-input",
+      "selectorHint": "input#rc_select_5.ant-select-selection-search-input",
+      "name": "",
+      "type": "search",
+      "role": "combobox",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "",
+      "href": "",
+      "disabled": false,
+      "visible": false,
+      "childCount": 0,
+      "rect": {
+        "x": 1606,
+        "y": 113,
+        "width": 108,
+        "height": 30
+      },
+      "style": {
+        "display": "inline-block",
+        "visibility": "visible",
+        "opacity": "0"
+      }
+    },
+    {
+      "index": 62,
+      "tag": "span",
+      "id": "",
+      "className": "ant-select-selection-item",
+      "selectorHint": "span.ant-select-selection-item",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 1606,
+        "y": 113,
+        "width": 126,
+        "height": 30
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 63,
+      "tag": "span",
+      "id": "",
+      "className": "ant-select-arrow",
+      "selectorHint": "span.ant-select-arrow",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 1,
+      "rect": {
+        "x": 1721,
+        "y": 122,
+        "width": 12,
+        "height": 12
+      },
+      "style": {
+        "display": "flex",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 64,
+      "tag": "span",
+      "id": "",
+      "className": "anticon anticon-down ant-select-suffix",
+      "selectorHint": "span.anticon.anticon-down.ant-select-suffix",
+      "name": "",
+      "type": "",
+      "role": "img",
+      "ariaLabel": "down",
+      "title": "",
+      "placeholder": "",
+      "text": "down",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 1,
+      "rect": {
+        "x": 1721,
+        "y": 122,
+        "width": 12,
+        "height": 12
+      },
+      "style": {
+        "display": "flex",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 65,
+      "tag": "svg",
+      "id": "",
+      "className": "",
+      "selectorHint": "svg",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 1,
+      "rect": {
+        "x": 1721,
+        "y": 122,
+        "width": 12,
+        "height": 12
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 66,
+      "tag": "path",
+      "id": "",
+      "className": "",
+      "selectorHint": "path",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 1722,
+        "y": 125,
+        "width": 10,
+        "height": 7
+      },
+      "style": {
+        "display": "inline",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 67,
+      "tag": "span",
+      "id": "",
+      "className": "ant-select-clear",
+      "selectorHint": "span.ant-select-clear",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "",
+      "href": "",
+      "disabled": false,
+      "visible": false,
+      "childCount": 1,
+      "rect": {
+        "x": 1721,
+        "y": 122,
+        "width": 12,
+        "height": 12
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "0"
+      }
+    },
+    {
+      "index": 68,
+      "tag": "span",
+      "id": "",
+      "className": "anticon anticon-close-circle",
+      "selectorHint": "span.anticon.anticon-close-circle",
+      "name": "",
+      "type": "",
+      "role": "img",
+      "ariaLabel": "close-circle",
+      "title": "",
+      "placeholder": "",
+      "text": "close-circle",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 1,
+      "rect": {
+        "x": 1721,
+        "y": 122,
+        "width": 12,
+        "height": 12
+      },
+      "style": {
+        "display": "inline-flex",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 69,
+      "tag": "svg",
+      "id": "",
+      "className": "",
+      "selectorHint": "svg",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 1,
+      "rect": {
+        "x": 1721,
+        "y": 122,
+        "width": 12,
+        "height": 12
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 70,
+      "tag": "path",
+      "id": "",
+      "className": "",
+      "selectorHint": "path",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 1721,
+        "y": 122,
+        "width": 12,
+        "height": 12
+      },
+      "style": {
+        "display": "inline",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 71,
+      "tag": "div",
+      "id": "",
+      "className": "ant-card ant-card-bordered css-dev-only-do-not-override-mgrif2",
+      "selectorHint": "div.ant-card.ant-card-bordered.css-dev-only-do-not-override-mgrif2",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "申请编号 提取类型 提取金额 状态 申请时间 审批时间 驳回原因 暂无申请记录",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 1,
+      "rect": {
+        "x": 248,
+        "y": 164,
+        "width": 1496,
+        "height": 160
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 72,
+      "tag": "div",
+      "id": "",
+      "className": "ant-card-body",
+      "selectorHint": "div.ant-card-body",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "申请编号 提取类型 提取金额 状态 申请时间 审批时间 驳回原因 暂无申请记录",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 1,
+      "rect": {
+        "x": 249,
+        "y": 165,
+        "width": 1494,
+        "height": 158
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 73,
+      "tag": "div",
+      "id": "",
+      "className": "ant-table-wrapper css-dev-only-do-not-override-mgrif2",
+      "selectorHint": "div.ant-table-wrapper.css-dev-only-do-not-override-mgrif2",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "申请编号 提取类型 提取金额 状态 申请时间 审批时间 驳回原因 暂无申请记录",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 1,
+      "rect": {
+        "x": 273,
+        "y": 189,
+        "width": 1446,
+        "height": 110
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 74,
+      "tag": "div",
+      "id": "",
+      "className": "ant-spin-nested-loading css-dev-only-do-not-override-mgrif2",
+      "selectorHint": "div.ant-spin-nested-loading.css-dev-only-do-not-override-mgrif2",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "申请编号 提取类型 提取金额 状态 申请时间 审批时间 驳回原因 暂无申请记录",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 1,
+      "rect": {
+        "x": 273,
+        "y": 189,
+        "width": 1446,
+        "height": 110
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 75,
+      "tag": "div",
+      "id": "",
+      "className": "ant-spin-container",
+      "selectorHint": "div.ant-spin-container",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "申请编号 提取类型 提取金额 状态 申请时间 审批时间 驳回原因 暂无申请记录",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 1,
+      "rect": {
+        "x": 273,
+        "y": 189,
+        "width": 1446,
+        "height": 110
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 76,
+      "tag": "div",
+      "id": "",
+      "className": "ant-table ant-table-empty css-dev-only-do-not-override-mgrif2",
+      "selectorHint": "div.ant-table.ant-table-empty.css-dev-only-do-not-override-mgrif2",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "申请编号 提取类型 提取金额 状态 申请时间 审批时间 驳回原因 暂无申请记录",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 1,
+      "rect": {
+        "x": 273,
+        "y": 189,
+        "width": 1446,
+        "height": 110
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 77,
+      "tag": "div",
+      "id": "",
+      "className": "ant-table-container",
+      "selectorHint": "div.ant-table-container",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "申请编号 提取类型 提取金额 状态 申请时间 审批时间 驳回原因 暂无申请记录",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 1,
+      "rect": {
+        "x": 273,
+        "y": 189,
+        "width": 1446,
+        "height": 110
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 78,
+      "tag": "div",
+      "id": "",
+      "className": "ant-table-content",
+      "selectorHint": "div.ant-table-content",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "申请编号 提取类型 提取金额 状态 申请时间 审批时间 驳回原因 暂无申请记录",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 1,
+      "rect": {
+        "x": 273,
+        "y": 189,
+        "width": 1446,
+        "height": 110
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 79,
+      "tag": "table",
+      "id": "",
+      "className": "",
+      "selectorHint": "table",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "申请编号 提取类型 提取金额 状态 申请时间 审批时间 驳回原因 暂无申请记录",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 2,
+      "rect": {
+        "x": 273,
+        "y": 189,
+        "width": 1446,
+        "height": 110
+      },
+      "style": {
+        "display": "table",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 80,
+      "tag": "thead",
+      "id": "",
+      "className": "ant-table-thead",
+      "selectorHint": "thead.ant-table-thead",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "申请编号 提取类型 提取金额 状态 申请时间 审批时间 驳回原因",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 1,
+      "rect": {
+        "x": 273,
+        "y": 189,
+        "width": 1446,
+        "height": 55
+      },
+      "style": {
+        "display": "table-header-group",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 81,
+      "tag": "tr",
+      "id": "",
+      "className": "",
+      "selectorHint": "tr",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "申请编号 提取类型 提取金额 状态 申请时间 审批时间 驳回原因",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 7,
+      "rect": {
+        "x": 273,
+        "y": 189,
+        "width": 1446,
+        "height": 55
+      },
+      "style": {
+        "display": "table-row",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 82,
+      "tag": "th",
+      "id": "",
+      "className": "ant-table-cell",
+      "selectorHint": "th.ant-table-cell",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "申请编号",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 273,
+        "y": 189,
+        "width": 216,
+        "height": 55
+      },
+      "style": {
+        "display": "table-cell",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 83,
+      "tag": "th",
+      "id": "",
+      "className": "ant-table-cell",
+      "selectorHint": "th.ant-table-cell",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "提取类型",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 489,
+        "y": 189,
+        "width": 216,
+        "height": 55
+      },
+      "style": {
+        "display": "table-cell",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 84,
+      "tag": "th",
+      "id": "",
+      "className": "ant-table-cell",
+      "selectorHint": "th.ant-table-cell",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "提取金额",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 706,
+        "y": 189,
+        "width": 216,
+        "height": 55
+      },
+      "style": {
+        "display": "table-cell",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 85,
+      "tag": "th",
+      "id": "",
+      "className": "ant-table-cell",
+      "selectorHint": "th.ant-table-cell",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "状态",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 922,
+        "y": 189,
+        "width": 148,
+        "height": 55
+      },
+      "style": {
+        "display": "table-cell",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 86,
+      "tag": "th",
+      "id": "",
+      "className": "ant-table-cell",
+      "selectorHint": "th.ant-table-cell",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "申请时间",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 1070,
+        "y": 189,
+        "width": 216,
+        "height": 55
+      },
+      "style": {
+        "display": "table-cell",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 87,
+      "tag": "th",
+      "id": "",
+      "className": "ant-table-cell",
+      "selectorHint": "th.ant-table-cell",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "审批时间",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 1286,
+        "y": 189,
+        "width": 216,
+        "height": 55
+      },
+      "style": {
+        "display": "table-cell",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 88,
+      "tag": "th",
+      "id": "",
+      "className": "ant-table-cell",
+      "selectorHint": "th.ant-table-cell",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "驳回原因",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 1503,
+        "y": 189,
+        "width": 216,
+        "height": 55
+      },
+      "style": {
+        "display": "table-cell",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 89,
+      "tag": "tbody",
+      "id": "",
+      "className": "ant-table-tbody",
+      "selectorHint": "tbody.ant-table-tbody",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "暂无申请记录",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 1,
+      "rect": {
+        "x": 273,
+        "y": 244,
+        "width": 1446,
+        "height": 55
+      },
+      "style": {
+        "display": "table-row-group",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 90,
+      "tag": "tr",
+      "id": "",
+      "className": "ant-table-placeholder",
+      "selectorHint": "tr.ant-table-placeholder",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "暂无申请记录",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 1,
+      "rect": {
+        "x": 273,
+        "y": 244,
+        "width": 1446,
+        "height": 55
+      },
+      "style": {
+        "display": "table-row",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 91,
+      "tag": "td",
+      "id": "",
+      "className": "ant-table-cell",
+      "selectorHint": "td.ant-table-cell",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "暂无申请记录",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 273,
+        "y": 244,
+        "width": 1446,
+        "height": 55
+      },
+      "style": {
+        "display": "table-cell",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    }
+  ],
+  "interactiveElements": [
+    {
+      "index": 0,
+      "tag": "ul",
+      "id": "",
+      "className": "ant-menu ant-menu-root ant-menu-inline ant-menu-dark css-dev-only-do-not-override-mgrif2",
+      "selectorHint": "ul.ant-menu.ant-menu-root.ant-menu-inline",
+      "name": "",
+      "type": "",
+      "role": "menu",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "首页 账户余额 交易明细 贷款信息 提取申请 申请记录",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 6,
+      "rect": {
+        "x": 0,
+        "y": 64,
+        "width": 200,
+        "height": 1536
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 1,
+      "tag": "li",
+      "id": "",
+      "className": "ant-menu-item",
+      "selectorHint": "li.ant-menu-item",
+      "name": "",
+      "type": "",
+      "role": "menuitem",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "首页",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 2,
+      "rect": {
+        "x": 4,
+        "y": 68,
+        "width": 192,
+        "height": 40
+      },
+      "style": {
+        "display": "flex",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 2,
+      "tag": "li",
+      "id": "",
+      "className": "ant-menu-item",
+      "selectorHint": "li.ant-menu-item",
+      "name": "",
+      "type": "",
+      "role": "menuitem",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "账户余额",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 2,
+      "rect": {
+        "x": 4,
+        "y": 112,
+        "width": 192,
+        "height": 40
+      },
+      "style": {
+        "display": "flex",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 3,
+      "tag": "li",
+      "id": "",
+      "className": "ant-menu-item",
+      "selectorHint": "li.ant-menu-item",
+      "name": "",
+      "type": "",
+      "role": "menuitem",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "交易明细",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 2,
+      "rect": {
+        "x": 4,
+        "y": 156,
+        "width": 192,
+        "height": 40
+      },
+      "style": {
+        "display": "flex",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 4,
+      "tag": "li",
+      "id": "",
+      "className": "ant-menu-item",
+      "selectorHint": "li.ant-menu-item",
+      "name": "",
+      "type": "",
+      "role": "menuitem",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "贷款信息",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 2,
+      "rect": {
+        "x": 4,
+        "y": 200,
+        "width": 192,
+        "height": 40
+      },
+      "style": {
+        "display": "flex",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 5,
+      "tag": "li",
+      "id": "",
+      "className": "ant-menu-item",
+      "selectorHint": "li.ant-menu-item",
+      "name": "",
+      "type": "",
+      "role": "menuitem",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "提取申请",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 2,
+      "rect": {
+        "x": 4,
+        "y": 244,
+        "width": 192,
+        "height": 40
+      },
+      "style": {
+        "display": "flex",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 6,
+      "tag": "li",
+      "id": "",
+      "className": "ant-menu-item ant-menu-item-active ant-menu-item-selected",
+      "selectorHint": "li.ant-menu-item.ant-menu-item-active.ant-menu-item-selected",
+      "name": "",
+      "type": "",
+      "role": "menuitem",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "申请记录",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 2,
+      "rect": {
+        "x": 4,
+        "y": 288,
+        "width": 192,
+        "height": 40
+      },
+      "style": {
+        "display": "flex",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 7,
+      "tag": "input",
+      "id": "rc_select_5",
+      "className": "ant-select-selection-search-input",
+      "selectorHint": "input#rc_select_5.ant-select-selection-search-input",
+      "name": "",
+      "type": "search",
+      "role": "combobox",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "",
+      "href": "",
+      "disabled": false,
+      "visible": false,
+      "childCount": 0,
+      "rect": {
+        "x": 1606,
+        "y": 113,
+        "width": 108,
+        "height": 30
+      },
+      "style": {
+        "display": "inline-block",
+        "visibility": "visible",
+        "opacity": "0"
+      }
+    }
+  ]
+}

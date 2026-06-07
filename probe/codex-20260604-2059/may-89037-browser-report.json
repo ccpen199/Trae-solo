@@ -1,0 +1,1641 @@
+{
+  "ok": true,
+  "generatedAt": "2026-06-04T21:00:29.861Z",
+  "order": "may-89037",
+  "roundIndex": 99,
+  "captureId": "codex-may-89037",
+  "url": "http://localhost:49037/",
+  "initialUrl": "http://localhost:49037/",
+  "finalUrl": "http://localhost:49037/dashboard",
+  "status": 200,
+  "title": "全国住房公积金统一服务中台",
+  "initialTitle": "全国住房公积金统一服务中台",
+  "navigationError": "",
+  "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89037/probe/codex-20260604-2059/codex-may-89037-frontend.png",
+  "screenshotPaths": [
+    "/Users/chen/Documents/trae_projects/local_projects/may-89037/probe/codex-20260604-2059/codex-may-89037-structure-01-首屏.png",
+    "/Users/chen/Documents/trae_projects/local_projects/may-89037/probe/codex-20260604-2059/codex-may-89037-structure-02-导航-首页.png",
+    "/Users/chen/Documents/trae_projects/local_projects/may-89037/probe/codex-20260604-2059/codex-may-89037-structure-03-导航-数据看板.png",
+    "/Users/chen/Documents/trae_projects/local_projects/may-89037/probe/codex-20260604-2059/codex-may-89037-structure-04-导航-提取审批.png",
+    "/Users/chen/Documents/trae_projects/local_projects/may-89037/probe/codex-20260604-2059/codex-may-89037-structure-05-操作-驳回.png",
+    "/Users/chen/Documents/trae_projects/local_projects/may-89037/probe/codex-20260604-2059/codex-may-89037-structure-06-二层操作-驳回-取-消.png",
+    "/Users/chen/Documents/trae_projects/local_projects/may-89037/probe/codex-20260604-2059/codex-may-89037-structure-07-操作-通过.png",
+    "/Users/chen/Documents/trae_projects/local_projects/may-89037/probe/codex-20260604-2059/codex-may-89037-structure-08-二层操作-通过-取-消.png"
+  ],
+  "issueTextPreview": "",
+  "targetReason": "登录流程已完成，继续复验登录后的首页和业务导航",
+  "targetKind": "auth",
+  "targetMatched": true,
+  "targetActions": [
+    {
+      "action": "login-fill-username",
+      "label": "admin",
+      "ok": true
+    },
+    {
+      "action": "login-fill-password",
+      "label": "admin:******",
+      "ok": true
+    },
+    {
+      "action": "click",
+      "label": "登录:admin",
+      "ok": true
+    },
+    {
+      "action": "login-submit",
+      "label": "admin",
+      "ok": true,
+      "beforeUrl": "http://localhost:49037/login"
+    },
+    {
+      "action": "login-result",
+      "label": "admin",
+      "ok": true,
+      "finalUrl": "http://localhost:49037/dashboard"
+    },
+    {
+      "action": "target-verify",
+      "label": "登录后首页",
+      "ok": true,
+      "finalUrl": "http://localhost:49037/dashboard"
+    }
+  ],
+  "authFlow": {
+    "detected": true,
+    "attempted": true,
+    "success": true,
+    "finalUrl": "http://localhost:49037/dashboard",
+    "message": "登录成功:admin",
+    "actions": [
+      {
+        "action": "login-fill-username",
+        "label": "admin",
+        "ok": true
+      },
+      {
+        "action": "login-fill-password",
+        "label": "admin:******",
+        "ok": true
+      },
+      {
+        "action": "click",
+        "label": "登录:admin",
+        "ok": true
+      },
+      {
+        "action": "login-submit",
+        "label": "admin",
+        "ok": true,
+        "beforeUrl": "http://localhost:49037/login"
+      },
+      {
+        "action": "login-result",
+        "label": "admin",
+        "ok": true,
+        "finalUrl": "http://localhost:49037/dashboard"
+      }
+    ],
+    "username": "admin",
+    "credentialSource": "preset"
+  },
+  "businessAudit": {
+    "actions": [
+      {
+        "action": "click",
+        "label": "导航:首页",
+        "ok": true
+      },
+      {
+        "action": "click",
+        "label": "导航:数据看板",
+        "ok": true
+      },
+      {
+        "action": "click",
+        "label": "导航:提取审批",
+        "ok": true
+      },
+      {
+        "action": "click",
+        "label": "操作:驳回",
+        "ok": true,
+        "result": {
+          "ok": true,
+          "matched": 2
+        }
+      },
+      {
+        "action": "click",
+        "label": "二层操作:驳回:取 消",
+        "ok": true,
+        "result": {
+          "ok": true,
+          "matched": 1
+        }
+      },
+      {
+        "action": "click",
+        "label": "操作:通过",
+        "ok": true,
+        "result": {
+          "ok": true,
+          "matched": 2
+        }
+      },
+      {
+        "action": "click",
+        "label": "二层操作:通过:取 消",
+        "ok": true,
+        "result": {
+          "ok": true,
+          "matched": 1
+        }
+      }
+    ],
+    "snapshots": [
+      {
+        "label": "首屏",
+        "url": "http://localhost:49037/dashboard",
+        "title": "全国住房公积金统一服务中台",
+        "headings": [
+          "超级管理员数据中心"
+        ],
+        "navLabels": [
+          "首页 数据看板 提取审批 审计日志 中心配置 风险预警",
+          "首页",
+          "dashboard",
+          "数据看板",
+          "bar-chart",
+          "提取审批",
+          "safety-certificate",
+          "审计日志",
+          "file-text",
+          "中心配置",
+          "setting",
+          "风险预警",
+          "alert"
+        ],
+        "buttons": [],
+        "links": [],
+        "inputs": [],
+        "tables": [
+          {
+            "headers": [
+              "申请编号",
+              "申请人",
+              "业务类型",
+              "超时时长",
+              "升级状态"
+            ],
+            "rowCount": 2,
+            "hasEmptyText": false,
+            "textPreview": "申请编号 申请人 业务类型 超时时长 升级状态 2 缴存人1 house_purchase 19811小时 已升级 4 缴存人2 rent 19714小时 已升级"
+          },
+          {
+            "headers": [
+              "预警类型",
+              "预警等级",
+              "描述",
+              "数量"
+            ],
+            "rowCount": 2,
+            "hasEmptyText": false,
+            "textPreview": "预警类型 预警等级 描述 数量 高 大额购房提取申请：100000元 warning 30天内多次提取申请"
+          },
+          {
+            "headers": [
+              "中心名称",
+              "状态",
+              "用户数",
+              "资金余额"
+            ],
+            "rowCount": 5,
+            "hasEmptyText": false,
+            "textPreview": "中心名称 状态 用户数 资金余额 北京住房公积金管理中心 正常 8 ¥435000.00 上海住房公积金管理中心 正常 1 ¥90000.00 广州住房公积金管理中心 正常 0 ¥0.00 深圳住房公积金管理中心 正常 0 ¥0.00 重庆住房公积金管理中心 正常 0 ¥0.00"
+          }
+        ],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "全国住房公积金统一服务中台欢迎，系统管理员首页数据看板提取审批审计日志中心配置风险预警超级管理员数据中心缴存用户数9资金总余额525,000.00元待审批申请2今日提取笔数0提取成功率0.0%管理中心数12提取成功率趋势（近30天）业务量热力图（按中心）逾期未办结督办申请编号申请人业务类型超时时长升级状态2缴存人1house_purchase19811小时已升级4缴存人2rent19714小时已升级1风险预警汇总预警类型预警等级描述数量高大额购房提取申请：100000元warning30天内多次提取申请1中心管理概览中心名称状态用户数资金余额北京住房公积金管理中心正常8¥435000.00上海住房公积金管理中心正常1¥90000.00广州住房公积金管理中心正常0¥0.00深圳住房公积金管理中心正常0¥0.00重庆住房公积金管理中心正常0¥0.00123",
+        "layout": {
+          "viewportWidth": 1504,
+          "viewportHeight": 1600,
+          "scrollWidth": 1504,
+          "scrollHeight": 2075,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "codex-may-89037-structure-01-首屏",
+          "label": "首屏",
+          "finalUrl": "http://localhost:49037/dashboard",
+          "title": "全国住房公积金统一服务中台",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89037/probe/codex-20260604-2059/codex-may-89037-structure-01-首屏.json",
+          "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89037/probe/codex-20260604-2059/codex-may-89037-structure-01-首屏.png",
+          "elementCount": 313,
+          "interactiveCount": 24,
+          "interactiveLabels": [
+            "首页 数据看板 提取审批 审计日志 中心配置 风险预警",
+            "首页",
+            "数据看板",
+            "提取审批",
+            "审计日志",
+            "中心配置",
+            "风险预警",
+            "1",
+            "2",
+            "3",
+            "下一页"
+          ]
+        }
+      },
+      {
+        "label": "导航:首页",
+        "url": "http://localhost:49037/dashboard",
+        "title": "全国住房公积金统一服务中台",
+        "headings": [
+          "超级管理员数据中心"
+        ],
+        "navLabels": [
+          "首页 数据看板 提取审批 审计日志 中心配置 风险预警",
+          "首页",
+          "dashboard",
+          "数据看板",
+          "bar-chart",
+          "提取审批",
+          "safety-certificate",
+          "审计日志",
+          "file-text",
+          "中心配置",
+          "setting",
+          "风险预警",
+          "alert"
+        ],
+        "buttons": [],
+        "links": [],
+        "inputs": [],
+        "tables": [
+          {
+            "headers": [
+              "申请编号",
+              "申请人",
+              "业务类型",
+              "超时时长",
+              "升级状态"
+            ],
+            "rowCount": 2,
+            "hasEmptyText": false,
+            "textPreview": "申请编号 申请人 业务类型 超时时长 升级状态 2 缴存人1 house_purchase 19811小时 已升级 4 缴存人2 rent 19714小时 已升级"
+          },
+          {
+            "headers": [
+              "预警类型",
+              "预警等级",
+              "描述",
+              "数量"
+            ],
+            "rowCount": 2,
+            "hasEmptyText": false,
+            "textPreview": "预警类型 预警等级 描述 数量 高 大额购房提取申请：100000元 warning 30天内多次提取申请"
+          },
+          {
+            "headers": [
+              "中心名称",
+              "状态",
+              "用户数",
+              "资金余额"
+            ],
+            "rowCount": 5,
+            "hasEmptyText": false,
+            "textPreview": "中心名称 状态 用户数 资金余额 北京住房公积金管理中心 正常 8 ¥435000.00 上海住房公积金管理中心 正常 1 ¥90000.00 广州住房公积金管理中心 正常 0 ¥0.00 深圳住房公积金管理中心 正常 0 ¥0.00 重庆住房公积金管理中心 正常 0 ¥0.00"
+          }
+        ],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "全国住房公积金统一服务中台欢迎，系统管理员首页数据看板提取审批审计日志中心配置风险预警超级管理员数据中心缴存用户数9资金总余额525,000.00元待审批申请2今日提取笔数0提取成功率0.0%管理中心数12提取成功率趋势（近30天）业务量热力图（按中心）逾期未办结督办申请编号申请人业务类型超时时长升级状态2缴存人1house_purchase19811小时已升级4缴存人2rent19714小时已升级1风险预警汇总预警类型预警等级描述数量高大额购房提取申请：100000元warning30天内多次提取申请1中心管理概览中心名称状态用户数资金余额北京住房公积金管理中心正常8¥435000.00上海住房公积金管理中心正常1¥90000.00广州住房公积金管理中心正常0¥0.00深圳住房公积金管理中心正常0¥0.00重庆住房公积金管理中心正常0¥0.00123",
+        "layout": {
+          "viewportWidth": 1536,
+          "viewportHeight": 1600,
+          "scrollWidth": 1536,
+          "scrollHeight": 2075,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "codex-may-89037-structure-02-导航-首页",
+          "label": "导航:首页",
+          "finalUrl": "http://localhost:49037/dashboard",
+          "title": "全国住房公积金统一服务中台",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89037/probe/codex-20260604-2059/codex-may-89037-structure-02-导航-首页.json",
+          "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89037/probe/codex-20260604-2059/codex-may-89037-structure-02-导航-首页.png",
+          "elementCount": 313,
+          "interactiveCount": 24,
+          "interactiveLabels": [
+            "首页 数据看板 提取审批 审计日志 中心配置 风险预警",
+            "首页",
+            "数据看板",
+            "提取审批",
+            "审计日志",
+            "中心配置",
+            "风险预警",
+            "1",
+            "2",
+            "3",
+            "下一页"
+          ]
+        }
+      },
+      {
+        "label": "导航:数据看板",
+        "url": "http://localhost:49037/admin/dashboard",
+        "title": "全国住房公积金统一服务中台",
+        "headings": [
+          "数据看板"
+        ],
+        "navLabels": [
+          "首页 数据看板 提取审批 审计日志 中心配置 风险预警",
+          "首页",
+          "dashboard",
+          "数据看板",
+          "bar-chart",
+          "提取审批",
+          "safety-certificate",
+          "审计日志",
+          "file-text",
+          "中心配置",
+          "setting",
+          "风险预警",
+          "alert"
+        ],
+        "buttons": [],
+        "links": [],
+        "inputs": [],
+        "tables": [],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "全国住房公积金统一服务中台欢迎，系统管理员首页数据看板提取审批审计日志中心配置风险预警数据看板缴存用户数9资金总余额0.00亿元待审批申请2今日提取笔数0今日提取金额0.00万元",
+        "layout": {
+          "viewportWidth": 1568,
+          "viewportHeight": 1600,
+          "scrollWidth": 1568,
+          "scrollHeight": 1600,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "codex-may-89037-structure-03-导航-数据看板",
+          "label": "导航:数据看板",
+          "finalUrl": "http://localhost:49037/admin/dashboard",
+          "title": "全国住房公积金统一服务中台",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89037/probe/codex-20260604-2059/codex-may-89037-structure-03-导航-数据看板.json",
+          "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89037/probe/codex-20260604-2059/codex-may-89037-structure-03-导航-数据看板.png",
+          "elementCount": 136,
+          "interactiveCount": 7,
+          "interactiveLabels": [
+            "首页 数据看板 提取审批 审计日志 中心配置 风险预警",
+            "首页",
+            "数据看板",
+            "提取审批",
+            "审计日志",
+            "中心配置",
+            "风险预警"
+          ]
+        }
+      },
+      {
+        "label": "导航:提取审批",
+        "url": "http://localhost:49037/withdrawal/approve",
+        "title": "全国住房公积金统一服务中台",
+        "headings": [
+          "提取审批"
+        ],
+        "navLabels": [
+          "首页 数据看板 提取审批 审计日志 中心配置 风险预警",
+          "首页",
+          "dashboard",
+          "数据看板",
+          "bar-chart",
+          "提取审批",
+          "safety-certificate",
+          "审计日志",
+          "file-text",
+          "中心配置",
+          "setting",
+          "风险预警",
+          "alert"
+        ],
+        "buttons": [
+          "通过",
+          "驳回"
+        ],
+        "links": [],
+        "inputs": [],
+        "tables": [
+          {
+            "headers": [
+              "申请编号",
+              "申请人",
+              "身份证号",
+              "提取类型",
+              "提取金额",
+              "申请说明",
+              "申请时间",
+              "操作"
+            ],
+            "rowCount": 2,
+            "hasEmptyText": false,
+            "textPreview": "申请编号 申请人 身份证号 提取类型 提取金额 申请说明 申请时间 操作 4 缴存人2 110101199001012002 租房提取 ¥18000.00 年度租房提取 2024-03-05T11:00:00 通过 驳回 2 缴存人1 110101199001012001 购房提取 ¥100000.00 购房首付提取 2024-03-01T10:00:00 通过 驳回"
+          }
+        ],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "全国住房公积金统一服务中台欢迎，系统管理员首页数据看板提取审批审计日志中心配置风险预警提取审批申请编号申请人身份证号提取类型提取金额申请说明申请时间操作4缴存人2110101199001012002租房提取¥18000.00年度租房提取2024-03-05T11:00:00通过驳回2缴存人1110101199001012001购房提取¥100000.00购房首付提取2024-03-01T10:00:00通过驳回1",
+        "layout": {
+          "viewportWidth": 1600,
+          "viewportHeight": 1600,
+          "scrollWidth": 1600,
+          "scrollHeight": 1600,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "codex-may-89037-structure-04-导航-提取审批",
+          "label": "导航:提取审批",
+          "finalUrl": "http://localhost:49037/withdrawal/approve",
+          "title": "全国住房公积金统一服务中台",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89037/probe/codex-20260604-2059/codex-may-89037-structure-04-导航-提取审批.json",
+          "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89037/probe/codex-20260604-2059/codex-may-89037-structure-04-导航-提取审批.png",
+          "elementCount": 137,
+          "interactiveCount": 15,
+          "interactiveLabels": [
+            "首页 数据看板 提取审批 审计日志 中心配置 风险预警",
+            "首页",
+            "数据看板",
+            "提取审批",
+            "审计日志",
+            "中心配置",
+            "风险预警",
+            "通过",
+            "驳回",
+            "1"
+          ]
+        }
+      },
+      {
+        "label": "操作:驳回",
+        "url": "http://localhost:49037/withdrawal/approve",
+        "title": "全国住房公积金统一服务中台",
+        "headings": [
+          "提取审批"
+        ],
+        "navLabels": [
+          "首页 数据看板 提取审批 审计日志 中心配置 风险预警",
+          "首页",
+          "dashboard",
+          "数据看板",
+          "bar-chart",
+          "提取审批",
+          "safety-certificate",
+          "审计日志",
+          "file-text",
+          "中心配置",
+          "setting",
+          "风险预警",
+          "alert"
+        ],
+        "buttons": [
+          "通过",
+          "驳回",
+          "Close",
+          "取 消",
+          "确 认"
+        ],
+        "links": [],
+        "inputs": [
+          {
+            "tag": "textarea",
+            "type": "",
+            "placeholder": "请输入驳回原因",
+            "name": "",
+            "label": ""
+          }
+        ],
+        "tables": [
+          {
+            "headers": [
+              "申请编号",
+              "申请人",
+              "身份证号",
+              "提取类型",
+              "提取金额",
+              "申请说明",
+              "申请时间",
+              "操作"
+            ],
+            "rowCount": 2,
+            "hasEmptyText": false,
+            "textPreview": "申请编号 申请人 身份证号 提取类型 提取金额 申请说明 申请时间 操作 4 缴存人2 110101199001012002 租房提取 ¥18000.00 年度租房提取 2024-03-05T11:00:00 通过 驳回 2 缴存人1 110101199001012001 购房提取 ¥100000.00 购房首付提取 2024-03-01T10:00:00 通过 驳回"
+          }
+        ],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "全国住房公积金统一服务中台欢迎，系统管理员首页数据看板提取审批审计日志中心配置风险预警提取审批申请编号申请人身份证号提取类型提取金额申请说明申请时间操作4缴存人2110101199001012002租房提取¥18000.00年度租房提取2024-03-05T11:00:00通过驳回2缴存人1110101199001012001购房提取¥100000.00购房首付提取2024-03-01T10:00:00通过驳回1 驳回申请申请人：缴存人2提取类型：租房提取提取金额：¥18000.00申请说明：年度租房提取取 消确 认",
+        "layout": {
+          "viewportWidth": 1632,
+          "viewportHeight": 1600,
+          "scrollWidth": 1632,
+          "scrollHeight": 1600,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "codex-may-89037-structure-05-操作-驳回",
+          "label": "操作:驳回",
+          "finalUrl": "http://localhost:49037/withdrawal/approve",
+          "title": "全国住房公积金统一服务中台",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89037/probe/codex-20260604-2059/codex-may-89037-structure-05-操作-驳回.json",
+          "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89037/probe/codex-20260604-2059/codex-may-89037-structure-05-操作-驳回.png",
+          "elementCount": 165,
+          "interactiveCount": 21,
+          "interactiveLabels": [
+            "首页 数据看板 提取审批 审计日志 中心配置 风险预警",
+            "首页",
+            "数据看板",
+            "提取审批",
+            "审计日志",
+            "中心配置",
+            "风险预警",
+            "通过",
+            "驳回",
+            "1",
+            "驳回申请 申请人：缴存人2 提取类型：租房提取 提取金额：¥18000.00 申请说明：年度租房提取 取 消 确 认",
+            "Close",
+            "请输入驳回原因",
+            "取 消",
+            "确 认"
+          ]
+        }
+      },
+      {
+        "label": "二层操作:驳回->取 消",
+        "url": "http://localhost:49037/withdrawal/approve",
+        "title": "全国住房公积金统一服务中台",
+        "headings": [
+          "提取审批"
+        ],
+        "navLabels": [
+          "首页 数据看板 提取审批 审计日志 中心配置 风险预警",
+          "首页",
+          "dashboard",
+          "数据看板",
+          "bar-chart",
+          "提取审批",
+          "safety-certificate",
+          "审计日志",
+          "file-text",
+          "中心配置",
+          "setting",
+          "风险预警",
+          "alert"
+        ],
+        "buttons": [
+          "通过",
+          "驳回"
+        ],
+        "links": [],
+        "inputs": [],
+        "tables": [
+          {
+            "headers": [
+              "申请编号",
+              "申请人",
+              "身份证号",
+              "提取类型",
+              "提取金额",
+              "申请说明",
+              "申请时间",
+              "操作"
+            ],
+            "rowCount": 2,
+            "hasEmptyText": false,
+            "textPreview": "申请编号 申请人 身份证号 提取类型 提取金额 申请说明 申请时间 操作 4 缴存人2 110101199001012002 租房提取 ¥18000.00 年度租房提取 2024-03-05T11:00:00 通过 驳回 2 缴存人1 110101199001012001 购房提取 ¥100000.00 购房首付提取 2024-03-01T10:00:00 通过 驳回"
+          }
+        ],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "全国住房公积金统一服务中台欢迎，系统管理员首页数据看板提取审批审计日志中心配置风险预警提取审批申请编号申请人身份证号提取类型提取金额申请说明申请时间操作4缴存人2110101199001012002租房提取¥18000.00年度租房提取2024-03-05T11:00:00通过驳回2缴存人1110101199001012001购房提取¥100000.00购房首付提取2024-03-01T10:00:00通过驳回1 驳回申请申请人：缴存人2提取类型：租房提取提取金额：¥18000.00申请说明：年度租房提取取 消确 认",
+        "layout": {
+          "viewportWidth": 1664,
+          "viewportHeight": 1600,
+          "scrollWidth": 1664,
+          "scrollHeight": 1600,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "codex-may-89037-structure-06-二层操作-驳回-取-消",
+          "label": "二层操作:驳回->取 消",
+          "finalUrl": "http://localhost:49037/withdrawal/approve",
+          "title": "全国住房公积金统一服务中台",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89037/probe/codex-20260604-2059/codex-may-89037-structure-06-二层操作-驳回-取-消.json",
+          "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89037/probe/codex-20260604-2059/codex-may-89037-structure-06-二层操作-驳回-取-消.png",
+          "elementCount": 166,
+          "interactiveCount": 21,
+          "interactiveLabels": [
+            "首页 数据看板 提取审批 审计日志 中心配置 风险预警",
+            "首页",
+            "数据看板",
+            "提取审批",
+            "审计日志",
+            "中心配置",
+            "风险预警",
+            "通过",
+            "驳回",
+            "1",
+            "驳回申请申请人：缴存人2提取类型：租房提取提取金额：¥18000.00申请说明：年度租房提取取 消确 认",
+            "Close",
+            "请输入驳回原因",
+            "取 消",
+            "确 认"
+          ]
+        }
+      },
+      {
+        "label": "操作:通过",
+        "url": "http://localhost:49037/withdrawal/approve",
+        "title": "全国住房公积金统一服务中台",
+        "headings": [
+          "提取审批"
+        ],
+        "navLabels": [
+          "首页 数据看板 提取审批 审计日志 中心配置 风险预警",
+          "首页",
+          "dashboard",
+          "数据看板",
+          "bar-chart",
+          "提取审批",
+          "safety-certificate",
+          "审计日志",
+          "file-text",
+          "中心配置",
+          "setting",
+          "风险预警",
+          "alert"
+        ],
+        "buttons": [
+          "通过",
+          "驳回",
+          "Close",
+          "取 消",
+          "确 认"
+        ],
+        "links": [],
+        "inputs": [],
+        "tables": [
+          {
+            "headers": [
+              "申请编号",
+              "申请人",
+              "身份证号",
+              "提取类型",
+              "提取金额",
+              "申请说明",
+              "申请时间",
+              "操作"
+            ],
+            "rowCount": 2,
+            "hasEmptyText": false,
+            "textPreview": "申请编号 申请人 身份证号 提取类型 提取金额 申请说明 申请时间 操作 4 缴存人2 110101199001012002 租房提取 ¥18000.00 年度租房提取 2024-03-05T11:00:00 通过 驳回 2 缴存人1 110101199001012001 购房提取 ¥100000.00 购房首付提取 2024-03-01T10:00:00 通过 驳回"
+          }
+        ],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "全国住房公积金统一服务中台欢迎，系统管理员首页数据看板提取审批审计日志中心配置风险预警提取审批申请编号申请人身份证号提取类型提取金额申请说明申请时间操作4缴存人2110101199001012002租房提取¥18000.00年度租房提取2024-03-05T11:00:00通过驳回2缴存人1110101199001012001购房提取¥100000.00购房首付提取2024-03-01T10:00:00通过驳回1 审批通过申请人：缴存人2提取类型：租房提取提取金额：¥18000.00申请说明：年度租房提取取 消确 认",
+        "layout": {
+          "viewportWidth": 1696,
+          "viewportHeight": 1600,
+          "scrollWidth": 1696,
+          "scrollHeight": 1600,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "codex-may-89037-structure-07-操作-通过",
+          "label": "操作:通过",
+          "finalUrl": "http://localhost:49037/withdrawal/approve",
+          "title": "全国住房公积金统一服务中台",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89037/probe/codex-20260604-2059/codex-may-89037-structure-07-操作-通过.json",
+          "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89037/probe/codex-20260604-2059/codex-may-89037-structure-07-操作-通过.png",
+          "elementCount": 167,
+          "interactiveCount": 20,
+          "interactiveLabels": [
+            "首页 数据看板 提取审批 审计日志 中心配置 风险预警",
+            "首页",
+            "数据看板",
+            "提取审批",
+            "审计日志",
+            "中心配置",
+            "风险预警",
+            "通过",
+            "驳回",
+            "1",
+            "审批通过 申请人：缴存人2 提取类型：租房提取 提取金额：¥18000.00 申请说明：年度租房提取 取 消 确 认",
+            "Close",
+            "取 消",
+            "确 认"
+          ]
+        }
+      },
+      {
+        "label": "二层操作:通过->取 消",
+        "url": "http://localhost:49037/withdrawal/approve",
+        "title": "全国住房公积金统一服务中台",
+        "headings": [
+          "提取审批"
+        ],
+        "navLabels": [
+          "首页 数据看板 提取审批 审计日志 中心配置 风险预警",
+          "首页",
+          "dashboard",
+          "数据看板",
+          "bar-chart",
+          "提取审批",
+          "safety-certificate",
+          "审计日志",
+          "file-text",
+          "中心配置",
+          "setting",
+          "风险预警",
+          "alert"
+        ],
+        "buttons": [
+          "通过",
+          "驳回"
+        ],
+        "links": [],
+        "inputs": [],
+        "tables": [
+          {
+            "headers": [
+              "申请编号",
+              "申请人",
+              "身份证号",
+              "提取类型",
+              "提取金额",
+              "申请说明",
+              "申请时间",
+              "操作"
+            ],
+            "rowCount": 2,
+            "hasEmptyText": false,
+            "textPreview": "申请编号 申请人 身份证号 提取类型 提取金额 申请说明 申请时间 操作 4 缴存人2 110101199001012002 租房提取 ¥18000.00 年度租房提取 2024-03-05T11:00:00 通过 驳回 2 缴存人1 110101199001012001 购房提取 ¥100000.00 购房首付提取 2024-03-01T10:00:00 通过 驳回"
+          }
+        ],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "全国住房公积金统一服务中台欢迎，系统管理员首页数据看板提取审批审计日志中心配置风险预警提取审批申请编号申请人身份证号提取类型提取金额申请说明申请时间操作4缴存人2110101199001012002租房提取¥18000.00年度租房提取2024-03-05T11:00:00通过驳回2缴存人1110101199001012001购房提取¥100000.00购房首付提取2024-03-01T10:00:00通过驳回1 审批通过申请人：缴存人2提取类型：租房提取提取金额：¥18000.00申请说明：年度租房提取取 消确 认",
+        "layout": {
+          "viewportWidth": 1728,
+          "viewportHeight": 1600,
+          "scrollWidth": 1728,
+          "scrollHeight": 1600,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "codex-may-89037-structure-08-二层操作-通过-取-消",
+          "label": "二层操作:通过->取 消",
+          "finalUrl": "http://localhost:49037/withdrawal/approve",
+          "title": "全国住房公积金统一服务中台",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89037/probe/codex-20260604-2059/codex-may-89037-structure-08-二层操作-通过-取-消.json",
+          "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89037/probe/codex-20260604-2059/codex-may-89037-structure-08-二层操作-通过-取-消.png",
+          "elementCount": 164,
+          "interactiveCount": 20,
+          "interactiveLabels": [
+            "首页 数据看板 提取审批 审计日志 中心配置 风险预警",
+            "首页",
+            "数据看板",
+            "提取审批",
+            "审计日志",
+            "中心配置",
+            "风险预警",
+            "通过",
+            "驳回",
+            "1",
+            "审批通过申请人：缴存人2提取类型：租房提取提取金额：¥18000.00申请说明：年度租房提取取 消确 认",
+            "Close",
+            "取 消",
+            "确 认"
+          ]
+        }
+      }
+    ],
+    "findings": [],
+    "actionHints": [],
+    "emptyPages": [],
+    "overflowPages": [],
+    "blankPages": [],
+    "apiFailurePaths": [],
+    "goalTerms": [],
+    "clickedActionDescriptors": [
+      {
+        "nav": "提取审批",
+        "label": "驳回",
+        "ordinal": 0,
+        "unsafe": false
+      },
+      {
+        "nav": "提取审批",
+        "label": "驳回->取 消",
+        "ordinal": 0,
+        "secondary": true,
+        "unsafe": false
+      },
+      {
+        "nav": "提取审批",
+        "label": "通过",
+        "ordinal": 0,
+        "unsafe": false
+      },
+      {
+        "nav": "提取审批",
+        "label": "通过->取 消",
+        "ordinal": 0,
+        "secondary": true,
+        "unsafe": false
+      }
+    ],
+    "secondaryActionClicks": 2,
+    "structureCaptures": [
+      {
+        "module": "website_structure_capture",
+        "runId": "codex-may-89037-structure-01-首屏",
+        "label": "首屏",
+        "finalUrl": "http://localhost:49037/dashboard",
+        "title": "全国住房公积金统一服务中台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89037/probe/codex-20260604-2059/codex-may-89037-structure-01-首屏.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89037/probe/codex-20260604-2059/codex-may-89037-structure-01-首屏.png",
+        "elementCount": 313,
+        "interactiveCount": 24,
+        "interactiveLabels": [
+          "首页 数据看板 提取审批 审计日志 中心配置 风险预警",
+          "首页",
+          "数据看板",
+          "提取审批",
+          "审计日志",
+          "中心配置",
+          "风险预警",
+          "1",
+          "2",
+          "3",
+          "下一页"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "codex-may-89037-structure-02-导航-首页",
+        "label": "导航:首页",
+        "finalUrl": "http://localhost:49037/dashboard",
+        "title": "全国住房公积金统一服务中台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89037/probe/codex-20260604-2059/codex-may-89037-structure-02-导航-首页.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89037/probe/codex-20260604-2059/codex-may-89037-structure-02-导航-首页.png",
+        "elementCount": 313,
+        "interactiveCount": 24,
+        "interactiveLabels": [
+          "首页 数据看板 提取审批 审计日志 中心配置 风险预警",
+          "首页",
+          "数据看板",
+          "提取审批",
+          "审计日志",
+          "中心配置",
+          "风险预警",
+          "1",
+          "2",
+          "3",
+          "下一页"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "codex-may-89037-structure-03-导航-数据看板",
+        "label": "导航:数据看板",
+        "finalUrl": "http://localhost:49037/admin/dashboard",
+        "title": "全国住房公积金统一服务中台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89037/probe/codex-20260604-2059/codex-may-89037-structure-03-导航-数据看板.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89037/probe/codex-20260604-2059/codex-may-89037-structure-03-导航-数据看板.png",
+        "elementCount": 136,
+        "interactiveCount": 7,
+        "interactiveLabels": [
+          "首页 数据看板 提取审批 审计日志 中心配置 风险预警",
+          "首页",
+          "数据看板",
+          "提取审批",
+          "审计日志",
+          "中心配置",
+          "风险预警"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "codex-may-89037-structure-04-导航-提取审批",
+        "label": "导航:提取审批",
+        "finalUrl": "http://localhost:49037/withdrawal/approve",
+        "title": "全国住房公积金统一服务中台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89037/probe/codex-20260604-2059/codex-may-89037-structure-04-导航-提取审批.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89037/probe/codex-20260604-2059/codex-may-89037-structure-04-导航-提取审批.png",
+        "elementCount": 137,
+        "interactiveCount": 15,
+        "interactiveLabels": [
+          "首页 数据看板 提取审批 审计日志 中心配置 风险预警",
+          "首页",
+          "数据看板",
+          "提取审批",
+          "审计日志",
+          "中心配置",
+          "风险预警",
+          "通过",
+          "驳回",
+          "1"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "codex-may-89037-structure-05-操作-驳回",
+        "label": "操作:驳回",
+        "finalUrl": "http://localhost:49037/withdrawal/approve",
+        "title": "全国住房公积金统一服务中台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89037/probe/codex-20260604-2059/codex-may-89037-structure-05-操作-驳回.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89037/probe/codex-20260604-2059/codex-may-89037-structure-05-操作-驳回.png",
+        "elementCount": 165,
+        "interactiveCount": 21,
+        "interactiveLabels": [
+          "首页 数据看板 提取审批 审计日志 中心配置 风险预警",
+          "首页",
+          "数据看板",
+          "提取审批",
+          "审计日志",
+          "中心配置",
+          "风险预警",
+          "通过",
+          "驳回",
+          "1",
+          "驳回申请 申请人：缴存人2 提取类型：租房提取 提取金额：¥18000.00 申请说明：年度租房提取 取 消 确 认",
+          "Close",
+          "请输入驳回原因",
+          "取 消",
+          "确 认"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "codex-may-89037-structure-06-二层操作-驳回-取-消",
+        "label": "二层操作:驳回->取 消",
+        "finalUrl": "http://localhost:49037/withdrawal/approve",
+        "title": "全国住房公积金统一服务中台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89037/probe/codex-20260604-2059/codex-may-89037-structure-06-二层操作-驳回-取-消.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89037/probe/codex-20260604-2059/codex-may-89037-structure-06-二层操作-驳回-取-消.png",
+        "elementCount": 166,
+        "interactiveCount": 21,
+        "interactiveLabels": [
+          "首页 数据看板 提取审批 审计日志 中心配置 风险预警",
+          "首页",
+          "数据看板",
+          "提取审批",
+          "审计日志",
+          "中心配置",
+          "风险预警",
+          "通过",
+          "驳回",
+          "1",
+          "驳回申请申请人：缴存人2提取类型：租房提取提取金额：¥18000.00申请说明：年度租房提取取 消确 认",
+          "Close",
+          "请输入驳回原因",
+          "取 消",
+          "确 认"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "codex-may-89037-structure-07-操作-通过",
+        "label": "操作:通过",
+        "finalUrl": "http://localhost:49037/withdrawal/approve",
+        "title": "全国住房公积金统一服务中台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89037/probe/codex-20260604-2059/codex-may-89037-structure-07-操作-通过.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89037/probe/codex-20260604-2059/codex-may-89037-structure-07-操作-通过.png",
+        "elementCount": 167,
+        "interactiveCount": 20,
+        "interactiveLabels": [
+          "首页 数据看板 提取审批 审计日志 中心配置 风险预警",
+          "首页",
+          "数据看板",
+          "提取审批",
+          "审计日志",
+          "中心配置",
+          "风险预警",
+          "通过",
+          "驳回",
+          "1",
+          "审批通过 申请人：缴存人2 提取类型：租房提取 提取金额：¥18000.00 申请说明：年度租房提取 取 消 确 认",
+          "Close",
+          "取 消",
+          "确 认"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "codex-may-89037-structure-08-二层操作-通过-取-消",
+        "label": "二层操作:通过->取 消",
+        "finalUrl": "http://localhost:49037/withdrawal/approve",
+        "title": "全国住房公积金统一服务中台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89037/probe/codex-20260604-2059/codex-may-89037-structure-08-二层操作-通过-取-消.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89037/probe/codex-20260604-2059/codex-may-89037-structure-08-二层操作-通过-取-消.png",
+        "elementCount": 164,
+        "interactiveCount": 20,
+        "interactiveLabels": [
+          "首页 数据看板 提取审批 审计日志 中心配置 风险预警",
+          "首页",
+          "数据看板",
+          "提取审批",
+          "审计日志",
+          "中心配置",
+          "风险预警",
+          "通过",
+          "驳回",
+          "1",
+          "审批通过申请人：缴存人2提取类型：租房提取提取金额：¥18000.00申请说明：年度租房提取取 消确 认",
+          "Close",
+          "取 消",
+          "确 认"
+        ]
+      }
+    ],
+    "representativeScreenshotUrl": "http://localhost:49037/dashboard",
+    "representativeScreenshotLabel": "超级管理员数据中心"
+  },
+  "websiteStructureCapture": {
+    "module": "website_structure_capture",
+    "captureCount": 8,
+    "captures": [
+      {
+        "module": "website_structure_capture",
+        "runId": "codex-may-89037-structure-01-首屏",
+        "label": "首屏",
+        "finalUrl": "http://localhost:49037/dashboard",
+        "title": "全国住房公积金统一服务中台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89037/probe/codex-20260604-2059/codex-may-89037-structure-01-首屏.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89037/probe/codex-20260604-2059/codex-may-89037-structure-01-首屏.png",
+        "elementCount": 313,
+        "interactiveCount": 24,
+        "interactiveLabels": [
+          "首页 数据看板 提取审批 审计日志 中心配置 风险预警",
+          "首页",
+          "数据看板",
+          "提取审批",
+          "审计日志",
+          "中心配置",
+          "风险预警",
+          "1",
+          "2",
+          "3",
+          "下一页"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "codex-may-89037-structure-02-导航-首页",
+        "label": "导航:首页",
+        "finalUrl": "http://localhost:49037/dashboard",
+        "title": "全国住房公积金统一服务中台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89037/probe/codex-20260604-2059/codex-may-89037-structure-02-导航-首页.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89037/probe/codex-20260604-2059/codex-may-89037-structure-02-导航-首页.png",
+        "elementCount": 313,
+        "interactiveCount": 24,
+        "interactiveLabels": [
+          "首页 数据看板 提取审批 审计日志 中心配置 风险预警",
+          "首页",
+          "数据看板",
+          "提取审批",
+          "审计日志",
+          "中心配置",
+          "风险预警",
+          "1",
+          "2",
+          "3",
+          "下一页"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "codex-may-89037-structure-03-导航-数据看板",
+        "label": "导航:数据看板",
+        "finalUrl": "http://localhost:49037/admin/dashboard",
+        "title": "全国住房公积金统一服务中台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89037/probe/codex-20260604-2059/codex-may-89037-structure-03-导航-数据看板.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89037/probe/codex-20260604-2059/codex-may-89037-structure-03-导航-数据看板.png",
+        "elementCount": 136,
+        "interactiveCount": 7,
+        "interactiveLabels": [
+          "首页 数据看板 提取审批 审计日志 中心配置 风险预警",
+          "首页",
+          "数据看板",
+          "提取审批",
+          "审计日志",
+          "中心配置",
+          "风险预警"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "codex-may-89037-structure-04-导航-提取审批",
+        "label": "导航:提取审批",
+        "finalUrl": "http://localhost:49037/withdrawal/approve",
+        "title": "全国住房公积金统一服务中台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89037/probe/codex-20260604-2059/codex-may-89037-structure-04-导航-提取审批.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89037/probe/codex-20260604-2059/codex-may-89037-structure-04-导航-提取审批.png",
+        "elementCount": 137,
+        "interactiveCount": 15,
+        "interactiveLabels": [
+          "首页 数据看板 提取审批 审计日志 中心配置 风险预警",
+          "首页",
+          "数据看板",
+          "提取审批",
+          "审计日志",
+          "中心配置",
+          "风险预警",
+          "通过",
+          "驳回",
+          "1"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "codex-may-89037-structure-05-操作-驳回",
+        "label": "操作:驳回",
+        "finalUrl": "http://localhost:49037/withdrawal/approve",
+        "title": "全国住房公积金统一服务中台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89037/probe/codex-20260604-2059/codex-may-89037-structure-05-操作-驳回.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89037/probe/codex-20260604-2059/codex-may-89037-structure-05-操作-驳回.png",
+        "elementCount": 165,
+        "interactiveCount": 21,
+        "interactiveLabels": [
+          "首页 数据看板 提取审批 审计日志 中心配置 风险预警",
+          "首页",
+          "数据看板",
+          "提取审批",
+          "审计日志",
+          "中心配置",
+          "风险预警",
+          "通过",
+          "驳回",
+          "1",
+          "驳回申请 申请人：缴存人2 提取类型：租房提取 提取金额：¥18000.00 申请说明：年度租房提取 取 消 确 认",
+          "Close",
+          "请输入驳回原因",
+          "取 消",
+          "确 认"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "codex-may-89037-structure-06-二层操作-驳回-取-消",
+        "label": "二层操作:驳回->取 消",
+        "finalUrl": "http://localhost:49037/withdrawal/approve",
+        "title": "全国住房公积金统一服务中台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89037/probe/codex-20260604-2059/codex-may-89037-structure-06-二层操作-驳回-取-消.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89037/probe/codex-20260604-2059/codex-may-89037-structure-06-二层操作-驳回-取-消.png",
+        "elementCount": 166,
+        "interactiveCount": 21,
+        "interactiveLabels": [
+          "首页 数据看板 提取审批 审计日志 中心配置 风险预警",
+          "首页",
+          "数据看板",
+          "提取审批",
+          "审计日志",
+          "中心配置",
+          "风险预警",
+          "通过",
+          "驳回",
+          "1",
+          "驳回申请申请人：缴存人2提取类型：租房提取提取金额：¥18000.00申请说明：年度租房提取取 消确 认",
+          "Close",
+          "请输入驳回原因",
+          "取 消",
+          "确 认"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "codex-may-89037-structure-07-操作-通过",
+        "label": "操作:通过",
+        "finalUrl": "http://localhost:49037/withdrawal/approve",
+        "title": "全国住房公积金统一服务中台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89037/probe/codex-20260604-2059/codex-may-89037-structure-07-操作-通过.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89037/probe/codex-20260604-2059/codex-may-89037-structure-07-操作-通过.png",
+        "elementCount": 167,
+        "interactiveCount": 20,
+        "interactiveLabels": [
+          "首页 数据看板 提取审批 审计日志 中心配置 风险预警",
+          "首页",
+          "数据看板",
+          "提取审批",
+          "审计日志",
+          "中心配置",
+          "风险预警",
+          "通过",
+          "驳回",
+          "1",
+          "审批通过 申请人：缴存人2 提取类型：租房提取 提取金额：¥18000.00 申请说明：年度租房提取 取 消 确 认",
+          "Close",
+          "取 消",
+          "确 认"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "codex-may-89037-structure-08-二层操作-通过-取-消",
+        "label": "二层操作:通过->取 消",
+        "finalUrl": "http://localhost:49037/withdrawal/approve",
+        "title": "全国住房公积金统一服务中台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89037/probe/codex-20260604-2059/codex-may-89037-structure-08-二层操作-通过-取-消.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89037/probe/codex-20260604-2059/codex-may-89037-structure-08-二层操作-通过-取-消.png",
+        "elementCount": 164,
+        "interactiveCount": 20,
+        "interactiveLabels": [
+          "首页 数据看板 提取审批 审计日志 中心配置 风险预警",
+          "首页",
+          "数据看板",
+          "提取审批",
+          "审计日志",
+          "中心配置",
+          "风险预警",
+          "通过",
+          "驳回",
+          "1",
+          "审批通过申请人：缴存人2提取类型：租房提取提取金额：¥18000.00申请说明：年度租房提取取 消确 认",
+          "Close",
+          "取 消",
+          "确 认"
+        ]
+      }
+    ]
+  },
+  "screenshotMetrics": {
+    "width": 1760,
+    "height": 1600,
+    "scrollWidth": 1728,
+    "scrollHeight": 2037
+  },
+  "initialBodyTextPreview": "全国住房公积金统一服务中台\n\n欢迎登录，请选择您的角色\n\n选择身份角色\n缴存人\nperson1\n缴存人工作台\n个人缴存用户，可查询账户、申请提取、查看贷款\n用户名\n密码\n安全登录\n\n演示环境默认密码：123456\n\n所有操作均会记录审计日志，请遵守相关规定",
+  "bodyTextPreview": "全国住房公积金统一服务中台\n欢迎，系统管理员\n首页\n数据看板\n提取审批\n审计日志\n中心配置\n风险预警\n超级管理员数据中心\n缴存用户数\n9\n资金总余额\n525,000.00元\n待审批申请\n2\n今日提取笔数\n0\n提取成功率\n0.0%\n管理中心数\n12\n提取成功率趋势（近30天）\n业务量热力图（按中心）\n逾期未办结督办\n申请编号\t申请人\t业务类型\t超时时长\t升级状态\n2\t缴存人1\thouse_purchase\t19811小时\t已升级\n4\t缴存人2\trent\t19714小时\t已升级\n1\n风险预警汇总\n预警类型\t预警等级\t描述\t数量\n\t高\t大额购房提取申请：100000元\t\n\twarning\t30天内多次提取申请\t\n1\n中心管理概览\n中心名称\t状态\t用户数\t资金余额\n北京住房公积金管理中心\t正常\t8\t¥435000.00\n上海住房公积金管理中心\t正常\t1\t¥90000.00\n广州住房公积金管理中心\t正常\t0\t¥0.00\n深圳住房公积金管理中心\t正常\t0\t¥0.00\n重庆住房公积金管理中心\t正常\t0\t¥0.00\n1\n2\n3",
+  "apiBase": "",
+  "businessGoalPreview": "",
+  "apiResponses": [
+    {
+      "method": "POST",
+      "status": 200,
+      "url": "http://localhost:49037/api/auth/login"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://localhost:49037/api/admin/dashboard"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://localhost:49037/api/admin/stats/success-trend?days=30"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://localhost:49037/api/admin/stats/center-heatmap"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://localhost:49037/api/admin/stats/overdue-monitor"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://localhost:49037/api/admin/risk-alerts?status=open"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://localhost:49037/api/admin/dashboard"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://localhost:49037/api/admin/stats/success-trend?days=30"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://localhost:49037/api/admin/stats/center-heatmap"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://localhost:49037/api/admin/stats/overdue-monitor"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://localhost:49037/api/admin/risk-alerts?status=open"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://localhost:49037/api/admin/dashboard"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://localhost:49037/api/admin/stats/success-trend?days=30"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://localhost:49037/api/admin/stats/center-heatmap"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://localhost:49037/api/admin/stats/overdue-monitor"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://localhost:49037/api/admin/risk-alerts?status=open"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://localhost:49037/api/admin/dashboard"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://localhost:49037/api/admin/stats/success-trend?days=30"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://localhost:49037/api/admin/stats/center-heatmap"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://localhost:49037/api/admin/stats/overdue-monitor"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://localhost:49037/api/admin/risk-alerts?status=open"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://localhost:49037/api/admin/stats/withdrawal-trend?days=7"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://localhost:49037/api/admin/dashboard"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://localhost:49037/api/admin/stats/heatmap"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://localhost:49037/api/admin/stats/withdrawal-trend?days=7"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://localhost:49037/api/admin/dashboard"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://localhost:49037/api/admin/stats/heatmap"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://localhost:49037/api/withdrawal/pending"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://localhost:49037/api/withdrawal/pending"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://localhost:49037/api/admin/dashboard"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://localhost:49037/api/admin/stats/success-trend?days=30"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://localhost:49037/api/admin/stats/center-heatmap"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://localhost:49037/api/admin/stats/overdue-monitor"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://localhost:49037/api/admin/risk-alerts?status=open"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://localhost:49037/api/admin/dashboard"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://localhost:49037/api/admin/stats/success-trend?days=30"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://localhost:49037/api/admin/stats/center-heatmap"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://localhost:49037/api/admin/stats/overdue-monitor"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://localhost:49037/api/admin/risk-alerts?status=open"
+    }
+  ],
+  "apiChecks": [],
+  "dialogs": [],
+  "consoleMessages": [
+    {
+      "type": "debug",
+      "text": "[vite] connecting...",
+      "location": {
+        "url": "http://localhost:49037/@vite/client",
+        "lineNumber": 494,
+        "columnNumber": 8
+      }
+    },
+    {
+      "type": "debug",
+      "text": "[vite] connected.",
+      "location": {
+        "url": "http://localhost:49037/@vite/client",
+        "lineNumber": 617,
+        "columnNumber": 14
+      }
+    },
+    {
+      "type": "info",
+      "text": "%cDownload the React DevTools for a better development experience: https://reactjs.org/link/react-devtools font-weight:bold",
+      "location": {
+        "url": "http://localhost:49037/node_modules/.vite/deps/chunk-PJEEZAML.js?v=f0b1156a",
+        "lineNumber": 21550,
+        "columnNumber": 24
+      }
+    },
+    {
+      "type": "warning",
+      "text": "⚠️ React Router Future Flag Warning: React Router will begin wrapping state updates in `React.startTransition` in v7. You can use the `v7_startTransition` future flag to opt-in early. For more information, see https://reactrouter.com/v6/upgrading/future#v7_starttransition.",
+      "location": {
+        "url": "http://localhost:49037/node_modules/.vite/deps/react-router-dom.js?v=ab5d0c32",
+        "lineNumber": 4426,
+        "columnNumber": 12
+      }
+    },
+    {
+      "type": "warning",
+      "text": "⚠️ React Router Future Flag Warning: Relative route resolution within Splat routes is changing in v7. You can use the `v7_relativeSplatPath` future flag to opt-in early. For more information, see https://reactrouter.com/v6/upgrading/future#v7_relativesplatpath.",
+      "location": {
+        "url": "http://localhost:49037/node_modules/.vite/deps/react-router-dom.js?v=ab5d0c32",
+        "lineNumber": 4426,
+        "columnNumber": 12
+      }
+    },
+    {
+      "type": "verbose",
+      "text": "[DOM] Input elements should have autocomplete attributes (suggested: \"current-password\"): (More info: https://goo.gl/9p2vKq)",
+      "location": {
+        "url": "http://localhost:49037/login",
+        "lineNumber": 0,
+        "columnNumber": 0
+      }
+    },
+    {
+      "type": "error",
+      "text": "Warning: [antd: message] Static function can not consume context like dynamic theme. Please use 'App' component instead.",
+      "location": {
+        "url": "http://localhost:49037/node_modules/.vite/deps/chunk-ZDBJOGHJ.js?v=f0b1156a",
+        "lineNumber": 1247,
+        "columnNumber": 14
+      }
+    },
+    {
+      "type": "debug",
+      "text": "[vite] connecting...",
+      "location": {
+        "url": "http://localhost:49037/@vite/client",
+        "lineNumber": 494,
+        "columnNumber": 8
+      }
+    },
+    {
+      "type": "info",
+      "text": "%cDownload the React DevTools for a better development experience: https://reactjs.org/link/react-devtools font-weight:bold",
+      "location": {
+        "url": "http://localhost:49037/node_modules/.vite/deps/chunk-PJEEZAML.js?v=f0b1156a",
+        "lineNumber": 21550,
+        "columnNumber": 24
+      }
+    },
+    {
+      "type": "debug",
+      "text": "[vite] connected.",
+      "location": {
+        "url": "http://localhost:49037/@vite/client",
+        "lineNumber": 617,
+        "columnNumber": 14
+      }
+    },
+    {
+      "type": "warning",
+      "text": "⚠️ React Router Future Flag Warning: React Router will begin wrapping state updates in `React.startTransition` in v7. You can use the `v7_startTransition` future flag to opt-in early. For more information, see https://reactrouter.com/v6/upgrading/future#v7_starttransition.",
+      "location": {
+        "url": "http://localhost:49037/node_modules/.vite/deps/react-router-dom.js?v=ab5d0c32",
+        "lineNumber": 4426,
+        "columnNumber": 12
+      }
+    },
+    {
+      "type": "warning",
+      "text": "⚠️ React Router Future Flag Warning: Relative route resolution within Splat routes is changing in v7. You can use the `v7_relativeSplatPath` future flag to opt-in early. For more information, see https://reactrouter.com/v6/upgrading/future#v7_relativesplatpath.",
+      "location": {
+        "url": "http://localhost:49037/node_modules/.vite/deps/react-router-dom.js?v=ab5d0c32",
+        "lineNumber": 4426,
+        "columnNumber": 12
+      }
+    },
+    {
+      "type": "debug",
+      "text": "[vite] connecting...",
+      "location": {
+        "url": "http://localhost:49037/@vite/client",
+        "lineNumber": 494,
+        "columnNumber": 8
+      }
+    },
+    {
+      "type": "debug",
+      "text": "[vite] connected.",
+      "location": {
+        "url": "http://localhost:49037/@vite/client",
+        "lineNumber": 617,
+        "columnNumber": 14
+      }
+    },
+    {
+      "type": "info",
+      "text": "%cDownload the React DevTools for a better development experience: https://reactjs.org/link/react-devtools font-weight:bold",
+      "location": {
+        "url": "http://localhost:49037/node_modules/.vite/deps/chunk-PJEEZAML.js?v=f0b1156a",
+        "lineNumber": 21550,
+        "columnNumber": 24
+      }
+    },
+    {
+      "type": "warning",
+      "text": "⚠️ React Router Future Flag Warning: React Router will begin wrapping state updates in `React.startTransition` in v7. You can use the `v7_startTransition` future flag to opt-in early. For more information, see https://reactrouter.com/v6/upgrading/future#v7_starttransition.",
+      "location": {
+        "url": "http://localhost:49037/node_modules/.vite/deps/react-router-dom.js?v=ab5d0c32",
+        "lineNumber": 4426,
+        "columnNumber": 12
+      }
+    },
+    {
+      "type": "warning",
+      "text": "⚠️ React Router Future Flag Warning: Relative route resolution within Splat routes is changing in v7. You can use the `v7_relativeSplatPath` future flag to opt-in early. For more information, see https://reactrouter.com/v6/upgrading/future#v7_relativesplatpath.",
+      "location": {
+        "url": "http://localhost:49037/node_modules/.vite/deps/react-router-dom.js?v=ab5d0c32",
+        "lineNumber": 4426,
+        "columnNumber": 12
+      }
+    }
+  ],
+  "requestFailures": [],
+  "responseErrors": []
+}

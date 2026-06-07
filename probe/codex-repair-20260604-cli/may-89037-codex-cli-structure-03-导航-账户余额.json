@@ -1,0 +1,6896 @@
+{
+  "meta": {
+    "title": "全国住房公积金统一服务中台",
+    "url": "http://127.0.0.1:49037/account/balance",
+    "timestamp": "2026-06-04T19:44:02.083Z",
+    "viewport": {
+      "width": 1568,
+      "height": 1600
+    },
+    "document": {
+      "scrollWidth": 1568,
+      "scrollHeight": 1751
+    }
+  },
+  "text": {
+    "bodyPreview": "全国住房公积金统一服务中台欢迎，缴存人1首页账户余额交易明细贷款信息提取申请申请记录账户余额同步账户基本信息账户编号BJ0202400001账户状态正常姓名缴存人1身份证号110101199001012001手机号码13800138101所属中心北京住房公积金管理中心所属单位示例科技有限公司最后同步时间2026-06-04 19:26:37缴存信息账户余额¥60000.00月缴存额¥3600.00缴存基数¥15000.00缴存比例单位 12% / 个人 12%多租户中心来源中心名称同步状态差异金额最后同步时间暂无多中心来源记录跨中心同步差异源中心目标中心同步类型状态差异金额差异详情同步时间暂无跨中心同步记录资金到账时效预计到账日期实际到账日期到账状态来源类型金额暂无资金到账记录操作审计记录操作模块IP地址操作时间暂无审计记录",
+    "emptyTextCount": 0
+  },
+  "domTree": {
+    "tag": "html",
+    "id": "",
+    "className": "",
+    "selectorHint": "html",
+    "text": "全国住房公积金统一服务中台 欢迎，缴存人1 首页 账户余额 交易明细 贷款信息 提取申请 申请记录 账户余额 同步账户 基本信息 账户编号 BJ02024000",
+    "visible": true,
+    "childCount": 2,
+    "children": [
+      {
+        "tag": "head",
+        "id": "",
+        "className": "",
+        "selectorHint": "head",
+        "text": ".anticon { display: inline-flex; align-items: center; color: inherit; font-style",
+        "visible": false,
+        "childCount": 42,
+        "children": []
+      },
+      {
+        "tag": "body",
+        "id": "",
+        "className": "",
+        "selectorHint": "body",
+        "text": "全国住房公积金统一服务中台 欢迎，缴存人1 首页 账户余额 交易明细 贷款信息 提取申请 申请记录 账户余额 同步账户 基本信息 账户编号 BJ02024000",
+        "visible": true,
+        "childCount": 2,
+        "children": [
+          {
+            "tag": "div",
+            "id": "root",
+            "className": "",
+            "selectorHint": "div#root",
+            "text": "全国住房公积金统一服务中台 欢迎，缴存人1 首页 账户余额 交易明细 贷款信息 提取申请 申请记录 账户余额 同步账户 基本信息 账户编号 BJ02024000",
+            "visible": true,
+            "childCount": 1,
+            "children": [
+              {
+                "tag": "div",
+                "id": "",
+                "className": "ant-layout layout-container css-dev-only-do-not-override-mgrif2",
+                "selectorHint": "div.ant-layout.layout-container.css-dev-only-do-not-override-mgrif2",
+                "text": "全国住房公积金统一服务中台 欢迎，缴存人1 首页 账户余额 交易明细 贷款信息 提取申请 申请记录 账户余额 同步账户 基本信息 账户编号 BJ02024000",
+                "visible": true,
+                "childCount": 2,
+                "children": [
+                  {
+                    "tag": "header",
+                    "id": "",
+                    "className": "ant-layout-header header css-dev-only-do-not-override-mgrif2",
+                    "selectorHint": "header.ant-layout-header.header.css-dev-only-do-not-override-mgrif2",
+                    "text": "全国住房公积金统一服务中台 欢迎，缴存人1",
+                    "visible": true,
+                    "childCount": 2,
+                    "children": [
+                      {
+                        "tag": "div",
+                        "id": "",
+                        "className": "header-title",
+                        "selectorHint": "div.header-title",
+                        "text": "全国住房公积金统一服务中台",
+                        "visible": true,
+                        "childCount": 0,
+                        "children": []
+                      },
+                      {
+                        "tag": "div",
+                        "id": "",
+                        "className": "header-user",
+                        "selectorHint": "div.header-user",
+                        "text": "欢迎，缴存人1",
+                        "visible": true,
+                        "childCount": 2,
+                        "children": []
+                      }
+                    ]
+                  },
+                  {
+                    "tag": "div",
+                    "id": "",
+                    "className": "ant-layout ant-layout-has-sider css-dev-only-do-not-override-mgrif2",
+                    "selectorHint": "div.ant-layout.ant-layout-has-sider.css-dev-only-do-not-override-mgrif2",
+                    "text": "首页 账户余额 交易明细 贷款信息 提取申请 申请记录 账户余额 同步账户 基本信息 账户编号 BJ0202400001 账户状态 正常 姓名 缴存人1 身份证",
+                    "visible": true,
+                    "childCount": 2,
+                    "children": [
+                      {
+                        "tag": "aside",
+                        "id": "",
+                        "className": "ant-layout-sider ant-layout-sider-dark sidebar css-dev-only-do-not-override-mgrif2",
+                        "selectorHint": "aside.ant-layout-sider.ant-layout-sider-dark.sidebar",
+                        "text": "首页 账户余额 交易明细 贷款信息 提取申请 申请记录",
+                        "visible": true,
+                        "childCount": 1,
+                        "children": []
+                      },
+                      {
+                        "tag": "div",
+                        "id": "",
+                        "className": "ant-layout css-dev-only-do-not-override-mgrif2",
+                        "selectorHint": "div.ant-layout.css-dev-only-do-not-override-mgrif2",
+                        "text": "账户余额 同步账户 基本信息 账户编号 BJ0202400001 账户状态 正常 姓名 缴存人1 身份证号 110101199001012001 手机号码 13",
+                        "visible": true,
+                        "childCount": 1,
+                        "children": []
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  "allElements": [
+    {
+      "index": 0,
+      "tag": "html",
+      "id": "",
+      "className": "",
+      "selectorHint": "html",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "全国住房公积金统一服务中台 欢迎，缴存人1 首页 账户余额 交易明细 贷款信息 提取申请 申请记录 账户余额 同步账户 基本信息 账户编号 BJ0202400001 账户状态 正常 姓名 缴存人1 身份证号 110101199001012001 手机号码 13800138101 所属中心 北京住房公积金管理中心 所属单位 示例科技有限公司 最后同步时间 20",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 2,
+      "rect": {
+        "x": 0,
+        "y": 0,
+        "width": 1568,
+        "height": 1751
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 1,
+      "tag": "head",
+      "id": "",
+      "className": "",
+      "selectorHint": "head",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": ".anticon { display: inline-flex; align-items: center; color: inherit; font-style: normal; line-height: 0; text-align: center; text-transform: none; vertical-align: -0.125em; text-r",
+      "href": "",
+      "disabled": false,
+      "visible": false,
+      "childCount": 42,
+      "rect": {
+        "x": 0,
+        "y": 0,
+        "width": 0,
+        "height": 0
+      },
+      "style": {
+        "display": "none",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 2,
+      "tag": "meta",
+      "id": "",
+      "className": "",
+      "selectorHint": "meta",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "",
+      "href": "",
+      "disabled": false,
+      "visible": false,
+      "childCount": 0,
+      "rect": {
+        "x": 0,
+        "y": 0,
+        "width": 0,
+        "height": 0
+      },
+      "style": {
+        "display": "none",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 3,
+      "tag": "link",
+      "id": "",
+      "className": "",
+      "selectorHint": "link",
+      "name": "",
+      "type": "image/svg+xml",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "",
+      "href": "/vite.svg",
+      "disabled": false,
+      "visible": false,
+      "childCount": 0,
+      "rect": {
+        "x": 0,
+        "y": 0,
+        "width": 0,
+        "height": 0
+      },
+      "style": {
+        "display": "none",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 4,
+      "tag": "meta",
+      "id": "",
+      "className": "",
+      "selectorHint": "meta",
+      "name": "viewport",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "",
+      "href": "",
+      "disabled": false,
+      "visible": false,
+      "childCount": 0,
+      "rect": {
+        "x": 0,
+        "y": 0,
+        "width": 0,
+        "height": 0
+      },
+      "style": {
+        "display": "none",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 5,
+      "tag": "title",
+      "id": "",
+      "className": "",
+      "selectorHint": "title",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "全国住房公积金统一服务中台",
+      "href": "",
+      "disabled": false,
+      "visible": false,
+      "childCount": 0,
+      "rect": {
+        "x": 0,
+        "y": 0,
+        "width": 0,
+        "height": 0
+      },
+      "style": {
+        "display": "none",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 6,
+      "tag": "body",
+      "id": "",
+      "className": "",
+      "selectorHint": "body",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "全国住房公积金统一服务中台 欢迎，缴存人1 首页 账户余额 交易明细 贷款信息 提取申请 申请记录 账户余额 同步账户 基本信息 账户编号 BJ0202400001 账户状态 正常 姓名 缴存人1 身份证号 110101199001012001 手机号码 13800138101 所属中心 北京住房公积金管理中心 所属单位 示例科技有限公司 最后同步时间 20",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 2,
+      "rect": {
+        "x": 0,
+        "y": 0,
+        "width": 1568,
+        "height": 1751
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 7,
+      "tag": "div",
+      "id": "root",
+      "className": "",
+      "selectorHint": "div#root",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "全国住房公积金统一服务中台 欢迎，缴存人1 首页 账户余额 交易明细 贷款信息 提取申请 申请记录 账户余额 同步账户 基本信息 账户编号 BJ0202400001 账户状态 正常 姓名 缴存人1 身份证号 110101199001012001 手机号码 13800138101 所属中心 北京住房公积金管理中心 所属单位 示例科技有限公司 最后同步时间 20",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 1,
+      "rect": {
+        "x": 0,
+        "y": 0,
+        "width": 1568,
+        "height": 1751
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 8,
+      "tag": "div",
+      "id": "",
+      "className": "ant-layout layout-container css-dev-only-do-not-override-mgrif2",
+      "selectorHint": "div.ant-layout.layout-container.css-dev-only-do-not-override-mgrif2",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "全国住房公积金统一服务中台 欢迎，缴存人1 首页 账户余额 交易明细 贷款信息 提取申请 申请记录 账户余额 同步账户 基本信息 账户编号 BJ0202400001 账户状态 正常 姓名 缴存人1 身份证号 110101199001012001 手机号码 13800138101 所属中心 北京住房公积金管理中心 所属单位 示例科技有限公司 最后同步时间 20",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 2,
+      "rect": {
+        "x": 0,
+        "y": 0,
+        "width": 1568,
+        "height": 1751
+      },
+      "style": {
+        "display": "flex",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 9,
+      "tag": "header",
+      "id": "",
+      "className": "ant-layout-header header css-dev-only-do-not-override-mgrif2",
+      "selectorHint": "header.ant-layout-header.header.css-dev-only-do-not-override-mgrif2",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "全国住房公积金统一服务中台 欢迎，缴存人1",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 2,
+      "rect": {
+        "x": 0,
+        "y": 0,
+        "width": 1568,
+        "height": 64
+      },
+      "style": {
+        "display": "flex",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 10,
+      "tag": "div",
+      "id": "",
+      "className": "header-title",
+      "selectorHint": "div.header-title",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "全国住房公积金统一服务中台",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 24,
+        "y": 0,
+        "width": 260,
+        "height": 64
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 11,
+      "tag": "div",
+      "id": "",
+      "className": "header-user",
+      "selectorHint": "div.header-user",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "欢迎，缴存人1",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 2,
+      "rect": {
+        "x": 1410,
+        "y": 0,
+        "width": 134,
+        "height": 64
+      },
+      "style": {
+        "display": "flex",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 12,
+      "tag": "span",
+      "id": "",
+      "className": "",
+      "selectorHint": "span",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "欢迎，缴存人1",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 1410,
+        "y": 0,
+        "width": 90,
+        "height": 64
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 13,
+      "tag": "span",
+      "id": "",
+      "className": "ant-avatar ant-avatar-circle ant-avatar-icon ant-dropdown-trigger css-dev-only-do-not-override-mgrif2",
+      "selectorHint": "span.ant-avatar.ant-avatar-circle.ant-avatar-icon",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 1,
+      "rect": {
+        "x": 1512,
+        "y": 16,
+        "width": 32,
+        "height": 32
+      },
+      "style": {
+        "display": "flex",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 14,
+      "tag": "span",
+      "id": "",
+      "className": "anticon anticon-user",
+      "selectorHint": "span.anticon.anticon-user",
+      "name": "",
+      "type": "",
+      "role": "img",
+      "ariaLabel": "user",
+      "title": "",
+      "placeholder": "",
+      "text": "user",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 1,
+      "rect": {
+        "x": 1519,
+        "y": 23,
+        "width": 18,
+        "height": 18
+      },
+      "style": {
+        "display": "flex",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 15,
+      "tag": "svg",
+      "id": "",
+      "className": "",
+      "selectorHint": "svg",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 1,
+      "rect": {
+        "x": 1519,
+        "y": 23,
+        "width": 18,
+        "height": 18
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 16,
+      "tag": "path",
+      "id": "",
+      "className": "",
+      "selectorHint": "path",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 1520,
+        "y": 24,
+        "width": 15,
+        "height": 16
+      },
+      "style": {
+        "display": "inline",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 17,
+      "tag": "div",
+      "id": "",
+      "className": "ant-layout ant-layout-has-sider css-dev-only-do-not-override-mgrif2",
+      "selectorHint": "div.ant-layout.ant-layout-has-sider.css-dev-only-do-not-override-mgrif2",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "首页 账户余额 交易明细 贷款信息 提取申请 申请记录 账户余额 同步账户 基本信息 账户编号 BJ0202400001 账户状态 正常 姓名 缴存人1 身份证号 110101199001012001 手机号码 13800138101 所属中心 北京住房公积金管理中心 所属单位 示例科技有限公司 最后同步时间 2026-06-04 19:26:37 缴存信息",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 2,
+      "rect": {
+        "x": 0,
+        "y": 64,
+        "width": 1568,
+        "height": 1687
+      },
+      "style": {
+        "display": "flex",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 18,
+      "tag": "aside",
+      "id": "",
+      "className": "ant-layout-sider ant-layout-sider-dark sidebar css-dev-only-do-not-override-mgrif2",
+      "selectorHint": "aside.ant-layout-sider.ant-layout-sider-dark.sidebar",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "首页 账户余额 交易明细 贷款信息 提取申请 申请记录",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 1,
+      "rect": {
+        "x": 0,
+        "y": 64,
+        "width": 200,
+        "height": 1687
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 19,
+      "tag": "div",
+      "id": "",
+      "className": "ant-layout-sider-children",
+      "selectorHint": "div.ant-layout-sider-children",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "首页 账户余额 交易明细 贷款信息 提取申请 申请记录",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 2,
+      "rect": {
+        "x": 0,
+        "y": 64,
+        "width": 200,
+        "height": 1687
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 20,
+      "tag": "ul",
+      "id": "",
+      "className": "ant-menu ant-menu-root ant-menu-inline ant-menu-dark css-dev-only-do-not-override-mgrif2",
+      "selectorHint": "ul.ant-menu.ant-menu-root.ant-menu-inline",
+      "name": "",
+      "type": "",
+      "role": "menu",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "首页 账户余额 交易明细 贷款信息 提取申请 申请记录",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 6,
+      "rect": {
+        "x": 0,
+        "y": 64,
+        "width": 200,
+        "height": 1687
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 21,
+      "tag": "li",
+      "id": "",
+      "className": "ant-menu-item",
+      "selectorHint": "li.ant-menu-item",
+      "name": "",
+      "type": "",
+      "role": "menuitem",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "首页",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 2,
+      "rect": {
+        "x": 4,
+        "y": 68,
+        "width": 192,
+        "height": 40
+      },
+      "style": {
+        "display": "flex",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 22,
+      "tag": "span",
+      "id": "",
+      "className": "anticon anticon-dashboard ant-menu-item-icon",
+      "selectorHint": "span.anticon.anticon-dashboard.ant-menu-item-icon",
+      "name": "",
+      "type": "",
+      "role": "img",
+      "ariaLabel": "dashboard",
+      "title": "",
+      "placeholder": "",
+      "text": "dashboard",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 1,
+      "rect": {
+        "x": 28,
+        "y": 81,
+        "width": 14,
+        "height": 14
+      },
+      "style": {
+        "display": "flex",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 23,
+      "tag": "svg",
+      "id": "",
+      "className": "",
+      "selectorHint": "svg",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 1,
+      "rect": {
+        "x": 28,
+        "y": 81,
+        "width": 14,
+        "height": 14
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 24,
+      "tag": "path",
+      "id": "",
+      "className": "",
+      "selectorHint": "path",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 28,
+        "y": 82,
+        "width": 14,
+        "height": 13
+      },
+      "style": {
+        "display": "inline",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 25,
+      "tag": "span",
+      "id": "",
+      "className": "ant-menu-title-content",
+      "selectorHint": "span.ant-menu-title-content",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "首页",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 52,
+        "y": 68,
+        "width": 128,
+        "height": 40
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 26,
+      "tag": "li",
+      "id": "",
+      "className": "ant-menu-item ant-menu-item-active ant-menu-item-selected",
+      "selectorHint": "li.ant-menu-item.ant-menu-item-active.ant-menu-item-selected",
+      "name": "",
+      "type": "",
+      "role": "menuitem",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "账户余额",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 2,
+      "rect": {
+        "x": 4,
+        "y": 112,
+        "width": 192,
+        "height": 40
+      },
+      "style": {
+        "display": "flex",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 27,
+      "tag": "span",
+      "id": "",
+      "className": "anticon anticon-wallet ant-menu-item-icon",
+      "selectorHint": "span.anticon.anticon-wallet.ant-menu-item-icon",
+      "name": "",
+      "type": "",
+      "role": "img",
+      "ariaLabel": "wallet",
+      "title": "",
+      "placeholder": "",
+      "text": "wallet",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 1,
+      "rect": {
+        "x": 28,
+        "y": 125,
+        "width": 14,
+        "height": 14
+      },
+      "style": {
+        "display": "flex",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 28,
+      "tag": "svg",
+      "id": "",
+      "className": "",
+      "selectorHint": "svg",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 1,
+      "rect": {
+        "x": 28,
+        "y": 125,
+        "width": 14,
+        "height": 14
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 29,
+      "tag": "path",
+      "id": "",
+      "className": "",
+      "selectorHint": "path",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 29,
+        "y": 126,
+        "width": 13,
+        "height": 13
+      },
+      "style": {
+        "display": "inline",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 30,
+      "tag": "span",
+      "id": "",
+      "className": "ant-menu-title-content",
+      "selectorHint": "span.ant-menu-title-content",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "账户余额",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 52,
+        "y": 112,
+        "width": 128,
+        "height": 40
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 31,
+      "tag": "li",
+      "id": "",
+      "className": "ant-menu-item",
+      "selectorHint": "li.ant-menu-item",
+      "name": "",
+      "type": "",
+      "role": "menuitem",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "交易明细",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 2,
+      "rect": {
+        "x": 4,
+        "y": 156,
+        "width": 192,
+        "height": 40
+      },
+      "style": {
+        "display": "flex",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 32,
+      "tag": "span",
+      "id": "",
+      "className": "anticon anticon-file-text ant-menu-item-icon",
+      "selectorHint": "span.anticon.anticon-file-text.ant-menu-item-icon",
+      "name": "",
+      "type": "",
+      "role": "img",
+      "ariaLabel": "file-text",
+      "title": "",
+      "placeholder": "",
+      "text": "file-text",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 1,
+      "rect": {
+        "x": 28,
+        "y": 169,
+        "width": 14,
+        "height": 14
+      },
+      "style": {
+        "display": "flex",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 33,
+      "tag": "svg",
+      "id": "",
+      "className": "",
+      "selectorHint": "svg",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 1,
+      "rect": {
+        "x": 28,
+        "y": 169,
+        "width": 14,
+        "height": 14
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 34,
+      "tag": "path",
+      "id": "",
+      "className": "",
+      "selectorHint": "path",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 30,
+        "y": 169,
+        "width": 11,
+        "height": 14
+      },
+      "style": {
+        "display": "inline",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 35,
+      "tag": "span",
+      "id": "",
+      "className": "ant-menu-title-content",
+      "selectorHint": "span.ant-menu-title-content",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "交易明细",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 52,
+        "y": 156,
+        "width": 128,
+        "height": 40
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 36,
+      "tag": "li",
+      "id": "",
+      "className": "ant-menu-item",
+      "selectorHint": "li.ant-menu-item",
+      "name": "",
+      "type": "",
+      "role": "menuitem",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "贷款信息",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 2,
+      "rect": {
+        "x": 4,
+        "y": 200,
+        "width": 192,
+        "height": 40
+      },
+      "style": {
+        "display": "flex",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 37,
+      "tag": "span",
+      "id": "",
+      "className": "anticon anticon-file-text ant-menu-item-icon",
+      "selectorHint": "span.anticon.anticon-file-text.ant-menu-item-icon",
+      "name": "",
+      "type": "",
+      "role": "img",
+      "ariaLabel": "file-text",
+      "title": "",
+      "placeholder": "",
+      "text": "file-text",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 1,
+      "rect": {
+        "x": 28,
+        "y": 213,
+        "width": 14,
+        "height": 14
+      },
+      "style": {
+        "display": "flex",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 38,
+      "tag": "svg",
+      "id": "",
+      "className": "",
+      "selectorHint": "svg",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 1,
+      "rect": {
+        "x": 28,
+        "y": 213,
+        "width": 14,
+        "height": 14
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 39,
+      "tag": "path",
+      "id": "",
+      "className": "",
+      "selectorHint": "path",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 30,
+        "y": 213,
+        "width": 11,
+        "height": 14
+      },
+      "style": {
+        "display": "inline",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 40,
+      "tag": "span",
+      "id": "",
+      "className": "ant-menu-title-content",
+      "selectorHint": "span.ant-menu-title-content",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "贷款信息",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 52,
+        "y": 200,
+        "width": 128,
+        "height": 40
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 41,
+      "tag": "li",
+      "id": "",
+      "className": "ant-menu-item",
+      "selectorHint": "li.ant-menu-item",
+      "name": "",
+      "type": "",
+      "role": "menuitem",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "提取申请",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 2,
+      "rect": {
+        "x": 4,
+        "y": 244,
+        "width": 192,
+        "height": 40
+      },
+      "style": {
+        "display": "flex",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 42,
+      "tag": "span",
+      "id": "",
+      "className": "anticon anticon-file-text ant-menu-item-icon",
+      "selectorHint": "span.anticon.anticon-file-text.ant-menu-item-icon",
+      "name": "",
+      "type": "",
+      "role": "img",
+      "ariaLabel": "file-text",
+      "title": "",
+      "placeholder": "",
+      "text": "file-text",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 1,
+      "rect": {
+        "x": 28,
+        "y": 257,
+        "width": 14,
+        "height": 14
+      },
+      "style": {
+        "display": "flex",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 43,
+      "tag": "svg",
+      "id": "",
+      "className": "",
+      "selectorHint": "svg",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 1,
+      "rect": {
+        "x": 28,
+        "y": 257,
+        "width": 14,
+        "height": 14
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 44,
+      "tag": "path",
+      "id": "",
+      "className": "",
+      "selectorHint": "path",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 30,
+        "y": 257,
+        "width": 11,
+        "height": 14
+      },
+      "style": {
+        "display": "inline",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 45,
+      "tag": "span",
+      "id": "",
+      "className": "ant-menu-title-content",
+      "selectorHint": "span.ant-menu-title-content",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "提取申请",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 52,
+        "y": 244,
+        "width": 128,
+        "height": 40
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 46,
+      "tag": "li",
+      "id": "",
+      "className": "ant-menu-item",
+      "selectorHint": "li.ant-menu-item",
+      "name": "",
+      "type": "",
+      "role": "menuitem",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "申请记录",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 2,
+      "rect": {
+        "x": 4,
+        "y": 288,
+        "width": 192,
+        "height": 40
+      },
+      "style": {
+        "display": "flex",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 47,
+      "tag": "span",
+      "id": "",
+      "className": "anticon anticon-file-text ant-menu-item-icon",
+      "selectorHint": "span.anticon.anticon-file-text.ant-menu-item-icon",
+      "name": "",
+      "type": "",
+      "role": "img",
+      "ariaLabel": "file-text",
+      "title": "",
+      "placeholder": "",
+      "text": "file-text",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 1,
+      "rect": {
+        "x": 28,
+        "y": 301,
+        "width": 14,
+        "height": 14
+      },
+      "style": {
+        "display": "flex",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 48,
+      "tag": "svg",
+      "id": "",
+      "className": "",
+      "selectorHint": "svg",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 1,
+      "rect": {
+        "x": 28,
+        "y": 301,
+        "width": 14,
+        "height": 14
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 49,
+      "tag": "path",
+      "id": "",
+      "className": "",
+      "selectorHint": "path",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 30,
+        "y": 301,
+        "width": 11,
+        "height": 14
+      },
+      "style": {
+        "display": "inline",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 50,
+      "tag": "span",
+      "id": "",
+      "className": "ant-menu-title-content",
+      "selectorHint": "span.ant-menu-title-content",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "申请记录",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 52,
+        "y": 288,
+        "width": 128,
+        "height": 40
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 51,
+      "tag": "div",
+      "id": "",
+      "className": "",
+      "selectorHint": "div",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "",
+      "href": "",
+      "disabled": false,
+      "visible": false,
+      "childCount": 0,
+      "rect": {
+        "x": 0,
+        "y": 0,
+        "width": 0,
+        "height": 0
+      },
+      "style": {
+        "display": "none",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 52,
+      "tag": "div",
+      "id": "",
+      "className": "ant-layout css-dev-only-do-not-override-mgrif2",
+      "selectorHint": "div.ant-layout.css-dev-only-do-not-override-mgrif2",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "账户余额 同步账户 基本信息 账户编号 BJ0202400001 账户状态 正常 姓名 缴存人1 身份证号 110101199001012001 手机号码 13800138101 所属中心 北京住房公积金管理中心 所属单位 示例科技有限公司 最后同步时间 2026-06-04 19:26:37 缴存信息 账户余额 ¥60000.00 月缴存额 ¥3600.0",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 1,
+      "rect": {
+        "x": 200,
+        "y": 64,
+        "width": 1368,
+        "height": 1687
+      },
+      "style": {
+        "display": "flex",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 53,
+      "tag": "main",
+      "id": "",
+      "className": "ant-layout-content content css-dev-only-do-not-override-mgrif2",
+      "selectorHint": "main.ant-layout-content.content.css-dev-only-do-not-override-mgrif2",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "账户余额 同步账户 基本信息 账户编号 BJ0202400001 账户状态 正常 姓名 缴存人1 身份证号 110101199001012001 手机号码 13800138101 所属中心 北京住房公积金管理中心 所属单位 示例科技有限公司 最后同步时间 2026-06-04 19:26:37 缴存信息 账户余额 ¥60000.00 月缴存额 ¥3600.0",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 1,
+      "rect": {
+        "x": 224,
+        "y": 88,
+        "width": 1320,
+        "height": 1639
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 54,
+      "tag": "div",
+      "id": "",
+      "className": "",
+      "selectorHint": "div",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "账户余额 同步账户 基本信息 账户编号 BJ0202400001 账户状态 正常 姓名 缴存人1 身份证号 110101199001012001 手机号码 13800138101 所属中心 北京住房公积金管理中心 所属单位 示例科技有限公司 最后同步时间 2026-06-04 19:26:37 缴存信息 账户余额 ¥60000.00 月缴存额 ¥3600.0",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 7,
+      "rect": {
+        "x": 248,
+        "y": 112,
+        "width": 1272,
+        "height": 1591
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 55,
+      "tag": "div",
+      "id": "",
+      "className": "",
+      "selectorHint": "div",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "账户余额 同步账户",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 2,
+      "rect": {
+        "x": 248,
+        "y": 112,
+        "width": 1272,
+        "height": 32
+      },
+      "style": {
+        "display": "flex",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 56,
+      "tag": "h2",
+      "id": "",
+      "className": "",
+      "selectorHint": "h2",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "账户余额",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 248,
+        "y": 114,
+        "width": 84,
+        "height": 29
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 57,
+      "tag": "button",
+      "id": "",
+      "className": "ant-btn css-dev-only-do-not-override-mgrif2 ant-btn-default ant-btn-color-default ant-btn-variant-outlined",
+      "selectorHint": "button.ant-btn.css-dev-only-do-not-override-mgrif2.ant-btn-default",
+      "name": "",
+      "type": "button",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "同步账户",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 2,
+      "rect": {
+        "x": 1410,
+        "y": 112,
+        "width": 110,
+        "height": 32
+      },
+      "style": {
+        "display": "flex",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 58,
+      "tag": "span",
+      "id": "",
+      "className": "ant-btn-icon",
+      "selectorHint": "span.ant-btn-icon",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 1,
+      "rect": {
+        "x": 1426,
+        "y": 120,
+        "width": 14,
+        "height": 17
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 59,
+      "tag": "span",
+      "id": "",
+      "className": "anticon anticon-reload",
+      "selectorHint": "span.anticon.anticon-reload",
+      "name": "",
+      "type": "",
+      "role": "img",
+      "ariaLabel": "reload",
+      "title": "",
+      "placeholder": "",
+      "text": "reload",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 1,
+      "rect": {
+        "x": 1426,
+        "y": 121,
+        "width": 14,
+        "height": 14
+      },
+      "style": {
+        "display": "inline-flex",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 60,
+      "tag": "svg",
+      "id": "",
+      "className": "",
+      "selectorHint": "svg",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 1,
+      "rect": {
+        "x": 1426,
+        "y": 121,
+        "width": 14,
+        "height": 14
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 61,
+      "tag": "path",
+      "id": "",
+      "className": "",
+      "selectorHint": "path",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 1427,
+        "y": 122,
+        "width": 13,
+        "height": 13
+      },
+      "style": {
+        "display": "inline",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 62,
+      "tag": "span",
+      "id": "",
+      "className": "",
+      "selectorHint": "span",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "同步账户",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 1448,
+        "y": 118,
+        "width": 56,
+        "height": 20
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 63,
+      "tag": "div",
+      "id": "",
+      "className": "ant-card ant-card-bordered css-dev-only-do-not-override-mgrif2",
+      "selectorHint": "div.ant-card.ant-card-bordered.css-dev-only-do-not-override-mgrif2",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "基本信息 账户编号 BJ0202400001 账户状态 正常 姓名 缴存人1 身份证号 110101199001012001 手机号码 13800138101 所属中心 北京住房公积金管理中心 所属单位 示例科技有限公司 最后同步时间 2026-06-04 19:26:37",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 2,
+      "rect": {
+        "x": 248,
+        "y": 164,
+        "width": 1272,
+        "height": 327
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 64,
+      "tag": "div",
+      "id": "",
+      "className": "ant-card-head",
+      "selectorHint": "div.ant-card-head",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "基本信息",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 1,
+      "rect": {
+        "x": 249,
+        "y": 165,
+        "width": 1270,
+        "height": 56
+      },
+      "style": {
+        "display": "flex",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 65,
+      "tag": "div",
+      "id": "",
+      "className": "ant-card-head-wrapper",
+      "selectorHint": "div.ant-card-head-wrapper",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "基本信息",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 1,
+      "rect": {
+        "x": 273,
+        "y": 180,
+        "width": 1222,
+        "height": 25
+      },
+      "style": {
+        "display": "flex",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 66,
+      "tag": "div",
+      "id": "",
+      "className": "ant-card-head-title",
+      "selectorHint": "div.ant-card-head-title",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "基本信息",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 273,
+        "y": 180,
+        "width": 1222,
+        "height": 25
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 67,
+      "tag": "div",
+      "id": "",
+      "className": "ant-card-body",
+      "selectorHint": "div.ant-card-body",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "账户编号 BJ0202400001 账户状态 正常 姓名 缴存人1 身份证号 110101199001012001 手机号码 13800138101 所属中心 北京住房公积金管理中心 所属单位 示例科技有限公司 最后同步时间 2026-06-04 19:26:37",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 1,
+      "rect": {
+        "x": 249,
+        "y": 220,
+        "width": 1270,
+        "height": 270
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 68,
+      "tag": "div",
+      "id": "",
+      "className": "ant-descriptions ant-descriptions-bordered css-dev-only-do-not-override-mgrif2",
+      "selectorHint": "div.ant-descriptions.ant-descriptions-bordered.css-dev-only-do-not-override-mgrif2",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "账户编号 BJ0202400001 账户状态 正常 姓名 缴存人1 身份证号 110101199001012001 手机号码 13800138101 所属中心 北京住房公积金管理中心 所属单位 示例科技有限公司 最后同步时间 2026-06-04 19:26:37",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 1,
+      "rect": {
+        "x": 273,
+        "y": 244,
+        "width": 1222,
+        "height": 222
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 69,
+      "tag": "div",
+      "id": "",
+      "className": "ant-descriptions-view",
+      "selectorHint": "div.ant-descriptions-view",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "账户编号 BJ0202400001 账户状态 正常 姓名 缴存人1 身份证号 110101199001012001 手机号码 13800138101 所属中心 北京住房公积金管理中心 所属单位 示例科技有限公司 最后同步时间 2026-06-04 19:26:37",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 1,
+      "rect": {
+        "x": 273,
+        "y": 244,
+        "width": 1222,
+        "height": 222
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 70,
+      "tag": "table",
+      "id": "",
+      "className": "",
+      "selectorHint": "table",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "账户编号 BJ0202400001 账户状态 正常 姓名 缴存人1 身份证号 110101199001012001 手机号码 13800138101 所属中心 北京住房公积金管理中心 所属单位 示例科技有限公司 最后同步时间 2026-06-04 19:26:37",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 1,
+      "rect": {
+        "x": 274,
+        "y": 245,
+        "width": 1220,
+        "height": 220
+      },
+      "style": {
+        "display": "table",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 71,
+      "tag": "tbody",
+      "id": "",
+      "className": "",
+      "selectorHint": "tbody",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "账户编号 BJ0202400001 账户状态 正常 姓名 缴存人1 身份证号 110101199001012001 手机号码 13800138101 所属中心 北京住房公积金管理中心 所属单位 示例科技有限公司 最后同步时间 2026-06-04 19:26:37",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 4,
+      "rect": {
+        "x": 274,
+        "y": 245,
+        "width": 1220,
+        "height": 220
+      },
+      "style": {
+        "display": "table-row-group",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 72,
+      "tag": "tr",
+      "id": "",
+      "className": "ant-descriptions-row",
+      "selectorHint": "tr.ant-descriptions-row",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "账户编号 BJ0202400001 账户状态 正常",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 4,
+      "rect": {
+        "x": 274,
+        "y": 245,
+        "width": 1220,
+        "height": 56
+      },
+      "style": {
+        "display": "table-row",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 73,
+      "tag": "th",
+      "id": "",
+      "className": "ant-descriptions-item-label",
+      "selectorHint": "th.ant-descriptions-item-label",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "账户编号",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 1,
+      "rect": {
+        "x": 274,
+        "y": 245,
+        "width": 212,
+        "height": 56
+      },
+      "style": {
+        "display": "table-cell",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 74,
+      "tag": "span",
+      "id": "",
+      "className": "",
+      "selectorHint": "span",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "账户编号",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 298,
+        "y": 264,
+        "width": 56,
+        "height": 17
+      },
+      "style": {
+        "display": "inline",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 75,
+      "tag": "td",
+      "id": "",
+      "className": "ant-descriptions-item-content",
+      "selectorHint": "td.ant-descriptions-item-content",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "BJ0202400001",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 1,
+      "rect": {
+        "x": 486,
+        "y": 245,
+        "width": 327,
+        "height": 56
+      },
+      "style": {
+        "display": "table-cell",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 76,
+      "tag": "span",
+      "id": "",
+      "className": "",
+      "selectorHint": "span",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "BJ0202400001",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 511,
+        "y": 264,
+        "width": 100,
+        "height": 17
+      },
+      "style": {
+        "display": "inline",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 77,
+      "tag": "th",
+      "id": "",
+      "className": "ant-descriptions-item-label",
+      "selectorHint": "th.ant-descriptions-item-label",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "账户状态",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 1,
+      "rect": {
+        "x": 813,
+        "y": 245,
+        "width": 270,
+        "height": 56
+      },
+      "style": {
+        "display": "table-cell",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 78,
+      "tag": "span",
+      "id": "",
+      "className": "",
+      "selectorHint": "span",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "账户状态",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 837,
+        "y": 264,
+        "width": 56,
+        "height": 17
+      },
+      "style": {
+        "display": "inline",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 79,
+      "tag": "td",
+      "id": "",
+      "className": "ant-descriptions-item-content",
+      "selectorHint": "td.ant-descriptions-item-content",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "正常",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 1,
+      "rect": {
+        "x": 1083,
+        "y": 245,
+        "width": 411,
+        "height": 56
+      },
+      "style": {
+        "display": "table-cell",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 80,
+      "tag": "span",
+      "id": "",
+      "className": "",
+      "selectorHint": "span",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "正常",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 1,
+      "rect": {
+        "x": 1107,
+        "y": 263,
+        "width": 48,
+        "height": 17
+      },
+      "style": {
+        "display": "inline",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 81,
+      "tag": "span",
+      "id": "",
+      "className": "ant-tag ant-tag-green css-dev-only-do-not-override-mgrif2",
+      "selectorHint": "span.ant-tag.ant-tag-green.css-dev-only-do-not-override-mgrif2",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "正常",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 1107,
+        "y": 262,
+        "width": 40,
+        "height": 22
+      },
+      "style": {
+        "display": "inline-block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 82,
+      "tag": "tr",
+      "id": "",
+      "className": "ant-descriptions-row",
+      "selectorHint": "tr.ant-descriptions-row",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "姓名 缴存人1 身份证号 110101199001012001",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 4,
+      "rect": {
+        "x": 274,
+        "y": 301,
+        "width": 1220,
+        "height": 55
+      },
+      "style": {
+        "display": "table-row",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 83,
+      "tag": "th",
+      "id": "",
+      "className": "ant-descriptions-item-label",
+      "selectorHint": "th.ant-descriptions-item-label",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "姓名",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 1,
+      "rect": {
+        "x": 274,
+        "y": 301,
+        "width": 212,
+        "height": 55
+      },
+      "style": {
+        "display": "table-cell",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 84,
+      "tag": "span",
+      "id": "",
+      "className": "",
+      "selectorHint": "span",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "姓名",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 298,
+        "y": 319,
+        "width": 28,
+        "height": 17
+      },
+      "style": {
+        "display": "inline",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 85,
+      "tag": "td",
+      "id": "",
+      "className": "ant-descriptions-item-content",
+      "selectorHint": "td.ant-descriptions-item-content",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "缴存人1",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 1,
+      "rect": {
+        "x": 486,
+        "y": 301,
+        "width": 327,
+        "height": 55
+      },
+      "style": {
+        "display": "table-cell",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 86,
+      "tag": "span",
+      "id": "",
+      "className": "",
+      "selectorHint": "span",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "缴存人1",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 511,
+        "y": 319,
+        "width": 48,
+        "height": 17
+      },
+      "style": {
+        "display": "inline",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 87,
+      "tag": "th",
+      "id": "",
+      "className": "ant-descriptions-item-label",
+      "selectorHint": "th.ant-descriptions-item-label",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "身份证号",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 1,
+      "rect": {
+        "x": 813,
+        "y": 301,
+        "width": 270,
+        "height": 55
+      },
+      "style": {
+        "display": "table-cell",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 88,
+      "tag": "span",
+      "id": "",
+      "className": "",
+      "selectorHint": "span",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "身份证号",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 837,
+        "y": 319,
+        "width": 56,
+        "height": 17
+      },
+      "style": {
+        "display": "inline",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 89,
+      "tag": "td",
+      "id": "",
+      "className": "ant-descriptions-item-content",
+      "selectorHint": "td.ant-descriptions-item-content",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "110101199001012001",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 1,
+      "rect": {
+        "x": 1083,
+        "y": 301,
+        "width": 411,
+        "height": 55
+      },
+      "style": {
+        "display": "table-cell",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 90,
+      "tag": "span",
+      "id": "",
+      "className": "",
+      "selectorHint": "span",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "110101199001012001",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 1107,
+        "y": 319,
+        "width": 137,
+        "height": 17
+      },
+      "style": {
+        "display": "inline",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 91,
+      "tag": "tr",
+      "id": "",
+      "className": "ant-descriptions-row",
+      "selectorHint": "tr.ant-descriptions-row",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "手机号码 13800138101 所属中心 北京住房公积金管理中心",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 4,
+      "rect": {
+        "x": 274,
+        "y": 356,
+        "width": 1220,
+        "height": 55
+      },
+      "style": {
+        "display": "table-row",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 92,
+      "tag": "th",
+      "id": "",
+      "className": "ant-descriptions-item-label",
+      "selectorHint": "th.ant-descriptions-item-label",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "手机号码",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 1,
+      "rect": {
+        "x": 274,
+        "y": 356,
+        "width": 212,
+        "height": 55
+      },
+      "style": {
+        "display": "table-cell",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 93,
+      "tag": "span",
+      "id": "",
+      "className": "",
+      "selectorHint": "span",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "手机号码",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 298,
+        "y": 374,
+        "width": 56,
+        "height": 17
+      },
+      "style": {
+        "display": "inline",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 94,
+      "tag": "td",
+      "id": "",
+      "className": "ant-descriptions-item-content",
+      "selectorHint": "td.ant-descriptions-item-content",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "13800138101",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 1,
+      "rect": {
+        "x": 486,
+        "y": 356,
+        "width": 327,
+        "height": 55
+      },
+      "style": {
+        "display": "table-cell",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 95,
+      "tag": "span",
+      "id": "",
+      "className": "",
+      "selectorHint": "span",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "13800138101",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 511,
+        "y": 374,
+        "width": 86,
+        "height": 17
+      },
+      "style": {
+        "display": "inline",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 96,
+      "tag": "th",
+      "id": "",
+      "className": "ant-descriptions-item-label",
+      "selectorHint": "th.ant-descriptions-item-label",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "所属中心",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 1,
+      "rect": {
+        "x": 813,
+        "y": 356,
+        "width": 270,
+        "height": 55
+      },
+      "style": {
+        "display": "table-cell",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 97,
+      "tag": "span",
+      "id": "",
+      "className": "",
+      "selectorHint": "span",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "所属中心",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 837,
+        "y": 374,
+        "width": 56,
+        "height": 17
+      },
+      "style": {
+        "display": "inline",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 98,
+      "tag": "td",
+      "id": "",
+      "className": "ant-descriptions-item-content",
+      "selectorHint": "td.ant-descriptions-item-content",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "北京住房公积金管理中心",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 1,
+      "rect": {
+        "x": 1083,
+        "y": 356,
+        "width": 411,
+        "height": 55
+      },
+      "style": {
+        "display": "table-cell",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 99,
+      "tag": "span",
+      "id": "",
+      "className": "",
+      "selectorHint": "span",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "北京住房公积金管理中心",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 1107,
+        "y": 374,
+        "width": 154,
+        "height": 17
+      },
+      "style": {
+        "display": "inline",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 100,
+      "tag": "tr",
+      "id": "",
+      "className": "ant-descriptions-row",
+      "selectorHint": "tr.ant-descriptions-row",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "所属单位 示例科技有限公司 最后同步时间 2026-06-04 19:26:37",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 4,
+      "rect": {
+        "x": 274,
+        "y": 411,
+        "width": 1220,
+        "height": 55
+      },
+      "style": {
+        "display": "table-row",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 101,
+      "tag": "th",
+      "id": "",
+      "className": "ant-descriptions-item-label",
+      "selectorHint": "th.ant-descriptions-item-label",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "所属单位",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 1,
+      "rect": {
+        "x": 274,
+        "y": 411,
+        "width": 212,
+        "height": 55
+      },
+      "style": {
+        "display": "table-cell",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 102,
+      "tag": "span",
+      "id": "",
+      "className": "",
+      "selectorHint": "span",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "所属单位",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 298,
+        "y": 429,
+        "width": 56,
+        "height": 17
+      },
+      "style": {
+        "display": "inline",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 103,
+      "tag": "td",
+      "id": "",
+      "className": "ant-descriptions-item-content",
+      "selectorHint": "td.ant-descriptions-item-content",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "示例科技有限公司",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 1,
+      "rect": {
+        "x": 486,
+        "y": 411,
+        "width": 327,
+        "height": 55
+      },
+      "style": {
+        "display": "table-cell",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 104,
+      "tag": "span",
+      "id": "",
+      "className": "",
+      "selectorHint": "span",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "示例科技有限公司",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 511,
+        "y": 429,
+        "width": 112,
+        "height": 17
+      },
+      "style": {
+        "display": "inline",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 105,
+      "tag": "th",
+      "id": "",
+      "className": "ant-descriptions-item-label",
+      "selectorHint": "th.ant-descriptions-item-label",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "最后同步时间",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 1,
+      "rect": {
+        "x": 813,
+        "y": 411,
+        "width": 270,
+        "height": 55
+      },
+      "style": {
+        "display": "table-cell",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 106,
+      "tag": "span",
+      "id": "",
+      "className": "",
+      "selectorHint": "span",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "最后同步时间",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 837,
+        "y": 429,
+        "width": 84,
+        "height": 17
+      },
+      "style": {
+        "display": "inline",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 107,
+      "tag": "td",
+      "id": "",
+      "className": "ant-descriptions-item-content",
+      "selectorHint": "td.ant-descriptions-item-content",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "2026-06-04 19:26:37",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 1,
+      "rect": {
+        "x": 1083,
+        "y": 411,
+        "width": 411,
+        "height": 55
+      },
+      "style": {
+        "display": "table-cell",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 108,
+      "tag": "span",
+      "id": "",
+      "className": "",
+      "selectorHint": "span",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "2026-06-04 19:26:37",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 1107,
+        "y": 429,
+        "width": 142,
+        "height": 17
+      },
+      "style": {
+        "display": "inline",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 109,
+      "tag": "div",
+      "id": "",
+      "className": "ant-card ant-card-bordered css-dev-only-do-not-override-mgrif2",
+      "selectorHint": "div.ant-card.ant-card-bordered.css-dev-only-do-not-override-mgrif2",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "缴存信息 账户余额 ¥60000.00 月缴存额 ¥3600.00 缴存基数 ¥15000.00 缴存比例 单位 12% / 个人 12%",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 2,
+      "rect": {
+        "x": 248,
+        "y": 515,
+        "width": 1272,
+        "height": 232
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 110,
+      "tag": "div",
+      "id": "",
+      "className": "ant-card-head",
+      "selectorHint": "div.ant-card-head",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "缴存信息",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 1,
+      "rect": {
+        "x": 249,
+        "y": 516,
+        "width": 1270,
+        "height": 56
+      },
+      "style": {
+        "display": "flex",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 111,
+      "tag": "div",
+      "id": "",
+      "className": "ant-card-head-wrapper",
+      "selectorHint": "div.ant-card-head-wrapper",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "缴存信息",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 1,
+      "rect": {
+        "x": 273,
+        "y": 531,
+        "width": 1222,
+        "height": 25
+      },
+      "style": {
+        "display": "flex",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 112,
+      "tag": "div",
+      "id": "",
+      "className": "ant-card-head-title",
+      "selectorHint": "div.ant-card-head-title",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "缴存信息",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 273,
+        "y": 531,
+        "width": 1222,
+        "height": 25
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 113,
+      "tag": "div",
+      "id": "",
+      "className": "ant-card-body",
+      "selectorHint": "div.ant-card-body",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "账户余额 ¥60000.00 月缴存额 ¥3600.00 缴存基数 ¥15000.00 缴存比例 单位 12% / 个人 12%",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 1,
+      "rect": {
+        "x": 249,
+        "y": 571,
+        "width": 1270,
+        "height": 175
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 114,
+      "tag": "div",
+      "id": "",
+      "className": "ant-descriptions ant-descriptions-bordered css-dev-only-do-not-override-mgrif2",
+      "selectorHint": "div.ant-descriptions.ant-descriptions-bordered.css-dev-only-do-not-override-mgrif2",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "账户余额 ¥60000.00 月缴存额 ¥3600.00 缴存基数 ¥15000.00 缴存比例 单位 12% / 个人 12%",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 1,
+      "rect": {
+        "x": 273,
+        "y": 595,
+        "width": 1222,
+        "height": 127
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 115,
+      "tag": "div",
+      "id": "",
+      "className": "ant-descriptions-view",
+      "selectorHint": "div.ant-descriptions-view",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "账户余额 ¥60000.00 月缴存额 ¥3600.00 缴存基数 ¥15000.00 缴存比例 单位 12% / 个人 12%",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 1,
+      "rect": {
+        "x": 273,
+        "y": 595,
+        "width": 1222,
+        "height": 127
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 116,
+      "tag": "table",
+      "id": "",
+      "className": "",
+      "selectorHint": "table",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "账户余额 ¥60000.00 月缴存额 ¥3600.00 缴存基数 ¥15000.00 缴存比例 单位 12% / 个人 12%",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 1,
+      "rect": {
+        "x": 274,
+        "y": 596,
+        "width": 1220,
+        "height": 125
+      },
+      "style": {
+        "display": "table",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 117,
+      "tag": "tbody",
+      "id": "",
+      "className": "",
+      "selectorHint": "tbody",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "账户余额 ¥60000.00 月缴存额 ¥3600.00 缴存基数 ¥15000.00 缴存比例 单位 12% / 个人 12%",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 2,
+      "rect": {
+        "x": 274,
+        "y": 596,
+        "width": 1220,
+        "height": 125
+      },
+      "style": {
+        "display": "table-row-group",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 118,
+      "tag": "tr",
+      "id": "",
+      "className": "ant-descriptions-row",
+      "selectorHint": "tr.ant-descriptions-row",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "账户余额 ¥60000.00 月缴存额 ¥3600.00",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 4,
+      "rect": {
+        "x": 274,
+        "y": 596,
+        "width": 1220,
+        "height": 70
+      },
+      "style": {
+        "display": "table-row",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 119,
+      "tag": "th",
+      "id": "",
+      "className": "ant-descriptions-item-label",
+      "selectorHint": "th.ant-descriptions-item-label",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "账户余额",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 1,
+      "rect": {
+        "x": 274,
+        "y": 596,
+        "width": 224,
+        "height": 70
+      },
+      "style": {
+        "display": "table-cell",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 120,
+      "tag": "span",
+      "id": "",
+      "className": "",
+      "selectorHint": "span",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "账户余额",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 298,
+        "y": 622,
+        "width": 56,
+        "height": 17
+      },
+      "style": {
+        "display": "inline",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 121,
+      "tag": "td",
+      "id": "",
+      "className": "ant-descriptions-item-content",
+      "selectorHint": "td.ant-descriptions-item-content",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "¥60000.00",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 1,
+      "rect": {
+        "x": 498,
+        "y": 596,
+        "width": 388,
+        "height": 70
+      },
+      "style": {
+        "display": "table-cell",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 122,
+      "tag": "span",
+      "id": "",
+      "className": "",
+      "selectorHint": "span",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "¥60000.00",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 1,
+      "rect": {
+        "x": 522,
+        "y": 625,
+        "width": 132,
+        "height": 17
+      },
+      "style": {
+        "display": "inline",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 123,
+      "tag": "span",
+      "id": "",
+      "className": "",
+      "selectorHint": "span",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "¥60000.00",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 522,
+        "y": 616,
+        "width": 132,
+        "height": 28
+      },
+      "style": {
+        "display": "inline",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 124,
+      "tag": "th",
+      "id": "",
+      "className": "ant-descriptions-item-label",
+      "selectorHint": "th.ant-descriptions-item-label",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "月缴存额",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 1,
+      "rect": {
+        "x": 886,
+        "y": 596,
+        "width": 225,
+        "height": 70
+      },
+      "style": {
+        "display": "table-cell",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 125,
+      "tag": "span",
+      "id": "",
+      "className": "",
+      "selectorHint": "span",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "月缴存额",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 911,
+        "y": 622,
+        "width": 56,
+        "height": 17
+      },
+      "style": {
+        "display": "inline",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 126,
+      "tag": "td",
+      "id": "",
+      "className": "ant-descriptions-item-content",
+      "selectorHint": "td.ant-descriptions-item-content",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "¥3600.00",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 1,
+      "rect": {
+        "x": 1111,
+        "y": 596,
+        "width": 383,
+        "height": 70
+      },
+      "style": {
+        "display": "table-cell",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 127,
+      "tag": "span",
+      "id": "",
+      "className": "",
+      "selectorHint": "span",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "¥3600.00",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 1136,
+        "y": 622,
+        "width": 64,
+        "height": 17
+      },
+      "style": {
+        "display": "inline",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 128,
+      "tag": "tr",
+      "id": "",
+      "className": "ant-descriptions-row",
+      "selectorHint": "tr.ant-descriptions-row",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "缴存基数 ¥15000.00 缴存比例 单位 12% / 个人 12%",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 4,
+      "rect": {
+        "x": 274,
+        "y": 666,
+        "width": 1220,
+        "height": 55
+      },
+      "style": {
+        "display": "table-row",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 129,
+      "tag": "th",
+      "id": "",
+      "className": "ant-descriptions-item-label",
+      "selectorHint": "th.ant-descriptions-item-label",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "缴存基数",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 1,
+      "rect": {
+        "x": 274,
+        "y": 666,
+        "width": 224,
+        "height": 55
+      },
+      "style": {
+        "display": "table-cell",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 130,
+      "tag": "span",
+      "id": "",
+      "className": "",
+      "selectorHint": "span",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "缴存基数",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 298,
+        "y": 685,
+        "width": 56,
+        "height": 17
+      },
+      "style": {
+        "display": "inline",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 131,
+      "tag": "td",
+      "id": "",
+      "className": "ant-descriptions-item-content",
+      "selectorHint": "td.ant-descriptions-item-content",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "¥15000.00",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 1,
+      "rect": {
+        "x": 498,
+        "y": 666,
+        "width": 388,
+        "height": 55
+      },
+      "style": {
+        "display": "table-cell",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 132,
+      "tag": "span",
+      "id": "",
+      "className": "",
+      "selectorHint": "span",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "¥15000.00",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 522,
+        "y": 685,
+        "width": 70,
+        "height": 17
+      },
+      "style": {
+        "display": "inline",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 133,
+      "tag": "th",
+      "id": "",
+      "className": "ant-descriptions-item-label",
+      "selectorHint": "th.ant-descriptions-item-label",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "缴存比例",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 1,
+      "rect": {
+        "x": 886,
+        "y": 666,
+        "width": 225,
+        "height": 55
+      },
+      "style": {
+        "display": "table-cell",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 134,
+      "tag": "span",
+      "id": "",
+      "className": "",
+      "selectorHint": "span",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "缴存比例",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 911,
+        "y": 685,
+        "width": 56,
+        "height": 17
+      },
+      "style": {
+        "display": "inline",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 135,
+      "tag": "td",
+      "id": "",
+      "className": "ant-descriptions-item-content",
+      "selectorHint": "td.ant-descriptions-item-content",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "单位 12% / 个人 12%",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 1,
+      "rect": {
+        "x": 1111,
+        "y": 666,
+        "width": 383,
+        "height": 55
+      },
+      "style": {
+        "display": "table-cell",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 136,
+      "tag": "span",
+      "id": "",
+      "className": "",
+      "selectorHint": "span",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "单位 12% / 个人 12%",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 1136,
+        "y": 685,
+        "width": 130,
+        "height": 17
+      },
+      "style": {
+        "display": "inline",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 137,
+      "tag": "div",
+      "id": "",
+      "className": "ant-card ant-card-bordered css-dev-only-do-not-override-mgrif2",
+      "selectorHint": "div.ant-card.ant-card-bordered.css-dev-only-do-not-override-mgrif2",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "多租户中心来源 中心名称 同步状态 差异金额 最后同步时间 暂无多中心来源记录",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 2,
+      "rect": {
+        "x": 248,
+        "y": 771,
+        "width": 1272,
+        "height": 215
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 138,
+      "tag": "div",
+      "id": "",
+      "className": "ant-card-head",
+      "selectorHint": "div.ant-card-head",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "多租户中心来源",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 1,
+      "rect": {
+        "x": 249,
+        "y": 772,
+        "width": 1270,
+        "height": 56
+      },
+      "style": {
+        "display": "flex",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 139,
+      "tag": "div",
+      "id": "",
+      "className": "ant-card-head-wrapper",
+      "selectorHint": "div.ant-card-head-wrapper",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "多租户中心来源",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 1,
+      "rect": {
+        "x": 273,
+        "y": 787,
+        "width": 1222,
+        "height": 25
+      },
+      "style": {
+        "display": "flex",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 140,
+      "tag": "div",
+      "id": "",
+      "className": "ant-card-head-title",
+      "selectorHint": "div.ant-card-head-title",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "多租户中心来源",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 273,
+        "y": 787,
+        "width": 1222,
+        "height": 25
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 141,
+      "tag": "div",
+      "id": "",
+      "className": "ant-card-body",
+      "selectorHint": "div.ant-card-body",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "中心名称 同步状态 差异金额 最后同步时间 暂无多中心来源记录",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 1,
+      "rect": {
+        "x": 249,
+        "y": 827,
+        "width": 1270,
+        "height": 158
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 142,
+      "tag": "div",
+      "id": "",
+      "className": "ant-table-wrapper css-dev-only-do-not-override-mgrif2",
+      "selectorHint": "div.ant-table-wrapper.css-dev-only-do-not-override-mgrif2",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "中心名称 同步状态 差异金额 最后同步时间 暂无多中心来源记录",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 1,
+      "rect": {
+        "x": 273,
+        "y": 851,
+        "width": 1222,
+        "height": 110
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 143,
+      "tag": "div",
+      "id": "",
+      "className": "ant-spin-nested-loading css-dev-only-do-not-override-mgrif2",
+      "selectorHint": "div.ant-spin-nested-loading.css-dev-only-do-not-override-mgrif2",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "中心名称 同步状态 差异金额 最后同步时间 暂无多中心来源记录",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 1,
+      "rect": {
+        "x": 273,
+        "y": 851,
+        "width": 1222,
+        "height": 110
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 144,
+      "tag": "div",
+      "id": "",
+      "className": "ant-spin-container",
+      "selectorHint": "div.ant-spin-container",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "中心名称 同步状态 差异金额 最后同步时间 暂无多中心来源记录",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 1,
+      "rect": {
+        "x": 273,
+        "y": 851,
+        "width": 1222,
+        "height": 110
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 145,
+      "tag": "div",
+      "id": "",
+      "className": "ant-table ant-table-empty css-dev-only-do-not-override-mgrif2",
+      "selectorHint": "div.ant-table.ant-table-empty.css-dev-only-do-not-override-mgrif2",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "中心名称 同步状态 差异金额 最后同步时间 暂无多中心来源记录",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 1,
+      "rect": {
+        "x": 273,
+        "y": 851,
+        "width": 1222,
+        "height": 110
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 146,
+      "tag": "div",
+      "id": "",
+      "className": "ant-table-container",
+      "selectorHint": "div.ant-table-container",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "中心名称 同步状态 差异金额 最后同步时间 暂无多中心来源记录",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 1,
+      "rect": {
+        "x": 273,
+        "y": 851,
+        "width": 1222,
+        "height": 110
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 147,
+      "tag": "div",
+      "id": "",
+      "className": "ant-table-content",
+      "selectorHint": "div.ant-table-content",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "中心名称 同步状态 差异金额 最后同步时间 暂无多中心来源记录",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 1,
+      "rect": {
+        "x": 273,
+        "y": 851,
+        "width": 1222,
+        "height": 110
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 148,
+      "tag": "table",
+      "id": "",
+      "className": "",
+      "selectorHint": "table",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "中心名称 同步状态 差异金额 最后同步时间 暂无多中心来源记录",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 2,
+      "rect": {
+        "x": 273,
+        "y": 851,
+        "width": 1222,
+        "height": 110
+      },
+      "style": {
+        "display": "table",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 149,
+      "tag": "thead",
+      "id": "",
+      "className": "ant-table-thead",
+      "selectorHint": "thead.ant-table-thead",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "中心名称 同步状态 差异金额 最后同步时间",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 1,
+      "rect": {
+        "x": 273,
+        "y": 851,
+        "width": 1222,
+        "height": 55
+      },
+      "style": {
+        "display": "table-header-group",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 150,
+      "tag": "tr",
+      "id": "",
+      "className": "",
+      "selectorHint": "tr",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "中心名称 同步状态 差异金额 最后同步时间",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 4,
+      "rect": {
+        "x": 273,
+        "y": 851,
+        "width": 1222,
+        "height": 55
+      },
+      "style": {
+        "display": "table-row",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 151,
+      "tag": "th",
+      "id": "",
+      "className": "ant-table-cell",
+      "selectorHint": "th.ant-table-cell",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "中心名称",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 273,
+        "y": 851,
+        "width": 283,
+        "height": 55
+      },
+      "style": {
+        "display": "table-cell",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 152,
+      "tag": "th",
+      "id": "",
+      "className": "ant-table-cell",
+      "selectorHint": "th.ant-table-cell",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "同步状态",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 556,
+        "y": 851,
+        "width": 283,
+        "height": 55
+      },
+      "style": {
+        "display": "table-cell",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 153,
+      "tag": "th",
+      "id": "",
+      "className": "ant-table-cell",
+      "selectorHint": "th.ant-table-cell",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "差异金额",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 839,
+        "y": 851,
+        "width": 283,
+        "height": 55
+      },
+      "style": {
+        "display": "table-cell",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 154,
+      "tag": "th",
+      "id": "",
+      "className": "ant-table-cell",
+      "selectorHint": "th.ant-table-cell",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "最后同步时间",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 1122,
+        "y": 851,
+        "width": 373,
+        "height": 55
+      },
+      "style": {
+        "display": "table-cell",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 155,
+      "tag": "tbody",
+      "id": "",
+      "className": "ant-table-tbody",
+      "selectorHint": "tbody.ant-table-tbody",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "暂无多中心来源记录",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 1,
+      "rect": {
+        "x": 273,
+        "y": 906,
+        "width": 1222,
+        "height": 55
+      },
+      "style": {
+        "display": "table-row-group",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 156,
+      "tag": "tr",
+      "id": "",
+      "className": "ant-table-placeholder",
+      "selectorHint": "tr.ant-table-placeholder",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "暂无多中心来源记录",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 1,
+      "rect": {
+        "x": 273,
+        "y": 906,
+        "width": 1222,
+        "height": 55
+      },
+      "style": {
+        "display": "table-row",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 157,
+      "tag": "td",
+      "id": "",
+      "className": "ant-table-cell",
+      "selectorHint": "td.ant-table-cell",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "暂无多中心来源记录",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 273,
+        "y": 906,
+        "width": 1222,
+        "height": 55
+      },
+      "style": {
+        "display": "table-cell",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 158,
+      "tag": "div",
+      "id": "",
+      "className": "ant-card ant-card-bordered css-dev-only-do-not-override-mgrif2",
+      "selectorHint": "div.ant-card.ant-card-bordered.css-dev-only-do-not-override-mgrif2",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "跨中心同步差异 源中心 目标中心 同步类型 状态 差异金额 差异详情 同步时间 暂无跨中心同步记录",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 2,
+      "rect": {
+        "x": 248,
+        "y": 1010,
+        "width": 1272,
+        "height": 215
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 159,
+      "tag": "div",
+      "id": "",
+      "className": "ant-card-head",
+      "selectorHint": "div.ant-card-head",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "跨中心同步差异",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 1,
+      "rect": {
+        "x": 249,
+        "y": 1011,
+        "width": 1270,
+        "height": 56
+      },
+      "style": {
+        "display": "flex",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 160,
+      "tag": "div",
+      "id": "",
+      "className": "ant-card-head-wrapper",
+      "selectorHint": "div.ant-card-head-wrapper",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "跨中心同步差异",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 1,
+      "rect": {
+        "x": 273,
+        "y": 1026,
+        "width": 1222,
+        "height": 25
+      },
+      "style": {
+        "display": "flex",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 161,
+      "tag": "div",
+      "id": "",
+      "className": "ant-card-head-title",
+      "selectorHint": "div.ant-card-head-title",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "跨中心同步差异",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 273,
+        "y": 1026,
+        "width": 1222,
+        "height": 25
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 162,
+      "tag": "div",
+      "id": "",
+      "className": "ant-card-body",
+      "selectorHint": "div.ant-card-body",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "源中心 目标中心 同步类型 状态 差异金额 差异详情 同步时间 暂无跨中心同步记录",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 1,
+      "rect": {
+        "x": 249,
+        "y": 1066,
+        "width": 1270,
+        "height": 158
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 163,
+      "tag": "div",
+      "id": "",
+      "className": "ant-table-wrapper css-dev-only-do-not-override-mgrif2",
+      "selectorHint": "div.ant-table-wrapper.css-dev-only-do-not-override-mgrif2",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "源中心 目标中心 同步类型 状态 差异金额 差异详情 同步时间 暂无跨中心同步记录",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 1,
+      "rect": {
+        "x": 273,
+        "y": 1090,
+        "width": 1222,
+        "height": 110
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 164,
+      "tag": "div",
+      "id": "",
+      "className": "ant-spin-nested-loading css-dev-only-do-not-override-mgrif2",
+      "selectorHint": "div.ant-spin-nested-loading.css-dev-only-do-not-override-mgrif2",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "源中心 目标中心 同步类型 状态 差异金额 差异详情 同步时间 暂无跨中心同步记录",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 1,
+      "rect": {
+        "x": 273,
+        "y": 1090,
+        "width": 1222,
+        "height": 110
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 165,
+      "tag": "div",
+      "id": "",
+      "className": "ant-spin-container",
+      "selectorHint": "div.ant-spin-container",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "源中心 目标中心 同步类型 状态 差异金额 差异详情 同步时间 暂无跨中心同步记录",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 1,
+      "rect": {
+        "x": 273,
+        "y": 1090,
+        "width": 1222,
+        "height": 110
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 166,
+      "tag": "div",
+      "id": "",
+      "className": "ant-table ant-table-empty css-dev-only-do-not-override-mgrif2",
+      "selectorHint": "div.ant-table.ant-table-empty.css-dev-only-do-not-override-mgrif2",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "源中心 目标中心 同步类型 状态 差异金额 差异详情 同步时间 暂无跨中心同步记录",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 1,
+      "rect": {
+        "x": 273,
+        "y": 1090,
+        "width": 1222,
+        "height": 110
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 167,
+      "tag": "div",
+      "id": "",
+      "className": "ant-table-container",
+      "selectorHint": "div.ant-table-container",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "源中心 目标中心 同步类型 状态 差异金额 差异详情 同步时间 暂无跨中心同步记录",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 1,
+      "rect": {
+        "x": 273,
+        "y": 1090,
+        "width": 1222,
+        "height": 110
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 168,
+      "tag": "div",
+      "id": "",
+      "className": "ant-table-content",
+      "selectorHint": "div.ant-table-content",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "源中心 目标中心 同步类型 状态 差异金额 差异详情 同步时间 暂无跨中心同步记录",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 1,
+      "rect": {
+        "x": 273,
+        "y": 1090,
+        "width": 1222,
+        "height": 110
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 169,
+      "tag": "table",
+      "id": "",
+      "className": "",
+      "selectorHint": "table",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "源中心 目标中心 同步类型 状态 差异金额 差异详情 同步时间 暂无跨中心同步记录",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 2,
+      "rect": {
+        "x": 273,
+        "y": 1090,
+        "width": 1222,
+        "height": 110
+      },
+      "style": {
+        "display": "table",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 170,
+      "tag": "thead",
+      "id": "",
+      "className": "ant-table-thead",
+      "selectorHint": "thead.ant-table-thead",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "源中心 目标中心 同步类型 状态 差异金额 差异详情 同步时间",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 1,
+      "rect": {
+        "x": 273,
+        "y": 1090,
+        "width": 1222,
+        "height": 55
+      },
+      "style": {
+        "display": "table-header-group",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 171,
+      "tag": "tr",
+      "id": "",
+      "className": "",
+      "selectorHint": "tr",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "源中心 目标中心 同步类型 状态 差异金额 差异详情 同步时间",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 7,
+      "rect": {
+        "x": 273,
+        "y": 1090,
+        "width": 1222,
+        "height": 55
+      },
+      "style": {
+        "display": "table-row",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 172,
+      "tag": "th",
+      "id": "",
+      "className": "ant-table-cell",
+      "selectorHint": "th.ant-table-cell",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "源中心",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 273,
+        "y": 1090,
+        "width": 158,
+        "height": 55
+      },
+      "style": {
+        "display": "table-cell",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 173,
+      "tag": "th",
+      "id": "",
+      "className": "ant-table-cell",
+      "selectorHint": "th.ant-table-cell",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "目标中心",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 431,
+        "y": 1090,
+        "width": 187,
+        "height": 55
+      },
+      "style": {
+        "display": "table-cell",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 174,
+      "tag": "th",
+      "id": "",
+      "className": "ant-table-cell",
+      "selectorHint": "th.ant-table-cell",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "同步类型",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 618,
+        "y": 1090,
+        "width": 187,
+        "height": 55
+      },
+      "style": {
+        "display": "table-cell",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 175,
+      "tag": "th",
+      "id": "",
+      "className": "ant-table-cell",
+      "selectorHint": "th.ant-table-cell",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "状态",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 805,
+        "y": 1090,
+        "width": 128,
+        "height": 55
+      },
+      "style": {
+        "display": "table-cell",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 176,
+      "tag": "th",
+      "id": "",
+      "className": "ant-table-cell",
+      "selectorHint": "th.ant-table-cell",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "差异金额",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 933,
+        "y": 1090,
+        "width": 187,
+        "height": 55
+      },
+      "style": {
+        "display": "table-cell",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 177,
+      "tag": "th",
+      "id": "",
+      "className": "ant-table-cell",
+      "selectorHint": "th.ant-table-cell",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "差异详情",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 1120,
+        "y": 1090,
+        "width": 187,
+        "height": 55
+      },
+      "style": {
+        "display": "table-cell",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 178,
+      "tag": "th",
+      "id": "",
+      "className": "ant-table-cell",
+      "selectorHint": "th.ant-table-cell",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "同步时间",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 1308,
+        "y": 1090,
+        "width": 187,
+        "height": 55
+      },
+      "style": {
+        "display": "table-cell",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 179,
+      "tag": "tbody",
+      "id": "",
+      "className": "ant-table-tbody",
+      "selectorHint": "tbody.ant-table-tbody",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "暂无跨中心同步记录",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 1,
+      "rect": {
+        "x": 273,
+        "y": 1145,
+        "width": 1222,
+        "height": 55
+      },
+      "style": {
+        "display": "table-row-group",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 180,
+      "tag": "tr",
+      "id": "",
+      "className": "ant-table-placeholder",
+      "selectorHint": "tr.ant-table-placeholder",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "暂无跨中心同步记录",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 1,
+      "rect": {
+        "x": 273,
+        "y": 1145,
+        "width": 1222,
+        "height": 55
+      },
+      "style": {
+        "display": "table-row",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 181,
+      "tag": "td",
+      "id": "",
+      "className": "ant-table-cell",
+      "selectorHint": "td.ant-table-cell",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "暂无跨中心同步记录",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 273,
+        "y": 1145,
+        "width": 1222,
+        "height": 55
+      },
+      "style": {
+        "display": "table-cell",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 182,
+      "tag": "div",
+      "id": "",
+      "className": "ant-card ant-card-bordered css-dev-only-do-not-override-mgrif2",
+      "selectorHint": "div.ant-card.ant-card-bordered.css-dev-only-do-not-override-mgrif2",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "资金到账时效 预计到账日期 实际到账日期 到账状态 来源类型 金额 暂无资金到账记录",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 2,
+      "rect": {
+        "x": 248,
+        "y": 1249,
+        "width": 1272,
+        "height": 215
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 183,
+      "tag": "div",
+      "id": "",
+      "className": "ant-card-head",
+      "selectorHint": "div.ant-card-head",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "资金到账时效",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 1,
+      "rect": {
+        "x": 249,
+        "y": 1250,
+        "width": 1270,
+        "height": 56
+      },
+      "style": {
+        "display": "flex",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 184,
+      "tag": "div",
+      "id": "",
+      "className": "ant-card-head-wrapper",
+      "selectorHint": "div.ant-card-head-wrapper",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "资金到账时效",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 1,
+      "rect": {
+        "x": 273,
+        "y": 1265,
+        "width": 1222,
+        "height": 25
+      },
+      "style": {
+        "display": "flex",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 185,
+      "tag": "div",
+      "id": "",
+      "className": "ant-card-head-title",
+      "selectorHint": "div.ant-card-head-title",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "资金到账时效",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 273,
+        "y": 1265,
+        "width": 1222,
+        "height": 25
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 186,
+      "tag": "div",
+      "id": "",
+      "className": "ant-card-body",
+      "selectorHint": "div.ant-card-body",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "预计到账日期 实际到账日期 到账状态 来源类型 金额 暂无资金到账记录",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 1,
+      "rect": {
+        "x": 249,
+        "y": 1305,
+        "width": 1270,
+        "height": 158
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 187,
+      "tag": "div",
+      "id": "",
+      "className": "ant-table-wrapper css-dev-only-do-not-override-mgrif2",
+      "selectorHint": "div.ant-table-wrapper.css-dev-only-do-not-override-mgrif2",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "预计到账日期 实际到账日期 到账状态 来源类型 金额 暂无资金到账记录",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 1,
+      "rect": {
+        "x": 273,
+        "y": 1329,
+        "width": 1222,
+        "height": 110
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 188,
+      "tag": "div",
+      "id": "",
+      "className": "ant-spin-nested-loading css-dev-only-do-not-override-mgrif2",
+      "selectorHint": "div.ant-spin-nested-loading.css-dev-only-do-not-override-mgrif2",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "预计到账日期 实际到账日期 到账状态 来源类型 金额 暂无资金到账记录",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 1,
+      "rect": {
+        "x": 273,
+        "y": 1329,
+        "width": 1222,
+        "height": 110
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 189,
+      "tag": "div",
+      "id": "",
+      "className": "ant-spin-container",
+      "selectorHint": "div.ant-spin-container",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "预计到账日期 实际到账日期 到账状态 来源类型 金额 暂无资金到账记录",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 1,
+      "rect": {
+        "x": 273,
+        "y": 1329,
+        "width": 1222,
+        "height": 110
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 190,
+      "tag": "div",
+      "id": "",
+      "className": "ant-table ant-table-empty css-dev-only-do-not-override-mgrif2",
+      "selectorHint": "div.ant-table.ant-table-empty.css-dev-only-do-not-override-mgrif2",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "预计到账日期 实际到账日期 到账状态 来源类型 金额 暂无资金到账记录",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 1,
+      "rect": {
+        "x": 273,
+        "y": 1329,
+        "width": 1222,
+        "height": 110
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 191,
+      "tag": "div",
+      "id": "",
+      "className": "ant-table-container",
+      "selectorHint": "div.ant-table-container",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "预计到账日期 实际到账日期 到账状态 来源类型 金额 暂无资金到账记录",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 1,
+      "rect": {
+        "x": 273,
+        "y": 1329,
+        "width": 1222,
+        "height": 110
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 192,
+      "tag": "div",
+      "id": "",
+      "className": "ant-table-content",
+      "selectorHint": "div.ant-table-content",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "预计到账日期 实际到账日期 到账状态 来源类型 金额 暂无资金到账记录",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 1,
+      "rect": {
+        "x": 273,
+        "y": 1329,
+        "width": 1222,
+        "height": 110
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 193,
+      "tag": "table",
+      "id": "",
+      "className": "",
+      "selectorHint": "table",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "预计到账日期 实际到账日期 到账状态 来源类型 金额 暂无资金到账记录",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 2,
+      "rect": {
+        "x": 273,
+        "y": 1329,
+        "width": 1222,
+        "height": 110
+      },
+      "style": {
+        "display": "table",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 194,
+      "tag": "thead",
+      "id": "",
+      "className": "ant-table-thead",
+      "selectorHint": "thead.ant-table-thead",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "预计到账日期 实际到账日期 到账状态 来源类型 金额",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 1,
+      "rect": {
+        "x": 273,
+        "y": 1329,
+        "width": 1222,
+        "height": 55
+      },
+      "style": {
+        "display": "table-header-group",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 195,
+      "tag": "tr",
+      "id": "",
+      "className": "",
+      "selectorHint": "tr",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "预计到账日期 实际到账日期 到账状态 来源类型 金额",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 5,
+      "rect": {
+        "x": 273,
+        "y": 1329,
+        "width": 1222,
+        "height": 55
+      },
+      "style": {
+        "display": "table-row",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 196,
+      "tag": "th",
+      "id": "",
+      "className": "ant-table-cell",
+      "selectorHint": "th.ant-table-cell",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "预计到账日期",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 273,
+        "y": 1329,
+        "width": 303,
+        "height": 55
+      },
+      "style": {
+        "display": "table-cell",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 197,
+      "tag": "th",
+      "id": "",
+      "className": "ant-table-cell",
+      "selectorHint": "th.ant-table-cell",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "实际到账日期",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 576,
+        "y": 1329,
+        "width": 303,
+        "height": 55
+      },
+      "style": {
+        "display": "table-cell",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 198,
+      "tag": "th",
+      "id": "",
+      "className": "ant-table-cell",
+      "selectorHint": "th.ant-table-cell",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "到账状态",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 879,
+        "y": 1329,
+        "width": 230,
+        "height": 55
+      },
+      "style": {
+        "display": "table-cell",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 199,
+      "tag": "th",
+      "id": "",
+      "className": "ant-table-cell",
+      "selectorHint": "th.ant-table-cell",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "来源类型",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 1109,
+        "y": 1329,
+        "width": 230,
+        "height": 55
+      },
+      "style": {
+        "display": "table-cell",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 200,
+      "tag": "th",
+      "id": "",
+      "className": "ant-table-cell",
+      "selectorHint": "th.ant-table-cell",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "金额",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 1338,
+        "y": 1329,
+        "width": 157,
+        "height": 55
+      },
+      "style": {
+        "display": "table-cell",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 201,
+      "tag": "tbody",
+      "id": "",
+      "className": "ant-table-tbody",
+      "selectorHint": "tbody.ant-table-tbody",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "暂无资金到账记录",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 1,
+      "rect": {
+        "x": 273,
+        "y": 1384,
+        "width": 1222,
+        "height": 55
+      },
+      "style": {
+        "display": "table-row-group",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 202,
+      "tag": "tr",
+      "id": "",
+      "className": "ant-table-placeholder",
+      "selectorHint": "tr.ant-table-placeholder",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "暂无资金到账记录",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 1,
+      "rect": {
+        "x": 273,
+        "y": 1384,
+        "width": 1222,
+        "height": 55
+      },
+      "style": {
+        "display": "table-row",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 203,
+      "tag": "td",
+      "id": "",
+      "className": "ant-table-cell",
+      "selectorHint": "td.ant-table-cell",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "暂无资金到账记录",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 273,
+        "y": 1384,
+        "width": 1222,
+        "height": 55
+      },
+      "style": {
+        "display": "table-cell",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 204,
+      "tag": "div",
+      "id": "",
+      "className": "ant-card ant-card-bordered css-dev-only-do-not-override-mgrif2",
+      "selectorHint": "div.ant-card.ant-card-bordered.css-dev-only-do-not-override-mgrif2",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "操作审计记录 操作 模块 IP地址 操作时间 暂无审计记录",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 2,
+      "rect": {
+        "x": 248,
+        "y": 1488,
+        "width": 1272,
+        "height": 215
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 205,
+      "tag": "div",
+      "id": "",
+      "className": "ant-card-head",
+      "selectorHint": "div.ant-card-head",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "操作审计记录",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 1,
+      "rect": {
+        "x": 249,
+        "y": 1489,
+        "width": 1270,
+        "height": 56
+      },
+      "style": {
+        "display": "flex",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 206,
+      "tag": "div",
+      "id": "",
+      "className": "ant-card-head-wrapper",
+      "selectorHint": "div.ant-card-head-wrapper",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "操作审计记录",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 1,
+      "rect": {
+        "x": 273,
+        "y": 1504,
+        "width": 1222,
+        "height": 25
+      },
+      "style": {
+        "display": "flex",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 207,
+      "tag": "div",
+      "id": "",
+      "className": "ant-card-head-title",
+      "selectorHint": "div.ant-card-head-title",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "操作审计记录",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 273,
+        "y": 1504,
+        "width": 1222,
+        "height": 25
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 208,
+      "tag": "div",
+      "id": "",
+      "className": "ant-card-body",
+      "selectorHint": "div.ant-card-body",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "操作 模块 IP地址 操作时间 暂无审计记录",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 1,
+      "rect": {
+        "x": 249,
+        "y": 1544,
+        "width": 1270,
+        "height": 158
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 209,
+      "tag": "div",
+      "id": "",
+      "className": "ant-table-wrapper css-dev-only-do-not-override-mgrif2",
+      "selectorHint": "div.ant-table-wrapper.css-dev-only-do-not-override-mgrif2",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "操作 模块 IP地址 操作时间 暂无审计记录",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 1,
+      "rect": {
+        "x": 273,
+        "y": 1568,
+        "width": 1222,
+        "height": 110
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 210,
+      "tag": "div",
+      "id": "",
+      "className": "ant-spin-nested-loading css-dev-only-do-not-override-mgrif2",
+      "selectorHint": "div.ant-spin-nested-loading.css-dev-only-do-not-override-mgrif2",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "操作 模块 IP地址 操作时间 暂无审计记录",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 1,
+      "rect": {
+        "x": 273,
+        "y": 1568,
+        "width": 1222,
+        "height": 110
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 211,
+      "tag": "div",
+      "id": "",
+      "className": "ant-spin-container",
+      "selectorHint": "div.ant-spin-container",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "操作 模块 IP地址 操作时间 暂无审计记录",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 1,
+      "rect": {
+        "x": 273,
+        "y": 1568,
+        "width": 1222,
+        "height": 110
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 212,
+      "tag": "div",
+      "id": "",
+      "className": "ant-table ant-table-empty css-dev-only-do-not-override-mgrif2",
+      "selectorHint": "div.ant-table.ant-table-empty.css-dev-only-do-not-override-mgrif2",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "操作 模块 IP地址 操作时间 暂无审计记录",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 1,
+      "rect": {
+        "x": 273,
+        "y": 1568,
+        "width": 1222,
+        "height": 110
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 213,
+      "tag": "div",
+      "id": "",
+      "className": "ant-table-container",
+      "selectorHint": "div.ant-table-container",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "操作 模块 IP地址 操作时间 暂无审计记录",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 1,
+      "rect": {
+        "x": 273,
+        "y": 1568,
+        "width": 1222,
+        "height": 110
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 214,
+      "tag": "div",
+      "id": "",
+      "className": "ant-table-content",
+      "selectorHint": "div.ant-table-content",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "操作 模块 IP地址 操作时间 暂无审计记录",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 1,
+      "rect": {
+        "x": 273,
+        "y": 1568,
+        "width": 1222,
+        "height": 110
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 215,
+      "tag": "table",
+      "id": "",
+      "className": "",
+      "selectorHint": "table",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "操作 模块 IP地址 操作时间 暂无审计记录",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 2,
+      "rect": {
+        "x": 273,
+        "y": 1568,
+        "width": 1222,
+        "height": 110
+      },
+      "style": {
+        "display": "table",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 216,
+      "tag": "thead",
+      "id": "",
+      "className": "ant-table-thead",
+      "selectorHint": "thead.ant-table-thead",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "操作 模块 IP地址 操作时间",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 1,
+      "rect": {
+        "x": 273,
+        "y": 1568,
+        "width": 1222,
+        "height": 55
+      },
+      "style": {
+        "display": "table-header-group",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 217,
+      "tag": "tr",
+      "id": "",
+      "className": "",
+      "selectorHint": "tr",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "操作 模块 IP地址 操作时间",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 4,
+      "rect": {
+        "x": 273,
+        "y": 1568,
+        "width": 1222,
+        "height": 55
+      },
+      "style": {
+        "display": "table-row",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 218,
+      "tag": "th",
+      "id": "",
+      "className": "ant-table-cell",
+      "selectorHint": "th.ant-table-cell",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "操作",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 273,
+        "y": 1568,
+        "width": 261,
+        "height": 55
+      },
+      "style": {
+        "display": "table-cell",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 219,
+      "tag": "th",
+      "id": "",
+      "className": "ant-table-cell",
+      "selectorHint": "th.ant-table-cell",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "模块",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 534,
+        "y": 1568,
+        "width": 261,
+        "height": 55
+      },
+      "style": {
+        "display": "table-cell",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 220,
+      "tag": "th",
+      "id": "",
+      "className": "ant-table-cell",
+      "selectorHint": "th.ant-table-cell",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "IP地址",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 795,
+        "y": 1568,
+        "width": 318,
+        "height": 55
+      },
+      "style": {
+        "display": "table-cell",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 221,
+      "tag": "th",
+      "id": "",
+      "className": "ant-table-cell",
+      "selectorHint": "th.ant-table-cell",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "操作时间",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 1113,
+        "y": 1568,
+        "width": 382,
+        "height": 55
+      },
+      "style": {
+        "display": "table-cell",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 222,
+      "tag": "tbody",
+      "id": "",
+      "className": "ant-table-tbody",
+      "selectorHint": "tbody.ant-table-tbody",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "暂无审计记录",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 1,
+      "rect": {
+        "x": 273,
+        "y": 1623,
+        "width": 1222,
+        "height": 55
+      },
+      "style": {
+        "display": "table-row-group",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 223,
+      "tag": "tr",
+      "id": "",
+      "className": "ant-table-placeholder",
+      "selectorHint": "tr.ant-table-placeholder",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "暂无审计记录",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 1,
+      "rect": {
+        "x": 273,
+        "y": 1623,
+        "width": 1222,
+        "height": 55
+      },
+      "style": {
+        "display": "table-row",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 224,
+      "tag": "td",
+      "id": "",
+      "className": "ant-table-cell",
+      "selectorHint": "td.ant-table-cell",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "暂无审计记录",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 273,
+        "y": 1623,
+        "width": 1222,
+        "height": 55
+      },
+      "style": {
+        "display": "table-cell",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    }
+  ],
+  "interactiveElements": [
+    {
+      "index": 0,
+      "tag": "ul",
+      "id": "",
+      "className": "ant-menu ant-menu-root ant-menu-inline ant-menu-dark css-dev-only-do-not-override-mgrif2",
+      "selectorHint": "ul.ant-menu.ant-menu-root.ant-menu-inline",
+      "name": "",
+      "type": "",
+      "role": "menu",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "首页 账户余额 交易明细 贷款信息 提取申请 申请记录",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 6,
+      "rect": {
+        "x": 0,
+        "y": 64,
+        "width": 200,
+        "height": 1687
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 1,
+      "tag": "li",
+      "id": "",
+      "className": "ant-menu-item",
+      "selectorHint": "li.ant-menu-item",
+      "name": "",
+      "type": "",
+      "role": "menuitem",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "首页",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 2,
+      "rect": {
+        "x": 4,
+        "y": 68,
+        "width": 192,
+        "height": 40
+      },
+      "style": {
+        "display": "flex",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 2,
+      "tag": "li",
+      "id": "",
+      "className": "ant-menu-item ant-menu-item-active ant-menu-item-selected",
+      "selectorHint": "li.ant-menu-item.ant-menu-item-active.ant-menu-item-selected",
+      "name": "",
+      "type": "",
+      "role": "menuitem",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "账户余额",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 2,
+      "rect": {
+        "x": 4,
+        "y": 112,
+        "width": 192,
+        "height": 40
+      },
+      "style": {
+        "display": "flex",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 3,
+      "tag": "li",
+      "id": "",
+      "className": "ant-menu-item",
+      "selectorHint": "li.ant-menu-item",
+      "name": "",
+      "type": "",
+      "role": "menuitem",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "交易明细",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 2,
+      "rect": {
+        "x": 4,
+        "y": 156,
+        "width": 192,
+        "height": 40
+      },
+      "style": {
+        "display": "flex",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 4,
+      "tag": "li",
+      "id": "",
+      "className": "ant-menu-item",
+      "selectorHint": "li.ant-menu-item",
+      "name": "",
+      "type": "",
+      "role": "menuitem",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "贷款信息",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 2,
+      "rect": {
+        "x": 4,
+        "y": 200,
+        "width": 192,
+        "height": 40
+      },
+      "style": {
+        "display": "flex",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 5,
+      "tag": "li",
+      "id": "",
+      "className": "ant-menu-item",
+      "selectorHint": "li.ant-menu-item",
+      "name": "",
+      "type": "",
+      "role": "menuitem",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "提取申请",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 2,
+      "rect": {
+        "x": 4,
+        "y": 244,
+        "width": 192,
+        "height": 40
+      },
+      "style": {
+        "display": "flex",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 6,
+      "tag": "li",
+      "id": "",
+      "className": "ant-menu-item",
+      "selectorHint": "li.ant-menu-item",
+      "name": "",
+      "type": "",
+      "role": "menuitem",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "申请记录",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 2,
+      "rect": {
+        "x": 4,
+        "y": 288,
+        "width": 192,
+        "height": 40
+      },
+      "style": {
+        "display": "flex",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 7,
+      "tag": "button",
+      "id": "",
+      "className": "ant-btn css-dev-only-do-not-override-mgrif2 ant-btn-default ant-btn-color-default ant-btn-variant-outlined",
+      "selectorHint": "button.ant-btn.css-dev-only-do-not-override-mgrif2.ant-btn-default",
+      "name": "",
+      "type": "button",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "同步账户",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 2,
+      "rect": {
+        "x": 1410,
+        "y": 112,
+        "width": 110,
+        "height": 32
+      },
+      "style": {
+        "display": "flex",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    }
+  ]
+}
