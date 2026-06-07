@@ -1,0 +1,219 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id              String    @id @default(uuid())
+  phone           String?   @unique
+  email           String?   @unique
+  name            String
+  passwordHash    String
+  role            String    @default("user")
+  enterpriseId    String?
+  socialSecurityBase Float?
+  resignationRisk String    @default("low")
+  twoFactorSecret String?
+  age             Int?
+  city            String?
+  createdAt       DateTime  @default(now())
+  enterprise      Enterprise? @relation(fields: [enterpriseId], references: [id])
+  interviewSessions InterviewSession[]
+  socialRecords   SocialSecurityRecord[]
+  orders          WelfareOrder[]
+  auditLogs       AuditLog[]
+  contractScans   ContractScan[]
+  redemptionCodes RedemptionCode[]
+}
+
+model Enterprise {
+  id                       String    @id @default(uuid())
+  name                     String
+  socialSecurityAccountStatus String @default("pending")
+  employeeCountThreshold   Int       @default(100)
+  complianceScore          Float     @default(100)
+  lastComplianceCheck      DateTime?
+  createdAt                DateTime  @default(now())
+  users                    User[]
+  employees                Employee[]
+  complianceReports        ComplianceReport[]
+  alerts                   Alert[]
+}
+
+model Employee {
+  id                    String    @id @default(uuid())
+  enterpriseId          String
+  name                  String
+  idCard                String    @unique
+  position              String?
+  hireDate              DateTime?
+  contractExpiryDate    DateTime?
+  socialSecurityBase    Float?
+  socialSecurityStatus  String    @default("normal")
+  resignationRiskScore  Float?
+  createdAt             DateTime  @default(now())
+  enterprise            Enterprise @relation(fields: [enterpriseId], references: [id])
+  socialRecords         SocialSecurityRecord[]
+  contractScans         ContractScan[]
+  alerts                Alert[]
+}
+
+model SocialSecurityPolicy {
+  cityCode          String   @id
+  cityName          String
+  pensionRates      String
+  medicalRates      String
+  unemploymentRates String
+  injuryRates       String
+  maternityRates    String
+  housingFundRates  String
+  minBase           Float
+  maxBase           Float
+  effectiveDate     DateTime
+}
+
+model SocialSecurityRecord {
+  id         String   @id @default(uuid())
+  userId     String?
+  employeeId String?
+  cityCode   String
+  baseSalary Float
+  resultJson String
+  createdAt  DateTime @default(now())
+  user       User?     @relation(fields: [userId], references: [id])
+  employee   Employee? @relation(fields: [employeeId], references: [id])
+}
+
+model InterviewSession {
+  id        String            @id @default(uuid())
+  userId    String
+  position  String
+  status    String            @default("active")
+  score     Float?
+  feedback  String?
+  createdAt DateTime          @default(now())
+  user      User              @relation(fields: [userId], references: [id])
+  messages  InterviewMessage[]
+}
+
+model InterviewMessage {
+  id        String   @id @default(uuid())
+  sessionId String
+  role      String
+  content   String
+  createdAt DateTime @default(now())
+  session   InterviewSession @relation(fields: [sessionId], references: [id])
+}
+
+model LawArticle {
+  id        String  @id @default(uuid())
+  title     String
+  content   String
+  category  String?
+  embedding String?
+}
+
+model ContractScan {
+  id         String   @id @default(uuid())
+  userId     String?
+  employeeId String?
+  fileName   String?
+  ocrResult  String?
+  riskPoints String?
+  suggestions String?
+  createdAt  DateTime @default(now())
+  user       User?     @relation(fields: [userId], references: [id])
+  employee   Employee? @relation(fields: [employeeId], references: [id])
+}
+
+model WelfareProduct {
+  id                  String   @id @default(uuid())
+  name                String
+  description         String?
+  price               Float
+  category            String?
+  targetAudienceRules String?
+  validityDays        Int      @default(365)
+  autoExpire          Boolean  @default(true)
+  stock               Int      @default(0)
+  status              String   @default("active")
+  expiresAt           DateTime?
+  createdAt           DateTime @default(now())
+  orders              WelfareOrder[]
+  redemptionCodes     RedemptionCode[]
+}
+
+model WelfareOrder {
+  id         String           @id @default(uuid())
+  userId     String
+  productId  String
+  quantity   Int              @default(1)
+  totalPrice Float
+  status     String           @default("pending")
+  createdAt  DateTime         @default(now())
+  user       User             @relation(fields: [userId], references: [id])
+  product    WelfareProduct   @relation(fields: [productId], references: [id])
+  redemptionCodes RedemptionCode[]
+}
+
+model RedemptionCode {
+  id         String       @id @default(uuid())
+  code       String       @unique
+  orderId    String
+  productId  String
+  userId     String
+  status     String       @default("active")
+  redeemedAt DateTime?
+  expiresAt  DateTime
+  createdAt  DateTime     @default(now())
+  order      WelfareOrder @relation(fields: [orderId], references: [id])
+  product    WelfareProduct @relation(fields: [productId], references: [id])
+  user       User         @relation(fields: [userId], references: [id])
+}
+
+model ComplianceReport {
+  id             String   @id @default(uuid())
+  enterpriseId   String
+  reportType     String
+  score          Float?
+  findings       String?
+  recommendations String?
+  createdAt      DateTime @default(now())
+  enterprise     Enterprise @relation(fields: [enterpriseId], references: [id])
+}
+
+model Alert {
+  id           String   @id @default(uuid())
+  enterpriseId String?
+  employeeId   String?
+  alertType    String
+  severity     String
+  message      String
+  isRead       Boolean  @default(false)
+  createdAt    DateTime @default(now())
+  enterprise   Enterprise? @relation(fields: [enterpriseId], references: [id])
+  employee     Employee?   @relation(fields: [employeeId], references: [id])
+}
+
+model AuditLog {
+  id             String   @id @default(uuid())
+  userId         String
+  action         String
+  resource       String
+  ip             String?
+  userAgent      String?
+  watermark      String?
+  secondVerified Boolean  @default(false)
+  detail         String?
+  reviewed       Boolean  @default(false)
+  reviewedAt     DateTime?
+  createdAt      DateTime @default(now())
+  user           User     @relation(fields: [userId], references: [id])
+}
