@@ -1,0 +1,982 @@
+{
+  "ok": true,
+  "generatedAt": "2026-06-04T21:00:17.971Z",
+  "order": "may-89042",
+  "roundIndex": 2,
+  "captureId": "may-89042-final",
+  "url": "http://127.0.0.1:49042/",
+  "initialUrl": "http://127.0.0.1:49042/",
+  "finalUrl": "http://127.0.0.1:49042/",
+  "status": 200,
+  "title": "房产交易数字化服务中台",
+  "initialTitle": "房产交易数字化服务中台",
+  "navigationError": "",
+  "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89042/probe/codex-final-20260604-2344/may-89042-final-frontend.png",
+  "screenshotPaths": [
+    "/Users/chen/Documents/trae_projects/local_projects/may-89042/probe/codex-final-20260604-2344/may-89042-final-structure-01-首屏.png"
+  ],
+  "issueTextPreview": "个人中心/我的相关问题；搜索/筛选相关问题；后台管理相关问题；购买/提交相关问题；详情/内容页相关问题",
+  "targetReason": "个人中心/我的相关问题；搜索/筛选相关问题；后台管理相关问题；购买/提交相关问题；详情/内容页相关问题",
+  "targetKind": "personal",
+  "targetMatched": true,
+  "targetActions": [
+    {
+      "action": "click",
+      "label": "个人中心/我的相关问题",
+      "ok": true
+    },
+    {
+      "action": "target-verify",
+      "label": "个人中心/我的相关问题",
+      "ok": true,
+      "finalUrl": "http://127.0.0.1:49042/"
+    }
+  ],
+  "authFlow": {
+    "detected": false,
+    "attempted": false,
+    "success": false,
+    "finalUrl": "http://127.0.0.1:49042/",
+    "message": "",
+    "actions": []
+  },
+  "businessAudit": {
+    "actions": [
+      {
+        "action": "click",
+        "label": "导航:首页",
+        "ok": true
+      },
+      {
+        "action": "click",
+        "label": "导航:地图找房",
+        "ok": true
+      },
+      {
+        "action": "click",
+        "label": "操作:搜索房源",
+        "ok": true,
+        "result": {
+          "ok": true,
+          "matched": 1
+        }
+      },
+      {
+        "action": "click",
+        "label": "导航:房源管理",
+        "ok": true
+      }
+    ],
+    "snapshots": [
+      {
+        "label": "首屏",
+        "url": "http://127.0.0.1:49042/",
+        "title": "房产交易数字化服务中台",
+        "headings": [
+          "房产交易数字化服务中台"
+        ],
+        "navLabels": [
+          "首页 地图找房 房源管理 VR看房 小区口碑 政策合规 税费计算 经纪人协作 个人中心 后台管理",
+          "首页",
+          "home",
+          "地图找房",
+          "environment",
+          "房源管理",
+          "build",
+          "VR看房",
+          "video-camera",
+          "小区口碑",
+          "comment",
+          "政策合规",
+          "safety-certificate",
+          "税费计算",
+          "calculator",
+          "经纪人协作",
+          "team",
+          "个人中心",
+          "后台管理",
+          "setting"
+        ],
+        "buttons": [],
+        "links": [],
+        "inputs": [],
+        "tables": [],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "房产交易中台首页地图找房房源管理VR看房小区口碑政策合规税费计算经纪人协作个人中心后台管理房产交易数字化服务中台数据驱动的房产交易综合服务平台楼盘总数10房源总数23经纪人数量4本月成交0地图找房基于地图的智能房源搜索VR看房沉浸式虚拟看房体验政策合规购房资格与限售校验税费计算精准房产税费测算",
+        "layout": {
+          "viewportWidth": 1504,
+          "viewportHeight": 1000,
+          "scrollWidth": 1504,
+          "scrollHeight": 1000,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89042-final-structure-01-首屏",
+          "label": "首屏",
+          "finalUrl": "http://127.0.0.1:49042/",
+          "title": "房产交易数字化服务中台",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89042/probe/codex-final-20260604-2344/may-89042-final-structure-01-首屏.json",
+          "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89042/probe/codex-final-20260604-2344/may-89042-final-structure-01-首屏.png",
+          "elementCount": 172,
+          "interactiveCount": 11,
+          "interactiveLabels": [
+            "首页 地图找房 房源管理 VR看房 小区口碑 政策合规 税费计算 经纪人协作 个人中心 后台管理",
+            "首页",
+            "地图找房",
+            "房源管理",
+            "VR看房",
+            "小区口碑",
+            "政策合规",
+            "税费计算",
+            "经纪人协作",
+            "个人中心",
+            "后台管理"
+          ]
+        }
+      },
+      {
+        "label": "导航:首页",
+        "url": "http://127.0.0.1:49042/",
+        "title": "房产交易数字化服务中台",
+        "headings": [
+          "房产交易数字化服务中台"
+        ],
+        "navLabels": [
+          "首页 地图找房 房源管理 VR看房 小区口碑 政策合规 税费计算 经纪人协作 个人中心 后台管理",
+          "首页",
+          "home",
+          "地图找房",
+          "environment",
+          "房源管理",
+          "build",
+          "VR看房",
+          "video-camera",
+          "小区口碑",
+          "comment",
+          "政策合规",
+          "safety-certificate",
+          "税费计算",
+          "calculator",
+          "经纪人协作",
+          "team",
+          "个人中心",
+          "后台管理",
+          "setting"
+        ],
+        "buttons": [],
+        "links": [],
+        "inputs": [],
+        "tables": [],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "房产交易中台首页地图找房房源管理VR看房小区口碑政策合规税费计算经纪人协作个人中心后台管理房产交易数字化服务中台数据驱动的房产交易综合服务平台楼盘总数10房源总数23经纪人数量4本月成交0地图找房基于地图的智能房源搜索VR看房沉浸式虚拟看房体验政策合规购房资格与限售校验税费计算精准房产税费测算",
+        "layout": {
+          "viewportWidth": 1536,
+          "viewportHeight": 1000,
+          "scrollWidth": 1536,
+          "scrollHeight": 1000,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89042-final-structure-02-导航-首页",
+          "label": "导航:首页",
+          "finalUrl": "http://127.0.0.1:49042/",
+          "title": "房产交易数字化服务中台",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89042/probe/codex-final-20260604-2344/may-89042-final-structure-02-导航-首页.json",
+          "screenshotPath": "",
+          "elementCount": 172,
+          "interactiveCount": 11,
+          "interactiveLabels": [
+            "首页 地图找房 房源管理 VR看房 小区口碑 政策合规 税费计算 经纪人协作 个人中心 后台管理",
+            "首页",
+            "地图找房",
+            "房源管理",
+            "VR看房",
+            "小区口碑",
+            "政策合规",
+            "税费计算",
+            "经纪人协作",
+            "个人中心",
+            "后台管理"
+          ]
+        }
+      },
+      {
+        "label": "导航:地图找房",
+        "url": "http://127.0.0.1:49042/map",
+        "title": "房产交易数字化服务中台",
+        "headings": [
+          "地图找房",
+          "筛选房源"
+        ],
+        "navLabels": [
+          "首页 地图找房 房源管理 VR看房 小区口碑 政策合规 税费计算 经纪人协作 个人中心 后台管理",
+          "首页",
+          "home",
+          "地图找房",
+          "environment",
+          "房源管理",
+          "build",
+          "VR看房",
+          "video-camera",
+          "小区口碑",
+          "comment",
+          "政策合规",
+          "safety-certificate",
+          "税费计算",
+          "calculator",
+          "经纪人协作",
+          "team",
+          "个人中心",
+          "后台管理",
+          "setting"
+        ],
+        "buttons": [
+          "搜索房源",
+          "+",
+          "−"
+        ],
+        "links": [
+          "+",
+          "−",
+          "Leaflet"
+        ],
+        "inputs": [
+          {
+            "tag": "input",
+            "type": "text",
+            "placeholder": "搜索小区、地址...",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "search",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "search",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "checkbox",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "checkbox",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          }
+        ],
+        "tables": [],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "房产交易中台首页地图找房房源管理VR看房小区口碑政策合规税费计算经纪人协作个人中心后台管理地图找房基于地理位置的智能房源搜索，支持学区、地铁、价格带多维度叠加筛选 筛选房源关键词搜索区域选择区域房源类型二手房新房租赁价格范围（万元）: 0 - 5000房间数选择房间数学区房地铁沿线搜索房源+− Leaflet搜索结果（11套）汤臣一品复式五房6800万380㎡ | 5室3厅二手房汤臣一品绿地海珀外滩两房850万62㎡ | 2室1厅二手房绿地海珀外滩绿地海珀外滩江景三房1560万110㎡ | 3室2厅二手房绿地海珀外滩中粮海景壹号江景三房980万100㎡ | 3室2厅二手房中粮海景壹号仁恒河滨城河景三房1050万100㎡ | 3室2厅二手房仁恒河滨城万科翡翠公园复式四房1800万150㎡ | 4室2厅二手房万科翡翠公园万科翡翠公园舒适三房1200万100㎡ | 3室1厅二手房万科翡翠公园翠湖天地温馨两房1680万108㎡ | 2室1厅二手房翠湖天地御苑翠湖天地御苑湖景四房3800万245㎡ | 4室2厅二手房翠湖天地御苑汤臣一品精装三房3200万180㎡ | 3室2厅二手房汤臣一品汤臣一品江景大平层4500万250㎡ | 4室2厅二手房汤臣一品",
+        "layout": {
+          "viewportWidth": 1568,
+          "viewportHeight": 1000,
+          "scrollWidth": 1568,
+          "scrollHeight": 1000,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89042-final-structure-03-导航-地图找房",
+          "label": "导航:地图找房",
+          "finalUrl": "http://127.0.0.1:49042/map",
+          "title": "房产交易数字化服务中台",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89042/probe/codex-final-20260604-2344/may-89042-final-structure-03-导航-地图找房.json",
+          "screenshotPath": "",
+          "elementCount": 404,
+          "interactiveCount": 26,
+          "interactiveLabels": [
+            "首页 地图找房 房源管理 VR看房 小区口碑 政策合规 税费计算 经纪人协作 个人中心 后台管理",
+            "首页",
+            "地图找房",
+            "房源管理",
+            "VR看房",
+            "小区口碑",
+            "政策合规",
+            "税费计算",
+            "经纪人协作",
+            "个人中心",
+            "后台管理",
+            "搜索小区、地址...",
+            "二手房",
+            "on",
+            "搜索房源",
+            "Leaflet"
+          ]
+        }
+      },
+      {
+        "label": "操作:搜索房源",
+        "url": "http://127.0.0.1:49042/map",
+        "title": "房产交易数字化服务中台",
+        "headings": [
+          "地图找房",
+          "筛选房源"
+        ],
+        "navLabels": [
+          "首页 地图找房 房源管理 VR看房 小区口碑 政策合规 税费计算 经纪人协作 个人中心 后台管理",
+          "首页",
+          "home",
+          "地图找房",
+          "environment",
+          "房源管理",
+          "build",
+          "VR看房",
+          "video-camera",
+          "小区口碑",
+          "comment",
+          "政策合规",
+          "safety-certificate",
+          "税费计算",
+          "calculator",
+          "经纪人协作",
+          "team",
+          "个人中心",
+          "后台管理",
+          "setting"
+        ],
+        "buttons": [
+          "搜索房源",
+          "+",
+          "−"
+        ],
+        "links": [
+          "+",
+          "−",
+          "Leaflet"
+        ],
+        "inputs": [
+          {
+            "tag": "input",
+            "type": "text",
+            "placeholder": "搜索小区、地址...",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "search",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "search",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "checkbox",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "checkbox",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          }
+        ],
+        "tables": [],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "房产交易中台首页地图找房房源管理VR看房小区口碑政策合规税费计算经纪人协作个人中心后台管理地图找房基于地理位置的智能房源搜索，支持学区、地铁、价格带多维度叠加筛选 筛选房源关键词搜索区域选择区域房源类型二手房新房租赁价格范围（万元）: 0 - 5000房间数选择房间数学区房地铁沿线搜索房源+− Leaflet搜索结果（11套）汤臣一品复式五房6800万380㎡ | 5室3厅二手房汤臣一品绿地海珀外滩两房850万62㎡ | 2室1厅二手房绿地海珀外滩绿地海珀外滩江景三房1560万110㎡ | 3室2厅二手房绿地海珀外滩中粮海景壹号江景三房980万100㎡ | 3室2厅二手房中粮海景壹号仁恒河滨城河景三房1050万100㎡ | 3室2厅二手房仁恒河滨城万科翡翠公园复式四房1800万150㎡ | 4室2厅二手房万科翡翠公园万科翡翠公园舒适三房1200万100㎡ | 3室1厅二手房万科翡翠公园翠湖天地温馨两房1680万108㎡ | 2室1厅二手房翠湖天地御苑翠湖天地御苑湖景四房3800万245㎡ | 4室2厅二手房翠湖天地御苑汤臣一品精装三房3200万180㎡ | 3室2厅二手房汤臣一品汤臣一品江景大平层4500万250㎡ | 4室2厅二手房汤臣一品",
+        "layout": {
+          "viewportWidth": 1600,
+          "viewportHeight": 1000,
+          "scrollWidth": 1600,
+          "scrollHeight": 1000,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89042-final-structure-04-操作-搜索房源",
+          "label": "操作:搜索房源",
+          "finalUrl": "http://127.0.0.1:49042/map",
+          "title": "房产交易数字化服务中台",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89042/probe/codex-final-20260604-2344/may-89042-final-structure-04-操作-搜索房源.json",
+          "screenshotPath": "",
+          "elementCount": 410,
+          "interactiveCount": 26,
+          "interactiveLabels": [
+            "首页 地图找房 房源管理 VR看房 小区口碑 政策合规 税费计算 经纪人协作 个人中心 后台管理",
+            "首页",
+            "地图找房",
+            "房源管理",
+            "VR看房",
+            "小区口碑",
+            "政策合规",
+            "税费计算",
+            "经纪人协作",
+            "个人中心",
+            "后台管理",
+            "搜索小区、地址...",
+            "二手房",
+            "on",
+            "搜索房源",
+            "Leaflet"
+          ]
+        }
+      },
+      {
+        "label": "导航:房源管理",
+        "url": "http://127.0.0.1:49042/listings",
+        "title": "房产交易数字化服务中台",
+        "headings": [],
+        "navLabels": [],
+        "buttons": [],
+        "links": [],
+        "inputs": [],
+        "tables": [],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "",
+        "layout": {
+          "viewportWidth": 1632,
+          "viewportHeight": 1000,
+          "scrollWidth": 1632,
+          "scrollHeight": 1000,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89042-final-structure-05-导航-房源管理",
+          "label": "导航:房源管理",
+          "finalUrl": "http://127.0.0.1:49042/listings",
+          "title": "房产交易数字化服务中台",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89042/probe/codex-final-20260604-2344/may-89042-final-structure-05-导航-房源管理.json",
+          "screenshotPath": "",
+          "elementCount": 7,
+          "interactiveCount": 0,
+          "interactiveLabels": []
+        }
+      }
+    ],
+    "findings": [
+      "房源管理 页面打开后是空白，没有渲染业务内容、表单或列表。"
+    ],
+    "actionHints": [
+      "修复 房源管理 的路由组件挂载、接口初始化和错误兜底，确保进入页面后直接显示可操作内容。"
+    ],
+    "emptyPages": [],
+    "overflowPages": [],
+    "blankPages": [
+      "房源管理"
+    ],
+    "apiFailurePaths": [],
+    "goalTerms": [],
+    "clickedActionDescriptors": [
+      {
+        "nav": "地图找房",
+        "label": "搜索房源",
+        "ordinal": 0,
+        "unsafe": false
+      }
+    ],
+    "secondaryActionClicks": 0,
+    "structureCaptures": [
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89042-final-structure-01-首屏",
+        "label": "首屏",
+        "finalUrl": "http://127.0.0.1:49042/",
+        "title": "房产交易数字化服务中台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89042/probe/codex-final-20260604-2344/may-89042-final-structure-01-首屏.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89042/probe/codex-final-20260604-2344/may-89042-final-structure-01-首屏.png",
+        "elementCount": 172,
+        "interactiveCount": 11,
+        "interactiveLabels": [
+          "首页 地图找房 房源管理 VR看房 小区口碑 政策合规 税费计算 经纪人协作 个人中心 后台管理",
+          "首页",
+          "地图找房",
+          "房源管理",
+          "VR看房",
+          "小区口碑",
+          "政策合规",
+          "税费计算",
+          "经纪人协作",
+          "个人中心",
+          "后台管理"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89042-final-structure-02-导航-首页",
+        "label": "导航:首页",
+        "finalUrl": "http://127.0.0.1:49042/",
+        "title": "房产交易数字化服务中台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89042/probe/codex-final-20260604-2344/may-89042-final-structure-02-导航-首页.json",
+        "screenshotPath": "",
+        "elementCount": 172,
+        "interactiveCount": 11,
+        "interactiveLabels": [
+          "首页 地图找房 房源管理 VR看房 小区口碑 政策合规 税费计算 经纪人协作 个人中心 后台管理",
+          "首页",
+          "地图找房",
+          "房源管理",
+          "VR看房",
+          "小区口碑",
+          "政策合规",
+          "税费计算",
+          "经纪人协作",
+          "个人中心",
+          "后台管理"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89042-final-structure-03-导航-地图找房",
+        "label": "导航:地图找房",
+        "finalUrl": "http://127.0.0.1:49042/map",
+        "title": "房产交易数字化服务中台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89042/probe/codex-final-20260604-2344/may-89042-final-structure-03-导航-地图找房.json",
+        "screenshotPath": "",
+        "elementCount": 404,
+        "interactiveCount": 26,
+        "interactiveLabels": [
+          "首页 地图找房 房源管理 VR看房 小区口碑 政策合规 税费计算 经纪人协作 个人中心 后台管理",
+          "首页",
+          "地图找房",
+          "房源管理",
+          "VR看房",
+          "小区口碑",
+          "政策合规",
+          "税费计算",
+          "经纪人协作",
+          "个人中心",
+          "后台管理",
+          "搜索小区、地址...",
+          "二手房",
+          "on",
+          "搜索房源",
+          "Leaflet"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89042-final-structure-04-操作-搜索房源",
+        "label": "操作:搜索房源",
+        "finalUrl": "http://127.0.0.1:49042/map",
+        "title": "房产交易数字化服务中台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89042/probe/codex-final-20260604-2344/may-89042-final-structure-04-操作-搜索房源.json",
+        "screenshotPath": "",
+        "elementCount": 410,
+        "interactiveCount": 26,
+        "interactiveLabels": [
+          "首页 地图找房 房源管理 VR看房 小区口碑 政策合规 税费计算 经纪人协作 个人中心 后台管理",
+          "首页",
+          "地图找房",
+          "房源管理",
+          "VR看房",
+          "小区口碑",
+          "政策合规",
+          "税费计算",
+          "经纪人协作",
+          "个人中心",
+          "后台管理",
+          "搜索小区、地址...",
+          "二手房",
+          "on",
+          "搜索房源",
+          "Leaflet"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89042-final-structure-05-导航-房源管理",
+        "label": "导航:房源管理",
+        "finalUrl": "http://127.0.0.1:49042/listings",
+        "title": "房产交易数字化服务中台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89042/probe/codex-final-20260604-2344/may-89042-final-structure-05-导航-房源管理.json",
+        "screenshotPath": "",
+        "elementCount": 7,
+        "interactiveCount": 0,
+        "interactiveLabels": []
+      }
+    ],
+    "representativeScreenshotUrl": "http://127.0.0.1:49042/",
+    "representativeScreenshotLabel": "房产交易数字化服务中台"
+  },
+  "websiteStructureCapture": {
+    "module": "website_structure_capture",
+    "captureCount": 5,
+    "captures": [
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89042-final-structure-01-首屏",
+        "label": "首屏",
+        "finalUrl": "http://127.0.0.1:49042/",
+        "title": "房产交易数字化服务中台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89042/probe/codex-final-20260604-2344/may-89042-final-structure-01-首屏.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89042/probe/codex-final-20260604-2344/may-89042-final-structure-01-首屏.png",
+        "elementCount": 172,
+        "interactiveCount": 11,
+        "interactiveLabels": [
+          "首页 地图找房 房源管理 VR看房 小区口碑 政策合规 税费计算 经纪人协作 个人中心 后台管理",
+          "首页",
+          "地图找房",
+          "房源管理",
+          "VR看房",
+          "小区口碑",
+          "政策合规",
+          "税费计算",
+          "经纪人协作",
+          "个人中心",
+          "后台管理"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89042-final-structure-02-导航-首页",
+        "label": "导航:首页",
+        "finalUrl": "http://127.0.0.1:49042/",
+        "title": "房产交易数字化服务中台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89042/probe/codex-final-20260604-2344/may-89042-final-structure-02-导航-首页.json",
+        "screenshotPath": "",
+        "elementCount": 172,
+        "interactiveCount": 11,
+        "interactiveLabels": [
+          "首页 地图找房 房源管理 VR看房 小区口碑 政策合规 税费计算 经纪人协作 个人中心 后台管理",
+          "首页",
+          "地图找房",
+          "房源管理",
+          "VR看房",
+          "小区口碑",
+          "政策合规",
+          "税费计算",
+          "经纪人协作",
+          "个人中心",
+          "后台管理"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89042-final-structure-03-导航-地图找房",
+        "label": "导航:地图找房",
+        "finalUrl": "http://127.0.0.1:49042/map",
+        "title": "房产交易数字化服务中台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89042/probe/codex-final-20260604-2344/may-89042-final-structure-03-导航-地图找房.json",
+        "screenshotPath": "",
+        "elementCount": 404,
+        "interactiveCount": 26,
+        "interactiveLabels": [
+          "首页 地图找房 房源管理 VR看房 小区口碑 政策合规 税费计算 经纪人协作 个人中心 后台管理",
+          "首页",
+          "地图找房",
+          "房源管理",
+          "VR看房",
+          "小区口碑",
+          "政策合规",
+          "税费计算",
+          "经纪人协作",
+          "个人中心",
+          "后台管理",
+          "搜索小区、地址...",
+          "二手房",
+          "on",
+          "搜索房源",
+          "Leaflet"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89042-final-structure-04-操作-搜索房源",
+        "label": "操作:搜索房源",
+        "finalUrl": "http://127.0.0.1:49042/map",
+        "title": "房产交易数字化服务中台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89042/probe/codex-final-20260604-2344/may-89042-final-structure-04-操作-搜索房源.json",
+        "screenshotPath": "",
+        "elementCount": 410,
+        "interactiveCount": 26,
+        "interactiveLabels": [
+          "首页 地图找房 房源管理 VR看房 小区口碑 政策合规 税费计算 经纪人协作 个人中心 后台管理",
+          "首页",
+          "地图找房",
+          "房源管理",
+          "VR看房",
+          "小区口碑",
+          "政策合规",
+          "税费计算",
+          "经纪人协作",
+          "个人中心",
+          "后台管理",
+          "搜索小区、地址...",
+          "二手房",
+          "on",
+          "搜索房源",
+          "Leaflet"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89042-final-structure-05-导航-房源管理",
+        "label": "导航:房源管理",
+        "finalUrl": "http://127.0.0.1:49042/listings",
+        "title": "房产交易数字化服务中台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89042/probe/codex-final-20260604-2344/may-89042-final-structure-05-导航-房源管理.json",
+        "screenshotPath": "",
+        "elementCount": 7,
+        "interactiveCount": 0,
+        "interactiveLabels": []
+      }
+    ]
+  },
+  "screenshotMetrics": {
+    "width": 1664,
+    "height": 1000,
+    "scrollWidth": 1632,
+    "scrollHeight": 1000
+  },
+  "initialBodyTextPreview": "房产交易中台\n首页\n地图找房\n房源管理\nVR看房\n小区口碑\n政策合规\n税费计算\n经纪人协作\n个人中心\n后台管理\n房产交易数字化服务中台\n\n数据驱动的房产交易综合服务平台\n\n楼盘总数\n10\n房源总数\n23\n经纪人数量\n4\n本月成交\n0\n地图找房\n基于地图的智能房源搜索\nVR看房\n沉浸式虚拟看房体验\n政策合规\n购房资格与限售校验\n税费计算\n精准房产税费测算",
+  "bodyTextPreview": "房产交易中台\n首页\n地图找房\n房源管理\nVR看房\n小区口碑\n政策合规\n税费计算\n经纪人协作\n个人中心\n后台管理\n房产交易数字化服务中台\n\n数据驱动的房产交易综合服务平台\n\n楼盘总数\n10\n房源总数\n23\n经纪人数量\n4\n本月成交\n0\n地图找房\n基于地图的智能房源搜索\nVR看房\n沉浸式虚拟看房体验\n政策合规\n购房资格与限售校验\n税费计算\n精准房产税费测算",
+  "apiBase": "http://127.0.0.1:59042",
+  "businessGoalPreview": "",
+  "apiResponses": [
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49042/api/admin/dashboard"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49042/api/admin/dashboard"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49042/api/listings?page=1&pageSize=50&type=%E4%BA%8C%E6%89%8B%E6%88%BF"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49042/api/listings?page=1&pageSize=50&type=%E4%BA%8C%E6%89%8B%E6%88%BF"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49042/api/listings?page=1&pageSize=50&type=%E4%BA%8C%E6%89%8B%E6%88%BF"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49042/api/admin/dashboard"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49042/api/admin/dashboard"
+    }
+  ],
+  "apiChecks": [
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59042/api/health",
+      "path": "/api/health",
+      "status": 200,
+      "ok": true,
+      "bodyPreview": "{\"code\":0,\"data\":{\"status\":\"ok\",\"timestamp\":\"2026-06-04T21:00:15.837Z\",\"db\":\"connected\"},\"message\":\"success\"}"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59042/api/admin/dashboard",
+      "path": "/api/admin/dashboard",
+      "status": 200,
+      "ok": true,
+      "bodyPreview": "{\"code\":0,\"data\":{\"total_buildings\":10,\"total_listings\":23,\"total_agents\":4,\"total_buyers\":4,\"total_contracts\":1},\"message\":\"success\"}"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59042/api/listings?page=1&pageSize=50&type=%E4%BA%8C%E6%89%8B%E6%88%BF",
+      "path": "/api/listings?page=1&pageSize=50&type=%E4%BA%8C%E6%89%8B%E6%88%BF",
+      "status": 200,
+      "ok": true,
+      "bodyPreview": "{\"code\":0,\"data\":{\"list\":[{\"id\":21,\"building_id\":1,\"title\":\"汤臣一品复式五房\",\"type\":\"二手房\",\"price\":6800,\"area\":380,\"unit_price\":178947,\"rooms\":\"5室3厅\",\"floor\":\"35-36/38\",\"orientation\":\"南\",\"decoration\":\"豪装\",\"vr_url\":\"/vr/tcyp-03.html\",\"property_status\":\"已验证\",\"transaction_history\":\"[{\\\"date\\\":\\\"2018-11\\\",\\\"price\\\":5200}]\",\"agent_id\":1,\"owner_name\":\"许先生\",\"owner_phone\":\"139****0001\",\"description\":\"顶层复式，私家泳池，360度环幕江景。\",\"images\":\"[\\\"/img/tc6.jpg\\\",\\\"/img/tc7.jpg\\\",\\\"/img/tc8.jpg\\\"]\",\"status\":\"在售\",\"created_at\":"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59042/api/auth/me",
+      "path": "/api/auth/me",
+      "status": 200,
+      "ok": true,
+      "bodyPreview": "{\"code\":0,\"data\":{\"id\":3,\"username\":\"王建国\",\"real_name\":\"王建国\",\"phone\":\"13703456789\",\"role\":\"agent\",\"agency\":\"我爱我家\",\"rating\":4.9,\"status\":\"在岗\"},\"message\":\"success\"}"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59042/api/users/profile",
+      "path": "/api/users/profile",
+      "status": 200,
+      "ok": true,
+      "bodyPreview": "{\"code\":0,\"data\":{\"id\":3,\"username\":\"王建国\",\"real_name\":\"王建国\",\"phone\":\"13703456789\",\"role\":\"agent\",\"agency\":\"我爱我家\",\"rating\":4.9,\"status\":\"在岗\"},\"message\":\"success\"}"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59042/api/user/profile",
+      "path": "/api/user/profile",
+      "status": 200,
+      "ok": true,
+      "bodyPreview": "{\"code\":0,\"data\":{\"id\":3,\"username\":\"王建国\",\"real_name\":\"王建国\",\"phone\":\"13703456789\",\"role\":\"agent\",\"agency\":\"我爱我家\",\"rating\":4.9,\"status\":\"在岗\"},\"message\":\"success\"}"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59042/api/search?q=%E6%B5%8B%E8%AF%95",
+      "path": "/api/search?q=%E6%B5%8B%E8%AF%95",
+      "status": 200,
+      "ok": true,
+      "bodyPreview": "{\"code\":0,\"data\":{\"keyword\":\"测试\",\"listings\":[],\"buildings\":[],\"total\":0},\"message\":\"success\"}"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59042/api/admin/stats",
+      "path": "/api/admin/stats",
+      "status": 200,
+      "ok": true,
+      "bodyPreview": "{\"code\":0,\"data\":{\"total_buildings\":10,\"total_listings\":23,\"total_agents\":4,\"total_buyers\":4,\"total_contracts\":1},\"message\":\"success\"}"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59042/api/products",
+      "path": "/api/products",
+      "status": 200,
+      "ok": true,
+      "bodyPreview": "{\"code\":0,\"data\":{\"list\":[{\"id\":23,\"name\":\"万科翡翠公园一房\",\"category\":\"租赁\",\"price\":0.6,\"area\":48,\"rooms\":\"1室1厅\",\"status\":\"在售\",\"building_name\":\"万科翡翠公园\",\"district\":\"徐汇\"},{\"id\":22,\"name\":\"翠湖天地御苑一房\",\"category\":\"租赁\",\"price\":1.2,\"area\":65,\"rooms\":\"1室1厅\",\"status\":\"在售\",\"building_name\":\"翠湖天地御苑\",\"district\":\"黄浦\"},{\"id\":21,\"name\":\"汤臣一品复式五房\",\"category\":\"二手房\",\"price\":6800,\"area\":380,\"rooms\":\"5室3厅\",\"status\":\"在售\",\"building_name\":\"汤臣一品\",\"district\":\"浦东\"},{\"id\":20,\"name\":\"长宁来福士办公位\",\"category\":\"租赁\",\"price\":0.6,\"area\":15,"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59042/api/orders",
+      "path": "/api/orders",
+      "status": 200,
+      "ok": true,
+      "bodyPreview": "{\"code\":0,\"data\":{\"list\":[{\"id\":1,\"contract_no\":\"HT20260604001\",\"amount\":45000000,\"status\":\"已签署\",\"signed_at\":\"2026-06-04 02:41:15\",\"created_at\":\"2026-06-04 02:41:04\",\"listing_title\":\"汤臣一品江景大平层\",\"agent_name\":\"张明辉\",\"buyer_name\":\"陈小明\"}],\"total\":1},\"message\":\"交易订单列表\"}"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59042/api/cart",
+      "path": "/api/cart",
+      "status": 200,
+      "ok": true,
+      "bodyPreview": "{\"code\":0,\"data\":{\"items\":[],\"total\":0,\"message\":\"房产交易以预约看房和合同签署为主，暂无待结算选房清单\"},\"message\":\"success\"}"
+    }
+  ],
+  "dialogs": [],
+  "consoleMessages": [
+    {
+      "type": "debug",
+      "text": "[vite] connecting...",
+      "location": {
+        "url": "http://127.0.0.1:49042/@vite/client",
+        "lineNumber": 494,
+        "columnNumber": 8
+      }
+    },
+    {
+      "type": "debug",
+      "text": "[vite] connected.",
+      "location": {
+        "url": "http://127.0.0.1:49042/@vite/client",
+        "lineNumber": 617,
+        "columnNumber": 14
+      }
+    },
+    {
+      "type": "info",
+      "text": "%cDownload the React DevTools for a better development experience: https://reactjs.org/link/react-devtools font-weight:bold",
+      "location": {
+        "url": "http://127.0.0.1:49042/node_modules/.vite/deps/chunk-PJEEZAML.js?v=9fb48876",
+        "lineNumber": 21550,
+        "columnNumber": 24
+      }
+    },
+    {
+      "type": "warning",
+      "text": "⚠️ React Router Future Flag Warning: React Router will begin wrapping state updates in `React.startTransition` in v7. You can use the `v7_startTransition` future flag to opt-in early. For more information, see https://reactrouter.com/v6/upgrading/future#v7_starttransition.",
+      "location": {
+        "url": "http://127.0.0.1:49042/node_modules/.vite/deps/react-router-dom.js?v=9fb48876",
+        "lineNumber": 4426,
+        "columnNumber": 12
+      }
+    },
+    {
+      "type": "warning",
+      "text": "⚠️ React Router Future Flag Warning: Relative route resolution within Splat routes is changing in v7. You can use the `v7_relativeSplatPath` future flag to opt-in early. For more information, see https://reactrouter.com/v6/upgrading/future#v7_relativesplatpath.",
+      "location": {
+        "url": "http://127.0.0.1:49042/node_modules/.vite/deps/react-router-dom.js?v=9fb48876",
+        "lineNumber": 4426,
+        "columnNumber": 12
+      }
+    },
+    {
+      "type": "error",
+      "text": "The above error occurred in the <ListingManager> component:\n\n    at ListingManager (http://127.0.0.1:49042/src/pages/ListingManager.tsx?t=1780604494606:57:35)\n    at RenderedRoute (http://127.0.0.1:49042/node_modules/.vite/deps/react-router-dom.js?v=9fb48876:4122:5)\n    at Routes (http://127.0.0.1:49042/node_modules/.vite/deps/react-router-dom.js?v=9fb48876:4592:5)\n    at main\n    at http://127.0.0.1:49042/node_modules/.vite/deps/antd.js?v=9fb48876:66570:16\n    at Content\n    at div\n    at http://127.0.0.1:49042/node_modules/.vite/deps/antd.js?v=9fb48876:66589:16\n    at Layout\n    at div\n    at http://127.0.0.1:49042/node_modules/.vite/deps/antd.js?v=9fb48876:66589:16\n    at Layout\n    at App (http://127.0.0.1:49042/src/App.tsx?t=1780604707134:98:20)\n    at Router (http://127.0.0.1:49042/node_modules/.vite/deps/react-router-dom.js?v=9fb48876:4535:15)\n    at BrowserRouter (http://127.0.0.1:49042/node_modules/.vite/deps/react-router-dom.js?v=9fb48876:5273:5)\n\nConsider adding an error boundary to your tree to customize error handling behavior.\nVisit https://reactjs.org/link/error-boundaries to learn more about error boundaries.",
+      "location": {
+        "url": "http://127.0.0.1:49042/node_modules/.vite/deps/chunk-PJEEZAML.js?v=9fb48876",
+        "lineNumber": 14031,
+        "columnNumber": 30
+      }
+    },
+    {
+      "type": "debug",
+      "text": "[vite] connecting...",
+      "location": {
+        "url": "http://127.0.0.1:49042/@vite/client",
+        "lineNumber": 494,
+        "columnNumber": 8
+      }
+    },
+    {
+      "type": "debug",
+      "text": "[vite] connected.",
+      "location": {
+        "url": "http://127.0.0.1:49042/@vite/client",
+        "lineNumber": 617,
+        "columnNumber": 14
+      }
+    },
+    {
+      "type": "info",
+      "text": "%cDownload the React DevTools for a better development experience: https://reactjs.org/link/react-devtools font-weight:bold",
+      "location": {
+        "url": "http://127.0.0.1:49042/node_modules/.vite/deps/chunk-PJEEZAML.js?v=9fb48876",
+        "lineNumber": 21550,
+        "columnNumber": 24
+      }
+    },
+    {
+      "type": "warning",
+      "text": "⚠️ React Router Future Flag Warning: React Router will begin wrapping state updates in `React.startTransition` in v7. You can use the `v7_startTransition` future flag to opt-in early. For more information, see https://reactrouter.com/v6/upgrading/future#v7_starttransition.",
+      "location": {
+        "url": "http://127.0.0.1:49042/node_modules/.vite/deps/react-router-dom.js?v=9fb48876",
+        "lineNumber": 4426,
+        "columnNumber": 12
+      }
+    },
+    {
+      "type": "warning",
+      "text": "⚠️ React Router Future Flag Warning: Relative route resolution within Splat routes is changing in v7. You can use the `v7_relativeSplatPath` future flag to opt-in early. For more information, see https://reactrouter.com/v6/upgrading/future#v7_relativesplatpath.",
+      "location": {
+        "url": "http://127.0.0.1:49042/node_modules/.vite/deps/react-router-dom.js?v=9fb48876",
+        "lineNumber": 4426,
+        "columnNumber": 12
+      }
+    }
+  ],
+  "requestFailures": [],
+  "responseErrors": []
+}

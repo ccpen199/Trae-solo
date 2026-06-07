@@ -1,0 +1,2174 @@
+{
+  "ok": true,
+  "generatedAt": "2026-06-05T11:44:14.497Z",
+  "order": "may-89042",
+  "roundIndex": 3,
+  "captureId": "may-89042-codex-20260605-final",
+  "url": "http://127.0.0.1:49042/",
+  "initialUrl": "http://127.0.0.1:49042/",
+  "finalUrl": "http://127.0.0.1:49042/",
+  "status": 200,
+  "title": "房产交易数字化服务中台",
+  "initialTitle": "房产交易数字化服务中台",
+  "navigationError": "",
+  "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89042/probe/codex-20260605-final-browser/may-89042-codex-20260605-final-frontend.png",
+  "screenshotPaths": [
+    "/Users/chen/Documents/trae_projects/local_projects/may-89042/probe/codex-20260605-final-browser/may-89042-codex-20260605-final-structure-01-首屏.png",
+    "/Users/chen/Documents/trae_projects/local_projects/may-89042/probe/codex-20260605-final-browser/may-89042-codex-20260605-final-structure-02-导航-首页.png",
+    "/Users/chen/Documents/trae_projects/local_projects/may-89042/probe/codex-20260605-final-browser/may-89042-codex-20260605-final-structure-03-导航-地图找房.png",
+    "/Users/chen/Documents/trae_projects/local_projects/may-89042/probe/codex-20260605-final-browser/may-89042-codex-20260605-final-structure-04-操作-查看详情.png",
+    "/Users/chen/Documents/trae_projects/local_projects/may-89042/probe/codex-20260605-final-browser/may-89042-codex-20260605-final-structure-05-二层操作-查看详情-返回搜索.png",
+    "/Users/chen/Documents/trae_projects/local_projects/may-89042/probe/codex-20260605-final-browser/may-89042-codex-20260605-final-structure-06-操作-搜索房源.png",
+    "/Users/chen/Documents/trae_projects/local_projects/may-89042/probe/codex-20260605-final-browser/may-89042-codex-20260605-final-structure-07-导航-房源管理.png",
+    "/Users/chen/Documents/trae_projects/local_projects/may-89042/probe/codex-20260605-final-browser/may-89042-codex-20260605-final-structure-08-操作-详情.png",
+    "/Users/chen/Documents/trae_projects/local_projects/may-89042/probe/codex-20260605-final-browser/may-89042-codex-20260605-final-structure-09-二层操作-详情-发起产权核验.png"
+  ],
+  "issueTextPreview": "",
+  "targetReason": "个人中心/我的相关问题；搜索/筛选相关问题；后台管理相关问题；购买/提交相关问题；详情/内容页相关问题",
+  "targetKind": "personal",
+  "targetMatched": true,
+  "targetActions": [
+    {
+      "action": "click",
+      "label": "个人中心/我的相关问题",
+      "ok": true
+    },
+    {
+      "action": "target-verify",
+      "label": "个人中心/我的相关问题",
+      "ok": true,
+      "finalUrl": "http://127.0.0.1:49042/"
+    }
+  ],
+  "authFlow": {
+    "detected": false,
+    "attempted": false,
+    "success": false,
+    "finalUrl": "http://127.0.0.1:49042/",
+    "message": "",
+    "actions": []
+  },
+  "businessAudit": {
+    "actions": [
+      {
+        "action": "click",
+        "label": "导航:首页",
+        "ok": true
+      },
+      {
+        "action": "click",
+        "label": "导航:地图找房",
+        "ok": true
+      },
+      {
+        "action": "click",
+        "label": "操作:查看详情",
+        "ok": true,
+        "result": {
+          "ok": true,
+          "matched": 11
+        }
+      },
+      {
+        "action": "click",
+        "label": "二层操作:查看详情:返回搜索",
+        "ok": true,
+        "result": {
+          "ok": true,
+          "matched": 1
+        }
+      },
+      {
+        "action": "click",
+        "label": "操作:搜索房源",
+        "ok": true,
+        "result": {
+          "ok": true,
+          "matched": 1
+        }
+      },
+      {
+        "action": "click",
+        "label": "导航:房源管理",
+        "ok": true
+      },
+      {
+        "action": "click",
+        "label": "操作:详情",
+        "ok": true,
+        "result": {
+          "ok": true,
+          "matched": 10
+        }
+      },
+      {
+        "action": "click",
+        "label": "二层操作:详情:发起产权核验",
+        "ok": true,
+        "result": {
+          "ok": true,
+          "matched": 1
+        }
+      },
+      {
+        "action": "click",
+        "label": "关闭弹窗/抽屉",
+        "ok": true
+      }
+    ],
+    "snapshots": [
+      {
+        "label": "首屏",
+        "url": "http://127.0.0.1:49042/",
+        "title": "房产交易数字化服务中台",
+        "headings": [
+          "房产交易数字化服务中台"
+        ],
+        "navLabels": [
+          "首页 地图找房 房源管理 VR看房 小区口碑 政策合规 税费计算 经纪人协作 个人中心 后台管理",
+          "首页",
+          "home",
+          "地图找房",
+          "environment",
+          "房源管理",
+          "build",
+          "VR看房",
+          "video-camera",
+          "小区口碑",
+          "comment",
+          "政策合规",
+          "safety-certificate",
+          "税费计算",
+          "calculator",
+          "经纪人协作",
+          "team",
+          "个人中心",
+          "后台管理",
+          "setting"
+        ],
+        "buttons": [],
+        "links": [],
+        "inputs": [],
+        "tables": [],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "房产交易中台首页地图找房房源管理VR看房小区口碑政策合规税费计算经纪人协作个人中心后台管理房产交易数字化服务中台数据驱动的房产交易综合服务平台楼盘总数10房源总数23经纪人数量4本月成交1地图找房基于地图的智能房源搜索VR看房沉浸式虚拟看房体验政策合规购房资格与限售校验税费计算精准房产税费测算",
+        "layout": {
+          "viewportWidth": 1504,
+          "viewportHeight": 1000,
+          "scrollWidth": 1504,
+          "scrollHeight": 1000,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89042-codex-20260605-final-structure-01-首屏",
+          "label": "首屏",
+          "finalUrl": "http://127.0.0.1:49042/",
+          "title": "房产交易数字化服务中台",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89042/probe/codex-20260605-final-browser/may-89042-codex-20260605-final-structure-01-首屏.json",
+          "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89042/probe/codex-20260605-final-browser/may-89042-codex-20260605-final-structure-01-首屏.png",
+          "elementCount": 172,
+          "interactiveCount": 11,
+          "interactiveLabels": [
+            "首页 地图找房 房源管理 VR看房 小区口碑 政策合规 税费计算 经纪人协作 个人中心 后台管理",
+            "首页",
+            "地图找房",
+            "房源管理",
+            "VR看房",
+            "小区口碑",
+            "政策合规",
+            "税费计算",
+            "经纪人协作",
+            "个人中心",
+            "后台管理"
+          ]
+        }
+      },
+      {
+        "label": "导航:首页",
+        "url": "http://127.0.0.1:49042/",
+        "title": "房产交易数字化服务中台",
+        "headings": [
+          "房产交易数字化服务中台"
+        ],
+        "navLabels": [
+          "首页 地图找房 房源管理 VR看房 小区口碑 政策合规 税费计算 经纪人协作 个人中心 后台管理",
+          "首页",
+          "home",
+          "地图找房",
+          "environment",
+          "房源管理",
+          "build",
+          "VR看房",
+          "video-camera",
+          "小区口碑",
+          "comment",
+          "政策合规",
+          "safety-certificate",
+          "税费计算",
+          "calculator",
+          "经纪人协作",
+          "team",
+          "个人中心",
+          "后台管理",
+          "setting"
+        ],
+        "buttons": [],
+        "links": [],
+        "inputs": [],
+        "tables": [],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "房产交易中台首页地图找房房源管理VR看房小区口碑政策合规税费计算经纪人协作个人中心后台管理房产交易数字化服务中台数据驱动的房产交易综合服务平台楼盘总数10房源总数23经纪人数量4本月成交1地图找房基于地图的智能房源搜索VR看房沉浸式虚拟看房体验政策合规购房资格与限售校验税费计算精准房产税费测算",
+        "layout": {
+          "viewportWidth": 1536,
+          "viewportHeight": 1000,
+          "scrollWidth": 1536,
+          "scrollHeight": 1000,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89042-codex-20260605-final-structure-02-导航-首页",
+          "label": "导航:首页",
+          "finalUrl": "http://127.0.0.1:49042/",
+          "title": "房产交易数字化服务中台",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89042/probe/codex-20260605-final-browser/may-89042-codex-20260605-final-structure-02-导航-首页.json",
+          "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89042/probe/codex-20260605-final-browser/may-89042-codex-20260605-final-structure-02-导航-首页.png",
+          "elementCount": 172,
+          "interactiveCount": 11,
+          "interactiveLabels": [
+            "首页 地图找房 房源管理 VR看房 小区口碑 政策合规 税费计算 经纪人协作 个人中心 后台管理",
+            "首页",
+            "地图找房",
+            "房源管理",
+            "VR看房",
+            "小区口碑",
+            "政策合规",
+            "税费计算",
+            "经纪人协作",
+            "个人中心",
+            "后台管理"
+          ]
+        }
+      },
+      {
+        "label": "导航:地图找房",
+        "url": "http://127.0.0.1:49042/map",
+        "title": "房产交易数字化服务中台",
+        "headings": [
+          "地图找房",
+          "筛选房源"
+        ],
+        "navLabels": [
+          "首页 地图找房 房源管理 VR看房 小区口碑 政策合规 税费计算 经纪人协作 个人中心 后台管理",
+          "首页",
+          "home",
+          "地图找房",
+          "environment",
+          "房源管理",
+          "build",
+          "VR看房",
+          "video-camera",
+          "小区口碑",
+          "comment",
+          "政策合规",
+          "safety-certificate",
+          "税费计算",
+          "calculator",
+          "经纪人协作",
+          "team",
+          "个人中心",
+          "后台管理",
+          "setting"
+        ],
+        "buttons": [
+          "搜索房源",
+          "6800万",
+          "850万",
+          "1560万",
+          "980万",
+          "1050万",
+          "1800万",
+          "1200万",
+          "1680万",
+          "3800万",
+          "3200万",
+          "4500万",
+          "+",
+          "−",
+          "查看详情"
+        ],
+        "links": [
+          "+",
+          "−",
+          "Leaflet"
+        ],
+        "inputs": [
+          {
+            "tag": "input",
+            "type": "text",
+            "placeholder": "搜索小区、地址...",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "search",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "search",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "checkbox",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "checkbox",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          }
+        ],
+        "tables": [],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "房产交易中台首页地图找房房源管理VR看房小区口碑政策合规税费计算经纪人协作个人中心后台管理地图找房基于地理位置的智能房源搜索，支持学区、地铁、价格带多维度叠加筛选 筛选房源关键词搜索区域选择区域房源类型二手房新房租赁价格范围（万元）: 0 - 5000房间数选择房间数学区房地铁沿线搜索房源6800万850万1560万980万1050万1800万1200万1680万3800万3200万4500万+− Leaflet搜索结果（11套）汤臣一品复式五房6800万380㎡ | 5室3厅二手房汤臣一品建平中学地铁沿线查看详情绿地海珀外滩两房850万62㎡ | 2室1厅二手房绿地海珀外滩大同中学地铁沿线查看详情绿地海珀外滩江景三房1560万110㎡ | 3室2厅二手房绿地海珀外滩大同中学地铁沿线查看详情中粮海景壹号江景三房980万100㎡ | 3室2厅二手房中粮海景壹号复兴高级中学地铁沿线查看详情仁恒河滨城河景三房1050万100㎡ | 3室2厅二手房仁恒河滨城洋泾中学地铁沿线查看详情万科翡翠公园复式四房1800万150㎡ | 4室2厅二手房万科翡翠公园位育中学地铁沿线查看详情万科翡翠公园舒适三房1200万100㎡ | 3室1厅二手房万科翡翠公园位育中学地铁沿线查看详情翠湖天地温馨两房1680万108㎡ | 2室1厅二手房翠湖天地御苑卢湾中学地铁沿线查看详情翠湖天地御苑湖景四房3800万245㎡ | 4室2厅二手房翠湖天地御苑卢湾中学地铁沿线查看详情汤臣一品精装三房3200万180㎡ | 3室2厅二手房汤臣一品建平中学地铁沿线查看详情汤臣一品江景大平层4500万250㎡ | 4室2厅二手房汤臣一品建平中学地铁沿线查看详情",
+        "layout": {
+          "viewportWidth": 1568,
+          "viewportHeight": 1000,
+          "scrollWidth": 1568,
+          "scrollHeight": 1000,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89042-codex-20260605-final-structure-03-导航-地图找房",
+          "label": "导航:地图找房",
+          "finalUrl": "http://127.0.0.1:49042/map",
+          "title": "房产交易数字化服务中台",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89042/probe/codex-20260605-final-browser/may-89042-codex-20260605-final-structure-03-导航-地图找房.json",
+          "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89042/probe/codex-20260605-final-browser/may-89042-codex-20260605-final-structure-03-导航-地图找房.png",
+          "elementCount": 470,
+          "interactiveCount": 48,
+          "interactiveLabels": [
+            "首页 地图找房 房源管理 VR看房 小区口碑 政策合规 税费计算 经纪人协作 个人中心 后台管理",
+            "首页",
+            "地图找房",
+            "房源管理",
+            "VR看房",
+            "小区口碑",
+            "政策合规",
+            "税费计算",
+            "经纪人协作",
+            "个人中心",
+            "后台管理",
+            "搜索小区、地址...",
+            "二手房",
+            "on",
+            "搜索房源",
+            "6800万 850万 1560万 980万 1050万 1800万 1200万 1680万 3800万 3200万 4500万 + − Leaflet",
+            "6800万",
+            "850万",
+            "1560万",
+            "980万",
+            "1050万",
+            "1800万",
+            "1200万",
+            "1680万",
+            "3800万",
+            "3200万",
+            "4500万",
+            "Leaflet",
+            "查看详情"
+          ]
+        }
+      },
+      {
+        "label": "操作:查看详情",
+        "url": "http://127.0.0.1:49042/listings/21",
+        "title": "房产交易数字化服务中台",
+        "headings": [
+          "汤臣一品复式五房"
+        ],
+        "navLabels": [
+          "首页 地图找房 房源管理 VR看房 小区口碑 政策合规 税费计算 经纪人协作 个人中心 后台管理",
+          "首页",
+          "home",
+          "地图找房",
+          "environment",
+          "房源管理",
+          "build",
+          "VR看房",
+          "video-camera",
+          "小区口碑",
+          "comment",
+          "政策合规",
+          "safety-certificate",
+          "税费计算",
+          "calculator",
+          "经纪人协作",
+          "team",
+          "个人中心",
+          "后台管理",
+          "setting"
+        ],
+        "buttons": [
+          "联系经纪人",
+          "预约看房",
+          "VR看房",
+          "计算税费",
+          "购房资格预审",
+          "返回搜索"
+        ],
+        "links": [],
+        "inputs": [],
+        "tables": [
+          {
+            "headers": [
+              "房源标题",
+              "售价",
+              "面积",
+              "户型",
+              "楼层",
+              "朝向",
+              "装修",
+              "类型",
+              "单价",
+              "所属小区",
+              "区域",
+              "地址"
+            ],
+            "rowCount": 4,
+            "hasEmptyText": false,
+            "textPreview": "房源标题 汤臣一品复式五房 售价 6800万元 面积 380㎡ 户型 5室3厅 楼层 35-36/38 朝向 南 装修 豪装 类型 二手房 单价 178,947元/㎡ 所属小区 汤臣一品 区域 浦东 地址 浦东新区花园石桥路28弄"
+          }
+        ],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "房产交易中台首页地图找房房源管理VR看房小区口碑政策合规税费计算经纪人协作个人中心后台管理汤臣一品复式五房 浦东新区花园石桥路28弄基本信息产权核验历史成交小区点评房源标题汤臣一品复式五房售价6800万元面积380㎡户型5室3厅楼层35-36/38朝向南装修豪装类型二手房单价178,947元/㎡所属小区汤臣一品区域浦东地址浦东新区花园石桥路28弄6800万元面积380㎡户型5室3厅单价17.89万/㎡产权状态：已验证经纪人信息张明辉链家地产 13901234567联系经纪人预约看房VR看房计算税费购房资格预审返回搜索",
+        "layout": {
+          "viewportWidth": 1600,
+          "viewportHeight": 1000,
+          "scrollWidth": 1600,
+          "scrollHeight": 1000,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89042-codex-20260605-final-structure-04-操作-查看详情",
+          "label": "操作:查看详情",
+          "finalUrl": "http://127.0.0.1:49042/listings/21",
+          "title": "房产交易数字化服务中台",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89042/probe/codex-20260605-final-browser/may-89042-codex-20260605-final-structure-04-操作-查看详情.json",
+          "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89042/probe/codex-20260605-final-browser/may-89042-codex-20260605-final-structure-04-操作-查看详情.png",
+          "elementCount": 280,
+          "interactiveCount": 20,
+          "interactiveLabels": [
+            "首页 地图找房 房源管理 VR看房 小区口碑 政策合规 税费计算 经纪人协作 个人中心 后台管理",
+            "首页",
+            "地图找房",
+            "房源管理",
+            "VR看房",
+            "小区口碑",
+            "政策合规",
+            "税费计算",
+            "经纪人协作",
+            "个人中心",
+            "后台管理",
+            "基本信息",
+            "房源标题 汤臣一品复式五房 售价 6800万元 面积 380㎡ 户型 5室3厅 楼层 35-36/38 朝向 南 装修 豪装 类型 二手房 单价 178,947元/㎡ 所属小区 汤臣一品 区域 浦东 地址 浦东新区花园石桥路28弄",
+            "联系经纪人",
+            "预约看房",
+            "计算税费",
+            "购房资格预审",
+            "返回搜索"
+          ]
+        }
+      },
+      {
+        "label": "二层操作:查看详情->返回搜索",
+        "url": "http://127.0.0.1:49042/map",
+        "title": "房产交易数字化服务中台",
+        "headings": [
+          "地图找房",
+          "筛选房源"
+        ],
+        "navLabels": [
+          "首页 地图找房 房源管理 VR看房 小区口碑 政策合规 税费计算 经纪人协作 个人中心 后台管理",
+          "首页",
+          "home",
+          "地图找房",
+          "environment",
+          "房源管理",
+          "build",
+          "VR看房",
+          "video-camera",
+          "小区口碑",
+          "comment",
+          "政策合规",
+          "safety-certificate",
+          "税费计算",
+          "calculator",
+          "经纪人协作",
+          "team",
+          "个人中心",
+          "后台管理",
+          "setting"
+        ],
+        "buttons": [
+          "搜索房源",
+          "6800万",
+          "850万",
+          "1560万",
+          "980万",
+          "1050万",
+          "1800万",
+          "1200万",
+          "1680万",
+          "3800万",
+          "3200万",
+          "4500万",
+          "+",
+          "−",
+          "查看详情"
+        ],
+        "links": [
+          "+",
+          "−",
+          "Leaflet"
+        ],
+        "inputs": [
+          {
+            "tag": "input",
+            "type": "text",
+            "placeholder": "搜索小区、地址...",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "search",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "search",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "checkbox",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "checkbox",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          }
+        ],
+        "tables": [],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "房产交易中台首页地图找房房源管理VR看房小区口碑政策合规税费计算经纪人协作个人中心后台管理地图找房基于地理位置的智能房源搜索，支持学区、地铁、价格带多维度叠加筛选 筛选房源关键词搜索区域选择区域房源类型二手房新房租赁价格范围（万元）: 0 - 5000房间数选择房间数学区房地铁沿线搜索房源6800万850万1560万980万1050万1800万1200万1680万3800万3200万4500万+− Leaflet搜索结果（11套）汤臣一品复式五房6800万380㎡ | 5室3厅二手房汤臣一品建平中学地铁沿线查看详情绿地海珀外滩两房850万62㎡ | 2室1厅二手房绿地海珀外滩大同中学地铁沿线查看详情绿地海珀外滩江景三房1560万110㎡ | 3室2厅二手房绿地海珀外滩大同中学地铁沿线查看详情中粮海景壹号江景三房980万100㎡ | 3室2厅二手房中粮海景壹号复兴高级中学地铁沿线查看详情仁恒河滨城河景三房1050万100㎡ | 3室2厅二手房仁恒河滨城洋泾中学地铁沿线查看详情万科翡翠公园复式四房1800万150㎡ | 4室2厅二手房万科翡翠公园位育中学地铁沿线查看详情万科翡翠公园舒适三房1200万100㎡ | 3室1厅二手房万科翡翠公园位育中学地铁沿线查看详情翠湖天地温馨两房1680万108㎡ | 2室1厅二手房翠湖天地御苑卢湾中学地铁沿线查看详情翠湖天地御苑湖景四房3800万245㎡ | 4室2厅二手房翠湖天地御苑卢湾中学地铁沿线查看详情汤臣一品精装三房3200万180㎡ | 3室2厅二手房汤臣一品建平中学地铁沿线查看详情汤臣一品江景大平层4500万250㎡ | 4室2厅二手房汤臣一品建平中学地铁沿线查看详情",
+        "layout": {
+          "viewportWidth": 1632,
+          "viewportHeight": 1000,
+          "scrollWidth": 1632,
+          "scrollHeight": 1000,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89042-codex-20260605-final-structure-05-二层操作-查看详情-返回搜索",
+          "label": "二层操作:查看详情->返回搜索",
+          "finalUrl": "http://127.0.0.1:49042/map",
+          "title": "房产交易数字化服务中台",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89042/probe/codex-20260605-final-browser/may-89042-codex-20260605-final-structure-05-二层操作-查看详情-返回搜索.json",
+          "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89042/probe/codex-20260605-final-browser/may-89042-codex-20260605-final-structure-05-二层操作-查看详情-返回搜索.png",
+          "elementCount": 470,
+          "interactiveCount": 48,
+          "interactiveLabels": [
+            "首页 地图找房 房源管理 VR看房 小区口碑 政策合规 税费计算 经纪人协作 个人中心 后台管理",
+            "首页",
+            "地图找房",
+            "房源管理",
+            "VR看房",
+            "小区口碑",
+            "政策合规",
+            "税费计算",
+            "经纪人协作",
+            "个人中心",
+            "后台管理",
+            "搜索小区、地址...",
+            "二手房",
+            "on",
+            "搜索房源",
+            "6800万 850万 1560万 980万 1050万 1800万 1200万 1680万 3800万 3200万 4500万 + − Leaflet",
+            "6800万",
+            "850万",
+            "1560万",
+            "980万",
+            "1050万",
+            "1800万",
+            "1200万",
+            "1680万",
+            "3800万",
+            "3200万",
+            "4500万",
+            "Leaflet",
+            "查看详情"
+          ]
+        }
+      },
+      {
+        "label": "操作:搜索房源",
+        "url": "http://127.0.0.1:49042/map",
+        "title": "房产交易数字化服务中台",
+        "headings": [
+          "地图找房",
+          "筛选房源"
+        ],
+        "navLabels": [
+          "首页 地图找房 房源管理 VR看房 小区口碑 政策合规 税费计算 经纪人协作 个人中心 后台管理",
+          "首页",
+          "home",
+          "地图找房",
+          "environment",
+          "房源管理",
+          "build",
+          "VR看房",
+          "video-camera",
+          "小区口碑",
+          "comment",
+          "政策合规",
+          "safety-certificate",
+          "税费计算",
+          "calculator",
+          "经纪人协作",
+          "team",
+          "个人中心",
+          "后台管理",
+          "setting"
+        ],
+        "buttons": [
+          "搜索房源",
+          "6800万",
+          "850万",
+          "1560万",
+          "980万",
+          "1050万",
+          "1800万",
+          "1200万",
+          "1680万",
+          "3800万",
+          "3200万",
+          "4500万",
+          "+",
+          "−",
+          "查看详情"
+        ],
+        "links": [
+          "+",
+          "−",
+          "Leaflet"
+        ],
+        "inputs": [
+          {
+            "tag": "input",
+            "type": "text",
+            "placeholder": "搜索小区、地址...",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "search",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "search",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "checkbox",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "checkbox",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          }
+        ],
+        "tables": [],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "房产交易中台首页地图找房房源管理VR看房小区口碑政策合规税费计算经纪人协作个人中心后台管理地图找房基于地理位置的智能房源搜索，支持学区、地铁、价格带多维度叠加筛选 筛选房源关键词搜索区域选择区域房源类型二手房新房租赁价格范围（万元）: 0 - 5000房间数选择房间数学区房地铁沿线搜索房源6800万850万1560万980万1050万1800万1200万1680万3800万3200万4500万+− Leaflet搜索结果（11套）汤臣一品复式五房6800万380㎡ | 5室3厅二手房汤臣一品建平中学地铁沿线查看详情绿地海珀外滩两房850万62㎡ | 2室1厅二手房绿地海珀外滩大同中学地铁沿线查看详情绿地海珀外滩江景三房1560万110㎡ | 3室2厅二手房绿地海珀外滩大同中学地铁沿线查看详情中粮海景壹号江景三房980万100㎡ | 3室2厅二手房中粮海景壹号复兴高级中学地铁沿线查看详情仁恒河滨城河景三房1050万100㎡ | 3室2厅二手房仁恒河滨城洋泾中学地铁沿线查看详情万科翡翠公园复式四房1800万150㎡ | 4室2厅二手房万科翡翠公园位育中学地铁沿线查看详情万科翡翠公园舒适三房1200万100㎡ | 3室1厅二手房万科翡翠公园位育中学地铁沿线查看详情翠湖天地温馨两房1680万108㎡ | 2室1厅二手房翠湖天地御苑卢湾中学地铁沿线查看详情翠湖天地御苑湖景四房3800万245㎡ | 4室2厅二手房翠湖天地御苑卢湾中学地铁沿线查看详情汤臣一品精装三房3200万180㎡ | 3室2厅二手房汤臣一品建平中学地铁沿线查看详情汤臣一品江景大平层4500万250㎡ | 4室2厅二手房汤臣一品建平中学地铁沿线查看详情",
+        "layout": {
+          "viewportWidth": 1664,
+          "viewportHeight": 1000,
+          "scrollWidth": 1664,
+          "scrollHeight": 1000,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89042-codex-20260605-final-structure-06-操作-搜索房源",
+          "label": "操作:搜索房源",
+          "finalUrl": "http://127.0.0.1:49042/map",
+          "title": "房产交易数字化服务中台",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89042/probe/codex-20260605-final-browser/may-89042-codex-20260605-final-structure-06-操作-搜索房源.json",
+          "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89042/probe/codex-20260605-final-browser/may-89042-codex-20260605-final-structure-06-操作-搜索房源.png",
+          "elementCount": 472,
+          "interactiveCount": 48,
+          "interactiveLabels": [
+            "首页 地图找房 房源管理 VR看房 小区口碑 政策合规 税费计算 经纪人协作 个人中心 后台管理",
+            "首页",
+            "地图找房",
+            "房源管理",
+            "VR看房",
+            "小区口碑",
+            "政策合规",
+            "税费计算",
+            "经纪人协作",
+            "个人中心",
+            "后台管理",
+            "搜索小区、地址...",
+            "二手房",
+            "on",
+            "搜索房源",
+            "6800万 850万 1560万 980万 1050万 1800万 1200万 1680万 3800万 3200万 4500万 + − Leaflet",
+            "6800万",
+            "850万",
+            "1560万",
+            "980万",
+            "1050万",
+            "1800万",
+            "1200万",
+            "1680万",
+            "3800万",
+            "3200万",
+            "4500万",
+            "Leaflet",
+            "查看详情"
+          ]
+        }
+      },
+      {
+        "label": "导航:房源管理",
+        "url": "http://127.0.0.1:49042/listings",
+        "title": "房产交易数字化服务中台",
+        "headings": [
+          "房源管理"
+        ],
+        "navLabels": [
+          "首页 地图找房 房源管理 VR看房 小区口碑 政策合规 税费计算 经纪人协作 个人中心 后台管理",
+          "首页",
+          "home",
+          "地图找房",
+          "environment",
+          "房源管理",
+          "build",
+          "VR看房",
+          "video-camera",
+          "小区口碑",
+          "comment",
+          "政策合规",
+          "safety-certificate",
+          "税费计算",
+          "calculator",
+          "经纪人协作",
+          "team",
+          "个人中心",
+          "后台管理",
+          "setting"
+        ],
+        "buttons": [
+          "详情",
+          "产权核验"
+        ],
+        "links": [],
+        "inputs": [],
+        "tables": [
+          {
+            "headers": [
+              "ID",
+              "房源标题",
+              "所属楼盘",
+              "价格",
+              "面积",
+              "户型",
+              "类型",
+              "产权状态",
+              "VR看房",
+              "操作",
+              "ID",
+              "房源标题"
+            ],
+            "rowCount": 10,
+            "hasEmptyText": false,
+            "textPreview": "ID 房源标题 所属楼盘 价格 面积 户型 类型 产权状态 VR看房 操作 ID 房源标题 所属楼盘 价格 面积 户型 类型 产权状态 VR看房 操作 23 万科翡翠公园一房 万科翡翠公园 0.6万 48㎡ 1室1厅 租赁 待验证 无 详情 产权核验 22 翠湖天地御苑一房 翠湖天地御苑 1.2万 65㎡ 1室1厅 租赁 待验证 无 详情 产权核验 21 汤臣一品复式五房 汤臣一品 6,800万 380㎡ 5室3厅 二手房 待验证 有 详情 产权核验 20 长宁来福士办公位 长宁来福士广场 0.6万 15㎡ 办公 租赁 待验证 无 详情 产权核验 19 长宁来福士商铺 长宁来福士广场 8万 2"
+          }
+        ],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "房产交易中台首页地图找房房源管理VR看房小区口碑政策合规税费计算经纪人协作个人中心后台管理房源管理房源列表、产权状态核验、历史成交记录、核验记录管理房源总数23已核验0有抵押0待核验0ID房源标题所属楼盘价格面积户型类型产权状态VR看房操作ID房源标题所属楼盘价格面积户型类型产权状态VR看房操作23万科翡翠公园一房万科翡翠公园0.6万48㎡1室1厅租赁待验证无详情产权核验22翠湖天地御苑一房翠湖天地御苑1.2万65㎡1室1厅租赁待验证无详情产权核验21汤臣一品复式五房汤臣一品6,800万380㎡5室3厅二手房待验证有详情产权核验20长宁来福士办公位长宁来福士广场0.6万15㎡办公租赁待验证无详情产权核验19长宁来福士商铺长宁来福士广场8万200㎡商业租赁待验证有详情产权核验18陆家嘴金融中心小面积办公陆家嘴金融中心3.5万100㎡办公租赁待验证无详情产权核验17陆家嘴金融中心甲级写字楼陆家嘴金融中心12万320㎡办公租赁待验证有详情产权核验16绿地海珀外滩两房绿地海珀外滩850万62㎡2室1厅二手房待验证无详情产权核验15绿地海珀外滩江景三房绿地海珀外滩1,560万110㎡3室2厅二手房待验证有详情产权核验14保利西岸精致三房保利西岸1,120万88㎡3室1厅新房待验证无详情产权核验共 23 条记录123",
+        "layout": {
+          "viewportWidth": 1696,
+          "viewportHeight": 1000,
+          "scrollWidth": 1696,
+          "scrollHeight": 1000,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89042-codex-20260605-final-structure-07-导航-房源管理",
+          "label": "导航:房源管理",
+          "finalUrl": "http://127.0.0.1:49042/listings",
+          "title": "房产交易数字化服务中台",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89042/probe/codex-20260605-final-browser/may-89042-codex-20260605-final-structure-07-导航-房源管理.json",
+          "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89042/probe/codex-20260605-final-browser/may-89042-codex-20260605-final-structure-07-导航-房源管理.png",
+          "elementCount": 539,
+          "interactiveCount": 40,
+          "interactiveLabels": [
+            "首页 地图找房 房源管理 VR看房 小区口碑 政策合规 税费计算 经纪人协作 个人中心 后台管理",
+            "首页",
+            "地图找房",
+            "房源管理",
+            "VR看房",
+            "小区口碑",
+            "政策合规",
+            "税费计算",
+            "经纪人协作",
+            "个人中心",
+            "后台管理",
+            "详情",
+            "产权核验",
+            "1",
+            "2",
+            "3",
+            "Next Page"
+          ]
+        }
+      },
+      {
+        "label": "操作:详情",
+        "url": "http://127.0.0.1:49042/listings",
+        "title": "房产交易数字化服务中台",
+        "headings": [
+          "房源管理"
+        ],
+        "navLabels": [
+          "首页 地图找房 房源管理 VR看房 小区口碑 政策合规 税费计算 经纪人协作 个人中心 后台管理",
+          "首页",
+          "home",
+          "地图找房",
+          "environment",
+          "房源管理",
+          "build",
+          "VR看房",
+          "video-camera",
+          "小区口碑",
+          "comment",
+          "政策合规",
+          "safety-certificate",
+          "税费计算",
+          "calculator",
+          "经纪人协作",
+          "team",
+          "个人中心",
+          "后台管理",
+          "setting"
+        ],
+        "buttons": [
+          "详情",
+          "产权核验",
+          "Close",
+          "关 闭",
+          "发起产权核验"
+        ],
+        "links": [],
+        "inputs": [],
+        "tables": [
+          {
+            "headers": [
+              "ID",
+              "房源标题",
+              "所属楼盘",
+              "价格",
+              "面积",
+              "户型",
+              "类型",
+              "产权状态",
+              "VR看房",
+              "操作",
+              "ID",
+              "房源标题"
+            ],
+            "rowCount": 10,
+            "hasEmptyText": false,
+            "textPreview": "ID 房源标题 所属楼盘 价格 面积 户型 类型 产权状态 VR看房 操作 ID 房源标题 所属楼盘 价格 面积 户型 类型 产权状态 VR看房 操作 23 万科翡翠公园一房 万科翡翠公园 0.6万 48㎡ 1室1厅 租赁 待验证 无 详情 产权核验 22 翠湖天地御苑一房 翠湖天地御苑 1.2万 65㎡ 1室1厅 租赁 待验证 无 详情 产权核验 21 汤臣一品复式五房 汤臣一品 6,800万 380㎡ 5室3厅 二手房 待验证 有 详情 产权核验 20 长宁来福士办公位 长宁来福士广场 0.6万 15㎡ 办公 租赁 待验证 无 详情 产权核验 19 长宁来福士商铺 长宁来福士广场 8万 2"
+          },
+          {
+            "headers": [
+              "房源标题",
+              "所属楼盘",
+              "房源类型",
+              "售价",
+              "面积",
+              "户型",
+              "楼层",
+              "朝向",
+              "装修",
+              "产权状态",
+              "VR看房"
+            ],
+            "rowCount": 7,
+            "hasEmptyText": false,
+            "textPreview": "房源标题 万科翡翠公园一房 所属楼盘 万科翡翠公园 房源类型 租赁 售价 0.6万 面积 48㎡ 户型 1室1厅 楼层 15/22 朝向 南 装修 精装 产权状态 待验证 VR看房 暂未上传VR"
+          }
+        ],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "房产交易中台首页地图找房房源管理VR看房小区口碑政策合规税费计算经纪人协作个人中心后台管理房源管理房源列表、产权状态核验、历史成交记录、核验记录管理房源总数23已核验0有抵押0待核验0ID房源标题所属楼盘价格面积户型类型产权状态VR看房操作ID房源标题所属楼盘价格面积户型类型产权状态VR看房操作23万科翡翠公园一房万科翡翠公园0.6万48㎡1室1厅租赁待验证无详情产权核验22翠湖天地御苑一房翠湖天地御苑1.2万65㎡1室1厅租赁待验证无详情产权核验21汤臣一品复式五房汤臣一品6,800万380㎡5室3厅二手房待验证有详情产权核验20长宁来福士办公位长宁来福士广场0.6万15㎡办公租赁待验证无详情产权核验19长宁来福士商铺长宁来福士广场8万200㎡商业租赁待验证有详情产权核验18陆家嘴金融中心小面积办公陆家嘴金融中心3.5万100㎡办公租赁待验证无详情产权核验17陆家嘴金融中心甲级写字楼陆家嘴金融中心12万320㎡办公租赁待验证有详情产权核验16绿地海珀外滩两房绿地海珀外滩850万62㎡2室1厅二手房待验证无详情产权核验15绿地海珀外滩江景三房绿地海珀外滩1,560万110㎡3室2厅二手房待验证有详情产权核验14保利西岸精致三房保利西岸1,120万88㎡3室1厅新房待验证无详情产权核验共 23 条记录123 房源详情与核验记录房源标题万科翡翠公园一房所属楼盘万科翡翠公园房源类型租赁售价0.6万面积48㎡户型1室1厅楼层15/22朝向南装修精装产权状态待验证VR看房暂未上传VR历史成交记录暂无历史成交记录核验记录（共 0 次）暂无核验记录，点击右下角\"发起产权核验\"按钮开始核验关 闭发起产权核验",
+        "layout": {
+          "viewportWidth": 1728,
+          "viewportHeight": 1000,
+          "scrollWidth": 1728,
+          "scrollHeight": 1000,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89042-codex-20260605-final-structure-08-操作-详情",
+          "label": "操作:详情",
+          "finalUrl": "http://127.0.0.1:49042/listings",
+          "title": "房产交易数字化服务中台",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89042/probe/codex-20260605-final-browser/may-89042-codex-20260605-final-structure-08-操作-详情.json",
+          "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89042/probe/codex-20260605-final-browser/may-89042-codex-20260605-final-structure-08-操作-详情.png",
+          "elementCount": 649,
+          "interactiveCount": 45,
+          "interactiveLabels": [
+            "首页 地图找房 房源管理 VR看房 小区口碑 政策合规 税费计算 经纪人协作 个人中心 后台管理",
+            "首页",
+            "地图找房",
+            "房源管理",
+            "VR看房",
+            "小区口碑",
+            "政策合规",
+            "税费计算",
+            "经纪人协作",
+            "个人中心",
+            "后台管理",
+            "详情",
+            "产权核验",
+            "1",
+            "2",
+            "3",
+            "Next Page",
+            "房源详情与核验记录 房源标题 万科翡翠公园一房 所属楼盘 万科翡翠公园 房源类型 租赁 售价 0.6万 面积 48㎡ 户型 1室1厅 楼层 15/22 朝向 南 装修 精装 产权状态 待验证 VR看房 暂未上传VR 历史成交记录 暂无历史成交记录 核验记录（共 0 次） 暂无核验记录，点击右下角\"发起产权核验\"按钮开始核验 关 闭 发起产权核验",
+            "Close",
+            "关 闭",
+            "发起产权核验"
+          ]
+        }
+      },
+      {
+        "label": "二层操作:详情->发起产权核验",
+        "url": "http://127.0.0.1:49042/listings",
+        "title": "房产交易数字化服务中台",
+        "headings": [
+          "房源管理"
+        ],
+        "navLabels": [
+          "首页 地图找房 房源管理 VR看房 小区口碑 政策合规 税费计算 经纪人协作 个人中心 后台管理",
+          "首页",
+          "home",
+          "地图找房",
+          "environment",
+          "房源管理",
+          "build",
+          "VR看房",
+          "video-camera",
+          "小区口碑",
+          "comment",
+          "政策合规",
+          "safety-certificate",
+          "税费计算",
+          "calculator",
+          "经纪人协作",
+          "team",
+          "个人中心",
+          "后台管理",
+          "setting"
+        ],
+        "buttons": [
+          "详情",
+          "产权核验",
+          "Close",
+          "取 消",
+          "确认核验"
+        ],
+        "links": [],
+        "inputs": [
+          {
+            "tag": "input",
+            "type": "text",
+            "placeholder": "如：沪(2022)浦字不动产权第001234号",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "text",
+            "placeholder": "请输入复查人姓名",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "radio",
+            "placeholder": "",
+            "name": "has_mortgage",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "radio",
+            "placeholder": "",
+            "name": "has_mortgage",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "radio",
+            "placeholder": "",
+            "name": "has_seizure",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "radio",
+            "placeholder": "",
+            "name": "has_seizure",
+            "label": ""
+          },
+          {
+            "tag": "textarea",
+            "type": "",
+            "placeholder": "请输入核验结论，如：产权清晰，无抵押无查封，可正常交易",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "textarea",
+            "type": "",
+            "placeholder": "核验过程中的其他说明",
+            "name": "",
+            "label": ""
+          }
+        ],
+        "tables": [
+          {
+            "headers": [
+              "ID",
+              "房源标题",
+              "所属楼盘",
+              "价格",
+              "面积",
+              "户型",
+              "类型",
+              "产权状态",
+              "VR看房",
+              "操作",
+              "ID",
+              "房源标题"
+            ],
+            "rowCount": 10,
+            "hasEmptyText": false,
+            "textPreview": "ID 房源标题 所属楼盘 价格 面积 户型 类型 产权状态 VR看房 操作 ID 房源标题 所属楼盘 价格 面积 户型 类型 产权状态 VR看房 操作 23 万科翡翠公园一房 万科翡翠公园 0.6万 48㎡ 1室1厅 租赁 待验证 无 详情 产权核验 22 翠湖天地御苑一房 翠湖天地御苑 1.2万 65㎡ 1室1厅 租赁 待验证 无 详情 产权核验 21 汤臣一品复式五房 汤臣一品 6,800万 380㎡ 5室3厅 二手房 待验证 有 详情 产权核验 20 长宁来福士办公位 长宁来福士广场 0.6万 15㎡ 办公 租赁 待验证 无 详情 产权核验 19 长宁来福士商铺 长宁来福士广场 8万 2"
+          },
+          {
+            "headers": [
+              "房源",
+              "当前产权状态",
+              "价格"
+            ],
+            "rowCount": 2,
+            "hasEmptyText": false,
+            "textPreview": "房源 万科翡翠公园一房 当前产权状态 待验证 价格 0.6万"
+          }
+        ],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "房产交易中台首页地图找房房源管理VR看房小区口碑政策合规税费计算经纪人协作个人中心后台管理房源管理房源列表、产权状态核验、历史成交记录、核验记录管理房源总数23已核验0有抵押0待核验0ID房源标题所属楼盘价格面积户型类型产权状态VR看房操作ID房源标题所属楼盘价格面积户型类型产权状态VR看房操作23万科翡翠公园一房万科翡翠公园0.6万48㎡1室1厅租赁待验证无详情产权核验22翠湖天地御苑一房翠湖天地御苑1.2万65㎡1室1厅租赁待验证无详情产权核验21汤臣一品复式五房汤臣一品6,800万380㎡5室3厅二手房待验证有详情产权核验20长宁来福士办公位长宁来福士广场0.6万15㎡办公租赁待验证无详情产权核验19长宁来福士商铺长宁来福士广场8万200㎡商业租赁待验证有详情产权核验18陆家嘴金融中心小面积办公陆家嘴金融中心3.5万100㎡办公租赁待验证无详情产权核验17陆家嘴金融中心甲级写字楼陆家嘴金融中心12万320㎡办公租赁待验证有详情产权核验16绿地海珀外滩两房绿地海珀外滩850万62㎡2室1厅二手房待验证无详情产权核验15绿地海珀外滩江景三房绿地海珀外滩1,560万110㎡3室2厅二手房待验证有详情产权核验14保利西岸精致三房保利西岸1,120万88㎡3室1厅新房待验证无详情产权核验共 23 条记录123 房源详情与核验记录房源标题万科翡翠公园一房所属楼盘万科翡翠公园房源类型租赁售价0.6万面积48㎡户型1室1厅楼层15/22朝向南装修精装产权状态待验证VR看房暂未上传VR历史成交记录暂无历史成交记录核验记录（共 0 次）暂无核验记录，点击右下角\"发起产权核验\"按钮开始核验关 闭发起产权核验产权核验房源万科翡翠公园一房当前产权状态待验证价格0.6万不动产权证号复查人是否有抵押无抵押有抵押是否有查封无查封有查封核验结论备注取 消确认核验",
+        "layout": {
+          "viewportWidth": 1760,
+          "viewportHeight": 1000,
+          "scrollWidth": 1760,
+          "scrollHeight": 1000,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89042-codex-20260605-final-structure-09-二层操作-详情-发起产权核验",
+          "label": "二层操作:详情->发起产权核验",
+          "finalUrl": "http://127.0.0.1:49042/listings",
+          "title": "房产交易数字化服务中台",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89042/probe/codex-20260605-final-browser/may-89042-codex-20260605-final-structure-09-二层操作-详情-发起产权核验.json",
+          "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89042/probe/codex-20260605-final-browser/may-89042-codex-20260605-final-structure-09-二层操作-详情-发起产权核验.png",
+          "elementCount": 782,
+          "interactiveCount": 58,
+          "interactiveLabels": [
+            "首页 地图找房 房源管理 VR看房 小区口碑 政策合规 税费计算 经纪人协作 个人中心 后台管理",
+            "首页",
+            "地图找房",
+            "房源管理",
+            "VR看房",
+            "小区口碑",
+            "政策合规",
+            "税费计算",
+            "经纪人协作",
+            "个人中心",
+            "后台管理",
+            "详情",
+            "产权核验",
+            "1",
+            "2",
+            "3",
+            "Next Page",
+            "房源详情与核验记录房源标题万科翡翠公园一房所属楼盘万科翡翠公园房源类型租赁售价0.6万面积48㎡户型1室1厅楼层15/22朝向南装修精装产权状态待验证VR看房暂未上传VR历史成交记录暂无历史成交记录核验记录（共 0 次）暂无核验记录，点击右下角\"发起产权核验\"按钮开始核验关 闭发起产权核验",
+            "Close",
+            "关 闭",
+            "发起产权核验",
+            "产权核验 房源 万科翡翠公园一房 当前产权状态 待验证 价格 0.6万 不动产权证号 复查人 是否有抵押 无抵押 有抵押 是否有查封 无查封 有查封 核验结论 备注 取 消 确认核验",
+            "如：沪(2022)浦字不动产权第001234号",
+            "系统审核",
+            "0",
+            "请输入核验结论，如：产权清晰，无抵押无查封，可正常交易",
+            "核验过程中的其他说明",
+            "取 消",
+            "确认核验"
+          ]
+        }
+      }
+    ],
+    "findings": [],
+    "actionHints": [],
+    "emptyPages": [],
+    "overflowPages": [],
+    "blankPages": [],
+    "apiFailurePaths": [],
+    "goalTerms": [],
+    "clickedActionDescriptors": [
+      {
+        "nav": "地图找房",
+        "label": "查看详情",
+        "ordinal": 0,
+        "unsafe": false
+      },
+      {
+        "nav": "地图找房",
+        "label": "查看详情->返回搜索",
+        "ordinal": 0,
+        "secondary": true,
+        "unsafe": false
+      },
+      {
+        "nav": "地图找房",
+        "label": "搜索房源",
+        "ordinal": 0,
+        "unsafe": false
+      },
+      {
+        "nav": "房源管理",
+        "label": "详情",
+        "ordinal": 0,
+        "unsafe": false
+      },
+      {
+        "nav": "房源管理",
+        "label": "详情->发起产权核验",
+        "ordinal": 0,
+        "secondary": true,
+        "unsafe": false
+      }
+    ],
+    "secondaryActionClicks": 2,
+    "structureCaptures": [
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89042-codex-20260605-final-structure-01-首屏",
+        "label": "首屏",
+        "finalUrl": "http://127.0.0.1:49042/",
+        "title": "房产交易数字化服务中台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89042/probe/codex-20260605-final-browser/may-89042-codex-20260605-final-structure-01-首屏.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89042/probe/codex-20260605-final-browser/may-89042-codex-20260605-final-structure-01-首屏.png",
+        "elementCount": 172,
+        "interactiveCount": 11,
+        "interactiveLabels": [
+          "首页 地图找房 房源管理 VR看房 小区口碑 政策合规 税费计算 经纪人协作 个人中心 后台管理",
+          "首页",
+          "地图找房",
+          "房源管理",
+          "VR看房",
+          "小区口碑",
+          "政策合规",
+          "税费计算",
+          "经纪人协作",
+          "个人中心",
+          "后台管理"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89042-codex-20260605-final-structure-02-导航-首页",
+        "label": "导航:首页",
+        "finalUrl": "http://127.0.0.1:49042/",
+        "title": "房产交易数字化服务中台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89042/probe/codex-20260605-final-browser/may-89042-codex-20260605-final-structure-02-导航-首页.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89042/probe/codex-20260605-final-browser/may-89042-codex-20260605-final-structure-02-导航-首页.png",
+        "elementCount": 172,
+        "interactiveCount": 11,
+        "interactiveLabels": [
+          "首页 地图找房 房源管理 VR看房 小区口碑 政策合规 税费计算 经纪人协作 个人中心 后台管理",
+          "首页",
+          "地图找房",
+          "房源管理",
+          "VR看房",
+          "小区口碑",
+          "政策合规",
+          "税费计算",
+          "经纪人协作",
+          "个人中心",
+          "后台管理"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89042-codex-20260605-final-structure-03-导航-地图找房",
+        "label": "导航:地图找房",
+        "finalUrl": "http://127.0.0.1:49042/map",
+        "title": "房产交易数字化服务中台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89042/probe/codex-20260605-final-browser/may-89042-codex-20260605-final-structure-03-导航-地图找房.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89042/probe/codex-20260605-final-browser/may-89042-codex-20260605-final-structure-03-导航-地图找房.png",
+        "elementCount": 470,
+        "interactiveCount": 48,
+        "interactiveLabels": [
+          "首页 地图找房 房源管理 VR看房 小区口碑 政策合规 税费计算 经纪人协作 个人中心 后台管理",
+          "首页",
+          "地图找房",
+          "房源管理",
+          "VR看房",
+          "小区口碑",
+          "政策合规",
+          "税费计算",
+          "经纪人协作",
+          "个人中心",
+          "后台管理",
+          "搜索小区、地址...",
+          "二手房",
+          "on",
+          "搜索房源",
+          "6800万 850万 1560万 980万 1050万 1800万 1200万 1680万 3800万 3200万 4500万 + − Leaflet",
+          "6800万",
+          "850万",
+          "1560万",
+          "980万",
+          "1050万",
+          "1800万",
+          "1200万",
+          "1680万",
+          "3800万",
+          "3200万",
+          "4500万",
+          "Leaflet",
+          "查看详情"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89042-codex-20260605-final-structure-04-操作-查看详情",
+        "label": "操作:查看详情",
+        "finalUrl": "http://127.0.0.1:49042/listings/21",
+        "title": "房产交易数字化服务中台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89042/probe/codex-20260605-final-browser/may-89042-codex-20260605-final-structure-04-操作-查看详情.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89042/probe/codex-20260605-final-browser/may-89042-codex-20260605-final-structure-04-操作-查看详情.png",
+        "elementCount": 280,
+        "interactiveCount": 20,
+        "interactiveLabels": [
+          "首页 地图找房 房源管理 VR看房 小区口碑 政策合规 税费计算 经纪人协作 个人中心 后台管理",
+          "首页",
+          "地图找房",
+          "房源管理",
+          "VR看房",
+          "小区口碑",
+          "政策合规",
+          "税费计算",
+          "经纪人协作",
+          "个人中心",
+          "后台管理",
+          "基本信息",
+          "房源标题 汤臣一品复式五房 售价 6800万元 面积 380㎡ 户型 5室3厅 楼层 35-36/38 朝向 南 装修 豪装 类型 二手房 单价 178,947元/㎡ 所属小区 汤臣一品 区域 浦东 地址 浦东新区花园石桥路28弄",
+          "联系经纪人",
+          "预约看房",
+          "计算税费",
+          "购房资格预审",
+          "返回搜索"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89042-codex-20260605-final-structure-05-二层操作-查看详情-返回搜索",
+        "label": "二层操作:查看详情->返回搜索",
+        "finalUrl": "http://127.0.0.1:49042/map",
+        "title": "房产交易数字化服务中台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89042/probe/codex-20260605-final-browser/may-89042-codex-20260605-final-structure-05-二层操作-查看详情-返回搜索.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89042/probe/codex-20260605-final-browser/may-89042-codex-20260605-final-structure-05-二层操作-查看详情-返回搜索.png",
+        "elementCount": 470,
+        "interactiveCount": 48,
+        "interactiveLabels": [
+          "首页 地图找房 房源管理 VR看房 小区口碑 政策合规 税费计算 经纪人协作 个人中心 后台管理",
+          "首页",
+          "地图找房",
+          "房源管理",
+          "VR看房",
+          "小区口碑",
+          "政策合规",
+          "税费计算",
+          "经纪人协作",
+          "个人中心",
+          "后台管理",
+          "搜索小区、地址...",
+          "二手房",
+          "on",
+          "搜索房源",
+          "6800万 850万 1560万 980万 1050万 1800万 1200万 1680万 3800万 3200万 4500万 + − Leaflet",
+          "6800万",
+          "850万",
+          "1560万",
+          "980万",
+          "1050万",
+          "1800万",
+          "1200万",
+          "1680万",
+          "3800万",
+          "3200万",
+          "4500万",
+          "Leaflet",
+          "查看详情"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89042-codex-20260605-final-structure-06-操作-搜索房源",
+        "label": "操作:搜索房源",
+        "finalUrl": "http://127.0.0.1:49042/map",
+        "title": "房产交易数字化服务中台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89042/probe/codex-20260605-final-browser/may-89042-codex-20260605-final-structure-06-操作-搜索房源.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89042/probe/codex-20260605-final-browser/may-89042-codex-20260605-final-structure-06-操作-搜索房源.png",
+        "elementCount": 472,
+        "interactiveCount": 48,
+        "interactiveLabels": [
+          "首页 地图找房 房源管理 VR看房 小区口碑 政策合规 税费计算 经纪人协作 个人中心 后台管理",
+          "首页",
+          "地图找房",
+          "房源管理",
+          "VR看房",
+          "小区口碑",
+          "政策合规",
+          "税费计算",
+          "经纪人协作",
+          "个人中心",
+          "后台管理",
+          "搜索小区、地址...",
+          "二手房",
+          "on",
+          "搜索房源",
+          "6800万 850万 1560万 980万 1050万 1800万 1200万 1680万 3800万 3200万 4500万 + − Leaflet",
+          "6800万",
+          "850万",
+          "1560万",
+          "980万",
+          "1050万",
+          "1800万",
+          "1200万",
+          "1680万",
+          "3800万",
+          "3200万",
+          "4500万",
+          "Leaflet",
+          "查看详情"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89042-codex-20260605-final-structure-07-导航-房源管理",
+        "label": "导航:房源管理",
+        "finalUrl": "http://127.0.0.1:49042/listings",
+        "title": "房产交易数字化服务中台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89042/probe/codex-20260605-final-browser/may-89042-codex-20260605-final-structure-07-导航-房源管理.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89042/probe/codex-20260605-final-browser/may-89042-codex-20260605-final-structure-07-导航-房源管理.png",
+        "elementCount": 539,
+        "interactiveCount": 40,
+        "interactiveLabels": [
+          "首页 地图找房 房源管理 VR看房 小区口碑 政策合规 税费计算 经纪人协作 个人中心 后台管理",
+          "首页",
+          "地图找房",
+          "房源管理",
+          "VR看房",
+          "小区口碑",
+          "政策合规",
+          "税费计算",
+          "经纪人协作",
+          "个人中心",
+          "后台管理",
+          "详情",
+          "产权核验",
+          "1",
+          "2",
+          "3",
+          "Next Page"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89042-codex-20260605-final-structure-08-操作-详情",
+        "label": "操作:详情",
+        "finalUrl": "http://127.0.0.1:49042/listings",
+        "title": "房产交易数字化服务中台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89042/probe/codex-20260605-final-browser/may-89042-codex-20260605-final-structure-08-操作-详情.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89042/probe/codex-20260605-final-browser/may-89042-codex-20260605-final-structure-08-操作-详情.png",
+        "elementCount": 649,
+        "interactiveCount": 45,
+        "interactiveLabels": [
+          "首页 地图找房 房源管理 VR看房 小区口碑 政策合规 税费计算 经纪人协作 个人中心 后台管理",
+          "首页",
+          "地图找房",
+          "房源管理",
+          "VR看房",
+          "小区口碑",
+          "政策合规",
+          "税费计算",
+          "经纪人协作",
+          "个人中心",
+          "后台管理",
+          "详情",
+          "产权核验",
+          "1",
+          "2",
+          "3",
+          "Next Page",
+          "房源详情与核验记录 房源标题 万科翡翠公园一房 所属楼盘 万科翡翠公园 房源类型 租赁 售价 0.6万 面积 48㎡ 户型 1室1厅 楼层 15/22 朝向 南 装修 精装 产权状态 待验证 VR看房 暂未上传VR 历史成交记录 暂无历史成交记录 核验记录（共 0 次） 暂无核验记录，点击右下角\"发起产权核验\"按钮开始核验 关 闭 发起产权核验",
+          "Close",
+          "关 闭",
+          "发起产权核验"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89042-codex-20260605-final-structure-09-二层操作-详情-发起产权核验",
+        "label": "二层操作:详情->发起产权核验",
+        "finalUrl": "http://127.0.0.1:49042/listings",
+        "title": "房产交易数字化服务中台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89042/probe/codex-20260605-final-browser/may-89042-codex-20260605-final-structure-09-二层操作-详情-发起产权核验.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89042/probe/codex-20260605-final-browser/may-89042-codex-20260605-final-structure-09-二层操作-详情-发起产权核验.png",
+        "elementCount": 782,
+        "interactiveCount": 58,
+        "interactiveLabels": [
+          "首页 地图找房 房源管理 VR看房 小区口碑 政策合规 税费计算 经纪人协作 个人中心 后台管理",
+          "首页",
+          "地图找房",
+          "房源管理",
+          "VR看房",
+          "小区口碑",
+          "政策合规",
+          "税费计算",
+          "经纪人协作",
+          "个人中心",
+          "后台管理",
+          "详情",
+          "产权核验",
+          "1",
+          "2",
+          "3",
+          "Next Page",
+          "房源详情与核验记录房源标题万科翡翠公园一房所属楼盘万科翡翠公园房源类型租赁售价0.6万面积48㎡户型1室1厅楼层15/22朝向南装修精装产权状态待验证VR看房暂未上传VR历史成交记录暂无历史成交记录核验记录（共 0 次）暂无核验记录，点击右下角\"发起产权核验\"按钮开始核验关 闭发起产权核验",
+          "Close",
+          "关 闭",
+          "发起产权核验",
+          "产权核验 房源 万科翡翠公园一房 当前产权状态 待验证 价格 0.6万 不动产权证号 复查人 是否有抵押 无抵押 有抵押 是否有查封 无查封 有查封 核验结论 备注 取 消 确认核验",
+          "如：沪(2022)浦字不动产权第001234号",
+          "系统审核",
+          "0",
+          "请输入核验结论，如：产权清晰，无抵押无查封，可正常交易",
+          "核验过程中的其他说明",
+          "取 消",
+          "确认核验"
+        ]
+      }
+    ],
+    "representativeScreenshotUrl": "http://127.0.0.1:49042/",
+    "representativeScreenshotLabel": "房产交易数字化服务中台"
+  },
+  "websiteStructureCapture": {
+    "module": "website_structure_capture",
+    "captureCount": 9,
+    "captures": [
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89042-codex-20260605-final-structure-01-首屏",
+        "label": "首屏",
+        "finalUrl": "http://127.0.0.1:49042/",
+        "title": "房产交易数字化服务中台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89042/probe/codex-20260605-final-browser/may-89042-codex-20260605-final-structure-01-首屏.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89042/probe/codex-20260605-final-browser/may-89042-codex-20260605-final-structure-01-首屏.png",
+        "elementCount": 172,
+        "interactiveCount": 11,
+        "interactiveLabels": [
+          "首页 地图找房 房源管理 VR看房 小区口碑 政策合规 税费计算 经纪人协作 个人中心 后台管理",
+          "首页",
+          "地图找房",
+          "房源管理",
+          "VR看房",
+          "小区口碑",
+          "政策合规",
+          "税费计算",
+          "经纪人协作",
+          "个人中心",
+          "后台管理"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89042-codex-20260605-final-structure-02-导航-首页",
+        "label": "导航:首页",
+        "finalUrl": "http://127.0.0.1:49042/",
+        "title": "房产交易数字化服务中台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89042/probe/codex-20260605-final-browser/may-89042-codex-20260605-final-structure-02-导航-首页.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89042/probe/codex-20260605-final-browser/may-89042-codex-20260605-final-structure-02-导航-首页.png",
+        "elementCount": 172,
+        "interactiveCount": 11,
+        "interactiveLabels": [
+          "首页 地图找房 房源管理 VR看房 小区口碑 政策合规 税费计算 经纪人协作 个人中心 后台管理",
+          "首页",
+          "地图找房",
+          "房源管理",
+          "VR看房",
+          "小区口碑",
+          "政策合规",
+          "税费计算",
+          "经纪人协作",
+          "个人中心",
+          "后台管理"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89042-codex-20260605-final-structure-03-导航-地图找房",
+        "label": "导航:地图找房",
+        "finalUrl": "http://127.0.0.1:49042/map",
+        "title": "房产交易数字化服务中台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89042/probe/codex-20260605-final-browser/may-89042-codex-20260605-final-structure-03-导航-地图找房.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89042/probe/codex-20260605-final-browser/may-89042-codex-20260605-final-structure-03-导航-地图找房.png",
+        "elementCount": 470,
+        "interactiveCount": 48,
+        "interactiveLabels": [
+          "首页 地图找房 房源管理 VR看房 小区口碑 政策合规 税费计算 经纪人协作 个人中心 后台管理",
+          "首页",
+          "地图找房",
+          "房源管理",
+          "VR看房",
+          "小区口碑",
+          "政策合规",
+          "税费计算",
+          "经纪人协作",
+          "个人中心",
+          "后台管理",
+          "搜索小区、地址...",
+          "二手房",
+          "on",
+          "搜索房源",
+          "6800万 850万 1560万 980万 1050万 1800万 1200万 1680万 3800万 3200万 4500万 + − Leaflet",
+          "6800万",
+          "850万",
+          "1560万",
+          "980万",
+          "1050万",
+          "1800万",
+          "1200万",
+          "1680万",
+          "3800万",
+          "3200万",
+          "4500万",
+          "Leaflet",
+          "查看详情"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89042-codex-20260605-final-structure-04-操作-查看详情",
+        "label": "操作:查看详情",
+        "finalUrl": "http://127.0.0.1:49042/listings/21",
+        "title": "房产交易数字化服务中台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89042/probe/codex-20260605-final-browser/may-89042-codex-20260605-final-structure-04-操作-查看详情.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89042/probe/codex-20260605-final-browser/may-89042-codex-20260605-final-structure-04-操作-查看详情.png",
+        "elementCount": 280,
+        "interactiveCount": 20,
+        "interactiveLabels": [
+          "首页 地图找房 房源管理 VR看房 小区口碑 政策合规 税费计算 经纪人协作 个人中心 后台管理",
+          "首页",
+          "地图找房",
+          "房源管理",
+          "VR看房",
+          "小区口碑",
+          "政策合规",
+          "税费计算",
+          "经纪人协作",
+          "个人中心",
+          "后台管理",
+          "基本信息",
+          "房源标题 汤臣一品复式五房 售价 6800万元 面积 380㎡ 户型 5室3厅 楼层 35-36/38 朝向 南 装修 豪装 类型 二手房 单价 178,947元/㎡ 所属小区 汤臣一品 区域 浦东 地址 浦东新区花园石桥路28弄",
+          "联系经纪人",
+          "预约看房",
+          "计算税费",
+          "购房资格预审",
+          "返回搜索"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89042-codex-20260605-final-structure-05-二层操作-查看详情-返回搜索",
+        "label": "二层操作:查看详情->返回搜索",
+        "finalUrl": "http://127.0.0.1:49042/map",
+        "title": "房产交易数字化服务中台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89042/probe/codex-20260605-final-browser/may-89042-codex-20260605-final-structure-05-二层操作-查看详情-返回搜索.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89042/probe/codex-20260605-final-browser/may-89042-codex-20260605-final-structure-05-二层操作-查看详情-返回搜索.png",
+        "elementCount": 470,
+        "interactiveCount": 48,
+        "interactiveLabels": [
+          "首页 地图找房 房源管理 VR看房 小区口碑 政策合规 税费计算 经纪人协作 个人中心 后台管理",
+          "首页",
+          "地图找房",
+          "房源管理",
+          "VR看房",
+          "小区口碑",
+          "政策合规",
+          "税费计算",
+          "经纪人协作",
+          "个人中心",
+          "后台管理",
+          "搜索小区、地址...",
+          "二手房",
+          "on",
+          "搜索房源",
+          "6800万 850万 1560万 980万 1050万 1800万 1200万 1680万 3800万 3200万 4500万 + − Leaflet",
+          "6800万",
+          "850万",
+          "1560万",
+          "980万",
+          "1050万",
+          "1800万",
+          "1200万",
+          "1680万",
+          "3800万",
+          "3200万",
+          "4500万",
+          "Leaflet",
+          "查看详情"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89042-codex-20260605-final-structure-06-操作-搜索房源",
+        "label": "操作:搜索房源",
+        "finalUrl": "http://127.0.0.1:49042/map",
+        "title": "房产交易数字化服务中台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89042/probe/codex-20260605-final-browser/may-89042-codex-20260605-final-structure-06-操作-搜索房源.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89042/probe/codex-20260605-final-browser/may-89042-codex-20260605-final-structure-06-操作-搜索房源.png",
+        "elementCount": 472,
+        "interactiveCount": 48,
+        "interactiveLabels": [
+          "首页 地图找房 房源管理 VR看房 小区口碑 政策合规 税费计算 经纪人协作 个人中心 后台管理",
+          "首页",
+          "地图找房",
+          "房源管理",
+          "VR看房",
+          "小区口碑",
+          "政策合规",
+          "税费计算",
+          "经纪人协作",
+          "个人中心",
+          "后台管理",
+          "搜索小区、地址...",
+          "二手房",
+          "on",
+          "搜索房源",
+          "6800万 850万 1560万 980万 1050万 1800万 1200万 1680万 3800万 3200万 4500万 + − Leaflet",
+          "6800万",
+          "850万",
+          "1560万",
+          "980万",
+          "1050万",
+          "1800万",
+          "1200万",
+          "1680万",
+          "3800万",
+          "3200万",
+          "4500万",
+          "Leaflet",
+          "查看详情"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89042-codex-20260605-final-structure-07-导航-房源管理",
+        "label": "导航:房源管理",
+        "finalUrl": "http://127.0.0.1:49042/listings",
+        "title": "房产交易数字化服务中台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89042/probe/codex-20260605-final-browser/may-89042-codex-20260605-final-structure-07-导航-房源管理.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89042/probe/codex-20260605-final-browser/may-89042-codex-20260605-final-structure-07-导航-房源管理.png",
+        "elementCount": 539,
+        "interactiveCount": 40,
+        "interactiveLabels": [
+          "首页 地图找房 房源管理 VR看房 小区口碑 政策合规 税费计算 经纪人协作 个人中心 后台管理",
+          "首页",
+          "地图找房",
+          "房源管理",
+          "VR看房",
+          "小区口碑",
+          "政策合规",
+          "税费计算",
+          "经纪人协作",
+          "个人中心",
+          "后台管理",
+          "详情",
+          "产权核验",
+          "1",
+          "2",
+          "3",
+          "Next Page"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89042-codex-20260605-final-structure-08-操作-详情",
+        "label": "操作:详情",
+        "finalUrl": "http://127.0.0.1:49042/listings",
+        "title": "房产交易数字化服务中台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89042/probe/codex-20260605-final-browser/may-89042-codex-20260605-final-structure-08-操作-详情.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89042/probe/codex-20260605-final-browser/may-89042-codex-20260605-final-structure-08-操作-详情.png",
+        "elementCount": 649,
+        "interactiveCount": 45,
+        "interactiveLabels": [
+          "首页 地图找房 房源管理 VR看房 小区口碑 政策合规 税费计算 经纪人协作 个人中心 后台管理",
+          "首页",
+          "地图找房",
+          "房源管理",
+          "VR看房",
+          "小区口碑",
+          "政策合规",
+          "税费计算",
+          "经纪人协作",
+          "个人中心",
+          "后台管理",
+          "详情",
+          "产权核验",
+          "1",
+          "2",
+          "3",
+          "Next Page",
+          "房源详情与核验记录 房源标题 万科翡翠公园一房 所属楼盘 万科翡翠公园 房源类型 租赁 售价 0.6万 面积 48㎡ 户型 1室1厅 楼层 15/22 朝向 南 装修 精装 产权状态 待验证 VR看房 暂未上传VR 历史成交记录 暂无历史成交记录 核验记录（共 0 次） 暂无核验记录，点击右下角\"发起产权核验\"按钮开始核验 关 闭 发起产权核验",
+          "Close",
+          "关 闭",
+          "发起产权核验"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89042-codex-20260605-final-structure-09-二层操作-详情-发起产权核验",
+        "label": "二层操作:详情->发起产权核验",
+        "finalUrl": "http://127.0.0.1:49042/listings",
+        "title": "房产交易数字化服务中台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89042/probe/codex-20260605-final-browser/may-89042-codex-20260605-final-structure-09-二层操作-详情-发起产权核验.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89042/probe/codex-20260605-final-browser/may-89042-codex-20260605-final-structure-09-二层操作-详情-发起产权核验.png",
+        "elementCount": 782,
+        "interactiveCount": 58,
+        "interactiveLabels": [
+          "首页 地图找房 房源管理 VR看房 小区口碑 政策合规 税费计算 经纪人协作 个人中心 后台管理",
+          "首页",
+          "地图找房",
+          "房源管理",
+          "VR看房",
+          "小区口碑",
+          "政策合规",
+          "税费计算",
+          "经纪人协作",
+          "个人中心",
+          "后台管理",
+          "详情",
+          "产权核验",
+          "1",
+          "2",
+          "3",
+          "Next Page",
+          "房源详情与核验记录房源标题万科翡翠公园一房所属楼盘万科翡翠公园房源类型租赁售价0.6万面积48㎡户型1室1厅楼层15/22朝向南装修精装产权状态待验证VR看房暂未上传VR历史成交记录暂无历史成交记录核验记录（共 0 次）暂无核验记录，点击右下角\"发起产权核验\"按钮开始核验关 闭发起产权核验",
+          "Close",
+          "关 闭",
+          "发起产权核验",
+          "产权核验 房源 万科翡翠公园一房 当前产权状态 待验证 价格 0.6万 不动产权证号 复查人 是否有抵押 无抵押 有抵押 是否有查封 无查封 有查封 核验结论 备注 取 消 确认核验",
+          "如：沪(2022)浦字不动产权第001234号",
+          "系统审核",
+          "0",
+          "请输入核验结论，如：产权清晰，无抵押无查封，可正常交易",
+          "核验过程中的其他说明",
+          "取 消",
+          "确认核验"
+        ]
+      }
+    ]
+  },
+  "screenshotMetrics": {
+    "width": 1792,
+    "height": 1000,
+    "scrollWidth": 1760,
+    "scrollHeight": 1000
+  },
+  "initialBodyTextPreview": "房产交易中台\n首页\n地图找房\n房源管理\nVR看房\n小区口碑\n政策合规\n税费计算\n经纪人协作\n个人中心\n后台管理\n房产交易数字化服务中台\n\n数据驱动的房产交易综合服务平台\n\n楼盘总数\n10\n房源总数\n23\n经纪人数量\n4\n本月成交\n1\n地图找房\n基于地图的智能房源搜索\nVR看房\n沉浸式虚拟看房体验\n政策合规\n购房资格与限售校验\n税费计算\n精准房产税费测算",
+  "bodyTextPreview": "房产交易中台\n首页\n地图找房\n房源管理\nVR看房\n小区口碑\n政策合规\n税费计算\n经纪人协作\n个人中心\n后台管理\n房产交易数字化服务中台\n\n数据驱动的房产交易综合服务平台\n\n楼盘总数\n10\n房源总数\n23\n经纪人数量\n4\n本月成交\n1\n地图找房\n基于地图的智能房源搜索\nVR看房\n沉浸式虚拟看房体验\n政策合规\n购房资格与限售校验\n税费计算\n精准房产税费测算",
+  "apiBase": "http://127.0.0.1:59042",
+  "businessGoalPreview": "房产交易数字化服务中台，覆盖地图搜索筛选、房源详情、个人中心、后台管理、购房资格提交、经纪人协作预约和合同签署。",
+  "apiResponses": [
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49042/api/admin/dashboard"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49042/api/admin/dashboard"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49042/api/listings?page=1&pageSize=50&type=%E4%BA%8C%E6%89%8B%E6%88%BF"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49042/api/listings?page=1&pageSize=50&type=%E4%BA%8C%E6%89%8B%E6%88%BF"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49042/api/listings/21"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49042/api/listings/21"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49042/api/buildings/1"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49042/api/reviews/building/1/stats"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49042/api/buildings/1"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49042/api/reviews/building/1/stats"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49042/api/listings?page=1&pageSize=50&type=%E4%BA%8C%E6%89%8B%E6%88%BF"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49042/api/listings?page=1&pageSize=50&type=%E4%BA%8C%E6%89%8B%E6%88%BF"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49042/api/listings?page=1&pageSize=50&type=%E4%BA%8C%E6%89%8B%E6%88%BF"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49042/api/listings?pageSize=100"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49042/api/listings?pageSize=100"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49042/api/listings/23"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49042/api/listings/23/verifications"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49042/api/listings/23/deals-history"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49042/api/admin/dashboard"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49042/api/admin/dashboard"
+    }
+  ],
+  "apiChecks": [
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59042/api/health",
+      "path": "/api/health",
+      "status": 200,
+      "ok": true,
+      "bodyPreview": "{\"code\":0,\"data\":{\"status\":\"ok\",\"timestamp\":\"2026-06-05T11:44:00.967Z\",\"db\":\"connected\"},\"message\":\"success\"}"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59042/api/admin/dashboard",
+      "path": "/api/admin/dashboard",
+      "status": 200,
+      "ok": true,
+      "bodyPreview": "{\"code\":0,\"data\":{\"total_buildings\":10,\"total_listings\":23,\"total_agents\":4,\"total_buyers\":4,\"total_contracts\":1,\"deals_this_month\":1,\"total_commission\":2850000,\"avg_city_price\":118300},\"message\":\"success\"}"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59042/api/listings?page=1&pageSize=50&type=%E4%BA%8C%E6%89%8B%E6%88%BF",
+      "path": "/api/listings?page=1&pageSize=50&type=%E4%BA%8C%E6%89%8B%E6%88%BF",
+      "status": 200,
+      "ok": true,
+      "bodyPreview": "{\"code\":0,\"data\":{\"list\":[{\"id\":21,\"building_id\":1,\"title\":\"汤臣一品复式五房\",\"type\":\"二手房\",\"price\":6800,\"area\":380,\"unit_price\":178947,\"rooms\":\"5室3厅\",\"floor\":\"35-36/38\",\"orientation\":\"南\",\"decoration\":\"豪装\",\"vr_url\":\"/vr/tcyp-03.html\",\"property_status\":\"已验证\",\"transaction_history\":\"[{\\\"date\\\":\\\"2018-11\\\",\\\"price\\\":5200}]\",\"agent_id\":1,\"owner_name\":\"许先生\",\"owner_phone\":\"139****0001\",\"description\":\"顶层复式，私家泳池，360度环幕江景。\",\"images\":\"[\\\"/img/tc6.jpg\\\",\\\"/img/tc7.jpg\\\",\\\"/img/tc8.jpg\\\"]\",\"status\":\"在售\",\"created_at\":"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59042/api/listings/21",
+      "path": "/api/listings/21",
+      "status": 200,
+      "ok": true,
+      "bodyPreview": "{\"code\":0,\"data\":{\"listing\":{\"id\":21,\"building_id\":1,\"title\":\"汤臣一品复式五房\",\"type\":\"二手房\",\"price\":6800,\"area\":380,\"unit_price\":178947,\"rooms\":\"5室3厅\",\"floor\":\"35-36/38\",\"orientation\":\"南\",\"decoration\":\"豪装\",\"vr_url\":\"/vr/tcyp-03.html\",\"property_status\":\"已验证\",\"transaction_history\":\"[{\\\"date\\\":\\\"2018-11\\\",\\\"price\\\":5200}]\",\"agent_id\":1,\"owner_name\":\"许先生\",\"owner_phone\":\"139****0001\",\"description\":\"顶层复式，私家泳池，360度环幕江景。\",\"images\":\"[\\\"/img/tc6.jpg\\\",\\\"/img/tc7.jpg\\\",\\\"/img/tc8.jpg\\\"]\",\"status\":\"在售\",\"created_at"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59042/api/buildings/1",
+      "path": "/api/buildings/1",
+      "status": 200,
+      "ok": true,
+      "bodyPreview": "{\"code\":0,\"data\":{\"id\":1,\"name\":\"汤臣一品\",\"address\":\"浦东新区花园石桥路28弄\",\"lat\":31.2397,\"lng\":121.4998,\"developer\":\"汤臣集团有限公司\",\"developer_qualification\":\"一级\",\"floor_area_ratio\":4.8,\"greening_rate\":35,\"building_type\":\"住宅\",\"total_units\":220,\"completion_year\":2009,\"district\":\"浦东\",\"subway_lines\":\"[\\\"2号线\\\",\\\"14号线\\\"]\",\"school_district\":\"建平中学\",\"avg_price\":180000,\"created_at\":\"2026-06-04 02:33:01\",\"updated_at\":\"2026-06-04 02:33:01\",\"listings_count\":3,\"avg_listing_price\":178908},\"message\":\"success\"}"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59042/api/reviews/building/1/stats",
+      "path": "/api/reviews/building/1/stats",
+      "status": 200,
+      "ok": true,
+      "bodyPreview": "{\"code\":0,\"data\":{\"avg_rating\":4.3,\"total_reviews\":3,\"sentiment_distribution\":{\"正面\":2,\"中性\":1,\"负面\":0},\"top_keywords\":[{\"keyword\":\"推荐\",\"count\":2},{\"keyword\":\"江景\",\"count\":1},{\"keyword\":\"物业\",\"count\":1},{\"keyword\":\"舒适\",\"count\":1},{\"keyword\":\"位置\",\"count\":1},{\"keyword\":\"价格\",\"count\":1},{\"keyword\":\"性价比\",\"count\":1}]},\"message\":\"success\"}"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59042/api/listings?pageSize=100",
+      "path": "/api/listings?pageSize=100",
+      "status": 200,
+      "ok": true,
+      "bodyPreview": "{\"code\":0,\"data\":{\"list\":[{\"id\":23,\"building_id\":5,\"title\":\"万科翡翠公园一房\",\"type\":\"租赁\",\"price\":0.6,\"area\":48,\"unit_price\":12500,\"rooms\":\"1室1厅\",\"floor\":\"15/22\",\"orientation\":\"南\",\"decoration\":\"精装\",\"vr_url\":\"\",\"property_status\":\"已验证\",\"transaction_history\":\"[]\",\"agent_id\":4,\"owner_name\":\"冯女士\",\"owner_phone\":\"135****0003\",\"description\":\"月租6000元，精装一房，拎包入住。\",\"images\":\"[\\\"/img/wk5.jpg\\\"]\",\"status\":\"在售\",\"created_at\":\"2026-06-04 02:33:01\",\"updated_at\":\"2026-06-04 02:33:01\",\"building_name\":\"万科翡翠公园\",\"district\":\"徐"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59042/api/listings/23",
+      "path": "/api/listings/23",
+      "status": 200,
+      "ok": true,
+      "bodyPreview": "{\"code\":0,\"data\":{\"listing\":{\"id\":23,\"building_id\":5,\"title\":\"万科翡翠公园一房\",\"type\":\"租赁\",\"price\":0.6,\"area\":48,\"unit_price\":12500,\"rooms\":\"1室1厅\",\"floor\":\"15/22\",\"orientation\":\"南\",\"decoration\":\"精装\",\"vr_url\":\"\",\"property_status\":\"已验证\",\"transaction_history\":\"[]\",\"agent_id\":4,\"owner_name\":\"冯女士\",\"owner_phone\":\"135****0003\",\"description\":\"月租6000元，精装一房，拎包入住。\",\"images\":\"[\\\"/img/wk5.jpg\\\"]\",\"status\":\"在售\",\"created_at\":\"2026-06-04 02:33:01\",\"updated_at\":\"2026-06-04 02:33:01\",\"building_name\":\"万科翡翠公园\",\"district\":"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59042/api/listings/23/verifications",
+      "path": "/api/listings/23/verifications",
+      "status": 200,
+      "ok": true,
+      "bodyPreview": "{\"code\":0,\"data\":{\"list\":[],\"total\":0},\"message\":\"success\"}"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59042/api/listings/23/deals-history",
+      "path": "/api/listings/23/deals-history",
+      "status": 200,
+      "ok": true,
+      "bodyPreview": "{\"code\":-1,\"message\":\"no such column: deals_history\"}"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59042/api/auth/me",
+      "path": "/api/auth/me",
+      "status": 200,
+      "ok": true,
+      "bodyPreview": "{\"code\":0,\"data\":{\"id\":3,\"username\":\"王建国\",\"real_name\":\"王建国\",\"phone\":\"13703456789\",\"role\":\"agent\",\"agency\":\"我爱我家\",\"rating\":4.9,\"status\":\"在岗\"},\"message\":\"success\"}"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59042/api/users/profile",
+      "path": "/api/users/profile",
+      "status": 200,
+      "ok": true,
+      "bodyPreview": "{\"code\":0,\"data\":{\"id\":3,\"username\":\"王建国\",\"real_name\":\"王建国\",\"phone\":\"13703456789\",\"role\":\"agent\",\"agency\":\"我爱我家\",\"rating\":4.9,\"status\":\"在岗\"},\"message\":\"success\"}"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59042/api/user/profile",
+      "path": "/api/user/profile",
+      "status": 200,
+      "ok": true,
+      "bodyPreview": "{\"code\":0,\"data\":{\"id\":3,\"username\":\"王建国\",\"real_name\":\"王建国\",\"phone\":\"13703456789\",\"role\":\"agent\",\"agency\":\"我爱我家\",\"rating\":4.9,\"status\":\"在岗\"},\"message\":\"success\"}"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59042/api/search?q=%E6%B5%8B%E8%AF%95",
+      "path": "/api/search?q=%E6%B5%8B%E8%AF%95",
+      "status": 200,
+      "ok": true,
+      "bodyPreview": "{\"code\":0,\"data\":{\"keyword\":\"测试\",\"listings\":[],\"buildings\":[],\"total\":0},\"message\":\"success\"}"
+    }
+  ],
+  "dialogs": [],
+  "consoleMessages": [
+    {
+      "type": "debug",
+      "text": "[vite] connecting...",
+      "location": {
+        "url": "http://127.0.0.1:49042/@vite/client",
+        "lineNumber": 494,
+        "columnNumber": 8
+      }
+    },
+    {
+      "type": "info",
+      "text": "%cDownload the React DevTools for a better development experience: https://reactjs.org/link/react-devtools font-weight:bold",
+      "location": {
+        "url": "http://127.0.0.1:49042/node_modules/.vite/deps/chunk-PJEEZAML.js?v=9fb48876",
+        "lineNumber": 21550,
+        "columnNumber": 24
+      }
+    },
+    {
+      "type": "warning",
+      "text": "⚠️ React Router Future Flag Warning: React Router will begin wrapping state updates in `React.startTransition` in v7. You can use the `v7_startTransition` future flag to opt-in early. For more information, see https://reactrouter.com/v6/upgrading/future#v7_starttransition.",
+      "location": {
+        "url": "http://127.0.0.1:49042/node_modules/.vite/deps/react-router-dom.js?v=9fb48876",
+        "lineNumber": 4426,
+        "columnNumber": 12
+      }
+    },
+    {
+      "type": "warning",
+      "text": "⚠️ React Router Future Flag Warning: Relative route resolution within Splat routes is changing in v7. You can use the `v7_relativeSplatPath` future flag to opt-in early. For more information, see https://reactrouter.com/v6/upgrading/future#v7_relativesplatpath.",
+      "location": {
+        "url": "http://127.0.0.1:49042/node_modules/.vite/deps/react-router-dom.js?v=9fb48876",
+        "lineNumber": 4426,
+        "columnNumber": 12
+      }
+    },
+    {
+      "type": "debug",
+      "text": "[vite] connected.",
+      "location": {
+        "url": "http://127.0.0.1:49042/@vite/client",
+        "lineNumber": 617,
+        "columnNumber": 14
+      }
+    },
+    {
+      "type": "debug",
+      "text": "[vite] connecting...",
+      "location": {
+        "url": "http://127.0.0.1:49042/@vite/client",
+        "lineNumber": 494,
+        "columnNumber": 8
+      }
+    },
+    {
+      "type": "debug",
+      "text": "[vite] connected.",
+      "location": {
+        "url": "http://127.0.0.1:49042/@vite/client",
+        "lineNumber": 617,
+        "columnNumber": 14
+      }
+    },
+    {
+      "type": "info",
+      "text": "%cDownload the React DevTools for a better development experience: https://reactjs.org/link/react-devtools font-weight:bold",
+      "location": {
+        "url": "http://127.0.0.1:49042/node_modules/.vite/deps/chunk-PJEEZAML.js?v=9fb48876",
+        "lineNumber": 21550,
+        "columnNumber": 24
+      }
+    },
+    {
+      "type": "warning",
+      "text": "⚠️ React Router Future Flag Warning: React Router will begin wrapping state updates in `React.startTransition` in v7. You can use the `v7_startTransition` future flag to opt-in early. For more information, see https://reactrouter.com/v6/upgrading/future#v7_starttransition.",
+      "location": {
+        "url": "http://127.0.0.1:49042/node_modules/.vite/deps/react-router-dom.js?v=9fb48876",
+        "lineNumber": 4426,
+        "columnNumber": 12
+      }
+    },
+    {
+      "type": "warning",
+      "text": "⚠️ React Router Future Flag Warning: Relative route resolution within Splat routes is changing in v7. You can use the `v7_relativeSplatPath` future flag to opt-in early. For more information, see https://reactrouter.com/v6/upgrading/future#v7_relativesplatpath.",
+      "location": {
+        "url": "http://127.0.0.1:49042/node_modules/.vite/deps/react-router-dom.js?v=9fb48876",
+        "lineNumber": 4426,
+        "columnNumber": 12
+      }
+    }
+  ],
+  "requestFailures": [],
+  "responseErrors": [],
+  "reportPath": "/Users/chen/Documents/trae_projects/local_projects/may-89042/probe/codex-20260605-final-browser/may-89042-browser-report.json"
+}
