@@ -1,0 +1,3649 @@
+{
+  "ok": true,
+  "generatedAt": "2026-06-04T19:45:07.549Z",
+  "order": "may-89038",
+  "roundIndex": 4,
+  "captureId": "may-89038-codex-cli",
+  "url": "http://127.0.0.1:49038/",
+  "initialUrl": "http://127.0.0.1:49038/",
+  "finalUrl": "http://127.0.0.1:49038/",
+  "status": 200,
+  "title": "即时配送骑手协同调度平台",
+  "initialTitle": "即时配送骑手协同调度平台",
+  "navigationError": "",
+  "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89038/probe/codex-repair-20260604-cli/may-89038-codex-cli-frontend.png",
+  "screenshotPaths": [
+    "/Users/chen/Documents/trae_projects/local_projects/may-89038/probe/codex-repair-20260604-cli/may-89038-codex-cli-structure-01-首屏.png",
+    "/Users/chen/Documents/trae_projects/local_projects/may-89038/probe/codex-repair-20260604-cli/may-89038-codex-cli-structure-02-导航-工作台.png",
+    "/Users/chen/Documents/trae_projects/local_projects/may-89038/probe/codex-repair-20260604-cli/may-89038-codex-cli-structure-03-操作-创建订单.png",
+    "/Users/chen/Documents/trae_projects/local_projects/may-89038/probe/codex-repair-20260604-cli/may-89038-codex-cli-structure-04-二层操作-创建订单-创建订单.png"
+  ],
+  "issueTextPreview": "个人中心/我的相关问题；搜索/筛选相关问题；后台管理相关问题；购买/提交相关问题",
+  "targetReason": "个人中心/我的相关问题；搜索/筛选相关问题；后台管理相关问题；购买/提交相关问题",
+  "targetKind": "admin",
+  "targetMatched": true,
+  "targetActions": [
+    {
+      "action": "target-already-visible",
+      "label": "后台管理相关问题",
+      "ok": true
+    },
+    {
+      "action": "target-verify",
+      "label": "后台管理相关问题",
+      "ok": true,
+      "finalUrl": "http://127.0.0.1:49038/"
+    }
+  ],
+  "authFlow": {
+    "detected": false,
+    "attempted": false,
+    "success": false,
+    "finalUrl": "http://127.0.0.1:49038/",
+    "message": "",
+    "actions": []
+  },
+  "businessAudit": {
+    "actions": [
+      {
+        "action": "click",
+        "label": "导航:工作台",
+        "ok": true
+      },
+      {
+        "action": "click",
+        "label": "操作:创建订单",
+        "ok": true,
+        "result": {
+          "ok": true,
+          "matched": 1
+        }
+      },
+      {
+        "action": "click",
+        "label": "二层操作:创建订单:创建订单",
+        "ok": true,
+        "result": {
+          "ok": true,
+          "matched": 1
+        }
+      },
+      {
+        "action": "click",
+        "label": "关闭弹窗/抽屉",
+        "ok": true
+      },
+      {
+        "action": "click",
+        "label": "操作:查看告警",
+        "ok": true,
+        "result": {
+          "ok": true,
+          "matched": 1
+        }
+      },
+      {
+        "action": "click",
+        "label": "二层操作:查看告警:查看",
+        "ok": true,
+        "result": {
+          "ok": true,
+          "matched": 8
+        }
+      },
+      {
+        "action": "click",
+        "label": "导航:骑手管理",
+        "ok": true
+      },
+      {
+        "action": "click",
+        "label": "操作:查看",
+        "ok": true,
+        "result": {
+          "ok": true,
+          "matched": 15
+        }
+      },
+      {
+        "action": "click",
+        "label": "二层操作:查看:返回骑手列表",
+        "ok": true,
+        "result": {
+          "ok": true,
+          "matched": 1
+        }
+      },
+      {
+        "action": "click",
+        "label": "操作:审核",
+        "ok": true,
+        "result": {
+          "ok": true,
+          "matched": 2
+        }
+      },
+      {
+        "action": "click",
+        "label": "二层操作:审核:返回详情",
+        "ok": true,
+        "result": {
+          "ok": true,
+          "matched": 1
+        }
+      },
+      {
+        "action": "click",
+        "label": "导航:订单管理",
+        "ok": true
+      },
+      {
+        "action": "click",
+        "label": "操作:创建订单",
+        "ok": true,
+        "result": {
+          "ok": true,
+          "matched": 1
+        }
+      },
+      {
+        "action": "click",
+        "label": "关闭弹窗/抽屉",
+        "ok": true
+      },
+      {
+        "action": "click",
+        "label": "操作:查看",
+        "ok": true,
+        "result": {
+          "ok": true,
+          "matched": 15
+        }
+      },
+      {
+        "action": "click",
+        "label": "导航:商户管理",
+        "ok": true
+      },
+      {
+        "action": "click",
+        "label": "操作:查看",
+        "ok": true,
+        "result": {
+          "ok": true,
+          "matched": 10
+        }
+      }
+    ],
+    "snapshots": [
+      {
+        "label": "首屏",
+        "url": "http://127.0.0.1:49038/",
+        "title": "即时配送骑手协同调度平台",
+        "headings": [
+          "区域热力图",
+          "最近告警",
+          "快捷操作"
+        ],
+        "navLabels": [
+          "骑手协同调度",
+          "工作台",
+          "骑手管理",
+          "订单管理",
+          "商户管理",
+          "区域调度",
+          "轨迹与告警",
+          "收入结算",
+          "运营看板",
+          "风控策略"
+        ],
+        "buttons": [
+          "创建订单",
+          "区域调度",
+          "查看告警",
+          "运营看板"
+        ],
+        "links": [
+          "工作台",
+          "骑手管理",
+          "订单管理",
+          "商户管理",
+          "区域调度",
+          "轨迹与告警",
+          "收入结算",
+          "运营看板",
+          "风控策略"
+        ],
+        "inputs": [],
+        "tables": [],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "骑手协同调度工作台骑手管理订单管理商户管理区域调度轨迹与告警收入结算运营看板风控策略v1.0.0工作台管理员超级管理员在线骑手14待派订单6今日完成14配送中3告警数4异常轨迹2 区域热力图北京朝阳区CBD 4单 3人运力缺口 2.3北京海淀区中关村 3单 3人运力缺口 1.5上海浦东陆家嘴 2单 2人运力缺口 1.8上海徐汇衡山路 2单 2人运力缺口 0.9深圳南山科技园 2单 2人运力缺口 3.1深圳福田CBD 2单 2人运力缺口 1.2 最近告警骑手轨迹偏离规划路线超过300米赵刚 · 06-04 13:38骑手轨迹偏离规划路线超过500米张伟 · 06-04 13:08朝阳区CBD区域运力不足，缺口2.306-04 11:30骑手健康码状态异常(红色)郭永刚 · 06-04 08:00 快捷操作创建订单区域调度 查看告警运营看板",
+        "layout": {
+          "viewportWidth": 1504,
+          "viewportHeight": 1000,
+          "scrollWidth": 1504,
+          "scrollHeight": 1000,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89038-codex-cli-structure-01-首屏",
+          "label": "首屏",
+          "finalUrl": "http://127.0.0.1:49038/",
+          "title": "即时配送骑手协同调度平台",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89038/probe/codex-repair-20260604-cli/may-89038-codex-cli-structure-01-首屏.json",
+          "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89038/probe/codex-repair-20260604-cli/may-89038-codex-cli-structure-01-首屏.png",
+          "elementCount": 298,
+          "interactiveCount": 14,
+          "interactiveLabels": [
+            "工作台",
+            "骑手管理",
+            "订单管理",
+            "商户管理",
+            "区域调度",
+            "轨迹与告警",
+            "收入结算",
+            "运营看板",
+            "风控策略",
+            "创建订单",
+            "查看告警"
+          ]
+        }
+      },
+      {
+        "label": "导航:工作台",
+        "url": "http://127.0.0.1:49038/",
+        "title": "即时配送骑手协同调度平台",
+        "headings": [
+          "区域热力图",
+          "最近告警",
+          "快捷操作"
+        ],
+        "navLabels": [
+          "骑手协同调度",
+          "工作台",
+          "骑手管理",
+          "订单管理",
+          "商户管理",
+          "区域调度",
+          "轨迹与告警",
+          "收入结算",
+          "运营看板",
+          "风控策略"
+        ],
+        "buttons": [
+          "创建订单",
+          "区域调度",
+          "查看告警",
+          "运营看板"
+        ],
+        "links": [
+          "工作台",
+          "骑手管理",
+          "订单管理",
+          "商户管理",
+          "区域调度",
+          "轨迹与告警",
+          "收入结算",
+          "运营看板",
+          "风控策略"
+        ],
+        "inputs": [],
+        "tables": [],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "骑手协同调度工作台骑手管理订单管理商户管理区域调度轨迹与告警收入结算运营看板风控策略v1.0.0工作台管理员超级管理员在线骑手14待派订单6今日完成14配送中3告警数4异常轨迹2 区域热力图北京朝阳区CBD 4单 3人运力缺口 2.3北京海淀区中关村 3单 3人运力缺口 1.5上海浦东陆家嘴 2单 2人运力缺口 1.8上海徐汇衡山路 2单 2人运力缺口 0.9深圳南山科技园 2单 2人运力缺口 3.1深圳福田CBD 2单 2人运力缺口 1.2 最近告警骑手轨迹偏离规划路线超过300米赵刚 · 06-04 13:38骑手轨迹偏离规划路线超过500米张伟 · 06-04 13:08朝阳区CBD区域运力不足，缺口2.306-04 11:30骑手健康码状态异常(红色)郭永刚 · 06-04 08:00 快捷操作创建订单区域调度 查看告警运营看板",
+        "layout": {
+          "viewportWidth": 1536,
+          "viewportHeight": 1000,
+          "scrollWidth": 1536,
+          "scrollHeight": 1000,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89038-codex-cli-structure-02-导航-工作台",
+          "label": "导航:工作台",
+          "finalUrl": "http://127.0.0.1:49038/",
+          "title": "即时配送骑手协同调度平台",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89038/probe/codex-repair-20260604-cli/may-89038-codex-cli-structure-02-导航-工作台.json",
+          "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89038/probe/codex-repair-20260604-cli/may-89038-codex-cli-structure-02-导航-工作台.png",
+          "elementCount": 298,
+          "interactiveCount": 14,
+          "interactiveLabels": [
+            "工作台",
+            "骑手管理",
+            "订单管理",
+            "商户管理",
+            "区域调度",
+            "轨迹与告警",
+            "收入结算",
+            "运营看板",
+            "风控策略",
+            "创建订单",
+            "查看告警"
+          ]
+        }
+      },
+      {
+        "label": "操作:创建订单",
+        "url": "http://127.0.0.1:49038/orders/create",
+        "title": "即时配送骑手协同调度平台",
+        "headings": [
+          "创建订单"
+        ],
+        "navLabels": [
+          "骑手协同调度",
+          "工作台",
+          "骑手管理",
+          "订单管理",
+          "商户管理",
+          "区域调度",
+          "轨迹与告警",
+          "收入结算",
+          "运营看板",
+          "风控策略"
+        ],
+        "buttons": [
+          "返回订单列表",
+          "创建订单",
+          "取消"
+        ],
+        "links": [
+          "工作台",
+          "骑手管理",
+          "订单管理",
+          "商户管理",
+          "区域调度",
+          "轨迹与告警",
+          "收入结算",
+          "运营看板",
+          "风控策略"
+        ],
+        "inputs": [
+          {
+            "tag": "select",
+            "type": "",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "select",
+            "type": "",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "",
+            "placeholder": "取货地址",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "",
+            "placeholder": "配送地址",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "datetime-local",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "datetime-local",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "datetime-local",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "datetime-local",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "select",
+            "type": "",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "select",
+            "type": "",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "textarea",
+            "type": "",
+            "placeholder": "如保温配送、小心轻放等",
+            "name": "",
+            "label": ""
+          }
+        ],
+        "tables": [],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "骑手协同调度工作台骑手管理订单管理商户管理区域调度轨迹与告警收入结算运营看板风控策略v1.0.0订单管理创建订单管理员超级管理员 返回订单列表创建订单订单类型 *即时单预约单批量单商户 *请选择商户全聚德前门店喜茶福田COCO Park店瑞幸科技园店肯德基衡山路店麦当劳陆家嘴店海底捞中关村店星巴克国贸店取货地址 *配送地址 *取货时间窗 至送达时间窗 至货物类型普通餐饮饮品药品文件所属区域自动分配北京朝阳区CBD北京海淀区中关村上海浦东陆家嘴上海徐汇衡山路深圳南山科技园深圳福田CBD特殊要求创建订单取消",
+        "layout": {
+          "viewportWidth": 1568,
+          "viewportHeight": 1000,
+          "scrollWidth": 1568,
+          "scrollHeight": 1000,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89038-codex-cli-structure-03-操作-创建订单",
+          "label": "操作:创建订单",
+          "finalUrl": "http://127.0.0.1:49038/orders/create",
+          "title": "即时配送骑手协同调度平台",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89038/probe/codex-repair-20260604-cli/may-89038-codex-cli-structure-03-操作-创建订单.json",
+          "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89038/probe/codex-repair-20260604-cli/may-89038-codex-cli-structure-03-操作-创建订单.png",
+          "elementCount": 166,
+          "interactiveCount": 24,
+          "interactiveLabels": [
+            "工作台",
+            "骑手管理",
+            "订单管理",
+            "商户管理",
+            "区域调度",
+            "轨迹与告警",
+            "收入结算",
+            "运营看板",
+            "风控策略",
+            "返回订单列表",
+            "即时单 预约单 批量单",
+            "请选择商户 全聚德前门店 喜茶福田COCO Park店 瑞幸科技园店 肯德基衡山路店 麦当劳陆家嘴店 海底捞中关村店 星巴克国贸店",
+            "取货地址",
+            "配送地址",
+            "普通 餐饮 饮品 药品 文件",
+            "自动分配 北京朝阳区CBD 北京海淀区中关村 上海浦东陆家嘴 上海徐汇衡山路 深圳南山科技园 深圳福田CBD",
+            "如保温配送、小心轻放等",
+            "创建订单",
+            "取消"
+          ]
+        }
+      },
+      {
+        "label": "二层操作:创建订单->创建订单",
+        "url": "http://127.0.0.1:49038/orders/create",
+        "title": "即时配送骑手协同调度平台",
+        "headings": [
+          "创建订单"
+        ],
+        "navLabels": [
+          "骑手协同调度",
+          "工作台",
+          "骑手管理",
+          "订单管理",
+          "商户管理",
+          "区域调度",
+          "轨迹与告警",
+          "收入结算",
+          "运营看板",
+          "风控策略"
+        ],
+        "buttons": [
+          "返回订单列表",
+          "创建订单",
+          "取消"
+        ],
+        "links": [
+          "工作台",
+          "骑手管理",
+          "订单管理",
+          "商户管理",
+          "区域调度",
+          "轨迹与告警",
+          "收入结算",
+          "运营看板",
+          "风控策略"
+        ],
+        "inputs": [
+          {
+            "tag": "select",
+            "type": "",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "select",
+            "type": "",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "",
+            "placeholder": "取货地址",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "",
+            "placeholder": "配送地址",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "datetime-local",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "datetime-local",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "datetime-local",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "datetime-local",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "select",
+            "type": "",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "select",
+            "type": "",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "textarea",
+            "type": "",
+            "placeholder": "如保温配送、小心轻放等",
+            "name": "",
+            "label": ""
+          }
+        ],
+        "tables": [],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "骑手协同调度工作台骑手管理订单管理商户管理区域调度轨迹与告警收入结算运营看板风控策略v1.0.0订单管理创建订单管理员超级管理员 返回订单列表创建订单订单类型 *即时单预约单批量单商户 *请选择商户全聚德前门店喜茶福田COCO Park店瑞幸科技园店肯德基衡山路店麦当劳陆家嘴店海底捞中关村店星巴克国贸店 请选择商户取货地址 * 请填写取货地址配送地址 * 请填写配送地址取货时间窗 至送达时间窗 至货物类型普通餐饮饮品药品文件所属区域自动分配北京朝阳区CBD北京海淀区中关村上海浦东陆家嘴上海徐汇衡山路深圳南山科技园深圳福田CBD特殊要求创建订单取消请检查表单中的错误项",
+        "layout": {
+          "viewportWidth": 1600,
+          "viewportHeight": 1000,
+          "scrollWidth": 1600,
+          "scrollHeight": 1000,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89038-codex-cli-structure-04-二层操作-创建订单-创建订单",
+          "label": "二层操作:创建订单->创建订单",
+          "finalUrl": "http://127.0.0.1:49038/orders/create",
+          "title": "即时配送骑手协同调度平台",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89038/probe/codex-repair-20260604-cli/may-89038-codex-cli-structure-04-二层操作-创建订单-创建订单.json",
+          "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89038/probe/codex-repair-20260604-cli/may-89038-codex-cli-structure-04-二层操作-创建订单-创建订单.png",
+          "elementCount": 188,
+          "interactiveCount": 25,
+          "interactiveLabels": [
+            "工作台",
+            "骑手管理",
+            "订单管理",
+            "商户管理",
+            "区域调度",
+            "轨迹与告警",
+            "收入结算",
+            "运营看板",
+            "风控策略",
+            "返回订单列表",
+            "即时单 预约单 批量单",
+            "请选择商户 全聚德前门店 喜茶福田COCO Park店 瑞幸科技园店 肯德基衡山路店 麦当劳陆家嘴店 海底捞中关村店 星巴克国贸店",
+            "取货地址",
+            "配送地址",
+            "普通 餐饮 饮品 药品 文件",
+            "自动分配 北京朝阳区CBD 北京海淀区中关村 上海浦东陆家嘴 上海徐汇衡山路 深圳南山科技园 深圳福田CBD",
+            "如保温配送、小心轻放等",
+            "创建订单",
+            "取消"
+          ]
+        }
+      },
+      {
+        "label": "操作:查看告警",
+        "url": "http://127.0.0.1:49038/tracking",
+        "title": "即时配送骑手协同调度平台",
+        "headings": [],
+        "navLabels": [
+          "骑手协同调度",
+          "工作台",
+          "骑手管理",
+          "订单管理",
+          "商户管理",
+          "区域调度",
+          "轨迹与告警",
+          "收入结算",
+          "运营看板",
+          "风控策略"
+        ],
+        "buttons": [
+          "告警列表",
+          "轨迹查询",
+          "查看",
+          "处理",
+          "去调度"
+        ],
+        "links": [
+          "工作台",
+          "骑手管理",
+          "订单管理",
+          "商户管理",
+          "区域调度",
+          "轨迹与告警",
+          "收入结算",
+          "运营看板",
+          "风控策略"
+        ],
+        "inputs": [
+          {
+            "tag": "select",
+            "type": "",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          }
+        ],
+        "tables": [
+          {
+            "headers": [
+              "告警类型",
+              "描述",
+              "骑手",
+              "订单",
+              "状态",
+              "时间",
+              "操作"
+            ],
+            "rowCount": 8,
+            "hasEmptyText": false,
+            "textPreview": "告警类型 描述 骑手 订单 状态 时间 操作 客户投诉 客户投诉骑手服务态度 赵刚 DD2026060400008 已处理 06-04 14:20 查看 超时未送 订单配送超时20分钟 赵刚 DD2026060400008 已处理 06-04 14:00 查看 异常停留 骑手轨迹偏离规划路线超过300米 赵刚 DD2026060400008 待处理 06-04 13:38 查看 处理 异常停留 骑手轨迹偏离规划路线超过500米 张伟 DD2026060400007 待处理 06-04 13:08 查看 处理 运力不足 [北京朝阳区CBD] 朝阳区CBD区域运力不足，缺口2.3 - - 待处理 "
+          }
+        ],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "骑手协同调度工作台骑手管理订单管理商户管理区域调度轨迹与告警收入结算运营看板风控策略v1.0.0轨迹与告警管理员超级管理员 告警列表 轨迹查询全部状态待处理已处理告警类型描述骑手订单状态时间操作客户投诉客户投诉骑手服务态度赵刚DD2026060400008已处理06-04 14:20 查看超时未送订单配送超时20分钟赵刚DD2026060400008已处理06-04 14:00 查看异常停留骑手轨迹偏离规划路线超过300米赵刚DD2026060400008待处理06-04 13:38 查看 处理异常停留骑手轨迹偏离规划路线超过500米张伟DD2026060400007待处理06-04 13:08 查看 处理运力不足[北京朝阳区CBD] 朝阳区CBD区域运力不足，缺口2.3--待处理06-04 11:30 查看 去调度 处理订单取消订单在配送前被取消-DD2026060400024已处理06-04 09:50 查看审核预警骑手资质审核未通过，建议关注朱志强-已处理06-04 09:00 查看健康码异常骑手健康码状态异常(红色)郭永刚-待处理06-04 08:00 查看 处理",
+        "layout": {
+          "viewportWidth": 1632,
+          "viewportHeight": 1000,
+          "scrollWidth": 1632,
+          "scrollHeight": 1000,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89038-codex-cli-structure-05-操作-查看告警",
+          "label": "操作:查看告警",
+          "finalUrl": "http://127.0.0.1:49038/tracking",
+          "title": "即时配送骑手协同调度平台",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89038/probe/codex-repair-20260604-cli/may-89038-codex-cli-structure-05-操作-查看告警.json",
+          "screenshotPath": "",
+          "elementCount": 267,
+          "interactiveCount": 26,
+          "interactiveLabels": [
+            "工作台",
+            "骑手管理",
+            "订单管理",
+            "商户管理",
+            "区域调度",
+            "轨迹与告警",
+            "收入结算",
+            "运营看板",
+            "风控策略",
+            "告警列表",
+            "轨迹查询",
+            "全部状态 待处理 已处理",
+            "查看",
+            "处理",
+            "去调度"
+          ]
+        }
+      },
+      {
+        "label": "二层操作:查看告警->查看",
+        "url": "http://127.0.0.1:49038/tracking",
+        "title": "即时配送骑手协同调度平台",
+        "headings": [
+          "告警详情"
+        ],
+        "navLabels": [
+          "骑手协同调度",
+          "工作台",
+          "骑手管理",
+          "订单管理",
+          "商户管理",
+          "区域调度",
+          "轨迹与告警",
+          "收入结算",
+          "运营看板",
+          "风控策略"
+        ],
+        "buttons": [
+          "告警列表",
+          "轨迹查询",
+          "查看",
+          "处理",
+          "去调度"
+        ],
+        "links": [
+          "工作台",
+          "骑手管理",
+          "订单管理",
+          "商户管理",
+          "区域调度",
+          "轨迹与告警",
+          "收入结算",
+          "运营看板",
+          "风控策略"
+        ],
+        "inputs": [
+          {
+            "tag": "select",
+            "type": "",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          }
+        ],
+        "tables": [
+          {
+            "headers": [
+              "告警类型",
+              "描述",
+              "骑手",
+              "订单",
+              "状态",
+              "时间",
+              "操作"
+            ],
+            "rowCount": 8,
+            "hasEmptyText": false,
+            "textPreview": "告警类型 描述 骑手 订单 状态 时间 操作 客户投诉 客户投诉骑手服务态度 赵刚 DD2026060400008 已处理 06-04 14:20 查看 超时未送 订单配送超时20分钟 赵刚 DD2026060400008 已处理 06-04 14:00 查看 异常停留 骑手轨迹偏离规划路线超过300米 赵刚 DD2026060400008 待处理 06-04 13:38 查看 处理 异常停留 骑手轨迹偏离规划路线超过500米 张伟 DD2026060400007 待处理 06-04 13:08 查看 处理 运力不足 [北京朝阳区CBD] 朝阳区CBD区域运力不足，缺口2.3 - - 待处理 "
+          }
+        ],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "骑手协同调度工作台骑手管理订单管理商户管理区域调度轨迹与告警收入结算运营看板风控策略v1.0.0轨迹与告警管理员超级管理员 告警列表 轨迹查询全部状态待处理已处理告警类型描述骑手订单状态时间操作客户投诉客户投诉骑手服务态度赵刚DD2026060400008已处理06-04 14:20 查看超时未送订单配送超时20分钟赵刚DD2026060400008已处理06-04 14:00 查看异常停留骑手轨迹偏离规划路线超过300米赵刚DD2026060400008待处理06-04 13:38 查看 处理异常停留骑手轨迹偏离规划路线超过500米张伟DD2026060400007待处理06-04 13:08 查看 处理运力不足[北京朝阳区CBD] 朝阳区CBD区域运力不足，缺口2.3--待处理06-04 11:30 查看 去调度 处理订单取消订单在配送前被取消-DD2026060400024已处理06-04 09:50 查看审核预警骑手资质审核未通过，建议关注朱志强-已处理06-04 09:00 查看健康码异常骑手健康码状态异常(红色)郭永刚-待处理06-04 08:00 查看 处理告警详情客户投诉已处理客户投诉骑手服务态度骑手：赵刚订单：DD2026060400008触发时间：2026-06-04 14:20:00处理时间：2026-06-04 14:30:00 关联轨迹经度: 116.3200纬度: 39.96502026-06-04 13:42:00经度: 116.3250纬度: 39.9680异常点2026-06-04 13:38:00经度: 116.3300纬度: 39.97002026-06-04 13:35:00暂无处理记录",
+        "layout": {
+          "viewportWidth": 1664,
+          "viewportHeight": 1000,
+          "scrollWidth": 1664,
+          "scrollHeight": 1000,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89038-codex-cli-structure-06-二层操作-查看告警-查看",
+          "label": "二层操作:查看告警->查看",
+          "finalUrl": "http://127.0.0.1:49038/tracking",
+          "title": "即时配送骑手协同调度平台",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89038/probe/codex-repair-20260604-cli/may-89038-codex-cli-structure-06-二层操作-查看告警-查看.json",
+          "screenshotPath": "",
+          "elementCount": 326,
+          "interactiveCount": 27,
+          "interactiveLabels": [
+            "工作台",
+            "骑手管理",
+            "订单管理",
+            "商户管理",
+            "区域调度",
+            "轨迹与告警",
+            "收入结算",
+            "运营看板",
+            "风控策略",
+            "告警列表",
+            "轨迹查询",
+            "全部状态 待处理 已处理",
+            "查看",
+            "处理",
+            "去调度"
+          ]
+        }
+      },
+      {
+        "label": "导航:骑手管理",
+        "url": "http://127.0.0.1:49038/riders",
+        "title": "即时配送骑手协同调度平台",
+        "headings": [],
+        "navLabels": [
+          "骑手协同调度",
+          "工作台",
+          "骑手管理",
+          "订单管理",
+          "商户管理",
+          "区域调度",
+          "轨迹与告警",
+          "收入结算",
+          "运营看板",
+          "风控策略"
+        ],
+        "buttons": [
+          "查看",
+          "审核",
+          "上一页",
+          "下一页"
+        ],
+        "links": [
+          "工作台",
+          "骑手管理",
+          "订单管理",
+          "商户管理",
+          "区域调度",
+          "轨迹与告警",
+          "收入结算",
+          "运营看板",
+          "风控策略"
+        ],
+        "inputs": [
+          {
+            "tag": "select",
+            "type": "",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "select",
+            "type": "",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "select",
+            "type": "",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "",
+            "placeholder": "搜索姓名或手机号",
+            "name": "",
+            "label": ""
+          }
+        ],
+        "tables": [
+          {
+            "headers": [
+              "姓名",
+              "手机号",
+              "区域",
+              "状态",
+              "认证状态",
+              "服务分",
+              "信用分",
+              "操作"
+            ],
+            "rowCount": 15,
+            "hasEmptyText": false,
+            "textPreview": "姓名 手机号 区域 状态 认证状态 服务分 信用分 操作 谢文东 13800001020 北京海淀区中关村 在线 已认证 4.3 86 查看 罗建国 13800001019 北京朝阳区CBD 在线 已认证 4 80 查看 何大伟 13800001018 深圳福田CBD 配送中 已认证 4.4 87 查看 林小明 13800001017 深圳南山科技园 配送中 已认证 4.1 83 查看 郭永刚 13800001016 上海徐汇衡山路 离线 已认证 3.8 72 查看 胡建华 13800001015 上海浦东陆家嘴 离线 待审核 0 100 查看 审核 朱志强 13800001014 北京海淀区"
+          }
+        ],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "骑手协同调度工作台骑手管理订单管理商户管理区域调度轨迹与告警收入结算运营看板风控策略v1.0.0骑手管理管理员超级管理员全部状态在线离线配送中全部认证已认证待审核已拒绝全部区域北京朝阳区CBD北京海淀区中关村上海浦东陆家嘴上海徐汇衡山路深圳南山科技园深圳福田CBD姓名手机号区域状态认证状态服务分信用分操作谢文东13800001020北京海淀区中关村在线已认证4.386 查看罗建国13800001019北京朝阳区CBD在线已认证480 查看何大伟13800001018深圳福田CBD配送中已认证4.487 查看林小明13800001017深圳南山科技园配送中已认证4.183 查看郭永刚13800001016上海徐汇衡山路离线已认证3.872 查看胡建华13800001015上海浦东陆家嘴离线待审核0100 查看 审核朱志强13800001014北京海淀区中关村离线已拒绝060 查看马云飞13800001013北京朝阳区CBD离线待审核0100 查看 审核孙涛13800001012深圳福田CBD在线已认证4.795 查看徐磊13800001011深圳福田CBD在线已认证4.590 查看吴昊13800001010深圳南山科技园在线已认证4.693 查看周杰13800001009深圳南山科技园在线已认证4.997 查看黄海13800001008上海徐汇衡山路在线已认证4.489 查看杨帆13800001007上海徐汇衡山路在线已认证4.388 查看陈明13800001006上海浦东陆家嘴在线已认证4.691 查看共 20 条上一页1 / 2下一页",
+        "layout": {
+          "viewportWidth": 1696,
+          "viewportHeight": 1000,
+          "scrollWidth": 1696,
+          "scrollHeight": 1000,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89038-codex-cli-structure-07-导航-骑手管理",
+          "label": "导航:骑手管理",
+          "finalUrl": "http://127.0.0.1:49038/riders",
+          "title": "即时配送骑手协同调度平台",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89038/probe/codex-repair-20260604-cli/may-89038-codex-cli-structure-07-导航-骑手管理.json",
+          "screenshotPath": "",
+          "elementCount": 380,
+          "interactiveCount": 33,
+          "interactiveLabels": [
+            "工作台",
+            "骑手管理",
+            "订单管理",
+            "商户管理",
+            "区域调度",
+            "轨迹与告警",
+            "收入结算",
+            "运营看板",
+            "风控策略",
+            "全部状态 在线 离线 配送中",
+            "全部认证 已认证 待审核 已拒绝",
+            "全部区域 北京朝阳区CBD 北京海淀区中关村 上海浦东陆家嘴 上海徐汇衡山路 深圳南山科技园 深圳福田CBD",
+            "搜索姓名或手机号",
+            "查看",
+            "审核",
+            "上一页",
+            "下一页"
+          ]
+        }
+      },
+      {
+        "label": "操作:查看",
+        "url": "http://127.0.0.1:49038/riders/20",
+        "title": "即时配送骑手协同调度平台",
+        "headings": [
+          "谢文东"
+        ],
+        "navLabels": [
+          "骑手协同调度",
+          "工作台",
+          "骑手管理",
+          "订单管理",
+          "商户管理",
+          "区域调度",
+          "轨迹与告警",
+          "收入结算",
+          "运营看板",
+          "风控策略"
+        ],
+        "buttons": [
+          "返回骑手列表",
+          "信用档案",
+          "收入明细",
+          "轨迹记录",
+          "申诉"
+        ],
+        "links": [
+          "工作台",
+          "骑手管理",
+          "订单管理",
+          "商户管理",
+          "区域调度",
+          "轨迹与告警",
+          "收入结算",
+          "运营看板",
+          "风控策略"
+        ],
+        "inputs": [],
+        "tables": [
+          {
+            "headers": [
+              "类型",
+              "分值变动",
+              "原因",
+              "申诉",
+              "时间"
+            ],
+            "rowCount": 3,
+            "hasEmptyText": false,
+            "textPreview": "类型 分值变动 原因 申诉 时间 加分 +5 连续完成10单无差评 2026-06-04 22:01 扣分 -3 配送轻微超时 申诉 2026-06-04 22:01 扣分 -5 客户投诉服务态度 已驳回 2026-06-04 22:01"
+          }
+        ],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "骑手协同调度工作台骑手管理订单管理商户管理区域调度轨迹与告警收入结算运营看板风控策略v1.0.0骑手管理骑手详情管理员超级管理员 返回骑手列表谢文东13800001020·北京海淀区中关村·已认证服务分4.3信用分86健康码🟢 绿码车辆京A12352 信用档案 收入明细 轨迹记录86信用评分满分100分类型分值变动原因申诉时间加分+5连续完成10单无差评2026-06-04 22:01扣分-3配送轻微超时申诉2026-06-04 22:01扣分-5客户投诉服务态度已驳回2026-06-04 22:01",
+        "layout": {
+          "viewportWidth": 1728,
+          "viewportHeight": 1000,
+          "scrollWidth": 1728,
+          "scrollHeight": 1000,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89038-codex-cli-structure-08-操作-查看",
+          "label": "操作:查看",
+          "finalUrl": "http://127.0.0.1:49038/riders/20",
+          "title": "即时配送骑手协同调度平台",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89038/probe/codex-repair-20260604-cli/may-89038-codex-cli-structure-08-操作-查看.json",
+          "screenshotPath": "",
+          "elementCount": 179,
+          "interactiveCount": 15,
+          "interactiveLabels": [
+            "工作台",
+            "骑手管理",
+            "订单管理",
+            "商户管理",
+            "区域调度",
+            "轨迹与告警",
+            "收入结算",
+            "运营看板",
+            "风控策略",
+            "返回骑手列表",
+            "信用档案",
+            "收入明细",
+            "轨迹记录",
+            "申诉"
+          ]
+        }
+      },
+      {
+        "label": "二层操作:查看->返回骑手列表",
+        "url": "http://127.0.0.1:49038/riders",
+        "title": "即时配送骑手协同调度平台",
+        "headings": [],
+        "navLabels": [
+          "骑手协同调度",
+          "工作台",
+          "骑手管理",
+          "订单管理",
+          "商户管理",
+          "区域调度",
+          "轨迹与告警",
+          "收入结算",
+          "运营看板",
+          "风控策略"
+        ],
+        "buttons": [
+          "查看",
+          "审核",
+          "上一页",
+          "下一页"
+        ],
+        "links": [
+          "工作台",
+          "骑手管理",
+          "订单管理",
+          "商户管理",
+          "区域调度",
+          "轨迹与告警",
+          "收入结算",
+          "运营看板",
+          "风控策略"
+        ],
+        "inputs": [
+          {
+            "tag": "select",
+            "type": "",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "select",
+            "type": "",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "select",
+            "type": "",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "",
+            "placeholder": "搜索姓名或手机号",
+            "name": "",
+            "label": ""
+          }
+        ],
+        "tables": [
+          {
+            "headers": [
+              "姓名",
+              "手机号",
+              "区域",
+              "状态",
+              "认证状态",
+              "服务分",
+              "信用分",
+              "操作"
+            ],
+            "rowCount": 15,
+            "hasEmptyText": false,
+            "textPreview": "姓名 手机号 区域 状态 认证状态 服务分 信用分 操作 谢文东 13800001020 北京海淀区中关村 在线 已认证 4.3 86 查看 罗建国 13800001019 北京朝阳区CBD 在线 已认证 4 80 查看 何大伟 13800001018 深圳福田CBD 配送中 已认证 4.4 87 查看 林小明 13800001017 深圳南山科技园 配送中 已认证 4.1 83 查看 郭永刚 13800001016 上海徐汇衡山路 离线 已认证 3.8 72 查看 胡建华 13800001015 上海浦东陆家嘴 离线 待审核 0 100 查看 审核 朱志强 13800001014 北京海淀区"
+          }
+        ],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "骑手协同调度工作台骑手管理订单管理商户管理区域调度轨迹与告警收入结算运营看板风控策略v1.0.0骑手管理管理员超级管理员全部状态在线离线配送中全部认证已认证待审核已拒绝全部区域北京朝阳区CBD北京海淀区中关村上海浦东陆家嘴上海徐汇衡山路深圳南山科技园深圳福田CBD姓名手机号区域状态认证状态服务分信用分操作谢文东13800001020北京海淀区中关村在线已认证4.386 查看罗建国13800001019北京朝阳区CBD在线已认证480 查看何大伟13800001018深圳福田CBD配送中已认证4.487 查看林小明13800001017深圳南山科技园配送中已认证4.183 查看郭永刚13800001016上海徐汇衡山路离线已认证3.872 查看胡建华13800001015上海浦东陆家嘴离线待审核0100 查看 审核朱志强13800001014北京海淀区中关村离线已拒绝060 查看马云飞13800001013北京朝阳区CBD离线待审核0100 查看 审核孙涛13800001012深圳福田CBD在线已认证4.795 查看徐磊13800001011深圳福田CBD在线已认证4.590 查看吴昊13800001010深圳南山科技园在线已认证4.693 查看周杰13800001009深圳南山科技园在线已认证4.997 查看黄海13800001008上海徐汇衡山路在线已认证4.489 查看杨帆13800001007上海徐汇衡山路在线已认证4.388 查看陈明13800001006上海浦东陆家嘴在线已认证4.691 查看共 20 条上一页1 / 2下一页",
+        "layout": {
+          "viewportWidth": 1760,
+          "viewportHeight": 1000,
+          "scrollWidth": 1760,
+          "scrollHeight": 1000,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89038-codex-cli-structure-09-二层操作-查看-返回骑手列表",
+          "label": "二层操作:查看->返回骑手列表",
+          "finalUrl": "http://127.0.0.1:49038/riders",
+          "title": "即时配送骑手协同调度平台",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89038/probe/codex-repair-20260604-cli/may-89038-codex-cli-structure-09-二层操作-查看-返回骑手列表.json",
+          "screenshotPath": "",
+          "elementCount": 380,
+          "interactiveCount": 33,
+          "interactiveLabels": [
+            "工作台",
+            "骑手管理",
+            "订单管理",
+            "商户管理",
+            "区域调度",
+            "轨迹与告警",
+            "收入结算",
+            "运营看板",
+            "风控策略",
+            "全部状态 在线 离线 配送中",
+            "全部认证 已认证 待审核 已拒绝",
+            "全部区域 北京朝阳区CBD 北京海淀区中关村 上海浦东陆家嘴 上海徐汇衡山路 深圳南山科技园 深圳福田CBD",
+            "搜索姓名或手机号",
+            "查看",
+            "审核",
+            "上一页",
+            "下一页"
+          ]
+        }
+      },
+      {
+        "label": "操作:审核",
+        "url": "http://127.0.0.1:49038/riders/15/verify",
+        "title": "即时配送骑手协同调度平台",
+        "headings": [
+          "胡建华",
+          "实名认证信息",
+          "健康码状态",
+          "车辆信息",
+          "证照照片",
+          "审核操作"
+        ],
+        "navLabels": [
+          "骑手协同调度",
+          "工作台",
+          "骑手管理",
+          "订单管理",
+          "商户管理",
+          "区域调度",
+          "轨迹与告警",
+          "收入结算",
+          "运营看板",
+          "风控策略"
+        ],
+        "buttons": [
+          "骑手管理",
+          "骑手详情",
+          "返回详情",
+          "提交审核",
+          "取消"
+        ],
+        "links": [
+          "工作台",
+          "骑手管理",
+          "订单管理",
+          "商户管理",
+          "区域调度",
+          "轨迹与告警",
+          "收入结算",
+          "运营看板",
+          "风控策略"
+        ],
+        "inputs": [
+          {
+            "tag": "input",
+            "type": "radio",
+            "placeholder": "",
+            "name": "verify_status",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "radio",
+            "placeholder": "",
+            "name": "verify_status",
+            "label": ""
+          },
+          {
+            "tag": "textarea",
+            "type": "",
+            "placeholder": "请输入审核意见（必填）",
+            "name": "",
+            "label": ""
+          }
+        ],
+        "tables": [],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "骑手协同调度工作台骑手管理订单管理商户管理区域调度轨迹与告警收入结算运营看板风控策略v1.0.0骑手管理15verify管理员超级管理员骑手管理/骑手详情/审核决策 返回详情胡建华13800001015 实名认证信息姓名胡建华身份证号310***********1248 健康码状态绿码 车辆信息车辆类型电动车车牌号沪B23460 证照照片身份证正面身份证反面驾驶证审核操作审核结果通过拒绝审核意见审核人管理员提交审核取消",
+        "layout": {
+          "viewportWidth": 1792,
+          "viewportHeight": 1000,
+          "scrollWidth": 1792,
+          "scrollHeight": 1000,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89038-codex-cli-structure-10-操作-审核",
+          "label": "操作:审核",
+          "finalUrl": "http://127.0.0.1:49038/riders/15/verify",
+          "title": "即时配送骑手协同调度平台",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89038/probe/codex-repair-20260604-cli/may-89038-codex-cli-structure-10-操作-审核.json",
+          "screenshotPath": "",
+          "elementCount": 204,
+          "interactiveCount": 18,
+          "interactiveLabels": [
+            "工作台",
+            "骑手管理",
+            "订单管理",
+            "商户管理",
+            "区域调度",
+            "轨迹与告警",
+            "收入结算",
+            "运营看板",
+            "风控策略",
+            "骑手详情",
+            "返回详情",
+            "approved",
+            "rejected",
+            "请输入审核意见（必填）",
+            "提交审核",
+            "取消"
+          ]
+        }
+      },
+      {
+        "label": "二层操作:审核->返回详情",
+        "url": "http://127.0.0.1:49038/riders/15",
+        "title": "即时配送骑手协同调度平台",
+        "headings": [
+          "胡建华"
+        ],
+        "navLabels": [
+          "骑手协同调度",
+          "工作台",
+          "骑手管理",
+          "订单管理",
+          "商户管理",
+          "区域调度",
+          "轨迹与告警",
+          "收入结算",
+          "运营看板",
+          "风控策略"
+        ],
+        "buttons": [
+          "返回骑手列表",
+          "去审核",
+          "信用档案",
+          "收入明细",
+          "轨迹记录"
+        ],
+        "links": [
+          "工作台",
+          "骑手管理",
+          "订单管理",
+          "商户管理",
+          "区域调度",
+          "轨迹与告警",
+          "收入结算",
+          "运营看板",
+          "风控策略"
+        ],
+        "inputs": [],
+        "tables": [
+          {
+            "headers": [
+              "类型",
+              "分值变动",
+              "原因",
+              "申诉",
+              "时间"
+            ],
+            "rowCount": 1,
+            "hasEmptyText": false,
+            "textPreview": "类型 分值变动 原因 申诉 时间"
+          }
+        ],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "骑手协同调度工作台骑手管理订单管理商户管理区域调度轨迹与告警收入结算运营看板风控策略v1.0.0骑手管理骑手详情管理员超级管理员 返回骑手列表胡建华13800001015·上海浦东陆家嘴·待审核 去审核服务分0信用分100健康码🟢 绿码车辆沪B23460 信用档案 收入明细 轨迹记录100信用评分满分100分类型分值变动原因申诉时间",
+        "layout": {
+          "viewportWidth": 1824,
+          "viewportHeight": 1000,
+          "scrollWidth": 1824,
+          "scrollHeight": 1000,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89038-codex-cli-structure-11-二层操作-审核-返回详情",
+          "label": "二层操作:审核->返回详情",
+          "finalUrl": "http://127.0.0.1:49038/riders/15",
+          "title": "即时配送骑手协同调度平台",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89038/probe/codex-repair-20260604-cli/may-89038-codex-cli-structure-11-二层操作-审核-返回详情.json",
+          "screenshotPath": "",
+          "elementCount": 163,
+          "interactiveCount": 15,
+          "interactiveLabels": [
+            "工作台",
+            "骑手管理",
+            "订单管理",
+            "商户管理",
+            "区域调度",
+            "轨迹与告警",
+            "收入结算",
+            "运营看板",
+            "风控策略",
+            "返回骑手列表",
+            "去审核",
+            "信用档案",
+            "收入明细",
+            "轨迹记录"
+          ]
+        }
+      },
+      {
+        "label": "导航:订单管理",
+        "url": "http://127.0.0.1:49038/orders",
+        "title": "即时配送骑手协同调度平台",
+        "headings": [
+          "订单管理"
+        ],
+        "navLabels": [
+          "骑手协同调度",
+          "工作台",
+          "骑手管理",
+          "订单管理",
+          "商户管理",
+          "区域调度",
+          "轨迹与告警",
+          "收入结算",
+          "运营看板",
+          "风控策略"
+        ],
+        "buttons": [
+          "创建订单",
+          "查看",
+          "上一页",
+          "下一页"
+        ],
+        "links": [
+          "工作台",
+          "骑手管理",
+          "订单管理",
+          "商户管理",
+          "区域调度",
+          "轨迹与告警",
+          "收入结算",
+          "运营看板",
+          "风控策略"
+        ],
+        "inputs": [
+          {
+            "tag": "select",
+            "type": "",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "select",
+            "type": "",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "select",
+            "type": "",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "",
+            "placeholder": "搜索订单号",
+            "name": "",
+            "label": ""
+          }
+        ],
+        "tables": [
+          {
+            "headers": [
+              "订单号",
+              "类型",
+              "商户",
+              "取货地址",
+              "送达地址",
+              "状态",
+              "骑手",
+              "创建时间",
+              "操作"
+            ],
+            "rowCount": 15,
+            "hasEmptyText": false,
+            "textPreview": "订单号 类型 商户 取货地址 送达地址 状态 骑手 创建时间 操作 DD2026060400030 即时单 肯德基衡山路店 上海市徐汇区衡山路10号 上海市徐汇区田林路388号 已完成 杨帆 2026-06-04 22:01 查看 DD2026060400029 即时单 麦当劳陆家嘴店 上海市浦东新区陆家嘴环路1000号 上海市浦东新区潍坊路100号 已完成 陈明 2026-06-04 22:01 查看 DD2026060400028 即时单 全聚德前门店 北京市东城区前门大街30号 北京市东城区王府井大街255号 已完成 罗建国 2026-06-04 22:01 查看 DD202606040"
+          }
+        ],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "骑手协同调度工作台骑手管理订单管理商户管理区域调度轨迹与告警收入结算运营看板风控策略v1.0.0订单管理管理员超级管理员订单管理 创建订单全部类型即时单预约单批量单全部状态待调度已派单取餐中配送中已完成已取消全部商户奈雪南山店汉堡王世纪大道店必胜客五道口店全聚德前门店喜茶福田COCO Park店瑞幸科技园店肯德基衡山路店麦当劳陆家嘴店海底捞中关村店星巴克国贸店订单号类型商户取货地址送达地址状态骑手创建时间操作DD2026060400030即时单肯德基衡山路店上海市徐汇区衡山路10号上海市徐汇区田林路388号已完成杨帆2026-06-04 22:01 查看DD2026060400029即时单麦当劳陆家嘴店上海市浦东新区陆家嘴环路1000号上海市浦东新区潍坊路100号已完成陈明2026-06-04 22:01 查看DD2026060400028即时单全聚德前门店北京市东城区前门大街30号北京市东城区王府井大街255号已完成罗建国2026-06-04 22:01 查看DD2026060400027即时单喜茶福田COCO Park店深圳市福田区福华三路COCO Park深圳市福田区深南大道6013号已完成徐磊2026-06-04 22:01 查看DD2026060400026即时单瑞幸科技园店深圳市南山区科技园路8号深圳市南山区科华路8号已完成周杰2026-06-04 22:01 查看DD2026060400025即时单肯德基衡山路店上海市徐汇区衡山路10号上海市徐汇区零陵路800号已完成黄海2026-06-04 22:01 查看DD2026060400024即时单海底捞中关村店北京市海淀区中关村大街15号北京市海淀区上地十街10号已取消-2026-06-04 22:01 查看DD2026060400023即时单麦当劳陆家嘴店上海市浦东新区陆家嘴环路1000号上海市浦东新区银城中路200号已完成刘洋2026-06-04 22:01 查看DD2026060400022即时单星巴克国贸店北京市朝阳区建国门外大街1号国贸商城B1北京市朝阳区建国路89号已完成张伟2026-06-04 22:01 查看DD2026060400021预约单喜茶福田COCO Park店深圳市福田区福华三路COCO Park深圳市福田区红荔西路8008号待调度-2026-06-04 22:01 查看DD2026060400020即时单瑞幸科技园店深圳市南山区科技园路8号深圳市南山区沙河西路2000号待调度-2026-06-04 22:01 查看DD2026060400019即时单麦当劳陆家嘴店上海市浦东新区陆家嘴环路1000号上海市浦东新区民生路1199号待调度-2026-06-04 22:01 查看DD2026060400018即时单海底捞中关村店北京市海淀区中关村大街15号北京市海淀区清华东路35号待调度-2026-06-04 22:01 查看DD2026060400017即时单星巴克国贸店北京市朝阳区建国门外大街1号国贸商城B1北京市朝阳区劲松南路1号待调度-2026-06-04 22:01 查看DD2026060400016即时单全聚德前门店北京市东城区前门大街30号北京市东城区东四北大街200号待调度-2026-06-04 22:01 查看共 30 条上一页1 / 2下一页",
+        "layout": {
+          "viewportWidth": 1856,
+          "viewportHeight": 1000,
+          "scrollWidth": 1856,
+          "scrollHeight": 1000,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89038-codex-cli-structure-12-导航-订单管理",
+          "label": "导航:订单管理",
+          "finalUrl": "http://127.0.0.1:49038/orders",
+          "title": "即时配送骑手协同调度平台",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89038/probe/codex-repair-20260604-cli/may-89038-codex-cli-structure-12-导航-订单管理.json",
+          "screenshotPath": "",
+          "elementCount": 371,
+          "interactiveCount": 32,
+          "interactiveLabels": [
+            "工作台",
+            "骑手管理",
+            "订单管理",
+            "商户管理",
+            "区域调度",
+            "轨迹与告警",
+            "收入结算",
+            "运营看板",
+            "风控策略",
+            "创建订单",
+            "全部类型 即时单 预约单 批量单",
+            "全部状态 待调度 已派单 取餐中 配送中 已完成 已取消",
+            "全部商户 奈雪南山店 汉堡王世纪大道店 必胜客五道口店 全聚德前门店 喜茶福田COCO Park店 瑞幸科技园店 肯德基衡山路店 麦当劳陆家嘴店 海底捞中关村店 星巴克国贸店",
+            "搜索订单号",
+            "查看",
+            "上一页",
+            "下一页"
+          ]
+        }
+      },
+      {
+        "label": "操作:创建订单",
+        "url": "http://127.0.0.1:49038/orders/create",
+        "title": "即时配送骑手协同调度平台",
+        "headings": [
+          "创建订单"
+        ],
+        "navLabels": [
+          "骑手协同调度",
+          "工作台",
+          "骑手管理",
+          "订单管理",
+          "商户管理",
+          "区域调度",
+          "轨迹与告警",
+          "收入结算",
+          "运营看板",
+          "风控策略"
+        ],
+        "buttons": [
+          "返回订单列表",
+          "创建订单",
+          "取消"
+        ],
+        "links": [
+          "工作台",
+          "骑手管理",
+          "订单管理",
+          "商户管理",
+          "区域调度",
+          "轨迹与告警",
+          "收入结算",
+          "运营看板",
+          "风控策略"
+        ],
+        "inputs": [
+          {
+            "tag": "select",
+            "type": "",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "select",
+            "type": "",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "",
+            "placeholder": "取货地址",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "",
+            "placeholder": "配送地址",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "datetime-local",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "datetime-local",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "datetime-local",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "datetime-local",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "select",
+            "type": "",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "select",
+            "type": "",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "textarea",
+            "type": "",
+            "placeholder": "如保温配送、小心轻放等",
+            "name": "",
+            "label": ""
+          }
+        ],
+        "tables": [],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "骑手协同调度工作台骑手管理订单管理商户管理区域调度轨迹与告警收入结算运营看板风控策略v1.0.0订单管理创建订单管理员超级管理员 返回订单列表创建订单订单类型 *即时单预约单批量单商户 *请选择商户全聚德前门店喜茶福田COCO Park店瑞幸科技园店肯德基衡山路店麦当劳陆家嘴店海底捞中关村店星巴克国贸店取货地址 *配送地址 *取货时间窗 至送达时间窗 至货物类型普通餐饮饮品药品文件所属区域自动分配北京朝阳区CBD北京海淀区中关村上海浦东陆家嘴上海徐汇衡山路深圳南山科技园深圳福田CBD特殊要求创建订单取消",
+        "layout": {
+          "viewportWidth": 1888,
+          "viewportHeight": 1000,
+          "scrollWidth": 1888,
+          "scrollHeight": 1000,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89038-codex-cli-structure-13-操作-创建订单",
+          "label": "操作:创建订单",
+          "finalUrl": "http://127.0.0.1:49038/orders/create",
+          "title": "即时配送骑手协同调度平台",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89038/probe/codex-repair-20260604-cli/may-89038-codex-cli-structure-13-操作-创建订单.json",
+          "screenshotPath": "",
+          "elementCount": 166,
+          "interactiveCount": 24,
+          "interactiveLabels": [
+            "工作台",
+            "骑手管理",
+            "订单管理",
+            "商户管理",
+            "区域调度",
+            "轨迹与告警",
+            "收入结算",
+            "运营看板",
+            "风控策略",
+            "返回订单列表",
+            "即时单 预约单 批量单",
+            "请选择商户 全聚德前门店 喜茶福田COCO Park店 瑞幸科技园店 肯德基衡山路店 麦当劳陆家嘴店 海底捞中关村店 星巴克国贸店",
+            "取货地址",
+            "配送地址",
+            "普通 餐饮 饮品 药品 文件",
+            "自动分配 北京朝阳区CBD 北京海淀区中关村 上海浦东陆家嘴 上海徐汇衡山路 深圳南山科技园 深圳福田CBD",
+            "如保温配送、小心轻放等",
+            "创建订单",
+            "取消"
+          ]
+        }
+      },
+      {
+        "label": "操作:查看",
+        "url": "http://127.0.0.1:49038/orders/30",
+        "title": "即时配送骑手协同调度平台",
+        "headings": [
+          "DD2026060400030",
+          "骑手信息",
+          "快捷操作"
+        ],
+        "navLabels": [
+          "骑手协同调度",
+          "工作台",
+          "骑手管理",
+          "订单管理",
+          "商户管理",
+          "区域调度",
+          "轨迹与告警",
+          "收入结算",
+          "运营看板",
+          "风控策略"
+        ],
+        "buttons": [
+          "返回订单列表"
+        ],
+        "links": [
+          "工作台",
+          "骑手管理",
+          "订单管理",
+          "商户管理",
+          "区域调度",
+          "轨迹与告警",
+          "收入结算",
+          "运营看板",
+          "风控策略"
+        ],
+        "inputs": [],
+        "tables": [],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "骑手协同调度工作台骑手管理订单管理商户管理区域调度轨迹与告警收入结算运营看板风控策略v1.0.0订单管理订单详情管理员超级管理员 返回订单列表DD2026060400030已完成即时单创建时间: 2026-06-04 22:01:43 · 区域: 上海徐汇衡山路1待调度2已派单3取餐中4配送中5已完成取货:上海市徐汇区衡山路10号2026-06-04 13:00 ~ 2026-06-04 13:10送达:上海市徐汇区田林路388号2026-06-04 13:15 ~ 2026-06-04 13:30商户: 肯德基衡山路店货物类型: food 骑手信息姓名: 杨帆手机: 13800001007 快捷操作",
+        "layout": {
+          "viewportWidth": 1920,
+          "viewportHeight": 1000,
+          "scrollWidth": 1920,
+          "scrollHeight": 1000,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89038-codex-cli-structure-14-操作-查看",
+          "label": "操作:查看",
+          "finalUrl": "http://127.0.0.1:49038/orders/30",
+          "title": "即时配送骑手协同调度平台",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89038/probe/codex-repair-20260604-cli/may-89038-codex-cli-structure-14-操作-查看.json",
+          "screenshotPath": "",
+          "elementCount": 176,
+          "interactiveCount": 11,
+          "interactiveLabels": [
+            "工作台",
+            "骑手管理",
+            "订单管理",
+            "商户管理",
+            "区域调度",
+            "轨迹与告警",
+            "收入结算",
+            "运营看板",
+            "风控策略",
+            "返回订单列表"
+          ]
+        }
+      },
+      {
+        "label": "导航:商户管理",
+        "url": "http://127.0.0.1:49038/merchants",
+        "title": "即时配送骑手协同调度平台",
+        "headings": [],
+        "navLabels": [
+          "骑手协同调度",
+          "工作台",
+          "骑手管理",
+          "订单管理",
+          "商户管理",
+          "区域调度",
+          "轨迹与告警",
+          "收入结算",
+          "运营看板",
+          "风控策略"
+        ],
+        "buttons": [
+          "查看",
+          "审核"
+        ],
+        "links": [
+          "工作台",
+          "骑手管理",
+          "订单管理",
+          "商户管理",
+          "区域调度",
+          "轨迹与告警",
+          "收入结算",
+          "运营看板",
+          "风控策略"
+        ],
+        "inputs": [
+          {
+            "tag": "select",
+            "type": "",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "",
+            "placeholder": "搜索商户名称",
+            "name": "",
+            "label": ""
+          }
+        ],
+        "tables": [
+          {
+            "headers": [
+              "商户名",
+              "联系人",
+              "手机号",
+              "地址",
+              "认证状态",
+              "履约评分",
+              "操作"
+            ],
+            "rowCount": 10,
+            "hasEmptyText": false,
+            "textPreview": "商户名 联系人 手机号 地址 认证状态 履约评分 操作 奈雪南山店 杨经理 0755-22001234 深圳市南山区南海大道1086号 已拒绝 - 查看 汉堡王世纪大道店 黄经理 021-61001234 上海市浦东新区世纪大道100号 待审核 - 查看 审核 必胜客五道口店 刘经理 010-62001234 北京市海淀区成府路28号 待审核 - 查看 审核 全聚德前门店 赵经理 010-67001234 北京市东城区前门大街30号 已认证 88.9 查看 喜茶福田COCO Park店 吴经理 0755-83001234 深圳市福田区福华三路COCO Park 已认证 96.7 查看 瑞幸科技"
+          }
+        ],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "骑手协同调度工作台骑手管理订单管理商户管理区域调度轨迹与告警收入结算运营看板风控策略v1.0.0商户管理管理员超级管理员全部认证状态已认证待审核已拒绝商户名联系人手机号地址认证状态履约评分操作奈雪南山店杨经理0755-22001234深圳市南山区南海大道1086号已拒绝- 查看汉堡王世纪大道店黄经理021-61001234上海市浦东新区世纪大道100号待审核- 查看 审核必胜客五道口店刘经理010-62001234北京市海淀区成府路28号待审核- 查看 审核全聚德前门店赵经理010-67001234北京市东城区前门大街30号已认证88.9 查看喜茶福田COCO Park店吴经理0755-83001234深圳市福田区福华三路COCO Park已认证96.7 查看瑞幸科技园店周经理0755-26001234深圳市南山区科技园路8号已认证91.3 查看肯德基衡山路店陈经理021-64001234上海市徐汇区衡山路10号已认证94.5 查看麦当劳陆家嘴店张经理021-58001234上海市浦东新区陆家嘴环路1000号已认证97.1 查看海底捞中关村店李经理010-82001234北京市海淀区中关村大街15号已认证92.8 查看星巴克国贸店王经理010-65001234北京市朝阳区建国门外大街1号国贸商城B1已认证95.2 查看",
+        "layout": {
+          "viewportWidth": 1952,
+          "viewportHeight": 1000,
+          "scrollWidth": 1952,
+          "scrollHeight": 1000,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89038-codex-cli-structure-15-导航-商户管理",
+          "label": "导航:商户管理",
+          "finalUrl": "http://127.0.0.1:49038/merchants",
+          "title": "即时配送骑手协同调度平台",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89038/probe/codex-repair-20260604-cli/may-89038-codex-cli-structure-15-导航-商户管理.json",
+          "screenshotPath": "",
+          "elementCount": 260,
+          "interactiveCount": 24,
+          "interactiveLabels": [
+            "工作台",
+            "骑手管理",
+            "订单管理",
+            "商户管理",
+            "区域调度",
+            "轨迹与告警",
+            "收入结算",
+            "运营看板",
+            "风控策略",
+            "全部认证状态 已认证 待审核 已拒绝",
+            "搜索商户名称",
+            "查看",
+            "审核"
+          ]
+        }
+      },
+      {
+        "label": "操作:查看",
+        "url": "http://127.0.0.1:49038/merchants/10",
+        "title": "即时配送骑手协同调度平台",
+        "headings": [
+          "奈雪南山店",
+          "最近订单"
+        ],
+        "navLabels": [
+          "骑手协同调度",
+          "工作台",
+          "骑手管理",
+          "订单管理",
+          "商户管理",
+          "区域调度",
+          "轨迹与告警",
+          "收入结算",
+          "运营看板",
+          "风控策略"
+        ],
+        "buttons": [
+          "返回商户列表"
+        ],
+        "links": [
+          "工作台",
+          "骑手管理",
+          "订单管理",
+          "商户管理",
+          "区域调度",
+          "轨迹与告警",
+          "收入结算",
+          "运营看板",
+          "风控策略"
+        ],
+        "inputs": [],
+        "tables": [
+          {
+            "headers": [
+              "订单号",
+              "类型",
+              "状态",
+              "骑手",
+              "创建时间"
+            ],
+            "rowCount": 1,
+            "hasEmptyText": false,
+            "textPreview": "订单号 类型 状态 骑手 创建时间 暂无订单"
+          }
+        ],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "骑手协同调度工作台骑手管理订单管理商户管理区域调度轨迹与告警收入结算运营看板风控策略v1.0.0商户管理商户详情管理员超级管理员 返回商户列表奈雪南山店杨经理·0755-22001234·已拒绝地址深圳市南山区南海大道1086号所属区域深圳南山科技园履约评分-最近订单订单号类型状态骑手创建时间暂无订单",
+        "layout": {
+          "viewportWidth": 1984,
+          "viewportHeight": 1000,
+          "scrollWidth": 1984,
+          "scrollHeight": 1000,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89038-codex-cli-structure-16-操作-查看",
+          "label": "操作:查看",
+          "finalUrl": "http://127.0.0.1:49038/merchants/10",
+          "title": "即时配送骑手协同调度平台",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89038/probe/codex-repair-20260604-cli/may-89038-codex-cli-structure-16-操作-查看.json",
+          "screenshotPath": "",
+          "elementCount": 143,
+          "interactiveCount": 11,
+          "interactiveLabels": [
+            "工作台",
+            "骑手管理",
+            "订单管理",
+            "商户管理",
+            "区域调度",
+            "轨迹与告警",
+            "收入结算",
+            "运营看板",
+            "风控策略",
+            "返回商户列表"
+          ]
+        }
+      }
+    ],
+    "findings": [],
+    "actionHints": [],
+    "emptyPages": [],
+    "overflowPages": [],
+    "blankPages": [],
+    "apiFailurePaths": [],
+    "goalTerms": [],
+    "clickedActionDescriptors": [
+      {
+        "nav": "工作台",
+        "label": "创建订单",
+        "ordinal": 0,
+        "unsafe": false
+      },
+      {
+        "nav": "工作台",
+        "label": "创建订单->创建订单",
+        "ordinal": 0,
+        "secondary": true,
+        "unsafe": false
+      },
+      {
+        "nav": "工作台",
+        "label": "查看告警",
+        "ordinal": 0,
+        "unsafe": false
+      },
+      {
+        "nav": "工作台",
+        "label": "查看告警->查看",
+        "ordinal": 0,
+        "secondary": true,
+        "unsafe": false
+      },
+      {
+        "nav": "骑手管理",
+        "label": "查看",
+        "ordinal": 0,
+        "unsafe": false
+      },
+      {
+        "nav": "骑手管理",
+        "label": "查看->返回骑手列表",
+        "ordinal": 0,
+        "secondary": true,
+        "unsafe": false
+      },
+      {
+        "nav": "骑手管理",
+        "label": "审核",
+        "ordinal": 0,
+        "unsafe": false
+      },
+      {
+        "nav": "骑手管理",
+        "label": "审核->返回详情",
+        "ordinal": 0,
+        "secondary": true,
+        "unsafe": false
+      },
+      {
+        "nav": "订单管理",
+        "label": "创建订单",
+        "ordinal": 0,
+        "unsafe": false
+      },
+      {
+        "nav": "订单管理",
+        "label": "查看",
+        "ordinal": 0,
+        "unsafe": false
+      },
+      {
+        "nav": "商户管理",
+        "label": "查看",
+        "ordinal": 0,
+        "unsafe": false
+      }
+    ],
+    "secondaryActionClicks": 4,
+    "structureCaptures": [
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89038-codex-cli-structure-01-首屏",
+        "label": "首屏",
+        "finalUrl": "http://127.0.0.1:49038/",
+        "title": "即时配送骑手协同调度平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89038/probe/codex-repair-20260604-cli/may-89038-codex-cli-structure-01-首屏.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89038/probe/codex-repair-20260604-cli/may-89038-codex-cli-structure-01-首屏.png",
+        "elementCount": 298,
+        "interactiveCount": 14,
+        "interactiveLabels": [
+          "工作台",
+          "骑手管理",
+          "订单管理",
+          "商户管理",
+          "区域调度",
+          "轨迹与告警",
+          "收入结算",
+          "运营看板",
+          "风控策略",
+          "创建订单",
+          "查看告警"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89038-codex-cli-structure-02-导航-工作台",
+        "label": "导航:工作台",
+        "finalUrl": "http://127.0.0.1:49038/",
+        "title": "即时配送骑手协同调度平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89038/probe/codex-repair-20260604-cli/may-89038-codex-cli-structure-02-导航-工作台.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89038/probe/codex-repair-20260604-cli/may-89038-codex-cli-structure-02-导航-工作台.png",
+        "elementCount": 298,
+        "interactiveCount": 14,
+        "interactiveLabels": [
+          "工作台",
+          "骑手管理",
+          "订单管理",
+          "商户管理",
+          "区域调度",
+          "轨迹与告警",
+          "收入结算",
+          "运营看板",
+          "风控策略",
+          "创建订单",
+          "查看告警"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89038-codex-cli-structure-03-操作-创建订单",
+        "label": "操作:创建订单",
+        "finalUrl": "http://127.0.0.1:49038/orders/create",
+        "title": "即时配送骑手协同调度平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89038/probe/codex-repair-20260604-cli/may-89038-codex-cli-structure-03-操作-创建订单.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89038/probe/codex-repair-20260604-cli/may-89038-codex-cli-structure-03-操作-创建订单.png",
+        "elementCount": 166,
+        "interactiveCount": 24,
+        "interactiveLabels": [
+          "工作台",
+          "骑手管理",
+          "订单管理",
+          "商户管理",
+          "区域调度",
+          "轨迹与告警",
+          "收入结算",
+          "运营看板",
+          "风控策略",
+          "返回订单列表",
+          "即时单 预约单 批量单",
+          "请选择商户 全聚德前门店 喜茶福田COCO Park店 瑞幸科技园店 肯德基衡山路店 麦当劳陆家嘴店 海底捞中关村店 星巴克国贸店",
+          "取货地址",
+          "配送地址",
+          "普通 餐饮 饮品 药品 文件",
+          "自动分配 北京朝阳区CBD 北京海淀区中关村 上海浦东陆家嘴 上海徐汇衡山路 深圳南山科技园 深圳福田CBD",
+          "如保温配送、小心轻放等",
+          "创建订单",
+          "取消"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89038-codex-cli-structure-04-二层操作-创建订单-创建订单",
+        "label": "二层操作:创建订单->创建订单",
+        "finalUrl": "http://127.0.0.1:49038/orders/create",
+        "title": "即时配送骑手协同调度平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89038/probe/codex-repair-20260604-cli/may-89038-codex-cli-structure-04-二层操作-创建订单-创建订单.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89038/probe/codex-repair-20260604-cli/may-89038-codex-cli-structure-04-二层操作-创建订单-创建订单.png",
+        "elementCount": 188,
+        "interactiveCount": 25,
+        "interactiveLabels": [
+          "工作台",
+          "骑手管理",
+          "订单管理",
+          "商户管理",
+          "区域调度",
+          "轨迹与告警",
+          "收入结算",
+          "运营看板",
+          "风控策略",
+          "返回订单列表",
+          "即时单 预约单 批量单",
+          "请选择商户 全聚德前门店 喜茶福田COCO Park店 瑞幸科技园店 肯德基衡山路店 麦当劳陆家嘴店 海底捞中关村店 星巴克国贸店",
+          "取货地址",
+          "配送地址",
+          "普通 餐饮 饮品 药品 文件",
+          "自动分配 北京朝阳区CBD 北京海淀区中关村 上海浦东陆家嘴 上海徐汇衡山路 深圳南山科技园 深圳福田CBD",
+          "如保温配送、小心轻放等",
+          "创建订单",
+          "取消"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89038-codex-cli-structure-05-操作-查看告警",
+        "label": "操作:查看告警",
+        "finalUrl": "http://127.0.0.1:49038/tracking",
+        "title": "即时配送骑手协同调度平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89038/probe/codex-repair-20260604-cli/may-89038-codex-cli-structure-05-操作-查看告警.json",
+        "screenshotPath": "",
+        "elementCount": 267,
+        "interactiveCount": 26,
+        "interactiveLabels": [
+          "工作台",
+          "骑手管理",
+          "订单管理",
+          "商户管理",
+          "区域调度",
+          "轨迹与告警",
+          "收入结算",
+          "运营看板",
+          "风控策略",
+          "告警列表",
+          "轨迹查询",
+          "全部状态 待处理 已处理",
+          "查看",
+          "处理",
+          "去调度"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89038-codex-cli-structure-06-二层操作-查看告警-查看",
+        "label": "二层操作:查看告警->查看",
+        "finalUrl": "http://127.0.0.1:49038/tracking",
+        "title": "即时配送骑手协同调度平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89038/probe/codex-repair-20260604-cli/may-89038-codex-cli-structure-06-二层操作-查看告警-查看.json",
+        "screenshotPath": "",
+        "elementCount": 326,
+        "interactiveCount": 27,
+        "interactiveLabels": [
+          "工作台",
+          "骑手管理",
+          "订单管理",
+          "商户管理",
+          "区域调度",
+          "轨迹与告警",
+          "收入结算",
+          "运营看板",
+          "风控策略",
+          "告警列表",
+          "轨迹查询",
+          "全部状态 待处理 已处理",
+          "查看",
+          "处理",
+          "去调度"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89038-codex-cli-structure-07-导航-骑手管理",
+        "label": "导航:骑手管理",
+        "finalUrl": "http://127.0.0.1:49038/riders",
+        "title": "即时配送骑手协同调度平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89038/probe/codex-repair-20260604-cli/may-89038-codex-cli-structure-07-导航-骑手管理.json",
+        "screenshotPath": "",
+        "elementCount": 380,
+        "interactiveCount": 33,
+        "interactiveLabels": [
+          "工作台",
+          "骑手管理",
+          "订单管理",
+          "商户管理",
+          "区域调度",
+          "轨迹与告警",
+          "收入结算",
+          "运营看板",
+          "风控策略",
+          "全部状态 在线 离线 配送中",
+          "全部认证 已认证 待审核 已拒绝",
+          "全部区域 北京朝阳区CBD 北京海淀区中关村 上海浦东陆家嘴 上海徐汇衡山路 深圳南山科技园 深圳福田CBD",
+          "搜索姓名或手机号",
+          "查看",
+          "审核",
+          "上一页",
+          "下一页"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89038-codex-cli-structure-08-操作-查看",
+        "label": "操作:查看",
+        "finalUrl": "http://127.0.0.1:49038/riders/20",
+        "title": "即时配送骑手协同调度平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89038/probe/codex-repair-20260604-cli/may-89038-codex-cli-structure-08-操作-查看.json",
+        "screenshotPath": "",
+        "elementCount": 179,
+        "interactiveCount": 15,
+        "interactiveLabels": [
+          "工作台",
+          "骑手管理",
+          "订单管理",
+          "商户管理",
+          "区域调度",
+          "轨迹与告警",
+          "收入结算",
+          "运营看板",
+          "风控策略",
+          "返回骑手列表",
+          "信用档案",
+          "收入明细",
+          "轨迹记录",
+          "申诉"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89038-codex-cli-structure-09-二层操作-查看-返回骑手列表",
+        "label": "二层操作:查看->返回骑手列表",
+        "finalUrl": "http://127.0.0.1:49038/riders",
+        "title": "即时配送骑手协同调度平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89038/probe/codex-repair-20260604-cli/may-89038-codex-cli-structure-09-二层操作-查看-返回骑手列表.json",
+        "screenshotPath": "",
+        "elementCount": 380,
+        "interactiveCount": 33,
+        "interactiveLabels": [
+          "工作台",
+          "骑手管理",
+          "订单管理",
+          "商户管理",
+          "区域调度",
+          "轨迹与告警",
+          "收入结算",
+          "运营看板",
+          "风控策略",
+          "全部状态 在线 离线 配送中",
+          "全部认证 已认证 待审核 已拒绝",
+          "全部区域 北京朝阳区CBD 北京海淀区中关村 上海浦东陆家嘴 上海徐汇衡山路 深圳南山科技园 深圳福田CBD",
+          "搜索姓名或手机号",
+          "查看",
+          "审核",
+          "上一页",
+          "下一页"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89038-codex-cli-structure-10-操作-审核",
+        "label": "操作:审核",
+        "finalUrl": "http://127.0.0.1:49038/riders/15/verify",
+        "title": "即时配送骑手协同调度平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89038/probe/codex-repair-20260604-cli/may-89038-codex-cli-structure-10-操作-审核.json",
+        "screenshotPath": "",
+        "elementCount": 204,
+        "interactiveCount": 18,
+        "interactiveLabels": [
+          "工作台",
+          "骑手管理",
+          "订单管理",
+          "商户管理",
+          "区域调度",
+          "轨迹与告警",
+          "收入结算",
+          "运营看板",
+          "风控策略",
+          "骑手详情",
+          "返回详情",
+          "approved",
+          "rejected",
+          "请输入审核意见（必填）",
+          "提交审核",
+          "取消"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89038-codex-cli-structure-11-二层操作-审核-返回详情",
+        "label": "二层操作:审核->返回详情",
+        "finalUrl": "http://127.0.0.1:49038/riders/15",
+        "title": "即时配送骑手协同调度平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89038/probe/codex-repair-20260604-cli/may-89038-codex-cli-structure-11-二层操作-审核-返回详情.json",
+        "screenshotPath": "",
+        "elementCount": 163,
+        "interactiveCount": 15,
+        "interactiveLabels": [
+          "工作台",
+          "骑手管理",
+          "订单管理",
+          "商户管理",
+          "区域调度",
+          "轨迹与告警",
+          "收入结算",
+          "运营看板",
+          "风控策略",
+          "返回骑手列表",
+          "去审核",
+          "信用档案",
+          "收入明细",
+          "轨迹记录"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89038-codex-cli-structure-12-导航-订单管理",
+        "label": "导航:订单管理",
+        "finalUrl": "http://127.0.0.1:49038/orders",
+        "title": "即时配送骑手协同调度平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89038/probe/codex-repair-20260604-cli/may-89038-codex-cli-structure-12-导航-订单管理.json",
+        "screenshotPath": "",
+        "elementCount": 371,
+        "interactiveCount": 32,
+        "interactiveLabels": [
+          "工作台",
+          "骑手管理",
+          "订单管理",
+          "商户管理",
+          "区域调度",
+          "轨迹与告警",
+          "收入结算",
+          "运营看板",
+          "风控策略",
+          "创建订单",
+          "全部类型 即时单 预约单 批量单",
+          "全部状态 待调度 已派单 取餐中 配送中 已完成 已取消",
+          "全部商户 奈雪南山店 汉堡王世纪大道店 必胜客五道口店 全聚德前门店 喜茶福田COCO Park店 瑞幸科技园店 肯德基衡山路店 麦当劳陆家嘴店 海底捞中关村店 星巴克国贸店",
+          "搜索订单号",
+          "查看",
+          "上一页",
+          "下一页"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89038-codex-cli-structure-13-操作-创建订单",
+        "label": "操作:创建订单",
+        "finalUrl": "http://127.0.0.1:49038/orders/create",
+        "title": "即时配送骑手协同调度平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89038/probe/codex-repair-20260604-cli/may-89038-codex-cli-structure-13-操作-创建订单.json",
+        "screenshotPath": "",
+        "elementCount": 166,
+        "interactiveCount": 24,
+        "interactiveLabels": [
+          "工作台",
+          "骑手管理",
+          "订单管理",
+          "商户管理",
+          "区域调度",
+          "轨迹与告警",
+          "收入结算",
+          "运营看板",
+          "风控策略",
+          "返回订单列表",
+          "即时单 预约单 批量单",
+          "请选择商户 全聚德前门店 喜茶福田COCO Park店 瑞幸科技园店 肯德基衡山路店 麦当劳陆家嘴店 海底捞中关村店 星巴克国贸店",
+          "取货地址",
+          "配送地址",
+          "普通 餐饮 饮品 药品 文件",
+          "自动分配 北京朝阳区CBD 北京海淀区中关村 上海浦东陆家嘴 上海徐汇衡山路 深圳南山科技园 深圳福田CBD",
+          "如保温配送、小心轻放等",
+          "创建订单",
+          "取消"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89038-codex-cli-structure-14-操作-查看",
+        "label": "操作:查看",
+        "finalUrl": "http://127.0.0.1:49038/orders/30",
+        "title": "即时配送骑手协同调度平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89038/probe/codex-repair-20260604-cli/may-89038-codex-cli-structure-14-操作-查看.json",
+        "screenshotPath": "",
+        "elementCount": 176,
+        "interactiveCount": 11,
+        "interactiveLabels": [
+          "工作台",
+          "骑手管理",
+          "订单管理",
+          "商户管理",
+          "区域调度",
+          "轨迹与告警",
+          "收入结算",
+          "运营看板",
+          "风控策略",
+          "返回订单列表"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89038-codex-cli-structure-15-导航-商户管理",
+        "label": "导航:商户管理",
+        "finalUrl": "http://127.0.0.1:49038/merchants",
+        "title": "即时配送骑手协同调度平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89038/probe/codex-repair-20260604-cli/may-89038-codex-cli-structure-15-导航-商户管理.json",
+        "screenshotPath": "",
+        "elementCount": 260,
+        "interactiveCount": 24,
+        "interactiveLabels": [
+          "工作台",
+          "骑手管理",
+          "订单管理",
+          "商户管理",
+          "区域调度",
+          "轨迹与告警",
+          "收入结算",
+          "运营看板",
+          "风控策略",
+          "全部认证状态 已认证 待审核 已拒绝",
+          "搜索商户名称",
+          "查看",
+          "审核"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89038-codex-cli-structure-16-操作-查看",
+        "label": "操作:查看",
+        "finalUrl": "http://127.0.0.1:49038/merchants/10",
+        "title": "即时配送骑手协同调度平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89038/probe/codex-repair-20260604-cli/may-89038-codex-cli-structure-16-操作-查看.json",
+        "screenshotPath": "",
+        "elementCount": 143,
+        "interactiveCount": 11,
+        "interactiveLabels": [
+          "工作台",
+          "骑手管理",
+          "订单管理",
+          "商户管理",
+          "区域调度",
+          "轨迹与告警",
+          "收入结算",
+          "运营看板",
+          "风控策略",
+          "返回商户列表"
+        ]
+      }
+    ],
+    "representativeScreenshotUrl": "http://127.0.0.1:49038/",
+    "representativeScreenshotLabel": "区域热力图"
+  },
+  "websiteStructureCapture": {
+    "module": "website_structure_capture",
+    "captureCount": 16,
+    "captures": [
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89038-codex-cli-structure-01-首屏",
+        "label": "首屏",
+        "finalUrl": "http://127.0.0.1:49038/",
+        "title": "即时配送骑手协同调度平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89038/probe/codex-repair-20260604-cli/may-89038-codex-cli-structure-01-首屏.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89038/probe/codex-repair-20260604-cli/may-89038-codex-cli-structure-01-首屏.png",
+        "elementCount": 298,
+        "interactiveCount": 14,
+        "interactiveLabels": [
+          "工作台",
+          "骑手管理",
+          "订单管理",
+          "商户管理",
+          "区域调度",
+          "轨迹与告警",
+          "收入结算",
+          "运营看板",
+          "风控策略",
+          "创建订单",
+          "查看告警"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89038-codex-cli-structure-02-导航-工作台",
+        "label": "导航:工作台",
+        "finalUrl": "http://127.0.0.1:49038/",
+        "title": "即时配送骑手协同调度平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89038/probe/codex-repair-20260604-cli/may-89038-codex-cli-structure-02-导航-工作台.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89038/probe/codex-repair-20260604-cli/may-89038-codex-cli-structure-02-导航-工作台.png",
+        "elementCount": 298,
+        "interactiveCount": 14,
+        "interactiveLabels": [
+          "工作台",
+          "骑手管理",
+          "订单管理",
+          "商户管理",
+          "区域调度",
+          "轨迹与告警",
+          "收入结算",
+          "运营看板",
+          "风控策略",
+          "创建订单",
+          "查看告警"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89038-codex-cli-structure-03-操作-创建订单",
+        "label": "操作:创建订单",
+        "finalUrl": "http://127.0.0.1:49038/orders/create",
+        "title": "即时配送骑手协同调度平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89038/probe/codex-repair-20260604-cli/may-89038-codex-cli-structure-03-操作-创建订单.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89038/probe/codex-repair-20260604-cli/may-89038-codex-cli-structure-03-操作-创建订单.png",
+        "elementCount": 166,
+        "interactiveCount": 24,
+        "interactiveLabels": [
+          "工作台",
+          "骑手管理",
+          "订单管理",
+          "商户管理",
+          "区域调度",
+          "轨迹与告警",
+          "收入结算",
+          "运营看板",
+          "风控策略",
+          "返回订单列表",
+          "即时单 预约单 批量单",
+          "请选择商户 全聚德前门店 喜茶福田COCO Park店 瑞幸科技园店 肯德基衡山路店 麦当劳陆家嘴店 海底捞中关村店 星巴克国贸店",
+          "取货地址",
+          "配送地址",
+          "普通 餐饮 饮品 药品 文件",
+          "自动分配 北京朝阳区CBD 北京海淀区中关村 上海浦东陆家嘴 上海徐汇衡山路 深圳南山科技园 深圳福田CBD",
+          "如保温配送、小心轻放等",
+          "创建订单",
+          "取消"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89038-codex-cli-structure-04-二层操作-创建订单-创建订单",
+        "label": "二层操作:创建订单->创建订单",
+        "finalUrl": "http://127.0.0.1:49038/orders/create",
+        "title": "即时配送骑手协同调度平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89038/probe/codex-repair-20260604-cli/may-89038-codex-cli-structure-04-二层操作-创建订单-创建订单.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89038/probe/codex-repair-20260604-cli/may-89038-codex-cli-structure-04-二层操作-创建订单-创建订单.png",
+        "elementCount": 188,
+        "interactiveCount": 25,
+        "interactiveLabels": [
+          "工作台",
+          "骑手管理",
+          "订单管理",
+          "商户管理",
+          "区域调度",
+          "轨迹与告警",
+          "收入结算",
+          "运营看板",
+          "风控策略",
+          "返回订单列表",
+          "即时单 预约单 批量单",
+          "请选择商户 全聚德前门店 喜茶福田COCO Park店 瑞幸科技园店 肯德基衡山路店 麦当劳陆家嘴店 海底捞中关村店 星巴克国贸店",
+          "取货地址",
+          "配送地址",
+          "普通 餐饮 饮品 药品 文件",
+          "自动分配 北京朝阳区CBD 北京海淀区中关村 上海浦东陆家嘴 上海徐汇衡山路 深圳南山科技园 深圳福田CBD",
+          "如保温配送、小心轻放等",
+          "创建订单",
+          "取消"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89038-codex-cli-structure-05-操作-查看告警",
+        "label": "操作:查看告警",
+        "finalUrl": "http://127.0.0.1:49038/tracking",
+        "title": "即时配送骑手协同调度平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89038/probe/codex-repair-20260604-cli/may-89038-codex-cli-structure-05-操作-查看告警.json",
+        "screenshotPath": "",
+        "elementCount": 267,
+        "interactiveCount": 26,
+        "interactiveLabels": [
+          "工作台",
+          "骑手管理",
+          "订单管理",
+          "商户管理",
+          "区域调度",
+          "轨迹与告警",
+          "收入结算",
+          "运营看板",
+          "风控策略",
+          "告警列表",
+          "轨迹查询",
+          "全部状态 待处理 已处理",
+          "查看",
+          "处理",
+          "去调度"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89038-codex-cli-structure-06-二层操作-查看告警-查看",
+        "label": "二层操作:查看告警->查看",
+        "finalUrl": "http://127.0.0.1:49038/tracking",
+        "title": "即时配送骑手协同调度平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89038/probe/codex-repair-20260604-cli/may-89038-codex-cli-structure-06-二层操作-查看告警-查看.json",
+        "screenshotPath": "",
+        "elementCount": 326,
+        "interactiveCount": 27,
+        "interactiveLabels": [
+          "工作台",
+          "骑手管理",
+          "订单管理",
+          "商户管理",
+          "区域调度",
+          "轨迹与告警",
+          "收入结算",
+          "运营看板",
+          "风控策略",
+          "告警列表",
+          "轨迹查询",
+          "全部状态 待处理 已处理",
+          "查看",
+          "处理",
+          "去调度"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89038-codex-cli-structure-07-导航-骑手管理",
+        "label": "导航:骑手管理",
+        "finalUrl": "http://127.0.0.1:49038/riders",
+        "title": "即时配送骑手协同调度平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89038/probe/codex-repair-20260604-cli/may-89038-codex-cli-structure-07-导航-骑手管理.json",
+        "screenshotPath": "",
+        "elementCount": 380,
+        "interactiveCount": 33,
+        "interactiveLabels": [
+          "工作台",
+          "骑手管理",
+          "订单管理",
+          "商户管理",
+          "区域调度",
+          "轨迹与告警",
+          "收入结算",
+          "运营看板",
+          "风控策略",
+          "全部状态 在线 离线 配送中",
+          "全部认证 已认证 待审核 已拒绝",
+          "全部区域 北京朝阳区CBD 北京海淀区中关村 上海浦东陆家嘴 上海徐汇衡山路 深圳南山科技园 深圳福田CBD",
+          "搜索姓名或手机号",
+          "查看",
+          "审核",
+          "上一页",
+          "下一页"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89038-codex-cli-structure-08-操作-查看",
+        "label": "操作:查看",
+        "finalUrl": "http://127.0.0.1:49038/riders/20",
+        "title": "即时配送骑手协同调度平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89038/probe/codex-repair-20260604-cli/may-89038-codex-cli-structure-08-操作-查看.json",
+        "screenshotPath": "",
+        "elementCount": 179,
+        "interactiveCount": 15,
+        "interactiveLabels": [
+          "工作台",
+          "骑手管理",
+          "订单管理",
+          "商户管理",
+          "区域调度",
+          "轨迹与告警",
+          "收入结算",
+          "运营看板",
+          "风控策略",
+          "返回骑手列表",
+          "信用档案",
+          "收入明细",
+          "轨迹记录",
+          "申诉"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89038-codex-cli-structure-09-二层操作-查看-返回骑手列表",
+        "label": "二层操作:查看->返回骑手列表",
+        "finalUrl": "http://127.0.0.1:49038/riders",
+        "title": "即时配送骑手协同调度平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89038/probe/codex-repair-20260604-cli/may-89038-codex-cli-structure-09-二层操作-查看-返回骑手列表.json",
+        "screenshotPath": "",
+        "elementCount": 380,
+        "interactiveCount": 33,
+        "interactiveLabels": [
+          "工作台",
+          "骑手管理",
+          "订单管理",
+          "商户管理",
+          "区域调度",
+          "轨迹与告警",
+          "收入结算",
+          "运营看板",
+          "风控策略",
+          "全部状态 在线 离线 配送中",
+          "全部认证 已认证 待审核 已拒绝",
+          "全部区域 北京朝阳区CBD 北京海淀区中关村 上海浦东陆家嘴 上海徐汇衡山路 深圳南山科技园 深圳福田CBD",
+          "搜索姓名或手机号",
+          "查看",
+          "审核",
+          "上一页",
+          "下一页"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89038-codex-cli-structure-10-操作-审核",
+        "label": "操作:审核",
+        "finalUrl": "http://127.0.0.1:49038/riders/15/verify",
+        "title": "即时配送骑手协同调度平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89038/probe/codex-repair-20260604-cli/may-89038-codex-cli-structure-10-操作-审核.json",
+        "screenshotPath": "",
+        "elementCount": 204,
+        "interactiveCount": 18,
+        "interactiveLabels": [
+          "工作台",
+          "骑手管理",
+          "订单管理",
+          "商户管理",
+          "区域调度",
+          "轨迹与告警",
+          "收入结算",
+          "运营看板",
+          "风控策略",
+          "骑手详情",
+          "返回详情",
+          "approved",
+          "rejected",
+          "请输入审核意见（必填）",
+          "提交审核",
+          "取消"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89038-codex-cli-structure-11-二层操作-审核-返回详情",
+        "label": "二层操作:审核->返回详情",
+        "finalUrl": "http://127.0.0.1:49038/riders/15",
+        "title": "即时配送骑手协同调度平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89038/probe/codex-repair-20260604-cli/may-89038-codex-cli-structure-11-二层操作-审核-返回详情.json",
+        "screenshotPath": "",
+        "elementCount": 163,
+        "interactiveCount": 15,
+        "interactiveLabels": [
+          "工作台",
+          "骑手管理",
+          "订单管理",
+          "商户管理",
+          "区域调度",
+          "轨迹与告警",
+          "收入结算",
+          "运营看板",
+          "风控策略",
+          "返回骑手列表",
+          "去审核",
+          "信用档案",
+          "收入明细",
+          "轨迹记录"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89038-codex-cli-structure-12-导航-订单管理",
+        "label": "导航:订单管理",
+        "finalUrl": "http://127.0.0.1:49038/orders",
+        "title": "即时配送骑手协同调度平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89038/probe/codex-repair-20260604-cli/may-89038-codex-cli-structure-12-导航-订单管理.json",
+        "screenshotPath": "",
+        "elementCount": 371,
+        "interactiveCount": 32,
+        "interactiveLabels": [
+          "工作台",
+          "骑手管理",
+          "订单管理",
+          "商户管理",
+          "区域调度",
+          "轨迹与告警",
+          "收入结算",
+          "运营看板",
+          "风控策略",
+          "创建订单",
+          "全部类型 即时单 预约单 批量单",
+          "全部状态 待调度 已派单 取餐中 配送中 已完成 已取消",
+          "全部商户 奈雪南山店 汉堡王世纪大道店 必胜客五道口店 全聚德前门店 喜茶福田COCO Park店 瑞幸科技园店 肯德基衡山路店 麦当劳陆家嘴店 海底捞中关村店 星巴克国贸店",
+          "搜索订单号",
+          "查看",
+          "上一页",
+          "下一页"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89038-codex-cli-structure-13-操作-创建订单",
+        "label": "操作:创建订单",
+        "finalUrl": "http://127.0.0.1:49038/orders/create",
+        "title": "即时配送骑手协同调度平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89038/probe/codex-repair-20260604-cli/may-89038-codex-cli-structure-13-操作-创建订单.json",
+        "screenshotPath": "",
+        "elementCount": 166,
+        "interactiveCount": 24,
+        "interactiveLabels": [
+          "工作台",
+          "骑手管理",
+          "订单管理",
+          "商户管理",
+          "区域调度",
+          "轨迹与告警",
+          "收入结算",
+          "运营看板",
+          "风控策略",
+          "返回订单列表",
+          "即时单 预约单 批量单",
+          "请选择商户 全聚德前门店 喜茶福田COCO Park店 瑞幸科技园店 肯德基衡山路店 麦当劳陆家嘴店 海底捞中关村店 星巴克国贸店",
+          "取货地址",
+          "配送地址",
+          "普通 餐饮 饮品 药品 文件",
+          "自动分配 北京朝阳区CBD 北京海淀区中关村 上海浦东陆家嘴 上海徐汇衡山路 深圳南山科技园 深圳福田CBD",
+          "如保温配送、小心轻放等",
+          "创建订单",
+          "取消"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89038-codex-cli-structure-14-操作-查看",
+        "label": "操作:查看",
+        "finalUrl": "http://127.0.0.1:49038/orders/30",
+        "title": "即时配送骑手协同调度平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89038/probe/codex-repair-20260604-cli/may-89038-codex-cli-structure-14-操作-查看.json",
+        "screenshotPath": "",
+        "elementCount": 176,
+        "interactiveCount": 11,
+        "interactiveLabels": [
+          "工作台",
+          "骑手管理",
+          "订单管理",
+          "商户管理",
+          "区域调度",
+          "轨迹与告警",
+          "收入结算",
+          "运营看板",
+          "风控策略",
+          "返回订单列表"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89038-codex-cli-structure-15-导航-商户管理",
+        "label": "导航:商户管理",
+        "finalUrl": "http://127.0.0.1:49038/merchants",
+        "title": "即时配送骑手协同调度平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89038/probe/codex-repair-20260604-cli/may-89038-codex-cli-structure-15-导航-商户管理.json",
+        "screenshotPath": "",
+        "elementCount": 260,
+        "interactiveCount": 24,
+        "interactiveLabels": [
+          "工作台",
+          "骑手管理",
+          "订单管理",
+          "商户管理",
+          "区域调度",
+          "轨迹与告警",
+          "收入结算",
+          "运营看板",
+          "风控策略",
+          "全部认证状态 已认证 待审核 已拒绝",
+          "搜索商户名称",
+          "查看",
+          "审核"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89038-codex-cli-structure-16-操作-查看",
+        "label": "操作:查看",
+        "finalUrl": "http://127.0.0.1:49038/merchants/10",
+        "title": "即时配送骑手协同调度平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89038/probe/codex-repair-20260604-cli/may-89038-codex-cli-structure-16-操作-查看.json",
+        "screenshotPath": "",
+        "elementCount": 143,
+        "interactiveCount": 11,
+        "interactiveLabels": [
+          "工作台",
+          "骑手管理",
+          "订单管理",
+          "商户管理",
+          "区域调度",
+          "轨迹与告警",
+          "收入结算",
+          "运营看板",
+          "风控策略",
+          "返回商户列表"
+        ]
+      }
+    ]
+  },
+  "screenshotMetrics": {
+    "width": 2016,
+    "height": 1000,
+    "scrollWidth": 1984,
+    "scrollHeight": 1000
+  },
+  "initialBodyTextPreview": "骑手协同调度\n工作台\n骑手管理\n订单管理\n商户管理\n区域调度\n轨迹与告警\n收入结算\n运营看板\n风控策略\nv1.0.0\n工作台\n管理员\n超级管理员\n在线骑手\n14\n待派订单\n6\n今日完成\n14\n配送中\n3\n告警数\n4\n异常轨迹\n2\n区域热力图\n北京朝阳区CBD\n4单\n3人\n运力缺口 2.3\n北京海淀区中关村\n3单\n3人\n运力缺口 1.5\n上海浦东陆家嘴\n2单\n2人\n运力缺口 1.8\n上海徐汇衡山路\n2单\n2人\n运力缺口 0.9\n深圳南山科技园\n2单\n2人\n运力缺口 3.1\n深圳福田CBD\n2单\n2人\n运力缺口 1.2\n最近告警\n骑手轨迹偏离规划路线超过300米\n赵刚 · 06-04 13:38\n骑手轨迹偏离规划路线超过500米\n张伟 · 06-04 13:08\n朝阳区CBD区域运力不足，缺口2.3\n06-04 11:30\n骑手健康码状态异常(红色)\n郭永刚 · 06-04 08:00\n快捷操作\n创建订单\n区域调度\n查看告警\n运营看板",
+  "bodyTextPreview": "骑手协同调度\n工作台\n骑手管理\n订单管理\n商户管理\n区域调度\n轨迹与告警\n收入结算\n运营看板\n风控策略\nv1.0.0\n工作台\n管理员\n超级管理员\n在线骑手\n14\n待派订单\n6\n今日完成\n14\n配送中\n3\n告警数\n4\n异常轨迹\n2\n区域热力图\n北京朝阳区CBD\n4单\n3人\n运力缺口 2.3\n北京海淀区中关村\n3单\n3人\n运力缺口 1.5\n上海浦东陆家嘴\n2单\n2人\n运力缺口 1.8\n上海徐汇衡山路\n2单\n2人\n运力缺口 0.9\n深圳南山科技园\n2单\n2人\n运力缺口 3.1\n深圳福田CBD\n2单\n2人\n运力缺口 1.2\n最近告警\n骑手轨迹偏离规划路线超过300米\n赵刚 · 06-04 13:38\n骑手轨迹偏离规划路线超过500米\n张伟 · 06-04 13:08\n朝阳区CBD区域运力不足，缺口2.3\n06-04 11:30\n骑手健康码状态异常(红色)\n郭永刚 · 06-04 08:00\n快捷操作\n创建订单\n区域调度\n查看告警\n运营看板",
+  "apiBase": "http://127.0.0.1:59038",
+  "businessGoalPreview": "",
+  "apiResponses": [
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49038/api/dashboard/overview"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49038/api/zones/heatmap"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49038/api/alerts?status=pending"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49038/api/dashboard/overview"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49038/api/zones/heatmap"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49038/api/alerts?status=pending"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49038/api/merchants?page_size=100"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49038/api/zones"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49038/api/merchants?page_size=100"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49038/api/zones"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49038/api/merchants?page_size=100"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49038/api/orders?page=1&page_size=15"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49038/api/merchants?page_size=100"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49038/api/orders?page=1&page_size=15"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49038/api/dashboard/overview"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49038/api/zones/heatmap"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49038/api/alerts?status=pending"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49038/api/dashboard/overview"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49038/api/zones/heatmap"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49038/api/alerts?status=pending"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49038/api/alerts"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49038/api/alerts"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49038/api/trajectories?order_id=8"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49038/api/verify-logs?target_type=alert&target_id=5"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49038/api/dashboard/overview"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49038/api/zones/heatmap"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49038/api/alerts?status=pending"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49038/api/dashboard/overview"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49038/api/zones/heatmap"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49038/api/alerts?status=pending"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49038/api/zones"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49038/api/riders?page=1&page_size=15"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49038/api/zones"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49038/api/riders?page=1&page_size=15"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49038/api/riders/20"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49038/api/riders/20/credit"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49038/api/verify-logs?target_type=rider&target_id=20&page_size=20"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49038/api/riders/20"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49038/api/riders/20/credit"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49038/api/verify-logs?target_type=rider&target_id=20&page_size=20"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49038/api/zones"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49038/api/riders?page=1&page_size=15"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49038/api/zones"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49038/api/riders?page=1&page_size=15"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49038/api/riders/15"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49038/api/verify-logs?target_type=rider&target_id=15&page_size=20"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49038/api/riders/15"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49038/api/verify-logs?target_type=rider&target_id=15&page_size=20"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49038/api/riders/15"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49038/api/riders/15/credit"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49038/api/verify-logs?target_type=rider&target_id=15&page_size=20"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49038/api/riders/15"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49038/api/riders/15/credit"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49038/api/verify-logs?target_type=rider&target_id=15&page_size=20"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49038/api/zones"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49038/api/riders?page=1&page_size=15"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49038/api/zones"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49038/api/riders?page=1&page_size=15"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49038/api/merchants?page_size=100"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49038/api/orders?page=1&page_size=15"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49038/api/merchants?page_size=100"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49038/api/orders?page=1&page_size=15"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49038/api/merchants?page_size=100"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49038/api/zones"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49038/api/merchants?page_size=100"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49038/api/zones"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49038/api/merchants?page_size=100"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49038/api/orders?page=1&page_size=15"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49038/api/merchants?page_size=100"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49038/api/orders?page=1&page_size=15"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49038/api/orders/30"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49038/api/orders/30"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49038/api/merchants?page_size=100"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49038/api/orders?page=1&page_size=15"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49038/api/merchants?page_size=100"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49038/api/orders?page=1&page_size=15"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49038/api/merchants?page=1&page_size=15"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49038/api/merchants?page=1&page_size=15"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49038/api/merchants/10"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49038/api/orders?merchant_id=10&page_size=10"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49038/api/merchants/10"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49038/api/orders?merchant_id=10&page_size=10"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49038/api/merchants?page=1&page_size=15"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49038/api/merchants?page=1&page_size=15"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49038/api/dashboard/overview"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49038/api/zones/heatmap"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49038/api/alerts?status=pending"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49038/api/dashboard/overview"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49038/api/zones/heatmap"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49038/api/alerts?status=pending"
+    }
+  ],
+  "apiChecks": [
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59038/api/health",
+      "path": "/api/health",
+      "status": 200,
+      "ok": true,
+      "bodyPreview": "{\"success\":true,\"message\":\"ok\"}"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59038/api/dashboard/overview",
+      "path": "/api/dashboard/overview",
+      "status": 200,
+      "ok": true,
+      "bodyPreview": "{\"success\":true,\"data\":{\"online_riders\":14,\"pending_orders\":6,\"today_completed\":14,\"delivering_orders\":3,\"total_riders\":20,\"total_orders\":30,\"total_alerts\":4,\"abnormal_trajectories\":2}}"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59038/api/zones/heatmap",
+      "path": "/api/zones/heatmap",
+      "status": 200,
+      "ok": true,
+      "bodyPreview": "{\"success\":true,\"data\":[{\"id\":1,\"name\":\"北京朝阳区CBD\",\"order_count\":4,\"rider_count\":3,\"gap\":2.3},{\"id\":2,\"name\":\"北京海淀区中关村\",\"order_count\":3,\"rider_count\":3,\"gap\":1.5},{\"id\":3,\"name\":\"上海浦东陆家嘴\",\"order_count\":2,\"rider_count\":2,\"gap\":1.8},{\"id\":4,\"name\":\"上海徐汇衡山路\",\"order_count\":2,\"rider_count\":2,\"gap\":0.9},{\"id\":5,\"name\":\"深圳南山科技园\",\"order_count\":2,\"rider_count\":2,\"gap\":3.1},{\"id\":6,\"name\":\"深圳福田CBD\",\"order_count\":2,\"rider_count\":2,\"gap\":1.2}]}"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59038/api/alerts?status=pending",
+      "path": "/api/alerts?status=pending",
+      "status": 200,
+      "ok": true,
+      "bodyPreview": "{\"success\":true,\"data\":[{\"id\":2,\"type\":\"trajectory_abnormal\",\"rider_id\":4,\"order_id\":8,\"zone_id\":null,\"description\":\"骑手轨迹偏离规划路线超过300米\",\"status\":\"pending\",\"created_at\":\"2026-06-04 13:38:00\",\"handled_at\":null,\"rider_name\":\"赵刚\",\"order_no\":\"DD2026060400008\",\"zone_name\":null},{\"id\":1,\"type\":\"trajectory_abnormal\",\"rider_id\":1,\"order_id\":7,\"zone_id\":null,\"description\":\"骑手轨迹偏离规划路线超过500米\",\"status\":\"pending\",\"created_at\":\"2026-06-04 13:08:00\",\"handled_at\":null,\"rider_name\":\"张伟\",\"order_no\":\"DD2026060400007"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59038/api/merchants?page_size=100",
+      "path": "/api/merchants?page_size=100",
+      "status": 200,
+      "ok": true,
+      "bodyPreview": "{\"success\":true,\"data\":{\"list\":[{\"id\":10,\"name\":\"奈雪南山店\",\"contact_name\":\"杨经理\",\"phone\":\"0755-22001234\",\"address\":\"深圳市南山区南海大道1086号\",\"zone_id\":5,\"verify_status\":\"rejected\",\"fulfillment_score\":0,\"created_at\":\"2026-06-04 22:01:43\",\"updated_at\":\"2026-06-04 22:01:43\",\"zone_name\":\"深圳南山科技园\"},{\"id\":9,\"name\":\"汉堡王世纪大道店\",\"contact_name\":\"黄经理\",\"phone\":\"021-61001234\",\"address\":\"上海市浦东新区世纪大道100号\",\"zone_id\":3,\"verify_status\":\"pending\",\"fulfillment_score\":0,\"created_at\":\"2026-06-04 22:01:43\",\"updated_at\":\"2026-06-04"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59038/api/zones",
+      "path": "/api/zones",
+      "status": 200,
+      "ok": true,
+      "bodyPreview": "{\"success\":true,\"data\":[{\"id\":1,\"name\":\"北京朝阳区CBD\",\"grid_bounds\":\"{\\\"min_lng\\\":116.44,\\\"max_lng\\\":116.50,\\\"min_lat\\\":39.90,\\\"max_lat\\\":39.93}\",\"online_riders\":8,\"pending_orders\":5,\"gap_forecast\":2.3,\"created_at\":\"2026-06-04 22:01:43\",\"updated_at\":\"2026-06-04 22:01:43\"},{\"id\":2,\"name\":\"北京海淀区中关村\",\"grid_bounds\":\"{\\\"min_lng\\\":116.30,\\\"max_lng\\\":116.35,\\\"min_lat\\\":39.96,\\\"max_lat\\\":39.99}\",\"online_riders\":6,\"pending_orders\":3,\"gap_forecast\":1.5,\"created_at\":\"2026-06-04 22:01:43\",\"updated_at\":\"2026-06-"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59038/api/orders?page=1&page_size=15",
+      "path": "/api/orders?page=1&page_size=15",
+      "status": 200,
+      "ok": true,
+      "bodyPreview": "{\"success\":true,\"data\":{\"list\":[{\"id\":30,\"order_no\":\"DD2026060400030\",\"type\":\"instant\",\"merchant_id\":4,\"pickup_address\":\"上海市徐汇区衡山路10号\",\"pickup_time_start\":\"2026-06-04 13:00\",\"pickup_time_end\":\"2026-06-04 13:10\",\"delivery_address\":\"上海市徐汇区田林路388号\",\"delivery_time_start\":\"2026-06-04 13:15\",\"delivery_time_end\":\"2026-06-04 13:30\",\"cargo_type\":\"food\",\"special_requirements\":\"\",\"status\":\"completed\",\"rider_id\":7,\"zone_id\":4,\"created_at\":\"2026-06-04 22:01:43\",\"updated_at\":\"2026-06-04 22:01:43\",\"merchant_na"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59038/api/alerts",
+      "path": "/api/alerts",
+      "status": 200,
+      "ok": true,
+      "bodyPreview": "{\"success\":true,\"data\":[{\"id\":5,\"type\":\"complaint\",\"rider_id\":4,\"order_id\":8,\"zone_id\":null,\"description\":\"客户投诉骑手服务态度\",\"status\":\"handled\",\"created_at\":\"2026-06-04 14:20:00\",\"handled_at\":\"2026-06-04 14:30:00\",\"rider_name\":\"赵刚\",\"order_no\":\"DD2026060400008\",\"zone_name\":null},{\"id\":4,\"type\":\"delivery_timeout\",\"rider_id\":4,\"order_id\":8,\"zone_id\":null,\"description\":\"订单配送超时20分钟\",\"status\":\"handled\",\"created_at\":\"2026-06-04 14:00:00\",\"handled_at\":\"2026-06-04 14:15:00\",\"rider_name\":\"赵刚\",\"order_no\":\"DD2026"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59038/api/trajectories?order_id=8",
+      "path": "/api/trajectories?order_id=8",
+      "status": 200,
+      "ok": true,
+      "bodyPreview": "{\"success\":true,\"data\":[{\"id\":27,\"rider_id\":4,\"order_id\":8,\"longitude\":116.32,\"latitude\":39.965,\"timestamp\":\"2026-06-04 13:42:00\",\"is_abnormal\":0,\"rider_name\":\"赵刚\",\"order_no\":\"DD2026060400008\"},{\"id\":26,\"rider_id\":4,\"order_id\":8,\"longitude\":116.325,\"latitude\":39.968,\"timestamp\":\"2026-06-04 13:38:00\",\"is_abnormal\":1,\"rider_name\":\"赵刚\",\"order_no\":\"DD2026060400008\"},{\"id\":25,\"rider_id\":4,\"order_id\":8,\"longitude\":116.33,\"latitude\":39.97,\"timestamp\":\"2026-06-04 13:35:00\",\"is_abnormal\":0,\"rider_name\":\""
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59038/api/verify-logs?target_type=alert&target_id=5",
+      "path": "/api/verify-logs?target_type=alert&target_id=5",
+      "status": 200,
+      "ok": true,
+      "bodyPreview": "{\"success\":true,\"data\":{\"list\":[],\"total\":0,\"page\":1,\"page_size\":20}}"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59038/api/riders?page=1&page_size=15",
+      "path": "/api/riders?page=1&page_size=15",
+      "status": 200,
+      "ok": true,
+      "bodyPreview": "{\"success\":true,\"data\":{\"list\":[{\"id\":20,\"name\":\"谢文东\",\"phone\":\"13800001020\",\"id_card\":\"110101199108081253\",\"health_code_status\":\"green\",\"vehicle_type\":\"electric_bike\",\"plate_number\":\"京A12352\",\"license_photos\":\"\",\"verify_status\":\"approved\",\"service_score\":4.3,\"credit_score\":86,\"status\":\"online\",\"latitude\":39.972,\"longitude\":116.328,\"zone_id\":2,\"created_at\":\"2026-06-04 22:01:43\",\"updated_at\":\"2026-06-04 22:01:43\",\"zone_name\":\"北京海淀区中关村\"},{\"id\":19,\"name\":\"罗建国\",\"phone\":\"13800001019\",\"id_card\":\"110101"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59038/api/riders/20",
+      "path": "/api/riders/20",
+      "status": 200,
+      "ok": true,
+      "bodyPreview": "{\"success\":true,\"data\":{\"id\":20,\"name\":\"谢文东\",\"phone\":\"13800001020\",\"id_card\":\"110101199108081253\",\"health_code_status\":\"green\",\"vehicle_type\":\"electric_bike\",\"plate_number\":\"京A12352\",\"license_photos\":\"\",\"verify_status\":\"approved\",\"service_score\":4.3,\"credit_score\":86,\"status\":\"online\",\"latitude\":39.972,\"longitude\":116.328,\"zone_id\":2,\"created_at\":\"2026-06-04 22:01:43\",\"updated_at\":\"2026-06-04 22:01:43\",\"zone_name\":\"北京海淀区中关村\"}}"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59038/api/riders/20/credit",
+      "path": "/api/riders/20/credit",
+      "status": 200,
+      "ok": true,
+      "bodyPreview": "{\"success\":true,\"data\":[{\"id\":4,\"rider_id\":20,\"type\":\"reward\",\"score_change\":5,\"reason\":\"连续完成10单无差评\",\"order_id\":null,\"appeal_status\":\"none\",\"created_at\":\"2026-06-04 22:01:43\"},{\"id\":5,\"rider_id\":20,\"type\":\"deduct\",\"score_change\":-3,\"reason\":\"配送轻微超时\",\"order_id\":14,\"appeal_status\":\"none\",\"created_at\":\"2026-06-04 22:01:43\"},{\"id\":6,\"rider_id\":20,\"type\":\"deduct\",\"score_change\":-5,\"reason\":\"客户投诉服务态度\",\"order_id\":14,\"appeal_status\":\"rejected\",\"created_at\":\"2026-06-04 22:01:43\"}]}"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59038/api/verify-logs?target_type=rider&target_id=20&page_size=20",
+      "path": "/api/verify-logs?target_type=rider&target_id=20&page_size=20",
+      "status": 200,
+      "ok": true,
+      "bodyPreview": "{\"success\":true,\"data\":{\"list\":[],\"total\":0,\"page\":1,\"page_size\":20}}"
+    }
+  ],
+  "dialogs": [],
+  "consoleMessages": [
+    {
+      "type": "debug",
+      "text": "[vite] connecting...",
+      "location": {
+        "url": "http://127.0.0.1:49038/@vite/client",
+        "lineNumber": 788,
+        "columnNumber": 8
+      }
+    },
+    {
+      "type": "debug",
+      "text": "[vite] connected.",
+      "location": {
+        "url": "http://127.0.0.1:49038/@vite/client",
+        "lineNumber": 911,
+        "columnNumber": 14
+      }
+    },
+    {
+      "type": "info",
+      "text": "%cDownload the React DevTools for a better development experience: https://reactjs.org/link/react-devtools font-weight:bold",
+      "location": {
+        "url": "http://127.0.0.1:49038/node_modules/.vite/deps/chunk-SVG7M4VJ.js?v=1ff8ba87",
+        "lineNumber": 21606,
+        "columnNumber": 24
+      }
+    },
+    {
+      "type": "debug",
+      "text": "[vite] connecting...",
+      "location": {
+        "url": "http://127.0.0.1:49038/@vite/client",
+        "lineNumber": 788,
+        "columnNumber": 8
+      }
+    },
+    {
+      "type": "debug",
+      "text": "[vite] connected.",
+      "location": {
+        "url": "http://127.0.0.1:49038/@vite/client",
+        "lineNumber": 911,
+        "columnNumber": 14
+      }
+    },
+    {
+      "type": "info",
+      "text": "%cDownload the React DevTools for a better development experience: https://reactjs.org/link/react-devtools font-weight:bold",
+      "location": {
+        "url": "http://127.0.0.1:49038/node_modules/.vite/deps/chunk-SVG7M4VJ.js?v=1ff8ba87",
+        "lineNumber": 21606,
+        "columnNumber": 24
+      }
+    },
+    {
+      "type": "debug",
+      "text": "[vite] connecting...",
+      "location": {
+        "url": "http://127.0.0.1:49038/@vite/client",
+        "lineNumber": 788,
+        "columnNumber": 8
+      }
+    },
+    {
+      "type": "info",
+      "text": "%cDownload the React DevTools for a better development experience: https://reactjs.org/link/react-devtools font-weight:bold",
+      "location": {
+        "url": "http://127.0.0.1:49038/node_modules/.vite/deps/chunk-SVG7M4VJ.js?v=1ff8ba87",
+        "lineNumber": 21606,
+        "columnNumber": 24
+      }
+    },
+    {
+      "type": "debug",
+      "text": "[vite] connected.",
+      "location": {
+        "url": "http://127.0.0.1:49038/@vite/client",
+        "lineNumber": 911,
+        "columnNumber": 14
+      }
+    },
+    {
+      "type": "debug",
+      "text": "[vite] connecting...",
+      "location": {
+        "url": "http://127.0.0.1:49038/@vite/client",
+        "lineNumber": 788,
+        "columnNumber": 8
+      }
+    },
+    {
+      "type": "debug",
+      "text": "[vite] connected.",
+      "location": {
+        "url": "http://127.0.0.1:49038/@vite/client",
+        "lineNumber": 911,
+        "columnNumber": 14
+      }
+    },
+    {
+      "type": "info",
+      "text": "%cDownload the React DevTools for a better development experience: https://reactjs.org/link/react-devtools font-weight:bold",
+      "location": {
+        "url": "http://127.0.0.1:49038/node_modules/.vite/deps/chunk-SVG7M4VJ.js?v=1ff8ba87",
+        "lineNumber": 21606,
+        "columnNumber": 24
+      }
+    },
+    {
+      "type": "debug",
+      "text": "[vite] connecting...",
+      "location": {
+        "url": "http://127.0.0.1:49038/@vite/client",
+        "lineNumber": 788,
+        "columnNumber": 8
+      }
+    },
+    {
+      "type": "debug",
+      "text": "[vite] connected.",
+      "location": {
+        "url": "http://127.0.0.1:49038/@vite/client",
+        "lineNumber": 911,
+        "columnNumber": 14
+      }
+    },
+    {
+      "type": "info",
+      "text": "%cDownload the React DevTools for a better development experience: https://reactjs.org/link/react-devtools font-weight:bold",
+      "location": {
+        "url": "http://127.0.0.1:49038/node_modules/.vite/deps/chunk-SVG7M4VJ.js?v=1ff8ba87",
+        "lineNumber": 21606,
+        "columnNumber": 24
+      }
+    },
+    {
+      "type": "debug",
+      "text": "[vite] connecting...",
+      "location": {
+        "url": "http://127.0.0.1:49038/@vite/client",
+        "lineNumber": 788,
+        "columnNumber": 8
+      }
+    },
+    {
+      "type": "debug",
+      "text": "[vite] connected.",
+      "location": {
+        "url": "http://127.0.0.1:49038/@vite/client",
+        "lineNumber": 911,
+        "columnNumber": 14
+      }
+    },
+    {
+      "type": "info",
+      "text": "%cDownload the React DevTools for a better development experience: https://reactjs.org/link/react-devtools font-weight:bold",
+      "location": {
+        "url": "http://127.0.0.1:49038/node_modules/.vite/deps/chunk-SVG7M4VJ.js?v=1ff8ba87",
+        "lineNumber": 21606,
+        "columnNumber": 24
+      }
+    },
+    {
+      "type": "debug",
+      "text": "[vite] connecting...",
+      "location": {
+        "url": "http://127.0.0.1:49038/@vite/client",
+        "lineNumber": 788,
+        "columnNumber": 8
+      }
+    },
+    {
+      "type": "debug",
+      "text": "[vite] connected.",
+      "location": {
+        "url": "http://127.0.0.1:49038/@vite/client",
+        "lineNumber": 911,
+        "columnNumber": 14
+      }
+    },
+    {
+      "type": "info",
+      "text": "%cDownload the React DevTools for a better development experience: https://reactjs.org/link/react-devtools font-weight:bold",
+      "location": {
+        "url": "http://127.0.0.1:49038/node_modules/.vite/deps/chunk-SVG7M4VJ.js?v=1ff8ba87",
+        "lineNumber": 21606,
+        "columnNumber": 24
+      }
+    }
+  ],
+  "requestFailures": [],
+  "responseErrors": []
+}

@@ -1,0 +1,97 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --color-primary: #1E3A5F;
+  --color-accent: #FF6B35;
+  --color-success: #10B981;
+  --color-danger: #EF4444;
+  --color-background: #F1F5F9;
+  --color-sidebar: #0F172A;
+  --color-warning: #F59E0B;
+  --color-info: #3B82F6;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Noto Sans SC", "PingFang SC", "Microsoft YaHei", Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji";
+  background-color: var(--color-background);
+  color: #1E293B;
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #CBD5E1;
+  border-radius: 3px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #94A3B8;
+}
+
+@layer components {
+  .btn-primary {
+    @apply bg-[#1E3A5F] text-white px-4 py-2 rounded-lg hover:bg-[#2A4F7F] transition-colors duration-200 font-medium text-sm;
+  }
+
+  .btn-accent {
+    @apply bg-[#FF6B35] text-white px-4 py-2 rounded-lg hover:bg-[#E85A25] transition-colors duration-200 font-medium text-sm;
+  }
+
+  .btn-danger {
+    @apply bg-[#EF4444] text-white px-4 py-2 rounded-lg hover:bg-[#DC2626] transition-colors duration-200 font-medium text-sm;
+  }
+
+  .btn-outline {
+    @apply border border-gray-300 text-gray-700 px-4 py-2 rounded-lg hover:bg-gray-50 transition-colors duration-200 font-medium text-sm;
+  }
+
+  .card {
+    @apply bg-white rounded-xl shadow-sm border border-gray-100;
+  }
+
+  .badge-pending {
+    @apply bg-gray-100 text-gray-600 px-2 py-0.5 rounded-full text-xs font-medium;
+  }
+
+  .badge-dispatched {
+    @apply bg-blue-100 text-blue-700 px-2 py-0.5 rounded-full text-xs font-medium;
+  }
+
+  .badge-picking_up {
+    @apply bg-orange-100 text-orange-700 px-2 py-0.5 rounded-full text-xs font-medium;
+  }
+
+  .badge-delivering {
+    @apply bg-purple-100 text-purple-700 px-2 py-0.5 rounded-full text-xs font-medium;
+  }
+
+  .badge-completed {
+    @apply bg-emerald-100 text-emerald-700 px-2 py-0.5 rounded-full text-xs font-medium;
+  }
+
+  .badge-cancelled {
+    @apply bg-red-100 text-red-700 px-2 py-0.5 rounded-full text-xs font-medium;
+  }
+
+  .input-base {
+    @apply border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[#1E3A5F]/30 focus:border-[#1E3A5F] transition-colors;
+  }
+
+  .select-base {
+    @apply border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[#1E3A5F]/30 focus:border-[#1E3A5F] bg-white transition-colors;
+  }
+}
