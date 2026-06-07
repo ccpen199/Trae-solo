@@ -1,0 +1,1113 @@
+{
+  "ok": true,
+  "generatedAt": "2026-06-04T12:31:41.802Z",
+  "order": "may-89022",
+  "roundIndex": 16,
+  "captureId": "may-89022-cycle16",
+  "url": "http://127.0.0.1:49022/",
+  "initialUrl": "http://127.0.0.1:49022/",
+  "finalUrl": "http://127.0.0.1:49022/dashboard",
+  "status": 200,
+  "title": "丰巢快递员SaaS平台",
+  "initialTitle": "丰巢快递员SaaS平台",
+  "navigationError": "",
+  "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89022/probe/codex-cycle16-verify/may-89022-cycle16-frontend.png",
+  "screenshotPaths": [
+    "/Users/chen/Documents/trae_projects/local_projects/may-89022/probe/codex-cycle16-verify/may-89022-cycle16-structure-01-首屏.png",
+    "/Users/chen/Documents/trae_projects/local_projects/may-89022/probe/codex-cycle16-verify/may-89022-cycle16-structure-02-导航-工作台.png",
+    "/Users/chen/Documents/trae_projects/local_projects/may-89022/probe/codex-cycle16-verify/may-89022-cycle16-structure-03-操作-查看全部柜机.png",
+    "/Users/chen/Documents/trae_projects/local_projects/may-89022/probe/codex-cycle16-verify/may-89022-cycle16-structure-04-二层操作-查看全部柜机-查看详情.png"
+  ],
+  "issueTextPreview": "页面结构采集已读取到业务内容",
+  "targetReason": "页面存在后台入口，优先复验后台管理链路；页面存在购买/商品入口，优先复验交易链路；页面存在内容列表，优先复验详情链路",
+  "targetKind": "purchase",
+  "targetMatched": true,
+  "targetActions": [
+    {
+      "action": "target-already-visible",
+      "label": "页面存在购买/商品入口，优先复验交易链路",
+      "ok": true
+    },
+    {
+      "action": "target-verify",
+      "label": "页面存在购买/商品入口，优先复验交易链路",
+      "ok": true,
+      "finalUrl": "http://127.0.0.1:49022/dashboard"
+    }
+  ],
+  "authFlow": {
+    "detected": false,
+    "attempted": false,
+    "success": false,
+    "finalUrl": "http://127.0.0.1:49022/dashboard",
+    "message": "",
+    "actions": []
+  },
+  "businessAudit": {
+    "actions": [
+      {
+        "action": "click",
+        "label": "导航:工作台",
+        "ok": true
+      },
+      {
+        "action": "click",
+        "label": "操作:查看全部柜机",
+        "ok": true,
+        "result": {
+          "ok": true,
+          "matched": 1
+        }
+      },
+      {
+        "action": "click",
+        "label": "二层操作:查看全部柜机:查看详情",
+        "ok": true,
+        "result": {
+          "ok": true,
+          "matched": 5
+        }
+      },
+      {
+        "action": "click",
+        "label": "关闭弹窗/抽屉",
+        "ok": true
+      }
+    ],
+    "snapshots": [
+      {
+        "label": "首屏",
+        "url": "http://127.0.0.1:49022/dashboard",
+        "title": "丰巢快递员SaaS平台",
+        "headings": [
+          "丰巢快递员SaaS"
+        ],
+        "navLabels": [
+          "工作台 包裹管理 智能柜列表 空箱预约 租用订单 赋能中心 柜机健康度 收益分析",
+          "工作台",
+          "dashboard",
+          "包裹管理",
+          "inbox",
+          "智能柜列表",
+          "shop",
+          "空箱预约",
+          "calendar",
+          "租用订单",
+          "credit-card",
+          "赋能中心",
+          "book",
+          "柜机健康度",
+          "heart",
+          "收益分析",
+          "bar-chart"
+        ],
+        "buttons": [
+          "包裹入库",
+          "空箱预约",
+          "租用格口",
+          "收益详情",
+          "查看全部柜机",
+          "选择派件"
+        ],
+        "links": [],
+        "inputs": [],
+        "tables": [],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "丰巢快递员SaaS工作台包裹管理智能柜列表空箱预约租用订单赋能中心柜机健康度收益分析工作台已登录演示快递员业务中心：包裹入库、空箱预约、租用订单、柜机健康和收益分析统一处理。今日派件2待处理包裹6滞留件0今日收益(元)0.00累计收益(元)0.00活跃租用0待处理预约0柜机在线率100%5 / 5 在线包裹状态流转0待入库6已存储2已滞留0已提醒2已取件快捷操作包裹入库空箱预约租用格口收益详情智能派单助手 - 最优柜机推荐5查看全部柜机 1朝阳园小区柜最优推荐北京市朝阳区朝阳园小区北门距离最近距离约 0 km30% 负载0 热区件非网格区距离 35负载 17.5可用 20热区 0网格 0匹配度 73%可用 7 格口选择派件2阳光花园柜北京市朝阳区阳光花园东门距离最近距离约 1.4 km30% 负载0 热区件非网格区距离 30.1负载 17.5可用 20热区 0网格 0匹配度 68%可用 7 格口选择派件3西城商业中心柜北京市西城区商业中心广场格口充足距离约 8.6 km30% 负载0 热区件非网格区距离 4.9负载 17.5可用 20热区 0网格 0匹配度 42%可用 7 格口选择派件4海淀科技园柜北京市海淀区科技园A座格口充足距离约 14.42 km30% 负载0 热区件非网格区距离 0负载 17.5可用 20热区 0网格 0匹配度 38%可用 7 格口选择派件5中关村大厦柜北京市海淀区中关村大厦B1层格口充足距离约 13.67 km30% 负载0 热区件非网格区距离 0负载 17.5可用 20热区 0网格 0匹配度 38%可用 7 格口选择派件金牌骑手排行榜1王五328 单 · 2100 积分2张三256 单 · 1850 积分3李四198 单 · 1520 积分绩效积分进度本月绩效目标1250 / 3000 分41.66666666666667%本月派件目标248 / 500 单49.6%服务评分4.8 / 5.0 分96%",
+        "layout": {
+          "viewportWidth": 1504,
+          "viewportHeight": 1600,
+          "scrollWidth": 1504,
+          "scrollHeight": 2196,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89022-cycle16-structure-01-首屏",
+          "label": "首屏",
+          "finalUrl": "http://127.0.0.1:49022/dashboard",
+          "title": "丰巢快递员SaaS平台",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89022/probe/codex-cycle16-verify/may-89022-cycle16-structure-01-首屏.json",
+          "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89022/probe/codex-cycle16-verify/may-89022-cycle16-structure-01-首屏.png",
+          "elementCount": 686,
+          "interactiveCount": 19,
+          "interactiveLabels": [
+            "工作台 包裹管理 智能柜列表 空箱预约 租用订单 赋能中心 柜机健康度 收益分析",
+            "工作台",
+            "包裹管理",
+            "智能柜列表",
+            "空箱预约",
+            "租用订单",
+            "赋能中心",
+            "柜机健康度",
+            "收益分析",
+            "包裹入库",
+            "租用格口",
+            "收益详情",
+            "查看全部柜机",
+            "选择派件"
+          ]
+        }
+      },
+      {
+        "label": "导航:工作台",
+        "url": "http://127.0.0.1:49022/dashboard",
+        "title": "丰巢快递员SaaS平台",
+        "headings": [
+          "丰巢快递员SaaS"
+        ],
+        "navLabels": [
+          "工作台 包裹管理 智能柜列表 空箱预约 租用订单 赋能中心 柜机健康度 收益分析",
+          "工作台",
+          "dashboard",
+          "包裹管理",
+          "inbox",
+          "智能柜列表",
+          "shop",
+          "空箱预约",
+          "calendar",
+          "租用订单",
+          "credit-card",
+          "赋能中心",
+          "book",
+          "柜机健康度",
+          "heart",
+          "收益分析",
+          "bar-chart"
+        ],
+        "buttons": [
+          "包裹入库",
+          "空箱预约",
+          "租用格口",
+          "收益详情",
+          "查看全部柜机",
+          "选择派件"
+        ],
+        "links": [],
+        "inputs": [],
+        "tables": [],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "丰巢快递员SaaS工作台包裹管理智能柜列表空箱预约租用订单赋能中心柜机健康度收益分析工作台已登录演示快递员业务中心：包裹入库、空箱预约、租用订单、柜机健康和收益分析统一处理。今日派件2待处理包裹6滞留件0今日收益(元)0.00累计收益(元)0.00活跃租用0待处理预约0柜机在线率100%5 / 5 在线包裹状态流转0待入库6已存储2已滞留0已提醒2已取件快捷操作包裹入库空箱预约租用格口收益详情智能派单助手 - 最优柜机推荐5查看全部柜机 1朝阳园小区柜最优推荐北京市朝阳区朝阳园小区北门距离最近距离约 0 km30% 负载0 热区件非网格区距离 35负载 17.5可用 20热区 0网格 0匹配度 73%可用 7 格口选择派件2阳光花园柜北京市朝阳区阳光花园东门距离最近距离约 1.4 km30% 负载0 热区件非网格区距离 30.1负载 17.5可用 20热区 0网格 0匹配度 68%可用 7 格口选择派件3西城商业中心柜北京市西城区商业中心广场格口充足距离约 8.6 km30% 负载0 热区件非网格区距离 4.9负载 17.5可用 20热区 0网格 0匹配度 42%可用 7 格口选择派件4海淀科技园柜北京市海淀区科技园A座格口充足距离约 14.42 km30% 负载0 热区件非网格区距离 0负载 17.5可用 20热区 0网格 0匹配度 38%可用 7 格口选择派件5中关村大厦柜北京市海淀区中关村大厦B1层格口充足距离约 13.67 km30% 负载0 热区件非网格区距离 0负载 17.5可用 20热区 0网格 0匹配度 38%可用 7 格口选择派件金牌骑手排行榜1王五328 单 · 2100 积分2张三256 单 · 1850 积分3李四198 单 · 1520 积分绩效积分进度本月绩效目标1250 / 3000 分41.66666666666667%本月派件目标248 / 500 单49.6%服务评分4.8 / 5.0 分96%",
+        "layout": {
+          "viewportWidth": 1536,
+          "viewportHeight": 1600,
+          "scrollWidth": 1536,
+          "scrollHeight": 2196,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89022-cycle16-structure-02-导航-工作台",
+          "label": "导航:工作台",
+          "finalUrl": "http://127.0.0.1:49022/dashboard",
+          "title": "丰巢快递员SaaS平台",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89022/probe/codex-cycle16-verify/may-89022-cycle16-structure-02-导航-工作台.json",
+          "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89022/probe/codex-cycle16-verify/may-89022-cycle16-structure-02-导航-工作台.png",
+          "elementCount": 686,
+          "interactiveCount": 19,
+          "interactiveLabels": [
+            "工作台 包裹管理 智能柜列表 空箱预约 租用订单 赋能中心 柜机健康度 收益分析",
+            "工作台",
+            "包裹管理",
+            "智能柜列表",
+            "空箱预约",
+            "租用订单",
+            "赋能中心",
+            "柜机健康度",
+            "收益分析",
+            "包裹入库",
+            "租用格口",
+            "收益详情",
+            "查看全部柜机",
+            "选择派件"
+          ]
+        }
+      },
+      {
+        "label": "操作:查看全部柜机",
+        "url": "http://127.0.0.1:49022/cabinets",
+        "title": "丰巢快递员SaaS平台",
+        "headings": [
+          "丰巢快递员SaaS"
+        ],
+        "navLabels": [
+          "工作台 包裹管理 智能柜列表 空箱预约 租用订单 赋能中心 柜机健康度 收益分析",
+          "工作台",
+          "dashboard",
+          "包裹管理",
+          "inbox",
+          "智能柜列表",
+          "shop",
+          "空箱预约",
+          "calendar",
+          "租用订单",
+          "credit-card",
+          "赋能中心",
+          "book",
+          "柜机健康度",
+          "heart",
+          "收益分析",
+          "bar-chart"
+        ],
+        "buttons": [
+          "刷新",
+          "查看详情"
+        ],
+        "links": [],
+        "inputs": [
+          {
+            "tag": "input",
+            "type": "text",
+            "placeholder": "搜索柜机名称/编号",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "search",
+            "placeholder": "",
+            "name": "",
+            "label": "页码"
+          }
+        ],
+        "tables": [
+          {
+            "headers": [
+              "柜机编号",
+              "柜机名称",
+              "地址",
+              "格口使用",
+              "温控",
+              "故障",
+              "状态",
+              "最后心跳",
+              "操作",
+              "柜机编号",
+              "柜机名称",
+              "地址"
+            ],
+            "rowCount": 5,
+            "hasEmptyText": false,
+            "textPreview": "柜机编号 柜机名称 地址 格口使用 温控 故障 状态 最后心跳 操作 柜机编号 柜机名称 地址 格口使用 温控 故障 状态 最后心跳 操作 FCBJ0001 朝阳园小区柜 北京市朝阳区朝阳园小区北门 33% 16 / 48 格口 支持 正常 在线 - 查看详情 FCBJ0002 阳光花园柜 北京市朝阳区阳光花园东门 58% 21 / 36 格口 不支持 正常 在线 - 查看详情 FCBJ0003 海淀科技园柜 北京市海淀区科技园A座 25% 15 / 60 格口 支持 正常 在线 - 查看详情 FCBJ0004 中关村大厦柜 北京市海淀区中关村大厦B1层 81% 34 / 42 格口 不支持 "
+          }
+        ],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "丰巢快递员SaaS工作台包裹管理智能柜列表空箱预约租用订单赋能中心柜机健康度收益分析智能柜列表已登录演示快递员业务中心：包裹入库、空箱预约、租用订单、柜机健康和收益分析统一处理。柜机总数5在线柜机5/ 5故障柜机0可用格口130/ 240刷新柜机编号柜机名称地址格口使用温控故障状态最后心跳操作柜机编号柜机名称地址格口使用温控故障状态最后心跳操作FCBJ0001朝阳园小区柜北京市朝阳区朝阳园小区北门33%16 / 48 格口支持正常在线-查看详情FCBJ0002阳光花园柜北京市朝阳区阳光花园东门58%21 / 36 格口不支持正常在线-查看详情FCBJ0003海淀科技园柜北京市海淀区科技园A座25%15 / 60 格口支持正常在线-查看详情FCBJ0004中关村大厦柜北京市海淀区中关村大厦B1层81%34 / 42 格口不支持正常在线-查看详情FCBJ0005西城商业中心柜北京市西城区商业中心广场44%24 / 54 格口支持正常在线-查看详情共 5 台柜机110 条/页",
+        "layout": {
+          "viewportWidth": 1568,
+          "viewportHeight": 1600,
+          "scrollWidth": 1568,
+          "scrollHeight": 1600,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89022-cycle16-structure-03-操作-查看全部柜机",
+          "label": "操作:查看全部柜机",
+          "finalUrl": "http://127.0.0.1:49022/cabinets",
+          "title": "丰巢快递员SaaS平台",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89022/probe/codex-cycle16-verify/may-89022-cycle16-structure-03-操作-查看全部柜机.json",
+          "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89022/probe/codex-cycle16-verify/may-89022-cycle16-structure-03-操作-查看全部柜机.png",
+          "elementCount": 359,
+          "interactiveCount": 22,
+          "interactiveLabels": [
+            "工作台 包裹管理 智能柜列表 空箱预约 租用订单 赋能中心 柜机健康度 收益分析",
+            "工作台",
+            "包裹管理",
+            "智能柜列表",
+            "空箱预约",
+            "租用订单",
+            "赋能中心",
+            "柜机健康度",
+            "收益分析",
+            "搜索柜机名称/编号",
+            "刷新",
+            "查看详情",
+            "1",
+            "页码"
+          ]
+        }
+      },
+      {
+        "label": "二层操作:查看全部柜机->查看详情",
+        "url": "http://127.0.0.1:49022/cabinets",
+        "title": "丰巢快递员SaaS平台",
+        "headings": [
+          "丰巢快递员SaaS"
+        ],
+        "navLabels": [
+          "工作台 包裹管理 智能柜列表 空箱预约 租用订单 赋能中心 柜机健康度 收益分析",
+          "工作台",
+          "dashboard",
+          "包裹管理",
+          "inbox",
+          "智能柜列表",
+          "shop",
+          "空箱预约",
+          "calendar",
+          "租用订单",
+          "credit-card",
+          "赋能中心",
+          "book",
+          "柜机健康度",
+          "heart",
+          "收益分析",
+          "bar-chart"
+        ],
+        "buttons": [
+          "刷新",
+          "查看详情",
+          "关闭"
+        ],
+        "links": [],
+        "inputs": [
+          {
+            "tag": "input",
+            "type": "text",
+            "placeholder": "搜索柜机名称/编号",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "search",
+            "placeholder": "",
+            "name": "",
+            "label": "页码"
+          }
+        ],
+        "tables": [
+          {
+            "headers": [
+              "柜机编号",
+              "柜机名称",
+              "地址",
+              "格口使用",
+              "温控",
+              "故障",
+              "状态",
+              "最后心跳",
+              "操作",
+              "柜机编号",
+              "柜机名称",
+              "地址"
+            ],
+            "rowCount": 5,
+            "hasEmptyText": false,
+            "textPreview": "柜机编号 柜机名称 地址 格口使用 温控 故障 状态 最后心跳 操作 柜机编号 柜机名称 地址 格口使用 温控 故障 状态 最后心跳 操作 FCBJ0001 朝阳园小区柜 北京市朝阳区朝阳园小区北门 33% 16 / 48 格口 支持 正常 在线 - 查看详情 FCBJ0002 阳光花园柜 北京市朝阳区阳光花园东门 58% 21 / 36 格口 不支持 正常 在线 - 查看详情 FCBJ0003 海淀科技园柜 北京市海淀区科技园A座 25% 15 / 60 格口 支持 正常 在线 - 查看详情 FCBJ0004 中关村大厦柜 北京市海淀区中关村大厦B1层 81% 34 / 42 格口 不支持 "
+          },
+          {
+            "headers": [],
+            "rowCount": 6,
+            "hasEmptyText": false,
+            "textPreview": "柜机名称 朝阳园小区柜 地址 北京市朝阳区朝阳园小区北门 温控功能 支持 故障状态 正常 总格口 48 可用格口 32 已占用 6 已锁定 0 最后心跳 -"
+          }
+        ],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "丰巢快递员SaaS工作台包裹管理智能柜列表空箱预约租用订单赋能中心柜机健康度收益分析智能柜列表已登录演示快递员业务中心：包裹入库、空箱预约、租用订单、柜机健康和收益分析统一处理。柜机总数5在线柜机5/ 5故障柜机0可用格口130/ 240刷新柜机编号柜机名称地址格口使用温控故障状态最后心跳操作柜机编号柜机名称地址格口使用温控故障状态最后心跳操作FCBJ0001朝阳园小区柜北京市朝阳区朝阳园小区北门33%16 / 48 格口支持正常在线-查看详情FCBJ0002阳光花园柜北京市朝阳区阳光花园东门58%21 / 36 格口不支持正常在线-查看详情FCBJ0003海淀科技园柜北京市海淀区科技园A座25%15 / 60 格口支持正常在线-查看详情FCBJ0004中关村大厦柜北京市海淀区中关村大厦B1层81%34 / 42 格口不支持正常在线-查看详情FCBJ0005西城商业中心柜北京市西城区商业中心广场44%24 / 54 格口支持正常在线-查看详情共 5 台柜机110 条/页 柜机详情柜机编号FCBJ0001状态在线基本信息格口状态故障处理记录健康复查记录温控异常记录柜机名称朝阳园小区柜地址北京市朝阳区朝阳园小区北门温控功能支持故障状态正常总格口48可用格口32已占用6已锁定0最后心跳-",
+        "layout": {
+          "viewportWidth": 1600,
+          "viewportHeight": 1600,
+          "scrollWidth": 1600,
+          "scrollHeight": 1600,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89022-cycle16-structure-04-二层操作-查看全部柜机-查看详情",
+          "label": "二层操作:查看全部柜机->查看详情",
+          "finalUrl": "http://127.0.0.1:49022/cabinets",
+          "title": "丰巢快递员SaaS平台",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89022/probe/codex-cycle16-verify/may-89022-cycle16-structure-04-二层操作-查看全部柜机-查看详情.json",
+          "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89022/probe/codex-cycle16-verify/may-89022-cycle16-structure-04-二层操作-查看全部柜机-查看详情.png",
+          "elementCount": 456,
+          "interactiveCount": 28,
+          "interactiveLabels": [
+            "工作台 包裹管理 智能柜列表 空箱预约 租用订单 赋能中心 柜机健康度 收益分析",
+            "工作台",
+            "包裹管理",
+            "智能柜列表",
+            "空箱预约",
+            "租用订单",
+            "赋能中心",
+            "柜机健康度",
+            "收益分析",
+            "搜索柜机名称/编号",
+            "刷新",
+            "查看详情",
+            "1",
+            "页码",
+            "关闭",
+            "基本信息",
+            "柜机名称 朝阳园小区柜 地址 北京市朝阳区朝阳园小区北门 温控功能 支持 故障状态 正常 总格口 48 可用格口 32 已占用 6 已锁定 0 最后心跳 -"
+          ]
+        }
+      }
+    ],
+    "findings": [],
+    "actionHints": [],
+    "emptyPages": [],
+    "overflowPages": [],
+    "blankPages": [],
+    "apiFailurePaths": [],
+    "goalTerms": [],
+    "clickedActionDescriptors": [
+      {
+        "nav": "工作台",
+        "label": "查看全部柜机",
+        "ordinal": 0,
+        "unsafe": false
+      },
+      {
+        "nav": "工作台",
+        "label": "查看全部柜机->查看详情",
+        "ordinal": 0,
+        "secondary": true,
+        "unsafe": false
+      }
+    ],
+    "secondaryActionClicks": 1,
+    "structureCaptures": [
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89022-cycle16-structure-01-首屏",
+        "label": "首屏",
+        "finalUrl": "http://127.0.0.1:49022/dashboard",
+        "title": "丰巢快递员SaaS平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89022/probe/codex-cycle16-verify/may-89022-cycle16-structure-01-首屏.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89022/probe/codex-cycle16-verify/may-89022-cycle16-structure-01-首屏.png",
+        "elementCount": 686,
+        "interactiveCount": 19,
+        "interactiveLabels": [
+          "工作台 包裹管理 智能柜列表 空箱预约 租用订单 赋能中心 柜机健康度 收益分析",
+          "工作台",
+          "包裹管理",
+          "智能柜列表",
+          "空箱预约",
+          "租用订单",
+          "赋能中心",
+          "柜机健康度",
+          "收益分析",
+          "包裹入库",
+          "租用格口",
+          "收益详情",
+          "查看全部柜机",
+          "选择派件"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89022-cycle16-structure-02-导航-工作台",
+        "label": "导航:工作台",
+        "finalUrl": "http://127.0.0.1:49022/dashboard",
+        "title": "丰巢快递员SaaS平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89022/probe/codex-cycle16-verify/may-89022-cycle16-structure-02-导航-工作台.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89022/probe/codex-cycle16-verify/may-89022-cycle16-structure-02-导航-工作台.png",
+        "elementCount": 686,
+        "interactiveCount": 19,
+        "interactiveLabels": [
+          "工作台 包裹管理 智能柜列表 空箱预约 租用订单 赋能中心 柜机健康度 收益分析",
+          "工作台",
+          "包裹管理",
+          "智能柜列表",
+          "空箱预约",
+          "租用订单",
+          "赋能中心",
+          "柜机健康度",
+          "收益分析",
+          "包裹入库",
+          "租用格口",
+          "收益详情",
+          "查看全部柜机",
+          "选择派件"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89022-cycle16-structure-03-操作-查看全部柜机",
+        "label": "操作:查看全部柜机",
+        "finalUrl": "http://127.0.0.1:49022/cabinets",
+        "title": "丰巢快递员SaaS平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89022/probe/codex-cycle16-verify/may-89022-cycle16-structure-03-操作-查看全部柜机.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89022/probe/codex-cycle16-verify/may-89022-cycle16-structure-03-操作-查看全部柜机.png",
+        "elementCount": 359,
+        "interactiveCount": 22,
+        "interactiveLabels": [
+          "工作台 包裹管理 智能柜列表 空箱预约 租用订单 赋能中心 柜机健康度 收益分析",
+          "工作台",
+          "包裹管理",
+          "智能柜列表",
+          "空箱预约",
+          "租用订单",
+          "赋能中心",
+          "柜机健康度",
+          "收益分析",
+          "搜索柜机名称/编号",
+          "刷新",
+          "查看详情",
+          "1",
+          "页码"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89022-cycle16-structure-04-二层操作-查看全部柜机-查看详情",
+        "label": "二层操作:查看全部柜机->查看详情",
+        "finalUrl": "http://127.0.0.1:49022/cabinets",
+        "title": "丰巢快递员SaaS平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89022/probe/codex-cycle16-verify/may-89022-cycle16-structure-04-二层操作-查看全部柜机-查看详情.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89022/probe/codex-cycle16-verify/may-89022-cycle16-structure-04-二层操作-查看全部柜机-查看详情.png",
+        "elementCount": 456,
+        "interactiveCount": 28,
+        "interactiveLabels": [
+          "工作台 包裹管理 智能柜列表 空箱预约 租用订单 赋能中心 柜机健康度 收益分析",
+          "工作台",
+          "包裹管理",
+          "智能柜列表",
+          "空箱预约",
+          "租用订单",
+          "赋能中心",
+          "柜机健康度",
+          "收益分析",
+          "搜索柜机名称/编号",
+          "刷新",
+          "查看详情",
+          "1",
+          "页码",
+          "关闭",
+          "基本信息",
+          "柜机名称 朝阳园小区柜 地址 北京市朝阳区朝阳园小区北门 温控功能 支持 故障状态 正常 总格口 48 可用格口 32 已占用 6 已锁定 0 最后心跳 -"
+        ]
+      }
+    ],
+    "representativeScreenshotUrl": "http://127.0.0.1:49022/dashboard",
+    "representativeScreenshotLabel": "丰巢快递员SaaS"
+  },
+  "websiteStructureCapture": {
+    "module": "website_structure_capture",
+    "captureCount": 4,
+    "captures": [
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89022-cycle16-structure-01-首屏",
+        "label": "首屏",
+        "finalUrl": "http://127.0.0.1:49022/dashboard",
+        "title": "丰巢快递员SaaS平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89022/probe/codex-cycle16-verify/may-89022-cycle16-structure-01-首屏.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89022/probe/codex-cycle16-verify/may-89022-cycle16-structure-01-首屏.png",
+        "elementCount": 686,
+        "interactiveCount": 19,
+        "interactiveLabels": [
+          "工作台 包裹管理 智能柜列表 空箱预约 租用订单 赋能中心 柜机健康度 收益分析",
+          "工作台",
+          "包裹管理",
+          "智能柜列表",
+          "空箱预约",
+          "租用订单",
+          "赋能中心",
+          "柜机健康度",
+          "收益分析",
+          "包裹入库",
+          "租用格口",
+          "收益详情",
+          "查看全部柜机",
+          "选择派件"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89022-cycle16-structure-02-导航-工作台",
+        "label": "导航:工作台",
+        "finalUrl": "http://127.0.0.1:49022/dashboard",
+        "title": "丰巢快递员SaaS平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89022/probe/codex-cycle16-verify/may-89022-cycle16-structure-02-导航-工作台.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89022/probe/codex-cycle16-verify/may-89022-cycle16-structure-02-导航-工作台.png",
+        "elementCount": 686,
+        "interactiveCount": 19,
+        "interactiveLabels": [
+          "工作台 包裹管理 智能柜列表 空箱预约 租用订单 赋能中心 柜机健康度 收益分析",
+          "工作台",
+          "包裹管理",
+          "智能柜列表",
+          "空箱预约",
+          "租用订单",
+          "赋能中心",
+          "柜机健康度",
+          "收益分析",
+          "包裹入库",
+          "租用格口",
+          "收益详情",
+          "查看全部柜机",
+          "选择派件"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89022-cycle16-structure-03-操作-查看全部柜机",
+        "label": "操作:查看全部柜机",
+        "finalUrl": "http://127.0.0.1:49022/cabinets",
+        "title": "丰巢快递员SaaS平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89022/probe/codex-cycle16-verify/may-89022-cycle16-structure-03-操作-查看全部柜机.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89022/probe/codex-cycle16-verify/may-89022-cycle16-structure-03-操作-查看全部柜机.png",
+        "elementCount": 359,
+        "interactiveCount": 22,
+        "interactiveLabels": [
+          "工作台 包裹管理 智能柜列表 空箱预约 租用订单 赋能中心 柜机健康度 收益分析",
+          "工作台",
+          "包裹管理",
+          "智能柜列表",
+          "空箱预约",
+          "租用订单",
+          "赋能中心",
+          "柜机健康度",
+          "收益分析",
+          "搜索柜机名称/编号",
+          "刷新",
+          "查看详情",
+          "1",
+          "页码"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89022-cycle16-structure-04-二层操作-查看全部柜机-查看详情",
+        "label": "二层操作:查看全部柜机->查看详情",
+        "finalUrl": "http://127.0.0.1:49022/cabinets",
+        "title": "丰巢快递员SaaS平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89022/probe/codex-cycle16-verify/may-89022-cycle16-structure-04-二层操作-查看全部柜机-查看详情.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89022/probe/codex-cycle16-verify/may-89022-cycle16-structure-04-二层操作-查看全部柜机-查看详情.png",
+        "elementCount": 456,
+        "interactiveCount": 28,
+        "interactiveLabels": [
+          "工作台 包裹管理 智能柜列表 空箱预约 租用订单 赋能中心 柜机健康度 收益分析",
+          "工作台",
+          "包裹管理",
+          "智能柜列表",
+          "空箱预约",
+          "租用订单",
+          "赋能中心",
+          "柜机健康度",
+          "收益分析",
+          "搜索柜机名称/编号",
+          "刷新",
+          "查看详情",
+          "1",
+          "页码",
+          "关闭",
+          "基本信息",
+          "柜机名称 朝阳园小区柜 地址 北京市朝阳区朝阳园小区北门 温控功能 支持 故障状态 正常 总格口 48 可用格口 32 已占用 6 已锁定 0 最后心跳 -"
+        ]
+      }
+    ]
+  },
+  "screenshotMetrics": {
+    "width": 1632,
+    "height": 1600,
+    "scrollWidth": 1600,
+    "scrollHeight": 2196
+  },
+  "initialBodyTextPreview": "丰巢快递员SaaS\n工作台\n包裹管理\n智能柜列表\n空箱预约\n租用订单\n赋能中心\n柜机健康度\n收益分析\n工作台\n已登录\n演示快递员\n业务中心：包裹入库、空箱预约、租用订单、柜机健康和收益分析统一处理。\n今日派件\n2\n待处理包裹\n6\n滞留件\n0\n今日收益(元)\n0.00\n累计收益(元)\n0.00\n活跃租用\n0\n待处理预约\n0\n柜机在线率\n100%\n5 / 5 在线\n包裹状态流转\n0\n待入库\n6\n已存储\n2\n已滞留\n0\n已提醒\n2\n已取件\n快捷操作\n包裹入库\n空箱预约\n租用格口\n收益详情\n智能派单助手 - 最优柜机推荐\n5\n查看全部柜机\n1\n朝阳园小区柜\n最优推荐\n北京市朝阳区朝阳园小区北门\n距离最近\n距离约 0 km\n30% 负载\n0 热区件\n非网格区\n距离 35\n负载 17.5\n可用 20\n热区 0\n网格 0\n匹配度 73%\n可用 7 格口\n选择派件\n2\n阳光花园柜\n北京市朝阳区阳光花园东门\n距离最近\n距离约 1.4 km\n30% 负载\n0 热区件\n非网格区\n距离 30.1\n负载 17.5\n可用 20\n热区 0\n网格 0\n匹配度 68%\n可用 7 格口\n选择派件\n3\n西城商业中心柜\n北京市西城区商业中心广场\n格口充足\n距离约 8.6 km\n30% 负载\n0 热区件\n非网格区\n距离 4.9\n负载 17.5\n可用 20\n热区 0\n网格 0\n匹配度 42%\n可用 7 格口\n选择派件\n4\n海淀科技园柜\n北京市海淀区科技园A座\n格口充足\n距离约 14.42 km\n30% 负载\n0 热区件\n非网格区\n距离 0\n负载 17.5\n可用 20\n热区 0\n网格 0\n匹配度 38%\n可用 7 格口\n选择派件\n5\n中关村大厦柜\n北京市海淀区中关村大厦B1层\n格口充足\n距离约 13.67 km\n30% 负载\n0 热区件\n非网格区\n距离 0\n负载 17.5\n可用 20\n热区 0\n网格 0\n匹配度 38%\n可用 7 格口\n选择派件\n金牌骑手排行榜\n1\n王五\n328 单 · 2100 积分\n2\n张三\n256 单 · 1850 积分\n3\n李四\n198 单 · 1520 积分\n绩效积分进度\n本月绩效目标\n1250 / 3000 分\n41.66666666666667%\n本月派件目标\n248 / 500 单\n49.6%\n服务评分\n4.8 / 5.0 分\n96%",
+  "bodyTextPreview": "丰巢快递员SaaS\n工作台\n包裹管理\n智能柜列表\n空箱预约\n租用订单\n赋能中心\n柜机健康度\n收益分析\n工作台\n已登录\n演示快递员\n业务中心：包裹入库、空箱预约、租用订单、柜机健康和收益分析统一处理。\n今日派件\n2\n待处理包裹\n6\n滞留件\n0\n今日收益(元)\n0.00\n累计收益(元)\n0.00\n活跃租用\n0\n待处理预约\n0\n柜机在线率\n100%\n5 / 5 在线\n包裹状态流转\n0\n待入库\n6\n已存储\n2\n已滞留\n0\n已提醒\n2\n已取件\n快捷操作\n包裹入库\n空箱预约\n租用格口\n收益详情\n智能派单助手 - 最优柜机推荐\n5\n查看全部柜机\n1\n朝阳园小区柜\n最优推荐\n北京市朝阳区朝阳园小区北门\n距离最近\n距离约 0 km\n30% 负载\n0 热区件\n非网格区\n距离 35\n负载 17.5\n可用 20\n热区 0\n网格 0\n匹配度 73%\n可用 7 格口\n选择派件\n2\n阳光花园柜\n北京市朝阳区阳光花园东门\n距离最近\n距离约 1.4 km\n30% 负载\n0 热区件\n非网格区\n距离 30.1\n负载 17.5\n可用 20\n热区 0\n网格 0\n匹配度 68%\n可用 7 格口\n选择派件\n3\n西城商业中心柜\n北京市西城区商业中心广场\n格口充足\n距离约 8.6 km\n30% 负载\n0 热区件\n非网格区\n距离 4.9\n负载 17.5\n可用 20\n热区 0\n网格 0\n匹配度 42%\n可用 7 格口\n选择派件\n4\n海淀科技园柜\n北京市海淀区科技园A座\n格口充足\n距离约 14.42 km\n30% 负载\n0 热区件\n非网格区\n距离 0\n负载 17.5\n可用 20\n热区 0\n网格 0\n匹配度 38%\n可用 7 格口\n选择派件\n5\n中关村大厦柜\n北京市海淀区中关村大厦B1层\n格口充足\n距离约 13.67 km\n30% 负载\n0 热区件\n非网格区\n距离 0\n负载 17.5\n可用 20\n热区 0\n网格 0\n匹配度 38%\n可用 7 格口\n选择派件\n金牌骑手排行榜\n1\n王五\n328 单 · 2100 积分\n2\n张三\n256 单 · 1850 积分\n3\n李四\n198 单 · 1520 积分\n绩效积分进度\n本月绩效目标\n1250 / 3000 分\n41.66666666666667%\n本月派件目标\n248 / 500 单\n49.6%\n服务评分\n4.8 / 5.0 分\n96%",
+  "apiBase": "http://127.0.0.1:59022",
+  "businessGoalPreview": "",
+  "apiResponses": [
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49022/api/device-alerts?isRead=false"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49022/api/device-alerts?isRead=false"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49022/api/statistics/overview"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49022/api/cabinets/recommend/optimal?boxSize=M"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49022/api/leaderboard?limit=5"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49022/api/statistics/overview"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49022/api/cabinets/recommend/optimal?boxSize=M"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49022/api/leaderboard?limit=5"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49022/api/device-alerts?isRead=false"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49022/api/device-alerts?isRead=false"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49022/api/statistics/overview"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49022/api/cabinets/recommend/optimal?boxSize=M"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49022/api/leaderboard?limit=5"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49022/api/statistics/overview"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49022/api/cabinets/recommend/optimal?boxSize=M"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49022/api/leaderboard?limit=5"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49022/api/cabinets?page=1&pageSize=10"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49022/api/cabinets?page=1&pageSize=10"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49022/api/cabinets/1"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49022/api/statistics/overview"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49022/api/cabinets/recommend/optimal?boxSize=M"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49022/api/leaderboard?limit=5"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49022/api/device-alerts?isRead=false"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49022/api/statistics/overview"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49022/api/cabinets/recommend/optimal?boxSize=M"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49022/api/leaderboard?limit=5"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49022/api/device-alerts?isRead=false"
+    }
+  ],
+  "apiChecks": [
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59022/api/health",
+      "path": "/api/health",
+      "status": 200,
+      "ok": true,
+      "bodyPreview": "{\"status\":\"ok\",\"timestamp\":\"2026-06-04T12:29:32.042Z\"}"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59022/api/device-alerts?isRead=false",
+      "path": "/api/device-alerts?isRead=false",
+      "status": 200,
+      "ok": true,
+      "bodyPreview": "[]"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59022/api/statistics/overview",
+      "path": "/api/statistics/overview",
+      "status": 200,
+      "ok": true,
+      "bodyPreview": "{\"todayDeliveries\":2,\"pendingPackages\":6,\"overduePackages\":0,\"todayRevenue\":0,\"activeRentals\":0,\"pendingReservations\":0,\"onlineCabinets\":5,\"totalCabinets\":5,\"dailyStats\":[{\"date\":\"2026-06-02\",\"count\":5},{\"date\":\"2026-06-03\",\"count\":3},{\"date\":\"2026-06-04\",\"count\":2}],\"packageStatusFlow\":{\"pending\":0,\"stored\":6,\"overdue\":2,\"reminded\":0,\"picked\":2},\"totalRevenue\":0}"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59022/api/cabinets/recommend/optimal?boxSize=M",
+      "path": "/api/cabinets/recommend/optimal?boxSize=M",
+      "status": 200,
+      "ok": true,
+      "bodyPreview": "[{\"id\":1,\"cabinet_code\":\"FCBJ0001\",\"name\":\"朝阳园小区柜\",\"address\":\"北京市朝阳区朝阳园小区北门\",\"lat\":39.92,\"lng\":116.46,\"total_boxes\":48,\"available_boxes\":32,\"temperature_control\":1,\"has_fault\":0,\"fault_description\":null,\"grid_id\":1,\"status\":\"online\",\"last_heartbeat\":null,\"created_at\":\"2026-06-04 12:17:01\",\"available_count\":7,\"total_box_count\":20,\"occupied_count\":6,\"score\":73,\"distance\":0,\"loadRate\":30,\"availableCount\":7,\"hotZoneDeliveries\":0,\"gridMatch\":false,\"reason\":\"距离最近\",\"scoreDetail\":{\"distance\":35,\"load\":1"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59022/api/leaderboard?limit=5",
+      "path": "/api/leaderboard?limit=5",
+      "status": 200,
+      "ok": true,
+      "bodyPreview": "{\"list\":[],\"stats\":{\"totalCouriers\":3,\"avgPoints\":0,\"topPoints\":0}}"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59022/api/cabinets?page=1&pageSize=10",
+      "path": "/api/cabinets?page=1&pageSize=10",
+      "status": 200,
+      "ok": true,
+      "bodyPreview": "{\"list\":[{\"id\":1,\"cabinet_code\":\"FCBJ0001\",\"name\":\"朝阳园小区柜\",\"address\":\"北京市朝阳区朝阳园小区北门\",\"lat\":39.92,\"lng\":116.46,\"total_boxes\":48,\"available_boxes\":32,\"temperature_control\":1,\"has_fault\":0,\"fault_description\":null,\"grid_id\":1,\"status\":\"online\",\"last_heartbeat\":null,\"created_at\":\"2026-06-04 12:17:01\",\"boxStats\":{\"total\":20,\"available\":14,\"occupied\":6,\"locked\":0},\"loadRate\":30},{\"id\":2,\"cabinet_code\":\"FCBJ0002\",\"name\":\"阳光花园柜\",\"address\":\"北京市朝阳区阳光花园东门\",\"lat\":39.93,\"lng\":116.47,\"total_boxes\":36,\"availab"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59022/api/cabinets/1",
+      "path": "/api/cabinets/1",
+      "status": 200,
+      "ok": true,
+      "bodyPreview": "{\"id\":1,\"cabinet_code\":\"FCBJ0001\",\"name\":\"朝阳园小区柜\",\"address\":\"北京市朝阳区朝阳园小区北门\",\"lat\":39.92,\"lng\":116.46,\"total_boxes\":48,\"available_boxes\":32,\"temperature_control\":1,\"has_fault\":0,\"fault_description\":null,\"grid_id\":1,\"status\":\"online\",\"last_heartbeat\":null,\"created_at\":\"2026-06-04 12:17:01\",\"boxes\":[{\"id\":1,\"cabinet_id\":1,\"box_code\":\"A01\",\"size\":\"M\",\"status\":\"empty\",\"temperature_control\":1,\"current_package_id\":null,\"locked_until\":null,\"tracking_number\":null,\"package_status\":null,\"pickup_code\":null,"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59022/api/teachers",
+      "path": "/api/teachers",
+      "status": 404,
+      "ok": false,
+      "bodyPreview": "<!DOCTYPE html>\n<html lang=\"en\">\n<head>\n<meta charset=\"utf-8\">\n<title>Error</title>\n</head>\n<body>\n<pre>Cannot GET /api/teachers</pre>\n</body>\n</html>\n"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59022/api/courses",
+      "path": "/api/courses",
+      "status": 404,
+      "ok": false,
+      "bodyPreview": "<!DOCTYPE html>\n<html lang=\"en\">\n<head>\n<meta charset=\"utf-8\">\n<title>Error</title>\n</head>\n<body>\n<pre>Cannot GET /api/courses</pre>\n</body>\n</html>\n"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59022/api/bookings",
+      "path": "/api/bookings",
+      "status": 404,
+      "ok": false,
+      "bodyPreview": "<!DOCTYPE html>\n<html lang=\"en\">\n<head>\n<meta charset=\"utf-8\">\n<title>Error</title>\n</head>\n<body>\n<pre>Cannot GET /api/bookings</pre>\n</body>\n</html>\n"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59022/api/orders",
+      "path": "/api/orders",
+      "status": 200,
+      "ok": true,
+      "bodyPreview": "{\"orders\":[],\"reservations\":[],\"total\":0}"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59022/api/auth/me",
+      "path": "/api/auth/me",
+      "status": 200,
+      "ok": true,
+      "bodyPreview": "{\"userId\":1,\"id\":1,\"username\":\"courier001\",\"name\":\"张三\",\"phone\":\"13800138001\",\"brands\":[\"sto\",\"yto\"],\"serviceArea\":\"朝阳区A区\",\"performancePoints\":1250,\"status\":\"active\",\"createdAt\":\"2026-06-04 12:17:01\"}"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59022/api/users/profile",
+      "path": "/api/users/profile",
+      "status": 200,
+      "ok": true,
+      "bodyPreview": "{\"userId\":1,\"id\":1,\"username\":\"courier001\",\"name\":\"张三\",\"phone\":\"13800138001\",\"brands\":[\"sto\",\"yto\"],\"serviceArea\":\"朝阳区A区\",\"performancePoints\":1250,\"status\":\"active\",\"createdAt\":\"2026-06-04 12:17:01\"}"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59022/api/user/profile",
+      "path": "/api/user/profile",
+      "status": 200,
+      "ok": true,
+      "bodyPreview": "{\"userId\":1,\"id\":1,\"username\":\"courier001\",\"name\":\"张三\",\"phone\":\"13800138001\",\"brands\":[\"sto\",\"yto\"],\"serviceArea\":\"朝阳区A区\",\"performancePoints\":1250,\"status\":\"active\",\"createdAt\":\"2026-06-04 12:17:01\"}"
+    }
+  ],
+  "dialogs": [],
+  "consoleMessages": [
+    {
+      "type": "debug",
+      "text": "[vite] connecting...",
+      "location": {
+        "url": "http://127.0.0.1:49022/@vite/client",
+        "lineNumber": 494,
+        "columnNumber": 8
+      }
+    },
+    {
+      "type": "debug",
+      "text": "[vite] connected.",
+      "location": {
+        "url": "http://127.0.0.1:49022/@vite/client",
+        "lineNumber": 617,
+        "columnNumber": 14
+      }
+    },
+    {
+      "type": "info",
+      "text": "%cDownload the React DevTools for a better development experience: https://reactjs.org/link/react-devtools font-weight:bold",
+      "location": {
+        "url": "http://127.0.0.1:49022/node_modules/.vite/deps/chunk-PJEEZAML.js?v=1ddbd61d",
+        "lineNumber": 21550,
+        "columnNumber": 24
+      }
+    },
+    {
+      "type": "warning",
+      "text": "⚠️ React Router Future Flag Warning: React Router will begin wrapping state updates in `React.startTransition` in v7. You can use the `v7_startTransition` future flag to opt-in early. For more information, see https://reactrouter.com/v6/upgrading/future#v7_starttransition.",
+      "location": {
+        "url": "http://127.0.0.1:49022/node_modules/.vite/deps/react-router-dom.js?v=1ddbd61d",
+        "lineNumber": 4426,
+        "columnNumber": 12
+      }
+    },
+    {
+      "type": "warning",
+      "text": "⚠️ React Router Future Flag Warning: Relative route resolution within Splat routes is changing in v7. You can use the `v7_relativeSplatPath` future flag to opt-in early. For more information, see https://reactrouter.com/v6/upgrading/future#v7_relativesplatpath.",
+      "location": {
+        "url": "http://127.0.0.1:49022/node_modules/.vite/deps/react-router-dom.js?v=1ddbd61d",
+        "lineNumber": 4426,
+        "columnNumber": 12
+      }
+    },
+    {
+      "type": "debug",
+      "text": "[vite] connecting...",
+      "location": {
+        "url": "http://127.0.0.1:49022/@vite/client",
+        "lineNumber": 494,
+        "columnNumber": 8
+      }
+    },
+    {
+      "type": "debug",
+      "text": "[vite] connected.",
+      "location": {
+        "url": "http://127.0.0.1:49022/@vite/client",
+        "lineNumber": 617,
+        "columnNumber": 14
+      }
+    },
+    {
+      "type": "info",
+      "text": "%cDownload the React DevTools for a better development experience: https://reactjs.org/link/react-devtools font-weight:bold",
+      "location": {
+        "url": "http://127.0.0.1:49022/node_modules/.vite/deps/chunk-PJEEZAML.js?v=1ddbd61d",
+        "lineNumber": 21550,
+        "columnNumber": 24
+      }
+    },
+    {
+      "type": "warning",
+      "text": "⚠️ React Router Future Flag Warning: React Router will begin wrapping state updates in `React.startTransition` in v7. You can use the `v7_startTransition` future flag to opt-in early. For more information, see https://reactrouter.com/v6/upgrading/future#v7_starttransition.",
+      "location": {
+        "url": "http://127.0.0.1:49022/node_modules/.vite/deps/react-router-dom.js?v=1ddbd61d",
+        "lineNumber": 4426,
+        "columnNumber": 12
+      }
+    },
+    {
+      "type": "warning",
+      "text": "⚠️ React Router Future Flag Warning: Relative route resolution within Splat routes is changing in v7. You can use the `v7_relativeSplatPath` future flag to opt-in early. For more information, see https://reactrouter.com/v6/upgrading/future#v7_relativesplatpath.",
+      "location": {
+        "url": "http://127.0.0.1:49022/node_modules/.vite/deps/react-router-dom.js?v=1ddbd61d",
+        "lineNumber": 4426,
+        "columnNumber": 12
+      }
+    },
+    {
+      "type": "error",
+      "text": "Warning: [antd: Tabs] `Tabs.TabPane` is deprecated. Please use `items` instead.",
+      "location": {
+        "url": "http://127.0.0.1:49022/node_modules/.vite/deps/chunk-D2XKH6ZM.js?v=1ddbd61d",
+        "lineNumber": 1247,
+        "columnNumber": 14
+      }
+    },
+    {
+      "type": "debug",
+      "text": "[vite] connecting...",
+      "location": {
+        "url": "http://127.0.0.1:49022/@vite/client",
+        "lineNumber": 494,
+        "columnNumber": 8
+      }
+    },
+    {
+      "type": "info",
+      "text": "%cDownload the React DevTools for a better development experience: https://reactjs.org/link/react-devtools font-weight:bold",
+      "location": {
+        "url": "http://127.0.0.1:49022/node_modules/.vite/deps/chunk-PJEEZAML.js?v=1ddbd61d",
+        "lineNumber": 21550,
+        "columnNumber": 24
+      }
+    },
+    {
+      "type": "warning",
+      "text": "⚠️ React Router Future Flag Warning: React Router will begin wrapping state updates in `React.startTransition` in v7. You can use the `v7_startTransition` future flag to opt-in early. For more information, see https://reactrouter.com/v6/upgrading/future#v7_starttransition.",
+      "location": {
+        "url": "http://127.0.0.1:49022/node_modules/.vite/deps/react-router-dom.js?v=1ddbd61d",
+        "lineNumber": 4426,
+        "columnNumber": 12
+      }
+    },
+    {
+      "type": "warning",
+      "text": "⚠️ React Router Future Flag Warning: Relative route resolution within Splat routes is changing in v7. You can use the `v7_relativeSplatPath` future flag to opt-in early. For more information, see https://reactrouter.com/v6/upgrading/future#v7_relativesplatpath.",
+      "location": {
+        "url": "http://127.0.0.1:49022/node_modules/.vite/deps/react-router-dom.js?v=1ddbd61d",
+        "lineNumber": 4426,
+        "columnNumber": 12
+      }
+    },
+    {
+      "type": "debug",
+      "text": "[vite] connected.",
+      "location": {
+        "url": "http://127.0.0.1:49022/@vite/client",
+        "lineNumber": 617,
+        "columnNumber": 14
+      }
+    }
+  ],
+  "requestFailures": [],
+  "responseErrors": []
+}

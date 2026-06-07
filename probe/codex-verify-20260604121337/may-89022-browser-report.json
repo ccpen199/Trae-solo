@@ -1,0 +1,2545 @@
+{
+  "ok": true,
+  "generatedAt": "2026-06-04T09:17:25.945Z",
+  "order": "may-89022",
+  "roundIndex": 99,
+  "captureId": "may-89022-codex-verify",
+  "url": "http://127.0.0.1:49022/",
+  "initialUrl": "http://127.0.0.1:49022/",
+  "finalUrl": "http://127.0.0.1:49022/dashboard",
+  "status": 200,
+  "title": "丰巢快递员SaaS平台",
+  "initialTitle": "丰巢快递员SaaS平台",
+  "navigationError": "",
+  "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89022/probe/codex-verify-20260604121337/may-89022-codex-verify-frontend.png",
+  "screenshotPaths": [
+    "/Users/chen/Documents/trae_projects/local_projects/may-89022/probe/codex-verify-20260604121337/may-89022-codex-verify-structure-01-首屏.png",
+    "/Users/chen/Documents/trae_projects/local_projects/may-89022/probe/codex-verify-20260604121337/may-89022-codex-verify-structure-02-导航-工作台.png",
+    "/Users/chen/Documents/trae_projects/local_projects/may-89022/probe/codex-verify-20260604121337/may-89022-codex-verify-structure-03-操作-查看全部柜机.png",
+    "/Users/chen/Documents/trae_projects/local_projects/may-89022/probe/codex-verify-20260604121337/may-89022-codex-verify-structure-04-二层操作-查看全部柜机-查看详情.png",
+    "/Users/chen/Documents/trae_projects/local_projects/may-89022/probe/codex-verify-20260604121337/may-89022-codex-verify-structure-05-操作-选择派件.png",
+    "/Users/chen/Documents/trae_projects/local_projects/may-89022/probe/codex-verify-20260604121337/may-89022-codex-verify-structure-06-导航-包裹管理.png",
+    "/Users/chen/Documents/trae_projects/local_projects/may-89022/probe/codex-verify-20260604121337/may-89022-codex-verify-structure-07-操作-详情.png",
+    "/Users/chen/Documents/trae_projects/local_projects/may-89022/probe/codex-verify-20260604121337/may-89022-codex-verify-structure-08-二层操作-详情-关闭.png",
+    "/Users/chen/Documents/trae_projects/local_projects/may-89022/probe/codex-verify-20260604121337/may-89022-codex-verify-structure-09-操作-刷新.png"
+  ],
+  "issueTextPreview": "",
+  "targetReason": "页面存在后台入口，优先复验后台管理链路；页面存在购买/商品入口，优先复验交易链路",
+  "targetKind": "purchase",
+  "targetMatched": true,
+  "targetActions": [
+    {
+      "action": "target-already-visible",
+      "label": "页面存在购买/商品入口，优先复验交易链路",
+      "ok": true
+    },
+    {
+      "action": "target-verify",
+      "label": "页面存在购买/商品入口，优先复验交易链路",
+      "ok": true,
+      "finalUrl": "http://127.0.0.1:49022/dashboard"
+    }
+  ],
+  "authFlow": {
+    "detected": false,
+    "attempted": false,
+    "success": false,
+    "finalUrl": "http://127.0.0.1:49022/dashboard",
+    "message": "",
+    "actions": []
+  },
+  "businessAudit": {
+    "actions": [
+      {
+        "action": "click",
+        "label": "导航:工作台",
+        "ok": true
+      },
+      {
+        "action": "click",
+        "label": "操作:查看全部柜机",
+        "ok": true,
+        "result": {
+          "ok": true,
+          "matched": 1
+        }
+      },
+      {
+        "action": "click",
+        "label": "二层操作:查看全部柜机:查看详情",
+        "ok": true,
+        "result": {
+          "ok": true,
+          "matched": 5
+        }
+      },
+      {
+        "action": "click",
+        "label": "关闭弹窗/抽屉",
+        "ok": true
+      },
+      {
+        "action": "click",
+        "label": "操作:选择派件",
+        "ok": true,
+        "result": {
+          "ok": true,
+          "matched": 5
+        }
+      },
+      {
+        "action": "click",
+        "label": "导航:包裹管理",
+        "ok": true
+      },
+      {
+        "action": "click",
+        "label": "操作:详情",
+        "ok": true,
+        "result": {
+          "ok": true,
+          "matched": 10
+        }
+      },
+      {
+        "action": "click",
+        "label": "二层操作:详情:关闭",
+        "ok": true,
+        "result": {
+          "ok": true,
+          "matched": 1
+        }
+      },
+      {
+        "action": "click",
+        "label": "操作:刷新",
+        "ok": true,
+        "result": {
+          "ok": true,
+          "matched": 1
+        }
+      }
+    ],
+    "snapshots": [
+      {
+        "label": "首屏",
+        "url": "http://127.0.0.1:49022/dashboard",
+        "title": "丰巢快递员SaaS平台",
+        "headings": [
+          "丰巢快递员SaaS"
+        ],
+        "navLabels": [
+          "工作台 包裹管理 智能柜列表 空箱预约 租用订单 赋能中心 柜机健康度 收益分析",
+          "工作台",
+          "dashboard",
+          "包裹管理",
+          "inbox",
+          "智能柜列表",
+          "shop",
+          "空箱预约",
+          "calendar",
+          "租用订单",
+          "credit-card",
+          "赋能中心",
+          "book",
+          "柜机健康度",
+          "heart",
+          "收益分析",
+          "bar-chart"
+        ],
+        "buttons": [
+          "查看全部柜机",
+          "选择派件"
+        ],
+        "links": [],
+        "inputs": [],
+        "tables": [],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "丰巢快递员SaaS工作台包裹管理智能柜列表空箱预约租用订单赋能中心柜机健康度收益分析工作台已登录演示快递员今日派件0待处理包裹6滞留件2今日收益(元)0.00智能派单助手 - 最优柜机推荐5查看全部柜机 1朝阳园小区柜最优推荐北京市朝阳区朝阳园小区北门当前可用格口最多距离约 2.0 km · 预计 8 分钟可达匹配度 76%可用 7 格口选择派件2阳光花园柜北京市朝阳区阳光花园东门距离您最近距离约 2.3 km · 预计 14 分钟可达匹配度 93%可用 7 格口选择派件3海淀科技园柜北京市海淀区科技园A座历史配送成功率高距离约 0.9 km · 预计 12 分钟可达匹配度 80%可用 7 格口选择派件4中关村大厦柜北京市海淀区中关村大厦B1层历史配送成功率高距离约 0.5 km · 预计 11 分钟可达匹配度 85%可用 7 格口选择派件5西城商业中心柜北京市西城区商业中心广场历史配送成功率高距离约 0.4 km · 预计 7 分钟可达匹配度 105%可用 7 格口选择派件金牌骑手排行榜1王五328 单 · 2100 积分2张三256 单 · 1850 积分3李四198 单 · 1520 积分绩效积分进度本月绩效目标1250 / 3000 分41.66666666666667%本月派件目标248 / 500 单49.6%服务评分4.8 / 5.0 分96%",
+        "layout": {
+          "viewportWidth": 1504,
+          "viewportHeight": 1439,
+          "scrollWidth": 1504,
+          "scrollHeight": 1439,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89022-codex-verify-structure-01-首屏",
+          "label": "首屏",
+          "finalUrl": "http://127.0.0.1:49022/dashboard",
+          "title": "丰巢快递员SaaS平台",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89022/probe/codex-verify-20260604121337/may-89022-codex-verify-structure-01-首屏.json",
+          "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89022/probe/codex-verify-20260604121337/may-89022-codex-verify-structure-01-首屏.png",
+          "elementCount": 439,
+          "interactiveCount": 15,
+          "interactiveLabels": [
+            "工作台 包裹管理 智能柜列表 空箱预约 租用订单 赋能中心 柜机健康度 收益分析",
+            "工作台",
+            "包裹管理",
+            "智能柜列表",
+            "空箱预约",
+            "租用订单",
+            "赋能中心",
+            "柜机健康度",
+            "收益分析",
+            "查看全部柜机",
+            "选择派件"
+          ]
+        }
+      },
+      {
+        "label": "导航:工作台",
+        "url": "http://127.0.0.1:49022/dashboard",
+        "title": "丰巢快递员SaaS平台",
+        "headings": [
+          "丰巢快递员SaaS"
+        ],
+        "navLabels": [
+          "工作台 包裹管理 智能柜列表 空箱预约 租用订单 赋能中心 柜机健康度 收益分析",
+          "工作台",
+          "dashboard",
+          "包裹管理",
+          "inbox",
+          "智能柜列表",
+          "shop",
+          "空箱预约",
+          "calendar",
+          "租用订单",
+          "credit-card",
+          "赋能中心",
+          "book",
+          "柜机健康度",
+          "heart",
+          "收益分析",
+          "bar-chart"
+        ],
+        "buttons": [
+          "查看全部柜机",
+          "选择派件"
+        ],
+        "links": [],
+        "inputs": [],
+        "tables": [],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "丰巢快递员SaaS工作台包裹管理智能柜列表空箱预约租用订单赋能中心柜机健康度收益分析工作台已登录演示快递员今日派件0待处理包裹6滞留件2今日收益(元)0.00智能派单助手 - 最优柜机推荐5查看全部柜机 1朝阳园小区柜最优推荐北京市朝阳区朝阳园小区北门当前可用格口最多距离约 1.4 km · 预计 10 分钟可达匹配度 76%可用 7 格口选择派件2阳光花园柜北京市朝阳区阳光花园东门距离您最近距离约 0.9 km · 预计 6 分钟可达匹配度 93%可用 7 格口选择派件3海淀科技园柜北京市海淀区科技园A座历史配送成功率高距离约 0.4 km · 预计 13 分钟可达匹配度 80%可用 7 格口选择派件4中关村大厦柜北京市海淀区中关村大厦B1层历史配送成功率高距离约 0.7 km · 预计 13 分钟可达匹配度 85%可用 7 格口选择派件5西城商业中心柜北京市西城区商业中心广场历史配送成功率高距离约 0.6 km · 预计 10 分钟可达匹配度 105%可用 7 格口选择派件金牌骑手排行榜1王五328 单 · 2100 积分2张三256 单 · 1850 积分3李四198 单 · 1520 积分绩效积分进度本月绩效目标1250 / 3000 分41.66666666666667%本月派件目标248 / 500 单49.6%服务评分4.8 / 5.0 分96%",
+        "layout": {
+          "viewportWidth": 1536,
+          "viewportHeight": 1439,
+          "scrollWidth": 1536,
+          "scrollHeight": 1439,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89022-codex-verify-structure-02-导航-工作台",
+          "label": "导航:工作台",
+          "finalUrl": "http://127.0.0.1:49022/dashboard",
+          "title": "丰巢快递员SaaS平台",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89022/probe/codex-verify-20260604121337/may-89022-codex-verify-structure-02-导航-工作台.json",
+          "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89022/probe/codex-verify-20260604121337/may-89022-codex-verify-structure-02-导航-工作台.png",
+          "elementCount": 439,
+          "interactiveCount": 15,
+          "interactiveLabels": [
+            "工作台 包裹管理 智能柜列表 空箱预约 租用订单 赋能中心 柜机健康度 收益分析",
+            "工作台",
+            "包裹管理",
+            "智能柜列表",
+            "空箱预约",
+            "租用订单",
+            "赋能中心",
+            "柜机健康度",
+            "收益分析",
+            "查看全部柜机",
+            "选择派件"
+          ]
+        }
+      },
+      {
+        "label": "操作:查看全部柜机",
+        "url": "http://127.0.0.1:49022/cabinets",
+        "title": "丰巢快递员SaaS平台",
+        "headings": [
+          "丰巢快递员SaaS"
+        ],
+        "navLabels": [
+          "工作台 包裹管理 智能柜列表 空箱预约 租用订单 赋能中心 柜机健康度 收益分析",
+          "工作台",
+          "dashboard",
+          "包裹管理",
+          "inbox",
+          "智能柜列表",
+          "shop",
+          "空箱预约",
+          "calendar",
+          "租用订单",
+          "credit-card",
+          "赋能中心",
+          "book",
+          "柜机健康度",
+          "heart",
+          "收益分析",
+          "bar-chart"
+        ],
+        "buttons": [
+          "刷新",
+          "查看详情"
+        ],
+        "links": [],
+        "inputs": [
+          {
+            "tag": "input",
+            "type": "text",
+            "placeholder": "搜索柜机名称/编号",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "search",
+            "placeholder": "",
+            "name": "",
+            "label": "页码"
+          }
+        ],
+        "tables": [
+          {
+            "headers": [
+              "柜机编号",
+              "柜机名称",
+              "地址",
+              "格口使用",
+              "温控",
+              "故障",
+              "状态",
+              "最后心跳",
+              "操作",
+              "柜机编号",
+              "柜机名称",
+              "地址"
+            ],
+            "rowCount": 5,
+            "hasEmptyText": false,
+            "textPreview": "柜机编号 柜机名称 地址 格口使用 温控 故障 状态 最后心跳 操作 柜机编号 柜机名称 地址 格口使用 温控 故障 状态 最后心跳 操作 FCBJ0001 朝阳园小区柜 北京市朝阳区朝阳园小区北门 33% 16 / 48 格口 支持 正常 在线 - 查看详情 FCBJ0002 阳光花园柜 北京市朝阳区阳光花园东门 58% 21 / 36 格口 不支持 正常 在线 - 查看详情 FCBJ0003 海淀科技园柜 北京市海淀区科技园A座 25% 15 / 60 格口 支持 正常 在线 - 查看详情 FCBJ0004 中关村大厦柜 北京市海淀区中关村大厦B1层 81% 34 / 42 格口 不支持 "
+          }
+        ],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "丰巢快递员SaaS工作台包裹管理智能柜列表空箱预约租用订单赋能中心柜机健康度收益分析智能柜列表已登录演示快递员柜机总数5在线柜机5/ 5故障柜机0可用格口130/ 240刷新柜机编号柜机名称地址格口使用温控故障状态最后心跳操作柜机编号柜机名称地址格口使用温控故障状态最后心跳操作FCBJ0001朝阳园小区柜北京市朝阳区朝阳园小区北门33%16 / 48 格口支持正常在线-查看详情FCBJ0002阳光花园柜北京市朝阳区阳光花园东门58%21 / 36 格口不支持正常在线-查看详情FCBJ0003海淀科技园柜北京市海淀区科技园A座25%15 / 60 格口支持正常在线-查看详情FCBJ0004中关村大厦柜北京市海淀区中关村大厦B1层81%34 / 42 格口不支持正常在线-查看详情FCBJ0005西城商业中心柜北京市西城区商业中心广场44%24 / 54 格口支持正常在线-查看详情共 5 台柜机110 条/页",
+        "layout": {
+          "viewportWidth": 1568,
+          "viewportHeight": 1439,
+          "scrollWidth": 1568,
+          "scrollHeight": 1439,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89022-codex-verify-structure-03-操作-查看全部柜机",
+          "label": "操作:查看全部柜机",
+          "finalUrl": "http://127.0.0.1:49022/cabinets",
+          "title": "丰巢快递员SaaS平台",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89022/probe/codex-verify-20260604121337/may-89022-codex-verify-structure-03-操作-查看全部柜机.json",
+          "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89022/probe/codex-verify-20260604121337/may-89022-codex-verify-structure-03-操作-查看全部柜机.png",
+          "elementCount": 357,
+          "interactiveCount": 22,
+          "interactiveLabels": [
+            "工作台 包裹管理 智能柜列表 空箱预约 租用订单 赋能中心 柜机健康度 收益分析",
+            "工作台",
+            "包裹管理",
+            "智能柜列表",
+            "空箱预约",
+            "租用订单",
+            "赋能中心",
+            "柜机健康度",
+            "收益分析",
+            "搜索柜机名称/编号",
+            "刷新",
+            "查看详情",
+            "1",
+            "页码"
+          ]
+        }
+      },
+      {
+        "label": "二层操作:查看全部柜机->查看详情",
+        "url": "http://127.0.0.1:49022/cabinets",
+        "title": "丰巢快递员SaaS平台",
+        "headings": [
+          "丰巢快递员SaaS"
+        ],
+        "navLabels": [
+          "工作台 包裹管理 智能柜列表 空箱预约 租用订单 赋能中心 柜机健康度 收益分析",
+          "工作台",
+          "dashboard",
+          "包裹管理",
+          "inbox",
+          "智能柜列表",
+          "shop",
+          "空箱预约",
+          "calendar",
+          "租用订单",
+          "credit-card",
+          "赋能中心",
+          "book",
+          "柜机健康度",
+          "heart",
+          "收益分析",
+          "bar-chart"
+        ],
+        "buttons": [
+          "刷新",
+          "查看详情",
+          "关闭"
+        ],
+        "links": [],
+        "inputs": [
+          {
+            "tag": "input",
+            "type": "text",
+            "placeholder": "搜索柜机名称/编号",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "search",
+            "placeholder": "",
+            "name": "",
+            "label": "页码"
+          }
+        ],
+        "tables": [
+          {
+            "headers": [
+              "柜机编号",
+              "柜机名称",
+              "地址",
+              "格口使用",
+              "温控",
+              "故障",
+              "状态",
+              "最后心跳",
+              "操作",
+              "柜机编号",
+              "柜机名称",
+              "地址"
+            ],
+            "rowCount": 5,
+            "hasEmptyText": false,
+            "textPreview": "柜机编号 柜机名称 地址 格口使用 温控 故障 状态 最后心跳 操作 柜机编号 柜机名称 地址 格口使用 温控 故障 状态 最后心跳 操作 FCBJ0001 朝阳园小区柜 北京市朝阳区朝阳园小区北门 33% 16 / 48 格口 支持 正常 在线 - 查看详情 FCBJ0002 阳光花园柜 北京市朝阳区阳光花园东门 58% 21 / 36 格口 不支持 正常 在线 - 查看详情 FCBJ0003 海淀科技园柜 北京市海淀区科技园A座 25% 15 / 60 格口 支持 正常 在线 - 查看详情 FCBJ0004 中关村大厦柜 北京市海淀区中关村大厦B1层 81% 34 / 42 格口 不支持 "
+          },
+          {
+            "headers": [],
+            "rowCount": 6,
+            "hasEmptyText": false,
+            "textPreview": "柜机名称 朝阳园小区柜 地址 北京市朝阳区朝阳园小区北门 温控功能 支持 故障状态 正常 总格口 48 可用格口 32 已占用 6 已锁定 0 最后心跳 -"
+          }
+        ],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "丰巢快递员SaaS工作台包裹管理智能柜列表空箱预约租用订单赋能中心柜机健康度收益分析智能柜列表已登录演示快递员柜机总数5在线柜机5/ 5故障柜机0可用格口130/ 240刷新柜机编号柜机名称地址格口使用温控故障状态最后心跳操作柜机编号柜机名称地址格口使用温控故障状态最后心跳操作FCBJ0001朝阳园小区柜北京市朝阳区朝阳园小区北门33%16 / 48 格口支持正常在线-查看详情FCBJ0002阳光花园柜北京市朝阳区阳光花园东门58%21 / 36 格口不支持正常在线-查看详情FCBJ0003海淀科技园柜北京市海淀区科技园A座25%15 / 60 格口支持正常在线-查看详情FCBJ0004中关村大厦柜北京市海淀区中关村大厦B1层81%34 / 42 格口不支持正常在线-查看详情FCBJ0005西城商业中心柜北京市西城区商业中心广场44%24 / 54 格口支持正常在线-查看详情共 5 台柜机110 条/页 柜机详情柜机编号FCBJ0001状态在线基本信息格口状态故障处理记录健康复查记录温控异常记录柜机名称朝阳园小区柜地址北京市朝阳区朝阳园小区北门温控功能支持故障状态正常总格口48可用格口32已占用6已锁定0最后心跳-",
+        "layout": {
+          "viewportWidth": 1600,
+          "viewportHeight": 1439,
+          "scrollWidth": 1600,
+          "scrollHeight": 1439,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89022-codex-verify-structure-04-二层操作-查看全部柜机-查看详情",
+          "label": "二层操作:查看全部柜机->查看详情",
+          "finalUrl": "http://127.0.0.1:49022/cabinets",
+          "title": "丰巢快递员SaaS平台",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89022/probe/codex-verify-20260604121337/may-89022-codex-verify-structure-04-二层操作-查看全部柜机-查看详情.json",
+          "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89022/probe/codex-verify-20260604121337/may-89022-codex-verify-structure-04-二层操作-查看全部柜机-查看详情.png",
+          "elementCount": 454,
+          "interactiveCount": 28,
+          "interactiveLabels": [
+            "工作台 包裹管理 智能柜列表 空箱预约 租用订单 赋能中心 柜机健康度 收益分析",
+            "工作台",
+            "包裹管理",
+            "智能柜列表",
+            "空箱预约",
+            "租用订单",
+            "赋能中心",
+            "柜机健康度",
+            "收益分析",
+            "搜索柜机名称/编号",
+            "刷新",
+            "查看详情",
+            "1",
+            "页码",
+            "关闭",
+            "基本信息",
+            "柜机名称 朝阳园小区柜 地址 北京市朝阳区朝阳园小区北门 温控功能 支持 故障状态 正常 总格口 48 可用格口 32 已占用 6 已锁定 0 最后心跳 -"
+          ]
+        }
+      },
+      {
+        "label": "操作:选择派件",
+        "url": "http://127.0.0.1:49022/dashboard",
+        "title": "丰巢快递员SaaS平台",
+        "headings": [
+          "丰巢快递员SaaS"
+        ],
+        "navLabels": [
+          "工作台 包裹管理 智能柜列表 空箱预约 租用订单 赋能中心 柜机健康度 收益分析",
+          "工作台",
+          "dashboard",
+          "包裹管理",
+          "inbox",
+          "智能柜列表",
+          "shop",
+          "空箱预约",
+          "calendar",
+          "租用订单",
+          "credit-card",
+          "赋能中心",
+          "book",
+          "柜机健康度",
+          "heart",
+          "收益分析",
+          "bar-chart"
+        ],
+        "buttons": [
+          "查看全部柜机",
+          "选择派件"
+        ],
+        "links": [],
+        "inputs": [],
+        "tables": [],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "丰巢快递员SaaS工作台包裹管理智能柜列表空箱预约租用订单赋能中心柜机健康度收益分析工作台已登录演示快递员今日派件0待处理包裹6滞留件2今日收益(元)0.00智能派单助手 - 最优柜机推荐5查看全部柜机 1朝阳园小区柜最优推荐北京市朝阳区朝阳园小区北门当前可用格口最多距离约 1.8 km · 预计 10 分钟可达匹配度 83%可用 7 格口选择派件2阳光花园柜北京市朝阳区阳光花园东门距离您最近距离约 1.0 km · 预计 6 分钟可达匹配度 80%可用 7 格口选择派件3海淀科技园柜北京市海淀区科技园A座历史配送成功率高距离约 1.5 km · 预计 6 分钟可达匹配度 102%可用 7 格口选择派件4中关村大厦柜北京市海淀区中关村大厦B1层历史配送成功率高距离约 1.6 km · 预计 6 分钟可达匹配度 113%可用 7 格口选择派件5西城商业中心柜北京市西城区商业中心广场历史配送成功率高距离约 0.8 km · 预计 11 分钟可达匹配度 116%可用 7 格口选择派件金牌骑手排行榜1王五328 单 · 2100 积分2张三256 单 · 1850 积分3李四198 单 · 1520 积分绩效积分进度本月绩效目标1250 / 3000 分41.66666666666667%本月派件目标248 / 500 单49.6%服务评分4.8 / 5.0 分96%",
+        "layout": {
+          "viewportWidth": 1632,
+          "viewportHeight": 1439,
+          "scrollWidth": 1632,
+          "scrollHeight": 1439,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89022-codex-verify-structure-05-操作-选择派件",
+          "label": "操作:选择派件",
+          "finalUrl": "http://127.0.0.1:49022/dashboard",
+          "title": "丰巢快递员SaaS平台",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89022/probe/codex-verify-20260604121337/may-89022-codex-verify-structure-05-操作-选择派件.json",
+          "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89022/probe/codex-verify-20260604121337/may-89022-codex-verify-structure-05-操作-选择派件.png",
+          "elementCount": 441,
+          "interactiveCount": 15,
+          "interactiveLabels": [
+            "工作台 包裹管理 智能柜列表 空箱预约 租用订单 赋能中心 柜机健康度 收益分析",
+            "工作台",
+            "包裹管理",
+            "智能柜列表",
+            "空箱预约",
+            "租用订单",
+            "赋能中心",
+            "柜机健康度",
+            "收益分析",
+            "查看全部柜机",
+            "选择派件"
+          ]
+        }
+      },
+      {
+        "label": "导航:包裹管理",
+        "url": "http://127.0.0.1:49022/packages",
+        "title": "丰巢快递员SaaS平台",
+        "headings": [
+          "丰巢快递员SaaS"
+        ],
+        "navLabels": [
+          "工作台 包裹管理 智能柜列表 空箱预约 租用订单 赋能中心 柜机健康度 收益分析",
+          "工作台",
+          "dashboard",
+          "包裹管理",
+          "inbox",
+          "智能柜列表",
+          "shop",
+          "空箱预约",
+          "calendar",
+          "租用订单",
+          "credit-card",
+          "赋能中心",
+          "book",
+          "柜机健康度",
+          "heart",
+          "收益分析",
+          "bar-chart"
+        ],
+        "buttons": [
+          "全 部",
+          "已存柜",
+          "已滞留 (2)",
+          "已取件",
+          "刷新",
+          "批量提醒 (0)",
+          "包裹入库",
+          "详情",
+          "重发取件码"
+        ],
+        "links": [],
+        "inputs": [
+          {
+            "tag": "input",
+            "type": "text",
+            "placeholder": "搜索运单号",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "search",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "checkbox",
+            "placeholder": "",
+            "name": "",
+            "label": "Select all"
+          },
+          {
+            "tag": "input",
+            "type": "checkbox",
+            "placeholder": "",
+            "name": "",
+            "label": "Select all"
+          },
+          {
+            "tag": "input",
+            "type": "checkbox",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "checkbox",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "checkbox",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "checkbox",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "checkbox",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "checkbox",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "checkbox",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "checkbox",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "checkbox",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "checkbox",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "search",
+            "placeholder": "",
+            "name": "",
+            "label": "页码"
+          },
+          {
+            "tag": "input",
+            "type": "text",
+            "placeholder": "",
+            "name": "",
+            "label": "页"
+          }
+        ],
+        "tables": [
+          {
+            "headers": [
+              "运单号",
+              "快递公司",
+              "收件人",
+              "联系电话",
+              "取件码",
+              "存放柜机",
+              "状态",
+              "存入时间",
+              "操作",
+              "运单号",
+              "快递公司",
+              "收件人"
+            ],
+            "rowCount": 10,
+            "hasEmptyText": false,
+            "textPreview": "运单号 快递公司 收件人 联系电话 取件码 存放柜机 状态 存入时间 操作 运单号 快递公司 收件人 联系电话 取件码 存放柜机 状态 存入时间 操作 SF100000000001 圆通速递 李四 13810000001 580397 阳光花园柜 已存柜 2026-06-01 07:24 详情 重发取件码 SF100000000002 中通快递 王五 13810000002 168574 海淀科技园柜 已存柜 2026-06-01 10:07 详情 重发取件码 SF100000000003 顺丰速运 赵六 13810000003 846840 中关村大厦柜 已取件 2026-06-01 00:"
+          }
+        ],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "丰巢快递员SaaS工作台包裹管理智能柜列表空箱预约租用订单赋能中心柜机健康度收益分析包裹管理已登录演示快递员全 部已存柜已滞留 (2)已取件快递公司刷新批量提醒 (0)包裹入库运单号快递公司收件人联系电话取件码存放柜机状态存入时间操作运单号快递公司收件人联系电话取件码存放柜机状态存入时间操作SF100000000001圆通速递李四13810000001580397阳光花园柜已存柜2026-06-01 07:24详情 重发取件码SF100000000002中通快递王五13810000002168574海淀科技园柜已存柜2026-06-01 10:07详情 重发取件码SF100000000003顺丰速运赵六13810000003846840中关村大厦柜已取件2026-06-01 00:04详情SF100000000004京东物流钱七13810000004567062西城商业中心柜已滞留2026-06-01 12:09详情SF100000000005EMS孙八13810000005619400朝阳园小区柜已存柜2026-06-02 03:44详情 重发取件码SF100000000006天天快递周九13810000006345841阳光花园柜已存柜2026-06-01 09:18详情 重发取件码SF100000000007韵达快递吴十13810000007335878海淀科技园柜已存柜2026-06-01 02:10详情 重发取件码SF100000000008全峰快递张三13810000008857823中关村大厦柜已取件2026-06-03 00:27详情SF100000000009德邦物流李四13810000009379811西城商业中心柜已滞留2026-06-02 20:44详情SF100000000010极兔速递王五13810000010326803朝阳园小区柜已存柜2026-06-01 06:20详情 重发取件码共 30 条记录12310 条/页跳至页",
+        "layout": {
+          "viewportWidth": 1664,
+          "viewportHeight": 1439,
+          "scrollWidth": 1664,
+          "scrollHeight": 1439,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89022-codex-verify-structure-06-导航-包裹管理",
+          "label": "导航:包裹管理",
+          "finalUrl": "http://127.0.0.1:49022/packages",
+          "title": "丰巢快递员SaaS平台",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89022/probe/codex-verify-20260604121337/may-89022-codex-verify-structure-06-导航-包裹管理.json",
+          "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89022/probe/codex-verify-20260604121337/may-89022-codex-verify-structure-06-导航-包裹管理.png",
+          "elementCount": 495,
+          "interactiveCount": 58,
+          "interactiveLabels": [
+            "工作台 包裹管理 智能柜列表 空箱预约 租用订单 赋能中心 柜机健康度 收益分析",
+            "工作台",
+            "包裹管理",
+            "智能柜列表",
+            "空箱预约",
+            "租用订单",
+            "赋能中心",
+            "柜机健康度",
+            "收益分析",
+            "全 部",
+            "已存柜",
+            "已滞留 (2)",
+            "已取件",
+            "搜索运单号",
+            "刷新",
+            "批量提醒 (0)",
+            "包裹入库",
+            "on",
+            "详情",
+            "重发取件码",
+            "1",
+            "2",
+            "3",
+            "下一页",
+            "页码",
+            "页"
+          ]
+        }
+      },
+      {
+        "label": "操作:详情",
+        "url": "http://127.0.0.1:49022/packages",
+        "title": "丰巢快递员SaaS平台",
+        "headings": [
+          "丰巢快递员SaaS"
+        ],
+        "navLabels": [
+          "工作台 包裹管理 智能柜列表 空箱预约 租用订单 赋能中心 柜机健康度 收益分析",
+          "工作台",
+          "dashboard",
+          "包裹管理",
+          "inbox",
+          "智能柜列表",
+          "shop",
+          "空箱预约",
+          "calendar",
+          "租用订单",
+          "credit-card",
+          "赋能中心",
+          "book",
+          "柜机健康度",
+          "heart",
+          "收益分析",
+          "bar-chart"
+        ],
+        "buttons": [
+          "全 部",
+          "已存柜",
+          "已滞留 (2)",
+          "已取件",
+          "刷新",
+          "批量提醒 (0)",
+          "包裹入库",
+          "详情",
+          "重发取件码",
+          "关闭"
+        ],
+        "links": [],
+        "inputs": [
+          {
+            "tag": "input",
+            "type": "text",
+            "placeholder": "搜索运单号",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "search",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "checkbox",
+            "placeholder": "",
+            "name": "",
+            "label": "Select all"
+          },
+          {
+            "tag": "input",
+            "type": "checkbox",
+            "placeholder": "",
+            "name": "",
+            "label": "Select all"
+          },
+          {
+            "tag": "input",
+            "type": "checkbox",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "checkbox",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "checkbox",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "checkbox",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "checkbox",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "checkbox",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "checkbox",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "checkbox",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "checkbox",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "checkbox",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "search",
+            "placeholder": "",
+            "name": "",
+            "label": "页码"
+          },
+          {
+            "tag": "input",
+            "type": "text",
+            "placeholder": "",
+            "name": "",
+            "label": "页"
+          }
+        ],
+        "tables": [
+          {
+            "headers": [
+              "运单号",
+              "快递公司",
+              "收件人",
+              "联系电话",
+              "取件码",
+              "存放柜机",
+              "状态",
+              "存入时间",
+              "操作",
+              "运单号",
+              "快递公司",
+              "收件人"
+            ],
+            "rowCount": 10,
+            "hasEmptyText": false,
+            "textPreview": "运单号 快递公司 收件人 联系电话 取件码 存放柜机 状态 存入时间 操作 运单号 快递公司 收件人 联系电话 取件码 存放柜机 状态 存入时间 操作 SF100000000001 圆通速递 李四 13810000001 580397 阳光花园柜 已存柜 2026-06-01 07:24 详情 重发取件码 SF100000000002 中通快递 王五 13810000002 168574 海淀科技园柜 已存柜 2026-06-01 10:07 详情 重发取件码 SF100000000003 顺丰速运 赵六 13810000003 846840 中关村大厦柜 已取件 2026-06-01 00:"
+          },
+          {
+            "headers": [],
+            "rowCount": 1,
+            "hasEmptyText": false,
+            "textPreview": "收件人姓名 李四 联系电话 13810000001"
+          },
+          {
+            "headers": [],
+            "rowCount": 2,
+            "hasEmptyText": false,
+            "textPreview": "入库快递员 李四 快递员ID 2"
+          },
+          {
+            "headers": [
+              "运单号",
+              "快递公司",
+              "取件码",
+              "存放柜机",
+              "状态",
+              "存入时间",
+              "取件时间",
+              "滞留时长"
+            ],
+            "rowCount": 8,
+            "hasEmptyText": false,
+            "textPreview": "运单号 SF100000000001 快递公司 圆通速递 取件码 580397 存放柜机 阳光花园柜 状态 已存柜 存入时间 2026-06-01 07:24:32 取件时间 - 滞留时长 正常"
+          }
+        ],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "丰巢快递员SaaS工作台包裹管理智能柜列表空箱预约租用订单赋能中心柜机健康度收益分析包裹管理已登录演示快递员全 部已存柜已滞留 (2)已取件快递公司刷新批量提醒 (0)包裹入库运单号快递公司收件人联系电话取件码存放柜机状态存入时间操作运单号快递公司收件人联系电话取件码存放柜机状态存入时间操作SF100000000001圆通速递李四13810000001580397阳光花园柜已存柜2026-06-01 07:24详情 重发取件码SF100000000002中通快递王五13810000002168574海淀科技园柜已存柜2026-06-01 10:07详情 重发取件码SF100000000003顺丰速运赵六13810000003846840中关村大厦柜已取件2026-06-01 00:04详情SF100000000004京东物流钱七13810000004567062西城商业中心柜已滞留2026-06-01 12:09详情SF100000000005EMS孙八13810000005619400朝阳园小区柜已存柜2026-06-02 03:44详情 重发取件码SF100000000006天天快递周九13810000006345841阳光花园柜已存柜2026-06-01 09:18详情 重发取件码SF100000000007韵达快递吴十13810000007335878海淀科技园柜已存柜2026-06-01 02:10详情 重发取件码SF100000000008全峰快递张三13810000008857823中关村大厦柜已取件2026-06-03 00:27详情SF100000000009德邦物流李四13810000009379811西城商业中心柜已滞留2026-06-02 20:44详情SF100000000010极兔速递王五13810000010326803朝阳园小区柜已存柜2026-06-01 06:20详情 重发取件码共 30 条记录12310 条/页跳至页 包裹详情收件人信息收件人姓名李四联系电话13810000001快递员责任链入库快递员李四快递员ID2包裹信息运单号SF100000000001快递公司圆通速递取件码580397存放柜机阳光花园柜状态已存柜存入时间2026-06-01 07:24:32取件时间-滞留时长正常",
+        "layout": {
+          "viewportWidth": 1696,
+          "viewportHeight": 1439,
+          "scrollWidth": 1696,
+          "scrollHeight": 1439,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89022-codex-verify-structure-07-操作-详情",
+          "label": "操作:详情",
+          "finalUrl": "http://127.0.0.1:49022/packages",
+          "title": "丰巢快递员SaaS平台",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89022/probe/codex-verify-20260604121337/may-89022-codex-verify-structure-07-操作-详情.json",
+          "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89022/probe/codex-verify-20260604121337/may-89022-codex-verify-structure-07-操作-详情.png",
+          "elementCount": 604,
+          "interactiveCount": 61,
+          "interactiveLabels": [
+            "工作台 包裹管理 智能柜列表 空箱预约 租用订单 赋能中心 柜机健康度 收益分析",
+            "工作台",
+            "包裹管理",
+            "智能柜列表",
+            "空箱预约",
+            "租用订单",
+            "赋能中心",
+            "柜机健康度",
+            "收益分析",
+            "全 部",
+            "已存柜",
+            "已滞留 (2)",
+            "已取件",
+            "搜索运单号",
+            "刷新",
+            "批量提醒 (0)",
+            "包裹入库",
+            "on",
+            "详情",
+            "重发取件码",
+            "1",
+            "2",
+            "3",
+            "下一页",
+            "页码",
+            "页",
+            "关闭"
+          ]
+        }
+      },
+      {
+        "label": "二层操作:详情->关闭",
+        "url": "http://127.0.0.1:49022/packages",
+        "title": "丰巢快递员SaaS平台",
+        "headings": [
+          "丰巢快递员SaaS"
+        ],
+        "navLabels": [
+          "工作台 包裹管理 智能柜列表 空箱预约 租用订单 赋能中心 柜机健康度 收益分析",
+          "工作台",
+          "dashboard",
+          "包裹管理",
+          "inbox",
+          "智能柜列表",
+          "shop",
+          "空箱预约",
+          "calendar",
+          "租用订单",
+          "credit-card",
+          "赋能中心",
+          "book",
+          "柜机健康度",
+          "heart",
+          "收益分析",
+          "bar-chart"
+        ],
+        "buttons": [
+          "全 部",
+          "已存柜",
+          "已滞留 (2)",
+          "已取件",
+          "刷新",
+          "批量提醒 (0)",
+          "包裹入库",
+          "详情",
+          "重发取件码"
+        ],
+        "links": [],
+        "inputs": [
+          {
+            "tag": "input",
+            "type": "text",
+            "placeholder": "搜索运单号",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "search",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "checkbox",
+            "placeholder": "",
+            "name": "",
+            "label": "Select all"
+          },
+          {
+            "tag": "input",
+            "type": "checkbox",
+            "placeholder": "",
+            "name": "",
+            "label": "Select all"
+          },
+          {
+            "tag": "input",
+            "type": "checkbox",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "checkbox",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "checkbox",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "checkbox",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "checkbox",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "checkbox",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "checkbox",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "checkbox",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "checkbox",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "checkbox",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "search",
+            "placeholder": "",
+            "name": "",
+            "label": "页码"
+          },
+          {
+            "tag": "input",
+            "type": "text",
+            "placeholder": "",
+            "name": "",
+            "label": "页"
+          }
+        ],
+        "tables": [
+          {
+            "headers": [
+              "运单号",
+              "快递公司",
+              "收件人",
+              "联系电话",
+              "取件码",
+              "存放柜机",
+              "状态",
+              "存入时间",
+              "操作",
+              "运单号",
+              "快递公司",
+              "收件人"
+            ],
+            "rowCount": 10,
+            "hasEmptyText": false,
+            "textPreview": "运单号 快递公司 收件人 联系电话 取件码 存放柜机 状态 存入时间 操作 运单号 快递公司 收件人 联系电话 取件码 存放柜机 状态 存入时间 操作 SF100000000001 圆通速递 李四 13810000001 580397 阳光花园柜 已存柜 2026-06-01 07:24 详情 重发取件码 SF100000000002 中通快递 王五 13810000002 168574 海淀科技园柜 已存柜 2026-06-01 10:07 详情 重发取件码 SF100000000003 顺丰速运 赵六 13810000003 846840 中关村大厦柜 已取件 2026-06-01 00:"
+          }
+        ],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "丰巢快递员SaaS工作台包裹管理智能柜列表空箱预约租用订单赋能中心柜机健康度收益分析包裹管理已登录演示快递员全 部已存柜已滞留 (2)已取件快递公司刷新批量提醒 (0)包裹入库运单号快递公司收件人联系电话取件码存放柜机状态存入时间操作运单号快递公司收件人联系电话取件码存放柜机状态存入时间操作SF100000000001圆通速递李四13810000001580397阳光花园柜已存柜2026-06-01 07:24详情 重发取件码SF100000000002中通快递王五13810000002168574海淀科技园柜已存柜2026-06-01 10:07详情 重发取件码SF100000000003顺丰速运赵六13810000003846840中关村大厦柜已取件2026-06-01 00:04详情SF100000000004京东物流钱七13810000004567062西城商业中心柜已滞留2026-06-01 12:09详情SF100000000005EMS孙八13810000005619400朝阳园小区柜已存柜2026-06-02 03:44详情 重发取件码SF100000000006天天快递周九13810000006345841阳光花园柜已存柜2026-06-01 09:18详情 重发取件码SF100000000007韵达快递吴十13810000007335878海淀科技园柜已存柜2026-06-01 02:10详情 重发取件码SF100000000008全峰快递张三13810000008857823中关村大厦柜已取件2026-06-03 00:27详情SF100000000009德邦物流李四13810000009379811西城商业中心柜已滞留2026-06-02 20:44详情SF100000000010极兔速递王五13810000010326803朝阳园小区柜已存柜2026-06-01 06:20详情 重发取件码共 30 条记录12310 条/页跳至页 包裹详情收件人信息收件人姓名李四联系电话13810000001快递员责任链入库快递员李四快递员ID2包裹信息运单号SF100000000001快递公司圆通速递取件码580397存放柜机阳光花园柜状态已存柜存入时间2026-06-01 07:24:32取件时间-滞留时长正常",
+        "layout": {
+          "viewportWidth": 1728,
+          "viewportHeight": 1439,
+          "scrollWidth": 1728,
+          "scrollHeight": 1439,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89022-codex-verify-structure-08-二层操作-详情-关闭",
+          "label": "二层操作:详情->关闭",
+          "finalUrl": "http://127.0.0.1:49022/packages",
+          "title": "丰巢快递员SaaS平台",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89022/probe/codex-verify-20260604121337/may-89022-codex-verify-structure-08-二层操作-详情-关闭.json",
+          "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89022/probe/codex-verify-20260604121337/may-89022-codex-verify-structure-08-二层操作-详情-关闭.png",
+          "elementCount": 603,
+          "interactiveCount": 61,
+          "interactiveLabels": [
+            "工作台 包裹管理 智能柜列表 空箱预约 租用订单 赋能中心 柜机健康度 收益分析",
+            "工作台",
+            "包裹管理",
+            "智能柜列表",
+            "空箱预约",
+            "租用订单",
+            "赋能中心",
+            "柜机健康度",
+            "收益分析",
+            "全 部",
+            "已存柜",
+            "已滞留 (2)",
+            "已取件",
+            "搜索运单号",
+            "刷新",
+            "批量提醒 (0)",
+            "包裹入库",
+            "on",
+            "详情",
+            "重发取件码",
+            "1",
+            "2",
+            "3",
+            "下一页",
+            "页码",
+            "页",
+            "关闭"
+          ]
+        }
+      },
+      {
+        "label": "操作:刷新",
+        "url": "http://127.0.0.1:49022/packages",
+        "title": "丰巢快递员SaaS平台",
+        "headings": [
+          "丰巢快递员SaaS"
+        ],
+        "navLabels": [
+          "工作台 包裹管理 智能柜列表 空箱预约 租用订单 赋能中心 柜机健康度 收益分析",
+          "工作台",
+          "dashboard",
+          "包裹管理",
+          "inbox",
+          "智能柜列表",
+          "shop",
+          "空箱预约",
+          "calendar",
+          "租用订单",
+          "credit-card",
+          "赋能中心",
+          "book",
+          "柜机健康度",
+          "heart",
+          "收益分析",
+          "bar-chart"
+        ],
+        "buttons": [
+          "全 部",
+          "已存柜",
+          "已滞留 (2)",
+          "已取件",
+          "刷新",
+          "批量提醒 (0)",
+          "包裹入库",
+          "详情",
+          "重发取件码"
+        ],
+        "links": [],
+        "inputs": [
+          {
+            "tag": "input",
+            "type": "text",
+            "placeholder": "搜索运单号",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "search",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "checkbox",
+            "placeholder": "",
+            "name": "",
+            "label": "Select all"
+          },
+          {
+            "tag": "input",
+            "type": "checkbox",
+            "placeholder": "",
+            "name": "",
+            "label": "Select all"
+          },
+          {
+            "tag": "input",
+            "type": "checkbox",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "checkbox",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "checkbox",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "checkbox",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "checkbox",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "checkbox",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "checkbox",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "checkbox",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "checkbox",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "checkbox",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "search",
+            "placeholder": "",
+            "name": "",
+            "label": "页码"
+          },
+          {
+            "tag": "input",
+            "type": "text",
+            "placeholder": "",
+            "name": "",
+            "label": "页"
+          }
+        ],
+        "tables": [
+          {
+            "headers": [
+              "运单号",
+              "快递公司",
+              "收件人",
+              "联系电话",
+              "取件码",
+              "存放柜机",
+              "状态",
+              "存入时间",
+              "操作",
+              "运单号",
+              "快递公司",
+              "收件人"
+            ],
+            "rowCount": 10,
+            "hasEmptyText": false,
+            "textPreview": "运单号 快递公司 收件人 联系电话 取件码 存放柜机 状态 存入时间 操作 运单号 快递公司 收件人 联系电话 取件码 存放柜机 状态 存入时间 操作 SF100000000001 圆通速递 李四 13810000001 580397 阳光花园柜 已存柜 2026-06-01 07:24 详情 重发取件码 SF100000000002 中通快递 王五 13810000002 168574 海淀科技园柜 已存柜 2026-06-01 10:07 详情 重发取件码 SF100000000003 顺丰速运 赵六 13810000003 846840 中关村大厦柜 已取件 2026-06-01 00:"
+          }
+        ],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "丰巢快递员SaaS工作台包裹管理智能柜列表空箱预约租用订单赋能中心柜机健康度收益分析包裹管理已登录演示快递员全 部已存柜已滞留 (2)已取件快递公司刷新批量提醒 (0)包裹入库运单号快递公司收件人联系电话取件码存放柜机状态存入时间操作运单号快递公司收件人联系电话取件码存放柜机状态存入时间操作SF100000000001圆通速递李四13810000001580397阳光花园柜已存柜2026-06-01 07:24详情 重发取件码SF100000000002中通快递王五13810000002168574海淀科技园柜已存柜2026-06-01 10:07详情 重发取件码SF100000000003顺丰速运赵六13810000003846840中关村大厦柜已取件2026-06-01 00:04详情SF100000000004京东物流钱七13810000004567062西城商业中心柜已滞留2026-06-01 12:09详情SF100000000005EMS孙八13810000005619400朝阳园小区柜已存柜2026-06-02 03:44详情 重发取件码SF100000000006天天快递周九13810000006345841阳光花园柜已存柜2026-06-01 09:18详情 重发取件码SF100000000007韵达快递吴十13810000007335878海淀科技园柜已存柜2026-06-01 02:10详情 重发取件码SF100000000008全峰快递张三13810000008857823中关村大厦柜已取件2026-06-03 00:27详情SF100000000009德邦物流李四13810000009379811西城商业中心柜已滞留2026-06-02 20:44详情SF100000000010极兔速递王五13810000010326803朝阳园小区柜已存柜2026-06-01 06:20详情 重发取件码共 30 条记录12310 条/页跳至页 包裹详情收件人信息收件人姓名李四联系电话13810000001快递员责任链入库快递员李四快递员ID2包裹信息运单号SF100000000001快递公司圆通速递取件码580397存放柜机阳光花园柜状态已存柜存入时间2026-06-01 07:24:32取件时间-滞留时长正常",
+        "layout": {
+          "viewportWidth": 1760,
+          "viewportHeight": 1439,
+          "scrollWidth": 1760,
+          "scrollHeight": 1439,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89022-codex-verify-structure-09-操作-刷新",
+          "label": "操作:刷新",
+          "finalUrl": "http://127.0.0.1:49022/packages",
+          "title": "丰巢快递员SaaS平台",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89022/probe/codex-verify-20260604121337/may-89022-codex-verify-structure-09-操作-刷新.json",
+          "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89022/probe/codex-verify-20260604121337/may-89022-codex-verify-structure-09-操作-刷新.png",
+          "elementCount": 605,
+          "interactiveCount": 61,
+          "interactiveLabels": [
+            "工作台 包裹管理 智能柜列表 空箱预约 租用订单 赋能中心 柜机健康度 收益分析",
+            "工作台",
+            "包裹管理",
+            "智能柜列表",
+            "空箱预约",
+            "租用订单",
+            "赋能中心",
+            "柜机健康度",
+            "收益分析",
+            "全 部",
+            "已存柜",
+            "已滞留 (2)",
+            "已取件",
+            "搜索运单号",
+            "刷新",
+            "批量提醒 (0)",
+            "包裹入库",
+            "on",
+            "详情",
+            "重发取件码",
+            "1",
+            "2",
+            "3",
+            "下一页",
+            "页码",
+            "页",
+            "关闭"
+          ]
+        }
+      }
+    ],
+    "findings": [],
+    "actionHints": [],
+    "emptyPages": [],
+    "overflowPages": [],
+    "blankPages": [],
+    "apiFailurePaths": [],
+    "goalTerms": [],
+    "clickedActionDescriptors": [
+      {
+        "nav": "工作台",
+        "label": "查看全部柜机",
+        "ordinal": 0,
+        "unsafe": false
+      },
+      {
+        "nav": "工作台",
+        "label": "查看全部柜机->查看详情",
+        "ordinal": 0,
+        "secondary": true,
+        "unsafe": false
+      },
+      {
+        "nav": "工作台",
+        "label": "选择派件",
+        "ordinal": 0,
+        "unsafe": false
+      },
+      {
+        "nav": "包裹管理",
+        "label": "详情",
+        "ordinal": 0,
+        "unsafe": false
+      },
+      {
+        "nav": "包裹管理",
+        "label": "详情->关闭",
+        "ordinal": 0,
+        "secondary": true,
+        "unsafe": false
+      },
+      {
+        "nav": "包裹管理",
+        "label": "刷新",
+        "ordinal": 0,
+        "unsafe": false
+      }
+    ],
+    "secondaryActionClicks": 2,
+    "structureCaptures": [
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89022-codex-verify-structure-01-首屏",
+        "label": "首屏",
+        "finalUrl": "http://127.0.0.1:49022/dashboard",
+        "title": "丰巢快递员SaaS平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89022/probe/codex-verify-20260604121337/may-89022-codex-verify-structure-01-首屏.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89022/probe/codex-verify-20260604121337/may-89022-codex-verify-structure-01-首屏.png",
+        "elementCount": 439,
+        "interactiveCount": 15,
+        "interactiveLabels": [
+          "工作台 包裹管理 智能柜列表 空箱预约 租用订单 赋能中心 柜机健康度 收益分析",
+          "工作台",
+          "包裹管理",
+          "智能柜列表",
+          "空箱预约",
+          "租用订单",
+          "赋能中心",
+          "柜机健康度",
+          "收益分析",
+          "查看全部柜机",
+          "选择派件"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89022-codex-verify-structure-02-导航-工作台",
+        "label": "导航:工作台",
+        "finalUrl": "http://127.0.0.1:49022/dashboard",
+        "title": "丰巢快递员SaaS平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89022/probe/codex-verify-20260604121337/may-89022-codex-verify-structure-02-导航-工作台.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89022/probe/codex-verify-20260604121337/may-89022-codex-verify-structure-02-导航-工作台.png",
+        "elementCount": 439,
+        "interactiveCount": 15,
+        "interactiveLabels": [
+          "工作台 包裹管理 智能柜列表 空箱预约 租用订单 赋能中心 柜机健康度 收益分析",
+          "工作台",
+          "包裹管理",
+          "智能柜列表",
+          "空箱预约",
+          "租用订单",
+          "赋能中心",
+          "柜机健康度",
+          "收益分析",
+          "查看全部柜机",
+          "选择派件"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89022-codex-verify-structure-03-操作-查看全部柜机",
+        "label": "操作:查看全部柜机",
+        "finalUrl": "http://127.0.0.1:49022/cabinets",
+        "title": "丰巢快递员SaaS平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89022/probe/codex-verify-20260604121337/may-89022-codex-verify-structure-03-操作-查看全部柜机.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89022/probe/codex-verify-20260604121337/may-89022-codex-verify-structure-03-操作-查看全部柜机.png",
+        "elementCount": 357,
+        "interactiveCount": 22,
+        "interactiveLabels": [
+          "工作台 包裹管理 智能柜列表 空箱预约 租用订单 赋能中心 柜机健康度 收益分析",
+          "工作台",
+          "包裹管理",
+          "智能柜列表",
+          "空箱预约",
+          "租用订单",
+          "赋能中心",
+          "柜机健康度",
+          "收益分析",
+          "搜索柜机名称/编号",
+          "刷新",
+          "查看详情",
+          "1",
+          "页码"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89022-codex-verify-structure-04-二层操作-查看全部柜机-查看详情",
+        "label": "二层操作:查看全部柜机->查看详情",
+        "finalUrl": "http://127.0.0.1:49022/cabinets",
+        "title": "丰巢快递员SaaS平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89022/probe/codex-verify-20260604121337/may-89022-codex-verify-structure-04-二层操作-查看全部柜机-查看详情.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89022/probe/codex-verify-20260604121337/may-89022-codex-verify-structure-04-二层操作-查看全部柜机-查看详情.png",
+        "elementCount": 454,
+        "interactiveCount": 28,
+        "interactiveLabels": [
+          "工作台 包裹管理 智能柜列表 空箱预约 租用订单 赋能中心 柜机健康度 收益分析",
+          "工作台",
+          "包裹管理",
+          "智能柜列表",
+          "空箱预约",
+          "租用订单",
+          "赋能中心",
+          "柜机健康度",
+          "收益分析",
+          "搜索柜机名称/编号",
+          "刷新",
+          "查看详情",
+          "1",
+          "页码",
+          "关闭",
+          "基本信息",
+          "柜机名称 朝阳园小区柜 地址 北京市朝阳区朝阳园小区北门 温控功能 支持 故障状态 正常 总格口 48 可用格口 32 已占用 6 已锁定 0 最后心跳 -"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89022-codex-verify-structure-05-操作-选择派件",
+        "label": "操作:选择派件",
+        "finalUrl": "http://127.0.0.1:49022/dashboard",
+        "title": "丰巢快递员SaaS平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89022/probe/codex-verify-20260604121337/may-89022-codex-verify-structure-05-操作-选择派件.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89022/probe/codex-verify-20260604121337/may-89022-codex-verify-structure-05-操作-选择派件.png",
+        "elementCount": 441,
+        "interactiveCount": 15,
+        "interactiveLabels": [
+          "工作台 包裹管理 智能柜列表 空箱预约 租用订单 赋能中心 柜机健康度 收益分析",
+          "工作台",
+          "包裹管理",
+          "智能柜列表",
+          "空箱预约",
+          "租用订单",
+          "赋能中心",
+          "柜机健康度",
+          "收益分析",
+          "查看全部柜机",
+          "选择派件"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89022-codex-verify-structure-06-导航-包裹管理",
+        "label": "导航:包裹管理",
+        "finalUrl": "http://127.0.0.1:49022/packages",
+        "title": "丰巢快递员SaaS平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89022/probe/codex-verify-20260604121337/may-89022-codex-verify-structure-06-导航-包裹管理.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89022/probe/codex-verify-20260604121337/may-89022-codex-verify-structure-06-导航-包裹管理.png",
+        "elementCount": 495,
+        "interactiveCount": 58,
+        "interactiveLabels": [
+          "工作台 包裹管理 智能柜列表 空箱预约 租用订单 赋能中心 柜机健康度 收益分析",
+          "工作台",
+          "包裹管理",
+          "智能柜列表",
+          "空箱预约",
+          "租用订单",
+          "赋能中心",
+          "柜机健康度",
+          "收益分析",
+          "全 部",
+          "已存柜",
+          "已滞留 (2)",
+          "已取件",
+          "搜索运单号",
+          "刷新",
+          "批量提醒 (0)",
+          "包裹入库",
+          "on",
+          "详情",
+          "重发取件码",
+          "1",
+          "2",
+          "3",
+          "下一页",
+          "页码",
+          "页"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89022-codex-verify-structure-07-操作-详情",
+        "label": "操作:详情",
+        "finalUrl": "http://127.0.0.1:49022/packages",
+        "title": "丰巢快递员SaaS平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89022/probe/codex-verify-20260604121337/may-89022-codex-verify-structure-07-操作-详情.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89022/probe/codex-verify-20260604121337/may-89022-codex-verify-structure-07-操作-详情.png",
+        "elementCount": 604,
+        "interactiveCount": 61,
+        "interactiveLabels": [
+          "工作台 包裹管理 智能柜列表 空箱预约 租用订单 赋能中心 柜机健康度 收益分析",
+          "工作台",
+          "包裹管理",
+          "智能柜列表",
+          "空箱预约",
+          "租用订单",
+          "赋能中心",
+          "柜机健康度",
+          "收益分析",
+          "全 部",
+          "已存柜",
+          "已滞留 (2)",
+          "已取件",
+          "搜索运单号",
+          "刷新",
+          "批量提醒 (0)",
+          "包裹入库",
+          "on",
+          "详情",
+          "重发取件码",
+          "1",
+          "2",
+          "3",
+          "下一页",
+          "页码",
+          "页",
+          "关闭"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89022-codex-verify-structure-08-二层操作-详情-关闭",
+        "label": "二层操作:详情->关闭",
+        "finalUrl": "http://127.0.0.1:49022/packages",
+        "title": "丰巢快递员SaaS平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89022/probe/codex-verify-20260604121337/may-89022-codex-verify-structure-08-二层操作-详情-关闭.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89022/probe/codex-verify-20260604121337/may-89022-codex-verify-structure-08-二层操作-详情-关闭.png",
+        "elementCount": 603,
+        "interactiveCount": 61,
+        "interactiveLabels": [
+          "工作台 包裹管理 智能柜列表 空箱预约 租用订单 赋能中心 柜机健康度 收益分析",
+          "工作台",
+          "包裹管理",
+          "智能柜列表",
+          "空箱预约",
+          "租用订单",
+          "赋能中心",
+          "柜机健康度",
+          "收益分析",
+          "全 部",
+          "已存柜",
+          "已滞留 (2)",
+          "已取件",
+          "搜索运单号",
+          "刷新",
+          "批量提醒 (0)",
+          "包裹入库",
+          "on",
+          "详情",
+          "重发取件码",
+          "1",
+          "2",
+          "3",
+          "下一页",
+          "页码",
+          "页",
+          "关闭"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89022-codex-verify-structure-09-操作-刷新",
+        "label": "操作:刷新",
+        "finalUrl": "http://127.0.0.1:49022/packages",
+        "title": "丰巢快递员SaaS平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89022/probe/codex-verify-20260604121337/may-89022-codex-verify-structure-09-操作-刷新.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89022/probe/codex-verify-20260604121337/may-89022-codex-verify-structure-09-操作-刷新.png",
+        "elementCount": 605,
+        "interactiveCount": 61,
+        "interactiveLabels": [
+          "工作台 包裹管理 智能柜列表 空箱预约 租用订单 赋能中心 柜机健康度 收益分析",
+          "工作台",
+          "包裹管理",
+          "智能柜列表",
+          "空箱预约",
+          "租用订单",
+          "赋能中心",
+          "柜机健康度",
+          "收益分析",
+          "全 部",
+          "已存柜",
+          "已滞留 (2)",
+          "已取件",
+          "搜索运单号",
+          "刷新",
+          "批量提醒 (0)",
+          "包裹入库",
+          "on",
+          "详情",
+          "重发取件码",
+          "1",
+          "2",
+          "3",
+          "下一页",
+          "页码",
+          "页",
+          "关闭"
+        ]
+      }
+    ],
+    "representativeScreenshotUrl": "http://127.0.0.1:49022/dashboard",
+    "representativeScreenshotLabel": "丰巢快递员SaaS"
+  },
+  "websiteStructureCapture": {
+    "module": "website_structure_capture",
+    "captureCount": 9,
+    "captures": [
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89022-codex-verify-structure-01-首屏",
+        "label": "首屏",
+        "finalUrl": "http://127.0.0.1:49022/dashboard",
+        "title": "丰巢快递员SaaS平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89022/probe/codex-verify-20260604121337/may-89022-codex-verify-structure-01-首屏.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89022/probe/codex-verify-20260604121337/may-89022-codex-verify-structure-01-首屏.png",
+        "elementCount": 439,
+        "interactiveCount": 15,
+        "interactiveLabels": [
+          "工作台 包裹管理 智能柜列表 空箱预约 租用订单 赋能中心 柜机健康度 收益分析",
+          "工作台",
+          "包裹管理",
+          "智能柜列表",
+          "空箱预约",
+          "租用订单",
+          "赋能中心",
+          "柜机健康度",
+          "收益分析",
+          "查看全部柜机",
+          "选择派件"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89022-codex-verify-structure-02-导航-工作台",
+        "label": "导航:工作台",
+        "finalUrl": "http://127.0.0.1:49022/dashboard",
+        "title": "丰巢快递员SaaS平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89022/probe/codex-verify-20260604121337/may-89022-codex-verify-structure-02-导航-工作台.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89022/probe/codex-verify-20260604121337/may-89022-codex-verify-structure-02-导航-工作台.png",
+        "elementCount": 439,
+        "interactiveCount": 15,
+        "interactiveLabels": [
+          "工作台 包裹管理 智能柜列表 空箱预约 租用订单 赋能中心 柜机健康度 收益分析",
+          "工作台",
+          "包裹管理",
+          "智能柜列表",
+          "空箱预约",
+          "租用订单",
+          "赋能中心",
+          "柜机健康度",
+          "收益分析",
+          "查看全部柜机",
+          "选择派件"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89022-codex-verify-structure-03-操作-查看全部柜机",
+        "label": "操作:查看全部柜机",
+        "finalUrl": "http://127.0.0.1:49022/cabinets",
+        "title": "丰巢快递员SaaS平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89022/probe/codex-verify-20260604121337/may-89022-codex-verify-structure-03-操作-查看全部柜机.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89022/probe/codex-verify-20260604121337/may-89022-codex-verify-structure-03-操作-查看全部柜机.png",
+        "elementCount": 357,
+        "interactiveCount": 22,
+        "interactiveLabels": [
+          "工作台 包裹管理 智能柜列表 空箱预约 租用订单 赋能中心 柜机健康度 收益分析",
+          "工作台",
+          "包裹管理",
+          "智能柜列表",
+          "空箱预约",
+          "租用订单",
+          "赋能中心",
+          "柜机健康度",
+          "收益分析",
+          "搜索柜机名称/编号",
+          "刷新",
+          "查看详情",
+          "1",
+          "页码"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89022-codex-verify-structure-04-二层操作-查看全部柜机-查看详情",
+        "label": "二层操作:查看全部柜机->查看详情",
+        "finalUrl": "http://127.0.0.1:49022/cabinets",
+        "title": "丰巢快递员SaaS平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89022/probe/codex-verify-20260604121337/may-89022-codex-verify-structure-04-二层操作-查看全部柜机-查看详情.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89022/probe/codex-verify-20260604121337/may-89022-codex-verify-structure-04-二层操作-查看全部柜机-查看详情.png",
+        "elementCount": 454,
+        "interactiveCount": 28,
+        "interactiveLabels": [
+          "工作台 包裹管理 智能柜列表 空箱预约 租用订单 赋能中心 柜机健康度 收益分析",
+          "工作台",
+          "包裹管理",
+          "智能柜列表",
+          "空箱预约",
+          "租用订单",
+          "赋能中心",
+          "柜机健康度",
+          "收益分析",
+          "搜索柜机名称/编号",
+          "刷新",
+          "查看详情",
+          "1",
+          "页码",
+          "关闭",
+          "基本信息",
+          "柜机名称 朝阳园小区柜 地址 北京市朝阳区朝阳园小区北门 温控功能 支持 故障状态 正常 总格口 48 可用格口 32 已占用 6 已锁定 0 最后心跳 -"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89022-codex-verify-structure-05-操作-选择派件",
+        "label": "操作:选择派件",
+        "finalUrl": "http://127.0.0.1:49022/dashboard",
+        "title": "丰巢快递员SaaS平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89022/probe/codex-verify-20260604121337/may-89022-codex-verify-structure-05-操作-选择派件.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89022/probe/codex-verify-20260604121337/may-89022-codex-verify-structure-05-操作-选择派件.png",
+        "elementCount": 441,
+        "interactiveCount": 15,
+        "interactiveLabels": [
+          "工作台 包裹管理 智能柜列表 空箱预约 租用订单 赋能中心 柜机健康度 收益分析",
+          "工作台",
+          "包裹管理",
+          "智能柜列表",
+          "空箱预约",
+          "租用订单",
+          "赋能中心",
+          "柜机健康度",
+          "收益分析",
+          "查看全部柜机",
+          "选择派件"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89022-codex-verify-structure-06-导航-包裹管理",
+        "label": "导航:包裹管理",
+        "finalUrl": "http://127.0.0.1:49022/packages",
+        "title": "丰巢快递员SaaS平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89022/probe/codex-verify-20260604121337/may-89022-codex-verify-structure-06-导航-包裹管理.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89022/probe/codex-verify-20260604121337/may-89022-codex-verify-structure-06-导航-包裹管理.png",
+        "elementCount": 495,
+        "interactiveCount": 58,
+        "interactiveLabels": [
+          "工作台 包裹管理 智能柜列表 空箱预约 租用订单 赋能中心 柜机健康度 收益分析",
+          "工作台",
+          "包裹管理",
+          "智能柜列表",
+          "空箱预约",
+          "租用订单",
+          "赋能中心",
+          "柜机健康度",
+          "收益分析",
+          "全 部",
+          "已存柜",
+          "已滞留 (2)",
+          "已取件",
+          "搜索运单号",
+          "刷新",
+          "批量提醒 (0)",
+          "包裹入库",
+          "on",
+          "详情",
+          "重发取件码",
+          "1",
+          "2",
+          "3",
+          "下一页",
+          "页码",
+          "页"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89022-codex-verify-structure-07-操作-详情",
+        "label": "操作:详情",
+        "finalUrl": "http://127.0.0.1:49022/packages",
+        "title": "丰巢快递员SaaS平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89022/probe/codex-verify-20260604121337/may-89022-codex-verify-structure-07-操作-详情.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89022/probe/codex-verify-20260604121337/may-89022-codex-verify-structure-07-操作-详情.png",
+        "elementCount": 604,
+        "interactiveCount": 61,
+        "interactiveLabels": [
+          "工作台 包裹管理 智能柜列表 空箱预约 租用订单 赋能中心 柜机健康度 收益分析",
+          "工作台",
+          "包裹管理",
+          "智能柜列表",
+          "空箱预约",
+          "租用订单",
+          "赋能中心",
+          "柜机健康度",
+          "收益分析",
+          "全 部",
+          "已存柜",
+          "已滞留 (2)",
+          "已取件",
+          "搜索运单号",
+          "刷新",
+          "批量提醒 (0)",
+          "包裹入库",
+          "on",
+          "详情",
+          "重发取件码",
+          "1",
+          "2",
+          "3",
+          "下一页",
+          "页码",
+          "页",
+          "关闭"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89022-codex-verify-structure-08-二层操作-详情-关闭",
+        "label": "二层操作:详情->关闭",
+        "finalUrl": "http://127.0.0.1:49022/packages",
+        "title": "丰巢快递员SaaS平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89022/probe/codex-verify-20260604121337/may-89022-codex-verify-structure-08-二层操作-详情-关闭.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89022/probe/codex-verify-20260604121337/may-89022-codex-verify-structure-08-二层操作-详情-关闭.png",
+        "elementCount": 603,
+        "interactiveCount": 61,
+        "interactiveLabels": [
+          "工作台 包裹管理 智能柜列表 空箱预约 租用订单 赋能中心 柜机健康度 收益分析",
+          "工作台",
+          "包裹管理",
+          "智能柜列表",
+          "空箱预约",
+          "租用订单",
+          "赋能中心",
+          "柜机健康度",
+          "收益分析",
+          "全 部",
+          "已存柜",
+          "已滞留 (2)",
+          "已取件",
+          "搜索运单号",
+          "刷新",
+          "批量提醒 (0)",
+          "包裹入库",
+          "on",
+          "详情",
+          "重发取件码",
+          "1",
+          "2",
+          "3",
+          "下一页",
+          "页码",
+          "页",
+          "关闭"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89022-codex-verify-structure-09-操作-刷新",
+        "label": "操作:刷新",
+        "finalUrl": "http://127.0.0.1:49022/packages",
+        "title": "丰巢快递员SaaS平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89022/probe/codex-verify-20260604121337/may-89022-codex-verify-structure-09-操作-刷新.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89022/probe/codex-verify-20260604121337/may-89022-codex-verify-structure-09-操作-刷新.png",
+        "elementCount": 605,
+        "interactiveCount": 61,
+        "interactiveLabels": [
+          "工作台 包裹管理 智能柜列表 空箱预约 租用订单 赋能中心 柜机健康度 收益分析",
+          "工作台",
+          "包裹管理",
+          "智能柜列表",
+          "空箱预约",
+          "租用订单",
+          "赋能中心",
+          "柜机健康度",
+          "收益分析",
+          "全 部",
+          "已存柜",
+          "已滞留 (2)",
+          "已取件",
+          "搜索运单号",
+          "刷新",
+          "批量提醒 (0)",
+          "包裹入库",
+          "on",
+          "详情",
+          "重发取件码",
+          "1",
+          "2",
+          "3",
+          "下一页",
+          "页码",
+          "页",
+          "关闭"
+        ]
+      }
+    ]
+  },
+  "screenshotMetrics": {
+    "width": 1792,
+    "height": 1439,
+    "scrollWidth": 1760,
+    "scrollHeight": 1439
+  },
+  "initialBodyTextPreview": "丰巢快递员SaaS\n工作台\n包裹管理\n智能柜列表\n空箱预约\n租用订单\n赋能中心\n柜机健康度\n收益分析\n工作台\n已登录\n演示快递员\n今日派件\n0\n待处理包裹\n6\n滞留件\n2\n今日收益(元)\n0.00\n智能派单助手 - 最优柜机推荐\n5\n查看全部柜机\n1\n朝阳园小区柜\n最优推荐\n北京市朝阳区朝阳园小区北门\n当前可用格口最多\n距离约 1.4 km · 预计 8 分钟可达\n匹配度 72%\n可用 7 格口\n选择派件\n2\n阳光花园柜\n北京市朝阳区阳光花园东门\n距离您最近\n距离约 2.1 km · 预计 12 分钟可达\n匹配度 79%\n可用 7 格口\n选择派件\n3\n海淀科技园柜\n北京市海淀区科技园A座\n历史配送成功率高\n距离约 0.7 km · 预计 11 分钟可达\n匹配度 81%\n可用 7 格口\n选择派件\n4\n中关村大厦柜\n北京市海淀区中关村大厦B1层\n历史配送成功率高\n距离约 1.1 km · 预计 14 分钟可达\n匹配度 112%\n可用 7 格口\n选择派件\n5\n西城商业中心柜\n北京市西城区商业中心广场\n历史配送成功率高\n距离约 0.4 km · 预计 6 分钟可达\n匹配度 102%\n可用 7 格口\n选择派件\n金牌骑手排行榜\n1\n王五\n328 单 · 2100 积分\n2\n张三\n256 单 · 1850 积分\n3\n李四\n198 单 · 1520 积分\n绩效积分进度\n本月绩效目标\n1250 / 3000 分\n41.66666666666667%\n本月派件目标\n248 / 500 单\n49.6%\n服务评分\n4.8 / 5.0 分\n96%",
+  "bodyTextPreview": "丰巢快递员SaaS\n工作台\n包裹管理\n智能柜列表\n空箱预约\n租用订单\n赋能中心\n柜机健康度\n收益分析\n工作台\n已登录\n演示快递员\n今日派件\n0\n待处理包裹\n6\n滞留件\n2\n今日收益(元)\n0.00\n智能派单助手 - 最优柜机推荐\n5\n查看全部柜机\n1\n朝阳园小区柜\n最优推荐\n北京市朝阳区朝阳园小区北门\n当前可用格口最多\n距离约 1.3 km · 预计 7 分钟可达\n匹配度 90%\n可用 7 格口\n选择派件\n2\n阳光花园柜\n北京市朝阳区阳光花园东门\n距离您最近\n距离约 0.5 km · 预计 6 分钟可达\n匹配度 102%\n可用 7 格口\n选择派件\n3\n海淀科技园柜\n北京市海淀区科技园A座\n历史配送成功率高\n距离约 1.5 km · 预计 7 分钟可达\n匹配度 107%\n可用 7 格口\n选择派件\n4\n中关村大厦柜\n北京市海淀区中关村大厦B1层\n历史配送成功率高\n距离约 2.0 km · 预计 9 分钟可达\n匹配度 89%\n可用 7 格口\n选择派件\n5\n西城商业中心柜\n北京市西城区商业中心广场\n历史配送成功率高\n距离约 1.6 km · 预计 6 分钟可达\n匹配度 113%\n可用 7 格口\n选择派件\n金牌骑手排行榜\n1\n王五\n328 单 · 2100 积分\n2\n张三\n256 单 · 1850 积分\n3\n李四\n198 单 · 1520 积分\n绩效积分进度\n本月绩效目标\n1250 / 3000 分\n41.66666666666667%\n本月派件目标\n248 / 500 单\n49.6%\n服务评分\n4.8 / 5.0 分\n96%",
+  "apiBase": "",
+  "businessGoalPreview": "",
+  "apiResponses": [
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:59022/api/device-alerts?isRead=false"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:59022/api/device-alerts?isRead=false"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:59022/api/statistics/overview"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:59022/api/cabinets/recommend/optimal?boxSize=M"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:59022/api/leaderboard?limit=5"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:59022/api/statistics/overview"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:59022/api/cabinets/recommend/optimal?boxSize=M"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:59022/api/leaderboard?limit=5"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:59022/api/device-alerts?isRead=false"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:59022/api/device-alerts?isRead=false"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:59022/api/statistics/overview"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:59022/api/cabinets/recommend/optimal?boxSize=M"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:59022/api/leaderboard?limit=5"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:59022/api/statistics/overview"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:59022/api/cabinets/recommend/optimal?boxSize=M"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:59022/api/leaderboard?limit=5"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:59022/api/cabinets?page=1&pageSize=10"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:59022/api/cabinets?page=1&pageSize=10"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:59022/api/cabinets/1"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:59022/api/statistics/overview"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:59022/api/cabinets/recommend/optimal?boxSize=M"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:59022/api/leaderboard?limit=5"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:59022/api/device-alerts?isRead=false"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:59022/api/statistics/overview"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:59022/api/cabinets/recommend/optimal?boxSize=M"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:59022/api/leaderboard?limit=5"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:59022/api/device-alerts?isRead=false"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:59022/api/packages?page=1&pageSize=10&status=&brand="
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:59022/api/sms-templates"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:59022/api/cabinets?pageSize=100"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:59022/api/statistics/overview"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:59022/api/cabinets?pageSize=100"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:59022/api/statistics/overview"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:59022/api/packages?page=1&pageSize=10&status=&brand="
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:59022/api/sms-templates"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:59022/api/packages?page=1&pageSize=10&status=&brand="
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:59022/api/statistics/overview"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:59022/api/leaderboard?limit=5"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:59022/api/cabinets/recommend/optimal?boxSize=M"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:59022/api/leaderboard?limit=5"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:59022/api/device-alerts?isRead=false"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:59022/api/device-alerts?isRead=false"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:59022/api/statistics/overview"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:59022/api/cabinets/recommend/optimal?boxSize=M"
+    }
+  ],
+  "apiChecks": [],
+  "dialogs": [],
+  "consoleMessages": [
+    {
+      "type": "debug",
+      "text": "[vite] connecting...",
+      "location": {
+        "url": "http://127.0.0.1:49022/@vite/client",
+        "lineNumber": 494,
+        "columnNumber": 8
+      }
+    },
+    {
+      "type": "debug",
+      "text": "[vite] connected.",
+      "location": {
+        "url": "http://127.0.0.1:49022/@vite/client",
+        "lineNumber": 617,
+        "columnNumber": 14
+      }
+    },
+    {
+      "type": "info",
+      "text": "%cDownload the React DevTools for a better development experience: https://reactjs.org/link/react-devtools font-weight:bold",
+      "location": {
+        "url": "http://127.0.0.1:49022/node_modules/.vite/deps/chunk-PJEEZAML.js?v=1ddbd61d",
+        "lineNumber": 21550,
+        "columnNumber": 24
+      }
+    },
+    {
+      "type": "warning",
+      "text": "⚠️ React Router Future Flag Warning: React Router will begin wrapping state updates in `React.startTransition` in v7. You can use the `v7_startTransition` future flag to opt-in early. For more information, see https://reactrouter.com/v6/upgrading/future#v7_starttransition.",
+      "location": {
+        "url": "http://127.0.0.1:49022/node_modules/.vite/deps/react-router-dom.js?v=1ddbd61d",
+        "lineNumber": 4426,
+        "columnNumber": 12
+      }
+    },
+    {
+      "type": "warning",
+      "text": "⚠️ React Router Future Flag Warning: Relative route resolution within Splat routes is changing in v7. You can use the `v7_relativeSplatPath` future flag to opt-in early. For more information, see https://reactrouter.com/v6/upgrading/future#v7_relativesplatpath.",
+      "location": {
+        "url": "http://127.0.0.1:49022/node_modules/.vite/deps/react-router-dom.js?v=1ddbd61d",
+        "lineNumber": 4426,
+        "columnNumber": 12
+      }
+    },
+    {
+      "type": "error",
+      "text": "Failed to load resource: the server responded with a status of 404 (Not Found)",
+      "location": {
+        "url": "http://127.0.0.1:49022/favicon.ico",
+        "lineNumber": 0,
+        "columnNumber": 0
+      }
+    },
+    {
+      "type": "error",
+      "text": "Failed to load resource: the server responded with a status of 404 (Not Found)",
+      "location": {
+        "url": "http://127.0.0.1:49022/favicon.ico",
+        "lineNumber": 0,
+        "columnNumber": 0
+      }
+    },
+    {
+      "type": "debug",
+      "text": "[vite] connecting...",
+      "location": {
+        "url": "http://127.0.0.1:49022/@vite/client",
+        "lineNumber": 494,
+        "columnNumber": 8
+      }
+    },
+    {
+      "type": "debug",
+      "text": "[vite] connected.",
+      "location": {
+        "url": "http://127.0.0.1:49022/@vite/client",
+        "lineNumber": 617,
+        "columnNumber": 14
+      }
+    },
+    {
+      "type": "info",
+      "text": "%cDownload the React DevTools for a better development experience: https://reactjs.org/link/react-devtools font-weight:bold",
+      "location": {
+        "url": "http://127.0.0.1:49022/node_modules/.vite/deps/chunk-PJEEZAML.js?v=1ddbd61d",
+        "lineNumber": 21550,
+        "columnNumber": 24
+      }
+    },
+    {
+      "type": "warning",
+      "text": "⚠️ React Router Future Flag Warning: React Router will begin wrapping state updates in `React.startTransition` in v7. You can use the `v7_startTransition` future flag to opt-in early. For more information, see https://reactrouter.com/v6/upgrading/future#v7_starttransition.",
+      "location": {
+        "url": "http://127.0.0.1:49022/node_modules/.vite/deps/react-router-dom.js?v=1ddbd61d",
+        "lineNumber": 4426,
+        "columnNumber": 12
+      }
+    },
+    {
+      "type": "warning",
+      "text": "⚠️ React Router Future Flag Warning: Relative route resolution within Splat routes is changing in v7. You can use the `v7_relativeSplatPath` future flag to opt-in early. For more information, see https://reactrouter.com/v6/upgrading/future#v7_relativesplatpath.",
+      "location": {
+        "url": "http://127.0.0.1:49022/node_modules/.vite/deps/react-router-dom.js?v=1ddbd61d",
+        "lineNumber": 4426,
+        "columnNumber": 12
+      }
+    },
+    {
+      "type": "error",
+      "text": "Warning: [antd: Tabs] `Tabs.TabPane` is deprecated. Please use `items` instead.",
+      "location": {
+        "url": "http://127.0.0.1:49022/node_modules/.vite/deps/chunk-D2XKH6ZM.js?v=1ddbd61d",
+        "lineNumber": 1247,
+        "columnNumber": 14
+      }
+    },
+    {
+      "type": "debug",
+      "text": "[vite] connecting...",
+      "location": {
+        "url": "http://127.0.0.1:49022/@vite/client",
+        "lineNumber": 494,
+        "columnNumber": 8
+      }
+    },
+    {
+      "type": "debug",
+      "text": "[vite] connected.",
+      "location": {
+        "url": "http://127.0.0.1:49022/@vite/client",
+        "lineNumber": 617,
+        "columnNumber": 14
+      }
+    },
+    {
+      "type": "info",
+      "text": "%cDownload the React DevTools for a better development experience: https://reactjs.org/link/react-devtools font-weight:bold",
+      "location": {
+        "url": "http://127.0.0.1:49022/node_modules/.vite/deps/chunk-PJEEZAML.js?v=1ddbd61d",
+        "lineNumber": 21550,
+        "columnNumber": 24
+      }
+    },
+    {
+      "type": "warning",
+      "text": "⚠️ React Router Future Flag Warning: React Router will begin wrapping state updates in `React.startTransition` in v7. You can use the `v7_startTransition` future flag to opt-in early. For more information, see https://reactrouter.com/v6/upgrading/future#v7_starttransition.",
+      "location": {
+        "url": "http://127.0.0.1:49022/node_modules/.vite/deps/react-router-dom.js?v=1ddbd61d",
+        "lineNumber": 4426,
+        "columnNumber": 12
+      }
+    },
+    {
+      "type": "warning",
+      "text": "⚠️ React Router Future Flag Warning: Relative route resolution within Splat routes is changing in v7. You can use the `v7_relativeSplatPath` future flag to opt-in early. For more information, see https://reactrouter.com/v6/upgrading/future#v7_relativesplatpath.",
+      "location": {
+        "url": "http://127.0.0.1:49022/node_modules/.vite/deps/react-router-dom.js?v=1ddbd61d",
+        "lineNumber": 4426,
+        "columnNumber": 12
+      }
+    },
+    {
+      "type": "debug",
+      "text": "[vite] connecting...",
+      "location": {
+        "url": "http://127.0.0.1:49022/@vite/client",
+        "lineNumber": 494,
+        "columnNumber": 8
+      }
+    },
+    {
+      "type": "debug",
+      "text": "[vite] connected.",
+      "location": {
+        "url": "http://127.0.0.1:49022/@vite/client",
+        "lineNumber": 617,
+        "columnNumber": 14
+      }
+    },
+    {
+      "type": "info",
+      "text": "%cDownload the React DevTools for a better development experience: https://reactjs.org/link/react-devtools font-weight:bold",
+      "location": {
+        "url": "http://127.0.0.1:49022/node_modules/.vite/deps/chunk-PJEEZAML.js?v=1ddbd61d",
+        "lineNumber": 21550,
+        "columnNumber": 24
+      }
+    },
+    {
+      "type": "warning",
+      "text": "⚠️ React Router Future Flag Warning: React Router will begin wrapping state updates in `React.startTransition` in v7. You can use the `v7_startTransition` future flag to opt-in early. For more information, see https://reactrouter.com/v6/upgrading/future#v7_starttransition.",
+      "location": {
+        "url": "http://127.0.0.1:49022/node_modules/.vite/deps/react-router-dom.js?v=1ddbd61d",
+        "lineNumber": 4426,
+        "columnNumber": 12
+      }
+    },
+    {
+      "type": "warning",
+      "text": "⚠️ React Router Future Flag Warning: Relative route resolution within Splat routes is changing in v7. You can use the `v7_relativeSplatPath` future flag to opt-in early. For more information, see https://reactrouter.com/v6/upgrading/future#v7_relativesplatpath.",
+      "location": {
+        "url": "http://127.0.0.1:49022/node_modules/.vite/deps/react-router-dom.js?v=1ddbd61d",
+        "lineNumber": 4426,
+        "columnNumber": 12
+      }
+    }
+  ],
+  "requestFailures": [],
+  "responseErrors": []
+}

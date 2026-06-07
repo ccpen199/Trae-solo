@@ -1,0 +1,3517 @@
+{
+  "ok": true,
+  "generatedAt": "2026-06-04T08:26:20.736Z",
+  "order": "may-89022",
+  "roundIndex": 99,
+  "captureId": "codex-may-89022-latest",
+  "url": "http://127.0.0.1:49022/",
+  "initialUrl": "http://127.0.0.1:49022/",
+  "finalUrl": "http://127.0.0.1:49022/cabinets",
+  "status": 200,
+  "title": "丰巢快递员SaaS平台",
+  "initialTitle": "丰巢快递员SaaS平台",
+  "navigationError": "",
+  "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89022/probe/latest-runtime/codex-may-89022-latest-frontend.png",
+  "screenshotPaths": [
+    "/Users/chen/Documents/trae_projects/local_projects/may-89022/probe/latest-runtime/codex-may-89022-latest-structure-01-首屏.png",
+    "/Users/chen/Documents/trae_projects/local_projects/may-89022/probe/latest-runtime/codex-may-89022-latest-structure-02-导航-工作台.png",
+    "/Users/chen/Documents/trae_projects/local_projects/may-89022/probe/latest-runtime/codex-may-89022-latest-structure-03-操作-查看全部柜机.png",
+    "/Users/chen/Documents/trae_projects/local_projects/may-89022/probe/latest-runtime/codex-may-89022-latest-structure-04-二层操作-查看全部柜机-刷新.png",
+    "/Users/chen/Documents/trae_projects/local_projects/may-89022/probe/latest-runtime/codex-may-89022-latest-structure-05-导航-包裹管理.png",
+    "/Users/chen/Documents/trae_projects/local_projects/may-89022/probe/latest-runtime/codex-may-89022-latest-structure-06-操作-刷新.png",
+    "/Users/chen/Documents/trae_projects/local_projects/may-89022/probe/latest-runtime/codex-may-89022-latest-structure-07-操作-包裹入库.png",
+    "/Users/chen/Documents/trae_projects/local_projects/may-89022/probe/latest-runtime/codex-may-89022-latest-structure-08-二层操作-包裹入库-确认入库.png"
+  ],
+  "issueTextPreview": "登录流程已完成，继续复验登录后的首页和业务导航",
+  "targetReason": "登录注册相关问题",
+  "targetKind": "auth",
+  "targetMatched": true,
+  "targetActions": [
+    {
+      "action": "click",
+      "label": "登录注册相关问题",
+      "ok": true
+    },
+    {
+      "action": "target-verify",
+      "label": "登录注册相关问题",
+      "ok": true,
+      "finalUrl": "http://127.0.0.1:49022/dashboard"
+    }
+  ],
+  "authFlow": {
+    "detected": false,
+    "attempted": false,
+    "success": false,
+    "finalUrl": "http://127.0.0.1:49022/dashboard",
+    "message": "",
+    "actions": []
+  },
+  "businessAudit": {
+    "actions": [
+      {
+        "action": "click",
+        "label": "导航:工作台",
+        "ok": true
+      },
+      {
+        "action": "click",
+        "label": "操作:查看全部柜机",
+        "ok": true,
+        "result": {
+          "ok": true,
+          "matched": 1
+        }
+      },
+      {
+        "action": "click",
+        "label": "二层操作:查看全部柜机:刷新",
+        "ok": true,
+        "result": {
+          "ok": true,
+          "matched": 1
+        }
+      },
+      {
+        "action": "click",
+        "label": "导航:包裹管理",
+        "ok": true
+      },
+      {
+        "action": "click",
+        "label": "操作:刷新",
+        "ok": true,
+        "result": {
+          "ok": true,
+          "matched": 1
+        }
+      },
+      {
+        "action": "click",
+        "label": "操作:包裹入库",
+        "ok": true,
+        "result": {
+          "ok": true,
+          "matched": 1
+        }
+      },
+      {
+        "action": "click",
+        "label": "二层操作:包裹入库:确认入库",
+        "ok": true,
+        "result": {
+          "ok": true,
+          "matched": 1
+        }
+      },
+      {
+        "action": "click",
+        "label": "关闭弹窗/抽屉",
+        "ok": true
+      },
+      {
+        "action": "click",
+        "label": "导航:智能柜列表",
+        "ok": true
+      },
+      {
+        "action": "click",
+        "label": "操作:刷新",
+        "ok": true,
+        "result": {
+          "ok": true,
+          "matched": 1
+        }
+      },
+      {
+        "action": "click",
+        "label": "导航:空箱预约",
+        "ok": true
+      }
+    ],
+    "snapshots": [
+      {
+        "label": "首屏",
+        "url": "http://127.0.0.1:49022/dashboard",
+        "title": "丰巢快递员SaaS平台",
+        "headings": [
+          "丰巢快递员SaaS"
+        ],
+        "navLabels": [
+          "工作台 包裹管理 智能柜列表 空箱预约 租用订单 赋能中心 柜机健康度 收益分析",
+          "工作台",
+          "dashboard",
+          "包裹管理",
+          "inbox",
+          "智能柜列表",
+          "shop",
+          "空箱预约",
+          "calendar",
+          "租用订单",
+          "credit-card",
+          "赋能中心",
+          "book",
+          "柜机健康度",
+          "heart",
+          "收益分析",
+          "bar-chart",
+          "退出登录"
+        ],
+        "buttons": [
+          "查看全部柜机"
+        ],
+        "links": [],
+        "inputs": [],
+        "tables": [],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "丰巢快递员SaaS工作台包裹管理智能柜列表空箱预约租用订单赋能中心柜机健康度收益分析工作台已登录演示快递员今日派件0待处理包裹0滞留件0今日收益(元)0.00智能派单助手 - 最优柜机推荐查看全部柜机 暂无推荐柜机，请检查柜机在线状态金牌骑手排行榜1王五328 单 · 2100 积分2张三256 单 · 1850 积分3李四198 单 · 1520 积分绩效积分进度本月绩效目标1250 / 3000 分41.66666666666667%本月派件目标248 / 500 单49.6%服务评分4.8 / 5.0 分96% 退出登录",
+        "layout": {
+          "viewportWidth": 1504,
+          "viewportHeight": 1000,
+          "scrollWidth": 1504,
+          "scrollHeight": 1000,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "codex-may-89022-latest-structure-01-首屏",
+          "label": "首屏",
+          "finalUrl": "http://127.0.0.1:49022/dashboard",
+          "title": "丰巢快递员SaaS平台",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89022/probe/latest-runtime/codex-may-89022-latest-structure-01-首屏.json",
+          "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89022/probe/latest-runtime/codex-may-89022-latest-structure-01-首屏.png",
+          "elementCount": 240,
+          "interactiveCount": 12,
+          "interactiveLabels": [
+            "工作台 包裹管理 智能柜列表 空箱预约 租用订单 赋能中心 柜机健康度 收益分析",
+            "工作台",
+            "包裹管理",
+            "智能柜列表",
+            "空箱预约",
+            "租用订单",
+            "赋能中心",
+            "柜机健康度",
+            "收益分析",
+            "查看全部柜机",
+            "退出登录"
+          ]
+        }
+      },
+      {
+        "label": "导航:工作台",
+        "url": "http://127.0.0.1:49022/dashboard",
+        "title": "丰巢快递员SaaS平台",
+        "headings": [
+          "丰巢快递员SaaS"
+        ],
+        "navLabels": [
+          "工作台 包裹管理 智能柜列表 空箱预约 租用订单 赋能中心 柜机健康度 收益分析",
+          "工作台",
+          "dashboard",
+          "包裹管理",
+          "inbox",
+          "智能柜列表",
+          "shop",
+          "空箱预约",
+          "calendar",
+          "租用订单",
+          "credit-card",
+          "赋能中心",
+          "book",
+          "柜机健康度",
+          "heart",
+          "收益分析",
+          "bar-chart"
+        ],
+        "buttons": [
+          "查看全部柜机"
+        ],
+        "links": [],
+        "inputs": [],
+        "tables": [],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "丰巢快递员SaaS工作台包裹管理智能柜列表空箱预约租用订单赋能中心柜机健康度收益分析工作台已登录演示快递员今日派件0待处理包裹0滞留件0今日收益(元)0.00智能派单助手 - 最优柜机推荐查看全部柜机 暂无推荐柜机，请检查柜机在线状态金牌骑手排行榜1王五328 单 · 2100 积分2张三256 单 · 1850 积分3李四198 单 · 1520 积分绩效积分进度本月绩效目标1250 / 3000 分41.66666666666667%本月派件目标248 / 500 单49.6%服务评分4.8 / 5.0 分96% 退出登录",
+        "layout": {
+          "viewportWidth": 1536,
+          "viewportHeight": 1000,
+          "scrollWidth": 1536,
+          "scrollHeight": 1000,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "codex-may-89022-latest-structure-02-导航-工作台",
+          "label": "导航:工作台",
+          "finalUrl": "http://127.0.0.1:49022/dashboard",
+          "title": "丰巢快递员SaaS平台",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89022/probe/latest-runtime/codex-may-89022-latest-structure-02-导航-工作台.json",
+          "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89022/probe/latest-runtime/codex-may-89022-latest-structure-02-导航-工作台.png",
+          "elementCount": 240,
+          "interactiveCount": 12,
+          "interactiveLabels": [
+            "工作台 包裹管理 智能柜列表 空箱预约 租用订单 赋能中心 柜机健康度 收益分析",
+            "工作台",
+            "包裹管理",
+            "智能柜列表",
+            "空箱预约",
+            "租用订单",
+            "赋能中心",
+            "柜机健康度",
+            "收益分析",
+            "查看全部柜机",
+            "退出登录"
+          ]
+        }
+      },
+      {
+        "label": "操作:查看全部柜机",
+        "url": "http://127.0.0.1:49022/cabinets",
+        "title": "丰巢快递员SaaS平台",
+        "headings": [
+          "丰巢快递员SaaS"
+        ],
+        "navLabels": [
+          "工作台 包裹管理 智能柜列表 空箱预约 租用订单 赋能中心 柜机健康度 收益分析",
+          "工作台",
+          "dashboard",
+          "包裹管理",
+          "inbox",
+          "智能柜列表",
+          "shop",
+          "空箱预约",
+          "calendar",
+          "租用订单",
+          "credit-card",
+          "赋能中心",
+          "book",
+          "柜机健康度",
+          "heart",
+          "收益分析",
+          "bar-chart"
+        ],
+        "buttons": [
+          "刷新"
+        ],
+        "links": [],
+        "inputs": [
+          {
+            "tag": "input",
+            "type": "text",
+            "placeholder": "搜索柜机名称/编号",
+            "name": "",
+            "label": ""
+          }
+        ],
+        "tables": [
+          {
+            "headers": [
+              "柜机编号",
+              "柜机名称",
+              "地址",
+              "格口使用",
+              "温控",
+              "故障",
+              "状态",
+              "最后心跳",
+              "操作",
+              "柜机编号",
+              "柜机名称",
+              "地址"
+            ],
+            "rowCount": 1,
+            "hasEmptyText": true,
+            "textPreview": "柜机编号 柜机名称 地址 格口使用 温控 故障 状态 最后心跳 操作 柜机编号 柜机名称 地址 格口使用 温控 故障 状态 最后心跳 操作 暂无数据"
+          }
+        ],
+        "emptyTextCount": 1,
+        "bodyTextPreview": "丰巢快递员SaaS工作台包裹管理智能柜列表空箱预约租用订单赋能中心柜机健康度收益分析智能柜列表已登录演示快递员柜机总数0在线柜机0/ 0故障柜机0可用格口0/ 0刷新柜机编号柜机名称地址格口使用温控故障状态最后心跳操作柜机编号柜机名称地址格口使用温控故障状态最后心跳操作暂无数据 退出登录加载柜机列表失败加载柜机列表失败",
+        "layout": {
+          "viewportWidth": 1568,
+          "viewportHeight": 1000,
+          "scrollWidth": 1568,
+          "scrollHeight": 1000,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "codex-may-89022-latest-structure-03-操作-查看全部柜机",
+          "label": "操作:查看全部柜机",
+          "finalUrl": "http://127.0.0.1:49022/cabinets",
+          "title": "丰巢快递员SaaS平台",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89022/probe/latest-runtime/codex-may-89022-latest-structure-03-操作-查看全部柜机.json",
+          "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89022/probe/latest-runtime/codex-may-89022-latest-structure-03-操作-查看全部柜机.png",
+          "elementCount": 222,
+          "interactiveCount": 14,
+          "interactiveLabels": [
+            "工作台 包裹管理 智能柜列表 空箱预约 租用订单 赋能中心 柜机健康度 收益分析",
+            "工作台",
+            "包裹管理",
+            "智能柜列表",
+            "空箱预约",
+            "租用订单",
+            "赋能中心",
+            "柜机健康度",
+            "收益分析",
+            "搜索柜机名称/编号",
+            "刷新",
+            "退出登录"
+          ]
+        }
+      },
+      {
+        "label": "二层操作:查看全部柜机->刷新",
+        "url": "http://127.0.0.1:49022/cabinets",
+        "title": "丰巢快递员SaaS平台",
+        "headings": [
+          "丰巢快递员SaaS"
+        ],
+        "navLabels": [
+          "工作台 包裹管理 智能柜列表 空箱预约 租用订单 赋能中心 柜机健康度 收益分析",
+          "工作台",
+          "dashboard",
+          "包裹管理",
+          "inbox",
+          "智能柜列表",
+          "shop",
+          "空箱预约",
+          "calendar",
+          "租用订单",
+          "credit-card",
+          "赋能中心",
+          "book",
+          "柜机健康度",
+          "heart",
+          "收益分析",
+          "bar-chart"
+        ],
+        "buttons": [
+          "刷新"
+        ],
+        "links": [],
+        "inputs": [
+          {
+            "tag": "input",
+            "type": "text",
+            "placeholder": "搜索柜机名称/编号",
+            "name": "",
+            "label": ""
+          }
+        ],
+        "tables": [
+          {
+            "headers": [
+              "柜机编号",
+              "柜机名称",
+              "地址",
+              "格口使用",
+              "温控",
+              "故障",
+              "状态",
+              "最后心跳",
+              "操作",
+              "柜机编号",
+              "柜机名称",
+              "地址"
+            ],
+            "rowCount": 1,
+            "hasEmptyText": true,
+            "textPreview": "柜机编号 柜机名称 地址 格口使用 温控 故障 状态 最后心跳 操作 柜机编号 柜机名称 地址 格口使用 温控 故障 状态 最后心跳 操作 暂无数据"
+          }
+        ],
+        "emptyTextCount": 1,
+        "bodyTextPreview": "丰巢快递员SaaS工作台包裹管理智能柜列表空箱预约租用订单赋能中心柜机健康度收益分析智能柜列表已登录演示快递员柜机总数0在线柜机0/ 0故障柜机0可用格口0/ 0刷新柜机编号柜机名称地址格口使用温控故障状态最后心跳操作柜机编号柜机名称地址格口使用温控故障状态最后心跳操作暂无数据 退出登录加载柜机列表失败",
+        "layout": {
+          "viewportWidth": 1600,
+          "viewportHeight": 1000,
+          "scrollWidth": 1600,
+          "scrollHeight": 1000,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "codex-may-89022-latest-structure-04-二层操作-查看全部柜机-刷新",
+          "label": "二层操作:查看全部柜机->刷新",
+          "finalUrl": "http://127.0.0.1:49022/cabinets",
+          "title": "丰巢快递员SaaS平台",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89022/probe/latest-runtime/codex-may-89022-latest-structure-04-二层操作-查看全部柜机-刷新.json",
+          "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89022/probe/latest-runtime/codex-may-89022-latest-structure-04-二层操作-查看全部柜机-刷新.png",
+          "elementCount": 216,
+          "interactiveCount": 14,
+          "interactiveLabels": [
+            "工作台 包裹管理 智能柜列表 空箱预约 租用订单 赋能中心 柜机健康度 收益分析",
+            "工作台",
+            "包裹管理",
+            "智能柜列表",
+            "空箱预约",
+            "租用订单",
+            "赋能中心",
+            "柜机健康度",
+            "收益分析",
+            "搜索柜机名称/编号",
+            "刷新",
+            "退出登录"
+          ]
+        }
+      },
+      {
+        "label": "导航:包裹管理",
+        "url": "http://127.0.0.1:49022/packages",
+        "title": "丰巢快递员SaaS平台",
+        "headings": [
+          "丰巢快递员SaaS"
+        ],
+        "navLabels": [
+          "工作台 包裹管理 智能柜列表 空箱预约 租用订单 赋能中心 柜机健康度 收益分析",
+          "工作台",
+          "dashboard",
+          "包裹管理",
+          "inbox",
+          "智能柜列表",
+          "shop",
+          "空箱预约",
+          "calendar",
+          "租用订单",
+          "credit-card",
+          "赋能中心",
+          "book",
+          "柜机健康度",
+          "heart",
+          "收益分析",
+          "bar-chart"
+        ],
+        "buttons": [
+          "全 部",
+          "已存柜",
+          "已滞留 (0)",
+          "已取件",
+          "刷新",
+          "批量提醒 (0)",
+          "包裹入库"
+        ],
+        "links": [],
+        "inputs": [
+          {
+            "tag": "input",
+            "type": "text",
+            "placeholder": "搜索运单号",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "search",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "checkbox",
+            "placeholder": "",
+            "name": "",
+            "label": "Select all"
+          },
+          {
+            "tag": "input",
+            "type": "checkbox",
+            "placeholder": "",
+            "name": "",
+            "label": "Select all"
+          }
+        ],
+        "tables": [
+          {
+            "headers": [
+              "运单号",
+              "快递公司",
+              "收件人",
+              "联系电话",
+              "取件码",
+              "存放柜机",
+              "状态",
+              "存入时间",
+              "操作",
+              "运单号",
+              "快递公司",
+              "收件人"
+            ],
+            "rowCount": 1,
+            "hasEmptyText": true,
+            "textPreview": "运单号 快递公司 收件人 联系电话 取件码 存放柜机 状态 存入时间 操作 运单号 快递公司 收件人 联系电话 取件码 存放柜机 状态 存入时间 操作 暂无数据"
+          }
+        ],
+        "emptyTextCount": 1,
+        "bodyTextPreview": "丰巢快递员SaaS工作台包裹管理智能柜列表空箱预约租用订单赋能中心柜机健康度收益分析包裹管理已登录演示快递员全 部已存柜已滞留 (0)已取件快递公司刷新批量提醒 (0)包裹入库运单号快递公司收件人联系电话取件码存放柜机状态存入时间操作运单号快递公司收件人联系电话取件码存放柜机状态存入时间操作暂无数据 加载包裹列表失败加载包裹列表失败",
+        "layout": {
+          "viewportWidth": 1632,
+          "viewportHeight": 1000,
+          "scrollWidth": 1632,
+          "scrollHeight": 1000,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "codex-may-89022-latest-structure-05-导航-包裹管理",
+          "label": "导航:包裹管理",
+          "finalUrl": "http://127.0.0.1:49022/packages",
+          "title": "丰巢快递员SaaS平台",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89022/probe/latest-runtime/codex-may-89022-latest-structure-05-导航-包裹管理.json",
+          "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89022/probe/latest-runtime/codex-may-89022-latest-structure-05-导航-包裹管理.png",
+          "elementCount": 228,
+          "interactiveCount": 21,
+          "interactiveLabels": [
+            "工作台 包裹管理 智能柜列表 空箱预约 租用订单 赋能中心 柜机健康度 收益分析",
+            "工作台",
+            "包裹管理",
+            "智能柜列表",
+            "空箱预约",
+            "租用订单",
+            "赋能中心",
+            "柜机健康度",
+            "收益分析",
+            "全 部",
+            "已存柜",
+            "已滞留 (0)",
+            "已取件",
+            "搜索运单号",
+            "刷新",
+            "批量提醒 (0)",
+            "包裹入库",
+            "on"
+          ]
+        }
+      },
+      {
+        "label": "操作:刷新",
+        "url": "http://127.0.0.1:49022/packages",
+        "title": "丰巢快递员SaaS平台",
+        "headings": [
+          "丰巢快递员SaaS"
+        ],
+        "navLabels": [
+          "工作台 包裹管理 智能柜列表 空箱预约 租用订单 赋能中心 柜机健康度 收益分析",
+          "工作台",
+          "dashboard",
+          "包裹管理",
+          "inbox",
+          "智能柜列表",
+          "shop",
+          "空箱预约",
+          "calendar",
+          "租用订单",
+          "credit-card",
+          "赋能中心",
+          "book",
+          "柜机健康度",
+          "heart",
+          "收益分析",
+          "bar-chart"
+        ],
+        "buttons": [
+          "全 部",
+          "已存柜",
+          "已滞留 (0)",
+          "已取件",
+          "刷新",
+          "批量提醒 (0)",
+          "包裹入库"
+        ],
+        "links": [],
+        "inputs": [
+          {
+            "tag": "input",
+            "type": "text",
+            "placeholder": "搜索运单号",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "search",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "checkbox",
+            "placeholder": "",
+            "name": "",
+            "label": "Select all"
+          },
+          {
+            "tag": "input",
+            "type": "checkbox",
+            "placeholder": "",
+            "name": "",
+            "label": "Select all"
+          }
+        ],
+        "tables": [
+          {
+            "headers": [
+              "运单号",
+              "快递公司",
+              "收件人",
+              "联系电话",
+              "取件码",
+              "存放柜机",
+              "状态",
+              "存入时间",
+              "操作",
+              "运单号",
+              "快递公司",
+              "收件人"
+            ],
+            "rowCount": 1,
+            "hasEmptyText": true,
+            "textPreview": "运单号 快递公司 收件人 联系电话 取件码 存放柜机 状态 存入时间 操作 运单号 快递公司 收件人 联系电话 取件码 存放柜机 状态 存入时间 操作 暂无数据"
+          }
+        ],
+        "emptyTextCount": 1,
+        "bodyTextPreview": "丰巢快递员SaaS工作台包裹管理智能柜列表空箱预约租用订单赋能中心柜机健康度收益分析包裹管理已登录演示快递员全 部已存柜已滞留 (0)已取件快递公司刷新批量提醒 (0)包裹入库运单号快递公司收件人联系电话取件码存放柜机状态存入时间操作运单号快递公司收件人联系电话取件码存放柜机状态存入时间操作暂无数据 加载包裹列表失败",
+        "layout": {
+          "viewportWidth": 1664,
+          "viewportHeight": 1000,
+          "scrollWidth": 1664,
+          "scrollHeight": 1000,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "codex-may-89022-latest-structure-06-操作-刷新",
+          "label": "操作:刷新",
+          "finalUrl": "http://127.0.0.1:49022/packages",
+          "title": "丰巢快递员SaaS平台",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89022/probe/latest-runtime/codex-may-89022-latest-structure-06-操作-刷新.json",
+          "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89022/probe/latest-runtime/codex-may-89022-latest-structure-06-操作-刷新.png",
+          "elementCount": 222,
+          "interactiveCount": 21,
+          "interactiveLabels": [
+            "工作台 包裹管理 智能柜列表 空箱预约 租用订单 赋能中心 柜机健康度 收益分析",
+            "工作台",
+            "包裹管理",
+            "智能柜列表",
+            "空箱预约",
+            "租用订单",
+            "赋能中心",
+            "柜机健康度",
+            "收益分析",
+            "全 部",
+            "已存柜",
+            "已滞留 (0)",
+            "已取件",
+            "搜索运单号",
+            "刷新",
+            "批量提醒 (0)",
+            "包裹入库",
+            "on"
+          ]
+        }
+      },
+      {
+        "label": "操作:包裹入库",
+        "url": "http://127.0.0.1:49022/packages",
+        "title": "丰巢快递员SaaS平台",
+        "headings": [
+          "丰巢快递员SaaS"
+        ],
+        "navLabels": [
+          "工作台 包裹管理 智能柜列表 空箱预约 租用订单 赋能中心 柜机健康度 收益分析",
+          "工作台",
+          "dashboard",
+          "包裹管理",
+          "inbox",
+          "智能柜列表",
+          "shop",
+          "空箱预约",
+          "calendar",
+          "租用订单",
+          "credit-card",
+          "赋能中心",
+          "book",
+          "柜机健康度",
+          "heart",
+          "收益分析",
+          "bar-chart"
+        ],
+        "buttons": [
+          "全 部",
+          "已存柜",
+          "已滞留 (0)",
+          "已取件",
+          "刷新",
+          "批量提醒 (0)",
+          "包裹入库",
+          "Close",
+          "确认入库"
+        ],
+        "links": [],
+        "inputs": [
+          {
+            "tag": "input",
+            "type": "text",
+            "placeholder": "搜索运单号",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "search",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "checkbox",
+            "placeholder": "",
+            "name": "",
+            "label": "Select all"
+          },
+          {
+            "tag": "input",
+            "type": "checkbox",
+            "placeholder": "",
+            "name": "",
+            "label": "Select all"
+          },
+          {
+            "tag": "input",
+            "type": "text",
+            "placeholder": "输入运单号，自动识别快递公司",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "search",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "text",
+            "placeholder": "请输入收件人姓名",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "text",
+            "placeholder": "请输入收件人电话",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "search",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "text",
+            "placeholder": "如: A01",
+            "name": "",
+            "label": ""
+          }
+        ],
+        "tables": [
+          {
+            "headers": [
+              "运单号",
+              "快递公司",
+              "收件人",
+              "联系电话",
+              "取件码",
+              "存放柜机",
+              "状态",
+              "存入时间",
+              "操作",
+              "运单号",
+              "快递公司",
+              "收件人"
+            ],
+            "rowCount": 1,
+            "hasEmptyText": true,
+            "textPreview": "运单号 快递公司 收件人 联系电话 取件码 存放柜机 状态 存入时间 操作 运单号 快递公司 收件人 联系电话 取件码 存放柜机 状态 存入时间 操作 暂无数据"
+          }
+        ],
+        "emptyTextCount": 1,
+        "bodyTextPreview": "丰巢快递员SaaS工作台包裹管理智能柜列表空箱预约租用订单赋能中心柜机健康度收益分析包裹管理已登录演示快递员全 部已存柜已滞留 (0)已取件快递公司刷新批量提醒 (0)包裹入库运单号快递公司收件人联系电话取件码存放柜机状态存入时间操作运单号快递公司收件人联系电话取件码存放柜机状态存入时间操作暂无数据 包裹入库运单号快递公司选择快递公司收件人姓名收件人电话存放柜机选择柜机格口编号确认入库",
+        "layout": {
+          "viewportWidth": 1696,
+          "viewportHeight": 1000,
+          "scrollWidth": 1696,
+          "scrollHeight": 1000,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "codex-may-89022-latest-structure-07-操作-包裹入库",
+          "label": "操作:包裹入库",
+          "finalUrl": "http://127.0.0.1:49022/packages",
+          "title": "丰巢快递员SaaS平台",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89022/probe/latest-runtime/codex-may-89022-latest-structure-07-操作-包裹入库.json",
+          "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89022/probe/latest-runtime/codex-may-89022-latest-structure-07-操作-包裹入库.png",
+          "elementCount": 312,
+          "interactiveCount": 31,
+          "interactiveLabels": [
+            "工作台 包裹管理 智能柜列表 空箱预约 租用订单 赋能中心 柜机健康度 收益分析",
+            "工作台",
+            "包裹管理",
+            "智能柜列表",
+            "空箱预约",
+            "租用订单",
+            "赋能中心",
+            "柜机健康度",
+            "收益分析",
+            "全 部",
+            "已存柜",
+            "已滞留 (0)",
+            "已取件",
+            "搜索运单号",
+            "刷新",
+            "批量提醒 (0)",
+            "包裹入库",
+            "on",
+            "包裹入库 运单号 快递公司 选择快递公司 收件人姓名 收件人电话 存放柜机 选择柜机 格口编号 确认入库",
+            "Close",
+            "输入运单号，自动识别快递公司",
+            "请输入收件人姓名",
+            "请输入收件人电话",
+            "如: A01",
+            "确认入库"
+          ]
+        }
+      },
+      {
+        "label": "二层操作:包裹入库->确认入库",
+        "url": "http://127.0.0.1:49022/packages",
+        "title": "丰巢快递员SaaS平台",
+        "headings": [
+          "丰巢快递员SaaS"
+        ],
+        "navLabels": [
+          "工作台 包裹管理 智能柜列表 空箱预约 租用订单 赋能中心 柜机健康度 收益分析",
+          "工作台",
+          "dashboard",
+          "包裹管理",
+          "inbox",
+          "智能柜列表",
+          "shop",
+          "空箱预约",
+          "calendar",
+          "租用订单",
+          "credit-card",
+          "赋能中心",
+          "book",
+          "柜机健康度",
+          "heart",
+          "收益分析",
+          "bar-chart"
+        ],
+        "buttons": [
+          "全 部",
+          "已存柜",
+          "已滞留 (0)",
+          "已取件",
+          "刷新",
+          "批量提醒 (0)",
+          "包裹入库",
+          "Close",
+          "确认入库"
+        ],
+        "links": [],
+        "inputs": [
+          {
+            "tag": "input",
+            "type": "text",
+            "placeholder": "搜索运单号",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "search",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "checkbox",
+            "placeholder": "",
+            "name": "",
+            "label": "Select all"
+          },
+          {
+            "tag": "input",
+            "type": "checkbox",
+            "placeholder": "",
+            "name": "",
+            "label": "Select all"
+          },
+          {
+            "tag": "input",
+            "type": "text",
+            "placeholder": "输入运单号，自动识别快递公司",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "search",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "text",
+            "placeholder": "请输入收件人姓名",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "text",
+            "placeholder": "请输入收件人电话",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "search",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "text",
+            "placeholder": "如: A01",
+            "name": "",
+            "label": ""
+          }
+        ],
+        "tables": [
+          {
+            "headers": [
+              "运单号",
+              "快递公司",
+              "收件人",
+              "联系电话",
+              "取件码",
+              "存放柜机",
+              "状态",
+              "存入时间",
+              "操作",
+              "运单号",
+              "快递公司",
+              "收件人"
+            ],
+            "rowCount": 1,
+            "hasEmptyText": true,
+            "textPreview": "运单号 快递公司 收件人 联系电话 取件码 存放柜机 状态 存入时间 操作 运单号 快递公司 收件人 联系电话 取件码 存放柜机 状态 存入时间 操作 暂无数据"
+          }
+        ],
+        "emptyTextCount": 1,
+        "bodyTextPreview": "丰巢快递员SaaS工作台包裹管理智能柜列表空箱预约租用订单赋能中心柜机健康度收益分析包裹管理已登录演示快递员全 部已存柜已滞留 (0)已取件快递公司刷新批量提醒 (0)包裹入库运单号快递公司收件人联系电话取件码存放柜机状态存入时间操作运单号快递公司收件人联系电话取件码存放柜机状态存入时间操作暂无数据 包裹入库运单号请输入运单号快递公司选择快递公司请选择快递公司收件人姓名请输入收件人姓名收件人电话请输入收件人电话存放柜机选择柜机请选择柜机格口编号请输入格口编号确认入库",
+        "layout": {
+          "viewportWidth": 1728,
+          "viewportHeight": 1000,
+          "scrollWidth": 1728,
+          "scrollHeight": 1000,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "codex-may-89022-latest-structure-08-二层操作-包裹入库-确认入库",
+          "label": "二层操作:包裹入库->确认入库",
+          "finalUrl": "http://127.0.0.1:49022/packages",
+          "title": "丰巢快递员SaaS平台",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89022/probe/latest-runtime/codex-may-89022-latest-structure-08-二层操作-包裹入库-确认入库.json",
+          "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89022/probe/latest-runtime/codex-may-89022-latest-structure-08-二层操作-包裹入库-确认入库.png",
+          "elementCount": 336,
+          "interactiveCount": 31,
+          "interactiveLabels": [
+            "工作台 包裹管理 智能柜列表 空箱预约 租用订单 赋能中心 柜机健康度 收益分析",
+            "工作台",
+            "包裹管理",
+            "智能柜列表",
+            "空箱预约",
+            "租用订单",
+            "赋能中心",
+            "柜机健康度",
+            "收益分析",
+            "全 部",
+            "已存柜",
+            "已滞留 (0)",
+            "已取件",
+            "搜索运单号",
+            "刷新",
+            "批量提醒 (0)",
+            "包裹入库",
+            "on",
+            "包裹入库 运单号 请输入运单号 快递公司 选择快递公司 请选择快递公司 收件人姓名 请输入收件人姓名 收件人电话 请输入收件人电话 存放柜机 选择柜机 请选择柜机 格口编号 请输入格口编号 确认入库",
+            "Close",
+            "输入运单号，自动识别快递公司",
+            "请输入收件人姓名",
+            "请输入收件人电话",
+            "如: A01",
+            "确认入库"
+          ]
+        }
+      },
+      {
+        "label": "导航:智能柜列表",
+        "url": "http://127.0.0.1:49022/cabinets",
+        "title": "丰巢快递员SaaS平台",
+        "headings": [
+          "丰巢快递员SaaS"
+        ],
+        "navLabels": [
+          "工作台 包裹管理 智能柜列表 空箱预约 租用订单 赋能中心 柜机健康度 收益分析",
+          "工作台",
+          "dashboard",
+          "包裹管理",
+          "inbox",
+          "智能柜列表",
+          "shop",
+          "空箱预约",
+          "calendar",
+          "租用订单",
+          "credit-card",
+          "赋能中心",
+          "book",
+          "柜机健康度",
+          "heart",
+          "收益分析",
+          "bar-chart"
+        ],
+        "buttons": [
+          "刷新"
+        ],
+        "links": [],
+        "inputs": [
+          {
+            "tag": "input",
+            "type": "text",
+            "placeholder": "搜索柜机名称/编号",
+            "name": "",
+            "label": ""
+          }
+        ],
+        "tables": [
+          {
+            "headers": [
+              "柜机编号",
+              "柜机名称",
+              "地址",
+              "格口使用",
+              "温控",
+              "故障",
+              "状态",
+              "最后心跳",
+              "操作",
+              "柜机编号",
+              "柜机名称",
+              "地址"
+            ],
+            "rowCount": 1,
+            "hasEmptyText": true,
+            "textPreview": "柜机编号 柜机名称 地址 格口使用 温控 故障 状态 最后心跳 操作 柜机编号 柜机名称 地址 格口使用 温控 故障 状态 最后心跳 操作 暂无数据"
+          }
+        ],
+        "emptyTextCount": 1,
+        "bodyTextPreview": "丰巢快递员SaaS工作台包裹管理智能柜列表空箱预约租用订单赋能中心柜机健康度收益分析智能柜列表已登录演示快递员柜机总数0在线柜机0/ 0故障柜机0可用格口0/ 0刷新柜机编号柜机名称地址格口使用温控故障状态最后心跳操作柜机编号柜机名称地址格口使用温控故障状态最后心跳操作暂无数据 加载柜机列表失败加载柜机列表失败",
+        "layout": {
+          "viewportWidth": 1760,
+          "viewportHeight": 1000,
+          "scrollWidth": 1760,
+          "scrollHeight": 1000,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "codex-may-89022-latest-structure-09-导航-智能柜列表",
+          "label": "导航:智能柜列表",
+          "finalUrl": "http://127.0.0.1:49022/cabinets",
+          "title": "丰巢快递员SaaS平台",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89022/probe/latest-runtime/codex-may-89022-latest-structure-09-导航-智能柜列表.json",
+          "screenshotPath": "",
+          "elementCount": 212,
+          "interactiveCount": 12,
+          "interactiveLabels": [
+            "工作台 包裹管理 智能柜列表 空箱预约 租用订单 赋能中心 柜机健康度 收益分析",
+            "工作台",
+            "包裹管理",
+            "智能柜列表",
+            "空箱预约",
+            "租用订单",
+            "赋能中心",
+            "柜机健康度",
+            "收益分析",
+            "搜索柜机名称/编号",
+            "刷新"
+          ]
+        }
+      },
+      {
+        "label": "操作:刷新",
+        "url": "http://127.0.0.1:49022/cabinets",
+        "title": "丰巢快递员SaaS平台",
+        "headings": [
+          "丰巢快递员SaaS"
+        ],
+        "navLabels": [
+          "工作台 包裹管理 智能柜列表 空箱预约 租用订单 赋能中心 柜机健康度 收益分析",
+          "工作台",
+          "dashboard",
+          "包裹管理",
+          "inbox",
+          "智能柜列表",
+          "shop",
+          "空箱预约",
+          "calendar",
+          "租用订单",
+          "credit-card",
+          "赋能中心",
+          "book",
+          "柜机健康度",
+          "heart",
+          "收益分析",
+          "bar-chart"
+        ],
+        "buttons": [
+          "刷新"
+        ],
+        "links": [],
+        "inputs": [
+          {
+            "tag": "input",
+            "type": "text",
+            "placeholder": "搜索柜机名称/编号",
+            "name": "",
+            "label": ""
+          }
+        ],
+        "tables": [
+          {
+            "headers": [
+              "柜机编号",
+              "柜机名称",
+              "地址",
+              "格口使用",
+              "温控",
+              "故障",
+              "状态",
+              "最后心跳",
+              "操作",
+              "柜机编号",
+              "柜机名称",
+              "地址"
+            ],
+            "rowCount": 1,
+            "hasEmptyText": true,
+            "textPreview": "柜机编号 柜机名称 地址 格口使用 温控 故障 状态 最后心跳 操作 柜机编号 柜机名称 地址 格口使用 温控 故障 状态 最后心跳 操作 暂无数据"
+          }
+        ],
+        "emptyTextCount": 1,
+        "bodyTextPreview": "丰巢快递员SaaS工作台包裹管理智能柜列表空箱预约租用订单赋能中心柜机健康度收益分析智能柜列表已登录演示快递员柜机总数0在线柜机0/ 0故障柜机0可用格口0/ 0刷新柜机编号柜机名称地址格口使用温控故障状态最后心跳操作柜机编号柜机名称地址格口使用温控故障状态最后心跳操作暂无数据 加载柜机列表失败加载柜机列表失败加载柜机列表失败",
+        "layout": {
+          "viewportWidth": 1792,
+          "viewportHeight": 1000,
+          "scrollWidth": 1792,
+          "scrollHeight": 1000,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "codex-may-89022-latest-structure-10-操作-刷新",
+          "label": "操作:刷新",
+          "finalUrl": "http://127.0.0.1:49022/cabinets",
+          "title": "丰巢快递员SaaS平台",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89022/probe/latest-runtime/codex-may-89022-latest-structure-10-操作-刷新.json",
+          "screenshotPath": "",
+          "elementCount": 222,
+          "interactiveCount": 12,
+          "interactiveLabels": [
+            "工作台 包裹管理 智能柜列表 空箱预约 租用订单 赋能中心 柜机健康度 收益分析",
+            "工作台",
+            "包裹管理",
+            "智能柜列表",
+            "空箱预约",
+            "租用订单",
+            "赋能中心",
+            "柜机健康度",
+            "收益分析",
+            "搜索柜机名称/编号",
+            "刷新"
+          ]
+        }
+      },
+      {
+        "label": "导航:空箱预约",
+        "url": "http://127.0.0.1:49022/reservation",
+        "title": "丰巢快递员SaaS平台",
+        "headings": [
+          "丰巢快递员SaaS"
+        ],
+        "navLabels": [
+          "工作台 包裹管理 智能柜列表 空箱预约 租用订单 赋能中心 柜机健康度 收益分析",
+          "工作台",
+          "dashboard",
+          "包裹管理",
+          "inbox",
+          "智能柜列表",
+          "shop",
+          "空箱预约",
+          "calendar",
+          "租用订单",
+          "credit-card",
+          "赋能中心",
+          "book",
+          "柜机健康度",
+          "heart",
+          "收益分析",
+          "bar-chart"
+        ],
+        "buttons": [
+          "刷新",
+          "新建预约"
+        ],
+        "links": [],
+        "inputs": [
+          {
+            "tag": "input",
+            "type": "search",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          }
+        ],
+        "tables": [
+          {
+            "headers": [
+              "预约编号",
+              "柜机",
+              "格口大小",
+              "预约时间",
+              "过期时间",
+              "状态",
+              "创建时间",
+              "操作"
+            ],
+            "rowCount": 1,
+            "hasEmptyText": true,
+            "textPreview": "预约编号 柜机 格口大小 预约时间 过期时间 状态 创建时间 操作 暂无数据"
+          }
+        ],
+        "emptyTextCount": 1,
+        "bodyTextPreview": "丰巢快递员SaaS工作台包裹管理智能柜列表空箱预约租用订单赋能中心柜机健康度收益分析空箱预约已登录演示快递员状态筛选刷新新建预约预约编号柜机格口大小预约时间过期时间状态创建时间操作暂无数据 加载预约列表失败加载预约列表失败",
+        "layout": {
+          "viewportWidth": 1824,
+          "viewportHeight": 1000,
+          "scrollWidth": 1824,
+          "scrollHeight": 1000,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "codex-may-89022-latest-structure-11-导航-空箱预约",
+          "label": "导航:空箱预约",
+          "finalUrl": "http://127.0.0.1:49022/reservation",
+          "title": "丰巢快递员SaaS平台",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89022/probe/latest-runtime/codex-may-89022-latest-structure-11-导航-空箱预约.json",
+          "screenshotPath": "",
+          "elementCount": 157,
+          "interactiveCount": 12,
+          "interactiveLabels": [
+            "工作台 包裹管理 智能柜列表 空箱预约 租用订单 赋能中心 柜机健康度 收益分析",
+            "工作台",
+            "包裹管理",
+            "智能柜列表",
+            "空箱预约",
+            "租用订单",
+            "赋能中心",
+            "柜机健康度",
+            "收益分析",
+            "刷新",
+            "新建预约"
+          ]
+        }
+      }
+    ],
+    "findings": [
+      "接口 /api/device-alerts 返回 HTTP 500，对应业务模块无法完成数据读取。",
+      "接口 /api/statistics/overview 返回 HTTP 500，对应业务模块无法完成数据读取。",
+      "接口 /api/cabinets/recommend/optimal 返回 HTTP 500，对应业务模块无法完成数据读取。",
+      "接口 /api/leaderboard 返回 HTTP 500，对应业务模块无法完成数据读取。",
+      "接口 /api/cabinets 返回 HTTP 500，对应业务模块无法完成数据读取。",
+      "接口 /api/packages 返回 HTTP 500，对应业务模块无法完成数据读取。",
+      "接口 /api/sms-templates 返回 HTTP 500，对应业务模块无法完成数据读取。",
+      "接口 /api/reservations 返回 HTTP 500，对应业务模块无法完成数据读取。",
+      "查看全部柜机 的 刷新结果、包裹管理、包裹入库 的 确认入库结果、智能柜列表、空箱预约 页面只显示空列表或“暂无数据”，缺少可复查的业务记录。",
+      "多个核心页面同时空列表且接口失败，当前系统没有形成“页面操作 - API - SQLite 数据”的闭环。"
+    ],
+    "actionHints": [
+      "补齐 /api/device-alerts 后端接口、SQLite 数据和前端错误处理。",
+      "补齐 /api/statistics/overview 后端接口、SQLite 数据和前端错误处理。",
+      "补齐 /api/cabinets/recommend/optimal 后端接口、SQLite 数据和前端错误处理。",
+      "补齐 /api/leaderboard 后端接口、SQLite 数据和前端错误处理。",
+      "补齐 /api/cabinets 后端接口、SQLite 数据和前端错误处理。",
+      "补齐 /api/packages 后端接口、SQLite 数据和前端错误处理。",
+      "补齐 /api/sms-templates 后端接口、SQLite 数据和前端错误处理。",
+      "补齐 /api/reservations 后端接口、SQLite 数据和前端错误处理。",
+      "为 查看全部柜机 的 刷新结果、包裹管理、包裹入库 的 确认入库结果、智能柜列表、空箱预约 补齐 SQLite 种子数据、列表接口和空状态引导，确保核心记录可新增、可查看、可复查。",
+      "优先打通版本、策略、发布、监控和回滚的核心接口与 SQLite 落库链路。"
+    ],
+    "emptyPages": [
+      "查看全部柜机 的 刷新结果",
+      "包裹管理",
+      "包裹入库 的 确认入库结果",
+      "智能柜列表",
+      "空箱预约"
+    ],
+    "overflowPages": [],
+    "blankPages": [],
+    "apiFailurePaths": [
+      "/api/device-alerts",
+      "/api/statistics/overview",
+      "/api/cabinets/recommend/optimal",
+      "/api/leaderboard",
+      "/api/cabinets",
+      "/api/packages",
+      "/api/sms-templates",
+      "/api/reservations"
+    ],
+    "goalTerms": [],
+    "clickedActionDescriptors": [
+      {
+        "nav": "工作台",
+        "label": "查看全部柜机",
+        "ordinal": 0,
+        "unsafe": false
+      },
+      {
+        "nav": "工作台",
+        "label": "查看全部柜机->刷新",
+        "ordinal": 0,
+        "secondary": true,
+        "unsafe": false
+      },
+      {
+        "nav": "包裹管理",
+        "label": "刷新",
+        "ordinal": 0,
+        "unsafe": false
+      },
+      {
+        "nav": "包裹管理",
+        "label": "包裹入库",
+        "ordinal": 0,
+        "unsafe": false
+      },
+      {
+        "nav": "包裹管理",
+        "label": "包裹入库->确认入库",
+        "ordinal": 0,
+        "secondary": true,
+        "unsafe": false
+      },
+      {
+        "nav": "智能柜列表",
+        "label": "刷新",
+        "ordinal": 0,
+        "unsafe": false
+      }
+    ],
+    "secondaryActionClicks": 2,
+    "structureCaptures": [
+      {
+        "module": "website_structure_capture",
+        "runId": "codex-may-89022-latest-structure-01-首屏",
+        "label": "首屏",
+        "finalUrl": "http://127.0.0.1:49022/dashboard",
+        "title": "丰巢快递员SaaS平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89022/probe/latest-runtime/codex-may-89022-latest-structure-01-首屏.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89022/probe/latest-runtime/codex-may-89022-latest-structure-01-首屏.png",
+        "elementCount": 240,
+        "interactiveCount": 12,
+        "interactiveLabels": [
+          "工作台 包裹管理 智能柜列表 空箱预约 租用订单 赋能中心 柜机健康度 收益分析",
+          "工作台",
+          "包裹管理",
+          "智能柜列表",
+          "空箱预约",
+          "租用订单",
+          "赋能中心",
+          "柜机健康度",
+          "收益分析",
+          "查看全部柜机",
+          "退出登录"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "codex-may-89022-latest-structure-02-导航-工作台",
+        "label": "导航:工作台",
+        "finalUrl": "http://127.0.0.1:49022/dashboard",
+        "title": "丰巢快递员SaaS平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89022/probe/latest-runtime/codex-may-89022-latest-structure-02-导航-工作台.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89022/probe/latest-runtime/codex-may-89022-latest-structure-02-导航-工作台.png",
+        "elementCount": 240,
+        "interactiveCount": 12,
+        "interactiveLabels": [
+          "工作台 包裹管理 智能柜列表 空箱预约 租用订单 赋能中心 柜机健康度 收益分析",
+          "工作台",
+          "包裹管理",
+          "智能柜列表",
+          "空箱预约",
+          "租用订单",
+          "赋能中心",
+          "柜机健康度",
+          "收益分析",
+          "查看全部柜机",
+          "退出登录"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "codex-may-89022-latest-structure-03-操作-查看全部柜机",
+        "label": "操作:查看全部柜机",
+        "finalUrl": "http://127.0.0.1:49022/cabinets",
+        "title": "丰巢快递员SaaS平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89022/probe/latest-runtime/codex-may-89022-latest-structure-03-操作-查看全部柜机.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89022/probe/latest-runtime/codex-may-89022-latest-structure-03-操作-查看全部柜机.png",
+        "elementCount": 222,
+        "interactiveCount": 14,
+        "interactiveLabels": [
+          "工作台 包裹管理 智能柜列表 空箱预约 租用订单 赋能中心 柜机健康度 收益分析",
+          "工作台",
+          "包裹管理",
+          "智能柜列表",
+          "空箱预约",
+          "租用订单",
+          "赋能中心",
+          "柜机健康度",
+          "收益分析",
+          "搜索柜机名称/编号",
+          "刷新",
+          "退出登录"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "codex-may-89022-latest-structure-04-二层操作-查看全部柜机-刷新",
+        "label": "二层操作:查看全部柜机->刷新",
+        "finalUrl": "http://127.0.0.1:49022/cabinets",
+        "title": "丰巢快递员SaaS平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89022/probe/latest-runtime/codex-may-89022-latest-structure-04-二层操作-查看全部柜机-刷新.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89022/probe/latest-runtime/codex-may-89022-latest-structure-04-二层操作-查看全部柜机-刷新.png",
+        "elementCount": 216,
+        "interactiveCount": 14,
+        "interactiveLabels": [
+          "工作台 包裹管理 智能柜列表 空箱预约 租用订单 赋能中心 柜机健康度 收益分析",
+          "工作台",
+          "包裹管理",
+          "智能柜列表",
+          "空箱预约",
+          "租用订单",
+          "赋能中心",
+          "柜机健康度",
+          "收益分析",
+          "搜索柜机名称/编号",
+          "刷新",
+          "退出登录"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "codex-may-89022-latest-structure-05-导航-包裹管理",
+        "label": "导航:包裹管理",
+        "finalUrl": "http://127.0.0.1:49022/packages",
+        "title": "丰巢快递员SaaS平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89022/probe/latest-runtime/codex-may-89022-latest-structure-05-导航-包裹管理.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89022/probe/latest-runtime/codex-may-89022-latest-structure-05-导航-包裹管理.png",
+        "elementCount": 228,
+        "interactiveCount": 21,
+        "interactiveLabels": [
+          "工作台 包裹管理 智能柜列表 空箱预约 租用订单 赋能中心 柜机健康度 收益分析",
+          "工作台",
+          "包裹管理",
+          "智能柜列表",
+          "空箱预约",
+          "租用订单",
+          "赋能中心",
+          "柜机健康度",
+          "收益分析",
+          "全 部",
+          "已存柜",
+          "已滞留 (0)",
+          "已取件",
+          "搜索运单号",
+          "刷新",
+          "批量提醒 (0)",
+          "包裹入库",
+          "on"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "codex-may-89022-latest-structure-06-操作-刷新",
+        "label": "操作:刷新",
+        "finalUrl": "http://127.0.0.1:49022/packages",
+        "title": "丰巢快递员SaaS平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89022/probe/latest-runtime/codex-may-89022-latest-structure-06-操作-刷新.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89022/probe/latest-runtime/codex-may-89022-latest-structure-06-操作-刷新.png",
+        "elementCount": 222,
+        "interactiveCount": 21,
+        "interactiveLabels": [
+          "工作台 包裹管理 智能柜列表 空箱预约 租用订单 赋能中心 柜机健康度 收益分析",
+          "工作台",
+          "包裹管理",
+          "智能柜列表",
+          "空箱预约",
+          "租用订单",
+          "赋能中心",
+          "柜机健康度",
+          "收益分析",
+          "全 部",
+          "已存柜",
+          "已滞留 (0)",
+          "已取件",
+          "搜索运单号",
+          "刷新",
+          "批量提醒 (0)",
+          "包裹入库",
+          "on"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "codex-may-89022-latest-structure-07-操作-包裹入库",
+        "label": "操作:包裹入库",
+        "finalUrl": "http://127.0.0.1:49022/packages",
+        "title": "丰巢快递员SaaS平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89022/probe/latest-runtime/codex-may-89022-latest-structure-07-操作-包裹入库.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89022/probe/latest-runtime/codex-may-89022-latest-structure-07-操作-包裹入库.png",
+        "elementCount": 312,
+        "interactiveCount": 31,
+        "interactiveLabels": [
+          "工作台 包裹管理 智能柜列表 空箱预约 租用订单 赋能中心 柜机健康度 收益分析",
+          "工作台",
+          "包裹管理",
+          "智能柜列表",
+          "空箱预约",
+          "租用订单",
+          "赋能中心",
+          "柜机健康度",
+          "收益分析",
+          "全 部",
+          "已存柜",
+          "已滞留 (0)",
+          "已取件",
+          "搜索运单号",
+          "刷新",
+          "批量提醒 (0)",
+          "包裹入库",
+          "on",
+          "包裹入库 运单号 快递公司 选择快递公司 收件人姓名 收件人电话 存放柜机 选择柜机 格口编号 确认入库",
+          "Close",
+          "输入运单号，自动识别快递公司",
+          "请输入收件人姓名",
+          "请输入收件人电话",
+          "如: A01",
+          "确认入库"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "codex-may-89022-latest-structure-08-二层操作-包裹入库-确认入库",
+        "label": "二层操作:包裹入库->确认入库",
+        "finalUrl": "http://127.0.0.1:49022/packages",
+        "title": "丰巢快递员SaaS平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89022/probe/latest-runtime/codex-may-89022-latest-structure-08-二层操作-包裹入库-确认入库.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89022/probe/latest-runtime/codex-may-89022-latest-structure-08-二层操作-包裹入库-确认入库.png",
+        "elementCount": 336,
+        "interactiveCount": 31,
+        "interactiveLabels": [
+          "工作台 包裹管理 智能柜列表 空箱预约 租用订单 赋能中心 柜机健康度 收益分析",
+          "工作台",
+          "包裹管理",
+          "智能柜列表",
+          "空箱预约",
+          "租用订单",
+          "赋能中心",
+          "柜机健康度",
+          "收益分析",
+          "全 部",
+          "已存柜",
+          "已滞留 (0)",
+          "已取件",
+          "搜索运单号",
+          "刷新",
+          "批量提醒 (0)",
+          "包裹入库",
+          "on",
+          "包裹入库 运单号 请输入运单号 快递公司 选择快递公司 请选择快递公司 收件人姓名 请输入收件人姓名 收件人电话 请输入收件人电话 存放柜机 选择柜机 请选择柜机 格口编号 请输入格口编号 确认入库",
+          "Close",
+          "输入运单号，自动识别快递公司",
+          "请输入收件人姓名",
+          "请输入收件人电话",
+          "如: A01",
+          "确认入库"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "codex-may-89022-latest-structure-09-导航-智能柜列表",
+        "label": "导航:智能柜列表",
+        "finalUrl": "http://127.0.0.1:49022/cabinets",
+        "title": "丰巢快递员SaaS平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89022/probe/latest-runtime/codex-may-89022-latest-structure-09-导航-智能柜列表.json",
+        "screenshotPath": "",
+        "elementCount": 212,
+        "interactiveCount": 12,
+        "interactiveLabels": [
+          "工作台 包裹管理 智能柜列表 空箱预约 租用订单 赋能中心 柜机健康度 收益分析",
+          "工作台",
+          "包裹管理",
+          "智能柜列表",
+          "空箱预约",
+          "租用订单",
+          "赋能中心",
+          "柜机健康度",
+          "收益分析",
+          "搜索柜机名称/编号",
+          "刷新"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "codex-may-89022-latest-structure-10-操作-刷新",
+        "label": "操作:刷新",
+        "finalUrl": "http://127.0.0.1:49022/cabinets",
+        "title": "丰巢快递员SaaS平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89022/probe/latest-runtime/codex-may-89022-latest-structure-10-操作-刷新.json",
+        "screenshotPath": "",
+        "elementCount": 222,
+        "interactiveCount": 12,
+        "interactiveLabels": [
+          "工作台 包裹管理 智能柜列表 空箱预约 租用订单 赋能中心 柜机健康度 收益分析",
+          "工作台",
+          "包裹管理",
+          "智能柜列表",
+          "空箱预约",
+          "租用订单",
+          "赋能中心",
+          "柜机健康度",
+          "收益分析",
+          "搜索柜机名称/编号",
+          "刷新"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "codex-may-89022-latest-structure-11-导航-空箱预约",
+        "label": "导航:空箱预约",
+        "finalUrl": "http://127.0.0.1:49022/reservation",
+        "title": "丰巢快递员SaaS平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89022/probe/latest-runtime/codex-may-89022-latest-structure-11-导航-空箱预约.json",
+        "screenshotPath": "",
+        "elementCount": 157,
+        "interactiveCount": 12,
+        "interactiveLabels": [
+          "工作台 包裹管理 智能柜列表 空箱预约 租用订单 赋能中心 柜机健康度 收益分析",
+          "工作台",
+          "包裹管理",
+          "智能柜列表",
+          "空箱预约",
+          "租用订单",
+          "赋能中心",
+          "柜机健康度",
+          "收益分析",
+          "刷新",
+          "新建预约"
+        ]
+      }
+    ],
+    "representativeScreenshotUrl": "http://127.0.0.1:49022/cabinets",
+    "representativeScreenshotLabel": "查看全部柜机 的 刷新结果"
+  },
+  "websiteStructureCapture": {
+    "module": "website_structure_capture",
+    "captureCount": 11,
+    "captures": [
+      {
+        "module": "website_structure_capture",
+        "runId": "codex-may-89022-latest-structure-01-首屏",
+        "label": "首屏",
+        "finalUrl": "http://127.0.0.1:49022/dashboard",
+        "title": "丰巢快递员SaaS平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89022/probe/latest-runtime/codex-may-89022-latest-structure-01-首屏.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89022/probe/latest-runtime/codex-may-89022-latest-structure-01-首屏.png",
+        "elementCount": 240,
+        "interactiveCount": 12,
+        "interactiveLabels": [
+          "工作台 包裹管理 智能柜列表 空箱预约 租用订单 赋能中心 柜机健康度 收益分析",
+          "工作台",
+          "包裹管理",
+          "智能柜列表",
+          "空箱预约",
+          "租用订单",
+          "赋能中心",
+          "柜机健康度",
+          "收益分析",
+          "查看全部柜机",
+          "退出登录"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "codex-may-89022-latest-structure-02-导航-工作台",
+        "label": "导航:工作台",
+        "finalUrl": "http://127.0.0.1:49022/dashboard",
+        "title": "丰巢快递员SaaS平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89022/probe/latest-runtime/codex-may-89022-latest-structure-02-导航-工作台.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89022/probe/latest-runtime/codex-may-89022-latest-structure-02-导航-工作台.png",
+        "elementCount": 240,
+        "interactiveCount": 12,
+        "interactiveLabels": [
+          "工作台 包裹管理 智能柜列表 空箱预约 租用订单 赋能中心 柜机健康度 收益分析",
+          "工作台",
+          "包裹管理",
+          "智能柜列表",
+          "空箱预约",
+          "租用订单",
+          "赋能中心",
+          "柜机健康度",
+          "收益分析",
+          "查看全部柜机",
+          "退出登录"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "codex-may-89022-latest-structure-03-操作-查看全部柜机",
+        "label": "操作:查看全部柜机",
+        "finalUrl": "http://127.0.0.1:49022/cabinets",
+        "title": "丰巢快递员SaaS平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89022/probe/latest-runtime/codex-may-89022-latest-structure-03-操作-查看全部柜机.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89022/probe/latest-runtime/codex-may-89022-latest-structure-03-操作-查看全部柜机.png",
+        "elementCount": 222,
+        "interactiveCount": 14,
+        "interactiveLabels": [
+          "工作台 包裹管理 智能柜列表 空箱预约 租用订单 赋能中心 柜机健康度 收益分析",
+          "工作台",
+          "包裹管理",
+          "智能柜列表",
+          "空箱预约",
+          "租用订单",
+          "赋能中心",
+          "柜机健康度",
+          "收益分析",
+          "搜索柜机名称/编号",
+          "刷新",
+          "退出登录"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "codex-may-89022-latest-structure-04-二层操作-查看全部柜机-刷新",
+        "label": "二层操作:查看全部柜机->刷新",
+        "finalUrl": "http://127.0.0.1:49022/cabinets",
+        "title": "丰巢快递员SaaS平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89022/probe/latest-runtime/codex-may-89022-latest-structure-04-二层操作-查看全部柜机-刷新.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89022/probe/latest-runtime/codex-may-89022-latest-structure-04-二层操作-查看全部柜机-刷新.png",
+        "elementCount": 216,
+        "interactiveCount": 14,
+        "interactiveLabels": [
+          "工作台 包裹管理 智能柜列表 空箱预约 租用订单 赋能中心 柜机健康度 收益分析",
+          "工作台",
+          "包裹管理",
+          "智能柜列表",
+          "空箱预约",
+          "租用订单",
+          "赋能中心",
+          "柜机健康度",
+          "收益分析",
+          "搜索柜机名称/编号",
+          "刷新",
+          "退出登录"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "codex-may-89022-latest-structure-05-导航-包裹管理",
+        "label": "导航:包裹管理",
+        "finalUrl": "http://127.0.0.1:49022/packages",
+        "title": "丰巢快递员SaaS平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89022/probe/latest-runtime/codex-may-89022-latest-structure-05-导航-包裹管理.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89022/probe/latest-runtime/codex-may-89022-latest-structure-05-导航-包裹管理.png",
+        "elementCount": 228,
+        "interactiveCount": 21,
+        "interactiveLabels": [
+          "工作台 包裹管理 智能柜列表 空箱预约 租用订单 赋能中心 柜机健康度 收益分析",
+          "工作台",
+          "包裹管理",
+          "智能柜列表",
+          "空箱预约",
+          "租用订单",
+          "赋能中心",
+          "柜机健康度",
+          "收益分析",
+          "全 部",
+          "已存柜",
+          "已滞留 (0)",
+          "已取件",
+          "搜索运单号",
+          "刷新",
+          "批量提醒 (0)",
+          "包裹入库",
+          "on"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "codex-may-89022-latest-structure-06-操作-刷新",
+        "label": "操作:刷新",
+        "finalUrl": "http://127.0.0.1:49022/packages",
+        "title": "丰巢快递员SaaS平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89022/probe/latest-runtime/codex-may-89022-latest-structure-06-操作-刷新.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89022/probe/latest-runtime/codex-may-89022-latest-structure-06-操作-刷新.png",
+        "elementCount": 222,
+        "interactiveCount": 21,
+        "interactiveLabels": [
+          "工作台 包裹管理 智能柜列表 空箱预约 租用订单 赋能中心 柜机健康度 收益分析",
+          "工作台",
+          "包裹管理",
+          "智能柜列表",
+          "空箱预约",
+          "租用订单",
+          "赋能中心",
+          "柜机健康度",
+          "收益分析",
+          "全 部",
+          "已存柜",
+          "已滞留 (0)",
+          "已取件",
+          "搜索运单号",
+          "刷新",
+          "批量提醒 (0)",
+          "包裹入库",
+          "on"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "codex-may-89022-latest-structure-07-操作-包裹入库",
+        "label": "操作:包裹入库",
+        "finalUrl": "http://127.0.0.1:49022/packages",
+        "title": "丰巢快递员SaaS平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89022/probe/latest-runtime/codex-may-89022-latest-structure-07-操作-包裹入库.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89022/probe/latest-runtime/codex-may-89022-latest-structure-07-操作-包裹入库.png",
+        "elementCount": 312,
+        "interactiveCount": 31,
+        "interactiveLabels": [
+          "工作台 包裹管理 智能柜列表 空箱预约 租用订单 赋能中心 柜机健康度 收益分析",
+          "工作台",
+          "包裹管理",
+          "智能柜列表",
+          "空箱预约",
+          "租用订单",
+          "赋能中心",
+          "柜机健康度",
+          "收益分析",
+          "全 部",
+          "已存柜",
+          "已滞留 (0)",
+          "已取件",
+          "搜索运单号",
+          "刷新",
+          "批量提醒 (0)",
+          "包裹入库",
+          "on",
+          "包裹入库 运单号 快递公司 选择快递公司 收件人姓名 收件人电话 存放柜机 选择柜机 格口编号 确认入库",
+          "Close",
+          "输入运单号，自动识别快递公司",
+          "请输入收件人姓名",
+          "请输入收件人电话",
+          "如: A01",
+          "确认入库"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "codex-may-89022-latest-structure-08-二层操作-包裹入库-确认入库",
+        "label": "二层操作:包裹入库->确认入库",
+        "finalUrl": "http://127.0.0.1:49022/packages",
+        "title": "丰巢快递员SaaS平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89022/probe/latest-runtime/codex-may-89022-latest-structure-08-二层操作-包裹入库-确认入库.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89022/probe/latest-runtime/codex-may-89022-latest-structure-08-二层操作-包裹入库-确认入库.png",
+        "elementCount": 336,
+        "interactiveCount": 31,
+        "interactiveLabels": [
+          "工作台 包裹管理 智能柜列表 空箱预约 租用订单 赋能中心 柜机健康度 收益分析",
+          "工作台",
+          "包裹管理",
+          "智能柜列表",
+          "空箱预约",
+          "租用订单",
+          "赋能中心",
+          "柜机健康度",
+          "收益分析",
+          "全 部",
+          "已存柜",
+          "已滞留 (0)",
+          "已取件",
+          "搜索运单号",
+          "刷新",
+          "批量提醒 (0)",
+          "包裹入库",
+          "on",
+          "包裹入库 运单号 请输入运单号 快递公司 选择快递公司 请选择快递公司 收件人姓名 请输入收件人姓名 收件人电话 请输入收件人电话 存放柜机 选择柜机 请选择柜机 格口编号 请输入格口编号 确认入库",
+          "Close",
+          "输入运单号，自动识别快递公司",
+          "请输入收件人姓名",
+          "请输入收件人电话",
+          "如: A01",
+          "确认入库"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "codex-may-89022-latest-structure-09-导航-智能柜列表",
+        "label": "导航:智能柜列表",
+        "finalUrl": "http://127.0.0.1:49022/cabinets",
+        "title": "丰巢快递员SaaS平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89022/probe/latest-runtime/codex-may-89022-latest-structure-09-导航-智能柜列表.json",
+        "screenshotPath": "",
+        "elementCount": 212,
+        "interactiveCount": 12,
+        "interactiveLabels": [
+          "工作台 包裹管理 智能柜列表 空箱预约 租用订单 赋能中心 柜机健康度 收益分析",
+          "工作台",
+          "包裹管理",
+          "智能柜列表",
+          "空箱预约",
+          "租用订单",
+          "赋能中心",
+          "柜机健康度",
+          "收益分析",
+          "搜索柜机名称/编号",
+          "刷新"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "codex-may-89022-latest-structure-10-操作-刷新",
+        "label": "操作:刷新",
+        "finalUrl": "http://127.0.0.1:49022/cabinets",
+        "title": "丰巢快递员SaaS平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89022/probe/latest-runtime/codex-may-89022-latest-structure-10-操作-刷新.json",
+        "screenshotPath": "",
+        "elementCount": 222,
+        "interactiveCount": 12,
+        "interactiveLabels": [
+          "工作台 包裹管理 智能柜列表 空箱预约 租用订单 赋能中心 柜机健康度 收益分析",
+          "工作台",
+          "包裹管理",
+          "智能柜列表",
+          "空箱预约",
+          "租用订单",
+          "赋能中心",
+          "柜机健康度",
+          "收益分析",
+          "搜索柜机名称/编号",
+          "刷新"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "codex-may-89022-latest-structure-11-导航-空箱预约",
+        "label": "导航:空箱预约",
+        "finalUrl": "http://127.0.0.1:49022/reservation",
+        "title": "丰巢快递员SaaS平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89022/probe/latest-runtime/codex-may-89022-latest-structure-11-导航-空箱预约.json",
+        "screenshotPath": "",
+        "elementCount": 157,
+        "interactiveCount": 12,
+        "interactiveLabels": [
+          "工作台 包裹管理 智能柜列表 空箱预约 租用订单 赋能中心 柜机健康度 收益分析",
+          "工作台",
+          "包裹管理",
+          "智能柜列表",
+          "空箱预约",
+          "租用订单",
+          "赋能中心",
+          "柜机健康度",
+          "收益分析",
+          "刷新",
+          "新建预约"
+        ]
+      }
+    ]
+  },
+  "screenshotMetrics": {
+    "width": 1856,
+    "height": 1000,
+    "scrollWidth": 1824,
+    "scrollHeight": 1000
+  },
+  "initialBodyTextPreview": "丰巢快递员SaaS\n工作台\n包裹管理\n智能柜列表\n空箱预约\n租用订单\n赋能中心\n柜机健康度\n收益分析\n工作台\n已登录\n演示快递员\n今日派件\n0\n待处理包裹\n0\n滞留件\n0\n今日收益(元)\n0.00\n智能派单助手 - 最优柜机推荐\n查看全部柜机\n暂无推荐柜机，请检查柜机在线状态\n金牌骑手排行榜\n1\n王五\n328 单 · 2100 积分\n2\n张三\n256 单 · 1850 积分\n3\n李四\n198 单 · 1520 积分\n绩效积分进度\n本月绩效目标\n1250 / 3000 分\n41.66666666666667%\n本月派件目标\n248 / 500 单\n49.6%\n服务评分\n4.8 / 5.0 分\n96%",
+  "bodyTextPreview": "丰巢快递员SaaS\n工作台\n包裹管理\n智能柜列表\n空箱预约\n租用订单\n赋能中心\n柜机健康度\n收益分析\n智能柜列表\n已登录\n演示快递员\n柜机总数\n0\n在线柜机\n0/ 0\n故障柜机\n0\n可用格口\n0/ 0\n刷新\n柜机编号\t柜机名称\t地址\t格口使用\t温控\t故障\t状态\t最后心跳\t操作\n\n柜机编号\n\t\n柜机名称\n\t\n地址\n\t\n格口使用\n\t\n温控\n\t\n故障\n\t\n状态\n\t\n最后心跳\n\t\n操作\n\n\n暂无数据\n加载柜机列表失败\n加载柜机列表失败",
+  "apiBase": "http://127.0.0.1:59022",
+  "businessGoalPreview": "",
+  "apiResponses": [
+    {
+      "method": "GET",
+      "status": 500,
+      "url": "http://127.0.0.1:49022/api/device-alerts?isRead=false"
+    },
+    {
+      "method": "GET",
+      "status": 500,
+      "url": "http://127.0.0.1:49022/api/device-alerts?isRead=false"
+    },
+    {
+      "method": "GET",
+      "status": 500,
+      "url": "http://127.0.0.1:49022/api/statistics/overview"
+    },
+    {
+      "method": "GET",
+      "status": 500,
+      "url": "http://127.0.0.1:49022/api/cabinets/recommend/optimal?boxSize=M"
+    },
+    {
+      "method": "GET",
+      "status": 500,
+      "url": "http://127.0.0.1:49022/api/leaderboard?limit=5"
+    },
+    {
+      "method": "GET",
+      "status": 500,
+      "url": "http://127.0.0.1:49022/api/statistics/overview"
+    },
+    {
+      "method": "GET",
+      "status": 500,
+      "url": "http://127.0.0.1:49022/api/cabinets/recommend/optimal?boxSize=M"
+    },
+    {
+      "method": "GET",
+      "status": 500,
+      "url": "http://127.0.0.1:49022/api/leaderboard?limit=5"
+    },
+    {
+      "method": "GET",
+      "status": 500,
+      "url": "http://127.0.0.1:49022/api/device-alerts?isRead=false"
+    },
+    {
+      "method": "GET",
+      "status": 500,
+      "url": "http://127.0.0.1:49022/api/device-alerts?isRead=false"
+    },
+    {
+      "method": "GET",
+      "status": 500,
+      "url": "http://127.0.0.1:49022/api/statistics/overview"
+    },
+    {
+      "method": "GET",
+      "status": 500,
+      "url": "http://127.0.0.1:49022/api/cabinets/recommend/optimal?boxSize=M"
+    },
+    {
+      "method": "GET",
+      "status": 500,
+      "url": "http://127.0.0.1:49022/api/leaderboard?limit=5"
+    },
+    {
+      "method": "GET",
+      "status": 500,
+      "url": "http://127.0.0.1:49022/api/statistics/overview"
+    },
+    {
+      "method": "GET",
+      "status": 500,
+      "url": "http://127.0.0.1:49022/api/cabinets/recommend/optimal?boxSize=M"
+    },
+    {
+      "method": "GET",
+      "status": 500,
+      "url": "http://127.0.0.1:49022/api/leaderboard?limit=5"
+    },
+    {
+      "method": "GET",
+      "status": 500,
+      "url": "http://127.0.0.1:49022/api/cabinets?page=1&pageSize=10"
+    },
+    {
+      "method": "GET",
+      "status": 500,
+      "url": "http://127.0.0.1:49022/api/cabinets?page=1&pageSize=10"
+    },
+    {
+      "method": "GET",
+      "status": 500,
+      "url": "http://127.0.0.1:49022/api/cabinets?page=1&pageSize=10"
+    },
+    {
+      "method": "GET",
+      "status": 500,
+      "url": "http://127.0.0.1:49022/api/statistics/overview"
+    },
+    {
+      "method": "GET",
+      "status": 500,
+      "url": "http://127.0.0.1:49022/api/cabinets/recommend/optimal?boxSize=M"
+    },
+    {
+      "method": "GET",
+      "status": 500,
+      "url": "http://127.0.0.1:49022/api/leaderboard?limit=5"
+    },
+    {
+      "method": "GET",
+      "status": 500,
+      "url": "http://127.0.0.1:49022/api/device-alerts?isRead=false"
+    },
+    {
+      "method": "GET",
+      "status": 500,
+      "url": "http://127.0.0.1:49022/api/statistics/overview"
+    },
+    {
+      "method": "GET",
+      "status": 500,
+      "url": "http://127.0.0.1:49022/api/cabinets/recommend/optimal?boxSize=M"
+    },
+    {
+      "method": "GET",
+      "status": 500,
+      "url": "http://127.0.0.1:49022/api/leaderboard?limit=5"
+    },
+    {
+      "method": "GET",
+      "status": 500,
+      "url": "http://127.0.0.1:49022/api/device-alerts?isRead=false"
+    },
+    {
+      "method": "GET",
+      "status": 500,
+      "url": "http://127.0.0.1:49022/api/packages?page=1&pageSize=10&status=&brand="
+    },
+    {
+      "method": "GET",
+      "status": 500,
+      "url": "http://127.0.0.1:49022/api/sms-templates"
+    },
+    {
+      "method": "GET",
+      "status": 500,
+      "url": "http://127.0.0.1:49022/api/cabinets?pageSize=100"
+    },
+    {
+      "method": "GET",
+      "status": 500,
+      "url": "http://127.0.0.1:49022/api/statistics/overview"
+    },
+    {
+      "method": "GET",
+      "status": 500,
+      "url": "http://127.0.0.1:49022/api/packages?page=1&pageSize=10&status=&brand="
+    },
+    {
+      "method": "GET",
+      "status": 500,
+      "url": "http://127.0.0.1:49022/api/sms-templates"
+    },
+    {
+      "method": "GET",
+      "status": 500,
+      "url": "http://127.0.0.1:49022/api/cabinets?pageSize=100"
+    },
+    {
+      "method": "GET",
+      "status": 500,
+      "url": "http://127.0.0.1:49022/api/statistics/overview"
+    },
+    {
+      "method": "GET",
+      "status": 500,
+      "url": "http://127.0.0.1:49022/api/packages?page=1&pageSize=10&status=&brand="
+    },
+    {
+      "method": "GET",
+      "status": 500,
+      "url": "http://127.0.0.1:49022/api/cabinets?page=1&pageSize=10"
+    },
+    {
+      "method": "GET",
+      "status": 500,
+      "url": "http://127.0.0.1:49022/api/cabinets?page=1&pageSize=10"
+    },
+    {
+      "method": "GET",
+      "status": 500,
+      "url": "http://127.0.0.1:49022/api/cabinets?page=1&pageSize=10"
+    },
+    {
+      "method": "GET",
+      "status": 500,
+      "url": "http://127.0.0.1:49022/api/reservations?page=1&pageSize=10&courierId=1&status="
+    },
+    {
+      "method": "GET",
+      "status": 500,
+      "url": "http://127.0.0.1:49022/api/cabinets?pageSize=100&status=online"
+    },
+    {
+      "method": "GET",
+      "status": 500,
+      "url": "http://127.0.0.1:49022/api/reservations?page=1&pageSize=10&courierId=1&status="
+    },
+    {
+      "method": "GET",
+      "status": 500,
+      "url": "http://127.0.0.1:49022/api/cabinets?pageSize=100&status=online"
+    },
+    {
+      "method": "GET",
+      "status": 500,
+      "url": "http://127.0.0.1:49022/api/cabinets?page=1&pageSize=10"
+    },
+    {
+      "method": "GET",
+      "status": 500,
+      "url": "http://127.0.0.1:49022/api/device-alerts?isRead=false"
+    },
+    {
+      "method": "GET",
+      "status": 500,
+      "url": "http://127.0.0.1:49022/api/cabinets?page=1&pageSize=10"
+    },
+    {
+      "method": "GET",
+      "status": 500,
+      "url": "http://127.0.0.1:49022/api/device-alerts?isRead=false"
+    }
+  ],
+  "apiChecks": [
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59022/api/health",
+      "path": "/api/health",
+      "status": 0,
+      "ok": false,
+      "error": "apiRequestContext.get: connect ECONNREFUSED 127.0.0.1:59022\nCall log:\n\u001b[2m  - → GET http://127.0.0.1:59022/api/health\u001b[22m\n\u001b[2m    - user-agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/148.0.0.0 Saf"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59022/api/device-alerts?isRead=false",
+      "path": "/api/device-alerts?isRead=false",
+      "status": 0,
+      "ok": false,
+      "error": "apiRequestContext.get: connect ECONNREFUSED 127.0.0.1:59022\nCall log:\n\u001b[2m  - → GET http://127.0.0.1:59022/api/device-alerts?isRead=false\u001b[22m\n\u001b[2m    - user-agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Headless"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59022/api/statistics/overview",
+      "path": "/api/statistics/overview",
+      "status": 0,
+      "ok": false,
+      "error": "apiRequestContext.get: connect ECONNREFUSED 127.0.0.1:59022\nCall log:\n\u001b[2m  - → GET http://127.0.0.1:59022/api/statistics/overview\u001b[22m\n\u001b[2m    - user-agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59022/api/cabinets/recommend/optimal?boxSize=M",
+      "path": "/api/cabinets/recommend/optimal?boxSize=M",
+      "status": 0,
+      "ok": false,
+      "error": "apiRequestContext.get: connect ECONNREFUSED 127.0.0.1:59022\nCall log:\n\u001b[2m  - → GET http://127.0.0.1:59022/api/cabinets/recommend/optimal?boxSize=M\u001b[22m\n\u001b[2m    - user-agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59022/api/leaderboard?limit=5",
+      "path": "/api/leaderboard?limit=5",
+      "status": 0,
+      "ok": false,
+      "error": "apiRequestContext.get: connect ECONNREFUSED 127.0.0.1:59022\nCall log:\n\u001b[2m  - → GET http://127.0.0.1:59022/api/leaderboard?limit=5\u001b[22m\n\u001b[2m    - user-agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59022/api/cabinets?page=1&pageSize=10",
+      "path": "/api/cabinets?page=1&pageSize=10",
+      "status": 0,
+      "ok": false,
+      "error": "apiRequestContext.get: connect ECONNREFUSED 127.0.0.1:59022\nCall log:\n\u001b[2m  - → GET http://127.0.0.1:59022/api/cabinets?page=1&pageSize=10\u001b[22m\n\u001b[2m    - user-agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Headles"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59022/api/packages?page=1&pageSize=10&status=&brand=",
+      "path": "/api/packages?page=1&pageSize=10&status=&brand=",
+      "status": 0,
+      "ok": false,
+      "error": "apiRequestContext.get: connect ECONNREFUSED 127.0.0.1:59022\nCall log:\n\u001b[2m  - → GET http://127.0.0.1:59022/api/packages?page=1&pageSize=10&status=&brand=\u001b[22m\n\u001b[2m    - user-agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59022/api/sms-templates",
+      "path": "/api/sms-templates",
+      "status": 0,
+      "ok": false,
+      "error": "apiRequestContext.get: connect ECONNREFUSED 127.0.0.1:59022\nCall log:\n\u001b[2m  - → GET http://127.0.0.1:59022/api/sms-templates\u001b[22m\n\u001b[2m    - user-agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/148.0."
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59022/api/cabinets?pageSize=100",
+      "path": "/api/cabinets?pageSize=100",
+      "status": 0,
+      "ok": false,
+      "error": "apiRequestContext.get: connect ECONNREFUSED 127.0.0.1:59022\nCall log:\n\u001b[2m  - → GET http://127.0.0.1:59022/api/cabinets?pageSize=100\u001b[22m\n\u001b[2m    - user-agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrom"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59022/api/reservations?page=1&pageSize=10&courierId=1&status=",
+      "path": "/api/reservations?page=1&pageSize=10&courierId=1&status=",
+      "status": 0,
+      "ok": false,
+      "error": "apiRequestContext.get: connect ECONNREFUSED 127.0.0.1:59022\nCall log:\n\u001b[2m  - → GET http://127.0.0.1:59022/api/reservations?page=1&pageSize=10&courierId=1&status=\u001b[22m\n\u001b[2m    - user-agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KH"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59022/api/cabinets?pageSize=100&status=online",
+      "path": "/api/cabinets?pageSize=100&status=online",
+      "status": 0,
+      "ok": false,
+      "error": "apiRequestContext.get: connect ECONNREFUSED 127.0.0.1:59022\nCall log:\n\u001b[2m  - → GET http://127.0.0.1:59022/api/cabinets?pageSize=100&status=online\u001b[22m\n\u001b[2m    - user-agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko)"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59022/api/teachers",
+      "path": "/api/teachers",
+      "status": 0,
+      "ok": false,
+      "error": "apiRequestContext.get: connect ECONNREFUSED 127.0.0.1:59022\nCall log:\n\u001b[2m  - → GET http://127.0.0.1:59022/api/teachers\u001b[22m\n\u001b[2m    - user-agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/148.0.0.0 S"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59022/api/courses",
+      "path": "/api/courses",
+      "status": 0,
+      "ok": false,
+      "error": "apiRequestContext.get: connect ECONNREFUSED 127.0.0.1:59022\nCall log:\n\u001b[2m  - → GET http://127.0.0.1:59022/api/courses\u001b[22m\n\u001b[2m    - user-agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/148.0.0.0 Sa"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59022/api/bookings",
+      "path": "/api/bookings",
+      "status": 0,
+      "ok": false,
+      "error": "apiRequestContext.get: connect ECONNREFUSED 127.0.0.1:59022\nCall log:\n\u001b[2m  - → GET http://127.0.0.1:59022/api/bookings\u001b[22m\n\u001b[2m    - user-agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/148.0.0.0 S"
+    }
+  ],
+  "dialogs": [],
+  "consoleMessages": [
+    {
+      "type": "debug",
+      "text": "[vite] connecting...",
+      "location": {
+        "url": "http://127.0.0.1:49022/@vite/client",
+        "lineNumber": 494,
+        "columnNumber": 8
+      }
+    },
+    {
+      "type": "debug",
+      "text": "[vite] connected.",
+      "location": {
+        "url": "http://127.0.0.1:49022/@vite/client",
+        "lineNumber": 617,
+        "columnNumber": 14
+      }
+    },
+    {
+      "type": "info",
+      "text": "%cDownload the React DevTools for a better development experience: https://reactjs.org/link/react-devtools font-weight:bold",
+      "location": {
+        "url": "http://127.0.0.1:49022/node_modules/.vite/deps/chunk-PJEEZAML.js?v=1ddbd61d",
+        "lineNumber": 21550,
+        "columnNumber": 24
+      }
+    },
+    {
+      "type": "warning",
+      "text": "⚠️ React Router Future Flag Warning: React Router will begin wrapping state updates in `React.startTransition` in v7. You can use the `v7_startTransition` future flag to opt-in early. For more information, see https://reactrouter.com/v6/upgrading/future#v7_starttransition.",
+      "location": {
+        "url": "http://127.0.0.1:49022/node_modules/.vite/deps/react-router-dom.js?v=1ddbd61d",
+        "lineNumber": 4426,
+        "columnNumber": 12
+      }
+    },
+    {
+      "type": "warning",
+      "text": "⚠️ React Router Future Flag Warning: Relative route resolution within Splat routes is changing in v7. You can use the `v7_relativeSplatPath` future flag to opt-in early. For more information, see https://reactrouter.com/v6/upgrading/future#v7_relativesplatpath.",
+      "location": {
+        "url": "http://127.0.0.1:49022/node_modules/.vite/deps/react-router-dom.js?v=1ddbd61d",
+        "lineNumber": 4426,
+        "columnNumber": 12
+      }
+    },
+    {
+      "type": "error",
+      "text": "Failed to load resource: the server responded with a status of 404 (Not Found)",
+      "location": {
+        "url": "http://127.0.0.1:49022/favicon.ico",
+        "lineNumber": 0,
+        "columnNumber": 0
+      }
+    },
+    {
+      "type": "error",
+      "text": "Failed to load resource: the server responded with a status of 500 (Internal Server Error)",
+      "location": {
+        "url": "http://127.0.0.1:49022/api/device-alerts?isRead=false",
+        "lineNumber": 0,
+        "columnNumber": 0
+      }
+    },
+    {
+      "type": "error",
+      "text": "加载告警失败 AxiosError: Request failed with status code 500\n    at settle (http://127.0.0.1:49022/node_modules/.vite/deps/axios.js?v=1ddbd61d:1457:12)\n    at XMLHttpRequest.onloadend (http://127.0.0.1:49022/node_modules/.vite/deps/axios.js?v=1ddbd61d:1862:7)",
+      "location": {
+        "url": "http://127.0.0.1:49022/src/components/MainLayout.jsx",
+        "lineNumber": 92,
+        "columnNumber": 14
+      }
+    },
+    {
+      "type": "error",
+      "text": "Failed to load resource: the server responded with a status of 500 (Internal Server Error)",
+      "location": {
+        "url": "http://127.0.0.1:49022/api/device-alerts?isRead=false",
+        "lineNumber": 0,
+        "columnNumber": 0
+      }
+    },
+    {
+      "type": "error",
+      "text": "加载告警失败 AxiosError: Request failed with status code 500\n    at settle (http://127.0.0.1:49022/node_modules/.vite/deps/axios.js?v=1ddbd61d:1457:12)\n    at XMLHttpRequest.onloadend (http://127.0.0.1:49022/node_modules/.vite/deps/axios.js?v=1ddbd61d:1862:7)",
+      "location": {
+        "url": "http://127.0.0.1:49022/src/components/MainLayout.jsx",
+        "lineNumber": 92,
+        "columnNumber": 14
+      }
+    },
+    {
+      "type": "error",
+      "text": "Failed to load resource: the server responded with a status of 500 (Internal Server Error)",
+      "location": {
+        "url": "http://127.0.0.1:49022/api/statistics/overview",
+        "lineNumber": 0,
+        "columnNumber": 0
+      }
+    },
+    {
+      "type": "error",
+      "text": "加载概览失败 AxiosError: Request failed with status code 500\n    at settle (http://127.0.0.1:49022/node_modules/.vite/deps/axios.js?v=1ddbd61d:1457:12)\n    at XMLHttpRequest.onloadend (http://127.0.0.1:49022/node_modules/.vite/deps/axios.js?v=1ddbd61d:1862:7)",
+      "location": {
+        "url": "http://127.0.0.1:49022/src/pages/Dashboard.jsx",
+        "lineNumber": 49,
+        "columnNumber": 14
+      }
+    },
+    {
+      "type": "error",
+      "text": "Failed to load resource: the server responded with a status of 500 (Internal Server Error)",
+      "location": {
+        "url": "http://127.0.0.1:49022/api/cabinets/recommend/optimal?boxSize=M",
+        "lineNumber": 0,
+        "columnNumber": 0
+      }
+    },
+    {
+      "type": "error",
+      "text": "加载推荐柜机失败 AxiosError: Request failed with status code 500\n    at settle (http://127.0.0.1:49022/node_modules/.vite/deps/axios.js?v=1ddbd61d:1457:12)\n    at XMLHttpRequest.onloadend (http://127.0.0.1:49022/node_modules/.vite/deps/axios.js?v=1ddbd61d:1862:7)",
+      "location": {
+        "url": "http://127.0.0.1:49022/src/pages/Dashboard.jsx",
+        "lineNumber": 57,
+        "columnNumber": 14
+      }
+    },
+    {
+      "type": "error",
+      "text": "Failed to load resource: the server responded with a status of 500 (Internal Server Error)",
+      "location": {
+        "url": "http://127.0.0.1:49022/api/leaderboard?limit=5",
+        "lineNumber": 0,
+        "columnNumber": 0
+      }
+    },
+    {
+      "type": "error",
+      "text": "加载排行榜失败 AxiosError: Request failed with status code 500\n    at settle (http://127.0.0.1:49022/node_modules/.vite/deps/axios.js?v=1ddbd61d:1457:12)\n    at XMLHttpRequest.onloadend (http://127.0.0.1:49022/node_modules/.vite/deps/axios.js?v=1ddbd61d:1862:7)",
+      "location": {
+        "url": "http://127.0.0.1:49022/src/pages/Dashboard.jsx",
+        "lineNumber": 65,
+        "columnNumber": 14
+      }
+    },
+    {
+      "type": "error",
+      "text": "Failed to load resource: the server responded with a status of 500 (Internal Server Error)",
+      "location": {
+        "url": "http://127.0.0.1:49022/api/statistics/overview",
+        "lineNumber": 0,
+        "columnNumber": 0
+      }
+    },
+    {
+      "type": "error",
+      "text": "加载概览失败 AxiosError: Request failed with status code 500\n    at settle (http://127.0.0.1:49022/node_modules/.vite/deps/axios.js?v=1ddbd61d:1457:12)\n    at XMLHttpRequest.onloadend (http://127.0.0.1:49022/node_modules/.vite/deps/axios.js?v=1ddbd61d:1862:7)",
+      "location": {
+        "url": "http://127.0.0.1:49022/src/pages/Dashboard.jsx",
+        "lineNumber": 49,
+        "columnNumber": 14
+      }
+    },
+    {
+      "type": "error",
+      "text": "Failed to load resource: the server responded with a status of 500 (Internal Server Error)",
+      "location": {
+        "url": "http://127.0.0.1:49022/api/cabinets/recommend/optimal?boxSize=M",
+        "lineNumber": 0,
+        "columnNumber": 0
+      }
+    },
+    {
+      "type": "error",
+      "text": "加载推荐柜机失败 AxiosError: Request failed with status code 500\n    at settle (http://127.0.0.1:49022/node_modules/.vite/deps/axios.js?v=1ddbd61d:1457:12)\n    at XMLHttpRequest.onloadend (http://127.0.0.1:49022/node_modules/.vite/deps/axios.js?v=1ddbd61d:1862:7)",
+      "location": {
+        "url": "http://127.0.0.1:49022/src/pages/Dashboard.jsx",
+        "lineNumber": 57,
+        "columnNumber": 14
+      }
+    },
+    {
+      "type": "error",
+      "text": "Failed to load resource: the server responded with a status of 500 (Internal Server Error)",
+      "location": {
+        "url": "http://127.0.0.1:49022/api/leaderboard?limit=5",
+        "lineNumber": 0,
+        "columnNumber": 0
+      }
+    },
+    {
+      "type": "error",
+      "text": "加载排行榜失败 AxiosError: Request failed with status code 500\n    at settle (http://127.0.0.1:49022/node_modules/.vite/deps/axios.js?v=1ddbd61d:1457:12)\n    at XMLHttpRequest.onloadend (http://127.0.0.1:49022/node_modules/.vite/deps/axios.js?v=1ddbd61d:1862:7)",
+      "location": {
+        "url": "http://127.0.0.1:49022/src/pages/Dashboard.jsx",
+        "lineNumber": 65,
+        "columnNumber": 14
+      }
+    },
+    {
+      "type": "error",
+      "text": "Failed to load resource: the server responded with a status of 404 (Not Found)",
+      "location": {
+        "url": "http://127.0.0.1:49022/favicon.ico",
+        "lineNumber": 0,
+        "columnNumber": 0
+      }
+    },
+    {
+      "type": "debug",
+      "text": "[vite] connecting...",
+      "location": {
+        "url": "http://127.0.0.1:49022/@vite/client",
+        "lineNumber": 494,
+        "columnNumber": 8
+      }
+    },
+    {
+      "type": "debug",
+      "text": "[vite] connected.",
+      "location": {
+        "url": "http://127.0.0.1:49022/@vite/client",
+        "lineNumber": 617,
+        "columnNumber": 14
+      }
+    },
+    {
+      "type": "info",
+      "text": "%cDownload the React DevTools for a better development experience: https://reactjs.org/link/react-devtools font-weight:bold",
+      "location": {
+        "url": "http://127.0.0.1:49022/node_modules/.vite/deps/chunk-PJEEZAML.js?v=1ddbd61d",
+        "lineNumber": 21550,
+        "columnNumber": 24
+      }
+    },
+    {
+      "type": "warning",
+      "text": "⚠️ React Router Future Flag Warning: React Router will begin wrapping state updates in `React.startTransition` in v7. You can use the `v7_startTransition` future flag to opt-in early. For more information, see https://reactrouter.com/v6/upgrading/future#v7_starttransition.",
+      "location": {
+        "url": "http://127.0.0.1:49022/node_modules/.vite/deps/react-router-dom.js?v=1ddbd61d",
+        "lineNumber": 4426,
+        "columnNumber": 12
+      }
+    },
+    {
+      "type": "warning",
+      "text": "⚠️ React Router Future Flag Warning: Relative route resolution within Splat routes is changing in v7. You can use the `v7_relativeSplatPath` future flag to opt-in early. For more information, see https://reactrouter.com/v6/upgrading/future#v7_relativesplatpath.",
+      "location": {
+        "url": "http://127.0.0.1:49022/node_modules/.vite/deps/react-router-dom.js?v=1ddbd61d",
+        "lineNumber": 4426,
+        "columnNumber": 12
+      }
+    },
+    {
+      "type": "error",
+      "text": "Failed to load resource: the server responded with a status of 500 (Internal Server Error)",
+      "location": {
+        "url": "http://127.0.0.1:49022/api/device-alerts?isRead=false",
+        "lineNumber": 0,
+        "columnNumber": 0
+      }
+    },
+    {
+      "type": "error",
+      "text": "加载告警失败 AxiosError: Request failed with status code 500\n    at settle (http://127.0.0.1:49022/node_modules/.vite/deps/axios.js?v=1ddbd61d:1457:12)\n    at XMLHttpRequest.onloadend (http://127.0.0.1:49022/node_modules/.vite/deps/axios.js?v=1ddbd61d:1862:7)",
+      "location": {
+        "url": "http://127.0.0.1:49022/src/components/MainLayout.jsx",
+        "lineNumber": 92,
+        "columnNumber": 14
+      }
+    },
+    {
+      "type": "error",
+      "text": "Failed to load resource: the server responded with a status of 500 (Internal Server Error)",
+      "location": {
+        "url": "http://127.0.0.1:49022/api/device-alerts?isRead=false",
+        "lineNumber": 0,
+        "columnNumber": 0
+      }
+    },
+    {
+      "type": "error",
+      "text": "加载告警失败 AxiosError: Request failed with status code 500\n    at settle (http://127.0.0.1:49022/node_modules/.vite/deps/axios.js?v=1ddbd61d:1457:12)\n    at XMLHttpRequest.onloadend (http://127.0.0.1:49022/node_modules/.vite/deps/axios.js?v=1ddbd61d:1862:7)",
+      "location": {
+        "url": "http://127.0.0.1:49022/src/components/MainLayout.jsx",
+        "lineNumber": 92,
+        "columnNumber": 14
+      }
+    },
+    {
+      "type": "error",
+      "text": "Failed to load resource: the server responded with a status of 500 (Internal Server Error)",
+      "location": {
+        "url": "http://127.0.0.1:49022/api/statistics/overview",
+        "lineNumber": 0,
+        "columnNumber": 0
+      }
+    },
+    {
+      "type": "error",
+      "text": "加载概览失败 AxiosError: Request failed with status code 500\n    at settle (http://127.0.0.1:49022/node_modules/.vite/deps/axios.js?v=1ddbd61d:1457:12)\n    at XMLHttpRequest.onloadend (http://127.0.0.1:49022/node_modules/.vite/deps/axios.js?v=1ddbd61d:1862:7)",
+      "location": {
+        "url": "http://127.0.0.1:49022/src/pages/Dashboard.jsx",
+        "lineNumber": 49,
+        "columnNumber": 14
+      }
+    },
+    {
+      "type": "error",
+      "text": "Failed to load resource: the server responded with a status of 500 (Internal Server Error)",
+      "location": {
+        "url": "http://127.0.0.1:49022/api/cabinets/recommend/optimal?boxSize=M",
+        "lineNumber": 0,
+        "columnNumber": 0
+      }
+    },
+    {
+      "type": "error",
+      "text": "加载推荐柜机失败 AxiosError: Request failed with status code 500\n    at settle (http://127.0.0.1:49022/node_modules/.vite/deps/axios.js?v=1ddbd61d:1457:12)\n    at XMLHttpRequest.onloadend (http://127.0.0.1:49022/node_modules/.vite/deps/axios.js?v=1ddbd61d:1862:7)",
+      "location": {
+        "url": "http://127.0.0.1:49022/src/pages/Dashboard.jsx",
+        "lineNumber": 57,
+        "columnNumber": 14
+      }
+    },
+    {
+      "type": "error",
+      "text": "Failed to load resource: the server responded with a status of 500 (Internal Server Error)",
+      "location": {
+        "url": "http://127.0.0.1:49022/api/leaderboard?limit=5",
+        "lineNumber": 0,
+        "columnNumber": 0
+      }
+    },
+    {
+      "type": "error",
+      "text": "加载排行榜失败 AxiosError: Request failed with status code 500\n    at settle (http://127.0.0.1:49022/node_modules/.vite/deps/axios.js?v=1ddbd61d:1457:12)\n    at XMLHttpRequest.onloadend (http://127.0.0.1:49022/node_modules/.vite/deps/axios.js?v=1ddbd61d:1862:7)",
+      "location": {
+        "url": "http://127.0.0.1:49022/src/pages/Dashboard.jsx",
+        "lineNumber": 65,
+        "columnNumber": 14
+      }
+    },
+    {
+      "type": "error",
+      "text": "Failed to load resource: the server responded with a status of 500 (Internal Server Error)",
+      "location": {
+        "url": "http://127.0.0.1:49022/api/statistics/overview",
+        "lineNumber": 0,
+        "columnNumber": 0
+      }
+    },
+    {
+      "type": "error",
+      "text": "加载概览失败 AxiosError: Request failed with status code 500\n    at settle (http://127.0.0.1:49022/node_modules/.vite/deps/axios.js?v=1ddbd61d:1457:12)\n    at XMLHttpRequest.onloadend (http://127.0.0.1:49022/node_modules/.vite/deps/axios.js?v=1ddbd61d:1862:7)",
+      "location": {
+        "url": "http://127.0.0.1:49022/src/pages/Dashboard.jsx",
+        "lineNumber": 49,
+        "columnNumber": 14
+      }
+    },
+    {
+      "type": "error",
+      "text": "Failed to load resource: the server responded with a status of 500 (Internal Server Error)",
+      "location": {
+        "url": "http://127.0.0.1:49022/api/cabinets/recommend/optimal?boxSize=M",
+        "lineNumber": 0,
+        "columnNumber": 0
+      }
+    },
+    {
+      "type": "error",
+      "text": "加载推荐柜机失败 AxiosError: Request failed with status code 500\n    at settle (http://127.0.0.1:49022/node_modules/.vite/deps/axios.js?v=1ddbd61d:1457:12)\n    at XMLHttpRequest.onloadend (http://127.0.0.1:49022/node_modules/.vite/deps/axios.js?v=1ddbd61d:1862:7)",
+      "location": {
+        "url": "http://127.0.0.1:49022/src/pages/Dashboard.jsx",
+        "lineNumber": 57,
+        "columnNumber": 14
+      }
+    },
+    {
+      "type": "error",
+      "text": "Failed to load resource: the server responded with a status of 500 (Internal Server Error)",
+      "location": {
+        "url": "http://127.0.0.1:49022/api/leaderboard?limit=5",
+        "lineNumber": 0,
+        "columnNumber": 0
+      }
+    },
+    {
+      "type": "error",
+      "text": "加载排行榜失败 AxiosError: Request failed with status code 500\n    at settle (http://127.0.0.1:49022/node_modules/.vite/deps/axios.js?v=1ddbd61d:1457:12)\n    at XMLHttpRequest.onloadend (http://127.0.0.1:49022/node_modules/.vite/deps/axios.js?v=1ddbd61d:1862:7)",
+      "location": {
+        "url": "http://127.0.0.1:49022/src/pages/Dashboard.jsx",
+        "lineNumber": 65,
+        "columnNumber": 14
+      }
+    },
+    {
+      "type": "error",
+      "text": "Failed to load resource: the server responded with a status of 500 (Internal Server Error)",
+      "location": {
+        "url": "http://127.0.0.1:49022/api/cabinets?page=1&pageSize=10",
+        "lineNumber": 0,
+        "columnNumber": 0
+      }
+    },
+    {
+      "type": "error",
+      "text": "Warning: [antd: message] Static function can not consume context like dynamic theme. Please use 'App' component instead.",
+      "location": {
+        "url": "http://127.0.0.1:49022/node_modules/.vite/deps/chunk-D2XKH6ZM.js?v=1ddbd61d",
+        "lineNumber": 1247,
+        "columnNumber": 14
+      }
+    },
+    {
+      "type": "error",
+      "text": "Failed to load resource: the server responded with a status of 500 (Internal Server Error)",
+      "location": {
+        "url": "http://127.0.0.1:49022/api/cabinets?page=1&pageSize=10",
+        "lineNumber": 0,
+        "columnNumber": 0
+      }
+    },
+    {
+      "type": "error",
+      "text": "Failed to load resource: the server responded with a status of 500 (Internal Server Error)",
+      "location": {
+        "url": "http://127.0.0.1:49022/api/cabinets?page=1&pageSize=10",
+        "lineNumber": 0,
+        "columnNumber": 0
+      }
+    },
+    {
+      "type": "debug",
+      "text": "[vite] connecting...",
+      "location": {
+        "url": "http://127.0.0.1:49022/@vite/client",
+        "lineNumber": 494,
+        "columnNumber": 8
+      }
+    },
+    {
+      "type": "debug",
+      "text": "[vite] connected.",
+      "location": {
+        "url": "http://127.0.0.1:49022/@vite/client",
+        "lineNumber": 617,
+        "columnNumber": 14
+      }
+    },
+    {
+      "type": "info",
+      "text": "%cDownload the React DevTools for a better development experience: https://reactjs.org/link/react-devtools font-weight:bold",
+      "location": {
+        "url": "http://127.0.0.1:49022/node_modules/.vite/deps/chunk-PJEEZAML.js?v=1ddbd61d",
+        "lineNumber": 21550,
+        "columnNumber": 24
+      }
+    },
+    {
+      "type": "warning",
+      "text": "⚠️ React Router Future Flag Warning: React Router will begin wrapping state updates in `React.startTransition` in v7. You can use the `v7_startTransition` future flag to opt-in early. For more information, see https://reactrouter.com/v6/upgrading/future#v7_starttransition.",
+      "location": {
+        "url": "http://127.0.0.1:49022/node_modules/.vite/deps/react-router-dom.js?v=1ddbd61d",
+        "lineNumber": 4426,
+        "columnNumber": 12
+      }
+    },
+    {
+      "type": "warning",
+      "text": "⚠️ React Router Future Flag Warning: Relative route resolution within Splat routes is changing in v7. You can use the `v7_relativeSplatPath` future flag to opt-in early. For more information, see https://reactrouter.com/v6/upgrading/future#v7_relativesplatpath.",
+      "location": {
+        "url": "http://127.0.0.1:49022/node_modules/.vite/deps/react-router-dom.js?v=1ddbd61d",
+        "lineNumber": 4426,
+        "columnNumber": 12
+      }
+    },
+    {
+      "type": "error",
+      "text": "Failed to load resource: the server responded with a status of 500 (Internal Server Error)",
+      "location": {
+        "url": "http://127.0.0.1:49022/api/statistics/overview",
+        "lineNumber": 0,
+        "columnNumber": 0
+      }
+    },
+    {
+      "type": "error",
+      "text": "加载概览失败 AxiosError: Request failed with status code 500\n    at settle (http://127.0.0.1:49022/node_modules/.vite/deps/axios.js?v=1ddbd61d:1457:12)\n    at XMLHttpRequest.onloadend (http://127.0.0.1:49022/node_modules/.vite/deps/axios.js?v=1ddbd61d:1862:7)",
+      "location": {
+        "url": "http://127.0.0.1:49022/src/pages/Dashboard.jsx",
+        "lineNumber": 49,
+        "columnNumber": 14
+      }
+    },
+    {
+      "type": "error",
+      "text": "Failed to load resource: the server responded with a status of 500 (Internal Server Error)",
+      "location": {
+        "url": "http://127.0.0.1:49022/api/cabinets/recommend/optimal?boxSize=M",
+        "lineNumber": 0,
+        "columnNumber": 0
+      }
+    },
+    {
+      "type": "error",
+      "text": "加载推荐柜机失败 AxiosError: Request failed with status code 500\n    at settle (http://127.0.0.1:49022/node_modules/.vite/deps/axios.js?v=1ddbd61d:1457:12)\n    at XMLHttpRequest.onloadend (http://127.0.0.1:49022/node_modules/.vite/deps/axios.js?v=1ddbd61d:1862:7)",
+      "location": {
+        "url": "http://127.0.0.1:49022/src/pages/Dashboard.jsx",
+        "lineNumber": 57,
+        "columnNumber": 14
+      }
+    },
+    {
+      "type": "error",
+      "text": "Failed to load resource: the server responded with a status of 500 (Internal Server Error)",
+      "location": {
+        "url": "http://127.0.0.1:49022/api/leaderboard?limit=5",
+        "lineNumber": 0,
+        "columnNumber": 0
+      }
+    },
+    {
+      "type": "error",
+      "text": "加载排行榜失败 AxiosError: Request failed with status code 500\n    at settle (http://127.0.0.1:49022/node_modules/.vite/deps/axios.js?v=1ddbd61d:1457:12)\n    at XMLHttpRequest.onloadend (http://127.0.0.1:49022/node_modules/.vite/deps/axios.js?v=1ddbd61d:1862:7)",
+      "location": {
+        "url": "http://127.0.0.1:49022/src/pages/Dashboard.jsx",
+        "lineNumber": 65,
+        "columnNumber": 14
+      }
+    },
+    {
+      "type": "error",
+      "text": "Failed to load resource: the server responded with a status of 500 (Internal Server Error)",
+      "location": {
+        "url": "http://127.0.0.1:49022/api/device-alerts?isRead=false",
+        "lineNumber": 0,
+        "columnNumber": 0
+      }
+    },
+    {
+      "type": "error",
+      "text": "加载告警失败 AxiosError: Request failed with status code 500\n    at settle (http://127.0.0.1:49022/node_modules/.vite/deps/axios.js?v=1ddbd61d:1457:12)\n    at XMLHttpRequest.onloadend (http://127.0.0.1:49022/node_modules/.vite/deps/axios.js?v=1ddbd61d:1862:7)",
+      "location": {
+        "url": "http://127.0.0.1:49022/src/components/MainLayout.jsx",
+        "lineNumber": 92,
+        "columnNumber": 14
+      }
+    },
+    {
+      "type": "error",
+      "text": "Failed to load resource: the server responded with a status of 500 (Internal Server Error)",
+      "location": {
+        "url": "http://127.0.0.1:49022/api/statistics/overview",
+        "lineNumber": 0,
+        "columnNumber": 0
+      }
+    },
+    {
+      "type": "error",
+      "text": "加载概览失败 AxiosError: Request failed with status code 500\n    at settle (http://127.0.0.1:49022/node_modules/.vite/deps/axios.js?v=1ddbd61d:1457:12)\n    at XMLHttpRequest.onloadend (http://127.0.0.1:49022/node_modules/.vite/deps/axios.js?v=1ddbd61d:1862:7)",
+      "location": {
+        "url": "http://127.0.0.1:49022/src/pages/Dashboard.jsx",
+        "lineNumber": 49,
+        "columnNumber": 14
+      }
+    },
+    {
+      "type": "error",
+      "text": "Failed to load resource: the server responded with a status of 500 (Internal Server Error)",
+      "location": {
+        "url": "http://127.0.0.1:49022/api/cabinets/recommend/optimal?boxSize=M",
+        "lineNumber": 0,
+        "columnNumber": 0
+      }
+    },
+    {
+      "type": "error",
+      "text": "加载推荐柜机失败 AxiosError: Request failed with status code 500\n    at settle (http://127.0.0.1:49022/node_modules/.vite/deps/axios.js?v=1ddbd61d:1457:12)\n    at XMLHttpRequest.onloadend (http://127.0.0.1:49022/node_modules/.vite/deps/axios.js?v=1ddbd61d:1862:7)",
+      "location": {
+        "url": "http://127.0.0.1:49022/src/pages/Dashboard.jsx",
+        "lineNumber": 57,
+        "columnNumber": 14
+      }
+    },
+    {
+      "type": "error",
+      "text": "Failed to load resource: the server responded with a status of 500 (Internal Server Error)",
+      "location": {
+        "url": "http://127.0.0.1:49022/api/leaderboard?limit=5",
+        "lineNumber": 0,
+        "columnNumber": 0
+      }
+    },
+    {
+      "type": "error",
+      "text": "加载排行榜失败 AxiosError: Request failed with status code 500\n    at settle (http://127.0.0.1:49022/node_modules/.vite/deps/axios.js?v=1ddbd61d:1457:12)\n    at XMLHttpRequest.onloadend (http://127.0.0.1:49022/node_modules/.vite/deps/axios.js?v=1ddbd61d:1862:7)",
+      "location": {
+        "url": "http://127.0.0.1:49022/src/pages/Dashboard.jsx",
+        "lineNumber": 65,
+        "columnNumber": 14
+      }
+    },
+    {
+      "type": "error",
+      "text": "Failed to load resource: the server responded with a status of 500 (Internal Server Error)",
+      "location": {
+        "url": "http://127.0.0.1:49022/api/device-alerts?isRead=false",
+        "lineNumber": 0,
+        "columnNumber": 0
+      }
+    },
+    {
+      "type": "error",
+      "text": "加载告警失败 AxiosError: Request failed with status code 500\n    at settle (http://127.0.0.1:49022/node_modules/.vite/deps/axios.js?v=1ddbd61d:1457:12)\n    at XMLHttpRequest.onloadend (http://127.0.0.1:49022/node_modules/.vite/deps/axios.js?v=1ddbd61d:1862:7)",
+      "location": {
+        "url": "http://127.0.0.1:49022/src/components/MainLayout.jsx",
+        "lineNumber": 92,
+        "columnNumber": 14
+      }
+    },
+    {
+      "type": "error",
+      "text": "Failed to load resource: the server responded with a status of 500 (Internal Server Error)",
+      "location": {
+        "url": "http://127.0.0.1:49022/api/packages?page=1&pageSize=10&status=&brand=",
+        "lineNumber": 0,
+        "columnNumber": 0
+      }
+    },
+    {
+      "type": "error",
+      "text": "Warning: [antd: message] Static function can not consume context like dynamic theme. Please use 'App' component instead.",
+      "location": {
+        "url": "http://127.0.0.1:49022/node_modules/.vite/deps/chunk-D2XKH6ZM.js?v=1ddbd61d",
+        "lineNumber": 1247,
+        "columnNumber": 14
+      }
+    },
+    {
+      "type": "error",
+      "text": "Failed to load resource: the server responded with a status of 500 (Internal Server Error)",
+      "location": {
+        "url": "http://127.0.0.1:49022/api/sms-templates",
+        "lineNumber": 0,
+        "columnNumber": 0
+      }
+    },
+    {
+      "type": "error",
+      "text": "加载短信模板失败 AxiosError: Request failed with status code 500\n    at settle (http://127.0.0.1:49022/node_modules/.vite/deps/axios.js?v=1ddbd61d:1457:12)\n    at XMLHttpRequest.onloadend (http://127.0.0.1:49022/node_modules/.vite/deps/axios.js?v=1ddbd61d:1862:7)",
+      "location": {
+        "url": "http://127.0.0.1:49022/src/pages/PackageList.jsx",
+        "lineNumber": 133,
+        "columnNumber": 14
+      }
+    },
+    {
+      "type": "error",
+      "text": "Failed to load resource: the server responded with a status of 500 (Internal Server Error)",
+      "location": {
+        "url": "http://127.0.0.1:49022/api/cabinets?pageSize=100",
+        "lineNumber": 0,
+        "columnNumber": 0
+      }
+    },
+    {
+      "type": "error",
+      "text": "加载柜机列表失败 AxiosError: Request failed with status code 500\n    at settle (http://127.0.0.1:49022/node_modules/.vite/deps/axios.js?v=1ddbd61d:1457:12)\n    at XMLHttpRequest.onloadend (http://127.0.0.1:49022/node_modules/.vite/deps/axios.js?v=1ddbd61d:1862:7)",
+      "location": {
+        "url": "http://127.0.0.1:49022/src/pages/PackageList.jsx",
+        "lineNumber": 141,
+        "columnNumber": 14
+      }
+    },
+    {
+      "type": "error",
+      "text": "Failed to load resource: the server responded with a status of 500 (Internal Server Error)",
+      "location": {
+        "url": "http://127.0.0.1:49022/api/statistics/overview",
+        "lineNumber": 0,
+        "columnNumber": 0
+      }
+    },
+    {
+      "type": "error",
+      "text": "加载统计失败 AxiosError: Request failed with status code 500\n    at settle (http://127.0.0.1:49022/node_modules/.vite/deps/axios.js?v=1ddbd61d:1457:12)\n    at XMLHttpRequest.onloadend (http://127.0.0.1:49022/node_modules/.vite/deps/axios.js?v=1ddbd61d:1862:7)",
+      "location": {
+        "url": "http://127.0.0.1:49022/src/pages/PackageList.jsx",
+        "lineNumber": 109,
+        "columnNumber": 14
+      }
+    },
+    {
+      "type": "error",
+      "text": "Failed to load resource: the server responded with a status of 500 (Internal Server Error)",
+      "location": {
+        "url": "http://127.0.0.1:49022/api/packages?page=1&pageSize=10&status=&brand=",
+        "lineNumber": 0,
+        "columnNumber": 0
+      }
+    },
+    {
+      "type": "error",
+      "text": "Failed to load resource: the server responded with a status of 500 (Internal Server Error)",
+      "location": {
+        "url": "http://127.0.0.1:49022/api/sms-templates",
+        "lineNumber": 0,
+        "columnNumber": 0
+      }
+    },
+    {
+      "type": "error",
+      "text": "加载短信模板失败 AxiosError: Request failed with status code 500\n    at settle (http://127.0.0.1:49022/node_modules/.vite/deps/axios.js?v=1ddbd61d:1457:12)\n    at XMLHttpRequest.onloadend (http://127.0.0.1:49022/node_modules/.vite/deps/axios.js?v=1ddbd61d:1862:7)",
+      "location": {
+        "url": "http://127.0.0.1:49022/src/pages/PackageList.jsx",
+        "lineNumber": 133,
+        "columnNumber": 14
+      }
+    },
+    {
+      "type": "error",
+      "text": "Failed to load resource: the server responded with a status of 500 (Internal Server Error)",
+      "location": {
+        "url": "http://127.0.0.1:49022/api/cabinets?pageSize=100",
+        "lineNumber": 0,
+        "columnNumber": 0
+      }
+    },
+    {
+      "type": "error",
+      "text": "加载柜机列表失败 AxiosError: Request failed with status code 500\n    at settle (http://127.0.0.1:49022/node_modules/.vite/deps/axios.js?v=1ddbd61d:1457:12)\n    at XMLHttpRequest.onloadend (http://127.0.0.1:49022/node_modules/.vite/deps/axios.js?v=1ddbd61d:1862:7)",
+      "location": {
+        "url": "http://127.0.0.1:49022/src/pages/PackageList.jsx",
+        "lineNumber": 141,
+        "columnNumber": 14
+      }
+    },
+    {
+      "type": "error",
+      "text": "Failed to load resource: the server responded with a status of 500 (Internal Server Error)",
+      "location": {
+        "url": "http://127.0.0.1:49022/api/statistics/overview",
+        "lineNumber": 0,
+        "columnNumber": 0
+      }
+    },
+    {
+      "type": "error",
+      "text": "加载统计失败 AxiosError: Request failed with status code 500\n    at settle (http://127.0.0.1:49022/node_modules/.vite/deps/axios.js?v=1ddbd61d:1457:12)\n    at XMLHttpRequest.onloadend (http://127.0.0.1:49022/node_modules/.vite/deps/axios.js?v=1ddbd61d:1862:7)",
+      "location": {
+        "url": "http://127.0.0.1:49022/src/pages/PackageList.jsx",
+        "lineNumber": 109,
+        "columnNumber": 14
+      }
+    },
+    {
+      "type": "error",
+      "text": "Failed to load resource: the server responded with a status of 500 (Internal Server Error)",
+      "location": {
+        "url": "http://127.0.0.1:49022/api/packages?page=1&pageSize=10&status=&brand=",
+        "lineNumber": 0,
+        "columnNumber": 0
+      }
+    },
+    {
+      "type": "error",
+      "text": "Failed to load resource: the server responded with a status of 500 (Internal Server Error)",
+      "location": {
+        "url": "http://127.0.0.1:49022/api/cabinets?page=1&pageSize=10",
+        "lineNumber": 0,
+        "columnNumber": 0
+      }
+    },
+    {
+      "type": "error",
+      "text": "Failed to load resource: the server responded with a status of 500 (Internal Server Error)",
+      "location": {
+        "url": "http://127.0.0.1:49022/api/cabinets?page=1&pageSize=10",
+        "lineNumber": 0,
+        "columnNumber": 0
+      }
+    },
+    {
+      "type": "error",
+      "text": "Failed to load resource: the server responded with a status of 500 (Internal Server Error)",
+      "location": {
+        "url": "http://127.0.0.1:49022/api/cabinets?page=1&pageSize=10",
+        "lineNumber": 0,
+        "columnNumber": 0
+      }
+    },
+    {
+      "type": "error",
+      "text": "Failed to load resource: the server responded with a status of 500 (Internal Server Error)",
+      "location": {
+        "url": "http://127.0.0.1:49022/api/reservations?page=1&pageSize=10&courierId=1&status=",
+        "lineNumber": 0,
+        "columnNumber": 0
+      }
+    },
+    {
+      "type": "error",
+      "text": "Failed to load resource: the server responded with a status of 500 (Internal Server Error)",
+      "location": {
+        "url": "http://127.0.0.1:49022/api/cabinets?pageSize=100&status=online",
+        "lineNumber": 0,
+        "columnNumber": 0
+      }
+    },
+    {
+      "type": "error",
+      "text": "加载柜机列表失败 AxiosError: Request failed with status code 500\n    at settle (http://127.0.0.1:49022/node_modules/.vite/deps/axios.js?v=1ddbd61d:1457:12)\n    at XMLHttpRequest.onloadend (http://127.0.0.1:49022/node_modules/.vite/deps/axios.js?v=1ddbd61d:1862:7)",
+      "location": {
+        "url": "http://127.0.0.1:49022/src/pages/Reservation.jsx",
+        "lineNumber": 70,
+        "columnNumber": 14
+      }
+    },
+    {
+      "type": "error",
+      "text": "Failed to load resource: the server responded with a status of 500 (Internal Server Error)",
+      "location": {
+        "url": "http://127.0.0.1:49022/api/reservations?page=1&pageSize=10&courierId=1&status=",
+        "lineNumber": 0,
+        "columnNumber": 0
+      }
+    },
+    {
+      "type": "error",
+      "text": "Failed to load resource: the server responded with a status of 500 (Internal Server Error)",
+      "location": {
+        "url": "http://127.0.0.1:49022/api/cabinets?pageSize=100&status=online",
+        "lineNumber": 0,
+        "columnNumber": 0
+      }
+    },
+    {
+      "type": "error",
+      "text": "加载柜机列表失败 AxiosError: Request failed with status code 500\n    at settle (http://127.0.0.1:49022/node_modules/.vite/deps/axios.js?v=1ddbd61d:1457:12)\n    at XMLHttpRequest.onloadend (http://127.0.0.1:49022/node_modules/.vite/deps/axios.js?v=1ddbd61d:1862:7)",
+      "location": {
+        "url": "http://127.0.0.1:49022/src/pages/Reservation.jsx",
+        "lineNumber": 70,
+        "columnNumber": 14
+      }
+    },
+    {
+      "type": "debug",
+      "text": "[vite] connecting...",
+      "location": {
+        "url": "http://127.0.0.1:49022/@vite/client",
+        "lineNumber": 494,
+        "columnNumber": 8
+      }
+    },
+    {
+      "type": "debug",
+      "text": "[vite] connected.",
+      "location": {
+        "url": "http://127.0.0.1:49022/@vite/client",
+        "lineNumber": 617,
+        "columnNumber": 14
+      }
+    },
+    {
+      "type": "info",
+      "text": "%cDownload the React DevTools for a better development experience: https://reactjs.org/link/react-devtools font-weight:bold",
+      "location": {
+        "url": "http://127.0.0.1:49022/node_modules/.vite/deps/chunk-PJEEZAML.js?v=1ddbd61d",
+        "lineNumber": 21550,
+        "columnNumber": 24
+      }
+    },
+    {
+      "type": "warning",
+      "text": "⚠️ React Router Future Flag Warning: React Router will begin wrapping state updates in `React.startTransition` in v7. You can use the `v7_startTransition` future flag to opt-in early. For more information, see https://reactrouter.com/v6/upgrading/future#v7_starttransition.",
+      "location": {
+        "url": "http://127.0.0.1:49022/node_modules/.vite/deps/react-router-dom.js?v=1ddbd61d",
+        "lineNumber": 4426,
+        "columnNumber": 12
+      }
+    },
+    {
+      "type": "warning",
+      "text": "⚠️ React Router Future Flag Warning: Relative route resolution within Splat routes is changing in v7. You can use the `v7_relativeSplatPath` future flag to opt-in early. For more information, see https://reactrouter.com/v6/upgrading/future#v7_relativesplatpath.",
+      "location": {
+        "url": "http://127.0.0.1:49022/node_modules/.vite/deps/react-router-dom.js?v=1ddbd61d",
+        "lineNumber": 4426,
+        "columnNumber": 12
+      }
+    },
+    {
+      "type": "error",
+      "text": "Failed to load resource: the server responded with a status of 500 (Internal Server Error)",
+      "location": {
+        "url": "http://127.0.0.1:49022/api/cabinets?page=1&pageSize=10",
+        "lineNumber": 0,
+        "columnNumber": 0
+      }
+    }
+  ],
+  "requestFailures": [],
+  "responseErrors": [
+    {
+      "status": 500,
+      "url": "http://127.0.0.1:49022/api/device-alerts?isRead=false"
+    },
+    {
+      "status": 500,
+      "url": "http://127.0.0.1:49022/api/device-alerts?isRead=false"
+    },
+    {
+      "status": 500,
+      "url": "http://127.0.0.1:49022/api/statistics/overview"
+    },
+    {
+      "status": 500,
+      "url": "http://127.0.0.1:49022/api/cabinets/recommend/optimal?boxSize=M"
+    },
+    {
+      "status": 500,
+      "url": "http://127.0.0.1:49022/api/leaderboard?limit=5"
+    },
+    {
+      "status": 500,
+      "url": "http://127.0.0.1:49022/api/statistics/overview"
+    },
+    {
+      "status": 500,
+      "url": "http://127.0.0.1:49022/api/cabinets/recommend/optimal?boxSize=M"
+    },
+    {
+      "status": 500,
+      "url": "http://127.0.0.1:49022/api/leaderboard?limit=5"
+    },
+    {
+      "status": 500,
+      "url": "http://127.0.0.1:49022/api/device-alerts?isRead=false"
+    },
+    {
+      "status": 500,
+      "url": "http://127.0.0.1:49022/api/device-alerts?isRead=false"
+    },
+    {
+      "status": 500,
+      "url": "http://127.0.0.1:49022/api/statistics/overview"
+    },
+    {
+      "status": 500,
+      "url": "http://127.0.0.1:49022/api/cabinets/recommend/optimal?boxSize=M"
+    },
+    {
+      "status": 500,
+      "url": "http://127.0.0.1:49022/api/leaderboard?limit=5"
+    },
+    {
+      "status": 500,
+      "url": "http://127.0.0.1:49022/api/statistics/overview"
+    },
+    {
+      "status": 500,
+      "url": "http://127.0.0.1:49022/api/cabinets/recommend/optimal?boxSize=M"
+    },
+    {
+      "status": 500,
+      "url": "http://127.0.0.1:49022/api/leaderboard?limit=5"
+    },
+    {
+      "status": 500,
+      "url": "http://127.0.0.1:49022/api/cabinets?page=1&pageSize=10"
+    },
+    {
+      "status": 500,
+      "url": "http://127.0.0.1:49022/api/cabinets?page=1&pageSize=10"
+    },
+    {
+      "status": 500,
+      "url": "http://127.0.0.1:49022/api/cabinets?page=1&pageSize=10"
+    },
+    {
+      "status": 500,
+      "url": "http://127.0.0.1:49022/api/statistics/overview"
+    },
+    {
+      "status": 500,
+      "url": "http://127.0.0.1:49022/api/cabinets/recommend/optimal?boxSize=M"
+    },
+    {
+      "status": 500,
+      "url": "http://127.0.0.1:49022/api/leaderboard?limit=5"
+    },
+    {
+      "status": 500,
+      "url": "http://127.0.0.1:49022/api/device-alerts?isRead=false"
+    },
+    {
+      "status": 500,
+      "url": "http://127.0.0.1:49022/api/statistics/overview"
+    },
+    {
+      "status": 500,
+      "url": "http://127.0.0.1:49022/api/cabinets/recommend/optimal?boxSize=M"
+    },
+    {
+      "status": 500,
+      "url": "http://127.0.0.1:49022/api/leaderboard?limit=5"
+    },
+    {
+      "status": 500,
+      "url": "http://127.0.0.1:49022/api/device-alerts?isRead=false"
+    },
+    {
+      "status": 500,
+      "url": "http://127.0.0.1:49022/api/packages?page=1&pageSize=10&status=&brand="
+    },
+    {
+      "status": 500,
+      "url": "http://127.0.0.1:49022/api/sms-templates"
+    },
+    {
+      "status": 500,
+      "url": "http://127.0.0.1:49022/api/cabinets?pageSize=100"
+    },
+    {
+      "status": 500,
+      "url": "http://127.0.0.1:49022/api/statistics/overview"
+    },
+    {
+      "status": 500,
+      "url": "http://127.0.0.1:49022/api/packages?page=1&pageSize=10&status=&brand="
+    },
+    {
+      "status": 500,
+      "url": "http://127.0.0.1:49022/api/sms-templates"
+    },
+    {
+      "status": 500,
+      "url": "http://127.0.0.1:49022/api/cabinets?pageSize=100"
+    },
+    {
+      "status": 500,
+      "url": "http://127.0.0.1:49022/api/statistics/overview"
+    },
+    {
+      "status": 500,
+      "url": "http://127.0.0.1:49022/api/packages?page=1&pageSize=10&status=&brand="
+    },
+    {
+      "status": 500,
+      "url": "http://127.0.0.1:49022/api/cabinets?page=1&pageSize=10"
+    },
+    {
+      "status": 500,
+      "url": "http://127.0.0.1:49022/api/cabinets?page=1&pageSize=10"
+    },
+    {
+      "status": 500,
+      "url": "http://127.0.0.1:49022/api/cabinets?page=1&pageSize=10"
+    },
+    {
+      "status": 500,
+      "url": "http://127.0.0.1:49022/api/reservations?page=1&pageSize=10&courierId=1&status="
+    },
+    {
+      "status": 500,
+      "url": "http://127.0.0.1:49022/api/cabinets?pageSize=100&status=online"
+    },
+    {
+      "status": 500,
+      "url": "http://127.0.0.1:49022/api/reservations?page=1&pageSize=10&courierId=1&status="
+    },
+    {
+      "status": 500,
+      "url": "http://127.0.0.1:49022/api/cabinets?pageSize=100&status=online"
+    },
+    {
+      "status": 500,
+      "url": "http://127.0.0.1:49022/api/cabinets?page=1&pageSize=10"
+    },
+    {
+      "status": 500,
+      "url": "http://127.0.0.1:49022/api/device-alerts?isRead=false"
+    },
+    {
+      "status": 500,
+      "url": "http://127.0.0.1:49022/api/cabinets?page=1&pageSize=10"
+    },
+    {
+      "status": 500,
+      "url": "http://127.0.0.1:49022/api/device-alerts?isRead=false"
+    }
+  ]
+}
