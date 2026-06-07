@@ -1,0 +1,105 @@
+* {
+  box-sizing: border-box;
+}
+
+html,
+body,
+#root {
+  min-width: 320px;
+  min-height: 100%;
+  margin: 0;
+}
+
+body {
+  background: #f4f6f9;
+  color: #1f2937;
+  font-family: Inter, "PingFang SC", "Microsoft YaHei", Arial, sans-serif;
+}
+
+.app-shell {
+  min-height: 100vh;
+}
+
+.sidebar {
+  background: #ffffff !important;
+  border-right: 1px solid #e5e7eb;
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  height: 64px;
+  padding: 0 24px;
+  color: #111827;
+  font-size: 18px;
+  font-weight: 700;
+  border-bottom: 1px solid #e5e7eb;
+}
+
+.brand .anticon {
+  color: #1677ff;
+  font-size: 22px;
+}
+
+.topbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 72px;
+  padding: 0 24px;
+  background: #ffffff;
+  border-bottom: 1px solid #e5e7eb;
+}
+
+.topbar h3 {
+  margin: 0;
+}
+
+.content {
+  padding: 24px;
+}
+
+.main-stack {
+  width: 100%;
+}
+
+.alert {
+  margin-bottom: 16px;
+}
+
+.ant-card {
+  border-radius: 8px;
+}
+
+.ant-table-wrapper {
+  overflow-x: auto;
+}
+
+@media (max-width: 760px) {
+  .app-shell {
+    display: block;
+  }
+
+  .sidebar {
+    width: 100% !important;
+    max-width: none !important;
+    min-width: 0 !important;
+  }
+
+  .brand {
+    height: 56px;
+  }
+
+  .topbar {
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 10px;
+    height: auto;
+    padding: 16px;
+  }
+
+  .content {
+    padding: 16px;
+  }
+}

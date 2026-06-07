@@ -1,0 +1,3928 @@
+{
+  "meta": {
+    "title": "家装产业协同管理平台",
+    "url": "http://127.0.0.1:49044/",
+    "timestamp": "2026-06-05T12:47:25.110Z",
+    "viewport": {
+      "width": 1728,
+      "height": 1000
+    },
+    "document": {
+      "scrollWidth": 1728,
+      "scrollHeight": 1000
+    }
+  },
+  "text": {
+    "bodyPreview": "家装协同运营总览项目协同材料供应设计师负载验收与资金家装产业协同管理平台报价、设计、材料、验收与资金风控一体化工作台API ok 15:47:20系统管理员刷新平台注册用户1装修项目0推进中项目0待处理验收0设计师负载暂无设计师负载数据",
+    "emptyTextCount": 0
+  },
+  "domTree": {
+    "tag": "html",
+    "id": "",
+    "className": "",
+    "selectorHint": "html",
+    "text": "家装协同 运营总览 项目协同 材料供应 设计师负载 验收与资金 家装产业协同管理平台 报价、设计、材料、验收与资金风控一体化工作台 API ok 15:47:2",
+    "visible": true,
+    "childCount": 2,
+    "children": [
+      {
+        "tag": "head",
+        "id": "",
+        "className": "",
+        "selectorHint": "head",
+        "text": ".anticon { display: inline-flex; align-items: center; color: inherit; font-style",
+        "visible": false,
+        "childCount": 39,
+        "children": []
+      },
+      {
+        "tag": "body",
+        "id": "",
+        "className": "",
+        "selectorHint": "body",
+        "text": "家装协同 运营总览 项目协同 材料供应 设计师负载 验收与资金 家装产业协同管理平台 报价、设计、材料、验收与资金风控一体化工作台 API ok 15:47:2",
+        "visible": true,
+        "childCount": 2,
+        "children": [
+          {
+            "tag": "div",
+            "id": "root",
+            "className": "",
+            "selectorHint": "div#root",
+            "text": "家装协同 运营总览 项目协同 材料供应 设计师负载 验收与资金 家装产业协同管理平台 报价、设计、材料、验收与资金风控一体化工作台 API ok 15:47:2",
+            "visible": true,
+            "childCount": 1,
+            "children": [
+              {
+                "tag": "div",
+                "id": "",
+                "className": "ant-layout ant-layout-has-sider app-shell css-dev-only-do-not-override-mncuj7",
+                "selectorHint": "div.ant-layout.ant-layout-has-sider.app-shell",
+                "text": "家装协同 运营总览 项目协同 材料供应 设计师负载 验收与资金 家装产业协同管理平台 报价、设计、材料、验收与资金风控一体化工作台 API ok 15:47:2",
+                "visible": true,
+                "childCount": 2,
+                "children": [
+                  {
+                    "tag": "aside",
+                    "id": "",
+                    "className": "ant-layout-sider ant-layout-sider-dark sidebar css-dev-only-do-not-override-mncuj7",
+                    "selectorHint": "aside.ant-layout-sider.ant-layout-sider-dark.sidebar",
+                    "text": "家装协同 运营总览 项目协同 材料供应 设计师负载 验收与资金",
+                    "visible": true,
+                    "childCount": 1,
+                    "children": [
+                      {
+                        "tag": "div",
+                        "id": "",
+                        "className": "ant-layout-sider-children",
+                        "selectorHint": "div.ant-layout-sider-children",
+                        "text": "家装协同 运营总览 项目协同 材料供应 设计师负载 验收与资金",
+                        "visible": true,
+                        "childCount": 3,
+                        "children": []
+                      }
+                    ]
+                  },
+                  {
+                    "tag": "div",
+                    "id": "",
+                    "className": "ant-layout css-dev-only-do-not-override-mncuj7",
+                    "selectorHint": "div.ant-layout.css-dev-only-do-not-override-mncuj7",
+                    "text": "家装产业协同管理平台 报价、设计、材料、验收与资金风控一体化工作台 API ok 15:47:20 系统管理员 刷新 平台注册用户 1 装修项目 0 推进中项目",
+                    "visible": true,
+                    "childCount": 2,
+                    "children": [
+                      {
+                        "tag": "header",
+                        "id": "",
+                        "className": "ant-layout-header topbar css-dev-only-do-not-override-mncuj7",
+                        "selectorHint": "header.ant-layout-header.topbar.css-dev-only-do-not-override-mncuj7",
+                        "text": "家装产业协同管理平台 报价、设计、材料、验收与资金风控一体化工作台 API ok 15:47:20 系统管理员 刷新",
+                        "visible": true,
+                        "childCount": 2,
+                        "children": []
+                      },
+                      {
+                        "tag": "main",
+                        "id": "",
+                        "className": "ant-layout-content content css-dev-only-do-not-override-mncuj7",
+                        "selectorHint": "main.ant-layout-content.content.css-dev-only-do-not-override-mncuj7",
+                        "text": "平台注册用户 1 装修项目 0 推进中项目 0 待处理验收 0 设计师负载 暂无设计师负载数据",
+                        "visible": true,
+                        "childCount": 1,
+                        "children": []
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  "allElements": [
+    {
+      "index": 0,
+      "tag": "html",
+      "id": "",
+      "className": "",
+      "selectorHint": "html",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "家装协同 运营总览 项目协同 材料供应 设计师负载 验收与资金 家装产业协同管理平台 报价、设计、材料、验收与资金风控一体化工作台 API ok 15:47:20 系统管理员 刷新 平台注册用户 1 装修项目 0 推进中项目 0 待处理验收 0 设计师负载 暂无设计师负载数据",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 2,
+      "rect": {
+        "x": 0,
+        "y": 0,
+        "width": 1728,
+        "height": 391
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 1,
+      "tag": "head",
+      "id": "",
+      "className": "",
+      "selectorHint": "head",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": ".anticon { display: inline-flex; align-items: center; color: inherit; font-style: normal; line-height: 0; text-align: center; text-transform: none; vertical-align: -0.125em; text-r",
+      "href": "",
+      "disabled": false,
+      "visible": false,
+      "childCount": 39,
+      "rect": {
+        "x": 0,
+        "y": 0,
+        "width": 0,
+        "height": 0
+      },
+      "style": {
+        "display": "none",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 2,
+      "tag": "meta",
+      "id": "",
+      "className": "",
+      "selectorHint": "meta",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "",
+      "href": "",
+      "disabled": false,
+      "visible": false,
+      "childCount": 0,
+      "rect": {
+        "x": 0,
+        "y": 0,
+        "width": 0,
+        "height": 0
+      },
+      "style": {
+        "display": "none",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 3,
+      "tag": "link",
+      "id": "",
+      "className": "",
+      "selectorHint": "link",
+      "name": "",
+      "type": "image/svg+xml",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "",
+      "href": "/vite.svg",
+      "disabled": false,
+      "visible": false,
+      "childCount": 0,
+      "rect": {
+        "x": 0,
+        "y": 0,
+        "width": 0,
+        "height": 0
+      },
+      "style": {
+        "display": "none",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 4,
+      "tag": "meta",
+      "id": "",
+      "className": "",
+      "selectorHint": "meta",
+      "name": "viewport",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "",
+      "href": "",
+      "disabled": false,
+      "visible": false,
+      "childCount": 0,
+      "rect": {
+        "x": 0,
+        "y": 0,
+        "width": 0,
+        "height": 0
+      },
+      "style": {
+        "display": "none",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 5,
+      "tag": "title",
+      "id": "",
+      "className": "",
+      "selectorHint": "title",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "家装产业协同管理平台",
+      "href": "",
+      "disabled": false,
+      "visible": false,
+      "childCount": 0,
+      "rect": {
+        "x": 0,
+        "y": 0,
+        "width": 0,
+        "height": 0
+      },
+      "style": {
+        "display": "none",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 6,
+      "tag": "body",
+      "id": "",
+      "className": "",
+      "selectorHint": "body",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "家装协同 运营总览 项目协同 材料供应 设计师负载 验收与资金 家装产业协同管理平台 报价、设计、材料、验收与资金风控一体化工作台 API ok 15:47:20 系统管理员 刷新 平台注册用户 1 装修项目 0 推进中项目 0 待处理验收 0 设计师负载 暂无设计师负载数据",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 2,
+      "rect": {
+        "x": 8,
+        "y": 8,
+        "width": 1712,
+        "height": 375
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 7,
+      "tag": "div",
+      "id": "root",
+      "className": "",
+      "selectorHint": "div#root",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "家装协同 运营总览 项目协同 材料供应 设计师负载 验收与资金 家装产业协同管理平台 报价、设计、材料、验收与资金风控一体化工作台 API ok 15:47:20 系统管理员 刷新 平台注册用户 1 装修项目 0 推进中项目 0 待处理验收 0 设计师负载 暂无设计师负载数据",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 1,
+      "rect": {
+        "x": 8,
+        "y": 8,
+        "width": 1712,
+        "height": 375
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 8,
+      "tag": "div",
+      "id": "",
+      "className": "ant-layout ant-layout-has-sider app-shell css-dev-only-do-not-override-mncuj7",
+      "selectorHint": "div.ant-layout.ant-layout-has-sider.app-shell",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "家装协同 运营总览 项目协同 材料供应 设计师负载 验收与资金 家装产业协同管理平台 报价、设计、材料、验收与资金风控一体化工作台 API ok 15:47:20 系统管理员 刷新 平台注册用户 1 装修项目 0 推进中项目 0 待处理验收 0 设计师负载 暂无设计师负载数据",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 2,
+      "rect": {
+        "x": 8,
+        "y": 8,
+        "width": 1712,
+        "height": 375
+      },
+      "style": {
+        "display": "flex",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 9,
+      "tag": "aside",
+      "id": "",
+      "className": "ant-layout-sider ant-layout-sider-dark sidebar css-dev-only-do-not-override-mncuj7",
+      "selectorHint": "aside.ant-layout-sider.ant-layout-sider-dark.sidebar",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "家装协同 运营总览 项目协同 材料供应 设计师负载 验收与资金",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 1,
+      "rect": {
+        "x": 8,
+        "y": 8,
+        "width": 232,
+        "height": 375
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 10,
+      "tag": "div",
+      "id": "",
+      "className": "ant-layout-sider-children",
+      "selectorHint": "div.ant-layout-sider-children",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "家装协同 运营总览 项目协同 材料供应 设计师负载 验收与资金",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 3,
+      "rect": {
+        "x": 8,
+        "y": 8,
+        "width": 232,
+        "height": 375
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 11,
+      "tag": "div",
+      "id": "",
+      "className": "brand",
+      "selectorHint": "div.brand",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "家装协同",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 2,
+      "rect": {
+        "x": 8,
+        "y": 8,
+        "width": 232,
+        "height": 20
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 12,
+      "tag": "span",
+      "id": "",
+      "className": "anticon anticon-build",
+      "selectorHint": "span.anticon.anticon-build",
+      "name": "",
+      "type": "",
+      "role": "img",
+      "ariaLabel": "build",
+      "title": "",
+      "placeholder": "",
+      "text": "build",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 1,
+      "rect": {
+        "x": 8,
+        "y": 11,
+        "width": 14,
+        "height": 14
+      },
+      "style": {
+        "display": "inline-flex",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 13,
+      "tag": "svg",
+      "id": "",
+      "className": "",
+      "selectorHint": "svg",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 1,
+      "rect": {
+        "x": 8,
+        "y": 11,
+        "width": 14,
+        "height": 14
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 14,
+      "tag": "path",
+      "id": "",
+      "className": "",
+      "selectorHint": "path",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 8,
+        "y": 13,
+        "width": 14,
+        "height": 9
+      },
+      "style": {
+        "display": "inline",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 15,
+      "tag": "span",
+      "id": "",
+      "className": "",
+      "selectorHint": "span",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "家装协同",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 22,
+        "y": 9,
+        "width": 56,
+        "height": 17
+      },
+      "style": {
+        "display": "inline",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 16,
+      "tag": "ul",
+      "id": "",
+      "className": "ant-menu ant-menu-root ant-menu-inline ant-menu-light css-dev-only-do-not-override-mncuj7",
+      "selectorHint": "ul.ant-menu.ant-menu-root.ant-menu-inline",
+      "name": "",
+      "type": "",
+      "role": "menu",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "运营总览 项目协同 材料供应 设计师负载 验收与资金",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 5,
+      "rect": {
+        "x": 8,
+        "y": 28,
+        "width": 232,
+        "height": 224
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 17,
+      "tag": "li",
+      "id": "",
+      "className": "ant-menu-item",
+      "selectorHint": "li.ant-menu-item",
+      "name": "",
+      "type": "",
+      "role": "menuitem",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "运营总览",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 2,
+      "rect": {
+        "x": 12,
+        "y": 32,
+        "width": 223,
+        "height": 40
+      },
+      "style": {
+        "display": "flex",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 18,
+      "tag": "span",
+      "id": "",
+      "className": "anticon anticon-dashboard ant-menu-item-icon",
+      "selectorHint": "span.anticon.anticon-dashboard.ant-menu-item-icon",
+      "name": "",
+      "type": "",
+      "role": "img",
+      "ariaLabel": "dashboard",
+      "title": "",
+      "placeholder": "",
+      "text": "dashboard",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 1,
+      "rect": {
+        "x": 36,
+        "y": 45,
+        "width": 14,
+        "height": 14
+      },
+      "style": {
+        "display": "flex",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 19,
+      "tag": "svg",
+      "id": "",
+      "className": "",
+      "selectorHint": "svg",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 1,
+      "rect": {
+        "x": 36,
+        "y": 45,
+        "width": 14,
+        "height": 14
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 20,
+      "tag": "path",
+      "id": "",
+      "className": "",
+      "selectorHint": "path",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 36,
+        "y": 46,
+        "width": 14,
+        "height": 13
+      },
+      "style": {
+        "display": "inline",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 21,
+      "tag": "span",
+      "id": "",
+      "className": "ant-menu-title-content",
+      "selectorHint": "span.ant-menu-title-content",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "运营总览",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 60,
+        "y": 32,
+        "width": 159,
+        "height": 40
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 22,
+      "tag": "li",
+      "id": "",
+      "className": "ant-menu-item",
+      "selectorHint": "li.ant-menu-item",
+      "name": "",
+      "type": "",
+      "role": "menuitem",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "项目协同",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 2,
+      "rect": {
+        "x": 12,
+        "y": 76,
+        "width": 223,
+        "height": 40
+      },
+      "style": {
+        "display": "flex",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 23,
+      "tag": "span",
+      "id": "",
+      "className": "anticon anticon-home ant-menu-item-icon",
+      "selectorHint": "span.anticon.anticon-home.ant-menu-item-icon",
+      "name": "",
+      "type": "",
+      "role": "img",
+      "ariaLabel": "home",
+      "title": "",
+      "placeholder": "",
+      "text": "home",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 1,
+      "rect": {
+        "x": 36,
+        "y": 89,
+        "width": 14,
+        "height": 14
+      },
+      "style": {
+        "display": "flex",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 24,
+      "tag": "svg",
+      "id": "",
+      "className": "",
+      "selectorHint": "svg",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 1,
+      "rect": {
+        "x": 36,
+        "y": 89,
+        "width": 14,
+        "height": 14
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 25,
+      "tag": "path",
+      "id": "",
+      "className": "",
+      "selectorHint": "path",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 36,
+        "y": 89,
+        "width": 14,
+        "height": 13
+      },
+      "style": {
+        "display": "inline",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 26,
+      "tag": "span",
+      "id": "",
+      "className": "ant-menu-title-content",
+      "selectorHint": "span.ant-menu-title-content",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "项目协同",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 60,
+        "y": 76,
+        "width": 159,
+        "height": 40
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 27,
+      "tag": "li",
+      "id": "",
+      "className": "ant-menu-item",
+      "selectorHint": "li.ant-menu-item",
+      "name": "",
+      "type": "",
+      "role": "menuitem",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "材料供应",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 2,
+      "rect": {
+        "x": 12,
+        "y": 120,
+        "width": 223,
+        "height": 40
+      },
+      "style": {
+        "display": "flex",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 28,
+      "tag": "span",
+      "id": "",
+      "className": "anticon anticon-shop ant-menu-item-icon",
+      "selectorHint": "span.anticon.anticon-shop.ant-menu-item-icon",
+      "name": "",
+      "type": "",
+      "role": "img",
+      "ariaLabel": "shop",
+      "title": "",
+      "placeholder": "",
+      "text": "shop",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 1,
+      "rect": {
+        "x": 36,
+        "y": 133,
+        "width": 14,
+        "height": 14
+      },
+      "style": {
+        "display": "flex",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 29,
+      "tag": "svg",
+      "id": "",
+      "className": "",
+      "selectorHint": "svg",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 1,
+      "rect": {
+        "x": 36,
+        "y": 133,
+        "width": 14,
+        "height": 14
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 30,
+      "tag": "path",
+      "id": "",
+      "className": "",
+      "selectorHint": "path",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 37,
+        "y": 134,
+        "width": 13,
+        "height": 13
+      },
+      "style": {
+        "display": "inline",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 31,
+      "tag": "span",
+      "id": "",
+      "className": "ant-menu-title-content",
+      "selectorHint": "span.ant-menu-title-content",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "材料供应",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 60,
+        "y": 120,
+        "width": 159,
+        "height": 40
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 32,
+      "tag": "li",
+      "id": "",
+      "className": "ant-menu-item ant-menu-item-active ant-menu-item-selected",
+      "selectorHint": "li.ant-menu-item.ant-menu-item-active.ant-menu-item-selected",
+      "name": "",
+      "type": "",
+      "role": "menuitem",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "设计师负载",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 2,
+      "rect": {
+        "x": 12,
+        "y": 164,
+        "width": 223,
+        "height": 40
+      },
+      "style": {
+        "display": "flex",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 33,
+      "tag": "span",
+      "id": "",
+      "className": "anticon anticon-team ant-menu-item-icon",
+      "selectorHint": "span.anticon.anticon-team.ant-menu-item-icon",
+      "name": "",
+      "type": "",
+      "role": "img",
+      "ariaLabel": "team",
+      "title": "",
+      "placeholder": "",
+      "text": "team",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 1,
+      "rect": {
+        "x": 36,
+        "y": 177,
+        "width": 14,
+        "height": 14
+      },
+      "style": {
+        "display": "flex",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 34,
+      "tag": "svg",
+      "id": "",
+      "className": "",
+      "selectorHint": "svg",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 1,
+      "rect": {
+        "x": 36,
+        "y": 177,
+        "width": 14,
+        "height": 14
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 35,
+      "tag": "path",
+      "id": "",
+      "className": "",
+      "selectorHint": "path",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 37,
+        "y": 178,
+        "width": 13,
+        "height": 13
+      },
+      "style": {
+        "display": "inline",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 36,
+      "tag": "span",
+      "id": "",
+      "className": "ant-menu-title-content",
+      "selectorHint": "span.ant-menu-title-content",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "设计师负载",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 60,
+        "y": 164,
+        "width": 159,
+        "height": 40
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 37,
+      "tag": "li",
+      "id": "",
+      "className": "ant-menu-item",
+      "selectorHint": "li.ant-menu-item",
+      "name": "",
+      "type": "",
+      "role": "menuitem",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "验收与资金",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 2,
+      "rect": {
+        "x": 12,
+        "y": 208,
+        "width": 223,
+        "height": 40
+      },
+      "style": {
+        "display": "flex",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 38,
+      "tag": "span",
+      "id": "",
+      "className": "anticon anticon-audit ant-menu-item-icon",
+      "selectorHint": "span.anticon.anticon-audit.ant-menu-item-icon",
+      "name": "",
+      "type": "",
+      "role": "img",
+      "ariaLabel": "audit",
+      "title": "",
+      "placeholder": "",
+      "text": "audit",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 1,
+      "rect": {
+        "x": 36,
+        "y": 221,
+        "width": 14,
+        "height": 14
+      },
+      "style": {
+        "display": "flex",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 39,
+      "tag": "svg",
+      "id": "",
+      "className": "",
+      "selectorHint": "svg",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 1,
+      "rect": {
+        "x": 36,
+        "y": 221,
+        "width": 14,
+        "height": 14
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 40,
+      "tag": "path",
+      "id": "",
+      "className": "",
+      "selectorHint": "path",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 37,
+        "y": 221,
+        "width": 12,
+        "height": 14
+      },
+      "style": {
+        "display": "inline",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 41,
+      "tag": "span",
+      "id": "",
+      "className": "ant-menu-title-content",
+      "selectorHint": "span.ant-menu-title-content",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "验收与资金",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 60,
+        "y": 208,
+        "width": 159,
+        "height": 40
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 42,
+      "tag": "div",
+      "id": "",
+      "className": "",
+      "selectorHint": "div",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "",
+      "href": "",
+      "disabled": false,
+      "visible": false,
+      "childCount": 0,
+      "rect": {
+        "x": 0,
+        "y": 0,
+        "width": 0,
+        "height": 0
+      },
+      "style": {
+        "display": "none",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 43,
+      "tag": "div",
+      "id": "",
+      "className": "ant-layout css-dev-only-do-not-override-mncuj7",
+      "selectorHint": "div.ant-layout.css-dev-only-do-not-override-mncuj7",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "家装产业协同管理平台 报价、设计、材料、验收与资金风控一体化工作台 API ok 15:47:20 系统管理员 刷新 平台注册用户 1 装修项目 0 推进中项目 0 待处理验收 0 设计师负载 暂无设计师负载数据",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 2,
+      "rect": {
+        "x": 240,
+        "y": 8,
+        "width": 1480,
+        "height": 375
+      },
+      "style": {
+        "display": "flex",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 44,
+      "tag": "header",
+      "id": "",
+      "className": "ant-layout-header topbar css-dev-only-do-not-override-mncuj7",
+      "selectorHint": "header.ant-layout-header.topbar.css-dev-only-do-not-override-mncuj7",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "家装产业协同管理平台 报价、设计、材料、验收与资金风控一体化工作台 API ok 15:47:20 系统管理员 刷新",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 2,
+      "rect": {
+        "x": 240,
+        "y": 8,
+        "width": 1480,
+        "height": 64
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 45,
+      "tag": "div",
+      "id": "",
+      "className": "ant-space css-dev-only-do-not-override-mncuj7 ant-space-vertical",
+      "selectorHint": "div.ant-space.css-dev-only-do-not-override-mncuj7.ant-space-vertical",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "家装产业协同管理平台 报价、设计、材料、验收与资金风控一体化工作台",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 2,
+      "rect": {
+        "x": 290,
+        "y": 8,
+        "width": 308,
+        "height": 132
+      },
+      "style": {
+        "display": "inline-flex",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 46,
+      "tag": "div",
+      "id": "",
+      "className": "ant-space-item",
+      "selectorHint": "div.ant-space-item",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "家装产业协同管理平台",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 1,
+      "rect": {
+        "x": 290,
+        "y": 8,
+        "width": 308,
+        "height": 68
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 47,
+      "tag": "h3",
+      "id": "",
+      "className": "ant-typography css-dev-only-do-not-override-mncuj7",
+      "selectorHint": "h3.ant-typography.css-dev-only-do-not-override-mncuj7",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "家装产业协同管理平台",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 290,
+        "y": 32,
+        "width": 308,
+        "height": 32
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 48,
+      "tag": "div",
+      "id": "",
+      "className": "ant-space-item",
+      "selectorHint": "div.ant-space-item",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "报价、设计、材料、验收与资金风控一体化工作台",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 1,
+      "rect": {
+        "x": 290,
+        "y": 76,
+        "width": 308,
+        "height": 64
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 49,
+      "tag": "span",
+      "id": "",
+      "className": "ant-typography ant-typography-secondary css-dev-only-do-not-override-mncuj7",
+      "selectorHint": "span.ant-typography.ant-typography-secondary.css-dev-only-do-not-override-mncuj7",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "报价、设计、材料、验收与资金风控一体化工作台",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 290,
+        "y": 99,
+        "width": 308,
+        "height": 17
+      },
+      "style": {
+        "display": "inline",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 50,
+      "tag": "div",
+      "id": "",
+      "className": "ant-space css-dev-only-do-not-override-mncuj7 ant-space-horizontal ant-space-align-center ant-space-gap-row-small ant-space-gap-col-small",
+      "selectorHint": "div.ant-space.css-dev-only-do-not-override-mncuj7.ant-space-horizontal",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "API ok 15:47:20 系统管理员 刷新",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 3,
+      "rect": {
+        "x": 598,
+        "y": 20,
+        "width": 295,
+        "height": 64
+      },
+      "style": {
+        "display": "inline-flex",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 51,
+      "tag": "div",
+      "id": "",
+      "className": "ant-space-item",
+      "selectorHint": "div.ant-space-item",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "API ok 15:47:20",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 1,
+      "rect": {
+        "x": 598,
+        "y": 20,
+        "width": 113,
+        "height": 64
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 52,
+      "tag": "span",
+      "id": "",
+      "className": "ant-tag ant-tag-green css-dev-only-do-not-override-mncuj7",
+      "selectorHint": "span.ant-tag.ant-tag-green.css-dev-only-do-not-override-mncuj7",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "API ok 15:47:20",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 598,
+        "y": 42,
+        "width": 105,
+        "height": 22
+      },
+      "style": {
+        "display": "inline-block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 53,
+      "tag": "div",
+      "id": "",
+      "className": "ant-space-item",
+      "selectorHint": "div.ant-space-item",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "系统管理员",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 1,
+      "rect": {
+        "x": 719,
+        "y": 20,
+        "width": 84,
+        "height": 64
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 54,
+      "tag": "span",
+      "id": "",
+      "className": "ant-tag ant-tag-blue css-dev-only-do-not-override-mncuj7",
+      "selectorHint": "span.ant-tag.ant-tag-blue.css-dev-only-do-not-override-mncuj7",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "系统管理员",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 719,
+        "y": 42,
+        "width": 76,
+        "height": 22
+      },
+      "style": {
+        "display": "inline-block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 55,
+      "tag": "div",
+      "id": "",
+      "className": "ant-space-item",
+      "selectorHint": "div.ant-space-item",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "刷新",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 1,
+      "rect": {
+        "x": 811,
+        "y": 20,
+        "width": 82,
+        "height": 64
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 56,
+      "tag": "button",
+      "id": "",
+      "className": "ant-btn css-dev-only-do-not-override-mncuj7 ant-btn-default ant-btn-color-default ant-btn-variant-outlined",
+      "selectorHint": "button.ant-btn.css-dev-only-do-not-override-mncuj7.ant-btn-default",
+      "name": "",
+      "type": "button",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "刷新",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 2,
+      "rect": {
+        "x": 811,
+        "y": 36,
+        "width": 82,
+        "height": 32
+      },
+      "style": {
+        "display": "inline-flex",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 57,
+      "tag": "span",
+      "id": "",
+      "className": "ant-btn-icon",
+      "selectorHint": "span.ant-btn-icon",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 1,
+      "rect": {
+        "x": 827,
+        "y": 43,
+        "width": 14,
+        "height": 17
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 58,
+      "tag": "span",
+      "id": "",
+      "className": "anticon anticon-reload",
+      "selectorHint": "span.anticon.anticon-reload",
+      "name": "",
+      "type": "",
+      "role": "img",
+      "ariaLabel": "reload",
+      "title": "",
+      "placeholder": "",
+      "text": "reload",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 1,
+      "rect": {
+        "x": 827,
+        "y": 45,
+        "width": 14,
+        "height": 14
+      },
+      "style": {
+        "display": "inline-flex",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 59,
+      "tag": "svg",
+      "id": "",
+      "className": "",
+      "selectorHint": "svg",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 1,
+      "rect": {
+        "x": 827,
+        "y": 45,
+        "width": 14,
+        "height": 14
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 60,
+      "tag": "path",
+      "id": "",
+      "className": "",
+      "selectorHint": "path",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 827,
+        "y": 45,
+        "width": 13,
+        "height": 13
+      },
+      "style": {
+        "display": "inline",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 61,
+      "tag": "span",
+      "id": "",
+      "className": "",
+      "selectorHint": "span",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "刷新",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 849,
+        "y": 42,
+        "width": 28,
+        "height": 20
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 62,
+      "tag": "main",
+      "id": "",
+      "className": "ant-layout-content content css-dev-only-do-not-override-mncuj7",
+      "selectorHint": "main.ant-layout-content.content.css-dev-only-do-not-override-mncuj7",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "平台注册用户 1 装修项目 0 推进中项目 0 待处理验收 0 设计师负载 暂无设计师负载数据",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 1,
+      "rect": {
+        "x": 240,
+        "y": 72,
+        "width": 1480,
+        "height": 311
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 63,
+      "tag": "div",
+      "id": "",
+      "className": "ant-space css-dev-only-do-not-override-mncuj7 ant-space-vertical main-stack",
+      "selectorHint": "div.ant-space.css-dev-only-do-not-override-mncuj7.ant-space-vertical",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "平台注册用户 1 装修项目 0 推进中项目 0 待处理验收 0 设计师负载 暂无设计师负载数据",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 2,
+      "rect": {
+        "x": 240,
+        "y": 72,
+        "width": 528,
+        "height": 311
+      },
+      "style": {
+        "display": "inline-flex",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 64,
+      "tag": "div",
+      "id": "",
+      "className": "ant-space-item",
+      "selectorHint": "div.ant-space-item",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "平台注册用户 1 装修项目 0 推进中项目 0 待处理验收 0",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 1,
+      "rect": {
+        "x": 240,
+        "y": 72,
+        "width": 528,
+        "height": 136
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 65,
+      "tag": "div",
+      "id": "",
+      "className": "ant-row css-dev-only-do-not-override-mncuj7",
+      "selectorHint": "div.ant-row.css-dev-only-do-not-override-mncuj7",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "平台注册用户 1 装修项目 0 推进中项目 0 待处理验收 0",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 4,
+      "rect": {
+        "x": 232,
+        "y": 72,
+        "width": 544,
+        "height": 136
+      },
+      "style": {
+        "display": "flex",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 66,
+      "tag": "div",
+      "id": "",
+      "className": "ant-col ant-col-xs-12 ant-col-lg-6 css-dev-only-do-not-override-mncuj7",
+      "selectorHint": "div.ant-col.ant-col-xs-12.ant-col-lg-6",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "平台注册用户 1",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 1,
+      "rect": {
+        "x": 232,
+        "y": 72,
+        "width": 136,
+        "height": 136
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 67,
+      "tag": "div",
+      "id": "",
+      "className": "ant-card ant-card-bordered css-dev-only-do-not-override-mncuj7",
+      "selectorHint": "div.ant-card.ant-card-bordered.css-dev-only-do-not-override-mncuj7",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "平台注册用户 1",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 1,
+      "rect": {
+        "x": 240,
+        "y": 72,
+        "width": 120,
+        "height": 136
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 68,
+      "tag": "div",
+      "id": "",
+      "className": "ant-card-body",
+      "selectorHint": "div.ant-card-body",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "平台注册用户 1",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 1,
+      "rect": {
+        "x": 241,
+        "y": 73,
+        "width": 118,
+        "height": 134
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 69,
+      "tag": "div",
+      "id": "",
+      "className": "ant-statistic css-dev-only-do-not-override-mncuj7",
+      "selectorHint": "div.ant-statistic.css-dev-only-do-not-override-mncuj7",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "平台注册用户 1",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 2,
+      "rect": {
+        "x": 265,
+        "y": 97,
+        "width": 70,
+        "height": 86
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 70,
+      "tag": "div",
+      "id": "",
+      "className": "ant-statistic-title",
+      "selectorHint": "div.ant-statistic-title",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "平台注册用户",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 265,
+        "y": 97,
+        "width": 70,
+        "height": 44
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 71,
+      "tag": "div",
+      "id": "",
+      "className": "ant-statistic-content",
+      "selectorHint": "div.ant-statistic-content",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "1",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 2,
+      "rect": {
+        "x": 265,
+        "y": 145,
+        "width": 70,
+        "height": 38
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 72,
+      "tag": "span",
+      "id": "",
+      "className": "ant-statistic-content-prefix",
+      "selectorHint": "span.ant-statistic-content-prefix",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 1,
+      "rect": {
+        "x": 265,
+        "y": 145,
+        "width": 24,
+        "height": 38
+      },
+      "style": {
+        "display": "inline-block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 73,
+      "tag": "span",
+      "id": "",
+      "className": "anticon anticon-team",
+      "selectorHint": "span.anticon.anticon-team",
+      "name": "",
+      "type": "",
+      "role": "img",
+      "ariaLabel": "team",
+      "title": "",
+      "placeholder": "",
+      "text": "team",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 1,
+      "rect": {
+        "x": 265,
+        "y": 151,
+        "width": 24,
+        "height": 24
+      },
+      "style": {
+        "display": "inline-flex",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 74,
+      "tag": "svg",
+      "id": "",
+      "className": "",
+      "selectorHint": "svg",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 1,
+      "rect": {
+        "x": 265,
+        "y": 151,
+        "width": 24,
+        "height": 24
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 75,
+      "tag": "path",
+      "id": "",
+      "className": "",
+      "selectorHint": "path",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 266,
+        "y": 152,
+        "width": 21,
+        "height": 21
+      },
+      "style": {
+        "display": "inline",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 76,
+      "tag": "span",
+      "id": "",
+      "className": "ant-statistic-content-value",
+      "selectorHint": "span.ant-statistic-content-value",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "1",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 1,
+      "rect": {
+        "x": 293,
+        "y": 145,
+        "width": 11,
+        "height": 38
+      },
+      "style": {
+        "display": "inline-block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 77,
+      "tag": "span",
+      "id": "",
+      "className": "ant-statistic-content-value-int",
+      "selectorHint": "span.ant-statistic-content-value-int",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "1",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 293,
+        "y": 149,
+        "width": 11,
+        "height": 28
+      },
+      "style": {
+        "display": "inline",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 78,
+      "tag": "div",
+      "id": "",
+      "className": "ant-col ant-col-xs-12 ant-col-lg-6 css-dev-only-do-not-override-mncuj7",
+      "selectorHint": "div.ant-col.ant-col-xs-12.ant-col-lg-6",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "装修项目 0",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 1,
+      "rect": {
+        "x": 368,
+        "y": 72,
+        "width": 136,
+        "height": 136
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 79,
+      "tag": "div",
+      "id": "",
+      "className": "ant-card ant-card-bordered css-dev-only-do-not-override-mncuj7",
+      "selectorHint": "div.ant-card.ant-card-bordered.css-dev-only-do-not-override-mncuj7",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "装修项目 0",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 1,
+      "rect": {
+        "x": 376,
+        "y": 72,
+        "width": 120,
+        "height": 114
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 80,
+      "tag": "div",
+      "id": "",
+      "className": "ant-card-body",
+      "selectorHint": "div.ant-card-body",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "装修项目 0",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 1,
+      "rect": {
+        "x": 377,
+        "y": 73,
+        "width": 118,
+        "height": 112
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 81,
+      "tag": "div",
+      "id": "",
+      "className": "ant-statistic css-dev-only-do-not-override-mncuj7",
+      "selectorHint": "div.ant-statistic.css-dev-only-do-not-override-mncuj7",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "装修项目 0",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 2,
+      "rect": {
+        "x": 401,
+        "y": 97,
+        "width": 70,
+        "height": 64
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 82,
+      "tag": "div",
+      "id": "",
+      "className": "ant-statistic-title",
+      "selectorHint": "div.ant-statistic-title",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "装修项目",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 401,
+        "y": 97,
+        "width": 70,
+        "height": 22
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 83,
+      "tag": "div",
+      "id": "",
+      "className": "ant-statistic-content",
+      "selectorHint": "div.ant-statistic-content",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "0",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 2,
+      "rect": {
+        "x": 401,
+        "y": 123,
+        "width": 70,
+        "height": 38
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 84,
+      "tag": "span",
+      "id": "",
+      "className": "ant-statistic-content-prefix",
+      "selectorHint": "span.ant-statistic-content-prefix",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 1,
+      "rect": {
+        "x": 401,
+        "y": 123,
+        "width": 24,
+        "height": 38
+      },
+      "style": {
+        "display": "inline-block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 85,
+      "tag": "span",
+      "id": "",
+      "className": "anticon anticon-home",
+      "selectorHint": "span.anticon.anticon-home",
+      "name": "",
+      "type": "",
+      "role": "img",
+      "ariaLabel": "home",
+      "title": "",
+      "placeholder": "",
+      "text": "home",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 1,
+      "rect": {
+        "x": 401,
+        "y": 129,
+        "width": 24,
+        "height": 24
+      },
+      "style": {
+        "display": "inline-flex",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 86,
+      "tag": "svg",
+      "id": "",
+      "className": "",
+      "selectorHint": "svg",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 1,
+      "rect": {
+        "x": 401,
+        "y": 129,
+        "width": 24,
+        "height": 24
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 87,
+      "tag": "path",
+      "id": "",
+      "className": "",
+      "selectorHint": "path",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 401,
+        "y": 130,
+        "width": 24,
+        "height": 23
+      },
+      "style": {
+        "display": "inline",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 88,
+      "tag": "span",
+      "id": "",
+      "className": "ant-statistic-content-value",
+      "selectorHint": "span.ant-statistic-content-value",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "0",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 1,
+      "rect": {
+        "x": 429,
+        "y": 123,
+        "width": 15,
+        "height": 38
+      },
+      "style": {
+        "display": "inline-block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 89,
+      "tag": "span",
+      "id": "",
+      "className": "ant-statistic-content-value-int",
+      "selectorHint": "span.ant-statistic-content-value-int",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "0",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 429,
+        "y": 127,
+        "width": 15,
+        "height": 28
+      },
+      "style": {
+        "display": "inline",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 90,
+      "tag": "div",
+      "id": "",
+      "className": "ant-col ant-col-xs-12 ant-col-lg-6 css-dev-only-do-not-override-mncuj7",
+      "selectorHint": "div.ant-col.ant-col-xs-12.ant-col-lg-6",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "推进中项目 0",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 1,
+      "rect": {
+        "x": 504,
+        "y": 72,
+        "width": 136,
+        "height": 136
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 91,
+      "tag": "div",
+      "id": "",
+      "className": "ant-card ant-card-bordered css-dev-only-do-not-override-mncuj7",
+      "selectorHint": "div.ant-card.ant-card-bordered.css-dev-only-do-not-override-mncuj7",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "推进中项目 0",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 1,
+      "rect": {
+        "x": 512,
+        "y": 72,
+        "width": 120,
+        "height": 114
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 92,
+      "tag": "div",
+      "id": "",
+      "className": "ant-card-body",
+      "selectorHint": "div.ant-card-body",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "推进中项目 0",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 1,
+      "rect": {
+        "x": 513,
+        "y": 73,
+        "width": 118,
+        "height": 112
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 93,
+      "tag": "div",
+      "id": "",
+      "className": "ant-statistic css-dev-only-do-not-override-mncuj7",
+      "selectorHint": "div.ant-statistic.css-dev-only-do-not-override-mncuj7",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "推进中项目 0",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 2,
+      "rect": {
+        "x": 537,
+        "y": 97,
+        "width": 70,
+        "height": 64
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 94,
+      "tag": "div",
+      "id": "",
+      "className": "ant-statistic-title",
+      "selectorHint": "div.ant-statistic-title",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "推进中项目",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 537,
+        "y": 97,
+        "width": 70,
+        "height": 22
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 95,
+      "tag": "div",
+      "id": "",
+      "className": "ant-statistic-content",
+      "selectorHint": "div.ant-statistic-content",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "0",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 2,
+      "rect": {
+        "x": 537,
+        "y": 123,
+        "width": 70,
+        "height": 38
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 96,
+      "tag": "span",
+      "id": "",
+      "className": "ant-statistic-content-prefix",
+      "selectorHint": "span.ant-statistic-content-prefix",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 1,
+      "rect": {
+        "x": 537,
+        "y": 123,
+        "width": 24,
+        "height": 38
+      },
+      "style": {
+        "display": "inline-block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 97,
+      "tag": "span",
+      "id": "",
+      "className": "anticon anticon-bar-chart",
+      "selectorHint": "span.anticon.anticon-bar-chart",
+      "name": "",
+      "type": "",
+      "role": "img",
+      "ariaLabel": "bar-chart",
+      "title": "",
+      "placeholder": "",
+      "text": "bar-chart",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 1,
+      "rect": {
+        "x": 537,
+        "y": 129,
+        "width": 24,
+        "height": 24
+      },
+      "style": {
+        "display": "inline-flex",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 98,
+      "tag": "svg",
+      "id": "",
+      "className": "",
+      "selectorHint": "svg",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 1,
+      "rect": {
+        "x": 537,
+        "y": 129,
+        "width": 24,
+        "height": 24
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 99,
+      "tag": "path",
+      "id": "",
+      "className": "",
+      "selectorHint": "path",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 539,
+        "y": 132,
+        "width": 21,
+        "height": 19
+      },
+      "style": {
+        "display": "inline",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 100,
+      "tag": "span",
+      "id": "",
+      "className": "ant-statistic-content-value",
+      "selectorHint": "span.ant-statistic-content-value",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "0",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 1,
+      "rect": {
+        "x": 565,
+        "y": 123,
+        "width": 15,
+        "height": 38
+      },
+      "style": {
+        "display": "inline-block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 101,
+      "tag": "span",
+      "id": "",
+      "className": "ant-statistic-content-value-int",
+      "selectorHint": "span.ant-statistic-content-value-int",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "0",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 565,
+        "y": 127,
+        "width": 15,
+        "height": 28
+      },
+      "style": {
+        "display": "inline",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 102,
+      "tag": "div",
+      "id": "",
+      "className": "ant-col ant-col-xs-12 ant-col-lg-6 css-dev-only-do-not-override-mncuj7",
+      "selectorHint": "div.ant-col.ant-col-xs-12.ant-col-lg-6",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "待处理验收 0",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 1,
+      "rect": {
+        "x": 640,
+        "y": 72,
+        "width": 136,
+        "height": 136
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 103,
+      "tag": "div",
+      "id": "",
+      "className": "ant-card ant-card-bordered css-dev-only-do-not-override-mncuj7",
+      "selectorHint": "div.ant-card.ant-card-bordered.css-dev-only-do-not-override-mncuj7",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "待处理验收 0",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 1,
+      "rect": {
+        "x": 648,
+        "y": 72,
+        "width": 120,
+        "height": 114
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 104,
+      "tag": "div",
+      "id": "",
+      "className": "ant-card-body",
+      "selectorHint": "div.ant-card-body",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "待处理验收 0",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 1,
+      "rect": {
+        "x": 649,
+        "y": 73,
+        "width": 118,
+        "height": 112
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 105,
+      "tag": "div",
+      "id": "",
+      "className": "ant-statistic css-dev-only-do-not-override-mncuj7",
+      "selectorHint": "div.ant-statistic.css-dev-only-do-not-override-mncuj7",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "待处理验收 0",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 2,
+      "rect": {
+        "x": 673,
+        "y": 97,
+        "width": 70,
+        "height": 64
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 106,
+      "tag": "div",
+      "id": "",
+      "className": "ant-statistic-title",
+      "selectorHint": "div.ant-statistic-title",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "待处理验收",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 673,
+        "y": 97,
+        "width": 70,
+        "height": 22
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 107,
+      "tag": "div",
+      "id": "",
+      "className": "ant-statistic-content",
+      "selectorHint": "div.ant-statistic-content",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "0",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 2,
+      "rect": {
+        "x": 673,
+        "y": 123,
+        "width": 70,
+        "height": 38
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 108,
+      "tag": "span",
+      "id": "",
+      "className": "ant-statistic-content-prefix",
+      "selectorHint": "span.ant-statistic-content-prefix",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 1,
+      "rect": {
+        "x": 673,
+        "y": 123,
+        "width": 24,
+        "height": 38
+      },
+      "style": {
+        "display": "inline-block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 109,
+      "tag": "span",
+      "id": "",
+      "className": "anticon anticon-audit",
+      "selectorHint": "span.anticon.anticon-audit",
+      "name": "",
+      "type": "",
+      "role": "img",
+      "ariaLabel": "audit",
+      "title": "",
+      "placeholder": "",
+      "text": "audit",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 1,
+      "rect": {
+        "x": 673,
+        "y": 129,
+        "width": 24,
+        "height": 24
+      },
+      "style": {
+        "display": "inline-flex",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 110,
+      "tag": "svg",
+      "id": "",
+      "className": "",
+      "selectorHint": "svg",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 1,
+      "rect": {
+        "x": 673,
+        "y": 129,
+        "width": 24,
+        "height": 24
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 111,
+      "tag": "path",
+      "id": "",
+      "className": "",
+      "selectorHint": "path",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 675,
+        "y": 129,
+        "width": 20,
+        "height": 23
+      },
+      "style": {
+        "display": "inline",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 112,
+      "tag": "span",
+      "id": "",
+      "className": "ant-statistic-content-value",
+      "selectorHint": "span.ant-statistic-content-value",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "0",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 1,
+      "rect": {
+        "x": 701,
+        "y": 123,
+        "width": 15,
+        "height": 38
+      },
+      "style": {
+        "display": "inline-block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 113,
+      "tag": "span",
+      "id": "",
+      "className": "ant-statistic-content-value-int",
+      "selectorHint": "span.ant-statistic-content-value-int",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "0",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 701,
+        "y": 127,
+        "width": 15,
+        "height": 28
+      },
+      "style": {
+        "display": "inline",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 114,
+      "tag": "div",
+      "id": "",
+      "className": "ant-space-item",
+      "selectorHint": "div.ant-space-item",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "设计师负载 暂无设计师负载数据",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 1,
+      "rect": {
+        "x": 240,
+        "y": 224,
+        "width": 528,
+        "height": 159
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 115,
+      "tag": "div",
+      "id": "",
+      "className": "ant-card ant-card-bordered css-dev-only-do-not-override-mncuj7",
+      "selectorHint": "div.ant-card.ant-card-bordered.css-dev-only-do-not-override-mncuj7",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "设计师负载 暂无设计师负载数据",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 2,
+      "rect": {
+        "x": 240,
+        "y": 224,
+        "width": 528,
+        "height": 159
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 116,
+      "tag": "div",
+      "id": "",
+      "className": "ant-card-head",
+      "selectorHint": "div.ant-card-head",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "设计师负载",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 1,
+      "rect": {
+        "x": 241,
+        "y": 225,
+        "width": 526,
+        "height": 56
+      },
+      "style": {
+        "display": "flex",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 117,
+      "tag": "div",
+      "id": "",
+      "className": "ant-card-head-wrapper",
+      "selectorHint": "div.ant-card-head-wrapper",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "设计师负载",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 1,
+      "rect": {
+        "x": 265,
+        "y": 240,
+        "width": 478,
+        "height": 25
+      },
+      "style": {
+        "display": "flex",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 118,
+      "tag": "div",
+      "id": "",
+      "className": "ant-card-head-title",
+      "selectorHint": "div.ant-card-head-title",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "设计师负载",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 265,
+        "y": 240,
+        "width": 478,
+        "height": 25
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 119,
+      "tag": "div",
+      "id": "",
+      "className": "ant-card-body",
+      "selectorHint": "div.ant-card-body",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "暂无设计师负载数据",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 1,
+      "rect": {
+        "x": 241,
+        "y": 280,
+        "width": 526,
+        "height": 102
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 120,
+      "tag": "div",
+      "id": "",
+      "className": "ant-list ant-list-split css-dev-only-do-not-override-mncuj7",
+      "selectorHint": "div.ant-list.ant-list-split.css-dev-only-do-not-override-mncuj7",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "暂无设计师负载数据",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 1,
+      "rect": {
+        "x": 265,
+        "y": 304,
+        "width": 478,
+        "height": 54
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 121,
+      "tag": "div",
+      "id": "",
+      "className": "ant-spin-nested-loading css-dev-only-do-not-override-mncuj7",
+      "selectorHint": "div.ant-spin-nested-loading.css-dev-only-do-not-override-mncuj7",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "暂无设计师负载数据",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 1,
+      "rect": {
+        "x": 265,
+        "y": 304,
+        "width": 478,
+        "height": 54
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 122,
+      "tag": "div",
+      "id": "",
+      "className": "ant-spin-container",
+      "selectorHint": "div.ant-spin-container",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "暂无设计师负载数据",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 1,
+      "rect": {
+        "x": 265,
+        "y": 304,
+        "width": 478,
+        "height": 54
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 123,
+      "tag": "div",
+      "id": "",
+      "className": "ant-list-empty-text",
+      "selectorHint": "div.ant-list-empty-text",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "暂无设计师负载数据",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 265,
+        "y": 304,
+        "width": 478,
+        "height": 54
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    }
+  ],
+  "interactiveElements": [
+    {
+      "index": 0,
+      "tag": "ul",
+      "id": "",
+      "className": "ant-menu ant-menu-root ant-menu-inline ant-menu-light css-dev-only-do-not-override-mncuj7",
+      "selectorHint": "ul.ant-menu.ant-menu-root.ant-menu-inline",
+      "name": "",
+      "type": "",
+      "role": "menu",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "运营总览 项目协同 材料供应 设计师负载 验收与资金",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 5,
+      "rect": {
+        "x": 8,
+        "y": 28,
+        "width": 232,
+        "height": 224
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 1,
+      "tag": "li",
+      "id": "",
+      "className": "ant-menu-item",
+      "selectorHint": "li.ant-menu-item",
+      "name": "",
+      "type": "",
+      "role": "menuitem",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "运营总览",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 2,
+      "rect": {
+        "x": 12,
+        "y": 32,
+        "width": 223,
+        "height": 40
+      },
+      "style": {
+        "display": "flex",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 2,
+      "tag": "li",
+      "id": "",
+      "className": "ant-menu-item",
+      "selectorHint": "li.ant-menu-item",
+      "name": "",
+      "type": "",
+      "role": "menuitem",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "项目协同",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 2,
+      "rect": {
+        "x": 12,
+        "y": 76,
+        "width": 223,
+        "height": 40
+      },
+      "style": {
+        "display": "flex",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 3,
+      "tag": "li",
+      "id": "",
+      "className": "ant-menu-item",
+      "selectorHint": "li.ant-menu-item",
+      "name": "",
+      "type": "",
+      "role": "menuitem",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "材料供应",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 2,
+      "rect": {
+        "x": 12,
+        "y": 120,
+        "width": 223,
+        "height": 40
+      },
+      "style": {
+        "display": "flex",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 4,
+      "tag": "li",
+      "id": "",
+      "className": "ant-menu-item ant-menu-item-active ant-menu-item-selected",
+      "selectorHint": "li.ant-menu-item.ant-menu-item-active.ant-menu-item-selected",
+      "name": "",
+      "type": "",
+      "role": "menuitem",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "设计师负载",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 2,
+      "rect": {
+        "x": 12,
+        "y": 164,
+        "width": 223,
+        "height": 40
+      },
+      "style": {
+        "display": "flex",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 5,
+      "tag": "li",
+      "id": "",
+      "className": "ant-menu-item",
+      "selectorHint": "li.ant-menu-item",
+      "name": "",
+      "type": "",
+      "role": "menuitem",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "验收与资金",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 2,
+      "rect": {
+        "x": 12,
+        "y": 208,
+        "width": 223,
+        "height": 40
+      },
+      "style": {
+        "display": "flex",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 6,
+      "tag": "button",
+      "id": "",
+      "className": "ant-btn css-dev-only-do-not-override-mncuj7 ant-btn-default ant-btn-color-default ant-btn-variant-outlined",
+      "selectorHint": "button.ant-btn.css-dev-only-do-not-override-mncuj7.ant-btn-default",
+      "name": "",
+      "type": "button",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "刷新",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 2,
+      "rect": {
+        "x": 811,
+        "y": 36,
+        "width": 82,
+        "height": 32
+      },
+      "style": {
+        "display": "inline-flex",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    }
+  ]
+}

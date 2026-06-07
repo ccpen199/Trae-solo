@@ -1,0 +1,2792 @@
+{
+  "ok": true,
+  "generatedAt": "2026-06-05T11:30:48.103Z",
+  "order": "may-89044",
+  "roundIndex": 100,
+  "captureId": "may-89044-codex-runtime-final",
+  "url": "http://127.0.0.1:49044/",
+  "initialUrl": "http://127.0.0.1:49044/",
+  "finalUrl": "http://127.0.0.1:49044/dashboard",
+  "status": 200,
+  "title": "家装产业协同管理平台",
+  "initialTitle": "家装产业协同管理平台",
+  "navigationError": "",
+  "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89044/probe/codex-runtime-final-20260605-1127/may-89044-codex-runtime-final-frontend.png",
+  "screenshotPaths": [
+    "/Users/chen/Documents/trae_projects/local_projects/may-89044/probe/codex-runtime-final-20260605-1127/may-89044-codex-runtime-final-structure-01-首屏.png",
+    "/Users/chen/Documents/trae_projects/local_projects/may-89044/probe/codex-runtime-final-20260605-1127/may-89044-codex-runtime-final-structure-02-导航-仪表盘.png",
+    "/Users/chen/Documents/trae_projects/local_projects/may-89044/probe/codex-runtime-final-20260605-1127/may-89044-codex-runtime-final-structure-03-操作-报价管理.png",
+    "/Users/chen/Documents/trae_projects/local_projects/may-89044/probe/codex-runtime-final-20260605-1127/may-89044-codex-runtime-final-structure-04-二层操作-报价管理-新建报价.png",
+    "/Users/chen/Documents/trae_projects/local_projects/may-89044/probe/codex-runtime-final-20260605-1127/may-89044-codex-runtime-final-structure-05-操作-材料管理.png",
+    "/Users/chen/Documents/trae_projects/local_projects/may-89044/probe/codex-runtime-final-20260605-1127/may-89044-codex-runtime-final-structure-06-二层操作-材料管理-编辑.png"
+  ],
+  "issueTextPreview": "登录注册相关问题；后台管理相关问题",
+  "targetReason": "登录流程已完成，继续复验登录后的首页和业务导航",
+  "targetKind": "auth",
+  "targetMatched": true,
+  "targetActions": [
+    {
+      "action": "login-fill-username",
+      "label": "admin",
+      "ok": true
+    },
+    {
+      "action": "login-fill-password",
+      "label": "admin:******",
+      "ok": true
+    },
+    {
+      "action": "login-enter",
+      "label": "admin",
+      "ok": true
+    },
+    {
+      "action": "login-result",
+      "label": "admin",
+      "ok": true,
+      "finalUrl": "http://127.0.0.1:49044/dashboard"
+    },
+    {
+      "action": "target-verify",
+      "label": "登录后首页",
+      "ok": true,
+      "finalUrl": "http://127.0.0.1:49044/dashboard"
+    }
+  ],
+  "authFlow": {
+    "detected": true,
+    "attempted": true,
+    "success": true,
+    "finalUrl": "http://127.0.0.1:49044/dashboard",
+    "message": "登录成功:admin",
+    "actions": [
+      {
+        "action": "login-fill-username",
+        "label": "admin",
+        "ok": true
+      },
+      {
+        "action": "login-fill-password",
+        "label": "admin:******",
+        "ok": true
+      },
+      {
+        "action": "login-enter",
+        "label": "admin",
+        "ok": true
+      },
+      {
+        "action": "login-result",
+        "label": "admin",
+        "ok": true,
+        "finalUrl": "http://127.0.0.1:49044/dashboard"
+      }
+    ],
+    "username": "admin",
+    "credentialSource": "visible-demo-text"
+  },
+  "businessAudit": {
+    "actions": [
+      {
+        "action": "click",
+        "label": "导航:仪表盘",
+        "ok": true
+      },
+      {
+        "action": "click",
+        "label": "操作:报价管理",
+        "ok": true,
+        "result": {
+          "ok": true,
+          "matched": 1
+        }
+      },
+      {
+        "action": "click",
+        "label": "二层操作:报价管理:新建报价",
+        "ok": true,
+        "result": {
+          "ok": true,
+          "matched": 1
+        }
+      },
+      {
+        "action": "click",
+        "label": "关闭弹窗/抽屉",
+        "ok": true
+      },
+      {
+        "action": "click",
+        "label": "操作:材料管理",
+        "ok": true,
+        "result": {
+          "ok": true,
+          "matched": 1
+        }
+      },
+      {
+        "action": "click",
+        "label": "二层操作:材料管理:编辑",
+        "ok": true,
+        "result": {
+          "ok": true,
+          "matched": 5
+        }
+      },
+      {
+        "action": "click",
+        "label": "关闭弹窗/抽屉",
+        "ok": true
+      },
+      {
+        "action": "click",
+        "label": "导航:项目管理",
+        "ok": true
+      },
+      {
+        "action": "click",
+        "label": "操作:新建项目",
+        "ok": true,
+        "result": {
+          "ok": true,
+          "matched": 1
+        }
+      },
+      {
+        "action": "click",
+        "label": "二层操作:新建项目:保 存",
+        "ok": true,
+        "result": {
+          "ok": true,
+          "matched": 1
+        }
+      },
+      {
+        "action": "click",
+        "label": "关闭弹窗/抽屉",
+        "ok": true
+      },
+      {
+        "action": "click",
+        "label": "操作:详情",
+        "ok": true,
+        "result": {
+          "ok": true,
+          "matched": 1
+        }
+      },
+      {
+        "action": "click",
+        "label": "二层操作:详情:关闭",
+        "ok": true,
+        "result": {
+          "ok": true,
+          "matched": 1
+        }
+      }
+    ],
+    "snapshots": [
+      {
+        "label": "首屏",
+        "url": "http://127.0.0.1:49044/dashboard",
+        "title": "家装产业协同管理平台",
+        "headings": [
+          "欢迎回来，系统管理员"
+        ],
+        "navLabels": [
+          "仪表盘",
+          "项目管理",
+          "设计方案",
+          "报价管理",
+          "验收管理",
+          "材料管理",
+          "管理面板"
+        ],
+        "buttons": [
+          "仪表盘",
+          "项目管理",
+          "设计方案",
+          "报价管理",
+          "验收管理",
+          "材料管理",
+          "管理面板"
+        ],
+        "links": [],
+        "inputs": [],
+        "tables": [],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "家装协同平台仪表盘项目管理设计方案报价管理验收管理材料管理管理面板家装产业协同管理平台系统管理员（管理员）退出欢迎回来，系统管理员当前角色：管理员项目总数1进行中项目1待验收1已完成项目0用户总数8业主2设计师1装修公司1供应商1运营总览资金共管对账管理资金流水与对账记录城市价格指数查看各城市装修价格走势设计师产能分析分析设计师工作效率与产出投诉根因分析分析投诉原因与改进措施最近动态项目「万科城市花园3栋502室装修项目」状态：in_progress project2026-06-05 16:44:27验收任务「万科城市花园3栋502室装修项目」状态：pending inspection2026-06-05 16:44:27材料订单「立邦净味5合1乳胶漆」状态：shipped material2026-06-05 15:27:34",
+        "layout": {
+          "viewportWidth": 1504,
+          "viewportHeight": 1092,
+          "scrollWidth": 1504,
+          "scrollHeight": 1108,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89044-codex-runtime-final-structure-01-首屏",
+          "label": "首屏",
+          "finalUrl": "http://127.0.0.1:49044/dashboard",
+          "title": "家装产业协同管理平台",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89044/probe/codex-runtime-final-20260605-1127/may-89044-codex-runtime-final-structure-01-首屏.json",
+          "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89044/probe/codex-runtime-final-20260605-1127/may-89044-codex-runtime-final-structure-01-首屏.png",
+          "elementCount": 264,
+          "interactiveCount": 8,
+          "interactiveLabels": [
+            "仪表盘",
+            "项目管理",
+            "设计方案",
+            "报价管理",
+            "验收管理",
+            "材料管理",
+            "管理面板",
+            "退出"
+          ]
+        }
+      },
+      {
+        "label": "导航:仪表盘",
+        "url": "http://127.0.0.1:49044/dashboard",
+        "title": "家装产业协同管理平台",
+        "headings": [
+          "欢迎回来，系统管理员"
+        ],
+        "navLabels": [
+          "仪表盘",
+          "项目管理",
+          "设计方案",
+          "报价管理",
+          "验收管理",
+          "材料管理",
+          "管理面板"
+        ],
+        "buttons": [
+          "仪表盘",
+          "项目管理",
+          "设计方案",
+          "报价管理",
+          "验收管理",
+          "材料管理",
+          "管理面板"
+        ],
+        "links": [],
+        "inputs": [],
+        "tables": [],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "家装协同平台仪表盘项目管理设计方案报价管理验收管理材料管理管理面板家装产业协同管理平台系统管理员（管理员）退出欢迎回来，系统管理员当前角色：管理员项目总数1进行中项目1待验收1已完成项目0用户总数8业主2设计师1装修公司1供应商1运营总览资金共管对账管理资金流水与对账记录城市价格指数查看各城市装修价格走势设计师产能分析分析设计师工作效率与产出投诉根因分析分析投诉原因与改进措施最近动态项目「万科城市花园3栋502室装修项目」状态：in_progress project2026-06-05 16:44:27验收任务「万科城市花园3栋502室装修项目」状态：pending inspection2026-06-05 16:44:27材料订单「立邦净味5合1乳胶漆」状态：shipped material2026-06-05 15:27:34",
+        "layout": {
+          "viewportWidth": 1536,
+          "viewportHeight": 1108,
+          "scrollWidth": 1536,
+          "scrollHeight": 1124,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89044-codex-runtime-final-structure-02-导航-仪表盘",
+          "label": "导航:仪表盘",
+          "finalUrl": "http://127.0.0.1:49044/dashboard",
+          "title": "家装产业协同管理平台",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89044/probe/codex-runtime-final-20260605-1127/may-89044-codex-runtime-final-structure-02-导航-仪表盘.json",
+          "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89044/probe/codex-runtime-final-20260605-1127/may-89044-codex-runtime-final-structure-02-导航-仪表盘.png",
+          "elementCount": 264,
+          "interactiveCount": 8,
+          "interactiveLabels": [
+            "仪表盘",
+            "项目管理",
+            "设计方案",
+            "报价管理",
+            "验收管理",
+            "材料管理",
+            "管理面板",
+            "退出"
+          ]
+        }
+      },
+      {
+        "label": "操作:报价管理",
+        "url": "http://127.0.0.1:49044/quotations",
+        "title": "家装产业协同管理平台",
+        "headings": [],
+        "navLabels": [
+          "仪表盘",
+          "项目管理",
+          "设计方案",
+          "报价管理",
+          "验收管理",
+          "材料管理",
+          "管理面板"
+        ],
+        "buttons": [
+          "仪表盘",
+          "项目管理",
+          "设计方案",
+          "报价管理",
+          "验收管理",
+          "材料管理",
+          "管理面板",
+          "新建报价",
+          "对比选中 (0)",
+          "详情",
+          "对比",
+          "预警"
+        ],
+        "links": [],
+        "inputs": [
+          {
+            "tag": "input",
+            "type": "search",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "search",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "checkbox",
+            "placeholder": "",
+            "name": "",
+            "label": "Select all"
+          },
+          {
+            "tag": "input",
+            "type": "checkbox",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "search",
+            "placeholder": "",
+            "name": "",
+            "label": "页码"
+          }
+        ],
+        "tables": [
+          {
+            "headers": [
+              "ID",
+              "标题",
+              "装企",
+              "总价",
+              "材料费",
+              "人工费",
+              "状态",
+              "创建时间",
+              "操作"
+            ],
+            "rowCount": 1,
+            "hasEmptyText": false,
+            "textPreview": "ID 标题 装企 总价 材料费 人工费 状态 创建时间 操作 1 装修报价A 靠谱装修公司 ¥125,000 ¥88,000 ¥32,000 已提交 2026-06-05 详情 对比 预警"
+          }
+        ],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "家装协同平台仪表盘项目管理设计方案报价管理验收管理材料管理管理面板家装产业协同管理平台系统管理员（管理员）退出装修报价管理新建报价选择项目状态筛选对比选中 (0)ID标题装企总价材料费人工费状态创建时间操作1装修报价A靠谱装修公司¥125,000¥88,000¥32,000已提交2026-06-05详情对比预警共 1 条110 条/页",
+        "layout": {
+          "viewportWidth": 1568,
+          "viewportHeight": 1124,
+          "scrollWidth": 1568,
+          "scrollHeight": 1140,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89044-codex-runtime-final-structure-03-操作-报价管理",
+          "label": "操作:报价管理",
+          "finalUrl": "http://127.0.0.1:49044/quotations",
+          "title": "家装产业协同管理平台",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89044/probe/codex-runtime-final-20260605-1127/may-89044-codex-runtime-final-structure-03-操作-报价管理.json",
+          "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89044/probe/codex-runtime-final-20260605-1127/may-89044-codex-runtime-final-structure-03-操作-报价管理.png",
+          "elementCount": 206,
+          "interactiveCount": 22,
+          "interactiveLabels": [
+            "仪表盘",
+            "项目管理",
+            "设计方案",
+            "报价管理",
+            "验收管理",
+            "材料管理",
+            "管理面板",
+            "退出",
+            "新建报价",
+            "对比选中 (0)",
+            "on",
+            "详情",
+            "对比",
+            "预警",
+            "1",
+            "页码"
+          ]
+        }
+      },
+      {
+        "label": "二层操作:报价管理->新建报价",
+        "url": "http://127.0.0.1:49044/quotations",
+        "title": "家装产业协同管理平台",
+        "headings": [],
+        "navLabels": [
+          "仪表盘",
+          "项目管理",
+          "设计方案",
+          "报价管理",
+          "验收管理",
+          "材料管理",
+          "管理面板"
+        ],
+        "buttons": [
+          "仪表盘",
+          "项目管理",
+          "设计方案",
+          "报价管理",
+          "验收管理",
+          "材料管理",
+          "管理面板",
+          "新建报价",
+          "对比选中 (0)",
+          "详情",
+          "对比",
+          "预警",
+          "Close",
+          "取 消",
+          "确 定"
+        ],
+        "links": [],
+        "inputs": [
+          {
+            "tag": "input",
+            "type": "search",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "search",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "checkbox",
+            "placeholder": "",
+            "name": "",
+            "label": "Select all"
+          },
+          {
+            "tag": "input",
+            "type": "checkbox",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "search",
+            "placeholder": "",
+            "name": "",
+            "label": "页码"
+          },
+          {
+            "tag": "input",
+            "type": "search",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "text",
+            "placeholder": "请输入报价标题",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "text",
+            "placeholder": "请输入装企名称",
+            "name": "",
+            "label": ""
+          }
+        ],
+        "tables": [
+          {
+            "headers": [
+              "ID",
+              "标题",
+              "装企",
+              "总价",
+              "材料费",
+              "人工费",
+              "状态",
+              "创建时间",
+              "操作"
+            ],
+            "rowCount": 1,
+            "hasEmptyText": false,
+            "textPreview": "ID 标题 装企 总价 材料费 人工费 状态 创建时间 操作 1 装修报价A 靠谱装修公司 ¥125,000 ¥88,000 ¥32,000 已提交 2026-06-05 详情 对比 预警"
+          }
+        ],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "家装协同平台仪表盘项目管理设计方案报价管理验收管理材料管理管理面板家装产业协同管理平台系统管理员（管理员）退出装修报价管理新建报价选择项目状态筛选对比选中 (0)ID标题装企总价材料费人工费状态创建时间操作1装修报价A靠谱装修公司¥125,000¥88,000¥32,000已提交2026-06-05详情对比预警共 1 条110 条/页 新建报价所属项目请选择项目报价标题装企名称取 消确 定",
+        "layout": {
+          "viewportWidth": 1600,
+          "viewportHeight": 1140,
+          "scrollWidth": 1600,
+          "scrollHeight": 1156,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89044-codex-runtime-final-structure-04-二层操作-报价管理-新建报价",
+          "label": "二层操作:报价管理->新建报价",
+          "finalUrl": "http://127.0.0.1:49044/quotations",
+          "title": "家装产业协同管理平台",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89044/probe/codex-runtime-final-20260605-1127/may-89044-codex-runtime-final-structure-04-二层操作-报价管理-新建报价.json",
+          "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89044/probe/codex-runtime-final-20260605-1127/may-89044-codex-runtime-final-structure-04-二层操作-报价管理-新建报价.png",
+          "elementCount": 263,
+          "interactiveCount": 30,
+          "interactiveLabels": [
+            "仪表盘",
+            "项目管理",
+            "设计方案",
+            "报价管理",
+            "验收管理",
+            "材料管理",
+            "管理面板",
+            "退出",
+            "新建报价",
+            "对比选中 (0)",
+            "on",
+            "详情",
+            "对比",
+            "预警",
+            "1",
+            "页码",
+            "新建报价 所属项目 请选择项目 报价标题 装企名称 取 消 确 定",
+            "Close",
+            "请输入报价标题",
+            "请输入装企名称",
+            "取 消",
+            "确 定"
+          ]
+        }
+      },
+      {
+        "label": "操作:材料管理",
+        "url": "http://127.0.0.1:49044/materials",
+        "title": "家装产业协同管理平台",
+        "headings": [],
+        "navLabels": [
+          "仪表盘",
+          "项目管理",
+          "设计方案",
+          "报价管理",
+          "验收管理",
+          "材料管理",
+          "管理面板"
+        ],
+        "buttons": [
+          "仪表盘",
+          "项目管理",
+          "设计方案",
+          "报价管理",
+          "验收管理",
+          "材料管理",
+          "管理面板",
+          "新增建材",
+          "编辑",
+          "删除"
+        ],
+        "links": [],
+        "inputs": [
+          {
+            "tag": "input",
+            "type": "search",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "search",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "search",
+            "placeholder": "",
+            "name": "",
+            "label": "页码"
+          }
+        ],
+        "tables": [
+          {
+            "headers": [
+              "名称",
+              "品牌",
+              "分类",
+              "单价",
+              "库存",
+              "最低库存",
+              "状态",
+              "供应商",
+              "操作"
+            ],
+            "rowCount": 5,
+            "hasEmptyText": false,
+            "textPreview": "名称 品牌 分类 单价 库存 最低库存 状态 供应商 操作 立邦净味5合1乳胶漆 立邦 涂料 ¥298 100 10 正常 金牌建材供应商 编辑 删除 东鹏800x800地砖 东鹏 瓷砖 ¥68 500 50 正常 金牌建材供应商 编辑 删除 欧派定制橱柜五金套装 欧派 五金 ¥1,280 8 10 库存不足 金牌建材供应商 编辑 删除 立邦净味5合1乳胶漆 立邦 涂料 ¥298 100 10 正常 系统管理员 编辑 删除 东鹏800x800地砖 东鹏 瓷砖 ¥68 500 50 正常 系统管理员 编辑 删除"
+          }
+        ],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "家装协同平台仪表盘项目管理设计方案报价管理验收管理材料管理管理面板家装产业协同管理平台系统管理员（管理员）退出库存预警: 1 种建材库存不足欧派定制橱柜五金套装 (库存: 8/10)建材供应链管理建材目录采购订单分类筛选库存预警新增建材名称品牌分类单价库存最低库存状态供应商操作立邦净味5合1乳胶漆立邦涂料¥29810010正常金牌建材供应商编辑删除东鹏800x800地砖东鹏瓷砖¥6850050正常金牌建材供应商编辑删除欧派定制橱柜五金套装欧派五金¥1,280810库存不足金牌建材供应商编辑删除立邦净味5合1乳胶漆立邦涂料¥29810010正常系统管理员编辑删除东鹏800x800地砖东鹏瓷砖¥6850050正常系统管理员编辑删除共 5 条110 条/页",
+        "layout": {
+          "viewportWidth": 1632,
+          "viewportHeight": 1156,
+          "scrollWidth": 1632,
+          "scrollHeight": 1172,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89044-codex-runtime-final-structure-05-操作-材料管理",
+          "label": "操作:材料管理",
+          "finalUrl": "http://127.0.0.1:49044/materials",
+          "title": "家装产业协同管理平台",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89044/probe/codex-runtime-final-20260605-1127/may-89044-codex-runtime-final-structure-05-操作-材料管理.json",
+          "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89044/probe/codex-runtime-final-20260605-1127/may-89044-codex-runtime-final-structure-05-操作-材料管理.png",
+          "elementCount": 321,
+          "interactiveCount": 29,
+          "interactiveLabels": [
+            "仪表盘",
+            "项目管理",
+            "设计方案",
+            "报价管理",
+            "验收管理",
+            "材料管理",
+            "管理面板",
+            "退出",
+            "建材目录",
+            "分类筛选 库存预警 新增建材 名称 品牌 分类 单价 库存 最低库存 状态 供应商 操作 立邦净味5合1乳胶漆 立邦 涂料 ¥298 100 10 正常 金牌建材供应商 编辑 删除 东鹏800x800地砖 东鹏 瓷砖 ¥68 500 50 正常 金牌建材供应商 编辑 删除 欧派定制橱柜五金套装 欧派 五金 ¥1,280 8 10 库存不足 金牌建材供应商 编",
+            "新增建材",
+            "编辑",
+            "删除",
+            "1",
+            "页码"
+          ]
+        }
+      },
+      {
+        "label": "二层操作:材料管理->编辑",
+        "url": "http://127.0.0.1:49044/materials",
+        "title": "家装产业协同管理平台",
+        "headings": [],
+        "navLabels": [
+          "仪表盘",
+          "项目管理",
+          "设计方案",
+          "报价管理",
+          "验收管理",
+          "材料管理",
+          "管理面板"
+        ],
+        "buttons": [
+          "仪表盘",
+          "项目管理",
+          "设计方案",
+          "报价管理",
+          "验收管理",
+          "材料管理",
+          "管理面板",
+          "新增建材",
+          "编辑",
+          "删除",
+          "Close",
+          "取 消",
+          "确 定"
+        ],
+        "links": [],
+        "inputs": [
+          {
+            "tag": "input",
+            "type": "search",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "search",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "search",
+            "placeholder": "",
+            "name": "",
+            "label": "页码"
+          },
+          {
+            "tag": "input",
+            "type": "text",
+            "placeholder": "请输入建材名称",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "text",
+            "placeholder": "请输入品牌",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "search",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "",
+            "placeholder": "请输入单价",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "text",
+            "placeholder": "请输入供应商名称",
+            "name": "",
+            "label": ""
+          }
+        ],
+        "tables": [
+          {
+            "headers": [
+              "名称",
+              "品牌",
+              "分类",
+              "单价",
+              "库存",
+              "最低库存",
+              "状态",
+              "供应商",
+              "操作"
+            ],
+            "rowCount": 5,
+            "hasEmptyText": false,
+            "textPreview": "名称 品牌 分类 单价 库存 最低库存 状态 供应商 操作 立邦净味5合1乳胶漆 立邦 涂料 ¥298 100 10 正常 金牌建材供应商 编辑 删除 东鹏800x800地砖 东鹏 瓷砖 ¥68 500 50 正常 金牌建材供应商 编辑 删除 欧派定制橱柜五金套装 欧派 五金 ¥1,280 8 10 库存不足 金牌建材供应商 编辑 删除 立邦净味5合1乳胶漆 立邦 涂料 ¥298 100 10 正常 系统管理员 编辑 删除 东鹏800x800地砖 东鹏 瓷砖 ¥68 500 50 正常 系统管理员 编辑 删除"
+          }
+        ],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "家装协同平台仪表盘项目管理设计方案报价管理验收管理材料管理管理面板家装产业协同管理平台系统管理员（管理员）退出库存预警: 1 种建材库存不足欧派定制橱柜五金套装 (库存: 8/10)建材供应链管理建材目录采购订单分类筛选库存预警新增建材名称品牌分类单价库存最低库存状态供应商操作立邦净味5合1乳胶漆立邦涂料¥29810010正常金牌建材供应商编辑删除东鹏800x800地砖东鹏瓷砖¥6850050正常金牌建材供应商编辑删除欧派定制橱柜五金套装欧派五金¥1,280810库存不足金牌建材供应商编辑删除立邦净味5合1乳胶漆立邦涂料¥29810010正常系统管理员编辑删除东鹏800x800地砖东鹏瓷砖¥6850050正常系统管理员编辑删除共 5 条110 条/页 编辑建材名称品牌分类涂料单价库存最低库存供应商取 消确 定",
+        "layout": {
+          "viewportWidth": 1664,
+          "viewportHeight": 1172,
+          "scrollWidth": 1664,
+          "scrollHeight": 1188,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89044-codex-runtime-final-structure-06-二层操作-材料管理-编辑",
+          "label": "二层操作:材料管理->编辑",
+          "finalUrl": "http://127.0.0.1:49044/materials",
+          "title": "家装产业协同管理平台",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89044/probe/codex-runtime-final-20260605-1127/may-89044-codex-runtime-final-structure-06-二层操作-材料管理-编辑.json",
+          "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89044/probe/codex-runtime-final-20260605-1127/may-89044-codex-runtime-final-structure-06-二层操作-材料管理-编辑.png",
+          "elementCount": 444,
+          "interactiveCount": 47,
+          "interactiveLabels": [
+            "仪表盘",
+            "项目管理",
+            "设计方案",
+            "报价管理",
+            "验收管理",
+            "材料管理",
+            "管理面板",
+            "退出",
+            "建材目录",
+            "分类筛选 库存预警 新增建材 名称 品牌 分类 单价 库存 最低库存 状态 供应商 操作 立邦净味5合1乳胶漆 立邦 涂料 ¥298 100 10 正常 金牌建材供应商 编辑 删除 东鹏800x800地砖 东鹏 瓷砖 ¥68 500 50 正常 金牌建材供应商 编辑 删除 欧派定制橱柜五金套装 欧派 五金 ¥1,280 8 10 库存不足 金牌建材供应商 编",
+            "新增建材",
+            "编辑",
+            "删除",
+            "1",
+            "页码",
+            "编辑建材 名称 品牌 分类 涂料 单价 库存 最低库存 供应商 取 消 确 定",
+            "Close",
+            "立邦净味5合1乳胶漆",
+            "立邦",
+            "Increase Value",
+            "Decrease Value",
+            "298.00",
+            "100",
+            "10",
+            "金牌建材供应商",
+            "取 消",
+            "确 定"
+          ]
+        }
+      },
+      {
+        "label": "导航:项目管理",
+        "url": "http://127.0.0.1:49044/projects",
+        "title": "家装产业协同管理平台",
+        "headings": [],
+        "navLabels": [
+          "仪表盘",
+          "项目管理",
+          "设计方案",
+          "报价管理",
+          "验收管理",
+          "材料管理",
+          "管理面板"
+        ],
+        "buttons": [
+          "仪表盘",
+          "项目管理",
+          "设计方案",
+          "报价管理",
+          "验收管理",
+          "材料管理",
+          "管理面板",
+          "新建项目",
+          "刷新",
+          "详情"
+        ],
+        "links": [],
+        "inputs": [
+          {
+            "tag": "input",
+            "type": "text",
+            "placeholder": "搜索项目名称/地址",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "search",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "search",
+            "placeholder": "",
+            "name": "",
+            "label": "页码"
+          }
+        ],
+        "tables": [
+          {
+            "headers": [
+              "项目名称",
+              "状态",
+              "业主",
+              "设计师",
+              "装修公司",
+              "预算",
+              "地址",
+              "操作",
+              "项目名称",
+              "状态",
+              "业主",
+              "设计师"
+            ],
+            "rowCount": 1,
+            "hasEmptyText": false,
+            "textPreview": "项目名称 状态 业主 设计师 装修公司 预算 地址 操作 项目名称 状态 业主 设计师 装修公司 预算 地址 操作 万科城市花园3栋502室装修项目 进行中 - - - ¥300,000 万科城市花园3栋502室 详情"
+          }
+        ],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "家装协同平台仪表盘项目管理设计方案报价管理验收管理材料管理管理面板家装产业协同管理平台系统管理员（管理员）退出项目管理新建项目项目状态刷新项目名称状态业主设计师装修公司预算地址操作项目名称状态业主设计师装修公司预算地址操作万科城市花园3栋502室装修项目进行中---¥300,000万科城市花园3栋502室详情共 1 条110 条/页",
+        "layout": {
+          "viewportWidth": 1696,
+          "viewportHeight": 1188,
+          "scrollWidth": 1696,
+          "scrollHeight": 1204,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89044-codex-runtime-final-structure-07-导航-项目管理",
+          "label": "导航:项目管理",
+          "finalUrl": "http://127.0.0.1:49044/projects",
+          "title": "家装产业协同管理平台",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89044/probe/codex-runtime-final-20260605-1127/may-89044-codex-runtime-final-structure-07-导航-项目管理.json",
+          "screenshotPath": "",
+          "elementCount": 193,
+          "interactiveCount": 19,
+          "interactiveLabels": [
+            "仪表盘",
+            "项目管理",
+            "设计方案",
+            "报价管理",
+            "验收管理",
+            "材料管理",
+            "管理面板",
+            "退出",
+            "新建项目",
+            "搜索项目名称/地址",
+            "刷新",
+            "详情",
+            "1",
+            "页码"
+          ]
+        }
+      },
+      {
+        "label": "操作:新建项目",
+        "url": "http://127.0.0.1:49044/projects",
+        "title": "家装产业协同管理平台",
+        "headings": [],
+        "navLabels": [
+          "仪表盘",
+          "项目管理",
+          "设计方案",
+          "报价管理",
+          "验收管理",
+          "材料管理",
+          "管理面板"
+        ],
+        "buttons": [
+          "仪表盘",
+          "项目管理",
+          "设计方案",
+          "报价管理",
+          "验收管理",
+          "材料管理",
+          "管理面板",
+          "新建项目",
+          "刷新",
+          "详情",
+          "关闭",
+          "保 存",
+          "取 消"
+        ],
+        "links": [],
+        "inputs": [
+          {
+            "tag": "input",
+            "type": "text",
+            "placeholder": "搜索项目名称/地址",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "search",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "search",
+            "placeholder": "",
+            "name": "",
+            "label": "页码"
+          },
+          {
+            "tag": "input",
+            "type": "text",
+            "placeholder": "如：万科城市花园3栋502室装修项目",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "text",
+            "placeholder": "请输入详细地址",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "search",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          }
+        ],
+        "tables": [
+          {
+            "headers": [
+              "项目名称",
+              "状态",
+              "业主",
+              "设计师",
+              "装修公司",
+              "预算",
+              "地址",
+              "操作",
+              "项目名称",
+              "状态",
+              "业主",
+              "设计师"
+            ],
+            "rowCount": 1,
+            "hasEmptyText": false,
+            "textPreview": "项目名称 状态 业主 设计师 装修公司 预算 地址 操作 项目名称 状态 业主 设计师 装修公司 预算 地址 操作 万科城市花园3栋502室装修项目 进行中 - - - ¥300,000 万科城市花园3栋502室 详情"
+          }
+        ],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "家装协同平台仪表盘项目管理设计方案报价管理验收管理材料管理管理面板家装产业协同管理平台系统管理员（管理员）退出项目管理新建项目项目状态刷新项目名称状态业主设计师装修公司预算地址操作项目名称状态业主设计师装修公司预算地址操作万科城市花园3栋502室装修项目进行中---¥300,000万科城市花园3栋502室详情共 1 条110 条/页 新建项目项目名称项目地址预算¥项目状态规划中保 存取 消",
+        "layout": {
+          "viewportWidth": 1728,
+          "viewportHeight": 1204,
+          "scrollWidth": 1728,
+          "scrollHeight": 1220,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89044-codex-runtime-final-structure-08-操作-新建项目",
+          "label": "操作:新建项目",
+          "finalUrl": "http://127.0.0.1:49044/projects",
+          "title": "家装产业协同管理平台",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89044/probe/codex-runtime-final-20260605-1127/may-89044-codex-runtime-final-structure-08-操作-新建项目.json",
+          "screenshotPath": "",
+          "elementCount": 270,
+          "interactiveCount": 30,
+          "interactiveLabels": [
+            "仪表盘",
+            "项目管理",
+            "设计方案",
+            "报价管理",
+            "验收管理",
+            "材料管理",
+            "管理面板",
+            "退出",
+            "新建项目",
+            "搜索项目名称/地址",
+            "刷新",
+            "详情",
+            "1",
+            "页码",
+            "关闭",
+            "如：万科城市花园3栋502室装修项目",
+            "请输入详细地址",
+            "Increase Value",
+            "Decrease Value",
+            "保 存",
+            "取 消"
+          ]
+        }
+      },
+      {
+        "label": "二层操作:新建项目->保 存",
+        "url": "http://127.0.0.1:49044/projects",
+        "title": "家装产业协同管理平台",
+        "headings": [],
+        "navLabels": [
+          "仪表盘",
+          "项目管理",
+          "设计方案",
+          "报价管理",
+          "验收管理",
+          "材料管理",
+          "管理面板"
+        ],
+        "buttons": [
+          "仪表盘",
+          "项目管理",
+          "设计方案",
+          "报价管理",
+          "验收管理",
+          "材料管理",
+          "管理面板",
+          "新建项目",
+          "刷新",
+          "详情",
+          "关闭",
+          "保 存",
+          "取 消"
+        ],
+        "links": [],
+        "inputs": [
+          {
+            "tag": "input",
+            "type": "text",
+            "placeholder": "搜索项目名称/地址",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "search",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "search",
+            "placeholder": "",
+            "name": "",
+            "label": "页码"
+          },
+          {
+            "tag": "input",
+            "type": "text",
+            "placeholder": "如：万科城市花园3栋502室装修项目",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "text",
+            "placeholder": "请输入详细地址",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "search",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          }
+        ],
+        "tables": [
+          {
+            "headers": [
+              "项目名称",
+              "状态",
+              "业主",
+              "设计师",
+              "装修公司",
+              "预算",
+              "地址",
+              "操作",
+              "项目名称",
+              "状态",
+              "业主",
+              "设计师"
+            ],
+            "rowCount": 1,
+            "hasEmptyText": false,
+            "textPreview": "项目名称 状态 业主 设计师 装修公司 预算 地址 操作 项目名称 状态 业主 设计师 装修公司 预算 地址 操作 万科城市花园3栋502室装修项目 进行中 - - - ¥300,000 万科城市花园3栋502室 详情"
+          }
+        ],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "家装协同平台仪表盘项目管理设计方案报价管理验收管理材料管理管理面板家装产业协同管理平台系统管理员（管理员）退出项目管理新建项目项目状态刷新项目名称状态业主设计师装修公司预算地址操作项目名称状态业主设计师装修公司预算地址操作万科城市花园3栋502室装修项目进行中---¥300,000万科城市花园3栋502室详情共 1 条110 条/页 新建项目项目名称请输入项目名称项目地址预算¥项目状态规划中保 存取 消",
+        "layout": {
+          "viewportWidth": 1760,
+          "viewportHeight": 1220,
+          "scrollWidth": 1760,
+          "scrollHeight": 1236,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89044-codex-runtime-final-structure-09-二层操作-新建项目-保-存",
+          "label": "二层操作:新建项目->保 存",
+          "finalUrl": "http://127.0.0.1:49044/projects",
+          "title": "家装产业协同管理平台",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89044/probe/codex-runtime-final-20260605-1127/may-89044-codex-runtime-final-structure-09-二层操作-新建项目-保-存.json",
+          "screenshotPath": "",
+          "elementCount": 276,
+          "interactiveCount": 30,
+          "interactiveLabels": [
+            "仪表盘",
+            "项目管理",
+            "设计方案",
+            "报价管理",
+            "验收管理",
+            "材料管理",
+            "管理面板",
+            "退出",
+            "新建项目",
+            "搜索项目名称/地址",
+            "刷新",
+            "详情",
+            "1",
+            "页码",
+            "关闭",
+            "如：万科城市花园3栋502室装修项目",
+            "请输入详细地址",
+            "Increase Value",
+            "Decrease Value",
+            "保 存",
+            "取 消"
+          ]
+        }
+      },
+      {
+        "label": "操作:详情",
+        "url": "http://127.0.0.1:49044/projects",
+        "title": "家装产业协同管理平台",
+        "headings": [],
+        "navLabels": [
+          "仪表盘",
+          "项目管理",
+          "设计方案",
+          "报价管理",
+          "验收管理",
+          "材料管理",
+          "管理面板"
+        ],
+        "buttons": [
+          "仪表盘",
+          "项目管理",
+          "设计方案",
+          "报价管理",
+          "验收管理",
+          "材料管理",
+          "管理面板",
+          "新建项目",
+          "刷新",
+          "详情",
+          "关闭"
+        ],
+        "links": [],
+        "inputs": [
+          {
+            "tag": "input",
+            "type": "text",
+            "placeholder": "搜索项目名称/地址",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "search",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "search",
+            "placeholder": "",
+            "name": "",
+            "label": "页码"
+          }
+        ],
+        "tables": [
+          {
+            "headers": [
+              "项目名称",
+              "状态",
+              "业主",
+              "设计师",
+              "装修公司",
+              "预算",
+              "地址",
+              "操作",
+              "项目名称",
+              "状态",
+              "业主",
+              "设计师"
+            ],
+            "rowCount": 1,
+            "hasEmptyText": false,
+            "textPreview": "项目名称 状态 业主 设计师 装修公司 预算 地址 操作 项目名称 状态 业主 设计师 装修公司 预算 地址 操作 万科城市花园3栋502室装修项目 进行中 - - - ¥300,000 万科城市花园3栋502室 详情"
+          },
+          {
+            "headers": [
+              "项目名称",
+              "状态",
+              "业主",
+              "设计师",
+              "装修公司",
+              "预算",
+              "计划周期",
+              "地址"
+            ],
+            "rowCount": 8,
+            "hasEmptyText": false,
+            "textPreview": "项目名称 万科城市花园3栋502室装修项目 状态 进行中 业主 - 设计师 - 装修公司 - 预算 ¥300,000 计划周期 2026-06-01 至 2026-09-30 地址 万科城市花园3栋502室"
+          }
+        ],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "家装协同平台仪表盘项目管理设计方案报价管理验收管理材料管理管理面板家装产业协同管理平台系统管理员（管理员）退出项目管理新建项目项目状态刷新项目名称状态业主设计师装修公司预算地址操作项目名称状态业主设计师装修公司预算地址操作万科城市花园3栋502室装修项目进行中---¥300,000万科城市花园3栋502室详情共 1 条110 条/页 新建项目项目名称请输入项目名称项目地址预算¥项目状态规划中保 存取 消项目详情项目名称万科城市花园3栋502室装修项目状态进行中业主-设计师-装修公司-预算¥300,000计划周期2026-06-01 至 2026-09-30地址万科城市花园3栋502室",
+        "layout": {
+          "viewportWidth": 1792,
+          "viewportHeight": 1236,
+          "scrollWidth": 1792,
+          "scrollHeight": 1252,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89044-codex-runtime-final-structure-10-操作-详情",
+          "label": "操作:详情",
+          "finalUrl": "http://127.0.0.1:49044/projects",
+          "title": "家装产业协同管理平台",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89044/probe/codex-runtime-final-20260605-1127/may-89044-codex-runtime-final-structure-10-操作-详情.json",
+          "screenshotPath": "",
+          "elementCount": 333,
+          "interactiveCount": 33,
+          "interactiveLabels": [
+            "仪表盘",
+            "项目管理",
+            "设计方案",
+            "报价管理",
+            "验收管理",
+            "材料管理",
+            "管理面板",
+            "退出",
+            "新建项目",
+            "搜索项目名称/地址",
+            "刷新",
+            "详情",
+            "1",
+            "页码",
+            "关闭",
+            "如：万科城市花园3栋502室装修项目",
+            "请输入详细地址",
+            "Increase Value",
+            "Decrease Value",
+            "保 存",
+            "取 消"
+          ]
+        }
+      },
+      {
+        "label": "二层操作:详情->关闭",
+        "url": "http://127.0.0.1:49044/projects",
+        "title": "家装产业协同管理平台",
+        "headings": [],
+        "navLabels": [
+          "仪表盘",
+          "项目管理",
+          "设计方案",
+          "报价管理",
+          "验收管理",
+          "材料管理",
+          "管理面板"
+        ],
+        "buttons": [
+          "仪表盘",
+          "项目管理",
+          "设计方案",
+          "报价管理",
+          "验收管理",
+          "材料管理",
+          "管理面板",
+          "新建项目",
+          "刷新",
+          "详情"
+        ],
+        "links": [],
+        "inputs": [
+          {
+            "tag": "input",
+            "type": "text",
+            "placeholder": "搜索项目名称/地址",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "search",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "search",
+            "placeholder": "",
+            "name": "",
+            "label": "页码"
+          }
+        ],
+        "tables": [
+          {
+            "headers": [
+              "项目名称",
+              "状态",
+              "业主",
+              "设计师",
+              "装修公司",
+              "预算",
+              "地址",
+              "操作",
+              "项目名称",
+              "状态",
+              "业主",
+              "设计师"
+            ],
+            "rowCount": 1,
+            "hasEmptyText": false,
+            "textPreview": "项目名称 状态 业主 设计师 装修公司 预算 地址 操作 项目名称 状态 业主 设计师 装修公司 预算 地址 操作 万科城市花园3栋502室装修项目 进行中 - - - ¥300,000 万科城市花园3栋502室 详情"
+          }
+        ],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "家装协同平台仪表盘项目管理设计方案报价管理验收管理材料管理管理面板家装产业协同管理平台系统管理员（管理员）退出项目管理新建项目项目状态刷新项目名称状态业主设计师装修公司预算地址操作项目名称状态业主设计师装修公司预算地址操作万科城市花园3栋502室装修项目进行中---¥300,000万科城市花园3栋502室详情共 1 条110 条/页 新建项目项目名称请输入项目名称项目地址预算¥项目状态规划中保 存取 消项目详情项目名称万科城市花园3栋502室装修项目状态进行中业主-设计师-装修公司-预算¥300,000计划周期2026-06-01 至 2026-09-30地址万科城市花园3栋502室",
+        "layout": {
+          "viewportWidth": 1824,
+          "viewportHeight": 1252,
+          "scrollWidth": 1824,
+          "scrollHeight": 1268,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89044-codex-runtime-final-structure-11-二层操作-详情-关闭",
+          "label": "二层操作:详情->关闭",
+          "finalUrl": "http://127.0.0.1:49044/projects",
+          "title": "家装产业协同管理平台",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89044/probe/codex-runtime-final-20260605-1127/may-89044-codex-runtime-final-structure-11-二层操作-详情-关闭.json",
+          "screenshotPath": "",
+          "elementCount": 332,
+          "interactiveCount": 33,
+          "interactiveLabels": [
+            "仪表盘",
+            "项目管理",
+            "设计方案",
+            "报价管理",
+            "验收管理",
+            "材料管理",
+            "管理面板",
+            "退出",
+            "新建项目",
+            "搜索项目名称/地址",
+            "刷新",
+            "详情",
+            "1",
+            "页码",
+            "关闭",
+            "如：万科城市花园3栋502室装修项目",
+            "请输入详细地址",
+            "Increase Value",
+            "Decrease Value",
+            "保 存",
+            "取 消"
+          ]
+        }
+      }
+    ],
+    "findings": [],
+    "actionHints": [],
+    "emptyPages": [],
+    "overflowPages": [],
+    "blankPages": [],
+    "apiFailurePaths": [],
+    "goalTerms": [],
+    "clickedActionDescriptors": [
+      {
+        "nav": "仪表盘",
+        "label": "报价管理",
+        "ordinal": 0,
+        "unsafe": false
+      },
+      {
+        "nav": "仪表盘",
+        "label": "报价管理->新建报价",
+        "ordinal": 0,
+        "secondary": true,
+        "unsafe": false
+      },
+      {
+        "nav": "仪表盘",
+        "label": "材料管理",
+        "ordinal": 0,
+        "unsafe": false
+      },
+      {
+        "nav": "仪表盘",
+        "label": "材料管理->编辑",
+        "ordinal": 0,
+        "secondary": true,
+        "unsafe": false
+      },
+      {
+        "nav": "项目管理",
+        "label": "新建项目",
+        "ordinal": 0,
+        "unsafe": false
+      },
+      {
+        "nav": "项目管理",
+        "label": "新建项目->保 存",
+        "ordinal": 0,
+        "secondary": true,
+        "unsafe": false
+      },
+      {
+        "nav": "项目管理",
+        "label": "详情",
+        "ordinal": 0,
+        "unsafe": false
+      },
+      {
+        "nav": "项目管理",
+        "label": "详情->关闭",
+        "ordinal": 0,
+        "secondary": true,
+        "unsafe": false
+      }
+    ],
+    "secondaryActionClicks": 4,
+    "structureCaptures": [
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89044-codex-runtime-final-structure-01-首屏",
+        "label": "首屏",
+        "finalUrl": "http://127.0.0.1:49044/dashboard",
+        "title": "家装产业协同管理平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89044/probe/codex-runtime-final-20260605-1127/may-89044-codex-runtime-final-structure-01-首屏.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89044/probe/codex-runtime-final-20260605-1127/may-89044-codex-runtime-final-structure-01-首屏.png",
+        "elementCount": 264,
+        "interactiveCount": 8,
+        "interactiveLabels": [
+          "仪表盘",
+          "项目管理",
+          "设计方案",
+          "报价管理",
+          "验收管理",
+          "材料管理",
+          "管理面板",
+          "退出"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89044-codex-runtime-final-structure-02-导航-仪表盘",
+        "label": "导航:仪表盘",
+        "finalUrl": "http://127.0.0.1:49044/dashboard",
+        "title": "家装产业协同管理平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89044/probe/codex-runtime-final-20260605-1127/may-89044-codex-runtime-final-structure-02-导航-仪表盘.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89044/probe/codex-runtime-final-20260605-1127/may-89044-codex-runtime-final-structure-02-导航-仪表盘.png",
+        "elementCount": 264,
+        "interactiveCount": 8,
+        "interactiveLabels": [
+          "仪表盘",
+          "项目管理",
+          "设计方案",
+          "报价管理",
+          "验收管理",
+          "材料管理",
+          "管理面板",
+          "退出"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89044-codex-runtime-final-structure-03-操作-报价管理",
+        "label": "操作:报价管理",
+        "finalUrl": "http://127.0.0.1:49044/quotations",
+        "title": "家装产业协同管理平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89044/probe/codex-runtime-final-20260605-1127/may-89044-codex-runtime-final-structure-03-操作-报价管理.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89044/probe/codex-runtime-final-20260605-1127/may-89044-codex-runtime-final-structure-03-操作-报价管理.png",
+        "elementCount": 206,
+        "interactiveCount": 22,
+        "interactiveLabels": [
+          "仪表盘",
+          "项目管理",
+          "设计方案",
+          "报价管理",
+          "验收管理",
+          "材料管理",
+          "管理面板",
+          "退出",
+          "新建报价",
+          "对比选中 (0)",
+          "on",
+          "详情",
+          "对比",
+          "预警",
+          "1",
+          "页码"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89044-codex-runtime-final-structure-04-二层操作-报价管理-新建报价",
+        "label": "二层操作:报价管理->新建报价",
+        "finalUrl": "http://127.0.0.1:49044/quotations",
+        "title": "家装产业协同管理平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89044/probe/codex-runtime-final-20260605-1127/may-89044-codex-runtime-final-structure-04-二层操作-报价管理-新建报价.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89044/probe/codex-runtime-final-20260605-1127/may-89044-codex-runtime-final-structure-04-二层操作-报价管理-新建报价.png",
+        "elementCount": 263,
+        "interactiveCount": 30,
+        "interactiveLabels": [
+          "仪表盘",
+          "项目管理",
+          "设计方案",
+          "报价管理",
+          "验收管理",
+          "材料管理",
+          "管理面板",
+          "退出",
+          "新建报价",
+          "对比选中 (0)",
+          "on",
+          "详情",
+          "对比",
+          "预警",
+          "1",
+          "页码",
+          "新建报价 所属项目 请选择项目 报价标题 装企名称 取 消 确 定",
+          "Close",
+          "请输入报价标题",
+          "请输入装企名称",
+          "取 消",
+          "确 定"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89044-codex-runtime-final-structure-05-操作-材料管理",
+        "label": "操作:材料管理",
+        "finalUrl": "http://127.0.0.1:49044/materials",
+        "title": "家装产业协同管理平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89044/probe/codex-runtime-final-20260605-1127/may-89044-codex-runtime-final-structure-05-操作-材料管理.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89044/probe/codex-runtime-final-20260605-1127/may-89044-codex-runtime-final-structure-05-操作-材料管理.png",
+        "elementCount": 321,
+        "interactiveCount": 29,
+        "interactiveLabels": [
+          "仪表盘",
+          "项目管理",
+          "设计方案",
+          "报价管理",
+          "验收管理",
+          "材料管理",
+          "管理面板",
+          "退出",
+          "建材目录",
+          "分类筛选 库存预警 新增建材 名称 品牌 分类 单价 库存 最低库存 状态 供应商 操作 立邦净味5合1乳胶漆 立邦 涂料 ¥298 100 10 正常 金牌建材供应商 编辑 删除 东鹏800x800地砖 东鹏 瓷砖 ¥68 500 50 正常 金牌建材供应商 编辑 删除 欧派定制橱柜五金套装 欧派 五金 ¥1,280 8 10 库存不足 金牌建材供应商 编",
+          "新增建材",
+          "编辑",
+          "删除",
+          "1",
+          "页码"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89044-codex-runtime-final-structure-06-二层操作-材料管理-编辑",
+        "label": "二层操作:材料管理->编辑",
+        "finalUrl": "http://127.0.0.1:49044/materials",
+        "title": "家装产业协同管理平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89044/probe/codex-runtime-final-20260605-1127/may-89044-codex-runtime-final-structure-06-二层操作-材料管理-编辑.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89044/probe/codex-runtime-final-20260605-1127/may-89044-codex-runtime-final-structure-06-二层操作-材料管理-编辑.png",
+        "elementCount": 444,
+        "interactiveCount": 47,
+        "interactiveLabels": [
+          "仪表盘",
+          "项目管理",
+          "设计方案",
+          "报价管理",
+          "验收管理",
+          "材料管理",
+          "管理面板",
+          "退出",
+          "建材目录",
+          "分类筛选 库存预警 新增建材 名称 品牌 分类 单价 库存 最低库存 状态 供应商 操作 立邦净味5合1乳胶漆 立邦 涂料 ¥298 100 10 正常 金牌建材供应商 编辑 删除 东鹏800x800地砖 东鹏 瓷砖 ¥68 500 50 正常 金牌建材供应商 编辑 删除 欧派定制橱柜五金套装 欧派 五金 ¥1,280 8 10 库存不足 金牌建材供应商 编",
+          "新增建材",
+          "编辑",
+          "删除",
+          "1",
+          "页码",
+          "编辑建材 名称 品牌 分类 涂料 单价 库存 最低库存 供应商 取 消 确 定",
+          "Close",
+          "立邦净味5合1乳胶漆",
+          "立邦",
+          "Increase Value",
+          "Decrease Value",
+          "298.00",
+          "100",
+          "10",
+          "金牌建材供应商",
+          "取 消",
+          "确 定"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89044-codex-runtime-final-structure-07-导航-项目管理",
+        "label": "导航:项目管理",
+        "finalUrl": "http://127.0.0.1:49044/projects",
+        "title": "家装产业协同管理平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89044/probe/codex-runtime-final-20260605-1127/may-89044-codex-runtime-final-structure-07-导航-项目管理.json",
+        "screenshotPath": "",
+        "elementCount": 193,
+        "interactiveCount": 19,
+        "interactiveLabels": [
+          "仪表盘",
+          "项目管理",
+          "设计方案",
+          "报价管理",
+          "验收管理",
+          "材料管理",
+          "管理面板",
+          "退出",
+          "新建项目",
+          "搜索项目名称/地址",
+          "刷新",
+          "详情",
+          "1",
+          "页码"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89044-codex-runtime-final-structure-08-操作-新建项目",
+        "label": "操作:新建项目",
+        "finalUrl": "http://127.0.0.1:49044/projects",
+        "title": "家装产业协同管理平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89044/probe/codex-runtime-final-20260605-1127/may-89044-codex-runtime-final-structure-08-操作-新建项目.json",
+        "screenshotPath": "",
+        "elementCount": 270,
+        "interactiveCount": 30,
+        "interactiveLabels": [
+          "仪表盘",
+          "项目管理",
+          "设计方案",
+          "报价管理",
+          "验收管理",
+          "材料管理",
+          "管理面板",
+          "退出",
+          "新建项目",
+          "搜索项目名称/地址",
+          "刷新",
+          "详情",
+          "1",
+          "页码",
+          "关闭",
+          "如：万科城市花园3栋502室装修项目",
+          "请输入详细地址",
+          "Increase Value",
+          "Decrease Value",
+          "保 存",
+          "取 消"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89044-codex-runtime-final-structure-09-二层操作-新建项目-保-存",
+        "label": "二层操作:新建项目->保 存",
+        "finalUrl": "http://127.0.0.1:49044/projects",
+        "title": "家装产业协同管理平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89044/probe/codex-runtime-final-20260605-1127/may-89044-codex-runtime-final-structure-09-二层操作-新建项目-保-存.json",
+        "screenshotPath": "",
+        "elementCount": 276,
+        "interactiveCount": 30,
+        "interactiveLabels": [
+          "仪表盘",
+          "项目管理",
+          "设计方案",
+          "报价管理",
+          "验收管理",
+          "材料管理",
+          "管理面板",
+          "退出",
+          "新建项目",
+          "搜索项目名称/地址",
+          "刷新",
+          "详情",
+          "1",
+          "页码",
+          "关闭",
+          "如：万科城市花园3栋502室装修项目",
+          "请输入详细地址",
+          "Increase Value",
+          "Decrease Value",
+          "保 存",
+          "取 消"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89044-codex-runtime-final-structure-10-操作-详情",
+        "label": "操作:详情",
+        "finalUrl": "http://127.0.0.1:49044/projects",
+        "title": "家装产业协同管理平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89044/probe/codex-runtime-final-20260605-1127/may-89044-codex-runtime-final-structure-10-操作-详情.json",
+        "screenshotPath": "",
+        "elementCount": 333,
+        "interactiveCount": 33,
+        "interactiveLabels": [
+          "仪表盘",
+          "项目管理",
+          "设计方案",
+          "报价管理",
+          "验收管理",
+          "材料管理",
+          "管理面板",
+          "退出",
+          "新建项目",
+          "搜索项目名称/地址",
+          "刷新",
+          "详情",
+          "1",
+          "页码",
+          "关闭",
+          "如：万科城市花园3栋502室装修项目",
+          "请输入详细地址",
+          "Increase Value",
+          "Decrease Value",
+          "保 存",
+          "取 消"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89044-codex-runtime-final-structure-11-二层操作-详情-关闭",
+        "label": "二层操作:详情->关闭",
+        "finalUrl": "http://127.0.0.1:49044/projects",
+        "title": "家装产业协同管理平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89044/probe/codex-runtime-final-20260605-1127/may-89044-codex-runtime-final-structure-11-二层操作-详情-关闭.json",
+        "screenshotPath": "",
+        "elementCount": 332,
+        "interactiveCount": 33,
+        "interactiveLabels": [
+          "仪表盘",
+          "项目管理",
+          "设计方案",
+          "报价管理",
+          "验收管理",
+          "材料管理",
+          "管理面板",
+          "退出",
+          "新建项目",
+          "搜索项目名称/地址",
+          "刷新",
+          "详情",
+          "1",
+          "页码",
+          "关闭",
+          "如：万科城市花园3栋502室装修项目",
+          "请输入详细地址",
+          "Increase Value",
+          "Decrease Value",
+          "保 存",
+          "取 消"
+        ]
+      }
+    ],
+    "representativeScreenshotUrl": "http://127.0.0.1:49044/dashboard",
+    "representativeScreenshotLabel": "欢迎回来，系统管理员"
+  },
+  "websiteStructureCapture": {
+    "module": "website_structure_capture",
+    "captureCount": 11,
+    "captures": [
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89044-codex-runtime-final-structure-01-首屏",
+        "label": "首屏",
+        "finalUrl": "http://127.0.0.1:49044/dashboard",
+        "title": "家装产业协同管理平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89044/probe/codex-runtime-final-20260605-1127/may-89044-codex-runtime-final-structure-01-首屏.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89044/probe/codex-runtime-final-20260605-1127/may-89044-codex-runtime-final-structure-01-首屏.png",
+        "elementCount": 264,
+        "interactiveCount": 8,
+        "interactiveLabels": [
+          "仪表盘",
+          "项目管理",
+          "设计方案",
+          "报价管理",
+          "验收管理",
+          "材料管理",
+          "管理面板",
+          "退出"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89044-codex-runtime-final-structure-02-导航-仪表盘",
+        "label": "导航:仪表盘",
+        "finalUrl": "http://127.0.0.1:49044/dashboard",
+        "title": "家装产业协同管理平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89044/probe/codex-runtime-final-20260605-1127/may-89044-codex-runtime-final-structure-02-导航-仪表盘.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89044/probe/codex-runtime-final-20260605-1127/may-89044-codex-runtime-final-structure-02-导航-仪表盘.png",
+        "elementCount": 264,
+        "interactiveCount": 8,
+        "interactiveLabels": [
+          "仪表盘",
+          "项目管理",
+          "设计方案",
+          "报价管理",
+          "验收管理",
+          "材料管理",
+          "管理面板",
+          "退出"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89044-codex-runtime-final-structure-03-操作-报价管理",
+        "label": "操作:报价管理",
+        "finalUrl": "http://127.0.0.1:49044/quotations",
+        "title": "家装产业协同管理平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89044/probe/codex-runtime-final-20260605-1127/may-89044-codex-runtime-final-structure-03-操作-报价管理.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89044/probe/codex-runtime-final-20260605-1127/may-89044-codex-runtime-final-structure-03-操作-报价管理.png",
+        "elementCount": 206,
+        "interactiveCount": 22,
+        "interactiveLabels": [
+          "仪表盘",
+          "项目管理",
+          "设计方案",
+          "报价管理",
+          "验收管理",
+          "材料管理",
+          "管理面板",
+          "退出",
+          "新建报价",
+          "对比选中 (0)",
+          "on",
+          "详情",
+          "对比",
+          "预警",
+          "1",
+          "页码"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89044-codex-runtime-final-structure-04-二层操作-报价管理-新建报价",
+        "label": "二层操作:报价管理->新建报价",
+        "finalUrl": "http://127.0.0.1:49044/quotations",
+        "title": "家装产业协同管理平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89044/probe/codex-runtime-final-20260605-1127/may-89044-codex-runtime-final-structure-04-二层操作-报价管理-新建报价.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89044/probe/codex-runtime-final-20260605-1127/may-89044-codex-runtime-final-structure-04-二层操作-报价管理-新建报价.png",
+        "elementCount": 263,
+        "interactiveCount": 30,
+        "interactiveLabels": [
+          "仪表盘",
+          "项目管理",
+          "设计方案",
+          "报价管理",
+          "验收管理",
+          "材料管理",
+          "管理面板",
+          "退出",
+          "新建报价",
+          "对比选中 (0)",
+          "on",
+          "详情",
+          "对比",
+          "预警",
+          "1",
+          "页码",
+          "新建报价 所属项目 请选择项目 报价标题 装企名称 取 消 确 定",
+          "Close",
+          "请输入报价标题",
+          "请输入装企名称",
+          "取 消",
+          "确 定"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89044-codex-runtime-final-structure-05-操作-材料管理",
+        "label": "操作:材料管理",
+        "finalUrl": "http://127.0.0.1:49044/materials",
+        "title": "家装产业协同管理平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89044/probe/codex-runtime-final-20260605-1127/may-89044-codex-runtime-final-structure-05-操作-材料管理.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89044/probe/codex-runtime-final-20260605-1127/may-89044-codex-runtime-final-structure-05-操作-材料管理.png",
+        "elementCount": 321,
+        "interactiveCount": 29,
+        "interactiveLabels": [
+          "仪表盘",
+          "项目管理",
+          "设计方案",
+          "报价管理",
+          "验收管理",
+          "材料管理",
+          "管理面板",
+          "退出",
+          "建材目录",
+          "分类筛选 库存预警 新增建材 名称 品牌 分类 单价 库存 最低库存 状态 供应商 操作 立邦净味5合1乳胶漆 立邦 涂料 ¥298 100 10 正常 金牌建材供应商 编辑 删除 东鹏800x800地砖 东鹏 瓷砖 ¥68 500 50 正常 金牌建材供应商 编辑 删除 欧派定制橱柜五金套装 欧派 五金 ¥1,280 8 10 库存不足 金牌建材供应商 编",
+          "新增建材",
+          "编辑",
+          "删除",
+          "1",
+          "页码"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89044-codex-runtime-final-structure-06-二层操作-材料管理-编辑",
+        "label": "二层操作:材料管理->编辑",
+        "finalUrl": "http://127.0.0.1:49044/materials",
+        "title": "家装产业协同管理平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89044/probe/codex-runtime-final-20260605-1127/may-89044-codex-runtime-final-structure-06-二层操作-材料管理-编辑.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89044/probe/codex-runtime-final-20260605-1127/may-89044-codex-runtime-final-structure-06-二层操作-材料管理-编辑.png",
+        "elementCount": 444,
+        "interactiveCount": 47,
+        "interactiveLabels": [
+          "仪表盘",
+          "项目管理",
+          "设计方案",
+          "报价管理",
+          "验收管理",
+          "材料管理",
+          "管理面板",
+          "退出",
+          "建材目录",
+          "分类筛选 库存预警 新增建材 名称 品牌 分类 单价 库存 最低库存 状态 供应商 操作 立邦净味5合1乳胶漆 立邦 涂料 ¥298 100 10 正常 金牌建材供应商 编辑 删除 东鹏800x800地砖 东鹏 瓷砖 ¥68 500 50 正常 金牌建材供应商 编辑 删除 欧派定制橱柜五金套装 欧派 五金 ¥1,280 8 10 库存不足 金牌建材供应商 编",
+          "新增建材",
+          "编辑",
+          "删除",
+          "1",
+          "页码",
+          "编辑建材 名称 品牌 分类 涂料 单价 库存 最低库存 供应商 取 消 确 定",
+          "Close",
+          "立邦净味5合1乳胶漆",
+          "立邦",
+          "Increase Value",
+          "Decrease Value",
+          "298.00",
+          "100",
+          "10",
+          "金牌建材供应商",
+          "取 消",
+          "确 定"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89044-codex-runtime-final-structure-07-导航-项目管理",
+        "label": "导航:项目管理",
+        "finalUrl": "http://127.0.0.1:49044/projects",
+        "title": "家装产业协同管理平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89044/probe/codex-runtime-final-20260605-1127/may-89044-codex-runtime-final-structure-07-导航-项目管理.json",
+        "screenshotPath": "",
+        "elementCount": 193,
+        "interactiveCount": 19,
+        "interactiveLabels": [
+          "仪表盘",
+          "项目管理",
+          "设计方案",
+          "报价管理",
+          "验收管理",
+          "材料管理",
+          "管理面板",
+          "退出",
+          "新建项目",
+          "搜索项目名称/地址",
+          "刷新",
+          "详情",
+          "1",
+          "页码"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89044-codex-runtime-final-structure-08-操作-新建项目",
+        "label": "操作:新建项目",
+        "finalUrl": "http://127.0.0.1:49044/projects",
+        "title": "家装产业协同管理平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89044/probe/codex-runtime-final-20260605-1127/may-89044-codex-runtime-final-structure-08-操作-新建项目.json",
+        "screenshotPath": "",
+        "elementCount": 270,
+        "interactiveCount": 30,
+        "interactiveLabels": [
+          "仪表盘",
+          "项目管理",
+          "设计方案",
+          "报价管理",
+          "验收管理",
+          "材料管理",
+          "管理面板",
+          "退出",
+          "新建项目",
+          "搜索项目名称/地址",
+          "刷新",
+          "详情",
+          "1",
+          "页码",
+          "关闭",
+          "如：万科城市花园3栋502室装修项目",
+          "请输入详细地址",
+          "Increase Value",
+          "Decrease Value",
+          "保 存",
+          "取 消"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89044-codex-runtime-final-structure-09-二层操作-新建项目-保-存",
+        "label": "二层操作:新建项目->保 存",
+        "finalUrl": "http://127.0.0.1:49044/projects",
+        "title": "家装产业协同管理平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89044/probe/codex-runtime-final-20260605-1127/may-89044-codex-runtime-final-structure-09-二层操作-新建项目-保-存.json",
+        "screenshotPath": "",
+        "elementCount": 276,
+        "interactiveCount": 30,
+        "interactiveLabels": [
+          "仪表盘",
+          "项目管理",
+          "设计方案",
+          "报价管理",
+          "验收管理",
+          "材料管理",
+          "管理面板",
+          "退出",
+          "新建项目",
+          "搜索项目名称/地址",
+          "刷新",
+          "详情",
+          "1",
+          "页码",
+          "关闭",
+          "如：万科城市花园3栋502室装修项目",
+          "请输入详细地址",
+          "Increase Value",
+          "Decrease Value",
+          "保 存",
+          "取 消"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89044-codex-runtime-final-structure-10-操作-详情",
+        "label": "操作:详情",
+        "finalUrl": "http://127.0.0.1:49044/projects",
+        "title": "家装产业协同管理平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89044/probe/codex-runtime-final-20260605-1127/may-89044-codex-runtime-final-structure-10-操作-详情.json",
+        "screenshotPath": "",
+        "elementCount": 333,
+        "interactiveCount": 33,
+        "interactiveLabels": [
+          "仪表盘",
+          "项目管理",
+          "设计方案",
+          "报价管理",
+          "验收管理",
+          "材料管理",
+          "管理面板",
+          "退出",
+          "新建项目",
+          "搜索项目名称/地址",
+          "刷新",
+          "详情",
+          "1",
+          "页码",
+          "关闭",
+          "如：万科城市花园3栋502室装修项目",
+          "请输入详细地址",
+          "Increase Value",
+          "Decrease Value",
+          "保 存",
+          "取 消"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89044-codex-runtime-final-structure-11-二层操作-详情-关闭",
+        "label": "二层操作:详情->关闭",
+        "finalUrl": "http://127.0.0.1:49044/projects",
+        "title": "家装产业协同管理平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89044/probe/codex-runtime-final-20260605-1127/may-89044-codex-runtime-final-structure-11-二层操作-详情-关闭.json",
+        "screenshotPath": "",
+        "elementCount": 332,
+        "interactiveCount": 33,
+        "interactiveLabels": [
+          "仪表盘",
+          "项目管理",
+          "设计方案",
+          "报价管理",
+          "验收管理",
+          "材料管理",
+          "管理面板",
+          "退出",
+          "新建项目",
+          "搜索项目名称/地址",
+          "刷新",
+          "详情",
+          "1",
+          "页码",
+          "关闭",
+          "如：万科城市花园3栋502室装修项目",
+          "请输入详细地址",
+          "Increase Value",
+          "Decrease Value",
+          "保 存",
+          "取 消"
+        ]
+      }
+    ]
+  },
+  "screenshotMetrics": {
+    "width": 1856,
+    "height": 1268,
+    "scrollWidth": 1824,
+    "scrollHeight": 1268
+  },
+  "initialBodyTextPreview": "家装协同平台\n\n设计 · 报价 · 材料 · 验收 一体化管理\n\n登录\n注册\n登 录\n演示账号快速登录\n管理员\n业 主\n设计师\n装修公司\n供应商\nadmin:Admin@123 / platform:Platform@123 / ops:Ops@123 / owner1:123456 / designer1:123456",
+  "bodyTextPreview": "家装协同平台\n仪表盘\n项目管理\n设计方案\n报价管理\n验收管理\n材料管理\n管理面板\n家装产业协同管理平台\n系统管理员（管理员）\n退出\n欢迎回来，系统管理员\n当前角色：管理员\n项目总数\n1\n进行中项目\n1\n待验收\n1\n已完成项目\n0\n用户总数\n8\n业主\n2\n设计师\n1\n装修公司\n1\n供应商\n1\n运营总览\n资金共管对账\n管理资金流水与对账记录\n城市价格指数\n查看各城市装修价格走势\n设计师产能分析\n分析设计师工作效率与产出\n投诉根因分析\n分析投诉原因与改进措施\n最近动态\n项目「万科城市花园3栋502室装修项目」状态：in_progress project\n2026-06-05 16:44:27\n验收任务「万科城市花园3栋502室装修项目」状态：pending inspection\n2026-06-05 16:44:27\n材料订单「立邦净味5合1乳胶漆」状态：shipped material\n2026-06-05 15:27:34",
+  "apiBase": "http://127.0.0.1:59044",
+  "businessGoalPreview": "装修设计协作管理平台：支持登录注册、项目管理、业主和设计师协作、后台订单与运营管理。",
+  "apiResponses": [
+    {
+      "method": "POST",
+      "status": 200,
+      "url": "http://127.0.0.1:59044/api/auth/login"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:59044/api/admin/dashboard"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:59044/api/admin/dashboard"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:59044/api/dashboard/activities"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:59044/api/dashboard/activities"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:59044/api/admin/dashboard"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:59044/api/admin/dashboard"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:59044/api/dashboard/activities"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:59044/api/dashboard/activities"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:59044/api/projects?pageSize=100"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:59044/api/quotations?page=1&pageSize=10"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:59044/api/projects?pageSize=100"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:59044/api/quotations?page=1&pageSize=10"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:59044/api/admin/dashboard"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:59044/api/admin/dashboard"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:59044/api/dashboard/activities"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:59044/api/dashboard/activities"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:59044/api/projects?pageSize=100"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:59044/api/materials?stock_warning=true&pageSize=100"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:59044/api/materials?page=1&pageSize=10"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:59044/api/projects?pageSize=100"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:59044/api/materials?stock_warning=true&pageSize=100"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:59044/api/materials?page=1&pageSize=10"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:59044/api/admin/dashboard"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:59044/api/admin/dashboard"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:59044/api/dashboard/activities"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:59044/api/dashboard/activities"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:59044/api/projects?page=1&limit=10"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:59044/api/projects?page=1&limit=10"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:59044/api/admin/dashboard"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:59044/api/admin/dashboard"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:59044/api/dashboard/activities"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:59044/api/dashboard/activities"
+    }
+  ],
+  "apiChecks": [
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59044/api/health",
+      "path": "/api/health",
+      "status": 200,
+      "ok": true,
+      "bodyPreview": "{\"success\":true,\"data\":{\"status\":\"ok\",\"timestamp\":\"2026-06-05T11:30:34.086Z\"}}"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59044/api/admin/dashboard",
+      "path": "/api/admin/dashboard",
+      "status": 200,
+      "ok": true,
+      "bodyPreview": "{\"success\":true,\"data\":{\"usersCount\":8,\"projectsCount\":1,\"activeProjects\":1,\"pendingInspections\":1,\"ownersCount\":2,\"designersCount\":1,\"companiesCount\":1,\"suppliersCount\":1,\"completedProjects\":0,\"totalRevenue\":30000,\"counts\":{\"users\":8,\"projects\":1,\"owners\":2,\"designers\":1,\"companies\":1,\"suppliers\":1,\"designSchemes\":1,\"quotations\":1,\"inspectionTasks\":1,\"complaints\":1,\"materials\":5,\"orders\":1},\"projectsByStatus\":[{\"status\":\"in_progress\",\"count\":1}],\"recentProjects\":[{\"id\":1,\"owner_id\":4,\"company_i"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59044/api/dashboard/activities",
+      "path": "/api/dashboard/activities",
+      "status": 200,
+      "ok": true,
+      "bodyPreview": "{\"success\":true,\"data\":[{\"id\":\"project-1\",\"action\":\"项目「万科城市花园3栋502室装修项目」状态：in_progress\",\"time\":\"2026-06-05 16:44:27\",\"type\":\"project\"},{\"id\":\"inspection-1\",\"action\":\"验收任务「万科城市花园3栋502室装修项目」状态：pending\",\"time\":\"2026-06-05 16:44:27\",\"type\":\"inspection\"},{\"id\":\"material-1\",\"action\":\"材料订单「立邦净味5合1乳胶漆」状态：shipped\",\"time\":\"2026-06-05 15:27:34\",\"type\":\"material\"}]}"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59044/api/projects?pageSize=100",
+      "path": "/api/projects?pageSize=100",
+      "status": 200,
+      "ok": true,
+      "bodyPreview": "{\"success\":true,\"data\":{\"list\":[{\"id\":1,\"owner_id\":4,\"company_id\":6,\"designer_id\":5,\"title\":\"万科城市花园3栋502室装修项目\",\"status\":\"in_progress\",\"start_date\":\"2026-06-01\",\"end_date\":\"2026-09-30\",\"address\":\"万科城市花园3栋502室\",\"total_budget\":300000,\"created_at\":\"2026-06-05 13:41:03\",\"updated_at\":\"2026-06-05 16:44:27\",\"owner_name\":null,\"designer_name\":null,\"company_name\":null}],\"total\":1,\"page\":1,\"limit\":10}}"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59044/api/quotations?page=1&pageSize=10",
+      "path": "/api/quotations?page=1&pageSize=10",
+      "status": 200,
+      "ok": true,
+      "bodyPreview": "{\"success\":true,\"data\":{\"list\":[{\"id\":1,\"project_id\":1,\"company_id\":6,\"title\":\"装修报价A\",\"total_price\":125000,\"labor_cost\":32000,\"material_cost\":88000,\"management_fee\":5000,\"status\":\"submitted\",\"warning_flags\":\"[]\",\"created_at\":\"2026-06-05 13:41:03\",\"updated_at\":\"2026-06-05 16:44:27\",\"company_name\":\"靠谱装修公司\"}],\"total\":1,\"page\":1,\"limit\":10,\"pageSize\":10}}"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59044/api/materials?stock_warning=true&pageSize=100",
+      "path": "/api/materials?stock_warning=true&pageSize=100",
+      "status": 200,
+      "ok": true,
+      "bodyPreview": "{\"success\":true,\"data\":{\"list\":[{\"id\":5,\"supplier_id\":7,\"name\":\"欧派定制橱柜五金套装\",\"brand\":\"欧派\",\"category\":\"五金\",\"specification\":\"标准套装\",\"unit_price\":1280,\"stock\":8,\"min_stock\":10,\"image_url\":null,\"status\":\"active\",\"created_at\":\"2026-06-05 15:27:34\",\"updated_at\":\"2026-06-05 16:44:27\",\"supplier_name\":\"金牌建材供应商\"}],\"total\":1,\"page\":1,\"limit\":100,\"pageSize\":100}}"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59044/api/materials?page=1&pageSize=10",
+      "path": "/api/materials?page=1&pageSize=10",
+      "status": 200,
+      "ok": true,
+      "bodyPreview": "{\"success\":true,\"data\":{\"list\":[{\"id\":3,\"supplier_id\":7,\"name\":\"立邦净味5合1乳胶漆\",\"brand\":\"立邦\",\"category\":\"涂料\",\"specification\":\"5L/桶\",\"unit_price\":298,\"stock\":100,\"min_stock\":10,\"image_url\":null,\"status\":\"active\",\"created_at\":\"2026-06-05 15:27:34\",\"updated_at\":\"2026-06-05 16:44:27\",\"supplier_name\":\"金牌建材供应商\"},{\"id\":4,\"supplier_id\":7,\"name\":\"东鹏800x800地砖\",\"brand\":\"东鹏\",\"category\":\"瓷砖\",\"specification\":\"800x800mm\",\"unit_price\":68,\"stock\":500,\"min_stock\":50,\"image_url\":null,\"status\":\"active\",\"created_at\":\"20"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59044/api/projects?page=1&limit=10",
+      "path": "/api/projects?page=1&limit=10",
+      "status": 200,
+      "ok": true,
+      "bodyPreview": "{\"success\":true,\"data\":{\"list\":[{\"id\":1,\"owner_id\":4,\"company_id\":6,\"designer_id\":5,\"title\":\"万科城市花园3栋502室装修项目\",\"status\":\"in_progress\",\"start_date\":\"2026-06-01\",\"end_date\":\"2026-09-30\",\"address\":\"万科城市花园3栋502室\",\"total_budget\":300000,\"created_at\":\"2026-06-05 13:41:03\",\"updated_at\":\"2026-06-05 16:44:27\",\"owner_name\":null,\"designer_name\":null,\"company_name\":null}],\"total\":1,\"page\":1,\"limit\":10}}"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59044/api/auth/me",
+      "path": "/api/auth/me",
+      "status": 200,
+      "ok": true,
+      "bodyPreview": "{\"success\":true,\"data\":{\"id\":1,\"username\":\"admin\",\"role\":\"admin\",\"name\":\"系统管理员\",\"phone\":null,\"email\":null,\"avatar\":null,\"created_at\":\"2026-06-05 13:40:45\",\"roleInfo\":null}}"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59044/api/users/profile",
+      "path": "/api/users/profile",
+      "status": 200,
+      "ok": true,
+      "bodyPreview": "{\"success\":true,\"data\":{\"id\":1,\"username\":\"admin\",\"role\":\"admin\",\"name\":\"系统管理员\",\"phone\":null,\"email\":null,\"avatar\":null,\"created_at\":\"2026-06-05 13:40:45\"}}"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59044/api/user/profile",
+      "path": "/api/user/profile",
+      "status": 200,
+      "ok": true,
+      "bodyPreview": "{\"success\":true,\"data\":{\"id\":1,\"username\":\"admin\",\"role\":\"admin\",\"name\":\"系统管理员\",\"phone\":null,\"email\":null,\"avatar\":null,\"created_at\":\"2026-06-05 13:40:45\"}}"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59044/api/admin/stats",
+      "path": "/api/admin/stats",
+      "status": 200,
+      "ok": true,
+      "bodyPreview": "{\"success\":true,\"data\":{\"usersCount\":8,\"ownersCount\":2,\"designersCount\":1,\"companiesCount\":1,\"suppliersCount\":1,\"projectsCount\":1,\"designSchemesCount\":1,\"quotationsCount\":1,\"materialsCount\":5,\"ordersCount\":1,\"activeProjects\":1,\"completedProjects\":0,\"pendingInspections\":1,\"status\":\"running\"}}"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59044/api/products",
+      "path": "/api/products",
+      "status": 200,
+      "ok": true,
+      "bodyPreview": "{\"success\":true,\"data\":{\"list\":[{\"id\":3,\"name\":\"立邦净味5合1乳胶漆\",\"brand\":\"立邦\",\"category\":\"涂料\",\"specification\":\"5L/桶\",\"price\":298,\"stock\":100,\"status\":\"active\",\"supplier_name\":\"金牌建材供应商\"},{\"id\":4,\"name\":\"东鹏800x800地砖\",\"brand\":\"东鹏\",\"category\":\"瓷砖\",\"specification\":\"800x800mm\",\"price\":68,\"stock\":500,\"status\":\"active\",\"supplier_name\":\"金牌建材供应商\"},{\"id\":5,\"name\":\"欧派定制橱柜五金套装\",\"brand\":\"欧派\",\"category\":\"五金\",\"specification\":\"标准套装\",\"price\":1280,\"stock\":8,\"status\":\"active\",\"supplier_name\":\"金牌建材供应商\"},{\"id\":1,\"name\":\"立"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59044/api/orders",
+      "path": "/api/orders",
+      "status": 200,
+      "ok": true,
+      "bodyPreview": "{\"success\":true,\"data\":{\"list\":[{\"id\":1,\"material_id\":3,\"project_id\":1,\"quantity\":12,\"unit_price\":298,\"total_price\":3576,\"status\":\"shipped\",\"logistics_info\":\"顺丰同城 SF20260605001，预计 6 月 6 日送达\",\"created_at\":\"2026-06-05 15:27:34\",\"updated_at\":\"2026-06-05 15:27:34\",\"material_name\":\"立邦净味5合1乳胶漆\",\"material_brand\":\"立邦\",\"project_title\":\"万科城市花园3栋502室装修项目\"}],\"total\":1,\"page\":1,\"limit\":10,\"pageSize\":10}}"
+    }
+  ],
+  "dialogs": [],
+  "consoleMessages": [
+    {
+      "type": "debug",
+      "text": "[vite] connecting...",
+      "location": {
+        "url": "http://127.0.0.1:49044/@vite/client",
+        "lineNumber": 494,
+        "columnNumber": 8
+      }
+    },
+    {
+      "type": "debug",
+      "text": "[vite] connected.",
+      "location": {
+        "url": "http://127.0.0.1:49044/@vite/client",
+        "lineNumber": 617,
+        "columnNumber": 14
+      }
+    },
+    {
+      "type": "info",
+      "text": "%cDownload the React DevTools for a better development experience: https://reactjs.org/link/react-devtools font-weight:bold",
+      "location": {
+        "url": "http://127.0.0.1:49044/node_modules/.vite/deps/chunk-PJEEZAML.js?v=71a91f3c",
+        "lineNumber": 21550,
+        "columnNumber": 24
+      }
+    },
+    {
+      "type": "warning",
+      "text": "⚠️ React Router Future Flag Warning: React Router will begin wrapping state updates in `React.startTransition` in v7. You can use the `v7_startTransition` future flag to opt-in early. For more information, see https://reactrouter.com/v6/upgrading/future#v7_starttransition.",
+      "location": {
+        "url": "http://127.0.0.1:49044/node_modules/.vite/deps/react-router-dom.js?v=71a91f3c",
+        "lineNumber": 4426,
+        "columnNumber": 12
+      }
+    },
+    {
+      "type": "warning",
+      "text": "⚠️ React Router Future Flag Warning: Relative route resolution within Splat routes is changing in v7. You can use the `v7_relativeSplatPath` future flag to opt-in early. For more information, see https://reactrouter.com/v6/upgrading/future#v7_relativesplatpath.",
+      "location": {
+        "url": "http://127.0.0.1:49044/node_modules/.vite/deps/react-router-dom.js?v=71a91f3c",
+        "lineNumber": 4426,
+        "columnNumber": 12
+      }
+    },
+    {
+      "type": "verbose",
+      "text": "[DOM] Input elements should have autocomplete attributes (suggested: \"current-password\"): (More info: https://goo.gl/9p2vKq) %o",
+      "location": {
+        "url": "http://127.0.0.1:49044/login",
+        "lineNumber": 0,
+        "columnNumber": 0
+      }
+    },
+    {
+      "type": "error",
+      "text": "Warning: [antd: message] Static function can not consume context like dynamic theme. Please use 'App' component instead.",
+      "location": {
+        "url": "http://127.0.0.1:49044/node_modules/.vite/deps/chunk-ZDBJOGHJ.js?v=71a91f3c",
+        "lineNumber": 1247,
+        "columnNumber": 14
+      }
+    },
+    {
+      "type": "debug",
+      "text": "[vite] connecting...",
+      "location": {
+        "url": "http://127.0.0.1:49044/@vite/client",
+        "lineNumber": 494,
+        "columnNumber": 8
+      }
+    },
+    {
+      "type": "debug",
+      "text": "[vite] connected.",
+      "location": {
+        "url": "http://127.0.0.1:49044/@vite/client",
+        "lineNumber": 617,
+        "columnNumber": 14
+      }
+    },
+    {
+      "type": "info",
+      "text": "%cDownload the React DevTools for a better development experience: https://reactjs.org/link/react-devtools font-weight:bold",
+      "location": {
+        "url": "http://127.0.0.1:49044/node_modules/.vite/deps/chunk-PJEEZAML.js?v=71a91f3c",
+        "lineNumber": 21550,
+        "columnNumber": 24
+      }
+    },
+    {
+      "type": "warning",
+      "text": "⚠️ React Router Future Flag Warning: React Router will begin wrapping state updates in `React.startTransition` in v7. You can use the `v7_startTransition` future flag to opt-in early. For more information, see https://reactrouter.com/v6/upgrading/future#v7_starttransition.",
+      "location": {
+        "url": "http://127.0.0.1:49044/node_modules/.vite/deps/react-router-dom.js?v=71a91f3c",
+        "lineNumber": 4426,
+        "columnNumber": 12
+      }
+    },
+    {
+      "type": "warning",
+      "text": "⚠️ React Router Future Flag Warning: Relative route resolution within Splat routes is changing in v7. You can use the `v7_relativeSplatPath` future flag to opt-in early. For more information, see https://reactrouter.com/v6/upgrading/future#v7_relativesplatpath.",
+      "location": {
+        "url": "http://127.0.0.1:49044/node_modules/.vite/deps/react-router-dom.js?v=71a91f3c",
+        "lineNumber": 4426,
+        "columnNumber": 12
+      }
+    },
+    {
+      "type": "debug",
+      "text": "[vite] connecting...",
+      "location": {
+        "url": "http://127.0.0.1:49044/@vite/client",
+        "lineNumber": 494,
+        "columnNumber": 8
+      }
+    },
+    {
+      "type": "debug",
+      "text": "[vite] connected.",
+      "location": {
+        "url": "http://127.0.0.1:49044/@vite/client",
+        "lineNumber": 617,
+        "columnNumber": 14
+      }
+    },
+    {
+      "type": "info",
+      "text": "%cDownload the React DevTools for a better development experience: https://reactjs.org/link/react-devtools font-weight:bold",
+      "location": {
+        "url": "http://127.0.0.1:49044/node_modules/.vite/deps/chunk-PJEEZAML.js?v=71a91f3c",
+        "lineNumber": 21550,
+        "columnNumber": 24
+      }
+    },
+    {
+      "type": "warning",
+      "text": "⚠️ React Router Future Flag Warning: React Router will begin wrapping state updates in `React.startTransition` in v7. You can use the `v7_startTransition` future flag to opt-in early. For more information, see https://reactrouter.com/v6/upgrading/future#v7_starttransition.",
+      "location": {
+        "url": "http://127.0.0.1:49044/node_modules/.vite/deps/react-router-dom.js?v=71a91f3c",
+        "lineNumber": 4426,
+        "columnNumber": 12
+      }
+    },
+    {
+      "type": "warning",
+      "text": "⚠️ React Router Future Flag Warning: Relative route resolution within Splat routes is changing in v7. You can use the `v7_relativeSplatPath` future flag to opt-in early. For more information, see https://reactrouter.com/v6/upgrading/future#v7_relativesplatpath.",
+      "location": {
+        "url": "http://127.0.0.1:49044/node_modules/.vite/deps/react-router-dom.js?v=71a91f3c",
+        "lineNumber": 4426,
+        "columnNumber": 12
+      }
+    },
+    {
+      "type": "debug",
+      "text": "[vite] connecting...",
+      "location": {
+        "url": "http://127.0.0.1:49044/@vite/client",
+        "lineNumber": 494,
+        "columnNumber": 8
+      }
+    },
+    {
+      "type": "debug",
+      "text": "[vite] connected.",
+      "location": {
+        "url": "http://127.0.0.1:49044/@vite/client",
+        "lineNumber": 617,
+        "columnNumber": 14
+      }
+    },
+    {
+      "type": "info",
+      "text": "%cDownload the React DevTools for a better development experience: https://reactjs.org/link/react-devtools font-weight:bold",
+      "location": {
+        "url": "http://127.0.0.1:49044/node_modules/.vite/deps/chunk-PJEEZAML.js?v=71a91f3c",
+        "lineNumber": 21550,
+        "columnNumber": 24
+      }
+    },
+    {
+      "type": "warning",
+      "text": "⚠️ React Router Future Flag Warning: React Router will begin wrapping state updates in `React.startTransition` in v7. You can use the `v7_startTransition` future flag to opt-in early. For more information, see https://reactrouter.com/v6/upgrading/future#v7_starttransition.",
+      "location": {
+        "url": "http://127.0.0.1:49044/node_modules/.vite/deps/react-router-dom.js?v=71a91f3c",
+        "lineNumber": 4426,
+        "columnNumber": 12
+      }
+    },
+    {
+      "type": "warning",
+      "text": "⚠️ React Router Future Flag Warning: Relative route resolution within Splat routes is changing in v7. You can use the `v7_relativeSplatPath` future flag to opt-in early. For more information, see https://reactrouter.com/v6/upgrading/future#v7_relativesplatpath.",
+      "location": {
+        "url": "http://127.0.0.1:49044/node_modules/.vite/deps/react-router-dom.js?v=71a91f3c",
+        "lineNumber": 4426,
+        "columnNumber": 12
+      }
+    },
+    {
+      "type": "debug",
+      "text": "[vite] connecting...",
+      "location": {
+        "url": "http://127.0.0.1:49044/@vite/client",
+        "lineNumber": 494,
+        "columnNumber": 8
+      }
+    },
+    {
+      "type": "debug",
+      "text": "[vite] connected.",
+      "location": {
+        "url": "http://127.0.0.1:49044/@vite/client",
+        "lineNumber": 617,
+        "columnNumber": 14
+      }
+    },
+    {
+      "type": "info",
+      "text": "%cDownload the React DevTools for a better development experience: https://reactjs.org/link/react-devtools font-weight:bold",
+      "location": {
+        "url": "http://127.0.0.1:49044/node_modules/.vite/deps/chunk-PJEEZAML.js?v=71a91f3c",
+        "lineNumber": 21550,
+        "columnNumber": 24
+      }
+    },
+    {
+      "type": "warning",
+      "text": "⚠️ React Router Future Flag Warning: React Router will begin wrapping state updates in `React.startTransition` in v7. You can use the `v7_startTransition` future flag to opt-in early. For more information, see https://reactrouter.com/v6/upgrading/future#v7_starttransition.",
+      "location": {
+        "url": "http://127.0.0.1:49044/node_modules/.vite/deps/react-router-dom.js?v=71a91f3c",
+        "lineNumber": 4426,
+        "columnNumber": 12
+      }
+    },
+    {
+      "type": "warning",
+      "text": "⚠️ React Router Future Flag Warning: Relative route resolution within Splat routes is changing in v7. You can use the `v7_relativeSplatPath` future flag to opt-in early. For more information, see https://reactrouter.com/v6/upgrading/future#v7_relativesplatpath.",
+      "location": {
+        "url": "http://127.0.0.1:49044/node_modules/.vite/deps/react-router-dom.js?v=71a91f3c",
+        "lineNumber": 4426,
+        "columnNumber": 12
+      }
+    }
+  ],
+  "requestFailures": [],
+  "responseErrors": []
+}

@@ -1,0 +1,1826 @@
+{
+  "ok": true,
+  "generatedAt": "2026-06-05T12:47:45.706Z",
+  "order": "may-89044",
+  "roundIndex": 97,
+  "captureId": "may-89044-service-repair",
+  "url": "http://127.0.0.1:49044/",
+  "initialUrl": "http://127.0.0.1:49044/",
+  "finalUrl": "http://127.0.0.1:49044/",
+  "status": 200,
+  "title": "家装产业协同管理平台",
+  "initialTitle": "家装产业协同管理平台",
+  "navigationError": "",
+  "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89044/probe/codex-service-repair-20260605/may-89044-service-repair-frontend.png",
+  "screenshotPaths": [
+    "/Users/chen/Documents/trae_projects/local_projects/may-89044/probe/codex-service-repair-20260605/may-89044-service-repair-structure-01-首屏.png",
+    "/Users/chen/Documents/trae_projects/local_projects/may-89044/probe/codex-service-repair-20260605/may-89044-service-repair-structure-02-导航-运营总览.png",
+    "/Users/chen/Documents/trae_projects/local_projects/may-89044/probe/codex-service-repair-20260605/may-89044-service-repair-structure-03-操作-刷新.png",
+    "/Users/chen/Documents/trae_projects/local_projects/may-89044/probe/codex-service-repair-20260605/may-89044-service-repair-structure-04-导航-项目协同.png"
+  ],
+  "issueTextPreview": "service repair: frontend and backend connection refused on 49044/59044",
+  "targetReason": "后台管理相关问题",
+  "targetKind": "admin",
+  "targetMatched": false,
+  "targetActions": [],
+  "authFlow": {
+    "detected": false,
+    "attempted": false,
+    "success": false,
+    "finalUrl": "http://127.0.0.1:49044/",
+    "message": "",
+    "actions": []
+  },
+  "businessAudit": {
+    "actions": [
+      {
+        "action": "click",
+        "label": "导航:运营总览",
+        "ok": true
+      },
+      {
+        "action": "click",
+        "label": "操作:刷新",
+        "ok": true,
+        "result": {
+          "ok": true,
+          "matched": 1
+        }
+      },
+      {
+        "action": "click",
+        "label": "导航:项目协同",
+        "ok": true
+      },
+      {
+        "action": "click",
+        "label": "操作:刷新",
+        "ok": true,
+        "result": {
+          "ok": true,
+          "matched": 1
+        }
+      },
+      {
+        "action": "click",
+        "label": "导航:材料供应",
+        "ok": true
+      },
+      {
+        "action": "click",
+        "label": "操作:刷新",
+        "ok": true,
+        "result": {
+          "ok": true,
+          "matched": 1
+        }
+      },
+      {
+        "action": "click",
+        "label": "导航:设计师负载",
+        "ok": true
+      },
+      {
+        "action": "click",
+        "label": "操作:刷新",
+        "ok": true,
+        "result": {
+          "ok": true,
+          "matched": 1
+        }
+      },
+      {
+        "action": "click",
+        "label": "导航:验收与资金",
+        "ok": true
+      },
+      {
+        "action": "click",
+        "label": "操作:刷新",
+        "ok": true,
+        "result": {
+          "ok": true,
+          "matched": 1
+        }
+      }
+    ],
+    "snapshots": [
+      {
+        "label": "首屏",
+        "url": "http://127.0.0.1:49044/",
+        "title": "家装产业协同管理平台",
+        "headings": [
+          "家装产业协同管理平台"
+        ],
+        "navLabels": [
+          "运营总览 项目协同 材料供应 设计师负载 验收与资金",
+          "运营总览",
+          "dashboard",
+          "项目协同",
+          "home",
+          "材料供应",
+          "shop",
+          "设计师负载",
+          "team",
+          "验收与资金",
+          "audit"
+        ],
+        "buttons": [
+          "刷新"
+        ],
+        "links": [],
+        "inputs": [],
+        "tables": [
+          {
+            "headers": [
+              "业主",
+              "设计师",
+              "装企",
+              "供应商",
+              "已完工",
+              "当前账号"
+            ],
+            "rowCount": 3,
+            "hasEmptyText": false,
+            "textPreview": "业主 0 设计师 0 装企 0 供应商 0 已完工 0 当前账号 admin"
+          }
+        ],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "家装协同运营总览项目协同材料供应设计师负载验收与资金家装产业协同管理平台报价、设计、材料、验收与资金风控一体化工作台API ok 15:47:05系统管理员刷新平台注册用户1装修项目0推进中项目0待处理验收0角色分布业主0设计师0装企0供应商0已完工0当前账号admin平台状态后端健康检查 ok 15:47:05SQLite 数据库已由后端初始化管理员演示账号 admin/admin123 可用前端 API 通过同源 /api 代理访问后端",
+        "layout": {
+          "viewportWidth": 1504,
+          "viewportHeight": 1000,
+          "scrollWidth": 1504,
+          "scrollHeight": 1000,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89044-service-repair-structure-01-首屏",
+          "label": "首屏",
+          "finalUrl": "http://127.0.0.1:49044/",
+          "title": "家装产业协同管理平台",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89044/probe/codex-service-repair-20260605/may-89044-service-repair-structure-01-首屏.json",
+          "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89044/probe/codex-service-repair-20260605/may-89044-service-repair-structure-01-首屏.png",
+          "elementCount": 167,
+          "interactiveCount": 7,
+          "interactiveLabels": [
+            "运营总览 项目协同 材料供应 设计师负载 验收与资金",
+            "运营总览",
+            "项目协同",
+            "材料供应",
+            "设计师负载",
+            "验收与资金",
+            "刷新"
+          ]
+        }
+      },
+      {
+        "label": "导航:运营总览",
+        "url": "http://127.0.0.1:49044/",
+        "title": "家装产业协同管理平台",
+        "headings": [
+          "家装产业协同管理平台"
+        ],
+        "navLabels": [
+          "运营总览 项目协同 材料供应 设计师负载 验收与资金",
+          "运营总览",
+          "dashboard",
+          "项目协同",
+          "home",
+          "材料供应",
+          "shop",
+          "设计师负载",
+          "team",
+          "验收与资金",
+          "audit"
+        ],
+        "buttons": [
+          "刷新"
+        ],
+        "links": [],
+        "inputs": [],
+        "tables": [
+          {
+            "headers": [
+              "业主",
+              "设计师",
+              "装企",
+              "供应商",
+              "已完工",
+              "当前账号"
+            ],
+            "rowCount": 3,
+            "hasEmptyText": false,
+            "textPreview": "业主 0 设计师 0 装企 0 供应商 0 已完工 0 当前账号 admin"
+          }
+        ],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "家装协同运营总览项目协同材料供应设计师负载验收与资金家装产业协同管理平台报价、设计、材料、验收与资金风控一体化工作台API ok 15:47:05系统管理员刷新平台注册用户1装修项目0推进中项目0待处理验收0角色分布业主0设计师0装企0供应商0已完工0当前账号admin平台状态后端健康检查 ok 15:47:05SQLite 数据库已由后端初始化管理员演示账号 admin/admin123 可用前端 API 通过同源 /api 代理访问后端",
+        "layout": {
+          "viewportWidth": 1536,
+          "viewportHeight": 1000,
+          "scrollWidth": 1536,
+          "scrollHeight": 1000,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89044-service-repair-structure-02-导航-运营总览",
+          "label": "导航:运营总览",
+          "finalUrl": "http://127.0.0.1:49044/",
+          "title": "家装产业协同管理平台",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89044/probe/codex-service-repair-20260605/may-89044-service-repair-structure-02-导航-运营总览.json",
+          "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89044/probe/codex-service-repair-20260605/may-89044-service-repair-structure-02-导航-运营总览.png",
+          "elementCount": 167,
+          "interactiveCount": 7,
+          "interactiveLabels": [
+            "运营总览 项目协同 材料供应 设计师负载 验收与资金",
+            "运营总览",
+            "项目协同",
+            "材料供应",
+            "设计师负载",
+            "验收与资金",
+            "刷新"
+          ]
+        }
+      },
+      {
+        "label": "操作:刷新",
+        "url": "http://127.0.0.1:49044/",
+        "title": "家装产业协同管理平台",
+        "headings": [
+          "家装产业协同管理平台"
+        ],
+        "navLabels": [
+          "运营总览 项目协同 材料供应 设计师负载 验收与资金",
+          "运营总览",
+          "dashboard",
+          "项目协同",
+          "home",
+          "材料供应",
+          "shop",
+          "设计师负载",
+          "team",
+          "验收与资金",
+          "audit"
+        ],
+        "buttons": [
+          "刷新"
+        ],
+        "links": [],
+        "inputs": [],
+        "tables": [
+          {
+            "headers": [
+              "业主",
+              "设计师",
+              "装企",
+              "供应商",
+              "已完工",
+              "当前账号"
+            ],
+            "rowCount": 3,
+            "hasEmptyText": false,
+            "textPreview": "业主 0 设计师 0 装企 0 供应商 0 已完工 0 当前账号 admin"
+          }
+        ],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "家装协同运营总览项目协同材料供应设计师负载验收与资金家装产业协同管理平台报价、设计、材料、验收与资金风控一体化工作台API ok 15:47:09系统管理员刷新平台注册用户1装修项目0推进中项目0待处理验收0角色分布业主0设计师0装企0供应商0已完工0当前账号admin平台状态后端健康检查 ok 15:47:09SQLite 数据库已由后端初始化管理员演示账号 admin/admin123 可用前端 API 通过同源 /api 代理访问后端",
+        "layout": {
+          "viewportWidth": 1568,
+          "viewportHeight": 1000,
+          "scrollWidth": 1568,
+          "scrollHeight": 1000,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89044-service-repair-structure-03-操作-刷新",
+          "label": "操作:刷新",
+          "finalUrl": "http://127.0.0.1:49044/",
+          "title": "家装产业协同管理平台",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89044/probe/codex-service-repair-20260605/may-89044-service-repair-structure-03-操作-刷新.json",
+          "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89044/probe/codex-service-repair-20260605/may-89044-service-repair-structure-03-操作-刷新.png",
+          "elementCount": 169,
+          "interactiveCount": 7,
+          "interactiveLabels": [
+            "运营总览 项目协同 材料供应 设计师负载 验收与资金",
+            "运营总览",
+            "项目协同",
+            "材料供应",
+            "设计师负载",
+            "验收与资金",
+            "刷新"
+          ]
+        }
+      },
+      {
+        "label": "导航:项目协同",
+        "url": "http://127.0.0.1:49044/",
+        "title": "家装产业协同管理平台",
+        "headings": [
+          "家装产业协同管理平台"
+        ],
+        "navLabels": [
+          "运营总览 项目协同 材料供应 设计师负载 验收与资金",
+          "运营总览",
+          "dashboard",
+          "项目协同",
+          "home",
+          "材料供应",
+          "shop",
+          "设计师负载",
+          "team",
+          "验收与资金",
+          "audit"
+        ],
+        "buttons": [
+          "刷新"
+        ],
+        "links": [],
+        "inputs": [],
+        "tables": [
+          {
+            "headers": [
+              "项目",
+              "地址",
+              "状态",
+              "预算",
+              "创建时间"
+            ],
+            "rowCount": 1,
+            "hasEmptyText": true,
+            "textPreview": "项目 地址 状态 预算 创建时间 暂无数据"
+          }
+        ],
+        "emptyTextCount": 1,
+        "bodyTextPreview": "家装协同运营总览项目协同材料供应设计师负载验收与资金家装产业协同管理平台报价、设计、材料、验收与资金风控一体化工作台API ok 15:47:09系统管理员刷新平台注册用户1装修项目0推进中项目0待处理验收0项目协同项目地址状态预算创建时间暂无数据",
+        "layout": {
+          "viewportWidth": 1600,
+          "viewportHeight": 1000,
+          "scrollWidth": 1600,
+          "scrollHeight": 1000,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89044-service-repair-structure-04-导航-项目协同",
+          "label": "导航:项目协同",
+          "finalUrl": "http://127.0.0.1:49044/",
+          "title": "家装产业协同管理平台",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89044/probe/codex-service-repair-20260605/may-89044-service-repair-structure-04-导航-项目协同.json",
+          "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89044/probe/codex-service-repair-20260605/may-89044-service-repair-structure-04-导航-项目协同.png",
+          "elementCount": 147,
+          "interactiveCount": 7,
+          "interactiveLabels": [
+            "运营总览 项目协同 材料供应 设计师负载 验收与资金",
+            "运营总览",
+            "项目协同",
+            "材料供应",
+            "设计师负载",
+            "验收与资金",
+            "刷新"
+          ]
+        }
+      },
+      {
+        "label": "操作:刷新",
+        "url": "http://127.0.0.1:49044/",
+        "title": "家装产业协同管理平台",
+        "headings": [
+          "家装产业协同管理平台"
+        ],
+        "navLabels": [
+          "运营总览 项目协同 材料供应 设计师负载 验收与资金",
+          "运营总览",
+          "dashboard",
+          "项目协同",
+          "home",
+          "材料供应",
+          "shop",
+          "设计师负载",
+          "team",
+          "验收与资金",
+          "audit"
+        ],
+        "buttons": [
+          "刷新"
+        ],
+        "links": [],
+        "inputs": [],
+        "tables": [
+          {
+            "headers": [
+              "项目",
+              "地址",
+              "状态",
+              "预算",
+              "创建时间"
+            ],
+            "rowCount": 1,
+            "hasEmptyText": true,
+            "textPreview": "项目 地址 状态 预算 创建时间 暂无数据"
+          }
+        ],
+        "emptyTextCount": 1,
+        "bodyTextPreview": "家装协同运营总览项目协同材料供应设计师负载验收与资金家装产业协同管理平台报价、设计、材料、验收与资金风控一体化工作台API ok 15:47:15系统管理员刷新平台注册用户1装修项目0推进中项目0待处理验收0项目协同项目地址状态预算创建时间暂无数据",
+        "layout": {
+          "viewportWidth": 1632,
+          "viewportHeight": 1000,
+          "scrollWidth": 1632,
+          "scrollHeight": 1000,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89044-service-repair-structure-05-操作-刷新",
+          "label": "操作:刷新",
+          "finalUrl": "http://127.0.0.1:49044/",
+          "title": "家装产业协同管理平台",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89044/probe/codex-service-repair-20260605/may-89044-service-repair-structure-05-操作-刷新.json",
+          "screenshotPath": "",
+          "elementCount": 149,
+          "interactiveCount": 7,
+          "interactiveLabels": [
+            "运营总览 项目协同 材料供应 设计师负载 验收与资金",
+            "运营总览",
+            "项目协同",
+            "材料供应",
+            "设计师负载",
+            "验收与资金",
+            "刷新"
+          ]
+        }
+      },
+      {
+        "label": "导航:材料供应",
+        "url": "http://127.0.0.1:49044/",
+        "title": "家装产业协同管理平台",
+        "headings": [
+          "家装产业协同管理平台"
+        ],
+        "navLabels": [
+          "运营总览 项目协同 材料供应 设计师负载 验收与资金",
+          "运营总览",
+          "dashboard",
+          "项目协同",
+          "home",
+          "材料供应",
+          "shop",
+          "设计师负载",
+          "team",
+          "验收与资金",
+          "audit"
+        ],
+        "buttons": [
+          "刷新"
+        ],
+        "links": [],
+        "inputs": [],
+        "tables": [
+          {
+            "headers": [
+              "材料",
+              "品牌",
+              "分类",
+              "供应商",
+              "库存",
+              "单价"
+            ],
+            "rowCount": 1,
+            "hasEmptyText": true,
+            "textPreview": "材料 品牌 分类 供应商 库存 单价 暂无数据"
+          }
+        ],
+        "emptyTextCount": 1,
+        "bodyTextPreview": "家装协同运营总览项目协同材料供应设计师负载验收与资金家装产业协同管理平台报价、设计、材料、验收与资金风控一体化工作台API ok 15:47:15系统管理员刷新平台注册用户1装修项目0推进中项目0待处理验收0材料供应与库存材料品牌分类供应商库存单价暂无数据",
+        "layout": {
+          "viewportWidth": 1664,
+          "viewportHeight": 1000,
+          "scrollWidth": 1664,
+          "scrollHeight": 1000,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89044-service-repair-structure-06-导航-材料供应",
+          "label": "导航:材料供应",
+          "finalUrl": "http://127.0.0.1:49044/",
+          "title": "家装产业协同管理平台",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89044/probe/codex-service-repair-20260605/may-89044-service-repair-structure-06-导航-材料供应.json",
+          "screenshotPath": "",
+          "elementCount": 148,
+          "interactiveCount": 7,
+          "interactiveLabels": [
+            "运营总览 项目协同 材料供应 设计师负载 验收与资金",
+            "运营总览",
+            "项目协同",
+            "材料供应",
+            "设计师负载",
+            "验收与资金",
+            "刷新"
+          ]
+        }
+      },
+      {
+        "label": "操作:刷新",
+        "url": "http://127.0.0.1:49044/",
+        "title": "家装产业协同管理平台",
+        "headings": [
+          "家装产业协同管理平台"
+        ],
+        "navLabels": [
+          "运营总览 项目协同 材料供应 设计师负载 验收与资金",
+          "运营总览",
+          "dashboard",
+          "项目协同",
+          "home",
+          "材料供应",
+          "shop",
+          "设计师负载",
+          "team",
+          "验收与资金",
+          "audit"
+        ],
+        "buttons": [
+          "刷新"
+        ],
+        "links": [],
+        "inputs": [],
+        "tables": [
+          {
+            "headers": [
+              "材料",
+              "品牌",
+              "分类",
+              "供应商",
+              "库存",
+              "单价"
+            ],
+            "rowCount": 1,
+            "hasEmptyText": true,
+            "textPreview": "材料 品牌 分类 供应商 库存 单价 暂无数据"
+          }
+        ],
+        "emptyTextCount": 1,
+        "bodyTextPreview": "家装协同运营总览项目协同材料供应设计师负载验收与资金家装产业协同管理平台报价、设计、材料、验收与资金风控一体化工作台API ok 15:47:20系统管理员刷新平台注册用户1装修项目0推进中项目0待处理验收0材料供应与库存材料品牌分类供应商库存单价暂无数据",
+        "layout": {
+          "viewportWidth": 1696,
+          "viewportHeight": 1000,
+          "scrollWidth": 1696,
+          "scrollHeight": 1000,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89044-service-repair-structure-07-操作-刷新",
+          "label": "操作:刷新",
+          "finalUrl": "http://127.0.0.1:49044/",
+          "title": "家装产业协同管理平台",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89044/probe/codex-service-repair-20260605/may-89044-service-repair-structure-07-操作-刷新.json",
+          "screenshotPath": "",
+          "elementCount": 150,
+          "interactiveCount": 7,
+          "interactiveLabels": [
+            "运营总览 项目协同 材料供应 设计师负载 验收与资金",
+            "运营总览",
+            "项目协同",
+            "材料供应",
+            "设计师负载",
+            "验收与资金",
+            "刷新"
+          ]
+        }
+      },
+      {
+        "label": "导航:设计师负载",
+        "url": "http://127.0.0.1:49044/",
+        "title": "家装产业协同管理平台",
+        "headings": [
+          "家装产业协同管理平台"
+        ],
+        "navLabels": [
+          "运营总览 项目协同 材料供应 设计师负载 验收与资金",
+          "运营总览",
+          "dashboard",
+          "项目协同",
+          "home",
+          "材料供应",
+          "shop",
+          "设计师负载",
+          "team",
+          "验收与资金",
+          "audit"
+        ],
+        "buttons": [
+          "刷新"
+        ],
+        "links": [],
+        "inputs": [],
+        "tables": [],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "家装协同运营总览项目协同材料供应设计师负载验收与资金家装产业协同管理平台报价、设计、材料、验收与资金风控一体化工作台API ok 15:47:20系统管理员刷新平台注册用户1装修项目0推进中项目0待处理验收0设计师负载暂无设计师负载数据",
+        "layout": {
+          "viewportWidth": 1728,
+          "viewportHeight": 1000,
+          "scrollWidth": 1728,
+          "scrollHeight": 1000,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89044-service-repair-structure-08-导航-设计师负载",
+          "label": "导航:设计师负载",
+          "finalUrl": "http://127.0.0.1:49044/",
+          "title": "家装产业协同管理平台",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89044/probe/codex-service-repair-20260605/may-89044-service-repair-structure-08-导航-设计师负载.json",
+          "screenshotPath": "",
+          "elementCount": 124,
+          "interactiveCount": 7,
+          "interactiveLabels": [
+            "运营总览 项目协同 材料供应 设计师负载 验收与资金",
+            "运营总览",
+            "项目协同",
+            "材料供应",
+            "设计师负载",
+            "验收与资金",
+            "刷新"
+          ]
+        }
+      },
+      {
+        "label": "操作:刷新",
+        "url": "http://127.0.0.1:49044/",
+        "title": "家装产业协同管理平台",
+        "headings": [
+          "家装产业协同管理平台"
+        ],
+        "navLabels": [
+          "运营总览 项目协同 材料供应 设计师负载 验收与资金",
+          "运营总览",
+          "dashboard",
+          "项目协同",
+          "home",
+          "材料供应",
+          "shop",
+          "设计师负载",
+          "team",
+          "验收与资金",
+          "audit"
+        ],
+        "buttons": [
+          "刷新"
+        ],
+        "links": [],
+        "inputs": [],
+        "tables": [],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "家装协同运营总览项目协同材料供应设计师负载验收与资金家装产业协同管理平台报价、设计、材料、验收与资金风控一体化工作台API ok 15:47:25系统管理员刷新平台注册用户1装修项目0推进中项目0待处理验收0设计师负载暂无设计师负载数据",
+        "layout": {
+          "viewportWidth": 1760,
+          "viewportHeight": 1000,
+          "scrollWidth": 1760,
+          "scrollHeight": 1000,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89044-service-repair-structure-09-操作-刷新",
+          "label": "操作:刷新",
+          "finalUrl": "http://127.0.0.1:49044/",
+          "title": "家装产业协同管理平台",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89044/probe/codex-service-repair-20260605/may-89044-service-repair-structure-09-操作-刷新.json",
+          "screenshotPath": "",
+          "elementCount": 126,
+          "interactiveCount": 7,
+          "interactiveLabels": [
+            "运营总览 项目协同 材料供应 设计师负载 验收与资金",
+            "运营总览",
+            "项目协同",
+            "材料供应",
+            "设计师负载",
+            "验收与资金",
+            "刷新"
+          ]
+        }
+      },
+      {
+        "label": "导航:验收与资金",
+        "url": "http://127.0.0.1:49044/",
+        "title": "家装产业协同管理平台",
+        "headings": [
+          "家装产业协同管理平台"
+        ],
+        "navLabels": [
+          "运营总览 项目协同 材料供应 设计师负载 验收与资金",
+          "运营总览",
+          "dashboard",
+          "项目协同",
+          "home",
+          "材料供应",
+          "shop",
+          "设计师负载",
+          "team",
+          "验收与资金",
+          "audit"
+        ],
+        "buttons": [
+          "刷新"
+        ],
+        "links": [],
+        "inputs": [],
+        "tables": [
+          {
+            "headers": [
+              "待验收任务",
+              "活跃项目",
+              "已完工项目",
+              "风控状态"
+            ],
+            "rowCount": 2,
+            "hasEmptyText": false,
+            "textPreview": "待验收任务 0 活跃项目 0 已完工项目 0 风控状态 在线"
+          }
+        ],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "家装协同运营总览项目协同材料供应设计师负载验收与资金家装产业协同管理平台报价、设计、材料、验收与资金风控一体化工作台API ok 15:47:25系统管理员刷新平台注册用户1装修项目0推进中项目0待处理验收0验收与资金风控待验收任务0活跃项目0已完工项目0风控状态在线",
+        "layout": {
+          "viewportWidth": 1792,
+          "viewportHeight": 1000,
+          "scrollWidth": 1792,
+          "scrollHeight": 1000,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89044-service-repair-structure-10-导航-验收与资金",
+          "label": "导航:验收与资金",
+          "finalUrl": "http://127.0.0.1:49044/",
+          "title": "家装产业协同管理平台",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89044/probe/codex-service-repair-20260605/may-89044-service-repair-structure-10-导航-验收与资金.json",
+          "screenshotPath": "",
+          "elementCount": 143,
+          "interactiveCount": 7,
+          "interactiveLabels": [
+            "运营总览 项目协同 材料供应 设计师负载 验收与资金",
+            "运营总览",
+            "项目协同",
+            "材料供应",
+            "设计师负载",
+            "验收与资金",
+            "刷新"
+          ]
+        }
+      },
+      {
+        "label": "操作:刷新",
+        "url": "http://127.0.0.1:49044/",
+        "title": "家装产业协同管理平台",
+        "headings": [
+          "家装产业协同管理平台"
+        ],
+        "navLabels": [
+          "运营总览 项目协同 材料供应 设计师负载 验收与资金",
+          "运营总览",
+          "dashboard",
+          "项目协同",
+          "home",
+          "材料供应",
+          "shop",
+          "设计师负载",
+          "team",
+          "验收与资金",
+          "audit"
+        ],
+        "buttons": [
+          "刷新"
+        ],
+        "links": [],
+        "inputs": [],
+        "tables": [
+          {
+            "headers": [
+              "待验收任务",
+              "活跃项目",
+              "已完工项目",
+              "风控状态"
+            ],
+            "rowCount": 2,
+            "hasEmptyText": false,
+            "textPreview": "待验收任务 0 活跃项目 0 已完工项目 0 风控状态 在线"
+          }
+        ],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "家装协同运营总览项目协同材料供应设计师负载验收与资金家装产业协同管理平台报价、设计、材料、验收与资金风控一体化工作台API ok 15:47:30系统管理员刷新平台注册用户1装修项目0推进中项目0待处理验收0验收与资金风控待验收任务0活跃项目0已完工项目0风控状态在线",
+        "layout": {
+          "viewportWidth": 1824,
+          "viewportHeight": 1000,
+          "scrollWidth": 1824,
+          "scrollHeight": 1000,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89044-service-repair-structure-11-操作-刷新",
+          "label": "操作:刷新",
+          "finalUrl": "http://127.0.0.1:49044/",
+          "title": "家装产业协同管理平台",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89044/probe/codex-service-repair-20260605/may-89044-service-repair-structure-11-操作-刷新.json",
+          "screenshotPath": "",
+          "elementCount": 145,
+          "interactiveCount": 7,
+          "interactiveLabels": [
+            "运营总览 项目协同 材料供应 设计师负载 验收与资金",
+            "运营总览",
+            "项目协同",
+            "材料供应",
+            "设计师负载",
+            "验收与资金",
+            "刷新"
+          ]
+        }
+      }
+    ],
+    "findings": [
+      "接口 POST /api/auth/login 请求失败，页面无法加载对应业务数据。",
+      "项目协同、刷新入口、材料供应 页面只显示空列表或“暂无数据”，缺少可复查的业务记录。",
+      "多个核心页面同时空列表且接口失败，当前系统没有形成“页面操作 - API - SQLite 数据”的闭环。"
+    ],
+    "actionHints": [
+      "修复 /api/auth/login 的前端地址、CORS 或后端路由，并让页面渲染真实业务数据。",
+      "为 项目协同、刷新入口、材料供应 补齐 SQLite 种子数据、列表接口和空状态引导，确保核心记录可新增、可查看、可复查。",
+      "优先打通版本、策略、发布、监控和回滚的核心接口与 SQLite 落库链路。"
+    ],
+    "emptyPages": [
+      "项目协同",
+      "刷新入口",
+      "材料供应"
+    ],
+    "overflowPages": [],
+    "blankPages": [],
+    "apiFailurePaths": [
+      "/api/auth/login"
+    ],
+    "goalTerms": [],
+    "clickedActionDescriptors": [
+      {
+        "nav": "运营总览",
+        "label": "刷新",
+        "ordinal": 0,
+        "unsafe": false
+      },
+      {
+        "nav": "项目协同",
+        "label": "刷新",
+        "ordinal": 0,
+        "unsafe": false
+      },
+      {
+        "nav": "材料供应",
+        "label": "刷新",
+        "ordinal": 0,
+        "unsafe": false
+      },
+      {
+        "nav": "设计师负载",
+        "label": "刷新",
+        "ordinal": 0,
+        "unsafe": false
+      },
+      {
+        "nav": "验收与资金",
+        "label": "刷新",
+        "ordinal": 0,
+        "unsafe": false
+      }
+    ],
+    "secondaryActionClicks": 0,
+    "structureCaptures": [
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89044-service-repair-structure-01-首屏",
+        "label": "首屏",
+        "finalUrl": "http://127.0.0.1:49044/",
+        "title": "家装产业协同管理平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89044/probe/codex-service-repair-20260605/may-89044-service-repair-structure-01-首屏.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89044/probe/codex-service-repair-20260605/may-89044-service-repair-structure-01-首屏.png",
+        "elementCount": 167,
+        "interactiveCount": 7,
+        "interactiveLabels": [
+          "运营总览 项目协同 材料供应 设计师负载 验收与资金",
+          "运营总览",
+          "项目协同",
+          "材料供应",
+          "设计师负载",
+          "验收与资金",
+          "刷新"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89044-service-repair-structure-02-导航-运营总览",
+        "label": "导航:运营总览",
+        "finalUrl": "http://127.0.0.1:49044/",
+        "title": "家装产业协同管理平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89044/probe/codex-service-repair-20260605/may-89044-service-repair-structure-02-导航-运营总览.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89044/probe/codex-service-repair-20260605/may-89044-service-repair-structure-02-导航-运营总览.png",
+        "elementCount": 167,
+        "interactiveCount": 7,
+        "interactiveLabels": [
+          "运营总览 项目协同 材料供应 设计师负载 验收与资金",
+          "运营总览",
+          "项目协同",
+          "材料供应",
+          "设计师负载",
+          "验收与资金",
+          "刷新"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89044-service-repair-structure-03-操作-刷新",
+        "label": "操作:刷新",
+        "finalUrl": "http://127.0.0.1:49044/",
+        "title": "家装产业协同管理平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89044/probe/codex-service-repair-20260605/may-89044-service-repair-structure-03-操作-刷新.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89044/probe/codex-service-repair-20260605/may-89044-service-repair-structure-03-操作-刷新.png",
+        "elementCount": 169,
+        "interactiveCount": 7,
+        "interactiveLabels": [
+          "运营总览 项目协同 材料供应 设计师负载 验收与资金",
+          "运营总览",
+          "项目协同",
+          "材料供应",
+          "设计师负载",
+          "验收与资金",
+          "刷新"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89044-service-repair-structure-04-导航-项目协同",
+        "label": "导航:项目协同",
+        "finalUrl": "http://127.0.0.1:49044/",
+        "title": "家装产业协同管理平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89044/probe/codex-service-repair-20260605/may-89044-service-repair-structure-04-导航-项目协同.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89044/probe/codex-service-repair-20260605/may-89044-service-repair-structure-04-导航-项目协同.png",
+        "elementCount": 147,
+        "interactiveCount": 7,
+        "interactiveLabels": [
+          "运营总览 项目协同 材料供应 设计师负载 验收与资金",
+          "运营总览",
+          "项目协同",
+          "材料供应",
+          "设计师负载",
+          "验收与资金",
+          "刷新"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89044-service-repair-structure-05-操作-刷新",
+        "label": "操作:刷新",
+        "finalUrl": "http://127.0.0.1:49044/",
+        "title": "家装产业协同管理平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89044/probe/codex-service-repair-20260605/may-89044-service-repair-structure-05-操作-刷新.json",
+        "screenshotPath": "",
+        "elementCount": 149,
+        "interactiveCount": 7,
+        "interactiveLabels": [
+          "运营总览 项目协同 材料供应 设计师负载 验收与资金",
+          "运营总览",
+          "项目协同",
+          "材料供应",
+          "设计师负载",
+          "验收与资金",
+          "刷新"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89044-service-repair-structure-06-导航-材料供应",
+        "label": "导航:材料供应",
+        "finalUrl": "http://127.0.0.1:49044/",
+        "title": "家装产业协同管理平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89044/probe/codex-service-repair-20260605/may-89044-service-repair-structure-06-导航-材料供应.json",
+        "screenshotPath": "",
+        "elementCount": 148,
+        "interactiveCount": 7,
+        "interactiveLabels": [
+          "运营总览 项目协同 材料供应 设计师负载 验收与资金",
+          "运营总览",
+          "项目协同",
+          "材料供应",
+          "设计师负载",
+          "验收与资金",
+          "刷新"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89044-service-repair-structure-07-操作-刷新",
+        "label": "操作:刷新",
+        "finalUrl": "http://127.0.0.1:49044/",
+        "title": "家装产业协同管理平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89044/probe/codex-service-repair-20260605/may-89044-service-repair-structure-07-操作-刷新.json",
+        "screenshotPath": "",
+        "elementCount": 150,
+        "interactiveCount": 7,
+        "interactiveLabels": [
+          "运营总览 项目协同 材料供应 设计师负载 验收与资金",
+          "运营总览",
+          "项目协同",
+          "材料供应",
+          "设计师负载",
+          "验收与资金",
+          "刷新"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89044-service-repair-structure-08-导航-设计师负载",
+        "label": "导航:设计师负载",
+        "finalUrl": "http://127.0.0.1:49044/",
+        "title": "家装产业协同管理平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89044/probe/codex-service-repair-20260605/may-89044-service-repair-structure-08-导航-设计师负载.json",
+        "screenshotPath": "",
+        "elementCount": 124,
+        "interactiveCount": 7,
+        "interactiveLabels": [
+          "运营总览 项目协同 材料供应 设计师负载 验收与资金",
+          "运营总览",
+          "项目协同",
+          "材料供应",
+          "设计师负载",
+          "验收与资金",
+          "刷新"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89044-service-repair-structure-09-操作-刷新",
+        "label": "操作:刷新",
+        "finalUrl": "http://127.0.0.1:49044/",
+        "title": "家装产业协同管理平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89044/probe/codex-service-repair-20260605/may-89044-service-repair-structure-09-操作-刷新.json",
+        "screenshotPath": "",
+        "elementCount": 126,
+        "interactiveCount": 7,
+        "interactiveLabels": [
+          "运营总览 项目协同 材料供应 设计师负载 验收与资金",
+          "运营总览",
+          "项目协同",
+          "材料供应",
+          "设计师负载",
+          "验收与资金",
+          "刷新"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89044-service-repair-structure-10-导航-验收与资金",
+        "label": "导航:验收与资金",
+        "finalUrl": "http://127.0.0.1:49044/",
+        "title": "家装产业协同管理平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89044/probe/codex-service-repair-20260605/may-89044-service-repair-structure-10-导航-验收与资金.json",
+        "screenshotPath": "",
+        "elementCount": 143,
+        "interactiveCount": 7,
+        "interactiveLabels": [
+          "运营总览 项目协同 材料供应 设计师负载 验收与资金",
+          "运营总览",
+          "项目协同",
+          "材料供应",
+          "设计师负载",
+          "验收与资金",
+          "刷新"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89044-service-repair-structure-11-操作-刷新",
+        "label": "操作:刷新",
+        "finalUrl": "http://127.0.0.1:49044/",
+        "title": "家装产业协同管理平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89044/probe/codex-service-repair-20260605/may-89044-service-repair-structure-11-操作-刷新.json",
+        "screenshotPath": "",
+        "elementCount": 145,
+        "interactiveCount": 7,
+        "interactiveLabels": [
+          "运营总览 项目协同 材料供应 设计师负载 验收与资金",
+          "运营总览",
+          "项目协同",
+          "材料供应",
+          "设计师负载",
+          "验收与资金",
+          "刷新"
+        ]
+      }
+    ],
+    "representativeScreenshotUrl": "http://127.0.0.1:49044/",
+    "representativeScreenshotLabel": "项目协同"
+  },
+  "websiteStructureCapture": {
+    "module": "website_structure_capture",
+    "captureCount": 11,
+    "captures": [
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89044-service-repair-structure-01-首屏",
+        "label": "首屏",
+        "finalUrl": "http://127.0.0.1:49044/",
+        "title": "家装产业协同管理平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89044/probe/codex-service-repair-20260605/may-89044-service-repair-structure-01-首屏.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89044/probe/codex-service-repair-20260605/may-89044-service-repair-structure-01-首屏.png",
+        "elementCount": 167,
+        "interactiveCount": 7,
+        "interactiveLabels": [
+          "运营总览 项目协同 材料供应 设计师负载 验收与资金",
+          "运营总览",
+          "项目协同",
+          "材料供应",
+          "设计师负载",
+          "验收与资金",
+          "刷新"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89044-service-repair-structure-02-导航-运营总览",
+        "label": "导航:运营总览",
+        "finalUrl": "http://127.0.0.1:49044/",
+        "title": "家装产业协同管理平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89044/probe/codex-service-repair-20260605/may-89044-service-repair-structure-02-导航-运营总览.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89044/probe/codex-service-repair-20260605/may-89044-service-repair-structure-02-导航-运营总览.png",
+        "elementCount": 167,
+        "interactiveCount": 7,
+        "interactiveLabels": [
+          "运营总览 项目协同 材料供应 设计师负载 验收与资金",
+          "运营总览",
+          "项目协同",
+          "材料供应",
+          "设计师负载",
+          "验收与资金",
+          "刷新"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89044-service-repair-structure-03-操作-刷新",
+        "label": "操作:刷新",
+        "finalUrl": "http://127.0.0.1:49044/",
+        "title": "家装产业协同管理平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89044/probe/codex-service-repair-20260605/may-89044-service-repair-structure-03-操作-刷新.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89044/probe/codex-service-repair-20260605/may-89044-service-repair-structure-03-操作-刷新.png",
+        "elementCount": 169,
+        "interactiveCount": 7,
+        "interactiveLabels": [
+          "运营总览 项目协同 材料供应 设计师负载 验收与资金",
+          "运营总览",
+          "项目协同",
+          "材料供应",
+          "设计师负载",
+          "验收与资金",
+          "刷新"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89044-service-repair-structure-04-导航-项目协同",
+        "label": "导航:项目协同",
+        "finalUrl": "http://127.0.0.1:49044/",
+        "title": "家装产业协同管理平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89044/probe/codex-service-repair-20260605/may-89044-service-repair-structure-04-导航-项目协同.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89044/probe/codex-service-repair-20260605/may-89044-service-repair-structure-04-导航-项目协同.png",
+        "elementCount": 147,
+        "interactiveCount": 7,
+        "interactiveLabels": [
+          "运营总览 项目协同 材料供应 设计师负载 验收与资金",
+          "运营总览",
+          "项目协同",
+          "材料供应",
+          "设计师负载",
+          "验收与资金",
+          "刷新"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89044-service-repair-structure-05-操作-刷新",
+        "label": "操作:刷新",
+        "finalUrl": "http://127.0.0.1:49044/",
+        "title": "家装产业协同管理平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89044/probe/codex-service-repair-20260605/may-89044-service-repair-structure-05-操作-刷新.json",
+        "screenshotPath": "",
+        "elementCount": 149,
+        "interactiveCount": 7,
+        "interactiveLabels": [
+          "运营总览 项目协同 材料供应 设计师负载 验收与资金",
+          "运营总览",
+          "项目协同",
+          "材料供应",
+          "设计师负载",
+          "验收与资金",
+          "刷新"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89044-service-repair-structure-06-导航-材料供应",
+        "label": "导航:材料供应",
+        "finalUrl": "http://127.0.0.1:49044/",
+        "title": "家装产业协同管理平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89044/probe/codex-service-repair-20260605/may-89044-service-repair-structure-06-导航-材料供应.json",
+        "screenshotPath": "",
+        "elementCount": 148,
+        "interactiveCount": 7,
+        "interactiveLabels": [
+          "运营总览 项目协同 材料供应 设计师负载 验收与资金",
+          "运营总览",
+          "项目协同",
+          "材料供应",
+          "设计师负载",
+          "验收与资金",
+          "刷新"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89044-service-repair-structure-07-操作-刷新",
+        "label": "操作:刷新",
+        "finalUrl": "http://127.0.0.1:49044/",
+        "title": "家装产业协同管理平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89044/probe/codex-service-repair-20260605/may-89044-service-repair-structure-07-操作-刷新.json",
+        "screenshotPath": "",
+        "elementCount": 150,
+        "interactiveCount": 7,
+        "interactiveLabels": [
+          "运营总览 项目协同 材料供应 设计师负载 验收与资金",
+          "运营总览",
+          "项目协同",
+          "材料供应",
+          "设计师负载",
+          "验收与资金",
+          "刷新"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89044-service-repair-structure-08-导航-设计师负载",
+        "label": "导航:设计师负载",
+        "finalUrl": "http://127.0.0.1:49044/",
+        "title": "家装产业协同管理平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89044/probe/codex-service-repair-20260605/may-89044-service-repair-structure-08-导航-设计师负载.json",
+        "screenshotPath": "",
+        "elementCount": 124,
+        "interactiveCount": 7,
+        "interactiveLabels": [
+          "运营总览 项目协同 材料供应 设计师负载 验收与资金",
+          "运营总览",
+          "项目协同",
+          "材料供应",
+          "设计师负载",
+          "验收与资金",
+          "刷新"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89044-service-repair-structure-09-操作-刷新",
+        "label": "操作:刷新",
+        "finalUrl": "http://127.0.0.1:49044/",
+        "title": "家装产业协同管理平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89044/probe/codex-service-repair-20260605/may-89044-service-repair-structure-09-操作-刷新.json",
+        "screenshotPath": "",
+        "elementCount": 126,
+        "interactiveCount": 7,
+        "interactiveLabels": [
+          "运营总览 项目协同 材料供应 设计师负载 验收与资金",
+          "运营总览",
+          "项目协同",
+          "材料供应",
+          "设计师负载",
+          "验收与资金",
+          "刷新"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89044-service-repair-structure-10-导航-验收与资金",
+        "label": "导航:验收与资金",
+        "finalUrl": "http://127.0.0.1:49044/",
+        "title": "家装产业协同管理平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89044/probe/codex-service-repair-20260605/may-89044-service-repair-structure-10-导航-验收与资金.json",
+        "screenshotPath": "",
+        "elementCount": 143,
+        "interactiveCount": 7,
+        "interactiveLabels": [
+          "运营总览 项目协同 材料供应 设计师负载 验收与资金",
+          "运营总览",
+          "项目协同",
+          "材料供应",
+          "设计师负载",
+          "验收与资金",
+          "刷新"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89044-service-repair-structure-11-操作-刷新",
+        "label": "操作:刷新",
+        "finalUrl": "http://127.0.0.1:49044/",
+        "title": "家装产业协同管理平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89044/probe/codex-service-repair-20260605/may-89044-service-repair-structure-11-操作-刷新.json",
+        "screenshotPath": "",
+        "elementCount": 145,
+        "interactiveCount": 7,
+        "interactiveLabels": [
+          "运营总览 项目协同 材料供应 设计师负载 验收与资金",
+          "运营总览",
+          "项目协同",
+          "材料供应",
+          "设计师负载",
+          "验收与资金",
+          "刷新"
+        ]
+      }
+    ]
+  },
+  "screenshotMetrics": {
+    "width": 1856,
+    "height": 1000,
+    "scrollWidth": 1824,
+    "scrollHeight": 1000
+  },
+  "initialBodyTextPreview": "",
+  "bodyTextPreview": "家装协同\n运营总览\n项目协同\n材料供应\n设计师负载\n验收与资金\n家装产业协同管理平台\n报价、设计、材料、验收与资金风控一体化工作台\nAPI ok 15:47:30\n系统管理员\n刷新\n平台注册用户\n1\n装修项目\n0\n推进中项目\n0\n待处理验收\n0\n验收与资金风控\n待验收任务\t0\t活跃项目\t0\n已完工项目\t0\t风控状态\t在线",
+  "apiBase": "http://127.0.0.1:59044",
+  "businessGoalPreview": "家装产业协同管理平台：运营总览、项目协同、材料供应、设计师负载、验收与资金风控",
+  "apiResponses": [
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:59044/api/health"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:59044/api/health"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:59044/api/health"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:59044/api/health"
+    },
+    {
+      "method": "POST",
+      "status": 200,
+      "url": "http://127.0.0.1:59044/api/auth/login"
+    },
+    {
+      "method": "POST",
+      "status": 200,
+      "url": "http://127.0.0.1:59044/api/auth/login"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:59044/api/auth/me"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:59044/api/auth/me"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:59044/api/admin/dashboard"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:59044/api/admin/designer-heatmap"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:59044/api/admin/dashboard"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:59044/api/owners?pageSize=6"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:59044/api/materials?pageSize=8"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:59044/api/owners?pageSize=6"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:59044/api/materials?pageSize=8"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:59044/api/admin/designer-heatmap"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:59044/api/health"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:59044/api/auth/me"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:59044/api/admin/dashboard"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:59044/api/owners?pageSize=6"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:59044/api/materials?pageSize=8"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:59044/api/admin/designer-heatmap"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:59044/api/health"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:59044/api/auth/me"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:59044/api/admin/dashboard"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:59044/api/owners?pageSize=6"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:59044/api/materials?pageSize=8"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:59044/api/admin/designer-heatmap"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:59044/api/health"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:59044/api/auth/me"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:59044/api/admin/dashboard"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:59044/api/owners?pageSize=6"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:59044/api/materials?pageSize=8"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:59044/api/admin/designer-heatmap"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:59044/api/health"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:59044/api/auth/me"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:59044/api/admin/dashboard"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:59044/api/owners?pageSize=6"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:59044/api/materials?pageSize=8"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:59044/api/admin/designer-heatmap"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:59044/api/health"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:59044/api/auth/me"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:59044/api/admin/dashboard"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:59044/api/owners?pageSize=6"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:59044/api/materials?pageSize=8"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:59044/api/admin/designer-heatmap"
+    }
+  ],
+  "apiChecks": [
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59044/api/health",
+      "path": "/api/health",
+      "status": 200,
+      "ok": true,
+      "bodyPreview": "{\"status\":\"ok\",\"timestamp\":\"2026-06-05T12:47:33.001Z\"}"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59044/api/auth/me",
+      "path": "/api/auth/me",
+      "status": 200,
+      "ok": true,
+      "bodyPreview": "{\"success\":true,\"data\":{\"user\":{\"id\":1,\"username\":\"admin\",\"role\":\"admin\",\"name\":\"系统管理员\",\"phone\":null,\"email\":null,\"avatar\":null,\"created_at\":\"2026-06-05 12:40:59\"},\"roleInfo\":null}}"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59044/api/admin/dashboard",
+      "path": "/api/admin/dashboard",
+      "status": 200,
+      "ok": true,
+      "bodyPreview": "{\"success\":true,\"data\":{\"usersCount\":1,\"projectsCount\":0,\"activeProjects\":0,\"pendingInspections\":0,\"ownersCount\":0,\"designersCount\":0,\"companiesCount\":0,\"suppliersCount\":0,\"completedProjects\":0}}"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59044/api/admin/designer-heatmap",
+      "path": "/api/admin/designer-heatmap",
+      "status": 200,
+      "ok": true,
+      "bodyPreview": "{\"success\":true,\"data\":[]}"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59044/api/owners?pageSize=6",
+      "path": "/api/owners?pageSize=6",
+      "status": 200,
+      "ok": true,
+      "bodyPreview": "{\"success\":true,\"data\":{\"list\":[],\"total\":0,\"page\":1,\"pageSize\":6}}"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59044/api/materials?pageSize=8",
+      "path": "/api/materials?pageSize=8",
+      "status": 200,
+      "ok": true,
+      "bodyPreview": "{\"success\":true,\"data\":{\"list\":[],\"total\":0,\"page\":1,\"pageSize\":8}}"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59044/api/users/profile",
+      "path": "/api/users/profile",
+      "status": 404,
+      "ok": false,
+      "bodyPreview": "<!DOCTYPE html>\n<html lang=\"en\">\n<head>\n<meta charset=\"utf-8\">\n<title>Error</title>\n</head>\n<body>\n<pre>Cannot GET /api/users/profile</pre>\n</body>\n</html>\n"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59044/api/user/profile",
+      "path": "/api/user/profile",
+      "status": 404,
+      "ok": false,
+      "bodyPreview": "<!DOCTYPE html>\n<html lang=\"en\">\n<head>\n<meta charset=\"utf-8\">\n<title>Error</title>\n</head>\n<body>\n<pre>Cannot GET /api/user/profile</pre>\n</body>\n</html>\n"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59044/api/admin/stats",
+      "path": "/api/admin/stats",
+      "status": 404,
+      "ok": false,
+      "bodyPreview": "<!DOCTYPE html>\n<html lang=\"en\">\n<head>\n<meta charset=\"utf-8\">\n<title>Error</title>\n</head>\n<body>\n<pre>Cannot GET /api/admin/stats</pre>\n</body>\n</html>\n"
+    }
+  ],
+  "dialogs": [],
+  "consoleMessages": [
+    {
+      "type": "debug",
+      "text": "[vite] connecting...",
+      "location": {
+        "url": "http://127.0.0.1:49044/@vite/client",
+        "lineNumber": 494,
+        "columnNumber": 8
+      }
+    },
+    {
+      "type": "debug",
+      "text": "[vite] connected.",
+      "location": {
+        "url": "http://127.0.0.1:49044/@vite/client",
+        "lineNumber": 617,
+        "columnNumber": 14
+      }
+    },
+    {
+      "type": "info",
+      "text": "%cDownload the React DevTools for a better development experience: https://reactjs.org/link/react-devtools font-weight:bold",
+      "location": {
+        "url": "http://127.0.0.1:49044/node_modules/.vite/deps/chunk-PJEEZAML.js?v=0b9d6a40",
+        "lineNumber": 21550,
+        "columnNumber": 24
+      }
+    },
+    {
+      "type": "debug",
+      "text": "[vite] connecting...",
+      "location": {
+        "url": "http://127.0.0.1:49044/@vite/client",
+        "lineNumber": 494,
+        "columnNumber": 8
+      }
+    },
+    {
+      "type": "debug",
+      "text": "[vite] connected.",
+      "location": {
+        "url": "http://127.0.0.1:49044/@vite/client",
+        "lineNumber": 617,
+        "columnNumber": 14
+      }
+    },
+    {
+      "type": "debug",
+      "text": "[vite] connecting...",
+      "location": {
+        "url": "http://127.0.0.1:49044/@vite/client",
+        "lineNumber": 494,
+        "columnNumber": 8
+      }
+    },
+    {
+      "type": "debug",
+      "text": "[vite] connected.",
+      "location": {
+        "url": "http://127.0.0.1:49044/@vite/client",
+        "lineNumber": 617,
+        "columnNumber": 14
+      }
+    },
+    {
+      "type": "info",
+      "text": "%cDownload the React DevTools for a better development experience: https://reactjs.org/link/react-devtools font-weight:bold",
+      "location": {
+        "url": "http://127.0.0.1:49044/node_modules/.vite/deps/chunk-PJEEZAML.js?v=15d7ac1a",
+        "lineNumber": 21550,
+        "columnNumber": 24
+      }
+    },
+    {
+      "type": "warning",
+      "text": "⚠️ React Router Future Flag Warning: React Router will begin wrapping state updates in `React.startTransition` in v7. You can use the `v7_startTransition` future flag to opt-in early. For more information, see https://reactrouter.com/v6/upgrading/future#v7_starttransition.",
+      "location": {
+        "url": "http://127.0.0.1:49044/node_modules/.vite/deps/react-router-dom.js?v=15d7ac1a",
+        "lineNumber": 4426,
+        "columnNumber": 12
+      }
+    },
+    {
+      "type": "warning",
+      "text": "⚠️ React Router Future Flag Warning: Relative route resolution within Splat routes is changing in v7. You can use the `v7_relativeSplatPath` future flag to opt-in early. For more information, see https://reactrouter.com/v6/upgrading/future#v7_relativesplatpath.",
+      "location": {
+        "url": "http://127.0.0.1:49044/node_modules/.vite/deps/react-router-dom.js?v=15d7ac1a",
+        "lineNumber": 4426,
+        "columnNumber": 12
+      }
+    },
+    {
+      "type": "error",
+      "text": "SyntaxError: The requested module '/src/utils/auth.ts' does not provide an export named 'getAuth'",
+      "location": {
+        "url": "http://127.0.0.1:49044/@vite/client",
+        "lineNumber": 173,
+        "columnNumber": 18
+      }
+    },
+    {
+      "type": "error",
+      "text": "[hmr] Failed to reload /src/App.tsx. This could be due to syntax errors or importing non-existent modules. (see errors above)",
+      "location": {
+        "url": "http://127.0.0.1:49044/@vite/client",
+        "lineNumber": 175,
+        "columnNumber": 16
+      }
+    },
+    {
+      "type": "debug",
+      "text": "[vite] hot updated: /src/App.tsx",
+      "location": {
+        "url": "http://127.0.0.1:49044/@vite/client",
+        "lineNumber": 222,
+        "columnNumber": 18
+      }
+    },
+    {
+      "type": "error",
+      "text": "SyntaxError: The requested module '/src/utils/auth.ts' does not provide an export named 'getAuth'",
+      "location": {
+        "url": "http://127.0.0.1:49044/@vite/client",
+        "lineNumber": 173,
+        "columnNumber": 18
+      }
+    },
+    {
+      "type": "error",
+      "text": "[hmr] Failed to reload /src/App.tsx. This could be due to syntax errors or importing non-existent modules. (see errors above)",
+      "location": {
+        "url": "http://127.0.0.1:49044/@vite/client",
+        "lineNumber": 175,
+        "columnNumber": 16
+      }
+    },
+    {
+      "type": "debug",
+      "text": "[vite] hot updated: /src/App.tsx",
+      "location": {
+        "url": "http://127.0.0.1:49044/@vite/client",
+        "lineNumber": 222,
+        "columnNumber": 18
+      }
+    }
+  ],
+  "requestFailures": [
+    {
+      "method": "POST",
+      "url": "http://127.0.0.1:59044/api/auth/login",
+      "errorText": "net::ERR_ABORTED"
+    },
+    {
+      "method": "POST",
+      "url": "http://127.0.0.1:59044/api/auth/login",
+      "errorText": "net::ERR_ABORTED"
+    }
+  ],
+  "responseErrors": []
+}

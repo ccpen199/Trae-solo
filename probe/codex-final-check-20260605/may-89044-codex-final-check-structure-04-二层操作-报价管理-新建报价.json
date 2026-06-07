@@ -1,0 +1,8679 @@
+{
+  "meta": {
+    "title": "家装产业协同管理平台",
+    "url": "http://127.0.0.1:49044/quotations",
+    "timestamp": "2026-06-05T16:33:01.716Z",
+    "viewport": {
+      "width": 1600,
+      "height": 1080
+    },
+    "document": {
+      "scrollWidth": 1600,
+      "scrollHeight": 1096
+    }
+  },
+  "text": {
+    "bodyPreview": "家装协同平台仪表盘设计方案报价管理验收管理材料管理项目管理管理面板家装产业协同管理平台系统管理员（管理员）退出装修报价管理新建报价选择项目状态筛选对比选中 (0)ID标题装企总价材料费人工费状态创建时间操作1装修报价A靠谱装修公司¥125,000¥88,000¥32,000已提交2026-06-05详情对比预警共 1 条110 条/页 新建报价所属项目请选择项目报价标题装企名称取 消确 定",
+    "emptyTextCount": 0
+  },
+  "domTree": {
+    "tag": "html",
+    "id": "",
+    "className": "",
+    "selectorHint": "html",
+    "text": "家装协同平台 仪表盘 设计方案 报价管理 验收管理 材料管理 项目管理 管理面板 家装产业协同管理平台 系统管理员（管理员） 退出 装修报价管理 新建报价 选择",
+    "visible": true,
+    "childCount": 2,
+    "children": [
+      {
+        "tag": "head",
+        "id": "",
+        "className": "",
+        "selectorHint": "head",
+        "text": ":where(.css-dev-only-do-not-override-7zmxdp)[class^=\"ant-form\"],:where(.css-dev-",
+        "visible": false,
+        "childCount": 51,
+        "children": []
+      },
+      {
+        "tag": "body",
+        "id": "",
+        "className": "",
+        "selectorHint": "body",
+        "text": "家装协同平台 仪表盘 设计方案 报价管理 验收管理 材料管理 项目管理 管理面板 家装产业协同管理平台 系统管理员（管理员） 退出 装修报价管理 新建报价 选择",
+        "visible": true,
+        "childCount": 3,
+        "children": [
+          {
+            "tag": "div",
+            "id": "root",
+            "className": "",
+            "selectorHint": "div#root",
+            "text": "家装协同平台 仪表盘 设计方案 报价管理 验收管理 材料管理 项目管理 管理面板 家装产业协同管理平台 系统管理员（管理员） 退出 装修报价管理 新建报价 选择",
+            "visible": true,
+            "childCount": 1,
+            "children": [
+              {
+                "tag": "div",
+                "id": "",
+                "className": "ant-layout ant-layout-has-sider css-dev-only-do-not-override-7zmxdp",
+                "selectorHint": "div.ant-layout.ant-layout-has-sider.css-dev-only-do-not-override-7zmxdp",
+                "text": "家装协同平台 仪表盘 设计方案 报价管理 验收管理 材料管理 项目管理 管理面板 家装产业协同管理平台 系统管理员（管理员） 退出 装修报价管理 新建报价 选择",
+                "visible": true,
+                "childCount": 2,
+                "children": [
+                  {
+                    "tag": "aside",
+                    "id": "",
+                    "className": "ant-layout-sider ant-layout-sider-dark css-dev-only-do-not-override-7zmxdp",
+                    "selectorHint": "aside.ant-layout-sider.ant-layout-sider-dark.css-dev-only-do-not-override-7zmxdp",
+                    "text": "家装协同平台 仪表盘 设计方案 报价管理 验收管理 材料管理 项目管理 管理面板",
+                    "visible": true,
+                    "childCount": 1,
+                    "children": [
+                      {
+                        "tag": "div",
+                        "id": "",
+                        "className": "ant-layout-sider-children",
+                        "selectorHint": "div.ant-layout-sider-children",
+                        "text": "家装协同平台 仪表盘 设计方案 报价管理 验收管理 材料管理 项目管理 管理面板",
+                        "visible": true,
+                        "childCount": 2,
+                        "children": []
+                      }
+                    ]
+                  },
+                  {
+                    "tag": "div",
+                    "id": "",
+                    "className": "ant-layout css-dev-only-do-not-override-7zmxdp",
+                    "selectorHint": "div.ant-layout.css-dev-only-do-not-override-7zmxdp",
+                    "text": "家装产业协同管理平台 系统管理员（管理员） 退出 装修报价管理 新建报价 选择项目 状态筛选 对比选中 (0) ID 标题 装企 总价 材料费 人工费 状态 创",
+                    "visible": true,
+                    "childCount": 2,
+                    "children": [
+                      {
+                        "tag": "header",
+                        "id": "",
+                        "className": "ant-layout-header css-dev-only-do-not-override-7zmxdp",
+                        "selectorHint": "header.ant-layout-header.css-dev-only-do-not-override-7zmxdp",
+                        "text": "家装产业协同管理平台 系统管理员（管理员） 退出",
+                        "visible": true,
+                        "childCount": 2,
+                        "children": []
+                      },
+                      {
+                        "tag": "main",
+                        "id": "",
+                        "className": "ant-layout-content css-dev-only-do-not-override-7zmxdp",
+                        "selectorHint": "main.ant-layout-content.css-dev-only-do-not-override-7zmxdp",
+                        "text": "装修报价管理 新建报价 选择项目 状态筛选 对比选中 (0) ID 标题 装企 总价 材料费 人工费 状态 创建时间 操作 1 装修报价A 靠谱装修公司 ¥12",
+                        "visible": true,
+                        "childCount": 1,
+                        "children": []
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "tag": "div",
+            "id": "",
+            "className": "",
+            "selectorHint": "div",
+            "text": "新建报价 所属项目 请选择项目 报价标题 装企名称 取 消 确 定",
+            "visible": false,
+            "childCount": 1,
+            "children": [
+              {
+                "tag": "div",
+                "id": "",
+                "className": "ant-modal-root css-dev-only-do-not-override-7zmxdp",
+                "selectorHint": "div.ant-modal-root.css-dev-only-do-not-override-7zmxdp",
+                "text": "新建报价 所属项目 请选择项目 报价标题 装企名称 取 消 确 定",
+                "visible": false,
+                "childCount": 2,
+                "children": [
+                  {
+                    "tag": "div",
+                    "id": "",
+                    "className": "ant-modal-mask",
+                    "selectorHint": "div.ant-modal-mask",
+                    "text": "",
+                    "visible": true,
+                    "childCount": 0,
+                    "children": []
+                  },
+                  {
+                    "tag": "div",
+                    "id": "",
+                    "className": "ant-modal-wrap",
+                    "selectorHint": "div.ant-modal-wrap",
+                    "text": "新建报价 所属项目 请选择项目 报价标题 装企名称 取 消 确 定",
+                    "visible": true,
+                    "childCount": 1,
+                    "children": [
+                      {
+                        "tag": "div",
+                        "id": "",
+                        "className": "ant-modal css-dev-only-do-not-override-7zmxdp",
+                        "selectorHint": "div.ant-modal.css-dev-only-do-not-override-7zmxdp",
+                        "text": "新建报价 所属项目 请选择项目 报价标题 装企名称 取 消 确 定",
+                        "visible": true,
+                        "childCount": 2,
+                        "children": []
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  "allElements": [
+    {
+      "index": 0,
+      "tag": "html",
+      "id": "",
+      "className": "",
+      "selectorHint": "html",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "家装协同平台 仪表盘 设计方案 报价管理 验收管理 材料管理 项目管理 管理面板 家装产业协同管理平台 系统管理员（管理员） 退出 装修报价管理 新建报价 选择项目 状态筛选 对比选中 (0) ID 标题 装企 总价 材料费 人工费 状态 创建时间 操作 1 装修报价A 靠谱装修公司 ¥125,000 ¥88,000 ¥32,000 已提交 2026-06-",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 2,
+      "rect": {
+        "x": 0,
+        "y": 0,
+        "width": 1600,
+        "height": 1096
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 1,
+      "tag": "head",
+      "id": "",
+      "className": "",
+      "selectorHint": "head",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": ":where(.css-dev-only-do-not-override-7zmxdp)[class^=\"ant-form\"],:where(.css-dev-only-do-not-override-7zmxdp)[class*=\" ant-form\"]{font-family:-apple-system,BlinkMacSystemFont,'Segoe",
+      "href": "",
+      "disabled": false,
+      "visible": false,
+      "childCount": 51,
+      "rect": {
+        "x": 0,
+        "y": 0,
+        "width": 0,
+        "height": 0
+      },
+      "style": {
+        "display": "none",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 2,
+      "tag": "meta",
+      "id": "",
+      "className": "",
+      "selectorHint": "meta",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "",
+      "href": "",
+      "disabled": false,
+      "visible": false,
+      "childCount": 0,
+      "rect": {
+        "x": 0,
+        "y": 0,
+        "width": 0,
+        "height": 0
+      },
+      "style": {
+        "display": "none",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 3,
+      "tag": "link",
+      "id": "",
+      "className": "",
+      "selectorHint": "link",
+      "name": "",
+      "type": "image/svg+xml",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "",
+      "href": "/vite.svg",
+      "disabled": false,
+      "visible": false,
+      "childCount": 0,
+      "rect": {
+        "x": 0,
+        "y": 0,
+        "width": 0,
+        "height": 0
+      },
+      "style": {
+        "display": "none",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 4,
+      "tag": "meta",
+      "id": "",
+      "className": "",
+      "selectorHint": "meta",
+      "name": "viewport",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "",
+      "href": "",
+      "disabled": false,
+      "visible": false,
+      "childCount": 0,
+      "rect": {
+        "x": 0,
+        "y": 0,
+        "width": 0,
+        "height": 0
+      },
+      "style": {
+        "display": "none",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 5,
+      "tag": "title",
+      "id": "",
+      "className": "",
+      "selectorHint": "title",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "家装产业协同管理平台",
+      "href": "",
+      "disabled": false,
+      "visible": false,
+      "childCount": 0,
+      "rect": {
+        "x": 0,
+        "y": 0,
+        "width": 0,
+        "height": 0
+      },
+      "style": {
+        "display": "none",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 6,
+      "tag": "body",
+      "id": "",
+      "className": "",
+      "selectorHint": "body",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "家装协同平台 仪表盘 设计方案 报价管理 验收管理 材料管理 项目管理 管理面板 家装产业协同管理平台 系统管理员（管理员） 退出 装修报价管理 新建报价 选择项目 状态筛选 对比选中 (0) ID 标题 装企 总价 材料费 人工费 状态 创建时间 操作 1 装修报价A 靠谱装修公司 ¥125,000 ¥88,000 ¥32,000 已提交 2026-06-",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 3,
+      "rect": {
+        "x": 8,
+        "y": 8,
+        "width": 1584,
+        "height": 1080
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 7,
+      "tag": "div",
+      "id": "root",
+      "className": "",
+      "selectorHint": "div#root",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "家装协同平台 仪表盘 设计方案 报价管理 验收管理 材料管理 项目管理 管理面板 家装产业协同管理平台 系统管理员（管理员） 退出 装修报价管理 新建报价 选择项目 状态筛选 对比选中 (0) ID 标题 装企 总价 材料费 人工费 状态 创建时间 操作 1 装修报价A 靠谱装修公司 ¥125,000 ¥88,000 ¥32,000 已提交 2026-06-",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 1,
+      "rect": {
+        "x": 8,
+        "y": 8,
+        "width": 1584,
+        "height": 1080
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 8,
+      "tag": "div",
+      "id": "",
+      "className": "ant-layout ant-layout-has-sider css-dev-only-do-not-override-7zmxdp",
+      "selectorHint": "div.ant-layout.ant-layout-has-sider.css-dev-only-do-not-override-7zmxdp",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "家装协同平台 仪表盘 设计方案 报价管理 验收管理 材料管理 项目管理 管理面板 家装产业协同管理平台 系统管理员（管理员） 退出 装修报价管理 新建报价 选择项目 状态筛选 对比选中 (0) ID 标题 装企 总价 材料费 人工费 状态 创建时间 操作 1 装修报价A 靠谱装修公司 ¥125,000 ¥88,000 ¥32,000 已提交 2026-06-",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 2,
+      "rect": {
+        "x": 8,
+        "y": 8,
+        "width": 1584,
+        "height": 1080
+      },
+      "style": {
+        "display": "flex",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 9,
+      "tag": "aside",
+      "id": "",
+      "className": "ant-layout-sider ant-layout-sider-dark css-dev-only-do-not-override-7zmxdp",
+      "selectorHint": "aside.ant-layout-sider.ant-layout-sider-dark.css-dev-only-do-not-override-7zmxdp",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "家装协同平台 仪表盘 设计方案 报价管理 验收管理 材料管理 项目管理 管理面板",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 1,
+      "rect": {
+        "x": 8,
+        "y": 8,
+        "width": 220,
+        "height": 1080
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 10,
+      "tag": "div",
+      "id": "",
+      "className": "ant-layout-sider-children",
+      "selectorHint": "div.ant-layout-sider-children",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "家装协同平台 仪表盘 设计方案 报价管理 验收管理 材料管理 项目管理 管理面板",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 2,
+      "rect": {
+        "x": 8,
+        "y": 8,
+        "width": 220,
+        "height": 1080
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 11,
+      "tag": "div",
+      "id": "",
+      "className": "",
+      "selectorHint": "div",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "家装协同平台",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 1,
+      "rect": {
+        "x": 8,
+        "y": 8,
+        "width": 220,
+        "height": 64
+      },
+      "style": {
+        "display": "flex",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 12,
+      "tag": "span",
+      "id": "",
+      "className": "",
+      "selectorHint": "span",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "家装协同平台",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 58,
+        "y": 27,
+        "width": 120,
+        "height": 25
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 13,
+      "tag": "nav",
+      "id": "",
+      "className": "",
+      "selectorHint": "nav",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "业务导航",
+      "title": "",
+      "placeholder": "",
+      "text": "仪表盘 设计方案 报价管理 验收管理 材料管理 项目管理 管理面板",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 7,
+      "rect": {
+        "x": 8,
+        "y": 72,
+        "width": 220,
+        "height": 328
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 14,
+      "tag": "button",
+      "id": "",
+      "className": "",
+      "selectorHint": "button",
+      "name": "",
+      "type": "button",
+      "role": "",
+      "ariaLabel": "仪表盘",
+      "title": "",
+      "placeholder": "",
+      "text": "仪表盘",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 2,
+      "rect": {
+        "x": 16,
+        "y": 84,
+        "width": 204,
+        "height": 40
+      },
+      "style": {
+        "display": "flex",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 15,
+      "tag": "span",
+      "id": "",
+      "className": "anticon anticon-dashboard",
+      "selectorHint": "span.anticon.anticon-dashboard",
+      "name": "",
+      "type": "",
+      "role": "img",
+      "ariaLabel": "dashboard",
+      "title": "",
+      "placeholder": "",
+      "text": "dashboard",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 1,
+      "rect": {
+        "x": 40,
+        "y": 97,
+        "width": 14,
+        "height": 14
+      },
+      "style": {
+        "display": "flex",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 16,
+      "tag": "svg",
+      "id": "",
+      "className": "",
+      "selectorHint": "svg",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 1,
+      "rect": {
+        "x": 40,
+        "y": 97,
+        "width": 14,
+        "height": 14
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 17,
+      "tag": "path",
+      "id": "",
+      "className": "",
+      "selectorHint": "path",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 40,
+        "y": 98,
+        "width": 14,
+        "height": 13
+      },
+      "style": {
+        "display": "inline",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 18,
+      "tag": "span",
+      "id": "",
+      "className": "",
+      "selectorHint": "span",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "仪表盘",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 64,
+        "y": 94,
+        "width": 42,
+        "height": 20
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 19,
+      "tag": "button",
+      "id": "",
+      "className": "",
+      "selectorHint": "button",
+      "name": "",
+      "type": "button",
+      "role": "",
+      "ariaLabel": "设计方案",
+      "title": "",
+      "placeholder": "",
+      "text": "设计方案",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 2,
+      "rect": {
+        "x": 16,
+        "y": 128,
+        "width": 204,
+        "height": 40
+      },
+      "style": {
+        "display": "flex",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 20,
+      "tag": "span",
+      "id": "",
+      "className": "anticon anticon-picture",
+      "selectorHint": "span.anticon.anticon-picture",
+      "name": "",
+      "type": "",
+      "role": "img",
+      "ariaLabel": "picture",
+      "title": "",
+      "placeholder": "",
+      "text": "picture",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 1,
+      "rect": {
+        "x": 40,
+        "y": 141,
+        "width": 14,
+        "height": 14
+      },
+      "style": {
+        "display": "flex",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 21,
+      "tag": "svg",
+      "id": "",
+      "className": "",
+      "selectorHint": "svg",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 1,
+      "rect": {
+        "x": 40,
+        "y": 141,
+        "width": 14,
+        "height": 14
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 22,
+      "tag": "path",
+      "id": "",
+      "className": "",
+      "selectorHint": "path",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 40,
+        "y": 143,
+        "width": 14,
+        "height": 11
+      },
+      "style": {
+        "display": "inline",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 23,
+      "tag": "span",
+      "id": "",
+      "className": "",
+      "selectorHint": "span",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "设计方案",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 64,
+        "y": 138,
+        "width": 56,
+        "height": 20
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 24,
+      "tag": "button",
+      "id": "",
+      "className": "",
+      "selectorHint": "button",
+      "name": "",
+      "type": "button",
+      "role": "",
+      "ariaLabel": "报价管理",
+      "title": "",
+      "placeholder": "",
+      "text": "报价管理",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 2,
+      "rect": {
+        "x": 16,
+        "y": 172,
+        "width": 204,
+        "height": 40
+      },
+      "style": {
+        "display": "flex",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 25,
+      "tag": "span",
+      "id": "",
+      "className": "anticon anticon-file-text",
+      "selectorHint": "span.anticon.anticon-file-text",
+      "name": "",
+      "type": "",
+      "role": "img",
+      "ariaLabel": "file-text",
+      "title": "",
+      "placeholder": "",
+      "text": "file-text",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 1,
+      "rect": {
+        "x": 40,
+        "y": 185,
+        "width": 14,
+        "height": 14
+      },
+      "style": {
+        "display": "flex",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 26,
+      "tag": "svg",
+      "id": "",
+      "className": "",
+      "selectorHint": "svg",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 1,
+      "rect": {
+        "x": 40,
+        "y": 185,
+        "width": 14,
+        "height": 14
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 27,
+      "tag": "path",
+      "id": "",
+      "className": "",
+      "selectorHint": "path",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 42,
+        "y": 185,
+        "width": 11,
+        "height": 14
+      },
+      "style": {
+        "display": "inline",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 28,
+      "tag": "span",
+      "id": "",
+      "className": "",
+      "selectorHint": "span",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "报价管理",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 64,
+        "y": 182,
+        "width": 56,
+        "height": 20
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 29,
+      "tag": "button",
+      "id": "",
+      "className": "",
+      "selectorHint": "button",
+      "name": "",
+      "type": "button",
+      "role": "",
+      "ariaLabel": "验收管理",
+      "title": "",
+      "placeholder": "",
+      "text": "验收管理",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 2,
+      "rect": {
+        "x": 16,
+        "y": 216,
+        "width": 204,
+        "height": 40
+      },
+      "style": {
+        "display": "flex",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 30,
+      "tag": "span",
+      "id": "",
+      "className": "anticon anticon-check-square",
+      "selectorHint": "span.anticon.anticon-check-square",
+      "name": "",
+      "type": "",
+      "role": "img",
+      "ariaLabel": "check-square",
+      "title": "",
+      "placeholder": "",
+      "text": "check-square",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 1,
+      "rect": {
+        "x": 40,
+        "y": 229,
+        "width": 14,
+        "height": 14
+      },
+      "style": {
+        "display": "flex",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 31,
+      "tag": "svg",
+      "id": "",
+      "className": "",
+      "selectorHint": "svg",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 2,
+      "rect": {
+        "x": 40,
+        "y": 229,
+        "width": 14,
+        "height": 14
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 32,
+      "tag": "path",
+      "id": "",
+      "className": "",
+      "selectorHint": "path",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 44,
+        "y": 234,
+        "width": 6,
+        "height": 5
+      },
+      "style": {
+        "display": "inline",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 33,
+      "tag": "path",
+      "id": "",
+      "className": "",
+      "selectorHint": "path",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 41,
+        "y": 230,
+        "width": 13,
+        "height": 13
+      },
+      "style": {
+        "display": "inline",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 34,
+      "tag": "span",
+      "id": "",
+      "className": "",
+      "selectorHint": "span",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "验收管理",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 64,
+        "y": 226,
+        "width": 56,
+        "height": 20
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 35,
+      "tag": "button",
+      "id": "",
+      "className": "",
+      "selectorHint": "button",
+      "name": "",
+      "type": "button",
+      "role": "",
+      "ariaLabel": "材料管理",
+      "title": "",
+      "placeholder": "",
+      "text": "材料管理",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 2,
+      "rect": {
+        "x": 16,
+        "y": 260,
+        "width": 204,
+        "height": 40
+      },
+      "style": {
+        "display": "flex",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 36,
+      "tag": "span",
+      "id": "",
+      "className": "anticon anticon-appstore",
+      "selectorHint": "span.anticon.anticon-appstore",
+      "name": "",
+      "type": "",
+      "role": "img",
+      "ariaLabel": "appstore",
+      "title": "",
+      "placeholder": "",
+      "text": "appstore",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 1,
+      "rect": {
+        "x": 40,
+        "y": 273,
+        "width": 14,
+        "height": 14
+      },
+      "style": {
+        "display": "flex",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 37,
+      "tag": "svg",
+      "id": "",
+      "className": "",
+      "selectorHint": "svg",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 1,
+      "rect": {
+        "x": 40,
+        "y": 273,
+        "width": 14,
+        "height": 14
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 38,
+      "tag": "path",
+      "id": "",
+      "className": "",
+      "selectorHint": "path",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 41,
+        "y": 274,
+        "width": 12,
+        "height": 12
+      },
+      "style": {
+        "display": "inline",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 39,
+      "tag": "span",
+      "id": "",
+      "className": "",
+      "selectorHint": "span",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "材料管理",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 64,
+        "y": 270,
+        "width": 56,
+        "height": 20
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 40,
+      "tag": "button",
+      "id": "",
+      "className": "",
+      "selectorHint": "button",
+      "name": "",
+      "type": "button",
+      "role": "",
+      "ariaLabel": "项目管理",
+      "title": "",
+      "placeholder": "",
+      "text": "项目管理",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 2,
+      "rect": {
+        "x": 16,
+        "y": 304,
+        "width": 204,
+        "height": 40
+      },
+      "style": {
+        "display": "flex",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 41,
+      "tag": "span",
+      "id": "",
+      "className": "anticon anticon-folder",
+      "selectorHint": "span.anticon.anticon-folder",
+      "name": "",
+      "type": "",
+      "role": "img",
+      "ariaLabel": "folder",
+      "title": "",
+      "placeholder": "",
+      "text": "folder",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 1,
+      "rect": {
+        "x": 40,
+        "y": 317,
+        "width": 14,
+        "height": 14
+      },
+      "style": {
+        "display": "flex",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 42,
+      "tag": "svg",
+      "id": "",
+      "className": "",
+      "selectorHint": "svg",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 1,
+      "rect": {
+        "x": 40,
+        "y": 317,
+        "width": 14,
+        "height": 14
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 43,
+      "tag": "path",
+      "id": "",
+      "className": "",
+      "selectorHint": "path",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 41,
+        "y": 319,
+        "width": 13,
+        "height": 10
+      },
+      "style": {
+        "display": "inline",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 44,
+      "tag": "span",
+      "id": "",
+      "className": "",
+      "selectorHint": "span",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "项目管理",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 64,
+        "y": 314,
+        "width": 56,
+        "height": 20
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 45,
+      "tag": "button",
+      "id": "",
+      "className": "",
+      "selectorHint": "button",
+      "name": "",
+      "type": "button",
+      "role": "",
+      "ariaLabel": "管理面板",
+      "title": "",
+      "placeholder": "",
+      "text": "管理面板",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 2,
+      "rect": {
+        "x": 16,
+        "y": 348,
+        "width": 204,
+        "height": 40
+      },
+      "style": {
+        "display": "flex",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 46,
+      "tag": "span",
+      "id": "",
+      "className": "anticon anticon-setting",
+      "selectorHint": "span.anticon.anticon-setting",
+      "name": "",
+      "type": "",
+      "role": "img",
+      "ariaLabel": "setting",
+      "title": "",
+      "placeholder": "",
+      "text": "setting",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 1,
+      "rect": {
+        "x": 40,
+        "y": 361,
+        "width": 14,
+        "height": 14
+      },
+      "style": {
+        "display": "flex",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 47,
+      "tag": "svg",
+      "id": "",
+      "className": "",
+      "selectorHint": "svg",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 1,
+      "rect": {
+        "x": 40,
+        "y": 361,
+        "width": 14,
+        "height": 14
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 48,
+      "tag": "path",
+      "id": "",
+      "className": "",
+      "selectorHint": "path",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 40,
+        "y": 361,
+        "width": 13,
+        "height": 14
+      },
+      "style": {
+        "display": "inline",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 49,
+      "tag": "span",
+      "id": "",
+      "className": "",
+      "selectorHint": "span",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "管理面板",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 64,
+        "y": 358,
+        "width": 56,
+        "height": 20
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 50,
+      "tag": "div",
+      "id": "",
+      "className": "ant-layout css-dev-only-do-not-override-7zmxdp",
+      "selectorHint": "div.ant-layout.css-dev-only-do-not-override-7zmxdp",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "家装产业协同管理平台 系统管理员（管理员） 退出 装修报价管理 新建报价 选择项目 状态筛选 对比选中 (0) ID 标题 装企 总价 材料费 人工费 状态 创建时间 操作 1 装修报价A 靠谱装修公司 ¥125,000 ¥88,000 ¥32,000 已提交 2026-06-05 详情 对比 预警 共 1 条 1 10 条/页",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 2,
+      "rect": {
+        "x": 228,
+        "y": 8,
+        "width": 1364,
+        "height": 1080
+      },
+      "style": {
+        "display": "flex",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 51,
+      "tag": "header",
+      "id": "",
+      "className": "ant-layout-header css-dev-only-do-not-override-7zmxdp",
+      "selectorHint": "header.ant-layout-header.css-dev-only-do-not-override-7zmxdp",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "家装产业协同管理平台 系统管理员（管理员） 退出",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 2,
+      "rect": {
+        "x": 228,
+        "y": 8,
+        "width": 1364,
+        "height": 64
+      },
+      "style": {
+        "display": "flex",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 52,
+      "tag": "div",
+      "id": "",
+      "className": "",
+      "selectorHint": "div",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "家装产业协同管理平台",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 252,
+        "y": 8,
+        "width": 160,
+        "height": 64
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 53,
+      "tag": "div",
+      "id": "",
+      "className": "",
+      "selectorHint": "div",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "系统管理员（管理员） 退出",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 2,
+      "rect": {
+        "x": 1348,
+        "y": 8,
+        "width": 220,
+        "height": 64
+      },
+      "style": {
+        "display": "flex",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 54,
+      "tag": "span",
+      "id": "",
+      "className": "",
+      "selectorHint": "span",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "系统管理员（管理员）",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 1,
+      "rect": {
+        "x": 1348,
+        "y": 8,
+        "width": 158,
+        "height": 64
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 55,
+      "tag": "span",
+      "id": "",
+      "className": "anticon anticon-user",
+      "selectorHint": "span.anticon.anticon-user",
+      "name": "",
+      "type": "",
+      "role": "img",
+      "ariaLabel": "user",
+      "title": "",
+      "placeholder": "",
+      "text": "user",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 1,
+      "rect": {
+        "x": 1348,
+        "y": 33,
+        "width": 14,
+        "height": 14
+      },
+      "style": {
+        "display": "inline-flex",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 56,
+      "tag": "svg",
+      "id": "",
+      "className": "",
+      "selectorHint": "svg",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 1,
+      "rect": {
+        "x": 1348,
+        "y": 33,
+        "width": 14,
+        "height": 14
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 57,
+      "tag": "path",
+      "id": "",
+      "className": "",
+      "selectorHint": "path",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 1349,
+        "y": 34,
+        "width": 12,
+        "height": 12
+      },
+      "style": {
+        "display": "inline",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 58,
+      "tag": "a",
+      "id": "",
+      "className": "",
+      "selectorHint": "a",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "退出",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 1,
+      "rect": {
+        "x": 1522,
+        "y": 8,
+        "width": 46,
+        "height": 64
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 59,
+      "tag": "span",
+      "id": "",
+      "className": "anticon anticon-logout",
+      "selectorHint": "span.anticon.anticon-logout",
+      "name": "",
+      "type": "",
+      "role": "img",
+      "ariaLabel": "logout",
+      "title": "",
+      "placeholder": "",
+      "text": "logout",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 1,
+      "rect": {
+        "x": 1522,
+        "y": 33,
+        "width": 14,
+        "height": 14
+      },
+      "style": {
+        "display": "inline-flex",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 60,
+      "tag": "svg",
+      "id": "",
+      "className": "",
+      "selectorHint": "svg",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 1,
+      "rect": {
+        "x": 1522,
+        "y": 33,
+        "width": 14,
+        "height": 14
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 61,
+      "tag": "path",
+      "id": "",
+      "className": "",
+      "selectorHint": "path",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 1522,
+        "y": 33,
+        "width": 14,
+        "height": 13
+      },
+      "style": {
+        "display": "inline",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 62,
+      "tag": "main",
+      "id": "",
+      "className": "ant-layout-content css-dev-only-do-not-override-7zmxdp",
+      "selectorHint": "main.ant-layout-content.css-dev-only-do-not-override-7zmxdp",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "装修报价管理 新建报价 选择项目 状态筛选 对比选中 (0) ID 标题 装企 总价 材料费 人工费 状态 创建时间 操作 1 装修报价A 靠谱装修公司 ¥125,000 ¥88,000 ¥32,000 已提交 2026-06-05 详情 对比 预警 共 1 条 1 10 条/页",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 1,
+      "rect": {
+        "x": 252,
+        "y": 96,
+        "width": 1316,
+        "height": 968
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 63,
+      "tag": "div",
+      "id": "",
+      "className": "",
+      "selectorHint": "div",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "装修报价管理 新建报价 选择项目 状态筛选 对比选中 (0) ID 标题 装企 总价 材料费 人工费 状态 创建时间 操作 1 装修报价A 靠谱装修公司 ¥125,000 ¥88,000 ¥32,000 已提交 2026-06-05 详情 对比 预警 共 1 条 1 10 条/页",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 1,
+      "rect": {
+        "x": 276,
+        "y": 120,
+        "width": 1268,
+        "height": 377
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 64,
+      "tag": "div",
+      "id": "",
+      "className": "ant-card ant-card-bordered css-dev-only-do-not-override-7zmxdp",
+      "selectorHint": "div.ant-card.ant-card-bordered.css-dev-only-do-not-override-7zmxdp",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "装修报价管理 新建报价 选择项目 状态筛选 对比选中 (0) ID 标题 装企 总价 材料费 人工费 状态 创建时间 操作 1 装修报价A 靠谱装修公司 ¥125,000 ¥88,000 ¥32,000 已提交 2026-06-05 详情 对比 预警 共 1 条 1 10 条/页",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 2,
+      "rect": {
+        "x": 300,
+        "y": 144,
+        "width": 1220,
+        "height": 329
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 65,
+      "tag": "div",
+      "id": "",
+      "className": "ant-card-head",
+      "selectorHint": "div.ant-card-head",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "装修报价管理 新建报价",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 1,
+      "rect": {
+        "x": 301,
+        "y": 145,
+        "width": 1218,
+        "height": 56
+      },
+      "style": {
+        "display": "flex",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 66,
+      "tag": "div",
+      "id": "",
+      "className": "ant-card-head-wrapper",
+      "selectorHint": "div.ant-card-head-wrapper",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "装修报价管理 新建报价",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 2,
+      "rect": {
+        "x": 325,
+        "y": 157,
+        "width": 1170,
+        "height": 32
+      },
+      "style": {
+        "display": "flex",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 67,
+      "tag": "div",
+      "id": "",
+      "className": "ant-card-head-title",
+      "selectorHint": "div.ant-card-head-title",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "装修报价管理",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 325,
+        "y": 160,
+        "width": 1060,
+        "height": 25
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 68,
+      "tag": "div",
+      "id": "",
+      "className": "ant-card-extra",
+      "selectorHint": "div.ant-card-extra",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "新建报价",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 1,
+      "rect": {
+        "x": 1385,
+        "y": 157,
+        "width": 110,
+        "height": 32
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 69,
+      "tag": "button",
+      "id": "",
+      "className": "ant-btn css-dev-only-do-not-override-7zmxdp ant-btn-primary ant-btn-color-primary ant-btn-variant-solid",
+      "selectorHint": "button.ant-btn.css-dev-only-do-not-override-7zmxdp.ant-btn-primary",
+      "name": "",
+      "type": "button",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "新建报价",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 3,
+      "rect": {
+        "x": 1385,
+        "y": 157,
+        "width": 110,
+        "height": 32
+      },
+      "style": {
+        "display": "inline-flex",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 70,
+      "tag": "div",
+      "id": "",
+      "className": "",
+      "selectorHint": "div",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "",
+      "href": "",
+      "disabled": false,
+      "visible": false,
+      "childCount": 1,
+      "rect": {
+        "x": 1386,
+        "y": 158,
+        "width": 0,
+        "height": 0
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 71,
+      "tag": "div",
+      "id": "",
+      "className": "ant-wave css-dev-only-do-not-override-7zmxdp wave-motion-appear wave-motion-appear-active wave-motion",
+      "selectorHint": "div.ant-wave.css-dev-only-do-not-override-7zmxdp.wave-motion-appear",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 1385,
+        "y": 157,
+        "width": 110,
+        "height": 32
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "0.00157493"
+      }
+    },
+    {
+      "index": 72,
+      "tag": "span",
+      "id": "",
+      "className": "ant-btn-icon",
+      "selectorHint": "span.ant-btn-icon",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 1,
+      "rect": {
+        "x": 1401,
+        "y": 164,
+        "width": 14,
+        "height": 17
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 73,
+      "tag": "span",
+      "id": "",
+      "className": "anticon anticon-plus",
+      "selectorHint": "span.anticon.anticon-plus",
+      "name": "",
+      "type": "",
+      "role": "img",
+      "ariaLabel": "plus",
+      "title": "",
+      "placeholder": "",
+      "text": "plus",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 1,
+      "rect": {
+        "x": 1401,
+        "y": 166,
+        "width": 14,
+        "height": 14
+      },
+      "style": {
+        "display": "inline-flex",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 74,
+      "tag": "svg",
+      "id": "",
+      "className": "",
+      "selectorHint": "svg",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 2,
+      "rect": {
+        "x": 1401,
+        "y": 166,
+        "width": 14,
+        "height": 14
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 75,
+      "tag": "path",
+      "id": "",
+      "className": "",
+      "selectorHint": "path",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 1407,
+        "y": 167,
+        "width": 1,
+        "height": 11
+      },
+      "style": {
+        "display": "inline",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 76,
+      "tag": "path",
+      "id": "",
+      "className": "",
+      "selectorHint": "path",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 1402,
+        "y": 172,
+        "width": 11,
+        "height": 1
+      },
+      "style": {
+        "display": "inline",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 77,
+      "tag": "span",
+      "id": "",
+      "className": "",
+      "selectorHint": "span",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "新建报价",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 1423,
+        "y": 163,
+        "width": 56,
+        "height": 20
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 78,
+      "tag": "div",
+      "id": "",
+      "className": "ant-card-body",
+      "selectorHint": "div.ant-card-body",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "选择项目 状态筛选 对比选中 (0) ID 标题 装企 总价 材料费 人工费 状态 创建时间 操作 1 装修报价A 靠谱装修公司 ¥125,000 ¥88,000 ¥32,000 已提交 2026-06-05 详情 对比 预警 共 1 条 1 10 条/页",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 2,
+      "rect": {
+        "x": 301,
+        "y": 200,
+        "width": 1218,
+        "height": 272
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 79,
+      "tag": "div",
+      "id": "",
+      "className": "ant-row css-dev-only-do-not-override-7zmxdp",
+      "selectorHint": "div.ant-row.css-dev-only-do-not-override-7zmxdp",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "选择项目 状态筛选 对比选中 (0)",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 3,
+      "rect": {
+        "x": 317,
+        "y": 224,
+        "width": 1186,
+        "height": 32
+      },
+      "style": {
+        "display": "flex",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 80,
+      "tag": "div",
+      "id": "",
+      "className": "ant-col css-dev-only-do-not-override-7zmxdp",
+      "selectorHint": "div.ant-col.css-dev-only-do-not-override-7zmxdp",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "选择项目",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 1,
+      "rect": {
+        "x": 317,
+        "y": 224,
+        "width": 216,
+        "height": 32
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 81,
+      "tag": "div",
+      "id": "",
+      "className": "ant-select ant-select-outlined css-dev-only-do-not-override-7zmxdp ant-select-single ant-select-allow-clear ant-select-show-arrow",
+      "selectorHint": "div.ant-select.ant-select-outlined.css-dev-only-do-not-override-7zmxdp",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "选择项目",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 2,
+      "rect": {
+        "x": 325,
+        "y": 224,
+        "width": 200,
+        "height": 32
+      },
+      "style": {
+        "display": "inline-flex",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 82,
+      "tag": "div",
+      "id": "",
+      "className": "ant-select-selector",
+      "selectorHint": "div.ant-select-selector",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "选择项目",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 1,
+      "rect": {
+        "x": 325,
+        "y": 224,
+        "width": 200,
+        "height": 32
+      },
+      "style": {
+        "display": "flex",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 83,
+      "tag": "span",
+      "id": "",
+      "className": "ant-select-selection-wrap",
+      "selectorHint": "span.ant-select-selection-wrap",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "选择项目",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 2,
+      "rect": {
+        "x": 337,
+        "y": 225,
+        "width": 176,
+        "height": 30
+      },
+      "style": {
+        "display": "flex",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 84,
+      "tag": "span",
+      "id": "",
+      "className": "ant-select-selection-search",
+      "selectorHint": "span.ant-select-selection-search",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 1,
+      "rect": {
+        "x": 337,
+        "y": 225,
+        "width": 176,
+        "height": 30
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 85,
+      "tag": "input",
+      "id": "rc_select_2",
+      "className": "ant-select-selection-search-input",
+      "selectorHint": "input#rc_select_2.ant-select-selection-search-input",
+      "name": "",
+      "type": "search",
+      "role": "combobox",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "",
+      "href": "",
+      "disabled": false,
+      "visible": false,
+      "childCount": 0,
+      "rect": {
+        "x": 337,
+        "y": 225,
+        "width": 158,
+        "height": 30
+      },
+      "style": {
+        "display": "inline-block",
+        "visibility": "visible",
+        "opacity": "0"
+      }
+    },
+    {
+      "index": 86,
+      "tag": "span",
+      "id": "",
+      "className": "ant-select-selection-placeholder",
+      "selectorHint": "span.ant-select-selection-placeholder",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "选择项目",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 337,
+        "y": 225,
+        "width": 176,
+        "height": 30
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 87,
+      "tag": "span",
+      "id": "",
+      "className": "ant-select-arrow",
+      "selectorHint": "span.ant-select-arrow",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 1,
+      "rect": {
+        "x": 502,
+        "y": 234,
+        "width": 12,
+        "height": 12
+      },
+      "style": {
+        "display": "flex",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 88,
+      "tag": "span",
+      "id": "",
+      "className": "anticon anticon-down ant-select-suffix",
+      "selectorHint": "span.anticon.anticon-down.ant-select-suffix",
+      "name": "",
+      "type": "",
+      "role": "img",
+      "ariaLabel": "down",
+      "title": "",
+      "placeholder": "",
+      "text": "down",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 1,
+      "rect": {
+        "x": 502,
+        "y": 234,
+        "width": 12,
+        "height": 12
+      },
+      "style": {
+        "display": "flex",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 89,
+      "tag": "svg",
+      "id": "",
+      "className": "",
+      "selectorHint": "svg",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 1,
+      "rect": {
+        "x": 502,
+        "y": 234,
+        "width": 12,
+        "height": 12
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 90,
+      "tag": "path",
+      "id": "",
+      "className": "",
+      "selectorHint": "path",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 503,
+        "y": 237,
+        "width": 10,
+        "height": 7
+      },
+      "style": {
+        "display": "inline",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 91,
+      "tag": "div",
+      "id": "",
+      "className": "ant-col css-dev-only-do-not-override-7zmxdp",
+      "selectorHint": "div.ant-col.css-dev-only-do-not-override-7zmxdp",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "状态筛选",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 1,
+      "rect": {
+        "x": 533,
+        "y": 224,
+        "width": 156,
+        "height": 32
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 92,
+      "tag": "div",
+      "id": "",
+      "className": "ant-select ant-select-outlined css-dev-only-do-not-override-7zmxdp ant-select-single ant-select-allow-clear ant-select-show-arrow",
+      "selectorHint": "div.ant-select.ant-select-outlined.css-dev-only-do-not-override-7zmxdp",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "状态筛选",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 2,
+      "rect": {
+        "x": 541,
+        "y": 224,
+        "width": 140,
+        "height": 32
+      },
+      "style": {
+        "display": "inline-flex",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 93,
+      "tag": "div",
+      "id": "",
+      "className": "ant-select-selector",
+      "selectorHint": "div.ant-select-selector",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "状态筛选",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 1,
+      "rect": {
+        "x": 541,
+        "y": 224,
+        "width": 140,
+        "height": 32
+      },
+      "style": {
+        "display": "flex",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 94,
+      "tag": "span",
+      "id": "",
+      "className": "ant-select-selection-wrap",
+      "selectorHint": "span.ant-select-selection-wrap",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "状态筛选",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 2,
+      "rect": {
+        "x": 553,
+        "y": 225,
+        "width": 116,
+        "height": 30
+      },
+      "style": {
+        "display": "flex",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 95,
+      "tag": "span",
+      "id": "",
+      "className": "ant-select-selection-search",
+      "selectorHint": "span.ant-select-selection-search",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 1,
+      "rect": {
+        "x": 553,
+        "y": 225,
+        "width": 116,
+        "height": 30
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 96,
+      "tag": "input",
+      "id": "rc_select_3",
+      "className": "ant-select-selection-search-input",
+      "selectorHint": "input#rc_select_3.ant-select-selection-search-input",
+      "name": "",
+      "type": "search",
+      "role": "combobox",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "",
+      "href": "",
+      "disabled": false,
+      "visible": false,
+      "childCount": 0,
+      "rect": {
+        "x": 553,
+        "y": 225,
+        "width": 98,
+        "height": 30
+      },
+      "style": {
+        "display": "inline-block",
+        "visibility": "visible",
+        "opacity": "0"
+      }
+    },
+    {
+      "index": 97,
+      "tag": "span",
+      "id": "",
+      "className": "ant-select-selection-placeholder",
+      "selectorHint": "span.ant-select-selection-placeholder",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "状态筛选",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 553,
+        "y": 225,
+        "width": 116,
+        "height": 30
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 98,
+      "tag": "span",
+      "id": "",
+      "className": "ant-select-arrow",
+      "selectorHint": "span.ant-select-arrow",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 1,
+      "rect": {
+        "x": 658,
+        "y": 234,
+        "width": 12,
+        "height": 12
+      },
+      "style": {
+        "display": "flex",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 99,
+      "tag": "span",
+      "id": "",
+      "className": "anticon anticon-down ant-select-suffix",
+      "selectorHint": "span.anticon.anticon-down.ant-select-suffix",
+      "name": "",
+      "type": "",
+      "role": "img",
+      "ariaLabel": "down",
+      "title": "",
+      "placeholder": "",
+      "text": "down",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 1,
+      "rect": {
+        "x": 658,
+        "y": 234,
+        "width": 12,
+        "height": 12
+      },
+      "style": {
+        "display": "flex",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 100,
+      "tag": "svg",
+      "id": "",
+      "className": "",
+      "selectorHint": "svg",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 1,
+      "rect": {
+        "x": 658,
+        "y": 234,
+        "width": 12,
+        "height": 12
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 101,
+      "tag": "path",
+      "id": "",
+      "className": "",
+      "selectorHint": "path",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 659,
+        "y": 237,
+        "width": 10,
+        "height": 7
+      },
+      "style": {
+        "display": "inline",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 102,
+      "tag": "div",
+      "id": "",
+      "className": "ant-col css-dev-only-do-not-override-7zmxdp",
+      "selectorHint": "div.ant-col.css-dev-only-do-not-override-7zmxdp",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "对比选中 (0)",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 1,
+      "rect": {
+        "x": 689,
+        "y": 224,
+        "width": 149,
+        "height": 32
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 103,
+      "tag": "button",
+      "id": "",
+      "className": "ant-btn css-dev-only-do-not-override-7zmxdp ant-btn-default ant-btn-color-default ant-btn-variant-outlined",
+      "selectorHint": "button.ant-btn.css-dev-only-do-not-override-7zmxdp.ant-btn-default",
+      "name": "",
+      "type": "button",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "对比选中 (0)",
+      "href": "",
+      "disabled": true,
+      "visible": true,
+      "childCount": 2,
+      "rect": {
+        "x": 697,
+        "y": 224,
+        "width": 133,
+        "height": 32
+      },
+      "style": {
+        "display": "inline-flex",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 104,
+      "tag": "span",
+      "id": "",
+      "className": "ant-btn-icon",
+      "selectorHint": "span.ant-btn-icon",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 1,
+      "rect": {
+        "x": 713,
+        "y": 232,
+        "width": 14,
+        "height": 17
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 105,
+      "tag": "span",
+      "id": "",
+      "className": "anticon anticon-swap",
+      "selectorHint": "span.anticon.anticon-swap",
+      "name": "",
+      "type": "",
+      "role": "img",
+      "ariaLabel": "swap",
+      "title": "",
+      "placeholder": "",
+      "text": "swap",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 1,
+      "rect": {
+        "x": 713,
+        "y": 233,
+        "width": 14,
+        "height": 14
+      },
+      "style": {
+        "display": "inline-flex",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 106,
+      "tag": "svg",
+      "id": "",
+      "className": "",
+      "selectorHint": "svg",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 1,
+      "rect": {
+        "x": 713,
+        "y": 233,
+        "width": 14,
+        "height": 14
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 107,
+      "tag": "path",
+      "id": "",
+      "className": "",
+      "selectorHint": "path",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 714,
+        "y": 235,
+        "width": 12,
+        "height": 11
+      },
+      "style": {
+        "display": "inline",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 108,
+      "tag": "span",
+      "id": "",
+      "className": "",
+      "selectorHint": "span",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "对比选中 (0)",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 735,
+        "y": 230,
+        "width": 79,
+        "height": 20
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 109,
+      "tag": "div",
+      "id": "",
+      "className": "ant-table-wrapper css-dev-only-do-not-override-7zmxdp",
+      "selectorHint": "div.ant-table-wrapper.css-dev-only-do-not-override-7zmxdp",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "ID 标题 装企 总价 材料费 人工费 状态 创建时间 操作 1 装修报价A 靠谱装修公司 ¥125,000 ¥88,000 ¥32,000 已提交 2026-06-05 详情 对比 预警 共 1 条 1 10 条/页",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 1,
+      "rect": {
+        "x": 325,
+        "y": 272,
+        "width": 1170,
+        "height": 176
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 110,
+      "tag": "div",
+      "id": "",
+      "className": "ant-spin-nested-loading css-dev-only-do-not-override-7zmxdp",
+      "selectorHint": "div.ant-spin-nested-loading.css-dev-only-do-not-override-7zmxdp",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "ID 标题 装企 总价 材料费 人工费 状态 创建时间 操作 1 装修报价A 靠谱装修公司 ¥125,000 ¥88,000 ¥32,000 已提交 2026-06-05 详情 对比 预警 共 1 条 1 10 条/页",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 1,
+      "rect": {
+        "x": 325,
+        "y": 272,
+        "width": 1170,
+        "height": 160
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 111,
+      "tag": "div",
+      "id": "",
+      "className": "ant-spin-container",
+      "selectorHint": "div.ant-spin-container",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "ID 标题 装企 总价 材料费 人工费 状态 创建时间 操作 1 装修报价A 靠谱装修公司 ¥125,000 ¥88,000 ¥32,000 已提交 2026-06-05 详情 对比 预警 共 1 条 1 10 条/页",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 2,
+      "rect": {
+        "x": 325,
+        "y": 272,
+        "width": 1170,
+        "height": 160
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 112,
+      "tag": "div",
+      "id": "",
+      "className": "ant-table css-dev-only-do-not-override-7zmxdp",
+      "selectorHint": "div.ant-table.css-dev-only-do-not-override-7zmxdp",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "ID 标题 装企 总价 材料费 人工费 状态 创建时间 操作 1 装修报价A 靠谱装修公司 ¥125,000 ¥88,000 ¥32,000 已提交 2026-06-05 详情 对比 预警",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 1,
+      "rect": {
+        "x": 325,
+        "y": 272,
+        "width": 1170,
+        "height": 112
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 113,
+      "tag": "div",
+      "id": "",
+      "className": "ant-table-container",
+      "selectorHint": "div.ant-table-container",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "ID 标题 装企 总价 材料费 人工费 状态 创建时间 操作 1 装修报价A 靠谱装修公司 ¥125,000 ¥88,000 ¥32,000 已提交 2026-06-05 详情 对比 预警",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 1,
+      "rect": {
+        "x": 325,
+        "y": 272,
+        "width": 1170,
+        "height": 112
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 114,
+      "tag": "div",
+      "id": "",
+      "className": "ant-table-content",
+      "selectorHint": "div.ant-table-content",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "ID 标题 装企 总价 材料费 人工费 状态 创建时间 操作 1 装修报价A 靠谱装修公司 ¥125,000 ¥88,000 ¥32,000 已提交 2026-06-05 详情 对比 预警",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 1,
+      "rect": {
+        "x": 325,
+        "y": 272,
+        "width": 1170,
+        "height": 112
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 115,
+      "tag": "table",
+      "id": "",
+      "className": "",
+      "selectorHint": "table",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "ID 标题 装企 总价 材料费 人工费 状态 创建时间 操作 1 装修报价A 靠谱装修公司 ¥125,000 ¥88,000 ¥32,000 已提交 2026-06-05 详情 对比 预警",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 3,
+      "rect": {
+        "x": 325,
+        "y": 272,
+        "width": 1170,
+        "height": 112
+      },
+      "style": {
+        "display": "table",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 116,
+      "tag": "colgroup",
+      "id": "",
+      "className": "",
+      "selectorHint": "colgroup",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 10,
+      "rect": {
+        "x": 325,
+        "y": 272,
+        "width": 1170,
+        "height": 112
+      },
+      "style": {
+        "display": "table-column-group",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 117,
+      "tag": "col",
+      "id": "",
+      "className": "ant-table-selection-col",
+      "selectorHint": "col.ant-table-selection-col",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 325,
+        "y": 272,
+        "width": 32,
+        "height": 112
+      },
+      "style": {
+        "display": "table-column",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 118,
+      "tag": "col",
+      "id": "",
+      "className": "",
+      "selectorHint": "col",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 357,
+        "y": 272,
+        "width": 60,
+        "height": 112
+      },
+      "style": {
+        "display": "table-column",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 119,
+      "tag": "col",
+      "id": "",
+      "className": "",
+      "selectorHint": "col",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 417,
+        "y": 272,
+        "width": 174,
+        "height": 112
+      },
+      "style": {
+        "display": "table-column",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 120,
+      "tag": "col",
+      "id": "",
+      "className": "",
+      "selectorHint": "col",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 591,
+        "y": 272,
+        "width": 174,
+        "height": 112
+      },
+      "style": {
+        "display": "table-column",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 121,
+      "tag": "col",
+      "id": "",
+      "className": "",
+      "selectorHint": "col",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 765,
+        "y": 272,
+        "width": 120,
+        "height": 112
+      },
+      "style": {
+        "display": "table-column",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 122,
+      "tag": "col",
+      "id": "",
+      "className": "",
+      "selectorHint": "col",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 885,
+        "y": 272,
+        "width": 100,
+        "height": 112
+      },
+      "style": {
+        "display": "table-column",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 123,
+      "tag": "col",
+      "id": "",
+      "className": "",
+      "selectorHint": "col",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 985,
+        "y": 272,
+        "width": 100,
+        "height": 112
+      },
+      "style": {
+        "display": "table-column",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 124,
+      "tag": "col",
+      "id": "",
+      "className": "",
+      "selectorHint": "col",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 1085,
+        "y": 272,
+        "width": 90,
+        "height": 112
+      },
+      "style": {
+        "display": "table-column",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 125,
+      "tag": "col",
+      "id": "",
+      "className": "",
+      "selectorHint": "col",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 1175,
+        "y": 272,
+        "width": 120,
+        "height": 112
+      },
+      "style": {
+        "display": "table-column",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 126,
+      "tag": "col",
+      "id": "",
+      "className": "",
+      "selectorHint": "col",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 1295,
+        "y": 272,
+        "width": 200,
+        "height": 112
+      },
+      "style": {
+        "display": "table-column",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 127,
+      "tag": "thead",
+      "id": "",
+      "className": "ant-table-thead",
+      "selectorHint": "thead.ant-table-thead",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "ID 标题 装企 总价 材料费 人工费 状态 创建时间 操作",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 1,
+      "rect": {
+        "x": 325,
+        "y": 272,
+        "width": 1170,
+        "height": 55
+      },
+      "style": {
+        "display": "table-header-group",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 128,
+      "tag": "tr",
+      "id": "",
+      "className": "",
+      "selectorHint": "tr",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "ID 标题 装企 总价 材料费 人工费 状态 创建时间 操作",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 10,
+      "rect": {
+        "x": 325,
+        "y": 272,
+        "width": 1170,
+        "height": 55
+      },
+      "style": {
+        "display": "table-row",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 129,
+      "tag": "th",
+      "id": "",
+      "className": "ant-table-cell ant-table-selection-column",
+      "selectorHint": "th.ant-table-cell.ant-table-selection-column",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 1,
+      "rect": {
+        "x": 325,
+        "y": 272,
+        "width": 32,
+        "height": 55
+      },
+      "style": {
+        "display": "table-cell",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 130,
+      "tag": "div",
+      "id": "",
+      "className": "ant-table-selection",
+      "selectorHint": "div.ant-table-selection",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 1,
+      "rect": {
+        "x": 333,
+        "y": 288,
+        "width": 16,
+        "height": 22
+      },
+      "style": {
+        "display": "inline-flex",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 131,
+      "tag": "label",
+      "id": "",
+      "className": "ant-checkbox-wrapper css-dev-only-do-not-override-7zmxdp",
+      "selectorHint": "label.ant-checkbox-wrapper.css-dev-only-do-not-override-7zmxdp",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 1,
+      "rect": {
+        "x": 333,
+        "y": 288,
+        "width": 16,
+        "height": 22
+      },
+      "style": {
+        "display": "flex",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 132,
+      "tag": "span",
+      "id": "",
+      "className": "ant-checkbox ant-wave-target css-dev-only-do-not-override-7zmxdp",
+      "selectorHint": "span.ant-checkbox.ant-wave-target.css-dev-only-do-not-override-7zmxdp",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 2,
+      "rect": {
+        "x": 333,
+        "y": 291,
+        "width": 16,
+        "height": 16
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 133,
+      "tag": "input",
+      "id": "",
+      "className": "ant-checkbox-input",
+      "selectorHint": "input.ant-checkbox-input",
+      "name": "",
+      "type": "checkbox",
+      "role": "",
+      "ariaLabel": "Select all",
+      "title": "",
+      "placeholder": "",
+      "text": "on",
+      "href": "",
+      "disabled": false,
+      "visible": false,
+      "childCount": 0,
+      "rect": {
+        "x": 333,
+        "y": 291,
+        "width": 16,
+        "height": 16
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "0"
+      }
+    },
+    {
+      "index": 134,
+      "tag": "span",
+      "id": "",
+      "className": "ant-checkbox-inner",
+      "selectorHint": "span.ant-checkbox-inner",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 333,
+        "y": 291,
+        "width": 16,
+        "height": 16
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 135,
+      "tag": "th",
+      "id": "",
+      "className": "ant-table-cell",
+      "selectorHint": "th.ant-table-cell",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "ID",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 357,
+        "y": 272,
+        "width": 60,
+        "height": 55
+      },
+      "style": {
+        "display": "table-cell",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 136,
+      "tag": "th",
+      "id": "",
+      "className": "ant-table-cell ant-table-cell-ellipsis",
+      "selectorHint": "th.ant-table-cell.ant-table-cell-ellipsis",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "标题",
+      "placeholder": "",
+      "text": "标题",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 417,
+        "y": 272,
+        "width": 174,
+        "height": 55
+      },
+      "style": {
+        "display": "table-cell",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 137,
+      "tag": "th",
+      "id": "",
+      "className": "ant-table-cell",
+      "selectorHint": "th.ant-table-cell",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "装企",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 591,
+        "y": 272,
+        "width": 174,
+        "height": 55
+      },
+      "style": {
+        "display": "table-cell",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 138,
+      "tag": "th",
+      "id": "",
+      "className": "ant-table-cell",
+      "selectorHint": "th.ant-table-cell",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "总价",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 765,
+        "y": 272,
+        "width": 120,
+        "height": 55
+      },
+      "style": {
+        "display": "table-cell",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 139,
+      "tag": "th",
+      "id": "",
+      "className": "ant-table-cell",
+      "selectorHint": "th.ant-table-cell",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "材料费",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 885,
+        "y": 272,
+        "width": 100,
+        "height": 55
+      },
+      "style": {
+        "display": "table-cell",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 140,
+      "tag": "th",
+      "id": "",
+      "className": "ant-table-cell",
+      "selectorHint": "th.ant-table-cell",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "人工费",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 985,
+        "y": 272,
+        "width": 100,
+        "height": 55
+      },
+      "style": {
+        "display": "table-cell",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 141,
+      "tag": "th",
+      "id": "",
+      "className": "ant-table-cell",
+      "selectorHint": "th.ant-table-cell",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "状态",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 1085,
+        "y": 272,
+        "width": 90,
+        "height": 55
+      },
+      "style": {
+        "display": "table-cell",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 142,
+      "tag": "th",
+      "id": "",
+      "className": "ant-table-cell",
+      "selectorHint": "th.ant-table-cell",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "创建时间",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 1175,
+        "y": 272,
+        "width": 120,
+        "height": 55
+      },
+      "style": {
+        "display": "table-cell",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 143,
+      "tag": "th",
+      "id": "",
+      "className": "ant-table-cell",
+      "selectorHint": "th.ant-table-cell",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "操作",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 1295,
+        "y": 272,
+        "width": 200,
+        "height": 55
+      },
+      "style": {
+        "display": "table-cell",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 144,
+      "tag": "tbody",
+      "id": "",
+      "className": "ant-table-tbody",
+      "selectorHint": "tbody.ant-table-tbody",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "1 装修报价A 靠谱装修公司 ¥125,000 ¥88,000 ¥32,000 已提交 2026-06-05 详情 对比 预警",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 1,
+      "rect": {
+        "x": 325,
+        "y": 327,
+        "width": 1170,
+        "height": 57
+      },
+      "style": {
+        "display": "table-row-group",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 145,
+      "tag": "tr",
+      "id": "",
+      "className": "ant-table-row ant-table-row-level-0",
+      "selectorHint": "tr.ant-table-row.ant-table-row-level-0",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "1 装修报价A 靠谱装修公司 ¥125,000 ¥88,000 ¥32,000 已提交 2026-06-05 详情 对比 预警",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 10,
+      "rect": {
+        "x": 325,
+        "y": 327,
+        "width": 1170,
+        "height": 57
+      },
+      "style": {
+        "display": "table-row",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 146,
+      "tag": "td",
+      "id": "",
+      "className": "ant-table-cell ant-table-selection-column",
+      "selectorHint": "td.ant-table-cell.ant-table-selection-column",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 1,
+      "rect": {
+        "x": 325,
+        "y": 327,
+        "width": 32,
+        "height": 57
+      },
+      "style": {
+        "display": "table-cell",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 147,
+      "tag": "label",
+      "id": "",
+      "className": "ant-checkbox-wrapper css-dev-only-do-not-override-7zmxdp",
+      "selectorHint": "label.ant-checkbox-wrapper.css-dev-only-do-not-override-7zmxdp",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 1,
+      "rect": {
+        "x": 333,
+        "y": 344,
+        "width": 16,
+        "height": 22
+      },
+      "style": {
+        "display": "inline-flex",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 148,
+      "tag": "span",
+      "id": "",
+      "className": "ant-checkbox ant-wave-target css-dev-only-do-not-override-7zmxdp",
+      "selectorHint": "span.ant-checkbox.ant-wave-target.css-dev-only-do-not-override-7zmxdp",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 2,
+      "rect": {
+        "x": 333,
+        "y": 347,
+        "width": 16,
+        "height": 16
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 149,
+      "tag": "input",
+      "id": "",
+      "className": "ant-checkbox-input",
+      "selectorHint": "input.ant-checkbox-input",
+      "name": "",
+      "type": "checkbox",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "on",
+      "href": "",
+      "disabled": false,
+      "visible": false,
+      "childCount": 0,
+      "rect": {
+        "x": 333,
+        "y": 347,
+        "width": 16,
+        "height": 16
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "0"
+      }
+    },
+    {
+      "index": 150,
+      "tag": "span",
+      "id": "",
+      "className": "ant-checkbox-inner",
+      "selectorHint": "span.ant-checkbox-inner",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 333,
+        "y": 347,
+        "width": 16,
+        "height": 16
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 151,
+      "tag": "td",
+      "id": "",
+      "className": "ant-table-cell",
+      "selectorHint": "td.ant-table-cell",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "1",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 357,
+        "y": 327,
+        "width": 60,
+        "height": 57
+      },
+      "style": {
+        "display": "table-cell",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 152,
+      "tag": "td",
+      "id": "",
+      "className": "ant-table-cell ant-table-cell-ellipsis",
+      "selectorHint": "td.ant-table-cell.ant-table-cell-ellipsis",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "装修报价A",
+      "placeholder": "",
+      "text": "装修报价A",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 417,
+        "y": 327,
+        "width": 174,
+        "height": 57
+      },
+      "style": {
+        "display": "table-cell",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 153,
+      "tag": "td",
+      "id": "",
+      "className": "ant-table-cell",
+      "selectorHint": "td.ant-table-cell",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "靠谱装修公司",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 591,
+        "y": 327,
+        "width": 174,
+        "height": 57
+      },
+      "style": {
+        "display": "table-cell",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 154,
+      "tag": "td",
+      "id": "",
+      "className": "ant-table-cell",
+      "selectorHint": "td.ant-table-cell",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "¥125,000",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 765,
+        "y": 327,
+        "width": 120,
+        "height": 57
+      },
+      "style": {
+        "display": "table-cell",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 155,
+      "tag": "td",
+      "id": "",
+      "className": "ant-table-cell",
+      "selectorHint": "td.ant-table-cell",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "¥88,000",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 885,
+        "y": 327,
+        "width": 100,
+        "height": 57
+      },
+      "style": {
+        "display": "table-cell",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 156,
+      "tag": "td",
+      "id": "",
+      "className": "ant-table-cell",
+      "selectorHint": "td.ant-table-cell",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "¥32,000",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 985,
+        "y": 327,
+        "width": 100,
+        "height": 57
+      },
+      "style": {
+        "display": "table-cell",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 157,
+      "tag": "td",
+      "id": "",
+      "className": "ant-table-cell",
+      "selectorHint": "td.ant-table-cell",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "已提交",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 1,
+      "rect": {
+        "x": 1085,
+        "y": 327,
+        "width": 90,
+        "height": 57
+      },
+      "style": {
+        "display": "table-cell",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 158,
+      "tag": "span",
+      "id": "",
+      "className": "ant-tag ant-tag-orange css-dev-only-do-not-override-7zmxdp",
+      "selectorHint": "span.ant-tag.ant-tag-orange.css-dev-only-do-not-override-7zmxdp",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "已提交",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 1101,
+        "y": 345,
+        "width": 52,
+        "height": 22
+      },
+      "style": {
+        "display": "inline-block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 159,
+      "tag": "td",
+      "id": "",
+      "className": "ant-table-cell",
+      "selectorHint": "td.ant-table-cell",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "2026-06-05",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 1175,
+        "y": 327,
+        "width": 120,
+        "height": 57
+      },
+      "style": {
+        "display": "table-cell",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 160,
+      "tag": "td",
+      "id": "",
+      "className": "ant-table-cell",
+      "selectorHint": "td.ant-table-cell",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "详情 对比 预警",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 1,
+      "rect": {
+        "x": 1295,
+        "y": 327,
+        "width": 200,
+        "height": 57
+      },
+      "style": {
+        "display": "table-cell",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 161,
+      "tag": "div",
+      "id": "",
+      "className": "ant-space css-dev-only-do-not-override-7zmxdp ant-space-horizontal ant-space-align-center ant-space-gap-row-small ant-space-gap-col-small",
+      "selectorHint": "div.ant-space.css-dev-only-do-not-override-7zmxdp.ant-space-horizontal",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "详情 对比 预警",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 3,
+      "rect": {
+        "x": 1311,
+        "y": 343,
+        "width": 214,
+        "height": 24
+      },
+      "style": {
+        "display": "inline-flex",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 162,
+      "tag": "div",
+      "id": "",
+      "className": "ant-space-item",
+      "selectorHint": "div.ant-space-item",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "详情",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 1,
+      "rect": {
+        "x": 1311,
+        "y": 343,
+        "width": 66,
+        "height": 24
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 163,
+      "tag": "button",
+      "id": "",
+      "className": "ant-btn css-dev-only-do-not-override-7zmxdp ant-btn-link ant-btn-color-link ant-btn-variant-link ant-btn-sm",
+      "selectorHint": "button.ant-btn.css-dev-only-do-not-override-7zmxdp.ant-btn-link",
+      "name": "",
+      "type": "button",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "详情",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 2,
+      "rect": {
+        "x": 1311,
+        "y": 343,
+        "width": 66,
+        "height": 24
+      },
+      "style": {
+        "display": "inline-flex",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 164,
+      "tag": "span",
+      "id": "",
+      "className": "ant-btn-icon",
+      "selectorHint": "span.ant-btn-icon",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 1,
+      "rect": {
+        "x": 1319,
+        "y": 347,
+        "width": 14,
+        "height": 17
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 165,
+      "tag": "span",
+      "id": "",
+      "className": "anticon anticon-eye",
+      "selectorHint": "span.anticon.anticon-eye",
+      "name": "",
+      "type": "",
+      "role": "img",
+      "ariaLabel": "eye",
+      "title": "",
+      "placeholder": "",
+      "text": "eye",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 1,
+      "rect": {
+        "x": 1319,
+        "y": 348,
+        "width": 14,
+        "height": 14
+      },
+      "style": {
+        "display": "inline-flex",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 166,
+      "tag": "svg",
+      "id": "",
+      "className": "",
+      "selectorHint": "svg",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 1,
+      "rect": {
+        "x": 1319,
+        "y": 348,
+        "width": 14,
+        "height": 14
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 167,
+      "tag": "path",
+      "id": "",
+      "className": "",
+      "selectorHint": "path",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 1319,
+        "y": 350,
+        "width": 14,
+        "height": 10
+      },
+      "style": {
+        "display": "inline",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 168,
+      "tag": "span",
+      "id": "",
+      "className": "",
+      "selectorHint": "span",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "详情",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 1341,
+        "y": 345,
+        "width": 28,
+        "height": 20
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 169,
+      "tag": "div",
+      "id": "",
+      "className": "ant-space-item",
+      "selectorHint": "div.ant-space-item",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "对比",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 1,
+      "rect": {
+        "x": 1385,
+        "y": 343,
+        "width": 66,
+        "height": 24
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 170,
+      "tag": "button",
+      "id": "",
+      "className": "ant-btn css-dev-only-do-not-override-7zmxdp ant-btn-link ant-btn-color-link ant-btn-variant-link ant-btn-sm",
+      "selectorHint": "button.ant-btn.css-dev-only-do-not-override-7zmxdp.ant-btn-link",
+      "name": "",
+      "type": "button",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "对比",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 2,
+      "rect": {
+        "x": 1385,
+        "y": 343,
+        "width": 66,
+        "height": 24
+      },
+      "style": {
+        "display": "inline-flex",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 171,
+      "tag": "span",
+      "id": "",
+      "className": "ant-btn-icon",
+      "selectorHint": "span.ant-btn-icon",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 1,
+      "rect": {
+        "x": 1393,
+        "y": 347,
+        "width": 14,
+        "height": 17
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 172,
+      "tag": "span",
+      "id": "",
+      "className": "anticon anticon-swap",
+      "selectorHint": "span.anticon.anticon-swap",
+      "name": "",
+      "type": "",
+      "role": "img",
+      "ariaLabel": "swap",
+      "title": "",
+      "placeholder": "",
+      "text": "swap",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 1,
+      "rect": {
+        "x": 1393,
+        "y": 348,
+        "width": 14,
+        "height": 14
+      },
+      "style": {
+        "display": "inline-flex",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 173,
+      "tag": "svg",
+      "id": "",
+      "className": "",
+      "selectorHint": "svg",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 1,
+      "rect": {
+        "x": 1393,
+        "y": 348,
+        "width": 14,
+        "height": 14
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 174,
+      "tag": "path",
+      "id": "",
+      "className": "",
+      "selectorHint": "path",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 1394,
+        "y": 350,
+        "width": 12,
+        "height": 11
+      },
+      "style": {
+        "display": "inline",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 175,
+      "tag": "span",
+      "id": "",
+      "className": "",
+      "selectorHint": "span",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "对比",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 1415,
+        "y": 345,
+        "width": 28,
+        "height": 20
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 176,
+      "tag": "div",
+      "id": "",
+      "className": "ant-space-item",
+      "selectorHint": "div.ant-space-item",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "预警",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 1,
+      "rect": {
+        "x": 1459,
+        "y": 343,
+        "width": 66,
+        "height": 24
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 177,
+      "tag": "button",
+      "id": "",
+      "className": "ant-btn css-dev-only-do-not-override-7zmxdp ant-btn-link ant-btn-color-link ant-btn-variant-link ant-btn-sm",
+      "selectorHint": "button.ant-btn.css-dev-only-do-not-override-7zmxdp.ant-btn-link",
+      "name": "",
+      "type": "button",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "预警",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 2,
+      "rect": {
+        "x": 1459,
+        "y": 343,
+        "width": 66,
+        "height": 24
+      },
+      "style": {
+        "display": "inline-flex",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 178,
+      "tag": "span",
+      "id": "",
+      "className": "ant-btn-icon",
+      "selectorHint": "span.ant-btn-icon",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 1,
+      "rect": {
+        "x": 1467,
+        "y": 347,
+        "width": 14,
+        "height": 17
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 179,
+      "tag": "span",
+      "id": "",
+      "className": "anticon anticon-warning",
+      "selectorHint": "span.anticon.anticon-warning",
+      "name": "",
+      "type": "",
+      "role": "img",
+      "ariaLabel": "warning",
+      "title": "",
+      "placeholder": "",
+      "text": "warning",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 1,
+      "rect": {
+        "x": 1467,
+        "y": 348,
+        "width": 14,
+        "height": 14
+      },
+      "style": {
+        "display": "inline-flex",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 180,
+      "tag": "svg",
+      "id": "",
+      "className": "",
+      "selectorHint": "svg",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 1,
+      "rect": {
+        "x": 1467,
+        "y": 348,
+        "width": 14,
+        "height": 14
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 181,
+      "tag": "path",
+      "id": "",
+      "className": "",
+      "selectorHint": "path",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 1467,
+        "y": 349,
+        "width": 14,
+        "height": 12
+      },
+      "style": {
+        "display": "inline",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 182,
+      "tag": "span",
+      "id": "",
+      "className": "",
+      "selectorHint": "span",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "预警",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 1489,
+        "y": 345,
+        "width": 28,
+        "height": 20
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 183,
+      "tag": "ul",
+      "id": "",
+      "className": "ant-pagination ant-pagination-end ant-table-pagination css-dev-only-do-not-override-7zmxdp",
+      "selectorHint": "ul.ant-pagination.ant-pagination-end.ant-table-pagination",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "共 1 条 1 10 条/页",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 5,
+      "rect": {
+        "x": 325,
+        "y": 400,
+        "width": 1170,
+        "height": 32
+      },
+      "style": {
+        "display": "flex",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 184,
+      "tag": "li",
+      "id": "",
+      "className": "ant-pagination-total-text",
+      "selectorHint": "li.ant-pagination-total-text",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "共 1 条",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 1224,
+        "y": 400,
+        "width": 42,
+        "height": 32
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 185,
+      "tag": "li",
+      "id": "",
+      "className": "ant-pagination-prev ant-pagination-disabled",
+      "selectorHint": "li.ant-pagination-prev.ant-pagination-disabled",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "上一页",
+      "placeholder": "",
+      "text": "上一页",
+      "href": "",
+      "disabled": true,
+      "visible": true,
+      "childCount": 1,
+      "rect": {
+        "x": 1274,
+        "y": 400,
+        "width": 32,
+        "height": 32
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 186,
+      "tag": "button",
+      "id": "",
+      "className": "ant-pagination-item-link",
+      "selectorHint": "button.ant-pagination-item-link",
+      "name": "",
+      "type": "button",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "",
+      "href": "",
+      "disabled": true,
+      "visible": true,
+      "childCount": 1,
+      "rect": {
+        "x": 1274,
+        "y": 400,
+        "width": 32,
+        "height": 32
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 187,
+      "tag": "span",
+      "id": "",
+      "className": "anticon anticon-left",
+      "selectorHint": "span.anticon.anticon-left",
+      "name": "",
+      "type": "",
+      "role": "img",
+      "ariaLabel": "left",
+      "title": "",
+      "placeholder": "",
+      "text": "left",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 1,
+      "rect": {
+        "x": 1284,
+        "y": 410,
+        "width": 12,
+        "height": 12
+      },
+      "style": {
+        "display": "inline-flex",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 188,
+      "tag": "svg",
+      "id": "",
+      "className": "",
+      "selectorHint": "svg",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 1,
+      "rect": {
+        "x": 1284,
+        "y": 410,
+        "width": 12,
+        "height": 12
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 189,
+      "tag": "path",
+      "id": "",
+      "className": "",
+      "selectorHint": "path",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 1287,
+        "y": 410,
+        "width": 6,
+        "height": 10
+      },
+      "style": {
+        "display": "inline",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 190,
+      "tag": "li",
+      "id": "",
+      "className": "ant-pagination-item ant-pagination-item-1 ant-pagination-item-active",
+      "selectorHint": "li.ant-pagination-item.ant-pagination-item-1.ant-pagination-item-active",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "1",
+      "placeholder": "",
+      "text": "1",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 1,
+      "rect": {
+        "x": 1314,
+        "y": 400,
+        "width": 32,
+        "height": 32
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 191,
+      "tag": "a",
+      "id": "",
+      "className": "",
+      "selectorHint": "a",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "1",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 1315,
+        "y": 401,
+        "width": 30,
+        "height": 30
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 192,
+      "tag": "li",
+      "id": "",
+      "className": "ant-pagination-next ant-pagination-disabled",
+      "selectorHint": "li.ant-pagination-next.ant-pagination-disabled",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "下一页",
+      "placeholder": "",
+      "text": "下一页",
+      "href": "",
+      "disabled": true,
+      "visible": true,
+      "childCount": 1,
+      "rect": {
+        "x": 1354,
+        "y": 400,
+        "width": 32,
+        "height": 32
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 193,
+      "tag": "button",
+      "id": "",
+      "className": "ant-pagination-item-link",
+      "selectorHint": "button.ant-pagination-item-link",
+      "name": "",
+      "type": "button",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "",
+      "href": "",
+      "disabled": true,
+      "visible": true,
+      "childCount": 1,
+      "rect": {
+        "x": 1354,
+        "y": 400,
+        "width": 32,
+        "height": 32
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 194,
+      "tag": "span",
+      "id": "",
+      "className": "anticon anticon-right",
+      "selectorHint": "span.anticon.anticon-right",
+      "name": "",
+      "type": "",
+      "role": "img",
+      "ariaLabel": "right",
+      "title": "",
+      "placeholder": "",
+      "text": "right",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 1,
+      "rect": {
+        "x": 1364,
+        "y": 410,
+        "width": 12,
+        "height": 12
+      },
+      "style": {
+        "display": "inline-flex",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 195,
+      "tag": "svg",
+      "id": "",
+      "className": "",
+      "selectorHint": "svg",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 1,
+      "rect": {
+        "x": 1364,
+        "y": 410,
+        "width": 12,
+        "height": 12
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 196,
+      "tag": "path",
+      "id": "",
+      "className": "",
+      "selectorHint": "path",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 1367,
+        "y": 410,
+        "width": 6,
+        "height": 10
+      },
+      "style": {
+        "display": "inline",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 197,
+      "tag": "li",
+      "id": "",
+      "className": "ant-pagination-options",
+      "selectorHint": "li.ant-pagination-options",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "10 条/页",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 1,
+      "rect": {
+        "x": 1402,
+        "y": 400,
+        "width": 93,
+        "height": 32
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 198,
+      "tag": "div",
+      "id": "",
+      "className": "ant-select ant-select-outlined ant-pagination-options-size-changer css-dev-only-do-not-override-7zmxdp ant-select-single ant-select-show-arrow ant-select-show-search",
+      "selectorHint": "div.ant-select.ant-select-outlined.ant-pagination-options-size-changer",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "页码",
+      "title": "",
+      "placeholder": "",
+      "text": "10 条/页",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 2,
+      "rect": {
+        "x": 1402,
+        "y": 400,
+        "width": 93,
+        "height": 32
+      },
+      "style": {
+        "display": "inline-block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 199,
+      "tag": "div",
+      "id": "",
+      "className": "ant-select-selector",
+      "selectorHint": "div.ant-select-selector",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "10 条/页",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 1,
+      "rect": {
+        "x": 1402,
+        "y": 400,
+        "width": 93,
+        "height": 32
+      },
+      "style": {
+        "display": "flex",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 200,
+      "tag": "span",
+      "id": "",
+      "className": "ant-select-selection-wrap",
+      "selectorHint": "span.ant-select-selection-wrap",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "10 条/页",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 2,
+      "rect": {
+        "x": 1414,
+        "y": 401,
+        "width": 69,
+        "height": 30
+      },
+      "style": {
+        "display": "flex",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 201,
+      "tag": "span",
+      "id": "",
+      "className": "ant-select-selection-search",
+      "selectorHint": "span.ant-select-selection-search",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 1,
+      "rect": {
+        "x": 1414,
+        "y": 401,
+        "width": 69,
+        "height": 30
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 202,
+      "tag": "input",
+      "id": "rc_select_5",
+      "className": "ant-select-selection-search-input",
+      "selectorHint": "input#rc_select_5.ant-select-selection-search-input",
+      "name": "",
+      "type": "search",
+      "role": "combobox",
+      "ariaLabel": "页码",
+      "title": "",
+      "placeholder": "",
+      "text": "页码",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 1414,
+        "y": 401,
+        "width": 51,
+        "height": 30
+      },
+      "style": {
+        "display": "inline-block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 203,
+      "tag": "span",
+      "id": "",
+      "className": "ant-select-selection-item",
+      "selectorHint": "span.ant-select-selection-item",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "10 条/页",
+      "placeholder": "",
+      "text": "10 条/页",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 1414,
+        "y": 401,
+        "width": 69,
+        "height": 30
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 204,
+      "tag": "span",
+      "id": "",
+      "className": "ant-select-arrow",
+      "selectorHint": "span.ant-select-arrow",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 1,
+      "rect": {
+        "x": 1472,
+        "y": 410,
+        "width": 12,
+        "height": 12
+      },
+      "style": {
+        "display": "flex",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 205,
+      "tag": "span",
+      "id": "",
+      "className": "anticon anticon-down ant-select-suffix",
+      "selectorHint": "span.anticon.anticon-down.ant-select-suffix",
+      "name": "",
+      "type": "",
+      "role": "img",
+      "ariaLabel": "down",
+      "title": "",
+      "placeholder": "",
+      "text": "down",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 1,
+      "rect": {
+        "x": 1472,
+        "y": 410,
+        "width": 12,
+        "height": 12
+      },
+      "style": {
+        "display": "flex",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 206,
+      "tag": "svg",
+      "id": "",
+      "className": "",
+      "selectorHint": "svg",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 1,
+      "rect": {
+        "x": 1472,
+        "y": 410,
+        "width": 12,
+        "height": 12
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 207,
+      "tag": "path",
+      "id": "",
+      "className": "",
+      "selectorHint": "path",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 1473,
+        "y": 413,
+        "width": 10,
+        "height": 7
+      },
+      "style": {
+        "display": "inline",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 208,
+      "tag": "div",
+      "id": "",
+      "className": "",
+      "selectorHint": "div",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "新建报价 所属项目 请选择项目 报价标题 装企名称 取 消 确 定",
+      "href": "",
+      "disabled": false,
+      "visible": false,
+      "childCount": 1,
+      "rect": {
+        "x": 8,
+        "y": 1088,
+        "width": 1584,
+        "height": 0
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 209,
+      "tag": "div",
+      "id": "",
+      "className": "ant-modal-root css-dev-only-do-not-override-7zmxdp",
+      "selectorHint": "div.ant-modal-root.css-dev-only-do-not-override-7zmxdp",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "新建报价 所属项目 请选择项目 报价标题 装企名称 取 消 确 定",
+      "href": "",
+      "disabled": false,
+      "visible": false,
+      "childCount": 2,
+      "rect": {
+        "x": 8,
+        "y": 1088,
+        "width": 1584,
+        "height": 0
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 210,
+      "tag": "div",
+      "id": "",
+      "className": "ant-modal-mask",
+      "selectorHint": "div.ant-modal-mask",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 0,
+        "y": 0,
+        "width": 1600,
+        "height": 1080
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 211,
+      "tag": "div",
+      "id": "",
+      "className": "ant-modal-wrap",
+      "selectorHint": "div.ant-modal-wrap",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "新建报价 所属项目 请选择项目 报价标题 装企名称 取 消 确 定",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 1,
+      "rect": {
+        "x": 0,
+        "y": 0,
+        "width": 1600,
+        "height": 1080
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 212,
+      "tag": "div",
+      "id": "",
+      "className": "ant-modal css-dev-only-do-not-override-7zmxdp",
+      "selectorHint": "div.ant-modal.css-dev-only-do-not-override-7zmxdp",
+      "name": "",
+      "type": "",
+      "role": "dialog",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "新建报价 所属项目 请选择项目 报价标题 装企名称 取 消 确 定",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 2,
+      "rect": {
+        "x": 540,
+        "y": 100,
+        "width": 520,
+        "height": 386
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 213,
+      "tag": "div",
+      "id": "",
+      "className": "",
+      "selectorHint": "div",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "新建报价 所属项目 请选择项目 报价标题 装企名称 取 消 确 定",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 1,
+      "rect": {
+        "x": 540,
+        "y": 100,
+        "width": 520,
+        "height": 362
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 214,
+      "tag": "div",
+      "id": "",
+      "className": "ant-modal-content",
+      "selectorHint": "div.ant-modal-content",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "新建报价 所属项目 请选择项目 报价标题 装企名称 取 消 确 定",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 4,
+      "rect": {
+        "x": 540,
+        "y": 100,
+        "width": 520,
+        "height": 362
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 215,
+      "tag": "button",
+      "id": "",
+      "className": "ant-modal-close",
+      "selectorHint": "button.ant-modal-close",
+      "name": "",
+      "type": "button",
+      "role": "",
+      "ariaLabel": "Close",
+      "title": "",
+      "placeholder": "",
+      "text": "Close",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 1,
+      "rect": {
+        "x": 1016,
+        "y": 112,
+        "width": 32,
+        "height": 32
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 216,
+      "tag": "span",
+      "id": "",
+      "className": "ant-modal-close-x",
+      "selectorHint": "span.ant-modal-close-x",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "关闭",
+      "title": "",
+      "placeholder": "",
+      "text": "关闭",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 1,
+      "rect": {
+        "x": 1016,
+        "y": 120,
+        "width": 32,
+        "height": 16
+      },
+      "style": {
+        "display": "flex",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 217,
+      "tag": "span",
+      "id": "",
+      "className": "anticon anticon-close ant-modal-close-icon",
+      "selectorHint": "span.anticon.anticon-close.ant-modal-close-icon",
+      "name": "",
+      "type": "",
+      "role": "img",
+      "ariaLabel": "close",
+      "title": "",
+      "placeholder": "",
+      "text": "close",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 1,
+      "rect": {
+        "x": 1024,
+        "y": 120,
+        "width": 16,
+        "height": 16
+      },
+      "style": {
+        "display": "flex",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 218,
+      "tag": "svg",
+      "id": "",
+      "className": "",
+      "selectorHint": "svg",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 1,
+      "rect": {
+        "x": 1024,
+        "y": 120,
+        "width": 16,
+        "height": 16
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 219,
+      "tag": "path",
+      "id": "",
+      "className": "",
+      "selectorHint": "path",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 1026,
+        "y": 122,
+        "width": 12,
+        "height": 12
+      },
+      "style": {
+        "display": "inline",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 220,
+      "tag": "div",
+      "id": "",
+      "className": "ant-modal-header",
+      "selectorHint": "div.ant-modal-header",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "新建报价",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 1,
+      "rect": {
+        "x": 564,
+        "y": 120,
+        "width": 472,
+        "height": 24
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 221,
+      "tag": "div",
+      "id": ":rd:",
+      "className": "ant-modal-title",
+      "selectorHint": "div#:rd:.ant-modal-title",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "新建报价",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 564,
+        "y": 120,
+        "width": 472,
+        "height": 24
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 222,
+      "tag": "div",
+      "id": "",
+      "className": "ant-modal-body",
+      "selectorHint": "div.ant-modal-body",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "所属项目 请选择项目 报价标题 装企名称",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 1,
+      "rect": {
+        "x": 564,
+        "y": 152,
+        "width": 472,
+        "height": 234
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 223,
+      "tag": "form",
+      "id": "",
+      "className": "ant-form ant-form-vertical css-dev-only-do-not-override-7zmxdp",
+      "selectorHint": "form.ant-form.ant-form-vertical.css-dev-only-do-not-override-7zmxdp",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "所属项目 请选择项目 报价标题 装企名称",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 3,
+      "rect": {
+        "x": 564,
+        "y": 152,
+        "width": 472,
+        "height": 234
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 224,
+      "tag": "div",
+      "id": "",
+      "className": "ant-form-item css-dev-only-do-not-override-7zmxdp ant-form-item-vertical",
+      "selectorHint": "div.ant-form-item.css-dev-only-do-not-override-7zmxdp.ant-form-item-vertical",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "所属项目 请选择项目",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 1,
+      "rect": {
+        "x": 564,
+        "y": 152,
+        "width": 472,
+        "height": 62
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 225,
+      "tag": "div",
+      "id": "",
+      "className": "ant-row ant-form-item-row css-dev-only-do-not-override-7zmxdp",
+      "selectorHint": "div.ant-row.ant-form-item-row.css-dev-only-do-not-override-7zmxdp",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "所属项目 请选择项目",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 2,
+      "rect": {
+        "x": 564,
+        "y": 152,
+        "width": 472,
+        "height": 62
+      },
+      "style": {
+        "display": "flex",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 226,
+      "tag": "div",
+      "id": "",
+      "className": "ant-col ant-form-item-label css-dev-only-do-not-override-7zmxdp",
+      "selectorHint": "div.ant-col.ant-form-item-label.css-dev-only-do-not-override-7zmxdp",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "所属项目",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 1,
+      "rect": {
+        "x": 564,
+        "y": 152,
+        "width": 472,
+        "height": 30
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 227,
+      "tag": "label",
+      "id": "",
+      "className": "ant-form-item-required",
+      "selectorHint": "label.ant-form-item-required",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "所属项目",
+      "placeholder": "",
+      "text": "所属项目",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 564,
+        "y": 152,
+        "width": 81,
+        "height": 22
+      },
+      "style": {
+        "display": "inline-flex",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 228,
+      "tag": "div",
+      "id": "",
+      "className": "ant-col ant-form-item-control css-dev-only-do-not-override-7zmxdp",
+      "selectorHint": "div.ant-col.ant-form-item-control.css-dev-only-do-not-override-7zmxdp",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "请选择项目",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 1,
+      "rect": {
+        "x": 564,
+        "y": 182,
+        "width": 472,
+        "height": 32
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 229,
+      "tag": "div",
+      "id": "",
+      "className": "ant-form-item-control-input",
+      "selectorHint": "div.ant-form-item-control-input",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "请选择项目",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 1,
+      "rect": {
+        "x": 564,
+        "y": 182,
+        "width": 472,
+        "height": 32
+      },
+      "style": {
+        "display": "flex",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 230,
+      "tag": "div",
+      "id": "",
+      "className": "ant-form-item-control-input-content",
+      "selectorHint": "div.ant-form-item-control-input-content",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "请选择项目",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 1,
+      "rect": {
+        "x": 564,
+        "y": 182,
+        "width": 472,
+        "height": 32
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 231,
+      "tag": "div",
+      "id": "",
+      "className": "ant-select ant-select-outlined ant-select-in-form-item css-dev-only-do-not-override-7zmxdp ant-select-single ant-select-show-arrow",
+      "selectorHint": "div.ant-select.ant-select-outlined.ant-select-in-form-item",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "请选择项目",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 2,
+      "rect": {
+        "x": 564,
+        "y": 182,
+        "width": 472,
+        "height": 32
+      },
+      "style": {
+        "display": "inline-flex",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 232,
+      "tag": "div",
+      "id": "",
+      "className": "ant-select-selector",
+      "selectorHint": "div.ant-select-selector",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "请选择项目",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 1,
+      "rect": {
+        "x": 564,
+        "y": 182,
+        "width": 472,
+        "height": 32
+      },
+      "style": {
+        "display": "flex",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 233,
+      "tag": "span",
+      "id": "",
+      "className": "ant-select-selection-wrap",
+      "selectorHint": "span.ant-select-selection-wrap",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "请选择项目",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 2,
+      "rect": {
+        "x": 576,
+        "y": 183,
+        "width": 448,
+        "height": 30
+      },
+      "style": {
+        "display": "flex",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 234,
+      "tag": "span",
+      "id": "",
+      "className": "ant-select-selection-search",
+      "selectorHint": "span.ant-select-selection-search",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 1,
+      "rect": {
+        "x": 576,
+        "y": 183,
+        "width": 448,
+        "height": 30
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 235,
+      "tag": "input",
+      "id": "project_id",
+      "className": "ant-select-selection-search-input",
+      "selectorHint": "input#project_id.ant-select-selection-search-input",
+      "name": "",
+      "type": "search",
+      "role": "combobox",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "",
+      "href": "",
+      "disabled": false,
+      "visible": false,
+      "childCount": 0,
+      "rect": {
+        "x": 576,
+        "y": 183,
+        "width": 430,
+        "height": 30
+      },
+      "style": {
+        "display": "inline-block",
+        "visibility": "visible",
+        "opacity": "0"
+      }
+    },
+    {
+      "index": 236,
+      "tag": "span",
+      "id": "",
+      "className": "ant-select-selection-placeholder",
+      "selectorHint": "span.ant-select-selection-placeholder",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "请选择项目",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 576,
+        "y": 183,
+        "width": 448,
+        "height": 30
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 237,
+      "tag": "span",
+      "id": "",
+      "className": "ant-select-arrow",
+      "selectorHint": "span.ant-select-arrow",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 1,
+      "rect": {
+        "x": 1013,
+        "y": 192,
+        "width": 12,
+        "height": 12
+      },
+      "style": {
+        "display": "flex",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 238,
+      "tag": "span",
+      "id": "",
+      "className": "anticon anticon-down ant-select-suffix",
+      "selectorHint": "span.anticon.anticon-down.ant-select-suffix",
+      "name": "",
+      "type": "",
+      "role": "img",
+      "ariaLabel": "down",
+      "title": "",
+      "placeholder": "",
+      "text": "down",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 1,
+      "rect": {
+        "x": 1013,
+        "y": 192,
+        "width": 12,
+        "height": 12
+      },
+      "style": {
+        "display": "flex",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 239,
+      "tag": "svg",
+      "id": "",
+      "className": "",
+      "selectorHint": "svg",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 1,
+      "rect": {
+        "x": 1013,
+        "y": 192,
+        "width": 12,
+        "height": 12
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 240,
+      "tag": "path",
+      "id": "",
+      "className": "",
+      "selectorHint": "path",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 1014,
+        "y": 195,
+        "width": 10,
+        "height": 7
+      },
+      "style": {
+        "display": "inline",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 241,
+      "tag": "div",
+      "id": "",
+      "className": "ant-form-item css-dev-only-do-not-override-7zmxdp ant-form-item-vertical",
+      "selectorHint": "div.ant-form-item.css-dev-only-do-not-override-7zmxdp.ant-form-item-vertical",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "报价标题",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 1,
+      "rect": {
+        "x": 564,
+        "y": 238,
+        "width": 472,
+        "height": 62
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 242,
+      "tag": "div",
+      "id": "",
+      "className": "ant-row ant-form-item-row css-dev-only-do-not-override-7zmxdp",
+      "selectorHint": "div.ant-row.ant-form-item-row.css-dev-only-do-not-override-7zmxdp",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "报价标题",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 2,
+      "rect": {
+        "x": 564,
+        "y": 238,
+        "width": 472,
+        "height": 62
+      },
+      "style": {
+        "display": "flex",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 243,
+      "tag": "div",
+      "id": "",
+      "className": "ant-col ant-form-item-label css-dev-only-do-not-override-7zmxdp",
+      "selectorHint": "div.ant-col.ant-form-item-label.css-dev-only-do-not-override-7zmxdp",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "报价标题",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 1,
+      "rect": {
+        "x": 564,
+        "y": 238,
+        "width": 472,
+        "height": 30
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 244,
+      "tag": "label",
+      "id": "",
+      "className": "ant-form-item-required",
+      "selectorHint": "label.ant-form-item-required",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "报价标题",
+      "placeholder": "",
+      "text": "报价标题",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 564,
+        "y": 238,
+        "width": 81,
+        "height": 22
+      },
+      "style": {
+        "display": "inline-flex",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 245,
+      "tag": "div",
+      "id": "",
+      "className": "ant-col ant-form-item-control css-dev-only-do-not-override-7zmxdp",
+      "selectorHint": "div.ant-col.ant-form-item-control.css-dev-only-do-not-override-7zmxdp",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 1,
+      "rect": {
+        "x": 564,
+        "y": 268,
+        "width": 472,
+        "height": 32
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 246,
+      "tag": "div",
+      "id": "",
+      "className": "ant-form-item-control-input",
+      "selectorHint": "div.ant-form-item-control-input",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 1,
+      "rect": {
+        "x": 564,
+        "y": 268,
+        "width": 472,
+        "height": 32
+      },
+      "style": {
+        "display": "flex",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 247,
+      "tag": "div",
+      "id": "",
+      "className": "ant-form-item-control-input-content",
+      "selectorHint": "div.ant-form-item-control-input-content",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 1,
+      "rect": {
+        "x": 564,
+        "y": 268,
+        "width": 472,
+        "height": 32
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 248,
+      "tag": "input",
+      "id": "title",
+      "className": "ant-input css-dev-only-do-not-override-7zmxdp ant-input-outlined",
+      "selectorHint": "input#title.ant-input.css-dev-only-do-not-override-7zmxdp.ant-input-outlined",
+      "name": "",
+      "type": "text",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "请输入报价标题",
+      "text": "",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 564,
+        "y": 268,
+        "width": 472,
+        "height": 32
+      },
+      "style": {
+        "display": "inline-block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 249,
+      "tag": "div",
+      "id": "",
+      "className": "ant-form-item css-dev-only-do-not-override-7zmxdp ant-form-item-vertical",
+      "selectorHint": "div.ant-form-item.css-dev-only-do-not-override-7zmxdp.ant-form-item-vertical",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "装企名称",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 1,
+      "rect": {
+        "x": 564,
+        "y": 324,
+        "width": 472,
+        "height": 62
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 250,
+      "tag": "div",
+      "id": "",
+      "className": "ant-row ant-form-item-row css-dev-only-do-not-override-7zmxdp",
+      "selectorHint": "div.ant-row.ant-form-item-row.css-dev-only-do-not-override-7zmxdp",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "装企名称",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 2,
+      "rect": {
+        "x": 564,
+        "y": 324,
+        "width": 472,
+        "height": 62
+      },
+      "style": {
+        "display": "flex",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 251,
+      "tag": "div",
+      "id": "",
+      "className": "ant-col ant-form-item-label css-dev-only-do-not-override-7zmxdp",
+      "selectorHint": "div.ant-col.ant-form-item-label.css-dev-only-do-not-override-7zmxdp",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "装企名称",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 1,
+      "rect": {
+        "x": 564,
+        "y": 324,
+        "width": 472,
+        "height": 30
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 252,
+      "tag": "label",
+      "id": "",
+      "className": "",
+      "selectorHint": "label",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "装企名称",
+      "placeholder": "",
+      "text": "装企名称",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 564,
+        "y": 324,
+        "width": 70,
+        "height": 22
+      },
+      "style": {
+        "display": "inline-flex",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 253,
+      "tag": "div",
+      "id": "",
+      "className": "ant-col ant-form-item-control css-dev-only-do-not-override-7zmxdp",
+      "selectorHint": "div.ant-col.ant-form-item-control.css-dev-only-do-not-override-7zmxdp",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 1,
+      "rect": {
+        "x": 564,
+        "y": 354,
+        "width": 472,
+        "height": 32
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 254,
+      "tag": "div",
+      "id": "",
+      "className": "ant-form-item-control-input",
+      "selectorHint": "div.ant-form-item-control-input",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 1,
+      "rect": {
+        "x": 564,
+        "y": 354,
+        "width": 472,
+        "height": 32
+      },
+      "style": {
+        "display": "flex",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 255,
+      "tag": "div",
+      "id": "",
+      "className": "ant-form-item-control-input-content",
+      "selectorHint": "div.ant-form-item-control-input-content",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 1,
+      "rect": {
+        "x": 564,
+        "y": 354,
+        "width": 472,
+        "height": 32
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 256,
+      "tag": "input",
+      "id": "company_name",
+      "className": "ant-input css-dev-only-do-not-override-7zmxdp ant-input-outlined",
+      "selectorHint": "input#company_name.ant-input.css-dev-only-do-not-override-7zmxdp.ant-input-outlined",
+      "name": "",
+      "type": "text",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "请输入装企名称",
+      "text": "",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 564,
+        "y": 354,
+        "width": 472,
+        "height": 32
+      },
+      "style": {
+        "display": "inline-block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 257,
+      "tag": "div",
+      "id": "",
+      "className": "ant-modal-footer",
+      "selectorHint": "div.ant-modal-footer",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "取 消 确 定",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 2,
+      "rect": {
+        "x": 564,
+        "y": 410,
+        "width": 472,
+        "height": 32
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 258,
+      "tag": "button",
+      "id": "",
+      "className": "ant-btn css-dev-only-do-not-override-7zmxdp ant-btn-default ant-btn-color-default ant-btn-variant-outlined",
+      "selectorHint": "button.ant-btn.css-dev-only-do-not-override-7zmxdp.ant-btn-default",
+      "name": "",
+      "type": "button",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "取 消",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 1,
+      "rect": {
+        "x": 900,
+        "y": 410,
+        "width": 64,
+        "height": 32
+      },
+      "style": {
+        "display": "inline-flex",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 259,
+      "tag": "span",
+      "id": "",
+      "className": "",
+      "selectorHint": "span",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "取 消",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 916,
+        "y": 416,
+        "width": 32,
+        "height": 20
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 260,
+      "tag": "button",
+      "id": "",
+      "className": "ant-btn css-dev-only-do-not-override-7zmxdp ant-btn-primary ant-btn-color-primary ant-btn-variant-solid",
+      "selectorHint": "button.ant-btn.css-dev-only-do-not-override-7zmxdp.ant-btn-primary",
+      "name": "",
+      "type": "button",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "确 定",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 1,
+      "rect": {
+        "x": 972,
+        "y": 410,
+        "width": 64,
+        "height": 32
+      },
+      "style": {
+        "display": "inline-flex",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 261,
+      "tag": "span",
+      "id": "",
+      "className": "",
+      "selectorHint": "span",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "确 定",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 988,
+        "y": 416,
+        "width": 32,
+        "height": 20
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 262,
+      "tag": "div",
+      "id": "",
+      "className": "",
+      "selectorHint": "div",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "",
+      "href": "",
+      "disabled": false,
+      "visible": false,
+      "childCount": 0,
+      "rect": {
+        "x": 540,
+        "y": 462,
+        "width": 0,
+        "height": 0
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    }
+  ],
+  "interactiveElements": [
+    {
+      "index": 0,
+      "tag": "button",
+      "id": "",
+      "className": "",
+      "selectorHint": "button",
+      "name": "",
+      "type": "button",
+      "role": "",
+      "ariaLabel": "仪表盘",
+      "title": "",
+      "placeholder": "",
+      "text": "仪表盘",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 2,
+      "rect": {
+        "x": 16,
+        "y": 84,
+        "width": 204,
+        "height": 40
+      },
+      "style": {
+        "display": "flex",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 1,
+      "tag": "button",
+      "id": "",
+      "className": "",
+      "selectorHint": "button",
+      "name": "",
+      "type": "button",
+      "role": "",
+      "ariaLabel": "设计方案",
+      "title": "",
+      "placeholder": "",
+      "text": "设计方案",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 2,
+      "rect": {
+        "x": 16,
+        "y": 128,
+        "width": 204,
+        "height": 40
+      },
+      "style": {
+        "display": "flex",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 2,
+      "tag": "button",
+      "id": "",
+      "className": "",
+      "selectorHint": "button",
+      "name": "",
+      "type": "button",
+      "role": "",
+      "ariaLabel": "报价管理",
+      "title": "",
+      "placeholder": "",
+      "text": "报价管理",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 2,
+      "rect": {
+        "x": 16,
+        "y": 172,
+        "width": 204,
+        "height": 40
+      },
+      "style": {
+        "display": "flex",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 3,
+      "tag": "button",
+      "id": "",
+      "className": "",
+      "selectorHint": "button",
+      "name": "",
+      "type": "button",
+      "role": "",
+      "ariaLabel": "验收管理",
+      "title": "",
+      "placeholder": "",
+      "text": "验收管理",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 2,
+      "rect": {
+        "x": 16,
+        "y": 216,
+        "width": 204,
+        "height": 40
+      },
+      "style": {
+        "display": "flex",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 4,
+      "tag": "button",
+      "id": "",
+      "className": "",
+      "selectorHint": "button",
+      "name": "",
+      "type": "button",
+      "role": "",
+      "ariaLabel": "材料管理",
+      "title": "",
+      "placeholder": "",
+      "text": "材料管理",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 2,
+      "rect": {
+        "x": 16,
+        "y": 260,
+        "width": 204,
+        "height": 40
+      },
+      "style": {
+        "display": "flex",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 5,
+      "tag": "button",
+      "id": "",
+      "className": "",
+      "selectorHint": "button",
+      "name": "",
+      "type": "button",
+      "role": "",
+      "ariaLabel": "项目管理",
+      "title": "",
+      "placeholder": "",
+      "text": "项目管理",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 2,
+      "rect": {
+        "x": 16,
+        "y": 304,
+        "width": 204,
+        "height": 40
+      },
+      "style": {
+        "display": "flex",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 6,
+      "tag": "button",
+      "id": "",
+      "className": "",
+      "selectorHint": "button",
+      "name": "",
+      "type": "button",
+      "role": "",
+      "ariaLabel": "管理面板",
+      "title": "",
+      "placeholder": "",
+      "text": "管理面板",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 2,
+      "rect": {
+        "x": 16,
+        "y": 348,
+        "width": 204,
+        "height": 40
+      },
+      "style": {
+        "display": "flex",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 7,
+      "tag": "a",
+      "id": "",
+      "className": "",
+      "selectorHint": "a",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "退出",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 1,
+      "rect": {
+        "x": 1522,
+        "y": 8,
+        "width": 46,
+        "height": 64
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 8,
+      "tag": "button",
+      "id": "",
+      "className": "ant-btn css-dev-only-do-not-override-7zmxdp ant-btn-primary ant-btn-color-primary ant-btn-variant-solid",
+      "selectorHint": "button.ant-btn.css-dev-only-do-not-override-7zmxdp.ant-btn-primary",
+      "name": "",
+      "type": "button",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "新建报价",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 3,
+      "rect": {
+        "x": 1385,
+        "y": 157,
+        "width": 110,
+        "height": 32
+      },
+      "style": {
+        "display": "inline-flex",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 9,
+      "tag": "input",
+      "id": "rc_select_2",
+      "className": "ant-select-selection-search-input",
+      "selectorHint": "input#rc_select_2.ant-select-selection-search-input",
+      "name": "",
+      "type": "search",
+      "role": "combobox",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "",
+      "href": "",
+      "disabled": false,
+      "visible": false,
+      "childCount": 0,
+      "rect": {
+        "x": 337,
+        "y": 225,
+        "width": 158,
+        "height": 30
+      },
+      "style": {
+        "display": "inline-block",
+        "visibility": "visible",
+        "opacity": "0"
+      }
+    },
+    {
+      "index": 10,
+      "tag": "input",
+      "id": "rc_select_3",
+      "className": "ant-select-selection-search-input",
+      "selectorHint": "input#rc_select_3.ant-select-selection-search-input",
+      "name": "",
+      "type": "search",
+      "role": "combobox",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "",
+      "href": "",
+      "disabled": false,
+      "visible": false,
+      "childCount": 0,
+      "rect": {
+        "x": 553,
+        "y": 225,
+        "width": 98,
+        "height": 30
+      },
+      "style": {
+        "display": "inline-block",
+        "visibility": "visible",
+        "opacity": "0"
+      }
+    },
+    {
+      "index": 11,
+      "tag": "button",
+      "id": "",
+      "className": "ant-btn css-dev-only-do-not-override-7zmxdp ant-btn-default ant-btn-color-default ant-btn-variant-outlined",
+      "selectorHint": "button.ant-btn.css-dev-only-do-not-override-7zmxdp.ant-btn-default",
+      "name": "",
+      "type": "button",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "对比选中 (0)",
+      "href": "",
+      "disabled": true,
+      "visible": true,
+      "childCount": 2,
+      "rect": {
+        "x": 697,
+        "y": 224,
+        "width": 133,
+        "height": 32
+      },
+      "style": {
+        "display": "inline-flex",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 12,
+      "tag": "input",
+      "id": "",
+      "className": "ant-checkbox-input",
+      "selectorHint": "input.ant-checkbox-input",
+      "name": "",
+      "type": "checkbox",
+      "role": "",
+      "ariaLabel": "Select all",
+      "title": "",
+      "placeholder": "",
+      "text": "on",
+      "href": "",
+      "disabled": false,
+      "visible": false,
+      "childCount": 0,
+      "rect": {
+        "x": 333,
+        "y": 291,
+        "width": 16,
+        "height": 16
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "0"
+      }
+    },
+    {
+      "index": 13,
+      "tag": "input",
+      "id": "",
+      "className": "ant-checkbox-input",
+      "selectorHint": "input.ant-checkbox-input",
+      "name": "",
+      "type": "checkbox",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "on",
+      "href": "",
+      "disabled": false,
+      "visible": false,
+      "childCount": 0,
+      "rect": {
+        "x": 333,
+        "y": 347,
+        "width": 16,
+        "height": 16
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "0"
+      }
+    },
+    {
+      "index": 14,
+      "tag": "button",
+      "id": "",
+      "className": "ant-btn css-dev-only-do-not-override-7zmxdp ant-btn-link ant-btn-color-link ant-btn-variant-link ant-btn-sm",
+      "selectorHint": "button.ant-btn.css-dev-only-do-not-override-7zmxdp.ant-btn-link",
+      "name": "",
+      "type": "button",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "详情",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 2,
+      "rect": {
+        "x": 1311,
+        "y": 343,
+        "width": 66,
+        "height": 24
+      },
+      "style": {
+        "display": "inline-flex",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 15,
+      "tag": "button",
+      "id": "",
+      "className": "ant-btn css-dev-only-do-not-override-7zmxdp ant-btn-link ant-btn-color-link ant-btn-variant-link ant-btn-sm",
+      "selectorHint": "button.ant-btn.css-dev-only-do-not-override-7zmxdp.ant-btn-link",
+      "name": "",
+      "type": "button",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "对比",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 2,
+      "rect": {
+        "x": 1385,
+        "y": 343,
+        "width": 66,
+        "height": 24
+      },
+      "style": {
+        "display": "inline-flex",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 16,
+      "tag": "button",
+      "id": "",
+      "className": "ant-btn css-dev-only-do-not-override-7zmxdp ant-btn-link ant-btn-color-link ant-btn-variant-link ant-btn-sm",
+      "selectorHint": "button.ant-btn.css-dev-only-do-not-override-7zmxdp.ant-btn-link",
+      "name": "",
+      "type": "button",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "预警",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 2,
+      "rect": {
+        "x": 1459,
+        "y": 343,
+        "width": 66,
+        "height": 24
+      },
+      "style": {
+        "display": "inline-flex",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 17,
+      "tag": "button",
+      "id": "",
+      "className": "ant-pagination-item-link",
+      "selectorHint": "button.ant-pagination-item-link",
+      "name": "",
+      "type": "button",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "",
+      "href": "",
+      "disabled": true,
+      "visible": true,
+      "childCount": 1,
+      "rect": {
+        "x": 1274,
+        "y": 400,
+        "width": 32,
+        "height": 32
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 18,
+      "tag": "li",
+      "id": "",
+      "className": "ant-pagination-item ant-pagination-item-1 ant-pagination-item-active",
+      "selectorHint": "li.ant-pagination-item.ant-pagination-item-1.ant-pagination-item-active",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "1",
+      "placeholder": "",
+      "text": "1",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 1,
+      "rect": {
+        "x": 1314,
+        "y": 400,
+        "width": 32,
+        "height": 32
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 19,
+      "tag": "a",
+      "id": "",
+      "className": "",
+      "selectorHint": "a",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "1",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 1315,
+        "y": 401,
+        "width": 30,
+        "height": 30
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 20,
+      "tag": "button",
+      "id": "",
+      "className": "ant-pagination-item-link",
+      "selectorHint": "button.ant-pagination-item-link",
+      "name": "",
+      "type": "button",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "",
+      "href": "",
+      "disabled": true,
+      "visible": true,
+      "childCount": 1,
+      "rect": {
+        "x": 1354,
+        "y": 400,
+        "width": 32,
+        "height": 32
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 21,
+      "tag": "input",
+      "id": "rc_select_5",
+      "className": "ant-select-selection-search-input",
+      "selectorHint": "input#rc_select_5.ant-select-selection-search-input",
+      "name": "",
+      "type": "search",
+      "role": "combobox",
+      "ariaLabel": "页码",
+      "title": "",
+      "placeholder": "",
+      "text": "页码",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 1414,
+        "y": 401,
+        "width": 51,
+        "height": 30
+      },
+      "style": {
+        "display": "inline-block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 22,
+      "tag": "div",
+      "id": "",
+      "className": "",
+      "selectorHint": "div",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "新建报价 所属项目 请选择项目 报价标题 装企名称 取 消 确 定",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 1,
+      "rect": {
+        "x": 540,
+        "y": 100,
+        "width": 520,
+        "height": 362
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 23,
+      "tag": "button",
+      "id": "",
+      "className": "ant-modal-close",
+      "selectorHint": "button.ant-modal-close",
+      "name": "",
+      "type": "button",
+      "role": "",
+      "ariaLabel": "Close",
+      "title": "",
+      "placeholder": "",
+      "text": "Close",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 1,
+      "rect": {
+        "x": 1016,
+        "y": 112,
+        "width": 32,
+        "height": 32
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 24,
+      "tag": "input",
+      "id": "project_id",
+      "className": "ant-select-selection-search-input",
+      "selectorHint": "input#project_id.ant-select-selection-search-input",
+      "name": "",
+      "type": "search",
+      "role": "combobox",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "",
+      "href": "",
+      "disabled": false,
+      "visible": false,
+      "childCount": 0,
+      "rect": {
+        "x": 576,
+        "y": 183,
+        "width": 430,
+        "height": 30
+      },
+      "style": {
+        "display": "inline-block",
+        "visibility": "visible",
+        "opacity": "0"
+      }
+    },
+    {
+      "index": 25,
+      "tag": "input",
+      "id": "title",
+      "className": "ant-input css-dev-only-do-not-override-7zmxdp ant-input-outlined",
+      "selectorHint": "input#title.ant-input.css-dev-only-do-not-override-7zmxdp.ant-input-outlined",
+      "name": "",
+      "type": "text",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "请输入报价标题",
+      "text": "",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 564,
+        "y": 268,
+        "width": 472,
+        "height": 32
+      },
+      "style": {
+        "display": "inline-block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 26,
+      "tag": "input",
+      "id": "company_name",
+      "className": "ant-input css-dev-only-do-not-override-7zmxdp ant-input-outlined",
+      "selectorHint": "input#company_name.ant-input.css-dev-only-do-not-override-7zmxdp.ant-input-outlined",
+      "name": "",
+      "type": "text",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "请输入装企名称",
+      "text": "",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 564,
+        "y": 354,
+        "width": 472,
+        "height": 32
+      },
+      "style": {
+        "display": "inline-block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 27,
+      "tag": "button",
+      "id": "",
+      "className": "ant-btn css-dev-only-do-not-override-7zmxdp ant-btn-default ant-btn-color-default ant-btn-variant-outlined",
+      "selectorHint": "button.ant-btn.css-dev-only-do-not-override-7zmxdp.ant-btn-default",
+      "name": "",
+      "type": "button",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "取 消",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 1,
+      "rect": {
+        "x": 900,
+        "y": 410,
+        "width": 64,
+        "height": 32
+      },
+      "style": {
+        "display": "inline-flex",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 28,
+      "tag": "button",
+      "id": "",
+      "className": "ant-btn css-dev-only-do-not-override-7zmxdp ant-btn-primary ant-btn-color-primary ant-btn-variant-solid",
+      "selectorHint": "button.ant-btn.css-dev-only-do-not-override-7zmxdp.ant-btn-primary",
+      "name": "",
+      "type": "button",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "确 定",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 1,
+      "rect": {
+        "x": 972,
+        "y": 410,
+        "width": 64,
+        "height": 32
+      },
+      "style": {
+        "display": "inline-flex",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 29,
+      "tag": "div",
+      "id": "",
+      "className": "",
+      "selectorHint": "div",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "",
+      "href": "",
+      "disabled": false,
+      "visible": false,
+      "childCount": 0,
+      "rect": {
+        "x": 540,
+        "y": 462,
+        "width": 0,
+        "height": 0
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    }
+  ]
+}
