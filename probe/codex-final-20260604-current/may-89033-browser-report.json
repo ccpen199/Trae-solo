@@ -1,0 +1,4151 @@
+{
+  "ok": true,
+  "generatedAt": "2026-06-04T12:53:15.539Z",
+  "order": "may-89033",
+  "roundIndex": 100,
+  "captureId": "may-89033-codex-final-current",
+  "url": "http://127.0.0.1:49033/",
+  "initialUrl": "http://127.0.0.1:49033/",
+  "finalUrl": "http://127.0.0.1:49033/student/dashboard",
+  "status": 200,
+  "title": "校园物联网热水服务系统",
+  "initialTitle": "校园物联网热水服务系统",
+  "navigationError": "",
+  "screenshotPath": "probe/codex-final-20260604-current/may-89033-codex-final-current-frontend.png",
+  "screenshotPaths": [
+    "/Users/chen/Documents/trae_projects/local_projects/may-89033/probe/codex-final-20260604-current/may-89033-codex-final-current-structure-01-首屏.png",
+    "/Users/chen/Documents/trae_projects/local_projects/may-89033/probe/codex-final-20260604-current/may-89033-codex-final-current-structure-02-导航-首页.png",
+    "/Users/chen/Documents/trae_projects/local_projects/may-89033/probe/codex-final-20260604-current/may-89033-codex-final-current-structure-03-操作-查看全部.png",
+    "/Users/chen/Documents/trae_projects/local_projects/may-89033/probe/codex-final-20260604-current/may-89033-codex-final-current-structure-04-二层操作-查看全部-详情.png",
+    "/Users/chen/Documents/trae_projects/local_projects/may-89033/probe/codex-final-20260604-current/may-89033-codex-final-current-structure-05-操作-查看全部设备.png",
+    "/Users/chen/Documents/trae_projects/local_projects/may-89033/probe/codex-final-20260604-current/may-89033-codex-final-current-structure-06-二层操作-查看全部设备-刷-新.png",
+    "/Users/chen/Documents/trae_projects/local_projects/may-89033/probe/codex-final-20260604-current/may-89033-codex-final-current-structure-07-导航-设备列表.png",
+    "/Users/chen/Documents/trae_projects/local_projects/may-89033/probe/codex-final-20260604-current/may-89033-codex-final-current-structure-08-操作-开始使用.png",
+    "/Users/chen/Documents/trae_projects/local_projects/may-89033/probe/codex-final-20260604-current/may-89033-codex-final-current-structure-09-二层操作-开始使用-立即充值.png",
+    "/Users/chen/Documents/trae_projects/local_projects/may-89033/probe/codex-final-20260604-current/may-89033-codex-final-current-structure-10-操作-刷-新.png",
+    "/Users/chen/Documents/trae_projects/local_projects/may-89033/probe/codex-final-20260604-current/may-89033-codex-final-current-structure-11-导航-消费记录.png",
+    "/Users/chen/Documents/trae_projects/local_projects/may-89033/probe/codex-final-20260604-current/may-89033-codex-final-current-structure-12-操作-详情.png"
+  ],
+  "issueTextPreview": "登录流程已完成，继续复验登录后的首页和业务导航",
+  "targetReason": "登录注册相关问题",
+  "targetKind": "auth",
+  "targetMatched": true,
+  "targetActions": [
+    {
+      "action": "click",
+      "label": "登录注册相关问题",
+      "ok": false,
+      "error": "locator.click: Timeout 900ms exceeded.\nCall log:\n\u001b[2m  - waiting for getByText(/登录/).first()\u001b[22m\n\u001b[2m    - locator resolved to <span>登录后首页</span>\u001b[22m\n\u001b[2m  - attempting click action\u001b[22m\n\u001b[2m    2 × waiting for element"
+    },
+    {
+      "action": "target-already-visible",
+      "label": "登录注册相关问题",
+      "ok": true
+    },
+    {
+      "action": "target-verify",
+      "label": "登录注册相关问题",
+      "ok": true,
+      "finalUrl": "http://127.0.0.1:49033/student/dashboard"
+    }
+  ],
+  "authFlow": {
+    "detected": false,
+    "attempted": false,
+    "success": false,
+    "finalUrl": "http://127.0.0.1:49033/student/dashboard",
+    "message": "",
+    "actions": []
+  },
+  "businessAudit": {
+    "actions": [
+      {
+        "action": "click",
+        "label": "关闭弹窗/抽屉",
+        "ok": true
+      },
+      {
+        "action": "click",
+        "label": "导航:首页",
+        "ok": true
+      },
+      {
+        "action": "click",
+        "label": "操作:查看全部",
+        "ok": true,
+        "result": {
+          "ok": true,
+          "matched": 1
+        }
+      },
+      {
+        "action": "click",
+        "label": "二层操作:查看全部:详情",
+        "ok": true,
+        "result": {
+          "ok": true,
+          "matched": 4
+        }
+      },
+      {
+        "action": "click",
+        "label": "关闭弹窗/抽屉",
+        "ok": true
+      },
+      {
+        "action": "click",
+        "label": "关闭弹窗/抽屉",
+        "ok": true
+      },
+      {
+        "action": "click",
+        "label": "操作:查看全部设备",
+        "ok": true,
+        "result": {
+          "ok": true,
+          "matched": 1
+        }
+      },
+      {
+        "action": "click",
+        "label": "二层操作:查看全部设备:刷 新",
+        "ok": true,
+        "result": {
+          "ok": true,
+          "matched": 1
+        }
+      },
+      {
+        "action": "click",
+        "label": "关闭弹窗/抽屉",
+        "ok": true
+      },
+      {
+        "action": "click",
+        "label": "导航:设备列表",
+        "ok": true
+      },
+      {
+        "action": "click",
+        "label": "操作:开始使用",
+        "ok": true,
+        "result": {
+          "ok": true,
+          "matched": 16
+        }
+      },
+      {
+        "action": "click",
+        "label": "二层操作:开始使用:立即充值",
+        "ok": true,
+        "result": {
+          "ok": true,
+          "matched": 1
+        }
+      },
+      {
+        "action": "click",
+        "label": "操作:刷 新",
+        "ok": true,
+        "result": {
+          "ok": true,
+          "matched": 1
+        }
+      },
+      {
+        "action": "click",
+        "label": "导航:消费记录",
+        "ok": true
+      },
+      {
+        "action": "click",
+        "label": "操作:详情",
+        "ok": true,
+        "result": {
+          "ok": true,
+          "matched": 4
+        }
+      },
+      {
+        "action": "click",
+        "label": "二层操作:详情:关 闭",
+        "ok": true,
+        "result": {
+          "ok": true,
+          "matched": 1
+        }
+      },
+      {
+        "action": "click",
+        "label": "操作:查 询",
+        "ok": true,
+        "result": {
+          "ok": true,
+          "matched": 1
+        }
+      }
+    ],
+    "snapshots": [
+      {
+        "label": "首屏",
+        "url": "http://127.0.0.1:49033/student/dashboard",
+        "title": "校园物联网热水服务系统",
+        "headings": [
+          "欢迎回来，演示学生",
+          "账户余额不足"
+        ],
+        "navLabels": [
+          "首页 设备列表 消费记录 账户充值 消息中心 个人信息",
+          "首页",
+          "dashboard",
+          "设备列表",
+          "desktop",
+          "消费记录",
+          "file-text",
+          "账户充值",
+          "wallet",
+          "消息中心",
+          "message",
+          "个人信息",
+          "user"
+        ],
+        "buttons": [
+          "扫码取水",
+          "刷新",
+          "查看全部设备",
+          "开始使用",
+          "查看全部",
+          "Close",
+          "支付宝充值",
+          "微信充值",
+          "稍后再说",
+          "立即充值"
+        ],
+        "links": [],
+        "inputs": [],
+        "tables": [
+          {
+            "headers": [],
+            "rowCount": 3,
+            "hasEmptyText": false,
+            "textPreview": "设备ID DEV0001 位置 一号楼 一号楼6层浴室 楼层 6层"
+          },
+          {
+            "headers": [],
+            "rowCount": 3,
+            "hasEmptyText": false,
+            "textPreview": "设备ID DEV0002 位置 一号楼 一号楼3层浴室 楼层 3层"
+          },
+          {
+            "headers": [],
+            "rowCount": 3,
+            "hasEmptyText": false,
+            "textPreview": "设备ID DEV0003 位置 一号楼 一号楼5层浴室 楼层 5层"
+          },
+          {
+            "headers": [],
+            "rowCount": 3,
+            "hasEmptyText": false,
+            "textPreview": "设备ID DEV0004 位置 一号楼 一号楼5层浴室 楼层 5层"
+          },
+          {
+            "headers": [],
+            "rowCount": 3,
+            "hasEmptyText": false,
+            "textPreview": "设备ID DEV0005 位置 一号楼 一号楼3层浴室 楼层 3层"
+          },
+          {
+            "headers": [],
+            "rowCount": 3,
+            "hasEmptyText": false,
+            "textPreview": "设备ID DEV0006 位置 二号楼 二号楼1层浴室 楼层 1层"
+          },
+          {
+            "headers": [],
+            "rowCount": 3,
+            "hasEmptyText": false,
+            "textPreview": "设备ID DEV0007 位置 二号楼 二号楼5层浴室 楼层 5层"
+          },
+          {
+            "headers": [],
+            "rowCount": 3,
+            "hasEmptyText": false,
+            "textPreview": "设备ID DEV0008 位置 二号楼 二号楼3层浴室 楼层 3层"
+          },
+          {
+            "headers": [],
+            "rowCount": 3,
+            "hasEmptyText": false,
+            "textPreview": "设备ID DEV0009 位置 二号楼 二号楼2层浴室 楼层 2层"
+          },
+          {
+            "headers": [],
+            "rowCount": 3,
+            "hasEmptyText": false,
+            "textPreview": "设备ID DEV0010 位置 二号楼 二号楼6层浴室 楼层 6层"
+          },
+          {
+            "headers": [],
+            "rowCount": 3,
+            "hasEmptyText": false,
+            "textPreview": "设备ID DEV0011 位置 三号楼 三号楼4层浴室 楼层 4层"
+          },
+          {
+            "headers": [],
+            "rowCount": 3,
+            "hasEmptyText": false,
+            "textPreview": "设备ID DEV0012 位置 三号楼 三号楼2层浴室 楼层 2层"
+          },
+          {
+            "headers": [],
+            "rowCount": 3,
+            "hasEmptyText": false,
+            "textPreview": "设备ID DEV0013 位置 三号楼 三号楼3层浴室 楼层 3层"
+          },
+          {
+            "headers": [],
+            "rowCount": 3,
+            "hasEmptyText": false,
+            "textPreview": "设备ID DEV0014 位置 三号楼 三号楼4层浴室 楼层 4层"
+          },
+          {
+            "headers": [],
+            "rowCount": 3,
+            "hasEmptyText": false,
+            "textPreview": "设备ID DEV0015 位置 三号楼 三号楼2层浴室 楼层 2层"
+          },
+          {
+            "headers": [],
+            "rowCount": 3,
+            "hasEmptyText": false,
+            "textPreview": "设备ID DEV0016 位置 图书馆 图书馆4层浴室 楼层 4层"
+          },
+          {
+            "headers": [],
+            "rowCount": 3,
+            "hasEmptyText": false,
+            "textPreview": "设备ID DEV0017 位置 图书馆 图书馆3层浴室 楼层 3层"
+          },
+          {
+            "headers": [],
+            "rowCount": 3,
+            "hasEmptyText": false,
+            "textPreview": "设备ID DEV0018 位置 图书馆 图书馆5层浴室 楼层 5层"
+          },
+          {
+            "headers": [],
+            "rowCount": 3,
+            "hasEmptyText": false,
+            "textPreview": "设备ID DEV0019 位置 图书馆 图书馆6层浴室 楼层 6层"
+          },
+          {
+            "headers": [],
+            "rowCount": 3,
+            "hasEmptyText": false,
+            "textPreview": "设备ID DEV0020 位置 图书馆 图书馆6层浴室 楼层 6层"
+          }
+        ],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "校园热水服务首页设备列表消费记录账户充值消息中心个人信息登录后首页演示学生欢迎回来，演示学生已登录学生首页扫码取水刷新账户余额0.00元点击前往充值本月用水0.0L累计用量本月消费¥0.00累计消费未读消息1点击查看详情智能水控终端在线 16离线 4告警 3查看全部设备水控终端-001在线设备IDDEV0001位置一号楼 一号楼6层浴室楼层6层水温35.6°C流速8.4L/min累计325L⚠️ 连续满流运行中开始使用水控终端-002在线设备IDDEV0002位置一号楼 一号楼3层浴室楼层3层水温45.8°C流速2.1L/min累计380L0开始使用水控终端-0030在线设备IDDEV0003位置一号楼 一号楼5层浴室楼层5层水温43.1°C流速3.2L/min累计225L0开始使用水控终端-0040在线设备IDDEV0004位置一号楼 一号楼5层浴室楼层5层水温42.7°C流速7.8L/min累计437L0开始使用水控终端-005离线设备IDDEV0005位置一号楼 一号楼3层浴室楼层3层离线水控终端-006在线设备IDDEV0006位置二号楼 二号楼1层浴室楼层1层水温49.7°C流速8.7L/min累计116L⚠️ 连续满流运行中开始使用水控终端-0070在线设备IDDEV0007位置二号楼 二号楼5层浴室楼层5层水温46.6°C流速2.2L/min累计499L0开始使用水控终端-0080在线设备IDDEV0008位置二号楼 二号楼3层浴室楼层3层水温41.8°C流速7.7L/min累计113L0开始使用水控终端-009在线设备IDDEV0009位置二号楼 二号楼2层浴室楼层2层水温42.4°C流速8.3L/min累计92L⚠️ 连续满流运行中开始使用水控终端-010离线设备IDDEV0010位置二号楼 二号楼6层浴室楼层6层离线水控终端-0110在线设备IDDEV0011位置三号楼 三号楼4层浴室楼层4层水温37.0°C流速4.8L/min累计78L0开始使用水控终端-0120在线设备IDDEV0012位置三号楼 三号楼2层浴室楼层2层水温38.8°C流速2.3L/min累计498L0开始使用水控终端-0130在线设备IDDEV0013位置三号楼 三号楼3层浴室楼层3层水温36.8°C流速1.1L/min累计483L0开始使用水控终端-0140在线设备IDDEV0014位置三号楼 三号楼4层浴室楼层4层水温50.0°C流速1.6L/min累计120L0开始使用水控终端-015离线设备IDDEV0015位置三号楼 三号楼2层浴室楼层2层离线水控终端-0160在线设备IDDEV0016位置图书馆 图书馆4层浴室楼层4层水温45.1°C流速5.4L/min累计177L0开始使用水控终端-0170在线设备IDDEV0017位置图书馆 图书馆3层浴室楼层3层水温48.3°C流速6.0L/min累计12L0开始使用水控终端-018在线设备IDDEV0018位置图书馆 图书馆5层浴室楼层5层水温49.0°C流速2.7L/min累计262L0开始使用水控终端-0190在线设备IDDEV0019位置图书馆 图书馆6层浴室楼层6层水温47.4°C流速4.0L/min累计50L0开始使用水控终端-020离线设备IDDEV0020位置图书馆 图书馆6层浴室楼层6层离线最近消费记录查看全部水控终端-004¥1.07时间: 2026/5/31 02:25:47用量: 30.4L | 水温: 44.7°C支付方式: 余额水控终端-016¥2.20时间: 2026/5/19 11:25:47用量: 44.0L | 水温: 46.9°C支付方式: 支付宝水控终端-016¥1.95时间: 2026/5/16 14:25:47用量: 39.0L | 水温: 42.0°C支付方式: 余额水控终端-019¥1.24时间: 2026/5/9 08:25:47用量: 24.7L | 水温: 44.3°C支付方式: 微信资费标准基础水价：¥0.05/L阶梯水价：0-50L: ¥0.05/L50-100L: ¥0.08/L100L+: ¥0.12/L夜间优惠：22:00-6:00 70% 余额不足提醒账户余额不足您的当前余额为 ¥0.00请充值后再使用热水服务支付宝充值微信充",
+        "layout": {
+          "viewportWidth": 1504,
+          "viewportHeight": 1600,
+          "scrollWidth": 1504,
+          "scrollHeight": 2723,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89033-codex-final-current-structure-01-首屏",
+          "label": "首屏",
+          "finalUrl": "http://127.0.0.1:49033/student/dashboard",
+          "title": "校园物联网热水服务系统",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89033/probe/codex-final-20260604-current/may-89033-codex-final-current-structure-01-首屏.json",
+          "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89033/probe/codex-final-20260604-current/may-89033-codex-final-current-structure-01-首屏.png",
+          "elementCount": 1200,
+          "interactiveCount": 34,
+          "interactiveLabels": [
+            "首页 设备列表 消费记录 账户充值 消息中心 个人信息",
+            "首页",
+            "设备列表",
+            "消费记录",
+            "账户充值",
+            "消息中心",
+            "个人信息",
+            "扫码取水",
+            "刷新",
+            "查看全部设备",
+            "开始使用",
+            "查看全部",
+            "余额不足提醒 账户余额不足 您的当前余额为 ¥0.00 请充值后再使用热水服务 支付宝充值 微信充值 稍后再说 立即充值",
+            "Close",
+            "支付宝充值",
+            "微信充值",
+            "稍后再说",
+            "立即充值"
+          ]
+        }
+      },
+      {
+        "label": "导航:首页",
+        "url": "http://127.0.0.1:49033/student/dashboard",
+        "title": "校园物联网热水服务系统",
+        "headings": [
+          "欢迎回来，演示学生"
+        ],
+        "navLabels": [
+          "首页 设备列表 消费记录 账户充值 消息中心 个人信息",
+          "首页",
+          "dashboard",
+          "设备列表",
+          "desktop",
+          "消费记录",
+          "file-text",
+          "账户充值",
+          "wallet",
+          "消息中心",
+          "message",
+          "个人信息",
+          "user"
+        ],
+        "buttons": [
+          "扫码取水",
+          "刷新",
+          "查看全部设备",
+          "开始使用",
+          "查看全部"
+        ],
+        "links": [],
+        "inputs": [],
+        "tables": [
+          {
+            "headers": [],
+            "rowCount": 3,
+            "hasEmptyText": false,
+            "textPreview": "设备ID DEV0001 位置 一号楼 一号楼6层浴室 楼层 6层"
+          },
+          {
+            "headers": [],
+            "rowCount": 3,
+            "hasEmptyText": false,
+            "textPreview": "设备ID DEV0002 位置 一号楼 一号楼3层浴室 楼层 3层"
+          },
+          {
+            "headers": [],
+            "rowCount": 3,
+            "hasEmptyText": false,
+            "textPreview": "设备ID DEV0003 位置 一号楼 一号楼5层浴室 楼层 5层"
+          },
+          {
+            "headers": [],
+            "rowCount": 3,
+            "hasEmptyText": false,
+            "textPreview": "设备ID DEV0004 位置 一号楼 一号楼5层浴室 楼层 5层"
+          },
+          {
+            "headers": [],
+            "rowCount": 3,
+            "hasEmptyText": false,
+            "textPreview": "设备ID DEV0005 位置 一号楼 一号楼3层浴室 楼层 3层"
+          },
+          {
+            "headers": [],
+            "rowCount": 3,
+            "hasEmptyText": false,
+            "textPreview": "设备ID DEV0006 位置 二号楼 二号楼1层浴室 楼层 1层"
+          },
+          {
+            "headers": [],
+            "rowCount": 3,
+            "hasEmptyText": false,
+            "textPreview": "设备ID DEV0007 位置 二号楼 二号楼5层浴室 楼层 5层"
+          },
+          {
+            "headers": [],
+            "rowCount": 3,
+            "hasEmptyText": false,
+            "textPreview": "设备ID DEV0008 位置 二号楼 二号楼3层浴室 楼层 3层"
+          },
+          {
+            "headers": [],
+            "rowCount": 3,
+            "hasEmptyText": false,
+            "textPreview": "设备ID DEV0009 位置 二号楼 二号楼2层浴室 楼层 2层"
+          },
+          {
+            "headers": [],
+            "rowCount": 3,
+            "hasEmptyText": false,
+            "textPreview": "设备ID DEV0010 位置 二号楼 二号楼6层浴室 楼层 6层"
+          },
+          {
+            "headers": [],
+            "rowCount": 3,
+            "hasEmptyText": false,
+            "textPreview": "设备ID DEV0011 位置 三号楼 三号楼4层浴室 楼层 4层"
+          },
+          {
+            "headers": [],
+            "rowCount": 3,
+            "hasEmptyText": false,
+            "textPreview": "设备ID DEV0012 位置 三号楼 三号楼2层浴室 楼层 2层"
+          },
+          {
+            "headers": [],
+            "rowCount": 3,
+            "hasEmptyText": false,
+            "textPreview": "设备ID DEV0013 位置 三号楼 三号楼3层浴室 楼层 3层"
+          },
+          {
+            "headers": [],
+            "rowCount": 3,
+            "hasEmptyText": false,
+            "textPreview": "设备ID DEV0014 位置 三号楼 三号楼4层浴室 楼层 4层"
+          },
+          {
+            "headers": [],
+            "rowCount": 3,
+            "hasEmptyText": false,
+            "textPreview": "设备ID DEV0015 位置 三号楼 三号楼2层浴室 楼层 2层"
+          },
+          {
+            "headers": [],
+            "rowCount": 3,
+            "hasEmptyText": false,
+            "textPreview": "设备ID DEV0016 位置 图书馆 图书馆4层浴室 楼层 4层"
+          },
+          {
+            "headers": [],
+            "rowCount": 3,
+            "hasEmptyText": false,
+            "textPreview": "设备ID DEV0017 位置 图书馆 图书馆3层浴室 楼层 3层"
+          },
+          {
+            "headers": [],
+            "rowCount": 3,
+            "hasEmptyText": false,
+            "textPreview": "设备ID DEV0018 位置 图书馆 图书馆5层浴室 楼层 5层"
+          },
+          {
+            "headers": [],
+            "rowCount": 3,
+            "hasEmptyText": false,
+            "textPreview": "设备ID DEV0019 位置 图书馆 图书馆6层浴室 楼层 6层"
+          },
+          {
+            "headers": [],
+            "rowCount": 3,
+            "hasEmptyText": false,
+            "textPreview": "设备ID DEV0020 位置 图书馆 图书馆6层浴室 楼层 6层"
+          }
+        ],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "校园热水服务首页设备列表消费记录账户充值消息中心个人信息登录后首页演示学生欢迎回来，演示学生已登录学生首页扫码取水刷新账户余额0.00元点击前往充值本月用水0.0L累计用量本月消费¥0.00累计消费未读消息1点击查看详情智能水控终端在线 16离线 4告警 3查看全部设备水控终端-001在线设备IDDEV0001位置一号楼 一号楼6层浴室楼层6层水温35.6°C流速8.4L/min累计325L⚠️ 连续满流运行中开始使用水控终端-002在线设备IDDEV0002位置一号楼 一号楼3层浴室楼层3层水温45.8°C流速2.1L/min累计380L0开始使用水控终端-0030在线设备IDDEV0003位置一号楼 一号楼5层浴室楼层5层水温43.1°C流速3.2L/min累计225L0开始使用水控终端-0040在线设备IDDEV0004位置一号楼 一号楼5层浴室楼层5层水温42.7°C流速7.8L/min累计437L0开始使用水控终端-005离线设备IDDEV0005位置一号楼 一号楼3层浴室楼层3层离线水控终端-006在线设备IDDEV0006位置二号楼 二号楼1层浴室楼层1层水温49.7°C流速8.7L/min累计116L⚠️ 连续满流运行中开始使用水控终端-0070在线设备IDDEV0007位置二号楼 二号楼5层浴室楼层5层水温46.6°C流速2.2L/min累计499L0开始使用水控终端-0080在线设备IDDEV0008位置二号楼 二号楼3层浴室楼层3层水温41.8°C流速7.7L/min累计113L0开始使用水控终端-009在线设备IDDEV0009位置二号楼 二号楼2层浴室楼层2层水温42.4°C流速8.3L/min累计92L⚠️ 连续满流运行中开始使用水控终端-010离线设备IDDEV0010位置二号楼 二号楼6层浴室楼层6层离线水控终端-0110在线设备IDDEV0011位置三号楼 三号楼4层浴室楼层4层水温37.0°C流速4.8L/min累计78L0开始使用水控终端-0120在线设备IDDEV0012位置三号楼 三号楼2层浴室楼层2层水温38.8°C流速2.3L/min累计498L0开始使用水控终端-0130在线设备IDDEV0013位置三号楼 三号楼3层浴室楼层3层水温36.8°C流速1.1L/min累计483L0开始使用水控终端-0140在线设备IDDEV0014位置三号楼 三号楼4层浴室楼层4层水温50.0°C流速1.6L/min累计120L0开始使用水控终端-015离线设备IDDEV0015位置三号楼 三号楼2层浴室楼层2层离线水控终端-0160在线设备IDDEV0016位置图书馆 图书馆4层浴室楼层4层水温45.1°C流速5.4L/min累计177L0开始使用水控终端-0170在线设备IDDEV0017位置图书馆 图书馆3层浴室楼层3层水温48.3°C流速6.0L/min累计12L0开始使用水控终端-018在线设备IDDEV0018位置图书馆 图书馆5层浴室楼层5层水温49.0°C流速2.7L/min累计262L0开始使用水控终端-0190在线设备IDDEV0019位置图书馆 图书馆6层浴室楼层6层水温47.4°C流速4.0L/min累计50L0开始使用水控终端-020离线设备IDDEV0020位置图书馆 图书馆6层浴室楼层6层离线最近消费记录查看全部水控终端-004¥1.07时间: 2026/5/31 02:25:47用量: 30.4L | 水温: 44.7°C支付方式: 余额水控终端-016¥2.20时间: 2026/5/19 11:25:47用量: 44.0L | 水温: 46.9°C支付方式: 支付宝水控终端-016¥1.95时间: 2026/5/16 14:25:47用量: 39.0L | 水温: 42.0°C支付方式: 余额水控终端-019¥1.24时间: 2026/5/9 08:25:47用量: 24.7L | 水温: 44.3°C支付方式: 微信资费标准基础水价：¥0.05/L阶梯水价：0-50L: ¥0.05/L50-100L: ¥0.08/L100L+: ¥0.12/L夜间优惠：22:00-6:00 70% 余额不足提醒账户余额不足您的当前余额为 ¥0.00请充值后再使用热水服务支付宝充值微信充",
+        "layout": {
+          "viewportWidth": 1536,
+          "viewportHeight": 1600,
+          "scrollWidth": 1536,
+          "scrollHeight": 2723,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89033-codex-final-current-structure-02-导航-首页",
+          "label": "导航:首页",
+          "finalUrl": "http://127.0.0.1:49033/student/dashboard",
+          "title": "校园物联网热水服务系统",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89033/probe/codex-final-20260604-current/may-89033-codex-final-current-structure-02-导航-首页.json",
+          "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89033/probe/codex-final-20260604-current/may-89033-codex-final-current-structure-02-导航-首页.png",
+          "elementCount": 1200,
+          "interactiveCount": 34,
+          "interactiveLabels": [
+            "首页 设备列表 消费记录 账户充值 消息中心 个人信息",
+            "首页",
+            "设备列表",
+            "消费记录",
+            "账户充值",
+            "消息中心",
+            "个人信息",
+            "扫码取水",
+            "刷新",
+            "查看全部设备",
+            "开始使用",
+            "查看全部",
+            "余额不足提醒账户余额不足您的当前余额为 ¥0.00请充值后再使用热水服务支付宝充值微信充值稍后再说立即充值",
+            "Close",
+            "支付宝充值",
+            "微信充值",
+            "稍后再说",
+            "立即充值"
+          ]
+        }
+      },
+      {
+        "label": "操作:查看全部",
+        "url": "http://127.0.0.1:49033/student/transactions",
+        "title": "校园物联网热水服务系统",
+        "headings": [
+          "消费账单"
+        ],
+        "navLabels": [
+          "首页 设备列表 消费记录 账户充值 消息中心 个人信息",
+          "首页",
+          "dashboard",
+          "设备列表",
+          "desktop",
+          "消费记录",
+          "file-text",
+          "账户充值",
+          "wallet",
+          "消息中心",
+          "message",
+          "个人信息",
+          "user"
+        ],
+        "buttons": [
+          "刷 新",
+          "查 询",
+          "详情"
+        ],
+        "links": [],
+        "inputs": [
+          {
+            "tag": "input",
+            "type": "",
+            "placeholder": "开始日期",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "",
+            "placeholder": "结束日期",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "search",
+            "placeholder": "",
+            "name": "",
+            "label": "页码"
+          }
+        ],
+        "tables": [
+          {
+            "headers": [
+              "交易ID",
+              "设备信息",
+              "开始时间",
+              "结束时间",
+              "时长",
+              "用水量",
+              "平均水温",
+              "平均流速",
+              "支付方式",
+              "金额",
+              "状态",
+              "操作"
+            ],
+            "rowCount": 4,
+            "hasEmptyText": false,
+            "textPreview": "交易ID 设备信息 开始时间 结束时间 时长 用水量 平均水温 平均流速 支付方式 金额 状态 操作 交易ID 设备信息 开始时间 结束时间 时长 用水量 平均水温 平均流速 支付方式 金额 状态 操作 16 水控终端-004 一号楼5层浴室 2026/5/31 02:25:47 2026/5/31 02:31:07 5分20秒 30.44L 44.7°C 4.91L/min 余额扣费 ¥1.07 已完成 详情 3 水控终端-016 图书馆4层浴室 2026/5/19 11:25:47 2026/5/19 11:41:18 15分31秒 44.00L 46.9°C 5.14L/min 支付宝 "
+          }
+        ],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "校园热水服务首页设备列表消费记录账户充值消息中心个人信息登录后首页演示学生消费账单刷 新总消费笔数4累计用水量138.2L累计消费金额¥6.46时间筛选：查 询交易ID设备信息开始时间结束时间时长用水量平均水温平均流速支付方式金额状态操作交易ID设备信息开始时间结束时间时长用水量平均水温平均流速支付方式金额状态操作16水控终端-004一号楼5层浴室2026/5/31 02:25:472026/5/31 02:31:075分20秒30.44L44.7°C4.91L/min余额扣费¥1.07已完成详情3水控终端-016图书馆4层浴室2026/5/19 11:25:472026/5/19 11:41:1815分31秒44.00L46.9°C5.14L/min支付宝¥2.20已完成详情31水控终端-016图书馆4层浴室2026/5/16 14:25:472026/5/16 14:55:1429分27秒39.02L42.0°C5.82L/min余额扣费¥1.95已完成详情12水控终端-019图书馆6层浴室2026/5/9 08:25:472026/5/9 08:51:1225分25秒24.71L44.3°C8.86L/min微信支付¥1.24已完成详情共 4 条记录110 条/页",
+        "layout": {
+          "viewportWidth": 1568,
+          "viewportHeight": 1600,
+          "scrollWidth": 1568,
+          "scrollHeight": 1600,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89033-codex-final-current-structure-03-操作-查看全部",
+          "label": "操作:查看全部",
+          "finalUrl": "http://127.0.0.1:49033/student/transactions",
+          "title": "校园物联网热水服务系统",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89033/probe/codex-final-20260604-current/may-89033-codex-final-current-structure-03-操作-查看全部.json",
+          "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89033/probe/codex-final-20260604-current/may-89033-codex-final-current-structure-03-操作-查看全部.png",
+          "elementCount": 303,
+          "interactiveCount": 20,
+          "interactiveLabels": [
+            "首页 设备列表 消费记录 账户充值 消息中心 个人信息",
+            "首页",
+            "设备列表",
+            "消费记录",
+            "账户充值",
+            "消息中心",
+            "个人信息",
+            "刷 新",
+            "开始日期",
+            "结束日期",
+            "查 询",
+            "详情",
+            "1",
+            "页码"
+          ]
+        }
+      },
+      {
+        "label": "二层操作:查看全部->详情",
+        "url": "http://127.0.0.1:49033/student/transactions",
+        "title": "校园物联网热水服务系统",
+        "headings": [
+          "消费账单"
+        ],
+        "navLabels": [
+          "首页 设备列表 消费记录 账户充值 消息中心 个人信息",
+          "首页",
+          "dashboard",
+          "设备列表",
+          "desktop",
+          "消费记录",
+          "file-text",
+          "账户充值",
+          "wallet",
+          "消息中心",
+          "message",
+          "个人信息",
+          "user"
+        ],
+        "buttons": [
+          "刷 新",
+          "查 询",
+          "详情",
+          "Close",
+          "关 闭"
+        ],
+        "links": [],
+        "inputs": [
+          {
+            "tag": "input",
+            "type": "",
+            "placeholder": "开始日期",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "",
+            "placeholder": "结束日期",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "search",
+            "placeholder": "",
+            "name": "",
+            "label": "页码"
+          }
+        ],
+        "tables": [
+          {
+            "headers": [
+              "交易ID",
+              "设备信息",
+              "开始时间",
+              "结束时间",
+              "时长",
+              "用水量",
+              "平均水温",
+              "平均流速",
+              "支付方式",
+              "金额",
+              "状态",
+              "操作"
+            ],
+            "rowCount": 4,
+            "hasEmptyText": false,
+            "textPreview": "交易ID 设备信息 开始时间 结束时间 时长 用水量 平均水温 平均流速 支付方式 金额 状态 操作 交易ID 设备信息 开始时间 结束时间 时长 用水量 平均水温 平均流速 支付方式 金额 状态 操作 16 水控终端-004 一号楼5层浴室 2026/5/31 02:25:47 2026/5/31 02:31:07 5分20秒 30.44L 44.7°C 4.91L/min 余额扣费 ¥1.07 已完成 详情 3 水控终端-016 图书馆4层浴室 2026/5/19 11:25:47 2026/5/19 11:41:18 15分31秒 44.00L 46.9°C 5.14L/min 支付宝 "
+          },
+          {
+            "headers": [
+              "交易ID",
+              "设备名称",
+              "设备位置",
+              "开始时间",
+              "结束时间",
+              "使用时长",
+              "用水量",
+              "平均水温",
+              "平均流速",
+              "支付方式",
+              "交易金额",
+              "交易状态"
+            ],
+            "rowCount": 12,
+            "hasEmptyText": false,
+            "textPreview": "交易ID 16 设备名称 水控终端-004 设备位置 一号楼5层浴室 开始时间 2026/5/31 02:25:47 结束时间 2026/5/31 02:31:07 使用时长 5分20秒 用水量 30.44L 平均水温 44.7°C 平均流速 4.91L/min 支付方式 余额扣费 交易金额 ¥1.07 交易状态 已完成"
+          }
+        ],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "校园热水服务首页设备列表消费记录账户充值消息中心个人信息登录后首页演示学生消费账单刷 新总消费笔数4累计用水量138.2L累计消费金额¥6.46时间筛选：查 询交易ID设备信息开始时间结束时间时长用水量平均水温平均流速支付方式金额状态操作交易ID设备信息开始时间结束时间时长用水量平均水温平均流速支付方式金额状态操作16水控终端-004一号楼5层浴室2026/5/31 02:25:472026/5/31 02:31:075分20秒30.44L44.7°C4.91L/min余额扣费¥1.07已完成详情3水控终端-016图书馆4层浴室2026/5/19 11:25:472026/5/19 11:41:1815分31秒44.00L46.9°C5.14L/min支付宝¥2.20已完成详情31水控终端-016图书馆4层浴室2026/5/16 14:25:472026/5/16 14:55:1429分27秒39.02L42.0°C5.82L/min余额扣费¥1.95已完成详情12水控终端-019图书馆6层浴室2026/5/9 08:25:472026/5/9 08:51:1225分25秒24.71L44.3°C8.86L/min微信支付¥1.24已完成详情共 4 条记录110 条/页 账单详情交易ID16设备名称水控终端-004设备位置一号楼5层浴室开始时间2026/5/31 02:25:47结束时间2026/5/31 02:31:07使用时长5分20秒用水量30.44L平均水温44.7°C平均流速4.91L/min支付方式余额扣费交易金额¥1.07交易状态已完成关 闭",
+        "layout": {
+          "viewportWidth": 1600,
+          "viewportHeight": 1600,
+          "scrollWidth": 1600,
+          "scrollHeight": 1600,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89033-codex-final-current-structure-04-二层操作-查看全部-详情",
+          "label": "二层操作:查看全部->详情",
+          "finalUrl": "http://127.0.0.1:49033/student/transactions",
+          "title": "校园物联网热水服务系统",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89033/probe/codex-final-20260604-current/may-89033-codex-final-current-structure-04-二层操作-查看全部-详情.json",
+          "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89033/probe/codex-final-20260604-current/may-89033-codex-final-current-structure-04-二层操作-查看全部-详情.png",
+          "elementCount": 389,
+          "interactiveCount": 24,
+          "interactiveLabels": [
+            "首页 设备列表 消费记录 账户充值 消息中心 个人信息",
+            "首页",
+            "设备列表",
+            "消费记录",
+            "账户充值",
+            "消息中心",
+            "个人信息",
+            "刷 新",
+            "开始日期",
+            "结束日期",
+            "查 询",
+            "详情",
+            "1",
+            "页码",
+            "账单详情 交易ID 16 设备名称 水控终端-004 设备位置 一号楼5层浴室 开始时间 2026/5/31 02:25:47 结束时间 2026/5/31 02:31:07 使用时长 5分20秒 用水量 30.44L 平均水温 44.7°C 平均流速 4.91L/min 支付方式 余额扣费 交易金额 ¥1.07 交易状态 已完成 关 闭",
+            "Close",
+            "关 闭"
+          ]
+        }
+      },
+      {
+        "label": "操作:查看全部设备",
+        "url": "http://127.0.0.1:49033/student/devices",
+        "title": "校园物联网热水服务系统",
+        "headings": [
+          "智能水控终端列表"
+        ],
+        "navLabels": [
+          "首页 设备列表 消费记录 账户充值 消息中心 个人信息",
+          "首页",
+          "dashboard",
+          "设备列表",
+          "desktop",
+          "消费记录",
+          "file-text",
+          "账户充值",
+          "wallet",
+          "消息中心",
+          "message",
+          "个人信息",
+          "user"
+        ],
+        "buttons": [
+          "刷 新",
+          "开始使用"
+        ],
+        "links": [],
+        "inputs": [
+          {
+            "tag": "input",
+            "type": "text",
+            "placeholder": "搜索设备名称/位置/ID",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "search",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "search",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          }
+        ],
+        "tables": [
+          {
+            "headers": [],
+            "rowCount": 4,
+            "hasEmptyText": false,
+            "textPreview": "设备ID DEV0001 位置 一号楼 一号楼6层浴室 楼层 6层 型号 WH-2024"
+          },
+          {
+            "headers": [],
+            "rowCount": 4,
+            "hasEmptyText": false,
+            "textPreview": "设备ID DEV0002 位置 一号楼 一号楼3层浴室 楼层 3层 型号 WH-2024"
+          },
+          {
+            "headers": [],
+            "rowCount": 4,
+            "hasEmptyText": false,
+            "textPreview": "设备ID DEV0003 位置 一号楼 一号楼5层浴室 楼层 5层 型号 WH-2024"
+          },
+          {
+            "headers": [],
+            "rowCount": 4,
+            "hasEmptyText": false,
+            "textPreview": "设备ID DEV0004 位置 一号楼 一号楼5层浴室 楼层 5层 型号 WH-2024"
+          },
+          {
+            "headers": [],
+            "rowCount": 4,
+            "hasEmptyText": false,
+            "textPreview": "设备ID DEV0005 位置 一号楼 一号楼3层浴室 楼层 3层 型号 WH-2024"
+          },
+          {
+            "headers": [],
+            "rowCount": 4,
+            "hasEmptyText": false,
+            "textPreview": "设备ID DEV0006 位置 二号楼 二号楼1层浴室 楼层 1层 型号 WH-2024"
+          },
+          {
+            "headers": [],
+            "rowCount": 4,
+            "hasEmptyText": false,
+            "textPreview": "设备ID DEV0007 位置 二号楼 二号楼5层浴室 楼层 5层 型号 WH-2024"
+          },
+          {
+            "headers": [],
+            "rowCount": 4,
+            "hasEmptyText": false,
+            "textPreview": "设备ID DEV0008 位置 二号楼 二号楼3层浴室 楼层 3层 型号 WH-2024"
+          },
+          {
+            "headers": [],
+            "rowCount": 4,
+            "hasEmptyText": false,
+            "textPreview": "设备ID DEV0009 位置 二号楼 二号楼2层浴室 楼层 2层 型号 WH-2024"
+          },
+          {
+            "headers": [],
+            "rowCount": 4,
+            "hasEmptyText": false,
+            "textPreview": "设备ID DEV0010 位置 二号楼 二号楼6层浴室 楼层 6层 型号 WH-2024"
+          },
+          {
+            "headers": [],
+            "rowCount": 4,
+            "hasEmptyText": false,
+            "textPreview": "设备ID DEV0011 位置 三号楼 三号楼4层浴室 楼层 4层 型号 WH-2024"
+          },
+          {
+            "headers": [],
+            "rowCount": 4,
+            "hasEmptyText": false,
+            "textPreview": "设备ID DEV0012 位置 三号楼 三号楼2层浴室 楼层 2层 型号 WH-2024"
+          },
+          {
+            "headers": [],
+            "rowCount": 4,
+            "hasEmptyText": false,
+            "textPreview": "设备ID DEV0013 位置 三号楼 三号楼3层浴室 楼层 3层 型号 WH-2024"
+          },
+          {
+            "headers": [],
+            "rowCount": 4,
+            "hasEmptyText": false,
+            "textPreview": "设备ID DEV0014 位置 三号楼 三号楼4层浴室 楼层 4层 型号 WH-2024"
+          },
+          {
+            "headers": [],
+            "rowCount": 4,
+            "hasEmptyText": false,
+            "textPreview": "设备ID DEV0015 位置 三号楼 三号楼2层浴室 楼层 2层 型号 WH-2024"
+          },
+          {
+            "headers": [],
+            "rowCount": 4,
+            "hasEmptyText": false,
+            "textPreview": "设备ID DEV0016 位置 图书馆 图书馆4层浴室 楼层 4层 型号 WH-2024"
+          },
+          {
+            "headers": [],
+            "rowCount": 4,
+            "hasEmptyText": false,
+            "textPreview": "设备ID DEV0017 位置 图书馆 图书馆3层浴室 楼层 3层 型号 WH-2024"
+          },
+          {
+            "headers": [],
+            "rowCount": 4,
+            "hasEmptyText": false,
+            "textPreview": "设备ID DEV0018 位置 图书馆 图书馆5层浴室 楼层 5层 型号 WH-2024"
+          },
+          {
+            "headers": [],
+            "rowCount": 4,
+            "hasEmptyText": false,
+            "textPreview": "设备ID DEV0019 位置 图书馆 图书馆6层浴室 楼层 6层 型号 WH-2024"
+          },
+          {
+            "headers": [],
+            "rowCount": 4,
+            "hasEmptyText": false,
+            "textPreview": "设备ID DEV0020 位置 图书馆 图书馆6层浴室 楼层 6层 型号 WH-2024"
+          }
+        ],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "校园热水服务首页设备列表消费记录账户充值消息中心个人信息登录后首页演示学生智能水控终端列表在线 16使用中 0离线 4刷 新共 20 台水控终端-001在线设备IDDEV0001位置一号楼 一号楼6层浴室楼层6层型号WH-2024 实时数据水温35.6°C流速8.4L/m累计325L 连续满流运行中开始使用水控终端-002在线设备IDDEV0002位置一号楼 一号楼3层浴室楼层3层型号WH-2024 实时数据水温45.8°C流速2.1L/m累计380L0开始使用异常告警水控终端-003在线设备IDDEV0003位置一号楼 一号楼5层浴室楼层5层型号WH-2024 实时数据水温43.1°C流速3.2L/m累计225L0开始使用水控终端-004在线设备IDDEV0004位置一号楼 一号楼5层浴室楼层5层型号WH-2024 实时数据水温42.7°C流速7.8L/m累计437L0开始使用水控终端-005离线设备IDDEV0005位置一号楼 一号楼3层浴室楼层3层型号WH-2024离线水控终端-006在线设备IDDEV0006位置二号楼 二号楼1层浴室楼层1层型号WH-2024 实时数据水温49.7°C流速8.7L/m累计116L 连续满流运行中开始使用异常告警水控终端-007在线设备IDDEV0007位置二号楼 二号楼5层浴室楼层5层型号WH-2024 实时数据水温46.6°C流速2.2L/m累计499L0开始使用水控终端-008在线设备IDDEV0008位置二号楼 二号楼3层浴室楼层3层型号WH-2024 实时数据水温41.8°C流速7.7L/m累计113L0开始使用水控终端-009在线设备IDDEV0009位置二号楼 二号楼2层浴室楼层2层型号WH-2024 实时数据水温42.4°C流速8.3L/m累计92L 连续满流运行中开始使用水控终端-010离线设备IDDEV0010位置二号楼 二号楼6层浴室楼层6层型号WH-2024离线水控终端-011在线设备IDDEV0011位置三号楼 三号楼4层浴室楼层4层型号WH-2024 实时数据水温37.0°C流速4.8L/m累计78L0开始使用水控终端-012在线设备IDDEV0012位置三号楼 三号楼2层浴室楼层2层型号WH-2024 实时数据水温38.8°C流速2.3L/m累计498L0开始使用水控终端-013在线设备IDDEV0013位置三号楼 三号楼3层浴室楼层3层型号WH-2024 实时数据水温36.8°C流速1.1L/m累计483L0开始使用水控终端-014在线设备IDDEV0014位置三号楼 三号楼4层浴室楼层4层型号WH-2024 实时数据水温50.0°C流速1.6L/m累计120L0开始使用水控终端-015离线设备IDDEV0015位置三号楼 三号楼2层浴室楼层2层型号WH-2024离线水控终端-016在线设备IDDEV0016位置图书馆 图书馆4层浴室楼层4层型号WH-2024 实时数据水温45.1°C流速5.4L/m累计177L0开始使用水控终端-017在线设备IDDEV0017位置图书馆 图书馆3层浴室楼层3层型号WH-2024 实时数据水温48.3°C流速6.0L/m累计12L0开始使用水控终端-018在线设备IDDEV0018位置图书馆 图书馆5层浴室楼层5层型号WH-2024 实时数据水温49.0°C流速2.7L/m累计262L0开始使用异常告警水控终端-019在线设备IDDEV0019位置图书馆 图书馆6层浴室楼层6层型号WH-2024 实时数据水温47.4°C流速4.0L/m累计50L0开始使用水控终端-020离线设备IDDEV0020位置图书馆 图书馆6层浴室楼层6层型号WH-2024离线",
+        "layout": {
+          "viewportWidth": 1632,
+          "viewportHeight": 1600,
+          "scrollWidth": 1632,
+          "scrollHeight": 2494,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89033-codex-final-current-structure-05-操作-查看全部设备",
+          "label": "操作:查看全部设备",
+          "finalUrl": "http://127.0.0.1:49033/student/devices",
+          "title": "校园物联网热水服务系统",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89033/probe/codex-final-20260604-current/may-89033-codex-final-current-structure-05-操作-查看全部设备.json",
+          "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89033/probe/codex-final-20260604-current/may-89033-codex-final-current-structure-05-操作-查看全部设备.png",
+          "elementCount": 1200,
+          "interactiveCount": 27,
+          "interactiveLabels": [
+            "首页 设备列表 消费记录 账户充值 消息中心 个人信息",
+            "首页",
+            "设备列表",
+            "消费记录",
+            "账户充值",
+            "消息中心",
+            "个人信息",
+            "刷 新",
+            "搜索设备名称/位置/ID",
+            "开始使用"
+          ]
+        }
+      },
+      {
+        "label": "二层操作:查看全部设备->刷 新",
+        "url": "http://127.0.0.1:49033/student/devices",
+        "title": "校园物联网热水服务系统",
+        "headings": [
+          "智能水控终端列表"
+        ],
+        "navLabels": [
+          "首页 设备列表 消费记录 账户充值 消息中心 个人信息",
+          "首页",
+          "dashboard",
+          "设备列表",
+          "desktop",
+          "消费记录",
+          "file-text",
+          "账户充值",
+          "wallet",
+          "消息中心",
+          "message",
+          "个人信息",
+          "user"
+        ],
+        "buttons": [
+          "刷 新",
+          "开始使用"
+        ],
+        "links": [],
+        "inputs": [
+          {
+            "tag": "input",
+            "type": "text",
+            "placeholder": "搜索设备名称/位置/ID",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "search",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "search",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          }
+        ],
+        "tables": [
+          {
+            "headers": [],
+            "rowCount": 4,
+            "hasEmptyText": false,
+            "textPreview": "设备ID DEV0001 位置 一号楼 一号楼6层浴室 楼层 6层 型号 WH-2024"
+          },
+          {
+            "headers": [],
+            "rowCount": 4,
+            "hasEmptyText": false,
+            "textPreview": "设备ID DEV0002 位置 一号楼 一号楼3层浴室 楼层 3层 型号 WH-2024"
+          },
+          {
+            "headers": [],
+            "rowCount": 4,
+            "hasEmptyText": false,
+            "textPreview": "设备ID DEV0003 位置 一号楼 一号楼5层浴室 楼层 5层 型号 WH-2024"
+          },
+          {
+            "headers": [],
+            "rowCount": 4,
+            "hasEmptyText": false,
+            "textPreview": "设备ID DEV0004 位置 一号楼 一号楼5层浴室 楼层 5层 型号 WH-2024"
+          },
+          {
+            "headers": [],
+            "rowCount": 4,
+            "hasEmptyText": false,
+            "textPreview": "设备ID DEV0005 位置 一号楼 一号楼3层浴室 楼层 3层 型号 WH-2024"
+          },
+          {
+            "headers": [],
+            "rowCount": 4,
+            "hasEmptyText": false,
+            "textPreview": "设备ID DEV0006 位置 二号楼 二号楼1层浴室 楼层 1层 型号 WH-2024"
+          },
+          {
+            "headers": [],
+            "rowCount": 4,
+            "hasEmptyText": false,
+            "textPreview": "设备ID DEV0007 位置 二号楼 二号楼5层浴室 楼层 5层 型号 WH-2024"
+          },
+          {
+            "headers": [],
+            "rowCount": 4,
+            "hasEmptyText": false,
+            "textPreview": "设备ID DEV0008 位置 二号楼 二号楼3层浴室 楼层 3层 型号 WH-2024"
+          },
+          {
+            "headers": [],
+            "rowCount": 4,
+            "hasEmptyText": false,
+            "textPreview": "设备ID DEV0009 位置 二号楼 二号楼2层浴室 楼层 2层 型号 WH-2024"
+          },
+          {
+            "headers": [],
+            "rowCount": 4,
+            "hasEmptyText": false,
+            "textPreview": "设备ID DEV0010 位置 二号楼 二号楼6层浴室 楼层 6层 型号 WH-2024"
+          },
+          {
+            "headers": [],
+            "rowCount": 4,
+            "hasEmptyText": false,
+            "textPreview": "设备ID DEV0011 位置 三号楼 三号楼4层浴室 楼层 4层 型号 WH-2024"
+          },
+          {
+            "headers": [],
+            "rowCount": 4,
+            "hasEmptyText": false,
+            "textPreview": "设备ID DEV0012 位置 三号楼 三号楼2层浴室 楼层 2层 型号 WH-2024"
+          },
+          {
+            "headers": [],
+            "rowCount": 4,
+            "hasEmptyText": false,
+            "textPreview": "设备ID DEV0013 位置 三号楼 三号楼3层浴室 楼层 3层 型号 WH-2024"
+          },
+          {
+            "headers": [],
+            "rowCount": 4,
+            "hasEmptyText": false,
+            "textPreview": "设备ID DEV0014 位置 三号楼 三号楼4层浴室 楼层 4层 型号 WH-2024"
+          },
+          {
+            "headers": [],
+            "rowCount": 4,
+            "hasEmptyText": false,
+            "textPreview": "设备ID DEV0015 位置 三号楼 三号楼2层浴室 楼层 2层 型号 WH-2024"
+          },
+          {
+            "headers": [],
+            "rowCount": 4,
+            "hasEmptyText": false,
+            "textPreview": "设备ID DEV0016 位置 图书馆 图书馆4层浴室 楼层 4层 型号 WH-2024"
+          },
+          {
+            "headers": [],
+            "rowCount": 4,
+            "hasEmptyText": false,
+            "textPreview": "设备ID DEV0017 位置 图书馆 图书馆3层浴室 楼层 3层 型号 WH-2024"
+          },
+          {
+            "headers": [],
+            "rowCount": 4,
+            "hasEmptyText": false,
+            "textPreview": "设备ID DEV0018 位置 图书馆 图书馆5层浴室 楼层 5层 型号 WH-2024"
+          },
+          {
+            "headers": [],
+            "rowCount": 4,
+            "hasEmptyText": false,
+            "textPreview": "设备ID DEV0019 位置 图书馆 图书馆6层浴室 楼层 6层 型号 WH-2024"
+          },
+          {
+            "headers": [],
+            "rowCount": 4,
+            "hasEmptyText": false,
+            "textPreview": "设备ID DEV0020 位置 图书馆 图书馆6层浴室 楼层 6层 型号 WH-2024"
+          }
+        ],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "校园热水服务首页设备列表消费记录账户充值消息中心个人信息登录后首页演示学生智能水控终端列表在线 16使用中 0离线 4刷 新共 20 台水控终端-001在线设备IDDEV0001位置一号楼 一号楼6层浴室楼层6层型号WH-2024 实时数据水温35.6°C流速8.4L/m累计325L 连续满流运行中开始使用水控终端-002在线设备IDDEV0002位置一号楼 一号楼3层浴室楼层3层型号WH-2024 实时数据水温45.8°C流速2.1L/m累计380L0开始使用异常告警水控终端-003在线设备IDDEV0003位置一号楼 一号楼5层浴室楼层5层型号WH-2024 实时数据水温43.1°C流速3.2L/m累计225L0开始使用水控终端-004在线设备IDDEV0004位置一号楼 一号楼5层浴室楼层5层型号WH-2024 实时数据水温42.7°C流速7.8L/m累计437L0开始使用水控终端-005离线设备IDDEV0005位置一号楼 一号楼3层浴室楼层3层型号WH-2024离线水控终端-006在线设备IDDEV0006位置二号楼 二号楼1层浴室楼层1层型号WH-2024 实时数据水温49.7°C流速8.7L/m累计116L 连续满流运行中开始使用异常告警水控终端-007在线设备IDDEV0007位置二号楼 二号楼5层浴室楼层5层型号WH-2024 实时数据水温46.6°C流速2.2L/m累计499L0开始使用水控终端-008在线设备IDDEV0008位置二号楼 二号楼3层浴室楼层3层型号WH-2024 实时数据水温41.8°C流速7.7L/m累计113L0开始使用水控终端-009在线设备IDDEV0009位置二号楼 二号楼2层浴室楼层2层型号WH-2024 实时数据水温42.4°C流速8.3L/m累计92L 连续满流运行中开始使用水控终端-010离线设备IDDEV0010位置二号楼 二号楼6层浴室楼层6层型号WH-2024离线水控终端-011在线设备IDDEV0011位置三号楼 三号楼4层浴室楼层4层型号WH-2024 实时数据水温37.0°C流速4.8L/m累计78L0开始使用水控终端-012在线设备IDDEV0012位置三号楼 三号楼2层浴室楼层2层型号WH-2024 实时数据水温38.8°C流速2.3L/m累计498L0开始使用水控终端-013在线设备IDDEV0013位置三号楼 三号楼3层浴室楼层3层型号WH-2024 实时数据水温36.8°C流速1.1L/m累计483L0开始使用水控终端-014在线设备IDDEV0014位置三号楼 三号楼4层浴室楼层4层型号WH-2024 实时数据水温50.0°C流速1.6L/m累计120L0开始使用水控终端-015离线设备IDDEV0015位置三号楼 三号楼2层浴室楼层2层型号WH-2024离线水控终端-016在线设备IDDEV0016位置图书馆 图书馆4层浴室楼层4层型号WH-2024 实时数据水温45.1°C流速5.4L/m累计177L0开始使用水控终端-017在线设备IDDEV0017位置图书馆 图书馆3层浴室楼层3层型号WH-2024 实时数据水温48.3°C流速6.0L/m累计12L0开始使用水控终端-018在线设备IDDEV0018位置图书馆 图书馆5层浴室楼层5层型号WH-2024 实时数据水温49.0°C流速2.7L/m累计262L0开始使用异常告警水控终端-019在线设备IDDEV0019位置图书馆 图书馆6层浴室楼层6层型号WH-2024 实时数据水温47.4°C流速4.0L/m累计50L0开始使用水控终端-020离线设备IDDEV0020位置图书馆 图书馆6层浴室楼层6层型号WH-2024离线",
+        "layout": {
+          "viewportWidth": 1664,
+          "viewportHeight": 1600,
+          "scrollWidth": 1664,
+          "scrollHeight": 2494,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89033-codex-final-current-structure-06-二层操作-查看全部设备-刷-新",
+          "label": "二层操作:查看全部设备->刷 新",
+          "finalUrl": "http://127.0.0.1:49033/student/devices",
+          "title": "校园物联网热水服务系统",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89033/probe/codex-final-20260604-current/may-89033-codex-final-current-structure-06-二层操作-查看全部设备-刷-新.json",
+          "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89033/probe/codex-final-20260604-current/may-89033-codex-final-current-structure-06-二层操作-查看全部设备-刷-新.png",
+          "elementCount": 1200,
+          "interactiveCount": 27,
+          "interactiveLabels": [
+            "首页 设备列表 消费记录 账户充值 消息中心 个人信息",
+            "首页",
+            "设备列表",
+            "消费记录",
+            "账户充值",
+            "消息中心",
+            "个人信息",
+            "刷 新",
+            "搜索设备名称/位置/ID",
+            "开始使用"
+          ]
+        }
+      },
+      {
+        "label": "导航:设备列表",
+        "url": "http://127.0.0.1:49033/student/devices",
+        "title": "校园物联网热水服务系统",
+        "headings": [
+          "智能水控终端列表"
+        ],
+        "navLabels": [
+          "首页 设备列表 消费记录 账户充值 消息中心 个人信息",
+          "首页",
+          "dashboard",
+          "设备列表",
+          "desktop",
+          "消费记录",
+          "file-text",
+          "账户充值",
+          "wallet",
+          "消息中心",
+          "message",
+          "个人信息",
+          "user"
+        ],
+        "buttons": [
+          "刷 新",
+          "开始使用"
+        ],
+        "links": [],
+        "inputs": [
+          {
+            "tag": "input",
+            "type": "text",
+            "placeholder": "搜索设备名称/位置/ID",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "search",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "search",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          }
+        ],
+        "tables": [
+          {
+            "headers": [],
+            "rowCount": 4,
+            "hasEmptyText": false,
+            "textPreview": "设备ID DEV0001 位置 一号楼 一号楼6层浴室 楼层 6层 型号 WH-2024"
+          },
+          {
+            "headers": [],
+            "rowCount": 4,
+            "hasEmptyText": false,
+            "textPreview": "设备ID DEV0002 位置 一号楼 一号楼3层浴室 楼层 3层 型号 WH-2024"
+          },
+          {
+            "headers": [],
+            "rowCount": 4,
+            "hasEmptyText": false,
+            "textPreview": "设备ID DEV0003 位置 一号楼 一号楼5层浴室 楼层 5层 型号 WH-2024"
+          },
+          {
+            "headers": [],
+            "rowCount": 4,
+            "hasEmptyText": false,
+            "textPreview": "设备ID DEV0004 位置 一号楼 一号楼5层浴室 楼层 5层 型号 WH-2024"
+          },
+          {
+            "headers": [],
+            "rowCount": 4,
+            "hasEmptyText": false,
+            "textPreview": "设备ID DEV0005 位置 一号楼 一号楼3层浴室 楼层 3层 型号 WH-2024"
+          },
+          {
+            "headers": [],
+            "rowCount": 4,
+            "hasEmptyText": false,
+            "textPreview": "设备ID DEV0006 位置 二号楼 二号楼1层浴室 楼层 1层 型号 WH-2024"
+          },
+          {
+            "headers": [],
+            "rowCount": 4,
+            "hasEmptyText": false,
+            "textPreview": "设备ID DEV0007 位置 二号楼 二号楼5层浴室 楼层 5层 型号 WH-2024"
+          },
+          {
+            "headers": [],
+            "rowCount": 4,
+            "hasEmptyText": false,
+            "textPreview": "设备ID DEV0008 位置 二号楼 二号楼3层浴室 楼层 3层 型号 WH-2024"
+          },
+          {
+            "headers": [],
+            "rowCount": 4,
+            "hasEmptyText": false,
+            "textPreview": "设备ID DEV0009 位置 二号楼 二号楼2层浴室 楼层 2层 型号 WH-2024"
+          },
+          {
+            "headers": [],
+            "rowCount": 4,
+            "hasEmptyText": false,
+            "textPreview": "设备ID DEV0010 位置 二号楼 二号楼6层浴室 楼层 6层 型号 WH-2024"
+          },
+          {
+            "headers": [],
+            "rowCount": 4,
+            "hasEmptyText": false,
+            "textPreview": "设备ID DEV0011 位置 三号楼 三号楼4层浴室 楼层 4层 型号 WH-2024"
+          },
+          {
+            "headers": [],
+            "rowCount": 4,
+            "hasEmptyText": false,
+            "textPreview": "设备ID DEV0012 位置 三号楼 三号楼2层浴室 楼层 2层 型号 WH-2024"
+          },
+          {
+            "headers": [],
+            "rowCount": 4,
+            "hasEmptyText": false,
+            "textPreview": "设备ID DEV0013 位置 三号楼 三号楼3层浴室 楼层 3层 型号 WH-2024"
+          },
+          {
+            "headers": [],
+            "rowCount": 4,
+            "hasEmptyText": false,
+            "textPreview": "设备ID DEV0014 位置 三号楼 三号楼4层浴室 楼层 4层 型号 WH-2024"
+          },
+          {
+            "headers": [],
+            "rowCount": 4,
+            "hasEmptyText": false,
+            "textPreview": "设备ID DEV0015 位置 三号楼 三号楼2层浴室 楼层 2层 型号 WH-2024"
+          },
+          {
+            "headers": [],
+            "rowCount": 4,
+            "hasEmptyText": false,
+            "textPreview": "设备ID DEV0016 位置 图书馆 图书馆4层浴室 楼层 4层 型号 WH-2024"
+          },
+          {
+            "headers": [],
+            "rowCount": 4,
+            "hasEmptyText": false,
+            "textPreview": "设备ID DEV0017 位置 图书馆 图书馆3层浴室 楼层 3层 型号 WH-2024"
+          },
+          {
+            "headers": [],
+            "rowCount": 4,
+            "hasEmptyText": false,
+            "textPreview": "设备ID DEV0018 位置 图书馆 图书馆5层浴室 楼层 5层 型号 WH-2024"
+          },
+          {
+            "headers": [],
+            "rowCount": 4,
+            "hasEmptyText": false,
+            "textPreview": "设备ID DEV0019 位置 图书馆 图书馆6层浴室 楼层 6层 型号 WH-2024"
+          },
+          {
+            "headers": [],
+            "rowCount": 4,
+            "hasEmptyText": false,
+            "textPreview": "设备ID DEV0020 位置 图书馆 图书馆6层浴室 楼层 6层 型号 WH-2024"
+          }
+        ],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "校园热水服务首页设备列表消费记录账户充值消息中心个人信息登录后首页演示学生智能水控终端列表在线 16使用中 0离线 4刷 新共 20 台水控终端-001在线设备IDDEV0001位置一号楼 一号楼6层浴室楼层6层型号WH-2024 实时数据水温35.6°C流速8.4L/m累计325L 连续满流运行中开始使用水控终端-002在线设备IDDEV0002位置一号楼 一号楼3层浴室楼层3层型号WH-2024 实时数据水温45.8°C流速2.1L/m累计380L0开始使用异常告警水控终端-003在线设备IDDEV0003位置一号楼 一号楼5层浴室楼层5层型号WH-2024 实时数据水温43.1°C流速3.2L/m累计225L0开始使用水控终端-004在线设备IDDEV0004位置一号楼 一号楼5层浴室楼层5层型号WH-2024 实时数据水温42.7°C流速7.8L/m累计437L0开始使用水控终端-005离线设备IDDEV0005位置一号楼 一号楼3层浴室楼层3层型号WH-2024离线水控终端-006在线设备IDDEV0006位置二号楼 二号楼1层浴室楼层1层型号WH-2024 实时数据水温49.7°C流速8.7L/m累计116L 连续满流运行中开始使用异常告警水控终端-007在线设备IDDEV0007位置二号楼 二号楼5层浴室楼层5层型号WH-2024 实时数据水温46.6°C流速2.2L/m累计499L0开始使用水控终端-008在线设备IDDEV0008位置二号楼 二号楼3层浴室楼层3层型号WH-2024 实时数据水温41.8°C流速7.7L/m累计113L0开始使用水控终端-009在线设备IDDEV0009位置二号楼 二号楼2层浴室楼层2层型号WH-2024 实时数据水温42.4°C流速8.3L/m累计92L 连续满流运行中开始使用水控终端-010离线设备IDDEV0010位置二号楼 二号楼6层浴室楼层6层型号WH-2024离线水控终端-011在线设备IDDEV0011位置三号楼 三号楼4层浴室楼层4层型号WH-2024 实时数据水温37.0°C流速4.8L/m累计78L0开始使用水控终端-012在线设备IDDEV0012位置三号楼 三号楼2层浴室楼层2层型号WH-2024 实时数据水温38.8°C流速2.3L/m累计498L0开始使用水控终端-013在线设备IDDEV0013位置三号楼 三号楼3层浴室楼层3层型号WH-2024 实时数据水温36.8°C流速1.1L/m累计483L0开始使用水控终端-014在线设备IDDEV0014位置三号楼 三号楼4层浴室楼层4层型号WH-2024 实时数据水温50.0°C流速1.6L/m累计120L0开始使用水控终端-015离线设备IDDEV0015位置三号楼 三号楼2层浴室楼层2层型号WH-2024离线水控终端-016在线设备IDDEV0016位置图书馆 图书馆4层浴室楼层4层型号WH-2024 实时数据水温45.1°C流速5.4L/m累计177L0开始使用水控终端-017在线设备IDDEV0017位置图书馆 图书馆3层浴室楼层3层型号WH-2024 实时数据水温48.3°C流速6.0L/m累计12L0开始使用水控终端-018在线设备IDDEV0018位置图书馆 图书馆5层浴室楼层5层型号WH-2024 实时数据水温49.0°C流速2.7L/m累计262L0开始使用异常告警水控终端-019在线设备IDDEV0019位置图书馆 图书馆6层浴室楼层6层型号WH-2024 实时数据水温47.4°C流速4.0L/m累计50L0开始使用水控终端-020离线设备IDDEV0020位置图书馆 图书馆6层浴室楼层6层型号WH-2024离线",
+        "layout": {
+          "viewportWidth": 1696,
+          "viewportHeight": 1600,
+          "scrollWidth": 1696,
+          "scrollHeight": 2494,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89033-codex-final-current-structure-07-导航-设备列表",
+          "label": "导航:设备列表",
+          "finalUrl": "http://127.0.0.1:49033/student/devices",
+          "title": "校园物联网热水服务系统",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89033/probe/codex-final-20260604-current/may-89033-codex-final-current-structure-07-导航-设备列表.json",
+          "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89033/probe/codex-final-20260604-current/may-89033-codex-final-current-structure-07-导航-设备列表.png",
+          "elementCount": 1200,
+          "interactiveCount": 27,
+          "interactiveLabels": [
+            "首页 设备列表 消费记录 账户充值 消息中心 个人信息",
+            "首页",
+            "设备列表",
+            "消费记录",
+            "账户充值",
+            "消息中心",
+            "个人信息",
+            "刷 新",
+            "搜索设备名称/位置/ID",
+            "开始使用"
+          ]
+        }
+      },
+      {
+        "label": "操作:开始使用",
+        "url": "http://127.0.0.1:49033/student/devices",
+        "title": "校园物联网热水服务系统",
+        "headings": [
+          "智能水控终端列表",
+          "账户余额不足"
+        ],
+        "navLabels": [
+          "首页 设备列表 消费记录 账户充值 消息中心 个人信息",
+          "首页",
+          "dashboard",
+          "设备列表",
+          "desktop",
+          "消费记录",
+          "file-text",
+          "账户充值",
+          "wallet",
+          "消息中心",
+          "message",
+          "个人信息",
+          "user"
+        ],
+        "buttons": [
+          "刷 新",
+          "开始使用",
+          "Close",
+          "支付宝充值",
+          "微信充值",
+          "稍后再说",
+          "立即充值"
+        ],
+        "links": [],
+        "inputs": [
+          {
+            "tag": "input",
+            "type": "text",
+            "placeholder": "搜索设备名称/位置/ID",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "search",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "search",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          }
+        ],
+        "tables": [
+          {
+            "headers": [],
+            "rowCount": 4,
+            "hasEmptyText": false,
+            "textPreview": "设备ID DEV0001 位置 一号楼 一号楼6层浴室 楼层 6层 型号 WH-2024"
+          },
+          {
+            "headers": [],
+            "rowCount": 4,
+            "hasEmptyText": false,
+            "textPreview": "设备ID DEV0002 位置 一号楼 一号楼3层浴室 楼层 3层 型号 WH-2024"
+          },
+          {
+            "headers": [],
+            "rowCount": 4,
+            "hasEmptyText": false,
+            "textPreview": "设备ID DEV0003 位置 一号楼 一号楼5层浴室 楼层 5层 型号 WH-2024"
+          },
+          {
+            "headers": [],
+            "rowCount": 4,
+            "hasEmptyText": false,
+            "textPreview": "设备ID DEV0004 位置 一号楼 一号楼5层浴室 楼层 5层 型号 WH-2024"
+          },
+          {
+            "headers": [],
+            "rowCount": 4,
+            "hasEmptyText": false,
+            "textPreview": "设备ID DEV0005 位置 一号楼 一号楼3层浴室 楼层 3层 型号 WH-2024"
+          },
+          {
+            "headers": [],
+            "rowCount": 4,
+            "hasEmptyText": false,
+            "textPreview": "设备ID DEV0006 位置 二号楼 二号楼1层浴室 楼层 1层 型号 WH-2024"
+          },
+          {
+            "headers": [],
+            "rowCount": 4,
+            "hasEmptyText": false,
+            "textPreview": "设备ID DEV0007 位置 二号楼 二号楼5层浴室 楼层 5层 型号 WH-2024"
+          },
+          {
+            "headers": [],
+            "rowCount": 4,
+            "hasEmptyText": false,
+            "textPreview": "设备ID DEV0008 位置 二号楼 二号楼3层浴室 楼层 3层 型号 WH-2024"
+          },
+          {
+            "headers": [],
+            "rowCount": 4,
+            "hasEmptyText": false,
+            "textPreview": "设备ID DEV0009 位置 二号楼 二号楼2层浴室 楼层 2层 型号 WH-2024"
+          },
+          {
+            "headers": [],
+            "rowCount": 4,
+            "hasEmptyText": false,
+            "textPreview": "设备ID DEV0010 位置 二号楼 二号楼6层浴室 楼层 6层 型号 WH-2024"
+          },
+          {
+            "headers": [],
+            "rowCount": 4,
+            "hasEmptyText": false,
+            "textPreview": "设备ID DEV0011 位置 三号楼 三号楼4层浴室 楼层 4层 型号 WH-2024"
+          },
+          {
+            "headers": [],
+            "rowCount": 4,
+            "hasEmptyText": false,
+            "textPreview": "设备ID DEV0012 位置 三号楼 三号楼2层浴室 楼层 2层 型号 WH-2024"
+          },
+          {
+            "headers": [],
+            "rowCount": 4,
+            "hasEmptyText": false,
+            "textPreview": "设备ID DEV0013 位置 三号楼 三号楼3层浴室 楼层 3层 型号 WH-2024"
+          },
+          {
+            "headers": [],
+            "rowCount": 4,
+            "hasEmptyText": false,
+            "textPreview": "设备ID DEV0014 位置 三号楼 三号楼4层浴室 楼层 4层 型号 WH-2024"
+          },
+          {
+            "headers": [],
+            "rowCount": 4,
+            "hasEmptyText": false,
+            "textPreview": "设备ID DEV0015 位置 三号楼 三号楼2层浴室 楼层 2层 型号 WH-2024"
+          },
+          {
+            "headers": [],
+            "rowCount": 4,
+            "hasEmptyText": false,
+            "textPreview": "设备ID DEV0016 位置 图书馆 图书馆4层浴室 楼层 4层 型号 WH-2024"
+          },
+          {
+            "headers": [],
+            "rowCount": 4,
+            "hasEmptyText": false,
+            "textPreview": "设备ID DEV0017 位置 图书馆 图书馆3层浴室 楼层 3层 型号 WH-2024"
+          },
+          {
+            "headers": [],
+            "rowCount": 4,
+            "hasEmptyText": false,
+            "textPreview": "设备ID DEV0018 位置 图书馆 图书馆5层浴室 楼层 5层 型号 WH-2024"
+          },
+          {
+            "headers": [],
+            "rowCount": 4,
+            "hasEmptyText": false,
+            "textPreview": "设备ID DEV0019 位置 图书馆 图书馆6层浴室 楼层 6层 型号 WH-2024"
+          },
+          {
+            "headers": [],
+            "rowCount": 4,
+            "hasEmptyText": false,
+            "textPreview": "设备ID DEV0020 位置 图书馆 图书馆6层浴室 楼层 6层 型号 WH-2024"
+          }
+        ],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "校园热水服务首页设备列表消费记录账户充值消息中心个人信息登录后首页演示学生智能水控终端列表在线 16使用中 0离线 4刷 新共 20 台水控终端-001在线设备IDDEV0001位置一号楼 一号楼6层浴室楼层6层型号WH-2024 实时数据水温35.6°C流速8.4L/m累计325L 连续满流运行中开始使用水控终端-002在线设备IDDEV0002位置一号楼 一号楼3层浴室楼层3层型号WH-2024 实时数据水温45.8°C流速2.1L/m累计380L0开始使用异常告警水控终端-003在线设备IDDEV0003位置一号楼 一号楼5层浴室楼层5层型号WH-2024 实时数据水温43.1°C流速3.2L/m累计225L0开始使用水控终端-004在线设备IDDEV0004位置一号楼 一号楼5层浴室楼层5层型号WH-2024 实时数据水温42.7°C流速7.8L/m累计437L0开始使用水控终端-005离线设备IDDEV0005位置一号楼 一号楼3层浴室楼层3层型号WH-2024离线水控终端-006在线设备IDDEV0006位置二号楼 二号楼1层浴室楼层1层型号WH-2024 实时数据水温49.7°C流速8.7L/m累计116L 连续满流运行中开始使用异常告警水控终端-007在线设备IDDEV0007位置二号楼 二号楼5层浴室楼层5层型号WH-2024 实时数据水温46.6°C流速2.2L/m累计499L0开始使用水控终端-008在线设备IDDEV0008位置二号楼 二号楼3层浴室楼层3层型号WH-2024 实时数据水温41.8°C流速7.7L/m累计113L0开始使用水控终端-009在线设备IDDEV0009位置二号楼 二号楼2层浴室楼层2层型号WH-2024 实时数据水温42.4°C流速8.3L/m累计92L 连续满流运行中开始使用水控终端-010离线设备IDDEV0010位置二号楼 二号楼6层浴室楼层6层型号WH-2024离线水控终端-011在线设备IDDEV0011位置三号楼 三号楼4层浴室楼层4层型号WH-2024 实时数据水温37.0°C流速4.8L/m累计78L0开始使用水控终端-012在线设备IDDEV0012位置三号楼 三号楼2层浴室楼层2层型号WH-2024 实时数据水温38.8°C流速2.3L/m累计498L0开始使用水控终端-013在线设备IDDEV0013位置三号楼 三号楼3层浴室楼层3层型号WH-2024 实时数据水温36.8°C流速1.1L/m累计483L0开始使用水控终端-014在线设备IDDEV0014位置三号楼 三号楼4层浴室楼层4层型号WH-2024 实时数据水温50.0°C流速1.6L/m累计120L0开始使用水控终端-015离线设备IDDEV0015位置三号楼 三号楼2层浴室楼层2层型号WH-2024离线水控终端-016在线设备IDDEV0016位置图书馆 图书馆4层浴室楼层4层型号WH-2024 实时数据水温45.1°C流速5.4L/m累计177L0开始使用水控终端-017在线设备IDDEV0017位置图书馆 图书馆3层浴室楼层3层型号WH-2024 实时数据水温48.3°C流速6.0L/m累计12L0开始使用水控终端-018在线设备IDDEV0018位置图书馆 图书馆5层浴室楼层5层型号WH-2024 实时数据水温49.0°C流速2.7L/m累计262L0开始使用异常告警水控终端-019在线设备IDDEV0019位置图书馆 图书馆6层浴室楼层6层型号WH-2024 实时数据水温47.4°C流速4.0L/m累计50L0开始使用水控终端-020离线设备IDDEV0020位置图书馆 图书馆6层浴室楼层6层型号WH-2024离线 余额不足提醒账户余额不足您的当前余额为 ¥0.00无法使用设备 水控终端-001（DEV0001），请充值后再使用支付宝充值微信充值稍后再说立即充值",
+        "layout": {
+          "viewportWidth": 1728,
+          "viewportHeight": 1600,
+          "scrollWidth": 1728,
+          "scrollHeight": 2494,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89033-codex-final-current-structure-08-操作-开始使用",
+          "label": "操作:开始使用",
+          "finalUrl": "http://127.0.0.1:49033/student/devices",
+          "title": "校园物联网热水服务系统",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89033/probe/codex-final-20260604-current/may-89033-codex-final-current-structure-08-操作-开始使用.json",
+          "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89033/probe/codex-final-20260604-current/may-89033-codex-final-current-structure-08-操作-开始使用.png",
+          "elementCount": 1200,
+          "interactiveCount": 34,
+          "interactiveLabels": [
+            "首页 设备列表 消费记录 账户充值 消息中心 个人信息",
+            "首页",
+            "设备列表",
+            "消费记录",
+            "账户充值",
+            "消息中心",
+            "个人信息",
+            "刷 新",
+            "搜索设备名称/位置/ID",
+            "开始使用",
+            "余额不足提醒 账户余额不足 您的当前余额为 ¥0.00 无法使用设备 水控终端-001（DEV0001），请充值后再使用 支付宝充值 微信充值 稍后再说 立即充值",
+            "Close",
+            "支付宝充值",
+            "微信充值",
+            "稍后再说",
+            "立即充值"
+          ]
+        }
+      },
+      {
+        "label": "二层操作:开始使用->立即充值",
+        "url": "http://127.0.0.1:49033/student/recharge",
+        "title": "校园物联网热水服务系统",
+        "headings": [
+          "账户充值"
+        ],
+        "navLabels": [
+          "首页 设备列表 消费记录 账户充值 消息中心 个人信息",
+          "首页",
+          "dashboard",
+          "设备列表",
+          "desktop",
+          "消费记录",
+          "file-text",
+          "账户充值",
+          "wallet",
+          "消息中心",
+          "message",
+          "个人信息",
+          "user"
+        ],
+        "buttons": [
+          "支付宝充值 ¥50",
+          "微信充值 ¥50"
+        ],
+        "links": [],
+        "inputs": [
+          {
+            "tag": "input",
+            "type": "",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          }
+        ],
+        "tables": [],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "校园热水服务首页设备列表消费记录账户充值消息中心个人信息登录后首页演示学生账户充值账户信息当前余额¥0.00学号20240001姓名张三选择充值金额¥20¥50¥100¥200¥500自定义支付宝充值 ¥50微信充值 ¥50充值记录支付宝充值2026/6/4 09:30:00+¥50.00微信充值2026/6/3 18:10:00+¥20.00当前展示演示充值流水，真实充值成功后会自动进入记录列表。",
+        "layout": {
+          "viewportWidth": 1760,
+          "viewportHeight": 1600,
+          "scrollWidth": 1760,
+          "scrollHeight": 1600,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89033-codex-final-current-structure-09-二层操作-开始使用-立即充值",
+          "label": "二层操作:开始使用->立即充值",
+          "finalUrl": "http://127.0.0.1:49033/student/recharge",
+          "title": "校园物联网热水服务系统",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89033/probe/codex-final-20260604-current/may-89033-codex-final-current-structure-09-二层操作-开始使用-立即充值.json",
+          "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89033/probe/codex-final-20260604-current/may-89033-codex-final-current-structure-09-二层操作-开始使用-立即充值.png",
+          "elementCount": 162,
+          "interactiveCount": 12,
+          "interactiveLabels": [
+            "首页 设备列表 消费记录 账户充值 消息中心 个人信息",
+            "首页",
+            "设备列表",
+            "消费记录",
+            "账户充值",
+            "消息中心",
+            "个人信息",
+            "Increase Value",
+            "Decrease Value",
+            "50",
+            "支付宝充值 ¥50",
+            "微信充值 ¥50"
+          ]
+        }
+      },
+      {
+        "label": "操作:刷 新",
+        "url": "http://127.0.0.1:49033/student/devices",
+        "title": "校园物联网热水服务系统",
+        "headings": [
+          "智能水控终端列表"
+        ],
+        "navLabels": [
+          "首页 设备列表 消费记录 账户充值 消息中心 个人信息",
+          "首页",
+          "dashboard",
+          "设备列表",
+          "desktop",
+          "消费记录",
+          "file-text",
+          "账户充值",
+          "wallet",
+          "消息中心",
+          "message",
+          "个人信息",
+          "user"
+        ],
+        "buttons": [
+          "刷 新",
+          "开始使用"
+        ],
+        "links": [],
+        "inputs": [
+          {
+            "tag": "input",
+            "type": "text",
+            "placeholder": "搜索设备名称/位置/ID",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "search",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "search",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          }
+        ],
+        "tables": [
+          {
+            "headers": [],
+            "rowCount": 4,
+            "hasEmptyText": false,
+            "textPreview": "设备ID DEV0001 位置 一号楼 一号楼6层浴室 楼层 6层 型号 WH-2024"
+          },
+          {
+            "headers": [],
+            "rowCount": 4,
+            "hasEmptyText": false,
+            "textPreview": "设备ID DEV0002 位置 一号楼 一号楼3层浴室 楼层 3层 型号 WH-2024"
+          },
+          {
+            "headers": [],
+            "rowCount": 4,
+            "hasEmptyText": false,
+            "textPreview": "设备ID DEV0003 位置 一号楼 一号楼5层浴室 楼层 5层 型号 WH-2024"
+          },
+          {
+            "headers": [],
+            "rowCount": 4,
+            "hasEmptyText": false,
+            "textPreview": "设备ID DEV0004 位置 一号楼 一号楼5层浴室 楼层 5层 型号 WH-2024"
+          },
+          {
+            "headers": [],
+            "rowCount": 4,
+            "hasEmptyText": false,
+            "textPreview": "设备ID DEV0005 位置 一号楼 一号楼3层浴室 楼层 3层 型号 WH-2024"
+          },
+          {
+            "headers": [],
+            "rowCount": 4,
+            "hasEmptyText": false,
+            "textPreview": "设备ID DEV0006 位置 二号楼 二号楼1层浴室 楼层 1层 型号 WH-2024"
+          },
+          {
+            "headers": [],
+            "rowCount": 4,
+            "hasEmptyText": false,
+            "textPreview": "设备ID DEV0007 位置 二号楼 二号楼5层浴室 楼层 5层 型号 WH-2024"
+          },
+          {
+            "headers": [],
+            "rowCount": 4,
+            "hasEmptyText": false,
+            "textPreview": "设备ID DEV0008 位置 二号楼 二号楼3层浴室 楼层 3层 型号 WH-2024"
+          },
+          {
+            "headers": [],
+            "rowCount": 4,
+            "hasEmptyText": false,
+            "textPreview": "设备ID DEV0009 位置 二号楼 二号楼2层浴室 楼层 2层 型号 WH-2024"
+          },
+          {
+            "headers": [],
+            "rowCount": 4,
+            "hasEmptyText": false,
+            "textPreview": "设备ID DEV0010 位置 二号楼 二号楼6层浴室 楼层 6层 型号 WH-2024"
+          },
+          {
+            "headers": [],
+            "rowCount": 4,
+            "hasEmptyText": false,
+            "textPreview": "设备ID DEV0011 位置 三号楼 三号楼4层浴室 楼层 4层 型号 WH-2024"
+          },
+          {
+            "headers": [],
+            "rowCount": 4,
+            "hasEmptyText": false,
+            "textPreview": "设备ID DEV0012 位置 三号楼 三号楼2层浴室 楼层 2层 型号 WH-2024"
+          },
+          {
+            "headers": [],
+            "rowCount": 4,
+            "hasEmptyText": false,
+            "textPreview": "设备ID DEV0013 位置 三号楼 三号楼3层浴室 楼层 3层 型号 WH-2024"
+          },
+          {
+            "headers": [],
+            "rowCount": 4,
+            "hasEmptyText": false,
+            "textPreview": "设备ID DEV0014 位置 三号楼 三号楼4层浴室 楼层 4层 型号 WH-2024"
+          },
+          {
+            "headers": [],
+            "rowCount": 4,
+            "hasEmptyText": false,
+            "textPreview": "设备ID DEV0015 位置 三号楼 三号楼2层浴室 楼层 2层 型号 WH-2024"
+          },
+          {
+            "headers": [],
+            "rowCount": 4,
+            "hasEmptyText": false,
+            "textPreview": "设备ID DEV0016 位置 图书馆 图书馆4层浴室 楼层 4层 型号 WH-2024"
+          },
+          {
+            "headers": [],
+            "rowCount": 4,
+            "hasEmptyText": false,
+            "textPreview": "设备ID DEV0017 位置 图书馆 图书馆3层浴室 楼层 3层 型号 WH-2024"
+          },
+          {
+            "headers": [],
+            "rowCount": 4,
+            "hasEmptyText": false,
+            "textPreview": "设备ID DEV0018 位置 图书馆 图书馆5层浴室 楼层 5层 型号 WH-2024"
+          },
+          {
+            "headers": [],
+            "rowCount": 4,
+            "hasEmptyText": false,
+            "textPreview": "设备ID DEV0019 位置 图书馆 图书馆6层浴室 楼层 6层 型号 WH-2024"
+          },
+          {
+            "headers": [],
+            "rowCount": 4,
+            "hasEmptyText": false,
+            "textPreview": "设备ID DEV0020 位置 图书馆 图书馆6层浴室 楼层 6层 型号 WH-2024"
+          }
+        ],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "校园热水服务首页设备列表消费记录账户充值消息中心个人信息登录后首页演示学生智能水控终端列表在线 16使用中 0离线 4刷 新共 20 台水控终端-001在线设备IDDEV0001位置一号楼 一号楼6层浴室楼层6层型号WH-2024 实时数据水温35.6°C流速8.4L/m累计325L 连续满流运行中开始使用水控终端-002在线设备IDDEV0002位置一号楼 一号楼3层浴室楼层3层型号WH-2024 实时数据水温45.8°C流速2.1L/m累计380L0开始使用异常告警水控终端-003在线设备IDDEV0003位置一号楼 一号楼5层浴室楼层5层型号WH-2024 实时数据水温43.1°C流速3.2L/m累计225L0开始使用水控终端-004在线设备IDDEV0004位置一号楼 一号楼5层浴室楼层5层型号WH-2024 实时数据水温42.7°C流速7.8L/m累计437L0开始使用水控终端-005离线设备IDDEV0005位置一号楼 一号楼3层浴室楼层3层型号WH-2024离线水控终端-006在线设备IDDEV0006位置二号楼 二号楼1层浴室楼层1层型号WH-2024 实时数据水温49.7°C流速8.7L/m累计116L 连续满流运行中开始使用异常告警水控终端-007在线设备IDDEV0007位置二号楼 二号楼5层浴室楼层5层型号WH-2024 实时数据水温46.6°C流速2.2L/m累计499L0开始使用水控终端-008在线设备IDDEV0008位置二号楼 二号楼3层浴室楼层3层型号WH-2024 实时数据水温41.8°C流速7.7L/m累计113L0开始使用水控终端-009在线设备IDDEV0009位置二号楼 二号楼2层浴室楼层2层型号WH-2024 实时数据水温42.4°C流速8.3L/m累计92L 连续满流运行中开始使用水控终端-010离线设备IDDEV0010位置二号楼 二号楼6层浴室楼层6层型号WH-2024离线水控终端-011在线设备IDDEV0011位置三号楼 三号楼4层浴室楼层4层型号WH-2024 实时数据水温37.0°C流速4.8L/m累计78L0开始使用水控终端-012在线设备IDDEV0012位置三号楼 三号楼2层浴室楼层2层型号WH-2024 实时数据水温38.8°C流速2.3L/m累计498L0开始使用水控终端-013在线设备IDDEV0013位置三号楼 三号楼3层浴室楼层3层型号WH-2024 实时数据水温36.8°C流速1.1L/m累计483L0开始使用水控终端-014在线设备IDDEV0014位置三号楼 三号楼4层浴室楼层4层型号WH-2024 实时数据水温50.0°C流速1.6L/m累计120L0开始使用水控终端-015离线设备IDDEV0015位置三号楼 三号楼2层浴室楼层2层型号WH-2024离线水控终端-016在线设备IDDEV0016位置图书馆 图书馆4层浴室楼层4层型号WH-2024 实时数据水温45.1°C流速5.4L/m累计177L0开始使用水控终端-017在线设备IDDEV0017位置图书馆 图书馆3层浴室楼层3层型号WH-2024 实时数据水温48.3°C流速6.0L/m累计12L0开始使用水控终端-018在线设备IDDEV0018位置图书馆 图书馆5层浴室楼层5层型号WH-2024 实时数据水温49.0°C流速2.7L/m累计262L0开始使用异常告警水控终端-019在线设备IDDEV0019位置图书馆 图书馆6层浴室楼层6层型号WH-2024 实时数据水温47.4°C流速4.0L/m累计50L0开始使用水控终端-020离线设备IDDEV0020位置图书馆 图书馆6层浴室楼层6层型号WH-2024离线",
+        "layout": {
+          "viewportWidth": 1792,
+          "viewportHeight": 1600,
+          "scrollWidth": 1792,
+          "scrollHeight": 2494,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89033-codex-final-current-structure-10-操作-刷-新",
+          "label": "操作:刷 新",
+          "finalUrl": "http://127.0.0.1:49033/student/devices",
+          "title": "校园物联网热水服务系统",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89033/probe/codex-final-20260604-current/may-89033-codex-final-current-structure-10-操作-刷-新.json",
+          "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89033/probe/codex-final-20260604-current/may-89033-codex-final-current-structure-10-操作-刷-新.png",
+          "elementCount": 1200,
+          "interactiveCount": 27,
+          "interactiveLabels": [
+            "首页 设备列表 消费记录 账户充值 消息中心 个人信息",
+            "首页",
+            "设备列表",
+            "消费记录",
+            "账户充值",
+            "消息中心",
+            "个人信息",
+            "刷 新",
+            "搜索设备名称/位置/ID",
+            "开始使用"
+          ]
+        }
+      },
+      {
+        "label": "导航:消费记录",
+        "url": "http://127.0.0.1:49033/student/transactions",
+        "title": "校园物联网热水服务系统",
+        "headings": [
+          "消费账单"
+        ],
+        "navLabels": [
+          "首页 设备列表 消费记录 账户充值 消息中心 个人信息",
+          "首页",
+          "dashboard",
+          "设备列表",
+          "desktop",
+          "消费记录",
+          "file-text",
+          "账户充值",
+          "wallet",
+          "消息中心",
+          "message",
+          "个人信息",
+          "user"
+        ],
+        "buttons": [
+          "刷 新",
+          "查 询",
+          "详情"
+        ],
+        "links": [],
+        "inputs": [
+          {
+            "tag": "input",
+            "type": "",
+            "placeholder": "开始日期",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "",
+            "placeholder": "结束日期",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "search",
+            "placeholder": "",
+            "name": "",
+            "label": "页码"
+          }
+        ],
+        "tables": [
+          {
+            "headers": [
+              "交易ID",
+              "设备信息",
+              "开始时间",
+              "结束时间",
+              "时长",
+              "用水量",
+              "平均水温",
+              "平均流速",
+              "支付方式",
+              "金额",
+              "状态",
+              "操作"
+            ],
+            "rowCount": 4,
+            "hasEmptyText": false,
+            "textPreview": "交易ID 设备信息 开始时间 结束时间 时长 用水量 平均水温 平均流速 支付方式 金额 状态 操作 交易ID 设备信息 开始时间 结束时间 时长 用水量 平均水温 平均流速 支付方式 金额 状态 操作 16 水控终端-004 一号楼5层浴室 2026/5/31 02:25:47 2026/5/31 02:31:07 5分20秒 30.44L 44.7°C 4.91L/min 余额扣费 ¥1.07 已完成 详情 3 水控终端-016 图书馆4层浴室 2026/5/19 11:25:47 2026/5/19 11:41:18 15分31秒 44.00L 46.9°C 5.14L/min 支付宝 "
+          }
+        ],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "校园热水服务首页设备列表消费记录账户充值消息中心个人信息登录后首页演示学生消费账单刷 新总消费笔数4累计用水量138.2L累计消费金额¥6.46时间筛选：查 询交易ID设备信息开始时间结束时间时长用水量平均水温平均流速支付方式金额状态操作交易ID设备信息开始时间结束时间时长用水量平均水温平均流速支付方式金额状态操作16水控终端-004一号楼5层浴室2026/5/31 02:25:472026/5/31 02:31:075分20秒30.44L44.7°C4.91L/min余额扣费¥1.07已完成详情3水控终端-016图书馆4层浴室2026/5/19 11:25:472026/5/19 11:41:1815分31秒44.00L46.9°C5.14L/min支付宝¥2.20已完成详情31水控终端-016图书馆4层浴室2026/5/16 14:25:472026/5/16 14:55:1429分27秒39.02L42.0°C5.82L/min余额扣费¥1.95已完成详情12水控终端-019图书馆6层浴室2026/5/9 08:25:472026/5/9 08:51:1225分25秒24.71L44.3°C8.86L/min微信支付¥1.24已完成详情共 4 条记录110 条/页",
+        "layout": {
+          "viewportWidth": 1824,
+          "viewportHeight": 1600,
+          "scrollWidth": 1824,
+          "scrollHeight": 1600,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89033-codex-final-current-structure-11-导航-消费记录",
+          "label": "导航:消费记录",
+          "finalUrl": "http://127.0.0.1:49033/student/transactions",
+          "title": "校园物联网热水服务系统",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89033/probe/codex-final-20260604-current/may-89033-codex-final-current-structure-11-导航-消费记录.json",
+          "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89033/probe/codex-final-20260604-current/may-89033-codex-final-current-structure-11-导航-消费记录.png",
+          "elementCount": 303,
+          "interactiveCount": 20,
+          "interactiveLabels": [
+            "首页 设备列表 消费记录 账户充值 消息中心 个人信息",
+            "首页",
+            "设备列表",
+            "消费记录",
+            "账户充值",
+            "消息中心",
+            "个人信息",
+            "刷 新",
+            "开始日期",
+            "结束日期",
+            "查 询",
+            "详情",
+            "1",
+            "页码"
+          ]
+        }
+      },
+      {
+        "label": "操作:详情",
+        "url": "http://127.0.0.1:49033/student/transactions",
+        "title": "校园物联网热水服务系统",
+        "headings": [
+          "消费账单"
+        ],
+        "navLabels": [
+          "首页 设备列表 消费记录 账户充值 消息中心 个人信息",
+          "首页",
+          "dashboard",
+          "设备列表",
+          "desktop",
+          "消费记录",
+          "file-text",
+          "账户充值",
+          "wallet",
+          "消息中心",
+          "message",
+          "个人信息",
+          "user"
+        ],
+        "buttons": [
+          "刷 新",
+          "查 询",
+          "详情",
+          "Close",
+          "关 闭"
+        ],
+        "links": [],
+        "inputs": [
+          {
+            "tag": "input",
+            "type": "",
+            "placeholder": "开始日期",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "",
+            "placeholder": "结束日期",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "search",
+            "placeholder": "",
+            "name": "",
+            "label": "页码"
+          }
+        ],
+        "tables": [
+          {
+            "headers": [
+              "交易ID",
+              "设备信息",
+              "开始时间",
+              "结束时间",
+              "时长",
+              "用水量",
+              "平均水温",
+              "平均流速",
+              "支付方式",
+              "金额",
+              "状态",
+              "操作"
+            ],
+            "rowCount": 4,
+            "hasEmptyText": false,
+            "textPreview": "交易ID 设备信息 开始时间 结束时间 时长 用水量 平均水温 平均流速 支付方式 金额 状态 操作 交易ID 设备信息 开始时间 结束时间 时长 用水量 平均水温 平均流速 支付方式 金额 状态 操作 16 水控终端-004 一号楼5层浴室 2026/5/31 02:25:47 2026/5/31 02:31:07 5分20秒 30.44L 44.7°C 4.91L/min 余额扣费 ¥1.07 已完成 详情 3 水控终端-016 图书馆4层浴室 2026/5/19 11:25:47 2026/5/19 11:41:18 15分31秒 44.00L 46.9°C 5.14L/min 支付宝 "
+          },
+          {
+            "headers": [
+              "交易ID",
+              "设备名称",
+              "设备位置",
+              "开始时间",
+              "结束时间",
+              "使用时长",
+              "用水量",
+              "平均水温",
+              "平均流速",
+              "支付方式",
+              "交易金额",
+              "交易状态"
+            ],
+            "rowCount": 12,
+            "hasEmptyText": false,
+            "textPreview": "交易ID 16 设备名称 水控终端-004 设备位置 一号楼5层浴室 开始时间 2026/5/31 02:25:47 结束时间 2026/5/31 02:31:07 使用时长 5分20秒 用水量 30.44L 平均水温 44.7°C 平均流速 4.91L/min 支付方式 余额扣费 交易金额 ¥1.07 交易状态 已完成"
+          }
+        ],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "校园热水服务首页设备列表消费记录账户充值消息中心个人信息登录后首页演示学生消费账单刷 新总消费笔数4累计用水量138.2L累计消费金额¥6.46时间筛选：查 询交易ID设备信息开始时间结束时间时长用水量平均水温平均流速支付方式金额状态操作交易ID设备信息开始时间结束时间时长用水量平均水温平均流速支付方式金额状态操作16水控终端-004一号楼5层浴室2026/5/31 02:25:472026/5/31 02:31:075分20秒30.44L44.7°C4.91L/min余额扣费¥1.07已完成详情3水控终端-016图书馆4层浴室2026/5/19 11:25:472026/5/19 11:41:1815分31秒44.00L46.9°C5.14L/min支付宝¥2.20已完成详情31水控终端-016图书馆4层浴室2026/5/16 14:25:472026/5/16 14:55:1429分27秒39.02L42.0°C5.82L/min余额扣费¥1.95已完成详情12水控终端-019图书馆6层浴室2026/5/9 08:25:472026/5/9 08:51:1225分25秒24.71L44.3°C8.86L/min微信支付¥1.24已完成详情共 4 条记录110 条/页 账单详情交易ID16设备名称水控终端-004设备位置一号楼5层浴室开始时间2026/5/31 02:25:47结束时间2026/5/31 02:31:07使用时长5分20秒用水量30.44L平均水温44.7°C平均流速4.91L/min支付方式余额扣费交易金额¥1.07交易状态已完成关 闭",
+        "layout": {
+          "viewportWidth": 1856,
+          "viewportHeight": 1600,
+          "scrollWidth": 1856,
+          "scrollHeight": 1600,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89033-codex-final-current-structure-12-操作-详情",
+          "label": "操作:详情",
+          "finalUrl": "http://127.0.0.1:49033/student/transactions",
+          "title": "校园物联网热水服务系统",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89033/probe/codex-final-20260604-current/may-89033-codex-final-current-structure-12-操作-详情.json",
+          "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89033/probe/codex-final-20260604-current/may-89033-codex-final-current-structure-12-操作-详情.png",
+          "elementCount": 389,
+          "interactiveCount": 24,
+          "interactiveLabels": [
+            "首页 设备列表 消费记录 账户充值 消息中心 个人信息",
+            "首页",
+            "设备列表",
+            "消费记录",
+            "账户充值",
+            "消息中心",
+            "个人信息",
+            "刷 新",
+            "开始日期",
+            "结束日期",
+            "查 询",
+            "详情",
+            "1",
+            "页码",
+            "账单详情 交易ID 16 设备名称 水控终端-004 设备位置 一号楼5层浴室 开始时间 2026/5/31 02:25:47 结束时间 2026/5/31 02:31:07 使用时长 5分20秒 用水量 30.44L 平均水温 44.7°C 平均流速 4.91L/min 支付方式 余额扣费 交易金额 ¥1.07 交易状态 已完成 关 闭",
+            "Close",
+            "关 闭"
+          ]
+        }
+      },
+      {
+        "label": "二层操作:详情->关 闭",
+        "url": "http://127.0.0.1:49033/student/transactions",
+        "title": "校园物联网热水服务系统",
+        "headings": [
+          "消费账单"
+        ],
+        "navLabels": [
+          "首页 设备列表 消费记录 账户充值 消息中心 个人信息",
+          "首页",
+          "dashboard",
+          "设备列表",
+          "desktop",
+          "消费记录",
+          "file-text",
+          "账户充值",
+          "wallet",
+          "消息中心",
+          "message",
+          "个人信息",
+          "user"
+        ],
+        "buttons": [
+          "刷 新",
+          "查 询",
+          "详情"
+        ],
+        "links": [],
+        "inputs": [
+          {
+            "tag": "input",
+            "type": "",
+            "placeholder": "开始日期",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "",
+            "placeholder": "结束日期",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "search",
+            "placeholder": "",
+            "name": "",
+            "label": "页码"
+          }
+        ],
+        "tables": [
+          {
+            "headers": [
+              "交易ID",
+              "设备信息",
+              "开始时间",
+              "结束时间",
+              "时长",
+              "用水量",
+              "平均水温",
+              "平均流速",
+              "支付方式",
+              "金额",
+              "状态",
+              "操作"
+            ],
+            "rowCount": 4,
+            "hasEmptyText": false,
+            "textPreview": "交易ID 设备信息 开始时间 结束时间 时长 用水量 平均水温 平均流速 支付方式 金额 状态 操作 交易ID 设备信息 开始时间 结束时间 时长 用水量 平均水温 平均流速 支付方式 金额 状态 操作 16 水控终端-004 一号楼5层浴室 2026/5/31 02:25:47 2026/5/31 02:31:07 5分20秒 30.44L 44.7°C 4.91L/min 余额扣费 ¥1.07 已完成 详情 3 水控终端-016 图书馆4层浴室 2026/5/19 11:25:47 2026/5/19 11:41:18 15分31秒 44.00L 46.9°C 5.14L/min 支付宝 "
+          }
+        ],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "校园热水服务首页设备列表消费记录账户充值消息中心个人信息登录后首页演示学生消费账单刷 新总消费笔数4累计用水量138.2L累计消费金额¥6.46时间筛选：查 询交易ID设备信息开始时间结束时间时长用水量平均水温平均流速支付方式金额状态操作交易ID设备信息开始时间结束时间时长用水量平均水温平均流速支付方式金额状态操作16水控终端-004一号楼5层浴室2026/5/31 02:25:472026/5/31 02:31:075分20秒30.44L44.7°C4.91L/min余额扣费¥1.07已完成详情3水控终端-016图书馆4层浴室2026/5/19 11:25:472026/5/19 11:41:1815分31秒44.00L46.9°C5.14L/min支付宝¥2.20已完成详情31水控终端-016图书馆4层浴室2026/5/16 14:25:472026/5/16 14:55:1429分27秒39.02L42.0°C5.82L/min余额扣费¥1.95已完成详情12水控终端-019图书馆6层浴室2026/5/9 08:25:472026/5/9 08:51:1225分25秒24.71L44.3°C8.86L/min微信支付¥1.24已完成详情共 4 条记录110 条/页 账单详情交易ID16设备名称水控终端-004设备位置一号楼5层浴室开始时间2026/5/31 02:25:47结束时间2026/5/31 02:31:07使用时长5分20秒用水量30.44L平均水温44.7°C平均流速4.91L/min支付方式余额扣费交易金额¥1.07交易状态已完成关 闭",
+        "layout": {
+          "viewportWidth": 1888,
+          "viewportHeight": 1600,
+          "scrollWidth": 1888,
+          "scrollHeight": 1600,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89033-codex-final-current-structure-13-二层操作-详情-关-闭",
+          "label": "二层操作:详情->关 闭",
+          "finalUrl": "http://127.0.0.1:49033/student/transactions",
+          "title": "校园物联网热水服务系统",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89033/probe/codex-final-20260604-current/may-89033-codex-final-current-structure-13-二层操作-详情-关-闭.json",
+          "screenshotPath": "",
+          "elementCount": 390,
+          "interactiveCount": 24,
+          "interactiveLabels": [
+            "首页 设备列表 消费记录 账户充值 消息中心 个人信息",
+            "首页",
+            "设备列表",
+            "消费记录",
+            "账户充值",
+            "消息中心",
+            "个人信息",
+            "刷 新",
+            "开始日期",
+            "结束日期",
+            "查 询",
+            "详情",
+            "1",
+            "页码",
+            "账单详情交易ID16设备名称水控终端-004设备位置一号楼5层浴室开始时间2026/5/31 02:25:47结束时间2026/5/31 02:31:07使用时长5分20秒用水量30.44L平均水温44.7°C平均流速4.91L/min支付方式余额扣费交易金额¥1.07交易状态已完成关 闭",
+            "Close",
+            "关 闭"
+          ]
+        }
+      },
+      {
+        "label": "操作:查 询",
+        "url": "http://127.0.0.1:49033/student/transactions",
+        "title": "校园物联网热水服务系统",
+        "headings": [
+          "消费账单"
+        ],
+        "navLabels": [
+          "首页 设备列表 消费记录 账户充值 消息中心 个人信息",
+          "首页",
+          "dashboard",
+          "设备列表",
+          "desktop",
+          "消费记录",
+          "file-text",
+          "账户充值",
+          "wallet",
+          "消息中心",
+          "message",
+          "个人信息",
+          "user"
+        ],
+        "buttons": [
+          "刷 新",
+          "查 询",
+          "详情"
+        ],
+        "links": [],
+        "inputs": [
+          {
+            "tag": "input",
+            "type": "",
+            "placeholder": "开始日期",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "",
+            "placeholder": "结束日期",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "search",
+            "placeholder": "",
+            "name": "",
+            "label": "页码"
+          }
+        ],
+        "tables": [
+          {
+            "headers": [
+              "交易ID",
+              "设备信息",
+              "开始时间",
+              "结束时间",
+              "时长",
+              "用水量",
+              "平均水温",
+              "平均流速",
+              "支付方式",
+              "金额",
+              "状态",
+              "操作"
+            ],
+            "rowCount": 4,
+            "hasEmptyText": false,
+            "textPreview": "交易ID 设备信息 开始时间 结束时间 时长 用水量 平均水温 平均流速 支付方式 金额 状态 操作 交易ID 设备信息 开始时间 结束时间 时长 用水量 平均水温 平均流速 支付方式 金额 状态 操作 16 水控终端-004 一号楼5层浴室 2026/5/31 02:25:47 2026/5/31 02:31:07 5分20秒 30.44L 44.7°C 4.91L/min 余额扣费 ¥1.07 已完成 详情 3 水控终端-016 图书馆4层浴室 2026/5/19 11:25:47 2026/5/19 11:41:18 15分31秒 44.00L 46.9°C 5.14L/min 支付宝 "
+          }
+        ],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "校园热水服务首页设备列表消费记录账户充值消息中心个人信息登录后首页演示学生消费账单刷 新总消费笔数4累计用水量138.2L累计消费金额¥6.46时间筛选：查 询交易ID设备信息开始时间结束时间时长用水量平均水温平均流速支付方式金额状态操作交易ID设备信息开始时间结束时间时长用水量平均水温平均流速支付方式金额状态操作16水控终端-004一号楼5层浴室2026/5/31 02:25:472026/5/31 02:31:075分20秒30.44L44.7°C4.91L/min余额扣费¥1.07已完成详情3水控终端-016图书馆4层浴室2026/5/19 11:25:472026/5/19 11:41:1815分31秒44.00L46.9°C5.14L/min支付宝¥2.20已完成详情31水控终端-016图书馆4层浴室2026/5/16 14:25:472026/5/16 14:55:1429分27秒39.02L42.0°C5.82L/min余额扣费¥1.95已完成详情12水控终端-019图书馆6层浴室2026/5/9 08:25:472026/5/9 08:51:1225分25秒24.71L44.3°C8.86L/min微信支付¥1.24已完成详情共 4 条记录110 条/页 账单详情交易ID16设备名称水控终端-004设备位置一号楼5层浴室开始时间2026/5/31 02:25:47结束时间2026/5/31 02:31:07使用时长5分20秒用水量30.44L平均水温44.7°C平均流速4.91L/min支付方式余额扣费交易金额¥1.07交易状态已完成关 闭",
+        "layout": {
+          "viewportWidth": 1920,
+          "viewportHeight": 1600,
+          "scrollWidth": 1920,
+          "scrollHeight": 1600,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89033-codex-final-current-structure-14-操作-查-询",
+          "label": "操作:查 询",
+          "finalUrl": "http://127.0.0.1:49033/student/transactions",
+          "title": "校园物联网热水服务系统",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89033/probe/codex-final-20260604-current/may-89033-codex-final-current-structure-14-操作-查-询.json",
+          "screenshotPath": "",
+          "elementCount": 392,
+          "interactiveCount": 24,
+          "interactiveLabels": [
+            "首页 设备列表 消费记录 账户充值 消息中心 个人信息",
+            "首页",
+            "设备列表",
+            "消费记录",
+            "账户充值",
+            "消息中心",
+            "个人信息",
+            "刷 新",
+            "开始日期",
+            "结束日期",
+            "查 询",
+            "详情",
+            "1",
+            "页码",
+            "账单详情交易ID16设备名称水控终端-004设备位置一号楼5层浴室开始时间2026/5/31 02:25:47结束时间2026/5/31 02:31:07使用时长5分20秒用水量30.44L平均水温44.7°C平均流速4.91L/min支付方式余额扣费交易金额¥1.07交易状态已完成关 闭",
+            "Close",
+            "关 闭"
+          ]
+        }
+      }
+    ],
+    "findings": [],
+    "actionHints": [],
+    "emptyPages": [],
+    "overflowPages": [],
+    "blankPages": [],
+    "apiFailurePaths": [],
+    "goalTerms": [],
+    "clickedActionDescriptors": [
+      {
+        "nav": "首页",
+        "label": "查看全部",
+        "ordinal": 0,
+        "unsafe": false
+      },
+      {
+        "nav": "首页",
+        "label": "查看全部->详情",
+        "ordinal": 0,
+        "secondary": true,
+        "unsafe": false
+      },
+      {
+        "nav": "首页",
+        "label": "查看全部设备",
+        "ordinal": 0,
+        "unsafe": false
+      },
+      {
+        "nav": "首页",
+        "label": "查看全部设备->刷 新",
+        "ordinal": 0,
+        "secondary": true,
+        "unsafe": false
+      },
+      {
+        "nav": "设备列表",
+        "label": "开始使用",
+        "ordinal": 0,
+        "unsafe": false
+      },
+      {
+        "nav": "设备列表",
+        "label": "开始使用->立即充值",
+        "ordinal": 0,
+        "secondary": true,
+        "unsafe": false
+      },
+      {
+        "nav": "设备列表",
+        "label": "刷 新",
+        "ordinal": 0,
+        "unsafe": false
+      },
+      {
+        "nav": "消费记录",
+        "label": "详情",
+        "ordinal": 0,
+        "unsafe": false
+      },
+      {
+        "nav": "消费记录",
+        "label": "详情->关 闭",
+        "ordinal": 0,
+        "secondary": true,
+        "unsafe": false
+      },
+      {
+        "nav": "消费记录",
+        "label": "查 询",
+        "ordinal": 0,
+        "unsafe": false
+      }
+    ],
+    "secondaryActionClicks": 4,
+    "structureCaptures": [
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89033-codex-final-current-structure-01-首屏",
+        "label": "首屏",
+        "finalUrl": "http://127.0.0.1:49033/student/dashboard",
+        "title": "校园物联网热水服务系统",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89033/probe/codex-final-20260604-current/may-89033-codex-final-current-structure-01-首屏.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89033/probe/codex-final-20260604-current/may-89033-codex-final-current-structure-01-首屏.png",
+        "elementCount": 1200,
+        "interactiveCount": 34,
+        "interactiveLabels": [
+          "首页 设备列表 消费记录 账户充值 消息中心 个人信息",
+          "首页",
+          "设备列表",
+          "消费记录",
+          "账户充值",
+          "消息中心",
+          "个人信息",
+          "扫码取水",
+          "刷新",
+          "查看全部设备",
+          "开始使用",
+          "查看全部",
+          "余额不足提醒 账户余额不足 您的当前余额为 ¥0.00 请充值后再使用热水服务 支付宝充值 微信充值 稍后再说 立即充值",
+          "Close",
+          "支付宝充值",
+          "微信充值",
+          "稍后再说",
+          "立即充值"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89033-codex-final-current-structure-02-导航-首页",
+        "label": "导航:首页",
+        "finalUrl": "http://127.0.0.1:49033/student/dashboard",
+        "title": "校园物联网热水服务系统",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89033/probe/codex-final-20260604-current/may-89033-codex-final-current-structure-02-导航-首页.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89033/probe/codex-final-20260604-current/may-89033-codex-final-current-structure-02-导航-首页.png",
+        "elementCount": 1200,
+        "interactiveCount": 34,
+        "interactiveLabels": [
+          "首页 设备列表 消费记录 账户充值 消息中心 个人信息",
+          "首页",
+          "设备列表",
+          "消费记录",
+          "账户充值",
+          "消息中心",
+          "个人信息",
+          "扫码取水",
+          "刷新",
+          "查看全部设备",
+          "开始使用",
+          "查看全部",
+          "余额不足提醒账户余额不足您的当前余额为 ¥0.00请充值后再使用热水服务支付宝充值微信充值稍后再说立即充值",
+          "Close",
+          "支付宝充值",
+          "微信充值",
+          "稍后再说",
+          "立即充值"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89033-codex-final-current-structure-03-操作-查看全部",
+        "label": "操作:查看全部",
+        "finalUrl": "http://127.0.0.1:49033/student/transactions",
+        "title": "校园物联网热水服务系统",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89033/probe/codex-final-20260604-current/may-89033-codex-final-current-structure-03-操作-查看全部.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89033/probe/codex-final-20260604-current/may-89033-codex-final-current-structure-03-操作-查看全部.png",
+        "elementCount": 303,
+        "interactiveCount": 20,
+        "interactiveLabels": [
+          "首页 设备列表 消费记录 账户充值 消息中心 个人信息",
+          "首页",
+          "设备列表",
+          "消费记录",
+          "账户充值",
+          "消息中心",
+          "个人信息",
+          "刷 新",
+          "开始日期",
+          "结束日期",
+          "查 询",
+          "详情",
+          "1",
+          "页码"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89033-codex-final-current-structure-04-二层操作-查看全部-详情",
+        "label": "二层操作:查看全部->详情",
+        "finalUrl": "http://127.0.0.1:49033/student/transactions",
+        "title": "校园物联网热水服务系统",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89033/probe/codex-final-20260604-current/may-89033-codex-final-current-structure-04-二层操作-查看全部-详情.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89033/probe/codex-final-20260604-current/may-89033-codex-final-current-structure-04-二层操作-查看全部-详情.png",
+        "elementCount": 389,
+        "interactiveCount": 24,
+        "interactiveLabels": [
+          "首页 设备列表 消费记录 账户充值 消息中心 个人信息",
+          "首页",
+          "设备列表",
+          "消费记录",
+          "账户充值",
+          "消息中心",
+          "个人信息",
+          "刷 新",
+          "开始日期",
+          "结束日期",
+          "查 询",
+          "详情",
+          "1",
+          "页码",
+          "账单详情 交易ID 16 设备名称 水控终端-004 设备位置 一号楼5层浴室 开始时间 2026/5/31 02:25:47 结束时间 2026/5/31 02:31:07 使用时长 5分20秒 用水量 30.44L 平均水温 44.7°C 平均流速 4.91L/min 支付方式 余额扣费 交易金额 ¥1.07 交易状态 已完成 关 闭",
+          "Close",
+          "关 闭"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89033-codex-final-current-structure-05-操作-查看全部设备",
+        "label": "操作:查看全部设备",
+        "finalUrl": "http://127.0.0.1:49033/student/devices",
+        "title": "校园物联网热水服务系统",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89033/probe/codex-final-20260604-current/may-89033-codex-final-current-structure-05-操作-查看全部设备.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89033/probe/codex-final-20260604-current/may-89033-codex-final-current-structure-05-操作-查看全部设备.png",
+        "elementCount": 1200,
+        "interactiveCount": 27,
+        "interactiveLabels": [
+          "首页 设备列表 消费记录 账户充值 消息中心 个人信息",
+          "首页",
+          "设备列表",
+          "消费记录",
+          "账户充值",
+          "消息中心",
+          "个人信息",
+          "刷 新",
+          "搜索设备名称/位置/ID",
+          "开始使用"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89033-codex-final-current-structure-06-二层操作-查看全部设备-刷-新",
+        "label": "二层操作:查看全部设备->刷 新",
+        "finalUrl": "http://127.0.0.1:49033/student/devices",
+        "title": "校园物联网热水服务系统",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89033/probe/codex-final-20260604-current/may-89033-codex-final-current-structure-06-二层操作-查看全部设备-刷-新.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89033/probe/codex-final-20260604-current/may-89033-codex-final-current-structure-06-二层操作-查看全部设备-刷-新.png",
+        "elementCount": 1200,
+        "interactiveCount": 27,
+        "interactiveLabels": [
+          "首页 设备列表 消费记录 账户充值 消息中心 个人信息",
+          "首页",
+          "设备列表",
+          "消费记录",
+          "账户充值",
+          "消息中心",
+          "个人信息",
+          "刷 新",
+          "搜索设备名称/位置/ID",
+          "开始使用"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89033-codex-final-current-structure-07-导航-设备列表",
+        "label": "导航:设备列表",
+        "finalUrl": "http://127.0.0.1:49033/student/devices",
+        "title": "校园物联网热水服务系统",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89033/probe/codex-final-20260604-current/may-89033-codex-final-current-structure-07-导航-设备列表.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89033/probe/codex-final-20260604-current/may-89033-codex-final-current-structure-07-导航-设备列表.png",
+        "elementCount": 1200,
+        "interactiveCount": 27,
+        "interactiveLabels": [
+          "首页 设备列表 消费记录 账户充值 消息中心 个人信息",
+          "首页",
+          "设备列表",
+          "消费记录",
+          "账户充值",
+          "消息中心",
+          "个人信息",
+          "刷 新",
+          "搜索设备名称/位置/ID",
+          "开始使用"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89033-codex-final-current-structure-08-操作-开始使用",
+        "label": "操作:开始使用",
+        "finalUrl": "http://127.0.0.1:49033/student/devices",
+        "title": "校园物联网热水服务系统",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89033/probe/codex-final-20260604-current/may-89033-codex-final-current-structure-08-操作-开始使用.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89033/probe/codex-final-20260604-current/may-89033-codex-final-current-structure-08-操作-开始使用.png",
+        "elementCount": 1200,
+        "interactiveCount": 34,
+        "interactiveLabels": [
+          "首页 设备列表 消费记录 账户充值 消息中心 个人信息",
+          "首页",
+          "设备列表",
+          "消费记录",
+          "账户充值",
+          "消息中心",
+          "个人信息",
+          "刷 新",
+          "搜索设备名称/位置/ID",
+          "开始使用",
+          "余额不足提醒 账户余额不足 您的当前余额为 ¥0.00 无法使用设备 水控终端-001（DEV0001），请充值后再使用 支付宝充值 微信充值 稍后再说 立即充值",
+          "Close",
+          "支付宝充值",
+          "微信充值",
+          "稍后再说",
+          "立即充值"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89033-codex-final-current-structure-09-二层操作-开始使用-立即充值",
+        "label": "二层操作:开始使用->立即充值",
+        "finalUrl": "http://127.0.0.1:49033/student/recharge",
+        "title": "校园物联网热水服务系统",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89033/probe/codex-final-20260604-current/may-89033-codex-final-current-structure-09-二层操作-开始使用-立即充值.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89033/probe/codex-final-20260604-current/may-89033-codex-final-current-structure-09-二层操作-开始使用-立即充值.png",
+        "elementCount": 162,
+        "interactiveCount": 12,
+        "interactiveLabels": [
+          "首页 设备列表 消费记录 账户充值 消息中心 个人信息",
+          "首页",
+          "设备列表",
+          "消费记录",
+          "账户充值",
+          "消息中心",
+          "个人信息",
+          "Increase Value",
+          "Decrease Value",
+          "50",
+          "支付宝充值 ¥50",
+          "微信充值 ¥50"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89033-codex-final-current-structure-10-操作-刷-新",
+        "label": "操作:刷 新",
+        "finalUrl": "http://127.0.0.1:49033/student/devices",
+        "title": "校园物联网热水服务系统",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89033/probe/codex-final-20260604-current/may-89033-codex-final-current-structure-10-操作-刷-新.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89033/probe/codex-final-20260604-current/may-89033-codex-final-current-structure-10-操作-刷-新.png",
+        "elementCount": 1200,
+        "interactiveCount": 27,
+        "interactiveLabels": [
+          "首页 设备列表 消费记录 账户充值 消息中心 个人信息",
+          "首页",
+          "设备列表",
+          "消费记录",
+          "账户充值",
+          "消息中心",
+          "个人信息",
+          "刷 新",
+          "搜索设备名称/位置/ID",
+          "开始使用"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89033-codex-final-current-structure-11-导航-消费记录",
+        "label": "导航:消费记录",
+        "finalUrl": "http://127.0.0.1:49033/student/transactions",
+        "title": "校园物联网热水服务系统",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89033/probe/codex-final-20260604-current/may-89033-codex-final-current-structure-11-导航-消费记录.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89033/probe/codex-final-20260604-current/may-89033-codex-final-current-structure-11-导航-消费记录.png",
+        "elementCount": 303,
+        "interactiveCount": 20,
+        "interactiveLabels": [
+          "首页 设备列表 消费记录 账户充值 消息中心 个人信息",
+          "首页",
+          "设备列表",
+          "消费记录",
+          "账户充值",
+          "消息中心",
+          "个人信息",
+          "刷 新",
+          "开始日期",
+          "结束日期",
+          "查 询",
+          "详情",
+          "1",
+          "页码"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89033-codex-final-current-structure-12-操作-详情",
+        "label": "操作:详情",
+        "finalUrl": "http://127.0.0.1:49033/student/transactions",
+        "title": "校园物联网热水服务系统",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89033/probe/codex-final-20260604-current/may-89033-codex-final-current-structure-12-操作-详情.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89033/probe/codex-final-20260604-current/may-89033-codex-final-current-structure-12-操作-详情.png",
+        "elementCount": 389,
+        "interactiveCount": 24,
+        "interactiveLabels": [
+          "首页 设备列表 消费记录 账户充值 消息中心 个人信息",
+          "首页",
+          "设备列表",
+          "消费记录",
+          "账户充值",
+          "消息中心",
+          "个人信息",
+          "刷 新",
+          "开始日期",
+          "结束日期",
+          "查 询",
+          "详情",
+          "1",
+          "页码",
+          "账单详情 交易ID 16 设备名称 水控终端-004 设备位置 一号楼5层浴室 开始时间 2026/5/31 02:25:47 结束时间 2026/5/31 02:31:07 使用时长 5分20秒 用水量 30.44L 平均水温 44.7°C 平均流速 4.91L/min 支付方式 余额扣费 交易金额 ¥1.07 交易状态 已完成 关 闭",
+          "Close",
+          "关 闭"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89033-codex-final-current-structure-13-二层操作-详情-关-闭",
+        "label": "二层操作:详情->关 闭",
+        "finalUrl": "http://127.0.0.1:49033/student/transactions",
+        "title": "校园物联网热水服务系统",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89033/probe/codex-final-20260604-current/may-89033-codex-final-current-structure-13-二层操作-详情-关-闭.json",
+        "screenshotPath": "",
+        "elementCount": 390,
+        "interactiveCount": 24,
+        "interactiveLabels": [
+          "首页 设备列表 消费记录 账户充值 消息中心 个人信息",
+          "首页",
+          "设备列表",
+          "消费记录",
+          "账户充值",
+          "消息中心",
+          "个人信息",
+          "刷 新",
+          "开始日期",
+          "结束日期",
+          "查 询",
+          "详情",
+          "1",
+          "页码",
+          "账单详情交易ID16设备名称水控终端-004设备位置一号楼5层浴室开始时间2026/5/31 02:25:47结束时间2026/5/31 02:31:07使用时长5分20秒用水量30.44L平均水温44.7°C平均流速4.91L/min支付方式余额扣费交易金额¥1.07交易状态已完成关 闭",
+          "Close",
+          "关 闭"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89033-codex-final-current-structure-14-操作-查-询",
+        "label": "操作:查 询",
+        "finalUrl": "http://127.0.0.1:49033/student/transactions",
+        "title": "校园物联网热水服务系统",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89033/probe/codex-final-20260604-current/may-89033-codex-final-current-structure-14-操作-查-询.json",
+        "screenshotPath": "",
+        "elementCount": 392,
+        "interactiveCount": 24,
+        "interactiveLabels": [
+          "首页 设备列表 消费记录 账户充值 消息中心 个人信息",
+          "首页",
+          "设备列表",
+          "消费记录",
+          "账户充值",
+          "消息中心",
+          "个人信息",
+          "刷 新",
+          "开始日期",
+          "结束日期",
+          "查 询",
+          "详情",
+          "1",
+          "页码",
+          "账单详情交易ID16设备名称水控终端-004设备位置一号楼5层浴室开始时间2026/5/31 02:25:47结束时间2026/5/31 02:31:07使用时长5分20秒用水量30.44L平均水温44.7°C平均流速4.91L/min支付方式余额扣费交易金额¥1.07交易状态已完成关 闭",
+          "Close",
+          "关 闭"
+        ]
+      }
+    ],
+    "representativeScreenshotUrl": "http://127.0.0.1:49033/student/dashboard",
+    "representativeScreenshotLabel": "欢迎回来，演示学生"
+  },
+  "websiteStructureCapture": {
+    "module": "website_structure_capture",
+    "captureCount": 14,
+    "captures": [
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89033-codex-final-current-structure-01-首屏",
+        "label": "首屏",
+        "finalUrl": "http://127.0.0.1:49033/student/dashboard",
+        "title": "校园物联网热水服务系统",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89033/probe/codex-final-20260604-current/may-89033-codex-final-current-structure-01-首屏.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89033/probe/codex-final-20260604-current/may-89033-codex-final-current-structure-01-首屏.png",
+        "elementCount": 1200,
+        "interactiveCount": 34,
+        "interactiveLabels": [
+          "首页 设备列表 消费记录 账户充值 消息中心 个人信息",
+          "首页",
+          "设备列表",
+          "消费记录",
+          "账户充值",
+          "消息中心",
+          "个人信息",
+          "扫码取水",
+          "刷新",
+          "查看全部设备",
+          "开始使用",
+          "查看全部",
+          "余额不足提醒 账户余额不足 您的当前余额为 ¥0.00 请充值后再使用热水服务 支付宝充值 微信充值 稍后再说 立即充值",
+          "Close",
+          "支付宝充值",
+          "微信充值",
+          "稍后再说",
+          "立即充值"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89033-codex-final-current-structure-02-导航-首页",
+        "label": "导航:首页",
+        "finalUrl": "http://127.0.0.1:49033/student/dashboard",
+        "title": "校园物联网热水服务系统",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89033/probe/codex-final-20260604-current/may-89033-codex-final-current-structure-02-导航-首页.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89033/probe/codex-final-20260604-current/may-89033-codex-final-current-structure-02-导航-首页.png",
+        "elementCount": 1200,
+        "interactiveCount": 34,
+        "interactiveLabels": [
+          "首页 设备列表 消费记录 账户充值 消息中心 个人信息",
+          "首页",
+          "设备列表",
+          "消费记录",
+          "账户充值",
+          "消息中心",
+          "个人信息",
+          "扫码取水",
+          "刷新",
+          "查看全部设备",
+          "开始使用",
+          "查看全部",
+          "余额不足提醒账户余额不足您的当前余额为 ¥0.00请充值后再使用热水服务支付宝充值微信充值稍后再说立即充值",
+          "Close",
+          "支付宝充值",
+          "微信充值",
+          "稍后再说",
+          "立即充值"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89033-codex-final-current-structure-03-操作-查看全部",
+        "label": "操作:查看全部",
+        "finalUrl": "http://127.0.0.1:49033/student/transactions",
+        "title": "校园物联网热水服务系统",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89033/probe/codex-final-20260604-current/may-89033-codex-final-current-structure-03-操作-查看全部.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89033/probe/codex-final-20260604-current/may-89033-codex-final-current-structure-03-操作-查看全部.png",
+        "elementCount": 303,
+        "interactiveCount": 20,
+        "interactiveLabels": [
+          "首页 设备列表 消费记录 账户充值 消息中心 个人信息",
+          "首页",
+          "设备列表",
+          "消费记录",
+          "账户充值",
+          "消息中心",
+          "个人信息",
+          "刷 新",
+          "开始日期",
+          "结束日期",
+          "查 询",
+          "详情",
+          "1",
+          "页码"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89033-codex-final-current-structure-04-二层操作-查看全部-详情",
+        "label": "二层操作:查看全部->详情",
+        "finalUrl": "http://127.0.0.1:49033/student/transactions",
+        "title": "校园物联网热水服务系统",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89033/probe/codex-final-20260604-current/may-89033-codex-final-current-structure-04-二层操作-查看全部-详情.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89033/probe/codex-final-20260604-current/may-89033-codex-final-current-structure-04-二层操作-查看全部-详情.png",
+        "elementCount": 389,
+        "interactiveCount": 24,
+        "interactiveLabels": [
+          "首页 设备列表 消费记录 账户充值 消息中心 个人信息",
+          "首页",
+          "设备列表",
+          "消费记录",
+          "账户充值",
+          "消息中心",
+          "个人信息",
+          "刷 新",
+          "开始日期",
+          "结束日期",
+          "查 询",
+          "详情",
+          "1",
+          "页码",
+          "账单详情 交易ID 16 设备名称 水控终端-004 设备位置 一号楼5层浴室 开始时间 2026/5/31 02:25:47 结束时间 2026/5/31 02:31:07 使用时长 5分20秒 用水量 30.44L 平均水温 44.7°C 平均流速 4.91L/min 支付方式 余额扣费 交易金额 ¥1.07 交易状态 已完成 关 闭",
+          "Close",
+          "关 闭"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89033-codex-final-current-structure-05-操作-查看全部设备",
+        "label": "操作:查看全部设备",
+        "finalUrl": "http://127.0.0.1:49033/student/devices",
+        "title": "校园物联网热水服务系统",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89033/probe/codex-final-20260604-current/may-89033-codex-final-current-structure-05-操作-查看全部设备.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89033/probe/codex-final-20260604-current/may-89033-codex-final-current-structure-05-操作-查看全部设备.png",
+        "elementCount": 1200,
+        "interactiveCount": 27,
+        "interactiveLabels": [
+          "首页 设备列表 消费记录 账户充值 消息中心 个人信息",
+          "首页",
+          "设备列表",
+          "消费记录",
+          "账户充值",
+          "消息中心",
+          "个人信息",
+          "刷 新",
+          "搜索设备名称/位置/ID",
+          "开始使用"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89033-codex-final-current-structure-06-二层操作-查看全部设备-刷-新",
+        "label": "二层操作:查看全部设备->刷 新",
+        "finalUrl": "http://127.0.0.1:49033/student/devices",
+        "title": "校园物联网热水服务系统",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89033/probe/codex-final-20260604-current/may-89033-codex-final-current-structure-06-二层操作-查看全部设备-刷-新.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89033/probe/codex-final-20260604-current/may-89033-codex-final-current-structure-06-二层操作-查看全部设备-刷-新.png",
+        "elementCount": 1200,
+        "interactiveCount": 27,
+        "interactiveLabels": [
+          "首页 设备列表 消费记录 账户充值 消息中心 个人信息",
+          "首页",
+          "设备列表",
+          "消费记录",
+          "账户充值",
+          "消息中心",
+          "个人信息",
+          "刷 新",
+          "搜索设备名称/位置/ID",
+          "开始使用"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89033-codex-final-current-structure-07-导航-设备列表",
+        "label": "导航:设备列表",
+        "finalUrl": "http://127.0.0.1:49033/student/devices",
+        "title": "校园物联网热水服务系统",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89033/probe/codex-final-20260604-current/may-89033-codex-final-current-structure-07-导航-设备列表.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89033/probe/codex-final-20260604-current/may-89033-codex-final-current-structure-07-导航-设备列表.png",
+        "elementCount": 1200,
+        "interactiveCount": 27,
+        "interactiveLabels": [
+          "首页 设备列表 消费记录 账户充值 消息中心 个人信息",
+          "首页",
+          "设备列表",
+          "消费记录",
+          "账户充值",
+          "消息中心",
+          "个人信息",
+          "刷 新",
+          "搜索设备名称/位置/ID",
+          "开始使用"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89033-codex-final-current-structure-08-操作-开始使用",
+        "label": "操作:开始使用",
+        "finalUrl": "http://127.0.0.1:49033/student/devices",
+        "title": "校园物联网热水服务系统",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89033/probe/codex-final-20260604-current/may-89033-codex-final-current-structure-08-操作-开始使用.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89033/probe/codex-final-20260604-current/may-89033-codex-final-current-structure-08-操作-开始使用.png",
+        "elementCount": 1200,
+        "interactiveCount": 34,
+        "interactiveLabels": [
+          "首页 设备列表 消费记录 账户充值 消息中心 个人信息",
+          "首页",
+          "设备列表",
+          "消费记录",
+          "账户充值",
+          "消息中心",
+          "个人信息",
+          "刷 新",
+          "搜索设备名称/位置/ID",
+          "开始使用",
+          "余额不足提醒 账户余额不足 您的当前余额为 ¥0.00 无法使用设备 水控终端-001（DEV0001），请充值后再使用 支付宝充值 微信充值 稍后再说 立即充值",
+          "Close",
+          "支付宝充值",
+          "微信充值",
+          "稍后再说",
+          "立即充值"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89033-codex-final-current-structure-09-二层操作-开始使用-立即充值",
+        "label": "二层操作:开始使用->立即充值",
+        "finalUrl": "http://127.0.0.1:49033/student/recharge",
+        "title": "校园物联网热水服务系统",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89033/probe/codex-final-20260604-current/may-89033-codex-final-current-structure-09-二层操作-开始使用-立即充值.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89033/probe/codex-final-20260604-current/may-89033-codex-final-current-structure-09-二层操作-开始使用-立即充值.png",
+        "elementCount": 162,
+        "interactiveCount": 12,
+        "interactiveLabels": [
+          "首页 设备列表 消费记录 账户充值 消息中心 个人信息",
+          "首页",
+          "设备列表",
+          "消费记录",
+          "账户充值",
+          "消息中心",
+          "个人信息",
+          "Increase Value",
+          "Decrease Value",
+          "50",
+          "支付宝充值 ¥50",
+          "微信充值 ¥50"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89033-codex-final-current-structure-10-操作-刷-新",
+        "label": "操作:刷 新",
+        "finalUrl": "http://127.0.0.1:49033/student/devices",
+        "title": "校园物联网热水服务系统",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89033/probe/codex-final-20260604-current/may-89033-codex-final-current-structure-10-操作-刷-新.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89033/probe/codex-final-20260604-current/may-89033-codex-final-current-structure-10-操作-刷-新.png",
+        "elementCount": 1200,
+        "interactiveCount": 27,
+        "interactiveLabels": [
+          "首页 设备列表 消费记录 账户充值 消息中心 个人信息",
+          "首页",
+          "设备列表",
+          "消费记录",
+          "账户充值",
+          "消息中心",
+          "个人信息",
+          "刷 新",
+          "搜索设备名称/位置/ID",
+          "开始使用"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89033-codex-final-current-structure-11-导航-消费记录",
+        "label": "导航:消费记录",
+        "finalUrl": "http://127.0.0.1:49033/student/transactions",
+        "title": "校园物联网热水服务系统",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89033/probe/codex-final-20260604-current/may-89033-codex-final-current-structure-11-导航-消费记录.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89033/probe/codex-final-20260604-current/may-89033-codex-final-current-structure-11-导航-消费记录.png",
+        "elementCount": 303,
+        "interactiveCount": 20,
+        "interactiveLabels": [
+          "首页 设备列表 消费记录 账户充值 消息中心 个人信息",
+          "首页",
+          "设备列表",
+          "消费记录",
+          "账户充值",
+          "消息中心",
+          "个人信息",
+          "刷 新",
+          "开始日期",
+          "结束日期",
+          "查 询",
+          "详情",
+          "1",
+          "页码"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89033-codex-final-current-structure-12-操作-详情",
+        "label": "操作:详情",
+        "finalUrl": "http://127.0.0.1:49033/student/transactions",
+        "title": "校园物联网热水服务系统",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89033/probe/codex-final-20260604-current/may-89033-codex-final-current-structure-12-操作-详情.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89033/probe/codex-final-20260604-current/may-89033-codex-final-current-structure-12-操作-详情.png",
+        "elementCount": 389,
+        "interactiveCount": 24,
+        "interactiveLabels": [
+          "首页 设备列表 消费记录 账户充值 消息中心 个人信息",
+          "首页",
+          "设备列表",
+          "消费记录",
+          "账户充值",
+          "消息中心",
+          "个人信息",
+          "刷 新",
+          "开始日期",
+          "结束日期",
+          "查 询",
+          "详情",
+          "1",
+          "页码",
+          "账单详情 交易ID 16 设备名称 水控终端-004 设备位置 一号楼5层浴室 开始时间 2026/5/31 02:25:47 结束时间 2026/5/31 02:31:07 使用时长 5分20秒 用水量 30.44L 平均水温 44.7°C 平均流速 4.91L/min 支付方式 余额扣费 交易金额 ¥1.07 交易状态 已完成 关 闭",
+          "Close",
+          "关 闭"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89033-codex-final-current-structure-13-二层操作-详情-关-闭",
+        "label": "二层操作:详情->关 闭",
+        "finalUrl": "http://127.0.0.1:49033/student/transactions",
+        "title": "校园物联网热水服务系统",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89033/probe/codex-final-20260604-current/may-89033-codex-final-current-structure-13-二层操作-详情-关-闭.json",
+        "screenshotPath": "",
+        "elementCount": 390,
+        "interactiveCount": 24,
+        "interactiveLabels": [
+          "首页 设备列表 消费记录 账户充值 消息中心 个人信息",
+          "首页",
+          "设备列表",
+          "消费记录",
+          "账户充值",
+          "消息中心",
+          "个人信息",
+          "刷 新",
+          "开始日期",
+          "结束日期",
+          "查 询",
+          "详情",
+          "1",
+          "页码",
+          "账单详情交易ID16设备名称水控终端-004设备位置一号楼5层浴室开始时间2026/5/31 02:25:47结束时间2026/5/31 02:31:07使用时长5分20秒用水量30.44L平均水温44.7°C平均流速4.91L/min支付方式余额扣费交易金额¥1.07交易状态已完成关 闭",
+          "Close",
+          "关 闭"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89033-codex-final-current-structure-14-操作-查-询",
+        "label": "操作:查 询",
+        "finalUrl": "http://127.0.0.1:49033/student/transactions",
+        "title": "校园物联网热水服务系统",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89033/probe/codex-final-20260604-current/may-89033-codex-final-current-structure-14-操作-查-询.json",
+        "screenshotPath": "",
+        "elementCount": 392,
+        "interactiveCount": 24,
+        "interactiveLabels": [
+          "首页 设备列表 消费记录 账户充值 消息中心 个人信息",
+          "首页",
+          "设备列表",
+          "消费记录",
+          "账户充值",
+          "消息中心",
+          "个人信息",
+          "刷 新",
+          "开始日期",
+          "结束日期",
+          "查 询",
+          "详情",
+          "1",
+          "页码",
+          "账单详情交易ID16设备名称水控终端-004设备位置一号楼5层浴室开始时间2026/5/31 02:25:47结束时间2026/5/31 02:31:07使用时长5分20秒用水量30.44L平均水温44.7°C平均流速4.91L/min支付方式余额扣费交易金额¥1.07交易状态已完成关 闭",
+          "Close",
+          "关 闭"
+        ]
+      }
+    ]
+  },
+  "screenshotMetrics": {
+    "width": 1952,
+    "height": 1600,
+    "scrollWidth": 1920,
+    "scrollHeight": 2723
+  },
+  "initialBodyTextPreview": "校园热水服务\n首页\n设备列表\n消费记录\n账户充值\n消息中心\n个人信息\n登录后首页\n演示学生\n欢迎回来，演示学生\n已登录学生首页\n扫码取水\n刷新\n账户余额\n0.00元\n点击前往充值\n本月用水\n0.0L\n累计用量\n本月消费\n¥0.00\n累计消费\n未读消息\n1\n点击查看详情\n智能水控终端\n在线 16\n离线 4\n告警 3\n查看全部设备\n水控终端-001\n在线\n设备ID\nDEV0001\n\n\n位置\n一号楼 一号楼6层浴室\n\n\n楼层\n6层\n水温\n35.6°C\n流速\n8.4L/min\n累计\n325L\n⚠️ 连续满流运行中\n开始使用\n水控终端-002\n在线\n设备ID\nDEV0002\n\n\n位置\n一号楼 一号楼3层浴室\n\n\n楼层\n3层\n水温\n45.8°C\n流速\n2.1L/min\n累计\n380L\n0\n开始使用\n水控终端-0030\n在线\n设备ID\nDEV0003\n\n\n位置\n一号楼 一号楼5层浴室\n\n\n楼层\n5层\n水温\n43.1°C\n流速\n3.2L/min\n累计\n225L\n0\n开始使用\n水控终端-0040\n在线\n设备ID\nDEV0004\n\n\n位置\n一号楼 一号楼5层浴室\n\n\n楼层\n5层\n水温\n42.7°C\n流速\n7.8L/min\n累计\n437L\n0\n开始使用\n水控终端-005\n离线\n设备ID\nDEV0005\n\n\n位置\n一号楼 一号楼3层浴室\n\n\n楼层\n3层\n离线\n水控终端-006\n在线\n设备ID\nDEV0006\n\n\n位置\n二号楼 二号楼1层浴室\n\n\n楼层\n1层\n水温\n49.7°C\n流速\n8.7L/min\n累计\n116L\n⚠️ 连续满流运行中\n开始使用\n水控终端-0070\n在线\n设备ID\nDEV0007\n\n\n位置\n二号楼 二号楼5层浴室\n\n\n楼层\n5层\n水温\n46.6°C\n流速\n2.2L/min\n累计\n499L\n0\n开始使用\n水控终端-0080\n在线\n设备ID\nDEV0008\n\n\n位置\n二号楼 二号楼3层浴室\n\n\n楼层\n3层\n水温\n41.8°C\n流速\n7.7L/min\n累计\n113L\n0\n开始使用\n水控终端-009\n在线\n设备ID\nDEV0009\n\n\n位置\n二号楼 二号楼2层浴室\n\n\n楼层\n2层\n水温\n42.4°C\n流速\n8.3L/min\n累计\n92L\n⚠️ 连续满流运行中\n开始使用\n水控终端-010\n离线\n设备ID\nDEV0010\n\n\n位置\n二号楼 二号楼6层浴室\n\n\n楼层\n6层\n离线\n水控终端-0110\n在线\n设备ID\nDEV0011\n\n\n位置\n三号楼 三号楼4层浴室\n\n\n楼层\n4层\n水温\n37.0°C\n流速\n4.8L/min\n累计\n78L\n0\n开始使用\n水控终端-0120\n在线\n设备ID\nDEV0012\n\n\n位置\n三号楼 三号楼2层浴室\n\n\n楼层\n2层\n水温\n38.8°C\n流速\n2.3L/min\n累计\n498L\n0\n开始使用\n水控终端-0130\n在线\n设备ID\nDEV0013\n\n\n位置\n三号楼 三号楼3层浴室\n\n\n楼层\n3层\n水温\n36.8°C\n流速\n1.1L/min\n累计\n483L\n0\n开始使用\n水控终端-0140\n在线\n设备ID\nDEV0014\n\n\n位置\n三号楼 三号楼4层浴室\n\n\n楼层\n4层\n水温\n50.0°C\n流速\n1.6L/min\n累计\n120L\n0\n开始使用\n水控终端-015\n离线\n设备ID\nDEV0015\n\n\n位置\n三号楼 三号楼2层浴室\n\n\n楼层\n2层\n离线\n水控终端-0160\n在线\n设备ID\nDEV0016\n\n\n位置\n图书馆 图书馆4层浴室\n\n\n楼层\n4层\n水温\n45.1°C\n流速\n5.4L/min\n累计\n177L\n0\n开始使用\n水控终端-0170\n在线\n设备ID\nDEV0017\n\n\n位置\n图书馆 图书馆3层浴室\n\n\n楼层\n3层\n水温\n48.3°C\n流速\n6.0L/min\n累计\n12L\n0\n开始使用\n水控终端-018\n在线\n设备ID\nDEV0018",
+  "bodyTextPreview": "校园热水服务\n首页\n设备列表\n消费记录\n账户充值\n消息中心\n个人信息\n登录后首页\n演示学生\n欢迎回来，演示学生\n已登录学生首页\n扫码取水\n刷新\n账户余额\n0.00元\n点击前往充值\n本月用水\n0.0L\n累计用量\n本月消费\n¥0.00\n累计消费\n未读消息\n0\n点击查看详情\n智能水控终端\n在线 16\n离线 4\n告警 3\n查看全部设备\n最近消费记录\n查看全部\n余额不足提醒\n账户余额不足\n\n您的当前余额为 ¥0.00\n\n请充值后再使用热水服务\n\n支付宝充值\n微信充值\n稍后再说\n立即充值",
+  "apiBase": "http://127.0.0.1:59033/api",
+  "businessGoalPreview": "",
+  "apiResponses": [
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49033/api/messages"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49033/api/students/profile"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49033/api/devices?pageSize=50"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49033/api/alerts?status=unread&pageSize=20"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49033/api/messages"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49033/api/students/profile"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49033/api/devices?pageSize=50"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49033/api/alerts?status=unread&pageSize=20"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49033/api/transactions?pageSize=5&_t=1780577245478"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49033/api/transactions?pageSize=200&_t=1780577245478"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49033/api/messages?is_read=false&pageSize=10&_t=1780577245478"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49033/api/pricing/active"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49033/api/devices/DEV0001/realtime"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49033/api/transactions?pageSize=5&_t=1780577245543"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49033/api/transactions?pageSize=200&_t=1780577245543"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49033/api/messages?is_read=false&pageSize=10&_t=1780577245543"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49033/api/pricing/active"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49033/api/devices/DEV0002/realtime"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49033/api/devices/DEV0001/realtime"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49033/api/devices/DEV0003/realtime"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49033/api/devices/DEV0002/realtime"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49033/api/devices/DEV0004/realtime"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49033/api/devices/DEV0003/realtime"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49033/api/devices/DEV0006/realtime"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49033/api/devices/DEV0004/realtime"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49033/api/devices/DEV0007/realtime"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49033/api/devices/DEV0006/realtime"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49033/api/devices/DEV0008/realtime"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49033/api/devices/DEV0007/realtime"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49033/api/devices/DEV0009/realtime"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49033/api/devices/DEV0008/realtime"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49033/api/devices/DEV0011/realtime"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49033/api/devices/DEV0009/realtime"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49033/api/devices/DEV0012/realtime"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49033/api/devices/DEV0011/realtime"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49033/api/devices/DEV0013/realtime"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49033/api/devices/DEV0012/realtime"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49033/api/devices/DEV0014/realtime"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49033/api/devices/DEV0013/realtime"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49033/api/devices/DEV0016/realtime"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49033/api/devices/DEV0014/realtime"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49033/api/devices/DEV0017/realtime"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49033/api/devices/DEV0016/realtime"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49033/api/devices/DEV0018/realtime"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49033/api/devices/DEV0017/realtime"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49033/api/devices/DEV0019/realtime"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49033/api/devices/DEV0018/realtime"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49033/api/devices/DEV0019/realtime"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49033/api/messages"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49033/api/students/profile"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49033/api/devices?pageSize=50"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49033/api/alerts?status=unread&pageSize=20"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49033/api/messages"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49033/api/students/profile"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49033/api/devices?pageSize=50"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49033/api/alerts?status=unread&pageSize=20"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49033/api/transactions?pageSize=5&_t=1780577251966"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49033/api/transactions?pageSize=200&_t=1780577251966"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49033/api/messages?is_read=false&pageSize=10&_t=1780577251966"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49033/api/pricing/active"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49033/api/transactions?pageSize=5&_t=1780577251968"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49033/api/transactions?pageSize=200&_t=1780577251968"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49033/api/messages?is_read=false&pageSize=10&_t=1780577251968"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49033/api/pricing/active"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49033/api/devices/DEV0001/realtime"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49033/api/devices/DEV0002/realtime"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49033/api/devices/DEV0003/realtime"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49033/api/devices/DEV0004/realtime"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49033/api/devices/DEV0006/realtime"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49033/api/devices/DEV0007/realtime"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49033/api/devices/DEV0008/realtime"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49033/api/devices/DEV0009/realtime"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49033/api/devices/DEV0011/realtime"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49033/api/devices/DEV0012/realtime"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49033/api/devices/DEV0013/realtime"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49033/api/devices/DEV0014/realtime"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49033/api/devices/DEV0016/realtime"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49033/api/devices/DEV0017/realtime"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49033/api/devices/DEV0018/realtime"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49033/api/devices/DEV0019/realtime"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49033/api/transactions?page=1&pageSize=10"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49033/api/messages"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49033/api/transactions?page=1&pageSize=10"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49033/api/messages"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49033/api/messages"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49033/api/students/profile"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49033/api/devices?pageSize=50"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49033/api/alerts?status=unread&pageSize=20"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49033/api/messages"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49033/api/students/profile"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49033/api/devices?pageSize=50"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49033/api/alerts?status=unread&pageSize=20"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49033/api/messages"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49033/api/students/profile"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49033/api/devices?pageSize=50"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49033/api/alerts?status=unread&pageSize=20"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49033/api/transactions?pageSize=5&_t=1780577260967"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49033/api/transactions?pageSize=200&_t=1780577260967"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49033/api/messages?is_read=false&pageSize=10&_t=1780577260967"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49033/api/pricing/active"
+    }
+  ],
+  "apiChecks": [
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59033/api/health",
+      "path": "/api/health",
+      "status": 200,
+      "ok": true,
+      "bodyPreview": "{\"status\":\"ok\",\"timestamp\":\"2026-06-04T12:48:04.774Z\"}"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59033/api/messages",
+      "path": "/api/messages",
+      "status": 200,
+      "ok": true,
+      "bodyPreview": "{\"messages\":[{\"id\":1,\"student_id\":\"20240001\",\"type\":\"balance_warning\",\"title\":\"余额不足提醒\",\"content\":\"张三同学您好，您的账户余额为0.00元，低于安全阈值，请及时充值以避免影响热水使用。\",\"is_read\":0,\"created_at\":\"2026-06-03T11:25:47.103Z\"},{\"id\":2,\"student_id\":\"20240001\",\"type\":\"system\",\"title\":\"系统维护通知\",\"content\":\"热水系统将于本周六凌晨2:00-6:00进行例行维护，届时服务将暂停，请提前做好用水安排。\",\"is_read\":1,\"created_at\":\"2026-06-01T11:25:47.103Z\"}],\"unreadCount\":1}"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59033/api/students/profile",
+      "path": "/api/students/profile",
+      "status": 200,
+      "ok": true,
+      "bodyPreview": "{\"id\":1,\"student_id\":\"20240001\",\"name\":\"张三\",\"phone\":\"13822345678\",\"email\":\"student1@campus.edu.cn\",\"department\":\"计算机学院\",\"balance\":0,\"alipay_user_id\":\"alipay_10054321\",\"bluetooth_address\":\"DD:EE:FF:175:192:199\",\"nfc_card_id\":\"CARD10098765\",\"status\":\"active\",\"created_at\":\"2026-06-04 11:25:47\"}"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59033/api/devices?pageSize=50",
+      "path": "/api/devices?pageSize=50",
+      "status": 200,
+      "ok": true,
+      "bodyPreview": "{\"devices\":[{\"id\":\"DEV0001\",\"name\":\"水控终端-001\",\"location\":\"一号楼6层浴室\",\"building\":\"一号楼\",\"floor\":6,\"status\":\"online\",\"last_online\":null,\"fault_code\":null,\"bluetooth_mac\":\"AA:BB:CC:218:218:115\",\"nfc_id\":\"NFC00764759\",\"created_at\":\"2026-06-04 11:25:47\",\"updated_at\":\"2026-06-04 11:25:47\"},{\"id\":\"DEV0002\",\"name\":\"水控终端-002\",\"location\":\"一号楼3层浴室\",\"building\":\"一号楼\",\"floor\":3,\"status\":\"online\",\"last_online\":null,\"fault_code\":null,\"bluetooth_mac\":\"AA:BB:CC:10:86:171\",\"nfc_id\":\"NFC00866140\",\"created_at\":\"2026-06"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59033/api/alerts?status=unread&pageSize=20",
+      "path": "/api/alerts?status=unread&pageSize=20",
+      "status": 200,
+      "ok": true,
+      "bodyPreview": "{\"alerts\":[{\"id\":1,\"type\":\"full_flow\",\"device_id\":\"DEV0018\",\"student_id\":null,\"message\":\"DEV0018连续10分钟满流运行，可能存在异常用水，请及时检查\",\"severity\":\"warning\",\"status\":\"unread\",\"created_at\":\"2026-06-04 11:25:47\",\"resolved_at\":null},{\"id\":2,\"type\":\"full_flow\",\"device_id\":\"DEV0002\",\"student_id\":null,\"message\":\"DEV0002连续10分钟满流运行，可能存在异常用水，请及时检查\",\"severity\":\"warning\",\"status\":\"unread\",\"created_at\":\"2026-06-04 11:25:47\",\"resolved_at\":null},{\"id\":3,\"type\":\"full_flow\",\"device_id\":\"DEV0006\",\"student_id\":null,\"message\":"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59033/api/transactions?pageSize=5&_t=1780577245478",
+      "path": "/api/transactions?pageSize=5&_t=1780577245478",
+      "status": 200,
+      "ok": true,
+      "bodyPreview": "{\"transactions\":[{\"id\":16,\"student_id\":\"20240001\",\"device_id\":\"DEV0004\",\"start_time\":\"2026-05-30T23:25:47.089Z\",\"end_time\":\"2026-05-30T23:31:07.089Z\",\"duration\":320,\"water_used\":30.44,\"avg_temp\":44.7,\"avg_flow\":4.91,\"amount\":1.07,\"payment_method\":\"balance\",\"status\":\"completed\",\"device_name\":\"水控终端-004\",\"building\":\"一号楼\",\"device_location\":\"一号楼5层浴室\"},{\"id\":3,\"student_id\":\"20240001\",\"device_id\":\"DEV0016\",\"start_time\":\"2026-05-19T08:25:47.089Z\",\"end_time\":\"2026-05-19T08:41:18.089Z\",\"duration\":931,\"wat"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59033/api/transactions?pageSize=200&_t=1780577245478",
+      "path": "/api/transactions?pageSize=200&_t=1780577245478",
+      "status": 200,
+      "ok": true,
+      "bodyPreview": "{\"transactions\":[{\"id\":16,\"student_id\":\"20240001\",\"device_id\":\"DEV0004\",\"start_time\":\"2026-05-30T23:25:47.089Z\",\"end_time\":\"2026-05-30T23:31:07.089Z\",\"duration\":320,\"water_used\":30.44,\"avg_temp\":44.7,\"avg_flow\":4.91,\"amount\":1.07,\"payment_method\":\"balance\",\"status\":\"completed\",\"device_name\":\"水控终端-004\",\"building\":\"一号楼\",\"device_location\":\"一号楼5层浴室\"},{\"id\":3,\"student_id\":\"20240001\",\"device_id\":\"DEV0016\",\"start_time\":\"2026-05-19T08:25:47.089Z\",\"end_time\":\"2026-05-19T08:41:18.089Z\",\"duration\":931,\"wat"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59033/api/messages?is_read=false&pageSize=10&_t=1780577245478",
+      "path": "/api/messages?is_read=false&pageSize=10&_t=1780577245478",
+      "status": 200,
+      "ok": true,
+      "bodyPreview": "{\"messages\":[{\"id\":1,\"student_id\":\"20240001\",\"type\":\"balance_warning\",\"title\":\"余额不足提醒\",\"content\":\"张三同学您好，您的账户余额为0.00元，低于安全阈值，请及时充值以避免影响热水使用。\",\"is_read\":0,\"created_at\":\"2026-06-03T11:25:47.103Z\"}],\"unreadCount\":1}"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59033/api/pricing/active",
+      "path": "/api/pricing/active",
+      "status": 200,
+      "ok": true,
+      "bodyPreview": "{\"id\":1,\"name\":\"默认资费\",\"type\":\"tiered\",\"base_price\":0.05,\"night_start_hour\":22,\"night_end_hour\":6,\"night_discount\":0.7,\"tier1_limit\":50,\"tier1_price\":0.05,\"tier2_limit\":100,\"tier2_price\":0.08,\"tier3_price\":0.12,\"is_active\":1,\"created_at\":\"2026-06-04 11:25:47\"}"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59033/api/devices/DEV0001/realtime",
+      "path": "/api/devices/DEV0001/realtime",
+      "status": 200,
+      "ok": true,
+      "bodyPreview": "{\"id\":1,\"device_id\":\"DEV0001\",\"timestamp\":\"2026-06-04 11:25:47\",\"temperature\":35.6,\"flow_rate\":8.44,\"cumulative_volume\":325.06,\"is_running\":0,\"is_full_flow\":1}"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59033/api/transactions?pageSize=5&_t=1780577245543",
+      "path": "/api/transactions?pageSize=5&_t=1780577245543",
+      "status": 200,
+      "ok": true,
+      "bodyPreview": "{\"transactions\":[{\"id\":16,\"student_id\":\"20240001\",\"device_id\":\"DEV0004\",\"start_time\":\"2026-05-30T23:25:47.089Z\",\"end_time\":\"2026-05-30T23:31:07.089Z\",\"duration\":320,\"water_used\":30.44,\"avg_temp\":44.7,\"avg_flow\":4.91,\"amount\":1.07,\"payment_method\":\"balance\",\"status\":\"completed\",\"device_name\":\"水控终端-004\",\"building\":\"一号楼\",\"device_location\":\"一号楼5层浴室\"},{\"id\":3,\"student_id\":\"20240001\",\"device_id\":\"DEV0016\",\"start_time\":\"2026-05-19T08:25:47.089Z\",\"end_time\":\"2026-05-19T08:41:18.089Z\",\"duration\":931,\"wat"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59033/api/transactions?pageSize=200&_t=1780577245543",
+      "path": "/api/transactions?pageSize=200&_t=1780577245543",
+      "status": 200,
+      "ok": true,
+      "bodyPreview": "{\"transactions\":[{\"id\":16,\"student_id\":\"20240001\",\"device_id\":\"DEV0004\",\"start_time\":\"2026-05-30T23:25:47.089Z\",\"end_time\":\"2026-05-30T23:31:07.089Z\",\"duration\":320,\"water_used\":30.44,\"avg_temp\":44.7,\"avg_flow\":4.91,\"amount\":1.07,\"payment_method\":\"balance\",\"status\":\"completed\",\"device_name\":\"水控终端-004\",\"building\":\"一号楼\",\"device_location\":\"一号楼5层浴室\"},{\"id\":3,\"student_id\":\"20240001\",\"device_id\":\"DEV0016\",\"start_time\":\"2026-05-19T08:25:47.089Z\",\"end_time\":\"2026-05-19T08:41:18.089Z\",\"duration\":931,\"wat"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59033/api/messages?is_read=false&pageSize=10&_t=1780577245543",
+      "path": "/api/messages?is_read=false&pageSize=10&_t=1780577245543",
+      "status": 200,
+      "ok": true,
+      "bodyPreview": "{\"messages\":[{\"id\":1,\"student_id\":\"20240001\",\"type\":\"balance_warning\",\"title\":\"余额不足提醒\",\"content\":\"张三同学您好，您的账户余额为0.00元，低于安全阈值，请及时充值以避免影响热水使用。\",\"is_read\":0,\"created_at\":\"2026-06-03T11:25:47.103Z\"}],\"unreadCount\":1}"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59033/api/devices/DEV0002/realtime",
+      "path": "/api/devices/DEV0002/realtime",
+      "status": 200,
+      "ok": true,
+      "bodyPreview": "{\"id\":2,\"device_id\":\"DEV0002\",\"timestamp\":\"2026-06-04 11:25:47\",\"temperature\":45.8,\"flow_rate\":2.09,\"cumulative_volume\":380.49,\"is_running\":0,\"is_full_flow\":0}"
+    }
+  ],
+  "dialogs": [],
+  "consoleMessages": [
+    {
+      "type": "debug",
+      "text": "[vite] connecting...",
+      "location": {
+        "url": "http://127.0.0.1:49033/@vite/client",
+        "lineNumber": 494,
+        "columnNumber": 8
+      }
+    },
+    {
+      "type": "debug",
+      "text": "[vite] connected.",
+      "location": {
+        "url": "http://127.0.0.1:49033/@vite/client",
+        "lineNumber": 617,
+        "columnNumber": 14
+      }
+    },
+    {
+      "type": "info",
+      "text": "%cDownload the React DevTools for a better development experience: https://reactjs.org/link/react-devtools font-weight:bold",
+      "location": {
+        "url": "http://127.0.0.1:49033/node_modules/.vite/deps/chunk-NUMECXU6.js?v=cf08e5ae",
+        "lineNumber": 21550,
+        "columnNumber": 24
+      }
+    },
+    {
+      "type": "warning",
+      "text": "⚠️ React Router Future Flag Warning: React Router will begin wrapping state updates in `React.startTransition` in v7. You can use the `v7_startTransition` future flag to opt-in early. For more information, see https://reactrouter.com/v6/upgrading/future#v7_starttransition.",
+      "location": {
+        "url": "http://127.0.0.1:49033/node_modules/.vite/deps/react-router-dom.js?v=cf08e5ae",
+        "lineNumber": 4426,
+        "columnNumber": 12
+      }
+    },
+    {
+      "type": "warning",
+      "text": "⚠️ React Router Future Flag Warning: Relative route resolution within Splat routes is changing in v7. You can use the `v7_relativeSplatPath` future flag to opt-in early. For more information, see https://reactrouter.com/v6/upgrading/future#v7_relativesplatpath.",
+      "location": {
+        "url": "http://127.0.0.1:49033/node_modules/.vite/deps/react-router-dom.js?v=cf08e5ae",
+        "lineNumber": 4426,
+        "columnNumber": 12
+      }
+    },
+    {
+      "type": "debug",
+      "text": "[vite] connecting...",
+      "location": {
+        "url": "http://127.0.0.1:49033/@vite/client",
+        "lineNumber": 494,
+        "columnNumber": 8
+      }
+    },
+    {
+      "type": "debug",
+      "text": "[vite] connected.",
+      "location": {
+        "url": "http://127.0.0.1:49033/@vite/client",
+        "lineNumber": 617,
+        "columnNumber": 14
+      }
+    },
+    {
+      "type": "info",
+      "text": "%cDownload the React DevTools for a better development experience: https://reactjs.org/link/react-devtools font-weight:bold",
+      "location": {
+        "url": "http://127.0.0.1:49033/node_modules/.vite/deps/chunk-NUMECXU6.js?v=cf08e5ae",
+        "lineNumber": 21550,
+        "columnNumber": 24
+      }
+    },
+    {
+      "type": "warning",
+      "text": "⚠️ React Router Future Flag Warning: React Router will begin wrapping state updates in `React.startTransition` in v7. You can use the `v7_startTransition` future flag to opt-in early. For more information, see https://reactrouter.com/v6/upgrading/future#v7_starttransition.",
+      "location": {
+        "url": "http://127.0.0.1:49033/node_modules/.vite/deps/react-router-dom.js?v=cf08e5ae",
+        "lineNumber": 4426,
+        "columnNumber": 12
+      }
+    },
+    {
+      "type": "warning",
+      "text": "⚠️ React Router Future Flag Warning: Relative route resolution within Splat routes is changing in v7. You can use the `v7_relativeSplatPath` future flag to opt-in early. For more information, see https://reactrouter.com/v6/upgrading/future#v7_relativesplatpath.",
+      "location": {
+        "url": "http://127.0.0.1:49033/node_modules/.vite/deps/react-router-dom.js?v=cf08e5ae",
+        "lineNumber": 4426,
+        "columnNumber": 12
+      }
+    },
+    {
+      "type": "debug",
+      "text": "[vite] connecting...",
+      "location": {
+        "url": "http://127.0.0.1:49033/@vite/client",
+        "lineNumber": 494,
+        "columnNumber": 8
+      }
+    },
+    {
+      "type": "info",
+      "text": "%cDownload the React DevTools for a better development experience: https://reactjs.org/link/react-devtools font-weight:bold",
+      "location": {
+        "url": "http://127.0.0.1:49033/node_modules/.vite/deps/chunk-NUMECXU6.js?v=cf08e5ae",
+        "lineNumber": 21550,
+        "columnNumber": 24
+      }
+    },
+    {
+      "type": "warning",
+      "text": "⚠️ React Router Future Flag Warning: React Router will begin wrapping state updates in `React.startTransition` in v7. You can use the `v7_startTransition` future flag to opt-in early. For more information, see https://reactrouter.com/v6/upgrading/future#v7_starttransition.",
+      "location": {
+        "url": "http://127.0.0.1:49033/node_modules/.vite/deps/react-router-dom.js?v=cf08e5ae",
+        "lineNumber": 4426,
+        "columnNumber": 12
+      }
+    },
+    {
+      "type": "warning",
+      "text": "⚠️ React Router Future Flag Warning: Relative route resolution within Splat routes is changing in v7. You can use the `v7_relativeSplatPath` future flag to opt-in early. For more information, see https://reactrouter.com/v6/upgrading/future#v7_relativesplatpath.",
+      "location": {
+        "url": "http://127.0.0.1:49033/node_modules/.vite/deps/react-router-dom.js?v=cf08e5ae",
+        "lineNumber": 4426,
+        "columnNumber": 12
+      }
+    },
+    {
+      "type": "debug",
+      "text": "[vite] connected.",
+      "location": {
+        "url": "http://127.0.0.1:49033/@vite/client",
+        "lineNumber": 617,
+        "columnNumber": 14
+      }
+    },
+    {
+      "type": "debug",
+      "text": "[vite] connecting...",
+      "location": {
+        "url": "http://127.0.0.1:49033/@vite/client",
+        "lineNumber": 494,
+        "columnNumber": 8
+      }
+    },
+    {
+      "type": "debug",
+      "text": "[vite] connected.",
+      "location": {
+        "url": "http://127.0.0.1:49033/@vite/client",
+        "lineNumber": 617,
+        "columnNumber": 14
+      }
+    },
+    {
+      "type": "info",
+      "text": "%cDownload the React DevTools for a better development experience: https://reactjs.org/link/react-devtools font-weight:bold",
+      "location": {
+        "url": "http://127.0.0.1:49033/node_modules/.vite/deps/chunk-NUMECXU6.js?v=cf08e5ae",
+        "lineNumber": 21550,
+        "columnNumber": 24
+      }
+    },
+    {
+      "type": "warning",
+      "text": "⚠️ React Router Future Flag Warning: React Router will begin wrapping state updates in `React.startTransition` in v7. You can use the `v7_startTransition` future flag to opt-in early. For more information, see https://reactrouter.com/v6/upgrading/future#v7_starttransition.",
+      "location": {
+        "url": "http://127.0.0.1:49033/node_modules/.vite/deps/react-router-dom.js?v=cf08e5ae",
+        "lineNumber": 4426,
+        "columnNumber": 12
+      }
+    },
+    {
+      "type": "warning",
+      "text": "⚠️ React Router Future Flag Warning: Relative route resolution within Splat routes is changing in v7. You can use the `v7_relativeSplatPath` future flag to opt-in early. For more information, see https://reactrouter.com/v6/upgrading/future#v7_relativesplatpath.",
+      "location": {
+        "url": "http://127.0.0.1:49033/node_modules/.vite/deps/react-router-dom.js?v=cf08e5ae",
+        "lineNumber": 4426,
+        "columnNumber": 12
+      }
+    },
+    {
+      "type": "debug",
+      "text": "[vite] connecting...",
+      "location": {
+        "url": "http://127.0.0.1:49033/@vite/client",
+        "lineNumber": 494,
+        "columnNumber": 8
+      }
+    },
+    {
+      "type": "debug",
+      "text": "[vite] connected.",
+      "location": {
+        "url": "http://127.0.0.1:49033/@vite/client",
+        "lineNumber": 617,
+        "columnNumber": 14
+      }
+    },
+    {
+      "type": "info",
+      "text": "%cDownload the React DevTools for a better development experience: https://reactjs.org/link/react-devtools font-weight:bold",
+      "location": {
+        "url": "http://127.0.0.1:49033/node_modules/.vite/deps/chunk-NUMECXU6.js?v=cf08e5ae",
+        "lineNumber": 21550,
+        "columnNumber": 24
+      }
+    },
+    {
+      "type": "warning",
+      "text": "⚠️ React Router Future Flag Warning: React Router will begin wrapping state updates in `React.startTransition` in v7. You can use the `v7_startTransition` future flag to opt-in early. For more information, see https://reactrouter.com/v6/upgrading/future#v7_starttransition.",
+      "location": {
+        "url": "http://127.0.0.1:49033/node_modules/.vite/deps/react-router-dom.js?v=cf08e5ae",
+        "lineNumber": 4426,
+        "columnNumber": 12
+      }
+    },
+    {
+      "type": "warning",
+      "text": "⚠️ React Router Future Flag Warning: Relative route resolution within Splat routes is changing in v7. You can use the `v7_relativeSplatPath` future flag to opt-in early. For more information, see https://reactrouter.com/v6/upgrading/future#v7_relativesplatpath.",
+      "location": {
+        "url": "http://127.0.0.1:49033/node_modules/.vite/deps/react-router-dom.js?v=cf08e5ae",
+        "lineNumber": 4426,
+        "columnNumber": 12
+      }
+    },
+    {
+      "type": "debug",
+      "text": "[vite] connecting...",
+      "location": {
+        "url": "http://127.0.0.1:49033/@vite/client",
+        "lineNumber": 494,
+        "columnNumber": 8
+      }
+    },
+    {
+      "type": "debug",
+      "text": "[vite] connected.",
+      "location": {
+        "url": "http://127.0.0.1:49033/@vite/client",
+        "lineNumber": 617,
+        "columnNumber": 14
+      }
+    },
+    {
+      "type": "info",
+      "text": "%cDownload the React DevTools for a better development experience: https://reactjs.org/link/react-devtools font-weight:bold",
+      "location": {
+        "url": "http://127.0.0.1:49033/node_modules/.vite/deps/chunk-NUMECXU6.js?v=cf08e5ae",
+        "lineNumber": 21550,
+        "columnNumber": 24
+      }
+    },
+    {
+      "type": "warning",
+      "text": "⚠️ React Router Future Flag Warning: React Router will begin wrapping state updates in `React.startTransition` in v7. You can use the `v7_startTransition` future flag to opt-in early. For more information, see https://reactrouter.com/v6/upgrading/future#v7_starttransition.",
+      "location": {
+        "url": "http://127.0.0.1:49033/node_modules/.vite/deps/react-router-dom.js?v=cf08e5ae",
+        "lineNumber": 4426,
+        "columnNumber": 12
+      }
+    },
+    {
+      "type": "warning",
+      "text": "⚠️ React Router Future Flag Warning: Relative route resolution within Splat routes is changing in v7. You can use the `v7_relativeSplatPath` future flag to opt-in early. For more information, see https://reactrouter.com/v6/upgrading/future#v7_relativesplatpath.",
+      "location": {
+        "url": "http://127.0.0.1:49033/node_modules/.vite/deps/react-router-dom.js?v=cf08e5ae",
+        "lineNumber": 4426,
+        "columnNumber": 12
+      }
+    }
+  ],
+  "requestFailures": [],
+  "responseErrors": []
+}

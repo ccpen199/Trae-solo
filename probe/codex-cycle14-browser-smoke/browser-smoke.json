@@ -1,0 +1,34 @@
+{
+  "order": "may-89033",
+  "ok": false,
+  "frontendUrl": "http://127.0.0.1:49033/",
+  "backendUrl": "http://127.0.0.1:59033",
+  "frontendStatus": 0,
+  "title": "",
+  "textLength": 0,
+  "apiChecks": [
+    {
+      "path": "/api/health",
+      "status": 0,
+      "ok": false,
+      "bodySample": "",
+      "error": "page.goto: net::ERR_CONNECTION_REFUSED at http://127.0.0.1:59033/api/health\nCall log:\n\u001b[2m  - navigating to \"http://127.0.0.1:59033/api/health\", waiting until \"domcontentloaded\"\u001b[22m\n"
+    },
+    {
+      "path": "/api/health",
+      "status": 0,
+      "ok": false,
+      "bodySample": "",
+      "error": "page.goto: net::ERR_CONNECTION_REFUSED at http://127.0.0.1:59033/api/health\nCall log:\n\u001b[2m  - navigating to \"http://127.0.0.1:59033/api/health\", waiting until \"domcontentloaded\"\u001b[22m\n"
+    }
+  ],
+  "responseErrors": [],
+  "requestFailures": [
+    {
+      "url": "http://127.0.0.1:49033/",
+      "error": "net::ERR_CONNECTION_REFUSED"
+    }
+  ],
+  "pageErrors": [],
+  "frontendError": "page.goto: net::ERR_CONNECTION_REFUSED at http://127.0.0.1:49033/\nCall log:\n\u001b[2m  - navigating to \"http://127.0.0.1:49033/\", waiting until \"domcontentloaded\"\u001b[22m\n"
+}
