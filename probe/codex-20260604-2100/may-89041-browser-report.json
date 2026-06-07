@@ -1,0 +1,1848 @@
+{
+  "ok": true,
+  "generatedAt": "2026-06-04T21:02:18.146Z",
+  "order": "may-89041",
+  "roundIndex": 99,
+  "captureId": "codex-may-89041",
+  "url": "http://localhost:49041/",
+  "initialUrl": "http://localhost:49041/",
+  "finalUrl": "http://localhost:49041/dashboard/admin",
+  "status": 200,
+  "title": "My Trae Project",
+  "initialTitle": "My Trae Project",
+  "navigationError": "",
+  "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89041/probe/codex-20260604-2100/codex-may-89041-frontend.png",
+  "screenshotPaths": [
+    "/Users/chen/Documents/trae_projects/local_projects/may-89041/probe/codex-20260604-2100/codex-may-89041-structure-01-首屏.png",
+    "/Users/chen/Documents/trae_projects/local_projects/may-89041/probe/codex-20260604-2100/codex-may-89041-structure-02-导航-社.png",
+    "/Users/chen/Documents/trae_projects/local_projects/may-89041/probe/codex-20260604-2100/codex-may-89041-structure-03-操作-发布帖子.png",
+    "/Users/chen/Documents/trae_projects/local_projects/may-89041/probe/codex-20260604-2100/codex-may-89041-structure-04-二层操作-发布帖子-添加图片.png",
+    "/Users/chen/Documents/trae_projects/local_projects/may-89041/probe/codex-20260604-2100/codex-may-89041-structure-05-操作-互助求助.png",
+    "/Users/chen/Documents/trae_projects/local_projects/may-89041/probe/codex-20260604-2100/codex-may-89041-structure-06-二层操作-互助求助-发布帖子.png",
+    "/Users/chen/Documents/trae_projects/local_projects/may-89041/probe/codex-20260604-2100/codex-may-89041-structure-07-导航-首页仪表盘.png",
+    "/Users/chen/Documents/trae_projects/local_projects/may-89041/probe/codex-20260604-2100/codex-may-89041-structure-08-操作-工单管理-查看处理所有工单.png"
+  ],
+  "issueTextPreview": "",
+  "targetReason": "登录流程已完成，继续复验登录后的首页和业务导航",
+  "targetKind": "auth",
+  "targetMatched": true,
+  "targetActions": [
+    {
+      "action": "login-fill-username",
+      "label": "admin",
+      "ok": true
+    },
+    {
+      "action": "login-fill-password",
+      "label": "admin:******",
+      "ok": true
+    },
+    {
+      "action": "click",
+      "label": "登录:admin",
+      "ok": true
+    },
+    {
+      "action": "login-submit",
+      "label": "admin",
+      "ok": true,
+      "beforeUrl": "http://localhost:49041/login"
+    },
+    {
+      "action": "login-result",
+      "label": "admin",
+      "ok": true,
+      "finalUrl": "http://localhost:49041/dashboard/admin"
+    },
+    {
+      "action": "target-verify",
+      "label": "登录后首页",
+      "ok": true,
+      "finalUrl": "http://localhost:49041/dashboard/admin"
+    }
+  ],
+  "authFlow": {
+    "detected": true,
+    "attempted": true,
+    "success": true,
+    "finalUrl": "http://localhost:49041/dashboard/admin",
+    "message": "登录成功:admin",
+    "actions": [
+      {
+        "action": "login-fill-username",
+        "label": "admin",
+        "ok": true
+      },
+      {
+        "action": "login-fill-password",
+        "label": "admin:******",
+        "ok": true
+      },
+      {
+        "action": "click",
+        "label": "登录:admin",
+        "ok": true
+      },
+      {
+        "action": "login-submit",
+        "label": "admin",
+        "ok": true,
+        "beforeUrl": "http://localhost:49041/login"
+      },
+      {
+        "action": "login-result",
+        "label": "admin",
+        "ok": true,
+        "finalUrl": "http://localhost:49041/dashboard/admin"
+      }
+    ],
+    "username": "admin",
+    "credentialSource": "visible-demo-text"
+  },
+  "businessAudit": {
+    "actions": [
+      {
+        "action": "click",
+        "label": "导航:社",
+        "ok": true
+      },
+      {
+        "action": "click",
+        "label": "操作:发布帖子",
+        "ok": true,
+        "result": {
+          "ok": true,
+          "matched": 1
+        }
+      },
+      {
+        "action": "click",
+        "label": "二层操作:发布帖子:添加图片",
+        "ok": true,
+        "result": {
+          "ok": true,
+          "matched": 1
+        }
+      },
+      {
+        "action": "click",
+        "label": "关闭弹窗/抽屉",
+        "ok": true
+      },
+      {
+        "action": "click",
+        "label": "操作:互助求助",
+        "ok": true,
+        "result": {
+          "ok": true,
+          "matched": 1
+        }
+      },
+      {
+        "action": "click",
+        "label": "二层操作:互助求助:发布帖子",
+        "ok": true,
+        "result": {
+          "ok": true,
+          "matched": 1
+        }
+      },
+      {
+        "action": "click",
+        "label": "关闭弹窗/抽屉",
+        "ok": true
+      },
+      {
+        "action": "click",
+        "label": "导航:首页仪表盘",
+        "ok": true
+      },
+      {
+        "action": "click",
+        "label": "操作:工单管理 查看处理所有工单",
+        "ok": true,
+        "result": {
+          "ok": true,
+          "matched": 1
+        }
+      }
+    ],
+    "snapshots": [
+      {
+        "label": "首屏",
+        "url": "http://localhost:49041/dashboard/admin",
+        "title": "My Trae Project",
+        "headings": [
+          "智慧社区",
+          "欢迎回来，系统管理员",
+          "系统管理员工作台",
+          "AI 运营摘要",
+          "快捷管理",
+          "最新工单",
+          "社区动态"
+        ],
+        "navLabels": [
+          "社 智慧社区 Smart Community",
+          "社",
+          "首页仪表盘",
+          "个人中心",
+          "楼栋管理",
+          "工单管理",
+          "邻里社区",
+          "商户广场",
+          "闲置集市",
+          "社区温度",
+          "费用中心",
+          "门禁管理"
+        ],
+        "buttons": [
+          "系统管理员 admin",
+          "楼栋管理 管理小区楼栋单元",
+          "工单管理 查看处理所有工单",
+          "商户审核 商户入驻审核管理",
+          "社区温度 社区运营数据看板",
+          "全部工单",
+          "全部动态"
+        ],
+        "links": [
+          "首页仪表盘",
+          "个人中心",
+          "楼栋管理",
+          "工单管理",
+          "邻里社区",
+          "商户广场",
+          "闲置集市",
+          "社区温度",
+          "费用中心",
+          "门禁管理"
+        ],
+        "inputs": [],
+        "tables": [],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "社智慧社区Smart Community当前身份：系统管理员功能菜单首页仪表盘个人中心楼栋管理工单管理邻里社区商户广场闲置集市社区温度费用中心门禁管理智慧社区管理系统 v1.0欢迎回来，系统管理员社区温度指数26°C系统管理员admin系统管理员工作台全局运营监控与系统管理系统运行正常小区总户数2户2.5% 较上月待处理工单1单15% 较上月总户数/单元4户8% 较上月缴费率42%3% 较上月AI 运营摘要今日社区整体运营状况良好，共收到 4 条工单， 其中待处理 1 条， 已完成 1 条。 小区总住户 2 户， 费用收缴率 42%。 待收费用 ¥453.5， 已收费用 ¥331.5。42%费用收缴率快捷管理楼栋管理管理小区楼栋单元工单管理查看处理所有工单商户审核商户入驻审核管理社区温度社区运营数据看板最新工单全部工单 卫生间水管漏水张三 · 2026-06-04 00:28:36处理中垃圾分类问题投诉李四 · 2026-06-04 00:28:36已完成楼道灯不亮李四 · 2026-06-04 00:28:36待处理建议增加健身器材张三 · 2026-06-04 00:28:36已完成社区动态全部动态 关于小区停水通知系统管理员👍 156💬 0春节联欢晚会活动通知系统管理员👍 234💬 0小区获评\"市文明小区\"称号系统管理员👍 312💬 0",
+        "layout": {
+          "viewportWidth": 1504,
+          "viewportHeight": 1125,
+          "scrollWidth": 1504,
+          "scrollHeight": 1125,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "codex-may-89041-structure-01-首屏",
+          "label": "首屏",
+          "finalUrl": "http://localhost:49041/dashboard/admin",
+          "title": "My Trae Project",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89041/probe/codex-20260604-2100/codex-may-89041-structure-01-首屏.json",
+          "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89041/probe/codex-20260604-2100/codex-may-89041-structure-01-首屏.png",
+          "elementCount": 329,
+          "interactiveCount": 18,
+          "interactiveLabels": [
+            "首页仪表盘",
+            "个人中心",
+            "楼栋管理",
+            "工单管理",
+            "邻里社区",
+            "商户广场",
+            "闲置集市",
+            "社区温度",
+            "费用中心",
+            "门禁管理",
+            "系统管理员 admin",
+            "楼栋管理 管理小区楼栋单元",
+            "工单管理 查看处理所有工单",
+            "商户审核 商户入驻审核管理",
+            "社区温度 社区运营数据看板",
+            "全部工单",
+            "全部动态"
+          ]
+        }
+      },
+      {
+        "label": "导航:社",
+        "url": "http://localhost:49041/community",
+        "title": "My Trae Project",
+        "headings": [
+          "智慧社区",
+          "欢迎回来，系统管理员",
+          "邻里社区",
+          "闲置物品集市",
+          "关于小区停水通知",
+          "春节联欢晚会活动通知",
+          "小区获评\"市文明小区\"称号"
+        ],
+        "navLabels": [
+          "社 智慧社区 Smart Community",
+          "社",
+          "首页仪表盘",
+          "个人中心",
+          "楼栋管理",
+          "工单管理",
+          "邻里社区",
+          "商户广场",
+          "闲置集市",
+          "社区温度",
+          "费用中心",
+          "门禁管理"
+        ],
+        "buttons": [
+          "系统管理员 admin",
+          "发布帖子",
+          "全部",
+          "活动通知",
+          "物业通知",
+          "互助求助",
+          "生活分享"
+        ],
+        "links": [
+          "首页仪表盘",
+          "个人中心",
+          "楼栋管理",
+          "工单管理",
+          "邻里社区",
+          "商户广场",
+          "闲置集市",
+          "社区温度",
+          "费用中心",
+          "门禁管理"
+        ],
+        "inputs": [
+          {
+            "tag": "input",
+            "type": "text",
+            "placeholder": "搜索帖子内容...",
+            "name": "",
+            "label": ""
+          }
+        ],
+        "tables": [],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "社智慧社区Smart Community当前身份：系统管理员功能菜单首页仪表盘个人中心楼栋管理工单管理邻里社区商户广场闲置集市社区温度费用中心门禁管理智慧社区管理系统 v1.0欢迎回来，系统管理员社区温度指数26°C系统管理员admin社区温度NaN°C本周活跃度0帖互助响应率0%矛盾化解率95%邻里社区分享生活动态，共建和谐社区发布帖子全部活动通知物业通知互助求助生活分享闲置物品集市邻里互助，物尽其用，去集市逛逛吧去闲置集市 →notice关于小区停水通知尊敬的各位业主： 因市政管网维修，本小区将于2024年1月15日9:00-17:00停水，请提前做好储水准备。 给您带来不便，敬请谅解！ 物业管理处 2024年1月14日156activity春节联欢晚会活动通知亲爱的居民朋友们： 一年一度的春节即将到来，为丰富小区文化生活，增进邻里感情，物业决定举办春节联欢晚会活动。 活动时间：2024年2月8日 19:00-21:00 活动地点：小区中心广场 欢迎各位业主积极报名参加节目表演！234news小区获评\"市文明小区\"称号热烈祝贺阳光花园小区在2023年度市级文明创建评比中，荣获\"市文明小区\"荣誉称号！ 这一荣誉的取得，离不开全体业主的共同努力和支持。希望大家继续保持，共同维护我们美好的家园。312",
+        "layout": {
+          "viewportWidth": 1536,
+          "viewportHeight": 1125,
+          "scrollWidth": 1536,
+          "scrollHeight": 1125,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "codex-may-89041-structure-02-导航-社",
+          "label": "导航:社",
+          "finalUrl": "http://localhost:49041/community",
+          "title": "My Trae Project",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89041/probe/codex-20260604-2100/codex-may-89041-structure-02-导航-社.json",
+          "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89041/probe/codex-20260604-2100/codex-may-89041-structure-02-导航-社.png",
+          "elementCount": 300,
+          "interactiveCount": 25,
+          "interactiveLabels": [
+            "首页仪表盘",
+            "个人中心",
+            "楼栋管理",
+            "工单管理",
+            "邻里社区",
+            "商户广场",
+            "闲置集市",
+            "社区温度",
+            "费用中心",
+            "门禁管理",
+            "系统管理员 admin",
+            "发布帖子",
+            "搜索帖子内容...",
+            "全部",
+            "活动通知",
+            "物业通知",
+            "互助求助",
+            "生活分享"
+          ]
+        }
+      },
+      {
+        "label": "操作:发布帖子",
+        "url": "http://localhost:49041/posts/create",
+        "title": "My Trae Project",
+        "headings": [
+          "智慧社区",
+          "欢迎回来，系统管理员",
+          "发布新帖",
+          "上传图片"
+        ],
+        "navLabels": [
+          "社 智慧社区 Smart Community",
+          "社",
+          "首页仪表盘",
+          "个人中心",
+          "楼栋管理",
+          "工单管理",
+          "邻里社区",
+          "商户广场",
+          "闲置集市",
+          "社区温度",
+          "费用中心",
+          "门禁管理"
+        ],
+        "buttons": [
+          "系统管理员 admin",
+          "活动通知",
+          "物业通知",
+          "互助求助",
+          "闲置转让",
+          "生活分享",
+          "#邻里互助",
+          "#社区活动",
+          "#生活贴士",
+          "#二手闲置",
+          "#寻物启事",
+          "#宠物交流",
+          "添加图片",
+          "取消",
+          "发布帖子"
+        ],
+        "links": [
+          "首页仪表盘",
+          "个人中心",
+          "楼栋管理",
+          "工单管理",
+          "邻里社区",
+          "商户广场",
+          "闲置集市",
+          "社区温度",
+          "费用中心",
+          "门禁管理"
+        ],
+        "inputs": [
+          {
+            "tag": "input",
+            "type": "text",
+            "placeholder": "输入自定义标签，回车添加",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "text",
+            "placeholder": "请输入一个吸引人的标题",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "textarea",
+            "type": "",
+            "placeholder": "分享你的想法...",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "checkbox",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          }
+        ],
+        "tables": [],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "社智慧社区Smart Community当前身份：系统管理员功能菜单首页仪表盘个人中心楼栋管理工单管理邻里社区商户广场闲置集市社区温度费用中心门禁管理智慧社区管理系统 v1.0欢迎回来，系统管理员社区温度指数26°C系统管理员admin发布新帖分享你的想法和动态系统管理员系统管理员此身份将展示在您发布的帖子中帖子分类 *活动通知物业通知互助求助闲置转让生活分享话题标签#邻里互助#社区活动#生活贴士#二手闲置#寻物启事#宠物交流已选 0/5 个标签帖子标题 *0/100帖子内容 *0/5000上传图片最多可上传9张图片添加图片温馨提示：请遵守社区公约，发布积极健康的内容。禁止发布广告、谣言、色情等违规内容，违规帖子将被删除。治理提示：本社区实行实名制发帖，违规内容将被标记并处理。举报可在帖子详情页操作。我承诺发布内容真实准确，遵守社区公约取消发布帖子",
+        "layout": {
+          "viewportWidth": 1568,
+          "viewportHeight": 1510,
+          "scrollWidth": 1568,
+          "scrollHeight": 1510,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "codex-may-89041-structure-03-操作-发布帖子",
+          "label": "操作:发布帖子",
+          "finalUrl": "http://localhost:49041/posts/create",
+          "title": "My Trae Project",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89041/probe/codex-20260604-2100/codex-may-89041-structure-03-操作-发布帖子.json",
+          "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89041/probe/codex-20260604-2100/codex-may-89041-structure-03-操作-发布帖子.png",
+          "elementCount": 202,
+          "interactiveCount": 32,
+          "interactiveLabels": [
+            "首页仪表盘",
+            "个人中心",
+            "楼栋管理",
+            "工单管理",
+            "邻里社区",
+            "商户广场",
+            "闲置集市",
+            "社区温度",
+            "费用中心",
+            "门禁管理",
+            "系统管理员 admin",
+            "活动通知",
+            "物业通知",
+            "互助求助",
+            "闲置转让",
+            "生活分享",
+            "邻里互助",
+            "社区活动",
+            "生活贴士",
+            "二手闲置",
+            "寻物启事",
+            "宠物交流",
+            "输入自定义标签，回车添加",
+            "请输入一个吸引人的标题",
+            "分享你的想法...",
+            "添加图片",
+            "on",
+            "取消",
+            "发布帖子"
+          ]
+        }
+      },
+      {
+        "label": "二层操作:发布帖子->添加图片",
+        "url": "http://localhost:49041/posts/create",
+        "title": "My Trae Project",
+        "headings": [
+          "智慧社区",
+          "欢迎回来，系统管理员",
+          "发布新帖",
+          "上传图片"
+        ],
+        "navLabels": [
+          "社 智慧社区 Smart Community",
+          "社",
+          "首页仪表盘",
+          "个人中心",
+          "楼栋管理",
+          "工单管理",
+          "邻里社区",
+          "商户广场",
+          "闲置集市",
+          "社区温度",
+          "费用中心",
+          "门禁管理"
+        ],
+        "buttons": [
+          "系统管理员 admin",
+          "活动通知",
+          "物业通知",
+          "互助求助",
+          "闲置转让",
+          "生活分享",
+          "#邻里互助",
+          "#社区活动",
+          "#生活贴士",
+          "#二手闲置",
+          "#寻物启事",
+          "#宠物交流",
+          "添加图片",
+          "取消",
+          "发布帖子"
+        ],
+        "links": [
+          "首页仪表盘",
+          "个人中心",
+          "楼栋管理",
+          "工单管理",
+          "邻里社区",
+          "商户广场",
+          "闲置集市",
+          "社区温度",
+          "费用中心",
+          "门禁管理"
+        ],
+        "inputs": [
+          {
+            "tag": "input",
+            "type": "text",
+            "placeholder": "输入自定义标签，回车添加",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "text",
+            "placeholder": "请输入一个吸引人的标题",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "textarea",
+            "type": "",
+            "placeholder": "分享你的想法...",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "checkbox",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          }
+        ],
+        "tables": [],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "社智慧社区Smart Community当前身份：系统管理员功能菜单首页仪表盘个人中心楼栋管理工单管理邻里社区商户广场闲置集市社区温度费用中心门禁管理智慧社区管理系统 v1.0欢迎回来，系统管理员社区温度指数26°C系统管理员admin发布新帖分享你的想法和动态系统管理员系统管理员此身份将展示在您发布的帖子中帖子分类 *活动通知物业通知互助求助闲置转让生活分享话题标签#邻里互助#社区活动#生活贴士#二手闲置#寻物启事#宠物交流已选 0/5 个标签帖子标题 *0/100帖子内容 *0/5000上传图片最多可上传9张图片添加图片温馨提示：请遵守社区公约，发布积极健康的内容。禁止发布广告、谣言、色情等违规内容，违规帖子将被删除。治理提示：本社区实行实名制发帖，违规内容将被标记并处理。举报可在帖子详情页操作。我承诺发布内容真实准确，遵守社区公约取消发布帖子",
+        "layout": {
+          "viewportWidth": 1600,
+          "viewportHeight": 1510,
+          "scrollWidth": 1600,
+          "scrollHeight": 1510,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "codex-may-89041-structure-04-二层操作-发布帖子-添加图片",
+          "label": "二层操作:发布帖子->添加图片",
+          "finalUrl": "http://localhost:49041/posts/create",
+          "title": "My Trae Project",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89041/probe/codex-20260604-2100/codex-may-89041-structure-04-二层操作-发布帖子-添加图片.json",
+          "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89041/probe/codex-20260604-2100/codex-may-89041-structure-04-二层操作-发布帖子-添加图片.png",
+          "elementCount": 208,
+          "interactiveCount": 33,
+          "interactiveLabels": [
+            "首页仪表盘",
+            "个人中心",
+            "楼栋管理",
+            "工单管理",
+            "邻里社区",
+            "商户广场",
+            "闲置集市",
+            "社区温度",
+            "费用中心",
+            "门禁管理",
+            "系统管理员 admin",
+            "活动通知",
+            "物业通知",
+            "互助求助",
+            "闲置转让",
+            "生活分享",
+            "邻里互助",
+            "社区活动",
+            "生活贴士",
+            "二手闲置",
+            "寻物启事",
+            "宠物交流",
+            "输入自定义标签，回车添加",
+            "请输入一个吸引人的标题",
+            "分享你的想法...",
+            "添加图片",
+            "on",
+            "取消",
+            "发布帖子"
+          ]
+        }
+      },
+      {
+        "label": "操作:互助求助",
+        "url": "http://localhost:49041/community",
+        "title": "My Trae Project",
+        "headings": [
+          "智慧社区",
+          "欢迎回来，系统管理员",
+          "邻里社区",
+          "闲置物品集市"
+        ],
+        "navLabels": [
+          "社 智慧社区 Smart Community",
+          "社",
+          "首页仪表盘",
+          "个人中心",
+          "楼栋管理",
+          "工单管理",
+          "邻里社区",
+          "商户广场",
+          "闲置集市",
+          "社区温度",
+          "费用中心",
+          "门禁管理"
+        ],
+        "buttons": [
+          "系统管理员 admin",
+          "发布帖子",
+          "全部",
+          "活动通知",
+          "物业通知",
+          "互助求助",
+          "生活分享"
+        ],
+        "links": [
+          "首页仪表盘",
+          "个人中心",
+          "楼栋管理",
+          "工单管理",
+          "邻里社区",
+          "商户广场",
+          "闲置集市",
+          "社区温度",
+          "费用中心",
+          "门禁管理"
+        ],
+        "inputs": [
+          {
+            "tag": "input",
+            "type": "text",
+            "placeholder": "搜索帖子内容...",
+            "name": "",
+            "label": ""
+          }
+        ],
+        "tables": [],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "社智慧社区Smart Community当前身份：系统管理员功能菜单首页仪表盘个人中心楼栋管理工单管理邻里社区商户广场闲置集市社区温度费用中心门禁管理智慧社区管理系统 v1.0欢迎回来，系统管理员社区温度指数26°C系统管理员admin社区温度NaN°C本周活跃度0帖互助响应率0%矛盾化解率95%邻里社区分享生活动态，共建和谐社区发布帖子全部活动通知物业通知互助求助生活分享闲置物品集市邻里互助，物尽其用，去集市逛逛吧去闲置集市 →暂无符合条件的帖子",
+        "layout": {
+          "viewportWidth": 1632,
+          "viewportHeight": 1510,
+          "scrollWidth": 1632,
+          "scrollHeight": 1510,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "codex-may-89041-structure-05-操作-互助求助",
+          "label": "操作:互助求助",
+          "finalUrl": "http://localhost:49041/community",
+          "title": "My Trae Project",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89041/probe/codex-20260604-2100/codex-may-89041-structure-05-操作-互助求助.json",
+          "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89041/probe/codex-20260604-2100/codex-may-89041-structure-05-操作-互助求助.png",
+          "elementCount": 206,
+          "interactiveCount": 19,
+          "interactiveLabels": [
+            "首页仪表盘",
+            "个人中心",
+            "楼栋管理",
+            "工单管理",
+            "邻里社区",
+            "商户广场",
+            "闲置集市",
+            "社区温度",
+            "费用中心",
+            "门禁管理",
+            "系统管理员 admin",
+            "发布帖子",
+            "搜索帖子内容...",
+            "全部",
+            "活动通知",
+            "物业通知",
+            "互助求助",
+            "生活分享"
+          ]
+        }
+      },
+      {
+        "label": "二层操作:互助求助->发布帖子",
+        "url": "http://localhost:49041/posts/create",
+        "title": "My Trae Project",
+        "headings": [
+          "智慧社区",
+          "欢迎回来，系统管理员",
+          "发布新帖",
+          "上传图片"
+        ],
+        "navLabels": [
+          "社 智慧社区 Smart Community",
+          "社",
+          "首页仪表盘",
+          "个人中心",
+          "楼栋管理",
+          "工单管理",
+          "邻里社区",
+          "商户广场",
+          "闲置集市",
+          "社区温度",
+          "费用中心",
+          "门禁管理"
+        ],
+        "buttons": [
+          "系统管理员 admin",
+          "活动通知",
+          "物业通知",
+          "互助求助",
+          "闲置转让",
+          "生活分享",
+          "#邻里互助",
+          "#社区活动",
+          "#生活贴士",
+          "#二手闲置",
+          "#寻物启事",
+          "#宠物交流",
+          "添加图片",
+          "取消",
+          "发布帖子"
+        ],
+        "links": [
+          "首页仪表盘",
+          "个人中心",
+          "楼栋管理",
+          "工单管理",
+          "邻里社区",
+          "商户广场",
+          "闲置集市",
+          "社区温度",
+          "费用中心",
+          "门禁管理"
+        ],
+        "inputs": [
+          {
+            "tag": "input",
+            "type": "text",
+            "placeholder": "输入自定义标签，回车添加",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "text",
+            "placeholder": "请输入一个吸引人的标题",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "textarea",
+            "type": "",
+            "placeholder": "分享你的想法...",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "checkbox",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          }
+        ],
+        "tables": [],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "社智慧社区Smart Community当前身份：系统管理员功能菜单首页仪表盘个人中心楼栋管理工单管理邻里社区商户广场闲置集市社区温度费用中心门禁管理智慧社区管理系统 v1.0欢迎回来，系统管理员社区温度指数26°C系统管理员admin发布新帖分享你的想法和动态系统管理员系统管理员此身份将展示在您发布的帖子中帖子分类 *活动通知物业通知互助求助闲置转让生活分享话题标签#邻里互助#社区活动#生活贴士#二手闲置#寻物启事#宠物交流已选 0/5 个标签帖子标题 *0/100帖子内容 *0/5000上传图片最多可上传9张图片添加图片温馨提示：请遵守社区公约，发布积极健康的内容。禁止发布广告、谣言、色情等违规内容，违规帖子将被删除。治理提示：本社区实行实名制发帖，违规内容将被标记并处理。举报可在帖子详情页操作。我承诺发布内容真实准确，遵守社区公约取消发布帖子",
+        "layout": {
+          "viewportWidth": 1664,
+          "viewportHeight": 1510,
+          "scrollWidth": 1664,
+          "scrollHeight": 1510,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "codex-may-89041-structure-06-二层操作-互助求助-发布帖子",
+          "label": "二层操作:互助求助->发布帖子",
+          "finalUrl": "http://localhost:49041/posts/create",
+          "title": "My Trae Project",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89041/probe/codex-20260604-2100/codex-may-89041-structure-06-二层操作-互助求助-发布帖子.json",
+          "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89041/probe/codex-20260604-2100/codex-may-89041-structure-06-二层操作-互助求助-发布帖子.png",
+          "elementCount": 202,
+          "interactiveCount": 32,
+          "interactiveLabels": [
+            "首页仪表盘",
+            "个人中心",
+            "楼栋管理",
+            "工单管理",
+            "邻里社区",
+            "商户广场",
+            "闲置集市",
+            "社区温度",
+            "费用中心",
+            "门禁管理",
+            "系统管理员 admin",
+            "活动通知",
+            "物业通知",
+            "互助求助",
+            "闲置转让",
+            "生活分享",
+            "邻里互助",
+            "社区活动",
+            "生活贴士",
+            "二手闲置",
+            "寻物启事",
+            "宠物交流",
+            "输入自定义标签，回车添加",
+            "请输入一个吸引人的标题",
+            "分享你的想法...",
+            "添加图片",
+            "on",
+            "取消",
+            "发布帖子"
+          ]
+        }
+      },
+      {
+        "label": "导航:首页仪表盘",
+        "url": "http://localhost:49041/dashboard/admin",
+        "title": "My Trae Project",
+        "headings": [
+          "智慧社区",
+          "欢迎回来，系统管理员",
+          "系统管理员工作台",
+          "AI 运营摘要",
+          "快捷管理",
+          "最新工单",
+          "社区动态"
+        ],
+        "navLabels": [
+          "社 智慧社区 Smart Community",
+          "社",
+          "首页仪表盘",
+          "个人中心",
+          "楼栋管理",
+          "工单管理",
+          "邻里社区",
+          "商户广场",
+          "闲置集市",
+          "社区温度",
+          "费用中心",
+          "门禁管理"
+        ],
+        "buttons": [
+          "系统管理员 admin",
+          "楼栋管理 管理小区楼栋单元",
+          "工单管理 查看处理所有工单",
+          "商户审核 商户入驻审核管理",
+          "社区温度 社区运营数据看板",
+          "全部工单",
+          "全部动态"
+        ],
+        "links": [
+          "首页仪表盘",
+          "个人中心",
+          "楼栋管理",
+          "工单管理",
+          "邻里社区",
+          "商户广场",
+          "闲置集市",
+          "社区温度",
+          "费用中心",
+          "门禁管理"
+        ],
+        "inputs": [],
+        "tables": [],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "社智慧社区Smart Community当前身份：系统管理员功能菜单首页仪表盘个人中心楼栋管理工单管理邻里社区商户广场闲置集市社区温度费用中心门禁管理智慧社区管理系统 v1.0欢迎回来，系统管理员社区温度指数26°C系统管理员admin系统管理员工作台全局运营监控与系统管理系统运行正常小区总户数2户2.5% 较上月待处理工单1单15% 较上月总户数/单元4户8% 较上月缴费率42%3% 较上月AI 运营摘要今日社区整体运营状况良好，共收到 4 条工单， 其中待处理 1 条， 已完成 1 条。 小区总住户 2 户， 费用收缴率 42%。 待收费用 ¥453.5， 已收费用 ¥331.5。42%费用收缴率快捷管理楼栋管理管理小区楼栋单元工单管理查看处理所有工单商户审核商户入驻审核管理社区温度社区运营数据看板最新工单全部工单 卫生间水管漏水张三 · 2026-06-04 00:28:36处理中垃圾分类问题投诉李四 · 2026-06-04 00:28:36已完成楼道灯不亮李四 · 2026-06-04 00:28:36待处理建议增加健身器材张三 · 2026-06-04 00:28:36已完成社区动态全部动态 关于小区停水通知系统管理员👍 156💬 0春节联欢晚会活动通知系统管理员👍 234💬 0小区获评\"市文明小区\"称号系统管理员👍 312💬 0",
+        "layout": {
+          "viewportWidth": 1696,
+          "viewportHeight": 1510,
+          "scrollWidth": 1696,
+          "scrollHeight": 1510,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "codex-may-89041-structure-07-导航-首页仪表盘",
+          "label": "导航:首页仪表盘",
+          "finalUrl": "http://localhost:49041/dashboard/admin",
+          "title": "My Trae Project",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89041/probe/codex-20260604-2100/codex-may-89041-structure-07-导航-首页仪表盘.json",
+          "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89041/probe/codex-20260604-2100/codex-may-89041-structure-07-导航-首页仪表盘.png",
+          "elementCount": 329,
+          "interactiveCount": 18,
+          "interactiveLabels": [
+            "首页仪表盘",
+            "个人中心",
+            "楼栋管理",
+            "工单管理",
+            "邻里社区",
+            "商户广场",
+            "闲置集市",
+            "社区温度",
+            "费用中心",
+            "门禁管理",
+            "系统管理员 admin",
+            "楼栋管理 管理小区楼栋单元",
+            "工单管理 查看处理所有工单",
+            "商户审核 商户入驻审核管理",
+            "社区温度 社区运营数据看板",
+            "全部工单",
+            "全部动态"
+          ]
+        }
+      },
+      {
+        "label": "操作:工单管理 查看处理所有工单",
+        "url": "http://localhost:49041/tickets",
+        "title": "My Trae Project",
+        "headings": [],
+        "navLabels": [],
+        "buttons": [],
+        "links": [],
+        "inputs": [],
+        "tables": [],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "",
+        "layout": {
+          "viewportWidth": 1728,
+          "viewportHeight": 1510,
+          "scrollWidth": 1728,
+          "scrollHeight": 1510,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "codex-may-89041-structure-08-操作-工单管理-查看处理所有工单",
+          "label": "操作:工单管理 查看处理所有工单",
+          "finalUrl": "http://localhost:49041/tickets",
+          "title": "My Trae Project",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89041/probe/codex-20260604-2100/codex-may-89041-structure-08-操作-工单管理-查看处理所有工单.json",
+          "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89041/probe/codex-20260604-2100/codex-may-89041-structure-08-操作-工单管理-查看处理所有工单.png",
+          "elementCount": 8,
+          "interactiveCount": 0,
+          "interactiveLabels": []
+        }
+      }
+    ],
+    "findings": [
+      "工单管理 查看处理所有工单入口 页面打开后是空白，没有渲染业务内容、表单或列表。"
+    ],
+    "actionHints": [
+      "修复 工单管理 查看处理所有工单入口 的路由组件挂载、接口初始化和错误兜底，确保进入页面后直接显示可操作内容。"
+    ],
+    "emptyPages": [],
+    "overflowPages": [],
+    "blankPages": [
+      "工单管理 查看处理所有工单入口"
+    ],
+    "apiFailurePaths": [],
+    "goalTerms": [],
+    "clickedActionDescriptors": [
+      {
+        "nav": "社",
+        "label": "发布帖子",
+        "ordinal": 0,
+        "unsafe": false
+      },
+      {
+        "nav": "社",
+        "label": "发布帖子->添加图片",
+        "ordinal": 0,
+        "secondary": true,
+        "unsafe": false
+      },
+      {
+        "nav": "社",
+        "label": "互助求助",
+        "ordinal": 0,
+        "unsafe": false
+      },
+      {
+        "nav": "社",
+        "label": "互助求助->发布帖子",
+        "ordinal": 0,
+        "secondary": true,
+        "unsafe": false
+      },
+      {
+        "nav": "首页仪表盘",
+        "label": "工单管理 查看处理所有工单",
+        "ordinal": 0,
+        "unsafe": false
+      }
+    ],
+    "secondaryActionClicks": 2,
+    "structureCaptures": [
+      {
+        "module": "website_structure_capture",
+        "runId": "codex-may-89041-structure-01-首屏",
+        "label": "首屏",
+        "finalUrl": "http://localhost:49041/dashboard/admin",
+        "title": "My Trae Project",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89041/probe/codex-20260604-2100/codex-may-89041-structure-01-首屏.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89041/probe/codex-20260604-2100/codex-may-89041-structure-01-首屏.png",
+        "elementCount": 329,
+        "interactiveCount": 18,
+        "interactiveLabels": [
+          "首页仪表盘",
+          "个人中心",
+          "楼栋管理",
+          "工单管理",
+          "邻里社区",
+          "商户广场",
+          "闲置集市",
+          "社区温度",
+          "费用中心",
+          "门禁管理",
+          "系统管理员 admin",
+          "楼栋管理 管理小区楼栋单元",
+          "工单管理 查看处理所有工单",
+          "商户审核 商户入驻审核管理",
+          "社区温度 社区运营数据看板",
+          "全部工单",
+          "全部动态"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "codex-may-89041-structure-02-导航-社",
+        "label": "导航:社",
+        "finalUrl": "http://localhost:49041/community",
+        "title": "My Trae Project",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89041/probe/codex-20260604-2100/codex-may-89041-structure-02-导航-社.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89041/probe/codex-20260604-2100/codex-may-89041-structure-02-导航-社.png",
+        "elementCount": 300,
+        "interactiveCount": 25,
+        "interactiveLabels": [
+          "首页仪表盘",
+          "个人中心",
+          "楼栋管理",
+          "工单管理",
+          "邻里社区",
+          "商户广场",
+          "闲置集市",
+          "社区温度",
+          "费用中心",
+          "门禁管理",
+          "系统管理员 admin",
+          "发布帖子",
+          "搜索帖子内容...",
+          "全部",
+          "活动通知",
+          "物业通知",
+          "互助求助",
+          "生活分享"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "codex-may-89041-structure-03-操作-发布帖子",
+        "label": "操作:发布帖子",
+        "finalUrl": "http://localhost:49041/posts/create",
+        "title": "My Trae Project",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89041/probe/codex-20260604-2100/codex-may-89041-structure-03-操作-发布帖子.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89041/probe/codex-20260604-2100/codex-may-89041-structure-03-操作-发布帖子.png",
+        "elementCount": 202,
+        "interactiveCount": 32,
+        "interactiveLabels": [
+          "首页仪表盘",
+          "个人中心",
+          "楼栋管理",
+          "工单管理",
+          "邻里社区",
+          "商户广场",
+          "闲置集市",
+          "社区温度",
+          "费用中心",
+          "门禁管理",
+          "系统管理员 admin",
+          "活动通知",
+          "物业通知",
+          "互助求助",
+          "闲置转让",
+          "生活分享",
+          "邻里互助",
+          "社区活动",
+          "生活贴士",
+          "二手闲置",
+          "寻物启事",
+          "宠物交流",
+          "输入自定义标签，回车添加",
+          "请输入一个吸引人的标题",
+          "分享你的想法...",
+          "添加图片",
+          "on",
+          "取消",
+          "发布帖子"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "codex-may-89041-structure-04-二层操作-发布帖子-添加图片",
+        "label": "二层操作:发布帖子->添加图片",
+        "finalUrl": "http://localhost:49041/posts/create",
+        "title": "My Trae Project",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89041/probe/codex-20260604-2100/codex-may-89041-structure-04-二层操作-发布帖子-添加图片.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89041/probe/codex-20260604-2100/codex-may-89041-structure-04-二层操作-发布帖子-添加图片.png",
+        "elementCount": 208,
+        "interactiveCount": 33,
+        "interactiveLabels": [
+          "首页仪表盘",
+          "个人中心",
+          "楼栋管理",
+          "工单管理",
+          "邻里社区",
+          "商户广场",
+          "闲置集市",
+          "社区温度",
+          "费用中心",
+          "门禁管理",
+          "系统管理员 admin",
+          "活动通知",
+          "物业通知",
+          "互助求助",
+          "闲置转让",
+          "生活分享",
+          "邻里互助",
+          "社区活动",
+          "生活贴士",
+          "二手闲置",
+          "寻物启事",
+          "宠物交流",
+          "输入自定义标签，回车添加",
+          "请输入一个吸引人的标题",
+          "分享你的想法...",
+          "添加图片",
+          "on",
+          "取消",
+          "发布帖子"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "codex-may-89041-structure-05-操作-互助求助",
+        "label": "操作:互助求助",
+        "finalUrl": "http://localhost:49041/community",
+        "title": "My Trae Project",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89041/probe/codex-20260604-2100/codex-may-89041-structure-05-操作-互助求助.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89041/probe/codex-20260604-2100/codex-may-89041-structure-05-操作-互助求助.png",
+        "elementCount": 206,
+        "interactiveCount": 19,
+        "interactiveLabels": [
+          "首页仪表盘",
+          "个人中心",
+          "楼栋管理",
+          "工单管理",
+          "邻里社区",
+          "商户广场",
+          "闲置集市",
+          "社区温度",
+          "费用中心",
+          "门禁管理",
+          "系统管理员 admin",
+          "发布帖子",
+          "搜索帖子内容...",
+          "全部",
+          "活动通知",
+          "物业通知",
+          "互助求助",
+          "生活分享"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "codex-may-89041-structure-06-二层操作-互助求助-发布帖子",
+        "label": "二层操作:互助求助->发布帖子",
+        "finalUrl": "http://localhost:49041/posts/create",
+        "title": "My Trae Project",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89041/probe/codex-20260604-2100/codex-may-89041-structure-06-二层操作-互助求助-发布帖子.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89041/probe/codex-20260604-2100/codex-may-89041-structure-06-二层操作-互助求助-发布帖子.png",
+        "elementCount": 202,
+        "interactiveCount": 32,
+        "interactiveLabels": [
+          "首页仪表盘",
+          "个人中心",
+          "楼栋管理",
+          "工单管理",
+          "邻里社区",
+          "商户广场",
+          "闲置集市",
+          "社区温度",
+          "费用中心",
+          "门禁管理",
+          "系统管理员 admin",
+          "活动通知",
+          "物业通知",
+          "互助求助",
+          "闲置转让",
+          "生活分享",
+          "邻里互助",
+          "社区活动",
+          "生活贴士",
+          "二手闲置",
+          "寻物启事",
+          "宠物交流",
+          "输入自定义标签，回车添加",
+          "请输入一个吸引人的标题",
+          "分享你的想法...",
+          "添加图片",
+          "on",
+          "取消",
+          "发布帖子"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "codex-may-89041-structure-07-导航-首页仪表盘",
+        "label": "导航:首页仪表盘",
+        "finalUrl": "http://localhost:49041/dashboard/admin",
+        "title": "My Trae Project",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89041/probe/codex-20260604-2100/codex-may-89041-structure-07-导航-首页仪表盘.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89041/probe/codex-20260604-2100/codex-may-89041-structure-07-导航-首页仪表盘.png",
+        "elementCount": 329,
+        "interactiveCount": 18,
+        "interactiveLabels": [
+          "首页仪表盘",
+          "个人中心",
+          "楼栋管理",
+          "工单管理",
+          "邻里社区",
+          "商户广场",
+          "闲置集市",
+          "社区温度",
+          "费用中心",
+          "门禁管理",
+          "系统管理员 admin",
+          "楼栋管理 管理小区楼栋单元",
+          "工单管理 查看处理所有工单",
+          "商户审核 商户入驻审核管理",
+          "社区温度 社区运营数据看板",
+          "全部工单",
+          "全部动态"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "codex-may-89041-structure-08-操作-工单管理-查看处理所有工单",
+        "label": "操作:工单管理 查看处理所有工单",
+        "finalUrl": "http://localhost:49041/tickets",
+        "title": "My Trae Project",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89041/probe/codex-20260604-2100/codex-may-89041-structure-08-操作-工单管理-查看处理所有工单.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89041/probe/codex-20260604-2100/codex-may-89041-structure-08-操作-工单管理-查看处理所有工单.png",
+        "elementCount": 8,
+        "interactiveCount": 0,
+        "interactiveLabels": []
+      }
+    ],
+    "representativeScreenshotUrl": "http://localhost:49041/dashboard/admin",
+    "representativeScreenshotLabel": "智慧社区"
+  },
+  "websiteStructureCapture": {
+    "module": "website_structure_capture",
+    "captureCount": 8,
+    "captures": [
+      {
+        "module": "website_structure_capture",
+        "runId": "codex-may-89041-structure-01-首屏",
+        "label": "首屏",
+        "finalUrl": "http://localhost:49041/dashboard/admin",
+        "title": "My Trae Project",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89041/probe/codex-20260604-2100/codex-may-89041-structure-01-首屏.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89041/probe/codex-20260604-2100/codex-may-89041-structure-01-首屏.png",
+        "elementCount": 329,
+        "interactiveCount": 18,
+        "interactiveLabels": [
+          "首页仪表盘",
+          "个人中心",
+          "楼栋管理",
+          "工单管理",
+          "邻里社区",
+          "商户广场",
+          "闲置集市",
+          "社区温度",
+          "费用中心",
+          "门禁管理",
+          "系统管理员 admin",
+          "楼栋管理 管理小区楼栋单元",
+          "工单管理 查看处理所有工单",
+          "商户审核 商户入驻审核管理",
+          "社区温度 社区运营数据看板",
+          "全部工单",
+          "全部动态"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "codex-may-89041-structure-02-导航-社",
+        "label": "导航:社",
+        "finalUrl": "http://localhost:49041/community",
+        "title": "My Trae Project",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89041/probe/codex-20260604-2100/codex-may-89041-structure-02-导航-社.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89041/probe/codex-20260604-2100/codex-may-89041-structure-02-导航-社.png",
+        "elementCount": 300,
+        "interactiveCount": 25,
+        "interactiveLabels": [
+          "首页仪表盘",
+          "个人中心",
+          "楼栋管理",
+          "工单管理",
+          "邻里社区",
+          "商户广场",
+          "闲置集市",
+          "社区温度",
+          "费用中心",
+          "门禁管理",
+          "系统管理员 admin",
+          "发布帖子",
+          "搜索帖子内容...",
+          "全部",
+          "活动通知",
+          "物业通知",
+          "互助求助",
+          "生活分享"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "codex-may-89041-structure-03-操作-发布帖子",
+        "label": "操作:发布帖子",
+        "finalUrl": "http://localhost:49041/posts/create",
+        "title": "My Trae Project",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89041/probe/codex-20260604-2100/codex-may-89041-structure-03-操作-发布帖子.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89041/probe/codex-20260604-2100/codex-may-89041-structure-03-操作-发布帖子.png",
+        "elementCount": 202,
+        "interactiveCount": 32,
+        "interactiveLabels": [
+          "首页仪表盘",
+          "个人中心",
+          "楼栋管理",
+          "工单管理",
+          "邻里社区",
+          "商户广场",
+          "闲置集市",
+          "社区温度",
+          "费用中心",
+          "门禁管理",
+          "系统管理员 admin",
+          "活动通知",
+          "物业通知",
+          "互助求助",
+          "闲置转让",
+          "生活分享",
+          "邻里互助",
+          "社区活动",
+          "生活贴士",
+          "二手闲置",
+          "寻物启事",
+          "宠物交流",
+          "输入自定义标签，回车添加",
+          "请输入一个吸引人的标题",
+          "分享你的想法...",
+          "添加图片",
+          "on",
+          "取消",
+          "发布帖子"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "codex-may-89041-structure-04-二层操作-发布帖子-添加图片",
+        "label": "二层操作:发布帖子->添加图片",
+        "finalUrl": "http://localhost:49041/posts/create",
+        "title": "My Trae Project",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89041/probe/codex-20260604-2100/codex-may-89041-structure-04-二层操作-发布帖子-添加图片.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89041/probe/codex-20260604-2100/codex-may-89041-structure-04-二层操作-发布帖子-添加图片.png",
+        "elementCount": 208,
+        "interactiveCount": 33,
+        "interactiveLabels": [
+          "首页仪表盘",
+          "个人中心",
+          "楼栋管理",
+          "工单管理",
+          "邻里社区",
+          "商户广场",
+          "闲置集市",
+          "社区温度",
+          "费用中心",
+          "门禁管理",
+          "系统管理员 admin",
+          "活动通知",
+          "物业通知",
+          "互助求助",
+          "闲置转让",
+          "生活分享",
+          "邻里互助",
+          "社区活动",
+          "生活贴士",
+          "二手闲置",
+          "寻物启事",
+          "宠物交流",
+          "输入自定义标签，回车添加",
+          "请输入一个吸引人的标题",
+          "分享你的想法...",
+          "添加图片",
+          "on",
+          "取消",
+          "发布帖子"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "codex-may-89041-structure-05-操作-互助求助",
+        "label": "操作:互助求助",
+        "finalUrl": "http://localhost:49041/community",
+        "title": "My Trae Project",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89041/probe/codex-20260604-2100/codex-may-89041-structure-05-操作-互助求助.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89041/probe/codex-20260604-2100/codex-may-89041-structure-05-操作-互助求助.png",
+        "elementCount": 206,
+        "interactiveCount": 19,
+        "interactiveLabels": [
+          "首页仪表盘",
+          "个人中心",
+          "楼栋管理",
+          "工单管理",
+          "邻里社区",
+          "商户广场",
+          "闲置集市",
+          "社区温度",
+          "费用中心",
+          "门禁管理",
+          "系统管理员 admin",
+          "发布帖子",
+          "搜索帖子内容...",
+          "全部",
+          "活动通知",
+          "物业通知",
+          "互助求助",
+          "生活分享"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "codex-may-89041-structure-06-二层操作-互助求助-发布帖子",
+        "label": "二层操作:互助求助->发布帖子",
+        "finalUrl": "http://localhost:49041/posts/create",
+        "title": "My Trae Project",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89041/probe/codex-20260604-2100/codex-may-89041-structure-06-二层操作-互助求助-发布帖子.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89041/probe/codex-20260604-2100/codex-may-89041-structure-06-二层操作-互助求助-发布帖子.png",
+        "elementCount": 202,
+        "interactiveCount": 32,
+        "interactiveLabels": [
+          "首页仪表盘",
+          "个人中心",
+          "楼栋管理",
+          "工单管理",
+          "邻里社区",
+          "商户广场",
+          "闲置集市",
+          "社区温度",
+          "费用中心",
+          "门禁管理",
+          "系统管理员 admin",
+          "活动通知",
+          "物业通知",
+          "互助求助",
+          "闲置转让",
+          "生活分享",
+          "邻里互助",
+          "社区活动",
+          "生活贴士",
+          "二手闲置",
+          "寻物启事",
+          "宠物交流",
+          "输入自定义标签，回车添加",
+          "请输入一个吸引人的标题",
+          "分享你的想法...",
+          "添加图片",
+          "on",
+          "取消",
+          "发布帖子"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "codex-may-89041-structure-07-导航-首页仪表盘",
+        "label": "导航:首页仪表盘",
+        "finalUrl": "http://localhost:49041/dashboard/admin",
+        "title": "My Trae Project",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89041/probe/codex-20260604-2100/codex-may-89041-structure-07-导航-首页仪表盘.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89041/probe/codex-20260604-2100/codex-may-89041-structure-07-导航-首页仪表盘.png",
+        "elementCount": 329,
+        "interactiveCount": 18,
+        "interactiveLabels": [
+          "首页仪表盘",
+          "个人中心",
+          "楼栋管理",
+          "工单管理",
+          "邻里社区",
+          "商户广场",
+          "闲置集市",
+          "社区温度",
+          "费用中心",
+          "门禁管理",
+          "系统管理员 admin",
+          "楼栋管理 管理小区楼栋单元",
+          "工单管理 查看处理所有工单",
+          "商户审核 商户入驻审核管理",
+          "社区温度 社区运营数据看板",
+          "全部工单",
+          "全部动态"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "codex-may-89041-structure-08-操作-工单管理-查看处理所有工单",
+        "label": "操作:工单管理 查看处理所有工单",
+        "finalUrl": "http://localhost:49041/tickets",
+        "title": "My Trae Project",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89041/probe/codex-20260604-2100/codex-may-89041-structure-08-操作-工单管理-查看处理所有工单.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89041/probe/codex-20260604-2100/codex-may-89041-structure-08-操作-工单管理-查看处理所有工单.png",
+        "elementCount": 8,
+        "interactiveCount": 0,
+        "interactiveLabels": []
+      }
+    ]
+  },
+  "screenshotMetrics": {
+    "width": 1760,
+    "height": 1510,
+    "scrollWidth": 1728,
+    "scrollHeight": 1510
+  },
+  "initialBodyTextPreview": "智慧社区\nSmart Community\n\n一站式社区管理平台，集物业服务、邻里互动、商圈服务于一体，让社区生活更智能、更便捷、更有温度。\n\n✓\n智能工单管理\n✓\n邻里互动社区\n✓\n社区商圈服务\n欢迎回来\n\n请选择身份并登录您的账号\n\n🛡️\n\n系统管理员\n\nadmin / 123456\n\n🏢\n\n物业管理员\n\nproperty1 / 123456\n\n🏠\n\n小区居民\n\nresident1 / 123456\n\n🏪\n\n入驻商家\n\nmerchant1 / 123456\n\n演示账号说明\n\n上方选择身份后自动填入对应账号，密码统一为：123456\n\n用户名\n密码\n登录\n\n登录即表示您同意我们的服务条款和隐私政策",
+  "bodyTextPreview": "社\n智慧社区\n\nSmart Community\n\n当前身份：系统管理员\n\n功能菜单\n\n首页仪表盘\n个人中心\n楼栋管理\n工单管理\n邻里社区\n商户广场\n闲置集市\n社区温度\n费用中心\n门禁管理\n\n智慧社区管理系统 v1.0\n\n欢迎回来，系统管理员\n\n社区温度指数\n\n26°C\n\n系统管理员\n\nadmin",
+  "apiBase": "",
+  "businessGoalPreview": "",
+  "apiResponses": [
+    {
+      "method": "POST",
+      "status": 200,
+      "url": "http://localhost:49041/api/auth/login"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://localhost:49041/api/dashboard/stats"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://localhost:49041/api/tickets?limit=5"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://localhost:49041/api/posts?limit=3"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://localhost:49041/api/dashboard/stats"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://localhost:49041/api/tickets?limit=5"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://localhost:49041/api/posts?limit=3"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://localhost:49041/api/dashboard/stats"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://localhost:49041/api/tickets?limit=5"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://localhost:49041/api/posts?limit=3"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://localhost:49041/api/dashboard/stats"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://localhost:49041/api/tickets?limit=5"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://localhost:49041/api/posts?limit=3"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://localhost:49041/api/posts/published"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://localhost:49041/api/posts/published"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://localhost:49041/api/posts/published"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://localhost:49041/api/posts/published"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://localhost:49041/api/posts/published"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://localhost:49041/api/posts/published"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://localhost:49041/api/dashboard/stats"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://localhost:49041/api/tickets?limit=5"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://localhost:49041/api/posts?limit=3"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://localhost:49041/api/dashboard/stats"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://localhost:49041/api/tickets?limit=5"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://localhost:49041/api/posts?limit=3"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://localhost:49041/api/tickets"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://localhost:49041/api/tickets"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://localhost:49041/api/dashboard/stats"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://localhost:49041/api/tickets?limit=5"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://localhost:49041/api/posts?limit=3"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://localhost:49041/api/dashboard/stats"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://localhost:49041/api/tickets?limit=5"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://localhost:49041/api/posts?limit=3"
+    }
+  ],
+  "apiChecks": [],
+  "dialogs": [],
+  "consoleMessages": [
+    {
+      "type": "debug",
+      "text": "[vite] connecting...",
+      "location": {
+        "url": "http://localhost:49041/@vite/client",
+        "lineNumber": 788,
+        "columnNumber": 8
+      }
+    },
+    {
+      "type": "debug",
+      "text": "[vite] connected.",
+      "location": {
+        "url": "http://localhost:49041/@vite/client",
+        "lineNumber": 911,
+        "columnNumber": 14
+      }
+    },
+    {
+      "type": "info",
+      "text": "%cDownload the React DevTools for a better development experience: https://reactjs.org/link/react-devtools font-weight:bold",
+      "location": {
+        "url": "http://localhost:49041/node_modules/.vite/deps/chunk-NXESFFTV.js?v=4f152ca4",
+        "lineNumber": 21608,
+        "columnNumber": 24
+      }
+    },
+    {
+      "type": "debug",
+      "text": "[vite] connecting...",
+      "location": {
+        "url": "http://localhost:49041/@vite/client",
+        "lineNumber": 788,
+        "columnNumber": 8
+      }
+    },
+    {
+      "type": "debug",
+      "text": "[vite] connected.",
+      "location": {
+        "url": "http://localhost:49041/@vite/client",
+        "lineNumber": 911,
+        "columnNumber": 14
+      }
+    },
+    {
+      "type": "info",
+      "text": "%cDownload the React DevTools for a better development experience: https://reactjs.org/link/react-devtools font-weight:bold",
+      "location": {
+        "url": "http://localhost:49041/node_modules/.vite/deps/chunk-NXESFFTV.js?v=4f152ca4",
+        "lineNumber": 21608,
+        "columnNumber": 24
+      }
+    },
+    {
+      "type": "error",
+      "text": "Warning: Received NaN for the `%s` attribute. If this is expected, cast the value to a string.%s children \n    at span\n    at div\n    at div\n    at div\n    at div\n    at div\n    at div\n    at CommunityFeed (http://localhost:49041/src/pages/CommunityFeed.tsx:32:20)\n    at RenderedRoute (http://localhost:49041/node_modules/.vite/deps/react-router-dom.js?v=4f152ca4:6626:26)\n    at Outlet (http://localhost:49041/node_modules/.vite/deps/react-router-dom.js?v=4f152ca4:7491:26)\n    at div\n    at main\n    at div\n    at div\n    at Layout (http://localhost:49041/src/components/Layout.tsx:24:37)\n    at PrivateRoute (http://localhost:49041/src/App.tsx:42:25)\n    at RenderedRoute (http://localhost:49041/node_modules/.vite/deps/react-router-dom.js?v=4f152ca4:6626:26)\n    at Routes (http://localhost:49041/node_modules/.vite/deps/react-router-dom.js?v=4f152ca4:7561:3)\n    at Router (http://localhost:49041/node_modules/.vite/deps/react-router-dom.js?v=4f152ca4:7500:13)\n    at BrowserRouter (http://localhost:49041/node_modules/.vite/deps/react-router-dom.js?v=4f152ca4:10787:3)\n    at App",
+      "location": {
+        "url": "http://localhost:49041/node_modules/.vite/deps/chunk-NXESFFTV.js?v=4f152ca4",
+        "lineNumber": 520,
+        "columnNumber": 37
+      }
+    },
+    {
+      "type": "error",
+      "text": "The above error occurred in the <TicketCard> component:\n\n    at TicketCard (http://localhost:49041/src/components/TicketCard.tsx:30:23)\n    at div\n    at div\n    at TicketList (http://localhost:49041/src/pages/TicketList.tsx:40:20)\n    at RenderedRoute (http://localhost:49041/node_modules/.vite/deps/react-router-dom.js?v=4f152ca4:6626:26)\n    at Outlet (http://localhost:49041/node_modules/.vite/deps/react-router-dom.js?v=4f152ca4:7491:26)\n    at div\n    at main\n    at div\n    at div\n    at Layout (http://localhost:49041/src/components/Layout.tsx:24:37)\n    at PrivateRoute (http://localhost:49041/src/App.tsx:42:25)\n    at RenderedRoute (http://localhost:49041/node_modules/.vite/deps/react-router-dom.js?v=4f152ca4:6626:26)\n    at Routes (http://localhost:49041/node_modules/.vite/deps/react-router-dom.js?v=4f152ca4:7561:3)\n    at Router (http://localhost:49041/node_modules/.vite/deps/react-router-dom.js?v=4f152ca4:7500:13)\n    at BrowserRouter (http://localhost:49041/node_modules/.vite/deps/react-router-dom.js?v=4f152ca4:10787:3)\n    at App\n\nConsider adding an error boundary to your tree to customize error handling behavior.\nVisit https://reactjs.org/link/error-boundaries to learn more about error boundaries.",
+      "location": {
+        "url": "http://localhost:49041/node_modules/.vite/deps/chunk-NXESFFTV.js?v=4f152ca4",
+        "lineNumber": 14079,
+        "columnNumber": 30
+      }
+    },
+    {
+      "type": "debug",
+      "text": "[vite] connecting...",
+      "location": {
+        "url": "http://localhost:49041/@vite/client",
+        "lineNumber": 788,
+        "columnNumber": 8
+      }
+    },
+    {
+      "type": "debug",
+      "text": "[vite] connected.",
+      "location": {
+        "url": "http://localhost:49041/@vite/client",
+        "lineNumber": 911,
+        "columnNumber": 14
+      }
+    },
+    {
+      "type": "info",
+      "text": "%cDownload the React DevTools for a better development experience: https://reactjs.org/link/react-devtools font-weight:bold",
+      "location": {
+        "url": "http://localhost:49041/node_modules/.vite/deps/chunk-NXESFFTV.js?v=4f152ca4",
+        "lineNumber": 21608,
+        "columnNumber": 24
+      }
+    }
+  ],
+  "requestFailures": [],
+  "responseErrors": []
+}
