@@ -1,0 +1,52 @@
+{
+  "ok": true,
+  "generatedAt": "2026-06-05T21:48:15.575Z",
+  "frontendUrl": "http://127.0.0.1:49062/",
+  "backendUrl": "http://127.0.0.1:59062",
+  "steps": [
+    {
+      "name": "frontpage",
+      "ok": true,
+      "status": 200,
+      "title": "南京市公共服务聚合平台",
+      "url": "http://127.0.0.1:49062/"
+    },
+    {
+      "name": "search-filter",
+      "ok": true,
+      "matched": "社保",
+      "hasResult": true
+    },
+    {
+      "name": "register-page",
+      "ok": true,
+      "url": "http://127.0.0.1:49062/register",
+      "hasRegisterForm": true
+    },
+    {
+      "name": "login-to-profile",
+      "ok": true,
+      "url": "http://127.0.0.1:49062/profile",
+      "userVisible": true,
+      "profileVisible": true
+    },
+    {
+      "name": "admin-console",
+      "ok": true,
+      "url": "http://127.0.0.1:49062/admin",
+      "adminVisible": true
+    }
+  ],
+  "backendHealth": {
+    "status": 200,
+    "ok": true,
+    "body": "{\"code\":0,\"message\":\"ok\",\"data\":{\"service\":\"health-service\",\"status\":\"ok\"}}"
+  },
+  "searchApi": {
+    "status": 200,
+    "ok": true,
+    "body": "{\"code\":0,\"message\":\"success\",\"data\":{\"keyword\":\"管理后台\",\"services\":[{\"title\":\"管理后台服务治理\",\"category\":\"后台\",\"url\":\"/admin/services\"}],\"knowledge\":[],\"total\":1}}"
+  },
+  "errors": [],
+  "responseErrors": []
+}

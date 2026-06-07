@@ -1,0 +1,36 @@
+{
+  "ok": true,
+  "generatedAt": "2026-06-05T23:06:13.984Z",
+  "frontend": "http://127.0.0.1:49062",
+  "checks": [
+    {
+      "name": "search",
+      "ok": true,
+      "url": "http://127.0.0.1:49062/"
+    },
+    {
+      "name": "register-page",
+      "ok": true,
+      "url": "http://127.0.0.1:49062/register"
+    },
+    {
+      "name": "admin-redirect-login",
+      "ok": true,
+      "url": "http://127.0.0.1:49062/login"
+    },
+    {
+      "name": "admin-login-console",
+      "ok": true,
+      "url": "http://127.0.0.1:49062/admin"
+    },
+    {
+      "name": "profile-authenticated",
+      "ok": true,
+      "url": "http://127.0.0.1:49062/profile"
+    }
+  ],
+  "responseErrors": [],
+  "requestFailures": [],
+  "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89062/data/repair-browser-check/codex-20260606-round867/may-89062-auth-search-admin-check.png",
+  "reportPath": "/Users/chen/Documents/trae_projects/local_projects/may-89062/data/repair-browser-check/codex-20260606-round867/may-89062-auth-search-admin-check.json"
+}

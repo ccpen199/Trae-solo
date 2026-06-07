@@ -1,0 +1,36 @@
+{
+  "ok": true,
+  "checks": [
+    {
+      "name": "home-search-results",
+      "ok": true,
+      "url": "http://127.0.0.1:49062/",
+      "matched": [
+        "社保卡申领",
+        "社保卡申领流程"
+      ]
+    },
+    {
+      "name": "register-flow",
+      "ok": true,
+      "url": "http://127.0.0.1:49062/",
+      "phone": "13998907316"
+    },
+    {
+      "name": "admin-login-flow",
+      "ok": true,
+      "url": "http://127.0.0.1:49062/"
+    },
+    {
+      "name": "profile-page",
+      "ok": true,
+      "url": "http://127.0.0.1:49062/profile"
+    },
+    {
+      "name": "admin-page",
+      "ok": true,
+      "url": "http://127.0.0.1:49062/admin"
+    }
+  ],
+  "errors": []
+}
