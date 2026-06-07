@@ -1,0 +1,67 @@
+{
+  "order": "may-89047",
+  "checkedAt": "2026-06-05T12:21:49.619Z",
+  "frontendUrl": "http://127.0.0.1:49047/admin",
+  "backendUrl": "http://127.0.0.1:59047",
+  "ok": true,
+  "checks": [
+    {
+      "text": "后台管理工作台",
+      "ok": true
+    },
+    {
+      "text": "后台快捷操作",
+      "ok": true
+    },
+    {
+      "text": "系统运行状态",
+      "ok": true
+    },
+    {
+      "text": "管理模块总览",
+      "ok": true
+    },
+    {
+      "text": "后台审计日志",
+      "ok": true
+    }
+  ],
+  "tableRows": 13,
+  "apiResponses": [
+    {
+      "url": "http://127.0.0.1:49047/api/admin/dashboard",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "url": "http://127.0.0.1:49047/api/admin/dashboard",
+      "status": 200,
+      "ok": true
+    }
+  ],
+  "requestFailures": [],
+  "responseErrors": [],
+  "pageErrors": [],
+  "actionableErrors": [],
+  "consoleWarnings": [
+    {
+      "type": "warning",
+      "text": "⚠️ React Router Future Flag Warning: React Router will begin wrapping state updates in `React.startTransition` in v7. You can use the `v7_startTransition` future flag to opt-in early. For more information, see https://reactrouter.com/v6/upgrading/future#v7_starttransition.",
+      "location": {
+        "url": "http://127.0.0.1:49047/node_modules/.vite/deps/react-router-dom.js?v=2e3b6c8f",
+        "lineNumber": 4426,
+        "columnNumber": 12
+      }
+    },
+    {
+      "type": "warning",
+      "text": "⚠️ React Router Future Flag Warning: Relative route resolution within Splat routes is changing in v7. You can use the `v7_relativeSplatPath` future flag to opt-in early. For more information, see https://reactrouter.com/v6/upgrading/future#v7_relativesplatpath.",
+      "location": {
+        "url": "http://127.0.0.1:49047/node_modules/.vite/deps/react-router-dom.js?v=2e3b6c8f",
+        "lineNumber": 4426,
+        "columnNumber": 12
+      }
+    }
+  ],
+  "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89047/probe/runtime-check/may-89047-final-admin-browser-check.png"
+}

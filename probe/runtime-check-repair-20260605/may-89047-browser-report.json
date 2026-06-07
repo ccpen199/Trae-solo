@@ -1,0 +1,3753 @@
+{
+  "ok": true,
+  "generatedAt": "2026-06-05T12:33:12.271Z",
+  "order": "may-89047",
+  "roundIndex": 543,
+  "captureId": "may-89047-repair-20260605",
+  "url": "http://127.0.0.1:49047/",
+  "initialUrl": "http://127.0.0.1:49047/",
+  "finalUrl": "http://127.0.0.1:49047/",
+  "status": 200,
+  "title": "山西农信普惠金融服务平台",
+  "initialTitle": "山西农信普惠金融服务平台",
+  "navigationError": "",
+  "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89047/probe/runtime-check-repair-20260605/may-89047-repair-20260605-frontend.png",
+  "screenshotPaths": [
+    "/Users/chen/Documents/trae_projects/local_projects/may-89047/probe/runtime-check-repair-20260605/may-89047-repair-20260605-structure-01-首屏.png",
+    "/Users/chen/Documents/trae_projects/local_projects/may-89047/probe/runtime-check-repair-20260605/may-89047-repair-20260605-structure-02-导航-运营概览.png",
+    "/Users/chen/Documents/trae_projects/local_projects/may-89047/probe/runtime-check-repair-20260605/may-89047-repair-20260605-structure-03-导航-后台管理.png",
+    "/Users/chen/Documents/trae_projects/local_projects/may-89047/probe/runtime-check-repair-20260605/may-89047-repair-20260605-structure-04-操作-查看系统日志.png",
+    "/Users/chen/Documents/trae_projects/local_projects/may-89047/probe/runtime-check-repair-20260605/may-89047-repair-20260605-structure-05-操作-贷款审批管理.png",
+    "/Users/chen/Documents/trae_projects/local_projects/may-89047/probe/runtime-check-repair-20260605/may-89047-repair-20260605-structure-06-二层操作-贷款审批管理-详情.png",
+    "/Users/chen/Documents/trae_projects/local_projects/may-89047/probe/runtime-check-repair-20260605/may-89047-repair-20260605-structure-07-导航-信用画像.png",
+    "/Users/chen/Documents/trae_projects/local_projects/may-89047/probe/runtime-check-repair-20260605/may-89047-repair-20260605-structure-08-操作-查看系统日志.png",
+    "/Users/chen/Documents/trae_projects/local_projects/may-89047/probe/runtime-check-repair-20260605/may-89047-repair-20260605-structure-09-操作-贷款审批管理.png",
+    "/Users/chen/Documents/trae_projects/local_projects/may-89047/probe/runtime-check-repair-20260605/may-89047-repair-20260605-structure-10-二层操作-贷款审批管理-详情.png",
+    "/Users/chen/Documents/trae_projects/local_projects/may-89047/probe/runtime-check-repair-20260605/may-89047-repair-20260605-structure-11-导航-农户-商户画像.png",
+    "/Users/chen/Documents/trae_projects/local_projects/may-89047/probe/runtime-check-repair-20260605/may-89047-repair-20260605-structure-12-操作-新建画像.png"
+  ],
+  "issueTextPreview": "后台管理相关问题",
+  "targetReason": "后台管理相关问题",
+  "targetKind": "admin",
+  "targetMatched": true,
+  "targetActions": [
+    {
+      "action": "click",
+      "label": "后台管理相关问题",
+      "ok": true
+    },
+    {
+      "action": "target-verify",
+      "label": "后台管理相关问题",
+      "ok": true,
+      "finalUrl": "http://127.0.0.1:49047/"
+    }
+  ],
+  "authFlow": {
+    "detected": false,
+    "attempted": false,
+    "success": false,
+    "finalUrl": "http://127.0.0.1:49047/",
+    "message": "",
+    "actions": []
+  },
+  "businessAudit": {
+    "actions": [
+      {
+        "action": "click",
+        "label": "导航:运营概览",
+        "ok": true
+      },
+      {
+        "action": "click",
+        "label": "导航:后台管理",
+        "ok": true
+      },
+      {
+        "action": "click",
+        "label": "操作:查看系统日志",
+        "ok": true,
+        "result": {
+          "ok": true,
+          "matched": 1
+        }
+      },
+      {
+        "action": "click",
+        "label": "操作:贷款审批管理",
+        "ok": true,
+        "result": {
+          "ok": true,
+          "matched": 1
+        }
+      },
+      {
+        "action": "click",
+        "label": "二层操作:贷款审批管理:详情",
+        "ok": true,
+        "result": {
+          "ok": true,
+          "matched": 5
+        }
+      },
+      {
+        "action": "click",
+        "label": "关闭弹窗/抽屉",
+        "ok": true
+      },
+      {
+        "action": "click",
+        "label": "导航:信用画像",
+        "ok": true
+      },
+      {
+        "action": "click",
+        "label": "操作:查看系统日志",
+        "ok": true,
+        "result": {
+          "ok": true,
+          "matched": 1
+        }
+      },
+      {
+        "action": "click",
+        "label": "操作:贷款审批管理",
+        "ok": true,
+        "result": {
+          "ok": true,
+          "matched": 1
+        }
+      },
+      {
+        "action": "click",
+        "label": "二层操作:贷款审批管理:详情",
+        "ok": true,
+        "result": {
+          "ok": true,
+          "matched": 5
+        }
+      },
+      {
+        "action": "click",
+        "label": "关闭弹窗/抽屉",
+        "ok": true
+      },
+      {
+        "action": "click",
+        "label": "导航:农户/商户画像",
+        "ok": true
+      },
+      {
+        "action": "click",
+        "label": "操作:新建画像",
+        "ok": true,
+        "result": {
+          "ok": true,
+          "matched": 1
+        }
+      },
+      {
+        "action": "click",
+        "label": "二层操作:新建画像:返回列表",
+        "ok": true,
+        "result": {
+          "ok": true,
+          "matched": 1
+        }
+      },
+      {
+        "action": "click",
+        "label": "操作:详情",
+        "ok": true,
+        "result": {
+          "ok": true,
+          "matched": 8
+        }
+      }
+    ],
+    "snapshots": [
+      {
+        "label": "首屏",
+        "url": "http://127.0.0.1:49047/",
+        "title": "山西农信普惠金融服务平台",
+        "headings": [],
+        "navLabels": [
+          "运营概览",
+          "dashboard",
+          "后台管理",
+          "control",
+          "信用画像",
+          "user",
+          "农户/商户画像",
+          "生活缴费",
+          "pay-circle",
+          "缴费中枢",
+          "缴费记录",
+          "本地商圈",
+          "shop",
+          "商户管理",
+          "优惠券管理",
+          "消费分期",
+          "金融产品",
+          "fund",
+          "产品工厂",
+          "贷款申请",
+          "活体抵押",
+          "协理员",
+          "team",
+          "任务管理"
+        ],
+        "buttons": [],
+        "links": [],
+        "inputs": [],
+        "tables": [],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "山西农信普惠金融运营概览后台管理信用画像农户/商户画像生活缴费缴费中枢缴费记录本地商圈商户管理优惠券管理消费分期金融产品产品工厂贷款申请活体抵押协理员任务管理数据分析县域活力指数普惠可得性热力图不良率预警系统日志山西农信区域性普惠金融服务平台后台管理对接：人行征信 | 农业农村部 | 地方政务服务平台运营概览信用档案总数8人生活缴费总额1,754.50元活跃商户4家已批贷款总额330,000元待审批 1 笔农户数量5人商户数量3人补贴汇总99,300元涉农贷款不良率2.35%正常信用评分分布800+信用等级分布缴费月度趋势缴费笔数2026-05缴费分类占比涉农贷款产品不良率不良率(%)贷款总额(元)惠农贷山西农信区域性普惠金融服务平台 ©2026 40000",
+        "layout": {
+          "viewportWidth": 1504,
+          "viewportHeight": 1600,
+          "scrollWidth": 1504,
+          "scrollHeight": 1617,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89047-repair-20260605-structure-01-首屏",
+          "label": "首屏",
+          "finalUrl": "http://127.0.0.1:49047/",
+          "title": "山西农信普惠金融服务平台",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89047/probe/runtime-check-repair-20260605/may-89047-repair-20260605-structure-01-首屏.json",
+          "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89047/probe/runtime-check-repair-20260605/may-89047-repair-20260605-structure-01-首屏.png",
+          "elementCount": 536,
+          "interactiveCount": 25,
+          "interactiveLabels": [
+            "运营概览 后台管理 信用画像 农户/商户画像 生活缴费 缴费中枢 缴费记录 本地商圈 商户管理 优惠券管理 消费分期 金融产品 产品工厂 贷款申请 活体抵押 协理员 任务管理 数据分析 县域活力指数 普惠可得性热力图 不良率预警 系统日志",
+            "运营概览",
+            "后台管理",
+            "信用画像",
+            "农户/商户画像",
+            "生活缴费",
+            "缴费中枢",
+            "缴费记录",
+            "本地商圈",
+            "商户管理",
+            "优惠券管理",
+            "消费分期",
+            "金融产品",
+            "产品工厂",
+            "贷款申请",
+            "活体抵押",
+            "协理员",
+            "任务管理",
+            "数据分析",
+            "县域活力指数",
+            "普惠可得性热力图",
+            "不良率预警",
+            "系统日志"
+          ]
+        }
+      },
+      {
+        "label": "导航:运营概览",
+        "url": "http://127.0.0.1:49047/",
+        "title": "山西农信普惠金融服务平台",
+        "headings": [],
+        "navLabels": [
+          "运营概览",
+          "dashboard",
+          "后台管理",
+          "control",
+          "信用画像",
+          "user",
+          "农户/商户画像",
+          "生活缴费",
+          "pay-circle",
+          "缴费中枢",
+          "缴费记录",
+          "本地商圈",
+          "shop",
+          "商户管理",
+          "优惠券管理",
+          "消费分期",
+          "金融产品",
+          "fund",
+          "产品工厂",
+          "贷款申请",
+          "活体抵押",
+          "协理员",
+          "team",
+          "任务管理"
+        ],
+        "buttons": [],
+        "links": [],
+        "inputs": [],
+        "tables": [],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "山西农信普惠金融运营概览后台管理信用画像农户/商户画像生活缴费缴费中枢缴费记录本地商圈商户管理优惠券管理消费分期金融产品产品工厂贷款申请活体抵押协理员任务管理数据分析县域活力指数普惠可得性热力图不良率预警系统日志山西农信区域性普惠金融服务平台后台管理对接：人行征信 | 农业农村部 | 地方政务服务平台运营概览信用档案总数8人生活缴费总额1,754.50元活跃商户4家已批贷款总额330,000元待审批 1 笔农户数量5人商户数量3人补贴汇总99,300元涉农贷款不良率2.35%正常信用评分分布800+信用等级分布缴费月度趋势缴费笔数2026-05缴费分类占比涉农贷款产品不良率不良率(%)贷款总额(元)惠农贷山西农信区域性普惠金融服务平台 ©2026 40000",
+        "layout": {
+          "viewportWidth": 1536,
+          "viewportHeight": 1600,
+          "scrollWidth": 1536,
+          "scrollHeight": 1617,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89047-repair-20260605-structure-02-导航-运营概览",
+          "label": "导航:运营概览",
+          "finalUrl": "http://127.0.0.1:49047/",
+          "title": "山西农信普惠金融服务平台",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89047/probe/runtime-check-repair-20260605/may-89047-repair-20260605-structure-02-导航-运营概览.json",
+          "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89047/probe/runtime-check-repair-20260605/may-89047-repair-20260605-structure-02-导航-运营概览.png",
+          "elementCount": 539,
+          "interactiveCount": 25,
+          "interactiveLabels": [
+            "运营概览 后台管理 信用画像 农户/商户画像 生活缴费 缴费中枢 缴费记录 本地商圈 商户管理 优惠券管理 消费分期 金融产品 产品工厂 贷款申请 活体抵押 协理员 任务管理 数据分析 县域活力指数 普惠可得性热力图 不良率预警 系统日志",
+            "运营概览",
+            "后台管理",
+            "信用画像",
+            "农户/商户画像",
+            "生活缴费",
+            "缴费中枢",
+            "缴费记录",
+            "本地商圈",
+            "商户管理",
+            "优惠券管理",
+            "消费分期",
+            "金融产品",
+            "产品工厂",
+            "贷款申请",
+            "活体抵押",
+            "协理员",
+            "任务管理",
+            "数据分析",
+            "县域活力指数",
+            "普惠可得性热力图",
+            "不良率预警",
+            "系统日志"
+          ]
+        }
+      },
+      {
+        "label": "导航:后台管理",
+        "url": "http://127.0.0.1:49047/admin",
+        "title": "山西农信普惠金融服务平台",
+        "headings": [],
+        "navLabels": [
+          "运营概览",
+          "dashboard",
+          "后台管理",
+          "control",
+          "信用画像",
+          "user",
+          "农户/商户画像",
+          "生活缴费",
+          "pay-circle",
+          "缴费中枢",
+          "缴费记录",
+          "本地商圈",
+          "shop",
+          "商户管理",
+          "优惠券管理",
+          "消费分期",
+          "金融产品",
+          "fund",
+          "产品工厂",
+          "贷款申请",
+          "活体抵押",
+          "协理员",
+          "team",
+          "任务管理"
+        ],
+        "buttons": [
+          "商户入驻审核",
+          "贷款审批管理",
+          "查看系统日志",
+          "运营数据分析",
+          "进 入"
+        ],
+        "links": [],
+        "inputs": [],
+        "tables": [
+          {
+            "headers": [
+              "检查项",
+              "状态",
+              "组件",
+              "范围"
+            ],
+            "rowCount": 4,
+            "hasEmptyText": false,
+            "textPreview": "检查项 状态 组件 范围 后端 API 运行中 Express / SQLite 127.0.0.1 业务数据库 已连接 SQLite WAL 本项目 data/app.sqlite 审计日志 可查询 system_logs 全模块操作留痕 后台权限 已启用 管理员角色 审批、配置、审计"
+          },
+          {
+            "headers": [
+              "后台模块",
+              "访问路径",
+              "管理职责",
+              "操作",
+              "后台模块",
+              "访问路径",
+              "管理职责",
+              "操作"
+            ],
+            "rowCount": 5,
+            "hasEmptyText": false,
+            "textPreview": "后台模块 访问路径 管理职责 操作 后台模块 访问路径 管理职责 操作 信用画像 /credit 信用档案、评分画像、授信资料核验 进 入 生活缴费 /payment 生活缴费项目、订单流水、代扣状态 进 入 本地商圈 /business/merchants 商户准入、优惠券、消费分期 进 入 金融产品 /finance/loans 产品工厂、贷款审批、抵押登记 进 入 数据分析 /analytics/vitality 经营分析、风险预警、操作日志 进 入"
+          },
+          {
+            "headers": [
+              "时间",
+              "模块",
+              "操作",
+              "操作人",
+              "详情",
+              "时间",
+              "模块",
+              "操作",
+              "操作人",
+              "详情"
+            ],
+            "rowCount": 4,
+            "hasEmptyText": false,
+            "textPreview": "时间 模块 操作 操作人 详情 时间 模块 操作 操作人 详情 2026-06-05 14:40:43 金融产品 approve_loan 信贷员李某 批准张富根惠农贷8万元 2026-06-05 14:40:43 本地商圈 audit_merchant admin 审核通过清徐农资超市入驻 2026-06-05 14:40:43 生活缴费 pay 张富根 缴纳自来水费45.6元 2026-06-05 14:40:43 信用画像 create_profile system 创建张富根信用画像"
+          }
+        ],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "山西农信普惠金融运营概览后台管理信用画像农户/商户画像生活缴费缴费中枢缴费记录本地商圈商户管理优惠券管理消费分期金融产品产品工厂贷款申请活体抵押协理员任务管理数据分析县域活力指数普惠可得性热力图不良率预警系统日志山西农信区域性普惠金融服务平台后台管理对接：人行征信 | 农业农村部 | 地方政务服务平台后台管理工作台待审商户1家待批贷款1笔已准入商户4家待办协理任务3项后台快捷操作商户入驻审核贷款审批管理查看系统日志运营数据分析系统运行状态检查项状态组件范围后端 API运行中Express / SQLite127.0.0.1业务数据库已连接SQLite WAL本项目 data/app.sqlite审计日志可查询system_logs全模块操作留痕后台权限已启用管理员角色审批、配置、审计管理模块总览信用档案 8 份，已批贷款 3 笔，优惠券核销 913 次后台模块访问路径管理职责操作后台模块访问路径管理职责操作信用画像/credit信用档案、评分画像、授信资料核验进 入生活缴费/payment生活缴费项目、订单流水、代扣状态进 入本地商圈/business/merchants商户准入、优惠券、消费分期进 入金融产品/finance/loans产品工厂、贷款审批、抵押登记进 入数据分析/analytics/vitality经营分析、风险预警、操作日志进 入后台审计日志时间模块操作操作人详情时间模块操作操作人详情2026-06-05 14:40:43金融产品approve_loan信贷员李某批准张富根惠农贷8万元2026-06-05 14:40:43本地商圈audit_merchantadmin审核通过清徐农资超市入驻2026-06-05 14:40:43生活缴费pay张富根缴纳自来水费45.6元2026-06-05 14:40:43信用画像create_profilesystem创建张富根信用画像山西农信区域性普惠金融服务平台 ©2026 40000",
+        "layout": {
+          "viewportWidth": 1568,
+          "viewportHeight": 1600,
+          "scrollWidth": 1568,
+          "scrollHeight": 1600,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89047-repair-20260605-structure-03-导航-后台管理",
+          "label": "导航:后台管理",
+          "finalUrl": "http://127.0.0.1:49047/admin",
+          "title": "山西农信普惠金融服务平台",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89047/probe/runtime-check-repair-20260605/may-89047-repair-20260605-structure-03-导航-后台管理.json",
+          "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89047/probe/runtime-check-repair-20260605/may-89047-repair-20260605-structure-03-导航-后台管理.png",
+          "elementCount": 407,
+          "interactiveCount": 32,
+          "interactiveLabels": [
+            "运营概览 后台管理 信用画像 农户/商户画像 生活缴费 缴费中枢 缴费记录 本地商圈 商户管理 优惠券管理 消费分期 金融产品 产品工厂 贷款申请 活体抵押 协理员 任务管理 数据分析 县域活力指数 普惠可得性热力图 不良率预警 系统日志",
+            "运营概览",
+            "后台管理",
+            "信用画像",
+            "农户/商户画像",
+            "生活缴费",
+            "缴费中枢",
+            "缴费记录",
+            "本地商圈",
+            "商户管理",
+            "优惠券管理",
+            "消费分期",
+            "金融产品",
+            "产品工厂",
+            "贷款申请",
+            "活体抵押",
+            "协理员",
+            "任务管理",
+            "数据分析",
+            "县域活力指数",
+            "普惠可得性热力图",
+            "不良率预警",
+            "系统日志",
+            "商户入驻审核",
+            "贷款审批管理",
+            "查看系统日志",
+            "运营数据分析",
+            "进 入"
+          ]
+        }
+      },
+      {
+        "label": "操作:查看系统日志",
+        "url": "http://127.0.0.1:49047/analytics/logs",
+        "title": "山西农信普惠金融服务平台",
+        "headings": [],
+        "navLabels": [
+          "运营概览",
+          "dashboard",
+          "后台管理",
+          "control",
+          "信用画像",
+          "user",
+          "农户/商户画像",
+          "生活缴费",
+          "pay-circle",
+          "缴费中枢",
+          "缴费记录",
+          "本地商圈",
+          "shop",
+          "商户管理",
+          "优惠券管理",
+          "消费分期",
+          "金融产品",
+          "fund",
+          "产品工厂",
+          "贷款申请",
+          "活体抵押",
+          "协理员",
+          "team",
+          "任务管理"
+        ],
+        "buttons": [],
+        "links": [],
+        "inputs": [
+          {
+            "tag": "input",
+            "type": "search",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          }
+        ],
+        "tables": [
+          {
+            "headers": [
+              "时间",
+              "模块",
+              "操作",
+              "操作人",
+              "详情",
+              "时间",
+              "模块",
+              "操作",
+              "操作人",
+              "详情"
+            ],
+            "rowCount": 4,
+            "hasEmptyText": false,
+            "textPreview": "时间 模块 操作 操作人 详情 时间 模块 操作 操作人 详情 2026-06-05 14:40:43 金融产品 approve_loan 信贷员李某 批准张富根惠农贷8万元 2026-06-05 14:40:43 本地商圈 audit_merchant admin 审核通过清徐农资超市入驻 2026-06-05 14:40:43 生活缴费 pay 张富根 缴纳自来水费45.6元 2026-06-05 14:40:43 信用画像 create_profile system 创建张富根信用画像"
+          }
+        ],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "山西农信普惠金融运营概览后台管理信用画像农户/商户画像生活缴费缴费中枢缴费记录本地商圈商户管理优惠券管理消费分期金融产品产品工厂贷款申请活体抵押协理员任务管理数据分析县域活力指数普惠可得性热力图不良率预警系统日志山西农信区域性普惠金融服务平台后台管理对接：人行征信 | 农业农村部 | 地方政务服务平台系统操作日志模块筛选时间模块操作操作人详情时间模块操作操作人详情2026-06-05 14:40:43金融产品approve_loan信贷员李某批准张富根惠农贷8万元2026-06-05 14:40:43本地商圈audit_merchantadmin审核通过清徐农资超市入驻2026-06-05 14:40:43生活缴费pay张富根缴纳自来水费45.6元2026-06-05 14:40:43信用画像create_profilesystem创建张富根信用画像1山西农信区域性普惠金融服务平台 ©2026 40000",
+        "layout": {
+          "viewportWidth": 1600,
+          "viewportHeight": 1600,
+          "scrollWidth": 1600,
+          "scrollHeight": 1600,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89047-repair-20260605-structure-04-操作-查看系统日志",
+          "label": "操作:查看系统日志",
+          "finalUrl": "http://127.0.0.1:49047/analytics/logs",
+          "title": "山西农信普惠金融服务平台",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89047/probe/runtime-check-repair-20260605/may-89047-repair-20260605-structure-04-操作-查看系统日志.json",
+          "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89047/probe/runtime-check-repair-20260605/may-89047-repair-20260605-structure-04-操作-查看系统日志.png",
+          "elementCount": 210,
+          "interactiveCount": 28,
+          "interactiveLabels": [
+            "运营概览 后台管理 信用画像 农户/商户画像 生活缴费 缴费中枢 缴费记录 本地商圈 商户管理 优惠券管理 消费分期 金融产品 产品工厂 贷款申请 活体抵押 协理员 任务管理 数据分析 县域活力指数 普惠可得性热力图 不良率预警 系统日志",
+            "运营概览",
+            "后台管理",
+            "信用画像",
+            "农户/商户画像",
+            "生活缴费",
+            "缴费中枢",
+            "缴费记录",
+            "本地商圈",
+            "商户管理",
+            "优惠券管理",
+            "消费分期",
+            "金融产品",
+            "产品工厂",
+            "贷款申请",
+            "活体抵押",
+            "协理员",
+            "任务管理",
+            "数据分析",
+            "县域活力指数",
+            "普惠可得性热力图",
+            "不良率预警",
+            "系统日志",
+            "1"
+          ]
+        }
+      },
+      {
+        "label": "操作:贷款审批管理",
+        "url": "http://127.0.0.1:49047/finance/loans",
+        "title": "山西农信普惠金融服务平台",
+        "headings": [],
+        "navLabels": [
+          "运营概览",
+          "dashboard",
+          "后台管理",
+          "control",
+          "信用画像",
+          "user",
+          "农户/商户画像",
+          "生活缴费",
+          "pay-circle",
+          "缴费中枢",
+          "缴费记录",
+          "本地商圈",
+          "shop",
+          "商户管理",
+          "优惠券管理",
+          "消费分期",
+          "金融产品",
+          "fund",
+          "产品工厂",
+          "贷款申请",
+          "活体抵押",
+          "协理员",
+          "team",
+          "任务管理"
+        ],
+        "buttons": [
+          "新申请",
+          "详情",
+          "批准",
+          "拒绝"
+        ],
+        "links": [],
+        "inputs": [
+          {
+            "tag": "input",
+            "type": "search",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "search",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          }
+        ],
+        "tables": [
+          {
+            "headers": [
+              "申请人",
+              "身份证号",
+              "产品",
+              "申请金额(元)",
+              "批核金额(元)",
+              "期限(月)",
+              "担保方式",
+              "状态",
+              "操作",
+              "申请人",
+              "身份证号",
+              "产品"
+            ],
+            "rowCount": 5,
+            "hasEmptyText": false,
+            "textPreview": "申请人 身份证号 产品 申请金额(元) 批核金额(元) 期限(月) 担保方式 状态 操作 申请人 身份证号 产品 申请金额(元) 批核金额(元) 期限(月) 担保方式 状态 操作 刘守义 140102195511045612 惠农贷 30,000 - 12 土地经营权 已拒绝 详情 王建国 140102197205154589 小微商户贷 150,000 150,000 12 商铺经营权 已批准 详情 赵梅花 140102197508216789 活体抵押贷 300,000 - 48 活体 待审批 详情 批准 拒绝 赵梅花 140102197508216789 农机购置贷 120,000 10"
+          }
+        ],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "山西农信普惠金融运营概览后台管理信用画像农户/商户画像生活缴费缴费中枢缴费记录本地商圈商户管理优惠券管理消费分期金融产品产品工厂贷款申请活体抵押协理员任务管理数据分析县域活力指数普惠可得性热力图不良率预警系统日志山西农信区域性普惠金融服务平台后台管理对接：人行征信 | 农业农村部 | 地方政务服务平台贷款申请管理产品状态新申请申请人身份证号产品申请金额(元)批核金额(元)期限(月)担保方式状态操作申请人身份证号产品申请金额(元)批核金额(元)期限(月)担保方式状态操作刘守义140102195511045612惠农贷30,000-12土地经营权已拒绝详情王建国140102197205154589小微商户贷150,000150,00012商铺经营权已批准详情赵梅花140102197508216789活体抵押贷300,000-48活体待审批详情批准拒绝赵梅花140102197508216789农机购置贷120,000100,00036农机设备已批准详情张富根140102196501012345惠农贷80,00080,00024土地经营权已批准详情1山西农信区域性普惠金融服务平台 ©2026",
+        "layout": {
+          "viewportWidth": 1632,
+          "viewportHeight": 1600,
+          "scrollWidth": 1632,
+          "scrollHeight": 1600,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89047-repair-20260605-structure-05-操作-贷款审批管理",
+          "label": "操作:贷款审批管理",
+          "finalUrl": "http://127.0.0.1:49047/finance/loans",
+          "title": "山西农信普惠金融服务平台",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89047/probe/runtime-check-repair-20260605/may-89047-repair-20260605-structure-05-操作-贷款审批管理.json",
+          "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89047/probe/runtime-check-repair-20260605/may-89047-repair-20260605-structure-05-操作-贷款审批管理.png",
+          "elementCount": 325,
+          "interactiveCount": 37,
+          "interactiveLabels": [
+            "运营概览 后台管理 信用画像 农户/商户画像 生活缴费 缴费中枢 缴费记录 本地商圈 商户管理 优惠券管理 消费分期 金融产品 产品工厂 贷款申请 活体抵押 协理员 任务管理 数据分析 县域活力指数 普惠可得性热力图 不良率预警 系统日志",
+            "运营概览",
+            "后台管理",
+            "信用画像",
+            "农户/商户画像",
+            "生活缴费",
+            "缴费中枢",
+            "缴费记录",
+            "本地商圈",
+            "商户管理",
+            "优惠券管理",
+            "消费分期",
+            "金融产品",
+            "产品工厂",
+            "贷款申请",
+            "活体抵押",
+            "协理员",
+            "任务管理",
+            "数据分析",
+            "县域活力指数",
+            "普惠可得性热力图",
+            "不良率预警",
+            "系统日志",
+            "新申请",
+            "详情",
+            "批准",
+            "拒绝",
+            "1"
+          ]
+        }
+      },
+      {
+        "label": "二层操作:贷款审批管理->详情",
+        "url": "http://127.0.0.1:49047/finance/loans",
+        "title": "山西农信普惠金融服务平台",
+        "headings": [],
+        "navLabels": [
+          "运营概览",
+          "dashboard",
+          "后台管理",
+          "control",
+          "信用画像",
+          "user",
+          "农户/商户画像",
+          "生活缴费",
+          "pay-circle",
+          "缴费中枢",
+          "缴费记录",
+          "本地商圈",
+          "shop",
+          "商户管理",
+          "优惠券管理",
+          "消费分期",
+          "金融产品",
+          "fund",
+          "产品工厂",
+          "贷款申请",
+          "活体抵押",
+          "协理员",
+          "team",
+          "任务管理"
+        ],
+        "buttons": [
+          "新申请",
+          "详情",
+          "批准",
+          "拒绝",
+          "关闭"
+        ],
+        "links": [],
+        "inputs": [
+          {
+            "tag": "input",
+            "type": "search",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "search",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          }
+        ],
+        "tables": [
+          {
+            "headers": [
+              "申请人",
+              "身份证号",
+              "产品",
+              "申请金额(元)",
+              "批核金额(元)",
+              "期限(月)",
+              "担保方式",
+              "状态",
+              "操作",
+              "申请人",
+              "身份证号",
+              "产品"
+            ],
+            "rowCount": 5,
+            "hasEmptyText": false,
+            "textPreview": "申请人 身份证号 产品 申请金额(元) 批核金额(元) 期限(月) 担保方式 状态 操作 申请人 身份证号 产品 申请金额(元) 批核金额(元) 期限(月) 担保方式 状态 操作 刘守义 140102195511045612 惠农贷 30,000 - 12 土地经营权 已拒绝 详情 王建国 140102197205154589 小微商户贷 150,000 150,000 12 商铺经营权 已批准 详情 赵梅花 140102197508216789 活体抵押贷 300,000 - 48 活体 待审批 详情 批准 拒绝 赵梅花 140102197508216789 农机购置贷 120,000 10"
+          },
+          {
+            "headers": [],
+            "rowCount": 11,
+            "hasEmptyText": false,
+            "textPreview": "申请人 刘守义 身份证 140102195511045612 产品 惠农贷 (HN-001) 申请金额 30,000元 批核金额 - 期限 12个月 担保方式 土地经营权 担保物 5亩耕地经营权 状态 已拒绝 审核备注 信用评分低于阈值，存在逾期记录 申请时间 2026-06-05 14:40:43"
+          }
+        ],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "山西农信普惠金融运营概览后台管理信用画像农户/商户画像生活缴费缴费中枢缴费记录本地商圈商户管理优惠券管理消费分期金融产品产品工厂贷款申请活体抵押协理员任务管理数据分析县域活力指数普惠可得性热力图不良率预警系统日志山西农信区域性普惠金融服务平台后台管理对接：人行征信 | 农业农村部 | 地方政务服务平台贷款申请管理产品状态新申请申请人身份证号产品申请金额(元)批核金额(元)期限(月)担保方式状态操作申请人身份证号产品申请金额(元)批核金额(元)期限(月)担保方式状态操作刘守义140102195511045612惠农贷30,000-12土地经营权已拒绝详情王建国140102197205154589小微商户贷150,000150,00012商铺经营权已批准详情赵梅花140102197508216789活体抵押贷300,000-48活体待审批详情批准拒绝赵梅花140102197508216789农机购置贷120,000100,00036农机设备已批准详情张富根140102196501012345惠农贷80,00080,00024土地经营权已批准详情1山西农信区域性普惠金融服务平台 ©2026 贷款详情申请人刘守义身份证140102195511045612产品惠农贷 (HN-001)申请金额30,000元批核金额-期限12个月担保方式土地经营权担保物5亩耕地经营权状态已拒绝审核备注信用评分低于阈值，存在逾期记录申请时间2026-06-05 14:40:43",
+        "layout": {
+          "viewportWidth": 1664,
+          "viewportHeight": 1600,
+          "scrollWidth": 1664,
+          "scrollHeight": 1600,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89047-repair-20260605-structure-06-二层操作-贷款审批管理-详情",
+          "label": "二层操作:贷款审批管理->详情",
+          "finalUrl": "http://127.0.0.1:49047/finance/loans",
+          "title": "山西农信普惠金融服务平台",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89047/probe/runtime-check-repair-20260605/may-89047-repair-20260605-structure-06-二层操作-贷款审批管理-详情.json",
+          "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89047/probe/runtime-check-repair-20260605/may-89047-repair-20260605-structure-06-二层操作-贷款审批管理-详情.png",
+          "elementCount": 402,
+          "interactiveCount": 40,
+          "interactiveLabels": [
+            "运营概览 后台管理 信用画像 农户/商户画像 生活缴费 缴费中枢 缴费记录 本地商圈 商户管理 优惠券管理 消费分期 金融产品 产品工厂 贷款申请 活体抵押 协理员 任务管理 数据分析 县域活力指数 普惠可得性热力图 不良率预警 系统日志",
+            "运营概览",
+            "后台管理",
+            "信用画像",
+            "农户/商户画像",
+            "生活缴费",
+            "缴费中枢",
+            "缴费记录",
+            "本地商圈",
+            "商户管理",
+            "优惠券管理",
+            "消费分期",
+            "金融产品",
+            "产品工厂",
+            "贷款申请",
+            "活体抵押",
+            "协理员",
+            "任务管理",
+            "数据分析",
+            "县域活力指数",
+            "普惠可得性热力图",
+            "不良率预警",
+            "系统日志",
+            "新申请",
+            "详情",
+            "批准",
+            "拒绝",
+            "1",
+            "关闭"
+          ]
+        }
+      },
+      {
+        "label": "导航:信用画像",
+        "url": "http://127.0.0.1:49047/admin",
+        "title": "山西农信普惠金融服务平台",
+        "headings": [],
+        "navLabels": [
+          "运营概览",
+          "dashboard",
+          "后台管理",
+          "control",
+          "信用画像",
+          "user",
+          "生活缴费",
+          "pay-circle",
+          "缴费中枢",
+          "缴费记录",
+          "本地商圈",
+          "shop",
+          "商户管理",
+          "优惠券管理",
+          "消费分期",
+          "金融产品",
+          "fund",
+          "产品工厂",
+          "贷款申请",
+          "活体抵押",
+          "协理员",
+          "team",
+          "任务管理",
+          "数据分析"
+        ],
+        "buttons": [
+          "商户入驻审核",
+          "贷款审批管理",
+          "查看系统日志",
+          "运营数据分析",
+          "进 入"
+        ],
+        "links": [],
+        "inputs": [],
+        "tables": [
+          {
+            "headers": [
+              "检查项",
+              "状态",
+              "组件",
+              "范围"
+            ],
+            "rowCount": 4,
+            "hasEmptyText": false,
+            "textPreview": "检查项 状态 组件 范围 后端 API 运行中 Express / SQLite 127.0.0.1 业务数据库 已连接 SQLite WAL 本项目 data/app.sqlite 审计日志 可查询 system_logs 全模块操作留痕 后台权限 已启用 管理员角色 审批、配置、审计"
+          },
+          {
+            "headers": [
+              "后台模块",
+              "访问路径",
+              "管理职责",
+              "操作",
+              "后台模块",
+              "访问路径",
+              "管理职责",
+              "操作"
+            ],
+            "rowCount": 5,
+            "hasEmptyText": false,
+            "textPreview": "后台模块 访问路径 管理职责 操作 后台模块 访问路径 管理职责 操作 信用画像 /credit 信用档案、评分画像、授信资料核验 进 入 生活缴费 /payment 生活缴费项目、订单流水、代扣状态 进 入 本地商圈 /business/merchants 商户准入、优惠券、消费分期 进 入 金融产品 /finance/loans 产品工厂、贷款审批、抵押登记 进 入 数据分析 /analytics/vitality 经营分析、风险预警、操作日志 进 入"
+          },
+          {
+            "headers": [
+              "时间",
+              "模块",
+              "操作",
+              "操作人",
+              "详情",
+              "时间",
+              "模块",
+              "操作",
+              "操作人",
+              "详情"
+            ],
+            "rowCount": 4,
+            "hasEmptyText": false,
+            "textPreview": "时间 模块 操作 操作人 详情 时间 模块 操作 操作人 详情 2026-06-05 14:40:43 金融产品 approve_loan 信贷员李某 批准张富根惠农贷8万元 2026-06-05 14:40:43 本地商圈 audit_merchant admin 审核通过清徐农资超市入驻 2026-06-05 14:40:43 生活缴费 pay 张富根 缴纳自来水费45.6元 2026-06-05 14:40:43 信用画像 create_profile system 创建张富根信用画像"
+          }
+        ],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "山西农信普惠金融运营概览后台管理信用画像农户/商户画像生活缴费缴费中枢缴费记录本地商圈商户管理优惠券管理消费分期金融产品产品工厂贷款申请活体抵押协理员任务管理数据分析县域活力指数普惠可得性热力图不良率预警系统日志山西农信区域性普惠金融服务平台后台管理对接：人行征信 | 农业农村部 | 地方政务服务平台后台管理工作台待审商户1家待批贷款1笔已准入商户4家待办协理任务3项后台快捷操作商户入驻审核贷款审批管理查看系统日志运营数据分析系统运行状态检查项状态组件范围后端 API运行中Express / SQLite127.0.0.1业务数据库已连接SQLite WAL本项目 data/app.sqlite审计日志可查询system_logs全模块操作留痕后台权限已启用管理员角色审批、配置、审计管理模块总览信用档案 8 份，已批贷款 3 笔，优惠券核销 913 次后台模块访问路径管理职责操作后台模块访问路径管理职责操作信用画像/credit信用档案、评分画像、授信资料核验进 入生活缴费/payment生活缴费项目、订单流水、代扣状态进 入本地商圈/business/merchants商户准入、优惠券、消费分期进 入金融产品/finance/loans产品工厂、贷款审批、抵押登记进 入数据分析/analytics/vitality经营分析、风险预警、操作日志进 入后台审计日志时间模块操作操作人详情时间模块操作操作人详情2026-06-05 14:40:43金融产品approve_loan信贷员李某批准张富根惠农贷8万元2026-06-05 14:40:43本地商圈audit_merchantadmin审核通过清徐农资超市入驻2026-06-05 14:40:43生活缴费pay张富根缴纳自来水费45.6元2026-06-05 14:40:43信用画像create_profilesystem创建张富根信用画像山西农信区域性普惠金融服务平台 ©2026",
+        "layout": {
+          "viewportWidth": 1696,
+          "viewportHeight": 1600,
+          "scrollWidth": 1696,
+          "scrollHeight": 1600,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89047-repair-20260605-structure-07-导航-信用画像",
+          "label": "导航:信用画像",
+          "finalUrl": "http://127.0.0.1:49047/admin",
+          "title": "山西农信普惠金融服务平台",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89047/probe/runtime-check-repair-20260605/may-89047-repair-20260605-structure-07-导航-信用画像.json",
+          "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89047/probe/runtime-check-repair-20260605/may-89047-repair-20260605-structure-07-导航-信用画像.png",
+          "elementCount": 406,
+          "interactiveCount": 32,
+          "interactiveLabels": [
+            "运营概览 后台管理 信用画像 生活缴费 缴费中枢 缴费记录 本地商圈 商户管理 优惠券管理 消费分期 金融产品 产品工厂 贷款申请 活体抵押 协理员 任务管理 数据分析 县域活力指数 普惠可得性热力图 不良率预警 系统日志",
+            "运营概览",
+            "后台管理",
+            "信用画像",
+            "农户/商户画像",
+            "生活缴费",
+            "缴费中枢",
+            "缴费记录",
+            "本地商圈",
+            "商户管理",
+            "优惠券管理",
+            "消费分期",
+            "金融产品",
+            "产品工厂",
+            "贷款申请",
+            "活体抵押",
+            "协理员",
+            "任务管理",
+            "数据分析",
+            "县域活力指数",
+            "普惠可得性热力图",
+            "不良率预警",
+            "系统日志",
+            "商户入驻审核",
+            "贷款审批管理",
+            "查看系统日志",
+            "运营数据分析",
+            "进 入"
+          ]
+        }
+      },
+      {
+        "label": "操作:查看系统日志",
+        "url": "http://127.0.0.1:49047/analytics/logs",
+        "title": "山西农信普惠金融服务平台",
+        "headings": [],
+        "navLabels": [
+          "运营概览",
+          "dashboard",
+          "后台管理",
+          "control",
+          "信用画像",
+          "user",
+          "生活缴费",
+          "pay-circle",
+          "缴费中枢",
+          "缴费记录",
+          "本地商圈",
+          "shop",
+          "商户管理",
+          "优惠券管理",
+          "消费分期",
+          "金融产品",
+          "fund",
+          "产品工厂",
+          "贷款申请",
+          "活体抵押",
+          "协理员",
+          "team",
+          "任务管理",
+          "数据分析"
+        ],
+        "buttons": [],
+        "links": [],
+        "inputs": [
+          {
+            "tag": "input",
+            "type": "search",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          }
+        ],
+        "tables": [
+          {
+            "headers": [
+              "时间",
+              "模块",
+              "操作",
+              "操作人",
+              "详情",
+              "时间",
+              "模块",
+              "操作",
+              "操作人",
+              "详情"
+            ],
+            "rowCount": 4,
+            "hasEmptyText": false,
+            "textPreview": "时间 模块 操作 操作人 详情 时间 模块 操作 操作人 详情 2026-06-05 14:40:43 金融产品 approve_loan 信贷员李某 批准张富根惠农贷8万元 2026-06-05 14:40:43 本地商圈 audit_merchant admin 审核通过清徐农资超市入驻 2026-06-05 14:40:43 生活缴费 pay 张富根 缴纳自来水费45.6元 2026-06-05 14:40:43 信用画像 create_profile system 创建张富根信用画像"
+          }
+        ],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "山西农信普惠金融运营概览后台管理信用画像农户/商户画像生活缴费缴费中枢缴费记录本地商圈商户管理优惠券管理消费分期金融产品产品工厂贷款申请活体抵押协理员任务管理数据分析县域活力指数普惠可得性热力图不良率预警系统日志山西农信区域性普惠金融服务平台后台管理对接：人行征信 | 农业农村部 | 地方政务服务平台系统操作日志模块筛选时间模块操作操作人详情时间模块操作操作人详情2026-06-05 14:40:43金融产品approve_loan信贷员李某批准张富根惠农贷8万元2026-06-05 14:40:43本地商圈audit_merchantadmin审核通过清徐农资超市入驻2026-06-05 14:40:43生活缴费pay张富根缴纳自来水费45.6元2026-06-05 14:40:43信用画像create_profilesystem创建张富根信用画像1山西农信区域性普惠金融服务平台 ©2026",
+        "layout": {
+          "viewportWidth": 1728,
+          "viewportHeight": 1600,
+          "scrollWidth": 1728,
+          "scrollHeight": 1600,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89047-repair-20260605-structure-08-操作-查看系统日志",
+          "label": "操作:查看系统日志",
+          "finalUrl": "http://127.0.0.1:49047/analytics/logs",
+          "title": "山西农信普惠金融服务平台",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89047/probe/runtime-check-repair-20260605/may-89047-repair-20260605-structure-08-操作-查看系统日志.json",
+          "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89047/probe/runtime-check-repair-20260605/may-89047-repair-20260605-structure-08-操作-查看系统日志.png",
+          "elementCount": 209,
+          "interactiveCount": 28,
+          "interactiveLabels": [
+            "运营概览 后台管理 信用画像 生活缴费 缴费中枢 缴费记录 本地商圈 商户管理 优惠券管理 消费分期 金融产品 产品工厂 贷款申请 活体抵押 协理员 任务管理 数据分析 县域活力指数 普惠可得性热力图 不良率预警 系统日志",
+            "运营概览",
+            "后台管理",
+            "信用画像",
+            "农户/商户画像",
+            "生活缴费",
+            "缴费中枢",
+            "缴费记录",
+            "本地商圈",
+            "商户管理",
+            "优惠券管理",
+            "消费分期",
+            "金融产品",
+            "产品工厂",
+            "贷款申请",
+            "活体抵押",
+            "协理员",
+            "任务管理",
+            "数据分析",
+            "县域活力指数",
+            "普惠可得性热力图",
+            "不良率预警",
+            "系统日志",
+            "1"
+          ]
+        }
+      },
+      {
+        "label": "操作:贷款审批管理",
+        "url": "http://127.0.0.1:49047/finance/loans",
+        "title": "山西农信普惠金融服务平台",
+        "headings": [],
+        "navLabels": [
+          "运营概览",
+          "dashboard",
+          "后台管理",
+          "control",
+          "信用画像",
+          "user",
+          "农户/商户画像",
+          "生活缴费",
+          "pay-circle",
+          "缴费中枢",
+          "缴费记录",
+          "本地商圈",
+          "shop",
+          "商户管理",
+          "优惠券管理",
+          "消费分期",
+          "金融产品",
+          "fund",
+          "产品工厂",
+          "贷款申请",
+          "活体抵押",
+          "协理员",
+          "team",
+          "任务管理"
+        ],
+        "buttons": [
+          "新申请",
+          "详情",
+          "批准",
+          "拒绝"
+        ],
+        "links": [],
+        "inputs": [
+          {
+            "tag": "input",
+            "type": "search",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "search",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          }
+        ],
+        "tables": [
+          {
+            "headers": [
+              "申请人",
+              "身份证号",
+              "产品",
+              "申请金额(元)",
+              "批核金额(元)",
+              "期限(月)",
+              "担保方式",
+              "状态",
+              "操作",
+              "申请人",
+              "身份证号",
+              "产品"
+            ],
+            "rowCount": 5,
+            "hasEmptyText": false,
+            "textPreview": "申请人 身份证号 产品 申请金额(元) 批核金额(元) 期限(月) 担保方式 状态 操作 申请人 身份证号 产品 申请金额(元) 批核金额(元) 期限(月) 担保方式 状态 操作 刘守义 140102195511045612 惠农贷 30,000 - 12 土地经营权 已拒绝 详情 王建国 140102197205154589 小微商户贷 150,000 150,000 12 商铺经营权 已批准 详情 赵梅花 140102197508216789 活体抵押贷 300,000 - 48 活体 待审批 详情 批准 拒绝 赵梅花 140102197508216789 农机购置贷 120,000 10"
+          }
+        ],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "山西农信普惠金融运营概览后台管理信用画像农户/商户画像生活缴费缴费中枢缴费记录本地商圈商户管理优惠券管理消费分期金融产品产品工厂贷款申请活体抵押协理员任务管理数据分析县域活力指数普惠可得性热力图不良率预警系统日志山西农信区域性普惠金融服务平台后台管理对接：人行征信 | 农业农村部 | 地方政务服务平台贷款申请管理产品状态新申请申请人身份证号产品申请金额(元)批核金额(元)期限(月)担保方式状态操作申请人身份证号产品申请金额(元)批核金额(元)期限(月)担保方式状态操作刘守义140102195511045612惠农贷30,000-12土地经营权已拒绝详情王建国140102197205154589小微商户贷150,000150,00012商铺经营权已批准详情赵梅花140102197508216789活体抵押贷300,000-48活体待审批详情批准拒绝赵梅花140102197508216789农机购置贷120,000100,00036农机设备已批准详情张富根140102196501012345惠农贷80,00080,00024土地经营权已批准详情1山西农信区域性普惠金融服务平台 ©2026",
+        "layout": {
+          "viewportWidth": 1760,
+          "viewportHeight": 1600,
+          "scrollWidth": 1760,
+          "scrollHeight": 1600,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89047-repair-20260605-structure-09-操作-贷款审批管理",
+          "label": "操作:贷款审批管理",
+          "finalUrl": "http://127.0.0.1:49047/finance/loans",
+          "title": "山西农信普惠金融服务平台",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89047/probe/runtime-check-repair-20260605/may-89047-repair-20260605-structure-09-操作-贷款审批管理.json",
+          "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89047/probe/runtime-check-repair-20260605/may-89047-repair-20260605-structure-09-操作-贷款审批管理.png",
+          "elementCount": 325,
+          "interactiveCount": 37,
+          "interactiveLabels": [
+            "运营概览 后台管理 信用画像 农户/商户画像 生活缴费 缴费中枢 缴费记录 本地商圈 商户管理 优惠券管理 消费分期 金融产品 产品工厂 贷款申请 活体抵押 协理员 任务管理 数据分析 县域活力指数 普惠可得性热力图 不良率预警 系统日志",
+            "运营概览",
+            "后台管理",
+            "信用画像",
+            "农户/商户画像",
+            "生活缴费",
+            "缴费中枢",
+            "缴费记录",
+            "本地商圈",
+            "商户管理",
+            "优惠券管理",
+            "消费分期",
+            "金融产品",
+            "产品工厂",
+            "贷款申请",
+            "活体抵押",
+            "协理员",
+            "任务管理",
+            "数据分析",
+            "县域活力指数",
+            "普惠可得性热力图",
+            "不良率预警",
+            "系统日志",
+            "新申请",
+            "详情",
+            "批准",
+            "拒绝",
+            "1"
+          ]
+        }
+      },
+      {
+        "label": "二层操作:贷款审批管理->详情",
+        "url": "http://127.0.0.1:49047/finance/loans",
+        "title": "山西农信普惠金融服务平台",
+        "headings": [],
+        "navLabels": [
+          "运营概览",
+          "dashboard",
+          "后台管理",
+          "control",
+          "信用画像",
+          "user",
+          "农户/商户画像",
+          "生活缴费",
+          "pay-circle",
+          "缴费中枢",
+          "缴费记录",
+          "本地商圈",
+          "shop",
+          "商户管理",
+          "优惠券管理",
+          "消费分期",
+          "金融产品",
+          "fund",
+          "产品工厂",
+          "贷款申请",
+          "活体抵押",
+          "协理员",
+          "team",
+          "任务管理"
+        ],
+        "buttons": [
+          "新申请",
+          "详情",
+          "批准",
+          "拒绝",
+          "关闭"
+        ],
+        "links": [],
+        "inputs": [
+          {
+            "tag": "input",
+            "type": "search",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "search",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          }
+        ],
+        "tables": [
+          {
+            "headers": [
+              "申请人",
+              "身份证号",
+              "产品",
+              "申请金额(元)",
+              "批核金额(元)",
+              "期限(月)",
+              "担保方式",
+              "状态",
+              "操作",
+              "申请人",
+              "身份证号",
+              "产品"
+            ],
+            "rowCount": 5,
+            "hasEmptyText": false,
+            "textPreview": "申请人 身份证号 产品 申请金额(元) 批核金额(元) 期限(月) 担保方式 状态 操作 申请人 身份证号 产品 申请金额(元) 批核金额(元) 期限(月) 担保方式 状态 操作 刘守义 140102195511045612 惠农贷 30,000 - 12 土地经营权 已拒绝 详情 王建国 140102197205154589 小微商户贷 150,000 150,000 12 商铺经营权 已批准 详情 赵梅花 140102197508216789 活体抵押贷 300,000 - 48 活体 待审批 详情 批准 拒绝 赵梅花 140102197508216789 农机购置贷 120,000 10"
+          },
+          {
+            "headers": [],
+            "rowCount": 11,
+            "hasEmptyText": false,
+            "textPreview": "申请人 刘守义 身份证 140102195511045612 产品 惠农贷 (HN-001) 申请金额 30,000元 批核金额 - 期限 12个月 担保方式 土地经营权 担保物 5亩耕地经营权 状态 已拒绝 审核备注 信用评分低于阈值，存在逾期记录 申请时间 2026-06-05 14:40:43"
+          }
+        ],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "山西农信普惠金融运营概览后台管理信用画像农户/商户画像生活缴费缴费中枢缴费记录本地商圈商户管理优惠券管理消费分期金融产品产品工厂贷款申请活体抵押协理员任务管理数据分析县域活力指数普惠可得性热力图不良率预警系统日志山西农信区域性普惠金融服务平台后台管理对接：人行征信 | 农业农村部 | 地方政务服务平台贷款申请管理产品状态新申请申请人身份证号产品申请金额(元)批核金额(元)期限(月)担保方式状态操作申请人身份证号产品申请金额(元)批核金额(元)期限(月)担保方式状态操作刘守义140102195511045612惠农贷30,000-12土地经营权已拒绝详情王建国140102197205154589小微商户贷150,000150,00012商铺经营权已批准详情赵梅花140102197508216789活体抵押贷300,000-48活体待审批详情批准拒绝赵梅花140102197508216789农机购置贷120,000100,00036农机设备已批准详情张富根140102196501012345惠农贷80,00080,00024土地经营权已批准详情1山西农信区域性普惠金融服务平台 ©2026 贷款详情申请人刘守义身份证140102195511045612产品惠农贷 (HN-001)申请金额30,000元批核金额-期限12个月担保方式土地经营权担保物5亩耕地经营权状态已拒绝审核备注信用评分低于阈值，存在逾期记录申请时间2026-06-05 14:40:43",
+        "layout": {
+          "viewportWidth": 1792,
+          "viewportHeight": 1600,
+          "scrollWidth": 1792,
+          "scrollHeight": 1600,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89047-repair-20260605-structure-10-二层操作-贷款审批管理-详情",
+          "label": "二层操作:贷款审批管理->详情",
+          "finalUrl": "http://127.0.0.1:49047/finance/loans",
+          "title": "山西农信普惠金融服务平台",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89047/probe/runtime-check-repair-20260605/may-89047-repair-20260605-structure-10-二层操作-贷款审批管理-详情.json",
+          "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89047/probe/runtime-check-repair-20260605/may-89047-repair-20260605-structure-10-二层操作-贷款审批管理-详情.png",
+          "elementCount": 402,
+          "interactiveCount": 40,
+          "interactiveLabels": [
+            "运营概览 后台管理 信用画像 农户/商户画像 生活缴费 缴费中枢 缴费记录 本地商圈 商户管理 优惠券管理 消费分期 金融产品 产品工厂 贷款申请 活体抵押 协理员 任务管理 数据分析 县域活力指数 普惠可得性热力图 不良率预警 系统日志",
+            "运营概览",
+            "后台管理",
+            "信用画像",
+            "农户/商户画像",
+            "生活缴费",
+            "缴费中枢",
+            "缴费记录",
+            "本地商圈",
+            "商户管理",
+            "优惠券管理",
+            "消费分期",
+            "金融产品",
+            "产品工厂",
+            "贷款申请",
+            "活体抵押",
+            "协理员",
+            "任务管理",
+            "数据分析",
+            "县域活力指数",
+            "普惠可得性热力图",
+            "不良率预警",
+            "系统日志",
+            "新申请",
+            "详情",
+            "批准",
+            "拒绝",
+            "1",
+            "关闭"
+          ]
+        }
+      },
+      {
+        "label": "导航:农户/商户画像",
+        "url": "http://127.0.0.1:49047/credit",
+        "title": "山西农信普惠金融服务平台",
+        "headings": [],
+        "navLabels": [
+          "运营概览",
+          "dashboard",
+          "后台管理",
+          "control",
+          "信用画像",
+          "user",
+          "农户/商户画像",
+          "生活缴费",
+          "pay-circle",
+          "缴费中枢",
+          "缴费记录",
+          "本地商圈",
+          "shop",
+          "商户管理",
+          "优惠券管理",
+          "消费分期",
+          "金融产品",
+          "fund",
+          "产品工厂",
+          "贷款申请",
+          "活体抵押",
+          "协理员",
+          "team",
+          "任务管理"
+        ],
+        "buttons": [
+          "查询",
+          "新建画像",
+          "详情"
+        ],
+        "links": [],
+        "inputs": [
+          {
+            "tag": "input",
+            "type": "text",
+            "placeholder": "姓名/身份证号",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "search",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "search",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          }
+        ],
+        "tables": [
+          {
+            "headers": [
+              "姓名",
+              "身份证号",
+              "类型",
+              "乡镇",
+              "村/社区",
+              "土地面积(亩)",
+              "补贴汇总(元)",
+              "经营收入(元)",
+              "信用评分",
+              "信用等级",
+              "操作",
+              "姓名"
+            ],
+            "rowCount": 8,
+            "hasEmptyText": false,
+            "textPreview": "姓名 身份证号 类型 乡镇 村/社区 土地面积(亩) 补贴汇总(元) 经营收入(元) 信用评分 信用等级 操作 姓名 身份证号 类型 乡镇 村/社区 土地面积(亩) 补贴汇总(元) 经营收入(元) 信用评分 信用等级 操作 马国强 140102197609183456 商户 马峪乡 马峪乡 3.5 5,250 150,000 710 A 详情 杨春花 140102198312092345 农户 王答乡 王答村 12 18,000 55,000 690 B 详情 刘守义 140102195511045612 农户 柳杜乡 柳杜村 5 7,500 28,000 560 C 详情 陈大庆 14010"
+          }
+        ],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "山西农信普惠金融运营概览后台管理信用画像农户/商户画像生活缴费缴费中枢缴费记录本地商圈商户管理优惠券管理消费分期金融产品产品工厂贷款申请活体抵押协理员任务管理数据分析县域活力指数普惠可得性热力图不良率预警系统日志山西农信区域性普惠金融服务平台后台管理对接：人行征信 | 农业农村部 | 地方政务服务平台类型信用等级查询新建画像姓名身份证号类型乡镇村/社区土地面积(亩)补贴汇总(元)经营收入(元)信用评分信用等级操作姓名身份证号类型乡镇村/社区土地面积(亩)补贴汇总(元)经营收入(元)信用评分信用等级操作马国强140102197609183456商户马峪乡马峪乡3.55,250150,000710A详情杨春花140102198312092345农户王答乡王答村1218,00055,000690B详情刘守义140102195511045612农户柳杜乡柳杜村57,50028,000560C详情陈大庆140102198006037890商户清徐镇东湖社区--320,000830AA详情赵梅花140102197508216789农户徐沟镇北营村2233,00095,000810AA详情王建国140102197205154589商户清徐镇西关街--185,000780A详情李秀英140102196803053467农户孟封镇南峪村8.212,30042,000650B详情张富根140102196501012345农户清徐镇东阳村15.523,25068,000720A详情1山西农信区域性普惠金融服务平台 ©2026",
+        "layout": {
+          "viewportWidth": 1824,
+          "viewportHeight": 1600,
+          "scrollWidth": 1824,
+          "scrollHeight": 1600,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89047-repair-20260605-structure-11-导航-农户-商户画像",
+          "label": "导航:农户/商户画像",
+          "finalUrl": "http://127.0.0.1:49047/credit",
+          "title": "山西农信普惠金融服务平台",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89047/probe/runtime-check-repair-20260605/may-89047-repair-20260605-structure-11-导航-农户-商户画像.json",
+          "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89047/probe/runtime-check-repair-20260605/may-89047-repair-20260605-structure-11-导航-农户-商户画像.png",
+          "elementCount": 411,
+          "interactiveCount": 41,
+          "interactiveLabels": [
+            "运营概览 后台管理 信用画像 农户/商户画像 生活缴费 缴费中枢 缴费记录 本地商圈 商户管理 优惠券管理 消费分期 金融产品 产品工厂 贷款申请 活体抵押 协理员 任务管理 数据分析 县域活力指数 普惠可得性热力图 不良率预警 系统日志",
+            "运营概览",
+            "后台管理",
+            "信用画像",
+            "农户/商户画像",
+            "生活缴费",
+            "缴费中枢",
+            "缴费记录",
+            "本地商圈",
+            "商户管理",
+            "优惠券管理",
+            "消费分期",
+            "金融产品",
+            "产品工厂",
+            "贷款申请",
+            "活体抵押",
+            "协理员",
+            "任务管理",
+            "数据分析",
+            "县域活力指数",
+            "普惠可得性热力图",
+            "不良率预警",
+            "系统日志",
+            "姓名/身份证号",
+            "查询",
+            "新建画像",
+            "详情",
+            "1"
+          ]
+        }
+      },
+      {
+        "label": "操作:新建画像",
+        "url": "http://127.0.0.1:49047/credit/new",
+        "title": "山西农信普惠金融服务平台",
+        "headings": [],
+        "navLabels": [
+          "运营概览",
+          "dashboard",
+          "后台管理",
+          "control",
+          "信用画像",
+          "user",
+          "农户/商户画像",
+          "生活缴费",
+          "pay-circle",
+          "缴费中枢",
+          "缴费记录",
+          "本地商圈",
+          "shop",
+          "商户管理",
+          "优惠券管理",
+          "消费分期",
+          "金融产品",
+          "fund",
+          "产品工厂",
+          "贷款申请",
+          "活体抵押",
+          "协理员",
+          "team",
+          "任务管理"
+        ],
+        "buttons": [
+          "返回列表",
+          "提 交",
+          "取 消"
+        ],
+        "links": [],
+        "inputs": [
+          {
+            "tag": "input",
+            "type": "text",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "text",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "search",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "text",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "text",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "text",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "search",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          }
+        ],
+        "tables": [],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "山西农信普惠金融运营概览后台管理信用画像农户/商户画像生活缴费缴费中枢缴费记录本地商圈商户管理优惠券管理消费分期金融产品产品工厂贷款申请活体抵押协理员任务管理数据分析县域活力指数普惠可得性热力图不良率预警系统日志山西农信区域性普惠金融服务平台后台管理对接：人行征信 | 农业农村部 | 地方政务服务平台返回列表新建信用画像姓名身份证号类型乡镇村/社区土地面积(亩)土地确权证号补贴汇总(元)经营收入(元)信用评分信用等级提 交取 消山西农信区域性普惠金融服务平台 ©2026",
+        "layout": {
+          "viewportWidth": 1856,
+          "viewportHeight": 1600,
+          "scrollWidth": 1856,
+          "scrollHeight": 1600,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89047-repair-20260605-structure-12-操作-新建画像",
+          "label": "操作:新建画像",
+          "finalUrl": "http://127.0.0.1:49047/credit/new",
+          "title": "山西农信普惠金融服务平台",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89047/probe/runtime-check-repair-20260605/may-89047-repair-20260605-structure-12-操作-新建画像.json",
+          "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89047/probe/runtime-check-repair-20260605/may-89047-repair-20260605-structure-12-操作-新建画像.png",
+          "elementCount": 294,
+          "interactiveCount": 45,
+          "interactiveLabels": [
+            "运营概览 后台管理 信用画像 农户/商户画像 生活缴费 缴费中枢 缴费记录 本地商圈 商户管理 优惠券管理 消费分期 金融产品 产品工厂 贷款申请 活体抵押 协理员 任务管理 数据分析 县域活力指数 普惠可得性热力图 不良率预警 系统日志",
+            "运营概览",
+            "后台管理",
+            "信用画像",
+            "农户/商户画像",
+            "生活缴费",
+            "缴费中枢",
+            "缴费记录",
+            "本地商圈",
+            "商户管理",
+            "优惠券管理",
+            "消费分期",
+            "金融产品",
+            "产品工厂",
+            "贷款申请",
+            "活体抵押",
+            "协理员",
+            "任务管理",
+            "数据分析",
+            "县域活力指数",
+            "普惠可得性热力图",
+            "不良率预警",
+            "系统日志",
+            "返回列表",
+            "Increase Value",
+            "Decrease Value",
+            "提 交",
+            "取 消"
+          ]
+        }
+      },
+      {
+        "label": "二层操作:新建画像->返回列表",
+        "url": "http://127.0.0.1:49047/credit",
+        "title": "山西农信普惠金融服务平台",
+        "headings": [],
+        "navLabels": [
+          "运营概览",
+          "dashboard",
+          "后台管理",
+          "control",
+          "信用画像",
+          "user",
+          "农户/商户画像",
+          "生活缴费",
+          "pay-circle",
+          "缴费中枢",
+          "缴费记录",
+          "本地商圈",
+          "shop",
+          "商户管理",
+          "优惠券管理",
+          "消费分期",
+          "金融产品",
+          "fund",
+          "产品工厂",
+          "贷款申请",
+          "活体抵押",
+          "协理员",
+          "team",
+          "任务管理"
+        ],
+        "buttons": [
+          "查询",
+          "新建画像",
+          "详情"
+        ],
+        "links": [],
+        "inputs": [
+          {
+            "tag": "input",
+            "type": "text",
+            "placeholder": "姓名/身份证号",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "search",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "search",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          }
+        ],
+        "tables": [
+          {
+            "headers": [
+              "姓名",
+              "身份证号",
+              "类型",
+              "乡镇",
+              "村/社区",
+              "土地面积(亩)",
+              "补贴汇总(元)",
+              "经营收入(元)",
+              "信用评分",
+              "信用等级",
+              "操作",
+              "姓名"
+            ],
+            "rowCount": 8,
+            "hasEmptyText": false,
+            "textPreview": "姓名 身份证号 类型 乡镇 村/社区 土地面积(亩) 补贴汇总(元) 经营收入(元) 信用评分 信用等级 操作 姓名 身份证号 类型 乡镇 村/社区 土地面积(亩) 补贴汇总(元) 经营收入(元) 信用评分 信用等级 操作 马国强 140102197609183456 商户 马峪乡 马峪乡 3.5 5,250 150,000 710 A 详情 杨春花 140102198312092345 农户 王答乡 王答村 12 18,000 55,000 690 B 详情 刘守义 140102195511045612 农户 柳杜乡 柳杜村 5 7,500 28,000 560 C 详情 陈大庆 14010"
+          }
+        ],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "山西农信普惠金融运营概览后台管理信用画像农户/商户画像生活缴费缴费中枢缴费记录本地商圈商户管理优惠券管理消费分期金融产品产品工厂贷款申请活体抵押协理员任务管理数据分析县域活力指数普惠可得性热力图不良率预警系统日志山西农信区域性普惠金融服务平台后台管理对接：人行征信 | 农业农村部 | 地方政务服务平台类型信用等级查询新建画像姓名身份证号类型乡镇村/社区土地面积(亩)补贴汇总(元)经营收入(元)信用评分信用等级操作姓名身份证号类型乡镇村/社区土地面积(亩)补贴汇总(元)经营收入(元)信用评分信用等级操作马国强140102197609183456商户马峪乡马峪乡3.55,250150,000710A详情杨春花140102198312092345农户王答乡王答村1218,00055,000690B详情刘守义140102195511045612农户柳杜乡柳杜村57,50028,000560C详情陈大庆140102198006037890商户清徐镇东湖社区--320,000830AA详情赵梅花140102197508216789农户徐沟镇北营村2233,00095,000810AA详情王建国140102197205154589商户清徐镇西关街--185,000780A详情李秀英140102196803053467农户孟封镇南峪村8.212,30042,000650B详情张富根140102196501012345农户清徐镇东阳村15.523,25068,000720A详情1山西农信区域性普惠金融服务平台 ©2026",
+        "layout": {
+          "viewportWidth": 1888,
+          "viewportHeight": 1600,
+          "scrollWidth": 1888,
+          "scrollHeight": 1600,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89047-repair-20260605-structure-13-二层操作-新建画像-返回列表",
+          "label": "二层操作:新建画像->返回列表",
+          "finalUrl": "http://127.0.0.1:49047/credit",
+          "title": "山西农信普惠金融服务平台",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89047/probe/runtime-check-repair-20260605/may-89047-repair-20260605-structure-13-二层操作-新建画像-返回列表.json",
+          "screenshotPath": "",
+          "elementCount": 411,
+          "interactiveCount": 41,
+          "interactiveLabels": [
+            "运营概览 后台管理 信用画像 农户/商户画像 生活缴费 缴费中枢 缴费记录 本地商圈 商户管理 优惠券管理 消费分期 金融产品 产品工厂 贷款申请 活体抵押 协理员 任务管理 数据分析 县域活力指数 普惠可得性热力图 不良率预警 系统日志",
+            "运营概览",
+            "后台管理",
+            "信用画像",
+            "农户/商户画像",
+            "生活缴费",
+            "缴费中枢",
+            "缴费记录",
+            "本地商圈",
+            "商户管理",
+            "优惠券管理",
+            "消费分期",
+            "金融产品",
+            "产品工厂",
+            "贷款申请",
+            "活体抵押",
+            "协理员",
+            "任务管理",
+            "数据分析",
+            "县域活力指数",
+            "普惠可得性热力图",
+            "不良率预警",
+            "系统日志",
+            "姓名/身份证号",
+            "查询",
+            "新建画像",
+            "详情",
+            "1"
+          ]
+        }
+      },
+      {
+        "label": "操作:详情",
+        "url": "http://127.0.0.1:49047/credit/8",
+        "title": "山西农信普惠金融服务平台",
+        "headings": [],
+        "navLabels": [
+          "运营概览",
+          "dashboard",
+          "后台管理",
+          "control",
+          "信用画像",
+          "user",
+          "农户/商户画像",
+          "生活缴费",
+          "pay-circle",
+          "缴费中枢",
+          "缴费记录",
+          "本地商圈",
+          "shop",
+          "商户管理",
+          "优惠券管理",
+          "消费分期",
+          "金融产品",
+          "fund",
+          "产品工厂",
+          "贷款申请",
+          "活体抵押",
+          "协理员",
+          "team",
+          "任务管理"
+        ],
+        "buttons": [
+          "返回列表"
+        ],
+        "links": [],
+        "inputs": [],
+        "tables": [
+          {
+            "headers": [],
+            "rowCount": 6,
+            "hasEmptyText": false,
+            "textPreview": "姓名 马国强 身份证号 140102197609183456 类型 商户 信用等级 A 乡镇 马峪乡 村/社区 马峪乡 土地面积 3.5亩 确权证号 QX-LD-2023-055 补贴汇总 5,250元 经营收入 150,000元 信用评分 710分 状态 正常"
+          },
+          {
+            "headers": [
+              "类型",
+              "金额(元)",
+              "描述",
+              "日期"
+            ],
+            "rowCount": 5,
+            "hasEmptyText": false,
+            "textPreview": "类型 金额(元) 描述 日期 经营流水 60,000 经营收入 2026-01-20 补贴流水 1,750 种粮大户补贴 2025-12-01 经营流水 90,000 农产品销售收入 2025-10-15 补贴流水 1,750 农机购置补贴 2025-09-20 补贴流水 1,750 耕地地力保护补贴 2025-06-15"
+          }
+        ],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "山西农信普惠金融运营概览后台管理信用画像农户/商户画像生活缴费缴费中枢缴费记录本地商圈商户管理优惠券管理消费分期金融产品产品工厂贷款申请活体抵押协理员任务管理数据分析县域活力指数普惠可得性热力图不良率预警系统日志山西农信区域性普惠金融服务平台后台管理对接：人行征信 | 农业农村部 | 地方政务服务平台返回列表马国强 - 信用画像基本信息姓名马国强身份证号140102197609183456类型商户信用等级A乡镇马峪乡村/社区马峪乡土地面积3.5亩确权证号QX-LD-2023-055补贴汇总5,250元经营收入150,000元信用评分710分状态正常信用雷达图流水记录类型金额(元)描述日期经营流水60,000经营收入2026-01-20补贴流水1,750种粮大户补贴2025-12-01经营流水90,000农产品销售收入2025-10-15补贴流水1,750农机购置补贴2025-09-20补贴流水1,750耕地地力保护补贴2025-06-151对接数据源人民银行征信系统 ✓农业农村部数据平台 ✓地方政务服务平台 ✓山西农信区域性普惠金融服务平台 ©2026",
+        "layout": {
+          "viewportWidth": 1920,
+          "viewportHeight": 1600,
+          "scrollWidth": 1920,
+          "scrollHeight": 1600,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89047-repair-20260605-structure-14-操作-详情",
+          "label": "操作:详情",
+          "finalUrl": "http://127.0.0.1:49047/credit/8",
+          "title": "山西农信普惠金融服务平台",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89047/probe/runtime-check-repair-20260605/may-89047-repair-20260605-structure-14-操作-详情.json",
+          "screenshotPath": "",
+          "elementCount": 345,
+          "interactiveCount": 28,
+          "interactiveLabels": [
+            "运营概览 后台管理 信用画像 农户/商户画像 生活缴费 缴费中枢 缴费记录 本地商圈 商户管理 优惠券管理 消费分期 金融产品 产品工厂 贷款申请 活体抵押 协理员 任务管理 数据分析 县域活力指数 普惠可得性热力图 不良率预警 系统日志",
+            "运营概览",
+            "后台管理",
+            "信用画像",
+            "农户/商户画像",
+            "生活缴费",
+            "缴费中枢",
+            "缴费记录",
+            "本地商圈",
+            "商户管理",
+            "优惠券管理",
+            "消费分期",
+            "金融产品",
+            "产品工厂",
+            "贷款申请",
+            "活体抵押",
+            "协理员",
+            "任务管理",
+            "数据分析",
+            "县域活力指数",
+            "普惠可得性热力图",
+            "不良率预警",
+            "系统日志",
+            "返回列表",
+            "1"
+          ]
+        }
+      }
+    ],
+    "findings": [],
+    "actionHints": [],
+    "emptyPages": [],
+    "overflowPages": [],
+    "blankPages": [],
+    "apiFailurePaths": [],
+    "goalTerms": [
+      "系统日志"
+    ],
+    "clickedActionDescriptors": [
+      {
+        "nav": "后台管理",
+        "label": "查看系统日志",
+        "ordinal": 0,
+        "unsafe": false
+      },
+      {
+        "nav": "后台管理",
+        "label": "贷款审批管理",
+        "ordinal": 0,
+        "unsafe": false
+      },
+      {
+        "nav": "后台管理",
+        "label": "贷款审批管理->详情",
+        "ordinal": 0,
+        "secondary": true,
+        "unsafe": false
+      },
+      {
+        "nav": "信用画像",
+        "label": "查看系统日志",
+        "ordinal": 0,
+        "unsafe": false
+      },
+      {
+        "nav": "信用画像",
+        "label": "贷款审批管理",
+        "ordinal": 0,
+        "unsafe": false
+      },
+      {
+        "nav": "信用画像",
+        "label": "贷款审批管理->详情",
+        "ordinal": 0,
+        "secondary": true,
+        "unsafe": false
+      },
+      {
+        "nav": "农户/商户画像",
+        "label": "新建画像",
+        "ordinal": 0,
+        "unsafe": false
+      },
+      {
+        "nav": "农户/商户画像",
+        "label": "新建画像->返回列表",
+        "ordinal": 0,
+        "secondary": true,
+        "unsafe": false
+      },
+      {
+        "nav": "农户/商户画像",
+        "label": "详情",
+        "ordinal": 0,
+        "unsafe": false
+      }
+    ],
+    "secondaryActionClicks": 3,
+    "structureCaptures": [
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89047-repair-20260605-structure-01-首屏",
+        "label": "首屏",
+        "finalUrl": "http://127.0.0.1:49047/",
+        "title": "山西农信普惠金融服务平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89047/probe/runtime-check-repair-20260605/may-89047-repair-20260605-structure-01-首屏.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89047/probe/runtime-check-repair-20260605/may-89047-repair-20260605-structure-01-首屏.png",
+        "elementCount": 536,
+        "interactiveCount": 25,
+        "interactiveLabels": [
+          "运营概览 后台管理 信用画像 农户/商户画像 生活缴费 缴费中枢 缴费记录 本地商圈 商户管理 优惠券管理 消费分期 金融产品 产品工厂 贷款申请 活体抵押 协理员 任务管理 数据分析 县域活力指数 普惠可得性热力图 不良率预警 系统日志",
+          "运营概览",
+          "后台管理",
+          "信用画像",
+          "农户/商户画像",
+          "生活缴费",
+          "缴费中枢",
+          "缴费记录",
+          "本地商圈",
+          "商户管理",
+          "优惠券管理",
+          "消费分期",
+          "金融产品",
+          "产品工厂",
+          "贷款申请",
+          "活体抵押",
+          "协理员",
+          "任务管理",
+          "数据分析",
+          "县域活力指数",
+          "普惠可得性热力图",
+          "不良率预警",
+          "系统日志"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89047-repair-20260605-structure-02-导航-运营概览",
+        "label": "导航:运营概览",
+        "finalUrl": "http://127.0.0.1:49047/",
+        "title": "山西农信普惠金融服务平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89047/probe/runtime-check-repair-20260605/may-89047-repair-20260605-structure-02-导航-运营概览.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89047/probe/runtime-check-repair-20260605/may-89047-repair-20260605-structure-02-导航-运营概览.png",
+        "elementCount": 539,
+        "interactiveCount": 25,
+        "interactiveLabels": [
+          "运营概览 后台管理 信用画像 农户/商户画像 生活缴费 缴费中枢 缴费记录 本地商圈 商户管理 优惠券管理 消费分期 金融产品 产品工厂 贷款申请 活体抵押 协理员 任务管理 数据分析 县域活力指数 普惠可得性热力图 不良率预警 系统日志",
+          "运营概览",
+          "后台管理",
+          "信用画像",
+          "农户/商户画像",
+          "生活缴费",
+          "缴费中枢",
+          "缴费记录",
+          "本地商圈",
+          "商户管理",
+          "优惠券管理",
+          "消费分期",
+          "金融产品",
+          "产品工厂",
+          "贷款申请",
+          "活体抵押",
+          "协理员",
+          "任务管理",
+          "数据分析",
+          "县域活力指数",
+          "普惠可得性热力图",
+          "不良率预警",
+          "系统日志"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89047-repair-20260605-structure-03-导航-后台管理",
+        "label": "导航:后台管理",
+        "finalUrl": "http://127.0.0.1:49047/admin",
+        "title": "山西农信普惠金融服务平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89047/probe/runtime-check-repair-20260605/may-89047-repair-20260605-structure-03-导航-后台管理.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89047/probe/runtime-check-repair-20260605/may-89047-repair-20260605-structure-03-导航-后台管理.png",
+        "elementCount": 407,
+        "interactiveCount": 32,
+        "interactiveLabels": [
+          "运营概览 后台管理 信用画像 农户/商户画像 生活缴费 缴费中枢 缴费记录 本地商圈 商户管理 优惠券管理 消费分期 金融产品 产品工厂 贷款申请 活体抵押 协理员 任务管理 数据分析 县域活力指数 普惠可得性热力图 不良率预警 系统日志",
+          "运营概览",
+          "后台管理",
+          "信用画像",
+          "农户/商户画像",
+          "生活缴费",
+          "缴费中枢",
+          "缴费记录",
+          "本地商圈",
+          "商户管理",
+          "优惠券管理",
+          "消费分期",
+          "金融产品",
+          "产品工厂",
+          "贷款申请",
+          "活体抵押",
+          "协理员",
+          "任务管理",
+          "数据分析",
+          "县域活力指数",
+          "普惠可得性热力图",
+          "不良率预警",
+          "系统日志",
+          "商户入驻审核",
+          "贷款审批管理",
+          "查看系统日志",
+          "运营数据分析",
+          "进 入"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89047-repair-20260605-structure-04-操作-查看系统日志",
+        "label": "操作:查看系统日志",
+        "finalUrl": "http://127.0.0.1:49047/analytics/logs",
+        "title": "山西农信普惠金融服务平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89047/probe/runtime-check-repair-20260605/may-89047-repair-20260605-structure-04-操作-查看系统日志.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89047/probe/runtime-check-repair-20260605/may-89047-repair-20260605-structure-04-操作-查看系统日志.png",
+        "elementCount": 210,
+        "interactiveCount": 28,
+        "interactiveLabels": [
+          "运营概览 后台管理 信用画像 农户/商户画像 生活缴费 缴费中枢 缴费记录 本地商圈 商户管理 优惠券管理 消费分期 金融产品 产品工厂 贷款申请 活体抵押 协理员 任务管理 数据分析 县域活力指数 普惠可得性热力图 不良率预警 系统日志",
+          "运营概览",
+          "后台管理",
+          "信用画像",
+          "农户/商户画像",
+          "生活缴费",
+          "缴费中枢",
+          "缴费记录",
+          "本地商圈",
+          "商户管理",
+          "优惠券管理",
+          "消费分期",
+          "金融产品",
+          "产品工厂",
+          "贷款申请",
+          "活体抵押",
+          "协理员",
+          "任务管理",
+          "数据分析",
+          "县域活力指数",
+          "普惠可得性热力图",
+          "不良率预警",
+          "系统日志",
+          "1"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89047-repair-20260605-structure-05-操作-贷款审批管理",
+        "label": "操作:贷款审批管理",
+        "finalUrl": "http://127.0.0.1:49047/finance/loans",
+        "title": "山西农信普惠金融服务平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89047/probe/runtime-check-repair-20260605/may-89047-repair-20260605-structure-05-操作-贷款审批管理.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89047/probe/runtime-check-repair-20260605/may-89047-repair-20260605-structure-05-操作-贷款审批管理.png",
+        "elementCount": 325,
+        "interactiveCount": 37,
+        "interactiveLabels": [
+          "运营概览 后台管理 信用画像 农户/商户画像 生活缴费 缴费中枢 缴费记录 本地商圈 商户管理 优惠券管理 消费分期 金融产品 产品工厂 贷款申请 活体抵押 协理员 任务管理 数据分析 县域活力指数 普惠可得性热力图 不良率预警 系统日志",
+          "运营概览",
+          "后台管理",
+          "信用画像",
+          "农户/商户画像",
+          "生活缴费",
+          "缴费中枢",
+          "缴费记录",
+          "本地商圈",
+          "商户管理",
+          "优惠券管理",
+          "消费分期",
+          "金融产品",
+          "产品工厂",
+          "贷款申请",
+          "活体抵押",
+          "协理员",
+          "任务管理",
+          "数据分析",
+          "县域活力指数",
+          "普惠可得性热力图",
+          "不良率预警",
+          "系统日志",
+          "新申请",
+          "详情",
+          "批准",
+          "拒绝",
+          "1"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89047-repair-20260605-structure-06-二层操作-贷款审批管理-详情",
+        "label": "二层操作:贷款审批管理->详情",
+        "finalUrl": "http://127.0.0.1:49047/finance/loans",
+        "title": "山西农信普惠金融服务平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89047/probe/runtime-check-repair-20260605/may-89047-repair-20260605-structure-06-二层操作-贷款审批管理-详情.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89047/probe/runtime-check-repair-20260605/may-89047-repair-20260605-structure-06-二层操作-贷款审批管理-详情.png",
+        "elementCount": 402,
+        "interactiveCount": 40,
+        "interactiveLabels": [
+          "运营概览 后台管理 信用画像 农户/商户画像 生活缴费 缴费中枢 缴费记录 本地商圈 商户管理 优惠券管理 消费分期 金融产品 产品工厂 贷款申请 活体抵押 协理员 任务管理 数据分析 县域活力指数 普惠可得性热力图 不良率预警 系统日志",
+          "运营概览",
+          "后台管理",
+          "信用画像",
+          "农户/商户画像",
+          "生活缴费",
+          "缴费中枢",
+          "缴费记录",
+          "本地商圈",
+          "商户管理",
+          "优惠券管理",
+          "消费分期",
+          "金融产品",
+          "产品工厂",
+          "贷款申请",
+          "活体抵押",
+          "协理员",
+          "任务管理",
+          "数据分析",
+          "县域活力指数",
+          "普惠可得性热力图",
+          "不良率预警",
+          "系统日志",
+          "新申请",
+          "详情",
+          "批准",
+          "拒绝",
+          "1",
+          "关闭"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89047-repair-20260605-structure-07-导航-信用画像",
+        "label": "导航:信用画像",
+        "finalUrl": "http://127.0.0.1:49047/admin",
+        "title": "山西农信普惠金融服务平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89047/probe/runtime-check-repair-20260605/may-89047-repair-20260605-structure-07-导航-信用画像.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89047/probe/runtime-check-repair-20260605/may-89047-repair-20260605-structure-07-导航-信用画像.png",
+        "elementCount": 406,
+        "interactiveCount": 32,
+        "interactiveLabels": [
+          "运营概览 后台管理 信用画像 生活缴费 缴费中枢 缴费记录 本地商圈 商户管理 优惠券管理 消费分期 金融产品 产品工厂 贷款申请 活体抵押 协理员 任务管理 数据分析 县域活力指数 普惠可得性热力图 不良率预警 系统日志",
+          "运营概览",
+          "后台管理",
+          "信用画像",
+          "农户/商户画像",
+          "生活缴费",
+          "缴费中枢",
+          "缴费记录",
+          "本地商圈",
+          "商户管理",
+          "优惠券管理",
+          "消费分期",
+          "金融产品",
+          "产品工厂",
+          "贷款申请",
+          "活体抵押",
+          "协理员",
+          "任务管理",
+          "数据分析",
+          "县域活力指数",
+          "普惠可得性热力图",
+          "不良率预警",
+          "系统日志",
+          "商户入驻审核",
+          "贷款审批管理",
+          "查看系统日志",
+          "运营数据分析",
+          "进 入"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89047-repair-20260605-structure-08-操作-查看系统日志",
+        "label": "操作:查看系统日志",
+        "finalUrl": "http://127.0.0.1:49047/analytics/logs",
+        "title": "山西农信普惠金融服务平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89047/probe/runtime-check-repair-20260605/may-89047-repair-20260605-structure-08-操作-查看系统日志.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89047/probe/runtime-check-repair-20260605/may-89047-repair-20260605-structure-08-操作-查看系统日志.png",
+        "elementCount": 209,
+        "interactiveCount": 28,
+        "interactiveLabels": [
+          "运营概览 后台管理 信用画像 生活缴费 缴费中枢 缴费记录 本地商圈 商户管理 优惠券管理 消费分期 金融产品 产品工厂 贷款申请 活体抵押 协理员 任务管理 数据分析 县域活力指数 普惠可得性热力图 不良率预警 系统日志",
+          "运营概览",
+          "后台管理",
+          "信用画像",
+          "农户/商户画像",
+          "生活缴费",
+          "缴费中枢",
+          "缴费记录",
+          "本地商圈",
+          "商户管理",
+          "优惠券管理",
+          "消费分期",
+          "金融产品",
+          "产品工厂",
+          "贷款申请",
+          "活体抵押",
+          "协理员",
+          "任务管理",
+          "数据分析",
+          "县域活力指数",
+          "普惠可得性热力图",
+          "不良率预警",
+          "系统日志",
+          "1"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89047-repair-20260605-structure-09-操作-贷款审批管理",
+        "label": "操作:贷款审批管理",
+        "finalUrl": "http://127.0.0.1:49047/finance/loans",
+        "title": "山西农信普惠金融服务平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89047/probe/runtime-check-repair-20260605/may-89047-repair-20260605-structure-09-操作-贷款审批管理.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89047/probe/runtime-check-repair-20260605/may-89047-repair-20260605-structure-09-操作-贷款审批管理.png",
+        "elementCount": 325,
+        "interactiveCount": 37,
+        "interactiveLabels": [
+          "运营概览 后台管理 信用画像 农户/商户画像 生活缴费 缴费中枢 缴费记录 本地商圈 商户管理 优惠券管理 消费分期 金融产品 产品工厂 贷款申请 活体抵押 协理员 任务管理 数据分析 县域活力指数 普惠可得性热力图 不良率预警 系统日志",
+          "运营概览",
+          "后台管理",
+          "信用画像",
+          "农户/商户画像",
+          "生活缴费",
+          "缴费中枢",
+          "缴费记录",
+          "本地商圈",
+          "商户管理",
+          "优惠券管理",
+          "消费分期",
+          "金融产品",
+          "产品工厂",
+          "贷款申请",
+          "活体抵押",
+          "协理员",
+          "任务管理",
+          "数据分析",
+          "县域活力指数",
+          "普惠可得性热力图",
+          "不良率预警",
+          "系统日志",
+          "新申请",
+          "详情",
+          "批准",
+          "拒绝",
+          "1"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89047-repair-20260605-structure-10-二层操作-贷款审批管理-详情",
+        "label": "二层操作:贷款审批管理->详情",
+        "finalUrl": "http://127.0.0.1:49047/finance/loans",
+        "title": "山西农信普惠金融服务平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89047/probe/runtime-check-repair-20260605/may-89047-repair-20260605-structure-10-二层操作-贷款审批管理-详情.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89047/probe/runtime-check-repair-20260605/may-89047-repair-20260605-structure-10-二层操作-贷款审批管理-详情.png",
+        "elementCount": 402,
+        "interactiveCount": 40,
+        "interactiveLabels": [
+          "运营概览 后台管理 信用画像 农户/商户画像 生活缴费 缴费中枢 缴费记录 本地商圈 商户管理 优惠券管理 消费分期 金融产品 产品工厂 贷款申请 活体抵押 协理员 任务管理 数据分析 县域活力指数 普惠可得性热力图 不良率预警 系统日志",
+          "运营概览",
+          "后台管理",
+          "信用画像",
+          "农户/商户画像",
+          "生活缴费",
+          "缴费中枢",
+          "缴费记录",
+          "本地商圈",
+          "商户管理",
+          "优惠券管理",
+          "消费分期",
+          "金融产品",
+          "产品工厂",
+          "贷款申请",
+          "活体抵押",
+          "协理员",
+          "任务管理",
+          "数据分析",
+          "县域活力指数",
+          "普惠可得性热力图",
+          "不良率预警",
+          "系统日志",
+          "新申请",
+          "详情",
+          "批准",
+          "拒绝",
+          "1",
+          "关闭"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89047-repair-20260605-structure-11-导航-农户-商户画像",
+        "label": "导航:农户/商户画像",
+        "finalUrl": "http://127.0.0.1:49047/credit",
+        "title": "山西农信普惠金融服务平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89047/probe/runtime-check-repair-20260605/may-89047-repair-20260605-structure-11-导航-农户-商户画像.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89047/probe/runtime-check-repair-20260605/may-89047-repair-20260605-structure-11-导航-农户-商户画像.png",
+        "elementCount": 411,
+        "interactiveCount": 41,
+        "interactiveLabels": [
+          "运营概览 后台管理 信用画像 农户/商户画像 生活缴费 缴费中枢 缴费记录 本地商圈 商户管理 优惠券管理 消费分期 金融产品 产品工厂 贷款申请 活体抵押 协理员 任务管理 数据分析 县域活力指数 普惠可得性热力图 不良率预警 系统日志",
+          "运营概览",
+          "后台管理",
+          "信用画像",
+          "农户/商户画像",
+          "生活缴费",
+          "缴费中枢",
+          "缴费记录",
+          "本地商圈",
+          "商户管理",
+          "优惠券管理",
+          "消费分期",
+          "金融产品",
+          "产品工厂",
+          "贷款申请",
+          "活体抵押",
+          "协理员",
+          "任务管理",
+          "数据分析",
+          "县域活力指数",
+          "普惠可得性热力图",
+          "不良率预警",
+          "系统日志",
+          "姓名/身份证号",
+          "查询",
+          "新建画像",
+          "详情",
+          "1"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89047-repair-20260605-structure-12-操作-新建画像",
+        "label": "操作:新建画像",
+        "finalUrl": "http://127.0.0.1:49047/credit/new",
+        "title": "山西农信普惠金融服务平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89047/probe/runtime-check-repair-20260605/may-89047-repair-20260605-structure-12-操作-新建画像.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89047/probe/runtime-check-repair-20260605/may-89047-repair-20260605-structure-12-操作-新建画像.png",
+        "elementCount": 294,
+        "interactiveCount": 45,
+        "interactiveLabels": [
+          "运营概览 后台管理 信用画像 农户/商户画像 生活缴费 缴费中枢 缴费记录 本地商圈 商户管理 优惠券管理 消费分期 金融产品 产品工厂 贷款申请 活体抵押 协理员 任务管理 数据分析 县域活力指数 普惠可得性热力图 不良率预警 系统日志",
+          "运营概览",
+          "后台管理",
+          "信用画像",
+          "农户/商户画像",
+          "生活缴费",
+          "缴费中枢",
+          "缴费记录",
+          "本地商圈",
+          "商户管理",
+          "优惠券管理",
+          "消费分期",
+          "金融产品",
+          "产品工厂",
+          "贷款申请",
+          "活体抵押",
+          "协理员",
+          "任务管理",
+          "数据分析",
+          "县域活力指数",
+          "普惠可得性热力图",
+          "不良率预警",
+          "系统日志",
+          "返回列表",
+          "Increase Value",
+          "Decrease Value",
+          "提 交",
+          "取 消"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89047-repair-20260605-structure-13-二层操作-新建画像-返回列表",
+        "label": "二层操作:新建画像->返回列表",
+        "finalUrl": "http://127.0.0.1:49047/credit",
+        "title": "山西农信普惠金融服务平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89047/probe/runtime-check-repair-20260605/may-89047-repair-20260605-structure-13-二层操作-新建画像-返回列表.json",
+        "screenshotPath": "",
+        "elementCount": 411,
+        "interactiveCount": 41,
+        "interactiveLabels": [
+          "运营概览 后台管理 信用画像 农户/商户画像 生活缴费 缴费中枢 缴费记录 本地商圈 商户管理 优惠券管理 消费分期 金融产品 产品工厂 贷款申请 活体抵押 协理员 任务管理 数据分析 县域活力指数 普惠可得性热力图 不良率预警 系统日志",
+          "运营概览",
+          "后台管理",
+          "信用画像",
+          "农户/商户画像",
+          "生活缴费",
+          "缴费中枢",
+          "缴费记录",
+          "本地商圈",
+          "商户管理",
+          "优惠券管理",
+          "消费分期",
+          "金融产品",
+          "产品工厂",
+          "贷款申请",
+          "活体抵押",
+          "协理员",
+          "任务管理",
+          "数据分析",
+          "县域活力指数",
+          "普惠可得性热力图",
+          "不良率预警",
+          "系统日志",
+          "姓名/身份证号",
+          "查询",
+          "新建画像",
+          "详情",
+          "1"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89047-repair-20260605-structure-14-操作-详情",
+        "label": "操作:详情",
+        "finalUrl": "http://127.0.0.1:49047/credit/8",
+        "title": "山西农信普惠金融服务平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89047/probe/runtime-check-repair-20260605/may-89047-repair-20260605-structure-14-操作-详情.json",
+        "screenshotPath": "",
+        "elementCount": 345,
+        "interactiveCount": 28,
+        "interactiveLabels": [
+          "运营概览 后台管理 信用画像 农户/商户画像 生活缴费 缴费中枢 缴费记录 本地商圈 商户管理 优惠券管理 消费分期 金融产品 产品工厂 贷款申请 活体抵押 协理员 任务管理 数据分析 县域活力指数 普惠可得性热力图 不良率预警 系统日志",
+          "运营概览",
+          "后台管理",
+          "信用画像",
+          "农户/商户画像",
+          "生活缴费",
+          "缴费中枢",
+          "缴费记录",
+          "本地商圈",
+          "商户管理",
+          "优惠券管理",
+          "消费分期",
+          "金融产品",
+          "产品工厂",
+          "贷款申请",
+          "活体抵押",
+          "协理员",
+          "任务管理",
+          "数据分析",
+          "县域活力指数",
+          "普惠可得性热力图",
+          "不良率预警",
+          "系统日志",
+          "返回列表",
+          "1"
+        ]
+      }
+    ],
+    "representativeScreenshotUrl": "http://127.0.0.1:49047/",
+    "representativeScreenshotLabel": "首屏"
+  },
+  "websiteStructureCapture": {
+    "module": "website_structure_capture",
+    "captureCount": 14,
+    "captures": [
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89047-repair-20260605-structure-01-首屏",
+        "label": "首屏",
+        "finalUrl": "http://127.0.0.1:49047/",
+        "title": "山西农信普惠金融服务平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89047/probe/runtime-check-repair-20260605/may-89047-repair-20260605-structure-01-首屏.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89047/probe/runtime-check-repair-20260605/may-89047-repair-20260605-structure-01-首屏.png",
+        "elementCount": 536,
+        "interactiveCount": 25,
+        "interactiveLabels": [
+          "运营概览 后台管理 信用画像 农户/商户画像 生活缴费 缴费中枢 缴费记录 本地商圈 商户管理 优惠券管理 消费分期 金融产品 产品工厂 贷款申请 活体抵押 协理员 任务管理 数据分析 县域活力指数 普惠可得性热力图 不良率预警 系统日志",
+          "运营概览",
+          "后台管理",
+          "信用画像",
+          "农户/商户画像",
+          "生活缴费",
+          "缴费中枢",
+          "缴费记录",
+          "本地商圈",
+          "商户管理",
+          "优惠券管理",
+          "消费分期",
+          "金融产品",
+          "产品工厂",
+          "贷款申请",
+          "活体抵押",
+          "协理员",
+          "任务管理",
+          "数据分析",
+          "县域活力指数",
+          "普惠可得性热力图",
+          "不良率预警",
+          "系统日志"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89047-repair-20260605-structure-02-导航-运营概览",
+        "label": "导航:运营概览",
+        "finalUrl": "http://127.0.0.1:49047/",
+        "title": "山西农信普惠金融服务平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89047/probe/runtime-check-repair-20260605/may-89047-repair-20260605-structure-02-导航-运营概览.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89047/probe/runtime-check-repair-20260605/may-89047-repair-20260605-structure-02-导航-运营概览.png",
+        "elementCount": 539,
+        "interactiveCount": 25,
+        "interactiveLabels": [
+          "运营概览 后台管理 信用画像 农户/商户画像 生活缴费 缴费中枢 缴费记录 本地商圈 商户管理 优惠券管理 消费分期 金融产品 产品工厂 贷款申请 活体抵押 协理员 任务管理 数据分析 县域活力指数 普惠可得性热力图 不良率预警 系统日志",
+          "运营概览",
+          "后台管理",
+          "信用画像",
+          "农户/商户画像",
+          "生活缴费",
+          "缴费中枢",
+          "缴费记录",
+          "本地商圈",
+          "商户管理",
+          "优惠券管理",
+          "消费分期",
+          "金融产品",
+          "产品工厂",
+          "贷款申请",
+          "活体抵押",
+          "协理员",
+          "任务管理",
+          "数据分析",
+          "县域活力指数",
+          "普惠可得性热力图",
+          "不良率预警",
+          "系统日志"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89047-repair-20260605-structure-03-导航-后台管理",
+        "label": "导航:后台管理",
+        "finalUrl": "http://127.0.0.1:49047/admin",
+        "title": "山西农信普惠金融服务平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89047/probe/runtime-check-repair-20260605/may-89047-repair-20260605-structure-03-导航-后台管理.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89047/probe/runtime-check-repair-20260605/may-89047-repair-20260605-structure-03-导航-后台管理.png",
+        "elementCount": 407,
+        "interactiveCount": 32,
+        "interactiveLabels": [
+          "运营概览 后台管理 信用画像 农户/商户画像 生活缴费 缴费中枢 缴费记录 本地商圈 商户管理 优惠券管理 消费分期 金融产品 产品工厂 贷款申请 活体抵押 协理员 任务管理 数据分析 县域活力指数 普惠可得性热力图 不良率预警 系统日志",
+          "运营概览",
+          "后台管理",
+          "信用画像",
+          "农户/商户画像",
+          "生活缴费",
+          "缴费中枢",
+          "缴费记录",
+          "本地商圈",
+          "商户管理",
+          "优惠券管理",
+          "消费分期",
+          "金融产品",
+          "产品工厂",
+          "贷款申请",
+          "活体抵押",
+          "协理员",
+          "任务管理",
+          "数据分析",
+          "县域活力指数",
+          "普惠可得性热力图",
+          "不良率预警",
+          "系统日志",
+          "商户入驻审核",
+          "贷款审批管理",
+          "查看系统日志",
+          "运营数据分析",
+          "进 入"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89047-repair-20260605-structure-04-操作-查看系统日志",
+        "label": "操作:查看系统日志",
+        "finalUrl": "http://127.0.0.1:49047/analytics/logs",
+        "title": "山西农信普惠金融服务平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89047/probe/runtime-check-repair-20260605/may-89047-repair-20260605-structure-04-操作-查看系统日志.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89047/probe/runtime-check-repair-20260605/may-89047-repair-20260605-structure-04-操作-查看系统日志.png",
+        "elementCount": 210,
+        "interactiveCount": 28,
+        "interactiveLabels": [
+          "运营概览 后台管理 信用画像 农户/商户画像 生活缴费 缴费中枢 缴费记录 本地商圈 商户管理 优惠券管理 消费分期 金融产品 产品工厂 贷款申请 活体抵押 协理员 任务管理 数据分析 县域活力指数 普惠可得性热力图 不良率预警 系统日志",
+          "运营概览",
+          "后台管理",
+          "信用画像",
+          "农户/商户画像",
+          "生活缴费",
+          "缴费中枢",
+          "缴费记录",
+          "本地商圈",
+          "商户管理",
+          "优惠券管理",
+          "消费分期",
+          "金融产品",
+          "产品工厂",
+          "贷款申请",
+          "活体抵押",
+          "协理员",
+          "任务管理",
+          "数据分析",
+          "县域活力指数",
+          "普惠可得性热力图",
+          "不良率预警",
+          "系统日志",
+          "1"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89047-repair-20260605-structure-05-操作-贷款审批管理",
+        "label": "操作:贷款审批管理",
+        "finalUrl": "http://127.0.0.1:49047/finance/loans",
+        "title": "山西农信普惠金融服务平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89047/probe/runtime-check-repair-20260605/may-89047-repair-20260605-structure-05-操作-贷款审批管理.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89047/probe/runtime-check-repair-20260605/may-89047-repair-20260605-structure-05-操作-贷款审批管理.png",
+        "elementCount": 325,
+        "interactiveCount": 37,
+        "interactiveLabels": [
+          "运营概览 后台管理 信用画像 农户/商户画像 生活缴费 缴费中枢 缴费记录 本地商圈 商户管理 优惠券管理 消费分期 金融产品 产品工厂 贷款申请 活体抵押 协理员 任务管理 数据分析 县域活力指数 普惠可得性热力图 不良率预警 系统日志",
+          "运营概览",
+          "后台管理",
+          "信用画像",
+          "农户/商户画像",
+          "生活缴费",
+          "缴费中枢",
+          "缴费记录",
+          "本地商圈",
+          "商户管理",
+          "优惠券管理",
+          "消费分期",
+          "金融产品",
+          "产品工厂",
+          "贷款申请",
+          "活体抵押",
+          "协理员",
+          "任务管理",
+          "数据分析",
+          "县域活力指数",
+          "普惠可得性热力图",
+          "不良率预警",
+          "系统日志",
+          "新申请",
+          "详情",
+          "批准",
+          "拒绝",
+          "1"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89047-repair-20260605-structure-06-二层操作-贷款审批管理-详情",
+        "label": "二层操作:贷款审批管理->详情",
+        "finalUrl": "http://127.0.0.1:49047/finance/loans",
+        "title": "山西农信普惠金融服务平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89047/probe/runtime-check-repair-20260605/may-89047-repair-20260605-structure-06-二层操作-贷款审批管理-详情.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89047/probe/runtime-check-repair-20260605/may-89047-repair-20260605-structure-06-二层操作-贷款审批管理-详情.png",
+        "elementCount": 402,
+        "interactiveCount": 40,
+        "interactiveLabels": [
+          "运营概览 后台管理 信用画像 农户/商户画像 生活缴费 缴费中枢 缴费记录 本地商圈 商户管理 优惠券管理 消费分期 金融产品 产品工厂 贷款申请 活体抵押 协理员 任务管理 数据分析 县域活力指数 普惠可得性热力图 不良率预警 系统日志",
+          "运营概览",
+          "后台管理",
+          "信用画像",
+          "农户/商户画像",
+          "生活缴费",
+          "缴费中枢",
+          "缴费记录",
+          "本地商圈",
+          "商户管理",
+          "优惠券管理",
+          "消费分期",
+          "金融产品",
+          "产品工厂",
+          "贷款申请",
+          "活体抵押",
+          "协理员",
+          "任务管理",
+          "数据分析",
+          "县域活力指数",
+          "普惠可得性热力图",
+          "不良率预警",
+          "系统日志",
+          "新申请",
+          "详情",
+          "批准",
+          "拒绝",
+          "1",
+          "关闭"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89047-repair-20260605-structure-07-导航-信用画像",
+        "label": "导航:信用画像",
+        "finalUrl": "http://127.0.0.1:49047/admin",
+        "title": "山西农信普惠金融服务平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89047/probe/runtime-check-repair-20260605/may-89047-repair-20260605-structure-07-导航-信用画像.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89047/probe/runtime-check-repair-20260605/may-89047-repair-20260605-structure-07-导航-信用画像.png",
+        "elementCount": 406,
+        "interactiveCount": 32,
+        "interactiveLabels": [
+          "运营概览 后台管理 信用画像 生活缴费 缴费中枢 缴费记录 本地商圈 商户管理 优惠券管理 消费分期 金融产品 产品工厂 贷款申请 活体抵押 协理员 任务管理 数据分析 县域活力指数 普惠可得性热力图 不良率预警 系统日志",
+          "运营概览",
+          "后台管理",
+          "信用画像",
+          "农户/商户画像",
+          "生活缴费",
+          "缴费中枢",
+          "缴费记录",
+          "本地商圈",
+          "商户管理",
+          "优惠券管理",
+          "消费分期",
+          "金融产品",
+          "产品工厂",
+          "贷款申请",
+          "活体抵押",
+          "协理员",
+          "任务管理",
+          "数据分析",
+          "县域活力指数",
+          "普惠可得性热力图",
+          "不良率预警",
+          "系统日志",
+          "商户入驻审核",
+          "贷款审批管理",
+          "查看系统日志",
+          "运营数据分析",
+          "进 入"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89047-repair-20260605-structure-08-操作-查看系统日志",
+        "label": "操作:查看系统日志",
+        "finalUrl": "http://127.0.0.1:49047/analytics/logs",
+        "title": "山西农信普惠金融服务平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89047/probe/runtime-check-repair-20260605/may-89047-repair-20260605-structure-08-操作-查看系统日志.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89047/probe/runtime-check-repair-20260605/may-89047-repair-20260605-structure-08-操作-查看系统日志.png",
+        "elementCount": 209,
+        "interactiveCount": 28,
+        "interactiveLabels": [
+          "运营概览 后台管理 信用画像 生活缴费 缴费中枢 缴费记录 本地商圈 商户管理 优惠券管理 消费分期 金融产品 产品工厂 贷款申请 活体抵押 协理员 任务管理 数据分析 县域活力指数 普惠可得性热力图 不良率预警 系统日志",
+          "运营概览",
+          "后台管理",
+          "信用画像",
+          "农户/商户画像",
+          "生活缴费",
+          "缴费中枢",
+          "缴费记录",
+          "本地商圈",
+          "商户管理",
+          "优惠券管理",
+          "消费分期",
+          "金融产品",
+          "产品工厂",
+          "贷款申请",
+          "活体抵押",
+          "协理员",
+          "任务管理",
+          "数据分析",
+          "县域活力指数",
+          "普惠可得性热力图",
+          "不良率预警",
+          "系统日志",
+          "1"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89047-repair-20260605-structure-09-操作-贷款审批管理",
+        "label": "操作:贷款审批管理",
+        "finalUrl": "http://127.0.0.1:49047/finance/loans",
+        "title": "山西农信普惠金融服务平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89047/probe/runtime-check-repair-20260605/may-89047-repair-20260605-structure-09-操作-贷款审批管理.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89047/probe/runtime-check-repair-20260605/may-89047-repair-20260605-structure-09-操作-贷款审批管理.png",
+        "elementCount": 325,
+        "interactiveCount": 37,
+        "interactiveLabels": [
+          "运营概览 后台管理 信用画像 农户/商户画像 生活缴费 缴费中枢 缴费记录 本地商圈 商户管理 优惠券管理 消费分期 金融产品 产品工厂 贷款申请 活体抵押 协理员 任务管理 数据分析 县域活力指数 普惠可得性热力图 不良率预警 系统日志",
+          "运营概览",
+          "后台管理",
+          "信用画像",
+          "农户/商户画像",
+          "生活缴费",
+          "缴费中枢",
+          "缴费记录",
+          "本地商圈",
+          "商户管理",
+          "优惠券管理",
+          "消费分期",
+          "金融产品",
+          "产品工厂",
+          "贷款申请",
+          "活体抵押",
+          "协理员",
+          "任务管理",
+          "数据分析",
+          "县域活力指数",
+          "普惠可得性热力图",
+          "不良率预警",
+          "系统日志",
+          "新申请",
+          "详情",
+          "批准",
+          "拒绝",
+          "1"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89047-repair-20260605-structure-10-二层操作-贷款审批管理-详情",
+        "label": "二层操作:贷款审批管理->详情",
+        "finalUrl": "http://127.0.0.1:49047/finance/loans",
+        "title": "山西农信普惠金融服务平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89047/probe/runtime-check-repair-20260605/may-89047-repair-20260605-structure-10-二层操作-贷款审批管理-详情.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89047/probe/runtime-check-repair-20260605/may-89047-repair-20260605-structure-10-二层操作-贷款审批管理-详情.png",
+        "elementCount": 402,
+        "interactiveCount": 40,
+        "interactiveLabels": [
+          "运营概览 后台管理 信用画像 农户/商户画像 生活缴费 缴费中枢 缴费记录 本地商圈 商户管理 优惠券管理 消费分期 金融产品 产品工厂 贷款申请 活体抵押 协理员 任务管理 数据分析 县域活力指数 普惠可得性热力图 不良率预警 系统日志",
+          "运营概览",
+          "后台管理",
+          "信用画像",
+          "农户/商户画像",
+          "生活缴费",
+          "缴费中枢",
+          "缴费记录",
+          "本地商圈",
+          "商户管理",
+          "优惠券管理",
+          "消费分期",
+          "金融产品",
+          "产品工厂",
+          "贷款申请",
+          "活体抵押",
+          "协理员",
+          "任务管理",
+          "数据分析",
+          "县域活力指数",
+          "普惠可得性热力图",
+          "不良率预警",
+          "系统日志",
+          "新申请",
+          "详情",
+          "批准",
+          "拒绝",
+          "1",
+          "关闭"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89047-repair-20260605-structure-11-导航-农户-商户画像",
+        "label": "导航:农户/商户画像",
+        "finalUrl": "http://127.0.0.1:49047/credit",
+        "title": "山西农信普惠金融服务平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89047/probe/runtime-check-repair-20260605/may-89047-repair-20260605-structure-11-导航-农户-商户画像.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89047/probe/runtime-check-repair-20260605/may-89047-repair-20260605-structure-11-导航-农户-商户画像.png",
+        "elementCount": 411,
+        "interactiveCount": 41,
+        "interactiveLabels": [
+          "运营概览 后台管理 信用画像 农户/商户画像 生活缴费 缴费中枢 缴费记录 本地商圈 商户管理 优惠券管理 消费分期 金融产品 产品工厂 贷款申请 活体抵押 协理员 任务管理 数据分析 县域活力指数 普惠可得性热力图 不良率预警 系统日志",
+          "运营概览",
+          "后台管理",
+          "信用画像",
+          "农户/商户画像",
+          "生活缴费",
+          "缴费中枢",
+          "缴费记录",
+          "本地商圈",
+          "商户管理",
+          "优惠券管理",
+          "消费分期",
+          "金融产品",
+          "产品工厂",
+          "贷款申请",
+          "活体抵押",
+          "协理员",
+          "任务管理",
+          "数据分析",
+          "县域活力指数",
+          "普惠可得性热力图",
+          "不良率预警",
+          "系统日志",
+          "姓名/身份证号",
+          "查询",
+          "新建画像",
+          "详情",
+          "1"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89047-repair-20260605-structure-12-操作-新建画像",
+        "label": "操作:新建画像",
+        "finalUrl": "http://127.0.0.1:49047/credit/new",
+        "title": "山西农信普惠金融服务平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89047/probe/runtime-check-repair-20260605/may-89047-repair-20260605-structure-12-操作-新建画像.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89047/probe/runtime-check-repair-20260605/may-89047-repair-20260605-structure-12-操作-新建画像.png",
+        "elementCount": 294,
+        "interactiveCount": 45,
+        "interactiveLabels": [
+          "运营概览 后台管理 信用画像 农户/商户画像 生活缴费 缴费中枢 缴费记录 本地商圈 商户管理 优惠券管理 消费分期 金融产品 产品工厂 贷款申请 活体抵押 协理员 任务管理 数据分析 县域活力指数 普惠可得性热力图 不良率预警 系统日志",
+          "运营概览",
+          "后台管理",
+          "信用画像",
+          "农户/商户画像",
+          "生活缴费",
+          "缴费中枢",
+          "缴费记录",
+          "本地商圈",
+          "商户管理",
+          "优惠券管理",
+          "消费分期",
+          "金融产品",
+          "产品工厂",
+          "贷款申请",
+          "活体抵押",
+          "协理员",
+          "任务管理",
+          "数据分析",
+          "县域活力指数",
+          "普惠可得性热力图",
+          "不良率预警",
+          "系统日志",
+          "返回列表",
+          "Increase Value",
+          "Decrease Value",
+          "提 交",
+          "取 消"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89047-repair-20260605-structure-13-二层操作-新建画像-返回列表",
+        "label": "二层操作:新建画像->返回列表",
+        "finalUrl": "http://127.0.0.1:49047/credit",
+        "title": "山西农信普惠金融服务平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89047/probe/runtime-check-repair-20260605/may-89047-repair-20260605-structure-13-二层操作-新建画像-返回列表.json",
+        "screenshotPath": "",
+        "elementCount": 411,
+        "interactiveCount": 41,
+        "interactiveLabels": [
+          "运营概览 后台管理 信用画像 农户/商户画像 生活缴费 缴费中枢 缴费记录 本地商圈 商户管理 优惠券管理 消费分期 金融产品 产品工厂 贷款申请 活体抵押 协理员 任务管理 数据分析 县域活力指数 普惠可得性热力图 不良率预警 系统日志",
+          "运营概览",
+          "后台管理",
+          "信用画像",
+          "农户/商户画像",
+          "生活缴费",
+          "缴费中枢",
+          "缴费记录",
+          "本地商圈",
+          "商户管理",
+          "优惠券管理",
+          "消费分期",
+          "金融产品",
+          "产品工厂",
+          "贷款申请",
+          "活体抵押",
+          "协理员",
+          "任务管理",
+          "数据分析",
+          "县域活力指数",
+          "普惠可得性热力图",
+          "不良率预警",
+          "系统日志",
+          "姓名/身份证号",
+          "查询",
+          "新建画像",
+          "详情",
+          "1"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89047-repair-20260605-structure-14-操作-详情",
+        "label": "操作:详情",
+        "finalUrl": "http://127.0.0.1:49047/credit/8",
+        "title": "山西农信普惠金融服务平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89047/probe/runtime-check-repair-20260605/may-89047-repair-20260605-structure-14-操作-详情.json",
+        "screenshotPath": "",
+        "elementCount": 345,
+        "interactiveCount": 28,
+        "interactiveLabels": [
+          "运营概览 后台管理 信用画像 农户/商户画像 生活缴费 缴费中枢 缴费记录 本地商圈 商户管理 优惠券管理 消费分期 金融产品 产品工厂 贷款申请 活体抵押 协理员 任务管理 数据分析 县域活力指数 普惠可得性热力图 不良率预警 系统日志",
+          "运营概览",
+          "后台管理",
+          "信用画像",
+          "农户/商户画像",
+          "生活缴费",
+          "缴费中枢",
+          "缴费记录",
+          "本地商圈",
+          "商户管理",
+          "优惠券管理",
+          "消费分期",
+          "金融产品",
+          "产品工厂",
+          "贷款申请",
+          "活体抵押",
+          "协理员",
+          "任务管理",
+          "数据分析",
+          "县域活力指数",
+          "普惠可得性热力图",
+          "不良率预警",
+          "系统日志",
+          "返回列表",
+          "1"
+        ]
+      }
+    ]
+  },
+  "screenshotMetrics": {
+    "width": 1952,
+    "height": 1600,
+    "scrollWidth": 1920,
+    "scrollHeight": 1617
+  },
+  "initialBodyTextPreview": "山西农信普惠金融\n运营概览\n后台管理\n信用画像\n农户/商户画像\n生活缴费\n缴费中枢\n缴费记录\n本地商圈\n商户管理\n优惠券管理\n消费分期\n金融产品\n产品工厂\n贷款申请\n活体抵押\n协理员\n任务管理\n数据分析\n县域活力指数\n普惠可得性热力图\n不良率预警\n系统日志\n山西农信区域性普惠金融服务平台\n后台管理对接：人行征信 | 农业农村部 | 地方政务服务平台\n运营概览\n信用档案总数\n8人\n生活缴费总额\n1,754.50元\n活跃商户\n4家\n已批贷款总额\n330,000元\n待审批 1 笔\n农户数量\n5人\n商户数量\n3人\n补贴汇总\n99,300元\n涉农贷款不良率\n2.35%\n正常\n信用评分分布\n800+\n700-799\n600-699\n500-599\n0\n0.75\n1.5\n2.25\n3\n信用等级分布\nA级: 3人\nAA级: 2人\nB级: 2人\nC级: 1人\n缴费月度趋势\n2026-05\n0\n1\n2\n3\n4\n缴费笔数\n缴费分类占比\nsocial_security: 1580元\nelectricity: 128.9元\nwater: 45.6元\n涉农贷款产品不良率\n惠农贷\n农机购置贷\n小微商户贷\n0\n40000\n80000\n120000\n160000\n不良率(%)贷款总额(元)\n山西农信区域性普惠金融服务平台 ©2026\n40000",
+  "bodyTextPreview": "山西农信普惠金融\n运营概览\n后台管理\n信用画像\n农户/商户画像\n生活缴费\n缴费中枢\n缴费记录\n本地商圈\n商户管理\n优惠券管理\n消费分期\n金融产品\n产品工厂\n贷款申请\n活体抵押\n协理员\n任务管理\n数据分析\n县域活力指数\n普惠可得性热力图\n不良率预警\n系统日志\n山西农信区域性普惠金融服务平台\n后台管理对接：人行征信 | 农业农村部 | 地方政务服务平台\n运营概览\n信用档案总数\n8人\n生活缴费总额\n1,754.50元\n活跃商户\n4家\n已批贷款总额\n330,000元\n待审批 1 笔\n农户数量\n5人\n商户数量\n3人\n补贴汇总\n99,300元\n涉农贷款不良率\n2.35%\n正常\n信用评分分布\n800+\n700-799\n600-699\n500-599\n0\n0.75\n1.5\n2.25\n3\n信用等级分布\n缴费月度趋势\n2026-05\n0\n1\n2\n3\n4\n缴费笔数\n缴费分类占比\n涉农贷款产品不良率\n惠农贷\n农机购置贷\n小微商户贷\n0\n40000\n80000\n120000\n160000\n不良率(%)贷款总额(元)\n山西农信区域性普惠金融服务平台 ©2026\n40000",
+  "apiBase": "http://127.0.0.1:59047",
+  "businessGoalPreview": "山西农信区域性普惠金融服务平台后台管理、贷款审批、系统日志、信用画像等业务链路可用",
+  "apiResponses": [
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49047/api/dashboard/overview"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49047/api/dashboard/credit-distribution"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49047/api/dashboard/payment-trend"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49047/api/dashboard/npl-warning"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49047/api/dashboard/overview"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49047/api/dashboard/credit-distribution"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49047/api/dashboard/payment-trend"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49047/api/dashboard/npl-warning"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49047/api/admin/dashboard"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49047/api/admin/dashboard"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49047/api/dashboard/logs?page=1&pageSize=20"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49047/api/dashboard/logs?page=1&pageSize=20"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49047/api/admin/dashboard"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49047/api/admin/dashboard"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49047/api/finance/products?status=active&page=1&pageSize=100"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49047/api/credit/profiles?page=1&pageSize=100"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49047/api/finance/loans?page=1&pageSize=10"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49047/api/finance/products?status=active&page=1&pageSize=100"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49047/api/credit/profiles?page=1&pageSize=100"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49047/api/finance/loans?page=1&pageSize=10"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49047/api/admin/dashboard"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49047/api/admin/dashboard"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49047/api/dashboard/logs?page=1&pageSize=20"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49047/api/dashboard/logs?page=1&pageSize=20"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49047/api/admin/dashboard"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49047/api/admin/dashboard"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49047/api/finance/products?status=active&page=1&pageSize=100"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49047/api/credit/profiles?page=1&pageSize=100"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49047/api/finance/loans?page=1&pageSize=10"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49047/api/finance/products?status=active&page=1&pageSize=100"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49047/api/credit/profiles?page=1&pageSize=100"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49047/api/finance/loans?page=1&pageSize=10"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49047/api/admin/dashboard"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49047/api/admin/dashboard"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49047/api/credit/profiles?page=1&pageSize=10"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49047/api/credit/profiles?page=1&pageSize=10"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49047/api/credit/profiles?page=1&pageSize=10"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49047/api/credit/profiles?page=1&pageSize=10"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49047/api/credit/profiles/8"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49047/api/credit/profiles/8"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49047/api/credit/profiles?page=1&pageSize=10"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49047/api/credit/profiles?page=1&pageSize=10"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49047/api/dashboard/overview"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49047/api/dashboard/credit-distribution"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49047/api/dashboard/payment-trend"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49047/api/dashboard/npl-warning"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49047/api/dashboard/overview"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49047/api/dashboard/credit-distribution"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49047/api/dashboard/payment-trend"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49047/api/dashboard/npl-warning"
+    }
+  ],
+  "apiChecks": [
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59047/api/health",
+      "path": "/api/health",
+      "status": 200,
+      "ok": true,
+      "bodyPreview": "{\"status\":\"ok\",\"service\":\"shanxi-rural-finance\",\"timestamp\":\"2026-06-05T12:32:41.400Z\"}"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59047/api/dashboard/overview",
+      "path": "/api/dashboard/overview",
+      "status": 200,
+      "ok": true,
+      "bodyPreview": "{\"data\":{\"profileCount\":8,\"farmerCount\":5,\"merchantCount\":3,\"totalSubsidy\":99300,\"totalIncome\":943000,\"paymentCount\":4,\"paymentAmount\":1754.5,\"merchantActive\":4,\"couponUsed\":913,\"loanCount\":3,\"loanAmount\":330000,\"pendingLoan\":1}}"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59047/api/dashboard/credit-distribution",
+      "path": "/api/dashboard/credit-distribution",
+      "status": 200,
+      "ok": true,
+      "bodyPreview": "{\"data\":{\"byLevel\":[{\"credit_level\":\"A\",\"count\":3},{\"credit_level\":\"AA\",\"count\":2},{\"credit_level\":\"B\",\"count\":2},{\"credit_level\":\"C\",\"count\":1}],\"byType\":[{\"type\":\"farmer\",\"count\":5,\"avg_score\":686},{\"type\":\"merchant\",\"count\":3,\"avg_score\":773.3333333333334}],\"scoreRanges\":[{\"range\":\"800+\",\"count\":2},{\"range\":\"700-799\",\"count\":3},{\"range\":\"600-699\",\"count\":2},{\"range\":\"500-599\",\"count\":1}]}}"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59047/api/dashboard/payment-trend",
+      "path": "/api/dashboard/payment-trend",
+      "status": 200,
+      "ok": true,
+      "bodyPreview": "{\"data\":{\"monthly\":[{\"month\":\"2026-05\",\"count\":4,\"total\":1754.5}],\"byCategory\":[{\"category\":\"social_security\",\"name\":\"城乡居民社保\",\"count\":2,\"total\":1580},{\"category\":\"electricity\",\"name\":\"居民电费\",\"count\":1,\"total\":128.9},{\"category\":\"water\",\"name\":\"自来水费\",\"count\":1,\"total\":45.6}]}}"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59047/api/dashboard/npl-warning",
+      "path": "/api/dashboard/npl-warning",
+      "status": 200,
+      "ok": true,
+      "bodyPreview": "{\"data\":{\"totalLoans\":3,\"totalLoanAmount\":330000,\"nplRate\":2.35,\"warningLevel\":\"green\",\"byProduct\":[{\"name\":\"惠农贷\",\"product_type\":\"huinong\",\"loan_count\":1,\"total_amount\":80000,\"avg_amount\":80000,\"npl_rate\":2.1},{\"name\":\"农机购置贷\",\"product_type\":\"machine\",\"loan_count\":1,\"total_amount\":100000,\"avg_amount\":100000,\"npl_rate\":1.5},{\"name\":\"小微商户贷\",\"product_type\":\"merchant\",\"loan_count\":1,\"total_amount\":150000,\"avg_amount\":150000,\"npl_rate\":2.8}]}}"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59047/api/admin/dashboard",
+      "path": "/api/admin/dashboard",
+      "status": 200,
+      "ok": true,
+      "bodyPreview": "{\"data\":{\"stats\":{\"profileCount\":8,\"merchantPending\":1,\"merchantApproved\":4,\"loanPending\":1,\"loanApproved\":3,\"paymentAmount\":1754.5,\"couponUsed\":913,\"taskPending\":3},\"modules\":[{\"key\":\"credit\",\"name\":\"信用画像\",\"path\":\"/credit\"},{\"key\":\"payment\",\"name\":\"生活缴费\",\"path\":\"/payment\"},{\"key\":\"business\",\"name\":\"本地商圈\",\"path\":\"/business/merchants\"},{\"key\":\"finance\",\"name\":\"金融产品\",\"path\":\"/finance/loans\"},{\"key\":\"analytics\",\"name\":\"数据分析\",\"path\":\"/analytics/vitality\"}],\"latestLogs\":[{\"id\":4,\"module\":\"finance\",\"a"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59047/api/dashboard/logs?page=1&pageSize=20",
+      "path": "/api/dashboard/logs?page=1&pageSize=20",
+      "status": 200,
+      "ok": true,
+      "bodyPreview": "{\"data\":[{\"id\":4,\"module\":\"finance\",\"action\":\"approve_loan\",\"operator\":\"信贷员李某\",\"detail\":\"批准张富根惠农贷8万元\",\"created_at\":\"2026-06-05 14:40:43\"},{\"id\":3,\"module\":\"business\",\"action\":\"audit_merchant\",\"operator\":\"admin\",\"detail\":\"审核通过清徐农资超市入驻\",\"created_at\":\"2026-06-05 14:40:43\"},{\"id\":2,\"module\":\"payment\",\"action\":\"pay\",\"operator\":\"张富根\",\"detail\":\"缴纳自来水费45.6元\",\"created_at\":\"2026-06-05 14:40:43\"},{\"id\":1,\"module\":\"credit\",\"action\":\"create_profile\",\"operator\":\"system\",\"detail\":\"创建张富根信用画像\",\"created_at\":\"2026"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59047/api/finance/products?status=active&page=1&pageSize=100",
+      "path": "/api/finance/products?status=active&page=1&pageSize=100",
+      "status": 200,
+      "ok": true,
+      "bodyPreview": "{\"data\":[{\"id\":4,\"code\":\"XW-001\",\"name\":\"小微商户贷\",\"product_type\":\"merchant\",\"max_amount\":300000,\"annual_rate\":5.2,\"max_periods\":24,\"risk_rules\":\"{\\\"min_credit_score\\\":620,\\\"business_license_required\\\":true,\\\"min_business_income\\\":50000}\",\"status\":\"active\",\"created_at\":\"2026-06-05 14:40:43\"},{\"id\":3,\"code\":\"HT-001\",\"name\":\"活体抵押贷\",\"product_type\":\"livestock\",\"max_amount\":1000000,\"annual_rate\":4.75,\"max_periods\":60,\"risk_rules\":\"{\\\"min_credit_score\\\":700,\\\"livestock_inspection_required\\\":true,\\\"ear_ta"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59047/api/credit/profiles?page=1&pageSize=100",
+      "path": "/api/credit/profiles?page=1&pageSize=100",
+      "status": 200,
+      "ok": true,
+      "bodyPreview": "{\"data\":[{\"id\":8,\"name\":\"马国强\",\"id_card\":\"140102197609183456\",\"type\":\"merchant\",\"village\":\"马峪乡\",\"town\":\"马峪乡\",\"county\":\"清徐县\",\"land_area\":3.5,\"land_cert_no\":\"QX-LD-2023-055\",\"subsidy_total\":5250,\"business_income\":150000,\"credit_score\":710,\"credit_level\":\"A\",\"status\":\"active\",\"created_at\":\"2026-06-05 14:40:43\",\"updated_at\":\"2026-06-05 14:40:43\"},{\"id\":7,\"name\":\"杨春花\",\"id_card\":\"140102198312092345\",\"type\":\"farmer\",\"village\":\"王答村\",\"town\":\"王答乡\",\"county\":\"清徐县\",\"land_area\":12,\"land_cert_no\":\"QX-LD-2023-04"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59047/api/finance/loans?page=1&pageSize=10",
+      "path": "/api/finance/loans?page=1&pageSize=10",
+      "status": 200,
+      "ok": true,
+      "bodyPreview": "{\"data\":[{\"id\":5,\"product_id\":1,\"user_id_card\":\"140102195511045612\",\"user_name\":\"刘守义\",\"apply_amount\":30000,\"apply_periods\":12,\"collateral_type\":\"land\",\"collateral_desc\":\"5亩耕地经营权\",\"status\":\"rejected\",\"approved_amount\":0,\"review_remark\":\"信用评分低于阈值，存在逾期记录\",\"created_at\":\"2026-06-05 14:40:43\",\"updated_at\":\"2026-06-05 14:40:43\",\"product_name\":\"惠农贷\",\"product_code\":\"HN-001\"},{\"id\":4,\"product_id\":4,\"user_id_card\":\"140102197205154589\",\"user_name\":\"王建国\",\"apply_amount\":150000,\"apply_periods\":12,\"collateral_t"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59047/api/credit/profiles?page=1&pageSize=10",
+      "path": "/api/credit/profiles?page=1&pageSize=10",
+      "status": 200,
+      "ok": true,
+      "bodyPreview": "{\"data\":[{\"id\":8,\"name\":\"马国强\",\"id_card\":\"140102197609183456\",\"type\":\"merchant\",\"village\":\"马峪乡\",\"town\":\"马峪乡\",\"county\":\"清徐县\",\"land_area\":3.5,\"land_cert_no\":\"QX-LD-2023-055\",\"subsidy_total\":5250,\"business_income\":150000,\"credit_score\":710,\"credit_level\":\"A\",\"status\":\"active\",\"created_at\":\"2026-06-05 14:40:43\",\"updated_at\":\"2026-06-05 14:40:43\"},{\"id\":7,\"name\":\"杨春花\",\"id_card\":\"140102198312092345\",\"type\":\"farmer\",\"village\":\"王答村\",\"town\":\"王答乡\",\"county\":\"清徐县\",\"land_area\":12,\"land_cert_no\":\"QX-LD-2023-04"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59047/api/credit/profiles/8",
+      "path": "/api/credit/profiles/8",
+      "status": 200,
+      "ok": true,
+      "bodyPreview": "{\"data\":{\"id\":8,\"name\":\"马国强\",\"id_card\":\"140102197609183456\",\"type\":\"merchant\",\"village\":\"马峪乡\",\"town\":\"马峪乡\",\"county\":\"清徐县\",\"land_area\":3.5,\"land_cert_no\":\"QX-LD-2023-055\",\"subsidy_total\":5250,\"business_income\":150000,\"credit_score\":710,\"credit_level\":\"A\",\"status\":\"active\",\"created_at\":\"2026-06-05 14:40:43\",\"updated_at\":\"2026-06-05 14:40:43\",\"flows\":[{\"id\":40,\"profile_id\":8,\"flow_type\":\"income\",\"amount\":60000,\"description\":\"经营收入\",\"flow_date\":\"2026-01-20\",\"created_at\":\"2026-06-05 14:40:43\"},{\"id\":3"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59047/api/admin/stats",
+      "path": "/api/admin/stats",
+      "status": 200,
+      "ok": true,
+      "bodyPreview": "{\"data\":{\"profileCount\":8,\"merchantPending\":1,\"merchantApproved\":4,\"loanPending\":1,\"loanApproved\":3,\"paymentAmount\":1754.5,\"couponUsed\":913,\"taskPending\":3}}"
+    }
+  ],
+  "dialogs": [],
+  "consoleMessages": [
+    {
+      "type": "debug",
+      "text": "[vite] connecting...",
+      "location": {
+        "url": "http://127.0.0.1:49047/@vite/client",
+        "lineNumber": 788,
+        "columnNumber": 8
+      }
+    },
+    {
+      "type": "debug",
+      "text": "[vite] connected.",
+      "location": {
+        "url": "http://127.0.0.1:49047/@vite/client",
+        "lineNumber": 911,
+        "columnNumber": 14
+      }
+    },
+    {
+      "type": "info",
+      "text": "%cDownload the React DevTools for a better development experience: https://reactjs.org/link/react-devtools font-weight:bold",
+      "location": {
+        "url": "http://127.0.0.1:49047/node_modules/.vite/deps/chunk-NXESFFTV.js?v=2e3b6c8f",
+        "lineNumber": 21608,
+        "columnNumber": 24
+      }
+    },
+    {
+      "type": "warning",
+      "text": "⚠️ React Router Future Flag Warning: React Router will begin wrapping state updates in `React.startTransition` in v7. You can use the `v7_startTransition` future flag to opt-in early. For more information, see https://reactrouter.com/v6/upgrading/future#v7_starttransition.",
+      "location": {
+        "url": "http://127.0.0.1:49047/node_modules/.vite/deps/react-router-dom.js?v=2e3b6c8f",
+        "lineNumber": 4426,
+        "columnNumber": 12
+      }
+    },
+    {
+      "type": "warning",
+      "text": "⚠️ React Router Future Flag Warning: Relative route resolution within Splat routes is changing in v7. You can use the `v7_relativeSplatPath` future flag to opt-in early. For more information, see https://reactrouter.com/v6/upgrading/future#v7_relativesplatpath.",
+      "location": {
+        "url": "http://127.0.0.1:49047/node_modules/.vite/deps/react-router-dom.js?v=2e3b6c8f",
+        "lineNumber": 4426,
+        "columnNumber": 12
+      }
+    },
+    {
+      "type": "debug",
+      "text": "[vite] connecting...",
+      "location": {
+        "url": "http://127.0.0.1:49047/@vite/client",
+        "lineNumber": 788,
+        "columnNumber": 8
+      }
+    },
+    {
+      "type": "debug",
+      "text": "[vite] connected.",
+      "location": {
+        "url": "http://127.0.0.1:49047/@vite/client",
+        "lineNumber": 911,
+        "columnNumber": 14
+      }
+    },
+    {
+      "type": "info",
+      "text": "%cDownload the React DevTools for a better development experience: https://reactjs.org/link/react-devtools font-weight:bold",
+      "location": {
+        "url": "http://127.0.0.1:49047/node_modules/.vite/deps/chunk-NXESFFTV.js?v=2e3b6c8f",
+        "lineNumber": 21608,
+        "columnNumber": 24
+      }
+    },
+    {
+      "type": "warning",
+      "text": "⚠️ React Router Future Flag Warning: React Router will begin wrapping state updates in `React.startTransition` in v7. You can use the `v7_startTransition` future flag to opt-in early. For more information, see https://reactrouter.com/v6/upgrading/future#v7_starttransition.",
+      "location": {
+        "url": "http://127.0.0.1:49047/node_modules/.vite/deps/react-router-dom.js?v=2e3b6c8f",
+        "lineNumber": 4426,
+        "columnNumber": 12
+      }
+    },
+    {
+      "type": "warning",
+      "text": "⚠️ React Router Future Flag Warning: Relative route resolution within Splat routes is changing in v7. You can use the `v7_relativeSplatPath` future flag to opt-in early. For more information, see https://reactrouter.com/v6/upgrading/future#v7_relativesplatpath.",
+      "location": {
+        "url": "http://127.0.0.1:49047/node_modules/.vite/deps/react-router-dom.js?v=2e3b6c8f",
+        "lineNumber": 4426,
+        "columnNumber": 12
+      }
+    },
+    {
+      "type": "debug",
+      "text": "[vite] connecting...",
+      "location": {
+        "url": "http://127.0.0.1:49047/@vite/client",
+        "lineNumber": 788,
+        "columnNumber": 8
+      }
+    },
+    {
+      "type": "info",
+      "text": "%cDownload the React DevTools for a better development experience: https://reactjs.org/link/react-devtools font-weight:bold",
+      "location": {
+        "url": "http://127.0.0.1:49047/node_modules/.vite/deps/chunk-NXESFFTV.js?v=2e3b6c8f",
+        "lineNumber": 21608,
+        "columnNumber": 24
+      }
+    },
+    {
+      "type": "warning",
+      "text": "⚠️ React Router Future Flag Warning: React Router will begin wrapping state updates in `React.startTransition` in v7. You can use the `v7_startTransition` future flag to opt-in early. For more information, see https://reactrouter.com/v6/upgrading/future#v7_starttransition.",
+      "location": {
+        "url": "http://127.0.0.1:49047/node_modules/.vite/deps/react-router-dom.js?v=2e3b6c8f",
+        "lineNumber": 4426,
+        "columnNumber": 12
+      }
+    },
+    {
+      "type": "warning",
+      "text": "⚠️ React Router Future Flag Warning: Relative route resolution within Splat routes is changing in v7. You can use the `v7_relativeSplatPath` future flag to opt-in early. For more information, see https://reactrouter.com/v6/upgrading/future#v7_relativesplatpath.",
+      "location": {
+        "url": "http://127.0.0.1:49047/node_modules/.vite/deps/react-router-dom.js?v=2e3b6c8f",
+        "lineNumber": 4426,
+        "columnNumber": 12
+      }
+    },
+    {
+      "type": "debug",
+      "text": "[vite] connected.",
+      "location": {
+        "url": "http://127.0.0.1:49047/@vite/client",
+        "lineNumber": 911,
+        "columnNumber": 14
+      }
+    },
+    {
+      "type": "debug",
+      "text": "[vite] connecting...",
+      "location": {
+        "url": "http://127.0.0.1:49047/@vite/client",
+        "lineNumber": 788,
+        "columnNumber": 8
+      }
+    },
+    {
+      "type": "info",
+      "text": "%cDownload the React DevTools for a better development experience: https://reactjs.org/link/react-devtools font-weight:bold",
+      "location": {
+        "url": "http://127.0.0.1:49047/node_modules/.vite/deps/chunk-NXESFFTV.js?v=2e3b6c8f",
+        "lineNumber": 21608,
+        "columnNumber": 24
+      }
+    },
+    {
+      "type": "warning",
+      "text": "⚠️ React Router Future Flag Warning: React Router will begin wrapping state updates in `React.startTransition` in v7. You can use the `v7_startTransition` future flag to opt-in early. For more information, see https://reactrouter.com/v6/upgrading/future#v7_starttransition.",
+      "location": {
+        "url": "http://127.0.0.1:49047/node_modules/.vite/deps/react-router-dom.js?v=2e3b6c8f",
+        "lineNumber": 4426,
+        "columnNumber": 12
+      }
+    },
+    {
+      "type": "warning",
+      "text": "⚠️ React Router Future Flag Warning: Relative route resolution within Splat routes is changing in v7. You can use the `v7_relativeSplatPath` future flag to opt-in early. For more information, see https://reactrouter.com/v6/upgrading/future#v7_relativesplatpath.",
+      "location": {
+        "url": "http://127.0.0.1:49047/node_modules/.vite/deps/react-router-dom.js?v=2e3b6c8f",
+        "lineNumber": 4426,
+        "columnNumber": 12
+      }
+    },
+    {
+      "type": "debug",
+      "text": "[vite] connected.",
+      "location": {
+        "url": "http://127.0.0.1:49047/@vite/client",
+        "lineNumber": 911,
+        "columnNumber": 14
+      }
+    },
+    {
+      "type": "debug",
+      "text": "[vite] connecting...",
+      "location": {
+        "url": "http://127.0.0.1:49047/@vite/client",
+        "lineNumber": 788,
+        "columnNumber": 8
+      }
+    },
+    {
+      "type": "debug",
+      "text": "[vite] connected.",
+      "location": {
+        "url": "http://127.0.0.1:49047/@vite/client",
+        "lineNumber": 911,
+        "columnNumber": 14
+      }
+    },
+    {
+      "type": "info",
+      "text": "%cDownload the React DevTools for a better development experience: https://reactjs.org/link/react-devtools font-weight:bold",
+      "location": {
+        "url": "http://127.0.0.1:49047/node_modules/.vite/deps/chunk-NXESFFTV.js?v=2e3b6c8f",
+        "lineNumber": 21608,
+        "columnNumber": 24
+      }
+    },
+    {
+      "type": "warning",
+      "text": "⚠️ React Router Future Flag Warning: React Router will begin wrapping state updates in `React.startTransition` in v7. You can use the `v7_startTransition` future flag to opt-in early. For more information, see https://reactrouter.com/v6/upgrading/future#v7_starttransition.",
+      "location": {
+        "url": "http://127.0.0.1:49047/node_modules/.vite/deps/react-router-dom.js?v=2e3b6c8f",
+        "lineNumber": 4426,
+        "columnNumber": 12
+      }
+    },
+    {
+      "type": "warning",
+      "text": "⚠️ React Router Future Flag Warning: Relative route resolution within Splat routes is changing in v7. You can use the `v7_relativeSplatPath` future flag to opt-in early. For more information, see https://reactrouter.com/v6/upgrading/future#v7_relativesplatpath.",
+      "location": {
+        "url": "http://127.0.0.1:49047/node_modules/.vite/deps/react-router-dom.js?v=2e3b6c8f",
+        "lineNumber": 4426,
+        "columnNumber": 12
+      }
+    },
+    {
+      "type": "debug",
+      "text": "[vite] connecting...",
+      "location": {
+        "url": "http://127.0.0.1:49047/@vite/client",
+        "lineNumber": 788,
+        "columnNumber": 8
+      }
+    },
+    {
+      "type": "info",
+      "text": "%cDownload the React DevTools for a better development experience: https://reactjs.org/link/react-devtools font-weight:bold",
+      "location": {
+        "url": "http://127.0.0.1:49047/node_modules/.vite/deps/chunk-NXESFFTV.js?v=2e3b6c8f",
+        "lineNumber": 21608,
+        "columnNumber": 24
+      }
+    },
+    {
+      "type": "warning",
+      "text": "⚠️ React Router Future Flag Warning: React Router will begin wrapping state updates in `React.startTransition` in v7. You can use the `v7_startTransition` future flag to opt-in early. For more information, see https://reactrouter.com/v6/upgrading/future#v7_starttransition.",
+      "location": {
+        "url": "http://127.0.0.1:49047/node_modules/.vite/deps/react-router-dom.js?v=2e3b6c8f",
+        "lineNumber": 4426,
+        "columnNumber": 12
+      }
+    },
+    {
+      "type": "warning",
+      "text": "⚠️ React Router Future Flag Warning: Relative route resolution within Splat routes is changing in v7. You can use the `v7_relativeSplatPath` future flag to opt-in early. For more information, see https://reactrouter.com/v6/upgrading/future#v7_relativesplatpath.",
+      "location": {
+        "url": "http://127.0.0.1:49047/node_modules/.vite/deps/react-router-dom.js?v=2e3b6c8f",
+        "lineNumber": 4426,
+        "columnNumber": 12
+      }
+    },
+    {
+      "type": "debug",
+      "text": "[vite] connected.",
+      "location": {
+        "url": "http://127.0.0.1:49047/@vite/client",
+        "lineNumber": 911,
+        "columnNumber": 14
+      }
+    },
+    {
+      "type": "debug",
+      "text": "[vite] connecting...",
+      "location": {
+        "url": "http://127.0.0.1:49047/@vite/client",
+        "lineNumber": 788,
+        "columnNumber": 8
+      }
+    },
+    {
+      "type": "debug",
+      "text": "[vite] connected.",
+      "location": {
+        "url": "http://127.0.0.1:49047/@vite/client",
+        "lineNumber": 911,
+        "columnNumber": 14
+      }
+    },
+    {
+      "type": "info",
+      "text": "%cDownload the React DevTools for a better development experience: https://reactjs.org/link/react-devtools font-weight:bold",
+      "location": {
+        "url": "http://127.0.0.1:49047/node_modules/.vite/deps/chunk-NXESFFTV.js?v=2e3b6c8f",
+        "lineNumber": 21608,
+        "columnNumber": 24
+      }
+    },
+    {
+      "type": "warning",
+      "text": "⚠️ React Router Future Flag Warning: React Router will begin wrapping state updates in `React.startTransition` in v7. You can use the `v7_startTransition` future flag to opt-in early. For more information, see https://reactrouter.com/v6/upgrading/future#v7_starttransition.",
+      "location": {
+        "url": "http://127.0.0.1:49047/node_modules/.vite/deps/react-router-dom.js?v=2e3b6c8f",
+        "lineNumber": 4426,
+        "columnNumber": 12
+      }
+    },
+    {
+      "type": "warning",
+      "text": "⚠️ React Router Future Flag Warning: Relative route resolution within Splat routes is changing in v7. You can use the `v7_relativeSplatPath` future flag to opt-in early. For more information, see https://reactrouter.com/v6/upgrading/future#v7_relativesplatpath.",
+      "location": {
+        "url": "http://127.0.0.1:49047/node_modules/.vite/deps/react-router-dom.js?v=2e3b6c8f",
+        "lineNumber": 4426,
+        "columnNumber": 12
+      }
+    }
+  ],
+  "requestFailures": [],
+  "responseErrors": []
+}

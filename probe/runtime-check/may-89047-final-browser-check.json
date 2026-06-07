@@ -1,0 +1,30 @@
+{
+  "order": "may-89047",
+  "checkedAt": "2026-06-05T12:11:31.763Z",
+  "frontendUrl": "http://127.0.0.1:49047/",
+  "backendUrl": "http://127.0.0.1:59047",
+  "checks": [
+    {
+      "name": "frontend-load",
+      "ok": true,
+      "status": 200
+    },
+    {
+      "name": "admin-shell-visible",
+      "ok": true
+    },
+    {
+      "name": "loan-table-nonempty",
+      "ok": true,
+      "rowCount": 6
+    },
+    {
+      "name": "loan-detail-opens",
+      "ok": true
+    }
+  ],
+  "consoleErrors": [],
+  "pageErrors": [],
+  "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89047/probe/runtime-check/may-89047-final-browser-check.png",
+  "ok": true
+}

@@ -1,0 +1,136 @@
+{
+  "ok": true,
+  "generatedAt": "2026-06-05T12:52:08.062Z",
+  "order": "may-89047",
+  "frontendUrl": "http://127.0.0.1:49047/",
+  "backendUrl": "http://127.0.0.1:59047",
+  "results": [
+    {
+      "name": "admin",
+      "url": "http://127.0.0.1:49047/admin",
+      "ok": true,
+      "missing": [],
+      "forbidden": [],
+      "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89047/probe/runtime-check-codex-live-20260605/may-89047-directed-admin.png",
+      "preview": "山西农信普惠金融 运营概览 后台管理 信用画像 农户/商户画像 生活缴费 缴费中枢 缴费记录 本地商圈 商户管理 优惠券管理 消费分期 金融产品 产品工厂 贷款申请 活体抵押 协理员 任务管理 数据分析 县域活力指数 普惠可得性热力图 不良率预警 系统日志 山西农信区域性普惠金融服务平台 后台管理对接：人行征信 | 农业农村部 | 地方政务服务平台 后台管理工作台 待审商户 1家 待批贷款 1笔 已准入商户 4家 待办协理任务 3项 后台快捷操作 商户入驻审核 贷款审批管理 查看系统日志 运营数据分析 系统运行状态 检查项 状态 组件 范围 后端 API 运行中 Express / SQLite 127.0.0.1 业务数据库 已连接 SQLite WAL 本项目 data/app.sqlite 审计日志 可查询 system_logs 全模块操作留痕 后台权限 已启用 管理员角色 审批、配置、审计 管理模块总览 信用档案 8 份，已批贷款 3 笔，优惠券核销 913 次 后台模块 访问路径 管理职责 操作 后台模块 访问路径 管理职责 操作 信用画像 /credit 信用档案、评分画"
+    },
+    {
+      "name": "payment-hub",
+      "url": "http://127.0.0.1:49047/payment",
+      "ok": true,
+      "missing": [],
+      "forbidden": [],
+      "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89047/probe/runtime-check-codex-live-20260605/may-89047-directed-payment-hub.png",
+      "preview": "山西农信普惠金融 运营概览 后台管理 信用画像 农户/商户画像 生活缴费 缴费中枢 缴费记录 本地商圈 商户管理 优惠券管理 消费分期 金融产品 产品工厂 贷款申请 活体抵押 协理员 任务管理 数据分析 县域活力指数 普惠可得性热力图 不良率预警 系统日志 山西农信区域性普惠金融服务平台 后台管理对接：人行征信 | 农业农村部 | 地方政务服务平台 生活缴费中枢 缴费记录 累计缴费笔数 4笔 累计缴费金额 1,754.50元 可缴项目 8项 选择缴费项目 💧 自来水费 SX-WATER-001 ⚡ 居民电费 SX-ELEC-001 🔥 天然气费 SX-GAS-001 🌡️ 供暖费 SX-HEAT-001 🎓 学费 SX-EDU-001 🏅 党费 SX-PARTY-001 🛡️ 城乡居民社保 SX-SS-001 🛡️ 新农合医保 SX-NRC-001 缴费办理 缴费项目 缴费类型 正常缴费 缴费户号 身份证号 收款单位 收款单位代码 应缴金额(元) 实缴金额(元) 代扣状态 未签约代扣 缴费备注 立即缴费 人民银行支付通道 ✓地方政务服务平台 ✓实时到账 各类缴费统计 电费"
+    },
+    {
+      "name": "payment-orders",
+      "url": "http://127.0.0.1:49047/payment/orders",
+      "ok": true,
+      "missing": [],
+      "forbidden": [],
+      "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89047/probe/runtime-check-codex-live-20260605/may-89047-directed-payment-orders.png",
+      "preview": "山西农信普惠金融 运营概览 后台管理 信用画像 农户/商户画像 生活缴费 缴费中枢 缴费记录 本地商圈 商户管理 优惠券管理 消费分期 金融产品 产品工厂 贷款申请 活体抵押 协理员 任务管理 数据分析 县域活力指数 普惠可得性热力图 不良率预警 系统日志 山西农信区域性普惠金融服务平台 后台管理对接：人行征信 | 农业农村部 | 地方政务服务平台 返回缴费 缴费记录 状态 订单号 缴费户号 身份证号 缴费类型 项目名称 缴费方式 收款单位 应缴金额 实缴金额 代扣状态 状态 支付时间 备注 订单号 缴费户号 身份证号 缴费类型 项目名称 缴费方式 收款单位 应缴金额 实缴金额 代扣状态 状态 支付时间 备注 PAY-2026-00005 140102198312092345 社保 新农合医保 正常缴费 - 380.00 未签约 已支付 2026-05-20 08:15:00 PAY-2026-00004 140102197205154589 学费 学费 正常缴费 - 4500.00 未签约 待支付 PAY-2026-00003 140102197508216789 社保 城乡居民社保"
+    },
+    {
+      "name": "business-merchants",
+      "url": "http://127.0.0.1:49047/business/merchants",
+      "ok": true,
+      "missing": [],
+      "forbidden": [],
+      "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89047/probe/runtime-check-codex-live-20260605/may-89047-directed-business-merchants.png",
+      "preview": "山西农信普惠金融 运营概览 后台管理 信用画像 农户/商户画像 生活缴费 缴费中枢 缴费记录 本地商圈 商户管理 优惠券管理 消费分期 金融产品 产品工厂 贷款申请 活体抵押 协理员 任务管理 数据分析 县域活力指数 普惠可得性热力图 不良率预警 系统日志 山西农信区域性普惠金融服务平台 后台管理对接：人行征信 | 农业农村部 | 地方政务服务平台 商户入驻管理 状态 查询 新增商户 商户名称 联系人 电话 地址 行业分类 营业执照 状态 审核备注 操作 商户名称 联系人 电话 地址 行业分类 营业执照 状态 审核备注 操作 丰收农贸商城 马总 13534567894 马峪乡商贸街15号 综合 SX-ML-2023-005 已通过 - 绿源果蔬合作社 杨社长 13634567893 王答乡果园路1号 果蔬 SX-ML-2023-004 待审核 - 通过 拒绝 金穗农机制销 刘经理 13734567892 徐沟镇工业路5号 农机 SX-ML-2023-003 已通过 - 老陈醋坊 陈掌柜 13834567891 清徐镇醋都街28号 食品 SX-ML-2023-002 已通过 - 清徐农资"
+    },
+    {
+      "name": "business-coupons",
+      "url": "http://127.0.0.1:49047/business/coupons",
+      "ok": true,
+      "missing": [],
+      "forbidden": [],
+      "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89047/probe/runtime-check-codex-live-20260605/may-89047-directed-business-coupons.png",
+      "preview": "山西农信普惠金融 运营概览 后台管理 信用画像 农户/商户画像 生活缴费 缴费中枢 缴费记录 本地商圈 商户管理 优惠券管理 消费分期 金融产品 产品工厂 贷款申请 活体抵押 协理员 任务管理 数据分析 县域活力指数 普惠可得性热力图 不良率预警 系统日志 山西农信区域性普惠金融服务平台 后台管理对接：人行征信 | 农业农村部 | 地方政务服务平台 优惠券管理 商户 状态 创建优惠券 优惠券 商户 优惠类型 优惠值 满额条件 发行量 已核销 有效期 状态 操作 优惠券 商户 优惠类型 优惠值 满额条件 发行量 已核销 有效期 状态 操作 新店开业满100减15 丰收农贸商城 立减 -15元 满100元 300 89 (30%) 2026-09-30 有效 核销 农机分期免息 金穗农机制销 折扣 0% 满10000元 100 23 (23%) 2027-06-30 有效 核销 陈醋9折优惠 老陈醋坊 折扣 10% 满50元 1000 567 (57%) 2026-12-31 有效 核销 农资满200减30 清徐农资超市 立减 -30元 满200元 500 234 (47%) 2026-1"
+    }
+  ],
+  "apiRequests": [
+    {
+      "url": "http://127.0.0.1:49047/api/admin/dashboard",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "url": "http://127.0.0.1:49047/api/admin/dashboard",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "url": "http://127.0.0.1:49047/api/payment/items",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "url": "http://127.0.0.1:49047/api/payment/stats",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "url": "http://127.0.0.1:49047/api/payment/items",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "url": "http://127.0.0.1:49047/api/payment/stats",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "url": "http://127.0.0.1:49047/api/payment/orders?page=1&pageSize=10",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "url": "http://127.0.0.1:49047/api/payment/orders?page=1&pageSize=10",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "url": "http://127.0.0.1:49047/api/business/merchants?page=1&pageSize=10",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "url": "http://127.0.0.1:49047/api/business/merchants?page=1&pageSize=10",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "url": "http://127.0.0.1:49047/api/business/coupons?page=1&pageSize=100",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "url": "http://127.0.0.1:49047/api/business/merchants?status=approved&page=1&pageSize=100",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "url": "http://127.0.0.1:49047/api/business/coupons?page=1&pageSize=10",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "url": "http://127.0.0.1:49047/api/business/coupons?page=1&pageSize=100",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "url": "http://127.0.0.1:49047/api/business/merchants?status=approved&page=1&pageSize=100",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "url": "http://127.0.0.1:49047/api/business/coupons?page=1&pageSize=10",
+      "status": 200,
+      "ok": true
+    }
+  ]
+}

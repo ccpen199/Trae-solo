@@ -1,0 +1,63 @@
+{
+  "order": "may-89047",
+  "checkedAt": "2026-06-05T12:17:06.825Z",
+  "frontendUrl": "http://127.0.0.1:49047/admin",
+  "backendUrl": "http://127.0.0.1:59047",
+  "ok": true,
+  "checks": [
+    {
+      "text": "后台管理工作台",
+      "ok": true
+    },
+    {
+      "text": "后台快捷操作",
+      "ok": true
+    },
+    {
+      "text": "系统运行状态",
+      "ok": true
+    },
+    {
+      "text": "管理模块总览",
+      "ok": true
+    },
+    {
+      "text": "后台审计日志",
+      "ok": true
+    },
+    {
+      "text": "商户入驻审核",
+      "ok": true
+    },
+    {
+      "text": "贷款审批管理",
+      "ok": true
+    }
+  ],
+  "tableRows": 13,
+  "apiResponses": [
+    {
+      "url": "http://127.0.0.1:49047/api/admin/dashboard",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "url": "http://127.0.0.1:49047/api/admin/dashboard",
+      "status": 200,
+      "ok": true
+    }
+  ],
+  "consoleErrors": [
+    {
+      "type": "warning",
+      "text": "⚠️ React Router Future Flag Warning: React Router will begin wrapping state updates in `React.startTransition` in v7. You can use the `v7_startTransition` future flag to opt-in early. For more information, see https://reactrouter.com/v6/upgrading/future#v7_starttransition."
+    },
+    {
+      "type": "warning",
+      "text": "⚠️ React Router Future Flag Warning: Relative route resolution within Splat routes is changing in v7. You can use the `v7_relativeSplatPath` future flag to opt-in early. For more information, see https://reactrouter.com/v6/upgrading/future#v7_relativesplatpath."
+    }
+  ],
+  "pageErrors": [],
+  "bodyPreview": "山西农信普惠金融 运营概览 后台管理 信用画像 农户/商户画像 生活缴费 缴费中枢 缴费记录 本地商圈 商户管理 优惠券管理 消费分期 金融产品 产品工厂 贷款申请 活体抵押 协理员 任务管理 数据分析 县域活力指数 普惠可得性热力图 不良率预警 系统日志 山西农信区域性普惠金融服务平台 后台管理对接：人行征信 | 农业农村部 | 地方政务服务平台 后台管理工作台 待审商户 1家 待批贷款 1笔 已准入商户 4家 待办协理任务 3项 后台快捷操作 商户入驻审核 贷款审批管理 查看系统日志 运营数据分析 系统运行状态 检查项 状态 组件 范围 后端 API 运行中 Express / SQLite 127.0.0.1 业务数据库 已连接 SQLite WAL 本项目 data/app.sqlite 审计日志 可查询 system_logs 全模块操作留痕 后台权限 已启用 管理员角色 审批、配置、审计 管理模块总览 信用档案 8 份，已批贷款 3 笔，优惠券核销 913 次 后台模块 访问路径 管理职责 操作 后台模块 访问路径 管理职责 操作 信用画像 /credit 信用档案、评分画",
+  "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89047/probe/runtime-check/may-89047-admin-browser-check.png"
+}
