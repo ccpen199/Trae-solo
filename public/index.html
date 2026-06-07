@@ -1,0 +1,152 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>may-88935</title>
+    <link rel="icon" href="data:," />
+    <style>
+      :root {
+        color-scheme: light;
+        font-family: Arial, "PingFang SC", "Microsoft YaHei", sans-serif;
+        background: #f5f7fb;
+        color: #1f2937;
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      body {
+        margin: 0;
+        min-height: 100vh;
+        display: grid;
+        place-items: center;
+        padding: 32px;
+      }
+
+      main {
+        width: min(720px, 100%);
+        background: #ffffff;
+        border: 1px solid #d8dee9;
+        border-radius: 8px;
+        padding: 28px;
+        box-shadow: 0 18px 50px rgba(31, 41, 55, 0.08);
+      }
+
+      h1 {
+        margin: 0 0 12px;
+        font-size: clamp(28px, 5vw, 42px);
+        line-height: 1.12;
+      }
+
+      p {
+        margin: 0;
+        color: #4b5563;
+        line-height: 1.7;
+      }
+
+      .status {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        margin-top: 24px;
+        padding: 14px 16px;
+        border: 1px solid #cfe1d3;
+        background: #f0f8f2;
+        border-radius: 8px;
+        color: #245a32;
+        font-weight: 700;
+      }
+
+      .dot {
+        width: 10px;
+        height: 10px;
+        border-radius: 999px;
+        background: #1f9d55;
+        flex: 0 0 auto;
+      }
+
+      dl {
+        display: grid;
+        grid-template-columns: minmax(110px, 160px) 1fr;
+        gap: 12px 18px;
+        margin: 24px 0 0;
+      }
+
+      dt {
+        color: #6b7280;
+        font-weight: 700;
+      }
+
+      dd {
+        margin: 0;
+        overflow-wrap: anywhere;
+      }
+
+      @media (max-width: 560px) {
+        body {
+          padding: 18px;
+          place-items: start center;
+        }
+
+        main {
+          padding: 22px;
+        }
+
+        dl {
+          grid-template-columns: 1fr;
+          gap: 6px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <main>
+      <h1 id="title">may-88935</h1>
+      <p id="message">正在连接后端服务...</p>
+      <div class="status" id="status">
+        <span class="dot"></span>
+        <span>前端已启动</span>
+      </div>
+      <dl>
+        <dt>Frontend</dt>
+        <dd>http://127.0.0.1:48935/</dd>
+        <dt>Backend</dt>
+        <dd>http://127.0.0.1:58935</dd>
+        <dt>SQLite</dt>
+        <dd id="database">检测中</dd>
+      </dl>
+    </main>
+    <script>
+      const backend = "http://127.0.0.1:58935";
+
+      async function loadState() {
+        const [healthResponse, stateResponse] = await Promise.all([
+          fetch(`${backend}/api/health`),
+          fetch(`${backend}/api/state`)
+        ]);
+        const health = await healthResponse.json();
+        const state = await stateResponse.json();
+
+        if (!health.ok || !state.ok) {
+          throw new Error("Backend response is not healthy");
+        }
+
+        document.getElementById("title").textContent = state.data.title;
+        document.getElementById("message").textContent = state.data.message;
+        document.getElementById("database").textContent = health.database;
+        document.getElementById("status").lastElementChild.textContent =
+          "前后端与 SQLite 已连接";
+      }
+
+      loadState().catch((error) => {
+        document.getElementById("status").style.borderColor = "#f2c6c6";
+        document.getElementById("status").style.background = "#fff5f5";
+        document.getElementById("status").style.color = "#8a2424";
+        document.getElementById("status").lastElementChild.textContent =
+          `后端连接失败：${error.message}`;
+      });
+    </script>
+  </body>
+</html>
