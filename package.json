@@ -1,0 +1,13 @@
+{
+  "name": "etc-lifecycle-console",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "install:backend": "cd backend && npm install",
+    "install:frontend": "cd frontend && npm install",
+    "install:all": "npm run install:backend && npm run install:frontend",
+    "dev:backend": "cd backend && node src/index.js",
+    "dev:frontend": "cd frontend && npx vite --strictPort",
+    "check:ports": "source .env && echo \"FRONTEND_PORT=$FRONTEND_PORT BACKEND_PORT=$BACKEND_PORT\" && lsof -nP -iTCP:$FRONTEND_PORT -sTCP:LISTEN && lsof -nP -iTCP:$BACKEND_PORT -sTCP:LISTEN || echo 'Ports are free'"
+  }
+}

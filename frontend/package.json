@@ -1,0 +1,24 @@
+{
+  "name": "etc-console-frontend",
+  "private": true,
+  "version": "1.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite --strictPort",
+    "build": "vite build",
+    "preview": "vite preview --strictPort"
+  },
+  "dependencies": {
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "antd": "^5.22.0",
+    "@ant-design/icons": "^5.5.1",
+    "react-router-dom": "^6.28.0",
+    "axios": "^1.7.7",
+    "dayjs": "^1.11.13"
+  },
+  "devDependencies": {
+    "@vitejs/plugin-react": "^4.3.3",
+    "vite": "^5.4.10"
+  }
+}

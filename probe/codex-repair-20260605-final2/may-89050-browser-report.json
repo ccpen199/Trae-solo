@@ -1,0 +1,3475 @@
+{
+  "ok": true,
+  "generatedAt": "2026-06-05T14:54:10.786Z",
+  "order": "may-89050",
+  "roundIndex": 6,
+  "captureId": "may-89050-codex-repair-20260605-final2",
+  "url": "http://127.0.0.1:49050/",
+  "initialUrl": "http://127.0.0.1:49050/",
+  "finalUrl": "http://127.0.0.1:49050/",
+  "status": 200,
+  "title": "省级ETC全生命周期管理控制台",
+  "initialTitle": "省级ETC全生命周期管理控制台",
+  "navigationError": "",
+  "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89050/probe/codex-repair-20260605-final2/may-89050-codex-repair-20260605-final2-frontend.png",
+  "screenshotPaths": [
+    "/Users/chen/Documents/trae_projects/local_projects/may-89050/probe/codex-repair-20260605-final2/may-89050-codex-repair-20260605-final2-structure-01-首屏.png",
+    "/Users/chen/Documents/trae_projects/local_projects/may-89050/probe/codex-repair-20260605-final2/may-89050-codex-repair-20260605-final2-structure-02-导航-仪表盘.png",
+    "/Users/chen/Documents/trae_projects/local_projects/may-89050/probe/codex-repair-20260605-final2/may-89050-codex-repair-20260605-final2-structure-03-操作-查看监控.png",
+    "/Users/chen/Documents/trae_projects/local_projects/may-89050/probe/codex-repair-20260605-final2/may-89050-codex-repair-20260605-final2-structure-04-二层操作-查看监控-查-询.png",
+    "/Users/chen/Documents/trae_projects/local_projects/may-89050/probe/codex-repair-20260605-final2/may-89050-codex-repair-20260605-final2-structure-05-操作-进入查询.png",
+    "/Users/chen/Documents/trae_projects/local_projects/may-89050/probe/codex-repair-20260605-final2/may-89050-codex-repair-20260605-final2-structure-06-二层操作-进入查询-添加记录.png",
+    "/Users/chen/Documents/trae_projects/local_projects/may-89050/probe/codex-repair-20260605-final2/may-89050-codex-repair-20260605-final2-structure-07-导航-用户管理.png",
+    "/Users/chen/Documents/trae_projects/local_projects/may-89050/probe/codex-repair-20260605-final2/may-89050-codex-repair-20260605-final2-structure-08-操作-添加用户.png",
+    "/Users/chen/Documents/trae_projects/local_projects/may-89050/probe/codex-repair-20260605-final2/may-89050-codex-repair-20260605-final2-structure-09-二层操作-添加用户-添加用户.png",
+    "/Users/chen/Documents/trae_projects/local_projects/may-89050/probe/codex-repair-20260605-final2/may-89050-codex-repair-20260605-final2-structure-10-操作-编辑.png",
+    "/Users/chen/Documents/trae_projects/local_projects/may-89050/probe/codex-repair-20260605-final2/may-89050-codex-repair-20260605-final2-structure-11-二层操作-编辑-添加用户.png",
+    "/Users/chen/Documents/trae_projects/local_projects/may-89050/probe/codex-repair-20260605-final2/may-89050-codex-repair-20260605-final2-structure-12-导航-OBU设备管理.png"
+  ],
+  "issueTextPreview": "登录流程已完成，继续复验登录后的首页和业务导航；发送后输入框仍有内容，未确认发送成功",
+  "targetReason": "登录流程已完成，继续复验登录后的首页和业务导航",
+  "targetKind": "auth",
+  "targetMatched": true,
+  "targetActions": [
+    {
+      "action": "login-fill-username",
+      "label": "admin",
+      "ok": true
+    },
+    {
+      "action": "login-fill-password",
+      "label": "admin:******",
+      "ok": true
+    },
+    {
+      "action": "click",
+      "label": "登录:admin",
+      "ok": true
+    },
+    {
+      "action": "login-submit",
+      "label": "admin",
+      "ok": true,
+      "beforeUrl": "http://127.0.0.1:49050/login"
+    },
+    {
+      "action": "login-result",
+      "label": "admin",
+      "ok": true,
+      "finalUrl": "http://127.0.0.1:49050/"
+    },
+    {
+      "action": "target-verify",
+      "label": "登录后首页",
+      "ok": true,
+      "finalUrl": "http://127.0.0.1:49050/"
+    }
+  ],
+  "authFlow": {
+    "detected": true,
+    "attempted": true,
+    "success": true,
+    "finalUrl": "http://127.0.0.1:49050/",
+    "message": "登录成功:admin",
+    "actions": [
+      {
+        "action": "login-fill-username",
+        "label": "admin",
+        "ok": true
+      },
+      {
+        "action": "login-fill-password",
+        "label": "admin:******",
+        "ok": true
+      },
+      {
+        "action": "click",
+        "label": "登录:admin",
+        "ok": true
+      },
+      {
+        "action": "login-submit",
+        "label": "admin",
+        "ok": true,
+        "beforeUrl": "http://127.0.0.1:49050/login"
+      },
+      {
+        "action": "login-result",
+        "label": "admin",
+        "ok": true,
+        "finalUrl": "http://127.0.0.1:49050/"
+      }
+    ],
+    "username": "admin",
+    "credentialSource": "visible-demo-text"
+  },
+  "businessAudit": {
+    "actions": [
+      {
+        "action": "click",
+        "label": "导航:仪表盘",
+        "ok": true
+      },
+      {
+        "action": "click",
+        "label": "操作:查看监控",
+        "ok": true,
+        "result": {
+          "ok": true,
+          "matched": 1
+        }
+      },
+      {
+        "action": "click",
+        "label": "二层操作:查看监控:查 询",
+        "ok": true,
+        "result": {
+          "ok": true,
+          "matched": 1
+        }
+      },
+      {
+        "action": "click",
+        "label": "操作:进入查询",
+        "ok": true,
+        "result": {
+          "ok": true,
+          "matched": 1
+        }
+      },
+      {
+        "action": "click",
+        "label": "二层操作:进入查询:添加记录",
+        "ok": true,
+        "result": {
+          "ok": true,
+          "matched": 1
+        }
+      },
+      {
+        "action": "click",
+        "label": "关闭弹窗/抽屉",
+        "ok": true
+      },
+      {
+        "action": "click",
+        "label": "导航:用户管理",
+        "ok": true
+      },
+      {
+        "action": "click",
+        "label": "操作:添加用户",
+        "ok": true,
+        "result": {
+          "ok": true,
+          "matched": 1
+        }
+      },
+      {
+        "action": "click",
+        "label": "二层操作:添加用户:添加用户",
+        "ok": true,
+        "result": {
+          "ok": true,
+          "matched": 1
+        }
+      },
+      {
+        "action": "click",
+        "label": "关闭弹窗/抽屉",
+        "ok": true
+      },
+      {
+        "action": "click",
+        "label": "操作:编辑",
+        "ok": true,
+        "result": {
+          "ok": true,
+          "matched": 7
+        }
+      },
+      {
+        "action": "click",
+        "label": "二层操作:编辑:添加用户",
+        "ok": true,
+        "result": {
+          "ok": true,
+          "matched": 1
+        }
+      },
+      {
+        "action": "click",
+        "label": "关闭弹窗/抽屉",
+        "ok": true
+      },
+      {
+        "action": "click",
+        "label": "导航:OBU设备管理",
+        "ok": true
+      }
+    ],
+    "snapshots": [
+      {
+        "label": "首屏",
+        "url": "http://127.0.0.1:49050/",
+        "title": "省级ETC全生命周期管理控制台",
+        "headings": [
+          "仪表盘概览"
+        ],
+        "navLabels": [
+          "仪表盘",
+          "dashboard",
+          "用户管理",
+          "user",
+          "OBU设备管理",
+          "api",
+          "ETC账户管理",
+          "wallet",
+          "通行记录",
+          "car",
+          "异常事件",
+          "warning",
+          "争议处理",
+          "swap",
+          "运维管理",
+          "tool",
+          "结算管理",
+          "pay-circle",
+          "开放接口",
+          "code",
+          "审计日志",
+          "file-search"
+        ],
+        "buttons": [
+          "进入查询",
+          "查看监控"
+        ],
+        "links": [],
+        "inputs": [],
+        "tables": [],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "ETC管理控制台系统管理员仪表盘用户管理OBU设备管理ETC账户管理通行记录异常事件争议处理运维管理结算管理开放接口审计日志系统管理员系统管理员仪表盘概览搜索/筛选通行记录进入查询查询结果覆盖车牌号、门架、收费站和日期筛选，支持查看通行详情、关联异常事件、发起争议申诉。用户数7设备数5活跃设备4ETC账户2总余额¥5,280.50今日通行3今日金额¥1,800.00待处理异常2黑名单2通行数据质量监控查看监控当前缺失率0%正常当前延迟率0%正常7日平均缺失率0%7日平均延迟率0%7日告警数 0异常事件分布（按类型）deduction_failed：1duplicate_billing：1path_missing：1异常事件分布（按状态）pending：1processing：1resolved：1设备状态分布active4(80.0%)activefaulty1(20.0%)faulty",
+        "layout": {
+          "viewportWidth": 1504,
+          "viewportHeight": 1193,
+          "scrollWidth": 1504,
+          "scrollHeight": 1193,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89050-codex-repair-20260605-final2-structure-01-首屏",
+          "label": "首屏",
+          "finalUrl": "http://127.0.0.1:49050/",
+          "title": "省级ETC全生命周期管理控制台",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89050/probe/codex-repair-20260605-final2/may-89050-codex-repair-20260605-final2-structure-01-首屏.json",
+          "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89050/probe/codex-repair-20260605-final2/may-89050-codex-repair-20260605-final2-structure-01-首屏.png",
+          "elementCount": 310,
+          "interactiveCount": 15,
+          "interactiveLabels": [
+            "仪表盘 用户管理 OBU设备管理 ETC账户管理 通行记录 异常事件 争议处理 运维管理 结算管理 开放接口 审计日志",
+            "仪表盘",
+            "用户管理",
+            "OBU设备管理",
+            "ETC账户管理",
+            "通行记录",
+            "异常事件",
+            "争议处理",
+            "运维管理",
+            "结算管理",
+            "开放接口",
+            "审计日志",
+            "进入查询",
+            "查看监控"
+          ]
+        }
+      },
+      {
+        "label": "导航:仪表盘",
+        "url": "http://127.0.0.1:49050/",
+        "title": "省级ETC全生命周期管理控制台",
+        "headings": [
+          "仪表盘概览"
+        ],
+        "navLabels": [
+          "仪表盘",
+          "dashboard",
+          "用户管理",
+          "user",
+          "OBU设备管理",
+          "api",
+          "ETC账户管理",
+          "wallet",
+          "通行记录",
+          "car",
+          "异常事件",
+          "warning",
+          "争议处理",
+          "swap",
+          "运维管理",
+          "tool",
+          "结算管理",
+          "pay-circle",
+          "开放接口",
+          "code",
+          "审计日志",
+          "file-search"
+        ],
+        "buttons": [
+          "进入查询",
+          "查看监控"
+        ],
+        "links": [],
+        "inputs": [],
+        "tables": [],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "ETC管理控制台系统管理员仪表盘用户管理OBU设备管理ETC账户管理通行记录异常事件争议处理运维管理结算管理开放接口审计日志系统管理员系统管理员仪表盘概览搜索/筛选通行记录进入查询查询结果覆盖车牌号、门架、收费站和日期筛选，支持查看通行详情、关联异常事件、发起争议申诉。用户数7设备数5活跃设备4ETC账户2总余额¥5,280.50今日通行3今日金额¥1,800.00待处理异常2黑名单2通行数据质量监控查看监控当前缺失率0%正常当前延迟率0%正常7日平均缺失率0%7日平均延迟率0%7日告警数 0异常事件分布（按类型）deduction_failed：1duplicate_billing：1path_missing：1异常事件分布（按状态）pending：1processing：1resolved：1设备状态分布active4(80.0%)activefaulty1(20.0%)faulty",
+        "layout": {
+          "viewportWidth": 1536,
+          "viewportHeight": 1193,
+          "scrollWidth": 1536,
+          "scrollHeight": 1193,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89050-codex-repair-20260605-final2-structure-02-导航-仪表盘",
+          "label": "导航:仪表盘",
+          "finalUrl": "http://127.0.0.1:49050/",
+          "title": "省级ETC全生命周期管理控制台",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89050/probe/codex-repair-20260605-final2/may-89050-codex-repair-20260605-final2-structure-02-导航-仪表盘.json",
+          "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89050/probe/codex-repair-20260605-final2/may-89050-codex-repair-20260605-final2-structure-02-导航-仪表盘.png",
+          "elementCount": 310,
+          "interactiveCount": 15,
+          "interactiveLabels": [
+            "仪表盘 用户管理 OBU设备管理 ETC账户管理 通行记录 异常事件 争议处理 运维管理 结算管理 开放接口 审计日志",
+            "仪表盘",
+            "用户管理",
+            "OBU设备管理",
+            "ETC账户管理",
+            "通行记录",
+            "异常事件",
+            "争议处理",
+            "运维管理",
+            "结算管理",
+            "开放接口",
+            "审计日志",
+            "进入查询",
+            "查看监控"
+          ]
+        }
+      },
+      {
+        "label": "操作:查看监控",
+        "url": "http://127.0.0.1:49050/operations",
+        "title": "省级ETC全生命周期管理控制台",
+        "headings": [
+          "运营管理"
+        ],
+        "navLabels": [
+          "仪表盘",
+          "dashboard",
+          "用户管理",
+          "user",
+          "OBU设备管理",
+          "api",
+          "ETC账户管理",
+          "wallet",
+          "通行记录",
+          "car",
+          "异常事件",
+          "warning",
+          "争议处理",
+          "swap",
+          "运维管理",
+          "tool",
+          "结算管理",
+          "pay-circle",
+          "开放接口",
+          "code",
+          "审计日志",
+          "file-search"
+        ],
+        "buttons": [
+          "查 询",
+          "重 置",
+          "新增指标"
+        ],
+        "links": [],
+        "inputs": [
+          {
+            "tag": "input",
+            "type": "",
+            "placeholder": "开始日期",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "",
+            "placeholder": "结束日期",
+            "name": "",
+            "label": ""
+          }
+        ],
+        "tables": [
+          {
+            "headers": [
+              "指标日期",
+              "缺失率(%)",
+              "延迟率(%)",
+              "告警数",
+              "详情"
+            ],
+            "rowCount": 3,
+            "hasEmptyText": false,
+            "textPreview": "指标日期 缺失率(%) 延迟率(%) 告警数 详情 2026-05-03 0.03 0.02 7 {\"missing_gantries\": 8, \"delayed_records\": 5} 2026-05-02 0.01 0.03 5 {\"missing_gantries\": 2, \"delayed_records\": 8} 2026-05-01 0.02 0.01 3 {\"missing_gantries\": 5, \"delayed_records\": 3}"
+          }
+        ],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "ETC管理控制台系统管理员仪表盘用户管理OBU设备管理ETC账户管理通行记录异常事件争议处理运维管理结算管理开放接口审计日志系统管理员系统管理员运营管理数据质量监控黑名单管理增值服务管理查 询重 置新增指标指标日期缺失率(%)延迟率(%)告警数详情2026-05-030.030.027{\"missing_gantries\": 8, \"delayed_records\": 5}2026-05-020.010.035{\"missing_gantries\": 2, \"delayed_records\": 8}2026-05-010.020.013{\"missing_gantries\": 5, \"delayed_records\": 3}1",
+        "layout": {
+          "viewportWidth": 1568,
+          "viewportHeight": 1193,
+          "scrollWidth": 1568,
+          "scrollHeight": 1193,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89050-codex-repair-20260605-final2-structure-03-操作-查看监控",
+          "label": "操作:查看监控",
+          "finalUrl": "http://127.0.0.1:49050/operations",
+          "title": "省级ETC全生命周期管理控制台",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89050/probe/codex-repair-20260605-final2/may-89050-codex-repair-20260605-final2-structure-03-操作-查看监控.json",
+          "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89050/probe/codex-repair-20260605-final2/may-89050-codex-repair-20260605-final2-structure-03-操作-查看监控.png",
+          "elementCount": 194,
+          "interactiveCount": 25,
+          "interactiveLabels": [
+            "仪表盘 用户管理 OBU设备管理 ETC账户管理 通行记录 异常事件 争议处理 运维管理 结算管理 开放接口 审计日志",
+            "仪表盘",
+            "用户管理",
+            "OBU设备管理",
+            "ETC账户管理",
+            "通行记录",
+            "异常事件",
+            "争议处理",
+            "运维管理",
+            "结算管理",
+            "开放接口",
+            "审计日志",
+            "数据质量监控",
+            "查 询 重 置 新增指标 指标日期 缺失率(%) 延迟率(%) 告警数 详情 2026-05-03 0.03 0.02 7 {\"missing_gantries\": 8, \"delayed_records\": 5} 2026-05-02 0.01 0.03 5 {\"missing_gantries\": 2, \"delayed_records\": 8} 202",
+            "开始日期",
+            "结束日期",
+            "查 询",
+            "重 置",
+            "新增指标",
+            "1"
+          ]
+        }
+      },
+      {
+        "label": "二层操作:查看监控->查 询",
+        "url": "http://127.0.0.1:49050/operations",
+        "title": "省级ETC全生命周期管理控制台",
+        "headings": [
+          "运营管理"
+        ],
+        "navLabels": [
+          "仪表盘",
+          "dashboard",
+          "用户管理",
+          "user",
+          "OBU设备管理",
+          "api",
+          "ETC账户管理",
+          "wallet",
+          "通行记录",
+          "car",
+          "异常事件",
+          "warning",
+          "争议处理",
+          "swap",
+          "运维管理",
+          "tool",
+          "结算管理",
+          "pay-circle",
+          "开放接口",
+          "code",
+          "审计日志",
+          "file-search"
+        ],
+        "buttons": [
+          "查 询",
+          "重 置",
+          "新增指标"
+        ],
+        "links": [],
+        "inputs": [
+          {
+            "tag": "input",
+            "type": "",
+            "placeholder": "开始日期",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "",
+            "placeholder": "结束日期",
+            "name": "",
+            "label": ""
+          }
+        ],
+        "tables": [
+          {
+            "headers": [
+              "指标日期",
+              "缺失率(%)",
+              "延迟率(%)",
+              "告警数",
+              "详情"
+            ],
+            "rowCount": 3,
+            "hasEmptyText": false,
+            "textPreview": "指标日期 缺失率(%) 延迟率(%) 告警数 详情 2026-05-03 0.03 0.02 7 {\"missing_gantries\": 8, \"delayed_records\": 5} 2026-05-02 0.01 0.03 5 {\"missing_gantries\": 2, \"delayed_records\": 8} 2026-05-01 0.02 0.01 3 {\"missing_gantries\": 5, \"delayed_records\": 3}"
+          }
+        ],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "ETC管理控制台系统管理员仪表盘用户管理OBU设备管理ETC账户管理通行记录异常事件争议处理运维管理结算管理开放接口审计日志系统管理员系统管理员运营管理数据质量监控黑名单管理增值服务管理查 询重 置新增指标指标日期缺失率(%)延迟率(%)告警数详情2026-05-030.030.027{\"missing_gantries\": 8, \"delayed_records\": 5}2026-05-020.010.035{\"missing_gantries\": 2, \"delayed_records\": 8}2026-05-010.020.013{\"missing_gantries\": 5, \"delayed_records\": 3}1",
+        "layout": {
+          "viewportWidth": 1600,
+          "viewportHeight": 1193,
+          "scrollWidth": 1600,
+          "scrollHeight": 1193,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89050-codex-repair-20260605-final2-structure-04-二层操作-查看监控-查-询",
+          "label": "二层操作:查看监控->查 询",
+          "finalUrl": "http://127.0.0.1:49050/operations",
+          "title": "省级ETC全生命周期管理控制台",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89050/probe/codex-repair-20260605-final2/may-89050-codex-repair-20260605-final2-structure-04-二层操作-查看监控-查-询.json",
+          "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89050/probe/codex-repair-20260605-final2/may-89050-codex-repair-20260605-final2-structure-04-二层操作-查看监控-查-询.png",
+          "elementCount": 196,
+          "interactiveCount": 25,
+          "interactiveLabels": [
+            "仪表盘 用户管理 OBU设备管理 ETC账户管理 通行记录 异常事件 争议处理 运维管理 结算管理 开放接口 审计日志",
+            "仪表盘",
+            "用户管理",
+            "OBU设备管理",
+            "ETC账户管理",
+            "通行记录",
+            "异常事件",
+            "争议处理",
+            "运维管理",
+            "结算管理",
+            "开放接口",
+            "审计日志",
+            "数据质量监控",
+            "查 询 重 置 新增指标 指标日期 缺失率(%) 延迟率(%) 告警数 详情 2026-05-03 0.03 0.02 7 {\"missing_gantries\": 8, \"delayed_records\": 5} 2026-05-02 0.01 0.03 5 {\"missing_gantries\": 2, \"delayed_records\": 8} 202",
+            "开始日期",
+            "结束日期",
+            "查 询",
+            "重 置",
+            "新增指标",
+            "1"
+          ]
+        }
+      },
+      {
+        "label": "操作:进入查询",
+        "url": "http://127.0.0.1:49050/toll",
+        "title": "省级ETC全生命周期管理控制台",
+        "headings": [
+          "通行记录查询结果"
+        ],
+        "navLabels": [
+          "仪表盘",
+          "dashboard",
+          "用户管理",
+          "user",
+          "OBU设备管理",
+          "api",
+          "ETC账户管理",
+          "wallet",
+          "通行记录",
+          "car",
+          "异常事件",
+          "warning",
+          "争议处理",
+          "swap",
+          "运维管理",
+          "tool",
+          "结算管理",
+          "pay-circle",
+          "开放接口",
+          "code",
+          "审计日志",
+          "file-search"
+        ],
+        "buttons": [
+          "查 询",
+          "重 置",
+          "添加记录",
+          "详情",
+          "月结单",
+          "申诉",
+          "查询轨迹"
+        ],
+        "links": [],
+        "inputs": [
+          {
+            "tag": "input",
+            "type": "",
+            "placeholder": "开始日期",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "",
+            "placeholder": "结束日期",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "search",
+            "placeholder": "车牌号",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "text",
+            "placeholder": "门架ID",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "text",
+            "placeholder": "收费站ID",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "search",
+            "placeholder": "",
+            "name": "",
+            "label": "页码"
+          },
+          {
+            "tag": "input",
+            "type": "text",
+            "placeholder": "车牌号",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "",
+            "placeholder": "开始日期",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "",
+            "placeholder": "结束日期",
+            "name": "",
+            "label": ""
+          }
+        ],
+        "tables": [
+          {
+            "headers": [
+              "ID",
+              "车牌号",
+              "用户",
+              "门架",
+              "收费站",
+              "入口时间",
+              "出口时间",
+              "费用",
+              "结算状态",
+              "异常关联",
+              "争议状态",
+              "操作"
+            ],
+            "rowCount": 8,
+            "hasEmptyText": false,
+            "textPreview": "ID 车牌号 用户 门架 收费站 入口时间 出口时间 费用 结算状态 异常关联 争议状态 操作 8 京A12345 运营平台管理员 2026-06-05 16:00:00 2026-06-05 16:30:00 ¥600.00 未结算 无 无 详情 月结单 0 7 京A12345 运营平台管理员 测试门架 测试站 2026-06-05 16:00:00 2026-06-05 16:30:00 ¥600.00 未结算 无 无 详情 月结单 0 6 京A12345 运营平台管理员 测试门架 测试站 2026-06-05 16:00:00 2026-06-05 16:30:00 ¥600.00 未结"
+          }
+        ],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "ETC管理控制台系统管理员仪表盘用户管理OBU设备管理ETC账户管理通行记录异常事件争议处理运维管理结算管理开放接口审计日志系统管理员系统管理员通行记录查询结果查 询重 置添加记录ID车牌号用户门架收费站入口时间出口时间费用结算状态异常关联争议状态操作8京A12345运营平台管理员2026-06-05 16:00:002026-06-05 16:30:00¥600.00未结算无无详情 月结单07京A12345运营平台管理员测试门架测试站2026-06-05 16:00:002026-06-05 16:30:00¥600.00未结算无无详情 月结单06京A12345运营平台管理员测试门架测试站2026-06-05 16:00:002026-06-05 16:30:00¥600.00未结算无无详情 月结单05陕C12345张三连霍高速K200门架西安收费站2026-05-05 16:00:002026-05-05 18:30:00¥95.00待对账无无详情 月结单04京B67890运维操作员京港澳K150门架郑州收费站2026-05-04 07:45:002026-05-04 10:00:00¥125.00待对账 重复计费 resolved详情 月结单3京B67890运维操作员京港澳K90门架石家庄收费站2026-05-03 14:00:002026-05-03 15:30:00¥82.00待对账 路径缺失无详情 月结单 申诉2京A12345运营平台管理员京沪高速K180门架天津收费站2026-05-02 10:00:002026-05-02 11:20:00¥68.50待对账 扣费失败 pending详情 月结单1京A12345运营平台管理员京沪高速K120门架北京收费站2026-05-01 08:30:002026-05-01 09:15:00¥45.00待对账无无详情 月结单0共 8 条110 条/页轨迹查询查询轨迹",
+        "layout": {
+          "viewportWidth": 1632,
+          "viewportHeight": 1215,
+          "scrollWidth": 1632,
+          "scrollHeight": 1215,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89050-codex-repair-20260605-final2-structure-05-操作-进入查询",
+          "label": "操作:进入查询",
+          "finalUrl": "http://127.0.0.1:49050/toll",
+          "title": "省级ETC全生命周期管理控制台",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89050/probe/codex-repair-20260605-final2/may-89050-codex-repair-20260605-final2-structure-05-操作-进入查询.json",
+          "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89050/probe/codex-repair-20260605-final2/may-89050-codex-repair-20260605-final2-structure-05-操作-进入查询.png",
+          "elementCount": 486,
+          "interactiveCount": 51,
+          "interactiveLabels": [
+            "仪表盘 用户管理 OBU设备管理 ETC账户管理 通行记录 异常事件 争议处理 运维管理 结算管理 开放接口 审计日志",
+            "仪表盘",
+            "用户管理",
+            "OBU设备管理",
+            "ETC账户管理",
+            "通行记录",
+            "异常事件",
+            "争议处理",
+            "运维管理",
+            "结算管理",
+            "开放接口",
+            "审计日志",
+            "开始日期",
+            "结束日期",
+            "车牌号",
+            "门架ID",
+            "收费站ID",
+            "查 询",
+            "重 置",
+            "添加记录",
+            "详情",
+            "月结单",
+            "申诉",
+            "1",
+            "页码",
+            "查询轨迹"
+          ]
+        }
+      },
+      {
+        "label": "二层操作:进入查询->添加记录",
+        "url": "http://127.0.0.1:49050/toll",
+        "title": "省级ETC全生命周期管理控制台",
+        "headings": [
+          "通行记录查询结果"
+        ],
+        "navLabels": [
+          "仪表盘",
+          "dashboard",
+          "用户管理",
+          "user",
+          "OBU设备管理",
+          "api",
+          "ETC账户管理",
+          "wallet",
+          "通行记录",
+          "car",
+          "异常事件",
+          "warning",
+          "争议处理",
+          "swap",
+          "运维管理",
+          "tool",
+          "结算管理",
+          "pay-circle",
+          "开放接口",
+          "code",
+          "审计日志",
+          "file-search"
+        ],
+        "buttons": [
+          "查 询",
+          "重 置",
+          "添加记录",
+          "详情",
+          "月结单",
+          "申诉",
+          "查询轨迹",
+          "Close",
+          "取 消",
+          "提 交"
+        ],
+        "links": [],
+        "inputs": [
+          {
+            "tag": "input",
+            "type": "",
+            "placeholder": "开始日期",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "",
+            "placeholder": "结束日期",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "search",
+            "placeholder": "车牌号",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "text",
+            "placeholder": "门架ID",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "text",
+            "placeholder": "收费站ID",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "search",
+            "placeholder": "",
+            "name": "",
+            "label": "页码"
+          },
+          {
+            "tag": "input",
+            "type": "text",
+            "placeholder": "车牌号",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "",
+            "placeholder": "开始日期",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "",
+            "placeholder": "结束日期",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "text",
+            "placeholder": "如：京A12345",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "text",
+            "placeholder": "门架编号",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "text",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "text",
+            "placeholder": "收费站编号",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "text",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "",
+            "placeholder": "请选择日期",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "",
+            "placeholder": "请选择日期",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "text",
+            "placeholder": "如：G6京藏高速",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "textarea",
+            "type": "",
+            "placeholder": "多个链接用逗号分隔，如：https://img1.com,https://img2.com",
+            "name": "",
+            "label": ""
+          }
+        ],
+        "tables": [
+          {
+            "headers": [
+              "ID",
+              "车牌号",
+              "用户",
+              "门架",
+              "收费站",
+              "入口时间",
+              "出口时间",
+              "费用",
+              "结算状态",
+              "异常关联",
+              "争议状态",
+              "操作"
+            ],
+            "rowCount": 8,
+            "hasEmptyText": false,
+            "textPreview": "ID 车牌号 用户 门架 收费站 入口时间 出口时间 费用 结算状态 异常关联 争议状态 操作 8 京A12345 运营平台管理员 2026-06-05 16:00:00 2026-06-05 16:30:00 ¥600.00 未结算 无 无 详情 月结单 0 7 京A12345 运营平台管理员 测试门架 测试站 2026-06-05 16:00:00 2026-06-05 16:30:00 ¥600.00 未结算 无 无 详情 月结单 0 6 京A12345 运营平台管理员 测试门架 测试站 2026-06-05 16:00:00 2026-06-05 16:30:00 ¥600.00 未结"
+          }
+        ],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "ETC管理控制台系统管理员仪表盘用户管理OBU设备管理ETC账户管理通行记录异常事件争议处理运维管理结算管理开放接口审计日志系统管理员系统管理员通行记录查询结果查 询重 置添加记录ID车牌号用户门架收费站入口时间出口时间费用结算状态异常关联争议状态操作8京A12345运营平台管理员2026-06-05 16:00:002026-06-05 16:30:00¥600.00未结算无无详情 月结单07京A12345运营平台管理员测试门架测试站2026-06-05 16:00:002026-06-05 16:30:00¥600.00未结算无无详情 月结单06京A12345运营平台管理员测试门架测试站2026-06-05 16:00:002026-06-05 16:30:00¥600.00未结算无无详情 月结单05陕C12345张三连霍高速K200门架西安收费站2026-05-05 16:00:002026-05-05 18:30:00¥95.00待对账无无详情 月结单04京B67890运维操作员京港澳K150门架郑州收费站2026-05-04 07:45:002026-05-04 10:00:00¥125.00待对账 重复计费 resolved详情 月结单3京B67890运维操作员京港澳K90门架石家庄收费站2026-05-03 14:00:002026-05-03 15:30:00¥82.00待对账 路径缺失无详情 月结单 申诉2京A12345运营平台管理员京沪高速K180门架天津收费站2026-05-02 10:00:002026-05-02 11:20:00¥68.50待对账 扣费失败 pending详情 月结单1京A12345运营平台管理员京沪高速K120门架北京收费站2026-05-01 08:30:002026-05-01 09:15:00¥45.00待对账无无详情 月结单0共 8 条110 条/页轨迹查询查询轨迹 添加收费记录账户ID车牌号门架ID门架名称收费站ID收费站名称入口时间出口时间费用(元)路段轨迹证据链接(可选)校验规则：门架/收费站至少填一个；出口时间必须晚于入口；费用≥0；通行时间<1分钟或>8小时将触发异常检测；费用>500元标记复核。取 消提 交",
+        "layout": {
+          "viewportWidth": 1664,
+          "viewportHeight": 1215,
+          "scrollWidth": 1664,
+          "scrollHeight": 1215,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89050-codex-repair-20260605-final2-structure-06-二层操作-进入查询-添加记录",
+          "label": "二层操作:进入查询->添加记录",
+          "finalUrl": "http://127.0.0.1:49050/toll",
+          "title": "省级ETC全生命周期管理控制台",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89050/probe/codex-repair-20260605-final2/may-89050-codex-repair-20260605-final2-structure-06-二层操作-进入查询-添加记录.json",
+          "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89050/probe/codex-repair-20260605-final2/may-89050-codex-repair-20260605-final2-structure-06-二层操作-进入查询-添加记录.png",
+          "elementCount": 657,
+          "interactiveCount": 71,
+          "interactiveLabels": [
+            "仪表盘 用户管理 OBU设备管理 ETC账户管理 通行记录 异常事件 争议处理 运维管理 结算管理 开放接口 审计日志",
+            "仪表盘",
+            "用户管理",
+            "OBU设备管理",
+            "ETC账户管理",
+            "通行记录",
+            "异常事件",
+            "争议处理",
+            "运维管理",
+            "结算管理",
+            "开放接口",
+            "审计日志",
+            "开始日期",
+            "结束日期",
+            "车牌号",
+            "门架ID",
+            "收费站ID",
+            "查 询",
+            "重 置",
+            "添加记录",
+            "详情",
+            "月结单",
+            "申诉",
+            "1",
+            "页码",
+            "查询轨迹",
+            "添加收费记录 账户ID 车牌号 门架ID 门架名称 收费站ID 收费站名称 入口时间 出口时间 费用(元) 路段 轨迹证据链接(可选) 校验规则：门架/收费站至少填一个；出口时间必须晚于入口；费用≥0；通行时间<1分钟或>8小时将触发异常检测；费用>500元标记复核。 取 消 提 交",
+            "Close",
+            "Increase Value",
+            "Decrease Value"
+          ]
+        }
+      },
+      {
+        "label": "导航:用户管理",
+        "url": "http://127.0.0.1:49050/users",
+        "title": "省级ETC全生命周期管理控制台",
+        "headings": [
+          "用户管理"
+        ],
+        "navLabels": [
+          "仪表盘",
+          "dashboard",
+          "用户管理",
+          "user",
+          "OBU设备管理",
+          "api",
+          "ETC账户管理",
+          "wallet",
+          "通行记录",
+          "car",
+          "异常事件",
+          "warning",
+          "争议处理",
+          "swap",
+          "运维管理",
+          "tool",
+          "结算管理",
+          "pay-circle",
+          "开放接口",
+          "code",
+          "审计日志",
+          "file-search"
+        ],
+        "buttons": [
+          "添加用户",
+          "详情",
+          "编辑",
+          "停用"
+        ],
+        "links": [],
+        "inputs": [
+          {
+            "tag": "input",
+            "type": "search",
+            "placeholder": "搜索用户名/姓名/手机号",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "search",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "search",
+            "placeholder": "",
+            "name": "",
+            "label": "页码"
+          }
+        ],
+        "tables": [
+          {
+            "headers": [
+              "ID",
+              "用户名",
+              "姓名",
+              "手机号",
+              "角色",
+              "车牌号",
+              "状态",
+              "创建时间",
+              "操作"
+            ],
+            "rowCount": 7,
+            "hasEmptyText": false,
+            "textPreview": "ID 用户名 姓名 手机号 角色 车牌号 状态 创建时间 操作 7 zhaoliu 赵六 13800000004 运维操作员 正常 2026-06-05 13:49:46 详情 编辑 停用 6 wangwu 王五 13800000003 车队管理者 正常 2026-06-05 13:49:45 详情 编辑 停用 5 lisi 李四 13800000002 车主 京B67890 正常 2026-06-05 13:49:45 详情 编辑 停用 4 zhangsan 张三 13800000001 车主 京A12345 正常 2026-06-05 13:49:45 详情 编辑 停用 3 ops 运维操"
+          }
+        ],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "ETC管理控制台系统管理员仪表盘用户管理OBU设备管理ETC账户管理通行记录异常事件争议处理运维管理结算管理开放接口审计日志系统管理员系统管理员用户管理角色权限说明 车主：车主自助服务权限，可申领OBU、充值、查询通行记录、发起争议申诉 车队管理者：车队管理权限，可管理多车辆账户、批量充值、查看车队通行数据 运维操作员：运维操作权限，可进行设备激活、升级、数据质量监控等技术操作 运营平台：运营管理权限，可查看运营数据、处理异常、管理结算、配置策略，无用户增删权限 系统管理员：拥有系统全部权限，可管理所有用户、设备、账户及所有配置角色筛选添加用户 所有增删改操作均记录审计日志ID用户名姓名手机号角色车牌号状态创建时间操作7zhaoliu赵六13800000004 运维操作员正常2026-06-05 13:49:46 详情编辑停用6wangwu王五13800000003 车队管理者正常2026-06-05 13:49:45 详情编辑停用5lisi李四13800000002 车主京B67890正常2026-06-05 13:49:45 详情编辑停用4zhangsan张三13800000001 车主京A12345正常2026-06-05 13:49:45 详情编辑停用3ops运维操作员13800000011 运维操作员正常2026-06-05 13:49:44 详情编辑停用2platform运营平台管理员13800000010 运营平台正常2026-06-05 13:49:44 详情编辑停用1admin系统管理员13800000000 系统管理员正常2026-06-05 13:49:43 详情编辑停用共 7 条110 条/页",
+        "layout": {
+          "viewportWidth": 1696,
+          "viewportHeight": 1215,
+          "scrollWidth": 1696,
+          "scrollHeight": 1215,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89050-codex-repair-20260605-final2-structure-07-导航-用户管理",
+          "label": "导航:用户管理",
+          "finalUrl": "http://127.0.0.1:49050/users",
+          "title": "省级ETC全生命周期管理控制台",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89050/probe/codex-repair-20260605-final2/may-89050-codex-repair-20260605-final2-structure-07-导航-用户管理.json",
+          "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89050/probe/codex-repair-20260605-final2/may-89050-codex-repair-20260605-final2-structure-07-导航-用户管理.png",
+          "elementCount": 421,
+          "interactiveCount": 44,
+          "interactiveLabels": [
+            "仪表盘 用户管理 OBU设备管理 ETC账户管理 通行记录 异常事件 争议处理 运维管理 结算管理 开放接口 审计日志",
+            "仪表盘",
+            "用户管理",
+            "OBU设备管理",
+            "ETC账户管理",
+            "通行记录",
+            "异常事件",
+            "争议处理",
+            "运维管理",
+            "结算管理",
+            "开放接口",
+            "审计日志",
+            "搜索用户名/姓名/手机号",
+            "添加用户",
+            "详情",
+            "编辑",
+            "停用",
+            "1",
+            "页码"
+          ]
+        }
+      },
+      {
+        "label": "操作:添加用户",
+        "url": "http://127.0.0.1:49050/users",
+        "title": "省级ETC全生命周期管理控制台",
+        "headings": [
+          "用户管理"
+        ],
+        "navLabels": [
+          "仪表盘",
+          "dashboard",
+          "用户管理",
+          "user",
+          "OBU设备管理",
+          "api",
+          "ETC账户管理",
+          "wallet",
+          "通行记录",
+          "car",
+          "异常事件",
+          "warning",
+          "争议处理",
+          "swap",
+          "运维管理",
+          "tool",
+          "结算管理",
+          "pay-circle",
+          "开放接口",
+          "code",
+          "审计日志",
+          "file-search"
+        ],
+        "buttons": [
+          "添加用户",
+          "详情",
+          "编辑",
+          "停用",
+          "Close",
+          "取 消",
+          "确 定"
+        ],
+        "links": [],
+        "inputs": [
+          {
+            "tag": "input",
+            "type": "search",
+            "placeholder": "搜索用户名/姓名/手机号",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "search",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "search",
+            "placeholder": "",
+            "name": "",
+            "label": "页码"
+          },
+          {
+            "tag": "input",
+            "type": "text",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "password",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "text",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "text",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "text",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "search",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "text",
+            "placeholder": "车主必填",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "text",
+            "placeholder": "车队管理者可选",
+            "name": "",
+            "label": ""
+          }
+        ],
+        "tables": [
+          {
+            "headers": [
+              "ID",
+              "用户名",
+              "姓名",
+              "手机号",
+              "角色",
+              "车牌号",
+              "状态",
+              "创建时间",
+              "操作"
+            ],
+            "rowCount": 7,
+            "hasEmptyText": false,
+            "textPreview": "ID 用户名 姓名 手机号 角色 车牌号 状态 创建时间 操作 7 zhaoliu 赵六 13800000004 运维操作员 正常 2026-06-05 13:49:46 详情 编辑 停用 6 wangwu 王五 13800000003 车队管理者 正常 2026-06-05 13:49:45 详情 编辑 停用 5 lisi 李四 13800000002 车主 京B67890 正常 2026-06-05 13:49:45 详情 编辑 停用 4 zhangsan 张三 13800000001 车主 京A12345 正常 2026-06-05 13:49:45 详情 编辑 停用 3 ops 运维操"
+          }
+        ],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "ETC管理控制台系统管理员仪表盘用户管理OBU设备管理ETC账户管理通行记录异常事件争议处理运维管理结算管理开放接口审计日志系统管理员系统管理员用户管理角色权限说明 车主：车主自助服务权限，可申领OBU、充值、查询通行记录、发起争议申诉 车队管理者：车队管理权限，可管理多车辆账户、批量充值、查看车队通行数据 运维操作员：运维操作权限，可进行设备激活、升级、数据质量监控等技术操作 运营平台：运营管理权限，可查看运营数据、处理异常、管理结算、配置策略，无用户增删权限 系统管理员：拥有系统全部权限，可管理所有用户、设备、账户及所有配置角色筛选添加用户 所有增删改操作均记录审计日志ID用户名姓名手机号角色车牌号状态创建时间操作7zhaoliu赵六13800000004 运维操作员正常2026-06-05 13:49:46 详情编辑停用6wangwu王五13800000003 车队管理者正常2026-06-05 13:49:45 详情编辑停用5lisi李四13800000002 车主京B67890正常2026-06-05 13:49:45 详情编辑停用4zhangsan张三13800000001 车主京A12345正常2026-06-05 13:49:45 详情编辑停用3ops运维操作员13800000011 运维操作员正常2026-06-05 13:49:44 详情编辑停用2platform运营平台管理员13800000010 运营平台正常2026-06-05 13:49:44 详情编辑停用1admin系统管理员13800000000 系统管理员正常2026-06-05 13:49:43 详情编辑停用共 7 条110 条/页 添加用户车主 权限车主自助服务权限，可申领OBU、充值、查询通行记录、发起争议申诉用户名密码姓名手机号身份证号角色车主车牌号车队名此操作将记录审计日志，包括操作人、操作类型、修改内容和IP地址。取 消确 定",
+        "layout": {
+          "viewportWidth": 1728,
+          "viewportHeight": 1215,
+          "scrollWidth": 1728,
+          "scrollHeight": 1215,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89050-codex-repair-20260605-final2-structure-08-操作-添加用户",
+          "label": "操作:添加用户",
+          "finalUrl": "http://127.0.0.1:49050/users",
+          "title": "省级ETC全生命周期管理控制台",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89050/probe/codex-repair-20260605-final2/may-89050-codex-repair-20260605-final2-structure-08-操作-添加用户.json",
+          "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89050/probe/codex-repair-20260605-final2/may-89050-codex-repair-20260605-final2-structure-08-操作-添加用户.png",
+          "elementCount": 550,
+          "interactiveCount": 57,
+          "interactiveLabels": [
+            "仪表盘 用户管理 OBU设备管理 ETC账户管理 通行记录 异常事件 争议处理 运维管理 结算管理 开放接口 审计日志",
+            "仪表盘",
+            "用户管理",
+            "OBU设备管理",
+            "ETC账户管理",
+            "通行记录",
+            "异常事件",
+            "争议处理",
+            "运维管理",
+            "结算管理",
+            "开放接口",
+            "审计日志",
+            "搜索用户名/姓名/手机号",
+            "添加用户",
+            "详情",
+            "编辑",
+            "停用",
+            "1",
+            "页码",
+            "添加用户 车主 权限 车主自助服务权限，可申领OBU、充值、查询通行记录、发起争议申诉 用户名 密码 姓名 手机号 身份证号 角色 车主 车牌号 车队名 此操作将记录审计日志，包括操作人、操作类型、修改内容和IP地址。 取 消 确 定",
+            "Close",
+            "demo_user_234416",
+            "Demo@123456",
+            "演示用户",
+            "13900234416",
+            "110101199001234416",
+            "京A34416",
+            "演示车队",
+            "取 消",
+            "确 定"
+          ]
+        }
+      },
+      {
+        "label": "二层操作:添加用户->添加用户",
+        "url": "http://127.0.0.1:49050/users",
+        "title": "省级ETC全生命周期管理控制台",
+        "headings": [
+          "用户管理"
+        ],
+        "navLabels": [
+          "仪表盘",
+          "dashboard",
+          "用户管理",
+          "user",
+          "OBU设备管理",
+          "api",
+          "ETC账户管理",
+          "wallet",
+          "通行记录",
+          "car",
+          "异常事件",
+          "warning",
+          "争议处理",
+          "swap",
+          "运维管理",
+          "tool",
+          "结算管理",
+          "pay-circle",
+          "开放接口",
+          "code",
+          "审计日志",
+          "file-search"
+        ],
+        "buttons": [
+          "添加用户",
+          "详情",
+          "编辑",
+          "停用",
+          "Close",
+          "取 消",
+          "确 定"
+        ],
+        "links": [],
+        "inputs": [
+          {
+            "tag": "input",
+            "type": "search",
+            "placeholder": "搜索用户名/姓名/手机号",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "search",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "search",
+            "placeholder": "",
+            "name": "",
+            "label": "页码"
+          },
+          {
+            "tag": "input",
+            "type": "text",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "password",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "text",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "text",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "text",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "search",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "text",
+            "placeholder": "车主必填",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "text",
+            "placeholder": "车队管理者可选",
+            "name": "",
+            "label": ""
+          }
+        ],
+        "tables": [
+          {
+            "headers": [
+              "ID",
+              "用户名",
+              "姓名",
+              "手机号",
+              "角色",
+              "车牌号",
+              "状态",
+              "创建时间",
+              "操作"
+            ],
+            "rowCount": 7,
+            "hasEmptyText": false,
+            "textPreview": "ID 用户名 姓名 手机号 角色 车牌号 状态 创建时间 操作 7 zhaoliu 赵六 13800000004 运维操作员 正常 2026-06-05 13:49:46 详情 编辑 停用 6 wangwu 王五 13800000003 车队管理者 正常 2026-06-05 13:49:45 详情 编辑 停用 5 lisi 李四 13800000002 车主 京B67890 正常 2026-06-05 13:49:45 详情 编辑 停用 4 zhangsan 张三 13800000001 车主 京A12345 正常 2026-06-05 13:49:45 详情 编辑 停用 3 ops 运维操"
+          }
+        ],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "ETC管理控制台系统管理员仪表盘用户管理OBU设备管理ETC账户管理通行记录异常事件争议处理运维管理结算管理开放接口审计日志系统管理员系统管理员用户管理角色权限说明 车主：车主自助服务权限，可申领OBU、充值、查询通行记录、发起争议申诉 车队管理者：车队管理权限，可管理多车辆账户、批量充值、查看车队通行数据 运维操作员：运维操作权限，可进行设备激活、升级、数据质量监控等技术操作 运营平台：运营管理权限，可查看运营数据、处理异常、管理结算、配置策略，无用户增删权限 系统管理员：拥有系统全部权限，可管理所有用户、设备、账户及所有配置角色筛选添加用户 所有增删改操作均记录审计日志ID用户名姓名手机号角色车牌号状态创建时间操作7zhaoliu赵六13800000004 运维操作员正常2026-06-05 13:49:46 详情编辑停用6wangwu王五13800000003 车队管理者正常2026-06-05 13:49:45 详情编辑停用5lisi李四13800000002 车主京B67890正常2026-06-05 13:49:45 详情编辑停用4zhangsan张三13800000001 车主京A12345正常2026-06-05 13:49:45 详情编辑停用3ops运维操作员13800000011 运维操作员正常2026-06-05 13:49:44 详情编辑停用2platform运营平台管理员13800000010 运营平台正常2026-06-05 13:49:44 详情编辑停用1admin系统管理员13800000000 系统管理员正常2026-06-05 13:49:43 详情编辑停用共 7 条110 条/页 添加用户车主 权限车主自助服务权限，可申领OBU、充值、查询通行记录、发起争议申诉用户名密码姓名手机号身份证号角色车主车牌号车队名此操作将记录审计日志，包括操作人、操作类型、修改内容和IP地址。取 消确 定",
+        "layout": {
+          "viewportWidth": 1760,
+          "viewportHeight": 1215,
+          "scrollWidth": 1760,
+          "scrollHeight": 1215,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89050-codex-repair-20260605-final2-structure-09-二层操作-添加用户-添加用户",
+          "label": "二层操作:添加用户->添加用户",
+          "finalUrl": "http://127.0.0.1:49050/users",
+          "title": "省级ETC全生命周期管理控制台",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89050/probe/codex-repair-20260605-final2/may-89050-codex-repair-20260605-final2-structure-09-二层操作-添加用户-添加用户.json",
+          "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89050/probe/codex-repair-20260605-final2/may-89050-codex-repair-20260605-final2-structure-09-二层操作-添加用户-添加用户.png",
+          "elementCount": 550,
+          "interactiveCount": 57,
+          "interactiveLabels": [
+            "仪表盘 用户管理 OBU设备管理 ETC账户管理 通行记录 异常事件 争议处理 运维管理 结算管理 开放接口 审计日志",
+            "仪表盘",
+            "用户管理",
+            "OBU设备管理",
+            "ETC账户管理",
+            "通行记录",
+            "异常事件",
+            "争议处理",
+            "运维管理",
+            "结算管理",
+            "开放接口",
+            "审计日志",
+            "搜索用户名/姓名/手机号",
+            "添加用户",
+            "详情",
+            "编辑",
+            "停用",
+            "1",
+            "页码",
+            "添加用户 车主 权限 车主自助服务权限，可申领OBU、充值、查询通行记录、发起争议申诉 用户名 密码 姓名 手机号 身份证号 角色 车主 车牌号 车队名 此操作将记录审计日志，包括操作人、操作类型、修改内容和IP地址。 取 消 确 定",
+            "Close",
+            "demo_user_236700",
+            "Demo@123456",
+            "演示用户",
+            "13900236700",
+            "110101199001236700",
+            "京A36700",
+            "演示车队",
+            "取 消",
+            "确 定"
+          ]
+        }
+      },
+      {
+        "label": "操作:编辑",
+        "url": "http://127.0.0.1:49050/users",
+        "title": "省级ETC全生命周期管理控制台",
+        "headings": [
+          "用户管理"
+        ],
+        "navLabels": [
+          "仪表盘",
+          "dashboard",
+          "用户管理",
+          "user",
+          "OBU设备管理",
+          "api",
+          "ETC账户管理",
+          "wallet",
+          "通行记录",
+          "car",
+          "异常事件",
+          "warning",
+          "争议处理",
+          "swap",
+          "运维管理",
+          "tool",
+          "结算管理",
+          "pay-circle",
+          "开放接口",
+          "code",
+          "审计日志",
+          "file-search"
+        ],
+        "buttons": [
+          "添加用户",
+          "详情",
+          "编辑",
+          "停用",
+          "Close",
+          "取 消",
+          "确 定"
+        ],
+        "links": [],
+        "inputs": [
+          {
+            "tag": "input",
+            "type": "search",
+            "placeholder": "搜索用户名/姓名/手机号",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "search",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "search",
+            "placeholder": "",
+            "name": "",
+            "label": "页码"
+          },
+          {
+            "tag": "input",
+            "type": "text",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "password",
+            "placeholder": "不修改请留空",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "text",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "text",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "text",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "search",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "text",
+            "placeholder": "车主必填",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "text",
+            "placeholder": "车队管理者可选",
+            "name": "",
+            "label": ""
+          }
+        ],
+        "tables": [
+          {
+            "headers": [
+              "ID",
+              "用户名",
+              "姓名",
+              "手机号",
+              "角色",
+              "车牌号",
+              "状态",
+              "创建时间",
+              "操作"
+            ],
+            "rowCount": 7,
+            "hasEmptyText": false,
+            "textPreview": "ID 用户名 姓名 手机号 角色 车牌号 状态 创建时间 操作 7 zhaoliu 赵六 13800000004 运维操作员 正常 2026-06-05 13:49:46 详情 编辑 停用 6 wangwu 王五 13800000003 车队管理者 正常 2026-06-05 13:49:45 详情 编辑 停用 5 lisi 李四 13800000002 车主 京B67890 正常 2026-06-05 13:49:45 详情 编辑 停用 4 zhangsan 张三 13800000001 车主 京A12345 正常 2026-06-05 13:49:45 详情 编辑 停用 3 ops 运维操"
+          }
+        ],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "ETC管理控制台系统管理员仪表盘用户管理OBU设备管理ETC账户管理通行记录异常事件争议处理运维管理结算管理开放接口审计日志系统管理员系统管理员用户管理角色权限说明 车主：车主自助服务权限，可申领OBU、充值、查询通行记录、发起争议申诉 车队管理者：车队管理权限，可管理多车辆账户、批量充值、查看车队通行数据 运维操作员：运维操作权限，可进行设备激活、升级、数据质量监控等技术操作 运营平台：运营管理权限，可查看运营数据、处理异常、管理结算、配置策略，无用户增删权限 系统管理员：拥有系统全部权限，可管理所有用户、设备、账户及所有配置角色筛选添加用户 所有增删改操作均记录审计日志ID用户名姓名手机号角色车牌号状态创建时间操作7zhaoliu赵六13800000004 运维操作员正常2026-06-05 13:49:46 详情编辑停用6wangwu王五13800000003 车队管理者正常2026-06-05 13:49:45 详情编辑停用5lisi李四13800000002 车主京B67890正常2026-06-05 13:49:45 详情编辑停用4zhangsan张三13800000001 车主京A12345正常2026-06-05 13:49:45 详情编辑停用3ops运维操作员13800000011 运维操作员正常2026-06-05 13:49:44 详情编辑停用2platform运营平台管理员13800000010 运营平台正常2026-06-05 13:49:44 详情编辑停用1admin系统管理员13800000000 系统管理员正常2026-06-05 13:49:43 详情编辑停用共 7 条110 条/页 编辑用户运维操作员 权限运维操作权限，可进行设备激活、升级、数据质量监控等技术操作用户名密码姓名手机号身份证号角色运维操作员车牌号车队名此操作将记录审计日志，包括操作人、操作类型、修改内容和IP地址。取 消确 定",
+        "layout": {
+          "viewportWidth": 1792,
+          "viewportHeight": 1215,
+          "scrollWidth": 1792,
+          "scrollHeight": 1215,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89050-codex-repair-20260605-final2-structure-10-操作-编辑",
+          "label": "操作:编辑",
+          "finalUrl": "http://127.0.0.1:49050/users",
+          "title": "省级ETC全生命周期管理控制台",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89050/probe/codex-repair-20260605-final2/may-89050-codex-repair-20260605-final2-structure-10-操作-编辑.json",
+          "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89050/probe/codex-repair-20260605-final2/may-89050-codex-repair-20260605-final2-structure-10-操作-编辑.png",
+          "elementCount": 548,
+          "interactiveCount": 57,
+          "interactiveLabels": [
+            "仪表盘 用户管理 OBU设备管理 ETC账户管理 通行记录 异常事件 争议处理 运维管理 结算管理 开放接口 审计日志",
+            "仪表盘",
+            "用户管理",
+            "OBU设备管理",
+            "ETC账户管理",
+            "通行记录",
+            "异常事件",
+            "争议处理",
+            "运维管理",
+            "结算管理",
+            "开放接口",
+            "审计日志",
+            "搜索用户名/姓名/手机号",
+            "添加用户",
+            "详情",
+            "编辑",
+            "停用",
+            "1",
+            "页码",
+            "编辑用户 运维操作员 权限 运维操作权限，可进行设备激活、升级、数据质量监控等技术操作 用户名 密码 姓名 手机号 身份证号 角色 运维操作员 车牌号 车队名 此操作将记录审计日志，包括操作人、操作类型、修改内容和IP地址。 取 消 确 定",
+            "Close",
+            "zhaoliu",
+            "不修改请留空",
+            "赵六",
+            "13800000004",
+            "110101199005051234",
+            "车主必填",
+            "车队管理者可选",
+            "取 消",
+            "确 定"
+          ]
+        }
+      },
+      {
+        "label": "二层操作:编辑->添加用户",
+        "url": "http://127.0.0.1:49050/users",
+        "title": "省级ETC全生命周期管理控制台",
+        "headings": [
+          "用户管理"
+        ],
+        "navLabels": [
+          "仪表盘",
+          "dashboard",
+          "用户管理",
+          "user",
+          "OBU设备管理",
+          "api",
+          "ETC账户管理",
+          "wallet",
+          "通行记录",
+          "car",
+          "异常事件",
+          "warning",
+          "争议处理",
+          "swap",
+          "运维管理",
+          "tool",
+          "结算管理",
+          "pay-circle",
+          "开放接口",
+          "code",
+          "审计日志",
+          "file-search"
+        ],
+        "buttons": [
+          "添加用户",
+          "详情",
+          "编辑",
+          "停用",
+          "Close",
+          "取 消",
+          "确 定"
+        ],
+        "links": [],
+        "inputs": [
+          {
+            "tag": "input",
+            "type": "search",
+            "placeholder": "搜索用户名/姓名/手机号",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "search",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "search",
+            "placeholder": "",
+            "name": "",
+            "label": "页码"
+          },
+          {
+            "tag": "input",
+            "type": "text",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "password",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "text",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "text",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "text",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "search",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "text",
+            "placeholder": "车主必填",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "text",
+            "placeholder": "车队管理者可选",
+            "name": "",
+            "label": ""
+          }
+        ],
+        "tables": [
+          {
+            "headers": [
+              "ID",
+              "用户名",
+              "姓名",
+              "手机号",
+              "角色",
+              "车牌号",
+              "状态",
+              "创建时间",
+              "操作"
+            ],
+            "rowCount": 7,
+            "hasEmptyText": false,
+            "textPreview": "ID 用户名 姓名 手机号 角色 车牌号 状态 创建时间 操作 7 zhaoliu 赵六 13800000004 运维操作员 正常 2026-06-05 13:49:46 详情 编辑 停用 6 wangwu 王五 13800000003 车队管理者 正常 2026-06-05 13:49:45 详情 编辑 停用 5 lisi 李四 13800000002 车主 京B67890 正常 2026-06-05 13:49:45 详情 编辑 停用 4 zhangsan 张三 13800000001 车主 京A12345 正常 2026-06-05 13:49:45 详情 编辑 停用 3 ops 运维操"
+          }
+        ],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "ETC管理控制台系统管理员仪表盘用户管理OBU设备管理ETC账户管理通行记录异常事件争议处理运维管理结算管理开放接口审计日志系统管理员系统管理员用户管理角色权限说明 车主：车主自助服务权限，可申领OBU、充值、查询通行记录、发起争议申诉 车队管理者：车队管理权限，可管理多车辆账户、批量充值、查看车队通行数据 运维操作员：运维操作权限，可进行设备激活、升级、数据质量监控等技术操作 运营平台：运营管理权限，可查看运营数据、处理异常、管理结算、配置策略，无用户增删权限 系统管理员：拥有系统全部权限，可管理所有用户、设备、账户及所有配置角色筛选添加用户 所有增删改操作均记录审计日志ID用户名姓名手机号角色车牌号状态创建时间操作7zhaoliu赵六13800000004 运维操作员正常2026-06-05 13:49:46 详情编辑停用6wangwu王五13800000003 车队管理者正常2026-06-05 13:49:45 详情编辑停用5lisi李四13800000002 车主京B67890正常2026-06-05 13:49:45 详情编辑停用4zhangsan张三13800000001 车主京A12345正常2026-06-05 13:49:45 详情编辑停用3ops运维操作员13800000011 运维操作员正常2026-06-05 13:49:44 详情编辑停用2platform运营平台管理员13800000010 运营平台正常2026-06-05 13:49:44 详情编辑停用1admin系统管理员13800000000 系统管理员正常2026-06-05 13:49:43 详情编辑停用共 7 条110 条/页 添加用户车主 权限车主自助服务权限，可申领OBU、充值、查询通行记录、发起争议申诉用户名密码姓名手机号身份证号角色车主车牌号车队名此操作将记录审计日志，包括操作人、操作类型、修改内容和IP地址。取 消确 定",
+        "layout": {
+          "viewportWidth": 1824,
+          "viewportHeight": 1215,
+          "scrollWidth": 1824,
+          "scrollHeight": 1215,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89050-codex-repair-20260605-final2-structure-11-二层操作-编辑-添加用户",
+          "label": "二层操作:编辑->添加用户",
+          "finalUrl": "http://127.0.0.1:49050/users",
+          "title": "省级ETC全生命周期管理控制台",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89050/probe/codex-repair-20260605-final2/may-89050-codex-repair-20260605-final2-structure-11-二层操作-编辑-添加用户.json",
+          "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89050/probe/codex-repair-20260605-final2/may-89050-codex-repair-20260605-final2-structure-11-二层操作-编辑-添加用户.png",
+          "elementCount": 550,
+          "interactiveCount": 57,
+          "interactiveLabels": [
+            "仪表盘 用户管理 OBU设备管理 ETC账户管理 通行记录 异常事件 争议处理 运维管理 结算管理 开放接口 审计日志",
+            "仪表盘",
+            "用户管理",
+            "OBU设备管理",
+            "ETC账户管理",
+            "通行记录",
+            "异常事件",
+            "争议处理",
+            "运维管理",
+            "结算管理",
+            "开放接口",
+            "审计日志",
+            "搜索用户名/姓名/手机号",
+            "添加用户",
+            "详情",
+            "编辑",
+            "停用",
+            "1",
+            "页码",
+            "添加用户 车主 权限 车主自助服务权限，可申领OBU、充值、查询通行记录、发起争议申诉 用户名 密码 姓名 手机号 身份证号 角色 车主 车牌号 车队名 此操作将记录审计日志，包括操作人、操作类型、修改内容和IP地址。 取 消 确 定",
+            "Close",
+            "demo_user_241606",
+            "Demo@123456",
+            "演示用户",
+            "13900241606",
+            "110101199001241606",
+            "京A41606",
+            "演示车队",
+            "取 消",
+            "确 定"
+          ]
+        }
+      },
+      {
+        "label": "导航:OBU设备管理",
+        "url": "http://127.0.0.1:49050/obu",
+        "title": "省级ETC全生命周期管理控制台",
+        "headings": [
+          "OBU设备管理"
+        ],
+        "navLabels": [
+          "仪表盘",
+          "dashboard",
+          "用户管理",
+          "user",
+          "OBU设备管理",
+          "api",
+          "ETC账户管理",
+          "wallet",
+          "通行记录",
+          "car",
+          "异常事件",
+          "warning",
+          "争议处理",
+          "swap",
+          "运维管理",
+          "tool",
+          "结算管理",
+          "pay-circle",
+          "开放接口",
+          "code",
+          "审计日志",
+          "file-search"
+        ],
+        "buttons": [
+          "添加设备",
+          "批量激活",
+          "申领OBU",
+          "刷新",
+          "OBU-SN-005",
+          "详情",
+          "编辑",
+          "升级固件",
+          "OBU-SN-004",
+          "OBU-SN-003",
+          "OBU-SN-002",
+          "OBU-SN-001"
+        ],
+        "links": [],
+        "inputs": [
+          {
+            "tag": "input",
+            "type": "search",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "search",
+            "placeholder": "按型号搜索",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "checkbox",
+            "placeholder": "",
+            "name": "",
+            "label": "Select all"
+          },
+          {
+            "tag": "input",
+            "type": "checkbox",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "checkbox",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "checkbox",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "checkbox",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "checkbox",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "search",
+            "placeholder": "",
+            "name": "",
+            "label": "页码"
+          }
+        ],
+        "tables": [
+          {
+            "headers": [
+              "ID",
+              "设备序列号",
+              "持有人",
+              "型号",
+              "固件版本",
+              "升级状态",
+              "升级时间",
+              "激活进度",
+              "申领状态",
+              "生命周期",
+              "激活状态",
+              "批次号"
+            ],
+            "rowCount": 5,
+            "hasEmptyText": false,
+            "textPreview": "ID 设备序列号 持有人 型号 固件版本 升级状态 升级时间 激活进度 申领状态 生命周期 激活状态 批次号 操作 5 OBU-SN-005 运营平台管理员 JL-2000 v2.0.5 未升级 - 0% 已通过 faulty 故障 BATCH-2026-001 详情 编辑 升级固件 4 OBU-SN-004 未绑定 JL-3000 v3.0.0 未升级 - 已通过 ✅ 已激活 已激活 BATCH-2026-002 详情 编辑 升级固件 3 OBU-SN-003 未绑定 JL-3000 v3.0.0 未升级 - 已通过 ✅ 已激活 已激活 BATCH-2026-002 详情 编辑 升级固件 2"
+          }
+        ],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "ETC管理控制台系统管理员仪表盘用户管理OBU设备管理ETC账户管理通行记录异常事件争议处理运维管理结算管理开放接口审计日志系统管理员系统管理员OBU设备管理设备生命周期说明⏳ 待审核：用户申领后等待运营审核❌ 已拒绝：申领审核未通过📦 待激活：设备未激活，可批量激活✅ 已激活：设备正常使用中⏸️ 已停用：设备暂停使用♻️ 已注销：设备生命周期结束激活状态筛选添加设备批量激活申领OBU刷新ID设备序列号持有人型号固件版本升级状态升级时间激活进度申领状态生命周期激活状态批次号操作5OBU-SN-005运营平台管理员JL-2000v2.0.5未升级-0%已通过 faulty故障BATCH-2026-001详情编辑升级固件4OBU-SN-004未绑定JL-3000v3.0.0未升级-已通过✅ 已激活已激活BATCH-2026-002详情编辑升级固件3OBU-SN-003未绑定JL-3000v3.0.0未升级-已通过✅ 已激活已激活BATCH-2026-002详情编辑升级固件2OBU-SN-002运维操作员JL-2000v2.1.0未升级-已通过✅ 已激活已激活BATCH-2026-001详情编辑升级固件1OBU-SN-001运营平台管理员JL-2000v3.2.0升级成功2026-06-05 14:43:46已通过✅ 已激活已激活BATCH-2026-001详情编辑升级固件共 5 条110 条/页",
+        "layout": {
+          "viewportWidth": 1856,
+          "viewportHeight": 1215,
+          "scrollWidth": 1856,
+          "scrollHeight": 1215,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89050-codex-repair-20260605-final2-structure-12-导航-OBU设备管理",
+          "label": "导航:OBU设备管理",
+          "finalUrl": "http://127.0.0.1:49050/obu",
+          "title": "省级ETC全生命周期管理控制台",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89050/probe/codex-repair-20260605-final2/may-89050-codex-repair-20260605-final2-structure-12-导航-OBU设备管理.json",
+          "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89050/probe/codex-repair-20260605-final2/may-89050-codex-repair-20260605-final2-structure-12-导航-OBU设备管理.png",
+          "elementCount": 442,
+          "interactiveCount": 52,
+          "interactiveLabels": [
+            "仪表盘 用户管理 OBU设备管理 ETC账户管理 通行记录 异常事件 争议处理 运维管理 结算管理 开放接口 审计日志",
+            "仪表盘",
+            "用户管理",
+            "OBU设备管理",
+            "ETC账户管理",
+            "通行记录",
+            "异常事件",
+            "争议处理",
+            "运维管理",
+            "结算管理",
+            "开放接口",
+            "审计日志",
+            "按型号搜索",
+            "添加设备",
+            "批量激活",
+            "申领OBU",
+            "刷新",
+            "on",
+            "OBU-SN-005",
+            "详情",
+            "编辑",
+            "升级固件",
+            "OBU-SN-004",
+            "OBU-SN-003",
+            "OBU-SN-002",
+            "OBU-SN-001",
+            "1",
+            "页码"
+          ]
+        }
+      }
+    ],
+    "findings": [],
+    "actionHints": [],
+    "emptyPages": [],
+    "overflowPages": [],
+    "blankPages": [],
+    "apiFailurePaths": [],
+    "goalTerms": [],
+    "clickedActionDescriptors": [
+      {
+        "nav": "仪表盘",
+        "label": "查看监控",
+        "ordinal": 0,
+        "unsafe": false
+      },
+      {
+        "nav": "仪表盘",
+        "label": "查看监控->查 询",
+        "ordinal": 0,
+        "secondary": true,
+        "unsafe": false
+      },
+      {
+        "nav": "仪表盘",
+        "label": "进入查询",
+        "ordinal": 0,
+        "unsafe": false
+      },
+      {
+        "nav": "仪表盘",
+        "label": "进入查询->添加记录",
+        "ordinal": 0,
+        "secondary": true,
+        "unsafe": false
+      },
+      {
+        "nav": "用户管理",
+        "label": "添加用户",
+        "ordinal": 0,
+        "unsafe": false
+      },
+      {
+        "nav": "用户管理",
+        "label": "添加用户->添加用户",
+        "ordinal": 0,
+        "secondary": true,
+        "unsafe": false
+      },
+      {
+        "nav": "用户管理",
+        "label": "编辑",
+        "ordinal": 0,
+        "unsafe": false
+      },
+      {
+        "nav": "用户管理",
+        "label": "编辑->添加用户",
+        "ordinal": 0,
+        "secondary": true,
+        "unsafe": false
+      }
+    ],
+    "secondaryActionClicks": 4,
+    "structureCaptures": [
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89050-codex-repair-20260605-final2-structure-01-首屏",
+        "label": "首屏",
+        "finalUrl": "http://127.0.0.1:49050/",
+        "title": "省级ETC全生命周期管理控制台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89050/probe/codex-repair-20260605-final2/may-89050-codex-repair-20260605-final2-structure-01-首屏.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89050/probe/codex-repair-20260605-final2/may-89050-codex-repair-20260605-final2-structure-01-首屏.png",
+        "elementCount": 310,
+        "interactiveCount": 15,
+        "interactiveLabels": [
+          "仪表盘 用户管理 OBU设备管理 ETC账户管理 通行记录 异常事件 争议处理 运维管理 结算管理 开放接口 审计日志",
+          "仪表盘",
+          "用户管理",
+          "OBU设备管理",
+          "ETC账户管理",
+          "通行记录",
+          "异常事件",
+          "争议处理",
+          "运维管理",
+          "结算管理",
+          "开放接口",
+          "审计日志",
+          "进入查询",
+          "查看监控"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89050-codex-repair-20260605-final2-structure-02-导航-仪表盘",
+        "label": "导航:仪表盘",
+        "finalUrl": "http://127.0.0.1:49050/",
+        "title": "省级ETC全生命周期管理控制台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89050/probe/codex-repair-20260605-final2/may-89050-codex-repair-20260605-final2-structure-02-导航-仪表盘.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89050/probe/codex-repair-20260605-final2/may-89050-codex-repair-20260605-final2-structure-02-导航-仪表盘.png",
+        "elementCount": 310,
+        "interactiveCount": 15,
+        "interactiveLabels": [
+          "仪表盘 用户管理 OBU设备管理 ETC账户管理 通行记录 异常事件 争议处理 运维管理 结算管理 开放接口 审计日志",
+          "仪表盘",
+          "用户管理",
+          "OBU设备管理",
+          "ETC账户管理",
+          "通行记录",
+          "异常事件",
+          "争议处理",
+          "运维管理",
+          "结算管理",
+          "开放接口",
+          "审计日志",
+          "进入查询",
+          "查看监控"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89050-codex-repair-20260605-final2-structure-03-操作-查看监控",
+        "label": "操作:查看监控",
+        "finalUrl": "http://127.0.0.1:49050/operations",
+        "title": "省级ETC全生命周期管理控制台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89050/probe/codex-repair-20260605-final2/may-89050-codex-repair-20260605-final2-structure-03-操作-查看监控.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89050/probe/codex-repair-20260605-final2/may-89050-codex-repair-20260605-final2-structure-03-操作-查看监控.png",
+        "elementCount": 194,
+        "interactiveCount": 25,
+        "interactiveLabels": [
+          "仪表盘 用户管理 OBU设备管理 ETC账户管理 通行记录 异常事件 争议处理 运维管理 结算管理 开放接口 审计日志",
+          "仪表盘",
+          "用户管理",
+          "OBU设备管理",
+          "ETC账户管理",
+          "通行记录",
+          "异常事件",
+          "争议处理",
+          "运维管理",
+          "结算管理",
+          "开放接口",
+          "审计日志",
+          "数据质量监控",
+          "查 询 重 置 新增指标 指标日期 缺失率(%) 延迟率(%) 告警数 详情 2026-05-03 0.03 0.02 7 {\"missing_gantries\": 8, \"delayed_records\": 5} 2026-05-02 0.01 0.03 5 {\"missing_gantries\": 2, \"delayed_records\": 8} 202",
+          "开始日期",
+          "结束日期",
+          "查 询",
+          "重 置",
+          "新增指标",
+          "1"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89050-codex-repair-20260605-final2-structure-04-二层操作-查看监控-查-询",
+        "label": "二层操作:查看监控->查 询",
+        "finalUrl": "http://127.0.0.1:49050/operations",
+        "title": "省级ETC全生命周期管理控制台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89050/probe/codex-repair-20260605-final2/may-89050-codex-repair-20260605-final2-structure-04-二层操作-查看监控-查-询.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89050/probe/codex-repair-20260605-final2/may-89050-codex-repair-20260605-final2-structure-04-二层操作-查看监控-查-询.png",
+        "elementCount": 196,
+        "interactiveCount": 25,
+        "interactiveLabels": [
+          "仪表盘 用户管理 OBU设备管理 ETC账户管理 通行记录 异常事件 争议处理 运维管理 结算管理 开放接口 审计日志",
+          "仪表盘",
+          "用户管理",
+          "OBU设备管理",
+          "ETC账户管理",
+          "通行记录",
+          "异常事件",
+          "争议处理",
+          "运维管理",
+          "结算管理",
+          "开放接口",
+          "审计日志",
+          "数据质量监控",
+          "查 询 重 置 新增指标 指标日期 缺失率(%) 延迟率(%) 告警数 详情 2026-05-03 0.03 0.02 7 {\"missing_gantries\": 8, \"delayed_records\": 5} 2026-05-02 0.01 0.03 5 {\"missing_gantries\": 2, \"delayed_records\": 8} 202",
+          "开始日期",
+          "结束日期",
+          "查 询",
+          "重 置",
+          "新增指标",
+          "1"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89050-codex-repair-20260605-final2-structure-05-操作-进入查询",
+        "label": "操作:进入查询",
+        "finalUrl": "http://127.0.0.1:49050/toll",
+        "title": "省级ETC全生命周期管理控制台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89050/probe/codex-repair-20260605-final2/may-89050-codex-repair-20260605-final2-structure-05-操作-进入查询.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89050/probe/codex-repair-20260605-final2/may-89050-codex-repair-20260605-final2-structure-05-操作-进入查询.png",
+        "elementCount": 486,
+        "interactiveCount": 51,
+        "interactiveLabels": [
+          "仪表盘 用户管理 OBU设备管理 ETC账户管理 通行记录 异常事件 争议处理 运维管理 结算管理 开放接口 审计日志",
+          "仪表盘",
+          "用户管理",
+          "OBU设备管理",
+          "ETC账户管理",
+          "通行记录",
+          "异常事件",
+          "争议处理",
+          "运维管理",
+          "结算管理",
+          "开放接口",
+          "审计日志",
+          "开始日期",
+          "结束日期",
+          "车牌号",
+          "门架ID",
+          "收费站ID",
+          "查 询",
+          "重 置",
+          "添加记录",
+          "详情",
+          "月结单",
+          "申诉",
+          "1",
+          "页码",
+          "查询轨迹"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89050-codex-repair-20260605-final2-structure-06-二层操作-进入查询-添加记录",
+        "label": "二层操作:进入查询->添加记录",
+        "finalUrl": "http://127.0.0.1:49050/toll",
+        "title": "省级ETC全生命周期管理控制台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89050/probe/codex-repair-20260605-final2/may-89050-codex-repair-20260605-final2-structure-06-二层操作-进入查询-添加记录.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89050/probe/codex-repair-20260605-final2/may-89050-codex-repair-20260605-final2-structure-06-二层操作-进入查询-添加记录.png",
+        "elementCount": 657,
+        "interactiveCount": 71,
+        "interactiveLabels": [
+          "仪表盘 用户管理 OBU设备管理 ETC账户管理 通行记录 异常事件 争议处理 运维管理 结算管理 开放接口 审计日志",
+          "仪表盘",
+          "用户管理",
+          "OBU设备管理",
+          "ETC账户管理",
+          "通行记录",
+          "异常事件",
+          "争议处理",
+          "运维管理",
+          "结算管理",
+          "开放接口",
+          "审计日志",
+          "开始日期",
+          "结束日期",
+          "车牌号",
+          "门架ID",
+          "收费站ID",
+          "查 询",
+          "重 置",
+          "添加记录",
+          "详情",
+          "月结单",
+          "申诉",
+          "1",
+          "页码",
+          "查询轨迹",
+          "添加收费记录 账户ID 车牌号 门架ID 门架名称 收费站ID 收费站名称 入口时间 出口时间 费用(元) 路段 轨迹证据链接(可选) 校验规则：门架/收费站至少填一个；出口时间必须晚于入口；费用≥0；通行时间<1分钟或>8小时将触发异常检测；费用>500元标记复核。 取 消 提 交",
+          "Close",
+          "Increase Value",
+          "Decrease Value"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89050-codex-repair-20260605-final2-structure-07-导航-用户管理",
+        "label": "导航:用户管理",
+        "finalUrl": "http://127.0.0.1:49050/users",
+        "title": "省级ETC全生命周期管理控制台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89050/probe/codex-repair-20260605-final2/may-89050-codex-repair-20260605-final2-structure-07-导航-用户管理.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89050/probe/codex-repair-20260605-final2/may-89050-codex-repair-20260605-final2-structure-07-导航-用户管理.png",
+        "elementCount": 421,
+        "interactiveCount": 44,
+        "interactiveLabels": [
+          "仪表盘 用户管理 OBU设备管理 ETC账户管理 通行记录 异常事件 争议处理 运维管理 结算管理 开放接口 审计日志",
+          "仪表盘",
+          "用户管理",
+          "OBU设备管理",
+          "ETC账户管理",
+          "通行记录",
+          "异常事件",
+          "争议处理",
+          "运维管理",
+          "结算管理",
+          "开放接口",
+          "审计日志",
+          "搜索用户名/姓名/手机号",
+          "添加用户",
+          "详情",
+          "编辑",
+          "停用",
+          "1",
+          "页码"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89050-codex-repair-20260605-final2-structure-08-操作-添加用户",
+        "label": "操作:添加用户",
+        "finalUrl": "http://127.0.0.1:49050/users",
+        "title": "省级ETC全生命周期管理控制台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89050/probe/codex-repair-20260605-final2/may-89050-codex-repair-20260605-final2-structure-08-操作-添加用户.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89050/probe/codex-repair-20260605-final2/may-89050-codex-repair-20260605-final2-structure-08-操作-添加用户.png",
+        "elementCount": 550,
+        "interactiveCount": 57,
+        "interactiveLabels": [
+          "仪表盘 用户管理 OBU设备管理 ETC账户管理 通行记录 异常事件 争议处理 运维管理 结算管理 开放接口 审计日志",
+          "仪表盘",
+          "用户管理",
+          "OBU设备管理",
+          "ETC账户管理",
+          "通行记录",
+          "异常事件",
+          "争议处理",
+          "运维管理",
+          "结算管理",
+          "开放接口",
+          "审计日志",
+          "搜索用户名/姓名/手机号",
+          "添加用户",
+          "详情",
+          "编辑",
+          "停用",
+          "1",
+          "页码",
+          "添加用户 车主 权限 车主自助服务权限，可申领OBU、充值、查询通行记录、发起争议申诉 用户名 密码 姓名 手机号 身份证号 角色 车主 车牌号 车队名 此操作将记录审计日志，包括操作人、操作类型、修改内容和IP地址。 取 消 确 定",
+          "Close",
+          "demo_user_234416",
+          "Demo@123456",
+          "演示用户",
+          "13900234416",
+          "110101199001234416",
+          "京A34416",
+          "演示车队",
+          "取 消",
+          "确 定"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89050-codex-repair-20260605-final2-structure-09-二层操作-添加用户-添加用户",
+        "label": "二层操作:添加用户->添加用户",
+        "finalUrl": "http://127.0.0.1:49050/users",
+        "title": "省级ETC全生命周期管理控制台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89050/probe/codex-repair-20260605-final2/may-89050-codex-repair-20260605-final2-structure-09-二层操作-添加用户-添加用户.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89050/probe/codex-repair-20260605-final2/may-89050-codex-repair-20260605-final2-structure-09-二层操作-添加用户-添加用户.png",
+        "elementCount": 550,
+        "interactiveCount": 57,
+        "interactiveLabels": [
+          "仪表盘 用户管理 OBU设备管理 ETC账户管理 通行记录 异常事件 争议处理 运维管理 结算管理 开放接口 审计日志",
+          "仪表盘",
+          "用户管理",
+          "OBU设备管理",
+          "ETC账户管理",
+          "通行记录",
+          "异常事件",
+          "争议处理",
+          "运维管理",
+          "结算管理",
+          "开放接口",
+          "审计日志",
+          "搜索用户名/姓名/手机号",
+          "添加用户",
+          "详情",
+          "编辑",
+          "停用",
+          "1",
+          "页码",
+          "添加用户 车主 权限 车主自助服务权限，可申领OBU、充值、查询通行记录、发起争议申诉 用户名 密码 姓名 手机号 身份证号 角色 车主 车牌号 车队名 此操作将记录审计日志，包括操作人、操作类型、修改内容和IP地址。 取 消 确 定",
+          "Close",
+          "demo_user_236700",
+          "Demo@123456",
+          "演示用户",
+          "13900236700",
+          "110101199001236700",
+          "京A36700",
+          "演示车队",
+          "取 消",
+          "确 定"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89050-codex-repair-20260605-final2-structure-10-操作-编辑",
+        "label": "操作:编辑",
+        "finalUrl": "http://127.0.0.1:49050/users",
+        "title": "省级ETC全生命周期管理控制台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89050/probe/codex-repair-20260605-final2/may-89050-codex-repair-20260605-final2-structure-10-操作-编辑.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89050/probe/codex-repair-20260605-final2/may-89050-codex-repair-20260605-final2-structure-10-操作-编辑.png",
+        "elementCount": 548,
+        "interactiveCount": 57,
+        "interactiveLabels": [
+          "仪表盘 用户管理 OBU设备管理 ETC账户管理 通行记录 异常事件 争议处理 运维管理 结算管理 开放接口 审计日志",
+          "仪表盘",
+          "用户管理",
+          "OBU设备管理",
+          "ETC账户管理",
+          "通行记录",
+          "异常事件",
+          "争议处理",
+          "运维管理",
+          "结算管理",
+          "开放接口",
+          "审计日志",
+          "搜索用户名/姓名/手机号",
+          "添加用户",
+          "详情",
+          "编辑",
+          "停用",
+          "1",
+          "页码",
+          "编辑用户 运维操作员 权限 运维操作权限，可进行设备激活、升级、数据质量监控等技术操作 用户名 密码 姓名 手机号 身份证号 角色 运维操作员 车牌号 车队名 此操作将记录审计日志，包括操作人、操作类型、修改内容和IP地址。 取 消 确 定",
+          "Close",
+          "zhaoliu",
+          "不修改请留空",
+          "赵六",
+          "13800000004",
+          "110101199005051234",
+          "车主必填",
+          "车队管理者可选",
+          "取 消",
+          "确 定"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89050-codex-repair-20260605-final2-structure-11-二层操作-编辑-添加用户",
+        "label": "二层操作:编辑->添加用户",
+        "finalUrl": "http://127.0.0.1:49050/users",
+        "title": "省级ETC全生命周期管理控制台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89050/probe/codex-repair-20260605-final2/may-89050-codex-repair-20260605-final2-structure-11-二层操作-编辑-添加用户.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89050/probe/codex-repair-20260605-final2/may-89050-codex-repair-20260605-final2-structure-11-二层操作-编辑-添加用户.png",
+        "elementCount": 550,
+        "interactiveCount": 57,
+        "interactiveLabels": [
+          "仪表盘 用户管理 OBU设备管理 ETC账户管理 通行记录 异常事件 争议处理 运维管理 结算管理 开放接口 审计日志",
+          "仪表盘",
+          "用户管理",
+          "OBU设备管理",
+          "ETC账户管理",
+          "通行记录",
+          "异常事件",
+          "争议处理",
+          "运维管理",
+          "结算管理",
+          "开放接口",
+          "审计日志",
+          "搜索用户名/姓名/手机号",
+          "添加用户",
+          "详情",
+          "编辑",
+          "停用",
+          "1",
+          "页码",
+          "添加用户 车主 权限 车主自助服务权限，可申领OBU、充值、查询通行记录、发起争议申诉 用户名 密码 姓名 手机号 身份证号 角色 车主 车牌号 车队名 此操作将记录审计日志，包括操作人、操作类型、修改内容和IP地址。 取 消 确 定",
+          "Close",
+          "demo_user_241606",
+          "Demo@123456",
+          "演示用户",
+          "13900241606",
+          "110101199001241606",
+          "京A41606",
+          "演示车队",
+          "取 消",
+          "确 定"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89050-codex-repair-20260605-final2-structure-12-导航-OBU设备管理",
+        "label": "导航:OBU设备管理",
+        "finalUrl": "http://127.0.0.1:49050/obu",
+        "title": "省级ETC全生命周期管理控制台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89050/probe/codex-repair-20260605-final2/may-89050-codex-repair-20260605-final2-structure-12-导航-OBU设备管理.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89050/probe/codex-repair-20260605-final2/may-89050-codex-repair-20260605-final2-structure-12-导航-OBU设备管理.png",
+        "elementCount": 442,
+        "interactiveCount": 52,
+        "interactiveLabels": [
+          "仪表盘 用户管理 OBU设备管理 ETC账户管理 通行记录 异常事件 争议处理 运维管理 结算管理 开放接口 审计日志",
+          "仪表盘",
+          "用户管理",
+          "OBU设备管理",
+          "ETC账户管理",
+          "通行记录",
+          "异常事件",
+          "争议处理",
+          "运维管理",
+          "结算管理",
+          "开放接口",
+          "审计日志",
+          "按型号搜索",
+          "添加设备",
+          "批量激活",
+          "申领OBU",
+          "刷新",
+          "on",
+          "OBU-SN-005",
+          "详情",
+          "编辑",
+          "升级固件",
+          "OBU-SN-004",
+          "OBU-SN-003",
+          "OBU-SN-002",
+          "OBU-SN-001",
+          "1",
+          "页码"
+        ]
+      }
+    ],
+    "representativeScreenshotUrl": "http://127.0.0.1:49050/",
+    "representativeScreenshotLabel": "仪表盘概览"
+  },
+  "websiteStructureCapture": {
+    "module": "website_structure_capture",
+    "captureCount": 12,
+    "captures": [
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89050-codex-repair-20260605-final2-structure-01-首屏",
+        "label": "首屏",
+        "finalUrl": "http://127.0.0.1:49050/",
+        "title": "省级ETC全生命周期管理控制台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89050/probe/codex-repair-20260605-final2/may-89050-codex-repair-20260605-final2-structure-01-首屏.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89050/probe/codex-repair-20260605-final2/may-89050-codex-repair-20260605-final2-structure-01-首屏.png",
+        "elementCount": 310,
+        "interactiveCount": 15,
+        "interactiveLabels": [
+          "仪表盘 用户管理 OBU设备管理 ETC账户管理 通行记录 异常事件 争议处理 运维管理 结算管理 开放接口 审计日志",
+          "仪表盘",
+          "用户管理",
+          "OBU设备管理",
+          "ETC账户管理",
+          "通行记录",
+          "异常事件",
+          "争议处理",
+          "运维管理",
+          "结算管理",
+          "开放接口",
+          "审计日志",
+          "进入查询",
+          "查看监控"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89050-codex-repair-20260605-final2-structure-02-导航-仪表盘",
+        "label": "导航:仪表盘",
+        "finalUrl": "http://127.0.0.1:49050/",
+        "title": "省级ETC全生命周期管理控制台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89050/probe/codex-repair-20260605-final2/may-89050-codex-repair-20260605-final2-structure-02-导航-仪表盘.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89050/probe/codex-repair-20260605-final2/may-89050-codex-repair-20260605-final2-structure-02-导航-仪表盘.png",
+        "elementCount": 310,
+        "interactiveCount": 15,
+        "interactiveLabels": [
+          "仪表盘 用户管理 OBU设备管理 ETC账户管理 通行记录 异常事件 争议处理 运维管理 结算管理 开放接口 审计日志",
+          "仪表盘",
+          "用户管理",
+          "OBU设备管理",
+          "ETC账户管理",
+          "通行记录",
+          "异常事件",
+          "争议处理",
+          "运维管理",
+          "结算管理",
+          "开放接口",
+          "审计日志",
+          "进入查询",
+          "查看监控"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89050-codex-repair-20260605-final2-structure-03-操作-查看监控",
+        "label": "操作:查看监控",
+        "finalUrl": "http://127.0.0.1:49050/operations",
+        "title": "省级ETC全生命周期管理控制台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89050/probe/codex-repair-20260605-final2/may-89050-codex-repair-20260605-final2-structure-03-操作-查看监控.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89050/probe/codex-repair-20260605-final2/may-89050-codex-repair-20260605-final2-structure-03-操作-查看监控.png",
+        "elementCount": 194,
+        "interactiveCount": 25,
+        "interactiveLabels": [
+          "仪表盘 用户管理 OBU设备管理 ETC账户管理 通行记录 异常事件 争议处理 运维管理 结算管理 开放接口 审计日志",
+          "仪表盘",
+          "用户管理",
+          "OBU设备管理",
+          "ETC账户管理",
+          "通行记录",
+          "异常事件",
+          "争议处理",
+          "运维管理",
+          "结算管理",
+          "开放接口",
+          "审计日志",
+          "数据质量监控",
+          "查 询 重 置 新增指标 指标日期 缺失率(%) 延迟率(%) 告警数 详情 2026-05-03 0.03 0.02 7 {\"missing_gantries\": 8, \"delayed_records\": 5} 2026-05-02 0.01 0.03 5 {\"missing_gantries\": 2, \"delayed_records\": 8} 202",
+          "开始日期",
+          "结束日期",
+          "查 询",
+          "重 置",
+          "新增指标",
+          "1"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89050-codex-repair-20260605-final2-structure-04-二层操作-查看监控-查-询",
+        "label": "二层操作:查看监控->查 询",
+        "finalUrl": "http://127.0.0.1:49050/operations",
+        "title": "省级ETC全生命周期管理控制台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89050/probe/codex-repair-20260605-final2/may-89050-codex-repair-20260605-final2-structure-04-二层操作-查看监控-查-询.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89050/probe/codex-repair-20260605-final2/may-89050-codex-repair-20260605-final2-structure-04-二层操作-查看监控-查-询.png",
+        "elementCount": 196,
+        "interactiveCount": 25,
+        "interactiveLabels": [
+          "仪表盘 用户管理 OBU设备管理 ETC账户管理 通行记录 异常事件 争议处理 运维管理 结算管理 开放接口 审计日志",
+          "仪表盘",
+          "用户管理",
+          "OBU设备管理",
+          "ETC账户管理",
+          "通行记录",
+          "异常事件",
+          "争议处理",
+          "运维管理",
+          "结算管理",
+          "开放接口",
+          "审计日志",
+          "数据质量监控",
+          "查 询 重 置 新增指标 指标日期 缺失率(%) 延迟率(%) 告警数 详情 2026-05-03 0.03 0.02 7 {\"missing_gantries\": 8, \"delayed_records\": 5} 2026-05-02 0.01 0.03 5 {\"missing_gantries\": 2, \"delayed_records\": 8} 202",
+          "开始日期",
+          "结束日期",
+          "查 询",
+          "重 置",
+          "新增指标",
+          "1"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89050-codex-repair-20260605-final2-structure-05-操作-进入查询",
+        "label": "操作:进入查询",
+        "finalUrl": "http://127.0.0.1:49050/toll",
+        "title": "省级ETC全生命周期管理控制台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89050/probe/codex-repair-20260605-final2/may-89050-codex-repair-20260605-final2-structure-05-操作-进入查询.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89050/probe/codex-repair-20260605-final2/may-89050-codex-repair-20260605-final2-structure-05-操作-进入查询.png",
+        "elementCount": 486,
+        "interactiveCount": 51,
+        "interactiveLabels": [
+          "仪表盘 用户管理 OBU设备管理 ETC账户管理 通行记录 异常事件 争议处理 运维管理 结算管理 开放接口 审计日志",
+          "仪表盘",
+          "用户管理",
+          "OBU设备管理",
+          "ETC账户管理",
+          "通行记录",
+          "异常事件",
+          "争议处理",
+          "运维管理",
+          "结算管理",
+          "开放接口",
+          "审计日志",
+          "开始日期",
+          "结束日期",
+          "车牌号",
+          "门架ID",
+          "收费站ID",
+          "查 询",
+          "重 置",
+          "添加记录",
+          "详情",
+          "月结单",
+          "申诉",
+          "1",
+          "页码",
+          "查询轨迹"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89050-codex-repair-20260605-final2-structure-06-二层操作-进入查询-添加记录",
+        "label": "二层操作:进入查询->添加记录",
+        "finalUrl": "http://127.0.0.1:49050/toll",
+        "title": "省级ETC全生命周期管理控制台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89050/probe/codex-repair-20260605-final2/may-89050-codex-repair-20260605-final2-structure-06-二层操作-进入查询-添加记录.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89050/probe/codex-repair-20260605-final2/may-89050-codex-repair-20260605-final2-structure-06-二层操作-进入查询-添加记录.png",
+        "elementCount": 657,
+        "interactiveCount": 71,
+        "interactiveLabels": [
+          "仪表盘 用户管理 OBU设备管理 ETC账户管理 通行记录 异常事件 争议处理 运维管理 结算管理 开放接口 审计日志",
+          "仪表盘",
+          "用户管理",
+          "OBU设备管理",
+          "ETC账户管理",
+          "通行记录",
+          "异常事件",
+          "争议处理",
+          "运维管理",
+          "结算管理",
+          "开放接口",
+          "审计日志",
+          "开始日期",
+          "结束日期",
+          "车牌号",
+          "门架ID",
+          "收费站ID",
+          "查 询",
+          "重 置",
+          "添加记录",
+          "详情",
+          "月结单",
+          "申诉",
+          "1",
+          "页码",
+          "查询轨迹",
+          "添加收费记录 账户ID 车牌号 门架ID 门架名称 收费站ID 收费站名称 入口时间 出口时间 费用(元) 路段 轨迹证据链接(可选) 校验规则：门架/收费站至少填一个；出口时间必须晚于入口；费用≥0；通行时间<1分钟或>8小时将触发异常检测；费用>500元标记复核。 取 消 提 交",
+          "Close",
+          "Increase Value",
+          "Decrease Value"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89050-codex-repair-20260605-final2-structure-07-导航-用户管理",
+        "label": "导航:用户管理",
+        "finalUrl": "http://127.0.0.1:49050/users",
+        "title": "省级ETC全生命周期管理控制台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89050/probe/codex-repair-20260605-final2/may-89050-codex-repair-20260605-final2-structure-07-导航-用户管理.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89050/probe/codex-repair-20260605-final2/may-89050-codex-repair-20260605-final2-structure-07-导航-用户管理.png",
+        "elementCount": 421,
+        "interactiveCount": 44,
+        "interactiveLabels": [
+          "仪表盘 用户管理 OBU设备管理 ETC账户管理 通行记录 异常事件 争议处理 运维管理 结算管理 开放接口 审计日志",
+          "仪表盘",
+          "用户管理",
+          "OBU设备管理",
+          "ETC账户管理",
+          "通行记录",
+          "异常事件",
+          "争议处理",
+          "运维管理",
+          "结算管理",
+          "开放接口",
+          "审计日志",
+          "搜索用户名/姓名/手机号",
+          "添加用户",
+          "详情",
+          "编辑",
+          "停用",
+          "1",
+          "页码"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89050-codex-repair-20260605-final2-structure-08-操作-添加用户",
+        "label": "操作:添加用户",
+        "finalUrl": "http://127.0.0.1:49050/users",
+        "title": "省级ETC全生命周期管理控制台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89050/probe/codex-repair-20260605-final2/may-89050-codex-repair-20260605-final2-structure-08-操作-添加用户.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89050/probe/codex-repair-20260605-final2/may-89050-codex-repair-20260605-final2-structure-08-操作-添加用户.png",
+        "elementCount": 550,
+        "interactiveCount": 57,
+        "interactiveLabels": [
+          "仪表盘 用户管理 OBU设备管理 ETC账户管理 通行记录 异常事件 争议处理 运维管理 结算管理 开放接口 审计日志",
+          "仪表盘",
+          "用户管理",
+          "OBU设备管理",
+          "ETC账户管理",
+          "通行记录",
+          "异常事件",
+          "争议处理",
+          "运维管理",
+          "结算管理",
+          "开放接口",
+          "审计日志",
+          "搜索用户名/姓名/手机号",
+          "添加用户",
+          "详情",
+          "编辑",
+          "停用",
+          "1",
+          "页码",
+          "添加用户 车主 权限 车主自助服务权限，可申领OBU、充值、查询通行记录、发起争议申诉 用户名 密码 姓名 手机号 身份证号 角色 车主 车牌号 车队名 此操作将记录审计日志，包括操作人、操作类型、修改内容和IP地址。 取 消 确 定",
+          "Close",
+          "demo_user_234416",
+          "Demo@123456",
+          "演示用户",
+          "13900234416",
+          "110101199001234416",
+          "京A34416",
+          "演示车队",
+          "取 消",
+          "确 定"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89050-codex-repair-20260605-final2-structure-09-二层操作-添加用户-添加用户",
+        "label": "二层操作:添加用户->添加用户",
+        "finalUrl": "http://127.0.0.1:49050/users",
+        "title": "省级ETC全生命周期管理控制台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89050/probe/codex-repair-20260605-final2/may-89050-codex-repair-20260605-final2-structure-09-二层操作-添加用户-添加用户.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89050/probe/codex-repair-20260605-final2/may-89050-codex-repair-20260605-final2-structure-09-二层操作-添加用户-添加用户.png",
+        "elementCount": 550,
+        "interactiveCount": 57,
+        "interactiveLabels": [
+          "仪表盘 用户管理 OBU设备管理 ETC账户管理 通行记录 异常事件 争议处理 运维管理 结算管理 开放接口 审计日志",
+          "仪表盘",
+          "用户管理",
+          "OBU设备管理",
+          "ETC账户管理",
+          "通行记录",
+          "异常事件",
+          "争议处理",
+          "运维管理",
+          "结算管理",
+          "开放接口",
+          "审计日志",
+          "搜索用户名/姓名/手机号",
+          "添加用户",
+          "详情",
+          "编辑",
+          "停用",
+          "1",
+          "页码",
+          "添加用户 车主 权限 车主自助服务权限，可申领OBU、充值、查询通行记录、发起争议申诉 用户名 密码 姓名 手机号 身份证号 角色 车主 车牌号 车队名 此操作将记录审计日志，包括操作人、操作类型、修改内容和IP地址。 取 消 确 定",
+          "Close",
+          "demo_user_236700",
+          "Demo@123456",
+          "演示用户",
+          "13900236700",
+          "110101199001236700",
+          "京A36700",
+          "演示车队",
+          "取 消",
+          "确 定"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89050-codex-repair-20260605-final2-structure-10-操作-编辑",
+        "label": "操作:编辑",
+        "finalUrl": "http://127.0.0.1:49050/users",
+        "title": "省级ETC全生命周期管理控制台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89050/probe/codex-repair-20260605-final2/may-89050-codex-repair-20260605-final2-structure-10-操作-编辑.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89050/probe/codex-repair-20260605-final2/may-89050-codex-repair-20260605-final2-structure-10-操作-编辑.png",
+        "elementCount": 548,
+        "interactiveCount": 57,
+        "interactiveLabels": [
+          "仪表盘 用户管理 OBU设备管理 ETC账户管理 通行记录 异常事件 争议处理 运维管理 结算管理 开放接口 审计日志",
+          "仪表盘",
+          "用户管理",
+          "OBU设备管理",
+          "ETC账户管理",
+          "通行记录",
+          "异常事件",
+          "争议处理",
+          "运维管理",
+          "结算管理",
+          "开放接口",
+          "审计日志",
+          "搜索用户名/姓名/手机号",
+          "添加用户",
+          "详情",
+          "编辑",
+          "停用",
+          "1",
+          "页码",
+          "编辑用户 运维操作员 权限 运维操作权限，可进行设备激活、升级、数据质量监控等技术操作 用户名 密码 姓名 手机号 身份证号 角色 运维操作员 车牌号 车队名 此操作将记录审计日志，包括操作人、操作类型、修改内容和IP地址。 取 消 确 定",
+          "Close",
+          "zhaoliu",
+          "不修改请留空",
+          "赵六",
+          "13800000004",
+          "110101199005051234",
+          "车主必填",
+          "车队管理者可选",
+          "取 消",
+          "确 定"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89050-codex-repair-20260605-final2-structure-11-二层操作-编辑-添加用户",
+        "label": "二层操作:编辑->添加用户",
+        "finalUrl": "http://127.0.0.1:49050/users",
+        "title": "省级ETC全生命周期管理控制台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89050/probe/codex-repair-20260605-final2/may-89050-codex-repair-20260605-final2-structure-11-二层操作-编辑-添加用户.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89050/probe/codex-repair-20260605-final2/may-89050-codex-repair-20260605-final2-structure-11-二层操作-编辑-添加用户.png",
+        "elementCount": 550,
+        "interactiveCount": 57,
+        "interactiveLabels": [
+          "仪表盘 用户管理 OBU设备管理 ETC账户管理 通行记录 异常事件 争议处理 运维管理 结算管理 开放接口 审计日志",
+          "仪表盘",
+          "用户管理",
+          "OBU设备管理",
+          "ETC账户管理",
+          "通行记录",
+          "异常事件",
+          "争议处理",
+          "运维管理",
+          "结算管理",
+          "开放接口",
+          "审计日志",
+          "搜索用户名/姓名/手机号",
+          "添加用户",
+          "详情",
+          "编辑",
+          "停用",
+          "1",
+          "页码",
+          "添加用户 车主 权限 车主自助服务权限，可申领OBU、充值、查询通行记录、发起争议申诉 用户名 密码 姓名 手机号 身份证号 角色 车主 车牌号 车队名 此操作将记录审计日志，包括操作人、操作类型、修改内容和IP地址。 取 消 确 定",
+          "Close",
+          "demo_user_241606",
+          "Demo@123456",
+          "演示用户",
+          "13900241606",
+          "110101199001241606",
+          "京A41606",
+          "演示车队",
+          "取 消",
+          "确 定"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89050-codex-repair-20260605-final2-structure-12-导航-OBU设备管理",
+        "label": "导航:OBU设备管理",
+        "finalUrl": "http://127.0.0.1:49050/obu",
+        "title": "省级ETC全生命周期管理控制台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89050/probe/codex-repair-20260605-final2/may-89050-codex-repair-20260605-final2-structure-12-导航-OBU设备管理.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89050/probe/codex-repair-20260605-final2/may-89050-codex-repair-20260605-final2-structure-12-导航-OBU设备管理.png",
+        "elementCount": 442,
+        "interactiveCount": 52,
+        "interactiveLabels": [
+          "仪表盘 用户管理 OBU设备管理 ETC账户管理 通行记录 异常事件 争议处理 运维管理 结算管理 开放接口 审计日志",
+          "仪表盘",
+          "用户管理",
+          "OBU设备管理",
+          "ETC账户管理",
+          "通行记录",
+          "异常事件",
+          "争议处理",
+          "运维管理",
+          "结算管理",
+          "开放接口",
+          "审计日志",
+          "按型号搜索",
+          "添加设备",
+          "批量激活",
+          "申领OBU",
+          "刷新",
+          "on",
+          "OBU-SN-005",
+          "详情",
+          "编辑",
+          "升级固件",
+          "OBU-SN-004",
+          "OBU-SN-003",
+          "OBU-SN-002",
+          "OBU-SN-001",
+          "1",
+          "页码"
+        ]
+      }
+    ]
+  },
+  "screenshotMetrics": {
+    "width": 1888,
+    "height": 1215,
+    "scrollWidth": 1856,
+    "scrollHeight": 1215
+  },
+  "initialBodyTextPreview": "省级ETC管理控制台\n\n全生命周期管理平台\n\n登录进入\n演示账号（点击自动填入并登录）\n admin · 系统管理员\n platform · 运营平台\n ops · 运维操作员\n zhangsan · 车主\n wangwu · 车队管理者\nadmin:admin123 / platform:platform123 / ops:ops123 / zhangsan:123456 / wangwu:123456\n登录失败将自动记录审计日志 · ETC Lifecycle Console v1.0",
+  "bodyTextPreview": "ETC管理控制台\n系统管理员\n仪表盘\n用户管理\nOBU设备管理\nETC账户管理\n通行记录\n异常事件\n争议处理\n运维管理\n结算管理\n开放接口\n审计日志\n系统管理员\n系统管理员\n仪表盘概览\n搜索/筛选通行记录\n进入查询\n查询结果覆盖车牌号、门架、收费站和日期筛选，支持查看通行详情、关联异常事件、发起争议申诉。\n用户数\n7\n设备数\n5\n活跃设备\n4\nETC账户\n2\n总余额\n¥5,280.50\n今日通行\n3\n今日金额\n¥1,800.00\n待处理异常\n2\n黑名单\n2\n通行数据质量监控\n查看监控\n当前缺失率\n0%\n正常\n当前延迟率\n0%\n正常\n7日平均缺失率\n0%\n7日平均延迟率\n0%\n7日告警数\n 0\n异常事件分布（按类型）\ndeduction_failed：1\nduplicate_billing：1\npath_missing：1\n异常事件分布（按状态）\npending：1\nprocessing：1\nresolved：1\n设备状态分布\nactive\n4(80.0%)\nactive\nfaulty\n1(20.0%)\nfaulty",
+  "apiBase": "http://127.0.0.1:59050",
+  "businessGoalPreview": "",
+  "apiResponses": [
+    {
+      "method": "POST",
+      "status": 200,
+      "url": "http://127.0.0.1:49050/api/auth/login"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49050/api/dashboard/stats"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49050/api/dashboard/exception-distribution"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49050/api/dashboard/device-status"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49050/api/dashboard/data-quality"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49050/api/operations/data-quality"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49050/api/operations/data-quality"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49050/api/dashboard/stats"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49050/api/dashboard/exception-distribution"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49050/api/dashboard/device-status"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49050/api/dashboard/data-quality"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49050/api/toll?page=1&pageSize=10"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49050/api/dashboard/stats"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49050/api/dashboard/exception-distribution"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49050/api/dashboard/device-status"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49050/api/dashboard/data-quality"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49050/api/users?page=1&pageSize=10"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49050/api/obu?page=1&pageSize=10"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49050/api/dashboard/stats"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49050/api/dashboard/exception-distribution"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49050/api/dashboard/device-status"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49050/api/dashboard/data-quality"
+    }
+  ],
+  "apiChecks": [
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59050/api/health",
+      "path": "/api/health",
+      "status": 200,
+      "ok": true,
+      "bodyPreview": "{\"status\":\"ok\",\"timestamp\":\"2026-06-05T14:54:09.814Z\",\"version\":\"1.0.0\"}"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59050/api/dashboard/stats",
+      "path": "/api/dashboard/stats",
+      "status": 200,
+      "ok": true,
+      "bodyPreview": "{\"user_count\":7,\"device_count\":5,\"active_device_count\":4,\"account_count\":2,\"total_balance\":5280.5,\"today_toll_count\":3,\"today_toll_amount\":1800,\"pending_exception_count\":2,\"blacklist_count\":2}"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59050/api/dashboard/exception-distribution",
+      "path": "/api/dashboard/exception-distribution",
+      "status": 200,
+      "ok": true,
+      "bodyPreview": "{\"by_type\":[{\"type\":\"deduction_failed\",\"count\":1},{\"type\":\"duplicate_billing\",\"count\":1},{\"type\":\"path_missing\",\"count\":1}],\"by_status\":[{\"status\":\"pending\",\"count\":1},{\"status\":\"processing\",\"count\":1},{\"status\":\"resolved\",\"count\":1}]}"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59050/api/dashboard/device-status",
+      "path": "/api/dashboard/device-status",
+      "status": 200,
+      "ok": true,
+      "bodyPreview": "{\"list\":[{\"activation_status\":\"active\",\"count\":4},{\"activation_status\":\"faulty\",\"count\":1}]}"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59050/api/dashboard/data-quality",
+      "path": "/api/dashboard/data-quality",
+      "status": 200,
+      "ok": true,
+      "bodyPreview": "{\"current_missing_rate\":0,\"current_latency_rate\":0,\"avg_missing_rate\":0,\"avg_latency_rate\":0,\"total_alerts\":0,\"missing_alert_level\":\"normal\",\"latency_alert_level\":\"normal\",\"trend\":[]}"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59050/api/operations/data-quality",
+      "path": "/api/operations/data-quality",
+      "status": 200,
+      "ok": true,
+      "bodyPreview": "{\"list\":[{\"id\":3,\"metric_date\":\"2026-05-03\",\"missing_rate\":0.03,\"latency_rate\":0.02,\"alert_count\":7,\"details\":\"{\\\"missing_gantries\\\": 8, \\\"delayed_records\\\": 5}\",\"created_at\":\"2026-06-05 13:49:46\"},{\"id\":2,\"metric_date\":\"2026-05-02\",\"missing_rate\":0.01,\"latency_rate\":0.03,\"alert_count\":5,\"details\":\"{\\\"missing_gantries\\\": 2, \\\"delayed_records\\\": 8}\",\"created_at\":\"2026-06-05 13:49:46\"},{\"id\":1,\"metric_date\":\"2026-05-01\",\"missing_rate\":0.02,\"latency_rate\":0.01,\"alert_count\":3,\"details\":\"{\\\"missing_"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59050/api/toll?page=1&pageSize=10",
+      "path": "/api/toll?page=1&pageSize=10",
+      "status": 200,
+      "ok": true,
+      "bodyPreview": "{\"list\":[{\"id\":8,\"account_id\":1,\"gantry_id\":\"G001\",\"gantry_name\":null,\"toll_station_id\":null,\"toll_station_name\":null,\"entry_time\":\"2026-06-05 16:00:00\",\"exit_time\":\"2026-06-05 16:30:00\",\"fee\":600,\"vehicle_plate\":\"京A12345\",\"road_segment\":null,\"created_at\":\"2026-06-05 14:50:44\",\"evidence_urls\":null,\"account_no\":\"ETC-ACC-001\",\"user_name\":\"运营平台管理员\",\"account_plate\":null,\"exception_id\":null,\"exception_type\":null,\"exception_status\":null,\"dispute_id\":null,\"dispute_status\":null,\"settlement_id\":null,\"set"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59050/api/users?page=1&pageSize=10",
+      "path": "/api/users?page=1&pageSize=10",
+      "status": 200,
+      "ok": true,
+      "bodyPreview": "{\"list\":[{\"id\":7,\"username\":\"zhaoliu\",\"real_name\":\"赵六\",\"phone\":\"13800000004\",\"id_card\":\"110101199005051234\",\"role\":\"operator\",\"vehicle_plate\":null,\"fleet_name\":null,\"status\":\"active\",\"created_at\":\"2026-06-05 13:49:46\",\"updated_at\":\"2026-06-05 13:49:46\"},{\"id\":6,\"username\":\"wangwu\",\"real_name\":\"王五\",\"phone\":\"13800000003\",\"id_card\":\"110101199004041234\",\"role\":\"fleet_admin\",\"vehicle_plate\":null,\"fleet_name\":\"顺达车队\",\"status\":\"active\",\"created_at\":\"2026-06-05 13:49:45\",\"updated_at\":\"2026-06-05 13:49:45"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59050/api/obu?page=1&pageSize=10",
+      "path": "/api/obu?page=1&pageSize=10",
+      "status": 200,
+      "ok": true,
+      "bodyPreview": "{\"list\":[{\"id\":5,\"device_sn\":\"OBU-SN-005\",\"model\":\"JL-2000\",\"firmware_version\":\"v2.0.5\",\"activation_status\":\"faulty\",\"user_id\":2,\"activated_at\":\"2026-02-01 09:00:00\",\"batch_no\":\"BATCH-2026-001\",\"created_at\":\"2026-06-05 13:49:46\",\"updated_at\":\"2026-06-05 13:49:46\",\"last_upgrade_status\":\"none\",\"last_upgrade_result\":null,\"last_upgrade_at\":null,\"batch_activate_progress\":\"0%\",\"apply_review_status\":\"approved\",\"apply_reason\":null,\"apply_at\":null,\"reject_reason\":null,\"user_name\":\"运营平台管理员\",\"user_username"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59050/api/auth/me",
+      "path": "/api/auth/me",
+      "status": 200,
+      "ok": true,
+      "bodyPreview": "{\"id\":1,\"username\":\"admin\",\"real_name\":\"系统管理员\",\"phone\":\"13800000000\",\"id_card\":\"110101199001011234\",\"role\":\"admin\",\"vehicle_plate\":null,\"fleet_name\":null,\"status\":\"active\",\"created_at\":\"2026-06-05 13:49:43\",\"updated_at\":\"2026-06-05 13:49:43\",\"role_label\":\"系统管理员\"}"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59050/api/users/profile",
+      "path": "/api/users/profile",
+      "status": 200,
+      "ok": true,
+      "bodyPreview": "{\"user\":{\"id\":1,\"username\":\"admin\",\"real_name\":\"系统管理员\",\"phone\":\"13800000000\",\"role\":\"admin\",\"vehicle_plate\":null,\"fleet_name\":null,\"status\":\"active\",\"created_at\":\"2026-06-05 13:49:43\"}}"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59050/api/user/profile",
+      "path": "/api/user/profile",
+      "status": 200,
+      "ok": true,
+      "bodyPreview": "{\"user\":{\"id\":1,\"username\":\"admin\",\"real_name\":\"系统管理员\",\"phone\":\"13800000000\",\"role\":\"admin\",\"vehicle_plate\":null,\"fleet_name\":null,\"status\":\"active\",\"created_at\":\"2026-06-05 13:49:43\"}}"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59050/api/search?q=%E6%B5%8B%E8%AF%95",
+      "path": "/api/search?q=%E6%B5%8B%E8%AF%95",
+      "status": 200,
+      "ok": true,
+      "bodyPreview": "{\"query\":\"测试\",\"total\":2,\"results\":{\"tollRecords\":[{\"id\":7,\"vehicle_plate\":\"京A12345\",\"gantry_name\":\"测试门架\",\"toll_station_name\":\"测试站\",\"road_segment\":null,\"fee\":600,\"exit_time\":\"2026-06-05 16:30:00\"},{\"id\":6,\"vehicle_plate\":\"京A12345\",\"gantry_name\":\"测试门架\",\"toll_station_name\":\"测试站\",\"road_segment\":null,\"fee\":600,\"exit_time\":\"2026-06-05 16:30:00\"}],\"users\":[]}}"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59050/api/admin/stats",
+      "path": "/api/admin/stats",
+      "status": 200,
+      "ok": true,
+      "bodyPreview": "{\"user_count\":7,\"device_count\":5,\"account_count\":2,\"toll_record_count\":8,\"pending_exception_count\":2,\"pending_settlement_count\":1}"
+    }
+  ],
+  "dialogs": [],
+  "consoleMessages": [
+    {
+      "type": "debug",
+      "text": "[vite] connecting...",
+      "location": {
+        "url": "http://127.0.0.1:49050/@vite/client",
+        "lineNumber": 494,
+        "columnNumber": 8
+      }
+    },
+    {
+      "type": "debug",
+      "text": "[vite] connected.",
+      "location": {
+        "url": "http://127.0.0.1:49050/@vite/client",
+        "lineNumber": 617,
+        "columnNumber": 14
+      }
+    },
+    {
+      "type": "info",
+      "text": "%cDownload the React DevTools for a better development experience: https://reactjs.org/link/react-devtools font-weight:bold",
+      "location": {
+        "url": "http://127.0.0.1:49050/node_modules/.vite/deps/chunk-PJEEZAML.js?v=ba7094b1",
+        "lineNumber": 21550,
+        "columnNumber": 24
+      }
+    },
+    {
+      "type": "debug",
+      "text": "[vite] connecting...",
+      "location": {
+        "url": "http://127.0.0.1:49050/@vite/client",
+        "lineNumber": 494,
+        "columnNumber": 8
+      }
+    },
+    {
+      "type": "debug",
+      "text": "[vite] connected.",
+      "location": {
+        "url": "http://127.0.0.1:49050/@vite/client",
+        "lineNumber": 617,
+        "columnNumber": 14
+      }
+    },
+    {
+      "type": "info",
+      "text": "%cDownload the React DevTools for a better development experience: https://reactjs.org/link/react-devtools font-weight:bold",
+      "location": {
+        "url": "http://127.0.0.1:49050/node_modules/.vite/deps/chunk-PJEEZAML.js?v=ba7094b1",
+        "lineNumber": 21550,
+        "columnNumber": 24
+      }
+    },
+    {
+      "type": "debug",
+      "text": "[vite] connecting...",
+      "location": {
+        "url": "http://127.0.0.1:49050/@vite/client",
+        "lineNumber": 494,
+        "columnNumber": 8
+      }
+    },
+    {
+      "type": "info",
+      "text": "%cDownload the React DevTools for a better development experience: https://reactjs.org/link/react-devtools font-weight:bold",
+      "location": {
+        "url": "http://127.0.0.1:49050/node_modules/.vite/deps/chunk-PJEEZAML.js?v=ba7094b1",
+        "lineNumber": 21550,
+        "columnNumber": 24
+      }
+    },
+    {
+      "type": "debug",
+      "text": "[vite] connected.",
+      "location": {
+        "url": "http://127.0.0.1:49050/@vite/client",
+        "lineNumber": 617,
+        "columnNumber": 14
+      }
+    },
+    {
+      "type": "debug",
+      "text": "[vite] connecting...",
+      "location": {
+        "url": "http://127.0.0.1:49050/@vite/client",
+        "lineNumber": 494,
+        "columnNumber": 8
+      }
+    },
+    {
+      "type": "debug",
+      "text": "[vite] connected.",
+      "location": {
+        "url": "http://127.0.0.1:49050/@vite/client",
+        "lineNumber": 617,
+        "columnNumber": 14
+      }
+    },
+    {
+      "type": "info",
+      "text": "%cDownload the React DevTools for a better development experience: https://reactjs.org/link/react-devtools font-weight:bold",
+      "location": {
+        "url": "http://127.0.0.1:49050/node_modules/.vite/deps/chunk-PJEEZAML.js?v=ba7094b1",
+        "lineNumber": 21550,
+        "columnNumber": 24
+      }
+    },
+    {
+      "type": "verbose",
+      "text": "[DOM] Input elements should have autocomplete attributes (suggested: \"current-password\"): (More info: https://goo.gl/9p2vKq)",
+      "location": {
+        "url": "http://127.0.0.1:49050/users",
+        "lineNumber": 0,
+        "columnNumber": 0
+      }
+    },
+    {
+      "type": "verbose",
+      "text": "[DOM] Input elements should have autocomplete attributes (suggested: \"current-password\"): (More info: https://goo.gl/9p2vKq)",
+      "location": {
+        "url": "http://127.0.0.1:49050/users",
+        "lineNumber": 0,
+        "columnNumber": 0
+      }
+    },
+    {
+      "type": "verbose",
+      "text": "[DOM] Input elements should have autocomplete attributes (suggested: \"current-password\"): (More info: https://goo.gl/9p2vKq) %o",
+      "location": {
+        "url": "http://127.0.0.1:49050/users",
+        "lineNumber": 0,
+        "columnNumber": 0
+      }
+    },
+    {
+      "type": "verbose",
+      "text": "[DOM] Input elements should have autocomplete attributes (suggested: \"current-password\"): (More info: https://goo.gl/9p2vKq)",
+      "location": {
+        "url": "http://127.0.0.1:49050/users",
+        "lineNumber": 0,
+        "columnNumber": 0
+      }
+    },
+    {
+      "type": "verbose",
+      "text": "[DOM] Input elements should have autocomplete attributes (suggested: \"current-password\"): (More info: https://goo.gl/9p2vKq) %o",
+      "location": {
+        "url": "http://127.0.0.1:49050/users",
+        "lineNumber": 0,
+        "columnNumber": 0
+      }
+    },
+    {
+      "type": "debug",
+      "text": "[vite] connecting...",
+      "location": {
+        "url": "http://127.0.0.1:49050/@vite/client",
+        "lineNumber": 494,
+        "columnNumber": 8
+      }
+    },
+    {
+      "type": "debug",
+      "text": "[vite] connected.",
+      "location": {
+        "url": "http://127.0.0.1:49050/@vite/client",
+        "lineNumber": 617,
+        "columnNumber": 14
+      }
+    },
+    {
+      "type": "info",
+      "text": "%cDownload the React DevTools for a better development experience: https://reactjs.org/link/react-devtools font-weight:bold",
+      "location": {
+        "url": "http://127.0.0.1:49050/node_modules/.vite/deps/chunk-PJEEZAML.js?v=ba7094b1",
+        "lineNumber": 21550,
+        "columnNumber": 24
+      }
+    }
+  ],
+  "requestFailures": [],
+  "responseErrors": []
+}
