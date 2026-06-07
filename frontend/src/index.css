@@ -1,0 +1,76 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --primary: #1e40af;
+  --secondary: #10b981;
+  --warning: #f59e0b;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Source Han Sans CN', system-ui, -apple-system, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.font-mono {
+  font-family: 'Roboto Mono', monospace;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.animate-fade-in {
+  animation: fadeIn 0.3s ease-out;
+}
+
+@keyframes pulse-glow {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.4); }
+  50% { box-shadow: 0 0 0 8px rgba(16, 185, 129, 0); }
+}
+
+.animate-pulse-glow {
+  animation: pulse-glow 2s ease-in-out infinite;
+}
+
+.tracking-timeline::before {
+  content: '';
+  position: absolute;
+  left: 7px;
+  top: 24px;
+  bottom: 0;
+  width: 2px;
+  background: #e5e7eb;
+}
+
+.tracking-dot {
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background: #d1d5db;
+  position: relative;
+  z-index: 1;
+}
+
+.tracking-dot.active {
+  background: #10b981;
+  animation: pulse-glow 2s ease-in-out infinite;
+}
+
+.card-hover {
+  transition: all 0.3s ease;
+}
+
+.card-hover:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+}

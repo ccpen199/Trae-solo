@@ -1,0 +1,15 @@
+{
+  "name": "express-logistics-platform",
+  "version": "1.0.0",
+  "description": "快递物流全链路数智化服务平台",
+  "scripts": {
+    "server": "cd backend && node index.js > backend.log 2>&1 &",
+    "client": "cd frontend && npm run dev > frontend.log 2>&1 &",
+    "start": "cd backend && node index.js",
+    "dev": "concurrently \"npm run server\" \"npm run client\"",
+    "init-db": "cd backend && node init-db.js"
+  },
+  "devDependencies": {
+    "concurrently": "^8.2.2"
+  }
+}
