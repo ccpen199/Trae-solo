@@ -1,0 +1,1841 @@
+{
+  "ok": true,
+  "generatedAt": "2026-06-04T09:14:31.519Z",
+  "order": "may-89019",
+  "roundIndex": 99,
+  "captureId": "may-89019-final-runtime",
+  "url": "http://127.0.0.1:49019/",
+  "initialUrl": "http://127.0.0.1:49019/",
+  "finalUrl": "http://127.0.0.1:49019/",
+  "status": 200,
+  "title": "智聘 - 泛蓝领与白领融合招聘平台",
+  "initialTitle": "智聘 - 泛蓝领与白领融合招聘平台",
+  "navigationError": "",
+  "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89019/probe/codex-final-20260604-runtime/may-89019-final-runtime-frontend.png",
+  "screenshotPaths": [
+    "/Users/chen/Documents/trae_projects/local_projects/may-89019/probe/codex-final-20260604-runtime/may-89019-final-runtime-structure-01-首屏.png",
+    "/Users/chen/Documents/trae_projects/local_projects/may-89019/probe/codex-final-20260604-runtime/may-89019-final-runtime-structure-02-导航-首页.png",
+    "/Users/chen/Documents/trae_projects/local_projects/may-89019/probe/codex-final-20260604-runtime/may-89019-final-runtime-structure-03-操作-查看面试安排.png",
+    "/Users/chen/Documents/trae_projects/local_projects/may-89019/probe/codex-final-20260604-runtime/may-89019-final-runtime-structure-04-二层操作-查看面试安排-测试账号.png",
+    "/Users/chen/Documents/trae_projects/local_projects/may-89019/probe/codex-final-20260604-runtime/may-89019-final-runtime-structure-05-操作-查看真实职位.png",
+    "/Users/chen/Documents/trae_projects/local_projects/may-89019/probe/codex-final-20260604-runtime/may-89019-final-runtime-structure-06-二层操作-查看真实职位-重置筛选.png",
+    "/Users/chen/Documents/trae_projects/local_projects/may-89019/probe/codex-final-20260604-runtime/may-89019-final-runtime-structure-07-导航-找工作.png"
+  ],
+  "issueTextPreview": "个人中心/我的相关问题；搜索/筛选相关问题；后台管理相关问题；详情/内容页相关问题；发现/分类相关问题",
+  "targetReason": "个人中心/我的相关问题；搜索/筛选相关问题；后台管理相关问题；详情/内容页相关问题；发现/分类相关问题",
+  "targetKind": "detail",
+  "targetMatched": true,
+  "targetActions": [
+    {
+      "action": "click",
+      "label": "个人中心/我的相关问题",
+      "ok": true
+    },
+    {
+      "action": "target-verify",
+      "label": "个人中心/我的相关问题",
+      "ok": false,
+      "finalUrl": "http://127.0.0.1:49019/"
+    },
+    {
+      "action": "click",
+      "label": "搜索/筛选相关问题",
+      "ok": true
+    },
+    {
+      "action": "fill-search",
+      "label": "搜索输入框",
+      "ok": true
+    },
+    {
+      "action": "target-verify",
+      "label": "搜索/筛选相关问题",
+      "ok": false,
+      "finalUrl": "http://127.0.0.1:49019/jobs?keyword=Java"
+    },
+    {
+      "action": "click",
+      "label": "首个内容/商品卡片",
+      "ok": true
+    },
+    {
+      "action": "target-verify",
+      "label": "详情/内容页相关问题",
+      "ok": true,
+      "finalUrl": "http://127.0.0.1:49019/"
+    }
+  ],
+  "authFlow": {
+    "detected": false,
+    "attempted": false,
+    "success": false,
+    "finalUrl": "http://127.0.0.1:49019/",
+    "message": "",
+    "actions": []
+  },
+  "businessAudit": {
+    "actions": [
+      {
+        "action": "click",
+        "label": "导航:首页",
+        "ok": true
+      },
+      {
+        "action": "click",
+        "label": "操作:查看面试安排",
+        "ok": true,
+        "result": {
+          "ok": true,
+          "matched": 1
+        }
+      },
+      {
+        "action": "click",
+        "label": "二层操作:查看面试安排:测试账号",
+        "ok": true,
+        "result": {
+          "ok": true,
+          "matched": 1
+        }
+      },
+      {
+        "action": "click",
+        "label": "操作:查看真实职位",
+        "ok": true,
+        "result": {
+          "ok": true,
+          "matched": 1
+        }
+      },
+      {
+        "action": "click",
+        "label": "二层操作:查看真实职位:重置筛选",
+        "ok": true,
+        "result": {
+          "ok": true,
+          "matched": 1
+        }
+      },
+      {
+        "action": "click",
+        "label": "导航:找工作",
+        "ok": false,
+        "error": "locator.click: Timeout 900ms exceeded.\nCall log:\n\u001b[2m  - waiting for getByRole('link', { name: /^\\s*找工作\\s*$/ }).first()\u001b[22m\n\u001b[2m    - locator resolved to <a href=\"/jobs\">找工作</a>\u001b[22m\n\u001b[2m  - attempting click action\u001b[22m"
+      },
+      {
+        "action": "click",
+        "label": "导航:找工作",
+        "ok": false,
+        "error": "locator.click: Timeout 900ms exceeded.\nCall log:\n\u001b[2m  - waiting for locator('a,button,[role=\"button\"],[role=\"menuitem\"],[onclick],[tabindex]:not([tabindex=\"-1\"]),[class*=\"nav-item\" i],[class*=\"menu-item\" i],[class*=\"men"
+      },
+      {
+        "action": "click",
+        "label": "导航:找工作",
+        "ok": true
+      }
+    ],
+    "snapshots": [
+      {
+        "label": "首屏",
+        "url": "http://127.0.0.1:49019/",
+        "title": "智聘 - 泛蓝领与白领融合招聘平台",
+        "headings": [
+          "泛蓝领与白领融合招聘平台",
+          "热门职位",
+          "平台特色",
+          "岗位真实性验证",
+          "能力图谱建模",
+          "智能推荐引擎",
+          "全流程面试管理"
+        ],
+        "navLabels": [
+          "首页",
+          "home",
+          "找工作",
+          "search"
+        ],
+        "buttons": [
+          "登 录",
+          "搜索",
+          "查看真实职位",
+          "完善我的简历",
+          "智能匹配职位",
+          "查看面试安排"
+        ],
+        "links": [
+          "首页",
+          "找工作"
+        ],
+        "inputs": [
+          {
+            "tag": "input",
+            "type": "search",
+            "placeholder": "搜索职位、技能或公司...",
+            "name": "",
+            "label": ""
+          }
+        ],
+        "tables": [],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "智聘平台首页找工作登 录泛蓝领与白领融合招聘平台岗位真实性治理 · 人岗智能匹配 · 全流程面试管理搜索在招职位20个认证企业9家求职人才7人真实率100%热门职位金融分析师95分已核验瑞丰金融20000-50000K上海·浦东新区 · 2-5年 · 硕士财务分析PythonWindJava开发工程师92分已核验智联科技15000-30000K深圳·南山区 · 3-5年 · 本科JavaSpring BootMySQL销售专员78分已核验万达零售5000-12000K广州·天河区 · 1-2年 · 高中销售技巧客户服务商品陈列客户经理93分已核验瑞丰金融12000-35000K上海·浦东新区 · 3-5年 · 本科客户关系理财产品风险控制前端开发工程师90分已核验智联科技12000-25000K深圳·南山区 · 2-4年 · 本科ReactTypeScriptVue护理员89分已核验仁和医疗6000-12000K成都·武侯区 · 1-3年 · 大专临床护理生命体征监测医嘱执行平台特色岗位真实性验证企业社保核验、办公地址标注、历史行为分析、举报风控联动查看真实职位 能力图谱建模基于简历、作品、测评生成技能权重画像，证书OCR识别完善我的简历 智能推荐引擎协同过滤+语义匹配+冷启动兜底算法智能匹配职位 全流程面试管理时间协商、视频面试、AI初筛报告归档查看面试安排 智聘平台 ©2024 泛蓝领与白领融合招聘服务平台",
+        "layout": {
+          "viewportWidth": 1504,
+          "viewportHeight": 1431,
+          "scrollWidth": 1504,
+          "scrollHeight": 1431,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89019-final-runtime-structure-01-首屏",
+          "label": "首屏",
+          "finalUrl": "http://127.0.0.1:49019/",
+          "title": "智聘 - 泛蓝领与白领融合招聘平台",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89019/probe/codex-final-20260604-runtime/may-89019-final-runtime-structure-01-首屏.json",
+          "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89019/probe/codex-final-20260604-runtime/may-89019-final-runtime-structure-01-首屏.png",
+          "elementCount": 327,
+          "interactiveCount": 13,
+          "interactiveLabels": [
+            "首页 找工作",
+            "首页",
+            "找工作",
+            "登 录",
+            "搜索职位、技能或公司...",
+            "搜索",
+            "查看真实职位",
+            "完善我的简历",
+            "智能匹配职位",
+            "查看面试安排"
+          ]
+        }
+      },
+      {
+        "label": "导航:首页",
+        "url": "http://127.0.0.1:49019/",
+        "title": "智聘 - 泛蓝领与白领融合招聘平台",
+        "headings": [
+          "泛蓝领与白领融合招聘平台",
+          "热门职位",
+          "平台特色",
+          "岗位真实性验证",
+          "能力图谱建模",
+          "智能推荐引擎",
+          "全流程面试管理"
+        ],
+        "navLabels": [
+          "首页",
+          "home",
+          "找工作",
+          "search"
+        ],
+        "buttons": [
+          "登 录",
+          "搜索",
+          "查看真实职位",
+          "完善我的简历",
+          "智能匹配职位",
+          "查看面试安排"
+        ],
+        "links": [
+          "首页",
+          "找工作"
+        ],
+        "inputs": [
+          {
+            "tag": "input",
+            "type": "search",
+            "placeholder": "搜索职位、技能或公司...",
+            "name": "",
+            "label": ""
+          }
+        ],
+        "tables": [],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "智聘平台首页找工作登 录泛蓝领与白领融合招聘平台岗位真实性治理 · 人岗智能匹配 · 全流程面试管理搜索在招职位20个认证企业9家求职人才7人真实率100%热门职位金融分析师95分已核验瑞丰金融20000-50000K上海·浦东新区 · 2-5年 · 硕士财务分析PythonWindJava开发工程师92分已核验智联科技15000-30000K深圳·南山区 · 3-5年 · 本科JavaSpring BootMySQL销售专员78分已核验万达零售5000-12000K广州·天河区 · 1-2年 · 高中销售技巧客户服务商品陈列客户经理93分已核验瑞丰金融12000-35000K上海·浦东新区 · 3-5年 · 本科客户关系理财产品风险控制前端开发工程师90分已核验智联科技12000-25000K深圳·南山区 · 2-4年 · 本科ReactTypeScriptVue护理员89分已核验仁和医疗6000-12000K成都·武侯区 · 1-3年 · 大专临床护理生命体征监测医嘱执行平台特色岗位真实性验证企业社保核验、办公地址标注、历史行为分析、举报风控联动查看真实职位 能力图谱建模基于简历、作品、测评生成技能权重画像，证书OCR识别完善我的简历 智能推荐引擎协同过滤+语义匹配+冷启动兜底算法智能匹配职位 全流程面试管理时间协商、视频面试、AI初筛报告归档查看面试安排 智聘平台 ©2024 泛蓝领与白领融合招聘服务平台",
+        "layout": {
+          "viewportWidth": 1536,
+          "viewportHeight": 1431,
+          "scrollWidth": 1536,
+          "scrollHeight": 1431,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89019-final-runtime-structure-02-导航-首页",
+          "label": "导航:首页",
+          "finalUrl": "http://127.0.0.1:49019/",
+          "title": "智聘 - 泛蓝领与白领融合招聘平台",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89019/probe/codex-final-20260604-runtime/may-89019-final-runtime-structure-02-导航-首页.json",
+          "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89019/probe/codex-final-20260604-runtime/may-89019-final-runtime-structure-02-导航-首页.png",
+          "elementCount": 327,
+          "interactiveCount": 13,
+          "interactiveLabels": [
+            "首页 找工作",
+            "首页",
+            "找工作",
+            "登 录",
+            "搜索职位、技能或公司...",
+            "搜索",
+            "查看真实职位",
+            "完善我的简历",
+            "智能匹配职位",
+            "查看面试安排"
+          ]
+        }
+      },
+      {
+        "label": "操作:查看面试安排",
+        "url": "http://127.0.0.1:49019/login",
+        "title": "智聘 - 泛蓝领与白领融合招聘平台",
+        "headings": [
+          "智聘平台"
+        ],
+        "navLabels": [],
+        "buttons": [
+          "登 录",
+          "测试账号"
+        ],
+        "links": [
+          "立即注册"
+        ],
+        "inputs": [
+          {
+            "tag": "input",
+            "type": "text",
+            "placeholder": "手机号",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "password",
+            "placeholder": "密码",
+            "name": "",
+            "label": ""
+          }
+        ],
+        "tables": [],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "智聘平台泛蓝领与白领融合招聘服务平台登 录还没有账号？立即注册测试账号点击账号可自动填充，点击\"一键登录\"可直接登录",
+        "layout": {
+          "viewportWidth": 1568,
+          "viewportHeight": 1431,
+          "scrollWidth": 1568,
+          "scrollHeight": 1431,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89019-final-runtime-structure-03-操作-查看面试安排",
+          "label": "操作:查看面试安排",
+          "finalUrl": "http://127.0.0.1:49019/login",
+          "title": "智聘 - 泛蓝领与白领融合招聘平台",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89019/probe/codex-final-20260604-runtime/may-89019-final-runtime-structure-03-操作-查看面试安排.json",
+          "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89019/probe/codex-final-20260604-runtime/may-89019-final-runtime-structure-03-操作-查看面试安排.png",
+          "elementCount": 64,
+          "interactiveCount": 5,
+          "interactiveLabels": [
+            "手机号",
+            "密码",
+            "登 录",
+            "立即注册",
+            "测试账号"
+          ]
+        }
+      },
+      {
+        "label": "二层操作:查看面试安排->测试账号",
+        "url": "http://127.0.0.1:49019/login",
+        "title": "智聘 - 泛蓝领与白领融合招聘平台",
+        "headings": [
+          "智聘平台"
+        ],
+        "navLabels": [],
+        "buttons": [
+          "登 录",
+          "测试账号",
+          "一键登录"
+        ],
+        "links": [
+          "立即注册"
+        ],
+        "inputs": [
+          {
+            "tag": "input",
+            "type": "text",
+            "placeholder": "手机号",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "password",
+            "placeholder": "密码",
+            "name": "",
+            "label": ""
+          }
+        ],
+        "tables": [],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "智聘平台泛蓝领与白领融合招聘服务平台登 录还没有账号？立即注册测试账号管理员风控中心数据看板企业审核职位审核13700000001 / admin123一键登录求职者能力图谱技能匹配面试管理AI初筛报告13900001001 / test123一键登录13900001002 / test123一键登录13900001003 / test123一键登录13900001004 / test123一键登录13900001005 / test123一键登录13900001006 / test123一键登录13900001007 / test123一键登录企业HR招聘效能职位发布简历筛选面试邀约13900002001 / test123一键登录13900002002 / test123一键登录13900002003 / test123一键登录13900002004 / test123一键登录13900002005 / test123一键登录13900002006 / test123一键登录13900002007 / test123一键登录13900002008 / test123一键登录13900002009 / test123一键登录点击账号可自动填充，点击\"一键登录\"可直接登录",
+        "layout": {
+          "viewportWidth": 1600,
+          "viewportHeight": 1431,
+          "scrollWidth": 1600,
+          "scrollHeight": 1431,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89019-final-runtime-structure-04-二层操作-查看面试安排-测试账号",
+          "label": "二层操作:查看面试安排->测试账号",
+          "finalUrl": "http://127.0.0.1:49019/login",
+          "title": "智聘 - 泛蓝领与白领融合招聘平台",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89019/probe/codex-final-20260604-runtime/may-89019-final-runtime-structure-04-二层操作-查看面试安排-测试账号.json",
+          "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89019/probe/codex-final-20260604-runtime/may-89019-final-runtime-structure-04-二层操作-查看面试安排-测试账号.png",
+          "elementCount": 282,
+          "interactiveCount": 22,
+          "interactiveLabels": [
+            "手机号",
+            "密码",
+            "登 录",
+            "立即注册",
+            "测试账号",
+            "一键登录"
+          ]
+        }
+      },
+      {
+        "label": "操作:查看真实职位",
+        "url": "http://127.0.0.1:49019/jobs",
+        "title": "智聘 - 泛蓝领与白领融合招聘平台",
+        "headings": [
+          "Java开发工程师",
+          "前端开发工程师",
+          "UI设计师",
+          "数控操作工",
+          "电焊工",
+          "物流调度员",
+          "仓库管理员",
+          "叉车司机",
+          "建筑施工员",
+          "电工",
+          "金融分析师",
+          "客户经理"
+        ],
+        "navLabels": [
+          "首页",
+          "home",
+          "找工作",
+          "search"
+        ],
+        "buttons": [
+          "登 录",
+          "搜索",
+          "排序说明",
+          "重置筛选"
+        ],
+        "links": [
+          "首页",
+          "找工作"
+        ],
+        "inputs": [
+          {
+            "tag": "input",
+            "type": "search",
+            "placeholder": "搜索职位、技能或公司...",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "search",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "search",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "search",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "search",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "search",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "search",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "search",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "search",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "search",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "search",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          }
+        ],
+        "tables": [],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "智聘平台首页找工作登 录搜索选择行业选择城市区/县街道薪资范围工作经验学历要求输入技能关键词搜索...工作类型最新发布排序说明重置筛选共找到 20 个职位Java开发工程师全职智联科技社保核验地址核验信誉良好 深圳·南山区·科技园南路 · 科技园南路3-5年本科JavaSpring BootMySQLRedis15000-30000K真实度 92分 48人申请 累计招聘15人前端开发工程师全职智联科技社保核验地址核验信誉良好 深圳·南山区·科技园南路 · 科技园南路2-4年本科ReactTypeScriptVueWebpack12000-25000K真实度 90分 37人申请 累计招聘15人UI设计师全职智联科技社保核验0信誉良好 深圳·南山区·科技园南路 · 科技园南路2-5年大专FigmaSketchPhotoshopIllustrator10000-20000K真实度 88分 25人申请 累计招聘15人数控操作工全职华创制造社保核验地址核验信誉良好 广州·黄埔区·开发区大道 · 开发区大道2-5年中专数控编程数控操作看图纸质量检测8000-15000K真实度 85分 32人申请 累计招聘15人电焊工全职华创制造社保核验地址核验信誉良好 广州·黄埔区·开发区大道 · 开发区大道3-5年初中电焊氩弧焊看图纸安全操作7000-13000K真实度 82分 28人申请 累计招聘15人物流调度员全职顺心物流社保核验0信誉良好 上海·浦东新区·物流园大道 · 物流园大道1-3年大专物流调度路线规划ERP系统数据分析6000-12000K真实度 87分 19人申请 累计招聘15人仓库管理员全职顺心物流社保核验地址核验信誉良好 上海·浦东新区·物流园大道 · 物流园大道1-3年高中仓库管理WMS系统库存盘点叉车操作5000-9000K真实度 83分 22人申请 累计招聘15人叉车司机全职顺心物流社保核验地址核验信誉良好 上海·浦东新区·物流园大道 · 物流园大道2-3年初中叉车操作货物搬运安全规范仓储流程5500-10000K真实度 80分 18人申请 累计招聘15人建筑施工员全职鑫鹏建筑社保核验0信誉良好 北京·朝阳区·建外大街 · 建外大街5-10年大专施工管理图纸审查质量安全进度管控10000-20000K真实度 86分 15人申请 累计招聘15人电工全职鑫鹏建筑社保核验地址核验信誉良好 北京·朝阳区·建外大街 · 建外大街3-5年中专电工操作强弱电电气安装安全规范7000-14000K真实度 81分 20人申请 累计招聘15人金融分析师全职瑞丰金融社保核验地址核验信誉良好 上海·浦东新区·陆家嘴环路 · 陆家嘴环路2-5年硕士财务分析PythonWindExcel建模20000-50000K真实度 95分 56人申请 累计招聘15人客户经理全职瑞丰金融社保核验0信誉良好 上海·浦东新区·陆家嘴环路 · 陆家嘴环路3-5年本科客户关系理财产品风险控制商务谈判12000-35000K真实度 93分 41人申请 累计招聘15人课程顾问全职明德教育社保核验地址核验信誉良好 杭州·西湖区·文三路 · 文三路1-3年大专课程咨询销售转化客户维护教育产品8000-18000K真实度 84分 29人申请 累计招聘15人电商运营全职明德教育社保核验地址核验信誉良好 杭州·西湖区·文三路 · 文三路2-4年本科电商运营数据分析活动策划SEO优化8000-16000K真实度 86分 26人申请 累计招聘15人护理员全职仁和医疗社保核验0信誉良好 成都·武侯区·人民南路 · 人民南路1-3年大专临床护理生命体征监测医嘱执行急救技能6000-12000K真实度 89分 34人申请 累计招聘15人销售专员全职万达零售社保核验地址核验信誉良好 广州·天河区·体育西路 · 体育西路1-2年高中销售技巧客户服务商品陈列收银系统5000-12000K真实度 78分 45人申请 累计招聘15人厨师全职万达零售社保核验地址核验信誉良好 广州·天河区·体育西路 · 体育西路3-5年初中中式烹饪西式料理食品安全厨房管理7000-15000K真实度 76分 30人申请 累计招聘15人人事专员全职恒达服务社保核验0信誉良好 深圳·福田区·华强北路 · 华强北路1-3年本科招聘管理劳动法",
+        "layout": {
+          "viewportWidth": 1632,
+          "viewportHeight": 1600,
+          "scrollWidth": 1632,
+          "scrollHeight": 2427,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89019-final-runtime-structure-05-操作-查看真实职位",
+          "label": "操作:查看真实职位",
+          "finalUrl": "http://127.0.0.1:49019/jobs",
+          "title": "智聘 - 泛蓝领与白领融合招聘平台",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89019/probe/codex-final-20260604-runtime/may-89019-final-runtime-structure-05-操作-查看真实职位.json",
+          "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89019/probe/codex-final-20260604-runtime/may-89019-final-runtime-structure-05-操作-查看真实职位.png",
+          "elementCount": 1200,
+          "interactiveCount": 25,
+          "interactiveLabels": [
+            "首页 找工作",
+            "首页",
+            "找工作",
+            "登 录",
+            "搜索职位、技能或公司...",
+            "搜索",
+            "排序说明",
+            "重置筛选",
+            "1"
+          ]
+        }
+      },
+      {
+        "label": "二层操作:查看真实职位->重置筛选",
+        "url": "http://127.0.0.1:49019/jobs",
+        "title": "智聘 - 泛蓝领与白领融合招聘平台",
+        "headings": [
+          "Java开发工程师",
+          "前端开发工程师",
+          "UI设计师",
+          "数控操作工",
+          "电焊工",
+          "物流调度员",
+          "仓库管理员",
+          "叉车司机",
+          "建筑施工员",
+          "电工",
+          "金融分析师",
+          "客户经理"
+        ],
+        "navLabels": [
+          "首页",
+          "home",
+          "找工作",
+          "search"
+        ],
+        "buttons": [
+          "登 录",
+          "搜索",
+          "排序说明",
+          "重置筛选"
+        ],
+        "links": [
+          "首页",
+          "找工作"
+        ],
+        "inputs": [
+          {
+            "tag": "input",
+            "type": "search",
+            "placeholder": "搜索职位、技能或公司...",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "search",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "search",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "search",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "search",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "search",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "search",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "search",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "search",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "search",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "search",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          }
+        ],
+        "tables": [],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "智聘平台首页找工作登 录搜索选择行业选择城市区/县街道薪资范围工作经验学历要求输入技能关键词搜索...工作类型最新发布排序说明重置筛选共找到 20 个职位Java开发工程师全职智联科技社保核验地址核验信誉良好 深圳·南山区·科技园南路 · 科技园南路3-5年本科JavaSpring BootMySQLRedis15000-30000K真实度 92分 48人申请 累计招聘15人前端开发工程师全职智联科技社保核验地址核验信誉良好 深圳·南山区·科技园南路 · 科技园南路2-4年本科ReactTypeScriptVueWebpack12000-25000K真实度 90分 37人申请 累计招聘15人UI设计师全职智联科技社保核验0信誉良好 深圳·南山区·科技园南路 · 科技园南路2-5年大专FigmaSketchPhotoshopIllustrator10000-20000K真实度 88分 25人申请 累计招聘15人数控操作工全职华创制造社保核验地址核验信誉良好 广州·黄埔区·开发区大道 · 开发区大道2-5年中专数控编程数控操作看图纸质量检测8000-15000K真实度 85分 32人申请 累计招聘15人电焊工全职华创制造社保核验地址核验信誉良好 广州·黄埔区·开发区大道 · 开发区大道3-5年初中电焊氩弧焊看图纸安全操作7000-13000K真实度 82分 28人申请 累计招聘15人物流调度员全职顺心物流社保核验0信誉良好 上海·浦东新区·物流园大道 · 物流园大道1-3年大专物流调度路线规划ERP系统数据分析6000-12000K真实度 87分 19人申请 累计招聘15人仓库管理员全职顺心物流社保核验地址核验信誉良好 上海·浦东新区·物流园大道 · 物流园大道1-3年高中仓库管理WMS系统库存盘点叉车操作5000-9000K真实度 83分 22人申请 累计招聘15人叉车司机全职顺心物流社保核验地址核验信誉良好 上海·浦东新区·物流园大道 · 物流园大道2-3年初中叉车操作货物搬运安全规范仓储流程5500-10000K真实度 80分 18人申请 累计招聘15人建筑施工员全职鑫鹏建筑社保核验0信誉良好 北京·朝阳区·建外大街 · 建外大街5-10年大专施工管理图纸审查质量安全进度管控10000-20000K真实度 86分 15人申请 累计招聘15人电工全职鑫鹏建筑社保核验地址核验信誉良好 北京·朝阳区·建外大街 · 建外大街3-5年中专电工操作强弱电电气安装安全规范7000-14000K真实度 81分 20人申请 累计招聘15人金融分析师全职瑞丰金融社保核验地址核验信誉良好 上海·浦东新区·陆家嘴环路 · 陆家嘴环路2-5年硕士财务分析PythonWindExcel建模20000-50000K真实度 95分 56人申请 累计招聘15人客户经理全职瑞丰金融社保核验0信誉良好 上海·浦东新区·陆家嘴环路 · 陆家嘴环路3-5年本科客户关系理财产品风险控制商务谈判12000-35000K真实度 93分 41人申请 累计招聘15人课程顾问全职明德教育社保核验地址核验信誉良好 杭州·西湖区·文三路 · 文三路1-3年大专课程咨询销售转化客户维护教育产品8000-18000K真实度 84分 29人申请 累计招聘15人电商运营全职明德教育社保核验地址核验信誉良好 杭州·西湖区·文三路 · 文三路2-4年本科电商运营数据分析活动策划SEO优化8000-16000K真实度 86分 26人申请 累计招聘15人护理员全职仁和医疗社保核验0信誉良好 成都·武侯区·人民南路 · 人民南路1-3年大专临床护理生命体征监测医嘱执行急救技能6000-12000K真实度 89分 34人申请 累计招聘15人销售专员全职万达零售社保核验地址核验信誉良好 广州·天河区·体育西路 · 体育西路1-2年高中销售技巧客户服务商品陈列收银系统5000-12000K真实度 78分 45人申请 累计招聘15人厨师全职万达零售社保核验地址核验信誉良好 广州·天河区·体育西路 · 体育西路3-5年初中中式烹饪西式料理食品安全厨房管理7000-15000K真实度 76分 30人申请 累计招聘15人人事专员全职恒达服务社保核验0信誉良好 深圳·福田区·华强北路 · 华强北路1-3年本科招聘管理劳动法",
+        "layout": {
+          "viewportWidth": 1664,
+          "viewportHeight": 1600,
+          "scrollWidth": 1664,
+          "scrollHeight": 2427,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89019-final-runtime-structure-06-二层操作-查看真实职位-重置筛选",
+          "label": "二层操作:查看真实职位->重置筛选",
+          "finalUrl": "http://127.0.0.1:49019/jobs",
+          "title": "智聘 - 泛蓝领与白领融合招聘平台",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89019/probe/codex-final-20260604-runtime/may-89019-final-runtime-structure-06-二层操作-查看真实职位-重置筛选.json",
+          "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89019/probe/codex-final-20260604-runtime/may-89019-final-runtime-structure-06-二层操作-查看真实职位-重置筛选.png",
+          "elementCount": 1200,
+          "interactiveCount": 25,
+          "interactiveLabels": [
+            "首页 找工作",
+            "首页",
+            "找工作",
+            "登 录",
+            "搜索职位、技能或公司...",
+            "搜索",
+            "排序说明",
+            "重置筛选",
+            "1"
+          ]
+        }
+      },
+      {
+        "label": "导航:找工作",
+        "url": "http://127.0.0.1:49019/jobs",
+        "title": "智聘 - 泛蓝领与白领融合招聘平台",
+        "headings": [
+          "Java开发工程师",
+          "前端开发工程师",
+          "UI设计师",
+          "数控操作工",
+          "电焊工",
+          "物流调度员",
+          "仓库管理员",
+          "叉车司机",
+          "建筑施工员",
+          "电工",
+          "金融分析师",
+          "客户经理"
+        ],
+        "navLabels": [
+          "首页",
+          "home",
+          "找工作",
+          "search"
+        ],
+        "buttons": [
+          "登 录",
+          "搜索",
+          "排序说明",
+          "重置筛选"
+        ],
+        "links": [
+          "首页",
+          "找工作"
+        ],
+        "inputs": [
+          {
+            "tag": "input",
+            "type": "search",
+            "placeholder": "搜索职位、技能或公司...",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "search",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "search",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "search",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "search",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "search",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "search",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "search",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "search",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "search",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "search",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          }
+        ],
+        "tables": [],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "智聘平台首页找工作登 录搜索选择行业选择城市区/县街道薪资范围工作经验学历要求输入技能关键词搜索...工作类型最新发布排序说明重置筛选共找到 20 个职位Java开发工程师全职智联科技社保核验地址核验信誉良好 深圳·南山区·科技园南路 · 科技园南路3-5年本科JavaSpring BootMySQLRedis15000-30000K真实度 92分 48人申请 累计招聘15人前端开发工程师全职智联科技社保核验地址核验信誉良好 深圳·南山区·科技园南路 · 科技园南路2-4年本科ReactTypeScriptVueWebpack12000-25000K真实度 90分 37人申请 累计招聘15人UI设计师全职智联科技社保核验0信誉良好 深圳·南山区·科技园南路 · 科技园南路2-5年大专FigmaSketchPhotoshopIllustrator10000-20000K真实度 88分 25人申请 累计招聘15人数控操作工全职华创制造社保核验地址核验信誉良好 广州·黄埔区·开发区大道 · 开发区大道2-5年中专数控编程数控操作看图纸质量检测8000-15000K真实度 85分 32人申请 累计招聘15人电焊工全职华创制造社保核验地址核验信誉良好 广州·黄埔区·开发区大道 · 开发区大道3-5年初中电焊氩弧焊看图纸安全操作7000-13000K真实度 82分 28人申请 累计招聘15人物流调度员全职顺心物流社保核验0信誉良好 上海·浦东新区·物流园大道 · 物流园大道1-3年大专物流调度路线规划ERP系统数据分析6000-12000K真实度 87分 19人申请 累计招聘15人仓库管理员全职顺心物流社保核验地址核验信誉良好 上海·浦东新区·物流园大道 · 物流园大道1-3年高中仓库管理WMS系统库存盘点叉车操作5000-9000K真实度 83分 22人申请 累计招聘15人叉车司机全职顺心物流社保核验地址核验信誉良好 上海·浦东新区·物流园大道 · 物流园大道2-3年初中叉车操作货物搬运安全规范仓储流程5500-10000K真实度 80分 18人申请 累计招聘15人建筑施工员全职鑫鹏建筑社保核验0信誉良好 北京·朝阳区·建外大街 · 建外大街5-10年大专施工管理图纸审查质量安全进度管控10000-20000K真实度 86分 15人申请 累计招聘15人电工全职鑫鹏建筑社保核验地址核验信誉良好 北京·朝阳区·建外大街 · 建外大街3-5年中专电工操作强弱电电气安装安全规范7000-14000K真实度 81分 20人申请 累计招聘15人金融分析师全职瑞丰金融社保核验地址核验信誉良好 上海·浦东新区·陆家嘴环路 · 陆家嘴环路2-5年硕士财务分析PythonWindExcel建模20000-50000K真实度 95分 56人申请 累计招聘15人客户经理全职瑞丰金融社保核验0信誉良好 上海·浦东新区·陆家嘴环路 · 陆家嘴环路3-5年本科客户关系理财产品风险控制商务谈判12000-35000K真实度 93分 41人申请 累计招聘15人课程顾问全职明德教育社保核验地址核验信誉良好 杭州·西湖区·文三路 · 文三路1-3年大专课程咨询销售转化客户维护教育产品8000-18000K真实度 84分 29人申请 累计招聘15人电商运营全职明德教育社保核验地址核验信誉良好 杭州·西湖区·文三路 · 文三路2-4年本科电商运营数据分析活动策划SEO优化8000-16000K真实度 86分 26人申请 累计招聘15人护理员全职仁和医疗社保核验0信誉良好 成都·武侯区·人民南路 · 人民南路1-3年大专临床护理生命体征监测医嘱执行急救技能6000-12000K真实度 89分 34人申请 累计招聘15人销售专员全职万达零售社保核验地址核验信誉良好 广州·天河区·体育西路 · 体育西路1-2年高中销售技巧客户服务商品陈列收银系统5000-12000K真实度 78分 45人申请 累计招聘15人厨师全职万达零售社保核验地址核验信誉良好 广州·天河区·体育西路 · 体育西路3-5年初中中式烹饪西式料理食品安全厨房管理7000-15000K真实度 76分 30人申请 累计招聘15人人事专员全职恒达服务社保核验0信誉良好 深圳·福田区·华强北路 · 华强北路1-3年本科招聘管理劳动法",
+        "layout": {
+          "viewportWidth": 1696,
+          "viewportHeight": 1600,
+          "scrollWidth": 1696,
+          "scrollHeight": 2427,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89019-final-runtime-structure-07-导航-找工作",
+          "label": "导航:找工作",
+          "finalUrl": "http://127.0.0.1:49019/jobs",
+          "title": "智聘 - 泛蓝领与白领融合招聘平台",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89019/probe/codex-final-20260604-runtime/may-89019-final-runtime-structure-07-导航-找工作.json",
+          "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89019/probe/codex-final-20260604-runtime/may-89019-final-runtime-structure-07-导航-找工作.png",
+          "elementCount": 1200,
+          "interactiveCount": 25,
+          "interactiveLabels": [
+            "首页 找工作",
+            "首页",
+            "找工作",
+            "登 录",
+            "搜索职位、技能或公司...",
+            "搜索",
+            "排序说明",
+            "重置筛选",
+            "1"
+          ]
+        }
+      }
+    ],
+    "findings": [
+      "接口 /api/hot-jobs 返回 HTTP 500，对应业务模块无法完成数据读取。",
+      "接口 /api/stats 返回 HTTP 500，对应业务模块无法完成数据读取。"
+    ],
+    "actionHints": [
+      "补齐 /api/hot-jobs 后端接口、SQLite 数据和前端错误处理。",
+      "补齐 /api/stats 后端接口、SQLite 数据和前端错误处理。"
+    ],
+    "emptyPages": [],
+    "overflowPages": [],
+    "blankPages": [],
+    "apiFailurePaths": [
+      "/api/hot-jobs",
+      "/api/stats"
+    ],
+    "goalTerms": [],
+    "clickedActionDescriptors": [
+      {
+        "nav": "首页",
+        "label": "查看面试安排",
+        "ordinal": 0,
+        "unsafe": false
+      },
+      {
+        "nav": "首页",
+        "label": "查看面试安排->测试账号",
+        "ordinal": 0,
+        "secondary": true,
+        "unsafe": false
+      },
+      {
+        "nav": "首页",
+        "label": "查看真实职位",
+        "ordinal": 0,
+        "unsafe": false
+      },
+      {
+        "nav": "首页",
+        "label": "查看真实职位->重置筛选",
+        "ordinal": 0,
+        "secondary": true,
+        "unsafe": true
+      }
+    ],
+    "secondaryActionClicks": 2,
+    "structureCaptures": [
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89019-final-runtime-structure-01-首屏",
+        "label": "首屏",
+        "finalUrl": "http://127.0.0.1:49019/",
+        "title": "智聘 - 泛蓝领与白领融合招聘平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89019/probe/codex-final-20260604-runtime/may-89019-final-runtime-structure-01-首屏.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89019/probe/codex-final-20260604-runtime/may-89019-final-runtime-structure-01-首屏.png",
+        "elementCount": 327,
+        "interactiveCount": 13,
+        "interactiveLabels": [
+          "首页 找工作",
+          "首页",
+          "找工作",
+          "登 录",
+          "搜索职位、技能或公司...",
+          "搜索",
+          "查看真实职位",
+          "完善我的简历",
+          "智能匹配职位",
+          "查看面试安排"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89019-final-runtime-structure-02-导航-首页",
+        "label": "导航:首页",
+        "finalUrl": "http://127.0.0.1:49019/",
+        "title": "智聘 - 泛蓝领与白领融合招聘平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89019/probe/codex-final-20260604-runtime/may-89019-final-runtime-structure-02-导航-首页.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89019/probe/codex-final-20260604-runtime/may-89019-final-runtime-structure-02-导航-首页.png",
+        "elementCount": 327,
+        "interactiveCount": 13,
+        "interactiveLabels": [
+          "首页 找工作",
+          "首页",
+          "找工作",
+          "登 录",
+          "搜索职位、技能或公司...",
+          "搜索",
+          "查看真实职位",
+          "完善我的简历",
+          "智能匹配职位",
+          "查看面试安排"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89019-final-runtime-structure-03-操作-查看面试安排",
+        "label": "操作:查看面试安排",
+        "finalUrl": "http://127.0.0.1:49019/login",
+        "title": "智聘 - 泛蓝领与白领融合招聘平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89019/probe/codex-final-20260604-runtime/may-89019-final-runtime-structure-03-操作-查看面试安排.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89019/probe/codex-final-20260604-runtime/may-89019-final-runtime-structure-03-操作-查看面试安排.png",
+        "elementCount": 64,
+        "interactiveCount": 5,
+        "interactiveLabels": [
+          "手机号",
+          "密码",
+          "登 录",
+          "立即注册",
+          "测试账号"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89019-final-runtime-structure-04-二层操作-查看面试安排-测试账号",
+        "label": "二层操作:查看面试安排->测试账号",
+        "finalUrl": "http://127.0.0.1:49019/login",
+        "title": "智聘 - 泛蓝领与白领融合招聘平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89019/probe/codex-final-20260604-runtime/may-89019-final-runtime-structure-04-二层操作-查看面试安排-测试账号.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89019/probe/codex-final-20260604-runtime/may-89019-final-runtime-structure-04-二层操作-查看面试安排-测试账号.png",
+        "elementCount": 282,
+        "interactiveCount": 22,
+        "interactiveLabels": [
+          "手机号",
+          "密码",
+          "登 录",
+          "立即注册",
+          "测试账号",
+          "一键登录"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89019-final-runtime-structure-05-操作-查看真实职位",
+        "label": "操作:查看真实职位",
+        "finalUrl": "http://127.0.0.1:49019/jobs",
+        "title": "智聘 - 泛蓝领与白领融合招聘平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89019/probe/codex-final-20260604-runtime/may-89019-final-runtime-structure-05-操作-查看真实职位.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89019/probe/codex-final-20260604-runtime/may-89019-final-runtime-structure-05-操作-查看真实职位.png",
+        "elementCount": 1200,
+        "interactiveCount": 25,
+        "interactiveLabels": [
+          "首页 找工作",
+          "首页",
+          "找工作",
+          "登 录",
+          "搜索职位、技能或公司...",
+          "搜索",
+          "排序说明",
+          "重置筛选",
+          "1"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89019-final-runtime-structure-06-二层操作-查看真实职位-重置筛选",
+        "label": "二层操作:查看真实职位->重置筛选",
+        "finalUrl": "http://127.0.0.1:49019/jobs",
+        "title": "智聘 - 泛蓝领与白领融合招聘平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89019/probe/codex-final-20260604-runtime/may-89019-final-runtime-structure-06-二层操作-查看真实职位-重置筛选.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89019/probe/codex-final-20260604-runtime/may-89019-final-runtime-structure-06-二层操作-查看真实职位-重置筛选.png",
+        "elementCount": 1200,
+        "interactiveCount": 25,
+        "interactiveLabels": [
+          "首页 找工作",
+          "首页",
+          "找工作",
+          "登 录",
+          "搜索职位、技能或公司...",
+          "搜索",
+          "排序说明",
+          "重置筛选",
+          "1"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89019-final-runtime-structure-07-导航-找工作",
+        "label": "导航:找工作",
+        "finalUrl": "http://127.0.0.1:49019/jobs",
+        "title": "智聘 - 泛蓝领与白领融合招聘平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89019/probe/codex-final-20260604-runtime/may-89019-final-runtime-structure-07-导航-找工作.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89019/probe/codex-final-20260604-runtime/may-89019-final-runtime-structure-07-导航-找工作.png",
+        "elementCount": 1200,
+        "interactiveCount": 25,
+        "interactiveLabels": [
+          "首页 找工作",
+          "首页",
+          "找工作",
+          "登 录",
+          "搜索职位、技能或公司...",
+          "搜索",
+          "排序说明",
+          "重置筛选",
+          "1"
+        ]
+      }
+    ],
+    "representativeScreenshotUrl": "http://127.0.0.1:49019/",
+    "representativeScreenshotLabel": "泛蓝领与白领融合招聘平台"
+  },
+  "websiteStructureCapture": {
+    "module": "website_structure_capture",
+    "captureCount": 7,
+    "captures": [
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89019-final-runtime-structure-01-首屏",
+        "label": "首屏",
+        "finalUrl": "http://127.0.0.1:49019/",
+        "title": "智聘 - 泛蓝领与白领融合招聘平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89019/probe/codex-final-20260604-runtime/may-89019-final-runtime-structure-01-首屏.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89019/probe/codex-final-20260604-runtime/may-89019-final-runtime-structure-01-首屏.png",
+        "elementCount": 327,
+        "interactiveCount": 13,
+        "interactiveLabels": [
+          "首页 找工作",
+          "首页",
+          "找工作",
+          "登 录",
+          "搜索职位、技能或公司...",
+          "搜索",
+          "查看真实职位",
+          "完善我的简历",
+          "智能匹配职位",
+          "查看面试安排"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89019-final-runtime-structure-02-导航-首页",
+        "label": "导航:首页",
+        "finalUrl": "http://127.0.0.1:49019/",
+        "title": "智聘 - 泛蓝领与白领融合招聘平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89019/probe/codex-final-20260604-runtime/may-89019-final-runtime-structure-02-导航-首页.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89019/probe/codex-final-20260604-runtime/may-89019-final-runtime-structure-02-导航-首页.png",
+        "elementCount": 327,
+        "interactiveCount": 13,
+        "interactiveLabels": [
+          "首页 找工作",
+          "首页",
+          "找工作",
+          "登 录",
+          "搜索职位、技能或公司...",
+          "搜索",
+          "查看真实职位",
+          "完善我的简历",
+          "智能匹配职位",
+          "查看面试安排"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89019-final-runtime-structure-03-操作-查看面试安排",
+        "label": "操作:查看面试安排",
+        "finalUrl": "http://127.0.0.1:49019/login",
+        "title": "智聘 - 泛蓝领与白领融合招聘平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89019/probe/codex-final-20260604-runtime/may-89019-final-runtime-structure-03-操作-查看面试安排.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89019/probe/codex-final-20260604-runtime/may-89019-final-runtime-structure-03-操作-查看面试安排.png",
+        "elementCount": 64,
+        "interactiveCount": 5,
+        "interactiveLabels": [
+          "手机号",
+          "密码",
+          "登 录",
+          "立即注册",
+          "测试账号"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89019-final-runtime-structure-04-二层操作-查看面试安排-测试账号",
+        "label": "二层操作:查看面试安排->测试账号",
+        "finalUrl": "http://127.0.0.1:49019/login",
+        "title": "智聘 - 泛蓝领与白领融合招聘平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89019/probe/codex-final-20260604-runtime/may-89019-final-runtime-structure-04-二层操作-查看面试安排-测试账号.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89019/probe/codex-final-20260604-runtime/may-89019-final-runtime-structure-04-二层操作-查看面试安排-测试账号.png",
+        "elementCount": 282,
+        "interactiveCount": 22,
+        "interactiveLabels": [
+          "手机号",
+          "密码",
+          "登 录",
+          "立即注册",
+          "测试账号",
+          "一键登录"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89019-final-runtime-structure-05-操作-查看真实职位",
+        "label": "操作:查看真实职位",
+        "finalUrl": "http://127.0.0.1:49019/jobs",
+        "title": "智聘 - 泛蓝领与白领融合招聘平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89019/probe/codex-final-20260604-runtime/may-89019-final-runtime-structure-05-操作-查看真实职位.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89019/probe/codex-final-20260604-runtime/may-89019-final-runtime-structure-05-操作-查看真实职位.png",
+        "elementCount": 1200,
+        "interactiveCount": 25,
+        "interactiveLabels": [
+          "首页 找工作",
+          "首页",
+          "找工作",
+          "登 录",
+          "搜索职位、技能或公司...",
+          "搜索",
+          "排序说明",
+          "重置筛选",
+          "1"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89019-final-runtime-structure-06-二层操作-查看真实职位-重置筛选",
+        "label": "二层操作:查看真实职位->重置筛选",
+        "finalUrl": "http://127.0.0.1:49019/jobs",
+        "title": "智聘 - 泛蓝领与白领融合招聘平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89019/probe/codex-final-20260604-runtime/may-89019-final-runtime-structure-06-二层操作-查看真实职位-重置筛选.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89019/probe/codex-final-20260604-runtime/may-89019-final-runtime-structure-06-二层操作-查看真实职位-重置筛选.png",
+        "elementCount": 1200,
+        "interactiveCount": 25,
+        "interactiveLabels": [
+          "首页 找工作",
+          "首页",
+          "找工作",
+          "登 录",
+          "搜索职位、技能或公司...",
+          "搜索",
+          "排序说明",
+          "重置筛选",
+          "1"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89019-final-runtime-structure-07-导航-找工作",
+        "label": "导航:找工作",
+        "finalUrl": "http://127.0.0.1:49019/jobs",
+        "title": "智聘 - 泛蓝领与白领融合招聘平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89019/probe/codex-final-20260604-runtime/may-89019-final-runtime-structure-07-导航-找工作.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89019/probe/codex-final-20260604-runtime/may-89019-final-runtime-structure-07-导航-找工作.png",
+        "elementCount": 1200,
+        "interactiveCount": 25,
+        "interactiveLabels": [
+          "首页 找工作",
+          "首页",
+          "找工作",
+          "登 录",
+          "搜索职位、技能或公司...",
+          "搜索",
+          "排序说明",
+          "重置筛选",
+          "1"
+        ]
+      }
+    ]
+  },
+  "screenshotMetrics": {
+    "width": 1728,
+    "height": 1600,
+    "scrollWidth": 1696,
+    "scrollHeight": 1600
+  },
+  "initialBodyTextPreview": "智聘平台\n首页\n找工作\n登 录\n泛蓝领与白领融合招聘平台\n\n岗位真实性治理 · 人岗智能匹配 · 全流程面试管理\n\n搜索\n在招职位\n1,280个\n认证企业\n356家\n求职人才\n8,900人\n真实率\n95%\n热门职位\n\n暂无职位数据，请先注册企业账号发布职位\n\n平台特色\n岗位真实性验证\n\n企业社保核验、办公地址标注、历史行为分析、举报风控联动\n\n查看真实职位\n能力图谱建模\n\n基于简历、作品、测评生成技能权重画像，证书OCR识别\n\n完善我的简历\n智能推荐引擎\n\n协同过滤+语义匹配+冷启动兜底算法\n\n智能匹配职位\n全流程面试管理\n\n时间协商、视频面试、AI初筛报告归档\n\n查看面试安排\n智聘平台 ©2024 泛蓝领与白领融合招聘服务平台",
+  "bodyTextPreview": "智聘平台\n首页\n找工作\n登 录\n泛蓝领与白领融合招聘平台\n\n岗位真实性治理 · 人岗智能匹配 · 全流程面试管理\n\n搜索\n在招职位\n20个\n认证企业\n9家\n求职人才\n7人\n真实率\n100%\n热门职位\n金融分析师\n95分\n已核验\n瑞丰金融\n20000-50000K\n上海·浦东新区 · 2-5年 · 硕士\n财务分析\nPython\nWind\nJava开发工程师\n92分\n已核验\n智联科技\n15000-30000K\n深圳·南山区 · 3-5年 · 本科\nJava\nSpring Boot\nMySQL\n销售专员\n78分\n已核验\n万达零售\n5000-12000K\n广州·天河区 · 1-2年 · 高中\n销售技巧\n客户服务\n商品陈列\n客户经理\n93分\n已核验\n瑞丰金融\n12000-35000K\n上海·浦东新区 · 3-5年 · 本科\n客户关系\n理财产品\n风险控制\n前端开发工程师\n90分\n已核验\n智联科技\n12000-25000K\n深圳·南山区 · 2-4年 · 本科\nReact\nTypeScript\nVue\n护理员\n89分\n已核验\n仁和医疗\n6000-12000K\n成都·武侯区 · 1-3年 · 大专\n临床护理\n生命体征监测\n医嘱执行\n平台特色\n岗位真实性验证\n\n企业社保核验、办公地址标注、历史行为分析、举报风控联动\n\n查看真实职位\n能力图谱建模\n\n基于简历、作品、测评生成技能权重画像，证书OCR识别\n\n完善我的简历\n智能推荐引擎\n\n协同过滤+语义匹配+冷启动兜底算法\n\n智能匹配职位\n全流程面试管理\n\n时间协商、视频面试、AI初筛报告归档\n\n查看面试安排\n智聘平台 ©2024 泛蓝领与白领融合招聘服务平台",
+  "apiBase": "http://127.0.0.1:59019",
+  "businessGoalPreview": "",
+  "apiResponses": [
+    {
+      "method": "GET",
+      "status": 500,
+      "url": "http://127.0.0.1:49019/api/hot-jobs"
+    },
+    {
+      "method": "GET",
+      "status": 500,
+      "url": "http://127.0.0.1:49019/api/stats"
+    },
+    {
+      "method": "GET",
+      "status": 500,
+      "url": "http://127.0.0.1:49019/api/hot-jobs"
+    },
+    {
+      "method": "GET",
+      "status": 500,
+      "url": "http://127.0.0.1:49019/api/stats"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49019/api/jobs?page=1&pageSize=20&keyword=Java"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49019/api/jobs?page=1&pageSize=20&keyword=Java"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49019/api/jobs?page=1&pageSize=20&keyword=%E6%B5%8B%E8%AF%95"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49019/api/hot-jobs"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49019/api/stats"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49019/api/hot-jobs"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49019/api/stats"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49019/api/hot-jobs"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49019/api/stats"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49019/api/hot-jobs"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49019/api/stats"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49019/api/jobs?page=1&pageSize=20"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49019/api/jobs?page=1&pageSize=20"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49019/api/jobs?page=1&pageSize=20"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49019/api/hot-jobs"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49019/api/stats"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49019/api/hot-jobs"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49019/api/stats"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49019/api/jobs?page=1&pageSize=20"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49019/api/jobs?page=1&pageSize=20"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49019/api/hot-jobs"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49019/api/stats"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49019/api/hot-jobs"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49019/api/stats"
+    }
+  ],
+  "apiChecks": [
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59019/api/health",
+      "path": "/api/health",
+      "status": 200,
+      "ok": true,
+      "bodyPreview": "{\"status\":\"ok\",\"timestamp\":\"2026-06-04T09:14:16.668Z\"}"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59019/api/hot-jobs",
+      "path": "/api/hot-jobs",
+      "status": 200,
+      "ok": true,
+      "bodyPreview": "[{\"id\":11,\"company_id\":5,\"hr_id\":5,\"title\":\"金融分析师\",\"industry\":\"finance\",\"category\":\"金融分析\",\"description\":\"负责行业研究和投资分析，撰写研究报告，为投资决策提供支持。\",\"requirements\":\"硕士学历，金融相关专业，2年以上分析经验，持有CFA优先。\",\"skills\":\"[\\\"财务分析\\\",\\\"Python\\\",\\\"Wind\\\",\\\"Excel建模\\\"]\",\"salary_min\":20000,\"salary_max\":50000,\"salary_negotiable\":1,\"province\":\"上海市\",\"city\":\"上海\",\"district\":\"浦东新区\",\"street\":\"陆家嘴环路\",\"address\":\"上海市浦东新区陆家嘴环路1088号28楼\",\"address_lat\":null,\"address_lng\":null,\"work_type\":\"fulltime\",\"experience_required\":\"2-5年\",\"education_requi"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59019/api/stats",
+      "path": "/api/stats",
+      "status": 200,
+      "ok": true,
+      "bodyPreview": "{\"totalJobs\":20,\"totalCompanies\":9,\"totalJobseekers\":7,\"verifiedRate\":100}"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59019/api/jobs?page=1&pageSize=20&keyword=Java",
+      "path": "/api/jobs?page=1&pageSize=20&keyword=Java",
+      "status": 200,
+      "ok": true,
+      "bodyPreview": "{\"list\":[{\"id\":1,\"company_id\":1,\"hr_id\":1,\"title\":\"Java开发工程师\",\"industry\":\"internet\",\"category\":\"技术研发\",\"description\":\"负责公司核心业务系统的后端开发与维护，参与系统架构设计和性能优化。\",\"requirements\":\"3年以上Java开发经验，熟悉Spring生态，有大型系统开发经验优先。\",\"skills\":\"[\\\"Java\\\",\\\"Spring Boot\\\",\\\"MySQL\\\",\\\"Redis\\\"]\",\"salary_min\":15000,\"salary_max\":30000,\"salary_negotiable\":0,\"province\":\"广东省\",\"city\":\"深圳\",\"district\":\"南山区\",\"street\":\"科技园南路\",\"address\":\"深圳市南山区科技园南区T2栋12楼\",\"address_lat\":null,\"address_lng\":null,\"work_type\":\"fulltime\",\"experience_required\":"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59019/api/jobs?page=1&pageSize=20&keyword=%E6%B5%8B%E8%AF%95",
+      "path": "/api/jobs?page=1&pageSize=20&keyword=%E6%B5%8B%E8%AF%95",
+      "status": 200,
+      "ok": true,
+      "bodyPreview": "{\"list\":[{\"id\":20,\"company_id\":1,\"hr_id\":1,\"title\":\"安防工程师\",\"industry\":\"internet\",\"category\":\"技术研发\",\"description\":\"负责公司信息安全体系建设，包括安全审计、漏洞修复、应急响应等。\",\"requirements\":\"3年以上信息安全工作经验，熟悉常见安全攻防技术。\",\"skills\":\"[\\\"网络安全\\\",\\\"渗透测试\\\",\\\"安全审计\\\",\\\"应急响应\\\"]\",\"salary_min\":18000,\"salary_max\":35000,\"salary_negotiable\":1,\"province\":\"广东省\",\"city\":\"深圳\",\"district\":\"南山区\",\"street\":\"科技园南路\",\"address\":\"深圳市南山区科技园南区T2栋15楼\",\"address_lat\":null,\"address_lng\":null,\"work_type\":\"fulltime\",\"experience_required\":\"3-5年\",\"education_required"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59019/api/jobs?page=1&pageSize=20",
+      "path": "/api/jobs?page=1&pageSize=20",
+      "status": 200,
+      "ok": true,
+      "bodyPreview": "{\"list\":[{\"id\":1,\"company_id\":1,\"hr_id\":1,\"title\":\"Java开发工程师\",\"industry\":\"internet\",\"category\":\"技术研发\",\"description\":\"负责公司核心业务系统的后端开发与维护，参与系统架构设计和性能优化。\",\"requirements\":\"3年以上Java开发经验，熟悉Spring生态，有大型系统开发经验优先。\",\"skills\":\"[\\\"Java\\\",\\\"Spring Boot\\\",\\\"MySQL\\\",\\\"Redis\\\"]\",\"salary_min\":15000,\"salary_max\":30000,\"salary_negotiable\":0,\"province\":\"广东省\",\"city\":\"深圳\",\"district\":\"南山区\",\"street\":\"科技园南路\",\"address\":\"深圳市南山区科技园南区T2栋12楼\",\"address_lat\":null,\"address_lng\":null,\"work_type\":\"fulltime\",\"experience_required\":"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59019/api/auth/me",
+      "path": "/api/auth/me",
+      "status": 200,
+      "ok": true,
+      "bodyPreview": "{\"id\":1,\"phone\":\"13800000000\",\"role\":\"admin\",\"name\":\"系统管理员\",\"avatar\":null}"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59019/api/users/profile",
+      "path": "/api/users/profile",
+      "status": 200,
+      "ok": true,
+      "bodyPreview": "{\"id\":1,\"phone\":\"13800000000\",\"role\":\"admin\",\"name\":\"系统管理员\",\"avatar\":null}"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59019/api/user/profile",
+      "path": "/api/user/profile",
+      "status": 200,
+      "ok": true,
+      "bodyPreview": "{\"id\":1,\"phone\":\"13800000000\",\"role\":\"admin\",\"name\":\"系统管理员\",\"avatar\":null}"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59019/api/search?q=%E6%B5%8B%E8%AF%95",
+      "path": "/api/search?q=%E6%B5%8B%E8%AF%95",
+      "status": 200,
+      "ok": true,
+      "bodyPreview": "{\"list\":[{\"id\":20,\"company_id\":1,\"hr_id\":1,\"title\":\"安防工程师\",\"industry\":\"internet\",\"category\":\"技术研发\",\"description\":\"负责公司信息安全体系建设，包括安全审计、漏洞修复、应急响应等。\",\"requirements\":\"3年以上信息安全工作经验，熟悉常见安全攻防技术。\",\"skills\":\"[\\\"网络安全\\\",\\\"渗透测试\\\",\\\"安全审计\\\",\\\"应急响应\\\"]\",\"salary_min\":18000,\"salary_max\":35000,\"salary_negotiable\":1,\"province\":\"广东省\",\"city\":\"深圳\",\"district\":\"南山区\",\"street\":\"科技园南路\",\"address\":\"深圳市南山区科技园南区T2栋15楼\",\"address_lat\":null,\"address_lng\":null,\"work_type\":\"fulltime\",\"experience_required\":\"3-5年\",\"education_required"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59019/api/admin/stats",
+      "path": "/api/admin/stats",
+      "status": 200,
+      "ok": true,
+      "bodyPreview": "{\"overview\":{\"totalUsers\":17,\"totalJobs\":20,\"totalCompanies\":9,\"totalApplications\":10,\"activeJobs\":20,\"totalSalaryBudget\":385000}}"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59019/api/admin/dashboard",
+      "path": "/api/admin/dashboard",
+      "status": 200,
+      "ok": true,
+      "bodyPreview": "{\"overview\":{\"totalUsers\":17,\"totalJobs\":20,\"totalCompanies\":9,\"totalApplications\":10,\"activeJobs\":20,\"totalSalaryBudget\":385000},\"recentJobs\":[{\"id\":1,\"company_id\":1,\"hr_id\":1,\"title\":\"Java开发工程师\",\"industry\":\"internet\",\"category\":\"技术研发\",\"description\":\"负责公司核心业务系统的后端开发与维护，参与系统架构设计和性能优化。\",\"requirements\":\"3年以上Java开发经验，熟悉Spring生态，有大型系统开发经验优先。\",\"skills\":\"[\\\"Java\\\",\\\"Spring Boot\\\",\\\"MySQL\\\",\\\"Redis\\\"]\",\"salary_min\":15000,\"salary_max\":30000,\"salary_negotiable\":0,\"province\":\"广东省\",\"city\":\"深圳\",\"district\":\""
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59019/api/products",
+      "path": "/api/products",
+      "status": 200,
+      "ok": true,
+      "bodyPreview": "{\"products\":[{\"id\":11,\"name\":\"金融分析师\",\"category\":\"金融分析\",\"description\":\"负责行业研究和投资分析，撰写研究报告，为投资决策提供支持。\",\"salary_min\":20000,\"salary_max\":50000,\"city\":\"上海\",\"district\":\"浦东新区\",\"company_name\":\"瑞丰金融\"},{\"id\":1,\"name\":\"Java开发工程师\",\"category\":\"技术研发\",\"description\":\"负责公司核心业务系统的后端开发与维护，参与系统架构设计和性能优化。\",\"salary_min\":15000,\"salary_max\":30000,\"city\":\"深圳\",\"district\":\"南山区\",\"company_name\":\"智联科技\"},{\"id\":16,\"name\":\"销售专员\",\"category\":\"销售\",\"description\":\"负责门店商品的销售和顾客服务，完成销售目标。\",\"salary_min\":5000,\"salary_max\":12000,\"city\":\""
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59019/api/orders",
+      "path": "/api/orders",
+      "status": 200,
+      "ok": true,
+      "bodyPreview": "{\"orders\":[{\"id\":1,\"job_id\":1,\"jobseeker_id\":1,\"status\":\"interview\",\"resume_snapshot\":null,\"hr_remark\":\"技术能力扎实，安排面试\",\"created_at\":\"2026-06-04 01:33:35\",\"updated_at\":\"2026-06-04 01:33:35\",\"job_title\":\"Java开发工程师\",\"salary_min\":15000,\"salary_max\":30000,\"company_name\":\"智联科技\"},{\"id\":2,\"job_id\":2,\"jobseeker_id\":2,\"status\":\"viewed\",\"resume_snapshot\":null,\"hr_remark\":\"简历已查看\",\"created_at\":\"2026-06-04 01:33:35\",\"updated_at\":\"2026-06-04 01:33:35\",\"job_title\":\"前端开发工程师\",\"salary_min\":12000,\"salary_max\":25000,\""
+    }
+  ],
+  "dialogs": [],
+  "consoleMessages": [
+    {
+      "type": "debug",
+      "text": "[vite] connecting...",
+      "location": {
+        "url": "http://127.0.0.1:49019/@vite/client",
+        "lineNumber": 494,
+        "columnNumber": 8
+      }
+    },
+    {
+      "type": "debug",
+      "text": "[vite] connected.",
+      "location": {
+        "url": "http://127.0.0.1:49019/@vite/client",
+        "lineNumber": 617,
+        "columnNumber": 14
+      }
+    },
+    {
+      "type": "info",
+      "text": "%cDownload the React DevTools for a better development experience: https://reactjs.org/link/react-devtools font-weight:bold",
+      "location": {
+        "url": "http://127.0.0.1:49019/node_modules/.vite/deps/chunk-6GSFWH52.js?v=4d1b0c2b",
+        "lineNumber": 21550,
+        "columnNumber": 24
+      }
+    },
+    {
+      "type": "error",
+      "text": "Warning: [antd: Card] `bodyStyle` is deprecated. Please use `styles.body` instead.",
+      "location": {
+        "url": "http://127.0.0.1:49019/node_modules/.vite/deps/chunk-ZAIULHLZ.js?v=4d1b0c2b",
+        "lineNumber": 1047,
+        "columnNumber": 14
+      }
+    },
+    {
+      "type": "warning",
+      "text": "⚠️ React Router Future Flag Warning: React Router will begin wrapping state updates in `React.startTransition` in v7. You can use the `v7_startTransition` future flag to opt-in early. For more information, see https://reactrouter.com/v6/upgrading/future#v7_starttransition.",
+      "location": {
+        "url": "http://127.0.0.1:49019/node_modules/.vite/deps/react-router-dom.js?v=4d1b0c2b",
+        "lineNumber": 4426,
+        "columnNumber": 12
+      }
+    },
+    {
+      "type": "warning",
+      "text": "⚠️ React Router Future Flag Warning: Relative route resolution within Splat routes is changing in v7. You can use the `v7_relativeSplatPath` future flag to opt-in early. For more information, see https://reactrouter.com/v6/upgrading/future#v7_relativesplatpath.",
+      "location": {
+        "url": "http://127.0.0.1:49019/node_modules/.vite/deps/react-router-dom.js?v=4d1b0c2b",
+        "lineNumber": 4426,
+        "columnNumber": 12
+      }
+    },
+    {
+      "type": "error",
+      "text": "Failed to load resource: the server responded with a status of 500 (Internal Server Error)",
+      "location": {
+        "url": "http://127.0.0.1:49019/api/hot-jobs",
+        "lineNumber": 0,
+        "columnNumber": 0
+      }
+    },
+    {
+      "type": "error",
+      "text": "Failed to load hot jobs: AxiosError: Request failed with status code 500\n    at settle (http://127.0.0.1:49019/node_modules/.vite/deps/axios.js?v=4d1b0c2b:1457:12)\n    at XMLHttpRequest.onloadend (http://127.0.0.1:49019/node_modules/.vite/deps/axios.js?v=4d1b0c2b:1862:7)",
+      "location": {
+        "url": "http://127.0.0.1:49019/src/pages/Home.tsx?t=1780563990520",
+        "lineNumber": 56,
+        "columnNumber": 14
+      }
+    },
+    {
+      "type": "error",
+      "text": "Failed to load resource: the server responded with a status of 500 (Internal Server Error)",
+      "location": {
+        "url": "http://127.0.0.1:49019/api/stats",
+        "lineNumber": 0,
+        "columnNumber": 0
+      }
+    },
+    {
+      "type": "error",
+      "text": "Failed to load resource: the server responded with a status of 500 (Internal Server Error)",
+      "location": {
+        "url": "http://127.0.0.1:49019/api/hot-jobs",
+        "lineNumber": 0,
+        "columnNumber": 0
+      }
+    },
+    {
+      "type": "error",
+      "text": "Failed to load hot jobs: AxiosError: Request failed with status code 500\n    at settle (http://127.0.0.1:49019/node_modules/.vite/deps/axios.js?v=4d1b0c2b:1457:12)\n    at XMLHttpRequest.onloadend (http://127.0.0.1:49019/node_modules/.vite/deps/axios.js?v=4d1b0c2b:1862:7)",
+      "location": {
+        "url": "http://127.0.0.1:49019/src/pages/Home.tsx?t=1780563990520",
+        "lineNumber": 56,
+        "columnNumber": 14
+      }
+    },
+    {
+      "type": "error",
+      "text": "Failed to load resource: the server responded with a status of 500 (Internal Server Error)",
+      "location": {
+        "url": "http://127.0.0.1:49019/api/stats",
+        "lineNumber": 0,
+        "columnNumber": 0
+      }
+    },
+    {
+      "type": "verbose",
+      "text": "[DOM] Input elements should have autocomplete attributes (suggested: \"current-password\"): (More info: https://goo.gl/9p2vKq) %o",
+      "location": {
+        "url": "http://127.0.0.1:49019/login",
+        "lineNumber": 0,
+        "columnNumber": 0
+      }
+    },
+    {
+      "type": "debug",
+      "text": "[vite] connecting...",
+      "location": {
+        "url": "http://127.0.0.1:49019/@vite/client",
+        "lineNumber": 494,
+        "columnNumber": 8
+      }
+    },
+    {
+      "type": "debug",
+      "text": "[vite] connected.",
+      "location": {
+        "url": "http://127.0.0.1:49019/@vite/client",
+        "lineNumber": 617,
+        "columnNumber": 14
+      }
+    },
+    {
+      "type": "info",
+      "text": "%cDownload the React DevTools for a better development experience: https://reactjs.org/link/react-devtools font-weight:bold",
+      "location": {
+        "url": "http://127.0.0.1:49019/node_modules/.vite/deps/chunk-6GSFWH52.js?v=4d1b0c2b",
+        "lineNumber": 21550,
+        "columnNumber": 24
+      }
+    },
+    {
+      "type": "error",
+      "text": "Warning: [antd: Card] `bodyStyle` is deprecated. Please use `styles.body` instead.",
+      "location": {
+        "url": "http://127.0.0.1:49019/node_modules/.vite/deps/chunk-ZAIULHLZ.js?v=4d1b0c2b",
+        "lineNumber": 1047,
+        "columnNumber": 14
+      }
+    },
+    {
+      "type": "warning",
+      "text": "⚠️ React Router Future Flag Warning: React Router will begin wrapping state updates in `React.startTransition` in v7. You can use the `v7_startTransition` future flag to opt-in early. For more information, see https://reactrouter.com/v6/upgrading/future#v7_starttransition.",
+      "location": {
+        "url": "http://127.0.0.1:49019/node_modules/.vite/deps/react-router-dom.js?v=4d1b0c2b",
+        "lineNumber": 4426,
+        "columnNumber": 12
+      }
+    },
+    {
+      "type": "warning",
+      "text": "⚠️ React Router Future Flag Warning: Relative route resolution within Splat routes is changing in v7. You can use the `v7_relativeSplatPath` future flag to opt-in early. For more information, see https://reactrouter.com/v6/upgrading/future#v7_relativesplatpath.",
+      "location": {
+        "url": "http://127.0.0.1:49019/node_modules/.vite/deps/react-router-dom.js?v=4d1b0c2b",
+        "lineNumber": 4426,
+        "columnNumber": 12
+      }
+    },
+    {
+      "type": "error",
+      "text": "Warning: Maximum update depth exceeded. This can happen when a component calls setState inside useEffect, but useEffect either doesn't have a dependency array, or one of the dependencies changes on every render.",
+      "location": {
+        "url": "http://127.0.0.1:49019/node_modules/.vite/deps/chunk-6GSFWH52.js?v=4d1b0c2b",
+        "lineNumber": 520,
+        "columnNumber": 37
+      }
+    },
+    {
+      "type": "error",
+      "text": "Warning: Maximum update depth exceeded. This can happen when a component calls setState inside useEffect, but useEffect either doesn't have a dependency array, or one of the dependencies changes on every render.",
+      "location": {
+        "url": "http://127.0.0.1:49019/node_modules/.vite/deps/chunk-6GSFWH52.js?v=4d1b0c2b",
+        "lineNumber": 520,
+        "columnNumber": 37
+      }
+    },
+    {
+      "type": "error",
+      "text": "Warning: Maximum update depth exceeded. This can happen when a component calls setState inside useEffect, but useEffect either doesn't have a dependency array, or one of the dependencies changes on every render.",
+      "location": {
+        "url": "http://127.0.0.1:49019/node_modules/.vite/deps/chunk-6GSFWH52.js?v=4d1b0c2b",
+        "lineNumber": 520,
+        "columnNumber": 37
+      }
+    },
+    {
+      "type": "error",
+      "text": "Warning: Maximum update depth exceeded. This can happen when a component calls setState inside useEffect, but useEffect either doesn't have a dependency array, or one of the dependencies changes on every render.",
+      "location": {
+        "url": "http://127.0.0.1:49019/node_modules/.vite/deps/chunk-6GSFWH52.js?v=4d1b0c2b",
+        "lineNumber": 520,
+        "columnNumber": 37
+      }
+    },
+    {
+      "type": "error",
+      "text": "Warning: Maximum update depth exceeded. This can happen when a component calls setState inside useEffect, but useEffect either doesn't have a dependency array, or one of the dependencies changes on every render.",
+      "location": {
+        "url": "http://127.0.0.1:49019/node_modules/.vite/deps/chunk-6GSFWH52.js?v=4d1b0c2b",
+        "lineNumber": 520,
+        "columnNumber": 37
+      }
+    },
+    {
+      "type": "error",
+      "text": "Warning: Maximum update depth exceeded. This can happen when a component calls setState inside useEffect, but useEffect either doesn't have a dependency array, or one of the dependencies changes on every render.",
+      "location": {
+        "url": "http://127.0.0.1:49019/node_modules/.vite/deps/chunk-6GSFWH52.js?v=4d1b0c2b",
+        "lineNumber": 520,
+        "columnNumber": 37
+      }
+    },
+    {
+      "type": "debug",
+      "text": "[vite] connecting...",
+      "location": {
+        "url": "http://127.0.0.1:49019/@vite/client",
+        "lineNumber": 494,
+        "columnNumber": 8
+      }
+    },
+    {
+      "type": "info",
+      "text": "%cDownload the React DevTools for a better development experience: https://reactjs.org/link/react-devtools font-weight:bold",
+      "location": {
+        "url": "http://127.0.0.1:49019/node_modules/.vite/deps/chunk-6GSFWH52.js?v=4d1b0c2b",
+        "lineNumber": 21550,
+        "columnNumber": 24
+      }
+    },
+    {
+      "type": "error",
+      "text": "Warning: [antd: Card] `bodyStyle` is deprecated. Please use `styles.body` instead.",
+      "location": {
+        "url": "http://127.0.0.1:49019/node_modules/.vite/deps/chunk-ZAIULHLZ.js?v=4d1b0c2b",
+        "lineNumber": 1047,
+        "columnNumber": 14
+      }
+    },
+    {
+      "type": "warning",
+      "text": "⚠️ React Router Future Flag Warning: React Router will begin wrapping state updates in `React.startTransition` in v7. You can use the `v7_startTransition` future flag to opt-in early. For more information, see https://reactrouter.com/v6/upgrading/future#v7_starttransition.",
+      "location": {
+        "url": "http://127.0.0.1:49019/node_modules/.vite/deps/react-router-dom.js?v=4d1b0c2b",
+        "lineNumber": 4426,
+        "columnNumber": 12
+      }
+    },
+    {
+      "type": "warning",
+      "text": "⚠️ React Router Future Flag Warning: Relative route resolution within Splat routes is changing in v7. You can use the `v7_relativeSplatPath` future flag to opt-in early. For more information, see https://reactrouter.com/v6/upgrading/future#v7_relativesplatpath.",
+      "location": {
+        "url": "http://127.0.0.1:49019/node_modules/.vite/deps/react-router-dom.js?v=4d1b0c2b",
+        "lineNumber": 4426,
+        "columnNumber": 12
+      }
+    },
+    {
+      "type": "debug",
+      "text": "[vite] connected.",
+      "location": {
+        "url": "http://127.0.0.1:49019/@vite/client",
+        "lineNumber": 617,
+        "columnNumber": 14
+      }
+    },
+    {
+      "type": "error",
+      "text": "Warning: Maximum update depth exceeded. This can happen when a component calls setState inside useEffect, but useEffect either doesn't have a dependency array, or one of the dependencies changes on every render.",
+      "location": {
+        "url": "http://127.0.0.1:49019/node_modules/.vite/deps/chunk-6GSFWH52.js?v=4d1b0c2b",
+        "lineNumber": 520,
+        "columnNumber": 37
+      }
+    },
+    {
+      "type": "error",
+      "text": "Warning: Maximum update depth exceeded. This can happen when a component calls setState inside useEffect, but useEffect either doesn't have a dependency array, or one of the dependencies changes on every render.",
+      "location": {
+        "url": "http://127.0.0.1:49019/node_modules/.vite/deps/chunk-6GSFWH52.js?v=4d1b0c2b",
+        "lineNumber": 520,
+        "columnNumber": 37
+      }
+    },
+    {
+      "type": "debug",
+      "text": "[vite] connecting...",
+      "location": {
+        "url": "http://127.0.0.1:49019/@vite/client",
+        "lineNumber": 494,
+        "columnNumber": 8
+      }
+    },
+    {
+      "type": "debug",
+      "text": "[vite] connected.",
+      "location": {
+        "url": "http://127.0.0.1:49019/@vite/client",
+        "lineNumber": 617,
+        "columnNumber": 14
+      }
+    },
+    {
+      "type": "info",
+      "text": "%cDownload the React DevTools for a better development experience: https://reactjs.org/link/react-devtools font-weight:bold",
+      "location": {
+        "url": "http://127.0.0.1:49019/node_modules/.vite/deps/chunk-6GSFWH52.js?v=4d1b0c2b",
+        "lineNumber": 21550,
+        "columnNumber": 24
+      }
+    },
+    {
+      "type": "error",
+      "text": "Warning: [antd: Card] `bodyStyle` is deprecated. Please use `styles.body` instead.",
+      "location": {
+        "url": "http://127.0.0.1:49019/node_modules/.vite/deps/chunk-ZAIULHLZ.js?v=4d1b0c2b",
+        "lineNumber": 1047,
+        "columnNumber": 14
+      }
+    },
+    {
+      "type": "warning",
+      "text": "⚠️ React Router Future Flag Warning: React Router will begin wrapping state updates in `React.startTransition` in v7. You can use the `v7_startTransition` future flag to opt-in early. For more information, see https://reactrouter.com/v6/upgrading/future#v7_starttransition.",
+      "location": {
+        "url": "http://127.0.0.1:49019/node_modules/.vite/deps/react-router-dom.js?v=4d1b0c2b",
+        "lineNumber": 4426,
+        "columnNumber": 12
+      }
+    },
+    {
+      "type": "warning",
+      "text": "⚠️ React Router Future Flag Warning: Relative route resolution within Splat routes is changing in v7. You can use the `v7_relativeSplatPath` future flag to opt-in early. For more information, see https://reactrouter.com/v6/upgrading/future#v7_relativesplatpath.",
+      "location": {
+        "url": "http://127.0.0.1:49019/node_modules/.vite/deps/react-router-dom.js?v=4d1b0c2b",
+        "lineNumber": 4426,
+        "columnNumber": 12
+      }
+    }
+  ],
+  "requestFailures": [],
+  "responseErrors": [
+    {
+      "status": 500,
+      "url": "http://127.0.0.1:49019/api/hot-jobs"
+    },
+    {
+      "status": 500,
+      "url": "http://127.0.0.1:49019/api/stats"
+    },
+    {
+      "status": 500,
+      "url": "http://127.0.0.1:49019/api/hot-jobs"
+    },
+    {
+      "status": 500,
+      "url": "http://127.0.0.1:49019/api/stats"
+    }
+  ],
+  "reportPath": "/Users/chen/Documents/trae_projects/local_projects/may-89019/probe/codex-final-20260604-runtime/may-89019-browser-report.json"
+}
