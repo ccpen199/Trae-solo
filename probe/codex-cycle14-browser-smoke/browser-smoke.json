@@ -1,0 +1,34 @@
+{
+  "order": "may-89035",
+  "ok": false,
+  "frontendUrl": "http://127.0.0.1:49035/",
+  "backendUrl": "http://127.0.0.1:59035",
+  "frontendStatus": 0,
+  "title": "",
+  "textLength": 0,
+  "apiChecks": [
+    {
+      "path": "/api/health",
+      "status": 0,
+      "ok": false,
+      "bodySample": "",
+      "error": "page.goto: net::ERR_CONNECTION_REFUSED at http://127.0.0.1:59035/api/health\nCall log:\n\u001b[2m  - navigating to \"http://127.0.0.1:59035/api/health\", waiting until \"domcontentloaded\"\u001b[22m\n"
+    },
+    {
+      "path": "/api/parts",
+      "status": 0,
+      "ok": false,
+      "bodySample": "",
+      "error": "page.goto: net::ERR_CONNECTION_REFUSED at http://127.0.0.1:59035/api/parts\nCall log:\n\u001b[2m  - navigating to \"http://127.0.0.1:59035/api/parts\", waiting until \"domcontentloaded\"\u001b[22m\n"
+    }
+  ],
+  "responseErrors": [],
+  "requestFailures": [
+    {
+      "url": "http://127.0.0.1:49035/",
+      "error": "net::ERR_CONNECTION_REFUSED"
+    }
+  ],
+  "pageErrors": [],
+  "frontendError": "page.goto: net::ERR_CONNECTION_REFUSED at http://127.0.0.1:49035/\nCall log:\n\u001b[2m  - navigating to \"http://127.0.0.1:49035/\", waiting until \"domcontentloaded\"\u001b[22m\n"
+}
