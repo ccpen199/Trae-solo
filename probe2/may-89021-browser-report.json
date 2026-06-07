@@ -1,0 +1,196 @@
+{
+  "ok": true,
+  "generatedAt": "2026-06-04T02:23:01.271Z",
+  "order": "may-89021",
+  "roundIndex": 99,
+  "captureId": "codex-may-89021",
+  "url": "http://127.0.0.1:49021/",
+  "initialUrl": "http://127.0.0.1:49021/",
+  "finalUrl": "http://127.0.0.1:49021/",
+  "status": 200,
+  "title": "安徽省一体化政务服务平台 - 省级工作台",
+  "initialTitle": "安徽省一体化政务服务平台 - 省级工作台",
+  "navigationError": "",
+  "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89021/probe2/codex-may-89021-frontend.png",
+  "screenshotPaths": [
+    "/Users/chen/Documents/trae_projects/local_projects/may-89021/probe2/codex-may-89021-structure-01-首屏.png"
+  ],
+  "issueTextPreview": "",
+  "targetReason": "未识别到特定问题页，保留首屏验收截图",
+  "targetKind": "smoke",
+  "targetMatched": false,
+  "targetActions": [
+    {
+      "action": "keep-current-page",
+      "label": "未识别到特定问题页，保留首屏验收截图",
+      "ok": true
+    }
+  ],
+  "authFlow": {
+    "detected": false,
+    "attempted": false,
+    "success": false,
+    "finalUrl": "http://127.0.0.1:49021/",
+    "message": "",
+    "actions": []
+  },
+  "businessAudit": {
+    "actions": [],
+    "snapshots": [
+      {
+        "label": "首屏",
+        "url": "http://127.0.0.1:49021/",
+        "title": "安徽省一体化政务服务平台 - 省级工作台",
+        "headings": [],
+        "navLabels": [],
+        "buttons": [],
+        "links": [],
+        "inputs": [],
+        "tables": [],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "",
+        "layout": {
+          "viewportWidth": 1504,
+          "viewportHeight": 1000,
+          "scrollWidth": 1504,
+          "scrollHeight": 1000,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "codex-may-89021-structure-01-首屏",
+          "label": "首屏",
+          "finalUrl": "http://127.0.0.1:49021/",
+          "title": "安徽省一体化政务服务平台 - 省级工作台",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89021/probe2/codex-may-89021-structure-01-首屏.json",
+          "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89021/probe2/codex-may-89021-structure-01-首屏.png",
+          "elementCount": 11,
+          "interactiveCount": 0,
+          "interactiveLabels": []
+        }
+      }
+    ],
+    "findings": [
+      "首屏 页面打开后是空白，没有渲染业务内容、表单或列表。"
+    ],
+    "actionHints": [
+      "修复 首屏 的路由组件挂载、接口初始化和错误兜底，确保进入页面后直接显示可操作内容。"
+    ],
+    "emptyPages": [],
+    "overflowPages": [],
+    "blankPages": [
+      "首屏"
+    ],
+    "apiFailurePaths": [],
+    "goalTerms": [],
+    "clickedActionDescriptors": [],
+    "secondaryActionClicks": 0,
+    "structureCaptures": [
+      {
+        "module": "website_structure_capture",
+        "runId": "codex-may-89021-structure-01-首屏",
+        "label": "首屏",
+        "finalUrl": "http://127.0.0.1:49021/",
+        "title": "安徽省一体化政务服务平台 - 省级工作台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89021/probe2/codex-may-89021-structure-01-首屏.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89021/probe2/codex-may-89021-structure-01-首屏.png",
+        "elementCount": 11,
+        "interactiveCount": 0,
+        "interactiveLabels": []
+      }
+    ],
+    "representativeScreenshotUrl": "http://127.0.0.1:49021/",
+    "representativeScreenshotLabel": "首屏"
+  },
+  "websiteStructureCapture": {
+    "module": "website_structure_capture",
+    "captureCount": 1,
+    "captures": [
+      {
+        "module": "website_structure_capture",
+        "runId": "codex-may-89021-structure-01-首屏",
+        "label": "首屏",
+        "finalUrl": "http://127.0.0.1:49021/",
+        "title": "安徽省一体化政务服务平台 - 省级工作台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89021/probe2/codex-may-89021-structure-01-首屏.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89021/probe2/codex-may-89021-structure-01-首屏.png",
+        "elementCount": 11,
+        "interactiveCount": 0,
+        "interactiveLabels": []
+      }
+    ]
+  },
+  "screenshotMetrics": {
+    "width": 1536,
+    "height": 1000,
+    "scrollWidth": 1504,
+    "scrollHeight": 1000
+  },
+  "initialBodyTextPreview": "",
+  "bodyTextPreview": "",
+  "apiBase": "http://127.0.0.1:59021",
+  "businessGoalPreview": "",
+  "apiResponses": [],
+  "apiChecks": [
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59021/api/health",
+      "path": "/api/health",
+      "status": 200,
+      "ok": true,
+      "bodyPreview": "{\"status\":\"ok\",\"timestamp\":\"2026-06-04T02:22:59.285Z\",\"service\":\"安徽省一体化政务服务平台 API\",\"version\":\"1.0.0\"}"
+    }
+  ],
+  "dialogs": [],
+  "consoleMessages": [
+    {
+      "type": "debug",
+      "text": "[vite] connecting...",
+      "location": {
+        "url": "http://127.0.0.1:49021/@vite/client",
+        "lineNumber": 788,
+        "columnNumber": 8
+      }
+    },
+    {
+      "type": "debug",
+      "text": "[vite] connected.",
+      "location": {
+        "url": "http://127.0.0.1:49021/@vite/client",
+        "lineNumber": 911,
+        "columnNumber": 14
+      }
+    },
+    {
+      "type": "error",
+      "text": "/Users/chen/Documents/trae_projects/local_projects/may-89021/src/pages/Dashboard.tsx: JSX value should be either an expression or a quoted JSX text. (117:18)\n\n  115 |           return (\n  116 |             <button\n> 117 |               key=***\n      |                   ^\n  118 |               onClick={() => navigate(item.path)}\n  119 |               className=\"bg-white rounded-xl p-5 shadow-sm text-left hover:shadow-md hover:bg-primary-50 transition-colors\"\n  120 |             >\n115|            return (\n116|              <button\n117|                key=***\n   |                    ^\n118|                onClick={() => navigate(item.path)}\n119|                className=\"bg-white rounded-xl p-5 shadow-sm text-left hover:shadow-md hover:bg-primary-50 transition-colors\"",
+      "location": {
+        "url": "http://127.0.0.1:49021/index.html?html-proxy&index=0.js",
+        "lineNumber": 4,
+        "columnNumber": 20
+      }
+    },
+    {
+      "type": "error",
+      "text": "Failed to load resource: the server responded with a status of 500 (Internal Server Error)",
+      "location": {
+        "url": "http://127.0.0.1:49021/src/pages/Dashboard.tsx?t=1780539764440",
+        "lineNumber": 0,
+        "columnNumber": 0
+      }
+    }
+  ],
+  "requestFailures": [
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:49021/src/pages/Dashboard.tsx?t=1780539764440",
+      "errorText": "net::ERR_ABORTED"
+    }
+  ],
+  "responseErrors": [
+    {
+      "status": 500,
+      "url": "http://127.0.0.1:49021/src/pages/Dashboard.tsx?t=1780539764440"
+    }
+  ]
+}
