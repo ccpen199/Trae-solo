@@ -1,0 +1,1648 @@
+{
+  "ok": true,
+  "generatedAt": "2026-06-04T09:23:49.098Z",
+  "order": "may-89029",
+  "roundIndex": 99,
+  "captureId": "may-89029-final-runtime",
+  "url": "http://127.0.0.1:49029/",
+  "initialUrl": "http://127.0.0.1:49029/",
+  "finalUrl": "http://127.0.0.1:49029/",
+  "status": 200,
+  "title": "泛文娱票务平台",
+  "initialTitle": "泛文娱票务平台",
+  "navigationError": "",
+  "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89029/probe/codex-final-20260604-runtime/may-89029-final-runtime-frontend.png",
+  "screenshotPaths": [
+    "/Users/chen/Documents/trae_projects/local_projects/may-89029/probe/codex-final-20260604-runtime/may-89029-final-runtime-structure-01-首屏.png",
+    "/Users/chen/Documents/trae_projects/local_projects/may-89029/probe/codex-final-20260604-runtime/may-89029-final-runtime-structure-02-导航-泛文娱票务.png",
+    "/Users/chen/Documents/trae_projects/local_projects/may-89029/probe/codex-final-20260604-runtime/may-89029-final-runtime-structure-03-操作-亲子.png",
+    "/Users/chen/Documents/trae_projects/local_projects/may-89029/probe/codex-final-20260604-runtime/may-89029-final-runtime-structure-04-操作-全部.png",
+    "/Users/chen/Documents/trae_projects/local_projects/may-89029/probe/codex-final-20260604-runtime/may-89029-final-runtime-structure-05-二层操作-全部-选座购票.png",
+    "/Users/chen/Documents/trae_projects/local_projects/may-89029/probe/codex-final-20260604-runtime/may-89029-final-runtime-structure-06-导航-首页.png",
+    "/Users/chen/Documents/trae_projects/local_projects/may-89029/probe/codex-final-20260604-runtime/may-89029-final-runtime-structure-07-操作-亲子.png",
+    "/Users/chen/Documents/trae_projects/local_projects/may-89029/probe/codex-final-20260604-runtime/may-89029-final-runtime-structure-08-操作-全部.png"
+  ],
+  "issueTextPreview": "后台管理相关问题",
+  "targetReason": "后台管理相关问题",
+  "targetKind": "admin",
+  "targetMatched": true,
+  "targetActions": [
+    {
+      "action": "click",
+      "label": "后台管理相关问题",
+      "ok": true
+    },
+    {
+      "action": "target-verify",
+      "label": "后台管理相关问题",
+      "ok": true,
+      "finalUrl": "http://127.0.0.1:49029/admin"
+    }
+  ],
+  "authFlow": {
+    "detected": false,
+    "attempted": false,
+    "success": false,
+    "finalUrl": "http://127.0.0.1:49029/",
+    "message": "",
+    "actions": []
+  },
+  "businessAudit": {
+    "actions": [
+      {
+        "action": "click",
+        "label": "导航:泛文娱票务",
+        "ok": true
+      },
+      {
+        "action": "click",
+        "label": "操作:亲子",
+        "ok": true,
+        "result": {
+          "ok": true,
+          "matched": 1
+        }
+      },
+      {
+        "action": "click",
+        "label": "操作:全部",
+        "ok": true,
+        "result": {
+          "ok": true,
+          "matched": 1
+        }
+      },
+      {
+        "action": "click",
+        "label": "二层操作:全部:选座购票#5",
+        "ok": true,
+        "result": {
+          "ok": true,
+          "matched": 16
+        }
+      },
+      {
+        "action": "click",
+        "label": "导航:首页",
+        "ok": true
+      },
+      {
+        "action": "click",
+        "label": "操作:亲子",
+        "ok": true,
+        "result": {
+          "ok": true,
+          "matched": 1
+        }
+      },
+      {
+        "action": "click",
+        "label": "操作:全部",
+        "ok": true,
+        "result": {
+          "ok": true,
+          "matched": 1
+        }
+      }
+    ],
+    "snapshots": [
+      {
+        "label": "首屏",
+        "url": "http://127.0.0.1:49029/",
+        "title": "泛文娱票务平台",
+        "headings": [
+          "泛文娱票务综合服务平台",
+          "梵高沉浸式艺术展",
+          "儿童剧《冰雪奇缘》",
+          "《巴黎圣母院》音乐剧",
+          "莫奈的花园光影展",
+          "小猪佩奇舞台剧",
+          "《茶馆》话剧",
+          "周杰伦嘉年华巡演",
+          "五月天好好好想见到你"
+        ],
+        "navLabels": [
+          "泛文娱票务",
+          "首页",
+          "我的票券",
+          "管理后台"
+        ],
+        "buttons": [
+          "全部",
+          "演唱会",
+          "演出",
+          "展览",
+          "亲子",
+          "选座购票"
+        ],
+        "links": [
+          "🎫 泛文娱票务",
+          "首页",
+          "我的票券",
+          "管理后台"
+        ],
+        "inputs": [],
+        "tables": [],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "🎫 泛文娱票务首页我的票券管理后台泛文娱票务综合服务平台覆盖电影、演出、展览、亲子等全品类票务，智能选座，极速购票全部演唱会演出展览亲子梵高沉浸式艺术展展览 · 06月05日 19:30📍 国家大剧院 · 北京¥180 - ¥880售票中余票 455 张 · 已售 345/800选座购票儿童剧《冰雪奇缘》亲子 · 06月06日 19:30📍 上海文化广场 · 上海¥380 - ¥680售票中余票 499 张 · 已售 101/600选座购票《巴黎圣母院》音乐剧演出 · 06月07日 19:30📍 国家大剧院 · 北京¥180 - ¥880售票中余票 528 张 · 已售 272/800选座购票莫奈的花园光影展展览 · 06月08日 19:30📍 上海文化广场 · 上海¥380 - ¥680预售余票 468 张 · 已售 132/600选座购票小猪佩奇舞台剧亲子 · 06月08日 19:30📍 广州大剧院 · 广州¥280售票中余票 418 张 · 已售 82/500选座购票《茶馆》话剧演出 · 06月09日 19:30📍 国家大剧院 · 北京¥180 - ¥880售票中余票 541 张 · 已售 259/800选座购票梵高沉浸式艺术展展览 · 06月10日 19:30📍 上海文化广场 · 上海¥380 - ¥680售票中余票 478 张 · 已售 122/600选座购票周杰伦嘉年华巡演演唱会 · 06月11日 19:30📍 上海文化广场 · 上海¥380 - ¥680预售余票 468 张 · 已售 132/600选座购票五月天好好好想见到你演唱会 · 06月12日 19:30📍 上海文化广场 · 上海¥380 - ¥680售票中余票 324 张 · 已售 276/600选座购票儿童剧《冰雪奇缘》亲子 · 06月13日 19:30📍 国家大剧院 · 北京¥180 - ¥880售票中余票 681 张 · 已售 119/800选座购票《巴黎圣母院》音乐剧演出 · 06月14日 19:30📍 国家大剧院 · 北京¥180 - ¥880⚡ 秒杀余票 489 张 · 已售 311/800选座购票小猪佩奇舞台剧亲子 · 06月15日 19:30📍 上海文化广场 · 上海¥380 - ¥680预售余票 339 张 · 已售 261/600选座购票《茶馆》话剧演出 · 06月16日 19:30📍 上海文化广场 · 上海¥380 - ¥680售票中余票 384 张 · 已售 216/600选座购票周杰伦嘉年华巡演演唱会 · 06月18日 19:30📍 国家大剧院 · 北京¥180 - ¥880售票中余票 500 张 · 已售 300/800选座购票《巴黎圣母院》音乐剧演出 · 06月19日 19:30📍 广州大剧院 · 广州¥280预售余票 297 张 · 已售 203/500选座购票五月天好好好想见到你演唱会 · 06月24日 19:30📍 广州大剧院 · 广州¥280⚡ 秒杀余票 252 张 · 已售 248/500选座购票",
+        "layout": {
+          "viewportWidth": 1504,
+          "viewportHeight": 1600,
+          "scrollWidth": 1504,
+          "scrollHeight": 2190,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89029-final-runtime-structure-01-首屏",
+          "label": "首屏",
+          "finalUrl": "http://127.0.0.1:49029/",
+          "title": "泛文娱票务平台",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89029/probe/codex-final-20260604-runtime/may-89029-final-runtime-structure-01-首屏.json",
+          "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89029/probe/codex-final-20260604-runtime/may-89029-final-runtime-structure-01-首屏.png",
+          "elementCount": 204,
+          "interactiveCount": 25,
+          "interactiveLabels": [
+            "泛文娱票务",
+            "首页",
+            "我的票券",
+            "管理后台",
+            "全部",
+            "演唱会",
+            "演出",
+            "展览",
+            "亲子",
+            "选座购票"
+          ]
+        }
+      },
+      {
+        "label": "导航:泛文娱票务",
+        "url": "http://127.0.0.1:49029/",
+        "title": "泛文娱票务平台",
+        "headings": [
+          "泛文娱票务综合服务平台",
+          "梵高沉浸式艺术展",
+          "儿童剧《冰雪奇缘》",
+          "《巴黎圣母院》音乐剧",
+          "莫奈的花园光影展",
+          "小猪佩奇舞台剧",
+          "《茶馆》话剧",
+          "周杰伦嘉年华巡演",
+          "五月天好好好想见到你"
+        ],
+        "navLabels": [
+          "泛文娱票务",
+          "首页",
+          "我的票券",
+          "管理后台"
+        ],
+        "buttons": [
+          "全部",
+          "演唱会",
+          "演出",
+          "展览",
+          "亲子",
+          "选座购票"
+        ],
+        "links": [
+          "🎫 泛文娱票务",
+          "首页",
+          "我的票券",
+          "管理后台"
+        ],
+        "inputs": [],
+        "tables": [],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "🎫 泛文娱票务首页我的票券管理后台泛文娱票务综合服务平台覆盖电影、演出、展览、亲子等全品类票务，智能选座，极速购票全部演唱会演出展览亲子梵高沉浸式艺术展展览 · 06月05日 19:30📍 国家大剧院 · 北京¥180 - ¥880售票中余票 455 张 · 已售 345/800选座购票儿童剧《冰雪奇缘》亲子 · 06月06日 19:30📍 上海文化广场 · 上海¥380 - ¥680售票中余票 499 张 · 已售 101/600选座购票《巴黎圣母院》音乐剧演出 · 06月07日 19:30📍 国家大剧院 · 北京¥180 - ¥880售票中余票 528 张 · 已售 272/800选座购票莫奈的花园光影展展览 · 06月08日 19:30📍 上海文化广场 · 上海¥380 - ¥680预售余票 468 张 · 已售 132/600选座购票小猪佩奇舞台剧亲子 · 06月08日 19:30📍 广州大剧院 · 广州¥280售票中余票 418 张 · 已售 82/500选座购票《茶馆》话剧演出 · 06月09日 19:30📍 国家大剧院 · 北京¥180 - ¥880售票中余票 541 张 · 已售 259/800选座购票梵高沉浸式艺术展展览 · 06月10日 19:30📍 上海文化广场 · 上海¥380 - ¥680售票中余票 478 张 · 已售 122/600选座购票周杰伦嘉年华巡演演唱会 · 06月11日 19:30📍 上海文化广场 · 上海¥380 - ¥680预售余票 468 张 · 已售 132/600选座购票五月天好好好想见到你演唱会 · 06月12日 19:30📍 上海文化广场 · 上海¥380 - ¥680售票中余票 324 张 · 已售 276/600选座购票儿童剧《冰雪奇缘》亲子 · 06月13日 19:30📍 国家大剧院 · 北京¥180 - ¥880售票中余票 681 张 · 已售 119/800选座购票《巴黎圣母院》音乐剧演出 · 06月14日 19:30📍 国家大剧院 · 北京¥180 - ¥880⚡ 秒杀余票 489 张 · 已售 311/800选座购票小猪佩奇舞台剧亲子 · 06月15日 19:30📍 上海文化广场 · 上海¥380 - ¥680预售余票 339 张 · 已售 261/600选座购票《茶馆》话剧演出 · 06月16日 19:30📍 上海文化广场 · 上海¥380 - ¥680售票中余票 384 张 · 已售 216/600选座购票周杰伦嘉年华巡演演唱会 · 06月18日 19:30📍 国家大剧院 · 北京¥180 - ¥880售票中余票 500 张 · 已售 300/800选座购票《巴黎圣母院》音乐剧演出 · 06月19日 19:30📍 广州大剧院 · 广州¥280预售余票 297 张 · 已售 203/500选座购票五月天好好好想见到你演唱会 · 06月24日 19:30📍 广州大剧院 · 广州¥280⚡ 秒杀余票 252 张 · 已售 248/500选座购票",
+        "layout": {
+          "viewportWidth": 1536,
+          "viewportHeight": 1600,
+          "scrollWidth": 1536,
+          "scrollHeight": 2190,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89029-final-runtime-structure-02-导航-泛文娱票务",
+          "label": "导航:泛文娱票务",
+          "finalUrl": "http://127.0.0.1:49029/",
+          "title": "泛文娱票务平台",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89029/probe/codex-final-20260604-runtime/may-89029-final-runtime-structure-02-导航-泛文娱票务.json",
+          "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89029/probe/codex-final-20260604-runtime/may-89029-final-runtime-structure-02-导航-泛文娱票务.png",
+          "elementCount": 204,
+          "interactiveCount": 25,
+          "interactiveLabels": [
+            "泛文娱票务",
+            "首页",
+            "我的票券",
+            "管理后台",
+            "全部",
+            "演唱会",
+            "演出",
+            "展览",
+            "亲子",
+            "选座购票"
+          ]
+        }
+      },
+      {
+        "label": "操作:亲子",
+        "url": "http://127.0.0.1:49029/",
+        "title": "泛文娱票务平台",
+        "headings": [
+          "泛文娱票务综合服务平台",
+          "儿童剧《冰雪奇缘》",
+          "小猪佩奇舞台剧"
+        ],
+        "navLabels": [
+          "泛文娱票务",
+          "首页",
+          "我的票券",
+          "管理后台"
+        ],
+        "buttons": [
+          "全部",
+          "演唱会",
+          "演出",
+          "展览",
+          "亲子",
+          "选座购票"
+        ],
+        "links": [
+          "🎫 泛文娱票务",
+          "首页",
+          "我的票券",
+          "管理后台"
+        ],
+        "inputs": [],
+        "tables": [],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "🎫 泛文娱票务首页我的票券管理后台泛文娱票务综合服务平台覆盖电影、演出、展览、亲子等全品类票务，智能选座，极速购票全部演唱会演出展览亲子儿童剧《冰雪奇缘》亲子 · 06月06日 19:30📍 上海文化广场 · 上海¥380 - ¥680售票中余票 499 张 · 已售 101/600选座购票小猪佩奇舞台剧亲子 · 06月08日 19:30📍 广州大剧院 · 广州¥280售票中余票 418 张 · 已售 82/500选座购票儿童剧《冰雪奇缘》亲子 · 06月13日 19:30📍 国家大剧院 · 北京¥180 - ¥880售票中余票 681 张 · 已售 119/800选座购票小猪佩奇舞台剧亲子 · 06月15日 19:30📍 上海文化广场 · 上海¥380 - ¥680预售余票 339 张 · 已售 261/600选座购票",
+        "layout": {
+          "viewportWidth": 1568,
+          "viewportHeight": 1600,
+          "scrollWidth": 1568,
+          "scrollHeight": 1600,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89029-final-runtime-structure-03-操作-亲子",
+          "label": "操作:亲子",
+          "finalUrl": "http://127.0.0.1:49029/",
+          "title": "泛文娱票务平台",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89029/probe/codex-final-20260604-runtime/may-89029-final-runtime-structure-03-操作-亲子.json",
+          "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89029/probe/codex-final-20260604-runtime/may-89029-final-runtime-structure-03-操作-亲子.png",
+          "elementCount": 72,
+          "interactiveCount": 13,
+          "interactiveLabels": [
+            "泛文娱票务",
+            "首页",
+            "我的票券",
+            "管理后台",
+            "全部",
+            "演唱会",
+            "演出",
+            "展览",
+            "亲子",
+            "选座购票"
+          ]
+        }
+      },
+      {
+        "label": "操作:全部",
+        "url": "http://127.0.0.1:49029/",
+        "title": "泛文娱票务平台",
+        "headings": [
+          "泛文娱票务综合服务平台",
+          "梵高沉浸式艺术展",
+          "儿童剧《冰雪奇缘》",
+          "《巴黎圣母院》音乐剧",
+          "莫奈的花园光影展",
+          "小猪佩奇舞台剧",
+          "《茶馆》话剧",
+          "周杰伦嘉年华巡演",
+          "五月天好好好想见到你"
+        ],
+        "navLabels": [
+          "泛文娱票务",
+          "首页",
+          "我的票券",
+          "管理后台"
+        ],
+        "buttons": [
+          "全部",
+          "演唱会",
+          "演出",
+          "展览",
+          "亲子",
+          "选座购票"
+        ],
+        "links": [
+          "🎫 泛文娱票务",
+          "首页",
+          "我的票券",
+          "管理后台"
+        ],
+        "inputs": [],
+        "tables": [],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "🎫 泛文娱票务首页我的票券管理后台泛文娱票务综合服务平台覆盖电影、演出、展览、亲子等全品类票务，智能选座，极速购票全部演唱会演出展览亲子梵高沉浸式艺术展展览 · 06月05日 19:30📍 国家大剧院 · 北京¥180 - ¥880售票中余票 455 张 · 已售 345/800选座购票儿童剧《冰雪奇缘》亲子 · 06月06日 19:30📍 上海文化广场 · 上海¥380 - ¥680售票中余票 499 张 · 已售 101/600选座购票《巴黎圣母院》音乐剧演出 · 06月07日 19:30📍 国家大剧院 · 北京¥180 - ¥880售票中余票 528 张 · 已售 272/800选座购票莫奈的花园光影展展览 · 06月08日 19:30📍 上海文化广场 · 上海¥380 - ¥680预售余票 468 张 · 已售 132/600选座购票小猪佩奇舞台剧亲子 · 06月08日 19:30📍 广州大剧院 · 广州¥280售票中余票 418 张 · 已售 82/500选座购票《茶馆》话剧演出 · 06月09日 19:30📍 国家大剧院 · 北京¥180 - ¥880售票中余票 541 张 · 已售 259/800选座购票梵高沉浸式艺术展展览 · 06月10日 19:30📍 上海文化广场 · 上海¥380 - ¥680售票中余票 478 张 · 已售 122/600选座购票周杰伦嘉年华巡演演唱会 · 06月11日 19:30📍 上海文化广场 · 上海¥380 - ¥680预售余票 468 张 · 已售 132/600选座购票五月天好好好想见到你演唱会 · 06月12日 19:30📍 上海文化广场 · 上海¥380 - ¥680售票中余票 324 张 · 已售 276/600选座购票儿童剧《冰雪奇缘》亲子 · 06月13日 19:30📍 国家大剧院 · 北京¥180 - ¥880售票中余票 681 张 · 已售 119/800选座购票《巴黎圣母院》音乐剧演出 · 06月14日 19:30📍 国家大剧院 · 北京¥180 - ¥880⚡ 秒杀余票 489 张 · 已售 311/800选座购票小猪佩奇舞台剧亲子 · 06月15日 19:30📍 上海文化广场 · 上海¥380 - ¥680预售余票 339 张 · 已售 261/600选座购票《茶馆》话剧演出 · 06月16日 19:30📍 上海文化广场 · 上海¥380 - ¥680售票中余票 384 张 · 已售 216/600选座购票周杰伦嘉年华巡演演唱会 · 06月18日 19:30📍 国家大剧院 · 北京¥180 - ¥880售票中余票 500 张 · 已售 300/800选座购票《巴黎圣母院》音乐剧演出 · 06月19日 19:30📍 广州大剧院 · 广州¥280预售余票 297 张 · 已售 203/500选座购票五月天好好好想见到你演唱会 · 06月24日 19:30📍 广州大剧院 · 广州¥280⚡ 秒杀余票 252 张 · 已售 248/500选座购票",
+        "layout": {
+          "viewportWidth": 1600,
+          "viewportHeight": 1600,
+          "scrollWidth": 1600,
+          "scrollHeight": 2190,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89029-final-runtime-structure-04-操作-全部",
+          "label": "操作:全部",
+          "finalUrl": "http://127.0.0.1:49029/",
+          "title": "泛文娱票务平台",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89029/probe/codex-final-20260604-runtime/may-89029-final-runtime-structure-04-操作-全部.json",
+          "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89029/probe/codex-final-20260604-runtime/may-89029-final-runtime-structure-04-操作-全部.png",
+          "elementCount": 204,
+          "interactiveCount": 25,
+          "interactiveLabels": [
+            "泛文娱票务",
+            "首页",
+            "我的票券",
+            "管理后台",
+            "全部",
+            "演唱会",
+            "演出",
+            "展览",
+            "亲子",
+            "选座购票"
+          ]
+        }
+      },
+      {
+        "label": "二层操作:全部->选座购票",
+        "url": "http://127.0.0.1:49029/session/1a8f9641-0939-4cbe-9ef0-b2ce55baf305/select-seat",
+        "title": "泛文娱票务平台",
+        "headings": [
+          "小猪佩奇舞台剧"
+        ],
+        "navLabels": [
+          "泛文娱票务",
+          "首页",
+          "我的票券",
+          "管理后台"
+        ],
+        "buttons": [
+          "确认选座"
+        ],
+        "links": [
+          "🎫 泛文娱票务",
+          "首页",
+          "我的票券",
+          "管理后台"
+        ],
+        "inputs": [],
+        "tables": [],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "🎫 泛文娱票务首页我的票券管理后台小猪佩奇舞台剧2026年06月08日 19:30 | 广州大剧院舞 台普通区¥可选已选已售盲区已选 0 个座位：¥0确认选座",
+        "layout": {
+          "viewportWidth": 1632,
+          "viewportHeight": 1600,
+          "scrollWidth": 1632,
+          "scrollHeight": 1600,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89029-final-runtime-structure-05-二层操作-全部-选座购票",
+          "label": "二层操作:全部->选座购票",
+          "finalUrl": "http://127.0.0.1:49029/session/1a8f9641-0939-4cbe-9ef0-b2ce55baf305/select-seat",
+          "title": "泛文娱票务平台",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89029/probe/codex-final-20260604-runtime/may-89029-final-runtime-structure-05-二层操作-全部-选座购票.json",
+          "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89029/probe/codex-final-20260604-runtime/may-89029-final-runtime-structure-05-二层操作-全部-选座购票.png",
+          "elementCount": 44,
+          "interactiveCount": 5,
+          "interactiveLabels": [
+            "泛文娱票务",
+            "首页",
+            "我的票券",
+            "管理后台",
+            "确认选座"
+          ]
+        }
+      },
+      {
+        "label": "导航:首页",
+        "url": "http://127.0.0.1:49029/",
+        "title": "泛文娱票务平台",
+        "headings": [
+          "泛文娱票务综合服务平台",
+          "梵高沉浸式艺术展",
+          "儿童剧《冰雪奇缘》",
+          "《巴黎圣母院》音乐剧",
+          "莫奈的花园光影展",
+          "小猪佩奇舞台剧",
+          "《茶馆》话剧",
+          "周杰伦嘉年华巡演",
+          "五月天好好好想见到你"
+        ],
+        "navLabels": [
+          "泛文娱票务",
+          "首页",
+          "我的票券",
+          "管理后台"
+        ],
+        "buttons": [
+          "全部",
+          "演唱会",
+          "演出",
+          "展览",
+          "亲子",
+          "选座购票"
+        ],
+        "links": [
+          "🎫 泛文娱票务",
+          "首页",
+          "我的票券",
+          "管理后台"
+        ],
+        "inputs": [],
+        "tables": [],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "🎫 泛文娱票务首页我的票券管理后台泛文娱票务综合服务平台覆盖电影、演出、展览、亲子等全品类票务，智能选座，极速购票全部演唱会演出展览亲子梵高沉浸式艺术展展览 · 06月05日 19:30📍 国家大剧院 · 北京¥180 - ¥880售票中余票 455 张 · 已售 345/800选座购票儿童剧《冰雪奇缘》亲子 · 06月06日 19:30📍 上海文化广场 · 上海¥380 - ¥680售票中余票 499 张 · 已售 101/600选座购票《巴黎圣母院》音乐剧演出 · 06月07日 19:30📍 国家大剧院 · 北京¥180 - ¥880售票中余票 528 张 · 已售 272/800选座购票莫奈的花园光影展展览 · 06月08日 19:30📍 上海文化广场 · 上海¥380 - ¥680预售余票 468 张 · 已售 132/600选座购票小猪佩奇舞台剧亲子 · 06月08日 19:30📍 广州大剧院 · 广州¥280售票中余票 418 张 · 已售 82/500选座购票《茶馆》话剧演出 · 06月09日 19:30📍 国家大剧院 · 北京¥180 - ¥880售票中余票 541 张 · 已售 259/800选座购票梵高沉浸式艺术展展览 · 06月10日 19:30📍 上海文化广场 · 上海¥380 - ¥680售票中余票 478 张 · 已售 122/600选座购票周杰伦嘉年华巡演演唱会 · 06月11日 19:30📍 上海文化广场 · 上海¥380 - ¥680预售余票 468 张 · 已售 132/600选座购票五月天好好好想见到你演唱会 · 06月12日 19:30📍 上海文化广场 · 上海¥380 - ¥680售票中余票 324 张 · 已售 276/600选座购票儿童剧《冰雪奇缘》亲子 · 06月13日 19:30📍 国家大剧院 · 北京¥180 - ¥880售票中余票 681 张 · 已售 119/800选座购票《巴黎圣母院》音乐剧演出 · 06月14日 19:30📍 国家大剧院 · 北京¥180 - ¥880⚡ 秒杀余票 489 张 · 已售 311/800选座购票小猪佩奇舞台剧亲子 · 06月15日 19:30📍 上海文化广场 · 上海¥380 - ¥680预售余票 339 张 · 已售 261/600选座购票《茶馆》话剧演出 · 06月16日 19:30📍 上海文化广场 · 上海¥380 - ¥680售票中余票 384 张 · 已售 216/600选座购票周杰伦嘉年华巡演演唱会 · 06月18日 19:30📍 国家大剧院 · 北京¥180 - ¥880售票中余票 500 张 · 已售 300/800选座购票《巴黎圣母院》音乐剧演出 · 06月19日 19:30📍 广州大剧院 · 广州¥280预售余票 297 张 · 已售 203/500选座购票五月天好好好想见到你演唱会 · 06月24日 19:30📍 广州大剧院 · 广州¥280⚡ 秒杀余票 252 张 · 已售 248/500选座购票",
+        "layout": {
+          "viewportWidth": 1664,
+          "viewportHeight": 1600,
+          "scrollWidth": 1664,
+          "scrollHeight": 2190,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89029-final-runtime-structure-06-导航-首页",
+          "label": "导航:首页",
+          "finalUrl": "http://127.0.0.1:49029/",
+          "title": "泛文娱票务平台",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89029/probe/codex-final-20260604-runtime/may-89029-final-runtime-structure-06-导航-首页.json",
+          "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89029/probe/codex-final-20260604-runtime/may-89029-final-runtime-structure-06-导航-首页.png",
+          "elementCount": 204,
+          "interactiveCount": 25,
+          "interactiveLabels": [
+            "泛文娱票务",
+            "首页",
+            "我的票券",
+            "管理后台",
+            "全部",
+            "演唱会",
+            "演出",
+            "展览",
+            "亲子",
+            "选座购票"
+          ]
+        }
+      },
+      {
+        "label": "操作:亲子",
+        "url": "http://127.0.0.1:49029/",
+        "title": "泛文娱票务平台",
+        "headings": [
+          "泛文娱票务综合服务平台",
+          "儿童剧《冰雪奇缘》",
+          "小猪佩奇舞台剧"
+        ],
+        "navLabels": [
+          "泛文娱票务",
+          "首页",
+          "我的票券",
+          "管理后台"
+        ],
+        "buttons": [
+          "全部",
+          "演唱会",
+          "演出",
+          "展览",
+          "亲子",
+          "选座购票"
+        ],
+        "links": [
+          "🎫 泛文娱票务",
+          "首页",
+          "我的票券",
+          "管理后台"
+        ],
+        "inputs": [],
+        "tables": [],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "🎫 泛文娱票务首页我的票券管理后台泛文娱票务综合服务平台覆盖电影、演出、展览、亲子等全品类票务，智能选座，极速购票全部演唱会演出展览亲子儿童剧《冰雪奇缘》亲子 · 06月06日 19:30📍 上海文化广场 · 上海¥380 - ¥680售票中余票 499 张 · 已售 101/600选座购票小猪佩奇舞台剧亲子 · 06月08日 19:30📍 广州大剧院 · 广州¥280售票中余票 418 张 · 已售 82/500选座购票儿童剧《冰雪奇缘》亲子 · 06月13日 19:30📍 国家大剧院 · 北京¥180 - ¥880售票中余票 681 张 · 已售 119/800选座购票小猪佩奇舞台剧亲子 · 06月15日 19:30📍 上海文化广场 · 上海¥380 - ¥680预售余票 339 张 · 已售 261/600选座购票",
+        "layout": {
+          "viewportWidth": 1696,
+          "viewportHeight": 1600,
+          "scrollWidth": 1696,
+          "scrollHeight": 1600,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89029-final-runtime-structure-07-操作-亲子",
+          "label": "操作:亲子",
+          "finalUrl": "http://127.0.0.1:49029/",
+          "title": "泛文娱票务平台",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89029/probe/codex-final-20260604-runtime/may-89029-final-runtime-structure-07-操作-亲子.json",
+          "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89029/probe/codex-final-20260604-runtime/may-89029-final-runtime-structure-07-操作-亲子.png",
+          "elementCount": 72,
+          "interactiveCount": 13,
+          "interactiveLabels": [
+            "泛文娱票务",
+            "首页",
+            "我的票券",
+            "管理后台",
+            "全部",
+            "演唱会",
+            "演出",
+            "展览",
+            "亲子",
+            "选座购票"
+          ]
+        }
+      },
+      {
+        "label": "操作:全部",
+        "url": "http://127.0.0.1:49029/",
+        "title": "泛文娱票务平台",
+        "headings": [
+          "泛文娱票务综合服务平台",
+          "梵高沉浸式艺术展",
+          "儿童剧《冰雪奇缘》",
+          "《巴黎圣母院》音乐剧",
+          "莫奈的花园光影展",
+          "小猪佩奇舞台剧",
+          "《茶馆》话剧",
+          "周杰伦嘉年华巡演",
+          "五月天好好好想见到你"
+        ],
+        "navLabels": [
+          "泛文娱票务",
+          "首页",
+          "我的票券",
+          "管理后台"
+        ],
+        "buttons": [
+          "全部",
+          "演唱会",
+          "演出",
+          "展览",
+          "亲子",
+          "选座购票"
+        ],
+        "links": [
+          "🎫 泛文娱票务",
+          "首页",
+          "我的票券",
+          "管理后台"
+        ],
+        "inputs": [],
+        "tables": [],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "🎫 泛文娱票务首页我的票券管理后台泛文娱票务综合服务平台覆盖电影、演出、展览、亲子等全品类票务，智能选座，极速购票全部演唱会演出展览亲子梵高沉浸式艺术展展览 · 06月05日 19:30📍 国家大剧院 · 北京¥180 - ¥880售票中余票 455 张 · 已售 345/800选座购票儿童剧《冰雪奇缘》亲子 · 06月06日 19:30📍 上海文化广场 · 上海¥380 - ¥680售票中余票 499 张 · 已售 101/600选座购票《巴黎圣母院》音乐剧演出 · 06月07日 19:30📍 国家大剧院 · 北京¥180 - ¥880售票中余票 528 张 · 已售 272/800选座购票莫奈的花园光影展展览 · 06月08日 19:30📍 上海文化广场 · 上海¥380 - ¥680预售余票 468 张 · 已售 132/600选座购票小猪佩奇舞台剧亲子 · 06月08日 19:30📍 广州大剧院 · 广州¥280售票中余票 418 张 · 已售 82/500选座购票《茶馆》话剧演出 · 06月09日 19:30📍 国家大剧院 · 北京¥180 - ¥880售票中余票 541 张 · 已售 259/800选座购票梵高沉浸式艺术展展览 · 06月10日 19:30📍 上海文化广场 · 上海¥380 - ¥680售票中余票 478 张 · 已售 122/600选座购票周杰伦嘉年华巡演演唱会 · 06月11日 19:30📍 上海文化广场 · 上海¥380 - ¥680预售余票 468 张 · 已售 132/600选座购票五月天好好好想见到你演唱会 · 06月12日 19:30📍 上海文化广场 · 上海¥380 - ¥680售票中余票 324 张 · 已售 276/600选座购票儿童剧《冰雪奇缘》亲子 · 06月13日 19:30📍 国家大剧院 · 北京¥180 - ¥880售票中余票 681 张 · 已售 119/800选座购票《巴黎圣母院》音乐剧演出 · 06月14日 19:30📍 国家大剧院 · 北京¥180 - ¥880⚡ 秒杀余票 489 张 · 已售 311/800选座购票小猪佩奇舞台剧亲子 · 06月15日 19:30📍 上海文化广场 · 上海¥380 - ¥680预售余票 339 张 · 已售 261/600选座购票《茶馆》话剧演出 · 06月16日 19:30📍 上海文化广场 · 上海¥380 - ¥680售票中余票 384 张 · 已售 216/600选座购票周杰伦嘉年华巡演演唱会 · 06月18日 19:30📍 国家大剧院 · 北京¥180 - ¥880售票中余票 500 张 · 已售 300/800选座购票《巴黎圣母院》音乐剧演出 · 06月19日 19:30📍 广州大剧院 · 广州¥280预售余票 297 张 · 已售 203/500选座购票五月天好好好想见到你演唱会 · 06月24日 19:30📍 广州大剧院 · 广州¥280⚡ 秒杀余票 252 张 · 已售 248/500选座购票",
+        "layout": {
+          "viewportWidth": 1728,
+          "viewportHeight": 1600,
+          "scrollWidth": 1728,
+          "scrollHeight": 2190,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89029-final-runtime-structure-08-操作-全部",
+          "label": "操作:全部",
+          "finalUrl": "http://127.0.0.1:49029/",
+          "title": "泛文娱票务平台",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89029/probe/codex-final-20260604-runtime/may-89029-final-runtime-structure-08-操作-全部.json",
+          "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89029/probe/codex-final-20260604-runtime/may-89029-final-runtime-structure-08-操作-全部.png",
+          "elementCount": 204,
+          "interactiveCount": 25,
+          "interactiveLabels": [
+            "泛文娱票务",
+            "首页",
+            "我的票券",
+            "管理后台",
+            "全部",
+            "演唱会",
+            "演出",
+            "展览",
+            "亲子",
+            "选座购票"
+          ]
+        }
+      }
+    ],
+    "findings": [],
+    "actionHints": [],
+    "emptyPages": [],
+    "overflowPages": [],
+    "blankPages": [],
+    "apiFailurePaths": [],
+    "goalTerms": [],
+    "clickedActionDescriptors": [
+      {
+        "nav": "泛文娱票务",
+        "label": "亲子",
+        "ordinal": 0,
+        "unsafe": false
+      },
+      {
+        "nav": "泛文娱票务",
+        "label": "全部",
+        "ordinal": 0,
+        "unsafe": false
+      },
+      {
+        "nav": "泛文娱票务",
+        "label": "全部->选座购票",
+        "ordinal": 4,
+        "secondary": true,
+        "unsafe": false
+      },
+      {
+        "nav": "首页",
+        "label": "亲子",
+        "ordinal": 0,
+        "unsafe": false
+      },
+      {
+        "nav": "首页",
+        "label": "全部",
+        "ordinal": 0,
+        "unsafe": false
+      }
+    ],
+    "secondaryActionClicks": 1,
+    "structureCaptures": [
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89029-final-runtime-structure-01-首屏",
+        "label": "首屏",
+        "finalUrl": "http://127.0.0.1:49029/",
+        "title": "泛文娱票务平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89029/probe/codex-final-20260604-runtime/may-89029-final-runtime-structure-01-首屏.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89029/probe/codex-final-20260604-runtime/may-89029-final-runtime-structure-01-首屏.png",
+        "elementCount": 204,
+        "interactiveCount": 25,
+        "interactiveLabels": [
+          "泛文娱票务",
+          "首页",
+          "我的票券",
+          "管理后台",
+          "全部",
+          "演唱会",
+          "演出",
+          "展览",
+          "亲子",
+          "选座购票"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89029-final-runtime-structure-02-导航-泛文娱票务",
+        "label": "导航:泛文娱票务",
+        "finalUrl": "http://127.0.0.1:49029/",
+        "title": "泛文娱票务平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89029/probe/codex-final-20260604-runtime/may-89029-final-runtime-structure-02-导航-泛文娱票务.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89029/probe/codex-final-20260604-runtime/may-89029-final-runtime-structure-02-导航-泛文娱票务.png",
+        "elementCount": 204,
+        "interactiveCount": 25,
+        "interactiveLabels": [
+          "泛文娱票务",
+          "首页",
+          "我的票券",
+          "管理后台",
+          "全部",
+          "演唱会",
+          "演出",
+          "展览",
+          "亲子",
+          "选座购票"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89029-final-runtime-structure-03-操作-亲子",
+        "label": "操作:亲子",
+        "finalUrl": "http://127.0.0.1:49029/",
+        "title": "泛文娱票务平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89029/probe/codex-final-20260604-runtime/may-89029-final-runtime-structure-03-操作-亲子.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89029/probe/codex-final-20260604-runtime/may-89029-final-runtime-structure-03-操作-亲子.png",
+        "elementCount": 72,
+        "interactiveCount": 13,
+        "interactiveLabels": [
+          "泛文娱票务",
+          "首页",
+          "我的票券",
+          "管理后台",
+          "全部",
+          "演唱会",
+          "演出",
+          "展览",
+          "亲子",
+          "选座购票"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89029-final-runtime-structure-04-操作-全部",
+        "label": "操作:全部",
+        "finalUrl": "http://127.0.0.1:49029/",
+        "title": "泛文娱票务平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89029/probe/codex-final-20260604-runtime/may-89029-final-runtime-structure-04-操作-全部.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89029/probe/codex-final-20260604-runtime/may-89029-final-runtime-structure-04-操作-全部.png",
+        "elementCount": 204,
+        "interactiveCount": 25,
+        "interactiveLabels": [
+          "泛文娱票务",
+          "首页",
+          "我的票券",
+          "管理后台",
+          "全部",
+          "演唱会",
+          "演出",
+          "展览",
+          "亲子",
+          "选座购票"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89029-final-runtime-structure-05-二层操作-全部-选座购票",
+        "label": "二层操作:全部->选座购票",
+        "finalUrl": "http://127.0.0.1:49029/session/1a8f9641-0939-4cbe-9ef0-b2ce55baf305/select-seat",
+        "title": "泛文娱票务平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89029/probe/codex-final-20260604-runtime/may-89029-final-runtime-structure-05-二层操作-全部-选座购票.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89029/probe/codex-final-20260604-runtime/may-89029-final-runtime-structure-05-二层操作-全部-选座购票.png",
+        "elementCount": 44,
+        "interactiveCount": 5,
+        "interactiveLabels": [
+          "泛文娱票务",
+          "首页",
+          "我的票券",
+          "管理后台",
+          "确认选座"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89029-final-runtime-structure-06-导航-首页",
+        "label": "导航:首页",
+        "finalUrl": "http://127.0.0.1:49029/",
+        "title": "泛文娱票务平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89029/probe/codex-final-20260604-runtime/may-89029-final-runtime-structure-06-导航-首页.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89029/probe/codex-final-20260604-runtime/may-89029-final-runtime-structure-06-导航-首页.png",
+        "elementCount": 204,
+        "interactiveCount": 25,
+        "interactiveLabels": [
+          "泛文娱票务",
+          "首页",
+          "我的票券",
+          "管理后台",
+          "全部",
+          "演唱会",
+          "演出",
+          "展览",
+          "亲子",
+          "选座购票"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89029-final-runtime-structure-07-操作-亲子",
+        "label": "操作:亲子",
+        "finalUrl": "http://127.0.0.1:49029/",
+        "title": "泛文娱票务平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89029/probe/codex-final-20260604-runtime/may-89029-final-runtime-structure-07-操作-亲子.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89029/probe/codex-final-20260604-runtime/may-89029-final-runtime-structure-07-操作-亲子.png",
+        "elementCount": 72,
+        "interactiveCount": 13,
+        "interactiveLabels": [
+          "泛文娱票务",
+          "首页",
+          "我的票券",
+          "管理后台",
+          "全部",
+          "演唱会",
+          "演出",
+          "展览",
+          "亲子",
+          "选座购票"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89029-final-runtime-structure-08-操作-全部",
+        "label": "操作:全部",
+        "finalUrl": "http://127.0.0.1:49029/",
+        "title": "泛文娱票务平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89029/probe/codex-final-20260604-runtime/may-89029-final-runtime-structure-08-操作-全部.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89029/probe/codex-final-20260604-runtime/may-89029-final-runtime-structure-08-操作-全部.png",
+        "elementCount": 204,
+        "interactiveCount": 25,
+        "interactiveLabels": [
+          "泛文娱票务",
+          "首页",
+          "我的票券",
+          "管理后台",
+          "全部",
+          "演唱会",
+          "演出",
+          "展览",
+          "亲子",
+          "选座购票"
+        ]
+      }
+    ],
+    "representativeScreenshotUrl": "http://127.0.0.1:49029/",
+    "representativeScreenshotLabel": "泛文娱票务综合服务平台"
+  },
+  "websiteStructureCapture": {
+    "module": "website_structure_capture",
+    "captureCount": 8,
+    "captures": [
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89029-final-runtime-structure-01-首屏",
+        "label": "首屏",
+        "finalUrl": "http://127.0.0.1:49029/",
+        "title": "泛文娱票务平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89029/probe/codex-final-20260604-runtime/may-89029-final-runtime-structure-01-首屏.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89029/probe/codex-final-20260604-runtime/may-89029-final-runtime-structure-01-首屏.png",
+        "elementCount": 204,
+        "interactiveCount": 25,
+        "interactiveLabels": [
+          "泛文娱票务",
+          "首页",
+          "我的票券",
+          "管理后台",
+          "全部",
+          "演唱会",
+          "演出",
+          "展览",
+          "亲子",
+          "选座购票"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89029-final-runtime-structure-02-导航-泛文娱票务",
+        "label": "导航:泛文娱票务",
+        "finalUrl": "http://127.0.0.1:49029/",
+        "title": "泛文娱票务平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89029/probe/codex-final-20260604-runtime/may-89029-final-runtime-structure-02-导航-泛文娱票务.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89029/probe/codex-final-20260604-runtime/may-89029-final-runtime-structure-02-导航-泛文娱票务.png",
+        "elementCount": 204,
+        "interactiveCount": 25,
+        "interactiveLabels": [
+          "泛文娱票务",
+          "首页",
+          "我的票券",
+          "管理后台",
+          "全部",
+          "演唱会",
+          "演出",
+          "展览",
+          "亲子",
+          "选座购票"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89029-final-runtime-structure-03-操作-亲子",
+        "label": "操作:亲子",
+        "finalUrl": "http://127.0.0.1:49029/",
+        "title": "泛文娱票务平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89029/probe/codex-final-20260604-runtime/may-89029-final-runtime-structure-03-操作-亲子.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89029/probe/codex-final-20260604-runtime/may-89029-final-runtime-structure-03-操作-亲子.png",
+        "elementCount": 72,
+        "interactiveCount": 13,
+        "interactiveLabels": [
+          "泛文娱票务",
+          "首页",
+          "我的票券",
+          "管理后台",
+          "全部",
+          "演唱会",
+          "演出",
+          "展览",
+          "亲子",
+          "选座购票"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89029-final-runtime-structure-04-操作-全部",
+        "label": "操作:全部",
+        "finalUrl": "http://127.0.0.1:49029/",
+        "title": "泛文娱票务平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89029/probe/codex-final-20260604-runtime/may-89029-final-runtime-structure-04-操作-全部.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89029/probe/codex-final-20260604-runtime/may-89029-final-runtime-structure-04-操作-全部.png",
+        "elementCount": 204,
+        "interactiveCount": 25,
+        "interactiveLabels": [
+          "泛文娱票务",
+          "首页",
+          "我的票券",
+          "管理后台",
+          "全部",
+          "演唱会",
+          "演出",
+          "展览",
+          "亲子",
+          "选座购票"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89029-final-runtime-structure-05-二层操作-全部-选座购票",
+        "label": "二层操作:全部->选座购票",
+        "finalUrl": "http://127.0.0.1:49029/session/1a8f9641-0939-4cbe-9ef0-b2ce55baf305/select-seat",
+        "title": "泛文娱票务平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89029/probe/codex-final-20260604-runtime/may-89029-final-runtime-structure-05-二层操作-全部-选座购票.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89029/probe/codex-final-20260604-runtime/may-89029-final-runtime-structure-05-二层操作-全部-选座购票.png",
+        "elementCount": 44,
+        "interactiveCount": 5,
+        "interactiveLabels": [
+          "泛文娱票务",
+          "首页",
+          "我的票券",
+          "管理后台",
+          "确认选座"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89029-final-runtime-structure-06-导航-首页",
+        "label": "导航:首页",
+        "finalUrl": "http://127.0.0.1:49029/",
+        "title": "泛文娱票务平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89029/probe/codex-final-20260604-runtime/may-89029-final-runtime-structure-06-导航-首页.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89029/probe/codex-final-20260604-runtime/may-89029-final-runtime-structure-06-导航-首页.png",
+        "elementCount": 204,
+        "interactiveCount": 25,
+        "interactiveLabels": [
+          "泛文娱票务",
+          "首页",
+          "我的票券",
+          "管理后台",
+          "全部",
+          "演唱会",
+          "演出",
+          "展览",
+          "亲子",
+          "选座购票"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89029-final-runtime-structure-07-操作-亲子",
+        "label": "操作:亲子",
+        "finalUrl": "http://127.0.0.1:49029/",
+        "title": "泛文娱票务平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89029/probe/codex-final-20260604-runtime/may-89029-final-runtime-structure-07-操作-亲子.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89029/probe/codex-final-20260604-runtime/may-89029-final-runtime-structure-07-操作-亲子.png",
+        "elementCount": 72,
+        "interactiveCount": 13,
+        "interactiveLabels": [
+          "泛文娱票务",
+          "首页",
+          "我的票券",
+          "管理后台",
+          "全部",
+          "演唱会",
+          "演出",
+          "展览",
+          "亲子",
+          "选座购票"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89029-final-runtime-structure-08-操作-全部",
+        "label": "操作:全部",
+        "finalUrl": "http://127.0.0.1:49029/",
+        "title": "泛文娱票务平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89029/probe/codex-final-20260604-runtime/may-89029-final-runtime-structure-08-操作-全部.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89029/probe/codex-final-20260604-runtime/may-89029-final-runtime-structure-08-操作-全部.png",
+        "elementCount": 204,
+        "interactiveCount": 25,
+        "interactiveLabels": [
+          "泛文娱票务",
+          "首页",
+          "我的票券",
+          "管理后台",
+          "全部",
+          "演唱会",
+          "演出",
+          "展览",
+          "亲子",
+          "选座购票"
+        ]
+      }
+    ]
+  },
+  "screenshotMetrics": {
+    "width": 1760,
+    "height": 1600,
+    "scrollWidth": 1728,
+    "scrollHeight": 2190
+  },
+  "initialBodyTextPreview": "🎫 泛文娱票务\n首页\n我的票券\n管理后台\n泛文娱票务综合服务平台\n\n覆盖电影、演出、展览、亲子等全品类票务，智能选座，极速购票\n\n全部\n演唱会\n演出\n展览\n亲子\n梵高沉浸式艺术展\n\n展览 · 06月05日 19:30\n\n📍 国家大剧院 · 北京\n\n¥180 - ¥880\n售票中\n\n余票 455 张 · 已售 345/800\n\n选座购票\n儿童剧《冰雪奇缘》\n\n亲子 · 06月06日 19:30\n\n📍 上海文化广场 · 上海\n\n¥380 - ¥680\n售票中\n\n余票 499 张 · 已售 101/600\n\n选座购票\n《巴黎圣母院》音乐剧\n\n演出 · 06月07日 19:30\n\n📍 国家大剧院 · 北京\n\n¥180 - ¥880\n售票中\n\n余票 528 张 · 已售 272/800\n\n选座购票\n莫奈的花园光影展\n\n展览 · 06月08日 19:30\n\n📍 上海文化广场 · 上海\n\n¥380 - ¥680\n预售\n\n余票 468 张 · 已售 132/600\n\n选座购票\n小猪佩奇舞台剧\n\n亲子 · 06月08日 19:30\n\n📍 广州大剧院 · 广州\n\n¥280\n售票中\n\n余票 418 张 · 已售 82/500\n\n选座购票\n《茶馆》话剧\n\n演出 · 06月09日 19:30\n\n📍 国家大剧院 · 北京\n\n¥180 - ¥880\n售票中\n\n余票 541 张 · 已售 259/800\n\n选座购票\n梵高沉浸式艺术展\n\n展览 · 06月10日 19:30\n\n📍 上海文化广场 · 上海\n\n¥380 - ¥680\n售票中\n\n余票 478 张 · 已售 122/600\n\n选座购票\n周杰伦嘉年华巡演\n\n演唱会 · 06月11日 19:30\n\n📍 上海文化广场 · 上海\n\n¥380 - ¥680\n预售\n\n余票 468 张 · 已售 132/600\n\n选座购票\n五月天好好好想见到你\n\n演唱会 · 06月12日 19:30\n\n📍 上海文化广场 · 上海\n\n¥380 - ¥680\n售票中\n\n余票 324 张 · 已售 276/600\n\n选座购票\n儿童剧《冰雪奇缘》\n\n亲子 · 06月13日 19:30\n\n📍 国家大剧院 · 北京\n\n¥180 - ¥880\n售票中\n\n余票 681 张 · 已售 119/800\n\n选座购票\n《巴黎圣母院》音乐剧\n\n演出 · 06月14日 19:30\n\n📍 国家大剧院 · 北京\n\n¥180 - ¥880\n⚡ 秒杀\n\n余票 489 张 · 已售 311/800\n\n选座购票\n小猪佩奇舞台剧\n\n亲子 · 06月15日 19:30\n\n📍 上海文化广场 · 上海\n\n¥380 - ¥680\n预售\n\n余票 339 张 · 已售 261/600\n\n选座购票\n《茶馆》话剧\n\n演出 · 06月16日 19:30\n\n📍 上海文化广场 · 上海\n\n¥380 - ¥680\n售票中\n\n余票 384 张 · 已售 216/600\n\n选座购票\n周杰伦嘉年华巡演\n\n演唱会 · 06月18日 19:30\n\n📍 国家大剧院 · 北京\n\n¥180 - ¥880\n售票中\n\n余票 500 张 · 已售 300/800\n\n选座购票\n《巴黎圣母院》音乐剧\n\n演出 · 06月19日 19:30\n\n📍 广州大剧院 · 广州\n\n¥280\n预售\n\n余票 297 张 · 已售 203/500\n\n选座购票\n五月天好好好想见到你\n\n演唱会 · 06月24日 19:30\n\n📍 广州大剧院 · 广州\n\n¥280\n⚡ 秒杀\n\n余票 252 张 · 已售 248/500\n\n选座购票",
+  "bodyTextPreview": "🎫 泛文娱票务\n首页\n我的票券\n管理后台\n泛文娱票务综合服务平台\n\n覆盖电影、演出、展览、亲子等全品类票务，智能选座，极速购票\n\n全部\n演唱会\n演出\n展览\n亲子\n梵高沉浸式艺术展\n\n展览 · 06月05日 19:30\n\n📍 国家大剧院 · 北京\n\n¥180 - ¥880\n售票中\n\n余票 455 张 · 已售 345/800\n\n选座购票\n儿童剧《冰雪奇缘》\n\n亲子 · 06月06日 19:30\n\n📍 上海文化广场 · 上海\n\n¥380 - ¥680\n售票中\n\n余票 499 张 · 已售 101/600\n\n选座购票\n《巴黎圣母院》音乐剧\n\n演出 · 06月07日 19:30\n\n📍 国家大剧院 · 北京\n\n¥180 - ¥880\n售票中\n\n余票 528 张 · 已售 272/800\n\n选座购票\n莫奈的花园光影展\n\n展览 · 06月08日 19:30\n\n📍 上海文化广场 · 上海\n\n¥380 - ¥680\n预售\n\n余票 468 张 · 已售 132/600\n\n选座购票\n小猪佩奇舞台剧\n\n亲子 · 06月08日 19:30\n\n📍 广州大剧院 · 广州\n\n¥280\n售票中\n\n余票 418 张 · 已售 82/500\n\n选座购票\n《茶馆》话剧\n\n演出 · 06月09日 19:30\n\n📍 国家大剧院 · 北京\n\n¥180 - ¥880\n售票中\n\n余票 541 张 · 已售 259/800\n\n选座购票\n梵高沉浸式艺术展\n\n展览 · 06月10日 19:30\n\n📍 上海文化广场 · 上海\n\n¥380 - ¥680\n售票中\n\n余票 478 张 · 已售 122/600\n\n选座购票\n周杰伦嘉年华巡演\n\n演唱会 · 06月11日 19:30\n\n📍 上海文化广场 · 上海\n\n¥380 - ¥680\n预售\n\n余票 468 张 · 已售 132/600\n\n选座购票\n五月天好好好想见到你\n\n演唱会 · 06月12日 19:30\n\n📍 上海文化广场 · 上海\n\n¥380 - ¥680\n售票中\n\n余票 324 张 · 已售 276/600\n\n选座购票\n儿童剧《冰雪奇缘》\n\n亲子 · 06月13日 19:30\n\n📍 国家大剧院 · 北京\n\n¥180 - ¥880\n售票中\n\n余票 681 张 · 已售 119/800\n\n选座购票\n《巴黎圣母院》音乐剧\n\n演出 · 06月14日 19:30\n\n📍 国家大剧院 · 北京\n\n¥180 - ¥880\n⚡ 秒杀\n\n余票 489 张 · 已售 311/800\n\n选座购票\n小猪佩奇舞台剧\n\n亲子 · 06月15日 19:30\n\n📍 上海文化广场 · 上海\n\n¥380 - ¥680\n预售\n\n余票 339 张 · 已售 261/600\n\n选座购票\n《茶馆》话剧\n\n演出 · 06月16日 19:30\n\n📍 上海文化广场 · 上海\n\n¥380 - ¥680\n售票中\n\n余票 384 张 · 已售 216/600\n\n选座购票\n周杰伦嘉年华巡演\n\n演唱会 · 06月18日 19:30\n\n📍 国家大剧院 · 北京\n\n¥180 - ¥880\n售票中\n\n余票 500 张 · 已售 300/800\n\n选座购票\n《巴黎圣母院》音乐剧\n\n演出 · 06月19日 19:30\n\n📍 广州大剧院 · 广州\n\n¥280\n预售\n\n余票 297 张 · 已售 203/500\n\n选座购票\n五月天好好好想见到你\n\n演唱会 · 06月24日 19:30\n\n📍 广州大剧院 · 广州\n\n¥280\n⚡ 秒杀\n\n余票 252 张 · 已售 248/500\n\n选座购票",
+  "apiBase": "http://127.0.0.1:59029",
+  "businessGoalPreview": "",
+  "apiResponses": [
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49029/api/events?limit=50"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49029/api/users?limit=1"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49029/api/events?limit=50"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49029/api/users?limit=1"
+    },
+    {
+      "method": "GET",
+      "status": 301,
+      "url": "https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?image_size=square&prompt=monet%20garden%20light%20exhibition"
+    },
+    {
+      "method": "GET",
+      "status": 301,
+      "url": "https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?image_size=square&prompt=frozen%20kids%20theater%20show"
+    },
+    {
+      "method": "GET",
+      "status": 301,
+      "url": "https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?image_size=square&prompt=drama%20teahouse%20theater"
+    },
+    {
+      "method": "GET",
+      "status": 301,
+      "url": "https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?image_size=square&prompt=peppa%20pig%20kids%20show"
+    },
+    {
+      "method": "GET",
+      "status": 301,
+      "url": "https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?image_size=square&prompt=jay%20chou%20concert%20stage"
+    },
+    {
+      "method": "GET",
+      "status": 301,
+      "url": "https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?image_size=square&prompt=musical%20notre%20dame%20stage"
+    },
+    {
+      "method": "GET",
+      "status": 301,
+      "url": "https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?image_size=square&prompt=van%20gogh%20immersive%20art%20exhibition"
+    },
+    {
+      "method": "GET",
+      "status": 301,
+      "url": "https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?image_size=square&prompt=mayday%20rock%20concert"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49029/api/admin/dashboard/box-office"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49029/api/admin/dashboard/audience"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49029/api/users?limit=1"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49029/api/admin/dashboard/box-office"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49029/api/admin/dashboard/audience"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49029/api/users?limit=1"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49029/api/events?limit=50"
+    },
+    {
+      "method": "GET",
+      "status": 301,
+      "url": "https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?image_size=square&prompt=drama%20teahouse%20theater"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49029/api/users?limit=1"
+    },
+    {
+      "method": "GET",
+      "status": 301,
+      "url": "https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?image_size=square&prompt=van%20gogh%20immersive%20art%20exhibition"
+    },
+    {
+      "method": "GET",
+      "status": 301,
+      "url": "https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?image_size=square&prompt=frozen%20kids%20theater%20show"
+    },
+    {
+      "method": "GET",
+      "status": 301,
+      "url": "https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?image_size=square&prompt=musical%20notre%20dame%20stage"
+    },
+    {
+      "method": "GET",
+      "status": 301,
+      "url": "https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?image_size=square&prompt=monet%20garden%20light%20exhibition"
+    },
+    {
+      "method": "GET",
+      "status": 301,
+      "url": "https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?image_size=square&prompt=peppa%20pig%20kids%20show"
+    },
+    {
+      "method": "GET",
+      "status": 301,
+      "url": "https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?image_size=square&prompt=jay%20chou%20concert%20stage"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49029/api/events?limit=50"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49029/api/users?limit=1"
+    },
+    {
+      "method": "GET",
+      "status": 301,
+      "url": "https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?image_size=square&prompt=mayday%20rock%20concert"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49029/api/events?type=kids&limit=50"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49029/api/events?limit=50"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49029/api/sessions/1a8f9641-0939-4cbe-9ef0-b2ce55baf305"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49029/api/sessions/1a8f9641-0939-4cbe-9ef0-b2ce55baf305/seats"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49029/api/sessions/1a8f9641-0939-4cbe-9ef0-b2ce55baf305"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49029/api/sessions/1a8f9641-0939-4cbe-9ef0-b2ce55baf305/seats"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49029/api/events?limit=50"
+    },
+    {
+      "method": "GET",
+      "status": 301,
+      "url": "https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?image_size=square&prompt=van%20gogh%20immersive%20art%20exhibition"
+    },
+    {
+      "method": "GET",
+      "status": 301,
+      "url": "https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?image_size=square&prompt=frozen%20kids%20theater%20show"
+    },
+    {
+      "method": "GET",
+      "status": 301,
+      "url": "https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?image_size=square&prompt=musical%20notre%20dame%20stage"
+    },
+    {
+      "method": "GET",
+      "status": 301,
+      "url": "https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?image_size=square&prompt=monet%20garden%20light%20exhibition"
+    },
+    {
+      "method": "GET",
+      "status": 301,
+      "url": "https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?image_size=square&prompt=peppa%20pig%20kids%20show"
+    },
+    {
+      "method": "GET",
+      "status": 301,
+      "url": "https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?image_size=square&prompt=drama%20teahouse%20theater"
+    },
+    {
+      "method": "GET",
+      "status": 301,
+      "url": "https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?image_size=square&prompt=mayday%20rock%20concert"
+    },
+    {
+      "method": "GET",
+      "status": 301,
+      "url": "https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?image_size=square&prompt=jay%20chou%20concert%20stage"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49029/api/users?limit=1"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49029/api/events?limit=50"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49029/api/users?limit=1"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49029/api/events?type=kids&limit=50"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49029/api/events?limit=50"
+    }
+  ],
+  "apiChecks": [
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59029/api/health",
+      "path": "/api/health",
+      "status": 200,
+      "ok": true,
+      "bodyPreview": "{\"status\":\"ok\",\"timestamp\":\"2026-06-04T09:23:17.326Z\"}"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59029/api/events?limit=50",
+      "path": "/api/events?limit=50",
+      "status": 200,
+      "ok": true,
+      "bodyPreview": "{\"data\":[{\"session_id\":\"fb14e0fd-ca68-457f-b503-7cdb3b5951e3\",\"start_time\":\"2026-06-05T16:30:56.323Z\",\"end_time\":\"2026-06-05T19:15:56.323Z\",\"status\":\"onsale\",\"is_seckill\":0,\"sale_start_time\":\"2026-06-03T05:15:56.323Z\",\"sale_end_time\":\"2026-06-05T15:15:56.323Z\",\"total_inventory\":800,\"sold_count\":345,\"fee_rate\":0.1,\"refund_policy\":\"{\\\"type\\\":\\\"flexible\\\",\\\"before24h\\\":0.1,\\\"before7d\\\":0.05,\\\"beforeStart\\\":0}\",\"event_id\":\"4ca82750-b998-40b9-843c-2435eb4faadc\",\"event_title\":\"梵高沉浸式艺术展\",\"event_type\":\""
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59029/api/users?limit=1",
+      "path": "/api/users?limit=1",
+      "status": 200,
+      "ok": true,
+      "bodyPreview": "{\"data\":[{\"id\":\"fec85935-c653-4f79-8ee0-86fabeaac94f\",\"phone\":\"13800138001\",\"email\":null,\"nickname\":\"文艺青年小王\",\"avatar_url\":null,\"password_hash\":null,\"total_orders\":23,\"total_spent\":8650,\"preference_tags\":[\"performance\",\"musical\",\"drama\"],\"price_sensitivity\":0.3,\"risk_level\":0,\"created_at\":\"2026-06-04 05:15:56\"}],\"total\":6,\"page\":1,\"limit\":1}"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59029/api/ide/v1/text_to_image?image_size=square&prompt=monet%20garden%20light%20exhibition",
+      "path": "/api/ide/v1/text_to_image?image_size=square&prompt=monet%20garden%20light%20exhibition",
+      "status": 200,
+      "ok": true,
+      "bodyPreview": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 400 300\">\n    <defs>\n      <linearGradient id=\"g\" x1=\"0\" x2=\"1\" y1=\"0\" y2=\"1\">\n        <stop offset=\"0\" stop-color=\"#38b2ac\"/>\n        <stop offset=\"1\" stop-color=\"#667eea\"/>\n      </linearGradient>\n    </defs>\n    <rect width=\"400\" height=\"300\" fill=\"url(#g)\"/>\n    <circle cx=\"320\" cy=\"54\" r=\"74\" fill=\"rgba(255,255,255,.18)\"/>\n    <circle cx=\"70\" cy=\"250\" r=\"92\" fill=\"rgba(255,255,255,.12)\"/>\n    <rect x=\"44\" y=\"72\" width=\"312\" height=\"156\" r"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59029/api/ide/v1/text_to_image?image_size=square&prompt=frozen%20kids%20theater%20show",
+      "path": "/api/ide/v1/text_to_image?image_size=square&prompt=frozen%20kids%20theater%20show",
+      "status": 200,
+      "ok": true,
+      "bodyPreview": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 400 300\">\n    <defs>\n      <linearGradient id=\"g\" x1=\"0\" x2=\"1\" y1=\"0\" y2=\"1\">\n        <stop offset=\"0\" stop-color=\"#764ba2\"/>\n        <stop offset=\"1\" stop-color=\"#f6ad55\"/>\n      </linearGradient>\n    </defs>\n    <rect width=\"400\" height=\"300\" fill=\"url(#g)\"/>\n    <circle cx=\"320\" cy=\"54\" r=\"74\" fill=\"rgba(255,255,255,.18)\"/>\n    <circle cx=\"70\" cy=\"250\" r=\"92\" fill=\"rgba(255,255,255,.12)\"/>\n    <rect x=\"44\" y=\"72\" width=\"312\" height=\"156\" r"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59029/api/ide/v1/text_to_image?image_size=square&prompt=drama%20teahouse%20theater",
+      "path": "/api/ide/v1/text_to_image?image_size=square&prompt=drama%20teahouse%20theater",
+      "status": 200,
+      "ok": true,
+      "bodyPreview": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 400 300\">\n    <defs>\n      <linearGradient id=\"g\" x1=\"0\" x2=\"1\" y1=\"0\" y2=\"1\">\n        <stop offset=\"0\" stop-color=\"#667eea\"/>\n        <stop offset=\"1\" stop-color=\"#764ba2\"/>\n      </linearGradient>\n    </defs>\n    <rect width=\"400\" height=\"300\" fill=\"url(#g)\"/>\n    <circle cx=\"320\" cy=\"54\" r=\"74\" fill=\"rgba(255,255,255,.18)\"/>\n    <circle cx=\"70\" cy=\"250\" r=\"92\" fill=\"rgba(255,255,255,.12)\"/>\n    <rect x=\"44\" y=\"72\" width=\"312\" height=\"156\" r"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59029/api/ide/v1/text_to_image?image_size=square&prompt=peppa%20pig%20kids%20show",
+      "path": "/api/ide/v1/text_to_image?image_size=square&prompt=peppa%20pig%20kids%20show",
+      "status": 200,
+      "ok": true,
+      "bodyPreview": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 400 300\">\n    <defs>\n      <linearGradient id=\"g\" x1=\"0\" x2=\"1\" y1=\"0\" y2=\"1\">\n        <stop offset=\"0\" stop-color=\"#f6ad55\"/>\n        <stop offset=\"1\" stop-color=\"#38b2ac\"/>\n      </linearGradient>\n    </defs>\n    <rect width=\"400\" height=\"300\" fill=\"url(#g)\"/>\n    <circle cx=\"320\" cy=\"54\" r=\"74\" fill=\"rgba(255,255,255,.18)\"/>\n    <circle cx=\"70\" cy=\"250\" r=\"92\" fill=\"rgba(255,255,255,.12)\"/>\n    <rect x=\"44\" y=\"72\" width=\"312\" height=\"156\" r"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59029/api/ide/v1/text_to_image?image_size=square&prompt=jay%20chou%20concert%20stage",
+      "path": "/api/ide/v1/text_to_image?image_size=square&prompt=jay%20chou%20concert%20stage",
+      "status": 200,
+      "ok": true,
+      "bodyPreview": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 400 300\">\n    <defs>\n      <linearGradient id=\"g\" x1=\"0\" x2=\"1\" y1=\"0\" y2=\"1\">\n        <stop offset=\"0\" stop-color=\"#764ba2\"/>\n        <stop offset=\"1\" stop-color=\"#f6ad55\"/>\n      </linearGradient>\n    </defs>\n    <rect width=\"400\" height=\"300\" fill=\"url(#g)\"/>\n    <circle cx=\"320\" cy=\"54\" r=\"74\" fill=\"rgba(255,255,255,.18)\"/>\n    <circle cx=\"70\" cy=\"250\" r=\"92\" fill=\"rgba(255,255,255,.12)\"/>\n    <rect x=\"44\" y=\"72\" width=\"312\" height=\"156\" r"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59029/api/ide/v1/text_to_image?image_size=square&prompt=musical%20notre%20dame%20stage",
+      "path": "/api/ide/v1/text_to_image?image_size=square&prompt=musical%20notre%20dame%20stage",
+      "status": 200,
+      "ok": true,
+      "bodyPreview": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 400 300\">\n    <defs>\n      <linearGradient id=\"g\" x1=\"0\" x2=\"1\" y1=\"0\" y2=\"1\">\n        <stop offset=\"0\" stop-color=\"#764ba2\"/>\n        <stop offset=\"1\" stop-color=\"#f6ad55\"/>\n      </linearGradient>\n    </defs>\n    <rect width=\"400\" height=\"300\" fill=\"url(#g)\"/>\n    <circle cx=\"320\" cy=\"54\" r=\"74\" fill=\"rgba(255,255,255,.18)\"/>\n    <circle cx=\"70\" cy=\"250\" r=\"92\" fill=\"rgba(255,255,255,.12)\"/>\n    <rect x=\"44\" y=\"72\" width=\"312\" height=\"156\" r"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59029/api/ide/v1/text_to_image?image_size=square&prompt=van%20gogh%20immersive%20art%20exhibition",
+      "path": "/api/ide/v1/text_to_image?image_size=square&prompt=van%20gogh%20immersive%20art%20exhibition",
+      "status": 200,
+      "ok": true,
+      "bodyPreview": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 400 300\">\n    <defs>\n      <linearGradient id=\"g\" x1=\"0\" x2=\"1\" y1=\"0\" y2=\"1\">\n        <stop offset=\"0\" stop-color=\"#764ba2\"/>\n        <stop offset=\"1\" stop-color=\"#f6ad55\"/>\n      </linearGradient>\n    </defs>\n    <rect width=\"400\" height=\"300\" fill=\"url(#g)\"/>\n    <circle cx=\"320\" cy=\"54\" r=\"74\" fill=\"rgba(255,255,255,.18)\"/>\n    <circle cx=\"70\" cy=\"250\" r=\"92\" fill=\"rgba(255,255,255,.12)\"/>\n    <rect x=\"44\" y=\"72\" width=\"312\" height=\"156\" r"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59029/api/ide/v1/text_to_image?image_size=square&prompt=mayday%20rock%20concert",
+      "path": "/api/ide/v1/text_to_image?image_size=square&prompt=mayday%20rock%20concert",
+      "status": 200,
+      "ok": true,
+      "bodyPreview": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 400 300\">\n    <defs>\n      <linearGradient id=\"g\" x1=\"0\" x2=\"1\" y1=\"0\" y2=\"1\">\n        <stop offset=\"0\" stop-color=\"#f6ad55\"/>\n        <stop offset=\"1\" stop-color=\"#38b2ac\"/>\n      </linearGradient>\n    </defs>\n    <rect width=\"400\" height=\"300\" fill=\"url(#g)\"/>\n    <circle cx=\"320\" cy=\"54\" r=\"74\" fill=\"rgba(255,255,255,.18)\"/>\n    <circle cx=\"70\" cy=\"250\" r=\"92\" fill=\"rgba(255,255,255,.12)\"/>\n    <rect x=\"44\" y=\"72\" width=\"312\" height=\"156\" r"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59029/api/admin/dashboard/box-office",
+      "path": "/api/admin/dashboard/box-office",
+      "status": 200,
+      "ok": true,
+      "bodyPreview": "{\"data\":[{\"period\":\"2026-06-03\",\"order_count\":2,\"total_revenue\":5440,\"buyer_count\":2,\"type\":\"kids\",\"city\":\"上海\"},{\"period\":\"2026-06-02\",\"order_count\":2,\"total_revenue\":4080,\"buyer_count\":2,\"type\":\"concert\",\"city\":\"上海\"},{\"period\":\"2026-06-01\",\"order_count\":3,\"total_revenue\":6640,\"buyer_count\":3,\"type\":\"performance\",\"city\":\"北京\"},{\"period\":\"2026-05-31\",\"order_count\":1,\"total_revenue\":1760,\"buyer_count\":1,\"type\":\"kids\",\"city\":\"北京\"},{\"period\":\"2026-05-30\",\"order_count\":1,\"total_revenue\":680,\"buyer_cou"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59029/api/admin/dashboard/audience",
+      "path": "/api/admin/dashboard/audience",
+      "status": 200,
+      "ok": true,
+      "bodyPreview": "{\"purchase_frequency\":[{\"frequency\":\"1次\",\"user_count\":1},{\"frequency\":\"2-5次\",\"user_count\":5}],\"price_sensitivity\":[{\"sensitivity_level\":\"中敏感度\",\"user_count\":3,\"avg_spent\":12550},{\"sensitivity_level\":\"低敏感度\",\"user_count\":2,\"avg_spent\":61500},{\"sensitivity_level\":\"高敏感度\",\"user_count\":1,\"avg_spent\":4200}],\"category_migration\":[{\"from_type\":\"concert\",\"to_type\":\"concert\",\"user_count\":2},{\"from_type\":\"exhibition\",\"to_type\":\"exhibition\",\"user_count\":1},{\"from_type\":\"kids\",\"to_type\":\"kids\",\"user_count\":1},"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59029/api/events?type=kids&limit=50",
+      "path": "/api/events?type=kids&limit=50",
+      "status": 200,
+      "ok": true,
+      "bodyPreview": "{\"data\":[{\"session_id\":\"14f0850b-17e3-437f-b06f-daa99b13b25f\",\"start_time\":\"2026-06-06T16:30:56.323Z\",\"end_time\":\"2026-06-06T19:15:56.323Z\",\"status\":\"onsale\",\"is_seckill\":0,\"sale_start_time\":\"2026-06-03T05:15:56.323Z\",\"sale_end_time\":\"2026-06-06T15:15:56.323Z\",\"total_inventory\":600,\"sold_count\":101,\"fee_rate\":0.1,\"refund_policy\":\"{\\\"type\\\":\\\"flexible\\\",\\\"before24h\\\":0.1,\\\"before7d\\\":0.05,\\\"beforeStart\\\":0}\",\"event_id\":\"22485e97-ae97-4090-a3f1-f3440d568a62\",\"event_title\":\"儿童剧《冰雪奇缘》\",\"event_type\":"
+    }
+  ],
+  "dialogs": [],
+  "consoleMessages": [
+    {
+      "type": "debug",
+      "text": "[vite] connecting...",
+      "location": {
+        "url": "http://127.0.0.1:49029/@vite/client",
+        "lineNumber": 494,
+        "columnNumber": 8
+      }
+    },
+    {
+      "type": "debug",
+      "text": "[vite] connected.",
+      "location": {
+        "url": "http://127.0.0.1:49029/@vite/client",
+        "lineNumber": 617,
+        "columnNumber": 14
+      }
+    },
+    {
+      "type": "info",
+      "text": "%cDownload the React DevTools for a better development experience: https://reactjs.org/link/react-devtools font-weight:bold",
+      "location": {
+        "url": "http://127.0.0.1:49029/node_modules/.vite/deps/chunk-PJEEZAML.js?v=c9e72c3e",
+        "lineNumber": 21550,
+        "columnNumber": 24
+      }
+    },
+    {
+      "type": "warning",
+      "text": "⚠️ React Router Future Flag Warning: React Router will begin wrapping state updates in `React.startTransition` in v7. You can use the `v7_startTransition` future flag to opt-in early. For more information, see https://reactrouter.com/v6/upgrading/future#v7_starttransition.",
+      "location": {
+        "url": "http://127.0.0.1:49029/node_modules/.vite/deps/react-router-dom.js?v=c9e72c3e",
+        "lineNumber": 4426,
+        "columnNumber": 12
+      }
+    },
+    {
+      "type": "warning",
+      "text": "⚠️ React Router Future Flag Warning: Relative route resolution within Splat routes is changing in v7. You can use the `v7_relativeSplatPath` future flag to opt-in early. For more information, see https://reactrouter.com/v6/upgrading/future#v7_relativesplatpath.",
+      "location": {
+        "url": "http://127.0.0.1:49029/node_modules/.vite/deps/react-router-dom.js?v=c9e72c3e",
+        "lineNumber": 4426,
+        "columnNumber": 12
+      }
+    },
+    {
+      "type": "debug",
+      "text": "[vite] connecting...",
+      "location": {
+        "url": "http://127.0.0.1:49029/@vite/client",
+        "lineNumber": 494,
+        "columnNumber": 8
+      }
+    },
+    {
+      "type": "debug",
+      "text": "[vite] connected.",
+      "location": {
+        "url": "http://127.0.0.1:49029/@vite/client",
+        "lineNumber": 617,
+        "columnNumber": 14
+      }
+    },
+    {
+      "type": "info",
+      "text": "%cDownload the React DevTools for a better development experience: https://reactjs.org/link/react-devtools font-weight:bold",
+      "location": {
+        "url": "http://127.0.0.1:49029/node_modules/.vite/deps/chunk-PJEEZAML.js?v=c9e72c3e",
+        "lineNumber": 21550,
+        "columnNumber": 24
+      }
+    },
+    {
+      "type": "warning",
+      "text": "⚠️ React Router Future Flag Warning: React Router will begin wrapping state updates in `React.startTransition` in v7. You can use the `v7_startTransition` future flag to opt-in early. For more information, see https://reactrouter.com/v6/upgrading/future#v7_starttransition.",
+      "location": {
+        "url": "http://127.0.0.1:49029/node_modules/.vite/deps/react-router-dom.js?v=c9e72c3e",
+        "lineNumber": 4426,
+        "columnNumber": 12
+      }
+    },
+    {
+      "type": "warning",
+      "text": "⚠️ React Router Future Flag Warning: Relative route resolution within Splat routes is changing in v7. You can use the `v7_relativeSplatPath` future flag to opt-in early. For more information, see https://reactrouter.com/v6/upgrading/future#v7_relativesplatpath.",
+      "location": {
+        "url": "http://127.0.0.1:49029/node_modules/.vite/deps/react-router-dom.js?v=c9e72c3e",
+        "lineNumber": 4426,
+        "columnNumber": 12
+      }
+    },
+    {
+      "type": "debug",
+      "text": "[vite] connecting...",
+      "location": {
+        "url": "http://127.0.0.1:49029/@vite/client",
+        "lineNumber": 494,
+        "columnNumber": 8
+      }
+    },
+    {
+      "type": "debug",
+      "text": "[vite] connected.",
+      "location": {
+        "url": "http://127.0.0.1:49029/@vite/client",
+        "lineNumber": 617,
+        "columnNumber": 14
+      }
+    },
+    {
+      "type": "info",
+      "text": "%cDownload the React DevTools for a better development experience: https://reactjs.org/link/react-devtools font-weight:bold",
+      "location": {
+        "url": "http://127.0.0.1:49029/node_modules/.vite/deps/chunk-PJEEZAML.js?v=c9e72c3e",
+        "lineNumber": 21550,
+        "columnNumber": 24
+      }
+    },
+    {
+      "type": "warning",
+      "text": "⚠️ React Router Future Flag Warning: React Router will begin wrapping state updates in `React.startTransition` in v7. You can use the `v7_startTransition` future flag to opt-in early. For more information, see https://reactrouter.com/v6/upgrading/future#v7_starttransition.",
+      "location": {
+        "url": "http://127.0.0.1:49029/node_modules/.vite/deps/react-router-dom.js?v=c9e72c3e",
+        "lineNumber": 4426,
+        "columnNumber": 12
+      }
+    },
+    {
+      "type": "warning",
+      "text": "⚠️ React Router Future Flag Warning: Relative route resolution within Splat routes is changing in v7. You can use the `v7_relativeSplatPath` future flag to opt-in early. For more information, see https://reactrouter.com/v6/upgrading/future#v7_relativesplatpath.",
+      "location": {
+        "url": "http://127.0.0.1:49029/node_modules/.vite/deps/react-router-dom.js?v=c9e72c3e",
+        "lineNumber": 4426,
+        "columnNumber": 12
+      }
+    },
+    {
+      "type": "debug",
+      "text": "[vite] connecting...",
+      "location": {
+        "url": "http://127.0.0.1:49029/@vite/client",
+        "lineNumber": 494,
+        "columnNumber": 8
+      }
+    },
+    {
+      "type": "debug",
+      "text": "[vite] connected.",
+      "location": {
+        "url": "http://127.0.0.1:49029/@vite/client",
+        "lineNumber": 617,
+        "columnNumber": 14
+      }
+    },
+    {
+      "type": "info",
+      "text": "%cDownload the React DevTools for a better development experience: https://reactjs.org/link/react-devtools font-weight:bold",
+      "location": {
+        "url": "http://127.0.0.1:49029/node_modules/.vite/deps/chunk-PJEEZAML.js?v=c9e72c3e",
+        "lineNumber": 21550,
+        "columnNumber": 24
+      }
+    },
+    {
+      "type": "warning",
+      "text": "⚠️ React Router Future Flag Warning: React Router will begin wrapping state updates in `React.startTransition` in v7. You can use the `v7_startTransition` future flag to opt-in early. For more information, see https://reactrouter.com/v6/upgrading/future#v7_starttransition.",
+      "location": {
+        "url": "http://127.0.0.1:49029/node_modules/.vite/deps/react-router-dom.js?v=c9e72c3e",
+        "lineNumber": 4426,
+        "columnNumber": 12
+      }
+    },
+    {
+      "type": "warning",
+      "text": "⚠️ React Router Future Flag Warning: Relative route resolution within Splat routes is changing in v7. You can use the `v7_relativeSplatPath` future flag to opt-in early. For more information, see https://reactrouter.com/v6/upgrading/future#v7_relativesplatpath.",
+      "location": {
+        "url": "http://127.0.0.1:49029/node_modules/.vite/deps/react-router-dom.js?v=c9e72c3e",
+        "lineNumber": 4426,
+        "columnNumber": 12
+      }
+    }
+  ],
+  "requestFailures": [
+    {
+      "method": "GET",
+      "url": "https://lf-cdn.trae.com.cn/obj/trae-ai-image/page_image/0ba55750a2eb5073a7c60bc1c789a37b.jpeg",
+      "errorText": "net::ERR_ABORTED"
+    },
+    {
+      "method": "GET",
+      "url": "https://lf-cdn.trae.com.cn/obj/trae-ai-image/page_image/0aae92bd35afa8136935984df6a44d4f.jpeg",
+      "errorText": "net::ERR_ABORTED"
+    },
+    {
+      "method": "GET",
+      "url": "https://lf-cdn.trae.com.cn/obj/trae-ai-image/page_image/d1bede2f89e282287d0b5096adfd662e.jpeg",
+      "errorText": "net::ERR_ABORTED"
+    },
+    {
+      "method": "GET",
+      "url": "https://lf-cdn.trae.com.cn/obj/trae-ai-image/page_image/1dad2e83755d1ca11e0b9bfeb8889a57.jpeg",
+      "errorText": "net::ERR_ABORTED"
+    },
+    {
+      "method": "GET",
+      "url": "https://lf-cdn.trae.com.cn/obj/trae-ai-image/page_image/cdad7ae83af31db5e4f887a405c6914b.jpeg",
+      "errorText": "net::ERR_ABORTED"
+    },
+    {
+      "method": "GET",
+      "url": "https://lf-cdn.trae.com.cn/obj/trae-ai-image/page_image/5032f191c7c6f913168f9edaa38a7be4.jpeg",
+      "errorText": "net::ERR_ABORTED"
+    },
+    {
+      "method": "GET",
+      "url": "https://lf-cdn.trae.com.cn/obj/trae-ai-image/page_image/7313a6fcd6233dd1be2a97f49c00f11a.jpeg",
+      "errorText": "net::ERR_ABORTED"
+    }
+  ],
+  "responseErrors": [],
+  "reportPath": "/Users/chen/Documents/trae_projects/local_projects/may-89029/probe/codex-final-20260604-runtime/may-89029-browser-report.json"
+}
