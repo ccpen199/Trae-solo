@@ -1,0 +1,13 @@
+{
+  "name": "social-security-platform",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "dev:frontend": "cd frontend && npm run dev",
+    "dev:backend": "cd backend && npm run dev",
+    "install:all": "npm install && cd frontend && npm install && cd ../backend && npm install",
+    "start": "npm run start:backend && npm run start:frontend",
+    "start:frontend": "cd frontend && nohup npm run dev > ../frontend.log 2>&1 &",
+    "start:backend": "cd backend && nohup npm run dev > ../backend.log 2>&1 &"
+  }
+}
