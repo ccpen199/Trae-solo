@@ -1,0 +1,176 @@
+{
+  "ok": false,
+  "generatedAt": "2026-06-04T02:20:13.801Z",
+  "order": "may-89018",
+  "roundIndex": 99,
+  "captureId": "codex-may-89018",
+  "url": "http://127.0.0.1:49018/",
+  "initialUrl": "http://127.0.0.1:49018/",
+  "finalUrl": "http://127.0.0.1:49018/",
+  "status": null,
+  "title": "建筑用工撮合平台",
+  "initialTitle": "",
+  "navigationError": "page.goto: Timeout 15000ms exceeded.\nCall log:\n\u001b[2m  - navigating to \"http://127.0.0.1:49018/\", waiting until \"domcontentloaded\"\u001b[22m\n",
+  "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89018/probe/codex-may-89018-frontend.png",
+  "screenshotPaths": [
+    "/Users/chen/Documents/trae_projects/local_projects/may-89018/probe/codex-may-89018-structure-01-首屏.png"
+  ],
+  "issueTextPreview": "",
+  "targetReason": "未识别到特定问题页，保留首屏验收截图",
+  "targetKind": "smoke",
+  "targetMatched": false,
+  "targetActions": [
+    {
+      "action": "keep-current-page",
+      "label": "未识别到特定问题页，保留首屏验收截图",
+      "ok": true
+    }
+  ],
+  "authFlow": {
+    "detected": false,
+    "attempted": false,
+    "success": false,
+    "finalUrl": "http://127.0.0.1:49018/",
+    "message": "",
+    "actions": []
+  },
+  "businessAudit": {
+    "actions": [],
+    "snapshots": [
+      {
+        "label": "首屏",
+        "url": "http://127.0.0.1:49018/",
+        "title": "建筑用工撮合平台",
+        "headings": [],
+        "navLabels": [],
+        "buttons": [],
+        "links": [],
+        "inputs": [],
+        "tables": [],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "",
+        "layout": {
+          "viewportWidth": 1504,
+          "viewportHeight": 1000,
+          "scrollWidth": 1504,
+          "scrollHeight": 1000,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "codex-may-89018-structure-01-首屏",
+          "label": "首屏",
+          "finalUrl": "http://127.0.0.1:49018/",
+          "title": "建筑用工撮合平台",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89018/probe/codex-may-89018-structure-01-首屏.json",
+          "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89018/probe/codex-may-89018-structure-01-首屏.png",
+          "elementCount": 7,
+          "interactiveCount": 0,
+          "interactiveLabels": []
+        }
+      }
+    ],
+    "findings": [
+      "首屏 页面打开后是空白，没有渲染业务内容、表单或列表。"
+    ],
+    "actionHints": [
+      "修复 首屏 的路由组件挂载、接口初始化和错误兜底，确保进入页面后直接显示可操作内容。"
+    ],
+    "emptyPages": [],
+    "overflowPages": [],
+    "blankPages": [
+      "首屏"
+    ],
+    "apiFailurePaths": [],
+    "goalTerms": [],
+    "clickedActionDescriptors": [],
+    "secondaryActionClicks": 0,
+    "structureCaptures": [
+      {
+        "module": "website_structure_capture",
+        "runId": "codex-may-89018-structure-01-首屏",
+        "label": "首屏",
+        "finalUrl": "http://127.0.0.1:49018/",
+        "title": "建筑用工撮合平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89018/probe/codex-may-89018-structure-01-首屏.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89018/probe/codex-may-89018-structure-01-首屏.png",
+        "elementCount": 7,
+        "interactiveCount": 0,
+        "interactiveLabels": []
+      }
+    ],
+    "representativeScreenshotUrl": "http://127.0.0.1:49018/",
+    "representativeScreenshotLabel": "首屏"
+  },
+  "websiteStructureCapture": {
+    "module": "website_structure_capture",
+    "captureCount": 1,
+    "captures": [
+      {
+        "module": "website_structure_capture",
+        "runId": "codex-may-89018-structure-01-首屏",
+        "label": "首屏",
+        "finalUrl": "http://127.0.0.1:49018/",
+        "title": "建筑用工撮合平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89018/probe/codex-may-89018-structure-01-首屏.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89018/probe/codex-may-89018-structure-01-首屏.png",
+        "elementCount": 7,
+        "interactiveCount": 0,
+        "interactiveLabels": []
+      }
+    ]
+  },
+  "screenshotMetrics": {
+    "width": 1536,
+    "height": 1000,
+    "scrollWidth": 1504,
+    "scrollHeight": 1000
+  },
+  "initialBodyTextPreview": "ERR:locator.innerText: Timeout 3000ms exceeded.\nCall log:\n\u001b[2m  - waiting for locator('body')\u001b[22m\n",
+  "bodyTextPreview": "",
+  "apiBase": "http://127.0.0.1:59018",
+  "businessGoalPreview": "",
+  "apiResponses": [],
+  "apiChecks": [
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59018/api/health",
+      "path": "/api/health",
+      "status": 200,
+      "ok": true,
+      "bodyPreview": "{\"status\":\"ok\",\"timestamp\":\"2026-06-04T02:19:38.505Z\"}"
+    }
+  ],
+  "dialogs": [],
+  "consoleMessages": [
+    {
+      "type": "debug",
+      "text": "[vite] connecting...",
+      "location": {
+        "url": "http://127.0.0.1:49018/@vite/client",
+        "lineNumber": 494,
+        "columnNumber": 8
+      }
+    },
+    {
+      "type": "debug",
+      "text": "[vite] connected.",
+      "location": {
+        "url": "http://127.0.0.1:49018/@vite/client",
+        "lineNumber": 617,
+        "columnNumber": 14
+      }
+    },
+    {
+      "type": "error",
+      "text": "Failed to load resource: the server responded with a status of 404 (Not Found)",
+      "location": {
+        "url": "http://127.0.0.1:49018/favicon.ico",
+        "lineNumber": 0,
+        "columnNumber": 0
+      }
+    }
+  ],
+  "requestFailures": [],
+  "responseErrors": []
+}

@@ -1,0 +1,29 @@
+{
+  "order": "may-89018",
+  "ok": true,
+  "frontendUrl": "http://127.0.0.1:49018/",
+  "backendUrl": "http://127.0.0.1:59018",
+  "frontendStatus": 200,
+  "title": "建筑用工撮合平台",
+  "textLength": 1076,
+  "apiChecks": [
+    {
+      "path": "/api/health",
+      "status": 200,
+      "ok": true,
+      "bodySample": "{\"status\":\"ok\",\"timestamp\":\"2026-06-04T12:49:14.640Z\"}",
+      "error": ""
+    },
+    {
+      "path": "/api/jobs?limit=2",
+      "status": 200,
+      "ok": true,
+      "bodySample": "{\"jobs\":[{\"id\":1,\"company_id\":1,\"title\":\"急招电工师傅5名\",\"job_type\":\"临时\",\"skill_required\":\"电工\",\"workers_needed\":5,\"location\":\"北京市朝阳区国贸中心项目\",\"lat\":null,\"lng\":null,\"dai",
+      "error": ""
+    }
+  ],
+  "responseErrors": [],
+  "requestFailures": [],
+  "pageErrors": [],
+  "frontendError": ""
+}

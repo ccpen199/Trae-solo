@@ -1,0 +1,20 @@
+{
+  "order": "may-89018",
+  "frontend": "http://127.0.0.1:49018/",
+  "backend": "http://127.0.0.1:59018",
+  "status": 200,
+  "title": "建筑用工撮合平台",
+  "bodyLen": 1081,
+  "responseErrors": [],
+  "requestFailures": [],
+  "apiChecks": [
+    {
+      "path": "/api/health",
+      "status": 200,
+      "ok": true,
+      "body": "{\"status\":\"ok\",\"timestamp\":\"2026-06-04T12:52:17.931Z\"}"
+    }
+  ],
+  "ok": true,
+  "error": ""
+}

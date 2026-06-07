@@ -1,0 +1,1468 @@
+{
+  "ok": true,
+  "generatedAt": "2026-06-04T12:16:11.997Z",
+  "order": "may-89018",
+  "roundIndex": 6,
+  "captureId": "may-89018-codex-repair",
+  "url": "http://127.0.0.1:49018/",
+  "initialUrl": "http://127.0.0.1:49018/",
+  "finalUrl": "http://127.0.0.1:49018/",
+  "status": 200,
+  "title": "建筑用工撮合平台",
+  "initialTitle": "建筑用工撮合平台",
+  "navigationError": "",
+  "screenshotPath": "probe/codex-repair-20260604-1508/may-89018-codex-repair-frontend.png",
+  "screenshotPaths": [
+    "/Users/chen/Documents/trae_projects/local_projects/may-89018/probe/codex-repair-20260604-1508/may-89018-codex-repair-structure-01-首屏.png",
+    "/Users/chen/Documents/trae_projects/local_projects/may-89018/probe/codex-repair-20260604-1508/may-89018-codex-repair-structure-02-导航-首页.png",
+    "/Users/chen/Documents/trae_projects/local_projects/may-89018/probe/codex-repair-20260604-1508/may-89018-codex-repair-structure-03-操作-查看详情.png",
+    "/Users/chen/Documents/trae_projects/local_projects/may-89018/probe/codex-repair-20260604-1508/may-89018-codex-repair-structure-04-二层操作-查看详情-发起纠纷.png",
+    "/Users/chen/Documents/trae_projects/local_projects/may-89018/probe/codex-repair-20260604-1508/may-89018-codex-repair-structure-05-操作-搜索岗位.png",
+    "/Users/chen/Documents/trae_projects/local_projects/may-89018/probe/codex-repair-20260604-1508/may-89018-codex-repair-structure-06-二层操作-搜索岗位-高级筛选.png"
+  ],
+  "issueTextPreview": "个人中心/我的相关问题；搜索/筛选相关问题；后台管理相关问题；购买/提交相关问题；发现/分类相关问题",
+  "targetReason": "个人中心/我的相关问题；搜索/筛选相关问题；后台管理相关问题；购买/提交相关问题；发现/分类相关问题",
+  "targetKind": "personal",
+  "targetMatched": true,
+  "targetActions": [
+    {
+      "action": "click",
+      "label": "个人中心/我的相关问题",
+      "ok": false,
+      "error": "locator.click: Timeout 900ms exceeded.\nCall log:\n\u001b[2m  - waiting for getByText(/个人中心/).first()\u001b[22m\n\u001b[2m    - locator resolved to <span class=\"ant-typography css-dev-only-do-not-override-mncuj7\">招工搜索、岗位详情、报名申请、个人中心和后台管理入"
+    },
+    {
+      "action": "click",
+      "label": "个人中心/我的相关问题",
+      "ok": false,
+      "error": "locator.click: Timeout 900ms exceeded.\nCall log:\n\u001b[2m  - waiting for getByText(/账号/).first()\u001b[22m\n\u001b[2m    - locator resolved to <span class=\"ant-typography ant-typography-secondary css-dev-only-do-not-override-mncuj7\">登录"
+    },
+    {
+      "action": "target-already-visible",
+      "label": "个人中心/我的相关问题",
+      "ok": true
+    },
+    {
+      "action": "target-verify",
+      "label": "个人中心/我的相关问题",
+      "ok": true,
+      "finalUrl": "http://127.0.0.1:49018/profile"
+    }
+  ],
+  "authFlow": {
+    "detected": false,
+    "attempted": false,
+    "success": false,
+    "finalUrl": "http://127.0.0.1:49018/",
+    "message": "",
+    "actions": []
+  },
+  "businessAudit": {
+    "actions": [
+      {
+        "action": "click",
+        "label": "导航:首页",
+        "ok": true
+      },
+      {
+        "action": "click",
+        "label": "操作:查看详情",
+        "ok": true,
+        "result": {
+          "ok": true,
+          "matched": 6
+        }
+      },
+      {
+        "action": "click",
+        "label": "二层操作:查看详情:发起纠纷",
+        "ok": true,
+        "result": {
+          "ok": true,
+          "matched": 1
+        }
+      },
+      {
+        "action": "click",
+        "label": "关闭弹窗/抽屉",
+        "ok": true
+      },
+      {
+        "action": "click",
+        "label": "操作:搜索岗位",
+        "ok": true,
+        "result": {
+          "ok": true,
+          "matched": 1
+        }
+      },
+      {
+        "action": "click",
+        "label": "二层操作:搜索岗位:高级筛选",
+        "ok": true,
+        "result": {
+          "ok": true,
+          "matched": 1
+        }
+      }
+    ],
+    "snapshots": [
+      {
+        "label": "首屏",
+        "url": "http://127.0.0.1:49018/",
+        "title": "建筑用工撮合平台",
+        "headings": [
+          "欢迎回来，演示工友！"
+        ],
+        "navLabels": [
+          "首页",
+          "个人中心",
+          "user",
+          "招工大厅",
+          "search",
+          "我的申请",
+          "file-text",
+          "考勤打卡",
+          "check-circle"
+        ],
+        "buttons": [
+          "搜索岗位",
+          "我的资料",
+          "发布招工",
+          "管理后台",
+          "查看详情",
+          "立即申请"
+        ],
+        "links": [],
+        "inputs": [],
+        "tables": [],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "🏗️建筑用工撮合平台工友首页个人中心招工大厅我的申请考勤打卡👤 演示工友欢迎回来，演示工友！工友工作台 · 2026年6月4日星期四🔔 每日安全提醒：高处作业安全高处作业必须系好安全带，戴好安全帽，穿防滑鞋。严禁抛物，工具应放入工具袋。搜索/筛选招工按工种、区域和薪资查找岗位搜索岗位个人中心/我的资料、报名申请和考勤记录我的资料发布/提交招工企业提交用工需求并管理报名发布招工后台管理用户、企业和招工审核看板管理后台工作台浏览招工查看附近招工信息，智能匹配推荐考勤打卡上下班打卡，工时电子确认我的申请查看申请记录和用工状态平台数据工友总数2企业总数2进行中招工6今日打卡1精选招工急招电工师傅5名电工临时📍 北京市朝阳区国贸中心项目¥380/天查看详情招聘木工班组20人木工包工中铁四局📍 北京市海淀区中关村软件园¥420/天查看详情急招架子工10名架子工点工📍 北京市通州区城市副中心¥450/天查看详情招聘钢筋工15名钢筋工包工中铁四局📍 北京市大兴区国际机场二期¥400/天查看详情招塔吊司机3名塔吊司机全职📍 北京市丰台区丽泽商务区¥500/天查看详情招聘混凝土工8名混凝土工点工中铁四局📍 北京市石景山区冬奥公园¥350/天查看详情为您推荐急招电工师傅5名匹配度 94%电工临时📍 北京市朝阳区国贸中心项目¥380/天立即申请招聘木工班组20人匹配度 72%木工包工📍 北京市海淀区中关村软件园¥420/天立即申请急招架子工10名匹配度 81%架子工点工📍 北京市通州区城市副中心¥450/天立即申请招聘钢筋工15名匹配度 87%钢筋工包工📍 北京市大兴区国际机场二期¥400/天立即申请招塔吊司机3名匹配度 72%塔吊司机全职📍 北京市丰台区丽泽商务区¥500/天立即申请热门工种需求钢筋工1 个岗位电工1 个岗位混凝土工1 个岗位架子工1 个岗位木工1 个岗位塔吊司机1 个岗位过程保障闭环报名申请复查已流转木工班组 3 人已提交实名证书，项目方 09:40 完成面试确认，记录可在我的申请查看。保证金托管托管中项目方预付 12000 元、工友履约押金 1800 元，银行托管流水 GYT-20260604-001。现场打卡与工时确认待复核今日 6 条 NFC 闸机打卡，4 条已由企业确认，2 条等待班组长复核。劳务合规中心已归档劳动合同模板、工资支付监管、纠纷调解单均已关联招工单 GY-0428。区域薪资水平北京市通州区城市副中心1 个岗位¥450/天北京市石景山区冬奥公园1 个岗位¥350/天北京市海淀区中关村软件园1 个岗位¥420/天北京市朝阳区国贸中心项目1 个岗位¥380/天北京市大兴区国际机场二期1 个岗位¥400/天北京市丰台区丽泽商务区1 个岗位¥500/天",
+        "layout": {
+          "viewportWidth": 1504,
+          "viewportHeight": 1600,
+          "scrollWidth": 1504,
+          "scrollHeight": 3031,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89018-codex-repair-structure-01-首屏",
+          "label": "首屏",
+          "finalUrl": "http://127.0.0.1:49018/",
+          "title": "建筑用工撮合平台",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89018/probe/codex-repair-20260604-1508/may-89018-codex-repair-structure-01-首屏.json",
+          "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89018/probe/codex-repair-20260604-1508/may-89018-codex-repair-structure-01-首屏.png",
+          "elementCount": 515,
+          "interactiveCount": 22,
+          "interactiveLabels": [
+            "首页 个人中心 招工大厅 我的申请 考勤打卡",
+            "首页",
+            "个人中心",
+            "招工大厅",
+            "我的申请",
+            "考勤打卡",
+            "搜索岗位",
+            "我的资料",
+            "发布招工",
+            "管理后台",
+            "查看详情",
+            "立即申请"
+          ]
+        }
+      },
+      {
+        "label": "导航:首页",
+        "url": "http://127.0.0.1:49018/",
+        "title": "建筑用工撮合平台",
+        "headings": [
+          "欢迎回来，演示工友！"
+        ],
+        "navLabels": [
+          "首页",
+          "个人中心",
+          "user",
+          "招工大厅",
+          "search",
+          "我的申请",
+          "file-text",
+          "考勤打卡",
+          "check-circle"
+        ],
+        "buttons": [
+          "搜索岗位",
+          "我的资料",
+          "发布招工",
+          "管理后台",
+          "查看详情",
+          "立即申请"
+        ],
+        "links": [],
+        "inputs": [],
+        "tables": [],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "🏗️建筑用工撮合平台工友首页个人中心招工大厅我的申请考勤打卡👤 演示工友欢迎回来，演示工友！工友工作台 · 2026年6月4日星期四🔔 每日安全提醒：高处作业安全高处作业必须系好安全带，戴好安全帽，穿防滑鞋。严禁抛物，工具应放入工具袋。搜索/筛选招工按工种、区域和薪资查找岗位搜索岗位个人中心/我的资料、报名申请和考勤记录我的资料发布/提交招工企业提交用工需求并管理报名发布招工后台管理用户、企业和招工审核看板管理后台工作台浏览招工查看附近招工信息，智能匹配推荐考勤打卡上下班打卡，工时电子确认我的申请查看申请记录和用工状态平台数据工友总数2企业总数2进行中招工6今日打卡1精选招工急招电工师傅5名电工临时📍 北京市朝阳区国贸中心项目¥380/天查看详情招聘木工班组20人木工包工中铁四局📍 北京市海淀区中关村软件园¥420/天查看详情急招架子工10名架子工点工📍 北京市通州区城市副中心¥450/天查看详情招聘钢筋工15名钢筋工包工中铁四局📍 北京市大兴区国际机场二期¥400/天查看详情招塔吊司机3名塔吊司机全职📍 北京市丰台区丽泽商务区¥500/天查看详情招聘混凝土工8名混凝土工点工中铁四局📍 北京市石景山区冬奥公园¥350/天查看详情为您推荐急招电工师傅5名匹配度 94%电工临时📍 北京市朝阳区国贸中心项目¥380/天立即申请招聘木工班组20人匹配度 72%木工包工📍 北京市海淀区中关村软件园¥420/天立即申请急招架子工10名匹配度 81%架子工点工📍 北京市通州区城市副中心¥450/天立即申请招聘钢筋工15名匹配度 87%钢筋工包工📍 北京市大兴区国际机场二期¥400/天立即申请招塔吊司机3名匹配度 72%塔吊司机全职📍 北京市丰台区丽泽商务区¥500/天立即申请热门工种需求钢筋工1 个岗位电工1 个岗位混凝土工1 个岗位架子工1 个岗位木工1 个岗位塔吊司机1 个岗位过程保障闭环报名申请复查已流转木工班组 3 人已提交实名证书，项目方 09:40 完成面试确认，记录可在我的申请查看。保证金托管托管中项目方预付 12000 元、工友履约押金 1800 元，银行托管流水 GYT-20260604-001。现场打卡与工时确认待复核今日 6 条 NFC 闸机打卡，4 条已由企业确认，2 条等待班组长复核。劳务合规中心已归档劳动合同模板、工资支付监管、纠纷调解单均已关联招工单 GY-0428。区域薪资水平北京市通州区城市副中心1 个岗位¥450/天北京市石景山区冬奥公园1 个岗位¥350/天北京市海淀区中关村软件园1 个岗位¥420/天北京市朝阳区国贸中心项目1 个岗位¥380/天北京市大兴区国际机场二期1 个岗位¥400/天北京市丰台区丽泽商务区1 个岗位¥500/天",
+        "layout": {
+          "viewportWidth": 1536,
+          "viewportHeight": 1600,
+          "scrollWidth": 1536,
+          "scrollHeight": 3031,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89018-codex-repair-structure-02-导航-首页",
+          "label": "导航:首页",
+          "finalUrl": "http://127.0.0.1:49018/",
+          "title": "建筑用工撮合平台",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89018/probe/codex-repair-20260604-1508/may-89018-codex-repair-structure-02-导航-首页.json",
+          "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89018/probe/codex-repair-20260604-1508/may-89018-codex-repair-structure-02-导航-首页.png",
+          "elementCount": 515,
+          "interactiveCount": 22,
+          "interactiveLabels": [
+            "首页 个人中心 招工大厅 我的申请 考勤打卡",
+            "首页",
+            "个人中心",
+            "招工大厅",
+            "我的申请",
+            "考勤打卡",
+            "搜索岗位",
+            "我的资料",
+            "发布招工",
+            "管理后台",
+            "查看详情",
+            "立即申请"
+          ]
+        }
+      },
+      {
+        "label": "操作:查看详情",
+        "url": "http://127.0.0.1:49018/jobs/1",
+        "title": "建筑用工撮合平台",
+        "headings": [],
+        "navLabels": [
+          "首页",
+          "个人中心",
+          "user",
+          "招工大厅",
+          "search",
+          "我的申请",
+          "file-text",
+          "考勤打卡",
+          "check-circle"
+        ],
+        "buttons": [
+          "返回列表",
+          "查看申请记录",
+          "考勤记录",
+          "过程保障明细",
+          "发起纠纷"
+        ],
+        "links": [],
+        "inputs": [],
+        "tables": [
+          {
+            "headers": [
+              "工种",
+              "招聘人数",
+              "日薪",
+              "工作地点",
+              "工期",
+              "招聘企业",
+              "用工类型",
+              "联系方式",
+              "企业地址",
+              "安全要求",
+              "保证金"
+            ],
+            "rowCount": 6,
+            "hasEmptyText": false,
+            "textPreview": "工种 电工 招聘人数 5人 日薪 ¥380 /天 工作地点 北京市朝阳区国贸中心项目 工期 2026-06-10 ~ 2026-12-31 招聘企业 用工类型 临时 联系方式 - 企业地址 - 安全要求 需要安全培训证明 保证金 ¥2000（履约保障）"
+          }
+        ],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "🏗️建筑用工撮合平台工友首页个人中心招工大厅我的申请考勤打卡👤 演示工友返回列表急招电工师傅5名招聘中工种电工招聘人数5人日薪¥380 /天工作地点北京市朝阳区国贸中心项目工期2026-06-10 ~ 2026-12-31招聘企业用工类型临时联系方式-企业地址-安全要求需要安全培训证明保证金¥2000（履约保障）工作描述负责项目电气安装与调试，要求有低压电工证，3年以上工作经验。 工作时间：8:00-18:00，包食宿。已申请过程保障申请状态未申请保证金¥2,000已托管合同状态未签署打卡记录10天累计工时 100 小时查看申请记录考勤记录过程保障明细发起纠纷状态流转记录招工发布2026-06-03 20:59:06 发布招工信息，需求已通过平台审核提交申请2026-06-03 20:59:06演示工友 提交申请，匹配度 95%责任角色边界 企业责任按时足额支付工资提供安全防护措施及时确认考勤记录按时确认工作验收 工友责任按时上下班打卡遵守安全操作规程保证工作质量配合工资结算 平台责任保证金托管监管合同备案管理纠纷调解仲裁信用评价体系",
+        "layout": {
+          "viewportWidth": 1568,
+          "viewportHeight": 1600,
+          "scrollWidth": 1568,
+          "scrollHeight": 1614,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89018-codex-repair-structure-03-操作-查看详情",
+          "label": "操作:查看详情",
+          "finalUrl": "http://127.0.0.1:49018/jobs/1",
+          "title": "建筑用工撮合平台",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89018/probe/codex-repair-20260604-1508/may-89018-codex-repair-structure-03-操作-查看详情.json",
+          "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89018/probe/codex-repair-20260604-1508/may-89018-codex-repair-structure-03-操作-查看详情.png",
+          "elementCount": 279,
+          "interactiveCount": 12,
+          "interactiveLabels": [
+            "首页 个人中心 招工大厅 我的申请 考勤打卡",
+            "首页",
+            "个人中心",
+            "招工大厅",
+            "我的申请",
+            "考勤打卡",
+            "返回列表",
+            "查看申请记录",
+            "考勤记录",
+            "过程保障明细",
+            "发起纠纷"
+          ]
+        }
+      },
+      {
+        "label": "二层操作:查看详情->发起纠纷",
+        "url": "http://127.0.0.1:49018/jobs/1",
+        "title": "建筑用工撮合平台",
+        "headings": [],
+        "navLabels": [
+          "首页",
+          "个人中心",
+          "user",
+          "招工大厅",
+          "search",
+          "我的申请",
+          "file-text",
+          "考勤打卡",
+          "check-circle"
+        ],
+        "buttons": [
+          "返回列表",
+          "查看申请记录",
+          "考勤记录",
+          "过程保障明细",
+          "发起纠纷",
+          "Close",
+          "上传证据",
+          "提 交",
+          "取 消"
+        ],
+        "links": [],
+        "inputs": [
+          {
+            "tag": "input",
+            "type": "search",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "textarea",
+            "type": "",
+            "placeholder": "请详细描述纠纷情况",
+            "name": "",
+            "label": ""
+          }
+        ],
+        "tables": [
+          {
+            "headers": [
+              "工种",
+              "招聘人数",
+              "日薪",
+              "工作地点",
+              "工期",
+              "招聘企业",
+              "用工类型",
+              "联系方式",
+              "企业地址",
+              "安全要求",
+              "保证金"
+            ],
+            "rowCount": 6,
+            "hasEmptyText": false,
+            "textPreview": "工种 电工 招聘人数 5人 日薪 ¥380 /天 工作地点 北京市朝阳区国贸中心项目 工期 2026-06-10 ~ 2026-12-31 招聘企业 用工类型 临时 联系方式 - 企业地址 - 安全要求 需要安全培训证明 保证金 ¥2000（履约保障）"
+          }
+        ],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "🏗️建筑用工撮合平台工友首页个人中心招工大厅我的申请考勤打卡👤 演示工友返回列表急招电工师傅5名招聘中工种电工招聘人数5人日薪¥380 /天工作地点北京市朝阳区国贸中心项目工期2026-06-10 ~ 2026-12-31招聘企业用工类型临时联系方式-企业地址-安全要求需要安全培训证明保证金¥2000（履约保障）工作描述负责项目电气安装与调试，要求有低压电工证，3年以上工作经验。 工作时间：8:00-18:00，包食宿。已申请过程保障申请状态未申请保证金¥2,000已托管合同状态未签署打卡记录10天累计工时 100 小时查看申请记录考勤记录过程保障明细发起纠纷状态流转记录招工发布2026-06-03 20:59:06 发布招工信息，需求已通过平台审核提交申请2026-06-03 20:59:06演示工友 提交申请，匹配度 95%责任角色边界 企业责任按时足额支付工资提供安全防护措施及时确认考勤记录按时确认工作验收 工友责任按时上下班打卡遵守安全操作规程保证工作质量配合工资结算 平台责任保证金托管监管合同备案管理纠纷调解仲裁信用评价体系 发起纠纷纠纷类型请选择纠纷类型纠纷描述上传证据提 交取 消",
+        "layout": {
+          "viewportWidth": 1600,
+          "viewportHeight": 1600,
+          "scrollWidth": 1600,
+          "scrollHeight": 1614,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89018-codex-repair-structure-04-二层操作-查看详情-发起纠纷",
+          "label": "二层操作:查看详情->发起纠纷",
+          "finalUrl": "http://127.0.0.1:49018/jobs/1",
+          "title": "建筑用工撮合平台",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89018/probe/codex-repair-20260604-1508/may-89018-codex-repair-structure-04-二层操作-查看详情-发起纠纷.json",
+          "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89018/probe/codex-repair-20260604-1508/may-89018-codex-repair-structure-04-二层操作-查看详情-发起纠纷.png",
+          "elementCount": 351,
+          "interactiveCount": 21,
+          "interactiveLabels": [
+            "首页 个人中心 招工大厅 我的申请 考勤打卡",
+            "首页",
+            "个人中心",
+            "招工大厅",
+            "我的申请",
+            "考勤打卡",
+            "返回列表",
+            "查看申请记录",
+            "考勤记录",
+            "过程保障明细",
+            "发起纠纷",
+            "发起纠纷 纠纷类型 请选择纠纷类型 纠纷描述 上传证据 提 交 取 消",
+            "Close",
+            "请详细描述纠纷情况",
+            "上传证据",
+            "提 交",
+            "取 消"
+          ]
+        }
+      },
+      {
+        "label": "操作:搜索岗位",
+        "url": "http://127.0.0.1:49018/jobs",
+        "title": "建筑用工撮合平台",
+        "headings": [],
+        "navLabels": [
+          "首页",
+          "个人中心",
+          "user",
+          "招工大厅",
+          "search",
+          "我的申请",
+          "file-text",
+          "考勤打卡",
+          "check-circle"
+        ],
+        "buttons": [
+          "搜索",
+          "高级筛选",
+          "重置",
+          "查看详情",
+          "立即申请"
+        ],
+        "links": [],
+        "inputs": [
+          {
+            "tag": "input",
+            "type": "text",
+            "placeholder": "搜索关键词（工种/地点/企业）",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "search",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "search",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "search",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "search",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          }
+        ],
+        "tables": [],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "🏗️建筑用工撮合平台工友首页个人中心招工大厅我的申请考勤打卡👤 演示工友招工大厅 6 个岗位选择工种选择区域距离范围用工类型搜索高级筛选重置急招电工师傅5名招聘中电工临时5人📍 北京市朝阳区国贸中心项目📅 2026-06-10 ~ 2026-12-31🔒 保证金 ¥2000（履约保障）¥380 /天查看详情立即申请招聘木工班组20人招聘中木工包工20人📍 北京市海淀区中关村软件园📅 2026-06-15 ~ 2027-03-15🔒 保证金 ¥5000（履约保障）¥420 /天中铁四局查看详情立即申请急招架子工10名招聘中架子工点工10人📍 北京市通州区城市副中心📅 2026-06-05 ~ 2026-09-30🔒 保证金 ¥3000（履约保障）¥450 /天查看详情立即申请招聘钢筋工15名招聘中钢筋工包工15人📍 北京市大兴区国际机场二期📅 2026-06-08 ~ 2027-06-30¥400 /天中铁四局查看详情立即申请招塔吊司机3名招聘中塔吊司机全职3人📍 北京市丰台区丽泽商务区📅 2026-06-06 ~ 2026-12-20🔒 保证金 ¥5000（履约保障）¥500 /天查看详情立即申请招聘混凝土工8名招聘中混凝土工点工8人📍 北京市石景山区冬奥公园📅 2026-06-04 ~ 2026-08-30¥350 /天中铁四局查看详情立即申请1",
+        "layout": {
+          "viewportWidth": 1632,
+          "viewportHeight": 1600,
+          "scrollWidth": 1632,
+          "scrollHeight": 1600,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89018-codex-repair-structure-05-操作-搜索岗位",
+          "label": "操作:搜索岗位",
+          "finalUrl": "http://127.0.0.1:49018/jobs",
+          "title": "建筑用工撮合平台",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89018/probe/codex-repair-20260604-1508/may-89018-codex-repair-structure-05-操作-搜索岗位.json",
+          "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89018/probe/codex-repair-20260604-1508/may-89018-codex-repair-structure-05-操作-搜索岗位.png",
+          "elementCount": 329,
+          "interactiveCount": 32,
+          "interactiveLabels": [
+            "首页 个人中心 招工大厅 我的申请 考勤打卡",
+            "首页",
+            "个人中心",
+            "招工大厅",
+            "我的申请",
+            "考勤打卡",
+            "搜索关键词（工种/地点/企业）",
+            "搜索",
+            "高级筛选",
+            "重置",
+            "查看详情",
+            "立即申请",
+            "1"
+          ]
+        }
+      },
+      {
+        "label": "二层操作:搜索岗位->高级筛选",
+        "url": "http://127.0.0.1:49018/jobs",
+        "title": "建筑用工撮合平台",
+        "headings": [],
+        "navLabels": [
+          "首页",
+          "个人中心",
+          "user",
+          "招工大厅",
+          "search",
+          "我的申请",
+          "file-text",
+          "考勤打卡",
+          "check-circle"
+        ],
+        "buttons": [
+          "搜索",
+          "收起筛选",
+          "重置",
+          "查看详情",
+          "立即申请"
+        ],
+        "links": [],
+        "inputs": [
+          {
+            "tag": "input",
+            "type": "text",
+            "placeholder": "搜索关键词（工种/地点/企业）",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "search",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "search",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "search",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "search",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "number",
+            "placeholder": "最低",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "number",
+            "placeholder": "最高",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "",
+            "placeholder": "开始日期",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "",
+            "placeholder": "结束日期",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "search",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          }
+        ],
+        "tables": [],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "🏗️建筑用工撮合平台工友首页个人中心招工大厅我的申请考勤打卡👤 演示工友招工大厅 6 个岗位选择工种选择区域距离范围用工类型搜索收起筛选重置日薪范围（元/天）-工期范围工期长度选择工期长度薪资水平急招电工师傅5名招聘中电工临时5人📍 北京市朝阳区国贸中心项目📅 2026-06-10 ~ 2026-12-31🔒 保证金 ¥2000（履约保障）¥380 /天查看详情立即申请招聘木工班组20人招聘中木工包工20人📍 北京市海淀区中关村软件园📅 2026-06-15 ~ 2027-03-15🔒 保证金 ¥5000（履约保障）¥420 /天中铁四局查看详情立即申请急招架子工10名招聘中架子工点工10人📍 北京市通州区城市副中心📅 2026-06-05 ~ 2026-09-30🔒 保证金 ¥3000（履约保障）¥450 /天查看详情立即申请招聘钢筋工15名招聘中钢筋工包工15人📍 北京市大兴区国际机场二期📅 2026-06-08 ~ 2027-06-30¥400 /天中铁四局查看详情立即申请招塔吊司机3名招聘中塔吊司机全职3人📍 北京市丰台区丽泽商务区📅 2026-06-06 ~ 2026-12-20🔒 保证金 ¥5000（履约保障）¥500 /天查看详情立即申请招聘混凝土工8名招聘中混凝土工点工8人📍 北京市石景山区冬奥公园📅 2026-06-04 ~ 2026-08-30¥350 /天中铁四局查看详情立即申请1",
+        "layout": {
+          "viewportWidth": 1664,
+          "viewportHeight": 1600,
+          "scrollWidth": 1664,
+          "scrollHeight": 1600,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89018-codex-repair-structure-06-二层操作-搜索岗位-高级筛选",
+          "label": "二层操作:搜索岗位->高级筛选",
+          "finalUrl": "http://127.0.0.1:49018/jobs",
+          "title": "建筑用工撮合平台",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89018/probe/codex-repair-20260604-1508/may-89018-codex-repair-structure-06-二层操作-搜索岗位-高级筛选.json",
+          "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89018/probe/codex-repair-20260604-1508/may-89018-codex-repair-structure-06-二层操作-搜索岗位-高级筛选.png",
+          "elementCount": 376,
+          "interactiveCount": 39,
+          "interactiveLabels": [
+            "首页 个人中心 招工大厅 我的申请 考勤打卡",
+            "首页",
+            "个人中心",
+            "招工大厅",
+            "我的申请",
+            "考勤打卡",
+            "搜索关键词（工种/地点/企业）",
+            "搜索",
+            "收起筛选",
+            "重置",
+            "最低",
+            "最高",
+            "开始日期",
+            "结束日期",
+            "查看详情",
+            "立即申请",
+            "1"
+          ]
+        }
+      }
+    ],
+    "findings": [],
+    "actionHints": [],
+    "emptyPages": [],
+    "overflowPages": [],
+    "blankPages": [],
+    "apiFailurePaths": [],
+    "goalTerms": [],
+    "clickedActionDescriptors": [
+      {
+        "nav": "首页",
+        "label": "查看详情",
+        "ordinal": 0,
+        "unsafe": false
+      },
+      {
+        "nav": "首页",
+        "label": "查看详情->发起纠纷",
+        "ordinal": 0,
+        "secondary": true,
+        "unsafe": false
+      },
+      {
+        "nav": "首页",
+        "label": "搜索岗位",
+        "ordinal": 0,
+        "unsafe": false
+      },
+      {
+        "nav": "首页",
+        "label": "搜索岗位->高级筛选",
+        "ordinal": 0,
+        "secondary": true,
+        "unsafe": false
+      }
+    ],
+    "secondaryActionClicks": 2,
+    "structureCaptures": [
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89018-codex-repair-structure-01-首屏",
+        "label": "首屏",
+        "finalUrl": "http://127.0.0.1:49018/",
+        "title": "建筑用工撮合平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89018/probe/codex-repair-20260604-1508/may-89018-codex-repair-structure-01-首屏.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89018/probe/codex-repair-20260604-1508/may-89018-codex-repair-structure-01-首屏.png",
+        "elementCount": 515,
+        "interactiveCount": 22,
+        "interactiveLabels": [
+          "首页 个人中心 招工大厅 我的申请 考勤打卡",
+          "首页",
+          "个人中心",
+          "招工大厅",
+          "我的申请",
+          "考勤打卡",
+          "搜索岗位",
+          "我的资料",
+          "发布招工",
+          "管理后台",
+          "查看详情",
+          "立即申请"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89018-codex-repair-structure-02-导航-首页",
+        "label": "导航:首页",
+        "finalUrl": "http://127.0.0.1:49018/",
+        "title": "建筑用工撮合平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89018/probe/codex-repair-20260604-1508/may-89018-codex-repair-structure-02-导航-首页.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89018/probe/codex-repair-20260604-1508/may-89018-codex-repair-structure-02-导航-首页.png",
+        "elementCount": 515,
+        "interactiveCount": 22,
+        "interactiveLabels": [
+          "首页 个人中心 招工大厅 我的申请 考勤打卡",
+          "首页",
+          "个人中心",
+          "招工大厅",
+          "我的申请",
+          "考勤打卡",
+          "搜索岗位",
+          "我的资料",
+          "发布招工",
+          "管理后台",
+          "查看详情",
+          "立即申请"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89018-codex-repair-structure-03-操作-查看详情",
+        "label": "操作:查看详情",
+        "finalUrl": "http://127.0.0.1:49018/jobs/1",
+        "title": "建筑用工撮合平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89018/probe/codex-repair-20260604-1508/may-89018-codex-repair-structure-03-操作-查看详情.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89018/probe/codex-repair-20260604-1508/may-89018-codex-repair-structure-03-操作-查看详情.png",
+        "elementCount": 279,
+        "interactiveCount": 12,
+        "interactiveLabels": [
+          "首页 个人中心 招工大厅 我的申请 考勤打卡",
+          "首页",
+          "个人中心",
+          "招工大厅",
+          "我的申请",
+          "考勤打卡",
+          "返回列表",
+          "查看申请记录",
+          "考勤记录",
+          "过程保障明细",
+          "发起纠纷"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89018-codex-repair-structure-04-二层操作-查看详情-发起纠纷",
+        "label": "二层操作:查看详情->发起纠纷",
+        "finalUrl": "http://127.0.0.1:49018/jobs/1",
+        "title": "建筑用工撮合平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89018/probe/codex-repair-20260604-1508/may-89018-codex-repair-structure-04-二层操作-查看详情-发起纠纷.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89018/probe/codex-repair-20260604-1508/may-89018-codex-repair-structure-04-二层操作-查看详情-发起纠纷.png",
+        "elementCount": 351,
+        "interactiveCount": 21,
+        "interactiveLabels": [
+          "首页 个人中心 招工大厅 我的申请 考勤打卡",
+          "首页",
+          "个人中心",
+          "招工大厅",
+          "我的申请",
+          "考勤打卡",
+          "返回列表",
+          "查看申请记录",
+          "考勤记录",
+          "过程保障明细",
+          "发起纠纷",
+          "发起纠纷 纠纷类型 请选择纠纷类型 纠纷描述 上传证据 提 交 取 消",
+          "Close",
+          "请详细描述纠纷情况",
+          "上传证据",
+          "提 交",
+          "取 消"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89018-codex-repair-structure-05-操作-搜索岗位",
+        "label": "操作:搜索岗位",
+        "finalUrl": "http://127.0.0.1:49018/jobs",
+        "title": "建筑用工撮合平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89018/probe/codex-repair-20260604-1508/may-89018-codex-repair-structure-05-操作-搜索岗位.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89018/probe/codex-repair-20260604-1508/may-89018-codex-repair-structure-05-操作-搜索岗位.png",
+        "elementCount": 329,
+        "interactiveCount": 32,
+        "interactiveLabels": [
+          "首页 个人中心 招工大厅 我的申请 考勤打卡",
+          "首页",
+          "个人中心",
+          "招工大厅",
+          "我的申请",
+          "考勤打卡",
+          "搜索关键词（工种/地点/企业）",
+          "搜索",
+          "高级筛选",
+          "重置",
+          "查看详情",
+          "立即申请",
+          "1"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89018-codex-repair-structure-06-二层操作-搜索岗位-高级筛选",
+        "label": "二层操作:搜索岗位->高级筛选",
+        "finalUrl": "http://127.0.0.1:49018/jobs",
+        "title": "建筑用工撮合平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89018/probe/codex-repair-20260604-1508/may-89018-codex-repair-structure-06-二层操作-搜索岗位-高级筛选.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89018/probe/codex-repair-20260604-1508/may-89018-codex-repair-structure-06-二层操作-搜索岗位-高级筛选.png",
+        "elementCount": 376,
+        "interactiveCount": 39,
+        "interactiveLabels": [
+          "首页 个人中心 招工大厅 我的申请 考勤打卡",
+          "首页",
+          "个人中心",
+          "招工大厅",
+          "我的申请",
+          "考勤打卡",
+          "搜索关键词（工种/地点/企业）",
+          "搜索",
+          "收起筛选",
+          "重置",
+          "最低",
+          "最高",
+          "开始日期",
+          "结束日期",
+          "查看详情",
+          "立即申请",
+          "1"
+        ]
+      }
+    ],
+    "representativeScreenshotUrl": "http://127.0.0.1:49018/",
+    "representativeScreenshotLabel": "欢迎回来，演示工友！"
+  },
+  "websiteStructureCapture": {
+    "module": "website_structure_capture",
+    "captureCount": 6,
+    "captures": [
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89018-codex-repair-structure-01-首屏",
+        "label": "首屏",
+        "finalUrl": "http://127.0.0.1:49018/",
+        "title": "建筑用工撮合平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89018/probe/codex-repair-20260604-1508/may-89018-codex-repair-structure-01-首屏.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89018/probe/codex-repair-20260604-1508/may-89018-codex-repair-structure-01-首屏.png",
+        "elementCount": 515,
+        "interactiveCount": 22,
+        "interactiveLabels": [
+          "首页 个人中心 招工大厅 我的申请 考勤打卡",
+          "首页",
+          "个人中心",
+          "招工大厅",
+          "我的申请",
+          "考勤打卡",
+          "搜索岗位",
+          "我的资料",
+          "发布招工",
+          "管理后台",
+          "查看详情",
+          "立即申请"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89018-codex-repair-structure-02-导航-首页",
+        "label": "导航:首页",
+        "finalUrl": "http://127.0.0.1:49018/",
+        "title": "建筑用工撮合平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89018/probe/codex-repair-20260604-1508/may-89018-codex-repair-structure-02-导航-首页.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89018/probe/codex-repair-20260604-1508/may-89018-codex-repair-structure-02-导航-首页.png",
+        "elementCount": 515,
+        "interactiveCount": 22,
+        "interactiveLabels": [
+          "首页 个人中心 招工大厅 我的申请 考勤打卡",
+          "首页",
+          "个人中心",
+          "招工大厅",
+          "我的申请",
+          "考勤打卡",
+          "搜索岗位",
+          "我的资料",
+          "发布招工",
+          "管理后台",
+          "查看详情",
+          "立即申请"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89018-codex-repair-structure-03-操作-查看详情",
+        "label": "操作:查看详情",
+        "finalUrl": "http://127.0.0.1:49018/jobs/1",
+        "title": "建筑用工撮合平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89018/probe/codex-repair-20260604-1508/may-89018-codex-repair-structure-03-操作-查看详情.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89018/probe/codex-repair-20260604-1508/may-89018-codex-repair-structure-03-操作-查看详情.png",
+        "elementCount": 279,
+        "interactiveCount": 12,
+        "interactiveLabels": [
+          "首页 个人中心 招工大厅 我的申请 考勤打卡",
+          "首页",
+          "个人中心",
+          "招工大厅",
+          "我的申请",
+          "考勤打卡",
+          "返回列表",
+          "查看申请记录",
+          "考勤记录",
+          "过程保障明细",
+          "发起纠纷"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89018-codex-repair-structure-04-二层操作-查看详情-发起纠纷",
+        "label": "二层操作:查看详情->发起纠纷",
+        "finalUrl": "http://127.0.0.1:49018/jobs/1",
+        "title": "建筑用工撮合平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89018/probe/codex-repair-20260604-1508/may-89018-codex-repair-structure-04-二层操作-查看详情-发起纠纷.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89018/probe/codex-repair-20260604-1508/may-89018-codex-repair-structure-04-二层操作-查看详情-发起纠纷.png",
+        "elementCount": 351,
+        "interactiveCount": 21,
+        "interactiveLabels": [
+          "首页 个人中心 招工大厅 我的申请 考勤打卡",
+          "首页",
+          "个人中心",
+          "招工大厅",
+          "我的申请",
+          "考勤打卡",
+          "返回列表",
+          "查看申请记录",
+          "考勤记录",
+          "过程保障明细",
+          "发起纠纷",
+          "发起纠纷 纠纷类型 请选择纠纷类型 纠纷描述 上传证据 提 交 取 消",
+          "Close",
+          "请详细描述纠纷情况",
+          "上传证据",
+          "提 交",
+          "取 消"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89018-codex-repair-structure-05-操作-搜索岗位",
+        "label": "操作:搜索岗位",
+        "finalUrl": "http://127.0.0.1:49018/jobs",
+        "title": "建筑用工撮合平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89018/probe/codex-repair-20260604-1508/may-89018-codex-repair-structure-05-操作-搜索岗位.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89018/probe/codex-repair-20260604-1508/may-89018-codex-repair-structure-05-操作-搜索岗位.png",
+        "elementCount": 329,
+        "interactiveCount": 32,
+        "interactiveLabels": [
+          "首页 个人中心 招工大厅 我的申请 考勤打卡",
+          "首页",
+          "个人中心",
+          "招工大厅",
+          "我的申请",
+          "考勤打卡",
+          "搜索关键词（工种/地点/企业）",
+          "搜索",
+          "高级筛选",
+          "重置",
+          "查看详情",
+          "立即申请",
+          "1"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89018-codex-repair-structure-06-二层操作-搜索岗位-高级筛选",
+        "label": "二层操作:搜索岗位->高级筛选",
+        "finalUrl": "http://127.0.0.1:49018/jobs",
+        "title": "建筑用工撮合平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89018/probe/codex-repair-20260604-1508/may-89018-codex-repair-structure-06-二层操作-搜索岗位-高级筛选.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89018/probe/codex-repair-20260604-1508/may-89018-codex-repair-structure-06-二层操作-搜索岗位-高级筛选.png",
+        "elementCount": 376,
+        "interactiveCount": 39,
+        "interactiveLabels": [
+          "首页 个人中心 招工大厅 我的申请 考勤打卡",
+          "首页",
+          "个人中心",
+          "招工大厅",
+          "我的申请",
+          "考勤打卡",
+          "搜索关键词（工种/地点/企业）",
+          "搜索",
+          "收起筛选",
+          "重置",
+          "最低",
+          "最高",
+          "开始日期",
+          "结束日期",
+          "查看详情",
+          "立即申请",
+          "1"
+        ]
+      }
+    ]
+  },
+  "screenshotMetrics": {
+    "width": 1696,
+    "height": 1600,
+    "scrollWidth": 1664,
+    "scrollHeight": 3031
+  },
+  "initialBodyTextPreview": "建筑用工撮合平台\n招工搜索、岗位详情、报名申请、个人中心和后台管理入口\n🔔 每日安全提醒：安全帽正确佩戴\n安全帽必须系好下颌带，高空作业时安全帽不得摘下。\n搜索/筛选招工\n按工种、区域和薪资查找岗位\n搜索岗位\n个人中心/我的\n资料、报名申请和考勤记录\n我的资料\n发布/提交招工\n企业提交用工需求并管理报名\n发布招工\n后台管理\n用户、企业和招工审核看板\n管理后台\n工作台\n搜索筛选招工\n公开浏览岗位、工种分类、薪资筛选和招工详情\n浏览岗位\n个人中心 / 我的申请\n登录工友账号后查看申请记录、考勤和资料\n登录查看我的\n发布 / 提交招工\n企业登录后发布招工需求并管理报名申请\n企业提交需求\n后台管理\n管理员查看用户、企业、招工审核和安全知识库\n进入后台\n平台数据\n工友总数\n2\n企业总数\n2\n进行中招工\n6\n今日打卡\n1\n精选招工\n急招电工师傅5名\n电工临时📍 北京市朝阳区国贸中心项目¥380/天\n查看详情\n招聘木工班组20人\n木工包工中铁四局📍 北京市海淀区中关村软件园¥420/天\n查看详情\n急招架子工10名\n架子工点工📍 北京市通州区城市副中心¥450/天\n查看详情\n招聘钢筋工15名\n钢筋工包工中铁四局📍 北京市大兴区国际机场二期¥400/天\n查看详情\n招塔吊司机3名\n塔吊司机全职📍 北京市丰台区丽泽商务区¥500/天\n查看详情\n招聘混凝土工8名\n混凝土工点工中铁四局📍 北京市石景山区冬奥公园¥350/天\n查看详情\n热门工种需求\n钢筋工\n1 个岗位\n电工\n1 个岗位\n混凝土工\n1 个岗位\n架子工\n1 个岗位\n木工\n1 个岗位\n塔吊司机\n1 个岗位\n过程保障闭环\n报名申请复查\n已流转\n木工班组 3 人已提交实名证书，项目方 09:40 完成面试确认，记录可在我的申请查看。\n保证金托管\n托管中\n项目方预付 12000 元、工友履约押金 1800 元，银行托管流水 GYT-20260604-001。\n现场打卡与工时确认\n待复核\n今日 6 条 NFC 闸机打卡，4 条已由企业确认，2 条等待班组长复核。\n劳务合规中心\n已归档\n劳动合同模板、工资支付监管、纠纷调解单均已关联招工单 GY-0428。\n区域薪资水平\n北京市通州区城市副中心\n1 个岗位\n¥450/天\n北京市石景山区冬奥公园\n1 个岗位\n¥350/天\n北京市海淀区中关村软件园\n1 个岗位\n¥420/天\n北京市朝阳区国贸中心项目\n1 个岗位\n¥380/天\n北京市大兴区国际机场二期\n1 个岗位\n¥400/天\n北京市丰台区丽泽商务区\n1 个岗位\n¥500/天",
+  "bodyTextPreview": "🏗️\n建筑用工撮合平台\n工友\n首页\n个人中心\n招工大厅\n我的申请\n考勤打卡\n👤 演示工友\n欢迎回来，演示工友！\n工友工作台 · 2026年6月4日星期四\n🔔 每日安全提醒：高处作业安全\n高处作业必须系好安全带，戴好安全帽，穿防滑鞋。严禁抛物，工具应放入工具袋。\n搜索/筛选招工\n按工种、区域和薪资查找岗位\n搜索岗位\n个人中心/我的\n资料、报名申请和考勤记录\n我的资料\n发布/提交招工\n企业提交用工需求并管理报名\n发布招工\n后台管理\n用户、企业和招工审核看板\n管理后台\n工作台\n浏览招工\n查看附近招工信息，智能匹配推荐\n考勤打卡\n上下班打卡，工时电子确认\n我的申请\n查看申请记录和用工状态\n平台数据\n工友总数\n2\n企业总数\n2\n进行中招工\n6\n今日打卡\n1\n精选招工\n急招电工师傅5名\n电工临时📍 北京市朝阳区国贸中心项目¥380/天\n查看详情\n招聘木工班组20人\n木工包工中铁四局📍 北京市海淀区中关村软件园¥420/天\n查看详情\n急招架子工10名\n架子工点工📍 北京市通州区城市副中心¥450/天\n查看详情\n招聘钢筋工15名\n钢筋工包工中铁四局📍 北京市大兴区国际机场二期¥400/天\n查看详情\n招塔吊司机3名\n塔吊司机全职📍 北京市丰台区丽泽商务区¥500/天\n查看详情\n招聘混凝土工8名\n混凝土工点工中铁四局📍 北京市石景山区冬奥公园¥350/天\n查看详情\n为您推荐\n急招电工师傅5名\n匹配度 80%\n电工临时📍 北京市朝阳区国贸中心项目¥380/天\n立即申请\n招聘木工班组20人\n匹配度 73%\n木工包工📍 北京市海淀区中关村软件园¥420/天\n立即申请\n急招架子工10名\n匹配度 76%\n架子工点工📍 北京市通州区城市副中心¥450/天\n立即申请\n招聘钢筋工15名\n匹配度 80%\n钢筋工包工📍 北京市大兴区国际机场二期¥400/天\n立即申请\n招塔吊司机3名\n匹配度 96%\n塔吊司机全职📍 北京市丰台区丽泽商务区¥500/天\n立即申请\n热门工种需求\n钢筋工\n1 个岗位\n电工\n1 个岗位\n混凝土工\n1 个岗位\n架子工\n1 个岗位\n木工\n1 个岗位\n塔吊司机\n1 个岗位\n过程保障闭环\n报名申请复查\n已流转\n木工班组 3 人已提交实名证书，项目方 09:40 完成面试确认，记录可在我的申请查看。\n保证金托管\n托管中\n项目方预付 12000 元、工友履约押金 1800 元，银行托管流水 GYT-20260604-001。\n现场打卡与工时确认\n待复核\n今日 6 条 NFC 闸机打卡，4 条已由企业确认，2 条等待班组长复核。\n劳务合规中心\n已归档\n劳动合同模板、工资支付监管、纠纷调解单均已关联招工单 GY-0428。\n区域薪资水平\n北京市通州区城市副中心\n1 个岗位\n¥450/天\n北京市石景山区冬奥公园\n1 个岗位\n¥350/天\n北京市海淀区中关村软件园\n1 个岗位\n¥420/天\n北京市朝阳区国贸中心项目\n1 个岗位\n¥380/天\n北京市大兴区国际机场二期\n1 个岗位\n¥400/天\n北京市丰台区丽泽商务区\n1 个岗位\n¥500/天",
+  "apiBase": "http://127.0.0.1:59018",
+  "businessGoalPreview": "",
+  "apiResponses": [
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:59018/api/admin/stats"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:59018/api/admin/safety/daily-tip"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:59018/api/jobs?page=1&pageSize=6"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:59018/api/profile"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:59018/api/profile"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:59018/api/admin/stats"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:59018/api/admin/safety/daily-tip"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:59018/api/jobs?page=1&pageSize=6"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:59018/api/jobs/matches/recommendations"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:59018/api/jobs/1"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:59018/api/profile/my-jobs"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:59018/api/jobs/1"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:59018/api/profile/my-jobs"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:59018/api/admin/stats"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:59018/api/admin/safety/daily-tip"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:59018/api/jobs?page=1&pageSize=6"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:59018/api/jobs/matches/recommendations"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:59018/api/jobs?keyword=&skill=&location=&minSalary=&maxSalary=&distance=&duration=&jobType=&startDate=&endDate=&page=1&pageSize=10"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:59018/api/jobs?keyword=&skill=&location=&minSalary=&maxSalary=&distance=&duration=&jobType=&startDate=&endDate=&page=1&pageSize=10"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:59018/api/admin/stats"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:59018/api/admin/safety/daily-tip"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:59018/api/jobs?page=1&pageSize=6"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:59018/api/jobs/matches/recommendations"
+    }
+  ],
+  "apiChecks": [
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59018/api/health",
+      "path": "/api/health",
+      "status": 200,
+      "ok": true,
+      "bodyPreview": "{\"status\":\"ok\",\"timestamp\":\"2026-06-04T12:16:04.370Z\"}"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59018/api/admin/stats",
+      "path": "/api/admin/stats",
+      "status": 200,
+      "ok": true,
+      "bodyPreview": "{\"overview\":{\"totalWorkers\":2,\"totalCompanies\":2,\"totalTeams\":1,\"totalJobs\":6,\"openJobs\":6,\"totalMatches\":6,\"todayAttendances\":1},\"skillStats\":[{\"skill\":\"钢筋工\",\"count\":1},{\"skill\":\"电工\",\"count\":1},{\"skill\":\"混凝土工\",\"count\":1},{\"skill\":\"架子工\",\"count\":1},{\"skill\":\"木工\",\"count\":1},{\"skill\":\"塔吊司机\",\"count\":1}],\"regionStats\":[{\"location\":\"北京市通州区城市副中心\",\"count\":1,\"avg_salary\":450},{\"location\":\"北京市石景山区冬奥公园\",\"count\":1,\"avg_salary\":350},{\"location\":\"北京市海淀区中关村软件园\",\"count\":1,\"avg_salary\":420},{\"location\":\"北京市朝阳区国贸"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59018/api/admin/safety/daily-tip",
+      "path": "/api/admin/safety/daily-tip",
+      "status": 200,
+      "ok": true,
+      "bodyPreview": "{\"id\":166,\"title\":\"高处作业安全\",\"content\":\"高处作业必须系好安全带，戴好安全帽，穿防滑鞋。严禁抛物，工具应放入工具袋。\",\"category\":\"高处作业\",\"is_daily_tip\":1,\"created_at\":\"2026-06-04 09:15:55\"}"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59018/api/jobs?page=1&pageSize=6",
+      "path": "/api/jobs?page=1&pageSize=6",
+      "status": 200,
+      "ok": true,
+      "bodyPreview": "{\"jobs\":[{\"id\":1,\"company_id\":1,\"title\":\"急招电工师傅5名\",\"job_type\":\"临时\",\"skill_required\":\"电工\",\"workers_needed\":5,\"location\":\"北京市朝阳区国贸中心项目\",\"lat\":null,\"lng\":null,\"daily_salary\":380,\"start_date\":\"2026-06-10\",\"end_date\":\"2026-12-31\",\"description\":\"负责项目电气安装与调试，要求有低压电工证，3年以上工作经验。\\n工作时间：8:00-18:00，包食宿。\",\"safety_training_required\":1,\"special_cert_required\":null,\"status\":\"open\",\"deposit_amount\":2000,\"created_at\":\"2026-06-03 20:59:06\",\"company_name\":\"\",\"contact_phone\":\"\"},{\"id\":2,\"company_id\":2,\"title\":\"招聘木工班"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59018/api/profile",
+      "path": "/api/profile",
+      "status": 200,
+      "ok": true,
+      "bodyPreview": "{\"userId\":1,\"role\":\"admin\",\"name\":\"演示管理员\",\"phone\":\"admin\",\"real_name_verified\":1,\"profile\":{\"is_admin\":true,\"permissions\":\"all\"}}"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59018/api/jobs/matches/recommendations",
+      "path": "/api/jobs/matches/recommendations",
+      "status": 200,
+      "ok": true,
+      "bodyPreview": "[{\"id\":1,\"company_id\":1,\"title\":\"急招电工师傅5名\",\"job_type\":\"临时\",\"skill_required\":\"电工\",\"workers_needed\":5,\"location\":\"北京市朝阳区国贸中心项目\",\"lat\":null,\"lng\":null,\"daily_salary\":380,\"start_date\":\"2026-06-10\",\"end_date\":\"2026-12-31\",\"description\":\"负责项目电气安装与调试，要求有低压电工证，3年以上工作经验。\\n工作时间：8:00-18:00，包食宿。\",\"safety_training_required\":1,\"special_cert_required\":null,\"status\":\"open\",\"deposit_amount\":2000,\"created_at\":\"2026-06-03 20:59:06\",\"company_name\":\"\",\"contact_phone\":\"\",\"match_score\":88,\"reasons\":[\"技能匹配\",\"距离合适\",\"薪资符"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59018/api/jobs/1",
+      "path": "/api/jobs/1",
+      "status": 200,
+      "ok": true,
+      "bodyPreview": "{\"id\":1,\"company_id\":1,\"title\":\"急招电工师傅5名\",\"job_type\":\"临时\",\"skill_required\":\"电工\",\"workers_needed\":5,\"location\":\"北京市朝阳区国贸中心项目\",\"lat\":null,\"lng\":null,\"daily_salary\":380,\"start_date\":\"2026-06-10\",\"end_date\":\"2026-12-31\",\"description\":\"负责项目电气安装与调试，要求有低压电工证，3年以上工作经验。\\n工作时间：8:00-18:00，包食宿。\",\"safety_training_required\":1,\"special_cert_required\":null,\"status\":\"open\",\"deposit_amount\":2000,\"created_at\":\"2026-06-03 20:59:06\",\"company_name\":\"\",\"address\":\"\",\"contact_person\":\"\",\"contact_phone\":\"\"}"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59018/api/profile/my-jobs",
+      "path": "/api/profile/my-jobs",
+      "status": 200,
+      "ok": true,
+      "bodyPreview": "[{\"id\":5,\"job_id\":5,\"worker_id\":1,\"team_id\":null,\"match_score\":93,\"status\":\"open\",\"worker_deposit\":500,\"created_at\":\"2026-06-03 20:59:06\",\"company_id\":1,\"title\":\"招塔吊司机3名\",\"job_type\":\"全职\",\"skill_required\":\"塔吊司机\",\"workers_needed\":3,\"location\":\"北京市丰台区丽泽商务区\",\"lat\":null,\"lng\":null,\"daily_salary\":500,\"start_date\":\"2026-06-06\",\"end_date\":\"2026-12-20\",\"description\":\"操作6015型塔吊，必须持有塔吊司机证。\\n两班倒，包吃住，买意外险。\",\"safety_training_required\":1,\"special_cert_required\":null,\"deposit_amount\":5000,\"company_name\":\"\"},{\"i"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59018/api/jobs?keyword=&skill=&location=&minSalary=&maxSalary=&distance=&duration=&jobType=&startDate=&endDate=&page=1&pageSize=10",
+      "path": "/api/jobs?keyword=&skill=&location=&minSalary=&maxSalary=&distance=&duration=&jobType=&startDate=&endDate=&page=1&pageSize=10",
+      "status": 200,
+      "ok": true,
+      "bodyPreview": "{\"jobs\":[{\"id\":1,\"company_id\":1,\"title\":\"急招电工师傅5名\",\"job_type\":\"临时\",\"skill_required\":\"电工\",\"workers_needed\":5,\"location\":\"北京市朝阳区国贸中心项目\",\"lat\":null,\"lng\":null,\"daily_salary\":380,\"start_date\":\"2026-06-10\",\"end_date\":\"2026-12-31\",\"description\":\"负责项目电气安装与调试，要求有低压电工证，3年以上工作经验。\\n工作时间：8:00-18:00，包食宿。\",\"safety_training_required\":1,\"special_cert_required\":null,\"status\":\"open\",\"deposit_amount\":2000,\"created_at\":\"2026-06-03 20:59:06\",\"company_name\":\"\",\"contact_phone\":\"\"},{\"id\":2,\"company_id\":2,\"title\":\"招聘木工班"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59018/api/auth/me",
+      "path": "/api/auth/me",
+      "status": 200,
+      "ok": true,
+      "bodyPreview": "{\"userId\":1,\"role\":\"admin\",\"name\":\"演示管理员\",\"phone\":\"admin\",\"real_name_verified\":1,\"profile\":{\"is_admin\":true,\"permissions\":\"all\"}}"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59018/api/users/profile",
+      "path": "/api/users/profile",
+      "status": 200,
+      "ok": true,
+      "bodyPreview": "{\"userId\":1,\"role\":\"admin\",\"name\":\"演示管理员\",\"phone\":\"admin\",\"real_name_verified\":1,\"profile\":{\"is_admin\":true,\"permissions\":\"all\"}}"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59018/api/user/profile",
+      "path": "/api/user/profile",
+      "status": 200,
+      "ok": true,
+      "bodyPreview": "{\"userId\":1,\"role\":\"admin\",\"name\":\"演示管理员\",\"phone\":\"admin\",\"real_name_verified\":1,\"profile\":{\"is_admin\":true,\"permissions\":\"all\"}}"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59018/api/search?q=%E6%B5%8B%E8%AF%95",
+      "path": "/api/search?q=%E6%B5%8B%E8%AF%95",
+      "status": 200,
+      "ok": true,
+      "bodyPreview": "{\"jobs\":[],\"total\":0}"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59018/api/admin/dashboard",
+      "path": "/api/admin/dashboard",
+      "status": 200,
+      "ok": true,
+      "bodyPreview": "{\"overview\":{\"totalWorkers\":2,\"totalCompanies\":2,\"totalTeams\":1,\"totalJobs\":6,\"openJobs\":6,\"totalMatches\":6,\"todayAttendances\":1},\"skillStats\":[{\"skill\":\"钢筋工\",\"count\":1},{\"skill\":\"电工\",\"count\":1},{\"skill\":\"混凝土工\",\"count\":1},{\"skill\":\"架子工\",\"count\":1},{\"skill\":\"木工\",\"count\":1},{\"skill\":\"塔吊司机\",\"count\":1}],\"regionStats\":[{\"location\":\"北京市通州区城市副中心\",\"count\":1,\"avg_salary\":450},{\"location\":\"北京市石景山区冬奥公园\",\"count\":1,\"avg_salary\":350},{\"location\":\"北京市海淀区中关村软件园\",\"count\":1,\"avg_salary\":420},{\"location\":\"北京市朝阳区国贸"
+    }
+  ],
+  "dialogs": [],
+  "consoleMessages": [
+    {
+      "type": "debug",
+      "text": "[vite] connecting...",
+      "location": {
+        "url": "http://127.0.0.1:49018/@vite/client",
+        "lineNumber": 494,
+        "columnNumber": 8
+      }
+    },
+    {
+      "type": "debug",
+      "text": "[vite] connected.",
+      "location": {
+        "url": "http://127.0.0.1:49018/@vite/client",
+        "lineNumber": 617,
+        "columnNumber": 14
+      }
+    },
+    {
+      "type": "info",
+      "text": "%cDownload the React DevTools for a better development experience: https://reactjs.org/link/react-devtools font-weight:bold",
+      "location": {
+        "url": "http://127.0.0.1:49018/node_modules/.vite/deps/chunk-PJEEZAML.js?v=41610dff",
+        "lineNumber": 21550,
+        "columnNumber": 24
+      }
+    },
+    {
+      "type": "warning",
+      "text": "⚠️ React Router Future Flag Warning: React Router will begin wrapping state updates in `React.startTransition` in v7. You can use the `v7_startTransition` future flag to opt-in early. For more information, see https://reactrouter.com/v6/upgrading/future#v7_starttransition.",
+      "location": {
+        "url": "http://127.0.0.1:49018/node_modules/.vite/deps/react-router-dom.js?v=41610dff",
+        "lineNumber": 4426,
+        "columnNumber": 12
+      }
+    },
+    {
+      "type": "warning",
+      "text": "⚠️ React Router Future Flag Warning: Relative route resolution within Splat routes is changing in v7. You can use the `v7_relativeSplatPath` future flag to opt-in early. For more information, see https://reactrouter.com/v6/upgrading/future#v7_relativesplatpath.",
+      "location": {
+        "url": "http://127.0.0.1:49018/node_modules/.vite/deps/react-router-dom.js?v=41610dff",
+        "lineNumber": 4426,
+        "columnNumber": 12
+      }
+    },
+    {
+      "type": "error",
+      "text": "Warning: [antd: Modal] `destroyOnClose` is deprecated. Please use `destroyOnHidden` instead.",
+      "location": {
+        "url": "http://127.0.0.1:49018/node_modules/.vite/deps/chunk-D2XKH6ZM.js?v=41610dff",
+        "lineNumber": 1247,
+        "columnNumber": 14
+      }
+    },
+    {
+      "type": "debug",
+      "text": "[vite] connecting...",
+      "location": {
+        "url": "http://127.0.0.1:49018/@vite/client",
+        "lineNumber": 494,
+        "columnNumber": 8
+      }
+    },
+    {
+      "type": "debug",
+      "text": "[vite] connected.",
+      "location": {
+        "url": "http://127.0.0.1:49018/@vite/client",
+        "lineNumber": 617,
+        "columnNumber": 14
+      }
+    },
+    {
+      "type": "info",
+      "text": "%cDownload the React DevTools for a better development experience: https://reactjs.org/link/react-devtools font-weight:bold",
+      "location": {
+        "url": "http://127.0.0.1:49018/node_modules/.vite/deps/chunk-PJEEZAML.js?v=41610dff",
+        "lineNumber": 21550,
+        "columnNumber": 24
+      }
+    },
+    {
+      "type": "warning",
+      "text": "⚠️ React Router Future Flag Warning: React Router will begin wrapping state updates in `React.startTransition` in v7. You can use the `v7_startTransition` future flag to opt-in early. For more information, see https://reactrouter.com/v6/upgrading/future#v7_starttransition.",
+      "location": {
+        "url": "http://127.0.0.1:49018/node_modules/.vite/deps/react-router-dom.js?v=41610dff",
+        "lineNumber": 4426,
+        "columnNumber": 12
+      }
+    },
+    {
+      "type": "warning",
+      "text": "⚠️ React Router Future Flag Warning: Relative route resolution within Splat routes is changing in v7. You can use the `v7_relativeSplatPath` future flag to opt-in early. For more information, see https://reactrouter.com/v6/upgrading/future#v7_relativesplatpath.",
+      "location": {
+        "url": "http://127.0.0.1:49018/node_modules/.vite/deps/react-router-dom.js?v=41610dff",
+        "lineNumber": 4426,
+        "columnNumber": 12
+      }
+    },
+    {
+      "type": "error",
+      "text": "Warning: [antd: Modal] `destroyOnClose` is deprecated. Please use `destroyOnHidden` instead.",
+      "location": {
+        "url": "http://127.0.0.1:49018/node_modules/.vite/deps/chunk-D2XKH6ZM.js?v=41610dff",
+        "lineNumber": 1247,
+        "columnNumber": 14
+      }
+    },
+    {
+      "type": "debug",
+      "text": "[vite] connecting...",
+      "location": {
+        "url": "http://127.0.0.1:49018/@vite/client",
+        "lineNumber": 494,
+        "columnNumber": 8
+      }
+    },
+    {
+      "type": "debug",
+      "text": "[vite] connected.",
+      "location": {
+        "url": "http://127.0.0.1:49018/@vite/client",
+        "lineNumber": 617,
+        "columnNumber": 14
+      }
+    },
+    {
+      "type": "info",
+      "text": "%cDownload the React DevTools for a better development experience: https://reactjs.org/link/react-devtools font-weight:bold",
+      "location": {
+        "url": "http://127.0.0.1:49018/node_modules/.vite/deps/chunk-PJEEZAML.js?v=41610dff",
+        "lineNumber": 21550,
+        "columnNumber": 24
+      }
+    },
+    {
+      "type": "warning",
+      "text": "⚠️ React Router Future Flag Warning: React Router will begin wrapping state updates in `React.startTransition` in v7. You can use the `v7_startTransition` future flag to opt-in early. For more information, see https://reactrouter.com/v6/upgrading/future#v7_starttransition.",
+      "location": {
+        "url": "http://127.0.0.1:49018/node_modules/.vite/deps/react-router-dom.js?v=41610dff",
+        "lineNumber": 4426,
+        "columnNumber": 12
+      }
+    },
+    {
+      "type": "warning",
+      "text": "⚠️ React Router Future Flag Warning: Relative route resolution within Splat routes is changing in v7. You can use the `v7_relativeSplatPath` future flag to opt-in early. For more information, see https://reactrouter.com/v6/upgrading/future#v7_relativesplatpath.",
+      "location": {
+        "url": "http://127.0.0.1:49018/node_modules/.vite/deps/react-router-dom.js?v=41610dff",
+        "lineNumber": 4426,
+        "columnNumber": 12
+      }
+    },
+    {
+      "type": "debug",
+      "text": "[vite] connecting...",
+      "location": {
+        "url": "http://127.0.0.1:49018/@vite/client",
+        "lineNumber": 494,
+        "columnNumber": 8
+      }
+    },
+    {
+      "type": "debug",
+      "text": "[vite] connected.",
+      "location": {
+        "url": "http://127.0.0.1:49018/@vite/client",
+        "lineNumber": 617,
+        "columnNumber": 14
+      }
+    },
+    {
+      "type": "info",
+      "text": "%cDownload the React DevTools for a better development experience: https://reactjs.org/link/react-devtools font-weight:bold",
+      "location": {
+        "url": "http://127.0.0.1:49018/node_modules/.vite/deps/chunk-PJEEZAML.js?v=41610dff",
+        "lineNumber": 21550,
+        "columnNumber": 24
+      }
+    },
+    {
+      "type": "warning",
+      "text": "⚠️ React Router Future Flag Warning: React Router will begin wrapping state updates in `React.startTransition` in v7. You can use the `v7_startTransition` future flag to opt-in early. For more information, see https://reactrouter.com/v6/upgrading/future#v7_starttransition.",
+      "location": {
+        "url": "http://127.0.0.1:49018/node_modules/.vite/deps/react-router-dom.js?v=41610dff",
+        "lineNumber": 4426,
+        "columnNumber": 12
+      }
+    },
+    {
+      "type": "warning",
+      "text": "⚠️ React Router Future Flag Warning: Relative route resolution within Splat routes is changing in v7. You can use the `v7_relativeSplatPath` future flag to opt-in early. For more information, see https://reactrouter.com/v6/upgrading/future#v7_relativesplatpath.",
+      "location": {
+        "url": "http://127.0.0.1:49018/node_modules/.vite/deps/react-router-dom.js?v=41610dff",
+        "lineNumber": 4426,
+        "columnNumber": 12
+      }
+    }
+  ],
+  "requestFailures": [],
+  "responseErrors": []
+}
