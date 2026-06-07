@@ -1,0 +1,10 @@
+{
+  "watch": ["api"],
+  "ext": "ts,mts,js,json",
+  "ignore": ["api/dist/*"],
+  "exec": "/Users/chen/.nvm/versions/node/v22.22.0/bin/node --import tsx/esm api/server.ts",
+  "env": {
+    "NODE_ENV": "development"
+  },
+  "delay": 1000
+}
