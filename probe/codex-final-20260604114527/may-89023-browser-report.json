@@ -1,0 +1,2332 @@
+{
+  "ok": true,
+  "generatedAt": "2026-06-04T08:52:08.478Z",
+  "order": "may-89023",
+  "roundIndex": 99,
+  "captureId": "may-89023-final-20260604114527",
+  "url": "http://127.0.0.1:49023/",
+  "initialUrl": "http://127.0.0.1:49023/",
+  "finalUrl": "http://127.0.0.1:49023/",
+  "status": 200,
+  "title": "城事志",
+  "initialTitle": "城事志",
+  "navigationError": "",
+  "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89023/probe/codex-final-20260604114527/may-89023-final-20260604114527-frontend.png",
+  "screenshotPaths": [
+    "/Users/chen/Documents/trae_projects/local_projects/may-89023/probe/codex-final-20260604114527/may-89023-final-20260604114527-structure-01-首屏.png",
+    "/Users/chen/Documents/trae_projects/local_projects/may-89023/probe/codex-final-20260604114527/may-89023-final-20260604114527-structure-02-导航-首页.png",
+    "/Users/chen/Documents/trae_projects/local_projects/may-89023/probe/codex-final-20260604114527/may-89023-final-20260604114527-structure-03-操作-关注.png",
+    "/Users/chen/Documents/trae_projects/local_projects/may-89023/probe/codex-final-20260604114527/may-89023-final-20260604114527-structure-04-操作-热门.png",
+    "/Users/chen/Documents/trae_projects/local_projects/may-89023/probe/codex-final-20260604114527/may-89023-final-20260604114527-structure-05-导航-发现.png",
+    "/Users/chen/Documents/trae_projects/local_projects/may-89023/probe/codex-final-20260604114527/may-89023-final-20260604114527-structure-06-操作-城市.png",
+    "/Users/chen/Documents/trae_projects/local_projects/may-89023/probe/codex-final-20260604114527/may-89023-final-20260604114527-structure-07-二层操作-城市-北京.png",
+    "/Users/chen/Documents/trae_projects/local_projects/may-89023/probe/codex-final-20260604114527/may-89023-final-20260604114527-structure-08-操作-话题.png",
+    "/Users/chen/Documents/trae_projects/local_projects/may-89023/probe/codex-final-20260604114527/may-89023-final-20260604114527-structure-09-导航-美食探店.png"
+  ],
+  "issueTextPreview": "",
+  "targetReason": "页面存在搜索/发现入口，优先复验检索链路；页面存在内容列表，优先复验详情链路",
+  "targetKind": "search",
+  "targetMatched": true,
+  "targetActions": [
+    {
+      "action": "fill-search",
+      "label": "搜索输入框",
+      "ok": true
+    },
+    {
+      "action": "target-verify",
+      "label": "页面存在搜索/发现入口，优先复验检索链路",
+      "ok": true,
+      "finalUrl": "http://127.0.0.1:49023/explore?q=%E6%B5%8B%E8%AF%95"
+    }
+  ],
+  "authFlow": {
+    "detected": false,
+    "attempted": false,
+    "success": false,
+    "finalUrl": "http://127.0.0.1:49023/",
+    "message": "",
+    "actions": []
+  },
+  "businessAudit": {
+    "actions": [
+      {
+        "action": "click",
+        "label": "导航:首页",
+        "ok": true
+      },
+      {
+        "action": "click",
+        "label": "操作:关注",
+        "ok": true,
+        "result": {
+          "ok": true,
+          "matched": 1
+        }
+      },
+      {
+        "action": "click",
+        "label": "操作:热门",
+        "ok": true,
+        "result": {
+          "ok": true,
+          "matched": 1
+        }
+      },
+      {
+        "action": "click",
+        "label": "导航:发现",
+        "ok": true
+      },
+      {
+        "action": "click",
+        "label": "操作:城市",
+        "ok": true,
+        "result": {
+          "ok": true,
+          "matched": 1
+        }
+      },
+      {
+        "action": "click",
+        "label": "二层操作:城市:北京",
+        "ok": true,
+        "result": {
+          "ok": true,
+          "matched": 1
+        }
+      },
+      {
+        "action": "click",
+        "label": "操作:话题",
+        "ok": true,
+        "result": {
+          "ok": true,
+          "matched": 1
+        }
+      },
+      {
+        "action": "click",
+        "label": "导航:美食探店",
+        "ok": true
+      }
+    ],
+    "snapshots": [
+      {
+        "label": "首屏",
+        "url": "http://127.0.0.1:49023/",
+        "title": "城事志",
+        "headings": [
+          "周末City Walk：从法租界到外滩",
+          "北京胡同里的隐藏咖啡馆",
+          "Test Post",
+          "热门话题"
+        ],
+        "navLabels": [
+          "首页",
+          "发现",
+          "美食探店 1 篇",
+          "美食探店",
+          "城市漫步 1 篇",
+          "城市漫步",
+          "咖啡与茶 1 篇",
+          "咖啡与茶",
+          "文艺空间 0 篇",
+          "文艺空间",
+          "户外运动 0 篇",
+          "户外运动",
+          "市集与夜市 0 篇",
+          "市集与夜市",
+          "家居生活 0 篇",
+          "家居生活",
+          "宠物日常 0 篇",
+          "宠物日常",
+          "摄影打卡 1 篇",
+          "摄影打卡",
+          "本地攻略 0 篇",
+          "本地攻略",
+          "开始创作"
+        ],
+        "buttons": [
+          "推荐",
+          "关注",
+          "最新",
+          "热门"
+        ],
+        "links": [
+          "城 城事志",
+          "首页",
+          "发现",
+          "创作",
+          "笔记 上海 Test Post testuser 0 0 0 2026-06-03 19:17",
+          "#美食探店",
+          "#城市漫步",
+          "#咖啡与茶",
+          "#文艺空间",
+          "#户外运动",
+          "#市集与夜市",
+          "#家居生活",
+          "#宠物日常",
+          "#摄影打卡",
+          "#本地攻略",
+          "开始创作",
+          "创作中心"
+        ],
+        "inputs": [
+          {
+            "tag": "input",
+            "type": "text",
+            "placeholder": "搜索内容、话题、用户...",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "text",
+            "placeholder": "筛选城市，如：北京、上海",
+            "name": "",
+            "label": ""
+          }
+        ],
+        "tables": [],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "城城事志首页发现创作推荐关注最新热门城市：0笔记上海周末City Walk：从法租界到外滩上海周末City Walk路线推荐，从法租界漫步到外滩#t2#t9探店达人1102026-06-03 20:060文章北京北京胡同里的隐藏咖啡馆发现北京胡同深处的隐藏咖啡馆，桂花拿铁和手冲埃塞都很推荐#t3#t1探店达人1102026-06-03 20:060笔记上海Test Posttestuser0002026-06-03 19:17热门话题#美食探店1 篇#城市漫步1 篇#咖啡与茶1 篇#文艺空间0 篇#户外运动0 篇#市集与夜市0 篇#家居生活0 篇#宠物日常0 篇#摄影打卡1 篇#本地攻略0 篇开始创作城城事志城市生活方式内容共创平台，记录城市点滴，分享美好生活。快速链接发现创作中心关于让每一座城市的故事被看见© 2024 城事志 All rights reserved.",
+        "layout": {
+          "viewportWidth": 1504,
+          "viewportHeight": 1000,
+          "scrollWidth": 1504,
+          "scrollHeight": 1000,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89023-final-20260604114527-structure-01-首屏",
+          "label": "首屏",
+          "finalUrl": "http://127.0.0.1:49023/",
+          "title": "城事志",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89023/probe/codex-final-20260604114527/may-89023-final-20260604114527-structure-01-首屏.json",
+          "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89023/probe/codex-final-20260604114527/may-89023-final-20260604114527-structure-01-首屏.png",
+          "elementCount": 233,
+          "interactiveCount": 29,
+          "interactiveLabels": [
+            "城 城事志",
+            "搜索内容、话题、用户...",
+            "首页",
+            "发现",
+            "创作",
+            "notifications",
+            "推荐",
+            "关注",
+            "最新",
+            "热门",
+            "筛选城市，如：北京、上海",
+            "笔记 上海 周末City Walk：从法租界到外滩 上海周末City Walk路线推荐，从法租界漫步到外滩 #t2 #t9 探店达人 1 1 0 2026-06-03 20:06",
+            "文章 北京 北京胡同里的隐藏咖啡馆 发现北京胡同深处的隐藏咖啡馆，桂花拿铁和手冲埃塞都很推荐 #t3 #t1 探店达人 1 1 0 2026-06-03 20:06",
+            "笔记 上海 Test Post testuser 0 0 0 2026-06-03 19:17",
+            "美食探店",
+            "城市漫步",
+            "咖啡与茶",
+            "文艺空间",
+            "户外运动",
+            "市集与夜市",
+            "家居生活",
+            "宠物日常",
+            "摄影打卡",
+            "本地攻略",
+            "开始创作",
+            "创作中心"
+          ]
+        }
+      },
+      {
+        "label": "导航:首页",
+        "url": "http://127.0.0.1:49023/",
+        "title": "城事志",
+        "headings": [
+          "周末City Walk：从法租界到外滩",
+          "北京胡同里的隐藏咖啡馆",
+          "Test Post",
+          "热门话题"
+        ],
+        "navLabels": [
+          "首页",
+          "发现",
+          "美食探店 1 篇",
+          "美食探店",
+          "城市漫步 1 篇",
+          "城市漫步",
+          "咖啡与茶 1 篇",
+          "咖啡与茶",
+          "文艺空间 0 篇",
+          "文艺空间",
+          "户外运动 0 篇",
+          "户外运动",
+          "市集与夜市 0 篇",
+          "市集与夜市",
+          "家居生活 0 篇",
+          "家居生活",
+          "宠物日常 0 篇",
+          "宠物日常",
+          "摄影打卡 1 篇",
+          "摄影打卡",
+          "本地攻略 0 篇",
+          "本地攻略",
+          "开始创作"
+        ],
+        "buttons": [
+          "推荐",
+          "关注",
+          "最新",
+          "热门"
+        ],
+        "links": [
+          "城 城事志",
+          "首页",
+          "发现",
+          "创作",
+          "笔记 上海 Test Post testuser 0 0 0 2026-06-03 19:17",
+          "#美食探店",
+          "#城市漫步",
+          "#咖啡与茶",
+          "#文艺空间",
+          "#户外运动",
+          "#市集与夜市",
+          "#家居生活",
+          "#宠物日常",
+          "#摄影打卡",
+          "#本地攻略",
+          "开始创作",
+          "创作中心"
+        ],
+        "inputs": [
+          {
+            "tag": "input",
+            "type": "text",
+            "placeholder": "搜索内容、话题、用户...",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "text",
+            "placeholder": "筛选城市，如：北京、上海",
+            "name": "",
+            "label": ""
+          }
+        ],
+        "tables": [],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "城城事志首页发现创作推荐关注最新热门城市：0笔记上海周末City Walk：从法租界到外滩上海周末City Walk路线推荐，从法租界漫步到外滩#t2#t9探店达人1102026-06-03 20:060文章北京北京胡同里的隐藏咖啡馆发现北京胡同深处的隐藏咖啡馆，桂花拿铁和手冲埃塞都很推荐#t3#t1探店达人1102026-06-03 20:060笔记上海Test Posttestuser0002026-06-03 19:17热门话题#美食探店1 篇#城市漫步1 篇#咖啡与茶1 篇#文艺空间0 篇#户外运动0 篇#市集与夜市0 篇#家居生活0 篇#宠物日常0 篇#摄影打卡1 篇#本地攻略0 篇开始创作城城事志城市生活方式内容共创平台，记录城市点滴，分享美好生活。快速链接发现创作中心关于让每一座城市的故事被看见© 2024 城事志 All rights reserved.",
+        "layout": {
+          "viewportWidth": 1536,
+          "viewportHeight": 1000,
+          "scrollWidth": 1536,
+          "scrollHeight": 1000,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89023-final-20260604114527-structure-02-导航-首页",
+          "label": "导航:首页",
+          "finalUrl": "http://127.0.0.1:49023/",
+          "title": "城事志",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89023/probe/codex-final-20260604114527/may-89023-final-20260604114527-structure-02-导航-首页.json",
+          "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89023/probe/codex-final-20260604114527/may-89023-final-20260604114527-structure-02-导航-首页.png",
+          "elementCount": 233,
+          "interactiveCount": 29,
+          "interactiveLabels": [
+            "城 城事志",
+            "搜索内容、话题、用户...",
+            "首页",
+            "发现",
+            "创作",
+            "notifications",
+            "推荐",
+            "关注",
+            "最新",
+            "热门",
+            "筛选城市，如：北京、上海",
+            "笔记 上海 周末City Walk：从法租界到外滩 上海周末City Walk路线推荐，从法租界漫步到外滩 #t2 #t9 探店达人 1 1 0 2026-06-03 20:06",
+            "文章 北京 北京胡同里的隐藏咖啡馆 发现北京胡同深处的隐藏咖啡馆，桂花拿铁和手冲埃塞都很推荐 #t3 #t1 探店达人 1 1 0 2026-06-03 20:06",
+            "笔记 上海 Test Post testuser 0 0 0 2026-06-03 19:17",
+            "美食探店",
+            "城市漫步",
+            "咖啡与茶",
+            "文艺空间",
+            "户外运动",
+            "市集与夜市",
+            "家居生活",
+            "宠物日常",
+            "摄影打卡",
+            "本地攻略",
+            "开始创作",
+            "创作中心"
+          ]
+        }
+      },
+      {
+        "label": "操作:关注",
+        "url": "http://127.0.0.1:49023/?tab=following",
+        "title": "城事志",
+        "headings": [
+          "周末City Walk：从法租界到外滩",
+          "北京胡同里的隐藏咖啡馆",
+          "Test Post",
+          "热门话题"
+        ],
+        "navLabels": [
+          "首页",
+          "发现",
+          "美食探店 1 篇",
+          "美食探店",
+          "城市漫步 1 篇",
+          "城市漫步",
+          "咖啡与茶 1 篇",
+          "咖啡与茶",
+          "文艺空间 0 篇",
+          "文艺空间",
+          "户外运动 0 篇",
+          "户外运动",
+          "市集与夜市 0 篇",
+          "市集与夜市",
+          "家居生活 0 篇",
+          "家居生活",
+          "宠物日常 0 篇",
+          "宠物日常",
+          "摄影打卡 1 篇",
+          "摄影打卡",
+          "本地攻略 0 篇",
+          "本地攻略",
+          "开始创作"
+        ],
+        "buttons": [
+          "推荐",
+          "关注",
+          "最新",
+          "热门"
+        ],
+        "links": [
+          "城 城事志",
+          "首页",
+          "发现",
+          "创作",
+          "笔记 上海 Test Post testuser 0 0 0 2026-06-03 19:17",
+          "#美食探店",
+          "#城市漫步",
+          "#咖啡与茶",
+          "#文艺空间",
+          "#户外运动",
+          "#市集与夜市",
+          "#家居生活",
+          "#宠物日常",
+          "#摄影打卡",
+          "#本地攻略",
+          "开始创作",
+          "创作中心"
+        ],
+        "inputs": [
+          {
+            "tag": "input",
+            "type": "text",
+            "placeholder": "搜索内容、话题、用户...",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "text",
+            "placeholder": "筛选城市，如：北京、上海",
+            "name": "",
+            "label": ""
+          }
+        ],
+        "tables": [],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "城城事志首页发现创作推荐关注最新热门城市：以下是您关注的创作者和话题内容0笔记上海周末City Walk：从法租界到外滩上海周末City Walk路线推荐，从法租界漫步到外滩#t2#t9探店达人1102026-06-03 20:060文章北京北京胡同里的隐藏咖啡馆发现北京胡同深处的隐藏咖啡馆，桂花拿铁和手冲埃塞都很推荐#t3#t1探店达人1102026-06-03 20:060笔记上海Test Posttestuser0002026-06-03 19:17热门话题#美食探店1 篇#城市漫步1 篇#咖啡与茶1 篇#文艺空间0 篇#户外运动0 篇#市集与夜市0 篇#家居生活0 篇#宠物日常0 篇#摄影打卡1 篇#本地攻略0 篇开始创作城城事志城市生活方式内容共创平台，记录城市点滴，分享美好生活。快速链接发现创作中心关于让每一座城市的故事被看见© 2024 城事志 All rights reserved.",
+        "layout": {
+          "viewportWidth": 1568,
+          "viewportHeight": 1000,
+          "scrollWidth": 1568,
+          "scrollHeight": 1000,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89023-final-20260604114527-structure-03-操作-关注",
+          "label": "操作:关注",
+          "finalUrl": "http://127.0.0.1:49023/?tab=following",
+          "title": "城事志",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89023/probe/codex-final-20260604114527/may-89023-final-20260604114527-structure-03-操作-关注.json",
+          "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89023/probe/codex-final-20260604114527/may-89023-final-20260604114527-structure-03-操作-关注.png",
+          "elementCount": 240,
+          "interactiveCount": 29,
+          "interactiveLabels": [
+            "城 城事志",
+            "搜索内容、话题、用户...",
+            "首页",
+            "发现",
+            "创作",
+            "notifications",
+            "推荐",
+            "关注",
+            "最新",
+            "热门",
+            "筛选城市，如：北京、上海",
+            "笔记 上海 周末City Walk：从法租界到外滩 上海周末City Walk路线推荐，从法租界漫步到外滩 #t2 #t9 探店达人 1 1 0 2026-06-03 20:06",
+            "文章 北京 北京胡同里的隐藏咖啡馆 发现北京胡同深处的隐藏咖啡馆，桂花拿铁和手冲埃塞都很推荐 #t3 #t1 探店达人 1 1 0 2026-06-03 20:06",
+            "笔记 上海 Test Post testuser 0 0 0 2026-06-03 19:17",
+            "美食探店",
+            "城市漫步",
+            "咖啡与茶",
+            "文艺空间",
+            "户外运动",
+            "市集与夜市",
+            "家居生活",
+            "宠物日常",
+            "摄影打卡",
+            "本地攻略",
+            "开始创作",
+            "创作中心"
+          ]
+        }
+      },
+      {
+        "label": "操作:热门",
+        "url": "http://127.0.0.1:49023/?tab=hot",
+        "title": "城事志",
+        "headings": [
+          "北京胡同里的隐藏咖啡馆",
+          "周末City Walk：从法租界到外滩",
+          "Test Post",
+          "热门话题"
+        ],
+        "navLabels": [
+          "首页",
+          "发现",
+          "美食探店 1 篇",
+          "美食探店",
+          "城市漫步 1 篇",
+          "城市漫步",
+          "咖啡与茶 1 篇",
+          "咖啡与茶",
+          "文艺空间 0 篇",
+          "文艺空间",
+          "户外运动 0 篇",
+          "户外运动",
+          "市集与夜市 0 篇",
+          "市集与夜市",
+          "家居生活 0 篇",
+          "家居生活",
+          "宠物日常 0 篇",
+          "宠物日常",
+          "摄影打卡 1 篇",
+          "摄影打卡",
+          "本地攻略 0 篇",
+          "本地攻略",
+          "开始创作"
+        ],
+        "buttons": [
+          "推荐",
+          "关注",
+          "最新",
+          "热门"
+        ],
+        "links": [
+          "城 城事志",
+          "首页",
+          "发现",
+          "创作",
+          "#美食探店",
+          "#城市漫步",
+          "#咖啡与茶",
+          "#文艺空间",
+          "#户外运动",
+          "#市集与夜市",
+          "#家居生活",
+          "#宠物日常",
+          "#摄影打卡",
+          "#本地攻略",
+          "开始创作",
+          "创作中心"
+        ],
+        "inputs": [
+          {
+            "tag": "input",
+            "type": "text",
+            "placeholder": "搜索内容、话题、用户...",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "text",
+            "placeholder": "筛选城市，如：北京、上海",
+            "name": "",
+            "label": ""
+          }
+        ],
+        "tables": [],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "城城事志首页发现创作推荐关注最新热门城市：热榜依据：点赞×3 + 浏览×1 + 评论×5 + 收藏×2，运营可置顶/精选干预分数越高排名越靠前，热门内容将获得更多曝光机会10文章北京23北京胡同里的隐藏咖啡馆发现北京胡同深处的隐藏咖啡馆，桂花拿铁和手冲埃塞都很推荐#t3#t1探店达人1102026-06-03 20:0620笔记上海9周末City Walk：从法租界到外滩上海周末City Walk路线推荐，从法租界漫步到外滩#t2#t9探店达人1102026-06-03 20:0630笔记上海0Test Posttestuser0002026-06-03 19:17热门话题#美食探店1 篇#城市漫步1 篇#咖啡与茶1 篇#文艺空间0 篇#户外运动0 篇#市集与夜市0 篇#家居生活0 篇#宠物日常0 篇#摄影打卡1 篇#本地攻略0 篇开始创作城城事志城市生活方式内容共创平台，记录城市点滴，分享美好生活。快速链接发现创作中心关于让每一座城市的故事被看见© 2024 城事志 All rights reserved.",
+        "layout": {
+          "viewportWidth": 1600,
+          "viewportHeight": 1000,
+          "scrollWidth": 1600,
+          "scrollHeight": 1000,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89023-final-20260604114527-structure-04-操作-热门",
+          "label": "操作:热门",
+          "finalUrl": "http://127.0.0.1:49023/?tab=hot",
+          "title": "城事志",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89023/probe/codex-final-20260604114527/may-89023-final-20260604114527-structure-04-操作-热门.json",
+          "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89023/probe/codex-final-20260604114527/may-89023-final-20260604114527-structure-04-操作-热门.png",
+          "elementCount": 254,
+          "interactiveCount": 29,
+          "interactiveLabels": [
+            "城 城事志",
+            "搜索内容、话题、用户...",
+            "首页",
+            "发现",
+            "创作",
+            "notifications",
+            "推荐",
+            "关注",
+            "最新",
+            "热门",
+            "筛选城市，如：北京、上海",
+            "文章 北京 23 北京胡同里的隐藏咖啡馆 发现北京胡同深处的隐藏咖啡馆，桂花拿铁和手冲埃塞都很推荐 #t3 #t1 探店达人 1 1 0 2026-06-03 20:06",
+            "笔记 上海 9 周末City Walk：从法租界到外滩 上海周末City Walk路线推荐，从法租界漫步到外滩 #t2 #t9 探店达人 1 1 0 2026-06-03 20:06",
+            "笔记 上海 0 Test Post testuser 0 0 0 2026-06-03 19:17",
+            "美食探店",
+            "城市漫步",
+            "咖啡与茶",
+            "文艺空间",
+            "户外运动",
+            "市集与夜市",
+            "家居生活",
+            "宠物日常",
+            "摄影打卡",
+            "本地攻略",
+            "开始创作",
+            "创作中心"
+          ]
+        }
+      },
+      {
+        "label": "导航:发现",
+        "url": "http://127.0.0.1:49023/explore",
+        "title": "城事志",
+        "headings": [
+          "发现",
+          "全部话题"
+        ],
+        "navLabels": [
+          "首页",
+          "发现"
+        ],
+        "buttons": [
+          "话题",
+          "热门",
+          "城市"
+        ],
+        "links": [
+          "城 城事志",
+          "首页",
+          "发现",
+          "创作",
+          "#美食探店 官方 1 篇内容 活跃 发现城市中的美味餐厅和小吃",
+          "#城市漫步 官方 1 篇内容 活跃 用脚步丈量城市的每一个角落",
+          "#咖啡与茶 1 篇内容 活跃 城市中的咖啡馆与茶空间",
+          "#文艺空间 官方 0 篇内容 策划中 美术馆、书店、剧场与展览",
+          "#户外运动 官方 0 篇内容 策划中 骑行、跑步、徒步与更多",
+          "#市集与夜市 0 篇内容 策划中 逛市集、淘好物、品夜市",
+          "#家居生活 0 篇内容 策划中 打造理想中的居住空间",
+          "#宠物日常 0 篇内容 策划中 与毛孩子一起的城市生活",
+          "#摄影打卡 1 篇内容 活跃 记录城市的美丽瞬间",
+          "#本地攻略 官方 0 篇内容 策划中 最地道的城市生活指南",
+          "创作中心"
+        ],
+        "inputs": [
+          {
+            "tag": "input",
+            "type": "text",
+            "placeholder": "搜索内容、话题、用户...",
+            "name": "",
+            "label": ""
+          }
+        ],
+        "tables": [],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "城城事志首页发现创作发现话题热门城市全部话题#美食探店官方1 篇内容活跃发现城市中的美味餐厅和小吃#城市漫步官方1 篇内容活跃用脚步丈量城市的每一个角落#咖啡与茶1 篇内容活跃城市中的咖啡馆与茶空间#文艺空间官方0 篇内容策划中美术馆、书店、剧场与展览#户外运动官方0 篇内容策划中骑行、跑步、徒步与更多#市集与夜市0 篇内容策划中逛市集、淘好物、品夜市#家居生活0 篇内容策划中打造理想中的居住空间#宠物日常0 篇内容策划中与毛孩子一起的城市生活#摄影打卡1 篇内容活跃记录城市的美丽瞬间#本地攻略官方0 篇内容策划中最地道的城市生活指南城城事志城市生活方式内容共创平台，记录城市点滴，分享美好生活。快速链接发现创作中心关于让每一座城市的故事被看见© 2024 城事志 All rights reserved.",
+        "layout": {
+          "viewportWidth": 1632,
+          "viewportHeight": 1000,
+          "scrollWidth": 1632,
+          "scrollHeight": 1000,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89023-final-20260604114527-structure-05-导航-发现",
+          "label": "导航:发现",
+          "finalUrl": "http://127.0.0.1:49023/explore",
+          "title": "城事志",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89023/probe/codex-final-20260604114527/may-89023-final-20260604114527-structure-05-导航-发现.json",
+          "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89023/probe/codex-final-20260604114527/may-89023-final-20260604114527-structure-05-导航-发现.png",
+          "elementCount": 177,
+          "interactiveCount": 23,
+          "interactiveLabels": [
+            "城 城事志",
+            "搜索内容、话题、用户...",
+            "首页",
+            "发现",
+            "创作",
+            "notifications",
+            "话题",
+            "热门",
+            "城市",
+            "美食探店 官方 1 篇内容 活跃 发现城市中的美味餐厅和小吃",
+            "城市漫步 官方 1 篇内容 活跃 用脚步丈量城市的每一个角落",
+            "咖啡与茶 1 篇内容 活跃 城市中的咖啡馆与茶空间",
+            "文艺空间 官方 0 篇内容 策划中 美术馆、书店、剧场与展览",
+            "户外运动 官方 0 篇内容 策划中 骑行、跑步、徒步与更多",
+            "市集与夜市 0 篇内容 策划中 逛市集、淘好物、品夜市",
+            "家居生活 0 篇内容 策划中 打造理想中的居住空间",
+            "宠物日常 0 篇内容 策划中 与毛孩子一起的城市生活",
+            "摄影打卡 1 篇内容 活跃 记录城市的美丽瞬间",
+            "本地攻略 官方 0 篇内容 策划中 最地道的城市生活指南",
+            "创作中心"
+          ]
+        }
+      },
+      {
+        "label": "操作:城市",
+        "url": "http://127.0.0.1:49023/explore",
+        "title": "城事志",
+        "headings": [
+          "发现",
+          "城市探索"
+        ],
+        "navLabels": [
+          "首页",
+          "发现"
+        ],
+        "buttons": [
+          "话题",
+          "热门",
+          "城市",
+          "北京",
+          "上海",
+          "广州",
+          "深圳",
+          "杭州",
+          "成都",
+          "重庆",
+          "武汉",
+          "西安",
+          "南京"
+        ],
+        "links": [
+          "城 城事志",
+          "首页",
+          "发现",
+          "创作",
+          "创作中心"
+        ],
+        "inputs": [
+          {
+            "tag": "input",
+            "type": "text",
+            "placeholder": "搜索内容、话题、用户...",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "text",
+            "placeholder": "输入其他城市名称...",
+            "name": "",
+            "label": ""
+          }
+        ],
+        "tables": [],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "城城事志首页发现创作发现话题热门城市城市探索北京上海广州深圳杭州成都重庆武汉西安南京选择或输入城市名称开始探索城城事志城市生活方式内容共创平台，记录城市点滴，分享美好生活。快速链接发现创作中心关于让每一座城市的故事被看见© 2024 城事志 All rights reserved.",
+        "layout": {
+          "viewportWidth": 1664,
+          "viewportHeight": 1000,
+          "scrollWidth": 1664,
+          "scrollHeight": 1000,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89023-final-20260604114527-structure-06-操作-城市",
+          "label": "操作:城市",
+          "finalUrl": "http://127.0.0.1:49023/explore",
+          "title": "城事志",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89023/probe/codex-final-20260604114527/may-89023-final-20260604114527-structure-06-操作-城市.json",
+          "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89023/probe/codex-final-20260604114527/may-89023-final-20260604114527-structure-06-操作-城市.png",
+          "elementCount": 98,
+          "interactiveCount": 24,
+          "interactiveLabels": [
+            "城 城事志",
+            "搜索内容、话题、用户...",
+            "首页",
+            "发现",
+            "创作",
+            "notifications",
+            "话题",
+            "热门",
+            "城市",
+            "北京",
+            "上海",
+            "广州",
+            "深圳",
+            "杭州",
+            "成都",
+            "重庆",
+            "武汉",
+            "西安",
+            "南京",
+            "输入其他城市名称...",
+            "创作中心"
+          ]
+        }
+      },
+      {
+        "label": "二层操作:城市->北京",
+        "url": "http://127.0.0.1:49023/explore",
+        "title": "城事志",
+        "headings": [
+          "发现",
+          "城市探索",
+          "北京 · 1 篇内容 · 2 个话题",
+          "北京胡同里的隐藏咖啡馆"
+        ],
+        "navLabels": [
+          "首页",
+          "发现"
+        ],
+        "buttons": [
+          "话题",
+          "热门",
+          "城市",
+          "北京",
+          "上海",
+          "广州",
+          "深圳",
+          "杭州",
+          "成都",
+          "重庆",
+          "武汉",
+          "西安",
+          "南京"
+        ],
+        "links": [
+          "城 城事志",
+          "首页",
+          "发现",
+          "创作",
+          "归档到合集",
+          "#t3 1",
+          "#t1 1",
+          "创作中心"
+        ],
+        "inputs": [
+          {
+            "tag": "input",
+            "type": "text",
+            "placeholder": "搜索内容、话题、用户...",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "text",
+            "placeholder": "输入其他城市名称...",
+            "name": "",
+            "label": ""
+          }
+        ],
+        "tables": [],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "城城事志首页发现创作发现话题热门城市城市探索北京上海广州深圳杭州成都重庆武汉西安南京北京 · 1 篇内容 · 2 个话题归档到合集话题分布#t31#t110文章北京北京胡同里的隐藏咖啡馆发现北京胡同深处的隐藏咖啡馆，桂花拿铁和手冲埃塞都很推荐#t3#t1探店达人1102026-06-03 20:06城城事志城市生活方式内容共创平台，记录城市点滴，分享美好生活。快速链接发现创作中心关于让每一座城市的故事被看见© 2024 城事志 All rights reserved.",
+        "layout": {
+          "viewportWidth": 1696,
+          "viewportHeight": 1000,
+          "scrollWidth": 1696,
+          "scrollHeight": 1000,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89023-final-20260604114527-structure-07-二层操作-城市-北京",
+          "label": "二层操作:城市->北京",
+          "finalUrl": "http://127.0.0.1:49023/explore",
+          "title": "城事志",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89023/probe/codex-final-20260604114527/may-89023-final-20260604114527-structure-07-二层操作-城市-北京.json",
+          "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89023/probe/codex-final-20260604114527/may-89023-final-20260604114527-structure-07-二层操作-城市-北京.png",
+          "elementCount": 158,
+          "interactiveCount": 28,
+          "interactiveLabels": [
+            "城 城事志",
+            "搜索内容、话题、用户...",
+            "首页",
+            "发现",
+            "创作",
+            "notifications",
+            "话题",
+            "热门",
+            "城市",
+            "北京",
+            "上海",
+            "广州",
+            "深圳",
+            "杭州",
+            "成都",
+            "重庆",
+            "武汉",
+            "西安",
+            "南京",
+            "归档到合集",
+            "t3 1",
+            "t1 1",
+            "文章 北京 北京胡同里的隐藏咖啡馆 发现北京胡同深处的隐藏咖啡馆，桂花拿铁和手冲埃塞都很推荐 #t3 #t1 探店达人 1 1 0 2026-06-03 20:06",
+            "创作中心"
+          ]
+        }
+      },
+      {
+        "label": "操作:话题",
+        "url": "http://127.0.0.1:49023/explore",
+        "title": "城事志",
+        "headings": [
+          "发现",
+          "全部话题"
+        ],
+        "navLabels": [
+          "首页",
+          "发现"
+        ],
+        "buttons": [
+          "话题",
+          "热门",
+          "城市"
+        ],
+        "links": [
+          "城 城事志",
+          "首页",
+          "发现",
+          "创作",
+          "#美食探店 官方 1 篇内容 活跃 发现城市中的美味餐厅和小吃",
+          "#城市漫步 官方 1 篇内容 活跃 用脚步丈量城市的每一个角落",
+          "#咖啡与茶 1 篇内容 活跃 城市中的咖啡馆与茶空间",
+          "#文艺空间 官方 0 篇内容 策划中 美术馆、书店、剧场与展览",
+          "#户外运动 官方 0 篇内容 策划中 骑行、跑步、徒步与更多",
+          "#市集与夜市 0 篇内容 策划中 逛市集、淘好物、品夜市",
+          "#家居生活 0 篇内容 策划中 打造理想中的居住空间",
+          "#宠物日常 0 篇内容 策划中 与毛孩子一起的城市生活",
+          "#摄影打卡 1 篇内容 活跃 记录城市的美丽瞬间",
+          "#本地攻略 官方 0 篇内容 策划中 最地道的城市生活指南",
+          "创作中心"
+        ],
+        "inputs": [
+          {
+            "tag": "input",
+            "type": "text",
+            "placeholder": "搜索内容、话题、用户...",
+            "name": "",
+            "label": ""
+          }
+        ],
+        "tables": [],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "城城事志首页发现创作发现话题热门城市全部话题#美食探店官方1 篇内容活跃发现城市中的美味餐厅和小吃#城市漫步官方1 篇内容活跃用脚步丈量城市的每一个角落#咖啡与茶1 篇内容活跃城市中的咖啡馆与茶空间#文艺空间官方0 篇内容策划中美术馆、书店、剧场与展览#户外运动官方0 篇内容策划中骑行、跑步、徒步与更多#市集与夜市0 篇内容策划中逛市集、淘好物、品夜市#家居生活0 篇内容策划中打造理想中的居住空间#宠物日常0 篇内容策划中与毛孩子一起的城市生活#摄影打卡1 篇内容活跃记录城市的美丽瞬间#本地攻略官方0 篇内容策划中最地道的城市生活指南城城事志城市生活方式内容共创平台，记录城市点滴，分享美好生活。快速链接发现创作中心关于让每一座城市的故事被看见© 2024 城事志 All rights reserved.",
+        "layout": {
+          "viewportWidth": 1728,
+          "viewportHeight": 1000,
+          "scrollWidth": 1728,
+          "scrollHeight": 1000,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89023-final-20260604114527-structure-08-操作-话题",
+          "label": "操作:话题",
+          "finalUrl": "http://127.0.0.1:49023/explore",
+          "title": "城事志",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89023/probe/codex-final-20260604114527/may-89023-final-20260604114527-structure-08-操作-话题.json",
+          "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89023/probe/codex-final-20260604114527/may-89023-final-20260604114527-structure-08-操作-话题.png",
+          "elementCount": 177,
+          "interactiveCount": 23,
+          "interactiveLabels": [
+            "城 城事志",
+            "搜索内容、话题、用户...",
+            "首页",
+            "发现",
+            "创作",
+            "notifications",
+            "话题",
+            "热门",
+            "城市",
+            "美食探店 官方 1 篇内容 活跃 发现城市中的美味餐厅和小吃",
+            "城市漫步 官方 1 篇内容 活跃 用脚步丈量城市的每一个角落",
+            "咖啡与茶 1 篇内容 活跃 城市中的咖啡馆与茶空间",
+            "文艺空间 官方 0 篇内容 策划中 美术馆、书店、剧场与展览",
+            "户外运动 官方 0 篇内容 策划中 骑行、跑步、徒步与更多",
+            "市集与夜市 0 篇内容 策划中 逛市集、淘好物、品夜市",
+            "家居生活 0 篇内容 策划中 打造理想中的居住空间",
+            "宠物日常 0 篇内容 策划中 与毛孩子一起的城市生活",
+            "摄影打卡 1 篇内容 活跃 记录城市的美丽瞬间",
+            "本地攻略 官方 0 篇内容 策划中 最地道的城市生活指南",
+            "创作中心"
+          ]
+        }
+      },
+      {
+        "label": "导航:美食探店",
+        "url": "http://127.0.0.1:49023/topic/food",
+        "title": "城事志",
+        "headings": [
+          "#美食探店",
+          "北京胡同里的隐藏咖啡馆"
+        ],
+        "navLabels": [
+          "首页",
+          "发现"
+        ],
+        "buttons": [
+          "关注话题",
+          "审核留痕"
+        ],
+        "links": [
+          "城 城事志",
+          "首页",
+          "发现",
+          "创作",
+          "创作中心"
+        ],
+        "inputs": [
+          {
+            "tag": "input",
+            "type": "text",
+            "placeholder": "搜索内容、话题、用户...",
+            "name": "",
+            "label": ""
+          }
+        ],
+        "tables": [],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "城城事志首页发现创作#美食探店官方发现城市中的美味餐厅和小吃0 关注1 篇内容关注话题审核留痕AI 通过1人工审核0待审核0已拒绝0创作者等级分布新手创作者1 人活跃创作者0 人优质创作者0 人精品创作者0 人顶级创作者0 人0文章北京北京胡同里的隐藏咖啡馆发现北京胡同深处的隐藏咖啡馆，桂花拿铁和手冲埃塞都很推荐#t3#t1探店达人1102026-06-03 20:06城城事志城市生活方式内容共创平台，记录城市点滴，分享美好生活。快速链接发现创作中心关于让每一座城市的故事被看见© 2024 城事志 All rights reserved.",
+        "layout": {
+          "viewportWidth": 1760,
+          "viewportHeight": 1004,
+          "scrollWidth": 1760,
+          "scrollHeight": 1004,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89023-final-20260604114527-structure-09-导航-美食探店",
+          "label": "导航:美食探店",
+          "finalUrl": "http://127.0.0.1:49023/topic/food",
+          "title": "城事志",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89023/probe/codex-final-20260604114527/may-89023-final-20260604114527-structure-09-导航-美食探店.json",
+          "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89023/probe/codex-final-20260604114527/may-89023-final-20260604114527-structure-09-导航-美食探店.png",
+          "elementCount": 205,
+          "interactiveCount": 13,
+          "interactiveLabels": [
+            "城 城事志",
+            "搜索内容、话题、用户...",
+            "首页",
+            "发现",
+            "创作",
+            "notifications",
+            "关注话题",
+            "审核留痕",
+            "文章 北京 北京胡同里的隐藏咖啡馆 发现北京胡同深处的隐藏咖啡馆，桂花拿铁和手冲埃塞都很推荐 #t3 #t1 探店达人 1 1 0 2026-06-03 20:06",
+            "创作中心"
+          ]
+        }
+      }
+    ],
+    "findings": [
+      "接口 /api/contents 返回 HTTP 500，对应业务模块无法完成数据读取。"
+    ],
+    "actionHints": [
+      "补齐 /api/contents 后端接口、SQLite 数据和前端错误处理。"
+    ],
+    "emptyPages": [],
+    "overflowPages": [],
+    "blankPages": [],
+    "apiFailurePaths": [
+      "/api/contents"
+    ],
+    "goalTerms": [],
+    "clickedActionDescriptors": [
+      {
+        "nav": "首页",
+        "label": "关注",
+        "ordinal": 0,
+        "unsafe": false
+      },
+      {
+        "nav": "首页",
+        "label": "热门",
+        "ordinal": 0,
+        "unsafe": false
+      },
+      {
+        "nav": "发现",
+        "label": "城市",
+        "ordinal": 0,
+        "unsafe": false
+      },
+      {
+        "nav": "发现",
+        "label": "城市->北京",
+        "ordinal": 0,
+        "secondary": true,
+        "unsafe": false
+      },
+      {
+        "nav": "发现",
+        "label": "话题",
+        "ordinal": 0,
+        "unsafe": false
+      }
+    ],
+    "secondaryActionClicks": 1,
+    "structureCaptures": [
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89023-final-20260604114527-structure-01-首屏",
+        "label": "首屏",
+        "finalUrl": "http://127.0.0.1:49023/",
+        "title": "城事志",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89023/probe/codex-final-20260604114527/may-89023-final-20260604114527-structure-01-首屏.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89023/probe/codex-final-20260604114527/may-89023-final-20260604114527-structure-01-首屏.png",
+        "elementCount": 233,
+        "interactiveCount": 29,
+        "interactiveLabels": [
+          "城 城事志",
+          "搜索内容、话题、用户...",
+          "首页",
+          "发现",
+          "创作",
+          "notifications",
+          "推荐",
+          "关注",
+          "最新",
+          "热门",
+          "筛选城市，如：北京、上海",
+          "笔记 上海 周末City Walk：从法租界到外滩 上海周末City Walk路线推荐，从法租界漫步到外滩 #t2 #t9 探店达人 1 1 0 2026-06-03 20:06",
+          "文章 北京 北京胡同里的隐藏咖啡馆 发现北京胡同深处的隐藏咖啡馆，桂花拿铁和手冲埃塞都很推荐 #t3 #t1 探店达人 1 1 0 2026-06-03 20:06",
+          "笔记 上海 Test Post testuser 0 0 0 2026-06-03 19:17",
+          "美食探店",
+          "城市漫步",
+          "咖啡与茶",
+          "文艺空间",
+          "户外运动",
+          "市集与夜市",
+          "家居生活",
+          "宠物日常",
+          "摄影打卡",
+          "本地攻略",
+          "开始创作",
+          "创作中心"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89023-final-20260604114527-structure-02-导航-首页",
+        "label": "导航:首页",
+        "finalUrl": "http://127.0.0.1:49023/",
+        "title": "城事志",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89023/probe/codex-final-20260604114527/may-89023-final-20260604114527-structure-02-导航-首页.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89023/probe/codex-final-20260604114527/may-89023-final-20260604114527-structure-02-导航-首页.png",
+        "elementCount": 233,
+        "interactiveCount": 29,
+        "interactiveLabels": [
+          "城 城事志",
+          "搜索内容、话题、用户...",
+          "首页",
+          "发现",
+          "创作",
+          "notifications",
+          "推荐",
+          "关注",
+          "最新",
+          "热门",
+          "筛选城市，如：北京、上海",
+          "笔记 上海 周末City Walk：从法租界到外滩 上海周末City Walk路线推荐，从法租界漫步到外滩 #t2 #t9 探店达人 1 1 0 2026-06-03 20:06",
+          "文章 北京 北京胡同里的隐藏咖啡馆 发现北京胡同深处的隐藏咖啡馆，桂花拿铁和手冲埃塞都很推荐 #t3 #t1 探店达人 1 1 0 2026-06-03 20:06",
+          "笔记 上海 Test Post testuser 0 0 0 2026-06-03 19:17",
+          "美食探店",
+          "城市漫步",
+          "咖啡与茶",
+          "文艺空间",
+          "户外运动",
+          "市集与夜市",
+          "家居生活",
+          "宠物日常",
+          "摄影打卡",
+          "本地攻略",
+          "开始创作",
+          "创作中心"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89023-final-20260604114527-structure-03-操作-关注",
+        "label": "操作:关注",
+        "finalUrl": "http://127.0.0.1:49023/?tab=following",
+        "title": "城事志",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89023/probe/codex-final-20260604114527/may-89023-final-20260604114527-structure-03-操作-关注.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89023/probe/codex-final-20260604114527/may-89023-final-20260604114527-structure-03-操作-关注.png",
+        "elementCount": 240,
+        "interactiveCount": 29,
+        "interactiveLabels": [
+          "城 城事志",
+          "搜索内容、话题、用户...",
+          "首页",
+          "发现",
+          "创作",
+          "notifications",
+          "推荐",
+          "关注",
+          "最新",
+          "热门",
+          "筛选城市，如：北京、上海",
+          "笔记 上海 周末City Walk：从法租界到外滩 上海周末City Walk路线推荐，从法租界漫步到外滩 #t2 #t9 探店达人 1 1 0 2026-06-03 20:06",
+          "文章 北京 北京胡同里的隐藏咖啡馆 发现北京胡同深处的隐藏咖啡馆，桂花拿铁和手冲埃塞都很推荐 #t3 #t1 探店达人 1 1 0 2026-06-03 20:06",
+          "笔记 上海 Test Post testuser 0 0 0 2026-06-03 19:17",
+          "美食探店",
+          "城市漫步",
+          "咖啡与茶",
+          "文艺空间",
+          "户外运动",
+          "市集与夜市",
+          "家居生活",
+          "宠物日常",
+          "摄影打卡",
+          "本地攻略",
+          "开始创作",
+          "创作中心"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89023-final-20260604114527-structure-04-操作-热门",
+        "label": "操作:热门",
+        "finalUrl": "http://127.0.0.1:49023/?tab=hot",
+        "title": "城事志",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89023/probe/codex-final-20260604114527/may-89023-final-20260604114527-structure-04-操作-热门.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89023/probe/codex-final-20260604114527/may-89023-final-20260604114527-structure-04-操作-热门.png",
+        "elementCount": 254,
+        "interactiveCount": 29,
+        "interactiveLabels": [
+          "城 城事志",
+          "搜索内容、话题、用户...",
+          "首页",
+          "发现",
+          "创作",
+          "notifications",
+          "推荐",
+          "关注",
+          "最新",
+          "热门",
+          "筛选城市，如：北京、上海",
+          "文章 北京 23 北京胡同里的隐藏咖啡馆 发现北京胡同深处的隐藏咖啡馆，桂花拿铁和手冲埃塞都很推荐 #t3 #t1 探店达人 1 1 0 2026-06-03 20:06",
+          "笔记 上海 9 周末City Walk：从法租界到外滩 上海周末City Walk路线推荐，从法租界漫步到外滩 #t2 #t9 探店达人 1 1 0 2026-06-03 20:06",
+          "笔记 上海 0 Test Post testuser 0 0 0 2026-06-03 19:17",
+          "美食探店",
+          "城市漫步",
+          "咖啡与茶",
+          "文艺空间",
+          "户外运动",
+          "市集与夜市",
+          "家居生活",
+          "宠物日常",
+          "摄影打卡",
+          "本地攻略",
+          "开始创作",
+          "创作中心"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89023-final-20260604114527-structure-05-导航-发现",
+        "label": "导航:发现",
+        "finalUrl": "http://127.0.0.1:49023/explore",
+        "title": "城事志",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89023/probe/codex-final-20260604114527/may-89023-final-20260604114527-structure-05-导航-发现.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89023/probe/codex-final-20260604114527/may-89023-final-20260604114527-structure-05-导航-发现.png",
+        "elementCount": 177,
+        "interactiveCount": 23,
+        "interactiveLabels": [
+          "城 城事志",
+          "搜索内容、话题、用户...",
+          "首页",
+          "发现",
+          "创作",
+          "notifications",
+          "话题",
+          "热门",
+          "城市",
+          "美食探店 官方 1 篇内容 活跃 发现城市中的美味餐厅和小吃",
+          "城市漫步 官方 1 篇内容 活跃 用脚步丈量城市的每一个角落",
+          "咖啡与茶 1 篇内容 活跃 城市中的咖啡馆与茶空间",
+          "文艺空间 官方 0 篇内容 策划中 美术馆、书店、剧场与展览",
+          "户外运动 官方 0 篇内容 策划中 骑行、跑步、徒步与更多",
+          "市集与夜市 0 篇内容 策划中 逛市集、淘好物、品夜市",
+          "家居生活 0 篇内容 策划中 打造理想中的居住空间",
+          "宠物日常 0 篇内容 策划中 与毛孩子一起的城市生活",
+          "摄影打卡 1 篇内容 活跃 记录城市的美丽瞬间",
+          "本地攻略 官方 0 篇内容 策划中 最地道的城市生活指南",
+          "创作中心"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89023-final-20260604114527-structure-06-操作-城市",
+        "label": "操作:城市",
+        "finalUrl": "http://127.0.0.1:49023/explore",
+        "title": "城事志",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89023/probe/codex-final-20260604114527/may-89023-final-20260604114527-structure-06-操作-城市.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89023/probe/codex-final-20260604114527/may-89023-final-20260604114527-structure-06-操作-城市.png",
+        "elementCount": 98,
+        "interactiveCount": 24,
+        "interactiveLabels": [
+          "城 城事志",
+          "搜索内容、话题、用户...",
+          "首页",
+          "发现",
+          "创作",
+          "notifications",
+          "话题",
+          "热门",
+          "城市",
+          "北京",
+          "上海",
+          "广州",
+          "深圳",
+          "杭州",
+          "成都",
+          "重庆",
+          "武汉",
+          "西安",
+          "南京",
+          "输入其他城市名称...",
+          "创作中心"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89023-final-20260604114527-structure-07-二层操作-城市-北京",
+        "label": "二层操作:城市->北京",
+        "finalUrl": "http://127.0.0.1:49023/explore",
+        "title": "城事志",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89023/probe/codex-final-20260604114527/may-89023-final-20260604114527-structure-07-二层操作-城市-北京.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89023/probe/codex-final-20260604114527/may-89023-final-20260604114527-structure-07-二层操作-城市-北京.png",
+        "elementCount": 158,
+        "interactiveCount": 28,
+        "interactiveLabels": [
+          "城 城事志",
+          "搜索内容、话题、用户...",
+          "首页",
+          "发现",
+          "创作",
+          "notifications",
+          "话题",
+          "热门",
+          "城市",
+          "北京",
+          "上海",
+          "广州",
+          "深圳",
+          "杭州",
+          "成都",
+          "重庆",
+          "武汉",
+          "西安",
+          "南京",
+          "归档到合集",
+          "t3 1",
+          "t1 1",
+          "文章 北京 北京胡同里的隐藏咖啡馆 发现北京胡同深处的隐藏咖啡馆，桂花拿铁和手冲埃塞都很推荐 #t3 #t1 探店达人 1 1 0 2026-06-03 20:06",
+          "创作中心"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89023-final-20260604114527-structure-08-操作-话题",
+        "label": "操作:话题",
+        "finalUrl": "http://127.0.0.1:49023/explore",
+        "title": "城事志",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89023/probe/codex-final-20260604114527/may-89023-final-20260604114527-structure-08-操作-话题.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89023/probe/codex-final-20260604114527/may-89023-final-20260604114527-structure-08-操作-话题.png",
+        "elementCount": 177,
+        "interactiveCount": 23,
+        "interactiveLabels": [
+          "城 城事志",
+          "搜索内容、话题、用户...",
+          "首页",
+          "发现",
+          "创作",
+          "notifications",
+          "话题",
+          "热门",
+          "城市",
+          "美食探店 官方 1 篇内容 活跃 发现城市中的美味餐厅和小吃",
+          "城市漫步 官方 1 篇内容 活跃 用脚步丈量城市的每一个角落",
+          "咖啡与茶 1 篇内容 活跃 城市中的咖啡馆与茶空间",
+          "文艺空间 官方 0 篇内容 策划中 美术馆、书店、剧场与展览",
+          "户外运动 官方 0 篇内容 策划中 骑行、跑步、徒步与更多",
+          "市集与夜市 0 篇内容 策划中 逛市集、淘好物、品夜市",
+          "家居生活 0 篇内容 策划中 打造理想中的居住空间",
+          "宠物日常 0 篇内容 策划中 与毛孩子一起的城市生活",
+          "摄影打卡 1 篇内容 活跃 记录城市的美丽瞬间",
+          "本地攻略 官方 0 篇内容 策划中 最地道的城市生活指南",
+          "创作中心"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89023-final-20260604114527-structure-09-导航-美食探店",
+        "label": "导航:美食探店",
+        "finalUrl": "http://127.0.0.1:49023/topic/food",
+        "title": "城事志",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89023/probe/codex-final-20260604114527/may-89023-final-20260604114527-structure-09-导航-美食探店.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89023/probe/codex-final-20260604114527/may-89023-final-20260604114527-structure-09-导航-美食探店.png",
+        "elementCount": 205,
+        "interactiveCount": 13,
+        "interactiveLabels": [
+          "城 城事志",
+          "搜索内容、话题、用户...",
+          "首页",
+          "发现",
+          "创作",
+          "notifications",
+          "关注话题",
+          "审核留痕",
+          "文章 北京 北京胡同里的隐藏咖啡馆 发现北京胡同深处的隐藏咖啡馆，桂花拿铁和手冲埃塞都很推荐 #t3 #t1 探店达人 1 1 0 2026-06-03 20:06",
+          "创作中心"
+        ]
+      }
+    ],
+    "representativeScreenshotUrl": "http://127.0.0.1:49023/",
+    "representativeScreenshotLabel": "周末City Walk：从法租界到外滩"
+  },
+  "websiteStructureCapture": {
+    "module": "website_structure_capture",
+    "captureCount": 9,
+    "captures": [
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89023-final-20260604114527-structure-01-首屏",
+        "label": "首屏",
+        "finalUrl": "http://127.0.0.1:49023/",
+        "title": "城事志",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89023/probe/codex-final-20260604114527/may-89023-final-20260604114527-structure-01-首屏.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89023/probe/codex-final-20260604114527/may-89023-final-20260604114527-structure-01-首屏.png",
+        "elementCount": 233,
+        "interactiveCount": 29,
+        "interactiveLabels": [
+          "城 城事志",
+          "搜索内容、话题、用户...",
+          "首页",
+          "发现",
+          "创作",
+          "notifications",
+          "推荐",
+          "关注",
+          "最新",
+          "热门",
+          "筛选城市，如：北京、上海",
+          "笔记 上海 周末City Walk：从法租界到外滩 上海周末City Walk路线推荐，从法租界漫步到外滩 #t2 #t9 探店达人 1 1 0 2026-06-03 20:06",
+          "文章 北京 北京胡同里的隐藏咖啡馆 发现北京胡同深处的隐藏咖啡馆，桂花拿铁和手冲埃塞都很推荐 #t3 #t1 探店达人 1 1 0 2026-06-03 20:06",
+          "笔记 上海 Test Post testuser 0 0 0 2026-06-03 19:17",
+          "美食探店",
+          "城市漫步",
+          "咖啡与茶",
+          "文艺空间",
+          "户外运动",
+          "市集与夜市",
+          "家居生活",
+          "宠物日常",
+          "摄影打卡",
+          "本地攻略",
+          "开始创作",
+          "创作中心"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89023-final-20260604114527-structure-02-导航-首页",
+        "label": "导航:首页",
+        "finalUrl": "http://127.0.0.1:49023/",
+        "title": "城事志",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89023/probe/codex-final-20260604114527/may-89023-final-20260604114527-structure-02-导航-首页.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89023/probe/codex-final-20260604114527/may-89023-final-20260604114527-structure-02-导航-首页.png",
+        "elementCount": 233,
+        "interactiveCount": 29,
+        "interactiveLabels": [
+          "城 城事志",
+          "搜索内容、话题、用户...",
+          "首页",
+          "发现",
+          "创作",
+          "notifications",
+          "推荐",
+          "关注",
+          "最新",
+          "热门",
+          "筛选城市，如：北京、上海",
+          "笔记 上海 周末City Walk：从法租界到外滩 上海周末City Walk路线推荐，从法租界漫步到外滩 #t2 #t9 探店达人 1 1 0 2026-06-03 20:06",
+          "文章 北京 北京胡同里的隐藏咖啡馆 发现北京胡同深处的隐藏咖啡馆，桂花拿铁和手冲埃塞都很推荐 #t3 #t1 探店达人 1 1 0 2026-06-03 20:06",
+          "笔记 上海 Test Post testuser 0 0 0 2026-06-03 19:17",
+          "美食探店",
+          "城市漫步",
+          "咖啡与茶",
+          "文艺空间",
+          "户外运动",
+          "市集与夜市",
+          "家居生活",
+          "宠物日常",
+          "摄影打卡",
+          "本地攻略",
+          "开始创作",
+          "创作中心"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89023-final-20260604114527-structure-03-操作-关注",
+        "label": "操作:关注",
+        "finalUrl": "http://127.0.0.1:49023/?tab=following",
+        "title": "城事志",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89023/probe/codex-final-20260604114527/may-89023-final-20260604114527-structure-03-操作-关注.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89023/probe/codex-final-20260604114527/may-89023-final-20260604114527-structure-03-操作-关注.png",
+        "elementCount": 240,
+        "interactiveCount": 29,
+        "interactiveLabels": [
+          "城 城事志",
+          "搜索内容、话题、用户...",
+          "首页",
+          "发现",
+          "创作",
+          "notifications",
+          "推荐",
+          "关注",
+          "最新",
+          "热门",
+          "筛选城市，如：北京、上海",
+          "笔记 上海 周末City Walk：从法租界到外滩 上海周末City Walk路线推荐，从法租界漫步到外滩 #t2 #t9 探店达人 1 1 0 2026-06-03 20:06",
+          "文章 北京 北京胡同里的隐藏咖啡馆 发现北京胡同深处的隐藏咖啡馆，桂花拿铁和手冲埃塞都很推荐 #t3 #t1 探店达人 1 1 0 2026-06-03 20:06",
+          "笔记 上海 Test Post testuser 0 0 0 2026-06-03 19:17",
+          "美食探店",
+          "城市漫步",
+          "咖啡与茶",
+          "文艺空间",
+          "户外运动",
+          "市集与夜市",
+          "家居生活",
+          "宠物日常",
+          "摄影打卡",
+          "本地攻略",
+          "开始创作",
+          "创作中心"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89023-final-20260604114527-structure-04-操作-热门",
+        "label": "操作:热门",
+        "finalUrl": "http://127.0.0.1:49023/?tab=hot",
+        "title": "城事志",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89023/probe/codex-final-20260604114527/may-89023-final-20260604114527-structure-04-操作-热门.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89023/probe/codex-final-20260604114527/may-89023-final-20260604114527-structure-04-操作-热门.png",
+        "elementCount": 254,
+        "interactiveCount": 29,
+        "interactiveLabels": [
+          "城 城事志",
+          "搜索内容、话题、用户...",
+          "首页",
+          "发现",
+          "创作",
+          "notifications",
+          "推荐",
+          "关注",
+          "最新",
+          "热门",
+          "筛选城市，如：北京、上海",
+          "文章 北京 23 北京胡同里的隐藏咖啡馆 发现北京胡同深处的隐藏咖啡馆，桂花拿铁和手冲埃塞都很推荐 #t3 #t1 探店达人 1 1 0 2026-06-03 20:06",
+          "笔记 上海 9 周末City Walk：从法租界到外滩 上海周末City Walk路线推荐，从法租界漫步到外滩 #t2 #t9 探店达人 1 1 0 2026-06-03 20:06",
+          "笔记 上海 0 Test Post testuser 0 0 0 2026-06-03 19:17",
+          "美食探店",
+          "城市漫步",
+          "咖啡与茶",
+          "文艺空间",
+          "户外运动",
+          "市集与夜市",
+          "家居生活",
+          "宠物日常",
+          "摄影打卡",
+          "本地攻略",
+          "开始创作",
+          "创作中心"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89023-final-20260604114527-structure-05-导航-发现",
+        "label": "导航:发现",
+        "finalUrl": "http://127.0.0.1:49023/explore",
+        "title": "城事志",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89023/probe/codex-final-20260604114527/may-89023-final-20260604114527-structure-05-导航-发现.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89023/probe/codex-final-20260604114527/may-89023-final-20260604114527-structure-05-导航-发现.png",
+        "elementCount": 177,
+        "interactiveCount": 23,
+        "interactiveLabels": [
+          "城 城事志",
+          "搜索内容、话题、用户...",
+          "首页",
+          "发现",
+          "创作",
+          "notifications",
+          "话题",
+          "热门",
+          "城市",
+          "美食探店 官方 1 篇内容 活跃 发现城市中的美味餐厅和小吃",
+          "城市漫步 官方 1 篇内容 活跃 用脚步丈量城市的每一个角落",
+          "咖啡与茶 1 篇内容 活跃 城市中的咖啡馆与茶空间",
+          "文艺空间 官方 0 篇内容 策划中 美术馆、书店、剧场与展览",
+          "户外运动 官方 0 篇内容 策划中 骑行、跑步、徒步与更多",
+          "市集与夜市 0 篇内容 策划中 逛市集、淘好物、品夜市",
+          "家居生活 0 篇内容 策划中 打造理想中的居住空间",
+          "宠物日常 0 篇内容 策划中 与毛孩子一起的城市生活",
+          "摄影打卡 1 篇内容 活跃 记录城市的美丽瞬间",
+          "本地攻略 官方 0 篇内容 策划中 最地道的城市生活指南",
+          "创作中心"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89023-final-20260604114527-structure-06-操作-城市",
+        "label": "操作:城市",
+        "finalUrl": "http://127.0.0.1:49023/explore",
+        "title": "城事志",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89023/probe/codex-final-20260604114527/may-89023-final-20260604114527-structure-06-操作-城市.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89023/probe/codex-final-20260604114527/may-89023-final-20260604114527-structure-06-操作-城市.png",
+        "elementCount": 98,
+        "interactiveCount": 24,
+        "interactiveLabels": [
+          "城 城事志",
+          "搜索内容、话题、用户...",
+          "首页",
+          "发现",
+          "创作",
+          "notifications",
+          "话题",
+          "热门",
+          "城市",
+          "北京",
+          "上海",
+          "广州",
+          "深圳",
+          "杭州",
+          "成都",
+          "重庆",
+          "武汉",
+          "西安",
+          "南京",
+          "输入其他城市名称...",
+          "创作中心"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89023-final-20260604114527-structure-07-二层操作-城市-北京",
+        "label": "二层操作:城市->北京",
+        "finalUrl": "http://127.0.0.1:49023/explore",
+        "title": "城事志",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89023/probe/codex-final-20260604114527/may-89023-final-20260604114527-structure-07-二层操作-城市-北京.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89023/probe/codex-final-20260604114527/may-89023-final-20260604114527-structure-07-二层操作-城市-北京.png",
+        "elementCount": 158,
+        "interactiveCount": 28,
+        "interactiveLabels": [
+          "城 城事志",
+          "搜索内容、话题、用户...",
+          "首页",
+          "发现",
+          "创作",
+          "notifications",
+          "话题",
+          "热门",
+          "城市",
+          "北京",
+          "上海",
+          "广州",
+          "深圳",
+          "杭州",
+          "成都",
+          "重庆",
+          "武汉",
+          "西安",
+          "南京",
+          "归档到合集",
+          "t3 1",
+          "t1 1",
+          "文章 北京 北京胡同里的隐藏咖啡馆 发现北京胡同深处的隐藏咖啡馆，桂花拿铁和手冲埃塞都很推荐 #t3 #t1 探店达人 1 1 0 2026-06-03 20:06",
+          "创作中心"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89023-final-20260604114527-structure-08-操作-话题",
+        "label": "操作:话题",
+        "finalUrl": "http://127.0.0.1:49023/explore",
+        "title": "城事志",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89023/probe/codex-final-20260604114527/may-89023-final-20260604114527-structure-08-操作-话题.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89023/probe/codex-final-20260604114527/may-89023-final-20260604114527-structure-08-操作-话题.png",
+        "elementCount": 177,
+        "interactiveCount": 23,
+        "interactiveLabels": [
+          "城 城事志",
+          "搜索内容、话题、用户...",
+          "首页",
+          "发现",
+          "创作",
+          "notifications",
+          "话题",
+          "热门",
+          "城市",
+          "美食探店 官方 1 篇内容 活跃 发现城市中的美味餐厅和小吃",
+          "城市漫步 官方 1 篇内容 活跃 用脚步丈量城市的每一个角落",
+          "咖啡与茶 1 篇内容 活跃 城市中的咖啡馆与茶空间",
+          "文艺空间 官方 0 篇内容 策划中 美术馆、书店、剧场与展览",
+          "户外运动 官方 0 篇内容 策划中 骑行、跑步、徒步与更多",
+          "市集与夜市 0 篇内容 策划中 逛市集、淘好物、品夜市",
+          "家居生活 0 篇内容 策划中 打造理想中的居住空间",
+          "宠物日常 0 篇内容 策划中 与毛孩子一起的城市生活",
+          "摄影打卡 1 篇内容 活跃 记录城市的美丽瞬间",
+          "本地攻略 官方 0 篇内容 策划中 最地道的城市生活指南",
+          "创作中心"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89023-final-20260604114527-structure-09-导航-美食探店",
+        "label": "导航:美食探店",
+        "finalUrl": "http://127.0.0.1:49023/topic/food",
+        "title": "城事志",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89023/probe/codex-final-20260604114527/may-89023-final-20260604114527-structure-09-导航-美食探店.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89023/probe/codex-final-20260604114527/may-89023-final-20260604114527-structure-09-导航-美食探店.png",
+        "elementCount": 205,
+        "interactiveCount": 13,
+        "interactiveLabels": [
+          "城 城事志",
+          "搜索内容、话题、用户...",
+          "首页",
+          "发现",
+          "创作",
+          "notifications",
+          "关注话题",
+          "审核留痕",
+          "文章 北京 北京胡同里的隐藏咖啡馆 发现北京胡同深处的隐藏咖啡馆，桂花拿铁和手冲埃塞都很推荐 #t3 #t1 探店达人 1 1 0 2026-06-03 20:06",
+          "创作中心"
+        ]
+      }
+    ]
+  },
+  "screenshotMetrics": {
+    "width": 1792,
+    "height": 1004,
+    "scrollWidth": 1760,
+    "scrollHeight": 1004
+  },
+  "initialBodyTextPreview": "城\n城事志\n首页\n发现\n创作\n推荐\n关注\n最新\n热门\n城市：\n0\n笔记\n上海\n周末City Walk：从法租界到外滩\n\n上海周末City Walk路线推荐，从法租界漫步到外滩\n\n#t2\n#t9\n探店达人\n1\n1\n0\n2026-06-03 20:06\n0\n文章\n北京\n北京胡同里的隐藏咖啡馆\n\n发现北京胡同深处的隐藏咖啡馆，桂花拿铁和手冲埃塞都很推荐\n\n#t3\n#t1\n探店达人\n1\n1\n0\n2026-06-03 20:06\n0\n笔记\n上海\nTest Post\ntestuser\n0\n0\n0\n2026-06-03 19:17\n热门话题\n#美食探店\n1 篇\n#城市漫步\n1 篇\n#咖啡与茶\n1 篇\n#文艺空间\n0 篇\n#户外运动\n0 篇\n#市集与夜市\n0 篇\n#家居生活\n0 篇\n#宠物日常\n0 篇\n#摄影打卡\n1 篇\n#本地攻略\n0 篇\n开始创作\n城\n城事志\n\n城市生活方式内容共创平台，记录城市点滴，分享美好生活。\n\n快速链接\n发现\n创作中心\n关于\n\n让每一座城市的故事被看见\n\n© 2024 城事志 All rights reserved.",
+  "bodyTextPreview": "城\n城事志\n首页\n发现\n创作\n推荐\n关注\n最新\n热门\n城市：\n0\n笔记\n上海\n周末City Walk：从法租界到外滩\n\n上海周末City Walk路线推荐，从法租界漫步到外滩\n\n#t2\n#t9\n探店达人\n1\n1\n0\n2026-06-03 20:06\n0\n文章\n北京\n北京胡同里的隐藏咖啡馆\n\n发现北京胡同深处的隐藏咖啡馆，桂花拿铁和手冲埃塞都很推荐\n\n#t3\n#t1\n探店达人\n1\n1\n0\n2026-06-03 20:06\n0\n笔记\n上海\nTest Post\ntestuser\n0\n0\n0\n2026-06-03 19:17\n热门话题\n#美食探店\n1 篇\n#城市漫步\n1 篇\n#咖啡与茶\n1 篇\n#文艺空间\n0 篇\n#户外运动\n0 篇\n#市集与夜市\n0 篇\n#家居生活\n0 篇\n#宠物日常\n0 篇\n#摄影打卡\n1 篇\n#本地攻略\n0 篇\n开始创作\n城\n城事志\n\n城市生活方式内容共创平台，记录城市点滴，分享美好生活。\n\n快速链接\n发现\n创作中心\n关于\n\n让每一座城市的故事被看见\n\n© 2024 城事志 All rights reserved.",
+  "apiBase": "",
+  "businessGoalPreview": "",
+  "apiResponses": [
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49023/api/topics?limit=10"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49023/api/contents?page=1&pageSize=12&recommend=1"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49023/api/auth/me"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49023/api/notifications/unread-count"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49023/api/topics?limit=10"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49023/api/contents?page=1&pageSize=12&recommend=1"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49023/api/auth/me"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49023/api/notifications/unread-count"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49023/api/topics?limit=20"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49023/api/contents?sort=hot&limit=6"
+    },
+    {
+      "method": "GET",
+      "status": 500,
+      "url": "http://127.0.0.1:49023/api/contents?q=%E6%B5%8B%E8%AF%95&limit=20"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49023/api/auth/me"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49023/api/notifications/unread-count"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49023/api/topics?limit=20"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49023/api/contents?sort=hot&limit=6"
+    },
+    {
+      "method": "GET",
+      "status": 500,
+      "url": "http://127.0.0.1:49023/api/contents?q=%E6%B5%8B%E8%AF%95&limit=20"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49023/api/topics?limit=10"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49023/api/contents?page=1&pageSize=12&recommend=1"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49023/api/auth/me"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49023/api/notifications/unread-count"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49023/api/topics?limit=10"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49023/api/contents?page=1&pageSize=12&recommend=1"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49023/api/auth/me"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49023/api/notifications/unread-count"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49023/api/contents?page=1&pageSize=12&following=1"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49023/api/topics?limit=10"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49023/api/contents?page=1&pageSize=12&recommend=1"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49023/api/auth/me"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49023/api/notifications/unread-count"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49023/api/topics?limit=10"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49023/api/contents?page=1&pageSize=12&recommend=1"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49023/api/auth/me"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49023/api/notifications/unread-count"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49023/api/contents?page=1&pageSize=12&sort=hot"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49023/api/topics?limit=10"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49023/api/contents?page=1&pageSize=12&recommend=1"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49023/api/auth/me"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49023/api/notifications/unread-count"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49023/api/topics?limit=10"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49023/api/contents?page=1&pageSize=12&recommend=1"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49023/api/auth/me"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49023/api/notifications/unread-count"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49023/api/topics?limit=20"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49023/api/contents?sort=hot&limit=6"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49023/api/auth/me"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49023/api/notifications/unread-count"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49023/api/topics?limit=20"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49023/api/contents?sort=hot&limit=6"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49023/api/contents?city=%E5%8C%97%E4%BA%AC&limit=12"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49023/api/topics/food"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49023/api/topics/food/contents"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49023/api/auth/me"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49023/api/notifications/unread-count"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49023/api/topics/food"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49023/api/topics/food/contents"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49023/api/topics?limit=10"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49023/api/contents?page=1&pageSize=12&recommend=1"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49023/api/auth/me"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49023/api/notifications/unread-count"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49023/api/topics?limit=10"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49023/api/contents?page=1&pageSize=12&recommend=1"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49023/api/auth/me"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49023/api/notifications/unread-count"
+    }
+  ],
+  "apiChecks": [],
+  "dialogs": [],
+  "consoleMessages": [
+    {
+      "type": "debug",
+      "text": "[vite] connecting...",
+      "location": {
+        "url": "http://127.0.0.1:49023/@vite/client",
+        "lineNumber": 494,
+        "columnNumber": 8
+      }
+    },
+    {
+      "type": "debug",
+      "text": "[vite] connected.",
+      "location": {
+        "url": "http://127.0.0.1:49023/@vite/client",
+        "lineNumber": 617,
+        "columnNumber": 14
+      }
+    },
+    {
+      "type": "info",
+      "text": "%cDownload the React DevTools for a better development experience: https://reactjs.org/link/react-devtools font-weight:bold",
+      "location": {
+        "url": "http://127.0.0.1:49023/node_modules/.vite/deps/chunk-PJEEZAML.js?v=2b387eba",
+        "lineNumber": 21550,
+        "columnNumber": 24
+      }
+    },
+    {
+      "type": "warning",
+      "text": "⚠️ React Router Future Flag Warning: React Router will begin wrapping state updates in `React.startTransition` in v7. You can use the `v7_startTransition` future flag to opt-in early. For more information, see https://reactrouter.com/v6/upgrading/future#v7_starttransition.",
+      "location": {
+        "url": "http://127.0.0.1:49023/node_modules/.vite/deps/react-router-dom.js?v=2b387eba",
+        "lineNumber": 4426,
+        "columnNumber": 12
+      }
+    },
+    {
+      "type": "warning",
+      "text": "⚠️ React Router Future Flag Warning: Relative route resolution within Splat routes is changing in v7. You can use the `v7_relativeSplatPath` future flag to opt-in early. For more information, see https://reactrouter.com/v6/upgrading/future#v7_relativesplatpath.",
+      "location": {
+        "url": "http://127.0.0.1:49023/node_modules/.vite/deps/react-router-dom.js?v=2b387eba",
+        "lineNumber": 4426,
+        "columnNumber": 12
+      }
+    },
+    {
+      "type": "error",
+      "text": "Failed to load resource: the server responded with a status of 500 (Internal Server Error)",
+      "location": {
+        "url": "http://127.0.0.1:49023/api/contents?q=%E6%B5%8B%E8%AF%95&limit=20",
+        "lineNumber": 0,
+        "columnNumber": 0
+      }
+    },
+    {
+      "type": "error",
+      "text": "Failed to load resource: the server responded with a status of 500 (Internal Server Error)",
+      "location": {
+        "url": "http://127.0.0.1:49023/api/contents?q=%E6%B5%8B%E8%AF%95&limit=20",
+        "lineNumber": 0,
+        "columnNumber": 0
+      }
+    },
+    {
+      "type": "debug",
+      "text": "[vite] connecting...",
+      "location": {
+        "url": "http://127.0.0.1:49023/@vite/client",
+        "lineNumber": 494,
+        "columnNumber": 8
+      }
+    },
+    {
+      "type": "debug",
+      "text": "[vite] connected.",
+      "location": {
+        "url": "http://127.0.0.1:49023/@vite/client",
+        "lineNumber": 617,
+        "columnNumber": 14
+      }
+    },
+    {
+      "type": "info",
+      "text": "%cDownload the React DevTools for a better development experience: https://reactjs.org/link/react-devtools font-weight:bold",
+      "location": {
+        "url": "http://127.0.0.1:49023/node_modules/.vite/deps/chunk-PJEEZAML.js?v=2b387eba",
+        "lineNumber": 21550,
+        "columnNumber": 24
+      }
+    },
+    {
+      "type": "warning",
+      "text": "⚠️ React Router Future Flag Warning: React Router will begin wrapping state updates in `React.startTransition` in v7. You can use the `v7_startTransition` future flag to opt-in early. For more information, see https://reactrouter.com/v6/upgrading/future#v7_starttransition.",
+      "location": {
+        "url": "http://127.0.0.1:49023/node_modules/.vite/deps/react-router-dom.js?v=2b387eba",
+        "lineNumber": 4426,
+        "columnNumber": 12
+      }
+    },
+    {
+      "type": "warning",
+      "text": "⚠️ React Router Future Flag Warning: Relative route resolution within Splat routes is changing in v7. You can use the `v7_relativeSplatPath` future flag to opt-in early. For more information, see https://reactrouter.com/v6/upgrading/future#v7_relativesplatpath.",
+      "location": {
+        "url": "http://127.0.0.1:49023/node_modules/.vite/deps/react-router-dom.js?v=2b387eba",
+        "lineNumber": 4426,
+        "columnNumber": 12
+      }
+    },
+    {
+      "type": "debug",
+      "text": "[vite] connecting...",
+      "location": {
+        "url": "http://127.0.0.1:49023/@vite/client",
+        "lineNumber": 494,
+        "columnNumber": 8
+      }
+    },
+    {
+      "type": "debug",
+      "text": "[vite] connected.",
+      "location": {
+        "url": "http://127.0.0.1:49023/@vite/client",
+        "lineNumber": 617,
+        "columnNumber": 14
+      }
+    },
+    {
+      "type": "info",
+      "text": "%cDownload the React DevTools for a better development experience: https://reactjs.org/link/react-devtools font-weight:bold",
+      "location": {
+        "url": "http://127.0.0.1:49023/node_modules/.vite/deps/chunk-PJEEZAML.js?v=2b387eba",
+        "lineNumber": 21550,
+        "columnNumber": 24
+      }
+    },
+    {
+      "type": "warning",
+      "text": "⚠️ React Router Future Flag Warning: React Router will begin wrapping state updates in `React.startTransition` in v7. You can use the `v7_startTransition` future flag to opt-in early. For more information, see https://reactrouter.com/v6/upgrading/future#v7_starttransition.",
+      "location": {
+        "url": "http://127.0.0.1:49023/node_modules/.vite/deps/react-router-dom.js?v=2b387eba",
+        "lineNumber": 4426,
+        "columnNumber": 12
+      }
+    },
+    {
+      "type": "warning",
+      "text": "⚠️ React Router Future Flag Warning: Relative route resolution within Splat routes is changing in v7. You can use the `v7_relativeSplatPath` future flag to opt-in early. For more information, see https://reactrouter.com/v6/upgrading/future#v7_relativesplatpath.",
+      "location": {
+        "url": "http://127.0.0.1:49023/node_modules/.vite/deps/react-router-dom.js?v=2b387eba",
+        "lineNumber": 4426,
+        "columnNumber": 12
+      }
+    },
+    {
+      "type": "debug",
+      "text": "[vite] connecting...",
+      "location": {
+        "url": "http://127.0.0.1:49023/@vite/client",
+        "lineNumber": 494,
+        "columnNumber": 8
+      }
+    },
+    {
+      "type": "debug",
+      "text": "[vite] connected.",
+      "location": {
+        "url": "http://127.0.0.1:49023/@vite/client",
+        "lineNumber": 617,
+        "columnNumber": 14
+      }
+    },
+    {
+      "type": "info",
+      "text": "%cDownload the React DevTools for a better development experience: https://reactjs.org/link/react-devtools font-weight:bold",
+      "location": {
+        "url": "http://127.0.0.1:49023/node_modules/.vite/deps/chunk-PJEEZAML.js?v=2b387eba",
+        "lineNumber": 21550,
+        "columnNumber": 24
+      }
+    },
+    {
+      "type": "warning",
+      "text": "⚠️ React Router Future Flag Warning: React Router will begin wrapping state updates in `React.startTransition` in v7. You can use the `v7_startTransition` future flag to opt-in early. For more information, see https://reactrouter.com/v6/upgrading/future#v7_starttransition.",
+      "location": {
+        "url": "http://127.0.0.1:49023/node_modules/.vite/deps/react-router-dom.js?v=2b387eba",
+        "lineNumber": 4426,
+        "columnNumber": 12
+      }
+    },
+    {
+      "type": "warning",
+      "text": "⚠️ React Router Future Flag Warning: Relative route resolution within Splat routes is changing in v7. You can use the `v7_relativeSplatPath` future flag to opt-in early. For more information, see https://reactrouter.com/v6/upgrading/future#v7_relativesplatpath.",
+      "location": {
+        "url": "http://127.0.0.1:49023/node_modules/.vite/deps/react-router-dom.js?v=2b387eba",
+        "lineNumber": 4426,
+        "columnNumber": 12
+      }
+    },
+    {
+      "type": "debug",
+      "text": "[vite] connecting...",
+      "location": {
+        "url": "http://127.0.0.1:49023/@vite/client",
+        "lineNumber": 494,
+        "columnNumber": 8
+      }
+    },
+    {
+      "type": "debug",
+      "text": "[vite] connected.",
+      "location": {
+        "url": "http://127.0.0.1:49023/@vite/client",
+        "lineNumber": 617,
+        "columnNumber": 14
+      }
+    },
+    {
+      "type": "info",
+      "text": "%cDownload the React DevTools for a better development experience: https://reactjs.org/link/react-devtools font-weight:bold",
+      "location": {
+        "url": "http://127.0.0.1:49023/node_modules/.vite/deps/chunk-PJEEZAML.js?v=2b387eba",
+        "lineNumber": 21550,
+        "columnNumber": 24
+      }
+    },
+    {
+      "type": "warning",
+      "text": "⚠️ React Router Future Flag Warning: React Router will begin wrapping state updates in `React.startTransition` in v7. You can use the `v7_startTransition` future flag to opt-in early. For more information, see https://reactrouter.com/v6/upgrading/future#v7_starttransition.",
+      "location": {
+        "url": "http://127.0.0.1:49023/node_modules/.vite/deps/react-router-dom.js?v=2b387eba",
+        "lineNumber": 4426,
+        "columnNumber": 12
+      }
+    },
+    {
+      "type": "warning",
+      "text": "⚠️ React Router Future Flag Warning: Relative route resolution within Splat routes is changing in v7. You can use the `v7_relativeSplatPath` future flag to opt-in early. For more information, see https://reactrouter.com/v6/upgrading/future#v7_relativesplatpath.",
+      "location": {
+        "url": "http://127.0.0.1:49023/node_modules/.vite/deps/react-router-dom.js?v=2b387eba",
+        "lineNumber": 4426,
+        "columnNumber": 12
+      }
+    }
+  ],
+  "requestFailures": [],
+  "responseErrors": [
+    {
+      "status": 500,
+      "url": "http://127.0.0.1:49023/api/contents?q=%E6%B5%8B%E8%AF%95&limit=20"
+    },
+    {
+      "status": 500,
+      "url": "http://127.0.0.1:49023/api/contents?q=%E6%B5%8B%E8%AF%95&limit=20"
+    }
+  ]
+}

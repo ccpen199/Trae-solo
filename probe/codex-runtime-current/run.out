@@ -1,0 +1,1332 @@
+{
+  "ok": true,
+  "generatedAt": "2026-06-04T06:58:43.028Z",
+  "order": "may-89023",
+  "roundIndex": 99,
+  "captureId": "codex-may-89023-current",
+  "url": "http://127.0.0.1:49023/",
+  "initialUrl": "http://127.0.0.1:49023/",
+  "finalUrl": "http://127.0.0.1:49023/",
+  "status": 200,
+  "title": "城事志",
+  "initialTitle": "城事志",
+  "navigationError": "",
+  "screenshotPath": "probe/codex-runtime-current/codex-may-89023-current-frontend.png",
+  "screenshotPaths": [
+    "/Users/chen/Documents/trae_projects/local_projects/may-89023/probe/codex-runtime-current/codex-may-89023-current-structure-01-首屏.png",
+    "/Users/chen/Documents/trae_projects/local_projects/may-89023/probe/codex-runtime-current/codex-may-89023-current-structure-02-导航-首页.png",
+    "/Users/chen/Documents/trae_projects/local_projects/may-89023/probe/codex-runtime-current/codex-may-89023-current-structure-03-操作-关注.png"
+  ],
+  "issueTextPreview": "runtime start report was not generated；页面结构采集已读取到业务内容",
+  "targetReason": "页面存在搜索/发现入口，优先复验检索链路；页面存在内容列表，优先复验详情链路",
+  "targetKind": "search",
+  "targetMatched": true,
+  "targetActions": [
+    {
+      "action": "fill-search",
+      "label": "搜索输入框",
+      "ok": true
+    },
+    {
+      "action": "target-verify",
+      "label": "页面存在搜索/发现入口，优先复验检索链路",
+      "ok": true,
+      "finalUrl": "http://127.0.0.1:49023/explore?q=%E6%B5%8B%E8%AF%95"
+    }
+  ],
+  "authFlow": {
+    "detected": false,
+    "attempted": false,
+    "success": false,
+    "finalUrl": "http://127.0.0.1:49023/",
+    "message": "",
+    "actions": []
+  },
+  "businessAudit": {
+    "actions": [
+      {
+        "action": "click",
+        "label": "导航:首页",
+        "ok": false,
+        "error": "locator.click: Timeout 900ms exceeded.\nCall log:\n\u001b[2m  - waiting for getByRole('link', { name: /^\\s*首页\\s*$/ }).first()\u001b[22m\n"
+      },
+      {
+        "action": "click",
+        "label": "导航:首页",
+        "ok": false,
+        "error": "locator.click: Timeout 900ms exceeded.\nCall log:\n\u001b[2m  - waiting for locator('a,button,[role=\"button\"],[role=\"menuitem\"],[onclick],[tabindex]:not([tabindex=\"-1\"]),[class*=\"nav-item\" i],[class*=\"menu-item\" i],[class*=\"men"
+      },
+      {
+        "action": "click",
+        "label": "导航:首页",
+        "ok": true
+      },
+      {
+        "action": "click",
+        "label": "操作:关注",
+        "ok": true,
+        "result": {
+          "ok": true,
+          "matched": 1
+        }
+      }
+    ],
+    "snapshots": [
+      {
+        "label": "首屏",
+        "url": "http://127.0.0.1:49023/",
+        "title": "城事志",
+        "headings": [
+          "周末City Walk：从法租界到外滩",
+          "北京胡同里的隐藏咖啡馆",
+          "Test Post",
+          "热门话题"
+        ],
+        "navLabels": [
+          "首页",
+          "发现",
+          "美食探店 1 篇",
+          "美食探店",
+          "城市漫步 1 篇",
+          "城市漫步",
+          "咖啡与茶 1 篇",
+          "咖啡与茶",
+          "文艺空间 0 篇",
+          "文艺空间",
+          "户外运动 0 篇",
+          "户外运动",
+          "市集与夜市 0 篇",
+          "市集与夜市",
+          "家居生活 0 篇",
+          "家居生活",
+          "宠物日常 0 篇",
+          "宠物日常",
+          "摄影打卡 1 篇",
+          "摄影打卡",
+          "本地攻略 0 篇",
+          "本地攻略",
+          "开始创作"
+        ],
+        "buttons": [
+          "推荐",
+          "关注",
+          "最新",
+          "热门"
+        ],
+        "links": [
+          "城 城事志",
+          "首页",
+          "发现",
+          "创作",
+          "笔记 上海 Test Post testuser 0 0 0 2026-06-03 19:17",
+          "#美食探店",
+          "#城市漫步",
+          "#咖啡与茶",
+          "#文艺空间",
+          "#户外运动",
+          "#市集与夜市",
+          "#家居生活",
+          "#宠物日常",
+          "#摄影打卡",
+          "#本地攻略",
+          "开始创作",
+          "创作中心"
+        ],
+        "inputs": [
+          {
+            "tag": "input",
+            "type": "text",
+            "placeholder": "搜索内容、话题、用户...",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "text",
+            "placeholder": "筛选城市",
+            "name": "",
+            "label": ""
+          }
+        ],
+        "tables": [],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "城城事志首页发现创作推荐关注最新热门0笔记上海周末City Walk：从法租界到外滩上海周末City Walk路线推荐，从法租界漫步到外滩探店达人1102026-06-03 20:060文章北京北京胡同里的隐藏咖啡馆发现北京胡同深处的隐藏咖啡馆，桂花拿铁和手冲埃塞都很推荐探店达人1102026-06-03 20:060笔记上海Test Posttestuser0002026-06-03 19:17热门话题#美食探店1 篇#城市漫步1 篇#咖啡与茶1 篇#文艺空间0 篇#户外运动0 篇#市集与夜市0 篇#家居生活0 篇#宠物日常0 篇#摄影打卡1 篇#本地攻略0 篇开始创作城城事志城市生活方式内容共创平台，记录城市点滴，分享美好生活。快速链接发现创作中心关于让每一座城市的故事被看见© 2024 城事志 All rights reserved.",
+        "layout": {
+          "viewportWidth": 1504,
+          "viewportHeight": 1000,
+          "scrollWidth": 1504,
+          "scrollHeight": 1000,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "codex-may-89023-current-structure-01-首屏",
+          "label": "首屏",
+          "finalUrl": "http://127.0.0.1:49023/",
+          "title": "城事志",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89023/probe/codex-runtime-current/codex-may-89023-current-structure-01-首屏.json",
+          "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89023/probe/codex-runtime-current/codex-may-89023-current-structure-01-首屏.png",
+          "elementCount": 197,
+          "interactiveCount": 29,
+          "interactiveLabels": [
+            "城 城事志",
+            "搜索内容、话题、用户...",
+            "首页",
+            "发现",
+            "创作",
+            "notifications",
+            "推荐",
+            "关注",
+            "最新",
+            "热门",
+            "筛选城市",
+            "笔记 上海 周末City Walk：从法租界到外滩 上海周末City Walk路线推荐，从法租界漫步到外滩 探店达人 1 1 0 2026-06-03 20:06",
+            "文章 北京 北京胡同里的隐藏咖啡馆 发现北京胡同深处的隐藏咖啡馆，桂花拿铁和手冲埃塞都很推荐 探店达人 1 1 0 2026-06-03 20:06",
+            "笔记 上海 Test Post testuser 0 0 0 2026-06-03 19:17",
+            "美食探店",
+            "城市漫步",
+            "咖啡与茶",
+            "文艺空间",
+            "户外运动",
+            "市集与夜市",
+            "家居生活",
+            "宠物日常",
+            "摄影打卡",
+            "本地攻略",
+            "开始创作",
+            "创作中心"
+          ]
+        }
+      },
+      {
+        "label": "导航:首页",
+        "url": "http://127.0.0.1:49023/",
+        "title": "城事志",
+        "headings": [
+          "周末City Walk：从法租界到外滩",
+          "北京胡同里的隐藏咖啡馆",
+          "Test Post",
+          "热门话题"
+        ],
+        "navLabels": [
+          "首页",
+          "发现",
+          "美食探店 1 篇",
+          "美食探店",
+          "城市漫步 1 篇",
+          "城市漫步",
+          "咖啡与茶 1 篇",
+          "咖啡与茶",
+          "文艺空间 0 篇",
+          "文艺空间",
+          "户外运动 0 篇",
+          "户外运动",
+          "市集与夜市 0 篇",
+          "市集与夜市",
+          "家居生活 0 篇",
+          "家居生活",
+          "宠物日常 0 篇",
+          "宠物日常",
+          "摄影打卡 1 篇",
+          "摄影打卡",
+          "本地攻略 0 篇",
+          "本地攻略",
+          "开始创作"
+        ],
+        "buttons": [
+          "推荐",
+          "关注",
+          "最新",
+          "热门"
+        ],
+        "links": [
+          "城 城事志",
+          "首页",
+          "发现",
+          "创作",
+          "笔记 上海 Test Post testuser 0 0 0 2026-06-03 19:17",
+          "#美食探店",
+          "#城市漫步",
+          "#咖啡与茶",
+          "#文艺空间",
+          "#户外运动",
+          "#市集与夜市",
+          "#家居生活",
+          "#宠物日常",
+          "#摄影打卡",
+          "#本地攻略",
+          "开始创作",
+          "创作中心"
+        ],
+        "inputs": [
+          {
+            "tag": "input",
+            "type": "text",
+            "placeholder": "搜索内容、话题、用户...",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "text",
+            "placeholder": "筛选城市",
+            "name": "",
+            "label": ""
+          }
+        ],
+        "tables": [],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "城城事志首页发现创作推荐关注最新热门0笔记上海周末City Walk：从法租界到外滩上海周末City Walk路线推荐，从法租界漫步到外滩探店达人1102026-06-03 20:060文章北京北京胡同里的隐藏咖啡馆发现北京胡同深处的隐藏咖啡馆，桂花拿铁和手冲埃塞都很推荐探店达人1102026-06-03 20:060笔记上海Test Posttestuser0002026-06-03 19:17热门话题#美食探店1 篇#城市漫步1 篇#咖啡与茶1 篇#文艺空间0 篇#户外运动0 篇#市集与夜市0 篇#家居生活0 篇#宠物日常0 篇#摄影打卡1 篇#本地攻略0 篇开始创作城城事志城市生活方式内容共创平台，记录城市点滴，分享美好生活。快速链接发现创作中心关于让每一座城市的故事被看见© 2024 城事志 All rights reserved.",
+        "layout": {
+          "viewportWidth": 1536,
+          "viewportHeight": 1000,
+          "scrollWidth": 1536,
+          "scrollHeight": 1000,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "codex-may-89023-current-structure-02-导航-首页",
+          "label": "导航:首页",
+          "finalUrl": "http://127.0.0.1:49023/",
+          "title": "城事志",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89023/probe/codex-runtime-current/codex-may-89023-current-structure-02-导航-首页.json",
+          "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89023/probe/codex-runtime-current/codex-may-89023-current-structure-02-导航-首页.png",
+          "elementCount": 197,
+          "interactiveCount": 29,
+          "interactiveLabels": [
+            "城 城事志",
+            "搜索内容、话题、用户...",
+            "首页",
+            "发现",
+            "创作",
+            "notifications",
+            "推荐",
+            "关注",
+            "最新",
+            "热门",
+            "筛选城市",
+            "笔记 上海 周末City Walk：从法租界到外滩 上海周末City Walk路线推荐，从法租界漫步到外滩 探店达人 1 1 0 2026-06-03 20:06",
+            "文章 北京 北京胡同里的隐藏咖啡馆 发现北京胡同深处的隐藏咖啡馆，桂花拿铁和手冲埃塞都很推荐 探店达人 1 1 0 2026-06-03 20:06",
+            "笔记 上海 Test Post testuser 0 0 0 2026-06-03 19:17",
+            "美食探店",
+            "城市漫步",
+            "咖啡与茶",
+            "文艺空间",
+            "户外运动",
+            "市集与夜市",
+            "家居生活",
+            "宠物日常",
+            "摄影打卡",
+            "本地攻略",
+            "开始创作",
+            "创作中心"
+          ]
+        }
+      },
+      {
+        "label": "操作:关注",
+        "url": "http://127.0.0.1:49023/?tab=following",
+        "title": "城事志",
+        "headings": [
+          "周末City Walk：从法租界到外滩",
+          "北京胡同里的隐藏咖啡馆",
+          "Test Post",
+          "热门话题"
+        ],
+        "navLabels": [
+          "首页",
+          "发现",
+          "美食探店 1 篇",
+          "美食探店",
+          "城市漫步 1 篇",
+          "城市漫步",
+          "咖啡与茶 1 篇",
+          "咖啡与茶",
+          "文艺空间 0 篇",
+          "文艺空间",
+          "户外运动 0 篇",
+          "户外运动",
+          "市集与夜市 0 篇",
+          "市集与夜市",
+          "家居生活 0 篇",
+          "家居生活",
+          "宠物日常 0 篇",
+          "宠物日常",
+          "摄影打卡 1 篇",
+          "摄影打卡",
+          "本地攻略 0 篇",
+          "本地攻略",
+          "开始创作"
+        ],
+        "buttons": [
+          "推荐",
+          "关注",
+          "最新",
+          "热门"
+        ],
+        "links": [
+          "城 城事志",
+          "首页",
+          "发现",
+          "创作",
+          "笔记 上海 Test Post testuser 0 0 0 2026-06-03 19:17",
+          "#美食探店",
+          "#城市漫步",
+          "#咖啡与茶",
+          "#文艺空间",
+          "#户外运动",
+          "#市集与夜市",
+          "#家居生活",
+          "#宠物日常",
+          "#摄影打卡",
+          "#本地攻略",
+          "开始创作",
+          "创作中心"
+        ],
+        "inputs": [
+          {
+            "tag": "input",
+            "type": "text",
+            "placeholder": "搜索内容、话题、用户...",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "text",
+            "placeholder": "筛选城市",
+            "name": "",
+            "label": ""
+          }
+        ],
+        "tables": [],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "城城事志首页发现创作推荐关注最新热门0笔记上海周末City Walk：从法租界到外滩上海周末City Walk路线推荐，从法租界漫步到外滩探店达人1102026-06-03 20:060文章北京北京胡同里的隐藏咖啡馆发现北京胡同深处的隐藏咖啡馆，桂花拿铁和手冲埃塞都很推荐探店达人1102026-06-03 20:060笔记上海Test Posttestuser0002026-06-03 19:17热门话题#美食探店1 篇#城市漫步1 篇#咖啡与茶1 篇#文艺空间0 篇#户外运动0 篇#市集与夜市0 篇#家居生活0 篇#宠物日常0 篇#摄影打卡1 篇#本地攻略0 篇开始创作城城事志城市生活方式内容共创平台，记录城市点滴，分享美好生活。快速链接发现创作中心关于让每一座城市的故事被看见© 2024 城事志 All rights reserved.",
+        "layout": {
+          "viewportWidth": 1568,
+          "viewportHeight": 1000,
+          "scrollWidth": 1568,
+          "scrollHeight": 1000,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "codex-may-89023-current-structure-03-操作-关注",
+          "label": "操作:关注",
+          "finalUrl": "http://127.0.0.1:49023/?tab=following",
+          "title": "城事志",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89023/probe/codex-runtime-current/codex-may-89023-current-structure-03-操作-关注.json",
+          "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89023/probe/codex-runtime-current/codex-may-89023-current-structure-03-操作-关注.png",
+          "elementCount": 197,
+          "interactiveCount": 29,
+          "interactiveLabels": [
+            "城 城事志",
+            "搜索内容、话题、用户...",
+            "首页",
+            "发现",
+            "创作",
+            "notifications",
+            "推荐",
+            "关注",
+            "最新",
+            "热门",
+            "筛选城市",
+            "笔记 上海 周末City Walk：从法租界到外滩 上海周末City Walk路线推荐，从法租界漫步到外滩 探店达人 1 1 0 2026-06-03 20:06",
+            "文章 北京 北京胡同里的隐藏咖啡馆 发现北京胡同深处的隐藏咖啡馆，桂花拿铁和手冲埃塞都很推荐 探店达人 1 1 0 2026-06-03 20:06",
+            "笔记 上海 Test Post testuser 0 0 0 2026-06-03 19:17",
+            "美食探店",
+            "城市漫步",
+            "咖啡与茶",
+            "文艺空间",
+            "户外运动",
+            "市集与夜市",
+            "家居生活",
+            "宠物日常",
+            "摄影打卡",
+            "本地攻略",
+            "开始创作",
+            "创作中心"
+          ]
+        }
+      }
+    ],
+    "findings": [
+      "接口 /api/auth/me 返回 HTTP 404，对应业务模块无法完成数据读取。"
+    ],
+    "actionHints": [
+      "补齐 /api/auth/me 后端接口、SQLite 数据和前端错误处理。"
+    ],
+    "emptyPages": [],
+    "overflowPages": [],
+    "blankPages": [],
+    "apiFailurePaths": [
+      "/api/auth/me"
+    ],
+    "goalTerms": [],
+    "clickedActionDescriptors": [
+      {
+        "nav": "首页",
+        "label": "关注",
+        "ordinal": 0,
+        "unsafe": false
+      }
+    ],
+    "secondaryActionClicks": 0,
+    "structureCaptures": [
+      {
+        "module": "website_structure_capture",
+        "runId": "codex-may-89023-current-structure-01-首屏",
+        "label": "首屏",
+        "finalUrl": "http://127.0.0.1:49023/",
+        "title": "城事志",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89023/probe/codex-runtime-current/codex-may-89023-current-structure-01-首屏.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89023/probe/codex-runtime-current/codex-may-89023-current-structure-01-首屏.png",
+        "elementCount": 197,
+        "interactiveCount": 29,
+        "interactiveLabels": [
+          "城 城事志",
+          "搜索内容、话题、用户...",
+          "首页",
+          "发现",
+          "创作",
+          "notifications",
+          "推荐",
+          "关注",
+          "最新",
+          "热门",
+          "筛选城市",
+          "笔记 上海 周末City Walk：从法租界到外滩 上海周末City Walk路线推荐，从法租界漫步到外滩 探店达人 1 1 0 2026-06-03 20:06",
+          "文章 北京 北京胡同里的隐藏咖啡馆 发现北京胡同深处的隐藏咖啡馆，桂花拿铁和手冲埃塞都很推荐 探店达人 1 1 0 2026-06-03 20:06",
+          "笔记 上海 Test Post testuser 0 0 0 2026-06-03 19:17",
+          "美食探店",
+          "城市漫步",
+          "咖啡与茶",
+          "文艺空间",
+          "户外运动",
+          "市集与夜市",
+          "家居生活",
+          "宠物日常",
+          "摄影打卡",
+          "本地攻略",
+          "开始创作",
+          "创作中心"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "codex-may-89023-current-structure-02-导航-首页",
+        "label": "导航:首页",
+        "finalUrl": "http://127.0.0.1:49023/",
+        "title": "城事志",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89023/probe/codex-runtime-current/codex-may-89023-current-structure-02-导航-首页.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89023/probe/codex-runtime-current/codex-may-89023-current-structure-02-导航-首页.png",
+        "elementCount": 197,
+        "interactiveCount": 29,
+        "interactiveLabels": [
+          "城 城事志",
+          "搜索内容、话题、用户...",
+          "首页",
+          "发现",
+          "创作",
+          "notifications",
+          "推荐",
+          "关注",
+          "最新",
+          "热门",
+          "筛选城市",
+          "笔记 上海 周末City Walk：从法租界到外滩 上海周末City Walk路线推荐，从法租界漫步到外滩 探店达人 1 1 0 2026-06-03 20:06",
+          "文章 北京 北京胡同里的隐藏咖啡馆 发现北京胡同深处的隐藏咖啡馆，桂花拿铁和手冲埃塞都很推荐 探店达人 1 1 0 2026-06-03 20:06",
+          "笔记 上海 Test Post testuser 0 0 0 2026-06-03 19:17",
+          "美食探店",
+          "城市漫步",
+          "咖啡与茶",
+          "文艺空间",
+          "户外运动",
+          "市集与夜市",
+          "家居生活",
+          "宠物日常",
+          "摄影打卡",
+          "本地攻略",
+          "开始创作",
+          "创作中心"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "codex-may-89023-current-structure-03-操作-关注",
+        "label": "操作:关注",
+        "finalUrl": "http://127.0.0.1:49023/?tab=following",
+        "title": "城事志",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89023/probe/codex-runtime-current/codex-may-89023-current-structure-03-操作-关注.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89023/probe/codex-runtime-current/codex-may-89023-current-structure-03-操作-关注.png",
+        "elementCount": 197,
+        "interactiveCount": 29,
+        "interactiveLabels": [
+          "城 城事志",
+          "搜索内容、话题、用户...",
+          "首页",
+          "发现",
+          "创作",
+          "notifications",
+          "推荐",
+          "关注",
+          "最新",
+          "热门",
+          "筛选城市",
+          "笔记 上海 周末City Walk：从法租界到外滩 上海周末City Walk路线推荐，从法租界漫步到外滩 探店达人 1 1 0 2026-06-03 20:06",
+          "文章 北京 北京胡同里的隐藏咖啡馆 发现北京胡同深处的隐藏咖啡馆，桂花拿铁和手冲埃塞都很推荐 探店达人 1 1 0 2026-06-03 20:06",
+          "笔记 上海 Test Post testuser 0 0 0 2026-06-03 19:17",
+          "美食探店",
+          "城市漫步",
+          "咖啡与茶",
+          "文艺空间",
+          "户外运动",
+          "市集与夜市",
+          "家居生活",
+          "宠物日常",
+          "摄影打卡",
+          "本地攻略",
+          "开始创作",
+          "创作中心"
+        ]
+      }
+    ],
+    "representativeScreenshotUrl": "http://127.0.0.1:49023/",
+    "representativeScreenshotLabel": "周末City Walk：从法租界到外滩"
+  },
+  "websiteStructureCapture": {
+    "module": "website_structure_capture",
+    "captureCount": 3,
+    "captures": [
+      {
+        "module": "website_structure_capture",
+        "runId": "codex-may-89023-current-structure-01-首屏",
+        "label": "首屏",
+        "finalUrl": "http://127.0.0.1:49023/",
+        "title": "城事志",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89023/probe/codex-runtime-current/codex-may-89023-current-structure-01-首屏.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89023/probe/codex-runtime-current/codex-may-89023-current-structure-01-首屏.png",
+        "elementCount": 197,
+        "interactiveCount": 29,
+        "interactiveLabels": [
+          "城 城事志",
+          "搜索内容、话题、用户...",
+          "首页",
+          "发现",
+          "创作",
+          "notifications",
+          "推荐",
+          "关注",
+          "最新",
+          "热门",
+          "筛选城市",
+          "笔记 上海 周末City Walk：从法租界到外滩 上海周末City Walk路线推荐，从法租界漫步到外滩 探店达人 1 1 0 2026-06-03 20:06",
+          "文章 北京 北京胡同里的隐藏咖啡馆 发现北京胡同深处的隐藏咖啡馆，桂花拿铁和手冲埃塞都很推荐 探店达人 1 1 0 2026-06-03 20:06",
+          "笔记 上海 Test Post testuser 0 0 0 2026-06-03 19:17",
+          "美食探店",
+          "城市漫步",
+          "咖啡与茶",
+          "文艺空间",
+          "户外运动",
+          "市集与夜市",
+          "家居生活",
+          "宠物日常",
+          "摄影打卡",
+          "本地攻略",
+          "开始创作",
+          "创作中心"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "codex-may-89023-current-structure-02-导航-首页",
+        "label": "导航:首页",
+        "finalUrl": "http://127.0.0.1:49023/",
+        "title": "城事志",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89023/probe/codex-runtime-current/codex-may-89023-current-structure-02-导航-首页.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89023/probe/codex-runtime-current/codex-may-89023-current-structure-02-导航-首页.png",
+        "elementCount": 197,
+        "interactiveCount": 29,
+        "interactiveLabels": [
+          "城 城事志",
+          "搜索内容、话题、用户...",
+          "首页",
+          "发现",
+          "创作",
+          "notifications",
+          "推荐",
+          "关注",
+          "最新",
+          "热门",
+          "筛选城市",
+          "笔记 上海 周末City Walk：从法租界到外滩 上海周末City Walk路线推荐，从法租界漫步到外滩 探店达人 1 1 0 2026-06-03 20:06",
+          "文章 北京 北京胡同里的隐藏咖啡馆 发现北京胡同深处的隐藏咖啡馆，桂花拿铁和手冲埃塞都很推荐 探店达人 1 1 0 2026-06-03 20:06",
+          "笔记 上海 Test Post testuser 0 0 0 2026-06-03 19:17",
+          "美食探店",
+          "城市漫步",
+          "咖啡与茶",
+          "文艺空间",
+          "户外运动",
+          "市集与夜市",
+          "家居生活",
+          "宠物日常",
+          "摄影打卡",
+          "本地攻略",
+          "开始创作",
+          "创作中心"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "codex-may-89023-current-structure-03-操作-关注",
+        "label": "操作:关注",
+        "finalUrl": "http://127.0.0.1:49023/?tab=following",
+        "title": "城事志",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89023/probe/codex-runtime-current/codex-may-89023-current-structure-03-操作-关注.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89023/probe/codex-runtime-current/codex-may-89023-current-structure-03-操作-关注.png",
+        "elementCount": 197,
+        "interactiveCount": 29,
+        "interactiveLabels": [
+          "城 城事志",
+          "搜索内容、话题、用户...",
+          "首页",
+          "发现",
+          "创作",
+          "notifications",
+          "推荐",
+          "关注",
+          "最新",
+          "热门",
+          "筛选城市",
+          "笔记 上海 周末City Walk：从法租界到外滩 上海周末City Walk路线推荐，从法租界漫步到外滩 探店达人 1 1 0 2026-06-03 20:06",
+          "文章 北京 北京胡同里的隐藏咖啡馆 发现北京胡同深处的隐藏咖啡馆，桂花拿铁和手冲埃塞都很推荐 探店达人 1 1 0 2026-06-03 20:06",
+          "笔记 上海 Test Post testuser 0 0 0 2026-06-03 19:17",
+          "美食探店",
+          "城市漫步",
+          "咖啡与茶",
+          "文艺空间",
+          "户外运动",
+          "市集与夜市",
+          "家居生活",
+          "宠物日常",
+          "摄影打卡",
+          "本地攻略",
+          "开始创作",
+          "创作中心"
+        ]
+      }
+    ]
+  },
+  "screenshotMetrics": {
+    "width": 1600,
+    "height": 1000,
+    "scrollWidth": 1568,
+    "scrollHeight": 1000
+  },
+  "initialBodyTextPreview": "城\n城事志\n首页\n发现\n创作\n推荐\n关注\n最新\n热门\n0\n笔记\n上海\n周末City Walk：从法租界到外滩\n\n上海周末City Walk路线推荐，从法租界漫步到外滩\n\n探店达人\n1\n1\n0\n2026-06-03 20:06\n0\n文章\n北京\n北京胡同里的隐藏咖啡馆\n\n发现北京胡同深处的隐藏咖啡馆，桂花拿铁和手冲埃塞都很推荐\n\n探店达人\n1\n1\n0\n2026-06-03 20:06\n0\n笔记\n上海\nTest Post\ntestuser\n0\n0\n0\n2026-06-03 19:17\n热门话题\n#美食探店\n1 篇\n#城市漫步\n1 篇\n#咖啡与茶\n1 篇\n#文艺空间\n0 篇\n#户外运动\n0 篇\n#市集与夜市\n0 篇\n#家居生活\n0 篇\n#宠物日常\n0 篇\n#摄影打卡\n1 篇\n#本地攻略\n0 篇\n开始创作\n城\n城事志\n\n城市生活方式内容共创平台，记录城市点滴，分享美好生活。\n\n快速链接\n发现\n创作中心\n关于\n\n让每一座城市的故事被看见\n\n© 2024 城事志 All rights reserved.",
+  "bodyTextPreview": "城\n城事志\n首页\n发现\n创作\n推荐\n关注\n最新\n热门\n0\n笔记\n上海\n周末City Walk：从法租界到外滩\n\n上海周末City Walk路线推荐，从法租界漫步到外滩\n\n探店达人\n1\n1\n0\n2026-06-03 20:06\n0\n文章\n北京\n北京胡同里的隐藏咖啡馆\n\n发现北京胡同深处的隐藏咖啡馆，桂花拿铁和手冲埃塞都很推荐\n\n探店达人\n1\n1\n0\n2026-06-03 20:06\n0\n笔记\n上海\nTest Post\ntestuser\n0\n0\n0\n2026-06-03 19:17\n热门话题\n#美食探店\n1 篇\n#城市漫步\n1 篇\n#咖啡与茶\n1 篇\n#文艺空间\n0 篇\n#户外运动\n0 篇\n#市集与夜市\n0 篇\n#家居生活\n0 篇\n#宠物日常\n0 篇\n#摄影打卡\n1 篇\n#本地攻略\n0 篇\n开始创作\n城\n城事志\n\n城市生活方式内容共创平台，记录城市点滴，分享美好生活。\n\n快速链接\n发现\n创作中心\n关于\n\n让每一座城市的故事被看见\n\n© 2024 城事志 All rights reserved.",
+  "apiBase": "http://127.0.0.1:59023",
+  "businessGoalPreview": "",
+  "apiResponses": [
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49023/api/topics?limit=10"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49023/api/contents?page=1&pageSize=12&recommend=1"
+    },
+    {
+      "method": "GET",
+      "status": 404,
+      "url": "http://127.0.0.1:49023/api/auth/me"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49023/api/notifications/unread-count"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49023/api/topics?limit=10"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49023/api/contents?page=1&pageSize=12&recommend=1"
+    },
+    {
+      "method": "GET",
+      "status": 404,
+      "url": "http://127.0.0.1:49023/api/auth/me"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49023/api/notifications/unread-count"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49023/api/topics?limit=20"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49023/api/contents?sort=hot&limit=6"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49023/api/contents?q=%E6%B5%8B%E8%AF%95&limit=20"
+    },
+    {
+      "method": "GET",
+      "status": 404,
+      "url": "http://127.0.0.1:49023/api/auth/me"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49023/api/notifications/unread-count"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49023/api/topics?limit=20"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49023/api/contents?sort=hot&limit=6"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49023/api/contents?q=%E6%B5%8B%E8%AF%95&limit=20"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49023/api/topics?limit=10"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49023/api/contents?page=1&pageSize=12&recommend=1"
+    },
+    {
+      "method": "GET",
+      "status": 404,
+      "url": "http://127.0.0.1:49023/api/auth/me"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49023/api/notifications/unread-count"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49023/api/topics?limit=10"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49023/api/contents?page=1&pageSize=12&recommend=1"
+    },
+    {
+      "method": "GET",
+      "status": 404,
+      "url": "http://127.0.0.1:49023/api/auth/me"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49023/api/notifications/unread-count"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49023/api/contents?page=1&pageSize=12&following=1"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49023/api/topics?limit=10"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49023/api/contents?page=1&pageSize=12&recommend=1"
+    },
+    {
+      "method": "GET",
+      "status": 404,
+      "url": "http://127.0.0.1:49023/api/auth/me"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49023/api/notifications/unread-count"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49023/api/topics?limit=10"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49023/api/contents?page=1&pageSize=12&recommend=1"
+    },
+    {
+      "method": "GET",
+      "status": 404,
+      "url": "http://127.0.0.1:49023/api/auth/me"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49023/api/notifications/unread-count"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49023/api/topics?limit=10"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49023/api/contents?page=1&pageSize=12&recommend=1"
+    },
+    {
+      "method": "GET",
+      "status": 404,
+      "url": "http://127.0.0.1:49023/api/auth/me"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49023/api/notifications/unread-count"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49023/api/topics?limit=10"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49023/api/contents?page=1&pageSize=12&recommend=1"
+    },
+    {
+      "method": "GET",
+      "status": 404,
+      "url": "http://127.0.0.1:49023/api/auth/me"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49023/api/notifications/unread-count"
+    }
+  ],
+  "apiChecks": [
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59023/api/health",
+      "path": "/api/health",
+      "status": 200,
+      "ok": true,
+      "bodyPreview": "{\"code\":0,\"data\":{\"status\":\"ok\",\"timestamp\":\"2026-06-04T06:58:10.781Z\"},\"message\":\"ok\"}"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59023/api/topics?limit=10",
+      "path": "/api/topics?limit=10",
+      "status": 200,
+      "ok": true,
+      "bodyPreview": "{\"code\":0,\"data\":[{\"id\":\"t1\",\"name\":\"美食探店\",\"slug\":\"food\",\"description\":\"发现城市中的美味餐厅和小吃\",\"cover_image\":null,\"category\":\"lifestyle\",\"post_count\":1,\"follow_count\":1,\"is_hot\":1,\"is_official\":1,\"sort_order\":1,\"status\":\"active\",\"created_at\":\"2026-06-03 16:15:35\",\"updated_at\":\"2026-06-03 16:15:35\"},{\"id\":\"t2\",\"name\":\"城市漫步\",\"slug\":\"citywalk\",\"description\":\"用脚步丈量城市的每一个角落\",\"cover_image\":null,\"category\":\"lifestyle\",\"post_count\":1,\"follow_count\":0,\"is_hot\":1,\"is_official\":1,\"sort_order\":2,\"status\":\"active\",\""
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59023/api/contents?page=1&pageSize=12&recommend=1",
+      "path": "/api/contents?page=1&pageSize=12&recommend=1",
+      "status": 200,
+      "ok": true,
+      "bodyPreview": "{\"code\":0,\"data\":{\"list\":[{\"id\":\"454fb79d-09c0-40fc-8b83-f47bc7c71089\",\"user_id\":\"9d773475-b416-4ca6-8bb5-998e9fcf4641\",\"title\":\"周末City Walk：从法租界到外滩\",\"body\":\"<p>上海的周末，最适合来一场City Walk。从梧桐树掩映的法租界出发，沿着老洋房林立的街道慢慢走向外滩。</p><p>路线推荐：武康路 → 安福路 → 巨鹿路 → 外滩。全程约3小时，沿途有无数值得拍照打卡的角落。</p>\",\"content_type\":\"note\",\"summary\":\"上海周末City Walk路线推荐，从法租界漫步到外滩\",\"cover_image\":null,\"media_urls\":\"[]\",\"topic_ids\":\"[\\\"t2\\\",\\\"t9\\\"]\",\"city\":\"上海\",\"tags\":\"[\\\"CityWalk\\\",\\\"上海\\\",\\\"周末\\\",\\\"外滩\\\"]\",\"view_count\":1,\"like_count\":1,\"comment_c"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59023/api/auth/me",
+      "path": "/api/auth/me",
+      "status": 401,
+      "ok": false,
+      "bodyPreview": "{\"code\":1,\"message\":\"未提供认证令牌\"}"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59023/api/notifications/unread-count",
+      "path": "/api/notifications/unread-count",
+      "status": 401,
+      "ok": false,
+      "bodyPreview": "{\"code\":1,\"message\":\"未提供认证令牌\"}"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59023/api/topics?limit=20",
+      "path": "/api/topics?limit=20",
+      "status": 200,
+      "ok": true,
+      "bodyPreview": "{\"code\":0,\"data\":[{\"id\":\"t1\",\"name\":\"美食探店\",\"slug\":\"food\",\"description\":\"发现城市中的美味餐厅和小吃\",\"cover_image\":null,\"category\":\"lifestyle\",\"post_count\":1,\"follow_count\":1,\"is_hot\":1,\"is_official\":1,\"sort_order\":1,\"status\":\"active\",\"created_at\":\"2026-06-03 16:15:35\",\"updated_at\":\"2026-06-03 16:15:35\"},{\"id\":\"t2\",\"name\":\"城市漫步\",\"slug\":\"citywalk\",\"description\":\"用脚步丈量城市的每一个角落\",\"cover_image\":null,\"category\":\"lifestyle\",\"post_count\":1,\"follow_count\":0,\"is_hot\":1,\"is_official\":1,\"sort_order\":2,\"status\":\"active\",\""
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59023/api/contents?sort=hot&limit=6",
+      "path": "/api/contents?sort=hot&limit=6",
+      "status": 200,
+      "ok": true,
+      "bodyPreview": "{\"code\":0,\"data\":{\"list\":[{\"id\":\"a25d83bc-4843-463f-99e4-90a696cd65af\",\"user_id\":\"9d773475-b416-4ca6-8bb5-998e9fcf4641\",\"title\":\"北京胡同里的隐藏咖啡馆\",\"body\":\"<p>在北京的胡同深处，藏着许多别具一格的咖啡馆。今天要推荐的这家，位于东城区的一条安静小巷里。</p><p>推开门，温暖的光线和咖啡香扑面而来。木质吧台、复古吊灯、手写菜单，每一个细节都让人感到舒适。</p><p>推荐他们的招牌：桂花拿铁和手冲埃塞俄比亚。桂花的清香和咖啡的醇厚完美融合，是秋冬季节的绝佳选择。</p>\",\"content_type\":\"article\",\"summary\":\"发现北京胡同深处的隐藏咖啡馆，桂花拿铁和手冲埃塞都很推荐\",\"cover_image\":null,\"media_urls\":\"[]\",\"topic_ids\":\"[\\\"t3\\\",\\\"t1\\\"]\",\"city\":\"北京\",\"tags\":\"[\\\"咖啡馆\\\",\\\"胡同\\\",\\\"北京\\\",\\\"探店\\\"]\",\"vi"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59023/api/contents?q=%E6%B5%8B%E8%AF%95&limit=20",
+      "path": "/api/contents?q=%E6%B5%8B%E8%AF%95&limit=20",
+      "status": 200,
+      "ok": true,
+      "bodyPreview": "{\"code\":0,\"data\":{\"list\":[],\"total\":0,\"page\":1,\"pageSize\":20,\"totalPages\":0},\"message\":\"ok\"}"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59023/api/contents?page=1&pageSize=12&following=1",
+      "path": "/api/contents?page=1&pageSize=12&following=1",
+      "status": 200,
+      "ok": true,
+      "bodyPreview": "{\"code\":0,\"data\":{\"list\":[{\"id\":\"454fb79d-09c0-40fc-8b83-f47bc7c71089\",\"user_id\":\"9d773475-b416-4ca6-8bb5-998e9fcf4641\",\"title\":\"周末City Walk：从法租界到外滩\",\"body\":\"<p>上海的周末，最适合来一场City Walk。从梧桐树掩映的法租界出发，沿着老洋房林立的街道慢慢走向外滩。</p><p>路线推荐：武康路 → 安福路 → 巨鹿路 → 外滩。全程约3小时，沿途有无数值得拍照打卡的角落。</p>\",\"content_type\":\"note\",\"summary\":\"上海周末City Walk路线推荐，从法租界漫步到外滩\",\"cover_image\":null,\"media_urls\":\"[]\",\"topic_ids\":\"[\\\"t2\\\",\\\"t9\\\"]\",\"city\":\"上海\",\"tags\":\"[\\\"CityWalk\\\",\\\"上海\\\",\\\"周末\\\",\\\"外滩\\\"]\",\"view_count\":1,\"like_count\":1,\"comment_c"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59023/api/users/profile",
+      "path": "/api/users/profile",
+      "status": 404,
+      "ok": false,
+      "bodyPreview": "{\"code\":1,\"message\":\"用户不存在\"}"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59023/api/user/profile",
+      "path": "/api/user/profile",
+      "status": 404,
+      "ok": false,
+      "bodyPreview": "<!DOCTYPE html>\n<html lang=\"en\">\n<head>\n<meta charset=\"utf-8\">\n<title>Error</title>\n</head>\n<body>\n<pre>Cannot GET /api/user/profile</pre>\n</body>\n</html>\n"
+    }
+  ],
+  "dialogs": [],
+  "consoleMessages": [
+    {
+      "type": "debug",
+      "text": "[vite] connecting...",
+      "location": {
+        "url": "http://127.0.0.1:49023/@vite/client",
+        "lineNumber": 494,
+        "columnNumber": 8
+      }
+    },
+    {
+      "type": "debug",
+      "text": "[vite] connected.",
+      "location": {
+        "url": "http://127.0.0.1:49023/@vite/client",
+        "lineNumber": 617,
+        "columnNumber": 14
+      }
+    },
+    {
+      "type": "info",
+      "text": "%cDownload the React DevTools for a better development experience: https://reactjs.org/link/react-devtools font-weight:bold",
+      "location": {
+        "url": "http://127.0.0.1:49023/node_modules/.vite/deps/chunk-PJEEZAML.js?v=2b387eba",
+        "lineNumber": 21550,
+        "columnNumber": 24
+      }
+    },
+    {
+      "type": "warning",
+      "text": "⚠️ React Router Future Flag Warning: React Router will begin wrapping state updates in `React.startTransition` in v7. You can use the `v7_startTransition` future flag to opt-in early. For more information, see https://reactrouter.com/v6/upgrading/future#v7_starttransition.",
+      "location": {
+        "url": "http://127.0.0.1:49023/node_modules/.vite/deps/react-router-dom.js?v=2b387eba",
+        "lineNumber": 4426,
+        "columnNumber": 12
+      }
+    },
+    {
+      "type": "warning",
+      "text": "⚠️ React Router Future Flag Warning: Relative route resolution within Splat routes is changing in v7. You can use the `v7_relativeSplatPath` future flag to opt-in early. For more information, see https://reactrouter.com/v6/upgrading/future#v7_relativesplatpath.",
+      "location": {
+        "url": "http://127.0.0.1:49023/node_modules/.vite/deps/react-router-dom.js?v=2b387eba",
+        "lineNumber": 4426,
+        "columnNumber": 12
+      }
+    },
+    {
+      "type": "error",
+      "text": "Failed to load resource: the server responded with a status of 404 (Not Found)",
+      "location": {
+        "url": "http://127.0.0.1:49023/api/auth/me",
+        "lineNumber": 0,
+        "columnNumber": 0
+      }
+    },
+    {
+      "type": "error",
+      "text": "Failed to load resource: the server responded with a status of 404 (Not Found)",
+      "location": {
+        "url": "http://127.0.0.1:49023/api/auth/me",
+        "lineNumber": 0,
+        "columnNumber": 0
+      }
+    },
+    {
+      "type": "error",
+      "text": "Failed to load resource: the server responded with a status of 404 (Not Found)",
+      "location": {
+        "url": "http://127.0.0.1:49023/api/auth/me",
+        "lineNumber": 0,
+        "columnNumber": 0
+      }
+    },
+    {
+      "type": "debug",
+      "text": "[vite] connecting...",
+      "location": {
+        "url": "http://127.0.0.1:49023/@vite/client",
+        "lineNumber": 494,
+        "columnNumber": 8
+      }
+    },
+    {
+      "type": "debug",
+      "text": "[vite] connected.",
+      "location": {
+        "url": "http://127.0.0.1:49023/@vite/client",
+        "lineNumber": 617,
+        "columnNumber": 14
+      }
+    },
+    {
+      "type": "info",
+      "text": "%cDownload the React DevTools for a better development experience: https://reactjs.org/link/react-devtools font-weight:bold",
+      "location": {
+        "url": "http://127.0.0.1:49023/node_modules/.vite/deps/chunk-PJEEZAML.js?v=2b387eba",
+        "lineNumber": 21550,
+        "columnNumber": 24
+      }
+    },
+    {
+      "type": "warning",
+      "text": "⚠️ React Router Future Flag Warning: React Router will begin wrapping state updates in `React.startTransition` in v7. You can use the `v7_startTransition` future flag to opt-in early. For more information, see https://reactrouter.com/v6/upgrading/future#v7_starttransition.",
+      "location": {
+        "url": "http://127.0.0.1:49023/node_modules/.vite/deps/react-router-dom.js?v=2b387eba",
+        "lineNumber": 4426,
+        "columnNumber": 12
+      }
+    },
+    {
+      "type": "warning",
+      "text": "⚠️ React Router Future Flag Warning: Relative route resolution within Splat routes is changing in v7. You can use the `v7_relativeSplatPath` future flag to opt-in early. For more information, see https://reactrouter.com/v6/upgrading/future#v7_relativesplatpath.",
+      "location": {
+        "url": "http://127.0.0.1:49023/node_modules/.vite/deps/react-router-dom.js?v=2b387eba",
+        "lineNumber": 4426,
+        "columnNumber": 12
+      }
+    },
+    {
+      "type": "error",
+      "text": "Failed to load resource: the server responded with a status of 404 (Not Found)",
+      "location": {
+        "url": "http://127.0.0.1:49023/api/auth/me",
+        "lineNumber": 0,
+        "columnNumber": 0
+      }
+    },
+    {
+      "type": "error",
+      "text": "Failed to load resource: the server responded with a status of 404 (Not Found)",
+      "location": {
+        "url": "http://127.0.0.1:49023/api/auth/me",
+        "lineNumber": 0,
+        "columnNumber": 0
+      }
+    },
+    {
+      "type": "debug",
+      "text": "[vite] connecting...",
+      "location": {
+        "url": "http://127.0.0.1:49023/@vite/client",
+        "lineNumber": 494,
+        "columnNumber": 8
+      }
+    },
+    {
+      "type": "info",
+      "text": "%cDownload the React DevTools for a better development experience: https://reactjs.org/link/react-devtools font-weight:bold",
+      "location": {
+        "url": "http://127.0.0.1:49023/node_modules/.vite/deps/chunk-PJEEZAML.js?v=2b387eba",
+        "lineNumber": 21550,
+        "columnNumber": 24
+      }
+    },
+    {
+      "type": "warning",
+      "text": "⚠️ React Router Future Flag Warning: React Router will begin wrapping state updates in `React.startTransition` in v7. You can use the `v7_startTransition` future flag to opt-in early. For more information, see https://reactrouter.com/v6/upgrading/future#v7_starttransition.",
+      "location": {
+        "url": "http://127.0.0.1:49023/node_modules/.vite/deps/react-router-dom.js?v=2b387eba",
+        "lineNumber": 4426,
+        "columnNumber": 12
+      }
+    },
+    {
+      "type": "warning",
+      "text": "⚠️ React Router Future Flag Warning: Relative route resolution within Splat routes is changing in v7. You can use the `v7_relativeSplatPath` future flag to opt-in early. For more information, see https://reactrouter.com/v6/upgrading/future#v7_relativesplatpath.",
+      "location": {
+        "url": "http://127.0.0.1:49023/node_modules/.vite/deps/react-router-dom.js?v=2b387eba",
+        "lineNumber": 4426,
+        "columnNumber": 12
+      }
+    },
+    {
+      "type": "debug",
+      "text": "[vite] connected.",
+      "location": {
+        "url": "http://127.0.0.1:49023/@vite/client",
+        "lineNumber": 617,
+        "columnNumber": 14
+      }
+    },
+    {
+      "type": "error",
+      "text": "Failed to load resource: the server responded with a status of 404 (Not Found)",
+      "location": {
+        "url": "http://127.0.0.1:49023/api/auth/me",
+        "lineNumber": 0,
+        "columnNumber": 0
+      }
+    },
+    {
+      "type": "error",
+      "text": "Failed to load resource: the server responded with a status of 404 (Not Found)",
+      "location": {
+        "url": "http://127.0.0.1:49023/api/auth/me",
+        "lineNumber": 0,
+        "columnNumber": 0
+      }
+    },
+    {
+      "type": "debug",
+      "text": "[vite] connecting...",
+      "location": {
+        "url": "http://127.0.0.1:49023/@vite/client",
+        "lineNumber": 494,
+        "columnNumber": 8
+      }
+    },
+    {
+      "type": "debug",
+      "text": "[vite] connected.",
+      "location": {
+        "url": "http://127.0.0.1:49023/@vite/client",
+        "lineNumber": 617,
+        "columnNumber": 14
+      }
+    },
+    {
+      "type": "info",
+      "text": "%cDownload the React DevTools for a better development experience: https://reactjs.org/link/react-devtools font-weight:bold",
+      "location": {
+        "url": "http://127.0.0.1:49023/node_modules/.vite/deps/chunk-PJEEZAML.js?v=2b387eba",
+        "lineNumber": 21550,
+        "columnNumber": 24
+      }
+    },
+    {
+      "type": "warning",
+      "text": "⚠️ React Router Future Flag Warning: React Router will begin wrapping state updates in `React.startTransition` in v7. You can use the `v7_startTransition` future flag to opt-in early. For more information, see https://reactrouter.com/v6/upgrading/future#v7_starttransition.",
+      "location": {
+        "url": "http://127.0.0.1:49023/node_modules/.vite/deps/react-router-dom.js?v=2b387eba",
+        "lineNumber": 4426,
+        "columnNumber": 12
+      }
+    },
+    {
+      "type": "warning",
+      "text": "⚠️ React Router Future Flag Warning: Relative route resolution within Splat routes is changing in v7. You can use the `v7_relativeSplatPath` future flag to opt-in early. For more information, see https://reactrouter.com/v6/upgrading/future#v7_relativesplatpath.",
+      "location": {
+        "url": "http://127.0.0.1:49023/node_modules/.vite/deps/react-router-dom.js?v=2b387eba",
+        "lineNumber": 4426,
+        "columnNumber": 12
+      }
+    },
+    {
+      "type": "error",
+      "text": "Failed to load resource: the server responded with a status of 404 (Not Found)",
+      "location": {
+        "url": "http://127.0.0.1:49023/api/auth/me",
+        "lineNumber": 0,
+        "columnNumber": 0
+      }
+    },
+    {
+      "type": "error",
+      "text": "Failed to load resource: the server responded with a status of 404 (Not Found)",
+      "location": {
+        "url": "http://127.0.0.1:49023/api/auth/me",
+        "lineNumber": 0,
+        "columnNumber": 0
+      }
+    }
+  ],
+  "requestFailures": [],
+  "responseErrors": [
+    {
+      "status": 404,
+      "url": "http://127.0.0.1:49023/api/auth/me"
+    },
+    {
+      "status": 404,
+      "url": "http://127.0.0.1:49023/api/auth/me"
+    },
+    {
+      "status": 404,
+      "url": "http://127.0.0.1:49023/api/auth/me"
+    },
+    {
+      "status": 404,
+      "url": "http://127.0.0.1:49023/api/auth/me"
+    },
+    {
+      "status": 404,
+      "url": "http://127.0.0.1:49023/api/auth/me"
+    },
+    {
+      "status": 404,
+      "url": "http://127.0.0.1:49023/api/auth/me"
+    },
+    {
+      "status": 404,
+      "url": "http://127.0.0.1:49023/api/auth/me"
+    },
+    {
+      "status": 404,
+      "url": "http://127.0.0.1:49023/api/auth/me"
+    },
+    {
+      "status": 404,
+      "url": "http://127.0.0.1:49023/api/auth/me"
+    }
+  ],
+  "reportPath": "probe/codex-runtime-current/may-89023-browser-report.json"
+}
