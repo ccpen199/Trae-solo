@@ -1,0 +1,231 @@
+{
+  "ok": true,
+  "generatedAt": "2026-06-04T06:55:21.933Z",
+  "order": "may-89014",
+  "roundIndex": 99,
+  "captureId": "codex-may-89014-current",
+  "url": "http://127.0.0.1:49014/",
+  "initialUrl": "http://127.0.0.1:49014/",
+  "finalUrl": "http://127.0.0.1:49014/",
+  "status": 200,
+  "title": "快货运 - B2C短途货运撮合平台",
+  "initialTitle": "快货运 - B2C短途货运撮合平台",
+  "navigationError": "",
+  "screenshotPath": "probe/codex-runtime-current/codex-may-89014-current-frontend.png",
+  "screenshotPaths": [
+    "/Users/chen/Documents/trae_projects/local_projects/may-89014/probe/codex-runtime-current/codex-may-89014-current-structure-01-首屏.png"
+  ],
+  "issueTextPreview": "runtime start report was not generated；后台管理相关问题；购买/提交相关问题；详情/内容页相关问题",
+  "targetReason": "后台管理相关问题；购买/提交相关问题；详情/内容页相关问题",
+  "targetKind": "admin",
+  "targetMatched": false,
+  "targetActions": [],
+  "authFlow": {
+    "detected": false,
+    "attempted": false,
+    "success": false,
+    "finalUrl": "http://127.0.0.1:49014/",
+    "message": "",
+    "actions": []
+  },
+  "businessAudit": {
+    "actions": [],
+    "snapshots": [
+      {
+        "label": "首屏",
+        "url": "http://127.0.0.1:49014/",
+        "title": "快货运 - B2C短途货运撮合平台",
+        "headings": [],
+        "navLabels": [],
+        "buttons": [],
+        "links": [],
+        "inputs": [],
+        "tables": [],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "",
+        "layout": {
+          "viewportWidth": 1504,
+          "viewportHeight": 1000,
+          "scrollWidth": 1504,
+          "scrollHeight": 1000,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "codex-may-89014-current-structure-01-首屏",
+          "label": "首屏",
+          "finalUrl": "http://127.0.0.1:49014/",
+          "title": "快货运 - B2C短途货运撮合平台",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89014/probe/codex-runtime-current/codex-may-89014-current-structure-01-首屏.json",
+          "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89014/probe/codex-runtime-current/codex-may-89014-current-structure-01-首屏.png",
+          "elementCount": 7,
+          "interactiveCount": 0,
+          "interactiveLabels": []
+        }
+      }
+    ],
+    "findings": [
+      "首屏 页面打开后是空白，没有渲染业务内容、表单或列表。"
+    ],
+    "actionHints": [
+      "修复 首屏 的路由组件挂载、接口初始化和错误兜底，确保进入页面后直接显示可操作内容。"
+    ],
+    "emptyPages": [],
+    "overflowPages": [],
+    "blankPages": [
+      "首屏"
+    ],
+    "apiFailurePaths": [],
+    "goalTerms": [],
+    "clickedActionDescriptors": [],
+    "secondaryActionClicks": 0,
+    "structureCaptures": [
+      {
+        "module": "website_structure_capture",
+        "runId": "codex-may-89014-current-structure-01-首屏",
+        "label": "首屏",
+        "finalUrl": "http://127.0.0.1:49014/",
+        "title": "快货运 - B2C短途货运撮合平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89014/probe/codex-runtime-current/codex-may-89014-current-structure-01-首屏.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89014/probe/codex-runtime-current/codex-may-89014-current-structure-01-首屏.png",
+        "elementCount": 7,
+        "interactiveCount": 0,
+        "interactiveLabels": []
+      }
+    ],
+    "representativeScreenshotUrl": "http://127.0.0.1:49014/",
+    "representativeScreenshotLabel": "首屏"
+  },
+  "websiteStructureCapture": {
+    "module": "website_structure_capture",
+    "captureCount": 1,
+    "captures": [
+      {
+        "module": "website_structure_capture",
+        "runId": "codex-may-89014-current-structure-01-首屏",
+        "label": "首屏",
+        "finalUrl": "http://127.0.0.1:49014/",
+        "title": "快货运 - B2C短途货运撮合平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89014/probe/codex-runtime-current/codex-may-89014-current-structure-01-首屏.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89014/probe/codex-runtime-current/codex-may-89014-current-structure-01-首屏.png",
+        "elementCount": 7,
+        "interactiveCount": 0,
+        "interactiveLabels": []
+      }
+    ]
+  },
+  "screenshotMetrics": {
+    "width": 1536,
+    "height": 1000,
+    "scrollWidth": 1504,
+    "scrollHeight": 1000
+  },
+  "initialBodyTextPreview": "",
+  "bodyTextPreview": "",
+  "apiBase": "http://127.0.0.1:59014",
+  "businessGoalPreview": "",
+  "apiResponses": [],
+  "apiChecks": [
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59014/api/health",
+      "path": "/api/health",
+      "status": 200,
+      "ok": true,
+      "bodyPreview": "{\"status\":\"ok\",\"service\":\"freight-backend\",\"database\":\"/Users/chen/Documents/trae_projects/local_projects/may-89014/backend/data/app.sqlite\",\"timestamp\":\"2026-06-04T06:55:21.110Z\"}"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59014/api/admin/stats",
+      "path": "/api/admin/stats",
+      "status": 404,
+      "ok": false,
+      "bodyPreview": "{\"error\":\"未找到接口 GET /api/admin/stats\"}"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59014/api/admin/dashboard",
+      "path": "/api/admin/dashboard",
+      "status": 200,
+      "ok": true,
+      "bodyPreview": "{\"today_orders\":{\"count\":1,\"revenue\":128},\"order_stats\":{\"total_orders\":1,\"pending_orders\":0,\"accepted_orders\":0,\"picked_orders\":0,\"delivered_orders\":0,\"completed_orders\":1,\"total_revenue\":128},\"driver_stats\":{\"approved_drivers\":4,\"pending_drivers\":0,\"online_drivers\":4,\"avg_score\":4.75},\"complaint_stats\":{\"pending_complaints\":0}}"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59014/api/products",
+      "path": "/api/products",
+      "status": 404,
+      "ok": false,
+      "bodyPreview": "{\"error\":\"未找到接口 GET /api/products\"}"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59014/api/orders",
+      "path": "/api/orders",
+      "status": 404,
+      "ok": false,
+      "bodyPreview": "{\"error\":\"未找到接口 GET /api/orders\"}"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59014/api/cart",
+      "path": "/api/cart",
+      "status": 404,
+      "ok": false,
+      "bodyPreview": "{\"error\":\"未找到接口 GET /api/cart\"}"
+    }
+  ],
+  "dialogs": [],
+  "consoleMessages": [
+    {
+      "type": "error",
+      "text": "Failed to load resource: the server responded with a status of 500 (Internal Server Error)",
+      "location": {
+        "url": "http://127.0.0.1:49014/src/main.jsx",
+        "lineNumber": 0,
+        "columnNumber": 0
+      }
+    },
+    {
+      "type": "debug",
+      "text": "[vite] connecting...",
+      "location": {
+        "url": "http://127.0.0.1:49014/@vite/client",
+        "lineNumber": 494,
+        "columnNumber": 8
+      }
+    },
+    {
+      "type": "debug",
+      "text": "[vite] connected.",
+      "location": {
+        "url": "http://127.0.0.1:49014/@vite/client",
+        "lineNumber": 617,
+        "columnNumber": 14
+      }
+    },
+    {
+      "type": "error",
+      "text": "Failed to load resource: the server responded with a status of 404 (Not Found)",
+      "location": {
+        "url": "http://127.0.0.1:49014/favicon.ico",
+        "lineNumber": 0,
+        "columnNumber": 0
+      }
+    }
+  ],
+  "requestFailures": [
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:49014/src/main.jsx",
+      "errorText": "net::ERR_ABORTED"
+    }
+  ],
+  "responseErrors": [
+    {
+      "status": 500,
+      "url": "http://127.0.0.1:49014/src/main.jsx"
+    }
+  ],
+  "reportPath": "probe/codex-runtime-current/may-89014-browser-report.json"
+}
