@@ -1,0 +1,137 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', 'Hiragino Sans GB',
+    'Microsoft YaHei', sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  background: #f0f2f5;
+}
+
+#root {
+  min-height: 100vh;
+}
+
+.app-container {
+  min-height: 100vh;
+}
+
+.main-layout {
+  min-height: 100vh;
+}
+
+.page-content {
+  padding: 24px;
+  min-height: calc(100vh - 64px);
+}
+
+.card-shadow {
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.03), 0 2px 4px rgba(0, 0, 0, 0.03);
+}
+
+.fault-card {
+  transition: all 0.3s ease;
+}
+
+.fault-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.confidence-bar {
+  height: 8px;
+  border-radius: 4px;
+  background: linear-gradient(90deg, #52c41a, #faad14, #ff4d4f);
+}
+
+.radar-chart-container {
+  width: 100%;
+  height: 350px;
+}
+
+.heatmap-container {
+  width: 100%;
+  height: 400px;
+}
+
+.order-timeline .ant-timeline-item-content {
+  padding-bottom: 16px;
+}
+
+.upload-area {
+  border: 2px dashed #d9d9d9;
+  border-radius: 8px;
+  padding: 40px;
+  text-align: center;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.upload-area:hover {
+  border-color: #1677ff;
+  background: #e6f4ff;
+}
+
+.engineer-card {
+  transition: all 0.3s ease;
+  border-left: 4px solid transparent;
+}
+
+.engineer-card.selected {
+  border-left-color: #1677ff;
+  background: #e6f4ff;
+}
+
+.stat-card {
+  padding: 20px;
+  border-radius: 8px;
+  background: #fff;
+}
+
+.stat-card .value {
+  font-size: 28px;
+  font-weight: 600;
+  color: #1f1f1f;
+}
+
+.stat-card .label {
+  font-size: 14px;
+  color: #8c8c8c;
+  margin-top: 4px;
+}
+
+.video-recording-indicator {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 4px 12px;
+  background: #fff1f0;
+  color: #ff4d4f;
+  border-radius: 4px;
+  font-size: 14px;
+}
+
+.recording-dot {
+  width: 8px;
+  height: 8px;
+  background: #ff4d4f;
+  border-radius: 50%;
+  animation: pulse 1s infinite;
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.5; }
+}
+
+.status-badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 2px 8px;
+  border-radius: 4px;
+  font-size: 12px;
+}
