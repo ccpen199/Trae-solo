@@ -1,0 +1,4398 @@
+{
+  "ok": true,
+  "generatedAt": "2026-06-05T14:29:57.949Z",
+  "order": "may-89049",
+  "roundIndex": 7,
+  "captureId": "may-89049-codex-repair-final",
+  "url": "http://127.0.0.1:49049/",
+  "initialUrl": "http://127.0.0.1:49049/",
+  "finalUrl": "http://127.0.0.1:49049/",
+  "status": 200,
+  "title": "电子税务服务平台",
+  "initialTitle": "电子税务服务平台",
+  "navigationError": "",
+  "screenshotPath": "probe/codex-repair-final-20260605/may-89049-codex-repair-final-frontend.png",
+  "screenshotPaths": [
+    "/Users/chen/Documents/trae_projects/local_projects/may-89049/probe/codex-repair-final-20260605/may-89049-codex-repair-final-structure-01-首屏.png",
+    "/Users/chen/Documents/trae_projects/local_projects/may-89049/probe/codex-repair-final-20260605/may-89049-codex-repair-final-structure-02-导航-税.png",
+    "/Users/chen/Documents/trae_projects/local_projects/may-89049/probe/codex-repair-final-20260605/may-89049-codex-repair-final-structure-03-操作-切换为当前主体.png",
+    "/Users/chen/Documents/trae_projects/local_projects/may-89049/probe/codex-repair-final-20260605/may-89049-codex-repair-final-structure-04-操作-退出登录.png",
+    "/Users/chen/Documents/trae_projects/local_projects/may-89049/probe/codex-repair-final-20260605/may-89049-codex-repair-final-structure-05-二层操作-退出登录-查看全部.png",
+    "/Users/chen/Documents/trae_projects/local_projects/may-89049/probe/codex-repair-final-20260605/may-89049-codex-repair-final-structure-06-导航-工作台.png",
+    "/Users/chen/Documents/trae_projects/local_projects/may-89049/probe/codex-repair-final-20260605/may-89049-codex-repair-final-structure-07-操作-查看全部.png",
+    "/Users/chen/Documents/trae_projects/local_projects/may-89049/probe/codex-repair-final-20260605/may-89049-codex-repair-final-structure-08-二层操作-查看全部-新建申报.png",
+    "/Users/chen/Documents/trae_projects/local_projects/may-89049/probe/codex-repair-final-20260605/may-89049-codex-repair-final-structure-09-操作-处理工单.png",
+    "/Users/chen/Documents/trae_projects/local_projects/may-89049/probe/codex-repair-final-20260605/may-89049-codex-repair-final-structure-10-二层操作-处理工单-提交工单.png",
+    "/Users/chen/Documents/trae_projects/local_projects/may-89049/probe/codex-repair-final-20260605/may-89049-codex-repair-final-structure-11-导航-纳税人中心.png",
+    "/Users/chen/Documents/trae_projects/local_projects/may-89049/probe/codex-repair-final-20260605/may-89049-codex-repair-final-structure-12-操作-切换为当前主体.png"
+  ],
+  "issueTextPreview": "登录注册相关问题；后台管理相关问题；购买/提交相关问题",
+  "targetReason": "登录注册相关问题；后台管理相关问题；购买/提交相关问题",
+  "targetKind": "admin",
+  "targetMatched": true,
+  "targetActions": [
+    {
+      "action": "click",
+      "label": "登录注册相关问题",
+      "ok": true
+    },
+    {
+      "action": "target-verify",
+      "label": "登录注册相关问题",
+      "ok": false,
+      "finalUrl": "http://127.0.0.1:49049/"
+    },
+    {
+      "action": "click",
+      "label": "后台管理相关问题",
+      "ok": true
+    },
+    {
+      "action": "target-verify",
+      "label": "后台管理相关问题",
+      "ok": true,
+      "finalUrl": "http://127.0.0.1:49049/admin"
+    }
+  ],
+  "authFlow": {
+    "detected": false,
+    "attempted": false,
+    "success": false,
+    "finalUrl": "http://127.0.0.1:49049/",
+    "message": "",
+    "actions": []
+  },
+  "businessAudit": {
+    "actions": [
+      {
+        "action": "click",
+        "label": "导航:税",
+        "ok": true
+      },
+      {
+        "action": "click",
+        "label": "操作:切换为当前主体",
+        "ok": true,
+        "result": {
+          "ok": true,
+          "matched": 2
+        }
+      },
+      {
+        "action": "click",
+        "label": "操作:退出登录",
+        "ok": true,
+        "result": {
+          "ok": true,
+          "matched": 1
+        }
+      },
+      {
+        "action": "click",
+        "label": "二层操作:退出登录:查看全部",
+        "ok": true,
+        "result": {
+          "ok": true,
+          "matched": 1
+        }
+      },
+      {
+        "action": "click",
+        "label": "导航:工作台",
+        "ok": true
+      },
+      {
+        "action": "click",
+        "label": "操作:查看全部",
+        "ok": true,
+        "result": {
+          "ok": true,
+          "matched": 1
+        }
+      },
+      {
+        "action": "click",
+        "label": "二层操作:查看全部:新建申报",
+        "ok": true,
+        "result": {
+          "ok": true,
+          "matched": 1
+        }
+      },
+      {
+        "action": "click",
+        "label": "操作:处理工单",
+        "ok": true,
+        "result": {
+          "ok": true,
+          "matched": 1
+        }
+      },
+      {
+        "action": "click",
+        "label": "二层操作:处理工单:提交工单",
+        "ok": true,
+        "result": {
+          "ok": true,
+          "matched": 1
+        }
+      },
+      {
+        "action": "click",
+        "label": "关闭弹窗/抽屉",
+        "ok": true
+      },
+      {
+        "action": "click",
+        "label": "导航:纳税人中心",
+        "ok": true
+      },
+      {
+        "action": "click",
+        "label": "操作:切换为当前主体",
+        "ok": true,
+        "result": {
+          "ok": true,
+          "matched": 2
+        }
+      },
+      {
+        "action": "click",
+        "label": "操作:退出登录",
+        "ok": true,
+        "result": {
+          "ok": true,
+          "matched": 1
+        }
+      },
+      {
+        "action": "click",
+        "label": "二层操作:退出登录:查看全部",
+        "ok": true,
+        "result": {
+          "ok": true,
+          "matched": 1
+        }
+      },
+      {
+        "action": "click",
+        "label": "导航:税种管理",
+        "ok": true
+      },
+      {
+        "action": "click",
+        "label": "操作:退出登录",
+        "ok": true,
+        "result": {
+          "ok": true,
+          "matched": 1
+        }
+      },
+      {
+        "action": "click",
+        "label": "导航:申报管理",
+        "ok": true
+      }
+    ],
+    "snapshots": [
+      {
+        "label": "首屏",
+        "url": "http://127.0.0.1:49049/",
+        "title": "电子税务服务平台",
+        "headings": [
+          "系统管理员，您好",
+          "待审申报",
+          "政策推荐"
+        ],
+        "navLabels": [
+          "税 电子税务平台",
+          "税",
+          "工作台",
+          "纳税人中心",
+          "税种管理",
+          "申报管理",
+          "缴款中心",
+          "发票管理",
+          "涉税证明",
+          "政策中心",
+          "征纳互动",
+          "管理后台",
+          "账户中心"
+        ],
+        "buttons": [
+          "退出登录",
+          "查看全部",
+          "更多",
+          "审核申报",
+          "处理工单",
+          "政策管理"
+        ],
+        "links": [
+          "工作台",
+          "纳税人中心",
+          "税种管理",
+          "申报管理",
+          "缴款中心",
+          "发票管理",
+          "涉税证明",
+          "政策中心",
+          "征纳互动",
+          "管理后台",
+          "账户中心"
+        ],
+        "inputs": [],
+        "tables": [],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "税电子税务平台管理端工作台纳税人中心税种管理申报管理缴款中心发票管理涉税证明政策中心征纳互动管理后台账户中心系统管理员管理员系统管理员，您好税务管理员审核申报、发票，处理工单，管理政策待审申报0待缴税款0互动工单0待办事项0待审申报查看全部 暂无申报记录政策推荐更多 个体工商户个税优惠热门政策推荐高新技术企业税收优惠热门政策推荐上海市科技创新奖补政策热门政策推荐审核申报处理工单政策管理",
+        "layout": {
+          "viewportWidth": 1504,
+          "viewportHeight": 1000,
+          "scrollWidth": 1504,
+          "scrollHeight": 1000,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89049-codex-repair-final-structure-01-首屏",
+          "label": "首屏",
+          "finalUrl": "http://127.0.0.1:49049/",
+          "title": "电子税务服务平台",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89049/probe/codex-repair-final-20260605/may-89049-codex-repair-final-structure-01-首屏.json",
+          "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89049/probe/codex-repair-final-20260605/may-89049-codex-repair-final-structure-01-首屏.png",
+          "elementCount": 223,
+          "interactiveCount": 19,
+          "interactiveLabels": [
+            "工作台",
+            "纳税人中心",
+            "税种管理",
+            "申报管理",
+            "缴款中心",
+            "发票管理",
+            "涉税证明",
+            "政策中心",
+            "征纳互动",
+            "管理后台",
+            "账户中心",
+            "退出登录",
+            "查看全部",
+            "更多",
+            "审核申报",
+            "处理工单",
+            "政策管理"
+          ]
+        }
+      },
+      {
+        "label": "导航:税",
+        "url": "http://127.0.0.1:49049/taxpayers",
+        "title": "电子税务服务平台",
+        "headings": [
+          "纳税人中心"
+        ],
+        "navLabels": [
+          "税 电子税务平台",
+          "税",
+          "工作台",
+          "纳税人中心",
+          "税种管理",
+          "申报管理",
+          "缴款中心",
+          "发票管理",
+          "涉税证明",
+          "政策中心",
+          "征纳互动",
+          "管理后台",
+          "账户中心"
+        ],
+        "buttons": [
+          "退出登录",
+          "新增纳税人",
+          "切换为当前主体"
+        ],
+        "links": [
+          "工作台",
+          "纳税人中心",
+          "税种管理",
+          "申报管理",
+          "缴款中心",
+          "发票管理",
+          "涉税证明",
+          "政策中心",
+          "征纳互动",
+          "管理后台",
+          "账户中心"
+        ],
+        "inputs": [],
+        "tables": [],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "税电子税务平台管理端工作台纳税人中心税种管理申报管理缴款中心发票管理涉税证明政策中心征纳互动管理后台账户中心系统管理员管理员纳税人中心 新增纳税人上海某某科技有限公司企业统一社会信用代码：91310000MA1FL8XX3J法定代表人：张三信息技术小型上海切换为当前主体测试企业企业统一社会信用代码：91110108MA01XXXX5K法定代表人：管理员科技服务中型北京切换为当前主体",
+        "layout": {
+          "viewportWidth": 1536,
+          "viewportHeight": 1000,
+          "scrollWidth": 1536,
+          "scrollHeight": 1000,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89049-codex-repair-final-structure-02-导航-税",
+          "label": "导航:税",
+          "finalUrl": "http://127.0.0.1:49049/taxpayers",
+          "title": "电子税务服务平台",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89049/probe/codex-repair-final-20260605/may-89049-codex-repair-final-structure-02-导航-税.json",
+          "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89049/probe/codex-repair-final-20260605/may-89049-codex-repair-final-structure-02-导航-税.png",
+          "elementCount": 165,
+          "interactiveCount": 19,
+          "interactiveLabels": [
+            "工作台",
+            "纳税人中心",
+            "税种管理",
+            "申报管理",
+            "缴款中心",
+            "发票管理",
+            "涉税证明",
+            "政策中心",
+            "征纳互动",
+            "管理后台",
+            "账户中心",
+            "退出登录",
+            "新增纳税人",
+            "切换为当前主体"
+          ]
+        }
+      },
+      {
+        "label": "操作:切换为当前主体",
+        "url": "http://127.0.0.1:49049/taxpayers",
+        "title": "电子税务服务平台",
+        "headings": [
+          "纳税人中心"
+        ],
+        "navLabels": [
+          "税 电子税务平台",
+          "税",
+          "工作台",
+          "纳税人中心",
+          "税种管理",
+          "申报管理",
+          "缴款中心",
+          "发票管理",
+          "涉税证明",
+          "政策中心",
+          "征纳互动",
+          "管理后台",
+          "账户中心"
+        ],
+        "buttons": [
+          "退出登录",
+          "新增纳税人",
+          "切换为当前主体"
+        ],
+        "links": [
+          "工作台",
+          "纳税人中心",
+          "税种管理",
+          "申报管理",
+          "缴款中心",
+          "发票管理",
+          "涉税证明",
+          "政策中心",
+          "征纳互动",
+          "管理后台",
+          "账户中心"
+        ],
+        "inputs": [],
+        "tables": [],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "税电子税务平台管理端工作台纳税人中心税种管理申报管理缴款中心发票管理涉税证明政策中心征纳互动管理后台账户中心上海某某科技有限公司系统管理员管理员纳税人中心 新增纳税人上海某某科技有限公司企业统一社会信用代码：91310000MA1FL8XX3J法定代表人：张三信息技术小型上海切换为当前主体测试企业企业统一社会信用代码：91110108MA01XXXX5K法定代表人：管理员科技服务中型北京切换为当前主体",
+        "layout": {
+          "viewportWidth": 1568,
+          "viewportHeight": 1000,
+          "scrollWidth": 1568,
+          "scrollHeight": 1000,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89049-codex-repair-final-structure-03-操作-切换为当前主体",
+          "label": "操作:切换为当前主体",
+          "finalUrl": "http://127.0.0.1:49049/taxpayers",
+          "title": "电子税务服务平台",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89049/probe/codex-repair-final-20260605/may-89049-codex-repair-final-structure-03-操作-切换为当前主体.json",
+          "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89049/probe/codex-repair-final-20260605/may-89049-codex-repair-final-structure-03-操作-切换为当前主体.png",
+          "elementCount": 170,
+          "interactiveCount": 19,
+          "interactiveLabels": [
+            "工作台",
+            "纳税人中心",
+            "税种管理",
+            "申报管理",
+            "缴款中心",
+            "发票管理",
+            "涉税证明",
+            "政策中心",
+            "征纳互动",
+            "管理后台",
+            "账户中心",
+            "退出登录",
+            "新增纳税人",
+            "切换为当前主体"
+          ]
+        }
+      },
+      {
+        "label": "操作:退出登录",
+        "url": "http://127.0.0.1:49049/",
+        "title": "电子税务服务平台",
+        "headings": [
+          "系统管理员，您好",
+          "待审申报",
+          "政策推荐"
+        ],
+        "navLabels": [
+          "税 电子税务平台",
+          "税",
+          "工作台",
+          "纳税人中心",
+          "税种管理",
+          "申报管理",
+          "缴款中心",
+          "发票管理",
+          "涉税证明",
+          "政策中心",
+          "征纳互动",
+          "管理后台",
+          "账户中心"
+        ],
+        "buttons": [
+          "退出登录",
+          "查看全部",
+          "更多",
+          "审核申报",
+          "处理工单",
+          "政策管理"
+        ],
+        "links": [
+          "工作台",
+          "纳税人中心",
+          "税种管理",
+          "申报管理",
+          "缴款中心",
+          "发票管理",
+          "涉税证明",
+          "政策中心",
+          "征纳互动",
+          "管理后台",
+          "账户中心"
+        ],
+        "inputs": [],
+        "tables": [],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "税电子税务平台管理端工作台纳税人中心税种管理申报管理缴款中心发票管理涉税证明政策中心征纳互动管理后台账户中心系统管理员管理员系统管理员，您好税务管理员审核申报、发票，处理工单，管理政策待审申报0待缴税款0互动工单0待办事项0待审申报查看全部 暂无申报记录政策推荐更多 个体工商户个税优惠热门政策推荐高新技术企业税收优惠热门政策推荐上海市科技创新奖补政策热门政策推荐审核申报处理工单政策管理",
+        "layout": {
+          "viewportWidth": 1600,
+          "viewportHeight": 1000,
+          "scrollWidth": 1600,
+          "scrollHeight": 1000,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89049-codex-repair-final-structure-04-操作-退出登录",
+          "label": "操作:退出登录",
+          "finalUrl": "http://127.0.0.1:49049/",
+          "title": "电子税务服务平台",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89049/probe/codex-repair-final-20260605/may-89049-codex-repair-final-structure-04-操作-退出登录.json",
+          "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89049/probe/codex-repair-final-20260605/may-89049-codex-repair-final-structure-04-操作-退出登录.png",
+          "elementCount": 223,
+          "interactiveCount": 19,
+          "interactiveLabels": [
+            "工作台",
+            "纳税人中心",
+            "税种管理",
+            "申报管理",
+            "缴款中心",
+            "发票管理",
+            "涉税证明",
+            "政策中心",
+            "征纳互动",
+            "管理后台",
+            "账户中心",
+            "退出登录",
+            "查看全部",
+            "更多",
+            "审核申报",
+            "处理工单",
+            "政策管理"
+          ]
+        }
+      },
+      {
+        "label": "二层操作:退出登录->查看全部",
+        "url": "http://127.0.0.1:49049/declarations",
+        "title": "电子税务服务平台",
+        "headings": [
+          "申报管理"
+        ],
+        "navLabels": [
+          "税 电子税务平台",
+          "税",
+          "工作台",
+          "纳税人中心",
+          "税种管理",
+          "申报管理",
+          "缴款中心",
+          "发票管理",
+          "涉税证明",
+          "政策中心",
+          "征纳互动",
+          "管理后台",
+          "账户中心"
+        ],
+        "buttons": [
+          "退出登录",
+          "新建申报",
+          "全部",
+          "草稿",
+          "已提交",
+          "已审核",
+          "已签章"
+        ],
+        "links": [
+          "工作台",
+          "纳税人中心",
+          "税种管理",
+          "申报管理",
+          "缴款中心",
+          "发票管理",
+          "涉税证明",
+          "政策中心",
+          "征纳互动",
+          "管理后台",
+          "账户中心"
+        ],
+        "inputs": [
+          {
+            "tag": "input",
+            "type": "text",
+            "placeholder": "搜索申报记录...",
+            "name": "",
+            "label": ""
+          }
+        ],
+        "tables": [
+          {
+            "headers": [
+              "纳税人",
+              "税种",
+              "申报期间",
+              "申报类型",
+              "应纳税额",
+              "状态",
+              "操作"
+            ],
+            "rowCount": 1,
+            "hasEmptyText": false,
+            "textPreview": "纳税人 税种 申报期间 申报类型 应纳税额 状态 操作"
+          }
+        ],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "税电子税务平台管理端工作台纳税人中心税种管理申报管理缴款中心发票管理涉税证明政策中心征纳互动管理后台账户中心系统管理员管理员申报管理 新建申报全部草稿已提交已审核已签章纳税人税种申报期间申报类型应纳税额状态操作暂无申报记录",
+        "layout": {
+          "viewportWidth": 1632,
+          "viewportHeight": 1000,
+          "scrollWidth": 1632,
+          "scrollHeight": 1000,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89049-codex-repair-final-structure-05-二层操作-退出登录-查看全部",
+          "label": "二层操作:退出登录->查看全部",
+          "finalUrl": "http://127.0.0.1:49049/declarations",
+          "title": "电子税务服务平台",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89049/probe/codex-repair-final-20260605/may-89049-codex-repair-final-structure-05-二层操作-退出登录-查看全部.json",
+          "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89049/probe/codex-repair-final-20260605/may-89049-codex-repair-final-structure-05-二层操作-退出登录-查看全部.png",
+          "elementCount": 140,
+          "interactiveCount": 21,
+          "interactiveLabels": [
+            "工作台",
+            "纳税人中心",
+            "税种管理",
+            "申报管理",
+            "缴款中心",
+            "发票管理",
+            "涉税证明",
+            "政策中心",
+            "征纳互动",
+            "管理后台",
+            "账户中心",
+            "退出登录",
+            "新建申报",
+            "搜索申报记录...",
+            "全部",
+            "草稿",
+            "已提交",
+            "已审核",
+            "已签章"
+          ]
+        }
+      },
+      {
+        "label": "导航:工作台",
+        "url": "http://127.0.0.1:49049/",
+        "title": "电子税务服务平台",
+        "headings": [
+          "系统管理员，您好",
+          "待审申报",
+          "政策推荐"
+        ],
+        "navLabels": [
+          "税 电子税务平台",
+          "税",
+          "工作台",
+          "纳税人中心",
+          "税种管理",
+          "申报管理",
+          "缴款中心",
+          "发票管理",
+          "涉税证明",
+          "政策中心",
+          "征纳互动",
+          "管理后台",
+          "账户中心"
+        ],
+        "buttons": [
+          "退出登录",
+          "查看全部",
+          "更多",
+          "审核申报",
+          "处理工单",
+          "政策管理"
+        ],
+        "links": [
+          "工作台",
+          "纳税人中心",
+          "税种管理",
+          "申报管理",
+          "缴款中心",
+          "发票管理",
+          "涉税证明",
+          "政策中心",
+          "征纳互动",
+          "管理后台",
+          "账户中心"
+        ],
+        "inputs": [],
+        "tables": [],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "税电子税务平台管理端工作台纳税人中心税种管理申报管理缴款中心发票管理涉税证明政策中心征纳互动管理后台账户中心系统管理员管理员系统管理员，您好税务管理员审核申报、发票，处理工单，管理政策待审申报0待缴税款0互动工单0待办事项0待审申报查看全部 暂无申报记录政策推荐更多 个体工商户个税优惠热门政策推荐高新技术企业税收优惠热门政策推荐上海市科技创新奖补政策热门政策推荐审核申报处理工单政策管理",
+        "layout": {
+          "viewportWidth": 1664,
+          "viewportHeight": 1000,
+          "scrollWidth": 1664,
+          "scrollHeight": 1000,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89049-codex-repair-final-structure-06-导航-工作台",
+          "label": "导航:工作台",
+          "finalUrl": "http://127.0.0.1:49049/",
+          "title": "电子税务服务平台",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89049/probe/codex-repair-final-20260605/may-89049-codex-repair-final-structure-06-导航-工作台.json",
+          "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89049/probe/codex-repair-final-20260605/may-89049-codex-repair-final-structure-06-导航-工作台.png",
+          "elementCount": 223,
+          "interactiveCount": 19,
+          "interactiveLabels": [
+            "工作台",
+            "纳税人中心",
+            "税种管理",
+            "申报管理",
+            "缴款中心",
+            "发票管理",
+            "涉税证明",
+            "政策中心",
+            "征纳互动",
+            "管理后台",
+            "账户中心",
+            "退出登录",
+            "查看全部",
+            "更多",
+            "审核申报",
+            "处理工单",
+            "政策管理"
+          ]
+        }
+      },
+      {
+        "label": "操作:查看全部",
+        "url": "http://127.0.0.1:49049/declarations",
+        "title": "电子税务服务平台",
+        "headings": [
+          "申报管理"
+        ],
+        "navLabels": [
+          "税 电子税务平台",
+          "税",
+          "工作台",
+          "纳税人中心",
+          "税种管理",
+          "申报管理",
+          "缴款中心",
+          "发票管理",
+          "涉税证明",
+          "政策中心",
+          "征纳互动",
+          "管理后台",
+          "账户中心"
+        ],
+        "buttons": [
+          "退出登录",
+          "新建申报",
+          "全部",
+          "草稿",
+          "已提交",
+          "已审核",
+          "已签章"
+        ],
+        "links": [
+          "工作台",
+          "纳税人中心",
+          "税种管理",
+          "申报管理",
+          "缴款中心",
+          "发票管理",
+          "涉税证明",
+          "政策中心",
+          "征纳互动",
+          "管理后台",
+          "账户中心"
+        ],
+        "inputs": [
+          {
+            "tag": "input",
+            "type": "text",
+            "placeholder": "搜索申报记录...",
+            "name": "",
+            "label": ""
+          }
+        ],
+        "tables": [
+          {
+            "headers": [
+              "纳税人",
+              "税种",
+              "申报期间",
+              "申报类型",
+              "应纳税额",
+              "状态",
+              "操作"
+            ],
+            "rowCount": 1,
+            "hasEmptyText": false,
+            "textPreview": "纳税人 税种 申报期间 申报类型 应纳税额 状态 操作"
+          }
+        ],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "税电子税务平台管理端工作台纳税人中心税种管理申报管理缴款中心发票管理涉税证明政策中心征纳互动管理后台账户中心系统管理员管理员申报管理 新建申报全部草稿已提交已审核已签章纳税人税种申报期间申报类型应纳税额状态操作暂无申报记录",
+        "layout": {
+          "viewportWidth": 1696,
+          "viewportHeight": 1000,
+          "scrollWidth": 1696,
+          "scrollHeight": 1000,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89049-codex-repair-final-structure-07-操作-查看全部",
+          "label": "操作:查看全部",
+          "finalUrl": "http://127.0.0.1:49049/declarations",
+          "title": "电子税务服务平台",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89049/probe/codex-repair-final-20260605/may-89049-codex-repair-final-structure-07-操作-查看全部.json",
+          "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89049/probe/codex-repair-final-20260605/may-89049-codex-repair-final-structure-07-操作-查看全部.png",
+          "elementCount": 140,
+          "interactiveCount": 21,
+          "interactiveLabels": [
+            "工作台",
+            "纳税人中心",
+            "税种管理",
+            "申报管理",
+            "缴款中心",
+            "发票管理",
+            "涉税证明",
+            "政策中心",
+            "征纳互动",
+            "管理后台",
+            "账户中心",
+            "退出登录",
+            "新建申报",
+            "搜索申报记录...",
+            "全部",
+            "草稿",
+            "已提交",
+            "已审核",
+            "已签章"
+          ]
+        }
+      },
+      {
+        "label": "二层操作:查看全部->新建申报",
+        "url": "http://127.0.0.1:49049/declarations/new",
+        "title": "电子税务服务平台",
+        "headings": [
+          "新建申报"
+        ],
+        "navLabels": [
+          "税 电子税务平台",
+          "税",
+          "工作台",
+          "纳税人中心",
+          "税种管理",
+          "申报管理",
+          "缴款中心",
+          "发票管理",
+          "涉税证明",
+          "政策中心",
+          "征纳互动",
+          "管理后台",
+          "账户中心"
+        ],
+        "buttons": [
+          "退出登录",
+          "智能预填",
+          "下一步"
+        ],
+        "links": [
+          "工作台",
+          "纳税人中心",
+          "税种管理",
+          "申报管理",
+          "缴款中心",
+          "发票管理",
+          "涉税证明",
+          "政策中心",
+          "征纳互动",
+          "管理后台",
+          "账户中心"
+        ],
+        "inputs": [
+          {
+            "tag": "select",
+            "type": "",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "month",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "select",
+            "type": "",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          }
+        ],
+        "tables": [],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "税电子税务平台管理端工作台纳税人中心税种管理申报管理缴款中心发票管理涉税证明政策中心征纳互动管理后台账户中心系统管理员管理员新建申报1选择税种2填写表单3风险校验4确认提交纳税人主体 *请先选择纳税人主体税种 *请选择税种企业所得税 (CIT)个人所得税 (PIT)增值税 (VAT)印花税 (ST)房产税 (PT)城市维护建设税 (UMCT)教育费附加 (ES)地方教育附加 (LES)申报期间 *申报类型定期申报零申报更正申报 智能预填下一步",
+        "layout": {
+          "viewportWidth": 1728,
+          "viewportHeight": 1000,
+          "scrollWidth": 1728,
+          "scrollHeight": 1000,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89049-codex-repair-final-structure-08-二层操作-查看全部-新建申报",
+          "label": "二层操作:查看全部->新建申报",
+          "finalUrl": "http://127.0.0.1:49049/declarations/new",
+          "title": "电子税务服务平台",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89049/probe/codex-repair-final-20260605/may-89049-codex-repair-final-structure-08-二层操作-查看全部-新建申报.json",
+          "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89049/probe/codex-repair-final-20260605/may-89049-codex-repair-final-structure-08-二层操作-查看全部-新建申报.png",
+          "elementCount": 156,
+          "interactiveCount": 20,
+          "interactiveLabels": [
+            "工作台",
+            "纳税人中心",
+            "税种管理",
+            "申报管理",
+            "缴款中心",
+            "发票管理",
+            "涉税证明",
+            "政策中心",
+            "征纳互动",
+            "管理后台",
+            "账户中心",
+            "退出登录",
+            "请选择税种 企业所得税 (CIT) 个人所得税 (PIT) 增值税 (VAT) 印花税 (ST) 房产税 (PT) 城市维护建设税 (UMCT) 教育费附加 (ES) 地方教育附加 (LES)",
+            "定期申报 零申报 更正申报",
+            "智能预填",
+            "下一步"
+          ]
+        }
+      },
+      {
+        "label": "操作:处理工单",
+        "url": "http://127.0.0.1:49049/tickets",
+        "title": "电子税务服务平台",
+        "headings": [
+          "征纳互动"
+        ],
+        "navLabels": [
+          "税 电子税务平台",
+          "税",
+          "工作台",
+          "纳税人中心",
+          "税种管理",
+          "申报管理",
+          "缴款中心",
+          "发票管理",
+          "涉税证明",
+          "政策中心",
+          "征纳互动",
+          "管理后台",
+          "账户中心"
+        ],
+        "buttons": [
+          "退出登录",
+          "提交工单"
+        ],
+        "links": [
+          "工作台",
+          "纳税人中心",
+          "税种管理",
+          "申报管理",
+          "缴款中心",
+          "发票管理",
+          "涉税证明",
+          "政策中心",
+          "征纳互动",
+          "管理后台",
+          "账户中心"
+        ],
+        "inputs": [],
+        "tables": [],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "税电子税务平台管理端工作台纳税人中心税种管理申报管理缴款中心发票管理涉税证明政策中心征纳互动管理后台账户中心系统管理员管理员征纳互动 提交工单暂无工单选择左侧工单查看详情",
+        "layout": {
+          "viewportWidth": 1760,
+          "viewportHeight": 1000,
+          "scrollWidth": 1760,
+          "scrollHeight": 1000,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89049-codex-repair-final-structure-09-操作-处理工单",
+          "label": "操作:处理工单",
+          "finalUrl": "http://127.0.0.1:49049/tickets",
+          "title": "电子税务服务平台",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89049/probe/codex-repair-final-20260605/may-89049-codex-repair-final-structure-09-操作-处理工单.json",
+          "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89049/probe/codex-repair-final-20260605/may-89049-codex-repair-final-structure-09-操作-处理工单.png",
+          "elementCount": 119,
+          "interactiveCount": 15,
+          "interactiveLabels": [
+            "工作台",
+            "纳税人中心",
+            "税种管理",
+            "申报管理",
+            "缴款中心",
+            "发票管理",
+            "涉税证明",
+            "政策中心",
+            "征纳互动",
+            "管理后台",
+            "账户中心",
+            "退出登录",
+            "提交工单"
+          ]
+        }
+      },
+      {
+        "label": "二层操作:处理工单->提交工单",
+        "url": "http://127.0.0.1:49049/tickets",
+        "title": "电子税务服务平台",
+        "headings": [
+          "征纳互动",
+          "提交工单"
+        ],
+        "navLabels": [
+          "税 电子税务平台",
+          "税",
+          "工作台",
+          "纳税人中心",
+          "税种管理",
+          "申报管理",
+          "缴款中心",
+          "发票管理",
+          "涉税证明",
+          "政策中心",
+          "征纳互动",
+          "管理后台",
+          "账户中心"
+        ],
+        "buttons": [
+          "退出登录",
+          "提交工单",
+          "取消",
+          "提交"
+        ],
+        "links": [
+          "工作台",
+          "纳税人中心",
+          "税种管理",
+          "申报管理",
+          "缴款中心",
+          "发票管理",
+          "涉税证明",
+          "政策中心",
+          "征纳互动",
+          "管理后台",
+          "账户中心"
+        ],
+        "inputs": [
+          {
+            "tag": "input",
+            "type": "text",
+            "placeholder": "请输入工单标题",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "select",
+            "type": "",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "file",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          }
+        ],
+        "tables": [],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "税电子税务平台管理端工作台纳税人中心税种管理申报管理缴款中心发票管理涉税证明政策中心征纳互动管理后台账户中心系统管理员管理员征纳互动 提交工单暂无工单选择左侧工单查看详情提交工单标题分类通用咨询申报问题发票问题缴款问题其他附件取消提交",
+        "layout": {
+          "viewportWidth": 1792,
+          "viewportHeight": 1000,
+          "scrollWidth": 1792,
+          "scrollHeight": 1000,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89049-codex-repair-final-structure-10-二层操作-处理工单-提交工单",
+          "label": "二层操作:处理工单->提交工单",
+          "finalUrl": "http://127.0.0.1:49049/tickets",
+          "title": "电子税务服务平台",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89049/probe/codex-repair-final-20260605/may-89049-codex-repair-final-structure-10-二层操作-处理工单-提交工单.json",
+          "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89049/probe/codex-repair-final-20260605/may-89049-codex-repair-final-structure-10-二层操作-处理工单-提交工单.png",
+          "elementCount": 145,
+          "interactiveCount": 21,
+          "interactiveLabels": [
+            "工作台",
+            "纳税人中心",
+            "税种管理",
+            "申报管理",
+            "缴款中心",
+            "发票管理",
+            "涉税证明",
+            "政策中心",
+            "征纳互动",
+            "管理后台",
+            "账户中心",
+            "退出登录",
+            "提交工单",
+            "请输入工单标题",
+            "通用咨询 申报问题 发票问题 缴款问题 其他",
+            "取消",
+            "提交"
+          ]
+        }
+      },
+      {
+        "label": "导航:纳税人中心",
+        "url": "http://127.0.0.1:49049/taxpayers",
+        "title": "电子税务服务平台",
+        "headings": [
+          "纳税人中心"
+        ],
+        "navLabels": [
+          "税 电子税务平台",
+          "税",
+          "工作台",
+          "纳税人中心",
+          "税种管理",
+          "申报管理",
+          "缴款中心",
+          "发票管理",
+          "涉税证明",
+          "政策中心",
+          "征纳互动",
+          "管理后台",
+          "账户中心"
+        ],
+        "buttons": [
+          "退出登录",
+          "新增纳税人",
+          "切换为当前主体"
+        ],
+        "links": [
+          "工作台",
+          "纳税人中心",
+          "税种管理",
+          "申报管理",
+          "缴款中心",
+          "发票管理",
+          "涉税证明",
+          "政策中心",
+          "征纳互动",
+          "管理后台",
+          "账户中心"
+        ],
+        "inputs": [],
+        "tables": [],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "税电子税务平台管理端工作台纳税人中心税种管理申报管理缴款中心发票管理涉税证明政策中心征纳互动管理后台账户中心系统管理员管理员纳税人中心 新增纳税人上海某某科技有限公司企业统一社会信用代码：91310000MA1FL8XX3J法定代表人：张三信息技术小型上海切换为当前主体测试企业企业统一社会信用代码：91110108MA01XXXX5K法定代表人：管理员科技服务中型北京切换为当前主体",
+        "layout": {
+          "viewportWidth": 1824,
+          "viewportHeight": 1000,
+          "scrollWidth": 1824,
+          "scrollHeight": 1000,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89049-codex-repair-final-structure-11-导航-纳税人中心",
+          "label": "导航:纳税人中心",
+          "finalUrl": "http://127.0.0.1:49049/taxpayers",
+          "title": "电子税务服务平台",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89049/probe/codex-repair-final-20260605/may-89049-codex-repair-final-structure-11-导航-纳税人中心.json",
+          "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89049/probe/codex-repair-final-20260605/may-89049-codex-repair-final-structure-11-导航-纳税人中心.png",
+          "elementCount": 165,
+          "interactiveCount": 19,
+          "interactiveLabels": [
+            "工作台",
+            "纳税人中心",
+            "税种管理",
+            "申报管理",
+            "缴款中心",
+            "发票管理",
+            "涉税证明",
+            "政策中心",
+            "征纳互动",
+            "管理后台",
+            "账户中心",
+            "退出登录",
+            "新增纳税人",
+            "切换为当前主体"
+          ]
+        }
+      },
+      {
+        "label": "操作:切换为当前主体",
+        "url": "http://127.0.0.1:49049/taxpayers",
+        "title": "电子税务服务平台",
+        "headings": [
+          "纳税人中心"
+        ],
+        "navLabels": [
+          "税 电子税务平台",
+          "税",
+          "工作台",
+          "纳税人中心",
+          "税种管理",
+          "申报管理",
+          "缴款中心",
+          "发票管理",
+          "涉税证明",
+          "政策中心",
+          "征纳互动",
+          "管理后台",
+          "账户中心"
+        ],
+        "buttons": [
+          "退出登录",
+          "新增纳税人",
+          "切换为当前主体"
+        ],
+        "links": [
+          "工作台",
+          "纳税人中心",
+          "税种管理",
+          "申报管理",
+          "缴款中心",
+          "发票管理",
+          "涉税证明",
+          "政策中心",
+          "征纳互动",
+          "管理后台",
+          "账户中心"
+        ],
+        "inputs": [],
+        "tables": [],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "税电子税务平台管理端工作台纳税人中心税种管理申报管理缴款中心发票管理涉税证明政策中心征纳互动管理后台账户中心上海某某科技有限公司系统管理员管理员纳税人中心 新增纳税人上海某某科技有限公司企业统一社会信用代码：91310000MA1FL8XX3J法定代表人：张三信息技术小型上海切换为当前主体测试企业企业统一社会信用代码：91110108MA01XXXX5K法定代表人：管理员科技服务中型北京切换为当前主体",
+        "layout": {
+          "viewportWidth": 1856,
+          "viewportHeight": 1000,
+          "scrollWidth": 1856,
+          "scrollHeight": 1000,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89049-codex-repair-final-structure-12-操作-切换为当前主体",
+          "label": "操作:切换为当前主体",
+          "finalUrl": "http://127.0.0.1:49049/taxpayers",
+          "title": "电子税务服务平台",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89049/probe/codex-repair-final-20260605/may-89049-codex-repair-final-structure-12-操作-切换为当前主体.json",
+          "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89049/probe/codex-repair-final-20260605/may-89049-codex-repair-final-structure-12-操作-切换为当前主体.png",
+          "elementCount": 170,
+          "interactiveCount": 19,
+          "interactiveLabels": [
+            "工作台",
+            "纳税人中心",
+            "税种管理",
+            "申报管理",
+            "缴款中心",
+            "发票管理",
+            "涉税证明",
+            "政策中心",
+            "征纳互动",
+            "管理后台",
+            "账户中心",
+            "退出登录",
+            "新增纳税人",
+            "切换为当前主体"
+          ]
+        }
+      },
+      {
+        "label": "操作:退出登录",
+        "url": "http://127.0.0.1:49049/",
+        "title": "电子税务服务平台",
+        "headings": [
+          "系统管理员，您好",
+          "待审申报",
+          "政策推荐"
+        ],
+        "navLabels": [
+          "税 电子税务平台",
+          "税",
+          "工作台",
+          "纳税人中心",
+          "税种管理",
+          "申报管理",
+          "缴款中心",
+          "发票管理",
+          "涉税证明",
+          "政策中心",
+          "征纳互动",
+          "管理后台",
+          "账户中心"
+        ],
+        "buttons": [
+          "退出登录",
+          "查看全部",
+          "更多",
+          "审核申报",
+          "处理工单",
+          "政策管理"
+        ],
+        "links": [
+          "工作台",
+          "纳税人中心",
+          "税种管理",
+          "申报管理",
+          "缴款中心",
+          "发票管理",
+          "涉税证明",
+          "政策中心",
+          "征纳互动",
+          "管理后台",
+          "账户中心"
+        ],
+        "inputs": [],
+        "tables": [],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "税电子税务平台管理端工作台纳税人中心税种管理申报管理缴款中心发票管理涉税证明政策中心征纳互动管理后台账户中心系统管理员管理员系统管理员，您好税务管理员审核申报、发票，处理工单，管理政策待审申报2待缴税款1互动工单2待办事项4待审申报查看全部 增值税2026-05 · 定期申报¥28,380已提交企业所得税2026-Q2 · 定期申报¥85,000已审核个人所得税2026-05 · 零申报¥0草稿政策推荐更多 个体工商户个税优惠热门政策推荐高新技术企业税收优惠热门政策推荐上海市科技创新奖补政策热门政策推荐审核申报处理工单政策管理",
+        "layout": {
+          "viewportWidth": 1888,
+          "viewportHeight": 1000,
+          "scrollWidth": 1888,
+          "scrollHeight": 1000,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89049-codex-repair-final-structure-13-操作-退出登录",
+          "label": "操作:退出登录",
+          "finalUrl": "http://127.0.0.1:49049/",
+          "title": "电子税务服务平台",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89049/probe/codex-repair-final-20260605/may-89049-codex-repair-final-structure-13-操作-退出登录.json",
+          "screenshotPath": "",
+          "elementCount": 261,
+          "interactiveCount": 19,
+          "interactiveLabels": [
+            "工作台",
+            "纳税人中心",
+            "税种管理",
+            "申报管理",
+            "缴款中心",
+            "发票管理",
+            "涉税证明",
+            "政策中心",
+            "征纳互动",
+            "管理后台",
+            "账户中心",
+            "退出登录",
+            "查看全部",
+            "更多",
+            "审核申报",
+            "处理工单",
+            "政策管理"
+          ]
+        }
+      },
+      {
+        "label": "二层操作:退出登录->查看全部",
+        "url": "http://127.0.0.1:49049/declarations",
+        "title": "电子税务服务平台",
+        "headings": [
+          "申报管理"
+        ],
+        "navLabels": [
+          "税 电子税务平台",
+          "税",
+          "工作台",
+          "纳税人中心",
+          "税种管理",
+          "申报管理",
+          "缴款中心",
+          "发票管理",
+          "涉税证明",
+          "政策中心",
+          "征纳互动",
+          "管理后台",
+          "账户中心"
+        ],
+        "buttons": [
+          "退出登录",
+          "新建申报",
+          "全部",
+          "草稿",
+          "已提交",
+          "已审核",
+          "已签章",
+          "查看",
+          "签章",
+          "提交"
+        ],
+        "links": [
+          "工作台",
+          "纳税人中心",
+          "税种管理",
+          "申报管理",
+          "缴款中心",
+          "发票管理",
+          "涉税证明",
+          "政策中心",
+          "征纳互动",
+          "管理后台",
+          "账户中心"
+        ],
+        "inputs": [
+          {
+            "tag": "input",
+            "type": "text",
+            "placeholder": "搜索申报记录...",
+            "name": "",
+            "label": ""
+          }
+        ],
+        "tables": [
+          {
+            "headers": [
+              "纳税人",
+              "税种",
+              "申报期间",
+              "申报类型",
+              "应纳税额",
+              "状态",
+              "操作"
+            ],
+            "rowCount": 3,
+            "hasEmptyText": false,
+            "textPreview": "纳税人 税种 申报期间 申报类型 应纳税额 状态 操作 上海某某科技有限公司 增值税 2026-05 定期申报 ¥28,380 已提交 上海某某科技有限公司 企业所得税 2026-Q2 定期申报 ¥85,000 已审核 上海某某科技有限公司 个人所得税 2026-05 零申报 ¥0 草稿"
+          }
+        ],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "税电子税务平台管理端工作台纳税人中心税种管理申报管理缴款中心发票管理涉税证明政策中心征纳互动管理后台账户中心系统管理员管理员申报管理 新建申报全部草稿已提交已审核已签章纳税人税种申报期间申报类型应纳税额状态操作上海某某科技有限公司增值税2026-05定期申报¥28,380已提交上海某某科技有限公司企业所得税2026-Q2定期申报¥85,000已审核上海某某科技有限公司个人所得税2026-05零申报¥0草稿",
+        "layout": {
+          "viewportWidth": 1920,
+          "viewportHeight": 1000,
+          "scrollWidth": 1920,
+          "scrollHeight": 1000,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89049-codex-repair-final-structure-14-二层操作-退出登录-查看全部",
+          "label": "二层操作:退出登录->查看全部",
+          "finalUrl": "http://127.0.0.1:49049/declarations",
+          "title": "电子税务服务平台",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89049/probe/codex-repair-final-20260605/may-89049-codex-repair-final-structure-14-二层操作-退出登录-查看全部.json",
+          "screenshotPath": "",
+          "elementCount": 183,
+          "interactiveCount": 26,
+          "interactiveLabels": [
+            "工作台",
+            "纳税人中心",
+            "税种管理",
+            "申报管理",
+            "缴款中心",
+            "发票管理",
+            "涉税证明",
+            "政策中心",
+            "征纳互动",
+            "管理后台",
+            "账户中心",
+            "退出登录",
+            "新建申报",
+            "搜索申报记录...",
+            "全部",
+            "草稿",
+            "已提交",
+            "已审核",
+            "已签章",
+            "查看",
+            "签章",
+            "提交"
+          ]
+        }
+      },
+      {
+        "label": "导航:税种管理",
+        "url": "http://127.0.0.1:49049/tax-types",
+        "title": "电子税务服务平台",
+        "headings": [
+          "税种管理",
+          "所得税",
+          "流转税",
+          "财产行为税",
+          "附加税"
+        ],
+        "navLabels": [
+          "税 电子税务平台",
+          "税",
+          "工作台",
+          "纳税人中心",
+          "税种管理",
+          "申报管理",
+          "缴款中心",
+          "发票管理",
+          "涉税证明",
+          "政策中心",
+          "征纳互动",
+          "管理后台",
+          "账户中心"
+        ],
+        "buttons": [
+          "退出登录"
+        ],
+        "links": [
+          "工作台",
+          "纳税人中心",
+          "税种管理",
+          "申报管理",
+          "缴款中心",
+          "发票管理",
+          "涉税证明",
+          "政策中心",
+          "征纳互动",
+          "管理后台",
+          "账户中心"
+        ],
+        "inputs": [],
+        "tables": [],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "税电子税务平台管理端工作台纳税人中心税种管理申报管理缴款中心发票管理涉税证明政策中心征纳互动管理后台账户中心系统管理员管理员税种管理所得税企业所得税CIT默认税率25.0%申报周期按季企业生产经营所得和其他所得个人所得税PIT默认税率3.0%申报周期按月工资薪金、劳务报酬、稿酬等流转税增值税VAT默认税率13.0%申报周期按月货物销售、加工修理修配、进口货物等财产行为税印花税ST默认税率0.03%申报周期按季购销合同、技术合同等房产税PT默认税率1.2%申报周期按年房产原值或租金收入附加税城市维护建设税UMCT默认税率7.0%申报周期按月增值税、消费税实缴税额教育费附加ES默认税率3.0%申报周期按月增值税、消费税实缴税额地方教育附加LES默认税率2.0%申报周期按月增值税、消费税实缴税额",
+        "layout": {
+          "viewportWidth": 1952,
+          "viewportHeight": 1072,
+          "scrollWidth": 1952,
+          "scrollHeight": 1072,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89049-codex-repair-final-structure-15-导航-税种管理",
+          "label": "导航:税种管理",
+          "finalUrl": "http://127.0.0.1:49049/tax-types",
+          "title": "电子税务服务平台",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89049/probe/codex-repair-final-20260605/may-89049-codex-repair-final-structure-15-导航-税种管理.json",
+          "screenshotPath": "",
+          "elementCount": 299,
+          "interactiveCount": 14,
+          "interactiveLabels": [
+            "工作台",
+            "纳税人中心",
+            "税种管理",
+            "申报管理",
+            "缴款中心",
+            "发票管理",
+            "涉税证明",
+            "政策中心",
+            "征纳互动",
+            "管理后台",
+            "账户中心",
+            "退出登录"
+          ]
+        }
+      },
+      {
+        "label": "操作:退出登录",
+        "url": "http://127.0.0.1:49049/",
+        "title": "电子税务服务平台",
+        "headings": [
+          "系统管理员，您好",
+          "待审申报",
+          "政策推荐"
+        ],
+        "navLabels": [
+          "税 电子税务平台",
+          "税",
+          "工作台",
+          "纳税人中心",
+          "税种管理",
+          "申报管理",
+          "缴款中心",
+          "发票管理",
+          "涉税证明",
+          "政策中心",
+          "征纳互动",
+          "管理后台",
+          "账户中心"
+        ],
+        "buttons": [
+          "退出登录",
+          "查看全部",
+          "更多",
+          "审核申报",
+          "处理工单",
+          "政策管理"
+        ],
+        "links": [
+          "工作台",
+          "纳税人中心",
+          "税种管理",
+          "申报管理",
+          "缴款中心",
+          "发票管理",
+          "涉税证明",
+          "政策中心",
+          "征纳互动",
+          "管理后台",
+          "账户中心"
+        ],
+        "inputs": [],
+        "tables": [],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "税电子税务平台管理端工作台纳税人中心税种管理申报管理缴款中心发票管理涉税证明政策中心征纳互动管理后台账户中心系统管理员管理员系统管理员，您好税务管理员审核申报、发票，处理工单，管理政策待审申报2待缴税款1互动工单2待办事项4待审申报查看全部 增值税2026-05 · 定期申报¥28,380已提交企业所得税2026-Q2 · 定期申报¥85,000已审核个人所得税2026-05 · 零申报¥0草稿政策推荐更多 个体工商户个税优惠热门政策推荐高新技术企业税收优惠热门政策推荐上海市科技创新奖补政策热门政策推荐审核申报处理工单政策管理",
+        "layout": {
+          "viewportWidth": 1984,
+          "viewportHeight": 1072,
+          "scrollWidth": 1984,
+          "scrollHeight": 1072,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89049-codex-repair-final-structure-16-操作-退出登录",
+          "label": "操作:退出登录",
+          "finalUrl": "http://127.0.0.1:49049/",
+          "title": "电子税务服务平台",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89049/probe/codex-repair-final-20260605/may-89049-codex-repair-final-structure-16-操作-退出登录.json",
+          "screenshotPath": "",
+          "elementCount": 261,
+          "interactiveCount": 19,
+          "interactiveLabels": [
+            "工作台",
+            "纳税人中心",
+            "税种管理",
+            "申报管理",
+            "缴款中心",
+            "发票管理",
+            "涉税证明",
+            "政策中心",
+            "征纳互动",
+            "管理后台",
+            "账户中心",
+            "退出登录",
+            "查看全部",
+            "更多",
+            "审核申报",
+            "处理工单",
+            "政策管理"
+          ]
+        }
+      },
+      {
+        "label": "导航:申报管理",
+        "url": "http://127.0.0.1:49049/declarations",
+        "title": "电子税务服务平台",
+        "headings": [
+          "申报管理"
+        ],
+        "navLabels": [
+          "税 电子税务平台",
+          "税",
+          "工作台",
+          "纳税人中心",
+          "税种管理",
+          "申报管理",
+          "缴款中心",
+          "发票管理",
+          "涉税证明",
+          "政策中心",
+          "征纳互动",
+          "管理后台",
+          "账户中心"
+        ],
+        "buttons": [
+          "退出登录",
+          "新建申报",
+          "全部",
+          "草稿",
+          "已提交",
+          "已审核",
+          "已签章",
+          "查看",
+          "签章",
+          "提交"
+        ],
+        "links": [
+          "工作台",
+          "纳税人中心",
+          "税种管理",
+          "申报管理",
+          "缴款中心",
+          "发票管理",
+          "涉税证明",
+          "政策中心",
+          "征纳互动",
+          "管理后台",
+          "账户中心"
+        ],
+        "inputs": [
+          {
+            "tag": "input",
+            "type": "text",
+            "placeholder": "搜索申报记录...",
+            "name": "",
+            "label": ""
+          }
+        ],
+        "tables": [
+          {
+            "headers": [
+              "纳税人",
+              "税种",
+              "申报期间",
+              "申报类型",
+              "应纳税额",
+              "状态",
+              "操作"
+            ],
+            "rowCount": 3,
+            "hasEmptyText": false,
+            "textPreview": "纳税人 税种 申报期间 申报类型 应纳税额 状态 操作 上海某某科技有限公司 增值税 2026-05 定期申报 ¥28,380 已提交 上海某某科技有限公司 企业所得税 2026-Q2 定期申报 ¥85,000 已审核 上海某某科技有限公司 个人所得税 2026-05 零申报 ¥0 草稿"
+          }
+        ],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "税电子税务平台管理端工作台纳税人中心税种管理申报管理缴款中心发票管理涉税证明政策中心征纳互动管理后台账户中心系统管理员管理员申报管理 新建申报全部草稿已提交已审核已签章纳税人税种申报期间申报类型应纳税额状态操作上海某某科技有限公司增值税2026-05定期申报¥28,380已提交上海某某科技有限公司企业所得税2026-Q2定期申报¥85,000已审核上海某某科技有限公司个人所得税2026-05零申报¥0草稿",
+        "layout": {
+          "viewportWidth": 2016,
+          "viewportHeight": 1072,
+          "scrollWidth": 2016,
+          "scrollHeight": 1072,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89049-codex-repair-final-structure-17-导航-申报管理",
+          "label": "导航:申报管理",
+          "finalUrl": "http://127.0.0.1:49049/declarations",
+          "title": "电子税务服务平台",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89049/probe/codex-repair-final-20260605/may-89049-codex-repair-final-structure-17-导航-申报管理.json",
+          "screenshotPath": "",
+          "elementCount": 183,
+          "interactiveCount": 26,
+          "interactiveLabels": [
+            "工作台",
+            "纳税人中心",
+            "税种管理",
+            "申报管理",
+            "缴款中心",
+            "发票管理",
+            "涉税证明",
+            "政策中心",
+            "征纳互动",
+            "管理后台",
+            "账户中心",
+            "退出登录",
+            "新建申报",
+            "搜索申报记录...",
+            "全部",
+            "草稿",
+            "已提交",
+            "已审核",
+            "已签章",
+            "查看",
+            "签章",
+            "提交"
+          ]
+        }
+      }
+    ],
+    "findings": [],
+    "actionHints": [],
+    "emptyPages": [],
+    "overflowPages": [],
+    "blankPages": [],
+    "apiFailurePaths": [],
+    "goalTerms": [],
+    "clickedActionDescriptors": [
+      {
+        "nav": "税",
+        "label": "切换为当前主体",
+        "ordinal": 0,
+        "unsafe": false
+      },
+      {
+        "nav": "税",
+        "label": "退出登录",
+        "ordinal": 0,
+        "unsafe": true
+      },
+      {
+        "nav": "税",
+        "label": "退出登录->查看全部",
+        "ordinal": 0,
+        "secondary": true,
+        "unsafe": false
+      },
+      {
+        "nav": "工作台",
+        "label": "查看全部",
+        "ordinal": 0,
+        "unsafe": false
+      },
+      {
+        "nav": "工作台",
+        "label": "查看全部->新建申报",
+        "ordinal": 0,
+        "secondary": true,
+        "unsafe": false
+      },
+      {
+        "nav": "工作台",
+        "label": "处理工单",
+        "ordinal": 0,
+        "unsafe": false
+      },
+      {
+        "nav": "工作台",
+        "label": "处理工单->提交工单",
+        "ordinal": 0,
+        "secondary": true,
+        "unsafe": false
+      },
+      {
+        "nav": "纳税人中心",
+        "label": "切换为当前主体",
+        "ordinal": 0,
+        "unsafe": false
+      },
+      {
+        "nav": "纳税人中心",
+        "label": "退出登录",
+        "ordinal": 0,
+        "unsafe": true
+      },
+      {
+        "nav": "纳税人中心",
+        "label": "退出登录->查看全部",
+        "ordinal": 0,
+        "secondary": true,
+        "unsafe": false
+      },
+      {
+        "nav": "税种管理",
+        "label": "退出登录",
+        "ordinal": 0,
+        "unsafe": true
+      }
+    ],
+    "secondaryActionClicks": 4,
+    "structureCaptures": [
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89049-codex-repair-final-structure-01-首屏",
+        "label": "首屏",
+        "finalUrl": "http://127.0.0.1:49049/",
+        "title": "电子税务服务平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89049/probe/codex-repair-final-20260605/may-89049-codex-repair-final-structure-01-首屏.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89049/probe/codex-repair-final-20260605/may-89049-codex-repair-final-structure-01-首屏.png",
+        "elementCount": 223,
+        "interactiveCount": 19,
+        "interactiveLabels": [
+          "工作台",
+          "纳税人中心",
+          "税种管理",
+          "申报管理",
+          "缴款中心",
+          "发票管理",
+          "涉税证明",
+          "政策中心",
+          "征纳互动",
+          "管理后台",
+          "账户中心",
+          "退出登录",
+          "查看全部",
+          "更多",
+          "审核申报",
+          "处理工单",
+          "政策管理"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89049-codex-repair-final-structure-02-导航-税",
+        "label": "导航:税",
+        "finalUrl": "http://127.0.0.1:49049/taxpayers",
+        "title": "电子税务服务平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89049/probe/codex-repair-final-20260605/may-89049-codex-repair-final-structure-02-导航-税.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89049/probe/codex-repair-final-20260605/may-89049-codex-repair-final-structure-02-导航-税.png",
+        "elementCount": 165,
+        "interactiveCount": 19,
+        "interactiveLabels": [
+          "工作台",
+          "纳税人中心",
+          "税种管理",
+          "申报管理",
+          "缴款中心",
+          "发票管理",
+          "涉税证明",
+          "政策中心",
+          "征纳互动",
+          "管理后台",
+          "账户中心",
+          "退出登录",
+          "新增纳税人",
+          "切换为当前主体"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89049-codex-repair-final-structure-03-操作-切换为当前主体",
+        "label": "操作:切换为当前主体",
+        "finalUrl": "http://127.0.0.1:49049/taxpayers",
+        "title": "电子税务服务平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89049/probe/codex-repair-final-20260605/may-89049-codex-repair-final-structure-03-操作-切换为当前主体.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89049/probe/codex-repair-final-20260605/may-89049-codex-repair-final-structure-03-操作-切换为当前主体.png",
+        "elementCount": 170,
+        "interactiveCount": 19,
+        "interactiveLabels": [
+          "工作台",
+          "纳税人中心",
+          "税种管理",
+          "申报管理",
+          "缴款中心",
+          "发票管理",
+          "涉税证明",
+          "政策中心",
+          "征纳互动",
+          "管理后台",
+          "账户中心",
+          "退出登录",
+          "新增纳税人",
+          "切换为当前主体"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89049-codex-repair-final-structure-04-操作-退出登录",
+        "label": "操作:退出登录",
+        "finalUrl": "http://127.0.0.1:49049/",
+        "title": "电子税务服务平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89049/probe/codex-repair-final-20260605/may-89049-codex-repair-final-structure-04-操作-退出登录.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89049/probe/codex-repair-final-20260605/may-89049-codex-repair-final-structure-04-操作-退出登录.png",
+        "elementCount": 223,
+        "interactiveCount": 19,
+        "interactiveLabels": [
+          "工作台",
+          "纳税人中心",
+          "税种管理",
+          "申报管理",
+          "缴款中心",
+          "发票管理",
+          "涉税证明",
+          "政策中心",
+          "征纳互动",
+          "管理后台",
+          "账户中心",
+          "退出登录",
+          "查看全部",
+          "更多",
+          "审核申报",
+          "处理工单",
+          "政策管理"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89049-codex-repair-final-structure-05-二层操作-退出登录-查看全部",
+        "label": "二层操作:退出登录->查看全部",
+        "finalUrl": "http://127.0.0.1:49049/declarations",
+        "title": "电子税务服务平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89049/probe/codex-repair-final-20260605/may-89049-codex-repair-final-structure-05-二层操作-退出登录-查看全部.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89049/probe/codex-repair-final-20260605/may-89049-codex-repair-final-structure-05-二层操作-退出登录-查看全部.png",
+        "elementCount": 140,
+        "interactiveCount": 21,
+        "interactiveLabels": [
+          "工作台",
+          "纳税人中心",
+          "税种管理",
+          "申报管理",
+          "缴款中心",
+          "发票管理",
+          "涉税证明",
+          "政策中心",
+          "征纳互动",
+          "管理后台",
+          "账户中心",
+          "退出登录",
+          "新建申报",
+          "搜索申报记录...",
+          "全部",
+          "草稿",
+          "已提交",
+          "已审核",
+          "已签章"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89049-codex-repair-final-structure-06-导航-工作台",
+        "label": "导航:工作台",
+        "finalUrl": "http://127.0.0.1:49049/",
+        "title": "电子税务服务平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89049/probe/codex-repair-final-20260605/may-89049-codex-repair-final-structure-06-导航-工作台.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89049/probe/codex-repair-final-20260605/may-89049-codex-repair-final-structure-06-导航-工作台.png",
+        "elementCount": 223,
+        "interactiveCount": 19,
+        "interactiveLabels": [
+          "工作台",
+          "纳税人中心",
+          "税种管理",
+          "申报管理",
+          "缴款中心",
+          "发票管理",
+          "涉税证明",
+          "政策中心",
+          "征纳互动",
+          "管理后台",
+          "账户中心",
+          "退出登录",
+          "查看全部",
+          "更多",
+          "审核申报",
+          "处理工单",
+          "政策管理"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89049-codex-repair-final-structure-07-操作-查看全部",
+        "label": "操作:查看全部",
+        "finalUrl": "http://127.0.0.1:49049/declarations",
+        "title": "电子税务服务平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89049/probe/codex-repair-final-20260605/may-89049-codex-repair-final-structure-07-操作-查看全部.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89049/probe/codex-repair-final-20260605/may-89049-codex-repair-final-structure-07-操作-查看全部.png",
+        "elementCount": 140,
+        "interactiveCount": 21,
+        "interactiveLabels": [
+          "工作台",
+          "纳税人中心",
+          "税种管理",
+          "申报管理",
+          "缴款中心",
+          "发票管理",
+          "涉税证明",
+          "政策中心",
+          "征纳互动",
+          "管理后台",
+          "账户中心",
+          "退出登录",
+          "新建申报",
+          "搜索申报记录...",
+          "全部",
+          "草稿",
+          "已提交",
+          "已审核",
+          "已签章"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89049-codex-repair-final-structure-08-二层操作-查看全部-新建申报",
+        "label": "二层操作:查看全部->新建申报",
+        "finalUrl": "http://127.0.0.1:49049/declarations/new",
+        "title": "电子税务服务平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89049/probe/codex-repair-final-20260605/may-89049-codex-repair-final-structure-08-二层操作-查看全部-新建申报.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89049/probe/codex-repair-final-20260605/may-89049-codex-repair-final-structure-08-二层操作-查看全部-新建申报.png",
+        "elementCount": 156,
+        "interactiveCount": 20,
+        "interactiveLabels": [
+          "工作台",
+          "纳税人中心",
+          "税种管理",
+          "申报管理",
+          "缴款中心",
+          "发票管理",
+          "涉税证明",
+          "政策中心",
+          "征纳互动",
+          "管理后台",
+          "账户中心",
+          "退出登录",
+          "请选择税种 企业所得税 (CIT) 个人所得税 (PIT) 增值税 (VAT) 印花税 (ST) 房产税 (PT) 城市维护建设税 (UMCT) 教育费附加 (ES) 地方教育附加 (LES)",
+          "定期申报 零申报 更正申报",
+          "智能预填",
+          "下一步"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89049-codex-repair-final-structure-09-操作-处理工单",
+        "label": "操作:处理工单",
+        "finalUrl": "http://127.0.0.1:49049/tickets",
+        "title": "电子税务服务平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89049/probe/codex-repair-final-20260605/may-89049-codex-repair-final-structure-09-操作-处理工单.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89049/probe/codex-repair-final-20260605/may-89049-codex-repair-final-structure-09-操作-处理工单.png",
+        "elementCount": 119,
+        "interactiveCount": 15,
+        "interactiveLabels": [
+          "工作台",
+          "纳税人中心",
+          "税种管理",
+          "申报管理",
+          "缴款中心",
+          "发票管理",
+          "涉税证明",
+          "政策中心",
+          "征纳互动",
+          "管理后台",
+          "账户中心",
+          "退出登录",
+          "提交工单"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89049-codex-repair-final-structure-10-二层操作-处理工单-提交工单",
+        "label": "二层操作:处理工单->提交工单",
+        "finalUrl": "http://127.0.0.1:49049/tickets",
+        "title": "电子税务服务平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89049/probe/codex-repair-final-20260605/may-89049-codex-repair-final-structure-10-二层操作-处理工单-提交工单.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89049/probe/codex-repair-final-20260605/may-89049-codex-repair-final-structure-10-二层操作-处理工单-提交工单.png",
+        "elementCount": 145,
+        "interactiveCount": 21,
+        "interactiveLabels": [
+          "工作台",
+          "纳税人中心",
+          "税种管理",
+          "申报管理",
+          "缴款中心",
+          "发票管理",
+          "涉税证明",
+          "政策中心",
+          "征纳互动",
+          "管理后台",
+          "账户中心",
+          "退出登录",
+          "提交工单",
+          "请输入工单标题",
+          "通用咨询 申报问题 发票问题 缴款问题 其他",
+          "取消",
+          "提交"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89049-codex-repair-final-structure-11-导航-纳税人中心",
+        "label": "导航:纳税人中心",
+        "finalUrl": "http://127.0.0.1:49049/taxpayers",
+        "title": "电子税务服务平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89049/probe/codex-repair-final-20260605/may-89049-codex-repair-final-structure-11-导航-纳税人中心.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89049/probe/codex-repair-final-20260605/may-89049-codex-repair-final-structure-11-导航-纳税人中心.png",
+        "elementCount": 165,
+        "interactiveCount": 19,
+        "interactiveLabels": [
+          "工作台",
+          "纳税人中心",
+          "税种管理",
+          "申报管理",
+          "缴款中心",
+          "发票管理",
+          "涉税证明",
+          "政策中心",
+          "征纳互动",
+          "管理后台",
+          "账户中心",
+          "退出登录",
+          "新增纳税人",
+          "切换为当前主体"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89049-codex-repair-final-structure-12-操作-切换为当前主体",
+        "label": "操作:切换为当前主体",
+        "finalUrl": "http://127.0.0.1:49049/taxpayers",
+        "title": "电子税务服务平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89049/probe/codex-repair-final-20260605/may-89049-codex-repair-final-structure-12-操作-切换为当前主体.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89049/probe/codex-repair-final-20260605/may-89049-codex-repair-final-structure-12-操作-切换为当前主体.png",
+        "elementCount": 170,
+        "interactiveCount": 19,
+        "interactiveLabels": [
+          "工作台",
+          "纳税人中心",
+          "税种管理",
+          "申报管理",
+          "缴款中心",
+          "发票管理",
+          "涉税证明",
+          "政策中心",
+          "征纳互动",
+          "管理后台",
+          "账户中心",
+          "退出登录",
+          "新增纳税人",
+          "切换为当前主体"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89049-codex-repair-final-structure-13-操作-退出登录",
+        "label": "操作:退出登录",
+        "finalUrl": "http://127.0.0.1:49049/",
+        "title": "电子税务服务平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89049/probe/codex-repair-final-20260605/may-89049-codex-repair-final-structure-13-操作-退出登录.json",
+        "screenshotPath": "",
+        "elementCount": 261,
+        "interactiveCount": 19,
+        "interactiveLabels": [
+          "工作台",
+          "纳税人中心",
+          "税种管理",
+          "申报管理",
+          "缴款中心",
+          "发票管理",
+          "涉税证明",
+          "政策中心",
+          "征纳互动",
+          "管理后台",
+          "账户中心",
+          "退出登录",
+          "查看全部",
+          "更多",
+          "审核申报",
+          "处理工单",
+          "政策管理"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89049-codex-repair-final-structure-14-二层操作-退出登录-查看全部",
+        "label": "二层操作:退出登录->查看全部",
+        "finalUrl": "http://127.0.0.1:49049/declarations",
+        "title": "电子税务服务平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89049/probe/codex-repair-final-20260605/may-89049-codex-repair-final-structure-14-二层操作-退出登录-查看全部.json",
+        "screenshotPath": "",
+        "elementCount": 183,
+        "interactiveCount": 26,
+        "interactiveLabels": [
+          "工作台",
+          "纳税人中心",
+          "税种管理",
+          "申报管理",
+          "缴款中心",
+          "发票管理",
+          "涉税证明",
+          "政策中心",
+          "征纳互动",
+          "管理后台",
+          "账户中心",
+          "退出登录",
+          "新建申报",
+          "搜索申报记录...",
+          "全部",
+          "草稿",
+          "已提交",
+          "已审核",
+          "已签章",
+          "查看",
+          "签章",
+          "提交"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89049-codex-repair-final-structure-15-导航-税种管理",
+        "label": "导航:税种管理",
+        "finalUrl": "http://127.0.0.1:49049/tax-types",
+        "title": "电子税务服务平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89049/probe/codex-repair-final-20260605/may-89049-codex-repair-final-structure-15-导航-税种管理.json",
+        "screenshotPath": "",
+        "elementCount": 299,
+        "interactiveCount": 14,
+        "interactiveLabels": [
+          "工作台",
+          "纳税人中心",
+          "税种管理",
+          "申报管理",
+          "缴款中心",
+          "发票管理",
+          "涉税证明",
+          "政策中心",
+          "征纳互动",
+          "管理后台",
+          "账户中心",
+          "退出登录"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89049-codex-repair-final-structure-16-操作-退出登录",
+        "label": "操作:退出登录",
+        "finalUrl": "http://127.0.0.1:49049/",
+        "title": "电子税务服务平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89049/probe/codex-repair-final-20260605/may-89049-codex-repair-final-structure-16-操作-退出登录.json",
+        "screenshotPath": "",
+        "elementCount": 261,
+        "interactiveCount": 19,
+        "interactiveLabels": [
+          "工作台",
+          "纳税人中心",
+          "税种管理",
+          "申报管理",
+          "缴款中心",
+          "发票管理",
+          "涉税证明",
+          "政策中心",
+          "征纳互动",
+          "管理后台",
+          "账户中心",
+          "退出登录",
+          "查看全部",
+          "更多",
+          "审核申报",
+          "处理工单",
+          "政策管理"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89049-codex-repair-final-structure-17-导航-申报管理",
+        "label": "导航:申报管理",
+        "finalUrl": "http://127.0.0.1:49049/declarations",
+        "title": "电子税务服务平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89049/probe/codex-repair-final-20260605/may-89049-codex-repair-final-structure-17-导航-申报管理.json",
+        "screenshotPath": "",
+        "elementCount": 183,
+        "interactiveCount": 26,
+        "interactiveLabels": [
+          "工作台",
+          "纳税人中心",
+          "税种管理",
+          "申报管理",
+          "缴款中心",
+          "发票管理",
+          "涉税证明",
+          "政策中心",
+          "征纳互动",
+          "管理后台",
+          "账户中心",
+          "退出登录",
+          "新建申报",
+          "搜索申报记录...",
+          "全部",
+          "草稿",
+          "已提交",
+          "已审核",
+          "已签章",
+          "查看",
+          "签章",
+          "提交"
+        ]
+      }
+    ],
+    "representativeScreenshotUrl": "http://127.0.0.1:49049/",
+    "representativeScreenshotLabel": "系统管理员，您好"
+  },
+  "websiteStructureCapture": {
+    "module": "website_structure_capture",
+    "captureCount": 17,
+    "captures": [
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89049-codex-repair-final-structure-01-首屏",
+        "label": "首屏",
+        "finalUrl": "http://127.0.0.1:49049/",
+        "title": "电子税务服务平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89049/probe/codex-repair-final-20260605/may-89049-codex-repair-final-structure-01-首屏.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89049/probe/codex-repair-final-20260605/may-89049-codex-repair-final-structure-01-首屏.png",
+        "elementCount": 223,
+        "interactiveCount": 19,
+        "interactiveLabels": [
+          "工作台",
+          "纳税人中心",
+          "税种管理",
+          "申报管理",
+          "缴款中心",
+          "发票管理",
+          "涉税证明",
+          "政策中心",
+          "征纳互动",
+          "管理后台",
+          "账户中心",
+          "退出登录",
+          "查看全部",
+          "更多",
+          "审核申报",
+          "处理工单",
+          "政策管理"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89049-codex-repair-final-structure-02-导航-税",
+        "label": "导航:税",
+        "finalUrl": "http://127.0.0.1:49049/taxpayers",
+        "title": "电子税务服务平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89049/probe/codex-repair-final-20260605/may-89049-codex-repair-final-structure-02-导航-税.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89049/probe/codex-repair-final-20260605/may-89049-codex-repair-final-structure-02-导航-税.png",
+        "elementCount": 165,
+        "interactiveCount": 19,
+        "interactiveLabels": [
+          "工作台",
+          "纳税人中心",
+          "税种管理",
+          "申报管理",
+          "缴款中心",
+          "发票管理",
+          "涉税证明",
+          "政策中心",
+          "征纳互动",
+          "管理后台",
+          "账户中心",
+          "退出登录",
+          "新增纳税人",
+          "切换为当前主体"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89049-codex-repair-final-structure-03-操作-切换为当前主体",
+        "label": "操作:切换为当前主体",
+        "finalUrl": "http://127.0.0.1:49049/taxpayers",
+        "title": "电子税务服务平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89049/probe/codex-repair-final-20260605/may-89049-codex-repair-final-structure-03-操作-切换为当前主体.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89049/probe/codex-repair-final-20260605/may-89049-codex-repair-final-structure-03-操作-切换为当前主体.png",
+        "elementCount": 170,
+        "interactiveCount": 19,
+        "interactiveLabels": [
+          "工作台",
+          "纳税人中心",
+          "税种管理",
+          "申报管理",
+          "缴款中心",
+          "发票管理",
+          "涉税证明",
+          "政策中心",
+          "征纳互动",
+          "管理后台",
+          "账户中心",
+          "退出登录",
+          "新增纳税人",
+          "切换为当前主体"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89049-codex-repair-final-structure-04-操作-退出登录",
+        "label": "操作:退出登录",
+        "finalUrl": "http://127.0.0.1:49049/",
+        "title": "电子税务服务平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89049/probe/codex-repair-final-20260605/may-89049-codex-repair-final-structure-04-操作-退出登录.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89049/probe/codex-repair-final-20260605/may-89049-codex-repair-final-structure-04-操作-退出登录.png",
+        "elementCount": 223,
+        "interactiveCount": 19,
+        "interactiveLabels": [
+          "工作台",
+          "纳税人中心",
+          "税种管理",
+          "申报管理",
+          "缴款中心",
+          "发票管理",
+          "涉税证明",
+          "政策中心",
+          "征纳互动",
+          "管理后台",
+          "账户中心",
+          "退出登录",
+          "查看全部",
+          "更多",
+          "审核申报",
+          "处理工单",
+          "政策管理"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89049-codex-repair-final-structure-05-二层操作-退出登录-查看全部",
+        "label": "二层操作:退出登录->查看全部",
+        "finalUrl": "http://127.0.0.1:49049/declarations",
+        "title": "电子税务服务平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89049/probe/codex-repair-final-20260605/may-89049-codex-repair-final-structure-05-二层操作-退出登录-查看全部.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89049/probe/codex-repair-final-20260605/may-89049-codex-repair-final-structure-05-二层操作-退出登录-查看全部.png",
+        "elementCount": 140,
+        "interactiveCount": 21,
+        "interactiveLabels": [
+          "工作台",
+          "纳税人中心",
+          "税种管理",
+          "申报管理",
+          "缴款中心",
+          "发票管理",
+          "涉税证明",
+          "政策中心",
+          "征纳互动",
+          "管理后台",
+          "账户中心",
+          "退出登录",
+          "新建申报",
+          "搜索申报记录...",
+          "全部",
+          "草稿",
+          "已提交",
+          "已审核",
+          "已签章"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89049-codex-repair-final-structure-06-导航-工作台",
+        "label": "导航:工作台",
+        "finalUrl": "http://127.0.0.1:49049/",
+        "title": "电子税务服务平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89049/probe/codex-repair-final-20260605/may-89049-codex-repair-final-structure-06-导航-工作台.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89049/probe/codex-repair-final-20260605/may-89049-codex-repair-final-structure-06-导航-工作台.png",
+        "elementCount": 223,
+        "interactiveCount": 19,
+        "interactiveLabels": [
+          "工作台",
+          "纳税人中心",
+          "税种管理",
+          "申报管理",
+          "缴款中心",
+          "发票管理",
+          "涉税证明",
+          "政策中心",
+          "征纳互动",
+          "管理后台",
+          "账户中心",
+          "退出登录",
+          "查看全部",
+          "更多",
+          "审核申报",
+          "处理工单",
+          "政策管理"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89049-codex-repair-final-structure-07-操作-查看全部",
+        "label": "操作:查看全部",
+        "finalUrl": "http://127.0.0.1:49049/declarations",
+        "title": "电子税务服务平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89049/probe/codex-repair-final-20260605/may-89049-codex-repair-final-structure-07-操作-查看全部.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89049/probe/codex-repair-final-20260605/may-89049-codex-repair-final-structure-07-操作-查看全部.png",
+        "elementCount": 140,
+        "interactiveCount": 21,
+        "interactiveLabels": [
+          "工作台",
+          "纳税人中心",
+          "税种管理",
+          "申报管理",
+          "缴款中心",
+          "发票管理",
+          "涉税证明",
+          "政策中心",
+          "征纳互动",
+          "管理后台",
+          "账户中心",
+          "退出登录",
+          "新建申报",
+          "搜索申报记录...",
+          "全部",
+          "草稿",
+          "已提交",
+          "已审核",
+          "已签章"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89049-codex-repair-final-structure-08-二层操作-查看全部-新建申报",
+        "label": "二层操作:查看全部->新建申报",
+        "finalUrl": "http://127.0.0.1:49049/declarations/new",
+        "title": "电子税务服务平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89049/probe/codex-repair-final-20260605/may-89049-codex-repair-final-structure-08-二层操作-查看全部-新建申报.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89049/probe/codex-repair-final-20260605/may-89049-codex-repair-final-structure-08-二层操作-查看全部-新建申报.png",
+        "elementCount": 156,
+        "interactiveCount": 20,
+        "interactiveLabels": [
+          "工作台",
+          "纳税人中心",
+          "税种管理",
+          "申报管理",
+          "缴款中心",
+          "发票管理",
+          "涉税证明",
+          "政策中心",
+          "征纳互动",
+          "管理后台",
+          "账户中心",
+          "退出登录",
+          "请选择税种 企业所得税 (CIT) 个人所得税 (PIT) 增值税 (VAT) 印花税 (ST) 房产税 (PT) 城市维护建设税 (UMCT) 教育费附加 (ES) 地方教育附加 (LES)",
+          "定期申报 零申报 更正申报",
+          "智能预填",
+          "下一步"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89049-codex-repair-final-structure-09-操作-处理工单",
+        "label": "操作:处理工单",
+        "finalUrl": "http://127.0.0.1:49049/tickets",
+        "title": "电子税务服务平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89049/probe/codex-repair-final-20260605/may-89049-codex-repair-final-structure-09-操作-处理工单.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89049/probe/codex-repair-final-20260605/may-89049-codex-repair-final-structure-09-操作-处理工单.png",
+        "elementCount": 119,
+        "interactiveCount": 15,
+        "interactiveLabels": [
+          "工作台",
+          "纳税人中心",
+          "税种管理",
+          "申报管理",
+          "缴款中心",
+          "发票管理",
+          "涉税证明",
+          "政策中心",
+          "征纳互动",
+          "管理后台",
+          "账户中心",
+          "退出登录",
+          "提交工单"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89049-codex-repair-final-structure-10-二层操作-处理工单-提交工单",
+        "label": "二层操作:处理工单->提交工单",
+        "finalUrl": "http://127.0.0.1:49049/tickets",
+        "title": "电子税务服务平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89049/probe/codex-repair-final-20260605/may-89049-codex-repair-final-structure-10-二层操作-处理工单-提交工单.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89049/probe/codex-repair-final-20260605/may-89049-codex-repair-final-structure-10-二层操作-处理工单-提交工单.png",
+        "elementCount": 145,
+        "interactiveCount": 21,
+        "interactiveLabels": [
+          "工作台",
+          "纳税人中心",
+          "税种管理",
+          "申报管理",
+          "缴款中心",
+          "发票管理",
+          "涉税证明",
+          "政策中心",
+          "征纳互动",
+          "管理后台",
+          "账户中心",
+          "退出登录",
+          "提交工单",
+          "请输入工单标题",
+          "通用咨询 申报问题 发票问题 缴款问题 其他",
+          "取消",
+          "提交"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89049-codex-repair-final-structure-11-导航-纳税人中心",
+        "label": "导航:纳税人中心",
+        "finalUrl": "http://127.0.0.1:49049/taxpayers",
+        "title": "电子税务服务平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89049/probe/codex-repair-final-20260605/may-89049-codex-repair-final-structure-11-导航-纳税人中心.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89049/probe/codex-repair-final-20260605/may-89049-codex-repair-final-structure-11-导航-纳税人中心.png",
+        "elementCount": 165,
+        "interactiveCount": 19,
+        "interactiveLabels": [
+          "工作台",
+          "纳税人中心",
+          "税种管理",
+          "申报管理",
+          "缴款中心",
+          "发票管理",
+          "涉税证明",
+          "政策中心",
+          "征纳互动",
+          "管理后台",
+          "账户中心",
+          "退出登录",
+          "新增纳税人",
+          "切换为当前主体"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89049-codex-repair-final-structure-12-操作-切换为当前主体",
+        "label": "操作:切换为当前主体",
+        "finalUrl": "http://127.0.0.1:49049/taxpayers",
+        "title": "电子税务服务平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89049/probe/codex-repair-final-20260605/may-89049-codex-repair-final-structure-12-操作-切换为当前主体.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89049/probe/codex-repair-final-20260605/may-89049-codex-repair-final-structure-12-操作-切换为当前主体.png",
+        "elementCount": 170,
+        "interactiveCount": 19,
+        "interactiveLabels": [
+          "工作台",
+          "纳税人中心",
+          "税种管理",
+          "申报管理",
+          "缴款中心",
+          "发票管理",
+          "涉税证明",
+          "政策中心",
+          "征纳互动",
+          "管理后台",
+          "账户中心",
+          "退出登录",
+          "新增纳税人",
+          "切换为当前主体"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89049-codex-repair-final-structure-13-操作-退出登录",
+        "label": "操作:退出登录",
+        "finalUrl": "http://127.0.0.1:49049/",
+        "title": "电子税务服务平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89049/probe/codex-repair-final-20260605/may-89049-codex-repair-final-structure-13-操作-退出登录.json",
+        "screenshotPath": "",
+        "elementCount": 261,
+        "interactiveCount": 19,
+        "interactiveLabels": [
+          "工作台",
+          "纳税人中心",
+          "税种管理",
+          "申报管理",
+          "缴款中心",
+          "发票管理",
+          "涉税证明",
+          "政策中心",
+          "征纳互动",
+          "管理后台",
+          "账户中心",
+          "退出登录",
+          "查看全部",
+          "更多",
+          "审核申报",
+          "处理工单",
+          "政策管理"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89049-codex-repair-final-structure-14-二层操作-退出登录-查看全部",
+        "label": "二层操作:退出登录->查看全部",
+        "finalUrl": "http://127.0.0.1:49049/declarations",
+        "title": "电子税务服务平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89049/probe/codex-repair-final-20260605/may-89049-codex-repair-final-structure-14-二层操作-退出登录-查看全部.json",
+        "screenshotPath": "",
+        "elementCount": 183,
+        "interactiveCount": 26,
+        "interactiveLabels": [
+          "工作台",
+          "纳税人中心",
+          "税种管理",
+          "申报管理",
+          "缴款中心",
+          "发票管理",
+          "涉税证明",
+          "政策中心",
+          "征纳互动",
+          "管理后台",
+          "账户中心",
+          "退出登录",
+          "新建申报",
+          "搜索申报记录...",
+          "全部",
+          "草稿",
+          "已提交",
+          "已审核",
+          "已签章",
+          "查看",
+          "签章",
+          "提交"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89049-codex-repair-final-structure-15-导航-税种管理",
+        "label": "导航:税种管理",
+        "finalUrl": "http://127.0.0.1:49049/tax-types",
+        "title": "电子税务服务平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89049/probe/codex-repair-final-20260605/may-89049-codex-repair-final-structure-15-导航-税种管理.json",
+        "screenshotPath": "",
+        "elementCount": 299,
+        "interactiveCount": 14,
+        "interactiveLabels": [
+          "工作台",
+          "纳税人中心",
+          "税种管理",
+          "申报管理",
+          "缴款中心",
+          "发票管理",
+          "涉税证明",
+          "政策中心",
+          "征纳互动",
+          "管理后台",
+          "账户中心",
+          "退出登录"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89049-codex-repair-final-structure-16-操作-退出登录",
+        "label": "操作:退出登录",
+        "finalUrl": "http://127.0.0.1:49049/",
+        "title": "电子税务服务平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89049/probe/codex-repair-final-20260605/may-89049-codex-repair-final-structure-16-操作-退出登录.json",
+        "screenshotPath": "",
+        "elementCount": 261,
+        "interactiveCount": 19,
+        "interactiveLabels": [
+          "工作台",
+          "纳税人中心",
+          "税种管理",
+          "申报管理",
+          "缴款中心",
+          "发票管理",
+          "涉税证明",
+          "政策中心",
+          "征纳互动",
+          "管理后台",
+          "账户中心",
+          "退出登录",
+          "查看全部",
+          "更多",
+          "审核申报",
+          "处理工单",
+          "政策管理"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89049-codex-repair-final-structure-17-导航-申报管理",
+        "label": "导航:申报管理",
+        "finalUrl": "http://127.0.0.1:49049/declarations",
+        "title": "电子税务服务平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89049/probe/codex-repair-final-20260605/may-89049-codex-repair-final-structure-17-导航-申报管理.json",
+        "screenshotPath": "",
+        "elementCount": 183,
+        "interactiveCount": 26,
+        "interactiveLabels": [
+          "工作台",
+          "纳税人中心",
+          "税种管理",
+          "申报管理",
+          "缴款中心",
+          "发票管理",
+          "涉税证明",
+          "政策中心",
+          "征纳互动",
+          "管理后台",
+          "账户中心",
+          "退出登录",
+          "新建申报",
+          "搜索申报记录...",
+          "全部",
+          "草稿",
+          "已提交",
+          "已审核",
+          "已签章",
+          "查看",
+          "签章",
+          "提交"
+        ]
+      }
+    ]
+  },
+  "screenshotMetrics": {
+    "width": 2048,
+    "height": 1072,
+    "scrollWidth": 2016,
+    "scrollHeight": 1072
+  },
+  "initialBodyTextPreview": "税\n电子税务平台\n管理端\n工作台\n纳税人中心\n税种管理\n申报管理\n缴款中心\n发票管理\n涉税证明\n政策中心\n征纳互动\n管理后台\n账户中心\n系统管理员\n管理员\n系统管理员，您好\n\n税务管理员审核申报、发票，处理工单，管理政策\n\n待审申报\n0\n待缴税款\n0\n互动工单\n0\n待办事项\n0\n待审申报\n查看全部\n\n暂无申报记录\n\n政策推荐\n更多\n个体工商户个税优惠\n热门政策推荐\n高新技术企业税收优惠\n热门政策推荐\n上海市科技创新奖补政策\n热门政策推荐\n审核申报\n处理工单\n政策管理",
+  "bodyTextPreview": "税\n电子税务平台\n管理端\n工作台\n纳税人中心\n税种管理\n申报管理\n缴款中心\n发票管理\n涉税证明\n政策中心\n征纳互动\n管理后台\n账户中心\n系统管理员\n管理员\n系统管理员，您好\n\n税务管理员审核申报、发票，处理工单，管理政策\n\n待审申报\n2\n待缴税款\n1\n互动工单\n2\n待办事项\n4\n待审申报\n查看全部\n增值税\n2026-05 · 定期申报\n¥28,380\n已提交\n企业所得税\n2026-Q2 · 定期申报\n¥85,000\n已审核\n个人所得税\n2026-05 · 零申报\n¥0\n草稿\n政策推荐\n更多\n个体工商户个税优惠\n热门政策推荐\n高新技术企业税收优惠\n热门政策推荐\n上海市科技创新奖补政策\n热门政策推荐\n审核申报\n处理工单\n政策管理",
+  "apiBase": "http://127.0.0.1:59049",
+  "businessGoalPreview": "",
+  "apiResponses": [
+    {
+      "method": "POST",
+      "status": 200,
+      "url": "http://127.0.0.1:49049/api/auth/login"
+    },
+    {
+      "method": "POST",
+      "status": 200,
+      "url": "http://127.0.0.1:49049/api/auth/login"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49049/api/auth/me"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49049/api/declarations"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49049/api/payments?status=pending"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49049/api/invoices"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49049/api/policies/recommend"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49049/api/tickets"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49049/api/auth/me"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49049/api/declarations"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49049/api/payments?status=pending"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49049/api/invoices"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49049/api/policies/recommend"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49049/api/tickets"
+    },
+    {
+      "method": "POST",
+      "status": 200,
+      "url": "http://127.0.0.1:49049/api/auth/login"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49049/api/auth/me"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49049/api/declarations"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49049/api/payments?status=pending"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49049/api/invoices"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49049/api/policies/recommend"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49049/api/tickets"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49049/api/declarations"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49049/api/payments?status=pending"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49049/api/invoices"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49049/api/policies/recommend"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49049/api/tickets"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49049/api/declarations"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49049/api/taxpayers"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49049/api/tickets"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49049/api/payments"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49049/api/account/logs"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49049/api/declarations"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49049/api/taxpayers"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49049/api/tickets"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49049/api/payments"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49049/api/account/logs"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49049/api/declarations"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49049/api/payments?status=pending"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49049/api/invoices"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49049/api/policies/recommend"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49049/api/tickets"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49049/api/declarations"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49049/api/payments?status=pending"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49049/api/invoices"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49049/api/policies/recommend"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49049/api/tickets"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49049/api/taxpayers"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49049/api/taxpayers"
+    },
+    {
+      "method": "POST",
+      "status": 200,
+      "url": "http://127.0.0.1:49049/api/auth/login"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49049/api/auth/me"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49049/api/declarations"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49049/api/payments?status=pending"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49049/api/invoices"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49049/api/policies/recommend"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49049/api/tickets"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49049/api/declarations"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49049/api/payments?status=pending"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49049/api/invoices"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49049/api/policies/recommend"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49049/api/tickets"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49049/api/declarations"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49049/api/declarations"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49049/api/taxpayers"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49049/api/taxpayers"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49049/api/declarations"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49049/api/payments?status=pending"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49049/api/invoices"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49049/api/policies/recommend"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49049/api/tickets"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49049/api/declarations"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49049/api/payments?status=pending"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49049/api/invoices"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49049/api/policies/recommend"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49049/api/tickets"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49049/api/declarations"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49049/api/declarations"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49049/api/tax-types"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49049/api/tax-types"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49049/api/declarations"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49049/api/payments?status=pending"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49049/api/invoices"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49049/api/policies/recommend"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49049/api/tickets"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49049/api/declarations"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49049/api/payments?status=pending"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49049/api/invoices"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49049/api/policies/recommend"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49049/api/tickets"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49049/api/tickets"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49049/api/tickets"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49049/api/declarations"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49049/api/payments?status=pending"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49049/api/invoices"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49049/api/policies/recommend"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49049/api/tickets"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49049/api/declarations"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49049/api/payments?status=pending"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49049/api/invoices"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49049/api/policies/recommend"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49049/api/tickets"
+    }
+  ],
+  "apiChecks": [
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59049/api/health",
+      "path": "/api/health",
+      "status": 200,
+      "ok": true,
+      "bodyPreview": "{\"success\":true,\"message\":\"ok\"}"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59049/api/auth/me",
+      "path": "/api/auth/me",
+      "status": 200,
+      "ok": true,
+      "bodyPreview": "{\"success\":true,\"data\":{\"id\":1,\"username\":\"admin\",\"role\":\"admin\",\"real_name\":\"系统管理员\",\"id_number\":\"110101199001011234\",\"phone\":\"13800138000\",\"digital_cert\":null,\"created_at\":\"2026-06-05 13:06:53\",\"taxpayers\":[{\"id\":2,\"user_id\":1,\"name\":\"测试企业\",\"type\":\"enterprise\",\"unified_code\":\"91110108MA01XXXX5K\",\"id_number\":\"110101199001011234\",\"legal_person\":\"管理员\",\"address\":\"北京市海淀区中关村大街1号\",\"industry\":\"科技服务\",\"scale\":\"中型\",\"region\":\"北京\",\"created_at\":\"2026-06-05 13:06:53\"}]}}"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59049/api/declarations",
+      "path": "/api/declarations",
+      "status": 200,
+      "ok": true,
+      "bodyPreview": "{\"success\":true,\"data\":[{\"id\":1,\"taxpayer_id\":1,\"tax_type_id\":1,\"user_id\":2,\"period\":\"2026-05\",\"decl_type\":\"regular\",\"form_data\":\"{\\\"sales\\\":386000,\\\"inputTax\\\":21800,\\\"outputTax\\\":50180}\",\"tax_amount\":28380,\"status\":\"submitted\",\"risk_check\":\"{}\",\"seal_data\":null,\"submitted_at\":\"2026-06-05T14:29:42.239Z\",\"created_at\":\"2026-06-05 14:29:42\",\"taxpayer_name\":\"上海某某科技有限公司\",\"tax_type_name\":\"增值税\",\"tax_type_code\":\"VAT\"},{\"id\":2,\"taxpayer_id\":1,\"tax_type_id\":2,\"user_id\":1,\"period\":\"2026-Q2\",\"decl_type\":\"r"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59049/api/payments?status=pending",
+      "path": "/api/payments?status=pending",
+      "status": 200,
+      "ok": true,
+      "bodyPreview": "{\"success\":true,\"data\":[{\"id\":1,\"declaration_id\":1,\"taxpayer_id\":1,\"user_id\":2,\"amount\":28380,\"status\":\"pending\",\"pay_method\":null,\"transaction_id\":null,\"voucher_no\":\"PAY-202606-0001\",\"paid_at\":null,\"created_at\":\"2026-06-05 14:29:42\",\"taxpayer_name\":\"上海某某科技有限公司\",\"declaration_period\":\"2026-05\"}]}"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59049/api/invoices",
+      "path": "/api/invoices",
+      "status": 200,
+      "ok": true,
+      "bodyPreview": "{\"success\":true,\"data\":[{\"id\":1,\"taxpayer_id\":1,\"user_id\":2,\"invoice_no\":\"INV-202606050001\",\"invoice_type\":\"normal\",\"amount\":12800,\"buyer_name\":\"上海某某科技有限公司\",\"buyer_code\":\"91310000MA1FL8XX3J\",\"seller_name\":\"测试企业\",\"seller_code\":\"91110108MA01XXXX5K\",\"items\":\"[{\\\"name\\\":\\\"技术服务费\\\",\\\"amount\\\":12800}]\",\"status\":\"issued\",\"ocr_data\":null,\"issued_at\":\"2026-06-05T14:29:42.239Z\",\"created_at\":\"2026-06-05 14:29:42\",\"taxpayer_name\":\"上海某某科技有限公司\"}]}"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59049/api/policies/recommend",
+      "path": "/api/policies/recommend",
+      "status": 200,
+      "ok": true,
+      "bodyPreview": "{\"success\":true,\"data\":[{\"id\":5,\"title\":\"个体工商户个税优惠\",\"source\":\"国家税务总局\",\"level\":\"national\",\"industry_tags\":\"[]\",\"scale_tags\":\"[\\\"微型\\\"]\",\"region_tags\":\"[]\",\"content\":\"对个体工商户年应纳税所得额不超过200万元的部分，减半征收个人所得税。\",\"summary\":\"个体户年应纳税所得200万以内减半征个税\",\"publish_date\":\"2025-04-01\",\"created_at\":\"2026-06-05 13:06:53\",\"match_reason\":\"热门政策推荐\"},{\"id\":2,\"title\":\"高新技术企业税收优惠\",\"source\":\"国家税务总局\",\"level\":\"national\",\"industry_tags\":\"[\\\"信息技术\\\",\\\"生物医药\\\",\\\"新材料\\\"]\",\"scale_tags\":\"[\\\"小型\\\",\\\"中型\\\"]\",\"region_tags\":\"[]\",\"content\":\"国家需要重"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59049/api/tickets",
+      "path": "/api/tickets",
+      "status": 200,
+      "ok": true,
+      "bodyPreview": "{\"success\":true,\"data\":[{\"id\":1,\"user_id\":2,\"taxpayer_id\":1,\"title\":\"申报表数据口径咨询\",\"category\":\"declaration\",\"status\":\"processing\",\"priority\":2,\"created_at\":\"2026-06-05 14:29:42\",\"updated_at\":\"2026-06-05 14:29:42\",\"taxpayer_name\":\"上海某某科技有限公司\"},{\"id\":2,\"user_id\":1,\"taxpayer_id\":1,\"title\":\"发票验真结果复核\",\"category\":\"invoice\",\"status\":\"open\",\"priority\":1,\"created_at\":\"2026-06-05 14:29:42\",\"updated_at\":\"2026-06-05 14:29:42\",\"taxpayer_name\":\"上海某某科技有限公司\"}]}"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59049/api/taxpayers",
+      "path": "/api/taxpayers",
+      "status": 200,
+      "ok": true,
+      "bodyPreview": "{\"success\":true,\"data\":[{\"id\":1,\"user_id\":2,\"name\":\"上海某某科技有限公司\",\"type\":\"enterprise\",\"unified_code\":\"91310000MA1FL8XX3J\",\"id_number\":\"310101199203154567\",\"legal_person\":\"张三\",\"address\":\"上海市浦东新区张江路100号\",\"industry\":\"信息技术\",\"scale\":\"小型\",\"region\":\"上海\",\"created_at\":\"2026-06-05 13:06:53\"},{\"id\":2,\"user_id\":1,\"name\":\"测试企业\",\"type\":\"enterprise\",\"unified_code\":\"91110108MA01XXXX5K\",\"id_number\":\"110101199001011234\",\"legal_person\":\"管理员\",\"address\":\"北京市海淀区中关村大街1号\",\"industry\":\"科技服务\",\"scale\":\"中型\",\"region\":\"北京\",\"cre"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59049/api/payments",
+      "path": "/api/payments",
+      "status": 200,
+      "ok": true,
+      "bodyPreview": "{\"success\":true,\"data\":[{\"id\":1,\"declaration_id\":1,\"taxpayer_id\":1,\"user_id\":2,\"amount\":28380,\"status\":\"pending\",\"pay_method\":null,\"transaction_id\":null,\"voucher_no\":\"PAY-202606-0001\",\"paid_at\":null,\"created_at\":\"2026-06-05 14:29:42\",\"taxpayer_name\":\"上海某某科技有限公司\",\"declaration_period\":\"2026-05\"},{\"id\":2,\"declaration_id\":2,\"taxpayer_id\":1,\"user_id\":1,\"amount\":85000,\"status\":\"paid\",\"pay_method\":\"bank\",\"transaction_id\":\"TX-202606050001\",\"voucher_no\":\"PAY-202606-0002\",\"paid_at\":\"2026-06-05T14:29:42.23"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59049/api/account/logs",
+      "path": "/api/account/logs",
+      "status": 200,
+      "ok": true,
+      "bodyPreview": "{\"success\":true,\"data\":[{\"id\":35,\"user_id\":1,\"action\":\"login\",\"module\":\"auth\",\"detail\":\"用户 admin 登录\",\"ip\":\"127.0.0.1\",\"created_at\":\"2026-06-05 14:29:50\"},{\"id\":34,\"user_id\":1,\"action\":\"login\",\"module\":\"auth\",\"detail\":\"用户 admin 登录\",\"ip\":\"127.0.0.1\",\"created_at\":\"2026-06-05 14:29:45\"},{\"id\":33,\"user_id\":1,\"action\":\"login\",\"module\":\"auth\",\"detail\":\"用户 admin 登录\",\"ip\":\"127.0.0.1\",\"created_at\":\"2026-06-05 14:29:27\"},{\"id\":32,\"user_id\":1,\"action\":\"login\",\"module\":\"auth\",\"detail\":\"用户 admin 登录\",\"ip\":\"127"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59049/api/tax-types",
+      "path": "/api/tax-types",
+      "status": 200,
+      "ok": true,
+      "bodyPreview": "{\"success\":true,\"data\":[{\"id\":2,\"name\":\"企业所得税\",\"code\":\"CIT\",\"category\":\"所得税\",\"default_rate\":0.25,\"scope\":\"企业生产经营所得和其他所得\",\"period_type\":\"quarterly\"},{\"id\":3,\"name\":\"个人所得税\",\"code\":\"PIT\",\"category\":\"所得税\",\"default_rate\":0.03,\"scope\":\"工资薪金、劳务报酬、稿酬等\",\"period_type\":\"monthly\"},{\"id\":1,\"name\":\"增值税\",\"code\":\"VAT\",\"category\":\"流转税\",\"default_rate\":0.13,\"scope\":\"货物销售、加工修理修配、进口货物等\",\"period_type\":\"monthly\"},{\"id\":7,\"name\":\"印花税\",\"code\":\"ST\",\"category\":\"财产行为税\",\"default_rate\":0.0003,\"scope\":\"购销合同、技术合同等\",\"period_typ"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59049/api/users/profile",
+      "path": "/api/users/profile",
+      "status": 200,
+      "ok": true,
+      "bodyPreview": "{\"success\":true,\"data\":{\"id\":1,\"username\":\"admin\",\"role\":\"admin\",\"real_name\":\"系统管理员\",\"id_number\":\"110101199001011234\",\"phone\":\"13800138000\",\"digital_cert\":null,\"created_at\":\"2026-06-05 13:06:53\",\"taxpayers\":[{\"id\":2,\"user_id\":1,\"name\":\"测试企业\",\"type\":\"enterprise\",\"unified_code\":\"91110108MA01XXXX5K\",\"id_number\":\"110101199001011234\",\"legal_person\":\"管理员\",\"address\":\"北京市海淀区中关村大街1号\",\"industry\":\"科技服务\",\"scale\":\"中型\",\"region\":\"北京\",\"created_at\":\"2026-06-05 13:06:53\"}]}}"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59049/api/user/profile",
+      "path": "/api/user/profile",
+      "status": 200,
+      "ok": true,
+      "bodyPreview": "{\"success\":true,\"data\":{\"id\":1,\"username\":\"admin\",\"role\":\"admin\",\"real_name\":\"系统管理员\",\"id_number\":\"110101199001011234\",\"phone\":\"13800138000\",\"digital_cert\":null,\"created_at\":\"2026-06-05 13:06:53\",\"taxpayers\":[{\"id\":2,\"user_id\":1,\"name\":\"测试企业\",\"type\":\"enterprise\",\"unified_code\":\"91110108MA01XXXX5K\",\"id_number\":\"110101199001011234\",\"legal_person\":\"管理员\",\"address\":\"北京市海淀区中关村大街1号\",\"industry\":\"科技服务\",\"scale\":\"中型\",\"region\":\"北京\",\"created_at\":\"2026-06-05 13:06:53\"}]}}"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59049/api/admin/stats",
+      "path": "/api/admin/stats",
+      "status": 200,
+      "ok": true,
+      "bodyPreview": "{\"success\":true,\"data\":{\"users\":3,\"taxpayers\":2,\"declarations\":3,\"pendingReview\":1,\"pendingPayments\":1,\"tickets\":2}}"
+    }
+  ],
+  "dialogs": [],
+  "consoleMessages": [
+    {
+      "type": "debug",
+      "text": "[vite] connecting...",
+      "location": {
+        "url": "http://127.0.0.1:49049/@vite/client",
+        "lineNumber": 788,
+        "columnNumber": 8
+      }
+    },
+    {
+      "type": "debug",
+      "text": "[vite] connected.",
+      "location": {
+        "url": "http://127.0.0.1:49049/@vite/client",
+        "lineNumber": 911,
+        "columnNumber": 14
+      }
+    },
+    {
+      "type": "info",
+      "text": "%cDownload the React DevTools for a better development experience: https://reactjs.org/link/react-devtools font-weight:bold",
+      "location": {
+        "url": "http://127.0.0.1:49049/node_modules/.vite/deps/chunk-SVG7M4VJ.js?v=c972a40e",
+        "lineNumber": 21606,
+        "columnNumber": 24
+      }
+    },
+    {
+      "type": "log",
+      "text": "[ProtectedRoute] 认证检查: {storeToken: false, storeUser: false, localToken: false, localUser: false}",
+      "location": {
+        "url": "http://127.0.0.1:49049/src/components/ProtectedRoute.tsx",
+        "lineNumber": 40,
+        "columnNumber": 12
+      }
+    },
+    {
+      "type": "log",
+      "text": "[ProtectedRoute] 未认证，正在建立本地演示管理员会话",
+      "location": {
+        "url": "http://127.0.0.1:49049/src/components/ProtectedRoute.tsx",
+        "lineNumber": 58,
+        "columnNumber": 12
+      }
+    },
+    {
+      "type": "log",
+      "text": "[API Request] POST /api/auth/login",
+      "location": {
+        "url": "http://127.0.0.1:49049/src/lib/api.ts",
+        "lineNumber": 11,
+        "columnNumber": 12
+      }
+    },
+    {
+      "type": "log",
+      "text": "[ProtectedRoute] 认证检查: {storeToken: false, storeUser: false, localToken: false, localUser: false}",
+      "location": {
+        "url": "http://127.0.0.1:49049/src/components/ProtectedRoute.tsx",
+        "lineNumber": 40,
+        "columnNumber": 12
+      }
+    },
+    {
+      "type": "log",
+      "text": "[ProtectedRoute] 未认证，正在建立本地演示管理员会话",
+      "location": {
+        "url": "http://127.0.0.1:49049/src/components/ProtectedRoute.tsx",
+        "lineNumber": 58,
+        "columnNumber": 12
+      }
+    },
+    {
+      "type": "log",
+      "text": "[API Request] POST /api/auth/login",
+      "location": {
+        "url": "http://127.0.0.1:49049/src/lib/api.ts",
+        "lineNumber": 11,
+        "columnNumber": 12
+      }
+    },
+    {
+      "type": "log",
+      "text": "[API Response] 200 OK for /api/auth/login",
+      "location": {
+        "url": "http://127.0.0.1:49049/src/lib/api.ts",
+        "lineNumber": 16,
+        "columnNumber": 12
+      }
+    },
+    {
+      "type": "log",
+      "text": "[API Success] /api/auth/login: {success: true, data: Object}",
+      "location": {
+        "url": "http://127.0.0.1:49049/src/lib/api.ts",
+        "lineNumber": 32,
+        "columnNumber": 12
+      }
+    },
+    {
+      "type": "log",
+      "text": "[API Request] GET /api/auth/me",
+      "location": {
+        "url": "http://127.0.0.1:49049/src/lib/api.ts",
+        "lineNumber": 11,
+        "columnNumber": 12
+      }
+    },
+    {
+      "type": "log",
+      "text": "[ProtectedRoute] 认证检查: {storeToken: true, storeUser: true, localToken: true, localUser: true}",
+      "location": {
+        "url": "http://127.0.0.1:49049/src/components/ProtectedRoute.tsx",
+        "lineNumber": 40,
+        "columnNumber": 12
+      }
+    },
+    {
+      "type": "log",
+      "text": "[ProtectedRoute] Store 已认证，允许访问",
+      "location": {
+        "url": "http://127.0.0.1:49049/src/components/ProtectedRoute.tsx",
+        "lineNumber": 47,
+        "columnNumber": 14
+      }
+    },
+    {
+      "type": "log",
+      "text": "[API Request] GET /api/declarations",
+      "location": {
+        "url": "http://127.0.0.1:49049/src/lib/api.ts",
+        "lineNumber": 11,
+        "columnNumber": 12
+      }
+    },
+    {
+      "type": "log",
+      "text": "[API Request] GET /api/payments?status=pending",
+      "location": {
+        "url": "http://127.0.0.1:49049/src/lib/api.ts",
+        "lineNumber": 11,
+        "columnNumber": 12
+      }
+    },
+    {
+      "type": "log",
+      "text": "[API Request] GET /api/invoices",
+      "location": {
+        "url": "http://127.0.0.1:49049/src/lib/api.ts",
+        "lineNumber": 11,
+        "columnNumber": 12
+      }
+    },
+    {
+      "type": "log",
+      "text": "[API Request] GET /api/policies/recommend",
+      "location": {
+        "url": "http://127.0.0.1:49049/src/lib/api.ts",
+        "lineNumber": 11,
+        "columnNumber": 12
+      }
+    },
+    {
+      "type": "log",
+      "text": "[API Request] GET /api/tickets",
+      "location": {
+        "url": "http://127.0.0.1:49049/src/lib/api.ts",
+        "lineNumber": 11,
+        "columnNumber": 12
+      }
+    },
+    {
+      "type": "log",
+      "text": "[API Request] GET /api/declarations",
+      "location": {
+        "url": "http://127.0.0.1:49049/src/lib/api.ts",
+        "lineNumber": 11,
+        "columnNumber": 12
+      }
+    },
+    {
+      "type": "log",
+      "text": "[API Request] GET /api/payments?status=pending",
+      "location": {
+        "url": "http://127.0.0.1:49049/src/lib/api.ts",
+        "lineNumber": 11,
+        "columnNumber": 12
+      }
+    },
+    {
+      "type": "log",
+      "text": "[API Request] GET /api/invoices",
+      "location": {
+        "url": "http://127.0.0.1:49049/src/lib/api.ts",
+        "lineNumber": 11,
+        "columnNumber": 12
+      }
+    },
+    {
+      "type": "log",
+      "text": "[API Request] GET /api/policies/recommend",
+      "location": {
+        "url": "http://127.0.0.1:49049/src/lib/api.ts",
+        "lineNumber": 11,
+        "columnNumber": 12
+      }
+    },
+    {
+      "type": "log",
+      "text": "[API Request] GET /api/tickets",
+      "location": {
+        "url": "http://127.0.0.1:49049/src/lib/api.ts",
+        "lineNumber": 11,
+        "columnNumber": 12
+      }
+    },
+    {
+      "type": "log",
+      "text": "[API Response] 200 OK for /api/auth/login",
+      "location": {
+        "url": "http://127.0.0.1:49049/src/lib/api.ts",
+        "lineNumber": 16,
+        "columnNumber": 12
+      }
+    },
+    {
+      "type": "log",
+      "text": "[API Success] /api/auth/login: {success: true, data: Object}",
+      "location": {
+        "url": "http://127.0.0.1:49049/src/lib/api.ts",
+        "lineNumber": 32,
+        "columnNumber": 12
+      }
+    },
+    {
+      "type": "log",
+      "text": "[API Request] GET /api/auth/me",
+      "location": {
+        "url": "http://127.0.0.1:49049/src/lib/api.ts",
+        "lineNumber": 11,
+        "columnNumber": 12
+      }
+    },
+    {
+      "type": "log",
+      "text": "[ProtectedRoute] 认证检查: {storeToken: true, storeUser: true, localToken: true, localUser: true}",
+      "location": {
+        "url": "http://127.0.0.1:49049/src/components/ProtectedRoute.tsx",
+        "lineNumber": 40,
+        "columnNumber": 12
+      }
+    },
+    {
+      "type": "log",
+      "text": "[ProtectedRoute] Store 已认证，允许访问",
+      "location": {
+        "url": "http://127.0.0.1:49049/src/components/ProtectedRoute.tsx",
+        "lineNumber": 47,
+        "columnNumber": 14
+      }
+    },
+    {
+      "type": "log",
+      "text": "[API Response] 200 OK for /api/auth/me",
+      "location": {
+        "url": "http://127.0.0.1:49049/src/lib/api.ts",
+        "lineNumber": 16,
+        "columnNumber": 12
+      }
+    },
+    {
+      "type": "log",
+      "text": "[API Success] /api/auth/me: {success: true, data: Object}",
+      "location": {
+        "url": "http://127.0.0.1:49049/src/lib/api.ts",
+        "lineNumber": 32,
+        "columnNumber": 12
+      }
+    },
+    {
+      "type": "log",
+      "text": "[API Response] 200 OK for /api/declarations",
+      "location": {
+        "url": "http://127.0.0.1:49049/src/lib/api.ts",
+        "lineNumber": 16,
+        "columnNumber": 12
+      }
+    },
+    {
+      "type": "log",
+      "text": "[API Success] /api/declarations: {success: true, data: Array(0)}",
+      "location": {
+        "url": "http://127.0.0.1:49049/src/lib/api.ts",
+        "lineNumber": 32,
+        "columnNumber": 12
+      }
+    },
+    {
+      "type": "log",
+      "text": "[API Response] 200 OK for /api/payments?status=pending",
+      "location": {
+        "url": "http://127.0.0.1:49049/src/lib/api.ts",
+        "lineNumber": 16,
+        "columnNumber": 12
+      }
+    },
+    {
+      "type": "log",
+      "text": "[API Success] /api/payments?status=pending: {success: true, data: Array(0)}",
+      "location": {
+        "url": "http://127.0.0.1:49049/src/lib/api.ts",
+        "lineNumber": 32,
+        "columnNumber": 12
+      }
+    },
+    {
+      "type": "log",
+      "text": "[API Response] 200 OK for /api/invoices",
+      "location": {
+        "url": "http://127.0.0.1:49049/src/lib/api.ts",
+        "lineNumber": 16,
+        "columnNumber": 12
+      }
+    },
+    {
+      "type": "log",
+      "text": "[API Success] /api/invoices: {success: true, data: Array(0)}",
+      "location": {
+        "url": "http://127.0.0.1:49049/src/lib/api.ts",
+        "lineNumber": 32,
+        "columnNumber": 12
+      }
+    },
+    {
+      "type": "log",
+      "text": "[API Response] 200 OK for /api/policies/recommend",
+      "location": {
+        "url": "http://127.0.0.1:49049/src/lib/api.ts",
+        "lineNumber": 16,
+        "columnNumber": 12
+      }
+    },
+    {
+      "type": "log",
+      "text": "[API Success] /api/policies/recommend: {success: true, data: Array(5)}",
+      "location": {
+        "url": "http://127.0.0.1:49049/src/lib/api.ts",
+        "lineNumber": 32,
+        "columnNumber": 12
+      }
+    },
+    {
+      "type": "log",
+      "text": "[API Response] 200 OK for /api/tickets",
+      "location": {
+        "url": "http://127.0.0.1:49049/src/lib/api.ts",
+        "lineNumber": 16,
+        "columnNumber": 12
+      }
+    },
+    {
+      "type": "log",
+      "text": "[API Success] /api/tickets: {success: true, data: Array(0)}",
+      "location": {
+        "url": "http://127.0.0.1:49049/src/lib/api.ts",
+        "lineNumber": 32,
+        "columnNumber": 12
+      }
+    },
+    {
+      "type": "log",
+      "text": "[API Response] 200 OK for /api/auth/me",
+      "location": {
+        "url": "http://127.0.0.1:49049/src/lib/api.ts",
+        "lineNumber": 16,
+        "columnNumber": 12
+      }
+    },
+    {
+      "type": "log",
+      "text": "[API Response] 200 OK for /api/declarations",
+      "location": {
+        "url": "http://127.0.0.1:49049/src/lib/api.ts",
+        "lineNumber": 16,
+        "columnNumber": 12
+      }
+    },
+    {
+      "type": "log",
+      "text": "[API Response] 200 OK for /api/payments?status=pending",
+      "location": {
+        "url": "http://127.0.0.1:49049/src/lib/api.ts",
+        "lineNumber": 16,
+        "columnNumber": 12
+      }
+    },
+    {
+      "type": "log",
+      "text": "[API Success] /api/auth/me: {success: true, data: Object}",
+      "location": {
+        "url": "http://127.0.0.1:49049/src/lib/api.ts",
+        "lineNumber": 32,
+        "columnNumber": 12
+      }
+    },
+    {
+      "type": "log",
+      "text": "[API Response] 200 OK for /api/invoices",
+      "location": {
+        "url": "http://127.0.0.1:49049/src/lib/api.ts",
+        "lineNumber": 16,
+        "columnNumber": 12
+      }
+    },
+    {
+      "type": "log",
+      "text": "[API Success] /api/declarations: {success: true, data: Array(0)}",
+      "location": {
+        "url": "http://127.0.0.1:49049/src/lib/api.ts",
+        "lineNumber": 32,
+        "columnNumber": 12
+      }
+    },
+    {
+      "type": "log",
+      "text": "[API Success] /api/payments?status=pending: {success: true, data: Array(0)}",
+      "location": {
+        "url": "http://127.0.0.1:49049/src/lib/api.ts",
+        "lineNumber": 32,
+        "columnNumber": 12
+      }
+    },
+    {
+      "type": "log",
+      "text": "[API Success] /api/invoices: {success: true, data: Array(0)}",
+      "location": {
+        "url": "http://127.0.0.1:49049/src/lib/api.ts",
+        "lineNumber": 32,
+        "columnNumber": 12
+      }
+    },
+    {
+      "type": "log",
+      "text": "[API Response] 200 OK for /api/policies/recommend",
+      "location": {
+        "url": "http://127.0.0.1:49049/src/lib/api.ts",
+        "lineNumber": 16,
+        "columnNumber": 12
+      }
+    },
+    {
+      "type": "log",
+      "text": "[API Success] /api/policies/recommend: {success: true, data: Array(5)}",
+      "location": {
+        "url": "http://127.0.0.1:49049/src/lib/api.ts",
+        "lineNumber": 32,
+        "columnNumber": 12
+      }
+    },
+    {
+      "type": "log",
+      "text": "[API Response] 200 OK for /api/tickets",
+      "location": {
+        "url": "http://127.0.0.1:49049/src/lib/api.ts",
+        "lineNumber": 16,
+        "columnNumber": 12
+      }
+    },
+    {
+      "type": "log",
+      "text": "[API Success] /api/tickets: {success: true, data: Array(0)}",
+      "location": {
+        "url": "http://127.0.0.1:49049/src/lib/api.ts",
+        "lineNumber": 32,
+        "columnNumber": 12
+      }
+    },
+    {
+      "type": "log",
+      "text": "[ProtectedRoute] 认证检查: {storeToken: false, storeUser: false, localToken: false, localUser: false}",
+      "location": {
+        "url": "http://127.0.0.1:49049/src/components/ProtectedRoute.tsx",
+        "lineNumber": 40,
+        "columnNumber": 12
+      }
+    },
+    {
+      "type": "log",
+      "text": "[ProtectedRoute] 未认证，正在建立本地演示管理员会话",
+      "location": {
+        "url": "http://127.0.0.1:49049/src/components/ProtectedRoute.tsx",
+        "lineNumber": 58,
+        "columnNumber": 12
+      }
+    },
+    {
+      "type": "log",
+      "text": "[API Request] POST /api/auth/login",
+      "location": {
+        "url": "http://127.0.0.1:49049/src/lib/api.ts",
+        "lineNumber": 11,
+        "columnNumber": 12
+      }
+    },
+    {
+      "type": "log",
+      "text": "[API Response] 200 OK for /api/auth/login",
+      "location": {
+        "url": "http://127.0.0.1:49049/src/lib/api.ts",
+        "lineNumber": 16,
+        "columnNumber": 12
+      }
+    },
+    {
+      "type": "log",
+      "text": "[API Success] /api/auth/login: {success: true, data: Object}",
+      "location": {
+        "url": "http://127.0.0.1:49049/src/lib/api.ts",
+        "lineNumber": 32,
+        "columnNumber": 12
+      }
+    },
+    {
+      "type": "log",
+      "text": "[API Request] GET /api/auth/me",
+      "location": {
+        "url": "http://127.0.0.1:49049/src/lib/api.ts",
+        "lineNumber": 11,
+        "columnNumber": 12
+      }
+    },
+    {
+      "type": "log",
+      "text": "[Login] 已检测到登录状态，直接跳转到首页",
+      "location": {
+        "url": "http://127.0.0.1:49049/src/pages/Login.tsx",
+        "lineNumber": 36,
+        "columnNumber": 14
+      }
+    },
+    {
+      "type": "log",
+      "text": "[ProtectedRoute] 认证检查: {storeToken: true, storeUser: true, localToken: true, localUser: true}",
+      "location": {
+        "url": "http://127.0.0.1:49049/src/components/ProtectedRoute.tsx",
+        "lineNumber": 40,
+        "columnNumber": 12
+      }
+    },
+    {
+      "type": "log",
+      "text": "[ProtectedRoute] Store 已认证，允许访问",
+      "location": {
+        "url": "http://127.0.0.1:49049/src/components/ProtectedRoute.tsx",
+        "lineNumber": 47,
+        "columnNumber": 14
+      }
+    },
+    {
+      "type": "log",
+      "text": "[ProtectedRoute] 认证检查: {storeToken: true, storeUser: true, localToken: true, localUser: true}",
+      "location": {
+        "url": "http://127.0.0.1:49049/src/components/ProtectedRoute.tsx",
+        "lineNumber": 40,
+        "columnNumber": 12
+      }
+    },
+    {
+      "type": "log",
+      "text": "[ProtectedRoute] Store 已认证，允许访问",
+      "location": {
+        "url": "http://127.0.0.1:49049/src/components/ProtectedRoute.tsx",
+        "lineNumber": 47,
+        "columnNumber": 14
+      }
+    },
+    {
+      "type": "log",
+      "text": "[API Request] GET /api/declarations",
+      "location": {
+        "url": "http://127.0.0.1:49049/src/lib/api.ts",
+        "lineNumber": 11,
+        "columnNumber": 12
+      }
+    },
+    {
+      "type": "log",
+      "text": "[API Request] GET /api/payments?status=pending",
+      "location": {
+        "url": "http://127.0.0.1:49049/src/lib/api.ts",
+        "lineNumber": 11,
+        "columnNumber": 12
+      }
+    },
+    {
+      "type": "log",
+      "text": "[API Request] GET /api/invoices",
+      "location": {
+        "url": "http://127.0.0.1:49049/src/lib/api.ts",
+        "lineNumber": 11,
+        "columnNumber": 12
+      }
+    },
+    {
+      "type": "log",
+      "text": "[API Request] GET /api/policies/recommend",
+      "location": {
+        "url": "http://127.0.0.1:49049/src/lib/api.ts",
+        "lineNumber": 11,
+        "columnNumber": 12
+      }
+    },
+    {
+      "type": "log",
+      "text": "[API Request] GET /api/tickets",
+      "location": {
+        "url": "http://127.0.0.1:49049/src/lib/api.ts",
+        "lineNumber": 11,
+        "columnNumber": 12
+      }
+    },
+    {
+      "type": "log",
+      "text": "[API Request] GET /api/declarations",
+      "location": {
+        "url": "http://127.0.0.1:49049/src/lib/api.ts",
+        "lineNumber": 11,
+        "columnNumber": 12
+      }
+    },
+    {
+      "type": "log",
+      "text": "[API Request] GET /api/payments?status=pending",
+      "location": {
+        "url": "http://127.0.0.1:49049/src/lib/api.ts",
+        "lineNumber": 11,
+        "columnNumber": 12
+      }
+    },
+    {
+      "type": "log",
+      "text": "[API Request] GET /api/invoices",
+      "location": {
+        "url": "http://127.0.0.1:49049/src/lib/api.ts",
+        "lineNumber": 11,
+        "columnNumber": 12
+      }
+    },
+    {
+      "type": "log",
+      "text": "[API Request] GET /api/policies/recommend",
+      "location": {
+        "url": "http://127.0.0.1:49049/src/lib/api.ts",
+        "lineNumber": 11,
+        "columnNumber": 12
+      }
+    },
+    {
+      "type": "log",
+      "text": "[API Request] GET /api/tickets",
+      "location": {
+        "url": "http://127.0.0.1:49049/src/lib/api.ts",
+        "lineNumber": 11,
+        "columnNumber": 12
+      }
+    },
+    {
+      "type": "log",
+      "text": "[API Response] 200 OK for /api/auth/me",
+      "location": {
+        "url": "http://127.0.0.1:49049/src/lib/api.ts",
+        "lineNumber": 16,
+        "columnNumber": 12
+      }
+    },
+    {
+      "type": "log",
+      "text": "[API Success] /api/auth/me: {success: true, data: Object}",
+      "location": {
+        "url": "http://127.0.0.1:49049/src/lib/api.ts",
+        "lineNumber": 32,
+        "columnNumber": 12
+      }
+    },
+    {
+      "type": "log",
+      "text": "[API Response] 200 OK for /api/declarations",
+      "location": {
+        "url": "http://127.0.0.1:49049/src/lib/api.ts",
+        "lineNumber": 16,
+        "columnNumber": 12
+      }
+    },
+    {
+      "type": "log",
+      "text": "[API Success] /api/declarations: {success: true, data: Array(0)}",
+      "location": {
+        "url": "http://127.0.0.1:49049/src/lib/api.ts",
+        "lineNumber": 32,
+        "columnNumber": 12
+      }
+    },
+    {
+      "type": "log",
+      "text": "[API Response] 200 OK for /api/payments?status=pending",
+      "location": {
+        "url": "http://127.0.0.1:49049/src/lib/api.ts",
+        "lineNumber": 16,
+        "columnNumber": 12
+      }
+    },
+    {
+      "type": "log",
+      "text": "[API Response] 200 OK for /api/invoices",
+      "location": {
+        "url": "http://127.0.0.1:49049/src/lib/api.ts",
+        "lineNumber": 16,
+        "columnNumber": 12
+      }
+    },
+    {
+      "type": "log",
+      "text": "[API Response] 200 OK for /api/policies/recommend",
+      "location": {
+        "url": "http://127.0.0.1:49049/src/lib/api.ts",
+        "lineNumber": 16,
+        "columnNumber": 12
+      }
+    },
+    {
+      "type": "log",
+      "text": "[API Response] 200 OK for /api/tickets",
+      "location": {
+        "url": "http://127.0.0.1:49049/src/lib/api.ts",
+        "lineNumber": 16,
+        "columnNumber": 12
+      }
+    },
+    {
+      "type": "log",
+      "text": "[API Response] 200 OK for /api/declarations",
+      "location": {
+        "url": "http://127.0.0.1:49049/src/lib/api.ts",
+        "lineNumber": 16,
+        "columnNumber": 12
+      }
+    },
+    {
+      "type": "log",
+      "text": "[API Response] 200 OK for /api/payments?status=pending",
+      "location": {
+        "url": "http://127.0.0.1:49049/src/lib/api.ts",
+        "lineNumber": 16,
+        "columnNumber": 12
+      }
+    },
+    {
+      "type": "log",
+      "text": "[API Response] 200 OK for /api/invoices",
+      "location": {
+        "url": "http://127.0.0.1:49049/src/lib/api.ts",
+        "lineNumber": 16,
+        "columnNumber": 12
+      }
+    },
+    {
+      "type": "log",
+      "text": "[API Response] 200 OK for /api/policies/recommend",
+      "location": {
+        "url": "http://127.0.0.1:49049/src/lib/api.ts",
+        "lineNumber": 16,
+        "columnNumber": 12
+      }
+    },
+    {
+      "type": "log",
+      "text": "[API Response] 200 OK for /api/tickets",
+      "location": {
+        "url": "http://127.0.0.1:49049/src/lib/api.ts",
+        "lineNumber": 16,
+        "columnNumber": 12
+      }
+    },
+    {
+      "type": "log",
+      "text": "[API Success] /api/payments?status=pending: {success: true, data: Array(0)}",
+      "location": {
+        "url": "http://127.0.0.1:49049/src/lib/api.ts",
+        "lineNumber": 32,
+        "columnNumber": 12
+      }
+    },
+    {
+      "type": "log",
+      "text": "[API Success] /api/invoices: {success: true, data: Array(0)}",
+      "location": {
+        "url": "http://127.0.0.1:49049/src/lib/api.ts",
+        "lineNumber": 32,
+        "columnNumber": 12
+      }
+    },
+    {
+      "type": "log",
+      "text": "[API Success] /api/policies/recommend: {success: true, data: Array(5)}",
+      "location": {
+        "url": "http://127.0.0.1:49049/src/lib/api.ts",
+        "lineNumber": 32,
+        "columnNumber": 12
+      }
+    },
+    {
+      "type": "log",
+      "text": "[API Success] /api/tickets: {success: true, data: Array(0)}",
+      "location": {
+        "url": "http://127.0.0.1:49049/src/lib/api.ts",
+        "lineNumber": 32,
+        "columnNumber": 12
+      }
+    },
+    {
+      "type": "log",
+      "text": "[API Success] /api/declarations: {success: true, data: Array(0)}",
+      "location": {
+        "url": "http://127.0.0.1:49049/src/lib/api.ts",
+        "lineNumber": 32,
+        "columnNumber": 12
+      }
+    },
+    {
+      "type": "log",
+      "text": "[API Success] /api/payments?status=pending: {success: true, data: Array(0)}",
+      "location": {
+        "url": "http://127.0.0.1:49049/src/lib/api.ts",
+        "lineNumber": 32,
+        "columnNumber": 12
+      }
+    },
+    {
+      "type": "log",
+      "text": "[API Success] /api/invoices: {success: true, data: Array(0)}",
+      "location": {
+        "url": "http://127.0.0.1:49049/src/lib/api.ts",
+        "lineNumber": 32,
+        "columnNumber": 12
+      }
+    },
+    {
+      "type": "log",
+      "text": "[API Success] /api/policies/recommend: {success: true, data: Array(5)}",
+      "location": {
+        "url": "http://127.0.0.1:49049/src/lib/api.ts",
+        "lineNumber": 32,
+        "columnNumber": 12
+      }
+    },
+    {
+      "type": "log",
+      "text": "[API Success] /api/tickets: {success: true, data: Array(0)}",
+      "location": {
+        "url": "http://127.0.0.1:49049/src/lib/api.ts",
+        "lineNumber": 32,
+        "columnNumber": 12
+      }
+    },
+    {
+      "type": "log",
+      "text": "[API Request] GET /api/declarations",
+      "location": {
+        "url": "http://127.0.0.1:49049/src/lib/api.ts",
+        "lineNumber": 11,
+        "columnNumber": 12
+      }
+    },
+    {
+      "type": "log",
+      "text": "[API Request] GET /api/taxpayers",
+      "location": {
+        "url": "http://127.0.0.1:49049/src/lib/api.ts",
+        "lineNumber": 11,
+        "columnNumber": 12
+      }
+    },
+    {
+      "type": "log",
+      "text": "[API Request] GET /api/tickets",
+      "location": {
+        "url": "http://127.0.0.1:49049/src/lib/api.ts",
+        "lineNumber": 11,
+        "columnNumber": 12
+      }
+    },
+    {
+      "type": "log",
+      "text": "[API Request] GET /api/payments",
+      "location": {
+        "url": "http://127.0.0.1:49049/src/lib/api.ts",
+        "lineNumber": 11,
+        "columnNumber": 12
+      }
+    }
+  ],
+  "requestFailures": [],
+  "responseErrors": [],
+  "reportPath": "probe/codex-repair-final-20260605/may-89049-browser-report.json"
+}
