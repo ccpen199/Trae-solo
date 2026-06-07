@@ -1,0 +1,133 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+.app-layout {
+  min-height: 100vh;
+}
+
+.navbar-header {
+  display: flex;
+  align-items: center;
+  padding: 0 24px;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+}
+
+.navbar-logo {
+  flex-shrink: 0;
+  margin-right: 40px;
+}
+
+.navbar-menu {
+  flex: 1;
+  background: transparent;
+  border-bottom: none;
+}
+
+.navbar-menu .ant-menu-item {
+  color: rgba(255, 255, 255, 0.85);
+}
+
+.navbar-menu .ant-menu-item:hover {
+  color: #fff;
+}
+
+.navbar-menu .ant-menu-item-selected {
+  color: #fff;
+  background-color: rgba(255, 255, 255, 0.1);
+}
+
+.navbar-user {
+  flex-shrink: 0;
+}
+
+.app-content {
+  background: #f0f2f5;
+  min-height: calc(100vh - 64px);
+}
+
+.home-page .hero-section {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  padding: 80px 120px;
+  color: #fff;
+}
+
+.hero-carousel .hero-card {
+  height: 280px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  border-radius: 12px;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+}
+
+.stats-section {
+  max-width: 1200px;
+  margin: -40px auto 40px;
+  padding: 0 24px;
+  position: relative;
+  z-index: 10;
+}
+
+.stat-card {
+  text-align: center;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.features-section {
+  max-width: 1200px;
+  margin: 0 auto 60px;
+  padding: 0 24px;
+}
+
+.section-title {
+  text-align: center;
+  margin-bottom: 40px !important;
+}
+
+.feature-card {
+  text-align: center;
+  border-radius: 12px;
+  height: 100%;
+}
+
+.lawyers-section {
+  max-width: 1200px;
+  margin: 0 auto 60px;
+  padding: 0 24px;
+}
+
+.lawyer-card {
+  border-radius: 12px;
+  height: 100%;
+}
+
+.lawyer-card .ant-card-meta-title {
+  font-size: 18px;
+  font-weight: 600;
+}
+
+@media (max-width: 768px) {
+  .navbar-header {
+    padding: 0 16px;
+  }
+  
+  .navbar-logo {
+    margin-right: 16px;
+  }
+  
+  .home-page .hero-section {
+    padding: 40px 24px;
+  }
+  
+  .stats-section,
+  .features-section,
+  .lawyers-section {
+    padding: 0 16px;
+  }
+}
