@@ -1,5 +1,9 @@
 import { useState, useMemo } from 'react'
-import { Package, Plus, Search, QrCode, ArrowRight, AlertTriangle, CheckCircle, Box, Truck, Wrench, Factory, Filter, Download, Clock, User, FileText, TrendingUp, TrendingDown } from 'lucide-react'
+import {
+  Package, Plus, Search, QrCode, ArrowRight, AlertTriangle, CheckCircle, Box, Truck, Wrench, Factory,
+  Filter, Download, Clock, User, FileText, TrendingUp, TrendingDown, X, ShieldCheck,
+  BarChart3, History, BadgeCheck
+} from 'lucide-react'
 import { mockParts, mockInventoryBatches, mockStockFlows } from '@/mocks/data'
 import { motion, AnimatePresence } from 'framer-motion'
 
@@ -24,6 +28,7 @@ export default function Supplier() {
   const [tab, setTab] = useState<Tab>('parts')
   const [search, setSearch] = useState('')
   const [flowFilter, setFlowFilter] = useState<FlowFilter>('all')
+  const [selectedPart, setSelectedPart] = useState<typeof mockParts[number] | null>(null)
 
   const filteredParts = useMemo(() =>
     mockParts.filter(p => p.name.includes(search) || p.qrCode.includes(search)),
@@ -45,6 +50,15 @@ export default function Supplier() {
     return flows.filter(f => f.type === flowFilter)
   }, [flowFilter])
 
+  const partBatches = useMemo(() =>
+    selectedPart ? mockInventoryBatches.filter(b => b.partId === selectedPart.id) : [],
+    [selectedPart]
+  )
+  const partFlows = useMemo(() =>
+    selectedPart ? mockStockFlows.filter(f => f.partId === selectedPart.id) : [],
+    [selectedPart]
+  )
+
   const tabs: { key: Tab; label: string; icon: typeof Package }[] = [
     { key: 'parts', label: '配件管理', icon: Package },
     { key: 'batches', label: '入库批次', icon: Box },
@@ -60,16 +74,9 @@ export default function Supplier() {
 
   const container = {
     hidden: { opacity: 0 },
-    show: {
-      opacity: 1,
-      transition: { staggerChildren: 0.05 }
-    }
+    show: { opacity: 1, transition: { staggerChildren: 0.05 } }
   }
-
-  const item = {
-    hidden: { opacity: 0, y: 10 },
-    show: { opacity: 1, y: 0 }
-  }
+  const item = { hidden: { opacity: 0, y: 10 }, show: { opacity: 1, y: 0 } }
 
   return (
     <div className="min-h-screen p-4 pb-8">
@@ -103,10 +110,15 @@ export default function Supplier() {
             <motion.div variants={container} initial="hidden" animate="show" className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
               {filteredParts.map(p => (
                 <motion.div key={p.id} variants={item} whileHover={{ y: -4 }}
-                  className="glass-card glass-card-hover p-4 group relative overflow-hidden">
+                  onClick={() => setSelectedPart(p)}
+                  className="glass-card glass-card-hover p-4 group relative overflow-hidden cursor-pointer border-2 border-transparent hover:border-cyber-400/40">
                   <div className="flex items-start justify-between mb-3">
                     <h3 className="font-medium text-navy-50 text-sm leading-tight">{p.name}</h3>
-                    {p.verified && <CheckCircle className="w-4 h-4 text-cyber-400 shrink-0" />}
+                    {p.verified && (
+                      <div className="flex items-center gap-0.5">
+                        <CheckCircle className="w-4 h-4 text-cyber-400 shrink-0" />
+                      </div>
+                    )}
                   </div>
                   <div className="flex items-center gap-2 mb-3">
                     <span className="tag-cyber">{categoryMap[p.category] || p.category}</span>
@@ -120,9 +132,13 @@ export default function Supplier() {
                       库存 {p.stock}
                     </span>
                   </div>
-                  <div className="absolute inset-0 bg-navy-900/80 backdrop-blur-sm opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center gap-2">
-                    <button className="btn-secondary text-xs py-1.5 px-4">查看详情</button>
-                    <button className="btn-primary text-xs py-1.5 px-4">入库</button>
+                  <div className="absolute inset-0 bg-gradient-to-t from-navy-900/90 via-navy-900/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity flex flex-col items-center justify-end pb-4 gap-2">
+                    <p className="text-xs text-cyber-400 mb-1">点击查看完整详情</p>
+                    <div className="flex gap-2">
+                      <button className="btn-primary text-xs py-1.5 px-4 flex items-center gap-1">
+                        <QrCode className="w-3 h-3" />扫码验真
+                      </button>
+                    </div>
                   </div>
                 </motion.div>
               ))}
@@ -196,7 +212,15 @@ export default function Supplier() {
                             {!b.verified && (
                               <button className="btn-primary text-xs py-1 px-3">验真</button>
                             )}
-                            <button className="btn-secondary text-xs py-1 px-3">查看详情</button>
+                            <button
+                              onClick={() => {
+                                const p = mockParts.find(pp => pp.id === b.partId)
+                                if (p) setSelectedPart(p)
+                              }}
+                              className="btn-secondary text-xs py-1 px-3"
+                            >
+                              查看详情
+                            </button>
                           </div>
                         </td>
                       </tr>
@@ -269,6 +293,179 @@ export default function Supplier() {
                   </motion.div>
                 )
               })}
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+
+      <AnimatePresence>
+        {selectedPart && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-navy-900/80 backdrop-blur-sm"
+            onClick={() => setSelectedPart(null)}
+          >
+            <motion.div
+              initial={{ scale: 0.9, y: 20, opacity: 0 }}
+              animate={{ scale: 1, y: 0, opacity: 1 }}
+              exit={{ scale: 0.9, y: 20, opacity: 0 }}
+              transition={{ type: 'spring', damping: 25, stiffness: 300 }}
+              className="glass-card cyber-border w-full max-w-2xl max-h-[90vh] overflow-hidden flex flex-col"
+              onClick={(e) => e.stopPropagation()}
+            >
+              <div className="p-5 border-b border-cyber-400/10 flex items-center justify-between shrink-0">
+                <div className="flex items-center gap-3">
+                  <div className="w-10 h-10 rounded-lg bg-cyber-400/20 flex items-center justify-center">
+                    <Package className="w-5 h-5 text-cyber-400" />
+                  </div>
+                  <div>
+                    <h3 className="text-lg font-bold text-white">{selectedPart.name}</h3>
+                    <div className="flex items-center gap-2 mt-0.5">
+                      <span className="text-xs text-navy-300">{categoryMap[selectedPart.category]}</span>
+                      {selectedPart.verified && (
+                        <span className="text-xs text-cyber-400 flex items-center gap-1">
+                          <BadgeCheck className="w-3 h-3" />已验真
+                        </span>
+                      )}
+                    </div>
+                  </div>
+                </div>
+                <button
+                  onClick={() => setSelectedPart(null)}
+                  className="text-white/40 hover:text-white transition-colors"
+                >
+                  <X className="w-5 h-5" />
+                </button>
+              </div>
+
+              <div className="flex-1 overflow-y-auto p-5 space-y-5">
+                <div className="grid grid-cols-3 gap-3">
+                  {[
+                    { label: 'QR码', value: selectedPart.qrCode, icon: QrCode, color: 'cyber' },
+                    { label: '单价', value: `¥${selectedPart.price}`, icon: BarChart3, color: 'cyber' },
+                    { label: '库存', value: selectedPart.stock, icon: Box, color: selectedPart.stock > 20 ? 'cyber' : 'warm' },
+                  ].map((stat, i) => (
+                    <div key={i} className="bg-navy-800/40 rounded-xl p-3 border border-cyber-400/10">
+                      <stat.icon className={`w-4 h-4 ${stat.color === 'cyber' ? 'text-cyber-400' : 'text-warm-500'} mb-2`} />
+                      <p className="text-lg font-bold text-navy-50">{stat.value}</p>
+                      <p className="text-xs text-navy-300">{stat.label}</p>
+                    </div>
+                  ))}
+                </div>
+
+                <div>
+                  <h4 className="text-sm font-semibold text-cyber-400 mb-3 flex items-center gap-2">
+                    <ShieldCheck className="w-4 h-4" /> 验真信息
+                  </h4>
+                  <div className="bg-navy-800/40 rounded-xl p-4 border border-cyber-400/10 space-y-3">
+                    <div className="flex items-center gap-3">
+                      <div className={`w-10 h-10 rounded-lg flex items-center justify-center ${selectedPart.verified ? 'bg-cyber-400/20' : 'bg-warm-500/20'}`}>
+                        {selectedPart.verified ? (
+                          <CheckCircle className={`w-5 h-5 text-cyber-400`} />
+                        ) : (
+                          <AlertTriangle className="w-5 h-5 text-warm-500" />
+                        )}
+                      </div>
+                      <div className="flex-1">
+                        <p className={`font-medium ${selectedPart.verified ? 'text-cyber-400' : 'text-warm-500'}`}>
+                          {selectedPart.verified ? '配件验真通过' : '待验真'}
+                        </p>
+                        <p className="text-xs text-navy-300">
+                          {selectedPart.verified
+                            ? '原厂正品，符合质量标准'
+                            : '请使用扫码枪或输入QR码进行验真'}
+                        </p>
+                      </div>
+                    </div>
+                    {selectedPart.verified && (
+                      <div className="grid grid-cols-2 gap-3 pt-3 border-t border-cyber-400/10">
+                        <div>
+                          <p className="text-xs text-navy-400 mb-0.5">质检员</p>
+                          <p className="text-sm text-navy-100">李质检</p>
+                        </div>
+                        <div>
+                          <p className="text-xs text-navy-400 mb-0.5">检验时间</p>
+                          <p className="text-sm text-navy-100">2024-01-15 10:30</p>
+                        </div>
+                      </div>
+                    )}
+                    <button className="btn-primary w-full text-sm py-2 flex items-center justify-center gap-2">
+                      <QrCode className="w-4 h-4" />
+                      {selectedPart.verified ? '重新扫码验真' : '扫码验真'}
+                    </button>
+                  </div>
+                </div>
+
+                <div>
+                  <h4 className="text-sm font-semibold text-cyber-400 mb-3 flex items-center gap-2">
+                    <History className="w-4 h-4" /> 入库批次 ({partBatches.length}条)
+                  </h4>
+                  <div className="space-y-2">
+                    {partBatches.length > 0 ? partBatches.map(b => (
+                      <div key={b.id} className="bg-navy-800/40 rounded-lg p-3 border border-cyber-400/10 flex items-center justify-between">
+                        <div>
+                          <p className="text-xs font-mono text-cyber-400">{b.batchNo}</p>
+                          <p className="text-xs text-navy-300 mt-0.5">{b.supplierName} · 入库 {b.quantity}件</p>
+                        </div>
+                        <div className="text-right">
+                          {b.verified ? (
+                            <span className="text-cyber-400 text-xs flex items-center gap-1 justify-end">
+                              <CheckCircle className="w-3 h-3" />已验真
+                            </span>
+                          ) : (
+                            <span className="text-warm-500 text-xs">待验真</span>
+                          )}
+                          <p className="text-xs text-navy-400 mt-0.5">{b.inboundDate}</p>
+                        </div>
+                      </div>
+                    )) : (
+                      <p className="text-center text-navy-400 text-xs py-6">暂无入库批次记录</p>
+                    )}
+                  </div>
+                </div>
+
+                <div>
+                  <h4 className="text-sm font-semibold text-cyber-400 mb-3 flex items-center gap-2">
+                    <TrendingUp className="w-4 h-4" /> 库存流转记录 ({partFlows.length}条)
+                  </h4>
+                  <div className="space-y-2 max-h-48 overflow-y-auto">
+                    {partFlows.length > 0 ? partFlows.map(f => {
+                      const typeInfo = flowTypeMap[f.type]
+                      const TypeIcon = typeInfo.icon
+                      const qtyPrefix = f.type === 'outbound' ? '-' : '+'
+                      return (
+                        <div key={f.id} className="flex items-center gap-3 py-2 border-b border-white/5 last:border-0">
+                          <div className={`w-8 h-8 rounded-lg ${typeInfo.bg}/10 flex items-center justify-center shrink-0`}>
+                            <TypeIcon className={`w-4 h-4 ${typeInfo.color}`} />
+                          </div>
+                          <div className="flex-1 min-w-0">
+                            <p className="text-xs font-medium text-navy-100">{typeInfo.label}</p>
+                            <p className="text-[10px] text-navy-400 truncate">{f.reason}</p>
+                          </div>
+                          <div className="text-right shrink-0">
+                            <p className={`text-sm font-bold ${typeInfo.color}`}>{qtyPrefix}{f.quantity}</p>
+                            <p className="text-[10px] text-navy-400">{f.timestamp}</p>
+                          </div>
+                        </div>
+                      )
+                    }) : (
+                      <p className="text-center text-navy-400 text-xs py-6">暂无流转记录</p>
+                    )}
+                  </div>
+                </div>
+              </div>
+
+              <div className="p-4 border-t border-cyber-400/10 flex gap-3 shrink-0">
+                <button className="btn-secondary flex-1 text-sm py-2">
+                  编辑信息
+                </button>
+                <button className="btn-primary flex-1 text-sm py-2 flex items-center justify-center gap-1">
+                  <Plus className="w-4 h-4" />
+                  新增入库
+                </button>
+              </div>
             </motion.div>
           </motion.div>
         )}

@@ -60,7 +60,17 @@ const categoryLabels: Record<string, string> = {
   washing_machine: '洗衣机', refrigerator: '冰箱', tv: '电视',
 }
 
-function OverviewTab() {
+function OverviewTab({ onNavigate }: { onNavigate: (key: string) => void }) {
+  const quickAccess = [
+    { key: 'credit', label: '工程师信用评级', icon: Users, color: 'cyber', desc: 'S/A/B/C等级评定', count: `${mockCredits.length}位工程师` },
+    { key: 'inspection', label: 'AI质检抽检', icon: ShieldCheck, color: 'cyber', desc: '服务质量AI分析', count: `${mockInspections.length}条记录` },
+    { key: 'knowledge', label: '厂商知识库', icon: BookOpen, color: 'warm', desc: '售后维修指南', count: `${mockKnowledge.length}条知识` },
+    { key: 'compliance', label: '合同存证复查', icon: FileCheck, color: 'warm', desc: '电子合同哈希存证', count: `${mockContracts.length}份合同` },
+  ]
+
+  const recentInspections = mockInspections.slice(0, 4)
+  const topCredits = [...mockCredits].sort((a, b) => b.score - a.score).slice(0, 4)
+
   return (
     <div className="space-y-6">
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
@@ -75,6 +85,103 @@ function OverviewTab() {
           </div>
         ))}
       </div>
+
+      <div>
+        <h3 className="text-base font-semibold text-navy-50 mb-4 flex items-center gap-2">
+          <BarChart3 className="w-4 h-4 text-cyber-400" /> 功能模块快捷入口
+        </h3>
+        <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
+          {quickAccess.map((item, i) => (
+            <motion.div
+              key={item.key}
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.1 * i }}
+              onClick={() => onNavigate(item.key)}
+              className="glass-card glass-card-hover cyber-border p-5 cursor-pointer group"
+            >
+              <div className={`w-12 h-12 rounded-xl ${item.color === 'cyber' ? 'bg-cyber-400/20' : 'bg-warm-500/20'} flex items-center justify-center mb-3 group-hover:scale-110 transition-transform`}>
+                <item.icon className={`w-6 h-6 ${item.color === 'cyber' ? 'text-cyber-400' : 'text-warm-500'}`} />
+              </div>
+              <h4 className="font-semibold text-navy-50 text-sm">{item.label}</h4>
+              <p className="text-xs text-navy-300 mt-1">{item.desc}</p>
+              <div className="flex items-center justify-between mt-3 pt-3 border-t border-white/5">
+                <span className="text-xs text-navy-400">{item.count}</span>
+                <span className={`text-xs ${item.color === 'cyber' ? 'text-cyber-400' : 'text-warm-500'} flex items-center gap-0.5`}>
+                  进入 <ChevronDown className="w-3 h-3 -rotate-90" />
+                </span>
+              </div>
+            </motion.div>
+          ))}
+        </div>
+      </div>
+
+      <div className="grid lg:grid-cols-2 gap-6">
+        <div className="glass-card cyber-border p-5">
+          <div className="flex items-center justify-between mb-4">
+            <h3 className="text-base font-semibold text-navy-50 flex items-center gap-2">
+              <ShieldCheck className="w-4 h-4 text-cyber-400" /> 近期质检记录
+            </h3>
+            <span className="text-xs text-cyber-400/70">共 {mockInspections.length} 条</span>
+          </div>
+          <div className="space-y-3">
+            {recentInspections.map(ins => {
+              const status = inspStatusMap[ins.status]
+              return (
+                <div key={ins.id} className="flex items-center gap-3 py-2 border-b border-white/5 last:border-0">
+                  <div className={`w-8 h-8 rounded-lg ${status.color.split(' ')[0]} flex items-center justify-center shrink-0`}>
+                    {ins.status === 'pass' ? (
+                      <CheckCircle className={`w-4 h-4 ${status.color.split(' ')[1]}`} />
+                    ) : ins.status === 'fail' ? (
+                      <AlertTriangle className={`w-4 h-4 ${status.color.split(' ')[1]}`} />
+                    ) : (
+                      <Clock className={`w-4 h-4 ${status.color.split(' ')[1]}`} />
+                    )}
+                  </div>
+                  <div className="flex-1 min-w-0">
+                    <p className="text-sm text-navy-50 font-medium truncate">{ins.orderId}</p>
+                    <p className="text-xs text-navy-300 truncate">{ins.engineerName} · {ins.inspectionType}</p>
+                  </div>
+                  <span className={`text-xs px-2 py-1 rounded border ${status.color}`}>
+                    {status.label}
+                  </span>
+                </div>
+              )
+            })}
+          </div>
+        </div>
+
+        <div className="glass-card cyber-border p-5">
+          <div className="flex items-center justify-between mb-4">
+            <h3 className="text-base font-semibold text-navy-50 flex items-center gap-2">
+              <Users className="w-4 h-4 text-cyber-400" /> 工程师信用排行
+            </h3>
+            <span className="text-xs text-cyber-400/70">按信用分</span>
+          </div>
+          <div className="space-y-3">
+            {topCredits.map((c, i) => (
+              <div key={c.engineerId} className="flex items-center gap-3 py-2 border-b border-white/5 last:border-0">
+                <div className={`w-8 h-8 rounded-full flex items-center justify-center shrink-0 font-bold text-sm ${
+                  i === 0 ? 'bg-yellow-500/30 text-yellow-400' :
+                  i === 1 ? 'bg-gray-400/30 text-gray-300' :
+                  i === 2 ? 'bg-orange-500/30 text-orange-400' : 'bg-navy-600/30 text-navy-300'
+                }`}>
+                  {i + 1}
+                </div>
+                <div className="flex-1 min-w-0">
+                  <div className="flex items-center gap-2">
+                    <p className="text-sm text-navy-50 font-medium">{c.name}</p>
+                    <span className={`text-[10px] px-1.5 py-0.5 rounded border ${levelColors[c.level]}`}>{c.level}级</span>
+                  </div>
+                  <p className="text-xs text-navy-300">完成率 {c.completionRate}% · 评分 {c.avgRating}</p>
+                </div>
+                <span className="text-lg font-bold text-cyber-400">{c.score}</span>
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+
       <div className="glass-card cyber-border p-5">
         <h3 className="text-lg font-semibold text-navy-50 mb-4">本周工单趋势</h3>
         <ResponsiveContainer width="100%" height={200}>
@@ -277,14 +384,6 @@ function ComplianceTab() {
 
 export default function Admin() {
   const [active, setActive] = useState('overview')
-  const tabComponents: Record<string, () => JSX.Element> = {
-    overview: OverviewTab,
-    credit: CreditTab,
-    inspection: InspectionTab,
-    knowledge: KnowledgeTab,
-    compliance: ComplianceTab,
-  }
-  const ActiveComponent = tabComponents[active]
   return (
     <div className="min-h-screen bg-navy-500 grid-bg">
       <div className="container mx-auto px-4 py-8">
@@ -297,7 +396,11 @@ export default function Admin() {
             </button>
           ))}
         </div>
-        <ActiveComponent />
+        {active === 'overview' && <OverviewTab onNavigate={setActive} />}
+        {active === 'credit' && <CreditTab />}
+        {active === 'inspection' && <InspectionTab />}
+        {active === 'knowledge' && <KnowledgeTab />}
+        {active === 'compliance' && <ComplianceTab />}
       </div>
     </div>
   )

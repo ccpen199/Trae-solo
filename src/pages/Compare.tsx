@@ -24,10 +24,15 @@ export default function Compare() {
   useEffect(() => {
     if (urlCategory && urlCategory !== activeCategory) {
       setActiveCategory(urlCategory)
-      const firstInCategory = mockServices.find(s => s.category === urlCategory)
-      if (firstInCategory) setExpandedId(firstInCategory.id)
     }
   }, [urlCategory])
+
+  useEffect(() => {
+    const firstInCategory = activeCategory === 'all'
+      ? mockServices[0]
+      : mockServices.find(s => s.category === activeCategory)
+    if (firstInCategory) setExpandedId(firstInCategory.id)
+  }, [activeCategory])
 
   const filtered = activeCategory === 'all'
     ? mockServices
@@ -150,10 +155,21 @@ export default function Compare() {
                       transition={{ duration: 0.3 }}
                       className="overflow-hidden"
                     >
-                      <div className="px-5 pb-5 pt-2 border-t border-white/5">
-                        <div className="flex items-center gap-2 mb-4">
-                          <Zap className="w-4 h-4 text-cyber-400" />
-                          <span className="text-sm font-medium text-white/80">服务商比价</span>
+                      <div className="px-5 pb-5 pt-4 border-t border-cyber-400/20 bg-gradient-to-b from-cyber-400/[0.02] to-transparent">
+                        <div className="flex items-center justify-between mb-4">
+                          <div className="flex items-center gap-2">
+                            <div className="w-8 h-8 rounded-lg bg-cyber-400/20 flex items-center justify-center">
+                              <Zap className="w-4 h-4 text-cyber-400" />
+                            </div>
+                            <div>
+                              <span className="text-base font-bold text-white">服务商比价</span>
+                              <p className="text-[10px] text-white/40">共{service.providers.length}位服务商，点击查看详情</p>
+                            </div>
+                          </div>
+                          <span className="text-xs text-cyber-400/70 flex items-center gap-1">
+                            <BadgeCheck className="w-3.5 h-3.5" />
+                            明码标价
+                          </span>
                         </div>
 
                         <div className={`grid gap-3 ${
@@ -168,10 +184,10 @@ export default function Compare() {
                             return (
                               <div
                                 key={provider.id}
-                                className={`rounded-xl p-4 border transition-all duration-300 relative ${
+                                className={`rounded-xl p-4 border-2 transition-all duration-300 relative ${
                                   isLowest
-                                    ? 'bg-warm-500/5 border-warm-500/30 shadow-lg shadow-warm-500/5'
-                                    : 'bg-white/[0.02] border-white/5 hover:border-cyber-400/20'
+                                    ? 'bg-warm-500/10 border-warm-500/50 shadow-xl shadow-warm-500/10 scale-[1.02]'
+                                    : 'bg-navy-800/40 border-cyber-400/20 hover:border-cyber-400/50 hover:shadow-lg hover:shadow-cyber-400/10'
                                 }`}
                               >
                                 {isLowest && (
