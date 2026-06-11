@@ -7,12 +7,13 @@ import { initDatabase } from './data/seedData.js';
 /**
  * start server with port
  */
-const PORT = process.env.PORT || 3001;
+const HOST = process.env.HOST || '127.0.0.1';
+const PORT = Number(process.env.BACKEND_PORT || process.env.PORT || 59171);
 
 initDatabase().then(() => {
   console.log('Database initialized with mock data');
-  const server = app.listen(PORT, () => {
-    console.log(`Server ready on port ${PORT}`);
+  const server = app.listen(PORT, HOST, () => {
+    console.log(`Server ready on http://${HOST}:${PORT}`);
   });
 
   process.on('SIGTERM', () => {

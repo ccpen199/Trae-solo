@@ -85,7 +85,6 @@ export const seedDatabase = async (): Promise<void> => {
   ).map(p => p.id));
 
   const hashedAdminPwd = await hashPassword('admin123');
-  const hashedUserPwd = await hashPassword('user123');
 
   const users: User[] = [
     {
@@ -181,8 +180,7 @@ export const seedDatabase = async (): Promise<void> => {
     },
   ];
 
-  users.forEach(user => db.users.set(user.id, { ...user, password_hash: hashedUserPwd } as any));
-  (db.users.get(adminId) as any).password_hash = hashedAdminPwd;
+  users.forEach(user => db.users.set(user.id, { ...user, password_hash: hashedAdminPwd } as any));
 
   db.userRoles.set(adminId, [superAdminRoleId]);
   db.userRoles.set(editorId, [editorRoleId]);

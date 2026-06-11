@@ -31,7 +31,11 @@ api.interceptors.response.use(
         window.location.href = '/login';
       }
     }
-    return Promise.reject(error);
+    const message = error.response?.data?.message || error.message || '请求失败';
+    const enhancedError = new Error(message) as Error & { response?: any; code?: number };
+    enhancedError.response = error.response;
+    enhancedError.code = error.response?.data?.code;
+    return Promise.reject(enhancedError);
   },
 );
 

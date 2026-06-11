@@ -5,6 +5,7 @@ import LoginPage from './pages/LoginPage';
 import AdminLayout from './components/layout/AdminLayout';
 import MobileLayout from './components/layout/MobileLayout';
 import PluginLayout from './components/layout/PluginLayout';
+import ProtectedRoute from './components/common/ProtectedRoute';
 import DashboardPage from './pages/admin/DashboardPage';
 import ContentListPage from './pages/admin/ContentListPage';
 import ContentCreatePage from './pages/admin/ContentCreatePage';
@@ -31,7 +32,11 @@ const App: React.FC = () => {
           <Route path="/" element={<Navigate to="/admin/dashboard" replace />} />
           <Route path="/login" element={<LoginPage />} />
 
-          <Route path="/admin" element={<AdminLayout />}>
+          <Route path="/admin" element={
+            <ProtectedRoute>
+              <AdminLayout />
+            </ProtectedRoute>
+          }>
             <Route index element={<Navigate to="dashboard" replace />} />
             <Route path="dashboard" element={<DashboardPage />} />
             <Route path="content" element={<ContentListPage />} />
@@ -59,7 +64,11 @@ const App: React.FC = () => {
             <Route path="scenic" element={<MobileScenicPage />} />
             <Route path="scenic/:id" element={<div className="bg-white rounded-xl p-4"><h2 className="font-bold text-lg mb-4">景区详情</h2><p className="text-ink-500">景区详情开发中...</p></div>} />
             <Route path="service" element={<div className="bg-white rounded-xl p-4"><h2 className="font-bold text-lg mb-4">便民服务</h2><p className="text-ink-500">服务页面开发中...</p></div>} />
-            <Route path="profile" element={<div className="bg-white rounded-xl p-4"><h2 className="font-bold text-lg mb-4">个人中心</h2><p className="text-ink-500">个人中心开发中...</p></div>} />
+            <Route path="profile" element={
+              <ProtectedRoute>
+                <div className="bg-white rounded-xl p-4"><h2 className="font-bold text-lg mb-4">个人中心</h2><p className="text-ink-500">个人中心开发中...</p></div>
+              </ProtectedRoute>
+            } />
           </Route>
 
           <Route path="/plugin" element={<PluginLayout />}>
