@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { Row, Col, Card, List, Tag, Button, Space, Progress, Statistic } from 'antd';
+import { Row, Col, Card, List, Tag, Button, Space, Progress, Statistic, message } from 'antd';
 import {
   RocketOutlined,
   ShoppingOutlined,
@@ -13,13 +13,15 @@ import {
 } from '@ant-design/icons';
 import ReactECharts from 'echarts-for-react';
 import { apiService } from '../services/api';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 function Dashboard() {
+  const navigate = useNavigate();
   const [stats, setStats] = useState<any>({});
   const [recentVoyages, setRecentVoyages] = useState<any[]>([]);
   const [alerts, setAlerts] = useState<any[]>([]);
   const [freightTrend, setFreightTrend] = useState<any[]>([]);
+  const [bidSlots, setBidSlots] = useState<any[]>([]);
 
   useEffect(() => {
     loadData();
@@ -27,16 +29,18 @@ function Dashboard() {
 
   const loadData = async () => {
     try {
-      const [overviewData, voyagesData, alertsData, trendData] = await Promise.all([
+      const [overviewData, voyagesData, alertsData, trendData, bidsData] = await Promise.all([
         apiService.get('/dashboard/overview'),
         apiService.get('/voyages', { status: 'published' }),
         apiService.get('/alerts', { status: 'active' }),
         apiService.get('/freight-index/trend'),
+        apiService.get('/bid-slots').catch(() => []),
       ]);
       setStats(overviewData);
       setRecentVoyages((voyagesData as any[]).slice(0, 5));
       setAlerts((alertsData as any[]).slice(0, 5));
       setFreightTrend(trendData as any[]);
+      setBidSlots(bidsData as any[]);
     } catch (err) {
       console.error('Failed to load dashboard data', err);
     }
@@ -163,9 +167,7 @@ function Dashboard() {
                     <div style={{ fontWeight: 'bold', color: '#ff7a45' }}>
                       ${item.base_rate?.toLocaleString()}/TEU
                     </div>
-                    <Button type="link" size="small">
-                      查看详情
-                    </Button>
+                    <Link to={`/voyages/${item.id}`}>查看详情</Link>
                   </div>
                 </List.Item>
               )}
@@ -212,7 +214,7 @@ function Dashboard() {
               <div style={{ fontSize: '18px', fontWeight: 'bold', marginTop: 12 }}>竞价舱位</div>
               <div style={{ color: '#999', marginTop: 4 }}>实时竞价，价高者得</div>
               <Button type="primary" style={{ marginTop: 12 }}>
-                <Link to="/container-booking" style={{ color: 'white' }}>参与竞价</Link>
+                <Link to="/bids/bid-1" style={{ color: 'white' }}>参与竞价</Link>
               </Button>
             </div>
           </Card>

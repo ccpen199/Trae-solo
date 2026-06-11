@@ -208,7 +208,7 @@ function AdminDashboard() {
 
   return (
     <div>
-      <div className="page-title">数据看板</div>
+      <div className="page-title">后台管理</div>
 
       <Row gutter={[16, 16]} style={{ marginBottom: 16 }}>
         <Col xs={12} md={6}>

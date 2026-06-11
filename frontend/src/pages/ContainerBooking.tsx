@@ -3,6 +3,7 @@ import { Card, Tabs, Table, Tag, Button, Space, Modal, Form, Input, Select, mess
 import { ThunderboltOutlined, RiseOutlined, CalendarOutlined, WarningOutlined, ClockCircleOutlined } from '@ant-design/icons';
 import { apiService } from '../services/api';
 import dayjs from 'dayjs';
+import { Link } from 'react-router-dom';
 
 const { Option } = Select;
 
@@ -12,8 +13,11 @@ function ContainerBooking() {
   const [bidSlots, setBidSlots] = useState<any[]>([]);
   const [loading, setLoading] = useState(false);
   const [isBookModalVisible, setIsBookModalVisible] = useState(false);
+  const [isScheduleModalVisible, setIsScheduleModalVisible] = useState(false);
+  const [selectedSchedule, setSelectedSchedule] = useState<any>(null);
   const [selectedContainer, setSelectedContainer] = useState<any>(null);
   const [form] = Form.useForm();
+  const [scheduleForm] = Form.useForm();
 
   useEffect(() => {
     loadSchedules();
@@ -95,6 +99,27 @@ function ContainerBooking() {
     setIsBookModalVisible(true);
   };
 
+  const handleBookSchedule = (schedule: any) => {
+    setSelectedSchedule(schedule);
+    setIsScheduleModalVisible(true);
+    scheduleForm.setFieldsValue({
+      route: `${schedule.origin_port} → ${schedule.destination_port}`,
+      company_name: '华贸物流集团',
+      contact_person: '张明',
+    });
+  };
+
+  const handleSubmitScheduleBooking = async () => {
+    try {
+      await scheduleForm.validateFields();
+      message.success('订舱申请已提交，商务会在订单中心跟进');
+      setIsScheduleModalVisible(false);
+      scheduleForm.resetFields();
+    } catch (err) {
+      message.error('请完善订舱申请信息');
+    }
+  };
+
   const handleSubmitBooking = async () => {
     try {
       const values = await form.validateFields();
@@ -151,10 +176,10 @@ function ContainerBooking() {
     {
       title: '操作',
       key: 'action',
-      render: () => (
+    render: (_: any, record: any) => (
         <Space>
           <Button type="link" size="small">订阅班期</Button>
-          <Button type="primary" size="small">立即订舱</Button>
+          <Button type="primary" size="small" onClick={() => handleBookSchedule(record)}>立即订舱</Button>
         </Space>
       ),
     },
@@ -290,10 +315,12 @@ function ContainerBooking() {
     {
       title: '操作',
       key: 'action',
-      render: () => (
-        <Button type="primary" size="small" icon={<RiseOutlined />}>
-          出价
-        </Button>
+    render: (_: any, record: any) => (
+        <Link to={`/bids/${record.id}`}>
+          <Button type="primary" size="small" icon={<RiseOutlined />}>
+            出价
+          </Button>
+        </Link>
       ),
     },
   ];
@@ -438,6 +465,44 @@ function ContainerBooking() {
               </Form.Item>
               <Form.Item name="remarks" label="备注">
                 <Input.TextArea rows={2} placeholder="其他说明" />
+              </Form.Item>
+            </Form>
+          </div>
+        )}
+      </Modal>
+
+      <Modal
+        title="班轮订舱申请"
+        open={isScheduleModalVisible}
+        onOk={handleSubmitScheduleBooking}
+        onCancel={() => setIsScheduleModalVisible(false)}
+        okText="提交订舱"
+        cancelText="取消"
+        width={520}
+      >
+        {selectedSchedule && (
+          <div>
+            <div style={{ padding: 16, background: '#f0f5ff', borderRadius: 6, marginBottom: 16 }}>
+              <div style={{ fontWeight: 600 }}>{selectedSchedule.route_code}</div>
+              <div style={{ color: '#666', marginTop: 4 }}>
+                {selectedSchedule.origin_port} → {selectedSchedule.destination_port}，{selectedSchedule.departure_day} 发船
+              </div>
+            </div>
+            <Form form={scheduleForm} layout="vertical">
+              <Form.Item name="route" label="航线">
+                <Input disabled />
+              </Form.Item>
+              <Form.Item name="company_name" label="公司名称" rules={[{ required: true }]}>
+                <Input placeholder="请输入公司名称" />
+              </Form.Item>
+              <Form.Item name="contact_person" label="联系人" rules={[{ required: true }]}>
+                <Input placeholder="请输入联系人" />
+              </Form.Item>
+              <Form.Item name="teu" label="订舱数量(TEU)" rules={[{ required: true }]}>
+                <Input type="number" placeholder="请输入订舱数量" />
+              </Form.Item>
+              <Form.Item name="cargo_type" label="货物类型" rules={[{ required: true }]}>
+                <Input placeholder="请输入货物类型" />
               </Form.Item>
             </Form>
           </div>

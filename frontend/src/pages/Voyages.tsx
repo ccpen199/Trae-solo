@@ -1,12 +1,17 @@
 import { useEffect, useState } from 'react';
-import { Card, Table, Tag, Button, Space, Input, Select, Modal, Form, DatePicker, InputNumber, message } from 'antd';
-import { PlusOutlined, SearchOutlined, EyeOutlined } from '@ant-design/icons';
+import { Card, Table, Tag, Button, Space, Input, Select, Modal, Form, DatePicker, InputNumber, message, Alert } from 'antd';
+import { PlusOutlined, SearchOutlined, EyeOutlined, SwapOutlined } from '@ant-design/icons';
 import { apiService } from '../services/api';
+import { useNavigate } from 'react-router-dom';
 import dayjs from 'dayjs';
+import { useAppStore } from '../store/appStore';
+import { canPublishVoyage, canSeeAllCargos, UserRole } from '../utils/permissions';
 
 const { Option } = Select;
 
 function Voyages() {
+  const navigate = useNavigate();
+  const { currentUser } = useAppStore();
   const [voyages, setVoyages] = useState<any[]>([]);
   const [loading, setLoading] = useState(false);
   const [isModalVisible, setIsModalVisible] = useState(false);
@@ -18,6 +23,9 @@ function Voyages() {
     loadVoyages();
     loadVessels();
   }, []);
+
+  const canPublish = canPublishVoyage(currentUser?.role as UserRole);
+  const canMatchCargo = canSeeAllCargos(currentUser?.role as UserRole);
 
   const loadVoyages = async (params?: any) => {
     setLoading(true);
@@ -124,12 +132,24 @@ function Voyages() {
       key: 'action',
       render: (_: any, record: any) => (
         <Space>
-          <Button type="link" size="small" icon={<EyeOutlined />}>
-            详情
+          <Button
+            type="link"
+            size="small"
+            icon={<EyeOutlined />}
+            onClick={() => navigate(`/voyages/${record.id}`)}
+          >
+            查看详情
           </Button>
-          <Button type="link" size="small">
-            匹配货盘
-          </Button>
+          {canMatchCargo && (
+            <Button
+              type="link"
+              size="small"
+              icon={<SwapOutlined />}
+              onClick={() => navigate(`/voyages/${record.id}`)}
+            >
+              匹配货盘
+            </Button>
+          )}
         </Space>
       ),
     },
@@ -189,11 +209,23 @@ function Voyages() {
         </Form>
       </Card>
 
+      {!canPublish && (
+        <Alert
+          style={{ marginBottom: 16 }}
+          type="info"
+          showIcon
+          message="浏览模式"
+          description="您当前以货主身份浏览，如需发布航次请切换至船东/货代身份。"
+        />
+      )}
+
       <Card
         extra={
-          <Button type="primary" icon={<PlusOutlined />} onClick={() => setIsModalVisible(true)}>
-            发布航次
-          </Button>
+          canPublish ? (
+            <Button type="primary" icon={<PlusOutlined />} onClick={() => setIsModalVisible(true)}>
+              发布航次
+            </Button>
+          ) : null
         }
       >
         <Table

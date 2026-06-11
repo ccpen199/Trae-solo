@@ -236,14 +236,97 @@ router.get('/cargo-bookings/:id', (req: Request, res: Response) => {
 
 router.post('/cargo-bookings', (req: Request, res: Response) => {
   const id = uuidv4();
-  const { cargo_owner_id, voyage_id, cargo_type, weight, teu, origin_port, destination_port, earliest_departure, latest_arrival, budget_rate, special_requirements, compliance_docs } = req.body;
-  
-  db.run(`INSERT INTO cargo_bookings (id, cargo_owner_id, voyage_id, cargo_type, weight, teu, origin_port, destination_port, earliest_departure, latest_arrival, budget_rate, status, special_requirements, compliance_docs)
-    VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, 'inquiry', ?, ?)`,
-    [id, cargo_owner_id, voyage_id || null, cargo_type, weight, teu, origin_port, destination_port, earliest_departure || null, latest_arrival || null, budget_rate || null, JSON.stringify(special_requirements || []), JSON.stringify(compliance_docs || [])],
-    function(err) {
-      if (err) return res.status(500).json({ error: err.message });
-      res.status(201).json({ id, ...req.body, status: 'inquiry' });
+  const {
+    cargo_owner_id,
+    owner_name,
+    owner_company,
+    voyage_id,
+    cargo_type,
+    weight,
+    teu,
+    origin_port,
+    destination_port,
+    earliest_departure,
+    latest_arrival,
+    budget_rate,
+    special_requirements,
+    compliance_docs,
+  } = req.body;
+
+  db.get(
+    'SELECT id FROM users WHERE id = ? OR (name = ? AND company = ?)',
+    [cargo_owner_id || '', owner_name || '', owner_company || ''],
+    (userErr, userRow: any) => {
+      if (userErr) return res.status(500).json({ error: userErr.message });
+      const resolvedOwnerId = userRow?.id || cargo_owner_id;
+      if (!resolvedOwnerId) return res.status(400).json({ error: 'Cargo owner not found' });
+
+      db.run(`INSERT INTO cargo_bookings (id, cargo_owner_id, voyage_id, cargo_type, weight, teu, origin_port, destination_port, earliest_departure, latest_arrival, budget_rate, status, special_requirements, compliance_docs)
+        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, 'inquiry', ?, ?)`,
+        [id, resolvedOwnerId, voyage_id || null, cargo_type, weight, teu, origin_port, destination_port, earliest_departure || null, latest_arrival || null, budget_rate || null, JSON.stringify(special_requirements || []), JSON.stringify(compliance_docs || [])],
+        function(err) {
+          if (err) return res.status(500).json({ error: err.message });
+          res.status(201).json({ id, ...req.body, cargo_owner_id: resolvedOwnerId, status: 'inquiry' });
+        }
+      );
+    }
+  );
+});
+
+router.put('/cargo-bookings/:id', (req: Request, res: Response) => {
+  const {
+    cargo_owner_id,
+    owner_name,
+    owner_company,
+    cargo_type,
+    weight,
+    teu,
+    origin_port,
+    destination_port,
+    earliest_departure,
+    latest_arrival,
+    budget_rate,
+    special_requirements,
+    compliance_docs,
+  } = req.body;
+
+  db.get(
+    'SELECT cb.*, u.name as owner_name, u.company as owner_company FROM cargo_bookings cb JOIN users u ON cb.cargo_owner_id = u.id WHERE cb.id = ?',
+    [req.params.id],
+    (findErr, existing: any) => {
+      if (findErr) return res.status(500).json({ error: findErr.message });
+      if (!existing) return res.status(404).json({ error: 'Booking not found' });
+
+      const isSameOwner =
+        existing.cargo_owner_id === cargo_owner_id ||
+        (owner_name && owner_company && existing.owner_name === owner_name && existing.owner_company === owner_company);
+
+      if (!isSameOwner) return res.status(403).json({ error: 'Only the cargo owner can edit this booking' });
+
+      db.run(
+        `UPDATE cargo_bookings
+         SET cargo_type = ?, weight = ?, teu = ?, origin_port = ?, destination_port = ?,
+             earliest_departure = ?, latest_arrival = ?, budget_rate = ?,
+             special_requirements = ?, compliance_docs = ?
+         WHERE id = ?`,
+        [
+          cargo_type,
+          weight,
+          teu,
+          origin_port,
+          destination_port,
+          earliest_departure || null,
+          latest_arrival || null,
+          budget_rate || null,
+          JSON.stringify(special_requirements || []),
+          JSON.stringify(compliance_docs || []),
+          req.params.id,
+        ],
+        function(err) {
+          if (err) return res.status(500).json({ error: err.message });
+          res.json({ id: req.params.id, ...req.body, cargo_owner_id: existing.cargo_owner_id });
+        }
+      );
     }
   );
 });

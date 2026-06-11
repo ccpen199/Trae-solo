@@ -1,7 +1,7 @@
 import { Routes, Route, Navigate } from 'react-router-dom';
-import { Layout, Menu, Avatar, Dropdown, Space } from 'antd';
+import { Layout, Menu, Avatar, Dropdown, Space, Select } from 'antd';
 import { useState } from 'react';
-import { Link, useLocation } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import {
   DashboardOutlined,
   RocketOutlined,
@@ -19,21 +19,40 @@ import {
 } from '@ant-design/icons';
 import Dashboard from './pages/Dashboard';
 import Voyages from './pages/Voyages';
+import VoyageDetail from './pages/VoyageDetail';
 import CargoBookings from './pages/CargoBookings';
 import VesselTrading from './pages/VesselTrading';
 import ContainerBooking from './pages/ContainerBooking';
+import BidDetail from './pages/BidDetail';
 import SpecialEquipment from './pages/SpecialEquipment';
 import MatchingEngine from './pages/MatchingEngine';
 import OrderCenter from './pages/OrderCenter';
 import AdminDashboard from './pages/AdminDashboard';
+import ProfileCenter from './pages/ProfileCenter';
 import { useAppStore } from './store/appStore';
+import { UserRole, ROLE_LABELS, ROLE_USERS } from './utils/permissions';
 
 const { Header, Sider, Content, Footer } = Layout;
 
 function App() {
   const [collapsed, setCollapsed] = useState(false);
   const location = useLocation();
-  const { currentUser } = useAppStore();
+  const navigate = useNavigate();
+  const { currentUser, setCurrentUser } = useAppStore();
+
+  const handleRoleChange = (newRole: UserRole) => {
+    const newUser = ROLE_USERS[newRole];
+    setCurrentUser({
+      id: newUser.id,
+      name: newUser.name,
+      company: newUser.company,
+      role: newRole,
+      email: newUser.email,
+      phone: newUser.phone,
+      qualifications: newUser.qualifications
+    });
+    navigate('/');
+  };
 
   const roleLabels: Record<string, string> = {
     cargo_owner: '货主',
@@ -52,13 +71,13 @@ function App() {
     { key: '/container-booking', icon: <AppstoreOutlined />, label: <Link to="/container-booking">集装箱订舱</Link> },
     { key: '/special-equipment', icon: <CarOutlined />, label: <Link to="/special-equipment">特种车船服务</Link> },
     { key: '/orders', icon: <FileTextOutlined />, label: <Link to="/orders">订单中心</Link> },
-    { key: '/admin', icon: <BarChartOutlined />, label: <Link to="/admin">数据看板</Link> },
+    { key: '/admin', icon: <BarChartOutlined />, label: <Link to="/admin">后台管理</Link> },
   ];
 
   const userMenuItems = [
-    { key: '1', label: '个人中心' },
-    { key: '2', label: '企业认证' },
-    { key: '3', label: '退出登录' },
+    { key: 'profile', label: '个人中心' },
+    { key: 'certification', label: '企业认证' },
+    { key: 'logout', label: '退出登录' },
   ];
 
   return (
@@ -69,12 +88,34 @@ function App() {
           <span>智慧货运协同平台</span>
         </div>
         <Space size="large">
+          <div style={{ color: 'white', fontSize: '14px', display: 'flex', alignItems: 'center', gap: '8px' }}>
+            <span>切换身份：</span>
+            <Select
+              value={currentUser?.role as UserRole}
+              onChange={handleRoleChange}
+              style={{ width: 160 }}
+              options={Object.entries(ROLE_LABELS).map(([key, label]) => ({
+                value: key as UserRole,
+                label
+              }))}
+            />
+          </div>
           <span style={{ color: 'white', fontSize: '14px' }}>
-            当前身份：{roleLabels[currentUser?.role || 'cargo_owner']} - {currentUser?.company}
+            当前：{currentUser?.company} / {ROLE_LABELS[(currentUser?.role as UserRole) || 'cargo_owner']}
           </span>
           <div style={{ display: 'flex', alignItems: 'center', gap: '12px', color: 'white' }}>
             <BellOutlined style={{ fontSize: '18px', cursor: 'pointer' }} />
-            <Dropdown menu={{ items: userMenuItems }} placement="bottomRight">
+            <Dropdown
+              menu={{
+                items: userMenuItems,
+                onClick: ({ key }) => {
+                  if (key === 'profile' || key === 'certification') {
+                    navigate(`/profile${key === 'certification' ? '?tab=certification' : ''}`);
+                  }
+                }
+              }}
+              placement="bottomRight"
+            >
               <div style={{ cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '8px' }}>
                 <Avatar size="small" icon={<UserOutlined />} />
                 <span>{currentUser?.name}</span>
@@ -118,13 +159,16 @@ function App() {
             <Routes>
               <Route path="/" element={<Dashboard />} />
               <Route path="/voyages" element={<Voyages />} />
+              <Route path="/voyages/:id" element={<VoyageDetail />} />
               <Route path="/cargo-bookings" element={<CargoBookings />} />
               <Route path="/matching" element={<MatchingEngine />} />
               <Route path="/vessel-trading" element={<VesselTrading />} />
               <Route path="/container-booking" element={<ContainerBooking />} />
+              <Route path="/bids/:id" element={<BidDetail />} />
               <Route path="/special-equipment" element={<SpecialEquipment />} />
               <Route path="/orders" element={<OrderCenter />} />
               <Route path="/admin" element={<AdminDashboard />} />
+              <Route path="/profile" element={<ProfileCenter />} />
               <Route path="*" element={<Navigate to="/" replace />} />
             </Routes>
           </Content>
