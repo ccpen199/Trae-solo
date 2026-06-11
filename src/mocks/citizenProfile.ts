@@ -1,0 +1,50 @@
+import type { CitizenProfile } from "@/types"
+
+export const citizenProfile: CitizenProfile = {
+  id: "410102199001011234",
+  name: "张明远",
+  role: "citizen",
+  avatar: "",
+  tags: ["新市民", "企业主", "公积金用户", "社保缴纳人"],
+  profileRadar: {
+    serviceActivity: 85,
+    paymentFrequency: 72,
+    servicePreference: 91,
+    policyMatch: 68,
+    digitalLevel: 78,
+  },
+  highFreqServices: [
+    { id: "s1", name: "社保缴费查询", icon: "Shield", category: "社保", dept: "人社局", url: "/services/social-security" },
+    { id: "s2", name: "公积金提取", icon: "Building2", category: "公积金", dept: "公积金中心", url: "/services/housing-fund" },
+    { id: "s3", name: "居住证续签", icon: "FileText", category: "户籍", dept: "公安局", url: "/services/residence" },
+    { id: "s4", name: "医保报销", icon: "HeartPulse", category: "医疗", dept: "医保局", url: "/services/medical" },
+    { id: "s5", name: "车辆年检", icon: "Car", category: "交通", dept: "交警支队", url: "/services/vehicle" },
+    { id: "s6", name: "不动产登记", icon: "Home", category: "住建", dept: "自然资源局", url: "/services/property" },
+  ],
+  expiringReminders: [
+    { id: "e1", title: "社保缴费即将到期", deadline: "2026-06-25", daysLeft: 16, urgency: "high", actionUrl: "/services/social-security/pay", serviceId: "ss1" },
+    { id: "e2", title: "居住证将于下月到期", deadline: "2026-07-15", daysLeft: 36, urgency: "medium", actionUrl: "/services/residence/renew", serviceId: "ps1" },
+    { id: "e3", title: "营业执照年审截止", deadline: "2026-06-30", daysLeft: 21, urgency: "high", actionUrl: "/services/business/annual", serviceId: "mk1" },
+    { id: "e4", title: "车辆保险即将到期", deadline: "2026-07-01", daysLeft: 22, urgency: "medium", actionUrl: "/services/vehicle/insurance", serviceId: "tr1" },
+  ],
+  matchedPolicies: [
+    { id: "p1", title: "郑州市高层次人才购房补贴", subsidy: "最高50万元", deadline: "2026-08-31", matchScore: 95, tags: ["人才政策", "购房补贴"] },
+    { id: "p2", title: "小微企业创业担保贷款", subsidy: "最高300万元", deadline: "2026-09-30", matchScore: 88, tags: ["创业扶持", "贷款贴息"] },
+    { id: "p3", title: "灵活就业人员社保补贴", subsidy: "每月500元", deadline: "2026-07-15", matchScore: 82, tags: ["社保补贴", "灵活就业"] },
+    { id: "p4", title: "郑州市科技创新券", subsidy: "最高20万元", deadline: "2026-10-31", matchScore: 75, tags: ["科技创新", "研发补助"] },
+  ],
+  preferenceHeatmap: [
+    { x: 0, y: 0, value: 95, label: "社保" },
+    { x: 1, y: 0, value: 88, label: "公积金" },
+    { x: 2, y: 0, value: 72, label: "户籍" },
+    { x: 3, y: 0, value: 65, label: "医疗" },
+    { x: 0, y: 1, value: 60, label: "教育" },
+    { x: 1, y: 1, value: 55, label: "交通" },
+    { x: 2, y: 1, value: 45, label: "住建" },
+    { x: 3, y: 1, value: 40, label: "税务" },
+    { x: 0, y: 2, value: 35, label: "民政" },
+    { x: 1, y: 2, value: 30, label: "司法" },
+    { x: 2, y: 2, value: 25, label: "文旅" },
+    { x: 3, y: 2, value: 20, label: "商务" },
+  ],
+}
