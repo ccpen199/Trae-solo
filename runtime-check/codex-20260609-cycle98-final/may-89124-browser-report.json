@@ -1,0 +1,2235 @@
+{
+  "ok": true,
+  "generatedAt": "2026-06-09T19:38:58.759Z",
+  "order": "may-89124",
+  "roundIndex": 98,
+  "captureId": "may-89124-cycle98-final",
+  "url": "http://127.0.0.1:49124/",
+  "initialUrl": "http://127.0.0.1:49124/",
+  "finalUrl": "http://127.0.0.1:49124/dashboard",
+  "status": 200,
+  "title": "知产全链条SaaS服务平台",
+  "initialTitle": "知产全链条SaaS服务平台",
+  "navigationError": "",
+  "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89124/runtime-check/codex-20260609-cycle98-final/may-89124-cycle98-final-frontend.png",
+  "screenshotPaths": [
+    "/Users/chen/Documents/trae_projects/local_projects/may-89124/runtime-check/codex-20260609-cycle98-final/may-89124-cycle98-final-structure-01-首屏.png",
+    "/Users/chen/Documents/trae_projects/local_projects/may-89124/runtime-check/codex-20260609-cycle98-final/may-89124-cycle98-final-structure-02-导航-工作台.png",
+    "/Users/chen/Documents/trae_projects/local_projects/may-89124/runtime-check/codex-20260609-cycle98-final/may-89124-cycle98-final-structure-03-操作-登-录.png",
+    "/Users/chen/Documents/trae_projects/local_projects/may-89124/runtime-check/codex-20260609-cycle98-final/may-89124-cycle98-final-structure-04-二层操作-登-录-登-录.png",
+    "/Users/chen/Documents/trae_projects/local_projects/may-89124/runtime-check/codex-20260609-cycle98-final/may-89124-cycle98-final-structure-05-操作-注-册.png",
+    "/Users/chen/Documents/trae_projects/local_projects/may-89124/runtime-check/codex-20260609-cycle98-final/may-89124-cycle98-final-structure-06-二层操作-注-册-取-消.png",
+    "/Users/chen/Documents/trae_projects/local_projects/may-89124/runtime-check/codex-20260609-cycle98-final/may-89124-cycle98-final-structure-07-导航-商标管理.png",
+    "/Users/chen/Documents/trae_projects/local_projects/may-89124/runtime-check/codex-20260609-cycle98-final/may-89124-cycle98-final-structure-08-操作-登-录.png",
+    "/Users/chen/Documents/trae_projects/local_projects/may-89124/runtime-check/codex-20260609-cycle98-final/may-89124-cycle98-final-structure-09-二层操作-登-录-登-录.png",
+    "/Users/chen/Documents/trae_projects/local_projects/may-89124/runtime-check/codex-20260609-cycle98-final/may-89124-cycle98-final-structure-10-操作-注-册.png"
+  ],
+  "issueTextPreview": "登录注册相关问题；搜索/筛选相关问题；后台管理相关问题；详情/内容页相关问题；发现/分类相关问题",
+  "targetReason": "登录注册相关问题；搜索/筛选相关问题；后台管理相关问题；详情/内容页相关问题；发现/分类相关问题",
+  "targetKind": "auth",
+  "targetMatched": true,
+  "targetActions": [
+    {
+      "action": "click",
+      "label": "登录注册相关问题",
+      "ok": true
+    },
+    {
+      "action": "target-verify",
+      "label": "登录注册相关问题",
+      "ok": true,
+      "finalUrl": "http://127.0.0.1:49124/trademark/tracker"
+    }
+  ],
+  "authFlow": {
+    "detected": false,
+    "attempted": false,
+    "success": false,
+    "finalUrl": "http://127.0.0.1:49124/dashboard",
+    "message": "",
+    "actions": []
+  },
+  "businessAudit": {
+    "actions": [
+      {
+        "action": "click",
+        "label": "导航:工作台",
+        "ok": true
+      },
+      {
+        "action": "click",
+        "label": "操作:登 录",
+        "ok": true,
+        "result": {
+          "ok": true,
+          "matched": 1
+        }
+      },
+      {
+        "action": "click",
+        "label": "二层操作:登 录:登 录#2",
+        "ok": true,
+        "result": {
+          "ok": true,
+          "matched": 2
+        }
+      },
+      {
+        "action": "click",
+        "label": "操作:注 册",
+        "ok": true,
+        "result": {
+          "ok": true,
+          "matched": 1
+        }
+      },
+      {
+        "action": "click",
+        "label": "二层操作:注 册:取 消",
+        "ok": true,
+        "result": {
+          "ok": true,
+          "matched": 1
+        }
+      },
+      {
+        "action": "click",
+        "label": "导航:商标管理",
+        "ok": true
+      },
+      {
+        "action": "click",
+        "label": "操作:登 录",
+        "ok": true,
+        "result": {
+          "ok": true,
+          "matched": 1
+        }
+      },
+      {
+        "action": "click",
+        "label": "二层操作:登 录:登 录#2",
+        "ok": true,
+        "result": {
+          "ok": true,
+          "matched": 2
+        }
+      },
+      {
+        "action": "click",
+        "label": "操作:注 册",
+        "ok": true,
+        "result": {
+          "ok": true,
+          "matched": 1
+        }
+      },
+      {
+        "action": "click",
+        "label": "二层操作:注 册:取 消",
+        "ok": true,
+        "result": {
+          "ok": true,
+          "matched": 1
+        }
+      }
+    ],
+    "snapshots": [
+      {
+        "label": "首屏",
+        "url": "http://127.0.0.1:49124/dashboard",
+        "title": "知产全链条SaaS服务平台",
+        "headings": [],
+        "navLabels": [
+          "工作台 商标管理 专利管理 版权管理 后台管理",
+          "工作台",
+          "dashboard",
+          "商标管理",
+          "trademark-circle",
+          "专利管理",
+          "file-protect",
+          "版权管理",
+          "safety-certificate",
+          "后台管理",
+          "setting"
+        ],
+        "buttons": [
+          "登 录",
+          "注 册"
+        ],
+        "links": [],
+        "inputs": [
+          {
+            "tag": "input",
+            "type": "text",
+            "placeholder": "搜索商标、专利、版权...",
+            "name": "",
+            "label": ""
+          }
+        ],
+        "tables": [],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "IP知产全链条平台工作台商标管理专利管理版权管理后台管理登 录注 册5张代理商标申请数1,28612.5% 较上月专利持有量5238.3% 较上月版权登记数8923.2% 较上月待处理案件4718.6% 较上月业务趋势案件状态分布近期动态商标\"云启科技\"注册申请已提交今天 14:32申请号：CN20260609001234，当前节点：形式审查查看进度 →专利 ZL2026301xxxxx 年费代缴已完成今天 11:15第3年年费 ¥1,200，缴费确认号：FEE20260609001缴费记录 →版权作品\"智慧城市管理系统 V3.0\"哈希存证成功昨天 16:40区块链交易ID：0x8f3a2b7c...c2d3e4f5查看证书 →商标\"星河数据\"异议答辩材料已上传昨天 09:22案件编号：TM-2024-038，答辩截止：2026-06-20案件详情 →专利价值评估报告已生成，估值等级：A06-07 15:10综合评分：88分（高价值），引用数92/法律状态95/技术热度90评估报告 →侵权线索自动抓取发现3条新疑似侵权链接06-06 10:05品牌视觉设计稿-淘宝(96.8%)、B站(94.1%)、小红书(91.3%)侵权详情 →待办事项6商标\"云端智联\"续展申请紧急续展截止：2026-07-15，需提交续展申请书前往处理 →专利 ZL2025200xxxxx 答辩截止紧急答辩截止：2026-06-20，尚需补充技术对比分析前往处理 →版权存证材料补充高3件作品待补充权属证明文件前往处理 →商标\"星河数据\"异议答辩书提交高案件编号 TM-2024-038，对方异议理由：近似商标前往处理 →专利年费清单核对中12件专利年费待核对，3件即将到期前往处理 →客户合同续签审批低华为年度代理合同续签，待法务审核前往处理 →",
+        "layout": {
+          "viewportWidth": 1504,
+          "viewportHeight": 1253,
+          "scrollWidth": 1504,
+          "scrollHeight": 1253,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89124-cycle98-final-structure-01-首屏",
+          "label": "首屏",
+          "finalUrl": "http://127.0.0.1:49124/dashboard",
+          "title": "知产全链条SaaS服务平台",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89124/runtime-check/codex-20260609-cycle98-final/may-89124-cycle98-final-structure-01-首屏.json",
+          "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89124/runtime-check/codex-20260609-cycle98-final/may-89124-cycle98-final-structure-01-首屏.png",
+          "elementCount": 371,
+          "interactiveCount": 10,
+          "interactiveLabels": [
+            "工作台 商标管理 专利管理 版权管理 后台管理",
+            "工作台",
+            "商标管理",
+            "专利管理",
+            "版权管理",
+            "后台管理",
+            "搜索商标、专利、版权...",
+            "登 录",
+            "注 册"
+          ]
+        }
+      },
+      {
+        "label": "导航:工作台",
+        "url": "http://127.0.0.1:49124/dashboard",
+        "title": "知产全链条SaaS服务平台",
+        "headings": [],
+        "navLabels": [
+          "工作台 商标管理 专利管理 版权管理 后台管理",
+          "工作台",
+          "dashboard",
+          "商标管理",
+          "trademark-circle",
+          "专利管理",
+          "file-protect",
+          "版权管理",
+          "safety-certificate",
+          "后台管理",
+          "setting"
+        ],
+        "buttons": [
+          "登 录",
+          "注 册"
+        ],
+        "links": [],
+        "inputs": [
+          {
+            "tag": "input",
+            "type": "text",
+            "placeholder": "搜索商标、专利、版权...",
+            "name": "",
+            "label": ""
+          }
+        ],
+        "tables": [],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "IP知产全链条平台工作台商标管理专利管理版权管理后台管理登 录注 册5张代理商标申请数1,28612.5% 较上月专利持有量5238.3% 较上月版权登记数8923.2% 较上月待处理案件4718.6% 较上月业务趋势案件状态分布近期动态商标\"云启科技\"注册申请已提交今天 14:32申请号：CN20260609001234，当前节点：形式审查查看进度 →专利 ZL2026301xxxxx 年费代缴已完成今天 11:15第3年年费 ¥1,200，缴费确认号：FEE20260609001缴费记录 →版权作品\"智慧城市管理系统 V3.0\"哈希存证成功昨天 16:40区块链交易ID：0x8f3a2b7c...c2d3e4f5查看证书 →商标\"星河数据\"异议答辩材料已上传昨天 09:22案件编号：TM-2024-038，答辩截止：2026-06-20案件详情 →专利价值评估报告已生成，估值等级：A06-07 15:10综合评分：88分（高价值），引用数92/法律状态95/技术热度90评估报告 →侵权线索自动抓取发现3条新疑似侵权链接06-06 10:05品牌视觉设计稿-淘宝(96.8%)、B站(94.1%)、小红书(91.3%)侵权详情 →待办事项6商标\"云端智联\"续展申请紧急续展截止：2026-07-15，需提交续展申请书前往处理 →专利 ZL2025200xxxxx 答辩截止紧急答辩截止：2026-06-20，尚需补充技术对比分析前往处理 →版权存证材料补充高3件作品待补充权属证明文件前往处理 →商标\"星河数据\"异议答辩书提交高案件编号 TM-2024-038，对方异议理由：近似商标前往处理 →专利年费清单核对中12件专利年费待核对，3件即将到期前往处理 →客户合同续签审批低华为年度代理合同续签，待法务审核前往处理 →",
+        "layout": {
+          "viewportWidth": 1536,
+          "viewportHeight": 1253,
+          "scrollWidth": 1536,
+          "scrollHeight": 1253,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89124-cycle98-final-structure-02-导航-工作台",
+          "label": "导航:工作台",
+          "finalUrl": "http://127.0.0.1:49124/dashboard",
+          "title": "知产全链条SaaS服务平台",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89124/runtime-check/codex-20260609-cycle98-final/may-89124-cycle98-final-structure-02-导航-工作台.json",
+          "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89124/runtime-check/codex-20260609-cycle98-final/may-89124-cycle98-final-structure-02-导航-工作台.png",
+          "elementCount": 371,
+          "interactiveCount": 10,
+          "interactiveLabels": [
+            "工作台 商标管理 专利管理 版权管理 后台管理",
+            "工作台",
+            "商标管理",
+            "专利管理",
+            "版权管理",
+            "后台管理",
+            "搜索商标、专利、版权...",
+            "登 录",
+            "注 册"
+          ]
+        }
+      },
+      {
+        "label": "操作:登 录",
+        "url": "http://127.0.0.1:49124/dashboard",
+        "title": "知产全链条SaaS服务平台",
+        "headings": [],
+        "navLabels": [
+          "工作台 商标管理 专利管理 版权管理 后台管理",
+          "工作台",
+          "dashboard",
+          "商标管理",
+          "trademark-circle",
+          "专利管理",
+          "file-protect",
+          "版权管理",
+          "safety-certificate",
+          "后台管理",
+          "setting"
+        ],
+        "buttons": [
+          "登 录",
+          "注 册",
+          "Close",
+          "显示",
+          "取 消"
+        ],
+        "links": [],
+        "inputs": [
+          {
+            "tag": "input",
+            "type": "text",
+            "placeholder": "搜索商标、专利、版权...",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "text",
+            "placeholder": "账号 / 手机号 / 邮箱",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "password",
+            "placeholder": "密码",
+            "name": "",
+            "label": ""
+          }
+        ],
+        "tables": [],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "IP知产全链条平台工作台商标管理专利管理版权管理后台管理登 录注 册5张代理商标申请数1,28612.5% 较上月专利持有量5238.3% 较上月版权登记数8923.2% 较上月待处理案件4718.6% 较上月业务趋势案件状态分布近期动态商标\"云启科技\"注册申请已提交今天 14:32申请号：CN20260609001234，当前节点：形式审查查看进度 →专利 ZL2026301xxxxx 年费代缴已完成今天 11:15第3年年费 ¥1,200，缴费确认号：FEE20260609001缴费记录 →版权作品\"智慧城市管理系统 V3.0\"哈希存证成功昨天 16:40区块链交易ID：0x8f3a2b7c...c2d3e4f5查看证书 →商标\"星河数据\"异议答辩材料已上传昨天 09:22案件编号：TM-2024-038，答辩截止：2026-06-20案件详情 →专利价值评估报告已生成，估值等级：A06-07 15:10综合评分：88分（高价值），引用数92/法律状态95/技术热度90评估报告 →侵权线索自动抓取发现3条新疑似侵权链接06-06 10:05品牌视觉设计稿-淘宝(96.8%)、B站(94.1%)、小红书(91.3%)侵权详情 →待办事项6商标\"云端智联\"续展申请紧急续展截止：2026-07-15，需提交续展申请书前往处理 →专利 ZL2025200xxxxx 答辩截止紧急答辩截止：2026-06-20，尚需补充技术对比分析前往处理 →版权存证材料补充高3件作品待补充权属证明文件前往处理 →商标\"星河数据\"异议答辩书提交高案件编号 TM-2024-038，对方异议理由：近似商标前往处理 →专利年费清单核对中12件专利年费待核对，3件即将到期前往处理 →客户合同续签审批低华为年度代理合同续签，待法务审核前往处理 → 登录知产工作台演示账号admin / Admin@123，可进入后台管理、搜索筛选、案件详情和分类发现链路。取 消登 录",
+        "layout": {
+          "viewportWidth": 1568,
+          "viewportHeight": 1253,
+          "scrollWidth": 1568,
+          "scrollHeight": 1253,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89124-cycle98-final-structure-03-操作-登-录",
+          "label": "操作:登 录",
+          "finalUrl": "http://127.0.0.1:49124/dashboard",
+          "title": "知产全链条SaaS服务平台",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89124/runtime-check/codex-20260609-cycle98-final/may-89124-cycle98-final-structure-03-操作-登-录.json",
+          "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89124/runtime-check/codex-20260609-cycle98-final/may-89124-cycle98-final-structure-03-操作-登-录.png",
+          "elementCount": 405,
+          "interactiveCount": 16,
+          "interactiveLabels": [
+            "工作台 商标管理 专利管理 版权管理 后台管理",
+            "工作台",
+            "商标管理",
+            "专利管理",
+            "版权管理",
+            "后台管理",
+            "搜索商标、专利、版权...",
+            "登 录",
+            "注 册",
+            "Close",
+            "admin",
+            "Admin@123",
+            "显示",
+            "取 消"
+          ]
+        }
+      },
+      {
+        "label": "二层操作:登 录->登 录",
+        "url": "http://127.0.0.1:49124/dashboard",
+        "title": "知产全链条SaaS服务平台",
+        "headings": [],
+        "navLabels": [
+          "工作台 商标管理 专利管理 版权管理 后台管理",
+          "工作台",
+          "dashboard",
+          "商标管理",
+          "trademark-circle",
+          "专利管理",
+          "file-protect",
+          "版权管理",
+          "safety-certificate",
+          "后台管理",
+          "setting"
+        ],
+        "buttons": [
+          "登 录",
+          "注 册"
+        ],
+        "links": [],
+        "inputs": [
+          {
+            "tag": "input",
+            "type": "text",
+            "placeholder": "搜索商标、专利、版权...",
+            "name": "",
+            "label": ""
+          }
+        ],
+        "tables": [],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "IP知产全链条平台工作台商标管理专利管理版权管理后台管理登 录注 册5张代理商标申请数1,28612.5% 较上月专利持有量5238.3% 较上月版权登记数8923.2% 较上月待处理案件4718.6% 较上月业务趋势案件状态分布近期动态商标\"云启科技\"注册申请已提交今天 14:32申请号：CN20260609001234，当前节点：形式审查查看进度 →专利 ZL2026301xxxxx 年费代缴已完成今天 11:15第3年年费 ¥1,200，缴费确认号：FEE20260609001缴费记录 →版权作品\"智慧城市管理系统 V3.0\"哈希存证成功昨天 16:40区块链交易ID：0x8f3a2b7c...c2d3e4f5查看证书 →商标\"星河数据\"异议答辩材料已上传昨天 09:22案件编号：TM-2024-038，答辩截止：2026-06-20案件详情 →专利价值评估报告已生成，估值等级：A06-07 15:10综合评分：88分（高价值），引用数92/法律状态95/技术热度90评估报告 →侵权线索自动抓取发现3条新疑似侵权链接06-06 10:05品牌视觉设计稿-淘宝(96.8%)、B站(94.1%)、小红书(91.3%)侵权详情 →待办事项6商标\"云端智联\"续展申请紧急续展截止：2026-07-15，需提交续展申请书前往处理 →专利 ZL2025200xxxxx 答辩截止紧急答辩截止：2026-06-20，尚需补充技术对比分析前往处理 →版权存证材料补充高3件作品待补充权属证明文件前往处理 →商标\"星河数据\"异议答辩书提交高案件编号 TM-2024-038，对方异议理由：近似商标前往处理 →专利年费清单核对中12件专利年费待核对，3件即将到期前往处理 →客户合同续签审批低华为年度代理合同续签，待法务审核前往处理 → 登录知产工作台演示账号admin / Admin@123，可进入后台管理、搜索筛选、案件详情和分类发现链路。取 消登 录",
+        "layout": {
+          "viewportWidth": 1600,
+          "viewportHeight": 1253,
+          "scrollWidth": 1600,
+          "scrollHeight": 1253,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89124-cycle98-final-structure-04-二层操作-登-录-登-录",
+          "label": "二层操作:登 录->登 录",
+          "finalUrl": "http://127.0.0.1:49124/dashboard",
+          "title": "知产全链条SaaS服务平台",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89124/runtime-check/codex-20260609-cycle98-final/may-89124-cycle98-final-structure-04-二层操作-登-录-登-录.json",
+          "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89124/runtime-check/codex-20260609-cycle98-final/may-89124-cycle98-final-structure-04-二层操作-登-录-登-录.png",
+          "elementCount": 404,
+          "interactiveCount": 16,
+          "interactiveLabels": [
+            "工作台 商标管理 专利管理 版权管理 后台管理",
+            "工作台",
+            "商标管理",
+            "专利管理",
+            "版权管理",
+            "后台管理",
+            "搜索商标、专利、版权...",
+            "登 录",
+            "注 册",
+            "Close",
+            "admin",
+            "Admin@123",
+            "显示",
+            "取 消"
+          ]
+        }
+      },
+      {
+        "label": "操作:注 册",
+        "url": "http://127.0.0.1:49124/dashboard",
+        "title": "知产全链条SaaS服务平台",
+        "headings": [],
+        "navLabels": [
+          "工作台 商标管理 专利管理 版权管理 后台管理",
+          "工作台",
+          "dashboard",
+          "商标管理",
+          "trademark-circle",
+          "专利管理",
+          "file-protect",
+          "版权管理",
+          "safety-certificate",
+          "后台管理",
+          "setting"
+        ],
+        "buttons": [
+          "登 录",
+          "注 册",
+          "Close",
+          "显示",
+          "取 消",
+          "完成注册"
+        ],
+        "links": [],
+        "inputs": [
+          {
+            "tag": "input",
+            "type": "text",
+            "placeholder": "搜索商标、专利、版权...",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "text",
+            "placeholder": "账号 / 手机号 / 邮箱",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "password",
+            "placeholder": "密码",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "text",
+            "placeholder": "机构名称，例如：星河知识产权代理事务所",
+            "name": "",
+            "label": ""
+          }
+        ],
+        "tables": [],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "IP知产全链条平台工作台商标管理专利管理版权管理后台管理登 录注 册5张代理商标申请数1,28612.5% 较上月专利持有量5238.3% 较上月版权登记数8923.2% 较上月待处理案件4718.6% 较上月业务趋势案件状态分布近期动态商标\"云启科技\"注册申请已提交今天 14:32申请号：CN20260609001234，当前节点：形式审查查看进度 →专利 ZL2026301xxxxx 年费代缴已完成今天 11:15第3年年费 ¥1,200，缴费确认号：FEE20260609001缴费记录 →版权作品\"智慧城市管理系统 V3.0\"哈希存证成功昨天 16:40区块链交易ID：0x8f3a2b7c...c2d3e4f5查看证书 →商标\"星河数据\"异议答辩材料已上传昨天 09:22案件编号：TM-2024-038，答辩截止：2026-06-20案件详情 →专利价值评估报告已生成，估值等级：A06-07 15:10综合评分：88分（高价值），引用数92/法律状态95/技术热度90评估报告 →侵权线索自动抓取发现3条新疑似侵权链接06-06 10:05品牌视觉设计稿-淘宝(96.8%)、B站(94.1%)、小红书(91.3%)侵权详情 →待办事项6商标\"云端智联\"续展申请紧急续展截止：2026-07-15，需提交续展申请书前往处理 →专利 ZL2025200xxxxx 答辩截止紧急答辩截止：2026-06-20，尚需补充技术对比分析前往处理 →版权存证材料补充高3件作品待补充权属证明文件前往处理 →商标\"星河数据\"异议答辩书提交高案件编号 TM-2024-038，对方异议理由：近似商标前往处理 →专利年费清单核对中12件专利年费待核对，3件即将到期前往处理 →客户合同续签审批低华为年度代理合同续签，待法务审核前往处理 → 注册代理人账号演示账号admin / Admin@123，可进入后台管理、搜索筛选、案件详情和分类发现链路。取 消完成注册",
+        "layout": {
+          "viewportWidth": 1632,
+          "viewportHeight": 1253,
+          "scrollWidth": 1632,
+          "scrollHeight": 1253,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89124-cycle98-final-structure-05-操作-注-册",
+          "label": "操作:注 册",
+          "finalUrl": "http://127.0.0.1:49124/dashboard",
+          "title": "知产全链条SaaS服务平台",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89124/runtime-check/codex-20260609-cycle98-final/may-89124-cycle98-final-structure-05-操作-注-册.json",
+          "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89124/runtime-check/codex-20260609-cycle98-final/may-89124-cycle98-final-structure-05-操作-注-册.png",
+          "elementCount": 406,
+          "interactiveCount": 17,
+          "interactiveLabels": [
+            "工作台 商标管理 专利管理 版权管理 后台管理",
+            "工作台",
+            "商标管理",
+            "专利管理",
+            "版权管理",
+            "后台管理",
+            "搜索商标、专利、版权...",
+            "登 录",
+            "注 册",
+            "Close",
+            "admin",
+            "Admin@123",
+            "显示",
+            "机构名称，例如：星河知识产权代理事务所",
+            "取 消",
+            "完成注册"
+          ]
+        }
+      },
+      {
+        "label": "二层操作:注 册->取 消",
+        "url": "http://127.0.0.1:49124/dashboard",
+        "title": "知产全链条SaaS服务平台",
+        "headings": [],
+        "navLabels": [
+          "工作台 商标管理 专利管理 版权管理 后台管理",
+          "工作台",
+          "dashboard",
+          "商标管理",
+          "trademark-circle",
+          "专利管理",
+          "file-protect",
+          "版权管理",
+          "safety-certificate",
+          "后台管理",
+          "setting"
+        ],
+        "buttons": [
+          "登 录",
+          "注 册"
+        ],
+        "links": [],
+        "inputs": [
+          {
+            "tag": "input",
+            "type": "text",
+            "placeholder": "搜索商标、专利、版权...",
+            "name": "",
+            "label": ""
+          }
+        ],
+        "tables": [],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "IP知产全链条平台工作台商标管理专利管理版权管理后台管理登 录注 册5张代理商标申请数1,28612.5% 较上月专利持有量5238.3% 较上月版权登记数8923.2% 较上月待处理案件4718.6% 较上月业务趋势案件状态分布近期动态商标\"云启科技\"注册申请已提交今天 14:32申请号：CN20260609001234，当前节点：形式审查查看进度 →专利 ZL2026301xxxxx 年费代缴已完成今天 11:15第3年年费 ¥1,200，缴费确认号：FEE20260609001缴费记录 →版权作品\"智慧城市管理系统 V3.0\"哈希存证成功昨天 16:40区块链交易ID：0x8f3a2b7c...c2d3e4f5查看证书 →商标\"星河数据\"异议答辩材料已上传昨天 09:22案件编号：TM-2024-038，答辩截止：2026-06-20案件详情 →专利价值评估报告已生成，估值等级：A06-07 15:10综合评分：88分（高价值），引用数92/法律状态95/技术热度90评估报告 →侵权线索自动抓取发现3条新疑似侵权链接06-06 10:05品牌视觉设计稿-淘宝(96.8%)、B站(94.1%)、小红书(91.3%)侵权详情 →待办事项6商标\"云端智联\"续展申请紧急续展截止：2026-07-15，需提交续展申请书前往处理 →专利 ZL2025200xxxxx 答辩截止紧急答辩截止：2026-06-20，尚需补充技术对比分析前往处理 →版权存证材料补充高3件作品待补充权属证明文件前往处理 →商标\"星河数据\"异议答辩书提交高案件编号 TM-2024-038，对方异议理由：近似商标前往处理 →专利年费清单核对中12件专利年费待核对，3件即将到期前往处理 →客户合同续签审批低华为年度代理合同续签，待法务审核前往处理 → 注册代理人账号演示账号admin / Admin@123，可进入后台管理、搜索筛选、案件详情和分类发现链路。取 消完成注册",
+        "layout": {
+          "viewportWidth": 1664,
+          "viewportHeight": 1253,
+          "scrollWidth": 1664,
+          "scrollHeight": 1253,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89124-cycle98-final-structure-06-二层操作-注-册-取-消",
+          "label": "二层操作:注 册->取 消",
+          "finalUrl": "http://127.0.0.1:49124/dashboard",
+          "title": "知产全链条SaaS服务平台",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89124/runtime-check/codex-20260609-cycle98-final/may-89124-cycle98-final-structure-06-二层操作-注-册-取-消.json",
+          "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89124/runtime-check/codex-20260609-cycle98-final/may-89124-cycle98-final-structure-06-二层操作-注-册-取-消.png",
+          "elementCount": 405,
+          "interactiveCount": 17,
+          "interactiveLabels": [
+            "工作台 商标管理 专利管理 版权管理 后台管理",
+            "工作台",
+            "商标管理",
+            "专利管理",
+            "版权管理",
+            "后台管理",
+            "搜索商标、专利、版权...",
+            "登 录",
+            "注 册",
+            "Close",
+            "admin",
+            "Admin@123",
+            "显示",
+            "机构名称，例如：星河知识产权代理事务所",
+            "取 消",
+            "完成注册"
+          ]
+        }
+      },
+      {
+        "label": "导航:商标管理",
+        "url": "http://127.0.0.1:49124/trademark/ai-search",
+        "title": "知产全链条SaaS服务平台",
+        "headings": [],
+        "navLabels": [
+          "工作台 商标管理 图形AI检索 注册进度追踪 转让/许可合同 专利管理 版权管理 后台管理",
+          "工作台",
+          "dashboard",
+          "商标管理",
+          "trademark-circle",
+          "图形AI检索",
+          "注册进度追踪",
+          "转让/许可合同",
+          "专利管理",
+          "file-protect",
+          "版权管理",
+          "safety-certificate",
+          "后台管理",
+          "setting"
+        ],
+        "buttons": [
+          "登 录",
+          "注 册"
+        ],
+        "links": [],
+        "inputs": [
+          {
+            "tag": "input",
+            "type": "text",
+            "placeholder": "搜索商标、专利、版权...",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "checkbox",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "checkbox",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "checkbox",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "checkbox",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "checkbox",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "checkbox",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          }
+        ],
+        "tables": [],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "IP知产全链条平台工作台商标管理图形AI检索注册进度追踪转让/许可合同专利管理版权管理后台管理登 录注 册5张代理筛选条件商标分类第1类 化学原料第9类 科学仪器第25类 服装鞋帽第35类 广告销售第42类 科技服务第43类 餐饮住宿相似度阈值: 50%0%50%80%100%点击或拖拽商标图形到此区域进行AI检索支持 PNG、JPG、SVG 格式，系统将自动提取图形特征进行相似度比对上传商标图形开始AI检索系统将基于深度学习模型分析图形特征，快速匹配相似商标 注册代理人账号演示账号admin / Admin@123，可进入后台管理、搜索筛选、案件详情和分类发现链路。取 消完成注册",
+        "layout": {
+          "viewportWidth": 1696,
+          "viewportHeight": 1253,
+          "scrollWidth": 1696,
+          "scrollHeight": 1253,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89124-cycle98-final-structure-07-导航-商标管理",
+          "label": "导航:商标管理",
+          "finalUrl": "http://127.0.0.1:49124/trademark/ai-search",
+          "title": "知产全链条SaaS服务平台",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89124/runtime-check/codex-20260609-cycle98-final/may-89124-cycle98-final-structure-07-导航-商标管理.json",
+          "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89124/runtime-check/codex-20260609-cycle98-final/may-89124-cycle98-final-structure-07-导航-商标管理.png",
+          "elementCount": 207,
+          "interactiveCount": 29,
+          "interactiveLabels": [
+            "工作台 商标管理 图形AI检索 注册进度追踪 转让/许可合同 专利管理 版权管理 后台管理",
+            "工作台",
+            "商标管理",
+            "图形AI检索",
+            "注册进度追踪",
+            "转让/许可合同",
+            "专利管理",
+            "版权管理",
+            "后台管理",
+            "搜索商标、专利、版权...",
+            "登 录",
+            "注 册",
+            "1",
+            "9",
+            "25",
+            "35",
+            "42",
+            "43",
+            "点击或拖拽商标图形到此区域进行AI检索 支持 PNG、JPG、SVG 格式，系统将自动提取图形特征进行相似度比对",
+            "Close",
+            "admin",
+            "Admin@123",
+            "显示",
+            "机构名称，例如：星河知识产权代理事务所",
+            "取 消",
+            "完成注册"
+          ]
+        }
+      },
+      {
+        "label": "操作:登 录",
+        "url": "http://127.0.0.1:49124/trademark/ai-search",
+        "title": "知产全链条SaaS服务平台",
+        "headings": [],
+        "navLabels": [
+          "工作台 商标管理 图形AI检索 注册进度追踪 转让/许可合同 专利管理 版权管理 后台管理",
+          "工作台",
+          "dashboard",
+          "商标管理",
+          "trademark-circle",
+          "图形AI检索",
+          "注册进度追踪",
+          "转让/许可合同",
+          "专利管理",
+          "file-protect",
+          "版权管理",
+          "safety-certificate",
+          "后台管理",
+          "setting"
+        ],
+        "buttons": [
+          "登 录",
+          "注 册",
+          "Close",
+          "显示",
+          "取 消"
+        ],
+        "links": [],
+        "inputs": [
+          {
+            "tag": "input",
+            "type": "text",
+            "placeholder": "搜索商标、专利、版权...",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "checkbox",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "checkbox",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "checkbox",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "checkbox",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "checkbox",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "checkbox",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "text",
+            "placeholder": "账号 / 手机号 / 邮箱",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "password",
+            "placeholder": "密码",
+            "name": "",
+            "label": ""
+          }
+        ],
+        "tables": [],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "IP知产全链条平台工作台商标管理图形AI检索注册进度追踪转让/许可合同专利管理版权管理后台管理登 录注 册5张代理筛选条件商标分类第1类 化学原料第9类 科学仪器第25类 服装鞋帽第35类 广告销售第42类 科技服务第43类 餐饮住宿相似度阈值: 50%0%50%80%100%点击或拖拽商标图形到此区域进行AI检索支持 PNG、JPG、SVG 格式，系统将自动提取图形特征进行相似度比对上传商标图形开始AI检索系统将基于深度学习模型分析图形特征，快速匹配相似商标 登录知产工作台演示账号admin / Admin@123，可进入后台管理、搜索筛选、案件详情和分类发现链路。取 消登 录",
+        "layout": {
+          "viewportWidth": 1728,
+          "viewportHeight": 1253,
+          "scrollWidth": 1728,
+          "scrollHeight": 1253,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89124-cycle98-final-structure-08-操作-登-录",
+          "label": "操作:登 录",
+          "finalUrl": "http://127.0.0.1:49124/trademark/ai-search",
+          "title": "知产全链条SaaS服务平台",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89124/runtime-check/codex-20260609-cycle98-final/may-89124-cycle98-final-structure-08-操作-登-录.json",
+          "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89124/runtime-check/codex-20260609-cycle98-final/may-89124-cycle98-final-structure-08-操作-登-录.png",
+          "elementCount": 209,
+          "interactiveCount": 28,
+          "interactiveLabels": [
+            "工作台 商标管理 图形AI检索 注册进度追踪 转让/许可合同 专利管理 版权管理 后台管理",
+            "工作台",
+            "商标管理",
+            "图形AI检索",
+            "注册进度追踪",
+            "转让/许可合同",
+            "专利管理",
+            "版权管理",
+            "后台管理",
+            "搜索商标、专利、版权...",
+            "登 录",
+            "注 册",
+            "1",
+            "9",
+            "25",
+            "35",
+            "42",
+            "43",
+            "点击或拖拽商标图形到此区域进行AI检索 支持 PNG、JPG、SVG 格式，系统将自动提取图形特征进行相似度比对",
+            "Close",
+            "admin",
+            "Admin@123",
+            "显示",
+            "取 消"
+          ]
+        }
+      },
+      {
+        "label": "二层操作:登 录->登 录",
+        "url": "http://127.0.0.1:49124/trademark/ai-search",
+        "title": "知产全链条SaaS服务平台",
+        "headings": [],
+        "navLabels": [
+          "工作台 商标管理 图形AI检索 注册进度追踪 转让/许可合同 专利管理 版权管理 后台管理",
+          "工作台",
+          "dashboard",
+          "商标管理",
+          "trademark-circle",
+          "图形AI检索",
+          "注册进度追踪",
+          "转让/许可合同",
+          "专利管理",
+          "file-protect",
+          "版权管理",
+          "safety-certificate",
+          "后台管理",
+          "setting"
+        ],
+        "buttons": [
+          "登 录",
+          "注 册"
+        ],
+        "links": [],
+        "inputs": [
+          {
+            "tag": "input",
+            "type": "text",
+            "placeholder": "搜索商标、专利、版权...",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "checkbox",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "checkbox",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "checkbox",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "checkbox",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "checkbox",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "checkbox",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          }
+        ],
+        "tables": [],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "IP知产全链条平台工作台商标管理图形AI检索注册进度追踪转让/许可合同专利管理版权管理后台管理登 录注 册5张代理筛选条件商标分类第1类 化学原料第9类 科学仪器第25类 服装鞋帽第35类 广告销售第42类 科技服务第43类 餐饮住宿相似度阈值: 50%0%50%80%100%点击或拖拽商标图形到此区域进行AI检索支持 PNG、JPG、SVG 格式，系统将自动提取图形特征进行相似度比对上传商标图形开始AI检索系统将基于深度学习模型分析图形特征，快速匹配相似商标 登录知产工作台演示账号admin / Admin@123，可进入后台管理、搜索筛选、案件详情和分类发现链路。取 消登 录",
+        "layout": {
+          "viewportWidth": 1760,
+          "viewportHeight": 1253,
+          "scrollWidth": 1760,
+          "scrollHeight": 1253,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89124-cycle98-final-structure-09-二层操作-登-录-登-录",
+          "label": "二层操作:登 录->登 录",
+          "finalUrl": "http://127.0.0.1:49124/trademark/ai-search",
+          "title": "知产全链条SaaS服务平台",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89124/runtime-check/codex-20260609-cycle98-final/may-89124-cycle98-final-structure-09-二层操作-登-录-登-录.json",
+          "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89124/runtime-check/codex-20260609-cycle98-final/may-89124-cycle98-final-structure-09-二层操作-登-录-登-录.png",
+          "elementCount": 208,
+          "interactiveCount": 28,
+          "interactiveLabels": [
+            "工作台 商标管理 图形AI检索 注册进度追踪 转让/许可合同 专利管理 版权管理 后台管理",
+            "工作台",
+            "商标管理",
+            "图形AI检索",
+            "注册进度追踪",
+            "转让/许可合同",
+            "专利管理",
+            "版权管理",
+            "后台管理",
+            "搜索商标、专利、版权...",
+            "登 录",
+            "注 册",
+            "1",
+            "9",
+            "25",
+            "35",
+            "42",
+            "43",
+            "点击或拖拽商标图形到此区域进行AI检索 支持 PNG、JPG、SVG 格式，系统将自动提取图形特征进行相似度比对",
+            "Close",
+            "admin",
+            "Admin@123",
+            "显示",
+            "取 消"
+          ]
+        }
+      },
+      {
+        "label": "操作:注 册",
+        "url": "http://127.0.0.1:49124/trademark/ai-search",
+        "title": "知产全链条SaaS服务平台",
+        "headings": [],
+        "navLabels": [
+          "工作台 商标管理 图形AI检索 注册进度追踪 转让/许可合同 专利管理 版权管理 后台管理",
+          "工作台",
+          "dashboard",
+          "商标管理",
+          "trademark-circle",
+          "图形AI检索",
+          "注册进度追踪",
+          "转让/许可合同",
+          "专利管理",
+          "file-protect",
+          "版权管理",
+          "safety-certificate",
+          "后台管理",
+          "setting"
+        ],
+        "buttons": [
+          "登 录",
+          "注 册",
+          "Close",
+          "显示",
+          "取 消",
+          "完成注册"
+        ],
+        "links": [],
+        "inputs": [
+          {
+            "tag": "input",
+            "type": "text",
+            "placeholder": "搜索商标、专利、版权...",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "checkbox",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "checkbox",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "checkbox",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "checkbox",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "checkbox",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "checkbox",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "text",
+            "placeholder": "账号 / 手机号 / 邮箱",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "password",
+            "placeholder": "密码",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "text",
+            "placeholder": "机构名称，例如：星河知识产权代理事务所",
+            "name": "",
+            "label": ""
+          }
+        ],
+        "tables": [],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "IP知产全链条平台工作台商标管理图形AI检索注册进度追踪转让/许可合同专利管理版权管理后台管理登 录注 册5张代理筛选条件商标分类第1类 化学原料第9类 科学仪器第25类 服装鞋帽第35类 广告销售第42类 科技服务第43类 餐饮住宿相似度阈值: 50%0%50%80%100%点击或拖拽商标图形到此区域进行AI检索支持 PNG、JPG、SVG 格式，系统将自动提取图形特征进行相似度比对上传商标图形开始AI检索系统将基于深度学习模型分析图形特征，快速匹配相似商标 注册代理人账号演示账号admin / Admin@123，可进入后台管理、搜索筛选、案件详情和分类发现链路。取 消完成注册",
+        "layout": {
+          "viewportWidth": 1792,
+          "viewportHeight": 1253,
+          "scrollWidth": 1792,
+          "scrollHeight": 1253,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89124-cycle98-final-structure-10-操作-注-册",
+          "label": "操作:注 册",
+          "finalUrl": "http://127.0.0.1:49124/trademark/ai-search",
+          "title": "知产全链条SaaS服务平台",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89124/runtime-check/codex-20260609-cycle98-final/may-89124-cycle98-final-structure-10-操作-注-册.json",
+          "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89124/runtime-check/codex-20260609-cycle98-final/may-89124-cycle98-final-structure-10-操作-注-册.png",
+          "elementCount": 208,
+          "interactiveCount": 29,
+          "interactiveLabels": [
+            "工作台 商标管理 图形AI检索 注册进度追踪 转让/许可合同 专利管理 版权管理 后台管理",
+            "工作台",
+            "商标管理",
+            "图形AI检索",
+            "注册进度追踪",
+            "转让/许可合同",
+            "专利管理",
+            "版权管理",
+            "后台管理",
+            "搜索商标、专利、版权...",
+            "登 录",
+            "注 册",
+            "1",
+            "9",
+            "25",
+            "35",
+            "42",
+            "43",
+            "点击或拖拽商标图形到此区域进行AI检索 支持 PNG、JPG、SVG 格式，系统将自动提取图形特征进行相似度比对",
+            "Close",
+            "admin",
+            "Admin@123",
+            "显示",
+            "机构名称，例如：星河知识产权代理事务所",
+            "取 消",
+            "完成注册"
+          ]
+        }
+      },
+      {
+        "label": "二层操作:注 册->取 消",
+        "url": "http://127.0.0.1:49124/trademark/ai-search",
+        "title": "知产全链条SaaS服务平台",
+        "headings": [],
+        "navLabels": [
+          "工作台 商标管理 图形AI检索 注册进度追踪 转让/许可合同 专利管理 版权管理 后台管理",
+          "工作台",
+          "dashboard",
+          "商标管理",
+          "trademark-circle",
+          "图形AI检索",
+          "注册进度追踪",
+          "转让/许可合同",
+          "专利管理",
+          "file-protect",
+          "版权管理",
+          "safety-certificate",
+          "后台管理",
+          "setting"
+        ],
+        "buttons": [
+          "登 录",
+          "注 册"
+        ],
+        "links": [],
+        "inputs": [
+          {
+            "tag": "input",
+            "type": "text",
+            "placeholder": "搜索商标、专利、版权...",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "checkbox",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "checkbox",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "checkbox",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "checkbox",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "checkbox",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "checkbox",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          }
+        ],
+        "tables": [],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "IP知产全链条平台工作台商标管理图形AI检索注册进度追踪转让/许可合同专利管理版权管理后台管理登 录注 册5张代理筛选条件商标分类第1类 化学原料第9类 科学仪器第25类 服装鞋帽第35类 广告销售第42类 科技服务第43类 餐饮住宿相似度阈值: 50%0%50%80%100%点击或拖拽商标图形到此区域进行AI检索支持 PNG、JPG、SVG 格式，系统将自动提取图形特征进行相似度比对上传商标图形开始AI检索系统将基于深度学习模型分析图形特征，快速匹配相似商标 注册代理人账号演示账号admin / Admin@123，可进入后台管理、搜索筛选、案件详情和分类发现链路。取 消完成注册",
+        "layout": {
+          "viewportWidth": 1824,
+          "viewportHeight": 1253,
+          "scrollWidth": 1824,
+          "scrollHeight": 1253,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89124-cycle98-final-structure-11-二层操作-注-册-取-消",
+          "label": "二层操作:注 册->取 消",
+          "finalUrl": "http://127.0.0.1:49124/trademark/ai-search",
+          "title": "知产全链条SaaS服务平台",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89124/runtime-check/codex-20260609-cycle98-final/may-89124-cycle98-final-structure-11-二层操作-注-册-取-消.json",
+          "screenshotPath": "",
+          "elementCount": 209,
+          "interactiveCount": 29,
+          "interactiveLabels": [
+            "工作台 商标管理 图形AI检索 注册进度追踪 转让/许可合同 专利管理 版权管理 后台管理",
+            "工作台",
+            "商标管理",
+            "图形AI检索",
+            "注册进度追踪",
+            "转让/许可合同",
+            "专利管理",
+            "版权管理",
+            "后台管理",
+            "搜索商标、专利、版权...",
+            "登 录",
+            "注 册",
+            "1",
+            "9",
+            "25",
+            "35",
+            "42",
+            "43",
+            "点击或拖拽商标图形到此区域进行AI检索 支持 PNG、JPG、SVG 格式，系统将自动提取图形特征进行相似度比对",
+            "Close",
+            "admin",
+            "Admin@123",
+            "显示",
+            "机构名称，例如：星河知识产权代理事务所",
+            "取 消",
+            "完成注册"
+          ]
+        }
+      }
+    ],
+    "findings": [],
+    "actionHints": [],
+    "emptyPages": [],
+    "overflowPages": [],
+    "blankPages": [],
+    "apiFailurePaths": [],
+    "goalTerms": [],
+    "clickedActionDescriptors": [
+      {
+        "nav": "工作台",
+        "label": "登 录",
+        "ordinal": 0,
+        "unsafe": false
+      },
+      {
+        "nav": "工作台",
+        "label": "登 录->登 录",
+        "ordinal": 1,
+        "secondary": true,
+        "unsafe": false
+      },
+      {
+        "nav": "工作台",
+        "label": "注 册",
+        "ordinal": 0,
+        "unsafe": false
+      },
+      {
+        "nav": "工作台",
+        "label": "注 册->取 消",
+        "ordinal": 0,
+        "secondary": true,
+        "unsafe": false
+      },
+      {
+        "nav": "商标管理",
+        "label": "登 录",
+        "ordinal": 0,
+        "unsafe": false
+      },
+      {
+        "nav": "商标管理",
+        "label": "登 录->登 录",
+        "ordinal": 1,
+        "secondary": true,
+        "unsafe": false
+      },
+      {
+        "nav": "商标管理",
+        "label": "注 册",
+        "ordinal": 0,
+        "unsafe": false
+      },
+      {
+        "nav": "商标管理",
+        "label": "注 册->取 消",
+        "ordinal": 0,
+        "secondary": true,
+        "unsafe": false
+      }
+    ],
+    "secondaryActionClicks": 4,
+    "structureCaptures": [
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89124-cycle98-final-structure-01-首屏",
+        "label": "首屏",
+        "finalUrl": "http://127.0.0.1:49124/dashboard",
+        "title": "知产全链条SaaS服务平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89124/runtime-check/codex-20260609-cycle98-final/may-89124-cycle98-final-structure-01-首屏.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89124/runtime-check/codex-20260609-cycle98-final/may-89124-cycle98-final-structure-01-首屏.png",
+        "elementCount": 371,
+        "interactiveCount": 10,
+        "interactiveLabels": [
+          "工作台 商标管理 专利管理 版权管理 后台管理",
+          "工作台",
+          "商标管理",
+          "专利管理",
+          "版权管理",
+          "后台管理",
+          "搜索商标、专利、版权...",
+          "登 录",
+          "注 册"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89124-cycle98-final-structure-02-导航-工作台",
+        "label": "导航:工作台",
+        "finalUrl": "http://127.0.0.1:49124/dashboard",
+        "title": "知产全链条SaaS服务平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89124/runtime-check/codex-20260609-cycle98-final/may-89124-cycle98-final-structure-02-导航-工作台.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89124/runtime-check/codex-20260609-cycle98-final/may-89124-cycle98-final-structure-02-导航-工作台.png",
+        "elementCount": 371,
+        "interactiveCount": 10,
+        "interactiveLabels": [
+          "工作台 商标管理 专利管理 版权管理 后台管理",
+          "工作台",
+          "商标管理",
+          "专利管理",
+          "版权管理",
+          "后台管理",
+          "搜索商标、专利、版权...",
+          "登 录",
+          "注 册"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89124-cycle98-final-structure-03-操作-登-录",
+        "label": "操作:登 录",
+        "finalUrl": "http://127.0.0.1:49124/dashboard",
+        "title": "知产全链条SaaS服务平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89124/runtime-check/codex-20260609-cycle98-final/may-89124-cycle98-final-structure-03-操作-登-录.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89124/runtime-check/codex-20260609-cycle98-final/may-89124-cycle98-final-structure-03-操作-登-录.png",
+        "elementCount": 405,
+        "interactiveCount": 16,
+        "interactiveLabels": [
+          "工作台 商标管理 专利管理 版权管理 后台管理",
+          "工作台",
+          "商标管理",
+          "专利管理",
+          "版权管理",
+          "后台管理",
+          "搜索商标、专利、版权...",
+          "登 录",
+          "注 册",
+          "Close",
+          "admin",
+          "Admin@123",
+          "显示",
+          "取 消"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89124-cycle98-final-structure-04-二层操作-登-录-登-录",
+        "label": "二层操作:登 录->登 录",
+        "finalUrl": "http://127.0.0.1:49124/dashboard",
+        "title": "知产全链条SaaS服务平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89124/runtime-check/codex-20260609-cycle98-final/may-89124-cycle98-final-structure-04-二层操作-登-录-登-录.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89124/runtime-check/codex-20260609-cycle98-final/may-89124-cycle98-final-structure-04-二层操作-登-录-登-录.png",
+        "elementCount": 404,
+        "interactiveCount": 16,
+        "interactiveLabels": [
+          "工作台 商标管理 专利管理 版权管理 后台管理",
+          "工作台",
+          "商标管理",
+          "专利管理",
+          "版权管理",
+          "后台管理",
+          "搜索商标、专利、版权...",
+          "登 录",
+          "注 册",
+          "Close",
+          "admin",
+          "Admin@123",
+          "显示",
+          "取 消"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89124-cycle98-final-structure-05-操作-注-册",
+        "label": "操作:注 册",
+        "finalUrl": "http://127.0.0.1:49124/dashboard",
+        "title": "知产全链条SaaS服务平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89124/runtime-check/codex-20260609-cycle98-final/may-89124-cycle98-final-structure-05-操作-注-册.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89124/runtime-check/codex-20260609-cycle98-final/may-89124-cycle98-final-structure-05-操作-注-册.png",
+        "elementCount": 406,
+        "interactiveCount": 17,
+        "interactiveLabels": [
+          "工作台 商标管理 专利管理 版权管理 后台管理",
+          "工作台",
+          "商标管理",
+          "专利管理",
+          "版权管理",
+          "后台管理",
+          "搜索商标、专利、版权...",
+          "登 录",
+          "注 册",
+          "Close",
+          "admin",
+          "Admin@123",
+          "显示",
+          "机构名称，例如：星河知识产权代理事务所",
+          "取 消",
+          "完成注册"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89124-cycle98-final-structure-06-二层操作-注-册-取-消",
+        "label": "二层操作:注 册->取 消",
+        "finalUrl": "http://127.0.0.1:49124/dashboard",
+        "title": "知产全链条SaaS服务平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89124/runtime-check/codex-20260609-cycle98-final/may-89124-cycle98-final-structure-06-二层操作-注-册-取-消.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89124/runtime-check/codex-20260609-cycle98-final/may-89124-cycle98-final-structure-06-二层操作-注-册-取-消.png",
+        "elementCount": 405,
+        "interactiveCount": 17,
+        "interactiveLabels": [
+          "工作台 商标管理 专利管理 版权管理 后台管理",
+          "工作台",
+          "商标管理",
+          "专利管理",
+          "版权管理",
+          "后台管理",
+          "搜索商标、专利、版权...",
+          "登 录",
+          "注 册",
+          "Close",
+          "admin",
+          "Admin@123",
+          "显示",
+          "机构名称，例如：星河知识产权代理事务所",
+          "取 消",
+          "完成注册"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89124-cycle98-final-structure-07-导航-商标管理",
+        "label": "导航:商标管理",
+        "finalUrl": "http://127.0.0.1:49124/trademark/ai-search",
+        "title": "知产全链条SaaS服务平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89124/runtime-check/codex-20260609-cycle98-final/may-89124-cycle98-final-structure-07-导航-商标管理.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89124/runtime-check/codex-20260609-cycle98-final/may-89124-cycle98-final-structure-07-导航-商标管理.png",
+        "elementCount": 207,
+        "interactiveCount": 29,
+        "interactiveLabels": [
+          "工作台 商标管理 图形AI检索 注册进度追踪 转让/许可合同 专利管理 版权管理 后台管理",
+          "工作台",
+          "商标管理",
+          "图形AI检索",
+          "注册进度追踪",
+          "转让/许可合同",
+          "专利管理",
+          "版权管理",
+          "后台管理",
+          "搜索商标、专利、版权...",
+          "登 录",
+          "注 册",
+          "1",
+          "9",
+          "25",
+          "35",
+          "42",
+          "43",
+          "点击或拖拽商标图形到此区域进行AI检索 支持 PNG、JPG、SVG 格式，系统将自动提取图形特征进行相似度比对",
+          "Close",
+          "admin",
+          "Admin@123",
+          "显示",
+          "机构名称，例如：星河知识产权代理事务所",
+          "取 消",
+          "完成注册"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89124-cycle98-final-structure-08-操作-登-录",
+        "label": "操作:登 录",
+        "finalUrl": "http://127.0.0.1:49124/trademark/ai-search",
+        "title": "知产全链条SaaS服务平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89124/runtime-check/codex-20260609-cycle98-final/may-89124-cycle98-final-structure-08-操作-登-录.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89124/runtime-check/codex-20260609-cycle98-final/may-89124-cycle98-final-structure-08-操作-登-录.png",
+        "elementCount": 209,
+        "interactiveCount": 28,
+        "interactiveLabels": [
+          "工作台 商标管理 图形AI检索 注册进度追踪 转让/许可合同 专利管理 版权管理 后台管理",
+          "工作台",
+          "商标管理",
+          "图形AI检索",
+          "注册进度追踪",
+          "转让/许可合同",
+          "专利管理",
+          "版权管理",
+          "后台管理",
+          "搜索商标、专利、版权...",
+          "登 录",
+          "注 册",
+          "1",
+          "9",
+          "25",
+          "35",
+          "42",
+          "43",
+          "点击或拖拽商标图形到此区域进行AI检索 支持 PNG、JPG、SVG 格式，系统将自动提取图形特征进行相似度比对",
+          "Close",
+          "admin",
+          "Admin@123",
+          "显示",
+          "取 消"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89124-cycle98-final-structure-09-二层操作-登-录-登-录",
+        "label": "二层操作:登 录->登 录",
+        "finalUrl": "http://127.0.0.1:49124/trademark/ai-search",
+        "title": "知产全链条SaaS服务平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89124/runtime-check/codex-20260609-cycle98-final/may-89124-cycle98-final-structure-09-二层操作-登-录-登-录.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89124/runtime-check/codex-20260609-cycle98-final/may-89124-cycle98-final-structure-09-二层操作-登-录-登-录.png",
+        "elementCount": 208,
+        "interactiveCount": 28,
+        "interactiveLabels": [
+          "工作台 商标管理 图形AI检索 注册进度追踪 转让/许可合同 专利管理 版权管理 后台管理",
+          "工作台",
+          "商标管理",
+          "图形AI检索",
+          "注册进度追踪",
+          "转让/许可合同",
+          "专利管理",
+          "版权管理",
+          "后台管理",
+          "搜索商标、专利、版权...",
+          "登 录",
+          "注 册",
+          "1",
+          "9",
+          "25",
+          "35",
+          "42",
+          "43",
+          "点击或拖拽商标图形到此区域进行AI检索 支持 PNG、JPG、SVG 格式，系统将自动提取图形特征进行相似度比对",
+          "Close",
+          "admin",
+          "Admin@123",
+          "显示",
+          "取 消"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89124-cycle98-final-structure-10-操作-注-册",
+        "label": "操作:注 册",
+        "finalUrl": "http://127.0.0.1:49124/trademark/ai-search",
+        "title": "知产全链条SaaS服务平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89124/runtime-check/codex-20260609-cycle98-final/may-89124-cycle98-final-structure-10-操作-注-册.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89124/runtime-check/codex-20260609-cycle98-final/may-89124-cycle98-final-structure-10-操作-注-册.png",
+        "elementCount": 208,
+        "interactiveCount": 29,
+        "interactiveLabels": [
+          "工作台 商标管理 图形AI检索 注册进度追踪 转让/许可合同 专利管理 版权管理 后台管理",
+          "工作台",
+          "商标管理",
+          "图形AI检索",
+          "注册进度追踪",
+          "转让/许可合同",
+          "专利管理",
+          "版权管理",
+          "后台管理",
+          "搜索商标、专利、版权...",
+          "登 录",
+          "注 册",
+          "1",
+          "9",
+          "25",
+          "35",
+          "42",
+          "43",
+          "点击或拖拽商标图形到此区域进行AI检索 支持 PNG、JPG、SVG 格式，系统将自动提取图形特征进行相似度比对",
+          "Close",
+          "admin",
+          "Admin@123",
+          "显示",
+          "机构名称，例如：星河知识产权代理事务所",
+          "取 消",
+          "完成注册"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89124-cycle98-final-structure-11-二层操作-注-册-取-消",
+        "label": "二层操作:注 册->取 消",
+        "finalUrl": "http://127.0.0.1:49124/trademark/ai-search",
+        "title": "知产全链条SaaS服务平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89124/runtime-check/codex-20260609-cycle98-final/may-89124-cycle98-final-structure-11-二层操作-注-册-取-消.json",
+        "screenshotPath": "",
+        "elementCount": 209,
+        "interactiveCount": 29,
+        "interactiveLabels": [
+          "工作台 商标管理 图形AI检索 注册进度追踪 转让/许可合同 专利管理 版权管理 后台管理",
+          "工作台",
+          "商标管理",
+          "图形AI检索",
+          "注册进度追踪",
+          "转让/许可合同",
+          "专利管理",
+          "版权管理",
+          "后台管理",
+          "搜索商标、专利、版权...",
+          "登 录",
+          "注 册",
+          "1",
+          "9",
+          "25",
+          "35",
+          "42",
+          "43",
+          "点击或拖拽商标图形到此区域进行AI检索 支持 PNG、JPG、SVG 格式，系统将自动提取图形特征进行相似度比对",
+          "Close",
+          "admin",
+          "Admin@123",
+          "显示",
+          "机构名称，例如：星河知识产权代理事务所",
+          "取 消",
+          "完成注册"
+        ]
+      }
+    ],
+    "representativeScreenshotUrl": "http://127.0.0.1:49124/dashboard",
+    "representativeScreenshotLabel": "首屏"
+  },
+  "websiteStructureCapture": {
+    "module": "website_structure_capture",
+    "captureCount": 11,
+    "captures": [
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89124-cycle98-final-structure-01-首屏",
+        "label": "首屏",
+        "finalUrl": "http://127.0.0.1:49124/dashboard",
+        "title": "知产全链条SaaS服务平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89124/runtime-check/codex-20260609-cycle98-final/may-89124-cycle98-final-structure-01-首屏.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89124/runtime-check/codex-20260609-cycle98-final/may-89124-cycle98-final-structure-01-首屏.png",
+        "elementCount": 371,
+        "interactiveCount": 10,
+        "interactiveLabels": [
+          "工作台 商标管理 专利管理 版权管理 后台管理",
+          "工作台",
+          "商标管理",
+          "专利管理",
+          "版权管理",
+          "后台管理",
+          "搜索商标、专利、版权...",
+          "登 录",
+          "注 册"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89124-cycle98-final-structure-02-导航-工作台",
+        "label": "导航:工作台",
+        "finalUrl": "http://127.0.0.1:49124/dashboard",
+        "title": "知产全链条SaaS服务平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89124/runtime-check/codex-20260609-cycle98-final/may-89124-cycle98-final-structure-02-导航-工作台.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89124/runtime-check/codex-20260609-cycle98-final/may-89124-cycle98-final-structure-02-导航-工作台.png",
+        "elementCount": 371,
+        "interactiveCount": 10,
+        "interactiveLabels": [
+          "工作台 商标管理 专利管理 版权管理 后台管理",
+          "工作台",
+          "商标管理",
+          "专利管理",
+          "版权管理",
+          "后台管理",
+          "搜索商标、专利、版权...",
+          "登 录",
+          "注 册"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89124-cycle98-final-structure-03-操作-登-录",
+        "label": "操作:登 录",
+        "finalUrl": "http://127.0.0.1:49124/dashboard",
+        "title": "知产全链条SaaS服务平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89124/runtime-check/codex-20260609-cycle98-final/may-89124-cycle98-final-structure-03-操作-登-录.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89124/runtime-check/codex-20260609-cycle98-final/may-89124-cycle98-final-structure-03-操作-登-录.png",
+        "elementCount": 405,
+        "interactiveCount": 16,
+        "interactiveLabels": [
+          "工作台 商标管理 专利管理 版权管理 后台管理",
+          "工作台",
+          "商标管理",
+          "专利管理",
+          "版权管理",
+          "后台管理",
+          "搜索商标、专利、版权...",
+          "登 录",
+          "注 册",
+          "Close",
+          "admin",
+          "Admin@123",
+          "显示",
+          "取 消"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89124-cycle98-final-structure-04-二层操作-登-录-登-录",
+        "label": "二层操作:登 录->登 录",
+        "finalUrl": "http://127.0.0.1:49124/dashboard",
+        "title": "知产全链条SaaS服务平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89124/runtime-check/codex-20260609-cycle98-final/may-89124-cycle98-final-structure-04-二层操作-登-录-登-录.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89124/runtime-check/codex-20260609-cycle98-final/may-89124-cycle98-final-structure-04-二层操作-登-录-登-录.png",
+        "elementCount": 404,
+        "interactiveCount": 16,
+        "interactiveLabels": [
+          "工作台 商标管理 专利管理 版权管理 后台管理",
+          "工作台",
+          "商标管理",
+          "专利管理",
+          "版权管理",
+          "后台管理",
+          "搜索商标、专利、版权...",
+          "登 录",
+          "注 册",
+          "Close",
+          "admin",
+          "Admin@123",
+          "显示",
+          "取 消"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89124-cycle98-final-structure-05-操作-注-册",
+        "label": "操作:注 册",
+        "finalUrl": "http://127.0.0.1:49124/dashboard",
+        "title": "知产全链条SaaS服务平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89124/runtime-check/codex-20260609-cycle98-final/may-89124-cycle98-final-structure-05-操作-注-册.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89124/runtime-check/codex-20260609-cycle98-final/may-89124-cycle98-final-structure-05-操作-注-册.png",
+        "elementCount": 406,
+        "interactiveCount": 17,
+        "interactiveLabels": [
+          "工作台 商标管理 专利管理 版权管理 后台管理",
+          "工作台",
+          "商标管理",
+          "专利管理",
+          "版权管理",
+          "后台管理",
+          "搜索商标、专利、版权...",
+          "登 录",
+          "注 册",
+          "Close",
+          "admin",
+          "Admin@123",
+          "显示",
+          "机构名称，例如：星河知识产权代理事务所",
+          "取 消",
+          "完成注册"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89124-cycle98-final-structure-06-二层操作-注-册-取-消",
+        "label": "二层操作:注 册->取 消",
+        "finalUrl": "http://127.0.0.1:49124/dashboard",
+        "title": "知产全链条SaaS服务平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89124/runtime-check/codex-20260609-cycle98-final/may-89124-cycle98-final-structure-06-二层操作-注-册-取-消.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89124/runtime-check/codex-20260609-cycle98-final/may-89124-cycle98-final-structure-06-二层操作-注-册-取-消.png",
+        "elementCount": 405,
+        "interactiveCount": 17,
+        "interactiveLabels": [
+          "工作台 商标管理 专利管理 版权管理 后台管理",
+          "工作台",
+          "商标管理",
+          "专利管理",
+          "版权管理",
+          "后台管理",
+          "搜索商标、专利、版权...",
+          "登 录",
+          "注 册",
+          "Close",
+          "admin",
+          "Admin@123",
+          "显示",
+          "机构名称，例如：星河知识产权代理事务所",
+          "取 消",
+          "完成注册"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89124-cycle98-final-structure-07-导航-商标管理",
+        "label": "导航:商标管理",
+        "finalUrl": "http://127.0.0.1:49124/trademark/ai-search",
+        "title": "知产全链条SaaS服务平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89124/runtime-check/codex-20260609-cycle98-final/may-89124-cycle98-final-structure-07-导航-商标管理.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89124/runtime-check/codex-20260609-cycle98-final/may-89124-cycle98-final-structure-07-导航-商标管理.png",
+        "elementCount": 207,
+        "interactiveCount": 29,
+        "interactiveLabels": [
+          "工作台 商标管理 图形AI检索 注册进度追踪 转让/许可合同 专利管理 版权管理 后台管理",
+          "工作台",
+          "商标管理",
+          "图形AI检索",
+          "注册进度追踪",
+          "转让/许可合同",
+          "专利管理",
+          "版权管理",
+          "后台管理",
+          "搜索商标、专利、版权...",
+          "登 录",
+          "注 册",
+          "1",
+          "9",
+          "25",
+          "35",
+          "42",
+          "43",
+          "点击或拖拽商标图形到此区域进行AI检索 支持 PNG、JPG、SVG 格式，系统将自动提取图形特征进行相似度比对",
+          "Close",
+          "admin",
+          "Admin@123",
+          "显示",
+          "机构名称，例如：星河知识产权代理事务所",
+          "取 消",
+          "完成注册"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89124-cycle98-final-structure-08-操作-登-录",
+        "label": "操作:登 录",
+        "finalUrl": "http://127.0.0.1:49124/trademark/ai-search",
+        "title": "知产全链条SaaS服务平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89124/runtime-check/codex-20260609-cycle98-final/may-89124-cycle98-final-structure-08-操作-登-录.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89124/runtime-check/codex-20260609-cycle98-final/may-89124-cycle98-final-structure-08-操作-登-录.png",
+        "elementCount": 209,
+        "interactiveCount": 28,
+        "interactiveLabels": [
+          "工作台 商标管理 图形AI检索 注册进度追踪 转让/许可合同 专利管理 版权管理 后台管理",
+          "工作台",
+          "商标管理",
+          "图形AI检索",
+          "注册进度追踪",
+          "转让/许可合同",
+          "专利管理",
+          "版权管理",
+          "后台管理",
+          "搜索商标、专利、版权...",
+          "登 录",
+          "注 册",
+          "1",
+          "9",
+          "25",
+          "35",
+          "42",
+          "43",
+          "点击或拖拽商标图形到此区域进行AI检索 支持 PNG、JPG、SVG 格式，系统将自动提取图形特征进行相似度比对",
+          "Close",
+          "admin",
+          "Admin@123",
+          "显示",
+          "取 消"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89124-cycle98-final-structure-09-二层操作-登-录-登-录",
+        "label": "二层操作:登 录->登 录",
+        "finalUrl": "http://127.0.0.1:49124/trademark/ai-search",
+        "title": "知产全链条SaaS服务平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89124/runtime-check/codex-20260609-cycle98-final/may-89124-cycle98-final-structure-09-二层操作-登-录-登-录.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89124/runtime-check/codex-20260609-cycle98-final/may-89124-cycle98-final-structure-09-二层操作-登-录-登-录.png",
+        "elementCount": 208,
+        "interactiveCount": 28,
+        "interactiveLabels": [
+          "工作台 商标管理 图形AI检索 注册进度追踪 转让/许可合同 专利管理 版权管理 后台管理",
+          "工作台",
+          "商标管理",
+          "图形AI检索",
+          "注册进度追踪",
+          "转让/许可合同",
+          "专利管理",
+          "版权管理",
+          "后台管理",
+          "搜索商标、专利、版权...",
+          "登 录",
+          "注 册",
+          "1",
+          "9",
+          "25",
+          "35",
+          "42",
+          "43",
+          "点击或拖拽商标图形到此区域进行AI检索 支持 PNG、JPG、SVG 格式，系统将自动提取图形特征进行相似度比对",
+          "Close",
+          "admin",
+          "Admin@123",
+          "显示",
+          "取 消"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89124-cycle98-final-structure-10-操作-注-册",
+        "label": "操作:注 册",
+        "finalUrl": "http://127.0.0.1:49124/trademark/ai-search",
+        "title": "知产全链条SaaS服务平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89124/runtime-check/codex-20260609-cycle98-final/may-89124-cycle98-final-structure-10-操作-注-册.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89124/runtime-check/codex-20260609-cycle98-final/may-89124-cycle98-final-structure-10-操作-注-册.png",
+        "elementCount": 208,
+        "interactiveCount": 29,
+        "interactiveLabels": [
+          "工作台 商标管理 图形AI检索 注册进度追踪 转让/许可合同 专利管理 版权管理 后台管理",
+          "工作台",
+          "商标管理",
+          "图形AI检索",
+          "注册进度追踪",
+          "转让/许可合同",
+          "专利管理",
+          "版权管理",
+          "后台管理",
+          "搜索商标、专利、版权...",
+          "登 录",
+          "注 册",
+          "1",
+          "9",
+          "25",
+          "35",
+          "42",
+          "43",
+          "点击或拖拽商标图形到此区域进行AI检索 支持 PNG、JPG、SVG 格式，系统将自动提取图形特征进行相似度比对",
+          "Close",
+          "admin",
+          "Admin@123",
+          "显示",
+          "机构名称，例如：星河知识产权代理事务所",
+          "取 消",
+          "完成注册"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89124-cycle98-final-structure-11-二层操作-注-册-取-消",
+        "label": "二层操作:注 册->取 消",
+        "finalUrl": "http://127.0.0.1:49124/trademark/ai-search",
+        "title": "知产全链条SaaS服务平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89124/runtime-check/codex-20260609-cycle98-final/may-89124-cycle98-final-structure-11-二层操作-注-册-取-消.json",
+        "screenshotPath": "",
+        "elementCount": 209,
+        "interactiveCount": 29,
+        "interactiveLabels": [
+          "工作台 商标管理 图形AI检索 注册进度追踪 转让/许可合同 专利管理 版权管理 后台管理",
+          "工作台",
+          "商标管理",
+          "图形AI检索",
+          "注册进度追踪",
+          "转让/许可合同",
+          "专利管理",
+          "版权管理",
+          "后台管理",
+          "搜索商标、专利、版权...",
+          "登 录",
+          "注 册",
+          "1",
+          "9",
+          "25",
+          "35",
+          "42",
+          "43",
+          "点击或拖拽商标图形到此区域进行AI检索 支持 PNG、JPG、SVG 格式，系统将自动提取图形特征进行相似度比对",
+          "Close",
+          "admin",
+          "Admin@123",
+          "显示",
+          "机构名称，例如：星河知识产权代理事务所",
+          "取 消",
+          "完成注册"
+        ]
+      }
+    ]
+  },
+  "screenshotMetrics": {
+    "width": 1856,
+    "height": 1253,
+    "scrollWidth": 1824,
+    "scrollHeight": 1253
+  },
+  "initialBodyTextPreview": "IP\n知产全链条平台\n工作台\n商标管理\n专利管理\n版权管理\n后台管理\n登 录\n注 册\n5\n张代理\n商标申请数\n1,286\n12.5% 较上月\n专利持有量\n523\n8.3% 较上月\n版权登记数\n892\n3.2% 较上月\n待处理案件\n47\n18.6% 较上月\n业务趋势\n案件状态分布\n近期动态\n商标\"云启科技\"注册申请已提交\n今天 14:32\n申请号：CN20260609001234，当前节点：形式审查\n查看进度 →\n专利 ZL2026301xxxxx 年费代缴已完成\n今天 11:15\n第3年年费 ¥1,200，缴费确认号：FEE20260609001\n缴费记录 →\n版权作品\"智慧城市管理系统 V3.0\"哈希存证成功\n昨天 16:40\n区块链交易ID：0x8f3a2b7c...c2d3e4f5\n查看证书 →\n商标\"星河数据\"异议答辩材料已上传\n昨天 09:22\n案件编号：TM-2024-038，答辩截止：2026-06-20\n案件详情 →\n专利价值评估报告已生成，估值等级：A\n06-07 15:10\n综合评分：88分（高价值），引用数92/法律状态95/技术热度90\n评估报告 →\n侵权线索自动抓取发现3条新疑似侵权链接\n06-06 10:05\n品牌视觉设计稿-淘宝(96.8%)、B站(94.1%)、小红书(91.3%)\n侵权详情 →\n待办事项\n6\n商标\"云端智联\"续展申请\n紧急\n续展截止：2026-07-15，需提交续展申请书前往处理 →\n专利 ZL2025200xxxxx 答辩截止\n紧急\n答辩截止：2026-06-20，尚需补充技术对比分析前往处理 →\n版权存证材料补充\n高\n3件作品待补充权属证明文件前往处理 →\n商标\"星河数据\"异议答辩书提交\n高\n案件编号 TM-2024-038，对方异议理由：近似商标前往处理 →\n专利年费清单核对\n中\n12件专利年费待核对，3件即将到期前往处理 →\n客户合同续签审批\n低\n华为年度代理合同续签，待法务审核前往处理 →",
+  "bodyTextPreview": "IP\n知产全链条平台\n工作台\n商标管理\n专利管理\n版权管理\n后台管理\n登 录\n注 册\n5\n张代理\n商标申请数\n1,286\n12.5% 较上月\n专利持有量\n523\n8.3% 较上月\n版权登记数\n892\n3.2% 较上月\n待处理案件\n47\n18.6% 较上月\n业务趋势\n案件状态分布\n近期动态\n商标\"云启科技\"注册申请已提交\n今天 14:32\n申请号：CN20260609001234，当前节点：形式审查\n查看进度 →\n专利 ZL2026301xxxxx 年费代缴已完成\n今天 11:15\n第3年年费 ¥1,200，缴费确认号：FEE20260609001\n缴费记录 →\n版权作品\"智慧城市管理系统 V3.0\"哈希存证成功\n昨天 16:40\n区块链交易ID：0x8f3a2b7c...c2d3e4f5\n查看证书 →\n商标\"星河数据\"异议答辩材料已上传\n昨天 09:22\n案件编号：TM-2024-038，答辩截止：2026-06-20\n案件详情 →\n专利价值评估报告已生成，估值等级：A\n06-07 15:10\n综合评分：88分（高价值），引用数92/法律状态95/技术热度90\n评估报告 →\n侵权线索自动抓取发现3条新疑似侵权链接\n06-06 10:05\n品牌视觉设计稿-淘宝(96.8%)、B站(94.1%)、小红书(91.3%)\n侵权详情 →\n待办事项\n6\n商标\"云端智联\"续展申请\n紧急\n续展截止：2026-07-15，需提交续展申请书前往处理 →\n专利 ZL2025200xxxxx 答辩截止\n紧急\n答辩截止：2026-06-20，尚需补充技术对比分析前往处理 →\n版权存证材料补充\n高\n3件作品待补充权属证明文件前往处理 →\n商标\"星河数据\"异议答辩书提交\n高\n案件编号 TM-2024-038，对方异议理由：近似商标前往处理 →\n专利年费清单核对\n中\n12件专利年费待核对，3件即将到期前往处理 →\n客户合同续签审批\n低\n华为年度代理合同续签，待法务审核前往处理 →",
+  "apiBase": "http://127.0.0.1:59124",
+  "businessGoalPreview": "",
+  "apiResponses": [],
+  "apiChecks": [
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59124/api/health",
+      "path": "/api/health",
+      "status": 200,
+      "ok": true,
+      "bodyPreview": "{\"success\":true,\"message\":\"ok\",\"service\":\"may-89124 backend\",\"database\":\"ip-platform.db\",\"data\":{\"caseCount\":4,\"uploadCount\":0}}"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59124/api/auth/me",
+      "path": "/api/auth/me",
+      "status": 200,
+      "ok": true,
+      "bodyPreview": "{\"success\":false,\"authenticated\":false,\"error\":\"未登录\",\"data\":null}"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59124/api/users/profile",
+      "path": "/api/users/profile",
+      "status": 200,
+      "ok": true,
+      "bodyPreview": "{\"success\":true,\"data\":{\"id\":\"guest\",\"username\":\"guest\",\"role\":\"client\",\"displayName\":\"访客客户\",\"status\":\"anonymous\",\"profileSections\":[\"个人中心\",\"案件进度\",\"通知设置\"]}}"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59124/api/user/profile",
+      "path": "/api/user/profile",
+      "status": 200,
+      "ok": true,
+      "bodyPreview": "{\"success\":true,\"data\":{\"id\":\"guest\",\"username\":\"guest\",\"role\":\"client\",\"displayName\":\"访客客户\",\"status\":\"anonymous\",\"profileSections\":[\"个人中心\",\"案件进度\",\"通知设置\"]}}"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59124/api/search?q=%E6%B5%8B%E8%AF%95",
+      "path": "/api/search?q=%E6%B5%8B%E8%AF%95",
+      "status": 200,
+      "ok": true,
+      "bodyPreview": "{\"success\":true,\"data\":{\"keyword\":\"测试\",\"items\":[],\"cases\":[],\"trademarks\":[],\"total\":0}}"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59124/api/admin/stats",
+      "path": "/api/admin/stats",
+      "status": 200,
+      "ok": true,
+      "bodyPreview": "{\"success\":true,\"data\":{\"summary\":{\"activeCases\":23,\"newThisMonth\":8,\"pendingReview\":5,\"expiringSoon\":3},\"cases\":[{\"id\":\"CR-2026-007\",\"name\":\"短视频版权登记\",\"client\":\"字节跳动有限公司\",\"category\":\"视听作品\",\"progress\":100,\"status\":\"已登记\"},{\"id\":\"TM-2026-023\",\"name\":\"瑞幸咖啡商标监测\",\"client\":\"瑞幸咖啡中国有限公司\",\"category\":\"第35类 广告销售\",\"progress\":86,\"status\":\"公告中\"},{\"id\":\"TM-2026-001\",\"name\":\"鸿蒙生态商标注册\",\"client\":\"华为技术有限公司\",\"category\":\"第9类 科学仪器\",\"progress\":68,\"status\":\"实审中\"},{\"id\":\"PT-2026-012\",\"name\":\"5G 通信专利申请\",\"client\":\"中兴通讯股份有限"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59124/api/admin/dashboard",
+      "path": "/api/admin/dashboard",
+      "status": 200,
+      "ok": true,
+      "bodyPreview": "{\"success\":true,\"data\":{\"summary\":{\"activeCases\":23,\"newThisMonth\":8,\"pendingReview\":5,\"expiringSoon\":3},\"cases\":[{\"id\":\"CR-2026-007\",\"name\":\"短视频版权登记\",\"client\":\"字节跳动有限公司\",\"category\":\"视听作品\",\"progress\":100,\"status\":\"已登记\"},{\"id\":\"TM-2026-023\",\"name\":\"瑞幸咖啡商标监测\",\"client\":\"瑞幸咖啡中国有限公司\",\"category\":\"第35类 广告销售\",\"progress\":86,\"status\":\"公告中\"},{\"id\":\"TM-2026-001\",\"name\":\"鸿蒙生态商标注册\",\"client\":\"华为技术有限公司\",\"category\":\"第9类 科学仪器\",\"progress\":68,\"status\":\"实审中\"},{\"id\":\"PT-2026-012\",\"name\":\"5G 通信专利申请\",\"client\":\"中兴通讯股份有限"
+    }
+  ],
+  "dialogs": [],
+  "consoleMessages": [
+    {
+      "type": "info",
+      "text": "%cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold",
+      "location": {
+        "url": "http://127.0.0.1:49124/assets/index-Db5nUb3-.js",
+        "lineNumber": 229,
+        "columnNumber": 1455
+      }
+    },
+    {
+      "type": "error",
+      "text": "Warning: [antd: Card] `bordered` is deprecated. Please use `variant` instead.",
+      "location": {
+        "url": "http://127.0.0.1:49124/assets/index-Db5nUb3-.js",
+        "lineNumber": 237,
+        "columnNumber": 559
+      }
+    },
+    {
+      "type": "error",
+      "text": "Warning: [antd: Timeline] `items.children` is deprecated. Please use `items.content` instead.",
+      "location": {
+        "url": "http://127.0.0.1:49124/assets/index-Db5nUb3-.js",
+        "lineNumber": 237,
+        "columnNumber": 559
+      }
+    },
+    {
+      "type": "error",
+      "text": "Warning: [antd: Progress] `trailColor` is deprecated. Please use `railColor` instead.",
+      "location": {
+        "url": "http://127.0.0.1:49124/assets/index-Db5nUb3-.js",
+        "lineNumber": 237,
+        "columnNumber": 559
+      }
+    },
+    {
+      "type": "error",
+      "text": "Warning: [antd: Drawer] `width` is deprecated. Please use `size` instead.",
+      "location": {
+        "url": "http://127.0.0.1:49124/assets/index-Db5nUb3-.js",
+        "lineNumber": 237,
+        "columnNumber": 559
+      }
+    },
+    {
+      "type": "info",
+      "text": "%cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold",
+      "location": {
+        "url": "http://127.0.0.1:49124/assets/index-Db5nUb3-.js",
+        "lineNumber": 229,
+        "columnNumber": 1455
+      }
+    },
+    {
+      "type": "error",
+      "text": "Warning: [antd: Card] `bordered` is deprecated. Please use `variant` instead.",
+      "location": {
+        "url": "http://127.0.0.1:49124/assets/index-Db5nUb3-.js",
+        "lineNumber": 237,
+        "columnNumber": 559
+      }
+    },
+    {
+      "type": "error",
+      "text": "Warning: [antd: Timeline] `items.children` is deprecated. Please use `items.content` instead.",
+      "location": {
+        "url": "http://127.0.0.1:49124/assets/index-Db5nUb3-.js",
+        "lineNumber": 237,
+        "columnNumber": 559
+      }
+    },
+    {
+      "type": "error",
+      "text": "Warning: [antd: Progress] `trailColor` is deprecated. Please use `railColor` instead.",
+      "location": {
+        "url": "http://127.0.0.1:49124/assets/index-Db5nUb3-.js",
+        "lineNumber": 237,
+        "columnNumber": 559
+      }
+    },
+    {
+      "type": "verbose",
+      "text": "[DOM] Password field is not contained in a form: (More info: https://goo.gl/9p2vKq)",
+      "location": {
+        "url": "http://127.0.0.1:49124/dashboard",
+        "lineNumber": 0,
+        "columnNumber": 0
+      }
+    },
+    {
+      "type": "info",
+      "text": "%cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold",
+      "location": {
+        "url": "http://127.0.0.1:49124/assets/index-Db5nUb3-.js",
+        "lineNumber": 229,
+        "columnNumber": 1455
+      }
+    },
+    {
+      "type": "error",
+      "text": "Warning: [antd: Card] `bordered` is deprecated. Please use `variant` instead.",
+      "location": {
+        "url": "http://127.0.0.1:49124/assets/index-Db5nUb3-.js",
+        "lineNumber": 237,
+        "columnNumber": 559
+      }
+    },
+    {
+      "type": "error",
+      "text": "Warning: [antd: Timeline] `items.children` is deprecated. Please use `items.content` instead.",
+      "location": {
+        "url": "http://127.0.0.1:49124/assets/index-Db5nUb3-.js",
+        "lineNumber": 237,
+        "columnNumber": 559
+      }
+    },
+    {
+      "type": "error",
+      "text": "Warning: [antd: Progress] `trailColor` is deprecated. Please use `railColor` instead.",
+      "location": {
+        "url": "http://127.0.0.1:49124/assets/index-Db5nUb3-.js",
+        "lineNumber": 237,
+        "columnNumber": 559
+      }
+    }
+  ],
+  "requestFailures": [],
+  "responseErrors": []
+}

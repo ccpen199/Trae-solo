@@ -1,0 +1,1824 @@
+{
+  "ok": true,
+  "generatedAt": "2026-06-09T20:38:28.182Z",
+  "order": "may-89124",
+  "roundIndex": 203,
+  "captureId": "may-89124-cycle203-fix",
+  "url": "http://127.0.0.1:49124/",
+  "initialUrl": "http://127.0.0.1:49124/",
+  "finalUrl": "http://127.0.0.1:49124/dashboard",
+  "status": 200,
+  "title": "知产全链条SaaS服务平台",
+  "initialTitle": "知产全链条SaaS服务平台",
+  "navigationError": "",
+  "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89124/runtime-check/codex-20260609-cycle203-fix/may-89124-cycle203-fix-frontend.png",
+  "screenshotPaths": [
+    "/Users/chen/Documents/trae_projects/local_projects/may-89124/runtime-check/codex-20260609-cycle203-fix/may-89124-cycle203-fix-structure-01-首屏.png",
+    "/Users/chen/Documents/trae_projects/local_projects/may-89124/runtime-check/codex-20260609-cycle203-fix/may-89124-cycle203-fix-structure-02-导航-工作台.png",
+    "/Users/chen/Documents/trae_projects/local_projects/may-89124/runtime-check/codex-20260609-cycle203-fix/may-89124-cycle203-fix-structure-03-操作-查看进度.png",
+    "/Users/chen/Documents/trae_projects/local_projects/may-89124/runtime-check/codex-20260609-cycle203-fix/may-89124-cycle203-fix-structure-04-二层操作-查看进度-详情.png",
+    "/Users/chen/Documents/trae_projects/local_projects/may-89124/runtime-check/codex-20260609-cycle203-fix/may-89124-cycle203-fix-structure-05-操作-查看证据.png",
+    "/Users/chen/Documents/trae_projects/local_projects/may-89124/runtime-check/codex-20260609-cycle203-fix/may-89124-cycle203-fix-structure-06-二层操作-查看证据-预览.png",
+    "/Users/chen/Documents/trae_projects/local_projects/may-89124/runtime-check/codex-20260609-cycle203-fix/may-89124-cycle203-fix-structure-07-导航-商标管理.png"
+  ],
+  "issueTextPreview": "登录注册 搜索筛选 后台管理 商标专利版权 分域案件办理台 详情处理 补贴申报",
+  "targetReason": "登录注册相关问题；搜索/筛选相关问题；后台管理相关问题；详情/内容页相关问题",
+  "targetKind": "auth",
+  "targetMatched": true,
+  "targetActions": [
+    {
+      "action": "click",
+      "label": "登录注册相关问题",
+      "ok": true
+    },
+    {
+      "action": "target-verify",
+      "label": "登录注册相关问题",
+      "ok": true,
+      "finalUrl": "http://127.0.0.1:49124/trademark/tracker"
+    }
+  ],
+  "authFlow": {
+    "detected": false,
+    "attempted": false,
+    "success": false,
+    "finalUrl": "http://127.0.0.1:49124/dashboard",
+    "message": "",
+    "actions": []
+  },
+  "businessAudit": {
+    "actions": [
+      {
+        "action": "click",
+        "label": "导航:工作台",
+        "ok": true
+      },
+      {
+        "action": "click",
+        "label": "操作:查看进度",
+        "ok": true,
+        "result": {
+          "ok": true,
+          "matched": 1
+        }
+      },
+      {
+        "action": "click",
+        "label": "二层操作:查看进度:详情",
+        "ok": true,
+        "result": {
+          "ok": true,
+          "matched": 7
+        }
+      },
+      {
+        "action": "click",
+        "label": "关闭弹窗/抽屉",
+        "ok": true
+      },
+      {
+        "action": "click",
+        "label": "操作:查看证据",
+        "ok": true,
+        "result": {
+          "ok": true,
+          "matched": 1
+        }
+      },
+      {
+        "action": "click",
+        "label": "二层操作:查看证据:预览",
+        "ok": true,
+        "result": {
+          "ok": true,
+          "matched": 3
+        }
+      },
+      {
+        "action": "click",
+        "label": "关闭弹窗/抽屉",
+        "ok": true
+      },
+      {
+        "action": "click",
+        "label": "导航:商标管理",
+        "ok": true
+      }
+    ],
+    "snapshots": [
+      {
+        "label": "首屏",
+        "url": "http://127.0.0.1:49124/dashboard",
+        "title": "知产全链条SaaS服务平台",
+        "headings": [],
+        "navLabels": [
+          "工作台",
+          "商标管理",
+          "专利管理",
+          "版权管理",
+          "后台管理"
+        ],
+        "buttons": [
+          "工作台",
+          "商标管理",
+          "专利管理",
+          "版权管理",
+          "后台管理",
+          "进入工作台",
+          "补贴申报",
+          "查看进度",
+          "前往处理",
+          "查看证据"
+        ],
+        "links": [],
+        "inputs": [
+          {
+            "tag": "input",
+            "type": "text",
+            "placeholder": "搜索商标、专利、版权...",
+            "name": "",
+            "label": ""
+          }
+        ],
+        "tables": [],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "IP知产全链条平台工作台商标管理专利管理版权管理后台管理代理人模式张代理 · 星河知产5张代理专利代理人代理人工作台张代理 · 星河知识产权代理事务所 · 今日待办 6 项进入工作台补贴申报商标1,28612.5%审核中 34已注册 218已驳回 12续展中 18专利5238.3%年费待缴 6答辩中 3已授权 45即将到期 3版权8923.2%已存证 86侵权线索 7维权中 4证据包 5待处理4718.6%紧急 8高优 12中等 18低优 9分域案件办理台商标注册办理台形式审查TM-2026-09001234 · 张代理申请书、委托书、类别核验已通过复查记录：近似商标 3 件，人工确认 1 件需规避查看进度 专利年费/答辩办理台答辩准备ZL2025200XXXXX · 王律师年费账单、技术对比、答辩截止日已归档复查记录：12 件年费待核对，3 件 7 天内到期前往处理 版权存证/维权办理台证据包生成CR-CHAIN-20260609 · 李助理哈希存证、侵权线索、证据包下载已串联复查记录：淘宝 96.8% 线索优先取证查看证据 代理后台闭环合同/费用/沟通AGENT-WB-0626 · 张代理客户沟通、费用账单、合同续签与补贴政策已承接复查记录：逾期账单 1 笔，待支付 4 笔进入工作台 业务趋势商标 →专利 →版权 →分域案件钻取商标域注册节点追踪审核中34驳回复审5续展到期18异议答辩3专利域年费与答辩年费即将到期3答辩截止2价值评估待复查4版权域存证与维权待确认侵权线索7证据包生成中2存证待补材料3案件状态分布查看案件 →按状态钻取审核中34已通过218已驳回12已放弃5续展中18近期动态 · 状态流转商标\"云启科技\"注册申请已提交今天 14:32 · 张代理节点追踪 →申请提交2形式审查3实质审查4初审公告5注册公告下一步：等待形式审查结果处理结果：形式审查预计3个工作日内完成，系统将在状态变更时主动推送通知专利 ZL2026301xxxxx 年费代缴已完成今天 11:15 · 李助理缴费回执 →费用计算代缴执行缴费确认下一步：年费缴纳回执已收到，归档完成处理结果：缴费确认号 FEE20260609001，国知局已确认到账，代理费¥200已开具版权作品\"智慧城市管理系统 V3.0\"哈希存证成功昨天 16:40 · 张代理存证证书 →作品上传哈希计算区块链存证证书生成下一步：存证证书已生成，可下载查看处理结果：证书编号 CERT-20260609-003，区块链确认数12，存证不可篡改商标\"星河数据\"异议答辩材料已上传昨天 09:22 · 王律师答辩追踪 →异议通知材料准备3答辩提交4审查结果下一步：答辩书提交截止 06-20，待确认邮寄处理结果：答辩材料已上传，待邮寄纸质版至商标局，截止06-20专利价值评估报告已生成06-07 15:10 · 系统自动评估报告 →数据采集模型评估报告生成下一步：综合评分88分（高价值），建议续费维护处理结果：评分88分（高价值），引用数92/法律状态95/技术热度90，建议续费维护侵权线索自动抓取发现3条新疑似侵权链接06-06 10:05 · 赵审核员侵权复查 →线索发现相似度比对3人工确认4证据打包下一步：3条线索待确认，其中淘宝96.8%需优先处理处理结果：3条线索待人工确认：淘宝96.8%(高危)、B站94.1%(高危)、小红书91.3%(中危)待办事项 · 处理流程6商标\"云端智联\"续展申请紧急 张代理 截止 2026-07-15提交续展申请书前往处理 →处理记录：2026-06-08 张代理 已准备续展申请书草稿专利 ZL2025200xxxxx 答辩截止紧急 王律师 截止 2026-06-20补充技术对比分析并提交答辩书前往处理 →处理记录：2026-06-07 王律师 补充技术对比分析第2稿版权存证材料补充高 李助理 截止 2026-06-253件作品待补充权属证明文件前往处理 →处理记录：2026-06-08 李助理 已上传2/3件权属证明商标\"星河数据\"异议答辩书高 王律师 截止 2026-06-20对方异议理由：近似商标，需准备对比证据前往处理 →处理记录：2026-06-07 王律师 完成近似商标对比证据专利年费清单核对中 李助理 截止 2026-06-3012件专利",
+        "layout": {
+          "viewportWidth": 1504,
+          "viewportHeight": 1600,
+          "scrollWidth": 1504,
+          "scrollHeight": 2603,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89124-cycle203-fix-structure-01-首屏",
+          "label": "首屏",
+          "finalUrl": "http://127.0.0.1:49124/dashboard",
+          "title": "知产全链条SaaS服务平台",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89124/runtime-check/codex-20260609-cycle203-fix/may-89124-cycle203-fix-structure-01-首屏.json",
+          "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89124/runtime-check/codex-20260609-cycle203-fix/may-89124-cycle203-fix-structure-01-首屏.png",
+          "elementCount": 1021,
+          "interactiveCount": 13,
+          "interactiveLabels": [
+            "工作台",
+            "商标管理",
+            "专利管理",
+            "版权管理",
+            "后台管理",
+            "搜索商标、专利、版权...",
+            "进入工作台",
+            "补贴申报",
+            "查看进度",
+            "前往处理",
+            "查看证据"
+          ]
+        }
+      },
+      {
+        "label": "导航:工作台",
+        "url": "http://127.0.0.1:49124/dashboard",
+        "title": "知产全链条SaaS服务平台",
+        "headings": [],
+        "navLabels": [
+          "工作台",
+          "商标管理",
+          "专利管理",
+          "版权管理",
+          "后台管理"
+        ],
+        "buttons": [
+          "工作台",
+          "商标管理",
+          "专利管理",
+          "版权管理",
+          "后台管理",
+          "进入工作台",
+          "补贴申报",
+          "查看进度",
+          "前往处理",
+          "查看证据"
+        ],
+        "links": [],
+        "inputs": [
+          {
+            "tag": "input",
+            "type": "text",
+            "placeholder": "搜索商标、专利、版权...",
+            "name": "",
+            "label": ""
+          }
+        ],
+        "tables": [],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "IP知产全链条平台工作台商标管理专利管理版权管理后台管理代理人模式张代理 · 星河知产5张代理专利代理人代理人工作台张代理 · 星河知识产权代理事务所 · 今日待办 6 项进入工作台补贴申报商标1,28612.5%审核中 34已注册 218已驳回 12续展中 18专利5238.3%年费待缴 6答辩中 3已授权 45即将到期 3版权8923.2%已存证 86侵权线索 7维权中 4证据包 5待处理4718.6%紧急 8高优 12中等 18低优 9分域案件办理台商标注册办理台形式审查TM-2026-09001234 · 张代理申请书、委托书、类别核验已通过复查记录：近似商标 3 件，人工确认 1 件需规避查看进度 专利年费/答辩办理台答辩准备ZL2025200XXXXX · 王律师年费账单、技术对比、答辩截止日已归档复查记录：12 件年费待核对，3 件 7 天内到期前往处理 版权存证/维权办理台证据包生成CR-CHAIN-20260609 · 李助理哈希存证、侵权线索、证据包下载已串联复查记录：淘宝 96.8% 线索优先取证查看证据 代理后台闭环合同/费用/沟通AGENT-WB-0626 · 张代理客户沟通、费用账单、合同续签与补贴政策已承接复查记录：逾期账单 1 笔，待支付 4 笔进入工作台 业务趋势商标 →专利 →版权 →分域案件钻取商标域注册节点追踪审核中34驳回复审5续展到期18异议答辩3专利域年费与答辩年费即将到期3答辩截止2价值评估待复查4版权域存证与维权待确认侵权线索7证据包生成中2存证待补材料3案件状态分布查看案件 →按状态钻取审核中34已通过218已驳回12已放弃5续展中18近期动态 · 状态流转商标\"云启科技\"注册申请已提交今天 14:32 · 张代理节点追踪 →申请提交2形式审查3实质审查4初审公告5注册公告下一步：等待形式审查结果处理结果：形式审查预计3个工作日内完成，系统将在状态变更时主动推送通知专利 ZL2026301xxxxx 年费代缴已完成今天 11:15 · 李助理缴费回执 →费用计算代缴执行缴费确认下一步：年费缴纳回执已收到，归档完成处理结果：缴费确认号 FEE20260609001，国知局已确认到账，代理费¥200已开具版权作品\"智慧城市管理系统 V3.0\"哈希存证成功昨天 16:40 · 张代理存证证书 →作品上传哈希计算区块链存证证书生成下一步：存证证书已生成，可下载查看处理结果：证书编号 CERT-20260609-003，区块链确认数12，存证不可篡改商标\"星河数据\"异议答辩材料已上传昨天 09:22 · 王律师答辩追踪 →异议通知材料准备3答辩提交4审查结果下一步：答辩书提交截止 06-20，待确认邮寄处理结果：答辩材料已上传，待邮寄纸质版至商标局，截止06-20专利价值评估报告已生成06-07 15:10 · 系统自动评估报告 →数据采集模型评估报告生成下一步：综合评分88分（高价值），建议续费维护处理结果：评分88分（高价值），引用数92/法律状态95/技术热度90，建议续费维护侵权线索自动抓取发现3条新疑似侵权链接06-06 10:05 · 赵审核员侵权复查 →线索发现相似度比对3人工确认4证据打包下一步：3条线索待确认，其中淘宝96.8%需优先处理处理结果：3条线索待人工确认：淘宝96.8%(高危)、B站94.1%(高危)、小红书91.3%(中危)待办事项 · 处理流程6商标\"云端智联\"续展申请紧急 张代理 截止 2026-07-15提交续展申请书前往处理 →处理记录：2026-06-08 张代理 已准备续展申请书草稿专利 ZL2025200xxxxx 答辩截止紧急 王律师 截止 2026-06-20补充技术对比分析并提交答辩书前往处理 →处理记录：2026-06-07 王律师 补充技术对比分析第2稿版权存证材料补充高 李助理 截止 2026-06-253件作品待补充权属证明文件前往处理 →处理记录：2026-06-08 李助理 已上传2/3件权属证明商标\"星河数据\"异议答辩书高 王律师 截止 2026-06-20对方异议理由：近似商标，需准备对比证据前往处理 →处理记录：2026-06-07 王律师 完成近似商标对比证据专利年费清单核对中 李助理 截止 2026-06-3012件专利",
+        "layout": {
+          "viewportWidth": 1536,
+          "viewportHeight": 1600,
+          "scrollWidth": 1536,
+          "scrollHeight": 2603,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89124-cycle203-fix-structure-02-导航-工作台",
+          "label": "导航:工作台",
+          "finalUrl": "http://127.0.0.1:49124/dashboard",
+          "title": "知产全链条SaaS服务平台",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89124/runtime-check/codex-20260609-cycle203-fix/may-89124-cycle203-fix-structure-02-导航-工作台.json",
+          "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89124/runtime-check/codex-20260609-cycle203-fix/may-89124-cycle203-fix-structure-02-导航-工作台.png",
+          "elementCount": 1021,
+          "interactiveCount": 13,
+          "interactiveLabels": [
+            "工作台",
+            "商标管理",
+            "专利管理",
+            "版权管理",
+            "后台管理",
+            "搜索商标、专利、版权...",
+            "进入工作台",
+            "补贴申报",
+            "查看进度",
+            "前往处理",
+            "查看证据"
+          ]
+        }
+      },
+      {
+        "label": "操作:查看进度",
+        "url": "http://127.0.0.1:49124/trademark/tracker",
+        "title": "知产全链条SaaS服务平台",
+        "headings": [],
+        "navLabels": [
+          "工作台",
+          "商标管理",
+          "图形AI检索",
+          "注册进度追踪",
+          "转让/许可合同",
+          "专利管理",
+          "版权管理",
+          "后台管理"
+        ],
+        "buttons": [
+          "工作台",
+          "商标管理",
+          "图形AI检索",
+          "注册进度追踪",
+          "转让/许可合同",
+          "专利管理",
+          "版权管理",
+          "后台管理",
+          "批量推送提醒",
+          "导出清单",
+          "展开行",
+          "详情"
+        ],
+        "links": [],
+        "inputs": [
+          {
+            "tag": "input",
+            "type": "text",
+            "placeholder": "搜索商标、专利、版权...",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "checkbox",
+            "placeholder": "",
+            "name": "",
+            "label": "Select all"
+          },
+          {
+            "tag": "input",
+            "type": "checkbox",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "checkbox",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "checkbox",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "checkbox",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "checkbox",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "checkbox",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "checkbox",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          }
+        ],
+        "tables": [
+          {
+            "headers": [
+              "商标名称",
+              "申请号",
+              "申请人",
+              "当前状态",
+              "提交日期",
+              "操作"
+            ],
+            "rowCount": 7,
+            "hasEmptyText": false,
+            "textPreview": "商标名称 申请号 申请人 当前状态 提交日期 操作 星辰科技 TM2024-001256 北京星辰科技有限公司 实质审查 2024-08-15 详情 云翼信息 TM2024-002389 上海云翼信息技术有限公司 初审公告 2024-05-20 详情 蓝鲸数据 TM2024-003012 深圳蓝鲸数据科技有限公司 证书发放 2024-01-10 详情 锐视传媒 TM2024-004567 广州锐视传媒有限公司 形式审查 2024-10-08 详情 锦程服饰 TM2024-005890 杭州锦程服饰有限公司 驳回 2024-06-22 详情 味享餐饮 TM2024-006234 成都味享餐饮管理"
+          }
+        ],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "IP知产全链条平台工作台商标管理图形AI检索注册进度追踪转让/许可合同专利管理版权管理后台管理代理人模式张代理 · 星河知产5张代理专利代理人注册进度追踪审查中: 5已注册: 1已驳回: 1批量推送提醒导出清单商标名称申请号申请人当前状态提交日期操作星辰科技TM2024-001256北京星辰科技有限公司实质审查2024-08-15详情云翼信息TM2024-002389上海云翼信息技术有限公司初审公告2024-05-20详情蓝鲸数据TM2024-003012深圳蓝鲸数据科技有限公司证书发放2024-01-10详情锐视传媒TM2024-004567广州锐视传媒有限公司形式审查2024-10-08详情锦程服饰TM2024-005890杭州锦程服饰有限公司驳回2024-06-22详情味享餐饮TM2024-006234成都味享餐饮管理有限公司注册公告2024-03-05详情华创化工TM2024-007891南京华创化工科技有限公司申请提交2024-11-01详情",
+        "layout": {
+          "viewportWidth": 1568,
+          "viewportHeight": 1600,
+          "scrollWidth": 1568,
+          "scrollHeight": 1600,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89124-cycle203-fix-structure-03-操作-查看进度",
+          "label": "操作:查看进度",
+          "finalUrl": "http://127.0.0.1:49124/trademark/tracker",
+          "title": "知产全链条SaaS服务平台",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89124/runtime-check/codex-20260609-cycle203-fix/may-89124-cycle203-fix-structure-03-操作-查看进度.json",
+          "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89124/runtime-check/codex-20260609-cycle203-fix/may-89124-cycle203-fix-structure-03-操作-查看进度.png",
+          "elementCount": 405,
+          "interactiveCount": 34,
+          "interactiveLabels": [
+            "工作台",
+            "商标管理",
+            "图形AI检索",
+            "注册进度追踪",
+            "转让/许可合同",
+            "专利管理",
+            "版权管理",
+            "后台管理",
+            "搜索商标、专利、版权...",
+            "批量推送提醒",
+            "导出清单",
+            "on",
+            "展开行",
+            "详情"
+          ]
+        }
+      },
+      {
+        "label": "二层操作:查看进度->详情",
+        "url": "http://127.0.0.1:49124/trademark/tracker",
+        "title": "知产全链条SaaS服务平台",
+        "headings": [],
+        "navLabels": [
+          "工作台",
+          "商标管理",
+          "图形AI检索",
+          "注册进度追踪",
+          "转让/许可合同",
+          "专利管理",
+          "版权管理",
+          "后台管理"
+        ],
+        "buttons": [
+          "工作台",
+          "商标管理",
+          "图形AI检索",
+          "注册进度追踪",
+          "转让/许可合同",
+          "专利管理",
+          "版权管理",
+          "后台管理",
+          "批量推送提醒",
+          "导出清单",
+          "展开行",
+          "详情",
+          "关闭",
+          "开 关",
+          "推送记录",
+          "开启 关闭"
+        ],
+        "links": [],
+        "inputs": [
+          {
+            "tag": "input",
+            "type": "text",
+            "placeholder": "搜索商标、专利、版权...",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "checkbox",
+            "placeholder": "",
+            "name": "",
+            "label": "Select all"
+          },
+          {
+            "tag": "input",
+            "type": "checkbox",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "checkbox",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "checkbox",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "checkbox",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "checkbox",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "checkbox",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "checkbox",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          }
+        ],
+        "tables": [
+          {
+            "headers": [
+              "商标名称",
+              "申请号",
+              "申请人",
+              "当前状态",
+              "提交日期",
+              "操作"
+            ],
+            "rowCount": 7,
+            "hasEmptyText": false,
+            "textPreview": "商标名称 申请号 申请人 当前状态 提交日期 操作 星辰科技 TM2024-001256 北京星辰科技有限公司 实质审查 2024-08-15 详情 云翼信息 TM2024-002389 上海云翼信息技术有限公司 初审公告 2024-05-20 详情 蓝鲸数据 TM2024-003012 深圳蓝鲸数据科技有限公司 证书发放 2024-01-10 详情 锐视传媒 TM2024-004567 广州锐视传媒有限公司 形式审查 2024-10-08 详情 锦程服饰 TM2024-005890 杭州锦程服饰有限公司 驳回 2024-06-22 详情 味享餐饮 TM2024-006234 成都味享餐饮管理"
+          },
+          {
+            "headers": [
+              "商标名称",
+              "申请号",
+              "申请人",
+              "当前状态",
+              "提交日期"
+            ],
+            "rowCount": 5,
+            "hasEmptyText": false,
+            "textPreview": "商标名称 星辰科技 申请号 TM2024-001256 申请人 北京星辰科技有限公司 当前状态 实质审查 提交日期 2024-08-15"
+          }
+        ],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "IP知产全链条平台工作台商标管理图形AI检索注册进度追踪转让/许可合同专利管理版权管理后台管理代理人模式张代理 · 星河知产5张代理专利代理人注册进度追踪审查中: 5已注册: 1已驳回: 1批量推送提醒导出清单商标名称申请号申请人当前状态提交日期操作星辰科技TM2024-001256北京星辰科技有限公司实质审查2024-08-15详情云翼信息TM2024-002389上海云翼信息技术有限公司初审公告2024-05-20详情蓝鲸数据TM2024-003012深圳蓝鲸数据科技有限公司证书发放2024-01-10详情锐视传媒TM2024-004567广州锐视传媒有限公司形式审查2024-10-08详情锦程服饰TM2024-005890杭州锦程服饰有限公司驳回2024-06-22详情味享餐饮TM2024-006234成都味享餐饮管理有限公司注册公告2024-03-05详情华创化工TM2024-007891南京华创化工科技有限公司申请提交2024-11-01详情 商标详情 - 星辰科技商标名称星辰科技申请号TM2024-001256申请人北京星辰科技有限公司当前状态实质审查提交日期2024-08-15状态变更记录申请提交2024-08-15 09:30申请材料已提交形式审查2024-08-22 14:00形式审查通过实质审查2024-09-10 10:15进入实质审查阶段状态变更推送记录2026-06-09 14:32系统自动 · 申请已提交已推送短信+邮件至张代理2026-06-08 10:15商标局 · 形式审查通过已推送站内信节点变更推送设置短信通知开关邮件通知开关站内信通知开关微信通知开关推送记录状态变更推送通知开启关闭",
+        "layout": {
+          "viewportWidth": 1600,
+          "viewportHeight": 1600,
+          "scrollWidth": 1600,
+          "scrollHeight": 1600,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89124-cycle203-fix-structure-04-二层操作-查看进度-详情",
+          "label": "二层操作:查看进度->详情",
+          "finalUrl": "http://127.0.0.1:49124/trademark/tracker",
+          "title": "知产全链条SaaS服务平台",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89124/runtime-check/codex-20260609-cycle203-fix/may-89124-cycle203-fix-structure-04-二层操作-查看进度-详情.json",
+          "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89124/runtime-check/codex-20260609-cycle203-fix/may-89124-cycle203-fix-structure-04-二层操作-查看进度-详情.png",
+          "elementCount": 591,
+          "interactiveCount": 41,
+          "interactiveLabels": [
+            "工作台",
+            "商标管理",
+            "图形AI检索",
+            "注册进度追踪",
+            "转让/许可合同",
+            "专利管理",
+            "版权管理",
+            "后台管理",
+            "搜索商标、专利、版权...",
+            "批量推送提醒",
+            "导出清单",
+            "on",
+            "展开行",
+            "详情",
+            "关闭",
+            "开 关",
+            "推送记录",
+            "开启 关闭"
+          ]
+        }
+      },
+      {
+        "label": "操作:查看证据",
+        "url": "http://127.0.0.1:49124/copyright/evidence",
+        "title": "知产全链条SaaS服务平台",
+        "headings": [],
+        "navLabels": [
+          "工作台",
+          "商标管理",
+          "专利管理",
+          "版权管理",
+          "作品哈希存证",
+          "侵权线索抓取",
+          "维权证据包",
+          "后台管理"
+        ],
+        "buttons": [
+          "工作台",
+          "商标管理",
+          "专利管理",
+          "版权管理",
+          "作品哈希存证",
+          "侵权线索抓取",
+          "维权证据包",
+          "后台管理",
+          "生成证据包",
+          "验证完整性",
+          "展开行",
+          "预览",
+          "下载"
+        ],
+        "links": [],
+        "inputs": [
+          {
+            "tag": "input",
+            "type": "text",
+            "placeholder": "搜索商标、专利、版权...",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "checkbox",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "checkbox",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "checkbox",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "checkbox",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "checkbox",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "checkbox",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "checkbox",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          }
+        ],
+        "tables": [
+          {
+            "headers": [
+              "原作品",
+              "侵权类型",
+              "来源平台",
+              "相似度",
+              "检测时间"
+            ],
+            "rowCount": 6,
+            "hasEmptyText": false,
+            "textPreview": "原作品 侵权类型 来源平台 相似度 检测时间 品牌视觉设计稿V3 图文抄袭 淘宝 96.8% 2026-06-09 08:32:15 产品宣传视频-夏季版 视频搬运 抖音 89.2% 2026-06-08 22:18:44 品牌视觉设计稿V3 图文抄袭 微信公众号 82.5% 2026-06-08 14:05:33 APP界面交互设计 图文抄袭 小红书 91.3% 2026-06-07 19:47:12 企业宣传片-国际版 视频搬运 B站 94.1% 2026-06-05 16:33:41 产品3D渲染图 图文抄袭 拼多多 87.4% 2026-06-04 09:14:07"
+          },
+          {
+            "headers": [
+              "序号",
+              "原作品",
+              "侵权类型",
+              "平台"
+            ],
+            "rowCount": 4,
+            "hasEmptyText": false,
+            "textPreview": "序号 原作品 侵权类型 平台 1 品牌视觉设计稿V3 图文抄袭 淘宝 2 产品宣传视频-夏季版 视频搬运 抖音 3 APP界面交互设计 图文抄袭 小红书 4 产品3D渲染图 图文抄袭 拼多多"
+          },
+          {
+            "headers": [],
+            "rowCount": 3,
+            "hasEmptyText": false,
+            "textPreview": "作品名称 品牌视觉设计稿V3 存证时间 2026-06-09 14:23:15 哈希值 a3f7b2c9d4e8...d8e1f4"
+          },
+          {
+            "headers": [],
+            "rowCount": 3,
+            "hasEmptyText": false,
+            "textPreview": "认证时间 2026-06-09 15:42:18 时间戳机构 中国金融认证中心 证书编号 TS-2026-0609-00042"
+          },
+          {
+            "headers": [],
+            "rowCount": 3,
+            "hasEmptyText": false,
+            "textPreview": "链上交易ID 0x8f3a2b7c...c2d3e4f5 区块高度 #18,432,567 确认数 12,847"
+          },
+          {
+            "headers": [
+              "证据包名称",
+              "证据包ID",
+              "生成时间",
+              "包含证据",
+              "区块链哈希",
+              "状态",
+              "操作"
+            ],
+            "rowCount": 5,
+            "hasEmptyText": false,
+            "textPreview": "证据包名称 证据包ID 生成时间 包含证据 区块链哈希 状态 操作 品牌视觉设计侵权证据包 EP-2026-0609-00042 2026-06-09 15:42:18 5 条 0x8f3a2b7c4d5e...d3e4f5 已完成 预览 下载 产品宣传视频侵权证据包 EP-2026-0608-00039 2026-06-08 23:10:55 3 条 0x1a2b3c4d5e6f...0f1a2b 已完成 预览 下载 APP界面交互侵权证据包 EP-2026-0607-00035 2026-06-07 20:28:33 2 条 - 生成中 67% 综合侵权证据包-2026年6月 EP-202"
+          },
+          {
+            "headers": [
+              "下载时间",
+              "下载人",
+              "用途"
+            ],
+            "rowCount": 4,
+            "hasEmptyText": false,
+            "textPreview": "下载时间 下载人 用途 2026-06-09 16:20:00 张伟 诉讼提交 2026-06-09 10:15:30 李明 律师函附件 2026-06-08 14:33:12 王芳 内部存档 2026-06-07 09:08:45 张伟 调解谈判"
+          }
+        ],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "IP知产全链条平台工作台商标管理专利管理版权管理作品哈希存证侵权线索抓取维权证据包后台管理代理人模式张代理 · 星河知产5张代理专利代理人选择侵权线索已选 4 条原作品侵权类型来源平台相似度检测时间品牌视觉设计稿V3图文抄袭淘宝96.8%2026-06-09 08:32:15产品宣传视频-夏季版视频搬运抖音89.2%2026-06-08 22:18:44品牌视觉设计稿V3图文抄袭微信公众号82.5%2026-06-08 14:05:33APP界面交互设计图文抄袭小红书91.3%2026-06-07 19:47:12企业宣传片-国际版视频搬运B站94.1%2026-06-05 16:33:41产品3D渲染图图文抄袭拼多多87.4%2026-06-04 09:14:07共 6 条侵权线索，已选择 4 条生成证据包证据包预览验证完整性证据清单序号原作品侵权类型平台1品牌视觉设计稿V3图文抄袭淘宝2产品宣传视频-夏季版视频搬运抖音3APP界面交互设计图文抄袭小红书4产品3D渲染图图文抄袭拼多多原作品信息作品名称品牌视觉设计稿V3存证时间2026-06-09 14:23:15哈希值a3f7b2c9d4e8...d8e1f4侵权对比截图原作品侵权内容时间戳认证认证时间2026-06-09 15:42:18时间戳机构中国金融认证中心证书编号TS-2026-0609-00042区块链存证证明链上交易ID0x8f3a2b7c...c2d3e4f5区块高度#18,432,567确认数12,847已生成证据包证据包名称证据包ID生成时间包含证据区块链哈希状态操作品牌视觉设计侵权证据包EP-2026-0609-000422026-06-09 15:42:185 条0x8f3a2b7c4d5e...d3e4f5已完成预览下载产品宣传视频侵权证据包EP-2026-0608-000392026-06-08 23:10:553 条0x1a2b3c4d5e6f...0f1a2b已完成预览下载APP界面交互侵权证据包EP-2026-0607-000352026-06-07 20:28:332 条-生成中67%综合侵权证据包-2026年6月EP-2026-0606-000282026-06-06 12:15:478 条0x3c4d5e6f7a8b...2b3c4d已完成预览下载3D渲染图侵权证据包--0 条-待生成共 5 个证据包1下载记录下载时间下载人用途2026-06-09 16:20:00张伟诉讼提交2026-06-09 10:15:30李明律师函附件2026-06-08 14:33:12王芳内部存档2026-06-07 09:08:45张伟调解谈判共 4 条下载记录1",
+        "layout": {
+          "viewportWidth": 1632,
+          "viewportHeight": 1600,
+          "scrollWidth": 1632,
+          "scrollHeight": 2301,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89124-cycle203-fix-structure-05-操作-查看证据",
+          "label": "操作:查看证据",
+          "finalUrl": "http://127.0.0.1:49124/copyright/evidence",
+          "title": "知产全链条SaaS服务平台",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89124/runtime-check/codex-20260609-cycle203-fix/may-89124-cycle203-fix-structure-05-操作-查看证据.json",
+          "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89124/runtime-check/codex-20260609-cycle203-fix/may-89124-cycle203-fix-structure-05-操作-查看证据.png",
+          "elementCount": 692,
+          "interactiveCount": 39,
+          "interactiveLabels": [
+            "工作台",
+            "商标管理",
+            "专利管理",
+            "版权管理",
+            "作品哈希存证",
+            "侵权线索抓取",
+            "维权证据包",
+            "后台管理",
+            "搜索商标、专利、版权...",
+            "on",
+            "相似度",
+            "生成证据包",
+            "验证完整性",
+            "展开行",
+            "预览",
+            "下载",
+            "1"
+          ]
+        }
+      },
+      {
+        "label": "二层操作:查看证据->预览",
+        "url": "http://127.0.0.1:49124/copyright/evidence",
+        "title": "知产全链条SaaS服务平台",
+        "headings": [],
+        "navLabels": [
+          "工作台",
+          "商标管理",
+          "专利管理",
+          "版权管理",
+          "作品哈希存证",
+          "侵权线索抓取",
+          "维权证据包",
+          "后台管理"
+        ],
+        "buttons": [
+          "工作台",
+          "商标管理",
+          "专利管理",
+          "版权管理",
+          "作品哈希存证",
+          "侵权线索抓取",
+          "维权证据包",
+          "后台管理",
+          "生成证据包",
+          "验证完整性",
+          "展开行",
+          "预览",
+          "下载",
+          "Close",
+          "关 闭",
+          "下载证据包"
+        ],
+        "links": [],
+        "inputs": [
+          {
+            "tag": "input",
+            "type": "text",
+            "placeholder": "搜索商标、专利、版权...",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "checkbox",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "checkbox",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "checkbox",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "checkbox",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "checkbox",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "checkbox",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "checkbox",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          }
+        ],
+        "tables": [
+          {
+            "headers": [
+              "原作品",
+              "侵权类型",
+              "来源平台",
+              "相似度",
+              "检测时间"
+            ],
+            "rowCount": 6,
+            "hasEmptyText": false,
+            "textPreview": "原作品 侵权类型 来源平台 相似度 检测时间 品牌视觉设计稿V3 图文抄袭 淘宝 96.8% 2026-06-09 08:32:15 产品宣传视频-夏季版 视频搬运 抖音 89.2% 2026-06-08 22:18:44 品牌视觉设计稿V3 图文抄袭 微信公众号 82.5% 2026-06-08 14:05:33 APP界面交互设计 图文抄袭 小红书 91.3% 2026-06-07 19:47:12 企业宣传片-国际版 视频搬运 B站 94.1% 2026-06-05 16:33:41 产品3D渲染图 图文抄袭 拼多多 87.4% 2026-06-04 09:14:07"
+          },
+          {
+            "headers": [
+              "序号",
+              "原作品",
+              "侵权类型",
+              "平台"
+            ],
+            "rowCount": 4,
+            "hasEmptyText": false,
+            "textPreview": "序号 原作品 侵权类型 平台 1 品牌视觉设计稿V3 图文抄袭 淘宝 2 产品宣传视频-夏季版 视频搬运 抖音 3 APP界面交互设计 图文抄袭 小红书 4 产品3D渲染图 图文抄袭 拼多多"
+          },
+          {
+            "headers": [],
+            "rowCount": 3,
+            "hasEmptyText": false,
+            "textPreview": "作品名称 品牌视觉设计稿V3 存证时间 2026-06-09 14:23:15 哈希值 a3f7b2c9d4e8...d8e1f4"
+          },
+          {
+            "headers": [],
+            "rowCount": 3,
+            "hasEmptyText": false,
+            "textPreview": "认证时间 2026-06-09 15:42:18 时间戳机构 中国金融认证中心 证书编号 TS-2026-0609-00042"
+          },
+          {
+            "headers": [],
+            "rowCount": 3,
+            "hasEmptyText": false,
+            "textPreview": "链上交易ID 0x8f3a2b7c...c2d3e4f5 区块高度 #18,432,567 确认数 12,847"
+          },
+          {
+            "headers": [
+              "证据包名称",
+              "证据包ID",
+              "生成时间",
+              "包含证据",
+              "区块链哈希",
+              "状态",
+              "操作"
+            ],
+            "rowCount": 5,
+            "hasEmptyText": false,
+            "textPreview": "证据包名称 证据包ID 生成时间 包含证据 区块链哈希 状态 操作 品牌视觉设计侵权证据包 EP-2026-0609-00042 2026-06-09 15:42:18 5 条 0x8f3a2b7c4d5e...d3e4f5 已完成 预览 下载 产品宣传视频侵权证据包 EP-2026-0608-00039 2026-06-08 23:10:55 3 条 0x1a2b3c4d5e6f...0f1a2b 已完成 预览 下载 APP界面交互侵权证据包 EP-2026-0607-00035 2026-06-07 20:28:33 2 条 - 生成中 67% 综合侵权证据包-2026年6月 EP-202"
+          },
+          {
+            "headers": [
+              "下载时间",
+              "下载人",
+              "用途"
+            ],
+            "rowCount": 4,
+            "hasEmptyText": false,
+            "textPreview": "下载时间 下载人 用途 2026-06-09 16:20:00 张伟 诉讼提交 2026-06-09 10:15:30 李明 律师函附件 2026-06-08 14:33:12 王芳 内部存档 2026-06-07 09:08:45 张伟 调解谈判"
+          },
+          {
+            "headers": [
+              "证据包名称",
+              "生成时间",
+              "包含证据",
+              "时间戳认证",
+              "区块链交易ID",
+              "文件格式",
+              "文件大小"
+            ],
+            "rowCount": 4,
+            "hasEmptyText": false,
+            "textPreview": "证据包名称 品牌视觉设计侵权证据包 生成时间 2026-06-09 15:42:18 包含证据 5 条 时间戳认证 TS-2026-0609-00042 区块链交易ID 0x8f3a2b7c...c2d3e4f5 文件格式 加密PDF 文件大小 24.8 MB"
+          },
+          {
+            "headers": [
+              "序号",
+              "侵权类型",
+              "来源平台",
+              "相似度"
+            ],
+            "rowCount": 5,
+            "hasEmptyText": false,
+            "textPreview": "序号 侵权类型 来源平台 相似度 1 图文抄袭 淘宝 96.8% 2 图文抄袭 微信公众号 82.5% 3 图文抄袭 小红书 91.3% 4 图文抄袭 拼多多 87.4% 5 视频搬运 B站 94.1%"
+          }
+        ],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "IP知产全链条平台工作台商标管理专利管理版权管理作品哈希存证侵权线索抓取维权证据包后台管理代理人模式张代理 · 星河知产5张代理专利代理人选择侵权线索已选 4 条原作品侵权类型来源平台相似度检测时间品牌视觉设计稿V3图文抄袭淘宝96.8%2026-06-09 08:32:15产品宣传视频-夏季版视频搬运抖音89.2%2026-06-08 22:18:44品牌视觉设计稿V3图文抄袭微信公众号82.5%2026-06-08 14:05:33APP界面交互设计图文抄袭小红书91.3%2026-06-07 19:47:12企业宣传片-国际版视频搬运B站94.1%2026-06-05 16:33:41产品3D渲染图图文抄袭拼多多87.4%2026-06-04 09:14:07共 6 条侵权线索，已选择 4 条生成证据包证据包预览验证完整性证据清单序号原作品侵权类型平台1品牌视觉设计稿V3图文抄袭淘宝2产品宣传视频-夏季版视频搬运抖音3APP界面交互设计图文抄袭小红书4产品3D渲染图图文抄袭拼多多原作品信息作品名称品牌视觉设计稿V3存证时间2026-06-09 14:23:15哈希值a3f7b2c9d4e8...d8e1f4侵权对比截图原作品侵权内容时间戳认证认证时间2026-06-09 15:42:18时间戳机构中国金融认证中心证书编号TS-2026-0609-00042区块链存证证明链上交易ID0x8f3a2b7c...c2d3e4f5区块高度#18,432,567确认数12,847已生成证据包证据包名称证据包ID生成时间包含证据区块链哈希状态操作品牌视觉设计侵权证据包EP-2026-0609-000422026-06-09 15:42:185 条0x8f3a2b7c4d5e...d3e4f5已完成预览下载产品宣传视频侵权证据包EP-2026-0608-000392026-06-08 23:10:553 条0x1a2b3c4d5e6f...0f1a2b已完成预览下载APP界面交互侵权证据包EP-2026-0607-000352026-06-07 20:28:332 条-生成中67%综合侵权证据包-2026年6月EP-2026-0606-000282026-06-06 12:15:478 条0x3c4d5e6f7a8b...2b3c4d已完成预览下载3D渲染图侵权证据包--0 条-待生成共 5 个证据包1下载记录下载时间下载人用途2026-06-09 16:20:00张伟诉讼提交2026-06-09 10:15:30李明律师函附件2026-06-08 14:33:12王芳内部存档2026-06-07 09:08:45张伟调解谈判共 4 条下载记录1 证据包预览证据包信息证据包名称品牌视觉设计侵权证据包生成时间2026-06-09 15:42:18包含证据5 条时间戳认证TS-2026-0609-00042区块链交易ID0x8f3a2b7c...c2d3e4f5文件格式加密PDF文件大小24.8 MB证据清单序号侵权类型来源平台相似度1图文抄袭淘宝96.8%2图文抄袭微信公众号82.5%3图文抄袭小红书91.3%4图文抄袭拼多多87.4%5视频搬运B站94.1%关 闭下载证据包",
+        "layout": {
+          "viewportWidth": 1664,
+          "viewportHeight": 1600,
+          "scrollWidth": 1664,
+          "scrollHeight": 2301,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89124-cycle203-fix-structure-06-二层操作-查看证据-预览",
+          "label": "二层操作:查看证据->预览",
+          "finalUrl": "http://127.0.0.1:49124/copyright/evidence",
+          "title": "知产全链条SaaS服务平台",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89124/runtime-check/codex-20260609-cycle203-fix/may-89124-cycle203-fix-structure-06-二层操作-查看证据-预览.json",
+          "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89124/runtime-check/codex-20260609-cycle203-fix/may-89124-cycle203-fix-structure-06-二层操作-查看证据-预览.png",
+          "elementCount": 803,
+          "interactiveCount": 42,
+          "interactiveLabels": [
+            "工作台",
+            "商标管理",
+            "专利管理",
+            "版权管理",
+            "作品哈希存证",
+            "侵权线索抓取",
+            "维权证据包",
+            "后台管理",
+            "搜索商标、专利、版权...",
+            "on",
+            "相似度",
+            "生成证据包",
+            "验证完整性",
+            "展开行",
+            "预览",
+            "下载",
+            "1",
+            "Close",
+            "关 闭",
+            "下载证据包"
+          ]
+        }
+      },
+      {
+        "label": "导航:商标管理",
+        "url": "http://127.0.0.1:49124/trademark/ai-search",
+        "title": "知产全链条SaaS服务平台",
+        "headings": [],
+        "navLabels": [
+          "工作台",
+          "商标管理",
+          "图形AI检索",
+          "注册进度追踪",
+          "转让/许可合同",
+          "专利管理",
+          "版权管理",
+          "后台管理"
+        ],
+        "buttons": [
+          "工作台",
+          "商标管理",
+          "图形AI检索",
+          "注册进度追踪",
+          "转让/许可合同",
+          "专利管理",
+          "版权管理",
+          "后台管理",
+          "开始检索",
+          "取消监控",
+          "重新检索"
+        ],
+        "links": [],
+        "inputs": [
+          {
+            "tag": "input",
+            "type": "text",
+            "placeholder": "搜索商标、专利、版权...",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "text",
+            "placeholder": "输入商标名称、申请人或分类",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "checkbox",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "checkbox",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "checkbox",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "checkbox",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "checkbox",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "checkbox",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          }
+        ],
+        "tables": [
+          {
+            "headers": [
+              "检索时间",
+              "关键词",
+              "结果数",
+              "操作"
+            ],
+            "rowCount": 5,
+            "hasEmptyText": false,
+            "textPreview": "检索时间 关键词 结果数 操作 2026-06-09 14:30 星辰科技 8 条 重新检索 2026-06-08 10:15 云翼 5 条 重新检索 2026-06-07 16:42 蓝鲸数据 3 条 重新检索 2026-06-05 09:20 智链 6 条 重新检索 2026-06-03 11:55 味享餐饮 2 条 重新检索"
+          }
+        ],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "IP知产全链条平台工作台商标管理图形AI检索注册进度追踪转让/许可合同专利管理版权管理后台管理代理人模式张代理 · 星河知产5张代理专利代理人筛选条件关键词搜索商标分类第1类 化学原料第9类 科学仪器第25类 服装鞋帽第35类 广告销售第42类 科技服务第43类 餐饮住宿相似度阈值: 50%0%50%80%100%开始检索点击或拖拽商标图形到此区域进行AI检索支持 PNG、JPG、SVG 格式，系统将自动提取图形特征进行相似度比对上传商标图形开始AI检索系统将基于深度学习模型分析图形特征，快速匹配相似商标已监控商标星辰科技已注册注册号: 2024-000123取消监控锐视传媒初审公告注册号: 2024-000567取消监控检索历史检索时间关键词结果数操作2026-06-09 14:30星辰科技8 条重新检索2026-06-08 10:15云翼5 条重新检索2026-06-07 16:42蓝鲸数据3 条重新检索2026-06-05 09:20智链6 条重新检索2026-06-03 11:55味享餐饮2 条重新检索",
+        "layout": {
+          "viewportWidth": 1696,
+          "viewportHeight": 1600,
+          "scrollWidth": 1696,
+          "scrollHeight": 1600,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89124-cycle203-fix-structure-07-导航-商标管理",
+          "label": "导航:商标管理",
+          "finalUrl": "http://127.0.0.1:49124/trademark/ai-search",
+          "title": "知产全链条SaaS服务平台",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89124/runtime-check/codex-20260609-cycle203-fix/may-89124-cycle203-fix-structure-07-导航-商标管理.json",
+          "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89124/runtime-check/codex-20260609-cycle203-fix/may-89124-cycle203-fix-structure-07-导航-商标管理.png",
+          "elementCount": 352,
+          "interactiveCount": 29,
+          "interactiveLabels": [
+            "工作台",
+            "商标管理",
+            "图形AI检索",
+            "注册进度追踪",
+            "转让/许可合同",
+            "专利管理",
+            "版权管理",
+            "后台管理",
+            "搜索商标、专利、版权...",
+            "输入商标名称、申请人或分类",
+            "1",
+            "9",
+            "25",
+            "35",
+            "42",
+            "43",
+            "开始检索",
+            "点击或拖拽商标图形到此区域进行AI检索 支持 PNG、JPG、SVG 格式，系统将自动提取图形特征进行相似度比对",
+            "取消监控",
+            "重新检索"
+          ]
+        }
+      }
+    ],
+    "findings": [],
+    "actionHints": [],
+    "emptyPages": [],
+    "overflowPages": [],
+    "blankPages": [],
+    "apiFailurePaths": [],
+    "goalTerms": [],
+    "clickedActionDescriptors": [
+      {
+        "nav": "工作台",
+        "label": "查看进度",
+        "ordinal": 0,
+        "unsafe": false
+      },
+      {
+        "nav": "工作台",
+        "label": "查看进度->详情",
+        "ordinal": 0,
+        "secondary": true,
+        "unsafe": false
+      },
+      {
+        "nav": "工作台",
+        "label": "查看证据",
+        "ordinal": 0,
+        "unsafe": false
+      },
+      {
+        "nav": "工作台",
+        "label": "查看证据->预览",
+        "ordinal": 0,
+        "secondary": true,
+        "unsafe": false
+      }
+    ],
+    "secondaryActionClicks": 2,
+    "structureCaptures": [
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89124-cycle203-fix-structure-01-首屏",
+        "label": "首屏",
+        "finalUrl": "http://127.0.0.1:49124/dashboard",
+        "title": "知产全链条SaaS服务平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89124/runtime-check/codex-20260609-cycle203-fix/may-89124-cycle203-fix-structure-01-首屏.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89124/runtime-check/codex-20260609-cycle203-fix/may-89124-cycle203-fix-structure-01-首屏.png",
+        "elementCount": 1021,
+        "interactiveCount": 13,
+        "interactiveLabels": [
+          "工作台",
+          "商标管理",
+          "专利管理",
+          "版权管理",
+          "后台管理",
+          "搜索商标、专利、版权...",
+          "进入工作台",
+          "补贴申报",
+          "查看进度",
+          "前往处理",
+          "查看证据"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89124-cycle203-fix-structure-02-导航-工作台",
+        "label": "导航:工作台",
+        "finalUrl": "http://127.0.0.1:49124/dashboard",
+        "title": "知产全链条SaaS服务平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89124/runtime-check/codex-20260609-cycle203-fix/may-89124-cycle203-fix-structure-02-导航-工作台.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89124/runtime-check/codex-20260609-cycle203-fix/may-89124-cycle203-fix-structure-02-导航-工作台.png",
+        "elementCount": 1021,
+        "interactiveCount": 13,
+        "interactiveLabels": [
+          "工作台",
+          "商标管理",
+          "专利管理",
+          "版权管理",
+          "后台管理",
+          "搜索商标、专利、版权...",
+          "进入工作台",
+          "补贴申报",
+          "查看进度",
+          "前往处理",
+          "查看证据"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89124-cycle203-fix-structure-03-操作-查看进度",
+        "label": "操作:查看进度",
+        "finalUrl": "http://127.0.0.1:49124/trademark/tracker",
+        "title": "知产全链条SaaS服务平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89124/runtime-check/codex-20260609-cycle203-fix/may-89124-cycle203-fix-structure-03-操作-查看进度.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89124/runtime-check/codex-20260609-cycle203-fix/may-89124-cycle203-fix-structure-03-操作-查看进度.png",
+        "elementCount": 405,
+        "interactiveCount": 34,
+        "interactiveLabels": [
+          "工作台",
+          "商标管理",
+          "图形AI检索",
+          "注册进度追踪",
+          "转让/许可合同",
+          "专利管理",
+          "版权管理",
+          "后台管理",
+          "搜索商标、专利、版权...",
+          "批量推送提醒",
+          "导出清单",
+          "on",
+          "展开行",
+          "详情"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89124-cycle203-fix-structure-04-二层操作-查看进度-详情",
+        "label": "二层操作:查看进度->详情",
+        "finalUrl": "http://127.0.0.1:49124/trademark/tracker",
+        "title": "知产全链条SaaS服务平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89124/runtime-check/codex-20260609-cycle203-fix/may-89124-cycle203-fix-structure-04-二层操作-查看进度-详情.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89124/runtime-check/codex-20260609-cycle203-fix/may-89124-cycle203-fix-structure-04-二层操作-查看进度-详情.png",
+        "elementCount": 591,
+        "interactiveCount": 41,
+        "interactiveLabels": [
+          "工作台",
+          "商标管理",
+          "图形AI检索",
+          "注册进度追踪",
+          "转让/许可合同",
+          "专利管理",
+          "版权管理",
+          "后台管理",
+          "搜索商标、专利、版权...",
+          "批量推送提醒",
+          "导出清单",
+          "on",
+          "展开行",
+          "详情",
+          "关闭",
+          "开 关",
+          "推送记录",
+          "开启 关闭"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89124-cycle203-fix-structure-05-操作-查看证据",
+        "label": "操作:查看证据",
+        "finalUrl": "http://127.0.0.1:49124/copyright/evidence",
+        "title": "知产全链条SaaS服务平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89124/runtime-check/codex-20260609-cycle203-fix/may-89124-cycle203-fix-structure-05-操作-查看证据.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89124/runtime-check/codex-20260609-cycle203-fix/may-89124-cycle203-fix-structure-05-操作-查看证据.png",
+        "elementCount": 692,
+        "interactiveCount": 39,
+        "interactiveLabels": [
+          "工作台",
+          "商标管理",
+          "专利管理",
+          "版权管理",
+          "作品哈希存证",
+          "侵权线索抓取",
+          "维权证据包",
+          "后台管理",
+          "搜索商标、专利、版权...",
+          "on",
+          "相似度",
+          "生成证据包",
+          "验证完整性",
+          "展开行",
+          "预览",
+          "下载",
+          "1"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89124-cycle203-fix-structure-06-二层操作-查看证据-预览",
+        "label": "二层操作:查看证据->预览",
+        "finalUrl": "http://127.0.0.1:49124/copyright/evidence",
+        "title": "知产全链条SaaS服务平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89124/runtime-check/codex-20260609-cycle203-fix/may-89124-cycle203-fix-structure-06-二层操作-查看证据-预览.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89124/runtime-check/codex-20260609-cycle203-fix/may-89124-cycle203-fix-structure-06-二层操作-查看证据-预览.png",
+        "elementCount": 803,
+        "interactiveCount": 42,
+        "interactiveLabels": [
+          "工作台",
+          "商标管理",
+          "专利管理",
+          "版权管理",
+          "作品哈希存证",
+          "侵权线索抓取",
+          "维权证据包",
+          "后台管理",
+          "搜索商标、专利、版权...",
+          "on",
+          "相似度",
+          "生成证据包",
+          "验证完整性",
+          "展开行",
+          "预览",
+          "下载",
+          "1",
+          "Close",
+          "关 闭",
+          "下载证据包"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89124-cycle203-fix-structure-07-导航-商标管理",
+        "label": "导航:商标管理",
+        "finalUrl": "http://127.0.0.1:49124/trademark/ai-search",
+        "title": "知产全链条SaaS服务平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89124/runtime-check/codex-20260609-cycle203-fix/may-89124-cycle203-fix-structure-07-导航-商标管理.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89124/runtime-check/codex-20260609-cycle203-fix/may-89124-cycle203-fix-structure-07-导航-商标管理.png",
+        "elementCount": 352,
+        "interactiveCount": 29,
+        "interactiveLabels": [
+          "工作台",
+          "商标管理",
+          "图形AI检索",
+          "注册进度追踪",
+          "转让/许可合同",
+          "专利管理",
+          "版权管理",
+          "后台管理",
+          "搜索商标、专利、版权...",
+          "输入商标名称、申请人或分类",
+          "1",
+          "9",
+          "25",
+          "35",
+          "42",
+          "43",
+          "开始检索",
+          "点击或拖拽商标图形到此区域进行AI检索 支持 PNG、JPG、SVG 格式，系统将自动提取图形特征进行相似度比对",
+          "取消监控",
+          "重新检索"
+        ]
+      }
+    ],
+    "representativeScreenshotUrl": "http://127.0.0.1:49124/dashboard",
+    "representativeScreenshotLabel": "首屏"
+  },
+  "websiteStructureCapture": {
+    "module": "website_structure_capture",
+    "captureCount": 7,
+    "captures": [
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89124-cycle203-fix-structure-01-首屏",
+        "label": "首屏",
+        "finalUrl": "http://127.0.0.1:49124/dashboard",
+        "title": "知产全链条SaaS服务平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89124/runtime-check/codex-20260609-cycle203-fix/may-89124-cycle203-fix-structure-01-首屏.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89124/runtime-check/codex-20260609-cycle203-fix/may-89124-cycle203-fix-structure-01-首屏.png",
+        "elementCount": 1021,
+        "interactiveCount": 13,
+        "interactiveLabels": [
+          "工作台",
+          "商标管理",
+          "专利管理",
+          "版权管理",
+          "后台管理",
+          "搜索商标、专利、版权...",
+          "进入工作台",
+          "补贴申报",
+          "查看进度",
+          "前往处理",
+          "查看证据"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89124-cycle203-fix-structure-02-导航-工作台",
+        "label": "导航:工作台",
+        "finalUrl": "http://127.0.0.1:49124/dashboard",
+        "title": "知产全链条SaaS服务平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89124/runtime-check/codex-20260609-cycle203-fix/may-89124-cycle203-fix-structure-02-导航-工作台.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89124/runtime-check/codex-20260609-cycle203-fix/may-89124-cycle203-fix-structure-02-导航-工作台.png",
+        "elementCount": 1021,
+        "interactiveCount": 13,
+        "interactiveLabels": [
+          "工作台",
+          "商标管理",
+          "专利管理",
+          "版权管理",
+          "后台管理",
+          "搜索商标、专利、版权...",
+          "进入工作台",
+          "补贴申报",
+          "查看进度",
+          "前往处理",
+          "查看证据"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89124-cycle203-fix-structure-03-操作-查看进度",
+        "label": "操作:查看进度",
+        "finalUrl": "http://127.0.0.1:49124/trademark/tracker",
+        "title": "知产全链条SaaS服务平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89124/runtime-check/codex-20260609-cycle203-fix/may-89124-cycle203-fix-structure-03-操作-查看进度.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89124/runtime-check/codex-20260609-cycle203-fix/may-89124-cycle203-fix-structure-03-操作-查看进度.png",
+        "elementCount": 405,
+        "interactiveCount": 34,
+        "interactiveLabels": [
+          "工作台",
+          "商标管理",
+          "图形AI检索",
+          "注册进度追踪",
+          "转让/许可合同",
+          "专利管理",
+          "版权管理",
+          "后台管理",
+          "搜索商标、专利、版权...",
+          "批量推送提醒",
+          "导出清单",
+          "on",
+          "展开行",
+          "详情"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89124-cycle203-fix-structure-04-二层操作-查看进度-详情",
+        "label": "二层操作:查看进度->详情",
+        "finalUrl": "http://127.0.0.1:49124/trademark/tracker",
+        "title": "知产全链条SaaS服务平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89124/runtime-check/codex-20260609-cycle203-fix/may-89124-cycle203-fix-structure-04-二层操作-查看进度-详情.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89124/runtime-check/codex-20260609-cycle203-fix/may-89124-cycle203-fix-structure-04-二层操作-查看进度-详情.png",
+        "elementCount": 591,
+        "interactiveCount": 41,
+        "interactiveLabels": [
+          "工作台",
+          "商标管理",
+          "图形AI检索",
+          "注册进度追踪",
+          "转让/许可合同",
+          "专利管理",
+          "版权管理",
+          "后台管理",
+          "搜索商标、专利、版权...",
+          "批量推送提醒",
+          "导出清单",
+          "on",
+          "展开行",
+          "详情",
+          "关闭",
+          "开 关",
+          "推送记录",
+          "开启 关闭"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89124-cycle203-fix-structure-05-操作-查看证据",
+        "label": "操作:查看证据",
+        "finalUrl": "http://127.0.0.1:49124/copyright/evidence",
+        "title": "知产全链条SaaS服务平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89124/runtime-check/codex-20260609-cycle203-fix/may-89124-cycle203-fix-structure-05-操作-查看证据.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89124/runtime-check/codex-20260609-cycle203-fix/may-89124-cycle203-fix-structure-05-操作-查看证据.png",
+        "elementCount": 692,
+        "interactiveCount": 39,
+        "interactiveLabels": [
+          "工作台",
+          "商标管理",
+          "专利管理",
+          "版权管理",
+          "作品哈希存证",
+          "侵权线索抓取",
+          "维权证据包",
+          "后台管理",
+          "搜索商标、专利、版权...",
+          "on",
+          "相似度",
+          "生成证据包",
+          "验证完整性",
+          "展开行",
+          "预览",
+          "下载",
+          "1"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89124-cycle203-fix-structure-06-二层操作-查看证据-预览",
+        "label": "二层操作:查看证据->预览",
+        "finalUrl": "http://127.0.0.1:49124/copyright/evidence",
+        "title": "知产全链条SaaS服务平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89124/runtime-check/codex-20260609-cycle203-fix/may-89124-cycle203-fix-structure-06-二层操作-查看证据-预览.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89124/runtime-check/codex-20260609-cycle203-fix/may-89124-cycle203-fix-structure-06-二层操作-查看证据-预览.png",
+        "elementCount": 803,
+        "interactiveCount": 42,
+        "interactiveLabels": [
+          "工作台",
+          "商标管理",
+          "专利管理",
+          "版权管理",
+          "作品哈希存证",
+          "侵权线索抓取",
+          "维权证据包",
+          "后台管理",
+          "搜索商标、专利、版权...",
+          "on",
+          "相似度",
+          "生成证据包",
+          "验证完整性",
+          "展开行",
+          "预览",
+          "下载",
+          "1",
+          "Close",
+          "关 闭",
+          "下载证据包"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89124-cycle203-fix-structure-07-导航-商标管理",
+        "label": "导航:商标管理",
+        "finalUrl": "http://127.0.0.1:49124/trademark/ai-search",
+        "title": "知产全链条SaaS服务平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89124/runtime-check/codex-20260609-cycle203-fix/may-89124-cycle203-fix-structure-07-导航-商标管理.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89124/runtime-check/codex-20260609-cycle203-fix/may-89124-cycle203-fix-structure-07-导航-商标管理.png",
+        "elementCount": 352,
+        "interactiveCount": 29,
+        "interactiveLabels": [
+          "工作台",
+          "商标管理",
+          "图形AI检索",
+          "注册进度追踪",
+          "转让/许可合同",
+          "专利管理",
+          "版权管理",
+          "后台管理",
+          "搜索商标、专利、版权...",
+          "输入商标名称、申请人或分类",
+          "1",
+          "9",
+          "25",
+          "35",
+          "42",
+          "43",
+          "开始检索",
+          "点击或拖拽商标图形到此区域进行AI检索 支持 PNG、JPG、SVG 格式，系统将自动提取图形特征进行相似度比对",
+          "取消监控",
+          "重新检索"
+        ]
+      }
+    ]
+  },
+  "screenshotMetrics": {
+    "width": 1728,
+    "height": 1600,
+    "scrollWidth": 1696,
+    "scrollHeight": 2554
+  },
+  "initialBodyTextPreview": "IP\n知产全链条平台\n工作台\n商标管理\n专利管理\n版权管理\n后台管理\n代理人模式\n张代理 · 星河知产\n5\n张代理\n专利代理人\n代理人工作台\n张代理 · 星河知识产权代理事务所 · 今日待办 6 项\n进入工作台\n补贴申报\n商标\n1,286\n12.5%\n审核中 34\n已注册 218\n已驳回 12\n续展中 18\n专利\n523\n8.3%\n年费待缴 6\n答辩中 3\n已授权 45\n即将到期 3\n版权\n892\n3.2%\n已存证 86\n侵权线索 7\n维权中 4\n证据包 5\n待处理\n47\n18.6%\n紧急 8\n高优 12\n中等 18\n低优 9\n分域案件办理台\n商标注册办理台\n形式审查\nTM-2026-09001234 · 张代理\n申请书、委托书、类别核验已通过\n复查记录：近似商标 3 件，人工确认 1 件需规避\n查看进度\n专利年费/答辩办理台\n答辩准备\nZL2025200XXXXX · 王律师\n年费账单、技术对比、答辩截止日已归档\n复查记录：12 件年费待核对，3 件 7 天内到期\n前往处理\n版权存证/维权办理台\n证据包生成\nCR-CHAIN-20260609 · 李助理\n哈希存证、侵权线索、证据包下载已串联\n复查记录：淘宝 96.8% 线索优先取证\n查看证据\n代理后台闭环\n合同/费用/沟通\nAGENT-WB-0626 · 张代理\n客户沟通、费用账单、合同续签与补贴政策已承接\n复查记录：逾期账单 1 笔，待支付 4 笔\n进入工作台\n业务趋势\n商标 →\n专利 →\n版权 →\n分域案件钻取\n商标域\n注册节点追踪\n审核中\n34\n驳回复审\n5\n续展到期\n18\n异议答辩\n3\n专利域\n年费与答辩\n年费即将到期\n3\n答辩截止\n2\n价值评估待复查\n4\n版权域\n存证与维权\n待确认侵权线索\n7\n证据包生成中\n2\n存证待补材料\n3\n案件状态分布\n查看案件 →\n按状态钻取\n审核中\n34\n已通过\n218\n已驳回\n12\n已放弃\n5\n续展中\n18\n近期动态 · 状态流转\n商标\"云启科技\"注册申请已提交\n今天 14:32 · \n 张代理\n节点追踪 →\n申请提交\n2\n形式审查\n3\n实质审查\n4\n初审公告\n5\n注册公告\n下一步：等待形式审查结果\n处理结果：形式审查预计3个工作日内完成，系统将在状态变更时主动推送通知\n专利 ZL2026301xxxxx 年费代缴已完成\n今天 11:15 · \n 李助理\n缴费回执 →\n费用计算\n代缴执行\n缴费确认\n下一步：年费缴纳回执已收到，归档完成\n处理结果：缴费确认号 FEE20260609001，国知局已确认到账，代理费¥200已开具\n版权作品\"智慧城市管理系统 V3.0\"哈希存证成功\n昨天 16:40 · \n 张代理\n存证证书 →\n作品上传\n哈希计算\n区块链存证\n证书生成\n下一步：存证证书已生成，可下载查看\n处理结果：证书编号 CERT-20260609-003，区块链确认数12，存证不可篡改\n商标\"星河数据\"异议答辩材料已上传\n昨天 09:22 · \n 王律师\n答辩追踪 →\n异议通知\n材料准备\n3\n答辩提交\n4\n审查结果\n下一步：答辩书提交截止 06-20，待确认邮寄\n处理结果：答辩材料已上传，待邮寄纸质版至商标局，截止06-20\n专利价值评估报告已生成\n06-07 15:10 · \n 系统自动\n评估报告 →\n数据采集\n模型评估\n报告生成\n下一步：综合评分88分（高价值），建议续费维护\n处理结果：评分88分（高价值），引用数92/法律状态95/技术热度90，建议续费维护\n侵权线索自动抓取发现3条新疑似侵权链接\n06-06 10:05 · \n 赵审核员\n侵权复查 →\n线索发现\n相似度比对\n3\n人工确认\n4\n证据打包\n下一步：3条线索待确认，其中淘宝96.8%需优先处理\n处理结果：3条线索待人工确认：淘宝96.8%(高危)、B站94.1%(高危)、小红书91.",
+  "bodyTextPreview": "IP\n知产全链条平台\n工作台\n商标管理\n专利管理\n版权管理\n后台管理\n代理人模式\n张代理 · 星河知产\n5\n张代理\n专利代理人\n代理人工作台\n张代理 · 星河知识产权代理事务所 · 今日待办 6 项\n进入工作台\n补贴申报\n商标\n1,286\n12.5%\n审核中 34\n已注册 218\n已驳回 12\n续展中 18\n专利\n523\n8.3%\n年费待缴 6\n答辩中 3\n已授权 45\n即将到期 3\n版权\n892\n3.2%\n已存证 86\n侵权线索 7\n维权中 4\n证据包 5\n待处理\n47\n18.6%\n紧急 8\n高优 12\n中等 18\n低优 9\n分域案件办理台\n商标注册办理台\n形式审查\nTM-2026-09001234 · 张代理\n申请书、委托书、类别核验已通过\n复查记录：近似商标 3 件，人工确认 1 件需规避\n查看进度\n专利年费/答辩办理台\n答辩准备\nZL2025200XXXXX · 王律师\n年费账单、技术对比、答辩截止日已归档\n复查记录：12 件年费待核对，3 件 7 天内到期\n前往处理\n版权存证/维权办理台\n证据包生成\nCR-CHAIN-20260609 · 李助理\n哈希存证、侵权线索、证据包下载已串联\n复查记录：淘宝 96.8% 线索优先取证\n查看证据\n代理后台闭环\n合同/费用/沟通\nAGENT-WB-0626 · 张代理\n客户沟通、费用账单、合同续签与补贴政策已承接\n复查记录：逾期账单 1 笔，待支付 4 笔\n进入工作台\n业务趋势\n商标 →\n专利 →\n版权 →\n分域案件钻取\n商标域\n注册节点追踪\n审核中\n34\n驳回复审\n5\n续展到期\n18\n异议答辩\n3\n专利域\n年费与答辩\n年费即将到期\n3\n答辩截止\n2\n价值评估待复查\n4\n版权域\n存证与维权\n待确认侵权线索\n7\n证据包生成中\n2\n存证待补材料\n3\n案件状态分布\n查看案件 →\n按状态钻取\n审核中\n34\n已通过\n218\n已驳回\n12\n已放弃\n5\n续展中\n18\n近期动态 · 状态流转\n商标\"云启科技\"注册申请已提交\n今天 14:32 · \n 张代理\n节点追踪 →\n申请提交\n2\n形式审查\n3\n实质审查\n4\n初审公告\n5\n注册公告\n下一步：等待形式审查结果\n处理结果：形式审查预计3个工作日内完成，系统将在状态变更时主动推送通知\n专利 ZL2026301xxxxx 年费代缴已完成\n今天 11:15 · \n 李助理\n缴费回执 →\n费用计算\n代缴执行\n缴费确认\n下一步：年费缴纳回执已收到，归档完成\n处理结果：缴费确认号 FEE20260609001，国知局已确认到账，代理费¥200已开具\n版权作品\"智慧城市管理系统 V3.0\"哈希存证成功\n昨天 16:40 · \n 张代理\n存证证书 →\n作品上传\n哈希计算\n区块链存证\n证书生成\n下一步：存证证书已生成，可下载查看\n处理结果：证书编号 CERT-20260609-003，区块链确认数12，存证不可篡改\n商标\"星河数据\"异议答辩材料已上传\n昨天 09:22 · \n 王律师\n答辩追踪 →\n异议通知\n材料准备\n3\n答辩提交\n4\n审查结果\n下一步：答辩书提交截止 06-20，待确认邮寄\n处理结果：答辩材料已上传，待邮寄纸质版至商标局，截止06-20\n专利价值评估报告已生成\n06-07 15:10 · \n 系统自动\n评估报告 →\n数据采集\n模型评估\n报告生成\n下一步：综合评分88分（高价值），建议续费维护\n处理结果：评分88分（高价值），引用数92/法律状态95/技术热度90，建议续费维护\n侵权线索自动抓取发现3条新疑似侵权链接\n06-06 10:05 · \n 赵审核员\n侵权复查 →\n线索发现\n相似度比对\n3\n人工确认\n4\n证据打包\n下一步：3条线索待确认，其中淘宝96.8%需优先处理\n处理结果：3条线索待人工确认：淘宝96.8%(高危)、B站94.1%(高危)、小红书91.3%(中危)\n待办事项 · 处理流程\n6\n商标\"云端智联\"续展申请\n紧急\n 张代理\n 截止 2026-07-15\n提交续展申请书\n前往处理 →\n处理记录：2026-06-08 张代理 已准备续展申请书草稿\n专利 ZL2025200xxxxx 答辩截止\n紧急\n 王律师\n 截止 2026-06-20\n补充技术对比分析并提交答辩书\n前往处理 →\n处理记录：2026-06-07 王律师 补充技术对比分析第2稿\n版权存证材料补充\n高\n 李助理\n 截止 2026-06-25\n3件作品待补充权属证明文件\n前往处理 →\n处理记录：2026-06-08 李助理 已上传2/3件权属证明\n商标\"星河数据\"异议答辩书\n高\n 王律师\n 截止 2026-06-20\n对方异议理由：近似商标，需准备对比证据\n前往处理 →\n处理记录：2026-06-07 王律师 完成近似商标对比证据\n专利年费清单核对\n中\n 李助理\n 截止 2026-06-30\n12件专利年费待核对，3件7天内到期\n前往处理 →\n处理记录：2026-06-06 李助理 已核对9/12件专利年费\n客户合同续签审批\n低\n 张代理\n 截止 2026-07-31\n华为年度代理合同续签，法务已审核通过\n前往处理 →\n处理记录：2026-06-05 法务部 审核通过，待张代理签署",
+  "apiBase": "http://127.0.0.1:59124",
+  "businessGoalPreview": "复验登录注册、搜索筛选、商标专利版权分域办理台、案件状态钻取、查看进度、前往处理、查看证据、代理后台、补贴申报政策匹配和材料预审闭环",
+  "apiResponses": [],
+  "apiChecks": [
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59124/api/health",
+      "path": "/api/health",
+      "status": 200,
+      "ok": true,
+      "bodyPreview": "{\"success\":true,\"message\":\"ok\",\"service\":\"may-89124 backend\",\"database\":\"ip-platform.db\",\"data\":{\"caseCount\":4,\"uploadCount\":0}}"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59124/api/auth/me",
+      "path": "/api/auth/me",
+      "status": 200,
+      "ok": true,
+      "bodyPreview": "{\"success\":false,\"authenticated\":false,\"error\":\"未登录\",\"data\":null}"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59124/api/users/profile",
+      "path": "/api/users/profile",
+      "status": 200,
+      "ok": true,
+      "bodyPreview": "{\"success\":true,\"data\":{\"id\":\"guest\",\"username\":\"guest\",\"role\":\"client\",\"displayName\":\"访客客户\",\"status\":\"anonymous\",\"profileSections\":[\"个人中心\",\"案件进度\",\"通知设置\"]}}"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59124/api/user/profile",
+      "path": "/api/user/profile",
+      "status": 200,
+      "ok": true,
+      "bodyPreview": "{\"success\":true,\"data\":{\"id\":\"guest\",\"username\":\"guest\",\"role\":\"client\",\"displayName\":\"访客客户\",\"status\":\"anonymous\",\"profileSections\":[\"个人中心\",\"案件进度\",\"通知设置\"]}}"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59124/api/search?q=%E6%B5%8B%E8%AF%95",
+      "path": "/api/search?q=%E6%B5%8B%E8%AF%95",
+      "status": 200,
+      "ok": true,
+      "bodyPreview": "{\"success\":true,\"data\":{\"keyword\":\"测试\",\"items\":[],\"cases\":[],\"trademarks\":[],\"total\":0}}"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59124/api/admin/stats",
+      "path": "/api/admin/stats",
+      "status": 200,
+      "ok": true,
+      "bodyPreview": "{\"success\":true,\"data\":{\"summary\":{\"activeCases\":23,\"newThisMonth\":8,\"pendingReview\":5,\"expiringSoon\":3},\"cases\":[{\"id\":\"CR-2026-007\",\"name\":\"短视频版权登记\",\"client\":\"字节跳动有限公司\",\"category\":\"视听作品\",\"progress\":100,\"status\":\"已登记\"},{\"id\":\"TM-2026-023\",\"name\":\"瑞幸咖啡商标监测\",\"client\":\"瑞幸咖啡中国有限公司\",\"category\":\"第35类 广告销售\",\"progress\":86,\"status\":\"公告中\"},{\"id\":\"TM-2026-001\",\"name\":\"鸿蒙生态商标注册\",\"client\":\"华为技术有限公司\",\"category\":\"第9类 科学仪器\",\"progress\":68,\"status\":\"实审中\"},{\"id\":\"PT-2026-012\",\"name\":\"5G 通信专利申请\",\"client\":\"中兴通讯股份有限"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59124/api/admin/dashboard",
+      "path": "/api/admin/dashboard",
+      "status": 200,
+      "ok": true,
+      "bodyPreview": "{\"success\":true,\"data\":{\"summary\":{\"activeCases\":23,\"newThisMonth\":8,\"pendingReview\":5,\"expiringSoon\":3},\"cases\":[{\"id\":\"CR-2026-007\",\"name\":\"短视频版权登记\",\"client\":\"字节跳动有限公司\",\"category\":\"视听作品\",\"progress\":100,\"status\":\"已登记\"},{\"id\":\"TM-2026-023\",\"name\":\"瑞幸咖啡商标监测\",\"client\":\"瑞幸咖啡中国有限公司\",\"category\":\"第35类 广告销售\",\"progress\":86,\"status\":\"公告中\"},{\"id\":\"TM-2026-001\",\"name\":\"鸿蒙生态商标注册\",\"client\":\"华为技术有限公司\",\"category\":\"第9类 科学仪器\",\"progress\":68,\"status\":\"实审中\"},{\"id\":\"PT-2026-012\",\"name\":\"5G 通信专利申请\",\"client\":\"中兴通讯股份有限"
+    }
+  ],
+  "dialogs": [],
+  "consoleMessages": [
+    {
+      "type": "debug",
+      "text": "[vite] connecting...",
+      "location": {
+        "url": "http://127.0.0.1:49124/@vite/client",
+        "lineNumber": 850,
+        "columnNumber": 8
+      }
+    },
+    {
+      "type": "info",
+      "text": "%cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold",
+      "location": {
+        "url": "http://127.0.0.1:49124/node_modules/.vite/deps/client-C839dZfX.js?v=cdd34414",
+        "lineNumber": 14337,
+        "columnNumber": 48
+      }
+    },
+    {
+      "type": "debug",
+      "text": "[vite] connected.",
+      "location": {
+        "url": "http://127.0.0.1:49124/@vite/client",
+        "lineNumber": 954,
+        "columnNumber": 11
+      }
+    },
+    {
+      "type": "error",
+      "text": "Warning: [antd: Drawer] `width` is deprecated. Please use `size` instead.",
+      "location": {
+        "url": "http://127.0.0.1:49124/@vite/client",
+        "lineNumber": 524,
+        "columnNumber": 3
+      }
+    },
+    {
+      "type": "debug",
+      "text": "[vite] connecting...",
+      "location": {
+        "url": "http://127.0.0.1:49124/@vite/client",
+        "lineNumber": 850,
+        "columnNumber": 8
+      }
+    },
+    {
+      "type": "debug",
+      "text": "[vite] connected.",
+      "location": {
+        "url": "http://127.0.0.1:49124/@vite/client",
+        "lineNumber": 954,
+        "columnNumber": 11
+      }
+    },
+    {
+      "type": "info",
+      "text": "%cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold",
+      "location": {
+        "url": "http://127.0.0.1:49124/node_modules/.vite/deps/client-C839dZfX.js?v=cdd34414",
+        "lineNumber": 14337,
+        "columnNumber": 48
+      }
+    },
+    {
+      "type": "error",
+      "text": "Warning: [antd: Drawer] `width` is deprecated. Please use `size` instead.",
+      "location": {
+        "url": "http://127.0.0.1:49124/@vite/client",
+        "lineNumber": 524,
+        "columnNumber": 3
+      }
+    },
+    {
+      "type": "error",
+      "text": "Warning: [antd: Timeline] `items.children` is deprecated. Please use `items.content` instead.",
+      "location": {
+        "url": "http://127.0.0.1:49124/@vite/client",
+        "lineNumber": 524,
+        "columnNumber": 3
+      }
+    },
+    {
+      "type": "debug",
+      "text": "[vite] connecting...",
+      "location": {
+        "url": "http://127.0.0.1:49124/@vite/client",
+        "lineNumber": 850,
+        "columnNumber": 8
+      }
+    },
+    {
+      "type": "debug",
+      "text": "[vite] connected.",
+      "location": {
+        "url": "http://127.0.0.1:49124/@vite/client",
+        "lineNumber": 954,
+        "columnNumber": 11
+      }
+    },
+    {
+      "type": "info",
+      "text": "%cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold",
+      "location": {
+        "url": "http://127.0.0.1:49124/node_modules/.vite/deps/client-C839dZfX.js?v=cdd34414",
+        "lineNumber": 14337,
+        "columnNumber": 48
+      }
+    },
+    {
+      "type": "debug",
+      "text": "[vite] connecting...",
+      "location": {
+        "url": "http://127.0.0.1:49124/@vite/client",
+        "lineNumber": 850,
+        "columnNumber": 8
+      }
+    },
+    {
+      "type": "debug",
+      "text": "[vite] connected.",
+      "location": {
+        "url": "http://127.0.0.1:49124/@vite/client",
+        "lineNumber": 954,
+        "columnNumber": 11
+      }
+    },
+    {
+      "type": "info",
+      "text": "%cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold",
+      "location": {
+        "url": "http://127.0.0.1:49124/node_modules/.vite/deps/client-C839dZfX.js?v=cdd34414",
+        "lineNumber": 14337,
+        "columnNumber": 48
+      }
+    },
+    {
+      "type": "error",
+      "text": "Warning: [antd: Drawer] `width` is deprecated. Please use `size` instead.",
+      "location": {
+        "url": "http://127.0.0.1:49124/@vite/client",
+        "lineNumber": 524,
+        "columnNumber": 3
+      }
+    },
+    {
+      "type": "debug",
+      "text": "[vite] connecting...",
+      "location": {
+        "url": "http://127.0.0.1:49124/@vite/client",
+        "lineNumber": 850,
+        "columnNumber": 8
+      }
+    },
+    {
+      "type": "debug",
+      "text": "[vite] connected.",
+      "location": {
+        "url": "http://127.0.0.1:49124/@vite/client",
+        "lineNumber": 954,
+        "columnNumber": 11
+      }
+    },
+    {
+      "type": "info",
+      "text": "%cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold",
+      "location": {
+        "url": "http://127.0.0.1:49124/node_modules/.vite/deps/client-C839dZfX.js?v=cdd34414",
+        "lineNumber": 14337,
+        "columnNumber": 48
+      }
+    }
+  ],
+  "requestFailures": [],
+  "responseErrors": []
+}
