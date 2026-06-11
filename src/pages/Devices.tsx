@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { Watch, Bluetooth, Search, CheckCircle, XCircle, Battery, RefreshCw, Trash2, Wifi, Signal, Shield, FileText, Download, Clock, Database, Zap, Award, Lock, FileCheck, ChevronDown, ChevronUp, Heart, Moon, Activity, Wind, Droplets, User, Calendar, X, CheckCircle2 } from "lucide-react";
+import { Watch, Bluetooth, Search, CheckCircle, XCircle, Battery, RefreshCw, Trash2, Wifi, Signal, Shield, FileText, Download, Clock, Database, Zap, Award, Lock, FileCheck, ChevronDown, ChevronUp, Heart, Moon, Activity, Wind, Droplets, User, Calendar, X, CheckCircle2, AlertTriangle } from "lucide-react";
 import { useHealthStore } from "../store/useHealthStore";
 import { api } from "../utils/api";
 import { cn } from "../lib/utils";
@@ -77,6 +77,7 @@ export default function Devices() {
   const [selectedDevice, setSelectedDevice] = useState<ScanResult | null>(null);
   const [archiveExpanded, setArchiveExpanded] = useState(false);
   const [exportState, setExportState] = useState<{ format: string; status: "idle" | "generating" | "success"; archive?: HealthArchive }>({ format: "", status: "idle" });
+  const [exportHistory, setExportHistory] = useState<HealthArchive[]>([]);
   const getLoading = (key: string) => useHealthStore.getState().loading[key];
 
   useEffect(() => {
@@ -132,6 +133,7 @@ export default function Devices() {
         deviceId: device.deviceId,
       })) as Device;
       addDevice(bound);
+      setScanResults((prev) => prev.filter((d) => d.deviceId !== device.deviceId));
       setBindState("syncing");
       const synced = (await api.devices.sync(bound.id)) as Device;
       if (synced) updateDevice(synced);
@@ -193,13 +195,15 @@ export default function Devices() {
         format,
       })) as HealthArchive;
       setExportState({ format, status: "success", archive });
-      setTimeout(() => {
-        setExportState({ format: "", status: "idle" });
-      }, 8000);
+      setExportHistory((prev) => [archive, ...prev].slice(0, 10));
     } catch (e) {
       console.error(e);
       setExportState({ format: "", status: "idle" });
     }
+  };
+
+  const resetExportState = () => {
+    setExportState({ format: "", status: "idle" });
   };
 
   const getStepStatus = (idx: number) => {
@@ -285,7 +289,7 @@ export default function Devices() {
               label="失败数" 
               value={primaryDevice?.lastSyncResult ? `${primaryDevice.lastSyncResult.recordsFailed} 条` : "--"} 
               icon={XCircle} 
-              iconColor="text-red-400" 
+              iconColor={primaryDevice?.lastSyncResult?.recordsFailed ? "text-alert-red-400" : "text-deep-sea-400"}
             />
             <StatItem 
               label="同步耗时" 
@@ -300,6 +304,30 @@ export default function Devices() {
               iconColor="text-vital-green-400" 
             />
           </div>
+          {primaryDevice?.lastSyncResult?.failedRecords && primaryDevice.lastSyncResult.failedRecords.length > 0 && (
+            <div className="mt-4 p-3 rounded-lg bg-alert-red-500/5 border border-alert-red-500/20">
+              <p className="text-xs text-alert-red-400 font-medium mb-2 flex items-center gap-1">
+                <AlertTriangle className="w-3.5 h-3.5" /> 同步失败详情
+              </p>
+              <div className="space-y-1.5">
+                {primaryDevice.lastSyncResult.failedRecords.map((f: any, i: number) => (
+                  <div key={i} className="flex items-center justify-between text-xs">
+                    <div className="flex items-center gap-2">
+                      <span className="text-deep-sea-200/70">{f.type}</span>
+                      <span className="text-deep-sea-200/40">{f.reason}</span>
+                    </div>
+                    <span className="text-warning-amber-500/70">已重试 {f.retryCount} 次</span>
+                  </div>
+                ))}
+              </div>
+              <button
+                onClick={() => primaryDevice && handleSync(primaryDevice.id)}
+                className="mt-2 w-full py-1.5 text-xs rounded-lg bg-alert-red-500/10 text-alert-red-400 hover:bg-alert-red-500/20 flex items-center justify-center gap-1 transition-colors"
+              >
+                <RefreshCw className="w-3.5 h-3.5" /> 重试同步失败项
+              </button>
+            </div>
+          )}
         </Card>
 
         <Card className="border-l-4 border-l-deep-sea-300">
@@ -326,11 +354,41 @@ export default function Devices() {
                 </span>
               ))}
             </div>
-            <div className="flex items-center justify-between pt-2 border-t border-gray-700/50">
-              <span className="text-xs text-gray-500">协议版本</span>
-              <span className="text-sm font-medium text-deep-sea-200">
-                {primaryDevice?.protocolVersion || "--"}
-              </span>
+            <div className="space-y-2 pt-2 border-t border-gray-700/50">
+              <div className="flex items-center justify-between">
+                <span className="text-xs text-gray-500">协议版本</span>
+                <span className="text-sm font-medium text-deep-sea-200">
+                  {primaryDevice?.protocolVersion || "--"}
+                </span>
+              </div>
+              {primaryDevice?.lastSyncResult?.protocolDiff && (
+                <>
+                  <div className="flex items-center justify-between">
+                    <span className="text-xs text-gray-500">标准合规性</span>
+                    <span className="text-xs text-deep-sea-200">
+                      {primaryDevice.lastSyncResult.protocolDiff.standardCompliance}
+                    </span>
+                  </div>
+                  <div className="pt-1">
+                    <p className="text-xs text-gray-500 mb-1">适配说明</p>
+                    <p className="text-xs text-deep-sea-200/70 leading-relaxed">
+                      {primaryDevice.lastSyncResult.protocolDiff.adaptationNotes}
+                    </p>
+                  </div>
+                  {primaryDevice.lastSyncResult.protocolDiff.featureGaps?.length > 0 && (
+                    <div className="pt-1">
+                      <p className="text-xs text-gray-500 mb-1">协议差异</p>
+                      <div className="flex flex-wrap gap-1">
+                        {primaryDevice.lastSyncResult.protocolDiff.featureGaps.map((g: string, i: number) => (
+                          <span key={i} className="px-1.5 py-0.5 text-xs bg-warning-amber-500/10 text-warning-amber-400 rounded">
+                            {g}
+                          </span>
+                        ))}
+                      </div>
+                    </div>
+                  )}
+                </>
+              )}
             </div>
           </div>
         </Card>
@@ -530,40 +588,73 @@ export default function Devices() {
             </div>
           </div>
 
-          <div className="flex items-center justify-between p-3 rounded-xl bg-purple-500/5 border border-purple-500/20">
-            <div className="flex items-center gap-2">
-              <Shield className="w-4 h-4 text-purple-400" />
-              <span className="text-xs text-purple-300">本档案已脱敏存储 · AES-256 加密 · 符合 HIPAA/GDPR/等保三级</span>
-            </div>
-            <div className="flex gap-2 items-center">
-              {exportState.status === "generating" && (
-                <span className="text-xs text-warning-amber-500 flex items-center gap-1">
-                  <RefreshCw className="w-3.5 h-3.5 animate-spin" /> 生成中...
-                </span>
-              )}
-              {exportState.status === "success" && exportState.archive && (
-                <div className="flex items-center gap-2 text-xs">
-                  <span className="text-vital-green-400 flex items-center gap-1">
-                    <CheckCircle2 className="w-3.5 h-3.5" /> 导出成功
-                  </span>
-                  <span className="text-deep-sea-200/50">编号: {exportState.archive.id?.slice(0, 8)}</span>
-                  <span className="text-deep-sea-200/50">{new Date(exportState.archive.generatedAt || Date.now()).toLocaleString("zh-CN")}</span>
-                </div>
-              )}
+          <div className="rounded-xl bg-purple-500/5 border border-purple-500/20 overflow-hidden">
+            <div className="flex items-center justify-between p-3 border-b border-purple-500/10">
+              <div className="flex items-center gap-2">
+                <Shield className="w-4 h-4 text-purple-400" />
+                <span className="text-xs text-purple-300">本档案已脱敏存储 · AES-256 加密 · 符合 HIPAA/GDPR/等保三级</span>
+              </div>
               {exportState.status === "idle" && (
-                <>
+                <div className="flex gap-2">
                   <button onClick={() => handleExportArchive("json")} className="px-3 py-1.5 text-xs rounded-lg bg-vital-green-500/10 text-vital-green-400 hover:bg-vital-green-500/20 flex items-center gap-1 transition-colors">
                     <Download className="w-3.5 h-3.5" /> 导出 JSON
                   </button>
                   <button onClick={() => handleExportArchive("pdf")} className="px-3 py-1.5 text-xs rounded-lg bg-warning-amber-500/10 text-warning-amber-500 hover:bg-warning-amber-500/20 flex items-center gap-1 transition-colors">
                     <Download className="w-3.5 h-3.5" /> 导出 PDF
                   </button>
-                </>
+                </div>
               )}
-              <button onClick={() => { window.location.hash = "#/records"; }} className="px-3 py-1.5 text-xs rounded-lg bg-purple-500/10 text-purple-400 hover:bg-purple-500/20 flex items-center gap-1 transition-colors">
-                <Calendar className="w-3.5 h-3.5" /> 预约挂号
-              </button>
+              {exportState.status === "generating" && (
+                <span className="text-xs text-warning-amber-500 flex items-center gap-1">
+                  <RefreshCw className="w-3.5 h-3.5 animate-spin" /> 正在生成标准化档案包...
+                </span>
+              )}
+              {exportState.status === "success" && exportState.archive && (
+                <button onClick={resetExportState} className="text-xs text-deep-sea-200/50 hover:text-deep-sea-100 flex items-center gap-1">
+                  <X className="w-3.5 h-3.5" /> 关闭
+                </button>
+              )}
             </div>
+
+            {exportState.status === "success" && exportState.archive && (
+              <div className="p-4 space-y-3 bg-vital-green-500/5">
+                <div className="flex items-center gap-2">
+                  <CheckCircle2 className="w-5 h-5 text-vital-green-400" />
+                  <span className="text-sm font-semibold text-vital-green-400">标准化健康档案包已生成</span>
+                </div>
+                <div className="grid grid-cols-2 gap-3 text-xs">
+                  <div className="p-2 rounded bg-deep-sea-600/30">
+                    <p className="text-deep-sea-200/50 mb-1">档案包编号</p>
+                    <p className="text-deep-sea-100 font-mono">{exportState.archive.id}</p>
+                  </div>
+                  <div className="p-2 rounded bg-deep-sea-600/30">
+                    <p className="text-deep-sea-200/50 mb-1">生成时间</p>
+                    <p className="text-deep-sea-100">{new Date(exportState.archive.generatedAt || Date.now()).toLocaleString("zh-CN")}</p>
+                  </div>
+                  <div className="p-2 rounded bg-deep-sea-600/30">
+                    <p className="text-deep-sea-200/50 mb-1">数据范围</p>
+                    <p className="text-deep-sea-100">{exportState.archive.dateStart} ~ {exportState.archive.dateEnd}</p>
+                  </div>
+                  <div className="p-2 rounded bg-deep-sea-600/30">
+                    <p className="text-deep-sea-200/50 mb-1">标准规范</p>
+                    <p className="text-deep-sea-100">{exportState.archive.standard}</p>
+                  </div>
+                </div>
+                <div className="flex items-center gap-2 pt-2">
+                  <a
+                    href={api.archives.download(exportState.archive.id)}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="flex-1 py-2 text-center text-xs rounded-lg bg-vital-green-500/20 text-vital-green-400 hover:bg-vital-green-500/30 flex items-center justify-center gap-1 transition-colors"
+                  >
+                    <Download className="w-3.5 h-3.5" /> 下载 {exportState.archive.format.toUpperCase()} 档案包
+                  </a>
+                  <button onClick={() => { window.location.hash = "#/records"; }} className="flex-1 py-2 text-center text-xs rounded-lg bg-purple-500/10 text-purple-400 hover:bg-purple-500/20 flex items-center justify-center gap-1 transition-colors">
+                    <Calendar className="w-3.5 h-3.5" /> 预约挂号
+                  </button>
+                </div>
+              </div>
+            )}
           </div>
         </Card>
       )}

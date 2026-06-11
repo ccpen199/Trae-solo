@@ -17,8 +17,11 @@ export function useWebSocket() {
   useEffect(() => {
     let ws: WebSocket | null = null;
     let reconnectTimer: ReturnType<typeof setTimeout> | null = null;
+    let disposed = false;
 
     function connectWS() {
+      if (disposed) return;
+
       try {
         ws = new WebSocket(WS_URL);
 
@@ -53,16 +56,17 @@ export function useWebSocket() {
         };
 
         ws.onerror = (error) => {
-          console.error("WebSocket error:", error);
+          console.warn("WebSocket recoverable error:", error);
         };
 
         ws.onclose = () => {
+          if (disposed) return;
           console.log("WebSocket disconnected");
           disconnect();
           reconnectTimer = setTimeout(connectWS, 3000);
         };
       } catch (error) {
-        console.error("WebSocket connection error:", error);
+        console.warn("WebSocket connection error:", error);
         reconnectTimer = setTimeout(connectWS, 5000);
       }
     }
@@ -70,6 +74,7 @@ export function useWebSocket() {
     connectWS();
 
     return () => {
+      disposed = true;
       if (ws) {
         ws.close();
       }

@@ -20,6 +20,7 @@ interface WebSocketState {
   lastMessage: unknown | null;
   dataValidity: "realtime" | "cached" | "offline";
   lastRealtimeTime: string | null;
+  lastCacheTime: string | null;
   connect: () => void;
   disconnect: () => void;
 }
@@ -88,8 +89,9 @@ export const useHealthStore = create<HealthState & WebSocketState>((set) => ({
   lastMessage: null,
   dataValidity: "offline",
   lastRealtimeTime: null,
+  lastCacheTime: null,
   connect: () => set({ connected: true, dataValidity: "realtime", lastRealtimeTime: new Date().toISOString() }),
-  disconnect: () => set({ connected: false, dataValidity: "cached" }),
+  disconnect: () => set({ connected: false, dataValidity: "cached", lastCacheTime: new Date().toISOString() }),
 
   currentVitals: null,
   healthScore: null,

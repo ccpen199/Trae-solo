@@ -8,6 +8,8 @@ import { Sleep } from "./pages/Sleep";
 import { Vitals } from "./pages/Vitals";
 import { Alerts } from "./pages/Alerts";
 import { Records } from "./pages/Records";
+import { Discover } from "./pages/Discover";
+import { Profile } from "./pages/Profile";
 import { useWebSocket } from "./hooks/useWebSocket";
 import { api } from "./utils/api";
 import type {
@@ -156,6 +158,8 @@ function AppRoutes() {
         <Route path="/vitals" element={<Vitals />} />
         <Route path="/alerts" element={<Alerts />} />
         <Route path="/records" element={<Records />} />
+        <Route path="/discover" element={<Discover />} />
+        <Route path="/profile" element={<Profile />} />
       </Route>
     </Routes>
   );

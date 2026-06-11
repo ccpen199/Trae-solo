@@ -84,7 +84,7 @@ const todayStats = [
 ];
 
 export function Home() {
-  const { currentVitals, healthScore, devices, alerts, activeAlerts, exerciseRecords, sleepRecords, connected, dataValidity, updateAlert, setLoading } = useHealthStore();
+  const { currentVitals, healthScore, devices, alerts, activeAlerts, exerciseRecords, sleepRecords, connected, dataValidity, lastRealtimeTime, lastCacheTime, updateAlert, setLoading } = useHealthStore();
   const [currentTime, setCurrentTime] = useState(new Date());
   const [alertActionModal, setAlertActionModal] = useState<{
     alert: Alert;
@@ -180,6 +180,9 @@ export function Home() {
           <div className={`flex items-center gap-2 px-3 py-1.5 rounded-full ${dataValidityConfig[dataValidity].bg} border border-vital-green-500/20`}>
             {dataValidityConfig[dataValidity].icon}
             <span className={`text-xs font-medium ${dataValidityConfig[dataValidity].text}`}>{dataValidityConfig[dataValidity].label}</span>
+            {dataValidity !== "realtime" && lastCacheTime && (
+              <span className="text-xs text-deep-sea-200/40">· {new Date(lastCacheTime).toLocaleTimeString("zh-CN")}</span>
+            )}
           </div>
           <div className="flex items-center gap-2">
             <span className={`w-3 h-3 rounded-full ${connected ? "bg-vital-green-500 status-connected" : "bg-alert-red-500 status-disconnected"}`} />
@@ -190,7 +193,14 @@ export function Home() {
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
         <Card className="lg:col-span-1">
-          <h3 className="text-lg font-semibold text-deep-sea-100 mb-4">健康评分</h3>
+          <div className="flex items-center justify-between mb-4">
+            <h3 className="text-lg font-semibold text-deep-sea-100">健康评分</h3>
+            {dataValidity !== "realtime" && (
+              <span className="text-xs text-warning-amber-500 flex items-center gap-1">
+                <Database className="w-3 h-3" /> 缓存值
+              </span>
+            )}
+          </div>
           <GaugeChart value={healthScore?.overall ?? 0} label="综合健康" />
           <div className="grid grid-cols-4 gap-4 mt-6">
             {subScores.map((item) => (
@@ -204,6 +214,17 @@ export function Home() {
               </div>
             ))}
           </div>
+          {dataValidity !== "realtime" && (
+            <div className="mt-4 p-3 rounded-lg bg-warning-amber-500/5 border border-warning-amber-500/20">
+              <p className="text-xs text-warning-amber-400/80 mb-1">数据来源</p>
+              <p className="text-xs text-deep-sea-200/60">
+                {dataValidity === "cached"
+                  ? `设备已断开，显示最后一次缓存数据（${lastCacheTime ? new Date(lastCacheTime).toLocaleString("zh-CN") : "未知时间"}）`
+                  : "暂无实时数据连接"}
+              </p>
+              <p className="text-xs text-deep-sea-200/40 mt-1">评分数据每 30 秒自动刷新，缓存保留 24 小时</p>
+            </div>
+          )}
         </Card>
 
         <div className="lg:col-span-2 space-y-6">
@@ -301,7 +322,14 @@ export function Home() {
             </Card>
 
             <Card>
-              <h3 className="text-lg font-semibold text-deep-sea-100 mb-4">预警摘要</h3>
+              <div className="flex items-center justify-between mb-4">
+                <h3 className="text-lg font-semibold text-deep-sea-100">预警摘要</h3>
+                {dataValidity !== "realtime" && (
+                  <span className="text-xs text-warning-amber-500 flex items-center gap-1">
+                    <AlertCircle className="w-3 h-3" /> 离线预警保留
+                  </span>
+                )}
+              </div>
               <div className="space-y-3">
                 {alerts.slice(0, 3).map((alert) => {
                   const styles = severityConfig[alert.severity];
@@ -439,6 +467,14 @@ export function Home() {
                   </div>
                 )}
               </div>
+              {dataValidity !== "realtime" && alerts.length > 0 && (
+                <div className="mt-4 pt-3 border-t border-deep-sea-600/30">
+                  <p className="text-xs text-deep-sea-200/40 flex items-center gap-1">
+                    <AlertCircle className="w-3 h-3 text-warning-amber-500/60" />
+                    离线预警保留规则：活跃预警持续显示 24 小时，已处置预警保留 7 天，超过时限自动归档
+                  </p>
+                </div>
+              )}
             </Card>
           </div>
         </div>

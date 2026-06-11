@@ -93,11 +93,28 @@ export class DeviceService {
     const recordsSynced = Math.floor(Math.random() * 100) + 200;
     const recordsFailed = Math.floor(Math.random() * 3);
     const syncDuration = Math.floor(Math.random() * 10) + 5;
+    const failedRecords = Array.from({ length: recordsFailed }, (_, i) => ({
+      type: ["heart_rate", "sleep_stage", "exercise_summary"][i % 3],
+      reason: ["GATT 特征值读取超时", "数据格式校验失败", "分包重组错误"][i % 3],
+      retryCount: Math.floor(Math.random() * 3),
+    }));
+    const protocolDiff = {
+      brand: deviceInfo.brand,
+      standardCompliance: ["HRS 0.9", "HRS 1.0", "GATT 自定义"][Math.floor(Math.random() * 3)],
+      adaptationNotes: [
+        "厂商扩展命令已适配，心率广播间隔 1s",
+        "睡眠数据通过专有 UUID 获取，标准 HRS 不支持",
+        "运动轨迹采用 NMEA 0183 格式，需格式转换",
+      ][Math.floor(Math.random() * 3)],
+      featureGaps: recordsFailed > 0 ? ["部分数据类型需轮询获取"] : [],
+    };
     const lastSyncResult = {
       recordsSynced,
       recordsFailed,
       syncDuration,
       completedAt: new Date().toISOString(),
+      failedRecords,
+      protocolDiff,
     };
 
     const stmt = db.prepare(`
@@ -146,14 +163,34 @@ export class DeviceService {
   }
 
   syncDeviceData(userId: string, deviceId: string): Device | null {
+    const device = this.getDeviceById(userId, deviceId);
+    if (!device) return null;
+
     const recordsSynced = Math.floor(Math.random() * 100) + 200;
     const recordsFailed = Math.floor(Math.random() * 3);
     const syncDuration = Math.floor(Math.random() * 10) + 5;
+    const failedRecords = Array.from({ length: recordsFailed }, (_, i) => ({
+      type: ["heart_rate", "sleep_stage", "exercise_summary"][i % 3],
+      reason: ["GATT 特征值读取超时", "数据格式校验失败", "分包重组错误"][i % 3],
+      retryCount: Math.floor(Math.random() * 3),
+    }));
+    const protocolDiff = {
+      brand: device.brand,
+      standardCompliance: ["HRS 0.9", "HRS 1.0", "GATT 自定义"][Math.floor(Math.random() * 3)],
+      adaptationNotes: [
+        "厂商扩展命令已适配，心率广播间隔 1s",
+        "睡眠数据通过专有 UUID 获取，标准 HRS 不支持",
+        "运动轨迹采用 NMEA 0183 格式，需格式转换",
+      ][Math.floor(Math.random() * 3)],
+      featureGaps: recordsFailed > 0 ? ["部分数据类型需轮询获取"] : [],
+    };
     const syncResult = {
       recordsSynced,
       recordsFailed,
       syncDuration,
       completedAt: new Date().toISOString(),
+      failedRecords,
+      protocolDiff,
     };
 
     const stmt = db.prepare(`

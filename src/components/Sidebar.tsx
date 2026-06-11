@@ -6,6 +6,7 @@ import {
   HeartPulse,
   AlertTriangle,
   FileText,
+  Compass,
   Settings,
   Bell,
   User,
@@ -21,6 +22,8 @@ const navItems = [
   { path: "/vitals", label: "生理监测", icon: HeartPulse },
   { path: "/alerts", label: "预警中心", icon: AlertTriangle },
   { path: "/records", label: "健康档案", icon: FileText },
+  { path: "/discover", label: "发现分类", icon: Compass },
+  { path: "/profile", label: "个人中心", icon: User },
 ];
 
 export function Sidebar() {
@@ -79,7 +82,10 @@ export function Sidebar() {
       </nav>
 
       <div className="p-4 border-t border-vital-green-500/20">
-        <div className="flex items-center gap-3 px-2 py-3 rounded-lg hover:bg-vital-green-500/10 cursor-pointer transition-colors">
+        <NavLink
+          to="/profile"
+          className="flex items-center gap-3 px-2 py-3 rounded-lg hover:bg-vital-green-500/10 cursor-pointer transition-colors"
+        >
           <div className="w-9 h-9 rounded-full bg-gradient-to-br from-vital-green-400/20 to-vital-green-600/20 flex items-center justify-center border border-vital-green-500/30">
             <User className="w-5 h-5 text-vital-green-400" />
           </div>
@@ -89,7 +95,7 @@ export function Sidebar() {
           </div>
           <Bell className="w-5 h-5 text-deep-sea-200/60 hover:text-vital-green-400 cursor-pointer transition-colors" />
           <Settings className="w-5 h-5 text-deep-sea-200/60 hover:text-vital-green-400 cursor-pointer transition-colors" />
-        </div>
+        </NavLink>
       </div>
     </aside>
   );

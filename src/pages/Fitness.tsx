@@ -53,22 +53,32 @@ export function Fitness() {
   }));
 
   const planCompletionRate = exercisePlan?.completionRate ?? 0;
+
+  const dayCount = range === "7d" ? 7 : 30;
+  const plannedPerWeek = totalExercises > 0 ? totalExercises / 7 : 5;
+  const expectedForRange = Math.round(plannedPerWeek * (dayCount / 7));
+  const rangeCompletionRate = expectedForRange > 0
+    ? Math.min(100, Math.round((stats.count / expectedForRange) * 100))
+    : 0;
+
+  const hrvDays = Math.min(hrvTrend.length, dayCount);
   const recentHrvAvg = hrvTrend.length > 0
-    ? Math.round(hrvTrend.slice(-7).reduce((s, d) => s + d.hrv, 0) / Math.min(hrvTrend.length, 7))
+    ? Math.round(hrvTrend.slice(-dayCount).reduce((s, d) => s + d.hrv, 0) / Math.min(hrvTrend.length, dayCount))
     : 55;
+
   const recommendation = stats.count === 0
     ? `暂无运动数据。基于当前身体恢复状态（HRV约 ${recentHrvAvg} ms），建议从低强度有氧开始，逐步建立运动习惯。`
-    : planCompletionRate >= 70
-    ? `基于近${range === "7d" ? "7" : "30"}天 ${stats.count} 次运动记录和 ${Math.round(planCompletionRate)}% 的计划完成率，配合 HRV 恢复指数良好（${recentHrvAvg} ms），本周可适当增加有氧训练强度。`
-    : planCompletionRate >= 40
-    ? `近${range === "7d" ? "7" : "30"}天完成率 ${Math.round(planCompletionRate)}%，HRV ${recentHrvAvg} ms，建议保持当前训练节奏，优先保证动作质量和恢复时间。`
-    : `近${range === "7d" ? "7" : "30"}天完成率仅 ${Math.round(planCompletionRate)}%，建议简化本周计划，优先建立每日 30 分钟低强度运动习惯。`;
+    : rangeCompletionRate >= 70
+    ? `基于近${dayCount}天 ${stats.count} 次运动记录和 ${rangeCompletionRate}% 的周期完成率，配合 HRV 恢复指数良好（${recentHrvAvg} ms），本周可适当增加有氧训练强度。`
+    : rangeCompletionRate >= 40
+    ? `近${dayCount}天完成率 ${rangeCompletionRate}%，HRV ${recentHrvAvg} ms（来源：${hrvDays} 条记录），建议保持当前训练节奏，优先保证动作质量和恢复时间。`
+    : `近${dayCount}天完成率仅 ${rangeCompletionRate}%，建议简化本周计划，优先建立每日 30 分钟低强度运动习惯。`;
 
   const adaptiveReasoning = stats.count === 0
     ? "当前缺乏历史运动数据，推荐采用循序渐进策略，避免过度训练。"
     : recentHrvAvg >= 50
-    ? `近 ${range === "7d" ? "7" : "30"} 天 HRV 指数均值 ${recentHrvAvg} ms（来源：${Math.min(hrvTrend.length, 7)} 条记录），自主神经恢复良好。`
-    : `HRV 偏低（均值 ${recentHrvAvg} ms，来源：${Math.min(hrvTrend.length, 7)} 条记录），提示身体可能处于疲劳状态。`;
+    ? `近 ${dayCount} 天 HRV 指数均值 ${recentHrvAvg} ms（来源：${hrvDays} 条记录），自主神经恢复良好。`
+    : `HRV 偏低（均值 ${recentHrvAvg} ms，来源：${hrvDays} 条记录），提示身体可能处于疲劳状态。`;
 
   const completedExercises = exercisePlan?.dailyPlans.reduce(
     (sum, d) => sum + d.exercises.filter((e) => e.completed).length, 0
@@ -210,27 +220,27 @@ export function Fitness() {
           {detailExpanded ? "收起依据明细" : "展开依据明细"}
         </button>
         {detailExpanded && (
-          <div className="mt-3 p-3 rounded-lg bg-deep-sea-700/40 border border-vital-green-500/10 space-y-2">
-            <h4 className="text-xs font-semibold text-deep-sea-100 mb-2">推荐依据数据来源</h4>
+          <div className="mt-3 p-3 rounded-lg bg-deep-sea-700/40 border border-vital-green-500/10 space-y-3">
+            <h4 className="text-xs font-semibold text-deep-sea-100">推荐依据数据来源 <span className="text-deep-sea-200/40 font-normal">（{dayCount}天周期）</span></h4>
             <div className="grid grid-cols-3 gap-3 text-xs">
               <div className="p-2 rounded bg-deep-sea-600/30">
-                <p className="text-deep-sea-200/50 mb-1">运动完成率</p>
-                <p className="text-vital-green-400 font-din text-lg">{Math.round(planCompletionRate)}%</p>
-                <p className="text-deep-sea-200/40 mt-1">已完成 {completedExercises}/{totalExercises} 项</p>
+                <p className="text-deep-sea-200/50 mb-1">周期完成率</p>
+                <p className="text-vital-green-400 font-din text-lg">{rangeCompletionRate}%</p>
+                <p className="text-deep-sea-200/40 mt-1">实际 {stats.count} / 预期 {expectedForRange} 次</p>
               </div>
               <div className="p-2 rounded bg-deep-sea-600/30">
                 <p className="text-deep-sea-200/50 mb-1">HRV 恢复指数</p>
                 <p className="text-vital-green-400 font-din text-lg">{recentHrvAvg} ms</p>
-                <p className="text-deep-sea-200/40 mt-1">来源：{Math.min(hrvTrend.length, 7)} 条近 7 天记录</p>
+                <p className="text-deep-sea-200/40 mt-1">来源：{hrvDays} 条记录</p>
               </div>
               <div className="p-2 rounded bg-deep-sea-600/30">
-                <p className="text-deep-sea-200/50 mb-1">运动次数</p>
-                <p className="text-vital-green-400 font-din text-lg">{stats.count} 次</p>
-                <p className="text-deep-sea-200/40 mt-1">范围：近 {range === "7d" ? "7" : "30"} 天</p>
+                <p className="text-deep-sea-200/50 mb-1">周计划完成率</p>
+                <p className="text-vital-green-400 font-din text-lg">{Math.round(planCompletionRate)}%</p>
+                <p className="text-deep-sea-200/40 mt-1">已完成 {completedExercises}/{totalExercises} 项</p>
               </div>
             </div>
-            <div className="text-xs text-deep-sea-200/30 pt-1 border-t border-deep-sea-400/10">
-              推荐逻辑：完成率 ≥ 70% + HRV ≥ 50ms → 增加强度 | 完成率 40-70% → 维持 | 完成率 &lt; 40% → 降低强度
+            <div className="text-xs text-deep-sea-200/30 pt-2 border-t border-deep-sea-400/10">
+              推荐逻辑：周期完成率 ≥ 70% + HRV ≥ 50ms → 增加强度 | 40-70% → 维持节奏 | &lt; 40% → 降低强度
             </div>
           </div>
         )}
