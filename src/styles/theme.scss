@@ -60,7 +60,9 @@ $spacing-3xl: 56rpx;
 $spacing-4xl: 64rpx;
 $spacing-6xl: 96rpx;
 $radius-full: 999rpx;
+$shadow-sm: 0 2rpx 8rpx rgba(0, 0, 0, 0.06);
 $shadow-md: 0 4rpx 16rpx rgba(0, 0, 0, 0.1);
+$shadow-lg: 0 8rpx 24rpx rgba(0, 0, 0, 0.12);
 
 @mixin font-title-large {
   font-size: 36rpx;

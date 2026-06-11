@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useCallback } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { View, Text, ScrollView } from '@tarojs/components';
 import Taro, { useDidShow } from '@tarojs/taro';
 import classnames from 'classnames';
@@ -13,7 +13,6 @@ import { waybillService } from '@/services/waybill';
 import { cainiaoService } from '@/services/cainiao';
 import type { DailyStats, TaskWarning, TaskHeatmapPoint, Geofence } from '@/types/task';
 import type { QuickActionItem } from '@/components/QuickAction';
-import type { SyncStatus } from '@/services/cainiao';
 
 interface ComplianceStats {
   pendingWaybills: number;
@@ -30,113 +29,56 @@ interface ComplianceStats {
   lastHashVerifyTime: number | null;
 }
 
-interface WorkflowStep {
-  key: string;
-  label: string;
-  icon: string;
-  count: number;
-  status: 'pending' | 'active' | 'completed' | 'exception';
-  path?: string;
-}
-
 const HomePage: React.FC = () => {
   const [loading, setLoading] = useState(false);
   const [stats, setStats] = useState<DailyStats | null>(null);
   const [warnings, setWarnings] = useState<TaskWarning[]>([]);
   const [offlineCount, setOfflineCount] = useState({ pickup: 0, delivery: 0 });
   const [isOnline, setIsOnline] = useState(true);
-  const [syncStatus, setSyncStatus] = useState<SyncStatus | null>(null);
+  const [isCainiaoAuth, setIsCainiaoAuth] = useState(false);
+  const [cainiaoPending, setCainiaoPending] = useState(0);
   const [complianceStats, setComplianceStats] = useState<ComplianceStats | null>(null);
   const [pendingTasks, setPendingTasks] = useState<{ type: string; count: number; description: string }[]>([]);
   const [fences, setFences] = useState<Geofence[]>([]);
   const [selectedFenceId, setSelectedFenceId] = useState('');
+  const [lastSyncTime, setLastSyncTime] = useState<number | null>(null);
 
   const { user, site } = useUserStore();
-  const { heatmapPoints, pickupTasks, deliveryTasks, exceptions, getHeatmapPoints } = useTaskStore();
-
-  const workflowSteps: WorkflowStep[] = React.useMemo(() => {
-    if (!stats) return [];
-    return [
-      {
-        key: 'pickup',
-        label: '揽件',
-        icon: '📦',
-        count: stats.completedPickup,
-        status: stats.completedPickup > 0 ? 'active' : 'pending',
-        path: '/pages/dispatch/index?tab=pickup'
-      },
-      {
-        key: 'ebill',
-        label: '电子面单',
-        icon: '🧾',
-        count: stats.completedPickup - (complianceStats?.pendingEbill || 0),
-        status: stats.completedPickup > 0 ? 'completed' : 'pending',
-        path: '/pages/archive/index?type=ebill'
-      },
-      {
-        key: 'delivery',
-        label: '派送',
-        icon: '🚚',
-        count: stats.totalDelivery,
-        status: stats.completedDelivery > 0 ? 'active' : 'pending',
-        path: '/pages/dispatch/index?tab=delivery'
-      },
-      {
-        key: 'sign',
-        label: '签收',
-        icon: '✅',
-        count: stats.completedDelivery,
-        status: stats.completedDelivery > 0 ? 'completed' : 'pending',
-        path: '/pages/scan/index?type=station'
-      },
-      {
-        key: 'exception',
-        label: '异常',
-        icon: '⚠️',
-        count: stats.exceptionCount,
-        status: stats.exceptionCount > 0 ? 'exception' : 'completed',
-        path: '/pages/exception/index'
-      },
-      {
-        key: 'archive',
-        label: '归档存证',
-        icon: '🔒',
-        count: complianceStats?.totalArchives || 0,
-        status: (complianceStats?.totalArchives || 0) > 0 ? 'completed' : 'pending',
-        path: '/pages/archive/index'
-      }
-    ];
-  }, [stats, complianceStats]);
+  const { heatmapPoints, getHeatmapPoints } = useTaskStore();
 
   const loadData = useCallback(async () => {
     setLoading(true);
     try {
-      const [statsData, warningsData, offlineData, syncData, complianceData, pendingTasksData, fencesData] = await Promise.all([
+      const [statsData, warningsData, offlineData, compData, pendingData, fencesData] = await Promise.all([
         taskService.getDailyStats(),
         taskService.getWarnings(),
         waybillService.getOfflinePendingCount(),
-        cainiaoService.getSyncStatus(),
         taskService.getComplianceStats(),
         taskService.getPendingTasks(),
         taskService.getGeofences(),
         getHeatmapPoints()
       ]);
 
-      const unreadOvertimeWarnings = warningsData.filter(w => !w.isRead && w.type === 'overtime');
+      const unreadOvertime = warningsData.filter(w => !w.isRead && w.type === 'overtime');
 
       setStats({
         ...statsData,
-        overtimeCount: unreadOvertimeWarnings.length
+        overtimeCount: unreadOvertime.length
       });
       setWarnings(warningsData.filter(w => !w.isRead).slice(0, 3));
       setOfflineCount(offlineData);
-      setSyncStatus(syncData);
-      setComplianceStats(complianceData);
-      setPendingTasks(pendingTasksData);
+      setComplianceStats(compData);
+      setPendingTasks(pendingData);
       setFences(fencesData);
+      setIsCainiaoAuth(!!cainiaoService.getConfig().token);
+
+      const syncStatus = cainiaoService.getSyncStatus();
+      setCainiaoPending(syncStatus.pendingPush + syncStatus.pendingException);
+      setLastSyncTime(syncStatus.lastSyncTime);
+
       setIsOnline(navigator.onLine);
     } catch (e) {
-      console.error('[HomePage] 加载数据失败:', e);
+      console.error('[HomePage] 加载失败:', e);
       Taro.showToast({ title: '加载失败', icon: 'none' });
     } finally {
       setLoading(false);
@@ -149,7 +91,6 @@ const HomePage: React.FC = () => {
 
     const handleOnline = () => setIsOnline(true);
     const handleOffline = () => setIsOnline(false);
-
     window.addEventListener('online', handleOnline);
     window.addEventListener('offline', handleOffline);
 
@@ -163,221 +104,12 @@ const HomePage: React.FC = () => {
     loadData();
   });
 
-  const handlePullDownRefresh = () => {
-    loadData();
-  };
+  const handlePullDownRefresh = () => loadData();
 
   useEffect(() => {
     Taro.eventCenter.on('onPullDownRefresh', handlePullDownRefresh);
-    return () => {
-      Taro.eventCenter.off('onPullDownRefresh', handlePullDownRefresh);
-    };
+    return () => Taro.eventCenter.off('onPullDownRefresh', handlePullDownRefresh);
   }, [handlePullDownRefresh]);
-
-  const quickActions: QuickActionItem[] = React.useMemo(() => {
-    const getPendingCount = (type: string) => {
-      const task = pendingTasks.find(t => t.type === type);
-      return task?.count || 0;
-    };
-
-    const cainiaoBadge = syncStatus ? syncStatus.pendingPush + syncStatus.pendingException : 0;
-    const cainiaoSubtitle = syncStatus?.isAuthorized
-      ? (syncStatus.lastSyncTime
-        ? `${formatTimeShort(syncStatus.lastSyncTime)}同步`
-        : '待同步')
-      : '未授权';
-
-    const logSubtitle = complianceStats
-      ? `${complianceStats.todayLogs}条·${complianceStats.verifiedArchives}份存证`
-      : '合规留痕';
-
-    return [
-      {
-        id: 'scan_pickup',
-        title: '扫码揽件',
-        subtitle: offlineCount.pickup > 0 ? `${offlineCount.pickup}单待同步` : '离线可用',
-        icon: '📦',
-        color: 'primary',
-        path: '/pages/scan/index?type=pickup',
-        badge: offlineCount.pickup
-      },
-      {
-        id: 'scan_delivery',
-        title: '扫码派送',
-        subtitle: '电子签收',
-        icon: '🚚',
-        color: 'success',
-        path: '/pages/scan/index?type=delivery',
-        badge: offlineCount.delivery
-      },
-      {
-        id: 'station_sign',
-        title: '驿站签收',
-        subtitle: '批量扫码',
-        icon: '🏪',
-        color: 'purple',
-        path: '/pages/scan/index?type=station'
-      },
-      {
-        id: 'exception_report',
-        title: '异常上报',
-        subtitle: '拍照取证',
-        icon: '⚠️',
-        color: 'warning',
-        path: '/pages/exception-report/index'
-      },
-      {
-        id: 'pending_waybills',
-        title: '待处理运单',
-        subtitle: `${getPendingCount('waybill')}单待处理`,
-        icon: '📋',
-        color: 'primary',
-        path: '/pages/dispatch/index',
-        badge: getPendingCount('waybill')
-      },
-      {
-        id: 'ebill_link',
-        title: '电子面单',
-        subtitle: `${getPendingCount('ebill')}单待关联`,
-        icon: '🧾',
-        color: 'success',
-        path: '/pages/archive/index?type=ebill',
-        badge: getPendingCount('ebill')
-      },
-      {
-        id: 'evidence_review',
-        title: '取证原因',
-        subtitle: `${getPendingCount('evidence')}条待确认`,
-        icon: '📸',
-        color: 'warning',
-        path: '/pages/exception/index?filter=pending',
-        badge: getPendingCount('evidence')
-      },
-      {
-        id: 'fence_check',
-        title: '围栏校验',
-        subtitle: `${getPendingCount('fence')}条待复核`,
-        icon: '🛡️',
-        color: 'checkin',
-        path: '/pages/checkin/index?tab=fence',
-        badge: getPendingCount('fence')
-      },
-      {
-        id: 'compliance_review',
-        title: '合规留痕',
-        subtitle: `${getPendingCount('compliance')}条待确认`,
-        icon: '✅',
-        color: 'primary',
-        path: '/pages/operation-log/index?module=compliance',
-        badge: getPendingCount('compliance')
-      },
-      {
-        id: 'checkin',
-        title: '考勤打卡',
-        subtitle: '围栏验证',
-        icon: '📍',
-        color: 'primary',
-        path: '/pages/checkin/index'
-      },
-      {
-        id: 'cainiao_sync',
-        title: '菜鸟同步',
-        subtitle: cainiaoSubtitle,
-        icon: syncStatus?.isAuthorized ? '🔄' : '🔒',
-        color: 'purple',
-        path: '',
-        badge: cainiaoBadge
-      },
-      {
-        id: 'operation_log',
-        title: '操作日志',
-        subtitle: logSubtitle,
-        icon: '📋',
-        color: 'warning',
-        path: '/pages/operation-log/index'
-      }
-    ];
-  }, [offlineCount, syncStatus, complianceStats, pendingTasks]);
-
-  const handleQuickActionClick = async (item: QuickActionItem) => {
-    if (item.id === 'cainiao_sync') {
-      if (user) {
-        if (!syncStatus?.isAuthorized) {
-          const res = await cainiaoService.auth(user.id, user.name);
-          if (res) {
-            loadData();
-          }
-        } else {
-          await cainiaoService.syncAll(user.id, user.name);
-          loadData();
-        }
-      }
-      return;
-    }
-
-    if (item.id === 'compliance_review' || item.id === 'operation_log') {
-      Taro.navigateTo({
-        url: `/pages/operation-log/index?module=${item.id === 'compliance_review' ? 'compliance' : 'all'}`
-      });
-      return;
-    }
-
-    if (item.id === 'ebill_link') {
-      Taro.navigateTo({
-        url: '/pages/archive/index?type=ebill'
-      });
-      return;
-    }
-
-    if (item.id === 'evidence_review') {
-      Taro.switchTab({
-        url: '/pages/exception/index'
-      });
-      return;
-    }
-
-    if (item.id === 'fence_check') {
-      Taro.navigateTo({
-        url: '/pages/checkin/index?tab=fence'
-      });
-      return;
-    }
-
-    if (item.id === 'pending_waybills') {
-      Taro.switchTab({
-        url: '/pages/dispatch/index'
-      });
-      return;
-    }
-
-    if (item.path) {
-      Taro.navigateTo({ url: item.path });
-    }
-  };
-
-  const formatTimeShort = (timestamp: number): string => {
-    const now = Date.now();
-    const diff = now - timestamp;
-    if (diff < 3600000) {
-      return `${Math.floor(diff / 60000)}分钟前`;
-    } else if (diff < 86400000) {
-      return `${Math.floor(diff / 3600000)}小时前`;
-    } else {
-      return '今日';
-    }
-  };
-
-  const formatTime = (timestamp: number): string => {
-    const now = Date.now();
-    const diff = now - timestamp;
-    if (diff < 3600000) {
-      return `${Math.floor(diff / 60000)}分钟前`;
-    } else if (diff < 86400000) {
-      return `${Math.floor(diff / 3600000)}小时前`;
-    } else {
-      return `${Math.floor(diff / 86400000)}天前`;
-    }
-  };
 
   const getGreeting = (): string => {
     const hour = new Date().getHours();
@@ -390,16 +122,175 @@ const HomePage: React.FC = () => {
     return '夜深了';
   };
 
+  const formatTime = (timestamp: number): string => {
+    const diff = Date.now() - timestamp;
+    if (diff < 3600000) return `${Math.floor(diff / 60000)}分钟前`;
+    if (diff < 86400000) return `${Math.floor(diff / 3600000)}小时前`;
+    return `${Math.floor(diff / 86400000)}天前`;
+  };
+
+  const getPendingCount = (type: string): number => {
+    const task = pendingTasks.find(t => t.type === type);
+    return task?.count || 0;
+  };
+
+  const quickActions: QuickActionItem[] = [
+    {
+      id: 'scan_pickup',
+      title: '扫码揽件',
+      subtitle: offlineCount.pickup > 0 ? `${offlineCount.pickup}单待同步` : '离线可用',
+      icon: '📦',
+      color: 'primary',
+      path: '/pages/scan/index?type=pickup',
+      badge: offlineCount.pickup
+    },
+    {
+      id: 'scan_delivery',
+      title: '扫码派送',
+      subtitle: '电子签收',
+      icon: '🚚',
+      color: 'success',
+      path: '/pages/scan/index?type=delivery',
+      badge: offlineCount.delivery
+    },
+    {
+      id: 'station_sign',
+      title: '驿站签收',
+      subtitle: '批量扫码',
+      icon: '🏪',
+      color: 'purple',
+      path: '/pages/scan/index?type=station'
+    },
+    {
+      id: 'exception_report',
+      title: '异常上报',
+      subtitle: '拍照取证',
+      icon: '⚠️',
+      color: 'warning',
+      path: '/pages/exception-report/index'
+    },
+    {
+      id: 'pending_waybills',
+      title: '待处理运单',
+      subtitle: `${getPendingCount('waybill')}单待处理`,
+      icon: '📋',
+      color: 'primary',
+      path: '/pages/dispatch/index',
+      badge: getPendingCount('waybill')
+    },
+    {
+      id: 'ebill_link',
+      title: '电子面单',
+      subtitle: `${getPendingCount('ebill')}单待关联`,
+      icon: '🧾',
+      color: 'success',
+      path: '/pages/archive/index?type=ebill',
+      badge: getPendingCount('ebill')
+    },
+    {
+      id: 'evidence_review',
+      title: '取证原因',
+      subtitle: `${getPendingCount('evidence')}条待确认`,
+      icon: '📸',
+      color: 'warning',
+      path: '/pages/exception/index?filter=pending',
+      badge: getPendingCount('evidence')
+    },
+    {
+      id: 'fence_check',
+      title: '围栏校验',
+      subtitle: `${getPendingCount('fence')}条待复核`,
+      icon: '🛡️',
+      color: 'checkin',
+      path: '/pages/checkin/index?tab=fence',
+      badge: getPendingCount('fence')
+    },
+    {
+      id: 'compliance_review',
+      title: '合规留痕',
+      subtitle: `${getPendingCount('compliance')}条待确认`,
+      icon: '✅',
+      color: 'primary',
+      path: '/pages/operation-log/index?module=compliance',
+      badge: getPendingCount('compliance')
+    },
+    {
+      id: 'checkin',
+      title: '考勤打卡',
+      subtitle: '围栏验证',
+      icon: '📍',
+      color: 'primary',
+      path: '/pages/checkin/index'
+    },
+    {
+      id: 'cainiao_sync',
+      title: '菜鸟同步',
+      subtitle: isCainiaoAuth ? (lastSyncTime ? `${formatTime(lastSyncTime)}同步` : '待同步') : '未授权',
+      icon: isCainiaoAuth ? '🔄' : '🔒',
+      color: 'purple',
+      path: '',
+      badge: cainiaoPending
+    },
+    {
+      id: 'operation_log',
+      title: '操作日志',
+      subtitle: complianceStats ? `${complianceStats.todayLogs}条记录` : '合规留痕',
+      icon: '📋',
+      color: 'warning',
+      path: '/pages/operation-log/index'
+    }
+  ];
+
+  const handleQuickAction = async (item: QuickActionItem) => {
+    if (item.id === 'cainiao_sync') {
+      if (user) {
+        if (!isCainiaoAuth) {
+          const res = await cainiaoService.auth(user.id, user.name);
+          if (res) {
+            setIsCainiaoAuth(true);
+            loadData();
+          }
+        } else {
+          await cainiaoService.syncAll(user.id, user.name);
+          loadData();
+        }
+      }
+      return;
+    }
+
+    if (item.id === 'compliance_review') {
+      Taro.navigateTo({ url: '/pages/operation-log/index?module=compliance' });
+      return;
+    }
+    if (item.id === 'evidence_review') {
+      Taro.switchTab({ url: '/pages/exception/index' });
+      return;
+    }
+    if (item.id === 'fence_check') {
+      Taro.navigateTo({ url: '/pages/checkin/index?tab=fence' });
+      return;
+    }
+    if (item.id === 'pending_waybills') {
+      Taro.switchTab({ url: '/pages/dispatch/index' });
+      return;
+    }
+    if (item.id === 'ebill_link') {
+      Taro.navigateTo({ url: '/pages/archive/index?type=ebill' });
+      return;
+    }
+
+    if (item.path) {
+      Taro.navigateTo({ url: item.path });
+    }
+  };
+
   const handleWarningClick = async (warning: TaskWarning) => {
     if (user) {
       await taskService.markWarningRead(warning.id, user.id, user.name);
       loadData();
     }
-
     if (warning.waybillNo) {
-      Taro.navigateTo({
-        url: `/pages/waybill-detail/index?waybillNo=${warning.waybillNo}`
-      });
+      Taro.navigateTo({ url: `/pages/waybill-detail/index?waybillNo=${warning.waybillNo}` });
     }
   };
 
@@ -413,7 +304,32 @@ const HomePage: React.FC = () => {
     loadData();
   };
 
-  const handleWorkflowStepClick = (step: WorkflowStep) => {
+  const handlePointClick = (point: TaskHeatmapPoint) => {
+    console.log('[HomePage] 点击热力点:', point);
+  };
+
+  const handleFenceSelect = (fence: Geofence) => {
+    setSelectedFenceId(fence.id === selectedFenceId ? '' : fence.id);
+    Taro.showToast({ title: `已选择围栏：${fence.name}`, icon: 'none' });
+  };
+
+  const handleDispatchAction = (type: string) => {
+    Taro.showToast({ title: `${type}调度功能`, icon: 'none' });
+  };
+
+  const totalOffline = offlineCount.pickup + offlineCount.delivery + cainiaoPending;
+  const totalPending = pendingTasks.reduce((acc, t) => acc + t.count, 0);
+
+  const workflowSteps = [
+    { key: 'pickup', label: '揽件', icon: '📦', count: stats?.completedPickup || 0, status: stats?.completedPickup ? 'active' : 'pending', path: '/pages/dispatch/index?tab=pickup' },
+    { key: 'ebill', label: '电子面单', icon: '🧾', count: (stats?.completedPickup || 0) - (complianceStats?.pendingEbill || 0), status: stats?.completedPickup ? 'completed' : 'pending', path: '/pages/archive/index?type=ebill' },
+    { key: 'delivery', label: '派送', icon: '🚚', count: stats?.totalDelivery || 0, status: stats?.completedDelivery ? 'active' : 'pending', path: '/pages/dispatch/index?tab=delivery' },
+    { key: 'sign', label: '签收', icon: '✅', count: stats?.completedDelivery || 0, status: stats?.completedDelivery ? 'completed' : 'pending', path: '/pages/scan/index?type=station' },
+    { key: 'exception', label: '异常', icon: '⚠️', count: stats?.exceptionCount || 0, status: stats?.exceptionCount ? 'exception' : 'completed', path: '/pages/exception/index' },
+    { key: 'archive', label: '归档存证', icon: '🔒', count: complianceStats?.totalArchives || 0, status: complianceStats?.totalArchives ? 'completed' : 'pending', path: '/pages/archive/index' }
+  ];
+
+  const handleWorkflowClick = (step: typeof workflowSteps[0]) => {
     if (step.path) {
       if (step.key === 'delivery' || step.key === 'pickup') {
         Taro.switchTab({ url: '/pages/dispatch/index' });
@@ -424,37 +340,6 @@ const HomePage: React.FC = () => {
       }
     }
   };
-
-  const handleViewAllWarnings = () => {
-    Taro.switchTab({ url: '/pages/exception/index' });
-  };
-
-  const handleViewAllDispatch = () => {
-    Taro.switchTab({ url: '/pages/dispatch/index' });
-  };
-
-  const handleDispatchAction = (type: string) => {
-    Taro.showToast({
-      title: `${type}调度功能`,
-      icon: 'none'
-    });
-  };
-
-  const handlePointClick = (point: TaskHeatmapPoint) => {
-    console.log('[HomePage] 点击热力点:', point);
-  };
-
-  const handleFenceSelect = (fence: Geofence) => {
-    setSelectedFenceId(fence.id === selectedFenceId ? '' : fence.id);
-    Taro.showToast({
-      title: `已选择围栏：${fence.name}`,
-      icon: 'none'
-    });
-  };
-
-  const totalOffline = offlineCount.pickup + offlineCount.delivery + (syncStatus?.pendingPush || 0) + (syncStatus?.pendingException || 0);
-  const totalPending = pendingTasks.reduce((acc, t) => acc + t.count, 0);
-  const isCainiaoAuthorized = syncStatus?.isAuthorized || false;
 
   return (
     <ScrollView
@@ -496,7 +381,7 @@ const HomePage: React.FC = () => {
                 {index > 0 && <View className={styles.workflowConnector} />}
                 <View
                   className={classnames(styles.workflowNode, styles[`step${step.status.charAt(0).toUpperCase() + step.status.slice(1)}`])}
-                  onClick={() => handleWorkflowStepClick(step)}
+                  onClick={() => handleWorkflowClick(step)}
                 >
                   <Text className={styles.workflowIcon}>{step.icon}</Text>
                   <Text className={styles.workflowCount}>{step.count}</Text>
@@ -546,9 +431,7 @@ const HomePage: React.FC = () => {
         <View className={styles.syncBar}>
           <View className={styles.syncInfo}>
             <Text className={styles.syncIcon}>📡</Text>
-            <Text className={styles.syncText}>
-              {totalOffline}条数据待同步
-            </Text>
+            <Text className={styles.syncText}>{totalOffline}条数据待同步</Text>
           </View>
           <View className={styles.syncBtn} onClick={handleSyncClick}>
             <Text>立即同步</Text>
@@ -556,80 +439,53 @@ const HomePage: React.FC = () => {
         </View>
       )}
 
-      {syncStatus && (
-        <View className={classnames(styles.complianceStatusBar, {
-          [styles.complianceUnauthorized]: !isCainiaoAuthorized
-        })}>
-          <View className={styles.statusBarTitle}>
-            <Text className={styles.statusBarTitleText}>
+      {complianceStats && (
+        <View className={classnames(styles.complianceBar, { [styles.unauthorized]: !isCainiaoAuth })}>
+          <View className={styles.complianceHeader}>
+            <Text className={styles.complianceTitle}>
               📊 合规管控状态
-              {!isCainiaoAuthorized && <Text className={styles.statusTag}>本地模式</Text>}
+              {!isCainiaoAuth && <Text className={styles.modeTag}>本地模式</Text>}
             </Text>
-            <Text className={styles.statusBarAction} onClick={() => Taro.navigateTo({ url: '/pages/archive/index' })}>
+            <Text className={styles.complianceAction} onClick={() => Taro.navigateTo({ url: '/pages/archive/index' })}>
               合规详情 →
             </Text>
           </View>
-          <View className={styles.statusGrid}>
-            <View className={styles.statusItem}>
-              <Text className={styles.statusItemIcon}>🔄</Text>
-              <View className={styles.statusItemInfo}>
-                <Text className={styles.statusItemLabel}>菜鸟同步</Text>
-                <Text className={classnames(styles.statusItemValue, styles[syncStatus.syncStatus])}>
-                  {syncStatus.isAuthorized
-                    ? (syncStatus.syncStatus === 'syncing' ? '同步中...'
-                      : syncStatus.syncStatus === 'success' ? '已同步'
-                      : syncStatus.syncStatus === 'failed' ? '同步失败'
-                      : `${syncStatus.todayPulled + syncStatus.todayPushed}条`)
-                    : '未授权(本地)'}
-                </Text>
-              </View>
-              {syncStatus.pendingPush + syncStatus.pendingException > 0 && (
-                <View className={styles.statusItemBadge}>
-                  <Text>{syncStatus.pendingPush + syncStatus.pendingException}</Text>
-                </View>
-              )}
+          <View className={styles.complianceGrid}>
+            <View className={styles.compItem}>
+              <Text className={styles.compIcon}>🔄</Text>
+              <Text className={styles.compLabel}>菜鸟同步</Text>
+              <Text className={classnames(styles.compValue, isCainiaoAuth ? styles.syncActive : styles.syncIdle)}>
+                {isCainiaoAuth ? '已授权' : '未授权(本地)'}
+              </Text>
+              {cainiaoPending > 0 && <View className={styles.compBadge}><Text>{cainiaoPending}</Text></View>}
             </View>
-            <View className={styles.statusItem}>
-              <Text className={styles.statusItemIcon}>📦</Text>
-              <View className={styles.statusItemInfo}>
-                <Text className={styles.statusItemLabel}>运单池</Text>
-                <Text className={styles.statusItemValue}>
-                  {complianceStats?.totalArchives || 0}单
-                </Text>
-              </View>
+            <View className={styles.compItem}>
+              <Text className={styles.compIcon}>📦</Text>
+              <Text className={styles.compLabel}>运单池</Text>
+              <Text className={styles.compValue}>{complianceStats.totalArchives}单</Text>
             </View>
-            <View className={styles.statusItem}>
-              <Text className={styles.statusItemIcon}>🔒</Text>
-              <View className={styles.statusItemInfo}>
-                <Text className={styles.statusItemLabel}>司法存证</Text>
-                <Text className={styles.statusItemValue}>
-                  {complianceStats?.verifiedArchives || 0}份
-                </Text>
-              </View>
+            <View className={styles.compItem}>
+              <Text className={styles.compIcon}>🔒</Text>
+              <Text className={styles.compLabel}>司法存证</Text>
+              <Text className={styles.compValue}>{complianceStats.verifiedArchives}份</Text>
             </View>
-            <View className={styles.statusItem}>
-              <Text className={styles.statusItemIcon}>🧾</Text>
-              <View className={styles.statusItemInfo}>
-                <Text className={styles.statusItemLabel}>合规留痕</Text>
-                <Text className={styles.statusItemValue}>
-                  {complianceStats?.todayLogs || 0}条
-                </Text>
-              </View>
-              {complianceStats?.criticalLogs && complianceStats.criticalLogs > 0 && (
-                <View className={classnames(styles.statusItemBadge, styles.danger)}>
-                  <Text>{complianceStats.criticalLogs}</Text>
-                </View>
+            <View className={styles.compItem}>
+              <Text className={styles.compIcon}>🧾</Text>
+              <Text className={styles.compLabel}>合规留痕</Text>
+              <Text className={styles.compValue}>{complianceStats.todayLogs}条</Text>
+              {complianceStats.criticalLogs > 0 && (
+                <View className={classnames(styles.compBadge, styles.danger)}><Text>{complianceStats.criticalLogs}</Text></View>
               )}
             </View>
           </View>
-          {complianceStats?.lastArchiveTime && (
-            <View className={styles.statusFooter}>
-              <Text className={styles.statusFooterText}>
-                最近归档: {formatTimeShort(complianceStats.lastArchiveTime)} ·{' '}
-                {complianceStats.lastHashVerifyTime ? `哈希校验: ${formatTimeShort(complianceStats.lastHashVerifyTime)}` : '待校验'}
+          {complianceStats.lastArchiveTime && (
+            <View className={styles.complianceFooter}>
+              <Text className={styles.compFooterText}>
+                最近归档: {formatTime(complianceStats.lastArchiveTime)} ·{' '}
+                {complianceStats.lastHashVerifyTime ? `哈希校验: ${formatTime(complianceStats.lastHashVerifyTime)}` : '待校验'}
               </Text>
               <Text
-                className={styles.statusFooterLink}
+                className={styles.compFooterLink}
                 onClick={() => Taro.navigateTo({ url: '/pages/operation-log/index?module=review' })}
               >
                 复查记录 →
@@ -640,23 +496,21 @@ const HomePage: React.FC = () => {
       )}
 
       {totalPending > 0 && (
-        <View className={styles.pendingTasksBar}>
-          <View className={styles.pendingTasksTitle}>
-            <Text className={styles.pendingTasksIcon}>⏳</Text>
-            <Text className={styles.pendingTasksTitleText}>待处理事项</Text>
-            <View className={styles.pendingTasksTotal}>
-              <Text>{totalPending}项</Text>
-            </View>
+        <View className={styles.pendingBar}>
+          <View className={styles.pendingHeader}>
+            <Text className={styles.pendingIcon}>⏳</Text>
+            <Text className={styles.pendingTitle}>待处理事项</Text>
+            <View className={styles.pendingTotal}><Text>{totalPending}项</Text></View>
           </View>
-          <ScrollView scrollX className={styles.pendingTasksScroll}>
+          <ScrollView scrollX className={styles.pendingScroll}>
             {pendingTasks.filter(t => t.count > 0).map(task => (
               <View
                 key={task.type}
-                className={styles.pendingTaskItem}
-                onClick={() => handleQuickActionClick({ id: task.type, path: '', title: task.description, icon: '⏳', color: 'primary' } as QuickActionItem)}
+                className={styles.pendingItem}
+                onClick={() => handleQuickAction({ id: task.type, path: '', title: task.description, icon: '⏳', color: 'primary' } as QuickActionItem)}
               >
-                <Text className={styles.pendingTaskCount}>{task.count}</Text>
-                <Text className={styles.pendingTaskDesc}>{task.description}</Text>
+                <Text className={styles.pendingCount}>{task.count}</Text>
+                <Text className={styles.pendingDesc}>{task.description}</Text>
               </View>
             ))}
           </ScrollView>
@@ -670,41 +524,35 @@ const HomePage: React.FC = () => {
             全部任务 →
           </Text>
         </View>
-        <QuickAction
-          items={quickActions}
-          columns={4}
-          onItemClick={handleQuickActionClick}
-        />
+        <QuickAction items={quickActions} columns={4} onItemClick={handleQuickAction} />
       </View>
 
       <View className={styles.section}>
         <View className={styles.sectionHeader}>
           <Text className={styles.sectionTitle}>任务热力图</Text>
-          <Text className={styles.sectionAction} onClick={handleViewAllDispatch}>
+          <Text className={styles.sectionAction} onClick={() => Taro.switchTab({ url: '/pages/dispatch/index' })}>
             调度详情 →
           </Text>
         </View>
-        <View className={styles.heatmapContainer}>
-          <HeatmapView
-            points={heatmapPoints}
-            fences={fences}
-            height={400}
-            showDimensionSwitch={true}
-            showStatusFilter={true}
-            showDispatchPanel={true}
-            selectedFenceId={selectedFenceId}
-            onPointClick={handlePointClick}
-            onFenceSelect={handleFenceSelect}
-            onDispatch={handleDispatchAction}
-            onViewAll={handleViewAllDispatch}
-          />
-        </View>
+        <HeatmapView
+          points={heatmapPoints}
+          fences={fences}
+          height={400}
+          showDimensionSwitch={true}
+          showStatusFilter={true}
+          showDispatchPanel={true}
+          selectedFenceId={selectedFenceId}
+          onPointClick={handlePointClick}
+          onFenceSelect={handleFenceSelect}
+          onDispatch={handleDispatchAction}
+          onViewAll={() => Taro.switchTab({ url: '/pages/dispatch/index' })}
+        />
       </View>
 
       <View className={styles.section}>
         <View className={styles.sectionHeader}>
           <Text className={styles.sectionTitle}>预警提醒</Text>
-          <Text className={styles.sectionAction} onClick={handleViewAllWarnings}>
+          <Text className={styles.sectionAction} onClick={() => Taro.switchTab({ url: '/pages/exception/index' })}>
             全部预警 →
           </Text>
         </View>
@@ -727,7 +575,7 @@ const HomePage: React.FC = () => {
               </View>
             ))
           ) : (
-            <View className={styles.empty}>
+            <View className={styles.emptyTip}>
               <Text>🎉 暂无预警提醒</Text>
             </View>
           )}
@@ -737,32 +585,17 @@ const HomePage: React.FC = () => {
       <View className={styles.section}>
         <View className={styles.sectionHeader}>
           <Text className={styles.sectionTitle}>工作统计</Text>
-          <Text
-            className={styles.sectionAction}
-            onClick={() => Taro.navigateTo({ url: '/pages/mine/index' })}
-          >
+          <Text className={styles.sectionAction} onClick={() => Taro.navigateTo({ url: '/pages/mine/index' })}>
             查看详情 →
           </Text>
         </View>
-        <View className={styles.statsGrid} style={{ marginTop: 0, padding: 0, marginBottom: 0 }}>
-          <StatCard
-            title="工作时长"
-            value={stats?.workingHours || 0}
-            unit="小时"
-            icon="⏱️"
-            color="primary"
-          />
-          <StatCard
-            title="行驶里程"
-            value={stats?.distance || 0}
-            unit="公里"
-            icon="🛣️"
-            color="success"
-          />
+        <View className={styles.miniStats}>
+          <StatCard title="工作时长" value={stats?.workingHours || 0} unit="小时" icon="⏱️" color="primary" />
+          <StatCard title="行驶里程" value={stats?.distance || 0} unit="公里" icon="🛣️" color="success" />
         </View>
       </View>
 
-      <View className={styles.bottomSpacing} />
+      <View className={styles.bottomSpace} />
     </ScrollView>
   );
 };

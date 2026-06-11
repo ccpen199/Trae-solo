@@ -7,6 +7,19 @@
   background: $color-bg-page;
 }
 
+.offlineBadge {
+  position: fixed;
+  top: 200rpx;
+  right: $spacing-lg;
+  padding: $spacing-sm $spacing-md;
+  background: $color-warning;
+  color: #fff;
+  border-radius: $radius-lg;
+  font-size: 24rpx;
+  z-index: 100;
+  box-shadow: $shadow-md;
+}
+
 .header {
   padding: $spacing-lg $spacing-lg $spacing-2xl;
   background: linear-gradient(135deg, $color-primary 0%, #4080ff 100%);
@@ -41,17 +54,20 @@
   font-size: 28rpx;
   opacity: 0.9;
   margin-bottom: $spacing-xs;
+  display: block;
 }
 
 .userName {
   font-size: 40rpx;
   font-weight: 600;
+  display: block;
 }
 
 .siteInfo {
   font-size: 24rpx;
   opacity: 0.8;
   margin-top: $spacing-xs;
+  display: block;
 }
 
 .onlineStatus {
@@ -84,7 +100,6 @@
   background: rgba(255, 255, 255, 0.15);
   border-radius: $radius-lg;
   padding: $spacing-md;
-  backdrop-filter: blur(10px);
 }
 
 .workflowTitle {
@@ -131,7 +146,6 @@
   justify-content: center;
   margin-bottom: $spacing-xs;
   transition: all $transition-base;
-  position: relative;
 
   &:active {
     transform: scale(1.1);
@@ -197,6 +211,248 @@
   z-index: 10;
 }
 
+.syncBar {
+  @include card-base;
+  padding: $spacing-md $spacing-lg;
+  margin: 0 $spacing-lg $spacing-lg;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: linear-gradient(135deg, #fff8e6 0%, #fff3cd 100%);
+  border: 2rpx solid rgba(255, 125, 0, 0.3);
+}
+
+.syncInfo {
+  display: flex;
+  align-items: center;
+  gap: $spacing-sm;
+}
+
+.syncIcon {
+  font-size: 32rpx;
+}
+
+.syncText {
+  font-size: 26rpx;
+  color: $color-exception;
+  font-weight: 500;
+}
+
+.syncBtn {
+  padding: $spacing-xs $spacing-md;
+  background: $color-exception;
+  color: #fff;
+  border-radius: $radius-md;
+  font-size: 24rpx;
+  font-weight: 500;
+
+  &:active {
+    opacity: 0.8;
+  }
+}
+
+.complianceBar {
+  @include card-base;
+  margin: 0 $spacing-lg $spacing-lg;
+  padding: $spacing-md;
+  background: linear-gradient(135deg, #f0f7ff 0%, #e8f4ff 100%);
+  border: 2rpx solid rgba(22, 93, 255, 0.2);
+}
+
+.complianceBar.unauthorized {
+  background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+  border-color: rgba(100, 100, 100, 0.2);
+
+  .complianceTitle {
+    color: $color-text-secondary;
+  }
+}
+
+.complianceHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: $spacing-md;
+}
+
+.complianceTitle {
+  font-size: 28rpx;
+  font-weight: 600;
+  color: $color-primary;
+}
+
+.modeTag {
+  display: inline-block;
+  margin-left: $spacing-xs;
+  padding: 4rpx 12rpx;
+  background: rgba(100, 100, 100, 0.1);
+  color: $color-text-secondary;
+  border-radius: $radius-sm;
+  font-size: 20rpx;
+  font-weight: 400;
+}
+
+.complianceAction {
+  font-size: 24rpx;
+  color: $color-primary;
+  font-weight: 500;
+}
+
+.complianceGrid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: $spacing-sm;
+  margin-bottom: $spacing-sm;
+}
+
+.compItem {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: $spacing-sm;
+  background: #fff;
+  border-radius: $radius-md;
+  position: relative;
+  box-shadow: $shadow-sm;
+}
+
+.compIcon {
+  font-size: 32rpx;
+  margin-bottom: $spacing-xs;
+}
+
+.compLabel {
+  font-size: 20rpx;
+  color: $color-text-secondary;
+  margin-bottom: 4rpx;
+}
+
+.compValue {
+  font-size: 26rpx;
+  font-weight: 600;
+  color: $color-text-primary;
+}
+
+.compValue.syncActive {
+  color: $color-delivery;
+}
+
+.compValue.syncIdle {
+  color: $color-text-secondary;
+}
+
+.compBadge {
+  position: absolute;
+  top: -8rpx;
+  right: -8rpx;
+  min-width: 36rpx;
+  height: 36rpx;
+  background: $color-exception;
+  color: #fff;
+  border-radius: 18rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 20rpx;
+  font-weight: 600;
+  padding: 0 8rpx;
+}
+
+.compBadge.danger {
+  background: $color-overtime;
+}
+
+.complianceFooter {
+  padding-top: $spacing-sm;
+  border-top: 2rpx dashed rgba(22, 93, 255, 0.2);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.compFooterText {
+  font-size: 22rpx;
+  color: $color-text-secondary;
+}
+
+.compFooterLink {
+  font-size: 22rpx;
+  color: $color-primary;
+  font-weight: 500;
+}
+
+.pendingBar {
+  @include card-base;
+  margin: 0 $spacing-lg $spacing-lg;
+  padding: $spacing-md;
+  background: #fff8e6;
+  border: 2rpx solid rgba(255, 125, 0, 0.3);
+}
+
+.pendingHeader {
+  display: flex;
+  align-items: center;
+  gap: $spacing-xs;
+  margin-bottom: $spacing-sm;
+}
+
+.pendingIcon {
+  font-size: 28rpx;
+}
+
+.pendingTitle {
+  font-size: 28rpx;
+  font-weight: 600;
+  color: $color-exception;
+  flex: 1;
+}
+
+.pendingTotal {
+  padding: 4rpx 16rpx;
+  background: $color-exception;
+  color: #fff;
+  border-radius: 20rpx;
+  font-size: 22rpx;
+  font-weight: 600;
+}
+
+.pendingScroll {
+  white-space: nowrap;
+}
+
+.pendingItem {
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  padding: $spacing-sm $spacing-md;
+  background: #fff;
+  border-radius: $radius-md;
+  margin-right: $spacing-sm;
+  min-width: 140rpx;
+  box-shadow: $shadow-sm;
+
+  &:active {
+    transform: scale(0.95);
+  }
+
+  &:last-child {
+    margin-right: 0;
+  }
+}
+
+.pendingCount {
+  font-size: 36rpx;
+  font-weight: 700;
+  color: $color-exception;
+}
+
+.pendingDesc {
+  font-size: 20rpx;
+  color: $color-text-secondary;
+  margin-top: 4rpx;
+  white-space: nowrap;
+}
+
 .section {
   padding: 0 $spacing-lg $spacing-lg;
 }
@@ -218,12 +474,6 @@
   font-size: 26rpx;
   color: $color-primary;
   font-weight: 500;
-}
-
-.heatmapContainer {
-  @include card-base;
-  padding: 0;
-  overflow: hidden;
 }
 
 .warningList {
@@ -273,6 +523,7 @@
   font-weight: 500;
   color: $color-text-primary;
   margin-bottom: $spacing-xs;
+  display: block;
 }
 
 .warningDesc {
@@ -289,270 +540,10 @@
   font-size: 22rpx;
   color: $color-text-tertiary;
   margin-top: $spacing-xs;
-}
-
-.syncBar {
-  @include card-base;
-  padding: $spacing-md $spacing-lg;
-  margin: 0 $spacing-lg $spacing-lg;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  background: linear-gradient(135deg, #fff8e6 0%, #fff3cd 100%);
-  border: 2rpx solid rgba(255, 125, 0, 0.3);
-}
-
-.syncInfo {
-  display: flex;
-  align-items: center;
-  gap: $spacing-sm;
-}
-
-.syncIcon {
-  font-size: 32rpx;
-}
-
-.syncText {
-  font-size: 26rpx;
-  color: $color-exception;
-  font-weight: 500;
-}
-
-.syncBtn {
-  padding: $spacing-xs $spacing-md;
-  background: $color-exception;
-  color: #fff;
-  border-radius: $radius-md;
-  font-size: 24rpx;
-  font-weight: 500;
-  transition: all $transition-base;
-
-  &:active {
-    opacity: 0.8;
-  }
-}
-
-.complianceStatusBar {
-  @include card-base;
-  margin: 0 $spacing-lg $spacing-lg;
-  padding: $spacing-md;
-  background: linear-gradient(135deg, #f0f7ff 0%, #e8f4ff 100%);
-  border: 2rpx solid rgba(22, 93, 255, 0.2);
-}
-
-.complianceUnauthorized {
-  background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
-  border-color: rgba(100, 100, 100, 0.2);
-
-  .statusBarTitleText {
-    color: $color-text-secondary;
-  }
-}
-
-.statusBarTitle {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  margin-bottom: $spacing-md;
-}
-
-.statusBarTitleText {
-  font-size: 28rpx;
-  font-weight: 600;
-  color: $color-primary;
-}
-
-.statusTag {
-  display: inline-block;
-  margin-left: $spacing-xs;
-  padding: 4rpx 12rpx;
-  background: rgba(100, 100, 100, 0.1);
-  color: $color-text-secondary;
-  border-radius: $radius-sm;
-  font-size: 20rpx;
-  font-weight: 400;
-}
-
-.statusBarAction {
-  font-size: 24rpx;
-  color: $color-primary;
-  font-weight: 500;
-}
-
-.statusGrid {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: $spacing-sm;
-  margin-bottom: $spacing-sm;
-}
-
-.statusItem {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  padding: $spacing-sm;
-  background: #fff;
-  border-radius: $radius-md;
-  position: relative;
-  box-shadow: $shadow-sm;
-}
-
-.statusItemIcon {
-  font-size: 32rpx;
-  margin-bottom: $spacing-xs;
-}
-
-.statusItemInfo {
-  text-align: center;
-}
-
-.statusItemLabel {
-  font-size: 20rpx;
-  color: $color-text-secondary;
   display: block;
-  margin-bottom: 4rpx;
 }
 
-.statusItemValue {
-  font-size: 26rpx;
-  font-weight: 600;
-  color: $color-text-primary;
-}
-
-.statusItemValue.success {
-  color: $color-delivery;
-}
-
-.statusItemValue.failed {
-  color: $color-overtime;
-}
-
-.statusItemValue.syncing {
-  color: $color-primary;
-}
-
-.statusItemValue.warning {
-  color: $color-exception;
-}
-
-.statusItemValue.idle {
-  color: $color-text-secondary;
-}
-
-.statusItemBadge {
-  position: absolute;
-  top: -8rpx;
-  right: -8rpx;
-  min-width: 36rpx;
-  height: 36rpx;
-  background: $color-exception;
-  color: #fff;
-  border-radius: 18rpx;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 20rpx;
-  font-weight: 600;
-  padding: 0 8rpx;
-}
-
-.statusItemBadge.danger {
-  background: $color-overtime;
-}
-
-.statusFooter {
-  padding-top: $spacing-sm;
-  border-top: 2rpx dashed rgba(22, 93, 255, 0.2);
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-}
-
-.statusFooterText {
-  font-size: 22rpx;
-  color: $color-text-secondary;
-}
-
-.statusFooterLink {
-  font-size: 22rpx;
-  color: $color-primary;
-  font-weight: 500;
-}
-
-.pendingTasksBar {
-  @include card-base;
-  margin: 0 $spacing-lg $spacing-lg;
-  padding: $spacing-md;
-  background: #fff8e6;
-  border: 2rpx solid rgba(255, 125, 0, 0.3);
-}
-
-.pendingTasksTitle {
-  display: flex;
-  align-items: center;
-  gap: $spacing-xs;
-  margin-bottom: $spacing-sm;
-}
-
-.pendingTasksIcon {
-  font-size: 28rpx;
-}
-
-.pendingTasksTitleText {
-  font-size: 28rpx;
-  font-weight: 600;
-  color: $color-exception;
-  flex: 1;
-}
-
-.pendingTasksTotal {
-  padding: 4rpx 16rpx;
-  background: $color-exception;
-  color: #fff;
-  border-radius: 20rpx;
-  font-size: 22rpx;
-  font-weight: 600;
-}
-
-.pendingTasksScroll {
-  white-space: nowrap;
-}
-
-.pendingTaskItem {
-  display: inline-flex;
-  flex-direction: column;
-  align-items: center;
-  padding: $spacing-sm $spacing-md;
-  background: #fff;
-  border-radius: $radius-md;
-  margin-right: $spacing-sm;
-  min-width: 140rpx;
-  transition: all $transition-base;
-  box-shadow: $shadow-sm;
-
-  &:active {
-    transform: scale(0.95);
-  }
-
-  &:last-child {
-    margin-right: 0;
-  }
-}
-
-.pendingTaskCount {
-  font-size: 36rpx;
-  font-weight: 700;
-  color: $color-exception;
-}
-
-.pendingTaskDesc {
-  font-size: 20rpx;
-  color: $color-text-secondary;
-  margin-top: 4rpx;
-  white-space: nowrap;
-}
-
-.empty {
+.emptyTip {
   padding: $spacing-xl;
   text-align: center;
   color: $color-text-tertiary;
@@ -561,19 +552,12 @@
   border-radius: $radius-md;
 }
 
-.offlineBadge {
-  position: fixed;
-  top: 200rpx;
-  right: $spacing-lg;
-  padding: $spacing-sm $spacing-md;
-  background: $color-warning;
-  color: #fff;
-  border-radius: $radius-lg;
-  font-size: 24rpx;
-  z-index: 100;
-  box-shadow: $shadow-md;
+.miniStats {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: $spacing-md;
 }
 
-.bottomSpacing {
+.bottomSpace {
   height: 120rpx;
 }
