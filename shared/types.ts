@@ -30,7 +30,22 @@ export interface Triple {
   object: Entity;
   confidence: number;
   sourceText: string;
+  sourceUrl?: string;
+  sourceName?: string;
+  extractedAt?: string;
   verified: boolean;
+  reviewStatus?: 'pending' | 'approved' | 'rejected';
+  reviewHistory?: TripleReviewRecord[];
+}
+
+export interface TripleReviewRecord {
+  id: string;
+  tripleId: string;
+  action: 'approve' | 'reject';
+  reviewerId: string;
+  reviewerName: string;
+  comment?: string;
+  timestamp: string;
 }
 
 export interface GraphData {

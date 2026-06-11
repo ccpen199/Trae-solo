@@ -12,6 +12,7 @@ import type {
   SummaryReview,
   LineageData,
   Triple,
+  TripleReviewRecord,
 } from '@/../shared/types';
 import {
   mockEntities,
@@ -55,9 +56,14 @@ interface AppState {
   getEntityTimeline: (entityId: string) => TimelineEvent[];
   getReportAnnotations: (reportId: string) => Annotation[];
   addAnnotation: (annotation: Omit<Annotation, 'id' | 'createdAt'>) => void;
-  verifyTriple: (tripleId: string, verified: boolean) => void;
+  verifyTriple: (tripleId: string, verified: boolean, comment?: string) => void;
   updateSummaryReview: (id: string, status: SummaryReview['status'], comment?: string) => void;
   getUnreadPushCount: () => number;
+  getEntityTriples: (entityId: string) => Triple[];
+  getPushesBySubscription: (subscriptionId: string) => PushItem[];
+  getTripleReviewHistory: (tripleId: string) => TripleReviewRecord[];
+  activePushFilter: { subscriptionId?: string } | null;
+  setActivePushFilter: (filter: { subscriptionId?: string } | null) => void;
 }
 
 export const useAppStore = create<AppState>((set, get) => ({
@@ -75,6 +81,9 @@ export const useAppStore = create<AppState>((set, get) => ({
   lineageData: mockLineageData,
   selectedEntity: null,
   searchQuery: '',
+  activePushFilter: null,
+
+  setActivePushFilter: (filter) => set({ activePushFilter: filter }),
 
   setSelectedEntity: (entity) => set({ selectedEntity: entity }),
   setSearchQuery: (query) => set({ searchQuery: query }),
@@ -161,12 +170,45 @@ export const useAppStore = create<AppState>((set, get) => ({
       ],
     })),
 
-  verifyTriple: (tripleId, verified) =>
-    set((state) => ({
-      triples: state.triples.map((t) =>
-        t.id === tripleId ? { ...t, verified } : t
-      ),
-    })),
+  verifyTriple: (tripleId, verified, comment) =>
+    set((state) => {
+      const record: TripleReviewRecord = {
+        id: `rh-${Date.now()}`,
+        tripleId,
+        action: verified ? 'approve' : 'reject',
+        reviewerId: 'u-001',
+        reviewerName: '当前用户',
+        comment,
+        timestamp: new Date().toISOString(),
+      };
+      return {
+        triples: state.triples.map((t) =>
+          t.id === tripleId
+            ? {
+                ...t,
+                verified,
+                reviewStatus: verified ? 'approved' : 'rejected',
+                reviewHistory: [...(t.reviewHistory ?? []), record],
+              }
+            : t
+        ),
+      };
+    }),
+
+  getEntityTriples: (entityId) => {
+    return get().triples.filter(
+      (t) => t.subject.id === entityId || t.object.id === entityId
+    );
+  },
+
+  getPushesBySubscription: (subscriptionId) => {
+    return get().pushes.filter((p) => p.subscriptionId === subscriptionId);
+  },
+
+  getTripleReviewHistory: (tripleId) => {
+    const triple = get().triples.find((t) => t.id === tripleId);
+    return triple?.reviewHistory ?? [];
+  },
 
   updateSummaryReview: (id, status, comment) =>
     set((state) => ({

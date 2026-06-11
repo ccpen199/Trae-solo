@@ -16,10 +16,17 @@ import {
   Bell,
   CheckCircle2,
   XCircle,
+  ExternalLink,
+  Clock,
+  GitBranch,
+  Eye,
+  Shield,
+  ThumbsUp,
+  ThumbsDown,
 } from 'lucide-react';
 import KnowledgeGraph from '@/components/graph/KnowledgeGraph';
 import { useAppStore } from '@/store/appStore';
-import type { EntityType, RiskLevel } from '@/../shared/types';
+import type { EntityType, RiskLevel, Triple } from '@/../shared/types';
 
 const typeIcon: Record<EntityType, any> = {
   company: Building2,
@@ -41,10 +48,16 @@ const riskLabel: Record<RiskLevel, string> = {
   high: '高风险',
 };
 
+const reviewStatusConfig: Record<string, { label: string; color: string; bg: string; icon: any }> = {
+  approved: { label: '已通过', color: 'text-emerald-300', bg: 'bg-emerald-500/10 ring-emerald-500/30', icon: ThumbsUp },
+  pending: { label: '待审核', color: 'text-amber-300', bg: 'bg-amber-500/10 ring-amber-500/30', icon: Clock },
+  rejected: { label: '已驳回', color: 'text-rose-300', bg: 'bg-rose-500/10 ring-rose-500/30', icon: ThumbsDown },
+};
+
 export default function EntityDetail() {
   const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
-  const { entities, getEntityRelations, getEntityTimeline, addSubscription, subscriptions } =
+  const { entities, getEntityRelations, getEntityTimeline, addSubscription, subscriptions, getEntityTriples, getTripleReviewHistory } =
     useAppStore();
 
   const entity = entities.find((e) => e.id === id);
@@ -53,6 +66,7 @@ export default function EntityDetail() {
     getEntityRelations,
   ]);
   const timeline = useMemo(() => (id ? getEntityTimeline(id) : []), [id, getEntityTimeline]);
+  const entityTriples = useMemo(() => (id ? getEntityTriples(id) : []), [id, getEntityTriples]);
 
   const isSubscribed = subscriptions.some((s) => s.targetId === id);
   const Icon = entity ? typeIcon[entity.type] : Building2;
@@ -69,6 +83,184 @@ export default function EntityDetail() {
             返回图谱
           </button>
         </div>
+      </div>
+    );
+  }
+
+  function TripleDetailCard({ triple }: { triple: Triple }) {
+    const isSubject = triple.subject.id === entity?.id;
+    const other = isSubject ? triple.object : triple.subject;
+    const reviewStatus = triple.reviewStatus ?? 'pending';
+    const statusCfg = reviewStatusConfig[reviewStatus];
+    const StatusIcon = statusCfg.icon;
+    const reviewHistory = getTripleReviewHistory(triple.id);
+
+    return (
+      <div className="space-y-3 rounded-lg border border-gold-500/10 bg-finance-900/40 p-4 transition hover:border-gold-500/25">
+        <div className="flex items-center gap-2">
+          <div
+            className={`flex min-w-0 flex-1 items-center gap-2 ${
+              isSubject ? '' : 'text-right flex-row-reverse'
+            }`}
+          >
+            <div
+              className={`flex h-8 w-8 shrink-0 items-center justify-center rounded text-[10px] font-medium ${
+                triple.subject.type === 'company'
+                  ? 'bg-blue-500/15 text-blue-300'
+                  : triple.subject.type === 'person'
+                    ? 'bg-purple-500/15 text-purple-300'
+                    : triple.subject.type === 'institution'
+                      ? 'bg-amber-500/15 text-amber-300'
+                      : 'bg-emerald-500/15 text-emerald-300'
+              }`}
+            >
+              {triple.subject.type === 'company'
+                ? '公'
+                : triple.subject.type === 'person'
+                  ? '人'
+                  : triple.subject.type === 'institution'
+                    ? '机'
+                    : '概'}
+            </div>
+            <div className="min-w-0 flex-1">
+              <p className="truncate text-xs font-medium text-slate-200">{triple.subject.name}</p>
+            </div>
+          </div>
+          <div className="shrink-0 rounded-full bg-gold-500/10 px-2 py-0.5 text-[10px] text-gold-300 ring-1 ring-gold-500/20">
+            {triple.predicate}
+          </div>
+          <div className="flex min-w-0 flex-1 items-center gap-2">
+            <div className="min-w-0 flex-1">
+              <p className="truncate text-xs font-medium text-slate-200">{triple.object.name}</p>
+            </div>
+            <div
+              className={`flex h-8 w-8 shrink-0 items-center justify-center rounded text-[10px] font-medium ${
+                triple.object.type === 'company'
+                  ? 'bg-blue-500/15 text-blue-300'
+                  : triple.object.type === 'person'
+                    ? 'bg-purple-500/15 text-purple-300'
+                    : triple.object.type === 'institution'
+                      ? 'bg-amber-500/15 text-amber-300'
+                      : 'bg-emerald-500/15 text-emerald-300'
+              }`}
+            >
+              {triple.object.type === 'company'
+                ? '公'
+                : triple.object.type === 'person'
+                  ? '人'
+                  : triple.object.type === 'institution'
+                    ? '机'
+                    : '概'}
+            </div>
+          </div>
+        </div>
+
+        <div className="rounded-md bg-finance-900/60 px-3 py-2 ring-1 ring-gold-500/5">
+          <p className="text-[10px] uppercase tracking-wider text-slate-500">原文片段（关键字段高亮）</p>
+          <p className="mt-1 text-xs leading-relaxed text-slate-300">
+            ...<span className="highlight-yellow px-0.5">{triple.sourceText}</span>...
+          </p>
+        </div>
+
+        <div className="flex flex-wrap items-center gap-x-4 gap-y-2 text-[11px]">
+          <div className="flex items-center gap-1.5">
+            <div className="h-1.5 w-16 overflow-hidden rounded-full bg-finance-700">
+              <div
+                className={`h-full rounded-full ${
+                  triple.confidence >= 0.9
+                    ? 'bg-signal-positive'
+                    : triple.confidence >= 0.8
+                      ? 'bg-signal-warning'
+                      : 'bg-signal-danger'
+                }`}
+                style={{ width: `${triple.confidence * 100}%` }}
+              />
+            </div>
+            <span className="text-slate-400">置信度 {(triple.confidence * 100).toFixed(0)}%</span>
+          </div>
+
+          <span className={`flex items-center gap-1 rounded px-1.5 py-0.5 ring-1 ${statusCfg.bg} ${statusCfg.color}`}>
+            <StatusIcon className="h-2.5 w-2.5" />
+            {statusCfg.label}
+          </span>
+
+          {triple.extractedAt && (
+            <span className="flex items-center gap-1 text-slate-500">
+              <Clock className="h-2.5 w-2.5" />
+              抽取于 {triple.extractedAt.replace('T', ' ').slice(0, 16)}
+            </span>
+          )}
+
+          {triple.sourceName && (
+            <span className="flex items-center gap-1 text-slate-500">
+              <Newspaper className="h-2.5 w-2.5" />
+              {triple.sourceName}
+            </span>
+          )}
+        </div>
+
+        <div className="flex items-center justify-between border-t border-gold-500/5 pt-3">
+          <div className="flex items-center gap-2">
+            {triple.sourceUrl && (
+              <a
+                href={triple.sourceUrl}
+                target="_blank"
+                rel="noreferrer"
+                className="flex items-center gap-1 rounded px-2 py-1 text-[11px] text-slate-400 transition hover:bg-finance-700/50 hover:text-gold-300"
+              >
+                <ExternalLink className="h-2.5 w-2.5" />
+                查看原始信源
+              </a>
+            )}
+            <button
+              onClick={() => navigate(`/entity/${other.id}`)}
+              className="flex items-center gap-1 rounded px-2 py-1 text-[11px] text-slate-400 transition hover:bg-finance-700/50 hover:text-gold-300"
+            >
+              <Eye className="h-2.5 w-2.5" />
+              查看{isSubject ? '客体' : '主体'}详情
+            </button>
+          </div>
+          <div className="flex items-center gap-2">
+            <button
+              onClick={() => navigate('/admin/lineage')}
+              className="flex items-center gap-1 rounded px-2 py-1 text-[11px] text-slate-400 transition hover:bg-finance-700/50 hover:text-gold-300"
+            >
+              <GitBranch className="h-2.5 w-2.5" />
+              血缘追溯
+            </button>
+            <button
+              onClick={() => navigate('/extraction')}
+              className="flex items-center gap-1 rounded px-2 py-1 text-[11px] text-slate-400 transition hover:bg-finance-700/50 hover:text-gold-300"
+            >
+              <Shield className="h-2.5 w-2.5" />
+              关系可信度复查
+            </button>
+          </div>
+        </div>
+
+        {reviewHistory.length > 0 && (
+          <div className="rounded-md border border-gold-500/10 bg-finance-800/40 p-2.5">
+            <p className="mb-1.5 text-[10px] uppercase tracking-wider text-slate-500">审核记录</p>
+            {reviewHistory.map((r) => (
+              <div key={r.id} className="flex items-start gap-2 text-[11px]">
+                <span
+                  className={`mt-0.5 shrink-0 rounded px-1 py-0.5 text-[9px] ${
+                    r.action === 'approve'
+                      ? 'bg-emerald-500/10 text-emerald-300'
+                      : 'bg-rose-500/10 text-rose-300'
+                  }`}
+                >
+                  {r.action === 'approve' ? '通过' : '驳回'}
+                </span>
+                <div className="flex-1">
+                  <span className="text-slate-400">{r.reviewerName}</span>
+                  <span className="text-slate-600"> · {r.timestamp.replace('T', ' ').slice(0, 16)}</span>
+                  {r.comment && <p className="mt-0.5 text-slate-500">{r.comment}</p>}
+                </div>
+              </div>
+            ))}
+          </div>
+        )}
       </div>
     );
   }
@@ -266,6 +458,17 @@ export default function EntityDetail() {
                                 : '事件'}
                         </span>
                         <span>{event.date}</span>
+                        {event.sourceUrl && (
+                          <a
+                            href={event.sourceUrl}
+                            target="_blank"
+                            rel="noreferrer"
+                            className="flex items-center gap-1 text-slate-400 hover:text-gold-300"
+                          >
+                            <ExternalLink className="h-2.5 w-2.5" />
+                            信源
+                          </a>
+                        )}
                       </div>
                     </div>
                   </div>
@@ -302,90 +505,40 @@ export default function EntityDetail() {
           </div>
 
           <div className="glass-panel rounded-xl p-5 animate-fade-in-up" style={{ animationDelay: '120ms' }}>
-            <h3 className="mb-4 flex items-center gap-2 text-sm font-medium text-slate-200">
-              <FileText className="h-4 w-4 text-gold-400" />
-              关联关系明细
-            </h3>
-            <div className="grid grid-cols-1 gap-2 md:grid-cols-2">
-              {graphData.links.slice(0, 8).map((rel) => {
-                const src = entities.find((e) => e.id === rel.sourceId);
-                const tgt = entities.find((e) => e.id === rel.targetId);
-                if (!src || !tgt) return null;
-                const isCenter = src.id === entity.id;
-                return (
+            <div className="mb-4 flex items-center justify-between">
+              <h3 className="flex items-center gap-2 text-sm font-medium text-slate-200">
+                <GitBranch className="h-4 w-4 text-gold-400" />
+                关联三元组明细（带信源追溯）
+              </h3>
+              <div className="flex items-center gap-1 rounded-md border border-gold-500/10 bg-finance-800/60 p-0.5 text-[11px]">
+                {(['all', 'approved', 'pending', 'rejected'] as const).map((s) => (
                   <button
-                    key={rel.id}
-                    className="flex items-center gap-2 rounded-md border border-gold-500/10 bg-finance-900/30 p-3 text-left transition hover:border-gold-500/25 hover:bg-gold-500/5"
+                    key={s}
+                    className="rounded px-2.5 py-1 text-slate-400 transition hover:text-slate-200"
                   >
-                    <div
-                      className={`flex min-w-0 flex-1 items-center gap-2 ${
-                        isCenter ? '' : 'text-right flex-row-reverse'
-                      }`}
-                    >
-                      <div
-                        className={`flex h-7 w-7 shrink-0 items-center justify-center rounded text-[10px] font-medium ${
-                          src.type === 'company'
-                            ? 'bg-blue-500/15 text-blue-300'
-                            : src.type === 'person'
-                              ? 'bg-purple-500/15 text-purple-300'
-                              : 'bg-amber-500/15 text-amber-300'
-                        }`}
-                      >
-                        {src.type === 'company'
-                          ? '公'
-                          : src.type === 'person'
-                            ? '人'
-                            : '机'}
-                      </div>
-                      <div className="min-w-0 flex-1">
-                        <p className="truncate text-xs text-slate-200">{src.name}</p>
-                      </div>
-                    </div>
-                    <div className="shrink-0 rounded-full bg-gold-500/10 px-2 py-0.5 text-[10px] text-gold-300 ring-1 ring-gold-500/20">
-                      {rel.predicate}
-                    </div>
-                    <div className="flex min-w-0 flex-1 items-center gap-2">
-                      <div className="min-w-0 flex-1">
-                        <p className="truncate text-xs text-slate-200">{tgt.name}</p>
-                      </div>
-                      <div
-                        className={`flex h-7 w-7 shrink-0 items-center justify-center rounded text-[10px] font-medium ${
-                          tgt.type === 'company'
-                            ? 'bg-blue-500/15 text-blue-300'
-                            : tgt.type === 'person'
-                              ? 'bg-purple-500/15 text-purple-300'
-                              : 'bg-amber-500/15 text-amber-300'
-                        }`}
-                      >
-                        {tgt.type === 'company'
-                          ? '公'
-                          : tgt.type === 'person'
-                            ? '人'
-                            : '机'}
-                      </div>
-                    </div>
-                    <div className="flex flex-col items-end gap-0.5">
-                      <span
-                        className={`text-[9px] ${
-                          rel.confidence >= 0.9
-                            ? 'text-emerald-400'
-                            : rel.confidence >= 0.8
-                              ? 'text-amber-400'
-                              : 'text-slate-500'
-                        }`}
-                      >
-                        {(rel.confidence * 100).toFixed(0)}%
-                      </span>
-                      {rel.verified ? (
-                        <CheckCircle2 className="h-3 w-3 text-emerald-400" />
-                      ) : (
-                        <XCircle className="h-3 w-3 text-slate-600" />
-                      )}
-                    </div>
+                    {s === 'all' ? '全部' : s === 'approved' ? '已通过' : s === 'pending' ? '待审核' : '已驳回'}
                   </button>
-                );
-              })}
+                ))}
+              </div>
             </div>
+            {entityTriples.length === 0 ? (
+              <div className="py-12 text-center">
+                <GitBranch className="mx-auto h-10 w-10 text-slate-700" />
+                <p className="mt-3 text-xs text-slate-500">暂无关联三元组数据</p>
+              </div>
+            ) : (
+              <div className="space-y-4">
+                {entityTriples.map((t, i) => (
+                  <div
+                    key={t.id}
+                    className="animate-fade-in-up"
+                    style={{ animationDelay: `${i * 60}ms` }}
+                  >
+                    <TripleDetailCard triple={t} />
+                  </div>
+                ))}
+              </div>
+            )}
           </div>
         </div>
       </div>
