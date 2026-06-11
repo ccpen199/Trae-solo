@@ -1,137 +1,285 @@
 import { useState, useMemo } from 'react';
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import { Star, X, MessageSquare, SlidersHorizontal } from 'lucide-react';
+import { Star, X, Eye, MessageSquare, SlidersHorizontal, ChevronDown, ChevronUp, Grid3X3, List, Search, RotateCcw } from 'lucide-react';
 import { mockCases, industries, positions, experienceLevels } from '@/data/mockCases';
 import type { ResumeCase } from '@/types/case';
 
-type SortKey = '热门' | '最新' | '评分';
+type SortKey = '热门' | '最新' | '评分' | '修改次数';
+type ViewMode = 'grid' | 'list';
 
 const sortFn: Record<SortKey, (a: ResumeCase, b: ResumeCase) => number> = {
   '热门': (a, b) => b.hrReviews.length - a.hrReviews.length,
   '最新': (a, b) => b.id.localeCompare(a.id),
   '评分': (a, b) => b.rating - a.rating,
+  '修改次数': (a, b) => b.tags.length - a.tags.length,
 };
 
 export default function Cases() {
   const [selIndustries, setSelIndustries] = useState<string[]>([]);
   const [selPositions, setSelPositions] = useState<string[]>([]);
-  const [selLevels, setSelLevels] = useState<string[]>([]);
+  const [selLevel, setSelLevel] = useState<string>('');
+  const [salaryRange, setSalaryRange] = useState<[number, number]>([10, 80]);
   const [sort, setSort] = useState<SortKey>('热门');
+  const [viewMode, setViewMode] = useState<ViewMode>('grid');
+  const [positionSearch, setPositionSearch] = useState('');
+  const [collapsed, setCollapsed] = useState<Record<string, boolean>>({
+    industry: false,
+    position: false,
+    level: false,
+    salary: false,
+  });
+
+  const industryCounts = useMemo(() => {
+    const counts: Record<string, number> = {};
+    mockCases.forEach(c => {
+      counts[c.industry] = (counts[c.industry] || 0) + 1;
+    });
+    return counts;
+  }, []);
+
+  const filteredPositions = useMemo(() =>
+    positions.filter(p => p.toLowerCase().includes(positionSearch.toLowerCase()))
+  , [positionSearch]);
 
   const toggle = (arr: string[], v: string, set: React.Dispatch<React.SetStateAction<string[]>>) =>
     set(arr.includes(v) ? arr.filter(x => x !== v) : [...arr, v]);
+
+  const toggleCollapse = (key: string) =>
+    setCollapsed(prev => ({ ...prev, [key]: !prev[key] }));
 
   const filtered = useMemo(() => {
     let list = mockCases;
     if (selIndustries.length) list = list.filter(c => selIndustries.includes(c.industry));
     if (selPositions.length) list = list.filter(c => selPositions.includes(c.position));
-    if (selLevels.length) list = list.filter(c => selLevels.includes(c.experienceLevel));
+    if (selLevel) list = list.filter(c => c.experienceLevel === selLevel);
     return [...list].sort(sortFn[sort]);
-  }, [selIndustries, selPositions, selLevels, sort]);
+  }, [selIndustries, selPositions, selLevel, sort]);
 
   const activeTags = [
     ...selIndustries.map(v => ({ label: v, clear: () => setSelIndustries(selIndustries.filter(x => x !== v)) })),
     ...selPositions.map(v => ({ label: v, clear: () => setSelPositions(selPositions.filter(x => x !== v)) })),
-    ...selLevels.map(v => ({ label: experienceLevels.find(e => e.value === v)?.label ?? v, clear: () => setSelLevels(selLevels.filter(x => x !== v)) })),
+    ...(selLevel ? [{ label: experienceLevels.find(e => e.value === selLevel)?.label || selLevel, clear: () => setSelLevel('') }] : []),
   ];
 
-  const CheckboxList = ({ items, selected, onToggle }: { items: string[]; selected: string[]; onToggle: (v: string) => void }) => (
-    <div className="space-y-1.5">
-      {items.map(item => (
-        <label key={item} className="flex items-center gap-2 cursor-pointer text-sm text-surface-300 hover:text-brand-900 transition-colors">
-          <input type="checkbox" checked={selected.includes(item)} onChange={() => onToggle(item)}
-            className="w-3.5 h-3.5 rounded border-surface-200 text-brand-500 focus:ring-brand-500" />
-          {item}
-        </label>
-      ))}
+  const resetFilters = () => {
+    setSelIndustries([]);
+    setSelPositions([]);
+    setSelLevel('');
+    setSalaryRange([10, 80]);
+  };
+
+  const views = Math.floor(Math.random() * 5000) + 500;
+
+  const FilterSection = ({ title, keyName, children }: { title: string; keyName: string; children: React.ReactNode }) => (
+    <div className="mb-5">
+      <button onClick={() => toggleCollapse(keyName)} className="flex items-center justify-between w-full mb-3">
+        <h4 className="font-display text-sm font-bold text-brand-900">{title}</h4>
+        {collapsed[keyName] ? <ChevronDown className="w-4 h-4 text-surface-300" /> : <ChevronUp className="w-4 h-4 text-surface-300" />}
+      </button>
+      {!collapsed[keyName] && children}
     </div>
+  );
+
+  const renderStars = (rating: number) => {
+    const fullStars = Math.floor(rating);
+    const hasHalf = rating % 1 >= 0.5;
+    return (
+      <div className="flex items-center gap-0.5">
+        {[...Array(5)].map((_, i) => (
+          <Star key={i} className={`w-3.5 h-3.5 ${i < fullStars ? 'text-gold-500 fill-gold-500' : (i === fullStars && hasHalf ? 'text-gold-500 fill-gold-500/50' : 'text-surface-200')}`} />
+        ))}
+      </div>
+    );
+  };
+
+  const Card = ({ c, i }: { c: ResumeCase; i: number }) => (
+    <motion.div key={c.id} initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: i * 0.05 }}
+      className="group relative glass-card card-hover overflow-hidden bg-white">
+      <div className="h-36 bg-gradient-to-br from-brand-900 via-brand-800 to-brand-700 p-5 relative overflow-hidden">
+        <div className="space-y-2.5 relative z-10">
+          <div className="h-2.5 w-3/4 bg-white/20 rounded-full" />
+          <div className="h-2 w-1/2 bg-white/15 rounded-full" />
+          <div className="h-2 w-2/3 bg-white/15 rounded-full" />
+          <div className="h-2 w-1/3 bg-brand-400/40 rounded-full" />
+          <div className="h-2 w-2/5 bg-brand-400/30 rounded-full" />
+          <div className="h-2 w-1/2 bg-white/10 rounded-full" />
+        </div>
+        <div className="absolute -right-8 -bottom-8 w-32 h-32 bg-brand-500/20 rounded-full blur-2xl" />
+      </div>
+      <div className="p-5">
+        <div className="flex flex-wrap gap-1.5 mb-3">
+          <span className="px-2 py-0.5 text-xs bg-brand-500/10 text-brand-600 rounded-full font-medium">{c.industry}</span>
+          <span className="px-2 py-0.5 text-xs bg-emerald-500/10 text-emerald-600 rounded-full font-medium">{c.position}</span>
+          <span className="px-2 py-0.5 text-xs bg-gold-500/10 text-gold-600 rounded-full font-medium">
+            {experienceLevels.find(e => e.value === c.experienceLevel)?.label}
+          </span>
+        </div>
+        <h3 className="font-display font-bold text-lg text-brand-900 mb-3 line-clamp-1 group-hover:text-brand-600 transition-colors">{c.title}</h3>
+        <div className="flex items-center gap-2 mb-3">
+          {renderStars(c.rating)}
+          <span className="text-sm font-mono text-gold-600 font-bold">{c.rating}</span>
+        </div>
+        <div className="flex items-center gap-4 text-xs text-surface-400 mb-4">
+          <div className="flex items-center gap-1">
+            <Eye className="w-3.5 h-3.5" />
+            <span>{views + i * 123}</span>
+          </div>
+          <div className="flex items-center gap-1">
+            <MessageSquare className="w-3.5 h-3.5" />
+            <span>{c.hrReviews.length} 条点评</span>
+          </div>
+        </div>
+        <Link to={`/cases/${c.id}`}
+          className="opacity-0 group-hover:opacity-100 absolute inset-x-0 bottom-0 h-12 bg-gradient-to-t from-brand-900 via-brand-900/80 to-transparent flex items-end justify-center pb-3 transition-opacity">
+          <span className="text-white text-sm font-medium flex items-center gap-1">
+            查看详情
+          </span>
+        </Link>
+      </div>
+    </motion.div>
   );
 
   return (
     <div className="flex h-full">
-      <aside className="w-64 shrink-0 border-r border-surface-100 bg-white/60 p-5 overflow-y-auto">
-        <div className="flex items-center gap-2 mb-6">
-          <SlidersHorizontal className="w-4 h-4 text-brand-500" />
-          <span className="font-display font-bold text-brand-900">筛选</span>
-        </div>
-        {activeTags.length > 0 && (
-          <div className="flex flex-wrap gap-1.5 mb-5">
-            {activeTags.map(t => (
-              <span key={t.label} className="inline-flex items-center gap-1 px-2 py-0.5 text-xs bg-brand-500/10 text-brand-500 rounded-full">
-                {t.label}
-                <button onClick={t.clear} className="hover:text-brand-700"><X className="w-3 h-3" /></button>
-              </span>
-            ))}
+      <aside className="w-72 shrink-0 border-r border-surface-100 bg-white flex flex-col">
+        <div className="p-6 border-b border-surface-50">
+          <div className="flex items-center gap-2.5">
+            <div className="w-9 h-9 rounded-xl bg-brand-500/10 flex items-center justify-center">
+              <SlidersHorizontal className="w-5 h-5 text-brand-500" />
+            </div>
+            <div>
+              <h3 className="font-display font-bold text-brand-900">筛选条件</h3>
+              <p className="text-xs text-surface-400">精准匹配你的需求</p>
+            </div>
           </div>
-        )}
-        <div className="mb-6">
-          <h4 className="font-display text-sm font-bold text-brand-900 mb-2">行业筛选</h4>
-          <CheckboxList items={industries} selected={selIndustries} onToggle={v => toggle(selIndustries, v, setSelIndustries)} />
         </div>
-        <div className="mb-6">
-          <h4 className="font-display text-sm font-bold text-brand-900 mb-2">岗位筛选</h4>
-          <CheckboxList items={positions} selected={selPositions} onToggle={v => toggle(selPositions, v, setSelPositions)} />
+
+        <div className="flex-1 overflow-y-auto p-6">
+          {activeTags.length > 0 && (
+            <div className="mb-5">
+              <p className="text-xs text-surface-400 mb-2">已选条件</p>
+              <div className="flex flex-wrap gap-1.5">
+                {activeTags.map((t, idx) => (
+                  <motion.span key={idx} initial={{ opacity: 0, scale: 0.8 }} animate={{ opacity: 1, scale: 1 }}
+                    className="inline-flex items-center gap-1 px-2.5 py-1 text-xs bg-brand-500 text-white rounded-full">
+                    {t.label}
+                    <button onClick={t.clear} className="hover:bg-white/20 rounded-full p-0.5 -mr-1">
+                      <X className="w-3 h-3" />
+                    </button>
+                  </motion.span>
+                ))}
+              </div>
+            </div>
+          )}
+
+          <FilterSection title="行业" keyName="industry">
+            <div className="space-y-2">
+              {industries.map(item => (
+                <label key={item} className="flex items-center justify-between cursor-pointer group">
+                  <div className="flex items-center gap-2">
+                    <input type="checkbox" checked={selIndustries.includes(item)} onChange={() => toggle(selIndustries, item, setSelIndustries)}
+                      className="w-4 h-4 rounded border-surface-200 text-brand-500 focus:ring-brand-500 focus:ring-offset-0" />
+                    <span className="text-sm text-surface-600 group-hover:text-brand-600 transition-colors">{item}</span>
+                  </div>
+                  <span className="text-xs text-surface-300 font-mono">{industryCounts[item] || 0}</span>
+                </label>
+              ))}
+            </div>
+          </FilterSection>
+
+          <FilterSection title="岗位" keyName="position">
+            <div className="relative mb-3">
+              <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-surface-300" />
+              <input type="text" placeholder="搜索岗位..." value={positionSearch} onChange={e => setPositionSearch(e.target.value)}
+                className="w-full pl-9 pr-3 py-2 text-sm border border-surface-200 rounded-lg focus:outline-none focus:ring-1 focus:ring-brand-500 focus:border-brand-500" />
+            </div>
+            <div className="space-y-2 max-h-40 overflow-y-auto">
+              {filteredPositions.map(item => (
+                <label key={item} className="flex items-center gap-2 cursor-pointer group">
+                  <input type="checkbox" checked={selPositions.includes(item)} onChange={() => toggle(selPositions, item, setSelPositions)}
+                    className="w-4 h-4 rounded border-surface-200 text-brand-500 focus:ring-brand-500 focus:ring-offset-0" />
+                  <span className="text-sm text-surface-600 group-hover:text-brand-600 transition-colors">{item}</span>
+                </label>
+              ))}
+            </div>
+          </FilterSection>
+
+          <FilterSection title="经验层级" keyName="level">
+            <div className="space-y-2">
+              {experienceLevels.map(lv => (
+                <button key={lv.value} onClick={() => setSelLevel(selLevel === lv.value ? '' : lv.value)}
+                  className={`w-full flex items-center gap-3 px-3 py-2.5 rounded-lg border transition-all ${
+                    selLevel === lv.value
+                      ? 'bg-brand-500 text-white border-brand-500 shadow-md shadow-brand-500/20'
+                      : 'bg-white text-surface-600 border-surface-200 hover:border-brand-300 hover:text-brand-600'
+                  }`}>
+                  <div className={`w-2 h-2 rounded-full ${selLevel === lv.value ? 'bg-white' : 'bg-surface-300'}`} />
+                  <span className="text-sm font-medium">{lv.label}</span>
+                </button>
+              ))}
+            </div>
+          </FilterSection>
+
+          <FilterSection title="薪资范围" keyName="salary">
+            <div className="space-y-4">
+              <div className="flex items-center justify-between text-sm">
+                <span className="text-brand-600 font-bold font-mono">{salaryRange[0]}K</span>
+                <span className="text-surface-300">—</span>
+                <span className="text-brand-600 font-bold font-mono">{salaryRange[1]}K</span>
+              </div>
+              <div className="relative h-2 bg-surface-100 rounded-full">
+                <div className="absolute h-full bg-gradient-to-r from-brand-400 to-brand-600 rounded-full"
+                  style={{ left: `${((salaryRange[0] - 5) / 95) * 100}%`, right: `${100 - ((salaryRange[1] - 5) / 95) * 100}%` }} />
+                <input type="range" min="5" max="100" value={salaryRange[0]}
+                  onChange={e => setSalaryRange([Math.min(Number(e.target.value), salaryRange[1] - 5), salaryRange[1]])}
+                  className="absolute w-full h-2 top-0 appearance-none bg-transparent pointer-events-none [&::-webkit-slider-thumb]:pointer-events-auto [&::-webkit-slider-thumb]:appearance-none [&::-webkit-slider-thumb]:w-5 [&::-webkit-slider-thumb]:h-5 [&::-webkit-slider-thumb]:rounded-full [&::-webkit-slider-thumb]:bg-white [&::-webkit-slider-thumb]:border-2 [&::-webkit-slider-thumb]:border-brand-500 [&::-webkit-slider-thumb]:shadow-md [&::-webkit-slider-thumb]:cursor-pointer" />
+              </div>
+            </div>
+          </FilterSection>
         </div>
-        <div>
-          <h4 className="font-display text-sm font-bold text-brand-900 mb-2">经验层级</h4>
-          <div className="flex flex-wrap gap-2">
-            {experienceLevels.map(lv => (
-              <button key={lv.value} onClick={() => toggle(selLevels, lv.value, setSelLevels)}
-                className={`px-3 py-1 text-xs rounded-full border transition-colors ${selLevels.includes(lv.value) ? 'bg-brand-500 text-white border-brand-500' : 'border-surface-200 text-surface-300 hover:border-brand-500 hover:text-brand-500'}`}>
-                {lv.label}
-              </button>
-            ))}
-          </div>
+
+        <div className="p-6 border-t border-surface-50">
+          <button onClick={resetFilters}
+            className="w-full flex items-center justify-center gap-2 py-2.5 text-sm text-surface-500 hover:text-brand-500 border border-surface-200 hover:border-brand-300 rounded-lg transition-colors">
+            <RotateCcw className="w-4 h-4" />
+            重置筛选
+          </button>
         </div>
       </aside>
 
-      <main className="flex-1 overflow-y-auto p-6">
-        <div className="flex items-center justify-between mb-6">
-          <div className="flex items-center gap-3">
-            <h1 className="font-display text-2xl font-bold text-brand-900">案例库</h1>
-            <span className="text-sm text-surface-300">{filtered.length} 个案例</span>
+      <main className="flex-1 overflow-y-auto bg-surface-50/30">
+        <div className="sticky top-0 z-10 bg-white/80 backdrop-blur-md border-b border-surface-100 px-8 py-5">
+          <div className="flex items-center justify-between">
+            <div className="flex items-center gap-4">
+              <h1 className="font-display text-2xl font-bold text-brand-900">案例库</h1>
+              <span className="px-3 py-1 bg-brand-500/10 text-brand-600 rounded-full text-sm font-medium">
+                共找到 {filtered.length} 份精选简历
+              </span>
+            </div>
+            <div className="flex items-center gap-3">
+              <select value={sort} onChange={e => setSort(e.target.value as SortKey)}
+                className="text-sm border border-surface-200 rounded-lg px-3.5 py-2 bg-white text-surface-600 focus:outline-none focus:ring-1 focus:ring-brand-500 focus:border-brand-500 cursor-pointer">
+                {(['热门', '最新', '评分', '修改次数'] as SortKey[]).map(s => <option key={s} value={s}>最{s}</option>)}
+              </select>
+              <div className="flex items-center bg-surface-100 rounded-lg p-1">
+                <button onClick={() => setViewMode('grid')}
+                  className={`p-1.5 rounded-md transition-colors ${viewMode === 'grid' ? 'bg-white text-brand-600 shadow-sm' : 'text-surface-400 hover:text-surface-600'}`}>
+                  <Grid3X3 className="w-4 h-4" />
+                </button>
+                <button onClick={() => setViewMode('list')}
+                  className={`p-1.5 rounded-md transition-colors ${viewMode === 'list' ? 'bg-white text-brand-600 shadow-sm' : 'text-surface-400 hover:text-surface-600'}`}>
+                  <List className="w-4 h-4" />
+                </button>
+              </div>
+            </div>
           </div>
-          <select value={sort} onChange={e => setSort(e.target.value as SortKey)}
-            className="text-sm border border-surface-200 rounded-lg px-3 py-1.5 bg-white text-surface-300 focus:outline-none focus:ring-1 focus:ring-brand-500">
-            {(['热门', '最新', '评分'] as SortKey[]).map(s => <option key={s} value={s}>{s}</option>)}
-          </select>
         </div>
 
-        <div className="grid grid-cols-3 gap-6">
-          {filtered.map((c, i) => (
-            <motion.div key={c.id} initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: i * 0.05 }}>
-              <Link to={`/cases/${c.id}`} className="block glass-card card-hover overflow-hidden">
-                <div className="h-32 bg-gradient-to-br from-brand-900 to-brand-800 p-4 relative">
-                  <div className="space-y-2">
-                    <div className="h-2 w-3/4 bg-white/15 rounded" />
-                    <div className="h-2 w-1/2 bg-white/10 rounded" />
-                    <div className="h-2 w-2/3 bg-white/10 rounded" />
-                    <div className="h-2 w-1/3 bg-brand-500/25 rounded" />
-                    <div className="h-2 w-2/5 bg-brand-500/20 rounded" />
-                  </div>
-                </div>
-                <div className="p-4">
-                  <div className="flex gap-1.5 mb-2">
-                    <span className="px-2 py-0.5 text-xs bg-brand-500 text-white rounded-full">{c.industry}</span>
-                    <span className="px-2 py-0.5 text-xs bg-brand-500 text-white rounded-full">{c.position}</span>
-                  </div>
-                  <h3 className="font-display font-bold text-brand-900 mb-2 line-clamp-1">{c.title}</h3>
-                  <div className="flex items-center gap-1 mb-2">
-                    <Star className="w-4 h-4 text-gold-500 fill-gold-500" />
-                    <span className="text-sm text-gold-500 font-mono">{c.rating}</span>
-                  </div>
-                  <div className="flex flex-wrap gap-1 mb-3">
-                    {c.tags.map(t => <span key={t} className="px-2 py-0.5 text-xs bg-surface-100 text-surface-300 rounded">{t}</span>)}
-                  </div>
-                  <div className="flex items-center gap-1 text-xs text-surface-300">
-                    <MessageSquare className="w-3.5 h-3.5" />
-                    {c.hrReviews.length} 条HR点评
-                  </div>
-                </div>
-              </Link>
-            </motion.div>
-          ))}
+        <div className="p-8">
+          <div className={`grid gap-6 ${viewMode === 'grid' ? 'grid-cols-3' : 'grid-cols-1'}`}>
+            {filtered.map((c, i) => <Card key={c.id} c={c} i={i} />)}
+          </div>
         </div>
       </main>
     </div>
