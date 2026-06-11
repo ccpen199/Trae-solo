@@ -1,0 +1,101 @@
+// ============================================
+// 主题配色变量（快递员作业平台）
+// ============================================
+
+// 品牌主题色：快递蓝（专业、信任、科技）
+$color-primary: #165dff;
+$color-primary-light: #4080ff;
+$color-primary-dark: #0e42d2;
+
+// 功能色
+$color-success: #00b42a;
+$color-warning: #ff7d00;
+$color-error: #f53f3f;
+$color-info: #165dff;
+$color-danger: $color-error;
+
+// 业务状态色
+$color-pickup: #165dff;
+$color-delivery: #00b42a;
+$color-exception: #ff7d00;
+$color-overtime: #f53f3f;
+$color-checkin: #722ed1;
+
+// 背景色
+$color-bg-page: #f5f6f7;
+$color-bg-card: #ffffff;
+$color-bg-hover: #f2f3f5;
+$color-bg-tag: #e8f3ff;
+$color-bg-gray: $color-bg-page;
+$color-bg-secondary: $color-bg-hover;
+
+// 文本色
+$color-text-primary: #1d2129;
+$color-text-secondary: #4e5969;
+$color-text-tertiary: #86909c;
+$color-text-disabled: #c9cdd4;
+$color-text-white: #ffffff;
+$color-white: $color-text-white;
+
+// 边框色
+$color-border: #e5e6eb;
+$color-divider: #f2f3f5;
+$color-border-light: $color-divider;
+
+// 标签背景色
+$color-tag-pickup-bg: rgba(22, 93, 255, 0.1);
+$color-tag-delivery-bg: rgba(0, 180, 42, 0.1);
+$color-tag-exception-bg: rgba(255, 125, 0, 0.1);
+$color-tag-overtime-bg: rgba(245, 63, 63, 0.1);
+
+// Compatibility aliases for legacy page styles.
+$color-primary-gradient-start: $color-primary;
+$color-primary-gradient-end: $color-primary-light;
+$color-success-light: rgba(0, 180, 42, 0.1);
+$color-warning-light: rgba(255, 125, 0, 0.1);
+$color-error-light: rgba(245, 63, 63, 0.1);
+$color-danger-light: $color-error-light;
+$spacing-2xl: 40rpx;
+$spacing-3xl: 56rpx;
+$spacing-4xl: 64rpx;
+$spacing-6xl: 96rpx;
+$radius-full: 999rpx;
+$shadow-md: 0 4rpx 16rpx rgba(0, 0, 0, 0.1);
+
+@mixin font-title-large {
+  font-size: 36rpx;
+  line-height: 1.35;
+  font-weight: 700;
+}
+
+@mixin font-title-medium {
+  font-size: 32rpx;
+  line-height: 1.4;
+  font-weight: 600;
+}
+
+@mixin font-body-medium {
+  font-size: 28rpx;
+  line-height: 1.5;
+  font-weight: 500;
+}
+
+@mixin font-body-small {
+  font-size: 24rpx;
+  line-height: 1.5;
+  font-weight: 400;
+}
+
+@mixin font-tag {
+  font-size: 22rpx;
+  line-height: 1.4;
+  font-weight: 500;
+}
+
+@mixin card-radius {
+  border-radius: 16rpx;
+}
+
+@mixin card-shadow {
+  box-shadow: 0 2rpx 12rpx rgba(0, 0, 0, 0.08);
+}

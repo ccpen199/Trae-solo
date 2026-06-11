@@ -1,0 +1,88 @@
+@use '@/styles/variables.scss' as *;
+
+.statCard {
+  @include card-base;
+  @include press-state;
+  flex: 1;
+  min-width: 0;
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: $spacing-sm;
+}
+
+.title {
+  font-size: $font-size-sm;
+  color: $color-text-secondary;
+  @include text-ellipsis;
+}
+
+.icon {
+  font-size: 32rpx;
+  opacity: 0.6;
+}
+
+.content {
+  display: flex;
+  align-items: baseline;
+  gap: $spacing-xs;
+  margin-bottom: $spacing-sm;
+}
+
+.value {
+  font-size: $font-size-xxl;
+  font-weight: $font-weight-bold;
+  line-height: 1.2;
+}
+
+.unit {
+  font-size: $font-size-xs;
+  color: $color-text-tertiary;
+}
+
+.trend {
+  display: flex;
+  align-items: center;
+  gap: $spacing-sm;
+}
+
+.trendValue {
+  font-size: $font-size-xs;
+  font-weight: $font-weight-medium;
+}
+
+.trendUp {
+  color: $color-success;
+}
+
+.trendDown {
+  color: $color-error;
+}
+
+.trendText {
+  font-size: $font-size-xs;
+  color: $color-text-tertiary;
+}
+
+.colorPrimary {
+  .value { color: $color-primary; }
+}
+
+.colorSuccess {
+  .value { color: $color-success; }
+}
+
+.colorWarning {
+  .value { color: $color-warning; }
+}
+
+.colorError {
+  .value { color: $color-error; }
+}
+
+.colorPurple {
+  .value { color: $color-checkin; }
+}

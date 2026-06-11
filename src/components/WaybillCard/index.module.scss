@@ -1,0 +1,214 @@
+@use '@/styles/variables.scss' as *;
+
+.card {
+  @include card-base;
+  @include press-state;
+  margin-bottom: $spacing-md;
+  position: relative;
+  overflow: hidden;
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: $spacing-md;
+}
+
+.left {
+  display: flex;
+  align-items: center;
+  gap: $spacing-sm;
+  flex: 1;
+  min-width: 0;
+}
+
+.typeTag {
+  width: 48rpx;
+  height: 48rpx;
+  border-radius: $radius-sm;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.typeText {
+  font-size: $font-size-sm;
+  color: $color-text-white;
+  font-weight: $font-weight-bold;
+}
+
+.pickup {
+  background: $color-primary;
+}
+
+.delivery {
+  background: $color-success;
+}
+
+.waybillNo {
+  font-size: $font-size-md;
+  color: $color-text-primary;
+  font-weight: $font-weight-semibold;
+  font-family: monospace;
+  @include text-ellipsis;
+  flex: 1;
+  min-width: 0;
+}
+
+.statusTag {
+  padding: 4rpx 12rpx;
+  border-radius: $radius-xs;
+  flex-shrink: 0;
+}
+
+.statusText {
+  font-size: $font-size-xs;
+  font-weight: $font-weight-medium;
+}
+
+.statusDefault {
+  background: $color-bg-hover;
+  .statusText { color: $color-text-secondary; }
+}
+
+.statusPrimary {
+  background: $color-tag-pickup-bg;
+  .statusText { color: $color-primary; }
+}
+
+.statusSuccess {
+  background: $color-tag-delivery-bg;
+  .statusText { color: $color-success; }
+}
+
+.statusError {
+  background: $color-tag-overtime-bg;
+  .statusText { color: $color-error; }
+}
+
+.priorityTag {
+  padding: 4rpx 12rpx;
+  border-radius: $radius-xs;
+  flex-shrink: 0;
+}
+
+.priorityText {
+  font-size: $font-size-xs;
+  font-weight: $font-weight-bold;
+  color: $color-text-white;
+}
+
+.urgent {
+  background: $color-error;
+}
+
+.vip {
+  background: linear-gradient(135deg, #ffd700 0%, #ff8c00 100%);
+}
+
+.info {
+  background: $color-bg-page;
+  border-radius: $radius-md;
+  padding: $spacing-md;
+  margin-bottom: $spacing-md;
+}
+
+.row {
+  display: flex;
+  align-items: flex-start;
+  gap: $spacing-sm;
+  margin-bottom: $spacing-sm;
+
+  &:last-child {
+    margin-bottom: 0;
+  }
+}
+
+.label {
+  font-size: $font-size-sm;
+  color: $color-text-tertiary;
+  flex-shrink: 0;
+  width: 80rpx;
+}
+
+.value {
+  font-size: $font-size-sm;
+  color: $color-text-primary;
+  flex: 1;
+  @include text-ellipsis;
+}
+
+.address {
+  font-size: $font-size-sm;
+  color: $color-text-primary;
+  flex: 1;
+  @include text-ellipsis-multi(2);
+  line-height: 1.5;
+}
+
+.footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: $spacing-md;
+}
+
+.timeInfo {
+  display: flex;
+  align-items: center;
+  gap: $spacing-xs;
+  flex-shrink: 0;
+}
+
+.timeIcon {
+  font-size: 24rpx;
+}
+
+.timeText {
+  font-size: $font-size-xs;
+  color: $color-text-tertiary;
+}
+
+.timeUrgent {
+  .timeText { color: $color-error; font-weight: $font-weight-medium; }
+}
+
+.actions {
+  display: flex;
+  align-items: center;
+  gap: $spacing-sm;
+  flex-shrink: 0;
+}
+
+.btn {
+  @include button-reset;
+  @include press-state;
+  height: $button-height-sm;
+  padding: 0 $spacing-lg;
+  border-radius: $radius-button;
+  font-size: $font-size-sm;
+  font-weight: $font-weight-medium;
+  min-width: 120rpx;
+}
+
+.btnPrimary {
+  @include gradient-primary;
+  color: $color-text-white;
+}
+
+.btnSecondary {
+  background: $color-bg-card;
+  border: 2rpx solid $color-primary;
+  color: $color-primary;
+}
+
+.urgentBar {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 6rpx;
+  background: linear-gradient(90deg, $color-warning 0%, $color-error 100%);
+}

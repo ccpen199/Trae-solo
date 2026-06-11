@@ -1,0 +1,346 @@
+@import '@/styles/variables.scss';
+@import '@/styles/theme.scss';
+
+.page {
+  @include page-safe;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  background: $color-bg-page;
+}
+
+.header {
+  padding: $spacing-xl $spacing-lg;
+  background: linear-gradient(135deg, $color-checkin 0%, #9254de 100%);
+  color: #fff;
+  margin: 0 (-$page-padding) $spacing-md;
+  text-align: center;
+}
+
+.currentTime {
+  font-size: 96rpx;
+  font-weight: 700;
+  letter-spacing: 4rpx;
+  margin-bottom: $spacing-xs;
+}
+
+.currentDate {
+  font-size: $font-size-md;
+  opacity: 0.9;
+  margin-bottom: $spacing-lg;
+}
+
+.workingHours {
+  display: inline-flex;
+  align-items: center;
+  padding: $spacing-sm $spacing-lg;
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: $radius-round;
+  gap: $spacing-sm;
+
+  .icon {
+    font-size: $font-size-md;
+  }
+
+  .text {
+    font-size: $font-size-md;
+    font-weight: 500;
+  }
+
+  .value {
+    font-size: $font-size-lg;
+    font-weight: 700;
+  }
+}
+
+.statusSection {
+  @include card-base;
+  margin-bottom: $spacing-md;
+}
+
+.sectionTitle {
+  font-size: $font-size-md;
+  font-weight: 600;
+  color: $color-text-primary;
+  margin-bottom: $spacing-md;
+  display: flex;
+  align-items: center;
+  gap: $spacing-sm;
+
+  &::before {
+    content: '';
+    width: 6rpx;
+    height: 32rpx;
+    background: $color-checkin;
+    border-radius: $radius-xs;
+  }
+}
+
+.statusRow {
+  display: flex;
+  justify-content: space-around;
+  margin-bottom: $spacing-lg;
+}
+
+.statusItem {
+  text-align: center;
+
+  .icon {
+    width: 80rpx;
+    height: 80rpx;
+    @include flex-center;
+    background: rgba($color-checkin, 0.1);
+    border-radius: $radius-round;
+    font-size: 40rpx;
+    margin: 0 auto $spacing-sm;
+  }
+
+  .label {
+    font-size: $font-size-sm;
+    color: $color-text-secondary;
+    margin-bottom: $spacing-xs;
+  }
+
+  .value {
+    font-size: $font-size-md;
+    font-weight: 600;
+    color: $color-text-primary;
+  }
+
+  .empty {
+    font-size: $font-size-md;
+    color: $color-text-tertiary;
+  }
+}
+
+.fenceInfo {
+  display: flex;
+  align-items: center;
+  padding: $spacing-md;
+  background: $color-bg-page;
+  border-radius: $radius-md;
+  gap: $spacing-md;
+
+  .icon {
+    width: 64rpx;
+    height: 64rpx;
+    @include flex-center;
+    background: rgba($color-success, 0.1);
+    border-radius: $radius-round;
+    font-size: 32rpx;
+    flex-shrink: 0;
+  }
+
+  .info {
+    flex: 1;
+
+    .title {
+      font-size: $font-size-md;
+      font-weight: 500;
+      color: $color-text-primary;
+      margin-bottom: $spacing-xs;
+    }
+
+    .desc {
+      font-size: $font-size-sm;
+      color: $color-text-secondary;
+    }
+  }
+
+  .status {
+    @include tag(rgba($color-success, 0.1), $color-success);
+  }
+}
+
+.checkinButtons {
+  @include card-base;
+  margin-bottom: $spacing-md;
+  display: flex;
+  gap: $spacing-lg;
+}
+
+.checkinBtn {
+  flex: 1;
+  height: 200rpx;
+  @include flex-center;
+  flex-direction: column;
+  border-radius: $radius-lg;
+  gap: $spacing-sm;
+  @include press-state;
+
+  .icon {
+    font-size: 64rpx;
+  }
+
+  .title {
+    font-size: $font-size-lg;
+    font-weight: 600;
+    color: #fff;
+  }
+
+  .time {
+    font-size: $font-size-sm;
+    opacity: 0.9;
+    color: #fff;
+  }
+
+  &.checkIn {
+    background: linear-gradient(135deg, $color-success 0%, #23c34f 100%);
+  }
+
+  &.checkOut {
+    background: linear-gradient(135deg, $color-warning 0%, #ff9a2e 100%);
+  }
+
+  &.disabled {
+    opacity: 0.5;
+  }
+}
+
+.historySection {
+  @include card-base;
+  margin-bottom: $spacing-md;
+}
+
+.historyList {
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-sm;
+}
+
+.historyItem {
+  display: flex;
+  align-items: center;
+  padding: $spacing-md;
+  background: $color-bg-page;
+  border-radius: $radius-md;
+  gap: $spacing-md;
+
+  .typeIcon {
+    width: 56rpx;
+    height: 56rpx;
+    @include flex-center;
+    border-radius: $radius-round;
+    font-size: 28rpx;
+    flex-shrink: 0;
+
+    &.checkIn {
+      background: rgba($color-success, 0.1);
+      color: $color-success;
+    }
+
+    &.checkOut {
+      background: rgba($color-warning, 0.1);
+      color: $color-warning;
+    }
+  }
+
+  .info {
+    flex: 1;
+
+    .title {
+      font-size: $font-size-md;
+      font-weight: 500;
+      color: $color-text-primary;
+      margin-bottom: $spacing-xs;
+    }
+
+    .location {
+      font-size: $font-size-sm;
+      color: $color-text-secondary;
+      @include text-ellipsis;
+    }
+  }
+
+  .time {
+    text-align: right;
+
+    .main {
+      font-size: $font-size-md;
+      font-weight: 600;
+      color: $color-text-primary;
+      margin-bottom: $spacing-xs;
+    }
+
+    .fence {
+      font-size: $font-size-xs;
+      color: $color-text-tertiary;
+    }
+  }
+}
+
+.empty {
+  padding: $spacing-xl * 2;
+  text-align: center;
+
+  .icon {
+    font-size: 80rpx;
+    opacity: 0.3;
+    margin-bottom: $spacing-md;
+  }
+
+  .text {
+    font-size: $font-size-md;
+    color: $color-text-tertiary;
+  }
+}
+
+.loading {
+  padding: $spacing-xl;
+  text-align: center;
+  color: $color-text-tertiary;
+  font-size: $font-size-sm;
+}
+
+.locationStatus {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: $spacing-sm;
+  gap: $spacing-sm;
+  margin-bottom: $spacing-md;
+
+  .icon {
+    font-size: $font-size-md;
+  }
+
+  .text {
+    font-size: $font-size-sm;
+    color: $color-text-secondary;
+  }
+
+  &.inside .text {
+    color: $color-success;
+  }
+
+  &.outside .text {
+    color: $color-warning;
+  }
+}
+
+.statsSection {
+  @include card-base;
+  margin-bottom: $spacing-md;
+}
+
+.statsGrid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: $spacing-md;
+}
+
+.statItem {
+  text-align: center;
+
+  .value {
+    font-size: $font-size-xxl;
+    font-weight: 700;
+    color: $color-checkin;
+    margin-bottom: $spacing-xs;
+  }
+
+  .label {
+    font-size: $font-size-sm;
+    color: $color-text-secondary;
+  }
+}

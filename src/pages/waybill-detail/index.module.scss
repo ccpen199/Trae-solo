@@ -1,0 +1,395 @@
+@import '@/styles/variables.scss';
+@import '@/styles/theme.scss';
+
+.page {
+  @include page-safe;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  background: $color-bg-page;
+  padding-bottom: calc(180rpx + env(safe-area-inset-bottom));
+}
+
+.header {
+  padding: $spacing-lg;
+  background: linear-gradient(135deg, $color-primary 0%, $color-primary-light 100%);
+  color: #fff;
+  margin: 0 (-$page-padding) $spacing-md;
+}
+
+.waybillNo {
+  font-size: $font-size-xl;
+  font-weight: 700;
+  margin-bottom: $spacing-xs;
+  letter-spacing: 2rpx;
+}
+
+.statusBadge {
+  display: inline-flex;
+  align-items: center;
+  padding: $spacing-xs $spacing-md;
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: $radius-round;
+  font-size: $font-size-sm;
+  gap: $spacing-xs;
+
+  .icon {
+    font-size: $font-size-md;
+  }
+}
+
+.section {
+  @include card-base;
+  margin-bottom: $spacing-md;
+}
+
+.sectionTitle {
+  font-size: $font-size-md;
+  font-weight: 600;
+  color: $color-text-primary;
+  margin-bottom: $spacing-md;
+  display: flex;
+  align-items: center;
+  gap: $spacing-sm;
+
+  &::before {
+    content: '';
+    width: 6rpx;
+    height: 32rpx;
+    background: $color-primary;
+    border-radius: $radius-xs;
+  }
+}
+
+.infoRow {
+  display: flex;
+  padding: $spacing-sm 0;
+  gap: $spacing-md;
+  border-bottom: 1rpx solid $color-divider;
+
+  &:last-child {
+    border-bottom: none;
+  }
+
+  .label {
+    width: 160rpx;
+    font-size: $font-size-sm;
+    color: $color-text-secondary;
+    flex-shrink: 0;
+  }
+
+  .value {
+    flex: 1;
+    font-size: $font-size-sm;
+    color: $color-text-primary;
+    word-break: break-all;
+  }
+
+  .highlight {
+    color: $color-primary;
+    font-weight: 600;
+  }
+
+  .tag {
+    @include tag(rgba($color-primary, 0.1), $color-primary);
+  }
+}
+
+.contactCard {
+  display: flex;
+  align-items: center;
+  padding: $spacing-md;
+  background: $color-bg-page;
+  border-radius: $radius-md;
+  margin-bottom: $spacing-sm;
+  gap: $spacing-md;
+
+  &:last-child {
+    margin-bottom: 0;
+  }
+
+  .avatar {
+    width: 80rpx;
+    height: 80rpx;
+    @include flex-center;
+    background: $color-primary;
+    border-radius: 50%;
+    color: #fff;
+    font-size: $font-size-lg;
+    font-weight: 600;
+    flex-shrink: 0;
+  }
+
+  .info {
+    flex: 1;
+
+    .nameRow {
+      display: flex;
+      align-items: center;
+      gap: $spacing-sm;
+      margin-bottom: $spacing-xs;
+
+      .name {
+        font-size: $font-size-md;
+        font-weight: 600;
+        color: $color-text-primary;
+      }
+
+      .phone {
+        font-size: $font-size-sm;
+        color: $color-text-secondary;
+      }
+
+      .tag {
+        @include tag(rgba($color-success, 0.1), $color-success);
+        font-size: $font-size-xs;
+      }
+    }
+
+    .address {
+      font-size: $font-size-sm;
+      color: $color-text-secondary;
+      line-height: 1.5;
+    }
+  }
+
+  .actions {
+    display: flex;
+    gap: $spacing-sm;
+
+    .actionBtn {
+      width: 64rpx;
+      height: 64rpx;
+      @include flex-center;
+      background: rgba($color-primary, 0.1);
+      border-radius: 50%;
+      font-size: $font-size-lg;
+      @include press-state;
+    }
+  }
+}
+
+.timeline {
+  position: relative;
+  padding-left: $spacing-lg;
+
+  &::before {
+    content: '';
+    position: absolute;
+    left: 10rpx;
+    top: 10rpx;
+    bottom: 10rpx;
+    width: 2rpx;
+    background: $color-border;
+  }
+}
+
+.timelineItem {
+  position: relative;
+  padding-bottom: $spacing-lg;
+
+  &:last-child {
+    padding-bottom: 0;
+  }
+
+  .dot {
+    position: absolute;
+    left: -34rpx;
+    top: 6rpx;
+    width: 20rpx;
+    height: 20rpx;
+    background: $color-border;
+    border-radius: 50%;
+    border: 4rpx solid #fff;
+
+    &.active {
+      background: $color-primary;
+      box-shadow: 0 0 0 4rpx rgba($color-primary, 0.2);
+    }
+  }
+
+  .content {
+    padding-left: $spacing-sm;
+
+    .title {
+      font-size: $font-size-md;
+      font-weight: 500;
+      color: $color-text-primary;
+      margin-bottom: $spacing-xs;
+    }
+
+    .operator {
+      font-size: $font-size-sm;
+      color: $color-text-secondary;
+      margin-bottom: $spacing-xs;
+    }
+
+    .time {
+      font-size: $font-size-xs;
+      color: $color-text-tertiary;
+    }
+
+    .remark {
+      margin-top: $spacing-sm;
+      padding: $spacing-sm $spacing-md;
+      background: $color-bg-page;
+      border-radius: $radius-sm;
+      font-size: $font-size-sm;
+      color: $color-text-secondary;
+    }
+
+    .location {
+      margin-top: $spacing-xs;
+      font-size: $font-size-xs;
+      color: $color-text-tertiary;
+      display: flex;
+      align-items: center;
+      gap: $spacing-xs;
+    }
+  }
+}
+
+.goodsGrid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: $spacing-md;
+}
+
+.goodsItem {
+  padding: $spacing-md;
+  background: $color-bg-page;
+  border-radius: $radius-md;
+
+  .label {
+    font-size: $font-size-xs;
+    color: $color-text-tertiary;
+    margin-bottom: $spacing-xs;
+  }
+
+  .value {
+    font-size: $font-size-md;
+    font-weight: 600;
+    color: $color-text-primary;
+
+    &.warning {
+      color: $color-warning;
+    }
+
+    &.danger {
+      color: $color-error;
+    }
+  }
+}
+
+.tagsRow {
+  display: flex;
+  flex-wrap: wrap;
+  gap: $spacing-sm;
+  margin-top: $spacing-md;
+}
+
+.tag {
+  @include tag(rgba($color-primary, 0.1), $color-primary);
+
+  &.fragile {
+    @include tag(rgba($color-warning, 0.1), $color-warning);
+  }
+
+  &.valuable {
+    @include tag(rgba($color-error, 0.1), $color-error);
+  }
+
+  &.perishable {
+    @include tag(rgba($color-success, 0.1), $color-success);
+  }
+}
+
+.loading {
+  padding: $spacing-xl;
+  text-align: center;
+  color: $color-text-tertiary;
+  font-size: $font-size-sm;
+}
+
+.empty {
+  padding: $spacing-xl * 2;
+  text-align: center;
+
+  .icon {
+    font-size: 80rpx;
+    opacity: 0.3;
+    margin-bottom: $spacing-md;
+  }
+
+  .text {
+    font-size: $font-size-md;
+    color: $color-text-tertiary;
+  }
+}
+
+.bottomActionBar {
+  @include bottom-action-bar;
+  display: flex;
+  gap: $spacing-md;
+}
+
+.actionBtn {
+  flex: 1;
+  height: $button-height-lg;
+  border-radius: $radius-button;
+  font-size: $font-size-md;
+  @include flex-center;
+  gap: $spacing-sm;
+  @include press-state;
+
+  &.primary {
+    @include gradient-primary;
+    color: #fff;
+  }
+
+  &.secondary {
+    background: $color-bg-page;
+    color: $color-text-primary;
+  }
+
+  &.warning {
+    background: $color-warning;
+    color: #fff;
+  }
+
+  &.disabled {
+    opacity: 0.5;
+  }
+}
+
+.signatureSection {
+  padding: $spacing-md;
+  background: $color-bg-page;
+  border-radius: $radius-md;
+
+  .signatureInfo {
+    display: flex;
+    align-items: center;
+    gap: $spacing-md;
+
+    .icon {
+      font-size: 48rpx;
+    }
+
+    .info {
+      flex: 1;
+
+      .name {
+        font-size: $font-size-md;
+        font-weight: 600;
+        color: $color-text-primary;
+        margin-bottom: $spacing-xs;
+      }
+
+      .time {
+        font-size: $font-size-sm;
+        color: $color-text-secondary;
+      }
+    }
+  }
+}

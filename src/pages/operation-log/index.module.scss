@@ -1,0 +1,354 @@
+@import '@/styles/variables.scss';
+@import '@/styles/theme.scss';
+
+.page {
+  @include page-safe;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  background: $color-bg-page;
+}
+
+.header {
+  padding: $spacing-lg;
+  background: linear-gradient(135deg, $color-info 0%, #4080ff 100%);
+  color: #fff;
+  margin: 0 (-$page-padding) $spacing-md;
+}
+
+.headerTitle {
+  font-size: $font-size-xl;
+  font-weight: 600;
+  margin-bottom: $spacing-sm;
+}
+
+.headerDesc {
+  font-size: $font-size-sm;
+  opacity: 0.9;
+}
+
+.statsRow {
+  display: flex;
+  justify-content: space-around;
+  margin-top: $spacing-lg;
+}
+
+.statItem {
+  text-align: center;
+
+  .value {
+    font-size: $font-size-xxl;
+    font-weight: 700;
+    margin-bottom: $spacing-xs;
+  }
+
+  .label {
+    font-size: $font-size-xs;
+    opacity: 0.8;
+  }
+}
+
+.filterBar {
+  @include card-base;
+  margin-bottom: $spacing-md;
+  padding: $spacing-md $spacing-lg;
+}
+
+.filterSection {
+  margin-bottom: $spacing-md;
+
+  &:last-child {
+    margin-bottom: 0;
+  }
+
+  .filterLabel {
+    font-size: $font-size-sm;
+    color: $color-text-secondary;
+    margin-bottom: $spacing-sm;
+  }
+
+  .filterTabs {
+    display: flex;
+    flex-wrap: wrap;
+    gap: $spacing-sm;
+  }
+
+  .filterTab {
+    padding: $spacing-xs $spacing-md;
+    background: $color-bg-page;
+    border-radius: $radius-round;
+    font-size: $font-size-sm;
+    color: $color-text-secondary;
+    @include press-state;
+
+    &.active {
+      background: $color-primary;
+      color: #fff;
+    }
+  }
+}
+
+.logList {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-md;
+}
+
+.logCard {
+  @include card-base;
+  margin-bottom: $spacing-md;
+}
+
+.logHeader {
+  display: flex;
+  align-items: flex-start;
+  gap: $spacing-md;
+  margin-bottom: $spacing-md;
+}
+
+.logIcon {
+  width: 64rpx;
+  height: 64rpx;
+  @include flex-center;
+  border-radius: $radius-round;
+  font-size: 28rpx;
+  flex-shrink: 0;
+
+  &.success {
+    background: rgba($color-success, 0.1);
+    color: $color-success;
+  }
+
+  &.failed {
+    background: rgba($color-error, 0.1);
+    color: $color-error;
+  }
+
+  &.warning {
+    background: rgba($color-warning, 0.1);
+    color: $color-warning;
+  }
+}
+
+.logMain {
+  flex: 1;
+  min-width: 0;
+}
+
+.logTitle {
+  font-size: $font-size-md;
+  font-weight: 600;
+  color: $color-text-primary;
+  margin-bottom: $spacing-xs;
+  @include text-ellipsis;
+}
+
+.logMeta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: $spacing-sm;
+  margin-bottom: $spacing-xs;
+
+  .metaItem {
+    font-size: $font-size-xs;
+    color: $color-text-tertiary;
+    display: flex;
+    align-items: center;
+    gap: $spacing-xs;
+  }
+}
+
+.logTags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: $spacing-xs;
+}
+
+.logTag {
+  @include tag(rgba($color-primary, 0.1), $color-primary);
+  font-size: $font-size-xs;
+
+  &.module {
+    @include tag(rgba($color-info, 0.1), $color-info);
+  }
+
+  &.critical {
+    @include tag(rgba($color-error, 0.1), $color-error);
+  }
+
+  &.sensitive {
+    @include tag(rgba($color-warning, 0.1), $color-warning);
+  }
+
+  &.normal {
+    @include tag(rgba($color-text-tertiary, 0.1), $color-text-tertiary);
+  }
+}
+
+.logContent {
+  padding: $spacing-md;
+  background: $color-bg-page;
+  border-radius: $radius-md;
+  margin-top: $spacing-md;
+
+  .contentRow {
+    display: flex;
+    padding: $spacing-xs 0;
+    gap: $spacing-md;
+    border-bottom: 1rpx solid $color-divider;
+
+    &:last-child {
+      border-bottom: none;
+    }
+
+    .label {
+      width: 140rpx;
+      font-size: $font-size-xs;
+      color: $color-text-secondary;
+      flex-shrink: 0;
+    }
+
+    .value {
+      flex: 1;
+      font-size: $font-size-xs;
+      color: $color-text-primary;
+      word-break: break-all;
+      font-family: monospace;
+    }
+  }
+}
+
+.expandBtn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding-top: $spacing-md;
+  font-size: $font-size-sm;
+  color: $color-text-secondary;
+  gap: $spacing-xs;
+}
+
+.empty {
+  padding: $spacing-xl * 2;
+  text-align: center;
+
+  .icon {
+    font-size: 80rpx;
+    opacity: 0.3;
+    margin-bottom: $spacing-md;
+  }
+
+  .text {
+    font-size: $font-size-md;
+    color: $color-text-tertiary;
+  }
+}
+
+.loading {
+  padding: $spacing-xl;
+  text-align: center;
+  color: $color-text-tertiary;
+  font-size: $font-size-sm;
+}
+
+.bottomActionBar {
+  @include bottom-action-bar;
+  display: flex;
+  gap: $spacing-md;
+}
+
+.actionBtn {
+  flex: 1;
+  height: $button-height-lg;
+  border-radius: $radius-button;
+  font-size: $font-size-md;
+  @include flex-center;
+  gap: $spacing-sm;
+  @include press-state;
+
+  &.primary {
+    @include gradient-primary;
+    color: #fff;
+  }
+
+  &.secondary {
+    background: $color-bg-page;
+    color: $color-text-primary;
+  }
+
+  &.disabled {
+    opacity: 0.5;
+  }
+}
+
+.modalContent {
+  padding: $spacing-lg;
+
+  .modalTitle {
+    font-size: $font-size-lg;
+    font-weight: 600;
+    color: $color-text-primary;
+    margin-bottom: $spacing-md;
+    text-align: center;
+  }
+
+  .modalOptions {
+    display: flex;
+    flex-direction: column;
+    gap: $spacing-sm;
+  }
+
+  .modalOption {
+    padding: $spacing-md;
+    background: $color-bg-page;
+    border-radius: $radius-md;
+    text-align: center;
+    font-size: $font-size-md;
+    color: $color-text-primary;
+    @include press-state;
+  }
+
+  .modalCancel {
+    margin-top: $spacing-md;
+    padding: $spacing-md;
+    text-align: center;
+    font-size: $font-size-md;
+    color: $color-text-secondary;
+  }
+}
+
+.dateFilter {
+  display: flex;
+  align-items: center;
+  gap: $spacing-sm;
+  padding: $spacing-sm $spacing-md;
+  background: $color-bg-page;
+  border-radius: $radius-md;
+  font-size: $font-size-sm;
+  color: $color-text-secondary;
+  @include press-state;
+}
+
+.searchBox {
+  display: flex;
+  align-items: center;
+  padding: $spacing-sm $spacing-md;
+  background: $color-bg-page;
+  border-radius: $radius-md;
+  gap: $spacing-sm;
+  margin-bottom: $spacing-md;
+
+  .icon {
+    font-size: $font-size-md;
+  }
+
+  .input {
+    flex: 1;
+    font-size: $font-size-sm;
+    color: $color-text-primary;
+    background: transparent;
+    border: none;
+    outline: none;
+  }
+}

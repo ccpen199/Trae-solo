@@ -1,0 +1,114 @@
+@use '@/styles/variables.scss' as *;
+
+.quickAction {
+  @include card-base;
+  padding: $spacing-md 0;
+}
+
+.grid {
+  display: grid;
+  gap: $spacing-md;
+}
+
+.item {
+  @include press-state;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: $spacing-md 0;
+  border-radius: $radius-md;
+  transition: background-color $transition-base;
+
+  &:active {
+    background: $color-bg-hover;
+  }
+}
+
+.iconWrapper {
+  position: relative;
+  width: 88rpx;
+  height: 88rpx;
+  border-radius: $radius-lg;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: $spacing-sm;
+}
+
+.icon {
+  font-size: 40rpx;
+  line-height: 1;
+}
+
+.title {
+  font-size: $font-size-sm;
+  color: $color-text-primary;
+  font-weight: $font-weight-medium;
+  margin-bottom: 2rpx;
+  @include text-ellipsis;
+  max-width: 100%;
+}
+
+.subtitle {
+  font-size: $font-size-xs;
+  color: $color-text-tertiary;
+  @include text-ellipsis;
+  max-width: 100%;
+}
+
+.badge {
+  position: absolute;
+  top: -8rpx;
+  right: -8rpx;
+  min-width: 32rpx;
+  height: 32rpx;
+  padding: 0 8rpx;
+  border-radius: $radius-round;
+  background: $color-error;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.badgeText {
+  font-size: 20rpx;
+  color: $color-text-white;
+  font-weight: $font-weight-medium;
+  line-height: 1;
+}
+
+.colorPrimary {
+  .iconWrapper {
+    background: linear-gradient(135deg, rgba($color-primary, 0.15) 0%, rgba($color-primary, 0.05) 100%);
+  }
+  .icon { color: $color-primary; }
+}
+
+.colorSuccess {
+  .iconWrapper {
+    background: linear-gradient(135deg, rgba($color-success, 0.15) 0%, rgba($color-success, 0.05) 100%);
+  }
+  .icon { color: $color-success; }
+}
+
+.colorWarning {
+  .iconWrapper {
+    background: linear-gradient(135deg, rgba($color-warning, 0.15) 0%, rgba($color-warning, 0.05) 100%);
+  }
+  .icon { color: $color-warning; }
+}
+
+.colorError {
+  .iconWrapper {
+    background: linear-gradient(135deg, rgba($color-error, 0.15) 0%, rgba($color-error, 0.05) 100%);
+  }
+  .icon { color: $color-error; }
+}
+
+.colorPurple {
+  .iconWrapper {
+    background: linear-gradient(135deg, rgba($color-checkin, 0.15) 0%, rgba($color-checkin, 0.05) 100%);
+  }
+  .icon { color: $color-checkin; }
+}

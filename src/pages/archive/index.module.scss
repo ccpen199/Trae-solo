@@ -1,0 +1,283 @@
+@import '@/styles/variables.scss';
+@import '@/styles/theme.scss';
+
+.page {
+  min-height: 100vh;
+  background: $color-bg-gray;
+  padding-bottom: $spacing-6xl;
+}
+
+.header {
+  background: linear-gradient(135deg, $color-primary-gradient-start, $color-primary-gradient-end);
+  padding: $spacing-3xl $spacing-2xl;
+  color: $color-white;
+}
+
+.headerTitle {
+  @include font-title-large;
+  display: block;
+  margin-bottom: $spacing-sm;
+}
+
+.headerDesc {
+  @include font-body-small;
+  opacity: 0.9;
+}
+
+.statsBar {
+  display: flex;
+  justify-content: space-around;
+  background: $color-white;
+  margin: $spacing-lg $spacing-2xl;
+  padding: $spacing-2xl;
+  @include card-radius;
+  @include card-shadow;
+}
+
+.statItem {
+  text-align: center;
+}
+
+.statValue {
+  @include font-title-large;
+  color: $color-primary;
+  display: block;
+  margin-bottom: $spacing-xs;
+}
+
+.statLabel {
+  @include font-body-small;
+  color: $color-text-secondary;
+}
+
+.filterBar {
+  display: flex;
+  gap: $spacing-sm;
+  padding: $spacing-md $spacing-2xl;
+  overflow-x: auto;
+  background: $color-white;
+  margin-bottom: $spacing-md;
+}
+
+.filterItem {
+  flex-shrink: 0;
+  padding: $spacing-sm $spacing-xl;
+  @include font-body-small;
+  color: $color-text-secondary;
+  background: $color-bg-gray;
+  border-radius: $radius-full;
+  white-space: nowrap;
+
+  &.active {
+    background: $color-primary;
+    color: $color-white;
+  }
+}
+
+.listContainer {
+  padding: 0 $spacing-2xl;
+}
+
+.archiveCard {
+  background: $color-white;
+  margin-bottom: $spacing-lg;
+  padding: $spacing-2xl;
+  @include card-radius;
+  @include card-shadow;
+}
+
+.cardHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: $spacing-xl;
+}
+
+.waybillInfo {
+  flex: 1;
+}
+
+.waybillNo {
+  @include font-title-medium;
+  color: $color-text-primary;
+  display: block;
+  margin-bottom: $spacing-xs;
+}
+
+.archiveType {
+  display: inline-block;
+  padding: $spacing-xs $spacing-md;
+  @include font-tag;
+  border-radius: $radius-sm;
+}
+
+.typeNormal {
+  background: $color-success-light;
+  color: $color-success;
+}
+
+.typeException {
+  background: $color-warning-light;
+  color: $color-warning;
+}
+
+.typeComplaint {
+  background: $color-error-light;
+  color: $color-error;
+}
+
+.typeLegal {
+  background: $color-danger-light;
+  color: $color-danger;
+}
+
+.verifyBadge {
+  display: flex;
+  align-items: center;
+  gap: $spacing-xs;
+  padding: $spacing-xs $spacing-md;
+  @include font-tag;
+  background: $color-success-light;
+  color: $color-success;
+  border-radius: $radius-sm;
+
+  &.unverified {
+    background: $color-warning-light;
+    color: $color-warning;
+  }
+}
+
+.infoSection {
+  margin-bottom: $spacing-lg;
+}
+
+.infoRow {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  padding: $spacing-sm 0;
+  border-bottom: 1px solid $color-border-light;
+
+  &:last-child {
+    border-bottom: none;
+  }
+}
+
+.infoLabel {
+  @include font-body-small;
+  color: $color-text-secondary;
+  flex-shrink: 0;
+}
+
+.infoValue {
+  @include font-body-small;
+  color: $color-text-primary;
+  text-align: right;
+  flex: 1;
+  margin-left: $spacing-lg;
+  word-break: break-all;
+}
+
+.hashValue {
+  @include font-body-small;
+  color: $color-text-secondary;
+  font-family: monospace;
+  font-size: $font-size-xs;
+  text-align: right;
+  flex: 1;
+  margin-left: $spacing-lg;
+  word-break: break-all;
+}
+
+.blockchainSection {
+  background: $color-bg-gray;
+  padding: $spacing-xl;
+  border-radius: $radius-md;
+  margin-bottom: $spacing-xl;
+}
+
+.blockchainTitle {
+  @include font-body-medium;
+  color: $color-text-primary;
+  display: flex;
+  align-items: center;
+  gap: $spacing-sm;
+  margin-bottom: $spacing-md;
+}
+
+.blockchainInfo {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: $spacing-sm;
+
+  &:last-child {
+    margin-bottom: 0;
+  }
+}
+
+.txId {
+  @include font-body-small;
+  color: $color-primary;
+  font-family: monospace;
+  font-size: $font-size-xs;
+  text-align: right;
+  flex: 1;
+  margin-left: $spacing-lg;
+  word-break: break-all;
+}
+
+.actionBar {
+  display: flex;
+  gap: $spacing-md;
+}
+
+.actionBtn {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: $spacing-md;
+  @include font-body-small;
+  border-radius: $radius-md;
+  gap: $spacing-xs;
+
+  &.primary {
+    background: $color-primary;
+    color: $color-white;
+  }
+
+  &.secondary {
+    background: $color-bg-gray;
+    color: $color-text-secondary;
+  }
+
+  &.disabled {
+    opacity: 0.5;
+    pointer-events: none;
+  }
+}
+
+.emptyState {
+  text-align: center;
+  padding: $spacing-6xl $spacing-2xl;
+
+  .icon {
+    font-size: 80px;
+    opacity: 0.3;
+    display: block;
+    margin-bottom: $spacing-xl;
+  }
+
+  .text {
+    @include font-body-medium;
+    color: $color-text-secondary;
+  }
+}
+
+.loading {
+  text-align: center;
+  padding: $spacing-4xl;
+  @include font-body-small;
+  color: $color-text-secondary;
+}

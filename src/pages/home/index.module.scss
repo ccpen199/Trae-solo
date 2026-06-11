@@ -1,0 +1,221 @@
+@import '@/styles/variables.scss';
+@import '@/styles/theme.scss';
+
+.page {
+  @include page-safe;
+  min-height: 100vh;
+}
+
+.header {
+  padding: $spacing-lg $spacing-lg $spacing-xl;
+  background: linear-gradient(135deg, $color-primary 0%, #4080ff 100%);
+  color: #fff;
+  border-radius: 0 0 $radius-lg $radius-lg;
+}
+
+.userInfo {
+  display: flex;
+  align-items: center;
+  gap: $spacing-md;
+  margin-bottom: $spacing-xl;
+}
+
+.avatar {
+  width: 96rpx;
+  height: 96rpx;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.2);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 48rpx;
+}
+
+.userText {
+  flex: 1;
+}
+
+.greeting {
+  font-size: 32rpx;
+  opacity: 0.9;
+  margin-bottom: $spacing-xs;
+}
+
+.userName {
+  font-size: 40rpx;
+  font-weight: 600;
+}
+
+.siteInfo {
+  font-size: 24rpx;
+  opacity: 0.8;
+  margin-top: $spacing-xs;
+}
+
+.onlineStatus {
+  display: flex;
+  align-items: center;
+  gap: $spacing-xs;
+  padding: $spacing-xs $spacing-md;
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: $radius-lg;
+}
+
+.statusDot {
+  width: 16rpx;
+  height: 16rpx;
+  border-radius: 50%;
+  background: #00ff64;
+  animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.5; }
+}
+
+.statusText {
+  font-size: 24rpx;
+}
+
+.statsGrid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: $spacing-md;
+  margin-top: -$spacing-xl;
+  padding: 0 $spacing-lg;
+  margin-bottom: $spacing-lg;
+}
+
+.section {
+  padding: $spacing-lg;
+  margin-bottom: $spacing-lg;
+}
+
+.sectionHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: $spacing-md;
+}
+
+.sectionTitle {
+  font-size: 32rpx;
+  font-weight: 600;
+  color: $color-text-primary;
+}
+
+.sectionAction {
+  font-size: 26rpx;
+  color: $color-primary;
+}
+
+.heatmapContainer {
+  @include card-base;
+  padding: $spacing-md;
+  margin-bottom: $spacing-md;
+}
+
+.warningList {
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-sm;
+}
+
+.warningItem {
+  @include card-base;
+  padding: $spacing-md;
+  display: flex;
+  align-items: flex-start;
+  gap: $spacing-md;
+  border-left: 6rpx solid $color-warning;
+}
+
+.warningItem.danger {
+  border-left-color: $color-danger;
+}
+
+.warningIcon {
+  font-size: 36rpx;
+  flex-shrink: 0;
+}
+
+.warningContent {
+  flex: 1;
+  min-width: 0;
+}
+
+.warningTitle {
+  font-size: 28rpx;
+  font-weight: 500;
+  color: $color-text-primary;
+  margin-bottom: $spacing-xs;
+}
+
+.warningDesc {
+  font-size: 24rpx;
+  color: $color-text-secondary;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+}
+
+.warningTime {
+  font-size: 22rpx;
+  color: $color-text-tertiary;
+  margin-top: $spacing-xs;
+}
+
+.syncBar {
+  @include card-base;
+  padding: $spacing-md $spacing-lg;
+  margin: 0 $spacing-lg $spacing-lg;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.syncInfo {
+  display: flex;
+  align-items: center;
+  gap: $spacing-sm;
+}
+
+.syncIcon {
+  font-size: 32rpx;
+}
+
+.syncText {
+  font-size: 26rpx;
+  color: $color-text-secondary;
+}
+
+.syncBtn {
+  padding: $spacing-xs $spacing-md;
+  background: $color-primary;
+  color: #fff;
+  border-radius: $radius-md;
+  font-size: 24rpx;
+}
+
+.empty {
+  padding: $spacing-xl;
+  text-align: center;
+  color: $color-text-tertiary;
+  font-size: 26rpx;
+}
+
+.offlineBadge {
+  position: fixed;
+  top: 200rpx;
+  right: $spacing-lg;
+  padding: $spacing-sm $spacing-md;
+  background: $color-warning;
+  color: #fff;
+  border-radius: $radius-lg;
+  font-size: 24rpx;
+  z-index: 100;
+  box-shadow: $shadow-md;
+}

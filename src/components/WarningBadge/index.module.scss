@@ -1,0 +1,132 @@
+@use '@/styles/variables.scss' as *;
+
+.container {
+  @include card-base;
+  margin-bottom: $spacing-md;
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: $spacing-md;
+}
+
+.titleRow {
+  display: flex;
+  align-items: center;
+  gap: $spacing-sm;
+}
+
+.title {
+  font-size: $font-size-lg;
+  color: $color-text-primary;
+  font-weight: $font-weight-semibold;
+}
+
+.badge {
+  min-width: 36rpx;
+  height: 36rpx;
+  padding: 0 10rpx;
+  border-radius: $radius-round;
+  background: $color-error;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.badgeText {
+  font-size: 20rpx;
+  color: $color-text-white;
+  font-weight: $font-weight-bold;
+  line-height: 1;
+}
+
+.more {
+  font-size: $font-size-sm;
+  color: $color-primary;
+  @include press-state;
+}
+
+.list {
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-sm;
+}
+
+.item {
+  display: flex;
+  align-items: flex-start;
+  gap: $spacing-md;
+  padding: $spacing-md;
+  border-radius: $radius-md;
+  background: $color-bg-page;
+  @include press-state;
+  border-left: 6rpx solid transparent;
+}
+
+.unread {
+  background: linear-gradient(90deg, rgba($color-primary, 0.05) 0%, $color-bg-page 100%);
+}
+
+.severityError {
+  border-left-color: $color-error;
+}
+
+.severityWarning {
+  border-left-color: $color-warning;
+}
+
+.severityPrimary {
+  border-left-color: $color-primary;
+}
+
+.icon {
+  flex-shrink: 0;
+  width: 56rpx;
+  height: 56rpx;
+  border-radius: $radius-md;
+  background: $color-bg-card;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.iconText {
+  font-size: 28rpx;
+}
+
+.content {
+  flex: 1;
+  min-width: 0;
+}
+
+.itemHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: $spacing-xs;
+  gap: $spacing-sm;
+}
+
+.itemTitle {
+  font-size: $font-size-sm;
+  color: $color-text-primary;
+  font-weight: $font-weight-semibold;
+  @include text-ellipsis;
+  flex: 1;
+}
+
+.deadline {
+  font-size: $font-size-xs;
+  color: $color-error;
+  font-weight: $font-weight-medium;
+  flex-shrink: 0;
+}
+
+.itemDesc {
+  font-size: $font-size-xs;
+  color: $color-text-secondary;
+  @include text-ellipsis-multi(2);
+  line-height: 1.5;
+}

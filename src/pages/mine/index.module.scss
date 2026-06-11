@@ -1,0 +1,311 @@
+@import '@/styles/variables.scss';
+@import '@/styles/theme.scss';
+
+.page {
+  @include page-safe;
+  min-height: 100vh;
+  background: $color-bg-secondary;
+}
+
+.header {
+  padding: $spacing-xl $spacing-lg;
+  background: linear-gradient(135deg, $color-primary 0%, #4080ff 100%);
+  color: #fff;
+  border-radius: 0 0 $radius-xl $radius-xl;
+}
+
+.userInfo {
+  display: flex;
+  align-items: center;
+  gap: $spacing-lg;
+  margin-bottom: $spacing-xl;
+}
+
+.avatar {
+  width: 120rpx;
+  height: 120rpx;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.2);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 56rpx;
+  border: 4rpx solid rgba(255, 255, 255, 0.3);
+}
+
+.userText {
+  flex: 1;
+}
+
+.userName {
+  font-size: 40rpx;
+  font-weight: 600;
+  margin-bottom: $spacing-xs;
+}
+
+.userMeta {
+  font-size: 26rpx;
+  opacity: 0.9;
+  display: flex;
+  align-items: center;
+  gap: $spacing-sm;
+  margin-bottom: $spacing-xs;
+}
+
+.userSite {
+  font-size: 24rpx;
+  opacity: 0.8;
+}
+
+.qrBtn {
+  width: 64rpx;
+  height: 64rpx;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.2);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 32rpx;
+}
+
+.statsCard {
+  background: rgba(255, 255, 255, 0.15);
+  border-radius: $radius-lg;
+  padding: $spacing-lg;
+  backdrop-filter: blur(10px);
+}
+
+.statsRow {
+  display: flex;
+  justify-content: space-around;
+}
+
+.statItem {
+  text-align: center;
+  flex: 1;
+}
+
+.statValue {
+  font-size: 40rpx;
+  font-weight: 700;
+  margin-bottom: $spacing-xs;
+}
+
+.statLabel {
+  font-size: 24rpx;
+  opacity: 0.85;
+}
+
+.section {
+  margin: $spacing-lg;
+  background: #fff;
+  border-radius: $radius-lg;
+  overflow: hidden;
+}
+
+.sectionTitle {
+  padding: $spacing-md $spacing-lg;
+  font-size: 28rpx;
+  font-weight: 600;
+  color: $color-text-primary;
+  border-bottom: 1rpx solid $color-border;
+}
+
+.menuList {
+  padding: 0 $spacing-lg;
+}
+
+.menuItem {
+  display: flex;
+  align-items: center;
+  padding: $spacing-md 0;
+  border-bottom: 1rpx solid $color-border;
+  gap: $spacing-md;
+}
+
+.menuItem:last-child {
+  border-bottom: none;
+}
+
+.menuIcon {
+  width: 64rpx;
+  height: 64rpx;
+  border-radius: $radius-md;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 32rpx;
+  flex-shrink: 0;
+}
+
+.menuIcon.primary {
+  background: rgba($color-primary, 0.1);
+}
+
+.menuIcon.success {
+  background: rgba($color-success, 0.1);
+}
+
+.menuIcon.warning {
+  background: rgba($color-warning, 0.1);
+}
+
+.menuIcon.error {
+  background: rgba($color-danger, 0.1);
+}
+
+.menuIcon.purple {
+  background: rgba($color-checkin, 0.1);
+}
+
+.menuContent {
+  flex: 1;
+  min-width: 0;
+}
+
+.menuTitle {
+  font-size: 28rpx;
+  color: $color-text-primary;
+  margin-bottom: $spacing-xs / 2;
+}
+
+.menuDesc {
+  font-size: 24rpx;
+  color: $color-text-tertiary;
+}
+
+.menuRight {
+  display: flex;
+  align-items: center;
+  gap: $spacing-sm;
+}
+
+.menuBadge {
+  min-width: 32rpx;
+  height: 32rpx;
+  padding: 0 10rpx;
+  background: $color-danger;
+  color: #fff;
+  border-radius: 16rpx;
+  font-size: 20rpx;
+  line-height: 32rpx;
+  text-align: center;
+}
+
+.menuArrow {
+  font-size: 24rpx;
+  color: $color-text-tertiary;
+}
+
+.performance {
+  margin: 0 $spacing-lg $spacing-lg;
+  background: #fff;
+  border-radius: $radius-lg;
+  padding: $spacing-lg;
+}
+
+.performanceHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: $spacing-lg;
+}
+
+.performanceTitle {
+  font-size: 30rpx;
+  font-weight: 600;
+  color: $color-text-primary;
+}
+
+.performancePeriod {
+  font-size: 24rpx;
+  color: $color-text-secondary;
+  padding: $spacing-xs $spacing-sm;
+  background: $color-bg-secondary;
+  border-radius: $radius-md;
+}
+
+.performanceGrid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: $spacing-md;
+}
+
+.performanceItem {
+  text-align: center;
+  padding: $spacing-md;
+  background: $color-bg-secondary;
+  border-radius: $radius-md;
+}
+
+.performanceValue {
+  font-size: 32rpx;
+  font-weight: 600;
+  color: $color-primary;
+  margin-bottom: $spacing-xs;
+}
+
+.performanceLabel {
+  font-size: 22rpx;
+  color: $color-text-secondary;
+}
+
+.ratingBar {
+  margin-top: $spacing-lg;
+}
+
+.ratingRow {
+  display: flex;
+  align-items: center;
+  margin-bottom: $spacing-sm;
+  gap: $spacing-md;
+}
+
+.ratingLabel {
+  width: 100rpx;
+  font-size: 24rpx;
+  color: $color-text-secondary;
+}
+
+.ratingTrack {
+  flex: 1;
+  height: 12rpx;
+  background: $color-bg-secondary;
+  border-radius: 6rpx;
+  overflow: hidden;
+}
+
+.ratingFill {
+  height: 100%;
+  background: linear-gradient(90deg, $color-primary, #4080ff);
+  border-radius: 6rpx;
+  transition: width 0.3s ease;
+}
+
+.ratingValue {
+  width: 80rpx;
+  text-align: right;
+  font-size: 24rpx;
+  color: $color-text-primary;
+  font-weight: 500;
+}
+
+.logoutBtn {
+  margin: $spacing-xl $spacing-lg;
+  height: 88rpx;
+  background: #fff;
+  border-radius: $radius-lg;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 30rpx;
+  color: $color-danger;
+  font-weight: 500;
+}
+
+.version {
+  text-align: center;
+  padding: $spacing-lg;
+  font-size: 24rpx;
+  color: $color-text-tertiary;
+}

@@ -1,0 +1,321 @@
+@import '@/styles/variables.scss';
+@import '@/styles/theme.scss';
+
+.page {
+  @include page-safe;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  background: $color-bg-page;
+  padding-bottom: calc(180rpx + env(safe-area-inset-bottom));
+}
+
+.header {
+  padding: $spacing-lg;
+  background: linear-gradient(135deg, $color-warning 0%, #ff9a2e 100%);
+  color: #fff;
+  margin: 0 (-$page-padding) $spacing-md;
+}
+
+.headerTitle {
+  font-size: $font-size-xl;
+  font-weight: 600;
+  margin-bottom: $spacing-sm;
+}
+
+.headerDesc {
+  font-size: $font-size-sm;
+  opacity: 0.9;
+}
+
+.formSection {
+  @include card-base;
+  margin-bottom: $spacing-md;
+}
+
+.sectionTitle {
+  font-size: $font-size-md;
+  font-weight: 600;
+  color: $color-text-primary;
+  margin-bottom: $spacing-md;
+  display: flex;
+  align-items: center;
+  gap: $spacing-sm;
+
+  &::before {
+    content: '';
+    width: 6rpx;
+    height: 32rpx;
+    background: $color-warning;
+    border-radius: $radius-xs;
+  }
+}
+
+.waybillInput {
+  display: flex;
+  align-items: center;
+  padding: $spacing-md;
+  background: $color-bg-page;
+  border-radius: $radius-md;
+  gap: $spacing-sm;
+
+  .icon {
+    font-size: $font-size-lg;
+  }
+
+  .input {
+    flex: 1;
+    font-size: $font-size-md;
+    color: $color-text-primary;
+    background: transparent;
+    border: none;
+    outline: none;
+  }
+}
+
+.typeGrid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: $spacing-sm;
+}
+
+.typeItem {
+  display: flex;
+  align-items: center;
+  padding: $spacing-md;
+  background: $color-bg-page;
+  border-radius: $radius-md;
+  border: 2rpx solid transparent;
+  gap: $spacing-sm;
+  @include press-state;
+
+  .icon {
+    width: 48rpx;
+    height: 48rpx;
+    @include flex-center;
+    background: rgba($color-warning, 0.1);
+    border-radius: $radius-sm;
+    font-size: $font-size-md;
+  }
+
+  .label {
+    flex: 1;
+    font-size: $font-size-sm;
+    color: $color-text-primary;
+  }
+
+  .check {
+    width: 36rpx;
+    height: 36rpx;
+    border-radius: 50%;
+    border: 2rpx solid $color-border;
+    @include flex-center;
+    font-size: $font-size-xs;
+    color: transparent;
+  }
+
+  &.active {
+    border-color: $color-warning;
+    background: rgba($color-warning, 0.05);
+
+    .icon {
+      background: $color-warning;
+      color: #fff;
+    }
+
+    .check {
+      background: $color-warning;
+      border-color: $color-warning;
+      color: #fff;
+    }
+  }
+}
+
+.severityHint {
+  display: flex;
+  align-items: center;
+  padding: $spacing-sm $spacing-md;
+  background: rgba($color-error, 0.05);
+  border-radius: $radius-md;
+  margin-top: $spacing-sm;
+  gap: $spacing-sm;
+
+  .icon {
+    font-size: $font-size-md;
+  }
+
+  .text {
+    font-size: $font-size-sm;
+    color: $color-error;
+  }
+}
+
+.photoSection {
+  @include card-base;
+  margin-bottom: $spacing-md;
+}
+
+.photoGrid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: $spacing-sm;
+}
+
+.photoItem {
+  position: relative;
+  aspect-ratio: 1;
+  border-radius: $radius-md;
+  overflow: hidden;
+
+  .image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .deleteBtn {
+    position: absolute;
+    top: 8rpx;
+    right: 8rpx;
+    width: 40rpx;
+    height: 40rpx;
+    @include flex-center;
+    background: rgba(0, 0, 0, 0.6);
+    border-radius: 50%;
+    color: #fff;
+    font-size: $font-size-sm;
+  }
+}
+
+.addPhoto {
+  aspect-ratio: 1;
+  @include flex-center;
+  flex-direction: column;
+  background: $color-bg-page;
+  border-radius: $radius-md;
+  border: 2rpx dashed $color-border;
+  gap: $spacing-xs;
+  @include press-state;
+
+  .icon {
+    font-size: 48rpx;
+    color: $color-text-tertiary;
+  }
+
+  .text {
+    font-size: $font-size-xs;
+    color: $color-text-tertiary;
+  }
+
+  &.disabled {
+    opacity: 0.5;
+  }
+}
+
+.photoCount {
+  text-align: right;
+  font-size: $font-size-xs;
+  color: $color-text-tertiary;
+  margin-top: $spacing-sm;
+}
+
+.descSection {
+  @include card-base;
+  margin-bottom: $spacing-md;
+}
+
+.descTextarea {
+  width: 100%;
+  min-height: 200rpx;
+  padding: $spacing-md;
+  background: $color-bg-page;
+  border-radius: $radius-md;
+  font-size: $font-size-md;
+  color: $color-text-primary;
+  line-height: 1.6;
+  border: none;
+  outline: none;
+  box-sizing: border-box;
+}
+
+.descCount {
+  text-align: right;
+  font-size: $font-size-xs;
+  color: $color-text-tertiary;
+  margin-top: $spacing-sm;
+}
+
+.infoSection {
+  @include card-base;
+  margin-bottom: $spacing-md;
+}
+
+.infoRow {
+  display: flex;
+  align-items: center;
+  padding: $spacing-sm 0;
+  border-bottom: 1rpx solid $color-divider;
+  gap: $spacing-md;
+
+  &:last-child {
+    border-bottom: none;
+  }
+
+  .label {
+    width: 160rpx;
+    font-size: $font-size-sm;
+    color: $color-text-secondary;
+    flex-shrink: 0;
+  }
+
+  .value {
+    flex: 1;
+    font-size: $font-size-sm;
+    color: $color-text-primary;
+    @include text-ellipsis;
+  }
+
+  .hash {
+    font-family: monospace;
+    font-size: $font-size-xs;
+    color: $color-primary;
+    word-break: break-all;
+  }
+}
+
+.loading {
+  padding: $spacing-xl;
+  text-align: center;
+  color: $color-text-tertiary;
+  font-size: $font-size-sm;
+}
+
+.bottomActionBar {
+  @include bottom-action-bar;
+  display: flex;
+  gap: $spacing-md;
+}
+
+.actionBtn {
+  flex: 1;
+  height: $button-height-lg;
+  border-radius: $radius-button;
+  font-size: $font-size-md;
+  @include flex-center;
+  gap: $spacing-sm;
+  @include press-state;
+
+  &.primary {
+    @include gradient-primary;
+    color: #fff;
+  }
+
+  &.secondary {
+    background: $color-bg-page;
+    color: $color-text-secondary;
+  }
+
+  &.disabled {
+    opacity: 0.5;
+  }
+}

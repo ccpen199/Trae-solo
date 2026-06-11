@@ -1,0 +1,232 @@
+@use '@/styles/variables.scss' as *;
+
+.card {
+  @include card-base;
+  @include press-state;
+  margin-bottom: $spacing-md;
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: $spacing-sm;
+}
+
+.left {
+  display: flex;
+  align-items: center;
+  gap: $spacing-sm;
+  flex: 1;
+  min-width: 0;
+}
+
+.severityTag {
+  padding: 4rpx 12rpx;
+  border-radius: $radius-xs;
+  flex-shrink: 0;
+}
+
+.severityText {
+  font-size: $font-size-xs;
+  font-weight: $font-weight-bold;
+}
+
+.severityError {
+  background: $color-tag-overtime-bg;
+  .severityText { color: $color-error; }
+}
+
+.severityWarning {
+  background: $color-tag-exception-bg;
+  .severityText { color: $color-warning; }
+}
+
+.severityPrimary {
+  background: $color-tag-pickup-bg;
+  .severityText { color: $color-primary; }
+}
+
+.severityDefault {
+  background: $color-bg-hover;
+  .severityText { color: $color-text-secondary; }
+}
+
+.waybillNo {
+  font-size: $font-size-md;
+  color: $color-text-primary;
+  font-weight: $font-weight-semibold;
+  font-family: monospace;
+  @include text-ellipsis;
+  flex: 1;
+  min-width: 0;
+}
+
+.statusTag {
+  padding: 4rpx 12rpx;
+  border-radius: $radius-xs;
+  flex-shrink: 0;
+}
+
+.statusText {
+  font-size: $font-size-xs;
+  font-weight: $font-weight-medium;
+}
+
+.statusSuccess {
+  background: $color-tag-delivery-bg;
+  .statusText { color: $color-success; }
+}
+
+.statusPrimary {
+  background: $color-tag-pickup-bg;
+  .statusText { color: $color-primary; }
+}
+
+.statusWarning {
+  background: $color-tag-exception-bg;
+  .statusText { color: $color-warning; }
+}
+
+.typeRow {
+  display: flex;
+  align-items: center;
+  gap: $spacing-sm;
+  margin-bottom: $spacing-md;
+  flex-wrap: wrap;
+}
+
+.typeTag {
+  padding: 4rpx 12rpx;
+  border-radius: $radius-xs;
+  background: $color-bg-hover;
+}
+
+.typeText {
+  font-size: $font-size-xs;
+  color: $color-text-secondary;
+  font-weight: $font-weight-medium;
+}
+
+.overtimeTag {
+  padding: 4rpx 12rpx;
+  border-radius: $radius-xs;
+  background: $color-tag-overtime-bg;
+}
+
+.overtimeText {
+  font-size: $font-size-xs;
+  color: $color-error;
+  font-weight: $font-weight-medium;
+}
+
+.photoTag {
+  padding: 4rpx 12rpx;
+  border-radius: $radius-xs;
+  background: $color-bg-tag;
+}
+
+.photoText {
+  font-size: $font-size-xs;
+  color: $color-primary;
+  font-weight: $font-weight-medium;
+}
+
+.description {
+  background: $color-bg-page;
+  border-radius: $radius-md;
+  padding: $spacing-md;
+  margin-bottom: $spacing-md;
+}
+
+.descriptionText {
+  font-size: $font-size-sm;
+  color: $color-text-primary;
+  line-height: 1.6;
+  @include text-ellipsis-multi(3);
+}
+
+.photos {
+  display: flex;
+  gap: $spacing-sm;
+  margin-bottom: $spacing-md;
+  flex-wrap: wrap;
+}
+
+.photo {
+  width: 160rpx;
+  height: 160rpx;
+  border-radius: $radius-md;
+  background: $color-bg-hover;
+  flex-shrink: 0;
+}
+
+.morePhoto {
+  width: 160rpx;
+  height: 160rpx;
+  border-radius: $radius-md;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.moreText {
+  font-size: $font-size-lg;
+  color: $color-text-white;
+  font-weight: $font-weight-semibold;
+}
+
+.footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: $spacing-md;
+}
+
+.reporter {
+  display: flex;
+  align-items: center;
+  gap: $spacing-sm;
+  flex-shrink: 0;
+}
+
+.reporterName {
+  font-size: $font-size-sm;
+  color: $color-text-secondary;
+}
+
+.reportTime {
+  font-size: $font-size-xs;
+  color: $color-text-tertiary;
+}
+
+.actions {
+  display: flex;
+  align-items: center;
+  gap: $spacing-sm;
+  flex-shrink: 0;
+}
+
+.btn {
+  @include button-reset;
+  @include press-state;
+  height: $button-height-sm;
+  padding: 0 $spacing-lg;
+  border-radius: $radius-button;
+  font-size: $font-size-sm;
+  font-weight: $font-weight-medium;
+  min-width: 120rpx;
+}
+
+.btnPrimary {
+  background: $color-warning;
+  color: $color-text-white;
+}
+
+.btnSecondary {
+  background: $color-bg-card;
+  border: 2rpx solid $color-primary;
+  color: $color-primary;
+}

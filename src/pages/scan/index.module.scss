@@ -1,0 +1,230 @@
+@import '@/styles/variables.scss';
+@import '@/styles/theme.scss';
+
+.page {
+  @include page-safe;
+  min-height: 100vh;
+  background: #000;
+  display: flex;
+  flex-direction: column;
+}
+
+.scanArea {
+  flex: 1;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.scanFrame {
+  width: 500rpx;
+  height: 500rpx;
+  position: relative;
+}
+
+.scanCorners {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+}
+
+.corner {
+  position: absolute;
+  width: 60rpx;
+  height: 60rpx;
+  border-color: $color-primary;
+  border-style: solid;
+}
+
+.corner.tl {
+  top: 0;
+  left: 0;
+  border-width: 6rpx 0 0 6rpx;
+  border-top-left-radius: $radius-md;
+}
+
+.corner.tr {
+  top: 0;
+  right: 0;
+  border-width: 6rpx 6rpx 0 0;
+  border-top-right-radius: $radius-md;
+}
+
+.corner.bl {
+  bottom: 0;
+  left: 0;
+  border-width: 0 0 6rpx 6rpx;
+  border-bottom-left-radius: $radius-md;
+}
+
+.corner.br {
+  bottom: 0;
+  right: 0;
+  border-width: 0 6rpx 6rpx 0;
+  border-bottom-right-radius: $radius-md;
+}
+
+.scanLine {
+  position: absolute;
+  left: 0;
+  right: 0;
+  height: 4rpx;
+  background: linear-gradient(90deg, transparent, $color-primary, transparent);
+  animation: scanMove 2s linear infinite;
+}
+
+@keyframes scanMove {
+  0% { top: 0; }
+  100% { top: 100%; }
+}
+
+.scanHint {
+  position: absolute;
+  bottom: -80rpx;
+  left: 50%;
+  transform: translateX(-50%);
+  color: #fff;
+  font-size: 26rpx;
+  white-space: nowrap;
+  opacity: 0.8;
+}
+
+.typeTabs {
+  display: flex;
+  background: rgba(255, 255, 255, 0.1);
+  margin: $spacing-lg;
+  border-radius: $radius-lg;
+  padding: $spacing-xs;
+}
+
+.typeTab {
+  flex: 1;
+  padding: $spacing-md;
+  text-align: center;
+  color: rgba(255, 255, 255, 0.6);
+  font-size: 28rpx;
+  border-radius: $radius-md;
+  transition: all 0.3s ease;
+}
+
+.typeTab.active {
+  background: $color-primary;
+  color: #fff;
+  font-weight: 500;
+}
+
+.manualInput {
+  margin: 0 $spacing-lg $spacing-lg;
+  padding: $spacing-md;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: $radius-lg;
+}
+
+.inputLabel {
+  color: rgba(255, 255, 255, 0.6);
+  font-size: 26rpx;
+  margin-bottom: $spacing-sm;
+}
+
+.inputRow {
+  display: flex;
+  gap: $spacing-sm;
+}
+
+.input {
+  flex: 1;
+  height: 80rpx;
+  padding: 0 $spacing-md;
+  background: rgba(255, 255, 255, 0.15);
+  border-radius: $radius-md;
+  color: #fff;
+  font-size: 28rpx;
+  border: 2rpx solid rgba(255, 255, 255, 0.2);
+}
+
+.confirmBtn {
+  width: 160rpx;
+  height: 80rpx;
+  background: $color-primary;
+  color: #fff;
+  border-radius: $radius-md;
+  font-size: 28rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.history {
+  margin: 0 $spacing-lg $spacing-lg;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: $radius-lg;
+  padding: $spacing-md;
+}
+
+.historyTitle {
+  color: rgba(255, 255, 255, 0.8);
+  font-size: 28rpx;
+  font-weight: 500;
+  margin-bottom: $spacing-md;
+}
+
+.historyItem {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: $spacing-sm 0;
+  border-bottom: 1rpx solid rgba(255, 255, 255, 0.1);
+}
+
+.historyItem:last-child {
+  border-bottom: none;
+}
+
+.historyWaybill {
+  color: #fff;
+  font-size: 26rpx;
+}
+
+.historyTime {
+  color: rgba(255, 255, 255, 0.5);
+  font-size: 22rpx;
+}
+
+.offlineNotice {
+  margin: $spacing-lg;
+  padding: $spacing-md;
+  background: rgba($color-warning, 0.2);
+  border-radius: $radius-lg;
+  border: 2rpx solid rgba($color-warning, 0.5);
+  display: flex;
+  align-items: center;
+  gap: $spacing-sm;
+}
+
+.offlineIcon {
+  font-size: 32rpx;
+}
+
+.offlineText {
+  flex: 1;
+  color: $color-warning;
+  font-size: 24rpx;
+}
+
+.bottomBtn {
+  @include bottom-action-bar;
+}
+
+.scanBtn {
+  @include gradient-primary;
+  height: 96rpx;
+  border-radius: $radius-lg;
+  color: #fff;
+  font-size: 32rpx;
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: $spacing-sm;
+}

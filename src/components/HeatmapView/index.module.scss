@@ -1,0 +1,141 @@
+@use '@/styles/variables.scss' as *;
+
+.container {
+  @include card-base;
+  margin-bottom: $spacing-md;
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: $spacing-md;
+}
+
+.title {
+  font-size: $font-size-lg;
+  color: $color-text-primary;
+  font-weight: $font-weight-semibold;
+}
+
+.total {
+  font-size: $font-size-sm;
+  color: $color-primary;
+  font-weight: $font-weight-medium;
+}
+
+.mapContainer {
+  position: relative;
+  border-radius: $radius-md;
+  background: linear-gradient(135deg, #f8fafc 0%, #e8f3ff 100%);
+  overflow: hidden;
+}
+
+.mapGrid {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+}
+
+.gridLineH {
+  position: absolute;
+  left: 0;
+  right: 0;
+  height: 1rpx;
+  background: rgba($color-primary, 0.1);
+}
+
+.gridLineV {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 1rpx;
+  background: rgba($color-primary, 0.1);
+}
+
+.heatPoint {
+  position: absolute;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all $transition-base;
+
+  &:active {
+    transform: translate(-50%, -50%) scale(1.1);
+  }
+}
+
+.pointInner {
+  width: 60%;
+  height: 60%;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.9);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.pointCount {
+  font-size: 20rpx;
+  color: $color-text-primary;
+  font-weight: $font-weight-bold;
+}
+
+.pickup {
+  background: radial-gradient(circle, rgba(22, 93, 255, 0.6) 0%, rgba(22, 93, 255, 0.1) 70%);
+  box-shadow: 0 0 20rpx rgba(22, 93, 255, 0.3);
+}
+
+.delivery {
+  background: radial-gradient(circle, rgba(0, 180, 42, 0.6) 0%, rgba(0, 180, 42, 0.1) 70%);
+  box-shadow: 0 0 20rpx rgba(0, 180, 42, 0.3);
+}
+
+.exception {
+  background: radial-gradient(circle, rgba(255, 125, 0, 0.6) 0%, rgba(255, 125, 0, 0.1) 70%);
+  box-shadow: 0 0 20rpx rgba(255, 125, 0, 0.3);
+}
+
+.legend {
+  position: absolute;
+  bottom: $spacing-md;
+  right: $spacing-md;
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-xs;
+  background: rgba(255, 255, 255, 0.95);
+  padding: $spacing-sm $spacing-md;
+  border-radius: $radius-md;
+  box-shadow: $shadow-card;
+}
+
+.legendItem {
+  display: flex;
+  align-items: center;
+  gap: $spacing-xs;
+}
+
+.legendDot {
+  width: 16rpx;
+  height: 16rpx;
+  border-radius: 50%;
+}
+
+.legendText {
+  font-size: 20rpx;
+  color: $color-text-secondary;
+}
+
+.empty {
+  @include flex-center;
+  background: $color-bg-page;
+  border-radius: $radius-md;
+}
+
+.emptyText {
+  font-size: $font-size-sm;
+  color: $color-text-tertiary;
+}
