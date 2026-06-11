@@ -1,0 +1,187 @@
+@import url('https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;500;600;700&family=Noto+Sans+SC:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --color-primary: #C8102E;
+  --color-landscape: #2D5A52;
+  --color-amber: #F0A500;
+  --color-porcelain: #1A4B8C;
+  --color-ink: #1A1A1A;
+  --color-paper: #F5F5F0;
+  
+  --font-family-serif: 'Noto Serif SC', 'Source Han Serif CN', serif;
+  --font-family-sans: 'Noto Sans SC', 'Source Han Sans CN', sans-serif;
+  --font-family-mono: 'JetBrains Mono', monospace;
+  
+  font-family: var(--font-family-sans);
+  line-height: 1.6;
+  font-weight: 400;
+  color: var(--color-ink);
+  background-color: var(--color-paper);
+  
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+@layer base {
+  body {
+    @apply bg-ink-50 text-ink-700 min-h-screen;
+    background-image: var(--paper-texture);
+    background-size: 200px 200px;
+    background-blend-mode: soft-light;
+  }
+  
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-serif font-semibold text-ink-700;
+  }
+  
+  h1 { @apply text-3xl md:text-4xl; }
+  h2 { @apply text-2xl md:text-3xl; }
+  h3 { @apply text-xl md:text-2xl; }
+  h4 { @apply text-lg md:text-xl; }
+  
+  p { @apply leading-relaxed; }
+  
+  a {
+    @apply text-porcelain-500 hover:text-porcelain-600 transition-colors duration-200;
+  }
+}
+
+@layer components {
+  .btn {
+    @apply inline-flex items-center justify-center px-6 py-2.5 rounded-md font-medium transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2;
+  }
+  
+  .btn-primary {
+    @apply btn bg-primary-500 text-white hover:bg-primary-600 focus:ring-primary-500 shadow-ink hover:shadow-card-hover;
+  }
+  
+  .btn-secondary {
+    @apply btn bg-landscape-500 text-white hover:bg-landscape-600 focus:ring-landscape-500;
+  }
+  
+  .btn-outline {
+    @apply btn border border-ink-200 text-ink-600 hover:bg-ink-100 focus:ring-ink-300;
+  }
+  
+  .btn-ghost {
+    @apply btn text-ink-600 hover:bg-ink-100;
+  }
+  
+  .card {
+    @apply bg-white rounded-lg shadow-card p-6 transition-all duration-300;
+  }
+  
+  .card:hover {
+    @apply shadow-card-hover transform -translate-y-0.5;
+  }
+  
+  .input {
+    @apply w-full px-4 py-2.5 border border-ink-200 rounded-md bg-white text-ink-700 placeholder-ink-400 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-all duration-200;
+  }
+  
+  .input-error {
+    @apply border-primary-500 focus:ring-primary-500;
+  }
+  
+  .badge {
+    @apply inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium;
+  }
+  
+  .badge-primary { @apply bg-primary-100 text-primary-700; }
+  .badge-landscape { @apply bg-landscape-100 text-landscape-700; }
+  .badge-amber { @apply bg-amber-100 text-amber-700; }
+  .badge-porcelain { @apply bg-porcelain-100 text-porcelain-700; }
+  .badge-success { @apply bg-green-100 text-green-700; }
+  .badge-warning { @apply bg-yellow-100 text-yellow-700; }
+  .badge-danger { @apply bg-red-100 text-red-700; }
+  
+  .sidebar-link {
+    @apply flex items-center gap-3 px-4 py-3 rounded-md text-ink-600 hover:bg-ink-100 hover:text-ink-700 transition-all duration-200;
+  }
+  
+  .sidebar-link.active {
+    @apply bg-primary-50 text-primary-600 font-medium;
+  }
+  
+  .scrollbar-thin {
+    scrollbar-width: thin;
+    scrollbar-color: #CCCCBB transparent;
+  }
+  
+  .scrollbar-thin::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+  }
+  
+  .scrollbar-thin::-webkit-scrollbar-track {
+    background: transparent;
+  }
+  
+  .scrollbar-thin::-webkit-scrollbar-thumb {
+    background-color: #CCCCBB;
+    border-radius: 3px;
+  }
+  
+  .ink-divider {
+    @apply h-px bg-gradient-to-r from-transparent via-ink-200 to-transparent;
+  }
+  
+  .chinese-border {
+    @apply relative;
+  }
+  
+  .chinese-border::before {
+    content: '';
+    @apply absolute -top-1 -left-1 -right-1 -bottom-1 border border-primary-200 rounded-lg pointer-events-none;
+  }
+  
+  .ink-shadow {
+    box-shadow: 0 2px 8px rgba(26, 26, 26, 0.15);
+  }
+}
+
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+  
+  .content-visibility-auto {
+    content-visibility: auto;
+  }
+  
+  .scroll-reveal {
+    animation: scrollReveal 0.8s ease-out forwards;
+  }
+  
+  .ink-spread {
+    animation: inkSpread 0.6s ease-out forwards;
+  }
+}
+
+@keyframes scrollReveal {
+  0% {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes inkSpread {
+  0% {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
