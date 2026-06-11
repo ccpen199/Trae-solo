@@ -1,0 +1,93 @@
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;500;700&family=ZCOOL+XiaoWei&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --color-primary-orange: #FF6B35;
+  --color-primary-indigo: #1B3A5C;
+  --color-secondary-warmYellow: #FFC857;
+  --color-secondary-mintGreen: #2EC4B6;
+  --color-secondary-coralRed: #E63946;
+  font-family: 'Noto Sans SC', -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  line-height: 1.5;
+  font-weight: 400;
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+* {
+  scrollbar-width: thin;
+  scrollbar-color: var(--color-primary-orange) transparent;
+}
+
+*::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+*::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+*::-webkit-scrollbar-thumb {
+  background-color: var(--color-primary-orange);
+  border-radius: 3px;
+}
+
+@keyframes fadeIn {
+  0% { opacity: 0; }
+  100% { opacity: 1; }
+}
+
+@keyframes slideUp {
+  0% { opacity: 0; transform: translateY(16px); }
+  100% { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.65; }
+}
+
+@layer utilities {
+  .gradient-primary {
+    background: linear-gradient(135deg, #FF6B35 0%, #E63946 100%);
+  }
+  .gradient-indigo {
+    background: linear-gradient(135deg, #1B3A5C 0%, #2EC4B6 100%);
+  }
+  .gradient-warm {
+    background: linear-gradient(135deg, #FFC857 0%, #FF6B35 100%);
+  }
+  .gradient-mint {
+    background: linear-gradient(135deg, #2EC4B6 0%, #1B3A5C 100%);
+  }
+  .gradient-hero {
+    background: linear-gradient(135deg, #1B3A5C 0%, #FF6B35 50%, #E63946 100%);
+  }
+  .animate-fade-in {
+    animation: fadeIn 0.5s ease-out;
+  }
+  .animate-slide-up {
+    animation: slideUp 0.4s ease-out;
+  }
+  .animate-pulse-brand {
+    animation: pulse 2s infinite;
+  }
+  .text-gradient-primary {
+    background: linear-gradient(135deg, #FF6B35, #E63946);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+  .text-gradient-indigo {
+    background: linear-gradient(135deg, #1B3A5C, #2EC4B6);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+}
