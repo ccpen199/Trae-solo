@@ -1,0 +1,3110 @@
+{
+  "ok": true,
+  "generatedAt": "2026-06-08T07:36:03.604Z",
+  "order": "may-89087",
+  "roundIndex": 2,
+  "captureId": "may-89087-codex-repair-2",
+  "url": "http://127.0.0.1:49087/",
+  "initialUrl": "http://127.0.0.1:49087/",
+  "finalUrl": "http://127.0.0.1:49087/dashboard",
+  "status": 200,
+  "title": "My Trae Project",
+  "initialTitle": "My Trae Project",
+  "navigationError": "",
+  "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89087/runtime-check/codex-20260608-repair-2/may-89087-codex-repair-2-frontend.png",
+  "screenshotPaths": [
+    "/Users/chen/Documents/trae_projects/local_projects/may-89087/runtime-check/codex-20260608-repair-2/may-89087-codex-repair-2-structure-01-首屏.png",
+    "/Users/chen/Documents/trae_projects/local_projects/may-89087/runtime-check/codex-20260608-repair-2/may-89087-codex-repair-2-structure-02-导航-工作台.png",
+    "/Users/chen/Documents/trae_projects/local_projects/may-89087/runtime-check/codex-20260608-repair-2/may-89087-codex-repair-2-structure-03-操作-创建工单.png",
+    "/Users/chen/Documents/trae_projects/local_projects/may-89087/runtime-check/codex-20260608-repair-2/may-89087-codex-repair-2-structure-04-二层操作-创建工单-创建工单.png",
+    "/Users/chen/Documents/trae_projects/local_projects/may-89087/runtime-check/codex-20260608-repair-2/may-89087-codex-repair-2-structure-05-操作-查看全部.png",
+    "/Users/chen/Documents/trae_projects/local_projects/may-89087/runtime-check/codex-20260608-repair-2/may-89087-codex-repair-2-structure-06-二层操作-查看全部-创建工单.png",
+    "/Users/chen/Documents/trae_projects/local_projects/may-89087/runtime-check/codex-20260608-repair-2/may-89087-codex-repair-2-structure-07-导航-通行管理.png",
+    "/Users/chen/Documents/trae_projects/local_projects/may-89087/runtime-check/codex-20260608-repair-2/may-89087-codex-repair-2-structure-08-操作-创建通行证.png",
+    "/Users/chen/Documents/trae_projects/local_projects/may-89087/runtime-check/codex-20260608-repair-2/may-89087-codex-repair-2-structure-09-二层操作-创建通行证-创建通行证.png",
+    "/Users/chen/Documents/trae_projects/local_projects/may-89087/runtime-check/codex-20260608-repair-2/may-89087-codex-repair-2-structure-10-操作-访客通行证.png",
+    "/Users/chen/Documents/trae_projects/local_projects/may-89087/runtime-check/codex-20260608-repair-2/may-89087-codex-repair-2-structure-11-二层操作-访客通行证-创建通行证.png",
+    "/Users/chen/Documents/trae_projects/local_projects/may-89087/runtime-check/codex-20260608-repair-2/may-89087-codex-repair-2-structure-12-导航-工单中心.png"
+  ],
+  "issueTextPreview": "个人中心/我的相关问题；后台管理相关问题",
+  "targetReason": "登录流程已完成，继续复验登录后的首页和业务导航",
+  "targetKind": "auth",
+  "targetMatched": true,
+  "targetActions": [
+    {
+      "action": "login-fill-username",
+      "label": "owner1",
+      "ok": true
+    },
+    {
+      "action": "login-fill-password",
+      "label": "owner1:******",
+      "ok": true
+    },
+    {
+      "action": "click",
+      "label": "登录:owner1",
+      "ok": true
+    },
+    {
+      "action": "login-submit",
+      "label": "owner1",
+      "ok": true,
+      "beforeUrl": "http://127.0.0.1:49087/login"
+    },
+    {
+      "action": "login-result",
+      "label": "owner1",
+      "ok": true,
+      "finalUrl": "http://127.0.0.1:49087/dashboard"
+    },
+    {
+      "action": "target-verify",
+      "label": "登录后首页",
+      "ok": true,
+      "finalUrl": "http://127.0.0.1:49087/dashboard"
+    }
+  ],
+  "authFlow": {
+    "detected": true,
+    "attempted": true,
+    "success": true,
+    "finalUrl": "http://127.0.0.1:49087/dashboard",
+    "message": "登录成功:owner1",
+    "actions": [
+      {
+        "action": "login-fill-username",
+        "label": "owner1",
+        "ok": true
+      },
+      {
+        "action": "login-fill-password",
+        "label": "owner1:******",
+        "ok": true
+      },
+      {
+        "action": "click",
+        "label": "登录:owner1",
+        "ok": true
+      },
+      {
+        "action": "login-submit",
+        "label": "owner1",
+        "ok": true,
+        "beforeUrl": "http://127.0.0.1:49087/login"
+      },
+      {
+        "action": "login-result",
+        "label": "owner1",
+        "ok": true,
+        "finalUrl": "http://127.0.0.1:49087/dashboard"
+      }
+    ],
+    "username": "owner1",
+    "credentialSource": "visible-demo-text"
+  },
+  "businessAudit": {
+    "actions": [
+      {
+        "action": "click",
+        "label": "导航:工作台",
+        "ok": true
+      },
+      {
+        "action": "click",
+        "label": "操作:创建工单",
+        "ok": true,
+        "result": {
+          "ok": true,
+          "matched": 1
+        }
+      },
+      {
+        "action": "click",
+        "label": "二层操作:创建工单:创建工单",
+        "ok": true,
+        "result": {
+          "ok": true,
+          "matched": 1
+        }
+      },
+      {
+        "action": "click",
+        "label": "操作:查看全部",
+        "ok": true,
+        "result": {
+          "ok": true,
+          "matched": 2
+        }
+      },
+      {
+        "action": "click",
+        "label": "二层操作:查看全部:创建工单",
+        "ok": true,
+        "result": {
+          "ok": true,
+          "matched": 1
+        }
+      },
+      {
+        "action": "click",
+        "label": "导航:通行管理",
+        "ok": true
+      },
+      {
+        "action": "click",
+        "label": "操作:创建通行证",
+        "ok": true,
+        "result": {
+          "ok": true,
+          "matched": 1
+        }
+      },
+      {
+        "action": "click",
+        "label": "二层操作:创建通行证:创建通行证",
+        "ok": true,
+        "result": {
+          "ok": true,
+          "matched": 2
+        }
+      },
+      {
+        "action": "click",
+        "label": "关闭弹窗/抽屉",
+        "ok": true
+      },
+      {
+        "action": "click",
+        "label": "操作:访客通行证",
+        "ok": true,
+        "result": {
+          "ok": true,
+          "matched": 1
+        }
+      },
+      {
+        "action": "click",
+        "label": "二层操作:访客通行证:创建通行证",
+        "ok": true,
+        "result": {
+          "ok": true,
+          "matched": 1
+        }
+      },
+      {
+        "action": "click",
+        "label": "关闭弹窗/抽屉",
+        "ok": true
+      },
+      {
+        "action": "click",
+        "label": "导航:工单中心",
+        "ok": true
+      },
+      {
+        "action": "click",
+        "label": "操作:创建工单",
+        "ok": true,
+        "result": {
+          "ok": true,
+          "matched": 2
+        }
+      },
+      {
+        "action": "click",
+        "label": "关闭弹窗/抽屉",
+        "ok": true
+      },
+      {
+        "action": "click",
+        "label": "操作:查看",
+        "ok": true,
+        "result": {
+          "ok": true,
+          "matched": 1
+        }
+      },
+      {
+        "action": "click",
+        "label": "关闭弹窗/抽屉",
+        "ok": true
+      },
+      {
+        "action": "click",
+        "label": "导航:社区商圈",
+        "ok": true
+      },
+      {
+        "action": "click",
+        "label": "操作:商户列表",
+        "ok": true,
+        "result": {
+          "ok": true,
+          "matched": 1
+        }
+      }
+    ],
+    "snapshots": [
+      {
+        "label": "首屏",
+        "url": "http://127.0.0.1:49087/dashboard",
+        "title": "My Trae Project",
+        "headings": [
+          "欢迎回来，张先生",
+          "快捷操作",
+          "最近工单",
+          "空调不制冷",
+          "近期活动",
+          "业主座谈会",
+          "社区亲子运动会"
+        ],
+        "navLabels": [
+          "智慧社区",
+          "张先生 业主",
+          "工作台",
+          "通行管理",
+          "工单中心",
+          "社区商圈",
+          "邻里社交",
+          "个人中心",
+          "退出登录"
+        ],
+        "buttons": [
+          "退出登录",
+          "创建工单",
+          "访客通行证",
+          "社区商城",
+          "社区活动",
+          "查看全部"
+        ],
+        "links": [
+          "工作台",
+          "通行管理",
+          "工单中心",
+          "社区商圈",
+          "邻里社交",
+          "个人中心"
+        ],
+        "inputs": [
+          {
+            "tag": "input",
+            "type": "text",
+            "placeholder": "搜索...",
+            "name": "",
+            "label": ""
+          }
+        ],
+        "tables": [],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "智慧社区张先生业主工作台通行管理工单中心社区商圈邻里社交个人中心退出登录张先生在线欢迎回来，张先生今天是 2026年6月8日星期一快捷操作创建工单访客通行证社区商城社区活动最近工单查看全部 空调不制冷处理中家里的空调不制冷，需要维修1号楼2单元101室6月8日 00:10近期活动查看全部 业主座谈会18人参与与物业面对面交流，讨论社区建设问题6月11日 03:10 - 05:10物业会议室社区亲子运动会35人参与一年一度的亲子运动会，欢迎家长带小朋友参加6月15日 03:10 - 07:10小区广场",
+        "layout": {
+          "viewportWidth": 1504,
+          "viewportHeight": 1000,
+          "scrollWidth": 1504,
+          "scrollHeight": 1000,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89087-codex-repair-2-structure-01-首屏",
+          "label": "首屏",
+          "finalUrl": "http://127.0.0.1:49087/dashboard",
+          "title": "My Trae Project",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89087/runtime-check/codex-20260608-repair-2/may-89087-codex-repair-2-structure-01-首屏.json",
+          "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89087/runtime-check/codex-20260608-repair-2/may-89087-codex-repair-2-structure-01-首屏.png",
+          "elementCount": 197,
+          "interactiveCount": 16,
+          "interactiveLabels": [
+            "工作台",
+            "通行管理",
+            "工单中心",
+            "社区商圈",
+            "邻里社交",
+            "个人中心",
+            "退出登录",
+            "搜索...",
+            "创建工单",
+            "访客通行证",
+            "社区商城",
+            "社区活动",
+            "查看全部"
+          ]
+        }
+      },
+      {
+        "label": "导航:工作台",
+        "url": "http://127.0.0.1:49087/dashboard",
+        "title": "My Trae Project",
+        "headings": [
+          "欢迎回来，张先生",
+          "快捷操作",
+          "最近工单",
+          "空调不制冷",
+          "近期活动",
+          "业主座谈会",
+          "社区亲子运动会"
+        ],
+        "navLabels": [
+          "智慧社区",
+          "张先生 业主",
+          "工作台",
+          "通行管理",
+          "工单中心",
+          "社区商圈",
+          "邻里社交",
+          "个人中心",
+          "退出登录"
+        ],
+        "buttons": [
+          "退出登录",
+          "创建工单",
+          "访客通行证",
+          "社区商城",
+          "社区活动",
+          "查看全部"
+        ],
+        "links": [
+          "工作台",
+          "通行管理",
+          "工单中心",
+          "社区商圈",
+          "邻里社交",
+          "个人中心"
+        ],
+        "inputs": [
+          {
+            "tag": "input",
+            "type": "text",
+            "placeholder": "搜索...",
+            "name": "",
+            "label": ""
+          }
+        ],
+        "tables": [],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "智慧社区张先生业主工作台通行管理工单中心社区商圈邻里社交个人中心退出登录张先生在线欢迎回来，张先生今天是 2026年6月8日星期一快捷操作创建工单访客通行证社区商城社区活动最近工单查看全部 空调不制冷处理中家里的空调不制冷，需要维修1号楼2单元101室6月8日 00:10近期活动查看全部 业主座谈会18人参与与物业面对面交流，讨论社区建设问题6月11日 03:10 - 05:10物业会议室社区亲子运动会35人参与一年一度的亲子运动会，欢迎家长带小朋友参加6月15日 03:10 - 07:10小区广场",
+        "layout": {
+          "viewportWidth": 1536,
+          "viewportHeight": 1000,
+          "scrollWidth": 1536,
+          "scrollHeight": 1000,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89087-codex-repair-2-structure-02-导航-工作台",
+          "label": "导航:工作台",
+          "finalUrl": "http://127.0.0.1:49087/dashboard",
+          "title": "My Trae Project",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89087/runtime-check/codex-20260608-repair-2/may-89087-codex-repair-2-structure-02-导航-工作台.json",
+          "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89087/runtime-check/codex-20260608-repair-2/may-89087-codex-repair-2-structure-02-导航-工作台.png",
+          "elementCount": 197,
+          "interactiveCount": 16,
+          "interactiveLabels": [
+            "工作台",
+            "通行管理",
+            "工单中心",
+            "社区商圈",
+            "邻里社交",
+            "个人中心",
+            "退出登录",
+            "搜索...",
+            "创建工单",
+            "访客通行证",
+            "社区商城",
+            "社区活动",
+            "查看全部"
+          ]
+        }
+      },
+      {
+        "label": "操作:创建工单",
+        "url": "http://127.0.0.1:49087/dashboard",
+        "title": "My Trae Project",
+        "headings": [
+          "欢迎回来，张先生",
+          "快捷操作",
+          "最近工单",
+          "空调不制冷",
+          "近期活动",
+          "业主座谈会",
+          "社区亲子运动会"
+        ],
+        "navLabels": [
+          "智慧社区",
+          "张先生 业主",
+          "工作台",
+          "通行管理",
+          "工单中心",
+          "社区商圈",
+          "邻里社交",
+          "个人中心",
+          "退出登录"
+        ],
+        "buttons": [
+          "退出登录",
+          "创建工单",
+          "访客通行证",
+          "社区商城",
+          "社区活动",
+          "查看全部"
+        ],
+        "links": [
+          "工作台",
+          "通行管理",
+          "工单中心",
+          "社区商圈",
+          "邻里社交",
+          "个人中心"
+        ],
+        "inputs": [
+          {
+            "tag": "input",
+            "type": "text",
+            "placeholder": "搜索...",
+            "name": "",
+            "label": ""
+          }
+        ],
+        "tables": [],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "智慧社区张先生业主工作台通行管理工单中心社区商圈邻里社交个人中心退出登录张先生在线欢迎回来，张先生今天是 2026年6月8日星期一快捷操作创建工单访客通行证社区商城社区活动最近工单查看全部 空调不制冷处理中家里的空调不制冷，需要维修1号楼2单元101室6月8日 00:10近期活动查看全部 业主座谈会18人参与与物业面对面交流，讨论社区建设问题6月11日 03:10 - 05:10物业会议室社区亲子运动会35人参与一年一度的亲子运动会，欢迎家长带小朋友参加6月15日 03:10 - 07:10小区广场",
+        "layout": {
+          "viewportWidth": 1568,
+          "viewportHeight": 1000,
+          "scrollWidth": 1568,
+          "scrollHeight": 1000,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89087-codex-repair-2-structure-03-操作-创建工单",
+          "label": "操作:创建工单",
+          "finalUrl": "http://127.0.0.1:49087/dashboard",
+          "title": "My Trae Project",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89087/runtime-check/codex-20260608-repair-2/may-89087-codex-repair-2-structure-03-操作-创建工单.json",
+          "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89087/runtime-check/codex-20260608-repair-2/may-89087-codex-repair-2-structure-03-操作-创建工单.png",
+          "elementCount": 197,
+          "interactiveCount": 16,
+          "interactiveLabels": [
+            "工作台",
+            "通行管理",
+            "工单中心",
+            "社区商圈",
+            "邻里社交",
+            "个人中心",
+            "退出登录",
+            "搜索...",
+            "创建工单",
+            "访客通行证",
+            "社区商城",
+            "社区活动",
+            "查看全部"
+          ]
+        }
+      },
+      {
+        "label": "二层操作:创建工单->创建工单",
+        "url": "http://127.0.0.1:49087/dashboard",
+        "title": "My Trae Project",
+        "headings": [
+          "欢迎回来，张先生",
+          "快捷操作",
+          "最近工单",
+          "空调不制冷",
+          "近期活动",
+          "业主座谈会",
+          "社区亲子运动会"
+        ],
+        "navLabels": [
+          "智慧社区",
+          "张先生 业主",
+          "工作台",
+          "通行管理",
+          "工单中心",
+          "社区商圈",
+          "邻里社交",
+          "个人中心",
+          "退出登录"
+        ],
+        "buttons": [
+          "退出登录",
+          "创建工单",
+          "访客通行证",
+          "社区商城",
+          "社区活动",
+          "查看全部"
+        ],
+        "links": [
+          "工作台",
+          "通行管理",
+          "工单中心",
+          "社区商圈",
+          "邻里社交",
+          "个人中心"
+        ],
+        "inputs": [
+          {
+            "tag": "input",
+            "type": "text",
+            "placeholder": "搜索...",
+            "name": "",
+            "label": ""
+          }
+        ],
+        "tables": [],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "智慧社区张先生业主工作台通行管理工单中心社区商圈邻里社交个人中心退出登录张先生在线欢迎回来，张先生今天是 2026年6月8日星期一快捷操作创建工单访客通行证社区商城社区活动最近工单查看全部 空调不制冷处理中家里的空调不制冷，需要维修1号楼2单元101室6月8日 00:10近期活动查看全部 业主座谈会18人参与与物业面对面交流，讨论社区建设问题6月11日 03:10 - 05:10物业会议室社区亲子运动会35人参与一年一度的亲子运动会，欢迎家长带小朋友参加6月15日 03:10 - 07:10小区广场",
+        "layout": {
+          "viewportWidth": 1600,
+          "viewportHeight": 1000,
+          "scrollWidth": 1600,
+          "scrollHeight": 1000,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89087-codex-repair-2-structure-04-二层操作-创建工单-创建工单",
+          "label": "二层操作:创建工单->创建工单",
+          "finalUrl": "http://127.0.0.1:49087/dashboard",
+          "title": "My Trae Project",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89087/runtime-check/codex-20260608-repair-2/may-89087-codex-repair-2-structure-04-二层操作-创建工单-创建工单.json",
+          "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89087/runtime-check/codex-20260608-repair-2/may-89087-codex-repair-2-structure-04-二层操作-创建工单-创建工单.png",
+          "elementCount": 197,
+          "interactiveCount": 16,
+          "interactiveLabels": [
+            "工作台",
+            "通行管理",
+            "工单中心",
+            "社区商圈",
+            "邻里社交",
+            "个人中心",
+            "退出登录",
+            "搜索...",
+            "创建工单",
+            "访客通行证",
+            "社区商城",
+            "社区活动",
+            "查看全部"
+          ]
+        }
+      },
+      {
+        "label": "操作:查看全部",
+        "url": "http://127.0.0.1:49087/dashboard",
+        "title": "My Trae Project",
+        "headings": [
+          "欢迎回来，张先生",
+          "快捷操作",
+          "最近工单",
+          "空调不制冷",
+          "近期活动",
+          "业主座谈会",
+          "社区亲子运动会"
+        ],
+        "navLabels": [
+          "智慧社区",
+          "张先生 业主",
+          "工作台",
+          "通行管理",
+          "工单中心",
+          "社区商圈",
+          "邻里社交",
+          "个人中心",
+          "退出登录"
+        ],
+        "buttons": [
+          "退出登录",
+          "创建工单",
+          "访客通行证",
+          "社区商城",
+          "社区活动",
+          "查看全部"
+        ],
+        "links": [
+          "工作台",
+          "通行管理",
+          "工单中心",
+          "社区商圈",
+          "邻里社交",
+          "个人中心"
+        ],
+        "inputs": [
+          {
+            "tag": "input",
+            "type": "text",
+            "placeholder": "搜索...",
+            "name": "",
+            "label": ""
+          }
+        ],
+        "tables": [],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "智慧社区张先生业主工作台通行管理工单中心社区商圈邻里社交个人中心退出登录张先生在线欢迎回来，张先生今天是 2026年6月8日星期一快捷操作创建工单访客通行证社区商城社区活动最近工单查看全部 空调不制冷处理中家里的空调不制冷，需要维修1号楼2单元101室6月8日 00:10近期活动查看全部 业主座谈会18人参与与物业面对面交流，讨论社区建设问题6月11日 03:10 - 05:10物业会议室社区亲子运动会35人参与一年一度的亲子运动会，欢迎家长带小朋友参加6月15日 03:10 - 07:10小区广场",
+        "layout": {
+          "viewportWidth": 1632,
+          "viewportHeight": 1000,
+          "scrollWidth": 1632,
+          "scrollHeight": 1000,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89087-codex-repair-2-structure-05-操作-查看全部",
+          "label": "操作:查看全部",
+          "finalUrl": "http://127.0.0.1:49087/dashboard",
+          "title": "My Trae Project",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89087/runtime-check/codex-20260608-repair-2/may-89087-codex-repair-2-structure-05-操作-查看全部.json",
+          "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89087/runtime-check/codex-20260608-repair-2/may-89087-codex-repair-2-structure-05-操作-查看全部.png",
+          "elementCount": 197,
+          "interactiveCount": 16,
+          "interactiveLabels": [
+            "工作台",
+            "通行管理",
+            "工单中心",
+            "社区商圈",
+            "邻里社交",
+            "个人中心",
+            "退出登录",
+            "搜索...",
+            "创建工单",
+            "访客通行证",
+            "社区商城",
+            "社区活动",
+            "查看全部"
+          ]
+        }
+      },
+      {
+        "label": "二层操作:查看全部->创建工单",
+        "url": "http://127.0.0.1:49087/dashboard",
+        "title": "My Trae Project",
+        "headings": [
+          "欢迎回来，张先生",
+          "快捷操作",
+          "最近工单",
+          "空调不制冷",
+          "近期活动",
+          "业主座谈会",
+          "社区亲子运动会"
+        ],
+        "navLabels": [
+          "智慧社区",
+          "张先生 业主",
+          "工作台",
+          "通行管理",
+          "工单中心",
+          "社区商圈",
+          "邻里社交",
+          "个人中心",
+          "退出登录"
+        ],
+        "buttons": [
+          "退出登录",
+          "创建工单",
+          "访客通行证",
+          "社区商城",
+          "社区活动",
+          "查看全部"
+        ],
+        "links": [
+          "工作台",
+          "通行管理",
+          "工单中心",
+          "社区商圈",
+          "邻里社交",
+          "个人中心"
+        ],
+        "inputs": [
+          {
+            "tag": "input",
+            "type": "text",
+            "placeholder": "搜索...",
+            "name": "",
+            "label": ""
+          }
+        ],
+        "tables": [],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "智慧社区张先生业主工作台通行管理工单中心社区商圈邻里社交个人中心退出登录张先生在线欢迎回来，张先生今天是 2026年6月8日星期一快捷操作创建工单访客通行证社区商城社区活动最近工单查看全部 空调不制冷处理中家里的空调不制冷，需要维修1号楼2单元101室6月8日 00:10近期活动查看全部 业主座谈会18人参与与物业面对面交流，讨论社区建设问题6月11日 03:10 - 05:10物业会议室社区亲子运动会35人参与一年一度的亲子运动会，欢迎家长带小朋友参加6月15日 03:10 - 07:10小区广场",
+        "layout": {
+          "viewportWidth": 1664,
+          "viewportHeight": 1000,
+          "scrollWidth": 1664,
+          "scrollHeight": 1000,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89087-codex-repair-2-structure-06-二层操作-查看全部-创建工单",
+          "label": "二层操作:查看全部->创建工单",
+          "finalUrl": "http://127.0.0.1:49087/dashboard",
+          "title": "My Trae Project",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89087/runtime-check/codex-20260608-repair-2/may-89087-codex-repair-2-structure-06-二层操作-查看全部-创建工单.json",
+          "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89087/runtime-check/codex-20260608-repair-2/may-89087-codex-repair-2-structure-06-二层操作-查看全部-创建工单.png",
+          "elementCount": 197,
+          "interactiveCount": 16,
+          "interactiveLabels": [
+            "工作台",
+            "通行管理",
+            "工单中心",
+            "社区商圈",
+            "邻里社交",
+            "个人中心",
+            "退出登录",
+            "搜索...",
+            "创建工单",
+            "访客通行证",
+            "社区商城",
+            "社区活动",
+            "查看全部"
+          ]
+        }
+      },
+      {
+        "label": "导航:通行管理",
+        "url": "http://127.0.0.1:49087/access",
+        "title": "My Trae Project",
+        "headings": [
+          "通行管理",
+          "有效通行证",
+          "李访客"
+        ],
+        "navLabels": [
+          "智慧社区",
+          "张先生 业主",
+          "工作台",
+          "通行管理",
+          "工单中心",
+          "社区商圈",
+          "邻里社交",
+          "个人中心",
+          "退出登录"
+        ],
+        "buttons": [
+          "退出登录",
+          "访客通行证",
+          "通行记录",
+          "设备状态",
+          "创建通行证"
+        ],
+        "links": [
+          "工作台",
+          "通行管理",
+          "工单中心",
+          "社区商圈",
+          "邻里社交",
+          "个人中心"
+        ],
+        "inputs": [
+          {
+            "tag": "input",
+            "type": "text",
+            "placeholder": "搜索...",
+            "name": "",
+            "label": ""
+          }
+        ],
+        "tables": [],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "智慧社区张先生业主工作台通行管理工单中心社区商圈邻里社交个人中心退出登录张先生在线通行管理管理访客通行证、查看通行记录和设备状态访客通行证通行记录设备状态有效通行证创建通行证李访客13900139001有效有效期：2026年6月8日 03:10 - 2026年6月9日 03:10通行区域：小区大门、1号楼单元门",
+        "layout": {
+          "viewportWidth": 1696,
+          "viewportHeight": 1000,
+          "scrollWidth": 1696,
+          "scrollHeight": 1000,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89087-codex-repair-2-structure-07-导航-通行管理",
+          "label": "导航:通行管理",
+          "finalUrl": "http://127.0.0.1:49087/access",
+          "title": "My Trae Project",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89087/runtime-check/codex-20260608-repair-2/may-89087-codex-repair-2-structure-07-导航-通行管理.json",
+          "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89087/runtime-check/codex-20260608-repair-2/may-89087-codex-repair-2-structure-07-导航-通行管理.png",
+          "elementCount": 133,
+          "interactiveCount": 14,
+          "interactiveLabels": [
+            "工作台",
+            "通行管理",
+            "工单中心",
+            "社区商圈",
+            "邻里社交",
+            "个人中心",
+            "退出登录",
+            "搜索...",
+            "访客通行证",
+            "通行记录",
+            "设备状态",
+            "创建通行证"
+          ]
+        }
+      },
+      {
+        "label": "操作:创建通行证",
+        "url": "http://127.0.0.1:49087/access",
+        "title": "My Trae Project",
+        "headings": [
+          "通行管理",
+          "有效通行证",
+          "李访客",
+          "创建访客通行证"
+        ],
+        "navLabels": [
+          "智慧社区",
+          "张先生 业主",
+          "工作台",
+          "通行管理",
+          "工单中心",
+          "社区商圈",
+          "邻里社交",
+          "个人中心",
+          "退出登录"
+        ],
+        "buttons": [
+          "退出登录",
+          "访客通行证",
+          "通行记录",
+          "设备状态",
+          "创建通行证",
+          "取消"
+        ],
+        "links": [
+          "工作台",
+          "通行管理",
+          "工单中心",
+          "社区商圈",
+          "邻里社交",
+          "个人中心"
+        ],
+        "inputs": [
+          {
+            "tag": "input",
+            "type": "text",
+            "placeholder": "搜索...",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "text",
+            "placeholder": "请输入访客姓名",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "tel",
+            "placeholder": "请输入联系电话",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "datetime-local",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "datetime-local",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "text",
+            "placeholder": "请输入来访事由",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "select",
+            "type": "",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          }
+        ],
+        "tables": [],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "智慧社区张先生业主工作台通行管理工单中心社区商圈邻里社交个人中心退出登录张先生在线通行管理管理访客通行证、查看通行记录和设备状态访客通行证通行记录设备状态有效通行证创建通行证李访客13900139001有效有效期：2026年6月8日 03:10 - 2026年6月9日 03:10通行区域：小区大门、1号楼单元门创建访客通行证访客姓名联系电话开始时间结束时间来访事由可通行次数1次3次5次不限次数取消创建通行证",
+        "layout": {
+          "viewportWidth": 1728,
+          "viewportHeight": 1000,
+          "scrollWidth": 1728,
+          "scrollHeight": 1000,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89087-codex-repair-2-structure-08-操作-创建通行证",
+          "label": "操作:创建通行证",
+          "finalUrl": "http://127.0.0.1:49087/access",
+          "title": "My Trae Project",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89087/runtime-check/codex-20260608-repair-2/may-89087-codex-repair-2-structure-08-操作-创建通行证.json",
+          "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89087/runtime-check/codex-20260608-repair-2/may-89087-codex-repair-2-structure-08-操作-创建通行证.png",
+          "elementCount": 186,
+          "interactiveCount": 23,
+          "interactiveLabels": [
+            "工作台",
+            "通行管理",
+            "工单中心",
+            "社区商圈",
+            "邻里社交",
+            "个人中心",
+            "退出登录",
+            "搜索...",
+            "访客通行证",
+            "通行记录",
+            "设备状态",
+            "创建通行证",
+            "请输入访客姓名",
+            "请输入联系电话",
+            "请输入来访事由",
+            "1次 3次 5次 不限次数",
+            "取消"
+          ]
+        }
+      },
+      {
+        "label": "二层操作:创建通行证->创建通行证",
+        "url": "http://127.0.0.1:49087/access",
+        "title": "My Trae Project",
+        "headings": [
+          "通行管理",
+          "有效通行证",
+          "李访客",
+          "创建访客通行证"
+        ],
+        "navLabels": [
+          "智慧社区",
+          "张先生 业主",
+          "工作台",
+          "通行管理",
+          "工单中心",
+          "社区商圈",
+          "邻里社交",
+          "个人中心",
+          "退出登录"
+        ],
+        "buttons": [
+          "退出登录",
+          "访客通行证",
+          "通行记录",
+          "设备状态",
+          "创建通行证",
+          "取消"
+        ],
+        "links": [
+          "工作台",
+          "通行管理",
+          "工单中心",
+          "社区商圈",
+          "邻里社交",
+          "个人中心"
+        ],
+        "inputs": [
+          {
+            "tag": "input",
+            "type": "text",
+            "placeholder": "搜索...",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "text",
+            "placeholder": "请输入访客姓名",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "tel",
+            "placeholder": "请输入联系电话",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "datetime-local",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "datetime-local",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "text",
+            "placeholder": "请输入来访事由",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "select",
+            "type": "",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          }
+        ],
+        "tables": [],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "智慧社区张先生业主工作台通行管理工单中心社区商圈邻里社交个人中心退出登录张先生在线通行管理管理访客通行证、查看通行记录和设备状态访客通行证通行记录设备状态有效通行证创建通行证李访客13900139001有效有效期：2026年6月8日 03:10 - 2026年6月9日 03:10通行区域：小区大门、1号楼单元门创建访客通行证访客姓名联系电话开始时间结束时间来访事由可通行次数1次3次5次不限次数取消创建通行证",
+        "layout": {
+          "viewportWidth": 1760,
+          "viewportHeight": 1000,
+          "scrollWidth": 1760,
+          "scrollHeight": 1000,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89087-codex-repair-2-structure-09-二层操作-创建通行证-创建通行证",
+          "label": "二层操作:创建通行证->创建通行证",
+          "finalUrl": "http://127.0.0.1:49087/access",
+          "title": "My Trae Project",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89087/runtime-check/codex-20260608-repair-2/may-89087-codex-repair-2-structure-09-二层操作-创建通行证-创建通行证.json",
+          "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89087/runtime-check/codex-20260608-repair-2/may-89087-codex-repair-2-structure-09-二层操作-创建通行证-创建通行证.png",
+          "elementCount": 186,
+          "interactiveCount": 23,
+          "interactiveLabels": [
+            "工作台",
+            "通行管理",
+            "工单中心",
+            "社区商圈",
+            "邻里社交",
+            "个人中心",
+            "退出登录",
+            "搜索...",
+            "访客通行证",
+            "通行记录",
+            "设备状态",
+            "创建通行证",
+            "请输入访客姓名",
+            "请输入联系电话",
+            "请输入来访事由",
+            "1次 3次 5次 不限次数",
+            "取消"
+          ]
+        }
+      },
+      {
+        "label": "操作:访客通行证",
+        "url": "http://127.0.0.1:49087/access",
+        "title": "My Trae Project",
+        "headings": [
+          "通行管理",
+          "有效通行证",
+          "李访客"
+        ],
+        "navLabels": [
+          "智慧社区",
+          "张先生 业主",
+          "工作台",
+          "通行管理",
+          "工单中心",
+          "社区商圈",
+          "邻里社交",
+          "个人中心",
+          "退出登录"
+        ],
+        "buttons": [
+          "退出登录",
+          "访客通行证",
+          "通行记录",
+          "设备状态",
+          "创建通行证"
+        ],
+        "links": [
+          "工作台",
+          "通行管理",
+          "工单中心",
+          "社区商圈",
+          "邻里社交",
+          "个人中心"
+        ],
+        "inputs": [
+          {
+            "tag": "input",
+            "type": "text",
+            "placeholder": "搜索...",
+            "name": "",
+            "label": ""
+          }
+        ],
+        "tables": [],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "智慧社区张先生业主工作台通行管理工单中心社区商圈邻里社交个人中心退出登录张先生在线通行管理管理访客通行证、查看通行记录和设备状态访客通行证通行记录设备状态有效通行证创建通行证李访客13900139001有效有效期：2026年6月8日 03:10 - 2026年6月9日 03:10通行区域：小区大门、1号楼单元门",
+        "layout": {
+          "viewportWidth": 1792,
+          "viewportHeight": 1000,
+          "scrollWidth": 1792,
+          "scrollHeight": 1000,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89087-codex-repair-2-structure-10-操作-访客通行证",
+          "label": "操作:访客通行证",
+          "finalUrl": "http://127.0.0.1:49087/access",
+          "title": "My Trae Project",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89087/runtime-check/codex-20260608-repair-2/may-89087-codex-repair-2-structure-10-操作-访客通行证.json",
+          "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89087/runtime-check/codex-20260608-repair-2/may-89087-codex-repair-2-structure-10-操作-访客通行证.png",
+          "elementCount": 133,
+          "interactiveCount": 14,
+          "interactiveLabels": [
+            "工作台",
+            "通行管理",
+            "工单中心",
+            "社区商圈",
+            "邻里社交",
+            "个人中心",
+            "退出登录",
+            "搜索...",
+            "访客通行证",
+            "通行记录",
+            "设备状态",
+            "创建通行证"
+          ]
+        }
+      },
+      {
+        "label": "二层操作:访客通行证->创建通行证",
+        "url": "http://127.0.0.1:49087/access",
+        "title": "My Trae Project",
+        "headings": [
+          "通行管理",
+          "有效通行证",
+          "李访客",
+          "创建访客通行证"
+        ],
+        "navLabels": [
+          "智慧社区",
+          "张先生 业主",
+          "工作台",
+          "通行管理",
+          "工单中心",
+          "社区商圈",
+          "邻里社交",
+          "个人中心",
+          "退出登录"
+        ],
+        "buttons": [
+          "退出登录",
+          "访客通行证",
+          "通行记录",
+          "设备状态",
+          "创建通行证",
+          "取消"
+        ],
+        "links": [
+          "工作台",
+          "通行管理",
+          "工单中心",
+          "社区商圈",
+          "邻里社交",
+          "个人中心"
+        ],
+        "inputs": [
+          {
+            "tag": "input",
+            "type": "text",
+            "placeholder": "搜索...",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "text",
+            "placeholder": "请输入访客姓名",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "tel",
+            "placeholder": "请输入联系电话",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "datetime-local",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "datetime-local",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "text",
+            "placeholder": "请输入来访事由",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "select",
+            "type": "",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          }
+        ],
+        "tables": [],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "智慧社区张先生业主工作台通行管理工单中心社区商圈邻里社交个人中心退出登录张先生在线通行管理管理访客通行证、查看通行记录和设备状态访客通行证通行记录设备状态有效通行证创建通行证李访客13900139001有效有效期：2026年6月8日 03:10 - 2026年6月9日 03:10通行区域：小区大门、1号楼单元门创建访客通行证访客姓名联系电话开始时间结束时间来访事由可通行次数1次3次5次不限次数取消创建通行证",
+        "layout": {
+          "viewportWidth": 1824,
+          "viewportHeight": 1000,
+          "scrollWidth": 1824,
+          "scrollHeight": 1000,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89087-codex-repair-2-structure-11-二层操作-访客通行证-创建通行证",
+          "label": "二层操作:访客通行证->创建通行证",
+          "finalUrl": "http://127.0.0.1:49087/access",
+          "title": "My Trae Project",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89087/runtime-check/codex-20260608-repair-2/may-89087-codex-repair-2-structure-11-二层操作-访客通行证-创建通行证.json",
+          "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89087/runtime-check/codex-20260608-repair-2/may-89087-codex-repair-2-structure-11-二层操作-访客通行证-创建通行证.png",
+          "elementCount": 186,
+          "interactiveCount": 23,
+          "interactiveLabels": [
+            "工作台",
+            "通行管理",
+            "工单中心",
+            "社区商圈",
+            "邻里社交",
+            "个人中心",
+            "退出登录",
+            "搜索...",
+            "访客通行证",
+            "通行记录",
+            "设备状态",
+            "创建通行证",
+            "请输入访客姓名",
+            "请输入联系电话",
+            "请输入来访事由",
+            "1次 3次 5次 不限次数",
+            "取消"
+          ]
+        }
+      },
+      {
+        "label": "导航:工单中心",
+        "url": "http://127.0.0.1:49087/workorder",
+        "title": "My Trae Project",
+        "headings": [
+          "工单中心"
+        ],
+        "navLabels": [
+          "智慧社区",
+          "张先生 业主",
+          "工作台",
+          "通行管理",
+          "工单中心",
+          "社区商圈",
+          "邻里社交",
+          "个人中心",
+          "退出登录"
+        ],
+        "buttons": [
+          "退出登录",
+          "我的工单",
+          "创建工单",
+          "查看"
+        ],
+        "links": [
+          "工作台",
+          "通行管理",
+          "工单中心",
+          "社区商圈",
+          "邻里社交",
+          "个人中心"
+        ],
+        "inputs": [
+          {
+            "tag": "input",
+            "type": "text",
+            "placeholder": "搜索...",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "select",
+            "type": "",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "select",
+            "type": "",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          }
+        ],
+        "tables": [
+          {
+            "headers": [
+              "标题",
+              "类型",
+              "状态",
+              "优先级",
+              "创建时间",
+              "处理人",
+              "评分",
+              "操作"
+            ],
+            "rowCount": 1,
+            "hasEmptyText": false,
+            "textPreview": "标题 类型 状态 优先级 创建时间 处理人 评分 操作 空调不制冷 家里的空调不制冷，需要维修 报修 处理中 高 2026/06/08 00:10 维修师傅 查看"
+          }
+        ],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "智慧社区张先生业主工作台通行管理工单中心社区商圈邻里社交个人中心退出登录张先生在线工单中心管理和处理社区工单我的工单创建工单创建工单全部状态待处理处理中已完成全部类型报修投诉咨询其他标题类型状态优先级创建时间处理人评分操作空调不制冷家里的空调不制冷，需要维修报修处理中高2026/06/08 00:10维修师傅查看",
+        "layout": {
+          "viewportWidth": 1856,
+          "viewportHeight": 1000,
+          "scrollWidth": 1856,
+          "scrollHeight": 1000,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89087-codex-repair-2-structure-12-导航-工单中心",
+          "label": "导航:工单中心",
+          "finalUrl": "http://127.0.0.1:49087/workorder",
+          "title": "My Trae Project",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89087/runtime-check/codex-20260608-repair-2/may-89087-codex-repair-2-structure-12-导航-工单中心.json",
+          "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89087/runtime-check/codex-20260608-repair-2/may-89087-codex-repair-2-structure-12-导航-工单中心.png",
+          "elementCount": 159,
+          "interactiveCount": 16,
+          "interactiveLabels": [
+            "工作台",
+            "通行管理",
+            "工单中心",
+            "社区商圈",
+            "邻里社交",
+            "个人中心",
+            "退出登录",
+            "搜索...",
+            "我的工单",
+            "创建工单",
+            "全部状态 待处理 处理中 已完成",
+            "全部类型 报修 投诉 咨询 其他",
+            "查看"
+          ]
+        }
+      },
+      {
+        "label": "操作:创建工单",
+        "url": "http://127.0.0.1:49087/workorder",
+        "title": "My Trae Project",
+        "headings": [
+          "工单中心",
+          "创建工单"
+        ],
+        "navLabels": [
+          "智慧社区",
+          "张先生 业主",
+          "工作台",
+          "通行管理",
+          "工单中心",
+          "社区商圈",
+          "邻里社交",
+          "个人中心",
+          "退出登录"
+        ],
+        "buttons": [
+          "退出登录",
+          "我的工单",
+          "创建工单",
+          "查看",
+          "上传",
+          "取消",
+          "提交工单"
+        ],
+        "links": [
+          "工作台",
+          "通行管理",
+          "工单中心",
+          "社区商圈",
+          "邻里社交",
+          "个人中心"
+        ],
+        "inputs": [
+          {
+            "tag": "input",
+            "type": "text",
+            "placeholder": "搜索...",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "select",
+            "type": "",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "select",
+            "type": "",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "text",
+            "placeholder": "请输入工单标题",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "textarea",
+            "type": "",
+            "placeholder": "请详细描述问题",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "select",
+            "type": "",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "select",
+            "type": "",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "text",
+            "placeholder": "例如：1号楼2单元301室",
+            "name": "",
+            "label": ""
+          }
+        ],
+        "tables": [
+          {
+            "headers": [
+              "标题",
+              "类型",
+              "状态",
+              "优先级",
+              "创建时间",
+              "处理人",
+              "评分",
+              "操作"
+            ],
+            "rowCount": 1,
+            "hasEmptyText": false,
+            "textPreview": "标题 类型 状态 优先级 创建时间 处理人 评分 操作 空调不制冷 家里的空调不制冷，需要维修 报修 处理中 高 2026/06/08 00:10 维修师傅 查看"
+          }
+        ],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "智慧社区张先生业主工作台通行管理工单中心社区商圈邻里社交个人中心退出登录张先生在线工单中心管理和处理社区工单我的工单创建工单创建工单全部状态待处理处理中已完成全部类型报修投诉咨询其他标题类型状态优先级创建时间处理人评分操作空调不制冷家里的空调不制冷，需要维修报修处理中高2026/06/08 00:10维修师傅查看创建工单标题 *描述 *类型 *报修投诉建议咨询优先级低中高紧急位置 *图片上传上传取消提交工单",
+        "layout": {
+          "viewportWidth": 1888,
+          "viewportHeight": 1000,
+          "scrollWidth": 1888,
+          "scrollHeight": 1000,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89087-codex-repair-2-structure-13-操作-创建工单",
+          "label": "操作:创建工单",
+          "finalUrl": "http://127.0.0.1:49087/workorder",
+          "title": "My Trae Project",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89087/runtime-check/codex-20260608-repair-2/may-89087-codex-repair-2-structure-13-操作-创建工单.json",
+          "screenshotPath": "",
+          "elementCount": 208,
+          "interactiveCount": 25,
+          "interactiveLabels": [
+            "工作台",
+            "通行管理",
+            "工单中心",
+            "社区商圈",
+            "邻里社交",
+            "个人中心",
+            "退出登录",
+            "搜索...",
+            "我的工单",
+            "创建工单",
+            "全部状态 待处理 处理中 已完成",
+            "全部类型 报修 投诉 咨询 其他",
+            "查看",
+            "请输入工单标题",
+            "请详细描述问题",
+            "报修 投诉 建议 咨询",
+            "低 中 高 紧急",
+            "例如：1号楼2单元301室",
+            "上传",
+            "取消",
+            "提交工单"
+          ]
+        }
+      },
+      {
+        "label": "操作:查看",
+        "url": "http://127.0.0.1:49087/workorder",
+        "title": "My Trae Project",
+        "headings": [
+          "工单中心",
+          "工单详情",
+          "空调不制冷"
+        ],
+        "navLabels": [
+          "智慧社区",
+          "张先生 业主",
+          "工作台",
+          "通行管理",
+          "工单中心",
+          "社区商圈",
+          "邻里社交",
+          "个人中心",
+          "退出登录"
+        ],
+        "buttons": [
+          "退出登录",
+          "我的工单",
+          "创建工单",
+          "查看",
+          "关闭"
+        ],
+        "links": [
+          "工作台",
+          "通行管理",
+          "工单中心",
+          "社区商圈",
+          "邻里社交",
+          "个人中心"
+        ],
+        "inputs": [
+          {
+            "tag": "input",
+            "type": "text",
+            "placeholder": "搜索...",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "select",
+            "type": "",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "select",
+            "type": "",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          }
+        ],
+        "tables": [
+          {
+            "headers": [
+              "标题",
+              "类型",
+              "状态",
+              "优先级",
+              "创建时间",
+              "处理人",
+              "评分",
+              "操作"
+            ],
+            "rowCount": 1,
+            "hasEmptyText": false,
+            "textPreview": "标题 类型 状态 优先级 创建时间 处理人 评分 操作 空调不制冷 家里的空调不制冷，需要维修 报修 处理中 高 2026/06/08 00:10 维修师傅 查看"
+          }
+        ],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "智慧社区张先生业主工作台通行管理工单中心社区商圈邻里社交个人中心退出登录张先生在线工单中心管理和处理社区工单我的工单创建工单创建工单全部状态待处理处理中已完成全部类型报修投诉咨询其他标题类型状态优先级创建时间处理人评分操作空调不制冷家里的空调不制冷，需要维修报修处理中高2026/06/08 00:10维修师傅查看工单详情空调不制冷处理中家里的空调不制冷，需要维修提交人：张先生创建时间：2026/06/08 00:10位置：1号楼2单元101室类型：报修优先级：高处理人：维修师傅处理时间线关闭",
+        "layout": {
+          "viewportWidth": 1920,
+          "viewportHeight": 1000,
+          "scrollWidth": 1920,
+          "scrollHeight": 1000,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89087-codex-repair-2-structure-14-操作-查看",
+          "label": "操作:查看",
+          "finalUrl": "http://127.0.0.1:49087/workorder",
+          "title": "My Trae Project",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89087/runtime-check/codex-20260608-repair-2/may-89087-codex-repair-2-structure-14-操作-查看.json",
+          "screenshotPath": "",
+          "elementCount": 206,
+          "interactiveCount": 18,
+          "interactiveLabels": [
+            "工作台",
+            "通行管理",
+            "工单中心",
+            "社区商圈",
+            "邻里社交",
+            "个人中心",
+            "退出登录",
+            "搜索...",
+            "我的工单",
+            "创建工单",
+            "全部状态 待处理 处理中 已完成",
+            "全部类型 报修 投诉 咨询 其他",
+            "查看",
+            "关闭"
+          ]
+        }
+      },
+      {
+        "label": "导航:社区商圈",
+        "url": "http://127.0.0.1:49087/mall",
+        "title": "My Trae Project",
+        "headings": [
+          "社区商圈",
+          "美好便利店",
+          "美食小厨"
+        ],
+        "navLabels": [
+          "智慧社区",
+          "张先生 业主",
+          "工作台",
+          "通行管理",
+          "工单中心",
+          "社区商圈",
+          "邻里社交",
+          "个人中心",
+          "退出登录"
+        ],
+        "buttons": [
+          "退出登录",
+          "商户列表",
+          "商品购买",
+          "我的优惠券",
+          "我的订单"
+        ],
+        "links": [
+          "工作台",
+          "通行管理",
+          "工单中心",
+          "社区商圈",
+          "邻里社交",
+          "个人中心"
+        ],
+        "inputs": [
+          {
+            "tag": "input",
+            "type": "text",
+            "placeholder": "搜索...",
+            "name": "",
+            "label": ""
+          }
+        ],
+        "tables": [],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "智慧社区张先生业主工作台通行管理工单中心社区商圈邻里社交个人中心退出登录张先生在线社区商圈享受社区周边便捷服务商户列表商品购买我的优惠券我的订单美好便利店已通过4.8社区便民超市，提供日常生活用品美食小厨已通过4.6家常菜馆，提供美味家常菜",
+        "layout": {
+          "viewportWidth": 1952,
+          "viewportHeight": 1000,
+          "scrollWidth": 1952,
+          "scrollHeight": 1000,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89087-codex-repair-2-structure-15-导航-社区商圈",
+          "label": "导航:社区商圈",
+          "finalUrl": "http://127.0.0.1:49087/mall",
+          "title": "My Trae Project",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89087/runtime-check/codex-20260608-repair-2/may-89087-codex-repair-2-structure-15-导航-社区商圈.json",
+          "screenshotPath": "",
+          "elementCount": 160,
+          "interactiveCount": 14,
+          "interactiveLabels": [
+            "工作台",
+            "通行管理",
+            "工单中心",
+            "社区商圈",
+            "邻里社交",
+            "个人中心",
+            "退出登录",
+            "搜索...",
+            "商户列表",
+            "商品购买",
+            "我的优惠券",
+            "我的订单"
+          ]
+        }
+      },
+      {
+        "label": "操作:商户列表",
+        "url": "http://127.0.0.1:49087/mall",
+        "title": "My Trae Project",
+        "headings": [
+          "社区商圈",
+          "美好便利店",
+          "美食小厨"
+        ],
+        "navLabels": [
+          "智慧社区",
+          "张先生 业主",
+          "工作台",
+          "通行管理",
+          "工单中心",
+          "社区商圈",
+          "邻里社交",
+          "个人中心",
+          "退出登录"
+        ],
+        "buttons": [
+          "退出登录",
+          "商户列表",
+          "商品购买",
+          "我的优惠券",
+          "我的订单"
+        ],
+        "links": [
+          "工作台",
+          "通行管理",
+          "工单中心",
+          "社区商圈",
+          "邻里社交",
+          "个人中心"
+        ],
+        "inputs": [
+          {
+            "tag": "input",
+            "type": "text",
+            "placeholder": "搜索...",
+            "name": "",
+            "label": ""
+          }
+        ],
+        "tables": [],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "智慧社区张先生业主工作台通行管理工单中心社区商圈邻里社交个人中心退出登录张先生在线社区商圈享受社区周边便捷服务商户列表商品购买我的优惠券我的订单美好便利店已通过4.8社区便民超市，提供日常生活用品美食小厨已通过4.6家常菜馆，提供美味家常菜",
+        "layout": {
+          "viewportWidth": 1984,
+          "viewportHeight": 1000,
+          "scrollWidth": 1984,
+          "scrollHeight": 1000,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89087-codex-repair-2-structure-16-操作-商户列表",
+          "label": "操作:商户列表",
+          "finalUrl": "http://127.0.0.1:49087/mall",
+          "title": "My Trae Project",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89087/runtime-check/codex-20260608-repair-2/may-89087-codex-repair-2-structure-16-操作-商户列表.json",
+          "screenshotPath": "",
+          "elementCount": 160,
+          "interactiveCount": 14,
+          "interactiveLabels": [
+            "工作台",
+            "通行管理",
+            "工单中心",
+            "社区商圈",
+            "邻里社交",
+            "个人中心",
+            "退出登录",
+            "搜索...",
+            "商户列表",
+            "商品购买",
+            "我的优惠券",
+            "我的订单"
+          ]
+        }
+      }
+    ],
+    "findings": [],
+    "actionHints": [],
+    "emptyPages": [],
+    "overflowPages": [],
+    "blankPages": [],
+    "apiFailurePaths": [],
+    "goalTerms": [],
+    "clickedActionDescriptors": [
+      {
+        "nav": "工作台",
+        "label": "创建工单",
+        "ordinal": 0,
+        "unsafe": false
+      },
+      {
+        "nav": "工作台",
+        "label": "创建工单->创建工单",
+        "ordinal": 0,
+        "secondary": true,
+        "unsafe": false
+      },
+      {
+        "nav": "工作台",
+        "label": "查看全部",
+        "ordinal": 0,
+        "unsafe": false
+      },
+      {
+        "nav": "工作台",
+        "label": "查看全部->创建工单",
+        "ordinal": 0,
+        "secondary": true,
+        "unsafe": false
+      },
+      {
+        "nav": "通行管理",
+        "label": "创建通行证",
+        "ordinal": 0,
+        "unsafe": false
+      },
+      {
+        "nav": "通行管理",
+        "label": "创建通行证->创建通行证",
+        "ordinal": 0,
+        "secondary": true,
+        "unsafe": false
+      },
+      {
+        "nav": "通行管理",
+        "label": "访客通行证",
+        "ordinal": 0,
+        "unsafe": false
+      },
+      {
+        "nav": "通行管理",
+        "label": "访客通行证->创建通行证",
+        "ordinal": 0,
+        "secondary": true,
+        "unsafe": false
+      },
+      {
+        "nav": "工单中心",
+        "label": "创建工单",
+        "ordinal": 0,
+        "unsafe": false
+      },
+      {
+        "nav": "工单中心",
+        "label": "查看",
+        "ordinal": 0,
+        "unsafe": false
+      },
+      {
+        "nav": "社区商圈",
+        "label": "商户列表",
+        "ordinal": 0,
+        "unsafe": false
+      }
+    ],
+    "secondaryActionClicks": 4,
+    "structureCaptures": [
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89087-codex-repair-2-structure-01-首屏",
+        "label": "首屏",
+        "finalUrl": "http://127.0.0.1:49087/dashboard",
+        "title": "My Trae Project",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89087/runtime-check/codex-20260608-repair-2/may-89087-codex-repair-2-structure-01-首屏.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89087/runtime-check/codex-20260608-repair-2/may-89087-codex-repair-2-structure-01-首屏.png",
+        "elementCount": 197,
+        "interactiveCount": 16,
+        "interactiveLabels": [
+          "工作台",
+          "通行管理",
+          "工单中心",
+          "社区商圈",
+          "邻里社交",
+          "个人中心",
+          "退出登录",
+          "搜索...",
+          "创建工单",
+          "访客通行证",
+          "社区商城",
+          "社区活动",
+          "查看全部"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89087-codex-repair-2-structure-02-导航-工作台",
+        "label": "导航:工作台",
+        "finalUrl": "http://127.0.0.1:49087/dashboard",
+        "title": "My Trae Project",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89087/runtime-check/codex-20260608-repair-2/may-89087-codex-repair-2-structure-02-导航-工作台.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89087/runtime-check/codex-20260608-repair-2/may-89087-codex-repair-2-structure-02-导航-工作台.png",
+        "elementCount": 197,
+        "interactiveCount": 16,
+        "interactiveLabels": [
+          "工作台",
+          "通行管理",
+          "工单中心",
+          "社区商圈",
+          "邻里社交",
+          "个人中心",
+          "退出登录",
+          "搜索...",
+          "创建工单",
+          "访客通行证",
+          "社区商城",
+          "社区活动",
+          "查看全部"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89087-codex-repair-2-structure-03-操作-创建工单",
+        "label": "操作:创建工单",
+        "finalUrl": "http://127.0.0.1:49087/dashboard",
+        "title": "My Trae Project",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89087/runtime-check/codex-20260608-repair-2/may-89087-codex-repair-2-structure-03-操作-创建工单.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89087/runtime-check/codex-20260608-repair-2/may-89087-codex-repair-2-structure-03-操作-创建工单.png",
+        "elementCount": 197,
+        "interactiveCount": 16,
+        "interactiveLabels": [
+          "工作台",
+          "通行管理",
+          "工单中心",
+          "社区商圈",
+          "邻里社交",
+          "个人中心",
+          "退出登录",
+          "搜索...",
+          "创建工单",
+          "访客通行证",
+          "社区商城",
+          "社区活动",
+          "查看全部"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89087-codex-repair-2-structure-04-二层操作-创建工单-创建工单",
+        "label": "二层操作:创建工单->创建工单",
+        "finalUrl": "http://127.0.0.1:49087/dashboard",
+        "title": "My Trae Project",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89087/runtime-check/codex-20260608-repair-2/may-89087-codex-repair-2-structure-04-二层操作-创建工单-创建工单.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89087/runtime-check/codex-20260608-repair-2/may-89087-codex-repair-2-structure-04-二层操作-创建工单-创建工单.png",
+        "elementCount": 197,
+        "interactiveCount": 16,
+        "interactiveLabels": [
+          "工作台",
+          "通行管理",
+          "工单中心",
+          "社区商圈",
+          "邻里社交",
+          "个人中心",
+          "退出登录",
+          "搜索...",
+          "创建工单",
+          "访客通行证",
+          "社区商城",
+          "社区活动",
+          "查看全部"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89087-codex-repair-2-structure-05-操作-查看全部",
+        "label": "操作:查看全部",
+        "finalUrl": "http://127.0.0.1:49087/dashboard",
+        "title": "My Trae Project",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89087/runtime-check/codex-20260608-repair-2/may-89087-codex-repair-2-structure-05-操作-查看全部.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89087/runtime-check/codex-20260608-repair-2/may-89087-codex-repair-2-structure-05-操作-查看全部.png",
+        "elementCount": 197,
+        "interactiveCount": 16,
+        "interactiveLabels": [
+          "工作台",
+          "通行管理",
+          "工单中心",
+          "社区商圈",
+          "邻里社交",
+          "个人中心",
+          "退出登录",
+          "搜索...",
+          "创建工单",
+          "访客通行证",
+          "社区商城",
+          "社区活动",
+          "查看全部"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89087-codex-repair-2-structure-06-二层操作-查看全部-创建工单",
+        "label": "二层操作:查看全部->创建工单",
+        "finalUrl": "http://127.0.0.1:49087/dashboard",
+        "title": "My Trae Project",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89087/runtime-check/codex-20260608-repair-2/may-89087-codex-repair-2-structure-06-二层操作-查看全部-创建工单.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89087/runtime-check/codex-20260608-repair-2/may-89087-codex-repair-2-structure-06-二层操作-查看全部-创建工单.png",
+        "elementCount": 197,
+        "interactiveCount": 16,
+        "interactiveLabels": [
+          "工作台",
+          "通行管理",
+          "工单中心",
+          "社区商圈",
+          "邻里社交",
+          "个人中心",
+          "退出登录",
+          "搜索...",
+          "创建工单",
+          "访客通行证",
+          "社区商城",
+          "社区活动",
+          "查看全部"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89087-codex-repair-2-structure-07-导航-通行管理",
+        "label": "导航:通行管理",
+        "finalUrl": "http://127.0.0.1:49087/access",
+        "title": "My Trae Project",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89087/runtime-check/codex-20260608-repair-2/may-89087-codex-repair-2-structure-07-导航-通行管理.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89087/runtime-check/codex-20260608-repair-2/may-89087-codex-repair-2-structure-07-导航-通行管理.png",
+        "elementCount": 133,
+        "interactiveCount": 14,
+        "interactiveLabels": [
+          "工作台",
+          "通行管理",
+          "工单中心",
+          "社区商圈",
+          "邻里社交",
+          "个人中心",
+          "退出登录",
+          "搜索...",
+          "访客通行证",
+          "通行记录",
+          "设备状态",
+          "创建通行证"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89087-codex-repair-2-structure-08-操作-创建通行证",
+        "label": "操作:创建通行证",
+        "finalUrl": "http://127.0.0.1:49087/access",
+        "title": "My Trae Project",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89087/runtime-check/codex-20260608-repair-2/may-89087-codex-repair-2-structure-08-操作-创建通行证.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89087/runtime-check/codex-20260608-repair-2/may-89087-codex-repair-2-structure-08-操作-创建通行证.png",
+        "elementCount": 186,
+        "interactiveCount": 23,
+        "interactiveLabels": [
+          "工作台",
+          "通行管理",
+          "工单中心",
+          "社区商圈",
+          "邻里社交",
+          "个人中心",
+          "退出登录",
+          "搜索...",
+          "访客通行证",
+          "通行记录",
+          "设备状态",
+          "创建通行证",
+          "请输入访客姓名",
+          "请输入联系电话",
+          "请输入来访事由",
+          "1次 3次 5次 不限次数",
+          "取消"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89087-codex-repair-2-structure-09-二层操作-创建通行证-创建通行证",
+        "label": "二层操作:创建通行证->创建通行证",
+        "finalUrl": "http://127.0.0.1:49087/access",
+        "title": "My Trae Project",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89087/runtime-check/codex-20260608-repair-2/may-89087-codex-repair-2-structure-09-二层操作-创建通行证-创建通行证.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89087/runtime-check/codex-20260608-repair-2/may-89087-codex-repair-2-structure-09-二层操作-创建通行证-创建通行证.png",
+        "elementCount": 186,
+        "interactiveCount": 23,
+        "interactiveLabels": [
+          "工作台",
+          "通行管理",
+          "工单中心",
+          "社区商圈",
+          "邻里社交",
+          "个人中心",
+          "退出登录",
+          "搜索...",
+          "访客通行证",
+          "通行记录",
+          "设备状态",
+          "创建通行证",
+          "请输入访客姓名",
+          "请输入联系电话",
+          "请输入来访事由",
+          "1次 3次 5次 不限次数",
+          "取消"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89087-codex-repair-2-structure-10-操作-访客通行证",
+        "label": "操作:访客通行证",
+        "finalUrl": "http://127.0.0.1:49087/access",
+        "title": "My Trae Project",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89087/runtime-check/codex-20260608-repair-2/may-89087-codex-repair-2-structure-10-操作-访客通行证.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89087/runtime-check/codex-20260608-repair-2/may-89087-codex-repair-2-structure-10-操作-访客通行证.png",
+        "elementCount": 133,
+        "interactiveCount": 14,
+        "interactiveLabels": [
+          "工作台",
+          "通行管理",
+          "工单中心",
+          "社区商圈",
+          "邻里社交",
+          "个人中心",
+          "退出登录",
+          "搜索...",
+          "访客通行证",
+          "通行记录",
+          "设备状态",
+          "创建通行证"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89087-codex-repair-2-structure-11-二层操作-访客通行证-创建通行证",
+        "label": "二层操作:访客通行证->创建通行证",
+        "finalUrl": "http://127.0.0.1:49087/access",
+        "title": "My Trae Project",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89087/runtime-check/codex-20260608-repair-2/may-89087-codex-repair-2-structure-11-二层操作-访客通行证-创建通行证.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89087/runtime-check/codex-20260608-repair-2/may-89087-codex-repair-2-structure-11-二层操作-访客通行证-创建通行证.png",
+        "elementCount": 186,
+        "interactiveCount": 23,
+        "interactiveLabels": [
+          "工作台",
+          "通行管理",
+          "工单中心",
+          "社区商圈",
+          "邻里社交",
+          "个人中心",
+          "退出登录",
+          "搜索...",
+          "访客通行证",
+          "通行记录",
+          "设备状态",
+          "创建通行证",
+          "请输入访客姓名",
+          "请输入联系电话",
+          "请输入来访事由",
+          "1次 3次 5次 不限次数",
+          "取消"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89087-codex-repair-2-structure-12-导航-工单中心",
+        "label": "导航:工单中心",
+        "finalUrl": "http://127.0.0.1:49087/workorder",
+        "title": "My Trae Project",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89087/runtime-check/codex-20260608-repair-2/may-89087-codex-repair-2-structure-12-导航-工单中心.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89087/runtime-check/codex-20260608-repair-2/may-89087-codex-repair-2-structure-12-导航-工单中心.png",
+        "elementCount": 159,
+        "interactiveCount": 16,
+        "interactiveLabels": [
+          "工作台",
+          "通行管理",
+          "工单中心",
+          "社区商圈",
+          "邻里社交",
+          "个人中心",
+          "退出登录",
+          "搜索...",
+          "我的工单",
+          "创建工单",
+          "全部状态 待处理 处理中 已完成",
+          "全部类型 报修 投诉 咨询 其他",
+          "查看"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89087-codex-repair-2-structure-13-操作-创建工单",
+        "label": "操作:创建工单",
+        "finalUrl": "http://127.0.0.1:49087/workorder",
+        "title": "My Trae Project",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89087/runtime-check/codex-20260608-repair-2/may-89087-codex-repair-2-structure-13-操作-创建工单.json",
+        "screenshotPath": "",
+        "elementCount": 208,
+        "interactiveCount": 25,
+        "interactiveLabels": [
+          "工作台",
+          "通行管理",
+          "工单中心",
+          "社区商圈",
+          "邻里社交",
+          "个人中心",
+          "退出登录",
+          "搜索...",
+          "我的工单",
+          "创建工单",
+          "全部状态 待处理 处理中 已完成",
+          "全部类型 报修 投诉 咨询 其他",
+          "查看",
+          "请输入工单标题",
+          "请详细描述问题",
+          "报修 投诉 建议 咨询",
+          "低 中 高 紧急",
+          "例如：1号楼2单元301室",
+          "上传",
+          "取消",
+          "提交工单"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89087-codex-repair-2-structure-14-操作-查看",
+        "label": "操作:查看",
+        "finalUrl": "http://127.0.0.1:49087/workorder",
+        "title": "My Trae Project",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89087/runtime-check/codex-20260608-repair-2/may-89087-codex-repair-2-structure-14-操作-查看.json",
+        "screenshotPath": "",
+        "elementCount": 206,
+        "interactiveCount": 18,
+        "interactiveLabels": [
+          "工作台",
+          "通行管理",
+          "工单中心",
+          "社区商圈",
+          "邻里社交",
+          "个人中心",
+          "退出登录",
+          "搜索...",
+          "我的工单",
+          "创建工单",
+          "全部状态 待处理 处理中 已完成",
+          "全部类型 报修 投诉 咨询 其他",
+          "查看",
+          "关闭"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89087-codex-repair-2-structure-15-导航-社区商圈",
+        "label": "导航:社区商圈",
+        "finalUrl": "http://127.0.0.1:49087/mall",
+        "title": "My Trae Project",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89087/runtime-check/codex-20260608-repair-2/may-89087-codex-repair-2-structure-15-导航-社区商圈.json",
+        "screenshotPath": "",
+        "elementCount": 160,
+        "interactiveCount": 14,
+        "interactiveLabels": [
+          "工作台",
+          "通行管理",
+          "工单中心",
+          "社区商圈",
+          "邻里社交",
+          "个人中心",
+          "退出登录",
+          "搜索...",
+          "商户列表",
+          "商品购买",
+          "我的优惠券",
+          "我的订单"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89087-codex-repair-2-structure-16-操作-商户列表",
+        "label": "操作:商户列表",
+        "finalUrl": "http://127.0.0.1:49087/mall",
+        "title": "My Trae Project",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89087/runtime-check/codex-20260608-repair-2/may-89087-codex-repair-2-structure-16-操作-商户列表.json",
+        "screenshotPath": "",
+        "elementCount": 160,
+        "interactiveCount": 14,
+        "interactiveLabels": [
+          "工作台",
+          "通行管理",
+          "工单中心",
+          "社区商圈",
+          "邻里社交",
+          "个人中心",
+          "退出登录",
+          "搜索...",
+          "商户列表",
+          "商品购买",
+          "我的优惠券",
+          "我的订单"
+        ]
+      }
+    ],
+    "representativeScreenshotUrl": "http://127.0.0.1:49087/dashboard",
+    "representativeScreenshotLabel": "欢迎回来，张先生"
+  },
+  "websiteStructureCapture": {
+    "module": "website_structure_capture",
+    "captureCount": 16,
+    "captures": [
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89087-codex-repair-2-structure-01-首屏",
+        "label": "首屏",
+        "finalUrl": "http://127.0.0.1:49087/dashboard",
+        "title": "My Trae Project",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89087/runtime-check/codex-20260608-repair-2/may-89087-codex-repair-2-structure-01-首屏.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89087/runtime-check/codex-20260608-repair-2/may-89087-codex-repair-2-structure-01-首屏.png",
+        "elementCount": 197,
+        "interactiveCount": 16,
+        "interactiveLabels": [
+          "工作台",
+          "通行管理",
+          "工单中心",
+          "社区商圈",
+          "邻里社交",
+          "个人中心",
+          "退出登录",
+          "搜索...",
+          "创建工单",
+          "访客通行证",
+          "社区商城",
+          "社区活动",
+          "查看全部"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89087-codex-repair-2-structure-02-导航-工作台",
+        "label": "导航:工作台",
+        "finalUrl": "http://127.0.0.1:49087/dashboard",
+        "title": "My Trae Project",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89087/runtime-check/codex-20260608-repair-2/may-89087-codex-repair-2-structure-02-导航-工作台.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89087/runtime-check/codex-20260608-repair-2/may-89087-codex-repair-2-structure-02-导航-工作台.png",
+        "elementCount": 197,
+        "interactiveCount": 16,
+        "interactiveLabels": [
+          "工作台",
+          "通行管理",
+          "工单中心",
+          "社区商圈",
+          "邻里社交",
+          "个人中心",
+          "退出登录",
+          "搜索...",
+          "创建工单",
+          "访客通行证",
+          "社区商城",
+          "社区活动",
+          "查看全部"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89087-codex-repair-2-structure-03-操作-创建工单",
+        "label": "操作:创建工单",
+        "finalUrl": "http://127.0.0.1:49087/dashboard",
+        "title": "My Trae Project",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89087/runtime-check/codex-20260608-repair-2/may-89087-codex-repair-2-structure-03-操作-创建工单.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89087/runtime-check/codex-20260608-repair-2/may-89087-codex-repair-2-structure-03-操作-创建工单.png",
+        "elementCount": 197,
+        "interactiveCount": 16,
+        "interactiveLabels": [
+          "工作台",
+          "通行管理",
+          "工单中心",
+          "社区商圈",
+          "邻里社交",
+          "个人中心",
+          "退出登录",
+          "搜索...",
+          "创建工单",
+          "访客通行证",
+          "社区商城",
+          "社区活动",
+          "查看全部"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89087-codex-repair-2-structure-04-二层操作-创建工单-创建工单",
+        "label": "二层操作:创建工单->创建工单",
+        "finalUrl": "http://127.0.0.1:49087/dashboard",
+        "title": "My Trae Project",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89087/runtime-check/codex-20260608-repair-2/may-89087-codex-repair-2-structure-04-二层操作-创建工单-创建工单.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89087/runtime-check/codex-20260608-repair-2/may-89087-codex-repair-2-structure-04-二层操作-创建工单-创建工单.png",
+        "elementCount": 197,
+        "interactiveCount": 16,
+        "interactiveLabels": [
+          "工作台",
+          "通行管理",
+          "工单中心",
+          "社区商圈",
+          "邻里社交",
+          "个人中心",
+          "退出登录",
+          "搜索...",
+          "创建工单",
+          "访客通行证",
+          "社区商城",
+          "社区活动",
+          "查看全部"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89087-codex-repair-2-structure-05-操作-查看全部",
+        "label": "操作:查看全部",
+        "finalUrl": "http://127.0.0.1:49087/dashboard",
+        "title": "My Trae Project",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89087/runtime-check/codex-20260608-repair-2/may-89087-codex-repair-2-structure-05-操作-查看全部.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89087/runtime-check/codex-20260608-repair-2/may-89087-codex-repair-2-structure-05-操作-查看全部.png",
+        "elementCount": 197,
+        "interactiveCount": 16,
+        "interactiveLabels": [
+          "工作台",
+          "通行管理",
+          "工单中心",
+          "社区商圈",
+          "邻里社交",
+          "个人中心",
+          "退出登录",
+          "搜索...",
+          "创建工单",
+          "访客通行证",
+          "社区商城",
+          "社区活动",
+          "查看全部"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89087-codex-repair-2-structure-06-二层操作-查看全部-创建工单",
+        "label": "二层操作:查看全部->创建工单",
+        "finalUrl": "http://127.0.0.1:49087/dashboard",
+        "title": "My Trae Project",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89087/runtime-check/codex-20260608-repair-2/may-89087-codex-repair-2-structure-06-二层操作-查看全部-创建工单.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89087/runtime-check/codex-20260608-repair-2/may-89087-codex-repair-2-structure-06-二层操作-查看全部-创建工单.png",
+        "elementCount": 197,
+        "interactiveCount": 16,
+        "interactiveLabels": [
+          "工作台",
+          "通行管理",
+          "工单中心",
+          "社区商圈",
+          "邻里社交",
+          "个人中心",
+          "退出登录",
+          "搜索...",
+          "创建工单",
+          "访客通行证",
+          "社区商城",
+          "社区活动",
+          "查看全部"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89087-codex-repair-2-structure-07-导航-通行管理",
+        "label": "导航:通行管理",
+        "finalUrl": "http://127.0.0.1:49087/access",
+        "title": "My Trae Project",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89087/runtime-check/codex-20260608-repair-2/may-89087-codex-repair-2-structure-07-导航-通行管理.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89087/runtime-check/codex-20260608-repair-2/may-89087-codex-repair-2-structure-07-导航-通行管理.png",
+        "elementCount": 133,
+        "interactiveCount": 14,
+        "interactiveLabels": [
+          "工作台",
+          "通行管理",
+          "工单中心",
+          "社区商圈",
+          "邻里社交",
+          "个人中心",
+          "退出登录",
+          "搜索...",
+          "访客通行证",
+          "通行记录",
+          "设备状态",
+          "创建通行证"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89087-codex-repair-2-structure-08-操作-创建通行证",
+        "label": "操作:创建通行证",
+        "finalUrl": "http://127.0.0.1:49087/access",
+        "title": "My Trae Project",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89087/runtime-check/codex-20260608-repair-2/may-89087-codex-repair-2-structure-08-操作-创建通行证.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89087/runtime-check/codex-20260608-repair-2/may-89087-codex-repair-2-structure-08-操作-创建通行证.png",
+        "elementCount": 186,
+        "interactiveCount": 23,
+        "interactiveLabels": [
+          "工作台",
+          "通行管理",
+          "工单中心",
+          "社区商圈",
+          "邻里社交",
+          "个人中心",
+          "退出登录",
+          "搜索...",
+          "访客通行证",
+          "通行记录",
+          "设备状态",
+          "创建通行证",
+          "请输入访客姓名",
+          "请输入联系电话",
+          "请输入来访事由",
+          "1次 3次 5次 不限次数",
+          "取消"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89087-codex-repair-2-structure-09-二层操作-创建通行证-创建通行证",
+        "label": "二层操作:创建通行证->创建通行证",
+        "finalUrl": "http://127.0.0.1:49087/access",
+        "title": "My Trae Project",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89087/runtime-check/codex-20260608-repair-2/may-89087-codex-repair-2-structure-09-二层操作-创建通行证-创建通行证.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89087/runtime-check/codex-20260608-repair-2/may-89087-codex-repair-2-structure-09-二层操作-创建通行证-创建通行证.png",
+        "elementCount": 186,
+        "interactiveCount": 23,
+        "interactiveLabels": [
+          "工作台",
+          "通行管理",
+          "工单中心",
+          "社区商圈",
+          "邻里社交",
+          "个人中心",
+          "退出登录",
+          "搜索...",
+          "访客通行证",
+          "通行记录",
+          "设备状态",
+          "创建通行证",
+          "请输入访客姓名",
+          "请输入联系电话",
+          "请输入来访事由",
+          "1次 3次 5次 不限次数",
+          "取消"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89087-codex-repair-2-structure-10-操作-访客通行证",
+        "label": "操作:访客通行证",
+        "finalUrl": "http://127.0.0.1:49087/access",
+        "title": "My Trae Project",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89087/runtime-check/codex-20260608-repair-2/may-89087-codex-repair-2-structure-10-操作-访客通行证.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89087/runtime-check/codex-20260608-repair-2/may-89087-codex-repair-2-structure-10-操作-访客通行证.png",
+        "elementCount": 133,
+        "interactiveCount": 14,
+        "interactiveLabels": [
+          "工作台",
+          "通行管理",
+          "工单中心",
+          "社区商圈",
+          "邻里社交",
+          "个人中心",
+          "退出登录",
+          "搜索...",
+          "访客通行证",
+          "通行记录",
+          "设备状态",
+          "创建通行证"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89087-codex-repair-2-structure-11-二层操作-访客通行证-创建通行证",
+        "label": "二层操作:访客通行证->创建通行证",
+        "finalUrl": "http://127.0.0.1:49087/access",
+        "title": "My Trae Project",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89087/runtime-check/codex-20260608-repair-2/may-89087-codex-repair-2-structure-11-二层操作-访客通行证-创建通行证.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89087/runtime-check/codex-20260608-repair-2/may-89087-codex-repair-2-structure-11-二层操作-访客通行证-创建通行证.png",
+        "elementCount": 186,
+        "interactiveCount": 23,
+        "interactiveLabels": [
+          "工作台",
+          "通行管理",
+          "工单中心",
+          "社区商圈",
+          "邻里社交",
+          "个人中心",
+          "退出登录",
+          "搜索...",
+          "访客通行证",
+          "通行记录",
+          "设备状态",
+          "创建通行证",
+          "请输入访客姓名",
+          "请输入联系电话",
+          "请输入来访事由",
+          "1次 3次 5次 不限次数",
+          "取消"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89087-codex-repair-2-structure-12-导航-工单中心",
+        "label": "导航:工单中心",
+        "finalUrl": "http://127.0.0.1:49087/workorder",
+        "title": "My Trae Project",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89087/runtime-check/codex-20260608-repair-2/may-89087-codex-repair-2-structure-12-导航-工单中心.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89087/runtime-check/codex-20260608-repair-2/may-89087-codex-repair-2-structure-12-导航-工单中心.png",
+        "elementCount": 159,
+        "interactiveCount": 16,
+        "interactiveLabels": [
+          "工作台",
+          "通行管理",
+          "工单中心",
+          "社区商圈",
+          "邻里社交",
+          "个人中心",
+          "退出登录",
+          "搜索...",
+          "我的工单",
+          "创建工单",
+          "全部状态 待处理 处理中 已完成",
+          "全部类型 报修 投诉 咨询 其他",
+          "查看"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89087-codex-repair-2-structure-13-操作-创建工单",
+        "label": "操作:创建工单",
+        "finalUrl": "http://127.0.0.1:49087/workorder",
+        "title": "My Trae Project",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89087/runtime-check/codex-20260608-repair-2/may-89087-codex-repair-2-structure-13-操作-创建工单.json",
+        "screenshotPath": "",
+        "elementCount": 208,
+        "interactiveCount": 25,
+        "interactiveLabels": [
+          "工作台",
+          "通行管理",
+          "工单中心",
+          "社区商圈",
+          "邻里社交",
+          "个人中心",
+          "退出登录",
+          "搜索...",
+          "我的工单",
+          "创建工单",
+          "全部状态 待处理 处理中 已完成",
+          "全部类型 报修 投诉 咨询 其他",
+          "查看",
+          "请输入工单标题",
+          "请详细描述问题",
+          "报修 投诉 建议 咨询",
+          "低 中 高 紧急",
+          "例如：1号楼2单元301室",
+          "上传",
+          "取消",
+          "提交工单"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89087-codex-repair-2-structure-14-操作-查看",
+        "label": "操作:查看",
+        "finalUrl": "http://127.0.0.1:49087/workorder",
+        "title": "My Trae Project",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89087/runtime-check/codex-20260608-repair-2/may-89087-codex-repair-2-structure-14-操作-查看.json",
+        "screenshotPath": "",
+        "elementCount": 206,
+        "interactiveCount": 18,
+        "interactiveLabels": [
+          "工作台",
+          "通行管理",
+          "工单中心",
+          "社区商圈",
+          "邻里社交",
+          "个人中心",
+          "退出登录",
+          "搜索...",
+          "我的工单",
+          "创建工单",
+          "全部状态 待处理 处理中 已完成",
+          "全部类型 报修 投诉 咨询 其他",
+          "查看",
+          "关闭"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89087-codex-repair-2-structure-15-导航-社区商圈",
+        "label": "导航:社区商圈",
+        "finalUrl": "http://127.0.0.1:49087/mall",
+        "title": "My Trae Project",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89087/runtime-check/codex-20260608-repair-2/may-89087-codex-repair-2-structure-15-导航-社区商圈.json",
+        "screenshotPath": "",
+        "elementCount": 160,
+        "interactiveCount": 14,
+        "interactiveLabels": [
+          "工作台",
+          "通行管理",
+          "工单中心",
+          "社区商圈",
+          "邻里社交",
+          "个人中心",
+          "退出登录",
+          "搜索...",
+          "商户列表",
+          "商品购买",
+          "我的优惠券",
+          "我的订单"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89087-codex-repair-2-structure-16-操作-商户列表",
+        "label": "操作:商户列表",
+        "finalUrl": "http://127.0.0.1:49087/mall",
+        "title": "My Trae Project",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89087/runtime-check/codex-20260608-repair-2/may-89087-codex-repair-2-structure-16-操作-商户列表.json",
+        "screenshotPath": "",
+        "elementCount": 160,
+        "interactiveCount": 14,
+        "interactiveLabels": [
+          "工作台",
+          "通行管理",
+          "工单中心",
+          "社区商圈",
+          "邻里社交",
+          "个人中心",
+          "退出登录",
+          "搜索...",
+          "商户列表",
+          "商品购买",
+          "我的优惠券",
+          "我的订单"
+        ]
+      }
+    ]
+  },
+  "screenshotMetrics": {
+    "width": 2016,
+    "height": 1000,
+    "scrollWidth": 1984,
+    "scrollHeight": 1000
+  },
+  "initialBodyTextPreview": "智慧社区服务平台\n\n碧桂园·在管小区专属服务\n\n欢迎登录\n用户名\n密码\n登录\n\n演示账号（密码均为 123456）\n\n张先生\n业主\nowner1 / 123456\n王先生\n租户\ntenant1 / 123456\n物业管理员\n物业员工\nproperty1 / 123456\n维修师傅\n物业员工\nworker1 / 123456\n商户管理员\n商户\nmerchant1 / 123456\n\n© 2024 碧桂园智慧社区服务平台",
+  "bodyTextPreview": "智慧社区\n\n张先生\n\n业主\n\n工作台\n通行管理\n工单中心\n社区商圈\n邻里社交\n个人中心\n退出登录\n\n张先生\n\n在线\n\n欢迎回来，张先生\n\n今天是 2026年6月8日星期一\n\n快捷操作\n创建工单\n访客通行证\n社区商城\n社区活动\n最近工单\n查看全部\n空调不制冷\n处理中\n\n家里的空调不制冷，需要维修\n\n1号楼2单元101室\n6月8日 00:10\n近期活动\n查看全部\n业主座谈会\n18人参与\n\n与物业面对面交流，讨论社区建设问题\n\n6月11日 03:10 - 05:10\n物业会议室\n社区亲子运动会\n35人参与\n\n一年一度的亲子运动会，欢迎家长带小朋友参加\n\n6月15日 03:10 - 07:10\n小区广场",
+  "apiBase": "http://127.0.0.1:59087",
+  "businessGoalPreview": "",
+  "apiResponses": [
+    {
+      "method": "POST",
+      "status": 200,
+      "url": "http://127.0.0.1:49087/api/auth/login"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49087/api/workorder?limit=5"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49087/api/social/activities?status=active"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49087/api/workorder?limit=5"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49087/api/social/activities?status=active"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49087/api/workorder?limit=5"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49087/api/social/activities?status=active"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49087/api/workorder?limit=5"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49087/api/social/activities?status=active"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49087/api/access/passes?status=active"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49087/api/access/passes?status=active"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49087/api/workorder"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49087/api/workorder"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49087/api/workorder/1"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49087/api/mall/merchants?status=approved"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49087/api/mall/merchants?status=approved"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49087/api/workorder?limit=5"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49087/api/social/activities?status=active"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49087/api/workorder?limit=5"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49087/api/social/activities?status=active"
+    }
+  ],
+  "apiChecks": [
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59087/api/health",
+      "path": "/api/health",
+      "status": 200,
+      "ok": true,
+      "bodyPreview": "{\"success\":true,\"message\":\"ok\"}"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59087/api/workorder?limit=5",
+      "path": "/api/workorder?limit=5",
+      "status": 200,
+      "ok": true,
+      "bodyPreview": "{\"success\":true,\"data\":{\"workOrders\":[{\"id\":1,\"user_id\":1,\"house_id\":1,\"type\":\"repair\",\"title\":\"空调不制冷\",\"description\":\"家里的空调不制冷，需要维修\",\"location\":\"1号楼2单元101室\",\"priority\":\"high\",\"status\":\"processing\",\"assignee_id\":5,\"created_at\":\"2026-06-08 00:10:23\",\"updated_at\":\"2026-06-08 00:10:23\",\"user_name\":\"张先生\",\"assignee_name\":\"维修师傅\",\"building\":\"1号楼\",\"unit\":\"2单元\",\"room_number\":\"101室\"}],\"total\":1}}"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59087/api/social/activities?status=active",
+      "path": "/api/social/activities?status=active",
+      "status": 200,
+      "ok": true,
+      "bodyPreview": "{\"success\":true,\"data\":[{\"id\":2,\"title\":\"业主座谈会\",\"description\":\"与物业面对面交流，讨论社区建设问题\",\"start_time\":\"2026-06-11T00:10:23.292Z\",\"end_time\":\"2026-06-11T02:10:23.292Z\",\"location\":\"物业会议室\",\"max_participants\":30,\"participant_count\":18,\"organizer_id\":4,\"status\":\"active\",\"created_at\":\"2026-06-08 00:10:23\",\"organizer_name\":\"物业管理员\",\"organizer_avatar\":\"https://api.dicebear.com/7.x/avataaars/svg?seed=property1\"},{\"id\":1,\"title\":\"社区亲子运动会\",\"description\":\"一年一度的亲子运动会，欢迎家长带小朋友参加\",\"start_time\":\"2026-06-15T00:10:23.292"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59087/api/access/passes?status=active",
+      "path": "/api/access/passes?status=active",
+      "status": 200,
+      "ok": true,
+      "bodyPreview": "{\"success\":true,\"data\":[{\"id\":1,\"creator_id\":1,\"visitor_name\":\"李访客\",\"visitor_phone\":\"13900139001\",\"visitor_id_card\":null,\"qr_code\":\"VP_1780877423766\",\"access_areas\":[\"小区大门\",\"1号楼单元门\"],\"valid_from\":\"2026-06-08T00:10:23.292Z\",\"valid_to\":\"2026-06-09T00:10:23.292Z\",\"status\":\"active\",\"created_at\":\"2026-06-08 00:10:23\"}]}"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59087/api/workorder",
+      "path": "/api/workorder",
+      "status": 200,
+      "ok": true,
+      "bodyPreview": "{\"success\":true,\"data\":{\"workOrders\":[{\"id\":1,\"user_id\":1,\"house_id\":1,\"type\":\"repair\",\"title\":\"空调不制冷\",\"description\":\"家里的空调不制冷，需要维修\",\"location\":\"1号楼2单元101室\",\"priority\":\"high\",\"status\":\"processing\",\"assignee_id\":5,\"created_at\":\"2026-06-08 00:10:23\",\"updated_at\":\"2026-06-08 00:10:23\",\"user_name\":\"张先生\",\"assignee_name\":\"维修师傅\",\"building\":\"1号楼\",\"unit\":\"2单元\",\"room_number\":\"101室\"}],\"total\":1}}"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59087/api/workorder/1",
+      "path": "/api/workorder/1",
+      "status": 200,
+      "ok": true,
+      "bodyPreview": "{\"success\":true,\"data\":{\"workOrder\":{\"id\":1,\"user_id\":1,\"house_id\":1,\"type\":\"repair\",\"title\":\"空调不制冷\",\"description\":\"家里的空调不制冷，需要维修\",\"location\":\"1号楼2单元101室\",\"priority\":\"high\",\"status\":\"processing\",\"assignee_id\":5,\"created_at\":\"2026-06-08 00:10:23\",\"updated_at\":\"2026-06-08 00:10:23\",\"user_name\":\"张先生\",\"user_phone\":\"13800138001\",\"assignee_name\":\"维修师傅\",\"building\":\"1号楼\",\"unit\":\"2单元\",\"room_number\":\"101室\",\"house_area\":120.5},\"logs\":[]}}"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59087/api/mall/merchants?status=approved",
+      "path": "/api/mall/merchants?status=approved",
+      "status": 200,
+      "ok": true,
+      "bodyPreview": "{\"success\":true,\"data\":[{\"id\":1,\"user_id\":6,\"name\":\"美好便利店\",\"license_no\":\"123456789012345\",\"description\":\"社区便民超市，提供日常生活用品\",\"logo_url\":null,\"status\":\"approved\",\"rating\":4.8,\"created_at\":\"2026-06-08 00:10:23\"},{\"id\":2,\"user_id\":6,\"name\":\"美食小厨\",\"license_no\":\"123456789012346\",\"description\":\"家常菜馆，提供美味家常菜\",\"logo_url\":null,\"status\":\"approved\",\"rating\":4.6,\"created_at\":\"2026-06-08 00:10:23\"}]}"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59087/api/auth/me",
+      "path": "/api/auth/me",
+      "status": 200,
+      "ok": true,
+      "bodyPreview": "{\"success\":true,\"data\":{\"id\":1,\"role\":\"owner\",\"username\":\"owner1\",\"name\":\"张先生\",\"phone\":\"13800138001\",\"password_hash\":\"$2b$10$oXfoejz8KSp/lWj9RJO3b.FVcUQxOekCCglp.NrobqUoPcHV0Bycu\",\"avatar\":\"https://api.dicebear.com/7.x/avataaars/svg?seed=owner1\",\"created_at\":\"2026-06-08 00:10:23\",\"permissions\":[\"access:manage\",\"workorder:create\",\"workorder:view\",\"mall:view\",\"mall:order\",\"social:view\",\"social:post\",\"profile:view\"]}}"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59087/api/users/profile",
+      "path": "/api/users/profile",
+      "status": 200,
+      "ok": true,
+      "bodyPreview": "{\"success\":true,\"data\":{\"user\":{\"id\":1,\"role\":\"owner\",\"username\":\"owner1\",\"name\":\"张先生\",\"phone\":\"13800138001\",\"password_hash\":\"$2b$10$oXfoejz8KSp/lWj9RJO3b.FVcUQxOekCCglp.NrobqUoPcHV0Bycu\",\"avatar\":\"https://api.dicebear.com/7.x/avataaars/svg?seed=owner1\",\"created_at\":\"2026-06-08 00:10:23\"},\"membership\":{\"id\":1,\"user_id\":1,\"level\":3,\"points\":2580,\"balance\":150,\"total_spent\":5800,\"updated_at\":\"2026-06-08 00:10:23\",\"created_at\":\"2026-06-08 00:10:23\"},\"stats\":{\"orders\":0,\"workOrders\":1,\"visitorPasses"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59087/api/user/profile",
+      "path": "/api/user/profile",
+      "status": 200,
+      "ok": true,
+      "bodyPreview": "{\"success\":true,\"data\":{\"user\":{\"id\":1,\"role\":\"owner\",\"username\":\"owner1\",\"name\":\"张先生\",\"phone\":\"13800138001\",\"password_hash\":\"$2b$10$oXfoejz8KSp/lWj9RJO3b.FVcUQxOekCCglp.NrobqUoPcHV0Bycu\",\"avatar\":\"https://api.dicebear.com/7.x/avataaars/svg?seed=owner1\",\"created_at\":\"2026-06-08 00:10:23\"},\"membership\":{\"id\":1,\"user_id\":1,\"level\":3,\"points\":2580,\"balance\":150,\"total_spent\":5800,\"updated_at\":\"2026-06-08 00:10:23\",\"created_at\":\"2026-06-08 00:10:23\"},\"stats\":{\"orders\":0,\"workOrders\":1,\"visitorPasses"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59087/api/admin/stats",
+      "path": "/api/admin/stats",
+      "status": 200,
+      "ok": true,
+      "bodyPreview": "{\"success\":true,\"data\":{\"users\":6,\"houses\":3,\"workOrders\":3,\"pendingWorkOrders\":1,\"visitorPasses\":1,\"accessDevices\":4,\"onlineDevices\":3,\"merchants\":2,\"products\":5,\"orders\":0,\"alerts\":4,\"unresolvedAlerts\":3,\"modules\":[\"个人中心\",\"后台管理\",\"通行管理\",\"工单中心\",\"社区商圈\",\"风险预警\"],\"recentWorkOrders\":[{\"id\":3,\"title\":\"停车费咨询\",\"type\":\"consultation\",\"priority\":\"low\",\"status\":\"completed\",\"created_at\":\"2026-06-08 00:10:23\"},{\"id\":2,\"title\":\"楼下噪音太大\",\"type\":\"complaint\",\"priority\":\"medium\",\"status\":\"pending\",\"created_at\":\"202"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59087/api/admin/dashboard",
+      "path": "/api/admin/dashboard",
+      "status": 200,
+      "ok": true,
+      "bodyPreview": "{\"success\":true,\"data\":{\"users\":6,\"houses\":3,\"workOrders\":3,\"pendingWorkOrders\":1,\"visitorPasses\":1,\"accessDevices\":4,\"onlineDevices\":3,\"merchants\":2,\"products\":5,\"orders\":0,\"alerts\":4,\"unresolvedAlerts\":3,\"modules\":[\"个人中心\",\"后台管理\",\"通行管理\",\"工单中心\",\"社区商圈\",\"风险预警\"],\"recentWorkOrders\":[{\"id\":3,\"title\":\"停车费咨询\",\"type\":\"consultation\",\"priority\":\"low\",\"status\":\"completed\",\"created_at\":\"2026-06-08 00:10:23\"},{\"id\":2,\"title\":\"楼下噪音太大\",\"type\":\"complaint\",\"priority\":\"medium\",\"status\":\"pending\",\"created_at\":\"202"
+    }
+  ],
+  "dialogs": [],
+  "consoleMessages": [
+    {
+      "type": "debug",
+      "text": "[vite] connecting...",
+      "location": {
+        "url": "http://127.0.0.1:49087/@vite/client",
+        "lineNumber": 788,
+        "columnNumber": 8
+      }
+    },
+    {
+      "type": "debug",
+      "text": "[vite] connected.",
+      "location": {
+        "url": "http://127.0.0.1:49087/@vite/client",
+        "lineNumber": 911,
+        "columnNumber": 14
+      }
+    },
+    {
+      "type": "info",
+      "text": "%cDownload the React DevTools for a better development experience: https://reactjs.org/link/react-devtools font-weight:bold",
+      "location": {
+        "url": "http://127.0.0.1:49087/node_modules/.vite/deps/chunk-KDCVS43I.js?v=e45f140f",
+        "lineNumber": 21608,
+        "columnNumber": 24
+      }
+    },
+    {
+      "type": "verbose",
+      "text": "[DOM] Input elements should have autocomplete attributes (suggested: \"current-password\"): (More info: https://goo.gl/9p2vKq) %o",
+      "location": {
+        "url": "http://127.0.0.1:49087/login",
+        "lineNumber": 0,
+        "columnNumber": 0
+      }
+    },
+    {
+      "type": "debug",
+      "text": "[vite] connecting...",
+      "location": {
+        "url": "http://127.0.0.1:49087/@vite/client",
+        "lineNumber": 788,
+        "columnNumber": 8
+      }
+    },
+    {
+      "type": "debug",
+      "text": "[vite] connected.",
+      "location": {
+        "url": "http://127.0.0.1:49087/@vite/client",
+        "lineNumber": 911,
+        "columnNumber": 14
+      }
+    },
+    {
+      "type": "info",
+      "text": "%cDownload the React DevTools for a better development experience: https://reactjs.org/link/react-devtools font-weight:bold",
+      "location": {
+        "url": "http://127.0.0.1:49087/node_modules/.vite/deps/chunk-KDCVS43I.js?v=e45f140f",
+        "lineNumber": 21608,
+        "columnNumber": 24
+      }
+    },
+    {
+      "type": "debug",
+      "text": "[vite] connecting...",
+      "location": {
+        "url": "http://127.0.0.1:49087/@vite/client",
+        "lineNumber": 788,
+        "columnNumber": 8
+      }
+    },
+    {
+      "type": "debug",
+      "text": "[vite] connected.",
+      "location": {
+        "url": "http://127.0.0.1:49087/@vite/client",
+        "lineNumber": 911,
+        "columnNumber": 14
+      }
+    },
+    {
+      "type": "info",
+      "text": "%cDownload the React DevTools for a better development experience: https://reactjs.org/link/react-devtools font-weight:bold",
+      "location": {
+        "url": "http://127.0.0.1:49087/node_modules/.vite/deps/chunk-KDCVS43I.js?v=e45f140f",
+        "lineNumber": 21608,
+        "columnNumber": 24
+      }
+    }
+  ],
+  "requestFailures": [],
+  "responseErrors": []
+}

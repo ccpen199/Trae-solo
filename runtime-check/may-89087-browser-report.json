@@ -1,0 +1,2071 @@
+{
+  "ok": true,
+  "generatedAt": "2026-06-08T17:58:36.863Z",
+  "order": "may-89087",
+  "roundIndex": 130,
+  "captureId": "may-89087-repair",
+  "url": "http://localhost:49087/",
+  "initialUrl": "http://localhost:49087/",
+  "finalUrl": "http://localhost:49087/dashboard",
+  "status": 200,
+  "title": "智慧社区服务平台",
+  "initialTitle": "智慧社区服务平台",
+  "navigationError": "",
+  "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89087/runtime-check/may-89087-repair-frontend.png",
+  "screenshotPaths": [
+    "/Users/chen/Documents/trae_projects/local_projects/may-89087/runtime-check/may-89087-repair-structure-01-首屏.png",
+    "/Users/chen/Documents/trae_projects/local_projects/may-89087/runtime-check/may-89087-repair-structure-02-导航-工作台.png",
+    "/Users/chen/Documents/trae_projects/local_projects/may-89087/runtime-check/may-89087-repair-structure-03-操作-创建工单-报事报修-投诉建议.png",
+    "/Users/chen/Documents/trae_projects/local_projects/may-89087/runtime-check/may-89087-repair-structure-04-二层操作-创建工单-报事报修-投诉建议-创建工单.png",
+    "/Users/chen/Documents/trae_projects/local_projects/may-89087/runtime-check/may-89087-repair-structure-05-操作-查看公告.png",
+    "/Users/chen/Documents/trae_projects/local_projects/may-89087/runtime-check/may-89087-repair-structure-06-二层操作-查看公告-动态广场.png",
+    "/Users/chen/Documents/trae_projects/local_projects/may-89087/runtime-check/may-89087-repair-structure-07-导航-通行管理.png",
+    "/Users/chen/Documents/trae_projects/local_projects/may-89087/runtime-check/may-89087-repair-structure-08-操作-通行设置.png"
+  ],
+  "issueTextPreview": "",
+  "targetReason": "登录流程已完成，继续复验登录后的首页和业务导航",
+  "targetKind": "auth",
+  "targetMatched": true,
+  "targetActions": [
+    {
+      "action": "login-fill-username",
+      "label": "owner1",
+      "ok": true
+    },
+    {
+      "action": "login-fill-password",
+      "label": "owner1:******",
+      "ok": true
+    },
+    {
+      "action": "click",
+      "label": "登录:owner1",
+      "ok": true
+    },
+    {
+      "action": "login-submit",
+      "label": "owner1",
+      "ok": true,
+      "beforeUrl": "http://localhost:49087/login"
+    },
+    {
+      "action": "login-result",
+      "label": "owner1",
+      "ok": true,
+      "finalUrl": "http://localhost:49087/dashboard"
+    },
+    {
+      "action": "target-verify",
+      "label": "登录后首页",
+      "ok": true,
+      "finalUrl": "http://localhost:49087/dashboard"
+    }
+  ],
+  "authFlow": {
+    "detected": true,
+    "attempted": true,
+    "success": true,
+    "finalUrl": "http://localhost:49087/dashboard",
+    "message": "登录成功:owner1",
+    "actions": [
+      {
+        "action": "login-fill-username",
+        "label": "owner1",
+        "ok": true
+      },
+      {
+        "action": "login-fill-password",
+        "label": "owner1:******",
+        "ok": true
+      },
+      {
+        "action": "click",
+        "label": "登录:owner1",
+        "ok": true
+      },
+      {
+        "action": "login-submit",
+        "label": "owner1",
+        "ok": true,
+        "beforeUrl": "http://localhost:49087/login"
+      },
+      {
+        "action": "login-result",
+        "label": "owner1",
+        "ok": true,
+        "finalUrl": "http://localhost:49087/dashboard"
+      }
+    ],
+    "username": "owner1",
+    "credentialSource": "visible-demo-text"
+  },
+  "businessAudit": {
+    "actions": [
+      {
+        "action": "click",
+        "label": "导航:工作台",
+        "ok": true
+      },
+      {
+        "action": "click",
+        "label": "操作:创建工单 报事报修/投诉建议",
+        "ok": true,
+        "result": {
+          "ok": true,
+          "matched": 1
+        }
+      },
+      {
+        "action": "click",
+        "label": "二层操作:创建工单 报事报修/投诉建议:创建工单",
+        "ok": true,
+        "result": {
+          "ok": true,
+          "matched": 1
+        }
+      },
+      {
+        "action": "click",
+        "label": "关闭弹窗/抽屉",
+        "ok": true
+      },
+      {
+        "action": "click",
+        "label": "操作:查看公告",
+        "ok": true,
+        "result": {
+          "ok": true,
+          "matched": 1
+        }
+      },
+      {
+        "action": "click",
+        "label": "二层操作:查看公告:动态广场",
+        "ok": true,
+        "result": {
+          "ok": true,
+          "matched": 1
+        }
+      },
+      {
+        "action": "click",
+        "label": "导航:通行管理",
+        "ok": true
+      },
+      {
+        "action": "click",
+        "label": "操作:通行设置",
+        "ok": true,
+        "result": {
+          "ok": true,
+          "matched": 1
+        }
+      }
+    ],
+    "snapshots": [
+      {
+        "label": "首屏",
+        "url": "http://localhost:49087/dashboard",
+        "title": "智慧社区服务平台",
+        "headings": [
+          "张先生",
+          "欢迎回来，张先生 业主",
+          "无感通行方式",
+          "门禁设备状态",
+          "异常访客风险",
+          "通行证管理",
+          "我的工单",
+          "空调不制冷",
+          "访客通行证",
+          "最近通行记录",
+          "社区商圈",
+          "邻里社交"
+        ],
+        "navLabels": [
+          "智慧社区",
+          "张先生 业主",
+          "工作台",
+          "通行管理",
+          "工单中心",
+          "社区商圈",
+          "邻里社交",
+          "个人中心",
+          "退出登录"
+        ],
+        "buttons": [
+          "退出登录",
+          "张先生 业主",
+          "业主",
+          "租户",
+          "访客",
+          "物业",
+          "商户",
+          "创建工单 报事报修/投诉建议",
+          "访客通行证 生成二维码/蓝牙/NFC",
+          "社区商城 积分抵扣/优惠券",
+          "邻里社交 楼栋群/闲置流转",
+          "查看详情",
+          "管理",
+          "重新激活",
+          "删除",
+          "延期",
+          "撤销",
+          "查看全部",
+          "房屋档案(历史工单3条)",
+          "确认完成",
+          "会员权益",
+          "积分通兑规则 →",
+          "核销流水 →",
+          "经营排行 →"
+        ],
+        "links": [
+          "工作台",
+          "通行管理",
+          "工单中心",
+          "社区商圈",
+          "邻里社交",
+          "个人中心"
+        ],
+        "inputs": [
+          {
+            "tag": "input",
+            "type": "text",
+            "placeholder": "搜索...",
+            "name": "",
+            "label": ""
+          }
+        ],
+        "tables": [],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "智慧社区张先生业主工作台通行管理工单中心社区商圈邻里社交个人中心退出登录张先生业主张先生业主权限：房产管理 · 通行控制 · 工单服务 · 商圈消费 · 邻里社交 · 个人中心快速切换角色：业主租户访客物业商户欢迎回来，张先生 业主今天是 2026年6月8日星期一会员等级金卡会员积分: 2,580创建工单报事报修/投诉建议访客通行证生成二维码/蓝牙/NFC社区商城积分抵扣/优惠券邻里社交楼栋群/闲置流转无感通行方式人脸识别已激活二维码动态刷新蓝牙自动感应NFC一碰开门门禁设备状态查看详情3在线设备1离线设备2号楼单元门离线2小时异常访客风险需关注同一访客24小时内频繁出入5次以上风险等级:中危通行证管理管理今日生成2张有效中1张待生效1张已过期1张李访客通行证已过期重新激活删除王访客通行证待生效延期撤销我的工单查看全部 1全部工单0待处理1处理中0已完成85%投诉闭环率高优先级4小时内响应处理中6月8日 00:10空调不制冷家里的空调不制冷，需要维修处理进度处理中待处理已接单处理中已完成已关闭进度推送：维修师傅已出发，预计15分钟后到达1号楼2单元101室房屋档案(历史工单3条)确认完成访客通行证管理李访客有效有效期: 6月8日 03:10 ~ 6月9日 03:10最近通行记录张先生人脸识别6月8日 00:10李女士二维码6月8日 00:10李访客二维码6月8日 00:10社区商圈查看全部 我的会员金卡积分余额: 2,580·可抵扣: ¥25.8会员权益100积分=1元累计消费返积分: 1,250积分通兑规则 →我的优惠券2张可用1张即将过期累计已核销: 8张核销流水 →优质商户A级2家已审核通过经营排行 →Top 3邻里社交查看全部 实名楼栋群官方认证已加入 · 业主身份已验证156人进入群聊查看公告兴趣圈子健身爱好者已加入2个 · 89人查看活动退出圈子闲置流转实名发布3件在售 · 15人浏览查看闲置发布闲置社区活动查看全部 官方活动业主座谈会有效与物业面对面交流，讨论社区建设问题物业会议室18人已报名已通过退出官方活动社区亲子运动会有效一年一度的亲子运动会，欢迎家长带小朋友参加小区广场35人已报名审核中人已报名立即报名",
+        "layout": {
+          "viewportWidth": 1504,
+          "viewportHeight": 1600,
+          "scrollWidth": 1504,
+          "scrollHeight": 2419,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89087-repair-structure-01-首屏",
+          "label": "首屏",
+          "finalUrl": "http://localhost:49087/dashboard",
+          "title": "智慧社区服务平台",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89087/runtime-check/may-89087-repair-structure-01-首屏.json",
+          "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89087/runtime-check/may-89087-repair-structure-01-首屏.png",
+          "elementCount": 658,
+          "interactiveCount": 45,
+          "interactiveLabels": [
+            "工作台",
+            "通行管理",
+            "工单中心",
+            "社区商圈",
+            "邻里社交",
+            "个人中心",
+            "退出登录",
+            "搜索...",
+            "张先生 业主",
+            "业主",
+            "租户",
+            "访客",
+            "物业",
+            "商户",
+            "创建工单 报事报修/投诉建议",
+            "访客通行证 生成二维码/蓝牙/NFC",
+            "社区商城 积分抵扣/优惠券",
+            "邻里社交 楼栋群/闲置流转",
+            "查看详情",
+            "管理",
+            "重新激活",
+            "删除",
+            "延期",
+            "撤销",
+            "查看全部",
+            "房屋档案(历史工单3条)",
+            "确认完成",
+            "会员权益",
+            "积分通兑规则 →",
+            "核销流水 →"
+          ]
+        }
+      },
+      {
+        "label": "导航:工作台",
+        "url": "http://localhost:49087/dashboard",
+        "title": "智慧社区服务平台",
+        "headings": [
+          "张先生",
+          "欢迎回来，张先生 业主",
+          "无感通行方式",
+          "门禁设备状态",
+          "异常访客风险",
+          "通行证管理",
+          "我的工单",
+          "空调不制冷",
+          "访客通行证",
+          "最近通行记录",
+          "社区商圈",
+          "邻里社交"
+        ],
+        "navLabels": [
+          "智慧社区",
+          "张先生 业主",
+          "工作台",
+          "通行管理",
+          "工单中心",
+          "社区商圈",
+          "邻里社交",
+          "个人中心",
+          "退出登录"
+        ],
+        "buttons": [
+          "退出登录",
+          "张先生 业主",
+          "业主",
+          "租户",
+          "访客",
+          "物业",
+          "商户",
+          "创建工单 报事报修/投诉建议",
+          "访客通行证 生成二维码/蓝牙/NFC",
+          "社区商城 积分抵扣/优惠券",
+          "邻里社交 楼栋群/闲置流转",
+          "查看详情",
+          "管理",
+          "重新激活",
+          "删除",
+          "延期",
+          "撤销",
+          "查看全部",
+          "房屋档案(历史工单3条)",
+          "确认完成",
+          "会员权益",
+          "积分通兑规则 →",
+          "核销流水 →",
+          "经营排行 →"
+        ],
+        "links": [
+          "工作台",
+          "通行管理",
+          "工单中心",
+          "社区商圈",
+          "邻里社交",
+          "个人中心"
+        ],
+        "inputs": [
+          {
+            "tag": "input",
+            "type": "text",
+            "placeholder": "搜索...",
+            "name": "",
+            "label": ""
+          }
+        ],
+        "tables": [],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "智慧社区张先生业主工作台通行管理工单中心社区商圈邻里社交个人中心退出登录张先生业主张先生业主权限：房产管理 · 通行控制 · 工单服务 · 商圈消费 · 邻里社交 · 个人中心快速切换角色：业主租户访客物业商户欢迎回来，张先生 业主今天是 2026年6月8日星期一会员等级金卡会员积分: 2,580创建工单报事报修/投诉建议访客通行证生成二维码/蓝牙/NFC社区商城积分抵扣/优惠券邻里社交楼栋群/闲置流转无感通行方式人脸识别已激活二维码动态刷新蓝牙自动感应NFC一碰开门门禁设备状态查看详情3在线设备1离线设备2号楼单元门离线2小时异常访客风险需关注同一访客24小时内频繁出入5次以上风险等级:中危通行证管理管理今日生成2张有效中1张待生效1张已过期1张李访客通行证已过期重新激活删除王访客通行证待生效延期撤销我的工单查看全部 1全部工单0待处理1处理中0已完成85%投诉闭环率高优先级4小时内响应处理中6月8日 00:10空调不制冷家里的空调不制冷，需要维修处理进度处理中待处理已接单处理中已完成已关闭进度推送：维修师傅已出发，预计15分钟后到达1号楼2单元101室房屋档案(历史工单3条)确认完成访客通行证管理李访客有效有效期: 6月8日 03:10 ~ 6月9日 03:10最近通行记录张先生人脸识别6月8日 00:10李女士二维码6月8日 00:10李访客二维码6月8日 00:10社区商圈查看全部 我的会员金卡积分余额: 2,580·可抵扣: ¥25.8会员权益100积分=1元累计消费返积分: 1,250积分通兑规则 →我的优惠券2张可用1张即将过期累计已核销: 8张核销流水 →优质商户A级2家已审核通过经营排行 →Top 3邻里社交查看全部 实名楼栋群官方认证已加入 · 业主身份已验证156人进入群聊查看公告兴趣圈子健身爱好者已加入2个 · 89人查看活动退出圈子闲置流转实名发布3件在售 · 15人浏览查看闲置发布闲置社区活动查看全部 官方活动业主座谈会有效与物业面对面交流，讨论社区建设问题物业会议室18人已报名已通过退出官方活动社区亲子运动会有效一年一度的亲子运动会，欢迎家长带小朋友参加小区广场35人已报名审核中人已报名立即报名",
+        "layout": {
+          "viewportWidth": 1536,
+          "viewportHeight": 1600,
+          "scrollWidth": 1536,
+          "scrollHeight": 2419,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89087-repair-structure-02-导航-工作台",
+          "label": "导航:工作台",
+          "finalUrl": "http://localhost:49087/dashboard",
+          "title": "智慧社区服务平台",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89087/runtime-check/may-89087-repair-structure-02-导航-工作台.json",
+          "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89087/runtime-check/may-89087-repair-structure-02-导航-工作台.png",
+          "elementCount": 658,
+          "interactiveCount": 45,
+          "interactiveLabels": [
+            "工作台",
+            "通行管理",
+            "工单中心",
+            "社区商圈",
+            "邻里社交",
+            "个人中心",
+            "退出登录",
+            "搜索...",
+            "张先生 业主",
+            "业主",
+            "租户",
+            "访客",
+            "物业",
+            "商户",
+            "创建工单 报事报修/投诉建议",
+            "访客通行证 生成二维码/蓝牙/NFC",
+            "社区商城 积分抵扣/优惠券",
+            "邻里社交 楼栋群/闲置流转",
+            "查看详情",
+            "管理",
+            "重新激活",
+            "删除",
+            "延期",
+            "撤销",
+            "查看全部",
+            "房屋档案(历史工单3条)",
+            "确认完成",
+            "会员权益",
+            "积分通兑规则 →",
+            "核销流水 →"
+          ]
+        }
+      },
+      {
+        "label": "操作:创建工单 报事报修/投诉建议",
+        "url": "http://localhost:49087/workorder",
+        "title": "智慧社区服务平台",
+        "headings": [
+          "物业服务工单中心",
+          "空调不制冷"
+        ],
+        "navLabels": [
+          "智慧社区",
+          "张先生 业主",
+          "工作台",
+          "通行管理",
+          "工单中心",
+          "社区商圈",
+          "邻里社交",
+          "个人中心",
+          "退出登录"
+        ],
+        "buttons": [
+          "退出登录",
+          "张先生 业主",
+          "我的工单",
+          "创建工单"
+        ],
+        "links": [
+          "工作台",
+          "通行管理",
+          "工单中心",
+          "社区商圈",
+          "邻里社交",
+          "个人中心"
+        ],
+        "inputs": [
+          {
+            "tag": "input",
+            "type": "text",
+            "placeholder": "搜索...",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "text",
+            "placeholder": "搜索工单标题/位置",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "select",
+            "type": "",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "select",
+            "type": "",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          }
+        ],
+        "tables": [],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "智慧社区张先生业主工作台通行管理工单中心社区商圈邻里社交个人中心退出登录张先生业主物业服务工单中心报事报修分级响应、维修进度实时推送、服务评价闭环、历史工单关联房屋档案全部工单1待处理0处理中1已完成0SLA预警0我的工单全部状态待处理处理中已完成已关闭全部类型报修投诉咨询建议其他创建工单空调不制冷高优先级处理中家里的空调不制冷，需要维修1号楼2单元101室张先生2026/06/08 00:10处理人：维修师傅待处理已接单处理中已完成已关闭推送：维修师傅已出发，预计15分钟到达关联房屋档案 · 历史工单 3 条",
+        "layout": {
+          "viewportWidth": 1568,
+          "viewportHeight": 1600,
+          "scrollWidth": 1568,
+          "scrollHeight": 1600,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89087-repair-structure-03-操作-创建工单-报事报修-投诉建议",
+          "label": "操作:创建工单 报事报修/投诉建议",
+          "finalUrl": "http://localhost:49087/workorder",
+          "title": "智慧社区服务平台",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89087/runtime-check/may-89087-repair-structure-03-操作-创建工单-报事报修-投诉建议.json",
+          "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89087/runtime-check/may-89087-repair-structure-03-操作-创建工单-报事报修-投诉建议.png",
+          "elementCount": 245,
+          "interactiveCount": 17,
+          "interactiveLabels": [
+            "工作台",
+            "通行管理",
+            "工单中心",
+            "社区商圈",
+            "邻里社交",
+            "个人中心",
+            "退出登录",
+            "搜索...",
+            "张先生 业主",
+            "我的工单",
+            "搜索工单标题/位置",
+            "全部状态 待处理 处理中 已完成 已关闭",
+            "全部类型 报修 投诉 咨询 建议 其他",
+            "创建工单"
+          ]
+        }
+      },
+      {
+        "label": "二层操作:创建工单 报事报修/投诉建议->创建工单",
+        "url": "http://localhost:49087/workorder",
+        "title": "智慧社区服务平台",
+        "headings": [
+          "物业服务工单中心",
+          "空调不制冷",
+          "创建工单"
+        ],
+        "navLabels": [
+          "智慧社区",
+          "张先生 业主",
+          "工作台",
+          "通行管理",
+          "工单中心",
+          "社区商圈",
+          "邻里社交",
+          "个人中心",
+          "退出登录"
+        ],
+        "buttons": [
+          "退出登录",
+          "张先生 业主",
+          "我的工单",
+          "创建工单",
+          "上传",
+          "取消",
+          "提交工单"
+        ],
+        "links": [
+          "工作台",
+          "通行管理",
+          "工单中心",
+          "社区商圈",
+          "邻里社交",
+          "个人中心"
+        ],
+        "inputs": [
+          {
+            "tag": "input",
+            "type": "text",
+            "placeholder": "搜索...",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "text",
+            "placeholder": "搜索工单标题/位置",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "select",
+            "type": "",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "select",
+            "type": "",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "text",
+            "placeholder": "请简要描述问题，如：客厅空调不制冷",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "textarea",
+            "type": "",
+            "placeholder": "请详细描述问题情况，包括出现时间、具体现象等信息",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "select",
+            "type": "",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "select",
+            "type": "",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "text",
+            "placeholder": "例如：1号楼2单元301室客厅",
+            "name": "",
+            "label": ""
+          }
+        ],
+        "tables": [],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "智慧社区张先生业主工作台通行管理工单中心社区商圈邻里社交个人中心退出登录张先生业主物业服务工单中心报事报修分级响应、维修进度实时推送、服务评价闭环、历史工单关联房屋档案全部工单1待处理0处理中1已完成0SLA预警0我的工单全部状态待处理处理中已完成已关闭全部类型报修投诉咨询建议其他创建工单空调不制冷高优先级处理中家里的空调不制冷，需要维修1号楼2单元101室张先生2026/06/08 00:10处理人：维修师傅待处理已接单处理中已完成已关闭推送：维修师傅已出发，预计15分钟到达关联房屋档案 · 历史工单 3 条创建工单请填写详细信息以便我们更好地为您服务分级响应机制紧急：30分钟内响应，如电梯故障、漏水高：4小时内响应，如空调故障、门锁问题中：12小时内响应，如灯具损坏、下水道堵塞低：24小时内响应，如咨询、建议工单标题 *详细描述 *工单类型 *报修投诉建议咨询优先级 *低 - 24小时内响应中 - 12小时内响应高 - 4小时内响应紧急 - 30分钟内响应位置 *图片上传上传图片可以帮助我们更快了解问题（最多9张）上传取消提交工单",
+        "layout": {
+          "viewportWidth": 1600,
+          "viewportHeight": 1600,
+          "scrollWidth": 1600,
+          "scrollHeight": 1600,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89087-repair-structure-04-二层操作-创建工单-报事报修-投诉建议-创建工单",
+          "label": "二层操作:创建工单 报事报修/投诉建议->创建工单",
+          "finalUrl": "http://localhost:49087/workorder",
+          "title": "智慧社区服务平台",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89087/runtime-check/may-89087-repair-structure-04-二层操作-创建工单-报事报修-投诉建议-创建工单.json",
+          "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89087/runtime-check/may-89087-repair-structure-04-二层操作-创建工单-报事报修-投诉建议-创建工单.png",
+          "elementCount": 310,
+          "interactiveCount": 26,
+          "interactiveLabels": [
+            "工作台",
+            "通行管理",
+            "工单中心",
+            "社区商圈",
+            "邻里社交",
+            "个人中心",
+            "退出登录",
+            "搜索...",
+            "张先生 业主",
+            "我的工单",
+            "搜索工单标题/位置",
+            "全部状态 待处理 处理中 已完成 已关闭",
+            "全部类型 报修 投诉 咨询 建议 其他",
+            "创建工单",
+            "请简要描述问题，如：客厅空调不制冷",
+            "请详细描述问题情况，包括出现时间、具体现象等信息",
+            "报修 投诉 建议 咨询",
+            "低 - 24小时内响应 中 - 12小时内响应 高 - 4小时内响应 紧急 - 30分钟内响应",
+            "例如：1号楼2单元301室客厅",
+            "上传",
+            "取消",
+            "提交工单"
+          ]
+        }
+      },
+      {
+        "label": "操作:查看公告",
+        "url": "http://localhost:49087/social",
+        "title": "智慧社区服务平台",
+        "headings": [
+          "邻里社交",
+          "实名楼栋群",
+          "兴趣圈子",
+          "1号楼业主群",
+          "宝妈交流圈",
+          "3号楼业主群"
+        ],
+        "navLabels": [
+          "智慧社区",
+          "张先生 业主",
+          "工作台",
+          "通行管理",
+          "工单中心",
+          "社区商圈",
+          "邻里社交",
+          "个人中心",
+          "退出登录"
+        ],
+        "buttons": [
+          "退出登录",
+          "张先生 业主",
+          "楼栋群/圈子",
+          "动态广场",
+          "社区活动",
+          "二手闲置",
+          "加入"
+        ],
+        "links": [
+          "工作台",
+          "通行管理",
+          "工单中心",
+          "社区商圈",
+          "邻里社交",
+          "个人中心"
+        ],
+        "inputs": [
+          {
+            "tag": "input",
+            "type": "text",
+            "placeholder": "搜索...",
+            "name": "",
+            "label": ""
+          }
+        ],
+        "tables": [],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "智慧社区张先生业主工作台通行管理工单中心社区商圈邻里社交个人中心退出登录张先生业主邻里社交连接邻里，共建温馨社区楼栋群/圈子动态广场社区活动二手闲置实名楼栋群官方认证已验证业主身份，仅限本楼栋居民加入，安全可靠兴趣圈子基于共同爱好的社区交流群，找到志同道合的邻居1号楼业主群已认证楼栋群203 / 200 位成员管理员: 物业王管理员分享萌宠日常，交流养宠经验📢 公告: 【重要通知】本周六下午2点将进行电梯维护，请各位业主提前做好安排。加入宝妈交流圈兴趣圈156 / 50 位成员管理员: 张业主宝妈们交流育儿经验📢 公告: 本周末将组织户外徒步活动，有意向的邻居请在群内报名。加入3号楼业主群已认证楼栋群89 / 200 位成员管理员: 物业王管理员一起健身，分享健身心得📢 公告: 【重要通知】本周六下午2点将进行电梯维护，请各位业主提前做好安排。加入",
+        "layout": {
+          "viewportWidth": 1632,
+          "viewportHeight": 1600,
+          "scrollWidth": 1632,
+          "scrollHeight": 1600,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89087-repair-structure-05-操作-查看公告",
+          "label": "操作:查看公告",
+          "finalUrl": "http://localhost:49087/social",
+          "title": "智慧社区服务平台",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89087/runtime-check/may-89087-repair-structure-05-操作-查看公告.json",
+          "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89087/runtime-check/may-89087-repair-structure-05-操作-查看公告.png",
+          "elementCount": 238,
+          "interactiveCount": 18,
+          "interactiveLabels": [
+            "工作台",
+            "通行管理",
+            "工单中心",
+            "社区商圈",
+            "邻里社交",
+            "个人中心",
+            "退出登录",
+            "搜索...",
+            "张先生 业主",
+            "楼栋群/圈子",
+            "动态广场",
+            "社区活动",
+            "二手闲置",
+            "加入"
+          ]
+        }
+      },
+      {
+        "label": "二层操作:查看公告->动态广场",
+        "url": "http://localhost:49087/social",
+        "title": "智慧社区服务平台",
+        "headings": [
+          "邻里社交",
+          "求推荐靠谱的育儿嫂",
+          "小区健身房什么时候开放？",
+          "转让九成新婴儿车"
+        ],
+        "navLabels": [
+          "智慧社区",
+          "张先生 业主",
+          "工作台",
+          "通行管理",
+          "工单中心",
+          "社区商圈",
+          "邻里社交",
+          "个人中心",
+          "退出登录"
+        ],
+        "buttons": [
+          "退出登录",
+          "张先生 业主",
+          "楼栋群/圈子",
+          "动态广场",
+          "社区活动",
+          "二手闲置",
+          "发布动态",
+          "12",
+          "8",
+          "分享",
+          "5",
+          "3",
+          "23",
+          "15"
+        ],
+        "links": [
+          "工作台",
+          "通行管理",
+          "工单中心",
+          "社区商圈",
+          "邻里社交",
+          "个人中心"
+        ],
+        "inputs": [
+          {
+            "tag": "input",
+            "type": "text",
+            "placeholder": "搜索...",
+            "name": "",
+            "label": ""
+          }
+        ],
+        "tables": [],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "智慧社区张先生业主工作台通行管理工单中心社区商圈邻里社交个人中心退出登录张先生业主邻里社交连接邻里，共建温馨社区楼栋群/圈子动态广场社区活动二手闲置发布动态张张先生实名6月8日 00:10宝妈交流圈求推荐靠谱的育儿嫂宝宝6个月了，想找个靠谱的育儿嫂，求大家推荐128分享李李女士实名6月8日 00:10健身爱好者小区健身房什么时候开放？之前看到公告说要装修，现在装好了吗？53分享王王先生6月8日 00:10转让九成新婴儿车宝宝长大了，婴儿车用不上了，九成新，低价转让2315分享",
+        "layout": {
+          "viewportWidth": 1664,
+          "viewportHeight": 1600,
+          "scrollWidth": 1664,
+          "scrollHeight": 1600,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89087-repair-structure-06-二层操作-查看公告-动态广场",
+          "label": "二层操作:查看公告->动态广场",
+          "finalUrl": "http://localhost:49087/social",
+          "title": "智慧社区服务平台",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89087/runtime-check/may-89087-repair-structure-06-二层操作-查看公告-动态广场.json",
+          "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89087/runtime-check/may-89087-repair-structure-06-二层操作-查看公告-动态广场.png",
+          "elementCount": 217,
+          "interactiveCount": 25,
+          "interactiveLabels": [
+            "工作台",
+            "通行管理",
+            "工单中心",
+            "社区商圈",
+            "邻里社交",
+            "个人中心",
+            "退出登录",
+            "搜索...",
+            "张先生 业主",
+            "楼栋群/圈子",
+            "动态广场",
+            "社区活动",
+            "二手闲置",
+            "发布动态",
+            "12",
+            "8",
+            "分享",
+            "5",
+            "3",
+            "23",
+            "15"
+          ]
+        }
+      },
+      {
+        "label": "导航:通行管理",
+        "url": "http://localhost:49087/access",
+        "title": "智慧社区服务平台",
+        "headings": [
+          "通行管理",
+          "无感通行体系",
+          "人脸识别",
+          "二维码",
+          "蓝牙感应",
+          "NFC碰一碰",
+          "门禁卡",
+          "通行说明"
+        ],
+        "navLabels": [
+          "智慧社区",
+          "张先生 业主",
+          "工作台",
+          "通行管理",
+          "工单中心",
+          "社区商圈",
+          "邻里社交",
+          "个人中心",
+          "退出登录"
+        ],
+        "buttons": [
+          "退出登录",
+          "张先生 业主",
+          "通行方式",
+          "访客通行证",
+          "通行记录",
+          "通行设置",
+          "点击激活 →"
+        ],
+        "links": [
+          "工作台",
+          "通行管理",
+          "工单中心",
+          "社区商圈",
+          "邻里社交",
+          "个人中心"
+        ],
+        "inputs": [
+          {
+            "tag": "input",
+            "type": "text",
+            "placeholder": "搜索...",
+            "name": "",
+            "label": ""
+          }
+        ],
+        "tables": [],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "智慧社区张先生业主工作台通行管理工单中心社区商圈邻里社交个人中心退出登录张先生业主通行管理无感通行体系，支持人脸/二维码/蓝牙/NFC多模识别通行方式访客通行证通行记录无感通行体系支持5种通行方式，为您提供便捷、安全的出入体验通行设置已激活人脸识别刷脸开门，无需携带任何物品可正常使用已激活二维码动态二维码，每分钟自动刷新可正常使用已激活蓝牙感应靠近自动感应，手机揣兜即可可正常使用已激活NFC碰一碰手机碰一碰门禁，快速开门可正常使用未激活门禁卡实体门禁卡，刷门禁开门点击激活 →通行说明1人脸识别站在设备前1-2米处，正视摄像头，识别成功后自动开门2二维码通行打开小程序二维码，对准扫码区，听到\"嘀\"声后通行3蓝牙感应确保手机蓝牙已开启，靠近门禁设备时自动感应开门4NFC碰一碰将手机NFC区域靠近门禁读卡区，即可快速开门",
+        "layout": {
+          "viewportWidth": 1696,
+          "viewportHeight": 1600,
+          "scrollWidth": 1696,
+          "scrollHeight": 1600,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89087-repair-structure-07-导航-通行管理",
+          "label": "导航:通行管理",
+          "finalUrl": "http://localhost:49087/access",
+          "title": "智慧社区服务平台",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89087/runtime-check/may-89087-repair-structure-07-导航-通行管理.json",
+          "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89087/runtime-check/may-89087-repair-structure-07-导航-通行管理.png",
+          "elementCount": 223,
+          "interactiveCount": 16,
+          "interactiveLabels": [
+            "工作台",
+            "通行管理",
+            "工单中心",
+            "社区商圈",
+            "邻里社交",
+            "个人中心",
+            "退出登录",
+            "搜索...",
+            "张先生 业主",
+            "通行方式",
+            "访客通行证",
+            "通行记录",
+            "通行设置",
+            "点击激活 →"
+          ]
+        }
+      },
+      {
+        "label": "操作:通行设置",
+        "url": "http://localhost:49087/access",
+        "title": "智慧社区服务平台",
+        "headings": [
+          "通行管理",
+          "无感通行体系",
+          "人脸识别",
+          "二维码",
+          "蓝牙感应",
+          "NFC碰一碰",
+          "门禁卡",
+          "通行说明"
+        ],
+        "navLabels": [
+          "智慧社区",
+          "张先生 业主",
+          "工作台",
+          "通行管理",
+          "工单中心",
+          "社区商圈",
+          "邻里社交",
+          "个人中心",
+          "退出登录"
+        ],
+        "buttons": [
+          "退出登录",
+          "张先生 业主",
+          "通行方式",
+          "访客通行证",
+          "通行记录",
+          "通行设置",
+          "点击激活 →"
+        ],
+        "links": [
+          "工作台",
+          "通行管理",
+          "工单中心",
+          "社区商圈",
+          "邻里社交",
+          "个人中心"
+        ],
+        "inputs": [
+          {
+            "tag": "input",
+            "type": "text",
+            "placeholder": "搜索...",
+            "name": "",
+            "label": ""
+          }
+        ],
+        "tables": [],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "智慧社区张先生业主工作台通行管理工单中心社区商圈邻里社交个人中心退出登录张先生业主通行管理无感通行体系，支持人脸/二维码/蓝牙/NFC多模识别通行方式访客通行证通行记录无感通行体系支持5种通行方式，为您提供便捷、安全的出入体验通行设置已激活人脸识别刷脸开门，无需携带任何物品可正常使用已激活二维码动态二维码，每分钟自动刷新可正常使用已激活蓝牙感应靠近自动感应，手机揣兜即可可正常使用已激活NFC碰一碰手机碰一碰门禁，快速开门可正常使用未激活门禁卡实体门禁卡，刷门禁开门点击激活 →通行说明1人脸识别站在设备前1-2米处，正视摄像头，识别成功后自动开门2二维码通行打开小程序二维码，对准扫码区，听到\"嘀\"声后通行3蓝牙感应确保手机蓝牙已开启，靠近门禁设备时自动感应开门4NFC碰一碰将手机NFC区域靠近门禁读卡区，即可快速开门",
+        "layout": {
+          "viewportWidth": 1728,
+          "viewportHeight": 1600,
+          "scrollWidth": 1728,
+          "scrollHeight": 1600,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89087-repair-structure-08-操作-通行设置",
+          "label": "操作:通行设置",
+          "finalUrl": "http://localhost:49087/access",
+          "title": "智慧社区服务平台",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89087/runtime-check/may-89087-repair-structure-08-操作-通行设置.json",
+          "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89087/runtime-check/may-89087-repair-structure-08-操作-通行设置.png",
+          "elementCount": 223,
+          "interactiveCount": 16,
+          "interactiveLabels": [
+            "工作台",
+            "通行管理",
+            "工单中心",
+            "社区商圈",
+            "邻里社交",
+            "个人中心",
+            "退出登录",
+            "搜索...",
+            "张先生 业主",
+            "通行方式",
+            "访客通行证",
+            "通行记录",
+            "通行设置",
+            "点击激活 →"
+          ]
+        }
+      }
+    ],
+    "findings": [],
+    "actionHints": [],
+    "emptyPages": [],
+    "overflowPages": [],
+    "blankPages": [],
+    "apiFailurePaths": [],
+    "goalTerms": [],
+    "clickedActionDescriptors": [
+      {
+        "nav": "工作台",
+        "label": "创建工单 报事报修/投诉建议",
+        "ordinal": 0,
+        "unsafe": false
+      },
+      {
+        "nav": "工作台",
+        "label": "创建工单 报事报修/投诉建议->创建工单",
+        "ordinal": 0,
+        "secondary": true,
+        "unsafe": false
+      },
+      {
+        "nav": "工作台",
+        "label": "查看公告",
+        "ordinal": 0,
+        "unsafe": false
+      },
+      {
+        "nav": "工作台",
+        "label": "查看公告->动态广场",
+        "ordinal": 0,
+        "secondary": true,
+        "unsafe": false
+      },
+      {
+        "nav": "通行管理",
+        "label": "通行设置",
+        "ordinal": 0,
+        "unsafe": false
+      }
+    ],
+    "secondaryActionClicks": 2,
+    "structureCaptures": [
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89087-repair-structure-01-首屏",
+        "label": "首屏",
+        "finalUrl": "http://localhost:49087/dashboard",
+        "title": "智慧社区服务平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89087/runtime-check/may-89087-repair-structure-01-首屏.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89087/runtime-check/may-89087-repair-structure-01-首屏.png",
+        "elementCount": 658,
+        "interactiveCount": 45,
+        "interactiveLabels": [
+          "工作台",
+          "通行管理",
+          "工单中心",
+          "社区商圈",
+          "邻里社交",
+          "个人中心",
+          "退出登录",
+          "搜索...",
+          "张先生 业主",
+          "业主",
+          "租户",
+          "访客",
+          "物业",
+          "商户",
+          "创建工单 报事报修/投诉建议",
+          "访客通行证 生成二维码/蓝牙/NFC",
+          "社区商城 积分抵扣/优惠券",
+          "邻里社交 楼栋群/闲置流转",
+          "查看详情",
+          "管理",
+          "重新激活",
+          "删除",
+          "延期",
+          "撤销",
+          "查看全部",
+          "房屋档案(历史工单3条)",
+          "确认完成",
+          "会员权益",
+          "积分通兑规则 →",
+          "核销流水 →"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89087-repair-structure-02-导航-工作台",
+        "label": "导航:工作台",
+        "finalUrl": "http://localhost:49087/dashboard",
+        "title": "智慧社区服务平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89087/runtime-check/may-89087-repair-structure-02-导航-工作台.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89087/runtime-check/may-89087-repair-structure-02-导航-工作台.png",
+        "elementCount": 658,
+        "interactiveCount": 45,
+        "interactiveLabels": [
+          "工作台",
+          "通行管理",
+          "工单中心",
+          "社区商圈",
+          "邻里社交",
+          "个人中心",
+          "退出登录",
+          "搜索...",
+          "张先生 业主",
+          "业主",
+          "租户",
+          "访客",
+          "物业",
+          "商户",
+          "创建工单 报事报修/投诉建议",
+          "访客通行证 生成二维码/蓝牙/NFC",
+          "社区商城 积分抵扣/优惠券",
+          "邻里社交 楼栋群/闲置流转",
+          "查看详情",
+          "管理",
+          "重新激活",
+          "删除",
+          "延期",
+          "撤销",
+          "查看全部",
+          "房屋档案(历史工单3条)",
+          "确认完成",
+          "会员权益",
+          "积分通兑规则 →",
+          "核销流水 →"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89087-repair-structure-03-操作-创建工单-报事报修-投诉建议",
+        "label": "操作:创建工单 报事报修/投诉建议",
+        "finalUrl": "http://localhost:49087/workorder",
+        "title": "智慧社区服务平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89087/runtime-check/may-89087-repair-structure-03-操作-创建工单-报事报修-投诉建议.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89087/runtime-check/may-89087-repair-structure-03-操作-创建工单-报事报修-投诉建议.png",
+        "elementCount": 245,
+        "interactiveCount": 17,
+        "interactiveLabels": [
+          "工作台",
+          "通行管理",
+          "工单中心",
+          "社区商圈",
+          "邻里社交",
+          "个人中心",
+          "退出登录",
+          "搜索...",
+          "张先生 业主",
+          "我的工单",
+          "搜索工单标题/位置",
+          "全部状态 待处理 处理中 已完成 已关闭",
+          "全部类型 报修 投诉 咨询 建议 其他",
+          "创建工单"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89087-repair-structure-04-二层操作-创建工单-报事报修-投诉建议-创建工单",
+        "label": "二层操作:创建工单 报事报修/投诉建议->创建工单",
+        "finalUrl": "http://localhost:49087/workorder",
+        "title": "智慧社区服务平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89087/runtime-check/may-89087-repair-structure-04-二层操作-创建工单-报事报修-投诉建议-创建工单.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89087/runtime-check/may-89087-repair-structure-04-二层操作-创建工单-报事报修-投诉建议-创建工单.png",
+        "elementCount": 310,
+        "interactiveCount": 26,
+        "interactiveLabels": [
+          "工作台",
+          "通行管理",
+          "工单中心",
+          "社区商圈",
+          "邻里社交",
+          "个人中心",
+          "退出登录",
+          "搜索...",
+          "张先生 业主",
+          "我的工单",
+          "搜索工单标题/位置",
+          "全部状态 待处理 处理中 已完成 已关闭",
+          "全部类型 报修 投诉 咨询 建议 其他",
+          "创建工单",
+          "请简要描述问题，如：客厅空调不制冷",
+          "请详细描述问题情况，包括出现时间、具体现象等信息",
+          "报修 投诉 建议 咨询",
+          "低 - 24小时内响应 中 - 12小时内响应 高 - 4小时内响应 紧急 - 30分钟内响应",
+          "例如：1号楼2单元301室客厅",
+          "上传",
+          "取消",
+          "提交工单"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89087-repair-structure-05-操作-查看公告",
+        "label": "操作:查看公告",
+        "finalUrl": "http://localhost:49087/social",
+        "title": "智慧社区服务平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89087/runtime-check/may-89087-repair-structure-05-操作-查看公告.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89087/runtime-check/may-89087-repair-structure-05-操作-查看公告.png",
+        "elementCount": 238,
+        "interactiveCount": 18,
+        "interactiveLabels": [
+          "工作台",
+          "通行管理",
+          "工单中心",
+          "社区商圈",
+          "邻里社交",
+          "个人中心",
+          "退出登录",
+          "搜索...",
+          "张先生 业主",
+          "楼栋群/圈子",
+          "动态广场",
+          "社区活动",
+          "二手闲置",
+          "加入"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89087-repair-structure-06-二层操作-查看公告-动态广场",
+        "label": "二层操作:查看公告->动态广场",
+        "finalUrl": "http://localhost:49087/social",
+        "title": "智慧社区服务平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89087/runtime-check/may-89087-repair-structure-06-二层操作-查看公告-动态广场.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89087/runtime-check/may-89087-repair-structure-06-二层操作-查看公告-动态广场.png",
+        "elementCount": 217,
+        "interactiveCount": 25,
+        "interactiveLabels": [
+          "工作台",
+          "通行管理",
+          "工单中心",
+          "社区商圈",
+          "邻里社交",
+          "个人中心",
+          "退出登录",
+          "搜索...",
+          "张先生 业主",
+          "楼栋群/圈子",
+          "动态广场",
+          "社区活动",
+          "二手闲置",
+          "发布动态",
+          "12",
+          "8",
+          "分享",
+          "5",
+          "3",
+          "23",
+          "15"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89087-repair-structure-07-导航-通行管理",
+        "label": "导航:通行管理",
+        "finalUrl": "http://localhost:49087/access",
+        "title": "智慧社区服务平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89087/runtime-check/may-89087-repair-structure-07-导航-通行管理.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89087/runtime-check/may-89087-repair-structure-07-导航-通行管理.png",
+        "elementCount": 223,
+        "interactiveCount": 16,
+        "interactiveLabels": [
+          "工作台",
+          "通行管理",
+          "工单中心",
+          "社区商圈",
+          "邻里社交",
+          "个人中心",
+          "退出登录",
+          "搜索...",
+          "张先生 业主",
+          "通行方式",
+          "访客通行证",
+          "通行记录",
+          "通行设置",
+          "点击激活 →"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89087-repair-structure-08-操作-通行设置",
+        "label": "操作:通行设置",
+        "finalUrl": "http://localhost:49087/access",
+        "title": "智慧社区服务平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89087/runtime-check/may-89087-repair-structure-08-操作-通行设置.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89087/runtime-check/may-89087-repair-structure-08-操作-通行设置.png",
+        "elementCount": 223,
+        "interactiveCount": 16,
+        "interactiveLabels": [
+          "工作台",
+          "通行管理",
+          "工单中心",
+          "社区商圈",
+          "邻里社交",
+          "个人中心",
+          "退出登录",
+          "搜索...",
+          "张先生 业主",
+          "通行方式",
+          "访客通行证",
+          "通行记录",
+          "通行设置",
+          "点击激活 →"
+        ]
+      }
+    ],
+    "representativeScreenshotUrl": "http://localhost:49087/dashboard",
+    "representativeScreenshotLabel": "张先生"
+  },
+  "websiteStructureCapture": {
+    "module": "website_structure_capture",
+    "captureCount": 8,
+    "captures": [
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89087-repair-structure-01-首屏",
+        "label": "首屏",
+        "finalUrl": "http://localhost:49087/dashboard",
+        "title": "智慧社区服务平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89087/runtime-check/may-89087-repair-structure-01-首屏.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89087/runtime-check/may-89087-repair-structure-01-首屏.png",
+        "elementCount": 658,
+        "interactiveCount": 45,
+        "interactiveLabels": [
+          "工作台",
+          "通行管理",
+          "工单中心",
+          "社区商圈",
+          "邻里社交",
+          "个人中心",
+          "退出登录",
+          "搜索...",
+          "张先生 业主",
+          "业主",
+          "租户",
+          "访客",
+          "物业",
+          "商户",
+          "创建工单 报事报修/投诉建议",
+          "访客通行证 生成二维码/蓝牙/NFC",
+          "社区商城 积分抵扣/优惠券",
+          "邻里社交 楼栋群/闲置流转",
+          "查看详情",
+          "管理",
+          "重新激活",
+          "删除",
+          "延期",
+          "撤销",
+          "查看全部",
+          "房屋档案(历史工单3条)",
+          "确认完成",
+          "会员权益",
+          "积分通兑规则 →",
+          "核销流水 →"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89087-repair-structure-02-导航-工作台",
+        "label": "导航:工作台",
+        "finalUrl": "http://localhost:49087/dashboard",
+        "title": "智慧社区服务平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89087/runtime-check/may-89087-repair-structure-02-导航-工作台.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89087/runtime-check/may-89087-repair-structure-02-导航-工作台.png",
+        "elementCount": 658,
+        "interactiveCount": 45,
+        "interactiveLabels": [
+          "工作台",
+          "通行管理",
+          "工单中心",
+          "社区商圈",
+          "邻里社交",
+          "个人中心",
+          "退出登录",
+          "搜索...",
+          "张先生 业主",
+          "业主",
+          "租户",
+          "访客",
+          "物业",
+          "商户",
+          "创建工单 报事报修/投诉建议",
+          "访客通行证 生成二维码/蓝牙/NFC",
+          "社区商城 积分抵扣/优惠券",
+          "邻里社交 楼栋群/闲置流转",
+          "查看详情",
+          "管理",
+          "重新激活",
+          "删除",
+          "延期",
+          "撤销",
+          "查看全部",
+          "房屋档案(历史工单3条)",
+          "确认完成",
+          "会员权益",
+          "积分通兑规则 →",
+          "核销流水 →"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89087-repair-structure-03-操作-创建工单-报事报修-投诉建议",
+        "label": "操作:创建工单 报事报修/投诉建议",
+        "finalUrl": "http://localhost:49087/workorder",
+        "title": "智慧社区服务平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89087/runtime-check/may-89087-repair-structure-03-操作-创建工单-报事报修-投诉建议.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89087/runtime-check/may-89087-repair-structure-03-操作-创建工单-报事报修-投诉建议.png",
+        "elementCount": 245,
+        "interactiveCount": 17,
+        "interactiveLabels": [
+          "工作台",
+          "通行管理",
+          "工单中心",
+          "社区商圈",
+          "邻里社交",
+          "个人中心",
+          "退出登录",
+          "搜索...",
+          "张先生 业主",
+          "我的工单",
+          "搜索工单标题/位置",
+          "全部状态 待处理 处理中 已完成 已关闭",
+          "全部类型 报修 投诉 咨询 建议 其他",
+          "创建工单"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89087-repair-structure-04-二层操作-创建工单-报事报修-投诉建议-创建工单",
+        "label": "二层操作:创建工单 报事报修/投诉建议->创建工单",
+        "finalUrl": "http://localhost:49087/workorder",
+        "title": "智慧社区服务平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89087/runtime-check/may-89087-repair-structure-04-二层操作-创建工单-报事报修-投诉建议-创建工单.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89087/runtime-check/may-89087-repair-structure-04-二层操作-创建工单-报事报修-投诉建议-创建工单.png",
+        "elementCount": 310,
+        "interactiveCount": 26,
+        "interactiveLabels": [
+          "工作台",
+          "通行管理",
+          "工单中心",
+          "社区商圈",
+          "邻里社交",
+          "个人中心",
+          "退出登录",
+          "搜索...",
+          "张先生 业主",
+          "我的工单",
+          "搜索工单标题/位置",
+          "全部状态 待处理 处理中 已完成 已关闭",
+          "全部类型 报修 投诉 咨询 建议 其他",
+          "创建工单",
+          "请简要描述问题，如：客厅空调不制冷",
+          "请详细描述问题情况，包括出现时间、具体现象等信息",
+          "报修 投诉 建议 咨询",
+          "低 - 24小时内响应 中 - 12小时内响应 高 - 4小时内响应 紧急 - 30分钟内响应",
+          "例如：1号楼2单元301室客厅",
+          "上传",
+          "取消",
+          "提交工单"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89087-repair-structure-05-操作-查看公告",
+        "label": "操作:查看公告",
+        "finalUrl": "http://localhost:49087/social",
+        "title": "智慧社区服务平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89087/runtime-check/may-89087-repair-structure-05-操作-查看公告.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89087/runtime-check/may-89087-repair-structure-05-操作-查看公告.png",
+        "elementCount": 238,
+        "interactiveCount": 18,
+        "interactiveLabels": [
+          "工作台",
+          "通行管理",
+          "工单中心",
+          "社区商圈",
+          "邻里社交",
+          "个人中心",
+          "退出登录",
+          "搜索...",
+          "张先生 业主",
+          "楼栋群/圈子",
+          "动态广场",
+          "社区活动",
+          "二手闲置",
+          "加入"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89087-repair-structure-06-二层操作-查看公告-动态广场",
+        "label": "二层操作:查看公告->动态广场",
+        "finalUrl": "http://localhost:49087/social",
+        "title": "智慧社区服务平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89087/runtime-check/may-89087-repair-structure-06-二层操作-查看公告-动态广场.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89087/runtime-check/may-89087-repair-structure-06-二层操作-查看公告-动态广场.png",
+        "elementCount": 217,
+        "interactiveCount": 25,
+        "interactiveLabels": [
+          "工作台",
+          "通行管理",
+          "工单中心",
+          "社区商圈",
+          "邻里社交",
+          "个人中心",
+          "退出登录",
+          "搜索...",
+          "张先生 业主",
+          "楼栋群/圈子",
+          "动态广场",
+          "社区活动",
+          "二手闲置",
+          "发布动态",
+          "12",
+          "8",
+          "分享",
+          "5",
+          "3",
+          "23",
+          "15"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89087-repair-structure-07-导航-通行管理",
+        "label": "导航:通行管理",
+        "finalUrl": "http://localhost:49087/access",
+        "title": "智慧社区服务平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89087/runtime-check/may-89087-repair-structure-07-导航-通行管理.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89087/runtime-check/may-89087-repair-structure-07-导航-通行管理.png",
+        "elementCount": 223,
+        "interactiveCount": 16,
+        "interactiveLabels": [
+          "工作台",
+          "通行管理",
+          "工单中心",
+          "社区商圈",
+          "邻里社交",
+          "个人中心",
+          "退出登录",
+          "搜索...",
+          "张先生 业主",
+          "通行方式",
+          "访客通行证",
+          "通行记录",
+          "通行设置",
+          "点击激活 →"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89087-repair-structure-08-操作-通行设置",
+        "label": "操作:通行设置",
+        "finalUrl": "http://localhost:49087/access",
+        "title": "智慧社区服务平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89087/runtime-check/may-89087-repair-structure-08-操作-通行设置.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89087/runtime-check/may-89087-repair-structure-08-操作-通行设置.png",
+        "elementCount": 223,
+        "interactiveCount": 16,
+        "interactiveLabels": [
+          "工作台",
+          "通行管理",
+          "工单中心",
+          "社区商圈",
+          "邻里社交",
+          "个人中心",
+          "退出登录",
+          "搜索...",
+          "张先生 业主",
+          "通行方式",
+          "访客通行证",
+          "通行记录",
+          "通行设置",
+          "点击激活 →"
+        ]
+      }
+    ]
+  },
+  "screenshotMetrics": {
+    "width": 1760,
+    "height": 1600,
+    "scrollWidth": 1728,
+    "scrollHeight": 2419
+  },
+  "initialBodyTextPreview": "智慧社区服务平台\n\n碧桂园·在管小区专属服务\n\n欢迎登录\n用户名\n密码\n登录\n\n演示账号（密码均为 123456）\n\n张先生\n业主\nowner1 / 123456\n王先生\n租户\ntenant1 / 123456\n物业管理员\n物业员工\nproperty1 / 123456\n维修师傅\n物业员工\nworker1 / 123456\n商户管理员\n商户\nmerchant1 / 123456\n\n© 2024 碧桂园智慧社区服务平台",
+  "bodyTextPreview": "智慧社区\n\n张先生\n\n业主\n\n工作台\n通行管理\n工单中心\n社区商圈\n邻里社交\n个人中心\n退出登录\n\n张先生\n\n业主\n张先生\n业主\n\n权限：房产管理 · 通行控制 · 工单服务 · 商圈消费 · 邻里社交 · 个人中心\n\n快速切换角色：\n业主\n租户\n访客\n物业\n商户\n欢迎回来，张先生 业主\n\n今天是 2026年6月8日星期一\n\n会员等级\n\n金卡会员\n\n积分: 2,580\n\n创建工单\n报事报修/投诉建议\n访客通行证\n生成二维码/蓝牙/NFC\n社区商城\n积分抵扣/优惠券\n邻里社交\n楼栋群/闲置流转\n无感通行方式\n\n人脸识别\n\n已激活\n\n二维码\n\n动态刷新\n\n蓝牙\n\n自动感应\n\nNFC\n\n一碰开门\n\n门禁设备状态\n查看详情\n\n3\n\n在线设备\n\n1\n\n离线设备\n\n2号楼单元门离线2小时\n\n异常访客风险\n需关注\n\n同一访客24小时内频繁出入5次以上\n\n风险等级:中危\n通行证管理\n管理\n今日生成\n2张\n有效中\n1张\n待生效\n1张\n已过期\n1张\n李访客通行证\n已过期\n重新激活\n删除\n王访客通行证\n待生效\n延期\n撤销\n我的工单\n查看全部\n\n1\n\n全部工单\n\n0\n\n待处理\n\n1\n\n处理中\n\n0\n\n已完成\n\n85%\n\n投诉闭环率\n\n高优先级\n4小时内响应\n处理中\n6月8日 00:10\n空调不制冷\n\n家里的空调不制冷，需要维修\n\n处理进度\n处理中\n待处理\n已接单\n处理中\n已完成\n已关闭\n进度推送：维修师傅已出发，预计15分钟后到达\n1号楼2单元101室\n房屋档案(历史工单3条)\n确认完成\n访客通行证\n管理\n李访客\n有效\n\n有效期: 6月8日 03:10 ~ 6月9日 03:10\n\n最近通行记录\n\n张先生\n\n人脸识别\n\n6月8日 00:10\n\n李女士\n\n二维码\n\n6月8日 00:10\n\n李访客\n\n二维码\n\n6月8日 00:10\n社区商圈\n查看全部\n\n我的会员\n\n金卡\n\n积分余额: 2,580·可抵扣: ¥25.8\n\n会员权益\n100积分=1元\n累计消费返积分: 1,250\n积分通兑规则 →\n\n我的优惠券\n\n2张可用\n1张即将过期\n累计已核销: 8张\n核销流水 →\n\n优质商户\n\nA级\n2家已审核通过\n经营排行 →\nTop 3\n邻里社交\n查看全部\n\n实名楼栋群\n\n官方认证\n\n已加入 · 业主身份已验证\n\n156人\n进入群聊\n查看公告\n\n兴趣圈子\n\n健身爱好者\n\n已加入2个 · 89人\n\n查看活动\n退出圈子\n\n闲置流转\n\n实名发布\n\n3件在售 · 15人浏览\n\n查看闲置\n发布闲置\n社区活动\n查看全部\n官方活动\n业主座谈会\n有效\n\n与物业面对面交流，讨论社区建设问题\n\n物业会议室\n18人已报名\n已通过\n退出\n官方活动\n社区亲子运动会\n有效\n\n一年一度的亲子运动会，欢迎家长带小朋友参加\n\n小区广场\n35人已报名\n审核中\n\n人已报名\n立即报名",
+  "apiBase": "",
+  "businessGoalPreview": "",
+  "apiResponses": [
+    {
+      "method": "POST",
+      "status": 200,
+      "url": "http://localhost:49087/api/auth/login"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://localhost:49087/api/workorder?limit=5"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://localhost:49087/api/social/activities?status=active"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://localhost:49087/api/access/passes"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://localhost:49087/api/access/records?limit=5&offset=0"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://localhost:49087/api/analytics/profile"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://localhost:49087/api/workorder?limit=5"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://localhost:49087/api/social/activities?status=active"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://localhost:49087/api/access/passes"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://localhost:49087/api/access/records?limit=5&offset=0"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://localhost:49087/api/analytics/profile"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://localhost:49087/api/workorder?limit=5"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://localhost:49087/api/social/activities?status=active"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://localhost:49087/api/access/passes"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://localhost:49087/api/access/records?limit=5&offset=0"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://localhost:49087/api/analytics/profile"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://localhost:49087/api/workorder?limit=5"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://localhost:49087/api/social/activities?status=active"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://localhost:49087/api/access/passes"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://localhost:49087/api/access/records?limit=5&offset=0"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://localhost:49087/api/analytics/profile"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://localhost:49087/api/workorder"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://localhost:49087/api/workorder"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://localhost:49087/api/workorder?limit=5"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://localhost:49087/api/social/activities?status=active"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://localhost:49087/api/access/passes"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://localhost:49087/api/access/records?limit=5&offset=0"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://localhost:49087/api/analytics/profile"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://localhost:49087/api/workorder?limit=5"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://localhost:49087/api/social/activities?status=active"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://localhost:49087/api/access/passes"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://localhost:49087/api/access/records?limit=5&offset=0"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://localhost:49087/api/analytics/profile"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://localhost:49087/api/social/circles"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://localhost:49087/api/social/circles"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://localhost:49087/api/social/posts"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://localhost:49087/api/workorder?limit=5"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://localhost:49087/api/social/activities?status=active"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://localhost:49087/api/access/passes"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://localhost:49087/api/access/records?limit=5&offset=0"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://localhost:49087/api/analytics/profile"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://localhost:49087/api/workorder?limit=5"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://localhost:49087/api/social/activities?status=active"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://localhost:49087/api/access/passes"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://localhost:49087/api/access/records?limit=5&offset=0"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://localhost:49087/api/analytics/profile"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://localhost:49087/api/workorder?limit=5"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://localhost:49087/api/social/activities?status=active"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://localhost:49087/api/access/passes"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://localhost:49087/api/access/records?limit=5&offset=0"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://localhost:49087/api/analytics/profile"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://localhost:49087/api/workorder?limit=5"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://localhost:49087/api/social/activities?status=active"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://localhost:49087/api/access/passes"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://localhost:49087/api/access/records?limit=5&offset=0"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://localhost:49087/api/analytics/profile"
+    }
+  ],
+  "apiChecks": [],
+  "dialogs": [],
+  "consoleMessages": [
+    {
+      "type": "debug",
+      "text": "[vite] connecting...",
+      "location": {
+        "url": "http://localhost:49087/@vite/client",
+        "lineNumber": 788,
+        "columnNumber": 8
+      }
+    },
+    {
+      "type": "debug",
+      "text": "[vite] connected.",
+      "location": {
+        "url": "http://localhost:49087/@vite/client",
+        "lineNumber": 911,
+        "columnNumber": 14
+      }
+    },
+    {
+      "type": "info",
+      "text": "%cDownload the React DevTools for a better development experience: https://reactjs.org/link/react-devtools font-weight:bold",
+      "location": {
+        "url": "http://localhost:49087/node_modules/.vite/deps/chunk-KDCVS43I.js?v=e45f140f",
+        "lineNumber": 21608,
+        "columnNumber": 24
+      }
+    },
+    {
+      "type": "verbose",
+      "text": "[DOM] Input elements should have autocomplete attributes (suggested: \"current-password\"): (More info: https://goo.gl/9p2vKq) %o",
+      "location": {
+        "url": "http://localhost:49087/login",
+        "lineNumber": 0,
+        "columnNumber": 0
+      }
+    },
+    {
+      "type": "debug",
+      "text": "[vite] connecting...",
+      "location": {
+        "url": "http://localhost:49087/@vite/client",
+        "lineNumber": 788,
+        "columnNumber": 8
+      }
+    },
+    {
+      "type": "debug",
+      "text": "[vite] connected.",
+      "location": {
+        "url": "http://localhost:49087/@vite/client",
+        "lineNumber": 911,
+        "columnNumber": 14
+      }
+    },
+    {
+      "type": "info",
+      "text": "%cDownload the React DevTools for a better development experience: https://reactjs.org/link/react-devtools font-weight:bold",
+      "location": {
+        "url": "http://localhost:49087/node_modules/.vite/deps/chunk-KDCVS43I.js?v=e45f140f",
+        "lineNumber": 21608,
+        "columnNumber": 24
+      }
+    },
+    {
+      "type": "debug",
+      "text": "[vite] connecting...",
+      "location": {
+        "url": "http://localhost:49087/@vite/client",
+        "lineNumber": 788,
+        "columnNumber": 8
+      }
+    },
+    {
+      "type": "debug",
+      "text": "[vite] connected.",
+      "location": {
+        "url": "http://localhost:49087/@vite/client",
+        "lineNumber": 911,
+        "columnNumber": 14
+      }
+    },
+    {
+      "type": "info",
+      "text": "%cDownload the React DevTools for a better development experience: https://reactjs.org/link/react-devtools font-weight:bold",
+      "location": {
+        "url": "http://localhost:49087/node_modules/.vite/deps/chunk-KDCVS43I.js?v=e45f140f",
+        "lineNumber": 21608,
+        "columnNumber": 24
+      }
+    },
+    {
+      "type": "debug",
+      "text": "[vite] connecting...",
+      "location": {
+        "url": "http://localhost:49087/@vite/client",
+        "lineNumber": 788,
+        "columnNumber": 8
+      }
+    },
+    {
+      "type": "debug",
+      "text": "[vite] connected.",
+      "location": {
+        "url": "http://localhost:49087/@vite/client",
+        "lineNumber": 911,
+        "columnNumber": 14
+      }
+    },
+    {
+      "type": "info",
+      "text": "%cDownload the React DevTools for a better development experience: https://reactjs.org/link/react-devtools font-weight:bold",
+      "location": {
+        "url": "http://localhost:49087/node_modules/.vite/deps/chunk-KDCVS43I.js?v=e45f140f",
+        "lineNumber": 21608,
+        "columnNumber": 24
+      }
+    },
+    {
+      "type": "debug",
+      "text": "[vite] hot updated: /src/pages/WorkOrderPage.tsx",
+      "location": {
+        "url": "http://localhost:49087/@vite/client",
+        "lineNumber": 882,
+        "columnNumber": 31
+      }
+    },
+    {
+      "type": "debug",
+      "text": "[vite] hot updated: /src/index.css",
+      "location": {
+        "url": "http://localhost:49087/@vite/client",
+        "lineNumber": 882,
+        "columnNumber": 31
+      }
+    },
+    {
+      "type": "debug",
+      "text": "[vite] connecting...",
+      "location": {
+        "url": "http://localhost:49087/@vite/client",
+        "lineNumber": 788,
+        "columnNumber": 8
+      }
+    },
+    {
+      "type": "debug",
+      "text": "[vite] connected.",
+      "location": {
+        "url": "http://localhost:49087/@vite/client",
+        "lineNumber": 911,
+        "columnNumber": 14
+      }
+    },
+    {
+      "type": "info",
+      "text": "%cDownload the React DevTools for a better development experience: https://reactjs.org/link/react-devtools font-weight:bold",
+      "location": {
+        "url": "http://localhost:49087/node_modules/.vite/deps/chunk-KDCVS43I.js?v=e45f140f",
+        "lineNumber": 21608,
+        "columnNumber": 24
+      }
+    }
+  ],
+  "requestFailures": [],
+  "responseErrors": []
+}

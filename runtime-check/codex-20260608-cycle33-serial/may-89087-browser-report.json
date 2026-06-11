@@ -1,0 +1,1223 @@
+{
+  "ok": true,
+  "generatedAt": "2026-06-08T10:00:05.189Z",
+  "order": "may-89087",
+  "roundIndex": 33,
+  "captureId": "may-89087-cycle33",
+  "url": "http://127.0.0.1:49087/",
+  "initialUrl": "http://127.0.0.1:49087/",
+  "finalUrl": "http://127.0.0.1:49087/dashboard",
+  "status": 200,
+  "title": "智慧社区服务平台",
+  "initialTitle": "智慧社区服务平台",
+  "navigationError": "",
+  "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89087/runtime-check/codex-20260608-cycle33-serial/may-89087-cycle33-frontend.png",
+  "screenshotPaths": [
+    "/Users/chen/Documents/trae_projects/local_projects/may-89087/runtime-check/codex-20260608-cycle33-serial/may-89087-cycle33-structure-01-首屏.png",
+    "/Users/chen/Documents/trae_projects/local_projects/may-89087/runtime-check/codex-20260608-cycle33-serial/may-89087-cycle33-structure-02-导航-工作台.png",
+    "/Users/chen/Documents/trae_projects/local_projects/may-89087/runtime-check/codex-20260608-cycle33-serial/may-89087-cycle33-structure-03-操作-创建工单-报事报修-投诉建议.png",
+    "/Users/chen/Documents/trae_projects/local_projects/may-89087/runtime-check/codex-20260608-cycle33-serial/may-89087-cycle33-structure-04-二层操作-创建工单-报事报修-投诉建议-创建工单.png"
+  ],
+  "issueTextPreview": "页面结构 工作台 业务内容",
+  "targetReason": "登录流程已完成，继续复验登录后的首页和业务导航",
+  "targetKind": "auth",
+  "targetMatched": true,
+  "targetActions": [
+    {
+      "action": "login-fill-username",
+      "label": "owner1",
+      "ok": true
+    },
+    {
+      "action": "login-fill-password",
+      "label": "owner1:******",
+      "ok": true
+    },
+    {
+      "action": "click",
+      "label": "登录:owner1",
+      "ok": true
+    },
+    {
+      "action": "login-submit",
+      "label": "owner1",
+      "ok": true,
+      "beforeUrl": "http://127.0.0.1:49087/login"
+    },
+    {
+      "action": "login-result",
+      "label": "owner1",
+      "ok": true,
+      "finalUrl": "http://127.0.0.1:49087/dashboard"
+    },
+    {
+      "action": "target-verify",
+      "label": "登录后首页",
+      "ok": true,
+      "finalUrl": "http://127.0.0.1:49087/dashboard"
+    }
+  ],
+  "authFlow": {
+    "detected": true,
+    "attempted": true,
+    "success": true,
+    "finalUrl": "http://127.0.0.1:49087/dashboard",
+    "message": "登录成功:owner1",
+    "actions": [
+      {
+        "action": "login-fill-username",
+        "label": "owner1",
+        "ok": true
+      },
+      {
+        "action": "login-fill-password",
+        "label": "owner1:******",
+        "ok": true
+      },
+      {
+        "action": "click",
+        "label": "登录:owner1",
+        "ok": true
+      },
+      {
+        "action": "login-submit",
+        "label": "owner1",
+        "ok": true,
+        "beforeUrl": "http://127.0.0.1:49087/login"
+      },
+      {
+        "action": "login-result",
+        "label": "owner1",
+        "ok": true,
+        "finalUrl": "http://127.0.0.1:49087/dashboard"
+      }
+    ],
+    "username": "owner1",
+    "credentialSource": "visible-demo-text"
+  },
+  "businessAudit": {
+    "actions": [
+      {
+        "action": "click",
+        "label": "导航:工作台",
+        "ok": true
+      },
+      {
+        "action": "click",
+        "label": "操作:创建工单 报事报修/投诉建议",
+        "ok": true,
+        "result": {
+          "ok": true,
+          "matched": 1
+        }
+      },
+      {
+        "action": "click",
+        "label": "二层操作:创建工单 报事报修/投诉建议:创建工单",
+        "ok": true,
+        "result": {
+          "ok": true,
+          "matched": 1
+        }
+      },
+      {
+        "action": "click",
+        "label": "关闭弹窗/抽屉",
+        "ok": true
+      },
+      {
+        "action": "click",
+        "label": "操作:查看全部",
+        "ok": false,
+        "result": {
+          "ok": false,
+          "matched": 0,
+          "reason": "not-found"
+        }
+      }
+    ],
+    "snapshots": [
+      {
+        "label": "首屏",
+        "url": "http://127.0.0.1:49087/dashboard",
+        "title": "智慧社区服务平台",
+        "headings": [
+          "欢迎回来，张先生 业主",
+          "无感通行方式",
+          "门禁设备状态",
+          "异常访客风险",
+          "动态权限状态",
+          "我的工单",
+          "空调不制冷",
+          "访客通行证",
+          "最近通行记录",
+          "社区活动",
+          "业主座谈会",
+          "社区亲子运动会"
+        ],
+        "navLabels": [
+          "智慧社区",
+          "张先生 业主",
+          "工作台",
+          "通行管理",
+          "工单中心",
+          "社区商圈",
+          "邻里社交",
+          "个人中心",
+          "退出登录"
+        ],
+        "buttons": [
+          "退出登录",
+          "张先生 业主",
+          "创建工单 报事报修/投诉建议",
+          "访客通行证 生成二维码/蓝牙/NFC",
+          "社区商城 积分抵扣/优惠券",
+          "邻里社交 楼栋群/闲置流转",
+          "查看详情",
+          "查看全部",
+          "管理",
+          "立即报名"
+        ],
+        "links": [
+          "工作台",
+          "通行管理",
+          "工单中心",
+          "社区商圈",
+          "邻里社交",
+          "个人中心"
+        ],
+        "inputs": [
+          {
+            "tag": "input",
+            "type": "text",
+            "placeholder": "搜索...",
+            "name": "",
+            "label": ""
+          }
+        ],
+        "tables": [],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "智慧社区张先生业主工作台通行管理工单中心社区商圈邻里社交个人中心退出登录张先生业主欢迎回来，张先生 业主今天是 2026年6月8日星期一会员等级金卡会员积分: 2,580创建工单报事报修/投诉建议访客通行证生成二维码/蓝牙/NFC社区商城积分抵扣/优惠券邻里社交楼栋群/闲置流转无感通行方式人脸识别已激活二维码动态刷新蓝牙自动感应NFC一碰开门门禁设备状态查看详情3在线设备1离线设备2号楼单元门离线2小时异常访客风险需关注同一访客24小时内频繁出入5次以上风险等级:中危动态权限状态今日生成通行证2张已过期1张待生效1张我的工单查看全部 高优先级4小时内响应处理中6月8日 00:10空调不制冷家里的空调不制冷，需要维修处理进度处理中待处理已接单处理中已完成已关闭进度推送：维修师傅已出发，预计15分钟后到达1号楼2单元101室关联房屋档案处理中，预计2小时内完成访客通行证管理李访客有效有效期: 6月8日 03:10 ~ 6月9日 03:10最近通行记录张先生人脸识别6月8日 00:10李女士二维码6月8日 00:10李访客二维码6月8日 00:10社区活动查看全部 业主座谈会有效与物业面对面交流，讨论社区建设问题物业会议室18人已报名立即报名社区亲子运动会有效一年一度的亲子运动会，欢迎家长带小朋友参加小区广场35人已报名立即报名",
+        "layout": {
+          "viewportWidth": 1504,
+          "viewportHeight": 1600,
+          "scrollWidth": 1504,
+          "scrollHeight": 1676,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89087-cycle33-structure-01-首屏",
+          "label": "首屏",
+          "finalUrl": "http://127.0.0.1:49087/dashboard",
+          "title": "智慧社区服务平台",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89087/runtime-check/codex-20260608-cycle33-serial/may-89087-cycle33-structure-01-首屏.json",
+          "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89087/runtime-check/codex-20260608-cycle33-serial/may-89087-cycle33-structure-01-首屏.png",
+          "elementCount": 416,
+          "interactiveCount": 21,
+          "interactiveLabels": [
+            "工作台",
+            "通行管理",
+            "工单中心",
+            "社区商圈",
+            "邻里社交",
+            "个人中心",
+            "退出登录",
+            "搜索...",
+            "张先生 业主",
+            "创建工单 报事报修/投诉建议",
+            "访客通行证 生成二维码/蓝牙/NFC",
+            "社区商城 积分抵扣/优惠券",
+            "邻里社交 楼栋群/闲置流转",
+            "查看详情",
+            "查看全部",
+            "管理",
+            "立即报名"
+          ]
+        }
+      },
+      {
+        "label": "导航:工作台",
+        "url": "http://127.0.0.1:49087/dashboard",
+        "title": "智慧社区服务平台",
+        "headings": [
+          "欢迎回来，张先生 业主",
+          "无感通行方式",
+          "门禁设备状态",
+          "异常访客风险",
+          "动态权限状态",
+          "我的工单",
+          "空调不制冷",
+          "访客通行证",
+          "最近通行记录",
+          "社区活动",
+          "业主座谈会",
+          "社区亲子运动会"
+        ],
+        "navLabels": [
+          "智慧社区",
+          "张先生 业主",
+          "工作台",
+          "通行管理",
+          "工单中心",
+          "社区商圈",
+          "邻里社交",
+          "个人中心",
+          "退出登录"
+        ],
+        "buttons": [
+          "退出登录",
+          "张先生 业主",
+          "创建工单 报事报修/投诉建议",
+          "访客通行证 生成二维码/蓝牙/NFC",
+          "社区商城 积分抵扣/优惠券",
+          "邻里社交 楼栋群/闲置流转",
+          "查看详情",
+          "查看全部",
+          "管理",
+          "立即报名"
+        ],
+        "links": [
+          "工作台",
+          "通行管理",
+          "工单中心",
+          "社区商圈",
+          "邻里社交",
+          "个人中心"
+        ],
+        "inputs": [
+          {
+            "tag": "input",
+            "type": "text",
+            "placeholder": "搜索...",
+            "name": "",
+            "label": ""
+          }
+        ],
+        "tables": [],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "智慧社区张先生业主工作台通行管理工单中心社区商圈邻里社交个人中心退出登录张先生业主欢迎回来，张先生 业主今天是 2026年6月8日星期一会员等级金卡会员积分: 2,580创建工单报事报修/投诉建议访客通行证生成二维码/蓝牙/NFC社区商城积分抵扣/优惠券邻里社交楼栋群/闲置流转无感通行方式人脸识别已激活二维码动态刷新蓝牙自动感应NFC一碰开门门禁设备状态查看详情3在线设备1离线设备2号楼单元门离线2小时异常访客风险需关注同一访客24小时内频繁出入5次以上风险等级:中危动态权限状态今日生成通行证2张已过期1张待生效1张我的工单查看全部 高优先级4小时内响应处理中6月8日 00:10空调不制冷家里的空调不制冷，需要维修处理进度处理中待处理已接单处理中已完成已关闭进度推送：维修师傅已出发，预计15分钟后到达1号楼2单元101室关联房屋档案处理中，预计2小时内完成访客通行证管理李访客有效有效期: 6月8日 03:10 ~ 6月9日 03:10最近通行记录张先生人脸识别6月8日 00:10李女士二维码6月8日 00:10李访客二维码6月8日 00:10社区活动查看全部 业主座谈会有效与物业面对面交流，讨论社区建设问题物业会议室18人已报名立即报名社区亲子运动会有效一年一度的亲子运动会，欢迎家长带小朋友参加小区广场35人已报名立即报名",
+        "layout": {
+          "viewportWidth": 1536,
+          "viewportHeight": 1600,
+          "scrollWidth": 1536,
+          "scrollHeight": 1676,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89087-cycle33-structure-02-导航-工作台",
+          "label": "导航:工作台",
+          "finalUrl": "http://127.0.0.1:49087/dashboard",
+          "title": "智慧社区服务平台",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89087/runtime-check/codex-20260608-cycle33-serial/may-89087-cycle33-structure-02-导航-工作台.json",
+          "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89087/runtime-check/codex-20260608-cycle33-serial/may-89087-cycle33-structure-02-导航-工作台.png",
+          "elementCount": 416,
+          "interactiveCount": 21,
+          "interactiveLabels": [
+            "工作台",
+            "通行管理",
+            "工单中心",
+            "社区商圈",
+            "邻里社交",
+            "个人中心",
+            "退出登录",
+            "搜索...",
+            "张先生 业主",
+            "创建工单 报事报修/投诉建议",
+            "访客通行证 生成二维码/蓝牙/NFC",
+            "社区商城 积分抵扣/优惠券",
+            "邻里社交 楼栋群/闲置流转",
+            "查看详情",
+            "查看全部",
+            "管理",
+            "立即报名"
+          ]
+        }
+      },
+      {
+        "label": "操作:创建工单 报事报修/投诉建议",
+        "url": "http://127.0.0.1:49087/workorder",
+        "title": "智慧社区服务平台",
+        "headings": [
+          "物业服务工单中心",
+          "空调不制冷"
+        ],
+        "navLabels": [
+          "智慧社区",
+          "张先生 业主",
+          "工作台",
+          "通行管理",
+          "工单中心",
+          "社区商圈",
+          "邻里社交",
+          "个人中心",
+          "退出登录"
+        ],
+        "buttons": [
+          "退出登录",
+          "张先生 业主",
+          "我的工单",
+          "创建工单"
+        ],
+        "links": [
+          "工作台",
+          "通行管理",
+          "工单中心",
+          "社区商圈",
+          "邻里社交",
+          "个人中心"
+        ],
+        "inputs": [
+          {
+            "tag": "input",
+            "type": "text",
+            "placeholder": "搜索...",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "text",
+            "placeholder": "搜索工单标题/位置",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "select",
+            "type": "",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "select",
+            "type": "",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          }
+        ],
+        "tables": [],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "智慧社区张先生业主工作台通行管理工单中心社区商圈邻里社交个人中心退出登录张先生业主物业服务工单中心报事报修分级响应、维修进度实时推送、服务评价闭环、历史工单关联房屋档案全部工单1待处理0处理中1已完成0SLA预警0我的工单全部状态待处理处理中已完成已关闭全部类型报修投诉咨询建议其他创建工单空调不制冷高优先级处理中家里的空调不制冷，需要维修1号楼2单元101室张先生2026/06/08 00:10处理人：维修师傅待处理已接单处理中已完成已关闭",
+        "layout": {
+          "viewportWidth": 1568,
+          "viewportHeight": 1600,
+          "scrollWidth": 1568,
+          "scrollHeight": 1600,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89087-cycle33-structure-03-操作-创建工单-报事报修-投诉建议",
+          "label": "操作:创建工单 报事报修/投诉建议",
+          "finalUrl": "http://127.0.0.1:49087/workorder",
+          "title": "智慧社区服务平台",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89087/runtime-check/codex-20260608-cycle33-serial/may-89087-cycle33-structure-03-操作-创建工单-报事报修-投诉建议.json",
+          "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89087/runtime-check/codex-20260608-cycle33-serial/may-89087-cycle33-structure-03-操作-创建工单-报事报修-投诉建议.png",
+          "elementCount": 236,
+          "interactiveCount": 17,
+          "interactiveLabels": [
+            "工作台",
+            "通行管理",
+            "工单中心",
+            "社区商圈",
+            "邻里社交",
+            "个人中心",
+            "退出登录",
+            "搜索...",
+            "张先生 业主",
+            "我的工单",
+            "搜索工单标题/位置",
+            "全部状态 待处理 处理中 已完成 已关闭",
+            "全部类型 报修 投诉 咨询 建议 其他",
+            "创建工单"
+          ]
+        }
+      },
+      {
+        "label": "二层操作:创建工单 报事报修/投诉建议->创建工单",
+        "url": "http://127.0.0.1:49087/workorder",
+        "title": "智慧社区服务平台",
+        "headings": [
+          "物业服务工单中心",
+          "空调不制冷",
+          "创建工单"
+        ],
+        "navLabels": [
+          "智慧社区",
+          "张先生 业主",
+          "工作台",
+          "通行管理",
+          "工单中心",
+          "社区商圈",
+          "邻里社交",
+          "个人中心",
+          "退出登录"
+        ],
+        "buttons": [
+          "退出登录",
+          "张先生 业主",
+          "我的工单",
+          "创建工单",
+          "上传",
+          "取消",
+          "提交工单"
+        ],
+        "links": [
+          "工作台",
+          "通行管理",
+          "工单中心",
+          "社区商圈",
+          "邻里社交",
+          "个人中心"
+        ],
+        "inputs": [
+          {
+            "tag": "input",
+            "type": "text",
+            "placeholder": "搜索...",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "text",
+            "placeholder": "搜索工单标题/位置",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "select",
+            "type": "",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "select",
+            "type": "",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "text",
+            "placeholder": "请简要描述问题，如：客厅空调不制冷",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "textarea",
+            "type": "",
+            "placeholder": "请详细描述问题情况，包括出现时间、具体现象等信息",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "select",
+            "type": "",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "select",
+            "type": "",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "text",
+            "placeholder": "例如：1号楼2单元301室客厅",
+            "name": "",
+            "label": ""
+          }
+        ],
+        "tables": [],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "智慧社区张先生业主工作台通行管理工单中心社区商圈邻里社交个人中心退出登录张先生业主物业服务工单中心报事报修分级响应、维修进度实时推送、服务评价闭环、历史工单关联房屋档案全部工单1待处理0处理中1已完成0SLA预警0我的工单全部状态待处理处理中已完成已关闭全部类型报修投诉咨询建议其他创建工单空调不制冷高优先级处理中家里的空调不制冷，需要维修1号楼2单元101室张先生2026/06/08 00:10处理人：维修师傅待处理已接单处理中已完成已关闭创建工单请填写详细信息以便我们更好地为您服务分级响应机制紧急：30分钟内响应，如电梯故障、漏水高：4小时内响应，如空调故障、门锁问题中：12小时内响应，如灯具损坏、下水道堵塞低：24小时内响应，如咨询、建议工单标题 *详细描述 *工单类型 *报修投诉建议咨询优先级 *低 - 24小时内响应中 - 12小时内响应高 - 4小时内响应紧急 - 30分钟内响应位置 *图片上传上传图片可以帮助我们更快了解问题（最多9张）上传取消提交工单",
+        "layout": {
+          "viewportWidth": 1600,
+          "viewportHeight": 1600,
+          "scrollWidth": 1600,
+          "scrollHeight": 1600,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89087-cycle33-structure-04-二层操作-创建工单-报事报修-投诉建议-创建工单",
+          "label": "二层操作:创建工单 报事报修/投诉建议->创建工单",
+          "finalUrl": "http://127.0.0.1:49087/workorder",
+          "title": "智慧社区服务平台",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89087/runtime-check/codex-20260608-cycle33-serial/may-89087-cycle33-structure-04-二层操作-创建工单-报事报修-投诉建议-创建工单.json",
+          "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89087/runtime-check/codex-20260608-cycle33-serial/may-89087-cycle33-structure-04-二层操作-创建工单-报事报修-投诉建议-创建工单.png",
+          "elementCount": 301,
+          "interactiveCount": 26,
+          "interactiveLabels": [
+            "工作台",
+            "通行管理",
+            "工单中心",
+            "社区商圈",
+            "邻里社交",
+            "个人中心",
+            "退出登录",
+            "搜索...",
+            "张先生 业主",
+            "我的工单",
+            "搜索工单标题/位置",
+            "全部状态 待处理 处理中 已完成 已关闭",
+            "全部类型 报修 投诉 咨询 建议 其他",
+            "创建工单",
+            "请简要描述问题，如：客厅空调不制冷",
+            "请详细描述问题情况，包括出现时间、具体现象等信息",
+            "报修 投诉 建议 咨询",
+            "低 - 24小时内响应 中 - 12小时内响应 高 - 4小时内响应 紧急 - 30分钟内响应",
+            "例如：1号楼2单元301室客厅",
+            "上传",
+            "取消",
+            "提交工单"
+          ]
+        }
+      }
+    ],
+    "findings": [],
+    "actionHints": [],
+    "emptyPages": [],
+    "overflowPages": [],
+    "blankPages": [],
+    "apiFailurePaths": [],
+    "goalTerms": [],
+    "clickedActionDescriptors": [
+      {
+        "nav": "工作台",
+        "label": "创建工单 报事报修/投诉建议",
+        "ordinal": 0,
+        "unsafe": false
+      },
+      {
+        "nav": "工作台",
+        "label": "创建工单 报事报修/投诉建议->创建工单",
+        "ordinal": 0,
+        "secondary": true,
+        "unsafe": false
+      }
+    ],
+    "secondaryActionClicks": 1,
+    "structureCaptures": [
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89087-cycle33-structure-01-首屏",
+        "label": "首屏",
+        "finalUrl": "http://127.0.0.1:49087/dashboard",
+        "title": "智慧社区服务平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89087/runtime-check/codex-20260608-cycle33-serial/may-89087-cycle33-structure-01-首屏.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89087/runtime-check/codex-20260608-cycle33-serial/may-89087-cycle33-structure-01-首屏.png",
+        "elementCount": 416,
+        "interactiveCount": 21,
+        "interactiveLabels": [
+          "工作台",
+          "通行管理",
+          "工单中心",
+          "社区商圈",
+          "邻里社交",
+          "个人中心",
+          "退出登录",
+          "搜索...",
+          "张先生 业主",
+          "创建工单 报事报修/投诉建议",
+          "访客通行证 生成二维码/蓝牙/NFC",
+          "社区商城 积分抵扣/优惠券",
+          "邻里社交 楼栋群/闲置流转",
+          "查看详情",
+          "查看全部",
+          "管理",
+          "立即报名"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89087-cycle33-structure-02-导航-工作台",
+        "label": "导航:工作台",
+        "finalUrl": "http://127.0.0.1:49087/dashboard",
+        "title": "智慧社区服务平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89087/runtime-check/codex-20260608-cycle33-serial/may-89087-cycle33-structure-02-导航-工作台.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89087/runtime-check/codex-20260608-cycle33-serial/may-89087-cycle33-structure-02-导航-工作台.png",
+        "elementCount": 416,
+        "interactiveCount": 21,
+        "interactiveLabels": [
+          "工作台",
+          "通行管理",
+          "工单中心",
+          "社区商圈",
+          "邻里社交",
+          "个人中心",
+          "退出登录",
+          "搜索...",
+          "张先生 业主",
+          "创建工单 报事报修/投诉建议",
+          "访客通行证 生成二维码/蓝牙/NFC",
+          "社区商城 积分抵扣/优惠券",
+          "邻里社交 楼栋群/闲置流转",
+          "查看详情",
+          "查看全部",
+          "管理",
+          "立即报名"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89087-cycle33-structure-03-操作-创建工单-报事报修-投诉建议",
+        "label": "操作:创建工单 报事报修/投诉建议",
+        "finalUrl": "http://127.0.0.1:49087/workorder",
+        "title": "智慧社区服务平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89087/runtime-check/codex-20260608-cycle33-serial/may-89087-cycle33-structure-03-操作-创建工单-报事报修-投诉建议.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89087/runtime-check/codex-20260608-cycle33-serial/may-89087-cycle33-structure-03-操作-创建工单-报事报修-投诉建议.png",
+        "elementCount": 236,
+        "interactiveCount": 17,
+        "interactiveLabels": [
+          "工作台",
+          "通行管理",
+          "工单中心",
+          "社区商圈",
+          "邻里社交",
+          "个人中心",
+          "退出登录",
+          "搜索...",
+          "张先生 业主",
+          "我的工单",
+          "搜索工单标题/位置",
+          "全部状态 待处理 处理中 已完成 已关闭",
+          "全部类型 报修 投诉 咨询 建议 其他",
+          "创建工单"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89087-cycle33-structure-04-二层操作-创建工单-报事报修-投诉建议-创建工单",
+        "label": "二层操作:创建工单 报事报修/投诉建议->创建工单",
+        "finalUrl": "http://127.0.0.1:49087/workorder",
+        "title": "智慧社区服务平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89087/runtime-check/codex-20260608-cycle33-serial/may-89087-cycle33-structure-04-二层操作-创建工单-报事报修-投诉建议-创建工单.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89087/runtime-check/codex-20260608-cycle33-serial/may-89087-cycle33-structure-04-二层操作-创建工单-报事报修-投诉建议-创建工单.png",
+        "elementCount": 301,
+        "interactiveCount": 26,
+        "interactiveLabels": [
+          "工作台",
+          "通行管理",
+          "工单中心",
+          "社区商圈",
+          "邻里社交",
+          "个人中心",
+          "退出登录",
+          "搜索...",
+          "张先生 业主",
+          "我的工单",
+          "搜索工单标题/位置",
+          "全部状态 待处理 处理中 已完成 已关闭",
+          "全部类型 报修 投诉 咨询 建议 其他",
+          "创建工单",
+          "请简要描述问题，如：客厅空调不制冷",
+          "请详细描述问题情况，包括出现时间、具体现象等信息",
+          "报修 投诉 建议 咨询",
+          "低 - 24小时内响应 中 - 12小时内响应 高 - 4小时内响应 紧急 - 30分钟内响应",
+          "例如：1号楼2单元301室客厅",
+          "上传",
+          "取消",
+          "提交工单"
+        ]
+      }
+    ],
+    "representativeScreenshotUrl": "http://127.0.0.1:49087/dashboard",
+    "representativeScreenshotLabel": "欢迎回来，张先生 业主"
+  },
+  "websiteStructureCapture": {
+    "module": "website_structure_capture",
+    "captureCount": 4,
+    "captures": [
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89087-cycle33-structure-01-首屏",
+        "label": "首屏",
+        "finalUrl": "http://127.0.0.1:49087/dashboard",
+        "title": "智慧社区服务平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89087/runtime-check/codex-20260608-cycle33-serial/may-89087-cycle33-structure-01-首屏.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89087/runtime-check/codex-20260608-cycle33-serial/may-89087-cycle33-structure-01-首屏.png",
+        "elementCount": 416,
+        "interactiveCount": 21,
+        "interactiveLabels": [
+          "工作台",
+          "通行管理",
+          "工单中心",
+          "社区商圈",
+          "邻里社交",
+          "个人中心",
+          "退出登录",
+          "搜索...",
+          "张先生 业主",
+          "创建工单 报事报修/投诉建议",
+          "访客通行证 生成二维码/蓝牙/NFC",
+          "社区商城 积分抵扣/优惠券",
+          "邻里社交 楼栋群/闲置流转",
+          "查看详情",
+          "查看全部",
+          "管理",
+          "立即报名"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89087-cycle33-structure-02-导航-工作台",
+        "label": "导航:工作台",
+        "finalUrl": "http://127.0.0.1:49087/dashboard",
+        "title": "智慧社区服务平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89087/runtime-check/codex-20260608-cycle33-serial/may-89087-cycle33-structure-02-导航-工作台.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89087/runtime-check/codex-20260608-cycle33-serial/may-89087-cycle33-structure-02-导航-工作台.png",
+        "elementCount": 416,
+        "interactiveCount": 21,
+        "interactiveLabels": [
+          "工作台",
+          "通行管理",
+          "工单中心",
+          "社区商圈",
+          "邻里社交",
+          "个人中心",
+          "退出登录",
+          "搜索...",
+          "张先生 业主",
+          "创建工单 报事报修/投诉建议",
+          "访客通行证 生成二维码/蓝牙/NFC",
+          "社区商城 积分抵扣/优惠券",
+          "邻里社交 楼栋群/闲置流转",
+          "查看详情",
+          "查看全部",
+          "管理",
+          "立即报名"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89087-cycle33-structure-03-操作-创建工单-报事报修-投诉建议",
+        "label": "操作:创建工单 报事报修/投诉建议",
+        "finalUrl": "http://127.0.0.1:49087/workorder",
+        "title": "智慧社区服务平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89087/runtime-check/codex-20260608-cycle33-serial/may-89087-cycle33-structure-03-操作-创建工单-报事报修-投诉建议.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89087/runtime-check/codex-20260608-cycle33-serial/may-89087-cycle33-structure-03-操作-创建工单-报事报修-投诉建议.png",
+        "elementCount": 236,
+        "interactiveCount": 17,
+        "interactiveLabels": [
+          "工作台",
+          "通行管理",
+          "工单中心",
+          "社区商圈",
+          "邻里社交",
+          "个人中心",
+          "退出登录",
+          "搜索...",
+          "张先生 业主",
+          "我的工单",
+          "搜索工单标题/位置",
+          "全部状态 待处理 处理中 已完成 已关闭",
+          "全部类型 报修 投诉 咨询 建议 其他",
+          "创建工单"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89087-cycle33-structure-04-二层操作-创建工单-报事报修-投诉建议-创建工单",
+        "label": "二层操作:创建工单 报事报修/投诉建议->创建工单",
+        "finalUrl": "http://127.0.0.1:49087/workorder",
+        "title": "智慧社区服务平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89087/runtime-check/codex-20260608-cycle33-serial/may-89087-cycle33-structure-04-二层操作-创建工单-报事报修-投诉建议-创建工单.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89087/runtime-check/codex-20260608-cycle33-serial/may-89087-cycle33-structure-04-二层操作-创建工单-报事报修-投诉建议-创建工单.png",
+        "elementCount": 301,
+        "interactiveCount": 26,
+        "interactiveLabels": [
+          "工作台",
+          "通行管理",
+          "工单中心",
+          "社区商圈",
+          "邻里社交",
+          "个人中心",
+          "退出登录",
+          "搜索...",
+          "张先生 业主",
+          "我的工单",
+          "搜索工单标题/位置",
+          "全部状态 待处理 处理中 已完成 已关闭",
+          "全部类型 报修 投诉 咨询 建议 其他",
+          "创建工单",
+          "请简要描述问题，如：客厅空调不制冷",
+          "请详细描述问题情况，包括出现时间、具体现象等信息",
+          "报修 投诉 建议 咨询",
+          "低 - 24小时内响应 中 - 12小时内响应 高 - 4小时内响应 紧急 - 30分钟内响应",
+          "例如：1号楼2单元301室客厅",
+          "上传",
+          "取消",
+          "提交工单"
+        ]
+      }
+    ]
+  },
+  "screenshotMetrics": {
+    "width": 1632,
+    "height": 1600,
+    "scrollWidth": 1600,
+    "scrollHeight": 1600
+  },
+  "initialBodyTextPreview": "智慧社区服务平台\n\n碧桂园·在管小区专属服务\n\n欢迎登录\n用户名\n密码\n登录\n\n演示账号（密码均为 123456）\n\n张先生\n业主\nowner1 / 123456\n王先生\n租户\ntenant1 / 123456\n物业管理员\n物业员工\nproperty1 / 123456\n维修师傅\n物业员工\nworker1 / 123456\n商户管理员\n商户\nmerchant1 / 123456\n\n© 2024 碧桂园智慧社区服务平台",
+  "bodyTextPreview": "",
+  "apiBase": "http://127.0.0.1:59087/api",
+  "businessGoalPreview": "",
+  "apiResponses": [
+    {
+      "method": "POST",
+      "status": 200,
+      "url": "http://127.0.0.1:49087/api/auth/login"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49087/api/workorder?limit=5"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49087/api/social/activities?status=active"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49087/api/access/passes"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49087/api/access/records?limit=5&offset=0"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49087/api/analytics/profile"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49087/api/workorder?limit=5"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49087/api/social/activities?status=active"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49087/api/access/passes"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49087/api/access/records?limit=5&offset=0"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49087/api/analytics/profile"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49087/api/workorder?limit=5"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49087/api/social/activities?status=active"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49087/api/access/passes"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49087/api/access/records?limit=5&offset=0"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49087/api/analytics/profile"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49087/api/workorder?limit=5"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49087/api/social/activities?status=active"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49087/api/access/passes"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49087/api/access/records?limit=5&offset=0"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49087/api/analytics/profile"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49087/api/workorder"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49087/api/workorder"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49087/api/workorder?limit=5"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49087/api/social/activities?status=active"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49087/api/access/passes"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49087/api/access/records?limit=5&offset=0"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49087/api/analytics/profile"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49087/api/workorder?limit=5"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49087/api/social/activities?status=active"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49087/api/access/passes"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49087/api/access/records?limit=5&offset=0"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49087/api/analytics/profile"
+    }
+  ],
+  "apiChecks": [
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59087/api/health",
+      "path": "/api/health",
+      "status": 200,
+      "ok": true,
+      "bodyPreview": "{\"success\":true,\"message\":\"ok\"}"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59087/api/workorder?limit=5",
+      "path": "/api/workorder?limit=5",
+      "status": 200,
+      "ok": true,
+      "bodyPreview": "{\"success\":true,\"data\":{\"workOrders\":[{\"id\":1,\"user_id\":1,\"house_id\":1,\"type\":\"repair\",\"title\":\"空调不制冷\",\"description\":\"家里的空调不制冷，需要维修\",\"location\":\"1号楼2单元101室\",\"priority\":\"high\",\"status\":\"processing\",\"assignee_id\":5,\"created_at\":\"2026-06-08 00:10:23\",\"updated_at\":\"2026-06-08 00:10:23\",\"user_name\":\"张先生\",\"assignee_name\":\"维修师傅\",\"building\":\"1号楼\",\"unit\":\"2单元\",\"room_number\":\"101室\"}],\"total\":1}}"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59087/api/social/activities?status=active",
+      "path": "/api/social/activities?status=active",
+      "status": 200,
+      "ok": true,
+      "bodyPreview": "{\"success\":true,\"data\":[{\"id\":2,\"title\":\"业主座谈会\",\"description\":\"与物业面对面交流，讨论社区建设问题\",\"start_time\":\"2026-06-11T00:10:23.292Z\",\"end_time\":\"2026-06-11T02:10:23.292Z\",\"location\":\"物业会议室\",\"max_participants\":30,\"participant_count\":18,\"organizer_id\":4,\"status\":\"active\",\"created_at\":\"2026-06-08 00:10:23\",\"organizer_name\":\"物业管理员\",\"organizer_avatar\":\"https://api.dicebear.com/7.x/avataaars/svg?seed=property1\"},{\"id\":1,\"title\":\"社区亲子运动会\",\"description\":\"一年一度的亲子运动会，欢迎家长带小朋友参加\",\"start_time\":\"2026-06-15T00:10:23.292"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59087/api/access/passes",
+      "path": "/api/access/passes",
+      "status": 200,
+      "ok": true,
+      "bodyPreview": "{\"success\":true,\"data\":[{\"id\":1,\"creator_id\":1,\"visitor_name\":\"李访客\",\"visitor_phone\":\"13900139001\",\"visitor_id_card\":null,\"qr_code\":\"VP_1780877423766\",\"access_areas\":[\"小区大门\",\"1号楼单元门\"],\"valid_from\":\"2026-06-08T00:10:23.292Z\",\"valid_to\":\"2026-06-09T00:10:23.292Z\",\"status\":\"active\",\"created_at\":\"2026-06-08 00:10:23\"}]}"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59087/api/access/records?limit=5&offset=0",
+      "path": "/api/access/records?limit=5&offset=0",
+      "status": 200,
+      "ok": true,
+      "bodyPreview": "{\"success\":true,\"data\":{\"records\":[{\"id\":1,\"pass_id\":null,\"device_id\":1,\"access_type\":\"face\",\"access_time\":\"2026-06-08 00:10:23\",\"result\":\"success\",\"person_name\":\"张先生\",\"visitor_name\":null,\"device_name\":\"小区大门\"},{\"id\":2,\"pass_id\":null,\"device_id\":2,\"access_type\":\"qr\",\"access_time\":\"2026-06-08 00:10:23\",\"result\":\"success\",\"person_name\":\"李女士\",\"visitor_name\":null,\"device_name\":\"1号楼单元门\"},{\"id\":3,\"pass_id\":1,\"device_id\":1,\"access_type\":\"qr\",\"access_time\":\"2026-06-08 00:10:23\",\"result\":\"success\",\"person"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59087/api/analytics/profile",
+      "path": "/api/analytics/profile",
+      "status": 200,
+      "ok": true,
+      "bodyPreview": "{\"success\":true,\"data\":{\"level\":\"gold\",\"points\":2580,\"totalSpent\":5800,\"orderCount\":0,\"couponUsed\":0,\"visitCount\":1,\"benefits\":[\"门禁通行记录实时同步\",\"工单优先派单提醒\",\"社区商圈会员权益\",\"邻里活动报名通知\"],\"recentOrders\":[],\"membership\":{\"id\":1,\"user_id\":1,\"level\":3,\"points\":2580,\"balance\":150,\"total_spent\":5800,\"updated_at\":\"2026-06-08 00:10:23\",\"created_at\":\"2026-06-08 00:10:23\"},\"houses\":[{\"id\":1,\"owner_id\":1,\"building\":\"1号楼\",\"unit\":\"2单元\",\"room_number\":\"101室\",\"area\":120.5,\"created_at\":\"2026-06-08 00:10:23\"},{\"id\":2,\"owner_"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59087/api/workorder",
+      "path": "/api/workorder",
+      "status": 200,
+      "ok": true,
+      "bodyPreview": "{\"success\":true,\"data\":{\"workOrders\":[{\"id\":1,\"user_id\":1,\"house_id\":1,\"type\":\"repair\",\"title\":\"空调不制冷\",\"description\":\"家里的空调不制冷，需要维修\",\"location\":\"1号楼2单元101室\",\"priority\":\"high\",\"status\":\"processing\",\"assignee_id\":5,\"created_at\":\"2026-06-08 00:10:23\",\"updated_at\":\"2026-06-08 00:10:23\",\"user_name\":\"张先生\",\"assignee_name\":\"维修师傅\",\"building\":\"1号楼\",\"unit\":\"2单元\",\"room_number\":\"101室\"}],\"total\":1}}"
+    }
+  ],
+  "dialogs": [],
+  "consoleMessages": [
+    {
+      "type": "debug",
+      "text": "[vite] connecting...",
+      "location": {
+        "url": "http://127.0.0.1:49087/@vite/client",
+        "lineNumber": 788,
+        "columnNumber": 8
+      }
+    },
+    {
+      "type": "debug",
+      "text": "[vite] connected.",
+      "location": {
+        "url": "http://127.0.0.1:49087/@vite/client",
+        "lineNumber": 911,
+        "columnNumber": 14
+      }
+    },
+    {
+      "type": "info",
+      "text": "%cDownload the React DevTools for a better development experience: https://reactjs.org/link/react-devtools font-weight:bold",
+      "location": {
+        "url": "http://127.0.0.1:49087/node_modules/.vite/deps/chunk-KDCVS43I.js?v=e45f140f",
+        "lineNumber": 21608,
+        "columnNumber": 24
+      }
+    },
+    {
+      "type": "verbose",
+      "text": "[DOM] Input elements should have autocomplete attributes (suggested: \"current-password\"): (More info: https://goo.gl/9p2vKq) %o",
+      "location": {
+        "url": "http://127.0.0.1:49087/login",
+        "lineNumber": 0,
+        "columnNumber": 0
+      }
+    },
+    {
+      "type": "debug",
+      "text": "[vite] connecting...",
+      "location": {
+        "url": "http://127.0.0.1:49087/@vite/client",
+        "lineNumber": 788,
+        "columnNumber": 8
+      }
+    },
+    {
+      "type": "debug",
+      "text": "[vite] connected.",
+      "location": {
+        "url": "http://127.0.0.1:49087/@vite/client",
+        "lineNumber": 911,
+        "columnNumber": 14
+      }
+    },
+    {
+      "type": "info",
+      "text": "%cDownload the React DevTools for a better development experience: https://reactjs.org/link/react-devtools font-weight:bold",
+      "location": {
+        "url": "http://127.0.0.1:49087/node_modules/.vite/deps/chunk-KDCVS43I.js?v=e45f140f",
+        "lineNumber": 21608,
+        "columnNumber": 24
+      }
+    },
+    {
+      "type": "debug",
+      "text": "[vite] hot updated: /src/pages/Dashboard.tsx",
+      "location": {
+        "url": "http://127.0.0.1:49087/@vite/client",
+        "lineNumber": 882,
+        "columnNumber": 31
+      }
+    },
+    {
+      "type": "debug",
+      "text": "[vite] hot updated: /src/index.css",
+      "location": {
+        "url": "http://127.0.0.1:49087/@vite/client",
+        "lineNumber": 882,
+        "columnNumber": 31
+      }
+    },
+    {
+      "type": "debug",
+      "text": "[vite] connecting...",
+      "location": {
+        "url": "http://127.0.0.1:49087/@vite/client",
+        "lineNumber": 788,
+        "columnNumber": 8
+      }
+    },
+    {
+      "type": "debug",
+      "text": "[vite] connected.",
+      "location": {
+        "url": "http://127.0.0.1:49087/@vite/client",
+        "lineNumber": 911,
+        "columnNumber": 14
+      }
+    },
+    {
+      "type": "info",
+      "text": "%cDownload the React DevTools for a better development experience: https://reactjs.org/link/react-devtools font-weight:bold",
+      "location": {
+        "url": "http://127.0.0.1:49087/node_modules/.vite/deps/chunk-KDCVS43I.js?v=e45f140f",
+        "lineNumber": 21608,
+        "columnNumber": 24
+      }
+    },
+    {
+      "type": "error",
+      "text": "The above error occurred in the <Dashboard> component:\n\n    at Dashboard (http://127.0.0.1:49087/src/pages/Dashboard.tsx?t=1780912765868:117:20)\n    at RenderedRoute (http://127.0.0.1:49087/node_modules/.vite/deps/react-router-dom.js?v=e45f140f:6626:26)\n    at Outlet (http://127.0.0.1:49087/node_modules/.vite/deps/react-router-dom.js?v=e45f140f:7491:26)\n    at main\n    at div\n    at div\n    at MainLayout (http://127.0.0.1:49087/src/components/layout/MainLayout.tsx:24:32)\n    at ProtectedRoute (http://127.0.0.1:49087/src/App.tsx?t=1780912765868:31:27)\n    at RenderedRoute (http://127.0.0.1:49087/node_modules/.vite/deps/react-router-dom.js?v=e45f140f:6626:26)\n    at Routes (http://127.0.0.1:49087/node_modules/.vite/deps/react-router-dom.js?v=e45f140f:7561:3)\n    at Router (http://127.0.0.1:49087/node_modules/.vite/deps/react-router-dom.js?v=e45f140f:7500:13)\n    at BrowserRouter (http://127.0.0.1:49087/node_modules/.vite/deps/react-router-dom.js?v=e45f140f:10787:3)\n    at App (http://127.0.0.1:49087/src/App.tsx?t=1780912765868:60:31)\n\nConsider adding an error boundary to your tree to customize error handling behavior.\nVisit https://reactjs.org/link/error-boundaries to learn more about error boundaries.",
+      "location": {
+        "url": "http://127.0.0.1:49087/node_modules/.vite/deps/chunk-KDCVS43I.js?v=e45f140f",
+        "lineNumber": 14079,
+        "columnNumber": 30
+      }
+    }
+  ],
+  "requestFailures": [],
+  "responseErrors": []
+}

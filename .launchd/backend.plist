@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+  <key>Label</key>
+  <string>local.may-89087.backend</string>
+  <key>WorkingDirectory</key>
+  <string>/Users/chen/Documents/trae_projects/local_projects/may-89087</string>
+  <key>ProgramArguments</key>
+  <array>
+    <string>/opt/homebrew/bin/node</string>
+    <string>/Users/chen/Documents/trae_projects/local_projects/may-89087/node_modules/tsx/dist/cli.mjs</string>
+    <string>/Users/chen/Documents/trae_projects/local_projects/may-89087/api/index.ts</string>
+  </array>
+  <key>EnvironmentVariables</key>
+  <dict>
+    <key>FRONTEND_PORT</key>
+    <string>49087</string>
+    <key>BACKEND_PORT</key>
+    <string>59087</string>
+    <key>FRONTEND_URL</key>
+    <string>http://127.0.0.1:49087</string>
+    <key>BACKEND_URL</key>
+    <string>http://127.0.0.1:59087</string>
+    <key>VITE_API_URL</key>
+    <string>http://127.0.0.1:59087/api</string>
+    <key>DATABASE_PATH</key>
+    <string>./data/app.sqlite</string>
+    <key>JWT_SECRET</key>
+    <string>smart_community_2024_secret_key</string>
+    <key>JWT_EXPIRES_IN</key>
+    <string>24h</string>
+    <key>CORS_ORIGIN</key>
+    <string>http://127.0.0.1:49087</string>
+    <key>NODE_ENV</key>
+    <string>development</string>
+  </dict>
+  <key>StandardOutPath</key>
+  <string>/Users/chen/Documents/trae_projects/local_projects/may-89087/backend.log</string>
+  <key>StandardErrorPath</key>
+  <string>/Users/chen/Documents/trae_projects/local_projects/may-89087/backend.log</string>
+  <key>RunAtLoad</key>
+  <true/>
+  <key>KeepAlive</key>
+  <true/>
+</dict>
+</plist>
