@@ -13,7 +13,7 @@ export default function Layout() {
         className={`transition-all duration-300 ${sidebarCollapsed ? 'ml-16' : 'ml-56'}`}
       >
         <Header />
-        <main className="p-6 min-h-[calc(100vh-3.5rem)]">
+        <main className="p-6 min-h-[calc(100vh-3.5rem)] overflow-x-hidden">
           <Outlet />
         </main>
       </div>

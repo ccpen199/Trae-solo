@@ -1,16 +1,33 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { AnimatePresence, motion } from 'framer-motion'
-import { Star, Clock, MapPin, ShieldCheck, CheckCircle, ChevronDown, ChevronUp, Zap, BadgeCheck, Users } from 'lucide-react'
+import { Star, Clock, MapPin, ShieldCheck, CheckCircle, ChevronDown, ChevronUp, Zap, BadgeCheck, Users, X, FileText, Scale } from 'lucide-react'
 import { mockServices, categories } from '@/mocks/data'
+import { useSearchParams } from 'react-router-dom'
 
 const categoryFilters = [
   { key: 'all', label: '全部' },
   ...categories.slice(0, 5).map(c => ({ key: c.key, label: c.label })),
 ]
 
+type ConfirmModalData = {
+  service: typeof mockServices[number]
+  provider: typeof mockServices[number]['providers'][number]
+} | null
+
 export default function Compare() {
-  const [activeCategory, setActiveCategory] = useState('all')
-  const [expandedId, setExpandedId] = useState<string | null>(null)
+  const [searchParams] = useSearchParams()
+  const urlCategory = searchParams.get('category') || 'all'
+  const [activeCategory, setActiveCategory] = useState(urlCategory)
+  const [expandedId, setExpandedId] = useState<string | null>(mockServices[0]?.id || null)
+  const [confirmModal, setConfirmModal] = useState<ConfirmModalData>(null)
+
+  useEffect(() => {
+    if (urlCategory && urlCategory !== activeCategory) {
+      setActiveCategory(urlCategory)
+      const firstInCategory = mockServices.find(s => s.category === urlCategory)
+      if (firstInCategory) setExpandedId(firstInCategory.id)
+    }
+  }, [urlCategory])
 
   const filtered = activeCategory === 'all'
     ? mockServices
@@ -108,12 +125,17 @@ export default function Compare() {
                         </div>
                         <div className="text-xs text-white/40 mt-0.5">价格区间</div>
                       </div>
-                      <div className="flex items-center gap-1 text-cyber-400">
-                        {isExpanded ? (
-                          <ChevronUp className="w-5 h-5" />
-                        ) : (
-                          <ChevronDown className="w-5 h-5" />
+                      <div className="flex flex-col items-end gap-1">
+                        {!isExpanded && (
+                          <span className="text-[10px] text-cyber-400/70 animate-pulse">点击展开查看服务商比价</span>
                         )}
+                        <div className="flex items-center justify-end gap-1 text-cyber-400">
+                          {isExpanded ? (
+                            <ChevronUp className="w-6 h-6" />
+                          ) : (
+                            <ChevronDown className="w-6 h-6 animate-bounce" />
+                          )}
+                        </div>
                       </div>
                     </div>
                   </div>
@@ -219,7 +241,7 @@ export default function Compare() {
                                   质保{provider.warranty}
                                 </div>
 
-                                <div className="space-y-1 mb-4">
+                                <div className="space-y-1 mb-3">
                                   {provider.guarantees.slice(0, 3).map((g, i) => (
                                     <div key={i} className="flex items-center gap-1.5 text-xs text-white/60">
                                       <CheckCircle className="w-3 h-3 text-cyber-400/70 shrink-0" />
@@ -228,7 +250,18 @@ export default function Compare() {
                                   ))}
                                 </div>
 
-                                <button className={isLowest ? 'btn-warm w-full text-sm py-2' : 'btn-secondary w-full text-sm py-2'}>
+                                <div className="flex items-center gap-1 text-[10px] text-white/40 mb-4 hover:text-cyber-400/70 cursor-pointer transition-colors">
+                                  <FileText className="w-3 h-3" />
+                                  <span>查看服务合同条款</span>
+                                </div>
+
+                                <button
+                                  onClick={(e) => {
+                                    e.stopPropagation()
+                                    setConfirmModal({ service, provider })
+                                  }}
+                                  className={isLowest ? 'btn-warm w-full text-sm py-2' : 'btn-secondary w-full text-sm py-2'}
+                                >
                                   选择此服务商
                                 </button>
                               </div>
@@ -250,6 +283,104 @@ export default function Compare() {
           </div>
         )}
       </div>
+
+      <AnimatePresence>
+        {confirmModal && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-navy-900/80 backdrop-blur-sm"
+            onClick={() => setConfirmModal(null)}
+          >
+            <motion.div
+              initial={{ scale: 0.9, y: 20, opacity: 0 }}
+              animate={{ scale: 1, y: 0, opacity: 1 }}
+              exit={{ scale: 0.9, y: 20, opacity: 0 }}
+              transition={{ type: 'spring', damping: 25, stiffness: 300 }}
+              className="glass-card cyber-border w-full max-w-md overflow-hidden"
+              onClick={(e) => e.stopPropagation()}
+            >
+              <div className="p-5 border-b border-cyber-400/10 flex items-center justify-between">
+                <div className="flex items-center gap-2">
+                  <Scale className="w-5 h-5 text-cyber-400" />
+                  <h3 className="text-lg font-bold text-white">电子价目确认</h3>
+                </div>
+                <button
+                  onClick={() => setConfirmModal(null)}
+                  className="text-white/40 hover:text-white transition-colors"
+                >
+                  <X className="w-5 h-5" />
+                </button>
+              </div>
+
+              <div className="p-5 space-y-4">
+                <div>
+                  <p className="text-xs text-white/40 mb-1">服务项目</p>
+                  <p className="text-white font-medium">{confirmModal.service.name}</p>
+                </div>
+                <div>
+                  <p className="text-xs text-white/40 mb-1">服务商</p>
+                  <p className="text-cyber-400 font-medium">{confirmModal.provider.name}</p>
+                </div>
+
+                <div className="rounded-lg bg-white/[0.02] border border-white/5 p-4 space-y-2">
+                  <div className="flex justify-between text-sm">
+                    <span className="text-white/60">上门费</span>
+                    <span className="text-white">¥{confirmModal.provider.visitFee}</span>
+                  </div>
+                  <div className="flex justify-between text-sm">
+                    <span className="text-white/60">人工费</span>
+                    <span className="text-white">¥{confirmModal.provider.laborFee}</span>
+                  </div>
+                  <div className="flex justify-between text-sm">
+                    <span className="text-white/60">配件费</span>
+                    <span className="text-white">¥{confirmModal.provider.partsFee}</span>
+                  </div>
+                  <div className="flex justify-between text-sm">
+                    <span className="text-white/60">质保期</span>
+                    <span className="text-cyber-400">{confirmModal.provider.warranty}</span>
+                  </div>
+                  <div className="h-px bg-white/10 my-2" />
+                  <div className="flex justify-between">
+                    <span className="text-white font-medium">合计</span>
+                    <span className="text-2xl font-bold text-cyber-400">¥{confirmModal.provider.price}</span>
+                  </div>
+                </div>
+
+                <div className="space-y-1.5">
+                  <p className="text-xs text-white/40 mb-2">服务保障</p>
+                  {confirmModal.provider.guarantees.map((g, i) => (
+                    <div key={i} className="flex items-center gap-2 text-xs text-white/70">
+                      <CheckCircle className="w-3.5 h-3.5 text-cyber-400 shrink-0" />
+                      {g}
+                    </div>
+                  ))}
+                </div>
+
+                <div className="rounded-lg bg-warm-500/10 border border-warm-500/20 p-3">
+                  <p className="text-xs text-warm-400 leading-relaxed">
+                    根据《家庭服务业管理暂行办法》，确认后将生成电子服务合同，服务过程全程可追溯。
+                  </p>
+                </div>
+              </div>
+
+              <div className="p-5 border-t border-cyber-400/10 flex gap-3">
+                <button
+                  onClick={() => setConfirmModal(null)}
+                  className="btn-secondary flex-1 text-sm py-2.5"
+                >
+                  返回比价
+                </button>
+                <button className="btn-warm flex-1 text-sm py-2.5 flex items-center justify-center gap-1">
+                  <FileText className="w-4 h-4" />
+                  确认预约
+                </button>
+              </div>
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </div>
   )
 }
