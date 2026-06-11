@@ -12,8 +12,8 @@ import { vehicleRouter } from './routes/vehicles.js'
 import { enterpriseRouter } from './routes/enterprise.js'
 
 const app = express()
-const PORT = parseInt(process.env.API_PORT || '3300', 10)
-const HOST = process.env.API_HOST || '0.0.0.0'
+const PORT = parseInt(process.env.API_PORT || process.env.BACKEND_PORT || '59164', 10)
+const HOST = process.env.API_HOST || process.env.HOST || '127.0.0.1'
 
 app.use(cors({
   origin: (process.env.CORS_ORIGIN || '*').split(','),
@@ -42,6 +42,16 @@ app.get('/api/v1/health', (_req, res) => {
   })
 })
 
+app.get('/api/health', (_req, res) => {
+  res.json({
+    status: 'ok',
+    service: 'deppon-logistics-api',
+    version: '1.0.0',
+    apiBase: '/api/v1',
+    timestamp: new Date().toISOString()
+  })
+})
+
 app.use('/api/v1/orders', orderRouter)
 app.use('/api/v1/tracking', trackingRouter)
 app.use('/api/v1/packaging', packagingRouter)
@@ -54,9 +64,9 @@ app.use((_req, res) => {
 })
 
 app.listen(PORT, HOST, () => {
-  console.log(`🚛 德邦大件物流 API 服务已启动`)
-  console.log(`   地址: http://localhost:${PORT}`)
-  console.log(`   健康检查: http://localhost:${PORT}/api/v1/health`)
+  console.log(`德邦大件物流 API 服务已启动`)
+  console.log(`   地址: http://${HOST}:${PORT}`)
+  console.log(`   健康检查: http://${HOST}:${PORT}/api/v1/health`)
   console.log(`   CORS: ${process.env.CORS_ORIGIN || '*'}`)
 })
 
