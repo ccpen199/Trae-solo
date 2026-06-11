@@ -1,6 +1,6 @@
-import { Layout, Menu, Avatar, Dropdown, Space, Button } from 'antd';
+import { Layout, Menu, Avatar, Dropdown, Space, Badge } from 'antd';
 import { Outlet, useNavigate, useLocation } from 'react-router-dom';
-import { HomeOutlined, CompassOutlined, QrcodeOutlined, ShoppingOutlined, UserOutlined, LogoutOutlined, SettingOutlined, DashboardOutlined } from '@ant-design/icons';
+import { HomeOutlined, CompassOutlined, QrcodeOutlined, ShoppingOutlined, UserOutlined, LogoutOutlined, SettingOutlined } from '@ant-design/icons';
 
 const { Header, Content, Footer } = Layout;
 
@@ -60,21 +60,12 @@ function MainLayout({ user, setUser }) {
         </div>
         <Space size="middle">
           {user ? (
-            <>
-              <Space size={4}>
-                <Button type="text" size="small" icon={<ShoppingOutlined />} onClick={() => navigate('/orders')}>我的订单</Button>
-                <Button type="text" size="small" icon={<QrcodeOutlined />} onClick={() => navigate('/tickets')}>我的票夹</Button>
-                {user.role === 'admin' && (
-                  <Button type="primary" size="small" icon={<DashboardOutlined />} onClick={() => navigate('/admin')}>管理后台</Button>
-                )}
+            <Dropdown menu={userMenu} placement="bottomRight">
+              <Space style={{ cursor: 'pointer' }}>
+                <Avatar size="small" icon={<UserOutlined />} />
+                <span>{user.username}</span>
               </Space>
-              <Dropdown menu={userMenu} placement="bottomRight">
-                <Space style={{ cursor: 'pointer' }}>
-                  <Avatar size="small" icon={<UserOutlined />} />
-                  <span>{user.username}</span>
-                </Space>
-              </Dropdown>
-            </>
+            </Dropdown>
           ) : (
             <Space>
               <a onClick={() => navigate('/login')} style={{ color: '#666' }}>登录</a>

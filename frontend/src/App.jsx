@@ -1,4 +1,4 @@
-import { Routes, Route, Navigate, useLocation } from 'react-router-dom';
+import { Routes, Route, Navigate } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import MainLayout from './components/Layout/MainLayout';
 import AdminLayout from './components/Layout/AdminLayout';
@@ -33,9 +33,8 @@ function App() {
 
   const ProtectedRoute = ({ children, requireAdmin = false }) => {
     const token = localStorage.getItem('token');
-    const location = useLocation();
     if (!token) {
-      return <Navigate to={`/login?redirect=${encodeURIComponent(location.pathname + location.search)}`} replace />;
+      return <Navigate to="/login" replace />;
     }
     if (requireAdmin && user?.role !== 'admin') {
       return <Navigate to="/" replace />;

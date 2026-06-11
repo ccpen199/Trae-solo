@@ -1,14 +1,11 @@
 import { Form, Input, Button, Card, message } from 'antd';
 import { UserOutlined, LockOutlined } from '@ant-design/icons';
-import { useNavigate, Link, useSearchParams } from 'react-router-dom';
-import { useState } from 'react';
+import { useNavigate, Link } from 'react-router-dom';
 import { authAPI } from '../api';
 
 function Login({ setUser }) {
   const navigate = useNavigate();
-  const [searchParams] = useSearchParams();
   const [form] = Form.useForm();
-  const [isAdmin, setIsAdmin] = useState(false);
 
   const handleLogin = async (values) => {
     try {
@@ -17,12 +14,7 @@ function Login({ setUser }) {
       localStorage.setItem('user', JSON.stringify(res.user));
       setUser(res.user);
       message.success('登录成功');
-      if (res.user.role === 'admin') {
-        setIsAdmin(true);
-        message.info('您是管理员，可进入管理后台管理票务信息');
-      }
-      const redirect = searchParams.get('redirect');
-      navigate(redirect || '/');
+      navigate('/');
     } catch (err) {
       message.error(err.response?.data?.error || '登录失败');
     }
@@ -51,13 +43,6 @@ function Login({ setUser }) {
               登录
             </Button>
           </Form.Item>
-          {isAdmin && (
-            <Form.Item>
-              <Button block style={{ height: 44 }} onClick={() => navigate('/admin')}>
-                进入管理后台
-              </Button>
-            </Form.Item>
-          )}
           <div style={{ textAlign: 'center', color: '#666' }}>
             还没有账户？<Link to="/register">立即注册</Link>
           </div>

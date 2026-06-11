@@ -34,7 +34,6 @@ router.get('/event/:eventId', (req, res) => {
 });
 
 function isStrategyApplicable(strategy, now) {
-  if (strategy.is_active === 1) return true;
   if (strategy.start_time && now < strategy.start_time) return false;
   if (strategy.end_time && now > strategy.end_time) return false;
   return true;

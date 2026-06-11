@@ -223,6 +223,8 @@ function initDatabase() {
       created_at DATETIME DEFAULT CURRENT_TIMESTAMP
     )`);
 
+    db.run(`INSERT OR IGNORE INTO users (username, email, password, role, real_name) VALUES (?, ?, ?, ?, ?)`, 
+      ['admin', 'admin@ticket.com', '$2a$10$rqQ43yN2dV8eEqY7V9G7ZeF7X7Y7V6X5W4V3U2T1S0R9Q8P7O6N5M4L3K2J1', 'admin', '系统管理员']);
   });
 }
 

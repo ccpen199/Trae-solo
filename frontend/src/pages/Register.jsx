@@ -1,11 +1,10 @@
 import { Form, Input, Button, Card, message } from 'antd';
 import { UserOutlined, LockOutlined, MailOutlined, PhoneOutlined } from '@ant-design/icons';
-import { useNavigate, Link, useSearchParams } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 import { authAPI } from '../api';
 
 function Register({ setUser }) {
   const navigate = useNavigate();
-  const [searchParams] = useSearchParams();
   const [form] = Form.useForm();
 
   const handleRegister = async (values) => {
@@ -15,8 +14,7 @@ function Register({ setUser }) {
       localStorage.setItem('user', JSON.stringify(res.user));
       setUser(res.user);
       message.success('注册成功');
-      const redirect = searchParams.get('redirect');
-      navigate(redirect || '/');
+      navigate('/');
     } catch (err) {
       message.error(err.response?.data?.error || '注册失败');
     }

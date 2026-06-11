@@ -34,21 +34,7 @@ router.get('/', (req, res) => {
       return res.status(500).json({ error: '查询失败' });
     }
 
-    let countQuery = 'SELECT COUNT(*) as total FROM events WHERE 1=1';
-    const countParams = [];
-    if (category && category !== 'all') {
-      countQuery += ' AND category = ?';
-      countParams.push(category);
-    }
-    if (city) {
-      countQuery += ' AND city = ?';
-      countParams.push(city);
-    }
-    if (keyword) {
-      countQuery += ' AND (title LIKE ? OR description LIKE ?)';
-      countParams.push(`%${keyword}%`, `%${keyword}%`);
-    }
-    db.get(countQuery, countParams, (err, result) => {
+    db.get('SELECT COUNT(*) as total FROM events WHERE 1=1', (err, result) => {
       res.json({ events, total: result.total, page: parseInt(page), limit: parseInt(limit) });
     });
   });

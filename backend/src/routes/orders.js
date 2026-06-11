@@ -16,109 +16,73 @@ function generateTicketNo() {
   return `ET${crypto.randomBytes(8).toString('hex').toUpperCase()}`;
 }
 
-router.post('/', authenticateToken, (req, res) => {
-  const { eventId, seatIds, realName, contactName, contactPhone, phone, idCard, strategyId } = req.body;
+router.post('/', authenticateToken, async (req, res) => {
+  const { eventId, seatIds, contactName, contactPhone, idCard, strategyId } = req.body;
   const userId = req.user.id;
   const orderNo = generateOrderNo();
-  const cName = realName || contactName || '';
-  const cPhone = phone || contactPhone || '';
 
-  if (!seatIds || !seatIds.length) {
-    return res.status(400).json({ error: '请选择座位' });
-  }
-
-  const placeholders = seatIds.map(() => '?').join(',');
-  
-  db.all(`
-    SELECT s.id, s.row, s.seat_number, s.area, s.price_tier, s.status, s.locked_by
-    FROM seats s
-    JOIN seat_maps sm ON s.seat_map_id = sm.id
-    WHERE s.id IN (${placeholders}) AND sm.event_id = ?
-  `, [...seatIds, eventId], (err, seats) => {
-    if (err) {
-      return res.status(500).json({ error: '查询座位失败' });
-    }
-
-    if (!seats || seats.length === 0) {
-      return res.status(400).json({ error: '未找到指定座位' });
-    }
-
-    const invalidSeats = seats.filter(s => s.status === 'sold');
-    if (invalidSeats.length > 0) {
-      return res.status(400).json({ error: '部分座位已售出' });
-    }
-
-    const lockedByOthers = seats.filter(s => s.status === 'locked' && s.locked_by !== userId);
-    if (lockedByOthers.length > 0) {
-      return res.status(400).json({ error: '部分座位已被他人锁定' });
-    }
-
-    const areaPriceMap = { 'VIP': 1280, 'A区': 880, 'B区': 580 };
-    let totalAmount = 0;
-    seats.forEach(s => {
-      totalAmount += areaPriceMap[s.area] || 880;
-    });
-
-    let payAmount = totalAmount;
-    db.get('SELECT base_price, discount_type, discount_value FROM price_strategies WHERE event_id = ? AND is_active = 1 LIMIT 1', [eventId], (err2, strategy) => {
-      if (strategy && strategy.discount_type === 'percentage' && strategy.discount_value) {
-        payAmount = Math.round(totalAmount * (1 - strategy.discount_value / 100));
-      } else if (strategy && strategy.discount_type === 'fixed' && strategy.discount_value) {
-        payAmount = totalAmount - strategy.discount_value * seats.length;
+  db.serialize(() => {
+    const placeholders = seatIds.map(() => '?').join(',');
+    
+    db.all(`
+      SELECT s.id, s.row, s.seat_number, s.area, s.price_tier, s.status, s.locked_by,
+             ps.base_price, ps.id as strategy_id
+      FROM seats s
+      JOIN seat_maps sm ON s.seat_map_id = sm.id
+      JOIN price_strategies ps ON sm.event_id = ps.event_id
+      WHERE s.id IN (${placeholders}) AND sm.event_id = ?
+    `, [...seatIds, eventId], (err, seats) => {
+      if (err) {
+        return res.status(500).json({ error: '查询座位失败' });
       }
+
+      const invalidSeats = seats.filter(s => s.status === 'sold');
+      if (invalidSeats.length > 0) {
+        return res.status(400).json({ error: '部分座位已售出' });
+      }
+
+      const lockedByOthers = seats.filter(s => s.status === 'locked' && s.locked_by !== userId);
+      if (lockedByOthers.length > 0) {
+        return res.status(400).json({ error: '部分座位已被他人锁定' });
+      }
+
+      const totalAmount = seats.reduce((sum, s) => sum + s.base_price, 0);
 
       db.run(
         `INSERT INTO orders (order_no, user_id, event_id, total_amount, pay_amount, contact_name, contact_phone, id_card, status)
          VALUES (?, ?, ?, ?, ?, ?, ?, ?, 'pending')`,
-        [orderNo, userId, eventId, totalAmount, payAmount, cName, cPhone, idCard],
-        function(err3) {
-          if (err3) {
+        [orderNo, userId, eventId, totalAmount, totalAmount, contactName, contactPhone, idCard],
+        function(err) {
+          if (err) {
             return res.status(500).json({ error: '创建订单失败' });
           }
 
           const orderId = this.lastID;
-          let pending = seats.length;
-          let failed = false;
+          const orderItemStmt = db.prepare('INSERT INTO order_items (order_id, seat_id, seat_info, price, original_price, strategy_id) VALUES (?, ?, ?, ?, ?, ?)');
+          const seatUpdateStmt = db.prepare('UPDATE seats SET status = "sold", order_id = ? WHERE id = ?');
 
-          function done() {
-            pending--;
-            if (pending === 0 && !failed) {
-              res.status(201).json({ orderId, orderNo, totalAmount, payAmount, message: '订单创建成功' });
-            }
-          }
-
-          seats.forEach((seat) => {
+          Promise.all(seats.map(async (seat) => {
             const seatInfo = JSON.stringify({ row: seat.row, number: seat.seat_number, area: seat.area, tier: seat.price_tier });
-            const price = areaPriceMap[seat.area] || 880;
-            
-            db.run(
-              'INSERT INTO order_items (order_id, seat_id, seat_info, price, original_price, strategy_id) VALUES (?, ?, ?, ?, ?, ?)',
-              [orderId, seat.id, seatInfo, price, price, strategyId || null],
-              function(err4) {
-                if (err4 || failed) { failed = true; return; }
-                const orderItemId = this.lastID;
+            orderItemStmt.run([orderId, seat.id, seatInfo, seat.base_price, seat.base_price, strategyId || null]);
+            seatUpdateStmt.run([orderId, seat.id]);
 
-                db.run('UPDATE seats SET status = "sold", order_id = ? WHERE id = ?', [orderId, seat.id]);
+            const ticketNo = generateTicketNo();
+            const encryptedData = crypto.createHash('sha256').update(`${ticketNo}-${orderId}-${seat.id}-${Date.now()}`).digest('hex');
+            const qrData = `ticket://${ticketNo}?data=${encryptedData}`;
+            const qrCode = await qrcode.toDataURL(qrData);
 
-                const ticketNo = generateTicketNo();
-                const encryptedData = crypto.createHash('sha256').update(`${ticketNo}-${orderId}-${seat.id}-${Date.now()}`).digest('hex');
-                const qrData = `ticket://${ticketNo}?data=${encryptedData}`;
-
-                qrcode.toDataURL(qrData, (qrErr, qrCode) => {
-                  if (qrErr) qrCode = '';
-                  
-                  db.run(
-                    `INSERT INTO etickets (ticket_no, order_id, order_item_id, user_id, event_id, seat_info, qr_code, encrypted_data, status)
-                     VALUES (?, ?, ?, ?, ?, ?, ?, ?, 'unused')`,
-                    [ticketNo, orderId, orderItemId, userId, eventId, seatInfo, qrCode || '', encryptedData],
-                    (err5) => {
-                      if (err5) { failed = true; return; }
-                      done();
-                    }
-                  );
-                });
-              }
-            );
+            return new Promise((resolve, reject) => {
+              db.run(
+                `INSERT INTO etickets (ticket_no, order_id, order_item_id, user_id, event_id, seat_info, qr_code, encrypted_data, status)
+                 VALUES (?, ?, ?, ?, ?, ?, ?, ?, 'unused')`,
+                [ticketNo, orderId, null, userId, eventId, seatInfo, qrCode, encryptedData],
+                (err) => err ? reject(err) : resolve()
+              );
+            });
+          })).then(() => {
+            res.status(201).json({ orderId, orderNo, message: '订单创建成功' });
+          }).catch((err) => {
+            res.status(500).json({ error: '生成电子票失败' });
           });
         }
       );
