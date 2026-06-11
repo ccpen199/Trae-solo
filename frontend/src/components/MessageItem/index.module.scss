@@ -1,0 +1,122 @@
+@import '@/styles/theme.scss';
+
+.item {
+  display: flex;
+  gap: 20rpx;
+  padding: 28rpx 32rpx;
+  background: #fff;
+  border-bottom: 1rpx solid #f0f0f0;
+  transition: background 0.2s;
+  &:active {
+    background: #f5f7fa;
+  }
+
+  &.unread {
+    background: #f0f7ff;
+  }
+}
+
+.icon {
+  width: 72rpx;
+  height: 72rpx;
+  background: linear-gradient(135deg, #E6F4FF 0%, #BAE0FF 100%);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  position: relative;
+}
+
+.iconText {
+  font-size: 32rpx;
+}
+
+.dot {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 16rpx;
+  height: 16rpx;
+  background: $color-error;
+  border-radius: 50%;
+  border: 2rpx solid #fff;
+}
+
+.content {
+  flex: 1;
+  min-width: 0;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 12rpx;
+}
+
+.titleRow {
+  display: flex;
+  align-items: center;
+  gap: 12rpx;
+  flex: 1;
+  min-width: 0;
+}
+
+.title {
+  font-size: 30rpx;
+  font-weight: 600;
+  color: #303133;
+  flex-shrink: 1;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.badgeUrgent {
+  font-size: 20rpx;
+  color: #fff;
+  background: $color-error;
+  padding: 4rpx 12rpx;
+  border-radius: 8rpx;
+  flex-shrink: 0;
+}
+
+.badgeHigh {
+  font-size: 20rpx;
+  color: #fff;
+  background: $color-warning;
+  padding: 4rpx 12rpx;
+  border-radius: 8rpx;
+  flex-shrink: 0;
+}
+
+.time {
+  font-size: 22rpx;
+  color: #909399;
+  flex-shrink: 0;
+  margin-left: 16rpx;
+}
+
+.summary {
+  font-size: 26rpx;
+  color: #606266;
+  line-height: 1.5;
+  margin-bottom: 12rpx;
+  display: block;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+}
+
+.footer {
+  display: flex;
+  align-items: center;
+}
+
+.sender {
+  font-size: 22rpx;
+  color: #909399;
+}

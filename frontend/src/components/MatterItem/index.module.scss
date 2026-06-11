@@ -1,0 +1,166 @@
+@import '@/styles/theme.scss';
+
+.item {
+  background: #fff;
+  border-radius: 16rpx;
+  padding: 28rpx;
+  margin-bottom: 20rpx;
+  box-shadow: 0 4rpx 12rpx rgba(0, 0, 0, 0.04);
+  &:active {
+    background: #f5f7fa;
+  }
+}
+
+.header {
+  border-bottom: 1rpx solid #f0f0f0;
+  padding-bottom: 20rpx;
+  margin-bottom: 20rpx;
+}
+
+.titleRow {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 16rpx;
+}
+
+.title {
+  font-size: 32rpx;
+  font-weight: 600;
+  color: #303133;
+  flex: 1;
+}
+
+.code {
+  font-size: 22rpx;
+  color: #909399;
+  margin-top: 8rpx;
+  display: block;
+}
+
+.status {
+  font-size: 22rpx;
+  padding: 6rpx 16rpx;
+  border-radius: 8rpx;
+  flex-shrink: 0;
+}
+
+.statusGray {
+  color: #909399;
+  background: rgba(144, 147, 153, 0.1);
+}
+
+.statusBlue {
+  color: $color-primary;
+  background: rgba(24, 144, 255, 0.1);
+}
+
+.statusWarning {
+  color: $color-warning;
+  background: rgba(250, 140, 22, 0.1);
+}
+
+.statusSuccess {
+  color: $color-success;
+  background: rgba(82, 196, 26, 0.1);
+}
+
+.statusError {
+  color: $color-error;
+  background: rgba(245, 34, 45, 0.1);
+}
+
+.crossProvince {
+  background: linear-gradient(90deg, rgba(82, 196, 26, 0.08), rgba(24, 144, 255, 0.08));
+  padding: 12rpx 16rpx;
+  border-radius: 8rpx;
+  margin-bottom: 16rpx;
+}
+
+.crossText {
+  font-size: 22rpx;
+  color: $color-primary;
+  font-weight: 500;
+}
+
+.progress {
+  display: flex;
+  gap: 16rpx;
+  padding: 16rpx 0;
+  background: #f9fafb;
+  border-radius: 12rpx;
+  padding: 16rpx 20rpx;
+  margin-bottom: 20rpx;
+}
+
+.progressDot {
+  width: 16rpx;
+  height: 16rpx;
+  border-radius: 50%;
+  background: $color-primary;
+  margin-top: 8rpx;
+  flex-shrink: 0;
+  box-shadow: 0 0 0 6rpx rgba(24, 144, 255, 0.15);
+}
+
+.progressContent {
+  flex: 1;
+}
+
+.progressNode {
+  font-size: 26rpx;
+  font-weight: 600;
+  color: #303133;
+  display: block;
+}
+
+.progressMsg {
+  font-size: 24rpx;
+  color: #606266;
+  margin-top: 6rpx;
+  display: block;
+}
+
+.progressTime {
+  font-size: 22rpx;
+  color: #909399;
+  margin-top: 6rpx;
+  display: block;
+}
+
+.footer {
+  border-top: 1rpx solid #f0f0f0;
+  padding-top: 20rpx;
+}
+
+.infoRow {
+  margin-bottom: 16rpx;
+}
+
+.info {
+  font-size: 22rpx;
+  color: #909399;
+}
+
+.actions {
+  display: flex;
+  gap: 16rpx;
+  justify-content: flex-end;
+}
+
+.actionBtn {
+  font-size: 24rpx;
+  color: $color-primary;
+  padding: 12rpx 28rpx;
+  border: 1rpx solid $color-primary;
+  border-radius: 40rpx;
+  background: #fff;
+}
+
+.actionBtnPrimary {
+  font-size: 24rpx;
+  color: #fff;
+  padding: 12rpx 28rpx;
+  border-radius: 40rpx;
+  background: $color-primary;
+}

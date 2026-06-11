@@ -1,0 +1,159 @@
+@import '@/styles/theme.scss';
+
+.timeline {
+  padding: 16rpx 0;
+}
+
+.item {
+  display: flex;
+  position: relative;
+  padding-bottom: 32rpx;
+
+  &.last {
+    padding-bottom: 0;
+  }
+}
+
+.line {
+  width: 2rpx;
+  position: absolute;
+  left: 15rpx;
+  top: 36rpx;
+  bottom: 0;
+  display: flex;
+  justify-content: center;
+}
+
+.lineBar {
+  width: 2rpx;
+  flex: 1;
+  background: #e4e7ed;
+}
+
+.dotWrap {
+  width: 32rpx;
+  height: 32rpx;
+  flex-shrink: 0;
+  margin-right: 20rpx;
+  position: relative;
+  z-index: 1;
+}
+
+.dot {
+  width: 32rpx;
+  height: 32rpx;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #e4e7ed;
+  border: 4rpx solid #fff;
+  box-shadow: 0 0 0 2rpx #e4e7ed;
+}
+
+.dotIcon {
+  font-size: 18rpx;
+  color: #fff;
+  font-weight: bold;
+}
+
+.completed {
+  background: $color-success;
+  box-shadow: 0 0 0 2rpx $color-success;
+  .lineBar {
+    background: $color-success;
+  }
+}
+
+.current {
+  background: $color-primary;
+  box-shadow: 0 0 0 6rpx rgba(24, 144, 255, 0.15);
+  animation: pulse 2s infinite;
+  .lineBar {
+    background: #e4e7ed;
+  }
+}
+
+.pending {
+  background: #fff;
+  .dotIcon {
+    color: #c0c4cc;
+  }
+  .lineBar {
+    background: #e4e7ed;
+  }
+}
+
+.success {
+  background: $color-success;
+  box-shadow: 0 0 0 2rpx $color-success;
+  .lineBar {
+    background: $color-success;
+  }
+}
+
+.warning {
+  background: $color-warning;
+  box-shadow: 0 0 0 2rpx $color-warning;
+  .lineBar {
+    background: $color-warning;
+  }
+}
+
+.error {
+  background: $color-error;
+  box-shadow: 0 0 0 2rpx $color-error;
+  .lineBar {
+    background: $color-error;
+  }
+}
+
+@keyframes pulse {
+  0% {
+    box-shadow: 0 0 0 6rpx rgba(24, 144, 255, 0.15);
+  }
+  50% {
+    box-shadow: 0 0 0 12rpx rgba(24, 144, 255, 0.05);
+  }
+  100% {
+    box-shadow: 0 0 0 6rpx rgba(24, 144, 255, 0.15);
+  }
+}
+
+.content {
+  flex: 1;
+  padding-top: 0;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 8rpx;
+}
+
+.title {
+  font-size: 28rpx;
+  font-weight: 600;
+  color: #303133;
+}
+
+.time {
+  font-size: 22rpx;
+  color: #909399;
+  flex-shrink: 0;
+  margin-left: 16rpx;
+}
+
+.description {
+  font-size: 24rpx;
+  color: #606266;
+  line-height: 1.5;
+  display: block;
+  margin-bottom: 8rpx;
+}
+
+.operator {
+  font-size: 22rpx;
+  color: #909399;
+}

@@ -1,0 +1,138 @@
+@import '@/styles/theme.scss';
+
+.card {
+  background: #fff;
+  border-radius: 16rpx;
+  padding: 24rpx;
+  display: flex;
+  gap: 20rpx;
+  box-shadow: 0 4rpx 12rpx rgba(0, 0, 0, 0.04);
+  transition: all 0.2s;
+  &:active {
+    transform: scale(0.98);
+    background: #f5f7fa;
+  }
+}
+
+.small {
+  padding: 16rpx;
+  .content {
+    .name {
+      font-size: 26rpx;
+    }
+    .desc {
+      font-size: 22rpx;
+    }
+  }
+}
+
+.medium {
+  .icon {
+    width: 88rpx;
+    height: 88rpx;
+  }
+}
+
+.large {
+  padding: 32rpx;
+  .icon {
+    width: 96rpx;
+    height: 96rpx;
+  }
+  .content {
+    .name {
+      font-size: 34rpx;
+    }
+    .desc {
+      font-size: 26rpx;
+      margin-top: 12rpx;
+    }
+  }
+}
+
+.icon {
+  width: 80rpx;
+  height: 80rpx;
+  background: linear-gradient(135deg, #E6F4FF 0%, #BAE0FF 100%);
+  border-radius: 16rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.content {
+  flex: 1;
+  min-width: 0;
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  gap: 12rpx;
+  flex-wrap: wrap;
+}
+
+.name {
+  font-size: 30rpx;
+  font-weight: 600;
+  color: #303133;
+}
+
+.crossTag {
+  font-size: 20rpx;
+  color: $color-success;
+  background: rgba(82, 196, 26, 0.1);
+  padding: 4rpx 12rpx;
+  border-radius: 8rpx;
+}
+
+.urgentTag {
+  font-size: 20rpx;
+  color: $color-warning;
+  background: rgba(250, 140, 22, 0.1);
+  padding: 4rpx 12rpx;
+  border-radius: 8rpx;
+}
+
+.desc {
+  font-size: 24rpx;
+  color: #909399;
+  margin-top: 8rpx;
+  display: block;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 16rpx;
+}
+
+.status {
+  font-size: 22rpx;
+  padding: 4rpx 12rpx;
+  border-radius: 8rpx;
+}
+
+.statusOnline {
+  color: $color-success;
+  background: rgba(82, 196, 26, 0.1);
+}
+
+.statusOffline {
+  color: #909399;
+  background: rgba(144, 147, 153, 0.1);
+}
+
+.hot {
+  display: flex;
+  gap: 2rpx;
+}
+
+.hotIcon {
+  font-size: 20rpx;
+}

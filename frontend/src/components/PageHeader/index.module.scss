@@ -1,0 +1,46 @@
+@import '@/styles/theme.scss';
+
+.header {
+  padding: 32rpx 32rpx 24rpx;
+  background: linear-gradient(135deg, $color-primary 0%, $color-primary-light 100%);
+  color: #fff;
+}
+
+.headerTop {
+  display: flex;
+  align-items: center;
+  gap: 16rpx;
+}
+
+.backBtn {
+  width: 56rpx;
+  height: 56rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.2);
+}
+
+.backIcon {
+  font-size: 40rpx;
+  font-weight: bold;
+  line-height: 1;
+}
+
+.titleWrap {
+  flex: 1;
+}
+
+.title {
+  font-size: 36rpx;
+  font-weight: 600;
+  display: block;
+}
+
+.subtitle {
+  font-size: 24rpx;
+  opacity: 0.9;
+  margin-top: 8rpx;
+  display: block;
+}
