@@ -1,0 +1,2100 @@
+{
+  "ok": true,
+  "generatedAt": "2026-06-09T06:15:33.803Z",
+  "order": "may-89114",
+  "roundIndex": 434,
+  "captureId": "may-89114-codex-round434",
+  "url": "http://127.0.0.1:49114/",
+  "initialUrl": "http://127.0.0.1:49114/",
+  "finalUrl": "http://127.0.0.1:49114/",
+  "status": 200,
+  "title": "小卫士 - 儿童安全监护平台",
+  "initialTitle": "小卫士 - 儿童安全监护平台",
+  "navigationError": "",
+  "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89114/runtime-check/codex-20260609-repair-round434/may-89114-codex-round434-frontend.png",
+  "screenshotPaths": [
+    "/Users/chen/Documents/trae_projects/local_projects/may-89114/runtime-check/codex-20260609-repair-round434/may-89114-codex-round434-structure-01-首屏.png",
+    "/Users/chen/Documents/trae_projects/local_projects/may-89114/runtime-check/codex-20260609-repair-round434/may-89114-codex-round434-structure-02-导航-仪表盘.png",
+    "/Users/chen/Documents/trae_projects/local_projects/may-89114/runtime-check/codex-20260609-repair-round434/may-89114-codex-round434-structure-03-操作-小刚的守护鞋.png",
+    "/Users/chen/Documents/trae_projects/local_projects/may-89114/runtime-check/codex-20260609-repair-round434/may-89114-codex-round434-structure-04-操作-小红的智能手表.png",
+    "/Users/chen/Documents/trae_projects/local_projects/may-89114/runtime-check/codex-20260609-repair-round434/may-89114-codex-round434-structure-05-导航-定位与围栏.png",
+    "/Users/chen/Documents/trae_projects/local_projects/may-89114/runtime-check/codex-20260609-repair-round434/may-89114-codex-round434-structure-06-操作-标准.png",
+    "/Users/chen/Documents/trae_projects/local_projects/may-89114/runtime-check/codex-20260609-repair-round434/may-89114-codex-round434-structure-07-操作-电子围栏.png",
+    "/Users/chen/Documents/trae_projects/local_projects/may-89114/runtime-check/codex-20260609-repair-round434/may-89114-codex-round434-structure-08-导航-通话管理.png",
+    "/Users/chen/Documents/trae_projects/local_projects/may-89114/runtime-check/codex-20260609-repair-round434/may-89114-codex-round434-structure-09-操作-全部类型.png"
+  ],
+  "issueTextPreview": "个人中心/我的相关问题；后台管理相关问题；详情/内容页相关问题",
+  "targetReason": "个人中心/我的相关问题；后台管理相关问题；详情/内容页相关问题",
+  "targetKind": "personal",
+  "targetMatched": true,
+  "targetActions": [
+    {
+      "action": "click",
+      "label": "个人中心/我的相关问题",
+      "ok": true
+    },
+    {
+      "action": "target-verify",
+      "label": "个人中心/我的相关问题",
+      "ok": true,
+      "finalUrl": "http://127.0.0.1:49114/profile"
+    }
+  ],
+  "authFlow": {
+    "detected": false,
+    "attempted": false,
+    "success": false,
+    "finalUrl": "http://127.0.0.1:49114/",
+    "message": "",
+    "actions": []
+  },
+  "businessAudit": {
+    "actions": [
+      {
+        "action": "click",
+        "label": "导航:仪表盘",
+        "ok": true
+      },
+      {
+        "action": "click",
+        "label": "操作:小刚的守护鞋",
+        "ok": true,
+        "result": {
+          "ok": true,
+          "matched": 1
+        }
+      },
+      {
+        "action": "click",
+        "label": "操作:小红的智能手表",
+        "ok": true,
+        "result": {
+          "ok": true,
+          "matched": 1
+        }
+      },
+      {
+        "action": "click",
+        "label": "导航:定位与围栏",
+        "ok": true
+      },
+      {
+        "action": "click",
+        "label": "操作:标准",
+        "ok": true,
+        "result": {
+          "ok": true,
+          "matched": 1
+        }
+      },
+      {
+        "action": "click",
+        "label": "操作:电子围栏",
+        "ok": true,
+        "result": {
+          "ok": true,
+          "matched": 1
+        }
+      },
+      {
+        "action": "click",
+        "label": "导航:通话管理",
+        "ok": true
+      },
+      {
+        "action": "click",
+        "label": "操作:全部类型",
+        "ok": true,
+        "result": {
+          "ok": true,
+          "matched": 1
+        }
+      }
+    ],
+    "snapshots": [
+      {
+        "label": "首屏",
+        "url": "http://127.0.0.1:49114/",
+        "title": "小卫士 - 儿童安全监护平台",
+        "headings": [
+          "小卫士",
+          "仪表盘总览",
+          "设备位置",
+          "告警统计",
+          "设备状态"
+        ],
+        "navLabels": [
+          "小卫士 儿童安全监护平台",
+          "仪表盘",
+          "定位与围栏",
+          "通话管理",
+          "SOS告警",
+          "设备管理",
+          "成员后台管理",
+          "个人中心",
+          "隐私保护",
+          "异常分析"
+        ],
+        "buttons": [
+          "小明的守护手表",
+          "小红的智能手表",
+          "小刚的守护鞋"
+        ],
+        "links": [
+          "仪表盘",
+          "定位与围栏",
+          "通话管理",
+          "SOS告警",
+          "设备管理",
+          "成员后台管理",
+          "个人中心",
+          "隐私保护",
+          "异常分析",
+          "3",
+          "SOS 3",
+          "围栏越界 3",
+          "异常行为 2",
+          "电量低 2",
+          "历史轨迹",
+          "隐私策略",
+          "设备设置",
+          "SOS测试",
+          "围栏设置",
+          "通话拨号"
+        ],
+        "inputs": [],
+        "tables": [],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "小卫士儿童安全监护平台仪表盘定位与围栏通话管理SOS告警设备管理成员后台管理个人中心隐私保护异常分析仪表盘总览2026年6月9日星期二 09:1431在线设备3活跃告警16今日通话5家庭成员设备位置小明的守护手表小红的智能手表小刚的守护鞋告警统计SOS 3围栏越界 3异常行为 2电量低 2最近告警SOS求助儿童长按SOS按钮发起求救6月8日 08:05设备离线设备已离线超过30分钟6月8日 02:05电量预警设备电量低于20%，请及时充电6月8日 01:05围栏越界儿童进入危险区域6月7日 21:05设备离线设备信号丢失，可能处于信号盲区6月7日 03:05设备状态小明的守护手表78%4小时前历史轨迹隐私策略设备设置小红的智能手表15%4小时前历史轨迹隐私策略设备设置小刚的守护鞋45%4小时前历史轨迹隐私策略设备设置SOS测试围栏设置通话拨号设备管理",
+        "layout": {
+          "viewportWidth": 1504,
+          "viewportHeight": 1000,
+          "scrollWidth": 1504,
+          "scrollHeight": 1000,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89114-codex-round434-structure-01-首屏",
+          "label": "首屏",
+          "finalUrl": "http://127.0.0.1:49114/",
+          "title": "小卫士 - 儿童安全监护平台",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89114/runtime-check/codex-20260609-repair-round434/may-89114-codex-round434-structure-01-首屏.json",
+          "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89114/runtime-check/codex-20260609-repair-round434/may-89114-codex-round434-structure-01-首屏.png",
+          "elementCount": 341,
+          "interactiveCount": 32,
+          "interactiveLabels": [
+            "仪表盘",
+            "定位与围栏",
+            "通话管理",
+            "SOS告警",
+            "设备管理",
+            "成员后台管理",
+            "个人中心",
+            "隐私保护",
+            "异常分析",
+            "3",
+            "小明的守护手表",
+            "小红的智能手表",
+            "小刚的守护鞋",
+            "SOS 3",
+            "围栏越界 3",
+            "异常行为 2",
+            "电量低 2",
+            "历史轨迹",
+            "隐私策略",
+            "设备设置",
+            "SOS测试",
+            "围栏设置",
+            "通话拨号"
+          ]
+        }
+      },
+      {
+        "label": "导航:仪表盘",
+        "url": "http://127.0.0.1:49114/",
+        "title": "小卫士 - 儿童安全监护平台",
+        "headings": [
+          "小卫士",
+          "仪表盘总览",
+          "设备位置",
+          "告警统计",
+          "设备状态"
+        ],
+        "navLabels": [
+          "小卫士 儿童安全监护平台",
+          "仪表盘",
+          "定位与围栏",
+          "通话管理",
+          "SOS告警",
+          "设备管理",
+          "成员后台管理",
+          "个人中心",
+          "隐私保护",
+          "异常分析"
+        ],
+        "buttons": [
+          "小明的守护手表",
+          "小红的智能手表",
+          "小刚的守护鞋"
+        ],
+        "links": [
+          "仪表盘",
+          "定位与围栏",
+          "通话管理",
+          "SOS告警",
+          "设备管理",
+          "成员后台管理",
+          "个人中心",
+          "隐私保护",
+          "异常分析",
+          "3",
+          "SOS 3",
+          "围栏越界 3",
+          "异常行为 2",
+          "电量低 2",
+          "历史轨迹",
+          "隐私策略",
+          "设备设置",
+          "SOS测试",
+          "围栏设置",
+          "通话拨号"
+        ],
+        "inputs": [],
+        "tables": [],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "小卫士儿童安全监护平台仪表盘定位与围栏通话管理SOS告警设备管理成员后台管理个人中心隐私保护异常分析仪表盘总览2026年6月9日星期二 09:1431在线设备3活跃告警16今日通话5家庭成员设备位置小明的守护手表小红的智能手表小刚的守护鞋告警统计SOS 3围栏越界 3异常行为 2电量低 2最近告警SOS求助儿童长按SOS按钮发起求救6月8日 08:05设备离线设备已离线超过30分钟6月8日 02:05电量预警设备电量低于20%，请及时充电6月8日 01:05围栏越界儿童进入危险区域6月7日 21:05设备离线设备信号丢失，可能处于信号盲区6月7日 03:05设备状态小明的守护手表78%4小时前历史轨迹隐私策略设备设置小红的智能手表15%4小时前历史轨迹隐私策略设备设置小刚的守护鞋45%4小时前历史轨迹隐私策略设备设置SOS测试围栏设置通话拨号设备管理",
+        "layout": {
+          "viewportWidth": 1536,
+          "viewportHeight": 1000,
+          "scrollWidth": 1536,
+          "scrollHeight": 1000,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89114-codex-round434-structure-02-导航-仪表盘",
+          "label": "导航:仪表盘",
+          "finalUrl": "http://127.0.0.1:49114/",
+          "title": "小卫士 - 儿童安全监护平台",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89114/runtime-check/codex-20260609-repair-round434/may-89114-codex-round434-structure-02-导航-仪表盘.json",
+          "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89114/runtime-check/codex-20260609-repair-round434/may-89114-codex-round434-structure-02-导航-仪表盘.png",
+          "elementCount": 341,
+          "interactiveCount": 32,
+          "interactiveLabels": [
+            "仪表盘",
+            "定位与围栏",
+            "通话管理",
+            "SOS告警",
+            "设备管理",
+            "成员后台管理",
+            "个人中心",
+            "隐私保护",
+            "异常分析",
+            "3",
+            "小明的守护手表",
+            "小红的智能手表",
+            "小刚的守护鞋",
+            "SOS 3",
+            "围栏越界 3",
+            "异常行为 2",
+            "电量低 2",
+            "历史轨迹",
+            "隐私策略",
+            "设备设置",
+            "SOS测试",
+            "围栏设置",
+            "通话拨号"
+          ]
+        }
+      },
+      {
+        "label": "操作:小刚的守护鞋",
+        "url": "http://127.0.0.1:49114/",
+        "title": "小卫士 - 儿童安全监护平台",
+        "headings": [
+          "小卫士",
+          "仪表盘总览",
+          "设备位置",
+          "告警统计",
+          "设备状态"
+        ],
+        "navLabels": [
+          "小卫士 儿童安全监护平台",
+          "仪表盘",
+          "定位与围栏",
+          "通话管理",
+          "SOS告警",
+          "设备管理",
+          "成员后台管理",
+          "个人中心",
+          "隐私保护",
+          "异常分析"
+        ],
+        "buttons": [
+          "小明的守护手表",
+          "小红的智能手表",
+          "小刚的守护鞋"
+        ],
+        "links": [
+          "仪表盘",
+          "定位与围栏",
+          "通话管理",
+          "SOS告警",
+          "设备管理",
+          "成员后台管理",
+          "个人中心",
+          "隐私保护",
+          "异常分析",
+          "3",
+          "查看轨迹",
+          "SOS 3",
+          "围栏越界 3",
+          "异常行为 2",
+          "电量低 2",
+          "历史轨迹",
+          "隐私策略",
+          "设备设置",
+          "SOS测试",
+          "围栏设置",
+          "通话拨号"
+        ],
+        "inputs": [],
+        "tables": [],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "小卫士儿童安全监护平台仪表盘定位与围栏通话管理SOS告警设备管理成员后台管理个人中心隐私保护异常分析仪表盘总览2026年6月9日星期二 09:1431在线设备3活跃告警16今日通话5家庭成员设备位置小明的守护手表小红的智能手表小刚的守护鞋小刚的守护鞋电量: 45% · SOS查看轨迹告警统计SOS 3围栏越界 3异常行为 2电量低 2最近告警SOS求助儿童长按SOS按钮发起求救6月8日 08:05设备离线设备已离线超过30分钟6月8日 02:05电量预警设备电量低于20%，请及时充电6月8日 01:05围栏越界儿童进入危险区域6月7日 21:05设备离线设备信号丢失，可能处于信号盲区6月7日 03:05设备状态小明的守护手表78%4小时前历史轨迹隐私策略设备设置小红的智能手表15%4小时前历史轨迹隐私策略设备设置小刚的守护鞋45%4小时前历史轨迹隐私策略设备设置SOS测试围栏设置通话拨号设备管理",
+        "layout": {
+          "viewportWidth": 1568,
+          "viewportHeight": 1000,
+          "scrollWidth": 1568,
+          "scrollHeight": 1000,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89114-codex-round434-structure-03-操作-小刚的守护鞋",
+          "label": "操作:小刚的守护鞋",
+          "finalUrl": "http://127.0.0.1:49114/",
+          "title": "小卫士 - 儿童安全监护平台",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89114/runtime-check/codex-20260609-repair-round434/may-89114-codex-round434-structure-03-操作-小刚的守护鞋.json",
+          "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89114/runtime-check/codex-20260609-repair-round434/may-89114-codex-round434-structure-03-操作-小刚的守护鞋.png",
+          "elementCount": 348,
+          "interactiveCount": 33,
+          "interactiveLabels": [
+            "仪表盘",
+            "定位与围栏",
+            "通话管理",
+            "SOS告警",
+            "设备管理",
+            "成员后台管理",
+            "个人中心",
+            "隐私保护",
+            "异常分析",
+            "3",
+            "小明的守护手表",
+            "小红的智能手表",
+            "小刚的守护鞋",
+            "查看轨迹",
+            "SOS 3",
+            "围栏越界 3",
+            "异常行为 2",
+            "电量低 2",
+            "历史轨迹",
+            "隐私策略",
+            "设备设置",
+            "SOS测试",
+            "围栏设置",
+            "通话拨号"
+          ]
+        }
+      },
+      {
+        "label": "操作:小红的智能手表",
+        "url": "http://127.0.0.1:49114/",
+        "title": "小卫士 - 儿童安全监护平台",
+        "headings": [
+          "小卫士",
+          "仪表盘总览",
+          "设备位置",
+          "告警统计",
+          "设备状态"
+        ],
+        "navLabels": [
+          "小卫士 儿童安全监护平台",
+          "仪表盘",
+          "定位与围栏",
+          "通话管理",
+          "SOS告警",
+          "设备管理",
+          "成员后台管理",
+          "个人中心",
+          "隐私保护",
+          "异常分析"
+        ],
+        "buttons": [
+          "小明的守护手表",
+          "小红的智能手表",
+          "小刚的守护鞋"
+        ],
+        "links": [
+          "仪表盘",
+          "定位与围栏",
+          "通话管理",
+          "SOS告警",
+          "设备管理",
+          "成员后台管理",
+          "个人中心",
+          "隐私保护",
+          "异常分析",
+          "3",
+          "查看轨迹",
+          "SOS 3",
+          "围栏越界 3",
+          "异常行为 2",
+          "电量低 2",
+          "历史轨迹",
+          "隐私策略",
+          "设备设置",
+          "SOS测试",
+          "围栏设置",
+          "通话拨号"
+        ],
+        "inputs": [],
+        "tables": [],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "小卫士儿童安全监护平台仪表盘定位与围栏通话管理SOS告警设备管理成员后台管理个人中心隐私保护异常分析仪表盘总览2026年6月9日星期二 09:1431在线设备3活跃告警16今日通话5家庭成员设备位置小明的守护手表小红的智能手表小红的智能手表电量: 15% · 离线查看轨迹小刚的守护鞋告警统计SOS 3围栏越界 3异常行为 2电量低 2最近告警SOS求助儿童长按SOS按钮发起求救6月8日 08:05设备离线设备已离线超过30分钟6月8日 02:05电量预警设备电量低于20%，请及时充电6月8日 01:05围栏越界儿童进入危险区域6月7日 21:05设备离线设备信号丢失，可能处于信号盲区6月7日 03:05设备状态小明的守护手表78%4小时前历史轨迹隐私策略设备设置小红的智能手表15%4小时前历史轨迹隐私策略设备设置小刚的守护鞋45%4小时前历史轨迹隐私策略设备设置SOS测试围栏设置通话拨号设备管理",
+        "layout": {
+          "viewportWidth": 1600,
+          "viewportHeight": 1000,
+          "scrollWidth": 1600,
+          "scrollHeight": 1000,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89114-codex-round434-structure-04-操作-小红的智能手表",
+          "label": "操作:小红的智能手表",
+          "finalUrl": "http://127.0.0.1:49114/",
+          "title": "小卫士 - 儿童安全监护平台",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89114/runtime-check/codex-20260609-repair-round434/may-89114-codex-round434-structure-04-操作-小红的智能手表.json",
+          "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89114/runtime-check/codex-20260609-repair-round434/may-89114-codex-round434-structure-04-操作-小红的智能手表.png",
+          "elementCount": 348,
+          "interactiveCount": 33,
+          "interactiveLabels": [
+            "仪表盘",
+            "定位与围栏",
+            "通话管理",
+            "SOS告警",
+            "设备管理",
+            "成员后台管理",
+            "个人中心",
+            "隐私保护",
+            "异常分析",
+            "3",
+            "小明的守护手表",
+            "小红的智能手表",
+            "查看轨迹",
+            "小刚的守护鞋",
+            "SOS 3",
+            "围栏越界 3",
+            "异常行为 2",
+            "电量低 2",
+            "历史轨迹",
+            "隐私策略",
+            "设备设置",
+            "SOS测试",
+            "围栏设置",
+            "通话拨号"
+          ]
+        }
+      },
+      {
+        "label": "导航:定位与围栏",
+        "url": "http://127.0.0.1:49114/location",
+        "title": "小卫士 - 儿童安全监护平台",
+        "headings": [
+          "小卫士",
+          "定位与围栏"
+        ],
+        "navLabels": [
+          "小卫士 儿童安全监护平台",
+          "仪表盘",
+          "定位与围栏",
+          "通话管理",
+          "SOS告警",
+          "设备管理",
+          "成员后台管理",
+          "个人中心",
+          "隐私保护",
+          "异常分析"
+        ],
+        "buttons": [
+          "标准",
+          "融合",
+          "+",
+          "−",
+          "电子围栏",
+          "历史轨迹",
+          "越界记录"
+        ],
+        "links": [
+          "仪表盘",
+          "定位与围栏",
+          "通话管理",
+          "SOS告警",
+          "设备管理",
+          "成员后台管理",
+          "个人中心",
+          "隐私保护",
+          "异常分析",
+          "+",
+          "−",
+          "Leaflet",
+          "OSM"
+        ],
+        "inputs": [
+          {
+            "tag": "select",
+            "type": "",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          }
+        ],
+        "tables": [],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "小卫士儿童安全监护平台仪表盘定位与围栏通话管理SOS告警设备管理成员后台管理个人中心隐私保护异常分析定位与围栏选择设备小明的守护手表小红的智能手表小刚的守护鞋标准融合+− Leaflet | © OSM电子围栏历史轨迹越界记录家进出已启用学校离开已启用公园进入已启用培训中心进出已启用",
+        "layout": {
+          "viewportWidth": 1632,
+          "viewportHeight": 1000,
+          "scrollWidth": 1632,
+          "scrollHeight": 1000,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89114-codex-round434-structure-05-导航-定位与围栏",
+          "label": "导航:定位与围栏",
+          "finalUrl": "http://127.0.0.1:49114/location",
+          "title": "小卫士 - 儿童安全监护平台",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89114/runtime-check/codex-20260609-repair-round434/may-89114-codex-round434-structure-05-导航-定位与围栏.json",
+          "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89114/runtime-check/codex-20260609-repair-round434/may-89114-codex-round434-structure-05-导航-定位与围栏.png",
+          "elementCount": 226,
+          "interactiveCount": 25,
+          "interactiveLabels": [
+            "仪表盘",
+            "定位与围栏",
+            "通话管理",
+            "SOS告警",
+            "设备管理",
+            "成员后台管理",
+            "个人中心",
+            "隐私保护",
+            "异常分析",
+            "选择设备 小明的守护手表 小红的智能手表 小刚的守护鞋",
+            "标准",
+            "融合",
+            "Leaflet | © OSM",
+            "Leaflet",
+            "OSM",
+            "电子围栏",
+            "历史轨迹",
+            "越界记录"
+          ]
+        }
+      },
+      {
+        "label": "操作:标准",
+        "url": "http://127.0.0.1:49114/location",
+        "title": "小卫士 - 儿童安全监护平台",
+        "headings": [
+          "小卫士",
+          "定位与围栏"
+        ],
+        "navLabels": [
+          "小卫士 儿童安全监护平台",
+          "仪表盘",
+          "定位与围栏",
+          "通话管理",
+          "SOS告警",
+          "设备管理",
+          "成员后台管理",
+          "个人中心",
+          "隐私保护",
+          "异常分析"
+        ],
+        "buttons": [
+          "标准",
+          "融合",
+          "+",
+          "−",
+          "电子围栏",
+          "历史轨迹",
+          "越界记录"
+        ],
+        "links": [
+          "仪表盘",
+          "定位与围栏",
+          "通话管理",
+          "SOS告警",
+          "设备管理",
+          "成员后台管理",
+          "个人中心",
+          "隐私保护",
+          "异常分析",
+          "+",
+          "−",
+          "Leaflet",
+          "OSM"
+        ],
+        "inputs": [
+          {
+            "tag": "select",
+            "type": "",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          }
+        ],
+        "tables": [],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "小卫士儿童安全监护平台仪表盘定位与围栏通话管理SOS告警设备管理成员后台管理个人中心隐私保护异常分析定位与围栏选择设备小明的守护手表小红的智能手表小刚的守护鞋标准融合+− Leaflet | © OSM电子围栏历史轨迹越界记录家进出已启用学校离开已启用公园进入已启用培训中心进出已启用",
+        "layout": {
+          "viewportWidth": 1664,
+          "viewportHeight": 1000,
+          "scrollWidth": 1664,
+          "scrollHeight": 1000,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89114-codex-round434-structure-06-操作-标准",
+          "label": "操作:标准",
+          "finalUrl": "http://127.0.0.1:49114/location",
+          "title": "小卫士 - 儿童安全监护平台",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89114/runtime-check/codex-20260609-repair-round434/may-89114-codex-round434-structure-06-操作-标准.json",
+          "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89114/runtime-check/codex-20260609-repair-round434/may-89114-codex-round434-structure-06-操作-标准.png",
+          "elementCount": 226,
+          "interactiveCount": 25,
+          "interactiveLabels": [
+            "仪表盘",
+            "定位与围栏",
+            "通话管理",
+            "SOS告警",
+            "设备管理",
+            "成员后台管理",
+            "个人中心",
+            "隐私保护",
+            "异常分析",
+            "选择设备 小明的守护手表 小红的智能手表 小刚的守护鞋",
+            "标准",
+            "融合",
+            "Leaflet | © OSM",
+            "Leaflet",
+            "OSM",
+            "电子围栏",
+            "历史轨迹",
+            "越界记录"
+          ]
+        }
+      },
+      {
+        "label": "操作:电子围栏",
+        "url": "http://127.0.0.1:49114/location",
+        "title": "小卫士 - 儿童安全监护平台",
+        "headings": [
+          "小卫士",
+          "定位与围栏"
+        ],
+        "navLabels": [
+          "小卫士 儿童安全监护平台",
+          "仪表盘",
+          "定位与围栏",
+          "通话管理",
+          "SOS告警",
+          "设备管理",
+          "成员后台管理",
+          "个人中心",
+          "隐私保护",
+          "异常分析"
+        ],
+        "buttons": [
+          "标准",
+          "融合",
+          "+",
+          "−",
+          "电子围栏",
+          "历史轨迹",
+          "越界记录"
+        ],
+        "links": [
+          "仪表盘",
+          "定位与围栏",
+          "通话管理",
+          "SOS告警",
+          "设备管理",
+          "成员后台管理",
+          "个人中心",
+          "隐私保护",
+          "异常分析",
+          "+",
+          "−",
+          "Leaflet",
+          "OSM"
+        ],
+        "inputs": [
+          {
+            "tag": "select",
+            "type": "",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          }
+        ],
+        "tables": [],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "小卫士儿童安全监护平台仪表盘定位与围栏通话管理SOS告警设备管理成员后台管理个人中心隐私保护异常分析定位与围栏选择设备小明的守护手表小红的智能手表小刚的守护鞋标准融合+− Leaflet | © OSM电子围栏历史轨迹越界记录家进出已启用学校离开已启用公园进入已启用培训中心进出已启用",
+        "layout": {
+          "viewportWidth": 1696,
+          "viewportHeight": 1000,
+          "scrollWidth": 1696,
+          "scrollHeight": 1000,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89114-codex-round434-structure-07-操作-电子围栏",
+          "label": "操作:电子围栏",
+          "finalUrl": "http://127.0.0.1:49114/location",
+          "title": "小卫士 - 儿童安全监护平台",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89114/runtime-check/codex-20260609-repair-round434/may-89114-codex-round434-structure-07-操作-电子围栏.json",
+          "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89114/runtime-check/codex-20260609-repair-round434/may-89114-codex-round434-structure-07-操作-电子围栏.png",
+          "elementCount": 228,
+          "interactiveCount": 25,
+          "interactiveLabels": [
+            "仪表盘",
+            "定位与围栏",
+            "通话管理",
+            "SOS告警",
+            "设备管理",
+            "成员后台管理",
+            "个人中心",
+            "隐私保护",
+            "异常分析",
+            "选择设备 小明的守护手表 小红的智能手表 小刚的守护鞋",
+            "标准",
+            "融合",
+            "Leaflet | © OSM",
+            "Leaflet",
+            "OSM",
+            "电子围栏",
+            "历史轨迹",
+            "越界记录"
+          ]
+        }
+      },
+      {
+        "label": "导航:通话管理",
+        "url": "http://127.0.0.1:49114/calls",
+        "title": "小卫士 - 儿童安全监护平台",
+        "headings": [
+          "小卫士",
+          "通话管理",
+          "昨天",
+          "更早",
+          "录音存储"
+        ],
+        "navLabels": [
+          "小卫士 儿童安全监护平台",
+          "仪表盘",
+          "定位与围栏",
+          "通话管理",
+          "SOS告警",
+          "设备管理",
+          "成员后台管理",
+          "个人中心",
+          "隐私保护",
+          "异常分析"
+        ],
+        "buttons": [
+          "全部类型",
+          "音频",
+          "视频",
+          "未接",
+          "1",
+          "2",
+          "3",
+          "4",
+          "5",
+          "6",
+          "7",
+          "8",
+          "9",
+          "*",
+          "0",
+          "#"
+        ],
+        "links": [
+          "仪表盘",
+          "定位与围栏",
+          "通话管理",
+          "SOS告警",
+          "设备管理",
+          "成员后台管理",
+          "个人中心",
+          "隐私保护",
+          "异常分析"
+        ],
+        "inputs": [
+          {
+            "tag": "select",
+            "type": "",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "date",
+            "placeholder": "开始日期",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "date",
+            "placeholder": "结束日期",
+            "name": "",
+            "label": ""
+          }
+        ],
+        "tables": [],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "小卫士儿童安全监护平台仪表盘定位与围栏通话管理SOS告警设备管理成员后台管理个人中心隐私保护异常分析通话管理全部设备小明的守护手表小红的智能手表小刚的守护鞋至全部设备|全部类型|共16条记录全部类型音频视频未接昨天小红的智能手表13600136006去电音频1分27秒18小时前小明的守护手表13600136006未接视频0秒6月8日 08:05小明的守护手表13900139002未接音频0秒6月8日 06:05小明的守护手表15800158005来电视频9分37秒6月8日 04:05小刚的守护鞋13900139002去电音频5分8秒6月8日 04:05更早小红的智能手表13700137004未接视频0秒6月7日 17:05小红的智能手表13900139002去电视频26秒6月7日 03:05小明的守护手表13900139002未接音频0秒6月6日 21:05小刚的守护鞋13600136006未接音频0秒6月6日 19:05小刚的守护鞋15800158005未接视频0秒6月6日 05:05小刚的守护鞋13700137004来电视频7分31秒6月6日 00:05小明的守护手表18600186003来电视频2分49秒6月5日 02:05小明的守护手表15800158005来电视频29秒6月4日 15:05小明的守护手表15800158005未接音频0秒6月4日 08:05小刚的守护鞋13700137004未接音频0秒6月3日 12:05小红的智能手表13900139002去电视频5分6秒6月2日 15:05小小明的守护手表音频视频—123456789*0#录音存储小红的智能手表18小时前 · 1分27秒 加密存储存储: 18小时前保留期: 剩余30天ID: df8a93bd小明的守护手表6月8日 04:05 · 9分37秒 已存储存储: 6月8日 04:05保留期: 剩余29天ID: 995f8c43小刚的守护鞋6月8日 04:05 · 5分8秒 加密存储存储: 6月8日 04:05保留期: 剩余29天ID: 8d04016d小明的守护手表6月5日 02:05 · 2分49秒 加密存储存储: 6月5日 02:05保留期: 剩余26天ID: f452c333小明的守护手表6月4日 15:05 · 29秒 已存储存储: 6月4日 15:05保留期: 剩余26天ID: 365d863d小红的智能手表6月2日 15:05 · 5分6秒 加密存储存储: 6月2日 15:05保留期: 剩余24天ID: b963e537",
+        "layout": {
+          "viewportWidth": 1728,
+          "viewportHeight": 1600,
+          "scrollWidth": 1728,
+          "scrollHeight": 2220,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89114-codex-round434-structure-08-导航-通话管理",
+          "label": "导航:通话管理",
+          "finalUrl": "http://127.0.0.1:49114/calls",
+          "title": "小卫士 - 儿童安全监护平台",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89114/runtime-check/codex-20260609-repair-round434/may-89114-codex-round434-structure-08-导航-通话管理.json",
+          "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89114/runtime-check/codex-20260609-repair-round434/may-89114-codex-round434-structure-08-导航-通话管理.png",
+          "elementCount": 516,
+          "interactiveCount": 32,
+          "interactiveLabels": [
+            "仪表盘",
+            "定位与围栏",
+            "通话管理",
+            "SOS告警",
+            "设备管理",
+            "成员后台管理",
+            "个人中心",
+            "隐私保护",
+            "异常分析",
+            "全部设备 小明的守护手表 小红的智能手表 小刚的守护鞋",
+            "开始日期",
+            "结束日期",
+            "全部类型",
+            "音频",
+            "视频",
+            "未接",
+            "1",
+            "2",
+            "3",
+            "4",
+            "5",
+            "6",
+            "7",
+            "8",
+            "9",
+            "0"
+          ]
+        }
+      },
+      {
+        "label": "操作:全部类型",
+        "url": "http://127.0.0.1:49114/calls",
+        "title": "小卫士 - 儿童安全监护平台",
+        "headings": [
+          "小卫士",
+          "通话管理",
+          "昨天",
+          "更早",
+          "录音存储"
+        ],
+        "navLabels": [
+          "小卫士 儿童安全监护平台",
+          "仪表盘",
+          "定位与围栏",
+          "通话管理",
+          "SOS告警",
+          "设备管理",
+          "成员后台管理",
+          "个人中心",
+          "隐私保护",
+          "异常分析"
+        ],
+        "buttons": [
+          "全部类型",
+          "音频",
+          "视频",
+          "未接",
+          "1",
+          "2",
+          "3",
+          "4",
+          "5",
+          "6",
+          "7",
+          "8",
+          "9",
+          "*",
+          "0",
+          "#"
+        ],
+        "links": [
+          "仪表盘",
+          "定位与围栏",
+          "通话管理",
+          "SOS告警",
+          "设备管理",
+          "成员后台管理",
+          "个人中心",
+          "隐私保护",
+          "异常分析"
+        ],
+        "inputs": [
+          {
+            "tag": "select",
+            "type": "",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "date",
+            "placeholder": "开始日期",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "date",
+            "placeholder": "结束日期",
+            "name": "",
+            "label": ""
+          }
+        ],
+        "tables": [],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "小卫士儿童安全监护平台仪表盘定位与围栏通话管理SOS告警设备管理成员后台管理个人中心隐私保护异常分析通话管理全部设备小明的守护手表小红的智能手表小刚的守护鞋至全部设备|全部类型|共16条记录全部类型音频视频未接昨天小红的智能手表13600136006去电音频1分27秒18小时前小明的守护手表13600136006未接视频0秒6月8日 08:05小明的守护手表13900139002未接音频0秒6月8日 06:05小明的守护手表15800158005来电视频9分37秒6月8日 04:05小刚的守护鞋13900139002去电音频5分8秒6月8日 04:05更早小红的智能手表13700137004未接视频0秒6月7日 17:05小红的智能手表13900139002去电视频26秒6月7日 03:05小明的守护手表13900139002未接音频0秒6月6日 21:05小刚的守护鞋13600136006未接音频0秒6月6日 19:05小刚的守护鞋15800158005未接视频0秒6月6日 05:05小刚的守护鞋13700137004来电视频7分31秒6月6日 00:05小明的守护手表18600186003来电视频2分49秒6月5日 02:05小明的守护手表15800158005来电视频29秒6月4日 15:05小明的守护手表15800158005未接音频0秒6月4日 08:05小刚的守护鞋13700137004未接音频0秒6月3日 12:05小红的智能手表13900139002去电视频5分6秒6月2日 15:05小小明的守护手表音频视频—123456789*0#录音存储小红的智能手表18小时前 · 1分27秒 加密存储存储: 18小时前保留期: 剩余30天ID: df8a93bd小明的守护手表6月8日 04:05 · 9分37秒 已存储存储: 6月8日 04:05保留期: 剩余29天ID: 995f8c43小刚的守护鞋6月8日 04:05 · 5分8秒 加密存储存储: 6月8日 04:05保留期: 剩余29天ID: 8d04016d小明的守护手表6月5日 02:05 · 2分49秒 加密存储存储: 6月5日 02:05保留期: 剩余26天ID: f452c333小明的守护手表6月4日 15:05 · 29秒 已存储存储: 6月4日 15:05保留期: 剩余26天ID: 365d863d小红的智能手表6月2日 15:05 · 5分6秒 加密存储存储: 6月2日 15:05保留期: 剩余24天ID: b963e537",
+        "layout": {
+          "viewportWidth": 1760,
+          "viewportHeight": 1600,
+          "scrollWidth": 1760,
+          "scrollHeight": 2220,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89114-codex-round434-structure-09-操作-全部类型",
+          "label": "操作:全部类型",
+          "finalUrl": "http://127.0.0.1:49114/calls",
+          "title": "小卫士 - 儿童安全监护平台",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89114/runtime-check/codex-20260609-repair-round434/may-89114-codex-round434-structure-09-操作-全部类型.json",
+          "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89114/runtime-check/codex-20260609-repair-round434/may-89114-codex-round434-structure-09-操作-全部类型.png",
+          "elementCount": 516,
+          "interactiveCount": 32,
+          "interactiveLabels": [
+            "仪表盘",
+            "定位与围栏",
+            "通话管理",
+            "SOS告警",
+            "设备管理",
+            "成员后台管理",
+            "个人中心",
+            "隐私保护",
+            "异常分析",
+            "全部设备 小明的守护手表 小红的智能手表 小刚的守护鞋",
+            "开始日期",
+            "结束日期",
+            "全部类型",
+            "音频",
+            "视频",
+            "未接",
+            "1",
+            "2",
+            "3",
+            "4",
+            "5",
+            "6",
+            "7",
+            "8",
+            "9",
+            "0"
+          ]
+        }
+      }
+    ],
+    "findings": [],
+    "actionHints": [],
+    "emptyPages": [],
+    "overflowPages": [],
+    "blankPages": [],
+    "apiFailurePaths": [],
+    "goalTerms": [],
+    "clickedActionDescriptors": [
+      {
+        "nav": "仪表盘",
+        "label": "小刚的守护鞋",
+        "ordinal": 0,
+        "unsafe": false
+      },
+      {
+        "nav": "仪表盘",
+        "label": "小红的智能手表",
+        "ordinal": 0,
+        "unsafe": false
+      },
+      {
+        "nav": "定位与围栏",
+        "label": "标准",
+        "ordinal": 0,
+        "unsafe": false
+      },
+      {
+        "nav": "定位与围栏",
+        "label": "电子围栏",
+        "ordinal": 0,
+        "unsafe": false
+      },
+      {
+        "nav": "通话管理",
+        "label": "全部类型",
+        "ordinal": 0,
+        "unsafe": false
+      }
+    ],
+    "secondaryActionClicks": 0,
+    "structureCaptures": [
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89114-codex-round434-structure-01-首屏",
+        "label": "首屏",
+        "finalUrl": "http://127.0.0.1:49114/",
+        "title": "小卫士 - 儿童安全监护平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89114/runtime-check/codex-20260609-repair-round434/may-89114-codex-round434-structure-01-首屏.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89114/runtime-check/codex-20260609-repair-round434/may-89114-codex-round434-structure-01-首屏.png",
+        "elementCount": 341,
+        "interactiveCount": 32,
+        "interactiveLabels": [
+          "仪表盘",
+          "定位与围栏",
+          "通话管理",
+          "SOS告警",
+          "设备管理",
+          "成员后台管理",
+          "个人中心",
+          "隐私保护",
+          "异常分析",
+          "3",
+          "小明的守护手表",
+          "小红的智能手表",
+          "小刚的守护鞋",
+          "SOS 3",
+          "围栏越界 3",
+          "异常行为 2",
+          "电量低 2",
+          "历史轨迹",
+          "隐私策略",
+          "设备设置",
+          "SOS测试",
+          "围栏设置",
+          "通话拨号"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89114-codex-round434-structure-02-导航-仪表盘",
+        "label": "导航:仪表盘",
+        "finalUrl": "http://127.0.0.1:49114/",
+        "title": "小卫士 - 儿童安全监护平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89114/runtime-check/codex-20260609-repair-round434/may-89114-codex-round434-structure-02-导航-仪表盘.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89114/runtime-check/codex-20260609-repair-round434/may-89114-codex-round434-structure-02-导航-仪表盘.png",
+        "elementCount": 341,
+        "interactiveCount": 32,
+        "interactiveLabels": [
+          "仪表盘",
+          "定位与围栏",
+          "通话管理",
+          "SOS告警",
+          "设备管理",
+          "成员后台管理",
+          "个人中心",
+          "隐私保护",
+          "异常分析",
+          "3",
+          "小明的守护手表",
+          "小红的智能手表",
+          "小刚的守护鞋",
+          "SOS 3",
+          "围栏越界 3",
+          "异常行为 2",
+          "电量低 2",
+          "历史轨迹",
+          "隐私策略",
+          "设备设置",
+          "SOS测试",
+          "围栏设置",
+          "通话拨号"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89114-codex-round434-structure-03-操作-小刚的守护鞋",
+        "label": "操作:小刚的守护鞋",
+        "finalUrl": "http://127.0.0.1:49114/",
+        "title": "小卫士 - 儿童安全监护平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89114/runtime-check/codex-20260609-repair-round434/may-89114-codex-round434-structure-03-操作-小刚的守护鞋.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89114/runtime-check/codex-20260609-repair-round434/may-89114-codex-round434-structure-03-操作-小刚的守护鞋.png",
+        "elementCount": 348,
+        "interactiveCount": 33,
+        "interactiveLabels": [
+          "仪表盘",
+          "定位与围栏",
+          "通话管理",
+          "SOS告警",
+          "设备管理",
+          "成员后台管理",
+          "个人中心",
+          "隐私保护",
+          "异常分析",
+          "3",
+          "小明的守护手表",
+          "小红的智能手表",
+          "小刚的守护鞋",
+          "查看轨迹",
+          "SOS 3",
+          "围栏越界 3",
+          "异常行为 2",
+          "电量低 2",
+          "历史轨迹",
+          "隐私策略",
+          "设备设置",
+          "SOS测试",
+          "围栏设置",
+          "通话拨号"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89114-codex-round434-structure-04-操作-小红的智能手表",
+        "label": "操作:小红的智能手表",
+        "finalUrl": "http://127.0.0.1:49114/",
+        "title": "小卫士 - 儿童安全监护平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89114/runtime-check/codex-20260609-repair-round434/may-89114-codex-round434-structure-04-操作-小红的智能手表.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89114/runtime-check/codex-20260609-repair-round434/may-89114-codex-round434-structure-04-操作-小红的智能手表.png",
+        "elementCount": 348,
+        "interactiveCount": 33,
+        "interactiveLabels": [
+          "仪表盘",
+          "定位与围栏",
+          "通话管理",
+          "SOS告警",
+          "设备管理",
+          "成员后台管理",
+          "个人中心",
+          "隐私保护",
+          "异常分析",
+          "3",
+          "小明的守护手表",
+          "小红的智能手表",
+          "查看轨迹",
+          "小刚的守护鞋",
+          "SOS 3",
+          "围栏越界 3",
+          "异常行为 2",
+          "电量低 2",
+          "历史轨迹",
+          "隐私策略",
+          "设备设置",
+          "SOS测试",
+          "围栏设置",
+          "通话拨号"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89114-codex-round434-structure-05-导航-定位与围栏",
+        "label": "导航:定位与围栏",
+        "finalUrl": "http://127.0.0.1:49114/location",
+        "title": "小卫士 - 儿童安全监护平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89114/runtime-check/codex-20260609-repair-round434/may-89114-codex-round434-structure-05-导航-定位与围栏.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89114/runtime-check/codex-20260609-repair-round434/may-89114-codex-round434-structure-05-导航-定位与围栏.png",
+        "elementCount": 226,
+        "interactiveCount": 25,
+        "interactiveLabels": [
+          "仪表盘",
+          "定位与围栏",
+          "通话管理",
+          "SOS告警",
+          "设备管理",
+          "成员后台管理",
+          "个人中心",
+          "隐私保护",
+          "异常分析",
+          "选择设备 小明的守护手表 小红的智能手表 小刚的守护鞋",
+          "标准",
+          "融合",
+          "Leaflet | © OSM",
+          "Leaflet",
+          "OSM",
+          "电子围栏",
+          "历史轨迹",
+          "越界记录"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89114-codex-round434-structure-06-操作-标准",
+        "label": "操作:标准",
+        "finalUrl": "http://127.0.0.1:49114/location",
+        "title": "小卫士 - 儿童安全监护平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89114/runtime-check/codex-20260609-repair-round434/may-89114-codex-round434-structure-06-操作-标准.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89114/runtime-check/codex-20260609-repair-round434/may-89114-codex-round434-structure-06-操作-标准.png",
+        "elementCount": 226,
+        "interactiveCount": 25,
+        "interactiveLabels": [
+          "仪表盘",
+          "定位与围栏",
+          "通话管理",
+          "SOS告警",
+          "设备管理",
+          "成员后台管理",
+          "个人中心",
+          "隐私保护",
+          "异常分析",
+          "选择设备 小明的守护手表 小红的智能手表 小刚的守护鞋",
+          "标准",
+          "融合",
+          "Leaflet | © OSM",
+          "Leaflet",
+          "OSM",
+          "电子围栏",
+          "历史轨迹",
+          "越界记录"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89114-codex-round434-structure-07-操作-电子围栏",
+        "label": "操作:电子围栏",
+        "finalUrl": "http://127.0.0.1:49114/location",
+        "title": "小卫士 - 儿童安全监护平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89114/runtime-check/codex-20260609-repair-round434/may-89114-codex-round434-structure-07-操作-电子围栏.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89114/runtime-check/codex-20260609-repair-round434/may-89114-codex-round434-structure-07-操作-电子围栏.png",
+        "elementCount": 228,
+        "interactiveCount": 25,
+        "interactiveLabels": [
+          "仪表盘",
+          "定位与围栏",
+          "通话管理",
+          "SOS告警",
+          "设备管理",
+          "成员后台管理",
+          "个人中心",
+          "隐私保护",
+          "异常分析",
+          "选择设备 小明的守护手表 小红的智能手表 小刚的守护鞋",
+          "标准",
+          "融合",
+          "Leaflet | © OSM",
+          "Leaflet",
+          "OSM",
+          "电子围栏",
+          "历史轨迹",
+          "越界记录"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89114-codex-round434-structure-08-导航-通话管理",
+        "label": "导航:通话管理",
+        "finalUrl": "http://127.0.0.1:49114/calls",
+        "title": "小卫士 - 儿童安全监护平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89114/runtime-check/codex-20260609-repair-round434/may-89114-codex-round434-structure-08-导航-通话管理.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89114/runtime-check/codex-20260609-repair-round434/may-89114-codex-round434-structure-08-导航-通话管理.png",
+        "elementCount": 516,
+        "interactiveCount": 32,
+        "interactiveLabels": [
+          "仪表盘",
+          "定位与围栏",
+          "通话管理",
+          "SOS告警",
+          "设备管理",
+          "成员后台管理",
+          "个人中心",
+          "隐私保护",
+          "异常分析",
+          "全部设备 小明的守护手表 小红的智能手表 小刚的守护鞋",
+          "开始日期",
+          "结束日期",
+          "全部类型",
+          "音频",
+          "视频",
+          "未接",
+          "1",
+          "2",
+          "3",
+          "4",
+          "5",
+          "6",
+          "7",
+          "8",
+          "9",
+          "0"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89114-codex-round434-structure-09-操作-全部类型",
+        "label": "操作:全部类型",
+        "finalUrl": "http://127.0.0.1:49114/calls",
+        "title": "小卫士 - 儿童安全监护平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89114/runtime-check/codex-20260609-repair-round434/may-89114-codex-round434-structure-09-操作-全部类型.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89114/runtime-check/codex-20260609-repair-round434/may-89114-codex-round434-structure-09-操作-全部类型.png",
+        "elementCount": 516,
+        "interactiveCount": 32,
+        "interactiveLabels": [
+          "仪表盘",
+          "定位与围栏",
+          "通话管理",
+          "SOS告警",
+          "设备管理",
+          "成员后台管理",
+          "个人中心",
+          "隐私保护",
+          "异常分析",
+          "全部设备 小明的守护手表 小红的智能手表 小刚的守护鞋",
+          "开始日期",
+          "结束日期",
+          "全部类型",
+          "音频",
+          "视频",
+          "未接",
+          "1",
+          "2",
+          "3",
+          "4",
+          "5",
+          "6",
+          "7",
+          "8",
+          "9",
+          "0"
+        ]
+      }
+    ],
+    "representativeScreenshotUrl": "http://127.0.0.1:49114/",
+    "representativeScreenshotLabel": "小卫士"
+  },
+  "websiteStructureCapture": {
+    "module": "website_structure_capture",
+    "captureCount": 9,
+    "captures": [
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89114-codex-round434-structure-01-首屏",
+        "label": "首屏",
+        "finalUrl": "http://127.0.0.1:49114/",
+        "title": "小卫士 - 儿童安全监护平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89114/runtime-check/codex-20260609-repair-round434/may-89114-codex-round434-structure-01-首屏.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89114/runtime-check/codex-20260609-repair-round434/may-89114-codex-round434-structure-01-首屏.png",
+        "elementCount": 341,
+        "interactiveCount": 32,
+        "interactiveLabels": [
+          "仪表盘",
+          "定位与围栏",
+          "通话管理",
+          "SOS告警",
+          "设备管理",
+          "成员后台管理",
+          "个人中心",
+          "隐私保护",
+          "异常分析",
+          "3",
+          "小明的守护手表",
+          "小红的智能手表",
+          "小刚的守护鞋",
+          "SOS 3",
+          "围栏越界 3",
+          "异常行为 2",
+          "电量低 2",
+          "历史轨迹",
+          "隐私策略",
+          "设备设置",
+          "SOS测试",
+          "围栏设置",
+          "通话拨号"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89114-codex-round434-structure-02-导航-仪表盘",
+        "label": "导航:仪表盘",
+        "finalUrl": "http://127.0.0.1:49114/",
+        "title": "小卫士 - 儿童安全监护平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89114/runtime-check/codex-20260609-repair-round434/may-89114-codex-round434-structure-02-导航-仪表盘.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89114/runtime-check/codex-20260609-repair-round434/may-89114-codex-round434-structure-02-导航-仪表盘.png",
+        "elementCount": 341,
+        "interactiveCount": 32,
+        "interactiveLabels": [
+          "仪表盘",
+          "定位与围栏",
+          "通话管理",
+          "SOS告警",
+          "设备管理",
+          "成员后台管理",
+          "个人中心",
+          "隐私保护",
+          "异常分析",
+          "3",
+          "小明的守护手表",
+          "小红的智能手表",
+          "小刚的守护鞋",
+          "SOS 3",
+          "围栏越界 3",
+          "异常行为 2",
+          "电量低 2",
+          "历史轨迹",
+          "隐私策略",
+          "设备设置",
+          "SOS测试",
+          "围栏设置",
+          "通话拨号"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89114-codex-round434-structure-03-操作-小刚的守护鞋",
+        "label": "操作:小刚的守护鞋",
+        "finalUrl": "http://127.0.0.1:49114/",
+        "title": "小卫士 - 儿童安全监护平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89114/runtime-check/codex-20260609-repair-round434/may-89114-codex-round434-structure-03-操作-小刚的守护鞋.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89114/runtime-check/codex-20260609-repair-round434/may-89114-codex-round434-structure-03-操作-小刚的守护鞋.png",
+        "elementCount": 348,
+        "interactiveCount": 33,
+        "interactiveLabels": [
+          "仪表盘",
+          "定位与围栏",
+          "通话管理",
+          "SOS告警",
+          "设备管理",
+          "成员后台管理",
+          "个人中心",
+          "隐私保护",
+          "异常分析",
+          "3",
+          "小明的守护手表",
+          "小红的智能手表",
+          "小刚的守护鞋",
+          "查看轨迹",
+          "SOS 3",
+          "围栏越界 3",
+          "异常行为 2",
+          "电量低 2",
+          "历史轨迹",
+          "隐私策略",
+          "设备设置",
+          "SOS测试",
+          "围栏设置",
+          "通话拨号"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89114-codex-round434-structure-04-操作-小红的智能手表",
+        "label": "操作:小红的智能手表",
+        "finalUrl": "http://127.0.0.1:49114/",
+        "title": "小卫士 - 儿童安全监护平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89114/runtime-check/codex-20260609-repair-round434/may-89114-codex-round434-structure-04-操作-小红的智能手表.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89114/runtime-check/codex-20260609-repair-round434/may-89114-codex-round434-structure-04-操作-小红的智能手表.png",
+        "elementCount": 348,
+        "interactiveCount": 33,
+        "interactiveLabels": [
+          "仪表盘",
+          "定位与围栏",
+          "通话管理",
+          "SOS告警",
+          "设备管理",
+          "成员后台管理",
+          "个人中心",
+          "隐私保护",
+          "异常分析",
+          "3",
+          "小明的守护手表",
+          "小红的智能手表",
+          "查看轨迹",
+          "小刚的守护鞋",
+          "SOS 3",
+          "围栏越界 3",
+          "异常行为 2",
+          "电量低 2",
+          "历史轨迹",
+          "隐私策略",
+          "设备设置",
+          "SOS测试",
+          "围栏设置",
+          "通话拨号"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89114-codex-round434-structure-05-导航-定位与围栏",
+        "label": "导航:定位与围栏",
+        "finalUrl": "http://127.0.0.1:49114/location",
+        "title": "小卫士 - 儿童安全监护平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89114/runtime-check/codex-20260609-repair-round434/may-89114-codex-round434-structure-05-导航-定位与围栏.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89114/runtime-check/codex-20260609-repair-round434/may-89114-codex-round434-structure-05-导航-定位与围栏.png",
+        "elementCount": 226,
+        "interactiveCount": 25,
+        "interactiveLabels": [
+          "仪表盘",
+          "定位与围栏",
+          "通话管理",
+          "SOS告警",
+          "设备管理",
+          "成员后台管理",
+          "个人中心",
+          "隐私保护",
+          "异常分析",
+          "选择设备 小明的守护手表 小红的智能手表 小刚的守护鞋",
+          "标准",
+          "融合",
+          "Leaflet | © OSM",
+          "Leaflet",
+          "OSM",
+          "电子围栏",
+          "历史轨迹",
+          "越界记录"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89114-codex-round434-structure-06-操作-标准",
+        "label": "操作:标准",
+        "finalUrl": "http://127.0.0.1:49114/location",
+        "title": "小卫士 - 儿童安全监护平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89114/runtime-check/codex-20260609-repair-round434/may-89114-codex-round434-structure-06-操作-标准.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89114/runtime-check/codex-20260609-repair-round434/may-89114-codex-round434-structure-06-操作-标准.png",
+        "elementCount": 226,
+        "interactiveCount": 25,
+        "interactiveLabels": [
+          "仪表盘",
+          "定位与围栏",
+          "通话管理",
+          "SOS告警",
+          "设备管理",
+          "成员后台管理",
+          "个人中心",
+          "隐私保护",
+          "异常分析",
+          "选择设备 小明的守护手表 小红的智能手表 小刚的守护鞋",
+          "标准",
+          "融合",
+          "Leaflet | © OSM",
+          "Leaflet",
+          "OSM",
+          "电子围栏",
+          "历史轨迹",
+          "越界记录"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89114-codex-round434-structure-07-操作-电子围栏",
+        "label": "操作:电子围栏",
+        "finalUrl": "http://127.0.0.1:49114/location",
+        "title": "小卫士 - 儿童安全监护平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89114/runtime-check/codex-20260609-repair-round434/may-89114-codex-round434-structure-07-操作-电子围栏.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89114/runtime-check/codex-20260609-repair-round434/may-89114-codex-round434-structure-07-操作-电子围栏.png",
+        "elementCount": 228,
+        "interactiveCount": 25,
+        "interactiveLabels": [
+          "仪表盘",
+          "定位与围栏",
+          "通话管理",
+          "SOS告警",
+          "设备管理",
+          "成员后台管理",
+          "个人中心",
+          "隐私保护",
+          "异常分析",
+          "选择设备 小明的守护手表 小红的智能手表 小刚的守护鞋",
+          "标准",
+          "融合",
+          "Leaflet | © OSM",
+          "Leaflet",
+          "OSM",
+          "电子围栏",
+          "历史轨迹",
+          "越界记录"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89114-codex-round434-structure-08-导航-通话管理",
+        "label": "导航:通话管理",
+        "finalUrl": "http://127.0.0.1:49114/calls",
+        "title": "小卫士 - 儿童安全监护平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89114/runtime-check/codex-20260609-repair-round434/may-89114-codex-round434-structure-08-导航-通话管理.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89114/runtime-check/codex-20260609-repair-round434/may-89114-codex-round434-structure-08-导航-通话管理.png",
+        "elementCount": 516,
+        "interactiveCount": 32,
+        "interactiveLabels": [
+          "仪表盘",
+          "定位与围栏",
+          "通话管理",
+          "SOS告警",
+          "设备管理",
+          "成员后台管理",
+          "个人中心",
+          "隐私保护",
+          "异常分析",
+          "全部设备 小明的守护手表 小红的智能手表 小刚的守护鞋",
+          "开始日期",
+          "结束日期",
+          "全部类型",
+          "音频",
+          "视频",
+          "未接",
+          "1",
+          "2",
+          "3",
+          "4",
+          "5",
+          "6",
+          "7",
+          "8",
+          "9",
+          "0"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89114-codex-round434-structure-09-操作-全部类型",
+        "label": "操作:全部类型",
+        "finalUrl": "http://127.0.0.1:49114/calls",
+        "title": "小卫士 - 儿童安全监护平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89114/runtime-check/codex-20260609-repair-round434/may-89114-codex-round434-structure-09-操作-全部类型.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89114/runtime-check/codex-20260609-repair-round434/may-89114-codex-round434-structure-09-操作-全部类型.png",
+        "elementCount": 516,
+        "interactiveCount": 32,
+        "interactiveLabels": [
+          "仪表盘",
+          "定位与围栏",
+          "通话管理",
+          "SOS告警",
+          "设备管理",
+          "成员后台管理",
+          "个人中心",
+          "隐私保护",
+          "异常分析",
+          "全部设备 小明的守护手表 小红的智能手表 小刚的守护鞋",
+          "开始日期",
+          "结束日期",
+          "全部类型",
+          "音频",
+          "视频",
+          "未接",
+          "1",
+          "2",
+          "3",
+          "4",
+          "5",
+          "6",
+          "7",
+          "8",
+          "9",
+          "0"
+        ]
+      }
+    ]
+  },
+  "screenshotMetrics": {
+    "width": 1792,
+    "height": 1600,
+    "scrollWidth": 1760,
+    "scrollHeight": 1600
+  },
+  "initialBodyTextPreview": "小卫士\n\n儿童安全监护平台\n\n仪表盘\n定位与围栏\n通话管理\nSOS告警\n设备管理\n成员后台管理\n个人中心\n隐私保护\n异常分析\n仪表盘总览\n\n2026年6月9日星期二 09:14\n\n3\n\n1\n\n在线设备\n\n3\n\n活跃告警\n\n16\n\n今日通话\n\n5\n\n家庭成员\n\n设备位置\n小明的守护手表\n小红的智能手表\n小刚的守护鞋\n告警统计\nSOS\n3\n围栏越界\n3\n异常行为\n2\n电量低\n2\n最近告警\nSOS求助\n儿童长按SOS按钮发起求救\n6月8日 08:05\n设备离线\n设备已离线超过30分钟\n6月8日 02:05\n电量预警\n设备电量低于20%，请及时充电\n6月8日 01:05\n围栏越界\n儿童进入危险区域\n6月7日 21:05\n设备离线\n设备信号丢失，可能处于信号盲区\n6月7日 03:05\n设备状态\n小明的守护手表\n78%\n4小时前\n历史轨迹\n隐私策略\n设备设置\n小红的智能手表\n15%\n4小时前\n历史轨迹\n隐私策略\n设备设置\n小刚的守护鞋\n45%\n4小时前\n历史轨迹\n隐私策略\n设备设置\nSOS测试\n围栏设置\n通话拨号\n设备管理",
+  "bodyTextPreview": "小卫士\n\n儿童安全监护平台\n\n仪表盘\n定位与围栏\n通话管理\nSOS告警\n设备管理\n成员后台管理\n个人中心\n隐私保护\n异常分析\n仪表盘总览\n\n2026年6月9日星期二 09:15\n\n3\n\n1\n\n在线设备\n\n3\n\n活跃告警\n\n16\n\n今日通话\n\n5\n\n家庭成员\n\n设备位置\n小明的守护手表\n小红的智能手表\n小刚的守护鞋\n告警统计\nSOS\n3\n围栏越界\n3\n异常行为\n2\n电量低\n2\n最近告警\nSOS求助\n儿童长按SOS按钮发起求救\n6月8日 08:05\n设备离线\n设备已离线超过30分钟\n6月8日 02:05\n电量预警\n设备电量低于20%，请及时充电\n6月8日 01:05\n围栏越界\n儿童进入危险区域\n6月7日 21:05\n设备离线\n设备信号丢失，可能处于信号盲区\n6月7日 03:05\n设备状态\n小明的守护手表\n78%\n4小时前\n历史轨迹\n隐私策略\n设备设置\n小红的智能手表\n15%\n4小时前\n历史轨迹\n隐私策略\n设备设置\n小刚的守护鞋\n45%\n4小时前\n历史轨迹\n隐私策略\n设备设置\nSOS测试\n围栏设置\n通话拨号\n设备管理",
+  "apiBase": "http://127.0.0.1:59114/api",
+  "businessGoalPreview": "",
+  "apiResponses": [
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49114/api/devices"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49114/api/alerts"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49114/api/members"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49114/api/calls"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49114/api/devices"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49114/api/alerts"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49114/api/members"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49114/api/calls"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49114/api/members"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49114/api/members"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49114/api/devices"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49114/api/alerts"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49114/api/members"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49114/api/calls"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49114/api/devices"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49114/api/alerts"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49114/api/members"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49114/api/calls"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49114/api/devices"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49114/api/geofences"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49114/api/alerts"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49114/api/geofences"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49114/api/devices"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49114/api/alerts"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49114/api/calls"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49114/api/devices"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49114/api/calls"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49114/api/devices"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49114/api/devices"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49114/api/alerts"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49114/api/members"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49114/api/calls"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49114/api/devices"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49114/api/alerts"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49114/api/members"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49114/api/calls"
+    }
+  ],
+  "apiChecks": [
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59114/api/health",
+      "path": "/api/health",
+      "status": 200,
+      "ok": true,
+      "bodyPreview": "{\"success\":true,\"message\":\"ok\"}"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59114/api/devices",
+      "path": "/api/devices",
+      "status": 200,
+      "ok": true,
+      "bodyPreview": "{\"success\":true,\"data\":[{\"id\":\"2ff6a8c7-f234-4e0b-9a04-b79188689e2f\",\"name\":\"小明的守护手表\",\"type\":\"watch\",\"imei\":\"860012345678901\",\"status\":\"online\",\"batteryLevel\":78,\"signalStrength\":92,\"firmwareVersion\":\"2.1.3\",\"settings\":{\"blockUnknownCalls\":true,\"restrictedApps\":[\"game1\",\"social1\"],\"classModeEnabled\":true,\"classModeSchedule\":[{\"start\":\"08:00\",\"end\":\"11:30\"},{\"start\":\"14:00\",\"end\":\"17:00\"}],\"batteryWarningThreshold\":20,\"batteryCriticalThreshold\":10},\"createdAt\":\"2026-06-09 05:05:48\",\"updatedAt\":\"2"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59114/api/alerts",
+      "path": "/api/alerts",
+      "status": 200,
+      "ok": true,
+      "bodyPreview": "{\"success\":true,\"data\":[{\"id\":\"08f88635-37c3-41b7-9702-f38d0352f111\",\"type\":\"sos\",\"deviceId\":\"e83ba222-3482-4c13-ba06-f0c81c651535\",\"severity\":\"high\",\"status\":\"resolved\",\"description\":\"儿童长按SOS按钮发起求救\",\"location\":{\"lat\":39.923159,\"lng\":116.421311},\"notificationChain\":[{\"role\":\"guardian\",\"name\":\"王建国\",\"status\":\"responded\",\"notifiedAt\":\"2026-06-09 03:05:48.357\",\"respondedAt\":\"2026-06-09 03:05:48.357\"},{\"role\":\"relative\",\"name\":\"李美华\",\"status\":\"notified\",\"notifiedAt\":\"2026-06-09 03:05:48.357\",\"responde"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59114/api/members",
+      "path": "/api/members",
+      "status": 200,
+      "ok": true,
+      "bodyPreview": "{\"success\":true,\"data\":[{\"id\":\"df54ee06-c3d8-4384-8ee2-5c477c93dad6\",\"name\":\"王建国\",\"avatar\":\"/avatars/wang.jpg\",\"phone\":\"13800138001\",\"role\":\"primary_guardian\",\"permissions\":[\"device:manage\",\"member:manage\",\"geofence:manage\",\"call:manage\",\"alert:manage\",\"privacy:manage\",\"analytics:view\"],\"joinedAt\":\"2026-05-10 05:05:48.357\",\"invitedBy\":null},{\"id\":\"65e5ca16-98db-440d-8629-45f84e6cba26\",\"name\":\"李美华\",\"avatar\":\"/avatars/li.jpg\",\"phone\":\"13900139002\",\"role\":\"primary_guardian\",\"permissions\":[\"device:m"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59114/api/calls",
+      "path": "/api/calls",
+      "status": 200,
+      "ok": true,
+      "bodyPreview": "{\"success\":true,\"data\":[{\"id\":\"df8a93bd-50a9-41e4-8b7a-1d12db39c077\",\"deviceId\":\"e83ba222-3482-4c13-ba06-f0c81c651535\",\"type\":\"audio\",\"direction\":\"outbound\",\"callerNumber\":\"13600136006\",\"duration\":87,\"timestamp\":\"2026-06-08 15:05:48.357\",\"hasRecording\":true,\"recordingUrl\":\"/recordings/ab6fedb7-1d02-47b0-adbe-8acd856f22dd.aac\"},{\"id\":\"baaee748-ff16-4997-a470-f4e6d1b30938\",\"deviceId\":\"2ff6a8c7-f234-4e0b-9a04-b79188689e2f\",\"type\":\"video\",\"direction\":\"missed\",\"callerNumber\":\"13600136006\",\"duration\":"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59114/api/geofences",
+      "path": "/api/geofences",
+      "status": 200,
+      "ok": true,
+      "bodyPreview": "{\"success\":true,\"data\":[{\"id\":\"b2b1fc43-544d-4b91-bb10-bc325ec048ed\",\"deviceId\":\"2ff6a8c7-f234-4e0b-9a04-b79188689e2f\",\"name\":\"家\",\"type\":\"circle\",\"coordinates\":[{\"lat\":39.915,\"lng\":116.404}],\"radius\":200,\"rule\":\"both\",\"schedule\":{\"start\":\"08:00\",\"end\":\"20:00\",\"days\":[1,2,3,4,5]},\"enabled\":true,\"alertLevel\":\"high\",\"createdAt\":\"2026-06-09 05:05:48\"},{\"id\":\"a8f6cc89-2e8e-450e-b242-68eefd3cc0ce\",\"deviceId\":\"2ff6a8c7-f234-4e0b-9a04-b79188689e2f\",\"name\":\"学校\",\"type\":\"circle\",\"coordinates\":[{\"lat\":39.92"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59114/api/auth/me",
+      "path": "/api/auth/me",
+      "status": 404,
+      "ok": false,
+      "bodyPreview": "{\"success\":false,\"error\":\"API not found\"}"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59114/api/users/profile",
+      "path": "/api/users/profile",
+      "status": 404,
+      "ok": false,
+      "bodyPreview": "{\"success\":false,\"error\":\"API not found\"}"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59114/api/user/profile",
+      "path": "/api/user/profile",
+      "status": 404,
+      "ok": false,
+      "bodyPreview": "{\"success\":false,\"error\":\"API not found\"}"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59114/api/admin/stats",
+      "path": "/api/admin/stats",
+      "status": 404,
+      "ok": false,
+      "bodyPreview": "{\"success\":false,\"error\":\"API not found\"}"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59114/api/admin/dashboard",
+      "path": "/api/admin/dashboard",
+      "status": 404,
+      "ok": false,
+      "bodyPreview": "{\"success\":false,\"error\":\"API not found\"}"
+    }
+  ],
+  "dialogs": [],
+  "consoleMessages": [
+    {
+      "type": "debug",
+      "text": "[vite] connecting...",
+      "location": {
+        "url": "http://127.0.0.1:49114/@vite/client",
+        "lineNumber": 788,
+        "columnNumber": 8
+      }
+    },
+    {
+      "type": "debug",
+      "text": "[vite] connected.",
+      "location": {
+        "url": "http://127.0.0.1:49114/@vite/client",
+        "lineNumber": 911,
+        "columnNumber": 14
+      }
+    },
+    {
+      "type": "info",
+      "text": "%cDownload the React DevTools for a better development experience: https://reactjs.org/link/react-devtools font-weight:bold",
+      "location": {
+        "url": "http://127.0.0.1:49114/node_modules/.vite/deps/chunk-SVG7M4VJ.js?v=16b285be",
+        "lineNumber": 21606,
+        "columnNumber": 24
+      }
+    },
+    {
+      "type": "debug",
+      "text": "[vite] connecting...",
+      "location": {
+        "url": "http://127.0.0.1:49114/@vite/client",
+        "lineNumber": 788,
+        "columnNumber": 8
+      }
+    },
+    {
+      "type": "debug",
+      "text": "[vite] connected.",
+      "location": {
+        "url": "http://127.0.0.1:49114/@vite/client",
+        "lineNumber": 911,
+        "columnNumber": 14
+      }
+    },
+    {
+      "type": "info",
+      "text": "%cDownload the React DevTools for a better development experience: https://reactjs.org/link/react-devtools font-weight:bold",
+      "location": {
+        "url": "http://127.0.0.1:49114/node_modules/.vite/deps/chunk-SVG7M4VJ.js?v=16b285be",
+        "lineNumber": 21606,
+        "columnNumber": 24
+      }
+    },
+    {
+      "type": "debug",
+      "text": "[vite] connecting...",
+      "location": {
+        "url": "http://127.0.0.1:49114/@vite/client",
+        "lineNumber": 788,
+        "columnNumber": 8
+      }
+    },
+    {
+      "type": "debug",
+      "text": "[vite] connected.",
+      "location": {
+        "url": "http://127.0.0.1:49114/@vite/client",
+        "lineNumber": 911,
+        "columnNumber": 14
+      }
+    },
+    {
+      "type": "info",
+      "text": "%cDownload the React DevTools for a better development experience: https://reactjs.org/link/react-devtools font-weight:bold",
+      "location": {
+        "url": "http://127.0.0.1:49114/node_modules/.vite/deps/chunk-SVG7M4VJ.js?v=16b285be",
+        "lineNumber": 21606,
+        "columnNumber": 24
+      }
+    }
+  ],
+  "requestFailures": [],
+  "responseErrors": []
+}
