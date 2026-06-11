@@ -1,0 +1,123 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --color-primary: #00D68F;
+  --color-primary-dark: #00AB72;
+  --color-primary-light: #4DFFB8;
+  --color-bg-dark: #0A2E1C;
+  --color-bg-darker: #061A10;
+  --color-bg-light: #F7F8FA;
+  --color-gold: #D4A843;
+  --color-gold-light: #E8BE5A;
+  --color-text-dark: #0A2E1C;
+  --color-text-light: #F7F8FA;
+  --color-text-muted: #6B7280;
+  --color-border: #D8DBE2;
+  --font-display: 'Playfair Display', serif;
+  --font-body: 'DM Sans', sans-serif;
+  --font-mono: 'JetBrains Mono', monospace;
+  --resume-primary: #0A2E1C;
+  --resume-secondary: #00D68F;
+  --resume-accent: #D4A843;
+  --resume-font-heading: 'Playfair Display', serif;
+  --resume-font-body: 'DM Sans', sans-serif;
+  --resume-font-size: 14px;
+  --resume-line-height: 1.6;
+  --resume-section-spacing: 16px;
+
+  font-family: var(--font-body);
+  line-height: 1.5;
+  font-weight: 400;
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+* {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(0, 214, 143, 0.3) transparent;
+}
+
+*::-webkit-scrollbar {
+  width: 6px;
+}
+
+*::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+*::-webkit-scrollbar-thumb {
+  background: rgba(0, 214, 143, 0.3);
+  border-radius: 3px;
+}
+
+*::-webkit-scrollbar-thumb:hover {
+  background: rgba(0, 214, 143, 0.5);
+}
+
+@layer base {
+  body {
+    @apply bg-surface-50 text-brand-900 font-body;
+  }
+}
+
+@layer components {
+  .btn-primary {
+    @apply bg-brand-500 hover:bg-brand-600 text-white font-body font-semibold
+    px-6 py-3 rounded-md transition-all duration-300
+    hover:shadow-lg hover:-translate-y-0.5 active:translate-y-0;
+  }
+
+  .btn-secondary {
+    @apply bg-brand-900 hover:bg-brand-800 text-brand-100 font-body font-medium
+    px-5 py-2.5 rounded-md transition-all duration-300
+    border border-brand-700 hover:border-brand-600;
+  }
+
+  .btn-ghost {
+    @apply bg-transparent hover:bg-brand-50 text-brand-700 font-body font-medium
+    px-4 py-2 rounded-md transition-all duration-200;
+  }
+
+  .card-hover {
+    @apply transition-all duration-300 hover:shadow-xl hover:-translate-y-1;
+  }
+
+  .glass-card {
+    @apply bg-white/80 backdrop-blur-xl border border-white/20 shadow-lg rounded-xl;
+  }
+
+  .gradient-text {
+    @apply bg-gradient-to-r from-brand-400 via-brand-500 to-brand-300 bg-clip-text text-transparent;
+  }
+
+  .section-title {
+    @apply font-display text-3xl font-bold text-brand-900;
+  }
+}
+
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+}
+
+.resume-preview {
+  font-family: var(--resume-font-body);
+  font-size: var(--resume-font-size);
+  line-height: var(--resume-line-height);
+  color: var(--resume-primary);
+}
+
+.resume-preview h1,
+.resume-preview h2,
+.resume-preview h3 {
+  font-family: var(--resume-font-heading);
+}
+
+.resume-preview .section-spacing {
+  margin-bottom: var(--resume-section-spacing);
+}
