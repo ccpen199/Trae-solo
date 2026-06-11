@@ -1,9 +1,9 @@
-import { useState, useMemo } from 'react'
+import { useState, useEffect, useMemo } from 'react'
 import { useNavigate } from 'react-router-dom'
 import {
   ClipboardList, ScanLine, FileText, MapPin, User, Clock,
   CheckCircle, XCircle, ChevronRight, Target, Map, Award,
-  TrendingUp, BadgeCheck, AlertCircle, QrCode
+  TrendingUp, BadgeCheck, AlertCircle, QrCode, Wrench, ShieldCheck
 } from 'lucide-react'
 import { mockWorkOrders, mockParts, mockDispatchMatches } from '@/mocks/data'
 import { motion, AnimatePresence } from 'framer-motion'
@@ -192,6 +192,7 @@ function PartsScanTab() {
 function WorkOrdersTab() {
   const navigate = useNavigate()
   const [filter, setFilter] = useState('all')
+  const [expandedId, setExpandedId] = useState<string | null>(mockWorkOrders[0]?.id || null)
   const filters = [
     { key: 'all', label: '全部' },
     { key: 'pending', label: '待处理' },
@@ -201,6 +202,33 @@ function WorkOrdersTab() {
   const filtered = filter === 'all'
     ? mockWorkOrders.slice(0, 5)
     : mockWorkOrders.filter(o => o.status === filter).slice(0, 5)
+
+  const stepChecklist = (order: typeof mockWorkOrders[number]) => {
+    const stepStatus = (idx: number) => {
+      if (order.status === 'pending') return idx <= 1 ? 'done' : idx === 2 ? 'doing' : 'pending'
+      if (order.status === 'in_progress') return idx <= 3 ? 'done' : idx === 4 ? 'doing' : 'pending'
+      if (order.status === 'completed') return idx <= 5 ? 'done' : idx === 6 ? 'doing' : 'pending'
+      if (order.status === 'cost_confirmed' || order.status === 'signed') return idx <= 6 ? 'done' : idx === 7 ? 'doing' : 'pending'
+      if (order.status === 'archived') return 'done'
+      return 'pending'
+    }
+    return [
+      { label: '接单', icon: ClipboardList, idx: 0 },
+      { label: '上门', icon: MapPin, idx: 1 },
+      { label: '检测', icon: AlertCircle, idx: 2 },
+      { label: '维修', icon: Wrench, idx: 3 },
+      { label: '照片', icon: FileText, idx: 4 },
+      { label: '费用', icon: BadgeCheck, idx: 5 },
+      { label: '签字', icon: TrendingUp, idx: 6 },
+      { label: '存证', icon: ShieldCheck, idx: 7 },
+    ].map(s => ({ ...s, status: stepStatus(s.idx) }))
+  }
+
+  useEffect(() => {
+    if (filtered.length > 0 && !expandedId) {
+      setExpandedId(filtered[0].id)
+    }
+  }, [filter])
 
   return (
     <div className="flex flex-col gap-4">
@@ -219,35 +247,145 @@ function WorkOrdersTab() {
           animate={{ opacity: 1, y: 0 }}
           exit={{ opacity: 0, y: -10 }}
           transition={{ duration: 0.2 }}
-          className="flex flex-col gap-2"
+          className="flex flex-col gap-3"
         >
-          {filtered.map(order => {
+          {filtered.map((order, orderIdx) => {
             const st = statusMap[order.status]
+            const isExpanded = expandedId === order.id
+            const steps = stepChecklist(order)
+            const doneCount = steps.filter(s => s.status === 'done').length
+
             return (
               <motion.div
                 key={order.id}
-                whileHover={{ x: 4 }}
-                onClick={() => navigate(`/engineer/order/${order.id}`)}
-                className="glass-card glass-card-hover cyber-border p-4 flex items-center gap-4 cursor-pointer"
+                layout
+                initial={{ opacity: 0, y: 10 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: orderIdx * 0.06 }}
+                className="glass-card glass-card-hover cyber-border overflow-hidden"
               >
-                <div className="flex-1 min-w-0 flex flex-col gap-2">
-                  <div className="flex items-center gap-2 flex-wrap">
-                    <span className="text-navy-50 font-medium text-sm font-mono">{order.orderId}</span>
-                    <span className={st.cls}>{st.label}</span>
-                    <span className="tag-cyber text-[10px]">{order.categoryLabel}</span>
+                <div
+                  onClick={() => setExpandedId(isExpanded ? null : order.id)}
+                  className="p-4 flex items-center gap-4 cursor-pointer"
+                >
+                  <div className="flex-1 min-w-0 flex flex-col gap-2">
+                    <div className="flex items-center gap-2 flex-wrap">
+                      <span className="text-navy-50 font-medium text-sm font-mono">{order.orderId}</span>
+                      <span className={st.cls}>{st.label}</span>
+                      <span className="tag-cyber text-[10px]">{order.categoryLabel}</span>
+                      <span className="text-[10px] text-cyber-400/70 flex items-center gap-1">
+                        <BadgeCheck className="w-3 h-3" />
+                        闭环进度 {doneCount}/8
+                      </span>
+                    </div>
+                    <div className="flex items-center gap-3 text-xs text-navy-300 flex-wrap">
+                      <span className="flex items-center gap-1"><User className="w-3 h-3" />{order.customerName}</span>
+                      <span className="flex items-center gap-1"><MapPin className="w-3 h-3" />{order.customerAddress}</span>
+                    </div>
+                    <div className="flex items-center gap-1.5 flex-wrap">
+                      {steps.slice(0, 4).map(s => {
+                        const Icon = s.icon
+                        return (
+                          <div key={s.label} className={`flex items-center gap-1 px-1.5 py-0.5 rounded text-[10px] ${
+                            s.status === 'done' ? 'bg-cyber-400/15 text-cyber-400' :
+                            s.status === 'doing' ? 'bg-warm-500/15 text-warm-500' :
+                            'bg-navy-600/30 text-navy-400'
+                          }`}>
+                            <Icon className="w-3 h-3" />
+                            {s.label}
+                            {s.status === 'done' && <CheckCircle className="w-2.5 h-2.5" />}
+                          </div>
+                        )
+                      })}
+                      <span className="text-navy-500 text-xs">...</span>
+                      {steps.slice(4).map(s => {
+                        const Icon = s.icon
+                        return (
+                          <div key={s.label} className={`flex items-center gap-1 px-1.5 py-0.5 rounded text-[10px] ${
+                            s.status === 'done' ? 'bg-cyber-400/15 text-cyber-400' :
+                            s.status === 'doing' ? 'bg-warm-500/15 text-warm-500' :
+                            'bg-navy-600/30 text-navy-400'
+                          }`}>
+                            <Icon className="w-3 h-3" />
+                            {s.label}
+                            {s.status === 'done' && <CheckCircle className="w-2.5 h-2.5" />}
+                          </div>
+                        )
+                      })}
+                    </div>
                   </div>
-                  <div className="flex items-center gap-3 text-xs text-navy-300 flex-wrap">
-                    <span className="flex items-center gap-1"><User className="w-3 h-3" />{order.customerName}</span>
-                    <span className="flex items-center gap-1"><MapPin className="w-3 h-3" />{order.customerAddress}</span>
+                  <div className="flex items-center gap-3 shrink-0">
+                    <div className="text-right hidden sm:block">
+                      <div className="w-20 h-1.5 bg-navy-600 rounded-full overflow-hidden">
+                        <div
+                          className="h-full bg-gradient-to-r from-cyber-400 to-cyber-300 rounded-full transition-all"
+                          style={{ width: `${(doneCount / 8) * 100}%` }}
+                        />
+                      </div>
+                      <span className="text-[10px] text-navy-400 mt-1">{Math.round((doneCount / 8) * 100)}%</span>
+                    </div>
+                    <ChevronRight className={`w-4 h-4 text-navy-400 transition-transform ${isExpanded ? 'rotate-90' : ''}`} />
                   </div>
-                  <p className="text-xs text-navy-400 line-clamp-1">{order.faultDescription}</p>
                 </div>
-                <div className="flex items-center gap-3 shrink-0">
-                  <span className="text-xs text-navy-400 flex items-center gap-1 whitespace-nowrap">
-                    <Clock className="w-3 h-3" />{order.createdAt.slice(5)}
-                  </span>
-                  <ChevronRight className="w-4 h-4 text-navy-400" />
-                </div>
+
+                <AnimatePresence>
+                  {isExpanded && (
+                    <motion.div
+                      initial={{ height: 0, opacity: 0 }}
+                      animate={{ height: 'auto', opacity: 1 }}
+                      exit={{ height: 0, opacity: 0 }}
+                      transition={{ duration: 0.3 }}
+                      className="overflow-hidden"
+                    >
+                      <div className="px-4 pb-4 pt-2 border-t border-cyber-400/10 space-y-4">
+                        <div className="grid grid-cols-2 lg:grid-cols-4 gap-3">
+                          {[
+                            { label: '维修前照片', status: order.beforePhotos.length > 0, count: order.beforePhotos.length, unit: '张', icon: FileText },
+                            { label: '维修后照片', status: order.afterPhotos.length > 0, count: order.afterPhotos.length, unit: '张', icon: FileText },
+                            { label: '费用确认', status: doneCount >= 6, count: doneCount >= 6 ? '¥520' : '待确认', unit: '', icon: BadgeCheck },
+                            { label: '合同存证', status: doneCount >= 8, count: doneCount >= 8 ? '已上链' : '待完成', unit: '', icon: ShieldCheck },
+                          ].map((info, i) => {
+                            const Icon = info.icon
+                            return (
+                              <div key={i} className={`rounded-xl p-3 border ${
+                                info.status
+                                  ? 'bg-cyber-400/5 border-cyber-400/20'
+                                  : 'bg-navy-600/20 border-navy-500/20'
+                              }`}>
+                                <div className="flex items-center gap-2 mb-1">
+                                  <Icon className={`w-3.5 h-3.5 ${info.status ? 'text-cyber-400' : 'text-navy-400'}`} />
+                                  <span className={`text-xs font-medium ${info.status ? 'text-cyber-400' : 'text-navy-400'}`}>{info.label}</span>
+                                </div>
+                                <p className={`text-lg font-bold ${info.status ? 'text-navy-50' : 'text-navy-500'}`}>
+                                  {info.count}{info.unit}
+                                </p>
+                              </div>
+                            )
+                          })}
+                        </div>
+
+                        <div className="flex gap-2">
+                          <button
+                            onClick={(e) => {
+                              e.stopPropagation()
+                              navigate(`/engineer/order/${order.id}`)
+                            }}
+                            className="btn-primary text-sm py-2 flex-1 flex items-center justify-center gap-1"
+                          >
+                            <FileText className="w-4 h-4" />
+                            查看完整工单
+                          </button>
+                          {doneCount < 8 && (
+                            <button className="btn-secondary text-sm py-2 px-4 flex items-center gap-1">
+                              <CheckCircle className="w-4 h-4" />
+                              继续推进
+                            </button>
+                          )}
+                        </div>
+                      </div>
+                    </motion.div>
+                  )}
+                </AnimatePresence>
               </motion.div>
             )
           })}

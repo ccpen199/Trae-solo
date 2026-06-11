@@ -2,7 +2,7 @@ import { useState, useMemo } from 'react'
 import {
   Package, Plus, Search, QrCode, ArrowRight, AlertTriangle, CheckCircle, Box, Truck, Wrench, Factory,
   Filter, Download, Clock, User, FileText, TrendingUp, TrendingDown, X, ShieldCheck,
-  BarChart3, History, BadgeCheck
+  BarChart3, History, BadgeCheck, Minus
 } from 'lucide-react'
 import { mockParts, mockInventoryBatches, mockStockFlows } from '@/mocks/data'
 import { motion, AnimatePresence } from 'framer-motion'
@@ -108,40 +108,45 @@ export default function Supplier() {
             </div>
 
             <motion.div variants={container} initial="hidden" animate="show" className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
-              {filteredParts.map(p => (
-                <motion.div key={p.id} variants={item} whileHover={{ y: -4 }}
-                  onClick={() => setSelectedPart(p)}
-                  className="glass-card glass-card-hover p-4 group relative overflow-hidden cursor-pointer border-2 border-transparent hover:border-cyber-400/40">
-                  <div className="flex items-start justify-between mb-3">
-                    <h3 className="font-medium text-navy-50 text-sm leading-tight">{p.name}</h3>
-                    {p.verified && (
-                      <div className="flex items-center gap-0.5">
-                        <CheckCircle className="w-4 h-4 text-cyber-400 shrink-0" />
+              {filteredParts.map(p => {
+                const latestBatchNo = mockInventoryBatches.filter(b => b.partId === p.id).sort((a, b) => new Date(b.inboundDate).getTime() - new Date(a.inboundDate).getTime())[0]?.batchNo || '-'
+                const flowCount = mockStockFlows.filter(f => f.partId === p.id).length
+                const stockTrend = p.stock > 20 ? { label: '库存充足', color: 'text-cyber-400', bg: 'bg-cyber-400/10', icon: TrendingUp } : p.stock >= 10 ? { label: '正常', color: 'text-warm-500', bg: 'bg-warm-500/10', icon: Minus } : { label: '库存预警', color: 'text-red-400', bg: 'bg-red-400/10', icon: AlertTriangle }
+                const TrendIcon = stockTrend.icon
+                return (
+                  <motion.div key={p.id} variants={item} whileHover={{ y: -4 }} onClick={() => setSelectedPart(p)}
+                    className="glass-card glass-card-hover p-4 group relative overflow-hidden cursor-pointer border-2 border-transparent hover:border-cyber-400/40">
+                    <div className="flex items-start justify-between mb-2">
+                      <h3 className="font-medium text-navy-50 text-sm leading-tight pr-2">{p.name}</h3>
+                      <div className={`flex items-center gap-0.5 px-1.5 py-0.5 rounded shrink-0 ${p.verified ? 'bg-cyber-400/10' : 'bg-warm-500/10'}`}>
+                        {p.verified ? (<><CheckCircle className="w-3 h-3 text-cyber-400 shrink-0" /><span className="text-[10px] font-medium text-cyber-400">已验真</span></>)
+                          : (<><AlertTriangle className="w-3 h-3 text-warm-500 shrink-0" /><span className="text-[10px] font-medium text-warm-500">待验真</span></>)}
                       </div>
-                    )}
-                  </div>
-                  <div className="flex items-center gap-2 mb-3">
-                    <span className="tag-cyber">{categoryMap[p.category] || p.category}</span>
-                    <span className="text-xs text-navy-200/40 font-mono flex items-center gap-1">
-                      <QrCode className="w-3 h-3" />{p.qrCode}
-                    </span>
-                  </div>
-                  <div className="flex items-end justify-between">
-                    <span className="text-lg font-bold text-cyber-400">¥{p.price}</span>
-                    <span className={`text-xs px-2 py-1 rounded font-medium ${stockBg(p.stock)} ${stockColor(p.stock)}`}>
-                      库存 {p.stock}
-                    </span>
-                  </div>
-                  <div className="absolute inset-0 bg-gradient-to-t from-navy-900/90 via-navy-900/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity flex flex-col items-center justify-end pb-4 gap-2">
-                    <p className="text-xs text-cyber-400 mb-1">点击查看完整详情</p>
-                    <div className="flex gap-2">
-                      <button className="btn-primary text-xs py-1.5 px-4 flex items-center gap-1">
-                        <QrCode className="w-3 h-3" />扫码验真
-                      </button>
                     </div>
-                  </div>
-                </motion.div>
-              ))}
+                    <div className="flex items-center gap-2 mb-2">
+                      <span className="tag-cyber text-[10px]">{categoryMap[p.category] || p.category}</span>
+                      <span className="text-[10px] text-navy-200/40 font-mono flex items-center gap-1"><QrCode className="w-2.5 h-2.5" />{p.qrCode}</span>
+                    </div>
+                    <div className="space-y-1.5 mb-2">
+                      <div className="flex items-center justify-between text-[10px]"><span className="text-navy-200/50">最近入库批次</span><span className="text-navy-200/70 font-mono">{latestBatchNo}</span></div>
+                      <div className="flex items-center justify-between">
+                        <div className={`flex items-center gap-1 px-1.5 py-0.5 rounded ${stockTrend.bg}`}>
+                          <TrendIcon className={`w-3 h-3 ${stockTrend.color}`} /><span className={`text-[10px] font-medium ${stockTrend.color}`}>{stockTrend.label}</span>
+                        </div>
+                        <div className="flex items-center gap-1 text-[10px] text-navy-200/50"><History className="w-3 h-3" /><span>流转 {flowCount}</span></div>
+                      </div>
+                    </div>
+                    <div className="flex items-end justify-between">
+                      <span className="text-lg font-bold text-cyber-400">¥{p.price}</span>
+                      <span className={`text-xs px-2 py-1 rounded font-medium ${stockBg(p.stock)} ${stockColor(p.stock)}`}>库存 {p.stock}</span>
+                    </div>
+                    <div className="absolute inset-0 bg-gradient-to-t from-navy-900/90 via-navy-900/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity flex flex-col items-center justify-end pb-4 gap-2">
+                      <p className="text-xs text-cyber-400 mb-1">点击查看完整详情</p>
+                      <div className="flex gap-2"><button className="btn-primary text-xs py-1.5 px-4 flex items-center gap-1"><QrCode className="w-3 h-3" />扫码验真</button></div>
+                    </div>
+                  </motion.div>
+                )
+              })}
             </motion.div>
           </motion.div>
         )}
@@ -183,48 +188,52 @@ export default function Supplier() {
                     </tr>
                   </thead>
                   <tbody>
-                    {mockInventoryBatches.map(b => (
-                      <tr key={b.id} className="border-b border-cyber-400/5 hover:bg-cyber-400/5 transition-colors">
-                        <td className="px-4 py-3">
-                          <span className="font-mono text-xs text-cyber-400">{b.batchNo}</span>
-                        </td>
-                        <td className="px-4 py-3 text-navy-50">{b.partName}</td>
-                        <td className="px-4 py-3 text-navy-50 font-medium">{b.quantity}</td>
-                        <td className="px-4 py-3 text-navy-200/70 text-xs">{b.supplierName}</td>
-                        <td className="px-4 py-3 text-navy-200/60 text-xs">{b.inboundDate}</td>
-                        <td className="px-4 py-3 text-navy-200/60 text-xs">{b.expireDate}</td>
-                        <td className="px-4 py-3">
-                          {b.verified ? (
-                            <div>
-                              <span className="text-cyber-400 text-xs flex items-center gap-1 font-medium">
-                                <CheckCircle className="w-3 h-3" />已验真
+                    {mockInventoryBatches.map(b => {
+                      const handleRowClick = () => {
+                        const p = mockParts.find(pp => pp.id === b.partId)
+                        if (p) setSelectedPart(p)
+                      }
+                      return (
+                        <tr key={b.id} onClick={handleRowClick}
+                          className="border-b border-cyber-400/5 hover:bg-cyber-400/5 transition-colors cursor-pointer">
+                          <td className="px-4 py-3">
+                            <span className="font-mono text-xs text-cyber-400">{b.batchNo}</span>
+                          </td>
+                          <td className="px-4 py-3 text-navy-50">{b.partName}</td>
+                          <td className="px-4 py-3 text-navy-50 font-medium">{b.quantity}</td>
+                          <td className="px-4 py-3 text-navy-200/70 text-xs">{b.supplierName}</td>
+                          <td className="px-4 py-3 text-navy-200/60 text-xs">{b.inboundDate}</td>
+                          <td className="px-4 py-3 text-navy-200/60 text-xs">{b.expireDate}</td>
+                          <td className="px-4 py-3">
+                            {b.verified ? (
+                              <div>
+                                <span className="text-cyber-400 text-xs flex items-center gap-1 font-medium">
+                                  <CheckCircle className="w-3 h-3" />已验真
+                                </span>
+                                <p className="text-xs text-navy-200/40 mt-0.5">{b.verifiedBy} · {b.verifiedAt}</p>
+                              </div>
+                            ) : (
+                              <span className="text-warm-500 text-xs flex items-center gap-1">
+                                <Clock className="w-3 h-3" />待验真
                               </span>
-                              <p className="text-xs text-navy-200/40 mt-0.5">{b.verifiedBy} · {b.verifiedAt}</p>
-                            </div>
-                          ) : (
-                            <span className="text-warm-500 text-xs flex items-center gap-1">
-                              <Clock className="w-3 h-3" />待验真
-                            </span>
-                          )}
-                        </td>
-                        <td className="px-4 py-3">
-                          <div className="flex items-center gap-2">
-                            {!b.verified && (
-                              <button className="btn-primary text-xs py-1 px-3">验真</button>
                             )}
-                            <button
-                              onClick={() => {
-                                const p = mockParts.find(pp => pp.id === b.partId)
-                                if (p) setSelectedPart(p)
-                              }}
-                              className="btn-secondary text-xs py-1 px-3"
-                            >
-                              查看详情
-                            </button>
-                          </div>
-                        </td>
-                      </tr>
-                    ))}
+                          </td>
+                          <td className="px-4 py-3">
+                            <div className="flex items-center gap-2" onClick={(e) => e.stopPropagation()}>
+                              {!b.verified && (
+                                <button className="btn-primary text-xs py-1 px-3">验真</button>
+                              )}
+                              <button
+                                onClick={handleRowClick}
+                                className="btn-secondary text-xs py-1 px-3"
+                              >
+                                查看详情
+                              </button>
+                            </div>
+                          </td>
+                        </tr>
+                      )
+                    })}
                   </tbody>
                 </table>
               </div>
@@ -258,9 +267,13 @@ export default function Supplier() {
                 const typeInfo = flowTypeMap[f.type]
                 const TypeIcon = typeInfo.icon
                 const qtyPrefix = f.type === 'outbound' ? '-' : f.type === 'inbound' ? '+' : f.quantity > 0 ? '+' : ''
+                const handleFlowClick = () => {
+                  const p = mockParts.find(pp => pp.id === f.partId)
+                  if (p) setSelectedPart(p)
+                }
                 return (
-                  <motion.div key={f.id} variants={item}
-                    className="glass-card p-4 flex items-center gap-4 hover:border-cyber-400/30 transition-colors">
+                  <motion.div key={f.id} variants={item} onClick={handleFlowClick}
+                    className="glass-card p-4 flex items-center gap-4 hover:border-cyber-400/30 transition-colors cursor-pointer">
                     <div className={`w-10 h-10 rounded-lg ${typeInfo.bg}/10 flex items-center justify-center shrink-0`}>
                       <TypeIcon className={`w-5 h-5 ${typeInfo.color}`} />
                     </div>

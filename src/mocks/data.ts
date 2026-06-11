@@ -184,23 +184,25 @@ export const mockWorkOrders: WorkOrder[] = [
     createdAt: '2026-06-11 09:30', customerName: '刘女士', customerAddress: '阳光花园3栋502室', customerPhone: '138****6789',
   },
   {
-    id: 'wo2', orderId: 'SO2026061102', engineerId: 'e1', userId: 'u2', status: 'in_progress',
+    id: 'wo2', orderId: 'SO2026061102', engineerId: 'e1', userId: 'u2', status: 'completed',
     category: 'water_heater', categoryLabel: '热水器维修', faultDescription: '热水器底部漏水，每天约漏半盆水，使用5年',
     beforePhotos: [
       'https://images.unsplash.com/photo-1584622650111-993a426fbf0a?w=400&h=300&fit=crop',
       'https://images.unsplash.com/photo-1504328345606-18bbc8c9d7d1?w=400&h=300&fit=crop',
     ],
-    afterPhotos: [],
+    afterPhotos: [
+      'https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=400&h=300&fit=crop',
+    ],
     steps: [
       { index: 1, title: '到场确认', description: '确认漏水位置和程度，关闭进水阀门', status: 'done' },
       { index: 2, title: '故障检测', description: '检测漏水原因，确认密封件损坏、内胆无腐蚀', status: 'done' },
-      { index: 3, title: '维修处理', description: '更换密封件，修复管路连接，清理水垢', status: 'doing' },
-      { index: 4, title: '功能测试', description: '通水通电测试，确认不再漏水且加热正常', status: 'pending' },
+      { index: 3, title: '维修处理', description: '更换密封件，修复管路连接，清理水垢', status: 'done' },
+      { index: 4, title: '功能测试', description: '通水通电测试，确认不再漏水且加热正常', status: 'done' },
     ],
     createdAt: '2026-06-11 08:00', customerName: '王先生', customerAddress: '翠湖花园12栋301室', customerPhone: '139****1234',
   },
   {
-    id: 'wo3', orderId: 'SO2026061005', engineerId: 'e1', userId: 'u3', status: 'signed',
+    id: 'wo3', orderId: 'SO2026061005', engineerId: 'e1', userId: 'u3', status: 'cost_confirmed',
     category: 'washing_machine', categoryLabel: '洗衣机维修', faultDescription: '洗衣机脱水时异响严重，震动大，使用4年',
     beforePhotos: [
       'https://images.unsplash.com/photo-1626806787461-102c1bfaaea1?w=400&h=300&fit=crop',
@@ -218,7 +220,7 @@ export const mockWorkOrders: WorkOrder[] = [
     customerName: '张女士', customerAddress: '金地华府8栋1801室', customerPhone: '137****5678',
   },
   {
-    id: 'wo4', orderId: 'SO2026060807', engineerId: 'e1', userId: 'u4', status: 'signed',
+    id: 'wo4', orderId: 'SO2026060807', engineerId: 'e1', userId: 'u4', status: 'archived',
     category: 'refrigerator', categoryLabel: '冰箱维修', faultDescription: '冰箱冷藏室温度不够低，食物容易坏',
     beforePhotos: [
       'https://images.unsplash.com/photo-1571175443880-49e1d25b2bc5?w=400&h=300&fit=crop',

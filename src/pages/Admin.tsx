@@ -70,6 +70,21 @@ function OverviewTab({ onNavigate }: { onNavigate: (key: string) => void }) {
 
   const recentInspections = mockInspections.slice(0, 4)
   const topCredits = [...mockCredits].sort((a, b) => b.score - a.score).slice(0, 4)
+  const recentKnowledge = mockKnowledge.slice(0, 4)
+  const recentContracts = mockContracts.slice(0, 4)
+
+  const creditLevelCounts = mockCredits.reduce<Record<string, number>>((acc, c) => {
+    acc[c.level] = (acc[c.level] || 0) + 1
+    return acc
+  }, {})
+  const inspCounts = mockInspections.reduce<Record<string, number>>((acc, i) => {
+    acc[i.status] = (acc[i.status] || 0) + 1
+    return acc
+  }, {})
+  const knowledgeCatCounts = mockKnowledge.reduce<Record<string, number>>((acc, k) => {
+    acc[k.category] = (acc[k.category] || 0) + 1
+    return acc
+  }, {})
 
   return (
     <div className="space-y-6">
@@ -140,7 +155,7 @@ function OverviewTab({ onNavigate }: { onNavigate: (key: string) => void }) {
                   </div>
                   <div className="flex-1 min-w-0">
                     <p className="text-sm text-navy-50 font-medium truncate">{ins.orderId}</p>
-                    <p className="text-xs text-navy-300 truncate">{ins.engineerName} · {ins.inspectionType}</p>
+                    <p className="text-xs text-navy-300 truncate">{ins.engineerName} · {ins.checkDate}</p>
                   </div>
                   <span className={`text-xs px-2 py-1 rounded border ${status.color}`}>
                     {status.label}
@@ -176,6 +191,127 @@ function OverviewTab({ onNavigate }: { onNavigate: (key: string) => void }) {
                   <p className="text-xs text-navy-300">完成率 {c.completionRate}% · 评分 {c.avgRating}</p>
                 </div>
                 <span className="text-lg font-bold text-cyber-400">{c.score}</span>
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+
+      <div className="glass-card cyber-border p-5">
+        <div className="flex items-center justify-between mb-4">
+          <h3 className="text-base font-semibold text-navy-50 flex items-center gap-2">
+            <BookOpen className="w-4 h-4 text-warm-500" /> 厂商知识库最新更新
+          </h3>
+          <span
+            onClick={() => onNavigate('knowledge')}
+            className="text-xs text-warm-500 hover:text-warm-400 cursor-pointer flex items-center gap-0.5"
+          >
+            查看更多 <ChevronDown className="w-3 h-3 -rotate-90" />
+          </span>
+        </div>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          {recentKnowledge.map(k => (
+            <div key={k.id} className="p-4 rounded-lg bg-navy-600/30 border border-white/5 hover:border-warm-500/30 transition-colors">
+              <h4 className="font-medium text-navy-50 text-sm mb-2 line-clamp-1">{k.title}</h4>
+              <div className="flex items-center gap-2 mb-2">
+                <span className="tag-cyber text-[10px]">{categoryLabels[k.category] || k.category}</span>
+                <span className="tag-warm text-[10px]">{k.brand}</span>
+              </div>
+              <p className="text-xs text-navy-300">更新于 {k.lastUpdated}</p>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      <div className="glass-card cyber-border p-5">
+        <div className="flex items-center justify-between mb-4">
+          <h3 className="text-base font-semibold text-navy-50 flex items-center gap-2">
+            <FileCheck className="w-4 h-4 text-cyber-400" /> 合同存证复查记录
+          </h3>
+          <span
+            onClick={() => onNavigate('compliance')}
+            className="text-xs text-cyber-400 hover:text-cyber-300 cursor-pointer flex items-center gap-0.5"
+          >
+            查看全部 <ChevronDown className="w-3 h-3 -rotate-90" />
+          </span>
+        </div>
+        <div className="overflow-x-auto">
+          <table className="w-full text-sm">
+            <thead>
+              <tr className="text-xs text-navy-300 border-b border-white/10">
+                <th className="text-left py-2 px-3 font-medium">合同编号</th>
+                <th className="text-left py-2 px-3 font-medium">甲方</th>
+                <th className="text-left py-2 px-3 font-medium">状态</th>
+                <th className="text-left py-2 px-3 font-medium">签署日期</th>
+                <th className="text-left py-2 px-3 font-medium">存证哈希</th>
+              </tr>
+            </thead>
+            <tbody>
+              {recentContracts.map(ct => {
+                const status = contractStatusMap[ct.status]
+                return (
+                  <tr key={ct.id} className="border-b border-white/5 last:border-0">
+                    <td className="py-2.5 px-3 text-navy-50 font-mono text-xs">{ct.orderId}</td>
+                    <td className="py-2.5 px-3 text-navy-200 text-xs">{ct.customerName}</td>
+                    <td className="py-2.5 px-3">
+                      <span className={`text-[10px] px-2 py-0.5 rounded border ${status.color}`}>{status.label}</span>
+                    </td>
+                    <td className="py-2.5 px-3 text-navy-300 text-xs">{ct.signedAt || '—'}</td>
+                    <td className="py-2.5 px-3 text-navy-400 font-mono text-[10px]">
+                      {ct.archiveHash ? ct.archiveHash.slice(0, 14) + '...' : '—'}
+                    </td>
+                  </tr>
+                )
+              })}
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+        <div className="glass-card cyber-border p-5">
+          <h4 className="text-sm font-semibold text-navy-50 mb-3 flex items-center gap-2">
+            <Users className="w-4 h-4 text-cyber-400" /> 信用评级分布
+          </h4>
+          <div className="space-y-2">
+            {(['S', 'A', 'B', 'C'] as const).map(lv => (
+              <div key={lv} className="flex items-center justify-between">
+                <span className={`text-xs px-2 py-0.5 rounded border ${levelColors[lv]}`}>{lv}级</span>
+                <span className="text-sm font-medium text-navy-50">{creditLevelCounts[lv] || 0} 人</span>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        <div className="glass-card cyber-border p-5">
+          <h4 className="text-sm font-semibold text-navy-50 mb-3 flex items-center gap-2">
+            <ShieldCheck className="w-4 h-4 text-cyber-400" /> 质检结果分布
+          </h4>
+          <div className="space-y-2">
+            <div className="flex items-center justify-between">
+              <span className={`text-xs px-2 py-0.5 rounded border ${inspStatusMap.pass.color}`}>通过</span>
+              <span className="text-sm font-medium text-navy-50">{inspCounts.pass || 0} 条</span>
+            </div>
+            <div className="flex items-center justify-between">
+              <span className={`text-xs px-2 py-0.5 rounded border ${inspStatusMap.fail.color}`}>未通过</span>
+              <span className="text-sm font-medium text-navy-50">{inspCounts.fail || 0} 条</span>
+            </div>
+            <div className="flex items-center justify-between">
+              <span className={`text-xs px-2 py-0.5 rounded border ${inspStatusMap.pending.color}`}>待检</span>
+              <span className="text-sm font-medium text-navy-50">{inspCounts.pending || 0} 条</span>
+            </div>
+          </div>
+        </div>
+
+        <div className="glass-card cyber-border p-5">
+          <h4 className="text-sm font-semibold text-navy-50 mb-3 flex items-center gap-2">
+            <BookOpen className="w-4 h-4 text-warm-500" /> 知识库类型分布
+          </h4>
+          <div className="space-y-2">
+            {Object.entries(knowledgeCatCounts).map(([cat, cnt]) => (
+              <div key={cat} className="flex items-center justify-between">
+                <span className="tag-cyber text-[10px]">{categoryLabels[cat] || cat}</span>
+                <span className="text-sm font-medium text-navy-50">{cnt} 条</span>
               </div>
             ))}
           </div>

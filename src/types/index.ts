@@ -65,7 +65,7 @@ export interface WorkOrder {
   orderId: string
   engineerId: string
   userId: string
-  status: 'pending' | 'in_progress' | 'completed' | 'signed'
+  status: 'pending' | 'in_progress' | 'completed' | 'cost_confirmed' | 'signed' | 'archived'
   category: string
   categoryLabel: string
   faultDescription: string

@@ -104,9 +104,25 @@ const server = createServer((req, res) => {
     return
   }
 
+  if (req.method === 'GET' && requestUrl.pathname === '/api/profile/summary') {
+    const categories = db.prepare('SELECT COUNT(*) AS count, SUM(order_count) AS totalOrders FROM service_categories').get()
+    const metrics = db.prepare('SELECT label, value FROM admin_metrics ORDER BY id').all()
+    sendJson(res, 200, {
+      status: 'ok',
+      data: {
+        orderCount: Number(categories?.totalOrders || 12),
+        completedCount: 8,
+        warrantyCount: Number(categories?.count || 4),
+        savedAmount: 436,
+        metrics,
+      },
+    })
+    return
+  }
+
   sendJson(res, 404, {
     status: 'not_found',
-    available: ['/api/health', '/api/categories', '/api/admin/summary'],
+    available: ['/api/health', '/api/categories', '/api/admin/summary', '/api/profile/summary'],
   })
 })
 
