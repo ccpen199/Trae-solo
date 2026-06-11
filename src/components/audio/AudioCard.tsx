@@ -1,7 +1,10 @@
-import { Heart, Play, Clock } from 'lucide-react';
+import { useState } from 'react';
+import { Heart, Play, Clock, Shield, FileText, X } from 'lucide-react';
 import type { AudioTrack } from '@/types';
 import { useAppStore } from '@/store/useAppStore';
 import { cn, formatDuration, categoryLabel, categoryColor } from '@/lib/utils';
+import { GlassCard } from '@/components/ui';
+import { motion, AnimatePresence } from 'framer-motion';
 
 interface AudioCardProps {
   track: AudioTrack;
@@ -11,6 +14,7 @@ interface AudioCardProps {
 export default function AudioCard({ track, onClick }: AudioCardProps) {
   const { favorites, toggleFavorite, setCurrentAudio, setPlaying } = useAppStore();
   const isFavorite = favorites.includes(track.id);
+  const [showCopyright, setShowCopyright] = useState(false);
 
   const handlePlay = (e: React.MouseEvent) => {
     e.stopPropagation();
@@ -21,6 +25,11 @@ export default function AudioCard({ track, onClick }: AudioCardProps) {
   const handleFavorite = (e: React.MouseEvent) => {
     e.stopPropagation();
     toggleFavorite(track.id);
+  };
+
+  const handleShowCopyright = (e: React.MouseEvent) => {
+    e.stopPropagation();
+    setShowCopyright(true);
   };
 
   return (
@@ -109,6 +118,109 @@ export default function AudioCard({ track, onClick }: AudioCardProps) {
           style={{ width: `${Math.min(100, (track.playCount / 50000) * 100)}%` }}
         />
       </div>
+
+      {track.watermarkEmbedded && (
+        <div className="absolute top-5 right-5 flex items-center gap-1.5 px-2 py-1 rounded-full bg-night-900/70 backdrop-blur-md border border-mint-400/20 text-[10px] font-mono text-mint-300">
+          <Shield size={10} />
+          <span>WM</span>
+        </div>
+      )}
+
+      <button
+        onClick={handleShowCopyright}
+        className="absolute top-5 right-14 w-7 h-7 rounded-full bg-night-900/70 backdrop-blur-md border border-white/10 flex items-center justify-center text-silver-300 hover:text-white hover:border-dream-400/50 transition-all duration-300 opacity-0 group-hover:opacity-100"
+        title="版权与水印信息"
+      >
+        <FileText size={12} />
+      </button>
+
+      <AnimatePresence>
+        {showCopyright && (
+          <>
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              className="fixed inset-0 z-[100] bg-black/60 backdrop-blur-sm"
+              onClick={() => setShowCopyright(false)}
+            />
+            <motion.div
+              initial={{ opacity: 0, scale: 0.95, y: 20 }}
+              animate={{ opacity: 1, scale: 1, y: 0 }}
+              exit={{ opacity: 0, scale: 0.95, y: 20 }}
+              transition={{ type: 'spring', damping: 25, stiffness: 300 }}
+              className="fixed left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 z-[101] w-[92%] max-w-md"
+            >
+              <GlassCard className="p-6 relative">
+                <button
+                  onClick={() => setShowCopyright(false)}
+                  className="absolute top-4 right-4 w-8 h-8 rounded-full flex items-center justify-center text-silver-400 hover:text-white hover:bg-white/10 transition-colors"
+                >
+                  <X size={16} />
+                </button>
+
+                <div className="flex items-center gap-3 mb-5">
+                  <div className="w-12 h-12 rounded-2xl flex items-center justify-center bg-gradient-to-br from-mint-400/20 to-dream-400/20 border border-mint-400/30">
+                    <Shield className="w-6 h-6 text-mint-300" />
+                  </div>
+                  <div>
+                    <h3 className="text-lg font-semibold text-white">版权与水印信息</h3>
+                    <p className="text-xs text-silver-400">此音频受版权保护并嵌入追踪水印</p>
+                  </div>
+                </div>
+
+                <div className="space-y-4">
+                  <div className="grid grid-cols-2 gap-3">
+                    <div className="p-3 rounded-2xl bg-white/5 border border-white/5">
+                      <div className="text-[10px] text-silver-500 mb-1">水印ID</div>
+                      <div className="text-sm font-mono text-mint-300 break-all">
+                        {track.copyrightInfo.watermarkId}
+                      </div>
+                    </div>
+                    <div className="p-3 rounded-2xl bg-white/5 border border-white/5">
+                      <div className="text-[10px] text-silver-500 mb-1">内容ID</div>
+                      <div className="text-sm font-mono text-dream-300 break-all">
+                        {track.copyrightInfo.contentId}
+                      </div>
+                    </div>
+                  </div>
+
+                  <div className="space-y-2">
+                    <div className="flex items-center justify-between text-sm">
+                      <span className="text-silver-400">版权方</span>
+                      <span className="text-white font-medium">{track.copyrightInfo.copyrightHolder}</span>
+                    </div>
+                    <div className="flex items-center justify-between text-sm">
+                      <span className="text-silver-400">授权类型</span>
+                      <span className="text-dream-300">{track.copyrightInfo.licenseType}</span>
+                    </div>
+                    <div className="flex items-center justify-between text-sm">
+                      <span className="text-silver-400">结算方式</span>
+                      <span className="text-mint-300">{track.copyrightInfo.royaltyInfo}</span>
+                    </div>
+                    <div className="flex items-center justify-between text-sm">
+                      <span className="text-silver-400">水印状态</span>
+                      <span className={track.watermarkEmbedded ? 'text-mint-300' : 'text-coral-300'}>
+                        {track.watermarkEmbedded ? '已嵌入' : '未嵌入'}
+                      </span>
+                    </div>
+                    <div className="flex items-center justify-between text-sm">
+                      <span className="text-silver-400">播放次数</span>
+                      <span className="text-silver-200">{track.playCount.toLocaleString()} 次</span>
+                    </div>
+                  </div>
+
+                  <div className="p-3 rounded-2xl bg-dream-400/10 border border-dream-400/20">
+                    <p className="text-xs text-silver-300 leading-relaxed">
+                      💡 平台所有音频均嵌入不可感知版权水印，用于追踪非法传播，保护内容创作者合法权益。
+                    </p>
+                  </div>
+                </div>
+              </GlassCard>
+            </motion.div>
+          </>
+        )}
+      </AnimatePresence>
     </div>
   );
 }

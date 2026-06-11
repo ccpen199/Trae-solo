@@ -1,4 +1,5 @@
 import { motion } from 'framer-motion';
+import { useNavigate } from 'react-router-dom';
 import { useAppStore } from '@/store/useAppStore';
 import { GlassCard, PillButton, RingProgress, StatCard, Chip } from '@/components/ui';
 import { SleepTrendChart } from '@/components/charts';
@@ -41,6 +42,7 @@ function getGreeting(): string {
 }
 
 export default function DashboardPage() {
+  const navigate = useNavigate();
   const {
     user,
     sleepSessions,
@@ -68,7 +70,10 @@ export default function DashboardPage() {
       icon: Play,
       gradient: 'from-dream-500/30 to-mint-500/20',
       iconColor: 'text-mint-300',
-      onClick: () => startMonitoring(),
+      onClick: () => {
+        startMonitoring();
+        navigate('/monitor');
+      },
     },
     {
       label: '助眠音频',
@@ -80,6 +85,7 @@ export default function DashboardPage() {
           setCurrentAudio(recommendedAudio);
           setPlaying(true);
         }
+        navigate('/audio');
       },
     },
     {
@@ -87,14 +93,14 @@ export default function DashboardPage() {
       icon: FileBarChart,
       gradient: 'from-night-500/30 to-night-600/20',
       iconColor: 'text-night-200',
-      onClick: () => {},
+      onClick: () => navigate('/reports'),
     },
     {
       label: '晨间自评',
       icon: ClipboardList,
       gradient: 'from-coral-500/20 to-dream-500/20',
       iconColor: 'text-coral-300',
-      onClick: () => {},
+      onClick: () => navigate('/morning'),
     },
   ];
 
@@ -139,9 +145,19 @@ export default function DashboardPage() {
               />
             </div>
             <div className="flex-1 w-full">
-              <div className="mb-4 flex items-center gap-3">
-                <h2 className="text-xl font-semibold text-white">昨夜睡眠概览</h2>
-                <Chip variant="dream">最新数据</Chip>
+              <div className="mb-4 flex items-center justify-between flex-wrap gap-2">
+                <div className="flex items-center gap-3">
+                  <h2 className="text-xl font-semibold text-white">昨夜睡眠概览</h2>
+                  <Chip variant="dream">最新数据</Chip>
+                </div>
+                <PillButton
+                  variant="secondary"
+                  size="sm"
+                  rightIcon={<ArrowRight className="w-3.5 h-3.5" />}
+                  onClick={() => navigate('/reports')}
+                >
+                  查看报告详情
+                </PillButton>
               </div>
               <div className="grid grid-cols-2 gap-4">
                 <StatCard
@@ -294,7 +310,12 @@ export default function DashboardPage() {
                   </p>
                 )}
               </div>
-              <PillButton variant="secondary" size="sm" rightIcon={<ArrowRight className="w-3.5 h-3.5" />}>
+              <PillButton
+                variant="secondary"
+                size="sm"
+                rightIcon={<ArrowRight className="w-3.5 h-3.5" />}
+                onClick={() => navigate('/risk')}
+              >
                 查看
               </PillButton>
             </div>

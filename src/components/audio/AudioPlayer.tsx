@@ -9,6 +9,7 @@ import {
   SkipBack,
   SkipForward,
   X,
+  Shield,
 } from 'lucide-react';
 import { useAppStore } from '@/store/useAppStore';
 import { cn, formatSecondsToTime } from '@/lib/utils';
@@ -103,11 +104,19 @@ export default function AudioPlayer() {
             <div className="flex-1 min-w-0">
               <div className="flex items-center justify-between mb-1">
                 <div className="min-w-0 flex-1 pr-4">
-                  <h4 className="font-medium text-white truncate text-sm">
-                    {currentAudio.title}
-                  </h4>
+                  <div className="flex items-center gap-2">
+                    <h4 className="font-medium text-white truncate text-sm">
+                      {currentAudio.title}
+                    </h4>
+                    {currentAudio.watermarkEmbedded && (
+                      <span className="flex items-center gap-1 px-1.5 py-0.5 rounded text-[9px] font-mono bg-mint-400/15 text-mint-300 border border-mint-400/20 flex-shrink-0" title={`水印ID: ${currentAudio.copyrightInfo.watermarkId}`}>
+                        <Shield size={8} />
+                        {currentAudio.copyrightInfo.watermarkId.slice(-5)}
+                      </span>
+                    )}
+                  </div>
                   <p className="text-xs text-silver-400 truncate">
-                    {currentAudio.author}
+                    {currentAudio.author} · © {currentAudio.copyrightInfo.copyrightHolder}
                   </p>
                 </div>
                 <div className="flex items-center gap-1 flex-shrink-0">

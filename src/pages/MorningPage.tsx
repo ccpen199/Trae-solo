@@ -1,5 +1,6 @@
 import { useMemo, useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
+import { useNavigate } from 'react-router-dom';
 import {
   Sun,
   Moon,
@@ -327,6 +328,7 @@ function getMoodInsight(mood: number, prevMood?: number) {
 }
 
 export default function MorningPage() {
+  const navigate = useNavigate();
   const { morningAssessments, submitMorningAssessment } = useAppStore();
 
   const [alertness, setAlertness] = useState(4);
@@ -490,6 +492,7 @@ export default function MorningPage() {
                 variant="mint"
                 size="md"
                 rightIcon={<Coffee size={18} />}
+                onClick={() => navigate('/plan')}
               >
                 开启今日计划
               </PillButton>

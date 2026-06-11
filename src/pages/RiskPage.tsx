@@ -15,12 +15,20 @@ import {
   TrendingUp,
   Clock,
   Gauge,
+  Video,
+  Phone,
+  MapPin,
+  Star,
+  RefreshCw,
+  Stethoscope,
+  User,
+  CheckCircle2,
 } from 'lucide-react';
 import { useAppStore } from '@/store/useAppStore';
 import { DSM5RadarChart } from '@/components/charts';
 import { GlassCard, PillButton, Chip } from '@/components/ui';
 import { cn, dayjs, riskLevelColor, riskLevelBg, formatDateLabel } from '@/lib/utils';
-import type { RiskLevel, ReferralStatus } from '@/types';
+import type { RiskLevel, ReferralStatus, ReferralRecord } from '@/types';
 
 const riskLabelMap: Record<RiskLevel, { label: string; subLabel: string; glow: string; ring: string }> = {
   low: {
@@ -364,6 +372,255 @@ function ReferralStepper() {
   );
 }
 
+function ReferralDetailCard() {
+  const referralRecords = useAppStore((s) => s.referralRecords);
+  const latest = referralRecords.slice(-1)[0];
+
+  if (!latest) return null;
+
+  const statusLabelMap: Record<ReferralStatus, string> = {
+    pending_auth: '等待用户授权',
+    data_packaging: '睡眠数据打包中',
+    report_generated: '已生成转诊报告',
+    hospital_matched: '已匹配合作医院',
+    appointment_scheduled: '已预约远程初筛',
+    consultation_completed: '初筛已完成',
+  };
+
+  return (
+    <motion.div
+      initial={{ opacity: 0, y: 20 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.6, delay: 0.25 }}
+    >
+      <GlassCard className="p-6">
+        <div className="mb-5 flex items-center justify-between">
+          <div>
+            <div className="text-sm font-medium text-white">当前转诊详情</div>
+            <div className="text-xs text-silver-500">
+              转诊单号 · <span className="font-mono">{latest.id.slice(-8).toUpperCase()}</span>
+            </div>
+          </div>
+          <Chip variant={latest.status === 'consultation_completed' ? 'mint' : 'dream'}>
+            {statusLabelMap[latest.status]}
+          </Chip>
+        </div>
+
+        {latest.matchedHospital && (
+          <div className="mb-5 rounded-2xl border border-white/5 bg-white/[0.02] p-4">
+            <div className="flex items-start gap-4">
+              <div className="flex h-14 w-14 shrink-0 items-center justify-center rounded-2xl bg-gradient-to-br from-dream-400/20 to-mint-400/20 border border-dream-400/20">
+                <Hospital className="h-7 w-7 text-dream-300" />
+              </div>
+              <div className="min-w-0 flex-1">
+                <div className="flex items-center gap-2 flex-wrap">
+                  <h4 className="font-semibold text-white">{latest.matchedHospital.name}</h4>
+                  <Chip variant="mint" className="text-[10px] py-0">
+                    {latest.matchedHospital.level}
+                  </Chip>
+                  <Chip variant="dream" className="text-[10px] py-0">
+                    {latest.matchedHospital.cooperationType}
+                  </Chip>
+                </div>
+                <p className="mt-1 text-xs text-silver-400">
+                  {latest.matchedHospital.department}
+                </p>
+                <div className="mt-2 flex items-center gap-4 text-[11px] text-silver-400 flex-wrap">
+                  <span className="flex items-center gap-1">
+                    <MapPin size={12} />
+                    {latest.matchedHospital.city}
+                  </span>
+                  <span className="flex items-center gap-1">
+                    <Stethoscope size={12} />
+                    {latest.matchedHospital.doctorsCount} 位睡眠专科医生
+                  </span>
+                  <span className="flex items-center gap-1 text-dream-300">
+                    <Star size={12} className="fill-current" />
+                    {latest.matchedHospital.rating}
+                  </span>
+                </div>
+              </div>
+            </div>
+          </div>
+        )}
+
+        {latest.appointment ? (
+          <div className="rounded-2xl border border-mint-400/20 bg-mint-400/5 p-4">
+            <div className="mb-3 flex items-center gap-2">
+              <CalendarCheck className="h-4 w-4 text-mint-300" />
+              <span className="text-sm font-medium text-white">远程初筛预约</span>
+              {latest.appointment.status === 'completed' && (
+                <Chip variant="mint" className="py-0 text-[10px]">
+                  <CheckCircle2 size={10} />
+                  已完成
+                </Chip>
+              )}
+            </div>
+            <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
+              <div>
+                <div className="text-[10px] text-silver-500">预约时间</div>
+                <div className="mt-0.5 font-mono text-sm text-silver-200">
+                  {dayjs(latest.appointment.scheduledAt).format('YYYY-MM-DD HH:mm')}
+                </div>
+              </div>
+              <div>
+                <div className="text-[10px] text-silver-500">主治医生</div>
+                <div className="mt-0.5 flex items-center gap-1.5 text-sm text-silver-200">
+                  <User size={14} className="text-dream-300" />
+                  {latest.appointment.doctorName}
+                </div>
+              </div>
+              <div>
+                <div className="text-[10px] text-silver-500">咨询方式</div>
+                <div className="mt-0.5 flex items-center gap-1.5 text-sm text-silver-200">
+                  {latest.appointment.consultationType === 'video' ? (
+                    <Video size={14} className="text-mint-300" />
+                  ) : latest.appointment.consultationType === 'phone' ? (
+                    <Phone size={14} className="text-dream-300" />
+                  ) : (
+                    <MapPin size={14} className="text-coral-300" />
+                  )}
+                  {latest.appointment.consultationType === 'video'
+                    ? '视频问诊'
+                    : latest.appointment.consultationType === 'phone'
+                      ? '电话问诊'
+                      : '线下到院'}
+                </div>
+              </div>
+              <div>
+                <div className="text-[10px] text-silver-500">预约时长</div>
+                <div className="mt-0.5 font-mono text-sm text-silver-200">
+                  {latest.appointment.duration} 分钟
+                </div>
+              </div>
+            </div>
+            {latest.appointment.meetingLink && (
+              <div className="mt-4 flex items-center justify-between rounded-xl bg-night-800/60 px-4 py-3 border border-white/5">
+                <div className="min-w-0">
+                  <div className="text-[10px] text-silver-500">视频问诊链接</div>
+                  <div className="mt-0.5 truncate font-mono text-xs text-mint-300">
+                    {latest.appointment.meetingLink}
+                  </div>
+                </div>
+                <PillButton variant="mint" size="sm">
+                  进入诊室
+                </PillButton>
+              </div>
+            )}
+            {latest.consultationResult && (
+              <div className="mt-4 rounded-xl bg-white/[0.03] p-3 border border-white/5">
+                <div className="text-[10px] text-silver-500 mb-1">医生初筛结论</div>
+                <p className="text-xs text-silver-200 leading-relaxed">{latest.consultationResult}</p>
+              </div>
+            )}
+          </div>
+        ) : (
+          latest.status !== 'pending_auth' && (
+            <div className="rounded-2xl border border-dream-400/20 bg-dream-400/5 p-4 flex items-center gap-3">
+              <RefreshCw className="h-5 w-5 text-dream-300 animate-spin" style={{ animationDuration: '3s' }} />
+              <div>
+                <div className="text-sm text-white">正在为您匹配最佳就诊时间...</div>
+                <div className="text-xs text-silver-400 mt-0.5">预计将在 2 小时内通知您预约结果</div>
+              </div>
+            </div>
+          )
+        )}
+
+        <div className="mt-4 flex items-center gap-2 text-[10px] text-silver-500">
+          <Shield size={11} />
+          所有医疗数据均端到端加密传输，仅用于本次转诊评估
+        </div>
+      </GlassCard>
+    </motion.div>
+  );
+}
+
+function FollowUpRecords() {
+  const records = [
+    {
+      id: 'fu-001',
+      date: dayjs().subtract(2, 'day').toISOString(),
+      type: '复诊提醒',
+      title: '睡眠监测数据已同步至医生端',
+      desc: '连续 3 晚 AHI 指数显示轻度改善，医生建议维持当前方案。',
+      doctor: '李主任',
+      status: 'done',
+    },
+    {
+      id: 'fu-002',
+      date: dayjs().subtract(7, 'day').toISOString(),
+      type: '首次随访',
+      title: '远程初筛视频问诊已完成',
+      desc: '初步诊断为轻度阻塞性睡眠呼吸暂停，建议家庭呼吸机试用 + 体位治疗。',
+      doctor: '王副主任',
+      status: 'done',
+    },
+    {
+      id: 'fu-003',
+      date: dayjs().subtract(14, 'day').toISOString(),
+      type: '复查计划',
+      title: '已创建 30 天睡眠干预复查计划',
+      desc: '每周数据自动上报，每 2 周进行一次远程评估。',
+      doctor: '系统自动',
+      status: 'done',
+    },
+  ];
+
+  return (
+    <motion.div
+      initial={{ opacity: 0, y: 20 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.6, delay: 0.35 }}
+    >
+      <GlassCard className="p-6">
+        <div className="mb-4 flex items-center justify-between">
+          <div>
+            <div className="text-sm font-medium text-white">复查与随访记录</div>
+            <div className="text-xs text-silver-500">医疗闭环全程可追溯</div>
+          </div>
+          <RefreshCw className="h-4 w-4 text-silver-500" />
+        </div>
+
+        <div className="relative">
+          <div className="absolute left-4 top-2 bottom-2 w-0.5 bg-gradient-to-b from-mint-400/50 via-dream-400/30 to-transparent" />
+
+          <div className="space-y-5">
+            {records.map((r, idx) => (
+              <div key={r.id} className="relative pl-10">
+                <div
+                  className={cn(
+                    'absolute left-2.5 top-1 flex h-3 w-3 items-center justify-center rounded-full',
+                    r.status === 'done' ? 'bg-mint-400 shadow-[0_0_8px_rgba(123,200,164,0.6)]' : 'bg-night-500 ring-2 ring-dream-400'
+                  )}
+                />
+                <div className="rounded-2xl border border-white/5 bg-white/[0.02] p-4 transition-all hover:border-dream-400/20 hover:bg-white/[0.04]">
+                  <div className="flex items-center justify-between flex-wrap gap-2">
+                    <div className="flex items-center gap-2">
+                      <Chip variant={idx === 0 ? 'mint' : 'dream'} className="py-0 text-[10px]">
+                        {r.type}
+                      </Chip>
+                      <h5 className="text-sm font-medium text-white">{r.title}</h5>
+                    </div>
+                    <div className="flex items-center gap-2 text-[10px] text-silver-500">
+                      <Clock size={10} />
+                      <span>{dayjs(r.date).format('MM-DD HH:mm')}</span>
+                    </div>
+                  </div>
+                  <p className="mt-2 text-xs text-silver-400 leading-relaxed">{r.desc}</p>
+                  <div className="mt-2 flex items-center gap-1.5 text-[11px] text-silver-500">
+                    <Stethoscope size={11} className="text-dream-300" />
+                    跟进：{r.doctor}
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </GlassCard>
+    </motion.div>
+  );
+}
+
 function RiskHistoryList() {
   const assessments = useAppStore((s) => s.riskAssessments);
 
@@ -488,8 +745,10 @@ export default function RiskPage() {
         <AHICard />
       </div>
 
-      <RiskHistoryList />
       <ReferralStepper />
+      <ReferralDetailCard />
+      <FollowUpRecords />
+      <RiskHistoryList />
 
       <motion.div
         className="fixed inset-x-0 bottom-0 z-30 border-t border-white/5 bg-gradient-night/95 px-6 py-5 backdrop-blur-xl"

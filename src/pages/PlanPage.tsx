@@ -1,5 +1,6 @@
 import { useMemo, useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
+import { useNavigate } from 'react-router-dom';
 import {
   Calendar,
   Flame,
@@ -12,6 +13,8 @@ import {
   Target,
   TrendingUp,
   Clock,
+  Coffee,
+  Headphones,
 } from 'lucide-react';
 import { useAppStore } from '@/store/useAppStore';
 import {
@@ -31,6 +34,7 @@ const cbtTabs: { type: CBTType; label: string; icon: typeof BookOpen }[] = [
 ];
 
 export default function PlanPage() {
+  const navigate = useNavigate();
   const { improvementPlan } = useAppStore();
   const [activeCBTType, setActiveCBTType] = useState<CBTType>('sleep_restriction');
 
@@ -79,12 +83,34 @@ export default function PlanPage() {
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5 }}
       >
-        <h1 className="text-3xl font-bold text-white font-display mb-2">
-          睡眠改善计划
-        </h1>
-        <p className="text-silver-400">
-          科学的CBT-I疗法，渐进式改善你的睡眠质量
-        </p>
+        <div className="flex items-start justify-between flex-wrap gap-4">
+          <div>
+            <h1 className="text-3xl font-bold text-white font-display mb-2">
+              睡眠改善计划
+            </h1>
+            <p className="text-silver-400">
+              科学的CBT-I疗法，渐进式改善你的睡眠质量
+            </p>
+          </div>
+          <div className="flex gap-2 flex-wrap">
+            <PillButton
+              variant="secondary"
+              size="sm"
+              leftIcon={<Coffee className="w-4 h-4" />}
+              onClick={() => navigate('/morning')}
+            >
+              晨间自评
+            </PillButton>
+            <PillButton
+              variant="mint"
+              size="sm"
+              leftIcon={<Headphones className="w-4 h-4" />}
+              onClick={() => navigate('/audio')}
+            >
+              助眠音频
+            </PillButton>
+          </div>
+        </div>
       </motion.div>
 
       <motion.div
