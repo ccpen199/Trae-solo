@@ -21,6 +21,7 @@ export default function App() {
           <Route path="/cases" element={<Cases />} />
           <Route path="/cases/:id" element={<CaseDetail />} />
           <Route path="/dashboard" element={<Dashboard />} />
+          <Route path="/admin" element={<Dashboard />} />
           <Route path="/profile" element={<Profile />} />
         </Route>
       </Routes>

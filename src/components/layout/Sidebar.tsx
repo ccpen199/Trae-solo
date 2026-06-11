@@ -13,8 +13,8 @@ const navItems = [
   { to: '/create', icon: MessageSquare, label: 'AI创作' },
   { to: '/editor/resume-1', icon: FileEdit, label: '简历编辑' },
   { to: '/lab', icon: FlaskConical, label: '简历实验室' },
-  { to: '/cases', icon: Library, label: '案例库' },
-  { to: '/dashboard', icon: BarChart3, label: '数据看板' },
+  { to: '/cases', icon: Library, label: '发现分类' },
+  { to: '/admin', icon: BarChart3, label: '后台管理' },
   { to: '/profile', icon: User, label: '个人中心' },
 ];
 
