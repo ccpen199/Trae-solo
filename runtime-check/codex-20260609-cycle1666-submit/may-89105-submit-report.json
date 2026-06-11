@@ -1,0 +1,115 @@
+{
+  "ok": true,
+  "frontendUrl": "http://127.0.0.1:50105/",
+  "backendUrl": "http://127.0.0.1:59105",
+  "cargoName": "Codex-cycle1666-submit-1780991533544",
+  "checks": [
+    {
+      "name": "dashboard visible without login form",
+      "ok": true,
+      "url": "http://127.0.0.1:50105/"
+    },
+    {
+      "name": "price query table visible",
+      "ok": true
+    },
+    {
+      "name": "cargo submit navigates to cargo list",
+      "ok": true,
+      "url": "http://127.0.0.1:50105/cargo/list",
+      "cargoName": "Codex-cycle1666-submit-1780991533544"
+    },
+    {
+      "name": "submitted cargo visible in list",
+      "ok": true,
+      "cargoName": "Codex-cycle1666-submit-1780991533544"
+    }
+  ],
+  "requestFailures": [],
+  "responseErrors": [],
+  "consoleErrors": [],
+  "consoleMessages": [
+    {
+      "type": "debug",
+      "text": "[vite] connecting...",
+      "location": {
+        "url": "http://127.0.0.1:50105/@vite/client",
+        "lineNumber": 788,
+        "columnNumber": 8
+      }
+    },
+    {
+      "type": "debug",
+      "text": "[vite] connected.",
+      "location": {
+        "url": "http://127.0.0.1:50105/@vite/client",
+        "lineNumber": 911,
+        "columnNumber": 14
+      }
+    },
+    {
+      "type": "info",
+      "text": "%cDownload the React DevTools for a better development experience: https://reactjs.org/link/react-devtools font-weight:bold",
+      "location": {
+        "url": "http://127.0.0.1:50105/node_modules/.vite/deps/chunk-XJQJ4TYH.js?v=ffdefe3b",
+        "lineNumber": 21608,
+        "columnNumber": 24
+      }
+    },
+    {
+      "type": "debug",
+      "text": "[vite] connecting...",
+      "location": {
+        "url": "http://127.0.0.1:50105/@vite/client",
+        "lineNumber": 788,
+        "columnNumber": 8
+      }
+    },
+    {
+      "type": "debug",
+      "text": "[vite] connected.",
+      "location": {
+        "url": "http://127.0.0.1:50105/@vite/client",
+        "lineNumber": 911,
+        "columnNumber": 14
+      }
+    },
+    {
+      "type": "info",
+      "text": "%cDownload the React DevTools for a better development experience: https://reactjs.org/link/react-devtools font-weight:bold",
+      "location": {
+        "url": "http://127.0.0.1:50105/node_modules/.vite/deps/chunk-XJQJ4TYH.js?v=ffdefe3b",
+        "lineNumber": 21608,
+        "columnNumber": 24
+      }
+    },
+    {
+      "type": "debug",
+      "text": "[vite] connecting...",
+      "location": {
+        "url": "http://127.0.0.1:50105/@vite/client",
+        "lineNumber": 788,
+        "columnNumber": 8
+      }
+    },
+    {
+      "type": "debug",
+      "text": "[vite] connected.",
+      "location": {
+        "url": "http://127.0.0.1:50105/@vite/client",
+        "lineNumber": 911,
+        "columnNumber": 14
+      }
+    },
+    {
+      "type": "info",
+      "text": "%cDownload the React DevTools for a better development experience: https://reactjs.org/link/react-devtools font-weight:bold",
+      "location": {
+        "url": "http://127.0.0.1:50105/node_modules/.vite/deps/chunk-XJQJ4TYH.js?v=ffdefe3b",
+        "lineNumber": 21608,
+        "columnNumber": 24
+      }
+    }
+  ],
+  "finishedAt": "2026-06-09T07:52:21.374Z"
+}

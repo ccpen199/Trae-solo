@@ -1,0 +1,285 @@
+{
+  "ok": false,
+  "generatedAt": "2026-06-09T15:34:47.004Z",
+  "order": "may-89105",
+  "roundIndex": 6,
+  "captureId": "may-89105-repair-final",
+  "url": "http://127.0.0.1:50105/",
+  "initialUrl": "http://127.0.0.1:50105/",
+  "finalUrl": "http://127.0.0.1:50105/login",
+  "status": null,
+  "title": "货运数字化服务平台",
+  "initialTitle": "货运数字化服务平台",
+  "navigationError": "page.goto: Timeout 15000ms exceeded.\nCall log:\n\u001b[2m  - navigating to \"http://127.0.0.1:50105/\", waiting until \"domcontentloaded\"\u001b[22m\n",
+  "screenshotPath": "runtime-check/codex-20260609-repair/may-89105-repair-final-frontend.png",
+  "screenshotPaths": [
+    "/Users/chen/Documents/trae_projects/local_projects/may-89105/runtime-check/codex-20260609-repair/may-89105-repair-final-structure-01-首屏.png"
+  ],
+  "issueTextPreview": "登录流程已完成，继续复验登录后的首页和业务导航；财务对账/结算中心页面需有业务数据",
+  "targetReason": "登录注册相关问题；购买/提交相关问题",
+  "targetKind": "auth",
+  "targetMatched": false,
+  "targetActions": [],
+  "authFlow": {
+    "detected": false,
+    "attempted": false,
+    "success": false,
+    "finalUrl": "http://127.0.0.1:50105/",
+    "message": "",
+    "actions": []
+  },
+  "businessAudit": {
+    "actions": [],
+    "snapshots": [
+      {
+        "label": "首屏",
+        "url": "http://127.0.0.1:50105/",
+        "title": "货运数字化服务平台",
+        "headings": [],
+        "navLabels": [],
+        "buttons": [],
+        "links": [],
+        "inputs": [],
+        "tables": [],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "",
+        "layout": {
+          "viewportWidth": 1504,
+          "viewportHeight": 1000,
+          "scrollWidth": 1504,
+          "scrollHeight": 1000,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89105-repair-final-structure-01-首屏",
+          "label": "首屏",
+          "finalUrl": "http://127.0.0.1:50105/",
+          "title": "货运数字化服务平台",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89105/runtime-check/codex-20260609-repair/may-89105-repair-final-structure-01-首屏.json",
+          "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89105/runtime-check/codex-20260609-repair/may-89105-repair-final-structure-01-首屏.png",
+          "elementCount": 8,
+          "interactiveCount": 0,
+          "interactiveLabels": []
+        }
+      }
+    ],
+    "findings": [
+      "首屏 页面打开后是空白，没有渲染业务内容、表单或列表。"
+    ],
+    "actionHints": [
+      "修复 首屏 的路由组件挂载、接口初始化和错误兜底，确保进入页面后直接显示可操作内容。"
+    ],
+    "emptyPages": [],
+    "overflowPages": [],
+    "blankPages": [
+      "首屏"
+    ],
+    "apiFailurePaths": [],
+    "goalTerms": [],
+    "clickedActionDescriptors": [],
+    "secondaryActionClicks": 0,
+    "structureCaptures": [
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89105-repair-final-structure-01-首屏",
+        "label": "首屏",
+        "finalUrl": "http://127.0.0.1:50105/",
+        "title": "货运数字化服务平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89105/runtime-check/codex-20260609-repair/may-89105-repair-final-structure-01-首屏.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89105/runtime-check/codex-20260609-repair/may-89105-repair-final-structure-01-首屏.png",
+        "elementCount": 8,
+        "interactiveCount": 0,
+        "interactiveLabels": []
+      }
+    ],
+    "representativeScreenshotUrl": "http://127.0.0.1:50105/",
+    "representativeScreenshotLabel": "首屏"
+  },
+  "websiteStructureCapture": {
+    "module": "website_structure_capture",
+    "captureCount": 1,
+    "captures": [
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89105-repair-final-structure-01-首屏",
+        "label": "首屏",
+        "finalUrl": "http://127.0.0.1:50105/",
+        "title": "货运数字化服务平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89105/runtime-check/codex-20260609-repair/may-89105-repair-final-structure-01-首屏.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89105/runtime-check/codex-20260609-repair/may-89105-repair-final-structure-01-首屏.png",
+        "elementCount": 8,
+        "interactiveCount": 0,
+        "interactiveLabels": []
+      }
+    ]
+  },
+  "screenshotMetrics": {
+    "width": 1536,
+    "height": 1000,
+    "scrollWidth": 1504,
+    "scrollHeight": 1000
+  },
+  "initialBodyTextPreview": "",
+  "bodyTextPreview": "W\n货运数字化服务平台\n智能、高效、安全的货运物流解决方案\n📦\n智能匹配\nAI 算法智能匹配货主与运力，提升运输效率\n📍\n实时追踪\nGPS 实时定位，全程可视化监控货物运输状态\n💰\n在线结算\n安全便捷的在线支付结算，保障交易双方权益\n欢迎登录\n请选择您的角色并登录账号\n选择角色\n货主\n发布货源、查询运价\n车队\n管理运力、接收货源\n司机\n抢单接单、运输执行\n运营\n审核管理、数据分析\n管理员\n系统配置、权限管理\n密码登录\n短信登录\n快速填入演示账号\n登 录\n演示账号\n货主: owner / 123456\n车队: fleet / 123456\n司机: driver / 123456\n运营: ops / 123456\n管理员: admin / admin123",
+  "apiBase": "http://127.0.0.1:59105/api",
+  "businessGoalPreview": "",
+  "apiResponses": [
+    {
+      "method": "POST",
+      "status": 200,
+      "url": "http://127.0.0.1:50105/api/auth/login"
+    },
+    {
+      "method": "POST",
+      "status": 200,
+      "url": "http://127.0.0.1:50105/api/auth/login"
+    }
+  ],
+  "apiChecks": [
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59105/api/health",
+      "path": "/api/health",
+      "status": 0,
+      "ok": false,
+      "error": "apiRequestContext.get: Timeout 3500ms exceeded.\nCall log:\n\u001b[2m  - → GET http://127.0.0.1:59105/api/health\u001b[22m\n\u001b[2m    - user-agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/148.0.0.0 Safari/537.36\u001b["
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59105/api/auth/me",
+      "path": "/api/auth/me",
+      "status": 0,
+      "ok": false,
+      "error": "apiRequestContext.get: Timeout 3500ms exceeded.\nCall log:\n\u001b[2m  - → GET http://127.0.0.1:59105/api/auth/me\u001b[22m\n\u001b[2m    - user-agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/148.0.0.0 Safari/537.36\u001b"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59105/api/users/profile",
+      "path": "/api/users/profile",
+      "status": 404,
+      "ok": false,
+      "bodyPreview": "{\"code\":404,\"message\":\"API 不存在\",\"data\":null,\"timestamp\":1781019217198}"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59105/api/user/profile",
+      "path": "/api/user/profile",
+      "status": 404,
+      "ok": false,
+      "bodyPreview": "{\"code\":404,\"message\":\"API 不存在\",\"data\":null,\"timestamp\":1781019217350}"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59105/api/search?q=%E6%B5%8B%E8%AF%95",
+      "path": "/api/search?q=%E6%B5%8B%E8%AF%95",
+      "status": 404,
+      "ok": false,
+      "bodyPreview": "{\"code\":404,\"message\":\"API 不存在\",\"data\":null,\"timestamp\":1781019217428}"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59105/api/admin/stats",
+      "path": "/api/admin/stats",
+      "status": 404,
+      "ok": false,
+      "bodyPreview": "{\"code\":404,\"message\":\"API 不存在\",\"data\":null,\"timestamp\":1781019217687}"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59105/api/admin/dashboard",
+      "path": "/api/admin/dashboard",
+      "status": 404,
+      "ok": false,
+      "bodyPreview": "{\"code\":404,\"message\":\"API 不存在\",\"data\":null,\"timestamp\":1781019217726}"
+    }
+  ],
+  "dialogs": [],
+  "consoleMessages": [
+    {
+      "type": "debug",
+      "text": "[vite] connecting...",
+      "location": {
+        "url": "http://127.0.0.1:50105/@vite/client",
+        "lineNumber": 788,
+        "columnNumber": 8
+      }
+    },
+    {
+      "type": "debug",
+      "text": "[vite] connected.",
+      "location": {
+        "url": "http://127.0.0.1:50105/@vite/client",
+        "lineNumber": 911,
+        "columnNumber": 14
+      }
+    },
+    {
+      "type": "info",
+      "text": "%cDownload the React DevTools for a better development experience: https://reactjs.org/link/react-devtools font-weight:bold",
+      "location": {
+        "url": "http://127.0.0.1:50105/node_modules/.vite/deps/chunk-XJQJ4TYH.js?v=ffdefe3b",
+        "lineNumber": 21608,
+        "columnNumber": 24
+      }
+    },
+    {
+      "type": "verbose",
+      "text": "[DOM] Input elements should have autocomplete attributes (suggested: \"current-password\"): (More info: https://goo.gl/9p2vKq) %o",
+      "location": {
+        "url": "http://127.0.0.1:50105/login",
+        "lineNumber": 0,
+        "columnNumber": 0
+      }
+    },
+    {
+      "type": "debug",
+      "text": "[vite] connecting...",
+      "location": {
+        "url": "http://127.0.0.1:50105/@vite/client",
+        "lineNumber": 788,
+        "columnNumber": 8
+      }
+    },
+    {
+      "type": "debug",
+      "text": "[vite] connected.",
+      "location": {
+        "url": "http://127.0.0.1:50105/@vite/client",
+        "lineNumber": 911,
+        "columnNumber": 14
+      }
+    },
+    {
+      "type": "info",
+      "text": "%cDownload the React DevTools for a better development experience: https://reactjs.org/link/react-devtools font-weight:bold",
+      "location": {
+        "url": "http://127.0.0.1:50105/node_modules/.vite/deps/chunk-XJQJ4TYH.js?v=ffdefe3b",
+        "lineNumber": 21608,
+        "columnNumber": 24
+      }
+    },
+    {
+      "type": "verbose",
+      "text": "[DOM] Input elements should have autocomplete attributes (suggested: \"current-password\"): (More info: https://goo.gl/9p2vKq) %o",
+      "location": {
+        "url": "http://127.0.0.1:50105/login",
+        "lineNumber": 0,
+        "columnNumber": 0
+      }
+    }
+  ],
+  "requestFailures": [
+    {
+      "method": "POST",
+      "url": "http://127.0.0.1:50105/api/auth/login",
+      "errorText": "net::ERR_ABORTED"
+    },
+    {
+      "method": "POST",
+      "url": "http://127.0.0.1:50105/api/auth/login",
+      "errorText": "net::ERR_ABORTED"
+    }
+  ],
+  "responseErrors": []
+}
