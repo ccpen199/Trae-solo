@@ -1,0 +1,2600 @@
+{
+  "ok": true,
+  "generatedAt": "2026-06-09T06:19:47.583Z",
+  "order": "may-89101",
+  "roundIndex": 434,
+  "captureId": "may-89101-codex-round434",
+  "url": "http://127.0.0.1:49101/",
+  "initialUrl": "http://127.0.0.1:49101/",
+  "finalUrl": "http://127.0.0.1:49101/admin/dashboard",
+  "status": 200,
+  "title": "常州市公共服务聚合平台",
+  "initialTitle": "常州市公共服务聚合平台",
+  "navigationError": "",
+  "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89101/runtime-check/codex-20260609-repair-round434/may-89101-codex-round434-frontend.png",
+  "screenshotPaths": [
+    "/Users/chen/Documents/trae_projects/local_projects/may-89101/runtime-check/codex-20260609-repair-round434/may-89101-codex-round434-structure-01-首屏.png",
+    "/Users/chen/Documents/trae_projects/local_projects/may-89101/runtime-check/codex-20260609-repair-round434/may-89101-codex-round434-structure-02-导航-首页.png",
+    "/Users/chen/Documents/trae_projects/local_projects/may-89101/runtime-check/codex-20260609-repair-round434/may-89101-codex-round434-structure-03-操作-查看全部.png",
+    "/Users/chen/Documents/trae_projects/local_projects/may-89101/runtime-check/codex-20260609-repair-round434/may-89101-codex-round434-structure-04-操作-详情.png",
+    "/Users/chen/Documents/trae_projects/local_projects/may-89101/runtime-check/codex-20260609-repair-round434/may-89101-codex-round434-structure-05-导航-办件管理.png",
+    "/Users/chen/Documents/trae_projects/local_projects/may-89101/runtime-check/codex-20260609-repair-round434/may-89101-codex-round434-structure-06-操作-查看全部.png",
+    "/Users/chen/Documents/trae_projects/local_projects/may-89101/runtime-check/codex-20260609-repair-round434/may-89101-codex-round434-structure-07-操作-详情.png",
+    "/Users/chen/Documents/trae_projects/local_projects/may-89101/runtime-check/codex-20260609-repair-round434/may-89101-codex-round434-structure-08-导航-全量办件视图.png",
+    "/Users/chen/Documents/trae_projects/local_projects/may-89101/runtime-check/codex-20260609-repair-round434/may-89101-codex-round434-structure-09-操作-编辑.png"
+  ],
+  "issueTextPreview": "登录流程已完成，继续复验登录后的首页和业务导航",
+  "targetReason": "登录流程已完成，继续复验登录后的首页和业务导航",
+  "targetKind": "auth",
+  "targetMatched": true,
+  "targetActions": [
+    {
+      "action": "login-fill-username",
+      "label": "admin",
+      "ok": true
+    },
+    {
+      "action": "login-fill-password",
+      "label": "admin:******",
+      "ok": true
+    },
+    {
+      "action": "click",
+      "label": "登录:admin",
+      "ok": true
+    },
+    {
+      "action": "login-submit",
+      "label": "admin",
+      "ok": true,
+      "beforeUrl": "http://127.0.0.1:49101/login"
+    },
+    {
+      "action": "login-result",
+      "label": "admin",
+      "ok": true,
+      "finalUrl": "http://127.0.0.1:49101/admin/dashboard"
+    },
+    {
+      "action": "target-verify",
+      "label": "登录后首页",
+      "ok": true,
+      "finalUrl": "http://127.0.0.1:49101/admin/dashboard"
+    }
+  ],
+  "authFlow": {
+    "detected": true,
+    "attempted": true,
+    "success": true,
+    "finalUrl": "http://127.0.0.1:49101/admin/dashboard",
+    "message": "登录成功:admin",
+    "actions": [
+      {
+        "action": "login-fill-username",
+        "label": "admin",
+        "ok": true
+      },
+      {
+        "action": "login-fill-password",
+        "label": "admin:******",
+        "ok": true
+      },
+      {
+        "action": "click",
+        "label": "登录:admin",
+        "ok": true
+      },
+      {
+        "action": "login-submit",
+        "label": "admin",
+        "ok": true,
+        "beforeUrl": "http://127.0.0.1:49101/login"
+      },
+      {
+        "action": "login-result",
+        "label": "admin",
+        "ok": true,
+        "finalUrl": "http://127.0.0.1:49101/admin/dashboard"
+      }
+    ],
+    "username": "admin",
+    "credentialSource": "preset"
+  },
+  "businessAudit": {
+    "actions": [
+      {
+        "action": "click",
+        "label": "导航:首页",
+        "ok": true
+      },
+      {
+        "action": "click",
+        "label": "操作:查看全部",
+        "ok": true,
+        "result": {
+          "ok": true,
+          "matched": 1
+        }
+      },
+      {
+        "action": "click",
+        "label": "操作:详情",
+        "ok": true,
+        "result": {
+          "ok": true,
+          "matched": 5
+        }
+      },
+      {
+        "action": "click",
+        "label": "导航:办件管理",
+        "ok": true
+      },
+      {
+        "action": "click",
+        "label": "操作:查看全部",
+        "ok": true,
+        "result": {
+          "ok": true,
+          "matched": 1
+        }
+      },
+      {
+        "action": "click",
+        "label": "操作:详情",
+        "ok": true,
+        "result": {
+          "ok": true,
+          "matched": 5
+        }
+      },
+      {
+        "action": "click",
+        "label": "导航:全量办件视图",
+        "ok": true
+      },
+      {
+        "action": "click",
+        "label": "操作:编辑",
+        "ok": true,
+        "result": {
+          "ok": true,
+          "matched": 6
+        }
+      }
+    ],
+    "snapshots": [
+      {
+        "label": "首屏",
+        "url": "http://127.0.0.1:49101/admin/dashboard",
+        "title": "常州市公共服务聚合平台",
+        "headings": [
+          "城市服务中枢"
+        ],
+        "navLabels": [
+          "城市服务中枢",
+          "首页",
+          "dashboard",
+          "办件管理",
+          "unordered-list",
+          "全量办件视图",
+          "运营监控看板",
+          "办件审核",
+          "人员管理",
+          "team",
+          "电子证照库",
+          "safety",
+          "异议仲裁",
+          "alert",
+          "合规审计",
+          "file-text",
+          "财务中心",
+          "wallet",
+          "系统设置",
+          "setting",
+          "服务接入标准",
+          "服务配置",
+          "证照模板管理"
+        ],
+        "buttons": [
+          "刷新数据",
+          "导出报表",
+          "查看全部",
+          "详情",
+          "前往处理",
+          "办件管理",
+          "人员审核",
+          "异议处理",
+          "财务中心",
+          "合规审计",
+          "证照管理",
+          "服务标准",
+          "数据报表"
+        ],
+        "links": [],
+        "inputs": [
+          {
+            "tag": "input",
+            "type": "text",
+            "placeholder": "全局搜索...",
+            "name": "",
+            "label": ""
+          }
+        ],
+        "tables": [
+          {
+            "headers": [
+              "办件编号",
+              "事项名称",
+              "受理部门",
+              "状态",
+              "受理时间",
+              "操作"
+            ],
+            "rowCount": 5,
+            "hasEmptyText": false,
+            "textPreview": "办件编号 事项名称 受理部门 状态 受理时间 操作 TASK20260608234630207971 企业官网首页UI设计 天宁区政务中心 办理中 2026-06-08 20:46 详情 TASK20260608234630220850 智能家居产品外观设计 钟楼区便民中心 待受理 2026-06-08 20:46 详情 TASK20260608234630803383 品牌吉祥物IP形象设计 武进区行政中心 待受理 2026-06-08 20:46 详情 TASK20260608234630226879 微信小程序开发 新北区服务大厅 待受理 2026-06-08 20:46 详情 TASK"
+          }
+        ],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "城市服务中枢首页办件管理全量办件视图运营监控看板办件审核人员管理电子证照库异议仲裁合规审计财务中心系统设置服务接入标准服务配置证照模板管理3平台管理员管理员城市服务中枢全市政务服务数据总览与运营监控刷新数据导出报表全口径办件量6线上办件 8520线下办件 4060在线服务率94.6%今日新增 +28进行中 456市民满意度96.8%本月环比 +2.3%持续提升平均办理时长2.3天待审核 18待仲裁 8今日数据2026-06-09线上办件156+12%线下办件42+8%已办结132+15%服务评价4.8分+5%市民投诉3-2区域服务热度服务可用性监测最新办件查看全部办件编号事项名称受理部门状态受理时间操作TASK20260608234630207971企业官网首页UI设计天宁区政务中心办理中2026-06-08 20:46详情TASK20260608234630220850智能家居产品外观设计钟楼区便民中心待受理2026-06-08 20:46详情TASK20260608234630803383品牌吉祥物IP形象设计武进区行政中心待受理2026-06-08 20:46详情TASK20260608234630226879微信小程序开发新北区服务大厅待受理2026-06-08 20:46详情TASK20260608234630625089品牌商标注册申请金坛区政务中心已办结2026-06-08 20:46详情服务类型分布待处理异议前往处理暂无待处理异议快捷操作办件管理人员审核异议处理财务中心合规审计证照管理服务标准数据报表",
+        "layout": {
+          "viewportWidth": 1504,
+          "viewportHeight": 1600,
+          "scrollWidth": 1504,
+          "scrollHeight": 1664,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89101-codex-round434-structure-01-首屏",
+          "label": "首屏",
+          "finalUrl": "http://127.0.0.1:49101/admin/dashboard",
+          "title": "常州市公共服务聚合平台",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89101/runtime-check/codex-20260609-repair-round434/may-89101-codex-round434-structure-01-首屏.json",
+          "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89101/runtime-check/codex-20260609-repair-round434/may-89101-codex-round434-structure-01-首屏.png",
+          "elementCount": 481,
+          "interactiveCount": 34,
+          "interactiveLabels": [
+            "首页 办件管理 全量办件视图 运营监控看板 办件审核 人员管理 电子证照库 异议仲裁 合规审计 财务中心 系统设置 服务接入标准 服务配置 证照模板管理",
+            "首页",
+            "办件管理",
+            "全量办件视图",
+            "运营监控看板",
+            "办件审核",
+            "人员管理",
+            "电子证照库",
+            "异议仲裁",
+            "合规审计",
+            "财务中心",
+            "系统设置",
+            "服务接入标准",
+            "服务配置",
+            "证照模板管理",
+            "全局搜索...",
+            "刷新数据",
+            "导出报表",
+            "查看全部",
+            "详情",
+            "前往处理",
+            "人员审核",
+            "异议处理",
+            "证照管理",
+            "服务标准",
+            "数据报表"
+          ]
+        }
+      },
+      {
+        "label": "导航:首页",
+        "url": "http://127.0.0.1:49101/admin/dashboard",
+        "title": "常州市公共服务聚合平台",
+        "headings": [
+          "城市服务中枢"
+        ],
+        "navLabels": [
+          "城市服务中枢",
+          "首页",
+          "dashboard",
+          "办件管理",
+          "unordered-list",
+          "全量办件视图",
+          "运营监控看板",
+          "办件审核",
+          "人员管理",
+          "team",
+          "电子证照库",
+          "safety",
+          "异议仲裁",
+          "alert",
+          "合规审计",
+          "file-text",
+          "财务中心",
+          "wallet",
+          "系统设置",
+          "setting",
+          "服务接入标准",
+          "服务配置",
+          "证照模板管理"
+        ],
+        "buttons": [
+          "刷新数据",
+          "导出报表",
+          "查看全部",
+          "详情",
+          "前往处理",
+          "办件管理",
+          "人员审核",
+          "异议处理",
+          "财务中心",
+          "合规审计",
+          "证照管理",
+          "服务标准",
+          "数据报表"
+        ],
+        "links": [],
+        "inputs": [
+          {
+            "tag": "input",
+            "type": "text",
+            "placeholder": "全局搜索...",
+            "name": "",
+            "label": ""
+          }
+        ],
+        "tables": [
+          {
+            "headers": [
+              "办件编号",
+              "事项名称",
+              "受理部门",
+              "状态",
+              "受理时间",
+              "操作"
+            ],
+            "rowCount": 5,
+            "hasEmptyText": false,
+            "textPreview": "办件编号 事项名称 受理部门 状态 受理时间 操作 TASK20260608234630207971 企业官网首页UI设计 天宁区政务中心 办理中 2026-06-08 20:46 详情 TASK20260608234630220850 智能家居产品外观设计 钟楼区便民中心 待受理 2026-06-08 20:46 详情 TASK20260608234630803383 品牌吉祥物IP形象设计 武进区行政中心 待受理 2026-06-08 20:46 详情 TASK20260608234630226879 微信小程序开发 新北区服务大厅 待受理 2026-06-08 20:46 详情 TASK"
+          }
+        ],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "城市服务中枢首页办件管理全量办件视图运营监控看板办件审核人员管理电子证照库异议仲裁合规审计财务中心系统设置服务接入标准服务配置证照模板管理3平台管理员管理员城市服务中枢全市政务服务数据总览与运营监控刷新数据导出报表全口径办件量6线上办件 8520线下办件 4060在线服务率94.6%今日新增 +28进行中 456市民满意度96.8%本月环比 +2.3%持续提升平均办理时长2.3天待审核 18待仲裁 8今日数据2026-06-09线上办件156+12%线下办件42+8%已办结132+15%服务评价4.8分+5%市民投诉3-2区域服务热度服务可用性监测最新办件查看全部办件编号事项名称受理部门状态受理时间操作TASK20260608234630207971企业官网首页UI设计天宁区政务中心办理中2026-06-08 20:46详情TASK20260608234630220850智能家居产品外观设计钟楼区便民中心待受理2026-06-08 20:46详情TASK20260608234630803383品牌吉祥物IP形象设计武进区行政中心待受理2026-06-08 20:46详情TASK20260608234630226879微信小程序开发新北区服务大厅待受理2026-06-08 20:46详情TASK20260608234630625089品牌商标注册申请金坛区政务中心已办结2026-06-08 20:46详情服务类型分布待处理异议前往处理暂无待处理异议快捷操作办件管理人员审核异议处理财务中心合规审计证照管理服务标准数据报表",
+        "layout": {
+          "viewportWidth": 1536,
+          "viewportHeight": 1600,
+          "scrollWidth": 1536,
+          "scrollHeight": 1664,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89101-codex-round434-structure-02-导航-首页",
+          "label": "导航:首页",
+          "finalUrl": "http://127.0.0.1:49101/admin/dashboard",
+          "title": "常州市公共服务聚合平台",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89101/runtime-check/codex-20260609-repair-round434/may-89101-codex-round434-structure-02-导航-首页.json",
+          "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89101/runtime-check/codex-20260609-repair-round434/may-89101-codex-round434-structure-02-导航-首页.png",
+          "elementCount": 481,
+          "interactiveCount": 34,
+          "interactiveLabels": [
+            "首页 办件管理 全量办件视图 运营监控看板 办件审核 人员管理 电子证照库 异议仲裁 合规审计 财务中心 系统设置 服务接入标准 服务配置 证照模板管理",
+            "首页",
+            "办件管理",
+            "全量办件视图",
+            "运营监控看板",
+            "办件审核",
+            "人员管理",
+            "电子证照库",
+            "异议仲裁",
+            "合规审计",
+            "财务中心",
+            "系统设置",
+            "服务接入标准",
+            "服务配置",
+            "证照模板管理",
+            "全局搜索...",
+            "刷新数据",
+            "导出报表",
+            "查看全部",
+            "详情",
+            "前往处理",
+            "人员审核",
+            "异议处理",
+            "证照管理",
+            "服务标准",
+            "数据报表"
+          ]
+        }
+      },
+      {
+        "label": "操作:查看全部",
+        "url": "http://127.0.0.1:49101/admin/dashboard",
+        "title": "常州市公共服务聚合平台",
+        "headings": [
+          "城市服务中枢"
+        ],
+        "navLabels": [
+          "城市服务中枢",
+          "首页",
+          "dashboard",
+          "办件管理",
+          "unordered-list",
+          "全量办件视图",
+          "运营监控看板",
+          "办件审核",
+          "人员管理",
+          "team",
+          "电子证照库",
+          "safety",
+          "异议仲裁",
+          "alert",
+          "合规审计",
+          "file-text",
+          "财务中心",
+          "wallet",
+          "系统设置",
+          "setting",
+          "服务接入标准",
+          "服务配置",
+          "证照模板管理"
+        ],
+        "buttons": [
+          "刷新数据",
+          "导出报表",
+          "查看全部",
+          "详情",
+          "前往处理",
+          "办件管理",
+          "人员审核",
+          "异议处理",
+          "财务中心",
+          "合规审计",
+          "证照管理",
+          "服务标准",
+          "数据报表"
+        ],
+        "links": [],
+        "inputs": [
+          {
+            "tag": "input",
+            "type": "text",
+            "placeholder": "全局搜索...",
+            "name": "",
+            "label": ""
+          }
+        ],
+        "tables": [
+          {
+            "headers": [
+              "办件编号",
+              "事项名称",
+              "受理部门",
+              "状态",
+              "受理时间",
+              "操作"
+            ],
+            "rowCount": 5,
+            "hasEmptyText": false,
+            "textPreview": "办件编号 事项名称 受理部门 状态 受理时间 操作 TASK20260608234630207971 企业官网首页UI设计 天宁区政务中心 办理中 2026-06-08 20:46 详情 TASK20260608234630220850 智能家居产品外观设计 钟楼区便民中心 待受理 2026-06-08 20:46 详情 TASK20260608234630803383 品牌吉祥物IP形象设计 武进区行政中心 待受理 2026-06-08 20:46 详情 TASK20260608234630226879 微信小程序开发 新北区服务大厅 待受理 2026-06-08 20:46 详情 TASK"
+          }
+        ],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "城市服务中枢首页办件管理全量办件视图运营监控看板办件审核人员管理电子证照库异议仲裁合规审计财务中心系统设置服务接入标准服务配置证照模板管理3平台管理员管理员城市服务中枢全市政务服务数据总览与运营监控刷新数据导出报表全口径办件量6线上办件 8520线下办件 4060在线服务率94.6%今日新增 +28进行中 456市民满意度96.8%本月环比 +2.3%持续提升平均办理时长2.3天待审核 18待仲裁 8今日数据2026-06-09线上办件156+12%线下办件42+8%已办结132+15%服务评价4.8分+5%市民投诉3-2区域服务热度服务可用性监测最新办件查看全部办件编号事项名称受理部门状态受理时间操作TASK20260608234630207971企业官网首页UI设计天宁区政务中心办理中2026-06-08 20:46详情TASK20260608234630220850智能家居产品外观设计钟楼区便民中心待受理2026-06-08 20:46详情TASK20260608234630803383品牌吉祥物IP形象设计武进区行政中心待受理2026-06-08 20:46详情TASK20260608234630226879微信小程序开发新北区服务大厅待受理2026-06-08 20:46详情TASK20260608234630625089品牌商标注册申请金坛区政务中心已办结2026-06-08 20:46详情服务类型分布待处理异议前往处理暂无待处理异议快捷操作办件管理人员审核异议处理财务中心合规审计证照管理服务标准数据报表",
+        "layout": {
+          "viewportWidth": 1568,
+          "viewportHeight": 1600,
+          "scrollWidth": 1568,
+          "scrollHeight": 1664,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89101-codex-round434-structure-03-操作-查看全部",
+          "label": "操作:查看全部",
+          "finalUrl": "http://127.0.0.1:49101/admin/dashboard",
+          "title": "常州市公共服务聚合平台",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89101/runtime-check/codex-20260609-repair-round434/may-89101-codex-round434-structure-03-操作-查看全部.json",
+          "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89101/runtime-check/codex-20260609-repair-round434/may-89101-codex-round434-structure-03-操作-查看全部.png",
+          "elementCount": 481,
+          "interactiveCount": 34,
+          "interactiveLabels": [
+            "首页 办件管理 全量办件视图 运营监控看板 办件审核 人员管理 电子证照库 异议仲裁 合规审计 财务中心 系统设置 服务接入标准 服务配置 证照模板管理",
+            "首页",
+            "办件管理",
+            "全量办件视图",
+            "运营监控看板",
+            "办件审核",
+            "人员管理",
+            "电子证照库",
+            "异议仲裁",
+            "合规审计",
+            "财务中心",
+            "系统设置",
+            "服务接入标准",
+            "服务配置",
+            "证照模板管理",
+            "全局搜索...",
+            "刷新数据",
+            "导出报表",
+            "查看全部",
+            "详情",
+            "前往处理",
+            "人员审核",
+            "异议处理",
+            "证照管理",
+            "服务标准",
+            "数据报表"
+          ]
+        }
+      },
+      {
+        "label": "操作:详情",
+        "url": "http://127.0.0.1:49101/admin/dashboard",
+        "title": "常州市公共服务聚合平台",
+        "headings": [
+          "城市服务中枢"
+        ],
+        "navLabels": [
+          "城市服务中枢",
+          "首页",
+          "dashboard",
+          "办件管理",
+          "unordered-list",
+          "全量办件视图",
+          "运营监控看板",
+          "办件审核",
+          "人员管理",
+          "team",
+          "电子证照库",
+          "safety",
+          "异议仲裁",
+          "alert",
+          "合规审计",
+          "file-text",
+          "财务中心",
+          "wallet",
+          "系统设置",
+          "setting",
+          "服务接入标准",
+          "服务配置",
+          "证照模板管理"
+        ],
+        "buttons": [
+          "刷新数据",
+          "导出报表",
+          "查看全部",
+          "详情",
+          "前往处理",
+          "办件管理",
+          "人员审核",
+          "异议处理",
+          "财务中心",
+          "合规审计",
+          "证照管理",
+          "服务标准",
+          "数据报表"
+        ],
+        "links": [],
+        "inputs": [
+          {
+            "tag": "input",
+            "type": "text",
+            "placeholder": "全局搜索...",
+            "name": "",
+            "label": ""
+          }
+        ],
+        "tables": [
+          {
+            "headers": [
+              "办件编号",
+              "事项名称",
+              "受理部门",
+              "状态",
+              "受理时间",
+              "操作"
+            ],
+            "rowCount": 5,
+            "hasEmptyText": false,
+            "textPreview": "办件编号 事项名称 受理部门 状态 受理时间 操作 TASK20260608234630207971 企业官网首页UI设计 天宁区政务中心 办理中 2026-06-08 20:46 详情 TASK20260608234630220850 智能家居产品外观设计 钟楼区便民中心 待受理 2026-06-08 20:46 详情 TASK20260608234630803383 品牌吉祥物IP形象设计 武进区行政中心 待受理 2026-06-08 20:46 详情 TASK20260608234630226879 微信小程序开发 新北区服务大厅 待受理 2026-06-08 20:46 详情 TASK"
+          }
+        ],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "城市服务中枢首页办件管理全量办件视图运营监控看板办件审核人员管理电子证照库异议仲裁合规审计财务中心系统设置服务接入标准服务配置证照模板管理3平台管理员管理员城市服务中枢全市政务服务数据总览与运营监控刷新数据导出报表全口径办件量6线上办件 8520线下办件 4060在线服务率94.6%今日新增 +28进行中 456市民满意度96.8%本月环比 +2.3%持续提升平均办理时长2.3天待审核 18待仲裁 8今日数据2026-06-09线上办件156+12%线下办件42+8%已办结132+15%服务评价4.8分+5%市民投诉3-2区域服务热度服务可用性监测最新办件查看全部办件编号事项名称受理部门状态受理时间操作TASK20260608234630207971企业官网首页UI设计天宁区政务中心办理中2026-06-08 20:46详情TASK20260608234630220850智能家居产品外观设计钟楼区便民中心待受理2026-06-08 20:46详情TASK20260608234630803383品牌吉祥物IP形象设计武进区行政中心待受理2026-06-08 20:46详情TASK20260608234630226879微信小程序开发新北区服务大厅待受理2026-06-08 20:46详情TASK20260608234630625089品牌商标注册申请金坛区政务中心已办结2026-06-08 20:46详情服务类型分布待处理异议前往处理暂无待处理异议快捷操作办件管理人员审核异议处理财务中心合规审计证照管理服务标准数据报表",
+        "layout": {
+          "viewportWidth": 1600,
+          "viewportHeight": 1600,
+          "scrollWidth": 1600,
+          "scrollHeight": 1664,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89101-codex-round434-structure-04-操作-详情",
+          "label": "操作:详情",
+          "finalUrl": "http://127.0.0.1:49101/admin/dashboard",
+          "title": "常州市公共服务聚合平台",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89101/runtime-check/codex-20260609-repair-round434/may-89101-codex-round434-structure-04-操作-详情.json",
+          "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89101/runtime-check/codex-20260609-repair-round434/may-89101-codex-round434-structure-04-操作-详情.png",
+          "elementCount": 481,
+          "interactiveCount": 34,
+          "interactiveLabels": [
+            "首页 办件管理 全量办件视图 运营监控看板 办件审核 人员管理 电子证照库 异议仲裁 合规审计 财务中心 系统设置 服务接入标准 服务配置 证照模板管理",
+            "首页",
+            "办件管理",
+            "全量办件视图",
+            "运营监控看板",
+            "办件审核",
+            "人员管理",
+            "电子证照库",
+            "异议仲裁",
+            "合规审计",
+            "财务中心",
+            "系统设置",
+            "服务接入标准",
+            "服务配置",
+            "证照模板管理",
+            "全局搜索...",
+            "刷新数据",
+            "导出报表",
+            "查看全部",
+            "详情",
+            "前往处理",
+            "人员审核",
+            "异议处理",
+            "证照管理",
+            "服务标准",
+            "数据报表"
+          ]
+        }
+      },
+      {
+        "label": "导航:办件管理",
+        "url": "http://127.0.0.1:49101/admin/dashboard",
+        "title": "常州市公共服务聚合平台",
+        "headings": [
+          "城市服务中枢"
+        ],
+        "navLabels": [
+          "城市服务中枢",
+          "首页",
+          "dashboard",
+          "办件管理",
+          "unordered-list",
+          "全量办件视图",
+          "运营监控看板",
+          "办件审核",
+          "人员管理",
+          "team",
+          "电子证照库",
+          "safety",
+          "异议仲裁",
+          "alert",
+          "合规审计",
+          "file-text",
+          "财务中心",
+          "wallet",
+          "系统设置",
+          "setting",
+          "服务接入标准",
+          "服务配置",
+          "证照模板管理"
+        ],
+        "buttons": [
+          "刷新数据",
+          "导出报表",
+          "查看全部",
+          "详情",
+          "前往处理",
+          "办件管理",
+          "人员审核",
+          "异议处理",
+          "财务中心",
+          "合规审计",
+          "证照管理",
+          "服务标准",
+          "数据报表"
+        ],
+        "links": [],
+        "inputs": [
+          {
+            "tag": "input",
+            "type": "text",
+            "placeholder": "全局搜索...",
+            "name": "",
+            "label": ""
+          }
+        ],
+        "tables": [
+          {
+            "headers": [
+              "办件编号",
+              "事项名称",
+              "受理部门",
+              "状态",
+              "受理时间",
+              "操作"
+            ],
+            "rowCount": 5,
+            "hasEmptyText": false,
+            "textPreview": "办件编号 事项名称 受理部门 状态 受理时间 操作 TASK20260608234630207971 企业官网首页UI设计 天宁区政务中心 办理中 2026-06-08 20:46 详情 TASK20260608234630220850 智能家居产品外观设计 钟楼区便民中心 待受理 2026-06-08 20:46 详情 TASK20260608234630803383 品牌吉祥物IP形象设计 武进区行政中心 待受理 2026-06-08 20:46 详情 TASK20260608234630226879 微信小程序开发 新北区服务大厅 待受理 2026-06-08 20:46 详情 TASK"
+          }
+        ],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "城市服务中枢首页办件管理全量办件视图运营监控看板办件审核人员管理电子证照库异议仲裁合规审计财务中心系统设置服务接入标准服务配置证照模板管理3平台管理员管理员城市服务中枢全市政务服务数据总览与运营监控刷新数据导出报表全口径办件量6线上办件 8520线下办件 4060在线服务率94.6%今日新增 +28进行中 456市民满意度96.8%本月环比 +2.3%持续提升平均办理时长2.3天待审核 18待仲裁 8今日数据2026-06-09线上办件156+12%线下办件42+8%已办结132+15%服务评价4.8分+5%市民投诉3-2区域服务热度服务可用性监测最新办件查看全部办件编号事项名称受理部门状态受理时间操作TASK20260608234630207971企业官网首页UI设计天宁区政务中心办理中2026-06-08 20:46详情TASK20260608234630220850智能家居产品外观设计钟楼区便民中心待受理2026-06-08 20:46详情TASK20260608234630803383品牌吉祥物IP形象设计武进区行政中心待受理2026-06-08 20:46详情TASK20260608234630226879微信小程序开发新北区服务大厅待受理2026-06-08 20:46详情TASK20260608234630625089品牌商标注册申请金坛区政务中心已办结2026-06-08 20:46详情服务类型分布待处理异议前往处理暂无待处理异议快捷操作办件管理人员审核异议处理财务中心合规审计证照管理服务标准数据报表",
+        "layout": {
+          "viewportWidth": 1632,
+          "viewportHeight": 1600,
+          "scrollWidth": 1632,
+          "scrollHeight": 1664,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89101-codex-round434-structure-05-导航-办件管理",
+          "label": "导航:办件管理",
+          "finalUrl": "http://127.0.0.1:49101/admin/dashboard",
+          "title": "常州市公共服务聚合平台",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89101/runtime-check/codex-20260609-repair-round434/may-89101-codex-round434-structure-05-导航-办件管理.json",
+          "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89101/runtime-check/codex-20260609-repair-round434/may-89101-codex-round434-structure-05-导航-办件管理.png",
+          "elementCount": 481,
+          "interactiveCount": 34,
+          "interactiveLabels": [
+            "首页 办件管理 全量办件视图 运营监控看板 办件审核 人员管理 电子证照库 异议仲裁 合规审计 财务中心 系统设置 服务接入标准 服务配置 证照模板管理",
+            "首页",
+            "办件管理",
+            "全量办件视图",
+            "运营监控看板",
+            "办件审核",
+            "人员管理",
+            "电子证照库",
+            "异议仲裁",
+            "合规审计",
+            "财务中心",
+            "系统设置",
+            "服务接入标准",
+            "服务配置",
+            "证照模板管理",
+            "全局搜索...",
+            "刷新数据",
+            "导出报表",
+            "查看全部",
+            "详情",
+            "前往处理",
+            "人员审核",
+            "异议处理",
+            "证照管理",
+            "服务标准",
+            "数据报表"
+          ]
+        }
+      },
+      {
+        "label": "操作:查看全部",
+        "url": "http://127.0.0.1:49101/admin/dashboard",
+        "title": "常州市公共服务聚合平台",
+        "headings": [
+          "城市服务中枢"
+        ],
+        "navLabels": [
+          "城市服务中枢",
+          "首页",
+          "dashboard",
+          "办件管理",
+          "unordered-list",
+          "全量办件视图",
+          "运营监控看板",
+          "办件审核",
+          "人员管理",
+          "team",
+          "电子证照库",
+          "safety",
+          "异议仲裁",
+          "alert",
+          "合规审计",
+          "file-text",
+          "财务中心",
+          "wallet",
+          "系统设置",
+          "setting",
+          "服务接入标准",
+          "服务配置",
+          "证照模板管理"
+        ],
+        "buttons": [
+          "刷新数据",
+          "导出报表",
+          "查看全部",
+          "详情",
+          "前往处理",
+          "办件管理",
+          "人员审核",
+          "异议处理",
+          "财务中心",
+          "合规审计",
+          "证照管理",
+          "服务标准",
+          "数据报表"
+        ],
+        "links": [],
+        "inputs": [
+          {
+            "tag": "input",
+            "type": "text",
+            "placeholder": "全局搜索...",
+            "name": "",
+            "label": ""
+          }
+        ],
+        "tables": [
+          {
+            "headers": [
+              "办件编号",
+              "事项名称",
+              "受理部门",
+              "状态",
+              "受理时间",
+              "操作"
+            ],
+            "rowCount": 5,
+            "hasEmptyText": false,
+            "textPreview": "办件编号 事项名称 受理部门 状态 受理时间 操作 TASK20260608234630207971 企业官网首页UI设计 天宁区政务中心 办理中 2026-06-08 20:46 详情 TASK20260608234630220850 智能家居产品外观设计 钟楼区便民中心 待受理 2026-06-08 20:46 详情 TASK20260608234630803383 品牌吉祥物IP形象设计 武进区行政中心 待受理 2026-06-08 20:46 详情 TASK20260608234630226879 微信小程序开发 新北区服务大厅 待受理 2026-06-08 20:46 详情 TASK"
+          }
+        ],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "城市服务中枢首页办件管理全量办件视图运营监控看板办件审核人员管理电子证照库异议仲裁合规审计财务中心系统设置服务接入标准服务配置证照模板管理3平台管理员管理员城市服务中枢全市政务服务数据总览与运营监控刷新数据导出报表全口径办件量6线上办件 8520线下办件 4060在线服务率94.6%今日新增 +28进行中 456市民满意度96.8%本月环比 +2.3%持续提升平均办理时长2.3天待审核 18待仲裁 8今日数据2026-06-09线上办件156+12%线下办件42+8%已办结132+15%服务评价4.8分+5%市民投诉3-2区域服务热度服务可用性监测最新办件查看全部办件编号事项名称受理部门状态受理时间操作TASK20260608234630207971企业官网首页UI设计天宁区政务中心办理中2026-06-08 20:46详情TASK20260608234630220850智能家居产品外观设计钟楼区便民中心待受理2026-06-08 20:46详情TASK20260608234630803383品牌吉祥物IP形象设计武进区行政中心待受理2026-06-08 20:46详情TASK20260608234630226879微信小程序开发新北区服务大厅待受理2026-06-08 20:46详情TASK20260608234630625089品牌商标注册申请金坛区政务中心已办结2026-06-08 20:46详情服务类型分布待处理异议前往处理暂无待处理异议快捷操作办件管理人员审核异议处理财务中心合规审计证照管理服务标准数据报表",
+        "layout": {
+          "viewportWidth": 1664,
+          "viewportHeight": 1600,
+          "scrollWidth": 1664,
+          "scrollHeight": 1664,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89101-codex-round434-structure-06-操作-查看全部",
+          "label": "操作:查看全部",
+          "finalUrl": "http://127.0.0.1:49101/admin/dashboard",
+          "title": "常州市公共服务聚合平台",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89101/runtime-check/codex-20260609-repair-round434/may-89101-codex-round434-structure-06-操作-查看全部.json",
+          "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89101/runtime-check/codex-20260609-repair-round434/may-89101-codex-round434-structure-06-操作-查看全部.png",
+          "elementCount": 481,
+          "interactiveCount": 34,
+          "interactiveLabels": [
+            "首页 办件管理 全量办件视图 运营监控看板 办件审核 人员管理 电子证照库 异议仲裁 合规审计 财务中心 系统设置 服务接入标准 服务配置 证照模板管理",
+            "首页",
+            "办件管理",
+            "全量办件视图",
+            "运营监控看板",
+            "办件审核",
+            "人员管理",
+            "电子证照库",
+            "异议仲裁",
+            "合规审计",
+            "财务中心",
+            "系统设置",
+            "服务接入标准",
+            "服务配置",
+            "证照模板管理",
+            "全局搜索...",
+            "刷新数据",
+            "导出报表",
+            "查看全部",
+            "详情",
+            "前往处理",
+            "人员审核",
+            "异议处理",
+            "证照管理",
+            "服务标准",
+            "数据报表"
+          ]
+        }
+      },
+      {
+        "label": "操作:详情",
+        "url": "http://127.0.0.1:49101/admin/dashboard",
+        "title": "常州市公共服务聚合平台",
+        "headings": [
+          "城市服务中枢"
+        ],
+        "navLabels": [
+          "城市服务中枢",
+          "首页",
+          "dashboard",
+          "办件管理",
+          "unordered-list",
+          "全量办件视图",
+          "运营监控看板",
+          "办件审核",
+          "人员管理",
+          "team",
+          "电子证照库",
+          "safety",
+          "异议仲裁",
+          "alert",
+          "合规审计",
+          "file-text",
+          "财务中心",
+          "wallet",
+          "系统设置",
+          "setting",
+          "服务接入标准",
+          "服务配置",
+          "证照模板管理"
+        ],
+        "buttons": [
+          "刷新数据",
+          "导出报表",
+          "查看全部",
+          "详情",
+          "前往处理",
+          "办件管理",
+          "人员审核",
+          "异议处理",
+          "财务中心",
+          "合规审计",
+          "证照管理",
+          "服务标准",
+          "数据报表"
+        ],
+        "links": [],
+        "inputs": [
+          {
+            "tag": "input",
+            "type": "text",
+            "placeholder": "全局搜索...",
+            "name": "",
+            "label": ""
+          }
+        ],
+        "tables": [
+          {
+            "headers": [
+              "办件编号",
+              "事项名称",
+              "受理部门",
+              "状态",
+              "受理时间",
+              "操作"
+            ],
+            "rowCount": 5,
+            "hasEmptyText": false,
+            "textPreview": "办件编号 事项名称 受理部门 状态 受理时间 操作 TASK20260608234630207971 企业官网首页UI设计 天宁区政务中心 办理中 2026-06-08 20:46 详情 TASK20260608234630220850 智能家居产品外观设计 钟楼区便民中心 待受理 2026-06-08 20:46 详情 TASK20260608234630803383 品牌吉祥物IP形象设计 武进区行政中心 待受理 2026-06-08 20:46 详情 TASK20260608234630226879 微信小程序开发 新北区服务大厅 待受理 2026-06-08 20:46 详情 TASK"
+          }
+        ],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "城市服务中枢首页办件管理全量办件视图运营监控看板办件审核人员管理电子证照库异议仲裁合规审计财务中心系统设置服务接入标准服务配置证照模板管理3平台管理员管理员城市服务中枢全市政务服务数据总览与运营监控刷新数据导出报表全口径办件量6线上办件 8520线下办件 4060在线服务率94.6%今日新增 +28进行中 456市民满意度96.8%本月环比 +2.3%持续提升平均办理时长2.3天待审核 18待仲裁 8今日数据2026-06-09线上办件156+12%线下办件42+8%已办结132+15%服务评价4.8分+5%市民投诉3-2区域服务热度服务可用性监测最新办件查看全部办件编号事项名称受理部门状态受理时间操作TASK20260608234630207971企业官网首页UI设计天宁区政务中心办理中2026-06-08 20:46详情TASK20260608234630220850智能家居产品外观设计钟楼区便民中心待受理2026-06-08 20:46详情TASK20260608234630803383品牌吉祥物IP形象设计武进区行政中心待受理2026-06-08 20:46详情TASK20260608234630226879微信小程序开发新北区服务大厅待受理2026-06-08 20:46详情TASK20260608234630625089品牌商标注册申请金坛区政务中心已办结2026-06-08 20:46详情服务类型分布待处理异议前往处理暂无待处理异议快捷操作办件管理人员审核异议处理财务中心合规审计证照管理服务标准数据报表",
+        "layout": {
+          "viewportWidth": 1696,
+          "viewportHeight": 1600,
+          "scrollWidth": 1696,
+          "scrollHeight": 1664,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89101-codex-round434-structure-07-操作-详情",
+          "label": "操作:详情",
+          "finalUrl": "http://127.0.0.1:49101/admin/dashboard",
+          "title": "常州市公共服务聚合平台",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89101/runtime-check/codex-20260609-repair-round434/may-89101-codex-round434-structure-07-操作-详情.json",
+          "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89101/runtime-check/codex-20260609-repair-round434/may-89101-codex-round434-structure-07-操作-详情.png",
+          "elementCount": 481,
+          "interactiveCount": 34,
+          "interactiveLabels": [
+            "首页 办件管理 全量办件视图 运营监控看板 办件审核 人员管理 电子证照库 异议仲裁 合规审计 财务中心 系统设置 服务接入标准 服务配置 证照模板管理",
+            "首页",
+            "办件管理",
+            "全量办件视图",
+            "运营监控看板",
+            "办件审核",
+            "人员管理",
+            "电子证照库",
+            "异议仲裁",
+            "合规审计",
+            "财务中心",
+            "系统设置",
+            "服务接入标准",
+            "服务配置",
+            "证照模板管理",
+            "全局搜索...",
+            "刷新数据",
+            "导出报表",
+            "查看全部",
+            "详情",
+            "前往处理",
+            "人员审核",
+            "异议处理",
+            "证照管理",
+            "服务标准",
+            "数据报表"
+          ]
+        }
+      },
+      {
+        "label": "导航:全量办件视图",
+        "url": "http://127.0.0.1:49101/admin/tasks",
+        "title": "常州市公共服务聚合平台",
+        "headings": [
+          "城市服务中枢",
+          "全量办件视图"
+        ],
+        "navLabels": [
+          "城市服务中枢",
+          "首页",
+          "dashboard",
+          "办件管理",
+          "unordered-list",
+          "全量办件视图",
+          "运营监控看板",
+          "办件审核",
+          "人员管理",
+          "team",
+          "电子证照库",
+          "safety",
+          "异议仲裁",
+          "alert",
+          "合规审计",
+          "file-text",
+          "财务中心",
+          "wallet",
+          "系统设置",
+          "setting",
+          "服务接入标准",
+          "服务配置",
+          "证照模板管理"
+        ],
+        "buttons": [
+          "刷新",
+          "导出数据",
+          "查询",
+          "重置",
+          "详情",
+          "编辑",
+          "删除"
+        ],
+        "links": [],
+        "inputs": [
+          {
+            "tag": "input",
+            "type": "text",
+            "placeholder": "全局搜索...",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "text",
+            "placeholder": "办件编号/标题",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "search",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "search",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "",
+            "placeholder": "开始日期",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "",
+            "placeholder": "结束日期",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "search",
+            "placeholder": "",
+            "name": "",
+            "label": "页码"
+          }
+        ],
+        "tables": [
+          {
+            "headers": [
+              "办件编号",
+              "办件标题",
+              "申请市民",
+              "费用标准",
+              "状态",
+              "承办数",
+              "创建时间",
+              "操作",
+              "办件编号",
+              "办件标题",
+              "申请市民",
+              "费用标准"
+            ],
+            "rowCount": 6,
+            "hasEmptyText": false,
+            "textPreview": "办件编号 办件标题 申请市民 费用标准 状态 承办数 创建时间 操作 办件编号 办件标题 申请市民 费用标准 状态 承办数 创建时间 操作 TASK20260608234630207971 企业官网首页UI设计 ¥8,000 - ¥15,000 已发布 3 2026-06-08 20:46 详情 编辑 删除 TASK20260608234630220850 智能家居产品外观设计 ¥20,000 - ¥50,000 待分配 3 2026-06-08 20:46 详情 编辑 删除 TASK20260608234630803383 品牌吉祥物IP形象设计 ¥15,000 - ¥30,000 办理中 "
+          }
+        ],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "城市服务中枢首页办件管理全量办件视图运营监控看板办件审核人员管理电子证照库异议仲裁合规审计财务中心系统设置服务接入标准服务配置证照模板管理3平台管理员管理员全量办件视图管理平台所有办件刷新导出数据关键词状态全部状态分类全部分类创建时间 查询重置办件编号办件标题申请市民费用标准状态承办数创建时间操作办件编号办件标题申请市民费用标准状态承办数创建时间操作TASK20260608234630207971企业官网首页UI设计¥8,000 - ¥15,000已发布32026-06-08 20:46详情编辑删除TASK20260608234630220850智能家居产品外观设计¥20,000 - ¥50,000待分配32026-06-08 20:46详情编辑删除TASK20260608234630803383品牌吉祥物IP形象设计¥15,000 - ¥30,000办理中02026-06-08 20:46详情编辑删除TASK20260608234630226879微信小程序开发¥30,000 - ¥60,000审核中02026-06-08 20:46详情编辑删除TASK20260608234630625089品牌商标注册申请¥3,000 - ¥6,000已办结02026-06-08 20:46详情编辑删除TASK20260608234630451766新产品上市营销文案¥5,000 - ¥10,000已办结02026-06-08 20:46详情编辑删除共 6 条记录110 条/页",
+        "layout": {
+          "viewportWidth": 1728,
+          "viewportHeight": 1600,
+          "scrollWidth": 1728,
+          "scrollHeight": 1664,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89101-codex-round434-structure-08-导航-全量办件视图",
+          "label": "导航:全量办件视图",
+          "finalUrl": "http://127.0.0.1:49101/admin/tasks",
+          "title": "常州市公共服务聚合平台",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89101/runtime-check/codex-20260609-repair-round434/may-89101-codex-round434-structure-08-导航-全量办件视图.json",
+          "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89101/runtime-check/codex-20260609-repair-round434/may-89101-codex-round434-structure-08-导航-全量办件视图.png",
+          "elementCount": 528,
+          "interactiveCount": 50,
+          "interactiveLabels": [
+            "首页 办件管理 全量办件视图 运营监控看板 办件审核 人员管理 电子证照库 异议仲裁 合规审计 财务中心 系统设置 服务接入标准 服务配置 证照模板管理",
+            "首页",
+            "办件管理",
+            "全量办件视图",
+            "运营监控看板",
+            "办件审核",
+            "人员管理",
+            "电子证照库",
+            "异议仲裁",
+            "合规审计",
+            "财务中心",
+            "系统设置",
+            "服务接入标准",
+            "服务配置",
+            "证照模板管理",
+            "全局搜索...",
+            "刷新",
+            "导出数据",
+            "办件编号/标题",
+            "开始日期",
+            "结束日期",
+            "查询",
+            "重置",
+            "详情",
+            "编辑",
+            "删除",
+            "1",
+            "页码"
+          ]
+        }
+      },
+      {
+        "label": "操作:编辑",
+        "url": "http://127.0.0.1:49101/admin/tasks",
+        "title": "常州市公共服务聚合平台",
+        "headings": [
+          "城市服务中枢",
+          "全量办件视图"
+        ],
+        "navLabels": [
+          "城市服务中枢",
+          "首页",
+          "dashboard",
+          "办件管理",
+          "unordered-list",
+          "全量办件视图",
+          "运营监控看板",
+          "办件审核",
+          "人员管理",
+          "team",
+          "电子证照库",
+          "safety",
+          "异议仲裁",
+          "alert",
+          "合规审计",
+          "file-text",
+          "财务中心",
+          "wallet",
+          "系统设置",
+          "setting",
+          "服务接入标准",
+          "服务配置",
+          "证照模板管理"
+        ],
+        "buttons": [
+          "刷新",
+          "导出数据",
+          "查询",
+          "重置",
+          "详情",
+          "编辑",
+          "删除"
+        ],
+        "links": [],
+        "inputs": [
+          {
+            "tag": "input",
+            "type": "text",
+            "placeholder": "全局搜索...",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "text",
+            "placeholder": "办件编号/标题",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "search",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "search",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "",
+            "placeholder": "开始日期",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "",
+            "placeholder": "结束日期",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "search",
+            "placeholder": "",
+            "name": "",
+            "label": "页码"
+          }
+        ],
+        "tables": [
+          {
+            "headers": [
+              "办件编号",
+              "办件标题",
+              "申请市民",
+              "费用标准",
+              "状态",
+              "承办数",
+              "创建时间",
+              "操作",
+              "办件编号",
+              "办件标题",
+              "申请市民",
+              "费用标准"
+            ],
+            "rowCount": 6,
+            "hasEmptyText": false,
+            "textPreview": "办件编号 办件标题 申请市民 费用标准 状态 承办数 创建时间 操作 办件编号 办件标题 申请市民 费用标准 状态 承办数 创建时间 操作 TASK20260608234630207971 企业官网首页UI设计 ¥8,000 - ¥15,000 已发布 3 2026-06-08 20:46 详情 编辑 删除 TASK20260608234630220850 智能家居产品外观设计 ¥20,000 - ¥50,000 待分配 3 2026-06-08 20:46 详情 编辑 删除 TASK20260608234630803383 品牌吉祥物IP形象设计 ¥15,000 - ¥30,000 办理中 "
+          }
+        ],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "城市服务中枢首页办件管理全量办件视图运营监控看板办件审核人员管理电子证照库异议仲裁合规审计财务中心系统设置服务接入标准服务配置证照模板管理3平台管理员管理员全量办件视图管理平台所有办件刷新导出数据关键词状态全部状态分类全部分类创建时间 查询重置办件编号办件标题申请市民费用标准状态承办数创建时间操作办件编号办件标题申请市民费用标准状态承办数创建时间操作TASK20260608234630207971企业官网首页UI设计¥8,000 - ¥15,000已发布32026-06-08 20:46详情编辑删除TASK20260608234630220850智能家居产品外观设计¥20,000 - ¥50,000待分配32026-06-08 20:46详情编辑删除TASK20260608234630803383品牌吉祥物IP形象设计¥15,000 - ¥30,000办理中02026-06-08 20:46详情编辑删除TASK20260608234630226879微信小程序开发¥30,000 - ¥60,000审核中02026-06-08 20:46详情编辑删除TASK20260608234630625089品牌商标注册申请¥3,000 - ¥6,000已办结02026-06-08 20:46详情编辑删除TASK20260608234630451766新产品上市营销文案¥5,000 - ¥10,000已办结02026-06-08 20:46详情编辑删除共 6 条记录110 条/页",
+        "layout": {
+          "viewportWidth": 1760,
+          "viewportHeight": 1600,
+          "scrollWidth": 1760,
+          "scrollHeight": 1664,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89101-codex-round434-structure-09-操作-编辑",
+          "label": "操作:编辑",
+          "finalUrl": "http://127.0.0.1:49101/admin/tasks",
+          "title": "常州市公共服务聚合平台",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89101/runtime-check/codex-20260609-repair-round434/may-89101-codex-round434-structure-09-操作-编辑.json",
+          "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89101/runtime-check/codex-20260609-repair-round434/may-89101-codex-round434-structure-09-操作-编辑.png",
+          "elementCount": 528,
+          "interactiveCount": 50,
+          "interactiveLabels": [
+            "首页 办件管理 全量办件视图 运营监控看板 办件审核 人员管理 电子证照库 异议仲裁 合规审计 财务中心 系统设置 服务接入标准 服务配置 证照模板管理",
+            "首页",
+            "办件管理",
+            "全量办件视图",
+            "运营监控看板",
+            "办件审核",
+            "人员管理",
+            "电子证照库",
+            "异议仲裁",
+            "合规审计",
+            "财务中心",
+            "系统设置",
+            "服务接入标准",
+            "服务配置",
+            "证照模板管理",
+            "全局搜索...",
+            "刷新",
+            "导出数据",
+            "办件编号/标题",
+            "开始日期",
+            "结束日期",
+            "查询",
+            "重置",
+            "详情",
+            "编辑",
+            "删除",
+            "1",
+            "页码"
+          ]
+        }
+      }
+    ],
+    "findings": [],
+    "actionHints": [],
+    "emptyPages": [],
+    "overflowPages": [],
+    "blankPages": [],
+    "apiFailurePaths": [],
+    "goalTerms": [],
+    "clickedActionDescriptors": [
+      {
+        "nav": "首页",
+        "label": "查看全部",
+        "ordinal": 0,
+        "unsafe": false
+      },
+      {
+        "nav": "首页",
+        "label": "详情",
+        "ordinal": 0,
+        "unsafe": false
+      },
+      {
+        "nav": "办件管理",
+        "label": "查看全部",
+        "ordinal": 0,
+        "unsafe": false
+      },
+      {
+        "nav": "办件管理",
+        "label": "详情",
+        "ordinal": 0,
+        "unsafe": false
+      },
+      {
+        "nav": "全量办件视图",
+        "label": "编辑",
+        "ordinal": 0,
+        "unsafe": false
+      }
+    ],
+    "secondaryActionClicks": 0,
+    "structureCaptures": [
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89101-codex-round434-structure-01-首屏",
+        "label": "首屏",
+        "finalUrl": "http://127.0.0.1:49101/admin/dashboard",
+        "title": "常州市公共服务聚合平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89101/runtime-check/codex-20260609-repair-round434/may-89101-codex-round434-structure-01-首屏.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89101/runtime-check/codex-20260609-repair-round434/may-89101-codex-round434-structure-01-首屏.png",
+        "elementCount": 481,
+        "interactiveCount": 34,
+        "interactiveLabels": [
+          "首页 办件管理 全量办件视图 运营监控看板 办件审核 人员管理 电子证照库 异议仲裁 合规审计 财务中心 系统设置 服务接入标准 服务配置 证照模板管理",
+          "首页",
+          "办件管理",
+          "全量办件视图",
+          "运营监控看板",
+          "办件审核",
+          "人员管理",
+          "电子证照库",
+          "异议仲裁",
+          "合规审计",
+          "财务中心",
+          "系统设置",
+          "服务接入标准",
+          "服务配置",
+          "证照模板管理",
+          "全局搜索...",
+          "刷新数据",
+          "导出报表",
+          "查看全部",
+          "详情",
+          "前往处理",
+          "人员审核",
+          "异议处理",
+          "证照管理",
+          "服务标准",
+          "数据报表"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89101-codex-round434-structure-02-导航-首页",
+        "label": "导航:首页",
+        "finalUrl": "http://127.0.0.1:49101/admin/dashboard",
+        "title": "常州市公共服务聚合平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89101/runtime-check/codex-20260609-repair-round434/may-89101-codex-round434-structure-02-导航-首页.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89101/runtime-check/codex-20260609-repair-round434/may-89101-codex-round434-structure-02-导航-首页.png",
+        "elementCount": 481,
+        "interactiveCount": 34,
+        "interactiveLabels": [
+          "首页 办件管理 全量办件视图 运营监控看板 办件审核 人员管理 电子证照库 异议仲裁 合规审计 财务中心 系统设置 服务接入标准 服务配置 证照模板管理",
+          "首页",
+          "办件管理",
+          "全量办件视图",
+          "运营监控看板",
+          "办件审核",
+          "人员管理",
+          "电子证照库",
+          "异议仲裁",
+          "合规审计",
+          "财务中心",
+          "系统设置",
+          "服务接入标准",
+          "服务配置",
+          "证照模板管理",
+          "全局搜索...",
+          "刷新数据",
+          "导出报表",
+          "查看全部",
+          "详情",
+          "前往处理",
+          "人员审核",
+          "异议处理",
+          "证照管理",
+          "服务标准",
+          "数据报表"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89101-codex-round434-structure-03-操作-查看全部",
+        "label": "操作:查看全部",
+        "finalUrl": "http://127.0.0.1:49101/admin/dashboard",
+        "title": "常州市公共服务聚合平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89101/runtime-check/codex-20260609-repair-round434/may-89101-codex-round434-structure-03-操作-查看全部.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89101/runtime-check/codex-20260609-repair-round434/may-89101-codex-round434-structure-03-操作-查看全部.png",
+        "elementCount": 481,
+        "interactiveCount": 34,
+        "interactiveLabels": [
+          "首页 办件管理 全量办件视图 运营监控看板 办件审核 人员管理 电子证照库 异议仲裁 合规审计 财务中心 系统设置 服务接入标准 服务配置 证照模板管理",
+          "首页",
+          "办件管理",
+          "全量办件视图",
+          "运营监控看板",
+          "办件审核",
+          "人员管理",
+          "电子证照库",
+          "异议仲裁",
+          "合规审计",
+          "财务中心",
+          "系统设置",
+          "服务接入标准",
+          "服务配置",
+          "证照模板管理",
+          "全局搜索...",
+          "刷新数据",
+          "导出报表",
+          "查看全部",
+          "详情",
+          "前往处理",
+          "人员审核",
+          "异议处理",
+          "证照管理",
+          "服务标准",
+          "数据报表"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89101-codex-round434-structure-04-操作-详情",
+        "label": "操作:详情",
+        "finalUrl": "http://127.0.0.1:49101/admin/dashboard",
+        "title": "常州市公共服务聚合平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89101/runtime-check/codex-20260609-repair-round434/may-89101-codex-round434-structure-04-操作-详情.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89101/runtime-check/codex-20260609-repair-round434/may-89101-codex-round434-structure-04-操作-详情.png",
+        "elementCount": 481,
+        "interactiveCount": 34,
+        "interactiveLabels": [
+          "首页 办件管理 全量办件视图 运营监控看板 办件审核 人员管理 电子证照库 异议仲裁 合规审计 财务中心 系统设置 服务接入标准 服务配置 证照模板管理",
+          "首页",
+          "办件管理",
+          "全量办件视图",
+          "运营监控看板",
+          "办件审核",
+          "人员管理",
+          "电子证照库",
+          "异议仲裁",
+          "合规审计",
+          "财务中心",
+          "系统设置",
+          "服务接入标准",
+          "服务配置",
+          "证照模板管理",
+          "全局搜索...",
+          "刷新数据",
+          "导出报表",
+          "查看全部",
+          "详情",
+          "前往处理",
+          "人员审核",
+          "异议处理",
+          "证照管理",
+          "服务标准",
+          "数据报表"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89101-codex-round434-structure-05-导航-办件管理",
+        "label": "导航:办件管理",
+        "finalUrl": "http://127.0.0.1:49101/admin/dashboard",
+        "title": "常州市公共服务聚合平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89101/runtime-check/codex-20260609-repair-round434/may-89101-codex-round434-structure-05-导航-办件管理.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89101/runtime-check/codex-20260609-repair-round434/may-89101-codex-round434-structure-05-导航-办件管理.png",
+        "elementCount": 481,
+        "interactiveCount": 34,
+        "interactiveLabels": [
+          "首页 办件管理 全量办件视图 运营监控看板 办件审核 人员管理 电子证照库 异议仲裁 合规审计 财务中心 系统设置 服务接入标准 服务配置 证照模板管理",
+          "首页",
+          "办件管理",
+          "全量办件视图",
+          "运营监控看板",
+          "办件审核",
+          "人员管理",
+          "电子证照库",
+          "异议仲裁",
+          "合规审计",
+          "财务中心",
+          "系统设置",
+          "服务接入标准",
+          "服务配置",
+          "证照模板管理",
+          "全局搜索...",
+          "刷新数据",
+          "导出报表",
+          "查看全部",
+          "详情",
+          "前往处理",
+          "人员审核",
+          "异议处理",
+          "证照管理",
+          "服务标准",
+          "数据报表"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89101-codex-round434-structure-06-操作-查看全部",
+        "label": "操作:查看全部",
+        "finalUrl": "http://127.0.0.1:49101/admin/dashboard",
+        "title": "常州市公共服务聚合平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89101/runtime-check/codex-20260609-repair-round434/may-89101-codex-round434-structure-06-操作-查看全部.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89101/runtime-check/codex-20260609-repair-round434/may-89101-codex-round434-structure-06-操作-查看全部.png",
+        "elementCount": 481,
+        "interactiveCount": 34,
+        "interactiveLabels": [
+          "首页 办件管理 全量办件视图 运营监控看板 办件审核 人员管理 电子证照库 异议仲裁 合规审计 财务中心 系统设置 服务接入标准 服务配置 证照模板管理",
+          "首页",
+          "办件管理",
+          "全量办件视图",
+          "运营监控看板",
+          "办件审核",
+          "人员管理",
+          "电子证照库",
+          "异议仲裁",
+          "合规审计",
+          "财务中心",
+          "系统设置",
+          "服务接入标准",
+          "服务配置",
+          "证照模板管理",
+          "全局搜索...",
+          "刷新数据",
+          "导出报表",
+          "查看全部",
+          "详情",
+          "前往处理",
+          "人员审核",
+          "异议处理",
+          "证照管理",
+          "服务标准",
+          "数据报表"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89101-codex-round434-structure-07-操作-详情",
+        "label": "操作:详情",
+        "finalUrl": "http://127.0.0.1:49101/admin/dashboard",
+        "title": "常州市公共服务聚合平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89101/runtime-check/codex-20260609-repair-round434/may-89101-codex-round434-structure-07-操作-详情.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89101/runtime-check/codex-20260609-repair-round434/may-89101-codex-round434-structure-07-操作-详情.png",
+        "elementCount": 481,
+        "interactiveCount": 34,
+        "interactiveLabels": [
+          "首页 办件管理 全量办件视图 运营监控看板 办件审核 人员管理 电子证照库 异议仲裁 合规审计 财务中心 系统设置 服务接入标准 服务配置 证照模板管理",
+          "首页",
+          "办件管理",
+          "全量办件视图",
+          "运营监控看板",
+          "办件审核",
+          "人员管理",
+          "电子证照库",
+          "异议仲裁",
+          "合规审计",
+          "财务中心",
+          "系统设置",
+          "服务接入标准",
+          "服务配置",
+          "证照模板管理",
+          "全局搜索...",
+          "刷新数据",
+          "导出报表",
+          "查看全部",
+          "详情",
+          "前往处理",
+          "人员审核",
+          "异议处理",
+          "证照管理",
+          "服务标准",
+          "数据报表"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89101-codex-round434-structure-08-导航-全量办件视图",
+        "label": "导航:全量办件视图",
+        "finalUrl": "http://127.0.0.1:49101/admin/tasks",
+        "title": "常州市公共服务聚合平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89101/runtime-check/codex-20260609-repair-round434/may-89101-codex-round434-structure-08-导航-全量办件视图.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89101/runtime-check/codex-20260609-repair-round434/may-89101-codex-round434-structure-08-导航-全量办件视图.png",
+        "elementCount": 528,
+        "interactiveCount": 50,
+        "interactiveLabels": [
+          "首页 办件管理 全量办件视图 运营监控看板 办件审核 人员管理 电子证照库 异议仲裁 合规审计 财务中心 系统设置 服务接入标准 服务配置 证照模板管理",
+          "首页",
+          "办件管理",
+          "全量办件视图",
+          "运营监控看板",
+          "办件审核",
+          "人员管理",
+          "电子证照库",
+          "异议仲裁",
+          "合规审计",
+          "财务中心",
+          "系统设置",
+          "服务接入标准",
+          "服务配置",
+          "证照模板管理",
+          "全局搜索...",
+          "刷新",
+          "导出数据",
+          "办件编号/标题",
+          "开始日期",
+          "结束日期",
+          "查询",
+          "重置",
+          "详情",
+          "编辑",
+          "删除",
+          "1",
+          "页码"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89101-codex-round434-structure-09-操作-编辑",
+        "label": "操作:编辑",
+        "finalUrl": "http://127.0.0.1:49101/admin/tasks",
+        "title": "常州市公共服务聚合平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89101/runtime-check/codex-20260609-repair-round434/may-89101-codex-round434-structure-09-操作-编辑.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89101/runtime-check/codex-20260609-repair-round434/may-89101-codex-round434-structure-09-操作-编辑.png",
+        "elementCount": 528,
+        "interactiveCount": 50,
+        "interactiveLabels": [
+          "首页 办件管理 全量办件视图 运营监控看板 办件审核 人员管理 电子证照库 异议仲裁 合规审计 财务中心 系统设置 服务接入标准 服务配置 证照模板管理",
+          "首页",
+          "办件管理",
+          "全量办件视图",
+          "运营监控看板",
+          "办件审核",
+          "人员管理",
+          "电子证照库",
+          "异议仲裁",
+          "合规审计",
+          "财务中心",
+          "系统设置",
+          "服务接入标准",
+          "服务配置",
+          "证照模板管理",
+          "全局搜索...",
+          "刷新",
+          "导出数据",
+          "办件编号/标题",
+          "开始日期",
+          "结束日期",
+          "查询",
+          "重置",
+          "详情",
+          "编辑",
+          "删除",
+          "1",
+          "页码"
+        ]
+      }
+    ],
+    "representativeScreenshotUrl": "http://127.0.0.1:49101/admin/dashboard",
+    "representativeScreenshotLabel": "城市服务中枢"
+  },
+  "websiteStructureCapture": {
+    "module": "website_structure_capture",
+    "captureCount": 9,
+    "captures": [
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89101-codex-round434-structure-01-首屏",
+        "label": "首屏",
+        "finalUrl": "http://127.0.0.1:49101/admin/dashboard",
+        "title": "常州市公共服务聚合平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89101/runtime-check/codex-20260609-repair-round434/may-89101-codex-round434-structure-01-首屏.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89101/runtime-check/codex-20260609-repair-round434/may-89101-codex-round434-structure-01-首屏.png",
+        "elementCount": 481,
+        "interactiveCount": 34,
+        "interactiveLabels": [
+          "首页 办件管理 全量办件视图 运营监控看板 办件审核 人员管理 电子证照库 异议仲裁 合规审计 财务中心 系统设置 服务接入标准 服务配置 证照模板管理",
+          "首页",
+          "办件管理",
+          "全量办件视图",
+          "运营监控看板",
+          "办件审核",
+          "人员管理",
+          "电子证照库",
+          "异议仲裁",
+          "合规审计",
+          "财务中心",
+          "系统设置",
+          "服务接入标准",
+          "服务配置",
+          "证照模板管理",
+          "全局搜索...",
+          "刷新数据",
+          "导出报表",
+          "查看全部",
+          "详情",
+          "前往处理",
+          "人员审核",
+          "异议处理",
+          "证照管理",
+          "服务标准",
+          "数据报表"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89101-codex-round434-structure-02-导航-首页",
+        "label": "导航:首页",
+        "finalUrl": "http://127.0.0.1:49101/admin/dashboard",
+        "title": "常州市公共服务聚合平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89101/runtime-check/codex-20260609-repair-round434/may-89101-codex-round434-structure-02-导航-首页.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89101/runtime-check/codex-20260609-repair-round434/may-89101-codex-round434-structure-02-导航-首页.png",
+        "elementCount": 481,
+        "interactiveCount": 34,
+        "interactiveLabels": [
+          "首页 办件管理 全量办件视图 运营监控看板 办件审核 人员管理 电子证照库 异议仲裁 合规审计 财务中心 系统设置 服务接入标准 服务配置 证照模板管理",
+          "首页",
+          "办件管理",
+          "全量办件视图",
+          "运营监控看板",
+          "办件审核",
+          "人员管理",
+          "电子证照库",
+          "异议仲裁",
+          "合规审计",
+          "财务中心",
+          "系统设置",
+          "服务接入标准",
+          "服务配置",
+          "证照模板管理",
+          "全局搜索...",
+          "刷新数据",
+          "导出报表",
+          "查看全部",
+          "详情",
+          "前往处理",
+          "人员审核",
+          "异议处理",
+          "证照管理",
+          "服务标准",
+          "数据报表"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89101-codex-round434-structure-03-操作-查看全部",
+        "label": "操作:查看全部",
+        "finalUrl": "http://127.0.0.1:49101/admin/dashboard",
+        "title": "常州市公共服务聚合平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89101/runtime-check/codex-20260609-repair-round434/may-89101-codex-round434-structure-03-操作-查看全部.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89101/runtime-check/codex-20260609-repair-round434/may-89101-codex-round434-structure-03-操作-查看全部.png",
+        "elementCount": 481,
+        "interactiveCount": 34,
+        "interactiveLabels": [
+          "首页 办件管理 全量办件视图 运营监控看板 办件审核 人员管理 电子证照库 异议仲裁 合规审计 财务中心 系统设置 服务接入标准 服务配置 证照模板管理",
+          "首页",
+          "办件管理",
+          "全量办件视图",
+          "运营监控看板",
+          "办件审核",
+          "人员管理",
+          "电子证照库",
+          "异议仲裁",
+          "合规审计",
+          "财务中心",
+          "系统设置",
+          "服务接入标准",
+          "服务配置",
+          "证照模板管理",
+          "全局搜索...",
+          "刷新数据",
+          "导出报表",
+          "查看全部",
+          "详情",
+          "前往处理",
+          "人员审核",
+          "异议处理",
+          "证照管理",
+          "服务标准",
+          "数据报表"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89101-codex-round434-structure-04-操作-详情",
+        "label": "操作:详情",
+        "finalUrl": "http://127.0.0.1:49101/admin/dashboard",
+        "title": "常州市公共服务聚合平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89101/runtime-check/codex-20260609-repair-round434/may-89101-codex-round434-structure-04-操作-详情.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89101/runtime-check/codex-20260609-repair-round434/may-89101-codex-round434-structure-04-操作-详情.png",
+        "elementCount": 481,
+        "interactiveCount": 34,
+        "interactiveLabels": [
+          "首页 办件管理 全量办件视图 运营监控看板 办件审核 人员管理 电子证照库 异议仲裁 合规审计 财务中心 系统设置 服务接入标准 服务配置 证照模板管理",
+          "首页",
+          "办件管理",
+          "全量办件视图",
+          "运营监控看板",
+          "办件审核",
+          "人员管理",
+          "电子证照库",
+          "异议仲裁",
+          "合规审计",
+          "财务中心",
+          "系统设置",
+          "服务接入标准",
+          "服务配置",
+          "证照模板管理",
+          "全局搜索...",
+          "刷新数据",
+          "导出报表",
+          "查看全部",
+          "详情",
+          "前往处理",
+          "人员审核",
+          "异议处理",
+          "证照管理",
+          "服务标准",
+          "数据报表"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89101-codex-round434-structure-05-导航-办件管理",
+        "label": "导航:办件管理",
+        "finalUrl": "http://127.0.0.1:49101/admin/dashboard",
+        "title": "常州市公共服务聚合平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89101/runtime-check/codex-20260609-repair-round434/may-89101-codex-round434-structure-05-导航-办件管理.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89101/runtime-check/codex-20260609-repair-round434/may-89101-codex-round434-structure-05-导航-办件管理.png",
+        "elementCount": 481,
+        "interactiveCount": 34,
+        "interactiveLabels": [
+          "首页 办件管理 全量办件视图 运营监控看板 办件审核 人员管理 电子证照库 异议仲裁 合规审计 财务中心 系统设置 服务接入标准 服务配置 证照模板管理",
+          "首页",
+          "办件管理",
+          "全量办件视图",
+          "运营监控看板",
+          "办件审核",
+          "人员管理",
+          "电子证照库",
+          "异议仲裁",
+          "合规审计",
+          "财务中心",
+          "系统设置",
+          "服务接入标准",
+          "服务配置",
+          "证照模板管理",
+          "全局搜索...",
+          "刷新数据",
+          "导出报表",
+          "查看全部",
+          "详情",
+          "前往处理",
+          "人员审核",
+          "异议处理",
+          "证照管理",
+          "服务标准",
+          "数据报表"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89101-codex-round434-structure-06-操作-查看全部",
+        "label": "操作:查看全部",
+        "finalUrl": "http://127.0.0.1:49101/admin/dashboard",
+        "title": "常州市公共服务聚合平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89101/runtime-check/codex-20260609-repair-round434/may-89101-codex-round434-structure-06-操作-查看全部.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89101/runtime-check/codex-20260609-repair-round434/may-89101-codex-round434-structure-06-操作-查看全部.png",
+        "elementCount": 481,
+        "interactiveCount": 34,
+        "interactiveLabels": [
+          "首页 办件管理 全量办件视图 运营监控看板 办件审核 人员管理 电子证照库 异议仲裁 合规审计 财务中心 系统设置 服务接入标准 服务配置 证照模板管理",
+          "首页",
+          "办件管理",
+          "全量办件视图",
+          "运营监控看板",
+          "办件审核",
+          "人员管理",
+          "电子证照库",
+          "异议仲裁",
+          "合规审计",
+          "财务中心",
+          "系统设置",
+          "服务接入标准",
+          "服务配置",
+          "证照模板管理",
+          "全局搜索...",
+          "刷新数据",
+          "导出报表",
+          "查看全部",
+          "详情",
+          "前往处理",
+          "人员审核",
+          "异议处理",
+          "证照管理",
+          "服务标准",
+          "数据报表"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89101-codex-round434-structure-07-操作-详情",
+        "label": "操作:详情",
+        "finalUrl": "http://127.0.0.1:49101/admin/dashboard",
+        "title": "常州市公共服务聚合平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89101/runtime-check/codex-20260609-repair-round434/may-89101-codex-round434-structure-07-操作-详情.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89101/runtime-check/codex-20260609-repair-round434/may-89101-codex-round434-structure-07-操作-详情.png",
+        "elementCount": 481,
+        "interactiveCount": 34,
+        "interactiveLabels": [
+          "首页 办件管理 全量办件视图 运营监控看板 办件审核 人员管理 电子证照库 异议仲裁 合规审计 财务中心 系统设置 服务接入标准 服务配置 证照模板管理",
+          "首页",
+          "办件管理",
+          "全量办件视图",
+          "运营监控看板",
+          "办件审核",
+          "人员管理",
+          "电子证照库",
+          "异议仲裁",
+          "合规审计",
+          "财务中心",
+          "系统设置",
+          "服务接入标准",
+          "服务配置",
+          "证照模板管理",
+          "全局搜索...",
+          "刷新数据",
+          "导出报表",
+          "查看全部",
+          "详情",
+          "前往处理",
+          "人员审核",
+          "异议处理",
+          "证照管理",
+          "服务标准",
+          "数据报表"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89101-codex-round434-structure-08-导航-全量办件视图",
+        "label": "导航:全量办件视图",
+        "finalUrl": "http://127.0.0.1:49101/admin/tasks",
+        "title": "常州市公共服务聚合平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89101/runtime-check/codex-20260609-repair-round434/may-89101-codex-round434-structure-08-导航-全量办件视图.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89101/runtime-check/codex-20260609-repair-round434/may-89101-codex-round434-structure-08-导航-全量办件视图.png",
+        "elementCount": 528,
+        "interactiveCount": 50,
+        "interactiveLabels": [
+          "首页 办件管理 全量办件视图 运营监控看板 办件审核 人员管理 电子证照库 异议仲裁 合规审计 财务中心 系统设置 服务接入标准 服务配置 证照模板管理",
+          "首页",
+          "办件管理",
+          "全量办件视图",
+          "运营监控看板",
+          "办件审核",
+          "人员管理",
+          "电子证照库",
+          "异议仲裁",
+          "合规审计",
+          "财务中心",
+          "系统设置",
+          "服务接入标准",
+          "服务配置",
+          "证照模板管理",
+          "全局搜索...",
+          "刷新",
+          "导出数据",
+          "办件编号/标题",
+          "开始日期",
+          "结束日期",
+          "查询",
+          "重置",
+          "详情",
+          "编辑",
+          "删除",
+          "1",
+          "页码"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89101-codex-round434-structure-09-操作-编辑",
+        "label": "操作:编辑",
+        "finalUrl": "http://127.0.0.1:49101/admin/tasks",
+        "title": "常州市公共服务聚合平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89101/runtime-check/codex-20260609-repair-round434/may-89101-codex-round434-structure-09-操作-编辑.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89101/runtime-check/codex-20260609-repair-round434/may-89101-codex-round434-structure-09-操作-编辑.png",
+        "elementCount": 528,
+        "interactiveCount": 50,
+        "interactiveLabels": [
+          "首页 办件管理 全量办件视图 运营监控看板 办件审核 人员管理 电子证照库 异议仲裁 合规审计 财务中心 系统设置 服务接入标准 服务配置 证照模板管理",
+          "首页",
+          "办件管理",
+          "全量办件视图",
+          "运营监控看板",
+          "办件审核",
+          "人员管理",
+          "电子证照库",
+          "异议仲裁",
+          "合规审计",
+          "财务中心",
+          "系统设置",
+          "服务接入标准",
+          "服务配置",
+          "证照模板管理",
+          "全局搜索...",
+          "刷新",
+          "导出数据",
+          "办件编号/标题",
+          "开始日期",
+          "结束日期",
+          "查询",
+          "重置",
+          "详情",
+          "编辑",
+          "删除",
+          "1",
+          "页码"
+        ]
+      }
+    ]
+  },
+  "screenshotMetrics": {
+    "width": 1792,
+    "height": 1600,
+    "scrollWidth": 1760,
+    "scrollHeight": 1664
+  },
+  "initialBodyTextPreview": "常州市公共服务聚合平台\n\n城市服务中枢 · 一网通办\n\n欢迎回来\n\n登录城市服务中枢工作台\n\n账号 / 邮箱\n密码\n记住我\n平台运营演示账号\n运维专员演示账号\n管理员演示账号\n登录\n还没有账户？立即注册",
+  "bodyTextPreview": "城市服务中枢\n首页\n办件管理\n全量办件视图\n运营监控看板\n办件审核\n人员管理\n电子证照库\n异议仲裁\n合规审计\n财务中心\n系统设置\n服务接入标准\n服务配置\n证照模板管理\n3\n平台管理员\n管理员\n城市服务中枢\n全市政务服务数据总览与运营监控\n刷新数据\n导出报表\n全口径办件量\n6\n线上办件 8520\n线下办件 4060\n在线服务率\n94.6%\n今日新增 +28\n进行中 456\n市民满意度\n96.8%\n本月环比 +2.3%\n持续提升\n平均办理时长\n2.3天\n待审核 18\n待仲裁 8\n今日数据\n2026-06-09\n线上办件\n156\n+12%\n线下办件\n42\n+8%\n已办结\n132\n+15%\n服务评价\n4.8分\n+5%\n市民投诉\n3\n-2\n区域服务热度\n服务可用性监测\n最新办件\n查看全部\n办件编号\t事项名称\t受理部门\t状态\t受理时间\t操作\nTASK20260608234630207971\t企业官网首页UI设计\t天宁区政务中心\t办理中\t2026-06-08 20:46\t\n详情\n\nTASK20260608234630220850\t智能家居产品外观设计\t钟楼区便民中心\t待受理\t2026-06-08 20:46\t\n详情\n\nTASK20260608234630803383\t品牌吉祥物IP形象设计\t武进区行政中心\t待受理\t2026-06-08 20:46\t\n详情\n\nTASK20260608234630226879\t微信小程序开发\t新北区服务大厅\t待受理\t2026-06-08 20:46\t\n详情\n\nTASK20260608234630625089\t品牌商标注册申请\t金坛区政务中心\t已办结\t2026-06-08 20:46\t\n详情\n服务类型分布\n待处理异议\n前往处理\n暂无待处理异议\n快捷操作\n办件管理\n人员审核\n异议处理\n财务中心\n合规审计\n证照管理\n服务标准\n数据报表",
+  "apiBase": "http://127.0.0.1:59101/api",
+  "businessGoalPreview": "",
+  "apiResponses": [
+    {
+      "method": "POST",
+      "status": 200,
+      "url": "http://127.0.0.1:59101/api/auth/login"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:59101/api/analytics/platform-stats"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:59101/api/tasks?page=1&pageSize=5"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:59101/api/disputes?status=pending&page=1&pageSize=5"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:59101/api/analytics/platform-stats"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:59101/api/tasks?page=1&pageSize=5"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:59101/api/disputes?status=pending&page=1&pageSize=5"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:59101/api/analytics/platform-stats"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:59101/api/tasks?page=1&pageSize=5"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:59101/api/disputes?status=pending&page=1&pageSize=5"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:59101/api/analytics/platform-stats"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:59101/api/tasks?page=1&pageSize=5"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:59101/api/disputes?status=pending&page=1&pageSize=5"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:59101/api/tasks?page=1&pageSize=10"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:59101/api/tasks?page=1&pageSize=10"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:59101/api/analytics/platform-stats"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:59101/api/tasks?page=1&pageSize=5"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:59101/api/disputes?status=pending&page=1&pageSize=5"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:59101/api/tasks?page=1&pageSize=5"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:59101/api/analytics/platform-stats"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:59101/api/disputes?status=pending&page=1&pageSize=5"
+    }
+  ],
+  "apiChecks": [
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59101/api/health",
+      "path": "/api/health",
+      "status": 200,
+      "ok": true,
+      "bodyPreview": "{\"code\":200,\"message\":\"服务运行正常\",\"data\":{\"status\":\"ok\",\"timestamp\":\"2026-06-09T06:19:42.291Z\"},\"timestamp\":\"2026-06-09T06:19:42.291Z\"}"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59101/api/analytics/platform-stats",
+      "path": "/api/analytics/platform-stats",
+      "status": 200,
+      "ok": true,
+      "bodyPreview": "{\"code\":200,\"message\":\"获取平台统计成功\",\"data\":{\"totalUsers\":7,\"totalProviders\":5,\"totalEmployers\":1,\"totalTasks\":6,\"completedTasks\":2,\"pendingTasks\":0,\"totalDisputes\":0,\"totalRevenue\":20800,\"completionRate\":33},\"timestamp\":\"2026-06-09T06:19:42.302Z\"}"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59101/api/tasks?page=1&pageSize=5",
+      "path": "/api/tasks?page=1&pageSize=5",
+      "status": 200,
+      "ok": true,
+      "bodyPreview": "{\"code\":200,\"message\":\"获取任务列表成功\",\"data\":{\"list\":[{\"id\":1,\"requestNo\":\"TASK20260608234630207971\",\"title\":\"企业官网首页UI设计\",\"description\":\"需要设计一套现代化的企业官网首页，要求简洁大气、专业可靠，体现公司的品牌形象。包含导航栏、Banner、产品展示、客户案例、关于我们、联系我们等模块。\",\"categoryId\":1,\"employerId\":2,\"providerId\":null,\"budgetMin\":8000,\"budgetMax\":15000,\"deadline\":\"2026-06-23T20:46:30.067Z\",\"status\":\"published\",\"skillsRequired\":[\"UI设计\",\"Figma\",\"响应式设计\"],\"attachments\":[\"/uploads/attachments/task-1.pdf\"],\"reviewRemark\":null,\"reviewBy\":null,\"reviewAt\":null,\"crea"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59101/api/disputes?status=pending&page=1&pageSize=5",
+      "path": "/api/disputes?status=pending&page=1&pageSize=5",
+      "status": 200,
+      "ok": true,
+      "bodyPreview": "{\"code\":200,\"message\":\"获取争议列表成功\",\"data\":{\"list\":[],\"items\":[],\"total\":0,\"page\":1,\"pageSize\":5,\"totalPages\":0},\"timestamp\":\"2026-06-09T06:19:42.347Z\"}"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59101/api/tasks?page=1&pageSize=10",
+      "path": "/api/tasks?page=1&pageSize=10",
+      "status": 200,
+      "ok": true,
+      "bodyPreview": "{\"code\":200,\"message\":\"获取任务列表成功\",\"data\":{\"list\":[{\"id\":1,\"requestNo\":\"TASK20260608234630207971\",\"title\":\"企业官网首页UI设计\",\"description\":\"需要设计一套现代化的企业官网首页，要求简洁大气、专业可靠，体现公司的品牌形象。包含导航栏、Banner、产品展示、客户案例、关于我们、联系我们等模块。\",\"categoryId\":1,\"employerId\":2,\"providerId\":null,\"budgetMin\":8000,\"budgetMax\":15000,\"deadline\":\"2026-06-23T20:46:30.067Z\",\"status\":\"published\",\"skillsRequired\":[\"UI设计\",\"Figma\",\"响应式设计\"],\"attachments\":[\"/uploads/attachments/task-1.pdf\"],\"reviewRemark\":null,\"reviewBy\":null,\"reviewAt\":null,\"crea"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59101/api/auth/me",
+      "path": "/api/auth/me",
+      "status": 200,
+      "ok": true,
+      "bodyPreview": "{\"code\":200,\"message\":\"获取当前用户成功\",\"data\":{\"id\":1,\"email\":\"admin@example.com\",\"name\":\"平台管理员\",\"avatar\":\"https://api.dicebear.com/7.x/avataaars/svg?seed=admin\",\"phone\":\"13800000000\",\"userType\":\"admin\",\"status\":\"active\",\"realNameVerified\":1,\"createdAt\":\"2026-06-08 20:46:29\",\"updatedAt\":\"2026-06-08 20:46:29\",\"role\":\"admin\",\"verified\":true,\"rating\":5,\"reviewCount\":0},\"timestamp\":\"2026-06-09T06:19:42.821Z\"}"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59101/api/users/profile",
+      "path": "/api/users/profile",
+      "status": 200,
+      "ok": true,
+      "bodyPreview": "{\"code\":200,\"message\":\"获取用户信息成功\",\"data\":{\"id\":1,\"email\":\"admin@example.com\",\"name\":\"平台管理员\",\"avatar\":\"https://api.dicebear.com/7.x/avataaars/svg?seed=admin\",\"phone\":\"13800000000\",\"userType\":\"admin\",\"status\":\"active\",\"realNameVerified\":1,\"idCardNo\":null,\"createdAt\":\"2026-06-08 20:46:29\",\"updatedAt\":\"2026-06-08 20:46:29\",\"providerId\":null,\"categoryId\":null,\"bio\":null,\"skills\":null,\"rating\":5,\"level\":null,\"completedTasks\":null,\"totalEarnings\":null,\"location\":null,\"verificationStatus\":null,\"role\":\"ad"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59101/api/user/profile",
+      "path": "/api/user/profile",
+      "status": 404,
+      "ok": false,
+      "bodyPreview": "{\"code\":404,\"message\":\"接口不存在\",\"data\":null,\"timestamp\":\"2026-06-09T06:19:43.615Z\"}"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59101/api/admin/stats",
+      "path": "/api/admin/stats",
+      "status": 404,
+      "ok": false,
+      "bodyPreview": "{\"code\":404,\"message\":\"接口不存在\",\"data\":null,\"timestamp\":\"2026-06-09T06:19:43.729Z\"}"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59101/api/admin/dashboard",
+      "path": "/api/admin/dashboard",
+      "status": 404,
+      "ok": false,
+      "bodyPreview": "{\"code\":404,\"message\":\"接口不存在\",\"data\":null,\"timestamp\":\"2026-06-09T06:19:43.735Z\"}"
+    }
+  ],
+  "dialogs": [],
+  "consoleMessages": [
+    {
+      "type": "debug",
+      "text": "[vite] connecting...",
+      "location": {
+        "url": "http://127.0.0.1:49101/@vite/client",
+        "lineNumber": 494,
+        "columnNumber": 8
+      }
+    },
+    {
+      "type": "debug",
+      "text": "[vite] connected.",
+      "location": {
+        "url": "http://127.0.0.1:49101/@vite/client",
+        "lineNumber": 617,
+        "columnNumber": 14
+      }
+    },
+    {
+      "type": "info",
+      "text": "%cDownload the React DevTools for a better development experience: https://reactjs.org/link/react-devtools font-weight:bold",
+      "location": {
+        "url": "http://127.0.0.1:49101/node_modules/.vite/deps/chunk-5DIXNSNT.js?v=f16ab9a5",
+        "lineNumber": 21550,
+        "columnNumber": 24
+      }
+    },
+    {
+      "type": "warning",
+      "text": "⚠️ React Router Future Flag Warning: React Router will begin wrapping state updates in `React.startTransition` in v7. You can use the `v7_startTransition` future flag to opt-in early. For more information, see https://reactrouter.com/v6/upgrading/future#v7_starttransition.",
+      "location": {
+        "url": "http://127.0.0.1:49101/node_modules/.vite/deps/react-router-dom.js?v=f16ab9a5",
+        "lineNumber": 4426,
+        "columnNumber": 12
+      }
+    },
+    {
+      "type": "debug",
+      "text": "[vite] hot updated: /src/pages/Admin/TaskReview.tsx",
+      "location": {
+        "url": "http://127.0.0.1:49101/@vite/client",
+        "lineNumber": 222,
+        "columnNumber": 18
+      }
+    },
+    {
+      "type": "debug",
+      "text": "[vite] hot updated: /src/index.css",
+      "location": {
+        "url": "http://127.0.0.1:49101/@vite/client",
+        "lineNumber": 222,
+        "columnNumber": 18
+      }
+    },
+    {
+      "type": "debug",
+      "text": "[vite] hot updated: /src/pages/Admin/TaskReview.tsx",
+      "location": {
+        "url": "http://127.0.0.1:49101/@vite/client",
+        "lineNumber": 222,
+        "columnNumber": 18
+      }
+    },
+    {
+      "type": "debug",
+      "text": "[vite] hot updated: /src/index.css",
+      "location": {
+        "url": "http://127.0.0.1:49101/@vite/client",
+        "lineNumber": 222,
+        "columnNumber": 18
+      }
+    },
+    {
+      "type": "debug",
+      "text": "[vite] hot updated: /src/pages/Admin/TaskReview.tsx",
+      "location": {
+        "url": "http://127.0.0.1:49101/@vite/client",
+        "lineNumber": 222,
+        "columnNumber": 18
+      }
+    },
+    {
+      "type": "debug",
+      "text": "[vite] hot updated: /src/index.css",
+      "location": {
+        "url": "http://127.0.0.1:49101/@vite/client",
+        "lineNumber": 222,
+        "columnNumber": 18
+      }
+    },
+    {
+      "type": "debug",
+      "text": "[vite] hot updated: /src/pages/Admin/TaskReview.tsx",
+      "location": {
+        "url": "http://127.0.0.1:49101/@vite/client",
+        "lineNumber": 222,
+        "columnNumber": 18
+      }
+    },
+    {
+      "type": "debug",
+      "text": "[vite] hot updated: /src/index.css",
+      "location": {
+        "url": "http://127.0.0.1:49101/@vite/client",
+        "lineNumber": 222,
+        "columnNumber": 18
+      }
+    },
+    {
+      "type": "debug",
+      "text": "[vite] hot updated: /src/pages/Admin/TaskReview.tsx",
+      "location": {
+        "url": "http://127.0.0.1:49101/@vite/client",
+        "lineNumber": 222,
+        "columnNumber": 18
+      }
+    },
+    {
+      "type": "debug",
+      "text": "[vite] hot updated: /src/index.css",
+      "location": {
+        "url": "http://127.0.0.1:49101/@vite/client",
+        "lineNumber": 222,
+        "columnNumber": 18
+      }
+    },
+    {
+      "type": "error",
+      "text": "Warning: [antd: message] Static function can not consume context like dynamic theme. Please use 'App' component instead.",
+      "location": {
+        "url": "http://127.0.0.1:49101/node_modules/.vite/deps/chunk-AWHL2DS6.js?v=f16ab9a5",
+        "lineNumber": 1247,
+        "columnNumber": 14
+      }
+    },
+    {
+      "type": "debug",
+      "text": "[vite] invalidate /src/pages/Admin/TaskReview.tsx: Could not Fast Refresh (export removed)",
+      "location": {
+        "url": "http://127.0.0.1:49101/@vite/client",
+        "lineNumber": 63,
+        "columnNumber": 26
+      }
+    },
+    {
+      "type": "debug",
+      "text": "[vite] hot updated: /src/pages/Admin/TaskReview.tsx",
+      "location": {
+        "url": "http://127.0.0.1:49101/@vite/client",
+        "lineNumber": 222,
+        "columnNumber": 18
+      }
+    },
+    {
+      "type": "debug",
+      "text": "[vite] hot updated: /src/index.css",
+      "location": {
+        "url": "http://127.0.0.1:49101/@vite/client",
+        "lineNumber": 222,
+        "columnNumber": 18
+      }
+    },
+    {
+      "type": "debug",
+      "text": "[vite] hot updated: /src/index.css",
+      "location": {
+        "url": "http://127.0.0.1:49101/@vite/client",
+        "lineNumber": 222,
+        "columnNumber": 18
+      }
+    },
+    {
+      "type": "debug",
+      "text": "[vite] invalidate /src/router/index.tsx: Could not Fast Refresh (\"default\" export is incompatible). Learn more at https://github.com/vitejs/vite-plugin-react/tree/main/packages/plugin-react#consistent-components-exports",
+      "location": {
+        "url": "http://127.0.0.1:49101/@vite/client",
+        "lineNumber": 63,
+        "columnNumber": 26
+      }
+    },
+    {
+      "type": "debug",
+      "text": "[vite] hot updated: /src/router/index.tsx",
+      "location": {
+        "url": "http://127.0.0.1:49101/@vite/client",
+        "lineNumber": 222,
+        "columnNumber": 18
+      }
+    },
+    {
+      "type": "debug",
+      "text": "[vite] hot updated: /src/App.tsx",
+      "location": {
+        "url": "http://127.0.0.1:49101/@vite/client",
+        "lineNumber": 222,
+        "columnNumber": 18
+      }
+    },
+    {
+      "type": "debug",
+      "text": "[vite] hot updated: /src/index.css",
+      "location": {
+        "url": "http://127.0.0.1:49101/@vite/client",
+        "lineNumber": 222,
+        "columnNumber": 18
+      }
+    },
+    {
+      "type": "debug",
+      "text": "[vite] connecting...",
+      "location": {
+        "url": "http://127.0.0.1:49101/@vite/client",
+        "lineNumber": 494,
+        "columnNumber": 8
+      }
+    },
+    {
+      "type": "debug",
+      "text": "[vite] connected.",
+      "location": {
+        "url": "http://127.0.0.1:49101/@vite/client",
+        "lineNumber": 617,
+        "columnNumber": 14
+      }
+    },
+    {
+      "type": "info",
+      "text": "%cDownload the React DevTools for a better development experience: https://reactjs.org/link/react-devtools font-weight:bold",
+      "location": {
+        "url": "http://127.0.0.1:49101/node_modules/.vite/deps/chunk-5DIXNSNT.js?v=f16ab9a5",
+        "lineNumber": 21550,
+        "columnNumber": 24
+      }
+    },
+    {
+      "type": "warning",
+      "text": "⚠️ React Router Future Flag Warning: React Router will begin wrapping state updates in `React.startTransition` in v7. You can use the `v7_startTransition` future flag to opt-in early. For more information, see https://reactrouter.com/v6/upgrading/future#v7_starttransition.",
+      "location": {
+        "url": "http://127.0.0.1:49101/node_modules/.vite/deps/react-router-dom.js?v=f16ab9a5",
+        "lineNumber": 4426,
+        "columnNumber": 12
+      }
+    },
+    {
+      "type": "error",
+      "text": "Warning: [antd: Modal] `destroyOnClose` is deprecated. Please use `destroyOnHidden` instead.",
+      "location": {
+        "url": "http://127.0.0.1:49101/node_modules/.vite/deps/chunk-AWHL2DS6.js?v=f16ab9a5",
+        "lineNumber": 1247,
+        "columnNumber": 14
+      }
+    },
+    {
+      "type": "debug",
+      "text": "[vite] connecting...",
+      "location": {
+        "url": "http://127.0.0.1:49101/@vite/client",
+        "lineNumber": 494,
+        "columnNumber": 8
+      }
+    },
+    {
+      "type": "debug",
+      "text": "[vite] connected.",
+      "location": {
+        "url": "http://127.0.0.1:49101/@vite/client",
+        "lineNumber": 617,
+        "columnNumber": 14
+      }
+    },
+    {
+      "type": "info",
+      "text": "%cDownload the React DevTools for a better development experience: https://reactjs.org/link/react-devtools font-weight:bold",
+      "location": {
+        "url": "http://127.0.0.1:49101/node_modules/.vite/deps/chunk-5DIXNSNT.js?v=f16ab9a5",
+        "lineNumber": 21550,
+        "columnNumber": 24
+      }
+    },
+    {
+      "type": "warning",
+      "text": "⚠️ React Router Future Flag Warning: React Router will begin wrapping state updates in `React.startTransition` in v7. You can use the `v7_startTransition` future flag to opt-in early. For more information, see https://reactrouter.com/v6/upgrading/future#v7_starttransition.",
+      "location": {
+        "url": "http://127.0.0.1:49101/node_modules/.vite/deps/react-router-dom.js?v=f16ab9a5",
+        "lineNumber": 4426,
+        "columnNumber": 12
+      }
+    }
+  ],
+  "requestFailures": [],
+  "responseErrors": []
+}
