@@ -79,6 +79,21 @@ export interface SleepSession {
   ahiIndex: number;
   environmentNoise: number;
   qualityScore: number;
+  auditInfo: SleepSessionAudit;
+}
+
+export interface SleepSessionAudit {
+  sessionId: string;
+  startTime: string;
+  endTime: string;
+  duration: number;
+  storageVersion: string;
+  dataFingerprint: string;
+  createdAt: string;
+  lastModifiedAt: string;
+  deviceModel: string;
+  appVersion: string;
+  checksum: string;
 }
 
 export interface MorningAssessment {
@@ -218,12 +233,22 @@ export interface RiskAssessment {
   id: string;
   sessionId?: string;
   userId: string;
+  icd10Code: string;
   assessedAt: string;
   overallRisk: RiskLevel;
   dsm5Mapping: DSM5Dimension[];
   ahiBasedRisk?: AHIRisk;
   referralTriggered: boolean;
   recommendations: string[];
+  dsm5Evidence: DSM5MappingEvidence[];
+  auditInfo: {
+    assessmentId: string;
+    assessor: string;
+    assessedAt: string;
+    lastModifiedAt: string;
+    version: string;
+    signature: string;
+  };
 }
 
 export type ReferralStatus =
@@ -272,6 +297,50 @@ export interface ReferralRecord {
   matchedHospital?: HospitalInfo;
   appointment?: AppointmentInfo;
   consultationResult?: string;
+  auditTrail?: ReferralAuditEntry[];
+  packagingInfo?: ReferralPackagingInfo;
+}
+
+export interface ReferralAuditEntry {
+  id: string;
+  status: ReferralStatus;
+  timestamp: string;
+  operator: string;
+  note: string;
+  signature?: string;
+}
+
+export interface ReferralPackagingInfo {
+  packageId: string;
+  encrypted: boolean;
+  encryptionAlgorithm: string;
+  dataIncluded: string[];
+  dataSize: number;
+  packagedAt: string;
+  checksum: string;
+}
+
+export interface DSM5MappingEvidence {
+  dimensionId: string;
+  symptom: string;
+  frequency: string;
+  duration: string;
+  impairment: string;
+  dsm5Reference: string;
+}
+
+export interface SleepSessionAudit {
+  sessionId: string;
+  startTime: string;
+  endTime: string;
+  duration: number;
+  storageVersion: string;
+  dataFingerprint: string;
+  createdAt: string;
+  lastModifiedAt: string;
+  deviceModel: string;
+  appVersion: string;
+  checksum: string;
 }
 
 export type SensorStatus = 'idle' | 'connecting' | 'active' | 'error' | 'denied';

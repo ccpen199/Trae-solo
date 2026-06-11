@@ -54,10 +54,42 @@ if (snapshotCount === 0) {
 const trackCount = db.prepare('SELECT COUNT(*) AS count FROM intervention_tracks').get().count
 if (trackCount === 0) {
   const insertTrack = db.prepare('INSERT INTO intervention_tracks (title, category, duration) VALUES (?, ?, ?)')
+  insertTrack.run('焦虑缓解呼吸', 'anxiety', 600)
   insertTrack.run('深睡呼吸引导', 'insomnia', 1800)
   insertTrack.run('雨声放松', 'stress', 2400)
   insertTrack.run('晨间唤醒冥想', 'meditation', 900)
 }
+
+const discoverCategories = [
+  {
+    id: 'insomnia',
+    name: '深度失眠',
+    summary: '睡前故事、白噪音与CBT-I助眠练习',
+    protocol: 'CBT-I + 睡眠限制疗法',
+    riskFit: '入睡困难、早醒、睡眠效率偏低',
+  },
+  {
+    id: 'anxiety',
+    name: '焦虑缓解',
+    summary: '呼吸节律、接地练习与夜间惊醒安抚',
+    protocol: '4-7-8呼吸 + 正念接地',
+    riskFit: '压力升高、夜间觉醒、心率波动',
+  },
+  {
+    id: 'stress',
+    name: '压力释放',
+    summary: '身体扫描、雨声放松与渐进式肌肉松弛',
+    protocol: 'PMR渐进放松',
+    riskFit: '工作压力、肩颈紧张、浅睡比例高',
+  },
+  {
+    id: 'meditation',
+    name: '专注冥想',
+    summary: '晨间唤醒、正念冥想与情绪记录',
+    protocol: '正念认知训练',
+    riskFit: '情绪波动、晨间疲惫、专注下降',
+  },
+]
 
 function sendJson(res, status, payload) {
   res.writeHead(status, {
@@ -106,9 +138,61 @@ const server = createServer((req, res) => {
     return
   }
 
+  if (req.method === 'GET' && requestUrl.pathname === '/api/discover/categories') {
+    const rows = db.prepare('SELECT id, title, category, duration FROM intervention_tracks ORDER BY id').all()
+    const data = discoverCategories.map((category) => ({
+      ...category,
+      trackCount: rows.filter((row) => row.category === category.id).length,
+      tracks: rows.filter((row) => row.category === category.id),
+    }))
+
+    sendJson(res, 200, {
+      status: 'ok',
+      data,
+      updatedAt: new Date().toISOString(),
+    })
+    return
+  }
+
+  if (req.method === 'GET' && requestUrl.pathname === '/api/admin/overview') {
+    const snapshotRows = db.prepare('SELECT metric, value FROM health_snapshots ORDER BY id').all()
+    const trackRows = db.prepare('SELECT id, title, category, duration FROM intervention_tracks ORDER BY id').all()
+    const sleepSummary = Object.fromEntries(snapshotRows.map((row) => [row.metric, Number(row.value) || row.value]))
+
+    sendJson(res, 200, {
+      status: 'ok',
+      data: {
+        usersOnline: 128,
+        activePlans: 46,
+        highRiskAlerts: 7,
+        medicalReferrals: 5,
+        sqlitePath: dbPath,
+        sleepSummary,
+        trackCount: trackRows.length,
+        categories: discoverCategories.map((category) => ({
+          id: category.id,
+          name: category.name,
+          trackCount: trackRows.filter((row) => row.category === category.id).length,
+        })),
+        auditEvents: [
+          { id: 'evt-001', action: '高风险报告生成', operator: '风控引擎', createdAt: new Date(Date.now() - 1800000).toISOString() },
+          { id: 'evt-002', action: '医生转诊授权', operator: '用户星夜旅者', createdAt: new Date(Date.now() - 5400000).toISOString() },
+          { id: 'evt-003', action: '音频版权水印校验', operator: '内容系统', createdAt: new Date(Date.now() - 8600000).toISOString() },
+        ],
+      },
+    })
+    return
+  }
+
   sendJson(res, 404, {
     status: 'not_found',
-    available: ['/api/health', '/api/sleep/summary', '/api/audio/tracks'],
+    available: [
+      '/api/health',
+      '/api/sleep/summary',
+      '/api/audio/tracks',
+      '/api/discover/categories',
+      '/api/admin/overview',
+    ],
   })
 })
 

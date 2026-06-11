@@ -16,6 +16,10 @@ import {
   Coffee,
   CloudSun,
   CloudRain,
+  Info,
+  CalendarCheck,
+  Link2,
+  Target,
 } from 'lucide-react';
 import { useAppStore } from '@/store/useAppStore';
 import { GlassCard, PillButton, Chip } from '@/components/ui';
@@ -364,8 +368,32 @@ export default function MorningPage() {
       ...data,
     });
 
+    const lowAlertness = alertness <= 2;
+    const lowSleepQuality = sleepQuality <= 4;
+    const lowMood = mood <= 30;
+    const highThoughtInterference = thoughtInterference >= 4;
+
+    if (lowAlertness || lowSleepQuality || lowMood || highThoughtInterference) {
+      const recommended = [];
+      if (lowSleepQuality) recommended.push('调整睡眠限制策略，优化入睡窗口');
+      if (lowAlertness) recommended.push('增加晨间光照疗法，提升日间警觉性');
+      if (highThoughtInterference) recommended.push('进行睡前认知重构练习，减少思维反刍');
+      if (lowMood) recommended.push('每日正念冥想训练，改善情绪调节能力');
+      setRecommendedActions(recommended);
+
+      const nextMonday = dayjs().add(1, 'week').day(1);
+      setFollowUpReminder({
+        date: nextMonday.format('YYYY-MM-DD'),
+        time: '09:00',
+        type: lowSleepQuality ? '睡眠质量复查' : lowMood ? '情绪状态评估' : '日间功能评估',
+      });
+    }
+
     setSubmitted(true);
   };
+
+  const [recommendedActions, setRecommendedActions] = useState<string[]>([]);
+  const [followUpReminder, setFollowUpReminder] = useState<{ date: string; time: string; type: string } | null>(null);
 
   const handleReset = () => {
     setAlertness(4);
@@ -475,6 +503,74 @@ export default function MorningPage() {
               </p>
             </motion.div>
 
+            {recommendedActions.length > 0 && (
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.55 }}
+                className="mt-5 bg-gradient-to-br from-mint-400/5 to-night-400/10 border border-mint-400/20 rounded-3xl p-5 text-left"
+              >
+                <div className="flex items-center gap-2 mb-3">
+                  <Target className="w-4 h-4 text-mint-300" />
+                  <h3 className="text-sm font-semibold text-white">为您推荐的改善计划</h3>
+                </div>
+                <ul className="space-y-2 mb-4">
+                  {recommendedActions.map((action, idx) => (
+                    <li key={idx} className="flex items-start gap-2 text-xs text-silver-300">
+                      <CheckCircle2 size={12} className="text-mint-300 mt-0.5 flex-shrink-0" />
+                      <span>{action}</span>
+                    </li>
+                  ))}
+                </ul>
+                <PillButton
+                  variant="mint"
+                  size="sm"
+                  className="w-full"
+                  leftIcon={<Link2 size={14} />}
+                  onClick={() => navigate('/plan')}
+                >
+                  查看完整改善计划
+                </PillButton>
+              </motion.div>
+            )}
+
+            {followUpReminder && (
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.6 }}
+                className="mt-5 bg-gradient-to-br from-dream-400/10 to-coral-400/5 border border-dream-400/20 rounded-3xl p-5 text-left"
+              >
+                <div className="flex items-center gap-2 mb-3">
+                  <CalendarCheck className="w-4 h-4 text-dream-300" />
+                  <h3 className="text-sm font-semibold text-white">复查提醒已自动创建</h3>
+                </div>
+                <div className="grid grid-cols-3 gap-3 mb-4">
+                  <div className="p-3 rounded-xl bg-white/[0.03] border border-white/5 text-center">
+                    <div className="text-[10px] text-silver-500 mb-1">日期</div>
+                    <div className="font-mono text-sm text-silver-200">
+                      {dayjs(followUpReminder.date).format('MM/DD')}
+                    </div>
+                  </div>
+                  <div className="p-3 rounded-xl bg-white/[0.03] border border-white/5 text-center">
+                    <div className="text-[10px] text-silver-500 mb-1">时间</div>
+                    <div className="font-mono text-sm text-silver-200">
+                      {followUpReminder.time}
+                    </div>
+                  </div>
+                  <div className="p-3 rounded-xl bg-white/[0.03] border border-white/5 text-center">
+                    <div className="text-[10px] text-silver-500 mb-1">类型</div>
+                    <div className="text-[10px] text-dream-300 leading-tight mt-1">
+                      {followUpReminder.type}
+                    </div>
+                  </div>
+                </div>
+                <p className="text-[11px] text-silver-400">
+                  我们将在复查当天通过系统通知提醒您完成评估，以跟踪您的睡眠改善进展。
+                </p>
+              </motion.div>
+            )}
+
             <motion.div
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
@@ -544,7 +640,17 @@ export default function MorningPage() {
               accentColor="dream"
             />
             <div className="mt-4 pt-4 border-t border-white/5">
-              <div className="flex flex-wrap gap-2">
+              <div className="flex items-start gap-2">
+                <Info size={12} className="text-dream-300 flex-shrink-0 mt-0.5" />
+                <div className="text-[11px] text-silver-400 leading-relaxed">
+                  <span className="font-medium text-silver-300">斯坦福嗜睡量表 (SSS)：</span>
+                  国际通用的7级清醒度自评量表，用于评估日间嗜睡程度。
+                  1-2分提示重度嗜睡（需排查睡眠呼吸暂停、发作性睡病），
+                  3-4分提示轻度嗜睡（建议调整作息），
+                  5-7分提示清醒状态良好。分数持续偏低可能与夜间睡眠质量差直接相关。
+                </div>
+              </div>
+              <div className="flex flex-wrap gap-2 mt-3">
                 {['动作变慢', '说话含糊', '躺下即睡', '难以保持清醒'].map((tag) => (
                   <Chip key={tag} variant="default" className="text-[10px]">
                     {tag}
@@ -562,6 +668,19 @@ export default function MorningPage() {
         >
           <GlassCard className="p-6">
             <StarRating value={sleepQuality} onChange={setSleepQuality} />
+            <div className="mt-4 pt-4 border-t border-white/5">
+              <div className="flex items-start gap-2">
+                <Info size={12} className="text-coral-300 flex-shrink-0 mt-0.5" />
+                <div className="text-[11px] text-silver-400 leading-relaxed">
+                  <span className="font-medium text-silver-300">主观睡眠质量评分：</span>
+                  基于PSQI（匹兹堡睡眠质量指数）简化版。
+                  1-4分提示睡眠质量较差（可能存在入睡困难、频繁觉醒或早醒），
+                  5-7分提示睡眠质量一般，
+                  8-10分提示睡眠质量优秀。
+                  连续2周低于5分建议进行完整的睡眠评估。
+                </div>
+              </div>
+            </div>
           </GlassCard>
         </motion.div>
 
@@ -581,6 +700,19 @@ export default function MorningPage() {
               rightLabel="愉悦"
               rightEmoji="😊"
             />
+            <div className="mt-4 pt-4 border-t border-white/5">
+              <div className="flex items-start gap-2">
+                <Info size={12} className="text-coral-300 flex-shrink-0 mt-0.5" />
+                <div className="text-[11px] text-silver-400 leading-relaxed">
+                  <span className="font-medium text-silver-300">视觉模拟评分法 (VAS)：</span>
+                  0-100分情绪自评量表，用于快速评估当前情绪状态。
+                  0-30分提示情绪低落（需关注是否存在抑郁状态或睡眠不足），
+                  31-60分提示情绪平稳，
+                  61-100分提示情绪积极愉悦。
+                  持续低于30分可能与睡眠质量差互为因果。
+                </div>
+              </div>
+            </div>
           </GlassCard>
         </motion.div>
 
@@ -640,6 +772,20 @@ export default function MorningPage() {
                     </motion.button>
                   );
                 })}
+              </div>
+
+              <div className="pt-3 border-t border-white/5">
+                <div className="flex items-start gap-2">
+                  <Info size={12} className="text-night-200 flex-shrink-0 mt-0.5" />
+                  <div className="text-[11px] text-silver-400 leading-relaxed">
+                    <span className="font-medium text-silver-300">睡前认知唤醒度评估：</span>
+                    评估入睡前思维反刍和过度思考的程度。
+                    4-5分提示高认知唤醒（是失眠症的核心症状之一），
+                    2-3分提示中度思维干扰，
+                    1分提示睡前心境平静。
+                    持续偏高建议进行CBT-I认知重构训练。
+                  </div>
+                </div>
               </div>
             </div>
           </GlassCard>

@@ -9,6 +9,8 @@ import {
   User,
   Moon,
   Coffee,
+  Compass,
+  ShieldCheck,
 } from 'lucide-react';
 import { NavLink, useLocation } from 'react-router-dom';
 
@@ -24,10 +26,12 @@ const navItems: NavItem[] = [
   { id: 'monitor', label: '睡眠监测', icon: Activity, path: '/monitor' },
   { id: 'report', label: '睡眠报告', icon: FileBarChart, path: '/reports' },
   { id: 'audio', label: '音频干预库', icon: Music, path: '/audio' },
+  { id: 'discover', label: '发现分类', icon: Compass, path: '/discover' },
   { id: 'plan', label: '改善计划', icon: Target, path: '/plan' },
   { id: 'morning', label: '晨间自评', icon: Coffee, path: '/morning' },
   { id: 'risk', label: '风险评估', icon: AlertTriangle, path: '/risk' },
   { id: 'profile', label: '个人中心', icon: User, path: '/profile' },
+  { id: 'admin', label: '后台管理', icon: ShieldCheck, path: '/admin' },
 ];
 
 interface SidebarProps {

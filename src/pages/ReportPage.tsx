@@ -22,6 +22,12 @@ import {
   AlertCircle,
   Lightbulb,
   FileText,
+  Shield,
+  Fingerprint,
+  Database,
+  Smartphone,
+  Tag,
+  CheckCircle2,
 } from 'lucide-react';
 import { useAppStore } from '@/store/useAppStore';
 import { GlassCard, StatCard, Chip, PillButton, RingProgress } from '@/components/ui';
@@ -875,6 +881,107 @@ export default function ReportPage() {
             </GlassCard>
           </motion.div>
         )}
+
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5, delay: 0.35 }}
+        >
+          <GlassCard className="p-6">
+            <div className="mb-4 flex items-center justify-between">
+              <div className="flex items-center gap-2">
+                <Shield className="w-4 h-4 text-dream-300" />
+                <h3 className="text-base font-semibold text-white">数据存储审计记录</h3>
+              </div>
+              <Chip variant="dream" className="py-0">
+                不可篡改
+              </Chip>
+            </div>
+
+            <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-3 mb-4">
+              <div className="p-3 rounded-xl bg-white/[0.03] border border-white/5">
+                <div className="flex items-center gap-1.5 mb-1.5">
+                  <Tag size={12} className="text-mint-300" />
+                  <span className="text-[10px] text-silver-500">Session ID</span>
+                </div>
+                <div className="font-mono text-[11px] text-silver-200 break-all">
+                  {currentSession.auditInfo.sessionId}
+                </div>
+              </div>
+              <div className="p-3 rounded-xl bg-white/[0.03] border border-white/5">
+                <div className="flex items-center gap-1.5 mb-1.5">
+                  <Database size={12} className="text-dream-300" />
+                  <span className="text-[10px] text-silver-500">存储版本</span>
+                </div>
+                <div className="font-mono text-[11px] text-silver-200">
+                  v{currentSession.auditInfo.storageVersion}
+                </div>
+              </div>
+              <div className="p-3 rounded-xl bg-white/[0.03] border border-white/5">
+                <div className="flex items-center gap-1.5 mb-1.5">
+                  <Smartphone size={12} className="text-night-200" />
+                  <span className="text-[10px] text-silver-500">采集设备</span>
+                </div>
+                <div className="font-mono text-[11px] text-silver-200">
+                  {currentSession.auditInfo.deviceModel}
+                </div>
+              </div>
+              <div className="p-3 rounded-xl bg-white/[0.03] border border-white/5">
+                <div className="flex items-center gap-1.5 mb-1.5">
+                  <Clock size={12} className="text-coral-300" />
+                  <span className="text-[10px] text-silver-500">采集时间</span>
+                </div>
+                <div className="font-mono text-[11px] text-silver-200">
+                  {dayjs(currentSession.auditInfo.startTime).format('HH:mm:ss')} - {dayjs(currentSession.auditInfo.endTime).format('HH:mm:ss')}
+                </div>
+              </div>
+              <div className="p-3 rounded-xl bg-white/[0.03] border border-white/5">
+                <div className="flex items-center gap-1.5 mb-1.5">
+                  <Fingerprint size={12} className="text-mint-300" />
+                  <span className="text-[10px] text-silver-500">数据指纹</span>
+                </div>
+                <div className="font-mono text-[10px] text-silver-200 break-all">
+                  {currentSession.auditInfo.dataFingerprint}
+                </div>
+              </div>
+              <div className="p-3 rounded-xl bg-white/[0.03] border border-white/5">
+                <div className="flex items-center gap-1.5 mb-1.5">
+                  <Shield size={12} className="text-mint-300" />
+                  <span className="text-[10px] text-silver-500">校验和</span>
+                </div>
+                <div className="font-mono text-[10px] text-silver-200 break-all">
+                  {currentSession.auditInfo.checksum}
+                </div>
+              </div>
+            </div>
+
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-2">
+              <div className="p-2.5 rounded-lg bg-white/[0.02] border border-white/5">
+                <div className="text-[10px] text-silver-500 mb-0.5">App 版本</div>
+                <div className="font-mono text-[11px] text-silver-200">{currentSession.auditInfo.appVersion}</div>
+              </div>
+              <div className="p-2.5 rounded-lg bg-white/[0.02] border border-white/5">
+                <div className="text-[10px] text-silver-500 mb-0.5">数据时长</div>
+                <div className="font-mono text-[11px] text-silver-200">{formatDuration(currentSession.auditInfo.duration)}</div>
+              </div>
+              <div className="p-2.5 rounded-lg bg-white/[0.02] border border-white/5">
+                <div className="text-[10px] text-silver-500 mb-0.5">首次入库</div>
+                <div className="font-mono text-[11px] text-silver-200">{dayjs(currentSession.auditInfo.createdAt).format('MM-DD HH:mm')}</div>
+              </div>
+              <div className="p-2.5 rounded-lg bg-white/[0.02] border border-white/5">
+                <div className="text-[10px] text-silver-500 mb-0.5">最后修改</div>
+                <div className="font-mono text-[11px] text-silver-200">{dayjs(currentSession.auditInfo.lastModifiedAt).format('MM-DD HH:mm')}</div>
+              </div>
+            </div>
+
+            <div className="mt-4 flex items-center gap-2 p-2.5 rounded-xl bg-mint-400/5 border border-mint-400/20">
+              <CheckCircle2 size={14} className="text-mint-300 flex-shrink-0" />
+              <p className="text-[11px] text-silver-300">
+                数据已安全加密存储于本地设备，数据指纹与校验和可用于审计与数据完整性验证。您可随时导出完整报告用于线下就医参考。
+              </p>
+            </div>
+          </GlassCard>
+        </motion.div>
 
         <motion.div
           initial={{ opacity: 0, y: 20 }}

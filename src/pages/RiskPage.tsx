@@ -23,6 +23,13 @@ import {
   Stethoscope,
   User,
   CheckCircle2,
+  Fingerprint,
+  Lock,
+  Database,
+  Tag,
+  Link2,
+  Send,
+  FileCheck,
 } from 'lucide-react';
 import { useAppStore } from '@/store/useAppStore';
 import { DSM5RadarChart } from '@/components/charts';
@@ -727,7 +734,9 @@ function RiskHistoryList() {
 
 export default function RiskPage() {
   const assessments = useAppStore((s) => s.riskAssessments);
+  const referralRecords = useAppStore((s) => s.referralRecords);
   const latest = useMemo(() => assessments.slice(-1)[0], [assessments]);
+  const referralRecord = useMemo(() => referralRecords.slice(-1)[0], [referralRecords]);
   const createReferral = useAppStore((s) => s.createReferral);
   const [referring, setReferring] = useState(false);
   const [selectedDisorder, setSelectedDisorder] = useState<string>('osa');
@@ -1020,6 +1029,340 @@ export default function RiskPage() {
 
       <ReferralStepper currentDisorder={selectedDisorder} disorderLabel={disorderLabelMap[selectedDisorder]} />
       <ReferralDetailCard currentDisorder={selectedDisorder} />
+
+      {latest && (
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5, delay: 0.25 }}
+          className="mt-6"
+        >
+          <GlassCard className="p-6">
+            <div className="mb-4 flex items-center justify-between">
+              <h3 className="text-base font-semibold text-white flex items-center gap-2">
+                <FileCheck className="w-4 h-4 text-dream-300" />
+                DSM-5 映射依据
+              </h3>
+              <Chip variant="dream" className="py-0">
+                ICD-10: {latest.icd10Code}
+              </Chip>
+            </div>
+
+            <div className="overflow-x-auto mb-4">
+              <table className="w-full text-left">
+                <thead>
+                  <tr className="border-b border-white/5">
+                    <th className="pb-3 pl-3 pr-4 text-[11px] font-medium text-silver-400">DSM-5 维度</th>
+                    <th className="pb-3 pr-4 text-[11px] font-medium text-silver-400">症状表现</th>
+                    <th className="pb-3 pr-4 text-[11px] font-medium text-silver-400">频率</th>
+                    <th className="pb-3 pr-4 text-[11px] font-medium text-silver-400">病程</th>
+                    <th className="pb-3 pr-4 text-[11px] font-medium text-silver-400">功能损害</th>
+                    <th className="pb-3 pr-4 text-[11px] font-medium text-silver-400">DSM-5 引用</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {latest.dsm5Evidence.map((evidence, index) => (
+                    <tr key={index} className="border-b border-white/5 hover:bg-white/[0.02]">
+                      <td className="py-3 pl-3 pr-4">
+                        <span className="text-xs font-medium text-dream-300">{evidence.dimensionId}</span>
+                      </td>
+                      <td className="py-3 pr-4 text-xs text-silver-300">{evidence.symptom}</td>
+                      <td className="py-3 pr-4 text-xs text-silver-300">{evidence.frequency}</td>
+                      <td className="py-3 pr-4 text-xs text-silver-300">{evidence.duration}</td>
+                      <td className="py-3 pr-4 text-xs text-silver-300">{evidence.impairment}</td>
+                      <td className="py-3 pr-4 font-mono text-[10px] text-mint-300">{evidence.dsm5Reference}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+
+            <div className="p-3 rounded-xl bg-night-800/50 border border-white/5">
+              <div className="flex items-center gap-2 text-xs text-silver-400">
+                <Fingerprint size={12} className="text-mint-300" />
+                <span>评估 ID：</span>
+                <code className="font-mono text-silver-200">{latest.auditInfo.assessmentId}</code>
+                <span className="mx-2 text-silver-600">|</span>
+                <span>评估人员：</span>
+                <span className="text-silver-200">{latest.auditInfo.assessor}</span>
+                <span className="mx-2 text-silver-600">|</span>
+                <span>评估时间：</span>
+                <span className="font-mono text-silver-200">{dayjs(latest.auditInfo.assessedAt).format('YYYY-MM-DD HH:mm')}</span>
+                <span className="mx-2 text-silver-600">|</span>
+                <span>版本：</span>
+                <span className="font-mono text-silver-200">v{latest.auditInfo.version}</span>
+                <span className="mx-2 text-silver-600">|</span>
+                <span>签名：</span>
+                <span className="font-mono text-[10px] text-silver-300">{latest.auditInfo.signature}</span>
+              </div>
+            </div>
+          </GlassCard>
+        </motion.div>
+      )}
+
+      {referralRecord && (
+        <>
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5, delay: 0.3 }}
+            className="mt-6"
+          >
+            <GlassCard className="p-6">
+              <div className="mb-4 flex items-center justify-between">
+                <h3 className="text-base font-semibold text-white flex items-center gap-2">
+                  <PackageCheck className="w-4 h-4 text-mint-300" />
+                  授权打包记录
+                </h3>
+                <Chip variant="mint" className="py-0">
+                  {referralRecord.packagingInfo.encrypted ? '已加密' : '未加密'}
+                </Chip>
+              </div>
+
+              <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-3 mb-4">
+                <div className="p-3 rounded-xl bg-white/[0.03] border border-white/5">
+                  <div className="flex items-center gap-1.5 mb-1.5">
+                    <Tag size={12} className="text-dream-300" />
+                    <span className="text-[10px] text-silver-500">数据包 ID</span>
+                  </div>
+                  <div className="font-mono text-[10px] text-silver-200 break-all">
+                    {referralRecord.packagingInfo.packageId}
+                  </div>
+                </div>
+                <div className="p-3 rounded-xl bg-white/[0.03] border border-white/5">
+                  <div className="flex items-center gap-1.5 mb-1.5">
+                    <Lock size={12} className="text-mint-300" />
+                    <span className="text-[10px] text-silver-500">加密算法</span>
+                  </div>
+                  <div className="font-mono text-[11px] text-silver-200">
+                    {referralRecord.packagingInfo.encryptionAlgorithm}
+                  </div>
+                </div>
+                <div className="p-3 rounded-xl bg-white/[0.03] border border-white/5">
+                  <div className="flex items-center gap-1.5 mb-1.5">
+                    <Database size={12} className="text-night-200" />
+                    <span className="text-[10px] text-silver-500">数据大小</span>
+                  </div>
+                  <div className="font-mono text-[11px] text-silver-200">
+                    {referralRecord.packagingInfo.dataSize} MB
+                  </div>
+                </div>
+                <div className="p-3 rounded-xl bg-white/[0.03] border border-white/5">
+                  <div className="flex items-center gap-1.5 mb-1.5">
+                    <Clock size={12} className="text-coral-300" />
+                    <span className="text-[10px] text-silver-500">打包时间</span>
+                  </div>
+                  <div className="font-mono text-[11px] text-silver-200">
+                    {dayjs(referralRecord.packagingInfo.packagedAt).format('MM-DD HH:mm')}
+                  </div>
+                </div>
+                <div className="p-3 rounded-xl bg-white/[0.03] border border-white/5 col-span-2">
+                  <div className="flex items-center gap-1.5 mb-1.5">
+                    <Fingerprint size={12} className="text-mint-300" />
+                    <span className="text-[10px] text-silver-500">校验和</span>
+                  </div>
+                  <div className="font-mono text-[10px] text-silver-200 break-all">
+                    {referralRecord.packagingInfo.checksum}
+                  </div>
+                </div>
+              </div>
+
+              <div className="p-3 rounded-xl bg-white/[0.02] border border-white/5">
+                <div className="text-[10px] text-silver-500 mb-2">包含数据项（{referralRecord.packagingInfo.dataIncluded.length} 项）</div>
+                <div className="flex flex-wrap gap-1.5">
+                  {referralRecord.packagingInfo.dataIncluded.map((item, idx) => (
+                    <span key={idx} className="px-2 py-0.5 rounded-md bg-mint-400/10 text-mint-300 text-[10px]">
+                      {item}
+                    </span>
+                  ))}
+                </div>
+              </div>
+            </GlassCard>
+          </motion.div>
+
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5, delay: 0.35 }}
+            className="mt-6 grid grid-cols-1 md:grid-cols-2 gap-6"
+          >
+            <GlassCard className="p-6">
+              <div className="mb-4 flex items-center justify-between">
+                <h3 className="text-base font-semibold text-white flex items-center gap-2">
+                  <Hospital className="w-4 h-4 text-dream-300" />
+                  医院预约记录
+                </h3>
+                <Chip variant="dream" className="py-0">
+                  待确认
+                </Chip>
+              </div>
+
+              {referralRecord.matchedHospital && (
+                <>
+                  <div className="flex items-start gap-3 mb-4">
+                    <div className="w-10 h-10 rounded-xl bg-dream-400/15 flex items-center justify-center flex-shrink-0">
+                      <Hospital size={18} className="text-dream-300" />
+                    </div>
+                    <div className="flex-1 min-w-0">
+                      <div className="text-sm font-medium text-white">{referralRecord.matchedHospital.name}</div>
+                      <div className="text-xs text-silver-400 mt-0.5">{referralRecord.matchedHospital.department} · {referralRecord.matchedHospital.level}</div>
+                      <div className="flex items-center gap-3 mt-1.5">
+                        <span className="text-[10px] text-silver-400 flex items-center gap-1">
+                          <MapPin size={10} /> {referralRecord.matchedHospital.city}
+                        </span>
+                        <span className="text-[10px] text-silver-400 flex items-center gap-1">
+                          <Star size={10} className="text-coral-300 fill-coral-300" /> {referralRecord.matchedHospital.rating}
+                        </span>
+                        <span className="text-[10px] text-silver-400 flex items-center gap-1">
+                          <User size={10} /> {referralRecord.matchedHospital.doctorsCount} 位医生
+                        </span>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div className="space-y-2.5">
+                    <div className="flex items-center justify-between p-2.5 rounded-lg bg-white/[0.02] border border-white/5">
+                      <span className="text-xs text-silver-400 flex items-center gap-1.5">
+                        <User size={12} className="text-mint-300" /> 接诊医生
+                      </span>
+                      <span className="text-xs font-medium text-white">李明 · 主任医师</span>
+                    </div>
+                    <div className="flex items-center justify-between p-2.5 rounded-lg bg-white/[0.02] border border-white/5">
+                      <span className="text-xs text-silver-400 flex items-center gap-1.5">
+                        <CalendarCheck size={12} className="text-dream-300" /> 预约时间
+                      </span>
+                      <span className="text-xs font-medium text-white">{dayjs().add(3, 'day').format('YYYY-MM-DD')} 上午 9:30</span>
+                    </div>
+                    <div className="flex items-center justify-between p-2.5 rounded-lg bg-white/[0.02] border border-white/5">
+                      <span className="text-xs text-silver-400 flex items-center gap-1.5">
+                        <Video size={12} className="text-coral-300" /> 初筛方式
+                      </span>
+                      <span className="text-xs font-medium text-white">视频远程初筛（45分钟）</span>
+                    </div>
+                  </div>
+
+                  <div className="mt-4 flex gap-2">
+                    <PillButton variant="dream" size="sm" leftIcon={<Link2 size={14} />} className="flex-1">
+                      打开预约链接
+                    </PillButton>
+                    <PillButton variant="secondary" size="sm" leftIcon={<Phone size={14} />}>
+                      联系客服
+                    </PillButton>
+                  </div>
+                </>
+              )}
+            </GlassCard>
+
+            <GlassCard className="p-6">
+              <div className="mb-4 flex items-center justify-between">
+                <h3 className="text-base font-semibold text-white flex items-center gap-2">
+                  <Stethoscope className="w-4 h-4 text-mint-300" />
+                  远程初筛结果
+                </h3>
+                <Chip variant="coral" className="py-0">
+                  待初筛
+                </Chip>
+              </div>
+
+              <div className="p-4 rounded-xl bg-night-800/50 border border-dashed border-white/10 text-center">
+                <div className="w-12 h-12 rounded-full bg-dream-400/10 flex items-center justify-center mx-auto mb-3">
+                  <Send size={20} className="text-dream-300" />
+                </div>
+                <div className="text-sm font-medium text-white mb-1">初筛将于预约完成后进行</div>
+                <div className="text-xs text-silver-400 mb-3">完成后将展示医生诊断意见、治疗方案及复查计划</div>
+                <div className="text-[10px] text-silver-500 font-mono">
+                  预估时间：{dayjs().add(3, 'day').format('MM-DD')} 10:15
+                </div>
+              </div>
+
+              <div className="mt-4 space-y-2">
+                <div className="flex items-center gap-2 text-xs text-silver-400">
+                  <CheckCircle2 size={12} className="text-mint-400" />
+                  <span>已完成数据授权与打包</span>
+                </div>
+                <div className="flex items-center gap-2 text-xs text-silver-400">
+                  <CheckCircle2 size={12} className="text-mint-400" />
+                  <span>已匹配医院与科室</span>
+                </div>
+                <div className="flex items-center gap-2 text-xs text-silver-400">
+                  <CheckCircle2 size={12} className="text-mint-400" />
+                  <span>已发送初筛预约邀请</span>
+                </div>
+                <div className="flex items-center gap-2 text-xs text-silver-500">
+                  <Clock size={12} className="text-dream-300" />
+                  <span>等待用户确认预约时间</span>
+                </div>
+              </div>
+            </GlassCard>
+          </motion.div>
+
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5, delay: 0.4 }}
+            className="mt-6"
+          >
+            <GlassCard className="p-6">
+              <div className="mb-4 flex items-center justify-between">
+                <h3 className="text-base font-semibold text-white flex items-center gap-2">
+                  <Shield className="w-4 h-4 text-dream-300" />
+                  审计追踪记录（不可篡改）
+                </h3>
+                <Chip variant="dream" className="py-0">
+                  {referralRecord.auditTrail.length} 条记录
+                </Chip>
+              </div>
+
+              <div className="space-y-3">
+                {referralRecord.auditTrail.map((entry, index) => (
+                  <div key={entry.id} className="flex gap-3">
+                    <div className="flex flex-col items-center">
+                      <div className={cn(
+                        'w-8 h-8 rounded-full flex items-center justify-center flex-shrink-0',
+                        index === referralRecord.auditTrail.length - 1 ? 'bg-dream-400/20' : 'bg-mint-400/10'
+                      )}>
+                        {index === referralRecord.auditTrail.length - 1 ? (
+                          <Clock size={14} className="text-dream-300" />
+                        ) : (
+                          <CheckCircle2 size={14} className="text-mint-400" />
+                        )}
+                      </div>
+                      {index < referralRecord.auditTrail.length - 1 && (
+                        <div className="w-px flex-1 bg-white/5" />
+                      )}
+                    </div>
+                    <div className="flex-1 pb-4">
+                      <div className="flex items-center justify-between">
+                        <div className="text-sm font-medium text-white">
+                          {entry.status === 'pending_auth' && '转诊流程启动'}
+                          {entry.status === 'data_packaging' && '数据打包完成'}
+                          {entry.status === 'report_generated' && 'AI分析报告生成'}
+                          {entry.status === 'hospital_matched' && '医院匹配成功'}
+                          {entry.status === 'appointment_scheduled' && '预约已确认'}
+                          {entry.status === 'consultation_completed' && '初筛完成'}
+                        </div>
+                        <span className="font-mono text-[10px] text-silver-500">
+                          {dayjs(entry.timestamp).format('MM-DD HH:mm')}
+                        </span>
+                      </div>
+                      <div className="text-xs text-silver-400 mt-0.5">{entry.note}</div>
+                      <div className="flex items-center gap-3 mt-1.5 text-[10px] text-silver-500">
+                        <span className="flex items-center gap-1">
+                          <User size={10} /> {entry.operator}
+                        </span>
+                        <span className="flex items-center gap-1 font-mono">
+                          <Fingerprint size={10} /> {entry.signature}
+                        </span>
+                      </div>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </GlassCard>
+          </motion.div>
+        </>
+      )}
+
       <FollowUpRecords currentDisorder={selectedDisorder} />
       <RiskHistoryList />
 

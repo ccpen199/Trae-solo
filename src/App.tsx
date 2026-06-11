@@ -10,6 +10,8 @@ import PlanPage from '@/pages/PlanPage';
 import MorningPage from '@/pages/MorningPage';
 import RiskPage from '@/pages/RiskPage';
 import ProfilePage from '@/pages/ProfilePage';
+import DiscoverPage from '@/pages/DiscoverPage';
+import AdminPage from '@/pages/AdminPage';
 
 function PageLayout({ children }: { children: React.ReactNode }) {
   const location = useLocation();
@@ -44,10 +46,12 @@ function AppRoutes() {
       <Route path="/report/:date" element={<PageLayout><ReportPage /></PageLayout>} />
       <Route path="/reports" element={<PageLayout><ReportPage /></PageLayout>} />
       <Route path="/audio" element={<PageLayout><AudioPage /></PageLayout>} />
+      <Route path="/discover" element={<PageLayout><DiscoverPage /></PageLayout>} />
       <Route path="/plan" element={<PageLayout><PlanPage /></PageLayout>} />
       <Route path="/morning" element={<PageLayout><MorningPage /></PageLayout>} />
       <Route path="/risk" element={<PageLayout><RiskPage /></PageLayout>} />
       <Route path="/profile" element={<PageLayout><ProfilePage /></PageLayout>} />
+      <Route path="/admin" element={<PageLayout><AdminPage /></PageLayout>} />
       <Route path="*" element={<PageLayout><DashboardPage /></PageLayout>} />
     </Routes>
   );

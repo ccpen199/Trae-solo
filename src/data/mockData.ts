@@ -215,6 +215,19 @@ export function generateSleepSessions(days = 14): SleepSession[] {
       ahiIndex: isApneaDay ? 7.2 + Math.random() * 2 : 1.2 + Math.random() * 1.5,
       environmentNoise: 28 + Math.random() * 12,
       qualityScore: quality === 'good' ? 88 : quality === 'poor' ? 56 : 76,
+      auditInfo: {
+        sessionId: `session-${date.format('YYYYMMDD')}`,
+        startTime,
+        endTime,
+        duration: duration * 60,
+        storageVersion: '2.1.0',
+        dataFingerprint: `SHA256:${btoa(`session-${date.format('YYYYMMDD')}-${i}`).slice(0, 16)}`,
+        createdAt: endTime,
+        lastModifiedAt: endTime,
+        deviceModel: 'iPhone 15 Pro',
+        appVersion: '1.0.0',
+        checksum: `CRC32:${btoa(`chk-${i}`).slice(0, 8)}`,
+      },
     });
   }
   return sessions;
@@ -228,10 +241,10 @@ export function generateMorningAssessments(sessions: SleepSession[]): MorningAss
     sessionId: s.id,
     userId: 'user-001',
     assessedAt: dayjs(s.endTime).add(30, 'minute').toISOString(),
-    alertness: Math.max(1, Math.min(7, 4 + Math.sin(i * 0.8) * 2 + (Math.random() - 0.5))),
-    sleepQuality: Math.max(1, Math.min(10, s.qualityScore / 10 + (Math.random() - 0.5))),
-    mood: Math.max(0, Math.min(100, 65 + Math.sin(i * 0.6) * 20 + (Math.random() - 0.5) * 10)),
-    thoughtInterference: Math.max(1, Math.min(5, 2.5 + Math.sin(i * 0.7) * 1.5 + (Math.random() - 0.5))),
+    alertness: Math.max(1, Math.min(7, Math.round(4 + Math.sin(i * 0.8) * 2 + (Math.random() - 0.5)))),
+    sleepQuality: Math.max(1, Math.min(10, Math.round(s.qualityScore / 10 + (Math.random() - 0.5)))),
+    mood: Math.max(0, Math.min(100, Math.round(65 + Math.sin(i * 0.6) * 20 + (Math.random() - 0.5) * 10))),
+    thoughtInterference: Math.max(1, Math.min(5, Math.round(2.5 + Math.sin(i * 0.7) * 1.5 + (Math.random() - 0.5)))),
     notes: i === 3 ? '昨晚感觉有点憋气，醒来几次口干' : undefined,
   }));
 }
@@ -842,6 +855,7 @@ export const mockRiskAssessments: RiskAssessment[] = [
     id: 'risk-001',
     sessionId: 'session-20260604',
     userId: 'user-001',
+    icd10Code: 'G47.33',
     assessedAt: dayjs().subtract(7, 'day').toISOString(),
     overallRisk: 'moderate',
     dsm5Mapping: [
@@ -860,11 +874,38 @@ export const mockRiskAssessments: RiskAssessment[] = [
       '保持规律作息，避免周末补觉',
       '注意体重管理和侧卧位睡眠',
     ],
+    dsm5Evidence: [
+      {
+        dimensionId: 'osa',
+        symptom: '睡眠中呼吸中断/喘息',
+        frequency: '每周约4-5晚',
+        duration: '持续约6个月',
+        impairment: '日间疲劳，注意力下降',
+        dsm5Reference: 'DSM-5 G47.33 诊断标准A-B',
+      },
+      {
+        dimensionId: 'insomnia',
+        symptom: '入睡困难，睡眠维持困难',
+        frequency: '每周约3晚',
+        duration: '持续约3个月',
+        impairment: '日间困倦，情绪易怒',
+        dsm5Reference: 'DSM-5 F51.01 诊断标准A-B',
+      },
+    ],
+    auditInfo: {
+      assessmentId: 'risk-001',
+      assessor: 'AI睡眠健康助理 v1.0',
+      assessedAt: dayjs().subtract(7, 'day').toISOString(),
+      lastModifiedAt: dayjs().subtract(7, 'day').toISOString(),
+      version: '1.2.0',
+      signature: `SIG-${btoa('risk-001-ai-v1').slice(0, 16)}`,
+    },
   },
   {
     id: 'risk-002',
     sessionId: 'session-20260608',
     userId: 'user-001',
+    icd10Code: 'G47.33',
     assessedAt: dayjs().subtract(3, 'day').toISOString(),
     overallRisk: 'high',
     dsm5Mapping: [
@@ -883,6 +924,32 @@ export const mockRiskAssessments: RiskAssessment[] = [
       '避免饮酒和仰卧位睡眠',
       '持续监测夜间呼吸情况',
     ],
+    dsm5Evidence: [
+      {
+        dimensionId: 'osa',
+        symptom: '睡眠中反复出现呼吸暂停/低通气',
+        frequency: '几乎每晚，每小时约8-10次',
+        duration: '持续约12个月，近期加重',
+        impairment: '严重日间嗜睡，晨起头痛，注意力无法集中',
+        dsm5Reference: 'DSM-5 G47.33 诊断标准A(1)(2)(3) + B + C',
+      },
+      {
+        dimensionId: 'insomnia',
+        symptom: '夜间反复觉醒，难以恢复睡眠',
+        frequency: '每周约4-5晚',
+        duration: '持续约6个月',
+        impairment: '日间疲劳，工作效率下降',
+        dsm5Reference: 'DSM-5 F51.01 诊断标准A-B',
+      },
+    ],
+    auditInfo: {
+      assessmentId: 'risk-002',
+      assessor: 'AI睡眠健康助理 v1.0',
+      assessedAt: dayjs().subtract(3, 'day').toISOString(),
+      lastModifiedAt: dayjs().subtract(3, 'day').toISOString(),
+      version: '1.2.0',
+      signature: `SIG-${btoa('risk-002-ai-v1').slice(0, 16)}`,
+    },
   },
 ];
 
@@ -907,4 +974,47 @@ export const mockReferralRecord: ReferralRecord = {
   matchedHospital: mockHospitals[1],
   appointment: undefined,
   consultationResult: undefined,
+  auditTrail: [
+    {
+      id: 'audit-001',
+      status: 'pending_auth',
+      timestamp: dayjs().subtract(2, 'day').toISOString(),
+      operator: 'system',
+      note: '转诊流程启动，等待用户授权',
+      signature: `SIG-${btoa('audit-001').slice(0, 12)}`,
+    },
+    {
+      id: 'audit-002',
+      status: 'data_packaging',
+      timestamp: dayjs().subtract(2, 'day').add(10, 'minute').toISOString(),
+      operator: 'system',
+      note: '数据打包中：睡眠报告1份 + 呼吸波形12小时 + 鼾声频谱6份',
+      signature: `SIG-${btoa('audit-002').slice(0, 12)}`,
+    },
+    {
+      id: 'audit-003',
+      status: 'report_generated',
+      timestamp: dayjs().subtract(2, 'day').add(20, 'minute').toISOString(),
+      operator: 'system',
+      note: 'AI分析报告生成，AHI指数8.5，中度OSA风险',
+      signature: `SIG-${btoa('audit-003').slice(0, 12)}`,
+    },
+    {
+      id: 'audit-004',
+      status: 'hospital_matched',
+      timestamp: dayjs().subtract(1, 'day').add(4, 'hour').toISOString(),
+      operator: 'system',
+      note: '匹配上海瑞金医院睡眠呼吸障碍诊疗中心',
+      signature: `SIG-${btoa('audit-004').slice(0, 12)}`,
+    },
+  ],
+  packagingInfo: {
+    packageId: `PKG-${dayjs().subtract(2, 'day').format('YYYYMMDD')}-${Math.random().toString(36).slice(2, 6).toUpperCase()}`,
+    encrypted: true,
+    encryptionAlgorithm: 'AES-256-GCM',
+    dataIncluded: ['睡眠报告', '呼吸波形', '鼾声频谱', 'AHI指数', '睡眠分期', '体动记录'],
+    dataSize: 28.5,
+    packagedAt: dayjs().subtract(2, 'day').add(15, 'minute').toISOString(),
+    checksum: `SHA256:${btoa('pkg-checksum-referral-001').slice(0, 16)}`,
+  },
 };
