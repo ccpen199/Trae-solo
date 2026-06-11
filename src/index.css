@@ -1,0 +1,118 @@
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&family=Space+Mono:wght@400;700&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --color-teal: #0A2E3C;
+  --color-teal-light: #0D3D4F;
+  --color-teal-dark: #071E28;
+  --color-orange: #FF6B35;
+  --color-orange-light: #FF8A5C;
+  --color-orange-dark: #E55A25;
+  --color-online: #22C55E;
+  --color-offline: #9CA3AF;
+  --color-fault: #EF4444;
+  --color-bg: #F5F7FA;
+  --color-card: #FFFFFF;
+  --color-text: #1F2937;
+  --color-text-muted: #6B7280;
+
+  font-family: 'DM Sans', -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  line-height: 1.5;
+  font-weight: 400;
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  background-color: var(--color-bg);
+  color: var(--color-text);
+}
+
+@layer utilities {
+  .font-display {
+    font-family: 'Space Mono', monospace;
+  }
+  .font-body {
+    font-family: 'DM Sans', sans-serif;
+  }
+  .bg-brand {
+    background-color: var(--color-teal);
+  }
+  .bg-brand-light {
+    background-color: var(--color-teal-light);
+  }
+  .text-brand {
+    color: var(--color-teal);
+  }
+  .bg-accent {
+    background-color: var(--color-orange);
+  }
+  .bg-accent-light {
+    background-color: var(--color-orange-light);
+  }
+  .text-accent {
+    color: var(--color-orange);
+  }
+  .bg-status-online {
+    background-color: var(--color-online);
+  }
+  .bg-status-offline {
+    background-color: var(--color-offline);
+  }
+  .bg-status-fault {
+    background-color: var(--color-fault);
+  }
+  .text-status-online {
+    color: var(--color-online);
+  }
+  .text-status-offline {
+    color: var(--color-offline);
+  }
+  .text-status-fault {
+    color: var(--color-fault);
+  }
+}
+
+@keyframes wave {
+  0% { transform: translateX(0) translateZ(0) scaleY(1); }
+  50% { transform: translateX(-25%) translateZ(0) scaleY(0.55); }
+  100% { transform: translateX(-50%) translateZ(0) scaleY(1); }
+}
+
+@keyframes pulse-status {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.5; }
+}
+
+.animate-wave {
+  animation: wave 3s ease-in-out infinite;
+}
+
+.animate-pulse-status {
+  animation: pulse-status 2s ease-in-out infinite;
+}
+
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: #CBD5E1;
+  border-radius: 3px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background-color: #94A3B8;
+}
+
+* {
+  scrollbar-width: thin;
+  scrollbar-color: #CBD5E1 transparent;
+}
