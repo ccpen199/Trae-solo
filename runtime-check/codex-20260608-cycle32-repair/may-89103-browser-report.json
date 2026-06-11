@@ -1,0 +1,2540 @@
+{
+  "ok": true,
+  "generatedAt": "2026-06-08T17:03:21.047Z",
+  "order": "may-89103",
+  "roundIndex": 2,
+  "captureId": "may-89103-cycle32-repair",
+  "url": "http://127.0.0.1:49103/",
+  "initialUrl": "http://127.0.0.1:49103/",
+  "finalUrl": "http://127.0.0.1:49103/",
+  "status": 200,
+  "title": "may-89103 PinAI 本地服务台",
+  "initialTitle": "may-89103 PinAI 本地服务台",
+  "navigationError": "",
+  "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89103/runtime-check/codex-20260608-cycle32-repair/may-89103-cycle32-repair-frontend.png",
+  "screenshotPaths": [
+    "/Users/chen/Documents/trae_projects/local_projects/may-89103/runtime-check/codex-20260608-cycle32-repair/may-89103-cycle32-repair-structure-01-首屏.png",
+    "/Users/chen/Documents/trae_projects/local_projects/may-89103/runtime-check/codex-20260608-cycle32-repair/may-89103-cycle32-repair-structure-02-导航-搜索筛选.png",
+    "/Users/chen/Documents/trae_projects/local_projects/may-89103/runtime-check/codex-20260608-cycle32-repair/may-89103-cycle32-repair-structure-03-操作-重置筛选.png",
+    "/Users/chen/Documents/trae_projects/local_projects/may-89103/runtime-check/codex-20260608-cycle32-repair/may-89103-cycle32-repair-structure-04-二层操作-重置筛选-提交购买.png",
+    "/Users/chen/Documents/trae_projects/local_projects/may-89103/runtime-check/codex-20260608-cycle32-repair/may-89103-cycle32-repair-structure-05-操作-刷新.png",
+    "/Users/chen/Documents/trae_projects/local_projects/may-89103/runtime-check/codex-20260608-cycle32-repair/may-89103-cycle32-repair-structure-06-二层操作-刷新-提交购买.png",
+    "/Users/chen/Documents/trae_projects/local_projects/may-89103/runtime-check/codex-20260608-cycle32-repair/may-89103-cycle32-repair-structure-07-导航-购买提交.png",
+    "/Users/chen/Documents/trae_projects/local_projects/may-89103/runtime-check/codex-20260608-cycle32-repair/may-89103-cycle32-repair-structure-08-操作-重置筛选.png",
+    "/Users/chen/Documents/trae_projects/local_projects/may-89103/runtime-check/codex-20260608-cycle32-repair/may-89103-cycle32-repair-structure-09-二层操作-重置筛选-提交购买.png"
+  ],
+  "issueTextPreview": "页面结构采集已读取到业务内容",
+  "targetReason": "页面存在后台入口，优先复验后台管理链路；页面存在搜索/发现入口，优先复验检索链路；页面存在购买/商品入口，优先复验交易链路；页面存在我的/账号入口，优先复验个人中心链路",
+  "targetKind": "admin",
+  "targetMatched": true,
+  "targetActions": [
+    {
+      "action": "click",
+      "label": "页面存在后台入口，优先复验后台管理链路",
+      "ok": true
+    },
+    {
+      "action": "target-verify",
+      "label": "页面存在后台入口，优先复验后台管理链路",
+      "ok": true,
+      "finalUrl": "http://127.0.0.1:49103/#admin"
+    }
+  ],
+  "authFlow": {
+    "detected": false,
+    "attempted": false,
+    "success": false,
+    "finalUrl": "http://127.0.0.1:49103/",
+    "message": "",
+    "actions": []
+  },
+  "businessAudit": {
+    "actions": [
+      {
+        "action": "click",
+        "label": "导航:搜索筛选",
+        "ok": true
+      },
+      {
+        "action": "click",
+        "label": "操作:重置筛选",
+        "ok": true,
+        "result": {
+          "ok": true,
+          "matched": 1
+        }
+      },
+      {
+        "action": "click",
+        "label": "二层操作:重置筛选:提交购买",
+        "ok": true,
+        "result": {
+          "ok": true,
+          "matched": 1
+        }
+      },
+      {
+        "action": "click",
+        "label": "操作:刷新",
+        "ok": true,
+        "result": {
+          "ok": true,
+          "matched": 1
+        }
+      },
+      {
+        "action": "click",
+        "label": "二层操作:刷新:提交购买",
+        "ok": true,
+        "result": {
+          "ok": true,
+          "matched": 1
+        }
+      },
+      {
+        "action": "click",
+        "label": "导航:购买提交",
+        "ok": true
+      },
+      {
+        "action": "click",
+        "label": "操作:重置筛选",
+        "ok": true,
+        "result": {
+          "ok": true,
+          "matched": 1
+        }
+      },
+      {
+        "action": "click",
+        "label": "二层操作:重置筛选:提交购买",
+        "ok": true,
+        "result": {
+          "ok": true,
+          "matched": 1
+        }
+      }
+    ],
+    "snapshots": [
+      {
+        "label": "首屏",
+        "url": "http://127.0.0.1:49103/",
+        "title": "may-89103 PinAI 本地服务台",
+        "headings": [
+          "may-89103 PinAI 本地服务台",
+          "演示账号快速进入",
+          "服务与方案",
+          "智能内容工作台",
+          "业务流程自动化",
+          "后台管理看板",
+          "个人中心数据包",
+          "接口健康巡检",
+          "提交购买或业务需求",
+          "没有合适服务时创建需求",
+          "我的订单、需求和最近记录",
+          "我的订单"
+        ],
+        "navLabels": [
+          "搜索筛选",
+          "购买提交",
+          "个人中心",
+          "后台管理"
+        ],
+        "buttons": [
+          "登录 / 注册",
+          "重置筛选",
+          "购买",
+          "提交购买",
+          "提交需求",
+          "刷新",
+          "刷新后台"
+        ],
+        "links": [
+          "搜索筛选",
+          "购买提交",
+          "个人中心",
+          "后台管理"
+        ],
+        "inputs": [
+          {
+            "tag": "input",
+            "type": "",
+            "placeholder": "姓名",
+            "name": "name",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "",
+            "placeholder": "手机号",
+            "name": "phone",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "",
+            "placeholder": "搜索个人中心、后台管理、购买提交",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "select",
+            "type": "",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "select",
+            "type": "",
+            "placeholder": "",
+            "name": "serviceId",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "",
+            "placeholder": "联系人",
+            "name": "customer",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "",
+            "placeholder": "联系电话",
+            "name": "phone",
+            "label": ""
+          },
+          {
+            "tag": "textarea",
+            "type": "",
+            "placeholder": "需求说明",
+            "name": "note",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "",
+            "placeholder": "需求标题",
+            "name": "title",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "",
+            "placeholder": "联系方式",
+            "name": "contact",
+            "label": ""
+          },
+          {
+            "tag": "textarea",
+            "type": "",
+            "placeholder": "详细描述",
+            "name": "detail",
+            "label": ""
+          }
+        ],
+        "tables": [],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "Local SQLite Full Stack may-89103 PinAI 本地服务台 搜索筛选 购买提交 个人中心 后台管理 前端http://127.0.0.1:49103 后端http://127.0.0.1:59103/api 健康检查ok 登录注册 演示账号快速进入 登录会写入本地状态，接口数据保存在项目 SQLite。 登录 / 注册 搜索 / 筛选 服务与方案 全部个人中心后台管理搜索筛选服务监控购买提交 重置筛选 搜索筛选可购买 智能内容工作台 支持本地资料检索、标签筛选和结果导出。 PinAI 服务中心评分 4.9 ¥99 购买 购买提交可购买 业务流程自动化 将表单提交、审批、通知和台账写入 SQLite。 流程编排组评分 4.8 ¥199 购买 后台管理功能入口 后台管理看板 查看服务、订单、需求、收入和操作日志。 运营管理台评分 4.7 免费入口 购买 个人中心可购买 个人中心数据包 汇总我的订单、需求和最近操作记录。 本地数据助手评分 4.6 ¥59 购买 服务监控功能入口 接口健康巡检 验证前端、后端和 SQLite 全链路是否可用。 本地运维台评分 4.5 免费入口 购买 购买 / 提交 提交购买或业务需求 购买提交会调用后端接口并立即写入 SQLite。 智能内容工作台 - ¥99业务流程自动化 - ¥199后台管理看板 - ¥0个人中心数据包 - ¥59接口健康巡检 - ¥0 请安排本地服务跟进。 提交购买 需求提交 没有合适服务时创建需求 需要验证前端、后端、SQLite 和业务页面可用。 提交需求 个人中心 / 我的 我的订单、需求和最近记录 刷新 用户演示用户 我的订单8 我的需求0 服务数量5 我的订单 #8 演示用户已提交 ¥99#7 演示用户已提交 ¥99#6 演示用户已提交 ¥99#5 演示用户已提交 ¥99#4 演示用户已提交 ¥99#3 演示用户已提交 ¥99#2 演示用户已提交 ¥99#1 演示用户已提交 ¥99 我的需求 暂无需求可在需求提交区创建 后台管理 运营看板 刷新后台 用户2 服务5 订单8 收入¥792 操作日志 user提交购买订单 #8user提交购买订单 #7user提交购买订单 #6user提交购买订单 #5user提交购买订单 #4user提交购买订单 #3user提交购买订单 #2user提交购买订单 #1 接口响应 { \"ok\": true, \"data\": { \"users\": 2, \"services\": 5, \"orders\": 8, \"submissions\": 0, \"revenue\": 792, \"logs\": [ { \"id\": 9, \"actor\": \"user\", \"action\": \"提交购买订单 #8\", \"created_at\": \"2026-06-08T13:49:48.439Z\" }, { \"id\": 8, \"actor\": \"user\", \"action\": \"提交购买订单 #7\", \"created_at\": \"2026-06-08T13:49:39.457Z\" }, { \"id\": 7, \"actor\": \"user\", \"action\": \"提交购买订单 #6\", \"created_at\": \"2026-06-08T13:29:20.732Z\" }, { \"id\": 6, \"actor\": \"user\", \"action\": \"提交购买订单 #5\", \"created_at\": \"2026-06-08T13:29:13.165Z\" }, { \"id\": 5, \"actor\": \"user\", \"action\": \"提交购买订单 #4\", \"created_at\": \"2026-06-08T13:25:49.027Z\" }, { \"id\": 4, \"actor\": \"user\", \"action\": \"提交购买订单 #3\", \"created_at\": \"2026-06-08T13:25:44.412Z\" }, { \"id\": 3, \"actor\": \"user\", \"action\": \"提交购买订单 #2\", \"created_at\": \"2026-06-08T13:25:36.055Z\" }, { \"id\": 2",
+        "layout": {
+          "viewportWidth": 1504,
+          "viewportHeight": 1600,
+          "scrollWidth": 1504,
+          "scrollHeight": 4522,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89103-cycle32-repair-structure-01-首屏",
+          "label": "首屏",
+          "finalUrl": "http://127.0.0.1:49103/",
+          "title": "may-89103 PinAI 本地服务台",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89103/runtime-check/codex-20260608-cycle32-repair/may-89103-cycle32-repair-structure-01-首屏.json",
+          "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89103/runtime-check/codex-20260608-cycle32-repair/may-89103-cycle32-repair-structure-01-首屏.png",
+          "elementCount": 235,
+          "interactiveCount": 26,
+          "interactiveLabels": [
+            "搜索筛选",
+            "购买提交",
+            "个人中心",
+            "后台管理",
+            "演示用户",
+            "13800138000",
+            "登录 / 注册",
+            "搜索个人中心、后台管理、购买提交",
+            "全部 个人中心 后台管理 搜索筛选 服务监控 购买提交",
+            "重置筛选",
+            "购买",
+            "智能内容工作台 - ¥99 业务流程自动化 - ¥199 后台管理看板 - ¥0 个人中心数据包 - ¥59 接口健康巡检 - ¥0",
+            "请安排本地服务跟进。",
+            "提交购买",
+            "本地全栈链路复验需求",
+            "需要验证前端、后端、SQLite 和业务页面可用。",
+            "提交需求",
+            "刷新",
+            "刷新后台"
+          ]
+        }
+      },
+      {
+        "label": "导航:搜索筛选",
+        "url": "http://127.0.0.1:49103/#search",
+        "title": "may-89103 PinAI 本地服务台",
+        "headings": [
+          "may-89103 PinAI 本地服务台",
+          "演示账号快速进入",
+          "服务与方案",
+          "智能内容工作台",
+          "业务流程自动化",
+          "后台管理看板",
+          "个人中心数据包",
+          "接口健康巡检",
+          "提交购买或业务需求",
+          "没有合适服务时创建需求",
+          "我的订单、需求和最近记录",
+          "我的订单"
+        ],
+        "navLabels": [
+          "搜索筛选",
+          "购买提交",
+          "个人中心",
+          "后台管理"
+        ],
+        "buttons": [
+          "登录 / 注册",
+          "重置筛选",
+          "购买",
+          "提交购买",
+          "提交需求",
+          "刷新",
+          "刷新后台"
+        ],
+        "links": [
+          "搜索筛选",
+          "购买提交",
+          "个人中心",
+          "后台管理"
+        ],
+        "inputs": [
+          {
+            "tag": "input",
+            "type": "",
+            "placeholder": "姓名",
+            "name": "name",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "",
+            "placeholder": "手机号",
+            "name": "phone",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "",
+            "placeholder": "搜索个人中心、后台管理、购买提交",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "select",
+            "type": "",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "select",
+            "type": "",
+            "placeholder": "",
+            "name": "serviceId",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "",
+            "placeholder": "联系人",
+            "name": "customer",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "",
+            "placeholder": "联系电话",
+            "name": "phone",
+            "label": ""
+          },
+          {
+            "tag": "textarea",
+            "type": "",
+            "placeholder": "需求说明",
+            "name": "note",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "",
+            "placeholder": "需求标题",
+            "name": "title",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "",
+            "placeholder": "联系方式",
+            "name": "contact",
+            "label": ""
+          },
+          {
+            "tag": "textarea",
+            "type": "",
+            "placeholder": "详细描述",
+            "name": "detail",
+            "label": ""
+          }
+        ],
+        "tables": [],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "Local SQLite Full Stack may-89103 PinAI 本地服务台 搜索筛选 购买提交 个人中心 后台管理 前端http://127.0.0.1:49103 后端http://127.0.0.1:59103/api 健康检查ok 登录注册 演示账号快速进入 登录会写入本地状态，接口数据保存在项目 SQLite。 登录 / 注册 搜索 / 筛选 服务与方案 全部个人中心后台管理搜索筛选服务监控购买提交 重置筛选 搜索筛选可购买 智能内容工作台 支持本地资料检索、标签筛选和结果导出。 PinAI 服务中心评分 4.9 ¥99 购买 购买提交可购买 业务流程自动化 将表单提交、审批、通知和台账写入 SQLite。 流程编排组评分 4.8 ¥199 购买 后台管理功能入口 后台管理看板 查看服务、订单、需求、收入和操作日志。 运营管理台评分 4.7 免费入口 购买 个人中心可购买 个人中心数据包 汇总我的订单、需求和最近操作记录。 本地数据助手评分 4.6 ¥59 购买 服务监控功能入口 接口健康巡检 验证前端、后端和 SQLite 全链路是否可用。 本地运维台评分 4.5 免费入口 购买 购买 / 提交 提交购买或业务需求 购买提交会调用后端接口并立即写入 SQLite。 智能内容工作台 - ¥99业务流程自动化 - ¥199后台管理看板 - ¥0个人中心数据包 - ¥59接口健康巡检 - ¥0 请安排本地服务跟进。 提交购买 需求提交 没有合适服务时创建需求 需要验证前端、后端、SQLite 和业务页面可用。 提交需求 个人中心 / 我的 我的订单、需求和最近记录 刷新 用户演示用户 我的订单8 我的需求0 服务数量5 我的订单 #8 演示用户已提交 ¥99#7 演示用户已提交 ¥99#6 演示用户已提交 ¥99#5 演示用户已提交 ¥99#4 演示用户已提交 ¥99#3 演示用户已提交 ¥99#2 演示用户已提交 ¥99#1 演示用户已提交 ¥99 我的需求 暂无需求可在需求提交区创建 后台管理 运营看板 刷新后台 用户2 服务5 订单8 收入¥792 操作日志 user提交购买订单 #8user提交购买订单 #7user提交购买订单 #6user提交购买订单 #5user提交购买订单 #4user提交购买订单 #3user提交购买订单 #2user提交购买订单 #1 接口响应 { \"ok\": true, \"data\": { \"users\": 2, \"services\": 5, \"orders\": 8, \"submissions\": 0, \"revenue\": 792, \"logs\": [ { \"id\": 9, \"actor\": \"user\", \"action\": \"提交购买订单 #8\", \"created_at\": \"2026-06-08T13:49:48.439Z\" }, { \"id\": 8, \"actor\": \"user\", \"action\": \"提交购买订单 #7\", \"created_at\": \"2026-06-08T13:49:39.457Z\" }, { \"id\": 7, \"actor\": \"user\", \"action\": \"提交购买订单 #6\", \"created_at\": \"2026-06-08T13:29:20.732Z\" }, { \"id\": 6, \"actor\": \"user\", \"action\": \"提交购买订单 #5\", \"created_at\": \"2026-06-08T13:29:13.165Z\" }, { \"id\": 5, \"actor\": \"user\", \"action\": \"提交购买订单 #4\", \"created_at\": \"2026-06-08T13:25:49.027Z\" }, { \"id\": 4, \"actor\": \"user\", \"action\": \"提交购买订单 #3\", \"created_at\": \"2026-06-08T13:25:44.412Z\" }, { \"id\": 3, \"actor\": \"user\", \"action\": \"提交购买订单 #2\", \"created_at\": \"2026-06-08T13:25:36.055Z\" }, { \"id\": 2",
+        "layout": {
+          "viewportWidth": 1536,
+          "viewportHeight": 1600,
+          "scrollWidth": 1536,
+          "scrollHeight": 4522,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89103-cycle32-repair-structure-02-导航-搜索筛选",
+          "label": "导航:搜索筛选",
+          "finalUrl": "http://127.0.0.1:49103/#search",
+          "title": "may-89103 PinAI 本地服务台",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89103/runtime-check/codex-20260608-cycle32-repair/may-89103-cycle32-repair-structure-02-导航-搜索筛选.json",
+          "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89103/runtime-check/codex-20260608-cycle32-repair/may-89103-cycle32-repair-structure-02-导航-搜索筛选.png",
+          "elementCount": 235,
+          "interactiveCount": 26,
+          "interactiveLabels": [
+            "搜索筛选",
+            "购买提交",
+            "个人中心",
+            "后台管理",
+            "演示用户",
+            "13800138000",
+            "登录 / 注册",
+            "搜索个人中心、后台管理、购买提交",
+            "全部 个人中心 后台管理 搜索筛选 服务监控 购买提交",
+            "重置筛选",
+            "购买",
+            "智能内容工作台 - ¥99 业务流程自动化 - ¥199 后台管理看板 - ¥0 个人中心数据包 - ¥59 接口健康巡检 - ¥0",
+            "请安排本地服务跟进。",
+            "提交购买",
+            "本地全栈链路复验需求",
+            "需要验证前端、后端、SQLite 和业务页面可用。",
+            "提交需求",
+            "刷新",
+            "刷新后台"
+          ]
+        }
+      },
+      {
+        "label": "操作:重置筛选",
+        "url": "http://127.0.0.1:49103/#search",
+        "title": "may-89103 PinAI 本地服务台",
+        "headings": [
+          "may-89103 PinAI 本地服务台",
+          "演示账号快速进入",
+          "服务与方案",
+          "智能内容工作台",
+          "业务流程自动化",
+          "后台管理看板",
+          "个人中心数据包",
+          "接口健康巡检",
+          "提交购买或业务需求",
+          "没有合适服务时创建需求",
+          "我的订单、需求和最近记录",
+          "我的订单"
+        ],
+        "navLabels": [
+          "搜索筛选",
+          "购买提交",
+          "个人中心",
+          "后台管理"
+        ],
+        "buttons": [
+          "登录 / 注册",
+          "重置筛选",
+          "购买",
+          "提交购买",
+          "提交需求",
+          "刷新",
+          "刷新后台"
+        ],
+        "links": [
+          "搜索筛选",
+          "购买提交",
+          "个人中心",
+          "后台管理"
+        ],
+        "inputs": [
+          {
+            "tag": "input",
+            "type": "",
+            "placeholder": "姓名",
+            "name": "name",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "",
+            "placeholder": "手机号",
+            "name": "phone",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "",
+            "placeholder": "搜索个人中心、后台管理、购买提交",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "select",
+            "type": "",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "select",
+            "type": "",
+            "placeholder": "",
+            "name": "serviceId",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "",
+            "placeholder": "联系人",
+            "name": "customer",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "",
+            "placeholder": "联系电话",
+            "name": "phone",
+            "label": ""
+          },
+          {
+            "tag": "textarea",
+            "type": "",
+            "placeholder": "需求说明",
+            "name": "note",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "",
+            "placeholder": "需求标题",
+            "name": "title",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "",
+            "placeholder": "联系方式",
+            "name": "contact",
+            "label": ""
+          },
+          {
+            "tag": "textarea",
+            "type": "",
+            "placeholder": "详细描述",
+            "name": "detail",
+            "label": ""
+          }
+        ],
+        "tables": [],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "Local SQLite Full Stack may-89103 PinAI 本地服务台 搜索筛选 购买提交 个人中心 后台管理 前端http://127.0.0.1:49103 后端http://127.0.0.1:59103/api 健康检查ok 登录注册 演示账号快速进入 登录会写入本地状态，接口数据保存在项目 SQLite。 登录 / 注册 搜索 / 筛选 服务与方案 全部个人中心后台管理搜索筛选服务监控购买提交 重置筛选 搜索筛选可购买 智能内容工作台 支持本地资料检索、标签筛选和结果导出。 PinAI 服务中心评分 4.9 ¥99 购买 购买提交可购买 业务流程自动化 将表单提交、审批、通知和台账写入 SQLite。 流程编排组评分 4.8 ¥199 购买 后台管理功能入口 后台管理看板 查看服务、订单、需求、收入和操作日志。 运营管理台评分 4.7 免费入口 购买 个人中心可购买 个人中心数据包 汇总我的订单、需求和最近操作记录。 本地数据助手评分 4.6 ¥59 购买 服务监控功能入口 接口健康巡检 验证前端、后端和 SQLite 全链路是否可用。 本地运维台评分 4.5 免费入口 购买 购买 / 提交 提交购买或业务需求 购买提交会调用后端接口并立即写入 SQLite。 智能内容工作台 - ¥99业务流程自动化 - ¥199后台管理看板 - ¥0个人中心数据包 - ¥59接口健康巡检 - ¥0 请安排本地服务跟进。 提交购买 需求提交 没有合适服务时创建需求 需要验证前端、后端、SQLite 和业务页面可用。 提交需求 个人中心 / 我的 我的订单、需求和最近记录 刷新 用户演示用户 我的订单8 我的需求0 服务数量5 我的订单 #8 演示用户已提交 ¥99#7 演示用户已提交 ¥99#6 演示用户已提交 ¥99#5 演示用户已提交 ¥99#4 演示用户已提交 ¥99#3 演示用户已提交 ¥99#2 演示用户已提交 ¥99#1 演示用户已提交 ¥99 我的需求 暂无需求可在需求提交区创建 后台管理 运营看板 刷新后台 用户2 服务5 订单8 收入¥792 操作日志 user提交购买订单 #8user提交购买订单 #7user提交购买订单 #6user提交购买订单 #5user提交购买订单 #4user提交购买订单 #3user提交购买订单 #2user提交购买订单 #1 接口响应 { \"ok\": true, \"data\": [ { \"id\": 1, \"title\": \"智能内容工作台\", \"category\": \"搜索筛选\", \"provider\": \"PinAI 服务中心\", \"price\": 99, \"rating\": 4.9, \"status\": \"可购买\", \"description\": \"支持本地资料检索、标签筛选和结果导出。\" }, { \"id\": 2, \"title\": \"业务流程自动化\", \"category\": \"购买提交\", \"provider\": \"流程编排组\", \"price\": 199, \"rating\": 4.8, \"status\": \"可购买\", \"description\": \"将表单提交、审批、通知和台账写入 SQLite。\" }, { \"id\": 4, \"title\": \"后台管理看板\", \"category\": \"后台管理\", \"provider\": \"运营管理台\", \"price\": 0, \"rating\": 4.7, \"status\": \"功能入口\", \"description\": \"查看服务、订单、需求、收入和操作日志。\" }, { \"id\": 3, \"title\": \"个人中心数据包\", \"category\": \"个人中心\", \"provider\": \"本地数据助手\", \"price\": 59, \"rating\": 4.6, \"status\": \"可购买\", \"description\": \"汇总我的订单、需求和最近操作记录。\" }, { \"id\": 5, \"title\": \"接口健康巡检\", \"category\": \"服务监控\", \"provider\": \"本地运维台\", \"price\": 0, \"rating\": 4.5, \"status\": \"功能入口\", \"desc",
+        "layout": {
+          "viewportWidth": 1568,
+          "viewportHeight": 1600,
+          "scrollWidth": 1568,
+          "scrollHeight": 4498,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89103-cycle32-repair-structure-03-操作-重置筛选",
+          "label": "操作:重置筛选",
+          "finalUrl": "http://127.0.0.1:49103/#search",
+          "title": "may-89103 PinAI 本地服务台",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89103/runtime-check/codex-20260608-cycle32-repair/may-89103-cycle32-repair-structure-03-操作-重置筛选.json",
+          "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89103/runtime-check/codex-20260608-cycle32-repair/may-89103-cycle32-repair-structure-03-操作-重置筛选.png",
+          "elementCount": 235,
+          "interactiveCount": 26,
+          "interactiveLabels": [
+            "搜索筛选",
+            "购买提交",
+            "个人中心",
+            "后台管理",
+            "演示用户",
+            "13800138000",
+            "登录 / 注册",
+            "搜索个人中心、后台管理、购买提交",
+            "全部 个人中心 后台管理 搜索筛选 服务监控 购买提交",
+            "重置筛选",
+            "购买",
+            "智能内容工作台 - ¥99 业务流程自动化 - ¥199 后台管理看板 - ¥0 个人中心数据包 - ¥59 接口健康巡检 - ¥0",
+            "请安排本地服务跟进。",
+            "提交购买",
+            "本地全栈链路复验需求",
+            "需要验证前端、后端、SQLite 和业务页面可用。",
+            "提交需求",
+            "刷新",
+            "刷新后台"
+          ]
+        }
+      },
+      {
+        "label": "二层操作:重置筛选->提交购买",
+        "url": "http://127.0.0.1:49103/#profile",
+        "title": "may-89103 PinAI 本地服务台",
+        "headings": [
+          "may-89103 PinAI 本地服务台",
+          "演示账号快速进入",
+          "服务与方案",
+          "智能内容工作台",
+          "业务流程自动化",
+          "后台管理看板",
+          "个人中心数据包",
+          "接口健康巡检",
+          "提交购买或业务需求",
+          "没有合适服务时创建需求",
+          "我的订单、需求和最近记录",
+          "我的订单"
+        ],
+        "navLabels": [
+          "搜索筛选",
+          "购买提交",
+          "个人中心",
+          "后台管理"
+        ],
+        "buttons": [
+          "登录 / 注册",
+          "重置筛选",
+          "购买",
+          "提交购买",
+          "提交需求",
+          "刷新",
+          "刷新后台"
+        ],
+        "links": [
+          "搜索筛选",
+          "购买提交",
+          "个人中心",
+          "后台管理"
+        ],
+        "inputs": [
+          {
+            "tag": "input",
+            "type": "",
+            "placeholder": "姓名",
+            "name": "name",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "",
+            "placeholder": "手机号",
+            "name": "phone",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "",
+            "placeholder": "搜索个人中心、后台管理、购买提交",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "select",
+            "type": "",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "select",
+            "type": "",
+            "placeholder": "",
+            "name": "serviceId",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "",
+            "placeholder": "联系人",
+            "name": "customer",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "",
+            "placeholder": "联系电话",
+            "name": "phone",
+            "label": ""
+          },
+          {
+            "tag": "textarea",
+            "type": "",
+            "placeholder": "需求说明",
+            "name": "note",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "",
+            "placeholder": "需求标题",
+            "name": "title",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "",
+            "placeholder": "联系方式",
+            "name": "contact",
+            "label": ""
+          },
+          {
+            "tag": "textarea",
+            "type": "",
+            "placeholder": "详细描述",
+            "name": "detail",
+            "label": ""
+          }
+        ],
+        "tables": [],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "Local SQLite Full Stack may-89103 PinAI 本地服务台 搜索筛选 购买提交 个人中心 后台管理 前端http://127.0.0.1:49103 后端http://127.0.0.1:59103/api 健康检查ok 登录注册 演示账号快速进入 登录会写入本地状态，接口数据保存在项目 SQLite。 登录 / 注册 搜索 / 筛选 服务与方案 全部个人中心后台管理搜索筛选服务监控购买提交 重置筛选 搜索筛选可购买 智能内容工作台 支持本地资料检索、标签筛选和结果导出。 PinAI 服务中心评分 4.9 ¥99 购买 购买提交可购买 业务流程自动化 将表单提交、审批、通知和台账写入 SQLite。 流程编排组评分 4.8 ¥199 购买 后台管理功能入口 后台管理看板 查看服务、订单、需求、收入和操作日志。 运营管理台评分 4.7 免费入口 购买 个人中心可购买 个人中心数据包 汇总我的订单、需求和最近操作记录。 本地数据助手评分 4.6 ¥59 购买 服务监控功能入口 接口健康巡检 验证前端、后端和 SQLite 全链路是否可用。 本地运维台评分 4.5 免费入口 购买 购买 / 提交 提交购买或业务需求 购买提交会调用后端接口并立即写入 SQLite。 智能内容工作台 - ¥99业务流程自动化 - ¥199后台管理看板 - ¥0个人中心数据包 - ¥59接口健康巡检 - ¥0 请安排本地服务跟进。 提交购买 需求提交 没有合适服务时创建需求 需要验证前端、后端、SQLite 和业务页面可用。 提交需求 个人中心 / 我的 我的订单、需求和最近记录 刷新 用户演示用户 我的订单9 我的需求0 服务数量5 我的订单 #9 演示用户已提交 ¥99#8 演示用户已提交 ¥99#7 演示用户已提交 ¥99#6 演示用户已提交 ¥99#5 演示用户已提交 ¥99#4 演示用户已提交 ¥99#3 演示用户已提交 ¥99#2 演示用户已提交 ¥99#1 演示用户已提交 ¥99 我的需求 暂无需求可在需求提交区创建 后台管理 运营看板 刷新后台 用户2 服务5 订单9 收入¥891 操作日志 user提交购买订单 #9user提交购买订单 #8user提交购买订单 #7user提交购买订单 #6user提交购买订单 #5user提交购买订单 #4user提交购买订单 #3user提交购买订单 #2 接口响应 { \"ok\": true, \"data\": [], \"total\": 0 }",
+        "layout": {
+          "viewportWidth": 1600,
+          "viewportHeight": 1600,
+          "scrollWidth": 1600,
+          "scrollHeight": 3733,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89103-cycle32-repair-structure-04-二层操作-重置筛选-提交购买",
+          "label": "二层操作:重置筛选->提交购买",
+          "finalUrl": "http://127.0.0.1:49103/#profile",
+          "title": "may-89103 PinAI 本地服务台",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89103/runtime-check/codex-20260608-cycle32-repair/may-89103-cycle32-repair-structure-04-二层操作-重置筛选-提交购买.json",
+          "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89103/runtime-check/codex-20260608-cycle32-repair/may-89103-cycle32-repair-structure-04-二层操作-重置筛选-提交购买.png",
+          "elementCount": 238,
+          "interactiveCount": 26,
+          "interactiveLabels": [
+            "搜索筛选",
+            "购买提交",
+            "个人中心",
+            "后台管理",
+            "演示用户",
+            "13800138000",
+            "登录 / 注册",
+            "搜索个人中心、后台管理、购买提交",
+            "全部 个人中心 后台管理 搜索筛选 服务监控 购买提交",
+            "重置筛选",
+            "购买",
+            "智能内容工作台 - ¥99 业务流程自动化 - ¥199 后台管理看板 - ¥0 个人中心数据包 - ¥59 接口健康巡检 - ¥0",
+            "请安排本地服务跟进。",
+            "提交购买",
+            "本地全栈链路复验需求",
+            "需要验证前端、后端、SQLite 和业务页面可用。",
+            "提交需求",
+            "刷新",
+            "刷新后台"
+          ]
+        }
+      },
+      {
+        "label": "操作:刷新",
+        "url": "http://127.0.0.1:49103/#search",
+        "title": "may-89103 PinAI 本地服务台",
+        "headings": [
+          "may-89103 PinAI 本地服务台",
+          "演示账号快速进入",
+          "服务与方案",
+          "智能内容工作台",
+          "业务流程自动化",
+          "后台管理看板",
+          "个人中心数据包",
+          "接口健康巡检",
+          "提交购买或业务需求",
+          "没有合适服务时创建需求",
+          "我的订单、需求和最近记录",
+          "我的订单"
+        ],
+        "navLabels": [
+          "搜索筛选",
+          "购买提交",
+          "个人中心",
+          "后台管理"
+        ],
+        "buttons": [
+          "登录 / 注册",
+          "重置筛选",
+          "购买",
+          "提交购买",
+          "提交需求",
+          "刷新",
+          "刷新后台"
+        ],
+        "links": [
+          "搜索筛选",
+          "购买提交",
+          "个人中心",
+          "后台管理"
+        ],
+        "inputs": [
+          {
+            "tag": "input",
+            "type": "",
+            "placeholder": "姓名",
+            "name": "name",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "",
+            "placeholder": "手机号",
+            "name": "phone",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "",
+            "placeholder": "搜索个人中心、后台管理、购买提交",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "select",
+            "type": "",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "select",
+            "type": "",
+            "placeholder": "",
+            "name": "serviceId",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "",
+            "placeholder": "联系人",
+            "name": "customer",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "",
+            "placeholder": "联系电话",
+            "name": "phone",
+            "label": ""
+          },
+          {
+            "tag": "textarea",
+            "type": "",
+            "placeholder": "需求说明",
+            "name": "note",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "",
+            "placeholder": "需求标题",
+            "name": "title",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "",
+            "placeholder": "联系方式",
+            "name": "contact",
+            "label": ""
+          },
+          {
+            "tag": "textarea",
+            "type": "",
+            "placeholder": "详细描述",
+            "name": "detail",
+            "label": ""
+          }
+        ],
+        "tables": [],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "Local SQLite Full Stack may-89103 PinAI 本地服务台 搜索筛选 购买提交 个人中心 后台管理 前端http://127.0.0.1:49103 后端http://127.0.0.1:59103/api 健康检查ok 登录注册 演示账号快速进入 登录会写入本地状态，接口数据保存在项目 SQLite。 登录 / 注册 搜索 / 筛选 服务与方案 全部个人中心后台管理搜索筛选服务监控购买提交 重置筛选 搜索筛选可购买 智能内容工作台 支持本地资料检索、标签筛选和结果导出。 PinAI 服务中心评分 4.9 ¥99 购买 购买提交可购买 业务流程自动化 将表单提交、审批、通知和台账写入 SQLite。 流程编排组评分 4.8 ¥199 购买 后台管理功能入口 后台管理看板 查看服务、订单、需求、收入和操作日志。 运营管理台评分 4.7 免费入口 购买 个人中心可购买 个人中心数据包 汇总我的订单、需求和最近操作记录。 本地数据助手评分 4.6 ¥59 购买 服务监控功能入口 接口健康巡检 验证前端、后端和 SQLite 全链路是否可用。 本地运维台评分 4.5 免费入口 购买 购买 / 提交 提交购买或业务需求 购买提交会调用后端接口并立即写入 SQLite。 智能内容工作台 - ¥99业务流程自动化 - ¥199后台管理看板 - ¥0个人中心数据包 - ¥59接口健康巡检 - ¥0 请安排本地服务跟进。 提交购买 需求提交 没有合适服务时创建需求 需要验证前端、后端、SQLite 和业务页面可用。 提交需求 个人中心 / 我的 我的订单、需求和最近记录 刷新 用户演示用户 我的订单9 我的需求0 服务数量5 我的订单 #9 演示用户已提交 ¥99#8 演示用户已提交 ¥99#7 演示用户已提交 ¥99#6 演示用户已提交 ¥99#5 演示用户已提交 ¥99#4 演示用户已提交 ¥99#3 演示用户已提交 ¥99#2 演示用户已提交 ¥99#1 演示用户已提交 ¥99 我的需求 暂无需求可在需求提交区创建 后台管理 运营看板 刷新后台 用户2 服务5 订单9 收入¥891 操作日志 user提交购买订单 #9user提交购买订单 #8user提交购买订单 #7user提交购买订单 #6user提交购买订单 #5user提交购买订单 #4user提交购买订单 #3user提交购买订单 #2 接口响应 { \"ok\": true, \"data\": [], \"total\": 0 }",
+        "layout": {
+          "viewportWidth": 1632,
+          "viewportHeight": 1600,
+          "scrollWidth": 1632,
+          "scrollHeight": 3733,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89103-cycle32-repair-structure-05-操作-刷新",
+          "label": "操作:刷新",
+          "finalUrl": "http://127.0.0.1:49103/#search",
+          "title": "may-89103 PinAI 本地服务台",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89103/runtime-check/codex-20260608-cycle32-repair/may-89103-cycle32-repair-structure-05-操作-刷新.json",
+          "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89103/runtime-check/codex-20260608-cycle32-repair/may-89103-cycle32-repair-structure-05-操作-刷新.png",
+          "elementCount": 238,
+          "interactiveCount": 26,
+          "interactiveLabels": [
+            "搜索筛选",
+            "购买提交",
+            "个人中心",
+            "后台管理",
+            "演示用户",
+            "13800138000",
+            "登录 / 注册",
+            "搜索个人中心、后台管理、购买提交",
+            "全部 个人中心 后台管理 搜索筛选 服务监控 购买提交",
+            "重置筛选",
+            "购买",
+            "智能内容工作台 - ¥99 业务流程自动化 - ¥199 后台管理看板 - ¥0 个人中心数据包 - ¥59 接口健康巡检 - ¥0",
+            "请安排本地服务跟进。",
+            "提交购买",
+            "本地全栈链路复验需求",
+            "需要验证前端、后端、SQLite 和业务页面可用。",
+            "提交需求",
+            "刷新",
+            "刷新后台"
+          ]
+        }
+      },
+      {
+        "label": "二层操作:刷新->提交购买",
+        "url": "http://127.0.0.1:49103/#profile",
+        "title": "may-89103 PinAI 本地服务台",
+        "headings": [
+          "may-89103 PinAI 本地服务台",
+          "演示账号快速进入",
+          "服务与方案",
+          "智能内容工作台",
+          "业务流程自动化",
+          "后台管理看板",
+          "个人中心数据包",
+          "接口健康巡检",
+          "提交购买或业务需求",
+          "没有合适服务时创建需求",
+          "我的订单、需求和最近记录",
+          "我的订单"
+        ],
+        "navLabels": [
+          "搜索筛选",
+          "购买提交",
+          "个人中心",
+          "后台管理"
+        ],
+        "buttons": [
+          "登录 / 注册",
+          "重置筛选",
+          "购买",
+          "提交购买",
+          "提交需求",
+          "刷新",
+          "刷新后台"
+        ],
+        "links": [
+          "搜索筛选",
+          "购买提交",
+          "个人中心",
+          "后台管理"
+        ],
+        "inputs": [
+          {
+            "tag": "input",
+            "type": "",
+            "placeholder": "姓名",
+            "name": "name",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "",
+            "placeholder": "手机号",
+            "name": "phone",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "",
+            "placeholder": "搜索个人中心、后台管理、购买提交",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "select",
+            "type": "",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "select",
+            "type": "",
+            "placeholder": "",
+            "name": "serviceId",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "",
+            "placeholder": "联系人",
+            "name": "customer",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "",
+            "placeholder": "联系电话",
+            "name": "phone",
+            "label": ""
+          },
+          {
+            "tag": "textarea",
+            "type": "",
+            "placeholder": "需求说明",
+            "name": "note",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "",
+            "placeholder": "需求标题",
+            "name": "title",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "",
+            "placeholder": "联系方式",
+            "name": "contact",
+            "label": ""
+          },
+          {
+            "tag": "textarea",
+            "type": "",
+            "placeholder": "详细描述",
+            "name": "detail",
+            "label": ""
+          }
+        ],
+        "tables": [],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "Local SQLite Full Stack may-89103 PinAI 本地服务台 搜索筛选 购买提交 个人中心 后台管理 前端http://127.0.0.1:49103 后端http://127.0.0.1:59103/api 健康检查ok 登录注册 演示账号快速进入 登录会写入本地状态，接口数据保存在项目 SQLite。 登录 / 注册 搜索 / 筛选 服务与方案 全部个人中心后台管理搜索筛选服务监控购买提交 重置筛选 搜索筛选可购买 智能内容工作台 支持本地资料检索、标签筛选和结果导出。 PinAI 服务中心评分 4.9 ¥99 购买 购买提交可购买 业务流程自动化 将表单提交、审批、通知和台账写入 SQLite。 流程编排组评分 4.8 ¥199 购买 后台管理功能入口 后台管理看板 查看服务、订单、需求、收入和操作日志。 运营管理台评分 4.7 免费入口 购买 个人中心可购买 个人中心数据包 汇总我的订单、需求和最近操作记录。 本地数据助手评分 4.6 ¥59 购买 服务监控功能入口 接口健康巡检 验证前端、后端和 SQLite 全链路是否可用。 本地运维台评分 4.5 免费入口 购买 购买 / 提交 提交购买或业务需求 购买提交会调用后端接口并立即写入 SQLite。 智能内容工作台 - ¥99业务流程自动化 - ¥199后台管理看板 - ¥0个人中心数据包 - ¥59接口健康巡检 - ¥0 请安排本地服务跟进。 提交购买 需求提交 没有合适服务时创建需求 需要验证前端、后端、SQLite 和业务页面可用。 提交需求 个人中心 / 我的 我的订单、需求和最近记录 刷新 用户演示用户 我的订单10 我的需求0 服务数量5 我的订单 #10 演示用户已提交 ¥99#9 演示用户已提交 ¥99#8 演示用户已提交 ¥99#7 演示用户已提交 ¥99#6 演示用户已提交 ¥99#5 演示用户已提交 ¥99#4 演示用户已提交 ¥99#3 演示用户已提交 ¥99#2 演示用户已提交 ¥99#1 演示用户已提交 ¥99 我的需求 暂无需求可在需求提交区创建 后台管理 运营看板 刷新后台 用户2 服务5 订单10 收入¥990 操作日志 user提交购买订单 #10user提交购买订单 #9user提交购买订单 #8user提交购买订单 #7user提交购买订单 #6user提交购买订单 #5user提交购买订单 #4user提交购买订单 #3 接口响应 { \"ok\": true, \"data\": [], \"total\": 0 }",
+        "layout": {
+          "viewportWidth": 1664,
+          "viewportHeight": 1600,
+          "scrollWidth": 1664,
+          "scrollHeight": 3790,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89103-cycle32-repair-structure-06-二层操作-刷新-提交购买",
+          "label": "二层操作:刷新->提交购买",
+          "finalUrl": "http://127.0.0.1:49103/#profile",
+          "title": "may-89103 PinAI 本地服务台",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89103/runtime-check/codex-20260608-cycle32-repair/may-89103-cycle32-repair-structure-06-二层操作-刷新-提交购买.json",
+          "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89103/runtime-check/codex-20260608-cycle32-repair/may-89103-cycle32-repair-structure-06-二层操作-刷新-提交购买.png",
+          "elementCount": 241,
+          "interactiveCount": 26,
+          "interactiveLabels": [
+            "搜索筛选",
+            "购买提交",
+            "个人中心",
+            "后台管理",
+            "演示用户",
+            "13800138000",
+            "登录 / 注册",
+            "搜索个人中心、后台管理、购买提交",
+            "全部 个人中心 后台管理 搜索筛选 服务监控 购买提交",
+            "重置筛选",
+            "购买",
+            "智能内容工作台 - ¥99 业务流程自动化 - ¥199 后台管理看板 - ¥0 个人中心数据包 - ¥59 接口健康巡检 - ¥0",
+            "请安排本地服务跟进。",
+            "提交购买",
+            "本地全栈链路复验需求",
+            "需要验证前端、后端、SQLite 和业务页面可用。",
+            "提交需求",
+            "刷新",
+            "刷新后台"
+          ]
+        }
+      },
+      {
+        "label": "导航:购买提交",
+        "url": "http://127.0.0.1:49103/#purchase",
+        "title": "may-89103 PinAI 本地服务台",
+        "headings": [
+          "may-89103 PinAI 本地服务台",
+          "演示账号快速进入",
+          "服务与方案",
+          "智能内容工作台",
+          "业务流程自动化",
+          "后台管理看板",
+          "个人中心数据包",
+          "接口健康巡检",
+          "提交购买或业务需求",
+          "没有合适服务时创建需求",
+          "我的订单、需求和最近记录",
+          "我的订单"
+        ],
+        "navLabels": [
+          "搜索筛选",
+          "购买提交",
+          "个人中心",
+          "后台管理"
+        ],
+        "buttons": [
+          "登录 / 注册",
+          "重置筛选",
+          "购买",
+          "提交购买",
+          "提交需求",
+          "刷新",
+          "刷新后台"
+        ],
+        "links": [
+          "搜索筛选",
+          "购买提交",
+          "个人中心",
+          "后台管理"
+        ],
+        "inputs": [
+          {
+            "tag": "input",
+            "type": "",
+            "placeholder": "姓名",
+            "name": "name",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "",
+            "placeholder": "手机号",
+            "name": "phone",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "",
+            "placeholder": "搜索个人中心、后台管理、购买提交",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "select",
+            "type": "",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "select",
+            "type": "",
+            "placeholder": "",
+            "name": "serviceId",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "",
+            "placeholder": "联系人",
+            "name": "customer",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "",
+            "placeholder": "联系电话",
+            "name": "phone",
+            "label": ""
+          },
+          {
+            "tag": "textarea",
+            "type": "",
+            "placeholder": "需求说明",
+            "name": "note",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "",
+            "placeholder": "需求标题",
+            "name": "title",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "",
+            "placeholder": "联系方式",
+            "name": "contact",
+            "label": ""
+          },
+          {
+            "tag": "textarea",
+            "type": "",
+            "placeholder": "详细描述",
+            "name": "detail",
+            "label": ""
+          }
+        ],
+        "tables": [],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "Local SQLite Full Stack may-89103 PinAI 本地服务台 搜索筛选 购买提交 个人中心 后台管理 前端http://127.0.0.1:49103 后端http://127.0.0.1:59103/api 健康检查ok 登录注册 演示账号快速进入 登录会写入本地状态，接口数据保存在项目 SQLite。 登录 / 注册 搜索 / 筛选 服务与方案 全部个人中心后台管理搜索筛选服务监控购买提交 重置筛选 搜索筛选可购买 智能内容工作台 支持本地资料检索、标签筛选和结果导出。 PinAI 服务中心评分 4.9 ¥99 购买 购买提交可购买 业务流程自动化 将表单提交、审批、通知和台账写入 SQLite。 流程编排组评分 4.8 ¥199 购买 后台管理功能入口 后台管理看板 查看服务、订单、需求、收入和操作日志。 运营管理台评分 4.7 免费入口 购买 个人中心可购买 个人中心数据包 汇总我的订单、需求和最近操作记录。 本地数据助手评分 4.6 ¥59 购买 服务监控功能入口 接口健康巡检 验证前端、后端和 SQLite 全链路是否可用。 本地运维台评分 4.5 免费入口 购买 购买 / 提交 提交购买或业务需求 购买提交会调用后端接口并立即写入 SQLite。 智能内容工作台 - ¥99业务流程自动化 - ¥199后台管理看板 - ¥0个人中心数据包 - ¥59接口健康巡检 - ¥0 请安排本地服务跟进。 提交购买 需求提交 没有合适服务时创建需求 需要验证前端、后端、SQLite 和业务页面可用。 提交需求 个人中心 / 我的 我的订单、需求和最近记录 刷新 用户演示用户 我的订单10 我的需求0 服务数量5 我的订单 #10 演示用户已提交 ¥99#9 演示用户已提交 ¥99#8 演示用户已提交 ¥99#7 演示用户已提交 ¥99#6 演示用户已提交 ¥99#5 演示用户已提交 ¥99#4 演示用户已提交 ¥99#3 演示用户已提交 ¥99#2 演示用户已提交 ¥99#1 演示用户已提交 ¥99 我的需求 暂无需求可在需求提交区创建 后台管理 运营看板 刷新后台 用户2 服务5 订单10 收入¥990 操作日志 user提交购买订单 #10user提交购买订单 #9user提交购买订单 #8user提交购买订单 #7user提交购买订单 #6user提交购买订单 #5user提交购买订单 #4user提交购买订单 #3 接口响应 { \"ok\": true, \"data\": [], \"total\": 0 }",
+        "layout": {
+          "viewportWidth": 1696,
+          "viewportHeight": 1600,
+          "scrollWidth": 1696,
+          "scrollHeight": 3790,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89103-cycle32-repair-structure-07-导航-购买提交",
+          "label": "导航:购买提交",
+          "finalUrl": "http://127.0.0.1:49103/#purchase",
+          "title": "may-89103 PinAI 本地服务台",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89103/runtime-check/codex-20260608-cycle32-repair/may-89103-cycle32-repair-structure-07-导航-购买提交.json",
+          "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89103/runtime-check/codex-20260608-cycle32-repair/may-89103-cycle32-repair-structure-07-导航-购买提交.png",
+          "elementCount": 241,
+          "interactiveCount": 26,
+          "interactiveLabels": [
+            "搜索筛选",
+            "购买提交",
+            "个人中心",
+            "后台管理",
+            "演示用户",
+            "13800138000",
+            "登录 / 注册",
+            "搜索个人中心、后台管理、购买提交",
+            "全部 个人中心 后台管理 搜索筛选 服务监控 购买提交",
+            "重置筛选",
+            "购买",
+            "智能内容工作台 - ¥99 业务流程自动化 - ¥199 后台管理看板 - ¥0 个人中心数据包 - ¥59 接口健康巡检 - ¥0",
+            "请安排本地服务跟进。",
+            "提交购买",
+            "本地全栈链路复验需求",
+            "需要验证前端、后端、SQLite 和业务页面可用。",
+            "提交需求",
+            "刷新",
+            "刷新后台"
+          ]
+        }
+      },
+      {
+        "label": "操作:重置筛选",
+        "url": "http://127.0.0.1:49103/#purchase",
+        "title": "may-89103 PinAI 本地服务台",
+        "headings": [
+          "may-89103 PinAI 本地服务台",
+          "演示账号快速进入",
+          "服务与方案",
+          "智能内容工作台",
+          "业务流程自动化",
+          "后台管理看板",
+          "个人中心数据包",
+          "接口健康巡检",
+          "提交购买或业务需求",
+          "没有合适服务时创建需求",
+          "我的订单、需求和最近记录",
+          "我的订单"
+        ],
+        "navLabels": [
+          "搜索筛选",
+          "购买提交",
+          "个人中心",
+          "后台管理"
+        ],
+        "buttons": [
+          "登录 / 注册",
+          "重置筛选",
+          "购买",
+          "提交购买",
+          "提交需求",
+          "刷新",
+          "刷新后台"
+        ],
+        "links": [
+          "搜索筛选",
+          "购买提交",
+          "个人中心",
+          "后台管理"
+        ],
+        "inputs": [
+          {
+            "tag": "input",
+            "type": "",
+            "placeholder": "姓名",
+            "name": "name",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "",
+            "placeholder": "手机号",
+            "name": "phone",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "",
+            "placeholder": "搜索个人中心、后台管理、购买提交",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "select",
+            "type": "",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "select",
+            "type": "",
+            "placeholder": "",
+            "name": "serviceId",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "",
+            "placeholder": "联系人",
+            "name": "customer",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "",
+            "placeholder": "联系电话",
+            "name": "phone",
+            "label": ""
+          },
+          {
+            "tag": "textarea",
+            "type": "",
+            "placeholder": "需求说明",
+            "name": "note",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "",
+            "placeholder": "需求标题",
+            "name": "title",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "",
+            "placeholder": "联系方式",
+            "name": "contact",
+            "label": ""
+          },
+          {
+            "tag": "textarea",
+            "type": "",
+            "placeholder": "详细描述",
+            "name": "detail",
+            "label": ""
+          }
+        ],
+        "tables": [],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "Local SQLite Full Stack may-89103 PinAI 本地服务台 搜索筛选 购买提交 个人中心 后台管理 前端http://127.0.0.1:49103 后端http://127.0.0.1:59103/api 健康检查ok 登录注册 演示账号快速进入 登录会写入本地状态，接口数据保存在项目 SQLite。 登录 / 注册 搜索 / 筛选 服务与方案 全部个人中心后台管理搜索筛选服务监控购买提交 重置筛选 搜索筛选可购买 智能内容工作台 支持本地资料检索、标签筛选和结果导出。 PinAI 服务中心评分 4.9 ¥99 购买 购买提交可购买 业务流程自动化 将表单提交、审批、通知和台账写入 SQLite。 流程编排组评分 4.8 ¥199 购买 后台管理功能入口 后台管理看板 查看服务、订单、需求、收入和操作日志。 运营管理台评分 4.7 免费入口 购买 个人中心可购买 个人中心数据包 汇总我的订单、需求和最近操作记录。 本地数据助手评分 4.6 ¥59 购买 服务监控功能入口 接口健康巡检 验证前端、后端和 SQLite 全链路是否可用。 本地运维台评分 4.5 免费入口 购买 购买 / 提交 提交购买或业务需求 购买提交会调用后端接口并立即写入 SQLite。 智能内容工作台 - ¥99业务流程自动化 - ¥199后台管理看板 - ¥0个人中心数据包 - ¥59接口健康巡检 - ¥0 请安排本地服务跟进。 提交购买 需求提交 没有合适服务时创建需求 需要验证前端、后端、SQLite 和业务页面可用。 提交需求 个人中心 / 我的 我的订单、需求和最近记录 刷新 用户演示用户 我的订单10 我的需求0 服务数量5 我的订单 #10 演示用户已提交 ¥99#9 演示用户已提交 ¥99#8 演示用户已提交 ¥99#7 演示用户已提交 ¥99#6 演示用户已提交 ¥99#5 演示用户已提交 ¥99#4 演示用户已提交 ¥99#3 演示用户已提交 ¥99#2 演示用户已提交 ¥99#1 演示用户已提交 ¥99 我的需求 暂无需求可在需求提交区创建 后台管理 运营看板 刷新后台 用户2 服务5 订单10 收入¥990 操作日志 user提交购买订单 #10user提交购买订单 #9user提交购买订单 #8user提交购买订单 #7user提交购买订单 #6user提交购买订单 #5user提交购买订单 #4user提交购买订单 #3 接口响应 { \"ok\": true, \"data\": [ { \"id\": 1, \"title\": \"智能内容工作台\", \"category\": \"搜索筛选\", \"provider\": \"PinAI 服务中心\", \"price\": 99, \"rating\": 4.9, \"status\": \"可购买\", \"description\": \"支持本地资料检索、标签筛选和结果导出。\" }, { \"id\": 2, \"title\": \"业务流程自动化\", \"category\": \"购买提交\", \"provider\": \"流程编排组\", \"price\": 199, \"rating\": 4.8, \"status\": \"可购买\", \"description\": \"将表单提交、审批、通知和台账写入 SQLite。\" }, { \"id\": 4, \"title\": \"后台管理看板\", \"category\": \"后台管理\", \"provider\": \"运营管理台\", \"price\": 0, \"rating\": 4.7, \"status\": \"功能入口\", \"description\": \"查看服务、订单、需求、收入和操作日志。\" }, { \"id\": 3, \"title\": \"个人中心数据包\", \"category\": \"个人中心\", \"provider\": \"本地数据助手\", \"price\": 59, \"rating\": 4.6, \"status\": \"可购买\", \"description\": \"汇总我的订单、需求和最近操作记录。\" }, { \"id\": 5, \"title\": \"接口健康巡检\", \"category\": \"服务监控\", \"provider\": \"本地运维台\", \"price\": 0, \"ratin",
+        "layout": {
+          "viewportWidth": 1728,
+          "viewportHeight": 1600,
+          "scrollWidth": 1728,
+          "scrollHeight": 4612,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89103-cycle32-repair-structure-08-操作-重置筛选",
+          "label": "操作:重置筛选",
+          "finalUrl": "http://127.0.0.1:49103/#purchase",
+          "title": "may-89103 PinAI 本地服务台",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89103/runtime-check/codex-20260608-cycle32-repair/may-89103-cycle32-repair-structure-08-操作-重置筛选.json",
+          "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89103/runtime-check/codex-20260608-cycle32-repair/may-89103-cycle32-repair-structure-08-操作-重置筛选.png",
+          "elementCount": 241,
+          "interactiveCount": 26,
+          "interactiveLabels": [
+            "搜索筛选",
+            "购买提交",
+            "个人中心",
+            "后台管理",
+            "演示用户",
+            "13800138000",
+            "登录 / 注册",
+            "搜索个人中心、后台管理、购买提交",
+            "全部 个人中心 后台管理 搜索筛选 服务监控 购买提交",
+            "重置筛选",
+            "购买",
+            "智能内容工作台 - ¥99 业务流程自动化 - ¥199 后台管理看板 - ¥0 个人中心数据包 - ¥59 接口健康巡检 - ¥0",
+            "请安排本地服务跟进。",
+            "提交购买",
+            "本地全栈链路复验需求",
+            "需要验证前端、后端、SQLite 和业务页面可用。",
+            "提交需求",
+            "刷新",
+            "刷新后台"
+          ]
+        }
+      },
+      {
+        "label": "二层操作:重置筛选->提交购买",
+        "url": "http://127.0.0.1:49103/#profile",
+        "title": "may-89103 PinAI 本地服务台",
+        "headings": [
+          "may-89103 PinAI 本地服务台",
+          "演示账号快速进入",
+          "服务与方案",
+          "智能内容工作台",
+          "业务流程自动化",
+          "后台管理看板",
+          "个人中心数据包",
+          "接口健康巡检",
+          "提交购买或业务需求",
+          "没有合适服务时创建需求",
+          "我的订单、需求和最近记录",
+          "我的订单"
+        ],
+        "navLabels": [
+          "搜索筛选",
+          "购买提交",
+          "个人中心",
+          "后台管理"
+        ],
+        "buttons": [
+          "登录 / 注册",
+          "重置筛选",
+          "购买",
+          "提交购买",
+          "提交需求",
+          "刷新",
+          "刷新后台"
+        ],
+        "links": [
+          "搜索筛选",
+          "购买提交",
+          "个人中心",
+          "后台管理"
+        ],
+        "inputs": [
+          {
+            "tag": "input",
+            "type": "",
+            "placeholder": "姓名",
+            "name": "name",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "",
+            "placeholder": "手机号",
+            "name": "phone",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "",
+            "placeholder": "搜索个人中心、后台管理、购买提交",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "select",
+            "type": "",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "select",
+            "type": "",
+            "placeholder": "",
+            "name": "serviceId",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "",
+            "placeholder": "联系人",
+            "name": "customer",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "",
+            "placeholder": "联系电话",
+            "name": "phone",
+            "label": ""
+          },
+          {
+            "tag": "textarea",
+            "type": "",
+            "placeholder": "需求说明",
+            "name": "note",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "",
+            "placeholder": "需求标题",
+            "name": "title",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "",
+            "placeholder": "联系方式",
+            "name": "contact",
+            "label": ""
+          },
+          {
+            "tag": "textarea",
+            "type": "",
+            "placeholder": "详细描述",
+            "name": "detail",
+            "label": ""
+          }
+        ],
+        "tables": [],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "Local SQLite Full Stack may-89103 PinAI 本地服务台 搜索筛选 购买提交 个人中心 后台管理 前端http://127.0.0.1:49103 后端http://127.0.0.1:59103/api 健康检查ok 登录注册 演示账号快速进入 登录会写入本地状态，接口数据保存在项目 SQLite。 登录 / 注册 搜索 / 筛选 服务与方案 全部个人中心后台管理搜索筛选服务监控购买提交 重置筛选 搜索筛选可购买 智能内容工作台 支持本地资料检索、标签筛选和结果导出。 PinAI 服务中心评分 4.9 ¥99 购买 购买提交可购买 业务流程自动化 将表单提交、审批、通知和台账写入 SQLite。 流程编排组评分 4.8 ¥199 购买 后台管理功能入口 后台管理看板 查看服务、订单、需求、收入和操作日志。 运营管理台评分 4.7 免费入口 购买 个人中心可购买 个人中心数据包 汇总我的订单、需求和最近操作记录。 本地数据助手评分 4.6 ¥59 购买 服务监控功能入口 接口健康巡检 验证前端、后端和 SQLite 全链路是否可用。 本地运维台评分 4.5 免费入口 购买 购买 / 提交 提交购买或业务需求 购买提交会调用后端接口并立即写入 SQLite。 智能内容工作台 - ¥99业务流程自动化 - ¥199后台管理看板 - ¥0个人中心数据包 - ¥59接口健康巡检 - ¥0 请安排本地服务跟进。 提交购买 需求提交 没有合适服务时创建需求 需要验证前端、后端、SQLite 和业务页面可用。 提交需求 个人中心 / 我的 我的订单、需求和最近记录 刷新 用户演示用户 我的订单11 我的需求0 服务数量5 我的订单 #11 演示用户已提交 ¥99#10 演示用户已提交 ¥99#9 演示用户已提交 ¥99#8 演示用户已提交 ¥99#7 演示用户已提交 ¥99#6 演示用户已提交 ¥99#5 演示用户已提交 ¥99#4 演示用户已提交 ¥99#3 演示用户已提交 ¥99#2 演示用户已提交 ¥99#1 演示用户已提交 ¥99 我的需求 暂无需求可在需求提交区创建 后台管理 运营看板 刷新后台 用户2 服务5 订单11 收入¥1089 操作日志 user提交购买订单 #11user提交购买订单 #10user提交购买订单 #9user提交购买订单 #8user提交购买订单 #7user提交购买订单 #6user提交购买订单 #5user提交购买订单 #4 接口响应 { \"ok\": true, \"data\": [], \"total\": 0 }",
+        "layout": {
+          "viewportWidth": 1760,
+          "viewportHeight": 1600,
+          "scrollWidth": 1760,
+          "scrollHeight": 3847,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89103-cycle32-repair-structure-09-二层操作-重置筛选-提交购买",
+          "label": "二层操作:重置筛选->提交购买",
+          "finalUrl": "http://127.0.0.1:49103/#profile",
+          "title": "may-89103 PinAI 本地服务台",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89103/runtime-check/codex-20260608-cycle32-repair/may-89103-cycle32-repair-structure-09-二层操作-重置筛选-提交购买.json",
+          "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89103/runtime-check/codex-20260608-cycle32-repair/may-89103-cycle32-repair-structure-09-二层操作-重置筛选-提交购买.png",
+          "elementCount": 244,
+          "interactiveCount": 26,
+          "interactiveLabels": [
+            "搜索筛选",
+            "购买提交",
+            "个人中心",
+            "后台管理",
+            "演示用户",
+            "13800138000",
+            "登录 / 注册",
+            "搜索个人中心、后台管理、购买提交",
+            "全部 个人中心 后台管理 搜索筛选 服务监控 购买提交",
+            "重置筛选",
+            "购买",
+            "智能内容工作台 - ¥99 业务流程自动化 - ¥199 后台管理看板 - ¥0 个人中心数据包 - ¥59 接口健康巡检 - ¥0",
+            "请安排本地服务跟进。",
+            "提交购买",
+            "本地全栈链路复验需求",
+            "需要验证前端、后端、SQLite 和业务页面可用。",
+            "提交需求",
+            "刷新",
+            "刷新后台"
+          ]
+        }
+      }
+    ],
+    "findings": [],
+    "actionHints": [],
+    "emptyPages": [],
+    "overflowPages": [],
+    "blankPages": [],
+    "apiFailurePaths": [],
+    "goalTerms": [],
+    "clickedActionDescriptors": [
+      {
+        "nav": "搜索筛选",
+        "label": "重置筛选",
+        "ordinal": 0,
+        "unsafe": true
+      },
+      {
+        "nav": "搜索筛选",
+        "label": "重置筛选->提交购买",
+        "ordinal": 0,
+        "secondary": true,
+        "unsafe": false
+      },
+      {
+        "nav": "搜索筛选",
+        "label": "刷新",
+        "ordinal": 0,
+        "unsafe": false
+      },
+      {
+        "nav": "搜索筛选",
+        "label": "刷新->提交购买",
+        "ordinal": 0,
+        "secondary": true,
+        "unsafe": false
+      },
+      {
+        "nav": "购买提交",
+        "label": "重置筛选",
+        "ordinal": 0,
+        "unsafe": true
+      },
+      {
+        "nav": "购买提交",
+        "label": "重置筛选->提交购买",
+        "ordinal": 0,
+        "secondary": true,
+        "unsafe": false
+      }
+    ],
+    "secondaryActionClicks": 3,
+    "structureCaptures": [
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89103-cycle32-repair-structure-01-首屏",
+        "label": "首屏",
+        "finalUrl": "http://127.0.0.1:49103/",
+        "title": "may-89103 PinAI 本地服务台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89103/runtime-check/codex-20260608-cycle32-repair/may-89103-cycle32-repair-structure-01-首屏.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89103/runtime-check/codex-20260608-cycle32-repair/may-89103-cycle32-repair-structure-01-首屏.png",
+        "elementCount": 235,
+        "interactiveCount": 26,
+        "interactiveLabels": [
+          "搜索筛选",
+          "购买提交",
+          "个人中心",
+          "后台管理",
+          "演示用户",
+          "13800138000",
+          "登录 / 注册",
+          "搜索个人中心、后台管理、购买提交",
+          "全部 个人中心 后台管理 搜索筛选 服务监控 购买提交",
+          "重置筛选",
+          "购买",
+          "智能内容工作台 - ¥99 业务流程自动化 - ¥199 后台管理看板 - ¥0 个人中心数据包 - ¥59 接口健康巡检 - ¥0",
+          "请安排本地服务跟进。",
+          "提交购买",
+          "本地全栈链路复验需求",
+          "需要验证前端、后端、SQLite 和业务页面可用。",
+          "提交需求",
+          "刷新",
+          "刷新后台"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89103-cycle32-repair-structure-02-导航-搜索筛选",
+        "label": "导航:搜索筛选",
+        "finalUrl": "http://127.0.0.1:49103/#search",
+        "title": "may-89103 PinAI 本地服务台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89103/runtime-check/codex-20260608-cycle32-repair/may-89103-cycle32-repair-structure-02-导航-搜索筛选.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89103/runtime-check/codex-20260608-cycle32-repair/may-89103-cycle32-repair-structure-02-导航-搜索筛选.png",
+        "elementCount": 235,
+        "interactiveCount": 26,
+        "interactiveLabels": [
+          "搜索筛选",
+          "购买提交",
+          "个人中心",
+          "后台管理",
+          "演示用户",
+          "13800138000",
+          "登录 / 注册",
+          "搜索个人中心、后台管理、购买提交",
+          "全部 个人中心 后台管理 搜索筛选 服务监控 购买提交",
+          "重置筛选",
+          "购买",
+          "智能内容工作台 - ¥99 业务流程自动化 - ¥199 后台管理看板 - ¥0 个人中心数据包 - ¥59 接口健康巡检 - ¥0",
+          "请安排本地服务跟进。",
+          "提交购买",
+          "本地全栈链路复验需求",
+          "需要验证前端、后端、SQLite 和业务页面可用。",
+          "提交需求",
+          "刷新",
+          "刷新后台"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89103-cycle32-repair-structure-03-操作-重置筛选",
+        "label": "操作:重置筛选",
+        "finalUrl": "http://127.0.0.1:49103/#search",
+        "title": "may-89103 PinAI 本地服务台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89103/runtime-check/codex-20260608-cycle32-repair/may-89103-cycle32-repair-structure-03-操作-重置筛选.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89103/runtime-check/codex-20260608-cycle32-repair/may-89103-cycle32-repair-structure-03-操作-重置筛选.png",
+        "elementCount": 235,
+        "interactiveCount": 26,
+        "interactiveLabels": [
+          "搜索筛选",
+          "购买提交",
+          "个人中心",
+          "后台管理",
+          "演示用户",
+          "13800138000",
+          "登录 / 注册",
+          "搜索个人中心、后台管理、购买提交",
+          "全部 个人中心 后台管理 搜索筛选 服务监控 购买提交",
+          "重置筛选",
+          "购买",
+          "智能内容工作台 - ¥99 业务流程自动化 - ¥199 后台管理看板 - ¥0 个人中心数据包 - ¥59 接口健康巡检 - ¥0",
+          "请安排本地服务跟进。",
+          "提交购买",
+          "本地全栈链路复验需求",
+          "需要验证前端、后端、SQLite 和业务页面可用。",
+          "提交需求",
+          "刷新",
+          "刷新后台"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89103-cycle32-repair-structure-04-二层操作-重置筛选-提交购买",
+        "label": "二层操作:重置筛选->提交购买",
+        "finalUrl": "http://127.0.0.1:49103/#profile",
+        "title": "may-89103 PinAI 本地服务台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89103/runtime-check/codex-20260608-cycle32-repair/may-89103-cycle32-repair-structure-04-二层操作-重置筛选-提交购买.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89103/runtime-check/codex-20260608-cycle32-repair/may-89103-cycle32-repair-structure-04-二层操作-重置筛选-提交购买.png",
+        "elementCount": 238,
+        "interactiveCount": 26,
+        "interactiveLabels": [
+          "搜索筛选",
+          "购买提交",
+          "个人中心",
+          "后台管理",
+          "演示用户",
+          "13800138000",
+          "登录 / 注册",
+          "搜索个人中心、后台管理、购买提交",
+          "全部 个人中心 后台管理 搜索筛选 服务监控 购买提交",
+          "重置筛选",
+          "购买",
+          "智能内容工作台 - ¥99 业务流程自动化 - ¥199 后台管理看板 - ¥0 个人中心数据包 - ¥59 接口健康巡检 - ¥0",
+          "请安排本地服务跟进。",
+          "提交购买",
+          "本地全栈链路复验需求",
+          "需要验证前端、后端、SQLite 和业务页面可用。",
+          "提交需求",
+          "刷新",
+          "刷新后台"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89103-cycle32-repair-structure-05-操作-刷新",
+        "label": "操作:刷新",
+        "finalUrl": "http://127.0.0.1:49103/#search",
+        "title": "may-89103 PinAI 本地服务台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89103/runtime-check/codex-20260608-cycle32-repair/may-89103-cycle32-repair-structure-05-操作-刷新.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89103/runtime-check/codex-20260608-cycle32-repair/may-89103-cycle32-repair-structure-05-操作-刷新.png",
+        "elementCount": 238,
+        "interactiveCount": 26,
+        "interactiveLabels": [
+          "搜索筛选",
+          "购买提交",
+          "个人中心",
+          "后台管理",
+          "演示用户",
+          "13800138000",
+          "登录 / 注册",
+          "搜索个人中心、后台管理、购买提交",
+          "全部 个人中心 后台管理 搜索筛选 服务监控 购买提交",
+          "重置筛选",
+          "购买",
+          "智能内容工作台 - ¥99 业务流程自动化 - ¥199 后台管理看板 - ¥0 个人中心数据包 - ¥59 接口健康巡检 - ¥0",
+          "请安排本地服务跟进。",
+          "提交购买",
+          "本地全栈链路复验需求",
+          "需要验证前端、后端、SQLite 和业务页面可用。",
+          "提交需求",
+          "刷新",
+          "刷新后台"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89103-cycle32-repair-structure-06-二层操作-刷新-提交购买",
+        "label": "二层操作:刷新->提交购买",
+        "finalUrl": "http://127.0.0.1:49103/#profile",
+        "title": "may-89103 PinAI 本地服务台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89103/runtime-check/codex-20260608-cycle32-repair/may-89103-cycle32-repair-structure-06-二层操作-刷新-提交购买.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89103/runtime-check/codex-20260608-cycle32-repair/may-89103-cycle32-repair-structure-06-二层操作-刷新-提交购买.png",
+        "elementCount": 241,
+        "interactiveCount": 26,
+        "interactiveLabels": [
+          "搜索筛选",
+          "购买提交",
+          "个人中心",
+          "后台管理",
+          "演示用户",
+          "13800138000",
+          "登录 / 注册",
+          "搜索个人中心、后台管理、购买提交",
+          "全部 个人中心 后台管理 搜索筛选 服务监控 购买提交",
+          "重置筛选",
+          "购买",
+          "智能内容工作台 - ¥99 业务流程自动化 - ¥199 后台管理看板 - ¥0 个人中心数据包 - ¥59 接口健康巡检 - ¥0",
+          "请安排本地服务跟进。",
+          "提交购买",
+          "本地全栈链路复验需求",
+          "需要验证前端、后端、SQLite 和业务页面可用。",
+          "提交需求",
+          "刷新",
+          "刷新后台"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89103-cycle32-repair-structure-07-导航-购买提交",
+        "label": "导航:购买提交",
+        "finalUrl": "http://127.0.0.1:49103/#purchase",
+        "title": "may-89103 PinAI 本地服务台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89103/runtime-check/codex-20260608-cycle32-repair/may-89103-cycle32-repair-structure-07-导航-购买提交.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89103/runtime-check/codex-20260608-cycle32-repair/may-89103-cycle32-repair-structure-07-导航-购买提交.png",
+        "elementCount": 241,
+        "interactiveCount": 26,
+        "interactiveLabels": [
+          "搜索筛选",
+          "购买提交",
+          "个人中心",
+          "后台管理",
+          "演示用户",
+          "13800138000",
+          "登录 / 注册",
+          "搜索个人中心、后台管理、购买提交",
+          "全部 个人中心 后台管理 搜索筛选 服务监控 购买提交",
+          "重置筛选",
+          "购买",
+          "智能内容工作台 - ¥99 业务流程自动化 - ¥199 后台管理看板 - ¥0 个人中心数据包 - ¥59 接口健康巡检 - ¥0",
+          "请安排本地服务跟进。",
+          "提交购买",
+          "本地全栈链路复验需求",
+          "需要验证前端、后端、SQLite 和业务页面可用。",
+          "提交需求",
+          "刷新",
+          "刷新后台"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89103-cycle32-repair-structure-08-操作-重置筛选",
+        "label": "操作:重置筛选",
+        "finalUrl": "http://127.0.0.1:49103/#purchase",
+        "title": "may-89103 PinAI 本地服务台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89103/runtime-check/codex-20260608-cycle32-repair/may-89103-cycle32-repair-structure-08-操作-重置筛选.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89103/runtime-check/codex-20260608-cycle32-repair/may-89103-cycle32-repair-structure-08-操作-重置筛选.png",
+        "elementCount": 241,
+        "interactiveCount": 26,
+        "interactiveLabels": [
+          "搜索筛选",
+          "购买提交",
+          "个人中心",
+          "后台管理",
+          "演示用户",
+          "13800138000",
+          "登录 / 注册",
+          "搜索个人中心、后台管理、购买提交",
+          "全部 个人中心 后台管理 搜索筛选 服务监控 购买提交",
+          "重置筛选",
+          "购买",
+          "智能内容工作台 - ¥99 业务流程自动化 - ¥199 后台管理看板 - ¥0 个人中心数据包 - ¥59 接口健康巡检 - ¥0",
+          "请安排本地服务跟进。",
+          "提交购买",
+          "本地全栈链路复验需求",
+          "需要验证前端、后端、SQLite 和业务页面可用。",
+          "提交需求",
+          "刷新",
+          "刷新后台"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89103-cycle32-repair-structure-09-二层操作-重置筛选-提交购买",
+        "label": "二层操作:重置筛选->提交购买",
+        "finalUrl": "http://127.0.0.1:49103/#profile",
+        "title": "may-89103 PinAI 本地服务台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89103/runtime-check/codex-20260608-cycle32-repair/may-89103-cycle32-repair-structure-09-二层操作-重置筛选-提交购买.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89103/runtime-check/codex-20260608-cycle32-repair/may-89103-cycle32-repair-structure-09-二层操作-重置筛选-提交购买.png",
+        "elementCount": 244,
+        "interactiveCount": 26,
+        "interactiveLabels": [
+          "搜索筛选",
+          "购买提交",
+          "个人中心",
+          "后台管理",
+          "演示用户",
+          "13800138000",
+          "登录 / 注册",
+          "搜索个人中心、后台管理、购买提交",
+          "全部 个人中心 后台管理 搜索筛选 服务监控 购买提交",
+          "重置筛选",
+          "购买",
+          "智能内容工作台 - ¥99 业务流程自动化 - ¥199 后台管理看板 - ¥0 个人中心数据包 - ¥59 接口健康巡检 - ¥0",
+          "请安排本地服务跟进。",
+          "提交购买",
+          "本地全栈链路复验需求",
+          "需要验证前端、后端、SQLite 和业务页面可用。",
+          "提交需求",
+          "刷新",
+          "刷新后台"
+        ]
+      }
+    ],
+    "representativeScreenshotUrl": "http://127.0.0.1:49103/",
+    "representativeScreenshotLabel": "may-89103 PinAI 本地服务台"
+  },
+  "websiteStructureCapture": {
+    "module": "website_structure_capture",
+    "captureCount": 9,
+    "captures": [
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89103-cycle32-repair-structure-01-首屏",
+        "label": "首屏",
+        "finalUrl": "http://127.0.0.1:49103/",
+        "title": "may-89103 PinAI 本地服务台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89103/runtime-check/codex-20260608-cycle32-repair/may-89103-cycle32-repair-structure-01-首屏.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89103/runtime-check/codex-20260608-cycle32-repair/may-89103-cycle32-repair-structure-01-首屏.png",
+        "elementCount": 235,
+        "interactiveCount": 26,
+        "interactiveLabels": [
+          "搜索筛选",
+          "购买提交",
+          "个人中心",
+          "后台管理",
+          "演示用户",
+          "13800138000",
+          "登录 / 注册",
+          "搜索个人中心、后台管理、购买提交",
+          "全部 个人中心 后台管理 搜索筛选 服务监控 购买提交",
+          "重置筛选",
+          "购买",
+          "智能内容工作台 - ¥99 业务流程自动化 - ¥199 后台管理看板 - ¥0 个人中心数据包 - ¥59 接口健康巡检 - ¥0",
+          "请安排本地服务跟进。",
+          "提交购买",
+          "本地全栈链路复验需求",
+          "需要验证前端、后端、SQLite 和业务页面可用。",
+          "提交需求",
+          "刷新",
+          "刷新后台"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89103-cycle32-repair-structure-02-导航-搜索筛选",
+        "label": "导航:搜索筛选",
+        "finalUrl": "http://127.0.0.1:49103/#search",
+        "title": "may-89103 PinAI 本地服务台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89103/runtime-check/codex-20260608-cycle32-repair/may-89103-cycle32-repair-structure-02-导航-搜索筛选.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89103/runtime-check/codex-20260608-cycle32-repair/may-89103-cycle32-repair-structure-02-导航-搜索筛选.png",
+        "elementCount": 235,
+        "interactiveCount": 26,
+        "interactiveLabels": [
+          "搜索筛选",
+          "购买提交",
+          "个人中心",
+          "后台管理",
+          "演示用户",
+          "13800138000",
+          "登录 / 注册",
+          "搜索个人中心、后台管理、购买提交",
+          "全部 个人中心 后台管理 搜索筛选 服务监控 购买提交",
+          "重置筛选",
+          "购买",
+          "智能内容工作台 - ¥99 业务流程自动化 - ¥199 后台管理看板 - ¥0 个人中心数据包 - ¥59 接口健康巡检 - ¥0",
+          "请安排本地服务跟进。",
+          "提交购买",
+          "本地全栈链路复验需求",
+          "需要验证前端、后端、SQLite 和业务页面可用。",
+          "提交需求",
+          "刷新",
+          "刷新后台"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89103-cycle32-repair-structure-03-操作-重置筛选",
+        "label": "操作:重置筛选",
+        "finalUrl": "http://127.0.0.1:49103/#search",
+        "title": "may-89103 PinAI 本地服务台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89103/runtime-check/codex-20260608-cycle32-repair/may-89103-cycle32-repair-structure-03-操作-重置筛选.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89103/runtime-check/codex-20260608-cycle32-repair/may-89103-cycle32-repair-structure-03-操作-重置筛选.png",
+        "elementCount": 235,
+        "interactiveCount": 26,
+        "interactiveLabels": [
+          "搜索筛选",
+          "购买提交",
+          "个人中心",
+          "后台管理",
+          "演示用户",
+          "13800138000",
+          "登录 / 注册",
+          "搜索个人中心、后台管理、购买提交",
+          "全部 个人中心 后台管理 搜索筛选 服务监控 购买提交",
+          "重置筛选",
+          "购买",
+          "智能内容工作台 - ¥99 业务流程自动化 - ¥199 后台管理看板 - ¥0 个人中心数据包 - ¥59 接口健康巡检 - ¥0",
+          "请安排本地服务跟进。",
+          "提交购买",
+          "本地全栈链路复验需求",
+          "需要验证前端、后端、SQLite 和业务页面可用。",
+          "提交需求",
+          "刷新",
+          "刷新后台"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89103-cycle32-repair-structure-04-二层操作-重置筛选-提交购买",
+        "label": "二层操作:重置筛选->提交购买",
+        "finalUrl": "http://127.0.0.1:49103/#profile",
+        "title": "may-89103 PinAI 本地服务台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89103/runtime-check/codex-20260608-cycle32-repair/may-89103-cycle32-repair-structure-04-二层操作-重置筛选-提交购买.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89103/runtime-check/codex-20260608-cycle32-repair/may-89103-cycle32-repair-structure-04-二层操作-重置筛选-提交购买.png",
+        "elementCount": 238,
+        "interactiveCount": 26,
+        "interactiveLabels": [
+          "搜索筛选",
+          "购买提交",
+          "个人中心",
+          "后台管理",
+          "演示用户",
+          "13800138000",
+          "登录 / 注册",
+          "搜索个人中心、后台管理、购买提交",
+          "全部 个人中心 后台管理 搜索筛选 服务监控 购买提交",
+          "重置筛选",
+          "购买",
+          "智能内容工作台 - ¥99 业务流程自动化 - ¥199 后台管理看板 - ¥0 个人中心数据包 - ¥59 接口健康巡检 - ¥0",
+          "请安排本地服务跟进。",
+          "提交购买",
+          "本地全栈链路复验需求",
+          "需要验证前端、后端、SQLite 和业务页面可用。",
+          "提交需求",
+          "刷新",
+          "刷新后台"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89103-cycle32-repair-structure-05-操作-刷新",
+        "label": "操作:刷新",
+        "finalUrl": "http://127.0.0.1:49103/#search",
+        "title": "may-89103 PinAI 本地服务台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89103/runtime-check/codex-20260608-cycle32-repair/may-89103-cycle32-repair-structure-05-操作-刷新.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89103/runtime-check/codex-20260608-cycle32-repair/may-89103-cycle32-repair-structure-05-操作-刷新.png",
+        "elementCount": 238,
+        "interactiveCount": 26,
+        "interactiveLabels": [
+          "搜索筛选",
+          "购买提交",
+          "个人中心",
+          "后台管理",
+          "演示用户",
+          "13800138000",
+          "登录 / 注册",
+          "搜索个人中心、后台管理、购买提交",
+          "全部 个人中心 后台管理 搜索筛选 服务监控 购买提交",
+          "重置筛选",
+          "购买",
+          "智能内容工作台 - ¥99 业务流程自动化 - ¥199 后台管理看板 - ¥0 个人中心数据包 - ¥59 接口健康巡检 - ¥0",
+          "请安排本地服务跟进。",
+          "提交购买",
+          "本地全栈链路复验需求",
+          "需要验证前端、后端、SQLite 和业务页面可用。",
+          "提交需求",
+          "刷新",
+          "刷新后台"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89103-cycle32-repair-structure-06-二层操作-刷新-提交购买",
+        "label": "二层操作:刷新->提交购买",
+        "finalUrl": "http://127.0.0.1:49103/#profile",
+        "title": "may-89103 PinAI 本地服务台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89103/runtime-check/codex-20260608-cycle32-repair/may-89103-cycle32-repair-structure-06-二层操作-刷新-提交购买.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89103/runtime-check/codex-20260608-cycle32-repair/may-89103-cycle32-repair-structure-06-二层操作-刷新-提交购买.png",
+        "elementCount": 241,
+        "interactiveCount": 26,
+        "interactiveLabels": [
+          "搜索筛选",
+          "购买提交",
+          "个人中心",
+          "后台管理",
+          "演示用户",
+          "13800138000",
+          "登录 / 注册",
+          "搜索个人中心、后台管理、购买提交",
+          "全部 个人中心 后台管理 搜索筛选 服务监控 购买提交",
+          "重置筛选",
+          "购买",
+          "智能内容工作台 - ¥99 业务流程自动化 - ¥199 后台管理看板 - ¥0 个人中心数据包 - ¥59 接口健康巡检 - ¥0",
+          "请安排本地服务跟进。",
+          "提交购买",
+          "本地全栈链路复验需求",
+          "需要验证前端、后端、SQLite 和业务页面可用。",
+          "提交需求",
+          "刷新",
+          "刷新后台"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89103-cycle32-repair-structure-07-导航-购买提交",
+        "label": "导航:购买提交",
+        "finalUrl": "http://127.0.0.1:49103/#purchase",
+        "title": "may-89103 PinAI 本地服务台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89103/runtime-check/codex-20260608-cycle32-repair/may-89103-cycle32-repair-structure-07-导航-购买提交.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89103/runtime-check/codex-20260608-cycle32-repair/may-89103-cycle32-repair-structure-07-导航-购买提交.png",
+        "elementCount": 241,
+        "interactiveCount": 26,
+        "interactiveLabels": [
+          "搜索筛选",
+          "购买提交",
+          "个人中心",
+          "后台管理",
+          "演示用户",
+          "13800138000",
+          "登录 / 注册",
+          "搜索个人中心、后台管理、购买提交",
+          "全部 个人中心 后台管理 搜索筛选 服务监控 购买提交",
+          "重置筛选",
+          "购买",
+          "智能内容工作台 - ¥99 业务流程自动化 - ¥199 后台管理看板 - ¥0 个人中心数据包 - ¥59 接口健康巡检 - ¥0",
+          "请安排本地服务跟进。",
+          "提交购买",
+          "本地全栈链路复验需求",
+          "需要验证前端、后端、SQLite 和业务页面可用。",
+          "提交需求",
+          "刷新",
+          "刷新后台"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89103-cycle32-repair-structure-08-操作-重置筛选",
+        "label": "操作:重置筛选",
+        "finalUrl": "http://127.0.0.1:49103/#purchase",
+        "title": "may-89103 PinAI 本地服务台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89103/runtime-check/codex-20260608-cycle32-repair/may-89103-cycle32-repair-structure-08-操作-重置筛选.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89103/runtime-check/codex-20260608-cycle32-repair/may-89103-cycle32-repair-structure-08-操作-重置筛选.png",
+        "elementCount": 241,
+        "interactiveCount": 26,
+        "interactiveLabels": [
+          "搜索筛选",
+          "购买提交",
+          "个人中心",
+          "后台管理",
+          "演示用户",
+          "13800138000",
+          "登录 / 注册",
+          "搜索个人中心、后台管理、购买提交",
+          "全部 个人中心 后台管理 搜索筛选 服务监控 购买提交",
+          "重置筛选",
+          "购买",
+          "智能内容工作台 - ¥99 业务流程自动化 - ¥199 后台管理看板 - ¥0 个人中心数据包 - ¥59 接口健康巡检 - ¥0",
+          "请安排本地服务跟进。",
+          "提交购买",
+          "本地全栈链路复验需求",
+          "需要验证前端、后端、SQLite 和业务页面可用。",
+          "提交需求",
+          "刷新",
+          "刷新后台"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89103-cycle32-repair-structure-09-二层操作-重置筛选-提交购买",
+        "label": "二层操作:重置筛选->提交购买",
+        "finalUrl": "http://127.0.0.1:49103/#profile",
+        "title": "may-89103 PinAI 本地服务台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89103/runtime-check/codex-20260608-cycle32-repair/may-89103-cycle32-repair-structure-09-二层操作-重置筛选-提交购买.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89103/runtime-check/codex-20260608-cycle32-repair/may-89103-cycle32-repair-structure-09-二层操作-重置筛选-提交购买.png",
+        "elementCount": 244,
+        "interactiveCount": 26,
+        "interactiveLabels": [
+          "搜索筛选",
+          "购买提交",
+          "个人中心",
+          "后台管理",
+          "演示用户",
+          "13800138000",
+          "登录 / 注册",
+          "搜索个人中心、后台管理、购买提交",
+          "全部 个人中心 后台管理 搜索筛选 服务监控 购买提交",
+          "重置筛选",
+          "购买",
+          "智能内容工作台 - ¥99 业务流程自动化 - ¥199 后台管理看板 - ¥0 个人中心数据包 - ¥59 接口健康巡检 - ¥0",
+          "请安排本地服务跟进。",
+          "提交购买",
+          "本地全栈链路复验需求",
+          "需要验证前端、后端、SQLite 和业务页面可用。",
+          "提交需求",
+          "刷新",
+          "刷新后台"
+        ]
+      }
+    ]
+  },
+  "screenshotMetrics": {
+    "width": 1792,
+    "height": 1600,
+    "scrollWidth": 1760,
+    "scrollHeight": 4693
+  },
+  "initialBodyTextPreview": "LOCAL SQLITE FULL STACK\n\nmay-89103 PinAI 本地服务台\n搜索筛选\n购买提交\n个人中心\n后台管理\n前端\nhttp://127.0.0.1:49103\n后端\nhttp://127.0.0.1:59103/api\n健康检查\nok\n\n登录注册\n\n演示账号快速进入\n\n登录会写入本地状态，接口数据保存在项目 SQLite。\n\n登录 / 注册\n\n搜索 / 筛选\n\n服务与方案\n全部\n个人中心\n后台管理\n搜索筛选\n服务监控\n购买提交\n重置筛选\n搜索筛选\n可购买\n智能内容工作台\n\n支持本地资料检索、标签筛选和结果导出。\n\nPinAI 服务中心\n评分 4.9\n¥99\n购买\n购买提交\n可购买\n业务流程自动化\n\n将表单提交、审批、通知和台账写入 SQLite。\n\n流程编排组\n评分 4.8\n¥199\n购买\n后台管理\n功能入口\n后台管理看板\n\n查看服务、订单、需求、收入和操作日志。\n\n运营管理台\n评分 4.7\n免费入口\n购买\n个人中心\n可购买\n个人中心数据包\n\n汇总我的订单、需求和最近操作记录。\n\n本地数据助手\n评分 4.6\n¥59\n购买\n服务监控\n功能入口\n接口健康巡检\n\n验证前端、后端和 SQLite 全链路是否可用。\n\n本地运维台\n评分 4.5\n免费入口\n购买\n\n购买 / 提交\n\n提交购买或业务需求\n\n购买提交会调用后端接口并立即写入 SQLite。\n\n智能内容工作台 - ¥99\n业务流程自动化 - ¥199\n后台管理看板 - ¥0\n个人中心数据包 - ¥59\n接口健康巡检 - ¥0\n提交购买\n\n需求提交\n\n没有合适服务时创建需求\n提交需求\n\n个人中心 / 我的\n\n我的订单、需求和最近记录\n刷新\n用户\n演示用户\n我的订单\n8\n我的需求\n0\n服务数量\n5\n我的订单\n#8 演示用户\n已提交 ¥99\n#7 演示用户\n已提交 ¥99\n#6 演示用户\n已提交 ¥99\n#5 演示用户\n已提交 ¥99\n#4 演示用户\n已提交 ¥99\n#3 演示用户\n已提交 ¥99\n#2 演示用户\n已提交 ¥99\n#1 演示用户\n已提交 ¥99\n我的需求\n暂无需求\n可在需求提交区创建\n\n后台管理\n\n运营看板\n刷新后台\n用户\n2\n服务\n5\n订单\n8\n收入\n¥792\n操作日志\nuser\n提交购买订单 #8\nuser\n提交购买订单 #7\nuser\n提交购买订单 #6\nuser\n提交购买订单 #5\nuser\n提交购买订单 #4\nuser\n提交购买订单 #3\nuser\n提交购买订单 #2\nuser\n提交购买订单 #1\n\n接口响应\n\n{\n  \"ok\": true,\n  \"data\": {\n    \"users\": 2,\n    \"services\": 5,\n    \"orders\": 8,\n    \"submissions\": 0,\n    \"revenue\": 792,\n    \"logs\": [\n      {\n        \"id\": 9,\n        \"actor\": \"user\",\n        \"action\": \"提交购买订单 #8\",\n        \"created_at\": \"2026-06-08T13:49:48.439Z\"\n      },\n      {\n        \"id\": 8,\n        \"actor\": \"user\",\n        \"action\": \"提交购买订单 #7\",\n        \"created_at\": \"2026-06-08T13:49:39.457Z\"\n      },\n      {\n        \"id\": 7,\n        \"actor\": \"user\",\n        \"action\": \"提交购买订单 #6\",\n        \"created_at\": \"2026-06-08T",
+  "bodyTextPreview": "LOCAL SQLITE FULL STACK\n\nmay-89103 PinAI 本地服务台\n搜索筛选\n购买提交\n个人中心\n后台管理\n前端\nhttp://127.0.0.1:49103\n后端\nhttp://127.0.0.1:59103/api\n健康检查\nok\n\n登录注册\n\n演示账号快速进入\n\n登录会写入本地状态，接口数据保存在项目 SQLite。\n\n登录 / 注册\n\n搜索 / 筛选\n\n服务与方案\n全部\n个人中心\n后台管理\n搜索筛选\n服务监控\n购买提交\n重置筛选\n搜索筛选\n可购买\n智能内容工作台\n\n支持本地资料检索、标签筛选和结果导出。\n\nPinAI 服务中心\n评分 4.9\n¥99\n购买\n购买提交\n可购买\n业务流程自动化\n\n将表单提交、审批、通知和台账写入 SQLite。\n\n流程编排组\n评分 4.8\n¥199\n购买\n后台管理\n功能入口\n后台管理看板\n\n查看服务、订单、需求、收入和操作日志。\n\n运营管理台\n评分 4.7\n免费入口\n购买\n个人中心\n可购买\n个人中心数据包\n\n汇总我的订单、需求和最近操作记录。\n\n本地数据助手\n评分 4.6\n¥59\n购买\n服务监控\n功能入口\n接口健康巡检\n\n验证前端、后端和 SQLite 全链路是否可用。\n\n本地运维台\n评分 4.5\n免费入口\n购买\n\n购买 / 提交\n\n提交购买或业务需求\n\n购买提交会调用后端接口并立即写入 SQLite。\n\n智能内容工作台 - ¥99\n业务流程自动化 - ¥199\n后台管理看板 - ¥0\n个人中心数据包 - ¥59\n接口健康巡检 - ¥0\n提交购买\n\n需求提交\n\n没有合适服务时创建需求\n提交需求\n\n个人中心 / 我的\n\n我的订单、需求和最近记录\n刷新\n用户\n演示用户\n我的订单\n11\n我的需求\n0\n服务数量\n5\n我的订单\n#11 演示用户\n已提交 ¥99\n#10 演示用户\n已提交 ¥99\n#9 演示用户\n已提交 ¥99\n#8 演示用户\n已提交 ¥99\n#7 演示用户\n已提交 ¥99\n#6 演示用户\n已提交 ¥99\n#5 演示用户\n已提交 ¥99\n#4 演示用户\n已提交 ¥99\n#3 演示用户\n已提交 ¥99\n#2 演示用户\n已提交 ¥99\n#1 演示用户\n已提交 ¥99\n我的需求\n暂无需求\n可在需求提交区创建\n\n后台管理\n\n运营看板\n刷新后台\n用户\n2\n服务\n5\n订单\n11\n收入\n¥1089\n操作日志\nuser\n提交购买订单 #11\nuser\n提交购买订单 #10\nuser\n提交购买订单 #9\nuser\n提交购买订单 #8\nuser\n提交购买订单 #7\nuser\n提交购买订单 #6\nuser\n提交购买订单 #5\nuser\n提交购买订单 #4\n\n接口响应\n\n{\n  \"ok\": true,\n  \"data\": {\n    \"users\": 2,\n    \"services\": 5,\n    \"orders\": 11,\n    \"submissions\": 0,\n    \"revenue\": 1089,\n    \"logs\": [\n      {\n        \"id\": 12,\n        \"actor\": \"user\",\n        \"action\": \"提交购买订单 #11\",\n        \"created_at\": \"2026-06-08T17:03:12.828Z\"\n      },\n      {\n        \"id\": 11,\n        \"actor\": \"user\",\n        \"action\": \"提交购买订单 #10\",\n        \"created_at\": \"2026-06-08T17:03:00.491Z\"\n      },\n      {\n        \"id\": 10,\n        \"actor\": \"user\",\n        \"action\": \"提交购买订单 #9\",\n        \"created_at\": \"2026-06-08T17:02:52.804Z\"\n      },\n      {\n        \"id\": 9,\n        \"actor\": \"user\",\n        \"action\": \"提交购买订单 #8\",\n        \"created_at\": \"2026-06-08T13:49:48.439Z\"\n      },\n      {\n        \"id\": 8,\n        \"actor\": \"user\",\n        \"action\": \"提交购买订单 #7\",\n        \"created_at\": \"2026-06-08T13:49:39.457Z\"\n      },\n      {\n        \"id\": 7,\n        \"actor\": \"user\",\n        \"action\": \"提交购买订单 #6\",\n        \"created_at\": \"2026-06-08T13:29:20.732Z\"\n      },\n      {\n        \"id\": 6,\n        \"actor\": \"user\",\n        \"action\": \"提交购买订单 #5\",\n        \"created_at\": \"2026-06-08T13:29:13.165Z\"\n      },\n      {\n        \"id\": 5,\n        \"actor\": \"user\",\n        \"action\": \"提交购买订单 #4\",\n        \"created_at\": \"2026-06-08T13:25:49.027Z\"\n      }\n    ]\n  }\n}",
+  "apiBase": "http://127.0.0.1:59103/api",
+  "businessGoalPreview": "",
+  "apiResponses": [
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:59103/api/health"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:59103/api/categories"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:59103/api/services?search=&category=%E5%85%A8%E9%83%A8"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:59103/api/profile"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:59103/api/orders"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:59103/api/submissions"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:59103/api/admin/summary"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:59103/api/health"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:59103/api/categories"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:59103/api/services?search=&category=%E5%85%A8%E9%83%A8"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:59103/api/profile"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:59103/api/orders"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:59103/api/submissions"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:59103/api/admin/summary"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:59103/api/services?search=&category=%E5%85%A8%E9%83%A8"
+    },
+    {
+      "method": "POST",
+      "status": 200,
+      "url": "http://127.0.0.1:59103/api/orders"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:59103/api/profile"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:59103/api/orders"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:59103/api/admin/summary"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:59103/api/submissions"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:59103/api/profile"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:59103/api/orders"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:59103/api/submissions"
+    },
+    {
+      "method": "POST",
+      "status": 200,
+      "url": "http://127.0.0.1:59103/api/orders"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:59103/api/profile"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:59103/api/admin/summary"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:59103/api/orders"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:59103/api/submissions"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:59103/api/services?search=&category=%E5%85%A8%E9%83%A8"
+    },
+    {
+      "method": "POST",
+      "status": 200,
+      "url": "http://127.0.0.1:59103/api/orders"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:59103/api/profile"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:59103/api/admin/summary"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:59103/api/orders"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:59103/api/submissions"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:59103/api/health"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:59103/api/categories"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:59103/api/services?search=&category=%E5%85%A8%E9%83%A8"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:59103/api/profile"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:59103/api/orders"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:59103/api/submissions"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:59103/api/admin/summary"
+    }
+  ],
+  "apiChecks": [
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59103/api/health",
+      "path": "/api/health",
+      "status": 200,
+      "ok": true,
+      "bodyPreview": "{\"ok\":true,\"status\":\"ok\",\"project\":\"may-89103\",\"db\":\"/Users/chen/Documents/trae_projects/local_projects/may-89103/data/app.sqlite\",\"time\":1780938197998}"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59103/api/categories",
+      "path": "/api/categories",
+      "status": 200,
+      "ok": true,
+      "bodyPreview": "{\"ok\":true,\"data\":[\"个人中心\",\"后台管理\",\"搜索筛选\",\"服务监控\",\"购买提交\"]}"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59103/api/services?search=&category=%E5%85%A8%E9%83%A8",
+      "path": "/api/services?search=&category=%E5%85%A8%E9%83%A8",
+      "status": 200,
+      "ok": true,
+      "bodyPreview": "{\"ok\":true,\"data\":[{\"id\":1,\"title\":\"智能内容工作台\",\"category\":\"搜索筛选\",\"provider\":\"PinAI 服务中心\",\"price\":99,\"rating\":4.9,\"status\":\"可购买\",\"description\":\"支持本地资料检索、标签筛选和结果导出。\"},{\"id\":2,\"title\":\"业务流程自动化\",\"category\":\"购买提交\",\"provider\":\"流程编排组\",\"price\":199,\"rating\":4.8,\"status\":\"可购买\",\"description\":\"将表单提交、审批、通知和台账写入 SQLite。\"},{\"id\":4,\"title\":\"后台管理看板\",\"category\":\"后台管理\",\"provider\":\"运营管理台\",\"price\":0,\"rating\":4.7,\"status\":\"功能入口\",\"description\":\"查看服务、订单、需求、收入和操作日志。\"},{\"id\":3,\"title\":\"个人中心数据包\",\"category\":\"个人中心\",\"provider\""
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59103/api/profile",
+      "path": "/api/profile",
+      "status": 200,
+      "ok": true,
+      "bodyPreview": "{\"ok\":true,\"data\":{\"user\":{\"id\":1,\"name\":\"演示用户\",\"phone\":\"13800138000\",\"role\":\"user\",\"created_at\":\"2026-06-08T12:05:45.234Z\"},\"stats\":{\"users\":2,\"services\":5,\"orders\":11,\"submissions\":0,\"revenue\":1089,\"logs\":[{\"id\":12,\"actor\":\"user\",\"action\":\"提交购买订单 #11\",\"created_at\":\"2026-06-08T17:03:12.828Z\"},{\"id\":11,\"actor\":\"user\",\"action\":\"提交购买订单 #10\",\"created_at\":\"2026-06-08T17:03:00.491Z\"},{\"id\":10,\"actor\":\"user\",\"action\":\"提交购买订单 #9\",\"created_at\":\"2026-06-08T17:02:52.804Z\"},{\"id\":9,\"actor\":\"user\",\"action\":"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59103/api/orders",
+      "path": "/api/orders",
+      "status": 200,
+      "ok": true,
+      "bodyPreview": "{\"ok\":true,\"data\":[{\"id\":11,\"service_id\":1,\"customer\":\"演示用户\",\"phone\":\"13800138000\",\"amount\":99,\"status\":\"已提交\",\"note\":\"请安排本地服务跟进。\",\"created_at\":\"2026-06-08T17:03:12.828Z\"},{\"id\":10,\"service_id\":1,\"customer\":\"演示用户\",\"phone\":\"13800138000\",\"amount\":99,\"status\":\"已提交\",\"note\":\"请安排本地服务跟进。\",\"created_at\":\"2026-06-08T17:03:00.491Z\"},{\"id\":9,\"service_id\":1,\"customer\":\"演示用户\",\"phone\":\"13800138000\",\"amount\":99,\"status\":\"已提交\",\"note\":\"请安排本地服务跟进。\",\"created_at\":\"2026-06-08T17:02:52.804Z\"},{\"id\":8,\"service_id\":1,\"cu"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59103/api/submissions",
+      "path": "/api/submissions",
+      "status": 200,
+      "ok": true,
+      "bodyPreview": "{\"ok\":true,\"data\":[],\"total\":0}"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59103/api/admin/summary",
+      "path": "/api/admin/summary",
+      "status": 200,
+      "ok": true,
+      "bodyPreview": "{\"ok\":true,\"data\":{\"users\":2,\"services\":5,\"orders\":11,\"submissions\":0,\"revenue\":1089,\"logs\":[{\"id\":12,\"actor\":\"user\",\"action\":\"提交购买订单 #11\",\"created_at\":\"2026-06-08T17:03:12.828Z\"},{\"id\":11,\"actor\":\"user\",\"action\":\"提交购买订单 #10\",\"created_at\":\"2026-06-08T17:03:00.491Z\"},{\"id\":10,\"actor\":\"user\",\"action\":\"提交购买订单 #9\",\"created_at\":\"2026-06-08T17:02:52.804Z\"},{\"id\":9,\"actor\":\"user\",\"action\":\"提交购买订单 #8\",\"created_at\":\"2026-06-08T13:49:48.439Z\"},{\"id\":8,\"actor\":\"user\",\"action\":\"提交购买订单 #7\",\"created_at\":\"2026"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59103/api/auth/me",
+      "path": "/api/auth/me",
+      "status": 200,
+      "ok": true,
+      "bodyPreview": "{\"ok\":true,\"data\":{\"id\":1,\"name\":\"演示用户\",\"phone\":\"13800138000\",\"role\":\"user\",\"created_at\":\"2026-06-08T12:05:45.234Z\"}}"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59103/api/users/profile",
+      "path": "/api/users/profile",
+      "status": 200,
+      "ok": true,
+      "bodyPreview": "{\"ok\":true,\"data\":{\"id\":1,\"name\":\"演示用户\",\"phone\":\"13800138000\",\"role\":\"user\",\"created_at\":\"2026-06-08T12:05:45.234Z\"}}"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59103/api/user/profile",
+      "path": "/api/user/profile",
+      "status": 200,
+      "ok": true,
+      "bodyPreview": "{\"ok\":true,\"data\":{\"id\":1,\"name\":\"演示用户\",\"phone\":\"13800138000\",\"role\":\"user\",\"created_at\":\"2026-06-08T12:05:45.234Z\"}}"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59103/api/search?q=%E6%B5%8B%E8%AF%95",
+      "path": "/api/search?q=%E6%B5%8B%E8%AF%95",
+      "status": 200,
+      "ok": true,
+      "bodyPreview": "{\"ok\":true,\"data\":[{\"id\":1,\"title\":\"智能内容工作台\",\"category\":\"搜索筛选\",\"provider\":\"PinAI 服务中心\",\"price\":99,\"rating\":4.9,\"status\":\"可购买\",\"description\":\"支持本地资料检索、标签筛选和结果导出。\"},{\"id\":2,\"title\":\"业务流程自动化\",\"category\":\"购买提交\",\"provider\":\"流程编排组\",\"price\":199,\"rating\":4.8,\"status\":\"可购买\",\"description\":\"将表单提交、审批、通知和台账写入 SQLite。\"},{\"id\":4,\"title\":\"后台管理看板\",\"category\":\"后台管理\",\"provider\":\"运营管理台\",\"price\":0,\"rating\":4.7,\"status\":\"功能入口\",\"description\":\"查看服务、订单、需求、收入和操作日志。\"},{\"id\":3,\"title\":\"个人中心数据包\",\"category\":\"个人中心\",\"provider\""
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59103/api/admin/stats",
+      "path": "/api/admin/stats",
+      "status": 200,
+      "ok": true,
+      "bodyPreview": "{\"ok\":true,\"data\":{\"users\":2,\"services\":5,\"orders\":11,\"submissions\":0,\"revenue\":1089,\"logs\":[{\"id\":12,\"actor\":\"user\",\"action\":\"提交购买订单 #11\",\"created_at\":\"2026-06-08T17:03:12.828Z\"},{\"id\":11,\"actor\":\"user\",\"action\":\"提交购买订单 #10\",\"created_at\":\"2026-06-08T17:03:00.491Z\"},{\"id\":10,\"actor\":\"user\",\"action\":\"提交购买订单 #9\",\"created_at\":\"2026-06-08T17:02:52.804Z\"},{\"id\":9,\"actor\":\"user\",\"action\":\"提交购买订单 #8\",\"created_at\":\"2026-06-08T13:49:48.439Z\"},{\"id\":8,\"actor\":\"user\",\"action\":\"提交购买订单 #7\",\"created_at\":\"2026"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59103/api/admin/dashboard",
+      "path": "/api/admin/dashboard",
+      "status": 200,
+      "ok": true,
+      "bodyPreview": "{\"ok\":true,\"data\":{\"users\":2,\"services\":5,\"orders\":11,\"submissions\":0,\"revenue\":1089,\"logs\":[{\"id\":12,\"actor\":\"user\",\"action\":\"提交购买订单 #11\",\"created_at\":\"2026-06-08T17:03:12.828Z\"},{\"id\":11,\"actor\":\"user\",\"action\":\"提交购买订单 #10\",\"created_at\":\"2026-06-08T17:03:00.491Z\"},{\"id\":10,\"actor\":\"user\",\"action\":\"提交购买订单 #9\",\"created_at\":\"2026-06-08T17:02:52.804Z\"},{\"id\":9,\"actor\":\"user\",\"action\":\"提交购买订单 #8\",\"created_at\":\"2026-06-08T13:49:48.439Z\"},{\"id\":8,\"actor\":\"user\",\"action\":\"提交购买订单 #7\",\"created_at\":\"2026"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59103/api/products",
+      "path": "/api/products",
+      "status": 200,
+      "ok": true,
+      "bodyPreview": "{\"ok\":true,\"data\":[{\"id\":1,\"title\":\"智能内容工作台\",\"category\":\"搜索筛选\",\"provider\":\"PinAI 服务中心\",\"price\":99,\"rating\":4.9,\"status\":\"可购买\",\"description\":\"支持本地资料检索、标签筛选和结果导出。\"},{\"id\":2,\"title\":\"业务流程自动化\",\"category\":\"购买提交\",\"provider\":\"流程编排组\",\"price\":199,\"rating\":4.8,\"status\":\"可购买\",\"description\":\"将表单提交、审批、通知和台账写入 SQLite。\"},{\"id\":4,\"title\":\"后台管理看板\",\"category\":\"后台管理\",\"provider\":\"运营管理台\",\"price\":0,\"rating\":4.7,\"status\":\"功能入口\",\"description\":\"查看服务、订单、需求、收入和操作日志。\"},{\"id\":3,\"title\":\"个人中心数据包\",\"category\":\"个人中心\",\"provider\""
+    }
+  ],
+  "dialogs": [],
+  "consoleMessages": [],
+  "requestFailures": [],
+  "responseErrors": []
+}

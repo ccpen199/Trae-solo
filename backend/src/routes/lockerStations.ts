@@ -1,0 +1,13 @@
+import { Router } from 'express';
+import { LockerStationController } from '../controllers/LockerStationController';
+import { authMiddleware, requireRole } from '../middleware/auth';
+
+const router = Router();
+const controller = new LockerStationController();
+
+router.get('/', authMiddleware, (req, res) => controller.list(req, res));
+router.get('/:id', authMiddleware, (req, res) => controller.getById(req, res));
+router.post('/', authMiddleware, requireRole('platform', 'admin'), (req, res) => controller.create(req, res));
+router.put('/:id/slots', authMiddleware, requireRole('platform', 'admin'), (req, res) => controller.updateSlots(req, res));
+
+export default router;

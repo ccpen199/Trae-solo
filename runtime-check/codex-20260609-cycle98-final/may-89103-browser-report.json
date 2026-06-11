@@ -1,0 +1,396 @@
+{
+  "ok": true,
+  "generatedAt": "2026-06-09T19:28:02.358Z",
+  "order": "may-89103",
+  "roundIndex": 98,
+  "captureId": "may-89103-cycle98-final",
+  "url": "http://127.0.0.1:49103/",
+  "initialUrl": "http://127.0.0.1:49103/",
+  "finalUrl": "http://127.0.0.1:49103/login",
+  "status": 200,
+  "title": "快递末端作业平台",
+  "initialTitle": "快递末端作业平台",
+  "navigationError": "",
+  "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89103/runtime-check/codex-20260609-cycle98-final/may-89103-cycle98-final-frontend.png",
+  "screenshotPaths": [
+    "/Users/chen/Documents/trae_projects/local_projects/may-89103/runtime-check/codex-20260609-cycle98-final/may-89103-cycle98-final-structure-01-首屏.png"
+  ],
+  "issueTextPreview": "个人中心/我的相关问题；后台管理相关问题；购买/提交相关问题；详情/内容页相关问题",
+  "targetReason": "登录流程已完成，继续复验登录后的首页和业务导航",
+  "targetKind": "auth",
+  "targetMatched": true,
+  "targetActions": [
+    {
+      "action": "login-fill-username",
+      "label": "admin",
+      "ok": true
+    },
+    {
+      "action": "login-fill-password",
+      "label": "admin:******",
+      "ok": true
+    },
+    {
+      "action": "click",
+      "label": "登录:admin",
+      "ok": true
+    },
+    {
+      "action": "login-submit",
+      "label": "admin",
+      "ok": true,
+      "beforeUrl": "http://127.0.0.1:49103/login"
+    },
+    {
+      "action": "login-result",
+      "label": "admin",
+      "ok": true,
+      "finalUrl": "http://127.0.0.1:49103/admin"
+    },
+    {
+      "action": "target-verify",
+      "label": "登录后首页",
+      "ok": true,
+      "finalUrl": "http://127.0.0.1:49103/admin"
+    }
+  ],
+  "authFlow": {
+    "detected": true,
+    "attempted": true,
+    "success": true,
+    "finalUrl": "http://127.0.0.1:49103/admin",
+    "message": "登录成功:admin",
+    "actions": [
+      {
+        "action": "login-fill-username",
+        "label": "admin",
+        "ok": true
+      },
+      {
+        "action": "login-fill-password",
+        "label": "admin:******",
+        "ok": true
+      },
+      {
+        "action": "click",
+        "label": "登录:admin",
+        "ok": true
+      },
+      {
+        "action": "login-submit",
+        "label": "admin",
+        "ok": true,
+        "beforeUrl": "http://127.0.0.1:49103/login"
+      },
+      {
+        "action": "login-result",
+        "label": "admin",
+        "ok": true,
+        "finalUrl": "http://127.0.0.1:49103/admin"
+      }
+    ],
+    "username": "admin",
+    "credentialSource": "visible-demo-text"
+  },
+  "businessAudit": {
+    "actions": [],
+    "snapshots": [
+      {
+        "label": "首屏",
+        "url": "http://127.0.0.1:49103/login",
+        "title": "快递末端作业平台",
+        "headings": [
+          "快递末端作业平台"
+        ],
+        "navLabels": [],
+        "buttons": [
+          "登录",
+          "管理员 admin / admin123",
+          "网点管理员 platform01 / platform123",
+          "快递员 ops01 / ops123"
+        ],
+        "links": [],
+        "inputs": [
+          {
+            "tag": "input",
+            "type": "text",
+            "placeholder": "请输入账号",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "password",
+            "placeholder": "请输入密码",
+            "name": "",
+            "label": ""
+          }
+        ],
+        "tables": [],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "快递末端作业平台快递末端作业统一管理账号密码登录快速登录测试账号：管理员admin / admin123网点管理员platform01 / platform123快递员ops01 / ops123",
+        "layout": {
+          "viewportWidth": 1504,
+          "viewportHeight": 1034,
+          "scrollWidth": 1504,
+          "scrollHeight": 1034,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89103-cycle98-final-structure-01-首屏",
+          "label": "首屏",
+          "finalUrl": "http://127.0.0.1:49103/login",
+          "title": "快递末端作业平台",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89103/runtime-check/codex-20260609-cycle98-final/may-89103-cycle98-final-structure-01-首屏.json",
+          "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89103/runtime-check/codex-20260609-cycle98-final/may-89103-cycle98-final-structure-01-首屏.png",
+          "elementCount": 60,
+          "interactiveCount": 6,
+          "interactiveLabels": [
+            "请输入账号",
+            "请输入密码",
+            "登录",
+            "管理员 admin / admin123",
+            "网点管理员 platform01 / platform123",
+            "快递员 ops01 / ops123"
+          ]
+        }
+      }
+    ],
+    "findings": [],
+    "actionHints": [],
+    "emptyPages": [],
+    "overflowPages": [],
+    "blankPages": [],
+    "apiFailurePaths": [],
+    "goalTerms": [],
+    "clickedActionDescriptors": [],
+    "secondaryActionClicks": 0,
+    "structureCaptures": [
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89103-cycle98-final-structure-01-首屏",
+        "label": "首屏",
+        "finalUrl": "http://127.0.0.1:49103/login",
+        "title": "快递末端作业平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89103/runtime-check/codex-20260609-cycle98-final/may-89103-cycle98-final-structure-01-首屏.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89103/runtime-check/codex-20260609-cycle98-final/may-89103-cycle98-final-structure-01-首屏.png",
+        "elementCount": 60,
+        "interactiveCount": 6,
+        "interactiveLabels": [
+          "请输入账号",
+          "请输入密码",
+          "登录",
+          "管理员 admin / admin123",
+          "网点管理员 platform01 / platform123",
+          "快递员 ops01 / ops123"
+        ]
+      }
+    ],
+    "representativeScreenshotUrl": "http://127.0.0.1:49103/login",
+    "representativeScreenshotLabel": "快递末端作业平台"
+  },
+  "websiteStructureCapture": {
+    "module": "website_structure_capture",
+    "captureCount": 1,
+    "captures": [
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89103-cycle98-final-structure-01-首屏",
+        "label": "首屏",
+        "finalUrl": "http://127.0.0.1:49103/login",
+        "title": "快递末端作业平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89103/runtime-check/codex-20260609-cycle98-final/may-89103-cycle98-final-structure-01-首屏.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89103/runtime-check/codex-20260609-cycle98-final/may-89103-cycle98-final-structure-01-首屏.png",
+        "elementCount": 60,
+        "interactiveCount": 6,
+        "interactiveLabels": [
+          "请输入账号",
+          "请输入密码",
+          "登录",
+          "管理员 admin / admin123",
+          "网点管理员 platform01 / platform123",
+          "快递员 ops01 / ops123"
+        ]
+      }
+    ]
+  },
+  "screenshotMetrics": {
+    "width": 1536,
+    "height": 1034,
+    "scrollWidth": 1504,
+    "scrollHeight": 1034
+  },
+  "initialBodyTextPreview": "快递末端作业平台\n\n快递末端作业统一管理\n\n账号\n密码\n登录\n\n快速登录测试账号：\n\n管理员\nadmin / admin123\n网点管理员\nplatform01 / platform123\n快递员\nops01 / ops123",
+  "bodyTextPreview": "快递末端作业平台\n\n快递末端作业统一管理\n\n账号\n密码\n登录\n\n快速登录测试账号：\n\n管理员\nadmin / admin123\n网点管理员\nplatform01 / platform123\n快递员\nops01 / ops123",
+  "apiBase": "http://127.0.0.1:59103",
+  "businessGoalPreview": "",
+  "apiResponses": [
+    {
+      "method": "POST",
+      "status": 200,
+      "url": "http://127.0.0.1:49103/api/auth/login"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49103/api/dashboard/stats"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49103/api/dashboard/stats"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49103/api/auth/me"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49103/api/auth/me"
+    }
+  ],
+  "apiChecks": [
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59103/api/health",
+      "path": "/api/health",
+      "status": 200,
+      "ok": true,
+      "bodyPreview": "{\"code\":0,\"message\":\"ok\",\"data\":{\"status\":\"running\",\"timestamp\":\"2026-06-09T19:28:00.170Z\"}}"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59103/api/dashboard/stats",
+      "path": "/api/dashboard/stats",
+      "status": 200,
+      "ok": true,
+      "bodyPreview": "{\"code\":0,\"message\":\"ok\",\"data\":{\"totalPackages\":30,\"todayTasks\":20,\"activeAlerts\":7,\"totalSettlementAmount\":1896.24,\"packagesByStatus\":{\"exception\":5,\"inbound\":5,\"outbound\":5,\"pending\":5,\"signed\":5,\"stored\":5},\"packagesByBrand\":{\"中通\":6,\"圆通\":6,\"极兔\":6,\"韵达\":6,\"顺丰\":6},\"taskStatusCounts\":{\"assigned\":4,\"completed\":4,\"failed\":4,\"in_progress\":4,\"pending\":4}}}"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59103/api/auth/me",
+      "path": "/api/auth/me",
+      "status": 200,
+      "ok": true,
+      "bodyPreview": "{\"code\":0,\"message\":\"ok\",\"data\":{\"id\":1,\"username\":\"admin\",\"name\":\"系统管理员\",\"phone\":\"13800000001\",\"role\":\"admin\",\"roleLabel\":\"系统管理员\",\"status\":\"active\"}}"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59103/api/users/profile",
+      "path": "/api/users/profile",
+      "status": 200,
+      "ok": true,
+      "bodyPreview": "{\"code\":0,\"message\":\"ok\",\"data\":{\"id\":1,\"name\":\"系统管理员\",\"role\":\"admin\",\"roleLabel\":\"系统管理员\",\"sections\":[\"个人中心\",\"我的任务\",\"账号设置\"]}}"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59103/api/user/profile",
+      "path": "/api/user/profile",
+      "status": 200,
+      "ok": true,
+      "bodyPreview": "{\"code\":0,\"message\":\"ok\",\"data\":{\"id\":1,\"name\":\"系统管理员\",\"role\":\"admin\",\"roleLabel\":\"系统管理员\",\"sections\":[\"个人中心\",\"我的任务\",\"账号设置\"]}}"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59103/api/admin/stats",
+      "path": "/api/admin/stats",
+      "status": 200,
+      "ok": true,
+      "bodyPreview": "{\"code\":0,\"message\":\"ok\",\"data\":{\"summary\":{\"totalPackages\":30,\"totalOrders\":8,\"activeAlerts\":7,\"branches\":2},\"recentOrders\":[{\"id\":1,\"order_no\":\"WD20240601001\",\"customer_name\":\"陈先生\",\"customer_phone\":\"13900001001\",\"product_name\":\"快递袋(大号)x50\",\"quantity\":1,\"amount\":25,\"status\":\"completed\",\"tracking_no\":null,\"branch_id\":1,\"courier_id\":4,\"source\":\"wechat\",\"created_at\":\"2026-06-09 22:24:55\",\"updated_at\":\"2026-06-09 22:24:55\"},{\"id\":2,\"order_no\":\"WD20240601002\",\"customer_name\":\"周女士\",\"customer_phone\":\""
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59103/api/admin/dashboard",
+      "path": "/api/admin/dashboard",
+      "status": 200,
+      "ok": true,
+      "bodyPreview": "{\"code\":0,\"message\":\"ok\",\"data\":{\"summary\":{\"totalPackages\":30,\"totalOrders\":8,\"activeAlerts\":7,\"branches\":2},\"recentOrders\":[{\"id\":1,\"order_no\":\"WD20240601001\",\"customer_name\":\"陈先生\",\"customer_phone\":\"13900001001\",\"product_name\":\"快递袋(大号)x50\",\"quantity\":1,\"amount\":25,\"status\":\"completed\",\"tracking_no\":null,\"branch_id\":1,\"courier_id\":4,\"source\":\"wechat\",\"created_at\":\"2026-06-09 22:24:55\",\"updated_at\":\"2026-06-09 22:24:55\"},{\"id\":2,\"order_no\":\"WD20240601002\",\"customer_name\":\"周女士\",\"customer_phone\":\""
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59103/api/products",
+      "path": "/api/products",
+      "status": 200,
+      "ok": true,
+      "bodyPreview": "{\"code\":0,\"message\":\"ok\",\"data\":{\"list\":[{\"id\":3,\"name\":\"气泡膜卷x5\",\"orderCount\":1,\"price\":15,\"stock\":5},{\"id\":6,\"name\":\"标签纸x3\",\"orderCount\":1,\"price\":6,\"stock\":3},{\"id\":5,\"name\":\"快递袋(小号)x100\",\"orderCount\":1,\"price\":35,\"stock\":1},{\"id\":1,\"name\":\"快递袋(大号)x50\",\"orderCount\":1,\"price\":25,\"stock\":1},{\"id\":8,\"name\":\"快递袋(中号)x80\",\"orderCount\":1,\"price\":28,\"stock\":2},{\"id\":4,\"name\":\"封箱胶带x10\",\"orderCount\":1,\"price\":3,\"stock\":10},{\"id\":7,\"name\":\"包装纸箱x50\",\"orderCount\":1,\"price\":120,\"stock\":1},{\"id\":2,\"name\":\"包装"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59103/api/orders",
+      "path": "/api/orders",
+      "status": 200,
+      "ok": true,
+      "bodyPreview": "{\"code\":0,\"message\":\"ok\",\"data\":{\"list\":[{\"id\":1,\"order_no\":\"WD20240601001\",\"customer_name\":\"陈先生\",\"customer_phone\":\"13900001001\",\"product_name\":\"快递袋(大号)x50\",\"quantity\":1,\"amount\":25,\"status\":\"completed\",\"tracking_no\":null,\"branch_id\":1,\"courier_id\":4,\"source\":\"wechat\",\"created_at\":\"2026-06-09 22:24:55\",\"updated_at\":\"2026-06-09 22:24:55\"},{\"id\":2,\"order_no\":\"WD20240601002\",\"customer_name\":\"周女士\",\"customer_phone\":\"13900001002\",\"product_name\":\"包装纸箱x20\",\"quantity\":2,\"amount\":48,\"status\":\"shipped\",\"tr"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59103/api/cart",
+      "path": "/api/cart",
+      "status": 200,
+      "ok": true,
+      "bodyPreview": "{\"code\":0,\"message\":\"ok\",\"data\":{\"items\":[{\"id\":3,\"name\":\"气泡膜卷x5\",\"quantity\":5,\"amount\":75,\"status\":\"processing\"},{\"id\":4,\"name\":\"封箱胶带x10\",\"quantity\":10,\"amount\":30,\"status\":\"pending\"},{\"id\":7,\"name\":\"包装纸箱x50\",\"quantity\":1,\"amount\":120,\"status\":\"processing\"}],\"total\":3,\"totalAmount\":225}}"
+    }
+  ],
+  "dialogs": [],
+  "consoleMessages": [
+    {
+      "type": "debug",
+      "text": "[vite] connecting...",
+      "location": {
+        "url": "http://127.0.0.1:49103/@vite/client",
+        "lineNumber": 850,
+        "columnNumber": 8
+      }
+    },
+    {
+      "type": "info",
+      "text": "%cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold",
+      "location": {
+        "url": "http://127.0.0.1:49103/node_modules/.vite/deps/react-dom_client.js?v=c7c1e214",
+        "lineNumber": 14337,
+        "columnNumber": 48
+      }
+    },
+    {
+      "type": "debug",
+      "text": "[vite] connected.",
+      "location": {
+        "url": "http://127.0.0.1:49103/@vite/client",
+        "lineNumber": 954,
+        "columnNumber": 11
+      }
+    },
+    {
+      "type": "debug",
+      "text": "[vite] connecting...",
+      "location": {
+        "url": "http://127.0.0.1:49103/@vite/client",
+        "lineNumber": 850,
+        "columnNumber": 8
+      }
+    },
+    {
+      "type": "debug",
+      "text": "[vite] connected.",
+      "location": {
+        "url": "http://127.0.0.1:49103/@vite/client",
+        "lineNumber": 954,
+        "columnNumber": 11
+      }
+    },
+    {
+      "type": "info",
+      "text": "%cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold",
+      "location": {
+        "url": "http://127.0.0.1:49103/node_modules/.vite/deps/react-dom_client.js?v=c7c1e214",
+        "lineNumber": 14337,
+        "columnNumber": 48
+      }
+    }
+  ],
+  "requestFailures": [],
+  "responseErrors": []
+}

@@ -1,0 +1,45 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --color-primary: #6366F1;
+    --color-primary-dark: #4F46E5;
+    --color-accent: #F97316;
+    --color-success: #10B981;
+    --color-warning: #F59E0B;
+    --color-danger: #EF4444;
+  }
+}
+
+@layer components {
+  .card {
+    @apply bg-white rounded-2xl border border-gray-100 p-5 shadow-sm;
+  }
+  .input-field {
+    @apply w-full px-4 py-2.5 rounded-xl border border-gray-200 text-sm
+           focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary
+           placeholder:text-gray-400 transition-all;
+  }
+  .btn-primary {
+    @apply bg-primary hover:bg-primary-dark text-white px-5 py-2.5 rounded-xl
+           font-medium text-sm transition-colors disabled:opacity-50;
+  }
+  .btn-accent {
+    @apply bg-accent hover:bg-orange-600 text-white px-5 py-2.5 rounded-xl
+           font-medium text-sm transition-colors disabled:opacity-50;
+  }
+  .btn-outline {
+    @apply border border-gray-200 text-gray-700 px-5 py-2.5 rounded-xl
+           font-medium text-sm hover:bg-gray-50 transition-colors disabled:opacity-50;
+  }
+  .btn-success {
+    @apply bg-success hover:bg-green-600 text-white px-5 py-2.5 rounded-xl
+           font-medium text-sm transition-colors disabled:opacity-50;
+  }
+  .btn-danger {
+    @apply bg-danger hover:bg-red-600 text-white px-5 py-2.5 rounded-xl
+           font-medium text-sm transition-colors disabled:opacity-50;
+  }
+}
