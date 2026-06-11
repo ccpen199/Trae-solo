@@ -1,0 +1,391 @@
+{
+  "ok": true,
+  "generatedAt": "2026-06-11T20:59:00.255Z",
+  "order": "may-89169",
+  "roundIndex": 0,
+  "captureId": "may-89169",
+  "url": "http://127.0.0.1:49169/",
+  "initialUrl": "http://127.0.0.1:49169/",
+  "finalUrl": "http://127.0.0.1:49169/",
+  "status": 200,
+  "title": "智慧货运协同平台 - 全球航运物流生态B2B平台",
+  "initialTitle": "智慧货运协同平台 - 全球航运物流生态B2B平台",
+  "navigationError": "",
+  "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89169/probe/codex-repair-20260611-page/may-89169-frontend.png",
+  "screenshotPaths": [
+    "/Users/chen/Documents/trae_projects/local_projects/may-89169/probe/codex-repair-20260611-page/may-89169-structure-01-首屏.png"
+  ],
+  "issueTextPreview": "个人中心/我的相关问题；搜索/筛选相关问题；后台管理相关问题；购买/提交相关问题；frontend previously refused while backend health ok",
+  "targetReason": "个人中心/我的相关问题；搜索/筛选相关问题；后台管理相关问题；购买/提交相关问题",
+  "targetKind": "personal",
+  "targetMatched": false,
+  "targetActions": [],
+  "authFlow": {
+    "detected": false,
+    "attempted": false,
+    "success": false,
+    "finalUrl": "http://127.0.0.1:49169/",
+    "message": "",
+    "actions": []
+  },
+  "businessAudit": {
+    "actions": [],
+    "snapshots": [
+      {
+        "label": "首屏",
+        "url": "http://127.0.0.1:49169/",
+        "title": "智慧货运协同平台 - 全球航运物流生态B2B平台",
+        "headings": [],
+        "navLabels": [],
+        "buttons": [],
+        "links": [],
+        "inputs": [],
+        "tables": [],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "",
+        "layout": {
+          "viewportWidth": 1504,
+          "viewportHeight": 1000,
+          "scrollWidth": 1504,
+          "scrollHeight": 1000,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89169-structure-01-首屏",
+          "label": "首屏",
+          "finalUrl": "http://127.0.0.1:49169/",
+          "title": "智慧货运协同平台 - 全球航运物流生态B2B平台",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89169/probe/codex-repair-20260611-page/may-89169-structure-01-首屏.json",
+          "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89169/probe/codex-repair-20260611-page/may-89169-structure-01-首屏.png",
+          "elementCount": 8,
+          "interactiveCount": 0,
+          "interactiveLabels": []
+        }
+      }
+    ],
+    "findings": [
+      "首屏 页面打开后是空白，没有渲染业务内容、表单或列表。"
+    ],
+    "actionHints": [
+      "修复 首屏 的路由组件挂载、接口初始化和错误兜底，确保进入页面后直接显示可操作内容。"
+    ],
+    "emptyPages": [],
+    "overflowPages": [],
+    "blankPages": [
+      "首屏"
+    ],
+    "apiFailurePaths": [],
+    "goalTerms": [],
+    "clickedActionDescriptors": [],
+    "secondaryActionClicks": 0,
+    "structureCaptures": [
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89169-structure-01-首屏",
+        "label": "首屏",
+        "finalUrl": "http://127.0.0.1:49169/",
+        "title": "智慧货运协同平台 - 全球航运物流生态B2B平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89169/probe/codex-repair-20260611-page/may-89169-structure-01-首屏.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89169/probe/codex-repair-20260611-page/may-89169-structure-01-首屏.png",
+        "elementCount": 8,
+        "interactiveCount": 0,
+        "interactiveLabels": []
+      }
+    ],
+    "representativeScreenshotUrl": "http://127.0.0.1:49169/",
+    "representativeScreenshotLabel": "首屏"
+  },
+  "websiteStructureCapture": {
+    "module": "website_structure_capture",
+    "captureCount": 1,
+    "captures": [
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89169-structure-01-首屏",
+        "label": "首屏",
+        "finalUrl": "http://127.0.0.1:49169/",
+        "title": "智慧货运协同平台 - 全球航运物流生态B2B平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89169/probe/codex-repair-20260611-page/may-89169-structure-01-首屏.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89169/probe/codex-repair-20260611-page/may-89169-structure-01-首屏.png",
+        "elementCount": 8,
+        "interactiveCount": 0,
+        "interactiveLabels": []
+      }
+    ]
+  },
+  "screenshotMetrics": {
+    "width": 1536,
+    "height": 1000,
+    "scrollWidth": 1504,
+    "scrollHeight": 1000
+  },
+  "initialBodyTextPreview": "",
+  "bodyTextPreview": "",
+  "apiBase": "http://127.0.0.1:59169",
+  "businessGoalPreview": "",
+  "apiResponses": [
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49169/api/alerts?status=active"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49169/api/spot-containers"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49169/api/bid-slots"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49169/api/voyages?status=published"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49169/api/freight-index/trend"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49169/api/dashboard/overview"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49169/api/vessel-listings"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49169/api/dashboard/heatmap-data"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49169/api/alerts?status=active"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49169/api/spot-containers"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49169/api/bid-slots"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49169/api/voyages?status=published"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49169/api/freight-index/trend"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49169/api/vessel-listings"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49169/api/dashboard/heatmap-data"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49169/api/dashboard/overview"
+    }
+  ],
+  "apiChecks": [
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59169/api/health",
+      "path": "/api/health",
+      "status": 200,
+      "ok": true,
+      "bodyPreview": "{\"status\":\"ok\",\"timestamp\":\"2026-06-11T20:58:59.779Z\"}"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59169/api/alerts?status=active",
+      "path": "/api/alerts?status=active",
+      "status": 200,
+      "ok": true,
+      "bodyPreview": "[{\"id\":\"4a60bc8f-8682-4a98-b2bc-a4f585ee3a8f\",\"order_id\":null,\"type\":\"甩柜预警\",\"severity\":\"medium\",\"message\":\"示例预警消息 - 5\",\"status\":\"active\",\"created_at\":\"2026-06-11 20:38:57\",\"resolved_at\":null},{\"id\":\"8157ccef-0158-4bf9-b164-5bdd14004c70\",\"order_id\":null,\"type\":\"船舶延误\",\"severity\":\"low\",\"message\":\"示例预警消息 - 6\",\"status\":\"active\",\"created_at\":\"2026-06-11 20:38:57\",\"resolved_at\":null},{\"id\":\"8e9d39ea-f6fa-495c-affc-8a1fadc17eb7\",\"order_id\":null,\"type\":\"甩柜预警\",\"severity\":\"medium\",\"message\":\"示例预警消息 - 6\",\"s"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59169/api/spot-containers",
+      "path": "/api/spot-containers",
+      "status": 200,
+      "ok": true,
+      "bodyPreview": "[]"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59169/api/bid-slots",
+      "path": "/api/bid-slots",
+      "status": 200,
+      "ok": true,
+      "bodyPreview": "[]"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59169/api/voyages?status=published",
+      "path": "/api/voyages?status=published",
+      "status": 200,
+      "ok": true,
+      "bodyPreview": "[{\"id\":\"896e9b4e-a5ff-47a4-a615-8624a7b90140\",\"vessel_id\":\"e64ca959-1454-4772-b476-d87ce9b4939e\",\"voyage_number\":\"V9518\",\"origin_port\":\"上海港\",\"destination_port\":\"纽约港\",\"etd\":\"2026-06-12T18:03:12.245Z\",\"eta\":\"2026-06-29T18:03:12.245Z\",\"status\":\"published\",\"available_teu\":8731,\"available_weight\":19655.81,\"container_types\":[\"20GP\",\"40GP\",\"40HQ\"],\"base_rate\":3359.33,\"carbon_estimate\":0.767,\"compliance_certificates\":[\"SOLAS\",\"MARPOL\",\"ISPS\"],\"created_at\":\"2026-06-11 18:03:12\",\"vessel_name\":\"大西洋先锋\",\"ves"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59169/api/freight-index/trend",
+      "path": "/api/freight-index/trend",
+      "status": 200,
+      "ok": true,
+      "bodyPreview": "[{\"date\":\"2026-05-12\",\"value\":952.12},{\"date\":\"2026-05-13\",\"value\":2429.18},{\"date\":\"2026-05-14\",\"value\":1870.95},{\"date\":\"2026-05-15\",\"value\":1058.33},{\"date\":\"2026-05-16\",\"value\":2042.89},{\"date\":\"2026-05-17\",\"value\":1724.2},{\"date\":\"2026-05-18\",\"value\":925.85},{\"date\":\"2026-05-19\",\"value\":1919.99},{\"date\":\"2026-05-20\",\"value\":1623.09},{\"date\":\"2026-05-21\",\"value\":981.72},{\"date\":\"2026-05-22\",\"value\":2023.98},{\"date\":\"2026-05-23\",\"value\":2655.43},{\"date\":\"2026-05-24\",\"value\":3053.5},{\"date\":\"2"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59169/api/dashboard/overview",
+      "path": "/api/dashboard/overview",
+      "status": 200,
+      "ok": true,
+      "bodyPreview": "{\"totalVessels\":32,\"activeVoyages\":25,\"pendingBookings\":16,\"activeListings\":6,\"totalOrders\":20,\"activeAlerts\":7}"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59169/api/vessel-listings",
+      "path": "/api/vessel-listings",
+      "status": 200,
+      "ok": true,
+      "bodyPreview": "[{\"id\":\"18ad99ff-58f7-4270-ae8c-8bdd1c87cb5f\",\"vessel_id\":\"e846341c-8a19-4c28-8eb1-edcccc23642a\",\"seller_id\":\"b5156f63-a4e9-4140-8506-b5a0c61a2ee6\",\"price\":30701434.07,\"currency\":\"USD\",\"description\":\"中远之星 - 特种船，2013年建造，适航状态良好\",\"status\":\"active\",\"due_diligence_docs\":[\"船舶登记证书\",\"入级证书\",\"检验报告\",\"轮机日志\"],\"inspection_date\":\"2026-06-28T15:36:58.771Z\",\"created_at\":\"2026-06-11 15:36:58\",\"vessel_name\":\"中远之星\",\"vessel_type\":\"特种船\",\"teu\":8718,\"dwt\":103303.58,\"built_year\":2013,\"flag\":\"中国\",\"seller_name\":\"孙丽\",\"sell"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59169/api/dashboard/heatmap-data",
+      "path": "/api/dashboard/heatmap-data",
+      "status": 200,
+      "ok": true,
+      "bodyPreview": "[{\"port\":\"上海港\",\"vessel_count\":1,\"total_teu\":7692,\"latitude\":31.0965,\"longitude\":121.88239999999999},{\"port\":\"上海港\",\"vessel_count\":1,\"total_teu\":8239,\"latitude\":31.6211,\"longitude\":121.4298},{\"port\":\"亚历山大港\",\"vessel_count\":1,\"total_teu\":9090,\"latitude\":31.5876,\"longitude\":30.087400000000002},{\"port\":\"孟买港\",\"vessel_count\":1,\"total_teu\":2151,\"latitude\":18.5933,\"longitude\":72.69640000000001},{\"port\":\"孟买港\",\"vessel_count\":1,\"total_teu\":2639,\"latitude\":18.605,\"longitude\":72.97540000000001},{\"port\":\"孟买港\",\""
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59169/api/auth/me",
+      "path": "/api/auth/me",
+      "status": 404,
+      "ok": false,
+      "bodyPreview": "<!DOCTYPE html>\n<html lang=\"en\">\n<head>\n<meta charset=\"utf-8\">\n<title>Error</title>\n</head>\n<body>\n<pre>Cannot GET /api/auth/me</pre>\n</body>\n</html>\n"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59169/api/users/profile",
+      "path": "/api/users/profile",
+      "status": 404,
+      "ok": false,
+      "bodyPreview": "{\"error\":\"User not found\"}"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59169/api/user/profile",
+      "path": "/api/user/profile",
+      "status": 404,
+      "ok": false,
+      "bodyPreview": "<!DOCTYPE html>\n<html lang=\"en\">\n<head>\n<meta charset=\"utf-8\">\n<title>Error</title>\n</head>\n<body>\n<pre>Cannot GET /api/user/profile</pre>\n</body>\n</html>\n"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59169/api/search?q=%E6%B5%8B%E8%AF%95",
+      "path": "/api/search?q=%E6%B5%8B%E8%AF%95",
+      "status": 404,
+      "ok": false,
+      "bodyPreview": "<!DOCTYPE html>\n<html lang=\"en\">\n<head>\n<meta charset=\"utf-8\">\n<title>Error</title>\n</head>\n<body>\n<pre>Cannot GET /api/search</pre>\n</body>\n</html>\n"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59169/api/admin/stats",
+      "path": "/api/admin/stats",
+      "status": 404,
+      "ok": false,
+      "bodyPreview": "<!DOCTYPE html>\n<html lang=\"en\">\n<head>\n<meta charset=\"utf-8\">\n<title>Error</title>\n</head>\n<body>\n<pre>Cannot GET /api/admin/stats</pre>\n</body>\n</html>\n"
+    }
+  ],
+  "dialogs": [],
+  "consoleMessages": [
+    {
+      "type": "debug",
+      "text": "[vite] connecting...",
+      "location": {
+        "url": "http://127.0.0.1:49169/@vite/client",
+        "lineNumber": 494,
+        "columnNumber": 8
+      }
+    },
+    {
+      "type": "debug",
+      "text": "[vite] connected.",
+      "location": {
+        "url": "http://127.0.0.1:49169/@vite/client",
+        "lineNumber": 617,
+        "columnNumber": 14
+      }
+    },
+    {
+      "type": "info",
+      "text": "%cDownload the React DevTools for a better development experience: https://reactjs.org/link/react-devtools font-weight:bold",
+      "location": {
+        "url": "http://127.0.0.1:49169/node_modules/.vite/deps/chunk-R3VZBYWY.js?v=38744c06",
+        "lineNumber": 21550,
+        "columnNumber": 24
+      }
+    },
+    {
+      "type": "warning",
+      "text": "⚠️ React Router Future Flag Warning: React Router will begin wrapping state updates in `React.startTransition` in v7. You can use the `v7_startTransition` future flag to opt-in early. For more information, see https://reactrouter.com/v6/upgrading/future#v7_starttransition.",
+      "location": {
+        "url": "http://127.0.0.1:49169/node_modules/.vite/deps/react-router-dom.js?v=38744c06",
+        "lineNumber": 4426,
+        "columnNumber": 12
+      }
+    },
+    {
+      "type": "warning",
+      "text": "⚠️ React Router Future Flag Warning: Relative route resolution within Splat routes is changing in v7. You can use the `v7_relativeSplatPath` future flag to opt-in early. For more information, see https://reactrouter.com/v6/upgrading/future#v7_relativesplatpath.",
+      "location": {
+        "url": "http://127.0.0.1:49169/node_modules/.vite/deps/react-router-dom.js?v=38744c06",
+        "lineNumber": 4426,
+        "columnNumber": 12
+      }
+    },
+    {
+      "type": "error",
+      "text": "Map world not exists. The GeoJSON of the map must be provided.",
+      "location": {
+        "url": "http://127.0.0.1:49169/node_modules/.vite/deps/echarts-for-react.js?v=38744c06",
+        "lineNumber": 41784,
+        "columnNumber": 16
+      }
+    },
+    {
+      "type": "error",
+      "text": "The above error occurred in the <EChartsReact2> component:\n\n    at EChartsReact2 (http://127.0.0.1:49169/node_modules/.vite/deps/echarts-for-react.js?v=38744c06:76021:26)\n    at div\n    at div\n    at http://127.0.0.1:49169/node_modules/.vite/deps/antd.js?v=38744c06:46335:16\n    at div\n    at http://127.0.0.1:49169/node_modules/.vite/deps/antd.js?v=38744c06:51647:16\n    at div\n    at http://127.0.0.1:49169/node_modules/.vite/deps/antd.js?v=38744c06:51789:16\n    at div\n    at Dashboard (http://127.0.0.1:49169/src/pages/Dashboard.tsx:71:20)\n    at RenderedRoute (http://127.0.0.1:49169/node_modules/.vite/deps/react-router-dom.js?v=38744c06:4122:5)\n    at Routes (http://127.0.0.1:49169/node_modules/.vite/deps/react-router-dom.js?v=38744c06:4592:5)\n    at main\n    at http://127.0.0.1:49169/node_modules/.vite/deps/antd.js?v=38744c06:66228:16\n    at Content\n    at div\n    at http://127.0.0.1:49169/node_modules/.vite/deps/antd.js?v=38744c06:66247:16\n    at Layout\n    at div\n    at http://127.0.0.1:49169/node_modules/.vite/deps/antd.js?v=38744c06:66247:16\n    at Layout\n    at div\n    at http://127.0.0.1:49169/node_modules/.vite/deps/antd.js?v=38744c06:66247:16\n    at Layout\n    at App (http://127.0.0.1:49169/src/App.tsx:54:37)\n    at Router (http://127.0.0.1:49169/node_modules/.vite/deps/react-router-dom.js?v=38744c06:4535:15)\n    at BrowserRouter (http://127.0.0.1:49169/node_modules/.vite/deps/react-router-dom.js?v=38744c06:5273:5)\n    at LocaleProvider (http://127.0.0.1:49169/node_modules/.vite/deps/antd.js?v=38744c06:3733:13)\n    at MotionWrapper (http://127.0.0.1:49169/node_modules/.vite/deps/antd.js?v=38744c06:6267:32)\n    at ProviderChildren (http://127.0.0.1:49169/node_modules/.vite/deps/antd.js?v=38744c06:6375:5)\n    at ConfigProvider (http://127.0.0.1:49169/node_modules/.vite/deps/antd.js?v=38744c06:6666:27)\n\nConsider adding an error boundary to your tree to customize error handling behavior.\nVisit https://reactjs.org/link/error-boundaries to learn more about error boundaries.",
+      "location": {
+        "url": "http://127.0.0.1:49169/node_modules/.vite/deps/chunk-R3VZBYWY.js?v=38744c06",
+        "lineNumber": 14031,
+        "columnNumber": 30
+      }
+    }
+  ],
+  "requestFailures": [],
+  "responseErrors": []
+}
