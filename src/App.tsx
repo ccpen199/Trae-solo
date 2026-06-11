@@ -10,6 +10,7 @@ import DashboardPage from './pages/admin/DashboardPage';
 import ContentListPage from './pages/admin/ContentListPage';
 import ContentCreatePage from './pages/admin/ContentCreatePage';
 import AuditPage from './pages/admin/AuditPage';
+import ProfileSettingsPage from './pages/admin/ProfileSettingsPage';
 import MobileHomePage from './pages/h5/HomePage';
 import MobileContentPage from './pages/h5/ContentPage';
 import MobileScenicPage from './pages/h5/ScenicPage';
@@ -55,6 +56,11 @@ const App: React.FC = () => {
             <Route path="analytics/propagation" element={<div className="card"><h2 className="text-xl font-bold">传播分析</h2><p className="text-ink-500 mt-2">传播分析页面开发中...</p></div>} />
             <Route path="analytics/sentiment" element={<div className="card"><h2 className="text-xl font-bold">舆情分析</h2><p className="text-ink-500 mt-2">舆情分析页面开发中...</p></div>} />
             <Route path="openapi" element={<div className="card"><h2 className="text-xl font-bold">API开放平台</h2><p className="text-ink-500 mt-2">API开放平台页面开发中...</p></div>} />
+            <Route path="settings/*" element={<ProfileSettingsPage />} />
+            <Route path="settings/profile" element={<ProfileSettingsPage />} />
+            <Route path="settings/password" element={<ProfileSettingsPage />} />
+            <Route path="settings/permissions" element={<ProfileSettingsPage />} />
+            <Route path="settings/logs" element={<ProfileSettingsPage />} />
           </Route>
 
           <Route path="/h5" element={<MobileLayout />}>

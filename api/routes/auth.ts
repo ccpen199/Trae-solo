@@ -123,4 +123,66 @@ router.post('/change-password', authenticateToken, async (req: AuthRequest, res:
   }
 });
 
+router.put('/profile', authenticateToken, async (req: AuthRequest, res: Response): Promise<void> => {
+  try {
+    if (!req.user) {
+      errorResponse(res, 401, '请先登录');
+      return;
+    }
+    const allowed = ['realName', 'email', 'phone', 'organization', 'avatar'];
+    const patch: any = {};
+    for (const k of allowed) {
+      if (req.body && req.body[k] !== undefined) {
+        patch[k] = req.body[k];
+      }
+    }
+    const updated = await authService.updateProfile(req.user.id, patch);
+    if (!updated) {
+      errorResponse(res, 404, '用户不存在');
+      return;
+    }
+    successResponse(res, updated, '资料已更新');
+  } catch (error) {
+    errorResponse(res, 500, '更新资料失败，请稍后重试');
+  }
+});
+
+router.put('/password', authenticateToken, async (req: AuthRequest, res: Response): Promise<void> => {
+  try {
+    if (!req.user) {
+      errorResponse(res, 401, '请先登录');
+      return;
+    }
+    const { oldPassword, newPassword, confirmPassword } = req.body as {
+      oldPassword: string;
+      newPassword: string;
+      confirmPassword: string;
+    };
+    if (!oldPassword || !newPassword || !confirmPassword) {
+      errorResponse(res, 400, '原密码、新密码和确认密码不能为空');
+      return;
+    }
+    if (newPassword !== confirmPassword) {
+      errorResponse(res, 400, '两次输入的新密码不一致');
+      return;
+    }
+    if (newPassword.length < 6) {
+      errorResponse(res, 400, '新密码长度不能少于6位');
+      return;
+    }
+    if (newPassword === oldPassword) {
+      errorResponse(res, 400, '新密码不能与原密码相同');
+      return;
+    }
+    const result = await authService.changePassword(req.user.id, oldPassword, newPassword);
+    if (!result.success) {
+      errorResponse(res, 400, result.message);
+      return;
+    }
+    successResponse(res, null, '密码修改成功，请妥善保管');
+  } catch (error) {
+    errorResponse(res, 500, '修改密码失败，请稍后重试');
+  }
+});
+
 export default router;

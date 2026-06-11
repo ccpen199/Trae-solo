@@ -9,6 +9,11 @@ const DashboardPage: React.FC = () => {
   const [flowTrend, setFlowTrend] = useState<any[]>([]);
   const [heritageStats, setHeritageStats] = useState<any[]>([]);
 
+  const toNumber = (value: unknown, fallback = 0) => {
+    const n = Number(value);
+    return Number.isFinite(n) ? n : fallback;
+  };
+
   const { data: contentData } = useQuery({
     queryKey: ['content-stats'],
     queryFn: async () => {
@@ -42,6 +47,13 @@ const DashboardPage: React.FC = () => {
     };
     fetchData();
   }, []);
+
+  const couponConsumptionRate = couponStats
+    ? toNumber(couponStats.consumptionRate, toNumber(couponStats.writeOffRate) * 100)
+    : 0;
+  const couponTotalIssued = toNumber(couponStats?.totalIssued);
+  const couponTotalConsumed = toNumber(couponStats?.totalConsumed ?? couponStats?.usedCount);
+  const couponTotalAmount = toNumber(couponStats?.totalAmount ?? couponStats?.usedAmount);
 
   const visitorChart = {
     tooltip: { trigger: 'axis' },
@@ -177,7 +189,7 @@ const DashboardPage: React.FC = () => {
         />
         <StatCard
           title="消费券核销率"
-          value={couponStats ? `${couponStats.consumptionRate?.toFixed(1)}%` : '0%'}
+          value={`${couponConsumptionRate.toFixed(1)}%`}
           icon={<svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 5v2m0 4v2m0 4v2M5 5a2 2 0 00-2 2v3a2 2 0 110 4v3a2 2 0 002 2h14a2 2 0 002-2v-3a2 2 0 110-4V7a2 2 0 00-2-2H5z" /></svg>}
           trend={{ value: 3.8, label: '较上月', isUp: true }}
           miniChart={{ type: 'line', data: [65, 68, 72, 70, 75, 78, 82], color: '#1A4B8C' }}
@@ -230,19 +242,19 @@ const DashboardPage: React.FC = () => {
           {couponStats && (
             <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
               <div className="text-center p-4 bg-ink-50 rounded-lg">
-                <p className="text-3xl font-bold text-primary-600">{couponStats.totalIssued?.toLocaleString() || 0}</p>
+                <p className="text-3xl font-bold text-primary-600">{couponTotalIssued.toLocaleString()}</p>
                 <p className="text-sm text-ink-500 mt-1">累计发放(张)</p>
               </div>
               <div className="text-center p-4 bg-landscape-50 rounded-lg">
-                <p className="text-3xl font-bold text-landscape-600">{couponStats.totalConsumed?.toLocaleString() || 0}</p>
+                <p className="text-3xl font-bold text-landscape-600">{couponTotalConsumed.toLocaleString()}</p>
                 <p className="text-sm text-ink-500 mt-1">累计核销(张)</p>
               </div>
               <div className="text-center p-4 bg-amber-50 rounded-lg">
-                <p className="text-3xl font-bold text-amber-600">{couponStats.consumptionRate?.toFixed(1) || 0}%</p>
+                <p className="text-3xl font-bold text-amber-600">{couponConsumptionRate.toFixed(1)}%</p>
                 <p className="text-sm text-ink-500 mt-1">核销率</p>
               </div>
               <div className="text-center p-4 bg-porcelain-50 rounded-lg">
-                <p className="text-3xl font-bold text-porcelain-600">¥{couponStats.totalAmount?.toLocaleString() || 0}</p>
+                <p className="text-3xl font-bold text-porcelain-600">¥{couponTotalAmount.toLocaleString()}</p>
                 <p className="text-sm text-ink-500 mt-1">核销金额</p>
               </div>
             </div>

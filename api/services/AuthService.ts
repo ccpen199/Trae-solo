@@ -107,6 +107,17 @@ export class AuthService {
     return { success: true, message: '密码修改成功' };
   }
 
+  async updateProfile(userId: string, updates: Partial<User>): Promise<User | undefined> {
+    const filtered: Partial<User> = {};
+    const allowed: (keyof User)[] = ['realName', 'email', 'phone', 'organization', 'avatar'];
+    for (const k of allowed) {
+      if (updates[k] !== undefined) {
+        (filtered as any)[k] = updates[k];
+      }
+    }
+    return userRepository.update(userId, filtered);
+  }
+
   async createUser(userData: {
     username: string;
     password: string;

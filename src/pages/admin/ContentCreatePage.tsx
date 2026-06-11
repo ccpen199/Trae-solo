@@ -4,6 +4,9 @@ import { contentApi } from '../../lib/api';
 import RichTextEditor from '../../components/ui/Editor';
 import type { ContentType } from '../../../shared/types';
 
+type FeedbackType = 'success' | 'error' | 'info' | null;
+const defaultCoverImage = 'https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?w=900&h=520&fit=crop';
+
 const ContentCreatePage: React.FC = () => {
   const navigate = useNavigate();
   const [formData, setFormData] = useState({
@@ -16,36 +19,100 @@ const ContentCreatePage: React.FC = () => {
     coverImage: '',
     tags: [] as string[],
     scheduledPublishAt: '',
+    videoUrl: '',
   });
   const [tagInput, setTagInput] = useState('');
   const [securityResult, setSecurityResult] = useState<any>(null);
   const [checkingSecurity, setCheckingSecurity] = useState(false);
+  const [saving, setSaving] = useState(false);
+  const [feedback, setFeedback] = useState<{ type: FeedbackType; message: string } | null>(null);
+  const [showCancelConfirm, setShowCancelConfirm] = useState(false);
 
   const categories = ['政策解读', '景区推荐', '文旅资讯', '非遗文化', '节庆活动', '导游指南', '美食推荐'];
   const regions = ['全国', '北京', '上海', '广东', '江苏', '浙江', '四川', '陕西', '云南', '其他'];
 
-  const handleSubmit = async (e: React.FormEvent, action: 'save' | 'submit') => {
-    e.preventDefault();
+  const showFeedback = (type: FeedbackType, message: string) => {
+    setFeedback({ type, message });
+    if (type !== 'error') {
+      setTimeout(() => setFeedback(null), 3000);
+    }
+  };
+
+  const doCreate = async (action: 'save' | 'submit') => {
+    if (!formData.title.trim()) {
+      showFeedback('error', '请填写内容标题');
+      return false;
+    }
+    if (!formData.summary.trim()) {
+      showFeedback('error', '请填写内容摘要');
+      return false;
+    }
+    if (!formData.content.trim()) {
+      showFeedback('error', '请填写正文内容');
+      return false;
+    }
+    if (formData.type === 'video' && !formData.videoUrl.trim() && !formData.coverImage.trim()) {
+      showFeedback('info', '建议填写视频URL或上传封面以提升展示效果');
+    }
+    setSaving(true);
     try {
-      const res = await contentApi.create(formData);
-      if (action === 'submit') {
+      const payload = {
+        ...formData,
+        coverImage: formData.coverImage.trim() || defaultCoverImage,
+      };
+      const status = action === 'save' ? 'draft' : 'pending_audit';
+      const res = await contentApi.create({ ...payload, status });
+      if (action === 'submit' && res?.data?.id) {
         await contentApi.submitAudit(res.data.id);
       }
+      const actionText = action === 'save' ? '草稿已保存' : '已提交审核';
+      showFeedback('success', `${actionText}，即将返回内容列表...`);
+      setTimeout(() => navigate('/admin/content'), 1200);
+      return true;
+    } catch (err: any) {
+      const msg = err?.message || '保存失败，请稍后重试';
+      showFeedback('error', msg);
+      return false;
+    } finally {
+      setSaving(false);
+    }
+  };
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    await doCreate('save');
+  };
+
+  const handleSubmitAudit = async () => {
+    await doCreate('submit');
+  };
+
+  const handleCancel = () => {
+    const hasContent = formData.title || formData.summary || formData.content || formData.tags.length > 0;
+    if (hasContent) {
+      setShowCancelConfirm(true);
+    } else {
       navigate('/admin/content');
-    } catch (err) {
-      console.error('保存失败:', err);
     }
   };
 
   const handleSecurityCheck = async () => {
     setCheckingSecurity(true);
     try {
-      const tempContent = await contentApi.create({ ...formData, status: 'draft' });
-      const res = await contentApi.securityCheck(tempContent.data.id);
+      const payload = {
+        ...formData,
+        coverImage: formData.coverImage.trim() || defaultCoverImage,
+      };
+      const tempContent = await contentApi.create({ ...payload, status: 'draft' });
+      const res = await contentApi.securityCheck(tempContent.data.id, {
+        content: payload.content,
+        type: payload.type,
+      } as any);
       setSecurityResult(res.data);
       await contentApi.delete(tempContent.data.id);
-    } catch (err) {
-      console.error('检测失败:', err);
+      showFeedback('success', '安全检测完成');
+    } catch (err: any) {
+      showFeedback('error', err?.message || '检测失败');
     } finally {
       setCheckingSecurity(false);
     }
@@ -63,18 +130,51 @@ const ContentCreatePage: React.FC = () => {
   };
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-6 relative">
+      {feedback && (
+        <div className={`fixed top-20 right-6 z-50 px-5 py-3 rounded-lg shadow-lg border ${
+          feedback.type === 'success' ? 'bg-green-50 text-green-800 border-green-200' :
+          feedback.type === 'error' ? 'bg-red-50 text-red-800 border-red-200' :
+          'bg-blue-50 text-blue-800 border-blue-200'
+        }`}>
+          <div className="flex items-center gap-2">
+            {feedback.type === 'success' && <span>✅</span>}
+            {feedback.type === 'error' && <span>❌</span>}
+            {feedback.type === 'info' && <span>ℹ️</span>}
+            <span className="text-sm font-medium">{feedback.message}</span>
+            <button onClick={() => setFeedback(null)} className="ml-3 text-ink-400 hover:text-ink-600">×</button>
+          </div>
+        </div>
+      )}
+
+      {showCancelConfirm && (
+        <div className="fixed inset-0 z-50 bg-black/40 flex items-center justify-center">
+          <div className="bg-white rounded-xl shadow-2xl p-6 max-w-sm w-full mx-4">
+            <h3 className="text-lg font-bold text-ink-900 mb-2">确认离开？</h3>
+            <p className="text-sm text-ink-600 mb-5">当前编辑的内容尚未保存，离开后将丢失全部修改。</p>
+            <div className="flex gap-3 justify-end">
+              <button onClick={() => setShowCancelConfirm(false)} className="btn-secondary">
+                继续编辑
+              </button>
+              <button onClick={() => { setShowCancelConfirm(false); navigate('/admin/content'); }} className="btn-primary">
+                确认离开
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
       <div className="flex items-center justify-between">
         <div>
           <h1 className="text-2xl font-bold text-ink-900">创建内容</h1>
-          <p className="text-ink-500 text-sm mt-1">发布新的文旅内容</p>
+          <p className="text-ink-500 text-sm mt-1">发布新的文旅内容（PGC专业生产 / UGC用户生产）</p>
         </div>
-        <button onClick={() => navigate('/admin/content')} className="btn-secondary">
+        <button onClick={handleCancel} className="btn-secondary">
           取消
         </button>
       </div>
 
-      <form onSubmit={(e) => handleSubmit(e, 'save')} className="space-y-6">
+      <form onSubmit={handleSubmit} className="space-y-6">
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
           <div className="lg:col-span-2 space-y-6">
             <div className="card chinese-border">
@@ -87,7 +187,7 @@ const ContentCreatePage: React.FC = () => {
                     value={formData.title}
                     onChange={(e) => setFormData({ ...formData, title: e.target.value })}
                     className="input"
-                    placeholder="请输入标题"
+                    placeholder="请输入标题（建议30字以内）"
                     required
                   />
                 </div>
@@ -101,7 +201,20 @@ const ContentCreatePage: React.FC = () => {
                     maxLength={100}
                     required
                   />
+                  <p className="text-xs text-ink-400 mt-1 text-right">{formData.summary.length}/100</p>
                 </div>
+                {formData.type === 'video' && (
+                  <div>
+                    <label className="block text-sm font-medium text-ink-700 mb-2">🎬 视频链接</label>
+                    <input
+                      type="url"
+                      value={formData.videoUrl}
+                      onChange={(e) => setFormData({ ...formData, videoUrl: e.target.value })}
+                      className="input"
+                      placeholder="请输入视频URL（mp4/m3u8等）"
+                    />
+                  </div>
+                )}
                 <div>
                   <label className="block text-sm font-medium text-ink-700 mb-2">正文内容 *</label>
                   <RichTextEditor
@@ -121,6 +234,7 @@ const ContentCreatePage: React.FC = () => {
                     <button type="button" onClick={() => handleRemoveTag(tag)} className="hover:text-primary-900">×</button>
                   </span>
                 ))}
+                {formData.tags.length === 0 && <span className="text-sm text-ink-400">暂无标签，输入后回车添加</span>}
               </div>
               <div className="flex gap-2">
                 <input
@@ -144,22 +258,23 @@ const ContentCreatePage: React.FC = () => {
                   <label className="block text-sm font-medium text-ink-700 mb-2">内容类型 *</label>
                   <div className="grid grid-cols-2 gap-2">
                     {[
-                      { value: 'article', label: '📄 图文' },
-                      { value: 'video', label: '🎬 视频' },
-                      { value: 'vr', label: '🎮 VR导览' },
-                      { value: 'infographic', label: '📊 信息图' },
+                      { value: 'article', label: '📄 图文', desc: 'PGC文章' },
+                      { value: 'video', label: '🎬 视频', desc: '短视频/直播' },
+                      { value: 'vr', label: '🎮 VR导览', desc: '全景/VR' },
+                      { value: 'infographic', label: '📊 信息图', desc: '政策长图' },
                     ].map((opt) => (
                       <button
                         key={opt.value}
                         type="button"
                         onClick={() => setFormData({ ...formData, type: opt.value as ContentType })}
-                        className={`p-3 rounded-lg border-2 transition-all ${
+                        className={`p-3 rounded-lg border-2 transition-all text-left ${
                           formData.type === opt.value
                             ? 'border-primary-500 bg-primary-50 text-primary-700'
                             : 'border-ink-200 hover:border-ink-300'
                         }`}
                       >
-                        {opt.label}
+                        <div className="font-medium">{opt.label}</div>
+                        <div className="text-xs text-ink-400 mt-0.5">{opt.desc}</div>
                       </button>
                     ))}
                   </div>
@@ -225,7 +340,7 @@ const ContentCreatePage: React.FC = () => {
                 type="button"
                 onClick={handleSecurityCheck}
                 disabled={checkingSecurity || !formData.title || !formData.content}
-                className="w-full btn-secondary mb-4"
+                className="w-full btn-secondary mb-4 disabled:opacity-50"
               >
                 {checkingSecurity ? '检测中...' : '🔍 安全检测'}
               </button>
@@ -242,16 +357,17 @@ const ContentCreatePage: React.FC = () => {
               )}
             </div>
 
-            <div className="flex gap-3">
-              <button type="submit" className="btn-secondary flex-1">
-                保存草稿
+            <div className="flex gap-3 sticky bottom-4">
+              <button type="submit" disabled={saving} className="btn-secondary flex-1 disabled:opacity-60">
+                {saving ? '保存中...' : '💾 保存草稿'}
               </button>
               <button
                 type="button"
-                onClick={(e) => handleSubmit(e, 'submit')}
-                className="btn-primary flex-1"
+                onClick={handleSubmitAudit}
+                disabled={saving}
+                className="btn-primary flex-1 disabled:opacity-60"
               >
-                提交审核
+                {saving ? '提交中...' : '📝 提交审核'}
               </button>
             </div>
           </div>

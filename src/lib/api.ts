@@ -32,6 +32,10 @@ export const authApi = {
     api.post('/auth/refresh', { refreshToken }),
   getCurrentUser: (): Promise<ApiResponse<{ user: User; permissions: string[] }>> =>
     api.get('/auth/me'),
+  updateProfile: (data: Partial<User>): Promise<ApiResponse<User>> =>
+    api.put('/auth/profile', data),
+  changePassword: (data: { oldPassword: string; newPassword: string; confirmPassword: string }): Promise<ApiResponse<null>> =>
+    api.put('/auth/password', data),
 };
 
 export const contentApi = {
@@ -56,8 +60,8 @@ export const contentApi = {
     api.post(`/content/${id}/publish`),
   offline: (id: string): Promise<ApiResponse<Content>> =>
     api.post(`/content/${id}/offline`),
-  securityCheck: (id: string): Promise<ApiResponse<{ safe: boolean; risk: string; suggestions: string[] }>> =>
-    api.post(`/content/${id}/security-check`),
+  securityCheck: (id: string, data: { content: string; type: ContentType; mediaUrls?: string[] }): Promise<ApiResponse<{ safe: boolean; risk: string; suggestions: string[] }>> =>
+    api.post(`/content/${id}/security-check`, data),
   like: (id: string): Promise<ApiResponse<{ likes: number }>> =>
     api.post(`/content/${id}/like`),
   share: (id: string): Promise<ApiResponse<{ shares: number }>> =>

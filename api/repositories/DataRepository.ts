@@ -53,10 +53,14 @@ export interface OTAAggregationResult {
 }
 
 export interface CouponStatisticsResult {
+  totalIssued: number;
+  totalConsumed: number;
+  totalIssuedAmount: number;
   totalAmount: number;
-  usedAmount: number;
-  usedCount: number;
+  consumptionRate: number;
   writeOffRate: number;
+  usedCount: number;
+  usedAmount: number;
   region?: string;
   statisticsDate?: string;
 }
@@ -216,31 +220,46 @@ export class DataRepository {
 
   async calculateCouponStatistics(params: CouponQueryParams): Promise<CouponStatisticsResult> {
     const { startDate, endDate, region, couponBatchId } = params;
-    
+
+    const allBatchIds = new Set<string>();
+    let totalIssuedCount = 0;
+    let totalIssuedAmount = 0;
+    db.couponBatches.forEach((batch) => {
+      let match = true;
+      if (region && batch.region !== region) match = false;
+      if (couponBatchId && batch.id !== couponBatchId) match = false;
+      if (match) {
+        allBatchIds.add(batch.id);
+        totalIssuedCount += batch.totalCount;
+        totalIssuedAmount += batch.totalAmount;
+      }
+    });
+
     let allConsumptions: CouponConsumption[] = [];
     db.couponConsumptions.forEach((consumptions) => {
       allConsumptions = [...allConsumptions, ...consumptions];
     });
 
-    let filtered = allConsumptions.filter((consumption) => {
-      let match = true;
-      if (startDate && consumption.statisticsDate < startDate) match = false;
-      if (endDate && consumption.statisticsDate > endDate) match = false;
-      if (region && consumption.region !== region) match = false;
-      if (couponBatchId && consumption.couponBatchId !== couponBatchId) match = false;
-      return match;
+    const filtered = allConsumptions.filter((consumption) => {
+      if (!allBatchIds.has(consumption.couponBatchId)) return false;
+      if (startDate && consumption.statisticsDate < startDate) return false;
+      if (endDate && consumption.statisticsDate > endDate) return false;
+      return true;
     });
 
-    const totalAmount = filtered.reduce((sum, c) => sum + c.totalAmount, 0);
     const usedAmount = filtered.reduce((sum, c) => sum + c.usedAmount, 0);
     const usedCount = filtered.reduce((sum, c) => sum + c.usedCount, 0);
-    const writeOffRate = totalAmount > 0 ? usedAmount / totalAmount : 0;
+    const consumptionRate = totalIssuedCount > 0 ? (usedCount / totalIssuedCount) * 100 : 0;
 
     return {
-      totalAmount,
-      usedAmount,
+      totalIssued: totalIssuedCount,
+      totalConsumed: usedCount,
+      totalIssuedAmount,
+      totalAmount: usedAmount,
+      consumptionRate,
+      writeOffRate: totalIssuedAmount > 0 ? usedAmount / totalIssuedAmount : 0,
       usedCount,
-      writeOffRate,
+      usedAmount,
       region,
     };
   }

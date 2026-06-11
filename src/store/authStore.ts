@@ -18,6 +18,7 @@ interface AuthState {
   error: string | null;
   errorType: LoginErrorType | null;
   lastLoginAt: string | null;
+  operationLogs: { time: string; action: string; result: string }[];
   login: (data: LoginRequest) => Promise<boolean>;
   logout: () => Promise<void>;
   fetchCurrentUser: () => Promise<void>;
@@ -25,6 +26,9 @@ interface AuthState {
   ensureDemoSession: () => void;
   hasPermission: (permission: string) => boolean;
   resetState: () => void;
+  updateProfile: (patch: Partial<User>) => Promise<{ success: boolean; message: string }>;
+  changePassword: (data: { oldPassword: string; newPassword: string; confirmPassword: string }) => Promise<{ success: boolean; message: string }>;
+  addOperationLog: (action: string, result: string) => void;
 }
 
 const DEMO_TOKEN = 'demo-local-token';
@@ -86,6 +90,45 @@ export const useAuthStore = create<AuthState>()(
       error: null,
       errorType: null,
       lastLoginAt: null,
+      operationLogs: [],
+
+      addOperationLog: (action: string, result: string) => {
+        const entry = { time: new Date().toLocaleString('zh-CN'), action, result };
+        set((state) => ({ operationLogs: [entry, ...state.operationLogs].slice(0, 50) }));
+      },
+
+      updateProfile: async (patch: Partial<User>) => {
+        try {
+          const res = await authApi.updateProfile(patch);
+          if (res?.data) {
+            const oldUser = get().user;
+            const updatedUser = { ...res.data, permissions: oldUser?.permissions || [] };
+            const token = get().token || '';
+            writeLocalAuth(token, updatedUser as User & { permissions: string[] });
+            set({ user: updatedUser as User & { permissions: string[] } });
+            get().addOperationLog(`更新资料（${Object.keys(patch).join('、')}）`, '成功');
+            return { success: true, message: res.message || '资料已更新' };
+          }
+          get().addOperationLog('更新资料', '失败：返回数据为空');
+          return { success: false, message: '更新失败，请稍后重试' };
+        } catch (err: any) {
+          const msg = err?.message || '更新资料失败';
+          get().addOperationLog('更新资料', `失败：${msg}`);
+          return { success: false, message: msg };
+        }
+      },
+
+      changePassword: async (data) => {
+        try {
+          const res = await authApi.changePassword(data);
+          get().addOperationLog('修改密码', res?.message || '成功');
+          return { success: true, message: res?.message || '密码修改成功' };
+        } catch (err: any) {
+          const msg = err?.message || '修改密码失败';
+          get().addOperationLog('修改密码', `失败：${msg}`);
+          return { success: false, message: msg };
+        }
+      },
 
       login: async (data: LoginRequest): Promise<boolean> => {
         console.log('[AuthStore] login start:', data.username);
@@ -123,6 +166,7 @@ export const useAuthStore = create<AuthState>()(
             lastLoginAt: new Date().toISOString(),
           });
 
+          get().addOperationLog(`账号登录（${data.username}）`, '成功');
           return true;
         } catch (err: any) {
           console.error('[AuthStore] login error:', err?.message, err?.status, err?.code);
@@ -142,6 +186,7 @@ export const useAuthStore = create<AuthState>()(
         } catch {
           // logout 失败不影响本地状态清除
         } finally {
+          get().addOperationLog('账号登出', '成功');
           clearLocalAuth();
           set({
             user: null,
@@ -194,6 +239,7 @@ export const useAuthStore = create<AuthState>()(
           error: null,
           errorType: null,
           lastLoginAt: null,
+          operationLogs: [],
         });
       },
 
