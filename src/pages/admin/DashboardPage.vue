@@ -75,6 +75,85 @@
       </div>
     </div>
 
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5">
+      <div class="stat-card cursor-pointer hover:shadow-lg transition-all duration-300" @click="router.push('/admin/vehicles')">
+        <div class="flex items-start justify-between">
+          <div>
+            <div class="stat-label">异常车辆监控</div>
+            <div class="stat-number mt-2 text-red-600">异常车辆3辆</div>
+            <div class="text-xs text-red-500 mt-1 font-medium">离线超时2h</div>
+          </div>
+          <div class="w-12 h-12 rounded-xl bg-red-50 flex items-center justify-center">
+            <component :is="icons.AlertTriangle" class="w-6 h-6 text-red-500" />
+          </div>
+        </div>
+        <div class="flex items-center justify-between mt-4 pt-3 border-t border-gray-100">
+          <span class="text-xs text-gray-400">需及时处理</span>
+          <span class="text-xs text-red-500 font-medium flex items-center gap-1 hover:gap-2 transition-all">
+            查看详情
+            <component :is="icons.ChevronRight" class="w-3 h-3" />
+          </span>
+        </div>
+      </div>
+      <div class="stat-card cursor-pointer hover:shadow-lg transition-all duration-300" @click="router.push('/enterprise/api-docs')">
+        <div class="flex items-start justify-between">
+          <div>
+            <div class="stat-label">ERP直连订单</div>
+            <div class="stat-number mt-2 text-blue-600">今日同步328单</div>
+            <div class="text-xs text-blue-500 mt-1 font-medium">成功率99.2%</div>
+          </div>
+          <div class="w-12 h-12 rounded-xl bg-blue-50 flex items-center justify-center">
+            <component :is="icons.Link2" class="w-6 h-6 text-blue-500" />
+          </div>
+        </div>
+        <div class="flex items-center justify-between mt-4 pt-3 border-t border-gray-100">
+          <span class="text-xs text-gray-400">实时同步中</span>
+          <span class="text-xs text-blue-500 font-medium flex items-center gap-1 hover:gap-2 transition-all">
+            查看详情
+            <component :is="icons.ChevronRight" class="w-3 h-3" />
+          </span>
+        </div>
+      </div>
+      <div class="stat-card cursor-pointer hover:shadow-lg transition-all duration-300">
+        <div class="flex items-start justify-between">
+          <div>
+            <div class="stat-label">客户权限管理</div>
+            <div class="stat-number mt-2 text-purple-600">授权企业256家</div>
+            <div class="text-xs text-purple-500 mt-1 font-medium">5级角色体系</div>
+          </div>
+          <div class="w-12 h-12 rounded-xl bg-purple-50 flex items-center justify-center">
+            <component :is="icons.Users" class="w-6 h-6 text-purple-500" />
+          </div>
+        </div>
+        <div class="flex items-center justify-between mt-4 pt-3 border-t border-gray-100">
+          <span class="text-xs text-gray-400">权限配置</span>
+          <span class="text-xs text-purple-500 font-medium flex items-center gap-1 hover:gap-2 transition-all">
+            查看详情
+            <component :is="icons.ChevronRight" class="w-3 h-3" />
+          </span>
+        </div>
+      </div>
+      <div class="stat-card cursor-pointer hover:shadow-lg transition-all duration-300" @click="router.push('/admin/auditing')">
+        <div class="flex items-start justify-between">
+          <div>
+            <div class="stat-label">对账审计中心</div>
+            <div class="stat-number mt-2 text-orange-600">待对账12笔</div>
+            <div class="text-xs text-orange-500 mt-1 font-medium">差异率1.2%</div>
+          </div>
+          <div class="w-12 h-12 rounded-xl bg-orange-50 flex items-center justify-center">
+            <component :is="icons.FileCheck" class="w-6 h-6 text-orange-500" />
+          </div>
+        </div>
+        <div class="flex items-center justify-between mt-4 pt-3 border-t border-gray-100">
+          <span class="text-xs text-gray-400">财务审计</span>
+          <span class="text-xs text-orange-500 font-medium flex items-center gap-1 hover:gap-2 transition-all">
+            查看详情
+            <component :is="icons.ChevronRight" class="w-3 h-3" />
+          </span>
+        </div>
+      </div>
+    </div>
+
     <div class="grid grid-cols-1 lg:grid-cols-3 gap-5">
       <div class="card-base p-5 lg:col-span-2">
         <div class="flex items-center justify-between mb-4">
@@ -191,7 +270,11 @@
               <td class="py-3 px-2 text-sm text-gray-600 max-w-xs truncate">{{ alert.message }}</td>
               <td class="py-3 px-2 text-sm text-gray-500">{{ alert.timestamp }}</td>
               <td class="py-3 px-2">
-                <button v-if="!alert.acknowledged" class="text-xs text-brand-500 hover:text-brand-600">
+                <button
+                  v-if="!alert.acknowledged"
+                  class="text-xs text-brand-500 hover:text-brand-600 font-medium hover:underline"
+                  @click="router.push(`/tracking?waybillNo=${alert.waybillNo}`)"
+                >
                   确认处理
                 </button>
                 <span v-else class="text-xs text-gray-400">已处理</span>
@@ -207,10 +290,12 @@
 <script setup lang="ts">
 import { ref, onMounted, computed } from 'vue'
 import * as echarts from 'echarts'
-import { Package, Banknote, Truck, AlertTriangle, TrendingUp, Minus, ChevronRight } from 'lucide-vue-next'
+import { Package, Banknote, Truck, AlertTriangle, TrendingUp, Minus, ChevronRight, Link2, Users, FileCheck } from 'lucide-vue-next'
 import { mockDashboardStats, mockAlerts, mockVehicles } from '@/mock'
+import { useRouter } from 'vue-router'
 
-const icons = { Package, Banknote, Truck, AlertTriangle, TrendingUp, Minus, ChevronRight }
+const icons = { Package, Banknote, Truck, AlertTriangle, TrendingUp, Minus, ChevronRight, Link2, Users, FileCheck }
+const router = useRouter()
 
 const stats = mockDashboardStats
 const alerts = mockAlerts

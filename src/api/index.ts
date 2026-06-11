@@ -45,6 +45,17 @@ export const orderApi = {
   list: () => apiClient.get('/orders')
 }
 
+export const auditingApi = {
+  listStatements: (params?: { status?: string; month?: string; customerId?: string }) =>
+    apiClient.get('/auditing/statements', { params }),
+  getStatement: (id: string) => apiClient.get(`/auditing/statements/${id}`),
+  confirmStatement: (id: string, operator = '系统管理员') =>
+    apiClient.put(`/auditing/statements/${id}/confirm`, { operator }),
+  rejectStatement: (id: string, reason: string, operator = '系统管理员') =>
+    apiClient.put(`/auditing/statements/${id}/reject`, { reason, operator }),
+  listLogs: () => apiClient.get('/auditing/logs')
+}
+
 export const trackingApi = {
   getMonitorData: (waybillNo: string, params?: { startTime?: string; endTime?: string }) =>
     apiClient.get(`/tracking/${waybillNo}/monitor`, { params }),

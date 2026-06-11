@@ -71,7 +71,7 @@
 import { computed } from 'vue'
 import { useRoute } from 'vue-router'
 import {
-  LayoutDashboard, Route, Video, FileText, Truck, Bell, Settings, LogOut
+  LayoutDashboard, Route, Video, FileText, Truck, Bell, Settings, LogOut, ReceiptText
 } from 'lucide-vue-next'
 
 const icons = { Bell, Settings, LogOut }
@@ -82,7 +82,8 @@ const menuItems = [
   { path: '/admin/routing', label: '路由规划引擎', icon: Route },
   { path: '/admin/video-review', label: '装卸视频审核', icon: Video, badge: '3' },
   { path: '/admin/claims', label: '理赔中心', icon: FileText, badge: '1' },
-  { path: '/admin/vehicles', label: '车辆监控对接', icon: Truck }
+  { path: '/admin/vehicles', label: '车辆监控对接', icon: Truck },
+  { path: '/admin/auditing', label: '对账审计', icon: ReceiptText, badge: '2' }
 ]
 
 const titleMap: Record<string, { title: string; subtitle: string }> = {
@@ -90,7 +91,8 @@ const titleMap: Record<string, { title: string; subtitle: string }> = {
   '/admin/routing': { title: '大件路由规划引擎', subtitle: '智能规避限高限重路段，多方案对比选优' },
   '/admin/video-review': { title: '装卸作业视频审核', subtitle: 'AI智能抽检 + 人工复核' },
   '/admin/claims': { title: '理赔中心', subtitle: 'OCR智能识别 · 结构化录入 · 快速理算' },
-  '/admin/vehicles': { title: '车辆监控对接', subtitle: '交通运输部货运车辆动态监控平台' }
+  '/admin/vehicles': { title: '车辆监控对接', subtitle: '交通运输部货运车辆动态监控平台' },
+  '/admin/auditing': { title: '对账审计中心', subtitle: '客户账单核对 · 差异追踪 · 财务留痕' }
 }
 
 const pageInfo = computed(() => titleMap[route.path] || { title: '', subtitle: '' })

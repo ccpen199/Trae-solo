@@ -68,6 +68,36 @@ const routes = [
     meta: { layout: 'admin', title: '车辆监控对接 - 德邦大件运营管理平台', requiresAuth: true }
   },
   {
+    path: '/admin/auditing',
+    name: 'admin-auditing',
+    component: {
+      template: `
+        <div class="p-8">
+          <h1 class="text-2xl font-bold text-gray-900 mb-4">对账审计</h1>
+          <p class="text-gray-500">该功能正在开发中，敬请期待...</p>
+          <div class="mt-6 card-base p-6">
+            <h2 class="text-lg font-semibold mb-4">本月对账概览</h2>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+              <div class="p-4 bg-bg-50 rounded-lg">
+                <div class="text-sm text-gray-500">本月对账</div>
+                <div class="text-2xl font-bold text-brand-600">256笔</div>
+              </div>
+              <div class="p-4 bg-bg-50 rounded-lg">
+                <div class="text-sm text-gray-500">待确认</div>
+                <div class="text-2xl font-bold text-red-600">12笔</div>
+              </div>
+              <div class="p-4 bg-bg-50 rounded-lg">
+                <div class="text-sm text-gray-500">差异率</div>
+                <div class="text-2xl font-bold text-green-600">1.2%</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      `
+    },
+    meta: { layout: 'admin', title: '对账审计 - 德邦大件运营管理平台', requiresAuth: true }
+  },
+  {
     path: '/enterprise/api-docs',
     name: 'enterprise-api-docs',
     component: () => import('@/pages/enterprise/ApiDocsPage.vue'),
