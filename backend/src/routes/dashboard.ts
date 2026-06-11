@@ -25,11 +25,11 @@ router.get('/stats', async (req: Request, res: Response) => {
       });
     }
 
-    const pendingContractItems = db.prepare("SELECT id, contract_number, status, created_at FROM contracts WHERE status IN ('draft','pending_signature') ORDER BY created_at DESC LIMIT 3").all() as any[];
+    const pendingContractItems = db.prepare("SELECT id, contract_no, status, created_at FROM contracts WHERE status IN ('draft','pending_signature') ORDER BY created_at DESC LIMIT 3").all() as any[];
     for (const c of pendingContractItems) {
       todos.push({
         id: c.id,
-        title: `合同待签署: ${c.contract_number}`,
+        title: `合同待签署: ${c.contract_no}`,
         type: '合同签署',
         created_at: c.created_at,
       });
@@ -47,7 +47,7 @@ router.get('/stats', async (req: Request, res: Response) => {
 
     const matches: any[] = [];
     const recentCargo = db.prepare("SELECT id, cargo_name, origin_city, dest_city FROM cargo WHERE status = 'pending' ORDER BY created_at DESC LIMIT 3").all() as any[];
-    const recentVehicles = db.prepare("SELECT id, plate_number, current_city FROM vehicles WHERE status = 'available' ORDER BY created_at DESC LIMIT 3").all() as any[];
+    const recentVehicles = db.prepare("SELECT id, plate_number, current_location FROM vehicles WHERE status = 'available' ORDER BY created_at DESC LIMIT 3").all() as any[];
 
     for (let i = 0; i < Math.min(recentCargo.length, recentVehicles.length); i++) {
       const c = recentCargo[i];
@@ -99,20 +99,24 @@ router.get('/cost-index', async (_req: Request, res: Response) => {
         const period = `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}`;
         for (const province of provinces) {
           const index = Math.round((85 + Math.random() * 40) * 100) / 100;
-          db.prepare('INSERT INTO cost_indices (period, province, city, cost_index) VALUES (?, ?, ?, ?)')
-            .run(period, province, '', index);
+          db.prepare('INSERT INTO cost_indices (period, province, city, avg_cost_index, fuel_index, toll_index, labor_index, warehouse_index) VALUES (?, ?, ?, ?, ?, ?, ?, ?)')
+            .run(period, province, '', index, Math.round((60 + Math.random() * 30) * 100) / 100, Math.round((50 + Math.random() * 25) * 100) / 100, Math.round((70 + Math.random() * 20) * 100) / 100, Math.round((40 + Math.random() * 30) * 100) / 100);
         }
       }
     }
 
-    const allData = db.prepare('SELECT period, province, cost_index FROM cost_indices ORDER BY period ASC').all() as any[];
+    const allData = db.prepare('SELECT period, province, avg_cost_index, fuel_index, toll_index, labor_index, warehouse_index FROM cost_indices ORDER BY period ASC').all() as any[];
 
-    const flatData: { date: string; index: number; province: string }[] = [];
+    const flatData: { date: string; index: number; province: string; fuel: number; toll: number; labor: number; warehouse: number }[] = [];
     for (const item of allData) {
       flatData.push({
         date: item.period,
-        index: item.cost_index,
+        index: item.avg_cost_index,
         province: item.province,
+        fuel: item.fuel_index,
+        toll: item.toll_index,
+        labor: item.labor_index,
+        warehouse: item.warehouse_index,
       });
     }
 
@@ -135,25 +139,14 @@ router.get('/supply-demand', async (_req: Request, res: Response) => {
         for (const province of provinces) {
           const demand = Math.round(1000 + Math.random() * 5000);
           const supply = Math.round(800 + Math.random() * 4500);
-          const matchRate = Math.round(Math.random() * 100) / 100;
-          db.prepare('INSERT INTO supply_demand_stats (period, province, city, cargo_count, vehicle_count, match_rate) VALUES (?, ?, ?, ?, ?, ?)')
-            .run(period, province, '', demand, supply, matchRate);
+          db.prepare('INSERT INTO supply_demand_stats (period, province, city, cargo_demand, vehicle_supply, avg_price, avg_transit_days) VALUES (?, ?, ?, ?, ?, ?, ?)')
+            .run(period, province, '', demand, supply, Math.round((200 + Math.random() * 300) * 100) / 100, Math.round(1 + Math.random() * 5));
         }
       }
     }
 
-    const allData = db.prepare('SELECT period, province, cargo_count, vehicle_count, match_rate FROM supply_demand_stats ORDER BY period ASC').all() as any[];
-
-    const flatData = allData.map((item: any) => ({
-      period: item.period,
-      province: item.province,
-      cargo_demand: item.cargo_count,
-      vehicle_supply: item.vehicle_count,
-      avg_price: Math.round((200 + item.match_rate * 300) * 100) / 100,
-      avg_transit_days: Math.round(1 + item.match_rate * 5),
-    }));
-
-    res.json(flatData);
+    const allData = db.prepare('SELECT period, province, cargo_demand, vehicle_supply, avg_price, avg_transit_days FROM supply_demand_stats ORDER BY period ASC').all() as any[];
+    res.json(allData);
   } catch (err) {
     res.status(500).json({ error: '获取供需数据失败' });
   }

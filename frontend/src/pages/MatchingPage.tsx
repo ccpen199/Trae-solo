@@ -27,7 +27,7 @@ interface VehicleItem {
   plate_number: string
   vehicle_type: string
   capacity: number
-  current_city: string
+  current_location: string
   temperature_control: boolean
   status: string
 }
@@ -51,7 +51,7 @@ interface MatchResult {
   plate_number?: string
   vehicle_type?: string
   capacity?: number
-  current_city?: string
+  current_location?: string
   name?: string
   origin?: string
   destination?: string
@@ -267,7 +267,7 @@ export default function MatchingPage() {
                 </div>
                 <div className="flex items-center gap-2 text-gray-600">
                   <MapPin className="h-4 w-4" />
-                  当前位置: {selectedVehicleInfo.current_city}
+                  当前位置: {selectedVehicleInfo.current_location}
                 </div>
               </div>
             </div>
@@ -327,7 +327,7 @@ export default function MatchingPage() {
                         </div>
                         <div className="flex flex-wrap gap-4 text-sm text-gray-500">
                           <span>载重: {match.capacity}吨</span>
-                          <span>位置: {match.current_city}</span>
+                          <span>位置: {match.current_location}</span>
                           {match.geographic_distance !== undefined && (
                             <span className="flex items-center gap-1">
                               <MapPin className="h-3.5 w-3.5" />

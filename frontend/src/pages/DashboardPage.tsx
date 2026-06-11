@@ -13,6 +13,10 @@ interface CostItem {
   date: string
   index: number
   province: string
+  fuel: number
+  toll: number
+  labor: number
+  warehouse: number
 }
 
 interface SupplyDemandItem {
@@ -84,11 +88,12 @@ export default function DashboardPage() {
   const latestCostByProvince = provinces.map((prov) => {
     const items = costData.filter((c) => c.province === prov)
     const latest = items[items.length - 1]
-    return { province: prov, index: latest?.index ?? 0 }
+    return { province: prov, index: latest?.index ?? 0, fuel: latest?.fuel ?? 0, toll: latest?.toll ?? 0, labor: latest?.labor ?? 0, warehouse: latest?.warehouse ?? 0 }
   }).sort((a, b) => b.index - a.index)
 
   const barOption = {
     tooltip: { trigger: 'axis' as const },
+    legend: { data: ['综合成本', '燃油', '过路费', '人工', '仓储'], top: 0, textStyle: { fontSize: 11 } },
     grid: { left: 60, right: 20, top: 40, bottom: 40 },
     xAxis: {
       type: 'category' as const,
@@ -102,18 +107,11 @@ export default function DashboardPage() {
       splitLine: { lineStyle: { color: '#F3F4F6' } },
     },
     series: [
-      {
-        type: 'bar' as const,
-        data: latestCostByProvince.map((d) => d.index),
-        itemStyle: {
-          color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
-            { offset: 0, color: '#E8722A' },
-            { offset: 1, color: '#F5A66B' },
-          ]),
-          borderRadius: [4, 4, 0, 0],
-        },
-        barWidth: '50%',
-      },
+      { name: '综合成本', type: 'bar' as const, data: latestCostByProvince.map((d) => d.index), itemStyle: { color: '#E8722A', borderRadius: [4, 4, 0, 0] }, barWidth: '18%' },
+      { name: '燃油', type: 'bar' as const, data: latestCostByProvince.map((d) => d.fuel), itemStyle: { color: '#1B2A4A', borderRadius: [4, 4, 0, 0] }, barWidth: '18%' },
+      { name: '过路费', type: 'bar' as const, data: latestCostByProvince.map((d) => d.toll), itemStyle: { color: '#7C3AED', borderRadius: [4, 4, 0, 0] }, barWidth: '18%' },
+      { name: '人工', type: 'bar' as const, data: latestCostByProvince.map((d) => d.labor), itemStyle: { color: '#16A34A', borderRadius: [4, 4, 0, 0] }, barWidth: '18%' },
+      { name: '仓储', type: 'bar' as const, data: latestCostByProvince.map((d) => d.warehouse), itemStyle: { color: '#DC2626', borderRadius: [4, 4, 0, 0] }, barWidth: '18%' },
     ],
   }
 

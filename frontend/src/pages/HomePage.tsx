@@ -36,6 +36,10 @@ interface CostItem {
   date: string
   index: number
   province: string
+  fuel: number
+  toll: number
+  labor: number
+  warehouse: number
 }
 
 interface SupplyDemandItem {

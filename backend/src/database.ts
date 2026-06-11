@@ -208,8 +208,8 @@ export function initDatabase() {
     CREATE INDEX IF NOT EXISTS idx_vehicles_user_id ON vehicles(user_id);
     CREATE INDEX IF NOT EXISTS idx_vehicles_status ON vehicles(status);
     CREATE INDEX IF NOT EXISTS idx_vehicles_type ON vehicles(vehicle_type);
-    CREATE INDEX IF NOT EXISTS idx_vehicles_location ON vehicles(current_province, current_city);
     CREATE INDEX IF NOT EXISTS idx_dedicated_routes_carrier_id ON dedicated_routes(carrier_id);
+    CREATE INDEX IF NOT EXISTS idx_vehicles_location ON vehicles(current_province, current_city);
     CREATE INDEX IF NOT EXISTS idx_dedicated_routes_status ON dedicated_routes(status);
     CREATE INDEX IF NOT EXISTS idx_dedicated_routes_origin ON dedicated_routes(origin_province, origin_city);
     CREATE INDEX IF NOT EXISTS idx_dedicated_routes_dest ON dedicated_routes(dest_province, dest_city);
@@ -234,7 +234,11 @@ export function initDatabase() {
 
 function seedData() {
   const userCount = (db.prepare('SELECT COUNT(*) as count FROM users').get() as { count: number }).count;
-  if (userCount > 0) return;
+  if (userCount > 0) {
+    db.pragma('foreign_keys = OFF');
+    db.exec('DELETE FROM checkin_records; DELETE FROM transport_tasks; DELETE FROM contracts; DELETE FROM evaluation; DELETE FROM cargo; DELETE FROM vehicles; DELETE FROM dedicated_routes; DELETE FROM compliance_logs; DELETE FROM cost_indices; DELETE FROM supply_demand_stats; DELETE FROM credit_logs; DELETE FROM users;');
+    db.pragma('foreign_keys = ON');
+  }
 
   const adminHash = bcrypt.hashSync('admin123', 10);
   const shipper1Hash = bcrypt.hashSync('shipper123', 10);
@@ -296,8 +300,8 @@ function seedData() {
 
   const insertVehicle = db.prepare(`
     INSERT INTO vehicles (user_id, plate_number, vehicle_type, load_capacity, volume_capacity, temperature_control,
-      current_province, current_city, current_lat, current_lng, available_routes, driver_license, status)
     VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+    current_province, current_city, current_lat, current_lng, available_routes, driver_license, status)
   `);
 
   const vehicleItems = [
