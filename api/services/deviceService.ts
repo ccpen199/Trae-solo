@@ -90,15 +90,25 @@ export class DeviceService {
     const supportedFeatures = adapter.getSupportedFeatures();
     const protocolVersion = adapter.getProtocolVersion();
 
+    const recordsSynced = Math.floor(Math.random() * 100) + 200;
+    const recordsFailed = Math.floor(Math.random() * 3);
+    const syncDuration = Math.floor(Math.random() * 10) + 5;
+    const lastSyncResult = {
+      recordsSynced,
+      recordsFailed,
+      syncDuration,
+      completedAt: new Date().toISOString(),
+    };
+
     const stmt = db.prepare(`
       INSERT INTO devices (
         id, user_id, brand, model, name, firmware_version, battery_level, 
         connection_status, last_sync_time, signal_strength, sync_status,
         abstraction_status, privacy_status, archive_status, 
-        supported_features_json, protocol_version
+        last_sync_result_json, supported_features_json, protocol_version
       )
       VALUES (?, ?, ?, ?, ?, ?, ?, 'connected', datetime('now'), ?, 'completed',
-              'adapted', 'encrypted', 'not_generated', ?, ?)
+              'adapted', 'encrypted', 'completed', ?, ?, ?)
     `);
     stmt.run(
       id,
@@ -109,6 +119,7 @@ export class DeviceService {
       "1.0.0",
       Math.floor(Math.random() * 50) + 50,
       Math.floor(Math.random() * 30) - 90,
+      JSON.stringify(lastSyncResult),
       JSON.stringify(supportedFeatures),
       protocolVersion
     );

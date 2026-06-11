@@ -49,11 +49,15 @@ function rowToSleepRecord(row: unknown): SleepRecord {
     rem_sleep: number;
     awake_time: number;
     noise_level_avg: number;
-    noiseLevel?: number[];
+    noise_level_json?: string;
     quality_score: number;
-    stages?: unknown[];
+    stages_json?: string;
     created_at: string;
   };
+  let noiseLevel: number[] = [];
+  let stages: SleepRecord["stages"] = [];
+  try { if (r.noise_level_json) noiseLevel = JSON.parse(r.noise_level_json); } catch (_) {}
+  try { if (r.stages_json) stages = JSON.parse(r.stages_json) as SleepRecord["stages"]; } catch (_) {}
   return {
     id: r.id,
     userId: r.user_id,
@@ -64,9 +68,9 @@ function rowToSleepRecord(row: unknown): SleepRecord {
     remSleep: r.rem_sleep,
     awakeTime: r.awake_time,
     noiseLevelAvg: r.noise_level_avg,
-    noiseLevel: r.noiseLevel || [],
+    noiseLevel,
     qualityScore: r.quality_score,
-    stages: (r.stages || []) as SleepRecord["stages"],
+    stages,
     createdAt: r.created_at,
   };
 }
@@ -82,10 +86,14 @@ function rowToExerciseRecord(row: unknown): ExerciseRecord {
     calories: number;
     avg_heart_rate: number;
     max_heart_rate: number;
-    trajectory?: ExerciseRecord["trajectory"];
-    heartRateZones?: ExerciseRecord["heartRateZones"];
+    trajectory_encrypted?: string;
+    heart_rate_zones_json?: string;
     created_at: string;
   };
+  let heartRateZones: ExerciseRecord["heartRateZones"] = [];
+  try { if (r.heart_rate_zones_json) heartRateZones = JSON.parse(r.heart_rate_zones_json) as ExerciseRecord["heartRateZones"]; } catch (_) {}
+  let trajectory: ExerciseRecord["trajectory"] = [];
+  try { if (r.trajectory_encrypted) trajectory = JSON.parse(r.trajectory_encrypted) as ExerciseRecord["trajectory"]; } catch (_) {}
   return {
     id: r.id,
     userId: r.user_id,
@@ -96,8 +104,8 @@ function rowToExerciseRecord(row: unknown): ExerciseRecord {
     calories: r.calories,
     avgHeartRate: r.avg_heart_rate,
     maxHeartRate: r.max_heart_rate,
-    trajectory: r.trajectory || [],
-    heartRateZones: r.heartRateZones || [],
+    trajectory,
+    heartRateZones,
     createdAt: r.created_at,
   };
 }
@@ -108,17 +116,25 @@ function rowToExercisePlan(row: unknown): ExercisePlan {
     user_id: string;
     week_start: string;
     week_end: string;
-    dailyPlans?: DailyPlan[];
+    daily_plans_json: string;
     completion_rate: number;
     recommendation: string;
     adaptive_reasoning: string;
   };
+  let dailyPlans: DailyPlan[] = [];
+  try {
+    if (r.daily_plans_json) {
+      dailyPlans = JSON.parse(r.daily_plans_json) as DailyPlan[];
+    }
+  } catch (e) {
+    console.error("Failed to parse dailyPlans JSON:", e);
+  }
   return {
     id: r.id,
     userId: r.user_id,
     weekStart: r.week_start,
     weekEnd: r.week_end,
-    dailyPlans: r.dailyPlans || [],
+    dailyPlans,
     completionRate: r.completion_rate,
     recommendation: r.recommendation,
     adaptiveReasoning: r.adaptive_reasoning,
@@ -170,10 +186,45 @@ export class HealthDataService {
     const stmt = db.prepare(`
       SELECT * FROM sleep_records 
       WHERE user_id = ? AND date >= date('now', '-' || ? || ' days')
-      ORDER BY date ASC
+      ORDER BY date DESC
     `);
     const rows = stmt.all(userId, days) as unknown[];
     return rows.map(rowToSleepRecord);
+  }
+
+  addSleepRecord(
+    userId: string,
+    data: Omit<SleepRecord, "id" | "userId" | "createdAt">
+  ): SleepRecord | null {
+    const id = generateId();
+    const stmt = db.prepare(`
+      INSERT INTO sleep_records (
+        id, user_id, date, total_time, deep_sleep, light_sleep, rem_sleep, 
+        awake_time, noise_level_avg, noise_level_json, quality_score, stages_json
+      ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+    `);
+    try {
+      stmt.run(
+        id,
+        userId,
+        data.date,
+        data.totalTime,
+        data.deepSleep,
+        data.lightSleep,
+        data.remSleep,
+        data.awakeTime,
+        data.noiseLevelAvg,
+        JSON.stringify(data.noiseLevel || []),
+        data.qualityScore,
+        JSON.stringify(data.stages || [])
+      );
+      const find = db.prepare(`SELECT * FROM sleep_records WHERE id = ?`);
+      const row = find.get(id) as unknown;
+      return row ? rowToSleepRecord(row) : null;
+    } catch (e) {
+      console.error("addSleepRecord error:", e);
+      return null;
+    }
   }
 
   getExerciseRecords(userId: string, days: number = 30): ExerciseRecord[] {
@@ -184,6 +235,40 @@ export class HealthDataService {
     `);
     const rows = stmt.all(userId, days) as unknown[];
     return rows.map(rowToExerciseRecord);
+  }
+
+  addExerciseRecord(
+    userId: string,
+    data: Omit<ExerciseRecord, "id" | "userId" | "createdAt">
+  ): ExerciseRecord | null {
+    const id = generateId();
+    const stmt = db.prepare(`
+      INSERT INTO exercise_records (
+        id, user_id, type, start_time, duration, distance, calories,
+        avg_heart_rate, max_heart_rate, trajectory_encrypted, heart_rate_zones_json
+      ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+    `);
+    try {
+      stmt.run(
+        id,
+        userId,
+        data.type,
+        data.startTime,
+        data.duration,
+        data.distance,
+        data.calories,
+        data.avgHeartRate,
+        data.maxHeartRate,
+        JSON.stringify(data.trajectory || []),
+        JSON.stringify(data.heartRateZones || [])
+      );
+      const find = db.prepare(`SELECT * FROM exercise_records WHERE id = ?`);
+      const row = find.get(id) as unknown;
+      return row ? rowToExerciseRecord(row) : null;
+    } catch (e) {
+      console.error("addExerciseRecord error:", e);
+      return null;
+    }
   }
 
   getExerciseRecordById(userId: string, recordId: string): ExerciseRecord | null {

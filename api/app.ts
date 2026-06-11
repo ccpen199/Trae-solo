@@ -82,30 +82,44 @@ async function initializeMockData() {
     }
 
     const existingVitals = healthDataService.getVitalRecords(DEFAULT_USER_ID, 1)
-    if (existingVitals.length === 0) {
-      const vitals = generateVitalRecords(30)
-      for (const v of vitals) {
-        healthDataService.addVitalRecord(DEFAULT_USER_ID, v)
+    const existingSleeps = healthDataService.getSleepRecords(DEFAULT_USER_ID, 1)
+    const existingExercises = healthDataService.getExerciseRecords(DEFAULT_USER_ID, 1)
+    const existingPlan = healthDataService.getCurrentPlan(DEFAULT_USER_ID)
+    const needHealthRefresh = existingVitals.length === 0 || existingSleeps.length === 0 || 
+      existingExercises.length === 0 || !existingPlan || existingPlan.dailyPlans.length === 0
+
+    if (needHealthRefresh) {
+      if (existingVitals.length === 0) {
+        const vitals = generateVitalRecords(30)
+        for (const v of vitals) {
+          healthDataService.addVitalRecord(DEFAULT_USER_ID, v)
+        }
       }
 
-      const sleeps = generateSleepRecords(30)
-      for (const s of sleeps) {
-        await archiveService.generateArchive(
-          DEFAULT_USER_ID,
-          s.date,
-          s.date,
-          ['sleep'],
-          'json'
-        )
+      if (existingSleeps.length === 0) {
+        const sleeps = generateSleepRecords(30)
+        for (const s of sleeps) {
+          healthDataService.addSleepRecord(DEFAULT_USER_ID, s)
+        }
       }
 
-      const exercises = generateExerciseRecords(30)
-      for (const e of exercises) {
-        healthDataService.calculateHealthScore(DEFAULT_USER_ID)
+      if (existingExercises.length === 0) {
+        const exercises = generateExerciseRecords(30)
+        for (const e of exercises) {
+          healthDataService.addExerciseRecord(DEFAULT_USER_ID, e)
+        }
       }
 
-      const plan = generateExercisePlan()
-      healthDataService.createExercisePlan(DEFAULT_USER_ID, plan)
+      if (!existingPlan || existingPlan.dailyPlans.length === 0) {
+        if (existingPlan) {
+          const delStmt = db.prepare(`DELETE FROM exercise_plans WHERE id = ?`)
+          delStmt.run(existingPlan.id)
+        }
+        const plan = generateExercisePlan()
+        healthDataService.createExercisePlan(DEFAULT_USER_ID, plan)
+      }
+
+      healthDataService.calculateHealthScore(DEFAULT_USER_ID)
     }
 
     const existingAlerts = alertService.getAlerts(DEFAULT_USER_ID)

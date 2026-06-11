@@ -85,17 +85,64 @@ const todayStats = [
 export function Home() {
   const { currentVitals, healthScore, devices, alerts, activeAlerts, exerciseRecords, sleepRecords, connected, dataValidity, updateAlert, setLoading } = useHealthStore();
   const [currentTime, setCurrentTime] = useState(new Date());
+  const [alertActionModal, setAlertActionModal] = useState<{
+    alert: Alert;
+    action: "acknowledge" | "dismiss";
+  } | null>(null);
+  const [acknowledgedBy, setAcknowledgedBy] = useState("系统管理员");
+  const [dispositionStatus, setDispositionStatus] = useState<DispositionStatus>("observed");
+  const [dispositionNote, setDispositionNote] = useState("");
+  const [dismissedBy, setDismissedBy] = useState("系统管理员");
+  const [dismissReason, setDismissReason] = useState("");
+  const [scheduleReview, setScheduleReview] = useState(false);
+  const [reviewDateTime, setReviewDateTime] = useState(() => {
+    const d = new Date();
+    d.setDate(d.getDate() + 3);
+    d.setHours(10, 0, 0, 0);
+    return d.toISOString().slice(0, 16);
+  });
 
   useEffect(() => {
     const timer = setInterval(() => setCurrentTime(new Date()), 1000);
     return () => clearInterval(timer);
   }, []);
 
-  const handleAlertAction = async (alertId: string, action: "acknowledge" | "dismiss") => {
+  const openAlertAction = (alert: Alert, action: "acknowledge" | "dismiss") => {
+    setAlertActionModal({ alert, action });
+    setDispositionStatus(action === "acknowledge" ? "observed" : "no_action");
+    setDispositionNote("");
+    setDismissReason("");
+    setScheduleReview(action === "acknowledge");
+    const d = new Date();
+    d.setDate(d.getDate() + 3);
+    d.setHours(10, 0, 0, 0);
+    setReviewDateTime(d.toISOString().slice(0, 16));
+  };
+
+  const handleConfirmAlertAction = async () => {
+    if (!alertActionModal) return;
+    const { alert, action } = alertActionModal;
     setLoading("alert", true);
     try {
-      const updated = (action === "acknowledge" ? await api.alerts.acknowledge(alertId) : await api.alerts.dismiss(alertId)) as Alert;
+      let updated: Alert;
+      if (action === "acknowledge") {
+        const payload: any = {
+          acknowledgedBy,
+          dispositionStatus,
+          dispositionNote: dispositionNote || undefined,
+        };
+        if (scheduleReview) {
+          payload.reviewScheduledAt = new Date(reviewDateTime).toISOString();
+        }
+        updated = (await api.alerts.acknowledge(alert.id, payload)) as Alert;
+      } else {
+        updated = (await api.alerts.dismiss(alert.id, {
+          dismissedBy,
+          dismissReason: dismissReason || undefined,
+        })) as Alert;
+      }
       updateAlert(updated);
+      setAlertActionModal(null);
     } catch (error) {
       console.error(`Failed to ${action} alert:`, error);
     } finally {
@@ -310,21 +357,38 @@ export function Home() {
                             </div>
                           )}
                           
-                          <div className="flex items-center gap-2 mt-2">
+                          <div className="flex items-center gap-2 mt-2 flex-wrap">
                             {alert.status === "active" && (
                               <>
-                                <button onClick={() => handleAlertAction(alert.id, "acknowledge")} className="px-3 py-1 text-xs rounded-full bg-vital-green-500/20 text-vital-green-400 hover:bg-vital-green-500/30 transition-colors">确认</button>
-                                <button onClick={() => handleAlertAction(alert.id, "dismiss")} className="px-3 py-1 text-xs rounded-full bg-deep-sea-200/10 text-deep-sea-200/70 hover:bg-deep-sea-200/20 transition-colors">忽略</button>
+                                <button onClick={() => openAlertAction(alert, "acknowledge")} className="px-3 py-1 text-xs rounded-full bg-vital-green-500/20 text-vital-green-400 hover:bg-vital-green-500/30 transition-colors">确认</button>
+                                <button onClick={() => openAlertAction(alert, "dismiss")} className="px-3 py-1 text-xs rounded-full bg-deep-sea-200/10 text-deep-sea-200/70 hover:bg-deep-sea-200/20 transition-colors">忽略</button>
                               </>
                             )}
                             {alert.status === "acknowledged" && (
-                              <button onClick={() => handleAlertAction(alert.id, "dismiss")} className="px-3 py-1 text-xs rounded-full bg-deep-sea-200/10 text-deep-sea-200/70 hover:bg-deep-sea-200/20 transition-colors">关闭</button>
+                              <>
+                                <button onClick={() => openAlertAction(alert, "dismiss")} className="px-3 py-1 text-xs rounded-full bg-deep-sea-200/10 text-deep-sea-200/70 hover:bg-deep-sea-200/20 transition-colors">关闭</button>
+                                {alert.referralNeeded ? (
+                                  <button onClick={() => { window.location.hash = "#/records"; }} className="px-3 py-1 text-xs rounded-full bg-purple-500/20 text-purple-400 hover:bg-purple-500/30 transition-colors">预约挂号</button>
+                                ) : (
+                                  <span className="px-3 py-1 text-xs rounded-full bg-vital-green-500/10 text-vital-green-400/70">已确认</span>
+                                )}
+                              </>
                             )}
                             {alert.status === "pending_review" && (
-                              <span className="px-3 py-1 text-xs rounded-full bg-warning-amber-500/20 text-warning-amber-400">待医生复核</span>
+                              <>
+                                <span className="px-3 py-1 text-xs rounded-full bg-warning-amber-500/20 text-warning-amber-400">待医生复核</span>
+                                {alert.reviewScheduledAt && (
+                                  <span className="px-2 py-0.5 text-[10px] rounded bg-warning-amber-500/10 text-warning-amber-300">
+                                    复查：{new Date(alert.reviewScheduledAt).toLocaleDateString("zh-CN")}
+                                  </span>
+                                )}
+                              </>
                             )}
                             {alert.status === "needs_referral" && (
-                              <span className="px-3 py-1 text-xs rounded-full bg-purple-500/20 text-purple-400">已建议转诊</span>
+                              <>
+                                <span className="px-3 py-1 text-xs rounded-full bg-purple-500/20 text-purple-400">已建议转诊</span>
+                                <button onClick={() => { window.location.hash = "#/records"; }} className="px-3 py-1 text-xs rounded-full bg-purple-500/20 text-purple-400 hover:bg-purple-500/30 transition-colors border border-purple-500/30">立即预约挂号</button>
+                              </>
                             )}
                             {alert.status === "dismissed" && (
                               <span className="px-3 py-1 text-xs rounded-full bg-deep-sea-400/20 text-deep-sea-300">已关闭</span>
@@ -367,6 +431,133 @@ export function Home() {
           ))}
         </div>
       </Card>
+
+      {alertActionModal && (
+        <div className="fixed inset-0 bg-black/60 backdrop-blur-sm flex items-center justify-center z-50 p-4">
+          <div className="w-full max-w-md bg-deep-sea-700 border border-vital-green-500/20 rounded-2xl p-6 shadow-2xl">
+            <div className="flex items-center justify-between mb-5">
+              <h3 className="text-lg font-semibold text-deep-sea-50">
+                {alertActionModal.action === "acknowledge" ? "确认预警处置" : "忽略预警"}
+              </h3>
+              <button
+                onClick={() => setAlertActionModal(null)}
+                className="text-deep-sea-200/60 hover:text-deep-sea-100 transition-colors"
+              >
+                <X className="w-5 h-5" />
+              </button>
+            </div>
+
+            <div className="mb-4 p-3 rounded-xl bg-deep-sea-600/50 border border-vital-green-500/10">
+              <p className="text-sm text-deep-sea-100 font-medium">{alertActionModal.alert.title}</p>
+              <p className="text-xs text-deep-sea-200/60 mt-1">{alertActionModal.alert.description}</p>
+            </div>
+
+            {alertActionModal.action === "acknowledge" ? (
+              <div className="space-y-4">
+                <div>
+                  <label className="block text-xs text-deep-sea-200/70 mb-1.5">确认人身份</label>
+                  <input
+                    value={acknowledgedBy}
+                    onChange={(e) => setAcknowledgedBy(e.target.value)}
+                    className="w-full px-3 py-2 bg-deep-sea-600/50 border border-vital-green-500/20 rounded-lg text-sm text-deep-sea-50 focus:outline-none focus:border-vital-green-500/50"
+                    placeholder="请输入处置人员姓名"
+                  />
+                </div>
+                <div>
+                  <label className="block text-xs text-deep-sea-200/70 mb-1.5">处置状态</label>
+                  <select
+                    value={dispositionStatus}
+                    onChange={(e) => setDispositionStatus(e.target.value as DispositionStatus)}
+                    className="w-full px-3 py-2 bg-deep-sea-600/50 border border-vital-green-500/20 rounded-lg text-sm text-deep-sea-50 focus:outline-none focus:border-vital-green-500/50"
+                  >
+                    <option value="observed">观察中</option>
+                    <option value="medication_adjusted">用药调整</option>
+                    <option value="lifestyle_change">生活方式改变</option>
+                    <option value="referral_suggested">建议转诊</option>
+                    <option value="no_action">无需处置</option>
+                  </select>
+                </div>
+                <div>
+                  <label className="block text-xs text-deep-sea-200/70 mb-1.5">处置备注（可选）</label>
+                  <textarea
+                    value={dispositionNote}
+                    onChange={(e) => setDispositionNote(e.target.value)}
+                    rows={2}
+                    className="w-full px-3 py-2 bg-deep-sea-600/50 border border-vital-green-500/20 rounded-lg text-sm text-deep-sea-50 focus:outline-none focus:border-vital-green-500/50 resize-none"
+                    placeholder="请输入处置说明"
+                  />
+                </div>
+                <label className="flex items-center gap-2 cursor-pointer">
+                  <input
+                    type="checkbox"
+                    checked={scheduleReview}
+                    onChange={(e) => setScheduleReview(e.target.checked)}
+                    className="w-4 h-4 rounded border-deep-sea-400 bg-deep-sea-600 text-vital-green-500 focus:ring-vital-green-500/50"
+                  />
+                  <span className="text-sm text-deep-sea-200/80">安排医生复查</span>
+                </label>
+                {scheduleReview && (
+                  <div>
+                    <label className="block text-xs text-deep-sea-200/70 mb-1.5">复查时间</label>
+                    <input
+                      type="datetime-local"
+                      value={reviewDateTime}
+                      onChange={(e) => setReviewDateTime(e.target.value)}
+                      className="w-full px-3 py-2 bg-deep-sea-600/50 border border-vital-green-500/20 rounded-lg text-sm text-deep-sea-50 focus:outline-none focus:border-vital-green-500/50"
+                    />
+                  </div>
+                )}
+                {dispositionStatus === "referral_suggested" && (
+                  <div className="p-3 rounded-lg bg-purple-500/10 border border-purple-500/30">
+                    <p className="text-xs text-purple-300">已标记为建议转诊，确认后可在健康档案页面预约挂号</p>
+                  </div>
+                )}
+              </div>
+            ) : (
+              <div className="space-y-4">
+                <div>
+                  <label className="block text-xs text-deep-sea-200/70 mb-1.5">忽略人身份</label>
+                  <input
+                    value={dismissedBy}
+                    onChange={(e) => setDismissedBy(e.target.value)}
+                    className="w-full px-3 py-2 bg-deep-sea-600/50 border border-vital-green-500/20 rounded-lg text-sm text-deep-sea-50 focus:outline-none focus:border-vital-green-500/50"
+                    placeholder="请输入忽略人员姓名"
+                  />
+                </div>
+                <div>
+                  <label className="block text-xs text-deep-sea-200/70 mb-1.5">忽略原因</label>
+                  <textarea
+                    value={dismissReason}
+                    onChange={(e) => setDismissReason(e.target.value)}
+                    rows={3}
+                    className="w-full px-3 py-2 bg-deep-sea-600/50 border border-vital-green-500/20 rounded-lg text-sm text-deep-sea-50 focus:outline-none focus:border-vital-green-500/50 resize-none"
+                    placeholder="请说明忽略此预警的原因，如已知误报、临时波动等"
+                  />
+                </div>
+              </div>
+            )}
+
+            <div className="flex items-center gap-3 mt-6">
+              <button
+                onClick={() => setAlertActionModal(null)}
+                className="flex-1 py-2.5 rounded-xl bg-deep-sea-600/50 border border-deep-sea-400/30 text-sm text-deep-sea-200 hover:bg-deep-sea-600 transition-colors"
+              >
+                取消
+              </button>
+              <button
+                onClick={handleConfirmAlertAction}
+                className={`flex-1 py-2.5 rounded-xl text-sm font-medium transition-colors ${
+                  alertActionModal.action === "acknowledge"
+                    ? "bg-vital-green-500/20 text-vital-green-400 hover:bg-vital-green-500/30 border border-vital-green-500/30"
+                    : "bg-deep-sea-400/20 text-deep-sea-200 hover:bg-deep-sea-400/30 border border-deep-sea-400/30"
+                }`}
+              >
+                {alertActionModal.action === "acknowledge" ? "确认处置" : "确认忽略"}
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }

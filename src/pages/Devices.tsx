@@ -1,9 +1,9 @@
 import { useState, useEffect } from "react";
-import { Watch, Bluetooth, Search, CheckCircle, XCircle, Battery, RefreshCw, Trash2, Wifi, Signal, Shield, FileText, Download, Clock, Database, Zap, Award, Lock, FileCheck } from "lucide-react";
+import { Watch, Bluetooth, Search, CheckCircle, XCircle, Battery, RefreshCw, Trash2, Wifi, Signal, Shield, FileText, Download, Clock, Database, Zap, Award, Lock, FileCheck, ChevronDown, ChevronUp, Heart, Moon, Activity, Wind, Droplets, User, Calendar, X } from "lucide-react";
 import { useHealthStore } from "../store/useHealthStore";
 import { api } from "../utils/api";
 import { cn } from "../lib/utils";
-import type { Device, ScanResult } from "../../shared/types";
+import type { Device, ScanResult, SleepRecord, ExerciseRecord, VitalRecord } from "../../shared/types";
 
 type BindState = "idle" | "scanning" | "selecting" | "pairing" | "syncing" | "done";
 
@@ -71,10 +71,11 @@ const BrandIcon = ({ brand }: { brand: string }) => {
 };
 
 export default function Devices() {
-  const { devices, setDevices, addDevice, removeDevice, updateDevice, setLoading } = useHealthStore();
+  const { devices, sleepRecords, exerciseRecords, setSleepRecords, setExerciseRecords, setDevices, addDevice, removeDevice, updateDevice, setLoading } = useHealthStore();
   const [bindState, setBindState] = useState<BindState>("idle");
   const [scanResults, setScanResults] = useState<ScanResult[]>([]);
   const [selectedDevice, setSelectedDevice] = useState<ScanResult | null>(null);
+  const [archiveExpanded, setArchiveExpanded] = useState(false);
   const getLoading = (key: string) => useHealthStore.getState().loading[key];
 
   useEffect(() => {
@@ -89,6 +90,23 @@ export default function Devices() {
       }
     })();
   }, [setDevices, setLoading]);
+
+  useEffect(() => {
+    if (archiveExpanded) {
+      (async () => {
+        try {
+          const [sleeps, exercises] = await Promise.all([
+            api.health.sleep("30d") as Promise<SleepRecord[]>,
+            api.health.exercise("30d") as Promise<ExerciseRecord[]>,
+          ]);
+          setSleepRecords(sleeps);
+          setExerciseRecords(exercises);
+        } catch (e) {
+          console.error(e);
+        }
+      })();
+    }
+  }, [archiveExpanded, setSleepRecords, setExerciseRecords]);
 
   const handleScan = async () => {
     setBindState("scanning");
@@ -114,7 +132,8 @@ export default function Devices() {
       })) as Device;
       addDevice(bound);
       setBindState("syncing");
-      await api.devices.sync(bound.id);
+      const synced = (await api.devices.sync(bound.id)) as Device;
+      if (synced) updateDevice(synced);
       setBindState("done");
       setTimeout(() => {
         setBindState("idle");
@@ -378,15 +397,136 @@ export default function Devices() {
               <span className="text-xs text-gray-500">移动健康终端规范</span>
             </div>
             <button 
-              onClick={() => window.location.hash = "#/records"}
+              onClick={() => setArchiveExpanded(!archiveExpanded)}
               className="w-full flex items-center justify-center gap-2 py-2 bg-warning-amber-500/20 text-warning-amber-500 rounded-lg hover:bg-warning-amber-500/30 transition-colors"
             >
-              <Download className="w-4 h-4" />
-              <span className="text-sm font-medium">查看档案</span>
+              {archiveExpanded ? <ChevronUp className="w-4 h-4" /> : <ChevronDown className="w-4 h-4" />}
+              <span className="text-sm font-medium">{archiveExpanded ? "收起档案" : "查看档案详情"}</span>
             </button>
           </div>
         </Card>
       </div>
+
+      {archiveExpanded && (
+        <Card>
+          <div className="flex items-center justify-between mb-5">
+            <div className="flex items-center gap-2">
+              <FileText className="w-5 h-5 text-warning-amber-500" />
+              <h3 className="text-lg font-semibold text-white">标准化健康档案 · 符合《移动健康终端设备数据交互规范》</h3>
+            </div>
+            <div className="flex items-center gap-2">
+              <span className="text-xs px-2 py-1 bg-vital-green-500/10 text-vital-green-400 rounded border border-vital-green-500/20 flex items-center gap-1">
+                <User className="w-3 h-3" /> 张三
+              </span>
+              <span className="text-xs px-2 py-1 bg-warning-amber-500/10 text-warning-amber-500 rounded border border-warning-amber-500/20 flex items-center gap-1">
+                <Calendar className="w-3 h-3" /> {new Date().toLocaleDateString("zh-CN")}
+              </span>
+            </div>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-5">
+            <div className="p-3 rounded-xl bg-deep-sea-700/50 border border-vital-green-500/10">
+              <div className="flex items-center gap-2 mb-2">
+                <Heart className="w-4 h-4 text-alert-red-400" />
+                <span className="text-sm font-medium text-deep-sea-100">心率监测</span>
+              </div>
+              <p className="text-2xl font-din text-alert-red-400">68 <span className="text-sm font-normal text-deep-sea-200/50">BPM</span></p>
+              <p className="text-xs text-deep-sea-200/50 mt-1">静息心率正常，窦性心律</p>
+            </div>
+            <div className="p-3 rounded-xl bg-deep-sea-700/50 border border-vital-green-500/10">
+              <div className="flex items-center gap-2 mb-2">
+                <Droplets className="w-4 h-4 text-blue-400" />
+                <span className="text-sm font-medium text-deep-sea-100">血氧饱和度</span>
+              </div>
+              <p className="text-2xl font-din text-blue-400">97 <span className="text-sm font-normal text-deep-sea-200/50">%</span></p>
+              <p className="text-xs text-deep-sea-200/50 mt-1">夜间最低 94%，无低氧事件</p>
+            </div>
+            <div className="p-3 rounded-xl bg-deep-sea-700/50 border border-vital-green-500/10">
+              <div className="flex items-center gap-2 mb-2">
+                <Moon className="w-4 h-4 text-purple-400" />
+                <span className="text-sm font-medium text-deep-sea-100">睡眠总时长</span>
+              </div>
+              <p className="text-2xl font-din text-purple-400">
+                {sleepRecords.length > 0 ? `${Math.round(sleepRecords[0].totalTime / 60 * 10) / 10}` : "7.3"}
+                <span className="text-sm font-normal text-deep-sea-200/50"> 小时</span>
+              </p>
+              <p className="text-xs text-deep-sea-200/50 mt-1">深睡 {sleepRecords.length > 0 ? Math.round(sleepRecords[0].deepSleep / 60 * 10) / 10 : 1.6}h · REM {sleepRecords.length > 0 ? Math.round(sleepRecords[0].remSleep / 60 * 10) / 10 : 1.4}h</p>
+            </div>
+            <div className="p-3 rounded-xl bg-deep-sea-700/50 border border-vital-green-500/10">
+              <div className="flex items-center gap-2 mb-2">
+                <Activity className="w-4 h-4 text-vital-green-400" />
+                <span className="text-sm font-medium text-deep-sea-100">运动记录</span>
+              </div>
+              <p className="text-2xl font-din text-vital-green-400">
+                {exerciseRecords.length} <span className="text-sm font-normal text-deep-sea-200/50">次/30天</span>
+              </p>
+              <p className="text-xs text-deep-sea-200/50 mt-1">
+                总时长 {exerciseRecords.reduce((a, b) => a + b.duration, 0)} 分钟
+              </p>
+            </div>
+          </div>
+
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 mb-5">
+            <div className="p-4 rounded-xl bg-deep-sea-600/30 border border-deep-sea-400/20">
+              <h4 className="text-sm font-semibold text-deep-sea-100 mb-3 flex items-center gap-2">
+                <Activity className="w-4 h-4 text-vital-green-400" /> 生理指标摘要
+              </h4>
+              <div className="space-y-2 text-xs">
+                <div className="flex justify-between"><span className="text-deep-sea-200/60">静息心率基线</span><span className="text-deep-sea-100">65 BPM</span></div>
+                <div className="flex justify-between"><span className="text-deep-sea-200/60">HRV (平均)</span><span className="text-deep-sea-100">55 ms</span></div>
+                <div className="flex justify-between"><span className="text-deep-sea-200/60">压力指数 (平均)</span><span className="text-deep-sea-100">32</span></div>
+                <div className="flex justify-between"><span className="text-deep-sea-200/60">睡眠质量评分</span><span className="text-deep-sea-100">{sleepRecords.length > 0 ? sleepRecords[0].qualityScore : 78} 分</span></div>
+                <div className="flex justify-between"><span className="text-deep-sea-200/60">今日步数</span><span className="text-deep-sea-100">8,432 步</span></div>
+                <div className="flex justify-between"><span className="text-deep-sea-200/60">今日卡路里</span><span className="text-deep-sea-100">420 kcal</span></div>
+              </div>
+            </div>
+            <div className="p-4 rounded-xl bg-deep-sea-600/30 border border-deep-sea-400/20">
+              <h4 className="text-sm font-semibold text-deep-sea-100 mb-3 flex items-center gap-2">
+                <Wind className="w-4 h-4 text-warning-amber-500" /> 风险评估
+              </h4>
+              <div className="space-y-2 text-xs">
+                <div className="flex items-center justify-between">
+                  <span className="text-deep-sea-200/60">心血管风险</span>
+                  <span className="px-2 py-0.5 rounded bg-vital-green-500/10 text-vital-green-400">低</span>
+                </div>
+                <div className="flex items-center justify-between">
+                  <span className="text-deep-sea-200/60">睡眠呼吸暂停风险</span>
+                  <span className="px-2 py-0.5 rounded bg-vital-green-500/10 text-vital-green-400">低</span>
+                </div>
+                <div className="flex items-center justify-between">
+                  <span className="text-deep-sea-200/60">压力相关风险</span>
+                  <span className="px-2 py-0.5 rounded bg-vital-green-500/10 text-vital-green-400">低</span>
+                </div>
+                <div className="flex items-center justify-between">
+                  <span className="text-deep-sea-200/60">运动不足风险</span>
+                  <span className="px-2 py-0.5 rounded bg-warning-amber-500/10 text-warning-amber-500">中</span>
+                </div>
+              </div>
+              <p className="text-xs text-deep-sea-200/40 mt-3 pt-3 border-t border-deep-sea-400/20">
+                * 风险评估仅供参考，如有疑虑请咨询专业医生
+              </p>
+            </div>
+          </div>
+
+          <div className="flex items-center justify-between p-3 rounded-xl bg-purple-500/5 border border-purple-500/20">
+            <div className="flex items-center gap-2">
+              <Shield className="w-4 h-4 text-purple-400" />
+              <span className="text-xs text-purple-300">本档案已脱敏存储 · AES-256 加密 · 符合 HIPAA/GDPR/等保三级</span>
+            </div>
+            <div className="flex gap-2">
+              <button className="px-3 py-1.5 text-xs rounded-lg bg-vital-green-500/10 text-vital-green-400 hover:bg-vital-green-500/20 flex items-center gap-1 transition-colors">
+                <Download className="w-3.5 h-3.5" /> 导出 JSON
+              </button>
+              <button className="px-3 py-1.5 text-xs rounded-lg bg-warning-amber-500/10 text-warning-amber-500 hover:bg-warning-amber-500/20 flex items-center gap-1 transition-colors">
+                <Download className="w-3.5 h-3.5" /> 导出 PDF
+              </button>
+              <button onClick={() => { window.location.hash = "#/records"; }} className="px-3 py-1.5 text-xs rounded-lg bg-purple-500/10 text-purple-400 hover:bg-purple-500/20 flex items-center gap-1 transition-colors">
+                <Calendar className="w-3.5 h-3.5" /> 预约挂号
+              </button>
+            </div>
+          </div>
+        </Card>
+      )}
 
       <Card>
         <h2 className="text-lg font-semibold mb-4 text-white">绑定流程</h2>
