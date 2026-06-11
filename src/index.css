@@ -1,0 +1,106 @@
+@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=Noto+Sans+SC:wght@300;400;500;600;700&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html {
+    font-family: 'Noto Sans SC', system-ui, sans-serif;
+  }
+
+  body {
+    @apply bg-space-blue-700 text-gray-100 min-h-screen antialiased;
+  }
+
+  * {
+    @apply border-space-blue-500;
+  }
+
+  ::selection {
+    @apply bg-amber-accent-500/30 text-amber-accent-200;
+  }
+}
+
+@layer utilities {
+  .scrollbar-thin {
+    scrollbar-width: thin;
+  }
+
+  .scrollbar-thin::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+  }
+
+  .scrollbar-thin::-webkit-scrollbar-track {
+    @apply bg-space-blue-800 rounded;
+  }
+
+  .scrollbar-thin::-webkit-scrollbar-thumb {
+    @apply bg-space-blue-400 rounded hover:bg-space-blue-300 transition-colors;
+  }
+
+  .scrollbar-thin::-webkit-scrollbar-thumb:hover {
+    @apply bg-space-blue-300;
+  }
+
+  .scrollbar-none {
+    scrollbar-width: none;
+  }
+
+  .scrollbar-none::-webkit-scrollbar {
+    display: none;
+  }
+
+  .font-mono-code {
+    font-family: 'JetBrains Mono', monospace;
+  }
+
+  .glass-effect {
+    @apply bg-space-blue-600/80 backdrop-blur-md border border-space-blue-500/50;
+  }
+
+  .gradient-border {
+    @apply relative before:absolute before:inset-0 before:p-px before:rounded-lg before:bg-gradient-to-r before:from-amber-accent-500/50 before:to-transparent before:pointer-events-none;
+  }
+
+  .text-gradient-amber {
+    @apply bg-gradient-to-r from-amber-accent-400 to-amber-accent-600 bg-clip-text text-transparent;
+  }
+
+  .animate-status-pulse {
+    animation: statusPulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+  }
+
+  .card-hover {
+    @apply transition-all duration-300 hover:shadow-card-hover hover:-translate-y-0.5;
+  }
+}
+
+@keyframes statusPulse {
+  0%, 100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.7;
+    transform: scale(1.1);
+  }
+}
+
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  @apply bg-space-blue-800;
+}
+
+::-webkit-scrollbar-thumb {
+  @apply bg-space-blue-500 rounded;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  @apply bg-space-blue-400;
+}
