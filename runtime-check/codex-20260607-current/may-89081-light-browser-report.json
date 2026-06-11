@@ -1,0 +1,57 @@
+{
+  "ok": true,
+  "generatedAt": "2026-06-07T18:34:31.960Z",
+  "order": "may-89081",
+  "url": "http://127.0.0.1:49081/",
+  "apiBase": "http://127.0.0.1:59081",
+  "issue": "登录注册相关问题；搜索/筛选相关问题；后台管理相关问题；详情/内容页相关问题",
+  "status": 200,
+  "finalUrl": "http://127.0.0.1:49081/",
+  "title": "智能红外遥控中台",
+  "navigationError": "",
+  "bodyTextLength": 619,
+  "bodyTextPreview": "智能红外遥控中台\n仪表盘\n设备控制\n场景模式\n定时任务\n数据统计\n红外学习\n管理后台\n智能红外遥控中台\n演示登录\n注册设备\n 在线\n仪表盘\n刷新数据\n📱\n5\n设备总数\n✅\n0\n在线设备\n📡\n282次\n今日指令\n12% 较上周\n⚡\n24.42kWh\n今日耗电\n8% 较上周\n快捷操作\n打开电视\n打开空调\n打开灯光\n打开投影\n快捷场景\n查看全部\nhome\n回家模式\n3 个动作\n开启客厅空调、灯光和电视\nexit\n离家模式\n5 个动作\n关闭所有设备\nmovie\n观影模式\n3 个动作\n打开投影、调暗灯光\nmoon\n睡眠模式\n2 个动作\n关闭主灯、开启睡眠空调\n设备状态\n管理\n❄️\n卧室空调\n格力 KFR-26GW/NhAa1\n详情\n离线\n❄️\n客厅空调\n美的 KFR-26GW\n·\n8 小时前\n详情\n离线\n📺\n客厅电视\n索尼 KD-55X8500G\n·\n8 小时前\n详情\n离线\n💡\n客厅主灯\n飞利浦 HUE-white\n·\n6 小时前\n详情\n离线\n即将执行\n管理\n回家模式\n·\n自定义\n立即执行\n已启用\n离家模式\n·\n自定义\n立即执行\n已启用\n客厅空调\n·\n自定义\n立即执行\n已启用\n最近操作\nstats:overview\n3 小时前\n离线\nstats:overview\n3 小时前\n离线\nstats:overview\n3 小时前\n离线\nstats:overview\n3 小时前\n离线\nstats:overview\n4 小时前\n离线",
+  "interactiveLabels": [
+    "搜索设备、场景",
+    "演示登录",
+    "注册设备",
+    "刷新数据",
+    "打开电视",
+    "打开空调",
+    "打开灯光",
+    "打开投影",
+    "查看全部",
+    "管理",
+    "详情",
+    "详情",
+    "详情",
+    "详情",
+    "管理",
+    "立即执行",
+    "立即执行",
+    "立即执行"
+  ],
+  "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89081/runtime-check/codex-20260607-current/may-89081-light-frontend.png",
+  "responseErrors": [],
+  "requestFailures": [],
+  "consoleMessages": [
+    {
+      "type": "warning",
+      "text": "⚠️ React Router Future Flag Warning: React Router will begin wrapping state updates in `React.startTransition` in v7. You can use the `v7_startTransition` future flag to opt-in early. For more information, see https://reactrouter.com/v6/upgrading/future#v7_starttransition.",
+      "location": {
+        "url": "http://127.0.0.1:49081/node_modules/.vite/deps/react-router-dom.js?v=a1ccde2f",
+        "lineNumber": 4426,
+        "columnNumber": 12
+      }
+    },
+    {
+      "type": "warning",
+      "text": "⚠️ React Router Future Flag Warning: Relative route resolution within Splat routes is changing in v7. You can use the `v7_relativeSplatPath` future flag to opt-in early. For more information, see https://reactrouter.com/v6/upgrading/future#v7_relativesplatpath.",
+      "location": {
+        "url": "http://127.0.0.1:49081/node_modules/.vite/deps/react-router-dom.js?v=a1ccde2f",
+        "lineNumber": 4426,
+        "columnNumber": 12
+      }
+    }
+  ]
+}
