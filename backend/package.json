@@ -1,0 +1,13 @@
+{
+  "name": "may-89119-backend",
+  "private": true,
+  "version": "1.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "node server.js",
+    "start": "node server.js"
+  },
+  "dependencies": {
+    "node:sqlite": "^0.1.0"
+  }
+}
