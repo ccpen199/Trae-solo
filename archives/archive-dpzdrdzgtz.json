@@ -1,0 +1,40 @@
+{
+  "header": {
+    "version": "1.0",
+    "standard": "移动健康终端设备数据交互规范",
+    "generatedAt": "2026-06-11T13:52:18.879Z",
+    "userId": "user-001",
+    "dateRange": {
+      "start": "2026-05-27",
+      "end": "2026-05-27"
+    },
+    "dataTypes": [
+      "sleep"
+    ]
+  },
+  "userInformation": {
+    "name": "***",
+    "age": "***",
+    "gender": "***"
+  },
+  "deviceInformation": {
+    "manufacturer": "Multiple",
+    "model": "Various",
+    "firmwareVersion": "Multiple"
+  },
+  "physiologicalData": {
+    "vitalSigns": [],
+    "sleepData": [],
+    "exerciseData": []
+  },
+  "alertData": [],
+  "healthAssessment": {
+    "overallScore": 62,
+    "assessmentDate": "2026-06-11T13:52:19.094Z"
+  },
+  "signature": {
+    "algorithm": "SHA256",
+    "value": "***",
+    "timestamp": "2026-06-11T13:52:19.094Z"
+  }
+}
