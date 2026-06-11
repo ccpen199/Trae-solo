@@ -3,22 +3,12 @@
 @tailwind utilities;
 
 :root {
-  --primary: #0F6CBD;
-  --primary-light: #E0F2FE;
-  --secondary: #108043;
-  --secondary-light: #DCFCE7;
-  --bg: #F8FAFC;
-  --card: #FFFFFF;
-  --sidebar: #1E293B;
-  --text: #1E293B;
-  --text-muted: #64748B;
-  --border: #E2E8F0;
-  --danger: #DC2626;
-  --warning: #F59E0B;
-}
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Noto Sans", Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji";
+  line-height: 1.5;
+  font-weight: 400;
 
-body {
-  font-family: system-ui, sans-serif;
-  background-color: var(--bg);
-  color: var(--text);
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }

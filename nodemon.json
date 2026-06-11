@@ -1,8 +1,10 @@
 {
   "watch": ["api"],
-  "ext": "ts",
-  "exec": "node node_modules/tsx/dist/cli.mjs api/server.ts",
+  "ext": "ts,mts,js,json",
+  "ignore": ["api/dist/*"],
+  "exec": "tsx api/server.ts",
   "env": {
-    "PORT": "58943"
-  }
+    "NODE_ENV": "development"
+  },
+  "delay": 1000
 }
