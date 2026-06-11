@@ -72,13 +72,8 @@ interface SettingRowProps {
 }
 
 function SettingRow({ icon: Icon, label, description, value, onClick, hasArrow = true }: SettingRowProps) {
-  return (
-    <motion.button
-      type="button"
-      onClick={onClick}
-      whileHover={{ backgroundColor: 'rgba(255,255,255,0.03)' }}
-      className="flex w-full items-center gap-4 rounded-2xl px-4 py-3 text-left transition-colors hover:bg-white/5"
-    >
+  const content = (
+    <>
       <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-night-700/60 text-silver-300">
         <Icon className="h-5 w-5" />
       </div>
@@ -88,6 +83,28 @@ function SettingRow({ icon: Icon, label, description, value, onClick, hasArrow =
       </div>
       {value && <div className="shrink-0">{value}</div>}
       {hasArrow && !value && <ChevronRight className="h-4 w-4 shrink-0 text-silver-600" />}
+    </>
+  );
+
+  if (value) {
+    return (
+      <motion.div
+        whileHover={{ backgroundColor: 'rgba(255,255,255,0.03)' }}
+        className="flex w-full items-center gap-4 rounded-2xl px-4 py-3 text-left transition-colors hover:bg-white/5"
+      >
+        {content}
+      </motion.div>
+    );
+  }
+
+  return (
+    <motion.button
+      type="button"
+      onClick={onClick}
+      whileHover={{ backgroundColor: 'rgba(255,255,255,0.03)' }}
+      className="flex w-full items-center gap-4 rounded-2xl px-4 py-3 text-left transition-colors hover:bg-white/5"
+    >
+      {content}
     </motion.button>
   );
 }

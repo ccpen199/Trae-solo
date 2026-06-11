@@ -51,6 +51,19 @@ const riskLabelMap: Record<RiskLevel, { label: string; subLabel: string; glow: s
   },
 };
 
+function normalizeRiskLevel(level: string): RiskLevel {
+  if (level === 'low' || level === 'moderate' || level === 'high') {
+    return level;
+  }
+  if (level === 'mild') return 'low';
+  if (level === 'medium') return 'moderate';
+  return 'high';
+}
+
+function getRiskLabelInfo(level: string) {
+  return riskLabelMap[normalizeRiskLevel(level)];
+}
+
 const referralSteps: { key: ReferralStatus; label: string; icon: typeof ShieldAlert }[] = [
   { key: 'pending_auth', label: '授权同意', icon: Handshake },
   { key: 'data_packaging', label: '数据打包', icon: PackageCheck },
@@ -67,7 +80,7 @@ const ahiSeverityMap: Record<string, { label: string; color: string }> = {
 };
 
 function RiskLevelCard({ level }: { level: RiskLevel }) {
-  const info = riskLabelMap[level];
+  const info = getRiskLabelInfo(level);
   return (
     <motion.div
       initial={{ opacity: 0, y: 20 }}
@@ -726,6 +739,7 @@ export default function RiskPage() {
       latest.dsm5Mapping[0]
     );
   }, [latest, selectedDisorder]);
+  const currentRiskLevel = currentDimension ? normalizeRiskLevel(currentDimension.riskLevel) : 'low';
 
   const disorderLabelMap: Record<string, string> = {
     insomnia: '失眠障碍',
@@ -805,7 +819,7 @@ export default function RiskPage() {
                       'text-[11px] px-1.5 py-0.5 rounded-full',
                       riskLevelBg(dim.riskLevel)
                     )}>
-                      {riskLabelMap[dim.riskLevel].label}
+                      {getRiskLabelInfo(dim.riskLevel).label}
                     </span>
                     <span className="font-mono text-xs text-silver-400">
                       {Math.round(dim.score)}
@@ -831,10 +845,10 @@ export default function RiskPage() {
               <div className="flex items-center gap-4">
                 <div className={cn(
                   'w-16 h-16 rounded-3xl flex items-center justify-center border-2 shadow-lg',
-                  riskLabelMap[currentDimension.riskLevel].ring,
-                  riskLabelMap[currentDimension.riskLevel].glow,
-                  currentDimension.riskLevel === 'low' ? 'bg-gradient-to-br from-mint-400/20 to-mint-500/10 border-mint-400/40' :
-                  currentDimension.riskLevel === 'moderate' ? 'bg-gradient-to-br from-dream-400/20 to-dream-500/10 border-dream-400/40' :
+                  getRiskLabelInfo(currentDimension.riskLevel).ring,
+                  getRiskLabelInfo(currentDimension.riskLevel).glow,
+                  currentRiskLevel === 'low' ? 'bg-gradient-to-br from-mint-400/20 to-mint-500/10 border-mint-400/40' :
+                  currentRiskLevel === 'moderate' ? 'bg-gradient-to-br from-dream-400/20 to-dream-500/10 border-dream-400/40' :
                   'bg-gradient-to-br from-coral-400/20 to-coral-500/10 border-coral-400/40'
                 )}>
                   <AlertTriangle className={cn('w-8 h-8', riskLevelColor(currentDimension.riskLevel))} />
@@ -850,12 +864,12 @@ export default function RiskPage() {
                     <span className="text-silver-700">·</span>
                     <span className="text-silver-400">
                       当前等级：<span className={cn('font-medium', riskLevelColor(currentDimension.riskLevel))}>
-                        {riskLabelMap[currentDimension.riskLevel].label}
+                        {getRiskLabelInfo(currentDimension.riskLevel).label}
                       </span>
                     </span>
                   </div>
                   <p className="mt-1 text-xs text-silver-400">
-                    {riskLabelMap[currentDimension.riskLevel].subLabel}
+                    {getRiskLabelInfo(currentDimension.riskLevel).subLabel}
                   </p>
                 </div>
               </div>
@@ -936,9 +950,9 @@ export default function RiskPage() {
             </div>
 
             <div className="mt-5 flex items-center gap-2 flex-wrap">
-              {currentDimension.riskLevel !== 'low' ? (
+              {currentRiskLevel !== 'low' ? (
                 <PillButton
-                  variant={currentDimension.riskLevel === 'high' ? 'coral' : 'dream'}
+                  variant={currentRiskLevel === 'high' ? 'coral' : 'dream'}
                   size="sm"
                   leftIcon={<CalendarCheck size={14} />}
                   onClick={handleReferral}
@@ -999,7 +1013,7 @@ export default function RiskPage() {
             'text-[10px] px-2 py-0.5 rounded-full flex-shrink-0',
             riskLevelBg(currentDimension.riskLevel)
           )}>
-            {riskLabelMap[currentDimension.riskLevel].label}
+            {getRiskLabelInfo(currentDimension.riskLevel).label}
           </span>
         </div>
       )}
