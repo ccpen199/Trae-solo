@@ -1,0 +1,92 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --union-red: #C41E3A;
+  --union-red-dark: #A01830;
+  --union-gold: #D4A843;
+  --union-gold-light: #E8C96A;
+  --sidebar-bg: #1F2937;
+  --sidebar-hover: #374151;
+  --content-bg: #F9FAFB;
+
+  font-family: "Noto Sans SC", sans-serif;
+  line-height: 1.5;
+  font-weight: 400;
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+::selection {
+  background-color: #C41E3A;
+  color: white;
+}
+
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #D1D5DB;
+  border-radius: 3px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #9CA3AF;
+}
+
+@layer base {
+  body {
+    @apply bg-[var(--content-bg)] text-gray-900 font-sans;
+    background-image: radial-gradient(circle at 1px 1px, rgba(0, 0, 0, 0.03) 1px, transparent 0);
+    background-size: 24px 24px;
+  }
+}
+
+@layer components {
+  .btn-primary {
+    @apply bg-union-red text-white px-4 py-2 rounded-lg font-medium
+           hover:bg-union-red-dark hover:shadow-md transition-all duration-200
+           active:scale-[0.98];
+  }
+
+  .btn-outline {
+    @apply border-2 border-union-red text-union-red px-4 py-2 rounded-lg font-medium
+           hover:bg-union-red hover:text-white transition-all duration-200
+           active:scale-[0.98];
+  }
+
+  .btn-gold {
+    @apply bg-union-gold text-white px-4 py-2 rounded-lg font-medium
+           hover:bg-union-gold-light hover:shadow-md transition-all duration-200
+           active:scale-[0.98];
+  }
+
+  .card {
+    @apply bg-white rounded-xl shadow-sm border border-gray-100 p-6
+           hover:shadow-md transition-shadow duration-200;
+  }
+
+  .sidebar-item {
+    @apply flex items-center gap-3 px-4 py-2.5 rounded-lg text-gray-300
+           hover:bg-[var(--sidebar-hover)] hover:text-white transition-all duration-200 cursor-pointer;
+  }
+
+  .sidebar-item-active {
+    @apply bg-union-red text-white hover:bg-union-red-dark hover:text-white;
+  }
+
+  .input-field {
+    @apply w-full px-3 py-2 border border-gray-300 rounded-lg text-sm
+           focus:outline-none focus:ring-2 focus:ring-union-red/30 focus:border-union-red
+           transition-all duration-200;
+  }
+}
