@@ -1,0 +1,12 @@
+{
+  "watch": ["api"],
+  "ext": "ts,mts,js,json",
+  "ignore": ["api/dist/*"],
+  "exec": "tsx api/server.ts",
+  "env": {
+    "NODE_ENV": "development",
+    "HOST": "127.0.0.1",
+    "BACKEND_PORT": "59116"
+  },
+  "delay": 1000
+}

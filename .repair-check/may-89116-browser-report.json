@@ -1,0 +1,3271 @@
+{
+  "ok": true,
+  "generatedAt": "2026-06-09T20:43:26.375Z",
+  "order": "may-89116",
+  "roundIndex": 272,
+  "captureId": "repair-may-89116",
+  "url": "http://127.0.0.1:49116/",
+  "initialUrl": "http://127.0.0.1:49116/",
+  "finalUrl": "http://127.0.0.1:49116/",
+  "status": 200,
+  "title": "My Trae Project",
+  "initialTitle": "My Trae Project",
+  "navigationError": "",
+  "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89116/.repair-check/repair-may-89116-frontend.png",
+  "screenshotPaths": [
+    "/Users/chen/Documents/trae_projects/local_projects/may-89116/.repair-check/repair-may-89116-structure-01-首屏.png",
+    "/Users/chen/Documents/trae_projects/local_projects/may-89116/.repair-check/repair-may-89116-structure-02-导航-工作台.png",
+    "/Users/chen/Documents/trae_projects/local_projects/may-89116/.repair-check/repair-may-89116-structure-03-操作-发起面试-HR-导师-学生三方协作.png",
+    "/Users/chen/Documents/trae_projects/local_projects/may-89116/.repair-check/repair-may-89116-structure-04-二层操作-发起面试-HR-导师-学生三方协作-发起面试.png",
+    "/Users/chen/Documents/trae_projects/local_projects/may-89116/.repair-check/repair-may-89116-structure-05-操作-查看结算中心.png",
+    "/Users/chen/Documents/trae_projects/local_projects/may-89116/.repair-check/repair-may-89116-structure-06-二层操作-查看结算中心-发起结算-按岗位批量结算.png",
+    "/Users/chen/Documents/trae_projects/local_projects/may-89116/.repair-check/repair-may-89116-structure-07-导航-岗位管理.png",
+    "/Users/chen/Documents/trae_projects/local_projects/may-89116/.repair-check/repair-may-89116-structure-08-操作-查看.png",
+    "/Users/chen/Documents/trae_projects/local_projects/may-89116/.repair-check/repair-may-89116-structure-09-二层操作-查看-发布岗位.png",
+    "/Users/chen/Documents/trae_projects/local_projects/may-89116/.repair-check/repair-may-89116-structure-10-操作-发布岗位.png",
+    "/Users/chen/Documents/trae_projects/local_projects/may-89116/.repair-check/repair-may-89116-structure-11-二层操作-发布岗位-3-薪资设置.png"
+  ],
+  "issueTextPreview": "页面结构采集已读取到业务内容；第4轮截图未命中失败/完成标记，按运行中",
+  "targetReason": "页面存在后台入口，优先复验后台管理链路；页面存在我的/账号入口，优先复验个人中心链路",
+  "targetKind": "personal",
+  "targetMatched": true,
+  "targetActions": [
+    {
+      "action": "click",
+      "label": "页面存在我的/账号入口，优先复验个人中心链路",
+      "ok": true
+    },
+    {
+      "action": "target-verify",
+      "label": "页面存在我的/账号入口，优先复验个人中心链路",
+      "ok": true,
+      "finalUrl": "http://127.0.0.1:49116/profile"
+    }
+  ],
+  "authFlow": {
+    "detected": false,
+    "attempted": false,
+    "success": false,
+    "finalUrl": "http://127.0.0.1:49116/",
+    "message": "",
+    "actions": []
+  },
+  "businessAudit": {
+    "actions": [
+      {
+        "action": "click",
+        "label": "导航:工作台",
+        "ok": true
+      },
+      {
+        "action": "click",
+        "label": "操作:发起面试 HR/导师/学生三方协作",
+        "ok": true,
+        "result": {
+          "ok": true,
+          "matched": 1
+        }
+      },
+      {
+        "action": "click",
+        "label": "二层操作:发起面试 HR/导师/学生三方协作:发起面试",
+        "ok": true,
+        "result": {
+          "ok": true,
+          "matched": 1
+        }
+      },
+      {
+        "action": "click",
+        "label": "操作:查看结算中心",
+        "ok": true,
+        "result": {
+          "ok": true,
+          "matched": 1
+        }
+      },
+      {
+        "action": "click",
+        "label": "二层操作:查看结算中心:发起结算 按岗位批量结算",
+        "ok": true,
+        "result": {
+          "ok": true,
+          "matched": 1
+        }
+      },
+      {
+        "action": "click",
+        "label": "关闭弹窗/抽屉",
+        "ok": true
+      },
+      {
+        "action": "click",
+        "label": "导航:岗位管理",
+        "ok": true
+      },
+      {
+        "action": "click",
+        "label": "操作:查看",
+        "ok": true,
+        "result": {
+          "ok": true,
+          "matched": 10
+        }
+      },
+      {
+        "action": "click",
+        "label": "二层操作:查看:发布岗位",
+        "ok": true,
+        "result": {
+          "ok": true,
+          "matched": 1
+        }
+      },
+      {
+        "action": "click",
+        "label": "操作:发布岗位",
+        "ok": true,
+        "result": {
+          "ok": true,
+          "matched": 1
+        }
+      },
+      {
+        "action": "click",
+        "label": "二层操作:发布岗位:3 薪资设置",
+        "ok": true,
+        "result": {
+          "ok": true,
+          "matched": 1
+        }
+      }
+    ],
+    "snapshots": [
+      {
+        "label": "首屏",
+        "url": "http://127.0.0.1:49116/",
+        "title": "My Trae Project",
+        "headings": [
+          "校园兼职平台",
+          "工作台",
+          "招聘流水线",
+          "岗位与匹配",
+          "简历与复核",
+          "面试与协作",
+          "考勤与分账",
+          "风控预警",
+          "待办事项",
+          "最近动态",
+          "平台治理"
+        ],
+        "navLabels": [
+          "校园兼职平台",
+          "工作台",
+          "岗位管理",
+          "人才库",
+          "面试中心",
+          "考勤管理",
+          "结算中心",
+          "喵任务",
+          "信用体系",
+          "风控预警",
+          "系统管理",
+          "个人中心"
+        ],
+        "buttons": [
+          "工作台",
+          "岗位管理",
+          "人才库",
+          "面试中心",
+          "考勤管理",
+          "结算中心",
+          "喵任务",
+          "信用体系",
+          "风控预警",
+          "系统管理",
+          "个人中心",
+          "3",
+          "张 张明远",
+          "在招岗位 2 +3 较上月",
+          "待处理简历 6 +12 较上月",
+          "进行中面试 1 +2 较上月",
+          "本月结算金额 ¥125,199 +15% 较上月",
+          "发布岗位 发布后可自动匹配学生",
+          "导入学生 解析简历并标签化",
+          "发起面试 HR/导师/学生三方协作",
+          "生成签到码 批量扫码核验考勤",
+          "查看全部10个岗位",
+          "查看全部25份简历",
+          "查看全部面试"
+        ],
+        "links": [],
+        "inputs": [
+          {
+            "tag": "input",
+            "type": "text",
+            "placeholder": "搜索岗位、学生或功能...",
+            "name": "",
+            "label": ""
+          }
+        ],
+        "tables": [],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "校园兼职平台工作台岗位管理人才库面试中心考勤管理结算中心喵任务信用体系风控预警系统管理个人中心首页3张张明远工作台欢迎回来，张明远2026年6月9日星期二在招岗位2+3较上月待处理简历6+12较上月进行中面试1+2较上月本月结算金额¥125,199+15%较上月发布岗位发布后可自动匹配学生导入学生解析简历并标签化发起面试HR/导师/学生三方协作生成签到码批量扫码核验考勤招聘流水线岗位与匹配暑期行政助理summer_winter5人投递Java开发实习生internship3人投递在线问卷调查员online_task3人投递查看全部10个岗位 简历与复核黄嘉琪人工智能90分何欣怡电子信息工程81分高雨涵软件工程89分查看全部25份简历 面试与协作在线问卷调查员videoin_progress前端开发实习生videoin_progress寒假图书馆管理员videoin_progress查看全部面试 考勤与分账¥45000手续费¥2250completed¥18000手续费¥900processing¥5000手续费¥250completed查看结算中心 风控预警已处理 1 条查看全部预警 高待处理超工时预警学生陈思远连续工作超过8小时，已超出校园用工时限规定责任分公司：浙江大学校园服务中心责任人：周建华复查记录：复查排班表、签到签退、周工时阈值和调休安排关闭结果：待责任人提交处理结果，关闭后写入合规留存2026/6/9 14:01:37处理忽略高待处理未签合同预警Java开发实习生岗位存在3名未签订合同的上岗学生责任分公司：杭州云校教育科技集团责任人：吴雪梅复查记录：核对合同签章、上岗日期、岗位责任人和补签回执关闭结果：待责任人提交处理结果，关闭后写入合规留存2026/6/9 14:01:37处理忽略中待处理异常行为预警学生赵天翔近期考勤异常，连续3次迟到责任分公司：浙江大学校园服务中心责任人：郑伟复查记录：复查考勤轨迹、导师反馈、学生申诉和关闭意见关闭结果：待责任人提交处理结果，关闭后写入合规留存2026/6/9 14:01:37处理忽略低待处理未签合同预警UI设计实习生岗位合同即将到期，请及时续签责任分公司：杭州云校教育科技集团责任人：杨秀英复查记录：核对合同签章、上岗日期、岗位责任人和补签回执关闭结果：待责任人提交处理结果，关闭后写入合规留存2026/6/9 14:01:37处理忽略高待处理异常行为预警学生孙浩然在岗期间擅自离岗，请核实情况责任分公司：杭州电子科技大学分部责任人：王子涵复查记录：复查考勤轨迹、导师反馈、学生申诉和关闭意见关闭结果：待责任人提交处理结果，关闭后写入合规留存2026/6/9 14:01:37处理忽略待办事项4 待处理审核3份新投递简历紧急安排明天群面场次确认6月薪资结算数据紧急处理异常考勤申诉最近动态赵雪投递了\"图书馆管理员\"岗位5分钟前面试\"食堂服务员\"已结束30分钟前5月工资批次已生成1小时前新学生陈浩导入成功2小时前刘洋完成今日签到3小时前平台治理进入系统管理 集团多租户--个租户岗位边界/账号层级进入 双向互评信用95分守时/技能/协作标签进入 喵任务追踪7个任务完成率/奖励/转化进入 合规留存审计4项待审归档批次/报告导出进入",
+        "layout": {
+          "viewportWidth": 1504,
+          "viewportHeight": 1600,
+          "scrollWidth": 1504,
+          "scrollHeight": 2050,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "repair-may-89116-structure-01-首屏",
+          "label": "首屏",
+          "finalUrl": "http://127.0.0.1:49116/",
+          "title": "My Trae Project",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89116/.repair-check/repair-may-89116-structure-01-首屏.json",
+          "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89116/.repair-check/repair-may-89116-structure-01-首屏.png",
+          "elementCount": 597,
+          "interactiveCount": 53,
+          "interactiveLabels": [
+            "工作台",
+            "岗位管理",
+            "人才库",
+            "面试中心",
+            "考勤管理",
+            "结算中心",
+            "喵任务",
+            "信用体系",
+            "风控预警",
+            "系统管理",
+            "个人中心",
+            "搜索岗位、学生或功能...",
+            "3",
+            "张 张明远",
+            "在招岗位 2 +3 较上月",
+            "待处理简历 6 +12 较上月",
+            "进行中面试 1 +2 较上月",
+            "本月结算金额 ¥133,949 +15% 较上月",
+            "发布岗位 发布后可自动匹配学生",
+            "导入学生 解析简历并标签化",
+            "发起面试 HR/导师/学生三方协作",
+            "生成签到码 批量扫码核验考勤",
+            "查看全部10个岗位",
+            "查看全部25份简历",
+            "查看全部面试",
+            "查看结算中心",
+            "查看全部预警",
+            "处理",
+            "忽略",
+            "赵雪投递了\"图书馆管理员\"岗位 5分钟前"
+          ]
+        }
+      },
+      {
+        "label": "导航:工作台",
+        "url": "http://127.0.0.1:49116/",
+        "title": "My Trae Project",
+        "headings": [
+          "校园兼职平台",
+          "工作台",
+          "招聘流水线",
+          "岗位与匹配",
+          "简历与复核",
+          "面试与协作",
+          "考勤与分账",
+          "风控预警",
+          "待办事项",
+          "最近动态",
+          "平台治理"
+        ],
+        "navLabels": [
+          "校园兼职平台",
+          "工作台",
+          "岗位管理",
+          "人才库",
+          "面试中心",
+          "考勤管理",
+          "结算中心",
+          "喵任务",
+          "信用体系",
+          "风控预警",
+          "系统管理",
+          "个人中心"
+        ],
+        "buttons": [
+          "工作台",
+          "岗位管理",
+          "人才库",
+          "面试中心",
+          "考勤管理",
+          "结算中心",
+          "喵任务",
+          "信用体系",
+          "风控预警",
+          "系统管理",
+          "个人中心",
+          "3",
+          "张 张明远",
+          "在招岗位 10 +3 较上月",
+          "待处理简历 25 +12 较上月",
+          "进行中面试 5 +2 较上月",
+          "本月结算金额 ¥500,000 +15% 较上月",
+          "发布岗位 发布后可自动匹配学生",
+          "导入学生 解析简历并标签化",
+          "发起面试 HR/导师/学生三方协作",
+          "生成签到码 批量扫码核验考勤",
+          "查看全部10个岗位",
+          "查看全部25份简历",
+          "查看全部面试"
+        ],
+        "links": [],
+        "inputs": [
+          {
+            "tag": "input",
+            "type": "text",
+            "placeholder": "搜索岗位、学生或功能...",
+            "name": "",
+            "label": ""
+          }
+        ],
+        "tables": [],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "校园兼职平台工作台岗位管理人才库面试中心考勤管理结算中心喵任务信用体系风控预警系统管理个人中心首页3张张明远工作台欢迎回来，张明远2026年6月9日星期二在招岗位10+3较上月待处理简历25+12较上月进行中面试5+2较上月本月结算金额¥500,000+15%较上月发布岗位发布后可自动匹配学生导入学生解析简历并标签化发起面试HR/导师/学生三方协作生成签到码批量扫码核验考勤招聘流水线岗位与匹配暑期行政助理summer_winter5人投递Java开发实习生internship3人投递在线问卷调查员online_task3人投递查看全部10个岗位 简历与复核黄嘉琪人工智能90分何欣怡电子信息工程81分高雨涵软件工程89分查看全部25份简历 面试与协作在线问卷调查员videoin_progress前端开发实习生videoin_progress寒假图书馆管理员videoin_progress查看全部面试 考勤与分账¥45000手续费¥2250completed¥18000手续费¥900processing¥5000手续费¥250completed查看结算中心 风控预警已处理 1 条查看全部预警 高待处理超工时预警学生陈思远连续工作超过8小时，已超出校园用工时限规定责任分公司：浙江大学校园服务中心责任人：周建华复查记录：复查排班表、签到签退、周工时阈值和调休安排关闭结果：待责任人提交处理结果，关闭后写入合规留存2026/6/9 14:01:37处理忽略高待处理未签合同预警Java开发实习生岗位存在3名未签订合同的上岗学生责任分公司：杭州云校教育科技集团责任人：吴雪梅复查记录：核对合同签章、上岗日期、岗位责任人和补签回执关闭结果：待责任人提交处理结果，关闭后写入合规留存2026/6/9 14:01:37处理忽略中待处理异常行为预警学生赵天翔近期考勤异常，连续3次迟到责任分公司：浙江大学校园服务中心责任人：郑伟复查记录：复查考勤轨迹、导师反馈、学生申诉和关闭意见关闭结果：待责任人提交处理结果，关闭后写入合规留存2026/6/9 14:01:37处理忽略低待处理未签合同预警UI设计实习生岗位合同即将到期，请及时续签责任分公司：杭州云校教育科技集团责任人：杨秀英复查记录：核对合同签章、上岗日期、岗位责任人和补签回执关闭结果：待责任人提交处理结果，关闭后写入合规留存2026/6/9 14:01:37处理忽略高待处理异常行为预警学生孙浩然在岗期间擅自离岗，请核实情况责任分公司：杭州电子科技大学分部责任人：王子涵复查记录：复查考勤轨迹、导师反馈、学生申诉和关闭意见关闭结果：待责任人提交处理结果，关闭后写入合规留存2026/6/9 14:01:37处理忽略待办事项4 待处理审核3份新投递简历紧急安排明天群面场次确认6月薪资结算数据紧急处理异常考勤申诉最近动态赵雪投递了\"图书馆管理员\"岗位5分钟前面试\"食堂服务员\"已结束30分钟前5月工资批次已生成1小时前新学生陈浩导入成功2小时前刘洋完成今日签到3小时前平台治理进入系统管理 集团多租户--个租户岗位边界/账号层级进入 双向互评信用95分守时/技能/协作标签进入 喵任务追踪7个任务完成率/奖励/转化进入 合规留存审计4项待审归档批次/报告导出进入",
+        "layout": {
+          "viewportWidth": 1536,
+          "viewportHeight": 1600,
+          "scrollWidth": 1536,
+          "scrollHeight": 2050,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "repair-may-89116-structure-02-导航-工作台",
+          "label": "导航:工作台",
+          "finalUrl": "http://127.0.0.1:49116/",
+          "title": "My Trae Project",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89116/.repair-check/repair-may-89116-structure-02-导航-工作台.json",
+          "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89116/.repair-check/repair-may-89116-structure-02-导航-工作台.png",
+          "elementCount": 597,
+          "interactiveCount": 53,
+          "interactiveLabels": [
+            "工作台",
+            "岗位管理",
+            "人才库",
+            "面试中心",
+            "考勤管理",
+            "结算中心",
+            "喵任务",
+            "信用体系",
+            "风控预警",
+            "系统管理",
+            "个人中心",
+            "搜索岗位、学生或功能...",
+            "3",
+            "张 张明远",
+            "在招岗位 10 +3 较上月",
+            "待处理简历 25 +12 较上月",
+            "进行中面试 5 +2 较上月",
+            "本月结算金额 ¥500,000 +15% 较上月",
+            "发布岗位 发布后可自动匹配学生",
+            "导入学生 解析简历并标签化",
+            "发起面试 HR/导师/学生三方协作",
+            "生成签到码 批量扫码核验考勤",
+            "查看全部10个岗位",
+            "查看全部25份简历",
+            "查看全部面试",
+            "查看结算中心",
+            "查看全部预警",
+            "处理",
+            "忽略",
+            "赵雪投递了\"图书馆管理员\"岗位 5分钟前"
+          ]
+        }
+      },
+      {
+        "label": "操作:发起面试 HR/导师/学生三方协作",
+        "url": "http://127.0.0.1:49116/interviews",
+        "title": "My Trae Project",
+        "headings": [
+          "校园兼职平台",
+          "面试中心"
+        ],
+        "navLabels": [
+          "校园兼职平台",
+          "工作台",
+          "岗位管理",
+          "人才库",
+          "面试中心",
+          "考勤管理",
+          "结算中心",
+          "喵任务",
+          "信用体系",
+          "风控预警",
+          "系统管理",
+          "个人中心",
+          "interviews"
+        ],
+        "buttons": [
+          "工作台",
+          "岗位管理",
+          "人才库",
+          "面试中心",
+          "考勤管理",
+          "结算中心",
+          "喵任务",
+          "信用体系",
+          "风控预警",
+          "系统管理",
+          "个人中心",
+          "3",
+          "张 张明远",
+          "发起面试",
+          "全部",
+          "待开始",
+          "进行中",
+          "已结束"
+        ],
+        "links": [],
+        "inputs": [
+          {
+            "tag": "input",
+            "type": "text",
+            "placeholder": "搜索岗位、学生或功能...",
+            "name": "",
+            "label": ""
+          }
+        ],
+        "tables": [],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "校园兼职平台工作台岗位管理人才库面试中心考勤管理结算中心喵任务信用体系风控预警系统管理个人中心首页/interviews3张张明远面试中心发起面试全部待开始进行中已结束UI设计实习生HR / 企业导师 / 学生三方协作已结束2026-06-21 12:00:00phone参与者3人共享文件1份纪要已沉淀在线问卷调查员HR / 企业导师 / 学生三方协作进行中2026-06-20 11:00:00video参与者3人共享文件1份纪要4条Java开发实习生HR / 企业导师 / 学生三方协作待开始2026-06-19 10:00:00group_chat参与者3人共享文件1份纪要4条暑期行政助理HR / 企业导师 / 学生三方协作已结束2026-06-18 9:00:00phone参与者3人共享文件1份纪要已沉淀前端开发实习生HR / 企业导师 / 学生三方协作进行中2026-06-17 12:00:00video参与者3人共享文件1份纪要4条新媒体运营助理HR / 企业导师 / 学生三方协作待开始2026-06-16 11:00:00group_chat参与者3人共享文件1份纪要4条Python数据分析助理HR / 企业导师 / 学生三方协作已结束2026-06-15 10:00:00phone参与者3人共享文件1份纪要已沉淀寒假图书馆管理员HR / 企业导师 / 学生三方协作进行中2026-06-14 9:00:00video参与者3人共享文件1份纪要4条UI设计实习生HR / 企业导师 / 学生三方协作待开始2026-06-13 12:00:00group_chat参与者3人共享文件1份纪要4条在线问卷调查员HR / 企业导师 / 学生三方协作已结束2026-06-12 11:00:00phone参与者3人共享文件1份纪要已沉淀",
+        "layout": {
+          "viewportWidth": 1568,
+          "viewportHeight": 1600,
+          "scrollWidth": 1568,
+          "scrollHeight": 1600,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "repair-may-89116-structure-03-操作-发起面试-HR-导师-学生三方协作",
+          "label": "操作:发起面试 HR/导师/学生三方协作",
+          "finalUrl": "http://127.0.0.1:49116/interviews",
+          "title": "My Trae Project",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89116/.repair-check/repair-may-89116-structure-03-操作-发起面试-HR-导师-学生三方协作.json",
+          "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89116/.repair-check/repair-may-89116-structure-03-操作-发起面试-HR-导师-学生三方协作.png",
+          "elementCount": 539,
+          "interactiveCount": 21,
+          "interactiveLabels": [
+            "工作台",
+            "岗位管理",
+            "人才库",
+            "面试中心",
+            "考勤管理",
+            "结算中心",
+            "喵任务",
+            "信用体系",
+            "风控预警",
+            "系统管理",
+            "个人中心",
+            "搜索岗位、学生或功能...",
+            "3",
+            "张 张明远",
+            "发起面试",
+            "全部",
+            "待开始",
+            "进行中",
+            "已结束"
+          ]
+        }
+      },
+      {
+        "label": "二层操作:发起面试 HR/导师/学生三方协作->发起面试",
+        "url": "http://127.0.0.1:49116/interviews",
+        "title": "My Trae Project",
+        "headings": [
+          "校园兼职平台",
+          "面试中心",
+          "发起面试"
+        ],
+        "navLabels": [
+          "校园兼职平台",
+          "工作台",
+          "岗位管理",
+          "人才库",
+          "面试中心",
+          "考勤管理",
+          "结算中心",
+          "喵任务",
+          "信用体系",
+          "风控预警",
+          "系统管理",
+          "个人中心",
+          "interviews"
+        ],
+        "buttons": [
+          "工作台",
+          "岗位管理",
+          "人才库",
+          "面试中心",
+          "考勤管理",
+          "结算中心",
+          "喵任务",
+          "信用体系",
+          "风控预警",
+          "系统管理",
+          "个人中心",
+          "3",
+          "张 张明远",
+          "发起面试",
+          "全部",
+          "待开始",
+          "进行中",
+          "已结束",
+          "确认发起"
+        ],
+        "links": [],
+        "inputs": [
+          {
+            "tag": "input",
+            "type": "text",
+            "placeholder": "搜索岗位、学生或功能...",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "select",
+            "type": "",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "select",
+            "type": "",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          }
+        ],
+        "tables": [],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "校园兼职平台工作台岗位管理人才库面试中心考勤管理结算中心喵任务信用体系风控预警系统管理个人中心首页/interviews3张张明远面试中心发起面试全部待开始进行中已结束UI设计实习生HR / 企业导师 / 学生三方协作已结束2026-06-21 12:00:00phone参与者3人共享文件1份纪要已沉淀在线问卷调查员HR / 企业导师 / 学生三方协作进行中2026-06-20 11:00:00video参与者3人共享文件1份纪要4条Java开发实习生HR / 企业导师 / 学生三方协作待开始2026-06-19 10:00:00group_chat参与者3人共享文件1份纪要4条暑期行政助理HR / 企业导师 / 学生三方协作已结束2026-06-18 9:00:00phone参与者3人共享文件1份纪要已沉淀前端开发实习生HR / 企业导师 / 学生三方协作进行中2026-06-17 12:00:00video参与者3人共享文件1份纪要4条新媒体运营助理HR / 企业导师 / 学生三方协作待开始2026-06-16 11:00:00group_chat参与者3人共享文件1份纪要4条Python数据分析助理HR / 企业导师 / 学生三方协作已结束2026-06-15 10:00:00phone参与者3人共享文件1份纪要已沉淀寒假图书馆管理员HR / 企业导师 / 学生三方协作进行中2026-06-14 9:00:00video参与者3人共享文件1份纪要4条UI设计实习生HR / 企业导师 / 学生三方协作待开始2026-06-13 12:00:00group_chat参与者3人共享文件1份纪要4条在线问卷调查员HR / 企业导师 / 学生三方协作已结束2026-06-12 11:00:00phone参与者3人共享文件1份纪要已沉淀发起面试选择岗位请选择岗位暑期行政助理Java开发实习生在线问卷调查员UI设计实习生寒假图书馆管理员Python数据分析助理新媒体运营助理前端开发实习生校园大使招募视频剪辑助理面试类型视频面试电话面试现场面试确认发起",
+        "layout": {
+          "viewportWidth": 1600,
+          "viewportHeight": 1600,
+          "scrollWidth": 1600,
+          "scrollHeight": 1600,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "repair-may-89116-structure-04-二层操作-发起面试-HR-导师-学生三方协作-发起面试",
+          "label": "二层操作:发起面试 HR/导师/学生三方协作->发起面试",
+          "finalUrl": "http://127.0.0.1:49116/interviews",
+          "title": "My Trae Project",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89116/.repair-check/repair-may-89116-structure-04-二层操作-发起面试-HR-导师-学生三方协作-发起面试.json",
+          "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89116/.repair-check/repair-may-89116-structure-04-二层操作-发起面试-HR-导师-学生三方协作-发起面试.png",
+          "elementCount": 569,
+          "interactiveCount": 25,
+          "interactiveLabels": [
+            "工作台",
+            "岗位管理",
+            "人才库",
+            "面试中心",
+            "考勤管理",
+            "结算中心",
+            "喵任务",
+            "信用体系",
+            "风控预警",
+            "系统管理",
+            "个人中心",
+            "搜索岗位、学生或功能...",
+            "3",
+            "张 张明远",
+            "发起面试",
+            "全部",
+            "待开始",
+            "进行中",
+            "已结束",
+            "请选择岗位 暑期行政助理 Java开发实习生 在线问卷调查员 UI设计实习生 寒假图书馆管理员 Python数据分析助理 新媒体运营助理 前端开发实习生 校园大使招募 视频剪辑助理",
+            "视频面试 电话面试 现场面试",
+            "确认发起"
+          ]
+        }
+      },
+      {
+        "label": "操作:查看结算中心",
+        "url": "http://127.0.0.1:49116/settlement",
+        "title": "My Trae Project",
+        "headings": [
+          "校园兼职平台",
+          "结算中心",
+          "资金分布",
+          "快捷操作",
+          "交易记录",
+          "结算配置"
+        ],
+        "navLabels": [
+          "校园兼职平台",
+          "工作台",
+          "岗位管理",
+          "人才库",
+          "面试中心",
+          "考勤管理",
+          "结算中心",
+          "喵任务",
+          "信用体系",
+          "风控预警",
+          "系统管理",
+          "个人中心",
+          "settlement"
+        ],
+        "buttons": [
+          "工作台",
+          "岗位管理",
+          "人才库",
+          "面试中心",
+          "考勤管理",
+          "结算中心",
+          "喵任务",
+          "信用体系",
+          "风控预警",
+          "系统管理",
+          "个人中心",
+          "3",
+          "张 张明远",
+          "账单明细",
+          "充值",
+          "发起结算 按岗位批量结算",
+          "查看账单 历史结算明细"
+        ],
+        "links": [],
+        "inputs": [
+          {
+            "tag": "input",
+            "type": "text",
+            "placeholder": "搜索岗位、学生或功能...",
+            "name": "",
+            "label": ""
+          }
+        ],
+        "tables": [],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "校园兼职平台工作台岗位管理人才库面试中心考勤管理结算中心喵任务信用体系风控预警系统管理个人中心首页/settlement3张张明远结算中心账单明细资金池总余额¥605,000可用 ¥500,000冻结 ¥80,000待结 ¥25,000充值资金分布¥605,000总计可用余额¥500,000冻结金额¥80,000待结算¥25,000快捷操作发起结算按岗位批量结算查看账单历史结算明细交易记录杭州云校教育科技集团 · 月结2026-06-09 14:01:37-¥45,000杭州云校教育科技集团 · 周结2026-06-09 14:01:37-¥18,000杭州云校教育科技集团 · 日结2026-06-09 14:01:37-¥5,000结算配置手续费率5.0%最低结算金额¥100自动结算未开启结算日每月15日",
+        "layout": {
+          "viewportWidth": 1632,
+          "viewportHeight": 1600,
+          "scrollWidth": 1632,
+          "scrollHeight": 1600,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "repair-may-89116-structure-05-操作-查看结算中心",
+          "label": "操作:查看结算中心",
+          "finalUrl": "http://127.0.0.1:49116/settlement",
+          "title": "My Trae Project",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89116/.repair-check/repair-may-89116-structure-05-操作-查看结算中心.json",
+          "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89116/.repair-check/repair-may-89116-structure-05-操作-查看结算中心.png",
+          "elementCount": 230,
+          "interactiveCount": 20,
+          "interactiveLabels": [
+            "工作台",
+            "岗位管理",
+            "人才库",
+            "面试中心",
+            "考勤管理",
+            "结算中心",
+            "喵任务",
+            "信用体系",
+            "风控预警",
+            "系统管理",
+            "个人中心",
+            "搜索岗位、学生或功能...",
+            "3",
+            "张 张明远",
+            "账单明细",
+            "充值",
+            "发起结算 按岗位批量结算",
+            "查看账单 历史结算明细"
+          ]
+        }
+      },
+      {
+        "label": "二层操作:查看结算中心->发起结算 按岗位批量结算",
+        "url": "http://127.0.0.1:49116/settlement",
+        "title": "My Trae Project",
+        "headings": [
+          "校园兼职平台",
+          "结算中心",
+          "资金分布",
+          "快捷操作",
+          "交易记录",
+          "结算配置",
+          "发起结算"
+        ],
+        "navLabels": [
+          "校园兼职平台",
+          "工作台",
+          "岗位管理",
+          "人才库",
+          "面试中心",
+          "考勤管理",
+          "结算中心",
+          "喵任务",
+          "信用体系",
+          "风控预警",
+          "系统管理",
+          "个人中心",
+          "settlement"
+        ],
+        "buttons": [
+          "工作台",
+          "岗位管理",
+          "人才库",
+          "面试中心",
+          "考勤管理",
+          "结算中心",
+          "喵任务",
+          "信用体系",
+          "风控预警",
+          "系统管理",
+          "个人中心",
+          "3",
+          "张 张明远",
+          "账单明细",
+          "充值",
+          "发起结算 按岗位批量结算",
+          "查看账单 历史结算明细",
+          "取消",
+          "确认结算"
+        ],
+        "links": [],
+        "inputs": [
+          {
+            "tag": "input",
+            "type": "text",
+            "placeholder": "搜索岗位、学生或功能...",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "number",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "select",
+            "type": "",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "number",
+            "placeholder": "请输入金额",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "textarea",
+            "type": "",
+            "placeholder": "张三:5000\n李四:3000",
+            "name": "",
+            "label": ""
+          }
+        ],
+        "tables": [],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "校园兼职平台工作台岗位管理人才库面试中心考勤管理结算中心喵任务信用体系风控预警系统管理个人中心首页/settlement3张张明远结算中心账单明细资金池总余额¥605,000可用 ¥500,000冻结 ¥80,000待结 ¥25,000充值资金分布¥605,000总计可用余额¥500,000冻结金额¥80,000待结算¥25,000快捷操作发起结算按岗位批量结算查看账单历史结算明细交易记录杭州云校教育科技集团 · 月结2026-06-09 14:01:37-¥45,000杭州云校教育科技集团 · 周结2026-06-09 14:01:37-¥18,000杭州云校教育科技集团 · 日结2026-06-09 14:01:37-¥5,000结算配置手续费率5.0%最低结算金额¥100自动结算未开启结算日每月15日发起结算机构ID结算周期日结周结月结结算金额¥手续费率5.0%手续费¥0实际到账¥0明细（每行一条：姓名:金额）取消确认结算",
+        "layout": {
+          "viewportWidth": 1664,
+          "viewportHeight": 1600,
+          "scrollWidth": 1664,
+          "scrollHeight": 1600,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "repair-may-89116-structure-06-二层操作-查看结算中心-发起结算-按岗位批量结算",
+          "label": "二层操作:查看结算中心->发起结算 按岗位批量结算",
+          "finalUrl": "http://127.0.0.1:49116/settlement",
+          "title": "My Trae Project",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89116/.repair-check/repair-may-89116-structure-06-二层操作-查看结算中心-发起结算-按岗位批量结算.json",
+          "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89116/.repair-check/repair-may-89116-structure-06-二层操作-查看结算中心-发起结算-按岗位批量结算.png",
+          "elementCount": 264,
+          "interactiveCount": 26,
+          "interactiveLabels": [
+            "工作台",
+            "岗位管理",
+            "人才库",
+            "面试中心",
+            "考勤管理",
+            "结算中心",
+            "喵任务",
+            "信用体系",
+            "风控预警",
+            "系统管理",
+            "个人中心",
+            "搜索岗位、学生或功能...",
+            "3",
+            "张 张明远",
+            "账单明细",
+            "充值",
+            "发起结算 按岗位批量结算",
+            "查看账单 历史结算明细",
+            "1",
+            "日结 周结 月结",
+            "请输入金额",
+            "张三:5000 李四:3000",
+            "取消",
+            "确认结算"
+          ]
+        }
+      },
+      {
+        "label": "导航:岗位管理",
+        "url": "http://127.0.0.1:49116/jobs",
+        "title": "My Trae Project",
+        "headings": [
+          "校园兼职平台",
+          "岗位管理"
+        ],
+        "navLabels": [
+          "校园兼职平台",
+          "工作台",
+          "岗位管理",
+          "人才库",
+          "面试中心",
+          "考勤管理",
+          "结算中心",
+          "喵任务",
+          "信用体系",
+          "风控预警",
+          "系统管理",
+          "个人中心",
+          "jobs"
+        ],
+        "buttons": [
+          "工作台",
+          "岗位管理",
+          "人才库",
+          "面试中心",
+          "考勤管理",
+          "结算中心",
+          "喵任务",
+          "信用体系",
+          "风控预警",
+          "系统管理",
+          "个人中心",
+          "3",
+          "张 张明远",
+          "发布岗位",
+          "全部",
+          "寒暑假",
+          "实习",
+          "线上任务",
+          "匹配",
+          "查看",
+          "删除",
+          "上一页",
+          "下一页"
+        ],
+        "links": [],
+        "inputs": [
+          {
+            "tag": "input",
+            "type": "text",
+            "placeholder": "搜索岗位、学生或功能...",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "select",
+            "type": "",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "",
+            "placeholder": "搜索岗位名称...",
+            "name": "",
+            "label": ""
+          }
+        ],
+        "tables": [
+          {
+            "headers": [
+              "岗位名称",
+              "状态",
+              "招聘人数",
+              "匹配进度",
+              "简历复查",
+              "薪资范围",
+              "所属机构",
+              "最近投递",
+              "操作"
+            ],
+            "rowCount": 10,
+            "hasEmptyText": false,
+            "textPreview": "岗位名称 状态 招聘人数 匹配进度 简历复查 薪资范围 所属机构 最近投递 操作 暑期行政助理 寒暑假 招聘中 5/3 投递/计划 100% 0 候选/已面试 ¥120~150 浙江大学校园服务中心 06/09 14:01 Java开发实习生 实习 招聘中 3/5 投递/计划 60% 0 候选/已面试 ¥200~300 杭州云校教育科技集团 06/09 14:01 在线问卷调查员 线上任务 招聘中 3/20 投递/计划 15% 2 候选/已面试 ¥50~80 浙江大学校园服务中心 06/09 14:01 UI设计实习生 实习 招聘中 5/2 投递/计划 100% 2 候选/已面试 ¥180~2"
+          }
+        ],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "校园兼职平台工作台岗位管理人才库面试中心考勤管理结算中心喵任务信用体系风控预警系统管理个人中心首页/jobs3张张明远岗位管理发布岗位12个岗位池10个招聘中13份简历复查68%平均匹配进度全部寒暑假实习线上任务全部状态招聘中已暂停已关闭草稿岗位名称状态招聘人数匹配进度简历复查薪资范围所属机构最近投递操作暑期行政助理寒暑假招聘中5/3投递/计划100%0候选/已面试¥120~150浙江大学校园服务中心06/09 14:01Java开发实习生实习招聘中3/5投递/计划60%0候选/已面试¥200~300杭州云校教育科技集团06/09 14:01在线问卷调查员线上任务招聘中3/20投递/计划15%2候选/已面试¥50~80浙江大学校园服务中心06/09 14:01UI设计实习生实习招聘中5/2投递/计划100%2候选/已面试¥180~250杭州云校教育科技集团06/09 14:01寒假图书馆管理员寒暑假招聘中4/4投递/计划100%2候选/已面试¥100~130杭州电子科技大学分部06/09 14:01Python数据分析助理实习招聘中3/3投递/计划100%2候选/已面试¥220~320杭州云校教育科技集团06/09 14:01新媒体运营助理线上任务招聘中6/3投递/计划100%3候选/已面试¥130~180浙江大学校园服务中心06/09 14:01前端开发实习生实习招聘中6/4投递/计划100%2候选/已面试¥200~280杭州云校教育科技集团06/09 14:01校园大使招募线上任务招聘中0/10投递/计划0%0候选/已面试¥80~150浙江大学校园服务中心--视频剪辑助理线上任务招聘中0/5投递/计划0%0候选/已面试¥100~200杭州电子科技大学分部--共 12 条上一页1 / 2下一页",
+        "layout": {
+          "viewportWidth": 1696,
+          "viewportHeight": 1600,
+          "scrollWidth": 1696,
+          "scrollHeight": 1600,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "repair-may-89116-structure-07-导航-岗位管理",
+          "label": "导航:岗位管理",
+          "finalUrl": "http://127.0.0.1:49116/jobs",
+          "title": "My Trae Project",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89116/.repair-check/repair-may-89116-structure-07-导航-岗位管理.json",
+          "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89116/.repair-check/repair-may-89116-structure-07-导航-岗位管理.png",
+          "elementCount": 608,
+          "interactiveCount": 55,
+          "interactiveLabels": [
+            "工作台",
+            "岗位管理",
+            "人才库",
+            "面试中心",
+            "考勤管理",
+            "结算中心",
+            "喵任务",
+            "信用体系",
+            "风控预警",
+            "系统管理",
+            "个人中心",
+            "搜索岗位、学生或功能...",
+            "3",
+            "张 张明远",
+            "发布岗位",
+            "全部",
+            "寒暑假",
+            "实习",
+            "线上任务",
+            "全部状态 招聘中 已暂停 已关闭 草稿",
+            "搜索岗位名称...",
+            "匹配",
+            "查看",
+            "删除",
+            "上一页",
+            "下一页"
+          ]
+        }
+      },
+      {
+        "label": "操作:查看",
+        "url": "http://127.0.0.1:49116/jobs",
+        "title": "My Trae Project",
+        "headings": [
+          "校园兼职平台",
+          "岗位管理"
+        ],
+        "navLabels": [
+          "校园兼职平台",
+          "工作台",
+          "岗位管理",
+          "人才库",
+          "面试中心",
+          "考勤管理",
+          "结算中心",
+          "喵任务",
+          "信用体系",
+          "风控预警",
+          "系统管理",
+          "个人中心",
+          "jobs"
+        ],
+        "buttons": [
+          "工作台",
+          "岗位管理",
+          "人才库",
+          "面试中心",
+          "考勤管理",
+          "结算中心",
+          "喵任务",
+          "信用体系",
+          "风控预警",
+          "系统管理",
+          "个人中心",
+          "3",
+          "张 张明远",
+          "发布岗位",
+          "全部",
+          "寒暑假",
+          "实习",
+          "线上任务",
+          "匹配",
+          "查看",
+          "删除",
+          "上一页",
+          "下一页"
+        ],
+        "links": [],
+        "inputs": [
+          {
+            "tag": "input",
+            "type": "text",
+            "placeholder": "搜索岗位、学生或功能...",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "select",
+            "type": "",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "",
+            "placeholder": "搜索岗位名称...",
+            "name": "",
+            "label": ""
+          }
+        ],
+        "tables": [
+          {
+            "headers": [
+              "岗位名称",
+              "状态",
+              "招聘人数",
+              "匹配进度",
+              "简历复查",
+              "薪资范围",
+              "所属机构",
+              "最近投递",
+              "操作"
+            ],
+            "rowCount": 10,
+            "hasEmptyText": false,
+            "textPreview": "岗位名称 状态 招聘人数 匹配进度 简历复查 薪资范围 所属机构 最近投递 操作 暑期行政助理 寒暑假 招聘中 5/3 投递/计划 100% 0 候选/已面试 ¥120~150 浙江大学校园服务中心 06/09 14:01 Java开发实习生 实习 招聘中 3/5 投递/计划 60% 0 候选/已面试 ¥200~300 杭州云校教育科技集团 06/09 14:01 在线问卷调查员 线上任务 招聘中 3/20 投递/计划 15% 2 候选/已面试 ¥50~80 浙江大学校园服务中心 06/09 14:01 UI设计实习生 实习 招聘中 5/2 投递/计划 100% 2 候选/已面试 ¥180~2"
+          }
+        ],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "校园兼职平台工作台岗位管理人才库面试中心考勤管理结算中心喵任务信用体系风控预警系统管理个人中心首页/jobs3张张明远岗位管理发布岗位12个岗位池10个招聘中13份简历复查68%平均匹配进度全部寒暑假实习线上任务全部状态招聘中已暂停已关闭草稿岗位名称状态招聘人数匹配进度简历复查薪资范围所属机构最近投递操作暑期行政助理寒暑假招聘中5/3投递/计划100%0候选/已面试¥120~150浙江大学校园服务中心06/09 14:01Java开发实习生实习招聘中3/5投递/计划60%0候选/已面试¥200~300杭州云校教育科技集团06/09 14:01在线问卷调查员线上任务招聘中3/20投递/计划15%2候选/已面试¥50~80浙江大学校园服务中心06/09 14:01UI设计实习生实习招聘中5/2投递/计划100%2候选/已面试¥180~250杭州云校教育科技集团06/09 14:01寒假图书馆管理员寒暑假招聘中4/4投递/计划100%2候选/已面试¥100~130杭州电子科技大学分部06/09 14:01Python数据分析助理实习招聘中3/3投递/计划100%2候选/已面试¥220~320杭州云校教育科技集团06/09 14:01新媒体运营助理线上任务招聘中6/3投递/计划100%3候选/已面试¥130~180浙江大学校园服务中心06/09 14:01前端开发实习生实习招聘中6/4投递/计划100%2候选/已面试¥200~280杭州云校教育科技集团06/09 14:01校园大使招募线上任务招聘中0/10投递/计划0%0候选/已面试¥80~150浙江大学校园服务中心--视频剪辑助理线上任务招聘中0/5投递/计划0%0候选/已面试¥100~200杭州电子科技大学分部--共 12 条上一页1 / 2下一页",
+        "layout": {
+          "viewportWidth": 1728,
+          "viewportHeight": 1600,
+          "scrollWidth": 1728,
+          "scrollHeight": 1600,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "repair-may-89116-structure-08-操作-查看",
+          "label": "操作:查看",
+          "finalUrl": "http://127.0.0.1:49116/jobs",
+          "title": "My Trae Project",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89116/.repair-check/repair-may-89116-structure-08-操作-查看.json",
+          "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89116/.repair-check/repair-may-89116-structure-08-操作-查看.png",
+          "elementCount": 608,
+          "interactiveCount": 55,
+          "interactiveLabels": [
+            "工作台",
+            "岗位管理",
+            "人才库",
+            "面试中心",
+            "考勤管理",
+            "结算中心",
+            "喵任务",
+            "信用体系",
+            "风控预警",
+            "系统管理",
+            "个人中心",
+            "搜索岗位、学生或功能...",
+            "3",
+            "张 张明远",
+            "发布岗位",
+            "全部",
+            "寒暑假",
+            "实习",
+            "线上任务",
+            "全部状态 招聘中 已暂停 已关闭 草稿",
+            "搜索岗位名称...",
+            "匹配",
+            "查看",
+            "删除",
+            "上一页",
+            "下一页"
+          ]
+        }
+      },
+      {
+        "label": "二层操作:查看->发布岗位",
+        "url": "http://127.0.0.1:49116/jobs/create",
+        "title": "My Trae Project",
+        "headings": [
+          "校园兼职平台",
+          "发布新岗位",
+          "基本信息"
+        ],
+        "navLabels": [
+          "校园兼职平台",
+          "工作台",
+          "岗位管理",
+          "人才库",
+          "面试中心",
+          "考勤管理",
+          "结算中心",
+          "喵任务",
+          "信用体系",
+          "风控预警",
+          "系统管理",
+          "个人中心",
+          "jobs",
+          "create"
+        ],
+        "buttons": [
+          "工作台",
+          "岗位管理",
+          "人才库",
+          "面试中心",
+          "考勤管理",
+          "结算中心",
+          "喵任务",
+          "信用体系",
+          "风控预警",
+          "系统管理",
+          "个人中心",
+          "3",
+          "张 张明远",
+          "1 基本信息",
+          "2 技能要求",
+          "3 薪资设置",
+          "4 发布范围",
+          "上一步",
+          "保存草稿",
+          "下一步"
+        ],
+        "links": [],
+        "inputs": [
+          {
+            "tag": "input",
+            "type": "text",
+            "placeholder": "搜索岗位、学生或功能...",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "",
+            "placeholder": "请输入岗位名称",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "select",
+            "type": "",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "",
+            "placeholder": "请输入部门",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "date",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "date",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "number",
+            "placeholder": "请输入招聘人数",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "textarea",
+            "type": "",
+            "placeholder": "请详细描述岗位职责和要求",
+            "name": "",
+            "label": ""
+          }
+        ],
+        "tables": [],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "校园兼职平台工作台岗位管理人才库面试中心考勤管理结算中心喵任务信用体系风控预警系统管理个人中心首页/jobs/create3张张明远发布新岗位1基本信息2技能要求3薪资设置4发布范围步骤 1 / 4基本信息岗位名称岗位类型寒暑假工实习线上任务所属部门开始日期结束日期招聘人数岗位描述上一步保存草稿下一步",
+        "layout": {
+          "viewportWidth": 1760,
+          "viewportHeight": 1600,
+          "scrollWidth": 1760,
+          "scrollHeight": 1600,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "repair-may-89116-structure-09-二层操作-查看-发布岗位",
+          "label": "二层操作:查看->发布岗位",
+          "finalUrl": "http://127.0.0.1:49116/jobs/create",
+          "title": "My Trae Project",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89116/.repair-check/repair-may-89116-structure-09-二层操作-查看-发布岗位.json",
+          "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89116/.repair-check/repair-may-89116-structure-09-二层操作-查看-发布岗位.png",
+          "elementCount": 169,
+          "interactiveCount": 31,
+          "interactiveLabels": [
+            "工作台",
+            "岗位管理",
+            "人才库",
+            "面试中心",
+            "考勤管理",
+            "结算中心",
+            "喵任务",
+            "信用体系",
+            "风控预警",
+            "系统管理",
+            "个人中心",
+            "搜索岗位、学生或功能...",
+            "3",
+            "张 张明远",
+            "1 基本信息",
+            "2 技能要求",
+            "3 薪资设置",
+            "4 发布范围",
+            "请输入岗位名称",
+            "寒暑假工 实习 线上任务",
+            "请输入部门",
+            "请输入招聘人数",
+            "请详细描述岗位职责和要求",
+            "上一步",
+            "保存草稿",
+            "下一步"
+          ]
+        }
+      },
+      {
+        "label": "操作:发布岗位",
+        "url": "http://127.0.0.1:49116/jobs/create",
+        "title": "My Trae Project",
+        "headings": [
+          "校园兼职平台",
+          "发布新岗位",
+          "基本信息"
+        ],
+        "navLabels": [
+          "校园兼职平台",
+          "工作台",
+          "岗位管理",
+          "人才库",
+          "面试中心",
+          "考勤管理",
+          "结算中心",
+          "喵任务",
+          "信用体系",
+          "风控预警",
+          "系统管理",
+          "个人中心",
+          "jobs",
+          "create"
+        ],
+        "buttons": [
+          "工作台",
+          "岗位管理",
+          "人才库",
+          "面试中心",
+          "考勤管理",
+          "结算中心",
+          "喵任务",
+          "信用体系",
+          "风控预警",
+          "系统管理",
+          "个人中心",
+          "3",
+          "张 张明远",
+          "1 基本信息",
+          "2 技能要求",
+          "3 薪资设置",
+          "4 发布范围",
+          "上一步",
+          "保存草稿",
+          "下一步"
+        ],
+        "links": [],
+        "inputs": [
+          {
+            "tag": "input",
+            "type": "text",
+            "placeholder": "搜索岗位、学生或功能...",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "",
+            "placeholder": "请输入岗位名称",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "select",
+            "type": "",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "",
+            "placeholder": "请输入部门",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "date",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "date",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "number",
+            "placeholder": "请输入招聘人数",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "textarea",
+            "type": "",
+            "placeholder": "请详细描述岗位职责和要求",
+            "name": "",
+            "label": ""
+          }
+        ],
+        "tables": [],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "校园兼职平台工作台岗位管理人才库面试中心考勤管理结算中心喵任务信用体系风控预警系统管理个人中心首页/jobs/create3张张明远发布新岗位1基本信息2技能要求3薪资设置4发布范围步骤 1 / 4基本信息岗位名称岗位类型寒暑假工实习线上任务所属部门开始日期结束日期招聘人数岗位描述上一步保存草稿下一步",
+        "layout": {
+          "viewportWidth": 1792,
+          "viewportHeight": 1600,
+          "scrollWidth": 1792,
+          "scrollHeight": 1600,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "repair-may-89116-structure-10-操作-发布岗位",
+          "label": "操作:发布岗位",
+          "finalUrl": "http://127.0.0.1:49116/jobs/create",
+          "title": "My Trae Project",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89116/.repair-check/repair-may-89116-structure-10-操作-发布岗位.json",
+          "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89116/.repair-check/repair-may-89116-structure-10-操作-发布岗位.png",
+          "elementCount": 169,
+          "interactiveCount": 31,
+          "interactiveLabels": [
+            "工作台",
+            "岗位管理",
+            "人才库",
+            "面试中心",
+            "考勤管理",
+            "结算中心",
+            "喵任务",
+            "信用体系",
+            "风控预警",
+            "系统管理",
+            "个人中心",
+            "搜索岗位、学生或功能...",
+            "3",
+            "张 张明远",
+            "1 基本信息",
+            "2 技能要求",
+            "3 薪资设置",
+            "4 发布范围",
+            "请输入岗位名称",
+            "寒暑假工 实习 线上任务",
+            "请输入部门",
+            "请输入招聘人数",
+            "请详细描述岗位职责和要求",
+            "上一步",
+            "保存草稿",
+            "下一步"
+          ]
+        }
+      },
+      {
+        "label": "二层操作:发布岗位->3 薪资设置",
+        "url": "http://127.0.0.1:49116/jobs/create",
+        "title": "My Trae Project",
+        "headings": [
+          "校园兼职平台",
+          "发布新岗位",
+          "薪资设置"
+        ],
+        "navLabels": [
+          "校园兼职平台",
+          "工作台",
+          "岗位管理",
+          "人才库",
+          "面试中心",
+          "考勤管理",
+          "结算中心",
+          "喵任务",
+          "信用体系",
+          "风控预警",
+          "系统管理",
+          "个人中心",
+          "jobs",
+          "create"
+        ],
+        "buttons": [
+          "工作台",
+          "岗位管理",
+          "人才库",
+          "面试中心",
+          "考勤管理",
+          "结算中心",
+          "喵任务",
+          "信用体系",
+          "风控预警",
+          "系统管理",
+          "个人中心",
+          "3",
+          "张 张明远",
+          "基本信息",
+          "技能要求",
+          "3 薪资设置",
+          "4 发布范围",
+          "月薪",
+          "日薪",
+          "时薪",
+          "按件计费",
+          "上一步",
+          "保存草稿",
+          "下一步"
+        ],
+        "links": [],
+        "inputs": [
+          {
+            "tag": "input",
+            "type": "text",
+            "placeholder": "搜索岗位、学生或功能...",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "number",
+            "placeholder": "0",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "number",
+            "placeholder": "0",
+            "name": "",
+            "label": ""
+          }
+        ],
+        "tables": [],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "校园兼职平台工作台岗位管理人才库面试中心考勤管理结算中心喵任务信用体系风控预警系统管理个人中心首页/jobs/create3张张明远发布新岗位基本信息技能要求3薪资设置4发布范围步骤 3 / 4薪资设置最低薪资¥最高薪资¥计薪方式月薪日薪时薪按件计费上一步保存草稿下一步",
+        "layout": {
+          "viewportWidth": 1824,
+          "viewportHeight": 1600,
+          "scrollWidth": 1824,
+          "scrollHeight": 1600,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "repair-may-89116-structure-11-二层操作-发布岗位-3-薪资设置",
+          "label": "二层操作:发布岗位->3 薪资设置",
+          "finalUrl": "http://127.0.0.1:49116/jobs/create",
+          "title": "My Trae Project",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89116/.repair-check/repair-may-89116-structure-11-二层操作-发布岗位-3-薪资设置.json",
+          "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89116/.repair-check/repair-may-89116-structure-11-二层操作-发布岗位-3-薪资设置.png",
+          "elementCount": 169,
+          "interactiveCount": 30,
+          "interactiveLabels": [
+            "工作台",
+            "岗位管理",
+            "人才库",
+            "面试中心",
+            "考勤管理",
+            "结算中心",
+            "喵任务",
+            "信用体系",
+            "风控预警",
+            "系统管理",
+            "个人中心",
+            "搜索岗位、学生或功能...",
+            "3",
+            "张 张明远",
+            "基本信息",
+            "技能要求",
+            "3 薪资设置",
+            "4 发布范围",
+            "0",
+            "月薪",
+            "日薪",
+            "时薪",
+            "按件计费",
+            "上一步",
+            "保存草稿",
+            "下一步"
+          ]
+        }
+      }
+    ],
+    "findings": [],
+    "actionHints": [],
+    "emptyPages": [],
+    "overflowPages": [],
+    "blankPages": [],
+    "apiFailurePaths": [],
+    "goalTerms": [],
+    "clickedActionDescriptors": [
+      {
+        "nav": "工作台",
+        "label": "发起面试 HR/导师/学生三方协作",
+        "ordinal": 0,
+        "unsafe": false
+      },
+      {
+        "nav": "工作台",
+        "label": "发起面试 HR/导师/学生三方协作->发起面试",
+        "ordinal": 0,
+        "secondary": true,
+        "unsafe": false
+      },
+      {
+        "nav": "工作台",
+        "label": "查看结算中心",
+        "ordinal": 0,
+        "unsafe": false
+      },
+      {
+        "nav": "工作台",
+        "label": "查看结算中心->发起结算 按岗位批量结算",
+        "ordinal": 0,
+        "secondary": true,
+        "unsafe": false
+      },
+      {
+        "nav": "岗位管理",
+        "label": "查看",
+        "ordinal": 0,
+        "unsafe": false
+      },
+      {
+        "nav": "岗位管理",
+        "label": "查看->发布岗位",
+        "ordinal": 0,
+        "secondary": true,
+        "unsafe": false
+      },
+      {
+        "nav": "岗位管理",
+        "label": "发布岗位",
+        "ordinal": 0,
+        "unsafe": false
+      },
+      {
+        "nav": "岗位管理",
+        "label": "发布岗位->3 薪资设置",
+        "ordinal": 0,
+        "secondary": true,
+        "unsafe": false
+      }
+    ],
+    "secondaryActionClicks": 4,
+    "structureCaptures": [
+      {
+        "module": "website_structure_capture",
+        "runId": "repair-may-89116-structure-01-首屏",
+        "label": "首屏",
+        "finalUrl": "http://127.0.0.1:49116/",
+        "title": "My Trae Project",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89116/.repair-check/repair-may-89116-structure-01-首屏.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89116/.repair-check/repair-may-89116-structure-01-首屏.png",
+        "elementCount": 597,
+        "interactiveCount": 53,
+        "interactiveLabels": [
+          "工作台",
+          "岗位管理",
+          "人才库",
+          "面试中心",
+          "考勤管理",
+          "结算中心",
+          "喵任务",
+          "信用体系",
+          "风控预警",
+          "系统管理",
+          "个人中心",
+          "搜索岗位、学生或功能...",
+          "3",
+          "张 张明远",
+          "在招岗位 2 +3 较上月",
+          "待处理简历 6 +12 较上月",
+          "进行中面试 1 +2 较上月",
+          "本月结算金额 ¥133,949 +15% 较上月",
+          "发布岗位 发布后可自动匹配学生",
+          "导入学生 解析简历并标签化",
+          "发起面试 HR/导师/学生三方协作",
+          "生成签到码 批量扫码核验考勤",
+          "查看全部10个岗位",
+          "查看全部25份简历",
+          "查看全部面试",
+          "查看结算中心",
+          "查看全部预警",
+          "处理",
+          "忽略",
+          "赵雪投递了\"图书馆管理员\"岗位 5分钟前"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "repair-may-89116-structure-02-导航-工作台",
+        "label": "导航:工作台",
+        "finalUrl": "http://127.0.0.1:49116/",
+        "title": "My Trae Project",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89116/.repair-check/repair-may-89116-structure-02-导航-工作台.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89116/.repair-check/repair-may-89116-structure-02-导航-工作台.png",
+        "elementCount": 597,
+        "interactiveCount": 53,
+        "interactiveLabels": [
+          "工作台",
+          "岗位管理",
+          "人才库",
+          "面试中心",
+          "考勤管理",
+          "结算中心",
+          "喵任务",
+          "信用体系",
+          "风控预警",
+          "系统管理",
+          "个人中心",
+          "搜索岗位、学生或功能...",
+          "3",
+          "张 张明远",
+          "在招岗位 10 +3 较上月",
+          "待处理简历 25 +12 较上月",
+          "进行中面试 5 +2 较上月",
+          "本月结算金额 ¥500,000 +15% 较上月",
+          "发布岗位 发布后可自动匹配学生",
+          "导入学生 解析简历并标签化",
+          "发起面试 HR/导师/学生三方协作",
+          "生成签到码 批量扫码核验考勤",
+          "查看全部10个岗位",
+          "查看全部25份简历",
+          "查看全部面试",
+          "查看结算中心",
+          "查看全部预警",
+          "处理",
+          "忽略",
+          "赵雪投递了\"图书馆管理员\"岗位 5分钟前"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "repair-may-89116-structure-03-操作-发起面试-HR-导师-学生三方协作",
+        "label": "操作:发起面试 HR/导师/学生三方协作",
+        "finalUrl": "http://127.0.0.1:49116/interviews",
+        "title": "My Trae Project",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89116/.repair-check/repair-may-89116-structure-03-操作-发起面试-HR-导师-学生三方协作.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89116/.repair-check/repair-may-89116-structure-03-操作-发起面试-HR-导师-学生三方协作.png",
+        "elementCount": 539,
+        "interactiveCount": 21,
+        "interactiveLabels": [
+          "工作台",
+          "岗位管理",
+          "人才库",
+          "面试中心",
+          "考勤管理",
+          "结算中心",
+          "喵任务",
+          "信用体系",
+          "风控预警",
+          "系统管理",
+          "个人中心",
+          "搜索岗位、学生或功能...",
+          "3",
+          "张 张明远",
+          "发起面试",
+          "全部",
+          "待开始",
+          "进行中",
+          "已结束"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "repair-may-89116-structure-04-二层操作-发起面试-HR-导师-学生三方协作-发起面试",
+        "label": "二层操作:发起面试 HR/导师/学生三方协作->发起面试",
+        "finalUrl": "http://127.0.0.1:49116/interviews",
+        "title": "My Trae Project",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89116/.repair-check/repair-may-89116-structure-04-二层操作-发起面试-HR-导师-学生三方协作-发起面试.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89116/.repair-check/repair-may-89116-structure-04-二层操作-发起面试-HR-导师-学生三方协作-发起面试.png",
+        "elementCount": 569,
+        "interactiveCount": 25,
+        "interactiveLabels": [
+          "工作台",
+          "岗位管理",
+          "人才库",
+          "面试中心",
+          "考勤管理",
+          "结算中心",
+          "喵任务",
+          "信用体系",
+          "风控预警",
+          "系统管理",
+          "个人中心",
+          "搜索岗位、学生或功能...",
+          "3",
+          "张 张明远",
+          "发起面试",
+          "全部",
+          "待开始",
+          "进行中",
+          "已结束",
+          "请选择岗位 暑期行政助理 Java开发实习生 在线问卷调查员 UI设计实习生 寒假图书馆管理员 Python数据分析助理 新媒体运营助理 前端开发实习生 校园大使招募 视频剪辑助理",
+          "视频面试 电话面试 现场面试",
+          "确认发起"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "repair-may-89116-structure-05-操作-查看结算中心",
+        "label": "操作:查看结算中心",
+        "finalUrl": "http://127.0.0.1:49116/settlement",
+        "title": "My Trae Project",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89116/.repair-check/repair-may-89116-structure-05-操作-查看结算中心.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89116/.repair-check/repair-may-89116-structure-05-操作-查看结算中心.png",
+        "elementCount": 230,
+        "interactiveCount": 20,
+        "interactiveLabels": [
+          "工作台",
+          "岗位管理",
+          "人才库",
+          "面试中心",
+          "考勤管理",
+          "结算中心",
+          "喵任务",
+          "信用体系",
+          "风控预警",
+          "系统管理",
+          "个人中心",
+          "搜索岗位、学生或功能...",
+          "3",
+          "张 张明远",
+          "账单明细",
+          "充值",
+          "发起结算 按岗位批量结算",
+          "查看账单 历史结算明细"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "repair-may-89116-structure-06-二层操作-查看结算中心-发起结算-按岗位批量结算",
+        "label": "二层操作:查看结算中心->发起结算 按岗位批量结算",
+        "finalUrl": "http://127.0.0.1:49116/settlement",
+        "title": "My Trae Project",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89116/.repair-check/repair-may-89116-structure-06-二层操作-查看结算中心-发起结算-按岗位批量结算.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89116/.repair-check/repair-may-89116-structure-06-二层操作-查看结算中心-发起结算-按岗位批量结算.png",
+        "elementCount": 264,
+        "interactiveCount": 26,
+        "interactiveLabels": [
+          "工作台",
+          "岗位管理",
+          "人才库",
+          "面试中心",
+          "考勤管理",
+          "结算中心",
+          "喵任务",
+          "信用体系",
+          "风控预警",
+          "系统管理",
+          "个人中心",
+          "搜索岗位、学生或功能...",
+          "3",
+          "张 张明远",
+          "账单明细",
+          "充值",
+          "发起结算 按岗位批量结算",
+          "查看账单 历史结算明细",
+          "1",
+          "日结 周结 月结",
+          "请输入金额",
+          "张三:5000 李四:3000",
+          "取消",
+          "确认结算"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "repair-may-89116-structure-07-导航-岗位管理",
+        "label": "导航:岗位管理",
+        "finalUrl": "http://127.0.0.1:49116/jobs",
+        "title": "My Trae Project",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89116/.repair-check/repair-may-89116-structure-07-导航-岗位管理.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89116/.repair-check/repair-may-89116-structure-07-导航-岗位管理.png",
+        "elementCount": 608,
+        "interactiveCount": 55,
+        "interactiveLabels": [
+          "工作台",
+          "岗位管理",
+          "人才库",
+          "面试中心",
+          "考勤管理",
+          "结算中心",
+          "喵任务",
+          "信用体系",
+          "风控预警",
+          "系统管理",
+          "个人中心",
+          "搜索岗位、学生或功能...",
+          "3",
+          "张 张明远",
+          "发布岗位",
+          "全部",
+          "寒暑假",
+          "实习",
+          "线上任务",
+          "全部状态 招聘中 已暂停 已关闭 草稿",
+          "搜索岗位名称...",
+          "匹配",
+          "查看",
+          "删除",
+          "上一页",
+          "下一页"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "repair-may-89116-structure-08-操作-查看",
+        "label": "操作:查看",
+        "finalUrl": "http://127.0.0.1:49116/jobs",
+        "title": "My Trae Project",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89116/.repair-check/repair-may-89116-structure-08-操作-查看.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89116/.repair-check/repair-may-89116-structure-08-操作-查看.png",
+        "elementCount": 608,
+        "interactiveCount": 55,
+        "interactiveLabels": [
+          "工作台",
+          "岗位管理",
+          "人才库",
+          "面试中心",
+          "考勤管理",
+          "结算中心",
+          "喵任务",
+          "信用体系",
+          "风控预警",
+          "系统管理",
+          "个人中心",
+          "搜索岗位、学生或功能...",
+          "3",
+          "张 张明远",
+          "发布岗位",
+          "全部",
+          "寒暑假",
+          "实习",
+          "线上任务",
+          "全部状态 招聘中 已暂停 已关闭 草稿",
+          "搜索岗位名称...",
+          "匹配",
+          "查看",
+          "删除",
+          "上一页",
+          "下一页"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "repair-may-89116-structure-09-二层操作-查看-发布岗位",
+        "label": "二层操作:查看->发布岗位",
+        "finalUrl": "http://127.0.0.1:49116/jobs/create",
+        "title": "My Trae Project",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89116/.repair-check/repair-may-89116-structure-09-二层操作-查看-发布岗位.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89116/.repair-check/repair-may-89116-structure-09-二层操作-查看-发布岗位.png",
+        "elementCount": 169,
+        "interactiveCount": 31,
+        "interactiveLabels": [
+          "工作台",
+          "岗位管理",
+          "人才库",
+          "面试中心",
+          "考勤管理",
+          "结算中心",
+          "喵任务",
+          "信用体系",
+          "风控预警",
+          "系统管理",
+          "个人中心",
+          "搜索岗位、学生或功能...",
+          "3",
+          "张 张明远",
+          "1 基本信息",
+          "2 技能要求",
+          "3 薪资设置",
+          "4 发布范围",
+          "请输入岗位名称",
+          "寒暑假工 实习 线上任务",
+          "请输入部门",
+          "请输入招聘人数",
+          "请详细描述岗位职责和要求",
+          "上一步",
+          "保存草稿",
+          "下一步"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "repair-may-89116-structure-10-操作-发布岗位",
+        "label": "操作:发布岗位",
+        "finalUrl": "http://127.0.0.1:49116/jobs/create",
+        "title": "My Trae Project",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89116/.repair-check/repair-may-89116-structure-10-操作-发布岗位.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89116/.repair-check/repair-may-89116-structure-10-操作-发布岗位.png",
+        "elementCount": 169,
+        "interactiveCount": 31,
+        "interactiveLabels": [
+          "工作台",
+          "岗位管理",
+          "人才库",
+          "面试中心",
+          "考勤管理",
+          "结算中心",
+          "喵任务",
+          "信用体系",
+          "风控预警",
+          "系统管理",
+          "个人中心",
+          "搜索岗位、学生或功能...",
+          "3",
+          "张 张明远",
+          "1 基本信息",
+          "2 技能要求",
+          "3 薪资设置",
+          "4 发布范围",
+          "请输入岗位名称",
+          "寒暑假工 实习 线上任务",
+          "请输入部门",
+          "请输入招聘人数",
+          "请详细描述岗位职责和要求",
+          "上一步",
+          "保存草稿",
+          "下一步"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "repair-may-89116-structure-11-二层操作-发布岗位-3-薪资设置",
+        "label": "二层操作:发布岗位->3 薪资设置",
+        "finalUrl": "http://127.0.0.1:49116/jobs/create",
+        "title": "My Trae Project",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89116/.repair-check/repair-may-89116-structure-11-二层操作-发布岗位-3-薪资设置.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89116/.repair-check/repair-may-89116-structure-11-二层操作-发布岗位-3-薪资设置.png",
+        "elementCount": 169,
+        "interactiveCount": 30,
+        "interactiveLabels": [
+          "工作台",
+          "岗位管理",
+          "人才库",
+          "面试中心",
+          "考勤管理",
+          "结算中心",
+          "喵任务",
+          "信用体系",
+          "风控预警",
+          "系统管理",
+          "个人中心",
+          "搜索岗位、学生或功能...",
+          "3",
+          "张 张明远",
+          "基本信息",
+          "技能要求",
+          "3 薪资设置",
+          "4 发布范围",
+          "0",
+          "月薪",
+          "日薪",
+          "时薪",
+          "按件计费",
+          "上一步",
+          "保存草稿",
+          "下一步"
+        ]
+      }
+    ],
+    "representativeScreenshotUrl": "http://127.0.0.1:49116/",
+    "representativeScreenshotLabel": "校园兼职平台"
+  },
+  "websiteStructureCapture": {
+    "module": "website_structure_capture",
+    "captureCount": 11,
+    "captures": [
+      {
+        "module": "website_structure_capture",
+        "runId": "repair-may-89116-structure-01-首屏",
+        "label": "首屏",
+        "finalUrl": "http://127.0.0.1:49116/",
+        "title": "My Trae Project",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89116/.repair-check/repair-may-89116-structure-01-首屏.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89116/.repair-check/repair-may-89116-structure-01-首屏.png",
+        "elementCount": 597,
+        "interactiveCount": 53,
+        "interactiveLabels": [
+          "工作台",
+          "岗位管理",
+          "人才库",
+          "面试中心",
+          "考勤管理",
+          "结算中心",
+          "喵任务",
+          "信用体系",
+          "风控预警",
+          "系统管理",
+          "个人中心",
+          "搜索岗位、学生或功能...",
+          "3",
+          "张 张明远",
+          "在招岗位 2 +3 较上月",
+          "待处理简历 6 +12 较上月",
+          "进行中面试 1 +2 较上月",
+          "本月结算金额 ¥133,949 +15% 较上月",
+          "发布岗位 发布后可自动匹配学生",
+          "导入学生 解析简历并标签化",
+          "发起面试 HR/导师/学生三方协作",
+          "生成签到码 批量扫码核验考勤",
+          "查看全部10个岗位",
+          "查看全部25份简历",
+          "查看全部面试",
+          "查看结算中心",
+          "查看全部预警",
+          "处理",
+          "忽略",
+          "赵雪投递了\"图书馆管理员\"岗位 5分钟前"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "repair-may-89116-structure-02-导航-工作台",
+        "label": "导航:工作台",
+        "finalUrl": "http://127.0.0.1:49116/",
+        "title": "My Trae Project",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89116/.repair-check/repair-may-89116-structure-02-导航-工作台.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89116/.repair-check/repair-may-89116-structure-02-导航-工作台.png",
+        "elementCount": 597,
+        "interactiveCount": 53,
+        "interactiveLabels": [
+          "工作台",
+          "岗位管理",
+          "人才库",
+          "面试中心",
+          "考勤管理",
+          "结算中心",
+          "喵任务",
+          "信用体系",
+          "风控预警",
+          "系统管理",
+          "个人中心",
+          "搜索岗位、学生或功能...",
+          "3",
+          "张 张明远",
+          "在招岗位 10 +3 较上月",
+          "待处理简历 25 +12 较上月",
+          "进行中面试 5 +2 较上月",
+          "本月结算金额 ¥500,000 +15% 较上月",
+          "发布岗位 发布后可自动匹配学生",
+          "导入学生 解析简历并标签化",
+          "发起面试 HR/导师/学生三方协作",
+          "生成签到码 批量扫码核验考勤",
+          "查看全部10个岗位",
+          "查看全部25份简历",
+          "查看全部面试",
+          "查看结算中心",
+          "查看全部预警",
+          "处理",
+          "忽略",
+          "赵雪投递了\"图书馆管理员\"岗位 5分钟前"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "repair-may-89116-structure-03-操作-发起面试-HR-导师-学生三方协作",
+        "label": "操作:发起面试 HR/导师/学生三方协作",
+        "finalUrl": "http://127.0.0.1:49116/interviews",
+        "title": "My Trae Project",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89116/.repair-check/repair-may-89116-structure-03-操作-发起面试-HR-导师-学生三方协作.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89116/.repair-check/repair-may-89116-structure-03-操作-发起面试-HR-导师-学生三方协作.png",
+        "elementCount": 539,
+        "interactiveCount": 21,
+        "interactiveLabels": [
+          "工作台",
+          "岗位管理",
+          "人才库",
+          "面试中心",
+          "考勤管理",
+          "结算中心",
+          "喵任务",
+          "信用体系",
+          "风控预警",
+          "系统管理",
+          "个人中心",
+          "搜索岗位、学生或功能...",
+          "3",
+          "张 张明远",
+          "发起面试",
+          "全部",
+          "待开始",
+          "进行中",
+          "已结束"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "repair-may-89116-structure-04-二层操作-发起面试-HR-导师-学生三方协作-发起面试",
+        "label": "二层操作:发起面试 HR/导师/学生三方协作->发起面试",
+        "finalUrl": "http://127.0.0.1:49116/interviews",
+        "title": "My Trae Project",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89116/.repair-check/repair-may-89116-structure-04-二层操作-发起面试-HR-导师-学生三方协作-发起面试.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89116/.repair-check/repair-may-89116-structure-04-二层操作-发起面试-HR-导师-学生三方协作-发起面试.png",
+        "elementCount": 569,
+        "interactiveCount": 25,
+        "interactiveLabels": [
+          "工作台",
+          "岗位管理",
+          "人才库",
+          "面试中心",
+          "考勤管理",
+          "结算中心",
+          "喵任务",
+          "信用体系",
+          "风控预警",
+          "系统管理",
+          "个人中心",
+          "搜索岗位、学生或功能...",
+          "3",
+          "张 张明远",
+          "发起面试",
+          "全部",
+          "待开始",
+          "进行中",
+          "已结束",
+          "请选择岗位 暑期行政助理 Java开发实习生 在线问卷调查员 UI设计实习生 寒假图书馆管理员 Python数据分析助理 新媒体运营助理 前端开发实习生 校园大使招募 视频剪辑助理",
+          "视频面试 电话面试 现场面试",
+          "确认发起"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "repair-may-89116-structure-05-操作-查看结算中心",
+        "label": "操作:查看结算中心",
+        "finalUrl": "http://127.0.0.1:49116/settlement",
+        "title": "My Trae Project",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89116/.repair-check/repair-may-89116-structure-05-操作-查看结算中心.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89116/.repair-check/repair-may-89116-structure-05-操作-查看结算中心.png",
+        "elementCount": 230,
+        "interactiveCount": 20,
+        "interactiveLabels": [
+          "工作台",
+          "岗位管理",
+          "人才库",
+          "面试中心",
+          "考勤管理",
+          "结算中心",
+          "喵任务",
+          "信用体系",
+          "风控预警",
+          "系统管理",
+          "个人中心",
+          "搜索岗位、学生或功能...",
+          "3",
+          "张 张明远",
+          "账单明细",
+          "充值",
+          "发起结算 按岗位批量结算",
+          "查看账单 历史结算明细"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "repair-may-89116-structure-06-二层操作-查看结算中心-发起结算-按岗位批量结算",
+        "label": "二层操作:查看结算中心->发起结算 按岗位批量结算",
+        "finalUrl": "http://127.0.0.1:49116/settlement",
+        "title": "My Trae Project",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89116/.repair-check/repair-may-89116-structure-06-二层操作-查看结算中心-发起结算-按岗位批量结算.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89116/.repair-check/repair-may-89116-structure-06-二层操作-查看结算中心-发起结算-按岗位批量结算.png",
+        "elementCount": 264,
+        "interactiveCount": 26,
+        "interactiveLabels": [
+          "工作台",
+          "岗位管理",
+          "人才库",
+          "面试中心",
+          "考勤管理",
+          "结算中心",
+          "喵任务",
+          "信用体系",
+          "风控预警",
+          "系统管理",
+          "个人中心",
+          "搜索岗位、学生或功能...",
+          "3",
+          "张 张明远",
+          "账单明细",
+          "充值",
+          "发起结算 按岗位批量结算",
+          "查看账单 历史结算明细",
+          "1",
+          "日结 周结 月结",
+          "请输入金额",
+          "张三:5000 李四:3000",
+          "取消",
+          "确认结算"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "repair-may-89116-structure-07-导航-岗位管理",
+        "label": "导航:岗位管理",
+        "finalUrl": "http://127.0.0.1:49116/jobs",
+        "title": "My Trae Project",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89116/.repair-check/repair-may-89116-structure-07-导航-岗位管理.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89116/.repair-check/repair-may-89116-structure-07-导航-岗位管理.png",
+        "elementCount": 608,
+        "interactiveCount": 55,
+        "interactiveLabels": [
+          "工作台",
+          "岗位管理",
+          "人才库",
+          "面试中心",
+          "考勤管理",
+          "结算中心",
+          "喵任务",
+          "信用体系",
+          "风控预警",
+          "系统管理",
+          "个人中心",
+          "搜索岗位、学生或功能...",
+          "3",
+          "张 张明远",
+          "发布岗位",
+          "全部",
+          "寒暑假",
+          "实习",
+          "线上任务",
+          "全部状态 招聘中 已暂停 已关闭 草稿",
+          "搜索岗位名称...",
+          "匹配",
+          "查看",
+          "删除",
+          "上一页",
+          "下一页"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "repair-may-89116-structure-08-操作-查看",
+        "label": "操作:查看",
+        "finalUrl": "http://127.0.0.1:49116/jobs",
+        "title": "My Trae Project",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89116/.repair-check/repair-may-89116-structure-08-操作-查看.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89116/.repair-check/repair-may-89116-structure-08-操作-查看.png",
+        "elementCount": 608,
+        "interactiveCount": 55,
+        "interactiveLabels": [
+          "工作台",
+          "岗位管理",
+          "人才库",
+          "面试中心",
+          "考勤管理",
+          "结算中心",
+          "喵任务",
+          "信用体系",
+          "风控预警",
+          "系统管理",
+          "个人中心",
+          "搜索岗位、学生或功能...",
+          "3",
+          "张 张明远",
+          "发布岗位",
+          "全部",
+          "寒暑假",
+          "实习",
+          "线上任务",
+          "全部状态 招聘中 已暂停 已关闭 草稿",
+          "搜索岗位名称...",
+          "匹配",
+          "查看",
+          "删除",
+          "上一页",
+          "下一页"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "repair-may-89116-structure-09-二层操作-查看-发布岗位",
+        "label": "二层操作:查看->发布岗位",
+        "finalUrl": "http://127.0.0.1:49116/jobs/create",
+        "title": "My Trae Project",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89116/.repair-check/repair-may-89116-structure-09-二层操作-查看-发布岗位.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89116/.repair-check/repair-may-89116-structure-09-二层操作-查看-发布岗位.png",
+        "elementCount": 169,
+        "interactiveCount": 31,
+        "interactiveLabels": [
+          "工作台",
+          "岗位管理",
+          "人才库",
+          "面试中心",
+          "考勤管理",
+          "结算中心",
+          "喵任务",
+          "信用体系",
+          "风控预警",
+          "系统管理",
+          "个人中心",
+          "搜索岗位、学生或功能...",
+          "3",
+          "张 张明远",
+          "1 基本信息",
+          "2 技能要求",
+          "3 薪资设置",
+          "4 发布范围",
+          "请输入岗位名称",
+          "寒暑假工 实习 线上任务",
+          "请输入部门",
+          "请输入招聘人数",
+          "请详细描述岗位职责和要求",
+          "上一步",
+          "保存草稿",
+          "下一步"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "repair-may-89116-structure-10-操作-发布岗位",
+        "label": "操作:发布岗位",
+        "finalUrl": "http://127.0.0.1:49116/jobs/create",
+        "title": "My Trae Project",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89116/.repair-check/repair-may-89116-structure-10-操作-发布岗位.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89116/.repair-check/repair-may-89116-structure-10-操作-发布岗位.png",
+        "elementCount": 169,
+        "interactiveCount": 31,
+        "interactiveLabels": [
+          "工作台",
+          "岗位管理",
+          "人才库",
+          "面试中心",
+          "考勤管理",
+          "结算中心",
+          "喵任务",
+          "信用体系",
+          "风控预警",
+          "系统管理",
+          "个人中心",
+          "搜索岗位、学生或功能...",
+          "3",
+          "张 张明远",
+          "1 基本信息",
+          "2 技能要求",
+          "3 薪资设置",
+          "4 发布范围",
+          "请输入岗位名称",
+          "寒暑假工 实习 线上任务",
+          "请输入部门",
+          "请输入招聘人数",
+          "请详细描述岗位职责和要求",
+          "上一步",
+          "保存草稿",
+          "下一步"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "repair-may-89116-structure-11-二层操作-发布岗位-3-薪资设置",
+        "label": "二层操作:发布岗位->3 薪资设置",
+        "finalUrl": "http://127.0.0.1:49116/jobs/create",
+        "title": "My Trae Project",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89116/.repair-check/repair-may-89116-structure-11-二层操作-发布岗位-3-薪资设置.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89116/.repair-check/repair-may-89116-structure-11-二层操作-发布岗位-3-薪资设置.png",
+        "elementCount": 169,
+        "interactiveCount": 30,
+        "interactiveLabels": [
+          "工作台",
+          "岗位管理",
+          "人才库",
+          "面试中心",
+          "考勤管理",
+          "结算中心",
+          "喵任务",
+          "信用体系",
+          "风控预警",
+          "系统管理",
+          "个人中心",
+          "搜索岗位、学生或功能...",
+          "3",
+          "张 张明远",
+          "基本信息",
+          "技能要求",
+          "3 薪资设置",
+          "4 发布范围",
+          "0",
+          "月薪",
+          "日薪",
+          "时薪",
+          "按件计费",
+          "上一步",
+          "保存草稿",
+          "下一步"
+        ]
+      }
+    ]
+  },
+  "screenshotMetrics": {
+    "width": 1856,
+    "height": 1600,
+    "scrollWidth": 1824,
+    "scrollHeight": 2050
+  },
+  "initialBodyTextPreview": "校园兼职平台\n工作台\n岗位管理\n人才库\n面试中心\n考勤管理\n结算中心\n喵任务\n信用体系\n风控预警\n系统管理\n个人中心\n首页\n3\n张\n张明远\n工作台\n\n欢迎回来，张明远\n\n2026年6月9日星期二\n\n在招岗位\n\n10\n\n+3\n较上月\n\n待处理简历\n\n25\n\n+12\n较上月\n\n进行中面试\n\n5\n\n+2\n较上月\n\n本月结算金额\n\n¥500,000\n\n+15%\n较上月\n发布岗位\n发布后可自动匹配学生\n导入学生\n解析简历并标签化\n发起面试\nHR/导师/学生三方协作\n生成签到码\n批量扫码核验考勤\n招聘流水线\n岗位与匹配\n暑期行政助理\nsummer_winter\n5人投递\nJava开发实习生\ninternship\n3人投递\n在线问卷调查员\nonline_task\n3人投递\n查看全部10个岗位\n简历与复核\n黄嘉琪\n人工智能\n90分\n何欣怡\n电子信息工程\n81分\n高雨涵\n软件工程\n89分\n查看全部25份简历\n面试与协作\n在线问卷调查员\nvideo\nin_progress\n前端开发实习生\nvideo\nin_progress\n寒假图书馆管理员\nvideo\nin_progress\n查看全部面试\n考勤与分账\n¥45000\n手续费¥2250\ncompleted\n¥18000\n手续费¥900\nprocessing\n¥5000\n手续费¥250\ncompleted\n查看结算中心\n风控预警\n已处理 1 条\n查看全部预警\n高\n待处理\n\n超工时预警\n\n学生陈思远连续工作超过8小时，已超出校园用工时限规定\n\n责任分公司：浙江大学校园服务中心\n责任人：周建华\n复查记录：复查排班表、签到签退、周工时阈值和调休安排\n关闭结果：待责任人提交处理结果，关闭后写入合规留存\n2026/6/9 14:01:37\n处理\n忽略\n高\n待处理\n\n未签合同预警\n\nJava开发实习生岗位存在3名未签订合同的上岗学生\n\n责任分公司：杭州云校教育科技集团\n责任人：吴雪梅\n复查记录：核对合同签章、上岗日期、岗位责任人和补签回执\n关闭结果：待责任人提交处理结果，关闭后写入合规留存\n2026/6/9 14:01:37\n处理\n忽略\n中\n待处理\n\n异常行为预警\n\n学生赵天翔近期考勤异常，连续3次迟到\n\n责任分公司：浙江大学校园服务中心\n责任人：郑伟\n复查记录：复查考勤轨迹、导师反馈、学生申诉和关闭意见\n关闭结果：待责任人提交处理结果，关闭后写入合规留存\n2026/6/9 14:01:37\n处理\n忽略\n低\n待处理\n\n未签合同预警\n\nUI设计实习生岗位合同即将到期，请及时续签\n\n责任分公司：杭州云校教育科技集团\n责任人：杨秀英\n复查记录：核对合同签章、上岗日期、岗位责任人和补签回执\n关闭结果：待责任人提交处理结果，关闭后写入合规留存\n2026/6/9 14:01:37\n处理\n忽略\n高\n待处理\n\n异常行为预警\n\n学生孙浩然在岗期间擅自离岗，请核实情况\n\n责任分公司：杭州电子科技大学分部\n责任人：王子涵\n复查记录：复查考勤轨迹、导师反馈、学生申诉和关闭意见\n关闭结果：待责任人提交处理结果，关闭后写入合规留存\n2026/6/9 14:01:37\n处理\n忽略\n待办事项\n4 待处理\n审核3份新投递简历\n紧急\n安排明天群面场次\n确认6月薪资结算数据\n紧急\n处理异常考勤申诉\n最近动态\n\n赵雪投递了\"图书馆管理员\"岗位\n\n5分钟前\n\n面试\"食堂服务员\"已结束\n\n30分钟前\n\n5月工资批次已生成\n\n1小时前\n\n新学生陈浩导入成功\n\n2小时前\n\n刘洋完成今日签到\n\n3小时前\n\n平台治理\n进入系统管理\n集团多租户\n\n--个租户\n\n岗位边界/账号层级\n\n进入\n双向互评信用\n\n95分\n\n守时/技能/协作标签\n\n进入\n喵任务追踪\n\n7个任务\n\n完成率/奖励/转化\n\n进入\n合规留存审计\n\n4项待审\n\n归档批次/报告导出\n\n进入",
+  "bodyTextPreview": "校园兼职平台\n工作台\n岗位管理\n人才库\n面试中心\n考勤管理\n结算中心\n喵任务\n信用体系\n风控预警\n系统管理\n个人中心\n首页\n3\n张\n张明远\n工作台\n\n欢迎回来，张明远\n\n2026年6月9日星期二\n\n在招岗位\n\n1\n\n+3\n较上月\n\n待处理简历\n\n3\n\n+12\n较上月\n\n进行中面试\n\n0\n\n+2\n较上月\n\n本月结算金额\n\n¥70,249\n\n+15%\n较上月\n发布岗位\n发布后可自动匹配学生\n导入学生\n解析简历并标签化\n发起面试\nHR/导师/学生三方协作\n生成签到码\n批量扫码核验考勤\n招聘流水线\n岗位与匹配\n暑期行政助理\nsummer_winter\n5人投递\nJava开发实习生\ninternship\n3人投递\n在线问卷调查员\nonline_task\n3人投递\n查看全部10个岗位\n简历与复核\n黄嘉琪\n人工智能\n90分\n何欣怡\n电子信息工程\n81分\n高雨涵\n软件工程\n89分\n查看全部25份简历\n面试与协作\n在线问卷调查员\nvideo\nin_progress\n前端开发实习生\nvideo\nin_progress\n寒假图书馆管理员\nvideo\nin_progress\n查看全部面试\n考勤与分账\n¥45000\n手续费¥2250\ncompleted\n¥18000\n手续费¥900\nprocessing\n¥5000\n手续费¥250\ncompleted\n查看结算中心\n风控预警\n已处理 1 条\n查看全部预警\n高\n待处理\n\n超工时预警\n\n学生陈思远连续工作超过8小时，已超出校园用工时限规定\n\n责任分公司：浙江大学校园服务中心\n责任人：周建华\n复查记录：复查排班表、签到签退、周工时阈值和调休安排\n关闭结果：待责任人提交处理结果，关闭后写入合规留存\n2026/6/9 14:01:37\n处理\n忽略\n高\n待处理\n\n未签合同预警\n\nJava开发实习生岗位存在3名未签订合同的上岗学生\n\n责任分公司：杭州云校教育科技集团\n责任人：吴雪梅\n复查记录：核对合同签章、上岗日期、岗位责任人和补签回执\n关闭结果：待责任人提交处理结果，关闭后写入合规留存\n2026/6/9 14:01:37\n处理\n忽略\n中\n待处理\n\n异常行为预警\n\n学生赵天翔近期考勤异常，连续3次迟到\n\n责任分公司：浙江大学校园服务中心\n责任人：郑伟\n复查记录：复查考勤轨迹、导师反馈、学生申诉和关闭意见\n关闭结果：待责任人提交处理结果，关闭后写入合规留存\n2026/6/9 14:01:37\n处理\n忽略\n低\n待处理\n\n未签合同预警\n\nUI设计实习生岗位合同即将到期，请及时续签\n\n责任分公司：杭州云校教育科技集团\n责任人：杨秀英\n复查记录：核对合同签章、上岗日期、岗位责任人和补签回执\n关闭结果：待责任人提交处理结果，关闭后写入合规留存\n2026/6/9 14:01:37\n处理\n忽略\n高\n待处理\n\n异常行为预警\n\n学生孙浩然在岗期间擅自离岗，请核实情况\n\n责任分公司：杭州电子科技大学分部\n责任人：王子涵\n复查记录：复查考勤轨迹、导师反馈、学生申诉和关闭意见\n关闭结果：待责任人提交处理结果，关闭后写入合规留存\n2026/6/9 14:01:37\n处理\n忽略\n待办事项\n4 待处理\n审核3份新投递简历\n紧急\n安排明天群面场次\n确认6月薪资结算数据\n紧急\n处理异常考勤申诉\n最近动态\n\n赵雪投递了\"图书馆管理员\"岗位\n\n5分钟前\n\n面试\"食堂服务员\"已结束\n\n30分钟前\n\n5月工资批次已生成\n\n1小时前\n\n新学生陈浩导入成功\n\n2小时前\n\n刘洋完成今日签到\n\n3小时前\n\n平台治理\n进入系统管理\n集团多租户\n\n--个租户\n\n岗位边界/账号层级\n\n进入\n双向互评信用\n\n95分\n\n守时/技能/协作标签\n\n进入\n喵任务追踪\n\n7个任务\n\n完成率/奖励/转化\n\n进入\n合规留存审计\n\n4项待审\n\n归档批次/报告导出\n\n进入",
+  "apiBase": "http://127.0.0.1:59116",
+  "businessGoalPreview": "",
+  "apiResponses": [
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49116/api/jobs?status=published&pageSize=1"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49116/api/talents?pageSize=1"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49116/api/interviews?status=in_progress&pageSize=1"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49116/api/settlement/pool?org_id=1"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49116/api/risk/alerts?status=pending&pageSize=1"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49116/api/risk/alerts?status=pending&pageSize=5"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49116/api/risk/alerts?status=resolved&pageSize=1"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49116/api/jobs?status=published&pageSize=3"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49116/api/talents?pageSize=3"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49116/api/interviews?status=in_progress&pageSize=3"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49116/api/settlement/bills?org_id=1&pageSize=3"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49116/api/admin/tenants"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49116/api/credit/1"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49116/api/micro-tasks?pageSize=1"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49116/api/admin/compliance"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49116/api/jobs?status=published&pageSize=1"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49116/api/talents?pageSize=1"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49116/api/interviews?status=in_progress&pageSize=1"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49116/api/settlement/pool?org_id=1"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49116/api/risk/alerts?status=pending&pageSize=1"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49116/api/risk/alerts?status=pending&pageSize=5"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49116/api/risk/alerts?status=resolved&pageSize=1"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49116/api/jobs?status=published&pageSize=3"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49116/api/talents?pageSize=3"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49116/api/interviews?status=in_progress&pageSize=3"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49116/api/settlement/bills?org_id=1&pageSize=3"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49116/api/admin/tenants"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49116/api/credit/1"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49116/api/micro-tasks?pageSize=1"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49116/api/admin/compliance"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49116/api/jobs?status=published&pageSize=1"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49116/api/talents?pageSize=1"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49116/api/interviews?status=in_progress&pageSize=1"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49116/api/settlement/pool?org_id=1"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49116/api/risk/alerts?status=pending&pageSize=1"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49116/api/risk/alerts?status=pending&pageSize=5"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49116/api/risk/alerts?status=resolved&pageSize=1"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49116/api/jobs?status=published&pageSize=3"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49116/api/talents?pageSize=3"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49116/api/interviews?status=in_progress&pageSize=3"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49116/api/settlement/bills?org_id=1&pageSize=3"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49116/api/admin/tenants"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49116/api/credit/1"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49116/api/micro-tasks?pageSize=1"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49116/api/admin/compliance"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49116/api/interviews?status=in_progress&pageSize=1"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49116/api/jobs?status=published&pageSize=1"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49116/api/talents?pageSize=1"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49116/api/settlement/pool?org_id=1"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49116/api/risk/alerts?status=pending&pageSize=1"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49116/api/risk/alerts?status=pending&pageSize=5"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49116/api/risk/alerts?status=resolved&pageSize=1"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49116/api/jobs?status=published&pageSize=3"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49116/api/talents?pageSize=3"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49116/api/interviews?status=in_progress&pageSize=3"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49116/api/settlement/bills?org_id=1&pageSize=3"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49116/api/admin/tenants"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49116/api/credit/1"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49116/api/micro-tasks?pageSize=1"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49116/api/admin/compliance"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49116/api/interviews?"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49116/api/interviews?"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49116/api/jobs?status=published"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49116/api/jobs?status=published&pageSize=1"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49116/api/talents?pageSize=1"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49116/api/interviews?status=in_progress&pageSize=1"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49116/api/settlement/pool?org_id=1"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49116/api/risk/alerts?status=pending&pageSize=1"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49116/api/risk/alerts?status=pending&pageSize=5"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49116/api/risk/alerts?status=resolved&pageSize=1"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49116/api/jobs?status=published&pageSize=3"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49116/api/talents?pageSize=3"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49116/api/interviews?status=in_progress&pageSize=3"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49116/api/settlement/bills?org_id=1&pageSize=3"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49116/api/admin/tenants"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49116/api/credit/1"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49116/api/micro-tasks?pageSize=1"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49116/api/admin/compliance"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49116/api/jobs?status=published&pageSize=1"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49116/api/talents?pageSize=1"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49116/api/interviews?status=in_progress&pageSize=1"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49116/api/settlement/pool?org_id=1"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49116/api/risk/alerts?status=pending&pageSize=1"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49116/api/risk/alerts?status=pending&pageSize=5"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49116/api/risk/alerts?status=resolved&pageSize=1"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49116/api/jobs?status=published&pageSize=3"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49116/api/talents?pageSize=3"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49116/api/interviews?status=in_progress&pageSize=3"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49116/api/settlement/bills?org_id=1&pageSize=3"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49116/api/admin/tenants"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49116/api/credit/1"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49116/api/micro-tasks?pageSize=1"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49116/api/admin/compliance"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49116/api/settlement/pool?org_id=1"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49116/api/settlement/bills?org_id=1&pageSize=10"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49116/api/settlement/config"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49116/api/settlement/pool?org_id=1"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49116/api/settlement/bills?org_id=1&pageSize=10"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49116/api/settlement/config"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49116/api/jobs?status=published&pageSize=1"
+    }
+  ],
+  "apiChecks": [
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59116/api/health",
+      "path": "/api/health",
+      "status": 200,
+      "ok": true,
+      "bodyPreview": "{\"success\":true,\"message\":\"ok\"}"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59116/api/jobs?status=published&pageSize=1",
+      "path": "/api/jobs?status=published&pageSize=1",
+      "status": 200,
+      "ok": true,
+      "bodyPreview": "{\"success\":true,\"data\":{\"items\":[{\"id\":1,\"title\":\"暑期行政助理\",\"type\":\"summer_winter\",\"description\":\"协助行政办公室处理日常事务，包括文件归档、会议记录、来访接待等\",\"requirements\":{\"skills\":[\"Excel\",\"文案写作\"],\"education\":\"本科在读\",\"experience\":\"无要求\"},\"salary_min\":120,\"salary_max\":150,\"org_id\":2,\"status\":\"published\",\"settlement_cycle\":\"monthly\",\"headcount\":3,\"created_at\":\"2026-06-09 14:01:37\",\"org_name\":\"浙江大学校园服务中心\",\"application_count\":5,\"shortlisted_count\":0,\"interviewed_count\":0,\"match_progress\":100,\"latest_application_at\":\"2026-06-09"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59116/api/talents?pageSize=1",
+      "path": "/api/talents?pageSize=1",
+      "status": 200,
+      "ok": true,
+      "bodyPreview": "{\"success\":true,\"data\":{\"items\":[{\"id\":12,\"user_id\":27,\"university\":\"杭州电子科技大学\",\"major\":\"人工智能\",\"grade\":\"研二\",\"skills\":[\"Python\",\"React\",\"数据分析\",\"Vue\"],\"certificates\":[\"英语六级\"],\"rating\":5,\"resume_text\":\"黄嘉琪，杭州电子科技大学人工智能专业研二学生，擅长Python、React、数据分析、Vue，持有英语六级证书。在校期间积极参与社会实践和志愿服务，具备良好的团队协作能力和沟通能力。\",\"created_at\":\"2026-06-09 14:01:37\",\"name\":\"黄嘉琪\",\"email\":\"student12@campus.edu.cn\",\"credit_score\":90,\"avatar\":\"/avatars/student12.png\",\"org_id\":3}],\"total\":25,\"page\":1,\"pageSize\":1}}"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59116/api/interviews?status=in_progress&pageSize=1",
+      "path": "/api/interviews?status=in_progress&pageSize=1",
+      "status": 200,
+      "ok": true,
+      "bodyPreview": "{\"success\":true,\"data\":{\"items\":[{\"id\":11,\"job_id\":3,\"application_id\":11,\"type\":\"video\",\"status\":\"in_progress\",\"summary\":null,\"scheduled_at\":\"2026-06-20 11:00:00\",\"created_at\":\"2026-06-09 14:01:37\",\"job_title\":\"在线问卷调查员\",\"application_status\":\"shortlisted\",\"participant_count\":3,\"file_count\":1,\"message_count\":4}],\"total\":5,\"page\":1,\"pageSize\":1}}"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59116/api/settlement/pool?org_id=1",
+      "path": "/api/settlement/pool?org_id=1",
+      "status": 200,
+      "ok": true,
+      "bodyPreview": "{\"success\":true,\"data\":{\"id\":1,\"org_id\":1,\"balance\":500000,\"frozen\":80000,\"pending\":25000,\"updated_at\":\"2026-06-09 14:01:37\",\"org_name\":\"杭州云校教育科技集团\"}}"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59116/api/risk/alerts?status=pending&pageSize=1",
+      "path": "/api/risk/alerts?status=pending&pageSize=1",
+      "status": 200,
+      "ok": true,
+      "bodyPreview": "{\"success\":true,\"data\":{\"items\":[{\"id\":1,\"type\":\"overtime\",\"level\":\"high\",\"message\":\"学生陈思远连续工作超过8小时，已超出校园用工时限规定\",\"org_id\":2,\"related_user_id\":9,\"status\":\"pending\",\"created_at\":\"2026-06-09 14:01:37\",\"org_name\":\"浙江大学校园服务中心\",\"related_user_name\":\"周建华\"}],\"total\":6,\"page\":1,\"pageSize\":1}}"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59116/api/risk/alerts?status=pending&pageSize=5",
+      "path": "/api/risk/alerts?status=pending&pageSize=5",
+      "status": 200,
+      "ok": true,
+      "bodyPreview": "{\"success\":true,\"data\":{\"items\":[{\"id\":1,\"type\":\"overtime\",\"level\":\"high\",\"message\":\"学生陈思远连续工作超过8小时，已超出校园用工时限规定\",\"org_id\":2,\"related_user_id\":9,\"status\":\"pending\",\"created_at\":\"2026-06-09 14:01:37\",\"org_name\":\"浙江大学校园服务中心\",\"related_user_name\":\"周建华\"},{\"id\":2,\"type\":\"unsigned_contract\",\"level\":\"high\",\"message\":\"Java开发实习生岗位存在3名未签订合同的上岗学生\",\"org_id\":1,\"related_user_id\":10,\"status\":\"pending\",\"created_at\":\"2026-06-09 14:01:37\",\"org_name\":\"杭州云校教育科技集团\",\"related_user_name\":\"吴雪梅\"},{\"id\":3,\"type\":\"abnormal_b"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59116/api/risk/alerts?status=resolved&pageSize=1",
+      "path": "/api/risk/alerts?status=resolved&pageSize=1",
+      "status": 200,
+      "ok": true,
+      "bodyPreview": "{\"success\":true,\"data\":{\"items\":[{\"id\":4,\"type\":\"overtime\",\"level\":\"medium\",\"message\":\"本周有5名学生周工时超过28小时\",\"org_id\":2,\"related_user_id\":11,\"status\":\"resolved\",\"created_at\":\"2026-06-09 14:01:37\",\"org_name\":\"浙江大学校园服务中心\",\"related_user_name\":\"黄志强\"}],\"total\":1,\"page\":1,\"pageSize\":1}}"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59116/api/jobs?status=published&pageSize=3",
+      "path": "/api/jobs?status=published&pageSize=3",
+      "status": 200,
+      "ok": true,
+      "bodyPreview": "{\"success\":true,\"data\":{\"items\":[{\"id\":1,\"title\":\"暑期行政助理\",\"type\":\"summer_winter\",\"description\":\"协助行政办公室处理日常事务，包括文件归档、会议记录、来访接待等\",\"requirements\":{\"skills\":[\"Excel\",\"文案写作\"],\"education\":\"本科在读\",\"experience\":\"无要求\"},\"salary_min\":120,\"salary_max\":150,\"org_id\":2,\"status\":\"published\",\"settlement_cycle\":\"monthly\",\"headcount\":3,\"created_at\":\"2026-06-09 14:01:37\",\"org_name\":\"浙江大学校园服务中心\",\"application_count\":5,\"shortlisted_count\":0,\"interviewed_count\":0,\"match_progress\":100,\"latest_application_at\":\"2026-06-09"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59116/api/talents?pageSize=3",
+      "path": "/api/talents?pageSize=3",
+      "status": 200,
+      "ok": true,
+      "bodyPreview": "{\"success\":true,\"data\":{\"items\":[{\"id\":12,\"user_id\":27,\"university\":\"杭州电子科技大学\",\"major\":\"人工智能\",\"grade\":\"研二\",\"skills\":[\"Python\",\"React\",\"数据分析\",\"Vue\"],\"certificates\":[\"英语六级\"],\"rating\":5,\"resume_text\":\"黄嘉琪，杭州电子科技大学人工智能专业研二学生，擅长Python、React、数据分析、Vue，持有英语六级证书。在校期间积极参与社会实践和志愿服务，具备良好的团队协作能力和沟通能力。\",\"created_at\":\"2026-06-09 14:01:37\",\"name\":\"黄嘉琪\",\"email\":\"student12@campus.edu.cn\",\"credit_score\":90,\"avatar\":\"/avatars/student12.png\",\"org_id\":3},{\"id\":14,\"user_id\":29,\"university\":\"浙江理工大学\",\"major\":\"电子信息工程\",\"g"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59116/api/interviews?status=in_progress&pageSize=3",
+      "path": "/api/interviews?status=in_progress&pageSize=3",
+      "status": 200,
+      "ok": true,
+      "bodyPreview": "{\"success\":true,\"data\":{\"items\":[{\"id\":11,\"job_id\":3,\"application_id\":11,\"type\":\"video\",\"status\":\"in_progress\",\"summary\":null,\"scheduled_at\":\"2026-06-20 11:00:00\",\"created_at\":\"2026-06-09 14:01:37\",\"job_title\":\"在线问卷调查员\",\"application_status\":\"shortlisted\",\"participant_count\":3,\"file_count\":1,\"message_count\":4},{\"id\":8,\"job_id\":8,\"application_id\":8,\"type\":\"video\",\"status\":\"in_progress\",\"summary\":null,\"scheduled_at\":\"2026-06-17 12:00:00\",\"created_at\":\"2026-06-09 14:01:37\",\"job_title\":\"前端开发实习生\",\"app"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59116/api/settlement/bills?org_id=1&pageSize=3",
+      "path": "/api/settlement/bills?org_id=1&pageSize=3",
+      "status": 200,
+      "ok": true,
+      "bodyPreview": "{\"success\":true,\"data\":{\"items\":[{\"id\":1,\"org_id\":1,\"amount\":45000,\"fee\":2250,\"cycle\":\"monthly\",\"status\":\"completed\",\"details\":[{\"studentName\":\"陈思远\",\"amount\":15000},{\"studentName\":\"王子涵\",\"amount\":15000},{\"studentName\":\"刘雨萱\",\"amount\":15000}],\"created_at\":\"2026-06-09 14:01:37\",\"org_name\":\"杭州云校教育科技集团\"},{\"id\":3,\"org_id\":1,\"amount\":18000,\"fee\":900,\"cycle\":\"weekly\",\"status\":\"processing\",\"details\":[{\"studentName\":\"赵天翔\",\"amount\":9000},{\"studentName\":\"周心怡\",\"amount\":9000}],\"created_at\":\"2026-06-09 14:01:37"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59116/api/admin/tenants",
+      "path": "/api/admin/tenants",
+      "status": 200,
+      "ok": true,
+      "bodyPreview": "{\"success\":true,\"data\":[{\"id\":1,\"name\":\"杭州云校教育科技集团\",\"type\":\"group\",\"parent_id\":null,\"contact\":\"0571-88888888\",\"created_at\":\"2026-06-09 14:01:37\"},{\"id\":2,\"name\":\"浙江大学校园服务中心\",\"type\":\"branch\",\"parent_id\":1,\"contact\":\"0571-87654321\",\"created_at\":\"2026-06-09 14:01:37\"},{\"id\":3,\"name\":\"杭州电子科技大学分部\",\"type\":\"branch\",\"parent_id\":1,\"contact\":\"0571-87659999\",\"created_at\":\"2026-06-09 14:01:37\"}]}"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59116/api/credit/1",
+      "path": "/api/credit/1",
+      "status": 200,
+      "ok": true,
+      "bodyPreview": "{\"success\":true,\"data\":{\"id\":1,\"name\":\"王建国\",\"email\":\"wangjianguo@yunxiao.com\",\"role\":\"admin\",\"org_id\":1,\"credit_score\":95,\"avatar\":\"/avatars/admin1.png\",\"profile\":null,\"evaluations\":[],\"average_score\":0,\"evaluation_count\":0}}"
+    }
+  ],
+  "dialogs": [],
+  "consoleMessages": [
+    {
+      "type": "debug",
+      "text": "[vite] connecting...",
+      "location": {
+        "url": "http://127.0.0.1:49116/@vite/client",
+        "lineNumber": 788,
+        "columnNumber": 8
+      }
+    },
+    {
+      "type": "debug",
+      "text": "[vite] connected.",
+      "location": {
+        "url": "http://127.0.0.1:49116/@vite/client",
+        "lineNumber": 911,
+        "columnNumber": 14
+      }
+    },
+    {
+      "type": "info",
+      "text": "%cDownload the React DevTools for a better development experience: https://reactjs.org/link/react-devtools font-weight:bold",
+      "location": {
+        "url": "http://127.0.0.1:49116/node_modules/.vite/deps/chunk-SVG7M4VJ.js?v=474f9028",
+        "lineNumber": 21606,
+        "columnNumber": 24
+      }
+    },
+    {
+      "type": "debug",
+      "text": "[vite] connecting...",
+      "location": {
+        "url": "http://127.0.0.1:49116/@vite/client",
+        "lineNumber": 788,
+        "columnNumber": 8
+      }
+    },
+    {
+      "type": "debug",
+      "text": "[vite] connected.",
+      "location": {
+        "url": "http://127.0.0.1:49116/@vite/client",
+        "lineNumber": 911,
+        "columnNumber": 14
+      }
+    },
+    {
+      "type": "info",
+      "text": "%cDownload the React DevTools for a better development experience: https://reactjs.org/link/react-devtools font-weight:bold",
+      "location": {
+        "url": "http://127.0.0.1:49116/node_modules/.vite/deps/chunk-SVG7M4VJ.js?v=474f9028",
+        "lineNumber": 21606,
+        "columnNumber": 24
+      }
+    },
+    {
+      "type": "debug",
+      "text": "[vite] connecting...",
+      "location": {
+        "url": "http://127.0.0.1:49116/@vite/client",
+        "lineNumber": 788,
+        "columnNumber": 8
+      }
+    },
+    {
+      "type": "debug",
+      "text": "[vite] connected.",
+      "location": {
+        "url": "http://127.0.0.1:49116/@vite/client",
+        "lineNumber": 911,
+        "columnNumber": 14
+      }
+    },
+    {
+      "type": "info",
+      "text": "%cDownload the React DevTools for a better development experience: https://reactjs.org/link/react-devtools font-weight:bold",
+      "location": {
+        "url": "http://127.0.0.1:49116/node_modules/.vite/deps/chunk-SVG7M4VJ.js?v=474f9028",
+        "lineNumber": 21606,
+        "columnNumber": 24
+      }
+    },
+    {
+      "type": "debug",
+      "text": "[vite] connecting...",
+      "location": {
+        "url": "http://127.0.0.1:49116/@vite/client",
+        "lineNumber": 788,
+        "columnNumber": 8
+      }
+    },
+    {
+      "type": "debug",
+      "text": "[vite] connected.",
+      "location": {
+        "url": "http://127.0.0.1:49116/@vite/client",
+        "lineNumber": 911,
+        "columnNumber": 14
+      }
+    },
+    {
+      "type": "info",
+      "text": "%cDownload the React DevTools for a better development experience: https://reactjs.org/link/react-devtools font-weight:bold",
+      "location": {
+        "url": "http://127.0.0.1:49116/node_modules/.vite/deps/chunk-SVG7M4VJ.js?v=474f9028",
+        "lineNumber": 21606,
+        "columnNumber": 24
+      }
+    },
+    {
+      "type": "debug",
+      "text": "[vite] connecting...",
+      "location": {
+        "url": "http://127.0.0.1:49116/@vite/client",
+        "lineNumber": 788,
+        "columnNumber": 8
+      }
+    },
+    {
+      "type": "debug",
+      "text": "[vite] connected.",
+      "location": {
+        "url": "http://127.0.0.1:49116/@vite/client",
+        "lineNumber": 911,
+        "columnNumber": 14
+      }
+    },
+    {
+      "type": "info",
+      "text": "%cDownload the React DevTools for a better development experience: https://reactjs.org/link/react-devtools font-weight:bold",
+      "location": {
+        "url": "http://127.0.0.1:49116/node_modules/.vite/deps/chunk-SVG7M4VJ.js?v=474f9028",
+        "lineNumber": 21606,
+        "columnNumber": 24
+      }
+    },
+    {
+      "type": "debug",
+      "text": "[vite] connecting...",
+      "location": {
+        "url": "http://127.0.0.1:49116/@vite/client",
+        "lineNumber": 788,
+        "columnNumber": 8
+      }
+    },
+    {
+      "type": "debug",
+      "text": "[vite] connected.",
+      "location": {
+        "url": "http://127.0.0.1:49116/@vite/client",
+        "lineNumber": 911,
+        "columnNumber": 14
+      }
+    },
+    {
+      "type": "info",
+      "text": "%cDownload the React DevTools for a better development experience: https://reactjs.org/link/react-devtools font-weight:bold",
+      "location": {
+        "url": "http://127.0.0.1:49116/node_modules/.vite/deps/chunk-SVG7M4VJ.js?v=474f9028",
+        "lineNumber": 21606,
+        "columnNumber": 24
+      }
+    },
+    {
+      "type": "debug",
+      "text": "[vite] connecting...",
+      "location": {
+        "url": "http://127.0.0.1:49116/@vite/client",
+        "lineNumber": 788,
+        "columnNumber": 8
+      }
+    },
+    {
+      "type": "debug",
+      "text": "[vite] connected.",
+      "location": {
+        "url": "http://127.0.0.1:49116/@vite/client",
+        "lineNumber": 911,
+        "columnNumber": 14
+      }
+    },
+    {
+      "type": "info",
+      "text": "%cDownload the React DevTools for a better development experience: https://reactjs.org/link/react-devtools font-weight:bold",
+      "location": {
+        "url": "http://127.0.0.1:49116/node_modules/.vite/deps/chunk-SVG7M4VJ.js?v=474f9028",
+        "lineNumber": 21606,
+        "columnNumber": 24
+      }
+    }
+  ],
+  "requestFailures": [],
+  "responseErrors": []
+}
