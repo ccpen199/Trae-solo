@@ -1,13 +1,12 @@
+node_modules
+.next
+out
+dist
+.env
+.env.local
+*.db
+*.db-journal
 .DS_Store
-.DS_Store?
-._*
-.Spotlight-V100
-.Trashes
-ehthumbs.db
-Thumbs.db
-
-# IDE
-.idea/
-.vscode/
-*.swp
-*.swo
+coverage
+.vscode/*
+!.vscode/extensions.json
