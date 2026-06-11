@@ -1,0 +1,346 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id              String    @id @default(uuid())
+  username        String    @unique
+  email           String?   @unique
+  phone           String    @unique
+  passwordHash    String
+  realName        String?
+  role            String    @default("CAR_OWNER")
+  avatar          String?
+  balance         Decimal   @default(0)
+  totalChargingKw Decimal   @default(0)
+  totalCost       Decimal   @default(0)
+  carbonReduction Decimal   @default(0)
+  createdAt       DateTime  @default(now())
+  updatedAt       DateTime  @updatedAt
+  lastLoginAt     DateTime?
+
+  vehicle         Vehicle?
+  orders          Order[]
+  reservations    Reservation[]
+  privatePiles    PrivatePile[]
+  greenCertificates GreenCertificate[]
+  sharingEarnings SharingEarning[]
+  carbonTrades    CarbonTrade[]
+  userProfile     UserProfile?
+
+  stationId       String?
+  station         Station?    @relation(fields: [stationId], references: [id])
+}
+
+model Vehicle {
+  id              String    @id @default(uuid())
+  userId          String    @unique
+  user            User      @relation(fields: [userId], references: [id])
+  plateNumber     String    @unique
+  brand           String
+  model           String
+  batteryCapacity Decimal
+  currentSoc      Int       @default(80)
+  createdAt       DateTime  @default(now())
+  updatedAt       DateTime  @updatedAt
+}
+
+model Station {
+  id              String    @id @default(uuid())
+  name            String
+  address         String
+  province        String
+  city            String
+  district        String
+  latitude        Decimal
+  longitude       Decimal
+  operatorId      String
+  operatorName    String
+  totalPiles      Int       @default(0)
+  availablePiles  Int       @default(0)
+  chargingPower   Decimal   @default(0)
+  serviceHours    String    @default("24小时")
+  supportServices String
+  rating          Decimal   @default(5)
+  reviewCount     Int       @default(0)
+  createdAt       DateTime  @default(now())
+  updatedAt       DateTime  @updatedAt
+
+  chargers        Charger[]
+  operators       User[]
+  alarms          Alarm[]
+  stationStats    StationStats[]
+}
+
+model Charger {
+  id              String    @id @default(uuid())
+  stationId       String
+  station         Station   @relation(fields: [stationId], references: [id])
+  serialNumber    String    @unique
+  name            String
+  type            String
+  status          String    @default("AVAILABLE")
+  maxPower        Decimal
+  currentPower    Decimal   @default(0)
+  protocol        String    @default("OCPP1.6")
+  ipAddress       String?
+  firmwareVersion String?
+  lastHeartbeat   DateTime?
+  totalKw         Decimal   @default(0)
+  totalOrders     Int       @default(0)
+  createdAt       DateTime  @default(now())
+  updatedAt       DateTime  @updatedAt
+
+  currentOrderId  String?   @unique
+  currentOrder    Order?    @relation("CurrentChargerOrder", fields: [currentOrderId], references: [id])
+  orders          Order[]   @relation("ChargerOrders")
+  reservations    Reservation[]
+  alarms          Alarm[]
+  healthRecords   ChargerHealth[]
+  isPrivate       Boolean   @default(false)
+  privatePileId   String?   @unique
+  privatePile     PrivatePile?  @relation("ChargerPrivatePile", fields: [privatePileId], references: [id])
+}
+
+model Order {
+  id              String    @id @default(uuid())
+  orderNo         String    @unique
+  userId          String
+  user            User      @relation(fields: [userId], references: [id])
+  chargerId       String
+  charger         Charger   @relation("ChargerOrders", fields: [chargerId], references: [id])
+  stationId       String
+  stationName     String
+  status          String    @default("PENDING")
+  startSoc        Int
+  endSoc          Int?
+  startPower      Decimal
+  chargedKw       Decimal   @default(0)
+  peakKw          Decimal   @default(0)
+  pricePerKw      Decimal
+  totalAmount     Decimal   @default(0)
+  paidAmount      Decimal   @default(0)
+  startTime       DateTime?
+  endTime         DateTime?
+  durationSeconds Int       @default(0)
+  greenEnergyType String?
+  greenEnergyRatio Decimal   @default(0)
+  carbonReduction Decimal   @default(0)
+  createdAt       DateTime  @default(now())
+  updatedAt       DateTime  @updatedAt
+
+  currentCharger  Charger?  @relation("CurrentChargerOrder")
+  greenCertificate GreenCertificate?
+  paymentRecord   PaymentRecord?
+}
+
+model Reservation {
+  id              String    @id @default(uuid())
+  reservationNo   String    @unique
+  userId          String
+  user            User      @relation(fields: [userId], references: [id])
+  chargerId       String
+  charger         Charger   @relation(fields: [chargerId], references: [id])
+  stationId       String
+  status          String    @default("PENDING")
+  scheduledStartTime DateTime
+  scheduledEndTime DateTime
+  actualStartTime DateTime?
+  actualEndTime   DateTime?
+  powerLimit      Decimal?
+  depositAmount   Decimal   @default(0)
+  createdAt       DateTime  @default(now())
+  updatedAt       DateTime  @updatedAt
+}
+
+model PaymentRecord {
+  id              String    @id @default(uuid())
+  orderId         String    @unique
+  order           Order     @relation(fields: [orderId], references: [id])
+  userId          String
+  amount          Decimal
+  payMethod       String
+  payTime         DateTime
+  transactionId   String
+  status          String
+  createdAt       DateTime  @default(now())
+}
+
+model Alarm {
+  id              String    @id @default(uuid())
+  alarmNo         String    @unique
+  stationId       String
+  station         Station   @relation(fields: [stationId], references: [id])
+  chargerId       String?
+  charger         Charger?  @relation(fields: [chargerId], references: [id])
+  type            String
+  level           String
+  title           String
+  description     String?
+  status          String    @default("UNHANDLED")
+  handledAt       DateTime?
+  handledBy       String?
+  handledNote     String?
+  createdAt       DateTime  @default(now())
+  updatedAt       DateTime  @updatedAt
+}
+
+model ChargerHealth {
+  id              String    @id @default(uuid())
+  chargerId       String
+  charger         Charger   @relation(fields: [chargerId], references: [id])
+  temperature     Decimal
+  voltage         Decimal
+  current         Decimal
+  insulationResistance Decimal
+  healthScore     Int
+  status          String
+  checkTime       DateTime  @default(now())
+  createdAt       DateTime  @default(now())
+}
+
+model GreenCertificate {
+  id              String    @id @default(uuid())
+  certificateNo   String    @unique
+  userId          String
+  user            User      @relation(fields: [userId], references: [id])
+  orderId         String?   @unique
+  order           Order?    @relation(fields: [orderId], references: [id])
+  energyType      String
+  energyAmount    Decimal
+  carbonReduction Decimal
+  gridCompany     String
+  issuedAt        DateTime
+  verified        Boolean   @default(false)
+  verifiedAt      DateTime?
+  createdAt       DateTime  @default(now())
+}
+
+model PrivatePile {
+  id              String    @id @default(uuid())
+  ownerId         String
+  owner           User      @relation(fields: [ownerId], references: [id])
+  chargerId       String?   @unique
+  charger         Charger?  @relation("ChargerPrivatePile")
+  address         String
+  city            String
+  chargerType     String
+  maxPower        Decimal
+  status          String    @default("INACTIVE")
+  pricePerKw      Decimal   @default(1.2)
+  serviceFee      Decimal   @default(0.5)
+  totalEarnings   Decimal   @default(0)
+  totalOrders     Int       @default(0)
+  createdAt       DateTime  @default(now())
+  updatedAt       DateTime  @updatedAt
+
+  timeSlots       SharingTimeSlot[]
+  earnings        SharingEarning[]
+}
+
+model SharingTimeSlot {
+  id              String    @id @default(uuid())
+  privatePileId   String
+  privatePile     PrivatePile @relation(fields: [privatePileId], references: [id])
+  dayOfWeek       Int
+  startTime       String
+  endTime         String
+  isAvailable     Boolean   @default(true)
+  createdAt       DateTime  @default(now())
+}
+
+model SharingEarning {
+  id              String    @id @default(uuid())
+  privatePileId   String
+  privatePile     PrivatePile @relation(fields: [privatePileId], references: [id])
+  userId          String
+  user            User      @relation(fields: [userId], references: [id])
+  orderId         String?
+  chargedKw       Decimal
+  totalAmount     Decimal
+  platformFee     Decimal
+  ownerEarning    Decimal
+  settlementDate  DateTime
+  settled         Boolean   @default(false)
+  createdAt       DateTime  @default(now())
+}
+
+model StationStats {
+  id              String    @id @default(uuid())
+  stationId       String
+  station         Station   @relation(fields: [stationId], references: [id])
+  statsDate       DateTime
+  totalOrders     Int       @default(0)
+  totalChargingKw Decimal   @default(0)
+  totalRevenue    Decimal   @default(0)
+  avgStayMinutes  Decimal   @default(0)
+  avgOrderAmount  Decimal   @default(0)
+  peakHourStart   Int       @default(18)
+  peakHourEnd     Int       @default(20)
+  trafficDensity  Decimal   @default(0)
+  utilizationRate Decimal   @default(0)
+  createdAt       DateTime  @default(now())
+
+  @@unique([stationId, statsDate])
+}
+
+model ElectricityPrice {
+  id              String    @id @default(uuid())
+  province        String
+  city            String
+  periodType      String
+  startTime       String
+  endTime         String
+  pricePerKw      Decimal
+  isPeak          Boolean   @default(false)
+  isValley        Boolean   @default(false)
+  effectiveDate   DateTime
+  createdAt       DateTime  @default(now())
+}
+
+model CarbonTrade {
+  id              String    @id @default(uuid())
+  tradeNo         String    @unique
+  userId          String
+  user            User      @relation(fields: [userId], references: [id])
+  carbonAmount    Decimal
+  pricePerTon     Decimal
+  totalAmount     Decimal
+  tradeType       String
+  status          String
+  tradeTime       DateTime
+  createdAt       DateTime  @default(now())
+}
+
+model UserProfile {
+  id              String    @id @default(uuid())
+  userId          String    @unique
+  user            User      @relation(fields: [userId], references: [id])
+  totalOrders     Int       @default(0)
+  totalChargingKw Decimal   @default(0)
+  avgChargingFreq Decimal   @default(0)
+  preferredStation String?
+  preferredTime   String?
+  avgSocStart     Decimal   @default(30)
+  avgSocEnd       Decimal   @default(80)
+  chargingLevel   String    @default("BRONZE")
+  riskScore       Int       @default(100)
+  lastUpdated     DateTime  @default(now())
+}
+
+model GridStats {
+  id              String    @id @default(uuid())
+  statsDate       DateTime  @unique
+  totalLoadMw     Decimal   @default(0)
+  peakLoadMw      Decimal   @default(0)
+  valleyLoadMw    Decimal   @default(0)
+  newEnergyRatio  Decimal   @default(0)
+  totalChargingKw Decimal   @default(0)
+  chargingPeakKw  Decimal   @default(0)
+  createdAt       DateTime  @default(now())
+}
