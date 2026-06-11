@@ -1,15 +1,11 @@
 import { useState } from 'react'
 import { AnimatePresence, motion } from 'framer-motion'
-import { Star, Clock, MapPin, ChevronDown, ChevronUp, BadgeCheck, Zap } from 'lucide-react'
-import { mockServices } from '@/mocks/data'
+import { Star, Clock, MapPin, ShieldCheck, CheckCircle, ChevronDown, ChevronUp, Zap, BadgeCheck, Users } from 'lucide-react'
+import { mockServices, categories } from '@/mocks/data'
 
 const categoryFilters = [
   { key: 'all', label: '全部' },
-  { key: 'air_conditioner', label: '空调维修' },
-  { key: 'water_heater', label: '热水器维修' },
-  { key: 'washing_machine', label: '洗衣机维修' },
-  { key: 'refrigerator', label: '冰箱维修' },
-  { key: 'tv', label: '电视维修' },
+  ...categories.slice(0, 5).map(c => ({ key: c.key, label: c.label })),
 ]
 
 export default function Compare() {
@@ -20,12 +16,17 @@ export default function Compare() {
     ? mockServices
     : mockServices.filter((s) => s.category === activeCategory)
 
+  const getPriceRange = (service: typeof mockServices[number]) => {
+    const prices = service.providers.map(p => p.price)
+    return { min: Math.min(...prices), max: Math.max(...prices) }
+  }
+
   const getLowestPrice = (service: typeof mockServices[number]) =>
     Math.min(...service.providers.map((p) => p.price))
 
   return (
     <div className="min-h-screen p-6 grid-bg">
-      <div className="max-w-5xl mx-auto space-y-6">
+      <div className="max-w-6xl mx-auto space-y-6">
         <h1 className="text-2xl font-bold gradient-text-cyber">服务商比价</h1>
 
         <div className="flex flex-wrap gap-2">
@@ -47,29 +48,74 @@ export default function Compare() {
         <div className="space-y-4">
           {filtered.map((service) => {
             const isExpanded = expandedId === service.id
+            const priceRange = getPriceRange(service)
             const lowest = getLowestPrice(service)
 
             return (
-              <div key={service.id} className="glass-card p-5 space-y-3">
+              <div
+                key={service.id}
+                className={`glass-card glass-card-hover transition-all duration-300 overflow-hidden ${
+                  isExpanded ? 'ring-1 ring-cyber-400/30' : ''
+                }`}
+              >
                 <div
-                  className="flex items-start justify-between cursor-pointer"
+                  className="p-5 cursor-pointer"
                   onClick={() => setExpandedId(isExpanded ? null : service.id)}
                 >
-                  <div className="space-y-1">
-                    <div className="flex items-center gap-2">
-                      <span className="text-lg font-semibold text-white">{service.name}</span>
-                      <span className="tag-cyber">{service.categoryLabel}</span>
+                  <div className="flex items-start justify-between gap-4">
+                    <div className="flex-1 space-y-3">
+                      <div className="flex items-center gap-3 flex-wrap">
+                        <span className="text-xl font-bold text-white">{service.name}</span>
+                        <span className="tag-cyber">{service.categoryLabel}</span>
+                      </div>
+
+                      <p className="text-sm text-white/60 line-clamp-2">{service.description}</p>
+
+                      <div className="flex flex-wrap gap-4 text-sm">
+                        <div className="flex items-center gap-1.5 text-white/50">
+                          <Clock className="w-4 h-4" />
+                          {service.estimatedDuration}
+                        </div>
+                        <div className="flex items-center gap-1.5 text-white/50">
+                          <ShieldCheck className="w-4 h-4" />
+                          {service.warranty}
+                        </div>
+                        <div className="flex items-center gap-1.5 text-white/50">
+                          <Users className="w-4 h-4" />
+                          {service.providers.length}位服务商
+                        </div>
+                      </div>
+
+                      <div className="flex flex-wrap gap-1.5">
+                        {service.guarantees.slice(0, 4).map((g, i) => (
+                          <span
+                            key={i}
+                            className="px-2 py-0.5 text-xs rounded bg-white/5 text-white/60 border border-white/10"
+                          >
+                            {g}
+                          </span>
+                        ))}
+                      </div>
                     </div>
-                    <p className="text-sm text-white/50">{service.description}</p>
-                  </div>
-                  <div className="flex items-center gap-2 shrink-0 ml-4">
-                    <div className="flex items-center gap-1 text-white/50 text-sm">
-                      <Clock className="w-3.5 h-3.5" />
-                      {service.estimatedDuration}
+
+                    <div className="flex flex-col items-end gap-2 shrink-0">
+                      <div className="text-right">
+                        <div className="text-2xl font-bold text-cyber-400">
+                          ¥{priceRange.min}
+                          {priceRange.min !== priceRange.max && (
+                            <span className="text-base text-cyber-400/60"> - ¥{priceRange.max}</span>
+                          )}
+                        </div>
+                        <div className="text-xs text-white/40 mt-0.5">价格区间</div>
+                      </div>
+                      <div className="flex items-center gap-1 text-cyber-400">
+                        {isExpanded ? (
+                          <ChevronUp className="w-5 h-5" />
+                        ) : (
+                          <ChevronDown className="w-5 h-5" />
+                        )}
+                      </div>
                     </div>
-                    {isExpanded
-                      ? <ChevronUp className="w-5 h-5 text-cyber-400" />
-                      : <ChevronDown className="w-5 h-5 text-white/40" />}
                   </div>
                 </div>
 
@@ -82,75 +128,107 @@ export default function Compare() {
                       transition={{ duration: 0.3 }}
                       className="overflow-hidden"
                     >
-                      <div className="pt-3 border-t border-white/5">
-                        <div className="flex items-center gap-2 mb-3">
+                      <div className="px-5 pb-5 pt-2 border-t border-white/5">
+                        <div className="flex items-center gap-2 mb-4">
                           <Zap className="w-4 h-4 text-cyber-400" />
-                          <span className="text-sm font-medium text-white/80">费用明细</span>
-                        </div>
-                        <div className="flex gap-6 mb-4 text-sm">
-                          <div className="text-white/60">人工费: <span className="text-cyber-400 font-medium">¥{service.laborFee}</span></div>
-                          <div className="text-white/60">配件费: <span className="text-cyber-400 font-medium">按实际</span></div>
+                          <span className="text-sm font-medium text-white/80">服务商比价</span>
                         </div>
 
-                        {service.providers.length > 1 && (
-                          <div className="mb-2 flex items-center gap-2">
-                            <BadgeCheck className="w-4 h-4 text-cyber-400" />
-                            <span className="text-sm font-medium text-white/80">多服务商对比</span>
-                          </div>
-                        )}
-
-                        <div className={`grid gap-3 ${service.providers.length > 1 ? 'grid-cols-2' : 'grid-cols-1'}`}>
+                        <div className={`grid gap-3 ${
+                          service.providers.length >= 4
+                            ? 'grid-cols-2 lg:grid-cols-4'
+                            : service.providers.length >= 3
+                            ? 'grid-cols-1 sm:grid-cols-2 lg:grid-cols-3'
+                            : 'grid-cols-1 sm:grid-cols-2'
+                        }`}>
                           {service.providers.map((provider) => {
                             const isLowest = provider.price === lowest && service.providers.length > 1
                             return (
                               <div
                                 key={provider.id}
-                                className={`rounded-xl p-4 border transition-all duration-300 ${
+                                className={`rounded-xl p-4 border transition-all duration-300 relative ${
                                   isLowest
                                     ? 'bg-warm-500/5 border-warm-500/30 shadow-lg shadow-warm-500/5'
-                                    : 'bg-white/[0.02] border-white/5'
+                                    : 'bg-white/[0.02] border-white/5 hover:border-cyber-400/20'
                                 }`}
                               >
-                                <div className="flex items-center justify-between mb-3">
-                                  <div className="flex items-center gap-2">
-                                    <div className="w-8 h-8 rounded-full bg-cyber-400/20 flex items-center justify-center text-sm font-bold text-cyber-400">
-                                      {provider.name[0]}
-                                    </div>
-                                    <span className="font-medium text-white text-sm">{provider.name}</span>
+                                {isLowest && (
+                                  <div className="absolute -top-2 -right-2">
+                                    <span className="tag-warm font-bold flex items-center gap-1">
+                                      <BadgeCheck className="w-3 h-3" />
+                                      最优价
+                                    </span>
                                   </div>
-                                  {isLowest && (
-                                    <span className="tag-warm font-bold">最优价</span>
-                                  )}
+                                )}
+
+                                <div className="flex items-center gap-3 mb-3">
+                                  <div className="w-10 h-10 rounded-full bg-cyber-400/20 flex items-center justify-center text-base font-bold text-cyber-400">
+                                    {provider.name[0]}
+                                  </div>
+                                  <div>
+                                    <div className="font-medium text-white text-sm">{provider.name}</div>
+                                    <div className="flex items-center gap-1">
+                                      <div className="flex">
+                                        {Array.from({ length: 5 }).map((_, i) => (
+                                          <Star
+                                            key={i}
+                                            className={`w-3 h-3 ${
+                                              i < Math.floor(provider.rating)
+                                                ? 'text-yellow-400 fill-yellow-400'
+                                                : 'text-white/20'
+                                            }`}
+                                          />
+                                        ))}
+                                      </div>
+                                      <span className="text-xs text-white/50">{provider.rating}</span>
+                                    </div>
+                                  </div>
                                 </div>
 
-                                <div className="flex items-center gap-1 mb-2">
-                                  {Array.from({ length: 5 }).map((_, i) => (
-                                    <Star
-                                      key={i}
-                                      className={`w-3.5 h-3.5 ${
-                                        i < Math.floor(provider.rating)
-                                          ? 'text-yellow-400 fill-yellow-400'
-                                          : 'text-white/20'
-                                      }`}
-                                    />
-                                  ))}
-                                  <span className="text-xs text-white/50 ml-1">{provider.rating}</span>
+                                <div className="text-xs text-white/40 mb-2">
+                                  已完成 <span className="text-white/60 font-medium">{provider.totalOrders}单</span>
                                 </div>
 
-                                <div className="text-xl font-bold text-white mb-1">¥{provider.price}</div>
-                                <div className="flex gap-4 text-xs text-white/40 mb-3">
-                                  <span>人工 ¥{provider.laborFee}</span>
-                                  <span>配件 ¥{provider.partsFee}</span>
+                                <div className="text-2xl font-bold text-white mb-2">¥{provider.price}</div>
+
+                                <div className="space-y-1 text-xs text-white/50 mb-3">
+                                  <div className="flex justify-between">
+                                    <span>上门费</span>
+                                    <span className="text-white/70">¥{provider.visitFee}</span>
+                                  </div>
+                                  <div className="flex justify-between">
+                                    <span>人工费</span>
+                                    <span className="text-white/70">¥{provider.laborFee}</span>
+                                  </div>
+                                  <div className="flex justify-between">
+                                    <span>配件费</span>
+                                    <span className="text-white/70">¥{provider.partsFee}</span>
+                                  </div>
                                 </div>
 
-                                <div className="flex items-center justify-between text-xs text-white/50 mb-3">
+                                <div className="flex items-center justify-between text-xs text-white/50 mb-2">
                                   <span className="flex items-center gap-1">
-                                    <MapPin className="w-3 h-3" />{provider.estimatedArrival}
+                                    <MapPin className="w-3 h-3" />
+                                    {provider.estimatedArrival}
                                   </span>
                                   <span>完成率 {provider.completionRate}%</span>
                                 </div>
 
-                                <button className={isLowest ? 'btn-warm w-full text-sm' : 'btn-secondary w-full text-sm'}>
+                                <div className="text-xs text-cyber-400/80 mb-3 flex items-center gap-1">
+                                  <ShieldCheck className="w-3 h-3" />
+                                  质保{provider.warranty}
+                                </div>
+
+                                <div className="space-y-1 mb-4">
+                                  {provider.guarantees.slice(0, 3).map((g, i) => (
+                                    <div key={i} className="flex items-center gap-1.5 text-xs text-white/60">
+                                      <CheckCircle className="w-3 h-3 text-cyber-400/70 shrink-0" />
+                                      <span className="truncate">{g}</span>
+                                    </div>
+                                  ))}
+                                </div>
+
+                                <button className={isLowest ? 'btn-warm w-full text-sm py-2' : 'btn-secondary w-full text-sm py-2'}>
                                   选择此服务商
                                 </button>
                               </div>

@@ -31,17 +31,6 @@ export interface Engineer {
   matchScore?: number
 }
 
-export interface ServiceItem {
-  id: string
-  name: string
-  category: CategoryType
-  categoryLabel: string
-  laborFee: number
-  description: string
-  estimatedDuration: string
-  providers: ServiceProvider[]
-}
-
 export interface ServiceProvider {
   id: string
   name: string
@@ -50,8 +39,25 @@ export interface ServiceProvider {
   price: number
   laborFee: number
   partsFee: number
+  visitFee: number
   estimatedArrival: string
   completionRate: number
+  warranty: string
+  guarantees: string[]
+  totalOrders: number
+}
+
+export interface ServiceItem {
+  id: string
+  name: string
+  category: CategoryType
+  categoryLabel: string
+  laborFee: number
+  description: string
+  estimatedDuration: string
+  warranty: string
+  guarantees: string[]
+  providers: ServiceProvider[]
 }
 
 export interface WorkOrder {
@@ -150,6 +156,50 @@ export interface InspectionRecord {
   aiScore: number
   checkDate: string
   issues: string[]
+}
+
+export interface InventoryBatch {
+  id: string
+  partId: string
+  partName: string
+  batchNo: string
+  quantity: number
+  supplierName: string
+  inboundDate: string
+  expireDate: string
+  verified: boolean
+  verifiedBy?: string
+  verifiedAt?: string
+}
+
+export interface StockFlowRecord {
+  id: string
+  partId: string
+  partName: string
+  type: 'inbound' | 'outbound' | 'adjust'
+  quantity: number
+  beforeStock: number
+  afterStock: number
+  operator: string
+  reason: string
+  timestamp: string
+  orderId?: string
+}
+
+export interface DispatchMatchDetail {
+  engineerId: string
+  engineerName: string
+  totalScore: number
+  distanceScore: number
+  skillScore: number
+  performanceScore: number
+  creditScore: number
+  distanceKm: number
+  matchedSkills: string[]
+  missingSkills: string[]
+  completionRate: number
+  avgRating: number
+  estimatedArrival: string
 }
 
 export type UserRole = 'user' | 'engineer' | 'supplier' | 'admin'

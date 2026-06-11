@@ -4,7 +4,9 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
-    "dev": "vite",
+    "dev": "npm run dev:frontend",
+    "dev:frontend": "vite --host 127.0.0.1 --port 49167 --strictPort",
+    "dev:backend": "node server/index.mjs",
     "build": "tsc -b && vite build",
     "lint": "eslint .",
     "preview": "vite preview",

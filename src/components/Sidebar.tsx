@@ -1,4 +1,4 @@
-import { NavLink, useLocation } from 'react-router-dom'
+import { NavLink, useLocation, useNavigate } from 'react-router-dom'
 import { useAppStore } from '@/stores/useAppStore'
 import {
   Home,
@@ -59,8 +59,16 @@ const roleConfig = {
 export default function Sidebar() {
   const { currentRole, setCurrentRole, sidebarCollapsed, toggleSidebar } = useAppStore()
   const location = useLocation()
+  const navigate = useNavigate()
   const config = roleConfig[currentRole]
 
+  const handleRoleChange = (role: keyof typeof roleConfig) => {
+    setCurrentRole(role)
+    if (role === 'user') navigate('/')
+    else if (role === 'engineer') navigate('/engineer')
+    else if (role === 'supplier') navigate('/supplier')
+    else if (role === 'admin') navigate('/admin')
+  }
   return (
     <aside
       className={`fixed left-0 top-0 h-screen bg-navy-800/90 backdrop-blur-xl border-r border-cyber-400/10 z-50 transition-all duration-300 flex flex-col ${
@@ -88,7 +96,7 @@ export default function Sidebar() {
             return (
               <button
                 key={role}
-                onClick={() => setCurrentRole(role)}
+                onClick={() => handleRoleChange(role)}
                 className={`flex items-center gap-2 px-2 py-1.5 rounded-md text-xs transition-all ${
                   isActive
                     ? 'bg-cyber-400/15 text-cyber-400 border border-cyber-400/30'
