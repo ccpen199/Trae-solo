@@ -4,6 +4,7 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
+    "server:dev": "node api/server.mjs",
     "build": "next build",
     "start": "next start",
     "lint": "next lint",

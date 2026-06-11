@@ -51,20 +51,19 @@ export async function POST(request: NextRequest) {
       await prisma.jobSeeker.create({
         data: {
           userId: user.id,
-          tags: [],
-          skills: [],
+          tags: "[]",
+          skills: "[]",
         },
       });
 
       await prisma.candidateProfile.create({
         data: {
           jobSeekerId: user.id,
-          industryTags: [],
-          skillTags: [],
-          preferredLocations: [],
-          preferredIndustries: [],
-          preferredRoles: [],
-          modelVersion: "v1.0",
+          industryTags: "[]",
+          skillTags: "[]",
+          preferredLocations: "[]",
+          preferredIndustries: "[]",
+          preferredRoles: "[]",
         },
       });
     } else if (data.role === "EMPLOYER") {
@@ -73,14 +72,14 @@ export async function POST(request: NextRequest) {
         company = await prisma.company.create({
           data: {
             name: data.companyName,
-            benefits: [],
+            benefits: "[]",
           },
         });
       } else {
         company = await prisma.company.create({
           data: {
             name: `${data.name}的公司`,
-            benefits: [],
+            benefits: "[]",
           },
         });
       }

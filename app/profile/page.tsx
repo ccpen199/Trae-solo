@@ -748,7 +748,7 @@ export default function CandidateProfilePage() {
             <Card>
               <CardHeader className="pb-2">
                 <CardTitle className="text-base">职业发展路径</CardTitle>
-                <CardDescription">你的进阶路线图</CardDescription>
+                <CardDescription>你的进阶路线图</CardDescription>
               </CardHeader>
               <CardContent>
                 <div className="flex items-center justify-between py-6">
@@ -797,7 +797,7 @@ export default function CandidateProfilePage() {
             <Card>
               <CardHeader className="pb-2">
                 <CardTitle className="text-base">能力提升建议</CardTitle>
-                <CardDescription">AI 生成的个性化成长方案</CardDescription>
+                <CardDescription>AI 生成的个性化成长方案</CardDescription>
               </CardHeader>
               <CardContent className="space-y-4">
                 {improvementSuggestions.map((item, index) => (
@@ -874,7 +874,7 @@ export default function CandidateProfilePage() {
             <Card>
               <CardHeader className="pb-2">
                 <CardTitle className="text-base">目标薪资预测</CardTitle>
-                <CardDescription">基于成长轨迹的薪资预测</CardDescription>
+                <CardDescription>基于成长轨迹的薪资预测</CardDescription>
               </CardHeader>
               <CardContent>
                 <div className="h-64">

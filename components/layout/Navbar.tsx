@@ -21,9 +21,9 @@ import {
   ChevronDown,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
-import { Avatar } from "./Avatar";
-import { Badge } from "./Badge";
-import { Button } from "./Button";
+import { Avatar } from "@/components/ui/Avatar";
+import { Badge } from "@/components/ui/Badge";
+import { Button } from "@/components/ui/Button";
 
 interface NavItem {
   label: string;
