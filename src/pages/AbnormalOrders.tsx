@@ -602,7 +602,7 @@ export default function AbnormalOrders() {
         {stats.map((item) => {
           const Icon = item.icon;
           return (
-            <div key=*** className="bg-space-blue-800 border border-space-blue-600 rounded-xl p-4">
+            <div key={item.label} className="bg-space-blue-800 border border-space-blue-600 rounded-xl p-4">
               <div className="flex items-center justify-between">
                 <div>
                   <p className="text-sm text-gray-400">{item.label}</p>
@@ -622,7 +622,7 @@ export default function AbnormalOrders() {
               const Icon = tab.icon;
               return (
                 <button
-                  key=***
+                  key={tab.key}
                   onClick={() => setActiveTab(tab.key)}
                   className={cn(
                     'inline-flex items-center gap-2 px-3 py-2 rounded-lg text-sm transition-colors',
@@ -656,7 +656,7 @@ export default function AbnormalOrders() {
                 className="w-full sm:w-44 pl-9 pr-8 py-2 bg-space-blue-900 border border-space-blue-600 rounded-lg text-sm text-gray-100 appearance-none focus:outline-none focus:border-amber-accent-500/70"
               >
                 {abnormalTypes.map((type) => (
-                  <option key=*** value={type.key}>{type.label}</option>
+                  <option key={type.key} value={type.key}>{type.label}</option>
                 ))}
               </select>
               <ChevronDown className="absolute right-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-500 pointer-events-none" />
@@ -735,7 +735,7 @@ export default function AbnormalOrders() {
               </h3>
               <div className="space-y-3">
                 {(detailOrder.reviewRecords || []).map((record) => (
-                  <div key=*** className="bg-space-blue-900/60 border border-space-blue-600 rounded-lg p-3">
+                  <div key={record.id} className="bg-space-blue-900/60 border border-space-blue-600 rounded-lg p-3">
                     <div className="flex items-center justify-between gap-3">
                       <div className="font-medium text-gray-100">{record.reviewer}</div>
                       <StatusBadge
@@ -801,7 +801,7 @@ export default function AbnormalOrders() {
               <div className="grid grid-cols-2 md:grid-cols-3 gap-2">
                 {(Object.keys(actionLabels) as AbnormalHandleAction[]).map((action) => (
                   <button
-                    key=***
+                    key={action}
                     onClick={() => setSelectedAction(action)}
                     className={cn(
                       'px-3 py-2 rounded-lg border text-sm text-left transition-colors',
@@ -822,7 +822,7 @@ export default function AbnormalOrders() {
                 <div className="grid grid-cols-2 gap-2">
                   {(Object.keys(planLabels) as CompensationPlan[]).map((plan) => (
                     <button
-                      key=***
+                      key={plan}
                       onClick={() => setCompensationPlan(plan)}
                       className={cn(
                         'px-3 py-2 rounded-lg border text-sm text-left transition-colors',
