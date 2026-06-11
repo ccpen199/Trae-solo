@@ -5,9 +5,16 @@ import { seedDatabase } from './seed';
 import routes from './routes';
 
 const app = express();
-const PORT = Number(process.env.PORT) || 3002;
+const HOST = process.env.HOST || '127.0.0.1';
+const PORT = Number(process.env.BACKEND_PORT || process.env.PORT) || 59169;
 
-app.use(cors());
+app.use(cors({
+  origin: [
+    process.env.FRONTEND_URL || 'http://127.0.0.1:49169',
+    'http://localhost:49169'
+  ],
+  credentials: true
+}));
 app.use(express.json());
 
 app.use('/api', routes);
@@ -24,9 +31,9 @@ async function start() {
     await seedDatabase();
     console.log('Database seeded with sample data');
     
-    app.listen(PORT, () => {
-      console.log(`Server is running on port ${PORT}`);
-      console.log(`API base URL: http://localhost:${PORT}/api`);
+    app.listen(PORT, HOST, () => {
+      console.log(`Server is running on http://${HOST}:${PORT}`);
+      console.log(`API base URL: http://${HOST}:${PORT}/api`);
     });
   } catch (error) {
     console.error('Failed to start server:', error);

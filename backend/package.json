@@ -4,9 +4,9 @@
   "description": "智慧货运平台后端服务",
   "main": "dist/index.js",
   "scripts": {
-    "dev": "ts-node-dev --respawn --transpile-only src/index.ts",
+    "dev": "HOST=${HOST:-127.0.0.1} PORT=${PORT:-59169} ts-node-dev --respawn --transpile-only src/index.ts",
     "build": "tsc",
-    "start": "node dist/index.js",
+    "start": "HOST=${HOST:-127.0.0.1} PORT=${PORT:-59169} node dist/index.js",
     "seed": "ts-node src/seed.ts"
   },
   "dependencies": {
