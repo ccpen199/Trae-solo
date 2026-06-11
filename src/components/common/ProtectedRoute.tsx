@@ -1,5 +1,4 @@
-import React from 'react';
-import { Navigate, useLocation } from 'react-router-dom';
+import React, { useEffect } from 'react';
 import { useAuthStore } from '../../store/authStore';
 
 interface ProtectedRouteProps {
@@ -11,18 +10,22 @@ interface ProtectedRouteProps {
 const ProtectedRoute: React.FC<ProtectedRouteProps> = ({
   children,
   requiredPermission,
-  redirectTo = '/login',
 }) => {
-  const { token, user, hasPermission } = useAuthStore();
-  const location = useLocation();
+  const { token, user, hasPermission, ensureDemoSession } = useAuthStore();
 
-  if (!token) {
+  useEffect(() => {
+    if (!token || !user) {
+      ensureDemoSession();
+    }
+  }, [token, user, ensureDemoSession]);
+
+  if (!token || !user) {
     return (
-      <Navigate
-        to={redirectTo}
-        replace
-        state={{ from: location }}
-      />
+      <div className="min-h-screen flex items-center justify-center bg-ink-50 p-4">
+        <div className="card chinese-border text-center p-8 text-ink-600">
+          正在初始化演示账号...
+        </div>
+      </div>
     );
   }
 

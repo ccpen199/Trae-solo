@@ -16,25 +16,37 @@ api.interceptors.request.use(
     if (token) {
       config.headers.Authorization = `Bearer ${token}`;
     }
+    console.log(`[API] ${config.method?.toUpperCase()} ${config.baseURL}${config.url}`, config.data || '');
     return config;
   },
   (error) => Promise.reject(error),
 );
 
 api.interceptors.response.use(
-  (response) => response.data,
+  (response) => {
+    console.log(`[API] ${response.status} ${response.config.url}`, response.data);
+    return response.data;
+  },
   (error) => {
+    console.error('[API] Error:', error.message, error.response?.data);
     if (error.response?.status === 401) {
       localStorage.removeItem('wenlv_token');
-      localStorage.removeItem('wenlv_user');
       if (!window.location.pathname.includes('/login')) {
         window.location.href = '/login';
       }
     }
-    const message = error.response?.data?.message || error.message || '请求失败';
-    const enhancedError = new Error(message) as Error & { response?: any; code?: number };
+    const message =
+      error.response?.data?.message ||
+      error.message ||
+      '请求失败';
+    const enhancedError = new Error(message) as Error & {
+      response?: any;
+      code?: number;
+      status?: number;
+    };
     enhancedError.response = error.response;
     enhancedError.code = error.response?.data?.code;
+    enhancedError.status = error.response?.status;
     return Promise.reject(enhancedError);
   },
 );

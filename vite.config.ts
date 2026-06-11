@@ -9,7 +9,7 @@ export default defineConfig(({ mode }) => {
   const host = env.HOST || '127.0.0.1'
   const frontendPort = Number(env.FRONTEND_PORT || 49171)
   const backendPort = Number(env.BACKEND_PORT || env.PORT || 59171)
-  const apiBaseUrl = env.VITE_API_BASE_URL || `http://${host}:${backendPort}`
+  const backendUrl = `http://${host}:${backendPort}`
 
   return {
     plugins: [
@@ -37,7 +37,7 @@ export default defineConfig(({ mode }) => {
       strictPort: true,
       proxy: {
         '/api': {
-          target: apiBaseUrl,
+          target: backendUrl,
           changeOrigin: true,
           secure: false,
         }

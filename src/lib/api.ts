@@ -30,7 +30,7 @@ export const authApi = {
   logout: (): Promise<ApiResponse<null>> => api.post('/auth/logout'),
   refresh: (refreshToken: string): Promise<ApiResponse<LoginResponse>> =>
     api.post('/auth/refresh', { refreshToken }),
-  getCurrentUser: (): Promise<ApiResponse<User & { permissions: string[] }>> =>
+  getCurrentUser: (): Promise<ApiResponse<{ user: User; permissions: string[] }>> =>
     api.get('/auth/me'),
 };
 

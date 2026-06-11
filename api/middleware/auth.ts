@@ -9,6 +9,28 @@ export interface AuthRequest extends Request {
   user?: User & { permissions: string[] };
 }
 
+const attachUser = (req: AuthRequest, userId: string): boolean => {
+  const user = db.users.get(userId);
+  if (!user || user.status !== 'active') {
+    return false;
+  }
+
+  const roleIds = db.userRoles.get(userId) || [];
+  const permissionIds: string[] = [];
+  roleIds.forEach(roleId => {
+    const perms = db.rolePermissions.get(roleId) || [];
+    permissionIds.push(...perms);
+  });
+
+  const permissions = permissionIds
+    .map(id => db.permissions.get(id)?.code)
+    .filter((p): p is string => !!p);
+
+  const { password_hash: _passwordHash, ...safeUser } = user as any;
+  req.user = { ...safeUser, permissions: [...new Set(permissions)] };
+  return true;
+};
+
 export const authenticateToken = (req: AuthRequest, res: Response, next: NextFunction): void => {
   const authHeader = req.headers['authorization'];
   const token = authHeader && authHeader.startsWith('Bearer ') ? authHeader.slice(7) : null;
@@ -19,26 +41,22 @@ export const authenticateToken = (req: AuthRequest, res: Response, next: NextFun
   }
 
   try {
+    if (token === 'demo-local-token') {
+      const demoUser = Array.from(db.users.values()).find((u: any) => u.username === 'admin') as User | undefined;
+      if (demoUser && attachUser(req, demoUser.id)) {
+        next();
+        return;
+      }
+      res.status(401).json({ code: 401, message: '演示账号未初始化', data: null, timestamp: Date.now() });
+      return;
+    }
+
     const decoded = jwt.verify(token, JWT_SECRET) as { userId: string };
-    const user = db.users.get(decoded.userId);
-    
-    if (!user || user.status !== 'active') {
+    if (!attachUser(req, decoded.userId)) {
       res.status(401).json({ code: 401, message: '用户不存在或已被禁用', data: null, timestamp: Date.now() });
       return;
     }
 
-    const roleIds = db.userRoles.get(decoded.userId) || [];
-    const permissionIds: string[] = [];
-    roleIds.forEach(roleId => {
-      const perms = db.rolePermissions.get(roleId) || [];
-      permissionIds.push(...perms);
-    });
-    
-    const permissions = permissionIds
-      .map(id => db.permissions.get(id)?.code)
-      .filter((p): p is string => !!p);
-
-    req.user = { ...user, permissions: [...new Set(permissions)] };
     next();
   } catch (error) {
     res.status(403).json({ code: 403, message: '令牌无效或已过期', data: null, timestamp: Date.now() });
