@@ -1,0 +1,584 @@
+{
+  "ok": true,
+  "generatedAt": "2026-06-08T02:09:47.373Z",
+  "order": "may-89088",
+  "roundIndex": 166,
+  "captureId": "may-89088-codex-cycle166",
+  "url": "http://127.0.0.1:49088/",
+  "initialUrl": "http://127.0.0.1:49088/",
+  "finalUrl": "http://127.0.0.1:49088/#/",
+  "status": 200,
+  "title": "全国人社政务服务平台",
+  "initialTitle": "全国人社政务服务平台",
+  "navigationError": "",
+  "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89088/runtime-check/codex-20260608-cycle166/may-89088-codex-cycle166-frontend.png",
+  "screenshotPaths": [
+    "/Users/chen/Documents/trae_projects/local_projects/may-89088/runtime-check/codex-20260608-cycle166/may-89088-codex-cycle166-structure-01-首屏.png"
+  ],
+  "issueTextPreview": "个人中心/我的相关问题；登录注册相关问题；搜索/筛选相关问题；后台管理相关问题；详情/内容页相关问题；发现/分类相关问题",
+  "targetReason": "个人中心/我的相关问题；登录注册相关问题；搜索/筛选相关问题；后台管理相关问题；详情/内容页相关问题；发现/分类相关问题",
+  "targetKind": "personal",
+  "targetMatched": false,
+  "targetActions": [
+    {
+      "action": "click",
+      "label": "个人中心/我的相关问题",
+      "ok": true
+    },
+    {
+      "action": "target-verify",
+      "label": "个人中心/我的相关问题",
+      "ok": false,
+      "finalUrl": "http://127.0.0.1:49088/#/login?redirect=/"
+    },
+    {
+      "action": "click",
+      "label": "登录注册相关问题",
+      "ok": true
+    },
+    {
+      "action": "target-verify",
+      "label": "登录注册相关问题",
+      "ok": false,
+      "finalUrl": "http://127.0.0.1:49088/#/"
+    },
+    {
+      "action": "click",
+      "label": "搜索/筛选相关问题",
+      "ok": true
+    },
+    {
+      "action": "target-verify",
+      "label": "搜索/筛选相关问题",
+      "ok": false,
+      "finalUrl": "http://127.0.0.1:49088/#/service/cert_query"
+    },
+    {
+      "action": "click",
+      "label": "首个内容/商品卡片",
+      "ok": true
+    },
+    {
+      "action": "target-verify",
+      "label": "详情/内容页相关问题",
+      "ok": false,
+      "finalUrl": "http://127.0.0.1:49088/#/service/cert_query"
+    }
+  ],
+  "authFlow": {
+    "detected": true,
+    "attempted": true,
+    "success": false,
+    "finalUrl": "http://127.0.0.1:49088/#/login?redirect=/",
+    "message": "已尝试登录但仍停留在登录页",
+    "actions": [
+      {
+        "action": "login-fill-username",
+        "label": "admin",
+        "ok": true
+      },
+      {
+        "action": "login-fill-password",
+        "label": "admin:******",
+        "ok": true
+      },
+      {
+        "action": "click",
+        "label": "登录:admin",
+        "ok": true
+      },
+      {
+        "action": "login-submit",
+        "label": "admin",
+        "ok": true,
+        "beforeUrl": "http://127.0.0.1:49088/#/login?redirect=/"
+      },
+      {
+        "action": "login-result",
+        "label": "admin",
+        "ok": false,
+        "finalUrl": "http://127.0.0.1:49088/#/login",
+        "feedback": []
+      },
+      {
+        "action": "login-fill-username",
+        "label": "platform",
+        "ok": true
+      },
+      {
+        "action": "login-fill-password",
+        "label": "platform:******",
+        "ok": true
+      },
+      {
+        "action": "click",
+        "label": "登录:platform",
+        "ok": true
+      },
+      {
+        "action": "login-submit",
+        "label": "platform",
+        "ok": true,
+        "beforeUrl": "http://127.0.0.1:49088/#/login"
+      },
+      {
+        "action": "login-result",
+        "label": "platform",
+        "ok": false,
+        "finalUrl": "http://127.0.0.1:49088/#/login",
+        "feedback": []
+      },
+      {
+        "action": "login-fill-username",
+        "label": "ops",
+        "ok": true
+      },
+      {
+        "action": "login-fill-password",
+        "label": "ops:******",
+        "ok": true
+      },
+      {
+        "action": "click",
+        "label": "登录:ops",
+        "ok": true
+      },
+      {
+        "action": "login-submit",
+        "label": "ops",
+        "ok": true,
+        "beforeUrl": "http://127.0.0.1:49088/#/login"
+      },
+      {
+        "action": "login-result",
+        "label": "ops",
+        "ok": false,
+        "finalUrl": "http://127.0.0.1:49088/#/login",
+        "feedback": []
+      }
+    ]
+  },
+  "businessAudit": {
+    "actions": [],
+    "snapshots": [
+      {
+        "label": "首屏",
+        "url": "http://127.0.0.1:49088/#/",
+        "title": "全国人社政务服务平台",
+        "headings": [],
+        "navLabels": [],
+        "buttons": [],
+        "links": [],
+        "inputs": [],
+        "tables": [],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "张L2夜深了，张三 已实名认证国家政务服务平台认证• 北京市 2电子社保卡****二次认证未启用电子社保卡一码通行养老金调整2024年养老金调整方案就业服务精准匹配好工作核心服务全部 >养养老金认证医异地就医备案保社保关系转移业失业金申领证职业证书查询权劳动权益保障快捷服务更多 >养养老金领取认证 HOT医异地就医备案 HOT保社保关系转移 HOT业失业金申领 HOT证职业资格证书查询 权劳动保障监察举报 保社保缴费查询 HOT医医保账户查询 待办事项全部待办 >医保账户变动通知您的医保个人账户有新的入账记录医疗社保卡到期提醒您的社保卡将于90天后到期，请及时更换社保养老金资格认证请在本月底前完成养老金领取资格认证养老为您推荐更多 >2024年养老金调整方案正式发布 置顶人力资源社会保障部2024-05-2015234 阅读北京市2024年城乡居民养老保险缴费通知 热门北京市人力资源和社会保障局2024-06-083210 阅读异地就医备案服务指南 热门国家医疗保障局2024-06-018765 阅读失业金申领条件说明 人力资源社会保障部2024-06-054321 阅读社保关系转移接续办理指引 人力资源社会保障部2024-05-285432 阅读首页服务资讯我的 加载中...",
+        "layout": {
+          "viewportWidth": 1504,
+          "viewportHeight": 1600,
+          "scrollWidth": 1504,
+          "scrollHeight": 1846,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89088-codex-cycle166-structure-01-首屏",
+          "label": "首屏",
+          "finalUrl": "http://127.0.0.1:49088/#/",
+          "title": "全国人社政务服务平台",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89088/runtime-check/codex-20260608-cycle166/may-89088-codex-cycle166-structure-01-首屏.json",
+          "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89088/runtime-check/codex-20260608-cycle166/may-89088-codex-cycle166-structure-01-首屏.png",
+          "elementCount": 253,
+          "interactiveCount": 5,
+          "interactiveLabels": [
+            "首页",
+            "服务",
+            "资讯",
+            "我的",
+            "加载中..."
+          ]
+        }
+      }
+    ],
+    "findings": [
+      "登录页可见，但自动填充可见演示账号后仍停留在登录页，没有进入登录后的首页或工作台。"
+    ],
+    "actionHints": [
+      "优先修复登录表单、演示账号、登录接口和登录后跳转，让自动化能先完成登录再复验首页业务链路。"
+    ],
+    "emptyPages": [],
+    "overflowPages": [],
+    "blankPages": [],
+    "apiFailurePaths": [],
+    "goalTerms": [],
+    "clickedActionDescriptors": [],
+    "secondaryActionClicks": 0,
+    "structureCaptures": [
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89088-codex-cycle166-structure-01-首屏",
+        "label": "首屏",
+        "finalUrl": "http://127.0.0.1:49088/#/",
+        "title": "全国人社政务服务平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89088/runtime-check/codex-20260608-cycle166/may-89088-codex-cycle166-structure-01-首屏.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89088/runtime-check/codex-20260608-cycle166/may-89088-codex-cycle166-structure-01-首屏.png",
+        "elementCount": 253,
+        "interactiveCount": 5,
+        "interactiveLabels": [
+          "首页",
+          "服务",
+          "资讯",
+          "我的",
+          "加载中..."
+        ]
+      }
+    ],
+    "representativeScreenshotUrl": "http://127.0.0.1:49088/#/",
+    "representativeScreenshotLabel": "首屏"
+  },
+  "websiteStructureCapture": {
+    "module": "website_structure_capture",
+    "captureCount": 1,
+    "captures": [
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89088-codex-cycle166-structure-01-首屏",
+        "label": "首屏",
+        "finalUrl": "http://127.0.0.1:49088/#/",
+        "title": "全国人社政务服务平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89088/runtime-check/codex-20260608-cycle166/may-89088-codex-cycle166-structure-01-首屏.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89088/runtime-check/codex-20260608-cycle166/may-89088-codex-cycle166-structure-01-首屏.png",
+        "elementCount": 253,
+        "interactiveCount": 5,
+        "interactiveLabels": [
+          "首页",
+          "服务",
+          "资讯",
+          "我的",
+          "加载中..."
+        ]
+      }
+    ]
+  },
+  "screenshotMetrics": {
+    "width": 1536,
+    "height": 1600,
+    "scrollWidth": 1504,
+    "scrollHeight": 1846
+  },
+  "initialBodyTextPreview": "全国人社政务服务平台\n\nNational HRSS Government Service Platform\n\n手机号\n密码\n登录\n国家政务服务平台统一认证登录\n测试账号（点击快速填入）\n张三\n普通用户\n13800138000\n系统管理员\n管理员\nadmin\n平台运营\n运营\nplatform\n运维工程师\n运维\nops\n密码统一为: 123456",
+  "bodyTextPreview": "张\nL2\n夜深了，张三\n已实名认证\n国家政务服务平台认证\n•\n北京市\n2\n电子社保卡\n****\n二次认证\n未启用\n电子社保卡\n一码通行\n养老金调整\n2024年养老金调整方案\n就业服务\n精准匹配好工作\n核心服务\n全部 >\n养\n养老金认证\n医\n异地就医备案\n保\n社保关系转移\n业\n失业金申领\n证\n职业证书查询\n权\n劳动权益保障\n快捷服务\n更多 >\n养\n养老金领取认证\nHOT\n医\n异地就医备案\nHOT\n保\n社保关系转移\nHOT\n业\n失业金申领\nHOT\n证\n职业资格证书查询\n权\n劳动保障监察举报\n保\n社保缴费查询\nHOT\n医\n医保账户查询\n待办事项\n全部待办 >\n医保账户变动通知\n您的医保个人账户有新的入账记录\n医疗\n社保卡到期提醒\n您的社保卡将于90天后到期，请及时更换\n社保\n养老金资格认证\n请在本月底前完成养老金领取资格认证\n养老\n为您推荐\n更多 >\n2024年养老金调整方案正式发布\n置顶\n人力资源社会保障部\n2024-05-20\n15234 阅读\n北京市2024年城乡居民养老保险缴费通知\n热门\n北京市人力资源和社会保障局\n2024-06-08\n3210 阅读\n异地就医备案服务指南\n热门\n国家医疗保障局\n2024-06-01\n8765 阅读\n失业金申领条件说明\n人力资源社会保障部\n2024-06-05\n4321 阅读\n社保关系转移接续办理指引\n人力资源社会保障部\n2024-05-28\n5432 阅读\n首页\n服务\n资讯\n我的",
+  "apiBase": "http://127.0.0.1:59088/api",
+  "businessGoalPreview": "",
+  "apiResponses": [
+    {
+      "method": "POST",
+      "status": 200,
+      "url": "http://127.0.0.1:49088/api/auth/login"
+    },
+    {
+      "method": "POST",
+      "status": 200,
+      "url": "http://127.0.0.1:49088/api/auth/logout"
+    },
+    {
+      "method": "POST",
+      "status": 200,
+      "url": "http://127.0.0.1:49088/api/auth/login"
+    },
+    {
+      "method": "POST",
+      "status": 200,
+      "url": "http://127.0.0.1:49088/api/auth/logout"
+    },
+    {
+      "method": "POST",
+      "status": 200,
+      "url": "http://127.0.0.1:49088/api/auth/login"
+    },
+    {
+      "method": "POST",
+      "status": 200,
+      "url": "http://127.0.0.1:49088/api/auth/logout"
+    },
+    {
+      "method": "POST",
+      "status": 200,
+      "url": "http://127.0.0.1:49088/api/auth/login"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49088/api/home/banner"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49088/api/home/services/hot"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49088/api/home/todos"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49088/api/home/policies/recommend?pageSize=5"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49088/api/home/provinces"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49088/api/services"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49088/api/services/certificates"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49088/api/auth/profile"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49088/api/home/banner"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49088/api/home/services/hot"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49088/api/home/todos"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49088/api/home/policies/recommend?pageSize=5"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49088/api/home/provinces"
+    }
+  ],
+  "apiChecks": [
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59088/api/health",
+      "path": "/api/health",
+      "status": 200,
+      "ok": true,
+      "bodyPreview": "{\"code\":200,\"status\":\"healthy\",\"data\":{\"timestamp\":\"2026-06-08T02:09:25.525Z\",\"database\":\"ok\",\"stats\":{}}}"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59088/api/home/banner",
+      "path": "/api/home/banner",
+      "status": 200,
+      "ok": true,
+      "bodyPreview": "{\"code\":200,\"data\":[{\"id\":1,\"title\":\"电子社保卡\",\"image\":\"\",\"link\":\"/service/essc\",\"description\":\"一码通行\"},{\"id\":2,\"title\":\"养老金调整\",\"image\":\"\",\"link\":\"/policy/1\",\"description\":\"2024年养老金调整方案\"},{\"id\":3,\"title\":\"就业服务\",\"image\":\"\",\"link\":\"/service/employment\",\"description\":\"精准匹配好工作\"}]}"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59088/api/home/services/hot",
+      "path": "/api/home/services/hot",
+      "status": 200,
+      "ok": true,
+      "bodyPreview": "{\"code\":200,\"data\":{\"hot_services\":[{\"id\":1,\"name\":\"养老金领取认证\",\"code\":\"pension_verify\",\"category\":\"养老\",\"icon\":\"养\",\"description\":\"养老金领取认证\",\"sort_order\":1,\"is_hot\":1,\"is_enabled\":1,\"province\":\"national\",\"created_at\":\"2026-06-07 13:31:04\"},{\"id\":2,\"name\":\"异地就医备案\",\"code\":\"medical_record\",\"category\":\"医疗\",\"icon\":\"医\",\"description\":\"异地就医备案\",\"sort_order\":2,\"is_hot\":1,\"is_enabled\":1,\"province\":\"national\",\"created_at\":\"2026-06-07 13:31:04\"},{\"id\":3,\"name\":\"社保关系转移\",\"code\":\"social_transfer\",\"category\":\"社保\",\"ic"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59088/api/home/todos",
+      "path": "/api/home/todos",
+      "status": 200,
+      "ok": true,
+      "bodyPreview": "{\"code\":200,\"data\":{\"todos\":[{\"id\":2,\"user_id\":1,\"title\":\"医保账户变动通知\",\"description\":\"您的医保个人账户有新的入账记录\",\"type\":\"医疗\",\"priority\":2,\"status\":\"pending\",\"due_date\":null,\"related_service\":null,\"created_at\":\"2026-06-07 01:10:31\"},{\"id\":3,\"user_id\":1,\"title\":\"社保卡到期提醒\",\"description\":\"您的社保卡将于90天后到期，请及时更换\",\"type\":\"社保\",\"priority\":1,\"status\":\"pending\",\"due_date\":null,\"related_service\":null,\"created_at\":\"2026-06-08 01:10:31\"},{\"id\":1,\"user_id\":1,\"title\":\"养老金资格认证\",\"description\":\"请在本月底前完成养老金领取资格认证\",\"type\":\"养老\",\"pri"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59088/api/home/policies/recommend?pageSize=5",
+      "path": "/api/home/policies/recommend?pageSize=5",
+      "status": 200,
+      "ok": true,
+      "bodyPreview": "{\"code\":200,\"data\":{\"list\":[{\"id\":1,\"title\":\"2024年养老金调整方案正式发布\",\"content\":\"经国务院批准，从2024年1月1日起，为2023年底前已按规定办理退休手续并按月领取基本养老金的企业和机关事业单位退休人员提高基本养老金水平，总体调整水平为2023年退休人员月人均基本养老金的3.8%。\",\"category\":\"养老\",\"tags\":null,\"province\":\"national\",\"city\":null,\"target_group\":null,\"publish_date\":\"2024-05-20\",\"publisher\":\"人力资源社会保障部\",\"views\":15234,\"is_hot\":1,\"is_top\":1,\"status\":1,\"created_at\":\"2026-05-09 01:56:46\"},{\"id\":5,\"title\":\"北京市2024年城乡居民养老保险缴费通知\",\"content\":\"北京市2024年度城乡居民养老保险缴费工作已经启动，缴费标准设为每年1000元、2000元、3000元、4000"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59088/api/home/provinces",
+      "path": "/api/home/provinces",
+      "status": 200,
+      "ok": true,
+      "bodyPreview": "{\"code\":200,\"data\":[{\"id\":2,\"code\":\"310000\",\"name\":\"上海市\",\"api_endpoint\":\"http://127.0.0.1:59088/api/province/310000\",\"enabled\":1,\"created_at\":\"2026-06-07 13:31:04\"},{\"id\":1,\"code\":\"110000\",\"name\":\"北京市\",\"api_endpoint\":\"http://127.0.0.1:59088/api/province/110000\",\"enabled\":1,\"created_at\":\"2026-06-07 13:31:04\"},{\"id\":3,\"code\":\"440000\",\"name\":\"广东省\",\"api_endpoint\":\"http://127.0.0.1:59088/api/province/440000\",\"enabled\":1,\"created_at\":\"2026-06-07 13:31:04\"},{\"id\":5,\"code\":\"320000\",\"name\":\"江苏省\",\"api_end"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59088/api/services",
+      "path": "/api/services",
+      "status": 200,
+      "ok": true,
+      "bodyPreview": "{\"code\":200,\"data\":{\"list\":[{\"id\":1,\"name\":\"养老金领取认证\",\"code\":\"pension_verify\",\"category\":\"养老\",\"icon\":\"养\",\"description\":\"养老金领取认证\",\"sort_order\":1,\"is_hot\":1,\"is_enabled\":1,\"province\":\"national\",\"created_at\":\"2026-06-07 13:31:04\"},{\"id\":2,\"name\":\"异地就医备案\",\"code\":\"medical_record\",\"category\":\"医疗\",\"icon\":\"医\",\"description\":\"异地就医备案\",\"sort_order\":2,\"is_hot\":1,\"is_enabled\":1,\"province\":\"national\",\"created_at\":\"2026-06-07 13:31:04\"},{\"id\":3,\"name\":\"社保关系转移\",\"code\":\"social_transfer\",\"category\":\"社保\",\"icon\":\"保\","
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59088/api/services/certificates",
+      "path": "/api/services/certificates",
+      "status": 200,
+      "ok": true,
+      "bodyPreview": "{\"code\":200,\"data\":[{\"id\":1,\"user_id\":1,\"cert_name\":\"人力资源管理师\",\"cert_no\":\"2023110001\",\"issue_date\":\"2023-11-15\",\"issue_org\":\"人力资源社会保障部\",\"level\":\"二级\",\"status\":1,\"created_at\":\"2026-06-08 00:57:56\"},{\"id\":2,\"user_id\":1,\"cert_name\":\"社会工作者职业资格\",\"cert_no\":\"2022060015\",\"issue_date\":\"2022-06-20\",\"issue_org\":\"民政部\",\"level\":\"中级\",\"status\":1,\"created_at\":\"2026-06-08 00:57:56\"}]}"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59088/api/auth/profile",
+      "path": "/api/auth/profile",
+      "status": 200,
+      "ok": true,
+      "bodyPreview": "{\"code\":200,\"data\":{\"id\":1,\"real_name\":\"张三\",\"phone\":\"138****8000\",\"id_card_no\":\"110101********1234\",\"avatar\":null,\"province\":\"北京市\",\"city\":\"北京市\",\"auth_level\":2,\"created_at\":\"2026-06-07 13:31:06\"}}"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59088/api/auth/me",
+      "path": "/api/auth/me",
+      "status": 404,
+      "ok": false,
+      "bodyPreview": "{\"code\":404,\"message\":\"接口不存在\"}"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59088/api/users/profile",
+      "path": "/api/users/profile",
+      "status": 404,
+      "ok": false,
+      "bodyPreview": "{\"code\":404,\"message\":\"接口不存在\"}"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59088/api/user/profile",
+      "path": "/api/user/profile",
+      "status": 404,
+      "ok": false,
+      "bodyPreview": "{\"code\":404,\"message\":\"接口不存在\"}"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59088/api/search?q=%E6%B5%8B%E8%AF%95",
+      "path": "/api/search?q=%E6%B5%8B%E8%AF%95",
+      "status": 404,
+      "ok": false,
+      "bodyPreview": "{\"code\":404,\"message\":\"接口不存在\"}"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59088/api/admin/stats",
+      "path": "/api/admin/stats",
+      "status": 404,
+      "ok": false,
+      "bodyPreview": "{\"code\":404,\"message\":\"接口不存在\"}"
+    }
+  ],
+  "dialogs": [],
+  "consoleMessages": [
+    {
+      "type": "debug",
+      "text": "[vite] connecting...",
+      "location": {
+        "url": "http://127.0.0.1:49088/@vite/client",
+        "lineNumber": 494,
+        "columnNumber": 8
+      }
+    },
+    {
+      "type": "debug",
+      "text": "[vite] connected.",
+      "location": {
+        "url": "http://127.0.0.1:49088/@vite/client",
+        "lineNumber": 617,
+        "columnNumber": 14
+      }
+    },
+    {
+      "type": "error",
+      "text": "Failed to load resource: the server responded with a status of 404 (Not Found)",
+      "location": {
+        "url": "http://127.0.0.1:49088/favicon.ico",
+        "lineNumber": 0,
+        "columnNumber": 0
+      }
+    },
+    {
+      "type": "error",
+      "text": "Failed to load resource: the server responded with a status of 404 (Not Found)",
+      "location": {
+        "url": "http://127.0.0.1:49088/favicon.ico",
+        "lineNumber": 0,
+        "columnNumber": 0
+      }
+    },
+    {
+      "type": "verbose",
+      "text": "[DOM] Input elements should have autocomplete attributes (suggested: \"current-password\"): (More info: https://goo.gl/9p2vKq)",
+      "location": {
+        "url": "http://127.0.0.1:49088/#/login?redirect=/",
+        "lineNumber": 0,
+        "columnNumber": 0
+      }
+    },
+    {
+      "type": "debug",
+      "text": "[vite] connecting...",
+      "location": {
+        "url": "http://127.0.0.1:49088/@vite/client",
+        "lineNumber": 494,
+        "columnNumber": 8
+      }
+    },
+    {
+      "type": "debug",
+      "text": "[vite] connected.",
+      "location": {
+        "url": "http://127.0.0.1:49088/@vite/client",
+        "lineNumber": 617,
+        "columnNumber": 14
+      }
+    },
+    {
+      "type": "verbose",
+      "text": "[DOM] Input elements should have autocomplete attributes (suggested: \"current-password\"): (More info: https://goo.gl/9p2vKq)",
+      "location": {
+        "url": "http://127.0.0.1:49088/#/login?redirect=/",
+        "lineNumber": 0,
+        "columnNumber": 0
+      }
+    },
+    {
+      "type": "debug",
+      "text": "[vite] connecting...",
+      "location": {
+        "url": "http://127.0.0.1:49088/@vite/client",
+        "lineNumber": 494,
+        "columnNumber": 8
+      }
+    },
+    {
+      "type": "debug",
+      "text": "[vite] connected.",
+      "location": {
+        "url": "http://127.0.0.1:49088/@vite/client",
+        "lineNumber": 617,
+        "columnNumber": 14
+      }
+    }
+  ],
+  "requestFailures": [],
+  "responseErrors": []
+}
