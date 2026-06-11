@@ -204,6 +204,50 @@
             </div>
           </div>
 
+          <div v-if="showConfirmPanel" class="card-base p-6 mt-6 border-2 border-brand-200 bg-brand-50/30">
+            <h4 class="font-semibold text-gray-900 mb-4 flex items-center gap-2">
+              <component :is="icons.ScrollText" class="w-5 h-5 text-brand-500" />
+              确认报价单
+            </h4>
+            <div class="space-y-4">
+              <div class="flex justify-between items-center py-2 border-b border-gray-200">
+                <span class="text-sm text-gray-600">报价单编号</span>
+                <span class="text-sm font-mono font-semibold text-brand-700">{{ confirmQuoteNo }}</span>
+              </div>
+              <div>
+                <div class="text-sm text-gray-600 mb-2">包装清单</div>
+                <div class="space-y-2">
+                  <div
+                    v-for="(item, idx) in quoteList"
+                    :key="idx"
+                    class="flex items-center justify-between py-2 px-3 bg-white rounded-lg text-sm"
+                  >
+                    <div class="flex-1">
+                      <span class="text-gray-900 font-medium">{{ item.name }}</span>
+                      <span class="text-gray-400 mx-1">|</span>
+                      <span class="text-gray-500">{{ item.specs }}</span>
+                      <span class="text-gray-400 mx-1">×</span>
+                      <span class="text-gray-700">{{ item.quantity }}</span>
+                    </div>
+                    <span class="text-alert-600 font-semibold">¥{{ item.subtotal.toFixed(2) }}</span>
+                  </div>
+                </div>
+              </div>
+              <div class="flex justify-between items-center pt-2 border-t border-gray-200">
+                <span class="text-sm font-semibold text-gray-900">总费用</span>
+                <span class="font-din text-xl font-bold text-alert-600">¥{{ totals.subtotal.toFixed(2) }}</span>
+              </div>
+              <div class="flex gap-3 pt-2">
+                <button class="btn-secondary flex-1 justify-center" @click="cancelConfirm">
+                  返回修改
+                </button>
+                <button class="btn-primary flex-1 justify-center" @click="confirmAndOrder">
+                  确认报价并下单
+                </button>
+              </div>
+            </div>
+          </div>
+
           <div class="card-base p-6 mt-6">
             <h4 class="font-semibold text-gray-900 mb-4 flex items-center gap-2">
               <component :is="icons.ShieldCheck" class="w-5 h-5 text-green-500" />
@@ -305,7 +349,18 @@ function removeItem(index: number) {
   quoteList.value = quoteList.value.filter((_, i) => i !== index)
 }
 
+function generateQuoteNo(): string {
+  return 'PQ' + Date.now()
+}
+
 function clearQuote() {
+  if (!window.confirm('确认清空所有包装配置？清空后报价单将无法恢复')) {
+    return
+  }
+  if (quoteList.value.length > 0) {
+    const quoteNo = generateQuoteNo()
+    ElMessage.info(`报价单 ${quoteNo} 已保存到历史记录`)
+  }
   quoteList.value = []
 }
 
@@ -320,15 +375,36 @@ const totals = computed(() => {
   }
 })
 
+const showConfirmPanel = ref(false)
+const confirmQuoteNo = ref('')
+
 function goOrder() {
   if (quoteList.value.length === 0) {
     ElMessage.warning('请先添加包装配置到报价清单')
     return
   }
+  confirmQuoteNo.value = generateQuoteNo()
+  showConfirmPanel.value = true
+}
+
+function confirmAndOrder() {
+  const items = quoteList.value.map(item => ({
+    name: item.name,
+    specs: item.specs,
+    quantity: item.quantity,
+    subtotal: item.subtotal
+  }))
   router.push({
     path: '/order/create',
-    query: { packagingFee: totals.value.subtotal.toFixed(2) }
+    query: {
+      packagingFee: totals.value.subtotal.toFixed(2),
+      packagingItems: encodeURIComponent(JSON.stringify(items))
+    }
   })
+}
+
+function cancelConfirm() {
+  showConfirmPanel.value = false
 }
 
 function contactSales() {

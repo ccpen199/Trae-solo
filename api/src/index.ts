@@ -12,8 +12,8 @@ import { vehicleRouter } from './routes/vehicles.js'
 import { enterpriseRouter } from './routes/enterprise.js'
 
 const app = express()
-const PORT = parseInt(process.env.API_PORT || process.env.BACKEND_PORT || '59164', 10)
-const HOST = process.env.API_HOST || process.env.HOST || '127.0.0.1'
+const PORT = parseInt(process.env.API_PORT || '3300', 10)
+const HOST = process.env.API_HOST || '0.0.0.0'
 
 app.use(cors({
   origin: (process.env.CORS_ORIGIN || '*').split(','),

@@ -218,17 +218,36 @@
             <span v-if="unacknowledgedCount > 0" class="badge badge-danger ml-auto">{{ unacknowledgedCount }} 未处理</span>
           </h3>
 
+          <div class="grid grid-cols-3 gap-3 mb-5">
+            <div class="rounded-lg bg-red-50 border border-red-100 p-3 text-center">
+              <div class="text-2xl font-bold text-red-600 font-din">{{ unacknowledgedCount }}</div>
+              <div class="text-xs text-red-500 mt-1">待处理告警</div>
+            </div>
+            <div class="rounded-lg bg-yellow-50 border border-yellow-100 p-3 text-center">
+              <div class="text-2xl font-bold text-yellow-600 font-din">{{ pendingReviewCount }}</div>
+              <div class="text-xs text-yellow-600 mt-1">已处理待复核</div>
+            </div>
+            <div class="rounded-lg bg-green-50 border border-green-100 p-3 text-center">
+              <div class="text-2xl font-bold text-green-600 font-din">{{ reviewedCount }}</div>
+              <div class="text-xs text-green-600 mt-1">已复核完成</div>
+            </div>
+          </div>
+
           <div v-if="alerts.length === 0" class="text-center py-8 text-gray-400">
             <component :is="icons.CheckCircle" class="w-12 h-12 mx-auto mb-2 opacity-30" />
             <p class="text-sm">暂无告警事件</p>
           </div>
 
-          <div v-else class="space-y-4 max-h-96 overflow-y-auto">
+          <div v-else class="space-y-4 max-h-[32rem] overflow-y-auto">
             <div
               v-for="alert in alerts"
               :key="alert.id"
               class="pl-4 py-3 border-l-4 relative"
-              :class="alert.level === 'critical' ? 'border-red-500 bg-red-50/50' : 'border-alert-500 bg-alert-50/50'"
+              :class="[
+                alert.acknowledged ? 'border-green-500 bg-green-50/50' :
+                alert.level === 'critical' ? 'border-red-500 bg-red-50/50' :
+                'border-alert-500 bg-alert-50/50'
+              ]"
             >
               <div class="flex items-start justify-between mb-1">
                 <div class="flex items-center gap-2">
@@ -240,12 +259,24 @@
                   </span>
                   <span class="text-sm font-medium text-gray-900">{{ getAlertTypeName(alert.type) }}</span>
                 </div>
-                <span
-                  class="text-xs px-2 py-0.5 rounded"
-                  :class="alert.acknowledged ? 'bg-green-100 text-green-700' : 'bg-red-100 text-red-700'"
-                >
-                  {{ alert.acknowledged ? '已处理' : '待处理' }}
-                </span>
+                <div class="flex items-center gap-2">
+                  <span
+                    v-if="alert.reviewStatus === 'approved'"
+                    class="text-xs px-2 py-0.5 rounded bg-green-100 text-green-700 font-medium"
+                  >已复核</span>
+                  <span
+                    v-else-if="alert.reviewStatus === 'rejected'"
+                    class="text-xs px-2 py-0.5 rounded bg-red-100 text-red-700 font-medium"
+                  >需重新处置</span>
+                  <span
+                    v-else-if="alert.acknowledged"
+                    class="text-xs px-2 py-0.5 rounded bg-yellow-100 text-yellow-700"
+                  >待复核</span>
+                  <span
+                    v-else
+                    class="text-xs px-2 py-0.5 rounded bg-red-100 text-red-700"
+                  >待处理</span>
+                </div>
               </div>
               <div class="text-sm text-gray-700 mb-1">{{ alert.message }}</div>
               <div class="text-xs text-gray-500 flex items-center gap-3">
@@ -258,16 +289,103 @@
                   {{ alert.timestamp }}
                 </span>
               </div>
-              <div v-if="alert.acknowledged && alert.acknowledgedBy" class="text-xs text-green-600 mt-1">
-                处置记录：{{ alert.acknowledgedBy }} · {{ alert.acknowledgedAt }}
+
+              <div v-if="alert.acknowledged && alert.acknowledgedBy" class="mt-2 p-2 rounded bg-green-100/60 text-xs text-green-800 space-y-1">
+                <div><span class="font-medium">处置人：</span>{{ alert.acknowledgedBy }}</div>
+                <div><span class="font-medium">责任角色：</span>{{ alert.responsibleRole }}</div>
+                <div><span class="font-medium">处置说明：</span>{{ alert.disposalNote }}</div>
+                <div><span class="font-medium">处置时间：</span>{{ alert.acknowledgedAt }}</div>
+                <div v-if="alert.reviewStatus === 'approved' && alert.reviewer" class="pt-1 border-t border-green-200 mt-1">
+                  <div><span class="font-medium">复核人：</span>{{ alert.reviewer }}</div>
+                  <div v-if="alert.reviewNote"><span class="font-medium">复核意见：</span>{{ alert.reviewNote }}</div>
+                  <div><span class="font-medium">复核时间：</span>{{ alert.reviewedAt }}</div>
+                </div>
               </div>
-              <div v-if="!alert.acknowledged" class="mt-2">
+
+              <div v-if="!alert.acknowledged && disposalForm.alertId !== alert.id" class="mt-2">
                 <button
                   class="text-xs px-3 py-1 bg-brand-500 text-white rounded hover:bg-brand-600 transition-colors"
-                  @click="handleAcknowledge(alert)"
+                  @click="openDisposalForm(alert)"
                 >
                   确认处理
                 </button>
+              </div>
+
+              <div v-if="!alert.acknowledged && disposalForm.alertId === alert.id" class="mt-3 p-3 rounded-lg bg-white border border-gray-200 space-y-3">
+                <div>
+                  <label class="block text-xs font-medium text-gray-700 mb-1">处置说明 <span class="text-red-500">*</span></label>
+                  <textarea
+                    v-model="disposalForm.disposalNote"
+                    class="w-full text-xs border rounded px-2 py-1.5 focus:outline-none focus:ring-1 focus:ring-brand-500"
+                    rows="3"
+                    placeholder="请输入处置说明（至少5个字）"
+                  ></textarea>
+                  <p v-if="disposalNoteError" class="text-xs text-red-500 mt-1">{{ disposalNoteError }}</p>
+                </div>
+                <div>
+                  <label class="block text-xs font-medium text-gray-700 mb-1">责任角色</label>
+                  <select
+                    v-model="disposalForm.responsibleRole"
+                    class="w-full text-xs border rounded px-2 py-1.5 focus:outline-none focus:ring-1 focus:ring-brand-500"
+                  >
+                    <option v-for="role in responsibleRoles" :key="role" :value="role">{{ role }}</option>
+                  </select>
+                </div>
+                <div class="flex items-center gap-2">
+                  <button
+                    class="text-xs px-3 py-1 bg-brand-500 text-white rounded hover:bg-brand-600 transition-colors"
+                    @click="submitDisposal(alert)"
+                  >
+                    提交处置
+                  </button>
+                  <button
+                    class="text-xs px-3 py-1 bg-gray-100 text-gray-600 rounded hover:bg-gray-200 transition-colors"
+                    @click="cancelDisposal"
+                  >
+                    取消
+                  </button>
+                </div>
+              </div>
+
+              <div v-if="alert.acknowledged && alert.reviewStatus !== 'approved' && alert.reviewStatus !== 'rejected' && reviewForm.alertId !== alert.id" class="mt-2">
+                <button
+                  class="text-xs px-3 py-1 bg-yellow-500 text-white rounded hover:bg-yellow-600 transition-colors"
+                  @click="openReviewForm(alert)"
+                >
+                  复核
+                </button>
+              </div>
+
+              <div v-if="alert.acknowledged && alert.reviewStatus !== 'approved' && alert.reviewStatus !== 'rejected' && reviewForm.alertId === alert.id" class="mt-3 p-3 rounded-lg bg-white border border-gray-200 space-y-3">
+                <div>
+                  <label class="block text-xs font-medium text-gray-700 mb-1">复核意见</label>
+                  <textarea
+                    v-model="reviewForm.reviewNote"
+                    class="w-full text-xs border rounded px-2 py-1.5 focus:outline-none focus:ring-1 focus:ring-brand-500"
+                    rows="2"
+                    placeholder="请输入复核意见（选填）"
+                  ></textarea>
+                </div>
+                <div class="flex items-center gap-2">
+                  <button
+                    class="text-xs px-3 py-1 bg-green-500 text-white rounded hover:bg-green-600 transition-colors"
+                    @click="submitReview(alert, 'approved')"
+                  >
+                    通过
+                  </button>
+                  <button
+                    class="text-xs px-3 py-1 bg-red-500 text-white rounded hover:bg-red-600 transition-colors"
+                    @click="submitReview(alert, 'rejected')"
+                  >
+                    驳回
+                  </button>
+                  <button
+                    class="text-xs px-3 py-1 bg-gray-100 text-gray-600 rounded hover:bg-gray-200 transition-colors"
+                    @click="cancelReview"
+                  >
+                    取消
+                  </button>
+                </div>
               </div>
             </div>
           </div>
@@ -278,7 +396,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref, computed, onMounted, onUnmounted, nextTick, watch } from 'vue'
+import { ref, reactive, computed, onMounted, onUnmounted, nextTick, watch } from 'vue'
 import { useRoute } from 'vue-router'
 import * as echarts from 'echarts'
 import dayjs from 'dayjs'
@@ -289,6 +407,31 @@ import {
 import { generateMonitorData, mockAlerts } from '@/mock'
 import { checkThreshold } from '@/utils/logistics'
 import type { MonitorData, AlertEvent, AlertType } from '@/types'
+
+type ResponsibleRole = '调度员' | '司机' | '仓库管理员' | '客户方' | '其他'
+type ReviewStatus = 'none' | 'approved' | 'rejected'
+
+interface ExtendedAlertEvent {
+  id: string
+  waybillNo: string
+  type: AlertType
+  level: string
+  value: number
+  threshold: number
+  unit: string
+  timestamp: string
+  location: string
+  message: string
+  acknowledged: boolean
+  acknowledgedBy?: string
+  acknowledgedAt?: string
+  disposalNote?: string
+  responsibleRole?: ResponsibleRole
+  reviewStatus?: ReviewStatus
+  reviewer?: string
+  reviewNote?: string
+  reviewedAt?: string
+}
 
 const icons = {
   Search, FileText, Truck, MapPin, Clock, Thermometer, Droplets,
@@ -303,8 +446,23 @@ const quickWaybills = ['DB2026061100001', 'DB2026061100002', 'DB2026061100003']
 
 const monitorDataCache = new Map<string, MonitorData[]>()
 const monitorData = ref<MonitorData[]>([])
-const alerts = ref<AlertEvent[]>([])
+const alerts = ref<ExtendedAlertEvent[]>([])
 const progressCache = new Map<string, number>()
+
+const responsibleRoles: ResponsibleRole[] = ['调度员', '司机', '仓库管理员', '客户方', '其他']
+
+const disposalForm = reactive({
+  alertId: null as string | null,
+  disposalNote: '',
+  responsibleRole: '调度员' as ResponsibleRole
+})
+
+const reviewForm = reactive({
+  alertId: null as string | null,
+  reviewNote: ''
+})
+
+const disposalNoteError = ref('')
 
 const tempChartRef = ref<HTMLElement | null>(null)
 const humidityChartRef = ref<HTMLElement | null>(null)
@@ -318,6 +476,14 @@ const latestData = computed(() => monitorData.value[monitorData.value.length - 1
 const progress = ref(62)
 
 const unacknowledgedCount = computed(() => alerts.value.filter(a => !a.acknowledged).length)
+
+const pendingReviewCount = computed(() =>
+  alerts.value.filter(a => a.acknowledged && a.reviewStatus !== 'approved' && a.reviewStatus !== 'rejected').length
+)
+
+const reviewedCount = computed(() =>
+  alerts.value.filter(a => a.reviewStatus === 'approved').length
+)
 
 const temperatureAbnormal = computed(() => {
   const t = latestData.value?.temperature
@@ -346,8 +512,8 @@ function getAlertTypeName(type: string) {
   return map[type] || type
 }
 
-function scanAlertsFromData(data: MonitorData[], wbn: string): AlertEvent[] {
-  const result: AlertEvent[] = []
+function scanAlertsFromData(data: MonitorData[], wbn: string): ExtendedAlertEvent[] {
+  const result: ExtendedAlertEvent[] = []
   const seen = new Set<string>()
 
   for (const d of data) {
@@ -391,7 +557,7 @@ function buildAlerts(data: MonitorData[], wbn: string) {
   }
 
   const seen = new Set<string>()
-  const merged: AlertEvent[] = []
+  const merged: ExtendedAlertEvent[] = []
 
   for (const a of staticAlerts) {
     const key = `${a.type}-${a.timestamp}`
@@ -434,9 +600,27 @@ function queryTracking() {
   })
 }
 
-function handleAcknowledge(alert: AlertEvent) {
+function openDisposalForm(alert: ExtendedAlertEvent) {
   if (alert.acknowledged) return
-  if (!window.confirm(`确认处理告警：${alert.message}？`)) return
+  disposalForm.alertId = alert.id
+  disposalForm.disposalNote = ''
+  disposalForm.responsibleRole = '调度员'
+  disposalNoteError.value = ''
+}
+
+function cancelDisposal() {
+  disposalForm.alertId = null
+  disposalForm.disposalNote = ''
+  disposalForm.responsibleRole = '调度员'
+  disposalNoteError.value = ''
+}
+
+function submitDisposal(alert: ExtendedAlertEvent) {
+  if (disposalForm.disposalNote.trim().length < 5) {
+    disposalNoteError.value = '处置说明至少需要5个字'
+    return
+  }
+  disposalNoteError.value = ''
 
   const now = dayjs().format('YYYY-MM-DD HH:mm:ss')
   const idx = alerts.value.findIndex(a => a.id === alert.id)
@@ -444,10 +628,59 @@ function handleAcknowledge(alert: AlertEvent) {
     alerts.value[idx] = {
       ...alerts.value[idx],
       acknowledged: true,
-      acknowledgedBy: '当前用户',
-      acknowledgedAt: now
+      acknowledgedBy: `${disposalForm.responsibleRole} 当前用户`,
+      acknowledgedAt: now,
+      disposalNote: disposalForm.disposalNote.trim(),
+      responsibleRole: disposalForm.responsibleRole,
+      reviewStatus: 'none'
     }
   }
+
+  disposalForm.alertId = null
+  disposalForm.disposalNote = ''
+  disposalForm.responsibleRole = '调度员'
+}
+
+function openReviewForm(alert: ExtendedAlertEvent) {
+  reviewForm.alertId = alert.id
+  reviewForm.reviewNote = ''
+}
+
+function cancelReview() {
+  reviewForm.alertId = null
+  reviewForm.reviewNote = ''
+}
+
+function submitReview(alert: ExtendedAlertEvent, action: 'approved' | 'rejected') {
+  const now = dayjs().format('YYYY-MM-DD HH:mm:ss')
+  const idx = alerts.value.findIndex(a => a.id === alert.id)
+  if (idx === -1) return
+
+  if (action === 'approved') {
+    alerts.value[idx] = {
+      ...alerts.value[idx],
+      reviewStatus: 'approved',
+      reviewer: '复核员',
+      reviewNote: reviewForm.reviewNote.trim(),
+      reviewedAt: now
+    }
+  } else {
+    alerts.value[idx] = {
+      ...alerts.value[idx],
+      reviewStatus: 'rejected',
+      reviewer: '复核员',
+      reviewNote: reviewForm.reviewNote.trim(),
+      reviewedAt: now,
+      acknowledged: false,
+      acknowledgedBy: undefined,
+      acknowledgedAt: undefined,
+      disposalNote: undefined,
+      responsibleRole: undefined
+    }
+  }
+
+  reviewForm.alertId = null
+  reviewForm.reviewNote = ''
 }
 
 function baseOption(xData: string[], yData: number[], color: string, unit: string, max?: number) {

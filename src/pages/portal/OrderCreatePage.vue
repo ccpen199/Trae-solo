@@ -307,6 +307,8 @@
                         <th class="px-4 py-3 text-center font-medium text-gray-600">包装</th>
                         <th class="px-4 py-3 text-center font-medium text-gray-600">货值</th>
                         <th class="px-4 py-3 text-right font-medium text-gray-600">小计运费</th>
+                        <th class="px-4 py-3 text-right font-medium text-gray-600">包装费</th>
+                        <th class="px-4 py-3 text-right font-medium text-gray-600">保价费</th>
                       </tr>
                     </thead>
                     <tbody class="divide-y divide-gray-100">
@@ -319,8 +321,24 @@
                         <td class="px-4 py-3 text-center text-gray-600">{{ packagingNameMap[cargo.packaging] }}</td>
                         <td class="px-4 py-3 text-center text-gray-600">¥{{ cargo.value.toLocaleString() }}</td>
                         <td class="px-4 py-3 text-right font-medium text-gray-900">¥{{ cargo.subtotal.toFixed(2) }}</td>
+                        <td class="px-4 py-3 text-right text-gray-700">¥{{ cargo.cargoPackagingFee.toFixed(2) }}</td>
+                        <td class="px-4 py-3 text-right text-gray-700">¥{{ cargo.cargoInsuranceFee.toFixed(2) }}</td>
                       </tr>
                     </tbody>
+                    <tfoot class="bg-gray-50 border-t-2 border-gray-300">
+                      <tr>
+                        <td class="px-4 py-3 font-semibold text-gray-900">合计</td>
+                        <td class="px-4 py-3"></td>
+                        <td class="px-4 py-3 text-center font-medium text-gray-900">{{ cargoTotals.totalActualWeight }}kg</td>
+                        <td class="px-4 py-3 text-center font-medium text-gray-900">{{ cargoTotals.totalVolumeWeight }}kg</td>
+                        <td class="px-4 py-3 text-center font-semibold text-gray-900">{{ cargoTotals.totalChargeWeight }}kg</td>
+                        <td class="px-4 py-3"></td>
+                        <td class="px-4 py-3"></td>
+                        <td class="px-4 py-3 text-right font-semibold text-gray-900">¥{{ cargoTotals.totalSubtotal.toFixed(2) }}</td>
+                        <td class="px-4 py-3 text-right font-semibold text-gray-900">¥{{ cargoTotals.totalPackagingFee.toFixed(2) }}</td>
+                        <td class="px-4 py-3 text-right font-semibold text-gray-900">¥{{ cargoTotals.totalInsuranceFee.toFixed(2) }}</td>
+                      </tr>
+                    </tfoot>
                   </table>
                 </div>
               </div>
@@ -390,6 +408,39 @@
                 </div>
               </div>
 
+              <div v-if="packagingItems.length > 0">
+                <h3 class="text-sm font-semibold text-gray-700 mb-3 flex items-center gap-2">
+                  <component :is="icons.Package" class="w-4 h-4 text-brand-500" />
+                  包装报价清单
+                </h3>
+                <div class="overflow-x-auto rounded-xl border border-gray-200">
+                  <table class="w-full text-sm">
+                    <thead class="bg-gray-50">
+                      <tr>
+                        <th class="px-4 py-3 text-left font-medium text-gray-600">包装名称</th>
+                        <th class="px-4 py-3 text-center font-medium text-gray-600">规格</th>
+                        <th class="px-4 py-3 text-center font-medium text-gray-600">数量</th>
+                        <th class="px-4 py-3 text-right font-medium text-gray-600">费用</th>
+                      </tr>
+                    </thead>
+                    <tbody class="divide-y divide-gray-100">
+                      <tr v-for="(pkg, idx) in packagingItems" :key="idx" class="hover:bg-gray-50">
+                        <td class="px-4 py-3 font-medium text-gray-900">{{ pkg.name }}</td>
+                        <td class="px-4 py-3 text-center text-gray-600">{{ pkg.specs }}</td>
+                        <td class="px-4 py-3 text-center text-gray-600">{{ pkg.quantity }}</td>
+                        <td class="px-4 py-3 text-right font-medium text-alert-600">¥{{ pkg.subtotal.toFixed(2) }}</td>
+                      </tr>
+                    </tbody>
+                    <tfoot class="bg-gray-50">
+                      <tr>
+                        <td colspan="3" class="px-4 py-3 font-semibold text-gray-900">包装费合计</td>
+                        <td class="px-4 py-3 text-right font-din font-bold text-alert-600">¥{{ packagingItems.reduce((s, i) => s + i.subtotal, 0).toFixed(2) }}</td>
+                      </tr>
+                    </tfoot>
+                  </table>
+                </div>
+              </div>
+
               <div>
                 <h3 class="text-sm font-semibold text-gray-700 mb-3">备注信息</h3>
                 <p class="text-sm text-gray-600 p-4 bg-bg-50 rounded-xl min-h-[3rem]">{{ remark || '无' }}</p>
@@ -416,63 +467,200 @@
             </div>
             <h2 class="text-2xl font-bold text-gray-900 mb-2">下单成功！</h2>
             <p class="text-gray-500 mb-8">您的运单已提交，请保存运单号以便查询</p>
-
-            <div class="inline-block px-8 py-4 bg-brand-50 rounded-xl mb-8">
+            <div class="inline-block px-8 py-4 bg-brand-50 rounded-xl">
               <div class="text-sm text-brand-600 mb-1">运单号</div>
               <div class="font-din text-3xl font-bold text-brand-700 tracking-wider">{{ orderNo }}</div>
-            </div>
-
-            <div class="flex items-center justify-center gap-2 text-sm text-gray-500 mb-8">
-              <component :is="icons.Clock" class="w-4 h-4" />
-              预计到达时间：{{ estimatedArrival }}
             </div>
           </div>
 
           <div class="card-base p-8">
             <h3 class="text-lg font-semibold text-gray-900 mb-5 flex items-center gap-2">
-              <component :is="icons.Receipt" class="w-5 h-5 text-brand-500" />
-              费用清单
+              <component :is="icons.ClipboardCheck" class="w-5 h-5 text-brand-500" />
+              订单信息摘要
             </h3>
-            <div class="p-5 bg-bg-50 rounded-xl space-y-0">
-              <div class="flex justify-between items-center py-2.5 border-b border-gray-200">
-                <span class="text-gray-600">基础运费</span>
-                <span class="text-gray-900 font-medium">¥{{ quote.baseFreight.toFixed(2) }}</span>
+            <div class="space-y-6">
+              <div>
+                <h4 class="text-sm font-semibold text-gray-700 mb-3 flex items-center gap-2">
+                  <component :is="icons.MapPin" class="w-4 h-4 text-brand-500" />
+                  收发货人信息
+                </h4>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4 p-4 bg-bg-50 rounded-xl">
+                  <div>
+                    <div class="text-xs text-gray-500 mb-1 flex items-center gap-1">
+                      <component :is="icons.Send" class="w-3 h-3 text-green-600" />
+                      发货人
+                    </div>
+                    <div class="font-medium text-gray-900">{{ sender.name }} {{ sender.phone }}</div>
+                    <div class="text-sm text-gray-600">{{ sender.province }}{{ sender.city }}{{ sender.detail }}</div>
+                  </div>
+                  <div>
+                    <div class="text-xs text-gray-500 mb-1 flex items-center gap-1">
+                      <component :is="icons.Inbox" class="w-3 h-3 text-brand-600" />
+                      收货人
+                    </div>
+                    <div class="font-medium text-gray-900">{{ receiver.name }} {{ receiver.phone }}</div>
+                    <div class="text-sm text-gray-600">{{ receiver.province }}{{ receiver.city }}{{ receiver.detail }}</div>
+                  </div>
+                </div>
               </div>
-              <div v-if="quote.pickupFee > 0" class="flex justify-between items-center py-2.5 border-b border-gray-200">
-                <span class="text-gray-600">取货费</span>
-                <span class="text-gray-900 font-medium">¥{{ quote.pickupFee.toFixed(2) }}</span>
+
+              <div>
+                <h4 class="text-sm font-semibold text-gray-700 mb-3 flex items-center gap-2">
+                  <component :is="icons.Package" class="w-4 h-4 text-brand-500" />
+                  货物信息
+                </h4>
+                <div class="p-4 bg-bg-50 rounded-xl">
+                  <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+                    <div>
+                      <div class="text-xs text-gray-500 mb-1">总件数</div>
+                      <div class="font-din text-xl font-bold text-gray-900">{{ cargoTotals.totalQuantity }} 件</div>
+                    </div>
+                    <div>
+                      <div class="text-xs text-gray-500 mb-1">总实际重</div>
+                      <div class="font-din text-xl font-bold text-gray-900">{{ cargoTotals.totalActualWeight }} kg</div>
+                    </div>
+                    <div>
+                      <div class="text-xs text-gray-500 mb-1">总体积重</div>
+                      <div class="font-din text-xl font-bold text-gray-900">{{ cargoTotals.totalVolumeWeight }} kg</div>
+                    </div>
+                    <div>
+                      <div class="text-xs text-gray-500 mb-1">总计费重</div>
+                      <div class="font-din text-xl font-bold text-brand-600">{{ cargoTotals.totalChargeWeight }} kg</div>
+                    </div>
+                  </div>
+                </div>
               </div>
-              <div v-if="quote.deliveryFee > 0" class="flex justify-between items-center py-2.5 border-b border-gray-200">
-                <span class="text-gray-600">送货费</span>
-                <span class="text-gray-900 font-medium">¥{{ quote.deliveryFee.toFixed(2) }}</span>
+
+              <div>
+                <h4 class="text-sm font-semibold text-gray-700 mb-3 flex items-center gap-2">
+                  <component :is="icons.Receipt" class="w-4 h-4 text-brand-500" />
+                  费用明细
+                </h4>
+                <div class="overflow-x-auto rounded-xl border border-gray-200">
+                  <table class="w-full text-sm">
+                    <thead class="bg-gray-50">
+                      <tr>
+                        <th class="px-4 py-3 text-left font-medium text-gray-600">货物名称</th>
+                        <th class="px-4 py-3 text-center font-medium text-gray-600">实际重</th>
+                        <th class="px-4 py-3 text-center font-medium text-gray-600">计费重</th>
+                        <th class="px-4 py-3 text-right font-medium text-gray-600">小计运费</th>
+                        <th class="px-4 py-3 text-right font-medium text-gray-600">包装费</th>
+                        <th class="px-4 py-3 text-right font-medium text-gray-600">保价费</th>
+                      </tr>
+                    </thead>
+                    <tbody class="divide-y divide-gray-100">
+                      <tr v-for="(cargo, idx) in cargoFreight" :key="idx" class="hover:bg-gray-50">
+                        <td class="px-4 py-3 font-medium text-gray-900">{{ cargo.name || '未命名' }} × {{ cargo.quantity }}</td>
+                        <td class="px-4 py-3 text-center text-gray-600">{{ cargo.actualWeight }}kg</td>
+                        <td class="px-4 py-3 text-center font-medium text-gray-900">{{ cargo.chargeWeight }}kg</td>
+                        <td class="px-4 py-3 text-right font-medium text-gray-900">¥{{ cargo.subtotal.toFixed(2) }}</td>
+                        <td class="px-4 py-3 text-right text-gray-700">¥{{ cargo.cargoPackagingFee.toFixed(2) }}</td>
+                        <td class="px-4 py-3 text-right text-gray-700">¥{{ cargo.cargoInsuranceFee.toFixed(2) }}</td>
+                      </tr>
+                    </tbody>
+                    <tfoot class="bg-gray-50 border-t-2 border-gray-300">
+                      <tr>
+                        <td class="px-4 py-3 font-semibold text-gray-900">合计</td>
+                        <td class="px-4 py-3 text-center font-medium text-gray-900">{{ cargoTotals.totalActualWeight }}kg</td>
+                        <td class="px-4 py-3 text-center font-semibold text-gray-900">{{ cargoTotals.totalChargeWeight }}kg</td>
+                        <td class="px-4 py-3 text-right font-semibold text-gray-900">¥{{ cargoTotals.totalSubtotal.toFixed(2) }}</td>
+                        <td class="px-4 py-3 text-right font-semibold text-gray-900">¥{{ cargoTotals.totalPackagingFee.toFixed(2) }}</td>
+                        <td class="px-4 py-3 text-right font-semibold text-gray-900">¥{{ cargoTotals.totalInsuranceFee.toFixed(2) }}</td>
+                      </tr>
+                    </tfoot>
+                  </table>
+                </div>
+                <div class="mt-3 p-4 bg-bg-50 rounded-xl space-y-0">
+                  <div class="flex justify-between items-center py-2.5 border-b border-gray-200">
+                    <span class="text-gray-600">基础运费</span>
+                    <span class="text-gray-900 font-medium">¥{{ quote.baseFreight.toFixed(2) }}</span>
+                  </div>
+                  <div v-if="quote.pickupFee > 0" class="flex justify-between items-center py-2.5 border-b border-gray-200">
+                    <span class="text-gray-600">取货费</span>
+                    <span class="text-gray-900 font-medium">¥{{ quote.pickupFee.toFixed(2) }}</span>
+                  </div>
+                  <div v-if="quote.deliveryFee > 0" class="flex justify-between items-center py-2.5 border-b border-gray-200">
+                    <span class="text-gray-600">送货费</span>
+                    <span class="text-gray-900 font-medium">¥{{ quote.deliveryFee.toFixed(2) }}</span>
+                  </div>
+                  <div v-if="quote.upstairsFee > 0" class="flex justify-between items-center py-2.5 border-b border-gray-200">
+                    <span class="text-gray-600">上楼费</span>
+                    <span class="text-gray-900 font-medium">¥{{ quote.upstairsFee.toFixed(2) }}</span>
+                  </div>
+                  <div v-if="quote.packagingFee > 0" class="flex justify-between items-center py-2.5 border-b border-gray-200">
+                    <span class="text-gray-600">包装费</span>
+                    <span class="text-gray-900 font-medium">¥{{ quote.packagingFee.toFixed(2) }}</span>
+                  </div>
+                  <div v-if="quote.insuranceFee > 0" class="flex justify-between items-center py-2.5 border-b border-gray-200">
+                    <span class="text-gray-600">保价费</span>
+                    <span class="text-gray-900 font-medium">¥{{ quote.insuranceFee.toFixed(2) }}</span>
+                  </div>
+                  <div v-if="quote.temperatureFee > 0" class="flex justify-between items-center py-2.5 border-b border-gray-200">
+                    <span class="text-gray-600">温控费</span>
+                    <span class="text-gray-900 font-medium">¥{{ quote.temperatureFee.toFixed(2) }}</span>
+                  </div>
+                  <div v-if="quote.overweightSurcharge > 0" class="flex justify-between items-center py-2.5 border-b border-gray-200">
+                    <span class="text-alert-600">超重附加费</span>
+                    <span class="text-alert-600 font-medium">¥{{ quote.overweightSurcharge.toFixed(2) }}</span>
+                  </div>
+                  <div v-if="quote.oversizeSurcharge > 0" class="flex justify-between items-center py-2.5 border-b border-gray-200">
+                    <span class="text-alert-600">超尺寸附加费</span>
+                    <span class="text-alert-600 font-medium">¥{{ quote.oversizeSurcharge.toFixed(2) }}</span>
+                  </div>
+                  <div class="flex justify-between items-center pt-3">
+                    <span class="text-gray-900 font-semibold">总计</span>
+                    <span class="font-din text-2xl font-bold text-alert-600">¥{{ quote.total.toFixed(2) }}</span>
+                  </div>
+                </div>
               </div>
-              <div v-if="quote.upstairsFee > 0" class="flex justify-between items-center py-2.5 border-b border-gray-200">
-                <span class="text-gray-600">上楼费</span>
-                <span class="text-gray-900 font-medium">¥{{ quote.upstairsFee.toFixed(2) }}</span>
+
+              <div>
+                <h4 class="text-sm font-semibold text-gray-700 mb-3 flex items-center gap-2">
+                  <component :is="icons.Clock" class="w-4 h-4 text-brand-500" />
+                  预计到达时间
+                </h4>
+                <div class="p-4 bg-brand-50 rounded-xl flex items-center gap-3">
+                  <component :is="icons.Clock" class="w-5 h-5 text-brand-500" />
+                  <div>
+                    <div class="text-sm text-brand-700">预计 <strong class="font-semibold">{{ estimatedArrival }}</strong> 送达</div>
+                    <div class="text-xs text-brand-600 mt-0.5">运输时效约 {{ quote.estimatedDays }} 天</div>
+                  </div>
+                </div>
               </div>
-              <div v-if="quote.packagingFee > 0" class="flex justify-between items-center py-2.5 border-b border-gray-200">
-                <span class="text-gray-600">包装费</span>
-                <span class="text-gray-900 font-medium">¥{{ quote.packagingFee.toFixed(2) }}</span>
-              </div>
-              <div v-if="quote.insuranceFee > 0" class="flex justify-between items-center py-2.5 border-b border-gray-200">
-                <span class="text-gray-600">保价费</span>
-                <span class="text-gray-900 font-medium">¥{{ quote.insuranceFee.toFixed(2) }}</span>
-              </div>
-              <div v-if="quote.temperatureFee > 0" class="flex justify-between items-center py-2.5 border-b border-gray-200">
-                <span class="text-gray-600">温控费</span>
-                <span class="text-gray-900 font-medium">¥{{ quote.temperatureFee.toFixed(2) }}</span>
-              </div>
-              <div v-if="quote.overweightSurcharge > 0" class="flex justify-between items-center py-2.5 border-b border-gray-200">
-                <span class="text-alert-600">超重附加费</span>
-                <span class="text-alert-600 font-medium">¥{{ quote.overweightSurcharge.toFixed(2) }}</span>
-              </div>
-              <div v-if="quote.oversizeSurcharge > 0" class="flex justify-between items-center py-2.5 border-b border-gray-200">
-                <span class="text-alert-600">超尺寸附加费</span>
-                <span class="text-alert-600 font-medium">¥{{ quote.oversizeSurcharge.toFixed(2) }}</span>
-              </div>
-              <div class="flex justify-between items-center pt-4">
-                <span class="text-gray-900 font-semibold">总计</span>
-                <span class="font-din text-2xl font-bold text-alert-600">¥{{ quote.total.toFixed(2) }}</span>
+
+              <div>
+                <h4 class="text-sm font-semibold text-gray-700 mb-3 flex items-center gap-2">
+                  <component :is="icons.Shield" class="w-4 h-4 text-brand-500" />
+                  服务保障
+                </h4>
+                <div class="p-4 bg-green-50 rounded-xl border border-green-100">
+                  <div class="grid grid-cols-1 md:grid-cols-3 gap-3">
+                    <div class="flex items-center gap-2">
+                      <component :is="icons.CheckCircle" class="w-4 h-4 text-green-500 flex-shrink-0" />
+                      <span class="text-sm text-green-700">全程物流追踪</span>
+                    </div>
+                    <div class="flex items-center gap-2">
+                      <component :is="icons.CheckCircle" class="w-4 h-4 text-green-500 flex-shrink-0" />
+                      <span class="text-sm text-green-700">货物损坏赔偿</span>
+                    </div>
+                    <div class="flex items-center gap-2">
+                      <component :is="icons.CheckCircle" class="w-4 h-4 text-green-500 flex-shrink-0" />
+                      <span class="text-sm text-green-700">专属客服支持</span>
+                    </div>
+                    <div v-if="services.insurance" class="flex items-center gap-2">
+                      <component :is="icons.CheckCircle" class="w-4 h-4 text-green-500 flex-shrink-0" />
+                      <span class="text-sm text-green-700">保价运输保障</span>
+                    </div>
+                    <div v-if="services.temperatureControl" class="flex items-center gap-2">
+                      <component :is="icons.CheckCircle" class="w-4 h-4 text-green-500 flex-shrink-0" />
+                      <span class="text-sm text-green-700">全程温控监测</span>
+                    </div>
+                    <div class="flex items-center gap-2">
+                      <component :is="icons.CheckCircle" class="w-4 h-4 text-green-500 flex-shrink-0" />
+                      <span class="text-sm text-green-700">签收验货服务</span>
+                    </div>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
@@ -550,6 +738,16 @@
                 <component :is="icons.Clock" class="w-4 h-4 text-brand-500" />
                 <span class="text-sm text-brand-700">预计运输时效：<strong class="font-semibold">{{ quote.estimatedDays }} 天</strong></span>
               </div>
+              <div v-if="currentStep === 1" class="mt-4 flex gap-3">
+                <button class="flex-1 py-2.5 px-4 border border-gray-300 rounded-lg text-gray-600 hover:bg-gray-50 transition-colors text-sm font-medium flex items-center justify-center gap-1" @click="currentStep = 0">
+                  <component :is="icons.ChevronLeft" class="w-4 h-4" />
+                  上一步
+                </button>
+                <button class="flex-[2] py-2.5 px-4 bg-brand-500 hover:bg-brand-600 text-white rounded-lg transition-colors text-sm font-semibold flex items-center justify-center gap-1 shadow-md shadow-brand-200" @click="currentStep = 2">
+                  下一步：确认下单
+                  <component :is="icons.ChevronRight" class="w-4 h-4" />
+                </button>
+              </div>
             </div>
           </div>
         </div>
@@ -578,6 +776,23 @@ const route = useRoute()
 const externalPackagingFee = computed(() => {
   const fee = route.query.packagingFee
   return fee ? Number(fee) : 0
+})
+
+interface PackagingItemSimple {
+  name: string
+  specs: string
+  quantity: number
+  subtotal: number
+}
+
+const packagingItems = computed<PackagingItemSimple[]>(() => {
+  const raw = route.query.packagingItems
+  if (!raw || typeof raw !== 'string') return []
+  try {
+    return JSON.parse(decodeURIComponent(raw)) as PackagingItemSimple[]
+  } catch {
+    return []
+  }
 })
 
 const icons = {
@@ -667,11 +882,36 @@ const packagingNameMap: Record<string, string> = {
 
 const cargoFreight = computed(() => {
   const totalChargeWeight = cargoList.value.reduce((sum, c) => sum + c.chargeWeight * c.quantity, 0)
+  const totalValue = cargoList.value.reduce((sum, c) => sum + c.value * c.quantity, 0)
   return cargoList.value.map(c => {
     const weightShare = totalChargeWeight > 0 ? (c.chargeWeight * c.quantity) / totalChargeWeight : 0
     const subtotal = Number((quote.value.baseFreight * weightShare).toFixed(2))
-    return { ...c, subtotal }
+    let packagingFeePerUnit = 0
+    switch (c.packaging) {
+      case 'wooden_box': packagingFeePerUnit = (c.length * c.width * c.height / 1000000) * 280; break
+      case 'wooden_pallet': packagingFeePerUnit = 180; break
+      case 'wooden_frame': packagingFeePerUnit = 120; break
+      case 'iron_frame': packagingFeePerUnit = 350; break
+      case 'plastic_pallet': packagingFeePerUnit = 100; break
+    }
+    const cargoPackagingFee = Number((packagingFeePerUnit * c.quantity).toFixed(2))
+    const valueShare = totalValue > 0 ? (c.value * c.quantity) / totalValue : 0
+    const cargoInsuranceFee = Number((quote.value.insuranceFee * valueShare).toFixed(2))
+    return { ...c, subtotal, cargoPackagingFee, cargoInsuranceFee }
   })
+})
+
+const cargoTotals = computed(() => {
+  const items = cargoFreight.value
+  return {
+    totalQuantity: items.reduce((s, c) => s + c.quantity, 0),
+    totalActualWeight: Number(items.reduce((s, c) => s + c.actualWeight * c.quantity, 0).toFixed(2)),
+    totalVolumeWeight: Number(items.reduce((s, c) => s + c.volumeWeight * c.quantity, 0).toFixed(2)),
+    totalChargeWeight: Number(items.reduce((s, c) => s + c.chargeWeight * c.quantity, 0).toFixed(2)),
+    totalSubtotal: Number(items.reduce((s, c) => s + c.subtotal, 0).toFixed(2)),
+    totalPackagingFee: Number(items.reduce((s, c) => s + c.cargoPackagingFee, 0).toFixed(2)),
+    totalInsuranceFee: Number(items.reduce((s, c) => s + c.cargoInsuranceFee, 0).toFixed(2))
+  }
 })
 
 const orderNo = ref('')
