@@ -163,8 +163,10 @@ export interface SummaryReview {
   reportTitle: string;
   originalText: string;
   generatedSummary: string;
+  reviewerId?: string;
   reviewerComment?: string;
   status: ReviewStatus;
+  version: number;
   createdAt: string;
 }
 

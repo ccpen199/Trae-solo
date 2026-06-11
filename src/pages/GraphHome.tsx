@@ -33,10 +33,26 @@ import {
   ClipboardCheck,
   PenLine,
   TrendingUp,
+  Target,
+  ThumbsUp,
+  ThumbsDown,
+  ArrowRight,
+  GitPullRequest,
+  AlertCircle,
+  ShieldCheck,
+  EyeOff,
+  Inbox,
+  CornerDownRight,
+  Link2,
+  FileWarning,
+  Users,
+  History,
+  BookOpenCheck,
+  ShieldAlert,
 } from 'lucide-react';
 import KnowledgeGraph from '@/components/graph/KnowledgeGraph';
 import { useAppStore } from '@/store/appStore';
-import type { Entity, EntityType, RiskLevel, Triple } from '@/../shared/types';
+import type { Entity, EntityType, RiskLevel, Triple, SubscriptionType, NotifyLevel } from '@/../shared/types';
 
 const predicateList = [
   '担任董事长',
@@ -102,6 +118,24 @@ const reviewStatusLabel: Record<string, string> = {
   rejected: '已驳回',
 };
 
+const subTypeIcon: Record<SubscriptionType, any> = {
+  entity: Building2,
+  concept: Lightbulb,
+  event: Zap,
+};
+
+const subTypeLabel: Record<SubscriptionType, string> = {
+  entity: '实体',
+  concept: '概念',
+  event: '事件',
+};
+
+const notifyLevelLabel: Record<NotifyLevel, string> = {
+  all: '全部动态',
+  important: '重要信息',
+  risk: '仅风险提醒',
+};
+
 function formatTime(iso: string) {
   const d = new Date(iso);
   const diff = Date.now() - d.getTime();
@@ -122,8 +156,10 @@ export default function GraphHome() {
     sourceScores,
     summaryReviews,
     pushes,
+    subscriptions,
     setSelectedEntity,
     getEntityTriples,
+    markPushRead,
   } = useAppStore();
   const [typeFilter, setTypeFilter] = useState<EntityType | 'all'>('all');
   const [selectedForDetail, setSelectedForDetail] = useState<Entity | null>(null);
@@ -132,7 +168,10 @@ export default function GraphHome() {
   const [expandedSections, setExpandedSections] = useState<Record<string, boolean>>({
     entityDetail: true,
     filteredTriples: true,
+    curatedTriples: true,
+    manualReviews: true,
     businessStatus: true,
+    collaborationOverview: true,
     riskDynamics: true,
   });
   const [advancedFilters, setAdvancedFilters] = useState({
@@ -270,6 +309,21 @@ export default function GraphHome() {
     return Math.round(sourceScores.reduce((sum, s) => sum + s.overall, 0) / sourceScores.length);
   }, [sourceScores]);
 
+  const curatedTriples = useMemo(() => triples.slice(0, 4), [triples]);
+
+  const reviewRecords = useMemo(() => {
+    return triples
+      .filter((t) => t.reviewHistory && t.reviewHistory.length > 0)
+      .flatMap((t) =>
+        (t.reviewHistory ?? []).map((rh) => ({
+          triple: t,
+          review: rh,
+          pushImpact: Math.floor(Math.random() * 8) + 1,
+        }))
+      )
+      .slice(0, 4);
+  }, [triples]);
+
   const enrichedRiskDynamics = useMemo(() => {
     const highRiskPushes = pushes
       .filter((p) => p.riskLevel === 'high' || p.riskLevel === 'medium')
@@ -277,17 +331,25 @@ export default function GraphHome() {
       .slice(0, 3);
 
     return [
-      ...highRiskPushes.map((p) => ({
-        time: formatTime(p.publishedAt),
-        text: p.title,
-        tag: p.riskLevel === 'high' ? '高风险' : '中风险',
-        riskLevel: p.riskLevel,
-        sourceUrl: p.sourceUrl,
-        sourceName: p.sourceName,
-        relatedEntities: p.relatedEntities,
-        read: p.read,
-      })),
+      ...highRiskPushes.map((p) => {
+        const sub = subscriptions.find((s) => s.id === p.subscriptionId);
+        return {
+          id: p.id,
+          time: formatTime(p.publishedAt),
+          text: p.title,
+          tag: p.riskLevel === 'high' ? '高风险' : '中风险',
+          riskLevel: p.riskLevel,
+          sourceUrl: p.sourceUrl,
+          sourceName: p.sourceName,
+          relatedEntities: p.relatedEntities,
+          read: p.read,
+          subscription: sub,
+          highlightedText: p.highlightedText,
+          isPush: true,
+        };
+      }),
       {
+        id: 'dyn-hot-1',
         time: '15 分钟前',
         text: '隆基绿能热度上升 8 位，当前排名第 1',
         tag: '热度',
@@ -296,8 +358,12 @@ export default function GraphHome() {
         sourceName: '',
         relatedEntities: ['c-001'],
         read: true,
+        subscription: null,
+        highlightedText: '',
+        isPush: false,
       },
       {
+        id: 'dyn-add-1',
         time: '3 小时前',
         text: '新增实体「通威股份」关联关系 5 条',
         tag: '新增',
@@ -306,9 +372,12 @@ export default function GraphHome() {
         sourceName: '',
         relatedEntities: ['c-002'],
         read: true,
+        subscription: null,
+        highlightedText: '',
+        isPush: false,
       },
     ];
-  }, [pushes]);
+  }, [pushes, subscriptions]);
 
   const handleNodeClick = (entity: Entity) => {
     setSelectedEntity(entity);
@@ -696,9 +765,9 @@ export default function GraphHome() {
         <div className="flex-1 overflow-y-auto">
           {selectedForDetail && (
             <div className="border-b border-gold-500/10">
-              <button
+              <div
                 onClick={() => toggleSection('entityDetail')}
-                className="flex w-full items-center justify-between px-4 py-3 text-left transition hover:bg-finance-700/30"
+                className="flex w-full cursor-pointer items-center justify-between px-4 py-3 text-left transition hover:bg-finance-700/30"
               >
                 <div className="flex items-center gap-2">
                   {(() => {
@@ -735,7 +804,7 @@ export default function GraphHome() {
                     <ChevronDown className="h-3.5 w-3.5 text-slate-500" />
                   )}
                 </div>
-              </button>
+              </div>
 
               {expandedSections.entityDetail && (
                 <div className="animate-fade-in-up px-4 pb-4">
@@ -853,9 +922,9 @@ export default function GraphHome() {
 
           {hasActiveAdvancedFilters && filteredTriples.length > 0 && (
             <div className="border-b border-gold-500/10">
-              <button
+              <div
                 onClick={() => toggleSection('filteredTriples')}
-                className="flex w-full items-center justify-between px-4 py-3 text-left transition hover:bg-finance-700/30"
+                className="flex w-full cursor-pointer items-center justify-between px-4 py-3 text-left transition hover:bg-finance-700/30"
               >
                 <div className="flex items-center gap-2">
                   <Zap className="h-4 w-4 text-gold-400" />
@@ -869,7 +938,7 @@ export default function GraphHome() {
                 ) : (
                   <ChevronDown className="h-3.5 w-3.5 text-slate-500" />
                 )}
-              </button>
+              </div>
 
               {expandedSections.filteredTriples && (
                 <div className="animate-fade-in-up px-4 pb-4">
@@ -964,9 +1033,256 @@ export default function GraphHome() {
           )}
 
           <div className="border-b border-gold-500/10">
-            <button
+            <div
+              onClick={() => toggleSection('curatedTriples')}
+              className="flex w-full cursor-pointer items-center justify-between px-4 py-3 text-left transition hover:bg-finance-700/30"
+            >
+              <div className="flex items-center gap-2">
+                <Target className="h-4 w-4 text-gold-400" />
+                <span className="text-sm font-medium text-slate-200">精选关系穿透</span>
+                <span className="rounded-full bg-gold-500/20 px-1.5 py-0.5 text-[10px] font-bold text-gold-300">
+                  {curatedTriples.length}
+                </span>
+              </div>
+              {expandedSections.curatedTriples ? (
+                <ChevronUp className="h-3.5 w-3.5 text-slate-500" />
+              ) : (
+                <ChevronDown className="h-3.5 w-3.5 text-slate-500" />
+              )}
+            </div>
+
+            {expandedSections.curatedTriples && (
+              <div className="animate-fade-in-up px-4 pb-4">
+                <p className="mb-3 text-[10px] text-slate-500">
+                  高置信度新抽取三元组 · 等待复核确认入库
+                </p>
+                <div className="space-y-2.5">
+                  {curatedTriples.map((triple) => (
+                    <div
+                      key={triple.id}
+                      className="rounded-lg border border-gold-500/10 bg-finance-900/40 p-3"
+                    >
+                      <div className="mb-2 flex items-start justify-between gap-2">
+                        <div className="flex-1 min-w-0">
+                          <p className="text-xs leading-relaxed text-slate-200">
+                            <span className="font-medium text-rose-300">{triple.subject.name}</span>
+                            <ArrowRight className="mx-1 inline h-2.5 w-2.5 text-slate-500" />
+                            <span className="text-blue-300">{triple.predicate}</span>
+                            <ArrowRight className="mx-1 inline h-2.5 w-2.5 text-slate-500" />
+                            <span className="font-medium text-emerald-300">{triple.object.name}</span>
+                          </p>
+                        </div>
+                        {triple.reviewStatus && (
+                          <span
+                            className={`shrink-0 rounded px-1.5 py-0.5 text-[9px] ring-1 ${reviewStatusColor[triple.reviewStatus]}`}
+                          >
+                            {reviewStatusLabel[triple.reviewStatus]}
+                          </span>
+                        )}
+                      </div>
+
+                      <div className="mb-2 flex items-center flex-wrap gap-x-3 gap-y-1 text-[10px] text-slate-500">
+                        <span className="flex items-center gap-1">
+                          <BarChart3 className="h-2.5 w-2.5" />
+                          置信度 {(triple.confidence * 100).toFixed(0)}%
+                        </span>
+                        {triple.sourceName && (
+                          <span className="flex items-center gap-1">
+                            <Newspaper className="h-2.5 w-2.5" />
+                            {triple.sourceName}
+                          </span>
+                        )}
+                        {triple.extractedAt && (
+                          <span className="flex items-center gap-1">
+                            <Clock className="h-2.5 w-2.5" />
+                            {formatTime(triple.extractedAt)}
+                          </span>
+                        )}
+                      </div>
+
+                      {triple.sourceText && (
+                        <div className="mb-2 rounded-md border border-yellow-500/10 bg-yellow-500/5 px-2.5 py-1.5">
+                          <p className="text-[11px] leading-relaxed text-slate-400">
+                            ...<span className="bg-yellow-500/25 px-0.5 text-yellow-200">{triple.sourceText}</span>...
+                          </p>
+                        </div>
+                      )}
+
+                      <div className="flex items-center flex-wrap gap-1.5">
+                        {triple.sourceUrl && (
+                          <a
+                            href={triple.sourceUrl}
+                            target="_blank"
+                            rel="noreferrer"
+                            className="flex items-center gap-1 rounded-md bg-finance-700/50 px-2 py-0.5 text-[10px] text-slate-400 transition hover:text-gold-300"
+                          >
+                            <ExternalLink className="h-2.5 w-2.5" />
+                            原始信源
+                          </a>
+                        )}
+                        <button
+                          onClick={() => navigate('/admin/lineage')}
+                          className="flex items-center gap-1 rounded-md bg-finance-700/50 px-2 py-0.5 text-[10px] text-slate-400 transition hover:text-gold-300"
+                        >
+                          <GitPullRequest className="h-2.5 w-2.5" />
+                          血缘追溯
+                        </button>
+                        <button
+                          onClick={() => navigate('/extraction')}
+                          className="flex items-center gap-1 rounded-md bg-finance-700/50 px-2 py-0.5 text-[10px] text-slate-400 transition hover:text-gold-300"
+                        >
+                          <ShieldAlert className="h-2.5 w-2.5" />
+                          可信度复查
+                        </button>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            )}
+          </div>
+
+          <div className="border-b border-gold-500/10">
+            <div
+              onClick={() => toggleSection('manualReviews')}
+              className="flex w-full cursor-pointer items-center justify-between px-4 py-3 text-left transition hover:bg-finance-700/30"
+            >
+              <div className="flex items-center gap-2">
+                <History className="h-4 w-4 text-purple-400" />
+                <span className="text-sm font-medium text-slate-200">人工校验记录</span>
+                {pendingTriples.length > 0 && (
+                  <span className="rounded-full bg-signal-danger px-1.5 py-0.5 text-[9px] font-bold text-white">
+                    待审核 {pendingTriples.length}
+                  </span>
+                )}
+              </div>
+              <div className="flex items-center gap-2">
+                <button
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    navigate('/extraction');
+                  }}
+                  className="flex items-center gap-1 rounded-md bg-purple-500/15 px-2 py-1 text-[10px] text-purple-300 ring-1 ring-purple-500/25 transition hover:bg-purple-500/25"
+                >
+                  <Inbox className="h-2.5 w-2.5" />
+                  去审核
+                </button>
+                {expandedSections.manualReviews ? (
+                  <ChevronUp className="h-3.5 w-3.5 text-slate-500" />
+                ) : (
+                  <ChevronDown className="h-3.5 w-3.5 text-slate-500" />
+                )}
+              </div>
+            </div>
+
+            {expandedSections.manualReviews && (
+              <div className="animate-fade-in-up px-4 pb-4">
+                <div className="space-y-2.5">
+                  {reviewRecords.length > 0 ? (
+                    reviewRecords.map(({ triple, review, pushImpact }, idx) => (
+                      <div
+                        key={`${triple.id}-${review.id}-${idx}`}
+                        className={`rounded-lg border p-3 transition ${
+                          review.action === 'approve'
+                            ? 'border-emerald-500/15 bg-emerald-500/5'
+                            : 'border-red-500/15 bg-red-500/5 border-dashed'
+                        }`}
+                      >
+                        <div className="mb-2 flex items-start justify-between gap-2">
+                          <div className="flex items-start gap-2">
+                            {review.action === 'approve' ? (
+                              <div className="mt-0.5 flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-emerald-500/20 text-emerald-300">
+                                <ThumbsUp className="h-3 w-3" />
+                              </div>
+                            ) : (
+                              <div className="mt-0.5 flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-red-500/20 text-red-300">
+                                <ThumbsDown className="h-3 w-3" />
+                              </div>
+                            )}
+                            <div className="flex-1 min-w-0">
+                              <button
+                                onClick={() => navigate('/extraction')}
+                                className="text-left transition hover:text-gold-300"
+                              >
+                                <p className="text-xs leading-relaxed text-slate-200">
+                                  <span className="font-medium text-rose-300">{triple.subject.name}</span>
+                                  <ArrowRight className="mx-1 inline h-2.5 w-2.5 text-slate-500" />
+                                  <span className="text-blue-300">{triple.predicate}</span>
+                                  <ArrowRight className="mx-1 inline h-2.5 w-2.5 text-slate-500" />
+                                  <span className="font-medium text-emerald-300">{triple.object.name}</span>
+                                </p>
+                              </button>
+                              {triple.reviewHistory && triple.reviewHistory.length > 1 && (
+                                <p className="mt-0.5 text-[9px] text-amber-400 flex items-center gap-0.5">
+                                  <FileWarning className="h-2.5 w-2.5" />
+                                  存在 {triple.reviewHistory.length} 条复查意见
+                                </p>
+                              )}
+                            </div>
+                          </div>
+                          <span
+                            className={`shrink-0 rounded px-1.5 py-0.5 text-[9px] ring-1 ${
+                              review.action === 'approve'
+                                ? 'bg-emerald-500/15 text-emerald-300 ring-emerald-500/30'
+                                : 'bg-red-500/15 text-red-300 ring-red-500/30'
+                            }`}
+                          >
+                            {review.action === 'approve' ? '已通过' : '已驳回'}
+                          </span>
+                        </div>
+
+                        {review.action === 'reject' && review.comment && (
+                          <div className="mb-2 rounded-md border border-red-500/10 bg-red-500/5 px-2 py-1.5">
+                            <p className="flex items-start gap-1 text-[10px] text-red-300">
+                              <CornerDownRight className="mt-0.5 h-2.5 w-2.5 shrink-0" />
+                              <span className="leading-relaxed">驳回原因：{review.comment}</span>
+                            </p>
+                          </div>
+                        )}
+
+                        <div className="mb-2 flex items-center flex-wrap gap-x-3 gap-y-1 text-[10px] text-slate-500">
+                          <span className="flex items-center gap-1">
+                            {review.action === 'approve' ? (
+                              <ShieldCheck className="h-2.5 w-2.5 text-emerald-400" />
+                            ) : (
+                              <EyeOff className="h-2.5 w-2.5 text-red-400" />
+                            )}
+                            {review.action === 'approve' ? '已永久入库' : '7 天后自动下线'}
+                          </span>
+                          <span className="flex items-center gap-1">
+                            <Link2 className="h-2.5 w-2.5" />
+                            影响推送 {pushImpact} 条
+                            <button className="text-amber-400 hover:text-amber-300 underline underline-offset-1">
+                              标记待复核
+                            </button>
+                            <button className="text-blue-400 hover:text-blue-300 underline underline-offset-1 ml-1">
+                              降级处理
+                            </button>
+                          </span>
+                        </div>
+
+                        <div className="flex items-center gap-2 text-[10px] text-slate-600">
+                          <span className="flex items-center gap-1">
+                            <Users className="h-2.5 w-2.5" />
+                            {review.reviewerName}
+                          </span>
+                          <span>·</span>
+                          <span>{formatTime(review.timestamp)}</span>
+                        </div>
+                      </div>
+                    ))
+                  ) : (
+                    <p className="py-4 text-center text-xs text-slate-500">暂无人工校验记录</p>
+                  )}
+                </div>
+              </div>
+            )}
+          </div>
+
+          <div className="border-b border-gold-500/10">
+            <div
               onClick={() => toggleSection('businessStatus')}
-              className="flex w-full items-center justify-between px-4 py-3 text-left transition hover:bg-finance-700/30"
+              className="flex w-full cursor-pointer items-center justify-between px-4 py-3 text-left transition hover:bg-finance-700/30"
             >
               <div className="flex items-center gap-2">
                 <ClipboardCheck className="h-4 w-4 text-blue-400" />
@@ -982,7 +1298,7 @@ export default function GraphHome() {
               ) : (
                 <ChevronDown className="h-3.5 w-3.5 text-slate-500" />
               )}
-            </button>
+            </div>
 
             {expandedSections.businessStatus && (
               <div className="animate-fade-in-up px-4 pb-4">
@@ -1096,33 +1412,6 @@ export default function GraphHome() {
                     </div>
                   </div>
                 )}
-
-                <div className="mt-3 border-t border-gold-500/5 pt-2">
-                  <p className="mb-1.5 text-[11px] font-medium text-slate-400">人工校验记录</p>
-                  <div className="space-y-1">
-                    {triples
-                      .filter((t) => t.reviewHistory && t.reviewHistory.length > 0)
-                      .slice(0, 3)
-                      .flatMap((t) =>
-                        (t.reviewHistory ?? []).map((rh) => (
-                          <div
-                            key={rh.id}
-                            className="flex items-center gap-2 rounded px-2 py-1.5 text-[10px]"
-                          >
-                            {rh.action === 'approve' ? (
-                              <CheckCircle2 className="h-3 w-3 shrink-0 text-emerald-400" />
-                            ) : (
-                              <X className="h-3 w-3 shrink-0 text-red-400" />
-                            )}
-                            <span className="flex-1 truncate text-slate-400">
-                              {rh.reviewerName} {rh.action === 'approve' ? '通过' : '驳回'}：{t.subject.name} → {t.predicate} → {t.object.name}
-                            </span>
-                            <span className="shrink-0 text-slate-600">{formatTime(rh.timestamp)}</span>
-                          </div>
-                        ))
-                      )}
-                  </div>
-                </div>
               </div>
             )}
           </div>
@@ -1196,10 +1485,187 @@ export default function GraphHome() {
             </div>
           </div>
 
+          <div className="border-b border-gold-500/10">
+            <div
+              onClick={() => toggleSection('collaborationOverview')}
+              className="flex w-full cursor-pointer items-center justify-between px-4 py-3 text-left transition hover:bg-finance-700/30"
+            >
+              <div className="flex items-center gap-2">
+                <BookOpenCheck className="h-4 w-4 text-cyan-400" />
+                <span className="text-sm font-medium text-slate-200">协作空间概览</span>
+              </div>
+              <div className="flex items-center gap-2">
+                <button
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    navigate('/workspace');
+                  }}
+                  className="flex items-center gap-1 rounded-md bg-cyan-500/15 px-2 py-1 text-[10px] text-cyan-300 ring-1 ring-cyan-500/25 transition hover:bg-cyan-500/25"
+                >
+                  <PenLine className="h-2.5 w-2.5" />
+                  去协作空间
+                </button>
+                {expandedSections.collaborationOverview ? (
+                  <ChevronUp className="h-3.5 w-3.5 text-slate-500" />
+                ) : (
+                  <ChevronDown className="h-3.5 w-3.5 text-slate-500" />
+                )}
+              </div>
+            </div>
+
+            {expandedSections.collaborationOverview && (
+              <div className="animate-fade-in-up px-4 pb-4 space-y-4">
+                <div>
+                  <p className="mb-2 flex items-center gap-1 text-[11px] font-medium text-slate-400">
+                    <BookmarkCheck className="h-3 w-3 text-gold-400" />
+                    PDF 锚点定位（最近 4 条）
+                  </p>
+                  <div className="space-y-1.5">
+                    {recentAnnotations.map((ann) => {
+                      const report = reports.find((r) => r.id === ann.reportId);
+                      const pos = ann.position as { x?: number; y?: number } | undefined;
+                      return (
+                        <button
+                          key={ann.id}
+                          onClick={() => navigate(`/workspace?report=${ann.reportId}&page=${ann.pageNumber}`)}
+                          className="flex w-full items-start gap-2 rounded-md border border-gold-500/5 bg-finance-900/30 p-2 text-left transition hover:border-gold-500/20"
+                        >
+                          <div className="mt-0.5 flex h-5 w-5 shrink-0 items-center justify-center rounded bg-gold-500/15 text-[9px] font-bold text-gold-300">
+                            P{ann.pageNumber}
+                          </div>
+                          <div className="flex-1 min-w-0">
+                            <p className="line-clamp-2 text-[11px] leading-relaxed text-slate-300">
+                              {ann.text || ann.comment || '批注锚点'}
+                            </p>
+                            <p className="mt-0.5 text-[10px] text-slate-500">
+                              {ann.annotatorName}
+                              {pos ? ` · (${Math.round(pos.x ?? 0)}, ${Math.round(pos.y ?? 0)})` : ''}
+                              {report ? ` · ${report.title.slice(0, 12)}...` : ''}
+                            </p>
+                          </div>
+                          <ArrowUpRight className="mt-0.5 h-3 w-3 shrink-0 text-slate-600 group-hover:text-gold-400" />
+                        </button>
+                      );
+                    })}
+                  </div>
+                </div>
+
+                <div>
+                  <p className="mb-2 flex items-center gap-1 text-[11px] font-medium text-slate-400">
+                    <AlertCircle className="h-3 w-3 text-rose-400" />
+                    多人批注冲突 / 版本差异
+                  </p>
+                  <div className="space-y-1.5">
+                    {[
+                      {
+                        id: 'conflict-1',
+                        page: 5,
+                        excerpt: '预计2025年光伏装机量将达到...',
+                        analystA: '王磊',
+                        commentA: '此处数据引用有误，应为80GW而非60GW',
+                        analystB: '李芳',
+                        commentB: '数据正确，参考CPIA最新报告2025版',
+                        time: '2 小时前',
+                      },
+                      {
+                        id: 'conflict-2',
+                        page: 12,
+                        excerpt: '公司毛利率同比下降的主要原因是...',
+                        analystA: '张明',
+                        commentA: '归因分析不全，遗漏原材料涨价因素',
+                        analystB: '陈雪',
+                        commentB: '原材料影响已在营业成本中体现，此处应聚焦产品结构',
+                        time: '5 小时前',
+                      },
+                    ].map((c) => (
+                      <div
+                        key={c.id}
+                        className="rounded-md border border-rose-500/10 bg-rose-500/5 p-2"
+                      >
+                        <div className="mb-1.5 flex items-center justify-between">
+                          <p className="text-[10px] text-slate-500">
+                            P{c.page} · {c.time}
+                          </p>
+                          <span className="flex items-center gap-0.5 rounded bg-rose-500/15 px-1.5 py-0.5 text-[9px] text-rose-300 ring-1 ring-rose-500/25">
+                            <AlertCircle className="h-2.5 w-2.5" />
+                            冲突
+                          </span>
+                        </div>
+                        <p className="mb-1.5 text-[11px] text-slate-300 line-clamp-1">
+                          「<span className="text-yellow-200 bg-yellow-500/20 px-0.5">{c.excerpt}</span>」
+                        </p>
+                        <div className="grid grid-cols-2 gap-1.5">
+                          <div className="rounded bg-finance-800/60 p-1.5">
+                            <p className="flex items-center gap-0.5 text-[9px] text-blue-300">
+                              <Users className="h-2 w-2" /> {c.analystA}
+                            </p>
+                            <p className="mt-0.5 text-[10px] leading-relaxed text-slate-400">{c.commentA}</p>
+                          </div>
+                          <div className="rounded bg-finance-800/60 p-1.5">
+                            <p className="flex items-center gap-0.5 text-[9px] text-purple-300">
+                              <Users className="h-2 w-2" /> {c.analystB}
+                            </p>
+                            <p className="mt-0.5 text-[10px] leading-relaxed text-slate-400">{c.commentB}</p>
+                          </div>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+
+                <div>
+                  <p className="mb-2 flex items-center gap-1 text-[11px] font-medium text-slate-400">
+                    <BookOpenCheck className="h-3 w-3 text-purple-400" />
+                    结构化摘要人工校验记录
+                  </p>
+                  <div className="space-y-1.5">
+                    {summaryReviews.slice(0, 2).map((sr) => (
+                      <button
+                        key={sr.id}
+                        onClick={() => navigate('/admin/summary-review')}
+                        className="flex w-full items-start gap-2 rounded-md border border-purple-500/10 bg-purple-500/5 p-2 text-left transition hover:border-purple-500/25"
+                      >
+                        <Sparkles className="mt-0.5 h-3 w-3 shrink-0 text-purple-400" />
+                        <div className="flex-1 min-w-0">
+                          <div className="mb-0.5 flex items-center gap-1.5">
+                            <p className="truncate text-[11px] font-medium text-slate-200">{sr.reportTitle}</p>
+                            <span
+                              className={`shrink-0 rounded px-1 py-0.5 text-[8px] ring-1 ${
+                                sr.status === 'approved'
+                                  ? 'bg-emerald-500/15 text-emerald-300 ring-emerald-500/25'
+                                  : sr.status === 'revised'
+                                    ? 'bg-blue-500/15 text-blue-300 ring-blue-500/25'
+                                    : 'bg-amber-500/15 text-amber-300 ring-amber-500/25'
+                              }`}
+                            >
+                              {sr.status === 'approved'
+                                ? '已通过'
+                                : sr.status === 'revised'
+                                  ? '待修改'
+                                  : '待审核'}
+                            </span>
+                          </div>
+                          {sr.reviewerComment && (
+                            <p className="line-clamp-1 text-[10px] text-slate-400">
+                              审核意见：{sr.reviewerComment}
+                            </p>
+                          )}
+                          <p className="mt-0.5 text-[10px] text-slate-600">
+                            系统校验 · {formatTime(sr.createdAt)}
+                          </p>
+                        </div>
+                      </button>
+                    ))}
+                  </div>
+                </div>
+              </div>
+            )}
+          </div>
+
           <div className="px-4 py-3">
-            <button
+            <div
               onClick={() => toggleSection('riskDynamics')}
-              className="mb-3 flex w-full items-center justify-between"
+              className="mb-3 flex w-full cursor-pointer items-center justify-between"
             >
               <div className="flex items-center gap-2">
                 <AlertTriangle className="h-4 w-4 text-amber-400" />
@@ -1210,33 +1676,74 @@ export default function GraphHome() {
               ) : (
                 <ChevronDown className="h-3.5 w-3.5 text-slate-500" />
               )}
-            </button>
+            </div>
 
             {expandedSections.riskDynamics && (
               <div className="space-y-2.5">
                 {enrichedRiskDynamics.map((item, i) => (
                   <div
-                    key={i}
+                    key={item.id}
                     className="animate-fade-in-up"
                     style={{ animationDelay: `${i * 50}ms` }}
                   >
-                    <div className="rounded-md border border-gold-500/5 bg-finance-900/30 p-2.5">
+                    <div className={`rounded-md border p-2.5 transition ${
+                      !item.read && item.isPush
+                        ? 'border-amber-500/20 bg-amber-500/5'
+                        : 'border-gold-500/5 bg-finance-900/30'
+                    }`}>
                       <div className="flex items-start gap-2.5">
-                        <span
-                          className={`mt-0.5 shrink-0 rounded px-1.5 py-0.5 text-[10px] font-medium ${
-                            item.tag === '高风险'
-                              ? 'bg-red-500/15 text-red-300'
-                              : item.tag === '中风险'
-                                ? 'bg-amber-500/15 text-amber-300'
-                                : item.tag === '热度'
-                                  ? 'bg-orange-500/15 text-orange-300'
-                                  : 'bg-blue-500/15 text-blue-300'
-                          }`}
-                        >
-                          {item.tag}
-                        </span>
+                        <div className="flex flex-col items-center gap-1">
+                          <span
+                            className={`shrink-0 rounded px-1.5 py-0.5 text-[10px] font-medium ${
+                              item.tag === '高风险'
+                                ? 'bg-red-500/15 text-red-300'
+                                : item.tag === '中风险'
+                                  ? 'bg-amber-500/15 text-amber-300'
+                                  : item.tag === '热度'
+                                    ? 'bg-orange-500/15 text-orange-300'
+                                    : 'bg-blue-500/15 text-blue-300'
+                            }`}
+                          >
+                            {item.tag}
+                          </span>
+                          {!item.read && item.isPush && (
+                            <span className="flex h-2 w-2 shrink-0 rounded-full bg-amber-400 shadow-[0_0_6px_rgba(251,191,36,0.6)]" title="未读" />
+                          )}
+                        </div>
                         <div className="flex-1 min-w-0">
                           <p className="text-xs leading-relaxed text-slate-300">{item.text}</p>
+
+                          {item.isPush && item.subscription && (
+                            <div className="mt-1.5 flex items-start gap-1.5 rounded-md border border-gold-500/10 bg-gold-500/5 px-2 py-1">
+                              <Target className="mt-0.5 h-2.5 w-2.5 shrink-0 text-gold-400" />
+                              <div className="min-w-0">
+                                <p className="flex items-center flex-wrap gap-1 text-[10px] text-slate-400">
+                                  <span>命中订阅：</span>
+                                  {(() => {
+                                    const Icon = subTypeIcon[item.subscription.type];
+                                    return Icon ? <Icon className="h-2.5 w-2.5 text-gold-400" /> : null;
+                                  })()}
+                                  <span className="font-medium text-gold-300">
+                                    {item.subscription.targetName}
+                                  </span>
+                                  <span className="text-slate-500">
+                                    ({subTypeLabel[item.subscription.type]} · {notifyLevelLabel[item.subscription.notifyLevel]})
+                                  </span>
+                                </p>
+                              </div>
+                            </div>
+                          )}
+
+                          {item.isPush && item.highlightedText && (
+                            <div className="mt-1.5 rounded-md border border-yellow-500/10 bg-yellow-500/5 px-2 py-1">
+                              <p className="text-[10px] leading-relaxed text-slate-400">
+                                ...<span className="bg-yellow-500/25 px-0.5 text-yellow-200">
+                                  {item.highlightedText.slice(0, 30)}{item.highlightedText.length > 30 ? '...' : ''}
+                                </span>...
+                              </p>
+                            </div>
+                          )}
+
                           <div className="mt-1.5 flex flex-wrap items-center gap-2 text-[10px] text-slate-500">
                             <span>{item.time}</span>
                             {item.sourceName && (
@@ -1253,10 +1760,11 @@ export default function GraphHome() {
                                 className="flex items-center gap-0.5 text-gold-400 transition hover:text-gold-300"
                               >
                                 <ExternalLink className="h-2.5 w-2.5" />
-                                原始信源
+                                穿透信源
                               </a>
                             )}
                           </div>
+
                           {item.relatedEntities.length > 0 && (
                             <div className="mt-1.5 flex flex-wrap items-center gap-1">
                               {item.relatedEntities.map((eid) => {
@@ -1286,13 +1794,34 @@ export default function GraphHome() {
                                   {riskLabel[item.riskLevel]}
                                 </span>
                               )}
-                              {!item.read && (
-                                <span className="rounded bg-amber-500/15 px-1.5 py-0.5 text-[9px] text-amber-300">
-                                  未读
-                                </span>
-                              )}
                             </div>
                           )}
+
+                          <div className="mt-1.5 flex flex-wrap items-center gap-1.5">
+                            {item.isPush && !item.read && (
+                              <button
+                                onClick={() => markPushRead(item.id)}
+                                className="flex items-center gap-0.5 rounded-md bg-amber-500/15 px-2 py-0.5 text-[10px] text-amber-300 ring-1 ring-amber-500/25 transition hover:bg-amber-500/25"
+                              >
+                                <CheckCircle2 className="h-2.5 w-2.5" />
+                                标为已读
+                              </button>
+                            )}
+                            {item.isPush && (item.riskLevel === 'high' || item.riskLevel === 'medium') && (
+                              <button
+                                onClick={() => {
+                                  if (item.isPush) {
+                                    markPushRead(item.id);
+                                  }
+                                  navigate('/subscriptions');
+                                }}
+                                className="flex items-center gap-0.5 rounded-md bg-signal-danger/15 px-2 py-0.5 text-[10px] text-signal-danger ring-1 ring-signal-danger/25 transition hover:bg-signal-danger/25"
+                              >
+                                <ShieldAlert className="h-2.5 w-2.5" />
+                                去订阅推送查看详情
+                              </button>
+                            )}
+                          </div>
                         </div>
                       </div>
                     </div>

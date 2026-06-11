@@ -574,7 +574,10 @@ export const mockSummaryReviews: SummaryReview[] = [
       '支付行业正经历深刻变革。监管层面，《非银行支付机构监督管理条例》正式实施，明确了支付机构准入、业务规则、消费者权益保护等要求。市场层面，跨境支付、B端支付成为新增长极。支付机构纷纷加码跨境支付能力，蚂蚁、连连、PingPong等在跨境电商收款领域竞争加剧。预计2025年中国跨境支付市场规模将达25万亿元，CAGR约18%。支付机构商业模式正从单纯的通道费收入向SaaS增值服务延伸。',
     generatedSummary:
       '监管方面，支付条例正式落地明确行业规范。市场方面，跨境支付和B端支付成为增长引擎，预计2025年市场规模25万亿元。支付机构正从通道费模式向SaaS服务转型。',
+    reviewerId: 'u-002',
+    reviewerComment: '建议补充监管对支付机构备付金集中度要求的影响分析',
     status: 'pending',
+    version: 1,
     createdAt: '2025-06-08T10:00:00Z',
   },
   {
@@ -585,7 +588,10 @@ export const mockSummaryReviews: SummaryReview[] = [
       '传统安防市场增速放缓，但AI技术为行业注入新动能。海康威视、大华股份等龙头企业纷纷推出基于大模型的智能安防产品，实现从"看得清"到"看得懂"的跨越。AI安防在城市治理、交通、金融、工业等场景加速落地。预计2025年AI安防市场规模将达850亿元，同比增长35%。头部企业凭借数据、算法、渠道优势，市占率有望进一步提升。',
     generatedSummary:
       '传统安防增速放缓，AI技术带来新增长。海康威视等龙头推出大模型智能产品，多场景应用加速落地。2025年AI安防市场预计约850亿元，同比增长35%，头部企业优势凸显。',
-    status: 'pending',
+    reviewerId: 'u-003',
+    reviewerComment: '海外业务不确定性和地缘政治风险需加强提示',
+    status: 'revised',
+    version: 2,
     createdAt: '2025-06-09T14:30:00Z',
   },
   {
@@ -593,9 +599,11 @@ export const mockSummaryReviews: SummaryReview[] = [
     reportId: 'report-001',
     reportTitle: '光伏行业2025年中期策略：否极泰来，拥抱新技术周期',
     originalText: '',
-    generatedSummary: '',
+    generatedSummary: '光伏行业供需反转在即，TOPCon/HJT技术迭代加速，二季度起盈利修复。关注一体化龙头、新技术方向和辅材环节。',
+    reviewerId: 'u-001',
     reviewerComment: '摘要已审核，表述准确，核心观点突出。',
     status: 'approved',
+    version: 3,
     createdAt: '2025-06-03T09:20:00Z',
   },
 ];
