@@ -1,0 +1,1397 @@
+{
+  "ok": true,
+  "generatedAt": "2026-06-09T19:32:32.787Z",
+  "order": "may-89123",
+  "roundIndex": 98,
+  "captureId": "may-89123-cycle98-final",
+  "url": "http://127.0.0.1:49123/",
+  "initialUrl": "http://127.0.0.1:49123/",
+  "finalUrl": "http://127.0.0.1:49123/",
+  "status": 200,
+  "title": "My Trae Project",
+  "initialTitle": "My Trae Project",
+  "navigationError": "",
+  "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89123/runtime-check/codex-20260609-cycle98-final/may-89123-cycle98-final-frontend.png",
+  "screenshotPaths": [
+    "/Users/chen/Documents/trae_projects/local_projects/may-89123/runtime-check/codex-20260609-cycle98-final/may-89123-cycle98-final-structure-01-首屏.png",
+    "/Users/chen/Documents/trae_projects/local_projects/may-89123/runtime-check/codex-20260609-cycle98-final/may-89123-cycle98-final-structure-02-导航-首页大厅.png",
+    "/Users/chen/Documents/trae_projects/local_projects/may-89123/runtime-check/codex-20260609-cycle98-final/may-89123-cycle98-final-structure-03-操作-购买.png",
+    "/Users/chen/Documents/trae_projects/local_projects/may-89123/runtime-check/codex-20260609-cycle98-final/may-89123-cycle98-final-structure-04-二层操作-购买-发起争议.png",
+    "/Users/chen/Documents/trae_projects/local_projects/may-89123/runtime-check/codex-20260609-cycle98-final/may-89123-cycle98-final-structure-05-操作-租用.png",
+    "/Users/chen/Documents/trae_projects/local_projects/may-89123/runtime-check/codex-20260609-cycle98-final/may-89123-cycle98-final-structure-06-二层操作-租用-按时.png",
+    "/Users/chen/Documents/trae_projects/local_projects/may-89123/runtime-check/codex-20260609-cycle98-final/may-89123-cycle98-final-structure-07-导航-租号中心.png"
+  ],
+  "issueTextPreview": "登录注册相关问题；后台管理相关问题",
+  "targetReason": "登录注册相关问题；后台管理相关问题",
+  "targetKind": "auth",
+  "targetMatched": true,
+  "targetActions": [
+    {
+      "action": "click",
+      "label": "登录注册相关问题",
+      "ok": true
+    },
+    {
+      "action": "target-verify",
+      "label": "登录注册相关问题",
+      "ok": true,
+      "finalUrl": "http://127.0.0.1:49123/login"
+    }
+  ],
+  "authFlow": {
+    "detected": false,
+    "attempted": false,
+    "success": false,
+    "finalUrl": "http://127.0.0.1:49123/",
+    "message": "",
+    "actions": []
+  },
+  "businessAudit": {
+    "actions": [
+      {
+        "action": "click",
+        "label": "导航:首页大厅",
+        "ok": true
+      },
+      {
+        "action": "click",
+        "label": "操作:购买",
+        "ok": true,
+        "result": {
+          "ok": true,
+          "matched": 4
+        }
+      },
+      {
+        "action": "click",
+        "label": "二层操作:购买:发起争议",
+        "ok": true,
+        "result": {
+          "ok": true,
+          "matched": 1
+        }
+      },
+      {
+        "action": "click",
+        "label": "操作:租用",
+        "ok": true,
+        "result": {
+          "ok": true,
+          "matched": 4
+        }
+      },
+      {
+        "action": "click",
+        "label": "二层操作:租用:按时",
+        "ok": true,
+        "result": {
+          "ok": true,
+          "matched": 1
+        }
+      },
+      {
+        "action": "click",
+        "label": "导航:租号中心",
+        "ok": true
+      }
+    ],
+    "snapshots": [
+      {
+        "label": "首屏",
+        "url": "http://127.0.0.1:49123/",
+        "title": "My Trae Project",
+        "headings": [
+          "GameVault",
+          "实时交易流",
+          "热门账号",
+          "快速开始交易",
+          "我的业务闭环"
+        ],
+        "navLabels": [
+          "GameVault",
+          "首页大厅",
+          "租号中心",
+          "买卖市场",
+          "估值系统",
+          "回收竞价",
+          "保险理赔",
+          "VR预览",
+          "运营后台"
+        ],
+        "buttons": [
+          "租用",
+          "购买"
+        ],
+        "links": [
+          "首页大厅",
+          "租号中心",
+          "买卖市场",
+          "估值系统",
+          "回收竞价",
+          "保险理赔",
+          "VR预览",
+          "运营后台",
+          "登录",
+          "注册",
+          "合规审计看板"
+        ],
+        "inputs": [],
+        "tables": [],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "GameVault首页大厅租号中心买卖市场估值系统回收竞价保险理赔VR预览运营后台GameVault首页大厅登录注册GameVault高安全等级游戏账号全生命周期交易平台¥12,856,000总交易额含租/买/卖/回收全口径，按合同签署时间统计2,847在线账号当前可租/可售账号数，每5分钟刷新98,652次安全保障累计资金托管+保险理赔+风控拦截次数租号中心买卖市场智能估值回收竞价保险理赔实时交易流合规审计看板原神购买¥2,58017:23已完成DNF手游租号¥12017:20进行中王者荣耀出售¥1,68017:15已完成永劫无间回收¥1,70017:10待处理崩铁购买¥3,68017:05已完成英雄联盟租号¥8817:00已完成原神出售¥3,20016:55已完成DNF手游购买¥4,20016:50进行中热门账号Lv.58原神天空岛 · 国服UID-8293010x7a3f...e8b2✓ 已上链0xabc123...def456可交易保险生效中¥2,580售价¥68/天租价租用购买VR预览Lv.30王者荣耀微信区 · 国服UID-4456720x9c2d...f1a4✓ 已上链0x789abc...012def资金托管中保险生效中¥1,680售价¥45/天租价租用购买VR预览Lv.45英雄联盟艾欧尼亚 · 国服UID-1198830x5e8b...c3d7✓ 已上链0x345def...678abc可交易未投保¥3,200售价¥88/天租价租用购买VR预览Lv.60DNF手游跨一区 · 国服UID-5566770x2f4a...b9e1✓ 已上链0xcde789...012345租赁中保险生效中¥4,200售价¥128/天租价租用购买VR预览快速开始交易我要租号安全租用高等级游戏账号，设备绑定+保险保障选号→租期→设备绑定→押金→使用→归还我要买号智能合约+资金托管，安全购买游戏账号下单→合同签署→托管冻结→过户→释放→完成我要卖号一键发布账号，链上存证+竞价回收上架→合同签署→托管→过户→资金释放我的业务闭环实时展示租号、买卖、回收、理赔流程的当前状态，点击可跳转到对应步骤继续操作租号流程当前状态：选号买卖流程当前状态：选号下单回收流程当前状态：提交回收理赔流程当前状态：查看保单GameVault首页大厅租号中心买卖市场估值系统回收竞价保险理赔VR预览运营后台GameVault",
+        "layout": {
+          "viewportWidth": 1504,
+          "viewportHeight": 1600,
+          "scrollWidth": 1504,
+          "scrollHeight": 1818,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89123-cycle98-final-structure-01-首屏",
+          "label": "首屏",
+          "finalUrl": "http://127.0.0.1:49123/",
+          "title": "My Trae Project",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89123/runtime-check/codex-20260609-cycle98-final/may-89123-cycle98-final-structure-01-首屏.json",
+          "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89123/runtime-check/codex-20260609-cycle98-final/may-89123-cycle98-final-structure-01-首屏.png",
+          "elementCount": 574,
+          "interactiveCount": 45,
+          "interactiveLabels": [
+            "首页大厅",
+            "租号中心",
+            "买卖市场",
+            "估值系统",
+            "回收竞价",
+            "保险理赔",
+            "VR预览",
+            "运营后台",
+            "登录",
+            "注册",
+            "login",
+            "智能估值",
+            "合规审计看板",
+            "租用",
+            "购买"
+          ]
+        }
+      },
+      {
+        "label": "导航:首页大厅",
+        "url": "http://127.0.0.1:49123/",
+        "title": "My Trae Project",
+        "headings": [
+          "GameVault",
+          "实时交易流",
+          "热门账号",
+          "快速开始交易",
+          "我的业务闭环"
+        ],
+        "navLabels": [
+          "GameVault",
+          "首页大厅",
+          "租号中心",
+          "买卖市场",
+          "估值系统",
+          "回收竞价",
+          "保险理赔",
+          "VR预览",
+          "运营后台"
+        ],
+        "buttons": [
+          "租用",
+          "购买"
+        ],
+        "links": [
+          "首页大厅",
+          "租号中心",
+          "买卖市场",
+          "估值系统",
+          "回收竞价",
+          "保险理赔",
+          "VR预览",
+          "运营后台",
+          "登录",
+          "注册",
+          "合规审计看板"
+        ],
+        "inputs": [],
+        "tables": [],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "GameVault首页大厅租号中心买卖市场估值系统回收竞价保险理赔VR预览运营后台GameVault首页大厅登录注册GameVault高安全等级游戏账号全生命周期交易平台¥12,856,000总交易额含租/买/卖/回收全口径，按合同签署时间统计2,847在线账号当前可租/可售账号数，每5分钟刷新98,652次安全保障累计资金托管+保险理赔+风控拦截次数租号中心买卖市场智能估值回收竞价保险理赔实时交易流合规审计看板原神购买¥2,58017:23已完成DNF手游租号¥12017:20进行中王者荣耀出售¥1,68017:15已完成永劫无间回收¥1,70017:10待处理崩铁购买¥3,68017:05已完成英雄联盟租号¥8817:00已完成原神出售¥3,20016:55已完成DNF手游购买¥4,20016:50进行中热门账号Lv.58原神天空岛 · 国服UID-8293010x7a3f...e8b2✓ 已上链0xabc123...def456可交易保险生效中¥2,580售价¥68/天租价租用购买VR预览Lv.30王者荣耀微信区 · 国服UID-4456720x9c2d...f1a4✓ 已上链0x789abc...012def资金托管中保险生效中¥1,680售价¥45/天租价租用购买VR预览Lv.45英雄联盟艾欧尼亚 · 国服UID-1198830x5e8b...c3d7✓ 已上链0x345def...678abc可交易未投保¥3,200售价¥88/天租价租用购买VR预览Lv.60DNF手游跨一区 · 国服UID-5566770x2f4a...b9e1✓ 已上链0xcde789...012345租赁中保险生效中¥4,200售价¥128/天租价租用购买VR预览快速开始交易我要租号安全租用高等级游戏账号，设备绑定+保险保障选号→租期→设备绑定→押金→使用→归还我要买号智能合约+资金托管，安全购买游戏账号下单→合同签署→托管冻结→过户→释放→完成我要卖号一键发布账号，链上存证+竞价回收上架→合同签署→托管→过户→资金释放我的业务闭环实时展示租号、买卖、回收、理赔流程的当前状态，点击可跳转到对应步骤继续操作租号流程当前状态：选号买卖流程当前状态：选号下单回收流程当前状态：提交回收理赔流程当前状态：查看保单GameVault首页大厅租号中心买卖市场估值系统回收竞价保险理赔VR预览运营后台GameVault",
+        "layout": {
+          "viewportWidth": 1536,
+          "viewportHeight": 1600,
+          "scrollWidth": 1536,
+          "scrollHeight": 1818,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89123-cycle98-final-structure-02-导航-首页大厅",
+          "label": "导航:首页大厅",
+          "finalUrl": "http://127.0.0.1:49123/",
+          "title": "My Trae Project",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89123/runtime-check/codex-20260609-cycle98-final/may-89123-cycle98-final-structure-02-导航-首页大厅.json",
+          "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89123/runtime-check/codex-20260609-cycle98-final/may-89123-cycle98-final-structure-02-导航-首页大厅.png",
+          "elementCount": 574,
+          "interactiveCount": 45,
+          "interactiveLabels": [
+            "首页大厅",
+            "租号中心",
+            "买卖市场",
+            "估值系统",
+            "回收竞价",
+            "保险理赔",
+            "VR预览",
+            "运营后台",
+            "登录",
+            "注册",
+            "login",
+            "智能估值",
+            "合规审计看板",
+            "租用",
+            "购买"
+          ]
+        }
+      },
+      {
+        "label": "操作:购买",
+        "url": "http://127.0.0.1:49123/trade",
+        "title": "My Trae Project",
+        "headings": [],
+        "navLabels": [
+          "GameVault",
+          "首页大厅",
+          "租号中心",
+          "买卖市场",
+          "估值系统",
+          "回收竞价",
+          "保险理赔",
+          "VR预览",
+          "运营后台"
+        ],
+        "buttons": [
+          "买号",
+          "卖号",
+          "我的订单",
+          "重新下单",
+          "签署合同",
+          "发起争议"
+        ],
+        "links": [
+          "首页大厅",
+          "租号中心",
+          "买卖市场",
+          "估值系统",
+          "回收竞价",
+          "保险理赔",
+          "VR预览",
+          "运营后台",
+          "登录",
+          "注册"
+        ],
+        "inputs": [],
+        "tables": [],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "GameVault首页大厅租号中心买卖市场估值系统回收竞价保险理赔VR预览运营后台GameVault首页大厅买卖市场登录注册买号卖号我的订单重新下单下单合同签署资金托管过户确认资金释放完成原神天空岛UID UID-829301 · Lv.58 · ¥2580合同文本甲方（卖方）同意将游戏账号 UID-829301 以 ¥2580 转让给乙方（买方）。双方同意通过平台托管完成交易。资金在账号过户确认后释放。争议由平台仲裁解决。本合同基于区块链存证，哈希 0x7a3f...e8b2，链上交易哈希 0xabc123...def456。签署合同发起争议GameVault首页大厅租号中心买卖市场估值系统回收竞价保险理赔VR预览运营后台GameVault",
+        "layout": {
+          "viewportWidth": 1568,
+          "viewportHeight": 1600,
+          "scrollWidth": 1568,
+          "scrollHeight": 1704,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89123-cycle98-final-structure-03-操作-购买",
+          "label": "操作:购买",
+          "finalUrl": "http://127.0.0.1:49123/trade",
+          "title": "My Trae Project",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89123/runtime-check/codex-20260609-cycle98-final/may-89123-cycle98-final-structure-03-操作-购买.json",
+          "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89123/runtime-check/codex-20260609-cycle98-final/may-89123-cycle98-final-structure-03-操作-购买.png",
+          "elementCount": 238,
+          "interactiveCount": 29,
+          "interactiveLabels": [
+            "首页大厅",
+            "租号中心",
+            "买卖市场",
+            "估值系统",
+            "回收竞价",
+            "保险理赔",
+            "VR预览",
+            "运营后台",
+            "登录",
+            "注册",
+            "login",
+            "买号",
+            "卖号",
+            "我的订单",
+            "重新下单",
+            "签署合同",
+            "发起争议"
+          ]
+        }
+      },
+      {
+        "label": "二层操作:购买->发起争议",
+        "url": "http://127.0.0.1:49123/trade",
+        "title": "My Trae Project",
+        "headings": [],
+        "navLabels": [
+          "GameVault",
+          "首页大厅",
+          "租号中心",
+          "买卖市场",
+          "估值系统",
+          "回收竞价",
+          "保险理赔",
+          "VR预览",
+          "运营后台"
+        ],
+        "buttons": [
+          "买号",
+          "卖号",
+          "我的订单",
+          "重新下单",
+          "签署合同",
+          "发起争议",
+          "提交争议"
+        ],
+        "links": [
+          "首页大厅",
+          "租号中心",
+          "买卖市场",
+          "估值系统",
+          "回收竞价",
+          "保险理赔",
+          "VR预览",
+          "运营后台",
+          "登录",
+          "注册"
+        ],
+        "inputs": [
+          {
+            "tag": "textarea",
+            "type": "",
+            "placeholder": "请描述争议原因...",
+            "name": "",
+            "label": ""
+          }
+        ],
+        "tables": [],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "GameVault首页大厅租号中心买卖市场估值系统回收竞价保险理赔VR预览运营后台GameVault首页大厅买卖市场登录注册买号卖号我的订单重新下单下单合同签署资金托管过户确认资金释放完成原神天空岛UID UID-829301 · Lv.58 · ¥2580合同文本甲方（卖方）同意将游戏账号 UID-829301 以 ¥2580 转让给乙方（买方）。双方同意通过平台托管完成交易。资金在账号过户确认后释放。争议由平台仲裁解决。本合同基于区块链存证，哈希 0x7a3f...e8b2，链上交易哈希 0xabc123...def456。签署合同发起争议发起争议提交后平台将：①冻结托管资金 → ②采集证据 → ③指派仲裁员 → ④裁决结果提交争议GameVault首页大厅租号中心买卖市场估值系统回收竞价保险理赔VR预览运营后台GameVault",
+        "layout": {
+          "viewportWidth": 1600,
+          "viewportHeight": 1600,
+          "scrollWidth": 1600,
+          "scrollHeight": 1704,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89123-cycle98-final-structure-04-二层操作-购买-发起争议",
+          "label": "二层操作:购买->发起争议",
+          "finalUrl": "http://127.0.0.1:49123/trade",
+          "title": "My Trae Project",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89123/runtime-check/codex-20260609-cycle98-final/may-89123-cycle98-final-structure-04-二层操作-购买-发起争议.json",
+          "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89123/runtime-check/codex-20260609-cycle98-final/may-89123-cycle98-final-structure-04-二层操作-购买-发起争议.png",
+          "elementCount": 253,
+          "interactiveCount": 32,
+          "interactiveLabels": [
+            "首页大厅",
+            "租号中心",
+            "买卖市场",
+            "估值系统",
+            "回收竞价",
+            "保险理赔",
+            "VR预览",
+            "运营后台",
+            "登录",
+            "注册",
+            "login",
+            "买号",
+            "卖号",
+            "我的订单",
+            "重新下单",
+            "签署合同",
+            "发起争议",
+            "请描述争议原因...",
+            "提交争议"
+          ]
+        }
+      },
+      {
+        "label": "操作:租用",
+        "url": "http://127.0.0.1:49123/rent",
+        "title": "My Trae Project",
+        "headings": [],
+        "navLabels": [
+          "GameVault",
+          "首页大厅",
+          "租号中心",
+          "买卖市场",
+          "估值系统",
+          "回收竞价",
+          "保险理赔",
+          "VR预览",
+          "运营后台"
+        ],
+        "buttons": [
+          "重新选号",
+          "按时",
+          "按天",
+          "确认租期，下一步：设备绑定 →"
+        ],
+        "links": [
+          "首页大厅",
+          "租号中心",
+          "买卖市场",
+          "估值系统",
+          "回收竞价",
+          "保险理赔",
+          "VR预览",
+          "运营后台",
+          "登录",
+          "注册"
+        ],
+        "inputs": [
+          {
+            "tag": "input",
+            "type": "range",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          }
+        ],
+        "tables": [],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "GameVault首页大厅租号中心买卖市场估值系统回收竞价保险理赔VR预览运营后台GameVault首页大厅租号中心登录注册租号流程步骤 2/7重新选号选号2租期3设备绑定4押金5使用中6归还7完成原神天空岛 · UID-829301 · Lv.58¥8/时 · ¥68/日链上存证已投保① 租期类型按时按天② 小时数: 2小时租金¥16押金（托管）¥387合计¥403确认租期，下一步：设备绑定 →GameVault首页大厅租号中心买卖市场估值系统回收竞价保险理赔VR预览运营后台GameVault",
+        "layout": {
+          "viewportWidth": 1632,
+          "viewportHeight": 1600,
+          "scrollWidth": 1632,
+          "scrollHeight": 1704,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89123-cycle98-final-structure-05-操作-租用",
+          "label": "操作:租用",
+          "finalUrl": "http://127.0.0.1:49123/rent",
+          "title": "My Trae Project",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89123/runtime-check/codex-20260609-cycle98-final/may-89123-cycle98-final-structure-05-操作-租用.json",
+          "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89123/runtime-check/codex-20260609-cycle98-final/may-89123-cycle98-final-structure-05-操作-租用.png",
+          "elementCount": 263,
+          "interactiveCount": 29,
+          "interactiveLabels": [
+            "首页大厅",
+            "租号中心",
+            "买卖市场",
+            "估值系统",
+            "回收竞价",
+            "保险理赔",
+            "VR预览",
+            "运营后台",
+            "登录",
+            "注册",
+            "login",
+            "重新选号",
+            "按时",
+            "按天",
+            "2",
+            "确认租期，下一步：设备绑定 →"
+          ]
+        }
+      },
+      {
+        "label": "二层操作:租用->按时",
+        "url": "http://127.0.0.1:49123/rent",
+        "title": "My Trae Project",
+        "headings": [],
+        "navLabels": [
+          "GameVault",
+          "首页大厅",
+          "租号中心",
+          "买卖市场",
+          "估值系统",
+          "回收竞价",
+          "保险理赔",
+          "VR预览",
+          "运营后台"
+        ],
+        "buttons": [
+          "重新选号",
+          "按时",
+          "按天",
+          "确认租期，下一步：设备绑定 →"
+        ],
+        "links": [
+          "首页大厅",
+          "租号中心",
+          "买卖市场",
+          "估值系统",
+          "回收竞价",
+          "保险理赔",
+          "VR预览",
+          "运营后台",
+          "登录",
+          "注册"
+        ],
+        "inputs": [
+          {
+            "tag": "input",
+            "type": "range",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          }
+        ],
+        "tables": [],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "GameVault首页大厅租号中心买卖市场估值系统回收竞价保险理赔VR预览运营后台GameVault首页大厅租号中心登录注册租号流程步骤 2/7重新选号选号2租期3设备绑定4押金5使用中6归还7完成原神天空岛 · UID-829301 · Lv.58¥8/时 · ¥68/日链上存证已投保① 租期类型按时按天② 小时数: 2小时租金¥16押金（托管）¥387合计¥403确认租期，下一步：设备绑定 →GameVault首页大厅租号中心买卖市场估值系统回收竞价保险理赔VR预览运营后台GameVault",
+        "layout": {
+          "viewportWidth": 1664,
+          "viewportHeight": 1600,
+          "scrollWidth": 1664,
+          "scrollHeight": 1704,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89123-cycle98-final-structure-06-二层操作-租用-按时",
+          "label": "二层操作:租用->按时",
+          "finalUrl": "http://127.0.0.1:49123/rent",
+          "title": "My Trae Project",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89123/runtime-check/codex-20260609-cycle98-final/may-89123-cycle98-final-structure-06-二层操作-租用-按时.json",
+          "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89123/runtime-check/codex-20260609-cycle98-final/may-89123-cycle98-final-structure-06-二层操作-租用-按时.png",
+          "elementCount": 263,
+          "interactiveCount": 29,
+          "interactiveLabels": [
+            "首页大厅",
+            "租号中心",
+            "买卖市场",
+            "估值系统",
+            "回收竞价",
+            "保险理赔",
+            "VR预览",
+            "运营后台",
+            "登录",
+            "注册",
+            "login",
+            "重新选号",
+            "按时",
+            "按天",
+            "2",
+            "确认租期，下一步：设备绑定 →"
+          ]
+        }
+      },
+      {
+        "label": "导航:租号中心",
+        "url": "http://127.0.0.1:49123/rent",
+        "title": "My Trae Project",
+        "headings": [],
+        "navLabels": [
+          "GameVault",
+          "首页大厅",
+          "租号中心",
+          "买卖市场",
+          "估值系统",
+          "回收竞价",
+          "保险理赔",
+          "VR预览",
+          "运营后台"
+        ],
+        "buttons": [
+          "选择此号",
+          "已被租用"
+        ],
+        "links": [
+          "首页大厅",
+          "租号中心",
+          "买卖市场",
+          "估值系统",
+          "回收竞价",
+          "保险理赔",
+          "VR预览",
+          "运营后台",
+          "登录",
+          "注册"
+        ],
+        "inputs": [
+          {
+            "tag": "select",
+            "type": "",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "select",
+            "type": "",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "range",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "range",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "",
+            "placeholder": "搜索游戏/区服",
+            "name": "",
+            "label": ""
+          }
+        ],
+        "tables": [],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "GameVault首页大厅租号中心买卖市场估值系统回收竞价保险理赔VR预览运营后台GameVault首页大厅租号中心登录注册租号流程步骤 1/71选号2租期3设备绑定4押金5使用中6归还7完成筛选账号全部游戏原神王者荣耀英雄联盟DNF手游永劫无间崩坏：星穹铁道全部区服等级 1-70时价上限 ¥50可租Lv.58原神天空岛UID-829301天空之翼护摩之杖磐岩结绿¥8/时¥68/日12链保选择此号可租Lv.45英雄联盟艾欧尼亚UID-119883至臻皮肤：K/DA阿卡丽传说皮肤：源计划：风海克斯科技：炼金男爵¥10/时¥88/日5链选择此号已租Lv.60DNF手游跨一区UID-556677荒古遗尘光剑幽魂魅影套冰雪公主的霜语¥15/时¥128/日22链保已被租用可租Lv.50永劫无间亚洲服UID-889900神识·天照极光套装¥6/时¥55/日10链保选择此号GameVault首页大厅租号中心买卖市场估值系统回收竞价保险理赔VR预览运营后台GameVault",
+        "layout": {
+          "viewportWidth": 1696,
+          "viewportHeight": 1600,
+          "scrollWidth": 1696,
+          "scrollHeight": 1704,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89123-cycle98-final-structure-07-导航-租号中心",
+          "label": "导航:租号中心",
+          "finalUrl": "http://127.0.0.1:49123/rent",
+          "title": "My Trae Project",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89123/runtime-check/codex-20260609-cycle98-final/may-89123-cycle98-final-structure-07-导航-租号中心.json",
+          "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89123/runtime-check/codex-20260609-cycle98-final/may-89123-cycle98-final-structure-07-导航-租号中心.png",
+          "elementCount": 370,
+          "interactiveCount": 32,
+          "interactiveLabels": [
+            "首页大厅",
+            "租号中心",
+            "买卖市场",
+            "估值系统",
+            "回收竞价",
+            "保险理赔",
+            "VR预览",
+            "运营后台",
+            "登录",
+            "注册",
+            "login",
+            "全部游戏 原神 王者荣耀 英雄联盟 DNF手游 永劫无间 崩坏：星穹铁道",
+            "全部区服",
+            "70",
+            "50",
+            "搜索游戏/区服",
+            "选择此号",
+            "已被租用"
+          ]
+        }
+      }
+    ],
+    "findings": [],
+    "actionHints": [],
+    "emptyPages": [],
+    "overflowPages": [],
+    "blankPages": [],
+    "apiFailurePaths": [],
+    "goalTerms": [],
+    "clickedActionDescriptors": [
+      {
+        "nav": "首页大厅",
+        "label": "购买",
+        "ordinal": 0,
+        "unsafe": false
+      },
+      {
+        "nav": "首页大厅",
+        "label": "购买->发起争议",
+        "ordinal": 0,
+        "secondary": true,
+        "unsafe": false
+      },
+      {
+        "nav": "首页大厅",
+        "label": "租用",
+        "ordinal": 0,
+        "unsafe": false
+      },
+      {
+        "nav": "首页大厅",
+        "label": "租用->按时",
+        "ordinal": 0,
+        "secondary": true,
+        "unsafe": false
+      }
+    ],
+    "secondaryActionClicks": 2,
+    "structureCaptures": [
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89123-cycle98-final-structure-01-首屏",
+        "label": "首屏",
+        "finalUrl": "http://127.0.0.1:49123/",
+        "title": "My Trae Project",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89123/runtime-check/codex-20260609-cycle98-final/may-89123-cycle98-final-structure-01-首屏.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89123/runtime-check/codex-20260609-cycle98-final/may-89123-cycle98-final-structure-01-首屏.png",
+        "elementCount": 574,
+        "interactiveCount": 45,
+        "interactiveLabels": [
+          "首页大厅",
+          "租号中心",
+          "买卖市场",
+          "估值系统",
+          "回收竞价",
+          "保险理赔",
+          "VR预览",
+          "运营后台",
+          "登录",
+          "注册",
+          "login",
+          "智能估值",
+          "合规审计看板",
+          "租用",
+          "购买"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89123-cycle98-final-structure-02-导航-首页大厅",
+        "label": "导航:首页大厅",
+        "finalUrl": "http://127.0.0.1:49123/",
+        "title": "My Trae Project",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89123/runtime-check/codex-20260609-cycle98-final/may-89123-cycle98-final-structure-02-导航-首页大厅.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89123/runtime-check/codex-20260609-cycle98-final/may-89123-cycle98-final-structure-02-导航-首页大厅.png",
+        "elementCount": 574,
+        "interactiveCount": 45,
+        "interactiveLabels": [
+          "首页大厅",
+          "租号中心",
+          "买卖市场",
+          "估值系统",
+          "回收竞价",
+          "保险理赔",
+          "VR预览",
+          "运营后台",
+          "登录",
+          "注册",
+          "login",
+          "智能估值",
+          "合规审计看板",
+          "租用",
+          "购买"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89123-cycle98-final-structure-03-操作-购买",
+        "label": "操作:购买",
+        "finalUrl": "http://127.0.0.1:49123/trade",
+        "title": "My Trae Project",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89123/runtime-check/codex-20260609-cycle98-final/may-89123-cycle98-final-structure-03-操作-购买.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89123/runtime-check/codex-20260609-cycle98-final/may-89123-cycle98-final-structure-03-操作-购买.png",
+        "elementCount": 238,
+        "interactiveCount": 29,
+        "interactiveLabels": [
+          "首页大厅",
+          "租号中心",
+          "买卖市场",
+          "估值系统",
+          "回收竞价",
+          "保险理赔",
+          "VR预览",
+          "运营后台",
+          "登录",
+          "注册",
+          "login",
+          "买号",
+          "卖号",
+          "我的订单",
+          "重新下单",
+          "签署合同",
+          "发起争议"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89123-cycle98-final-structure-04-二层操作-购买-发起争议",
+        "label": "二层操作:购买->发起争议",
+        "finalUrl": "http://127.0.0.1:49123/trade",
+        "title": "My Trae Project",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89123/runtime-check/codex-20260609-cycle98-final/may-89123-cycle98-final-structure-04-二层操作-购买-发起争议.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89123/runtime-check/codex-20260609-cycle98-final/may-89123-cycle98-final-structure-04-二层操作-购买-发起争议.png",
+        "elementCount": 253,
+        "interactiveCount": 32,
+        "interactiveLabels": [
+          "首页大厅",
+          "租号中心",
+          "买卖市场",
+          "估值系统",
+          "回收竞价",
+          "保险理赔",
+          "VR预览",
+          "运营后台",
+          "登录",
+          "注册",
+          "login",
+          "买号",
+          "卖号",
+          "我的订单",
+          "重新下单",
+          "签署合同",
+          "发起争议",
+          "请描述争议原因...",
+          "提交争议"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89123-cycle98-final-structure-05-操作-租用",
+        "label": "操作:租用",
+        "finalUrl": "http://127.0.0.1:49123/rent",
+        "title": "My Trae Project",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89123/runtime-check/codex-20260609-cycle98-final/may-89123-cycle98-final-structure-05-操作-租用.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89123/runtime-check/codex-20260609-cycle98-final/may-89123-cycle98-final-structure-05-操作-租用.png",
+        "elementCount": 263,
+        "interactiveCount": 29,
+        "interactiveLabels": [
+          "首页大厅",
+          "租号中心",
+          "买卖市场",
+          "估值系统",
+          "回收竞价",
+          "保险理赔",
+          "VR预览",
+          "运营后台",
+          "登录",
+          "注册",
+          "login",
+          "重新选号",
+          "按时",
+          "按天",
+          "2",
+          "确认租期，下一步：设备绑定 →"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89123-cycle98-final-structure-06-二层操作-租用-按时",
+        "label": "二层操作:租用->按时",
+        "finalUrl": "http://127.0.0.1:49123/rent",
+        "title": "My Trae Project",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89123/runtime-check/codex-20260609-cycle98-final/may-89123-cycle98-final-structure-06-二层操作-租用-按时.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89123/runtime-check/codex-20260609-cycle98-final/may-89123-cycle98-final-structure-06-二层操作-租用-按时.png",
+        "elementCount": 263,
+        "interactiveCount": 29,
+        "interactiveLabels": [
+          "首页大厅",
+          "租号中心",
+          "买卖市场",
+          "估值系统",
+          "回收竞价",
+          "保险理赔",
+          "VR预览",
+          "运营后台",
+          "登录",
+          "注册",
+          "login",
+          "重新选号",
+          "按时",
+          "按天",
+          "2",
+          "确认租期，下一步：设备绑定 →"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89123-cycle98-final-structure-07-导航-租号中心",
+        "label": "导航:租号中心",
+        "finalUrl": "http://127.0.0.1:49123/rent",
+        "title": "My Trae Project",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89123/runtime-check/codex-20260609-cycle98-final/may-89123-cycle98-final-structure-07-导航-租号中心.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89123/runtime-check/codex-20260609-cycle98-final/may-89123-cycle98-final-structure-07-导航-租号中心.png",
+        "elementCount": 370,
+        "interactiveCount": 32,
+        "interactiveLabels": [
+          "首页大厅",
+          "租号中心",
+          "买卖市场",
+          "估值系统",
+          "回收竞价",
+          "保险理赔",
+          "VR预览",
+          "运营后台",
+          "登录",
+          "注册",
+          "login",
+          "全部游戏 原神 王者荣耀 英雄联盟 DNF手游 永劫无间 崩坏：星穹铁道",
+          "全部区服",
+          "70",
+          "50",
+          "搜索游戏/区服",
+          "选择此号",
+          "已被租用"
+        ]
+      }
+    ],
+    "representativeScreenshotUrl": "http://127.0.0.1:49123/",
+    "representativeScreenshotLabel": "GameVault"
+  },
+  "websiteStructureCapture": {
+    "module": "website_structure_capture",
+    "captureCount": 7,
+    "captures": [
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89123-cycle98-final-structure-01-首屏",
+        "label": "首屏",
+        "finalUrl": "http://127.0.0.1:49123/",
+        "title": "My Trae Project",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89123/runtime-check/codex-20260609-cycle98-final/may-89123-cycle98-final-structure-01-首屏.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89123/runtime-check/codex-20260609-cycle98-final/may-89123-cycle98-final-structure-01-首屏.png",
+        "elementCount": 574,
+        "interactiveCount": 45,
+        "interactiveLabels": [
+          "首页大厅",
+          "租号中心",
+          "买卖市场",
+          "估值系统",
+          "回收竞价",
+          "保险理赔",
+          "VR预览",
+          "运营后台",
+          "登录",
+          "注册",
+          "login",
+          "智能估值",
+          "合规审计看板",
+          "租用",
+          "购买"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89123-cycle98-final-structure-02-导航-首页大厅",
+        "label": "导航:首页大厅",
+        "finalUrl": "http://127.0.0.1:49123/",
+        "title": "My Trae Project",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89123/runtime-check/codex-20260609-cycle98-final/may-89123-cycle98-final-structure-02-导航-首页大厅.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89123/runtime-check/codex-20260609-cycle98-final/may-89123-cycle98-final-structure-02-导航-首页大厅.png",
+        "elementCount": 574,
+        "interactiveCount": 45,
+        "interactiveLabels": [
+          "首页大厅",
+          "租号中心",
+          "买卖市场",
+          "估值系统",
+          "回收竞价",
+          "保险理赔",
+          "VR预览",
+          "运营后台",
+          "登录",
+          "注册",
+          "login",
+          "智能估值",
+          "合规审计看板",
+          "租用",
+          "购买"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89123-cycle98-final-structure-03-操作-购买",
+        "label": "操作:购买",
+        "finalUrl": "http://127.0.0.1:49123/trade",
+        "title": "My Trae Project",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89123/runtime-check/codex-20260609-cycle98-final/may-89123-cycle98-final-structure-03-操作-购买.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89123/runtime-check/codex-20260609-cycle98-final/may-89123-cycle98-final-structure-03-操作-购买.png",
+        "elementCount": 238,
+        "interactiveCount": 29,
+        "interactiveLabels": [
+          "首页大厅",
+          "租号中心",
+          "买卖市场",
+          "估值系统",
+          "回收竞价",
+          "保险理赔",
+          "VR预览",
+          "运营后台",
+          "登录",
+          "注册",
+          "login",
+          "买号",
+          "卖号",
+          "我的订单",
+          "重新下单",
+          "签署合同",
+          "发起争议"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89123-cycle98-final-structure-04-二层操作-购买-发起争议",
+        "label": "二层操作:购买->发起争议",
+        "finalUrl": "http://127.0.0.1:49123/trade",
+        "title": "My Trae Project",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89123/runtime-check/codex-20260609-cycle98-final/may-89123-cycle98-final-structure-04-二层操作-购买-发起争议.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89123/runtime-check/codex-20260609-cycle98-final/may-89123-cycle98-final-structure-04-二层操作-购买-发起争议.png",
+        "elementCount": 253,
+        "interactiveCount": 32,
+        "interactiveLabels": [
+          "首页大厅",
+          "租号中心",
+          "买卖市场",
+          "估值系统",
+          "回收竞价",
+          "保险理赔",
+          "VR预览",
+          "运营后台",
+          "登录",
+          "注册",
+          "login",
+          "买号",
+          "卖号",
+          "我的订单",
+          "重新下单",
+          "签署合同",
+          "发起争议",
+          "请描述争议原因...",
+          "提交争议"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89123-cycle98-final-structure-05-操作-租用",
+        "label": "操作:租用",
+        "finalUrl": "http://127.0.0.1:49123/rent",
+        "title": "My Trae Project",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89123/runtime-check/codex-20260609-cycle98-final/may-89123-cycle98-final-structure-05-操作-租用.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89123/runtime-check/codex-20260609-cycle98-final/may-89123-cycle98-final-structure-05-操作-租用.png",
+        "elementCount": 263,
+        "interactiveCount": 29,
+        "interactiveLabels": [
+          "首页大厅",
+          "租号中心",
+          "买卖市场",
+          "估值系统",
+          "回收竞价",
+          "保险理赔",
+          "VR预览",
+          "运营后台",
+          "登录",
+          "注册",
+          "login",
+          "重新选号",
+          "按时",
+          "按天",
+          "2",
+          "确认租期，下一步：设备绑定 →"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89123-cycle98-final-structure-06-二层操作-租用-按时",
+        "label": "二层操作:租用->按时",
+        "finalUrl": "http://127.0.0.1:49123/rent",
+        "title": "My Trae Project",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89123/runtime-check/codex-20260609-cycle98-final/may-89123-cycle98-final-structure-06-二层操作-租用-按时.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89123/runtime-check/codex-20260609-cycle98-final/may-89123-cycle98-final-structure-06-二层操作-租用-按时.png",
+        "elementCount": 263,
+        "interactiveCount": 29,
+        "interactiveLabels": [
+          "首页大厅",
+          "租号中心",
+          "买卖市场",
+          "估值系统",
+          "回收竞价",
+          "保险理赔",
+          "VR预览",
+          "运营后台",
+          "登录",
+          "注册",
+          "login",
+          "重新选号",
+          "按时",
+          "按天",
+          "2",
+          "确认租期，下一步：设备绑定 →"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89123-cycle98-final-structure-07-导航-租号中心",
+        "label": "导航:租号中心",
+        "finalUrl": "http://127.0.0.1:49123/rent",
+        "title": "My Trae Project",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89123/runtime-check/codex-20260609-cycle98-final/may-89123-cycle98-final-structure-07-导航-租号中心.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89123/runtime-check/codex-20260609-cycle98-final/may-89123-cycle98-final-structure-07-导航-租号中心.png",
+        "elementCount": 370,
+        "interactiveCount": 32,
+        "interactiveLabels": [
+          "首页大厅",
+          "租号中心",
+          "买卖市场",
+          "估值系统",
+          "回收竞价",
+          "保险理赔",
+          "VR预览",
+          "运营后台",
+          "登录",
+          "注册",
+          "login",
+          "全部游戏 原神 王者荣耀 英雄联盟 DNF手游 永劫无间 崩坏：星穹铁道",
+          "全部区服",
+          "70",
+          "50",
+          "搜索游戏/区服",
+          "选择此号",
+          "已被租用"
+        ]
+      }
+    ]
+  },
+  "screenshotMetrics": {
+    "width": 1728,
+    "height": 1600,
+    "scrollWidth": 1696,
+    "scrollHeight": 1818
+  },
+  "initialBodyTextPreview": "GameVault\n首页大厅\n租号中心\n买卖市场\n估值系统\n回收竞价\n保险理赔\nVR预览\n运营后台\nGameVault\n首页大厅\n登录\n注册\nGameVault\n\n高安全等级游戏账号全生命周期交易平台\n\n¥12,856,000\n总交易额\n含租/买/卖/回收全口径，按合同签署时间统计\n2,847\n在线账号\n当前可租/可售账号数，每5分钟刷新\n98,652次\n安全保障\n累计资金托管+保险理赔+风控拦截次数\n租号中心\n买卖市场\n智能估值\n回收竞价\n保险理赔\n实时交易流\n合规审计看板\n原神\n购买\n¥2,580\n17:23\n已完成\nDNF手游\n租号\n¥120\n17:20\n进行中\n王者荣耀\n出售\n¥1,680\n17:15\n已完成\n永劫无间\n回收\n¥1,700\n17:10\n待处理\n崩铁\n购买\n¥3,680\n17:05\n已完成\n英雄联盟\n租号\n¥88\n17:00\n已完成\n原神\n出售\n¥3,200\n16:55\n已完成\nDNF手游\n购买\n¥4,200\n16:50\n进行中\n热门账号\nLv.58\n原神\n天空岛 · 国服\nUID-829301\n0x7a3f...e8b2\n✓ 已上链\n0xabc123...def456\n可交易\n保险生效中\n¥2,580\n售价\n¥68/天\n租价\n租用\n购买\nVR预览\nLv.30\n王者荣耀\n微信区 · 国服\nUID-445672\n0x9c2d...f1a4\n✓ 已上链\n0x789abc...012def\n资金托管中\n保险生效中\n¥1,680\n售价\n¥45/天\n租价\n租用\n购买\nVR预览\nLv.45\n英雄联盟\n艾欧尼亚 · 国服\nUID-119883\n0x5e8b...c3d7\n✓ 已上链\n0x345def...678abc\n可交易\n未投保\n¥3,200\n售价\n¥88/天\n租价\n租用\n购买\nVR预览\nLv.60\nDNF手游\n跨一区 · 国服\nUID-556677\n0x2f4a...b9e1\n✓ 已上链\n0xcde789...012345\n租赁中\n保险生效中\n¥4,200\n售价\n¥128/天\n租价\n租用\n购买\nVR预览\n快速开始交易\n我要租号\n安全租用高等级游戏账号，设备绑定+保险保障\n选号→租期→设备绑定→押金→使用→归还\n我要买号\n智能合约+资金托管，安全购买游戏账号\n下单→合同签署→托管冻结→过户→释放→完成\n我要卖号\n一键发布账号，链上存证+竞价回收\n上架→合同签署→托管→过户→资金释放\n我的业务闭环\n\n实时展示租号、买卖、回收、理赔流程的当前状态，点击可跳转到对应步骤继续操作\n\n租号流程\n当前状态：选号\n买卖流程\n当前状态：选号下单\n回收流程\n当前状态：提交回收\n理赔流程\n当前状态：查看保单",
+  "bodyTextPreview": "GameVault\n首页大厅\n租号中心\n买卖市场\n估值系统\n回收竞价\n保险理赔\nVR预览\n运营后台\nGameVault\n首页大厅\n登录\n注册\nGameVault\n\n高安全等级游戏账号全生命周期交易平台\n\n¥12,856,000\n总交易额\n含租/买/卖/回收全口径，按合同签署时间统计\n2,847\n在线账号\n当前可租/可售账号数，每5分钟刷新\n98,652次\n安全保障\n累计资金托管+保险理赔+风控拦截次数\n租号中心\n买卖市场\n智能估值\n回收竞价\n保险理赔\n实时交易流\n合规审计看板\n原神\n购买\n¥2,580\n17:23\n已完成\nDNF手游\n租号\n¥120\n17:20\n进行中\n王者荣耀\n出售\n¥1,680\n17:15\n已完成\n永劫无间\n回收\n¥1,700\n17:10\n待处理\n崩铁\n购买\n¥3,680\n17:05\n已完成\n英雄联盟\n租号\n¥88\n17:00\n已完成\n原神\n出售\n¥3,200\n16:55\n已完成\nDNF手游\n购买\n¥4,200\n16:50\n进行中\n热门账号\nLv.58\n原神\n天空岛 · 国服\nUID-829301\n0x7a3f...e8b2\n✓ 已上链\n0xabc123...def456\n可交易\n保险生效中\n¥2,580\n售价\n¥68/天\n租价\n租用\n购买\nVR预览\nLv.30\n王者荣耀\n微信区 · 国服\nUID-445672\n0x9c2d...f1a4\n✓ 已上链\n0x789abc...012def\n资金托管中\n保险生效中\n¥1,680\n售价\n¥45/天\n租价\n租用\n购买\nVR预览\nLv.45\n英雄联盟\n艾欧尼亚 · 国服\nUID-119883\n0x5e8b...c3d7\n✓ 已上链\n0x345def...678abc\n可交易\n未投保\n¥3,200\n售价\n¥88/天\n租价\n租用\n购买\nVR预览\nLv.60\nDNF手游\n跨一区 · 国服\nUID-556677\n0x2f4a...b9e1\n✓ 已上链\n0xcde789...012345\n租赁中\n保险生效中\n¥4,200\n售价\n¥128/天\n租价\n租用\n购买\nVR预览\n快速开始交易\n我要租号\n安全租用高等级游戏账号，设备绑定+保险保障\n选号→租期→设备绑定→押金→使用→归还\n我要买号\n智能合约+资金托管，安全购买游戏账号\n下单→合同签署→托管冻结→过户→释放→完成\n我要卖号\n一键发布账号，链上存证+竞价回收\n上架→合同签署→托管→过户→资金释放\n我的业务闭环\n\n实时展示租号、买卖、回收、理赔流程的当前状态，点击可跳转到对应步骤继续操作\n\n租号流程\n当前状态：选号\n买卖流程\n当前状态：选号下单\n回收流程\n当前状态：提交回收\n理赔流程\n当前状态：查看保单",
+  "apiBase": "http://127.0.0.1:59123",
+  "businessGoalPreview": "",
+  "apiResponses": [],
+  "apiChecks": [
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59123/api/health",
+      "path": "/api/health",
+      "status": 200,
+      "ok": true,
+      "bodyPreview": "{\"success\":true,\"message\":\"ok\",\"project\":\"may-89123\",\"database\":\"sqlite\",\"stats\":{\"accounts\":4,\"transactions\":4,\"riskAlerts\":3}}"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59123/api/auth/me",
+      "path": "/api/auth/me",
+      "status": 200,
+      "ok": true,
+      "bodyPreview": "{\"success\":false,\"authenticated\":false,\"error\":\"未登录\",\"data\":null}"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59123/api/users/profile",
+      "path": "/api/users/profile",
+      "status": 200,
+      "ok": true,
+      "bodyPreview": "{\"success\":true,\"data\":{\"id\":\"guest\",\"username\":\"guest\",\"role\":\"buyer\",\"displayName\":\"游客用户\",\"status\":\"anonymous\",\"profileSections\":[\"个人中心\",\"我的订单\",\"账号安全\"]}}"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59123/api/user/profile",
+      "path": "/api/user/profile",
+      "status": 200,
+      "ok": true,
+      "bodyPreview": "{\"success\":true,\"data\":{\"id\":\"guest\",\"username\":\"guest\",\"role\":\"buyer\",\"displayName\":\"游客用户\",\"status\":\"anonymous\",\"profileSections\":[\"个人中心\",\"我的订单\",\"账号安全\"]}}"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59123/api/admin/stats",
+      "path": "/api/admin/stats",
+      "status": 200,
+      "ok": true,
+      "bodyPreview": "{\"success\":true,\"data\":{\"summary\":{\"users\":3,\"authEvents\":0,\"highRiskAlerts\":3,\"grossMerchandiseValue\":7280},\"authEvents\":[]}}"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59123/api/admin/dashboard",
+      "path": "/api/admin/dashboard",
+      "status": 200,
+      "ok": true,
+      "bodyPreview": "{\"success\":true,\"data\":{\"summary\":{\"users\":3,\"authEvents\":0,\"highRiskAlerts\":3,\"grossMerchandiseValue\":7280},\"authEvents\":[]}}"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59123/api/products",
+      "path": "/api/products",
+      "status": 200,
+      "ok": true,
+      "bodyPreview": "{\"success\":true,\"data\":{\"items\":[{\"id\":\"acc-004\",\"name\":\"DNF手游\",\"game_uid\":\"UID-556677\",\"server\":\"跨一区\",\"region\":\"国服\",\"level\":60,\"price\":4200,\"rent_daily\":128,\"status\":\"rented\",\"valuation\":3900,\"equipment_snapshot\":[]},{\"id\":\"acc-003\",\"name\":\"英雄联盟\",\"game_uid\":\"UID-119883\",\"server\":\"艾欧尼亚\",\"region\":\"国服\",\"level\":45,\"price\":3200,\"rent_daily\":88,\"status\":\"available\",\"valuation\":2950,\"equipment_snapshot\":[]},{\"id\":\"acc-002\",\"name\":\"王者荣耀\",\"game_uid\":\"UID-445672\",\"server\":\"微信区\",\"region\":\"国服\",\"level\":30,\""
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59123/api/orders",
+      "path": "/api/orders",
+      "status": 200,
+      "ok": true,
+      "bodyPreview": "{\"success\":true,\"data\":{\"items\":[{\"id\":\"tx-004\",\"account_id\":\"acc-003\",\"type\":\"recycle\",\"amount\":2900,\"status\":\"pending\",\"contract_hash\":\"0xcontract004jkl\",\"escrow_status\":\"awaiting_transfer\",\"created_at\":\"2026-06-09T12:20:00Z\",\"game_name\":\"英雄联盟\",\"game_uid\":\"UID-119883\"},{\"id\":\"tx-003\",\"account_id\":\"acc-002\",\"type\":\"sell\",\"amount\":1680,\"status\":\"completed\",\"contract_hash\":\"0xcontract003ghi\",\"escrow_status\":\"released\",\"created_at\":\"2026-06-09T11:15:00Z\",\"game_name\":\"王者荣耀\",\"game_uid\":\"UID-445672\"}"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59123/api/cart",
+      "path": "/api/cart",
+      "status": 200,
+      "ok": true,
+      "bodyPreview": "{\"success\":true,\"data\":{\"items\":[{\"id\":\"acc-003\",\"name\":\"英雄联盟\",\"price\":3200,\"rent_daily\":88,\"status\":\"available\"},{\"id\":\"acc-002\",\"name\":\"王者荣耀\",\"price\":1680,\"rent_daily\":45,\"status\":\"selling\"},{\"id\":\"acc-001\",\"name\":\"原神\",\"price\":2580,\"rent_daily\":68,\"status\":\"available\"}],\"total\":3,\"totalAmount\":7460}}"
+    }
+  ],
+  "dialogs": [],
+  "consoleMessages": [
+    {
+      "type": "debug",
+      "text": "[vite] connecting...",
+      "location": {
+        "url": "http://127.0.0.1:49123/@vite/client",
+        "lineNumber": 788,
+        "columnNumber": 8
+      }
+    },
+    {
+      "type": "debug",
+      "text": "[vite] connected.",
+      "location": {
+        "url": "http://127.0.0.1:49123/@vite/client",
+        "lineNumber": 911,
+        "columnNumber": 14
+      }
+    },
+    {
+      "type": "info",
+      "text": "%cDownload the React DevTools for a better development experience: https://reactjs.org/link/react-devtools font-weight:bold",
+      "location": {
+        "url": "http://127.0.0.1:49123/node_modules/.vite/deps/chunk-DYKRQPZ6.js?v=3619bde0",
+        "lineNumber": 21608,
+        "columnNumber": 24
+      }
+    },
+    {
+      "type": "verbose",
+      "text": "[DOM] Input elements should have autocomplete attributes (suggested: \"current-password\"): (More info: https://goo.gl/9p2vKq)",
+      "location": {
+        "url": "http://127.0.0.1:49123/login",
+        "lineNumber": 0,
+        "columnNumber": 0
+      }
+    },
+    {
+      "type": "debug",
+      "text": "[vite] connecting...",
+      "location": {
+        "url": "http://127.0.0.1:49123/@vite/client",
+        "lineNumber": 788,
+        "columnNumber": 8
+      }
+    },
+    {
+      "type": "debug",
+      "text": "[vite] connected.",
+      "location": {
+        "url": "http://127.0.0.1:49123/@vite/client",
+        "lineNumber": 911,
+        "columnNumber": 14
+      }
+    },
+    {
+      "type": "info",
+      "text": "%cDownload the React DevTools for a better development experience: https://reactjs.org/link/react-devtools font-weight:bold",
+      "location": {
+        "url": "http://127.0.0.1:49123/node_modules/.vite/deps/chunk-DYKRQPZ6.js?v=3619bde0",
+        "lineNumber": 21608,
+        "columnNumber": 24
+      }
+    },
+    {
+      "type": "debug",
+      "text": "[vite] connecting...",
+      "location": {
+        "url": "http://127.0.0.1:49123/@vite/client",
+        "lineNumber": 788,
+        "columnNumber": 8
+      }
+    },
+    {
+      "type": "info",
+      "text": "%cDownload the React DevTools for a better development experience: https://reactjs.org/link/react-devtools font-weight:bold",
+      "location": {
+        "url": "http://127.0.0.1:49123/node_modules/.vite/deps/chunk-DYKRQPZ6.js?v=3619bde0",
+        "lineNumber": 21608,
+        "columnNumber": 24
+      }
+    },
+    {
+      "type": "debug",
+      "text": "[vite] connected.",
+      "location": {
+        "url": "http://127.0.0.1:49123/@vite/client",
+        "lineNumber": 911,
+        "columnNumber": 14
+      }
+    },
+    {
+      "type": "debug",
+      "text": "[vite] connecting...",
+      "location": {
+        "url": "http://127.0.0.1:49123/@vite/client",
+        "lineNumber": 788,
+        "columnNumber": 8
+      }
+    },
+    {
+      "type": "debug",
+      "text": "[vite] connected.",
+      "location": {
+        "url": "http://127.0.0.1:49123/@vite/client",
+        "lineNumber": 911,
+        "columnNumber": 14
+      }
+    },
+    {
+      "type": "info",
+      "text": "%cDownload the React DevTools for a better development experience: https://reactjs.org/link/react-devtools font-weight:bold",
+      "location": {
+        "url": "http://127.0.0.1:49123/node_modules/.vite/deps/chunk-DYKRQPZ6.js?v=3619bde0",
+        "lineNumber": 21608,
+        "columnNumber": 24
+      }
+    },
+    {
+      "type": "debug",
+      "text": "[vite] connecting...",
+      "location": {
+        "url": "http://127.0.0.1:49123/@vite/client",
+        "lineNumber": 788,
+        "columnNumber": 8
+      }
+    },
+    {
+      "type": "debug",
+      "text": "[vite] connected.",
+      "location": {
+        "url": "http://127.0.0.1:49123/@vite/client",
+        "lineNumber": 911,
+        "columnNumber": 14
+      }
+    },
+    {
+      "type": "info",
+      "text": "%cDownload the React DevTools for a better development experience: https://reactjs.org/link/react-devtools font-weight:bold",
+      "location": {
+        "url": "http://127.0.0.1:49123/node_modules/.vite/deps/chunk-DYKRQPZ6.js?v=3619bde0",
+        "lineNumber": 21608,
+        "columnNumber": 24
+      }
+    }
+  ],
+  "requestFailures": [],
+  "responseErrors": []
+}
