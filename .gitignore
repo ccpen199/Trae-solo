@@ -1,13 +1,12 @@
+node_modules
+dist
+build
+.env.local
+.env.*.local
+data/*.sqlite
+data/*.sqlite-journal
+*.log
+frontend.log
+backend.log
 .DS_Store
-.DS_Store?
-._*
-.Spotlight-V100
-.Trashes
-ehthumbs.db
-Thumbs.db
-
-# IDE
-.idea/
-.vscode/
-*.swp
-*.swo
+*.pid
