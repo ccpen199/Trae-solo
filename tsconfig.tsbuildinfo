@@ -1,0 +1,1 @@
+{"root":["./src/app.tsx","./src/main.tsx","./src/vite-env.d.ts","./src/components/layout.tsx","./src/data/mockdata.ts","./src/pages/dashboard.tsx","./src/pages/hranalytics.tsx","./src/pages/jobmodeling.tsx","./src/pages/knowledgegraph.tsx","./src/pages/matchingengine.tsx","./src/pages/resumeparser.tsx","./src/store/positionstore.tsx"],"version":"5.9.3"}
