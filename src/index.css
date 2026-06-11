@@ -1,0 +1,140 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@import 'leaflet/dist/leaflet.css';
+
+:root {
+  font-family: 'PingFang SC', 'Inter', system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+  line-height: 1.6;
+  font-weight: 400;
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  min-height: 100vh;
+  background-color: #F9FAFB;
+  color: #1F2937;
+}
+
+#root {
+  min-height: 100vh;
+}
+
+@layer components {
+  .btn-primary {
+    @apply px-6 py-2.5 bg-gradient-primary text-white font-medium rounded-lg transition-all duration-300 hover:shadow-glow hover:scale-[1.02] active:scale-[0.98] disabled:opacity-50 disabled:cursor-not-allowed;
+  }
+
+  .btn-secondary {
+    @apply px-6 py-2.5 bg-white border-2 border-primary-500 text-primary-600 font-medium rounded-lg transition-all duration-300 hover:bg-primary-50 hover:border-primary-600;
+  }
+
+  .btn-accent {
+    @apply px-6 py-2.5 bg-gradient-accent text-white font-medium rounded-lg transition-all duration-300 hover:shadow-lg hover:scale-[1.02] active:scale-[0.98];
+  }
+
+  .card {
+    @apply bg-white rounded-xl shadow-card border border-dark-200 transition-all duration-300 hover:shadow-card-hover;
+  }
+
+  .card-dark {
+    @apply bg-dark-800 rounded-xl border border-dark-700 transition-all duration-300 hover:border-primary-600;
+  }
+
+  .input-field {
+    @apply w-full px-4 py-2.5 bg-white border border-dark-300 rounded-lg text-dark-800 placeholder-dark-400 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-all duration-200;
+  }
+
+  .input-field-dark {
+    @apply w-full px-4 py-2.5 bg-dark-700 border border-dark-600 rounded-lg text-white placeholder-dark-400 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-all duration-200;
+  }
+
+  .badge {
+    @apply inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium;
+  }
+
+  .badge-success {
+    @apply bg-green-100 text-green-800;
+  }
+
+  .badge-warning {
+    @apply bg-yellow-100 text-yellow-800;
+  }
+
+  .badge-danger {
+    @apply bg-red-100 text-red-800;
+  }
+
+  .badge-info {
+    @apply bg-blue-100 text-blue-800;
+  }
+
+  .stat-card {
+    @apply p-6 rounded-xl bg-white shadow-card border border-dark-200;
+  }
+
+  .stat-card-dark {
+    @apply p-6 rounded-xl bg-dark-800 border border-dark-700;
+  }
+
+  .nav-link {
+    @apply flex items-center gap-3 px-4 py-3 rounded-lg text-dark-600 hover:bg-primary-50 hover:text-primary-600 transition-all duration-200;
+  }
+
+  .nav-link-active {
+    @apply bg-primary-500 text-white hover:bg-primary-600 hover:text-white;
+  }
+
+  .animate-number {
+    font-variant-numeric: tabular-nums;
+  }
+}
+
+/* Leaflet map custom styles */
+.leaflet-container {
+  border-radius: 0.75rem;
+  font-family: inherit;
+}
+
+.leaflet-popup-content-wrapper {
+  border-radius: 0.75rem;
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #F3F4F6;
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #9CA3AF;
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #6B7280;
+}
+
+/* Animation classes */
+.animate-stagger-1 { animation-delay: 50ms; }
+.animate-stagger-2 { animation-delay: 100ms; }
+.animate-stagger-3 { animation-delay: 150ms; }
+.animate-stagger-4 { animation-delay: 200ms; }
+.animate-stagger-5 { animation-delay: 250ms; }
+.animate-stagger-6 { animation-delay: 300ms; }
