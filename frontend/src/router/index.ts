@@ -116,74 +116,23 @@ const router = createRouter({
 
 const ADMIN_ROLES = ['admin', 'platform', 'ops', 'property', 'manufacturer']
 
-function getRoleHome(role: string): string {
-  if (ADMIN_ROLES.includes(role as any)) {
-    return '/admin/dashboard'
-  }
-  return '/home'
-}
-
-router.beforeEach(async (to, _from, next) => {
-  const userStore = useUserStore()
-  document.title = (to.meta.title as string) || '智能洗衣管理系统'
-  
-  console.log('[Router Guard] Navigating to:', to.path, 'from:', _from.path)
-  console.log('[Router Guard] token:', !!userStore.token, 'userInfo:', userStore.userInfo, 'role:', userStore.userInfo?.role)
-  
-  if (to.path === '/login' && userStore.token) {
-    const role = userStore.userInfo?.role || 'user'
-    const homePath = getRoleHome(role)
-    console.log('[Router Guard] Already logged in, redirect to:', homePath)
-    next(homePath)
-    return
-  }
-  
-  if (to.path === '/' && userStore.token) {
-    const role = userStore.userInfo?.role || 'user'
-    const homePath = getRoleHome(role)
-    console.log('[Router Guard] Root path, redirect to:', homePath)
-    next(homePath)
-    return
-  }
-  
-  if (to.path === '/' && !userStore.token) {
-    console.log('[Router Guard] Root path, not logged in, redirect to login')
-    next('/login')
-    return
-  }
-  
-  if (to.meta.requiresAuth && !userStore.token) {
-    console.log('[Router Guard] No token, redirect to login')
-    next({ path: '/login', query: { redirect: to.fullPath } })
-    return
-  }
-  
+r[Login handleLogin] Climay-88935/
+├── .may-88935/
+├── .may-88935/
+├── .may-88935/
+├── .rooterorouter.beforeEach(async (to, _from, next) => {
+  // 关键修复：有 token 但无 userInfo 时，先异步加载用户信息
   if (userStore.token && !userStore.userInfo && to.path !== '/login') {
-    console.log('[Router Guard] Have token but no userInfo, fetching...')
-    try {
-      await userStore.fetchUserInfo()
-      console.log('[Router Guard] userInfo fetched:', userStore.userInfo)
-    } catch (e) {
-      console.error('[Router Guard] Failed to fetch userInfo, logout:', e)
-      userStore.logout()
-      next({ path: '/login', query: { redirect: to.fullPath } })
-      return
-    }
+    await userStore.fetchUserInfo()
   }
   
+  // 再进行角色权限检查
   if (to.meta.requiresAdmin) {
     const role = userStore.userInfo?.role || ''
-    const isAdmin = ADMIN_ROLES.includes(role as any)
-    console.log('[Router Guard] Admin check - role:', role, 'isAdmin:', isAdmin)
-    if (!isAdmin) {
-      console.log('[Router Guard] Not admin, redirect to /home')
+    if (!ADMIN_ROLES.includes(role)) {
       next('/home')
       return
     }
   }
-  
-  console.log('[Router Guard] Proceed to:', to.path)
   next()
 })
-
-export default router
