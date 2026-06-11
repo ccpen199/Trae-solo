@@ -1,5 +1,6 @@
 import { useState, useMemo } from 'react';
-import { motion } from 'framer-motion';
+import { motion, AnimatePresence } from 'framer-motion';
+import { useNavigate, useParams } from 'react-router-dom';
 import {
   Calendar,
   Download,
@@ -14,6 +15,13 @@ import {
   Volume2,
   Clock,
   BarChart3,
+  ChevronDown,
+  ChevronUp,
+  Heart,
+  Gauge,
+  AlertCircle,
+  Lightbulb,
+  FileText,
 } from 'lucide-react';
 import { useAppStore } from '@/store/useAppStore';
 import { GlassCard, StatCard, Chip, PillButton, RingProgress } from '@/components/ui';
@@ -42,6 +50,7 @@ const severityLabels: Record<string, string> = {
 };
 
 export default function ReportPage() {
+  const navigate = useNavigate();
   const { sleepSessions } = useAppStore();
   const sortedSessions = useMemo(
     () => [...sleepSessions].sort((a, b) => dayjs(b.startTime).valueOf() - dayjs(a.startTime).valueOf()),
@@ -56,6 +65,7 @@ export default function ReportPage() {
     }
     return sortedSessions[0] ? dayjs(sortedSessions[0].startTime).format('YYYY-MM-DD') : '';
   });
+  const [expandedApneaId, setExpandedApneaId] = useState<string | null>(null);
 
   const currentSession = useMemo(
     () => sortedSessions.find((s) => dayjs(s.startTime).isSame(selectedDate, 'day')),
@@ -556,58 +566,229 @@ export default function ReportPage() {
             </div>
 
             {currentSession.apneaEvents.length > 0 && (
-              <div className="space-y-2 max-h-64 overflow-y-auto">
-                {currentSession.apneaEvents.map((event, index) => (
-                  <div
-                    key={event.id}
-                    className="flex items-center justify-between p-3 rounded-xl bg-night-800/30 hover:bg-night-800/50 transition-colors"
-                  >
-                    <div className="flex items-center gap-3">
-                      <span className="w-8 h-8 rounded-lg bg-white/5 flex items-center justify-center text-xs font-mono text-silver-400">
-                        #{index + 1}
-                      </span>
-                      <div>
-                        <div className="flex items-center gap-2">
-                          <span className="text-sm font-medium text-white">
-                            {apneaTypeLabels[event.type]}
+              <div className="space-y-2 max-h-[520px] overflow-y-auto pr-1 scrollbar-thin">
+                {currentSession.apneaEvents.map((event, index) => {
+                  const expanded = expandedApneaId === event.id;
+                  const eventTime = dayjs(currentSession.startTime).add(event.startTime, 'second');
+
+                  const suggestionMap = {
+                    obstructive: [
+                      '建议尝试侧卧位睡眠，减少舌根后坠',
+                      '避免饮酒和服用镇静类药物',
+                      '若BMI超标，建议减重5-10%',
+                    ],
+                    central: [
+                      '建议进一步做多导睡眠监测（PSG）',
+                      '注意心肺基础疾病的管理',
+                      '避免高海拔睡眠环境',
+                    ],
+                    mixed: [
+                      '混合型呼吸暂停需多学科评估',
+                      '建议使用CPAP呼吸机试验治疗',
+                      '长期规律随访复查',
+                    ],
+                    suspected: [
+                      '疑似事件，需连续多晚监测确认',
+                      '建议记录详细睡眠日记',
+                      '如白天嗜睡加重请及时就医',
+                    ],
+                  };
+                  const suggestions = suggestionMap[event.type as keyof typeof suggestionMap];
+                  const waveform = Array.from({ length: 80 }, (_, i) => {
+                    if (i >= 35 && i <= 35 + Math.round((event.duration - 8) * 1.2)) {
+                      return Math.sin(i * 0.15) * 0.08;
+                    }
+                    return Math.sin(i * 0.4 + index) * 0.55 + (Math.random() - 0.5) * 0.15;
+                  });
+
+                  return (
+                    <div
+                      key={event.id}
+                      className="rounded-2xl border border-white/5 overflow-hidden transition-all duration-500"
+                      style={{
+                        background: expanded
+                          ? 'linear-gradient(180deg, rgba(255,107,107,0.08) 0%, rgba(7,14,39,0.4) 100%)'
+                          : 'rgba(7,14,39,0.3)',
+                        borderColor: expanded ? 'rgba(255,107,107,0.25)' : undefined,
+                      }}
+                    >
+                      <button
+                        onClick={() => setExpandedApneaId(expanded ? null : event.id)}
+                        className="w-full flex items-center justify-between p-3 text-left hover:bg-white/[0.02] transition-colors"
+                      >
+                        <div className="flex items-center gap-3">
+                          <span className={cn(
+                            'w-8 h-8 rounded-lg flex items-center justify-center text-xs font-mono',
+                            expanded ? 'bg-coral-400/20 text-coral-300' : 'bg-white/5 text-silver-400'
+                          )}>
+                            #{index + 1}
                           </span>
-                          <span
-                            className={cn(
-                              'text-xs px-2 py-0.5 rounded-full',
-                              riskLevelBg(event.severity)
+                          <div>
+                            <div className="flex items-center gap-2">
+                              <span className="text-sm font-medium text-white">
+                                {apneaTypeLabels[event.type]}呼吸暂停
+                              </span>
+                              <span
+                                className={cn(
+                                  'text-xs px-2 py-0.5 rounded-full',
+                                  riskLevelBg(event.severity)
+                                )}
+                              >
+                                {severityLabels[event.severity]}
+                              </span>
+                            </div>
+                            <div className="text-xs text-silver-400 mt-0.5 flex items-center gap-2">
+                              <Clock size={10} className="inline" />
+                              {eventTime.format('HH:mm:ss')}
+                              <AlertCircle size={10} className="ml-2" />
+                              持续 {event.duration}s · 血氧 ↓{event.oxygenDrop ?? 3}%
+                            </div>
+                          </div>
+                        </div>
+                        <div className="flex items-center gap-3">
+                          <div className="hidden sm:flex items-center gap-4 text-sm">
+                            {event.oxygenDrop && (
+                              <div className="text-right">
+                                <div className="text-[10px] text-silver-500">SpO2</div>
+                                <div className="font-mono text-coral-300">↓{event.oxygenDrop}%</div>
+                              </div>
                             )}
+                            <div className="text-right">
+                              <div className="text-[10px] text-silver-500">模型置信</div>
+                              <div className="font-mono text-dream-300">{Math.round(event.confidence * 100)}%</div>
+                            </div>
+                          </div>
+                          <div className={cn(
+                            'w-7 h-7 rounded-full flex items-center justify-center transition-all duration-300',
+                            expanded ? 'bg-coral-400/20 text-coral-300 rotate-180' : 'bg-white/5 text-silver-400'
+                          )}>
+                            <ChevronDown size={15} />
+                          </div>
+                        </div>
+                      </button>
+
+                      <AnimatePresence initial={false}>
+                        {expanded && (
+                          <motion.div
+                            initial={{ height: 0, opacity: 0 }}
+                            animate={{ height: 'auto', opacity: 1 }}
+                            exit={{ height: 0, opacity: 0 }}
+                            transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
+                            className="overflow-hidden"
                           >
-                            {severityLabels[event.severity]}
-                          </span>
-                        </div>
-                        <div className="text-xs text-silver-400 mt-0.5">
-                          <Clock size={10} className="inline mr-1" />
-                          {dayjs(currentSession.startTime)
-                            .add(event.startTime, 'second')
-                            .format('HH:mm:ss')}
-                        </div>
-                      </div>
+                            <div className="px-4 pb-4 pt-1 border-t border-white/5 space-y-4">
+                              <div className="rounded-xl bg-night-900/60 border border-white/5 p-3">
+                                <div className="flex items-center justify-between mb-2">
+                                  <div className="text-[11px] text-silver-400 flex items-center gap-1.5">
+                                    <Wind size={12} />
+                                    呼吸气流波形（事件前后24秒）
+                                  </div>
+                                  <span className="text-[10px] text-coral-300 font-mono">
+                                    {apneaTypeLabels[event.type]}段 ↓↓↓
+                                  </span>
+                                </div>
+                                <div className="relative h-20 bg-night-900/80 rounded-lg overflow-hidden border border-white/5">
+                                  <svg viewBox="0 0 400 80" className="w-full h-full" preserveAspectRatio="none">
+                                    <defs>
+                                      <linearGradient id={`apnea-wave-${event.id}`} x1="0" x2="1" y1="0" y2="0">
+                                        <stop offset="0%" stopColor="#7BC8A4" />
+                                        <stop offset="45%" stopColor="#7BC8A4" />
+                                        <stop offset="55%" stopColor="#FF6B6B" />
+                                        <stop offset="60%" stopColor="#FF6B6B" />
+                                        <stop offset="100%" stopColor="#7BC8A4" />
+                                      </linearGradient>
+                                    </defs>
+                                    <rect x="180" y="0" width="60" height="80" fill="rgba(255,107,107,0.08)" />
+                                    <path
+                                      d={`M 0 40 ${waveform.map((v, i) => `L ${(i / waveform.length) * 400} ${40 - v * 28}`).join(' ')}`}
+                                      fill="none"
+                                      stroke={`url(#apnea-wave-${event.id})`}
+                                      strokeWidth="1.6"
+                                      strokeLinecap="round"
+                                    />
+                                  </svg>
+                                  <div className="absolute left-1 top-1 text-[9px] text-silver-500 font-mono">
+                                    事件前 24s
+                                  </div>
+                                  <div className="absolute right-1 top-1 text-[9px] text-silver-500 font-mono">
+                                    恢复 +24s
+                                  </div>
+                                </div>
+                              </div>
+
+                              <div className="grid grid-cols-2 md:grid-cols-4 gap-2">
+                                <div className="p-3 rounded-xl bg-white/[0.03] border border-white/5">
+                                  <div className="flex items-center gap-1 text-[10px] text-silver-500 mb-1">
+                                    <Gauge size={11} /> 事件时长
+                                  </div>
+                                  <div className="text-lg font-mono font-semibold text-coral-300">
+                                    {event.duration}<span className="text-xs ml-0.5 text-silver-400">秒</span>
+                                  </div>
+                                </div>
+                                <div className="p-3 rounded-xl bg-white/[0.03] border border-white/5">
+                                  <div className="flex items-center gap-1 text-[10px] text-silver-500 mb-1">
+                                    <Heart size={11} /> SpO₂最低点
+                                  </div>
+                                  <div className="text-lg font-mono font-semibold text-coral-300">
+                                    {97 - (event.oxygenDrop ?? 3)}<span className="text-xs ml-0.5 text-silver-400">%</span>
+                                  </div>
+                                </div>
+                                <div className="p-3 rounded-xl bg-white/[0.03] border border-white/5">
+                                  <div className="flex items-center gap-1 text-[10px] text-silver-500 mb-1">
+                                    <Volume2 size={11} /> 关联鼾声
+                                  </div>
+                                  <div className="text-lg font-mono font-semibold text-dream-300">
+                                    {event.type === 'obstructive' ? 1 : event.type === 'mixed' ? 0.5 : 0}<span className="text-xs ml-0.5 text-silver-400">次</span>
+                                  </div>
+                                </div>
+                                <div className="p-3 rounded-xl bg-white/[0.03] border border-white/5">
+                                  <div className="flex items-center gap-1 text-[10px] text-silver-500 mb-1">
+                                    <BarChart3 size={11} /> 位置
+                                  </div>
+                                  <div className="text-lg font-mono font-semibold text-dream-300">
+                                    {Math.round(event.startTime / currentSession.totalDuration * 100)}<span className="text-xs ml-0.5 text-silver-400">%进度</span>
+                                  </div>
+                                </div>
+                              </div>
+
+                              <div className="p-3 rounded-xl bg-dream-400/10 border border-dream-400/20">
+                                <div className="flex items-start gap-2">
+                                  <div className="flex-shrink-0 w-6 h-6 rounded-lg bg-mint-400/15 flex items-center justify-center mt-0.5">
+                                    <Lightbulb size={13} className="text-mint-300" />
+                                  </div>
+                                  <div className="flex-1 min-w-0">
+                                    <div className="text-xs font-medium text-white mb-1.5">临床建议</div>
+                                    <ul className="space-y-1">
+                                      {suggestions.map((s, i) => (
+                                        <li key={i} className="text-[11px] text-silver-300 flex gap-1.5 leading-relaxed">
+                                          <span className="text-mint-400 mt-0.5 flex-shrink-0">•</span>
+                                          {s}
+                                        </li>
+                                      ))}
+                                    </ul>
+                                    <div className="mt-2 flex items-center gap-2">
+                                      <PillButton
+                                        variant="coral"
+                                        size="sm"
+                                        leftIcon={<FileText size={11} />}
+                                        onClick={() => navigate('/risk')}
+                                      >
+                                        转介至风险评估
+                                      </PillButton>
+                                      <PillButton variant="secondary" size="sm">
+                                        添加到观察列表
+                                      </PillButton>
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          </motion.div>
+                        )}
+                      </AnimatePresence>
                     </div>
-                    <div className="flex items-center gap-4 text-sm">
-                      <div className="text-right">
-                        <div className="text-xs text-silver-500">持续</div>
-                        <div className="font-mono text-silver-300">{event.duration}s</div>
-                      </div>
-                      {event.oxygenDrop && (
-                        <div className="text-right">
-                          <div className="text-xs text-silver-500">血氧下降</div>
-                          <div className="font-mono text-coral-300">-{event.oxygenDrop}%</div>
-                        </div>
-                      )}
-                      <div className="text-right">
-                        <div className="text-xs text-silver-500">置信度</div>
-                        <div className="font-mono text-dream-300">
-                          {Math.round(event.confidence * 100)}%
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                ))}
+                  );
+                })}
               </div>
             )}
           </GlassCard>

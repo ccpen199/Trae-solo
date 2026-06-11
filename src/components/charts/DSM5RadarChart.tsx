@@ -14,6 +14,8 @@ import { cn, riskLevelColor, riskLevelBg } from '@/lib/utils';
 interface DSM5RadarChartProps {
   dimensions: DSM5Dimension[];
   className?: string;
+  selected?: string;
+  onSelect?: (disorder: string) => void;
   onDimensionClick?: (dimension: DSM5Dimension) => void;
 }
 
@@ -29,9 +31,19 @@ const disorderLabels: Record<string, string> = {
 export default function DSM5RadarChart({
   dimensions,
   className,
+  selected,
+  onSelect,
   onDimensionClick,
 }: DSM5RadarChartProps) {
-  const [selectedIndex, setSelectedIndex] = useState<number | null>(null);
+  const [selectedIndex, setSelectedIndex] = useState<number | null>(
+    selected ? dimensions.findIndex((d) => d.disorder === selected) : null
+  );
+
+  React.useEffect(() => {
+    if (selected) {
+      setSelectedIndex(dimensions.findIndex((d) => d.disorder === selected));
+    }
+  }, [selected, dimensions]);
 
   const data = dimensions.map((dim) => ({
     disorder: dim.disorder,
@@ -103,6 +115,7 @@ export default function DSM5RadarChart({
 
   const handleClick = (index: number) => {
     setSelectedIndex(selectedIndex === index ? null : index);
+    onSelect?.(dimensions[index].disorder);
     onDimensionClick?.(dimensions[index]);
   };
 

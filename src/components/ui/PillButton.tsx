@@ -1,7 +1,7 @@
 import { cn } from '@/lib/utils';
 import type { ButtonHTMLAttributes, ReactNode } from 'react';
 
-type PillButtonVariant = 'primary' | 'mint' | 'coral' | 'secondary';
+type PillButtonVariant = 'primary' | 'mint' | 'coral' | 'secondary' | 'dream';
 type PillButtonSize = 'sm' | 'md' | 'lg';
 
 interface PillButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
@@ -19,6 +19,8 @@ const variantStyles: Record<PillButtonVariant, string> = {
     'bg-gradient-mint text-night-800 font-semibold shadow-glow-mint hover:brightness-105',
   coral:
     'bg-gradient-coral text-white font-semibold shadow-glow-coral hover:brightness-105',
+  dream:
+    'bg-gradient-to-br from-dream-500 to-dream-300 text-white font-semibold shadow-[0_0_20px_rgba(155,126,219,0.35)] hover:brightness-110',
   secondary:
     'bg-white/5 border border-white/10 text-silver-200 hover:bg-white/10 hover:border-white/20 hover:text-white',
 };

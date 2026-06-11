@@ -284,7 +284,12 @@ function AHICard() {
   );
 }
 
-function ReferralStepper() {
+interface ReferralSubProps {
+  currentDisorder?: string;
+  disorderLabel?: string;
+}
+
+function ReferralStepper({ currentDisorder, disorderLabel }: ReferralSubProps) {
   const referralRecords = useAppStore((s) => s.referralRecords);
   const latest = referralRecords.slice(-1)[0];
   const currentIndex = referralSteps.findIndex((s) => s.key === latest?.status);
@@ -296,10 +301,19 @@ function ReferralStepper() {
       transition={{ duration: 0.6, delay: 0.2 }}
     >
       <GlassCard className="p-6">
-        <div className="mb-5 flex items-center justify-between">
+        <div className="mb-5 flex items-center justify-between flex-wrap gap-2">
           <div>
-            <div className="text-sm font-medium text-white">互联网医院转诊流程</div>
-            <div className="text-xs text-silver-500">5步快速对接睡眠专科医疗资源</div>
+            <div className="text-sm font-medium text-white flex items-center gap-2">
+              互联网医院转诊流程
+              {disorderLabel && (
+                <Chip variant={currentDisorder === 'osa' ? 'coral' : 'dream'} className="py-0">
+                  {disorderLabel}
+                </Chip>
+              )}
+            </div>
+            <div className="text-xs text-silver-500 mt-0.5">
+              {currentDisorder ? `针对「${disorderLabel || currentDisorder}」的5步医疗转诊对接` : '5步快速对接睡眠专科医疗资源'}
+            </div>
           </div>
           {latest && (
             <Chip variant="dream">
@@ -372,7 +386,7 @@ function ReferralStepper() {
   );
 }
 
-function ReferralDetailCard() {
+function ReferralDetailCard({ currentDisorder, disorderLabel }: ReferralSubProps) {
   const referralRecords = useAppStore((s) => s.referralRecords);
   const latest = referralRecords.slice(-1)[0];
 
@@ -535,7 +549,7 @@ function ReferralDetailCard() {
   );
 }
 
-function FollowUpRecords() {
+function FollowUpRecords({ currentDisorder, disorderLabel }: ReferralSubProps) {
   const records = [
     {
       id: 'fu-001',
@@ -703,6 +717,24 @@ export default function RiskPage() {
   const latest = useMemo(() => assessments.slice(-1)[0], [assessments]);
   const createReferral = useAppStore((s) => s.createReferral);
   const [referring, setReferring] = useState(false);
+  const [selectedDisorder, setSelectedDisorder] = useState<string>('osa');
+
+  const currentDimension = useMemo(() => {
+    if (!latest) return null;
+    return (
+      latest.dsm5Mapping.find((d) => d.disorder === selectedDisorder) ||
+      latest.dsm5Mapping[0]
+    );
+  }, [latest, selectedDisorder]);
+
+  const disorderLabelMap: Record<string, string> = {
+    insomnia: '失眠障碍',
+    osa: '阻塞性睡眠呼吸暂停',
+    restless_legs: '不宁腿综合征',
+    periodic_limb: '周期性肢体运动障碍',
+    narcolepsy: '发作性睡病',
+    circadian_rhythm: '昼夜节律睡眠觉醒障碍',
+  };
 
   const handleReferral = () => {
     if (!latest) return;
@@ -730,7 +762,201 @@ export default function RiskPage() {
         </Chip>
       </motion.div>
 
-      <RiskLevelCard level={latest?.overallRisk ?? 'low'} />
+      <motion.div
+        initial={{ opacity: 0, y: 10 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ delay: 0.05 }}
+      >
+        <GlassCard className="p-4">
+          <div className="mb-3 flex items-center justify-between">
+            <div className="text-xs text-silver-400 flex items-center gap-1.5">
+              <AlertTriangle size={12} className="text-dream-300" />
+              选择病种查看详细风险 · 点击雷达图或下方标签切换
+            </div>
+            <div className="text-[10px] text-silver-500 font-mono">
+              当前评估ID: {latest?.id?.slice(-8).toUpperCase() || '---'}
+            </div>
+          </div>
+          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-2">
+            {latest?.dsm5Mapping.map((dim) => {
+              const active = selectedDisorder === dim.disorder;
+              return (
+                <button
+                  key={dim.disorder}
+                  onClick={() => setSelectedDisorder(dim.disorder)}
+                  className={cn(
+                    'relative p-3 rounded-2xl text-left transition-all duration-400 border',
+                    active
+                      ? 'bg-gradient-to-br from-night-500/60 to-night-700/60 border-dream-400/40 shadow-glow-dream scale-[1.02]'
+                      : 'bg-white/[0.02] border-white/5 hover:bg-white/[0.05] hover:border-white/10'
+                  )}
+                >
+                  {active && (
+                    <div className="absolute top-2 right-2 w-1.5 h-1.5 rounded-full bg-dream-300 animate-pulse" />
+                  )}
+                  <div className={cn(
+                    'text-[11px] font-medium leading-snug',
+                    active ? 'text-white' : 'text-silver-300'
+                  )}>
+                    {disorderLabelMap[dim.disorder] || dim.disorder}
+                  </div>
+                  <div className="mt-2 flex items-center justify-between">
+                    <span className={cn(
+                      'text-[11px] px-1.5 py-0.5 rounded-full',
+                      riskLevelBg(dim.riskLevel)
+                    )}>
+                      {riskLabelMap[dim.riskLevel].label}
+                    </span>
+                    <span className="font-mono text-xs text-silver-400">
+                      {Math.round(dim.score)}
+                      <span className="text-[9px] text-silver-600">/{dim.threshold}</span>
+                    </span>
+                  </div>
+                </button>
+              );
+            })}
+          </div>
+        </GlassCard>
+      </motion.div>
+
+      {currentDimension && (
+        <motion.div
+          key={selectedDisorder}
+          initial={{ opacity: 0, y: 14 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5 }}
+        >
+          <GlassCard className="p-6">
+            <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-5">
+              <div className="flex items-center gap-4">
+                <div className={cn(
+                  'w-16 h-16 rounded-3xl flex items-center justify-center border-2 shadow-lg',
+                  riskLabelMap[currentDimension.riskLevel].ring,
+                  riskLabelMap[currentDimension.riskLevel].glow,
+                  currentDimension.riskLevel === 'low' ? 'bg-gradient-to-br from-mint-400/20 to-mint-500/10 border-mint-400/40' :
+                  currentDimension.riskLevel === 'moderate' ? 'bg-gradient-to-br from-dream-400/20 to-dream-500/10 border-dream-400/40' :
+                  'bg-gradient-to-br from-coral-400/20 to-coral-500/10 border-coral-400/40'
+                )}>
+                  <AlertTriangle className={cn('w-8 h-8', riskLevelColor(currentDimension.riskLevel))} />
+                </div>
+                <div>
+                  <h3 className="text-xl font-semibold text-white">
+                    {disorderLabelMap[currentDimension.disorder] || currentDimension.disorder}
+                  </h3>
+                  <div className="mt-0.5 flex items-center gap-2 text-xs">
+                    <span className="font-mono text-silver-500">
+                      DSM-5 编码: {currentDimension.dsm5Code}
+                    </span>
+                    <span className="text-silver-700">·</span>
+                    <span className="text-silver-400">
+                      当前等级：<span className={cn('font-medium', riskLevelColor(currentDimension.riskLevel))}>
+                        {riskLabelMap[currentDimension.riskLevel].label}
+                      </span>
+                    </span>
+                  </div>
+                  <p className="mt-1 text-xs text-silver-400">
+                    {riskLabelMap[currentDimension.riskLevel].subLabel}
+                  </p>
+                </div>
+              </div>
+
+              <div className="grid grid-cols-3 gap-3 w-full lg:w-auto min-w-[360px]">
+                <div className="p-3 rounded-2xl bg-white/[0.03] border border-white/5">
+                  <div className="text-[10px] text-silver-500 mb-1">风险得分</div>
+                  <div className="flex items-baseline gap-1">
+                    <span className="text-2xl font-mono font-bold text-dream-300">
+                      {Math.round(currentDimension.score)}
+                    </span>
+                    <span className="text-[10px] text-silver-500">/ 100</span>
+                  </div>
+                </div>
+                <div className="p-3 rounded-2xl bg-white/[0.03] border border-white/5">
+                  <div className="text-[10px] text-silver-500 mb-1">阈值线</div>
+                  <div className="flex items-baseline gap-1">
+                    <span className="text-2xl font-mono font-bold text-coral-300">
+                      {currentDimension.threshold}
+                    </span>
+                    <span className="text-[10px] text-silver-500">分</span>
+                  </div>
+                </div>
+                <div className="p-3 rounded-2xl bg-white/[0.03] border border-white/5">
+                  <div className="text-[10px] text-silver-500 mb-1">距阈值差</div>
+                  <div className="flex items-baseline gap-1">
+                    <span className={cn(
+                      'text-2xl font-mono font-bold',
+                      currentDimension.score >= currentDimension.threshold ? 'text-coral-300' : 'text-mint-300'
+                    )}>
+                      {currentDimension.score >= currentDimension.threshold ? '+' : ''}
+                      {Math.round(currentDimension.score - currentDimension.threshold)}
+                    </span>
+                    <span className="text-[10px] text-silver-500">分</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div className="mt-6 grid grid-cols-1 lg:grid-cols-2 gap-5">
+              <div className="p-4 rounded-2xl bg-night-800/30 border border-white/5">
+                <div className="flex items-center gap-1.5 text-xs text-silver-300 mb-3">
+                  <Activity size={13} className="text-dream-300" />
+                  风险证据（{currentDimension.evidences.length} 项）
+                </div>
+                {currentDimension.evidences.length > 0 ? (
+                  <ul className="space-y-1.5">
+                    {currentDimension.evidences.map((e, i) => (
+                      <li key={i} className="flex items-start gap-2 text-xs text-silver-300">
+                        <span className="mt-1 w-1 h-1 rounded-full bg-dream-400 flex-shrink-0" />
+                        {e}
+                      </li>
+                    ))}
+                  </ul>
+                ) : (
+                  <p className="text-xs text-mint-400/80">暂无风险证据，状态良好</p>
+                )}
+              </div>
+
+              <div className="p-4 rounded-2xl bg-night-800/30 border border-white/5">
+                <div className="flex items-center gap-1.5 text-xs text-silver-300 mb-3">
+                  <FileText size={13} className="text-mint-300" />
+                  符合的诊断标准（DSM-5）
+                </div>
+                {currentDimension.diagnosticCriteriaMet.length > 0 ? (
+                  <ul className="space-y-1.5">
+                    {currentDimension.diagnosticCriteriaMet.map((c, i) => (
+                      <li key={i} className="flex items-start gap-2 text-xs text-silver-300">
+                        <CheckCircle2 size={13} className="mt-0.5 text-mint-400 flex-shrink-0" />
+                        <span>{c}</span>
+                      </li>
+                    ))}
+                  </ul>
+                ) : (
+                  <p className="text-xs text-silver-500">暂未达到DSM-5诊断标准</p>
+                )}
+              </div>
+            </div>
+
+            <div className="mt-5 flex items-center gap-2 flex-wrap">
+              {currentDimension.riskLevel !== 'low' ? (
+                <PillButton
+                  variant={currentDimension.riskLevel === 'high' ? 'coral' : 'dream'}
+                  size="sm"
+                  leftIcon={<CalendarCheck size={14} />}
+                  onClick={handleReferral}
+                  disabled={referring}
+                >
+                  {referring ? '创建转诊单中...' : `发起${disorderLabelMap[currentDimension.disorder]}转诊`}
+                </PillButton>
+              ) : null}
+              <PillButton variant="secondary" size="sm" leftIcon={<FileText size={14} />}>
+                查看完整DSM-5评估报告
+              </PillButton>
+              <PillButton variant="mint" size="sm" leftIcon={<RefreshCw size={14} />}>
+                重新评估当前病种
+              </PillButton>
+            </div>
+          </GlassCard>
+        </motion.div>
+      )}
 
       <div className="grid grid-cols-1 gap-6 lg:grid-cols-2">
         <motion.div
@@ -739,15 +965,48 @@ export default function RiskPage() {
           transition={{ duration: 0.6, delay: 0.15 }}
         >
           <GlassCard className="p-6">
-            {latest && <DSM5RadarChart dimensions={latest.dsm5Mapping} />}
+            <div className="mb-4 flex items-center justify-between">
+              <h3 className="text-sm font-medium text-white flex items-center gap-1.5">
+                <Shield size={15} className="text-dream-300" />
+                六维DSM-5风险映射
+              </h3>
+              <span className="text-[10px] text-silver-500">点击维度切换详情</span>
+            </div>
+            {latest && (
+              <DSM5RadarChart
+                dimensions={latest.dsm5Mapping}
+                selected={selectedDisorder}
+                onSelect={setSelectedDisorder}
+              />
+            )}
           </GlassCard>
         </motion.div>
         <AHICard />
       </div>
 
-      <ReferralStepper />
-      <ReferralDetailCard />
-      <FollowUpRecords />
+      {currentDimension && (
+        <div className="rounded-2xl border border-dream-400/10 bg-dream-400/5 p-4 flex items-start gap-3">
+          <ShieldAlert size={18} className="text-dream-300 mt-0.5 flex-shrink-0" />
+          <div className="flex-1 min-w-0">
+            <div className="text-xs font-medium text-white">
+              当前查看的是「{disorderLabelMap[currentDimension.disorder] || currentDimension.disorder}」的风险数据
+            </div>
+            <div className="mt-0.5 text-[11px] text-silver-400">
+              下方转诊流程、转诊详情、复查记录均与当前选中病种关联。AHI卡片仅在阻塞性睡眠呼吸暂停(OSA)下触发高风险转诊。
+            </div>
+          </div>
+          <span className={cn(
+            'text-[10px] px-2 py-0.5 rounded-full flex-shrink-0',
+            riskLevelBg(currentDimension.riskLevel)
+          )}>
+            {riskLabelMap[currentDimension.riskLevel].label}
+          </span>
+        </div>
+      )}
+
+      <ReferralStepper currentDisorder={selectedDisorder} disorderLabel={disorderLabelMap[selectedDisorder]} />
+      <ReferralDetailCard currentDisorder={selectedDisorder} />
+      <FollowUpRecords currentDisorder={selectedDisorder} />
       <RiskHistoryList />
 
       <motion.div
@@ -772,7 +1031,7 @@ export default function RiskPage() {
               disabled={referring}
               rightIcon={<ArrowRight className="h-5 w-5" />}
             >
-              {referring ? '转诊中...' : '立即转诊'}
+              {referring ? '转诊中...' : `为「${disorderLabelMap[selectedDisorder] || selectedDisorder}」立即转诊`}
             </PillButton>
           </div>
         </div>
