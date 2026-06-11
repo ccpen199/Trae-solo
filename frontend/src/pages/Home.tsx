@@ -1,4 +1,66 @@
-import React, { useEffect, useState } from 'react'
+protocolSupport[key] = typeof val === 'object' ? (val.count ?? 0) : Number(val)protocolSupport[key] = typeof val === 'object' ? (val.count ?? 0) : Number(val){
+  "platform_stats": { "total_devices": 10, "connected_brands": 4, "total_users": 4, "service_orders_today": 1 },
+  "protocol_support": {
+    "uhome": { "count": 2, "label": "海尔UHome", "description": "...", "icon": "home" },
+    "matter": { "count": 2, "label": "Matter标准", "..." },
+    "wifi": { "count": 4, "..." },
+    "zigbee": { "count": 2, "..." },
+    "ir_bridge": { "count": 0, "..." }
+  },
+  "business_modules": [ /* 12个模块 */ ],
+  "featured_scenes": [ /* 3个精选场景 */ ],
+  "energy_preview": { "total_kwh_7d": 69.01, "carbon_reduction_kg": 8.12, "..." },
+  "product_preview": { "total_products": 5, "..." },
+  "demo_accounts": [ /* 4个演示账号 */ ]
+}{
+  "platform_stats": { "total_devices": 10, "connected_brands": 4, "total_users": 4, "service_orders_today": 1 },
+  "protocol_support": {
+    "uhome": { "count": 2, "label": "海尔UHome", "description": "...", "icon": "home" },
+    "matter": { "count": 2, "label": "Matter标准", "..." },
+    "wifi": { "count": 4, "..." },
+    "zigbee": { "count": 2, "..." },
+    "ir_bridge": { "count": 0, "..." }
+  },
+  "business_modules": [ /* 12个模块 */ ],
+  "featured_scenes": [ /* 3个精选场景 */ ],
+  "energy_preview": { "total_kwh_7d": 69.01, "carbon_reduction_kg": 8.12, "..." },
+  "product_preview": { "total_products": 5, "..." },
+  "demo_accounts": [ /* 4个演示账号 */ ]
+}// 身份 → 角色映射
+home      → user       → /dashboard
+channel   → platform   → /services
+engineer  → ops        → /firmware// 身份 → 角色映射
+home      → user       → /dashboard
+channel   → platform   → /services
+engineer  → ops        → /firmwareprotocolSupport[key] = typeof val === 'object' ? (val.count ?? 0) : Number(val)protocolSupport[key] = typeof val === 'object' ? (val.count ?? 0) : Number(val){
+  "platform_stats": { "total_devices": 10, "connected_brands": 4, "total_users": 4, "service_orders_today": 1 },
+  "protocol_support": {
+    "uhome": { "count": 2, "label": "海尔UHome", "description": "...", "icon": "home" },
+    "matter": { "count": 2, "label": "Matter标准", "..." },
+    "wifi": { "count": 4, "..." },
+    "zigbee": { "count": 2, "..." },
+    "ir_bridge": { "count": 0, "..." }
+  },
+  "business_modules": [ /* 12个模块 */ ],
+  "featured_scenes": [ /* 3个精选场景 */ ],
+  "energy_preview": { "total_kwh_7d": 69.01, "carbon_reduction_kg": 8.12, "..." },
+  "product_preview": { "total_products": 5, "..." },
+  "demo_accounts": [ /* 4个演示账号 */ ]
+}{
+  "platform_stats": { "total_devices": 10, "connected_brands": 4, "total_users": 4, "service_orders_today": 1 },
+  "protocol_support": {
+    "uhome": { "count": 2, "label": "海尔UHome", "description": "...", "icon": "home" },
+    "matter": { "count": 2, "label": "Matter标准", "..." },
+    "wifi": { "count": 4, "..." },
+    "zigbee": { "count": 2, "..." },
+    "ir_bridge": { "count": 0, "..." }
+  },
+  "business_modules": [ /* 12个模块 */ ],
+  "featured_scenes": [ /* 3个精选场景 */ ],
+  "energy_preview": { "total_kwh_7d": 69.01, "carbon_reduction_kg": 8.12, "..." },
+  "product_preview": { "total_products": 5, "..." },
+  "demo_accounts": [ /* 4个演示账号 */ ]
+}import React, { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import {
   LayoutDashboard, Cpu, Search, Sparkles, Wrench, ShoppingBag,
