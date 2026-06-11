@@ -11,7 +11,7 @@ import { useUserStore } from '@/store/useUserStore';
 import { taskService } from '@/services/task';
 import { waybillService } from '@/services/waybill';
 import { cainiaoService } from '@/services/cainiao';
-import type { DailyStats, TaskWarning } from '@/types/task';
+import type { DailyStats, TaskWarning, TaskHeatmapPoint, Geofence } from '@/types/task';
 import type { QuickActionItem } from '@/components/QuickAction';
 import type { SyncStatus } from '@/services/cainiao';
 
@@ -30,6 +30,15 @@ interface ComplianceStats {
   lastHashVerifyTime: number | null;
 }
 
+interface WorkflowStep {
+  key: string;
+  label: string;
+  icon: string;
+  count: number;
+  status: 'pending' | 'active' | 'completed' | 'exception';
+  path?: string;
+}
+
 const HomePage: React.FC = () => {
   const [loading, setLoading] = useState(false);
   const [stats, setStats] = useState<DailyStats | null>(null);
@@ -39,21 +48,77 @@ const HomePage: React.FC = () => {
   const [syncStatus, setSyncStatus] = useState<SyncStatus | null>(null);
   const [complianceStats, setComplianceStats] = useState<ComplianceStats | null>(null);
   const [pendingTasks, setPendingTasks] = useState<{ type: string; count: number; description: string }[]>([]);
-  const [cainiaoAuthorized, setCainiaoAuthorized] = useState(false);
+  const [fences, setFences] = useState<Geofence[]>([]);
+  const [selectedFenceId, setSelectedFenceId] = useState('');
 
   const { user, site } = useUserStore();
-  const { heatmapPoints, pickupTasks: storePickupTasks, deliveryTasks: storeDeliveryTasks, exceptions, getHeatmapPoints } = useTaskStore();
+  const { heatmapPoints, pickupTasks, deliveryTasks, exceptions, getHeatmapPoints } = useTaskStore();
+
+  const workflowSteps: WorkflowStep[] = React.useMemo(() => {
+    if (!stats) return [];
+    return [
+      {
+        key: 'pickup',
+        label: '揽件',
+        icon: '📦',
+        count: stats.completedPickup,
+        status: stats.completedPickup > 0 ? 'active' : 'pending',
+        path: '/pages/dispatch/index?tab=pickup'
+      },
+      {
+        key: 'ebill',
+        label: '电子面单',
+        icon: '🧾',
+        count: stats.completedPickup - (complianceStats?.pendingEbill || 0),
+        status: stats.completedPickup > 0 ? 'completed' : 'pending',
+        path: '/pages/archive/index?type=ebill'
+      },
+      {
+        key: 'delivery',
+        label: '派送',
+        icon: '🚚',
+        count: stats.totalDelivery,
+        status: stats.completedDelivery > 0 ? 'active' : 'pending',
+        path: '/pages/dispatch/index?tab=delivery'
+      },
+      {
+        key: 'sign',
+        label: '签收',
+        icon: '✅',
+        count: stats.completedDelivery,
+        status: stats.completedDelivery > 0 ? 'completed' : 'pending',
+        path: '/pages/scan/index?type=station'
+      },
+      {
+        key: 'exception',
+        label: '异常',
+        icon: '⚠️',
+        count: stats.exceptionCount,
+        status: stats.exceptionCount > 0 ? 'exception' : 'completed',
+        path: '/pages/exception/index'
+      },
+      {
+        key: 'archive',
+        label: '归档存证',
+        icon: '🔒',
+        count: complianceStats?.totalArchives || 0,
+        status: (complianceStats?.totalArchives || 0) > 0 ? 'completed' : 'pending',
+        path: '/pages/archive/index'
+      }
+    ];
+  }, [stats, complianceStats]);
 
   const loadData = useCallback(async () => {
     setLoading(true);
     try {
-      const [statsData, warningsData, offlineData, syncData, complianceData, pendingTasksData] = await Promise.all([
+      const [statsData, warningsData, offlineData, syncData, complianceData, pendingTasksData, fencesData] = await Promise.all([
         taskService.getDailyStats(),
         taskService.getWarnings(),
         waybillService.getOfflinePendingCount(),
         cainiaoService.getSyncStatus(),
         taskService.getComplianceStats(),
         taskService.getPendingTasks(),
+        taskService.getGeofences(),
         getHeatmapPoints()
       ]);
 
@@ -68,7 +133,7 @@ const HomePage: React.FC = () => {
       setSyncStatus(syncData);
       setComplianceStats(complianceData);
       setPendingTasks(pendingTasksData);
-      setCainiaoAuthorized(syncData.isAuthorized);
+      setFences(fencesData);
       setIsOnline(navigator.onLine);
     } catch (e) {
       console.error('[HomePage] 加载数据失败:', e);
@@ -123,14 +188,14 @@ const HomePage: React.FC = () => {
       : '未授权';
 
     const logSubtitle = complianceStats
-      ? `${complianceStats.todayLogs}条操作记录`
+      ? `${complianceStats.todayLogs}条·${complianceStats.verifiedArchives}份存证`
       : '合规留痕';
 
     return [
       {
         id: 'scan_pickup',
         title: '扫码揽件',
-        subtitle: '离线可用',
+        subtitle: offlineCount.pickup > 0 ? `${offlineCount.pickup}单待同步` : '离线可用',
         icon: '📦',
         color: 'primary',
         path: '/pages/scan/index?type=pickup',
@@ -165,7 +230,7 @@ const HomePage: React.FC = () => {
         id: 'pending_waybills',
         title: '待处理运单',
         subtitle: `${getPendingCount('waybill')}单待处理`,
-        icon: '�',
+        icon: '📋',
         color: 'primary',
         path: '/pages/dispatch/index',
         badge: getPendingCount('waybill')
@@ -176,7 +241,7 @@ const HomePage: React.FC = () => {
         subtitle: `${getPendingCount('ebill')}单待关联`,
         icon: '🧾',
         color: 'success',
-        path: '/pages/waybill-detail/index',
+        path: '/pages/archive/index?type=ebill',
         badge: getPendingCount('ebill')
       },
       {
@@ -185,16 +250,16 @@ const HomePage: React.FC = () => {
         subtitle: `${getPendingCount('evidence')}条待确认`,
         icon: '📸',
         color: 'warning',
-        path: '/pages/exception/index',
+        path: '/pages/exception/index?filter=pending',
         badge: getPendingCount('evidence')
       },
       {
         id: 'fence_check',
         title: '围栏校验',
         subtitle: `${getPendingCount('fence')}条待复核`,
-        icon: '�️',
+        icon: '🛡️',
         color: 'checkin',
-        path: '/pages/checkin/index',
+        path: '/pages/checkin/index?tab=fence',
         badge: getPendingCount('fence')
       },
       {
@@ -203,7 +268,7 @@ const HomePage: React.FC = () => {
         subtitle: `${getPendingCount('compliance')}条待确认`,
         icon: '✅',
         color: 'primary',
-        path: '/pages/operation-log/index',
+        path: '/pages/operation-log/index?module=compliance',
         badge: getPendingCount('compliance')
       },
       {
@@ -218,7 +283,7 @@ const HomePage: React.FC = () => {
         id: 'cainiao_sync',
         title: '菜鸟同步',
         subtitle: cainiaoSubtitle,
-        icon: cainiaoAuthorized ? '🔄' : '🔒',
+        icon: syncStatus?.isAuthorized ? '🔄' : '🔒',
         color: 'purple',
         path: '',
         badge: cainiaoBadge
@@ -232,7 +297,7 @@ const HomePage: React.FC = () => {
         path: '/pages/operation-log/index'
       }
     ];
-  }, [offlineCount, syncStatus, complianceStats, pendingTasks, cainiaoAuthorized]);
+  }, [offlineCount, syncStatus, complianceStats, pendingTasks]);
 
   const handleQuickActionClick = async (item: QuickActionItem) => {
     if (item.id === 'cainiao_sync') {
@@ -265,8 +330,8 @@ const HomePage: React.FC = () => {
     }
 
     if (item.id === 'evidence_review') {
-      Taro.navigateTo({
-        url: '/pages/exception/index?filter=pending'
+      Taro.switchTab({
+        url: '/pages/exception/index'
       });
       return;
     }
@@ -348,8 +413,48 @@ const HomePage: React.FC = () => {
     loadData();
   };
 
+  const handleWorkflowStepClick = (step: WorkflowStep) => {
+    if (step.path) {
+      if (step.key === 'delivery' || step.key === 'pickup') {
+        Taro.switchTab({ url: '/pages/dispatch/index' });
+      } else if (step.key === 'exception') {
+        Taro.switchTab({ url: '/pages/exception/index' });
+      } else {
+        Taro.navigateTo({ url: step.path });
+      }
+    }
+  };
+
+  const handleViewAllWarnings = () => {
+    Taro.switchTab({ url: '/pages/exception/index' });
+  };
+
+  const handleViewAllDispatch = () => {
+    Taro.switchTab({ url: '/pages/dispatch/index' });
+  };
+
+  const handleDispatchAction = (type: string) => {
+    Taro.showToast({
+      title: `${type}调度功能`,
+      icon: 'none'
+    });
+  };
+
+  const handlePointClick = (point: TaskHeatmapPoint) => {
+    console.log('[HomePage] 点击热力点:', point);
+  };
+
+  const handleFenceSelect = (fence: Geofence) => {
+    setSelectedFenceId(fence.id === selectedFenceId ? '' : fence.id);
+    Taro.showToast({
+      title: `已选择围栏：${fence.name}`,
+      icon: 'none'
+    });
+  };
+
   const totalOffline = offlineCount.pickup + offlineCount.delivery + (syncStatus?.pendingPush || 0) + (syncStatus?.pendingException || 0);
   const totalPending = pendingTasks.reduce((acc, t) => acc + t.count, 0);
+  const isCainiaoAuthorized = syncStatus?.isAuthorized || false;
 
   return (
     <ScrollView
@@ -381,6 +486,25 @@ const HomePage: React.FC = () => {
             <View className={styles.statusDot} />
             <Text className={styles.statusText}>{isOnline ? '在线' : '离线'}</Text>
           </View>
+        </View>
+
+        <View className={styles.workflowBar}>
+          <Text className={styles.workflowTitle}>今日作业流程</Text>
+          <ScrollView scrollX className={styles.workflowScroll}>
+            {workflowSteps.map((step, index) => (
+              <View key={step.key} className={styles.workflowItem}>
+                {index > 0 && <View className={styles.workflowConnector} />}
+                <View
+                  className={classnames(styles.workflowNode, styles[`step${step.status.charAt(0).toUpperCase() + step.status.slice(1)}`])}
+                  onClick={() => handleWorkflowStepClick(step)}
+                >
+                  <Text className={styles.workflowIcon}>{step.icon}</Text>
+                  <Text className={styles.workflowCount}>{step.count}</Text>
+                </View>
+                <Text className={styles.workflowLabel}>{step.label}</Text>
+              </View>
+            ))}
+          </ScrollView>
         </View>
       </View>
 
@@ -433,11 +557,16 @@ const HomePage: React.FC = () => {
       )}
 
       {syncStatus && (
-        <View className={styles.complianceStatusBar}>
+        <View className={classnames(styles.complianceStatusBar, {
+          [styles.complianceUnauthorized]: !isCainiaoAuthorized
+        })}>
           <View className={styles.statusBarTitle}>
-            <Text className={styles.statusBarTitleText}>📊 合规管控状态</Text>
+            <Text className={styles.statusBarTitleText}>
+              📊 合规管控状态
+              {!isCainiaoAuthorized && <Text className={styles.statusTag}>本地模式</Text>}
+            </Text>
             <Text className={styles.statusBarAction} onClick={() => Taro.navigateTo({ url: '/pages/archive/index' })}>
-              合规详情
+              合规详情 →
             </Text>
           </View>
           <View className={styles.statusGrid}>
@@ -451,7 +580,7 @@ const HomePage: React.FC = () => {
                       : syncStatus.syncStatus === 'success' ? '已同步'
                       : syncStatus.syncStatus === 'failed' ? '同步失败'
                       : `${syncStatus.todayPulled + syncStatus.todayPushed}条`)
-                    : '未授权'}
+                    : '未授权(本地)'}
                 </Text>
               </View>
               {syncStatus.pendingPush + syncStatus.pendingException > 0 && (
@@ -499,6 +628,12 @@ const HomePage: React.FC = () => {
                 最近归档: {formatTimeShort(complianceStats.lastArchiveTime)} ·{' '}
                 {complianceStats.lastHashVerifyTime ? `哈希校验: ${formatTimeShort(complianceStats.lastHashVerifyTime)}` : '待校验'}
               </Text>
+              <Text
+                className={styles.statusFooterLink}
+                onClick={() => Taro.navigateTo({ url: '/pages/operation-log/index?module=review' })}
+              >
+                复查记录 →
+              </Text>
             </View>
           )}
         </View>
@@ -531,6 +666,9 @@ const HomePage: React.FC = () => {
       <View className={styles.section}>
         <View className={styles.sectionHeader}>
           <Text className={styles.sectionTitle}>快捷操作</Text>
+          <Text className={styles.sectionAction} onClick={() => Taro.switchTab({ url: '/pages/dispatch/index' })}>
+            全部任务 →
+          </Text>
         </View>
         <QuickAction
           items={quickActions}
@@ -542,17 +680,33 @@ const HomePage: React.FC = () => {
       <View className={styles.section}>
         <View className={styles.sectionHeader}>
           <Text className={styles.sectionTitle}>任务热力图</Text>
-          <Text className={styles.sectionAction}>查看全部</Text>
+          <Text className={styles.sectionAction} onClick={handleViewAllDispatch}>
+            调度详情 →
+          </Text>
         </View>
         <View className={styles.heatmapContainer}>
-          <HeatmapView points={heatmapPoints} height={300} />
+          <HeatmapView
+            points={heatmapPoints}
+            fences={fences}
+            height={400}
+            showDimensionSwitch={true}
+            showStatusFilter={true}
+            showDispatchPanel={true}
+            selectedFenceId={selectedFenceId}
+            onPointClick={handlePointClick}
+            onFenceSelect={handleFenceSelect}
+            onDispatch={handleDispatchAction}
+            onViewAll={handleViewAllDispatch}
+          />
         </View>
       </View>
 
       <View className={styles.section}>
         <View className={styles.sectionHeader}>
           <Text className={styles.sectionTitle}>预警提醒</Text>
-          <Text className={styles.sectionAction}>全部预警</Text>
+          <Text className={styles.sectionAction} onClick={handleViewAllWarnings}>
+            全部预警 →
+          </Text>
         </View>
         <View className={styles.warningList}>
           {warnings.length > 0 ? (
@@ -583,6 +737,12 @@ const HomePage: React.FC = () => {
       <View className={styles.section}>
         <View className={styles.sectionHeader}>
           <Text className={styles.sectionTitle}>工作统计</Text>
+          <Text
+            className={styles.sectionAction}
+            onClick={() => Taro.navigateTo({ url: '/pages/mine/index' })}
+          >
+            查看详情 →
+          </Text>
         </View>
         <View className={styles.statsGrid} style={{ marginTop: 0, padding: 0, marginBottom: 0 }}>
           <StatCard
@@ -601,6 +761,8 @@ const HomePage: React.FC = () => {
           />
         </View>
       </View>
+
+      <View className={styles.bottomSpacing} />
     </ScrollView>
   );
 };

@@ -108,3 +108,5 @@ export const EXCEPTION_REASON_OPTIONS: ExceptionReasonOption[] = [
   { type: 'package_leak', label: '内件泄漏', needPhotos: true, needDescription: true, severity: 'high' },
   { type: 'other', label: '其他异常', needPhotos: true, needDescription: true, severity: 'medium' }
 ];
+
+export const EXCEPTION_TYPE_OPTIONS = EXCEPTION_REASON_OPTIONS;

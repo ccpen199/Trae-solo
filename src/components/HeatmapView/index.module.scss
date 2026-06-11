@@ -3,6 +3,7 @@
 .container {
   @include card-base;
   margin-bottom: $spacing-md;
+  padding: $spacing-md;
 }
 
 .header {
@@ -18,9 +19,118 @@
   font-weight: $font-weight-semibold;
 }
 
+.headerRight {
+  display: flex;
+  align-items: center;
+  gap: $spacing-md;
+}
+
 .total {
   font-size: $font-size-sm;
   color: $color-primary;
+  font-weight: $font-weight-medium;
+}
+
+.viewAll {
+  font-size: $font-size-xs;
+  color: $color-primary;
+  font-weight: $font-weight-medium;
+}
+
+.dimSwitch {
+  display: flex;
+  background: $color-bg-secondary;
+  border-radius: $radius-md;
+  padding: 4rpx;
+  margin-bottom: $spacing-sm;
+}
+
+.dimItem {
+  flex: 1;
+  padding: $spacing-xs 0;
+  text-align: center;
+  font-size: $font-size-xs;
+  color: $color-text-secondary;
+  border-radius: $radius-sm;
+  transition: all $transition-base;
+
+  &:active {
+    opacity: 0.7;
+  }
+}
+
+.dimActive {
+  background: #fff;
+  color: $color-primary;
+  font-weight: $font-weight-medium;
+  box-shadow: $shadow-sm;
+}
+
+.statusFilter {
+  display: flex;
+  gap: $spacing-sm;
+  margin-bottom: $spacing-md;
+  overflow-x: auto;
+}
+
+.statusItem {
+  padding: $spacing-xs $spacing-md;
+  border-radius: $radius-round;
+  font-size: $font-size-xs;
+  white-space: nowrap;
+  border: 2rpx solid transparent;
+  transition: all $transition-base;
+
+  &:active {
+    opacity: 0.7;
+  }
+}
+
+.statusPrimary {
+  color: $color-primary;
+  border-color: $color-primary;
+  background: rgba($color-primary, 0.05);
+
+  &.statusActive {
+    background: $color-primary;
+    color: #fff;
+  }
+}
+
+.statusWarning {
+  color: $color-exception;
+  border-color: $color-exception;
+  background: rgba($color-exception, 0.05);
+
+  &.statusActive {
+    background: $color-exception;
+    color: #fff;
+  }
+}
+
+.statusSuccess {
+  color: $color-delivery;
+  border-color: $color-delivery;
+  background: rgba($color-delivery, 0.05);
+
+  &.statusActive {
+    background: $color-delivery;
+    color: #fff;
+  }
+}
+
+.statusError {
+  color: $color-overtime;
+  border-color: $color-overtime;
+  background: rgba($color-overtime, 0.05);
+
+  &.statusActive {
+    background: $color-overtime;
+    color: #fff;
+  }
+}
+
+.statusActive {
   font-weight: $font-weight-medium;
 }
 
@@ -55,6 +165,36 @@
   background: rgba($color-primary, 0.1);
 }
 
+.fenceCircle {
+  position: absolute;
+  border: 4rpx dashed $color-checkin;
+  border-radius: 50%;
+  opacity: 0.6;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all $transition-base;
+
+  &:active {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1.05);
+  }
+}
+
+.fenceActive {
+  border-color: $color-primary;
+  border-style: solid;
+  opacity: 1;
+  background: rgba($color-primary, 0.1);
+}
+
+.fenceLabel {
+  font-size: 18rpx;
+  color: $color-checkin;
+  white-space: nowrap;
+  font-weight: $font-weight-medium;
+}
+
 .heatPoint {
   position: absolute;
   border-radius: 50%;
@@ -62,20 +202,29 @@
   align-items: center;
   justify-content: center;
   transition: all $transition-base;
+  cursor: pointer;
 
   &:active {
     transform: translate(-50%, -50%) scale(1.1);
+    z-index: 10;
   }
+}
+
+.pointSelected {
+  z-index: 20;
+  transform: translate(-50%, -50%) scale(1.15);
+  box-shadow: 0 0 30rpx rgba($color-primary, 0.5);
 }
 
 .pointInner {
   width: 60%;
   height: 60%;
   border-radius: 50%;
-  background: rgba(255, 255, 255, 0.9);
+  background: rgba(255, 255, 255, 0.95);
   display: flex;
   align-items: center;
   justify-content: center;
+  box-shadow: $shadow-sm;
 }
 
 .pointCount {
@@ -124,9 +273,97 @@
   border-radius: 50%;
 }
 
+.legendDot.pickup {
+  background: $color-primary;
+  box-shadow: none;
+}
+
+.legendDot.delivery {
+  background: $color-delivery;
+  box-shadow: none;
+}
+
+.legendDot.exception {
+  background: $color-exception;
+  box-shadow: none;
+}
+
 .legendText {
   font-size: 20rpx;
   color: $color-text-secondary;
+}
+
+.pointPopup {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: #fff;
+  border-radius: $radius-md;
+  box-shadow: $shadow-lg;
+  padding: $spacing-md;
+  min-width: 280rpx;
+  z-index: 30;
+}
+
+.popupHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: $spacing-sm;
+}
+
+.popupTitle {
+  font-size: $font-size-base;
+  font-weight: $font-weight-semibold;
+  color: $color-text-primary;
+}
+
+.popupClose {
+  font-size: $font-size-base;
+  color: $color-text-tertiary;
+  padding: $spacing-xs;
+}
+
+.popupContent {
+  margin-bottom: $spacing-md;
+}
+
+.popupCount {
+  font-size: 48rpx;
+  font-weight: $font-weight-bold;
+  color: $color-primary;
+  display: block;
+}
+
+.popupDesc {
+  font-size: $font-size-sm;
+  color: $color-text-secondary;
+}
+
+.popupActions {
+  display: flex;
+  gap: $spacing-sm;
+}
+
+.popupBtn {
+  flex: 1;
+  padding: $spacing-sm 0;
+  text-align: center;
+  border-radius: $radius-md;
+  font-size: $font-size-sm;
+  color: $color-text-secondary;
+  background: $color-bg-secondary;
+  transition: all $transition-base;
+
+  &:active {
+    opacity: 0.8;
+  }
+}
+
+.primaryBtn {
+  background: $color-primary;
+  color: #fff;
 }
 
 .empty {
@@ -138,4 +375,48 @@
 .emptyText {
   font-size: $font-size-sm;
   color: $color-text-tertiary;
+}
+
+.dispatchPanel {
+  margin-top: $spacing-md;
+  padding-top: $spacing-md;
+  border-top: 2rpx solid $color-border-light;
+}
+
+.dispatchTitle {
+  font-size: $font-size-sm;
+  font-weight: $font-weight-medium;
+  color: $color-text-primary;
+  margin-bottom: $spacing-sm;
+  display: block;
+}
+
+.dispatchActions {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: $spacing-sm;
+}
+
+.dispatchBtn {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: $spacing-sm $spacing-xs;
+  background: $color-bg-secondary;
+  border-radius: $radius-md;
+  transition: all $transition-base;
+
+  &:active {
+    background: $color-bg-hover;
+  }
+}
+
+.dispatchIcon {
+  font-size: 36rpx;
+  margin-bottom: 6rpx;
+}
+
+.dispatchLabel {
+  font-size: 20rpx;
+  color: $color-text-secondary;
 }
