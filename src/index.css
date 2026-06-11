@@ -1,0 +1,33 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+html, body, #root {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  background-color: #f5f7fa;
+  color: #1f2937;
+  -webkit-font-smoothing: antialiased;
+}
+
+@layer components {
+  .gov-card {
+    @apply bg-white rounded-lg shadow-sm border border-gray-100;
+  }
+  .gov-btn-primary {
+    @apply bg-gov-red hover:bg-red-700 text-white font-medium px-5 py-2.5 rounded-md transition-colors duration-200;
+  }
+  .gov-btn-secondary {
+    @apply bg-white border border-gray-300 hover:bg-gray-50 text-gray-700 font-medium px-5 py-2.5 rounded-md transition-colors duration-200;
+  }
+  .gov-input {
+    @apply w-full px-4 py-2.5 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-gov-red/30 focus:border-gov-red transition;
+  }
+  .gov-badge {
+    @apply inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium;
+  }
+}
