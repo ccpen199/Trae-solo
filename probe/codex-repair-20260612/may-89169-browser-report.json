@@ -1,0 +1,4230 @@
+{
+  "ok": true,
+  "generatedAt": "2026-06-11T21:10:48.782Z",
+  "order": "may-89169",
+  "roundIndex": 528,
+  "captureId": "may-89169-repair",
+  "url": "http://127.0.0.1:49169/",
+  "initialUrl": "http://127.0.0.1:49169/",
+  "finalUrl": "http://127.0.0.1:49169/",
+  "status": 200,
+  "title": "智慧货运协同平台 - 全球航运物流生态B2B平台",
+  "initialTitle": "智慧货运协同平台 - 全球航运物流生态B2B平台",
+  "navigationError": "",
+  "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89169/probe/codex-repair-20260612/may-89169-repair-frontend.png",
+  "screenshotPaths": [
+    "/Users/chen/Documents/trae_projects/local_projects/may-89169/probe/codex-repair-20260612/may-89169-repair-structure-01-首屏.png",
+    "/Users/chen/Documents/trae_projects/local_projects/may-89169/probe/codex-repair-20260612/may-89169-repair-structure-02-导航-工作台.png",
+    "/Users/chen/Documents/trae_projects/local_projects/may-89169/probe/codex-repair-20260612/may-89169-repair-structure-03-操作-查看尽调资料-发起议价.png",
+    "/Users/chen/Documents/trae_projects/local_projects/may-89169/probe/codex-repair-20260612/may-89169-repair-structure-04-二层操作-查看尽调资料-发起议价-详情.png",
+    "/Users/chen/Documents/trae_projects/local_projects/may-89169/probe/codex-repair-20260612/may-89169-repair-structure-05-操作-查看详情.png",
+    "/Users/chen/Documents/trae_projects/local_projects/may-89169/probe/codex-repair-20260612/may-89169-repair-structure-06-二层操作-查看详情-发起订舱邀约.png",
+    "/Users/chen/Documents/trae_projects/local_projects/may-89169/probe/codex-repair-20260612/may-89169-repair-structure-07-导航-航次动态.png",
+    "/Users/chen/Documents/trae_projects/local_projects/may-89169/probe/codex-repair-20260612/may-89169-repair-structure-08-操作-查看详情.png",
+    "/Users/chen/Documents/trae_projects/local_projects/may-89169/probe/codex-repair-20260612/may-89169-repair-structure-09-二层操作-查看详情-发起订舱邀约.png",
+    "/Users/chen/Documents/trae_projects/local_projects/may-89169/probe/codex-repair-20260612/may-89169-repair-structure-10-操作-搜索.png",
+    "/Users/chen/Documents/trae_projects/local_projects/may-89169/probe/codex-repair-20260612/may-89169-repair-structure-11-导航-货盘管理.png",
+    "/Users/chen/Documents/trae_projects/local_projects/may-89169/probe/codex-repair-20260612/may-89169-repair-structure-12-操作-编辑.png"
+  ],
+  "issueTextPreview": "page: 个人中心/我的相关问题；搜索/筛选相关问题；后台管理相关问题；购买/提交相关问题；需要验证货运平台目标页面和接口数据",
+  "targetReason": "个人中心/我的相关问题；搜索/筛选相关问题；后台管理相关问题；购买/提交相关问题",
+  "targetKind": "admin",
+  "targetMatched": true,
+  "targetActions": [
+    {
+      "action": "fill-search",
+      "label": "搜索输入框",
+      "ok": false,
+      "error": "locator.fill: Timeout 1200ms exceeded.\nCall log:\n\u001b[2m  - waiting for locator('input[type=\"search\"],input[name*=\"search\" i],input[class*=\"search\" i],input[placeholder*=\"搜索\"],textarea[placeholder*=\"搜索\"]').first()\u001b[22m\n\u001b[2m"
+    },
+    {
+      "action": "click",
+      "label": "后台管理相关问题",
+      "ok": true
+    },
+    {
+      "action": "target-verify",
+      "label": "后台管理相关问题",
+      "ok": true,
+      "finalUrl": "http://127.0.0.1:49169/admin"
+    }
+  ],
+  "authFlow": {
+    "detected": false,
+    "attempted": false,
+    "success": false,
+    "finalUrl": "http://127.0.0.1:49169/",
+    "message": "",
+    "actions": []
+  },
+  "businessAudit": {
+    "actions": [
+      {
+        "action": "click",
+        "label": "导航:工作台",
+        "ok": true
+      },
+      {
+        "action": "click",
+        "label": "操作:查看尽调资料 / 发起议价",
+        "ok": true,
+        "result": {
+          "ok": true,
+          "matched": 1
+        }
+      },
+      {
+        "action": "click",
+        "label": "二层操作:查看尽调资料 / 发起议价:详情",
+        "ok": true,
+        "result": {
+          "ok": true,
+          "matched": 1
+        }
+      },
+      {
+        "action": "click",
+        "label": "关闭弹窗/抽屉",
+        "ok": true
+      },
+      {
+        "action": "click",
+        "label": "操作:查看详情",
+        "ok": true,
+        "result": {
+          "ok": true,
+          "matched": 6
+        }
+      },
+      {
+        "action": "click",
+        "label": "二层操作:查看详情:发起订舱邀约",
+        "ok": true,
+        "result": {
+          "ok": true,
+          "matched": 1
+        }
+      },
+      {
+        "action": "click",
+        "label": "导航:航次动态",
+        "ok": true
+      },
+      {
+        "action": "click",
+        "label": "操作:查看详情",
+        "ok": true,
+        "result": {
+          "ok": true,
+          "matched": 10
+        }
+      },
+      {
+        "action": "click",
+        "label": "二层操作:查看详情:发起订舱邀约",
+        "ok": true,
+        "result": {
+          "ok": true,
+          "matched": 1
+        }
+      },
+      {
+        "action": "click",
+        "label": "操作:搜索",
+        "ok": true,
+        "result": {
+          "ok": true,
+          "matched": 1
+        }
+      },
+      {
+        "action": "click",
+        "label": "导航:货盘管理",
+        "ok": true
+      },
+      {
+        "action": "click",
+        "label": "操作:编辑",
+        "ok": true,
+        "result": {
+          "ok": true,
+          "matched": 7
+        }
+      },
+      {
+        "action": "click",
+        "label": "二层操作:编辑:发布货盘",
+        "ok": true,
+        "result": {
+          "ok": true,
+          "matched": 1
+        }
+      },
+      {
+        "action": "click",
+        "label": "关闭弹窗/抽屉",
+        "ok": true
+      },
+      {
+        "action": "click",
+        "label": "操作:详情",
+        "ok": true,
+        "result": {
+          "ok": true,
+          "matched": 7
+        }
+      },
+      {
+        "action": "click",
+        "label": "关闭弹窗/抽屉",
+        "ok": true
+      },
+      {
+        "action": "click",
+        "label": "导航:智能撮合",
+        "ok": true
+      }
+    ],
+    "snapshots": [
+      {
+        "label": "首屏",
+        "url": "http://127.0.0.1:49169/",
+        "title": "智慧货运协同平台 - 全球航运物流生态B2B平台",
+        "headings": [],
+        "navLabels": [
+          "工作台 航次动态 货盘管理 智能撮合 船舶交易 集装箱订舱 特种车船服务 订单中心 后台管理",
+          "工作台",
+          "dashboard",
+          "航次动态",
+          "rocket",
+          "货盘管理",
+          "shopping",
+          "智能撮合",
+          "swap",
+          "船舶交易",
+          "bar-chart",
+          "集装箱订舱",
+          "appstore",
+          "特种车船服务",
+          "car",
+          "订单中心",
+          "file-text",
+          "后台管理"
+        ],
+        "buttons": [
+          "AI智能撮合",
+          "发布我的货盘",
+          "SCFI",
+          "远东→美西",
+          "查看详情",
+          "AI撮合",
+          "立即抢购",
+          "去出价 / 查看我的保证金",
+          "查看尽调资料 / 发起议价"
+        ],
+        "links": [
+          "工作台",
+          "航次动态",
+          "货盘管理",
+          "智能撮合",
+          "船舶交易",
+          "集装箱订舱",
+          "特种车船服务",
+          "订单中心",
+          "后台管理",
+          "查看分析",
+          "完整热力图",
+          "全部航次",
+          "全部预警",
+          "全部"
+        ],
+        "inputs": [
+          {
+            "tag": "input",
+            "type": "search",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          }
+        ],
+        "tables": [],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "智慧货运协同平台切换身份：货主当前：华贸物流集团 / 货主张明工作台航次动态货盘管理智能撮合船舶交易集装箱订舱特种车船服务订单中心后台管理工作台 华贸物流集团 · 张明2026年06月12日AI智能撮合 发布我的货盘25活跃航次+316待匹配货盘+12%20我的订单+27待处理预警高风险2运价指数趋势（近30天）SCFI远东→美西查看分析 远东→美西$2,450 ↑ 3.2%远东→欧洲$1,890 ↓ 1.5%空载率预测12.8% 较上周↑1.2%全球运力热力分布完整热力图 主要港口12在线船舶342周运力(TEU)12,800,000最新航次（货主决策视图）全部航次 港口ETA合规资质匹配建议履约异常大西洋先锋V9518 · 接受订舱上海港ETD 06-12 21:03↓ 航程约 17 天纽约港ETA 06-29 21:03合规资质SOLASMARPOLISPS碳排: 0.767 kg CO₂/TEU推荐货类电子产品机械设备纺织服装舱位容量8731 TEU 可用$3359USD/TEU 查看详情 AI撮合大西洋先锋V1326 · 接受订舱宁波港ETD 06-12 23:38↓ 航程约 14 天迪拜港ETA 06-26 23:38合规资质SOLASMARPOLISPS碳排: 2.248 kg CO₂/TEU推荐货类电子产品机械设备纺织服装舱位容量2972 TEU 可用$803USD/TEU 查看详情 AI撮合蓝鲸号V8915 · 接受订舱迪拜港ETD 06-13 21:05↓ 航程约 8 天孟买港ETA 06-21 21:05合规资质SOLASMARPOLISPS碳排: 1.459 kg CO₂/TEU推荐货类电子产品机械设备纺织服装舱位容量1835 TEU 可用$1293USD/TEU 查看详情 AI撮合太平洋使者V6937 · 接受订舱釜山港ETD 06-14 23:38↓ 航程约 23 天鹿特丹港ETA 07-07 23:38合规资质SOLASMARPOLISPS碳排: 1.501 kg CO₂/TEU推荐货类电子产品机械设备纺织服装舱位容量8521 TEU 可用$2075USD/TEU 查看详情 AI撮合北冰洋探索者V1431 · 接受订舱汉堡港ETD 06-15 18:36↓ 航程约 19 天孟买港ETA 07-04 18:36合规资质SOLASMARPOLISPS碳排: 0.54 kg CO₂/TEU推荐货类电子产品机械设备纺织服装舱位容量4206 TEU 可用$1141USD/TEU 查看详情 AI撮合蓝鲸号V3782 · 接受订舱汉堡港ETD 06-17 18:36↓ 航程约 12 天深圳港ETA 06-29 18:36合规资质SOLASMARPOLISPS碳排: 0.892 kg CO₂/TEU推荐货类电子产品机械设备纺织服装舱位容量2200 TEU 可用$3276USD/TEU 查看详情 AI撮合异常预警中心2全部预警 甩柜预警中06-11 20:38示例预警消息 - 5 订单: ORD-20260608-0231 航次: V3040 提单: BL-SH-20260608-0892待处理船舶延误低06-11 20:38示例预警消息 - 6 订单: ORD-20260605-0198 航次: V2876 提单: BL-NB-20260605-0712待处理甩柜预警中06-11 18:05示例预警消息 - 6 订单: ORD-20260608-0231 航次: V3040 提单: BL-SH-20260608-0892待处理船舶延误高06-11 18:05示例预警消息 - 8 订单: ORD-20260605-0198 航次: V2876 提单: BL-NB-20260605-0712待处理单证缺失中06-11 18:03示例预警消息 - 8 订单: ORD-20260610-0287 航次: V2903 提单: BL-SZ-20260610-0987待处理滞港风险紧急06-11 15:36示例预警消息 - 4 订单: ORD-20260609-0265 航次: V2941 提单: BL-QD-20260609-0834待处理1紧急1高风险21近7日已闭环现舱秒杀全部 暂无秒杀舱位立即抢购竞价舱位我的出价 2全部 暂无",
+        "layout": {
+          "viewportWidth": 1504,
+          "viewportHeight": 1600,
+          "scrollWidth": 1504,
+          "scrollHeight": 2734,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89169-repair-structure-01-首屏",
+          "label": "首屏",
+          "finalUrl": "http://127.0.0.1:49169/",
+          "title": "智慧货运协同平台 - 全球航运物流生态B2B平台",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89169/probe/codex-repair-20260612/may-89169-repair-structure-01-首屏.json",
+          "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89169/probe/codex-repair-20260612/may-89169-repair-structure-01-首屏.png",
+          "elementCount": 1113,
+          "interactiveCount": 46,
+          "interactiveLabels": [
+            "工作台 航次动态 货盘管理 智能撮合 船舶交易 集装箱订舱 特种车船服务 订单中心 后台管理",
+            "工作台",
+            "航次动态",
+            "货盘管理",
+            "智能撮合",
+            "船舶交易",
+            "集装箱订舱",
+            "特种车船服务",
+            "订单中心",
+            "后台管理",
+            "AI智能撮合",
+            "发布我的货盘",
+            "SCFI",
+            "远东→美西",
+            "查看分析",
+            "完整热力图",
+            "全部航次",
+            "查看详情",
+            "AI撮合",
+            "全部预警",
+            "全部",
+            "立即抢购",
+            "去出价 / 查看我的保证金",
+            "查看尽调资料 / 发起议价"
+          ]
+        }
+      },
+      {
+        "label": "导航:工作台",
+        "url": "http://127.0.0.1:49169/",
+        "title": "智慧货运协同平台 - 全球航运物流生态B2B平台",
+        "headings": [],
+        "navLabels": [
+          "工作台 航次动态 货盘管理 智能撮合 船舶交易 集装箱订舱 特种车船服务 订单中心 后台管理",
+          "工作台",
+          "dashboard",
+          "航次动态",
+          "rocket",
+          "货盘管理",
+          "shopping",
+          "智能撮合",
+          "swap",
+          "船舶交易",
+          "bar-chart",
+          "集装箱订舱",
+          "appstore",
+          "特种车船服务",
+          "car",
+          "订单中心",
+          "file-text",
+          "后台管理"
+        ],
+        "buttons": [
+          "AI智能撮合",
+          "发布我的货盘",
+          "SCFI",
+          "远东→美西",
+          "查看详情",
+          "AI撮合",
+          "立即抢购",
+          "去出价 / 查看我的保证金",
+          "查看尽调资料 / 发起议价"
+        ],
+        "links": [
+          "工作台",
+          "航次动态",
+          "货盘管理",
+          "智能撮合",
+          "船舶交易",
+          "集装箱订舱",
+          "特种车船服务",
+          "订单中心",
+          "后台管理",
+          "查看分析",
+          "完整热力图",
+          "全部航次",
+          "全部预警",
+          "全部"
+        ],
+        "inputs": [
+          {
+            "tag": "input",
+            "type": "search",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          }
+        ],
+        "tables": [],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "智慧货运协同平台切换身份：货主当前：华贸物流集团 / 货主张明工作台航次动态货盘管理智能撮合船舶交易集装箱订舱特种车船服务订单中心后台管理工作台 华贸物流集团 · 张明2026年06月12日AI智能撮合 发布我的货盘25活跃航次+316待匹配货盘+12%20我的订单+27待处理预警高风险2运价指数趋势（近30天）SCFI远东→美西查看分析 远东→美西$2,450 ↑ 3.2%远东→欧洲$1,890 ↓ 1.5%空载率预测12.8% 较上周↑1.2%全球运力热力分布完整热力图 主要港口12在线船舶342周运力(TEU)12,800,000最新航次（货主决策视图）全部航次 港口ETA合规资质匹配建议履约异常大西洋先锋V9518 · 接受订舱上海港ETD 06-12 21:03↓ 航程约 17 天纽约港ETA 06-29 21:03合规资质SOLASMARPOLISPS碳排: 0.767 kg CO₂/TEU推荐货类电子产品机械设备纺织服装舱位容量8731 TEU 可用$3359USD/TEU 查看详情 AI撮合大西洋先锋V1326 · 接受订舱宁波港ETD 06-12 23:38↓ 航程约 14 天迪拜港ETA 06-26 23:38合规资质SOLASMARPOLISPS碳排: 2.248 kg CO₂/TEU推荐货类电子产品机械设备纺织服装舱位容量2972 TEU 可用$803USD/TEU 查看详情 AI撮合蓝鲸号V8915 · 接受订舱迪拜港ETD 06-13 21:05↓ 航程约 8 天孟买港ETA 06-21 21:05合规资质SOLASMARPOLISPS碳排: 1.459 kg CO₂/TEU推荐货类电子产品机械设备纺织服装舱位容量1835 TEU 可用$1293USD/TEU 查看详情 AI撮合太平洋使者V6937 · 接受订舱釜山港ETD 06-14 23:38↓ 航程约 23 天鹿特丹港ETA 07-07 23:38合规资质SOLASMARPOLISPS碳排: 1.501 kg CO₂/TEU推荐货类电子产品机械设备纺织服装舱位容量8521 TEU 可用$2075USD/TEU 查看详情 AI撮合北冰洋探索者V1431 · 接受订舱汉堡港ETD 06-15 18:36↓ 航程约 19 天孟买港ETA 07-04 18:36合规资质SOLASMARPOLISPS碳排: 0.54 kg CO₂/TEU推荐货类电子产品机械设备纺织服装舱位容量4206 TEU 可用$1141USD/TEU 查看详情 AI撮合蓝鲸号V3782 · 接受订舱汉堡港ETD 06-17 18:36↓ 航程约 12 天深圳港ETA 06-29 18:36合规资质SOLASMARPOLISPS碳排: 0.892 kg CO₂/TEU推荐货类电子产品机械设备纺织服装舱位容量2200 TEU 可用$3276USD/TEU 查看详情 AI撮合异常预警中心2全部预警 甩柜预警中06-11 20:38示例预警消息 - 5 订单: ORD-20260608-0231 航次: V3040 提单: BL-SH-20260608-0892待处理船舶延误低06-11 20:38示例预警消息 - 6 订单: ORD-20260605-0198 航次: V2876 提单: BL-NB-20260605-0712待处理甩柜预警中06-11 18:05示例预警消息 - 6 订单: ORD-20260608-0231 航次: V3040 提单: BL-SH-20260608-0892待处理船舶延误高06-11 18:05示例预警消息 - 8 订单: ORD-20260605-0198 航次: V2876 提单: BL-NB-20260605-0712待处理单证缺失中06-11 18:03示例预警消息 - 8 订单: ORD-20260610-0287 航次: V2903 提单: BL-SZ-20260610-0987待处理滞港风险紧急06-11 15:36示例预警消息 - 4 订单: ORD-20260609-0265 航次: V2941 提单: BL-QD-20260609-0834待处理1紧急1高风险21近7日已闭环现舱秒杀全部 暂无秒杀舱位立即抢购竞价舱位我的出价 2全部 暂无",
+        "layout": {
+          "viewportWidth": 1536,
+          "viewportHeight": 1600,
+          "scrollWidth": 1536,
+          "scrollHeight": 2734,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89169-repair-structure-02-导航-工作台",
+          "label": "导航:工作台",
+          "finalUrl": "http://127.0.0.1:49169/",
+          "title": "智慧货运协同平台 - 全球航运物流生态B2B平台",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89169/probe/codex-repair-20260612/may-89169-repair-structure-02-导航-工作台.json",
+          "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89169/probe/codex-repair-20260612/may-89169-repair-structure-02-导航-工作台.png",
+          "elementCount": 1113,
+          "interactiveCount": 46,
+          "interactiveLabels": [
+            "工作台 航次动态 货盘管理 智能撮合 船舶交易 集装箱订舱 特种车船服务 订单中心 后台管理",
+            "工作台",
+            "航次动态",
+            "货盘管理",
+            "智能撮合",
+            "船舶交易",
+            "集装箱订舱",
+            "特种车船服务",
+            "订单中心",
+            "后台管理",
+            "AI智能撮合",
+            "发布我的货盘",
+            "SCFI",
+            "远东→美西",
+            "查看分析",
+            "完整热力图",
+            "全部航次",
+            "查看详情",
+            "AI撮合",
+            "全部预警",
+            "全部",
+            "立即抢购",
+            "去出价 / 查看我的保证金",
+            "查看尽调资料 / 发起议价"
+          ]
+        }
+      },
+      {
+        "label": "操作:查看尽调资料 / 发起议价",
+        "url": "http://127.0.0.1:49169/vessel-trading",
+        "title": "智慧货运协同平台 - 全球航运物流生态B2B平台",
+        "headings": [],
+        "navLabels": [
+          "工作台 航次动态 货盘管理 智能撮合 船舶交易 集装箱订舱 特种车船服务 订单中心 后台管理",
+          "工作台",
+          "dashboard",
+          "航次动态",
+          "rocket",
+          "货盘管理",
+          "shopping",
+          "智能撮合",
+          "swap",
+          "船舶交易",
+          "bar-chart",
+          "集装箱订舱",
+          "appstore",
+          "特种车船服务",
+          "car",
+          "订单中心",
+          "file-text",
+          "后台管理"
+        ],
+        "buttons": [
+          "发布挂牌",
+          "详情",
+          "议价"
+        ],
+        "links": [
+          "工作台",
+          "航次动态",
+          "货盘管理",
+          "智能撮合",
+          "船舶交易",
+          "集装箱订舱",
+          "特种车船服务",
+          "订单中心",
+          "后台管理"
+        ],
+        "inputs": [
+          {
+            "tag": "input",
+            "type": "search",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          }
+        ],
+        "tables": [
+          {
+            "headers": [
+              "船舶信息",
+              "船舶参数",
+              "卖方",
+              "报价",
+              "状态",
+              "操作"
+            ],
+            "rowCount": 1,
+            "hasEmptyText": false,
+            "textPreview": "船舶信息 船舶参数 卖方 报价 状态 操作 中远之星 特种船2013年建造 | 中国 载重吨: 103,303.58 DWT 箱量: 8,718 TEU 东方之星航运 孙丽 $3070.14万 在售 详情 议价"
+          }
+        ],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "智慧货运协同平台切换身份：货主当前：华贸物流集团 / 货主张明工作台航次动态货盘管理智能撮合船舶交易集装箱订舱特种车船服务订单中心后台管理船舶交易发布挂牌全部船舶我的挂牌我的收藏船舶信息船舶参数卖方报价状态操作中远之星特种船2013年建造 | 中国载重吨: 103,303.58 DWT箱量: 8,718 TEU东方之星航运孙丽$3070.14万在售详情议价1智慧货运协同平台 ©2024 - 面向全球航运物流生态的B2B智慧货运协同平台",
+        "layout": {
+          "viewportWidth": 1568,
+          "viewportHeight": 1600,
+          "scrollWidth": 1568,
+          "scrollHeight": 1600,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89169-repair-structure-03-操作-查看尽调资料-发起议价",
+          "label": "操作:查看尽调资料 / 发起议价",
+          "finalUrl": "http://127.0.0.1:49169/vessel-trading",
+          "title": "智慧货运协同平台 - 全球航运物流生态B2B平台",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89169/probe/codex-repair-20260612/may-89169-repair-structure-03-操作-查看尽调资料-发起议价.json",
+          "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89169/probe/codex-repair-20260612/may-89169-repair-structure-03-操作-查看尽调资料-发起议价.png",
+          "elementCount": 201,
+          "interactiveCount": 30,
+          "interactiveLabels": [
+            "工作台 航次动态 货盘管理 智能撮合 船舶交易 集装箱订舱 特种车船服务 订单中心 后台管理",
+            "工作台",
+            "航次动态",
+            "货盘管理",
+            "智能撮合",
+            "船舶交易",
+            "集装箱订舱",
+            "特种车船服务",
+            "订单中心",
+            "后台管理",
+            "发布挂牌",
+            "全部船舶",
+            "船舶信息 船舶参数 卖方 报价 状态 操作 中远之星 特种船2013年建造 | 中国 载重吨: 103,303.58 DWT 箱量: 8,718 TEU 东方之星航运 孙丽 $3070.14万 在售 详情 议价 1",
+            "详情",
+            "议价",
+            "1"
+          ]
+        }
+      },
+      {
+        "label": "二层操作:查看尽调资料 / 发起议价->详情",
+        "url": "http://127.0.0.1:49169/vessel-trading",
+        "title": "智慧货运协同平台 - 全球航运物流生态B2B平台",
+        "headings": [],
+        "navLabels": [
+          "工作台 航次动态 货盘管理 智能撮合 船舶交易 集装箱订舱 特种车船服务 订单中心 后台管理",
+          "工作台",
+          "dashboard",
+          "航次动态",
+          "rocket",
+          "货盘管理",
+          "shopping",
+          "智能撮合",
+          "swap",
+          "船舶交易",
+          "bar-chart",
+          "集装箱订舱",
+          "appstore",
+          "特种车船服务",
+          "car",
+          "订单中心",
+          "file-text",
+          "后台管理"
+        ],
+        "buttons": [
+          "发布挂牌",
+          "详情",
+          "议价",
+          "Close"
+        ],
+        "links": [
+          "工作台",
+          "航次动态",
+          "货盘管理",
+          "智能撮合",
+          "船舶交易",
+          "集装箱订舱",
+          "特种车船服务",
+          "订单中心",
+          "后台管理"
+        ],
+        "inputs": [
+          {
+            "tag": "input",
+            "type": "search",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          }
+        ],
+        "tables": [
+          {
+            "headers": [
+              "船舶信息",
+              "船舶参数",
+              "卖方",
+              "报价",
+              "状态",
+              "操作"
+            ],
+            "rowCount": 1,
+            "hasEmptyText": false,
+            "textPreview": "船舶信息 船舶参数 卖方 报价 状态 操作 中远之星 特种船2013年建造 | 中国 载重吨: 103,303.58 DWT 箱量: 8,718 TEU 东方之星航运 孙丽 $3070.14万 在售 详情 议价"
+          },
+          {
+            "headers": [
+              "船舶名称",
+              "船舶类型",
+              "载重吨",
+              "载箱量",
+              "建造年份",
+              "船旗国",
+              "卖方",
+              "报价"
+            ],
+            "rowCount": 4,
+            "hasEmptyText": false,
+            "textPreview": "船舶名称 中远之星 船舶类型 特种船 载重吨 103,303.58 DWT 载箱量 8,718 TEU 建造年份 2013年 船旗国 中国 卖方 东方之星航运 报价 $30,701,434.07"
+          }
+        ],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "智慧货运协同平台切换身份：货主当前：华贸物流集团 / 货主张明工作台航次动态货盘管理智能撮合船舶交易集装箱订舱特种车船服务订单中心后台管理船舶交易发布挂牌全部船舶我的挂牌我的收藏船舶信息船舶参数卖方报价状态操作中远之星特种船2013年建造 | 中国载重吨: 103,303.58 DWT箱量: 8,718 TEU东方之星航运孙丽$3070.14万在售详情议价1智慧货运协同平台 ©2024 - 面向全球航运物流生态的B2B智慧货运协同平台 船舶详情基本信息尽调文档议价记录船舶名称中远之星船舶类型特种船载重吨103,303.58 DWT载箱量8,718 TEU建造年份2013年船旗国中国卖方东方之星航运报价$30,701,434.07船舶描述中远之星 - 特种船，2013年建造，适航状态良好交割流程发布挂牌尽调资料上传在线议价签署合同船舶交付款项结算",
+        "layout": {
+          "viewportWidth": 1600,
+          "viewportHeight": 1600,
+          "scrollWidth": 1600,
+          "scrollHeight": 1600,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89169-repair-structure-04-二层操作-查看尽调资料-发起议价-详情",
+          "label": "二层操作:查看尽调资料 / 发起议价->详情",
+          "finalUrl": "http://127.0.0.1:49169/vessel-trading",
+          "title": "智慧货运协同平台 - 全球航运物流生态B2B平台",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89169/probe/codex-repair-20260612/may-89169-repair-structure-04-二层操作-查看尽调资料-发起议价-详情.json",
+          "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89169/probe/codex-repair-20260612/may-89169-repair-structure-04-二层操作-查看尽调资料-发起议价-详情.png",
+          "elementCount": 307,
+          "interactiveCount": 36,
+          "interactiveLabels": [
+            "工作台 航次动态 货盘管理 智能撮合 船舶交易 集装箱订舱 特种车船服务 订单中心 后台管理",
+            "工作台",
+            "航次动态",
+            "货盘管理",
+            "智能撮合",
+            "船舶交易",
+            "集装箱订舱",
+            "特种车船服务",
+            "订单中心",
+            "后台管理",
+            "发布挂牌",
+            "全部船舶",
+            "船舶信息 船舶参数 卖方 报价 状态 操作 中远之星 特种船2013年建造 | 中国 载重吨: 103,303.58 DWT 箱量: 8,718 TEU 东方之星航运 孙丽 $3070.14万 在售 详情 议价 1",
+            "详情",
+            "议价",
+            "1",
+            "船舶详情 基本信息 尽调文档 议价记录 船舶名称 中远之星 船舶类型 特种船 载重吨 103,303.58 DWT 载箱量 8,718 TEU 建造年份 2013年 船旗国 中国 卖方 东方之星航运 报价 $30,701,434.07 船舶描述 中远之星 - 特种船，2013年建造，适航状态良好 交割流程 发布挂牌 尽调资料上传 在线议价 签署合同 船舶交付",
+            "Close",
+            "基本信息",
+            "船舶名称 中远之星 船舶类型 特种船 载重吨 103,303.58 DWT 载箱量 8,718 TEU 建造年份 2013年 船旗国 中国 卖方 东方之星航运 报价 $30,701,434.07 船舶描述 中远之星 - 特种船，2013年建造，适航状态良好 交割流程 发布挂牌 尽调资料上传 在线议价 签署合同 船舶交付 款项结算"
+          ]
+        }
+      },
+      {
+        "label": "操作:查看详情",
+        "url": "http://127.0.0.1:49169/voyages/896e9b4e-a5ff-47a4-a615-8624a7b90140",
+        "title": "智慧货运协同平台 - 全球航运物流生态B2B平台",
+        "headings": [
+          "合规资质证书",
+          "可装载集装箱类型"
+        ],
+        "navLabels": [
+          "工作台 航次动态 货盘管理 智能撮合 船舶交易 集装箱订舱 特种车船服务 订单中心 后台管理",
+          "工作台",
+          "dashboard",
+          "航次动态",
+          "rocket",
+          "货盘管理",
+          "shopping",
+          "智能撮合",
+          "swap",
+          "船舶交易",
+          "bar-chart",
+          "集装箱订舱",
+          "appstore",
+          "特种车船服务",
+          "car",
+          "订单中心",
+          "file-text",
+          "后台管理"
+        ],
+        "buttons": [
+          "返回航次列表",
+          "收藏航次",
+          "举报异常",
+          "发起订舱邀约"
+        ],
+        "links": [
+          "工作台",
+          "航次动态",
+          "货盘管理",
+          "智能撮合",
+          "船舶交易",
+          "集装箱订舱",
+          "特种车船服务",
+          "订单中心",
+          "后台管理"
+        ],
+        "inputs": [
+          {
+            "tag": "input",
+            "type": "search",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          }
+        ],
+        "tables": [],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "智慧货运协同平台切换身份：货主当前：华贸物流集团 / 货主张明工作台航次动态货盘管理智能撮合船舶交易集装箱订舱特种车船服务订单中心后台管理返回航次列表航次详情 - V9518已发布 大西洋先锋集装箱船船旗: 利比里亚船速: 节出发港上海港ETD: 2026-06-12 21:03航行中65%预计航程 17 天目的港纽约港ETA: 2026-06-29 21:03可用舱位8731 TEU77%可用载重19,655.81 吨72%基础运价$3,359.33USD / TEU碳排放估算0.767kg CO₂ / TEU航次业务承接港口节点上海港 → 纽约港ETA 2026-06-29 21:03合规资质SOLASMARPOLISPS货物类型匹配建议电子产品机械设备家具家居履约异常记录历史记录: 太平洋恶劣天气历史记录: 港口拥堵，临时调整舱位合规资质与可载箱型智能匹配货盘 (0)履约记录与异常航次单证合规资质证书SOLAS 国际海上人命安全公约有效期至: 2025-06-30已认证MARPOL 国际防止船舶污染公约有效期至: 2025-03-15已认证ISPS 国际船舶和港口设施保安有效期至: 2025-12-31已认证ISM 国际安全管理规则有效期至: 2024-11-20已认证MLC 海事劳工公约有效期至: 2025-08-10已认证可装载集装箱类型20GP 标准箱充足可用: 1200限重: 28,000 kg40GP 标准箱充足可用: 800限重: 28,000 kg40HQ 高柜充足可用: 600限重: 30,480 kg45HQ 超高柜紧张可用: 150限重: 30,480 kg20RF 冷藏箱少量可用: 80限重: 27,000 kg40RF 冷藏箱少量可用: 50限重: 29,000 kg推荐承运货物类型电子产品服装纺织机械设备家具家居汽车配件普通化工品食品饮料(非冷藏) 暂不接受: 危险品一类、散装液体、活体动物收藏航次举报异常 发起订舱邀约智慧货运协同平台 ©2024 - 面向全球航运物流生态的B2B智慧货运协同平台",
+        "layout": {
+          "viewportWidth": 1632,
+          "viewportHeight": 1600,
+          "scrollWidth": 1632,
+          "scrollHeight": 1724,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89169-repair-structure-05-操作-查看详情",
+          "label": "操作:查看详情",
+          "finalUrl": "http://127.0.0.1:49169/voyages/896e9b4e-a5ff-47a4-a615-8624a7b90140",
+          "title": "智慧货运协同平台 - 全球航运物流生态B2B平台",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89169/probe/codex-repair-20260612/may-89169-repair-structure-05-操作-查看详情.json",
+          "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89169/probe/codex-repair-20260612/may-89169-repair-structure-05-操作-查看详情.png",
+          "elementCount": 411,
+          "interactiveCount": 27,
+          "interactiveLabels": [
+            "工作台 航次动态 货盘管理 智能撮合 船舶交易 集装箱订舱 特种车船服务 订单中心 后台管理",
+            "工作台",
+            "航次动态",
+            "货盘管理",
+            "智能撮合",
+            "船舶交易",
+            "集装箱订舱",
+            "特种车船服务",
+            "订单中心",
+            "后台管理",
+            "返回航次列表",
+            "合规资质与可载箱型",
+            "合规资质证书 SOLAS 国际海上人命安全公约 有效期至: 2025-06-30 已认证 MARPOL 国际防止船舶污染公约 有效期至: 2025-03-15 已认证 ISPS 国际船舶和港口设施保安 有效期至: 2025-12-31 已认证 ISM 国际安全管理规则 有效期至: 2024-11-20 已认证 MLC 海事劳工公约 有效期至: 2025-08",
+            "收藏航次",
+            "举报异常",
+            "发起订舱邀约"
+          ]
+        }
+      },
+      {
+        "label": "二层操作:查看详情->发起订舱邀约",
+        "url": "http://127.0.0.1:49169/voyages/896e9b4e-a5ff-47a4-a615-8624a7b90140",
+        "title": "智慧货运协同平台 - 全球航运物流生态B2B平台",
+        "headings": [
+          "合规资质证书",
+          "可装载集装箱类型"
+        ],
+        "navLabels": [
+          "工作台 航次动态 货盘管理 智能撮合 船舶交易 集装箱订舱 特种车船服务 订单中心 后台管理",
+          "工作台",
+          "dashboard",
+          "航次动态",
+          "rocket",
+          "货盘管理",
+          "shopping",
+          "智能撮合",
+          "swap",
+          "船舶交易",
+          "bar-chart",
+          "集装箱订舱",
+          "appstore",
+          "特种车船服务",
+          "car",
+          "订单中心",
+          "file-text",
+          "后台管理"
+        ],
+        "buttons": [
+          "返回航次列表",
+          "收藏航次",
+          "举报异常",
+          "发起订舱邀约"
+        ],
+        "links": [
+          "工作台",
+          "航次动态",
+          "货盘管理",
+          "智能撮合",
+          "船舶交易",
+          "集装箱订舱",
+          "特种车船服务",
+          "订单中心",
+          "后台管理"
+        ],
+        "inputs": [
+          {
+            "tag": "input",
+            "type": "search",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          }
+        ],
+        "tables": [],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "智慧货运协同平台切换身份：货主当前：华贸物流集团 / 货主张明工作台航次动态货盘管理智能撮合船舶交易集装箱订舱特种车船服务订单中心后台管理返回航次列表航次详情 - V9518已发布 大西洋先锋集装箱船船旗: 利比里亚船速: 节出发港上海港ETD: 2026-06-12 21:03航行中65%预计航程 17 天目的港纽约港ETA: 2026-06-29 21:03可用舱位8731 TEU77%可用载重19,655.81 吨72%基础运价$3,359.33USD / TEU碳排放估算0.767kg CO₂ / TEU航次业务承接港口节点上海港 → 纽约港ETA 2026-06-29 21:03合规资质SOLASMARPOLISPS货物类型匹配建议电子产品机械设备家具家居履约异常记录历史记录: 太平洋恶劣天气历史记录: 港口拥堵，临时调整舱位合规资质与可载箱型智能匹配货盘 (0)履约记录与异常航次单证合规资质证书SOLAS 国际海上人命安全公约有效期至: 2025-06-30已认证MARPOL 国际防止船舶污染公约有效期至: 2025-03-15已认证ISPS 国际船舶和港口设施保安有效期至: 2025-12-31已认证ISM 国际安全管理规则有效期至: 2024-11-20已认证MLC 海事劳工公约有效期至: 2025-08-10已认证可装载集装箱类型20GP 标准箱充足可用: 1200限重: 28,000 kg40GP 标准箱充足可用: 800限重: 28,000 kg40HQ 高柜充足可用: 600限重: 30,480 kg45HQ 超高柜紧张可用: 150限重: 30,480 kg20RF 冷藏箱少量可用: 80限重: 27,000 kg40RF 冷藏箱少量可用: 50限重: 29,000 kg推荐承运货物类型电子产品服装纺织机械设备家具家居汽车配件普通化工品食品饮料(非冷藏) 暂不接受: 危险品一类、散装液体、活体动物收藏航次举报异常 发起订舱邀约智慧货运协同平台 ©2024 - 面向全球航运物流生态的B2B智慧货运协同平台",
+        "layout": {
+          "viewportWidth": 1664,
+          "viewportHeight": 1600,
+          "scrollWidth": 1664,
+          "scrollHeight": 1724,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89169-repair-structure-06-二层操作-查看详情-发起订舱邀约",
+          "label": "二层操作:查看详情->发起订舱邀约",
+          "finalUrl": "http://127.0.0.1:49169/voyages/896e9b4e-a5ff-47a4-a615-8624a7b90140",
+          "title": "智慧货运协同平台 - 全球航运物流生态B2B平台",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89169/probe/codex-repair-20260612/may-89169-repair-structure-06-二层操作-查看详情-发起订舱邀约.json",
+          "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89169/probe/codex-repair-20260612/may-89169-repair-structure-06-二层操作-查看详情-发起订舱邀约.png",
+          "elementCount": 413,
+          "interactiveCount": 27,
+          "interactiveLabels": [
+            "工作台 航次动态 货盘管理 智能撮合 船舶交易 集装箱订舱 特种车船服务 订单中心 后台管理",
+            "工作台",
+            "航次动态",
+            "货盘管理",
+            "智能撮合",
+            "船舶交易",
+            "集装箱订舱",
+            "特种车船服务",
+            "订单中心",
+            "后台管理",
+            "返回航次列表",
+            "合规资质与可载箱型",
+            "合规资质证书 SOLAS 国际海上人命安全公约 有效期至: 2025-06-30 已认证 MARPOL 国际防止船舶污染公约 有效期至: 2025-03-15 已认证 ISPS 国际船舶和港口设施保安 有效期至: 2025-12-31 已认证 ISM 国际安全管理规则 有效期至: 2024-11-20 已认证 MLC 海事劳工公约 有效期至: 2025-08",
+            "收藏航次",
+            "举报异常",
+            "发起订舱邀约"
+          ]
+        }
+      },
+      {
+        "label": "导航:航次动态",
+        "url": "http://127.0.0.1:49169/voyages",
+        "title": "智慧货运协同平台 - 全球航运物流生态B2B平台",
+        "headings": [],
+        "navLabels": [
+          "工作台 航次动态 货盘管理 智能撮合 船舶交易 集装箱订舱 特种车船服务 订单中心 后台管理",
+          "工作台",
+          "dashboard",
+          "航次动态",
+          "rocket",
+          "货盘管理",
+          "shopping",
+          "智能撮合",
+          "swap",
+          "船舶交易",
+          "bar-chart",
+          "集装箱订舱",
+          "appstore",
+          "特种车船服务",
+          "car",
+          "订单中心",
+          "file-text",
+          "后台管理"
+        ],
+        "buttons": [
+          "搜索",
+          "重 置",
+          "查看详情"
+        ],
+        "links": [
+          "工作台",
+          "航次动态",
+          "货盘管理",
+          "智能撮合",
+          "船舶交易",
+          "集装箱订舱",
+          "特种车船服务",
+          "订单中心",
+          "后台管理"
+        ],
+        "inputs": [
+          {
+            "tag": "input",
+            "type": "search",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "text",
+            "placeholder": "请输入出发港",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "text",
+            "placeholder": "请输入目的港",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "search",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "search",
+            "placeholder": "",
+            "name": "",
+            "label": "页码"
+          }
+        ],
+        "tables": [
+          {
+            "headers": [
+              "船舶名称",
+              "航次号",
+              "航线",
+              "出发时间",
+              "到达时间",
+              "可用舱位",
+              "基础运价",
+              "碳排放估算",
+              "状态",
+              "操作"
+            ],
+            "rowCount": 10,
+            "hasEmptyText": false,
+            "textPreview": "船舶名称 航次号 航线 出发时间 到达时间 可用舱位 基础运价 碳排放估算 状态 操作 中远之星 特种船 V3040 洛杉矶港 ↓ 深圳港 2026-06-12 18:36 2026-07-05 18:36 3020 TEU 21634.48 吨 $2,003.8/TEU 1.085 kg CO₂/TEU 运输中 查看详情 大西洋先锋 集装箱船 V9518 上海港 ↓ 纽约港 2026-06-12 21:03 2026-06-29 21:03 8731 TEU 19655.81 吨 $3,359.33/TEU 0.767 kg CO₂/TEU 已发布 查看详情 中远之星 集装箱船 V7725 "
+          }
+        ],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "智慧货运协同平台切换身份：货主当前：华贸物流集团 / 货主张明工作台航次动态货盘管理智能撮合船舶交易集装箱订舱特种车船服务订单中心后台管理航次动态出发港目的港状态全部状态搜索重 置浏览模式您当前以货主身份浏览，如需发布航次请切换至船东/货代身份。船舶名称航次号航线出发时间到达时间可用舱位基础运价碳排放估算状态操作中远之星特种船V3040洛杉矶港↓深圳港2026-06-12 18:362026-07-05 18:363020 TEU21634.48 吨$2,003.8/TEU1.085 kg CO₂/TEU运输中查看详情大西洋先锋集装箱船V9518上海港↓纽约港2026-06-12 21:032026-06-29 21:038731 TEU19655.81 吨$3,359.33/TEU0.767 kg CO₂/TEU已发布查看详情中远之星集装箱船V7725迪拜港↓亚历山大港2026-06-12 23:382026-07-16 23:381790 TEU44842.05 吨$1,080.14/TEU2.095 kg CO₂/TEU运输中查看详情大西洋先锋油轮V1326宁波港↓迪拜港2026-06-12 23:382026-06-26 23:382972 TEU8444.06 吨$802.82/TEU2.248 kg CO₂/TEU已发布查看详情蓝鲸号特种船V8915迪拜港↓孟买港2026-06-13 21:052026-06-21 21:051835 TEU28345.34 吨$1,293.21/TEU1.459 kg CO₂/TEU已发布查看详情东方明珠液化气船V8785汉堡港↓洛杉矶港2026-06-13 21:052026-07-11 21:05625 TEU32032.72 吨$1,069.73/TEU1.958 kg CO₂/TEU卸货中查看详情蓝鲸号特种船V1603深圳港↓上海港2026-06-14 18:362026-07-16 18:365055 TEU21237.1 吨$2,726.02/TEU1.997 kg CO₂/TEU卸货中查看详情太平洋使者集装箱船V6937釜山港↓鹿特丹港2026-06-14 23:382026-07-07 23:388521 TEU7290.93 吨$2,075.47/TEU1.501 kg CO₂/TEU已发布查看详情北冰洋探索者集装箱船V9157迪拜港↓孟买港2026-06-14 23:382026-06-28 23:3810110 TEU29472.72 吨$2,710.68/TEU1.825 kg CO₂/TEU运输中查看详情蓝鲸号滚装船V1717洛杉矶港↓深圳港2026-06-14 23:382026-07-17 23:38573 TEU28060.04 吨$868.21/TEU0.906 kg CO₂/TEU卸货中查看详情12345610 条/页智慧货运协同平台 ©2024 - 面向全球航运物流生态的B2B智慧货运协同平台",
+        "layout": {
+          "viewportWidth": 1696,
+          "viewportHeight": 1600,
+          "scrollWidth": 1696,
+          "scrollHeight": 1600,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89169-repair-structure-07-导航-航次动态",
+          "label": "导航:航次动态",
+          "finalUrl": "http://127.0.0.1:49169/voyages",
+          "title": "智慧货运协同平台 - 全球航运物流生态B2B平台",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89169/probe/codex-repair-20260612/may-89169-repair-structure-07-导航-航次动态.json",
+          "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89169/probe/codex-repair-20260612/may-89169-repair-structure-07-导航-航次动态.png",
+          "elementCount": 566,
+          "interactiveCount": 51,
+          "interactiveLabels": [
+            "工作台 航次动态 货盘管理 智能撮合 船舶交易 集装箱订舱 特种车船服务 订单中心 后台管理",
+            "工作台",
+            "航次动态",
+            "货盘管理",
+            "智能撮合",
+            "船舶交易",
+            "集装箱订舱",
+            "特种车船服务",
+            "订单中心",
+            "后台管理",
+            "请输入出发港",
+            "请输入目的港",
+            "搜索",
+            "重 置",
+            "查看详情",
+            "1",
+            "2",
+            "3",
+            "4",
+            "5",
+            "6",
+            "下一页",
+            "页码"
+          ]
+        }
+      },
+      {
+        "label": "操作:查看详情",
+        "url": "http://127.0.0.1:49169/voyages/6354305b-8b75-47de-b98f-949010e2372e",
+        "title": "智慧货运协同平台 - 全球航运物流生态B2B平台",
+        "headings": [
+          "合规资质证书",
+          "可装载集装箱类型"
+        ],
+        "navLabels": [
+          "工作台 航次动态 货盘管理 智能撮合 船舶交易 集装箱订舱 特种车船服务 订单中心 后台管理",
+          "工作台",
+          "dashboard",
+          "航次动态",
+          "rocket",
+          "货盘管理",
+          "shopping",
+          "智能撮合",
+          "swap",
+          "船舶交易",
+          "bar-chart",
+          "集装箱订舱",
+          "appstore",
+          "特种车船服务",
+          "car",
+          "订单中心",
+          "file-text",
+          "后台管理"
+        ],
+        "buttons": [
+          "返回航次列表",
+          "收藏航次",
+          "举报异常",
+          "发起订舱邀约"
+        ],
+        "links": [
+          "工作台",
+          "航次动态",
+          "货盘管理",
+          "智能撮合",
+          "船舶交易",
+          "集装箱订舱",
+          "特种车船服务",
+          "订单中心",
+          "后台管理"
+        ],
+        "inputs": [
+          {
+            "tag": "input",
+            "type": "search",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          }
+        ],
+        "tables": [],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "智慧货运协同平台切换身份：货主当前：华贸物流集团 / 货主张明工作台航次动态货盘管理智能撮合船舶交易集装箱订舱特种车船服务订单中心后台管理返回航次列表航次详情 - V3040运输中 中远之星特种船船旗: 中国船速: 节出发港洛杉矶港ETD: 2026-06-12 18:36航行中65%预计航程 23 天目的港深圳港ETA: 2026-07-05 18:36可用舱位3020 TEU35%可用载重21,634.48 吨72%基础运价$2,003.8USD / TEU碳排放估算1.085kg CO₂ / TEU航次业务承接港口节点洛杉矶港 → 深圳港ETA 2026-07-05 18:36合规资质SOLASMARPOLISPS货物类型匹配建议电子产品机械设备家具家居履约异常记录历史记录: 太平洋恶劣天气历史记录: 港口拥堵，临时调整舱位合规资质与可载箱型智能匹配货盘 (0)履约记录与异常航次单证合规资质证书SOLAS 国际海上人命安全公约有效期至: 2025-06-30已认证MARPOL 国际防止船舶污染公约有效期至: 2025-03-15已认证ISPS 国际船舶和港口设施保安有效期至: 2025-12-31已认证ISM 国际安全管理规则有效期至: 2024-11-20已认证MLC 海事劳工公约有效期至: 2025-08-10已认证可装载集装箱类型20GP 标准箱充足可用: 1200限重: 28,000 kg40GP 标准箱充足可用: 800限重: 28,000 kg40HQ 高柜充足可用: 600限重: 30,480 kg45HQ 超高柜紧张可用: 150限重: 30,480 kg20RF 冷藏箱少量可用: 80限重: 27,000 kg40RF 冷藏箱少量可用: 50限重: 29,000 kg推荐承运货物类型电子产品服装纺织机械设备家具家居汽车配件普通化工品食品饮料(非冷藏) 暂不接受: 危险品一类、散装液体、活体动物收藏航次举报异常 发起订舱邀约智慧货运协同平台 ©2024 - 面向全球航运物流生态的B2B智慧货运协同平台",
+        "layout": {
+          "viewportWidth": 1728,
+          "viewportHeight": 1600,
+          "scrollWidth": 1728,
+          "scrollHeight": 1724,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89169-repair-structure-08-操作-查看详情",
+          "label": "操作:查看详情",
+          "finalUrl": "http://127.0.0.1:49169/voyages/6354305b-8b75-47de-b98f-949010e2372e",
+          "title": "智慧货运协同平台 - 全球航运物流生态B2B平台",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89169/probe/codex-repair-20260612/may-89169-repair-structure-08-操作-查看详情.json",
+          "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89169/probe/codex-repair-20260612/may-89169-repair-structure-08-操作-查看详情.png",
+          "elementCount": 411,
+          "interactiveCount": 27,
+          "interactiveLabels": [
+            "工作台 航次动态 货盘管理 智能撮合 船舶交易 集装箱订舱 特种车船服务 订单中心 后台管理",
+            "工作台",
+            "航次动态",
+            "货盘管理",
+            "智能撮合",
+            "船舶交易",
+            "集装箱订舱",
+            "特种车船服务",
+            "订单中心",
+            "后台管理",
+            "返回航次列表",
+            "合规资质与可载箱型",
+            "合规资质证书 SOLAS 国际海上人命安全公约 有效期至: 2025-06-30 已认证 MARPOL 国际防止船舶污染公约 有效期至: 2025-03-15 已认证 ISPS 国际船舶和港口设施保安 有效期至: 2025-12-31 已认证 ISM 国际安全管理规则 有效期至: 2024-11-20 已认证 MLC 海事劳工公约 有效期至: 2025-08",
+            "收藏航次",
+            "举报异常",
+            "发起订舱邀约"
+          ]
+        }
+      },
+      {
+        "label": "二层操作:查看详情->发起订舱邀约",
+        "url": "http://127.0.0.1:49169/voyages/6354305b-8b75-47de-b98f-949010e2372e",
+        "title": "智慧货运协同平台 - 全球航运物流生态B2B平台",
+        "headings": [
+          "合规资质证书",
+          "可装载集装箱类型"
+        ],
+        "navLabels": [
+          "工作台 航次动态 货盘管理 智能撮合 船舶交易 集装箱订舱 特种车船服务 订单中心 后台管理",
+          "工作台",
+          "dashboard",
+          "航次动态",
+          "rocket",
+          "货盘管理",
+          "shopping",
+          "智能撮合",
+          "swap",
+          "船舶交易",
+          "bar-chart",
+          "集装箱订舱",
+          "appstore",
+          "特种车船服务",
+          "car",
+          "订单中心",
+          "file-text",
+          "后台管理"
+        ],
+        "buttons": [
+          "返回航次列表",
+          "收藏航次",
+          "举报异常",
+          "发起订舱邀约"
+        ],
+        "links": [
+          "工作台",
+          "航次动态",
+          "货盘管理",
+          "智能撮合",
+          "船舶交易",
+          "集装箱订舱",
+          "特种车船服务",
+          "订单中心",
+          "后台管理"
+        ],
+        "inputs": [
+          {
+            "tag": "input",
+            "type": "search",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          }
+        ],
+        "tables": [],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "智慧货运协同平台切换身份：货主当前：华贸物流集团 / 货主张明工作台航次动态货盘管理智能撮合船舶交易集装箱订舱特种车船服务订单中心后台管理返回航次列表航次详情 - V3040运输中 中远之星特种船船旗: 中国船速: 节出发港洛杉矶港ETD: 2026-06-12 18:36航行中65%预计航程 23 天目的港深圳港ETA: 2026-07-05 18:36可用舱位3020 TEU35%可用载重21,634.48 吨72%基础运价$2,003.8USD / TEU碳排放估算1.085kg CO₂ / TEU航次业务承接港口节点洛杉矶港 → 深圳港ETA 2026-07-05 18:36合规资质SOLASMARPOLISPS货物类型匹配建议电子产品机械设备家具家居履约异常记录历史记录: 太平洋恶劣天气历史记录: 港口拥堵，临时调整舱位合规资质与可载箱型智能匹配货盘 (0)履约记录与异常航次单证合规资质证书SOLAS 国际海上人命安全公约有效期至: 2025-06-30已认证MARPOL 国际防止船舶污染公约有效期至: 2025-03-15已认证ISPS 国际船舶和港口设施保安有效期至: 2025-12-31已认证ISM 国际安全管理规则有效期至: 2024-11-20已认证MLC 海事劳工公约有效期至: 2025-08-10已认证可装载集装箱类型20GP 标准箱充足可用: 1200限重: 28,000 kg40GP 标准箱充足可用: 800限重: 28,000 kg40HQ 高柜充足可用: 600限重: 30,480 kg45HQ 超高柜紧张可用: 150限重: 30,480 kg20RF 冷藏箱少量可用: 80限重: 27,000 kg40RF 冷藏箱少量可用: 50限重: 29,000 kg推荐承运货物类型电子产品服装纺织机械设备家具家居汽车配件普通化工品食品饮料(非冷藏) 暂不接受: 危险品一类、散装液体、活体动物收藏航次举报异常 发起订舱邀约智慧货运协同平台 ©2024 - 面向全球航运物流生态的B2B智慧货运协同平台",
+        "layout": {
+          "viewportWidth": 1760,
+          "viewportHeight": 1600,
+          "scrollWidth": 1760,
+          "scrollHeight": 1724,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89169-repair-structure-09-二层操作-查看详情-发起订舱邀约",
+          "label": "二层操作:查看详情->发起订舱邀约",
+          "finalUrl": "http://127.0.0.1:49169/voyages/6354305b-8b75-47de-b98f-949010e2372e",
+          "title": "智慧货运协同平台 - 全球航运物流生态B2B平台",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89169/probe/codex-repair-20260612/may-89169-repair-structure-09-二层操作-查看详情-发起订舱邀约.json",
+          "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89169/probe/codex-repair-20260612/may-89169-repair-structure-09-二层操作-查看详情-发起订舱邀约.png",
+          "elementCount": 413,
+          "interactiveCount": 27,
+          "interactiveLabels": [
+            "工作台 航次动态 货盘管理 智能撮合 船舶交易 集装箱订舱 特种车船服务 订单中心 后台管理",
+            "工作台",
+            "航次动态",
+            "货盘管理",
+            "智能撮合",
+            "船舶交易",
+            "集装箱订舱",
+            "特种车船服务",
+            "订单中心",
+            "后台管理",
+            "返回航次列表",
+            "合规资质与可载箱型",
+            "合规资质证书 SOLAS 国际海上人命安全公约 有效期至: 2025-06-30 已认证 MARPOL 国际防止船舶污染公约 有效期至: 2025-03-15 已认证 ISPS 国际船舶和港口设施保安 有效期至: 2025-12-31 已认证 ISM 国际安全管理规则 有效期至: 2024-11-20 已认证 MLC 海事劳工公约 有效期至: 2025-08",
+            "收藏航次",
+            "举报异常",
+            "发起订舱邀约"
+          ]
+        }
+      },
+      {
+        "label": "操作:搜索",
+        "url": "http://127.0.0.1:49169/voyages",
+        "title": "智慧货运协同平台 - 全球航运物流生态B2B平台",
+        "headings": [],
+        "navLabels": [
+          "工作台 航次动态 货盘管理 智能撮合 船舶交易 集装箱订舱 特种车船服务 订单中心 后台管理",
+          "工作台",
+          "dashboard",
+          "航次动态",
+          "rocket",
+          "货盘管理",
+          "shopping",
+          "智能撮合",
+          "swap",
+          "船舶交易",
+          "bar-chart",
+          "集装箱订舱",
+          "appstore",
+          "特种车船服务",
+          "car",
+          "订单中心",
+          "file-text",
+          "后台管理"
+        ],
+        "buttons": [
+          "搜索",
+          "重 置",
+          "查看详情"
+        ],
+        "links": [
+          "工作台",
+          "航次动态",
+          "货盘管理",
+          "智能撮合",
+          "船舶交易",
+          "集装箱订舱",
+          "特种车船服务",
+          "订单中心",
+          "后台管理"
+        ],
+        "inputs": [
+          {
+            "tag": "input",
+            "type": "search",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "text",
+            "placeholder": "请输入出发港",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "text",
+            "placeholder": "请输入目的港",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "search",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "search",
+            "placeholder": "",
+            "name": "",
+            "label": "页码"
+          }
+        ],
+        "tables": [
+          {
+            "headers": [
+              "船舶名称",
+              "航次号",
+              "航线",
+              "出发时间",
+              "到达时间",
+              "可用舱位",
+              "基础运价",
+              "碳排放估算",
+              "状态",
+              "操作"
+            ],
+            "rowCount": 10,
+            "hasEmptyText": false,
+            "textPreview": "船舶名称 航次号 航线 出发时间 到达时间 可用舱位 基础运价 碳排放估算 状态 操作 中远之星 特种船 V3040 洛杉矶港 ↓ 深圳港 2026-06-12 18:36 2026-07-05 18:36 3020 TEU 21634.48 吨 $2,003.8/TEU 1.085 kg CO₂/TEU 运输中 查看详情 大西洋先锋 集装箱船 V9518 上海港 ↓ 纽约港 2026-06-12 21:03 2026-06-29 21:03 8731 TEU 19655.81 吨 $3,359.33/TEU 0.767 kg CO₂/TEU 已发布 查看详情 中远之星 集装箱船 V7725 "
+          }
+        ],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "智慧货运协同平台切换身份：货主当前：华贸物流集团 / 货主张明工作台航次动态货盘管理智能撮合船舶交易集装箱订舱特种车船服务订单中心后台管理航次动态出发港目的港状态全部状态搜索重 置浏览模式您当前以货主身份浏览，如需发布航次请切换至船东/货代身份。船舶名称航次号航线出发时间到达时间可用舱位基础运价碳排放估算状态操作中远之星特种船V3040洛杉矶港↓深圳港2026-06-12 18:362026-07-05 18:363020 TEU21634.48 吨$2,003.8/TEU1.085 kg CO₂/TEU运输中查看详情大西洋先锋集装箱船V9518上海港↓纽约港2026-06-12 21:032026-06-29 21:038731 TEU19655.81 吨$3,359.33/TEU0.767 kg CO₂/TEU已发布查看详情中远之星集装箱船V7725迪拜港↓亚历山大港2026-06-12 23:382026-07-16 23:381790 TEU44842.05 吨$1,080.14/TEU2.095 kg CO₂/TEU运输中查看详情大西洋先锋油轮V1326宁波港↓迪拜港2026-06-12 23:382026-06-26 23:382972 TEU8444.06 吨$802.82/TEU2.248 kg CO₂/TEU已发布查看详情蓝鲸号特种船V8915迪拜港↓孟买港2026-06-13 21:052026-06-21 21:051835 TEU28345.34 吨$1,293.21/TEU1.459 kg CO₂/TEU已发布查看详情东方明珠液化气船V8785汉堡港↓洛杉矶港2026-06-13 21:052026-07-11 21:05625 TEU32032.72 吨$1,069.73/TEU1.958 kg CO₂/TEU卸货中查看详情蓝鲸号特种船V1603深圳港↓上海港2026-06-14 18:362026-07-16 18:365055 TEU21237.1 吨$2,726.02/TEU1.997 kg CO₂/TEU卸货中查看详情太平洋使者集装箱船V6937釜山港↓鹿特丹港2026-06-14 23:382026-07-07 23:388521 TEU7290.93 吨$2,075.47/TEU1.501 kg CO₂/TEU已发布查看详情北冰洋探索者集装箱船V9157迪拜港↓孟买港2026-06-14 23:382026-06-28 23:3810110 TEU29472.72 吨$2,710.68/TEU1.825 kg CO₂/TEU运输中查看详情蓝鲸号滚装船V1717洛杉矶港↓深圳港2026-06-14 23:382026-07-17 23:38573 TEU28060.04 吨$868.21/TEU0.906 kg CO₂/TEU卸货中查看详情12345610 条/页智慧货运协同平台 ©2024 - 面向全球航运物流生态的B2B智慧货运协同平台",
+        "layout": {
+          "viewportWidth": 1792,
+          "viewportHeight": 1600,
+          "scrollWidth": 1792,
+          "scrollHeight": 1600,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89169-repair-structure-10-操作-搜索",
+          "label": "操作:搜索",
+          "finalUrl": "http://127.0.0.1:49169/voyages",
+          "title": "智慧货运协同平台 - 全球航运物流生态B2B平台",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89169/probe/codex-repair-20260612/may-89169-repair-structure-10-操作-搜索.json",
+          "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89169/probe/codex-repair-20260612/may-89169-repair-structure-10-操作-搜索.png",
+          "elementCount": 568,
+          "interactiveCount": 51,
+          "interactiveLabels": [
+            "工作台 航次动态 货盘管理 智能撮合 船舶交易 集装箱订舱 特种车船服务 订单中心 后台管理",
+            "工作台",
+            "航次动态",
+            "货盘管理",
+            "智能撮合",
+            "船舶交易",
+            "集装箱订舱",
+            "特种车船服务",
+            "订单中心",
+            "后台管理",
+            "请输入出发港",
+            "请输入目的港",
+            "搜索",
+            "重 置",
+            "查看详情",
+            "1",
+            "2",
+            "3",
+            "4",
+            "5",
+            "6",
+            "下一页",
+            "页码"
+          ]
+        }
+      },
+      {
+        "label": "导航:货盘管理",
+        "url": "http://127.0.0.1:49169/cargo-bookings",
+        "title": "智慧货运协同平台 - 全球航运物流生态B2B平台",
+        "headings": [],
+        "navLabels": [
+          "工作台 航次动态 货盘管理 智能撮合 船舶交易 集装箱订舱 特种车船服务 订单中心 后台管理",
+          "工作台",
+          "dashboard",
+          "航次动态",
+          "rocket",
+          "货盘管理",
+          "shopping",
+          "智能撮合",
+          "swap",
+          "船舶交易",
+          "bar-chart",
+          "集装箱订舱",
+          "appstore",
+          "特种车船服务",
+          "car",
+          "订单中心",
+          "file-text",
+          "后台管理"
+        ],
+        "buttons": [
+          "搜索",
+          "重 置",
+          "发布货盘",
+          "详情",
+          "编辑",
+          "删除"
+        ],
+        "links": [
+          "工作台",
+          "航次动态",
+          "货盘管理",
+          "智能撮合",
+          "船舶交易",
+          "集装箱订舱",
+          "特种车船服务",
+          "订单中心",
+          "后台管理"
+        ],
+        "inputs": [
+          {
+            "tag": "input",
+            "type": "search",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "text",
+            "placeholder": "请输入",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "text",
+            "placeholder": "出发港",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "search",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          }
+        ],
+        "tables": [
+          {
+            "headers": [
+              "货主",
+              "货物类型",
+              "数量",
+              "运输路线",
+              "时间窗口",
+              "预算运价",
+              "特殊要求",
+              "状态",
+              "操作"
+            ],
+            "rowCount": 7,
+            "hasEmptyText": false,
+            "textPreview": "货主 货物类型 数量 运输路线 时间窗口 预算运价 特殊要求 状态 操作 张明 华贸物流集团 化工原料 41 TEU 215.17 吨 亚历山大港 → 鹿特丹港 最早出发: 06-19 最晚到达: 07-11 $2,034.23/TEU 防潮 轻放 询盘中 详情 编辑 删除 张明 华贸物流集团 家具家居 30 TEU 127.64 吨 宁波港 → 洛杉矶港 最早出发: 06-18 最晚到达: 07-26 $2,962.58/TEU 防潮 轻放 询盘中 详情 编辑 删除 张明 华贸物流集团 建材钢材 22 TEU 383.85 吨 鹿特丹港 → 深圳港 最早出发: 06-14 最晚到达: 07-"
+          }
+        ],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "智慧货运协同平台切换身份：货主当前：华贸物流集团 / 货主张明工作台航次动态货盘管理智能撮合船舶交易集装箱订舱特种车船服务订单中心后台管理货盘管理我的货盘仅显示您本人发布的货盘。如需查看全部市场货盘，请切换至船东/货代身份。我的货盘数7询盘中3已确认2货物类型出发港状态全部状态搜索重 置发布货盘货主货物类型数量运输路线时间窗口预算运价特殊要求状态操作张明华贸物流集团化工原料41 TEU215.17 吨亚历山大港→ 鹿特丹港最早出发: 06-19最晚到达: 07-11$2,034.23/TEU防潮轻放询盘中详情编辑删除张明华贸物流集团家具家居30 TEU127.64 吨宁波港→ 洛杉矶港最早出发: 06-18最晚到达: 07-26$2,962.58/TEU防潮轻放询盘中详情编辑删除张明华贸物流集团建材钢材22 TEU383.85 吨鹿特丹港→ 深圳港最早出发: 06-14最晚到达: 07-24$1,604.58/TEU防潮轻放已报价详情编辑删除张明华贸物流集团服装纺织32 TEU261.22 吨鹿特丹港→ 新加坡港最早出发: 06-17最晚到达: 07-21$2,554.07/TEU防潮轻放已报价详情编辑删除张明华贸物流集团建材钢材25 TEU88.61 吨釜山港→ 深圳港最早出发: 06-19最晚到达: 07-21$2,051.1/TEU防潮轻放询盘中详情编辑删除张明华贸物流集团服装纺织39 TEU143.71 吨纽约港→ 汉堡港最早出发: 06-21最晚到达: 07-13$2,149.78/TEU防潮轻放已确认详情编辑删除张明华贸物流集团机械设备12 TEU488.99 吨洛杉矶港→ 迪拜港最早出发: 06-14最晚到达: 07-21$1,541.8/TEU防潮轻放已确认详情编辑删除1智慧货运协同平台 ©2024 - 面向全球航运物流生态的B2B智慧货运协同平台",
+        "layout": {
+          "viewportWidth": 1824,
+          "viewportHeight": 1600,
+          "scrollWidth": 1824,
+          "scrollHeight": 1600,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89169-repair-structure-11-导航-货盘管理",
+          "label": "导航:货盘管理",
+          "finalUrl": "http://127.0.0.1:49169/cargo-bookings",
+          "title": "智慧货运协同平台 - 全球航运物流生态B2B平台",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89169/probe/codex-repair-20260612/may-89169-repair-structure-11-导航-货盘管理.json",
+          "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89169/probe/codex-repair-20260612/may-89169-repair-structure-11-导航-货盘管理.png",
+          "elementCount": 582,
+          "interactiveCount": 51,
+          "interactiveLabels": [
+            "工作台 航次动态 货盘管理 智能撮合 船舶交易 集装箱订舱 特种车船服务 订单中心 后台管理",
+            "工作台",
+            "航次动态",
+            "货盘管理",
+            "智能撮合",
+            "船舶交易",
+            "集装箱订舱",
+            "特种车船服务",
+            "订单中心",
+            "后台管理",
+            "请输入",
+            "出发港",
+            "搜索",
+            "重 置",
+            "发布货盘",
+            "详情",
+            "编辑",
+            "删除",
+            "1"
+          ]
+        }
+      },
+      {
+        "label": "操作:编辑",
+        "url": "http://127.0.0.1:49169/cargo-bookings",
+        "title": "智慧货运协同平台 - 全球航运物流生态B2B平台",
+        "headings": [],
+        "navLabels": [
+          "工作台 航次动态 货盘管理 智能撮合 船舶交易 集装箱订舱 特种车船服务 订单中心 后台管理",
+          "工作台",
+          "dashboard",
+          "航次动态",
+          "rocket",
+          "货盘管理",
+          "shopping",
+          "智能撮合",
+          "swap",
+          "船舶交易",
+          "bar-chart",
+          "集装箱订舱",
+          "appstore",
+          "特种车船服务",
+          "car",
+          "订单中心",
+          "file-text",
+          "后台管理"
+        ],
+        "buttons": [
+          "搜索",
+          "重 置",
+          "发布货盘",
+          "详情",
+          "编辑",
+          "删除",
+          "Close",
+          "取 消",
+          "保存修改"
+        ],
+        "links": [
+          "工作台",
+          "航次动态",
+          "货盘管理",
+          "智能撮合",
+          "船舶交易",
+          "集装箱订舱",
+          "特种车船服务",
+          "订单中心",
+          "后台管理"
+        ],
+        "inputs": [
+          {
+            "tag": "input",
+            "type": "search",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "text",
+            "placeholder": "请输入",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "text",
+            "placeholder": "出发港",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "search",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "text",
+            "placeholder": "如：电子产品、服装等",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "text",
+            "placeholder": "出发港口",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "text",
+            "placeholder": "目的港口",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "date",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "date",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "search",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "search",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          }
+        ],
+        "tables": [
+          {
+            "headers": [
+              "货主",
+              "货物类型",
+              "数量",
+              "运输路线",
+              "时间窗口",
+              "预算运价",
+              "特殊要求",
+              "状态",
+              "操作"
+            ],
+            "rowCount": 7,
+            "hasEmptyText": false,
+            "textPreview": "货主 货物类型 数量 运输路线 时间窗口 预算运价 特殊要求 状态 操作 张明 华贸物流集团 化工原料 41 TEU 215.17 吨 亚历山大港 → 鹿特丹港 最早出发: 06-19 最晚到达: 07-11 $2,034.23/TEU 防潮 轻放 询盘中 详情 编辑 删除 张明 华贸物流集团 家具家居 30 TEU 127.64 吨 宁波港 → 洛杉矶港 最早出发: 06-18 最晚到达: 07-26 $2,962.58/TEU 防潮 轻放 询盘中 详情 编辑 删除 张明 华贸物流集团 建材钢材 22 TEU 383.85 吨 鹿特丹港 → 深圳港 最早出发: 06-14 最晚到达: 07-"
+          }
+        ],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "智慧货运协同平台切换身份：货主当前：华贸物流集团 / 货主张明工作台航次动态货盘管理智能撮合船舶交易集装箱订舱特种车船服务订单中心后台管理货盘管理我的货盘仅显示您本人发布的货盘。如需查看全部市场货盘，请切换至船东/货代身份。我的货盘数7询盘中3已确认2货物类型出发港状态全部状态搜索重 置发布货盘货主货物类型数量运输路线时间窗口预算运价特殊要求状态操作张明华贸物流集团化工原料41 TEU215.17 吨亚历山大港→ 鹿特丹港最早出发: 06-19最晚到达: 07-11$2,034.23/TEU防潮轻放询盘中详情编辑删除张明华贸物流集团家具家居30 TEU127.64 吨宁波港→ 洛杉矶港最早出发: 06-18最晚到达: 07-26$2,962.58/TEU防潮轻放询盘中详情编辑删除张明华贸物流集团建材钢材22 TEU383.85 吨鹿特丹港→ 深圳港最早出发: 06-14最晚到达: 07-24$1,604.58/TEU防潮轻放已报价详情编辑删除张明华贸物流集团服装纺织32 TEU261.22 吨鹿特丹港→ 新加坡港最早出发: 06-17最晚到达: 07-21$2,554.07/TEU防潮轻放已报价详情编辑删除张明华贸物流集团建材钢材25 TEU88.61 吨釜山港→ 深圳港最早出发: 06-19最晚到达: 07-21$2,051.1/TEU防潮轻放询盘中详情编辑删除张明华贸物流集团服装纺织39 TEU143.71 吨纽约港→ 汉堡港最早出发: 06-21最晚到达: 07-13$2,149.78/TEU防潮轻放已确认详情编辑删除张明华贸物流集团机械设备12 TEU488.99 吨洛杉矶港→ 迪拜港最早出发: 06-14最晚到达: 07-21$1,541.8/TEU防潮轻放已确认详情编辑删除1智慧货运协同平台 ©2024 - 面向全球航运物流生态的B2B智慧货运协同平台 编辑货盘货物类型出发港目的港TEU数量总重量(吨)预算运价(USD/TEU)最早出发日期最晚到达日期特殊要求防潮轻放 已备单证商业发票装箱单产地证 取 消保存修改",
+        "layout": {
+          "viewportWidth": 1856,
+          "viewportHeight": 1600,
+          "scrollWidth": 1856,
+          "scrollHeight": 1600,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89169-repair-structure-12-操作-编辑",
+          "label": "操作:编辑",
+          "finalUrl": "http://127.0.0.1:49169/cargo-bookings",
+          "title": "智慧货运协同平台 - 全球航运物流生态B2B平台",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89169/probe/codex-repair-20260612/may-89169-repair-structure-12-操作-编辑.json",
+          "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89169/probe/codex-repair-20260612/may-89169-repair-structure-12-操作-编辑.png",
+          "elementCount": 780,
+          "interactiveCount": 72,
+          "interactiveLabels": [
+            "工作台 航次动态 货盘管理 智能撮合 船舶交易 集装箱订舱 特种车船服务 订单中心 后台管理",
+            "工作台",
+            "航次动态",
+            "货盘管理",
+            "智能撮合",
+            "船舶交易",
+            "集装箱订舱",
+            "特种车船服务",
+            "订单中心",
+            "后台管理",
+            "请输入",
+            "出发港",
+            "搜索",
+            "重 置",
+            "发布货盘",
+            "详情",
+            "编辑",
+            "删除",
+            "1",
+            "编辑货盘 货物类型 出发港 目的港 TEU数量 总重量(吨) 预算运价(USD/TEU) 最早出发日期 最晚到达日期 特殊要求 防潮 轻放 已备单证 商业发票 装箱单 产地证 取 消 保存修改",
+            "Close",
+            "化工原料",
+            "亚历山大港",
+            "鹿特丹港",
+            "Increase Value",
+            "Decrease Value",
+            "41",
+            "215.17",
+            "2034.23",
+            "2026-06-19"
+          ]
+        }
+      },
+      {
+        "label": "二层操作:编辑->发布货盘",
+        "url": "http://127.0.0.1:49169/cargo-bookings",
+        "title": "智慧货运协同平台 - 全球航运物流生态B2B平台",
+        "headings": [],
+        "navLabels": [
+          "工作台 航次动态 货盘管理 智能撮合 船舶交易 集装箱订舱 特种车船服务 订单中心 后台管理",
+          "工作台",
+          "dashboard",
+          "航次动态",
+          "rocket",
+          "货盘管理",
+          "shopping",
+          "智能撮合",
+          "swap",
+          "船舶交易",
+          "bar-chart",
+          "集装箱订舱",
+          "appstore",
+          "特种车船服务",
+          "car",
+          "订单中心",
+          "file-text",
+          "后台管理"
+        ],
+        "buttons": [
+          "搜索",
+          "重 置",
+          "发布货盘",
+          "详情",
+          "编辑",
+          "删除",
+          "Close",
+          "取 消",
+          "发 布"
+        ],
+        "links": [
+          "工作台",
+          "航次动态",
+          "货盘管理",
+          "智能撮合",
+          "船舶交易",
+          "集装箱订舱",
+          "特种车船服务",
+          "订单中心",
+          "后台管理"
+        ],
+        "inputs": [
+          {
+            "tag": "input",
+            "type": "search",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "text",
+            "placeholder": "请输入",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "text",
+            "placeholder": "出发港",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "search",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "text",
+            "placeholder": "如：电子产品、服装等",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "text",
+            "placeholder": "出发港口",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "text",
+            "placeholder": "目的港口",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "date",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "date",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "search",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "search",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          }
+        ],
+        "tables": [
+          {
+            "headers": [
+              "货主",
+              "货物类型",
+              "数量",
+              "运输路线",
+              "时间窗口",
+              "预算运价",
+              "特殊要求",
+              "状态",
+              "操作"
+            ],
+            "rowCount": 7,
+            "hasEmptyText": false,
+            "textPreview": "货主 货物类型 数量 运输路线 时间窗口 预算运价 特殊要求 状态 操作 张明 华贸物流集团 化工原料 41 TEU 215.17 吨 亚历山大港 → 鹿特丹港 最早出发: 06-19 最晚到达: 07-11 $2,034.23/TEU 防潮 轻放 询盘中 详情 编辑 删除 张明 华贸物流集团 家具家居 30 TEU 127.64 吨 宁波港 → 洛杉矶港 最早出发: 06-18 最晚到达: 07-26 $2,962.58/TEU 防潮 轻放 询盘中 详情 编辑 删除 张明 华贸物流集团 建材钢材 22 TEU 383.85 吨 鹿特丹港 → 深圳港 最早出发: 06-14 最晚到达: 07-"
+          }
+        ],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "智慧货运协同平台切换身份：货主当前：华贸物流集团 / 货主张明工作台航次动态货盘管理智能撮合船舶交易集装箱订舱特种车船服务订单中心后台管理货盘管理我的货盘仅显示您本人发布的货盘。如需查看全部市场货盘，请切换至船东/货代身份。我的货盘数7询盘中3已确认2货物类型出发港状态全部状态搜索重 置发布货盘货主货物类型数量运输路线时间窗口预算运价特殊要求状态操作张明华贸物流集团化工原料41 TEU215.17 吨亚历山大港→ 鹿特丹港最早出发: 06-19最晚到达: 07-11$2,034.23/TEU防潮轻放询盘中详情编辑删除张明华贸物流集团家具家居30 TEU127.64 吨宁波港→ 洛杉矶港最早出发: 06-18最晚到达: 07-26$2,962.58/TEU防潮轻放询盘中详情编辑删除张明华贸物流集团建材钢材22 TEU383.85 吨鹿特丹港→ 深圳港最早出发: 06-14最晚到达: 07-24$1,604.58/TEU防潮轻放已报价详情编辑删除张明华贸物流集团服装纺织32 TEU261.22 吨鹿特丹港→ 新加坡港最早出发: 06-17最晚到达: 07-21$2,554.07/TEU防潮轻放已报价详情编辑删除张明华贸物流集团建材钢材25 TEU88.61 吨釜山港→ 深圳港最早出发: 06-19最晚到达: 07-21$2,051.1/TEU防潮轻放询盘中详情编辑删除张明华贸物流集团服装纺织39 TEU143.71 吨纽约港→ 汉堡港最早出发: 06-21最晚到达: 07-13$2,149.78/TEU防潮轻放已确认详情编辑删除张明华贸物流集团机械设备12 TEU488.99 吨洛杉矶港→ 迪拜港最早出发: 06-14最晚到达: 07-21$1,541.8/TEU防潮轻放已确认详情编辑删除1智慧货运协同平台 ©2024 - 面向全球航运物流生态的B2B智慧货运协同平台 发布新货盘货物类型出发港目的港TEU数量总重量(吨)预算运价(USD/TEU)最早出发日期最晚到达日期特殊要求 添加特殊要求已备单证 选择已准备的单证取 消发 布",
+        "layout": {
+          "viewportWidth": 1888,
+          "viewportHeight": 1600,
+          "scrollWidth": 1888,
+          "scrollHeight": 1600,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89169-repair-structure-13-二层操作-编辑-发布货盘",
+          "label": "二层操作:编辑->发布货盘",
+          "finalUrl": "http://127.0.0.1:49169/cargo-bookings",
+          "title": "智慧货运协同平台 - 全球航运物流生态B2B平台",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89169/probe/codex-repair-20260612/may-89169-repair-structure-13-二层操作-编辑-发布货盘.json",
+          "screenshotPath": "",
+          "elementCount": 749,
+          "interactiveCount": 72,
+          "interactiveLabels": [
+            "工作台 航次动态 货盘管理 智能撮合 船舶交易 集装箱订舱 特种车船服务 订单中心 后台管理",
+            "工作台",
+            "航次动态",
+            "货盘管理",
+            "智能撮合",
+            "船舶交易",
+            "集装箱订舱",
+            "特种车船服务",
+            "订单中心",
+            "后台管理",
+            "请输入",
+            "出发港",
+            "搜索",
+            "重 置",
+            "发布货盘",
+            "详情",
+            "编辑",
+            "删除",
+            "1",
+            "发布新货盘 货物类型 出发港 目的港 TEU数量 总重量(吨) 预算运价(USD/TEU) 最早出发日期 最晚到达日期 特殊要求 添加特殊要求 已备单证 选择已准备的单证 取 消 发 布",
+            "Close",
+            "如：电子产品、服装等",
+            "出发港口",
+            "目的港口",
+            "Increase Value",
+            "Decrease Value",
+            "取 消",
+            "发 布"
+          ]
+        }
+      },
+      {
+        "label": "操作:详情",
+        "url": "http://127.0.0.1:49169/cargo-bookings",
+        "title": "智慧货运协同平台 - 全球航运物流生态B2B平台",
+        "headings": [],
+        "navLabels": [
+          "工作台 航次动态 货盘管理 智能撮合 船舶交易 集装箱订舱 特种车船服务 订单中心 后台管理",
+          "工作台",
+          "dashboard",
+          "航次动态",
+          "rocket",
+          "货盘管理",
+          "shopping",
+          "智能撮合",
+          "swap",
+          "船舶交易",
+          "bar-chart",
+          "集装箱订舱",
+          "appstore",
+          "特种车船服务",
+          "car",
+          "订单中心",
+          "file-text",
+          "后台管理"
+        ],
+        "buttons": [
+          "搜索",
+          "重 置",
+          "发布货盘",
+          "详情",
+          "编辑",
+          "删除",
+          "Close",
+          "预览",
+          "关 闭",
+          "智能匹配航次"
+        ],
+        "links": [
+          "工作台",
+          "航次动态",
+          "货盘管理",
+          "智能撮合",
+          "船舶交易",
+          "集装箱订舱",
+          "特种车船服务",
+          "订单中心",
+          "后台管理"
+        ],
+        "inputs": [
+          {
+            "tag": "input",
+            "type": "search",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "text",
+            "placeholder": "请输入",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "text",
+            "placeholder": "出发港",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "search",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          }
+        ],
+        "tables": [
+          {
+            "headers": [
+              "货主",
+              "货物类型",
+              "数量",
+              "运输路线",
+              "时间窗口",
+              "预算运价",
+              "特殊要求",
+              "状态",
+              "操作"
+            ],
+            "rowCount": 7,
+            "hasEmptyText": false,
+            "textPreview": "货主 货物类型 数量 运输路线 时间窗口 预算运价 特殊要求 状态 操作 张明 华贸物流集团 化工原料 41 TEU 215.17 吨 亚历山大港 → 鹿特丹港 最早出发: 06-19 最晚到达: 07-11 $2,034.23/TEU 防潮 轻放 询盘中 详情 编辑 删除 张明 华贸物流集团 家具家居 30 TEU 127.64 吨 宁波港 → 洛杉矶港 最早出发: 06-18 最晚到达: 07-26 $2,962.58/TEU 防潮 轻放 询盘中 详情 编辑 删除 张明 华贸物流集团 建材钢材 22 TEU 383.85 吨 鹿特丹港 → 深圳港 最早出发: 06-14 最晚到达: 07-"
+          },
+          {
+            "headers": [
+              "货主",
+              "联系人",
+              "货物类型",
+              "状态",
+              "TEU数量",
+              "总重量",
+              "预算运价",
+              "货物价值"
+            ],
+            "rowCount": 4,
+            "hasEmptyText": false,
+            "textPreview": "货主 华贸物流集团 联系人 张明 货物类型 化工原料 状态 询盘中 TEU数量 41 TEU 总重量 215.17 吨 预算运价 $2,034.23 / TEU 货物价值 $未填写"
+          }
+        ],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "智慧货运协同平台切换身份：货主当前：华贸物流集团 / 货主张明工作台航次动态货盘管理智能撮合船舶交易集装箱订舱特种车船服务订单中心后台管理货盘管理我的货盘仅显示您本人发布的货盘。如需查看全部市场货盘，请切换至船东/货代身份。我的货盘数7询盘中3已确认2货物类型出发港状态全部状态搜索重 置发布货盘货主货物类型数量运输路线时间窗口预算运价特殊要求状态操作张明华贸物流集团化工原料41 TEU215.17 吨亚历山大港→ 鹿特丹港最早出发: 06-19最晚到达: 07-11$2,034.23/TEU防潮轻放询盘中详情编辑删除张明华贸物流集团家具家居30 TEU127.64 吨宁波港→ 洛杉矶港最早出发: 06-18最晚到达: 07-26$2,962.58/TEU防潮轻放询盘中详情编辑删除张明华贸物流集团建材钢材22 TEU383.85 吨鹿特丹港→ 深圳港最早出发: 06-14最晚到达: 07-24$1,604.58/TEU防潮轻放已报价详情编辑删除张明华贸物流集团服装纺织32 TEU261.22 吨鹿特丹港→ 新加坡港最早出发: 06-17最晚到达: 07-21$2,554.07/TEU防潮轻放已报价详情编辑删除张明华贸物流集团建材钢材25 TEU88.61 吨釜山港→ 深圳港最早出发: 06-19最晚到达: 07-21$2,051.1/TEU防潮轻放询盘中详情编辑删除张明华贸物流集团服装纺织39 TEU143.71 吨纽约港→ 汉堡港最早出发: 06-21最晚到达: 07-13$2,149.78/TEU防潮轻放已确认详情编辑删除张明华贸物流集团机械设备12 TEU488.99 吨洛杉矶港→ 迪拜港最早出发: 06-14最晚到达: 07-21$1,541.8/TEU防潮轻放已确认详情编辑删除1智慧货运协同平台 ©2024 - 面向全球航运物流生态的B2B智慧货运协同平台 发布新货盘货物类型出发港目的港TEU数量总重量(吨)预算运价(USD/TEU)最早出发日期最晚到达日期特殊要求 添加特殊要求已备单证 选择已准备的单证取 消发 布货盘详情货主华贸物流集团联系人张明货物类型化工原料状态询盘中TEU数量41 TEU总重量215.17 吨预算运价$2,034.23 / TEU货物价值$未填写运输路线起运港亚历山大港最早出发: 2026-06-19目的港鹿特丹港最晚到达: 2026-07-11特殊要求防潮轻放已备单证商业发票已上传，点击查看预览装箱单已上传，点击查看预览产地证已上传，点击查看预览关 闭智能匹配航次",
+        "layout": {
+          "viewportWidth": 1920,
+          "viewportHeight": 1600,
+          "scrollWidth": 1920,
+          "scrollHeight": 1600,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89169-repair-structure-14-操作-详情",
+          "label": "操作:详情",
+          "finalUrl": "http://127.0.0.1:49169/cargo-bookings",
+          "title": "智慧货运协同平台 - 全球航运物流生态B2B平台",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89169/probe/codex-repair-20260612/may-89169-repair-structure-14-操作-详情.json",
+          "screenshotPath": "",
+          "elementCount": 872,
+          "interactiveCount": 80,
+          "interactiveLabels": [
+            "工作台 航次动态 货盘管理 智能撮合 船舶交易 集装箱订舱 特种车船服务 订单中心 后台管理",
+            "工作台",
+            "航次动态",
+            "货盘管理",
+            "智能撮合",
+            "船舶交易",
+            "集装箱订舱",
+            "特种车船服务",
+            "订单中心",
+            "后台管理",
+            "请输入",
+            "出发港",
+            "搜索",
+            "重 置",
+            "发布货盘",
+            "详情",
+            "编辑",
+            "删除",
+            "1",
+            "发布新货盘货物类型出发港目的港TEU数量总重量(吨)预算运价(USD/TEU)最早出发日期最晚到达日期特殊要求 添加特殊要求已备单证 选择已准备的单证取 消发 布",
+            "Close",
+            "如：电子产品、服装等",
+            "出发港口",
+            "目的港口",
+            "Increase Value",
+            "Decrease Value",
+            "取 消",
+            "发 布",
+            "货盘详情 货主 华贸物流集团 联系人 张明 货物类型 化工原料 状态 询盘中 TEU数量 41 TEU 总重量 215.17 吨 预算运价 $2,034.23 / TEU 货物价值 $未填写 运输路线 起运港 亚历山大港 最早出发: 2026-06-19 目的港 鹿特丹港 最晚到达: 2026-07-11 特殊要求 防潮 轻放 已备单证 商业发票 已上传，点",
+            "预览"
+          ]
+        }
+      },
+      {
+        "label": "导航:智能撮合",
+        "url": "http://127.0.0.1:49169/matching",
+        "title": "智慧货运协同平台 - 全球航运物流生态B2B平台",
+        "headings": [],
+        "navLabels": [
+          "工作台 航次动态 货盘管理 智能撮合 船舶交易 集装箱订舱 特种车船服务 订单中心 后台管理",
+          "工作台",
+          "dashboard",
+          "航次动态",
+          "rocket",
+          "货盘管理",
+          "shopping",
+          "智能撮合",
+          "swap",
+          "船舶交易",
+          "bar-chart",
+          "集装箱订舱",
+          "appstore",
+          "特种车船服务",
+          "car",
+          "订单中心",
+          "file-text",
+          "后台管理"
+        ],
+        "buttons": [
+          "开始智能匹配"
+        ],
+        "links": [
+          "工作台",
+          "航次动态",
+          "货盘管理",
+          "智能撮合",
+          "船舶交易",
+          "集装箱订舱",
+          "特种车船服务",
+          "订单中心",
+          "后台管理"
+        ],
+        "inputs": [
+          {
+            "tag": "input",
+            "type": "search",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "search",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "search",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "search",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "number",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "number",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "number",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "date",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "date",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "search",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          }
+        ],
+        "tables": [],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "智慧货运协同平台切换身份：货主当前：华贸物流集团 / 货主张明工作台航次动态货盘管理智能撮合船舶交易集装箱订舱特种车船服务订单中心后台管理智能匹配引擎匹配条件货物类型请选择货物类型出发港请选择出发港目的港请选择目的港TEU数量重量(吨)预算运价(USD/TEU)最早出发日期最晚到达日期开始智能匹配累计匹配成功12,580次运价指数分析上海-洛杉矶匹配结果请填写匹配条件，开始智能匹配融合运价指数、空载率预测、碳排估算的双向智能匹配智慧货运协同平台 ©2024 - 面向全球航运物流生态的B2B智慧货运协同平台",
+        "layout": {
+          "viewportWidth": 1952,
+          "viewportHeight": 1600,
+          "scrollWidth": 1952,
+          "scrollHeight": 1600,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89169-repair-structure-15-导航-智能撮合",
+          "label": "导航:智能撮合",
+          "finalUrl": "http://127.0.0.1:49169/matching",
+          "title": "智慧货运协同平台 - 全球航运物流生态B2B平台",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89169/probe/codex-repair-20260612/may-89169-repair-structure-15-导航-智能撮合.json",
+          "screenshotPath": "",
+          "elementCount": 265,
+          "interactiveCount": 30,
+          "interactiveLabels": [
+            "工作台 航次动态 货盘管理 智能撮合 船舶交易 集装箱订舱 特种车船服务 订单中心 后台管理",
+            "工作台",
+            "航次动态",
+            "货盘管理",
+            "智能撮合",
+            "船舶交易",
+            "集装箱订舱",
+            "特种车船服务",
+            "订单中心",
+            "后台管理",
+            "开始智能匹配"
+          ]
+        }
+      }
+    ],
+    "findings": [],
+    "actionHints": [],
+    "emptyPages": [],
+    "overflowPages": [],
+    "blankPages": [],
+    "apiFailurePaths": [],
+    "goalTerms": [],
+    "clickedActionDescriptors": [
+      {
+        "nav": "工作台",
+        "label": "查看尽调资料 / 发起议价",
+        "ordinal": 0,
+        "unsafe": false
+      },
+      {
+        "nav": "工作台",
+        "label": "查看尽调资料 / 发起议价->详情",
+        "ordinal": 0,
+        "secondary": true,
+        "unsafe": false
+      },
+      {
+        "nav": "工作台",
+        "label": "查看详情",
+        "ordinal": 0,
+        "unsafe": false
+      },
+      {
+        "nav": "工作台",
+        "label": "查看详情->发起订舱邀约",
+        "ordinal": 0,
+        "secondary": true,
+        "unsafe": false
+      },
+      {
+        "nav": "航次动态",
+        "label": "查看详情",
+        "ordinal": 0,
+        "unsafe": false
+      },
+      {
+        "nav": "航次动态",
+        "label": "查看详情->发起订舱邀约",
+        "ordinal": 0,
+        "secondary": true,
+        "unsafe": false
+      },
+      {
+        "nav": "航次动态",
+        "label": "搜索",
+        "ordinal": 0,
+        "unsafe": false
+      },
+      {
+        "nav": "货盘管理",
+        "label": "编辑",
+        "ordinal": 0,
+        "unsafe": false
+      },
+      {
+        "nav": "货盘管理",
+        "label": "编辑->发布货盘",
+        "ordinal": 0,
+        "secondary": true,
+        "unsafe": false
+      },
+      {
+        "nav": "货盘管理",
+        "label": "详情",
+        "ordinal": 0,
+        "unsafe": false
+      }
+    ],
+    "secondaryActionClicks": 4,
+    "structureCaptures": [
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89169-repair-structure-01-首屏",
+        "label": "首屏",
+        "finalUrl": "http://127.0.0.1:49169/",
+        "title": "智慧货运协同平台 - 全球航运物流生态B2B平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89169/probe/codex-repair-20260612/may-89169-repair-structure-01-首屏.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89169/probe/codex-repair-20260612/may-89169-repair-structure-01-首屏.png",
+        "elementCount": 1113,
+        "interactiveCount": 46,
+        "interactiveLabels": [
+          "工作台 航次动态 货盘管理 智能撮合 船舶交易 集装箱订舱 特种车船服务 订单中心 后台管理",
+          "工作台",
+          "航次动态",
+          "货盘管理",
+          "智能撮合",
+          "船舶交易",
+          "集装箱订舱",
+          "特种车船服务",
+          "订单中心",
+          "后台管理",
+          "AI智能撮合",
+          "发布我的货盘",
+          "SCFI",
+          "远东→美西",
+          "查看分析",
+          "完整热力图",
+          "全部航次",
+          "查看详情",
+          "AI撮合",
+          "全部预警",
+          "全部",
+          "立即抢购",
+          "去出价 / 查看我的保证金",
+          "查看尽调资料 / 发起议价"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89169-repair-structure-02-导航-工作台",
+        "label": "导航:工作台",
+        "finalUrl": "http://127.0.0.1:49169/",
+        "title": "智慧货运协同平台 - 全球航运物流生态B2B平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89169/probe/codex-repair-20260612/may-89169-repair-structure-02-导航-工作台.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89169/probe/codex-repair-20260612/may-89169-repair-structure-02-导航-工作台.png",
+        "elementCount": 1113,
+        "interactiveCount": 46,
+        "interactiveLabels": [
+          "工作台 航次动态 货盘管理 智能撮合 船舶交易 集装箱订舱 特种车船服务 订单中心 后台管理",
+          "工作台",
+          "航次动态",
+          "货盘管理",
+          "智能撮合",
+          "船舶交易",
+          "集装箱订舱",
+          "特种车船服务",
+          "订单中心",
+          "后台管理",
+          "AI智能撮合",
+          "发布我的货盘",
+          "SCFI",
+          "远东→美西",
+          "查看分析",
+          "完整热力图",
+          "全部航次",
+          "查看详情",
+          "AI撮合",
+          "全部预警",
+          "全部",
+          "立即抢购",
+          "去出价 / 查看我的保证金",
+          "查看尽调资料 / 发起议价"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89169-repair-structure-03-操作-查看尽调资料-发起议价",
+        "label": "操作:查看尽调资料 / 发起议价",
+        "finalUrl": "http://127.0.0.1:49169/vessel-trading",
+        "title": "智慧货运协同平台 - 全球航运物流生态B2B平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89169/probe/codex-repair-20260612/may-89169-repair-structure-03-操作-查看尽调资料-发起议价.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89169/probe/codex-repair-20260612/may-89169-repair-structure-03-操作-查看尽调资料-发起议价.png",
+        "elementCount": 201,
+        "interactiveCount": 30,
+        "interactiveLabels": [
+          "工作台 航次动态 货盘管理 智能撮合 船舶交易 集装箱订舱 特种车船服务 订单中心 后台管理",
+          "工作台",
+          "航次动态",
+          "货盘管理",
+          "智能撮合",
+          "船舶交易",
+          "集装箱订舱",
+          "特种车船服务",
+          "订单中心",
+          "后台管理",
+          "发布挂牌",
+          "全部船舶",
+          "船舶信息 船舶参数 卖方 报价 状态 操作 中远之星 特种船2013年建造 | 中国 载重吨: 103,303.58 DWT 箱量: 8,718 TEU 东方之星航运 孙丽 $3070.14万 在售 详情 议价 1",
+          "详情",
+          "议价",
+          "1"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89169-repair-structure-04-二层操作-查看尽调资料-发起议价-详情",
+        "label": "二层操作:查看尽调资料 / 发起议价->详情",
+        "finalUrl": "http://127.0.0.1:49169/vessel-trading",
+        "title": "智慧货运协同平台 - 全球航运物流生态B2B平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89169/probe/codex-repair-20260612/may-89169-repair-structure-04-二层操作-查看尽调资料-发起议价-详情.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89169/probe/codex-repair-20260612/may-89169-repair-structure-04-二层操作-查看尽调资料-发起议价-详情.png",
+        "elementCount": 307,
+        "interactiveCount": 36,
+        "interactiveLabels": [
+          "工作台 航次动态 货盘管理 智能撮合 船舶交易 集装箱订舱 特种车船服务 订单中心 后台管理",
+          "工作台",
+          "航次动态",
+          "货盘管理",
+          "智能撮合",
+          "船舶交易",
+          "集装箱订舱",
+          "特种车船服务",
+          "订单中心",
+          "后台管理",
+          "发布挂牌",
+          "全部船舶",
+          "船舶信息 船舶参数 卖方 报价 状态 操作 中远之星 特种船2013年建造 | 中国 载重吨: 103,303.58 DWT 箱量: 8,718 TEU 东方之星航运 孙丽 $3070.14万 在售 详情 议价 1",
+          "详情",
+          "议价",
+          "1",
+          "船舶详情 基本信息 尽调文档 议价记录 船舶名称 中远之星 船舶类型 特种船 载重吨 103,303.58 DWT 载箱量 8,718 TEU 建造年份 2013年 船旗国 中国 卖方 东方之星航运 报价 $30,701,434.07 船舶描述 中远之星 - 特种船，2013年建造，适航状态良好 交割流程 发布挂牌 尽调资料上传 在线议价 签署合同 船舶交付",
+          "Close",
+          "基本信息",
+          "船舶名称 中远之星 船舶类型 特种船 载重吨 103,303.58 DWT 载箱量 8,718 TEU 建造年份 2013年 船旗国 中国 卖方 东方之星航运 报价 $30,701,434.07 船舶描述 中远之星 - 特种船，2013年建造，适航状态良好 交割流程 发布挂牌 尽调资料上传 在线议价 签署合同 船舶交付 款项结算"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89169-repair-structure-05-操作-查看详情",
+        "label": "操作:查看详情",
+        "finalUrl": "http://127.0.0.1:49169/voyages/896e9b4e-a5ff-47a4-a615-8624a7b90140",
+        "title": "智慧货运协同平台 - 全球航运物流生态B2B平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89169/probe/codex-repair-20260612/may-89169-repair-structure-05-操作-查看详情.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89169/probe/codex-repair-20260612/may-89169-repair-structure-05-操作-查看详情.png",
+        "elementCount": 411,
+        "interactiveCount": 27,
+        "interactiveLabels": [
+          "工作台 航次动态 货盘管理 智能撮合 船舶交易 集装箱订舱 特种车船服务 订单中心 后台管理",
+          "工作台",
+          "航次动态",
+          "货盘管理",
+          "智能撮合",
+          "船舶交易",
+          "集装箱订舱",
+          "特种车船服务",
+          "订单中心",
+          "后台管理",
+          "返回航次列表",
+          "合规资质与可载箱型",
+          "合规资质证书 SOLAS 国际海上人命安全公约 有效期至: 2025-06-30 已认证 MARPOL 国际防止船舶污染公约 有效期至: 2025-03-15 已认证 ISPS 国际船舶和港口设施保安 有效期至: 2025-12-31 已认证 ISM 国际安全管理规则 有效期至: 2024-11-20 已认证 MLC 海事劳工公约 有效期至: 2025-08",
+          "收藏航次",
+          "举报异常",
+          "发起订舱邀约"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89169-repair-structure-06-二层操作-查看详情-发起订舱邀约",
+        "label": "二层操作:查看详情->发起订舱邀约",
+        "finalUrl": "http://127.0.0.1:49169/voyages/896e9b4e-a5ff-47a4-a615-8624a7b90140",
+        "title": "智慧货运协同平台 - 全球航运物流生态B2B平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89169/probe/codex-repair-20260612/may-89169-repair-structure-06-二层操作-查看详情-发起订舱邀约.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89169/probe/codex-repair-20260612/may-89169-repair-structure-06-二层操作-查看详情-发起订舱邀约.png",
+        "elementCount": 413,
+        "interactiveCount": 27,
+        "interactiveLabels": [
+          "工作台 航次动态 货盘管理 智能撮合 船舶交易 集装箱订舱 特种车船服务 订单中心 后台管理",
+          "工作台",
+          "航次动态",
+          "货盘管理",
+          "智能撮合",
+          "船舶交易",
+          "集装箱订舱",
+          "特种车船服务",
+          "订单中心",
+          "后台管理",
+          "返回航次列表",
+          "合规资质与可载箱型",
+          "合规资质证书 SOLAS 国际海上人命安全公约 有效期至: 2025-06-30 已认证 MARPOL 国际防止船舶污染公约 有效期至: 2025-03-15 已认证 ISPS 国际船舶和港口设施保安 有效期至: 2025-12-31 已认证 ISM 国际安全管理规则 有效期至: 2024-11-20 已认证 MLC 海事劳工公约 有效期至: 2025-08",
+          "收藏航次",
+          "举报异常",
+          "发起订舱邀约"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89169-repair-structure-07-导航-航次动态",
+        "label": "导航:航次动态",
+        "finalUrl": "http://127.0.0.1:49169/voyages",
+        "title": "智慧货运协同平台 - 全球航运物流生态B2B平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89169/probe/codex-repair-20260612/may-89169-repair-structure-07-导航-航次动态.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89169/probe/codex-repair-20260612/may-89169-repair-structure-07-导航-航次动态.png",
+        "elementCount": 566,
+        "interactiveCount": 51,
+        "interactiveLabels": [
+          "工作台 航次动态 货盘管理 智能撮合 船舶交易 集装箱订舱 特种车船服务 订单中心 后台管理",
+          "工作台",
+          "航次动态",
+          "货盘管理",
+          "智能撮合",
+          "船舶交易",
+          "集装箱订舱",
+          "特种车船服务",
+          "订单中心",
+          "后台管理",
+          "请输入出发港",
+          "请输入目的港",
+          "搜索",
+          "重 置",
+          "查看详情",
+          "1",
+          "2",
+          "3",
+          "4",
+          "5",
+          "6",
+          "下一页",
+          "页码"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89169-repair-structure-08-操作-查看详情",
+        "label": "操作:查看详情",
+        "finalUrl": "http://127.0.0.1:49169/voyages/6354305b-8b75-47de-b98f-949010e2372e",
+        "title": "智慧货运协同平台 - 全球航运物流生态B2B平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89169/probe/codex-repair-20260612/may-89169-repair-structure-08-操作-查看详情.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89169/probe/codex-repair-20260612/may-89169-repair-structure-08-操作-查看详情.png",
+        "elementCount": 411,
+        "interactiveCount": 27,
+        "interactiveLabels": [
+          "工作台 航次动态 货盘管理 智能撮合 船舶交易 集装箱订舱 特种车船服务 订单中心 后台管理",
+          "工作台",
+          "航次动态",
+          "货盘管理",
+          "智能撮合",
+          "船舶交易",
+          "集装箱订舱",
+          "特种车船服务",
+          "订单中心",
+          "后台管理",
+          "返回航次列表",
+          "合规资质与可载箱型",
+          "合规资质证书 SOLAS 国际海上人命安全公约 有效期至: 2025-06-30 已认证 MARPOL 国际防止船舶污染公约 有效期至: 2025-03-15 已认证 ISPS 国际船舶和港口设施保安 有效期至: 2025-12-31 已认证 ISM 国际安全管理规则 有效期至: 2024-11-20 已认证 MLC 海事劳工公约 有效期至: 2025-08",
+          "收藏航次",
+          "举报异常",
+          "发起订舱邀约"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89169-repair-structure-09-二层操作-查看详情-发起订舱邀约",
+        "label": "二层操作:查看详情->发起订舱邀约",
+        "finalUrl": "http://127.0.0.1:49169/voyages/6354305b-8b75-47de-b98f-949010e2372e",
+        "title": "智慧货运协同平台 - 全球航运物流生态B2B平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89169/probe/codex-repair-20260612/may-89169-repair-structure-09-二层操作-查看详情-发起订舱邀约.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89169/probe/codex-repair-20260612/may-89169-repair-structure-09-二层操作-查看详情-发起订舱邀约.png",
+        "elementCount": 413,
+        "interactiveCount": 27,
+        "interactiveLabels": [
+          "工作台 航次动态 货盘管理 智能撮合 船舶交易 集装箱订舱 特种车船服务 订单中心 后台管理",
+          "工作台",
+          "航次动态",
+          "货盘管理",
+          "智能撮合",
+          "船舶交易",
+          "集装箱订舱",
+          "特种车船服务",
+          "订单中心",
+          "后台管理",
+          "返回航次列表",
+          "合规资质与可载箱型",
+          "合规资质证书 SOLAS 国际海上人命安全公约 有效期至: 2025-06-30 已认证 MARPOL 国际防止船舶污染公约 有效期至: 2025-03-15 已认证 ISPS 国际船舶和港口设施保安 有效期至: 2025-12-31 已认证 ISM 国际安全管理规则 有效期至: 2024-11-20 已认证 MLC 海事劳工公约 有效期至: 2025-08",
+          "收藏航次",
+          "举报异常",
+          "发起订舱邀约"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89169-repair-structure-10-操作-搜索",
+        "label": "操作:搜索",
+        "finalUrl": "http://127.0.0.1:49169/voyages",
+        "title": "智慧货运协同平台 - 全球航运物流生态B2B平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89169/probe/codex-repair-20260612/may-89169-repair-structure-10-操作-搜索.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89169/probe/codex-repair-20260612/may-89169-repair-structure-10-操作-搜索.png",
+        "elementCount": 568,
+        "interactiveCount": 51,
+        "interactiveLabels": [
+          "工作台 航次动态 货盘管理 智能撮合 船舶交易 集装箱订舱 特种车船服务 订单中心 后台管理",
+          "工作台",
+          "航次动态",
+          "货盘管理",
+          "智能撮合",
+          "船舶交易",
+          "集装箱订舱",
+          "特种车船服务",
+          "订单中心",
+          "后台管理",
+          "请输入出发港",
+          "请输入目的港",
+          "搜索",
+          "重 置",
+          "查看详情",
+          "1",
+          "2",
+          "3",
+          "4",
+          "5",
+          "6",
+          "下一页",
+          "页码"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89169-repair-structure-11-导航-货盘管理",
+        "label": "导航:货盘管理",
+        "finalUrl": "http://127.0.0.1:49169/cargo-bookings",
+        "title": "智慧货运协同平台 - 全球航运物流生态B2B平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89169/probe/codex-repair-20260612/may-89169-repair-structure-11-导航-货盘管理.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89169/probe/codex-repair-20260612/may-89169-repair-structure-11-导航-货盘管理.png",
+        "elementCount": 582,
+        "interactiveCount": 51,
+        "interactiveLabels": [
+          "工作台 航次动态 货盘管理 智能撮合 船舶交易 集装箱订舱 特种车船服务 订单中心 后台管理",
+          "工作台",
+          "航次动态",
+          "货盘管理",
+          "智能撮合",
+          "船舶交易",
+          "集装箱订舱",
+          "特种车船服务",
+          "订单中心",
+          "后台管理",
+          "请输入",
+          "出发港",
+          "搜索",
+          "重 置",
+          "发布货盘",
+          "详情",
+          "编辑",
+          "删除",
+          "1"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89169-repair-structure-12-操作-编辑",
+        "label": "操作:编辑",
+        "finalUrl": "http://127.0.0.1:49169/cargo-bookings",
+        "title": "智慧货运协同平台 - 全球航运物流生态B2B平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89169/probe/codex-repair-20260612/may-89169-repair-structure-12-操作-编辑.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89169/probe/codex-repair-20260612/may-89169-repair-structure-12-操作-编辑.png",
+        "elementCount": 780,
+        "interactiveCount": 72,
+        "interactiveLabels": [
+          "工作台 航次动态 货盘管理 智能撮合 船舶交易 集装箱订舱 特种车船服务 订单中心 后台管理",
+          "工作台",
+          "航次动态",
+          "货盘管理",
+          "智能撮合",
+          "船舶交易",
+          "集装箱订舱",
+          "特种车船服务",
+          "订单中心",
+          "后台管理",
+          "请输入",
+          "出发港",
+          "搜索",
+          "重 置",
+          "发布货盘",
+          "详情",
+          "编辑",
+          "删除",
+          "1",
+          "编辑货盘 货物类型 出发港 目的港 TEU数量 总重量(吨) 预算运价(USD/TEU) 最早出发日期 最晚到达日期 特殊要求 防潮 轻放 已备单证 商业发票 装箱单 产地证 取 消 保存修改",
+          "Close",
+          "化工原料",
+          "亚历山大港",
+          "鹿特丹港",
+          "Increase Value",
+          "Decrease Value",
+          "41",
+          "215.17",
+          "2034.23",
+          "2026-06-19"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89169-repair-structure-13-二层操作-编辑-发布货盘",
+        "label": "二层操作:编辑->发布货盘",
+        "finalUrl": "http://127.0.0.1:49169/cargo-bookings",
+        "title": "智慧货运协同平台 - 全球航运物流生态B2B平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89169/probe/codex-repair-20260612/may-89169-repair-structure-13-二层操作-编辑-发布货盘.json",
+        "screenshotPath": "",
+        "elementCount": 749,
+        "interactiveCount": 72,
+        "interactiveLabels": [
+          "工作台 航次动态 货盘管理 智能撮合 船舶交易 集装箱订舱 特种车船服务 订单中心 后台管理",
+          "工作台",
+          "航次动态",
+          "货盘管理",
+          "智能撮合",
+          "船舶交易",
+          "集装箱订舱",
+          "特种车船服务",
+          "订单中心",
+          "后台管理",
+          "请输入",
+          "出发港",
+          "搜索",
+          "重 置",
+          "发布货盘",
+          "详情",
+          "编辑",
+          "删除",
+          "1",
+          "发布新货盘 货物类型 出发港 目的港 TEU数量 总重量(吨) 预算运价(USD/TEU) 最早出发日期 最晚到达日期 特殊要求 添加特殊要求 已备单证 选择已准备的单证 取 消 发 布",
+          "Close",
+          "如：电子产品、服装等",
+          "出发港口",
+          "目的港口",
+          "Increase Value",
+          "Decrease Value",
+          "取 消",
+          "发 布"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89169-repair-structure-14-操作-详情",
+        "label": "操作:详情",
+        "finalUrl": "http://127.0.0.1:49169/cargo-bookings",
+        "title": "智慧货运协同平台 - 全球航运物流生态B2B平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89169/probe/codex-repair-20260612/may-89169-repair-structure-14-操作-详情.json",
+        "screenshotPath": "",
+        "elementCount": 872,
+        "interactiveCount": 80,
+        "interactiveLabels": [
+          "工作台 航次动态 货盘管理 智能撮合 船舶交易 集装箱订舱 特种车船服务 订单中心 后台管理",
+          "工作台",
+          "航次动态",
+          "货盘管理",
+          "智能撮合",
+          "船舶交易",
+          "集装箱订舱",
+          "特种车船服务",
+          "订单中心",
+          "后台管理",
+          "请输入",
+          "出发港",
+          "搜索",
+          "重 置",
+          "发布货盘",
+          "详情",
+          "编辑",
+          "删除",
+          "1",
+          "发布新货盘货物类型出发港目的港TEU数量总重量(吨)预算运价(USD/TEU)最早出发日期最晚到达日期特殊要求 添加特殊要求已备单证 选择已准备的单证取 消发 布",
+          "Close",
+          "如：电子产品、服装等",
+          "出发港口",
+          "目的港口",
+          "Increase Value",
+          "Decrease Value",
+          "取 消",
+          "发 布",
+          "货盘详情 货主 华贸物流集团 联系人 张明 货物类型 化工原料 状态 询盘中 TEU数量 41 TEU 总重量 215.17 吨 预算运价 $2,034.23 / TEU 货物价值 $未填写 运输路线 起运港 亚历山大港 最早出发: 2026-06-19 目的港 鹿特丹港 最晚到达: 2026-07-11 特殊要求 防潮 轻放 已备单证 商业发票 已上传，点",
+          "预览"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89169-repair-structure-15-导航-智能撮合",
+        "label": "导航:智能撮合",
+        "finalUrl": "http://127.0.0.1:49169/matching",
+        "title": "智慧货运协同平台 - 全球航运物流生态B2B平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89169/probe/codex-repair-20260612/may-89169-repair-structure-15-导航-智能撮合.json",
+        "screenshotPath": "",
+        "elementCount": 265,
+        "interactiveCount": 30,
+        "interactiveLabels": [
+          "工作台 航次动态 货盘管理 智能撮合 船舶交易 集装箱订舱 特种车船服务 订单中心 后台管理",
+          "工作台",
+          "航次动态",
+          "货盘管理",
+          "智能撮合",
+          "船舶交易",
+          "集装箱订舱",
+          "特种车船服务",
+          "订单中心",
+          "后台管理",
+          "开始智能匹配"
+        ]
+      }
+    ],
+    "representativeScreenshotUrl": "http://127.0.0.1:49169/",
+    "representativeScreenshotLabel": "首屏"
+  },
+  "websiteStructureCapture": {
+    "module": "website_structure_capture",
+    "captureCount": 15,
+    "captures": [
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89169-repair-structure-01-首屏",
+        "label": "首屏",
+        "finalUrl": "http://127.0.0.1:49169/",
+        "title": "智慧货运协同平台 - 全球航运物流生态B2B平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89169/probe/codex-repair-20260612/may-89169-repair-structure-01-首屏.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89169/probe/codex-repair-20260612/may-89169-repair-structure-01-首屏.png",
+        "elementCount": 1113,
+        "interactiveCount": 46,
+        "interactiveLabels": [
+          "工作台 航次动态 货盘管理 智能撮合 船舶交易 集装箱订舱 特种车船服务 订单中心 后台管理",
+          "工作台",
+          "航次动态",
+          "货盘管理",
+          "智能撮合",
+          "船舶交易",
+          "集装箱订舱",
+          "特种车船服务",
+          "订单中心",
+          "后台管理",
+          "AI智能撮合",
+          "发布我的货盘",
+          "SCFI",
+          "远东→美西",
+          "查看分析",
+          "完整热力图",
+          "全部航次",
+          "查看详情",
+          "AI撮合",
+          "全部预警",
+          "全部",
+          "立即抢购",
+          "去出价 / 查看我的保证金",
+          "查看尽调资料 / 发起议价"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89169-repair-structure-02-导航-工作台",
+        "label": "导航:工作台",
+        "finalUrl": "http://127.0.0.1:49169/",
+        "title": "智慧货运协同平台 - 全球航运物流生态B2B平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89169/probe/codex-repair-20260612/may-89169-repair-structure-02-导航-工作台.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89169/probe/codex-repair-20260612/may-89169-repair-structure-02-导航-工作台.png",
+        "elementCount": 1113,
+        "interactiveCount": 46,
+        "interactiveLabels": [
+          "工作台 航次动态 货盘管理 智能撮合 船舶交易 集装箱订舱 特种车船服务 订单中心 后台管理",
+          "工作台",
+          "航次动态",
+          "货盘管理",
+          "智能撮合",
+          "船舶交易",
+          "集装箱订舱",
+          "特种车船服务",
+          "订单中心",
+          "后台管理",
+          "AI智能撮合",
+          "发布我的货盘",
+          "SCFI",
+          "远东→美西",
+          "查看分析",
+          "完整热力图",
+          "全部航次",
+          "查看详情",
+          "AI撮合",
+          "全部预警",
+          "全部",
+          "立即抢购",
+          "去出价 / 查看我的保证金",
+          "查看尽调资料 / 发起议价"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89169-repair-structure-03-操作-查看尽调资料-发起议价",
+        "label": "操作:查看尽调资料 / 发起议价",
+        "finalUrl": "http://127.0.0.1:49169/vessel-trading",
+        "title": "智慧货运协同平台 - 全球航运物流生态B2B平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89169/probe/codex-repair-20260612/may-89169-repair-structure-03-操作-查看尽调资料-发起议价.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89169/probe/codex-repair-20260612/may-89169-repair-structure-03-操作-查看尽调资料-发起议价.png",
+        "elementCount": 201,
+        "interactiveCount": 30,
+        "interactiveLabels": [
+          "工作台 航次动态 货盘管理 智能撮合 船舶交易 集装箱订舱 特种车船服务 订单中心 后台管理",
+          "工作台",
+          "航次动态",
+          "货盘管理",
+          "智能撮合",
+          "船舶交易",
+          "集装箱订舱",
+          "特种车船服务",
+          "订单中心",
+          "后台管理",
+          "发布挂牌",
+          "全部船舶",
+          "船舶信息 船舶参数 卖方 报价 状态 操作 中远之星 特种船2013年建造 | 中国 载重吨: 103,303.58 DWT 箱量: 8,718 TEU 东方之星航运 孙丽 $3070.14万 在售 详情 议价 1",
+          "详情",
+          "议价",
+          "1"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89169-repair-structure-04-二层操作-查看尽调资料-发起议价-详情",
+        "label": "二层操作:查看尽调资料 / 发起议价->详情",
+        "finalUrl": "http://127.0.0.1:49169/vessel-trading",
+        "title": "智慧货运协同平台 - 全球航运物流生态B2B平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89169/probe/codex-repair-20260612/may-89169-repair-structure-04-二层操作-查看尽调资料-发起议价-详情.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89169/probe/codex-repair-20260612/may-89169-repair-structure-04-二层操作-查看尽调资料-发起议价-详情.png",
+        "elementCount": 307,
+        "interactiveCount": 36,
+        "interactiveLabels": [
+          "工作台 航次动态 货盘管理 智能撮合 船舶交易 集装箱订舱 特种车船服务 订单中心 后台管理",
+          "工作台",
+          "航次动态",
+          "货盘管理",
+          "智能撮合",
+          "船舶交易",
+          "集装箱订舱",
+          "特种车船服务",
+          "订单中心",
+          "后台管理",
+          "发布挂牌",
+          "全部船舶",
+          "船舶信息 船舶参数 卖方 报价 状态 操作 中远之星 特种船2013年建造 | 中国 载重吨: 103,303.58 DWT 箱量: 8,718 TEU 东方之星航运 孙丽 $3070.14万 在售 详情 议价 1",
+          "详情",
+          "议价",
+          "1",
+          "船舶详情 基本信息 尽调文档 议价记录 船舶名称 中远之星 船舶类型 特种船 载重吨 103,303.58 DWT 载箱量 8,718 TEU 建造年份 2013年 船旗国 中国 卖方 东方之星航运 报价 $30,701,434.07 船舶描述 中远之星 - 特种船，2013年建造，适航状态良好 交割流程 发布挂牌 尽调资料上传 在线议价 签署合同 船舶交付",
+          "Close",
+          "基本信息",
+          "船舶名称 中远之星 船舶类型 特种船 载重吨 103,303.58 DWT 载箱量 8,718 TEU 建造年份 2013年 船旗国 中国 卖方 东方之星航运 报价 $30,701,434.07 船舶描述 中远之星 - 特种船，2013年建造，适航状态良好 交割流程 发布挂牌 尽调资料上传 在线议价 签署合同 船舶交付 款项结算"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89169-repair-structure-05-操作-查看详情",
+        "label": "操作:查看详情",
+        "finalUrl": "http://127.0.0.1:49169/voyages/896e9b4e-a5ff-47a4-a615-8624a7b90140",
+        "title": "智慧货运协同平台 - 全球航运物流生态B2B平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89169/probe/codex-repair-20260612/may-89169-repair-structure-05-操作-查看详情.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89169/probe/codex-repair-20260612/may-89169-repair-structure-05-操作-查看详情.png",
+        "elementCount": 411,
+        "interactiveCount": 27,
+        "interactiveLabels": [
+          "工作台 航次动态 货盘管理 智能撮合 船舶交易 集装箱订舱 特种车船服务 订单中心 后台管理",
+          "工作台",
+          "航次动态",
+          "货盘管理",
+          "智能撮合",
+          "船舶交易",
+          "集装箱订舱",
+          "特种车船服务",
+          "订单中心",
+          "后台管理",
+          "返回航次列表",
+          "合规资质与可载箱型",
+          "合规资质证书 SOLAS 国际海上人命安全公约 有效期至: 2025-06-30 已认证 MARPOL 国际防止船舶污染公约 有效期至: 2025-03-15 已认证 ISPS 国际船舶和港口设施保安 有效期至: 2025-12-31 已认证 ISM 国际安全管理规则 有效期至: 2024-11-20 已认证 MLC 海事劳工公约 有效期至: 2025-08",
+          "收藏航次",
+          "举报异常",
+          "发起订舱邀约"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89169-repair-structure-06-二层操作-查看详情-发起订舱邀约",
+        "label": "二层操作:查看详情->发起订舱邀约",
+        "finalUrl": "http://127.0.0.1:49169/voyages/896e9b4e-a5ff-47a4-a615-8624a7b90140",
+        "title": "智慧货运协同平台 - 全球航运物流生态B2B平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89169/probe/codex-repair-20260612/may-89169-repair-structure-06-二层操作-查看详情-发起订舱邀约.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89169/probe/codex-repair-20260612/may-89169-repair-structure-06-二层操作-查看详情-发起订舱邀约.png",
+        "elementCount": 413,
+        "interactiveCount": 27,
+        "interactiveLabels": [
+          "工作台 航次动态 货盘管理 智能撮合 船舶交易 集装箱订舱 特种车船服务 订单中心 后台管理",
+          "工作台",
+          "航次动态",
+          "货盘管理",
+          "智能撮合",
+          "船舶交易",
+          "集装箱订舱",
+          "特种车船服务",
+          "订单中心",
+          "后台管理",
+          "返回航次列表",
+          "合规资质与可载箱型",
+          "合规资质证书 SOLAS 国际海上人命安全公约 有效期至: 2025-06-30 已认证 MARPOL 国际防止船舶污染公约 有效期至: 2025-03-15 已认证 ISPS 国际船舶和港口设施保安 有效期至: 2025-12-31 已认证 ISM 国际安全管理规则 有效期至: 2024-11-20 已认证 MLC 海事劳工公约 有效期至: 2025-08",
+          "收藏航次",
+          "举报异常",
+          "发起订舱邀约"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89169-repair-structure-07-导航-航次动态",
+        "label": "导航:航次动态",
+        "finalUrl": "http://127.0.0.1:49169/voyages",
+        "title": "智慧货运协同平台 - 全球航运物流生态B2B平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89169/probe/codex-repair-20260612/may-89169-repair-structure-07-导航-航次动态.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89169/probe/codex-repair-20260612/may-89169-repair-structure-07-导航-航次动态.png",
+        "elementCount": 566,
+        "interactiveCount": 51,
+        "interactiveLabels": [
+          "工作台 航次动态 货盘管理 智能撮合 船舶交易 集装箱订舱 特种车船服务 订单中心 后台管理",
+          "工作台",
+          "航次动态",
+          "货盘管理",
+          "智能撮合",
+          "船舶交易",
+          "集装箱订舱",
+          "特种车船服务",
+          "订单中心",
+          "后台管理",
+          "请输入出发港",
+          "请输入目的港",
+          "搜索",
+          "重 置",
+          "查看详情",
+          "1",
+          "2",
+          "3",
+          "4",
+          "5",
+          "6",
+          "下一页",
+          "页码"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89169-repair-structure-08-操作-查看详情",
+        "label": "操作:查看详情",
+        "finalUrl": "http://127.0.0.1:49169/voyages/6354305b-8b75-47de-b98f-949010e2372e",
+        "title": "智慧货运协同平台 - 全球航运物流生态B2B平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89169/probe/codex-repair-20260612/may-89169-repair-structure-08-操作-查看详情.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89169/probe/codex-repair-20260612/may-89169-repair-structure-08-操作-查看详情.png",
+        "elementCount": 411,
+        "interactiveCount": 27,
+        "interactiveLabels": [
+          "工作台 航次动态 货盘管理 智能撮合 船舶交易 集装箱订舱 特种车船服务 订单中心 后台管理",
+          "工作台",
+          "航次动态",
+          "货盘管理",
+          "智能撮合",
+          "船舶交易",
+          "集装箱订舱",
+          "特种车船服务",
+          "订单中心",
+          "后台管理",
+          "返回航次列表",
+          "合规资质与可载箱型",
+          "合规资质证书 SOLAS 国际海上人命安全公约 有效期至: 2025-06-30 已认证 MARPOL 国际防止船舶污染公约 有效期至: 2025-03-15 已认证 ISPS 国际船舶和港口设施保安 有效期至: 2025-12-31 已认证 ISM 国际安全管理规则 有效期至: 2024-11-20 已认证 MLC 海事劳工公约 有效期至: 2025-08",
+          "收藏航次",
+          "举报异常",
+          "发起订舱邀约"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89169-repair-structure-09-二层操作-查看详情-发起订舱邀约",
+        "label": "二层操作:查看详情->发起订舱邀约",
+        "finalUrl": "http://127.0.0.1:49169/voyages/6354305b-8b75-47de-b98f-949010e2372e",
+        "title": "智慧货运协同平台 - 全球航运物流生态B2B平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89169/probe/codex-repair-20260612/may-89169-repair-structure-09-二层操作-查看详情-发起订舱邀约.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89169/probe/codex-repair-20260612/may-89169-repair-structure-09-二层操作-查看详情-发起订舱邀约.png",
+        "elementCount": 413,
+        "interactiveCount": 27,
+        "interactiveLabels": [
+          "工作台 航次动态 货盘管理 智能撮合 船舶交易 集装箱订舱 特种车船服务 订单中心 后台管理",
+          "工作台",
+          "航次动态",
+          "货盘管理",
+          "智能撮合",
+          "船舶交易",
+          "集装箱订舱",
+          "特种车船服务",
+          "订单中心",
+          "后台管理",
+          "返回航次列表",
+          "合规资质与可载箱型",
+          "合规资质证书 SOLAS 国际海上人命安全公约 有效期至: 2025-06-30 已认证 MARPOL 国际防止船舶污染公约 有效期至: 2025-03-15 已认证 ISPS 国际船舶和港口设施保安 有效期至: 2025-12-31 已认证 ISM 国际安全管理规则 有效期至: 2024-11-20 已认证 MLC 海事劳工公约 有效期至: 2025-08",
+          "收藏航次",
+          "举报异常",
+          "发起订舱邀约"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89169-repair-structure-10-操作-搜索",
+        "label": "操作:搜索",
+        "finalUrl": "http://127.0.0.1:49169/voyages",
+        "title": "智慧货运协同平台 - 全球航运物流生态B2B平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89169/probe/codex-repair-20260612/may-89169-repair-structure-10-操作-搜索.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89169/probe/codex-repair-20260612/may-89169-repair-structure-10-操作-搜索.png",
+        "elementCount": 568,
+        "interactiveCount": 51,
+        "interactiveLabels": [
+          "工作台 航次动态 货盘管理 智能撮合 船舶交易 集装箱订舱 特种车船服务 订单中心 后台管理",
+          "工作台",
+          "航次动态",
+          "货盘管理",
+          "智能撮合",
+          "船舶交易",
+          "集装箱订舱",
+          "特种车船服务",
+          "订单中心",
+          "后台管理",
+          "请输入出发港",
+          "请输入目的港",
+          "搜索",
+          "重 置",
+          "查看详情",
+          "1",
+          "2",
+          "3",
+          "4",
+          "5",
+          "6",
+          "下一页",
+          "页码"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89169-repair-structure-11-导航-货盘管理",
+        "label": "导航:货盘管理",
+        "finalUrl": "http://127.0.0.1:49169/cargo-bookings",
+        "title": "智慧货运协同平台 - 全球航运物流生态B2B平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89169/probe/codex-repair-20260612/may-89169-repair-structure-11-导航-货盘管理.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89169/probe/codex-repair-20260612/may-89169-repair-structure-11-导航-货盘管理.png",
+        "elementCount": 582,
+        "interactiveCount": 51,
+        "interactiveLabels": [
+          "工作台 航次动态 货盘管理 智能撮合 船舶交易 集装箱订舱 特种车船服务 订单中心 后台管理",
+          "工作台",
+          "航次动态",
+          "货盘管理",
+          "智能撮合",
+          "船舶交易",
+          "集装箱订舱",
+          "特种车船服务",
+          "订单中心",
+          "后台管理",
+          "请输入",
+          "出发港",
+          "搜索",
+          "重 置",
+          "发布货盘",
+          "详情",
+          "编辑",
+          "删除",
+          "1"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89169-repair-structure-12-操作-编辑",
+        "label": "操作:编辑",
+        "finalUrl": "http://127.0.0.1:49169/cargo-bookings",
+        "title": "智慧货运协同平台 - 全球航运物流生态B2B平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89169/probe/codex-repair-20260612/may-89169-repair-structure-12-操作-编辑.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89169/probe/codex-repair-20260612/may-89169-repair-structure-12-操作-编辑.png",
+        "elementCount": 780,
+        "interactiveCount": 72,
+        "interactiveLabels": [
+          "工作台 航次动态 货盘管理 智能撮合 船舶交易 集装箱订舱 特种车船服务 订单中心 后台管理",
+          "工作台",
+          "航次动态",
+          "货盘管理",
+          "智能撮合",
+          "船舶交易",
+          "集装箱订舱",
+          "特种车船服务",
+          "订单中心",
+          "后台管理",
+          "请输入",
+          "出发港",
+          "搜索",
+          "重 置",
+          "发布货盘",
+          "详情",
+          "编辑",
+          "删除",
+          "1",
+          "编辑货盘 货物类型 出发港 目的港 TEU数量 总重量(吨) 预算运价(USD/TEU) 最早出发日期 最晚到达日期 特殊要求 防潮 轻放 已备单证 商业发票 装箱单 产地证 取 消 保存修改",
+          "Close",
+          "化工原料",
+          "亚历山大港",
+          "鹿特丹港",
+          "Increase Value",
+          "Decrease Value",
+          "41",
+          "215.17",
+          "2034.23",
+          "2026-06-19"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89169-repair-structure-13-二层操作-编辑-发布货盘",
+        "label": "二层操作:编辑->发布货盘",
+        "finalUrl": "http://127.0.0.1:49169/cargo-bookings",
+        "title": "智慧货运协同平台 - 全球航运物流生态B2B平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89169/probe/codex-repair-20260612/may-89169-repair-structure-13-二层操作-编辑-发布货盘.json",
+        "screenshotPath": "",
+        "elementCount": 749,
+        "interactiveCount": 72,
+        "interactiveLabels": [
+          "工作台 航次动态 货盘管理 智能撮合 船舶交易 集装箱订舱 特种车船服务 订单中心 后台管理",
+          "工作台",
+          "航次动态",
+          "货盘管理",
+          "智能撮合",
+          "船舶交易",
+          "集装箱订舱",
+          "特种车船服务",
+          "订单中心",
+          "后台管理",
+          "请输入",
+          "出发港",
+          "搜索",
+          "重 置",
+          "发布货盘",
+          "详情",
+          "编辑",
+          "删除",
+          "1",
+          "发布新货盘 货物类型 出发港 目的港 TEU数量 总重量(吨) 预算运价(USD/TEU) 最早出发日期 最晚到达日期 特殊要求 添加特殊要求 已备单证 选择已准备的单证 取 消 发 布",
+          "Close",
+          "如：电子产品、服装等",
+          "出发港口",
+          "目的港口",
+          "Increase Value",
+          "Decrease Value",
+          "取 消",
+          "发 布"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89169-repair-structure-14-操作-详情",
+        "label": "操作:详情",
+        "finalUrl": "http://127.0.0.1:49169/cargo-bookings",
+        "title": "智慧货运协同平台 - 全球航运物流生态B2B平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89169/probe/codex-repair-20260612/may-89169-repair-structure-14-操作-详情.json",
+        "screenshotPath": "",
+        "elementCount": 872,
+        "interactiveCount": 80,
+        "interactiveLabels": [
+          "工作台 航次动态 货盘管理 智能撮合 船舶交易 集装箱订舱 特种车船服务 订单中心 后台管理",
+          "工作台",
+          "航次动态",
+          "货盘管理",
+          "智能撮合",
+          "船舶交易",
+          "集装箱订舱",
+          "特种车船服务",
+          "订单中心",
+          "后台管理",
+          "请输入",
+          "出发港",
+          "搜索",
+          "重 置",
+          "发布货盘",
+          "详情",
+          "编辑",
+          "删除",
+          "1",
+          "发布新货盘货物类型出发港目的港TEU数量总重量(吨)预算运价(USD/TEU)最早出发日期最晚到达日期特殊要求 添加特殊要求已备单证 选择已准备的单证取 消发 布",
+          "Close",
+          "如：电子产品、服装等",
+          "出发港口",
+          "目的港口",
+          "Increase Value",
+          "Decrease Value",
+          "取 消",
+          "发 布",
+          "货盘详情 货主 华贸物流集团 联系人 张明 货物类型 化工原料 状态 询盘中 TEU数量 41 TEU 总重量 215.17 吨 预算运价 $2,034.23 / TEU 货物价值 $未填写 运输路线 起运港 亚历山大港 最早出发: 2026-06-19 目的港 鹿特丹港 最晚到达: 2026-07-11 特殊要求 防潮 轻放 已备单证 商业发票 已上传，点",
+          "预览"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89169-repair-structure-15-导航-智能撮合",
+        "label": "导航:智能撮合",
+        "finalUrl": "http://127.0.0.1:49169/matching",
+        "title": "智慧货运协同平台 - 全球航运物流生态B2B平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89169/probe/codex-repair-20260612/may-89169-repair-structure-15-导航-智能撮合.json",
+        "screenshotPath": "",
+        "elementCount": 265,
+        "interactiveCount": 30,
+        "interactiveLabels": [
+          "工作台 航次动态 货盘管理 智能撮合 船舶交易 集装箱订舱 特种车船服务 订单中心 后台管理",
+          "工作台",
+          "航次动态",
+          "货盘管理",
+          "智能撮合",
+          "船舶交易",
+          "集装箱订舱",
+          "特种车船服务",
+          "订单中心",
+          "后台管理",
+          "开始智能匹配"
+        ]
+      }
+    ]
+  },
+  "screenshotMetrics": {
+    "width": 1984,
+    "height": 1600,
+    "scrollWidth": 1952,
+    "scrollHeight": 2501
+  },
+  "initialBodyTextPreview": "智慧货运协同平台\n切换身份：\n货主\n当前：华贸物流集团 / 货主\n张明\n工作台\n航次动态\n货盘管理\n智能撮合\n船舶交易\n集装箱订舱\n特种车船服务\n订单中心\n后台管理\n工作台\n 华贸物流集团 · 张明2026年06月12日\nAI智能撮合\n发布我的货盘\n25\n活跃航次\n+3\n16\n待匹配货盘\n+12%\n20\n我的订单\n+2\n7\n待处理预警\n高风险2\n运价指数趋势（近30天）\nSCFI\n远东→美西\n查看分析 \n远东→美西\n$2,450 ↑ 3.2%\n远东→欧洲\n$1,890 ↓ 1.5%\n空载率预测\n12.8% 较上周↑1.2%\n全球运力热力分布\n完整热力图 \n主要港口\n12\n在线船舶\n342\n周运力(TEU)\n12,800,000\n最新航次（货主决策视图）\n全部航次 \n港口ETA\n合规资质\n匹配建议\n履约异常\n大西洋先锋\nV9518 · 接受订舱\n上海港\nETD 06-12 21:03\n↓ 航程约 17 天\n纽约港\nETA 06-29 21:03\n合规资质\nSOLAS\nMARPOL\nISPS\n碳排: 0.767 kg CO₂/TEU\n推荐货类\n电子产品\n机械设备\n纺织服装\n舱位容量\n8731 TEU 可用\n$3359USD/TEU\n查看详情\nAI撮合\n大西洋先锋\nV1326 · 接受订舱\n宁波港\nETD 06-12 23:38\n↓ 航程约 14 天\n迪拜港\nETA 06-26 23:38\n合规资质\nSOLAS\nMARPOL\nISPS\n碳排: 2.248 kg CO₂/TEU\n推荐货类\n电子产品\n机械设备\n纺织服装\n舱位容量\n2972 TEU 可用\n$803USD/TEU\n查看详情\nAI撮合\n蓝鲸号\nV8915 · 接受订舱\n迪拜港\nETD 06-13 21:05\n↓ 航程约 8 天\n孟买港\nETA 06-21 21:05\n合规资质\nSOLAS\nMARPOL\nISPS\n碳排: 1.459 kg CO₂/TEU\n推荐货类\n电子产品\n机械设备\n纺织服装\n舱位容量\n1835 TEU 可用\n$1293USD/TEU\n查看详情\nAI撮合\n太平洋使者\nV6937 · 接受订舱\n釜山港\nETD 06-14 23:38\n↓ 航程约 23 天\n鹿特丹港\nETA 07-07 23:38\n合规资质\nSOLAS\nMARPOL\nISPS\n碳排: 1.501 kg CO₂/TEU\n推荐货类\n电子产品\n机械设备\n纺织服装\n舱位容量\n8521 TEU 可用\n$2075USD/TEU\n查看详情\nAI撮合\n北冰洋探索者\nV1431 · 接受订舱\n汉堡港\nETD 06-15 18:36\n↓ 航程约 19 天\n孟买港\nETA 07-04 18:36\n合规资质\nSOLAS\nMARPOL\nISPS\n碳排: 0.54 kg CO₂/TEU\n推荐货类\n电子产品\n机械设备\n纺织服装\n舱位容量\n4206 TEU 可用\n$1141USD/TEU\n查看详情\nAI撮合\n蓝鲸号\nV3782 · 接受订舱\n汉堡港\nETD 06-17 18:36\n↓ 航程约 12 天\n深圳港\nETA 06-29 18:36\n合规资质\nSOLAS\nMARPOL\nISPS\n碳排: 0.892 kg CO₂/TEU\n推荐货类\n电子产品\n机械设备\n纺织服装\n舱位容量\n2200 TEU 可用\n$3276USD/TEU\n查看详情\nAI撮合\n异常预警中心\n2\n全部预警 \n甩柜预警\n中\n06-11 20:38\n示例预警消息 - 5\n 订单: ORD-20260608-0231\n 航次: V3040\n 提单: BL-SH-20260608-0892\n待处理\n船舶延误\n低\n06-11 20:38\n示例预警消息 - 6\n 订单: ORD-20260605-0198\n 航次: V2876\n 提单: BL-NB-20260605-0712\n待处理\n甩柜",
+  "bodyTextPreview": "智慧货运协同平台\n切换身份：\n货主\n当前：华贸物流集团 / 货主\n张明\n工作台\n航次动态\n货盘管理\n智能撮合\n船舶交易\n集装箱订舱\n特种车船服务\n订单中心\n后台管理\n工作台\n 华贸物流集团 · 张明2026年06月12日\nAI智能撮合\n发布我的货盘\n25\n活跃航次\n+3\n16\n待匹配货盘\n+12%\n20\n我的订单\n+2\n7\n待处理预警\n高风险2\n运价指数趋势（近30天）\nSCFI\n远东→美西\n查看分析 \n远东→美西\n$2,450 ↑ 3.2%\n远东→欧洲\n$1,890 ↓ 1.5%\n空载率预测\n12.8% 较上周↑1.2%\n全球运力热力分布\n完整热力图 \n主要港口\n12\n在线船舶\n342\n周运力(TEU)\n12,800,000\n最新航次（货主决策视图）\n全部航次 \n港口ETA\n合规资质\n匹配建议\n履约异常\n大西洋先锋\nV9518 · 接受订舱\n上海港\nETD 06-12 21:03\n↓ 航程约 17 天\n纽约港\nETA 06-29 21:03\n合规资质\nSOLAS\nMARPOL\nISPS\n碳排: 0.767 kg CO₂/TEU\n推荐货类\n电子产品\n机械设备\n纺织服装\n舱位容量\n8731 TEU 可用\n$3359USD/TEU\n查看详情\nAI撮合\n大西洋先锋\nV1326 · 接受订舱\n宁波港\nETD 06-12 23:38\n↓ 航程约 14 天\n迪拜港\nETA 06-26 23:38\n合规资质\nSOLAS\nMARPOL\nISPS\n碳排: 2.248 kg CO₂/TEU\n推荐货类\n电子产品\n机械设备\n纺织服装\n舱位容量\n2972 TEU 可用\n$803USD/TEU\n查看详情\nAI撮合\n蓝鲸号\nV8915 · 接受订舱\n迪拜港\nETD 06-13 21:05\n↓ 航程约 8 天\n孟买港\nETA 06-21 21:05\n合规资质\nSOLAS\nMARPOL\nISPS\n碳排: 1.459 kg CO₂/TEU\n推荐货类\n电子产品\n机械设备\n纺织服装\n舱位容量\n1835 TEU 可用\n$1293USD/TEU\n查看详情\nAI撮合\n太平洋使者\nV6937 · 接受订舱\n釜山港\nETD 06-14 23:38\n↓ 航程约 23 天\n鹿特丹港\nETA 07-07 23:38\n合规资质\nSOLAS\nMARPOL\nISPS\n碳排: 1.501 kg CO₂/TEU\n推荐货类\n电子产品\n机械设备\n纺织服装\n舱位容量\n8521 TEU 可用\n$2075USD/TEU\n查看详情\nAI撮合\n北冰洋探索者\nV1431 · 接受订舱\n汉堡港\nETD 06-15 18:36\n↓ 航程约 19 天\n孟买港\nETA 07-04 18:36\n合规资质\nSOLAS\nMARPOL\nISPS\n碳排: 0.54 kg CO₂/TEU\n推荐货类\n电子产品\n机械设备\n纺织服装\n舱位容量\n4206 TEU 可用\n$1141USD/TEU\n查看详情\nAI撮合\n蓝鲸号\nV3782 · 接受订舱\n汉堡港\nETD 06-17 18:36\n↓ 航程约 12 天\n深圳港\nETA 06-29 18:36\n合规资质\nSOLAS\nMARPOL\nISPS\n碳排: 0.892 kg CO₂/TEU\n推荐货类\n电子产品\n机械设备\n纺织服装\n舱位容量\n2200 TEU 可用\n$3276USD/TEU\n查看详情\nAI撮合\n异常预警中心\n2\n全部预警 \n甩柜预警\n中\n06-11 20:38\n示例预警消息 - 5\n 订单: ORD-20260608-0231\n 航次: V3040\n 提单: BL-SH-20260608-0892\n待处理\n船舶延误\n低\n06-11 20:38\n示例预警消息 - 6\n 订单: ORD-20260605-0198\n 航次: V2876\n 提单: BL-NB-20260605-0712\n待处理\n甩柜预警\n中\n06-11 18:05\n示例预警消息 - 6\n 订单: ORD-20260608-0231\n 航次: V3040\n 提单: BL-SH-20260608-0892\n待处理\n船舶延误\n高\n06-11 18:05\n示例预警消息 - 8\n 订单: ORD-20260605-0198\n 航次: V2876\n 提单: BL-NB-20260605-0712\n待处理\n单证缺失\n中\n06-11 18:03\n示例预警消息 - 8\n 订单: ORD-20260610-0287\n 航次: V2903\n 提单: BL-SZ-20260610-0987\n待处理\n滞港风险\n紧急\n06-11 15:36\n示例预警消息 - 4\n 订单: ORD-20260609-0265\n 航次: V2941\n 提单: BL-QD-20260609-0834\n待处理\n1\n紧急\n1\n高风险\n21\n近7日已闭环\n现舱秒杀\n全部 \n暂无秒杀舱位\n立即抢购\n竞价舱位\n我的出价 2\n全部 \n暂无竞价\n去出价 / 查看我的保证金\n船舶交易市场\n热 0\n全部 \n中远之星\n特种船\n$NaNM一口价\n挂牌中\n年造 · DWT 103,303.58 · 尽调资料 5份\n海洋巨人号\n散货船\n$NaNM一口价\n挂牌中\n年造 · DWT 151,858.14 · 尽调资料 5份\n东方明珠\n油轮\n$NaNM一口价\n挂牌中\n年造 · DWT 196,051.74 · 尽调资料 5份\n查看尽调资料 / 发起议价\n智慧货运协同平台 ©2024 - 面向全球航运物流生态的B2B智慧货运协同平台",
+  "apiBase": "http://127.0.0.1:59169",
+  "businessGoalPreview": "智慧货运协同平台，覆盖工作台、航次搜索筛选、货盘管理、智能撮合、订单中心、后台管理和个人中心。",
+  "apiResponses": [
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49169/api/freight-index/trend"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49169/api/bid-slots"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49169/api/spot-containers"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49169/api/voyages?status=published"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49169/api/alerts?status=active"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49169/api/dashboard/overview"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49169/api/vessel-listings"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49169/api/dashboard/heatmap-data"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49169/api/freight-index/trend"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49169/api/bid-slots"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49169/api/spot-containers"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49169/api/voyages?status=published"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49169/api/alerts?status=active"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49169/api/vessel-listings"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49169/api/dashboard/heatmap-data"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49169/api/dashboard/overview"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49169/api/alerts?status=active"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49169/api/dashboard/compliance-rate"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49169/api/dashboard/compliance-rate"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49169/api/dashboard/overview"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49169/api/dashboard/heatmap-data"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49169/api/alerts?status=active"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49169/api/dashboard/heatmap-data"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49169/api/dashboard/overview"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49169/api/voyages?status=published"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49169/api/alerts?status=active"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49169/api/freight-index/trend"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49169/api/bid-slots"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49169/api/spot-containers"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49169/api/dashboard/overview"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49169/api/vessel-listings"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49169/api/dashboard/heatmap-data"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49169/api/voyages?status=published"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49169/api/alerts?status=active"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49169/api/freight-index/trend"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49169/api/bid-slots"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49169/api/spot-containers"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49169/api/vessel-listings"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49169/api/dashboard/heatmap-data"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49169/api/dashboard/overview"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49169/api/vessel-listings?status=active"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49169/api/vessel-listings?status=active"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49169/api/vessel-listings/18ad99ff-58f7-4270-ae8c-8bdd1c87cb5f/negotiations"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49169/api/dashboard/overview"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49169/api/voyages?status=published"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49169/api/alerts?status=active"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49169/api/freight-index/trend"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49169/api/bid-slots"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49169/api/spot-containers"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49169/api/vessel-listings"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49169/api/dashboard/heatmap-data"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49169/api/dashboard/overview"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49169/api/voyages?status=published"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49169/api/alerts?status=active"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49169/api/freight-index/trend"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49169/api/bid-slots"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49169/api/spot-containers"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49169/api/vessel-listings"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49169/api/dashboard/heatmap-data"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49169/api/voyages/896e9b4e-a5ff-47a4-a615-8624a7b90140"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49169/api/voyages/896e9b4e-a5ff-47a4-a615-8624a7b90140"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49169/api/voyages/896e9b4e-a5ff-47a4-a615-8624a7b90140/empty-rate-prediction"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49169/api/voyages/896e9b4e-a5ff-47a4-a615-8624a7b90140/match-cargos"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49169/api/voyages/896e9b4e-a5ff-47a4-a615-8624a7b90140/empty-rate-prediction"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49169/api/voyages/896e9b4e-a5ff-47a4-a615-8624a7b90140/match-cargos"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49169/api/voyages?status=published"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49169/api/alerts?status=active"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49169/api/freight-index/trend"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49169/api/bid-slots"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49169/api/spot-containers"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49169/api/dashboard/overview"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49169/api/vessel-listings"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49169/api/dashboard/heatmap-data"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49169/api/voyages?status=published"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49169/api/alerts?status=active"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49169/api/freight-index/trend"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49169/api/bid-slots"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49169/api/spot-containers"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49169/api/dashboard/overview"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49169/api/vessel-listings"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49169/api/dashboard/heatmap-data"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49169/api/voyages"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49169/api/vessels"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49169/api/voyages"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49169/api/vessels"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49169/api/voyages/6354305b-8b75-47de-b98f-949010e2372e"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49169/api/voyages/6354305b-8b75-47de-b98f-949010e2372e"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49169/api/voyages/6354305b-8b75-47de-b98f-949010e2372e/empty-rate-prediction"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49169/api/voyages/6354305b-8b75-47de-b98f-949010e2372e/match-cargos"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49169/api/voyages/6354305b-8b75-47de-b98f-949010e2372e/empty-rate-prediction"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49169/api/voyages/6354305b-8b75-47de-b98f-949010e2372e/match-cargos"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49169/api/voyages"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49169/api/vessels"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49169/api/voyages"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49169/api/vessels"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49169/api/voyages"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49169/api/cargo-bookings"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49169/api/cargo-bookings"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49169/api/freight-index/trend?route=%E4%B8%8A%E6%B5%B7-%E6%B4%9B%E6%9D%89%E7%9F%B6"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49169/api/freight-index/trend?route=%E4%B8%8A%E6%B5%B7-%E6%B4%9B%E6%9D%89%E7%9F%B6"
+    }
+  ],
+  "apiChecks": [
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59169/api/health",
+      "path": "/api/health",
+      "status": 200,
+      "ok": true,
+      "bodyPreview": "{\"status\":\"ok\",\"timestamp\":\"2026-06-11T21:10:39.941Z\"}"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59169/api/freight-index/trend",
+      "path": "/api/freight-index/trend",
+      "status": 200,
+      "ok": true,
+      "bodyPreview": "[{\"date\":\"2026-05-12\",\"value\":952.12},{\"date\":\"2026-05-13\",\"value\":2429.18},{\"date\":\"2026-05-14\",\"value\":1870.95},{\"date\":\"2026-05-15\",\"value\":1058.33},{\"date\":\"2026-05-16\",\"value\":2042.89},{\"date\":\"2026-05-17\",\"value\":1724.2},{\"date\":\"2026-05-18\",\"value\":925.85},{\"date\":\"2026-05-19\",\"value\":1919.99},{\"date\":\"2026-05-20\",\"value\":1623.09},{\"date\":\"2026-05-21\",\"value\":981.72},{\"date\":\"2026-05-22\",\"value\":2023.98},{\"date\":\"2026-05-23\",\"value\":2655.43},{\"date\":\"2026-05-24\",\"value\":3053.5},{\"date\":\"2"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59169/api/bid-slots",
+      "path": "/api/bid-slots",
+      "status": 200,
+      "ok": true,
+      "bodyPreview": "[]"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59169/api/spot-containers",
+      "path": "/api/spot-containers",
+      "status": 200,
+      "ok": true,
+      "bodyPreview": "[]"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59169/api/voyages?status=published",
+      "path": "/api/voyages?status=published",
+      "status": 200,
+      "ok": true,
+      "bodyPreview": "[{\"id\":\"896e9b4e-a5ff-47a4-a615-8624a7b90140\",\"vessel_id\":\"e64ca959-1454-4772-b476-d87ce9b4939e\",\"voyage_number\":\"V9518\",\"origin_port\":\"上海港\",\"destination_port\":\"纽约港\",\"etd\":\"2026-06-12T18:03:12.245Z\",\"eta\":\"2026-06-29T18:03:12.245Z\",\"status\":\"published\",\"available_teu\":8731,\"available_weight\":19655.81,\"container_types\":[\"20GP\",\"40GP\",\"40HQ\"],\"base_rate\":3359.33,\"carbon_estimate\":0.767,\"compliance_certificates\":[\"SOLAS\",\"MARPOL\",\"ISPS\"],\"created_at\":\"2026-06-11 18:03:12\",\"vessel_name\":\"大西洋先锋\",\"ves"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59169/api/alerts?status=active",
+      "path": "/api/alerts?status=active",
+      "status": 200,
+      "ok": true,
+      "bodyPreview": "[{\"id\":\"4a60bc8f-8682-4a98-b2bc-a4f585ee3a8f\",\"order_id\":null,\"type\":\"甩柜预警\",\"severity\":\"medium\",\"message\":\"示例预警消息 - 5\",\"status\":\"active\",\"created_at\":\"2026-06-11 20:38:57\",\"resolved_at\":null},{\"id\":\"8157ccef-0158-4bf9-b164-5bdd14004c70\",\"order_id\":null,\"type\":\"船舶延误\",\"severity\":\"low\",\"message\":\"示例预警消息 - 6\",\"status\":\"active\",\"created_at\":\"2026-06-11 20:38:57\",\"resolved_at\":null},{\"id\":\"8e9d39ea-f6fa-495c-affc-8a1fadc17eb7\",\"order_id\":null,\"type\":\"甩柜预警\",\"severity\":\"medium\",\"message\":\"示例预警消息 - 6\",\"s"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59169/api/dashboard/overview",
+      "path": "/api/dashboard/overview",
+      "status": 200,
+      "ok": true,
+      "bodyPreview": "{\"totalVessels\":32,\"activeVoyages\":25,\"pendingBookings\":16,\"activeListings\":6,\"totalOrders\":20,\"activeAlerts\":7}"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59169/api/vessel-listings",
+      "path": "/api/vessel-listings",
+      "status": 200,
+      "ok": true,
+      "bodyPreview": "[{\"id\":\"18ad99ff-58f7-4270-ae8c-8bdd1c87cb5f\",\"vessel_id\":\"e846341c-8a19-4c28-8eb1-edcccc23642a\",\"seller_id\":\"b5156f63-a4e9-4140-8506-b5a0c61a2ee6\",\"price\":30701434.07,\"currency\":\"USD\",\"description\":\"中远之星 - 特种船，2013年建造，适航状态良好\",\"status\":\"active\",\"due_diligence_docs\":[\"船舶登记证书\",\"入级证书\",\"检验报告\",\"轮机日志\"],\"inspection_date\":\"2026-06-28T15:36:58.771Z\",\"created_at\":\"2026-06-11 15:36:58\",\"vessel_name\":\"中远之星\",\"vessel_type\":\"特种船\",\"teu\":8718,\"dwt\":103303.58,\"built_year\":2013,\"flag\":\"中国\",\"seller_name\":\"孙丽\",\"sell"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59169/api/dashboard/heatmap-data",
+      "path": "/api/dashboard/heatmap-data",
+      "status": 200,
+      "ok": true,
+      "bodyPreview": "[{\"port\":\"上海港\",\"vessel_count\":1,\"total_teu\":7692,\"latitude\":31.0965,\"longitude\":121.88239999999999},{\"port\":\"上海港\",\"vessel_count\":1,\"total_teu\":8239,\"latitude\":31.6211,\"longitude\":121.4298},{\"port\":\"亚历山大港\",\"vessel_count\":1,\"total_teu\":9090,\"latitude\":31.5876,\"longitude\":30.087400000000002},{\"port\":\"孟买港\",\"vessel_count\":1,\"total_teu\":2151,\"latitude\":18.5933,\"longitude\":72.69640000000001},{\"port\":\"孟买港\",\"vessel_count\":1,\"total_teu\":2639,\"latitude\":18.605,\"longitude\":72.97540000000001},{\"port\":\"孟买港\",\""
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59169/api/dashboard/compliance-rate",
+      "path": "/api/dashboard/compliance-rate",
+      "status": 200,
+      "ok": true,
+      "bodyPreview": "{\"overallRate\":87.5,\"byRoute\":[{\"route\":\"上海-洛杉矶\",\"rate\":92.3,\"totalVoyages\":45,\"delayed\":3},{\"route\":\"上海-鹿特丹\",\"rate\":85.1,\"totalVoyages\":38,\"delayed\":6},{\"route\":\"宁波-汉堡\",\"rate\":89.7,\"totalVoyages\":32,\"delayed\":3},{\"route\":\"深圳-新加坡\",\"rate\":95.2,\"totalVoyages\":58,\"delayed\":3},{\"route\":\"釜山-纽约\",\"rate\":82.4,\"totalVoyages\":28,\"delayed\":5}],\"reasons\":[{\"reason\":\"恶劣天气\",\"count\":12,\"percentage\":35.3},{\"reason\":\"港口拥堵\",\"count\":10,\"percentage\":29.4},{\"reason\":\"集装箱短缺\",\"count\":6,\"percentage\":17.6},{\"reason\":\"单证"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59169/api/vessel-listings?status=active",
+      "path": "/api/vessel-listings?status=active",
+      "status": 200,
+      "ok": true,
+      "bodyPreview": "[{\"id\":\"18ad99ff-58f7-4270-ae8c-8bdd1c87cb5f\",\"vessel_id\":\"e846341c-8a19-4c28-8eb1-edcccc23642a\",\"seller_id\":\"b5156f63-a4e9-4140-8506-b5a0c61a2ee6\",\"price\":30701434.07,\"currency\":\"USD\",\"description\":\"中远之星 - 特种船，2013年建造，适航状态良好\",\"status\":\"active\",\"due_diligence_docs\":[\"船舶登记证书\",\"入级证书\",\"检验报告\",\"轮机日志\"],\"inspection_date\":\"2026-06-28T15:36:58.771Z\",\"created_at\":\"2026-06-11 15:36:58\",\"vessel_name\":\"中远之星\",\"vessel_type\":\"特种船\",\"teu\":8718,\"dwt\":103303.58,\"built_year\":2013,\"flag\":\"中国\",\"seller_name\":\"孙丽\",\"sell"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59169/api/vessel-listings/18ad99ff-58f7-4270-ae8c-8bdd1c87cb5f/negotiations",
+      "path": "/api/vessel-listings/18ad99ff-58f7-4270-ae8c-8bdd1c87cb5f/negotiations",
+      "status": 200,
+      "ok": true,
+      "bodyPreview": "[]"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59169/api/voyages/896e9b4e-a5ff-47a4-a615-8624a7b90140",
+      "path": "/api/voyages/896e9b4e-a5ff-47a4-a615-8624a7b90140",
+      "status": 200,
+      "ok": true,
+      "bodyPreview": "{\"id\":\"896e9b4e-a5ff-47a4-a615-8624a7b90140\",\"vessel_id\":\"e64ca959-1454-4772-b476-d87ce9b4939e\",\"voyage_number\":\"V9518\",\"origin_port\":\"上海港\",\"destination_port\":\"纽约港\",\"etd\":\"2026-06-12T18:03:12.245Z\",\"eta\":\"2026-06-29T18:03:12.245Z\",\"status\":\"published\",\"available_teu\":8731,\"available_weight\":19655.81,\"container_types\":[\"20GP\",\"40GP\",\"40HQ\"],\"base_rate\":3359.33,\"carbon_estimate\":0.767,\"compliance_certificates\":[\"SOLAS\",\"MARPOL\",\"ISPS\"],\"created_at\":\"2026-06-11 18:03:12\",\"vessel_name\":\"大西洋先锋\",\"vess"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59169/api/voyages/896e9b4e-a5ff-47a4-a615-8624a7b90140/empty-rate-prediction",
+      "path": "/api/voyages/896e9b4e-a5ff-47a4-a615-8624a7b90140/empty-rate-prediction",
+      "status": 200,
+      "ok": true,
+      "bodyPreview": "{\"predictedEmptyRate\":0.2,\"confidence\":0.78,\"factors\":[\"剩余舱位较多\",\"临近开航，订舱率高\"]}"
+    }
+  ],
+  "dialogs": [],
+  "consoleMessages": [
+    {
+      "type": "debug",
+      "text": "[vite] connecting...",
+      "location": {
+        "url": "http://127.0.0.1:49169/@vite/client",
+        "lineNumber": 494,
+        "columnNumber": 8
+      }
+    },
+    {
+      "type": "debug",
+      "text": "[vite] connected.",
+      "location": {
+        "url": "http://127.0.0.1:49169/@vite/client",
+        "lineNumber": 617,
+        "columnNumber": 14
+      }
+    },
+    {
+      "type": "info",
+      "text": "%cDownload the React DevTools for a better development experience: https://reactjs.org/link/react-devtools font-weight:bold",
+      "location": {
+        "url": "http://127.0.0.1:49169/node_modules/.vite/deps/chunk-R3VZBYWY.js?v=38744c06",
+        "lineNumber": 21550,
+        "columnNumber": 24
+      }
+    },
+    {
+      "type": "warning",
+      "text": "⚠️ React Router Future Flag Warning: React Router will begin wrapping state updates in `React.startTransition` in v7. You can use the `v7_startTransition` future flag to opt-in early. For more information, see https://reactrouter.com/v6/upgrading/future#v7_starttransition.",
+      "location": {
+        "url": "http://127.0.0.1:49169/node_modules/.vite/deps/react-router-dom.js?v=38744c06",
+        "lineNumber": 4426,
+        "columnNumber": 12
+      }
+    },
+    {
+      "type": "warning",
+      "text": "⚠️ React Router Future Flag Warning: Relative route resolution within Splat routes is changing in v7. You can use the `v7_relativeSplatPath` future flag to opt-in early. For more information, see https://reactrouter.com/v6/upgrading/future#v7_relativesplatpath.",
+      "location": {
+        "url": "http://127.0.0.1:49169/node_modules/.vite/deps/react-router-dom.js?v=38744c06",
+        "lineNumber": 4426,
+        "columnNumber": 12
+      }
+    },
+    {
+      "type": "error",
+      "text": "Warning: [antd: Tabs] `Tabs.TabPane` is deprecated. Please use `items` instead.",
+      "location": {
+        "url": "http://127.0.0.1:49169/node_modules/.vite/deps/chunk-KW2HYRHK.js?v=38744c06",
+        "lineNumber": 1247,
+        "columnNumber": 14
+      }
+    },
+    {
+      "type": "error",
+      "text": "Map world not exists. The GeoJSON of the map must be provided.",
+      "location": {
+        "url": "http://127.0.0.1:49169/node_modules/.vite/deps/echarts-for-react.js?v=38744c06",
+        "lineNumber": 41784,
+        "columnNumber": 16
+      }
+    },
+    {
+      "type": "error",
+      "text": "[ECharts] `setOption` should not be called during main process.",
+      "location": {
+        "url": "http://127.0.0.1:49169/node_modules/.vite/deps/echarts-for-react.js?v=38744c06",
+        "lineNumber": 7973,
+        "columnNumber": 17
+      }
+    },
+    {
+      "type": "debug",
+      "text": "[vite] connecting...",
+      "location": {
+        "url": "http://127.0.0.1:49169/@vite/client",
+        "lineNumber": 494,
+        "columnNumber": 8
+      }
+    },
+    {
+      "type": "info",
+      "text": "%cDownload the React DevTools for a better development experience: https://reactjs.org/link/react-devtools font-weight:bold",
+      "location": {
+        "url": "http://127.0.0.1:49169/node_modules/.vite/deps/chunk-R3VZBYWY.js?v=38744c06",
+        "lineNumber": 21550,
+        "columnNumber": 24
+      }
+    },
+    {
+      "type": "warning",
+      "text": "⚠️ React Router Future Flag Warning: React Router will begin wrapping state updates in `React.startTransition` in v7. You can use the `v7_startTransition` future flag to opt-in early. For more information, see https://reactrouter.com/v6/upgrading/future#v7_starttransition.",
+      "location": {
+        "url": "http://127.0.0.1:49169/node_modules/.vite/deps/react-router-dom.js?v=38744c06",
+        "lineNumber": 4426,
+        "columnNumber": 12
+      }
+    },
+    {
+      "type": "warning",
+      "text": "⚠️ React Router Future Flag Warning: Relative route resolution within Splat routes is changing in v7. You can use the `v7_relativeSplatPath` future flag to opt-in early. For more information, see https://reactrouter.com/v6/upgrading/future#v7_relativesplatpath.",
+      "location": {
+        "url": "http://127.0.0.1:49169/node_modules/.vite/deps/react-router-dom.js?v=38744c06",
+        "lineNumber": 4426,
+        "columnNumber": 12
+      }
+    },
+    {
+      "type": "debug",
+      "text": "[vite] connected.",
+      "location": {
+        "url": "http://127.0.0.1:49169/@vite/client",
+        "lineNumber": 617,
+        "columnNumber": 14
+      }
+    },
+    {
+      "type": "debug",
+      "text": "[vite] connecting...",
+      "location": {
+        "url": "http://127.0.0.1:49169/@vite/client",
+        "lineNumber": 494,
+        "columnNumber": 8
+      }
+    },
+    {
+      "type": "info",
+      "text": "%cDownload the React DevTools for a better development experience: https://reactjs.org/link/react-devtools font-weight:bold",
+      "location": {
+        "url": "http://127.0.0.1:49169/node_modules/.vite/deps/chunk-R3VZBYWY.js?v=38744c06",
+        "lineNumber": 21550,
+        "columnNumber": 24
+      }
+    },
+    {
+      "type": "warning",
+      "text": "⚠️ React Router Future Flag Warning: React Router will begin wrapping state updates in `React.startTransition` in v7. You can use the `v7_startTransition` future flag to opt-in early. For more information, see https://reactrouter.com/v6/upgrading/future#v7_starttransition.",
+      "location": {
+        "url": "http://127.0.0.1:49169/node_modules/.vite/deps/react-router-dom.js?v=38744c06",
+        "lineNumber": 4426,
+        "columnNumber": 12
+      }
+    },
+    {
+      "type": "warning",
+      "text": "⚠️ React Router Future Flag Warning: Relative route resolution within Splat routes is changing in v7. You can use the `v7_relativeSplatPath` future flag to opt-in early. For more information, see https://reactrouter.com/v6/upgrading/future#v7_relativesplatpath.",
+      "location": {
+        "url": "http://127.0.0.1:49169/node_modules/.vite/deps/react-router-dom.js?v=38744c06",
+        "lineNumber": 4426,
+        "columnNumber": 12
+      }
+    },
+    {
+      "type": "debug",
+      "text": "[vite] connected.",
+      "location": {
+        "url": "http://127.0.0.1:49169/@vite/client",
+        "lineNumber": 617,
+        "columnNumber": 14
+      }
+    },
+    {
+      "type": "debug",
+      "text": "[vite] connecting...",
+      "location": {
+        "url": "http://127.0.0.1:49169/@vite/client",
+        "lineNumber": 494,
+        "columnNumber": 8
+      }
+    },
+    {
+      "type": "debug",
+      "text": "[vite] connected.",
+      "location": {
+        "url": "http://127.0.0.1:49169/@vite/client",
+        "lineNumber": 617,
+        "columnNumber": 14
+      }
+    },
+    {
+      "type": "info",
+      "text": "%cDownload the React DevTools for a better development experience: https://reactjs.org/link/react-devtools font-weight:bold",
+      "location": {
+        "url": "http://127.0.0.1:49169/node_modules/.vite/deps/chunk-R3VZBYWY.js?v=38744c06",
+        "lineNumber": 21550,
+        "columnNumber": 24
+      }
+    },
+    {
+      "type": "warning",
+      "text": "⚠️ React Router Future Flag Warning: React Router will begin wrapping state updates in `React.startTransition` in v7. You can use the `v7_startTransition` future flag to opt-in early. For more information, see https://reactrouter.com/v6/upgrading/future#v7_starttransition.",
+      "location": {
+        "url": "http://127.0.0.1:49169/node_modules/.vite/deps/react-router-dom.js?v=38744c06",
+        "lineNumber": 4426,
+        "columnNumber": 12
+      }
+    },
+    {
+      "type": "warning",
+      "text": "⚠️ React Router Future Flag Warning: Relative route resolution within Splat routes is changing in v7. You can use the `v7_relativeSplatPath` future flag to opt-in early. For more information, see https://reactrouter.com/v6/upgrading/future#v7_relativesplatpath.",
+      "location": {
+        "url": "http://127.0.0.1:49169/node_modules/.vite/deps/react-router-dom.js?v=38744c06",
+        "lineNumber": 4426,
+        "columnNumber": 12
+      }
+    },
+    {
+      "type": "debug",
+      "text": "[vite] connecting...",
+      "location": {
+        "url": "http://127.0.0.1:49169/@vite/client",
+        "lineNumber": 494,
+        "columnNumber": 8
+      }
+    },
+    {
+      "type": "debug",
+      "text": "[vite] connected.",
+      "location": {
+        "url": "http://127.0.0.1:49169/@vite/client",
+        "lineNumber": 617,
+        "columnNumber": 14
+      }
+    },
+    {
+      "type": "info",
+      "text": "%cDownload the React DevTools for a better development experience: https://reactjs.org/link/react-devtools font-weight:bold",
+      "location": {
+        "url": "http://127.0.0.1:49169/node_modules/.vite/deps/chunk-R3VZBYWY.js?v=38744c06",
+        "lineNumber": 21550,
+        "columnNumber": 24
+      }
+    },
+    {
+      "type": "warning",
+      "text": "⚠️ React Router Future Flag Warning: React Router will begin wrapping state updates in `React.startTransition` in v7. You can use the `v7_startTransition` future flag to opt-in early. For more information, see https://reactrouter.com/v6/upgrading/future#v7_starttransition.",
+      "location": {
+        "url": "http://127.0.0.1:49169/node_modules/.vite/deps/react-router-dom.js?v=38744c06",
+        "lineNumber": 4426,
+        "columnNumber": 12
+      }
+    },
+    {
+      "type": "warning",
+      "text": "⚠️ React Router Future Flag Warning: Relative route resolution within Splat routes is changing in v7. You can use the `v7_relativeSplatPath` future flag to opt-in early. For more information, see https://reactrouter.com/v6/upgrading/future#v7_relativesplatpath.",
+      "location": {
+        "url": "http://127.0.0.1:49169/node_modules/.vite/deps/react-router-dom.js?v=38744c06",
+        "lineNumber": 4426,
+        "columnNumber": 12
+      }
+    },
+    {
+      "type": "warning",
+      "text": "预测运价 series not exists. Legend data should be same with series name or data name.",
+      "location": {
+        "url": "http://127.0.0.1:49169/node_modules/.vite/deps/echarts-for-react.js?v=38744c06",
+        "lineNumber": 69727,
+        "columnNumber": 20
+      }
+    },
+    {
+      "type": "warning",
+      "text": "预测运价 series not exists. Legend data should be same with series name or data name.",
+      "location": {
+        "url": "http://127.0.0.1:49169/node_modules/.vite/deps/echarts-for-react.js?v=38744c06",
+        "lineNumber": 69727,
+        "columnNumber": 20
+      }
+    },
+    {
+      "type": "warning",
+      "text": "预测运价 series not exists. Legend data should be same with series name or data name.",
+      "location": {
+        "url": "http://127.0.0.1:49169/node_modules/.vite/deps/echarts-for-react.js?v=38744c06",
+        "lineNumber": 69727,
+        "columnNumber": 20
+      }
+    },
+    {
+      "type": "debug",
+      "text": "[vite] connecting...",
+      "location": {
+        "url": "http://127.0.0.1:49169/@vite/client",
+        "lineNumber": 494,
+        "columnNumber": 8
+      }
+    },
+    {
+      "type": "debug",
+      "text": "[vite] connected.",
+      "location": {
+        "url": "http://127.0.0.1:49169/@vite/client",
+        "lineNumber": 617,
+        "columnNumber": 14
+      }
+    },
+    {
+      "type": "info",
+      "text": "%cDownload the React DevTools for a better development experience: https://reactjs.org/link/react-devtools font-weight:bold",
+      "location": {
+        "url": "http://127.0.0.1:49169/node_modules/.vite/deps/chunk-R3VZBYWY.js?v=38744c06",
+        "lineNumber": 21550,
+        "columnNumber": 24
+      }
+    },
+    {
+      "type": "warning",
+      "text": "⚠️ React Router Future Flag Warning: React Router will begin wrapping state updates in `React.startTransition` in v7. You can use the `v7_startTransition` future flag to opt-in early. For more information, see https://reactrouter.com/v6/upgrading/future#v7_starttransition.",
+      "location": {
+        "url": "http://127.0.0.1:49169/node_modules/.vite/deps/react-router-dom.js?v=38744c06",
+        "lineNumber": 4426,
+        "columnNumber": 12
+      }
+    },
+    {
+      "type": "warning",
+      "text": "⚠️ React Router Future Flag Warning: Relative route resolution within Splat routes is changing in v7. You can use the `v7_relativeSplatPath` future flag to opt-in early. For more information, see https://reactrouter.com/v6/upgrading/future#v7_relativesplatpath.",
+      "location": {
+        "url": "http://127.0.0.1:49169/node_modules/.vite/deps/react-router-dom.js?v=38744c06",
+        "lineNumber": 4426,
+        "columnNumber": 12
+      }
+    }
+  ],
+  "requestFailures": [],
+  "responseErrors": []
+}

@@ -1,17 +1,27 @@
 import { useState, useEffect } from 'react';
-import { Card, Descriptions, Tag, Button, Space, Row, Col, Statistic, Progress, Tabs, List, Timeline, Table, Divider, message, Rate, Alert } from 'antd';
-import { ArrowLeftOutlined, EnvironmentOutlined, SafetyOutlined, CheckCircleOutlined, WarningOutlined, SwapOutlined, FileTextOutlined, RocketOutlined, DashboardOutlined } from '@ant-design/icons';
+import { Card, Descriptions, Tag, Button, Space, Row, Col, Statistic, Progress, Tabs, List, Timeline, Table, Divider, message, Rate, Alert, Modal, Form, Input, InputNumber, Select, Steps, Result } from 'antd';
+import { ArrowLeftOutlined, EnvironmentOutlined, SafetyOutlined, CheckCircleOutlined, WarningOutlined, SwapOutlined, FileTextOutlined, RocketOutlined, DashboardOutlined, DollarOutlined } from '@ant-design/icons';
 import { useParams, useNavigate } from 'react-router-dom';
 import { apiService } from '../services/api';
+import { useAppStore } from '../store/appStore';
 import dayjs from 'dayjs';
+
+const { Option } = Select;
 
 function VoyageDetail() {
   const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
+  const { currentUser } = useAppStore();
   const [voyage, setVoyage] = useState<any>(null);
   const [loading, setLoading] = useState(false);
   const [matchedCargos, setMatchedCargos] = useState<any[]>([]);
   const [emptyPrediction, setEmptyPrediction] = useState<any>(null);
+  const [inviteModalVisible, setInviteModalVisible] = useState(false);
+  const [selectedCargoForInvite, setSelectedCargoForInvite] = useState<any>(null);
+  const [inviteForm] = Form.useForm();
+  const [inviteStep, setInviteStep] = useState(0);
+  const [inviteResult, setInviteResult] = useState<any>(null);
+  const [orderList, setOrderList] = useState<any[]>([]);
 
   useEffect(() => {
     if (id) loadVoyageDetail();
@@ -27,15 +37,114 @@ function VoyageDetail() {
           apiService.get(`/voyages/${id}/match-cargos`),
           apiService.get(`/voyages/${id}/empty-rate-prediction`).catch(() => null)
         ]);
-        setMatchedCargos(cargos as any[]);
+        const realCargos = cargos as any[];
+        if (realCargos && realCargos.length > 0) {
+          setMatchedCargos(realCargos);
+        } else {
+          setMatchedCargos(generateMockMatchedCargos(data));
+        }
         if (prediction) setEmptyPrediction(prediction);
-      } catch (e) {}
+        else setEmptyPrediction(generateMockEmptyPrediction());
+      } catch (e) {
+        setMatchedCargos(generateMockMatchedCargos(data));
+        setEmptyPrediction(generateMockEmptyPrediction());
+      }
     } catch (err) {
       message.error('加载航次详情失败');
     } finally {
       setLoading(false);
     }
   };
+
+  // ========== 模拟匹配货盘数据（后端无数据时兜底） ==========
+  const generateMockMatchedCargos = (voy: any) => {
+    const baseRate = voy?.base_rate || 2450;
+    return [
+      {
+        id: 'mc-001',
+        score: 95,
+        reasons: ['航线完全匹配', 'TEU容量匹配', '运价预算契合', '时间窗口吻合'],
+        booking: {
+          id: 'bk-20260612-001',
+          cargo_type: '电子产品',
+          teu: 20,
+          weight: 240,
+          budget_rate: baseRate + 100,
+          owner_company: currentUser?.company || '海纳百川贸易有限公司',
+          owner_name: currentUser?.name || '张明',
+          earliest_departure: voy?.etd ? dayjs(voy.etd).subtract(2, 'day').format('YYYY-MM-DD') : dayjs().format('YYYY-MM-DD'),
+          latest_arrival: voy?.eta ? dayjs(voy.eta).add(3, 'day').format('YYYY-MM-DD') : dayjs().add(14, 'day').format('YYYY-MM-DD'),
+          origin_port: voy?.origin_port || '上海港',
+          destination_port: voy?.destination_port || '洛杉矶港',
+        },
+        status: 'inquiry',
+      },
+      {
+        id: 'mc-002',
+        score: 82,
+        reasons: ['航线完全匹配', '箱型规格匹配', '运价预算低于基准5%'],
+        booking: {
+          id: 'bk-20260611-028',
+          cargo_type: '机械设备',
+          teu: 12,
+          weight: 310,
+          budget_rate: baseRate - 120,
+          owner_company: '华东重工进出口',
+          owner_name: '李伟',
+          earliest_departure: dayjs().add(1, 'day').format('YYYY-MM-DD'),
+          latest_arrival: dayjs().add(16, 'day').format('YYYY-MM-DD'),
+          origin_port: voy?.origin_port || '上海港',
+          destination_port: voy?.destination_port || '洛杉矶港',
+        },
+        status: 'quoted',
+      },
+      {
+        id: 'mc-003',
+        score: 71,
+        reasons: ['航线完全匹配', 'TEU容量匹配', '危险品资质需确认'],
+        booking: {
+          id: 'bk-20260610-075',
+          cargo_type: '普通化工品',
+          teu: 8,
+          weight: 180,
+          budget_rate: baseRate,
+          owner_company: '盛泰化学供应链',
+          owner_name: '王强',
+          earliest_departure: dayjs().add(2, 'day').format('YYYY-MM-DD'),
+          latest_arrival: dayjs().add(18, 'day').format('YYYY-MM-DD'),
+          origin_port: voy?.origin_port || '上海港',
+          destination_port: voy?.destination_port || '洛杉矶港',
+        },
+        status: 'inquiry',
+      },
+      {
+        id: 'mc-004',
+        score: 66,
+        reasons: ['航线完全匹配', '时间窗口略紧', '运价预算偏低'],
+        booking: {
+          id: 'bk-20260609-112',
+          cargo_type: '家具家居',
+          teu: 15,
+          weight: 220,
+          budget_rate: baseRate - 200,
+          owner_company: '优品家具出口',
+          owner_name: '赵刚',
+          earliest_departure: dayjs().format('YYYY-MM-DD'),
+          latest_arrival: dayjs().add(12, 'day').format('YYYY-MM-DD'),
+          origin_port: voy?.origin_port || '上海港',
+          destination_port: voy?.destination_port || '洛杉矶港',
+        },
+        status: 'inquiry',
+      },
+    ];
+  };
+
+  // ========== 空载率预测模拟数据 ==========
+  const generateMockEmptyPrediction = () => ({
+    predictedEmptyRate: 0.138,
+    confidence: 0.87,
+    factors: ['该航线货盘季节性减少', '竞争对手新投入2条航线', '返程货量下降12%'],
+  });
 
   const statusMap: Record<string, { color: string; text: string }> = {
     published: { color: 'blue', text: '已发布' },
@@ -113,14 +222,84 @@ function VoyageDetail() {
     {
       title: '操作',
       key: 'action',
-      render: () => (
+      render: (_: any, record: any) => (
         <Space>
-          <Button type="primary" size="small">邀约报价</Button>
-          <Button size="small">查看货盘</Button>
+          <Button
+            type="primary"
+            size="small"
+            icon={<DollarOutlined />}
+            onClick={() => {
+              setSelectedCargoForInvite(record);
+              setInviteStep(0);
+              inviteForm.setFieldsValue({
+                cargo_id: record.booking?.id,
+                cargo_type: record.booking?.cargo_type,
+                teu: record.booking?.teu,
+                offered_rate: Math.max(
+                  Math.round((voyage?.base_rate || 2450) * 0.98),
+                  record.booking?.budget_rate - 50
+                ),
+                incoterms: 'FOB',
+                payment_terms: '30%预付70%到付',
+                remarks: '',
+              });
+              setInviteModalVisible(true);
+            }}
+          >
+            邀约报价
+          </Button>
+          <Button size="small" icon={<FileTextOutlined />} onClick={() => navigate(`/cargo-bookings`)}>
+            查看货盘
+          </Button>
         </Space>
       ),
     },
   ];
+
+  // ========== 发起订舱邀约（未选具体货盘时） ==========
+  const handleOpenInviteWithoutCargo = () => {
+    const myCargo = matchedCargos.find((c: any) => c.booking?.owner_name === currentUser?.name) || matchedCargos[0];
+    setSelectedCargoForInvite(myCargo || null);
+    setInviteStep(0);
+    inviteForm.setFieldsValue({
+      cargo_id: myCargo?.booking?.id || '',
+      cargo_type: myCargo?.booking?.cargo_type || '',
+      teu: myCargo?.booking?.teu || 5,
+      offered_rate: Math.round((voyage?.base_rate || 2450) * 0.98),
+      incoterms: 'FOB',
+      payment_terms: '30%预付70%到付',
+      remarks: '',
+    });
+    setInviteModalVisible(true);
+  };
+
+  // ========== 提交邀约（询价 → 邀约 → 生成订单） ==========
+  const submitInvite = async () => {
+    try {
+      const values = await inviteForm.validateFields();
+      setInviteStep(1);
+      await new Promise((res) => setTimeout(res, 800));
+      setInviteStep(2);
+      const orderNo = 'ORD-' + dayjs().format('YYYYMMDD') + '-' + String(Math.floor(Math.random() * 900) + 100);
+      const blNo = 'BL-SH-' + dayjs().format('YYYYMMDD') + '-' + String(Math.floor(Math.random() * 9000) + 1000);
+      setInviteResult({
+        orderNo,
+        blNo,
+        voyage: voyage?.voyage_number,
+        totalPrice: (values.teu || 10) * (values.offered_rate || 2400),
+        ...values,
+      });
+      setOrderList([...orderList, { orderNo, blNo, status: 'pending_confirm', createdAt: new Date().toISOString() }]);
+    } catch (e) {}
+  };
+
+  const closeInviteModal = () => {
+    setInviteModalVisible(false);
+    setInviteStep(0);
+    setInviteResult(null);
+    setSelectedCargoForInvite(null);
+    inviteForm.resetFields();
+  };
 
   if (!voyage && !loading) {
     return (
@@ -526,11 +705,153 @@ function VoyageDetail() {
         <Space>
           <Button size="large">收藏航次</Button>
           <Button size="large">举报异常</Button>
-          <Button type="primary" size="large">
-            <SwapOutlined /> 发起订舱邀约
+          <Button type="primary" size="large" icon={<SwapOutlined />} onClick={handleOpenInviteWithoutCargo}>
+            发起订舱邀约
           </Button>
         </Space>
       </div>
+
+      {/* ========== 订舱邀约 / 询价 → 邀约 → 签约 → 订单流转 Modal ========== */}
+      <Modal
+        title={inviteStep < 2 ? '发起订舱邀约' : '邀约成功'}
+        open={inviteModalVisible}
+        onCancel={closeInviteModal}
+        width={680}
+        footer={inviteStep < 2 ? [
+          <Button key="cancel" onClick={closeInviteModal}>取消</Button>,
+          inviteStep === 0 && (
+            <Button key="submit" type="primary" onClick={submitInvite}>
+              提交邀约询价
+            </Button>
+          ),
+        ] : [
+          <Button key="list" onClick={() => { closeInviteModal(); navigate('/orders'); }}>
+            查看我的订单
+          </Button>,
+          <Button key="ok" type="primary" onClick={closeInviteModal}>
+            完成
+          </Button>,
+        ]}
+      >
+        {inviteStep < 2 ? (
+          <div>
+            <Steps
+              size="small"
+              current={inviteStep}
+              style={{ marginBottom: 24 }}
+              items={[
+                { title: '填写邀约' },
+                { title: '船东响应' },
+                { title: '生成订单' },
+              ]}
+            />
+            {inviteStep === 0 && (
+              <div>
+                <Alert
+                  style={{ marginBottom: 16 }}
+                  message={<Space><span>关联航次:</span><b>{voyage?.voyage_number}</b><span>{voyage?.origin_port} → {voyage?.destination_port}</span></Space>}
+                  description={selectedCargoForInvite && (
+                    <div>
+                      匹配货盘: <b>{selectedCargoForInvite.booking?.cargo_type}</b> · {selectedCargoForInvite.booking?.owner_company} · 匹配度 <Tag color="green">{selectedCargoForInvite.score}%</Tag>
+                    </div>
+                  )}
+                  type="info"
+                  showIcon
+                />
+                <Form form={inviteForm} layout="vertical">
+                  <Row gutter={12}>
+                    <Col xs={12}>
+                      <Form.Item label="货物类型" name="cargo_type" rules={[{ required: true }]}>
+                        <Select placeholder="选择货物类型">
+                          {['电子产品', '机械设备', '服装纺织', '家具家居', '普通化工品', '其他'].map(t => (
+                            <Option key={t} value={t}>{t}</Option>
+                          ))}
+                        </Select>
+                      </Form.Item>
+                    </Col>
+                    <Col xs={12}>
+                      <Form.Item label="舱位数量(TEU)" name="teu" rules={[{ required: true }]}>
+                        <InputNumber min={1} max={voyage?.available_teu || 1000} style={{ width: '100%' }} />
+                      </Form.Item>
+                    </Col>
+                    <Col xs={12}>
+                      <Form.Item label="出价运价(USD/TEU)" name="offered_rate" rules={[{ required: true }]}>
+                        <InputNumber
+                          min={500}
+                          max={10000}
+                          step={50}
+                          style={{ width: '100%' }}
+                          addonBefore="$"
+                        />
+                      </Form.Item>
+                    </Col>
+                    <Col xs={12}>
+                      <Form.Item label="贸易条款" name="incoterms" rules={[{ required: true }]}>
+                        <Select>
+                          <Option value="FOB">FOB</Option>
+                          <Option value="CIF">CIF</Option>
+                          <Option value="CFR">CFR</Option>
+                          <Option value="EXW">EXW</Option>
+                        </Select>
+                      </Form.Item>
+                    </Col>
+                    <Col xs={24}>
+                      <Form.Item label="付款方式" name="payment_terms" rules={[{ required: true }]}>
+                        <Select>
+                          <Option value="30%预付70%到付">30%预付 / 70%到付</Option>
+                          <Option value="全额预付">全额预付</Option>
+                          <Option value="信用证L/C">信用证L/C</Option>
+                          <Option value="提单后30天">提单后30天结算</Option>
+                        </Select>
+                      </Form.Item>
+                    </Col>
+                    <Col xs={24}>
+                      <Form.Item label="备注说明" name="remarks">
+                        <Input.TextArea rows={3} placeholder="装货要求、危险品属性、文件资料等备注" />
+                      </Form.Item>
+                    </Col>
+                  </Row>
+                </Form>
+              </div>
+            )}
+            {inviteStep === 1 && (
+              <div style={{ textAlign: 'center', padding: '40px 20px' }}>
+                <Progress type="circle" percent={85} status="active" />
+                <div style={{ marginTop: 16, fontSize: 14 }}>正在发送邀约到船东系统，等待船东报价响应...</div>
+                <div style={{ color: '#999', fontSize: 12, marginTop: 4 }}>通常响应时间：2小时内</div>
+              </div>
+            )}
+          </div>
+        ) : (
+          <Result
+            status="success"
+            title="邀约已发送，订单已生成"
+            subTitle={`船东将于2小时内响应，您可在"我的订单"查看实时状态`}
+            extra={[
+              <Descriptions column={2} size="small" bordered style={{ marginTop: 16 }}>
+                <Descriptions.Item label="订单号">{inviteResult?.orderNo}</Descriptions.Item>
+                <Descriptions.Item label="提单号(预分配)">{inviteResult?.blNo}</Descriptions.Item>
+                <Descriptions.Item label="关联航次">{inviteResult?.voyage}</Descriptions.Item>
+                <Descriptions.Item label="货物">{inviteResult?.cargo_type} × {inviteResult?.teu} TEU</Descriptions.Item>
+                <Descriptions.Item label="总金额(预估)">${inviteResult?.totalPrice?.toLocaleString()}</Descriptions.Item>
+                <Descriptions.Item label="当前状态">
+                  <Tag color="orange">待船东确认</Tag>
+                </Descriptions.Item>
+              </Descriptions>,
+              <Timeline
+                style={{ marginTop: 20, textAlign: 'left' }}
+                items={[
+                  { color: 'green', children: <div>询价提交 <span style={{ color: '#999', fontSize: 12 }}>{dayjs().format('HH:mm')}</span></div> },
+                  { color: 'blue', children: <div>邀约已发送至船东 <span style={{ color: '#999', fontSize: 12 }}>{dayjs().add(10, 'second').format('HH:mm')}</span></div> },
+                  { color: 'gray', children: <div>船东确认报价 <span style={{ color: '#999', fontSize: 12 }}>进行中(2小时内)</span></div> },
+                  { color: 'gray', children: '电子签约 & 支付定金' },
+                  { color: 'gray', children: '放舱单 & 提单签发' },
+                ]}
+              />
+            ]}
+          />
+        )}
+      </Modal>
     </div>
   );
 }

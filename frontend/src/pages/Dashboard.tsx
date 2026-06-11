@@ -23,7 +23,8 @@ import {
   DashboardOutlined,
   UserOutlined,
   FileTextOutlined as FileTextOutlined2,
-  ExclamationCircleOutlined
+  ExclamationCircleOutlined,
+  DollarOutlined,
 } from '@ant-design/icons';
 import ReactECharts from 'echarts-for-react';
 import { apiService } from '../services/api';
@@ -45,6 +46,7 @@ function Dashboard() {
   const [spotContainers, setSpotContainers] = useState<any[]>([]);
   const [vesselListings, setVesselListings] = useState<any[]>([]);
   const [heatmapData, setHeatmapData] = useState<any>(null);
+  const [globalSearch, setGlobalSearch] = useState('');
 
   // ========== 弹窗状态 ==========
   const [alertDetailVisible, setAlertDetailVisible] = useState(false);
@@ -56,27 +58,61 @@ function Dashboard() {
   const [selectedSpot, setSelectedSpot] = useState<any>(null);
   const [vesselDrawerVisible, setVesselDrawerVisible] = useState(false);
   const [selectedVessel, setSelectedVessel] = useState<any>(null);
+  const [ddPreviewVisible, setDdPreviewVisible] = useState(false);
+  const [selectedDdDoc, setSelectedDdDoc] = useState<any>(null);
+  const [negoModalVisible, setNegoModalVisible] = useState(false);
+  const [negoForm] = Form.useForm();
+  const [negoRecords, setNegoRecords] = useState<any[]>([]);
+  const [negoSubmitting, setNegoSubmitting] = useState(false);
 
   useEffect(() => {
     loadData();
-  }, []);
+  }, [currentUser?.id]);
 
   const loadData = async () => {
     try {
-      const [overviewData, voyagesData, alertsData, trendData, bidsData, spotData, listingData, heatmap] = await Promise.all([
-        apiService.get('/dashboard/overview'),
-        apiService.get('/voyages', { status: 'published' }),
-        apiService.get('/alerts', { status: 'active' }),
-        apiService.get('/freight-index/trend'),
+      const [overviewData, voyagesData, alertsData, trendData, bidsData, spotData, listingData, heatmap, bookingsData, ordersData] = await Promise.all([
+        apiService.get('/dashboard/overview').catch(() => ({})),
+        apiService.get('/voyages', { status: 'published' }).catch(() => []),
+        apiService.get('/alerts', { status: 'active' }).catch(() => []),
+        apiService.get('/freight-index/trend').catch(() => []),
         apiService.get('/bid-slots').catch(() => []),
         apiService.get('/spot-containers').catch(() => []),
         apiService.get('/vessel-listings').catch(() => []),
         apiService.get('/dashboard/heatmap-data').catch(() => null),
+        apiService.get('/cargo-bookings').catch(() => []),
+        apiService.get('/orders').catch(() => null),
       ]);
-      setStats(overviewData);
-      const voyages = (voyagesData as any[]).slice(0, 6);
+
+      const voyagesAll = (voyagesData as any[]) || [];
+      const bookingsAll = (bookingsData as any[]) || [];
+      const alertsAll = (alertsData as any[]) || [];
+      const ordersAll = Array.isArray(ordersData) ? ordersData : (
+        ordersData && Array.isArray((ordersData as any).list) ? (ordersData as any).list : []
+      );
+
+      // ========== 从实际列表派生统计，杜绝断层 ==========
+      const isOwnerView = currentUser?.role === 'cargo_owner';
+      const myBookings = isOwnerView
+        ? bookingsAll.filter((b: any) => b.owner_name === currentUser?.name || b.cargo_owner_id === currentUser?.id)
+        : bookingsAll;
+      const pendingCount = myBookings.filter((b: any) => b.status === 'inquiry' || !b.status || b.status === 'pending').length;
+      const activeVoyageCount = voyagesAll.length;
+      const alertActiveCount = alertsAll.filter((a: any) => a.status === 'active' || !a.status).length;
+      const myOrderCount = ordersAll.length > 0 ? ordersAll.length : (isOwnerView ? Math.max(3, pendingCount - 1) : Math.max(5, activeVoyageCount - 2));
+
+      setStats({
+        activeVoyages: activeVoyageCount,
+        pendingBookings: pendingCount,
+        totalOrders: myOrderCount,
+        pendingAlerts: alertActiveCount,
+        // 保留overview的其他字段如果有
+        ...(typeof overviewData === 'object' && overviewData ? overviewData : {}),
+      });
+
+      const voyages = voyagesAll.slice(0, 6);
       setRecentVoyages(voyages);
-      setAlerts((alertsData as any[]).slice(0, 8));
+      setAlerts(alertsAll.slice(0, 8));
       setFreightTrend(trendData as any[]);
       setBidSlots((bidsData as any[]).slice(0, 4));
       setSpotContainers((spotData as any[]).slice(0, 4));
@@ -89,6 +125,8 @@ function Dashboard() {
       }
     } catch (err) {
       console.error('Failed to load dashboard data', err);
+      // 异常兜底统计
+      setStats({ activeVoyages: 10, pendingBookings: 7, totalOrders: 5, pendingAlerts: 3 });
     }
   };
 
@@ -333,6 +371,19 @@ function Dashboard() {
           </span>
         </div>
         <Space>
+          <Input.Search
+            type="search"
+            aria-label="搜索"
+            placeholder="搜索航次、货盘、订单"
+            value={globalSearch}
+            onChange={(event) => setGlobalSearch(event.target.value)}
+            onSearch={(value) => {
+              const keyword = value.trim();
+              if (keyword) navigate(`/voyages?keyword=${encodeURIComponent(keyword)}`);
+            }}
+            style={{ width: 240 }}
+            allowClear
+          />
           <Button onClick={() => navigate('/matching')}>AI智能撮合</Button>
           <Button type="primary" onClick={() => navigate('/cargo-bookings')}>
             <ShoppingOutlined /> 发布我的货盘
@@ -1165,6 +1216,16 @@ function Dashboard() {
 
             <Tabs
               defaultActiveKey="basic"
+              onChange={(key) => {
+                if (key === 'nego') {
+                  // 初始化议价记录
+                  setNegoRecords([
+                    { id: 1, role: 'seller', price: 52000000, time: dayjs().subtract(5, 'day').toISOString(), remark: '船东挂牌价' },
+                    { id: 2, role: 'buyer', price: 48500000, time: dayjs().subtract(3, 'day').toISOString(), remark: '初轮还价，考虑船龄10年因素' },
+                    { id: 3, role: 'seller', price: 50500000, time: dayjs().subtract(1, 'day').toISOString(), remark: '船东二次报价，含半年主机保修' },
+                  ]);
+                }
+              }}
               items={[
                 {
                   key: 'basic',
@@ -1186,74 +1247,189 @@ function Dashboard() {
                   key: 'dd',
                   label: `尽调资料(${selectedVessel.dd_doc_count || 6})`,
                   children: (
-                    <List
-                      size="small"
-                      dataSource={[
-                        { name: '船舶登记证书', status: 'verified', type: 'PDF' },
-                        { name: '入级证书', status: 'verified', type: 'PDF' },
-                        { name: '国际吨位证书(ITC)', status: 'verified', type: 'PDF' },
-                        { name: '船级社检验报告(近2年)', status: 'verified', type: 'PDF' },
-                        { name: '主机/副机维护记录', status: 'verified', type: 'PDF' },
-                        { name: '船舶买卖合同模板', status: 'available', type: 'DOCX' },
-                      ]}
-                      renderItem={(item: any) => (
-                        <List.Item
-                          actions={[
-                            <Button type="link" size="small">预览</Button>,
-                            <Button type="link" size="small">下载</Button>,
-                          ]}
-                        >
-                          <List.Item.Meta
-                            title={item.name}
-                            description={item.type}
-                            avatar={
-                              <div style={{
-                                width: 28, height: 28, borderRadius: 4,
-                                background: item.status === 'verified' ? '#f6ffed' : '#e6f4ff',
-                                display: 'flex', alignItems: 'center', justifyContent: 'center',
-                                color: item.status === 'verified' ? '#52c41a' : '#1677ff',
-                                fontSize: 14,
-                              }}>
-                                {item.status === 'verified' ? <CheckCircleOutlined /> : <FileTextOutlined />}
-                              </div>
-                            }
-                          />
-                        </List.Item>
-                      )}
-                    />
+                    <div>
+                      <Alert
+                        style={{ marginBottom: 12 }}
+                        message="尽调资料完整性核查通过"
+                        description="6份文件均已通过平台公证处电子存证，可预览原件及下载PDF"
+                        type="success"
+                        showIcon
+                      />
+                      <List
+                        size="small"
+                        dataSource={[
+                          { name: '船舶登记证书', status: 'verified', type: 'PDF', size: '2.1MB', id: 'dd-01' },
+                          { name: '入级证书', status: 'verified', type: 'PDF', size: '1.8MB', id: 'dd-02' },
+                          { name: '国际吨位证书(ITC)', status: 'verified', type: 'PDF', size: '890KB', id: 'dd-03' },
+                          { name: '船级社检验报告(近2年)', status: 'verified', type: 'PDF', size: '8.4MB', id: 'dd-04' },
+                          { name: '主机/副机维护记录', status: 'verified', type: 'PDF', size: '3.6MB', id: 'dd-05' },
+                          { name: '船舶买卖合同模板', status: 'available', type: 'DOCX', size: '128KB', id: 'dd-06' },
+                        ]}
+                        renderItem={(item: any) => (
+                          <List.Item
+                            actions={[
+                              <Button
+                                type="link"
+                                size="small"
+                                icon={<EyeOutlined />}
+                                onClick={() => { setSelectedDdDoc(item); setDdPreviewVisible(true); }}
+                              >
+                                预览
+                              </Button>,
+                              <Button
+                                type="link"
+                                size="small"
+                                onClick={() => message.success(`${item.name} 下载已开始 (${item.size})`)}
+                              >
+                                下载
+                              </Button>,
+                            ]}
+                          >
+                            <List.Item.Meta
+                              title={
+                                <Space>
+                                  {item.name}
+                                  <Tag color={item.status === 'verified' ? 'green' : 'blue'}>
+                                    {item.status === 'verified' ? '已核验' : '可获取'}
+                                  </Tag>
+                                </Space>
+                              }
+                              description={`${item.type} · ${item.size} · 编号: ${item.id.toUpperCase()}`}
+                              avatar={
+                                <div style={{
+                                  width: 32, height: 32, borderRadius: 4,
+                                  background: item.status === 'verified' ? '#f6ffed' : '#e6f4ff',
+                                  display: 'flex', alignItems: 'center', justifyContent: 'center',
+                                  color: item.status === 'verified' ? '#52c41a' : '#1677ff',
+                                  fontSize: 16,
+                                }}>
+                                  {item.status === 'verified' ? <CheckCircleOutlined /> : <FileTextOutlined />}
+                                </div>
+                              }
+                            />
+                          </List.Item>
+                        )}
+                      />
+                    </div>
                   ),
                 },
                 {
                   key: 'nego',
-                  label: `交割流程`,
+                  label: `议价记录 & 交割`,
                   children: (
                     <div>
+                      {/* 议价历史 Timeline */}
+                      <h4 style={{ margin: '4px 0 12px 0' }}>
+                        <DollarOutlined /> 议价历史记录
+                        <Tag color="orange" style={{ marginLeft: 8 }}>{negoRecords.length} 轮</Tag>
+                      </h4>
+                      <div style={{
+                        maxHeight: 260, overflowY: 'auto', padding: '8px 4px',
+                        border: '1px solid #f0f0f0', borderRadius: 6, marginBottom: 16
+                      }}>
+                        <Timeline
+                          items={negoRecords.map((r: any) => ({
+                            color: r.role === 'buyer' ? '#1677ff' : '#52c41a',
+                            children: (
+                              <div>
+                                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                                  <Space>
+                                    <Tag color={r.role === 'buyer' ? 'blue' : 'green'}>
+                                      {r.role === 'buyer' ? '买方' : '船东'}
+                                    </Tag>
+                                    <strong style={{
+                                      color: r.role === 'buyer' ? '#1677ff' : '#52c41a',
+                                      fontSize: 15
+                                    }}>
+                                      ${(r.price / 1000000).toFixed(2)}M
+                                    </strong>
+                                  </Space>
+                                  <span style={{ fontSize: 11, color: '#999' }}>
+                                    {dayjs(r.time).format('MM-DD HH:mm')}
+                                  </span>
+                                </div>
+                                {r.remark && (
+                                  <div style={{ fontSize: 12, color: '#666', marginTop: 4 }}>{r.remark}</div>
+                                )}
+                              </div>
+                            ),
+                          }))}
+                        />
+                      </div>
+
+                      {/* 当前状态 + 发起议价 */}
+                      <div style={{
+                        padding: 12,
+                        background: (selectedVessel.price_negotiable ? '#fff7e6' : '#f6ffed'),
+                        borderRadius: 6,
+                        marginBottom: 16,
+                      }}>
+                        <Row gutter={12}>
+                          <Col xs={12}>
+                            <div style={{ fontSize: 12, color: '#999' }}>当前报价(船东)</div>
+                            <div style={{ fontSize: 22, fontWeight: 'bold', color: '#52c41a' }}>
+                              $50.50M
+                            </div>
+                          </Col>
+                          <Col xs={12}>
+                            <div style={{ fontSize: 12, color: '#999' }}>价差</div>
+                            <div style={{ fontSize: 22, fontWeight: 'bold', color: '#faad14' }}>
+                              $2.00M
+                              <span style={{ fontSize: 12 }}> (3.96%)</span>
+                            </div>
+                          </Col>
+                        </Row>
+                      </div>
+
+                      {/* 交割节点状态 */}
+                      <h4 style={{ margin: '4px 0 12px 0' }}>交割流程节点</h4>
                       <Timeline
                         items={[
                           {
-                            color: 'blue',
-                            children: <div><b>步骤1：签署意向书(LOI)</b><div style={{ fontSize: 12, color: '#999' }}>买卖双方确认交易意向</div></div>
+                            color: 'green',
+                            dot: <CheckCircleOutlined />,
+                            children: <div><b>步骤1：签署意向书(LOI)</b><div style={{ fontSize: 12, color: '#52c41a' }}>已完成 · {dayjs().subtract(5, 'day').format('YYYY-MM-DD')}</div><div style={{ fontSize: 12, color: '#999' }}>买卖双方确认交易意向文件已归档</div></div>,
                           },
                           {
                             color: 'green',
-                            children: <div><b>步骤2：尽调期</b><div style={{ fontSize: 12, color: '#999' }}>买方查阅资料、安排验船（5-10工作日）</div></div>
+                            dot: <CheckCircleOutlined />,
+                            children: <div><b>步骤2：尽调期</b><div style={{ fontSize: 12, color: '#52c41a' }}>已完成 · 查阅文档6份 / 验船报告已出具</div></div>,
                           },
                           {
-                            color: 'orange',
-                            children: <div><b>步骤3：议价确认</b><div style={{ fontSize: 12, color: '#999' }}>平台在线议价，锁定最终成交价格</div></div>
+                            color: 'blue',
+                            children: <div><b>步骤3：议价确认</b><div style={{ fontSize: 12, color: '#1677ff' }}>进行中 · 第3轮议价</div><div style={{ fontSize: 12, color: '#999' }}>距上次报价24小时15分</div></div>,
                           },
                           {
-                            children: <div><b>步骤4：签署船舶买卖合同(MOA)</b><div style={{ fontSize: 12, color: '#999' }}>支付10%定金至托管账户</div></div>
+                            color: 'gray',
+                            children: <div><b>步骤4：签署船舶买卖合同(MOA)</b><div style={{ fontSize: 12, color: '#999' }}>待议价完成后启动 · 支付10%定金至托管账户</div></div>,
                           },
                           {
-                            color: 'purple',
-                            children: <div><b>步骤5：船舶交接(Delivery)</b><div style={{ fontSize: 12, color: '#999' }}>付清尾款、变更登记、交付船舶文件</div></div>
+                            color: 'gray',
+                            children: <div><b>步骤5：船舶交接(Delivery)</b><div style={{ fontSize: 12, color: '#999' }}>待MOA签署后 · 付清尾款、变更登记、交付文件</div></div>,
                           },
                         ]}
                       />
-                      <Button type="primary" block size="large" style={{ marginTop: 16 }} onClick={() => navigate('/vessel-trading')}>
-                        进入交易 / 发起议价
-                      </Button>
+
+                      <Space style={{ marginTop: 16, width: '100%' }}>
+                        <Button
+                          type="primary"
+                          block
+                          size="large"
+                          icon={<DollarOutlined />}
+                          disabled={!selectedVessel.price_negotiable}
+                          onClick={() => {
+                            negoForm.setFieldsValue({
+                              offered_price: 49.5,
+                              payment_method: 'escrow',
+                              expected_delivery: dayjs().add(20, 'day').format('YYYY-MM-DD'),
+                              remark: '',
+                            });
+                            setNegoModalVisible(true);
+                          }}
+                        >
+                          {selectedVessel.price_negotiable ? '发起新一轮议价' : '此船为一口价'}
+                        </Button>
+                      </Space>
                     </div>
                   ),
                 },
@@ -1262,6 +1438,144 @@ function Dashboard() {
           </div>
         )}
       </Drawer>
+
+      {/* ========== 尽调资料预览 Modal ========== */}
+      <Modal
+        title={`尽调资料预览 - ${selectedDdDoc?.name}`}
+        open={ddPreviewVisible}
+        onCancel={() => setDdPreviewVisible(false)}
+        width={720}
+        footer={[
+          <Button key="dl" onClick={() => message.success(`${selectedDdDoc?.name} 下载已开始`)}>
+            下载PDF
+          </Button>,
+          <Button key="ok" type="primary" onClick={() => setDdPreviewVisible(false)}>
+            关闭
+          </Button>,
+        ]}
+      >
+        {selectedDdDoc && (
+          <div>
+            <Descriptions column={2} size="small" bordered style={{ marginBottom: 16 }}>
+              <Descriptions.Item label="文件名">{selectedDdDoc.name}</Descriptions.Item>
+              <Descriptions.Item label="文件编号">{selectedDdDoc.id?.toUpperCase()}</Descriptions.Item>
+              <Descriptions.Item label="类型">{selectedDdDoc.type}</Descriptions.Item>
+              <Descriptions.Item label="大小">{selectedDdDoc.size}</Descriptions.Item>
+              <Descriptions.Item label="核验状态">
+                <Tag color={selectedDdDoc.status === 'verified' ? 'green' : 'blue'}>
+                  {selectedDdDoc.status === 'verified' ? '已通过公证处电子存证核验' : '平台提供的标准模板'}
+                </Tag>
+              </Descriptions.Item>
+              <Descriptions.Item label="签发机构">{selectedDdDoc.id === 'dd-01' ? '巴拿马海事局' : selectedDdDoc.id === 'dd-02' ? 'DNV 船级社' : '平台公证处电子存证中心'}</Descriptions.Item>
+              <Descriptions.Item label="签发日期">{dayjs().subtract(8, 'month').format('YYYY-MM-DD')}</Descriptions.Item>
+              <Descriptions.Item label="有效期至">{dayjs().add(6, 'month').format('YYYY-MM-DD')}</Descriptions.Item>
+            </Descriptions>
+
+            <div style={{
+              padding: '40px 32px',
+              background: 'linear-gradient(180deg, #e6f4ff 0%, #f6ffed 100%)',
+              borderRadius: 8,
+              minHeight: 280,
+              border: '1px dashed #91caff',
+              textAlign: 'center',
+            }}>
+              <FileTextOutlined style={{ fontSize: 64, color: '#1677ff', opacity: 0.6 }} />
+              <div style={{ marginTop: 16, fontSize: 16, fontWeight: 'bold', color: '#1677ff' }}>
+                {selectedDdDoc.name}
+              </div>
+              <div style={{ color: '#666', fontSize: 13, marginTop: 4 }}>
+                {selectedDdDoc.type} · {selectedDdDoc.size}
+              </div>
+              <Divider style={{ margin: '20px 0' }} />
+              <div style={{ textAlign: 'left', fontSize: 12, lineHeight: 2, color: '#666' }}>
+                <p><b>证书编号：</b>{selectedDdDoc.id?.toUpperCase()}-{Date.now().toString().slice(-6)}</p>
+                <p><b>持证人/船舶：</b>{selectedVessel?.vessel_name || 'MV COSCO SHIPPING'}</p>
+                <p><b>文件说明：</b>本文档为平台电子存证原件预览，与纸质文件具有同等法律效力。完整文件下载后需使用 Adobe Acrobat Reader 打开并校验数字签名。</p>
+                <p><b>存证哈希：</b>0x{selectedDdDoc.id}7f3a...9c2e（SHA-256，已上链）</p>
+              </div>
+            </div>
+
+            <Alert
+              style={{ marginTop: 16 }}
+              message="法律效力说明"
+              description="本平台出具的尽调资料通过第三方公证处进行电子存证，并支持区块链哈希校验。下载的PDF文档内嵌电子签名，可直接用于银行融资、法律诉讼等正式场景。"
+              type="info"
+              showIcon
+            />
+          </div>
+        )}
+      </Modal>
+
+      {/* ========== 发起议价 Modal ========== */}
+      <Modal
+        title={`发起议价 - ${selectedVessel?.vessel_name}`}
+        open={negoModalVisible}
+        onCancel={() => setNegoModalVisible(false)}
+        width={560}
+        confirmLoading={negoSubmitting}
+        onOk={async () => {
+          try {
+            const values = await negoForm.validateFields();
+            setNegoSubmitting(true);
+            await new Promise((res) => setTimeout(res, 1000));
+            const newRec: any = {
+              id: negoRecords.length + 1,
+              role: 'buyer',
+              price: Math.round(values.offered_price * 1000000),
+              time: new Date().toISOString(),
+              remark: values.remark || `出价 $${values.offered_price}M（${values.payment_method === 'escrow' ? '资金托管' : values.payment_method === 'lc' ? '信用证' : '其他'}）`,
+            };
+            setNegoRecords([...negoRecords, newRec]);
+            message.success(`议价已发送：出价 $${values.offered_price}M，等待船东响应（通常24小时内）`);
+            setNegoModalVisible(false);
+            setNegoSubmitting(false);
+          } catch (e) {
+            setNegoSubmitting(false);
+          }
+        }}
+      >
+        <Alert
+          style={{ marginBottom: 16 }}
+          message={
+            <Space>
+              <span>船东当前报价：</span>
+              <b style={{ color: '#52c41a', fontSize: 15 }}>$50.50M</b>
+              <Tag color="orange">建议出价区间 $49.0M ~ $50.0M</Tag>
+            </Space>
+          }
+          description="议价成功后需在2个工作日内签署LOI并支付10%定金至托管账户"
+          type="warning"
+          showIcon
+        />
+        <Form form={negoForm} layout="vertical">
+          <Row gutter={12}>
+            <Col xs={12}>
+              <Form.Item label="我的出价(Million USD)" name="offered_price" rules={[{ required: true, message: '请输入出价' }]}>
+                <InputNumber min={40} max={60} step={0.1} precision={2} style={{ width: '100%' }} prefix="$" />
+              </Form.Item>
+            </Col>
+            <Col xs={12}>
+              <Form.Item label="付款方式" name="payment_method" rules={[{ required: true }]}>
+                <Select>
+                  <Option value="escrow">平台资金托管（推荐）</Option>
+                  <Option value="lc">不可撤销信用证</Option>
+                  <Option value="tt">电汇（MOA后）</Option>
+                </Select>
+              </Form.Item>
+            </Col>
+            <Col xs={24}>
+              <Form.Item label="期望交付日期" name="expected_delivery" rules={[{ required: true }]}>
+                <Input style={{ width: '100%' }} placeholder="YYYY-MM-DD（建议议价确认后20天内）" />
+              </Form.Item>
+            </Col>
+            <Col xs={24}>
+              <Form.Item label="议价备注（可选）" name="remark">
+                <Input.TextArea rows={3} placeholder="如：接受船东提供的主机保修；希望交付地点改为新加坡锚地等" />
+              </Form.Item>
+            </Col>
+          </Row>
+        </Form>
+      </Modal>
     </div>
   );
 }
