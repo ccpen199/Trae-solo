@@ -1,0 +1,162 @@
+@import url('https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  color-scheme: dark;
+  font-family: 'PingFang SC', 'Noto Sans SC', -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
+  line-height: 1.6;
+  font-weight: 400;
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html, body, #root {
+  margin: 0;
+  padding: 0;
+  min-height: 100vh;
+  background: #040817;
+  color: #C4C9D9;
+  overflow-x: hidden;
+}
+
+@layer components {
+  .glass-card {
+    @apply bg-gradient-glass backdrop-blur-xl border border-white/5 rounded-4xl shadow-card;
+  }
+
+  .glass-card-hover {
+    @apply glass-card transition-all duration-300 hover:border-white/10 hover:shadow-glow-blue hover:-translate-y-0.5;
+  }
+
+  .btn-primary {
+    @apply inline-flex items-center justify-center gap-2 px-6 py-3 rounded-full
+           bg-gradient-to-r from-night-400 to-dream-400 text-white font-medium
+           shadow-glow-blue hover:shadow-lg hover:brightness-110
+           transition-all duration-300 active:scale-95;
+  }
+
+  .btn-secondary {
+    @apply inline-flex items-center justify-center gap-2 px-5 py-2.5 rounded-full
+           bg-white/5 border border-white/10 text-silver-200 font-medium
+           hover:bg-white/10 hover:border-white/20 hover:text-white
+           transition-all duration-300 active:scale-95;
+  }
+
+  .btn-mint {
+    @apply inline-flex items-center justify-center gap-2 px-6 py-3 rounded-full
+           bg-gradient-mint text-night-800 font-semibold
+           shadow-glow-mint hover:brightness-105
+           transition-all duration-300 active:scale-95;
+  }
+
+  .btn-coral {
+    @apply inline-flex items-center justify-center gap-2 px-6 py-3 rounded-full
+           bg-gradient-coral text-white font-semibold
+           shadow-glow-coral hover:brightness-105
+           transition-all duration-300 active:scale-95;
+  }
+
+  .chip {
+    @apply inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-medium
+           bg-white/5 border border-white/10 text-silver-300;
+  }
+
+  .chip-mint {
+    @apply chip bg-mint-400/15 border-mint-400/30 text-mint-300;
+  }
+
+  .chip-coral {
+    @apply chip bg-coral-400/15 border-coral-400/30 text-coral-300;
+  }
+
+  .chip-dream {
+    @apply chip bg-dream-400/15 border-dream-400/30 text-dream-300;
+  }
+
+  .label-text {
+    @apply text-xs uppercase tracking-wider text-silver-400 font-medium;
+  }
+
+  .value-mono {
+    @apply font-mono font-semibold text-white tabular-nums;
+  }
+
+  .divider-glow {
+    @apply h-px w-full bg-gradient-to-r from-transparent via-white/10 to-transparent;
+  }
+}
+
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+
+  .scrollbar-thin::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+  }
+  .scrollbar-thin::-webkit-scrollbar-track {
+    background: transparent;
+  }
+  .scrollbar-thin::-webkit-scrollbar-thumb {
+    background: rgba(196, 201, 217, 0.15);
+    border-radius: 3px;
+  }
+  .scrollbar-thin::-webkit-scrollbar-thumb:hover {
+    background: rgba(196, 201, 217, 0.3);
+  }
+
+  .no-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+  .no-scrollbar {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+
+  .mask-fade-b {
+    mask-image: linear-gradient(to bottom, black 70%, transparent 100%);
+    -webkit-mask-image: linear-gradient(to bottom, black 70%, transparent 100%);
+  }
+}
+
+/* 星空背景粒子画布层 */
+#starfield-canvas {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+}
+
+/* 页面根容器层级 */
+#root {
+  position: relative;
+  z-index: 1;
+}
+
+/* 音频播放器波形进度 */
+.waveform-bar {
+  transition: transform 150ms ease-out, opacity 150ms;
+}
+.waveform-bar.active {
+  transform: scaleY(1.1);
+  opacity: 1;
+}
+
+/* 滚动选中动画 */
+@keyframes slideUpFade {
+  from { opacity: 0; transform: translateY(16px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+.slide-up-fade {
+  animation: slideUpFade 0.5s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
