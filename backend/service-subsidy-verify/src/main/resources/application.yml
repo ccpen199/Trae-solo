@@ -1,0 +1,96 @@
+server:
+  port: 8086
+  servlet:
+    context-path: /subsidy-verify
+
+spring:
+  profiles:
+    active: dev
+  application:
+    name: service-subsidy-verify
+
+  datasource:
+    url: jdbc:mysql://127.0.0.1:3306/subsidy_verify_db?useUnicode=true&characterEncoding=utf8&zeroDateTimeBehavior=convertToNull&useSSL=true&serverTimezone=GMT%2B8
+    username: root
+    password: root
+    driver-class-name: com.mysql.cj.jdbc.Driver
+
+  data:
+    redis:
+      host: 127.0.0.1
+      port: 6379
+      password:
+      database: 5
+      timeout: 30s
+      lettuce:
+        pool:
+          max-active: 50
+          max-wait: -1ms
+          max-idle: 10
+          min-idle: 5
+
+  rocketmq:
+    name-server: 127.0.0.1:9876
+    producer:
+      group: subsidy-verify-producer-group
+      send-message-timeout: 3000
+      retry-times-when-send-failed: 2
+    consumer:
+      group: subsidy-verify-consumer-group
+
+  cloud:
+    openfeign:
+      client:
+        config:
+          default:
+            connect-timeout: 5000
+            read-timeout: 10000
+
+mybatis-plus:
+  mapper-locations: classpath:mapper/**/*.xml
+  type-aliases-package: com.guizhou.platform.subsidyverify.entity
+  configuration:
+    map-underscore-to-camel-case: true
+    cache-enabled: false
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+  global-config:
+    db-config:
+      id-type: ASSIGN_ID
+      logic-delete-field: deleted
+      logic-delete-value: 1
+      logic-not-delete-value: 0
+
+knife4j:
+  enable: true
+  openapi:
+    title: 消费补贴核销服务API
+    description: 贵州省数字服务平台-消费补贴核销接口文档
+    version: 1.0.0
+    concat: 技术支持部
+    terms-of-service-url: http://www.guizhou.gov.cn
+
+subsidy-verify:
+  subsidy-service:
+    url: http://platform-subsidy/subsidy
+  merchant:
+    default-category: RETAIL
+    qualification-required: true
+  voucher:
+    default-expire-days: 90
+    max-amount: 5000.00
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: '*'
+  endpoint:
+    health:
+      show-details: always
+
+logging:
+  level:
+    com.guizhou.platform.subsidyverify: debug
+    org.springframework.web: info
+  pattern:
+    console: "%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level %logger{50} - %msg%n"

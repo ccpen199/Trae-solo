@@ -1,0 +1,137 @@
+server:
+  port: ${SERVER_PORT:8081}
+  servlet:
+    context-path: /auth
+
+spring:
+  profiles:
+    active: ${SPRING_PROFILES_ACTIVE:dev}
+
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://${DB_HOST:127.0.0.1}:${DB_PORT:3306}/${DB_NAME:guizhou_platform_auth}?useUnicode=true&characterEncoding=utf8&zeroDateTimeBehavior=convertToNull&useSSL=true&serverTimezone=Asia/Shanghai
+    username: ${DB_USERNAME:root}
+    password: ${DB_PASSWORD:root}
+
+  data:
+    redis:
+      host: ${REDIS_HOST:127.0.0.1}
+      port: ${REDIS_PORT:6379}
+      password: ${REDIS_PASSWORD:}
+      database: ${REDIS_DATABASE:1}
+      timeout: 3000
+      lettuce:
+        pool:
+          max-active: 8
+          max-wait: -1
+          max-idle: 8
+          min-idle: 0
+
+  security:
+    oauth2:
+      client:
+        registration:
+          keycloak:
+            client-id: ${KEYCLOAK_CLIENT_ID:guizhou-platform}
+            client-secret: ${KEYCLOAK_CLIENT_SECRET:your-secret}
+            authorization-grant-type: authorization_code
+            redirect-uri: "{baseUrl}/login/oauth2/code/keycloak"
+            scope: openid,profile,email
+          wechat:
+            client-id: ${WECHAT_APP_ID:your-wechat-appid}
+            client-secret: ${WECHAT_APP_SECRET:your-wechat-secret}
+            authorization-grant-type: authorization_code
+            redirect-uri: "{baseUrl}/oauth2/callback/wechat"
+            client-name: 微信登录
+          alipay:
+            client-id: ${ALIPAY_APP_ID:your-alipay-appid}
+            client-secret: ${ALIPAY_APP_SECRET:your-alipay-secret}
+            authorization-grant-type: authorization_code
+            redirect-uri: "{baseUrl}/oauth2/callback/alipay"
+            client-name: 支付宝登录
+        provider:
+          keycloak:
+            issuer-uri: ${KEYCLOAK_ISSUER_URI:http://127.0.0.1:8080/realms/guizhou}
+            user-name-attribute: preferred_username
+          wechat:
+            authorization-uri: https://open.weixin.qq.com/connect/oauth2/authorize
+            token-uri: https://api.weixin.qq.com/sns/oauth2/access_token
+            user-info-uri: https://api.weixin.qq.com/sns/userinfo
+            user-name-attribute: openid
+          alipay:
+            authorization-uri: https://openauth.alipay.com/oauth2/publicAppAuthorize.htm
+            token-uri: https://openapi.alipay.com/gateway.do
+            user-info-uri: https://openapi.alipay.com/gateway.do
+            user-name-attribute: user_id
+      resourceserver:
+        jwt:
+          issuer-uri: ${KEYCLOAK_ISSUER_URI:http://127.0.0.1:8080/realms/guizhou}
+          jwk-set-uri: ${KEYCLOAK_ISSUER_URI:http://127.0.0.1:8080/realms/guizhou}/protocol/openid-connect/certs
+
+mybatis-plus:
+  mapper-locations: classpath*:/mapper/**/*.xml
+  type-aliases-package: com.guizhou.platform.auth.entity
+  configuration:
+    map-underscore-to-camel-case: true
+    cache-enabled: false
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+  global-config:
+    db-config:
+      id-type: ASSIGN_ID
+      logic-delete-field: deleted
+      logic-delete-value: true
+      logic-not-delete-value: false
+
+keycloak:
+  admin:
+    server-url: ${KEYCLOAK_ADMIN_URL:http://127.0.0.1:8080}
+    realm: ${KEYCLOAK_REALM:guizhou}
+    client-id: ${KEYCLOAK_ADMIN_CLIENT_ID:admin-cli}
+    client-secret: ${KEYCLOAK_ADMIN_CLIENT_SECRET:admin-secret}
+    username: ${KEYCLOAK_ADMIN_USER:admin}
+    password: ${KEYCLOAK_ADMIN_PASSWORD:admin}
+    grant-type: password
+
+jwt:
+  secret: ${JWT_SECRET:guizhou-platform-auth-secret-key-2024-very-long-secret}
+  access-token-expire: 3600
+  refresh-token-expire: 86400
+  issuer: guizhou-digital-platform
+
+auth:
+  sms:
+    expire-minutes: 5
+    template-code: AUTH_CODE
+  face:
+    api-url: ${FACE_API_URL:http://127.0.0.1:5000}
+    api-key: ${FACE_API_KEY:face-api-key}
+    threshold: 0.85
+  token:
+    prefix: "auth:token:"
+    blacklist-prefix: "auth:blacklist:"
+    refresh-prefix: "auth:refresh:"
+  login:
+    max-fail-count: 5
+    lock-minutes: 30
+
+springdoc:
+  api-docs:
+    path: /v3/api-docs
+  swagger-ui:
+    path: /swagger-ui.html
+  group-configs:
+    - group: 认证模块
+      paths-to-match: /api/auth/**
+    - group: 用户管理
+      paths-to-match: /api/user/**
+    - group: 角色管理
+      paths-to-match: /api/role/**
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info,metrics,prometheus
+  endpoint:
+    health:
+      show-details: always

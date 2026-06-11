@@ -1,0 +1,150 @@
+server:
+  port: 8085
+  servlet:
+    context-path: /subsidy
+
+spring:
+  profiles:
+    active: dev
+  cloud:
+    sentinel:
+      transport:
+        dashboard: 127.0.0.1:8858
+        port: 8721
+      eager: true
+      datasource:
+        ds1:
+          nacos:
+            server-addr: 127.0.0.1:8848
+            dataId: platform-subsidy-sentinel
+            groupId: DEFAULT_GROUP
+            data-type: json
+            rule-type: flow
+
+  datasource:
+    dynamic:
+      primary: master
+      datasource:
+        master:
+          url: jdbc:mysql://127.0.0.1:3306/subsidy_db?useUnicode=true&characterEncoding=utf8&zeroDateTimeBehavior=convertToNull&useSSL=true&serverTimezone=GMT%2B8
+          username: root
+          password: root
+          driver-class-name: com.mysql.cj.jdbc.Driver
+        finance:
+          url: jdbc:mysql://127.0.0.1:3306/finance_db?useUnicode=true&characterEncoding=utf8&zeroDateTimeBehavior=convertToNull&useSSL=true&serverTimezone=GMT%2B8
+          username: root
+          password: root
+          driver-class-name: com.mysql.cj.jdbc.Driver
+
+  data:
+    redis:
+      host: 127.0.0.1
+      port: 6379
+      password:
+      database: 4
+      timeout: 30s
+      lettuce:
+        pool:
+          max-active: 50
+          max-wait: -1ms
+          max-idle: 10
+          min-idle: 5
+
+    elasticsearch:
+      uris: http://127.0.0.1:9200
+      username: elastic
+      password: elastic
+      connection-timeout: 30s
+      socket-timeout: 30s
+
+  rocketmq:
+    name-server: 127.0.0.1:9876
+    producer:
+      group: subsidy-producer-group
+      send-message-timeout: 3000
+      retry-times-when-send-failed: 2
+    consumer:
+      group: subsidy-consumer-group
+
+seata:
+  enabled: true
+  application-id: ${spring.application.name}
+  tx-service-group: guizhou-subsidy-group
+  service:
+    vgroup-mapping:
+      guizhou-subsidy-group: default
+    grouplist:
+      default: 127.0.0.1:8091
+  registry:
+    type: nacos
+    nacos:
+      server-addr: 127.0.0.1:8848
+      namespace: guizhou-platform
+      group: SEATA_GROUP
+      cluster: default
+  config:
+    type: nacos
+    nacos:
+      server-addr: 127.0.0.1:8848
+      namespace: guizhou-platform
+      group: SEATA_GROUP
+
+mybatis-plus:
+  mapper-locations: classpath:mapper/**/*.xml
+  type-aliases-package: com.guizhou.platform.subsidy.entity
+  configuration:
+    map-underscore-to-camel-case: true
+    cache-enabled: false
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+  global-config:
+    db-config:
+      id-type: ASSIGN_ID
+      logic-delete-field: deleted
+      logic-delete-value: 1
+      logic-not-delete-value: 0
+
+knife4j:
+  enable: true
+  openapi:
+    title: 补贴资金穿透式监管服务API
+    description: 贵州省数字服务平台-补贴资金监管接口文档
+    version: 1.0.0
+    concat: 技术支持部
+    terms-of-service-url: http://www.guizhou.gov.cn
+
+subsidy:
+  blockchain:
+    enabled: true
+    rpc-url: http://127.0.0.1:8545
+    chain-id: 1337
+    contract-address: 0x...
+    private-key: 0x...
+  risk-engine:
+    enabled: true
+    scan-interval: 300000
+    warning-threshold: 80
+    auto-freeze: true
+  fund-trace:
+    es-index: fund_flow_trace
+    sync-interval: 60000
+  schedule:
+    grant-settle-cron: 0 0 2 * * ?
+    risk-scan-cron: 0 */5 * * * ?
+    statistics-cron: 0 0 3 * * ?
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: '*'
+  endpoint:
+    health:
+      show-details: always
+
+logging:
+  level:
+    com.guizhou.platform.subsidy: debug
+    org.springframework.web: info
+    io.seata: debug
+  pattern:
+    console: "%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level %logger{50} - %msg%n"

@@ -1,0 +1,128 @@
+server:
+  port: 8086
+  servlet:
+    context-path: /ticket
+
+spring:
+  profiles:
+    active: dev
+  application:
+    name: platform-ticket
+  cloud:
+    sentinel:
+      transport:
+        dashboard: 127.0.0.1:8858
+        port: 8722
+      eager: true
+      datasource:
+        ds1:
+          nacos:
+            server-addr: 127.0.0.1:8848
+            dataId: platform-ticket-sentinel
+            groupId: DEFAULT_GROUP
+            data-type: json
+            rule-type: flow
+
+  datasource:
+    url: jdbc:mysql://127.0.0.1:3306/ticket_db?useUnicode=true&characterEncoding=utf8&zeroDateTimeBehavior=convertToNull&useSSL=true&serverTimezone=GMT%2B8
+    username: root
+    password: root
+    driver-class-name: com.mysql.cj.jdbc.Driver
+
+  data:
+    redis:
+      host: 127.0.0.1
+      port: 6379
+      password:
+      database: 5
+      timeout: 30s
+      lettuce:
+        pool:
+          max-active: 50
+          max-wait: -1ms
+          max-idle: 10
+          min-idle: 5
+
+    elasticsearch:
+      uris: http://127.0.0.1:9200
+      username: elastic
+      password: elastic
+      connection-timeout: 30s
+      socket-timeout: 30s
+
+  rocketmq:
+    name-server: 127.0.0.1:9876
+    producer:
+      group: ticket-producer-group
+      send-message-timeout: 3000
+      retry-times-when-send-failed: 2
+    consumer:
+      group: ticket-consumer-group
+
+mybatis-plus:
+  mapper-locations: classpath:mapper/**/*.xml
+  type-aliases-package: com.guizhou.platform.ticket.entity
+  configuration:
+    map-underscore-to-camel-case: true
+    cache-enabled: false
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+  global-config:
+    db-config:
+      id-type: ASSIGN_ID
+      logic-delete-field: deleted
+      logic-delete-value: 1
+      logic-not-delete-value: 0
+
+knife4j:
+  enable: true
+  openapi:
+    title: 市民诉求智能分拨引擎API
+    description: 贵州省数字服务平台-市民诉求工单管理接口文档
+    version: 1.0.0
+    concat: 技术支持部
+    terms-of-service-url: http://www.guizhou.gov.cn
+
+ticket:
+  nlp:
+    enabled: true
+    endpoint: http://127.0.0.1:8501/predict
+    timeout: 5000
+    keywords-weight: 0.3
+    category-weight: 0.4
+    urgency-weight: 0.3
+  dispatch:
+    auto-dispatch: true
+    score-threshold: 60
+    max-candidate-departments: 3
+    history-weight: 0.5
+    rule-weight: 0.3
+    nlp-weight: 0.2
+  schedule:
+    timeout-check-cron: 0 */10 * * * ?
+    statistics-cron: 0 0 3 * * ?
+    hotspot-cron: 0 0 4 * * ?
+  hotline:
+    adapter-type: REST
+    endpoint: http://127.0.0.1:9090/hotline
+    sync-interval: 30000
+    auto-create-ticket: true
+  knowledge:
+    es-index: ticket_knowledge
+    min-score: 0.6
+    max-results: 10
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: '*'
+  endpoint:
+    health:
+      show-details: always
+
+logging:
+  level:
+    com.guizhou.platform.ticket: debug
+    org.springframework.web: info
+  pattern:
+    console: "%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level %logger{50} - %msg%n"

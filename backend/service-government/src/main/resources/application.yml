@@ -1,0 +1,109 @@
+server:
+  port: 8086
+  servlet:
+    context-path: /government
+
+spring:
+  profiles:
+    active: dev
+  cloud:
+    sentinel:
+      transport:
+        dashboard: 127.0.0.1:8858
+        port: 8722
+      eager: true
+      datasource:
+        ds1:
+          nacos:
+            server-addr: 127.0.0.1:8848
+            dataId: service-government-sentinel
+            groupId: DEFAULT_GROUP
+            data-type: json
+            rule-type: flow
+
+  datasource:
+    url: jdbc:mysql://127.0.0.1:3306/government_db?useUnicode=true&characterEncoding=utf8&zeroDateTimeBehavior=convertToNull&useSSL=true&serverTimezone=GMT%2B8
+    username: root
+    password: root
+    driver-class-name: com.mysql.cj.jdbc.Driver
+
+  data:
+    redis:
+      host: 127.0.0.1
+      port: 6379
+      password:
+      database: 5
+      timeout: 30s
+      lettuce:
+        pool:
+          max-active: 50
+          max-wait: -1ms
+          max-idle: 10
+          min-idle: 5
+
+    elasticsearch:
+      uris: http://127.0.0.1:9200
+      username: elastic
+      password: elastic
+      connection-timeout: 30s
+      socket-timeout: 30s
+
+  rocketmq:
+    name-server: 127.0.0.1:9876
+    producer:
+      group: government-producer-group
+      send-message-timeout: 3000
+      retry-times-when-send-failed: 2
+    consumer:
+      group: government-consumer-group
+
+mybatis-plus:
+  mapper-locations: classpath:mapper/**/*.xml
+  type-aliases-package: com.guizhou.platform.government.entity
+  configuration:
+    map-underscore-to-camel-case: true
+    cache-enabled: false
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+  global-config:
+    db-config:
+      id-type: ASSIGN_ID
+      logic-delete-field: deleted
+      logic-delete-value: 1
+      logic-not-delete-value: 0
+
+knife4j:
+  enable: true
+  openapi:
+    title: 政务服务模块API
+    description: 贵州省数字服务平台-政务服务事项管理、在线申办、办件进度接口文档
+    version: 1.0.0
+    concat: 技术支持部
+    terms-of-service-url: http://www.guizhou.gov.cn
+
+government:
+  catalog:
+    es-index: government_service_catalog
+    sync-interval: 60000
+  apply:
+    max-material-size: 20971520
+    allowed-file-types: pdf,jpg,jpeg,png,doc,docx
+    auto-fill-enabled: true
+  progress:
+    notify-enabled: true
+    notify-interval: 300000
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: '*'
+  endpoint:
+    health:
+      show-details: always
+
+logging:
+  level:
+    com.guizhou.platform.government: debug
+    org.springframework.web: info
+  pattern:
+    console: "%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level %logger{50} - %msg%n"

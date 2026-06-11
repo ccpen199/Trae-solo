@@ -1,0 +1,9 @@
+package com.guizhou.platform.auth.mapper;
+
+import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import com.guizhou.platform.auth.entity.AuthAuditLog;
+import org.apache.ibatis.annotations.Mapper;
+
+@Mapper
+public interface AuthAuditLogMapper extends BaseMapper<AuthAuditLog> {
+}

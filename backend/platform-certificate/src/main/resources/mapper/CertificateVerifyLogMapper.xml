@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.guizhou.platform.certificate.mapper.CertificateVerifyLogMapper">
+
+    <resultMap id="BaseResultMap" type="com.guizhou.platform.certificate.entity.CertificateVerifyLog">
+        <id column="id" property="id"/>
+        <result column="certificate_id" property="certificateId"/>
+        <result column="certificate_no" property="certificateNo"/>
+        <result column="verify_type" property="verifyType"/>
+        <result column="verify_content" property="verifyContent"/>
+        <result column="verifier_id" property="verifierId"/>
+        <result column="verifier_name" property="verifierName"/>
+        <result column="verifier_org" property="verifierOrg"/>
+        <result column="verify_time" property="verifyTime"/>
+        <result column="verify_result" property="verifyResult"/>
+        <result column="verify_detail" property="verifyDetail"/>
+        <result column="ip_address" property="ipAddress"/>
+        <result column="user_agent" property="userAgent"/>
+        <result column="extend_info" property="extendInfo"/>
+        <result column="create_by" property="createBy"/>
+        <result column="create_time" property="createTime"/>
+        <result column="update_by" property="updateBy"/>
+        <result column="update_time" property="updateTime"/>
+        <result column="deleted" property="deleted"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        id, certificate_id, certificate_no, verify_type, verify_content, verifier_id,
+        verifier_name, verifier_org, verify_time, verify_result, verify_detail,
+        ip_address, user_agent, extend_info, create_by, create_time, update_by, update_time, deleted
+    </sql>
+
+</mapper>
