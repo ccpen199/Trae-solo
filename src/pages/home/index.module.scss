@@ -219,3 +219,188 @@
   z-index: 100;
   box-shadow: $shadow-md;
 }
+
+.complianceStatusBar {
+  @include card-base;
+  margin: 0 $spacing-lg $spacing-lg;
+  padding: $spacing-md;
+  background: linear-gradient(135deg, #f0f7ff 0%, #e8f4ff 100%);
+  border: 2rpx solid rgba(22, 93, 255, 0.2);
+}
+
+.statusBarTitle {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: $spacing-md;
+}
+
+.statusBarTitleText {
+  font-size: 28rpx;
+  font-weight: 600;
+  color: $color-primary;
+}
+
+.statusBarAction {
+  font-size: 24rpx;
+  color: $color-primary;
+}
+
+.statusGrid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: $spacing-sm;
+  margin-bottom: $spacing-sm;
+}
+
+.statusItem {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: $spacing-sm;
+  background: #fff;
+  border-radius: $radius-md;
+  position: relative;
+}
+
+.statusItemIcon {
+  font-size: 32rpx;
+  margin-bottom: $spacing-xs;
+}
+
+.statusItemInfo {
+  text-align: center;
+}
+
+.statusItemLabel {
+  font-size: 20rpx;
+  color: $color-text-secondary;
+  display: block;
+  margin-bottom: 4rpx;
+}
+
+.statusItemValue {
+  font-size: 26rpx;
+  font-weight: 600;
+  color: $color-text-primary;
+}
+
+.statusItemValue.success {
+  color: $color-delivery;
+}
+
+.statusItemValue.failed {
+  color: $color-overtime;
+}
+
+.statusItemValue.syncing {
+  color: $color-primary;
+}
+
+.statusItemValue.warning {
+  color: $color-exception;
+}
+
+.statusItemBadge {
+  position: absolute;
+  top: -8rpx;
+  right: -8rpx;
+  min-width: 36rpx;
+  height: 36rpx;
+  background: $color-exception;
+  color: #fff;
+  border-radius: 18rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 20rpx;
+  font-weight: 600;
+  padding: 0 8rpx;
+}
+
+.statusItemBadge.danger {
+  background: $color-overtime;
+}
+
+.statusFooter {
+  padding-top: $spacing-sm;
+  border-top: 2rpx dashed rgba(22, 93, 255, 0.2);
+}
+
+.statusFooterText {
+  font-size: 22rpx;
+  color: $color-text-secondary;
+  text-align: center;
+  display: block;
+}
+
+.pendingTasksBar {
+  @include card-base;
+  margin: 0 $spacing-lg $spacing-lg;
+  padding: $spacing-md;
+  background: #fff8e6;
+  border: 2rpx solid rgba(255, 125, 0, 0.3);
+}
+
+.pendingTasksTitle {
+  display: flex;
+  align-items: center;
+  gap: $spacing-xs;
+  margin-bottom: $spacing-sm;
+}
+
+.pendingTasksIcon {
+  font-size: 28rpx;
+}
+
+.pendingTasksTitleText {
+  font-size: 28rpx;
+  font-weight: 600;
+  color: $color-exception;
+  flex: 1;
+}
+
+.pendingTasksTotal {
+  padding: 4rpx 16rpx;
+  background: $color-exception;
+  color: #fff;
+  border-radius: 20rpx;
+  font-size: 22rpx;
+  font-weight: 600;
+}
+
+.pendingTasksScroll {
+  white-space: nowrap;
+}
+
+.pendingTaskItem {
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  padding: $spacing-sm $spacing-md;
+  background: #fff;
+  border-radius: $radius-md;
+  margin-right: $spacing-sm;
+  min-width: 140rpx;
+}
+
+.pendingTaskCount {
+  font-size: 36rpx;
+  font-weight: 700;
+  color: $color-exception;
+}
+
+.pendingTaskDesc {
+  font-size: 20rpx;
+  color: $color-text-secondary;
+  margin-top: 4rpx;
+  white-space: nowrap;
+}
+
+.warningItem.warning {
+  border-left-color: $color-warning;
+}
+
+.warningItem.normal {
+  border-left-color: $color-primary;
+}

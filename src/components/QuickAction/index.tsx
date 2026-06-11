@@ -9,7 +9,7 @@ export interface QuickActionItem {
   title: string;
   subtitle?: string;
   icon: string;
-  color: 'primary' | 'success' | 'warning' | 'error' | 'purple';
+  color: 'primary' | 'success' | 'warning' | 'error' | 'purple' | 'checkin';
   path: string;
   badge?: number;
 }

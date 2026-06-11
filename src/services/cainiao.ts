@@ -17,6 +17,17 @@ interface SyncResult {
   message: string;
 }
 
+export interface SyncStatus {
+  isAuthorized: boolean;
+  lastSyncTime: number | null;
+  pendingPush: number;
+  pendingException: number;
+  todayPulled: number;
+  todayPushed: number;
+  syncStatus: 'idle' | 'syncing' | 'success' | 'failed';
+  lastSyncResult?: string;
+}
+
 const DEFAULT_CONFIG: CainiaoConfig = {
   appKey: 'CAINIAO_APP_KEY',
   appSecret: 'CAINIAO_APP_SECRET',
@@ -25,6 +36,19 @@ const DEFAULT_CONFIG: CainiaoConfig = {
 };
 
 let config: CainiaoConfig = { ...DEFAULT_CONFIG };
+
+let syncState: {
+  lastSyncTime: number | null;
+  todayPulled: number;
+  todayPushed: number;
+  syncStatus: 'idle' | 'syncing' | 'success' | 'failed';
+  lastSyncResult?: string;
+} = {
+  lastSyncTime: null,
+  todayPulled: 0,
+  todayPushed: 0,
+  syncStatus: 'idle'
+};
 
 export const cainiaoService = {
   init(customConfig: Partial<CainiaoConfig>): void {
@@ -308,6 +332,7 @@ export const cainiaoService = {
 
   async syncAll(userId: string, userName: string): Promise<SyncResult> {
     console.log('[CainiaoService] 双向同步');
+    syncState.syncStatus = 'syncing';
     await new Promise(resolve => setTimeout(resolve, 1000));
 
     try {
@@ -350,6 +375,12 @@ export const cainiaoService = {
         message: `拉取${pullResult.length}条，推送${pushSuccess}条，失败${pushFailed}条`
       };
 
+      syncState.lastSyncTime = Date.now();
+      syncState.todayPulled += pullResult.length;
+      syncState.todayPushed += pushSuccess;
+      syncState.syncStatus = result.failed === 0 ? 'success' : 'warning';
+      syncState.lastSyncResult = result.message;
+
       await logOperation({
         userId,
         userName,
@@ -369,6 +400,10 @@ export const cainiaoService = {
       const errorMsg = e instanceof Error ? e.message : '同步失败';
       console.error('[CainiaoService] 同步失败:', e);
 
+      syncState.syncStatus = 'failed';
+      syncState.lastSyncResult = errorMsg;
+      syncState.lastSyncTime = Date.now();
+
       const result: SyncResult = {
         success: 0,
         failed: 0,
@@ -384,6 +419,20 @@ export const cainiaoService = {
     return {
       push: getOfflineData('cainiao_push').length,
       exception: getOfflineData('cainiao_exception').length
+    };
+  },
+
+  getSyncStatus(): SyncStatus {
+    const pending = this.getOfflinePendingCount();
+    return {
+      isAuthorized: !!config.token,
+      lastSyncTime: syncState.lastSyncTime,
+      pendingPush: pending.push,
+      pendingException: pending.exception,
+      todayPulled: syncState.todayPulled,
+      todayPushed: syncState.todayPushed,
+      syncStatus: syncState.syncStatus,
+      lastSyncResult: syncState.lastSyncResult
     };
   },
 

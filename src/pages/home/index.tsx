@@ -13,14 +13,33 @@ import { waybillService } from '@/services/waybill';
 import { cainiaoService } from '@/services/cainiao';
 import type { DailyStats, TaskWarning } from '@/types/task';
 import type { QuickActionItem } from '@/components/QuickAction';
+import type { SyncStatus } from '@/services/cainiao';
+
+interface ComplianceStats {
+  pendingWaybills: number;
+  pendingEbill: number;
+  pendingEvidence: number;
+  pendingFence: number;
+  pendingCompliance: number;
+  pendingReview: number;
+  totalArchives: number;
+  verifiedArchives: number;
+  todayLogs: number;
+  criticalLogs: number;
+  lastArchiveTime: number | null;
+  lastHashVerifyTime: number | null;
+}
 
 const HomePage: React.FC = () => {
   const [loading, setLoading] = useState(false);
   const [stats, setStats] = useState<DailyStats | null>(null);
   const [warnings, setWarnings] = useState<TaskWarning[]>([]);
   const [offlineCount, setOfflineCount] = useState({ pickup: 0, delivery: 0 });
-  const [cainiaoOffline, setCainiaoOffline] = useState({ push: 0, exception: 0 });
   const [isOnline, setIsOnline] = useState(true);
+  const [syncStatus, setSyncStatus] = useState<SyncStatus | null>(null);
+  const [complianceStats, setComplianceStats] = useState<ComplianceStats | null>(null);
+  const [pendingTasks, setPendingTasks] = useState<{ type: string; count: number; description: string }[]>([]);
+  const [cainiaoAuthorized, setCainiaoAuthorized] = useState(false);
 
   const { user, site } = useUserStore();
   const { heatmapPoints, pickupTasks: storePickupTasks, deliveryTasks: storeDeliveryTasks, exceptions, getHeatmapPoints } = useTaskStore();
@@ -28,17 +47,28 @@ const HomePage: React.FC = () => {
   const loadData = useCallback(async () => {
     setLoading(true);
     try {
-      const [statsData, warningsData, offlineData, cainiaoData] = await Promise.all([
+      const [statsData, warningsData, offlineData, syncData, complianceData, pendingTasksData] = await Promise.all([
         taskService.getDailyStats(),
         taskService.getWarnings(),
         waybillService.getOfflinePendingCount(),
-        Promise.resolve(cainiaoService.getOfflinePendingCount())
+        cainiaoService.getSyncStatus(),
+        taskService.getComplianceStats(),
+        taskService.getPendingTasks(),
+        getHeatmapPoints()
       ]);
 
-      setStats(statsData);
+      const unreadOvertimeWarnings = warningsData.filter(w => !w.isRead && w.type === 'overtime');
+
+      setStats({
+        ...statsData,
+        overtimeCount: unreadOvertimeWarnings.length
+      });
       setWarnings(warningsData.filter(w => !w.isRead).slice(0, 3));
       setOfflineCount(offlineData);
-      setCainiaoOffline(cainiaoData);
+      setSyncStatus(syncData);
+      setComplianceStats(complianceData);
+      setPendingTasks(pendingTasksData);
+      setCainiaoAuthorized(syncData.isAuthorized);
       setIsOnline(navigator.onLine);
     } catch (e) {
       console.error('[HomePage] 加载数据失败:', e);
@@ -47,7 +77,7 @@ const HomePage: React.FC = () => {
       setLoading(false);
       Taro.stopPullDownRefresh();
     }
-  }, []);
+  }, [getHeatmapPoints]);
 
   useEffect(() => {
     loadData();
@@ -79,87 +109,196 @@ const HomePage: React.FC = () => {
     };
   }, [handlePullDownRefresh]);
 
-  const quickActions: QuickActionItem[] = [
-    {
-      id: 'scan_pickup',
-      title: '扫码揽件',
-      subtitle: '离线可用',
-      icon: '📦',
-      color: 'primary',
-      path: '/pages/scan/index?type=pickup',
-      badge: offlineCount.pickup
-    },
-    {
-      id: 'scan_delivery',
-      title: '扫码派送',
-      subtitle: '电子签收',
-      icon: '🚚',
-      color: 'success',
-      path: '/pages/scan/index?type=delivery',
-      badge: offlineCount.delivery
-    },
-    {
-      id: 'station_sign',
-      title: '驿站签收',
-      subtitle: '批量扫码',
-      icon: '🏪',
-      color: 'purple',
-      path: '/pages/scan/index?type=station'
-    },
-    {
-      id: 'exception_report',
-      title: '异常上报',
-      subtitle: '拍照取证',
-      icon: '⚠️',
-      color: 'warning',
-      path: '/pages/exception-report/index'
-    },
-    {
-      id: 'checkin',
-      title: '考勤打卡',
-      subtitle: '围栏验证',
-      icon: '📍',
-      color: 'primary',
-      path: '/pages/checkin/index'
-    },
-    {
-      id: 'heatmap',
-      title: '任务热力图',
-      subtitle: '实时调度',
-      icon: '🗺️',
-      color: 'success',
-      path: ''
-    },
-    {
-      id: 'cainiao_sync',
-      title: '菜鸟同步',
-      subtitle: '双向同步',
-      icon: '🔄',
-      color: 'purple',
-      path: '',
-      badge: cainiaoOffline.push + cainiaoOffline.exception
-    },
-    {
-      id: 'operation_log',
-      title: '操作日志',
-      subtitle: '合规留痕',
-      icon: '📋',
-      color: 'warning',
-      path: '/pages/operation-log/index'
-    }
-  ];
+  const quickActions: QuickActionItem[] = React.useMemo(() => {
+    const getPendingCount = (type: string) => {
+      const task = pendingTasks.find(t => t.type === type);
+      return task?.count || 0;
+    };
+
+    const cainiaoBadge = syncStatus ? syncStatus.pendingPush + syncStatus.pendingException : 0;
+    const cainiaoSubtitle = syncStatus?.isAuthorized
+      ? (syncStatus.lastSyncTime
+        ? `${formatTimeShort(syncStatus.lastSyncTime)}同步`
+        : '待同步')
+      : '未授权';
+
+    const logSubtitle = complianceStats
+      ? `${complianceStats.todayLogs}条操作记录`
+      : '合规留痕';
+
+    return [
+      {
+        id: 'scan_pickup',
+        title: '扫码揽件',
+        subtitle: '离线可用',
+        icon: '📦',
+        color: 'primary',
+        path: '/pages/scan/index?type=pickup',
+        badge: offlineCount.pickup
+      },
+      {
+        id: 'scan_delivery',
+        title: '扫码派送',
+        subtitle: '电子签收',
+        icon: '🚚',
+        color: 'success',
+        path: '/pages/scan/index?type=delivery',
+        badge: offlineCount.delivery
+      },
+      {
+        id: 'station_sign',
+        title: '驿站签收',
+        subtitle: '批量扫码',
+        icon: '🏪',
+        color: 'purple',
+        path: '/pages/scan/index?type=station'
+      },
+      {
+        id: 'exception_report',
+        title: '异常上报',
+        subtitle: '拍照取证',
+        icon: '⚠️',
+        color: 'warning',
+        path: '/pages/exception-report/index'
+      },
+      {
+        id: 'pending_waybills',
+        title: '待处理运单',
+        subtitle: `${getPendingCount('waybill')}单待处理`,
+        icon: '�',
+        color: 'primary',
+        path: '/pages/dispatch/index',
+        badge: getPendingCount('waybill')
+      },
+      {
+        id: 'ebill_link',
+        title: '电子面单',
+        subtitle: `${getPendingCount('ebill')}单待关联`,
+        icon: '🧾',
+        color: 'success',
+        path: '/pages/waybill-detail/index',
+        badge: getPendingCount('ebill')
+      },
+      {
+        id: 'evidence_review',
+        title: '取证原因',
+        subtitle: `${getPendingCount('evidence')}条待确认`,
+        icon: '📸',
+        color: 'warning',
+        path: '/pages/exception/index',
+        badge: getPendingCount('evidence')
+      },
+      {
+        id: 'fence_check',
+        title: '围栏校验',
+        subtitle: `${getPendingCount('fence')}条待复核`,
+        icon: '�️',
+        color: 'checkin',
+        path: '/pages/checkin/index',
+        badge: getPendingCount('fence')
+      },
+      {
+        id: 'compliance_review',
+        title: '合规留痕',
+        subtitle: `${getPendingCount('compliance')}条待确认`,
+        icon: '✅',
+        color: 'primary',
+        path: '/pages/operation-log/index',
+        badge: getPendingCount('compliance')
+      },
+      {
+        id: 'checkin',
+        title: '考勤打卡',
+        subtitle: '围栏验证',
+        icon: '📍',
+        color: 'primary',
+        path: '/pages/checkin/index'
+      },
+      {
+        id: 'cainiao_sync',
+        title: '菜鸟同步',
+        subtitle: cainiaoSubtitle,
+        icon: cainiaoAuthorized ? '🔄' : '🔒',
+        color: 'purple',
+        path: '',
+        badge: cainiaoBadge
+      },
+      {
+        id: 'operation_log',
+        title: '操作日志',
+        subtitle: logSubtitle,
+        icon: '📋',
+        color: 'warning',
+        path: '/pages/operation-log/index'
+      }
+    ];
+  }, [offlineCount, syncStatus, complianceStats, pendingTasks, cainiaoAuthorized]);
 
   const handleQuickActionClick = async (item: QuickActionItem) => {
     if (item.id === 'cainiao_sync') {
       if (user) {
-        await cainiaoService.syncAll(user.id, user.name);
-        loadData();
+        if (!syncStatus?.isAuthorized) {
+          const res = await cainiaoService.auth(user.id, user.name);
+          if (res) {
+            loadData();
+          }
+        } else {
+          await cainiaoService.syncAll(user.id, user.name);
+          loadData();
+        }
       }
+      return;
+    }
+
+    if (item.id === 'compliance_review' || item.id === 'operation_log') {
+      Taro.navigateTo({
+        url: `/pages/operation-log/index?module=${item.id === 'compliance_review' ? 'compliance' : 'all'}`
+      });
+      return;
+    }
+
+    if (item.id === 'ebill_link') {
+      Taro.navigateTo({
+        url: '/pages/archive/index?type=ebill'
+      });
+      return;
+    }
+
+    if (item.id === 'evidence_review') {
+      Taro.navigateTo({
+        url: '/pages/exception/index?filter=pending'
+      });
+      return;
+    }
+
+    if (item.id === 'fence_check') {
+      Taro.navigateTo({
+        url: '/pages/checkin/index?tab=fence'
+      });
+      return;
+    }
+
+    if (item.id === 'pending_waybills') {
+      Taro.switchTab({
+        url: '/pages/dispatch/index'
+      });
       return;
     }
 
     if (item.path) {
       Taro.navigateTo({ url: item.path });
+    }
+  };
+
+  const formatTimeShort = (timestamp: number): string => {
+    const now = Date.now();
+    const diff = now - timestamp;
+    if (diff < 3600000) {
+      return `${Math.floor(diff / 60000)}分钟前`;
+    } else if (diff < 86400000) {
+      return `${Math.floor(diff / 3600000)}小时前`;
+    } else {
+      return '今日';
     }
   };
 
@@ -209,7 +348,8 @@ const HomePage: React.FC = () => {
     loadData();
   };
 
-  const totalOffline = offlineCount.pickup + offlineCount.delivery + cainiaoOffline.push + cainiaoOffline.exception;
+  const totalOffline = offlineCount.pickup + offlineCount.delivery + (syncStatus?.pendingPush || 0) + (syncStatus?.pendingException || 0);
+  const totalPending = pendingTasks.reduce((acc, t) => acc + t.count, 0);
 
   return (
     <ScrollView
@@ -289,6 +429,102 @@ const HomePage: React.FC = () => {
           <View className={styles.syncBtn} onClick={handleSyncClick}>
             <Text>立即同步</Text>
           </View>
+        </View>
+      )}
+
+      {syncStatus && (
+        <View className={styles.complianceStatusBar}>
+          <View className={styles.statusBarTitle}>
+            <Text className={styles.statusBarTitleText}>📊 合规管控状态</Text>
+            <Text className={styles.statusBarAction} onClick={() => Taro.navigateTo({ url: '/pages/archive/index' })}>
+              合规详情
+            </Text>
+          </View>
+          <View className={styles.statusGrid}>
+            <View className={styles.statusItem}>
+              <Text className={styles.statusItemIcon}>🔄</Text>
+              <View className={styles.statusItemInfo}>
+                <Text className={styles.statusItemLabel}>菜鸟同步</Text>
+                <Text className={classnames(styles.statusItemValue, styles[syncStatus.syncStatus])}>
+                  {syncStatus.isAuthorized
+                    ? (syncStatus.syncStatus === 'syncing' ? '同步中...'
+                      : syncStatus.syncStatus === 'success' ? '已同步'
+                      : syncStatus.syncStatus === 'failed' ? '同步失败'
+                      : `${syncStatus.todayPulled + syncStatus.todayPushed}条`)
+                    : '未授权'}
+                </Text>
+              </View>
+              {syncStatus.pendingPush + syncStatus.pendingException > 0 && (
+                <View className={styles.statusItemBadge}>
+                  <Text>{syncStatus.pendingPush + syncStatus.pendingException}</Text>
+                </View>
+              )}
+            </View>
+            <View className={styles.statusItem}>
+              <Text className={styles.statusItemIcon}>📦</Text>
+              <View className={styles.statusItemInfo}>
+                <Text className={styles.statusItemLabel}>运单池</Text>
+                <Text className={styles.statusItemValue}>
+                  {complianceStats?.totalArchives || 0}单
+                </Text>
+              </View>
+            </View>
+            <View className={styles.statusItem}>
+              <Text className={styles.statusItemIcon}>🔒</Text>
+              <View className={styles.statusItemInfo}>
+                <Text className={styles.statusItemLabel}>司法存证</Text>
+                <Text className={styles.statusItemValue}>
+                  {complianceStats?.verifiedArchives || 0}份
+                </Text>
+              </View>
+            </View>
+            <View className={styles.statusItem}>
+              <Text className={styles.statusItemIcon}>🧾</Text>
+              <View className={styles.statusItemInfo}>
+                <Text className={styles.statusItemLabel}>合规留痕</Text>
+                <Text className={styles.statusItemValue}>
+                  {complianceStats?.todayLogs || 0}条
+                </Text>
+              </View>
+              {complianceStats?.criticalLogs && complianceStats.criticalLogs > 0 && (
+                <View className={classnames(styles.statusItemBadge, styles.danger)}>
+                  <Text>{complianceStats.criticalLogs}</Text>
+                </View>
+              )}
+            </View>
+          </View>
+          {complianceStats?.lastArchiveTime && (
+            <View className={styles.statusFooter}>
+              <Text className={styles.statusFooterText}>
+                最近归档: {formatTimeShort(complianceStats.lastArchiveTime)} ·{' '}
+                {complianceStats.lastHashVerifyTime ? `哈希校验: ${formatTimeShort(complianceStats.lastHashVerifyTime)}` : '待校验'}
+              </Text>
+            </View>
+          )}
+        </View>
+      )}
+
+      {totalPending > 0 && (
+        <View className={styles.pendingTasksBar}>
+          <View className={styles.pendingTasksTitle}>
+            <Text className={styles.pendingTasksIcon}>⏳</Text>
+            <Text className={styles.pendingTasksTitleText}>待处理事项</Text>
+            <View className={styles.pendingTasksTotal}>
+              <Text>{totalPending}项</Text>
+            </View>
+          </View>
+          <ScrollView scrollX className={styles.pendingTasksScroll}>
+            {pendingTasks.filter(t => t.count > 0).map(task => (
+              <View
+                key={task.type}
+                className={styles.pendingTaskItem}
+                onClick={() => handleQuickActionClick({ id: task.type, path: '', title: task.description, icon: '⏳', color: 'primary' } as QuickActionItem)}
+              >
+                <Text className={styles.pendingTaskCount}>{task.count}</Text>
+                <Text className={styles.pendingTaskDesc}>{task.description}</Text>
+              </View>
+            ))}
+          </ScrollView>
         </View>
       )}
 

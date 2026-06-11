@@ -357,5 +357,56 @@ export const taskService = {
 
     Taro.showToast({ title: '验证通过，哈希一致', icon: 'success' });
     return true;
+  },
+
+  async getComplianceStats(): Promise<{
+    pendingWaybills: number;
+    pendingEbill: number;
+    pendingEvidence: number;
+    pendingFence: number;
+    pendingCompliance: number;
+    pendingReview: number;
+    totalArchives: number;
+    verifiedArchives: number;
+    todayLogs: number;
+    criticalLogs: number;
+    lastArchiveTime: number | null;
+    lastHashVerifyTime: number | null;
+  }> {
+    console.log('[TaskService] 获取合规统计');
+    await new Promise(resolve => setTimeout(resolve, 200));
+
+    return {
+      pendingWaybills: 12,
+      pendingEbill: 3,
+      pendingEvidence: 2,
+      pendingFence: 1,
+      pendingCompliance: 5,
+      pendingReview: 2,
+      totalArchives: mockArchives.length,
+      verifiedArchives: mockArchives.filter(a => a.isVerified).length,
+      todayLogs: 156,
+      criticalLogs: 8,
+      lastArchiveTime: mockArchives.length > 0 ? mockArchives[0].archiveTime : null,
+      lastHashVerifyTime: mockArchives.find(a => a.isVerified)?.verifyTime || null
+    };
+  },
+
+  async getPendingTasks(): Promise<{
+    type: string;
+    count: number;
+    description: string;
+  }[]> {
+    console.log('[TaskService] 获取待处理任务');
+    await new Promise(resolve => setTimeout(resolve, 200));
+
+    return [
+      { type: 'waybill', count: 12, description: '待处理运单' },
+      { type: 'ebill', count: 3, description: '待关联电子面单' },
+      { type: 'evidence', count: 2, description: '待确认取证原因' },
+      { type: 'fence', count: 1, description: '待复核围栏校验' },
+      { type: 'compliance', count: 5, description: '待确认合规留痕' },
+      { type: 'review', count: 2, description: '待复查归档记录' }
+    ];
   }
 };

@@ -112,3 +112,10 @@
   }
   .icon { color: $color-checkin; }
 }
+
+.colorCheckin {
+  .iconWrapper {
+    background: linear-gradient(135deg, rgba($color-checkin, 0.15) 0%, rgba($color-checkin, 0.05) 100%);
+  }
+  .icon { color: $color-checkin; }
+}
