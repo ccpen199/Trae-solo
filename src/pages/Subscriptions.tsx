@@ -17,6 +17,14 @@ import {
   Filter,
   Search,
   X,
+  Newspaper,
+  Target,
+  Shield,
+  Eye,
+  Clock,
+  BarChart3,
+  TrendingUp,
+  ArrowRight,
 } from 'lucide-react';
 import { useAppStore } from '@/store/appStore';
 import type { SubscriptionType, NotifyLevel, RiskLevel, PushItem } from '@/../shared/types';
@@ -70,6 +78,7 @@ export default function Subscriptions() {
     markAllPushesRead,
     entities,
     concepts,
+    triples,
     activePushFilter,
     setActivePushFilter,
   } = useAppStore();
@@ -308,14 +317,67 @@ export default function Subscriptions() {
                     {selectedPush.title}
                   </h2>
                   <div className="mt-3 flex items-center gap-3 text-[11px] text-slate-500">
-                    <span>来源：{selectedPush.sourceName}</span>
-                    <span>发布：{formatTime(selectedPush.publishedAt)}</span>
+                    <span className="flex items-center gap-1">
+                      <Newspaper className="h-3 w-3" />
+                      {selectedPush.sourceName}
+                    </span>
+                    <span className="flex items-center gap-1">
+                      <Clock className="h-3 w-3" />
+                      {formatTime(selectedPush.publishedAt)}
+                    </span>
                   </div>
                   <p className="mt-4 text-sm leading-relaxed text-slate-300">
                     {selectedPush.summary}
                   </p>
 
-                  <div className="mt-5 rounded-lg border border-gold-500/10 bg-finance-900/50 p-4">
+                  {(() => {
+                    const sub = subscriptions.find((s) => s.id === selectedPush.subscriptionId);
+                    if (!sub) return null;
+                    const relatedTriples = triples.filter(
+                      (t) =>
+                        selectedPush.relatedEntities.includes(t.subject.id) ||
+                        selectedPush.relatedEntities.includes(t.object.id)
+                    );
+                    return (
+                      <div className="mt-4 rounded-lg border border-gold-500/15 bg-gold-500/5 p-3">
+                        <p className="mb-2 flex items-center gap-1.5 text-[10px] uppercase tracking-wider text-slate-500">
+                          <Target className="h-3 w-3 text-gold-400" />
+                          订阅命中原因
+                        </p>
+                        <div className="space-y-1.5">
+                          <div className="flex items-center gap-2 text-[11px]">
+                            {(() => {
+                              const Icon = typeIcon[sub.type];
+                              return Icon ? <Icon className="h-3 w-3 text-gold-400" /> : null;
+                            })()}
+                            <span className="text-slate-300">
+                              命中订阅：<span className="font-medium text-gold-300">{sub.targetName}</span>
+                              <span className="ml-1 text-slate-500">({typeLabel[sub.type]} · {levelLabel[sub.notifyLevel]})</span>
+                            </span>
+                          </div>
+                          <p className="text-[11px] text-slate-400">
+                            · 推送级别匹配：{levelLabel[sub.notifyLevel]}
+                            {selectedPush.riskLevel !== 'low' && ' · 风险等级触发额外推送'}
+                          </p>
+                          {relatedTriples.length > 0 && (
+                            <div className="mt-1.5 space-y-1">
+                              {relatedTriples.slice(0, 3).map((t) => (
+                                <div key={t.id} className="flex items-center gap-1 text-[10px] text-slate-400">
+                                  <BarChart3 className="h-2.5 w-2.5 shrink-0 text-gold-400" />
+                                  <span className="truncate">
+                                    {t.subject.name} → {t.predicate} → {t.object.name}
+                                  </span>
+                                  <span className="shrink-0 text-slate-600">({(t.confidence * 100).toFixed(0)}%)</span>
+                                </div>
+                              ))}
+                            </div>
+                          )}
+                        </div>
+                      </div>
+                    );
+                  })()}
+
+                  <div className="mt-4 rounded-lg border border-gold-500/10 bg-finance-900/50 p-4">
                     <p className="mb-2 text-[11px] uppercase tracking-wider text-slate-500">
                       关键字段高亮
                     </p>
@@ -324,24 +386,73 @@ export default function Subscriptions() {
                       <span className="highlight-yellow px-0.5">{selectedPush.highlightedText}</span>
                       ...
                     </p>
+                    <div className="mt-2 flex flex-wrap gap-1">
+                      {selectedPush.highlightedText.split(/[，。、；：！？\s]+/).filter(Boolean).slice(0, 5).map((kw, i) => (
+                        <span key={i} className="rounded-full bg-yellow-500/10 px-2 py-0.5 text-[10px] text-yellow-300 ring-1 ring-yellow-500/20">
+                          {kw}
+                        </span>
+                      ))}
+                    </div>
                   </div>
 
                   {selectedPush.riskLevel !== 'low' && (
-                    <div className="mt-4 flex items-start gap-2 rounded-lg border border-red-500/20 bg-red-500/5 p-3">
-                      <AlertTriangle className="mt-0.5 h-4 w-4 shrink-0 text-red-400" />
-                      <div>
-                        <p className="text-xs font-medium text-red-300">风险信号标识</p>
-                        <p className="mt-0.5 text-[11px] leading-relaxed text-red-400/80">
-                          {selectedPush.riskLevel === 'high'
-                            ? '此信息可能对相关标的产生重大负面影响，建议密切关注后续进展并评估投资组合风险敞口。'
-                            : '此信息可能引发市场短期波动，建议结合基本面综合判断。'}
-                        </p>
+                    <div className="mt-4 rounded-lg border border-red-500/20 bg-red-500/5 p-3">
+                      <p className="mb-2 flex items-center gap-1.5 text-[10px] uppercase tracking-wider text-slate-500">
+                        <Shield className="h-3 w-3 text-red-400" />
+                        风险信号穿透
+                      </p>
+                      <div className="space-y-2">
+                        <div className="flex items-start gap-2">
+                          <AlertTriangle className="mt-0.5 h-3.5 w-3.5 shrink-0 text-red-400" />
+                          <div>
+                            <p className="text-xs font-medium text-red-300">
+                              {selectedPush.riskLevel === 'high' ? '高风险信号' : '中等风险信号'}
+                            </p>
+                            <p className="mt-0.5 text-[11px] leading-relaxed text-red-400/80">
+                              {selectedPush.riskLevel === 'high'
+                                ? '此信息可能对相关标的产生重大负面影响，建议密切关注后续进展并评估投资组合风险敞口。'
+                                : '此信息可能引发市场短期波动，建议结合基本面综合判断。'}
+                            </p>
+                          </div>
+                        </div>
+                        <div className="space-y-1 text-[11px] text-slate-400">
+                          <p>· 风险等级：<span className={selectedPush.riskLevel === 'high' ? 'text-red-300' : 'text-amber-300'}>{riskLabel[selectedPush.riskLevel]}</span></p>
+                          <p>· 信源可信度：{selectedPush.sourceName.includes('公告') ? <span className="text-emerald-300">高（官方公告）</span> : selectedPush.sourceName.includes('路透') ? <span className="text-blue-300">较高（国际通讯社）</span> : <span className="text-amber-300">中等（财经媒体）</span>}</p>
+                          <p>· 影响范围：{selectedPush.relatedEntities.length} 个关联实体</p>
+                          <p>· 复核状态：<span className="text-amber-300">待人工确认</span></p>
+                        </div>
+                        {selectedPush.relatedEntities.length > 0 && (
+                          <div className="mt-2 border-t border-red-500/10 pt-2">
+                            <p className="mb-1 text-[10px] text-slate-500">受影响实体风险敞口</p>
+                            {selectedPush.relatedEntities.map((eid) => {
+                              const e = entities.find((x) => x.id === eid);
+                              if (!e) return null;
+                              const entityTriples = triples.filter(
+                                (t) => (t.subject.id === eid || t.object.id === eid) && t.reviewStatus !== 'rejected'
+                              );
+                              return (
+                                <div key={eid} className="mb-1.5 last:mb-0 rounded bg-finance-800/50 p-2">
+                                  <div className="flex items-center gap-1.5 text-[11px]">
+                                    <span className="font-medium text-slate-200">{e.name}</span>
+                                    {e.riskTags && e.riskTags.length > 0 && (
+                                      <span className="rounded bg-red-500/10 px-1 py-0.5 text-[9px] text-red-300">
+                                        {e.riskTags.length} 项风险
+                                      </span>
+                                    )}
+                                    <span className="text-slate-600">· {entityTriples.length} 条关系</span>
+                                  </div>
+                                </div>
+                              );
+                            })}
+                          </div>
+                        )}
                       </div>
                     </div>
                   )}
 
                   <div className="mt-5">
-                    <p className="mb-2 text-[11px] uppercase tracking-wider text-slate-500">
+                    <p className="mb-2 flex items-center gap-1.5 text-[11px] uppercase tracking-wider text-slate-500">
+                      <Eye className="h-3 w-3" />
                       关联实体
                     </p>
                     <div className="flex flex-wrap gap-1.5">
@@ -371,7 +482,7 @@ export default function Subscriptions() {
                     className="flex items-center justify-center gap-1.5 rounded-md bg-gold-500/15 py-2 text-xs font-medium text-gold-300 ring-1 ring-gold-500/30 transition hover:bg-gold-500/25"
                   >
                     <ExternalLink className="h-3.5 w-3.5" />
-                    查看原始信源
+                    查看原始信源 · {selectedPush.sourceName}
                   </a>
                 </div>
               </div>

@@ -44,6 +44,14 @@ export default function ExtractionCenter() {
   const [rejectModal, setRejectModal] = useState<{ open: boolean; tripleId: string }>({ open: false, tripleId: '' });
   const [rejectReason, setRejectReason] = useState('');
   const [expandHistory, setExpandHistory] = useState<string | null>(null);
+  const [rejectResult, setRejectResult] = useState<{
+    show: boolean;
+    tripleId: string;
+    reason: string;
+    subjectName: string;
+    predicate: string;
+    objectName: string;
+  } | null>(null);
 
   const startExtract = () => {
     if (!text.trim()) return;
@@ -71,8 +79,19 @@ export default function ExtractionCenter() {
   };
 
   const handleRejectConfirm = () => {
+    const triple = triples.find((t) => t.id === rejectModal.tripleId);
     verifyTriple(rejectModal.tripleId, false, rejectReason || undefined);
     setRejectModal({ open: false, tripleId: '' });
+    if (triple) {
+      setRejectResult({
+        show: true,
+        tripleId: triple.id,
+        reason: rejectReason,
+        subjectName: triple.subject.name,
+        predicate: triple.predicate,
+        objectName: triple.object.name,
+      });
+    }
     setRejectReason('');
   };
 
@@ -160,6 +179,87 @@ export default function ExtractionCenter() {
                 <ThumbsDown className="h-3 w-3" />
                 确认驳回
               </button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {rejectResult && rejectResult.show && (
+        <div className="mb-5 animate-fade-in-up rounded-xl border border-rose-500/20 bg-rose-500/5 p-5">
+          <div className="mb-3 flex items-start justify-between">
+            <div className="flex items-center gap-3">
+              <div className="flex h-10 w-10 items-center justify-center rounded-full bg-rose-500/10 text-rose-300 ring-1 ring-rose-500/30">
+                <XCircle className="h-5 w-5" />
+              </div>
+              <div>
+                <h3 className="text-sm font-medium text-rose-200">驳回操作已完成</h3>
+                <p className="mt-0.5 text-[11px] text-slate-500">三元组状态已变更，审核记录已回写</p>
+              </div>
+            </div>
+            <button
+              onClick={() => setRejectResult(null)}
+              className="rounded p-1 text-slate-500 hover:bg-finance-700/50 hover:text-slate-300"
+            >
+              <X className="h-4 w-4" />
+            </button>
+          </div>
+
+          <div className="space-y-3">
+            <div className="rounded-md border border-gold-500/10 bg-finance-900/40 p-3">
+              <p className="mb-1.5 text-[10px] uppercase tracking-wider text-slate-500">状态变更</p>
+              <div className="flex items-center gap-2 text-xs">
+                <span className="flex items-center gap-1 rounded bg-amber-500/10 px-2 py-0.5 text-amber-300 ring-1 ring-amber-500/30">
+                  <Clock className="h-2.5 w-2.5" />
+                  待审核
+                </span>
+                <ArrowRight className="h-3.5 w-3.5 text-slate-500" />
+                <span className="flex items-center gap-1 rounded bg-rose-500/10 px-2 py-0.5 text-rose-300 ring-1 ring-rose-500/30">
+                  <ThumbsDown className="h-2.5 w-2.5" />
+                  已驳回
+                </span>
+                <span className="ml-2 text-slate-400">
+                  {rejectResult.subjectName} → {rejectResult.predicate} → {rejectResult.objectName}
+                </span>
+              </div>
+            </div>
+
+            <div className="rounded-md border border-emerald-500/10 bg-emerald-500/5 p-3">
+              <p className="mb-1.5 flex items-center gap-1.5 text-[10px] uppercase tracking-wider text-slate-500">
+                <CheckCircle2 className="h-3 w-3 text-emerald-400" />
+                审核记录已回写
+              </p>
+              <div className="space-y-1 text-[11px] text-slate-400">
+                <p>· 操作类型：<span className="text-rose-300">驳回</span></p>
+                <p>· 驳回原因：<span className="text-slate-200">{rejectResult.reason}</span></p>
+                <p>· 审核人：<span className="text-slate-200">当前用户（分析师）</span></p>
+                <p>· 操作时间：<span className="text-slate-200">{new Date().toLocaleString('zh-CN')}</span></p>
+                <p>· 记录已写入审核历史，可在三元组详情中查看完整审核链</p>
+              </div>
+            </div>
+
+            <div className="rounded-md border border-blue-500/10 bg-blue-500/5 p-3">
+              <p className="mb-1.5 flex items-center gap-1.5 text-[10px] uppercase tracking-wider text-slate-500">
+                <GitBranch className="h-3 w-3 text-blue-400" />
+                图谱关系去留规则
+              </p>
+              <div className="space-y-1 text-[11px] text-slate-400">
+                <p>· 已驳回三元组将在知识图谱中标记为<span className="text-rose-300">低置信度</span>（虚线显示）</p>
+                <p>· 该关系将在驳回后 <span className="text-slate-200">7 天</span> 内保留供复核参考</p>
+                <p>· 7 天后系统将自动从图谱主视图中下线该关系，但审核记录永久保留</p>
+                <p>· 如需恢复，可在审核记录中点击"重新审核"发起复核</p>
+              </div>
+            </div>
+
+            <div className="rounded-md border border-amber-500/10 bg-amber-500/5 p-3">
+              <p className="mb-1.5 flex items-center gap-1.5 text-[10px] uppercase tracking-wider text-slate-500">
+                <AlertCircle className="h-3 w-3 text-amber-400" />
+                风险推送影响
+              </p>
+              <div className="space-y-1 text-[11px] text-slate-400">
+                <p>· 基于该三元组生成的相关推送已标记为<span className="text-amber-300">"待复核"</span></p>
+                <p>· 涉及此关系的风险信号将降级处理，不再触发高风险推送</p>
+                <p>· 订阅该实体的用户将在下次推送中收到驳回通知</p>
+              </div>
             </div>
           </div>
         </div>

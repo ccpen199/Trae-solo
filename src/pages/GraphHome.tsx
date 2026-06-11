@@ -131,6 +131,7 @@ export default function GraphHome() {
   const [showRolePanel, setShowRolePanel] = useState(false);
   const [expandedSections, setExpandedSections] = useState<Record<string, boolean>>({
     entityDetail: true,
+    filteredTriples: true,
     businessStatus: true,
     riskDynamics: true,
   });
@@ -246,6 +247,17 @@ export default function GraphHome() {
     if (!selectedForDetail) return [];
     return getEntityTriples(selectedForDetail.id);
   }, [selectedForDetail, getEntityTriples, triples]);
+
+  const filteredTriples = useMemo(() => {
+    if (!hasActiveAdvancedFilters) return [];
+    const nodeIds = new Set(filteredNodes.map((n) => n.id));
+    return triples.filter(
+      (t) =>
+        nodeIds.has(t.subject.id) &&
+        nodeIds.has(t.object.id) &&
+        (advancedFilters.predicate.length === 0 || advancedFilters.predicate.includes(t.predicate))
+    );
+  }, [hasActiveAdvancedFilters, filteredNodes, triples, advancedFilters.predicate]);
 
   const pendingTriples = useMemo(() => triples.filter((t) => t.reviewStatus === 'pending'), [triples]);
   const pendingSummaries = useMemo(() => summaryReviews.filter((s) => s.status === 'pending'), [summaryReviews]);
@@ -833,6 +845,118 @@ export default function GraphHome() {
                     ) : (
                       <p className="py-3 text-center text-xs text-slate-500">暂无关联三元组</p>
                     )}
+                  </div>
+                </div>
+              )}
+            </div>
+          )}
+
+          {hasActiveAdvancedFilters && filteredTriples.length > 0 && (
+            <div className="border-b border-gold-500/10">
+              <button
+                onClick={() => toggleSection('filteredTriples')}
+                className="flex w-full items-center justify-between px-4 py-3 text-left transition hover:bg-finance-700/30"
+              >
+                <div className="flex items-center gap-2">
+                  <Zap className="h-4 w-4 text-gold-400" />
+                  <span className="text-sm font-medium text-slate-200">筛选关系结果</span>
+                  <span className="rounded-full bg-gold-500/20 px-1.5 py-0.5 text-[10px] font-bold text-gold-300">
+                    {filteredTriples.length}
+                  </span>
+                </div>
+                {expandedSections.filteredTriples ? (
+                  <ChevronUp className="h-3.5 w-3.5 text-slate-500" />
+                ) : (
+                  <ChevronDown className="h-3.5 w-3.5 text-slate-500" />
+                )}
+              </button>
+
+              {expandedSections.filteredTriples && (
+                <div className="animate-fade-in-up px-4 pb-4">
+                  <p className="mb-3 text-[10px] text-slate-500">
+                    当前筛选命中 {filteredNodes.length} 个实体、{filteredLinks.length} 条关联、{filteredTriples.length} 条三元组
+                  </p>
+                  <div className="space-y-2.5">
+                    {filteredTriples.map((triple) => (
+                      <div
+                        key={triple.id}
+                        className="rounded-lg border border-gold-500/10 bg-finance-900/40 p-3"
+                      >
+                        <div className="mb-2 flex items-start justify-between gap-2">
+                          <div className="flex-1">
+                            <p className="text-xs leading-relaxed text-slate-200">
+                              <span className="font-medium text-gold-300">{triple.subject.name}</span>
+                              <span className="mx-1.5 text-slate-500">→</span>
+                              <span className="text-blue-300">{triple.predicate}</span>
+                              <span className="mx-1.5 text-slate-500">→</span>
+                              <span className="font-medium text-gold-300">{triple.object.name}</span>
+                            </p>
+                          </div>
+                          {triple.reviewStatus && (
+                            <span
+                              className={`shrink-0 rounded px-1.5 py-0.5 text-[9px] ring-1 ${reviewStatusColor[triple.reviewStatus]}`}
+                            >
+                              {reviewStatusLabel[triple.reviewStatus]}
+                            </span>
+                          )}
+                        </div>
+
+                        <div className="mb-2 flex items-center gap-3 text-[10px] text-slate-500">
+                          <span className="flex items-center gap-1">
+                            <BarChart3 className="h-2.5 w-2.5" />
+                            置信度 {(triple.confidence * 100).toFixed(0)}%
+                          </span>
+                          {triple.sourceName && (
+                            <span className="flex items-center gap-1">
+                              <Newspaper className="h-2.5 w-2.5" />
+                              {triple.sourceName}
+                            </span>
+                          )}
+                          {triple.extractedAt && (
+                            <span className="flex items-center gap-1">
+                              <Clock className="h-2.5 w-2.5" />
+                              {formatTime(triple.extractedAt)}
+                            </span>
+                          )}
+                        </div>
+
+                        {triple.sourceText && (
+                          <div className="mb-2 rounded-md border border-gold-500/5 bg-finance-800/50 px-2.5 py-1.5">
+                            <p className="text-[11px] leading-relaxed text-slate-400">
+                              ...<span className="bg-yellow-500/20 px-0.5 text-yellow-200">{triple.sourceText}</span>...
+                            </p>
+                          </div>
+                        )}
+
+                        <div className="flex items-center gap-2">
+                          {triple.sourceUrl && (
+                            <a
+                              href={triple.sourceUrl}
+                              target="_blank"
+                              rel="noreferrer"
+                              className="flex items-center gap-1 rounded-md bg-finance-700/50 px-2 py-0.5 text-[10px] text-slate-400 transition hover:text-gold-300"
+                            >
+                              <ExternalLink className="h-2.5 w-2.5" />
+                              原始信源
+                            </a>
+                          )}
+                          <button
+                            onClick={() => navigate('/admin/lineage')}
+                            className="flex items-center gap-1 rounded-md bg-finance-700/50 px-2 py-0.5 text-[10px] text-slate-400 transition hover:text-gold-300"
+                          >
+                            <GitBranch className="h-2.5 w-2.5" />
+                            血缘追溯
+                          </button>
+                          <button
+                            onClick={() => navigate('/extraction')}
+                            className="flex items-center gap-1 rounded-md bg-finance-700/50 px-2 py-0.5 text-[10px] text-slate-400 transition hover:text-gold-300"
+                          >
+                            <Eye className="h-2.5 w-2.5" />
+                            可信度复查
+                          </button>
+                        </div>
+                      </div>
+                    ))}
                   </div>
                 </div>
               )}
