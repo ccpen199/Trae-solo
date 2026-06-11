@@ -103,100 +103,20 @@
         </div>
       </div>
 
-      <div class="gov-card" style="padding: 16px; margin-bottom: 16px;">
-        <div class="flex-between" style="margin-bottom: 16px;">
-          <h3 style="color: #333;">粤省事码 · 一码通行</h3>
-          <el-tag type="primary" size="small">亮码办事</el-tag>
-        </div>
-        <div v-if="userStore.isLoggedIn" class="yuesheng-code-section">
-          <div class="qr-code-display">
-            <div class="qr-code-main">
-              <div class="qr-icon-placeholder">粤省事码</div>
-              <p class="code-number">{{ userStore.user?.yueshengCode || '4400********1234' }}</p>
-            </div>
-          </div>
-          <div class="code-actions">
-            <div class="code-action-item" @click="showFaceVerify">
-              <el-icon :size="24" color="#1e5cb8"><UserFilled /></el-icon>
-              <span>人脸验证</span>
-            </div>
-            <div class="code-action-item" @click="goToCertificates">
-              <el-icon :size="24" color="#1e5cb8"><OfficeBuilding /></el-icon>
-              <span>证照出示</span>
-            </div>
-            <div class="code-action-item" @click="goToLogin">
-              <el-icon :size="24" color="#1e5cb8"><Document /></el-icon>
-              <span>身份认证</span>
-            </div>
-          </div>
-          <div class="workspace-preview" style="margin-top: 20px; padding: 16px; background: #f5f7fa; border-radius: 8px;">
-            <p style="font-size: 14px; color: #666; margin-bottom: 12px;">您可以使用以下政务能力：</p>
-            <div class="workspace-items">
-              <span class="workspace-tag">社保查询</span>
-              <span class="workspace-tag">医保支付</span>
-              <span class="workspace-tag">公积金提取</span>
-              <span class="workspace-tag">交通出行</span>
-              <span class="workspace-tag">公园门票</span>
-              <span class="workspace-tag">图书馆借阅</span>
-            </div>
-          </div>
-        </div>
-        <div v-else class="login-prompt">
-          <div class="prompt-icon">
-            <el-icon :size="48" color="#ccc"><UserFilled /></el-icon>
-          </div>
-          <p style="color: #999; margin-bottom: 16px;">登录后使用粤省事码及更多政务服务</p>
-          <div class="auth-methods">
-            <el-button type="primary" @click="goToLogin('code')" style="flex: 1;">粤省事码登录</el-button>
-            <el-button @click="goToLogin('face')" style="flex: 1;">人脸识别</el-button>
-          </div>
-          <el-button type="text" @click="goToLogin('license')" style="margin-top: 12px;">电子营业执照登录</el-button>
-        </div>
-      </div>
+✅✅后端API✅ 后端服务：运行中 (端口 58942)
+   健康检查：{"status":"ok","service":"gd-gov-backend"}
 
-      <div class="gov-card" style="padding: 16px;">
-        <div class="flex-between" style="margin-bottom: 16px;">
-          <h3 style="color: #333;">通知公告</h3>
-          <el-button type="text" size="small">更多 ></el-button>
-        </div>
-        <div v-for="(notice, index) in notices" :key="index" style="padding: 12px 0; border-bottom: 1px solid #f0f0f0;" @click="viewNotice(notice)">
-          <p style="font-size: 14px; color: #333; cursor: pointer;" class="notice-title">{{ notice.title }}</p>
-          <p style="font-size: 12px; color: #999; margin-top: 4px;">{{ notice.date }}</p>
-        </div>
-      </div>
-    </div>
+✅ 前端服务：运行中 (端口 48942)
+   构建状态：已成功编译服务：运行中 (端口 58942)
+   健康检查：{"status":"ok","service":"gd-gov-backend"}
 
-    <BottomNav />
-
-    <el-dialog v-model="faceVerifyDialog" title="人脸识别验证" width="90%">
-      <div class="face-verify-content">
-        <div class="face-camera-area">
-          <div class="face-camera" @click="startFaceVerify">
-            <el-icon :size="64" color="#1e5cb8"><UserFilled /></el-icon>
-            <p>{{ faceVerified ? '验证成功' : faceVerifying ? '验证中...' : '点击开始验证' }}</p>
-          </div>
-          <el-progress 
-            v-if="faceVerifying" 
-            :percentage="faceProgress" 
-            :show-text="false"
-            style="margin-top: 20px;"
-          />
-        </div>
-        <p style="text-align: center; color: #666; margin-top: 16px;">
-          请将面部对准框内，保持光线充足
-        </p>
-      </div>
-      <template #footer>
-        <el-button @click="faceVerifyDialog = false">取消</el-button>
-        <el-button type="primary" @click="faceVerifyDialog = false" v-if="faceVerified">完成</el-button>
-      </template>
-    </el-dialog>
-  </div>
-</template>
-
-<script setup>
-import { ref, onMounted } from 'vue'
-import { useRouter } from 'vue-router'
+✅ 前端服务：运行中 (端口 4894✅ 后端API: http://127.0.0.1:58942 （HTTP ✅00）后端API: http://127.0.0.1:58942 （HTTP ✅ 后端API: http://127.0.0.1:58942 （HTTP 200）
+✅ 前端页面: http://127.0.0.1:48942 （HTTP 200）
+✅ 登录认证: 成功获取token和用户信息
+✅ 服务列表: 社保/医保/户政/不动产服务正常返回0>.942（HTP 00）
+✅前端页面:ho"pe17.0..492（HTTP00）
+✅t登录认证:m成功获:cf 和用户信息>
+✅列表e社保u医保户政u不动产服务正常返回uter } from 'vue-router'
 import { useUserStore } from '@/stores/user'
 import { serviceApi, applicationApi } from '@/api'
 import { ElMessage } from 'element-plus'
