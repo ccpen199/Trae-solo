@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import {
   Dumbbell, MapPin, Flame, Gauge, Check, Circle,
-  Bike, Waves, Mountain, Footprints, Timer, Calendar, AlertTriangle,
+  Bike, Waves, Mountain, Footprints, Timer, Calendar, AlertTriangle, ChevronDown, ChevronUp,
 } from "lucide-react";
 import Card from "../components/ui/Card";
 import StatCard from "../components/ui/StatCard";
@@ -23,9 +23,10 @@ const intensityLabel = { low: "低", medium: "中", high: "高" };
 const heartZoneColor = ["text-vital-green-400", "text-warning-amber-400", "text-alert-red-400", "text-purple-400", "text-pink-400"];
 
 export function Fitness() {
-  const { exerciseRecords, exercisePlan, setExerciseRecords, setExercisePlan, loading } = useHealthStore();
+  const { exerciseRecords, exercisePlan, setExerciseRecords, setExercisePlan, loading, hrvTrend } = useHealthStore();
   const [range, setRange] = useState<"7d" | "30d">("7d");
   const [completingId, setCompletingId] = useState<string | null>(null);
+  const [detailExpanded, setDetailExpanded] = useState(false);
 
   useEffect(() => {
     api.health.exercise(range).then(setExerciseRecords).catch(console.error);
@@ -52,20 +53,29 @@ export function Fitness() {
   }));
 
   const planCompletionRate = exercisePlan?.completionRate ?? 0;
-  const hrvAvg = 55;
+  const recentHrvAvg = hrvTrend.length > 0
+    ? Math.round(hrvTrend.slice(-7).reduce((s, d) => s + d.hrv, 0) / Math.min(hrvTrend.length, 7))
+    : 55;
   const recommendation = stats.count === 0
-    ? `暂无运动数据。基于当前身体恢复状态（HRV约 ${hrvAvg} ms），建议从低强度有氧开始，逐步建立运动习惯。`
+    ? `暂无运动数据。基于当前身体恢复状态（HRV约 ${recentHrvAvg} ms），建议从低强度有氧开始，逐步建立运动习惯。`
     : planCompletionRate >= 70
-    ? `基于近${range === "7d" ? "7" : "30"}天 ${stats.count} 次运动记录和 ${Math.round(planCompletionRate)}% 的计划完成率，配合 HRV 恢复指数良好，本周可适当增加有氧训练强度。`
+    ? `基于近${range === "7d" ? "7" : "30"}天 ${stats.count} 次运动记录和 ${Math.round(planCompletionRate)}% 的计划完成率，配合 HRV 恢复指数良好（${recentHrvAvg} ms），本周可适当增加有氧训练强度。`
     : planCompletionRate >= 40
-    ? `近${range === "7d" ? "7" : "30"}天完成率 ${Math.round(planCompletionRate)}%，建议保持当前训练节奏，优先保证动作质量和恢复时间。`
+    ? `近${range === "7d" ? "7" : "30"}天完成率 ${Math.round(planCompletionRate)}%，HRV ${recentHrvAvg} ms，建议保持当前训练节奏，优先保证动作质量和恢复时间。`
     : `近${range === "7d" ? "7" : "30"}天完成率仅 ${Math.round(planCompletionRate)}%，建议简化本周计划，优先建立每日 30 分钟低强度运动习惯。`;
 
   const adaptiveReasoning = stats.count === 0
     ? "当前缺乏历史运动数据，推荐采用循序渐进策略，避免过度训练。"
-    : hrvAvg >= 50
-    ? `近 ${range === "7d" ? "7" : "30"} 天 HRV 指数呈稳定趋势（平均 ${hrvAvg} ms），表明自主神经恢复良好。`
-    : `HRV 偏低（平均 ${hrvAvg} ms），提示身体可能处于疲劳状态，建议降低训练强度。`;
+    : recentHrvAvg >= 50
+    ? `近 ${range === "7d" ? "7" : "30"} 天 HRV 指数均值 ${recentHrvAvg} ms（来源：${Math.min(hrvTrend.length, 7)} 条记录），自主神经恢复良好。`
+    : `HRV 偏低（均值 ${recentHrvAvg} ms，来源：${Math.min(hrvTrend.length, 7)} 条记录），提示身体可能处于疲劳状态。`;
+
+  const completedExercises = exercisePlan?.dailyPlans.reduce(
+    (sum, d) => sum + d.exercises.filter((e) => e.completed).length, 0
+  ) ?? 0;
+  const totalExercises = exercisePlan?.dailyPlans.reduce(
+    (sum, d) => sum + d.exercises.length, 0
+  ) ?? 0;
 
   const handleComplete = async (planId: string, dayIdx: number, exerciseId: string) => {
     setCompletingId(exerciseId);
@@ -191,6 +201,38 @@ export function Fitness() {
           <p className="mt-2 text-xs text-deep-sea-200/40 px-1">
             📊 {adaptiveReasoning}
           </p>
+        )}
+        <button
+          onClick={() => setDetailExpanded(!detailExpanded)}
+          className="mt-3 text-xs text-vital-green-400/60 hover:text-vital-green-400 flex items-center gap-1 transition-colors"
+        >
+          {detailExpanded ? <ChevronUp className="w-3 h-3" /> : <ChevronDown className="w-3 h-3" />}
+          {detailExpanded ? "收起依据明细" : "展开依据明细"}
+        </button>
+        {detailExpanded && (
+          <div className="mt-3 p-3 rounded-lg bg-deep-sea-700/40 border border-vital-green-500/10 space-y-2">
+            <h4 className="text-xs font-semibold text-deep-sea-100 mb-2">推荐依据数据来源</h4>
+            <div className="grid grid-cols-3 gap-3 text-xs">
+              <div className="p-2 rounded bg-deep-sea-600/30">
+                <p className="text-deep-sea-200/50 mb-1">运动完成率</p>
+                <p className="text-vital-green-400 font-din text-lg">{Math.round(planCompletionRate)}%</p>
+                <p className="text-deep-sea-200/40 mt-1">已完成 {completedExercises}/{totalExercises} 项</p>
+              </div>
+              <div className="p-2 rounded bg-deep-sea-600/30">
+                <p className="text-deep-sea-200/50 mb-1">HRV 恢复指数</p>
+                <p className="text-vital-green-400 font-din text-lg">{recentHrvAvg} ms</p>
+                <p className="text-deep-sea-200/40 mt-1">来源：{Math.min(hrvTrend.length, 7)} 条近 7 天记录</p>
+              </div>
+              <div className="p-2 rounded bg-deep-sea-600/30">
+                <p className="text-deep-sea-200/50 mb-1">运动次数</p>
+                <p className="text-vital-green-400 font-din text-lg">{stats.count} 次</p>
+                <p className="text-deep-sea-200/40 mt-1">范围：近 {range === "7d" ? "7" : "30"} 天</p>
+              </div>
+            </div>
+            <div className="text-xs text-deep-sea-200/30 pt-1 border-t border-deep-sea-400/10">
+              推荐逻辑：完成率 ≥ 70% + HRV ≥ 50ms → 增加强度 | 完成率 40-70% → 维持 | 完成率 &lt; 40% → 降低强度
+            </div>
+          </div>
         )}
       </Card>
 

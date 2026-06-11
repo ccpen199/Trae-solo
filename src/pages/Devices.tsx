@@ -1,9 +1,9 @@
 import { useState, useEffect } from "react";
-import { Watch, Bluetooth, Search, CheckCircle, XCircle, Battery, RefreshCw, Trash2, Wifi, Signal, Shield, FileText, Download, Clock, Database, Zap, Award, Lock, FileCheck, ChevronDown, ChevronUp, Heart, Moon, Activity, Wind, Droplets, User, Calendar, X } from "lucide-react";
+import { Watch, Bluetooth, Search, CheckCircle, XCircle, Battery, RefreshCw, Trash2, Wifi, Signal, Shield, FileText, Download, Clock, Database, Zap, Award, Lock, FileCheck, ChevronDown, ChevronUp, Heart, Moon, Activity, Wind, Droplets, User, Calendar, X, CheckCircle2 } from "lucide-react";
 import { useHealthStore } from "../store/useHealthStore";
 import { api } from "../utils/api";
 import { cn } from "../lib/utils";
-import type { Device, ScanResult, SleepRecord, ExerciseRecord, VitalRecord } from "../../shared/types";
+import type { Device, ScanResult, SleepRecord, ExerciseRecord, VitalRecord, HealthArchive } from "../../shared/types";
 
 type BindState = "idle" | "scanning" | "selecting" | "pairing" | "syncing" | "done";
 
@@ -76,6 +76,7 @@ export default function Devices() {
   const [scanResults, setScanResults] = useState<ScanResult[]>([]);
   const [selectedDevice, setSelectedDevice] = useState<ScanResult | null>(null);
   const [archiveExpanded, setArchiveExpanded] = useState(false);
+  const [exportState, setExportState] = useState<{ format: string; status: "idle" | "generating" | "success"; archive?: HealthArchive }>({ format: "", status: "idle" });
   const getLoading = (key: string) => useHealthStore.getState().loading[key];
 
   useEffect(() => {
@@ -177,6 +178,27 @@ export default function Devices() {
       console.error(e);
     } finally {
       setLoading(`conn-${device.id}`, false);
+    }
+  };
+
+  const handleExportArchive = async (format: string) => {
+    setExportState({ format, status: "generating" });
+    try {
+      const today = new Date().toISOString().split("T")[0];
+      const weekAgo = new Date(Date.now() - 7 * 86400000).toISOString().split("T")[0];
+      const archive = (await api.archives.generate({
+        dateStart: weekAgo,
+        dateEnd: today,
+        dataTypes: ["vitals", "sleep", "exercise"],
+        format,
+      })) as HealthArchive;
+      setExportState({ format, status: "success", archive });
+      setTimeout(() => {
+        setExportState({ format: "", status: "idle" });
+      }, 8000);
+    } catch (e) {
+      console.error(e);
+      setExportState({ format: "", status: "idle" });
     }
   };
 
@@ -513,13 +535,31 @@ export default function Devices() {
               <Shield className="w-4 h-4 text-purple-400" />
               <span className="text-xs text-purple-300">本档案已脱敏存储 · AES-256 加密 · 符合 HIPAA/GDPR/等保三级</span>
             </div>
-            <div className="flex gap-2">
-              <button className="px-3 py-1.5 text-xs rounded-lg bg-vital-green-500/10 text-vital-green-400 hover:bg-vital-green-500/20 flex items-center gap-1 transition-colors">
-                <Download className="w-3.5 h-3.5" /> 导出 JSON
-              </button>
-              <button className="px-3 py-1.5 text-xs rounded-lg bg-warning-amber-500/10 text-warning-amber-500 hover:bg-warning-amber-500/20 flex items-center gap-1 transition-colors">
-                <Download className="w-3.5 h-3.5" /> 导出 PDF
-              </button>
+            <div className="flex gap-2 items-center">
+              {exportState.status === "generating" && (
+                <span className="text-xs text-warning-amber-500 flex items-center gap-1">
+                  <RefreshCw className="w-3.5 h-3.5 animate-spin" /> 生成中...
+                </span>
+              )}
+              {exportState.status === "success" && exportState.archive && (
+                <div className="flex items-center gap-2 text-xs">
+                  <span className="text-vital-green-400 flex items-center gap-1">
+                    <CheckCircle2 className="w-3.5 h-3.5" /> 导出成功
+                  </span>
+                  <span className="text-deep-sea-200/50">编号: {exportState.archive.id?.slice(0, 8)}</span>
+                  <span className="text-deep-sea-200/50">{new Date(exportState.archive.generatedAt || Date.now()).toLocaleString("zh-CN")}</span>
+                </div>
+              )}
+              {exportState.status === "idle" && (
+                <>
+                  <button onClick={() => handleExportArchive("json")} className="px-3 py-1.5 text-xs rounded-lg bg-vital-green-500/10 text-vital-green-400 hover:bg-vital-green-500/20 flex items-center gap-1 transition-colors">
+                    <Download className="w-3.5 h-3.5" /> 导出 JSON
+                  </button>
+                  <button onClick={() => handleExportArchive("pdf")} className="px-3 py-1.5 text-xs rounded-lg bg-warning-amber-500/10 text-warning-amber-500 hover:bg-warning-amber-500/20 flex items-center gap-1 transition-colors">
+                    <Download className="w-3.5 h-3.5" /> 导出 PDF
+                  </button>
+                </>
+              )}
               <button onClick={() => { window.location.hash = "#/records"; }} className="px-3 py-1.5 text-xs rounded-lg bg-purple-500/10 text-purple-400 hover:bg-purple-500/20 flex items-center gap-1 transition-colors">
                 <Calendar className="w-3.5 h-3.5" /> 预约挂号
               </button>

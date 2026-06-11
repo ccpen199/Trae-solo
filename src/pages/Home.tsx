@@ -24,6 +24,7 @@ import {
   Database,
   Signal,
   SignalZero,
+  Calendar,
 } from "lucide-react";
 import Card from "../components/ui/Card";
 import StatCard from "../components/ui/StatCard";
@@ -89,10 +90,10 @@ export function Home() {
     alert: Alert;
     action: "acknowledge" | "dismiss";
   } | null>(null);
-  const [acknowledgedBy, setAcknowledgedBy] = useState("系统管理员");
+  const [acknowledgedBy, setAcknowledgedBy] = useState("张三");
   const [dispositionStatus, setDispositionStatus] = useState<DispositionStatus>("observed");
   const [dispositionNote, setDispositionNote] = useState("");
-  const [dismissedBy, setDismissedBy] = useState("系统管理员");
+  const [dismissedBy, setDismissedBy] = useState("张三");
   const [dismissReason, setDismissReason] = useState("");
   const [scheduleReview, setScheduleReview] = useState(false);
   const [reviewDateTime, setReviewDateTime] = useState(() => {
@@ -324,11 +325,18 @@ export function Home() {
                           <p className="text-xs text-deep-sea-200/70 line-clamp-1">{alert.description}</p>
                           
                           {(alert.status === "acknowledged" || alert.status === "pending_review" || alert.status === "needs_referral") && (
-                            <div className="mt-2 p-2 rounded-lg bg-deep-sea-700/50 border border-vital-green-500/10">
+                            <div className="mt-2 p-2 rounded-lg bg-deep-sea-700/50 border border-vital-green-500/10 space-y-1.5">
                               {alert.acknowledgedBy && (
-                                <div className="flex items-center gap-1 text-xs text-deep-sea-200/70 mb-1">
+                                <div className="flex items-center gap-1 text-xs text-deep-sea-200/70">
                                   <User className="w-3 h-3 text-vital-green-400" />
-                                  <span>确认人：<span className="text-vital-green-400">{alert.acknowledgedBy}</span></span>
+                                  <span>处置人：<span className="text-vital-green-400">{alert.acknowledgedBy}</span></span>
+                                  <span className="text-deep-sea-200/40 ml-1">（普通用户）</span>
+                                </div>
+                              )}
+                              {alert.acknowledgedAt && (
+                                <div className="flex items-center gap-1 text-xs text-deep-sea-200/50">
+                                  <Clock className="w-3 h-3" />
+                                  <span>处置时间：{new Date(alert.acknowledgedAt).toLocaleString("zh-CN")}</span>
                                 </div>
                               )}
                               {alert.dispositionStatus && (
@@ -338,21 +346,46 @@ export function Home() {
                                 </div>
                               )}
                               {alert.dispositionNote && (
-                                <p className="text-xs text-deep-sea-200/60 mt-1 line-clamp-2">{alert.dispositionNote}</p>
+                                <p className="text-xs text-deep-sea-200/60 pl-4">{alert.dispositionNote}</p>
+                              )}
+                              {alert.reviewScheduledAt && (
+                                <div className="flex items-center gap-1 text-xs text-deep-sea-200/70">
+                                  <Calendar className="w-3 h-3 text-warning-amber-400" />
+                                  <span>复查时间：<span className="text-warning-amber-300">{new Date(alert.reviewScheduledAt).toLocaleString("zh-CN")}</span></span>
+                                </div>
+                              )}
+                              {alert.status === "pending_review" && (
+                                <div className="flex items-center gap-1 text-xs text-warning-amber-400">
+                                  <Eye className="w-3 h-3" />
+                                  <span>等待医生复核</span>
+                                </div>
+                              )}
+                              {alert.status === "needs_referral" && (
+                                <div className="flex items-center gap-1 text-xs text-purple-400">
+                                  <User className="w-3 h-3" />
+                                  <span>已建议转诊至专科</span>
+                                </div>
                               )}
                             </div>
                           )}
                           
                           {alert.status === "dismissed" && (
-                            <div className="mt-2 p-2 rounded-lg bg-deep-sea-700/50 border border-deep-sea-400/20">
+                            <div className="mt-2 p-2 rounded-lg bg-deep-sea-700/50 border border-deep-sea-400/20 space-y-1.5">
                               {alert.dismissedBy && (
-                                <div className="flex items-center gap-1 text-xs text-deep-sea-200/70 mb-1">
+                                <div className="flex items-center gap-1 text-xs text-deep-sea-200/70">
                                   <User className="w-3 h-3 text-deep-sea-300" />
                                   <span>忽略人：<span className="text-deep-sea-300">{alert.dismissedBy}</span></span>
+                                  <span className="text-deep-sea-200/40 ml-1">（普通用户）</span>
+                                </div>
+                              )}
+                              {alert.dismissedAt && (
+                                <div className="flex items-center gap-1 text-xs text-deep-sea-200/50">
+                                  <Clock className="w-3 h-3" />
+                                  <span>忽略时间：{new Date(alert.dismissedAt).toLocaleString("zh-CN")}</span>
                                 </div>
                               )}
                               {alert.dismissReason && (
-                                <p className="text-xs text-deep-sea-200/60 line-clamp-2">{alert.dismissReason}</p>
+                                <p className="text-xs text-deep-sea-200/60 pl-4">{alert.dismissReason}</p>
                               )}
                             </div>
                           )}
@@ -455,7 +488,7 @@ export function Home() {
             {alertActionModal.action === "acknowledge" ? (
               <div className="space-y-4">
                 <div>
-                  <label className="block text-xs text-deep-sea-200/70 mb-1.5">确认人身份</label>
+                  <label className="block text-xs text-deep-sea-200/70 mb-1.5">处置人身份 <span className="text-vital-green-400/60">（普通用户）</span></label>
                   <input
                     value={acknowledgedBy}
                     onChange={(e) => setAcknowledgedBy(e.target.value)}
@@ -516,7 +549,7 @@ export function Home() {
             ) : (
               <div className="space-y-4">
                 <div>
-                  <label className="block text-xs text-deep-sea-200/70 mb-1.5">忽略人身份</label>
+                  <label className="block text-xs text-deep-sea-200/70 mb-1.5">忽略人身份 <span className="text-deep-sea-300/60">（普通用户）</span></label>
                   <input
                     value={dismissedBy}
                     onChange={(e) => setDismissedBy(e.target.value)}
