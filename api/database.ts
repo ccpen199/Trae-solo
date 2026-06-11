@@ -216,6 +216,38 @@ CREATE INDEX IF NOT EXISTS idx_scan_user ON scan_records(user_id);
 CREATE INDEX IF NOT EXISTS idx_scan_waybill ON scan_records(waybill_no);
 `);
 
+function addColumnIfMissing(table: string, column: string, definition: string) {
+  try {
+    const row = db.prepare(`PRAGMA table_info(${table})`).all() as { name: string }[];
+    if (!row.find((c) => c.name === column)) {
+      db.prepare(`ALTER TABLE ${table} ADD COLUMN ${column} ${definition}`).run();
+    }
+  } catch (e) {
+    console.warn(`[migration] skip ${table}.${column}:`, (e as Error).message);
+  }
+}
+
+addColumnIfMissing('scan_records', 'review_status', "TEXT CHECK(review_status IN ('auto_pass','manual_edited','pending_review','review_passed'))");
+addColumnIfMissing('scan_records', 'review_conclusion', 'TEXT');
+addColumnIfMissing('scan_records', 'reviewer', 'TEXT');
+addColumnIfMissing('scan_records', 'reviewed_at', 'TEXT');
+addColumnIfMissing('scan_records', 'synced_waybill_id', 'TEXT');
+addColumnIfMissing('scan_records', 'synced_tracking', "INTEGER NOT NULL DEFAULT 0");
+addColumnIfMissing('scan_records', 'synced_fee', 'REAL');
+
+addColumnIfMissing('waybills', 'sender_phone', "TEXT NOT NULL DEFAULT '138****0000'");
+addColumnIfMissing('waybills', 'receiver_phone', "TEXT NOT NULL DEFAULT '139****0000'");
+
+addColumnIfMissing('membership_info', 'svip_level', "INTEGER NOT NULL DEFAULT 0");
+addColumnIfMissing('membership_info', 'svip_source', "TEXT CHECK(svip_source IN ('purchase','activity','upgrade','gift'))");
+addColumnIfMissing('membership_info', 'svip_granted_at', 'TEXT');
+addColumnIfMissing('membership_info', 'svip_granted_by', 'TEXT');
+
+addColumnIfMissing('invoices', 'fail_reason', 'TEXT');
+addColumnIfMissing('invoices', 'ukey_status', "TEXT NOT NULL DEFAULT 'connected'");
+addColumnIfMissing('invoices', 'ukey_message', 'TEXT');
+addColumnIfMissing('invoices', 'review_logs', "TEXT NOT NULL DEFAULT '[]'");
+
 const insertUser = db.prepare(
   `INSERT OR IGNORE INTO users (id, phone, name, role) VALUES (?, ?, ?, ?)`
 );
@@ -406,58 +438,90 @@ const seed = db.transaction(() => {
   for (const al of auditLogs) {
     insertAuditLog.run(al.id, al.userId, al.operator, al.action, al.target, al.detail, al.createdAt);
   }
+});
 
-  const importBatches = [
-    { id: 'ib1', userId: 'u2', totalCount: 50, successCount: 47, failedCount: 3, status: 'completed', fileName: '6月订单批量导入.xlsx', template: 'standard',
-      failedReasons: JSON.stringify([
-        { row: 3, waybillNo: 'SF2025061000011', reason: '收件人手机号格式错误' },
-        { row: 12, waybillNo: '', reason: '运单号不能为空' },
-        { row: 28, waybillNo: 'SF2025061000028', reason: '收件地址不完整' },
-      ]),
-      createdAt: '2025-06-10 09:00:00', completedAt: '2025-06-10 09:00:45' },
-    { id: 'ib2', userId: 'u2', totalCount: 30, successCount: 30, failedCount: 0, status: 'completed', fileName: '淘宝订单导出.csv', template: 'ecommerce',
-      failedReasons: '[]',
-      createdAt: '2025-06-08 14:30:00', completedAt: '2025-06-08 14:30:20' },
-    { id: 'ib3', userId: 'u2', totalCount: 100, successCount: 95, failedCount: 5, status: 'completed', fileName: '618活动第一批.xlsx', template: 'standard',
-      failedReasons: JSON.stringify([
-        { row: 7, waybillNo: 'SF2025060500007', reason: '运单号已存在' },
-        { row: 15, waybillNo: '', reason: '运单号为空' },
-        { row: 33, waybillNo: 'SF2025060500033', reason: '收件人姓名为空' },
-        { row: 56, waybillNo: 'SF2025060500056', reason: '重量超出范围（>50kg）' },
-        { row: 89, waybillNo: 'SF2025060500089', reason: '寄件地址不支持取件' },
-      ]),
-      createdAt: '2025-06-05 08:00:00', completedAt: '2025-06-05 08:02:30' },
-    { id: 'ib4', userId: 'u1', totalCount: 5, successCount: 5, failedCount: 0, status: 'completed', fileName: '个人寄件.csv', template: 'standard',
-      failedReasons: '[]',
-      createdAt: '2025-06-09 16:00:00', completedAt: '2025-06-09 16:00:05' },
-  ];
-
-  for (const ib of importBatches) {
-    db.prepare(
-      `INSERT OR IGNORE INTO import_batches (id, user_id, total_count, success_count, failed_count, status, file_name, template, failed_reasons, created_at, completed_at)
-       VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`
-    ).run(ib.id, ib.userId, ib.totalCount, ib.successCount, ib.failedCount, ib.status, ib.fileName, ib.template, ib.failedReasons, ib.createdAt, ib.completedAt);
+const seedBatches = db.transaction(() => {
+  const ibCount = (db.prepare('SELECT COUNT(*) as count FROM import_batches').get() as { count: number }).count;
+  if (ibCount === 0) {
+    const importBatches = [
+      { id: 'ib1', userId: 'u2', totalCount: 50, successCount: 47, failedCount: 3, status: 'completed', fileName: '6月订单批量导入.xlsx', template: 'standard',
+        failedReasons: JSON.stringify([
+          { row: 3, waybillNo: 'SF2025061000011', reason: '收件人手机号格式错误' },
+          { row: 12, waybillNo: '', reason: '运单号不能为空' },
+          { row: 28, waybillNo: 'SF2025061000028', reason: '收件地址不完整' },
+        ]),
+        createdAt: '2025-06-10 09:00:00', completedAt: '2025-06-10 09:00:45' },
+      { id: 'ib2', userId: 'u2', totalCount: 30, successCount: 30, failedCount: 0, status: 'completed', fileName: '淘宝订单导出.csv', template: 'ecommerce',
+        failedReasons: '[]',
+        createdAt: '2025-06-08 14:30:00', completedAt: '2025-06-08 14:30:20' },
+      { id: 'ib3', userId: 'u2', totalCount: 100, successCount: 95, failedCount: 5, status: 'completed', fileName: '618活动第一批.xlsx', template: 'standard',
+        failedReasons: JSON.stringify([
+          { row: 7, waybillNo: 'SF2025060500007', reason: '运单号已存在' },
+          { row: 33, waybillNo: 'SF2025060500033', reason: '收件人姓名为空' },
+          { row: 89, waybillNo: 'SF2025060500089', reason: '寄件地址不支持取件' },
+        ]),
+        createdAt: '2025-06-05 08:00:00', completedAt: '2025-06-05 08:02:30' },
+      { id: 'ib4', userId: 'u1', totalCount: 5, successCount: 5, failedCount: 0, status: 'completed', fileName: '个人寄件.csv', template: 'standard',
+        failedReasons: '[]',
+        createdAt: '2025-06-09 16:00:00', completedAt: '2025-06-09 16:00:05' },
+      { id: 'ib5', userId: 'u2', totalCount: 80, successCount: 12, failedCount: 2, status: 'processing', fileName: '京东618商家订单-0611.xlsx', template: 'standard',
+        failedReasons: JSON.stringify([
+          { row: 8, waybillNo: '', reason: '运单号缺失' },
+          { row: 15, waybillNo: 'SF2025061100015', reason: '收件人手机号格式错误' },
+        ]),
+        createdAt: '2025-06-11 08:30:00', completedAt: null },
+    ];
+    for (const ib of importBatches) {
+      db.prepare(
+        `INSERT OR IGNORE INTO import_batches (id, user_id, total_count, success_count, failed_count, status, file_name, template, failed_reasons, created_at, completed_at)
+         VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`
+      ).run(ib.id, ib.userId, ib.totalCount, ib.successCount, ib.failedCount, ib.status, ib.fileName, ib.template, ib.failedReasons, ib.createdAt, ib.completedAt);
+    }
   }
 
-  const printBatches = [
-    { id: 'pb1', userId: 'u2', waybillIds: '["w1","w2","w3"]', template: 'standard', status: 'completed', totalCount: 3, printedCount: 3,
-      createdAt: '2025-06-10 10:00:00', completedAt: '2025-06-10 10:00:15' },
-    { id: 'pb2', userId: 'u2', waybillIds: '["w5","w6","w7","w8","w9","w10"]', template: 'thermal', status: 'completed', totalCount: 6, printedCount: 6,
-      createdAt: '2025-06-09 11:00:00', completedAt: '2025-06-09 11:00:45' },
-    { id: 'pb3', userId: 'u2', waybillIds: '["w1","w2","w3","w4","w5"]', template: 'a4', status: 'failed', totalCount: 5, printedCount: 2,
-      createdAt: '2025-06-07 14:00:00', completedAt: '2025-06-07 14:00:30' },
-    { id: 'pb4', userId: 'u1', waybillIds: '["w1"]', template: 'standard', status: 'completed', totalCount: 1, printedCount: 1,
-      createdAt: '2025-06-08 09:00:00', completedAt: '2025-06-08 09:00:03' },
-  ];
+  const pbCount = (db.prepare('SELECT COUNT(*) as count FROM print_batches').get() as { count: number }).count;
+  if (pbCount === 0) {
+    const printBatches = [
+      { id: 'pb1', userId: 'u2', waybillIds: '["w1","w2","w3"]', template: 'standard', status: 'completed', totalCount: 3, printedCount: 3,
+        createdAt: '2025-06-10 10:00:00', completedAt: '2025-06-10 10:00:15' },
+      { id: 'pb2', userId: 'u2', waybillIds: '["w5","w6","w7","w8","w9","w10"]', template: 'thermal', status: 'completed', totalCount: 6, printedCount: 6,
+        createdAt: '2025-06-09 11:00:00', completedAt: '2025-06-09 11:00:45' },
+      { id: 'pb3', userId: 'u2', waybillIds: '["w1","w2","w3","w4","w5"]', template: 'a4', status: 'failed', totalCount: 5, printedCount: 2,
+        createdAt: '2025-06-07 14:00:00', completedAt: '2025-06-07 14:00:30' },
+      { id: 'pb4', userId: 'u1', waybillIds: '["w1"]', template: 'standard', status: 'completed', totalCount: 1, printedCount: 1,
+        createdAt: '2025-06-08 09:00:00', completedAt: '2025-06-08 09:00:03' },
+      { id: 'pb5', userId: 'u2', waybillIds: '[]', template: 'thermal', status: 'printing', totalCount: 20, printedCount: 7,
+        createdAt: '2025-06-11 09:15:00', completedAt: null },
+      { id: 'pb6', userId: 'u2', waybillIds: '[]', template: 'standard', status: 'pending', totalCount: 15, printedCount: 0,
+        createdAt: '2025-06-11 09:45:00', completedAt: null },
+    ];
+    for (const pb of printBatches) {
+      db.prepare(
+        `INSERT OR IGNORE INTO print_batches (id, user_id, waybill_ids, template, status, total_count, printed_count, created_at, completed_at)
+         VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)`
+      ).run(pb.id, pb.userId, pb.waybillIds, pb.template, pb.status, pb.totalCount, pb.printedCount, pb.createdAt, pb.completedAt);
+    }
+  }
+});
 
-  for (const pb of printBatches) {
-    db.prepare(
-      `INSERT OR IGNORE INTO print_batches (id, user_id, waybill_ids, template, status, total_count, printed_count, created_at, completed_at)
-       VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)`
-    ).run(pb.id, pb.userId, pb.waybillIds, pb.template, pb.status, pb.totalCount, pb.printedCount, pb.createdAt, pb.completedAt);
+const seedMembershipSvip = db.transaction(() => {
+  const rows = db.prepare('SELECT id, user_id, level FROM membership_info').all() as { id: string; user_id: string; level: string }[];
+  const updateStmt = db.prepare(
+    `UPDATE membership_info SET svip_level = ?, svip_source = ?, svip_granted_at = ?, svip_granted_by = ?, svip_expiry = ? WHERE id = ?`
+  );
+  for (const r of rows) {
+    if (r.level === 'svip') {
+      updateStmt.run(2, 'activity', '2025-06-01 00:00:00', '王管理', '2026-06-30 23:59:59', r.id);
+    } else if (r.level === 'gold') {
+      updateStmt.run(1, 'upgrade', '2025-03-20 14:00:00', '系统自动', null, r.id);
+    } else {
+      updateStmt.run(0, null, null, null, null, r.id);
+    }
   }
 });
 
 seed();
+seedBatches();
+seedMembershipSvip();
 
 export default db;

@@ -3,7 +3,7 @@ import {
   Crown, Coins, TrendingUp, TrendingDown, Clock,
   Star, Shield, Headphones, Package, Percent, Gift, MapPin,
   FileText, ArrowRight, CheckCircle, AlertCircle, User, Calendar, Search,
-  Tag, Award, Clock as ClockIcon, X,
+  Tag, Award, Clock as ClockIcon, X, Eye,
 } from 'lucide-react'
 import { useMembershipStore } from '@/store'
 
@@ -263,6 +263,60 @@ export default function Membership() {
 
       {tab === 'points' && (
         <div className="space-y-6">
+          {(info?.svipLevel && info.svipLevel > 0) && (
+            <div className="card p-5 border border-amber-500/30 bg-gradient-to-br from-amber-500/10 via-orange-500/5 to-transparent">
+              <div className="flex items-start gap-4">
+                <div className="w-14 h-14 rounded-xl bg-gradient-to-br from-amber-400 to-orange-500 text-slate-900 flex items-center justify-center shrink-0 shadow-lg shadow-amber-500/20">
+                  <Crown className="w-7 h-7" />
+                </div>
+                <div className="flex-1 min-w-0">
+                  <div className="flex items-center gap-2 flex-wrap">
+                    <h3 className="font-semibold text-amber-400 text-lg flex items-center gap-1.5">
+                      {svipSubLevels[info.svipLevel as number] || `SVIP Lv.${info.svipLevel}`}
+                      <Star className="w-4 h-4" fill="currentColor" />
+                    </h3>
+                    <span className="text-xs px-2 py-0.5 rounded-full bg-emerald-500/15 text-emerald-400 border border-emerald-500/30 flex items-center gap-1">
+                      <CheckCircle className="w-3 h-3" />权益已激活
+                    </span>
+                    {info.svipSource && (
+                      <span className="text-xs px-2 py-0.5 rounded-full bg-slate-700/60 text-slate-300 border border-slate-600 flex items-center gap-1">
+                        <Tag className="w-3 h-3" />
+                        {info.svipSource === 'purchase' ? '购买获得' : info.svipSource === 'activity' ? '活动赠送' : info.svipSource === 'upgrade' ? '等级升级' : '他人赠送'}
+                      </span>
+                    )}
+                  </div>
+                  <p className="text-sm text-slate-400 mt-1">专属特权：优先揽收 · 免费保价 · 专属客服 · 极速理赔</p>
+                  <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 mt-4 text-xs">
+                    <div className="bg-slate-800/60 rounded-lg p-3">
+                      <p className="text-slate-500 mb-1 flex items-center gap-1"><Clock className="w-3 h-3" />有效期至</p>
+                      <p className="text-slate-200 font-mono-num font-medium">{info.svipExpiry ? formatDate(info.svipExpiry) : '长期有效'}</p>
+                    </div>
+                    <div className="bg-slate-800/60 rounded-lg p-3">
+                      <p className="text-slate-500 mb-1 flex items-center gap-1"><Award className="w-3 h-3" />发放人</p>
+                      <p className="text-slate-200 font-medium">{info.svipGrantedBy || '系统自动'}</p>
+                    </div>
+                    <div className="bg-slate-800/60 rounded-lg p-3">
+                      <p className="text-slate-500 mb-1 flex items-center gap-1"><Calendar className="w-3 h-3" />发放时间</p>
+                      <p className="text-slate-200 font-mono-num font-medium">{info.svipGrantedAt ? formatDate(info.svipGrantedAt) : '-'}</p>
+                    </div>
+                    <div className="bg-slate-800/60 rounded-lg p-3">
+                      <p className="text-slate-500 mb-1 flex items-center gap-1"><Shield className="w-3 h-3" />会员等级</p>
+                      <p className="text-slate-200 font-medium capitalize">{levelLabels[info.level as keyof typeof levelLabels] || info.level}</p>
+                    </div>
+                  </div>
+                  <div className="flex items-center gap-2 mt-4">
+                    <button onClick={() => setTab('svip')} className="btn-secondary text-xs flex items-center gap-1">
+                      <Eye className="w-3.5 h-3.5" />查看完整权益
+                    </button>
+                    <button onClick={() => setTab('audit')} className="btn-secondary text-xs flex items-center gap-1">
+                      <FileText className="w-3.5 h-3.5" />审计日志
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          )}
+
           <div className="grid md:grid-cols-3 gap-4">
             {exchangeItems.map((item) => {
               const isSvip = item.name.includes('SVIP')

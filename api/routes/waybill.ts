@@ -241,7 +241,8 @@ router.post('/', (req, res) => {
   try {
     const db: DbInstance = req.app.get('db');
     const {
-      waybillNo, senderName, senderAddress, receiverName, receiverAddress,
+      waybillNo, senderName, senderPhone, senderAddress,
+      receiverName, receiverPhone, receiverAddress,
       serviceLevel, weight, fee,
     } = req.body ?? {};
 
@@ -253,23 +254,59 @@ router.post('/', (req, res) => {
       safeWaybillNo = generateWaybillNo();
     }
 
+    const safeSenderName = textOr(senderName, '张伟');
+    const safeSenderPhone = textOr(senderPhone, '138****8888');
+    const safeSenderAddress = textOr(senderAddress, '上海市浦东新区张江高科技园区博云路2号');
+    const safeReceiverName = textOr(receiverName, '李娜');
+    const safeReceiverPhone = textOr(receiverPhone, '139****6666');
+    const safeReceiverAddress = textOr(receiverAddress, '北京市海淀区中关村大街27号中关村大厦');
+    const safeWeight = numberOr(weight, 2);
+    const safeFee = numberOr(fee, 18);
+    const safeService = normalizeServiceLevel(serviceLevel);
+    const serviceLabel = safeService === 'same_day' ? '当日达' : safeService === 'express' ? '次日达' : '标准快递';
+
     db.prepare(
-      `INSERT INTO waybills (id, user_id, waybill_no, sender_name, sender_address, receiver_name, receiver_address, status, service_level, weight, fee, created_at, updated_at)
-       VALUES (?, ?, ?, ?, ?, ?, ?, 'created', ?, ?, ?, ?, ?)`
+      `INSERT INTO waybills (id, user_id, waybill_no, sender_name, sender_phone, sender_address, receiver_name, receiver_phone, receiver_address, status, service_level, weight, fee, created_at, updated_at)
+       VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, 'created', ?, ?, ?, ?, ?)`
     ).run(
       id,
       CURRENT_USER_ID,
       safeWaybillNo,
-      textOr(senderName, '散客寄件'),
-      textOr(senderAddress, '待补充寄件地址'),
-      textOr(receiverName, '待确认收件人'),
-      textOr(receiverAddress, '待补充收件地址'),
-      normalizeServiceLevel(serviceLevel),
-      numberOr(weight, 1),
-      numberOr(fee, 12),
+      safeSenderName,
+      safeSenderPhone,
+      safeSenderAddress,
+      safeReceiverName,
+      safeReceiverPhone,
+      safeReceiverAddress,
+      safeService,
+      safeWeight,
+      safeFee,
       now,
       now
     );
+
+    const trackingId = `tn-${Date.now()}-${Math.random().toString(36).slice(2, 5)}`;
+    db.prepare(
+      `INSERT INTO tracking_nodes (id, waybill_id, time, location, status, description)
+       VALUES (?, ?, ?, ?, 'created', ?)`
+    ).run(
+      trackingId, id, now,
+      safeSenderAddress,
+      `运单已创建 · ${serviceLabel} · 重量${safeWeight}kg · 运费¥${safeFee} · 寄件人:${safeSenderName}`
+    );
+
+    try {
+      db.prepare(
+        `INSERT INTO audit_logs (id, user_id, action, target_type, target_id, details, created_at)
+         VALUES (?, ?, 'waybill_create', 'waybill', ?, ?, ?)`
+      ).run(
+        `al-${Date.now()}-${Math.random().toString(36).slice(2, 5)}`,
+        CURRENT_USER_ID,
+        id,
+        JSON.stringify({ waybillNo: safeWaybillNo, serviceLevel: safeService, weight: safeWeight, fee: safeFee }),
+        now
+      );
+    } catch (_) {}
 
     const row = db.prepare('SELECT * FROM waybills WHERE id = ?').get(id) as any;
     res.status(201).json(mapWaybillRow(row));

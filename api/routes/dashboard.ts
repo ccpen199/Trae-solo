@@ -101,7 +101,10 @@ router.get('/todos', (req, res) => {
 
     const pendingReviewScans = db.prepare(`
       SELECT * FROM scan_records
-      WHERE confidence < 0.85 OR is_edited = 0
+      WHERE (
+        (confidence < 0.85 AND (review_status IS NULL OR review_status = 'pending_review'))
+        OR (is_edited = 0 AND (review_status IS NULL OR review_status = ''))
+      )
       ORDER BY created_at DESC LIMIT 5
     `).all() as any[];
     for (const s of pendingReviewScans) {
