@@ -128,7 +128,7 @@ router.patch('/:id/status', async (req: Request, res: Response): Promise<void> =
       res.status(401).json({ success: false, error: '未登录' })
       return
     }
-    const { status } = req.body
+    const { status, note } = req.body
     if (!status) {
       res.status(400).json({ success: false, error: '缺少状态' })
       return
@@ -149,7 +149,9 @@ router.patch('/:id/status', async (req: Request, res: Response): Promise<void> =
       return
     }
     const timeline = JSON.parse(application.timeline || '[]')
-    timeline.push({ status, at: new Date().toISOString() })
+    const entry: any = { status, at: new Date().toISOString() }
+    if (note) entry.note = note
+    timeline.push(entry)
     db.prepare('UPDATE applications SET status = ?, timeline = ?, updated_at = datetime(\'now\') WHERE id = ?').run(status, JSON.stringify(timeline), req.params.id)
     const updated = db.prepare('SELECT * FROM applications WHERE id = ?').get(req.params.id)
     res.json({ success: true, data: updated })

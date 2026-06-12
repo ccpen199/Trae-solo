@@ -114,4 +114,26 @@ router.put('/profile', async (req: Request, res: Response): Promise<void> => {
   }
 })
 
+router.get('/status', async (req: Request, res: Response): Promise<void> => {
+  try {
+    const { phone, role } = req.query
+    if (!phone || !role) {
+      res.status(400).json({ success: false, error: '缺少参数' })
+      return
+    }
+    const user = db.prepare('SELECT id, verified, created_at FROM users WHERE phone = ? AND role = ?').get(phone, role) as any
+    if (!user) {
+      res.json({ success: true, data: { status: 'not_found', message: '未找到申请记录' } })
+      return
+    }
+    if (user.verified) {
+      res.json({ success: true, data: { status: 'approved', message: '审核已通过，您可以正常登录使用' } })
+    } else {
+      res.json({ success: true, data: { status: 'pending', message: '审核中，请耐心等待，预计1-3个工作日完成' } })
+    }
+  } catch (err: any) {
+    res.status(500).json({ success: false, error: err.message })
+  }
+})
+
 export default router
