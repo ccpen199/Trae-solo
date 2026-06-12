@@ -1,19 +1,13 @@
 import Link from "next/link";
 import {
-  Sparkles,
   Video,
   Radio,
-  Bot,
-  Building2,
-  Target,
   ArrowRight,
   Star,
   Users,
   Briefcase,
   MapPin,
   Upload,
-  Send,
-  Calendar,
   Eye,
   DollarSign,
   CheckCircle2,
@@ -25,8 +19,7 @@ import {
   LayoutGrid,
   FileSearch,
   ChevronRight,
-  Play,
-  CalendarDays,
+  Building2,
   Shield,
   Film,
   LineChart,
@@ -38,169 +31,54 @@ import { Avatar } from "@/components/ui/Avatar";
 import { Navbar } from "@/components/layout/Navbar";
 import { Footer } from "@/components/layout/Footer";
 
+const jobs = [
+  {
+    id: "1",
+    title: "高级前端工程师",
+    company: "字节跳动",
+    logo: "https://images.unsplash.com/photo-1611532736597-de2d4265fba3?w=80&h=80&fit=crop",
+    location: "北京",
+    salary: "25-50K",
+    tags: ["React", "TypeScript", "3-5年"],
+  },
+  {
+    id: "2",
+    title: "B端产品经理",
+    company: "阿里巴巴",
+    logo: "https://images.unsplash.com/photo-1549923746-c502d488b3ea?w=80&h=80&fit=crop",
+    location: "杭州",
+    salary: "20-35K",
+    tags: ["SaaS", "5-10年"],
+  },
+  {
+    id: "3",
+    title: "AI算法工程师",
+    company: "腾讯",
+    logo: "https://images.unsplash.com/photo-1560179707-f14e90ef3623?w=80&h=80&fit=crop",
+    location: "深圳",
+    salary: "30-60K",
+    tags: ["NLP", "机器学习"],
+  },
+  {
+    id: "4",
+    title: "资深Java开发",
+    company: "美团",
+    logo: "https://images.unsplash.com/photo-1568952433726-3896e3881c65?w=80&h=80&fit=crop",
+    location: "上海",
+    salary: "22-45K",
+    tags: ["Java", "微服务"],
+  },
+];
+
 export default function HomePage() {
-  const jobSeekerSteps = [
-    {
-      icon: Upload,
-      title: "AI简历解析",
-      desc: "上传PDF/Word，自动补全教育/工作/技能字段",
-      href: "/resume/ai",
-      color: "from-blue-500 to-cyan-500",
-      tag: "Step 1",
-    },
-    {
-      icon: Briefcase,
-      title: "一键投递",
-      desc: "基于能力画像智能匹配，一键批量投递",
-      href: "/jobs",
-      color: "from-indigo-500 to-purple-500",
-      tag: "Step 2",
-    },
-    {
-      icon: Video,
-      title: "视频面试",
-      desc: "预约面试 + 云端录制回放，复盘表现",
-      href: "/interviews",
-      color: "from-emerald-500 to-teal-500",
-      tag: "Step 3",
-    },
-    {
-      icon: UserCircle,
-      title: "能力画像沉淀",
-      desc: "所有行为沉淀六维画像，持续推荐机会",
-      href: "/profile",
-      color: "from-amber-500 to-orange-500",
-      tag: "Step 4",
-    },
-  ];
-
-  const employerModules = [
-    {
-      icon: Radio,
-      title: "直播招聘后台",
-      desc: "推流管理、弹幕审核、岗位挂载、连麦邀约",
-      href: "/employer/live",
-      color: "from-rose-500 to-red-500",
-      badge: "热门",
-    },
-    {
-      icon: Building2,
-      title: "雇主品牌主页",
-      desc: "VR导览、团队Vlog、文化价值观标签维护",
-      href: "/employer/brand",
-      color: "from-blue-500 to-indigo-500",
-    },
-    {
-      icon: Eye,
-      title: "谁看过我",
-      desc: "HR活跃度、岗位点击热区、简历打开率",
-      href: "/employer/views",
-      color: "from-purple-500 to-pink-500",
-      badge: "NEW",
-    },
-    {
-      icon: DollarSign,
-      title: "薪酬分位报告",
-      desc: "第三方薪资库 · P25/P50/P75 城市对比",
-      href: "/employer/salary",
-      color: "from-emerald-500 to-green-500",
-    },
-    {
-      icon: LayoutGrid,
-      title: "招聘会管理",
-      desc: "展位搭建、简历归集、AI初筛、扫码签到",
-      href: "/employer/fairs",
-      color: "from-amber-500 to-yellow-500",
-    },
-    {
-      icon: LineChart,
-      title: "企业数据看板",
-      desc: "招聘全链路数据分析漏斗和状态流转",
-      href: "/employer/dashboard",
-      color: "from-cyan-500 to-blue-500",
-    },
-  ];
-
-  const jobs = [
-    {
-      id: "1",
-      title: "高级前端工程师",
-      company: "字节跳动",
-      logo: "https://images.unsplash.com/photo-1611532736597-de2d4265fba3?w=80&h=80&fit=crop",
-      location: "北京",
-      salary: "25-50K",
-      tags: ["React", "TypeScript", "3-5年"],
-    },
-    {
-      id: "2",
-      title: "B端产品经理",
-      company: "阿里巴巴",
-      logo: "https://images.unsplash.com/photo-1549923746-c502d488b3ea?w=80&h=80&fit=crop",
-      location: "杭州",
-      salary: "20-35K",
-      tags: ["SaaS", "5-10年"],
-    },
-    {
-      id: "3",
-      title: "AI算法工程师",
-      company: "腾讯",
-      logo: "https://images.unsplash.com/photo-1560179707-f14e90ef3623?w=80&h=80&fit=crop",
-      location: "深圳",
-      salary: "30-60K",
-      tags: ["NLP", "机器学习"],
-    },
-    {
-      id: "4",
-      title: "资深Java开发",
-      company: "美团",
-      logo: "https://images.unsplash.com/photo-1568952433726-3896e3881c65?w=80&h=80&fit=crop",
-      location: "上海",
-      salary: "22-45K",
-      tags: ["Java", "微服务"],
-    },
-  ];
-
-  const lives = [
-    {
-      id: "1",
-      title: "小米技术岗专场直播",
-      host: "Lisa",
-      avatar: "L",
-      viewers: 3256,
-      jobs: 12,
-      cover: "https://images.unsplash.com/photo-1560439514-4e9645039924?w=400&h=250&fit=crop",
-      isLive: true,
-    },
-    {
-      id: "2",
-      title: "华为2026校招宣讲会",
-      host: "HR团队",
-      avatar: "H",
-      viewers: 8921,
-      jobs: 38,
-      cover: "https://images.unsplash.com/photo-1515187029135-18ee286d815b?w=400&h=250&fit=crop",
-      isLive: true,
-    },
-    {
-      id: "3",
-      title: "网易游戏岗位专场",
-      host: "网易招聘",
-      avatar: "N",
-      viewers: 1542,
-      jobs: 7,
-      cover: "https://images.unsplash.com/photo-1538481199705-c710c4e965fc?w=400&h=250&fit=crop",
-      isLive: false,
-    },
-  ];
-
   return (
     <div className="min-h-screen bg-white">
       <Navbar />
 
+      {/* ========== HERO ========== */}
       <section className="relative overflow-hidden py-20 lg:py-28">
         <div className="absolute inset-0 bg-gradient-to-br from-blue-50 via-indigo-50/50 to-purple-50" />
         <div className="absolute top-0 right-0 w-[700px] h-[700px] bg-blue-400/15 rounded-full blur-3xl -translate-y-1/3 translate-x-1/3" />
-
         <div className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="grid gap-12 lg:grid-cols-2 items-center">
             <div className="space-y-8">
@@ -263,13 +141,13 @@ export default function HomePage() {
 
               <div className="flex items-center gap-6 pt-2">
                 <div className="flex -space-x-3">
-                  {["A","B","C","D","E"].map((c) => (
+                  {["A", "B", "C", "D", "E"].map((c) => (
                     <div key={c} className="w-10 h-10 rounded-full border-2 border-white bg-gradient-to-br from-slate-400 to-slate-500 flex items-center justify-center text-white text-xs font-medium">{c}</div>
                   ))}
                 </div>
                 <div>
                   <div className="flex items-center gap-1">
-                    {[1,2,3,4,5].map((i) => (
+                    {[1, 2, 3, 4, 5].map((i) => (
                       <Star key={i} className="h-4 w-4 fill-amber-400 text-amber-400" />
                     ))}
                     <span className="ml-1 text-sm font-semibold text-slate-900">4.9 分</span>
@@ -284,8 +162,8 @@ export default function HomePage() {
                 <div className="aspect-video w-full relative rounded-xl overflow-hidden">
                   <img src="https://images.unsplash.com/photo-1553877522-43269d4ea984?w=900&h=560&fit=crop" className="w-full h-full object-cover" alt="product" />
                   <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent" />
-                  <div className="absolute bottom-4 left-4 right-4 flex gap-3">
-                    <div className="flex-1 rounded-lg bg-white/95 backdrop-blur p-4 shadow-lg">
+                  <div className="absolute bottom-4 left-4 right-4">
+                    <div className="rounded-lg bg-white/95 backdrop-blur p-4 shadow-lg">
                       <div className="flex items-center gap-3">
                         <div className="flex h-11 w-11 rounded-lg items-center justify-center bg-gradient-to-br from-blue-500 to-indigo-500 text-white">
                           <Brain className="h-5 w-5" />
@@ -322,6 +200,7 @@ export default function HomePage() {
         </div>
       </section>
 
+      {/* ========== 求职者四步闭环 ========== */}
       <section className="py-20 bg-white border-y border-slate-100">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="text-center max-w-2xl mx-auto mb-12">
@@ -331,30 +210,82 @@ export default function HomePage() {
           </div>
 
           <div className="grid gap-5 md:grid-cols-2 lg:grid-cols-4">
-            {jobSeekerSteps.map((s) => (
-              <Link key={s.href} href={s.href} className="group">
-                <Card hover className="h-full">
-                  <CardContent className="p-6 relative">
-                    <div className="absolute top-4 right-4 text-[10px] font-semibold uppercase tracking-wider text-slate-400">{s.tag}</div>
-                    <div className={`inline-flex h-14 w-14 items-center justify-center rounded-2xl bg-gradient-to-br ${s.color} text-white mb-5 shadow-lg group-hover:scale-110 transition-transform`}>
-                      <s.icon className="h-7 w-7" />
-                    </div>
-                    <h3 className="text-lg font-semibold text-slate-900 mb-2">{s.title}</h3>
-                    <p className="text-sm text-slate-600 mb-5 leading-relaxed">{s.desc}</p>
-                    <div className="flex items-center justify-between pt-4 border-t border-slate-100 -mx-6 px-6">
-                      <span className="text-xs font-medium text-slate-500">点击进入</span>
-                      <span className="inline-flex items-center gap-1 text-sm font-semibold text-blue-600 group-hover:gap-2 transition-all">
-                        立即体验 <ArrowRight className="h-4 w-4" />
-                      </span>
-                    </div>
-                  </CardContent>
-                </Card>
-              </Link>
-            ))}
+            {/* Step 1 */}
+            <Link href="/resume/ai" className="group">
+              <Card hover className="h-full">
+                <CardContent className="p-6 relative">
+                  <div className="absolute top-4 right-4 text-[10px] font-semibold uppercase tracking-wider text-slate-400">Step 1</div>
+                  <div className="inline-flex h-14 w-14 items-center justify-center rounded-2xl bg-gradient-to-br from-blue-500 to-cyan-500 text-white mb-5 shadow-lg group-hover:scale-110 transition-transform">
+                    <Upload className="h-7 w-7" />
+                  </div>
+                  <h3 className="text-lg font-semibold text-slate-900 mb-2">AI简历解析</h3>
+                  <p className="text-sm text-slate-600 mb-5 leading-relaxed">上传PDF/Word，自动补全教育/工作/技能字段</p>
+                  <div className="flex items-center justify-between pt-4 border-t border-slate-100 -mx-6 px-6">
+                    <span className="text-xs font-medium text-slate-500">点击进入</span>
+                    <span className="inline-flex items-center gap-1 text-sm font-semibold text-blue-600 group-hover:gap-2 transition-all">立即体验 <ArrowRight className="h-4 w-4" /></span>
+                  </div>
+                </CardContent>
+              </Card>
+            </Link>
+
+            {/* Step 2 */}
+            <Link href="/jobs" className="group">
+              <Card hover className="h-full">
+                <CardContent className="p-6 relative">
+                  <div className="absolute top-4 right-4 text-[10px] font-semibold uppercase tracking-wider text-slate-400">Step 2</div>
+                  <div className="inline-flex h-14 w-14 items-center justify-center rounded-2xl bg-gradient-to-br from-indigo-500 to-purple-500 text-white mb-5 shadow-lg group-hover:scale-110 transition-transform">
+                    <Briefcase className="h-7 w-7" />
+                  </div>
+                  <h3 className="text-lg font-semibold text-slate-900 mb-2">一键投递</h3>
+                  <p className="text-sm text-slate-600 mb-5 leading-relaxed">基于能力画像智能匹配，一键批量投递</p>
+                  <div className="flex items-center justify-between pt-4 border-t border-slate-100 -mx-6 px-6">
+                    <span className="text-xs font-medium text-slate-500">点击进入</span>
+                    <span className="inline-flex items-center gap-1 text-sm font-semibold text-blue-600 group-hover:gap-2 transition-all">找工作 <ArrowRight className="h-4 w-4" /></span>
+                  </div>
+                </CardContent>
+              </Card>
+            </Link>
+
+            {/* Step 3 */}
+            <Link href="/interviews" className="group">
+              <Card hover className="h-full">
+                <CardContent className="p-6 relative">
+                  <div className="absolute top-4 right-4 text-[10px] font-semibold uppercase tracking-wider text-slate-400">Step 3</div>
+                  <div className="inline-flex h-14 w-14 items-center justify-center rounded-2xl bg-gradient-to-br from-emerald-500 to-teal-500 text-white mb-5 shadow-lg group-hover:scale-110 transition-transform">
+                    <Video className="h-7 w-7" />
+                  </div>
+                  <h3 className="text-lg font-semibold text-slate-900 mb-2">视频面试</h3>
+                  <p className="text-sm text-slate-600 mb-5 leading-relaxed">预约面试 + 云端录制回放，复盘表现</p>
+                  <div className="flex items-center justify-between pt-4 border-t border-slate-100 -mx-6 px-6">
+                    <span className="text-xs font-medium text-slate-500">点击进入</span>
+                    <span className="inline-flex items-center gap-1 text-sm font-semibold text-blue-600 group-hover:gap-2 transition-all">进入面试 <ArrowRight className="h-4 w-4" /></span>
+                  </div>
+                </CardContent>
+              </Card>
+            </Link>
+
+            {/* Step 4 */}
+            <Link href="/profile" className="group">
+              <Card hover className="h-full">
+                <CardContent className="p-6 relative">
+                  <div className="absolute top-4 right-4 text-[10px] font-semibold uppercase tracking-wider text-slate-400">Step 4</div>
+                  <div className="inline-flex h-14 w-14 items-center justify-center rounded-2xl bg-gradient-to-br from-amber-500 to-orange-500 text-white mb-5 shadow-lg group-hover:scale-110 transition-transform">
+                    <UserCircle className="h-7 w-7" />
+                  </div>
+                  <h3 className="text-lg font-semibold text-slate-900 mb-2">能力画像沉淀</h3>
+                  <p className="text-sm text-slate-600 mb-5 leading-relaxed">所有行为沉淀六维画像，持续推荐机会</p>
+                  <div className="flex items-center justify-between pt-4 border-t border-slate-100 -mx-6 px-6">
+                    <span className="text-xs font-medium text-slate-500">点击进入</span>
+                    <span className="inline-flex items-center gap-1 text-sm font-semibold text-blue-600 group-hover:gap-2 transition-all">查看画像 <ArrowRight className="h-4 w-4" /></span>
+                  </div>
+                </CardContent>
+              </Card>
+            </Link>
           </div>
         </div>
       </section>
 
+      {/* ========== 企业 6 大模块 ========== */}
       <section className="py-20 bg-gradient-to-br from-indigo-50 via-white to-purple-50/60">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="text-center max-w-2xl mx-auto mb-12">
@@ -364,25 +295,103 @@ export default function HomePage() {
           </div>
 
           <div className="grid gap-5 md:grid-cols-2 lg:grid-cols-3">
-            {employerModules.map((m) => (
-              <Link key={m.href} href={m.href} className="group">
-                <Card hover className="h-full group-hover:shadow-xl transition-all">
-                  <CardContent className="p-6">
-                    <div className="flex items-start justify-between mb-4">
-                      <div className={`inline-flex h-12 w-12 items-center justify-center rounded-xl bg-gradient-to-br ${m.color} text-white shadow-md group-hover:scale-110 transition-transform`}>
-                        <m.icon className="h-6 w-6" />
-                      </div>
-                      {m.badge && <Badge variant={m.badge === "热门" ? "destructive" : "info"} size="sm">{m.badge}</Badge>}
+            {/* 直播招聘 */}
+            <Link href="/employer/live" className="group">
+              <Card hover className="h-full group-hover:shadow-xl transition-all">
+                <CardContent className="p-6">
+                  <div className="flex items-start justify-between mb-4">
+                    <div className="inline-flex h-12 w-12 items-center justify-center rounded-xl bg-gradient-to-br from-rose-500 to-red-500 text-white shadow-md group-hover:scale-110 transition-transform">
+                      <Radio className="h-6 w-6" />
                     </div>
-                    <h3 className="text-lg font-semibold text-slate-900 mb-2">{m.title}</h3>
-                    <p className="text-sm text-slate-600 leading-relaxed mb-4">{m.desc}</p>
-                    <span className="inline-flex items-center gap-2 text-sm font-semibold text-indigo-600 group-hover:gap-3 transition-all">
-                      进入后台 <ChevronRight className="h-4 w-4" />
-                    </span>
-                  </CardContent>
-                </Card>
-              </Link>
-            ))}
+                    <Badge variant="destructive" size="sm">热门</Badge>
+                  </div>
+                  <h3 className="text-lg font-semibold text-slate-900 mb-2">直播招聘后台</h3>
+                  <p className="text-sm text-slate-600 leading-relaxed mb-4">推流管理、弹幕审核、岗位挂载、连麦邀约</p>
+                  <span className="inline-flex items-center gap-2 text-sm font-semibold text-indigo-600 group-hover:gap-3 transition-all">进入后台 <ChevronRight className="h-4 w-4" /></span>
+                </CardContent>
+              </Card>
+            </Link>
+
+            {/* 雇主品牌 */}
+            <Link href="/employer/brand" className="group">
+              <Card hover className="h-full group-hover:shadow-xl transition-all">
+                <CardContent className="p-6">
+                  <div className="flex items-start justify-between mb-4">
+                    <div className="inline-flex h-12 w-12 items-center justify-center rounded-xl bg-gradient-to-br from-blue-500 to-indigo-500 text-white shadow-md group-hover:scale-110 transition-transform">
+                      <Building2 className="h-6 w-6" />
+                    </div>
+                  </div>
+                  <h3 className="text-lg font-semibold text-slate-900 mb-2">雇主品牌主页</h3>
+                  <p className="text-sm text-slate-600 leading-relaxed mb-4">VR导览、团队Vlog、文化价值观标签维护</p>
+                  <span className="inline-flex items-center gap-2 text-sm font-semibold text-indigo-600 group-hover:gap-3 transition-all">维护主页 <ChevronRight className="h-4 w-4" /></span>
+                </CardContent>
+              </Card>
+            </Link>
+
+            {/* 谁看过我 */}
+            <Link href="/employer/views" className="group">
+              <Card hover className="h-full group-hover:shadow-xl transition-all">
+                <CardContent className="p-6">
+                  <div className="flex items-start justify-between mb-4">
+                    <div className="inline-flex h-12 w-12 items-center justify-center rounded-xl bg-gradient-to-br from-purple-500 to-pink-500 text-white shadow-md group-hover:scale-110 transition-transform">
+                      <Eye className="h-6 w-6" />
+                    </div>
+                    <Badge variant="info" size="sm">NEW</Badge>
+                  </div>
+                  <h3 className="text-lg font-semibold text-slate-900 mb-2">谁看过我</h3>
+                  <p className="text-sm text-slate-600 leading-relaxed mb-4">HR活跃度、岗位点击热区、简历打开率</p>
+                  <span className="inline-flex items-center gap-2 text-sm font-semibold text-indigo-600 group-hover:gap-3 transition-all">看数据 <ChevronRight className="h-4 w-4" /></span>
+                </CardContent>
+              </Card>
+            </Link>
+
+            {/* 薪酬报告 */}
+            <Link href="/employer/salary" className="group">
+              <Card hover className="h-full group-hover:shadow-xl transition-all">
+                <CardContent className="p-6">
+                  <div className="flex items-start justify-between mb-4">
+                    <div className="inline-flex h-12 w-12 items-center justify-center rounded-xl bg-gradient-to-br from-emerald-500 to-green-500 text-white shadow-md group-hover:scale-110 transition-transform">
+                      <DollarSign className="h-6 w-6" />
+                    </div>
+                  </div>
+                  <h3 className="text-lg font-semibold text-slate-900 mb-2">薪酬分位报告</h3>
+                  <p className="text-sm text-slate-600 leading-relaxed mb-4">第三方薪资库 · P25/P50/P75 城市对比</p>
+                  <span className="inline-flex items-center gap-2 text-sm font-semibold text-indigo-600 group-hover:gap-3 transition-all">查报告 <ChevronRight className="h-4 w-4" /></span>
+                </CardContent>
+              </Card>
+            </Link>
+
+            {/* 招聘会管理 */}
+            <Link href="/employer/fairs" className="group">
+              <Card hover className="h-full group-hover:shadow-xl transition-all">
+                <CardContent className="p-6">
+                  <div className="flex items-start justify-between mb-4">
+                    <div className="inline-flex h-12 w-12 items-center justify-center rounded-xl bg-gradient-to-br from-amber-500 to-yellow-500 text-white shadow-md group-hover:scale-110 transition-transform">
+                      <LayoutGrid className="h-6 w-6" />
+                    </div>
+                  </div>
+                  <h3 className="text-lg font-semibold text-slate-900 mb-2">招聘会管理</h3>
+                  <p className="text-sm text-slate-600 leading-relaxed mb-4">展位搭建、简历归集、AI初筛、扫码签到</p>
+                  <span className="inline-flex items-center gap-2 text-sm font-semibold text-indigo-600 group-hover:gap-3 transition-all">去管理 <ChevronRight className="h-4 w-4" /></span>
+                </CardContent>
+              </Card>
+            </Link>
+
+            {/* 企业数据看板 */}
+            <Link href="/employer/dashboard" className="group">
+              <Card hover className="h-full group-hover:shadow-xl transition-all">
+                <CardContent className="p-6">
+                  <div className="flex items-start justify-between mb-4">
+                    <div className="inline-flex h-12 w-12 items-center justify-center rounded-xl bg-gradient-to-br from-cyan-500 to-blue-500 text-white shadow-md group-hover:scale-110 transition-transform">
+                      <LineChart className="h-6 w-6" />
+                    </div>
+                  </div>
+                  <h3 className="text-lg font-semibold text-slate-900 mb-2">企业数据看板</h3>
+                  <p className="text-sm text-slate-600 leading-relaxed mb-4">招聘全链路数据分析漏斗和状态流转</p>
+                  <span className="inline-flex items-center gap-2 text-sm font-semibold text-indigo-600 group-hover:gap-3 transition-all">进入控制台 <ChevronRight className="h-4 w-4" /></span>
+                </CardContent>
+              </Card>
+            </Link>
           </div>
 
           <div className="mt-10 flex flex-col sm:flex-row items-center justify-center gap-3">
@@ -400,6 +409,7 @@ export default function HomePage() {
         </div>
       </section>
 
+      {/* ========== 热门职位 ========== */}
       <section id="jobs" className="py-20 bg-white">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="flex items-end justify-between mb-10 flex-wrap gap-4">
@@ -449,13 +459,14 @@ export default function HomePage() {
         </div>
       </section>
 
+      {/* ========== 直播招聘 ========== */}
       <section id="live" className="py-20 bg-gradient-to-br from-slate-900 via-slate-900 to-indigo-950 text-white relative overflow-hidden">
         <div className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="flex items-end justify-between mb-12 flex-wrap gap-4">
             <div>
               <Badge variant="destructive" size="lg" className="mb-3 bg-red-500/20 text-red-300 border-red-500/30" dot>正在直播</Badge>
               <h2 className="text-3xl font-bold">直播带岗 · 边看边投</h2>
-              <p className="mt-2 text-slate-300">点击直播间进入：弹幕互动/岗位挂载/连麦邀约 <Link href="/live" className="text-blue-400 underline underline-offset-2 ml-1">全部直播 →</Link></p>
+              <p className="mt-2 text-slate-300">弹幕互动/岗位挂载/连麦邀约 <Link href="/live" className="text-blue-400 underline underline-offset-2 ml-1">全部直播 →</Link></p>
             </div>
             <div className="flex items-center gap-2">
               <Link href="/live"><Button variant="outline" className="bg-white/10 text-white border-white/20 hover:bg-white/20">直播大厅</Button></Link>
@@ -464,7 +475,11 @@ export default function HomePage() {
           </div>
 
           <div className="grid gap-6 md:grid-cols-3">
-            {lives.map((s) => (
+            {[
+              { id: "1", title: "小米技术岗专场直播", host: "Lisa", avatar: "L", viewers: 3256, jobCount: 12, cover: "https://images.unsplash.com/photo-1560439514-4e9645039924?w=400&h=250&fit=crop", isLive: true },
+              { id: "2", title: "华为2026校招宣讲会", host: "HR团队", avatar: "H", viewers: 8921, jobCount: 38, cover: "https://images.unsplash.com/photo-1515187029135-18ee286d815b?w=400&h=250&fit=crop", isLive: true },
+              { id: "3", title: "网易游戏岗位专场", host: "网易招聘", avatar: "N", viewers: 1542, jobCount: 7, cover: "https://images.unsplash.com/photo-1538481199705-c710c4e965fc?w=400&h=250&fit=crop", isLive: false },
+            ].map((s) => (
               <Link key={s.id} href={`/live?room=${s.id}`} className="group relative rounded-2xl overflow-hidden">
                 <div className="aspect-[16/10] relative">
                   <img src={s.cover} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" alt={s.title} />
@@ -476,7 +491,7 @@ export default function HomePage() {
                   )}
                   <div className="absolute top-3 right-3 flex items-center gap-3">
                     <div className="flex items-center gap-1 px-2 py-1 rounded-md bg-black/60 backdrop-blur text-white text-xs"><Users className="h-3.5 w-3.5" />{s.viewers.toLocaleString()}</div>
-                    <div className="flex items-center gap-1 px-2 py-1 rounded-md bg-black/60 backdrop-blur text-white text-xs"><Briefcase className="h-3.5 w-3.5" />{s.jobs}</div>
+                    <div className="flex items-center gap-1 px-2 py-1 rounded-md bg-black/60 backdrop-blur text-white text-xs"><Briefcase className="h-3.5 w-3.5" />{s.jobCount}</div>
                   </div>
                   <div className="absolute bottom-0 left-0 right-0 p-4">
                     <h3 className="font-semibold text-white mb-2 line-clamp-1">{s.title}</h3>
@@ -487,25 +502,27 @@ export default function HomePage() {
             ))}
           </div>
 
-          <div className="mt-10 grid gap-4 md:grid-cols-3 gap-6 pt-8 border-t border-white/10">
-            {[
-              { icon: Shield, title: "弹幕审核", desc: "关键词过滤+人工审核", link: "去配置", href: "/employer/live" },
-              { icon: Briefcase, title: "岗位挂载", desc: "直播中挂载岗位一键投递", link: "立即挂载", href: "/employer/live" },
-              { icon: Film, title: "连麦邀约", desc: "一键邀请求职者上麦面试", link: "去体验", href: "/live" },
-            ].map((it) => (
-              <Link key={it.title} href={it.href} className="flex items-start gap-4 p-4 rounded-xl bg-white/5 border border-white/10 hover:bg-white/10 transition-colors">
-                <it.icon className="h-6 w-6 text-blue-400 flex-shrink-0" />
-                <div className="flex-1">
-                  <p className="text-white font-semibold">{it.title}</p>
-                  <p className="text-xs text-slate-400">{it.desc}</p>
-                </div>
-                <span className="text-xs font-medium text-blue-400 whitespace-nowrap">{it.link} →</span>
-              </Link>
-            ))}
+          <div className="mt-10 grid gap-4 md:grid-cols-3 pt-8 border-t border-white/10">
+            <Link href="/employer/live" className="flex items-start gap-4 p-4 rounded-xl bg-white/5 border border-white/10 hover:bg-white/10 transition-colors">
+              <Shield className="h-6 w-6 text-blue-400 flex-shrink-0" />
+              <div className="flex-1"><p className="text-white font-semibold">弹幕审核</p><p className="text-xs text-slate-400">关键词过滤+人工审核</p></div>
+              <span className="text-xs font-medium text-blue-400 whitespace-nowrap">去配置 →</span>
+            </Link>
+            <Link href="/employer/live" className="flex items-start gap-4 p-4 rounded-xl bg-white/5 border border-white/10 hover:bg-white/10 transition-colors">
+              <Briefcase className="h-6 w-6 text-emerald-400 flex-shrink-0" />
+              <div className="flex-1"><p className="text-white font-semibold">岗位挂载</p><p className="text-xs text-slate-400">直播中挂载岗位一键投递</p></div>
+              <span className="text-xs font-medium text-blue-400 whitespace-nowrap">立即挂载 →</span>
+            </Link>
+            <Link href="/live" className="flex items-start gap-4 p-4 rounded-xl bg-white/5 border border-white/10 hover:bg-white/10 transition-colors">
+              <Film className="h-6 w-6 text-rose-400 flex-shrink-0" />
+              <div className="flex-1"><p className="text-white font-semibold">连麦邀约</p><p className="text-xs text-slate-400">一键邀请求职者上麦面试</p></div>
+              <span className="text-xs font-medium text-blue-400 whitespace-nowrap">去体验 →</span>
+            </Link>
           </div>
         </div>
       </section>
 
+      {/* ========== 招聘会 ========== */}
       <section id="fairs" className="py-20 bg-slate-50">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="grid gap-12 lg:grid-cols-2 items-center">
@@ -517,21 +534,26 @@ export default function HomePage() {
               </p>
 
               <div className="space-y-3 mb-8">
-                {[
-                  { icon: LayoutGrid, title: "线上展位搭建", desc: "拖拽展位装修、主题色、岗位列表", href: "/employer/fairs" },
-                  { icon: FileSearch, title: "简历归集 + AI初筛", desc: "JD关键词/年限/证书多维评分排序", href: "/employer/fairs" },
-                  { icon: ListFilter, title: "JD关键词匹配权重", desc: "调整五维评分权重，自动生成报告", href: "/employer/fairs" },
-                  { icon: QrCode, title: "扫码签到联动", desc: "签到数据实时同步，沉淀能力画像", href: "/employer/fairs" },
-                ].map((it) => (
-                  <Link key={it.title} href={it.href} className="flex items-start gap-3 p-4 rounded-xl bg-white border border-slate-200/60 hover:border-blue-200 hover:shadow-md transition-all group">
-                    <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-blue-50 text-blue-600 flex-shrink-0 group-hover:bg-blue-100 transition-colors"><it.icon className="h-5 w-5" /></div>
-                    <div className="flex-1">
-                      <p className="font-semibold text-slate-900">{it.title}</p>
-                      <p className="text-sm text-slate-600 mt-0.5">{it.desc}</p>
-                    </div>
-                    <ChevronRight className="h-5 w-5 text-slate-400 group-hover:text-blue-500 group-hover:translate-x-0.5 transition-all" />
-                  </Link>
-                ))}
+                <Link href="/employer/fairs" className="flex items-start gap-3 p-4 rounded-xl bg-white border border-slate-200/60 hover:border-blue-200 hover:shadow-md transition-all group">
+                  <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-blue-50 text-blue-600 flex-shrink-0 group-hover:bg-blue-100 transition-colors"><LayoutGrid className="h-5 w-5" /></div>
+                  <div className="flex-1"><p className="font-semibold text-slate-900">线上展位搭建</p><p className="text-sm text-slate-600 mt-0.5">拖拽展位装修、主题色、岗位列表</p></div>
+                  <ChevronRight className="h-5 w-5 text-slate-400 group-hover:text-blue-500 group-hover:translate-x-0.5 transition-all" />
+                </Link>
+                <Link href="/employer/fairs" className="flex items-start gap-3 p-4 rounded-xl bg-white border border-slate-200/60 hover:border-blue-200 hover:shadow-md transition-all group">
+                  <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-blue-50 text-blue-600 flex-shrink-0 group-hover:bg-blue-100 transition-colors"><FileSearch className="h-5 w-5" /></div>
+                  <div className="flex-1"><p className="font-semibold text-slate-900">简历归集 + AI初筛</p><p className="text-sm text-slate-600 mt-0.5">JD关键词/年限/证书多维评分排序</p></div>
+                  <ChevronRight className="h-5 w-5 text-slate-400 group-hover:text-blue-500 group-hover:translate-x-0.5 transition-all" />
+                </Link>
+                <Link href="/employer/fairs" className="flex items-start gap-3 p-4 rounded-xl bg-white border border-slate-200/60 hover:border-blue-200 hover:shadow-md transition-all group">
+                  <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-blue-50 text-blue-600 flex-shrink-0 group-hover:bg-blue-100 transition-colors"><ListFilter className="h-5 w-5" /></div>
+                  <div className="flex-1"><p className="font-semibold text-slate-900">JD关键词匹配权重</p><p className="text-sm text-slate-600 mt-0.5">调整五维评分权重，自动生成报告</p></div>
+                  <ChevronRight className="h-5 w-5 text-slate-400 group-hover:text-blue-500 group-hover:translate-x-0.5 transition-all" />
+                </Link>
+                <Link href="/employer/fairs" className="flex items-start gap-3 p-4 rounded-xl bg-white border border-slate-200/60 hover:border-blue-200 hover:shadow-md transition-all group">
+                  <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-blue-50 text-blue-600 flex-shrink-0 group-hover:bg-blue-100 transition-colors"><QrCode className="h-5 w-5" /></div>
+                  <div className="flex-1"><p className="font-semibold text-slate-900">扫码签到联动</p><p className="text-sm text-slate-600 mt-0.5">签到数据实时同步，沉淀能力画像</p></div>
+                  <ChevronRight className="h-5 w-5 text-slate-400 group-hover:text-blue-500 group-hover:translate-x-0.5 transition-all" />
+                </Link>
               </div>
 
               <div className="flex flex-wrap items-center gap-3">
@@ -561,6 +583,7 @@ export default function HomePage() {
         </div>
       </section>
 
+      {/* ========== CTA ========== */}
       <section className="py-20 bg-white">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="max-w-5xl mx-auto rounded-3xl bg-gradient-to-br from-indigo-600 via-blue-600 to-purple-700 p-10 md:p-14 text-white relative overflow-hidden shadow-2xl">

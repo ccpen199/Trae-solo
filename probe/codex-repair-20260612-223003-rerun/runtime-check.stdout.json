@@ -1,0 +1,188 @@
+{
+  "ok": true,
+  "generatedAt": "2026-06-12T20:38:31.159Z",
+  "order": "may-89174",
+  "roundIndex": 1509,
+  "captureId": "may-89174-codex-1509-rerun",
+  "url": "http://127.0.0.1:49174/",
+  "initialUrl": "http://127.0.0.1:49174/",
+  "finalUrl": "http://127.0.0.1:49174/",
+  "status": 404,
+  "title": "404: This page could not be found.",
+  "initialTitle": "404: This page could not be found.",
+  "navigationError": "",
+  "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89174/probe/codex-repair-20260612-223003-rerun/may-89174-codex-1509-rerun-frontend.png",
+  "screenshotPaths": [
+    "/Users/chen/Documents/trae_projects/local_projects/may-89174/probe/codex-repair-20260612-223003-rerun/may-89174-codex-1509-rerun-structure-01-首屏.png"
+  ],
+  "issueTextPreview": "runtime start report was not generated；搜索/筛选相关问题；后台管理相关问题；详情/内容页相关问题；发现/分类相关问题",
+  "targetReason": "搜索/筛选相关问题；后台管理相关问题；详情/内容页相关问题；发现/分类相关问题",
+  "targetKind": "search",
+  "targetMatched": false,
+  "targetActions": [],
+  "authFlow": {
+    "detected": false,
+    "attempted": false,
+    "success": false,
+    "finalUrl": "http://127.0.0.1:49174/",
+    "message": "",
+    "actions": []
+  },
+  "businessAudit": {
+    "actions": [],
+    "snapshots": [
+      {
+        "label": "首屏",
+        "url": "http://127.0.0.1:49174/",
+        "title": "404: This page could not be found.",
+        "headings": [
+          "404",
+          "This page could not be found."
+        ],
+        "navLabels": [],
+        "buttons": [],
+        "links": [],
+        "inputs": [],
+        "tables": [],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "404This page could not be found.",
+        "layout": {
+          "viewportWidth": 1504,
+          "viewportHeight": 1000,
+          "scrollWidth": 1504,
+          "scrollHeight": 1000,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89174-codex-1509-rerun-structure-01-首屏",
+          "label": "首屏",
+          "finalUrl": "http://127.0.0.1:49174/",
+          "title": "404: This page could not be found.",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89174/probe/codex-repair-20260612-223003-rerun/may-89174-codex-1509-rerun-structure-01-首屏.json",
+          "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89174/probe/codex-repair-20260612-223003-rerun/may-89174-codex-1509-rerun-structure-01-首屏.png",
+          "elementCount": 20,
+          "interactiveCount": 0,
+          "interactiveLabels": []
+        }
+      }
+    ],
+    "findings": [],
+    "actionHints": [],
+    "emptyPages": [],
+    "overflowPages": [],
+    "blankPages": [],
+    "apiFailurePaths": [],
+    "goalTerms": [],
+    "clickedActionDescriptors": [],
+    "secondaryActionClicks": 0,
+    "structureCaptures": [
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89174-codex-1509-rerun-structure-01-首屏",
+        "label": "首屏",
+        "finalUrl": "http://127.0.0.1:49174/",
+        "title": "404: This page could not be found.",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89174/probe/codex-repair-20260612-223003-rerun/may-89174-codex-1509-rerun-structure-01-首屏.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89174/probe/codex-repair-20260612-223003-rerun/may-89174-codex-1509-rerun-structure-01-首屏.png",
+        "elementCount": 20,
+        "interactiveCount": 0,
+        "interactiveLabels": []
+      }
+    ],
+    "representativeScreenshotUrl": "http://127.0.0.1:49174/",
+    "representativeScreenshotLabel": "404"
+  },
+  "websiteStructureCapture": {
+    "module": "website_structure_capture",
+    "captureCount": 1,
+    "captures": [
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89174-codex-1509-rerun-structure-01-首屏",
+        "label": "首屏",
+        "finalUrl": "http://127.0.0.1:49174/",
+        "title": "404: This page could not be found.",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89174/probe/codex-repair-20260612-223003-rerun/may-89174-codex-1509-rerun-structure-01-首屏.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89174/probe/codex-repair-20260612-223003-rerun/may-89174-codex-1509-rerun-structure-01-首屏.png",
+        "elementCount": 20,
+        "interactiveCount": 0,
+        "interactiveLabels": []
+      }
+    ]
+  },
+  "screenshotMetrics": {
+    "width": 1536,
+    "height": 1000,
+    "scrollWidth": 1504,
+    "scrollHeight": 1000
+  },
+  "initialBodyTextPreview": "404\nThis page could not be found.",
+  "bodyTextPreview": "404\nThis page could not be found.",
+  "apiBase": "http://127.0.0.1:59174",
+  "businessGoalPreview": "",
+  "apiResponses": [],
+  "apiChecks": [
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59174/api/health",
+      "path": "/api/health",
+      "status": 0,
+      "ok": false,
+      "error": "apiRequestContext.get: connect ECONNREFUSED 127.0.0.1:59174\nCall log:\n\u001b[2m  - → GET http://127.0.0.1:59174/api/health\u001b[22m\n\u001b[2m    - user-agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/149.0.0.0 Saf"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59174/api/search?q=%E6%B5%8B%E8%AF%95",
+      "path": "/api/search?q=%E6%B5%8B%E8%AF%95",
+      "status": 0,
+      "ok": false,
+      "error": "apiRequestContext.get: connect ECONNREFUSED 127.0.0.1:59174\nCall log:\n\u001b[2m  - → GET http://127.0.0.1:59174/api/search?q=%E6%B5%8B%E8%AF%95\u001b[22m\n\u001b[2m    - user-agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Headles"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59174/api/admin/stats",
+      "path": "/api/admin/stats",
+      "status": 0,
+      "ok": false,
+      "error": "apiRequestContext.get: connect ECONNREFUSED 127.0.0.1:59174\nCall log:\n\u001b[2m  - → GET http://127.0.0.1:59174/api/admin/stats\u001b[22m\n\u001b[2m    - user-agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/149.0.0."
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59174/api/admin/dashboard",
+      "path": "/api/admin/dashboard",
+      "status": 0,
+      "ok": false,
+      "error": "apiRequestContext.get: connect ECONNREFUSED 127.0.0.1:59174\nCall log:\n\u001b[2m  - → GET http://127.0.0.1:59174/api/admin/dashboard\u001b[22m\n\u001b[2m    - user-agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/149."
+    }
+  ],
+  "dialogs": [],
+  "consoleMessages": [
+    {
+      "type": "error",
+      "text": "Failed to load resource: the server responded with a status of 404 (Not Found)",
+      "location": {
+        "url": "http://127.0.0.1:49174/",
+        "lineNumber": 0,
+        "columnNumber": 0
+      }
+    },
+    {
+      "type": "info",
+      "text": "%cDownload the React DevTools for a better development experience: https://reactjs.org/link/react-devtools font-weight:bold",
+      "location": {
+        "url": "webpack-internal:///(app-pages-browser)/./node_modules/next/dist/compiled/react-dom/cjs/react-dom.development.js",
+        "lineNumber": 38559,
+        "columnNumber": 16
+      }
+    }
+  ],
+  "requestFailures": [],
+  "responseErrors": [
+    {
+      "status": 404,
+      "url": "http://127.0.0.1:49174/"
+    }
+  ],
+  "reportPath": "/Users/chen/Documents/trae_projects/local_projects/may-89174/probe/codex-repair-20260612-223003-rerun/may-89174-browser-report.json"
+}

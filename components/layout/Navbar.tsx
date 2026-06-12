@@ -34,7 +34,7 @@ import { Button } from "@/components/ui/Button";
 interface NavItem {
   label: string;
   href: string;
-  icon: React.ReactNode;
+  icon: React.ComponentType<{ className?: string }>;
   badge?: string;
 }
 
@@ -49,23 +49,23 @@ interface NavbarProps {
 }
 
 const jobSeekerNav: NavItem[] = [
-  { label: "工作台", href: "/dashboard", icon: <LayoutDashboard className="h-4 w-4" />, badge: "AI" },
-  { label: "找工作", href: "/jobs", icon: <Briefcase className="h-4 w-4" /> },
-  { label: "AI解析简历", href: "/resume/ai", icon: <Brain className="h-4 w-4" />, badge: "NEW" },
-  { label: "视频面试", href: "/interviews", icon: <Video className="h-4 w-4" /> },
-  { label: "直播招聘", href: "/live", icon: <Radio className="h-4 w-4" /> },
-  { label: "招聘会", href: "/employer/fairs", icon: <CalendarDays className="h-4 w-4" /> },
-  { label: "能力画像", href: "/profile", icon: <User className="h-4 w-4" /> },
+  { label: "工作台", href: "/dashboard", icon: LayoutDashboard, badge: "AI" },
+  { label: "找工作", href: "/jobs", icon: Briefcase },
+  { label: "AI解析简历", href: "/resume/ai", icon: Brain, badge: "NEW" },
+  { label: "视频面试", href: "/interviews", icon: Video },
+  { label: "直播招聘", href: "/live", icon: Radio },
+  { label: "招聘会", href: "/employer/fairs", icon: CalendarDays },
+  { label: "能力画像", href: "/profile", icon: User },
 ];
 
 const employerNav: NavItem[] = [
-  { label: "数据看板", href: "/employer/dashboard", icon: <BarChart3 className="h-4 w-4" /> },
-  { label: "直播管理", href: "/employer/live", icon: <Radio className="h-4 w-4" />, badge: "直播中" },
-  { label: "雇主品牌", href: "/employer/brand", icon: <Building2 className="h-4 w-4" /> },
-  { label: "谁看过我", href: "/employer/views", icon: <Eye className="h-4 w-4" />, badge: "NEW" },
-  { label: "薪酬报告", href: "/employer/salary", icon: <DollarSign className="h-4 w-4" /> },
-  { label: "招聘会", href: "/employer/fairs", icon: <CalendarDays className="h-4 w-4" /> },
-  { label: "视频面试", href: "/interviews", icon: <Video className="h-4 w-4" /> },
+  { label: "数据看板", href: "/employer/dashboard", icon: BarChart3 },
+  { label: "直播管理", href: "/employer/live", icon: Radio, badge: "直播中" },
+  { label: "雇主品牌", href: "/employer/brand", icon: Building2 },
+  { label: "谁看过我", href: "/employer/views", icon: Eye, badge: "NEW" },
+  { label: "薪酬报告", href: "/employer/salary", icon: DollarSign },
+  { label: "招聘会", href: "/employer/fairs", icon: CalendarDays },
+  { label: "视频面试", href: "/interviews", icon: Video },
 ];
 
 export function Navbar({ role, user, unreadNotifications = 0 }: NavbarProps) {
@@ -137,7 +137,7 @@ export function Navbar({ role, user, unreadNotifications = 0 }: NavbarProps) {
                       : "text-slate-600 hover:bg-slate-100 hover:text-slate-900"
                   )}
                 >
-                  {item.icon}
+                  <item.icon className="h-4 w-4" />
                   <span>{item.label}</span>
                   {item.badge && (
                     <Badge
@@ -345,7 +345,7 @@ export function Navbar({ role, user, unreadNotifications = 0 }: NavbarProps) {
                   onClick={() => setMobileMenuOpen(false)}
                 >
                   <span className="flex items-center gap-3">
-                    {item.icon}
+                    <item.icon className="h-4 w-4" />
                     {item.label}
                   </span>
                   <div className="flex items-center gap-2">

@@ -39,6 +39,21 @@ const jobs = [
   { id: 'job-003', title: '招聘运营专家', company: '未来人才集团', category: '运营', salary: '20-32K', tags: ['招聘会', '雇主品牌'] },
 ];
 
+const mentors = [
+  { id: 'mentor-001', name: '林老师', specialty: '简历诊断', rating: 4.9, slots: ['今天 19:00', '明天 10:30'] },
+  { id: 'mentor-002', name: '周导师', specialty: '视频面试陪练', rating: 4.8, slots: ['今天 20:00', '周六 14:00'] },
+];
+
+const courses = [
+  { id: 'course-001', title: 'AI 简历优化课', category: '求职课程', lessons: 8, enrolled: 1260 },
+  { id: 'course-002', title: '直播招聘面试训练营', category: '面试课程', lessons: 6, enrolled: 840 },
+];
+
+const bookings = [
+  { id: 'booking-001', service: '视频面试预约', mentor: '周导师', time: '今天 20:00', status: '已确认' },
+  { id: 'booking-002', service: '简历诊断预约', mentor: '林老师', time: '明天 10:30', status: '待开始' },
+];
+
 const profile = {
   id: 'recruit-user-89174',
   name: '企业管理员',
@@ -107,6 +122,21 @@ const server = http.createServer((req, res) => {
       ? jobs.filter((item) => JSON.stringify(item).includes(keyword))
       : jobs;
     sendJson(res, 200, { success: true, data: { keyword, items, total: items.length } });
+    return;
+  }
+
+  if (url.pathname === '/api/teachers') {
+    sendJson(res, 200, { success: true, data: { items: mentors, total: mentors.length } });
+    return;
+  }
+
+  if (url.pathname === '/api/courses') {
+    sendJson(res, 200, { success: true, data: { items: courses, total: courses.length } });
+    return;
+  }
+
+  if (url.pathname === '/api/bookings') {
+    sendJson(res, 200, { success: true, data: { items: bookings, total: bookings.length } });
     return;
   }
 

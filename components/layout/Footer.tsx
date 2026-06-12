@@ -1,3 +1,5 @@
+"use client";
+
 import * as React from "react";
 import Link from "next/link";
 import {
@@ -25,47 +27,47 @@ import { Badge } from "@/components/ui/Badge";
 type FooterLink = {
   label: string;
   href: string;
-  icon?: React.ReactNode;
+  icon?: React.ComponentType<{ className?: string }>;
   badge?: string;
 };
 
 export function Footer() {
   const footerLinks: Record<string, FooterLink[]> = {
     求职者服务: [
-      { label: "AI简历解析", href: "/resume/ai", icon: <Brain className="h-3.5 w-3.5" />, badge: "NEW" },
-      { label: "职位搜索", href: "/jobs", icon: <Briefcase className="h-3.5 w-3.5" /> },
-      { label: "一键投递", href: "/jobs", icon: <Briefcase className="h-3.5 w-3.5" /> },
-      { label: "视频面试预约", href: "/interviews", icon: <Video className="h-3.5 w-3.5" /> },
-      { label: "面试录制回放", href: "/interviews?tab=completed", icon: <Video className="h-3.5 w-3.5" /> },
-      { label: "直播带岗", href: "/live", icon: <Radio className="h-3.5 w-3.5" />, badge: "热门" },
-      { label: "招聘会日历", href: "/employer/fairs", icon: <CalendarDays className="h-3.5 w-3.5" /> },
-      { label: "能力画像", href: "/profile", icon: <UserCircle className="h-3.5 w-3.5" /> },
+      { label: "AI简历解析", href: "/resume/ai", icon: Brain, badge: "NEW" },
+      { label: "职位搜索", href: "/jobs", icon: Briefcase },
+      { label: "一键投递", href: "/jobs", icon: Briefcase },
+      { label: "视频面试预约", href: "/interviews", icon: Video },
+      { label: "面试录制回放", href: "/interviews?tab=completed", icon: Video },
+      { label: "直播带岗", href: "/live", icon: Radio, badge: "热门" },
+      { label: "招聘会日历", href: "/employer/fairs", icon: CalendarDays },
+      { label: "能力画像", href: "/profile", icon: UserCircle },
     ],
     企业服务: [
-      { label: "企业数据看板", href: "/employer/dashboard", icon: <BarChart3 className="h-3.5 w-3.5" /> },
-      { label: "直播招聘后台", href: "/employer/live", icon: <Radio className="h-3.5 w-3.5" />, badge: "直播中" },
-      { label: "推流与连麦", href: "/employer/live", icon: <Radio className="h-3.5 w-3.5" /> },
-      { label: "弹幕审核", href: "/employer/live#moderation", icon: <Shield className="h-3.5 w-3.5" /> },
-      { label: "岗位挂载", href: "/employer/live#jobs", icon: <Briefcase className="h-3.5 w-3.5" /> },
-      { label: "雇主品牌主页", href: "/employer/brand", icon: <Building2 className="h-3.5 w-3.5" /> },
-      { label: "VR导览维护", href: "/employer/brand#vr", icon: <Building2 className="h-3.5 w-3.5" /> },
-      { label: "团队Vlog上传", href: "/employer/brand#vlog", icon: <Video className="h-3.5 w-3.5" /> },
+      { label: "企业数据看板", href: "/employer/dashboard", icon: BarChart3 },
+      { label: "直播招聘后台", href: "/employer/live", icon: Radio, badge: "直播中" },
+      { label: "推流与连麦", href: "/employer/live", icon: Radio },
+      { label: "弹幕审核", href: "/employer/live#moderation", icon: Shield },
+      { label: "岗位挂载", href: "/employer/live#jobs", icon: Briefcase },
+      { label: "雇主品牌主页", href: "/employer/brand", icon: Building2 },
+      { label: "VR导览维护", href: "/employer/brand#vr", icon: Building2 },
+      { label: "团队Vlog上传", href: "/employer/brand#vlog", icon: Video },
     ],
     数据分析: [
-      { label: "谁看过我", href: "/employer/views", icon: <Eye className="h-3.5 w-3.5" />, badge: "NEW" },
-      { label: "HR活跃度排行", href: "/employer/views#activity", icon: <Users className="h-3.5 w-3.5" /> },
-      { label: "岗位点击热区", href: "/employer/views#heatmap", icon: <BarChart3 className="h-3.5 w-3.5" /> },
-      { label: "简历打开率分析", href: "/employer/views#openrate", icon: <Eye className="h-3.5 w-3.5" /> },
-      { label: "薪酬分位报告", href: "/employer/salary", icon: <DollarSign className="h-3.5 w-3.5" />, badge: "P25/P50/P75" },
-      { label: "薪酬城市对比", href: "/employer/salary#compare", icon: <DollarSign className="h-3.5 w-3.5" /> },
-      { label: "AI薪酬建议", href: "/employer/salary#advice", icon: <Brain className="h-3.5 w-3.5" /> },
+      { label: "谁看过我", href: "/employer/views", icon: Eye, badge: "NEW" },
+      { label: "HR活跃度排行", href: "/employer/views#activity", icon: Users },
+      { label: "岗位点击热区", href: "/employer/views#heatmap", icon: BarChart3 },
+      { label: "简历打开率分析", href: "/employer/views#openrate", icon: Eye },
+      { label: "薪酬分位报告", href: "/employer/salary", icon: DollarSign, badge: "P25/P50/P75" },
+      { label: "薪酬城市对比", href: "/employer/salary#compare", icon: DollarSign },
+      { label: "AI薪酬建议", href: "/employer/salary#advice", icon: Brain },
     ],
     招聘会系统: [
-      { label: "线上展位搭建", href: "/employer/fairs#booths", icon: <Building2 className="h-3.5 w-3.5" /> },
-      { label: "简历自动归集", href: "/employer/fairs#resumes", icon: <Briefcase className="h-3.5 w-3.5" /> },
-      { label: "AI初筛配置", href: "/employer/fairs#screening", icon: <Brain className="h-3.5 w-3.5" /> },
-      { label: "JD关键词匹配", href: "/employer/fairs#screening", icon: <Brain className="h-3.5 w-3.5" /> },
-      { label: "扫码签到管理", href: "/employer/fairs#checkin", icon: <CalendarDays className="h-3.5 w-3.5" /> },
+      { label: "线上展位搭建", href: "/employer/fairs#booths", icon: Building2 },
+      { label: "简历自动归集", href: "/employer/fairs#resumes", icon: Briefcase },
+      { label: "AI初筛配置", href: "/employer/fairs#screening", icon: Brain },
+      { label: "JD关键词匹配", href: "/employer/fairs#screening", icon: Brain },
+      { label: "扫码签到管理", href: "/employer/fairs#checkin", icon: CalendarDays },
       { label: "求职者注册", href: "/auth/register?role=jobseeker" },
       { label: "企业HR注册", href: "/auth/register?role=employer" },
       { label: "登录账号", href: "/auth/login" },
@@ -158,7 +160,7 @@ export function Footer() {
                       className="group flex items-center justify-between gap-2 text-sm text-slate-600 hover:text-blue-600 transition-colors py-1"
                     >
                       <span className="flex items-center gap-1.5">
-                        {link.icon}
+                        {link.icon && <link.icon className="h-3.5 w-3.5" />}
                         {link.label}
                       </span>
                       <div className="flex items-center gap-1">

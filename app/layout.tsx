@@ -6,6 +6,9 @@ export const metadata: Metadata = {
   description:
     "融合直播、视频面试与雇主品牌可视化的新一代智能招聘平台",
   keywords: ["招聘", "直播招聘", "视频面试", "AI简历", "雇主品牌"],
+  icons: {
+    icon: "/favicon.svg",
+  },
 };
 
 export default function RootLayout({
