@@ -1,0 +1,80 @@
+import express from 'express';
+import cors from 'cors';
+import fs from 'fs';
+import path from 'path';
+import http from 'http';
+import multer from 'multer';
+import { config } from './config';
+import { initDatabase, db } from './database';
+import { initSocketIO } from './socket';
+import authRoutes from './routes/auth';
+import userRoutes from './routes/users';
+import resumeRoutes from './routes/resumes';
+import jobRoutes from './routes/jobs';
+import matchingRoutes from './routes/matching';
+import communityRoutes from './routes/community';
+import chatRoutes from './routes/chat';
+import enterpriseRoutes from './routes/enterprise';
+import lmsRoutes from './routes/lms';
+import notificationRoutes from './routes/notifications';
+
+if (!fs.existsSync(config.uploadDir)) {
+  fs.mkdirSync(config.uploadDir, { recursive: true });
+}
+
+initDatabase();
+
+const app = express();
+const server = http.createServer(app);
+
+app.use(cors({ origin: config.frontendUrl, credentials: true }));
+app.use(express.json({ limit: '50mb' }));
+app.use(express.urlencoded({ extended: true }));
+app.use('/uploads', express.static(config.uploadDir));
+
+const storage = multer.diskStorage({
+  destination: (_req, _file, cb) => cb(null, config.uploadDir),
+  filename: (_req, file, cb) => cb(null, Date.now() + '-' + file.originalname)
+});
+const upload = multer({ storage, limits: { fileSize: 50 * 1024 * 1024 } });
+
+app.post('/api/upload', upload.single('file'), (req, res) => {
+  if (!req.file) return res.status(400).json({ error: '未上传文件' });
+  res.json({ url: `/uploads/${req.file.filename}`, filename: req.file.originalname, size: req.file.size });
+});
+
+app.get('/api/health', (_req, res) => {
+  res.json({ status: 'ok', timestamp: Date.now(), uptime: process.uptime() });
+});
+
+app.use('/api/auth', authRoutes);
+app.use('/api/users', userRoutes);
+app.use('/api/resumes', resumeRoutes);
+app.use('/api/jobs', jobRoutes);
+app.use('/api/matching', matchingRoutes);
+app.use('/api/community', communityRoutes);
+app.use('/api/chat', chatRoutes);
+app.use('/api/enterprise', enterpriseRoutes);
+app.use('/api/lms', lmsRoutes);
+app.use('/api/notifications', notificationRoutes);
+
+app.get('/api/stats/dashboard', (req, res) => {
+  const userCount = db.prepare('SELECT COUNT(*) as cnt FROM users').get() as { cnt: number };
+  const jobCount = db.prepare('SELECT COUNT(*) as cnt FROM jobs WHERE status = ?').get('open') as { cnt: number };
+  const applicationCount = db.prepare('SELECT COUNT(*) as cnt FROM job_applications').get() as { cnt: number };
+  const courseCount = db.prepare('SELECT COUNT(*) as cnt FROM courses WHERE status = ?').get('published') as { cnt: number };
+  res.json({ stats: { userCount: userCount.cnt, jobCount: jobCount.cnt, applicationCount: applicationCount.cnt, courseCount: courseCount.cnt } });
+});
+
+app.use((err: any, _req: any, res: any, _next: any) => {
+  console.error(err);
+  res.status(500).json({ error: err.message || '服务器内部错误' });
+});
+
+const io = initSocketIO(server);
+(global as any)._io = io;
+
+server.listen(config.port, '127.0.0.1', () => {
+  console.log(`🚀 Backend server running at http://127.0.0.1:${config.port}`);
+  console.log(`📡 Socket.IO ready`);
+});
