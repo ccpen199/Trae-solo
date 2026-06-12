@@ -1,0 +1,2285 @@
+{
+  "ok": true,
+  "generatedAt": "2026-06-12T07:26:29.047Z",
+  "order": "may-89174",
+  "roundIndex": 704,
+  "captureId": "may-89174-codex-704b",
+  "url": "http://127.0.0.1:49174/",
+  "initialUrl": "http://127.0.0.1:49174/",
+  "finalUrl": "http://127.0.0.1:49174/",
+  "status": 200,
+  "title": "智聘OS - 智能招聘操作系统",
+  "initialTitle": "智聘OS - 智能招聘操作系统",
+  "navigationError": "",
+  "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89174/probe/codex-repair-20260612-704/may-89174-codex-704b-frontend.png",
+  "screenshotPaths": [
+    "/Users/chen/Documents/trae_projects/local_projects/may-89174/probe/codex-repair-20260612-704/may-89174-codex-704b-structure-01-首屏.png",
+    "/Users/chen/Documents/trae_projects/local_projects/may-89174/probe/codex-repair-20260612-704/may-89174-codex-704b-structure-02-导航-智聘OS.png",
+    "/Users/chen/Documents/trae_projects/local_projects/may-89174/probe/codex-repair-20260612-704/may-89174-codex-704b-structure-03-操作-查看.png",
+    "/Users/chen/Documents/trae_projects/local_projects/may-89174/probe/codex-repair-20260612-704/may-89174-codex-704b-structure-04-二层操作-查看-使用示例预览.png",
+    "/Users/chen/Documents/trae_projects/local_projects/may-89174/probe/codex-repair-20260612-704/may-89174-codex-704b-structure-05-操作-查看-谁看过我-热力.png",
+    "/Users/chen/Documents/trae_projects/local_projects/may-89174/probe/codex-repair-20260612-704/may-89174-codex-704b-structure-06-二层操作-查看-谁看过我-热力-访客列表.png",
+    "/Users/chen/Documents/trae_projects/local_projects/may-89174/probe/codex-repair-20260612-704/may-89174-codex-704b-structure-07-导航-求职者.png",
+    "/Users/chen/Documents/trae_projects/local_projects/may-89174/probe/codex-repair-20260612-704/may-89174-codex-704b-structure-08-操作-登-录.png",
+    "/Users/chen/Documents/trae_projects/local_projects/may-89174/probe/codex-repair-20260612-704/may-89174-codex-704b-structure-09-操作-企业HR.png",
+    "/Users/chen/Documents/trae_projects/local_projects/may-89174/probe/codex-repair-20260612-704/may-89174-codex-704b-structure-10-导航-企业HR.png",
+    "/Users/chen/Documents/trae_projects/local_projects/may-89174/probe/codex-repair-20260612-704/may-89174-codex-704b-structure-11-操作-登-录.png",
+    "/Users/chen/Documents/trae_projects/local_projects/may-89174/probe/codex-repair-20260612-704/may-89174-codex-704b-structure-12-操作-企业HR.png"
+  ],
+  "issueTextPreview": "",
+  "targetReason": "页面存在后台入口，优先复验后台管理链路；页面存在搜索/发现入口，优先复验检索链路；页面存在我的/账号入口，优先复验个人中心链路；页面存在内容列表，优先复验详情链路",
+  "targetKind": "personal",
+  "targetMatched": true,
+  "targetActions": [
+    {
+      "action": "click",
+      "label": "页面存在后台入口，优先复验后台管理链路",
+      "ok": true
+    },
+    {
+      "action": "target-verify",
+      "label": "页面存在后台入口，优先复验后台管理链路",
+      "ok": false,
+      "finalUrl": "http://127.0.0.1:49174/employer/dashboard"
+    },
+    {
+      "action": "fill-search",
+      "label": "搜索输入框",
+      "ok": true
+    },
+    {
+      "action": "target-verify",
+      "label": "页面存在搜索/发现入口，优先复验检索链路",
+      "ok": false,
+      "finalUrl": "http://127.0.0.1:49174/employer/dashboard"
+    },
+    {
+      "action": "target-already-visible",
+      "label": "页面存在我的/账号入口，优先复验个人中心链路",
+      "ok": true
+    },
+    {
+      "action": "target-verify",
+      "label": "页面存在我的/账号入口，优先复验个人中心链路",
+      "ok": true,
+      "finalUrl": "http://127.0.0.1:49174/employer/dashboard"
+    }
+  ],
+  "authFlow": {
+    "detected": false,
+    "attempted": false,
+    "success": false,
+    "finalUrl": "http://127.0.0.1:49174/",
+    "message": "",
+    "actions": []
+  },
+  "businessAudit": {
+    "actions": [
+      {
+        "action": "click",
+        "label": "导航:智聘OS",
+        "ok": true
+      },
+      {
+        "action": "click",
+        "label": "操作:查看",
+        "ok": true,
+        "result": {
+          "ok": true,
+          "matched": 1
+        }
+      },
+      {
+        "action": "click",
+        "label": "二层操作:查看:使用示例预览",
+        "ok": true,
+        "result": {
+          "ok": true,
+          "matched": 1
+        }
+      },
+      {
+        "action": "click",
+        "label": "操作:查看「谁看过我」热力",
+        "ok": true,
+        "result": {
+          "ok": true,
+          "matched": 1
+        }
+      },
+      {
+        "action": "click",
+        "label": "二层操作:查看「谁看过我」热力:访客列表",
+        "ok": true,
+        "result": {
+          "ok": true,
+          "matched": 1
+        }
+      },
+      {
+        "action": "click",
+        "label": "导航:求职者",
+        "ok": true
+      },
+      {
+        "action": "click",
+        "label": "操作:登 录",
+        "ok": true,
+        "result": {
+          "ok": true,
+          "matched": 1
+        }
+      },
+      {
+        "action": "click",
+        "label": "操作:企业HR",
+        "ok": true,
+        "result": {
+          "ok": true,
+          "matched": 1
+        }
+      },
+      {
+        "action": "click",
+        "label": "导航:企业HR",
+        "ok": true
+      },
+      {
+        "action": "click",
+        "label": "操作:登 录",
+        "ok": true,
+        "result": {
+          "ok": true,
+          "matched": 1
+        }
+      },
+      {
+        "action": "click",
+        "label": "操作:企业HR",
+        "ok": true,
+        "result": {
+          "ok": true,
+          "matched": 1
+        }
+      }
+    ],
+    "snapshots": [
+      {
+        "label": "首屏",
+        "url": "http://127.0.0.1:49174/",
+        "title": "智聘OS - 智能招聘操作系统",
+        "headings": [
+          "求职者 & 企业双端闭环 AI 全程陪伴",
+          "四步闭环：上传简历 → 拿到 Offer",
+          "AI简历解析",
+          "一键投递",
+          "视频面试",
+          "能力画像沉淀",
+          "6 大模块 · 点击直达真实业务后台",
+          "直播招聘后台",
+          "雇主品牌主页",
+          "谁看过我",
+          "薪酬分位报告",
+          "招聘会管理"
+        ],
+        "navLabels": [
+          "智聘OS",
+          "求职者 企业HR",
+          "求职者",
+          "企业HR",
+          "工作台 AI 找工作 AI解析简历 NEW 视频面试 直播招聘 招聘会 能力画像",
+          "工作台 AI",
+          "AI",
+          "找工作",
+          "AI解析简历 NEW",
+          "NEW",
+          "视频面试",
+          "直播招聘",
+          "招聘会",
+          "能力画像",
+          "简历解析 能力画像 登录 求职者注册 企业注册",
+          "简历解析",
+          "登录 求职者注册 企业注册",
+          "登录",
+          "求职者注册 企业注册",
+          "求职者注册",
+          "企业注册"
+        ],
+        "buttons": [
+          "登录",
+          "求职者注册",
+          "企业注册",
+          "求职者工作台",
+          "企业管理后台",
+          "免费注册",
+          "查看",
+          "进入企业控制台",
+          "查看「谁看过我」热力",
+          "全部职位",
+          "上传简历",
+          "直播大厅",
+          "企业开启直播",
+          "进入招聘会后台",
+          "查看薪酬报告"
+        ],
+        "links": [
+          "智聘OS",
+          "求职者",
+          "企业HR",
+          "工作台 AI",
+          "找工作",
+          "AI解析简历 NEW",
+          "视频面试",
+          "直播招聘",
+          "招聘会",
+          "能力画像",
+          "简历解析",
+          "登录",
+          "求职者注册",
+          "企业注册",
+          "求职者工作台",
+          "企业管理后台",
+          "免费注册",
+          "AI 解析 3秒补全",
+          "一键投递 AI匹配",
+          "视频面试 云端录制",
+          "直播招聘 弹幕连麦",
+          "查看",
+          "岗位匹配 238 个",
+          "待面试 3 场"
+        ],
+        "inputs": [],
+        "tables": [],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "智聘OS求职者企业HR工作台AI找工作AI解析简历NEW视频面试直播招聘招聘会能力画像简历解析能力画像登录求职者注册企业注册立即注册2026智能招聘操作系统求职者 & 企业双端闭环AI 全程陪伴求职者：简历解析 → 智能匹配 → 一键投递 → 视频面试 → 回放复盘 → 能力画像。 企业：直播招聘 → 雇主品牌 → 数据热力图 → 薪酬报告 → 招聘会数字化。求职者工作台企业管理后台免费注册AI 解析3秒补全一键投递AI匹配视频面试云端录制直播招聘弹幕连麦ABCDE4.9 分500万+用户 · 10万+企业AI简历解析完成已识别5段经历 · 3所院校 · 12技能查看岗位匹配238 个待面试3 场被查看12 次求职者路径四步闭环：上传简历 → 拿到 Offer每一步均可点击进入对应业务页面 点击卡片体验Step 1AI简历解析上传PDF/Word，自动补全教育/工作/技能字段点击进入立即体验 Step 2一键投递基于能力画像智能匹配，一键批量投递点击进入立即体验 Step 3视频面试预约面试 + 云端录制回放，复盘表现点击进入立即体验 Step 4能力画像沉淀所有行为沉淀六维画像，持续推荐机会点击进入立即体验 企业工作台6 大模块 · 点击直达真实业务后台直播招聘/雇主品牌/数据热力/薪酬报告/招聘会/看板 全链路运营热门直播招聘后台推流管理、弹幕审核、岗位挂载、连麦邀约进入后台 雇主品牌主页VR导览、团队Vlog、文化价值观标签维护进入后台 NEW谁看过我HR活跃度、岗位点击热区、简历打开率进入后台 薪酬分位报告第三方薪资库 · P25/P50/P75 城市对比进入后台 招聘会管理展位搭建、简历归集、AI初筛、扫码签到进入后台 企业数据看板招聘全链路数据分析漏斗和状态流转进入后台 进入企业控制台查看「谁看过我」热力热门职位今日精选好工作基于能力画像智能推荐，全部职位 →全部职位上传简历高级前端工程师字节跳动25-50K北京ReactTypeScript3-5年AI匹配度 92%一键投递 B端产品经理阿里巴巴20-35K杭州SaaS5-10年AI匹配度 92%一键投递 AI算法工程师腾讯30-60K深圳NLP机器学习AI匹配度 92%一键投递 资深Java开发美团22-45K上海Java微服务AI匹配度 92%一键投递 正在直播直播带岗 · 边看边投点击直播间进入：弹幕互动/岗位挂载/连麦邀约 全部直播 →直播大厅企业开启直播直播中3,25612小米技术岗专场直播LLisa直播中8,92138华为2026校招宣讲会HHR团队预告1,5427网易游戏岗位专场N网易招聘弹幕审核关键词过滤+人工审核去配置 →岗位挂载直播中挂载岗位一键投递立即挂载 →连麦邀约一键邀请求职者上麦面试去体验 →招聘会数字化招聘会管理子系统线上线下融合的招聘会解决方案，每一步均可在 招聘会后台 中操作和复盘数据线上展位搭建拖拽展位装修、主题色、岗位列表简历归集 + AI初筛JD关键词/年限/证书多维评分排序JD关键词匹配权重调整五维评分权重，自动生成报告扫码签到联动签到数据实时同步，沉淀能力画像进入招聘会后台查看薪酬报告谁看过我热力看板HR活跃度/岗位热区查看数据 →薪酬报告P25/P50/P75分位值城市对比查看报告 →立即开始加入智聘 OS，让招聘求职更智能求职者：上传简历到拿 Offer，AI 全程陪伴。企业：直播、品牌、数据、薪酬、招聘会一站式搞定。求职者工作台企业管理后台AI简历解析 →能力画像 →智聘OS融合直播招聘、视频面试、AI简历解析、雇主品牌可视化的新一代智能招聘操作系统。求职者工作台进入 →企业管理后台进入 →求职者服务AI简历解析NEW→职位搜索→一键投递→视频面试预约→面试录制回放→直播带岗热门→招聘会日历→能力画像→企业服务企业数据看板→直播招聘后台直播中→推流与连麦→弹幕审核→岗位挂载→雇主品牌主页→VR导览维护→团队Vlog上传→数据分析谁看过我NEW→HR活跃度排行→岗位点击热区→简历打开率分析→薪酬分位报告P25/P50/P75→薪酬城市对比→AI薪酬建议→招聘会系统线上展位搭建→简历自动归集→AI初筛配置→JD关键词匹配→扫码签到管理→求职者注册→企业HR注册→登录账号→© 2026 智聘OS · 智能招聘操作系统. 保留所有",
+        "layout": {
+          "viewportWidth": 1504,
+          "viewportHeight": 1600,
+          "scrollWidth": 1504,
+          "scrollHeight": 5495,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89174-codex-704b-structure-01-首屏",
+          "label": "首屏",
+          "finalUrl": "http://127.0.0.1:49174/",
+          "title": "智聘OS - 智能招聘操作系统",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89174/probe/codex-repair-20260612-704/may-89174-codex-704b-structure-01-首屏.json",
+          "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89174/probe/codex-repair-20260612-704/may-89174-codex-704b-structure-01-首屏.png",
+          "elementCount": 1200,
+          "interactiveCount": 127,
+          "interactiveLabels": [
+            "智聘OS",
+            "求职者",
+            "企业HR",
+            "工作台 AI",
+            "找工作",
+            "AI解析简历 NEW",
+            "视频面试",
+            "直播招聘",
+            "招聘会",
+            "能力画像",
+            "简历解析",
+            "登录",
+            "求职者注册",
+            "企业注册",
+            "立即注册",
+            "求职者工作台",
+            "企业管理后台",
+            "免费注册",
+            "AI 解析 3秒补全",
+            "一键投递 AI匹配",
+            "视频面试 云端录制",
+            "直播招聘 弹幕连麦",
+            "查看",
+            "岗位匹配 238 个",
+            "待面试 3 场",
+            "被查看 12 次",
+            "STEP 1 AI简历解析 上传PDF/Word，自动补全教育/工作/技能字段 点击进入 立即体验",
+            "STEP 2 一键投递 基于能力画像智能匹配，一键批量投递 点击进入 立即体验",
+            "STEP 3 视频面试 预约面试 + 云端录制回放，复盘表现 点击进入 立即体验",
+            "STEP 4 能力画像沉淀 所有行为沉淀六维画像，持续推荐机会 点击进入 立即体验"
+          ]
+        }
+      },
+      {
+        "label": "导航:智聘OS",
+        "url": "http://127.0.0.1:49174/",
+        "title": "智聘OS - 智能招聘操作系统",
+        "headings": [
+          "求职者 & 企业双端闭环 AI 全程陪伴",
+          "四步闭环：上传简历 → 拿到 Offer",
+          "AI简历解析",
+          "一键投递",
+          "视频面试",
+          "能力画像沉淀",
+          "6 大模块 · 点击直达真实业务后台",
+          "直播招聘后台",
+          "雇主品牌主页",
+          "谁看过我",
+          "薪酬分位报告",
+          "招聘会管理"
+        ],
+        "navLabels": [
+          "智聘OS",
+          "求职者 企业HR",
+          "求职者",
+          "企业HR",
+          "工作台 AI 找工作 AI解析简历 NEW 视频面试 直播招聘 招聘会 能力画像",
+          "工作台 AI",
+          "AI",
+          "找工作",
+          "AI解析简历 NEW",
+          "NEW",
+          "视频面试",
+          "直播招聘",
+          "招聘会",
+          "能力画像",
+          "简历解析 能力画像 登录 求职者注册 企业注册",
+          "简历解析",
+          "登录 求职者注册 企业注册",
+          "登录",
+          "求职者注册 企业注册",
+          "求职者注册",
+          "企业注册"
+        ],
+        "buttons": [
+          "登录",
+          "求职者注册",
+          "企业注册",
+          "求职者工作台",
+          "企业管理后台",
+          "免费注册",
+          "查看",
+          "进入企业控制台",
+          "查看「谁看过我」热力",
+          "全部职位",
+          "上传简历",
+          "直播大厅",
+          "企业开启直播",
+          "进入招聘会后台",
+          "查看薪酬报告"
+        ],
+        "links": [
+          "智聘OS",
+          "求职者",
+          "企业HR",
+          "工作台 AI",
+          "找工作",
+          "AI解析简历 NEW",
+          "视频面试",
+          "直播招聘",
+          "招聘会",
+          "能力画像",
+          "简历解析",
+          "登录",
+          "求职者注册",
+          "企业注册",
+          "求职者工作台",
+          "企业管理后台",
+          "免费注册",
+          "AI 解析 3秒补全",
+          "一键投递 AI匹配",
+          "视频面试 云端录制",
+          "直播招聘 弹幕连麦",
+          "查看",
+          "岗位匹配 238 个",
+          "待面试 3 场"
+        ],
+        "inputs": [],
+        "tables": [],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "智聘OS求职者企业HR工作台AI找工作AI解析简历NEW视频面试直播招聘招聘会能力画像简历解析能力画像登录求职者注册企业注册立即注册2026智能招聘操作系统求职者 & 企业双端闭环AI 全程陪伴求职者：简历解析 → 智能匹配 → 一键投递 → 视频面试 → 回放复盘 → 能力画像。 企业：直播招聘 → 雇主品牌 → 数据热力图 → 薪酬报告 → 招聘会数字化。求职者工作台企业管理后台免费注册AI 解析3秒补全一键投递AI匹配视频面试云端录制直播招聘弹幕连麦ABCDE4.9 分500万+用户 · 10万+企业AI简历解析完成已识别5段经历 · 3所院校 · 12技能查看岗位匹配238 个待面试3 场被查看12 次求职者路径四步闭环：上传简历 → 拿到 Offer每一步均可点击进入对应业务页面 点击卡片体验Step 1AI简历解析上传PDF/Word，自动补全教育/工作/技能字段点击进入立即体验 Step 2一键投递基于能力画像智能匹配，一键批量投递点击进入立即体验 Step 3视频面试预约面试 + 云端录制回放，复盘表现点击进入立即体验 Step 4能力画像沉淀所有行为沉淀六维画像，持续推荐机会点击进入立即体验 企业工作台6 大模块 · 点击直达真实业务后台直播招聘/雇主品牌/数据热力/薪酬报告/招聘会/看板 全链路运营热门直播招聘后台推流管理、弹幕审核、岗位挂载、连麦邀约进入后台 雇主品牌主页VR导览、团队Vlog、文化价值观标签维护进入后台 NEW谁看过我HR活跃度、岗位点击热区、简历打开率进入后台 薪酬分位报告第三方薪资库 · P25/P50/P75 城市对比进入后台 招聘会管理展位搭建、简历归集、AI初筛、扫码签到进入后台 企业数据看板招聘全链路数据分析漏斗和状态流转进入后台 进入企业控制台查看「谁看过我」热力热门职位今日精选好工作基于能力画像智能推荐，全部职位 →全部职位上传简历高级前端工程师字节跳动25-50K北京ReactTypeScript3-5年AI匹配度 92%一键投递 B端产品经理阿里巴巴20-35K杭州SaaS5-10年AI匹配度 92%一键投递 AI算法工程师腾讯30-60K深圳NLP机器学习AI匹配度 92%一键投递 资深Java开发美团22-45K上海Java微服务AI匹配度 92%一键投递 正在直播直播带岗 · 边看边投点击直播间进入：弹幕互动/岗位挂载/连麦邀约 全部直播 →直播大厅企业开启直播直播中3,25612小米技术岗专场直播LLisa直播中8,92138华为2026校招宣讲会HHR团队预告1,5427网易游戏岗位专场N网易招聘弹幕审核关键词过滤+人工审核去配置 →岗位挂载直播中挂载岗位一键投递立即挂载 →连麦邀约一键邀请求职者上麦面试去体验 →招聘会数字化招聘会管理子系统线上线下融合的招聘会解决方案，每一步均可在 招聘会后台 中操作和复盘数据线上展位搭建拖拽展位装修、主题色、岗位列表简历归集 + AI初筛JD关键词/年限/证书多维评分排序JD关键词匹配权重调整五维评分权重，自动生成报告扫码签到联动签到数据实时同步，沉淀能力画像进入招聘会后台查看薪酬报告谁看过我热力看板HR活跃度/岗位热区查看数据 →薪酬报告P25/P50/P75分位值城市对比查看报告 →立即开始加入智聘 OS，让招聘求职更智能求职者：上传简历到拿 Offer，AI 全程陪伴。企业：直播、品牌、数据、薪酬、招聘会一站式搞定。求职者工作台企业管理后台AI简历解析 →能力画像 →智聘OS融合直播招聘、视频面试、AI简历解析、雇主品牌可视化的新一代智能招聘操作系统。求职者工作台进入 →企业管理后台进入 →求职者服务AI简历解析NEW→职位搜索→一键投递→视频面试预约→面试录制回放→直播带岗热门→招聘会日历→能力画像→企业服务企业数据看板→直播招聘后台直播中→推流与连麦→弹幕审核→岗位挂载→雇主品牌主页→VR导览维护→团队Vlog上传→数据分析谁看过我NEW→HR活跃度排行→岗位点击热区→简历打开率分析→薪酬分位报告P25/P50/P75→薪酬城市对比→AI薪酬建议→招聘会系统线上展位搭建→简历自动归集→AI初筛配置→JD关键词匹配→扫码签到管理→求职者注册→企业HR注册→登录账号→© 2026 智聘OS · 智能招聘操作系统. 保留所有",
+        "layout": {
+          "viewportWidth": 1536,
+          "viewportHeight": 1600,
+          "scrollWidth": 1536,
+          "scrollHeight": 5495,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89174-codex-704b-structure-02-导航-智聘OS",
+          "label": "导航:智聘OS",
+          "finalUrl": "http://127.0.0.1:49174/",
+          "title": "智聘OS - 智能招聘操作系统",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89174/probe/codex-repair-20260612-704/may-89174-codex-704b-structure-02-导航-智聘OS.json",
+          "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89174/probe/codex-repair-20260612-704/may-89174-codex-704b-structure-02-导航-智聘OS.png",
+          "elementCount": 1200,
+          "interactiveCount": 127,
+          "interactiveLabels": [
+            "智聘OS",
+            "求职者",
+            "企业HR",
+            "工作台 AI",
+            "找工作",
+            "AI解析简历 NEW",
+            "视频面试",
+            "直播招聘",
+            "招聘会",
+            "能力画像",
+            "简历解析",
+            "登录",
+            "求职者注册",
+            "企业注册",
+            "立即注册",
+            "求职者工作台",
+            "企业管理后台",
+            "免费注册",
+            "AI 解析 3秒补全",
+            "一键投递 AI匹配",
+            "视频面试 云端录制",
+            "直播招聘 弹幕连麦",
+            "查看",
+            "岗位匹配 238 个",
+            "待面试 3 场",
+            "被查看 12 次",
+            "STEP 1 AI简历解析 上传PDF/Word，自动补全教育/工作/技能字段 点击进入 立即体验",
+            "STEP 2 一键投递 基于能力画像智能匹配，一键批量投递 点击进入 立即体验",
+            "STEP 3 视频面试 预约面试 + 云端录制回放，复盘表现 点击进入 立即体验",
+            "STEP 4 能力画像沉淀 所有行为沉淀六维画像，持续推荐机会 点击进入 立即体验"
+          ]
+        }
+      },
+      {
+        "label": "操作:查看",
+        "url": "http://127.0.0.1:49174/resume/ai",
+        "title": "智聘OS - 智能招聘操作系统",
+        "headings": [
+          "AI简历解析",
+          "求职者服务",
+          "企业服务",
+          "数据分析",
+          "招聘会系统"
+        ],
+        "navLabels": [
+          "智聘OS",
+          "求职者 企业HR",
+          "求职者",
+          "企业HR",
+          "工作台 AI 找工作 AI解析简历 NEW 视频面试 直播招聘 招聘会 能力画像",
+          "工作台 AI",
+          "AI",
+          "找工作",
+          "AI解析简历 NEW",
+          "NEW",
+          "视频面试",
+          "直播招聘",
+          "招聘会",
+          "能力画像",
+          "简历解析 能力画像 张 张三 求职者",
+          "简历解析",
+          "张 张三 求职者",
+          "张"
+        ],
+        "buttons": [
+          "张 张三 求职者",
+          "使用示例预览",
+          "开始智能解析"
+        ],
+        "links": [
+          "智聘OS",
+          "求职者",
+          "企业HR",
+          "工作台 AI",
+          "找工作",
+          "AI解析简历 NEW",
+          "视频面试",
+          "直播招聘",
+          "招聘会",
+          "能力画像",
+          "简历解析",
+          "求职者工作台 进入 →",
+          "企业管理后台 进入 →",
+          "邮件联系",
+          "AI简历解析 NEW →",
+          "职位搜索 →",
+          "一键投递 →",
+          "视频面试预约 →",
+          "面试录制回放 →",
+          "直播带岗 热门 →",
+          "招聘会日历 →",
+          "能力画像 →",
+          "企业数据看板 →",
+          "直播招聘后台 直播中 →"
+        ],
+        "inputs": [],
+        "tables": [],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "智聘OS求职者企业HR工作台AI找工作AI解析简历NEW视频面试直播招聘招聘会能力画像简历解析能力画像张张三求职者 AI智能解析AI简历解析上传简历，AI自动提取信息，一键生成完整简历上传简历AI解析确认保存拖拽文件到这里，或点击上传支持 PDF、Word、TXT 格式，文件大小不超过 10MBAI解析提示建议上传 PDF 格式简历，解析准确率更高。AI 会自动提取教育背景、工作经历、技能证书等信息。使用示例预览开始智能解析智聘OS融合直播招聘、视频面试、AI简历解析、雇主品牌可视化的新一代智能招聘操作系统。求职者工作台进入 →企业管理后台进入 →求职者服务AI简历解析NEW→职位搜索→一键投递→视频面试预约→面试录制回放→直播带岗热门→招聘会日历→能力画像→企业服务企业数据看板→直播招聘后台直播中→推流与连麦→弹幕审核→岗位挂载→雇主品牌主页→VR导览维护→团队Vlog上传→数据分析谁看过我NEW→HR活跃度排行→岗位点击热区→简历打开率分析→薪酬分位报告P25/P50/P75→薪酬城市对比→AI薪酬建议→招聘会系统线上展位搭建→简历自动归集→AI初筛配置→JD关键词匹配→扫码签到管理→求职者注册→企业HR注册→登录账号→© 2026 智聘OS · 智能招聘操作系统. 保留所有权利.隐私政策服务条款等保三级毫秒响应500万+ 用户10万+ 企业",
+        "layout": {
+          "viewportWidth": 1568,
+          "viewportHeight": 1600,
+          "scrollWidth": 1568,
+          "scrollHeight": 1600,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89174-codex-704b-structure-03-操作-查看",
+          "label": "操作:查看",
+          "finalUrl": "http://127.0.0.1:49174/resume/ai",
+          "title": "智聘OS - 智能招聘操作系统",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89174/probe/codex-repair-20260612-704/may-89174-codex-704b-structure-03-操作-查看.json",
+          "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89174/probe/codex-repair-20260612-704/may-89174-codex-704b-structure-03-操作-查看.png",
+          "elementCount": 644,
+          "interactiveCount": 57,
+          "interactiveLabels": [
+            "智聘OS",
+            "求职者",
+            "企业HR",
+            "工作台 AI",
+            "找工作",
+            "AI解析简历 NEW",
+            "视频面试",
+            "直播招聘",
+            "招聘会",
+            "能力画像",
+            "简历解析",
+            "张 张三 求职者",
+            "使用示例预览",
+            "开始智能解析",
+            "求职者工作台 进入 →",
+            "企业管理后台 进入 →",
+            "邮件联系",
+            "AI简历解析 NEW →",
+            "职位搜索 →",
+            "一键投递 →",
+            "视频面试预约 →",
+            "面试录制回放 →",
+            "直播带岗 热门 →",
+            "招聘会日历 →",
+            "能力画像 →",
+            "企业数据看板 →",
+            "直播招聘后台 直播中 →",
+            "推流与连麦 →",
+            "弹幕审核 →",
+            "岗位挂载 →"
+          ]
+        }
+      },
+      {
+        "label": "二层操作:查看->使用示例预览",
+        "url": "http://127.0.0.1:49174/resume/ai",
+        "title": "智聘OS - 智能招聘操作系统",
+        "headings": [
+          "AI简历解析",
+          "基本信息",
+          "教育背景",
+          "工作经历",
+          "技能特长",
+          "证书资质",
+          "求职者服务",
+          "企业服务",
+          "数据分析",
+          "招聘会系统"
+        ],
+        "navLabels": [
+          "智聘OS",
+          "求职者 企业HR",
+          "求职者",
+          "企业HR",
+          "工作台 AI 找工作 AI解析简历 NEW 视频面试 直播招聘 招聘会 能力画像",
+          "工作台 AI",
+          "AI",
+          "找工作",
+          "AI解析简历 NEW",
+          "NEW",
+          "视频面试",
+          "直播招聘",
+          "招聘会",
+          "能力画像",
+          "简历解析 能力画像 张 张三 求职者",
+          "简历解析",
+          "张 张三 求职者",
+          "张",
+          "基本信息",
+          "教育背景",
+          "工作经历",
+          "技能特长",
+          "证书资质",
+          "项目经验"
+        ],
+        "buttons": [
+          "张 张三 求职者",
+          "基本信息",
+          "教育背景",
+          "工作经历",
+          "技能特长",
+          "证书资质",
+          "项目经验",
+          "确认保存",
+          "重新上传"
+        ],
+        "links": [
+          "智聘OS",
+          "求职者",
+          "企业HR",
+          "工作台 AI",
+          "找工作",
+          "AI解析简历 NEW",
+          "视频面试",
+          "直播招聘",
+          "招聘会",
+          "能力画像",
+          "简历解析",
+          "求职者工作台 进入 →",
+          "企业管理后台 进入 →",
+          "邮件联系",
+          "AI简历解析 NEW →",
+          "职位搜索 →",
+          "一键投递 →",
+          "视频面试预约 →",
+          "面试录制回放 →",
+          "直播带岗 热门 →",
+          "招聘会日历 →",
+          "能力画像 →",
+          "企业数据看板 →",
+          "直播招聘后台 直播中 →"
+        ],
+        "inputs": [],
+        "tables": [],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "智聘OS求职者企业HR工作台AI找工作AI解析简历NEW视频面试直播招聘招聘会能力画像简历解析能力画像张张三求职者 AI智能解析AI简历解析上传简历，AI自动提取信息，一键生成完整简历上传简历AI解析确认保存基本信息教育背景工作经历技能特长证书资质项目经验解析置信度100%确认保存重新上传基本信息AI自动提取的个人信息 已识别姓名张明邮箱zhangming@example.com手机号13812345678所在城市北京工作年限5.3年教育背景识别到 1 段教育经历 已识别北京大学 计算机科学与技术 本科 .06本科 计算机2015-01 - 至今工作经历识别到 1 段工作经历 已识别字节跳动 高级前端工程师2021.03 - 至今2021-03 - 至今•主导前端性能优化技能特长识别到 25 项技能 已识别JavaScriptTypeScriptReactVueNode.jsJavaGoMySQLMongoDBRedisDockerKubernetesAWS微服务Next.jsNuxt.jsTailwindCSSSassLessWebpackViteGit项目管理PMP敏捷开发证书资质识别到 1 个证书 已识别- PMP智聘OS融合直播招聘、视频面试、AI简历解析、雇主品牌可视化的新一代智能招聘操作系统。求职者工作台进入 →企业管理后台进入 →求职者服务AI简历解析NEW→职位搜索→一键投递→视频面试预约→面试录制回放→直播带岗热门→招聘会日历→能力画像→企业服务企业数据看板→直播招聘后台直播中→推流与连麦→弹幕审核→岗位挂载→雇主品牌主页→VR导览维护→团队Vlog上传→数据分析谁看过我NEW→HR活跃度排行→岗位点击热区→简历打开率分析→薪酬分位报告P25/P50/P75→薪酬城市对比→AI薪酬建议→招聘会系统线上展位搭建→简历自动归集→AI初筛配置→JD关键词匹配→扫码签到管理→求职者注册→企业HR注册→登录账号→© 2026 智聘OS · 智能招聘操作系统. 保留所有权利.隐私政策服务条款等保三级毫秒响应500万+ 用户10万+ 企业",
+        "layout": {
+          "viewportWidth": 1600,
+          "viewportHeight": 1600,
+          "scrollWidth": 1600,
+          "scrollHeight": 2065,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89174-codex-704b-structure-04-二层操作-查看-使用示例预览",
+          "label": "二层操作:查看->使用示例预览",
+          "finalUrl": "http://127.0.0.1:49174/resume/ai",
+          "title": "智聘OS - 智能招聘操作系统",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89174/probe/codex-repair-20260612-704/may-89174-codex-704b-structure-04-二层操作-查看-使用示例预览.json",
+          "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89174/probe/codex-repair-20260612-704/may-89174-codex-704b-structure-04-二层操作-查看-使用示例预览.png",
+          "elementCount": 813,
+          "interactiveCount": 62,
+          "interactiveLabels": [
+            "智聘OS",
+            "求职者",
+            "企业HR",
+            "工作台 AI",
+            "找工作",
+            "AI解析简历 NEW",
+            "视频面试",
+            "直播招聘",
+            "招聘会",
+            "能力画像",
+            "简历解析",
+            "张 张三 求职者",
+            "基本信息",
+            "教育背景",
+            "工作经历",
+            "技能特长",
+            "证书资质",
+            "项目经验",
+            "确认保存",
+            "重新上传",
+            "求职者工作台 进入 →",
+            "企业管理后台 进入 →",
+            "邮件联系",
+            "AI简历解析 NEW →",
+            "职位搜索 →",
+            "一键投递 →",
+            "视频面试预约 →",
+            "面试录制回放 →",
+            "直播带岗 热门 →",
+            "招聘会日历 →"
+          ]
+        }
+      },
+      {
+        "label": "操作:查看「谁看过我」热力",
+        "url": "http://127.0.0.1:49174/employer/views",
+        "title": "智聘OS - 智能招聘操作系统",
+        "headings": [
+          "「谁看过我」热力看板",
+          "浏览趋势分析",
+          "流量来源分布",
+          "简历打开漏斗",
+          "简历打开关键指标"
+        ],
+        "navLabels": [],
+        "buttons": [
+          "近7天",
+          "近30天",
+          "近90天",
+          "自定义",
+          "数据概览",
+          "HR活跃度",
+          "岗位热区",
+          "访客列表",
+          "去优化"
+        ],
+        "links": [],
+        "inputs": [],
+        "tables": [],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "「谁看过我」热力看板实时追踪求职者浏览行为，洞察招聘效果近7天近30天近90天自定义数据概览HR活跃度岗位热区访客列表+12.5%3,180主页浏览量+18.2%8,930职位浏览量+3.1%26.1%简历打开率+5.289.5HR活跃度浏览趋势分析主页浏览、职位浏览、简历打开主页浏览职位浏览简历打开流量来源分布求职者从哪里找到你直接搜索35%推荐算法28%直播招聘18%招聘会12%内推7%简历打开漏斗从浏览到打开的转化路径1职位浏览8,930(100%)2点击查看3,820(42.8%)3投递简历1,256(14.1%)4简历被打开328(3.7%)5进入面试86(1%)简历打开关键指标招聘效率核心指标累计收到简历1,256已打开简历328平均打开时长2.3天初筛通过率42%AI优化建议优化职位描述关键词可提升 23% 简历打开率去优化0",
+        "layout": {
+          "viewportWidth": 1632,
+          "viewportHeight": 1600,
+          "scrollWidth": 1632,
+          "scrollHeight": 1600,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89174-codex-704b-structure-05-操作-查看-谁看过我-热力",
+          "label": "操作:查看「谁看过我」热力",
+          "finalUrl": "http://127.0.0.1:49174/employer/views",
+          "title": "智聘OS - 智能招聘操作系统",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89174/probe/codex-repair-20260612-704/may-89174-codex-704b-structure-05-操作-查看-谁看过我-热力.json",
+          "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89174/probe/codex-repair-20260612-704/may-89174-codex-704b-structure-05-操作-查看-谁看过我-热力.png",
+          "elementCount": 386,
+          "interactiveCount": 10,
+          "interactiveLabels": [
+            "近7天",
+            "近30天",
+            "近90天",
+            "自定义",
+            "数据概览",
+            "HR活跃度",
+            "岗位热区",
+            "访客列表",
+            "去优化"
+          ]
+        }
+      },
+      {
+        "label": "二层操作:查看「谁看过我」热力->访客列表",
+        "url": "http://127.0.0.1:49174/employer/views",
+        "title": "智聘OS - 智能招聘操作系统",
+        "headings": [
+          "「谁看过我」热力看板",
+          "最近访客"
+        ],
+        "navLabels": [],
+        "buttons": [
+          "近7天",
+          "近30天",
+          "近90天",
+          "自定义",
+          "数据概览",
+          "HR活跃度",
+          "岗位热区",
+          "访客列表",
+          "筛选",
+          "导出列表",
+          "查看简历",
+          "发起沟通"
+        ],
+        "links": [],
+        "inputs": [],
+        "tables": [],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "「谁看过我」热力看板实时追踪求职者浏览行为，洞察招聘效果近7天近30天近90天自定义数据概览HR活跃度岗位热区访客列表最近访客共 6 位求职者浏览过筛选导出列表张张明优质人才高级前端工程师 @ 腾讯查看了：高级前端工程师5分钟前92分匹配度查看简历发起沟通李李华优质人才产品经理 @ 美团查看了：产品经理12分钟前85分匹配度查看简历发起沟通王王芳UI设计师 @ 网易查看了：UI设计师25分钟前78分匹配度查看简历发起沟通陈陈伟优质人才Java工程师 @ 阿里查看了：Java工程师1小时前88分匹配度查看简历发起沟通刘刘洋数据分析师 @ 京东查看了：数据分析师2小时前72分匹配度查看简历发起沟通赵赵磊运营专员 @ 小米查看了：运营专员3小时前65分匹配度查看简历发起沟通0",
+        "layout": {
+          "viewportWidth": 1664,
+          "viewportHeight": 1600,
+          "scrollWidth": 1664,
+          "scrollHeight": 1600,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89174-codex-704b-structure-06-二层操作-查看-谁看过我-热力-访客列表",
+          "label": "二层操作:查看「谁看过我」热力->访客列表",
+          "finalUrl": "http://127.0.0.1:49174/employer/views",
+          "title": "智聘OS - 智能招聘操作系统",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89174/probe/codex-repair-20260612-704/may-89174-codex-704b-structure-06-二层操作-查看-谁看过我-热力-访客列表.json",
+          "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89174/probe/codex-repair-20260612-704/may-89174-codex-704b-structure-06-二层操作-查看-谁看过我-热力-访客列表.png",
+          "elementCount": 276,
+          "interactiveCount": 22,
+          "interactiveLabels": [
+            "近7天",
+            "近30天",
+            "近90天",
+            "自定义",
+            "数据概览",
+            "HR活跃度",
+            "岗位热区",
+            "访客列表",
+            "筛选",
+            "导出列表",
+            "查看简历",
+            "发起沟通"
+          ]
+        }
+      },
+      {
+        "label": "导航:求职者",
+        "url": "http://127.0.0.1:49174/auth/login?role=jobseeker",
+        "title": "智聘OS - 智能招聘操作系统",
+        "headings": [
+          "欢迎回来"
+        ],
+        "navLabels": [],
+        "buttons": [
+          "求职者",
+          "企业HR",
+          "登 录",
+          "微信",
+          "支付宝",
+          "手机"
+        ],
+        "links": [
+          "智聘OS",
+          "忘记密码？",
+          "立即注册",
+          "服务条款",
+          "隐私政策"
+        ],
+        "inputs": [
+          {
+            "tag": "input",
+            "type": "email",
+            "placeholder": "请输入邮箱地址",
+            "name": "email",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "password",
+            "placeholder": "请输入密码",
+            "name": "password",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "checkbox",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          }
+        ],
+        "tables": [],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "智聘OS欢迎回来登录你的账号，继续你的招聘之旅求职者企业HR邮箱密码记住我忘记密码？登 录还没有账号？ 立即注册其他登录方式微信支付宝手机登录即表示同意 服务条款 和 隐私政策",
+        "layout": {
+          "viewportWidth": 1696,
+          "viewportHeight": 1600,
+          "scrollWidth": 1696,
+          "scrollHeight": 1600,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89174-codex-704b-structure-07-导航-求职者",
+          "label": "导航:求职者",
+          "finalUrl": "http://127.0.0.1:49174/auth/login?role=jobseeker",
+          "title": "智聘OS - 智能招聘操作系统",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89174/probe/codex-repair-20260612-704/may-89174-codex-704b-structure-07-导航-求职者.json",
+          "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89174/probe/codex-repair-20260612-704/may-89174-codex-704b-structure-07-导航-求职者.png",
+          "elementCount": 97,
+          "interactiveCount": 15,
+          "interactiveLabels": [
+            "智聘OS",
+            "求职者",
+            "企业HR",
+            "请输入邮箱地址",
+            "请输入密码",
+            "on",
+            "忘记密码？",
+            "登 录",
+            "立即注册",
+            "微信",
+            "支付宝",
+            "手机",
+            "服务条款",
+            "隐私政策"
+          ]
+        }
+      },
+      {
+        "label": "操作:登 录",
+        "url": "http://127.0.0.1:49174/auth/login?role=jobseeker",
+        "title": "智聘OS - 智能招聘操作系统",
+        "headings": [
+          "欢迎回来"
+        ],
+        "navLabels": [],
+        "buttons": [
+          "求职者",
+          "企业HR",
+          "登 录",
+          "微信",
+          "支付宝",
+          "手机"
+        ],
+        "links": [
+          "智聘OS",
+          "忘记密码？",
+          "立即注册",
+          "服务条款",
+          "隐私政策"
+        ],
+        "inputs": [
+          {
+            "tag": "input",
+            "type": "email",
+            "placeholder": "请输入邮箱地址",
+            "name": "email",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "password",
+            "placeholder": "请输入密码",
+            "name": "password",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "checkbox",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          }
+        ],
+        "tables": [],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "智聘OS欢迎回来登录你的账号，继续你的招聘之旅求职者企业HR邮箱请输入有效的邮箱地址密码密码至少6位记住我忘记密码？登 录还没有账号？ 立即注册其他登录方式微信支付宝手机登录即表示同意 服务条款 和 隐私政策",
+        "layout": {
+          "viewportWidth": 1728,
+          "viewportHeight": 1600,
+          "scrollWidth": 1728,
+          "scrollHeight": 1600,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89174-codex-704b-structure-08-操作-登-录",
+          "label": "操作:登 录",
+          "finalUrl": "http://127.0.0.1:49174/auth/login?role=jobseeker",
+          "title": "智聘OS - 智能招聘操作系统",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89174/probe/codex-repair-20260612-704/may-89174-codex-704b-structure-08-操作-登-录.json",
+          "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89174/probe/codex-repair-20260612-704/may-89174-codex-704b-structure-08-操作-登-录.png",
+          "elementCount": 99,
+          "interactiveCount": 15,
+          "interactiveLabels": [
+            "智聘OS",
+            "求职者",
+            "企业HR",
+            "请输入邮箱地址",
+            "请输入密码",
+            "on",
+            "忘记密码？",
+            "登 录",
+            "立即注册",
+            "微信",
+            "支付宝",
+            "手机",
+            "服务条款",
+            "隐私政策"
+          ]
+        }
+      },
+      {
+        "label": "操作:企业HR",
+        "url": "http://127.0.0.1:49174/auth/login?role=jobseeker",
+        "title": "智聘OS - 智能招聘操作系统",
+        "headings": [
+          "欢迎回来"
+        ],
+        "navLabels": [],
+        "buttons": [
+          "求职者",
+          "企业HR",
+          "登 录",
+          "微信",
+          "支付宝",
+          "手机"
+        ],
+        "links": [
+          "智聘OS",
+          "忘记密码？",
+          "立即注册",
+          "服务条款",
+          "隐私政策"
+        ],
+        "inputs": [
+          {
+            "tag": "input",
+            "type": "email",
+            "placeholder": "请输入邮箱地址",
+            "name": "email",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "password",
+            "placeholder": "请输入密码",
+            "name": "password",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "checkbox",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          }
+        ],
+        "tables": [],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "智聘OS欢迎回来登录你的账号，继续你的招聘之旅求职者企业HR邮箱请输入有效的邮箱地址密码密码至少6位记住我忘记密码？登 录还没有账号？ 立即注册其他登录方式微信支付宝手机登录即表示同意 服务条款 和 隐私政策",
+        "layout": {
+          "viewportWidth": 1760,
+          "viewportHeight": 1600,
+          "scrollWidth": 1760,
+          "scrollHeight": 1600,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89174-codex-704b-structure-09-操作-企业HR",
+          "label": "操作:企业HR",
+          "finalUrl": "http://127.0.0.1:49174/auth/login?role=jobseeker",
+          "title": "智聘OS - 智能招聘操作系统",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89174/probe/codex-repair-20260612-704/may-89174-codex-704b-structure-09-操作-企业HR.json",
+          "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89174/probe/codex-repair-20260612-704/may-89174-codex-704b-structure-09-操作-企业HR.png",
+          "elementCount": 99,
+          "interactiveCount": 15,
+          "interactiveLabels": [
+            "智聘OS",
+            "求职者",
+            "企业HR",
+            "请输入邮箱地址",
+            "请输入密码",
+            "on",
+            "忘记密码？",
+            "登 录",
+            "立即注册",
+            "微信",
+            "支付宝",
+            "手机",
+            "服务条款",
+            "隐私政策"
+          ]
+        }
+      },
+      {
+        "label": "导航:企业HR",
+        "url": "http://127.0.0.1:49174/auth/login?role=jobseeker",
+        "title": "智聘OS - 智能招聘操作系统",
+        "headings": [
+          "欢迎回来"
+        ],
+        "navLabels": [],
+        "buttons": [
+          "求职者",
+          "企业HR",
+          "登 录",
+          "微信",
+          "支付宝",
+          "手机"
+        ],
+        "links": [
+          "智聘OS",
+          "忘记密码？",
+          "立即注册",
+          "服务条款",
+          "隐私政策"
+        ],
+        "inputs": [
+          {
+            "tag": "input",
+            "type": "email",
+            "placeholder": "请输入邮箱地址",
+            "name": "email",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "password",
+            "placeholder": "请输入密码",
+            "name": "password",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "checkbox",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          }
+        ],
+        "tables": [],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "智聘OS欢迎回来登录你的账号，继续你的招聘之旅求职者企业HR邮箱请输入有效的邮箱地址密码密码至少6位记住我忘记密码？登 录还没有账号？ 立即注册其他登录方式微信支付宝手机登录即表示同意 服务条款 和 隐私政策",
+        "layout": {
+          "viewportWidth": 1792,
+          "viewportHeight": 1600,
+          "scrollWidth": 1792,
+          "scrollHeight": 1600,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89174-codex-704b-structure-10-导航-企业HR",
+          "label": "导航:企业HR",
+          "finalUrl": "http://127.0.0.1:49174/auth/login?role=jobseeker",
+          "title": "智聘OS - 智能招聘操作系统",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89174/probe/codex-repair-20260612-704/may-89174-codex-704b-structure-10-导航-企业HR.json",
+          "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89174/probe/codex-repair-20260612-704/may-89174-codex-704b-structure-10-导航-企业HR.png",
+          "elementCount": 99,
+          "interactiveCount": 15,
+          "interactiveLabels": [
+            "智聘OS",
+            "求职者",
+            "企业HR",
+            "请输入邮箱地址",
+            "请输入密码",
+            "on",
+            "忘记密码？",
+            "登 录",
+            "立即注册",
+            "微信",
+            "支付宝",
+            "手机",
+            "服务条款",
+            "隐私政策"
+          ]
+        }
+      },
+      {
+        "label": "操作:登 录",
+        "url": "http://127.0.0.1:49174/auth/login?role=jobseeker",
+        "title": "智聘OS - 智能招聘操作系统",
+        "headings": [
+          "欢迎回来"
+        ],
+        "navLabels": [],
+        "buttons": [
+          "求职者",
+          "企业HR",
+          "登 录",
+          "微信",
+          "支付宝",
+          "手机"
+        ],
+        "links": [
+          "智聘OS",
+          "忘记密码？",
+          "立即注册",
+          "服务条款",
+          "隐私政策"
+        ],
+        "inputs": [
+          {
+            "tag": "input",
+            "type": "email",
+            "placeholder": "请输入邮箱地址",
+            "name": "email",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "password",
+            "placeholder": "请输入密码",
+            "name": "password",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "checkbox",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          }
+        ],
+        "tables": [],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "智聘OS欢迎回来登录你的账号，继续你的招聘之旅求职者企业HR邮箱请输入有效的邮箱地址密码密码至少6位记住我忘记密码？登 录还没有账号？ 立即注册其他登录方式微信支付宝手机登录即表示同意 服务条款 和 隐私政策",
+        "layout": {
+          "viewportWidth": 1824,
+          "viewportHeight": 1600,
+          "scrollWidth": 1824,
+          "scrollHeight": 1600,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89174-codex-704b-structure-11-操作-登-录",
+          "label": "操作:登 录",
+          "finalUrl": "http://127.0.0.1:49174/auth/login?role=jobseeker",
+          "title": "智聘OS - 智能招聘操作系统",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89174/probe/codex-repair-20260612-704/may-89174-codex-704b-structure-11-操作-登-录.json",
+          "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89174/probe/codex-repair-20260612-704/may-89174-codex-704b-structure-11-操作-登-录.png",
+          "elementCount": 99,
+          "interactiveCount": 15,
+          "interactiveLabels": [
+            "智聘OS",
+            "求职者",
+            "企业HR",
+            "请输入邮箱地址",
+            "请输入密码",
+            "on",
+            "忘记密码？",
+            "登 录",
+            "立即注册",
+            "微信",
+            "支付宝",
+            "手机",
+            "服务条款",
+            "隐私政策"
+          ]
+        }
+      },
+      {
+        "label": "操作:企业HR",
+        "url": "http://127.0.0.1:49174/auth/login?role=jobseeker",
+        "title": "智聘OS - 智能招聘操作系统",
+        "headings": [
+          "欢迎回来"
+        ],
+        "navLabels": [],
+        "buttons": [
+          "求职者",
+          "企业HR",
+          "登 录",
+          "微信",
+          "支付宝",
+          "手机"
+        ],
+        "links": [
+          "智聘OS",
+          "忘记密码？",
+          "立即注册",
+          "服务条款",
+          "隐私政策"
+        ],
+        "inputs": [
+          {
+            "tag": "input",
+            "type": "email",
+            "placeholder": "请输入邮箱地址",
+            "name": "email",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "password",
+            "placeholder": "请输入密码",
+            "name": "password",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "checkbox",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          }
+        ],
+        "tables": [],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "智聘OS欢迎回来登录你的账号，继续你的招聘之旅求职者企业HR邮箱请输入有效的邮箱地址密码密码至少6位记住我忘记密码？登 录还没有账号？ 立即注册其他登录方式微信支付宝手机登录即表示同意 服务条款 和 隐私政策",
+        "layout": {
+          "viewportWidth": 1856,
+          "viewportHeight": 1600,
+          "scrollWidth": 1856,
+          "scrollHeight": 1600,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89174-codex-704b-structure-12-操作-企业HR",
+          "label": "操作:企业HR",
+          "finalUrl": "http://127.0.0.1:49174/auth/login?role=jobseeker",
+          "title": "智聘OS - 智能招聘操作系统",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89174/probe/codex-repair-20260612-704/may-89174-codex-704b-structure-12-操作-企业HR.json",
+          "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89174/probe/codex-repair-20260612-704/may-89174-codex-704b-structure-12-操作-企业HR.png",
+          "elementCount": 99,
+          "interactiveCount": 15,
+          "interactiveLabels": [
+            "智聘OS",
+            "求职者",
+            "企业HR",
+            "请输入邮箱地址",
+            "请输入密码",
+            "on",
+            "忘记密码？",
+            "登 录",
+            "立即注册",
+            "微信",
+            "支付宝",
+            "手机",
+            "服务条款",
+            "隐私政策"
+          ]
+        }
+      }
+    ],
+    "findings": [],
+    "actionHints": [],
+    "emptyPages": [],
+    "overflowPages": [],
+    "blankPages": [],
+    "apiFailurePaths": [],
+    "goalTerms": [],
+    "clickedActionDescriptors": [
+      {
+        "nav": "智聘OS",
+        "label": "查看",
+        "ordinal": 0,
+        "unsafe": false
+      },
+      {
+        "nav": "智聘OS",
+        "label": "查看->使用示例预览",
+        "ordinal": 0,
+        "secondary": true,
+        "unsafe": false
+      },
+      {
+        "nav": "智聘OS",
+        "label": "查看「谁看过我」热力",
+        "ordinal": 0,
+        "unsafe": false
+      },
+      {
+        "nav": "智聘OS",
+        "label": "查看「谁看过我」热力->访客列表",
+        "ordinal": 0,
+        "secondary": true,
+        "unsafe": false
+      },
+      {
+        "nav": "求职者",
+        "label": "登 录",
+        "ordinal": 0,
+        "unsafe": false
+      },
+      {
+        "nav": "求职者",
+        "label": "企业HR",
+        "ordinal": 0,
+        "unsafe": false
+      },
+      {
+        "nav": "企业HR",
+        "label": "登 录",
+        "ordinal": 0,
+        "unsafe": false
+      },
+      {
+        "nav": "企业HR",
+        "label": "企业HR",
+        "ordinal": 0,
+        "unsafe": false
+      }
+    ],
+    "secondaryActionClicks": 2,
+    "structureCaptures": [
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89174-codex-704b-structure-01-首屏",
+        "label": "首屏",
+        "finalUrl": "http://127.0.0.1:49174/",
+        "title": "智聘OS - 智能招聘操作系统",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89174/probe/codex-repair-20260612-704/may-89174-codex-704b-structure-01-首屏.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89174/probe/codex-repair-20260612-704/may-89174-codex-704b-structure-01-首屏.png",
+        "elementCount": 1200,
+        "interactiveCount": 127,
+        "interactiveLabels": [
+          "智聘OS",
+          "求职者",
+          "企业HR",
+          "工作台 AI",
+          "找工作",
+          "AI解析简历 NEW",
+          "视频面试",
+          "直播招聘",
+          "招聘会",
+          "能力画像",
+          "简历解析",
+          "登录",
+          "求职者注册",
+          "企业注册",
+          "立即注册",
+          "求职者工作台",
+          "企业管理后台",
+          "免费注册",
+          "AI 解析 3秒补全",
+          "一键投递 AI匹配",
+          "视频面试 云端录制",
+          "直播招聘 弹幕连麦",
+          "查看",
+          "岗位匹配 238 个",
+          "待面试 3 场",
+          "被查看 12 次",
+          "STEP 1 AI简历解析 上传PDF/Word，自动补全教育/工作/技能字段 点击进入 立即体验",
+          "STEP 2 一键投递 基于能力画像智能匹配，一键批量投递 点击进入 立即体验",
+          "STEP 3 视频面试 预约面试 + 云端录制回放，复盘表现 点击进入 立即体验",
+          "STEP 4 能力画像沉淀 所有行为沉淀六维画像，持续推荐机会 点击进入 立即体验"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89174-codex-704b-structure-02-导航-智聘OS",
+        "label": "导航:智聘OS",
+        "finalUrl": "http://127.0.0.1:49174/",
+        "title": "智聘OS - 智能招聘操作系统",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89174/probe/codex-repair-20260612-704/may-89174-codex-704b-structure-02-导航-智聘OS.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89174/probe/codex-repair-20260612-704/may-89174-codex-704b-structure-02-导航-智聘OS.png",
+        "elementCount": 1200,
+        "interactiveCount": 127,
+        "interactiveLabels": [
+          "智聘OS",
+          "求职者",
+          "企业HR",
+          "工作台 AI",
+          "找工作",
+          "AI解析简历 NEW",
+          "视频面试",
+          "直播招聘",
+          "招聘会",
+          "能力画像",
+          "简历解析",
+          "登录",
+          "求职者注册",
+          "企业注册",
+          "立即注册",
+          "求职者工作台",
+          "企业管理后台",
+          "免费注册",
+          "AI 解析 3秒补全",
+          "一键投递 AI匹配",
+          "视频面试 云端录制",
+          "直播招聘 弹幕连麦",
+          "查看",
+          "岗位匹配 238 个",
+          "待面试 3 场",
+          "被查看 12 次",
+          "STEP 1 AI简历解析 上传PDF/Word，自动补全教育/工作/技能字段 点击进入 立即体验",
+          "STEP 2 一键投递 基于能力画像智能匹配，一键批量投递 点击进入 立即体验",
+          "STEP 3 视频面试 预约面试 + 云端录制回放，复盘表现 点击进入 立即体验",
+          "STEP 4 能力画像沉淀 所有行为沉淀六维画像，持续推荐机会 点击进入 立即体验"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89174-codex-704b-structure-03-操作-查看",
+        "label": "操作:查看",
+        "finalUrl": "http://127.0.0.1:49174/resume/ai",
+        "title": "智聘OS - 智能招聘操作系统",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89174/probe/codex-repair-20260612-704/may-89174-codex-704b-structure-03-操作-查看.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89174/probe/codex-repair-20260612-704/may-89174-codex-704b-structure-03-操作-查看.png",
+        "elementCount": 644,
+        "interactiveCount": 57,
+        "interactiveLabels": [
+          "智聘OS",
+          "求职者",
+          "企业HR",
+          "工作台 AI",
+          "找工作",
+          "AI解析简历 NEW",
+          "视频面试",
+          "直播招聘",
+          "招聘会",
+          "能力画像",
+          "简历解析",
+          "张 张三 求职者",
+          "使用示例预览",
+          "开始智能解析",
+          "求职者工作台 进入 →",
+          "企业管理后台 进入 →",
+          "邮件联系",
+          "AI简历解析 NEW →",
+          "职位搜索 →",
+          "一键投递 →",
+          "视频面试预约 →",
+          "面试录制回放 →",
+          "直播带岗 热门 →",
+          "招聘会日历 →",
+          "能力画像 →",
+          "企业数据看板 →",
+          "直播招聘后台 直播中 →",
+          "推流与连麦 →",
+          "弹幕审核 →",
+          "岗位挂载 →"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89174-codex-704b-structure-04-二层操作-查看-使用示例预览",
+        "label": "二层操作:查看->使用示例预览",
+        "finalUrl": "http://127.0.0.1:49174/resume/ai",
+        "title": "智聘OS - 智能招聘操作系统",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89174/probe/codex-repair-20260612-704/may-89174-codex-704b-structure-04-二层操作-查看-使用示例预览.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89174/probe/codex-repair-20260612-704/may-89174-codex-704b-structure-04-二层操作-查看-使用示例预览.png",
+        "elementCount": 813,
+        "interactiveCount": 62,
+        "interactiveLabels": [
+          "智聘OS",
+          "求职者",
+          "企业HR",
+          "工作台 AI",
+          "找工作",
+          "AI解析简历 NEW",
+          "视频面试",
+          "直播招聘",
+          "招聘会",
+          "能力画像",
+          "简历解析",
+          "张 张三 求职者",
+          "基本信息",
+          "教育背景",
+          "工作经历",
+          "技能特长",
+          "证书资质",
+          "项目经验",
+          "确认保存",
+          "重新上传",
+          "求职者工作台 进入 →",
+          "企业管理后台 进入 →",
+          "邮件联系",
+          "AI简历解析 NEW →",
+          "职位搜索 →",
+          "一键投递 →",
+          "视频面试预约 →",
+          "面试录制回放 →",
+          "直播带岗 热门 →",
+          "招聘会日历 →"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89174-codex-704b-structure-05-操作-查看-谁看过我-热力",
+        "label": "操作:查看「谁看过我」热力",
+        "finalUrl": "http://127.0.0.1:49174/employer/views",
+        "title": "智聘OS - 智能招聘操作系统",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89174/probe/codex-repair-20260612-704/may-89174-codex-704b-structure-05-操作-查看-谁看过我-热力.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89174/probe/codex-repair-20260612-704/may-89174-codex-704b-structure-05-操作-查看-谁看过我-热力.png",
+        "elementCount": 386,
+        "interactiveCount": 10,
+        "interactiveLabels": [
+          "近7天",
+          "近30天",
+          "近90天",
+          "自定义",
+          "数据概览",
+          "HR活跃度",
+          "岗位热区",
+          "访客列表",
+          "去优化"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89174-codex-704b-structure-06-二层操作-查看-谁看过我-热力-访客列表",
+        "label": "二层操作:查看「谁看过我」热力->访客列表",
+        "finalUrl": "http://127.0.0.1:49174/employer/views",
+        "title": "智聘OS - 智能招聘操作系统",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89174/probe/codex-repair-20260612-704/may-89174-codex-704b-structure-06-二层操作-查看-谁看过我-热力-访客列表.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89174/probe/codex-repair-20260612-704/may-89174-codex-704b-structure-06-二层操作-查看-谁看过我-热力-访客列表.png",
+        "elementCount": 276,
+        "interactiveCount": 22,
+        "interactiveLabels": [
+          "近7天",
+          "近30天",
+          "近90天",
+          "自定义",
+          "数据概览",
+          "HR活跃度",
+          "岗位热区",
+          "访客列表",
+          "筛选",
+          "导出列表",
+          "查看简历",
+          "发起沟通"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89174-codex-704b-structure-07-导航-求职者",
+        "label": "导航:求职者",
+        "finalUrl": "http://127.0.0.1:49174/auth/login?role=jobseeker",
+        "title": "智聘OS - 智能招聘操作系统",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89174/probe/codex-repair-20260612-704/may-89174-codex-704b-structure-07-导航-求职者.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89174/probe/codex-repair-20260612-704/may-89174-codex-704b-structure-07-导航-求职者.png",
+        "elementCount": 97,
+        "interactiveCount": 15,
+        "interactiveLabels": [
+          "智聘OS",
+          "求职者",
+          "企业HR",
+          "请输入邮箱地址",
+          "请输入密码",
+          "on",
+          "忘记密码？",
+          "登 录",
+          "立即注册",
+          "微信",
+          "支付宝",
+          "手机",
+          "服务条款",
+          "隐私政策"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89174-codex-704b-structure-08-操作-登-录",
+        "label": "操作:登 录",
+        "finalUrl": "http://127.0.0.1:49174/auth/login?role=jobseeker",
+        "title": "智聘OS - 智能招聘操作系统",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89174/probe/codex-repair-20260612-704/may-89174-codex-704b-structure-08-操作-登-录.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89174/probe/codex-repair-20260612-704/may-89174-codex-704b-structure-08-操作-登-录.png",
+        "elementCount": 99,
+        "interactiveCount": 15,
+        "interactiveLabels": [
+          "智聘OS",
+          "求职者",
+          "企业HR",
+          "请输入邮箱地址",
+          "请输入密码",
+          "on",
+          "忘记密码？",
+          "登 录",
+          "立即注册",
+          "微信",
+          "支付宝",
+          "手机",
+          "服务条款",
+          "隐私政策"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89174-codex-704b-structure-09-操作-企业HR",
+        "label": "操作:企业HR",
+        "finalUrl": "http://127.0.0.1:49174/auth/login?role=jobseeker",
+        "title": "智聘OS - 智能招聘操作系统",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89174/probe/codex-repair-20260612-704/may-89174-codex-704b-structure-09-操作-企业HR.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89174/probe/codex-repair-20260612-704/may-89174-codex-704b-structure-09-操作-企业HR.png",
+        "elementCount": 99,
+        "interactiveCount": 15,
+        "interactiveLabels": [
+          "智聘OS",
+          "求职者",
+          "企业HR",
+          "请输入邮箱地址",
+          "请输入密码",
+          "on",
+          "忘记密码？",
+          "登 录",
+          "立即注册",
+          "微信",
+          "支付宝",
+          "手机",
+          "服务条款",
+          "隐私政策"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89174-codex-704b-structure-10-导航-企业HR",
+        "label": "导航:企业HR",
+        "finalUrl": "http://127.0.0.1:49174/auth/login?role=jobseeker",
+        "title": "智聘OS - 智能招聘操作系统",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89174/probe/codex-repair-20260612-704/may-89174-codex-704b-structure-10-导航-企业HR.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89174/probe/codex-repair-20260612-704/may-89174-codex-704b-structure-10-导航-企业HR.png",
+        "elementCount": 99,
+        "interactiveCount": 15,
+        "interactiveLabels": [
+          "智聘OS",
+          "求职者",
+          "企业HR",
+          "请输入邮箱地址",
+          "请输入密码",
+          "on",
+          "忘记密码？",
+          "登 录",
+          "立即注册",
+          "微信",
+          "支付宝",
+          "手机",
+          "服务条款",
+          "隐私政策"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89174-codex-704b-structure-11-操作-登-录",
+        "label": "操作:登 录",
+        "finalUrl": "http://127.0.0.1:49174/auth/login?role=jobseeker",
+        "title": "智聘OS - 智能招聘操作系统",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89174/probe/codex-repair-20260612-704/may-89174-codex-704b-structure-11-操作-登-录.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89174/probe/codex-repair-20260612-704/may-89174-codex-704b-structure-11-操作-登-录.png",
+        "elementCount": 99,
+        "interactiveCount": 15,
+        "interactiveLabels": [
+          "智聘OS",
+          "求职者",
+          "企业HR",
+          "请输入邮箱地址",
+          "请输入密码",
+          "on",
+          "忘记密码？",
+          "登 录",
+          "立即注册",
+          "微信",
+          "支付宝",
+          "手机",
+          "服务条款",
+          "隐私政策"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89174-codex-704b-structure-12-操作-企业HR",
+        "label": "操作:企业HR",
+        "finalUrl": "http://127.0.0.1:49174/auth/login?role=jobseeker",
+        "title": "智聘OS - 智能招聘操作系统",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89174/probe/codex-repair-20260612-704/may-89174-codex-704b-structure-12-操作-企业HR.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89174/probe/codex-repair-20260612-704/may-89174-codex-704b-structure-12-操作-企业HR.png",
+        "elementCount": 99,
+        "interactiveCount": 15,
+        "interactiveLabels": [
+          "智聘OS",
+          "求职者",
+          "企业HR",
+          "请输入邮箱地址",
+          "请输入密码",
+          "on",
+          "忘记密码？",
+          "登 录",
+          "立即注册",
+          "微信",
+          "支付宝",
+          "手机",
+          "服务条款",
+          "隐私政策"
+        ]
+      }
+    ],
+    "representativeScreenshotUrl": "http://127.0.0.1:49174/",
+    "representativeScreenshotLabel": "求职者 & 企业双端闭环 AI 全程陪伴"
+  },
+  "websiteStructureCapture": {
+    "module": "website_structure_capture",
+    "captureCount": 12,
+    "captures": [
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89174-codex-704b-structure-01-首屏",
+        "label": "首屏",
+        "finalUrl": "http://127.0.0.1:49174/",
+        "title": "智聘OS - 智能招聘操作系统",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89174/probe/codex-repair-20260612-704/may-89174-codex-704b-structure-01-首屏.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89174/probe/codex-repair-20260612-704/may-89174-codex-704b-structure-01-首屏.png",
+        "elementCount": 1200,
+        "interactiveCount": 127,
+        "interactiveLabels": [
+          "智聘OS",
+          "求职者",
+          "企业HR",
+          "工作台 AI",
+          "找工作",
+          "AI解析简历 NEW",
+          "视频面试",
+          "直播招聘",
+          "招聘会",
+          "能力画像",
+          "简历解析",
+          "登录",
+          "求职者注册",
+          "企业注册",
+          "立即注册",
+          "求职者工作台",
+          "企业管理后台",
+          "免费注册",
+          "AI 解析 3秒补全",
+          "一键投递 AI匹配",
+          "视频面试 云端录制",
+          "直播招聘 弹幕连麦",
+          "查看",
+          "岗位匹配 238 个",
+          "待面试 3 场",
+          "被查看 12 次",
+          "STEP 1 AI简历解析 上传PDF/Word，自动补全教育/工作/技能字段 点击进入 立即体验",
+          "STEP 2 一键投递 基于能力画像智能匹配，一键批量投递 点击进入 立即体验",
+          "STEP 3 视频面试 预约面试 + 云端录制回放，复盘表现 点击进入 立即体验",
+          "STEP 4 能力画像沉淀 所有行为沉淀六维画像，持续推荐机会 点击进入 立即体验"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89174-codex-704b-structure-02-导航-智聘OS",
+        "label": "导航:智聘OS",
+        "finalUrl": "http://127.0.0.1:49174/",
+        "title": "智聘OS - 智能招聘操作系统",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89174/probe/codex-repair-20260612-704/may-89174-codex-704b-structure-02-导航-智聘OS.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89174/probe/codex-repair-20260612-704/may-89174-codex-704b-structure-02-导航-智聘OS.png",
+        "elementCount": 1200,
+        "interactiveCount": 127,
+        "interactiveLabels": [
+          "智聘OS",
+          "求职者",
+          "企业HR",
+          "工作台 AI",
+          "找工作",
+          "AI解析简历 NEW",
+          "视频面试",
+          "直播招聘",
+          "招聘会",
+          "能力画像",
+          "简历解析",
+          "登录",
+          "求职者注册",
+          "企业注册",
+          "立即注册",
+          "求职者工作台",
+          "企业管理后台",
+          "免费注册",
+          "AI 解析 3秒补全",
+          "一键投递 AI匹配",
+          "视频面试 云端录制",
+          "直播招聘 弹幕连麦",
+          "查看",
+          "岗位匹配 238 个",
+          "待面试 3 场",
+          "被查看 12 次",
+          "STEP 1 AI简历解析 上传PDF/Word，自动补全教育/工作/技能字段 点击进入 立即体验",
+          "STEP 2 一键投递 基于能力画像智能匹配，一键批量投递 点击进入 立即体验",
+          "STEP 3 视频面试 预约面试 + 云端录制回放，复盘表现 点击进入 立即体验",
+          "STEP 4 能力画像沉淀 所有行为沉淀六维画像，持续推荐机会 点击进入 立即体验"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89174-codex-704b-structure-03-操作-查看",
+        "label": "操作:查看",
+        "finalUrl": "http://127.0.0.1:49174/resume/ai",
+        "title": "智聘OS - 智能招聘操作系统",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89174/probe/codex-repair-20260612-704/may-89174-codex-704b-structure-03-操作-查看.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89174/probe/codex-repair-20260612-704/may-89174-codex-704b-structure-03-操作-查看.png",
+        "elementCount": 644,
+        "interactiveCount": 57,
+        "interactiveLabels": [
+          "智聘OS",
+          "求职者",
+          "企业HR",
+          "工作台 AI",
+          "找工作",
+          "AI解析简历 NEW",
+          "视频面试",
+          "直播招聘",
+          "招聘会",
+          "能力画像",
+          "简历解析",
+          "张 张三 求职者",
+          "使用示例预览",
+          "开始智能解析",
+          "求职者工作台 进入 →",
+          "企业管理后台 进入 →",
+          "邮件联系",
+          "AI简历解析 NEW →",
+          "职位搜索 →",
+          "一键投递 →",
+          "视频面试预约 →",
+          "面试录制回放 →",
+          "直播带岗 热门 →",
+          "招聘会日历 →",
+          "能力画像 →",
+          "企业数据看板 →",
+          "直播招聘后台 直播中 →",
+          "推流与连麦 →",
+          "弹幕审核 →",
+          "岗位挂载 →"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89174-codex-704b-structure-04-二层操作-查看-使用示例预览",
+        "label": "二层操作:查看->使用示例预览",
+        "finalUrl": "http://127.0.0.1:49174/resume/ai",
+        "title": "智聘OS - 智能招聘操作系统",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89174/probe/codex-repair-20260612-704/may-89174-codex-704b-structure-04-二层操作-查看-使用示例预览.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89174/probe/codex-repair-20260612-704/may-89174-codex-704b-structure-04-二层操作-查看-使用示例预览.png",
+        "elementCount": 813,
+        "interactiveCount": 62,
+        "interactiveLabels": [
+          "智聘OS",
+          "求职者",
+          "企业HR",
+          "工作台 AI",
+          "找工作",
+          "AI解析简历 NEW",
+          "视频面试",
+          "直播招聘",
+          "招聘会",
+          "能力画像",
+          "简历解析",
+          "张 张三 求职者",
+          "基本信息",
+          "教育背景",
+          "工作经历",
+          "技能特长",
+          "证书资质",
+          "项目经验",
+          "确认保存",
+          "重新上传",
+          "求职者工作台 进入 →",
+          "企业管理后台 进入 →",
+          "邮件联系",
+          "AI简历解析 NEW →",
+          "职位搜索 →",
+          "一键投递 →",
+          "视频面试预约 →",
+          "面试录制回放 →",
+          "直播带岗 热门 →",
+          "招聘会日历 →"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89174-codex-704b-structure-05-操作-查看-谁看过我-热力",
+        "label": "操作:查看「谁看过我」热力",
+        "finalUrl": "http://127.0.0.1:49174/employer/views",
+        "title": "智聘OS - 智能招聘操作系统",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89174/probe/codex-repair-20260612-704/may-89174-codex-704b-structure-05-操作-查看-谁看过我-热力.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89174/probe/codex-repair-20260612-704/may-89174-codex-704b-structure-05-操作-查看-谁看过我-热力.png",
+        "elementCount": 386,
+        "interactiveCount": 10,
+        "interactiveLabels": [
+          "近7天",
+          "近30天",
+          "近90天",
+          "自定义",
+          "数据概览",
+          "HR活跃度",
+          "岗位热区",
+          "访客列表",
+          "去优化"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89174-codex-704b-structure-06-二层操作-查看-谁看过我-热力-访客列表",
+        "label": "二层操作:查看「谁看过我」热力->访客列表",
+        "finalUrl": "http://127.0.0.1:49174/employer/views",
+        "title": "智聘OS - 智能招聘操作系统",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89174/probe/codex-repair-20260612-704/may-89174-codex-704b-structure-06-二层操作-查看-谁看过我-热力-访客列表.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89174/probe/codex-repair-20260612-704/may-89174-codex-704b-structure-06-二层操作-查看-谁看过我-热力-访客列表.png",
+        "elementCount": 276,
+        "interactiveCount": 22,
+        "interactiveLabels": [
+          "近7天",
+          "近30天",
+          "近90天",
+          "自定义",
+          "数据概览",
+          "HR活跃度",
+          "岗位热区",
+          "访客列表",
+          "筛选",
+          "导出列表",
+          "查看简历",
+          "发起沟通"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89174-codex-704b-structure-07-导航-求职者",
+        "label": "导航:求职者",
+        "finalUrl": "http://127.0.0.1:49174/auth/login?role=jobseeker",
+        "title": "智聘OS - 智能招聘操作系统",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89174/probe/codex-repair-20260612-704/may-89174-codex-704b-structure-07-导航-求职者.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89174/probe/codex-repair-20260612-704/may-89174-codex-704b-structure-07-导航-求职者.png",
+        "elementCount": 97,
+        "interactiveCount": 15,
+        "interactiveLabels": [
+          "智聘OS",
+          "求职者",
+          "企业HR",
+          "请输入邮箱地址",
+          "请输入密码",
+          "on",
+          "忘记密码？",
+          "登 录",
+          "立即注册",
+          "微信",
+          "支付宝",
+          "手机",
+          "服务条款",
+          "隐私政策"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89174-codex-704b-structure-08-操作-登-录",
+        "label": "操作:登 录",
+        "finalUrl": "http://127.0.0.1:49174/auth/login?role=jobseeker",
+        "title": "智聘OS - 智能招聘操作系统",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89174/probe/codex-repair-20260612-704/may-89174-codex-704b-structure-08-操作-登-录.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89174/probe/codex-repair-20260612-704/may-89174-codex-704b-structure-08-操作-登-录.png",
+        "elementCount": 99,
+        "interactiveCount": 15,
+        "interactiveLabels": [
+          "智聘OS",
+          "求职者",
+          "企业HR",
+          "请输入邮箱地址",
+          "请输入密码",
+          "on",
+          "忘记密码？",
+          "登 录",
+          "立即注册",
+          "微信",
+          "支付宝",
+          "手机",
+          "服务条款",
+          "隐私政策"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89174-codex-704b-structure-09-操作-企业HR",
+        "label": "操作:企业HR",
+        "finalUrl": "http://127.0.0.1:49174/auth/login?role=jobseeker",
+        "title": "智聘OS - 智能招聘操作系统",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89174/probe/codex-repair-20260612-704/may-89174-codex-704b-structure-09-操作-企业HR.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89174/probe/codex-repair-20260612-704/may-89174-codex-704b-structure-09-操作-企业HR.png",
+        "elementCount": 99,
+        "interactiveCount": 15,
+        "interactiveLabels": [
+          "智聘OS",
+          "求职者",
+          "企业HR",
+          "请输入邮箱地址",
+          "请输入密码",
+          "on",
+          "忘记密码？",
+          "登 录",
+          "立即注册",
+          "微信",
+          "支付宝",
+          "手机",
+          "服务条款",
+          "隐私政策"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89174-codex-704b-structure-10-导航-企业HR",
+        "label": "导航:企业HR",
+        "finalUrl": "http://127.0.0.1:49174/auth/login?role=jobseeker",
+        "title": "智聘OS - 智能招聘操作系统",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89174/probe/codex-repair-20260612-704/may-89174-codex-704b-structure-10-导航-企业HR.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89174/probe/codex-repair-20260612-704/may-89174-codex-704b-structure-10-导航-企业HR.png",
+        "elementCount": 99,
+        "interactiveCount": 15,
+        "interactiveLabels": [
+          "智聘OS",
+          "求职者",
+          "企业HR",
+          "请输入邮箱地址",
+          "请输入密码",
+          "on",
+          "忘记密码？",
+          "登 录",
+          "立即注册",
+          "微信",
+          "支付宝",
+          "手机",
+          "服务条款",
+          "隐私政策"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89174-codex-704b-structure-11-操作-登-录",
+        "label": "操作:登 录",
+        "finalUrl": "http://127.0.0.1:49174/auth/login?role=jobseeker",
+        "title": "智聘OS - 智能招聘操作系统",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89174/probe/codex-repair-20260612-704/may-89174-codex-704b-structure-11-操作-登-录.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89174/probe/codex-repair-20260612-704/may-89174-codex-704b-structure-11-操作-登-录.png",
+        "elementCount": 99,
+        "interactiveCount": 15,
+        "interactiveLabels": [
+          "智聘OS",
+          "求职者",
+          "企业HR",
+          "请输入邮箱地址",
+          "请输入密码",
+          "on",
+          "忘记密码？",
+          "登 录",
+          "立即注册",
+          "微信",
+          "支付宝",
+          "手机",
+          "服务条款",
+          "隐私政策"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89174-codex-704b-structure-12-操作-企业HR",
+        "label": "操作:企业HR",
+        "finalUrl": "http://127.0.0.1:49174/auth/login?role=jobseeker",
+        "title": "智聘OS - 智能招聘操作系统",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89174/probe/codex-repair-20260612-704/may-89174-codex-704b-structure-12-操作-企业HR.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89174/probe/codex-repair-20260612-704/may-89174-codex-704b-structure-12-操作-企业HR.png",
+        "elementCount": 99,
+        "interactiveCount": 15,
+        "interactiveLabels": [
+          "智聘OS",
+          "求职者",
+          "企业HR",
+          "请输入邮箱地址",
+          "请输入密码",
+          "on",
+          "忘记密码？",
+          "登 录",
+          "立即注册",
+          "微信",
+          "支付宝",
+          "手机",
+          "服务条款",
+          "隐私政策"
+        ]
+      }
+    ]
+  },
+  "screenshotMetrics": {
+    "width": 1888,
+    "height": 1600,
+    "scrollWidth": 1856,
+    "scrollHeight": 5495
+  },
+  "initialBodyTextPreview": "智聘OS\n求职者\n企业HR\n工作台\nAI\n找工作\nAI解析简历\nNEW\n视频面试\n直播招聘\n招聘会\n能力画像\n简历解析\n能力画像\n登录\n求职者注册\n企业注册\n2026\n智能招聘操作系统\n求职者 & 企业双端闭环\nAI 全程陪伴\n\n求职者：简历解析 → 智能匹配 → 一键投递 → 视频面试 → 回放复盘 → 能力画像。 企业：直播招聘 → 雇主品牌 → 数据热力图 → 薪酬报告 → 招聘会数字化。\n\n求职者工作台\n企业管理后台\n免费注册\n\nAI 解析\n\n3秒补全\n\n一键投递\n\nAI匹配\n\n视频面试\n\n云端录制\n\n直播招聘\n\n弹幕连麦\n\nA\nB\nC\nD\nE\n4.9 分\n\n500万+用户 · 10万+企业\n\nAI简历解析完成\n\n已识别5段经历 · 3所院校 · 12技能\n\n查看\n\n岗位匹配\n\n238 个\n\n待面试\n\n3 场\n\n被查看\n\n12 次\n\n求职者路径\n四步闭环：上传简历 → 拿到 Offer\n\n每一步均可点击进入对应业务页面 点击卡片体验\n\nSTEP 1\nAI简历解析\n\n上传PDF/Word，自动补全教育/工作/技能字段\n\n点击进入\n立即体验\nSTEP 2\n一键投递\n\n基于能力画像智能匹配，一键批量投递\n\n点击进入\n立即体验\nSTEP 3\n视频面试\n\n预约面试 + 云端录制回放，复盘表现\n\n点击进入\n立即体验\nSTEP 4\n能力画像沉淀\n\n所有行为沉淀六维画像，持续推荐机会\n\n点击进入\n立即体验\n企业工作台\n6 大模块 · 点击直达真实业务后台\n\n直播招聘/雇主品牌/数据热力/薪酬报告/招聘会/看板 全链路运营\n\n热门\n直播招聘后台\n\n推流管理、弹幕审核、岗位挂载、连麦邀约\n\n进入后台\n雇主品牌主页\n\nVR导览、团队Vlog、文化价值观标签维护\n\n进入后台\nNEW\n谁看过我\n\nHR活跃度、岗位点击热区、简历打开率\n\n进入后台\n薪酬分位报告\n\n第三方薪资库 · P25/P50/P75 城市对比\n\n进入后台\n招聘会管理\n\n展位搭建、简历归集、AI初筛、扫码签到\n\n进入后台\n企业数据看板\n\n招聘全链路数据分析漏斗和状态流转\n\n进入后台\n进入企业控制台\n查看「谁看过我」热力\n热门职位\n今日精选好工作\n\n基于能力画像智能推荐，全部职位 →\n\n全部职位\n上传简历\n高级前端工程师\n\n字节跳动\n\n25-50K\n北京\nReact\nTypeScript\n3-5年\nAI匹配度 92%\n一键投递\nB端产品经理\n\n阿里巴巴\n\n20-35K\n杭州\nSaaS\n5-10年\nAI匹配度 92%\n一键投递\nAI算法工程师\n\n腾讯\n\n30-60K\n深圳\nNLP\n机器学习\nAI匹配度 92%\n一键投递\n资深Java开发\n\n美团\n\n22-45K\n上海\nJava\n微服务\nAI匹配度 92%\n一键投递\n正在直播\n直播带岗 · 边看边投\n\n点击直播间进入：弹幕互动/岗位挂载/连麦邀约 全部直播 →\n\n直播大厅\n企业开启直播\n直播中\n3,256\n12\n小米技术岗专场直播\nL\nLisa\n直播中\n8,921\n38\n华为2026校招宣讲会\nH\nHR团队\n预告\n1,542\n7\n网易游戏岗位专场\nN\n网易招聘\n\n弹幕审核\n\n关键词过滤+人工审核\n\n去配置 →\n\n岗位挂载\n\n直播中挂载岗位一键投递\n\n立即挂载 →\n\n连麦邀约\n\n一键邀请求职者上麦面试\n\n去体验 →\n招聘会数字化\n招聘会管理子系统\n\n线上线下融合的招聘会解决方案，每一步均可在 招聘会后台 中操作和复盘数据\n\n线上展位搭建\n\n拖拽展位装修、主题色、岗位列表\n\n简历归集 + AI初筛\n\nJD关键词/年限/证书多维评分排序\n\nJD关键词匹配权重\n\n调整五维评分权重，自动生成报告\n\n扫码签到联动\n\n签到数据实时同步，沉淀能力画像\n\n进入招聘会后台\n查看薪酬报告\n\n谁看过我\n\n热力看板\n\nHR活跃度/岗位热区\n\n查看数据 →\n\n薪酬报告\n\nP25",
+  "bodyTextPreview": "智聘OS\n求职者\n企业HR\n工作台\nAI\n找工作\nAI解析简历\nNEW\n视频面试\n直播招聘\n招聘会\n能力画像\n简历解析\n能力画像\n登录\n求职者注册\n企业注册\n2026\n智能招聘操作系统\n求职者 & 企业双端闭环\nAI 全程陪伴\n\n求职者：简历解析 → 智能匹配 → 一键投递 → 视频面试 → 回放复盘 → 能力画像。 企业：直播招聘 → 雇主品牌 → 数据热力图 → 薪酬报告 → 招聘会数字化。\n\n求职者工作台\n企业管理后台\n免费注册\n\nAI 解析\n\n3秒补全\n\n一键投递\n\nAI匹配\n\n视频面试\n\n云端录制\n\n直播招聘\n\n弹幕连麦\n\nA\nB\nC\nD\nE\n4.9 分\n\n500万+用户 · 10万+企业\n\nAI简历解析完成\n\n已识别5段经历 · 3所院校 · 12技能\n\n查看\n\n岗位匹配\n\n238 个\n\n待面试\n\n3 场\n\n被查看\n\n12 次\n\n求职者路径\n四步闭环：上传简历 → 拿到 Offer\n\n每一步均可点击进入对应业务页面 点击卡片体验\n\nSTEP 1\nAI简历解析\n\n上传PDF/Word，自动补全教育/工作/技能字段\n\n点击进入\n立即体验\nSTEP 2\n一键投递\n\n基于能力画像智能匹配，一键批量投递\n\n点击进入\n立即体验\nSTEP 3\n视频面试\n\n预约面试 + 云端录制回放，复盘表现\n\n点击进入\n立即体验\nSTEP 4\n能力画像沉淀\n\n所有行为沉淀六维画像，持续推荐机会\n\n点击进入\n立即体验\n企业工作台\n6 大模块 · 点击直达真实业务后台\n\n直播招聘/雇主品牌/数据热力/薪酬报告/招聘会/看板 全链路运营\n\n热门\n直播招聘后台\n\n推流管理、弹幕审核、岗位挂载、连麦邀约\n\n进入后台\n雇主品牌主页\n\nVR导览、团队Vlog、文化价值观标签维护\n\n进入后台\nNEW\n谁看过我\n\nHR活跃度、岗位点击热区、简历打开率\n\n进入后台\n薪酬分位报告\n\n第三方薪资库 · P25/P50/P75 城市对比\n\n进入后台\n招聘会管理\n\n展位搭建、简历归集、AI初筛、扫码签到\n\n进入后台\n企业数据看板\n\n招聘全链路数据分析漏斗和状态流转\n\n进入后台\n进入企业控制台\n查看「谁看过我」热力\n热门职位\n今日精选好工作\n\n基于能力画像智能推荐，全部职位 →\n\n全部职位\n上传简历\n高级前端工程师\n\n字节跳动\n\n25-50K\n北京\nReact\nTypeScript\n3-5年\nAI匹配度 92%\n一键投递\nB端产品经理\n\n阿里巴巴\n\n20-35K\n杭州\nSaaS\n5-10年\nAI匹配度 92%\n一键投递\nAI算法工程师\n\n腾讯\n\n30-60K\n深圳\nNLP\n机器学习\nAI匹配度 92%\n一键投递\n资深Java开发\n\n美团\n\n22-45K\n上海\nJava\n微服务\nAI匹配度 92%\n一键投递\n正在直播\n直播带岗 · 边看边投\n\n点击直播间进入：弹幕互动/岗位挂载/连麦邀约 全部直播 →\n\n直播大厅\n企业开启直播\n直播中\n3,256\n12\n小米技术岗专场直播\nL\nLisa\n直播中\n8,921\n38\n华为2026校招宣讲会\nH\nHR团队\n预告\n1,542\n7\n网易游戏岗位专场\nN\n网易招聘\n\n弹幕审核\n\n关键词过滤+人工审核\n\n去配置 →\n\n岗位挂载\n\n直播中挂载岗位一键投递\n\n立即挂载 →\n\n连麦邀约\n\n一键邀请求职者上麦面试\n\n去体验 →\n招聘会数字化\n招聘会管理子系统\n\n线上线下融合的招聘会解决方案，每一步均可在 招聘会后台 中操作和复盘数据\n\n线上展位搭建\n\n拖拽展位装修、主题色、岗位列表\n\n简历归集 + AI初筛\n\nJD关键词/年限/证书多维评分排序\n\nJD关键词匹配权重\n\n调整五维评分权重，自动生成报告\n\n扫码签到联动\n\n签到数据实时同步，沉淀能力画像\n\n进入招聘会后台\n查看薪酬报告\n\n谁看过我\n\n热力看板\n\nHR活跃度/岗位热区\n\n查看数据 →\n\n薪酬报告\n\nP25/P50/P75\n\n分位值城市对比\n\n查看报告 →\n\n立即开始\n加入智聘 OS，让招聘求职更智能\n\n求职者：上传简历到拿 Offer，AI 全程陪伴。企业：直播、品牌、数据、薪酬、招聘会一站式搞定。\n\n求职者工作台\n企业管理后台\nAI简历解析 →\n能力画像 →\n智聘OS\n\n融合直播招聘、视频面试、AI简历解析、雇主品牌可视化的新一代智能招聘操作系统。\n\n求职者工作台\n进入 →\n企业管理后台\n进入 →\n求职者服务\nAI简历解析\nNEW\n→\n职位搜索\n→\n一键投递\n→\n视频面试预约\n→\n面试录制回放\n→\n直播带岗\n热门\n→\n招聘会日历\n→\n能力画像\n→\n企业服务\n企业数据看板\n→\n直播招聘后台\n直播中\n→\n推流与连麦\n→\n弹幕审核\n→\n岗位挂载\n→\n雇主品牌主页\n→\nVR导览维护\n→\n团队Vlog上传\n→\n数据分析\n谁看过我\nNEW\n→\nHR活跃度排行\n→\n岗位点击热区\n→\n简历打开率分析\n→\n薪酬分位报告\nP25/P50/P75\n→\n薪酬城市对比\n→\nAI薪酬建议\n→\n招聘会系统\n线上展位搭建\n→\n简历自动归集\n→\nAI初筛配置\n→\nJD关键词匹配\n→\n扫码签到管理\n→\n求职者注册\n→\n企业HR注册\n→\n登录账号\n→\n\n© 2026 智聘OS · 智能招聘操作系统. 保留所有权利.\n\n隐私政策\n服务条款\n等保三级\n毫秒响应\n500万+ 用户\n10万+ 企业",
+  "apiBase": "",
+  "businessGoalPreview": "",
+  "apiResponses": [],
+  "apiChecks": [],
+  "dialogs": [],
+  "consoleMessages": [
+    {
+      "type": "error",
+      "text": "Failed to load resource: the server responded with a status of 404 (Not Found)",
+      "location": {
+        "url": "http://127.0.0.1:49174/favicon.ico",
+        "lineNumber": 0,
+        "columnNumber": 0
+      }
+    },
+    {
+      "type": "error",
+      "text": "Failed to load resource: the server responded with a status of 404 (Not Found)",
+      "location": {
+        "url": "http://127.0.0.1:49174/privacy?_rsc=6f6o6",
+        "lineNumber": 0,
+        "columnNumber": 0
+      }
+    },
+    {
+      "type": "error",
+      "text": "Failed to load resource: the server responded with a status of 404 (Not Found)",
+      "location": {
+        "url": "http://127.0.0.1:49174/terms?_rsc=6f6o6",
+        "lineNumber": 0,
+        "columnNumber": 0
+      }
+    },
+    {
+      "type": "error",
+      "text": "Failed to load resource: the server responded with a status of 404 (Not Found)",
+      "location": {
+        "url": "http://127.0.0.1:49174/auth/forgot-password?_rsc=synmf",
+        "lineNumber": 0,
+        "columnNumber": 0
+      }
+    },
+    {
+      "type": "error",
+      "text": "Failed to load resource: the server responded with a status of 404 (Not Found)",
+      "location": {
+        "url": "http://127.0.0.1:49174/terms?_rsc=synmf",
+        "lineNumber": 0,
+        "columnNumber": 0
+      }
+    },
+    {
+      "type": "error",
+      "text": "Failed to load resource: the server responded with a status of 404 (Not Found)",
+      "location": {
+        "url": "http://127.0.0.1:49174/privacy?_rsc=synmf",
+        "lineNumber": 0,
+        "columnNumber": 0
+      }
+    },
+    {
+      "type": "verbose",
+      "text": "[DOM] Input elements should have autocomplete attributes (suggested: \"current-password\"): (More info: https://goo.gl/9p2vKq) %o",
+      "location": {
+        "url": "http://127.0.0.1:49174/auth/login?role=jobseeker",
+        "lineNumber": 0,
+        "columnNumber": 0
+      }
+    }
+  ],
+  "requestFailures": [
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:49174/privacy?_rsc=6f6o6",
+      "errorText": "net::ERR_ABORTED"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:49174/terms?_rsc=6f6o6",
+      "errorText": "net::ERR_ABORTED"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:49174/dashboard?_rsc=3y0gy",
+      "errorText": "net::ERR_ABORTED"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:49174/privacy?_rsc=synmf",
+      "errorText": "net::ERR_ABORTED"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:49174/auth/forgot-password?_rsc=synmf",
+      "errorText": "net::ERR_ABORTED"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:49174/terms?_rsc=synmf",
+      "errorText": "net::ERR_ABORTED"
+    }
+  ],
+  "responseErrors": [
+    {
+      "status": 404,
+      "url": "http://127.0.0.1:49174/privacy?_rsc=6f6o6"
+    },
+    {
+      "status": 404,
+      "url": "http://127.0.0.1:49174/terms?_rsc=6f6o6"
+    },
+    {
+      "status": 404,
+      "url": "http://127.0.0.1:49174/auth/forgot-password?_rsc=synmf"
+    },
+    {
+      "status": 404,
+      "url": "http://127.0.0.1:49174/terms?_rsc=synmf"
+    },
+    {
+      "status": 404,
+      "url": "http://127.0.0.1:49174/privacy?_rsc=synmf"
+    }
+  ]
+}

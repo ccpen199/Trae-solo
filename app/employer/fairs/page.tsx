@@ -15,7 +15,6 @@ import {
   Eye,
   FileText,
   QrCode,
-  CheckIn,
   TrendingUp,
   Clock,
   CheckCircle2,

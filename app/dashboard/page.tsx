@@ -47,16 +47,23 @@ export default async function JobSeekerDashboard() {
   const interviews = await prisma.videoInterview.findMany({
     where: { jobSeekerId: user.jobSeeker?.id || "" },
     include: {
-      job: {
-        include: { company: true },
+      application: {
+        include: {
+          job: {
+            include: { company: true },
+          },
+        },
       },
     },
-    orderBy: { scheduledStart: "asc" },
+    orderBy: { scheduledAt: "asc" },
     take: 3,
   });
 
   const recommendations = await prisma.jobRecommendation.findMany({
-    where: { jobSeekerId: user.jobSeeker?.id || "", isApplied: false },
+    where: {
+      profile: { jobSeekerId: user.jobSeeker?.id || "" },
+      isApplied: false,
+    },
     include: {
       job: {
         include: { company: true },
@@ -203,7 +210,7 @@ export default async function JobSeekerDashboard() {
                             </span>
                             <span className="text-xs text-slate-500 flex items-center gap-1">
                               <MapPin className="h-3 w-3" />
-                              {rec.job.location}
+                              {[rec.job.city, rec.job.district, rec.job.address].filter(Boolean).join(" · ") || "地点不限"}
                             </span>
                           </div>
                         </div>
@@ -358,26 +365,31 @@ export default async function JobSeekerDashboard() {
               <CardContent>
                 {interviews.length > 0 ? (
                   <div className="space-y-3">
-                    {interviews.map((interview) => (
-                      <div key={interview.id} className="p-3 rounded-xl bg-blue-50 border border-blue-100">
-                        <div className="flex items-center gap-2 mb-2">
-                          <Video className="h-4 w-4 text-blue-600" />
-                          <span className="text-sm font-medium text-blue-700">{interview.title}</span>
+                    {interviews.map((interview) => {
+                      const interviewJob = interview.application?.job;
+                      return (
+                        <div key={interview.id} className="p-3 rounded-xl bg-blue-50 border border-blue-100">
+                          <div className="flex items-center gap-2 mb-2">
+                            <Video className="h-4 w-4 text-blue-600" />
+                            <span className="text-sm font-medium text-blue-700">{interview.title || "视频面试"}</span>
+                          </div>
+                          <p className="text-xs text-slate-600 mb-2">
+                            {interviewJob ? `${interviewJob.company.name} · ${interviewJob.title}` : "智能视频面试"}
+                          </p>
+                          <div className="flex items-center gap-2 text-xs text-slate-500">
+                            <CalendarDays className="h-3.5 w-3.5" />
+                            <span>{formatDate(interview.scheduledAt || interview.createdAt, "MM月DD日 HH:mm")}</span>
+                          </div>
+                          {interview.status === "SCHEDULED" && (
+                            <Link href={`/interviews/${interview.id}`}>
+                              <Button size="sm" variant="default" fullWidth className="mt-3">
+                                进入面试
+                              </Button>
+                            </Link>
+                          )}
                         </div>
-                        <p className="text-xs text-slate-600 mb-2">{interview.job.company.name} · {interview.job.title}</p>
-                        <div className="flex items-center gap-2 text-xs text-slate-500">
-                          <CalendarDays className="h-3.5 w-3.5" />
-                          <span>{formatDate(interview.scheduledStart, "MM月DD日 HH:mm")}</span>
-                        </div>
-                        {interview.status === "SCHEDULED" && (
-                          <Link href={`/interviews/${interview.id}`}>
-                            <Button size="sm" variant="default" fullWidth className="mt-3">
-                              进入面试
-                            </Button>
-                          </Link>
-                        )}
-                      </div>
-                    ))}
+                      );
+                    })}
                   </div>
                 ) : (
                   <div className="text-center py-6 text-slate-500">

@@ -22,8 +22,15 @@ import {
 } from "lucide-react";
 import { Badge } from "@/components/ui/Badge";
 
+type FooterLink = {
+  label: string;
+  href: string;
+  icon?: React.ReactNode;
+  badge?: string;
+};
+
 export function Footer() {
-  const footerLinks = {
+  const footerLinks: Record<string, FooterLink[]> = {
     求职者服务: [
       { label: "AI简历解析", href: "/resume/ai", icon: <Brain className="h-3.5 w-3.5" />, badge: "NEW" },
       { label: "职位搜索", href: "/jobs", icon: <Briefcase className="h-3.5 w-3.5" /> },

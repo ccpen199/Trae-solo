@@ -48,7 +48,7 @@ export async function POST(request: NextRequest) {
     });
 
     if (data.role === "JOB_SEEKER") {
-      await prisma.jobSeeker.create({
+      const jobSeeker = await prisma.jobSeeker.create({
         data: {
           userId: user.id,
           tags: "[]",
@@ -58,7 +58,7 @@ export async function POST(request: NextRequest) {
 
       await prisma.candidateProfile.create({
         data: {
-          jobSeekerId: user.id,
+          jobSeekerId: jobSeeker.id,
           industryTags: "[]",
           skillTags: "[]",
           preferredLocations: "[]",

@@ -29,7 +29,7 @@ const registerSchema = z
 
 type RegisterFormData = z.infer<typeof registerSchema>;
 
-export default function RegisterPage() {
+function RegisterPageContent() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const roleFromUrl = (searchParams.get("role") as string) || "jobseeker";
@@ -257,5 +257,19 @@ export default function RegisterPage() {
         </p>
       </div>
     </div>
+  );
+}
+
+export default function RegisterPage() {
+  return (
+    <React.Suspense
+      fallback={
+        <div className="min-h-screen bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50 flex items-center justify-center p-4">
+          <div className="text-sm text-slate-500">加载中...</div>
+        </div>
+      }
+    >
+      <RegisterPageContent />
+    </React.Suspense>
   );
 }
