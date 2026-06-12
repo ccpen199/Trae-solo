@@ -40,6 +40,17 @@ export interface Device {
     recordsFailed: number;
     syncDuration: number;
     completedAt: string;
+    failedRecords?: {
+      type: string;
+      reason: string;
+      retryCount: number;
+    }[];
+    protocolDiff?: {
+      brand: string;
+      standardCompliance: string;
+      adaptationNotes: string;
+      featureGaps?: string[];
+    };
   };
   supportedFeatures?: string[];
   protocolVersion?: string;

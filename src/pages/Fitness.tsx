@@ -52,6 +52,12 @@ export function Fitness() {
     value: Math.min(100, (r.duration / 45) * 100),
   }));
 
+  const completedExercises = exercisePlan?.dailyPlans.reduce(
+    (sum, d) => sum + d.exercises.filter((e) => e.completed).length, 0
+  ) ?? 0;
+  const totalExercises = exercisePlan?.dailyPlans.reduce(
+    (sum, d) => sum + d.exercises.length, 0
+  ) ?? 0;
   const planCompletionRate = exercisePlan?.completionRate ?? 0;
 
   const dayCount = range === "7d" ? 7 : 30;
@@ -79,13 +85,6 @@ export function Fitness() {
     : recentHrvAvg >= 50
     ? `近 ${dayCount} 天 HRV 指数均值 ${recentHrvAvg} ms（来源：${hrvDays} 条记录），自主神经恢复良好。`
     : `HRV 偏低（均值 ${recentHrvAvg} ms，来源：${hrvDays} 条记录），提示身体可能处于疲劳状态。`;
-
-  const completedExercises = exercisePlan?.dailyPlans.reduce(
-    (sum, d) => sum + d.exercises.filter((e) => e.completed).length, 0
-  ) ?? 0;
-  const totalExercises = exercisePlan?.dailyPlans.reduce(
-    (sum, d) => sum + d.exercises.length, 0
-  ) ?? 0;
 
   const handleComplete = async (planId: string, dayIdx: number, exerciseId: string) => {
     setCompletingId(exerciseId);
