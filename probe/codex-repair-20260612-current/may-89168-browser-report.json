@@ -1,0 +1,681 @@
+{
+  "ok": true,
+  "generatedAt": "2026-06-12T07:38:49.364Z",
+  "order": "may-89168",
+  "roundIndex": 1248,
+  "captureId": "may-89168-current",
+  "url": "http://127.0.0.1:49168/",
+  "initialUrl": "http://127.0.0.1:49168/",
+  "finalUrl": "http://127.0.0.1:49168/login",
+  "status": 200,
+  "title": "企业招聘与内训一体化数字工作台",
+  "initialTitle": "企业招聘与内训一体化数字工作台",
+  "navigationError": "",
+  "screenshotPath": "probe/codex-repair-20260612-current/may-89168-current-frontend.png",
+  "screenshotPaths": [
+    "/Users/chen/Documents/trae_projects/local_projects/may-89168/probe/codex-repair-20260612-current/may-89168-current-structure-01-首屏.png"
+  ],
+  "issueTextPreview": "搜索/筛选相关问题；后台管理相关问题；发现/分类相关问题",
+  "targetReason": "搜索/筛选相关问题；后台管理相关问题；发现/分类相关问题",
+  "targetKind": "search",
+  "targetMatched": false,
+  "targetActions": [
+    {
+      "action": "fill-search",
+      "label": "搜索输入框",
+      "ok": true
+    },
+    {
+      "action": "target-verify",
+      "label": "搜索/筛选相关问题",
+      "ok": false,
+      "finalUrl": "http://127.0.0.1:49168/login"
+    },
+    {
+      "action": "click",
+      "label": "后台管理相关问题",
+      "ok": true
+    },
+    {
+      "action": "target-verify",
+      "label": "后台管理相关问题",
+      "ok": false,
+      "finalUrl": "http://127.0.0.1:49168/login"
+    }
+  ],
+  "authFlow": {
+    "detected": true,
+    "attempted": true,
+    "success": false,
+    "finalUrl": "http://127.0.0.1:49168/login",
+    "message": "已尝试登录但仍停留在登录页",
+    "actions": [
+      {
+        "action": "login-fill-username",
+        "label": "admin",
+        "ok": true
+      },
+      {
+        "action": "login-fill-password",
+        "label": "admin:******",
+        "ok": true
+      },
+      {
+        "action": "click",
+        "label": "登录:admin",
+        "ok": true
+      },
+      {
+        "action": "login-submit",
+        "label": "admin",
+        "ok": true,
+        "beforeUrl": "http://127.0.0.1:49168/login"
+      },
+      {
+        "action": "login-result",
+        "label": "admin",
+        "ok": false,
+        "finalUrl": "http://127.0.0.1:49168/login",
+        "feedback": [
+          "密码错误",
+          "登录失败",
+          "错误"
+        ]
+      },
+      {
+        "action": "login-fill-username",
+        "label": "platform",
+        "ok": true
+      },
+      {
+        "action": "login-fill-password",
+        "label": "platform:******",
+        "ok": true
+      },
+      {
+        "action": "click",
+        "label": "登录:platform",
+        "ok": true
+      },
+      {
+        "action": "login-submit",
+        "label": "platform",
+        "ok": true,
+        "beforeUrl": "http://127.0.0.1:49168/login"
+      },
+      {
+        "action": "login-result",
+        "label": "platform",
+        "ok": false,
+        "finalUrl": "http://127.0.0.1:49168/login",
+        "feedback": [
+          "登录失败"
+        ]
+      },
+      {
+        "action": "login-fill-username",
+        "label": "ops",
+        "ok": true
+      },
+      {
+        "action": "login-fill-password",
+        "label": "ops:******",
+        "ok": true
+      },
+      {
+        "action": "click",
+        "label": "登录:ops",
+        "ok": true
+      },
+      {
+        "action": "login-submit",
+        "label": "ops",
+        "ok": true,
+        "beforeUrl": "http://127.0.0.1:49168/login"
+      },
+      {
+        "action": "login-result",
+        "label": "ops",
+        "ok": false,
+        "finalUrl": "http://127.0.0.1:49168/login",
+        "feedback": [
+          "登录失败"
+        ]
+      }
+    ]
+  },
+  "businessAudit": {
+    "actions": [],
+    "snapshots": [
+      {
+        "label": "首屏",
+        "url": "http://127.0.0.1:49168/login",
+        "title": "企业招聘与内训一体化数字工作台",
+        "headings": [
+          "企业招聘与内训工作台"
+        ],
+        "navLabels": [],
+        "buttons": [
+          "登 录"
+        ],
+        "links": [],
+        "inputs": [
+          {
+            "tag": "input",
+            "type": "text",
+            "placeholder": "请输入用户名或邮箱",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "password",
+            "placeholder": "请输入密码",
+            "name": "",
+            "label": ""
+          }
+        ],
+        "tables": [],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "企业招聘与内训工作台智能匹配 · 职场社区 · 在线学习🎯 快速登录（点击下方账号自动填充） admin(系统管理员) hr01(HR招聘专员) trainer01(培训管理员) seeker01(个人求职者)密码统一为：123456账号登录新用户注册用户名 / 邮箱密码登 录© 2026 企业招聘与内训一体化数字工作台 · 端口 49168 / 59168",
+        "layout": {
+          "viewportWidth": 1504,
+          "viewportHeight": 1048,
+          "scrollWidth": 1504,
+          "scrollHeight": 1096,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89168-current-structure-01-首屏",
+          "label": "首屏",
+          "finalUrl": "http://127.0.0.1:49168/login",
+          "title": "企业招聘与内训一体化数字工作台",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89168/probe/codex-repair-20260612-current/may-89168-current-structure-01-首屏.json",
+          "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89168/probe/codex-repair-20260612-current/may-89168-current-structure-01-首屏.png",
+          "elementCount": 113,
+          "interactiveCount": 6,
+          "interactiveLabels": [
+            "账号登录",
+            "用户名 / 邮箱 密码 登 录",
+            "请输入用户名或邮箱",
+            "请输入密码",
+            "登 录"
+          ]
+        }
+      }
+    ],
+    "findings": [
+      "登录页可见，但自动填充可见演示账号后仍停留在登录页，没有进入登录后的首页或工作台。",
+      "接口 /api/auth/login 返回 HTTP 401，对应业务模块无法完成数据读取。"
+    ],
+    "actionHints": [
+      "优先修复登录表单、演示账号、登录接口和登录后跳转，让自动化能先完成登录再复验首页业务链路。",
+      "补齐 /api/auth/login 后端接口、SQLite 数据和前端错误处理。"
+    ],
+    "emptyPages": [],
+    "overflowPages": [],
+    "blankPages": [],
+    "apiFailurePaths": [
+      "/api/auth/login"
+    ],
+    "goalTerms": [],
+    "clickedActionDescriptors": [],
+    "secondaryActionClicks": 0,
+    "structureCaptures": [
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89168-current-structure-01-首屏",
+        "label": "首屏",
+        "finalUrl": "http://127.0.0.1:49168/login",
+        "title": "企业招聘与内训一体化数字工作台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89168/probe/codex-repair-20260612-current/may-89168-current-structure-01-首屏.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89168/probe/codex-repair-20260612-current/may-89168-current-structure-01-首屏.png",
+        "elementCount": 113,
+        "interactiveCount": 6,
+        "interactiveLabels": [
+          "账号登录",
+          "用户名 / 邮箱 密码 登 录",
+          "请输入用户名或邮箱",
+          "请输入密码",
+          "登 录"
+        ]
+      }
+    ],
+    "representativeScreenshotUrl": "http://127.0.0.1:49168/login",
+    "representativeScreenshotLabel": "企业招聘与内训工作台"
+  },
+  "websiteStructureCapture": {
+    "module": "website_structure_capture",
+    "captureCount": 1,
+    "captures": [
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89168-current-structure-01-首屏",
+        "label": "首屏",
+        "finalUrl": "http://127.0.0.1:49168/login",
+        "title": "企业招聘与内训一体化数字工作台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89168/probe/codex-repair-20260612-current/may-89168-current-structure-01-首屏.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89168/probe/codex-repair-20260612-current/may-89168-current-structure-01-首屏.png",
+        "elementCount": 113,
+        "interactiveCount": 6,
+        "interactiveLabels": [
+          "账号登录",
+          "用户名 / 邮箱 密码 登 录",
+          "请输入用户名或邮箱",
+          "请输入密码",
+          "登 录"
+        ]
+      }
+    ]
+  },
+  "screenshotMetrics": {
+    "width": 1536,
+    "height": 1096,
+    "scrollWidth": 1504,
+    "scrollHeight": 1096
+  },
+  "initialBodyTextPreview": "企业招聘与内训工作台\n智能匹配 · 职场社区 · 在线学习\n🎯 快速登录（点击下方账号自动填充）\n admin(系统管理员)\n hr01(HR招聘专员)\n trainer01(培训管理员)\n seeker01(个人求职者)\n密码统一为：123456\n账号登录\n新用户注册\n用户名 / 邮箱\n密码\n登 录\n© 2026 企业招聘与内训一体化数字工作台 · 端口 49168 / 59168",
+  "bodyTextPreview": "企业招聘与内训工作台\n智能匹配 · 职场社区 · 在线学习\n🎯 快速登录（点击下方账号自动填充）\n admin(系统管理员)\n hr01(HR招聘专员)\n trainer01(培训管理员)\n seeker01(个人求职者)\n密码统一为：123456\n账号登录\n新用户注册\n用户名 / 邮箱\n密码\n登 录\n© 2026 企业招聘与内训一体化数字工作台 · 端口 49168 / 59168",
+  "apiBase": "http://127.0.0.1:59168",
+  "businessGoalPreview": "",
+  "apiResponses": [
+    {
+      "method": "POST",
+      "status": 401,
+      "url": "http://127.0.0.1:49168/api/auth/login"
+    },
+    {
+      "method": "POST",
+      "status": 401,
+      "url": "http://127.0.0.1:49168/api/auth/login"
+    },
+    {
+      "method": "POST",
+      "status": 401,
+      "url": "http://127.0.0.1:49168/api/auth/login"
+    }
+  ],
+  "apiChecks": [
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59168/api/health",
+      "path": "/api/health",
+      "status": 200,
+      "ok": true,
+      "bodyPreview": "{\"status\":\"ok\",\"timestamp\":1781249926886,\"uptime\":298.70816175}"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59168/api/auth/me",
+      "path": "/api/auth/me",
+      "status": 401,
+      "ok": false,
+      "bodyPreview": "{\"error\":\"未提供认证令牌\"}"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59168/api/users/profile",
+      "path": "/api/users/profile",
+      "status": 401,
+      "ok": false,
+      "bodyPreview": "{\"error\":\"未提供认证令牌\"}"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59168/api/user/profile",
+      "path": "/api/user/profile",
+      "status": 404,
+      "ok": false,
+      "bodyPreview": "<!DOCTYPE html>\n<html lang=\"en\">\n<head>\n<meta charset=\"utf-8\">\n<title>Error</title>\n</head>\n<body>\n<pre>Cannot GET /api/user/profile</pre>\n</body>\n</html>\n"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59168/api/search?q=%E6%B5%8B%E8%AF%95",
+      "path": "/api/search?q=%E6%B5%8B%E8%AF%95",
+      "status": 404,
+      "ok": false,
+      "bodyPreview": "<!DOCTYPE html>\n<html lang=\"en\">\n<head>\n<meta charset=\"utf-8\">\n<title>Error</title>\n</head>\n<body>\n<pre>Cannot GET /api/search</pre>\n</body>\n</html>\n"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59168/api/admin/stats",
+      "path": "/api/admin/stats",
+      "status": 404,
+      "ok": false,
+      "bodyPreview": "<!DOCTYPE html>\n<html lang=\"en\">\n<head>\n<meta charset=\"utf-8\">\n<title>Error</title>\n</head>\n<body>\n<pre>Cannot GET /api/admin/stats</pre>\n</body>\n</html>\n"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59168/api/admin/dashboard",
+      "path": "/api/admin/dashboard",
+      "status": 404,
+      "ok": false,
+      "bodyPreview": "<!DOCTYPE html>\n<html lang=\"en\">\n<head>\n<meta charset=\"utf-8\">\n<title>Error</title>\n</head>\n<body>\n<pre>Cannot GET /api/admin/dashboard</pre>\n</body>\n</html>\n"
+    }
+  ],
+  "dialogs": [],
+  "consoleMessages": [
+    {
+      "type": "debug",
+      "text": "[vite] connecting...",
+      "location": {
+        "url": "http://127.0.0.1:49168/@vite/client",
+        "lineNumber": 494,
+        "columnNumber": 8
+      }
+    },
+    {
+      "type": "debug",
+      "text": "[vite] connected.",
+      "location": {
+        "url": "http://127.0.0.1:49168/@vite/client",
+        "lineNumber": 617,
+        "columnNumber": 14
+      }
+    },
+    {
+      "type": "info",
+      "text": "%cDownload the React DevTools for a better development experience: https://reactjs.org/link/react-devtools font-weight:bold",
+      "location": {
+        "url": "http://127.0.0.1:49168/node_modules/.vite/deps/chunk-NUMECXU6.js?v=02886155",
+        "lineNumber": 21550,
+        "columnNumber": 24
+      }
+    },
+    {
+      "type": "error",
+      "text": "Warning: [antd: Spin] `tip` only work in nest or fullscreen pattern.",
+      "location": {
+        "url": "http://127.0.0.1:49168/node_modules/.vite/deps/chunk-PP4EJKA4.js?v=02886155",
+        "lineNumber": 1247,
+        "columnNumber": 14
+      }
+    },
+    {
+      "type": "warning",
+      "text": "⚠️ React Router Future Flag Warning: React Router will begin wrapping state updates in `React.startTransition` in v7. You can use the `v7_startTransition` future flag to opt-in early. For more information, see https://reactrouter.com/v6/upgrading/future#v7_starttransition.",
+      "location": {
+        "url": "http://127.0.0.1:49168/node_modules/.vite/deps/react-router-dom.js?v=02886155",
+        "lineNumber": 4426,
+        "columnNumber": 12
+      }
+    },
+    {
+      "type": "warning",
+      "text": "⚠️ React Router Future Flag Warning: Relative route resolution within Splat routes is changing in v7. You can use the `v7_relativeSplatPath` future flag to opt-in early. For more information, see https://reactrouter.com/v6/upgrading/future#v7_relativesplatpath.",
+      "location": {
+        "url": "http://127.0.0.1:49168/node_modules/.vite/deps/react-router-dom.js?v=02886155",
+        "lineNumber": 4426,
+        "columnNumber": 12
+      }
+    },
+    {
+      "type": "error",
+      "text": "Failed to load resource: the server responded with a status of 404 (Not Found)",
+      "location": {
+        "url": "http://127.0.0.1:49168/favicon.ico",
+        "lineNumber": 0,
+        "columnNumber": 0
+      }
+    },
+    {
+      "type": "log",
+      "text": "[ProtectedRoute] No auth, redirecting to login from: /",
+      "location": {
+        "url": "http://127.0.0.1:49168/src/App.tsx?t=1781249311156",
+        "lineNumber": 77,
+        "columnNumber": 12
+      }
+    },
+    {
+      "type": "log",
+      "text": "[ProtectedRoute] No auth, redirecting to login from: /",
+      "location": {
+        "url": "http://127.0.0.1:49168/src/App.tsx?t=1781249311156",
+        "lineNumber": 77,
+        "columnNumber": 12
+      }
+    },
+    {
+      "type": "log",
+      "text": "[Login] Attempting login with: admin",
+      "location": {
+        "url": "http://127.0.0.1:49168/src/pages/Login.tsx?t=1781249098237",
+        "lineNumber": 54,
+        "columnNumber": 14
+      }
+    },
+    {
+      "type": "error",
+      "text": "Failed to load resource: the server responded with a status of 401 (Unauthorized)",
+      "location": {
+        "url": "http://127.0.0.1:49168/api/auth/login",
+        "lineNumber": 0,
+        "columnNumber": 0
+      }
+    },
+    {
+      "type": "error",
+      "text": "[Login] Failed: {error: 密码错误}",
+      "location": {
+        "url": "http://127.0.0.1:49168/src/pages/Login.tsx?t=1781249098237",
+        "lineNumber": 69,
+        "columnNumber": 14
+      }
+    },
+    {
+      "type": "log",
+      "text": "[Login] Attempting login with: platform",
+      "location": {
+        "url": "http://127.0.0.1:49168/src/pages/Login.tsx?t=1781249098237",
+        "lineNumber": 54,
+        "columnNumber": 14
+      }
+    },
+    {
+      "type": "error",
+      "text": "Failed to load resource: the server responded with a status of 401 (Unauthorized)",
+      "location": {
+        "url": "http://127.0.0.1:49168/api/auth/login",
+        "lineNumber": 0,
+        "columnNumber": 0
+      }
+    },
+    {
+      "type": "error",
+      "text": "[Login] Failed: {error: 用户不存在}",
+      "location": {
+        "url": "http://127.0.0.1:49168/src/pages/Login.tsx?t=1781249098237",
+        "lineNumber": 69,
+        "columnNumber": 14
+      }
+    },
+    {
+      "type": "log",
+      "text": "[Login] Attempting login with: ops",
+      "location": {
+        "url": "http://127.0.0.1:49168/src/pages/Login.tsx?t=1781249098237",
+        "lineNumber": 54,
+        "columnNumber": 14
+      }
+    },
+    {
+      "type": "error",
+      "text": "Failed to load resource: the server responded with a status of 401 (Unauthorized)",
+      "location": {
+        "url": "http://127.0.0.1:49168/api/auth/login",
+        "lineNumber": 0,
+        "columnNumber": 0
+      }
+    },
+    {
+      "type": "error",
+      "text": "[Login] Failed: {error: 用户不存在}",
+      "location": {
+        "url": "http://127.0.0.1:49168/src/pages/Login.tsx?t=1781249098237",
+        "lineNumber": 69,
+        "columnNumber": 14
+      }
+    },
+    {
+      "type": "debug",
+      "text": "[vite] connecting...",
+      "location": {
+        "url": "http://127.0.0.1:49168/@vite/client",
+        "lineNumber": 494,
+        "columnNumber": 8
+      }
+    },
+    {
+      "type": "info",
+      "text": "%cDownload the React DevTools for a better development experience: https://reactjs.org/link/react-devtools font-weight:bold",
+      "location": {
+        "url": "http://127.0.0.1:49168/node_modules/.vite/deps/chunk-NUMECXU6.js?v=02886155",
+        "lineNumber": 21550,
+        "columnNumber": 24
+      }
+    },
+    {
+      "type": "error",
+      "text": "Warning: [antd: Spin] `tip` only work in nest or fullscreen pattern.",
+      "location": {
+        "url": "http://127.0.0.1:49168/node_modules/.vite/deps/chunk-PP4EJKA4.js?v=02886155",
+        "lineNumber": 1247,
+        "columnNumber": 14
+      }
+    },
+    {
+      "type": "debug",
+      "text": "[vite] connected.",
+      "location": {
+        "url": "http://127.0.0.1:49168/@vite/client",
+        "lineNumber": 617,
+        "columnNumber": 14
+      }
+    },
+    {
+      "type": "warning",
+      "text": "⚠️ React Router Future Flag Warning: React Router will begin wrapping state updates in `React.startTransition` in v7. You can use the `v7_startTransition` future flag to opt-in early. For more information, see https://reactrouter.com/v6/upgrading/future#v7_starttransition.",
+      "location": {
+        "url": "http://127.0.0.1:49168/node_modules/.vite/deps/react-router-dom.js?v=02886155",
+        "lineNumber": 4426,
+        "columnNumber": 12
+      }
+    },
+    {
+      "type": "warning",
+      "text": "⚠️ React Router Future Flag Warning: Relative route resolution within Splat routes is changing in v7. You can use the `v7_relativeSplatPath` future flag to opt-in early. For more information, see https://reactrouter.com/v6/upgrading/future#v7_relativesplatpath.",
+      "location": {
+        "url": "http://127.0.0.1:49168/node_modules/.vite/deps/react-router-dom.js?v=02886155",
+        "lineNumber": 4426,
+        "columnNumber": 12
+      }
+    },
+    {
+      "type": "log",
+      "text": "[ProtectedRoute] No auth, redirecting to login from: /",
+      "location": {
+        "url": "http://127.0.0.1:49168/src/App.tsx?t=1781249311156",
+        "lineNumber": 77,
+        "columnNumber": 12
+      }
+    },
+    {
+      "type": "log",
+      "text": "[ProtectedRoute] No auth, redirecting to login from: /",
+      "location": {
+        "url": "http://127.0.0.1:49168/src/App.tsx?t=1781249311156",
+        "lineNumber": 77,
+        "columnNumber": 12
+      }
+    },
+    {
+      "type": "debug",
+      "text": "[vite] connecting...",
+      "location": {
+        "url": "http://127.0.0.1:49168/@vite/client",
+        "lineNumber": 494,
+        "columnNumber": 8
+      }
+    },
+    {
+      "type": "debug",
+      "text": "[vite] connected.",
+      "location": {
+        "url": "http://127.0.0.1:49168/@vite/client",
+        "lineNumber": 617,
+        "columnNumber": 14
+      }
+    },
+    {
+      "type": "info",
+      "text": "%cDownload the React DevTools for a better development experience: https://reactjs.org/link/react-devtools font-weight:bold",
+      "location": {
+        "url": "http://127.0.0.1:49168/node_modules/.vite/deps/chunk-NUMECXU6.js?v=02886155",
+        "lineNumber": 21550,
+        "columnNumber": 24
+      }
+    },
+    {
+      "type": "error",
+      "text": "Warning: [antd: Spin] `tip` only work in nest or fullscreen pattern.",
+      "location": {
+        "url": "http://127.0.0.1:49168/node_modules/.vite/deps/chunk-PP4EJKA4.js?v=02886155",
+        "lineNumber": 1247,
+        "columnNumber": 14
+      }
+    },
+    {
+      "type": "warning",
+      "text": "⚠️ React Router Future Flag Warning: React Router will begin wrapping state updates in `React.startTransition` in v7. You can use the `v7_startTransition` future flag to opt-in early. For more information, see https://reactrouter.com/v6/upgrading/future#v7_starttransition.",
+      "location": {
+        "url": "http://127.0.0.1:49168/node_modules/.vite/deps/react-router-dom.js?v=02886155",
+        "lineNumber": 4426,
+        "columnNumber": 12
+      }
+    },
+    {
+      "type": "warning",
+      "text": "⚠️ React Router Future Flag Warning: Relative route resolution within Splat routes is changing in v7. You can use the `v7_relativeSplatPath` future flag to opt-in early. For more information, see https://reactrouter.com/v6/upgrading/future#v7_relativesplatpath.",
+      "location": {
+        "url": "http://127.0.0.1:49168/node_modules/.vite/deps/react-router-dom.js?v=02886155",
+        "lineNumber": 4426,
+        "columnNumber": 12
+      }
+    },
+    {
+      "type": "log",
+      "text": "[ProtectedRoute] No auth, redirecting to login from: /",
+      "location": {
+        "url": "http://127.0.0.1:49168/src/App.tsx?t=1781249311156",
+        "lineNumber": 77,
+        "columnNumber": 12
+      }
+    },
+    {
+      "type": "log",
+      "text": "[ProtectedRoute] No auth, redirecting to login from: /",
+      "location": {
+        "url": "http://127.0.0.1:49168/src/App.tsx?t=1781249311156",
+        "lineNumber": 77,
+        "columnNumber": 12
+      }
+    }
+  ],
+  "requestFailures": [],
+  "responseErrors": [
+    {
+      "status": 401,
+      "url": "http://127.0.0.1:49168/api/auth/login"
+    },
+    {
+      "status": 401,
+      "url": "http://127.0.0.1:49168/api/auth/login"
+    },
+    {
+      "status": 401,
+      "url": "http://127.0.0.1:49168/api/auth/login"
+    }
+  ]
+}

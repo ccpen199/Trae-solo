@@ -62,8 +62,14 @@ router.post('/switch-role', authMiddleware, (req: AuthRequest, res) => {
   if (!['jobseeker', 'hr', 'trainer'].includes(role)) return res.status(400).json({ error: '无效角色' });
   db.prepare('UPDATE users SET role = ?, updated_at = CURRENT_TIMESTAMP WHERE id = ?').run(role, req.user!.id);
   const token = jwt.sign({ userId: req.user!.id, role }, config.jwtSecret, { expiresIn: '7d' });
-  const user = db.prepare('SELECT id, username, name, email, role, tenant_id, avatar, points FROM users WHERE id = ?').get(req.user!.id);
-  res.json({ token, user });
+  const user = db.prepare('SELECT id, username, name, email, role, tenant_id, avatar, points FROM users WHERE id = ?').get(req.user!.id) as any;
+  res.json({
+    token,
+    user: {
+      id: user.id, username: user.username, name: user.name, email: user.email,
+      role: user.role, tenantId: user.tenant_id, avatar: user.avatar, points: user.points
+    }
+  });
 });
 
 router.get('/roles/available', authMiddleware, (_req: AuthRequest, res) => {

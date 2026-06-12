@@ -349,4 +349,16 @@ export function initDatabase() {
     insertUser.run(uuidv4(), tenantId, 'trainer01', 'trainer@demo.com', hashedPwd, '李培训师', 'trainer');
     insertUser.run(uuidv4(), tenantId, 'seeker01', 'seeker@demo.com', hashedPwd, '王求职者', 'jobseeker');
   }
+
+  // 每次启动重置测试账号角色，确保演示数据一致
+  const resetTestAccounts = [
+    ['admin', 'admin'],
+    ['hr01', 'hr'],
+    ['trainer01', 'trainer'],
+    ['seeker01', 'jobseeker'],
+  ];
+  const updateRoleStmt = db.prepare('UPDATE users SET role = ? WHERE username = ?');
+  resetTestAccounts.forEach(([username, role]) => {
+    updateRoleStmt.run(role, username);
+  });
 }

@@ -15,12 +15,21 @@ api.interceptors.request.use(config => {
 api.interceptors.response.use(
   res => res.data,
   err => {
-    if (err.response?.status === 401) {
+    const isLoginRequest = err.config?.url?.includes('/auth/login');
+    const isRegisterRequest = err.config?.url?.includes('/auth/register');
+    const hasToken = !!localStorage.getItem('token');
+
+    if (err.response?.status === 401 && !isLoginRequest && !isRegisterRequest && hasToken) {
       localStorage.removeItem('token');
       localStorage.removeItem('user');
       window.location.href = '/login';
     }
-    return Promise.reject(err.response?.data || err);
+
+    const serverError = err.response?.data;
+    if (serverError && (serverError.error || serverError.message)) {
+      return Promise.reject(serverError);
+    }
+    return Promise.reject({ error: err.message || '网络请求失败' });
   }
 );
 

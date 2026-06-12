@@ -23,32 +23,62 @@ interface AppState {
   fetchMe: () => Promise<void>;
 }
 
-export const useAppStore = create<AppState>((set) => ({
-  token: localStorage.getItem('token'),
-  user: JSON.parse(localStorage.getItem('user') || 'null'),
+const safeRead = (key: string) => {
+  try {
+    const v = localStorage.getItem(key);
+    return v ? v : null;
+  } catch { return null; }
+};
+
+const safeParseUser = (): User | null => {
+  try {
+    const s = localStorage.getItem('user');
+    return s ? JSON.parse(s) : null;
+  } catch { return null; }
+};
+
+const _token = safeRead('token');
+const _user = safeParseUser();
+
+export const useAppStore = create<AppState>((set, get) => ({
+  token: _token,
+  user: _user,
   unreadCount: 0,
-  setAuth: (token, user) => {
-    localStorage.setItem('token', token);
-    localStorage.setItem('user', JSON.stringify(user));
+
+  setAuth: (token: string, user: User) => {
+    try {
+      localStorage.setItem('token', token);
+      localStorage.setItem('user', JSON.stringify(user));
+    } catch (e) { console.warn('setAuth storage error:', e); }
     set({ token, user });
   },
+
   logout: () => {
-    localStorage.removeItem('token');
-    localStorage.removeItem('user');
-    set({ token: null, user: null });
+    try {
+      localStorage.removeItem('token');
+      localStorage.removeItem('user');
+    } catch (e) { console.warn('logout storage error:', e); }
+    set({ token: null, user: null, unreadCount: 0 });
   },
-  setUser: (user) => {
-    localStorage.setItem('user', JSON.stringify(user));
+
+  setUser: (user: User) => {
+    try { localStorage.setItem('user', JSON.stringify(user)); } catch {}
     set({ user });
   },
-  setUnreadCount: (n) => set((state) => ({ unreadCount: typeof n === 'function' ? n(state.unreadCount) : n })),
+
+  setUnreadCount: (n) => set((state) => ({ 
+    unreadCount: typeof n === 'function' ? (n as any)(state.unreadCount) : n 
+  })),
+
   fetchMe: async () => {
     try {
+      const state = get();
+      if (!state.token) return;
       const data = await api.get('/auth/me') as any;
       if (data?.user) {
-        localStorage.setItem('user', JSON.stringify(data.user));
+        try { localStorage.setItem('user', JSON.stringify(data.user)); } catch {}
         set({ user: data.user });
       }
-    } catch (e) {}
+    } catch (e) { console.error('fetchMe failed:', e); }
   }
 }));

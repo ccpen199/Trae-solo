@@ -24,13 +24,28 @@ import MyLearning from './pages/MyLearning';
 import Certificates from './pages/Certificates';
 import Users from './pages/Users';
 import AuditLogs from './pages/AuditLogs';
+import Permissions from './pages/Permissions';
 import Profile from './pages/Profile';
 import Notifications from './pages/Notifications';
 
+const hasStoredAuth = () => {
+  try {
+    const t = localStorage.getItem('token');
+    const u = localStorage.getItem('user');
+    return !!(t && u);
+  } catch { return false; }
+};
+
 function ProtectedRoute({ children }: { children: React.ReactNode }) {
-  const token = useAppStore(s => s.token);
+  const storeToken = useAppStore(s => s.token);
+  const storeUser = useAppStore(s => s.user);
   const location = useLocation();
-  if (!token) return <Navigate to="/login" replace state={{ from: location }} />;
+
+  const hasAuth = !!(storeToken && storeUser) || hasStoredAuth();
+  if (!hasAuth) {
+    return <Navigate to="/login" replace state={{ from: location }} />;
+  }
+  
   return <>{children}</>;
 }
 
@@ -65,6 +80,7 @@ export default function App() {
         <Route path="certificates" element={<Certificates />} />
         <Route path="users" element={<Users />} />
         <Route path="audit-logs" element={<AuditLogs />} />
+        <Route path="permissions" element={<Permissions />} />
         <Route path="profile" element={<Profile />} />
         <Route path="notifications" element={<Notifications />} />
       </Route>

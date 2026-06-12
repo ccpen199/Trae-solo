@@ -16,6 +16,12 @@ router.get('/', authMiddleware, rbacMiddleware('user', 'read'), (req: AuthReques
   res.json({ users });
 });
 
+router.get('/profile', authMiddleware, (req: AuthRequest, res) => {
+  const user = db.prepare('SELECT id, username, name, email, role, tenant_id, avatar, phone, points, status, created_at FROM users WHERE id = ?').get(req.user!.id) as any;
+  if (!user) return res.status(404).json({ error: '用户不存在' });
+  res.json({ user: { ...user, tenantId: user.tenant_id } });
+});
+
 router.get('/:id', authMiddleware, (req: AuthRequest, res) => {
   const user = db.prepare('SELECT id, username, name, email, role, avatar, phone, points, status, created_at FROM users WHERE id = ?').get(req.params.id);
   if (!user) return res.status(404).json({ error: '用户不存在' });
@@ -28,7 +34,7 @@ router.get('/audit/logs', authMiddleware, rbacMiddleware('audit', 'read'), (req:
   const logs = db.prepare('SELECT a.*, u.name as user_name FROM audit_logs a LEFT JOIN users u ON a.user_id = u.id WHERE a.tenant_id = ? ORDER BY a.created_at DESC LIMIT ? OFFSET ?')
     .all(req.user!.tenantId, size, (page - 1) * size);
   const total = db.prepare('SELECT COUNT(*) as cnt FROM audit_logs WHERE tenant_id = ?').get(req.user!.tenantId) as { cnt: number };
-  res.json({ logs, total: total.cnt, page, size });
+  res.json({ items: logs, total: total.cnt, page, size });
 });
 
 export default router;

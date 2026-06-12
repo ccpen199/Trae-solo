@@ -17,6 +17,7 @@ import chatRoutes from './routes/chat';
 import enterpriseRoutes from './routes/enterprise';
 import lmsRoutes from './routes/lms';
 import notificationRoutes from './routes/notifications';
+import permissionRoutes from './routes/permissions';
 
 if (!fs.existsSync(config.uploadDir)) {
   fs.mkdirSync(config.uploadDir, { recursive: true });
@@ -47,6 +48,69 @@ app.get('/api/health', (_req, res) => {
   res.json({ status: 'ok', timestamp: Date.now(), uptime: process.uptime() });
 });
 
+app.get('/api/search', (req, res) => {
+  const q = String(req.query.q || req.query.keyword || '').trim();
+  const keyword = `%${q || '职场'}%`;
+  const jobs = db.prepare(`
+    SELECT id, title, department, location, industry, status, created_at
+    FROM jobs
+    WHERE status = 'open' AND (title LIKE ? OR department LIKE ? OR description LIKE ? OR location LIKE ? OR industry LIKE ?)
+    ORDER BY created_at DESC
+    LIMIT 8
+  `).all(keyword, keyword, keyword, keyword, keyword);
+  const courses = db.prepare(`
+    SELECT id, title, category, status, created_at
+    FROM courses
+    WHERE title LIKE ? OR category LIKE ? OR description LIKE ?
+    ORDER BY created_at DESC
+    LIMIT 8
+  `).all(keyword, keyword, keyword);
+  const topics = db.prepare(`
+    SELECT id, title, tags, status, views, likes, created_at
+    FROM community_topics
+    WHERE title LIKE ? OR content LIKE ? OR tags LIKE ?
+    ORDER BY created_at DESC
+    LIMIT 8
+  `).all(keyword, keyword, keyword);
+  res.json({
+    query: q,
+    total: jobs.length + courses.length + topics.length,
+    results: { jobs, courses, topics }
+  });
+});
+
+app.get('/api/admin/stats', (_req, res) => {
+  const users = db.prepare('SELECT COUNT(*) as cnt FROM users').get() as { cnt: number };
+  const jobs = db.prepare('SELECT COUNT(*) as cnt FROM jobs').get() as { cnt: number };
+  const resumes = db.prepare('SELECT COUNT(*) as cnt FROM resumes').get() as { cnt: number };
+  const courses = db.prepare('SELECT COUNT(*) as cnt FROM courses').get() as { cnt: number };
+  const audits = db.prepare('SELECT COUNT(*) as cnt FROM audit_logs').get() as { cnt: number };
+  res.json({
+    stats: {
+      userCount: users.cnt,
+      jobCount: jobs.cnt,
+      resumeCount: resumes.cnt,
+      courseCount: courses.cnt,
+      auditCount: audits.cnt
+    }
+  });
+});
+
+app.get('/api/admin/dashboard', (_req, res) => {
+  const roleRows = db.prepare('SELECT role, COUNT(*) as count FROM users GROUP BY role').all() as Array<{ role: string; count: number }>;
+  const openJobs = db.prepare('SELECT COUNT(*) as cnt FROM jobs WHERE status = ?').get('open') as { cnt: number };
+  const pendingTopics = db.prepare('SELECT COUNT(*) as cnt FROM community_topics WHERE status = ? OR is_approved = 0').get('pending') as { cnt: number };
+  res.json({
+    overview: {
+      title: '后台管理数据概览',
+      openJobs: openJobs.cnt,
+      pendingTopics: pendingTopics.cnt,
+      roleDistribution: roleRows
+    },
+    modules: ['用户管理', '岗位管理', '课程管理', '内容审核', '操作审计日志']
+  });
+});
+
 app.use('/api/auth', authRoutes);
 app.use('/api/users', userRoutes);
 app.use('/api/resumes', resumeRoutes);
@@ -57,6 +121,7 @@ app.use('/api/chat', chatRoutes);
 app.use('/api/enterprise', enterpriseRoutes);
 app.use('/api/lms', lmsRoutes);
 app.use('/api/notifications', notificationRoutes);
+app.use('/api/permissions', permissionRoutes);
 
 app.get('/api/stats/dashboard', (req, res) => {
   const userCount = db.prepare('SELECT COUNT(*) as cnt FROM users').get() as { cnt: number };
