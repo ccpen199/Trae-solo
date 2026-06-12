@@ -1,3 +1,4 @@
+import { useNavigate } from 'react-router-dom';
 import {
   Briefcase,
   Users,
@@ -35,12 +36,12 @@ const heroStats = [
 ];
 
 const quickEntries = [
-  { title: '找岗位', desc: '海量精选实习', icon: Search, variant: 'brand' as const, gradient: 'from-brand-400 to-brand-500' },
-  { title: '建档案', desc: '智能简历生成', icon: FileText, variant: 'teal' as const, gradient: 'from-teal-400 to-teal-500' },
-  { title: '互助社区', desc: '学长经验分享', icon: MessageCircle, variant: 'amber' as const, gradient: 'from-amber-400 to-orange-500' },
-  { title: '真人内推', desc: '直通面试机会', icon: UserCheck, variant: 'sky' as const, gradient: 'from-sky-400 to-sky-500' },
-  { title: '公司雷达', desc: '企业真实评价', icon: Radar, variant: 'rose' as const, gradient: 'from-rose-400 to-pink-500' },
-  { title: '成长工具箱', desc: '面试备考助手', icon: Wrench, variant: 'ink' as const, gradient: 'from-ink-500 to-ink-600' },
+  { title: '找岗位', desc: '海量精选实习', icon: Search, variant: 'brand' as const, gradient: 'from-brand-400 to-brand-500', path: '/jobs' },
+  { title: '建档案', desc: '智能简历生成', icon: FileText, variant: 'teal' as const, gradient: 'from-teal-400 to-teal-500', path: '/student/profile' },
+  { title: '互助社区', desc: '学长经验分享', icon: MessageCircle, variant: 'amber' as const, gradient: 'from-amber-400 to-orange-500', path: '/community' },
+  { title: '真人内推', desc: '直通面试机会', icon: UserCheck, variant: 'sky' as const, gradient: 'from-sky-400 to-sky-500', path: '/referral' },
+  { title: '公司雷达', desc: '企业真实评价', icon: Radar, variant: 'rose' as const, gradient: 'from-rose-400 to-pink-500', path: '/radar' },
+  { title: '成长工具箱', desc: '面试备考助手', icon: Wrench, variant: 'ink' as const, gradient: 'from-ink-500 to-ink-600', path: '/tools' },
 ];
 
 const hotJobs = [
@@ -118,6 +119,7 @@ function RankBadge({ rank }: { rank: number }) {
 }
 
 export default function Home() {
+  const navigate = useNavigate();
   return (
     <div className="min-h-screen bg-cream-50">
       {/* Hero Section */}
@@ -149,10 +151,10 @@ export default function Home() {
                 ))}
               </div>
               <div className="flex gap-4 pt-2">
-                <Button size="lg" leftIcon={<Search size={18} />}>
+                <Button size="lg" leftIcon={<Search size={18} />} onClick={() => navigate('/jobs')}>
                   立即找岗位
                 </Button>
-                <Button size="lg" variant="outline" rightIcon={<ChevronRight size={18} />}>
+                <Button size="lg" variant="outline" rightIcon={<ChevronRight size={18} />} onClick={() => navigate('/community')}>
                   了解平台
                 </Button>
               </div>
@@ -196,8 +198,9 @@ export default function Home() {
             <Card
               key={entry.title}
               hoverable
-              className="animate-fade-in-up p-5 flex flex-col items-center text-center"
+              className="animate-fade-in-up p-5 flex flex-col items-center text-center cursor-pointer"
               style={{ animationDelay: `${i * 60}ms` }}
+              onClick={() => navigate(entry.path)}
             >
               <div className={`w-14 h-14 rounded-2xl bg-gradient-to-br ${entry.gradient} flex items-center justify-center mb-4 shadow-lg`}>
                 <entry.icon size={26} className="text-white" />
@@ -219,15 +222,16 @@ export default function Home() {
             <h2 className="text-3xl font-bold text-ink-900 font-display tracking-tight">热门岗位推荐</h2>
             <p className="text-ink-500 mt-2">高转正率·HR实时在线·简历快速反馈</p>
           </div>
-          <Button variant="ghost" rightIcon={<ArrowRight size={16} />}>查看全部</Button>
+          <Button variant="ghost" rightIcon={<ArrowRight size={16} />} onClick={() => navigate('/jobs')}>查看全部</Button>
         </div>
         <div className="flex gap-5 overflow-x-auto pb-4 -mx-4 px-4 snap-x snap-mandatory">
           {hotJobs.map((job, i) => (
             <Card
               key={job.id}
               hoverable
-              className="shrink-0 w-[300px] snap-start animate-fade-in-up"
+              className="shrink-0 w-[300px] snap-start animate-fade-in-up cursor-pointer"
               style={{ animationDelay: `${i * 50}ms` }}
+              onClick={() => navigate('/jobs/' + job.id)}
             >
               <CardContent className="space-y-4">
                 <div className="flex items-start justify-between">
@@ -257,7 +261,7 @@ export default function Home() {
                       <span className="text-ink-500">转正率 </span>
                       <span className="font-bold text-teal-600 font-num">{job.convertRate}%</span>
                     </div>
-                    <Button size="sm" variant="secondary">立即投递</Button>
+                    <Button size="sm" variant="secondary" onClick={(e: React.MouseEvent) => { e.stopPropagation(); navigate('/jobs/' + job.id); }}>立即投递</Button>
                   </div>
                 </div>
               </CardContent>
@@ -277,15 +281,16 @@ export default function Home() {
               <h2 className="text-3xl font-bold text-ink-900 font-display tracking-tight">公司雷达 · TOP榜</h2>
               <p className="text-ink-500 mt-2">基于万名实习生匿名反馈数据生成</p>
             </div>
-            <Button variant="ghost" rightIcon={<ArrowRight size={16} />}>完整榜单</Button>
+            <Button variant="ghost" rightIcon={<ArrowRight size={16} />} onClick={() => navigate('/radar')}>完整榜单</Button>
           </div>
           <div className="space-y-4">
             {radarTopList.map((c, i) => (
               <Card
                 key={c.name}
                 hoverable
-                className="animate-fade-in-up"
+                className="animate-fade-in-up cursor-pointer"
                 style={{ animationDelay: `${i * 80}ms` }}
+                onClick={() => navigate('/company/' + c.rank)}
               >
                 <CardContent className="flex items-center gap-6">
                   <RankBadge rank={c.rank} />
@@ -324,15 +329,16 @@ export default function Home() {
             <h2 className="text-3xl font-bold text-ink-900 font-display tracking-tight">社区热榜</h2>
             <p className="text-ink-500 mt-2">来自真实学长学姐的经验分享</p>
           </div>
-          <Button variant="ghost" rightIcon={<ArrowRight size={16} />}>进入社区</Button>
+          <Button variant="ghost" rightIcon={<ArrowRight size={16} />} onClick={() => navigate('/community')}>进入社区</Button>
         </div>
         <div className="grid md:grid-cols-2 gap-5">
           {communityHot.map((q, i) => (
             <Card
               key={q.id}
               hoverable
-              className="animate-fade-in-up"
+              className="animate-fade-in-up cursor-pointer"
               style={{ animationDelay: `${i * 100}ms` }}
+              onClick={() => navigate('/community/' + q.id)}
             >
               <CardContent className="space-y-4">
                 <div className="flex items-center gap-2">
@@ -377,7 +383,7 @@ export default function Home() {
               </p>
             </div>
             <div className="relative z-10 flex gap-3 shrink-0">
-              <Button size="lg" className="bg-white text-brand-600 hover:bg-white/95 shadow-2xl" leftIcon={<Search size={18} />}>
+              <Button size="lg" className="bg-white text-brand-600 hover:bg-white/95 shadow-2xl" leftIcon={<Search size={18} />} onClick={() => navigate('/jobs')}>
                 搜索岗位
               </Button>
               <Button size="lg" variant="outline" className="bg-transparent text-white border-white/60 hover:bg-white/15 hover:border-white hover:text-white">

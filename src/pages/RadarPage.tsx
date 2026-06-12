@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import {
   Search,
   Filter,
@@ -299,6 +300,16 @@ export default function RadarPage() {
   const [activeIndustry, setActiveIndustry] = useState(0);
   const [activeSort, setActiveSort] = useState(0);
   const [searchText, setSearchText] = useState('');
+  const navigate = useNavigate();
+
+  const sortKey = sortOptions[activeSort].key as 'overall' | 'salary' | 'env' | 'convert';
+  const filteredCompanies = [...companies]
+    .filter((c) => {
+      if (searchText && !c.name.includes(searchText)) return false;
+      if (activeIndustry > 0 && c.industry !== industries[activeIndustry].name) return false;
+      return true;
+    })
+    .sort((a, b) => b.scores[sortKey] - a.scores[sortKey]);
 
   return (
     <div className="min-h-screen bg-cream-50 py-8">
@@ -429,12 +440,13 @@ export default function RadarPage() {
 
         {/* 公司卡片列表 */}
         <div className="space-y-4">
-          {companies.map((c, i) => (
+          {filteredCompanies.map((c, i) => (
             <Card
               key={c.id}
               hoverable
-              className="animate-fade-in-up overflow-hidden"
+              className="animate-fade-in-up overflow-hidden cursor-pointer"
               style={{ animationDelay: `${120 + i * 60}ms` }}
+              onClick={() => navigate('/company/' + c.id)}
             >
               <CardContent className="flex items-center gap-6 flex-wrap">
                 <div className="flex items-center gap-4 min-w-[240px]">
@@ -475,7 +487,7 @@ export default function RadarPage() {
                       {c.scores.overall}
                     </div>
                     <div className="text-xs text-ink-500 whitespace-nowrap">综合评分</div>
-                    <Button size="sm" variant="secondary" rightIcon={<ChevronRight size={14} />}>
+                    <Button size="sm" variant="secondary" rightIcon={<ChevronRight size={14} />} onClick={(e: React.MouseEvent) => { e.stopPropagation(); navigate('/company/' + c.id); }}>
                       详情
                     </Button>
                   </div>

@@ -11,6 +11,13 @@ import {
   ChevronLeft,
   Check,
   ShieldCheck,
+  Upload,
+  FileText,
+  Plus,
+  X,
+  GraduationCap,
+  Briefcase,
+  User,
 } from 'lucide-react';
 import { useAuthStore, UserRole } from '@/store/auth';
 import Button from '@/components/ui/Button';
@@ -18,7 +25,16 @@ import Input from '@/components/ui/Input';
 import Badge from '@/components/ui/Badge';
 
 type RegisterRole = Exclude<UserRole, 'admin' | 'officer'>;
-type Step = 1 | 2 | 3;
+type Step = 1 | 2 | 3 | 4 | 5;
+
+interface MentorInfo {
+  id: string;
+  name: string;
+  position: string;
+  phone: string;
+}
+
+const MAJOR_OPTIONS = ['计算机', '电子通信', '经管', '设计', '机械', '其他'];
 
 export default function Register() {
   const navigate = useNavigate();
@@ -33,10 +49,30 @@ export default function Register() {
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
   const [nickname, setNickname] = useState('');
+  const [school, setSchool] = useState('');
+  const [major, setMajor] = useState('');
+  const [creditCode, setCreditCode] = useState('');
+  const [legalRep, setLegalRep] = useState('');
+  const [companyName, setCompanyName] = useState('');
+  const [licenseFile, setLicenseFile] = useState<File | null>(null);
+  const [agreementFiles, setAgreementFiles] = useState<File[]>([]);
+  const [mentorName, setMentorName] = useState('');
+  const [mentorPosition, setMentorPosition] = useState('');
+  const [mentorPhone, setMentorPhone] = useState('');
+  const [mentors, setMentors] = useState<MentorInfo[]>([]);
   const [showPassword, setShowPassword] = useState(false);
   const [countdown, setCountdown] = useState(0);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
+
+  const totalSteps = role === 'enterprise' ? 5 : 4;
+
+  const stepLabels =
+    role === 'enterprise'
+      ? ['身份选择', '手机验证', '设置密码', '企业资质', '协议与带教']
+      : ['身份选择', '手机验证', '设置密码', '完善信息'];
+
+  const displayIndex = step - 1;
 
   const sendCode = () => {
     if (!phone || phone.length !== 11) {
@@ -56,7 +92,21 @@ export default function Register() {
     }, 1000);
   };
 
+  const goNext = (next: Step) => {
+    setError('');
+    setStep(next);
+  };
+
+  const goBack = (prev: Step) => {
+    setError('');
+    setStep(prev);
+  };
+
   const validateStep1 = () => {
+    goNext(2);
+  };
+
+  const validateStep2 = () => {
     if (!phone || phone.length !== 11) {
       setError('请输入正确的11位手机号');
       return false;
@@ -65,12 +115,11 @@ export default function Register() {
       setError('请输入6位验证码');
       return false;
     }
-    setError('');
-    setStep(2);
+    goNext(3);
     return true;
   };
 
-  const validateStep2 = () => {
+  const validateStep3 = () => {
     if (!password || password.length < 8) {
       setError('密码至少8位，建议包含字母和数字');
       return false;
@@ -79,19 +128,120 @@ export default function Register() {
       setError('两次输入的密码不一致');
       return false;
     }
-    setError('');
-    setStep(3);
+    goNext(4);
     return true;
   };
 
-  const completeRegister = async () => {
-    if (!nickname.trim()) {
-      setError(role === 'student' ? '请输入昵称' : '请输入企业简称');
+  const validateStep4 = () => {
+    if (role === 'student') {
+      if (!nickname.trim()) {
+        setError('请输入昵称');
+        return false;
+      }
+      if (!school.trim()) {
+        setError('请输入学校名称');
+        return false;
+      }
+      if (!major) {
+        setError('请选择专业方向');
+        return false;
+      }
+      return true;
+    }
+    if (!companyName.trim()) {
+      setError('请输入企业全称');
+      return false;
+    }
+    if (!creditCode.trim()) {
+      setError('请输入统一社会信用代码');
+      return false;
+    }
+    if (!legalRep.trim()) {
+      setError('请输入法人代表姓名');
+      return false;
+    }
+    if (!licenseFile) {
+      setError('请上传营业执照');
+      return false;
+    }
+    goNext(5);
+    return true;
+  };
+
+  const addMentor = () => {
+    if (!mentorName.trim()) {
+      setError('请输入带教人姓名');
+      return;
+    }
+    if (!mentorPosition.trim()) {
+      setError('请输入带教人职位');
+      return;
+    }
+    if (!mentorPhone.trim() || mentorPhone.length !== 11) {
+      setError('请输入正确的带教人联系电话');
       return;
     }
     setError('');
-    setLoading(true);
+    setMentors((prev) => [
+      ...prev,
+      {
+        id: Date.now().toString(),
+        name: mentorName.trim(),
+        position: mentorPosition.trim(),
+        phone: mentorPhone.trim(),
+      },
+    ]);
+    setMentorName('');
+    setMentorPosition('');
+    setMentorPhone('');
+  };
 
+  const removeMentor = (id: string) => {
+    setMentors((prev) => prev.filter((m) => m.id !== id));
+  };
+
+  const handleLicenseUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (file) {
+      const validTypes = ['image/jpeg', 'image/png', 'image/webp', 'application/pdf'];
+      if (!validTypes.includes(file.type)) {
+        setError('仅支持 JPG/PNG/WebP 图片或 PDF 文件');
+        return;
+      }
+      setError('');
+      setLicenseFile(file);
+    }
+  };
+
+  const handleAgreementUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const files = e.target.files;
+    if (!files) return;
+    const pdfFiles = Array.from(files).filter(
+      (f) => f.type === 'application/pdf'
+    );
+    if (pdfFiles.length === 0) {
+      setError('仅支持上传 PDF 文件');
+      return;
+    }
+    setError('');
+    setAgreementFiles((prev) => [...prev, ...pdfFiles]);
+  };
+
+  const removeAgreementFile = (index: number) => {
+    setAgreementFiles((prev) => prev.filter((_, i) => i !== index));
+  };
+
+  const completeRegister = async () => {
+    if (role === 'student') {
+      if (!validateStep4()) return;
+    } else {
+      if (mentors.length === 0) {
+        setError('请至少添加一位带教人');
+        return;
+      }
+    }
+    setError('');
+    setLoading(true);
     await new Promise((r) => setTimeout(r, 1000));
 
     login('mock-jwt-token-' + Date.now(), {
@@ -106,8 +256,49 @@ export default function Register() {
     navigate(role === 'student' ? '/student/profile' : '/enterprise/qualification');
   };
 
-  const stepLabels = ['身份选择', '手机验证', '设置密码', '完善信息'];
-  const displayStep = step === 1 ? 0 : step === 2 ? 1 : 2;
+  const renderStepIndicator = () => (
+    <div className="flex items-center justify-between mb-7">
+      {Array.from({ length: totalSteps }, (_, i) => i).map((i) => (
+        <div key={i} className="flex items-center flex-1 last:flex-none">
+          <div className="flex flex-col items-center">
+            <div
+              className={`w-8 h-8 rounded-full flex items-center justify-center text-xs font-semibold transition-all ${
+                i < displayIndex + 1
+                  ? 'bg-brand-gradient text-white shadow-float'
+                  : 'bg-cream-100 text-ink-400'
+              }`}
+            >
+              {i < displayIndex ? <Check size={14} /> : i + 1}
+            </div>
+            <span
+              className={`text-[10px] mt-1.5 whitespace-nowrap ${
+                i < displayIndex + 1 ? 'text-brand-600 font-medium' : 'text-ink-400'
+              }`}
+            >
+              {stepLabels[i]}
+            </span>
+          </div>
+          {i < totalSteps - 1 && (
+            <div
+              className={`h-0.5 flex-1 mx-1.5 mt-[-20px] transition-all ${
+                i < displayIndex ? 'bg-brand-400' : 'bg-ink-100'
+              }`}
+            />
+          )}
+        </div>
+      ))}
+    </div>
+  );
+
+  const renderError = (filter?: (e: string) => boolean) => {
+    if (!error) return null;
+    if (filter && !filter(error)) return null;
+    return (
+      <div className="text-xs text-danger-500 bg-red-50 border border-red-100 rounded-lg px-3 py-2">
+        {error}
+      </div>
+    );
+  };
 
   return (
     <div className="w-full max-w-md mx-4 animate-fade-in-up">
@@ -121,7 +312,7 @@ export default function Register() {
           创建你的<span className="bg-text-gradient ml-1.5">展翅账号</span>
         </h1>
         <p className="mt-2 text-sm text-ink-500">
-          仅需 4 步，开启你的实习赋能之旅
+          仅需 {totalSteps} 步，开启你的实习赋能之旅
         </p>
       </div>
 
@@ -130,37 +321,7 @@ export default function Register() {
         <div className="absolute -bottom-24 -left-20 w-56 h-56 rounded-full bg-brand-200/30 blur-3xl" />
 
         <div className="relative">
-          <div className="flex items-center justify-between mb-7">
-            {[0, 1, 2, 3].map((i) => (
-              <div key={i} className="flex items-center flex-1 last:flex-none">
-                <div className="flex flex-col items-center">
-                  <div
-                    className={`w-8 h-8 rounded-full flex items-center justify-center text-xs font-semibold transition-all ${
-                      i < displayStep + 1
-                        ? 'bg-brand-gradient text-white shadow-float'
-                        : 'bg-cream-100 text-ink-400'
-                    }`}
-                  >
-                    {i < displayStep ? <Check size={14} /> : i + 1}
-                  </div>
-                  <span
-                    className={`text-[10px] mt-1.5 whitespace-nowrap ${
-                      i < displayStep + 1 ? 'text-brand-600 font-medium' : 'text-ink-400'
-                    }`}
-                  >
-                    {stepLabels[i]}
-                  </span>
-                </div>
-                {i < 3 && (
-                  <div
-                    className={`h-0.5 flex-1 mx-1.5 mt-[-20px] transition-all ${
-                      i < displayStep ? 'bg-brand-400' : 'bg-ink-100'
-                    }`}
-                  />
-                )}
-              </div>
-            ))}
-          </div>
+          {renderStepIndicator()}
 
           {step === 1 && (
             <div className="flex flex-col gap-4 animate-fade-in">
@@ -225,12 +386,6 @@ export default function Register() {
                 </span>
               </div>
 
-              {error && (
-                <div className="text-xs text-danger-500 bg-red-50 border border-red-100 rounded-lg px-3 py-2">
-                  {error}
-                </div>
-              )}
-
               <Button size="lg" onClick={validateStep1} className="w-full mt-1">
                 下一步
                 <ArrowRight size={16} />
@@ -242,7 +397,7 @@ export default function Register() {
             <form
               onSubmit={(e) => {
                 e.preventDefault();
-                validateStep1();
+                validateStep2();
               }}
               className="flex flex-col gap-4 animate-fade-in"
             >
@@ -272,9 +427,7 @@ export default function Register() {
                   name="code"
                   placeholder="请输入6位验证码"
                   value={code}
-                  onChange={(e) =>
-                    setCode(e.target.value.replace(/\D/g, '').slice(0, 6))
-                  }
+                  onChange={(e) => setCode(e.target.value.replace(/\D/g, '').slice(0, 6))}
                   maxLength={6}
                   error={error.includes('验证码') ? error : undefined}
                   rightIcon={
@@ -294,18 +447,14 @@ export default function Register() {
                 />
               </div>
 
-              {error && !error.includes('手机号') && !error.includes('验证码') && (
-                <div className="text-xs text-danger-500 bg-red-50 border border-red-100 rounded-lg px-3 py-2">
-                  {error}
-                </div>
-              )}
+              {renderError((e) => !e.includes('手机号') && !e.includes('验证码'))}
 
               <div className="flex gap-2 mt-1">
                 <Button
                   type="button"
                   variant="outline"
                   size="lg"
-                  onClick={() => setStep(1)}
+                  onClick={() => goBack(1)}
                   className="flex-1"
                 >
                   <ChevronLeft size={16} />
@@ -323,14 +472,16 @@ export default function Register() {
             <form
               onSubmit={(e) => {
                 e.preventDefault();
-                if (validateStep2()) {
-                  const nextStep = 3;
-                  if (nextStep) setStep(3 as Step);
-                }
+                validateStep3();
               }}
               className="flex flex-col gap-4 animate-fade-in"
             >
-              <div className="text-xs text-ink-400 mb-1">第 3 步：设置密码</div>
+              <div className="flex items-center gap-2 text-sm text-ink-600 mb-1">
+                <Badge variant={role === 'student' ? 'brand' : 'verified'} size="xs">
+                  {role === 'student' ? '学生注册' : '企业注册'}
+                </Badge>
+                <span className="text-ink-400 text-xs">第 3 步：设置密码</span>
+              </div>
 
               <Input
                 label="设置密码"
@@ -347,11 +498,7 @@ export default function Register() {
                     onClick={() => setShowPassword(!showPassword)}
                     className="text-ink-400 hover:text-ink-600 transition-colors"
                   >
-                    {showPassword ? (
-                      <EyeOff size={17} strokeWidth={1.8} />
-                    ) : (
-                      <Eye size={17} strokeWidth={1.8} />
-                    )}
+                    {showPassword ? <EyeOff size={17} strokeWidth={1.8} /> : <Eye size={17} strokeWidth={1.8} />}
                   </button>
                 }
                 error={error.includes('密码') && !error.includes('一致') ? error : undefined}
@@ -368,29 +515,20 @@ export default function Register() {
                 error={error.includes('一致') ? error : undefined}
               />
 
-              {error && !error.includes('密码') && !error.includes('一致') && !error.includes('昵称') && !error.includes('简称') && (
-                <div className="text-xs text-danger-500 bg-red-50 border border-red-100 rounded-lg px-3 py-2">
-                  {error}
-                </div>
-              )}
+              {renderError((e) => !e.includes('密码') && !e.includes('一致'))}
 
               <div className="flex gap-2 mt-1">
                 <Button
                   type="button"
                   variant="outline"
                   size="lg"
-                  onClick={() => setStep(2)}
+                  onClick={() => goBack(2)}
                   className="flex-1"
                 >
                   <ChevronLeft size={16} />
                   上一步
                 </Button>
-                <Button
-                  type="button"
-                  size="lg"
-                  className="flex-1"
-                  onClick={validateStep2}
-                >
+                <Button type="submit" size="lg" className="flex-1">
                   下一步
                   <ArrowRight size={16} />
                 </Button>
@@ -398,27 +536,70 @@ export default function Register() {
             </form>
           )}
 
-          {step === 3 && error && (error.includes('昵称') || error.includes('简称')) && null}
-
-          {step === 3 && !error.includes('密码') && !error.includes('一致') && (
+          {step === 4 && role === 'student' && (
             <form
               onSubmit={(e) => {
                 e.preventDefault();
-                completeRegister();
+                if (validateStep4()) {
+                  completeRegister();
+                }
               }}
-              className="flex flex-col gap-4 animate-fade-in mt-6 pt-6 border-t border-dashed border-ink-100"
+              className="flex flex-col gap-4 animate-fade-in"
             >
-              <div className="text-xs text-ink-400 mb-1">第 4 步：完善信息</div>
+              <div className="flex items-center gap-2 text-sm text-ink-600 mb-1">
+                <Badge variant="brand" size="xs">学生注册</Badge>
+                <span className="text-ink-400 text-xs">第 4 步：完善信息</span>
+              </div>
 
               <Input
-                label={role === 'student' ? '昵称（选填）' : '企业简称'}
+                label="昵称"
                 type="text"
                 name="nickname"
-                placeholder={role === 'student' ? '给你自己起个昵称吧' : '请输入企业对外展示简称'}
+                placeholder="给你自己起个昵称吧"
                 value={nickname}
                 onChange={(e) => setNickname(e.target.value)}
                 leftIcon={<UserCircle2 size={17} strokeWidth={1.8} />}
+                error={error.includes('昵称') ? error : undefined}
               />
+
+              <Input
+                label="学校名称"
+                type="text"
+                name="school"
+                placeholder="请输入你的学校名称"
+                value={school}
+                onChange={(e) => setSchool(e.target.value)}
+                leftIcon={<GraduationCap size={17} strokeWidth={1.8} />}
+                error={error.includes('学校') ? error : undefined}
+              />
+
+              <div className="flex flex-col gap-1.5">
+                <label className="text-sm font-medium text-ink-700 ml-0.5 select-none">
+                  专业方向
+                </label>
+                <div className="grid grid-cols-3 gap-2">
+                  {MAJOR_OPTIONS.map((opt) => (
+                    <button
+                      key={opt}
+                      type="button"
+                      onClick={() => {
+                        setMajor(opt);
+                        setError('');
+                      }}
+                      className={`px-3 py-2 rounded-xl text-sm font-medium border transition-all ${
+                        major === opt
+                          ? 'border-brand-400 bg-brand-50/60 text-brand-700 shadow-soft'
+                          : 'border-ink-100 text-ink-600 hover:border-ink-200 bg-white'
+                      }`}
+                    >
+                      {opt}
+                    </button>
+                  ))}
+                </div>
+                {error.includes('专业') && (
+                  <p className="text-xs text-danger-500 ml-1">{error}</p>
+                )}
+              </div>
 
               <label className="flex items-start gap-2 text-xs text-ink-500 cursor-pointer select-none leading-relaxed">
                 <input
@@ -438,15 +619,320 @@ export default function Register() {
                 </span>
               </label>
 
-              <div className="text-xs text-danger-500 bg-red-50 border border-red-100 rounded-lg px-3 py-2 hidden" id="final-error">
-                {(error.includes('昵称') || error.includes('简称')) && error}
+              {renderError((e) => !e.includes('昵称') && !e.includes('学校') && !e.includes('专业'))}
+
+              <div className="flex gap-2 mt-1">
+                <Button
+                  type="button"
+                  variant="outline"
+                  size="lg"
+                  onClick={() => goBack(3)}
+                  className="flex-1"
+                >
+                  <ChevronLeft size={16} />
+                  上一步
+                </Button>
+                <Button type="submit" size="lg" loading={loading} className="flex-1">
+                  创建学生账号
+                  <Check size={16} />
+                </Button>
+              </div>
+            </form>
+          )}
+
+          {step === 4 && role === 'enterprise' && (
+            <form
+              onSubmit={(e) => {
+                e.preventDefault();
+                validateStep4();
+              }}
+              className="flex flex-col gap-4 animate-fade-in"
+            >
+              <div className="flex items-center gap-2 text-sm text-ink-600 mb-1">
+                <Badge variant="verified" size="xs">企业注册</Badge>
+                <span className="text-ink-400 text-xs">第 4 步：企业资质</span>
               </div>
 
-              <Button type="submit" size="lg" loading={loading} className="w-full mt-1">
-                {role === 'student' ? '创建学生账号' : '创建企业账号'}
-                <Check size={16} />
-              </Button>
+              <Input
+                label="企业全称"
+                type="text"
+                name="companyName"
+                placeholder="请输入企业营业执照上的全称"
+                value={companyName}
+                onChange={(e) => setCompanyName(e.target.value)}
+                leftIcon={<Building2 size={17} strokeWidth={1.8} />}
+                error={error.includes('企业全称') ? error : undefined}
+              />
+
+              <Input
+                label="统一社会信用代码"
+                type="text"
+                name="creditCode"
+                placeholder="18位统一社会信用代码"
+                value={creditCode}
+                onChange={(e) => setCreditCode(e.target.value.replace(/[^A-Za-z0-9]/g, '').slice(0, 18))}
+                leftIcon={<ShieldCheck size={17} strokeWidth={1.8} />}
+                maxLength={18}
+                error={error.includes('信用代码') ? error : undefined}
+              />
+
+              <Input
+                label="法人代表姓名"
+                type="text"
+                name="legalRep"
+                placeholder="请输入法人代表姓名"
+                value={legalRep}
+                onChange={(e) => setLegalRep(e.target.value)}
+                leftIcon={<User size={17} strokeWidth={1.8} />}
+                error={error.includes('法人') ? error : undefined}
+              />
+
+              <div className="flex flex-col gap-1.5">
+                <label className="text-sm font-medium text-ink-700 ml-0.5 select-none">
+                  营业执照
+                </label>
+                <div
+                  className={`relative border-2 border-dashed rounded-xl2 p-6 text-center transition-all cursor-pointer ${
+                    licenseFile
+                      ? 'border-teal-300 bg-teal-50/40'
+                      : 'border-ink-200 hover:border-teal-300 hover:bg-teal-50/20'
+                  }`}
+                  onClick={() => document.getElementById('license-upload')?.click()}
+                >
+                  <input
+                    id="license-upload"
+                    type="file"
+                    accept="image/jpeg,image/png,image/webp,application/pdf"
+                    className="hidden"
+                    onChange={handleLicenseUpload}
+                  />
+                  {licenseFile ? (
+                    <div className="flex items-center justify-center gap-2 text-teal-700">
+                      <FileText size={18} />
+                      <span className="text-sm font-medium truncate max-w-[200px]">
+                        {licenseFile.name}
+                      </span>
+                      <button
+                        type="button"
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          setLicenseFile(null);
+                        }}
+                        className="text-ink-400 hover:text-danger-500 transition-colors"
+                      >
+                        <X size={14} />
+                      </button>
+                    </div>
+                  ) : (
+                    <>
+                      <Upload size={24} className="mx-auto text-ink-300 mb-2" />
+                      <p className="text-sm text-ink-500">
+                        点击或拖拽上传营业执照
+                      </p>
+                      <p className="text-xs text-ink-400 mt-1">
+                        支持 JPG / PNG / WebP / PDF
+                      </p>
+                    </>
+                  )}
+                </div>
+                {error.includes('营业执照') && (
+                  <p className="text-xs text-danger-500 ml-1">{error}</p>
+                )}
+              </div>
+
+              {renderError(
+                (e) =>
+                  !e.includes('企业全称') &&
+                  !e.includes('信用代码') &&
+                  !e.includes('法人') &&
+                  !e.includes('营业执照')
+              )}
+
+              <div className="flex gap-2 mt-1">
+                <Button
+                  type="button"
+                  variant="outline"
+                  size="lg"
+                  onClick={() => goBack(3)}
+                  className="flex-1"
+                >
+                  <ChevronLeft size={16} />
+                  上一步
+                </Button>
+                <Button type="submit" size="lg" className="flex-1">
+                  下一步
+                  <ArrowRight size={16} />
+                </Button>
+              </div>
             </form>
+          )}
+
+          {step === 5 && role === 'enterprise' && (
+            <div className="flex flex-col gap-4 animate-fade-in">
+              <div className="flex items-center gap-2 text-sm text-ink-600 mb-1">
+                <Badge variant="verified" size="xs">企业注册</Badge>
+                <span className="text-ink-400 text-xs">第 5 步：协议与带教</span>
+              </div>
+
+              <div className="flex flex-col gap-1.5">
+                <label className="text-sm font-medium text-ink-700 ml-0.5 select-none">
+                  实习协议模板
+                </label>
+                <div
+                  className="relative border-2 border-dashed border-ink-200 hover:border-teal-300 hover:bg-teal-50/20 rounded-xl2 p-5 text-center transition-all cursor-pointer"
+                  onClick={() => document.getElementById('agreement-upload')?.click()}
+                >
+                  <input
+                    id="agreement-upload"
+                    type="file"
+                    accept="application/pdf"
+                    multiple
+                    className="hidden"
+                    onChange={handleAgreementUpload}
+                  />
+                  <Upload size={22} className="mx-auto text-ink-300 mb-1.5" />
+                  <p className="text-sm text-ink-500">点击上传实习协议模板</p>
+                  <p className="text-xs text-ink-400 mt-1">仅支持 PDF 格式，可上传多个</p>
+                </div>
+                {agreementFiles.length > 0 && (
+                  <div className="flex flex-col gap-1.5 mt-1">
+                    {agreementFiles.map((file, idx) => (
+                      <div
+                        key={idx}
+                        className="flex items-center gap-2 px-3 py-2 rounded-xl bg-teal-50/50 border border-teal-100"
+                      >
+                        <FileText size={15} className="text-teal-600 shrink-0" />
+                        <span className="text-sm text-ink-700 truncate flex-1">
+                          {file.name}
+                        </span>
+                        <button
+                          type="button"
+                          onClick={() => removeAgreementFile(idx)}
+                          className="text-ink-400 hover:text-danger-500 transition-colors shrink-0"
+                        >
+                          <X size={14} />
+                        </button>
+                      </div>
+                    ))}
+                  </div>
+                )}
+              </div>
+
+              <div className="flex flex-col gap-3">
+                <label className="text-sm font-medium text-ink-700 ml-0.5 select-none">
+                  岗位带教人
+                </label>
+                <div className="grid grid-cols-1 gap-2.5">
+                  <Input
+                    type="text"
+                    name="mentorName"
+                    placeholder="带教人姓名"
+                    value={mentorName}
+                    onChange={(e) => setMentorName(e.target.value)}
+                    leftIcon={<User size={15} strokeWidth={1.8} />}
+                  />
+                  <div className="grid grid-cols-2 gap-2.5">
+                    <Input
+                      type="text"
+                      name="mentorPosition"
+                      placeholder="职位"
+                      value={mentorPosition}
+                      onChange={(e) => setMentorPosition(e.target.value)}
+                      leftIcon={<Briefcase size={15} strokeWidth={1.8} />}
+                    />
+                    <Input
+                      type="tel"
+                      name="mentorPhone"
+                      placeholder="联系电话"
+                      value={mentorPhone}
+                      onChange={(e) => setMentorPhone(e.target.value.replace(/\D/g, '').slice(0, 11))}
+                      leftIcon={<Phone size={15} strokeWidth={1.8} />}
+                    />
+                  </div>
+                </div>
+                <Button
+                  type="button"
+                  variant="outline"
+                  size="sm"
+                  onClick={addMentor}
+                  className="w-full"
+                >
+                  <Plus size={14} />
+                  添加带教人
+                </Button>
+
+                {mentors.length > 0 && (
+                  <div className="flex flex-col gap-2">
+                    {mentors.map((m) => (
+                      <div
+                        key={m.id}
+                        className="flex items-center gap-3 px-3.5 py-2.5 rounded-xl bg-teal-50/50 border border-teal-100"
+                      >
+                        <div className="w-8 h-8 rounded-lg bg-teal-gradient flex items-center justify-center text-white shrink-0">
+                          <User size={14} />
+                        </div>
+                        <div className="flex-1 min-w-0">
+                          <div className="text-sm font-medium text-ink-800">{m.name}</div>
+                          <div className="text-xs text-ink-500">
+                            {m.position} · {m.phone}
+                          </div>
+                        </div>
+                        <button
+                          type="button"
+                          onClick={() => removeMentor(m.id)}
+                          className="text-ink-400 hover:text-danger-500 transition-colors shrink-0"
+                        >
+                          <X size={14} />
+                        </button>
+                      </div>
+                    ))}
+                  </div>
+                )}
+              </div>
+
+              {renderError((e) => e.includes('带教'))}
+
+              <label className="flex items-start gap-2 text-xs text-ink-500 cursor-pointer select-none leading-relaxed">
+                <input
+                  type="checkbox"
+                  defaultChecked
+                  className="mt-0.5 w-3.5 h-3.5 rounded border-ink-200 text-brand-500 focus:ring-brand-400 shrink-0"
+                />
+                <span>
+                  我已阅读并同意
+                  <Link to="/legal/terms" className="text-brand-600 mx-1 hover:underline">
+                    《服务协议》
+                  </Link>
+                  和
+                  <Link to="/legal/privacy" className="text-brand-600 mx-1 hover:underline">
+                    《隐私政策》
+                  </Link>
+                </span>
+              </label>
+
+              <div className="flex gap-2 mt-1">
+                <Button
+                  type="button"
+                  variant="outline"
+                  size="lg"
+                  onClick={() => goBack(4)}
+                  className="flex-1"
+                >
+                  <ChevronLeft size={16} />
+                  上一步
+                </Button>
+                <Button
+                  type="button"
+                  size="lg"
+                  loading={loading}
+                  className="flex-1"
+                  onClick={completeRegister}
+                >
+                  创建企业账号
+                  <Check size={16} />
+                </Button>
+              </div>
+            </div>
           )}
 
           <div className="mt-7 text-center text-sm text-ink-500">

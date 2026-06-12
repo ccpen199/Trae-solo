@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { useNavigate, Link } from 'react-router-dom';
 import {
   MapPin,
   Banknote,
@@ -81,10 +82,12 @@ const similarJobs = [
 ];
 
 export default function JobDetailPage() {
+  const navigate = useNavigate();
   const [sections, setSections] = useState(
     jdSections.map((s) => ({ ...s, open: s.defaultOpen }))
   );
   const [liked, setLiked] = useState(false);
+  const [applied, setApplied] = useState(false);
 
   const toggleSection = (idx: number) => {
     setSections((prev) =>
@@ -95,6 +98,13 @@ export default function JobDetailPage() {
   return (
     <div className="min-h-screen bg-cream-50 py-8">
       <div className="container space-y-6">
+        <div className="flex items-center gap-2 text-sm text-ink-500">
+          <Link to="/" className="hover:text-brand-600 transition-colors">首页</Link>
+          <span>/</span>
+          <Link to="/jobs" className="hover:text-brand-600 transition-colors">岗位广场</Link>
+          <span>/</span>
+          <span className="text-ink-800 font-medium">岗位详情</span>
+        </div>
         {/* 顶部信息卡 */}
         <Card className="animate-fade-in-up overflow-hidden">
           <div className="h-2 bg-gradient-to-r from-brand-500 via-brand-400 to-teal-500" />
@@ -292,7 +302,7 @@ export default function JobDetailPage() {
                 </CardTitle>
               </CardHeader>
               <CardContent className="space-y-4">
-                <div className="flex items-center gap-4 p-4 rounded-2xl bg-ink-50">
+                <div className="flex items-center gap-4 p-4 rounded-2xl bg-ink-50 cursor-pointer hover:bg-ink-100/70 transition-colors" onClick={() => navigate('/company/1')}>
                   <div className="w-16 h-20 rounded-xl bg-gradient-to-br from-ink-200 to-ink-300 flex items-center justify-center shrink-0 overflow-hidden">
                     <FileText size={28} className="text-ink-500" />
                   </div>
@@ -384,10 +394,16 @@ export default function JobDetailPage() {
                   <ArrowRight size={18} className="text-ink-300 group-hover:text-brand-500 transition-colors" />
                 </button>
 
-                <Button size="lg" className="w-full" leftIcon={<Briefcase size={18} />}>
-                  立即投递简历
+                <Button
+                  size="lg"
+                  className="w-full"
+                  variant={applied ? 'outline' : 'primary'}
+                  leftIcon={<Briefcase size={18} />}
+                  onClick={() => applied ? navigate('/me/applications') : setApplied(true)}
+                >
+                  {applied ? '已投递 ✓' : '立即投递简历'}
                 </Button>
-                <Button size="lg" variant="secondary" className="w-full" leftIcon={<Users size={18} />}>
+                <Button size="lg" variant="secondary" className="w-full" leftIcon={<Users size={18} />} onClick={() => navigate('/referral')}>
                   找人内推 · 通过率+40%
                 </Button>
                 <p className="text-xs text-center text-ink-400 pt-1">
@@ -424,7 +440,7 @@ export default function JobDetailPage() {
                     <Badge variant="salary">💰 {job.salary}</Badge>
                     <Badge variant="success">转正 {job.rate}%</Badge>
                   </div>
-                  <Button variant="outline" className="w-full mt-1" size="sm">查看详情</Button>
+                  <Button variant="outline" className="w-full mt-1" size="sm" onClick={() => navigate('/jobs/' + job.id)}>查看详情</Button>
                 </CardContent>
               </Card>
             ))}

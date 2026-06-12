@@ -1,3 +1,4 @@
+import { useNavigate } from 'react-router-dom';
 import {
   MapPin,
   Building2,
@@ -236,15 +237,28 @@ function ReviewCard({ r }: { r: typeof reviews[0] }) {
             </button>
           </div>
         </div>
+        <div className="text-xs text-ink-300 mt-2">
+          数据来源：{r.anonymous ? '实习生匿名反馈' : '企业HR补充'}
+        </div>
       </div>
     </div>
   );
 }
 
 export default function CompanyDetailPage() {
+  const navigate = useNavigate();
+
   return (
     <div className="min-h-screen bg-cream-50 py-8">
       <div className="container space-y-6">
+        <div className="flex items-center gap-2 text-sm text-ink-500">
+          <span className="cursor-pointer hover:text-brand-500 transition-colors" onClick={() => navigate('/')}>首页</span>
+          <span>/</span>
+          <span className="cursor-pointer hover:text-brand-500 transition-colors" onClick={() => navigate('/radar')}>公司雷达</span>
+          <span>/</span>
+          <span className="text-ink-800 font-medium">腾讯科技</span>
+        </div>
+
         {/* 顶部企业信息Banner */}
         <Card className="animate-fade-in-up overflow-hidden border-0">
           <div className="relative h-40 bg-gradient-to-r from-brand-500 via-brand-400 to-teal-500">
@@ -275,7 +289,7 @@ export default function CompanyDetailPage() {
                 </div>
               </div>
               <div className="flex items-center gap-3 pb-2">
-                <Button variant="outline" leftIcon={<Briefcase size={16} />}>在招岗位 · 128</Button>
+                <Button variant="outline" leftIcon={<Briefcase size={16} />} onClick={() => navigate('/jobs')}>在招岗位 · 128</Button>
                 <Button leftIcon={<Star size={16} />}>关注企业</Button>
               </div>
             </div>
@@ -386,7 +400,7 @@ export default function CompanyDetailPage() {
                     实习生匿名评价
                     <Badge variant="success" size="xs" className="ml-2">{reviews.length * 478}条</Badge>
                   </CardTitle>
-                  <Button variant="ghost" size="sm" rightIcon={<ChevronRight size={14} />}>查看全部</Button>
+                  <Button variant="ghost" size="sm" rightIcon={<ChevronRight size={14} />} onClick={() => navigate('/feedback')}>查看全部</Button>
                 </div>
               </CardHeader>
               <CardContent className="bg-cream-50/50 -mx-5 -mb-5 mx-0 rounded-b-card pt-0">
@@ -464,7 +478,7 @@ export default function CompanyDetailPage() {
                   { name: '网易互娱', score: 87, rank: 4 },
                   { name: '美团点评', score: 84, rank: 5 },
                 ].map((c) => (
-                  <div key={c.name} className="flex items-center gap-3 p-2.5 rounded-xl hover:bg-ink-50 cursor-pointer transition-colors group">
+                  <div key={c.name} className="flex items-center gap-3 p-2.5 rounded-xl hover:bg-ink-50 cursor-pointer transition-colors group" onClick={() => navigate('/company/' + c.rank)}>
                     <span className={`w-7 h-7 rounded-lg flex items-center justify-center text-sm font-bold font-num ${
                       c.rank === 2 ? 'bg-slate-200 text-slate-700' :
                       c.rank === 3 ? 'bg-amber-100 text-amber-700' : 'bg-ink-100 text-ink-500'
@@ -494,7 +508,7 @@ export default function CompanyDetailPage() {
                   </CardTitle>
                   <p className="text-ink-500 text-sm mt-1">高薪好岗位，快速投递拿offer</p>
                 </div>
-                <Button variant="ghost" rightIcon={<ArrowRight size={16} />}>查看全部岗位</Button>
+                <Button variant="ghost" rightIcon={<ArrowRight size={16} />} onClick={() => navigate('/jobs')}>查看全部岗位</Button>
               </div>
             </CardHeader>
             <CardContent>
@@ -520,7 +534,7 @@ export default function CompanyDetailPage() {
                           <span className="text-ink-500">转正 </span>
                           <span className="font-bold text-teal-600 font-num">{job.rate}%</span>
                         </div>
-                        <Button size="xs" variant="secondary">立即投</Button>
+                        <Button size="xs" variant="secondary" onClick={() => navigate('/jobs/' + job.id)}>立即投</Button>
                       </div>
                     </CardContent>
                   </Card>

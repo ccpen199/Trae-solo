@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import {
   Search,
   MapPin,
@@ -75,6 +76,7 @@ const jobs = [
 const sortOptions = ['综合排序', '薪资最高', '热度最高', '最新发布'];
 
 export default function JobListPage() {
+  const navigate = useNavigate();
   const [activeSort, setActiveSort] = useState(0);
   const [viewMode, setViewMode] = useState<'grid' | 'list'>('grid');
   const [salaryRange, setSalaryRange] = useState([0, 500]);
@@ -301,8 +303,9 @@ export default function JobListPage() {
               <Card
                 key={job.id}
                 hoverable
-                className="animate-fade-in-up overflow-hidden"
+                className="animate-fade-in-up overflow-hidden cursor-pointer"
                 style={{ animationDelay: `${i * 40}ms` }}
+                onClick={() => navigate('/jobs/' + job.id)}
               >
                 <CardContent className="space-y-4">
                   <div className="flex items-start justify-between gap-3">
@@ -359,8 +362,8 @@ export default function JobListPage() {
                   </div>
 
                   <div className="flex items-center gap-3 pt-1">
-                    <Button className="flex-1">立即投递</Button>
-                    <Button variant="outline" size="md">
+                    <Button className="flex-1" onClick={(e: React.MouseEvent) => { e.stopPropagation(); navigate('/jobs/' + job.id); }}>立即投递</Button>
+                    <Button variant="outline" size="md" onClick={(e: React.MouseEvent) => { e.stopPropagation(); navigate('/jobs/' + job.id); }}>
                       <ChevronDown size={16} className="mr-1" />
                       沟通
                     </Button>
