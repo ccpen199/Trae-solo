@@ -14,7 +14,7 @@ import messagesRoutes from './routes/messages.js'
 import communityRoutes from './routes/community.js'
 import adminRoutes from './routes/admin.js'
 
-dotenv.config()
+dotenv.config({ quiet: true })
 
 const app: express.Application = express()
 
@@ -26,6 +26,8 @@ app.use(express.json({ limit: '10mb' }))
 app.use(express.urlencoded({ extended: true, limit: '10mb' }))
 
 app.use('/api/auth', authRoutes)
+app.use('/api/users', authRoutes)
+app.use('/api/user', authRoutes)
 app.use('/api/jobs', jobsRoutes)
 app.use('/api/resumes', resumesRoutes)
 app.use('/api/applications', applicationsRoutes)

@@ -228,7 +228,12 @@ router.put('/:id', async (req: Request, res: Response): Promise<void> => {
   try {
     const userId = req.headers['x-user-id']
     const userRole = req.headers['x-user-role']
-    const existing = db.prepare('SELECT * FROM jobs WHERE id = ?').get(req.params.id) as any
+    const existing = db.prepare(`
+      SELECT j.*, ip.verified_level, ip.institution_name
+      FROM jobs j
+      JOIN institution_profiles ip ON j.institution_id = ip.id
+      WHERE j.id = ?
+    `).get(req.params.id) as any
     if (!existing) {
       res.status(404).json({ success: false, error: '职位不存在' })
       return
@@ -241,6 +246,11 @@ router.put('/:id', async (req: Request, res: Response): Promise<void> => {
       }
     }
     const { title, department, required_title, required_category, location, salary_min, salary_max, description, requirements, status } = req.body
+    if (status === 'active' && (existing.verified_level || 0) < 2 && userRole !== 'admin') {
+      const levelText = (existing.verified_level || 0) === 1 ? '基础认证' : '未认证'
+      res.status(400).json({ success: false, error: `机构"${existing.institution_name}"当前为${levelText}，需完成高级认证后方可上架职位。`, code: 'INSTITUTION_NOT_FULLY_VERIFIED' })
+      return
+    }
     db.prepare(`
       UPDATE jobs SET title = COALESCE(?, title), department = COALESCE(?, department),
       required_title = COALESCE(?, required_title), required_category = COALESCE(?, required_category),

@@ -7,7 +7,15 @@ interface HeatmapItem { region?: string; department?: string; count: number; lev
 interface TrendItem { month: string; count: number }
 interface FunnelStep { label: string; count: number; rate: number }
 interface ComplianceItem { id: string; title: string; type: string; status: string }
-interface DashboardData { overview: Overview; heatmaps: { region: HeatmapItem[]; department: HeatmapItem[] }; trends: { applications: TrendItem[]; jobs: TrendItem[] }; compliance: { pendingReviews: ComplianceItem[]; expiringInstitutions: ComplianceItem[]; highRiskJobs: ComplianceItem[] } }
+interface DashboardCompliance {
+  pendingReviews?: ComplianceItem[]
+  expiringInstitutions?: ComplianceItem[]
+  highRiskJobs?: ComplianceItem[] | number
+  highRiskJobItems?: ComplianceItem[]
+  pendingJobsReview?: number
+  institutionsPendingRenewal?: number
+}
+interface DashboardData { overview: Overview; heatmaps: { region: HeatmapItem[]; department: HeatmapItem[] }; trends: { applications: TrendItem[]; jobs: TrendItem[] }; compliance?: DashboardCompliance }
 
 const institutionLevels = ['三甲', '二甲', '专科', '社区']
 const titleLevels = ['住院', '主治', '副主任', '主任']
@@ -41,9 +49,9 @@ export default function Dashboard() {
     { label: '本月投递', value: (overview.monthlyApplications || 0).toLocaleString(), change: overview.applicationsChange || '-0%', up: (overview.applicationsChange || '-0%').startsWith('+'), icon: FileText },
   ]
 
-  const departmentHeat = (heatmaps.department || []).map((d) => ({ name: d.department || '', count: d.count, title: d.title || '' }))
+  const departmentHeat = (heatmaps.department || []).map((d: any) => ({ name: d.department || '', count: d.count, title: d.title || d.required_title || '' }))
   const deptMax = Math.max(...departmentHeat.map((d) => d.count), 1)
-  const regionHeat = (heatmaps.region || []).map((r) => ({ name: r.region || '', count: r.count, level: r.level || '' }))
+  const regionHeat = (heatmaps.region || []).map((r: any) => ({ name: r.region || '', count: r.count, level: r.level || r.institution_type || '' }))
   const regionMax = Math.max(...regionHeat.map((r) => r.count), 1)
   const trendMonths = (trends.applications || []).map((a) => a.month)
 
@@ -67,10 +75,26 @@ export default function Dashboard() {
     total: departmentHeat.filter(d => d.title === title || Math.random() > 0.5).reduce((sum, d) => sum + d.count, 0),
   }))
 
-  const complianceData = data.compliance || {
-    pendingReviews: [{ id: '1', title: '北京协和医院-内科主治医师', type: 'job', status: 'pending' }, { id: '2', title: '上海瑞金医院资质年审', type: 'institution', status: 'pending' }],
-    expiringInstitutions: [{ id: '3', title: '某社区卫生服务中心', type: 'institution', status: 'expired' }],
-    highRiskJobs: [{ id: '4', title: '高薪急聘主任医师 50K-80K', type: 'job', status: 'highRisk' }],
+  const complianceSource = data.compliance || {}
+  const makeCountItems = (count: number, title: string, type: string, status: string): ComplianceItem[] =>
+    Array.from({ length: count }, (_, index) => ({
+      id: `${status}-${index + 1}`,
+      title: count === 1 ? title : `${title} ${index + 1}`,
+      type,
+      status,
+    }))
+  const complianceData = {
+    pendingReviews: complianceSource.pendingReviews?.length
+      ? complianceSource.pendingReviews
+      : makeCountItems(complianceSource.pendingJobsReview || 0, '待审核职位', 'job', 'pending'),
+    expiringInstitutions: complianceSource.expiringInstitutions?.length
+      ? complianceSource.expiringInstitutions
+      : makeCountItems(complianceSource.institutionsPendingRenewal || 0, '资质即将到期机构', 'institution', 'expired'),
+    highRiskJobs: complianceSource.highRiskJobItems?.length
+      ? complianceSource.highRiskJobItems
+      : Array.isArray(complianceSource.highRiskJobs)
+        ? complianceSource.highRiskJobs
+        : makeCountItems(complianceSource.highRiskJobs || 0, '高风险招聘岗位', 'job', 'highRisk'),
   }
 
   return (

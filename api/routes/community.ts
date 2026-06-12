@@ -42,6 +42,38 @@ router.get('/posts', async (req: Request, res: Response): Promise<void> => {
   }
 })
 
+router.get('/posts/new', async (req: Request, res: Response): Promise<void> => {
+  res.json({
+    success: true,
+    data: {
+      mode: 'create',
+      categories: ['news', 'policy', 'education'],
+      draft: { title: '', content: '', tags: [], category: 'policy' },
+    },
+  })
+})
+
+router.get('/posts/:id/comments', async (req: Request, res: Response): Promise<void> => {
+  try {
+    const postId = Number(req.params.id)
+    if (!Number.isFinite(postId)) {
+      res.json({ success: true, data: { items: [], total: 0 } })
+      return
+    }
+
+    const comments = db.prepare(`
+      SELECT c.*, u.name as author_name, u.role as author_role
+      FROM comments c
+      JOIN users u ON c.author_id = u.id
+      WHERE c.post_id = ?
+      ORDER BY c.created_at ASC
+    `).all(postId)
+    res.json({ success: true, data: { items: comments, total: comments.length } })
+  } catch (err: any) {
+    res.status(500).json({ success: false, error: err.message })
+  }
+})
+
 router.get('/posts/:id', async (req: Request, res: Response): Promise<void> => {
   try {
     const post = db.prepare(`

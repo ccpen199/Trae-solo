@@ -1,9 +1,11 @@
+import 'dotenv/config';
 import app from './app.js';
 
-const PORT = process.env.PORT || 59180;
+const HOST = process.env.HOST || '127.0.0.1';
+const PORT = Number(process.env.BACKEND_PORT || process.env.PORT || 59180);
 
-const server = app.listen(Number(PORT), '127.0.0.1', () => {
-  console.log(`Server ready on port ${PORT}`);
+const server = app.listen(PORT, HOST, () => {
+  console.log(`Server ready on http://${HOST}:${PORT}`);
 });
 
 process.on('SIGTERM', () => {

@@ -1,0 +1,4278 @@
+{
+  "meta": {
+    "title": "医聘通 - 医疗行业垂直招聘平台",
+    "url": "http://127.0.0.1:49180/community",
+    "timestamp": "2026-06-12T18:28:52.062Z",
+    "viewport": {
+      "width": 1856,
+      "height": 1600
+    },
+    "document": {
+      "scrollWidth": 1856,
+      "scrollHeight": 1600
+    }
+  },
+  "text": {
+    "bodyPreview": "医聘通首页职位社区登录注册医疗人社区 #全部 #政策解读 #继续教育 #行业动态#政策解读2025年医疗卫生体制改革最新政策解读 · 12845#继续教育住院医师规范化培训经验分享 · 25689#行业动态人工智能在医疗影像诊断中的应用进展 · 34267#政策解读儿科医生短缺问题的深层原因分析 · 18956#继续教育执业药师继续教育新规解读 · 9532#行业动态社区医院信息化建设实践与思考 · 6721",
+    "emptyTextCount": 0
+  },
+  "domTree": {
+    "tag": "html",
+    "id": "",
+    "className": "",
+    "selectorHint": "html",
+    "text": "医聘通 首页 职位 社区 登录 注册 医疗人社区 #全部 #政策解读 #继续教育 #行业动态 #政策解读 2025年医疗卫生体制改革最新政策解读 · 128 4",
+    "visible": true,
+    "childCount": 2,
+    "children": [
+      {
+        "tag": "head",
+        "id": "",
+        "className": "",
+        "selectorHint": "head",
+        "text": "import { injectIntoGlobalHook } from \"/@react-refresh\"; injectIntoGlobalHook(win",
+        "visible": false,
+        "childCount": 8,
+        "children": [
+          {
+            "tag": "meta",
+            "id": "",
+            "className": "",
+            "selectorHint": "meta",
+            "text": "",
+            "visible": false,
+            "childCount": 0,
+            "children": []
+          },
+          {
+            "tag": "link",
+            "id": "",
+            "className": "",
+            "selectorHint": "link",
+            "text": "",
+            "visible": false,
+            "childCount": 0,
+            "children": []
+          },
+          {
+            "tag": "meta",
+            "id": "",
+            "className": "",
+            "selectorHint": "meta",
+            "text": "",
+            "visible": false,
+            "childCount": 0,
+            "children": []
+          },
+          {
+            "tag": "title",
+            "id": "",
+            "className": "",
+            "selectorHint": "title",
+            "text": "医聘通 - 医疗行业垂直招聘平台",
+            "visible": false,
+            "childCount": 0,
+            "children": []
+          }
+        ]
+      },
+      {
+        "tag": "body",
+        "id": "",
+        "className": "",
+        "selectorHint": "body",
+        "text": "医聘通 首页 职位 社区 登录 注册 医疗人社区 #全部 #政策解读 #继续教育 #行业动态 #政策解读 2025年医疗卫生体制改革最新政策解读 · 128 4",
+        "visible": true,
+        "childCount": 2,
+        "children": [
+          {
+            "tag": "div",
+            "id": "root",
+            "className": "",
+            "selectorHint": "div#root",
+            "text": "医聘通 首页 职位 社区 登录 注册 医疗人社区 #全部 #政策解读 #继续教育 #行业动态 #政策解读 2025年医疗卫生体制改革最新政策解读 · 128 4",
+            "visible": true,
+            "childCount": 1,
+            "children": [
+              {
+                "tag": "div",
+                "id": "",
+                "className": "min-h-screen bg-stone-50",
+                "selectorHint": "div.min-h-screen.bg-stone-50",
+                "text": "医聘通 首页 职位 社区 登录 注册 医疗人社区 #全部 #政策解读 #继续教育 #行业动态 #政策解读 2025年医疗卫生体制改革最新政策解读 · 128 4",
+                "visible": true,
+                "childCount": 2,
+                "children": [
+                  {
+                    "tag": "header",
+                    "id": "",
+                    "className": "bg-white border-b border-stone-200 sticky top-0 z-50",
+                    "selectorHint": "header.bg-white.border-b.border-stone-200",
+                    "text": "医聘通 首页 职位 社区 登录 注册",
+                    "visible": true,
+                    "childCount": 1,
+                    "children": [
+                      {
+                        "tag": "div",
+                        "id": "",
+                        "className": "container mx-auto px-4 h-16 flex items-center justify-between",
+                        "selectorHint": "div.container.mx-auto.px-4",
+                        "text": "医聘通 首页 职位 社区 登录 注册",
+                        "visible": true,
+                        "childCount": 3,
+                        "children": []
+                      }
+                    ]
+                  },
+                  {
+                    "tag": "main",
+                    "id": "",
+                    "className": "",
+                    "selectorHint": "main",
+                    "text": "医疗人社区 #全部 #政策解读 #继续教育 #行业动态 #政策解读 2025年医疗卫生体制改革最新政策解读 · 128 45 #继续教育 住院医师规范化培训经验",
+                    "visible": true,
+                    "childCount": 1,
+                    "children": [
+                      {
+                        "tag": "div",
+                        "id": "",
+                        "className": "container mx-auto px-4 py-8",
+                        "selectorHint": "div.container.mx-auto.px-4",
+                        "text": "医疗人社区 #全部 #政策解读 #继续教育 #行业动态 #政策解读 2025年医疗卫生体制改革最新政策解读 · 128 45 #继续教育 住院医师规范化培训经验",
+                        "visible": true,
+                        "childCount": 3,
+                        "children": []
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  "allElements": [
+    {
+      "index": 0,
+      "tag": "html",
+      "id": "",
+      "className": "",
+      "selectorHint": "html",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "医聘通 首页 职位 社区 登录 注册 医疗人社区 #全部 #政策解读 #继续教育 #行业动态 #政策解读 2025年医疗卫生体制改革最新政策解读 · 128 45 #继续教育 住院医师规范化培训经验分享 · 256 89 #行业动态 人工智能在医疗影像诊断中的应用进展 · 342 67 #政策解读 儿科医生短缺问题的深层原因分析 · 189 56 #继续教育",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 2,
+      "rect": {
+        "x": 0,
+        "y": 0,
+        "width": 1856,
+        "height": 1600
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 1,
+      "tag": "head",
+      "id": "",
+      "className": "",
+      "selectorHint": "head",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "import { injectIntoGlobalHook } from \"/@react-refresh\"; injectIntoGlobalHook(window); window.$RefreshReg$ = () => {}; window.$RefreshSig$ = () => (type) => type; 医聘通 - 医疗行业垂直招聘平台 @",
+      "href": "",
+      "disabled": false,
+      "visible": false,
+      "childCount": 8,
+      "rect": {
+        "x": 0,
+        "y": 0,
+        "width": 0,
+        "height": 0
+      },
+      "style": {
+        "display": "none",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 2,
+      "tag": "meta",
+      "id": "",
+      "className": "",
+      "selectorHint": "meta",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "",
+      "href": "",
+      "disabled": false,
+      "visible": false,
+      "childCount": 0,
+      "rect": {
+        "x": 0,
+        "y": 0,
+        "width": 0,
+        "height": 0
+      },
+      "style": {
+        "display": "none",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 3,
+      "tag": "link",
+      "id": "",
+      "className": "",
+      "selectorHint": "link",
+      "name": "",
+      "type": "image/svg+xml",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "",
+      "href": "/favicon.svg",
+      "disabled": false,
+      "visible": false,
+      "childCount": 0,
+      "rect": {
+        "x": 0,
+        "y": 0,
+        "width": 0,
+        "height": 0
+      },
+      "style": {
+        "display": "none",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 4,
+      "tag": "meta",
+      "id": "",
+      "className": "",
+      "selectorHint": "meta",
+      "name": "viewport",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "",
+      "href": "",
+      "disabled": false,
+      "visible": false,
+      "childCount": 0,
+      "rect": {
+        "x": 0,
+        "y": 0,
+        "width": 0,
+        "height": 0
+      },
+      "style": {
+        "display": "none",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 5,
+      "tag": "title",
+      "id": "",
+      "className": "",
+      "selectorHint": "title",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "医聘通 - 医疗行业垂直招聘平台",
+      "href": "",
+      "disabled": false,
+      "visible": false,
+      "childCount": 0,
+      "rect": {
+        "x": 0,
+        "y": 0,
+        "width": 0,
+        "height": 0
+      },
+      "style": {
+        "display": "none",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 6,
+      "tag": "body",
+      "id": "",
+      "className": "",
+      "selectorHint": "body",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "医聘通 首页 职位 社区 登录 注册 医疗人社区 #全部 #政策解读 #继续教育 #行业动态 #政策解读 2025年医疗卫生体制改革最新政策解读 · 128 45 #继续教育 住院医师规范化培训经验分享 · 256 89 #行业动态 人工智能在医疗影像诊断中的应用进展 · 342 67 #政策解读 儿科医生短缺问题的深层原因分析 · 189 56 #继续教育",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 2,
+      "rect": {
+        "x": 0,
+        "y": 0,
+        "width": 1856,
+        "height": 1600
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 7,
+      "tag": "div",
+      "id": "root",
+      "className": "",
+      "selectorHint": "div#root",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "医聘通 首页 职位 社区 登录 注册 医疗人社区 #全部 #政策解读 #继续教育 #行业动态 #政策解读 2025年医疗卫生体制改革最新政策解读 · 128 45 #继续教育 住院医师规范化培训经验分享 · 256 89 #行业动态 人工智能在医疗影像诊断中的应用进展 · 342 67 #政策解读 儿科医生短缺问题的深层原因分析 · 189 56 #继续教育",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 1,
+      "rect": {
+        "x": 0,
+        "y": 0,
+        "width": 1856,
+        "height": 1600
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 8,
+      "tag": "div",
+      "id": "",
+      "className": "min-h-screen bg-stone-50",
+      "selectorHint": "div.min-h-screen.bg-stone-50",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "医聘通 首页 职位 社区 登录 注册 医疗人社区 #全部 #政策解读 #继续教育 #行业动态 #政策解读 2025年医疗卫生体制改革最新政策解读 · 128 45 #继续教育 住院医师规范化培训经验分享 · 256 89 #行业动态 人工智能在医疗影像诊断中的应用进展 · 342 67 #政策解读 儿科医生短缺问题的深层原因分析 · 189 56 #继续教育",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 2,
+      "rect": {
+        "x": 0,
+        "y": 0,
+        "width": 1856,
+        "height": 1600
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 9,
+      "tag": "header",
+      "id": "",
+      "className": "bg-white border-b border-stone-200 sticky top-0 z-50",
+      "selectorHint": "header.bg-white.border-b.border-stone-200",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "医聘通 首页 职位 社区 登录 注册",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 1,
+      "rect": {
+        "x": 0,
+        "y": 0,
+        "width": 1856,
+        "height": 65
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 10,
+      "tag": "div",
+      "id": "",
+      "className": "container mx-auto px-4 h-16 flex items-center justify-between",
+      "selectorHint": "div.container.mx-auto.px-4",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "医聘通 首页 职位 社区 登录 注册",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 3,
+      "rect": {
+        "x": 160,
+        "y": 0,
+        "width": 1536,
+        "height": 64
+      },
+      "style": {
+        "display": "flex",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 11,
+      "tag": "a",
+      "id": "",
+      "className": "flex items-center gap-2",
+      "selectorHint": "a.flex.items-center.gap-2",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "医聘通",
+      "href": "/",
+      "disabled": false,
+      "visible": true,
+      "childCount": 2,
+      "rect": {
+        "x": 176,
+        "y": 16,
+        "width": 112,
+        "height": 32
+      },
+      "style": {
+        "display": "flex",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 12,
+      "tag": "svg",
+      "id": "",
+      "className": "",
+      "selectorHint": "svg",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 5,
+      "rect": {
+        "x": 176,
+        "y": 16,
+        "width": 32,
+        "height": 32
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 13,
+      "tag": "path",
+      "id": "",
+      "className": "",
+      "selectorHint": "path",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "",
+      "href": "",
+      "disabled": false,
+      "visible": false,
+      "childCount": 0,
+      "rect": {
+        "x": 191,
+        "y": 19,
+        "width": 0,
+        "height": 3
+      },
+      "style": {
+        "display": "inline",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 14,
+      "tag": "path",
+      "id": "",
+      "className": "",
+      "selectorHint": "path",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "",
+      "href": "",
+      "disabled": false,
+      "visible": false,
+      "childCount": 0,
+      "rect": {
+        "x": 183,
+        "y": 19,
+        "width": 0,
+        "height": 3
+      },
+      "style": {
+        "display": "inline",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 15,
+      "tag": "path",
+      "id": "",
+      "className": "",
+      "selectorHint": "path",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 179,
+        "y": 20,
+        "width": 16,
+        "height": 16
+      },
+      "style": {
+        "display": "inline",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 16,
+      "tag": "path",
+      "id": "",
+      "className": "",
+      "selectorHint": "path",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 187,
+        "y": 32,
+        "width": 16,
+        "height": 12
+      },
+      "style": {
+        "display": "inline",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 17,
+      "tag": "circle",
+      "id": "",
+      "className": "",
+      "selectorHint": "circle",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 200,
+        "y": 27,
+        "width": 5,
+        "height": 5
+      },
+      "style": {
+        "display": "inline",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 18,
+      "tag": "span",
+      "id": "",
+      "className": "font-heading text-2xl font-bold text-teal-700",
+      "selectorHint": "span.font-heading.text-2xl.font-bold",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "医聘通",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 216,
+        "y": 16,
+        "width": 72,
+        "height": 32
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 19,
+      "tag": "nav",
+      "id": "",
+      "className": "flex items-center gap-8",
+      "selectorHint": "nav.flex.items-center.gap-8",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "首页 职位 社区",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 3,
+      "rect": {
+        "x": 837,
+        "y": 20,
+        "width": 160,
+        "height": 24
+      },
+      "style": {
+        "display": "flex",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 20,
+      "tag": "a",
+      "id": "",
+      "className": "text-stone-600 hover:text-teal-700 font-medium transition-colors",
+      "selectorHint": "a.text-stone-600.hover:text-teal-700.font-medium",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "首页",
+      "href": "/",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 837,
+        "y": 20,
+        "width": 32,
+        "height": 24
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 21,
+      "tag": "a",
+      "id": "",
+      "className": "text-stone-600 hover:text-teal-700 font-medium transition-colors",
+      "selectorHint": "a.text-stone-600.hover:text-teal-700.font-medium",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "职位",
+      "href": "/jobs",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 901,
+        "y": 20,
+        "width": 32,
+        "height": 24
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 22,
+      "tag": "a",
+      "id": "",
+      "className": "text-teal-700 font-semibold font-medium transition-colors",
+      "selectorHint": "a.text-teal-700.font-semibold.font-medium",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "社区",
+      "href": "/community",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 965,
+        "y": 20,
+        "width": 32,
+        "height": 24
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 23,
+      "tag": "div",
+      "id": "",
+      "className": "flex items-center gap-3",
+      "selectorHint": "div.flex.items-center.gap-3",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "登录 注册",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 2,
+      "rect": {
+        "x": 1546,
+        "y": 13,
+        "width": 134,
+        "height": 38
+      },
+      "style": {
+        "display": "flex",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 24,
+      "tag": "a",
+      "id": "",
+      "className": "px-4 py-2 text-teal-700 border border-teal-700 rounded-lg hover:bg-teal-50 text-sm font-medium transition-colors",
+      "selectorHint": "a.px-4.py-2.text-teal-700",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "登录",
+      "href": "/login",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 1546,
+        "y": 13,
+        "width": 62,
+        "height": 38
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 25,
+      "tag": "a",
+      "id": "",
+      "className": "px-4 py-2 bg-teal-700 text-white rounded-lg hover:bg-teal-800 text-sm font-medium transition-colors",
+      "selectorHint": "a.px-4.py-2.bg-teal-700",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "注册",
+      "href": "/register",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 1620,
+        "y": 14,
+        "width": 60,
+        "height": 36
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 26,
+      "tag": "main",
+      "id": "",
+      "className": "",
+      "selectorHint": "main",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "医疗人社区 #全部 #政策解读 #继续教育 #行业动态 #政策解读 2025年医疗卫生体制改革最新政策解读 · 128 45 #继续教育 住院医师规范化培训经验分享 · 256 89 #行业动态 人工智能在医疗影像诊断中的应用进展 · 342 67 #政策解读 儿科医生短缺问题的深层原因分析 · 189 56 #继续教育 执业药师继续教育新规解读 · 95 ",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 1,
+      "rect": {
+        "x": 0,
+        "y": 65,
+        "width": 1856,
+        "height": 638
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 27,
+      "tag": "div",
+      "id": "",
+      "className": "container mx-auto px-4 py-8",
+      "selectorHint": "div.container.mx-auto.px-4",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "医疗人社区 #全部 #政策解读 #继续教育 #行业动态 #政策解读 2025年医疗卫生体制改革最新政策解读 · 128 45 #继续教育 住院医师规范化培训经验分享 · 256 89 #行业动态 人工智能在医疗影像诊断中的应用进展 · 342 67 #政策解读 儿科医生短缺问题的深层原因分析 · 189 56 #继续教育 执业药师继续教育新规解读 · 95 ",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 3,
+      "rect": {
+        "x": 160,
+        "y": 65,
+        "width": 1536,
+        "height": 638
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 28,
+      "tag": "div",
+      "id": "",
+      "className": "flex items-center justify-between mb-6",
+      "selectorHint": "div.flex.items-center.justify-between",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "医疗人社区",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 1,
+      "rect": {
+        "x": 176,
+        "y": 97,
+        "width": 1504,
+        "height": 32
+      },
+      "style": {
+        "display": "flex",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 29,
+      "tag": "h1",
+      "id": "",
+      "className": "font-heading text-2xl font-bold",
+      "selectorHint": "h1.font-heading.text-2xl.font-bold",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "医疗人社区",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 176,
+        "y": 97,
+        "width": 120,
+        "height": 32
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 30,
+      "tag": "div",
+      "id": "",
+      "className": "flex gap-2 mb-6",
+      "selectorHint": "div.flex.gap-2.mb-6",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "#全部 #政策解读 #继续教育 #行业动态",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 4,
+      "rect": {
+        "x": 176,
+        "y": 153,
+        "width": 1504,
+        "height": 36
+      },
+      "style": {
+        "display": "flex",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 31,
+      "tag": "button",
+      "id": "",
+      "className": "flex items-center gap-1 px-4 py-2 rounded-lg text-sm font-medium transition-colors bg-teal-700 text-white",
+      "selectorHint": "button.flex.items-center.gap-1",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "#全部",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 1,
+      "rect": {
+        "x": 176,
+        "y": 153,
+        "width": 86,
+        "height": 36
+      },
+      "style": {
+        "display": "flex",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 32,
+      "tag": "svg",
+      "id": "",
+      "className": "",
+      "selectorHint": "svg",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 2,
+      "rect": {
+        "x": 192,
+        "y": 164,
+        "width": 14,
+        "height": 14
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 33,
+      "tag": "path",
+      "id": "",
+      "className": "",
+      "selectorHint": "path",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 193,
+        "y": 165,
+        "width": 12,
+        "height": 12
+      },
+      "style": {
+        "display": "inline",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 34,
+      "tag": "circle",
+      "id": "",
+      "className": "",
+      "selectorHint": "circle",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "",
+      "href": "",
+      "disabled": false,
+      "visible": false,
+      "childCount": 0,
+      "rect": {
+        "x": 196,
+        "y": 168,
+        "width": 1,
+        "height": 1
+      },
+      "style": {
+        "display": "inline",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 35,
+      "tag": "button",
+      "id": "",
+      "className": "flex items-center gap-1 px-4 py-2 rounded-lg text-sm font-medium transition-colors bg-stone-100 text-stone-600 hover:bg-stone-200",
+      "selectorHint": "button.flex.items-center.gap-1",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "#政策解读",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 1,
+      "rect": {
+        "x": 270,
+        "y": 153,
+        "width": 114,
+        "height": 36
+      },
+      "style": {
+        "display": "flex",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 36,
+      "tag": "svg",
+      "id": "",
+      "className": "",
+      "selectorHint": "svg",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 2,
+      "rect": {
+        "x": 286,
+        "y": 164,
+        "width": 14,
+        "height": 14
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 37,
+      "tag": "path",
+      "id": "",
+      "className": "",
+      "selectorHint": "path",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 287,
+        "y": 165,
+        "width": 12,
+        "height": 12
+      },
+      "style": {
+        "display": "inline",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 38,
+      "tag": "circle",
+      "id": "",
+      "className": "",
+      "selectorHint": "circle",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "",
+      "href": "",
+      "disabled": false,
+      "visible": false,
+      "childCount": 0,
+      "rect": {
+        "x": 290,
+        "y": 168,
+        "width": 1,
+        "height": 1
+      },
+      "style": {
+        "display": "inline",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 39,
+      "tag": "button",
+      "id": "",
+      "className": "flex items-center gap-1 px-4 py-2 rounded-lg text-sm font-medium transition-colors bg-stone-100 text-stone-600 hover:bg-stone-200",
+      "selectorHint": "button.flex.items-center.gap-1",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "#继续教育",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 1,
+      "rect": {
+        "x": 392,
+        "y": 153,
+        "width": 114,
+        "height": 36
+      },
+      "style": {
+        "display": "flex",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 40,
+      "tag": "svg",
+      "id": "",
+      "className": "",
+      "selectorHint": "svg",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 2,
+      "rect": {
+        "x": 408,
+        "y": 164,
+        "width": 14,
+        "height": 14
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 41,
+      "tag": "path",
+      "id": "",
+      "className": "",
+      "selectorHint": "path",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 409,
+        "y": 165,
+        "width": 12,
+        "height": 12
+      },
+      "style": {
+        "display": "inline",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 42,
+      "tag": "circle",
+      "id": "",
+      "className": "",
+      "selectorHint": "circle",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "",
+      "href": "",
+      "disabled": false,
+      "visible": false,
+      "childCount": 0,
+      "rect": {
+        "x": 412,
+        "y": 168,
+        "width": 1,
+        "height": 1
+      },
+      "style": {
+        "display": "inline",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 43,
+      "tag": "button",
+      "id": "",
+      "className": "flex items-center gap-1 px-4 py-2 rounded-lg text-sm font-medium transition-colors bg-stone-100 text-stone-600 hover:bg-stone-200",
+      "selectorHint": "button.flex.items-center.gap-1",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "#行业动态",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 1,
+      "rect": {
+        "x": 514,
+        "y": 153,
+        "width": 114,
+        "height": 36
+      },
+      "style": {
+        "display": "flex",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 44,
+      "tag": "svg",
+      "id": "",
+      "className": "",
+      "selectorHint": "svg",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 2,
+      "rect": {
+        "x": 530,
+        "y": 164,
+        "width": 14,
+        "height": 14
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 45,
+      "tag": "path",
+      "id": "",
+      "className": "",
+      "selectorHint": "path",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 531,
+        "y": 165,
+        "width": 12,
+        "height": 12
+      },
+      "style": {
+        "display": "inline",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 46,
+      "tag": "circle",
+      "id": "",
+      "className": "",
+      "selectorHint": "circle",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "",
+      "href": "",
+      "disabled": false,
+      "visible": false,
+      "childCount": 0,
+      "rect": {
+        "x": 534,
+        "y": 168,
+        "width": 1,
+        "height": 1
+      },
+      "style": {
+        "display": "inline",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 47,
+      "tag": "div",
+      "id": "",
+      "className": "grid grid-cols-2 gap-4",
+      "selectorHint": "div.grid.grid-cols-2.gap-4",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "#政策解读 2025年医疗卫生体制改革最新政策解读 · 128 45 #继续教育 住院医师规范化培训经验分享 · 256 89 #行业动态 人工智能在医疗影像诊断中的应用进展 · 342 67 #政策解读 儿科医生短缺问题的深层原因分析 · 189 56 #继续教育 执业药师继续教育新规解读 · 95 32 #行业动态 社区医院信息化建设实践与思考 · 67",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 6,
+      "rect": {
+        "x": 176,
+        "y": 213,
+        "width": 1504,
+        "height": 458
+      },
+      "style": {
+        "display": "grid",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 48,
+      "tag": "a",
+      "id": "",
+      "className": "bg-white border border-stone-200 rounded-lg p-5 hover:shadow-md transition-shadow",
+      "selectorHint": "a.bg-white.border.border-stone-200",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "#政策解读 2025年医疗卫生体制改革最新政策解读 · 128 45",
+      "href": "/community/1",
+      "disabled": false,
+      "visible": true,
+      "childCount": 4,
+      "rect": {
+        "x": 176,
+        "y": 213,
+        "width": 744,
+        "height": 142
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 49,
+      "tag": "span",
+      "id": "",
+      "className": "px-2 py-1 rounded text-xs font-medium bg-amber-50 text-amber-700",
+      "selectorHint": "span.px-2.py-1.rounded",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "#政策解读",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 197,
+        "y": 235,
+        "width": 71,
+        "height": 25
+      },
+      "style": {
+        "display": "inline",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 50,
+      "tag": "h3",
+      "id": "",
+      "className": "font-medium text-lg text-stone-800 mt-3 line-clamp-2",
+      "selectorHint": "h3.font-medium.text-lg.text-stone-800",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "2025年医疗卫生体制改革最新政策解读",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 197,
+        "y": 270,
+        "width": 702,
+        "height": 28
+      },
+      "style": {
+        "display": "flow-root",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 51,
+      "tag": "p",
+      "id": "",
+      "className": "text-sm text-stone-500 mt-2 line-clamp-2",
+      "selectorHint": "p.text-sm.text-stone-500.mt-2",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "",
+      "href": "",
+      "disabled": false,
+      "visible": false,
+      "childCount": 0,
+      "rect": {
+        "x": 197,
+        "y": 306,
+        "width": 702,
+        "height": 0
+      },
+      "style": {
+        "display": "flow-root",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 52,
+      "tag": "div",
+      "id": "",
+      "className": "flex items-center justify-between mt-3 text-xs text-stone-400",
+      "selectorHint": "div.flex.items-center.justify-between",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "· 128 45",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 2,
+      "rect": {
+        "x": 197,
+        "y": 318,
+        "width": 702,
+        "height": 16
+      },
+      "style": {
+        "display": "flex",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 53,
+      "tag": "span",
+      "id": "",
+      "className": "",
+      "selectorHint": "span",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "·",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 197,
+        "y": 318,
+        "width": 12,
+        "height": 16
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 54,
+      "tag": "div",
+      "id": "",
+      "className": "flex items-center gap-3",
+      "selectorHint": "div.flex.items-center.gap-3",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "128 45",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 2,
+      "rect": {
+        "x": 818,
+        "y": 318,
+        "width": 81,
+        "height": 16
+      },
+      "style": {
+        "display": "flex",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 55,
+      "tag": "span",
+      "id": "",
+      "className": "flex items-center gap-1",
+      "selectorHint": "span.flex.items-center.gap-1",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "128",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 1,
+      "rect": {
+        "x": 818,
+        "y": 318,
+        "width": 38,
+        "height": 16
+      },
+      "style": {
+        "display": "flex",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 56,
+      "tag": "svg",
+      "id": "",
+      "className": "",
+      "selectorHint": "svg",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 1,
+      "rect": {
+        "x": 818,
+        "y": 319,
+        "width": 14,
+        "height": 14
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 57,
+      "tag": "path",
+      "id": "",
+      "className": "",
+      "selectorHint": "path",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 819,
+        "y": 321,
+        "width": 12,
+        "height": 11
+      },
+      "style": {
+        "display": "inline",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 58,
+      "tag": "span",
+      "id": "",
+      "className": "flex items-center gap-1",
+      "selectorHint": "span.flex.items-center.gap-1",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "45",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 1,
+      "rect": {
+        "x": 868,
+        "y": 318,
+        "width": 31,
+        "height": 16
+      },
+      "style": {
+        "display": "flex",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 59,
+      "tag": "svg",
+      "id": "",
+      "className": "",
+      "selectorHint": "svg",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 1,
+      "rect": {
+        "x": 868,
+        "y": 319,
+        "width": 14,
+        "height": 14
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 60,
+      "tag": "path",
+      "id": "",
+      "className": "",
+      "selectorHint": "path",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 869,
+        "y": 321,
+        "width": 11,
+        "height": 11
+      },
+      "style": {
+        "display": "inline",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 61,
+      "tag": "a",
+      "id": "",
+      "className": "bg-white border border-stone-200 rounded-lg p-5 hover:shadow-md transition-shadow",
+      "selectorHint": "a.bg-white.border.border-stone-200",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "#继续教育 住院医师规范化培训经验分享 · 256 89",
+      "href": "/community/2",
+      "disabled": false,
+      "visible": true,
+      "childCount": 4,
+      "rect": {
+        "x": 936,
+        "y": 213,
+        "width": 744,
+        "height": 142
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 62,
+      "tag": "span",
+      "id": "",
+      "className": "px-2 py-1 rounded text-xs font-medium bg-teal-50 text-teal-700",
+      "selectorHint": "span.px-2.py-1.rounded",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "#继续教育",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 957,
+        "y": 235,
+        "width": 71,
+        "height": 25
+      },
+      "style": {
+        "display": "inline",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 63,
+      "tag": "h3",
+      "id": "",
+      "className": "font-medium text-lg text-stone-800 mt-3 line-clamp-2",
+      "selectorHint": "h3.font-medium.text-lg.text-stone-800",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "住院医师规范化培训经验分享",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 957,
+        "y": 270,
+        "width": 702,
+        "height": 28
+      },
+      "style": {
+        "display": "flow-root",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 64,
+      "tag": "p",
+      "id": "",
+      "className": "text-sm text-stone-500 mt-2 line-clamp-2",
+      "selectorHint": "p.text-sm.text-stone-500.mt-2",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "",
+      "href": "",
+      "disabled": false,
+      "visible": false,
+      "childCount": 0,
+      "rect": {
+        "x": 957,
+        "y": 306,
+        "width": 702,
+        "height": 0
+      },
+      "style": {
+        "display": "flow-root",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 65,
+      "tag": "div",
+      "id": "",
+      "className": "flex items-center justify-between mt-3 text-xs text-stone-400",
+      "selectorHint": "div.flex.items-center.justify-between",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "· 256 89",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 2,
+      "rect": {
+        "x": 957,
+        "y": 318,
+        "width": 702,
+        "height": 16
+      },
+      "style": {
+        "display": "flex",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 66,
+      "tag": "span",
+      "id": "",
+      "className": "",
+      "selectorHint": "span",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "·",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 957,
+        "y": 318,
+        "width": 12,
+        "height": 16
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 67,
+      "tag": "div",
+      "id": "",
+      "className": "flex items-center gap-3",
+      "selectorHint": "div.flex.items-center.gap-3",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "256 89",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 2,
+      "rect": {
+        "x": 1578,
+        "y": 318,
+        "width": 81,
+        "height": 16
+      },
+      "style": {
+        "display": "flex",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 68,
+      "tag": "span",
+      "id": "",
+      "className": "flex items-center gap-1",
+      "selectorHint": "span.flex.items-center.gap-1",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "256",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 1,
+      "rect": {
+        "x": 1578,
+        "y": 318,
+        "width": 38,
+        "height": 16
+      },
+      "style": {
+        "display": "flex",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 69,
+      "tag": "svg",
+      "id": "",
+      "className": "",
+      "selectorHint": "svg",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 1,
+      "rect": {
+        "x": 1578,
+        "y": 319,
+        "width": 14,
+        "height": 14
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 70,
+      "tag": "path",
+      "id": "",
+      "className": "",
+      "selectorHint": "path",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 1579,
+        "y": 321,
+        "width": 12,
+        "height": 11
+      },
+      "style": {
+        "display": "inline",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 71,
+      "tag": "span",
+      "id": "",
+      "className": "flex items-center gap-1",
+      "selectorHint": "span.flex.items-center.gap-1",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "89",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 1,
+      "rect": {
+        "x": 1628,
+        "y": 318,
+        "width": 31,
+        "height": 16
+      },
+      "style": {
+        "display": "flex",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 72,
+      "tag": "svg",
+      "id": "",
+      "className": "",
+      "selectorHint": "svg",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 1,
+      "rect": {
+        "x": 1628,
+        "y": 319,
+        "width": 14,
+        "height": 14
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 73,
+      "tag": "path",
+      "id": "",
+      "className": "",
+      "selectorHint": "path",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 1629,
+        "y": 321,
+        "width": 11,
+        "height": 11
+      },
+      "style": {
+        "display": "inline",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 74,
+      "tag": "a",
+      "id": "",
+      "className": "bg-white border border-stone-200 rounded-lg p-5 hover:shadow-md transition-shadow",
+      "selectorHint": "a.bg-white.border.border-stone-200",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "#行业动态 人工智能在医疗影像诊断中的应用进展 · 342 67",
+      "href": "/community/3",
+      "disabled": false,
+      "visible": true,
+      "childCount": 4,
+      "rect": {
+        "x": 176,
+        "y": 371,
+        "width": 744,
+        "height": 142
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 75,
+      "tag": "span",
+      "id": "",
+      "className": "px-2 py-1 rounded text-xs font-medium bg-blue-50 text-blue-700",
+      "selectorHint": "span.px-2.py-1.rounded",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "#行业动态",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 197,
+        "y": 393,
+        "width": 71,
+        "height": 25
+      },
+      "style": {
+        "display": "inline",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 76,
+      "tag": "h3",
+      "id": "",
+      "className": "font-medium text-lg text-stone-800 mt-3 line-clamp-2",
+      "selectorHint": "h3.font-medium.text-lg.text-stone-800",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "人工智能在医疗影像诊断中的应用进展",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 197,
+        "y": 428,
+        "width": 702,
+        "height": 28
+      },
+      "style": {
+        "display": "flow-root",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 77,
+      "tag": "p",
+      "id": "",
+      "className": "text-sm text-stone-500 mt-2 line-clamp-2",
+      "selectorHint": "p.text-sm.text-stone-500.mt-2",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "",
+      "href": "",
+      "disabled": false,
+      "visible": false,
+      "childCount": 0,
+      "rect": {
+        "x": 197,
+        "y": 464,
+        "width": 702,
+        "height": 0
+      },
+      "style": {
+        "display": "flow-root",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 78,
+      "tag": "div",
+      "id": "",
+      "className": "flex items-center justify-between mt-3 text-xs text-stone-400",
+      "selectorHint": "div.flex.items-center.justify-between",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "· 342 67",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 2,
+      "rect": {
+        "x": 197,
+        "y": 476,
+        "width": 702,
+        "height": 16
+      },
+      "style": {
+        "display": "flex",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 79,
+      "tag": "span",
+      "id": "",
+      "className": "",
+      "selectorHint": "span",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "·",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 197,
+        "y": 476,
+        "width": 12,
+        "height": 16
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 80,
+      "tag": "div",
+      "id": "",
+      "className": "flex items-center gap-3",
+      "selectorHint": "div.flex.items-center.gap-3",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "342 67",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 2,
+      "rect": {
+        "x": 818,
+        "y": 476,
+        "width": 81,
+        "height": 16
+      },
+      "style": {
+        "display": "flex",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 81,
+      "tag": "span",
+      "id": "",
+      "className": "flex items-center gap-1",
+      "selectorHint": "span.flex.items-center.gap-1",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "342",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 1,
+      "rect": {
+        "x": 818,
+        "y": 476,
+        "width": 38,
+        "height": 16
+      },
+      "style": {
+        "display": "flex",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 82,
+      "tag": "svg",
+      "id": "",
+      "className": "",
+      "selectorHint": "svg",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 1,
+      "rect": {
+        "x": 818,
+        "y": 477,
+        "width": 14,
+        "height": 14
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 83,
+      "tag": "path",
+      "id": "",
+      "className": "",
+      "selectorHint": "path",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 819,
+        "y": 479,
+        "width": 12,
+        "height": 11
+      },
+      "style": {
+        "display": "inline",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 84,
+      "tag": "span",
+      "id": "",
+      "className": "flex items-center gap-1",
+      "selectorHint": "span.flex.items-center.gap-1",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "67",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 1,
+      "rect": {
+        "x": 868,
+        "y": 476,
+        "width": 31,
+        "height": 16
+      },
+      "style": {
+        "display": "flex",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 85,
+      "tag": "svg",
+      "id": "",
+      "className": "",
+      "selectorHint": "svg",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 1,
+      "rect": {
+        "x": 868,
+        "y": 477,
+        "width": 14,
+        "height": 14
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 86,
+      "tag": "path",
+      "id": "",
+      "className": "",
+      "selectorHint": "path",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 869,
+        "y": 479,
+        "width": 11,
+        "height": 11
+      },
+      "style": {
+        "display": "inline",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 87,
+      "tag": "a",
+      "id": "",
+      "className": "bg-white border border-stone-200 rounded-lg p-5 hover:shadow-md transition-shadow",
+      "selectorHint": "a.bg-white.border.border-stone-200",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "#政策解读 儿科医生短缺问题的深层原因分析 · 189 56",
+      "href": "/community/4",
+      "disabled": false,
+      "visible": true,
+      "childCount": 4,
+      "rect": {
+        "x": 936,
+        "y": 371,
+        "width": 744,
+        "height": 142
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 88,
+      "tag": "span",
+      "id": "",
+      "className": "px-2 py-1 rounded text-xs font-medium bg-amber-50 text-amber-700",
+      "selectorHint": "span.px-2.py-1.rounded",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "#政策解读",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 957,
+        "y": 393,
+        "width": 71,
+        "height": 25
+      },
+      "style": {
+        "display": "inline",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 89,
+      "tag": "h3",
+      "id": "",
+      "className": "font-medium text-lg text-stone-800 mt-3 line-clamp-2",
+      "selectorHint": "h3.font-medium.text-lg.text-stone-800",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "儿科医生短缺问题的深层原因分析",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 957,
+        "y": 428,
+        "width": 702,
+        "height": 28
+      },
+      "style": {
+        "display": "flow-root",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 90,
+      "tag": "p",
+      "id": "",
+      "className": "text-sm text-stone-500 mt-2 line-clamp-2",
+      "selectorHint": "p.text-sm.text-stone-500.mt-2",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "",
+      "href": "",
+      "disabled": false,
+      "visible": false,
+      "childCount": 0,
+      "rect": {
+        "x": 957,
+        "y": 464,
+        "width": 702,
+        "height": 0
+      },
+      "style": {
+        "display": "flow-root",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 91,
+      "tag": "div",
+      "id": "",
+      "className": "flex items-center justify-between mt-3 text-xs text-stone-400",
+      "selectorHint": "div.flex.items-center.justify-between",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "· 189 56",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 2,
+      "rect": {
+        "x": 957,
+        "y": 476,
+        "width": 702,
+        "height": 16
+      },
+      "style": {
+        "display": "flex",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 92,
+      "tag": "span",
+      "id": "",
+      "className": "",
+      "selectorHint": "span",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "·",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 957,
+        "y": 476,
+        "width": 12,
+        "height": 16
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 93,
+      "tag": "div",
+      "id": "",
+      "className": "flex items-center gap-3",
+      "selectorHint": "div.flex.items-center.gap-3",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "189 56",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 2,
+      "rect": {
+        "x": 1578,
+        "y": 476,
+        "width": 81,
+        "height": 16
+      },
+      "style": {
+        "display": "flex",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 94,
+      "tag": "span",
+      "id": "",
+      "className": "flex items-center gap-1",
+      "selectorHint": "span.flex.items-center.gap-1",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "189",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 1,
+      "rect": {
+        "x": 1578,
+        "y": 476,
+        "width": 38,
+        "height": 16
+      },
+      "style": {
+        "display": "flex",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 95,
+      "tag": "svg",
+      "id": "",
+      "className": "",
+      "selectorHint": "svg",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 1,
+      "rect": {
+        "x": 1578,
+        "y": 477,
+        "width": 14,
+        "height": 14
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 96,
+      "tag": "path",
+      "id": "",
+      "className": "",
+      "selectorHint": "path",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 1579,
+        "y": 479,
+        "width": 12,
+        "height": 11
+      },
+      "style": {
+        "display": "inline",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 97,
+      "tag": "span",
+      "id": "",
+      "className": "flex items-center gap-1",
+      "selectorHint": "span.flex.items-center.gap-1",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "56",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 1,
+      "rect": {
+        "x": 1628,
+        "y": 476,
+        "width": 31,
+        "height": 16
+      },
+      "style": {
+        "display": "flex",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 98,
+      "tag": "svg",
+      "id": "",
+      "className": "",
+      "selectorHint": "svg",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 1,
+      "rect": {
+        "x": 1628,
+        "y": 477,
+        "width": 14,
+        "height": 14
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 99,
+      "tag": "path",
+      "id": "",
+      "className": "",
+      "selectorHint": "path",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 1629,
+        "y": 479,
+        "width": 11,
+        "height": 11
+      },
+      "style": {
+        "display": "inline",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 100,
+      "tag": "a",
+      "id": "",
+      "className": "bg-white border border-stone-200 rounded-lg p-5 hover:shadow-md transition-shadow",
+      "selectorHint": "a.bg-white.border.border-stone-200",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "#继续教育 执业药师继续教育新规解读 · 95 32",
+      "href": "/community/5",
+      "disabled": false,
+      "visible": true,
+      "childCount": 4,
+      "rect": {
+        "x": 176,
+        "y": 529,
+        "width": 744,
+        "height": 142
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 101,
+      "tag": "span",
+      "id": "",
+      "className": "px-2 py-1 rounded text-xs font-medium bg-teal-50 text-teal-700",
+      "selectorHint": "span.px-2.py-1.rounded",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "#继续教育",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 197,
+        "y": 551,
+        "width": 71,
+        "height": 25
+      },
+      "style": {
+        "display": "inline",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 102,
+      "tag": "h3",
+      "id": "",
+      "className": "font-medium text-lg text-stone-800 mt-3 line-clamp-2",
+      "selectorHint": "h3.font-medium.text-lg.text-stone-800",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "执业药师继续教育新规解读",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 197,
+        "y": 586,
+        "width": 702,
+        "height": 28
+      },
+      "style": {
+        "display": "flow-root",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 103,
+      "tag": "p",
+      "id": "",
+      "className": "text-sm text-stone-500 mt-2 line-clamp-2",
+      "selectorHint": "p.text-sm.text-stone-500.mt-2",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "",
+      "href": "",
+      "disabled": false,
+      "visible": false,
+      "childCount": 0,
+      "rect": {
+        "x": 197,
+        "y": 622,
+        "width": 702,
+        "height": 0
+      },
+      "style": {
+        "display": "flow-root",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 104,
+      "tag": "div",
+      "id": "",
+      "className": "flex items-center justify-between mt-3 text-xs text-stone-400",
+      "selectorHint": "div.flex.items-center.justify-between",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "· 95 32",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 2,
+      "rect": {
+        "x": 197,
+        "y": 634,
+        "width": 702,
+        "height": 16
+      },
+      "style": {
+        "display": "flex",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 105,
+      "tag": "span",
+      "id": "",
+      "className": "",
+      "selectorHint": "span",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "·",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 197,
+        "y": 634,
+        "width": 12,
+        "height": 16
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 106,
+      "tag": "div",
+      "id": "",
+      "className": "flex items-center gap-3",
+      "selectorHint": "div.flex.items-center.gap-3",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "95 32",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 2,
+      "rect": {
+        "x": 824,
+        "y": 634,
+        "width": 75,
+        "height": 16
+      },
+      "style": {
+        "display": "flex",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 107,
+      "tag": "span",
+      "id": "",
+      "className": "flex items-center gap-1",
+      "selectorHint": "span.flex.items-center.gap-1",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "95",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 1,
+      "rect": {
+        "x": 824,
+        "y": 634,
+        "width": 31,
+        "height": 16
+      },
+      "style": {
+        "display": "flex",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 108,
+      "tag": "svg",
+      "id": "",
+      "className": "",
+      "selectorHint": "svg",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 1,
+      "rect": {
+        "x": 824,
+        "y": 635,
+        "width": 14,
+        "height": 14
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 109,
+      "tag": "path",
+      "id": "",
+      "className": "",
+      "selectorHint": "path",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 826,
+        "y": 637,
+        "width": 12,
+        "height": 11
+      },
+      "style": {
+        "display": "inline",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 110,
+      "tag": "span",
+      "id": "",
+      "className": "flex items-center gap-1",
+      "selectorHint": "span.flex.items-center.gap-1",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "32",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 1,
+      "rect": {
+        "x": 868,
+        "y": 634,
+        "width": 31,
+        "height": 16
+      },
+      "style": {
+        "display": "flex",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 111,
+      "tag": "svg",
+      "id": "",
+      "className": "",
+      "selectorHint": "svg",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 1,
+      "rect": {
+        "x": 868,
+        "y": 635,
+        "width": 14,
+        "height": 14
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 112,
+      "tag": "path",
+      "id": "",
+      "className": "",
+      "selectorHint": "path",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 869,
+        "y": 637,
+        "width": 11,
+        "height": 11
+      },
+      "style": {
+        "display": "inline",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 113,
+      "tag": "a",
+      "id": "",
+      "className": "bg-white border border-stone-200 rounded-lg p-5 hover:shadow-md transition-shadow",
+      "selectorHint": "a.bg-white.border.border-stone-200",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "#行业动态 社区医院信息化建设实践与思考 · 67 21",
+      "href": "/community/6",
+      "disabled": false,
+      "visible": true,
+      "childCount": 4,
+      "rect": {
+        "x": 936,
+        "y": 529,
+        "width": 744,
+        "height": 142
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 114,
+      "tag": "span",
+      "id": "",
+      "className": "px-2 py-1 rounded text-xs font-medium bg-blue-50 text-blue-700",
+      "selectorHint": "span.px-2.py-1.rounded",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "#行业动态",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 957,
+        "y": 551,
+        "width": 71,
+        "height": 25
+      },
+      "style": {
+        "display": "inline",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 115,
+      "tag": "h3",
+      "id": "",
+      "className": "font-medium text-lg text-stone-800 mt-3 line-clamp-2",
+      "selectorHint": "h3.font-medium.text-lg.text-stone-800",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "社区医院信息化建设实践与思考",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 957,
+        "y": 586,
+        "width": 702,
+        "height": 28
+      },
+      "style": {
+        "display": "flow-root",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 116,
+      "tag": "p",
+      "id": "",
+      "className": "text-sm text-stone-500 mt-2 line-clamp-2",
+      "selectorHint": "p.text-sm.text-stone-500.mt-2",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "",
+      "href": "",
+      "disabled": false,
+      "visible": false,
+      "childCount": 0,
+      "rect": {
+        "x": 957,
+        "y": 622,
+        "width": 702,
+        "height": 0
+      },
+      "style": {
+        "display": "flow-root",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 117,
+      "tag": "div",
+      "id": "",
+      "className": "flex items-center justify-between mt-3 text-xs text-stone-400",
+      "selectorHint": "div.flex.items-center.justify-between",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "· 67 21",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 2,
+      "rect": {
+        "x": 957,
+        "y": 634,
+        "width": 702,
+        "height": 16
+      },
+      "style": {
+        "display": "flex",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 118,
+      "tag": "span",
+      "id": "",
+      "className": "",
+      "selectorHint": "span",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "·",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 957,
+        "y": 634,
+        "width": 12,
+        "height": 16
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 119,
+      "tag": "div",
+      "id": "",
+      "className": "flex items-center gap-3",
+      "selectorHint": "div.flex.items-center.gap-3",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "67 21",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 2,
+      "rect": {
+        "x": 1584,
+        "y": 634,
+        "width": 75,
+        "height": 16
+      },
+      "style": {
+        "display": "flex",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 120,
+      "tag": "span",
+      "id": "",
+      "className": "flex items-center gap-1",
+      "selectorHint": "span.flex.items-center.gap-1",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "67",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 1,
+      "rect": {
+        "x": 1584,
+        "y": 634,
+        "width": 31,
+        "height": 16
+      },
+      "style": {
+        "display": "flex",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 121,
+      "tag": "svg",
+      "id": "",
+      "className": "",
+      "selectorHint": "svg",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 1,
+      "rect": {
+        "x": 1584,
+        "y": 635,
+        "width": 14,
+        "height": 14
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 122,
+      "tag": "path",
+      "id": "",
+      "className": "",
+      "selectorHint": "path",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 1586,
+        "y": 637,
+        "width": 12,
+        "height": 11
+      },
+      "style": {
+        "display": "inline",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 123,
+      "tag": "span",
+      "id": "",
+      "className": "flex items-center gap-1",
+      "selectorHint": "span.flex.items-center.gap-1",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "21",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 1,
+      "rect": {
+        "x": 1628,
+        "y": 634,
+        "width": 31,
+        "height": 16
+      },
+      "style": {
+        "display": "flex",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 124,
+      "tag": "svg",
+      "id": "",
+      "className": "",
+      "selectorHint": "svg",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 1,
+      "rect": {
+        "x": 1628,
+        "y": 635,
+        "width": 14,
+        "height": 14
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 125,
+      "tag": "path",
+      "id": "",
+      "className": "",
+      "selectorHint": "path",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 1629,
+        "y": 637,
+        "width": 11,
+        "height": 11
+      },
+      "style": {
+        "display": "inline",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    }
+  ],
+  "interactiveElements": [
+    {
+      "index": 0,
+      "tag": "a",
+      "id": "",
+      "className": "flex items-center gap-2",
+      "selectorHint": "a.flex.items-center.gap-2",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "医聘通",
+      "href": "/",
+      "disabled": false,
+      "visible": true,
+      "childCount": 2,
+      "rect": {
+        "x": 176,
+        "y": 16,
+        "width": 112,
+        "height": 32
+      },
+      "style": {
+        "display": "flex",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 1,
+      "tag": "a",
+      "id": "",
+      "className": "text-stone-600 hover:text-teal-700 font-medium transition-colors",
+      "selectorHint": "a.text-stone-600.hover:text-teal-700.font-medium",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "首页",
+      "href": "/",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 837,
+        "y": 20,
+        "width": 32,
+        "height": 24
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 2,
+      "tag": "a",
+      "id": "",
+      "className": "text-stone-600 hover:text-teal-700 font-medium transition-colors",
+      "selectorHint": "a.text-stone-600.hover:text-teal-700.font-medium",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "职位",
+      "href": "/jobs",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 901,
+        "y": 20,
+        "width": 32,
+        "height": 24
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 3,
+      "tag": "a",
+      "id": "",
+      "className": "text-teal-700 font-semibold font-medium transition-colors",
+      "selectorHint": "a.text-teal-700.font-semibold.font-medium",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "社区",
+      "href": "/community",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 965,
+        "y": 20,
+        "width": 32,
+        "height": 24
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 4,
+      "tag": "a",
+      "id": "",
+      "className": "px-4 py-2 text-teal-700 border border-teal-700 rounded-lg hover:bg-teal-50 text-sm font-medium transition-colors",
+      "selectorHint": "a.px-4.py-2.text-teal-700",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "登录",
+      "href": "/login",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 1546,
+        "y": 13,
+        "width": 62,
+        "height": 38
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 5,
+      "tag": "a",
+      "id": "",
+      "className": "px-4 py-2 bg-teal-700 text-white rounded-lg hover:bg-teal-800 text-sm font-medium transition-colors",
+      "selectorHint": "a.px-4.py-2.bg-teal-700",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "注册",
+      "href": "/register",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 1620,
+        "y": 14,
+        "width": 60,
+        "height": 36
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 6,
+      "tag": "button",
+      "id": "",
+      "className": "flex items-center gap-1 px-4 py-2 rounded-lg text-sm font-medium transition-colors bg-teal-700 text-white",
+      "selectorHint": "button.flex.items-center.gap-1",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "#全部",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 1,
+      "rect": {
+        "x": 176,
+        "y": 153,
+        "width": 86,
+        "height": 36
+      },
+      "style": {
+        "display": "flex",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 7,
+      "tag": "button",
+      "id": "",
+      "className": "flex items-center gap-1 px-4 py-2 rounded-lg text-sm font-medium transition-colors bg-stone-100 text-stone-600 hover:bg-stone-200",
+      "selectorHint": "button.flex.items-center.gap-1",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "#政策解读",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 1,
+      "rect": {
+        "x": 270,
+        "y": 153,
+        "width": 114,
+        "height": 36
+      },
+      "style": {
+        "display": "flex",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 8,
+      "tag": "button",
+      "id": "",
+      "className": "flex items-center gap-1 px-4 py-2 rounded-lg text-sm font-medium transition-colors bg-stone-100 text-stone-600 hover:bg-stone-200",
+      "selectorHint": "button.flex.items-center.gap-1",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "#继续教育",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 1,
+      "rect": {
+        "x": 392,
+        "y": 153,
+        "width": 114,
+        "height": 36
+      },
+      "style": {
+        "display": "flex",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 9,
+      "tag": "button",
+      "id": "",
+      "className": "flex items-center gap-1 px-4 py-2 rounded-lg text-sm font-medium transition-colors bg-stone-100 text-stone-600 hover:bg-stone-200",
+      "selectorHint": "button.flex.items-center.gap-1",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "#行业动态",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 1,
+      "rect": {
+        "x": 514,
+        "y": 153,
+        "width": 114,
+        "height": 36
+      },
+      "style": {
+        "display": "flex",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 10,
+      "tag": "a",
+      "id": "",
+      "className": "bg-white border border-stone-200 rounded-lg p-5 hover:shadow-md transition-shadow",
+      "selectorHint": "a.bg-white.border.border-stone-200",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "#政策解读 2025年医疗卫生体制改革最新政策解读 · 128 45",
+      "href": "/community/1",
+      "disabled": false,
+      "visible": true,
+      "childCount": 4,
+      "rect": {
+        "x": 176,
+        "y": 213,
+        "width": 744,
+        "height": 142
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 11,
+      "tag": "a",
+      "id": "",
+      "className": "bg-white border border-stone-200 rounded-lg p-5 hover:shadow-md transition-shadow",
+      "selectorHint": "a.bg-white.border.border-stone-200",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "#继续教育 住院医师规范化培训经验分享 · 256 89",
+      "href": "/community/2",
+      "disabled": false,
+      "visible": true,
+      "childCount": 4,
+      "rect": {
+        "x": 936,
+        "y": 213,
+        "width": 744,
+        "height": 142
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 12,
+      "tag": "a",
+      "id": "",
+      "className": "bg-white border border-stone-200 rounded-lg p-5 hover:shadow-md transition-shadow",
+      "selectorHint": "a.bg-white.border.border-stone-200",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "#行业动态 人工智能在医疗影像诊断中的应用进展 · 342 67",
+      "href": "/community/3",
+      "disabled": false,
+      "visible": true,
+      "childCount": 4,
+      "rect": {
+        "x": 176,
+        "y": 371,
+        "width": 744,
+        "height": 142
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 13,
+      "tag": "a",
+      "id": "",
+      "className": "bg-white border border-stone-200 rounded-lg p-5 hover:shadow-md transition-shadow",
+      "selectorHint": "a.bg-white.border.border-stone-200",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "#政策解读 儿科医生短缺问题的深层原因分析 · 189 56",
+      "href": "/community/4",
+      "disabled": false,
+      "visible": true,
+      "childCount": 4,
+      "rect": {
+        "x": 936,
+        "y": 371,
+        "width": 744,
+        "height": 142
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 14,
+      "tag": "a",
+      "id": "",
+      "className": "bg-white border border-stone-200 rounded-lg p-5 hover:shadow-md transition-shadow",
+      "selectorHint": "a.bg-white.border.border-stone-200",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "#继续教育 执业药师继续教育新规解读 · 95 32",
+      "href": "/community/5",
+      "disabled": false,
+      "visible": true,
+      "childCount": 4,
+      "rect": {
+        "x": 176,
+        "y": 529,
+        "width": 744,
+        "height": 142
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 15,
+      "tag": "a",
+      "id": "",
+      "className": "bg-white border border-stone-200 rounded-lg p-5 hover:shadow-md transition-shadow",
+      "selectorHint": "a.bg-white.border.border-stone-200",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "#行业动态 社区医院信息化建设实践与思考 · 67 21",
+      "href": "/community/6",
+      "disabled": false,
+      "visible": true,
+      "childCount": 4,
+      "rect": {
+        "x": 936,
+        "y": 529,
+        "width": 744,
+        "height": 142
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    }
+  ]
+}

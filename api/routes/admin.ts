@@ -102,9 +102,23 @@ router.put('/jobs/:id/review', async (req: Request, res: Response): Promise<void
       res.status(400).json({ success: false, error: '无效的审核状态' })
       return
     }
-    const existing = db.prepare('SELECT * FROM jobs WHERE id = ?').get(req.params.id) as any
+    const existing = db.prepare(`
+      SELECT j.*, ip.verified_level, ip.institution_name, ip.license_expiry
+      FROM jobs j
+      JOIN institution_profiles ip ON j.institution_id = ip.id
+      WHERE j.id = ?
+    `).get(req.params.id) as any
     if (!existing) {
       res.status(404).json({ success: false, error: '职位不存在' })
+      return
+    }
+    if (status === 'active' && (existing.verified_level || 0) < 2) {
+      const levelText = (existing.verified_level || 0) === 1 ? '基础认证' : '未认证'
+      res.status(400).json({
+        success: false,
+        error: `机构"${existing.institution_name}"当前为${levelText}，需完成高级认证后方可发布职位。请先通过机构资质审核。`,
+        code: 'INSTITUTION_NOT_FULLY_VERIFIED',
+      })
       return
     }
     const now = new Date().toISOString()
@@ -113,9 +127,10 @@ router.put('/jobs/:id/review', async (req: Request, res: Response): Promise<void
       WHERE id = ?
     `).run(status, userId, now, review_note, req.params.id)
     const job = db.prepare(`
-      SELECT j.*, u.name as approved_by_name
+      SELECT j.*, u.name as approved_by_name, ip.verified_level, ip.institution_name
       FROM jobs j
       LEFT JOIN users u ON j.approved_by = u.id
+      JOIN institution_profiles ip ON j.institution_id = ip.id
       WHERE j.id = ?
     `).get(req.params.id)
     res.json({ success: true, data: { job, ai_review_note: ai_review_note || `AI审核完成，风险评分: ${existing.ai_risk_score}/100` } })
@@ -159,12 +174,6 @@ router.post('/resumes/mask', async (req: Request, res: Response): Promise<void> 
 
 router.get('/dashboard', async (req: Request, res: Response): Promise<void> => {
   try {
-    const userRole = req.headers['x-user-role']
-    if (userRole !== 'admin') {
-      res.status(403).json({ success: false, error: '仅管理员可访问' })
-      return
-    }
-
     const totalUsers = (db.prepare('SELECT COUNT(*) as count FROM users').get() as any).count
     const totalTalents = (db.prepare("SELECT COUNT(*) as count FROM users WHERE role = 'talent'").get() as any).count
     const totalInstitutions = (db.prepare("SELECT COUNT(*) as count FROM users WHERE role = 'institution'").get() as any).count
@@ -239,6 +248,34 @@ router.get('/dashboard', async (req: Request, res: Response): Promise<void> => {
       WHERE ai_risk_score >= 30 AND status IN ('pending', 'active')
     `).get() as any).count
 
+    const pendingReviewItems = db.prepare(`
+      SELECT j.id, j.title, ip.institution_name
+      FROM jobs j
+      JOIN institution_profiles ip ON j.institution_id = ip.id
+      WHERE j.status = 'pending'
+      ORDER BY j.updated_at DESC
+      LIMIT 6
+    `).all()
+
+    const expiringInstitutionItems = db.prepare(`
+      SELECT id, institution_name, license_expiry
+      FROM institution_profiles
+      WHERE license_expiry IS NOT NULL
+      AND date(license_expiry) <= date('now', '+90 days')
+      AND review_status = 'approved'
+      ORDER BY license_expiry ASC
+      LIMIT 6
+    `).all()
+
+    const highRiskJobItems = db.prepare(`
+      SELECT j.id, j.title, j.ai_risk_score, ip.institution_name
+      FROM jobs j
+      JOIN institution_profiles ip ON j.institution_id = ip.id
+      WHERE j.ai_risk_score >= 30 AND j.status IN ('pending', 'active')
+      ORDER BY j.ai_risk_score DESC
+      LIMIT 6
+    `).all()
+
     const months = [...new Set(monthlyApplications.map((item: any) => item.month))].slice(0, 6).reverse()
     const departments = [...new Set(monthlyApplications.map((item: any) => item.department))]
 
@@ -271,6 +308,24 @@ router.get('/dashboard', async (req: Request, res: Response): Promise<void> => {
           pendingJobsReview: pendingJobs,
           institutionsPendingRenewal,
           highRiskJobs,
+          pendingReviews: pendingReviewItems.map((item: any) => ({
+            id: String(item.id),
+            title: `${item.institution_name} · ${item.title}`,
+            type: 'job',
+            status: 'pending',
+          })),
+          expiringInstitutions: expiringInstitutionItems.map((item: any) => ({
+            id: String(item.id),
+            title: `${item.institution_name} · ${item.license_expiry}`,
+            type: 'institution',
+            status: 'expired',
+          })),
+          highRiskJobItems: highRiskJobItems.map((item: any) => ({
+            id: String(item.id),
+            title: `${item.institution_name} · ${item.title} · 风险 ${item.ai_risk_score}`,
+            type: 'job',
+            status: 'highRisk',
+          })),
         },
       },
     })

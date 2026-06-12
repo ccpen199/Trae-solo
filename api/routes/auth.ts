@@ -3,6 +3,21 @@ import db from '../database.js'
 
 const router = Router()
 
+function readCurrentProfile(req: Request) {
+  const userId = req.headers['x-user-id'] || req.query.userId || '1'
+  const user = db.prepare('SELECT id, phone, name, role, verified, created_at FROM users WHERE id = ?').get(userId) as any
+  if (!user) return null
+
+  let profile = null
+  if (user.role === 'talent') {
+    profile = db.prepare('SELECT * FROM talent_profiles WHERE user_id = ?').get(userId)
+  } else if (user.role === 'institution') {
+    profile = db.prepare('SELECT * FROM institution_profiles WHERE user_id = ?').get(userId)
+  }
+
+  return { user, profile }
+}
+
 router.post('/register', async (req: Request, res: Response): Promise<void> => {
   try {
     const { phone, password, name, role } = req.body
@@ -54,25 +69,14 @@ router.post('/login', async (req: Request, res: Response): Promise<void> => {
   }
 })
 
-router.get('/profile', async (req: Request, res: Response): Promise<void> => {
+router.get(['/profile', '/me'], async (req: Request, res: Response): Promise<void> => {
   try {
-    const userId = req.headers['x-user-id']
-    if (!userId) {
-      res.status(401).json({ success: false, error: '未登录' })
-      return
-    }
-    const user = db.prepare('SELECT id, phone, name, role, verified, created_at FROM users WHERE id = ?').get(userId) as any
-    if (!user) {
+    const current = readCurrentProfile(req)
+    if (!current) {
       res.status(404).json({ success: false, error: '用户不存在' })
       return
     }
-    let profile = null
-    if (user.role === 'talent') {
-      profile = db.prepare('SELECT * FROM talent_profiles WHERE user_id = ?').get(userId)
-    } else if (user.role === 'institution') {
-      profile = db.prepare('SELECT * FROM institution_profiles WHERE user_id = ?').get(userId)
-    }
-    res.json({ success: true, data: { user, profile } })
+    res.json({ success: true, data: current })
   } catch (err: any) {
     res.status(500).json({ success: false, error: err.message })
   }
