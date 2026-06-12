@@ -79,7 +79,7 @@ function generateImageUrl(style: string, room: string, seed: number): string {
   const stylePrompt = stylePrompts[style] || stylePrompts.modern;
   const roomPrompt = room === 'all' ? 'living room' : roomPrompts[room];
   const prompt = `${stylePrompt}, ${roomPrompt}, photorealistic interior design photography, professional lighting, high detail`;
-  return `https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=${encodeURIComponent(prompt)}&image_size=portrait_4_3&seed=${seed}`;
+  return `/api/ide/v1/text_to_image?prompt=${encodeURIComponent(prompt)}&image_size=portrait_4_3&seed=${seed}`;
 }
 
 interface InspirationItem {

@@ -97,7 +97,7 @@ function generateMaterials(category: string): MaterialItem[] {
       spec: '1210×195×15mm',
       price: basePrice + Math.floor(Math.random() * 100),
       unit,
-      image: `https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=${encodeURIComponent(prompt)}&image_size=square&seed=${i + 400}`,
+      image: `/api/ide/v1/text_to_image?prompt=${encodeURIComponent(prompt)}&image_size=square&seed=${i + 400}`,
       rating: 4.3 + Math.random() * 0.7,
     };
   });

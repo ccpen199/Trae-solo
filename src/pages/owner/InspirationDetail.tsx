@@ -25,17 +25,17 @@ const designers = [
 
 const materials = [
   { id: 'm1', name: '北欧白橡木地板', brand: '圣象', spec: '1210×195×15mm', price: 288, unit: '㎡',
-    image: 'https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=' + encodeURIComponent('close up shot of white oak wood floor texture natural grain pattern, product photography') + '&image_size=square' },
+    image: '/api/ide/v1/text_to_image?prompt=' + encodeURIComponent('close up shot of white oak wood floor texture natural grain pattern, product photography') + '&image_size=square' },
   { id: 'm2', name: '莫兰迪灰墙面漆', brand: '多乐士', spec: '5L装', price: 468, unit: '桶',
-    image: 'https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=' + encodeURIComponent('luxury interior paint can with morandi gray color swatch, product photography white background') + '&image_size=square' },
+    image: '/api/ide/v1/text_to_image?prompt=' + encodeURIComponent('luxury interior paint can with morandi gray color swatch, product photography white background') + '&image_size=square' },
   { id: 'm3', name: '云朵亚麻沙发', brand: '宜家', spec: '三人座 240cm', price: 5999, unit: '件',
-    image: 'https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=' + encodeURIComponent('modern minimalist linen sofa cloud design cream white color, product photography studio lighting') + '&image_size=square' },
+    image: '/api/ide/v1/text_to_image?prompt=' + encodeURIComponent('modern minimalist linen sofa cloud design cream white color, product photography studio lighting') + '&image_size=square' },
   { id: 'm4', name: '黄铜极简吊灯', brand: '造作', spec: '直径60cm', price: 1280, unit: '盏',
-    image: 'https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=' + encodeURIComponent('minimalist brass pendant lamp chandelier modern design, product photography') + '&image_size=square' },
+    image: '/api/ide/v1/text_to_image?prompt=' + encodeURIComponent('minimalist brass pendant lamp chandelier modern design, product photography') + '&image_size=square' },
   { id: 'm5', name: '岩板餐桌台面', brand: '德利丰', spec: '1600×900×12mm', price: 1880, unit: '块',
-    image: 'https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=' + encodeURIComponent('sintered stone dining table top texture marble pattern, product photography') + '&image_size=square' },
+    image: '/api/ide/v1/text_to_image?prompt=' + encodeURIComponent('sintered stone dining table top texture marble pattern, product photography') + '&image_size=square' },
   { id: 'm6', name: '实木橱柜门板', brand: '欧派', spec: '定制尺寸', price: 680, unit: '㎡',
-    image: 'https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=' + encodeURIComponent('solid wood kitchen cabinet door panel natural oak finish, product photography') + '&image_size=square' },
+    image: '/api/ide/v1/text_to_image?prompt=' + encodeURIComponent('solid wood kitchen cabinet door panel natural oak finish, product photography') + '&image_size=square' },
 ];
 
 const galleryPrompts = [
@@ -54,7 +54,7 @@ export default function InspirationDetail() {
   const [showShareToast, setShowShareToast] = useState(false);
 
   const galleryImages = galleryPrompts.map((p, i) =>
-    `https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=${encodeURIComponent(p)}&image_size=landscape_16_9&seed=${i + 300}`
+    `/api/ide/v1/text_to_image?prompt=${encodeURIComponent(p)}&image_size=landscape_16_9&seed=${i + 300}`
   );
 
   const designer = designers[parseInt(id || '0') % 2];

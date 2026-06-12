@@ -16,7 +16,7 @@ const MOCK_CASE = {
     phone: '138****2345',
     avatar: '',
     statement: '合同约定3月1日开工，工期60个工作日，应5月1日完工。至今5月28日仍未完工，泥瓦工程才做了一半。工长频繁更换，每次更换都停工3-5天。多次催促无果，要求赔偿延期损失。',
-    images: ['https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=unfinished%20renovation%20construction%20site%20messy%20wall%20tiles%20incomplete&image_size=square'],
+    images: ['/api/ide/v1/text_to_image?prompt=unfinished%20renovation%20construction%20site%20messy%20wall%20tiles%20incomplete&image_size=square'],
     submittedAt: '2026-05-28 09:15',
   },
   company: {
@@ -25,7 +25,7 @@ const MOCK_CASE = {
     phone: '139****8901',
     logo: '',
     statement: '承认工期延误，但原因是业主中途多次变更设计方案导致返工。2月20日变更厨房布局，3月15日变更卫生间防水方案，4月初又要求增加阳台封闭工程。每次变更都需要重新采购材料并调整施工计划。愿意协商延期责任分担。',
-    images: ['https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=home%20renovation%20design%20change%20order%20document%20blueprint&image_size=square'],
+    images: ['/api/ide/v1/text_to_image?prompt=home%20renovation%20design%20change%20order%20document%20blueprint&image_size=square'],
     submittedAt: '2026-05-29 14:30',
     respondedAt: '2026-05-29 14:30',
   },

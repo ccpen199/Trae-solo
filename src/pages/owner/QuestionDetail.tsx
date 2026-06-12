@@ -58,8 +58,8 @@ const questionData: Record<string, QuestionData> = {
 - 淋浴区高度到底是1.5米还是1.8米？
 各位有经验的业主或者专业人士帮忙解答一下，怕以后漏水麻烦！预算有限但该花的不能省。`,
     images: [
-      `https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=${encodeURIComponent('bathroom waterproof coating construction site blue membrane, renovation documentary photography')}&image_size=landscape_4_3&seed=701`,
-      `https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=${encodeURIComponent('bathroom water leak test flooded floor plumbing renovation, detail photography')}&image_size=landscape_4_3&seed=702`,
+      `/api/ide/v1/text_to_image?prompt=${encodeURIComponent('bathroom waterproof coating construction site blue membrane, renovation documentary photography')}&image_size=landscape_4_3&seed=701`,
+      `/api/ide/v1/text_to_image?prompt=${encodeURIComponent('bathroom water leak test flooded floor plumbing renovation, detail photography')}&image_size=landscape_4_3&seed=702`,
     ],
     views: 3421,
     votes: 127,

@@ -51,7 +51,7 @@ function generateSearchResults(): SearchResult[] {
     const prompt = `${stylePrompts[style]}, photorealistic interior design photography, professional lighting, high detail`;
     return {
       id: `result-${i}`,
-      imageUrl: `https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=${encodeURIComponent(prompt)}&image_size=portrait_4_3&seed=${i + 200}`,
+      imageUrl: `/api/ide/v1/text_to_image?prompt=${encodeURIComponent(prompt)}&image_size=portrait_4_3&seed=${i + 200}`,
       similarity: 95 - i * 2 - Math.floor(Math.random() * 5),
       title: searchTitles[i % searchTitles.length],
       style: searchStyles[i % searchStyles.length],

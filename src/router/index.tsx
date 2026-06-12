@@ -1,48 +1,113 @@
 import { createBrowserRouter } from 'react-router-dom';
+import { lazy, Suspense, Component, type ComponentType, type LazyExoticComponent, type ReactNode } from 'react';
 import AppLayout from '@/layouts/AppLayout';
-import HomePage from '@/pages/Home';
 
-import DGeneratorPage from '@/pages/owner/DGeneratorPage';
-import CalculatorPage from '@/pages/owner/CalculatorPage';
-import InspirationLibrary from '@/pages/owner/InspirationLibrary';
-import ImageSearchPage from '@/pages/owner/ImageSearchPage';
-import InspirationDetail from '@/pages/owner/InspirationDetail';
-import MaterialLibrary from '@/pages/owner/MaterialLibrary';
-import ProcessLibrary from '@/pages/owner/ProcessLibrary';
-import ProcessDetail from '@/pages/owner/ProcessDetail';
-import PitfallGuide from '@/pages/owner/PitfallGuide';
-import CommunityHome from '@/pages/owner/CommunityHome';
-import QuestionDetail from '@/pages/owner/QuestionDetail';
-import ComparisonBoard from '@/pages/owner/ComparisonBoard';
-import CompanyListPage from '@/pages/owner/CompanyListPage';
-import CompanyDetailPage from '@/pages/owner/CompanyDetailPage';
-import AppointmentList from '@/pages/owner/AppointmentList';
+function Loading() {
+  return (
+    <div className="flex items-center justify-center min-h-[60vh]">
+      <div className="text-center">
+        <div className="w-10 h-10 mx-auto mb-4 border-3 border-ivory-200 border-t-terracotta-500 rounded-full animate-spin" />
+        <p className="text-ivory-500 text-sm">加载中...</p>
+      </div>
+    </div>
+  );
+}
 
-import ProviderWorkspace from '@/pages/provider/ProviderWorkspace';
-import QualificationAudit from '@/pages/provider/QualificationAudit';
-import AppointmentSchedule from '@/pages/provider/AppointmentSchedule';
-import PlanManagement from '@/pages/provider/PlanManagement';
-import PlanCreator from '@/pages/provider/PlanCreator';
-import SiteManagement from '@/pages/provider/SiteManagement';
-import SiteDailyLog from '@/pages/provider/SiteDailyLog';
+interface EBProps {
+  children: ReactNode;
+}
 
-import AdminDashboard from '@/pages/admin/AdminDashboard';
-import CompanyAuditQueue from '@/pages/admin/CompanyAuditQueue';
-import ProjectGantt from '@/pages/admin/ProjectGantt';
-import SupplyChainAPI from '@/pages/admin/SupplyChainAPI';
-import MaterialSKUAdmin from '@/pages/admin/MaterialSKUAdmin';
-import DisputeList from '@/pages/admin/DisputeList';
-import DisputeDetail from '@/pages/admin/DisputeDetail';
+class ErrorBoundary extends Component<EBProps, { hasError: boolean; error: unknown }> {
+  constructor(props: EBProps) {
+    super(props);
+    this.state = { hasError: false, error: null };
+  }
+
+  static getDerivedStateFromError(error: unknown) {
+    return { hasError: true, error };
+  }
+
+  render() {
+    if (this.state.hasError) {
+      return (
+        <div className="card-base p-12 m-8 text-center">
+          <div className="w-16 h-16 mx-auto mb-4 bg-terracotta-50 rounded-full flex items-center justify-center">
+            <svg className="w-8 h-8 text-terracotta-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-2.5L13.732 4c-.77-.833-1.964-.833-2.732 0L4.082 16.5c-.77.833.192 2.5 1.732 2.5z" />
+            </svg>
+          </div>
+          <h2 className="font-serif text-xl text-carbon-800 mb-2">页面加载出错</h2>
+          <p className="text-ivory-500 text-sm mb-4">该功能模块暂时无法加载，请刷新页面重试</p>
+          <pre className="text-xs text-terracotta-600 bg-terracotta-50 p-3 rounded-lg max-w-lg mx-auto overflow-auto mb-4">
+            {String(this.state.error)}
+          </pre>
+          <button onClick={() => window.location.reload()} className="btn-primary">
+            刷新页面
+          </button>
+        </div>
+      );
+    }
+    return this.props.children;
+  }
+}
+
+function LazyWrap({ children }: { children: ReactNode }) {
+  return (
+    <ErrorBoundary>
+      <Suspense fallback={<Loading />}>
+        {children}
+      </Suspense>
+    </ErrorBoundary>
+  );
+}
+
+const HomePage = lazy(() => import('@/pages/Home'));
+const DGeneratorPage = lazy(() => import('@/pages/owner/DGeneratorPage'));
+const CalculatorPage = lazy(() => import('@/pages/owner/CalculatorPage'));
+const InspirationLibrary = lazy(() => import('@/pages/owner/InspirationLibrary'));
+const ImageSearchPage = lazy(() => import('@/pages/owner/ImageSearchPage'));
+const InspirationDetail = lazy(() => import('@/pages/owner/InspirationDetail'));
+const MaterialLibrary = lazy(() => import('@/pages/owner/MaterialLibrary'));
+const CompanyListPage = lazy(() => import('@/pages/owner/CompanyListPage'));
+const CompanyDetailPage = lazy(() => import('@/pages/owner/CompanyDetailPage'));
+const AppointmentList = lazy(() => import('@/pages/owner/AppointmentList'));
+const ComparisonBoard = lazy(() => import('@/pages/owner/ComparisonBoard'));
+const ProcessLibrary = lazy(() => import('@/pages/owner/ProcessLibrary'));
+const ProcessDetail = lazy(() => import('@/pages/owner/ProcessDetail'));
+const PitfallGuide = lazy(() => import('@/pages/owner/PitfallGuide'));
+const CommunityHome = lazy(() => import('@/pages/owner/CommunityHome'));
+const QuestionDetail = lazy(() => import('@/pages/owner/QuestionDetail'));
+
+const ProviderWorkspace = lazy(() => import('@/pages/provider/ProviderWorkspace'));
+const QualificationAudit = lazy(() => import('@/pages/provider/QualificationAudit'));
+const AppointmentSchedule = lazy(() => import('@/pages/provider/AppointmentSchedule'));
+const PlanManagement = lazy(() => import('@/pages/provider/PlanManagement'));
+const PlanCreator = lazy(() => import('@/pages/provider/PlanCreator'));
+const SiteManagement = lazy(() => import('@/pages/provider/SiteManagement'));
+const SiteDailyLog = lazy(() => import('@/pages/provider/SiteDailyLog'));
+
+const AdminDashboard = lazy(() => import('@/pages/admin/AdminDashboard'));
+const CompanyAuditQueue = lazy(() => import('@/pages/admin/CompanyAuditQueue'));
+const ProjectGantt = lazy(() => import('@/pages/admin/ProjectGantt'));
+const SupplyChainAPI = lazy(() => import('@/pages/admin/SupplyChainAPI'));
+const MaterialSKUAdmin = lazy(() => import('@/pages/admin/MaterialSKUAdmin'));
+const DisputeList = lazy(() => import('@/pages/admin/DisputeList'));
+const DisputeDetail = lazy(() => import('@/pages/admin/DisputeDetail'));
+
+type LC = LazyExoticComponent<ComponentType<object>>;
+
+function L(Comp: LC) {
+  return (
+    <LazyWrap>
+      <Comp />
+    </LazyWrap>
+  );
+}
 
 const Placeholder = ({ title }: { title: string }) => (
   <div className="card-base p-12 m-8">
     <h1 className="section-title">{title}</h1>
     <p className="text-ivory-600 mt-2">页面功能开发中，敬请期待...</p>
-    <div className="mt-6 grid grid-cols-3 gap-4">
-      {[1, 2, 3, 4, 5, 6].map((i) => (
-        <div key={i} className="h-32 bg-ivory-100 rounded-card animate-pulse" />
-      ))}
-    </div>
   </div>
 );
 
@@ -53,52 +118,49 @@ const router = createBrowserRouter([
     children: [
       {
         index: true,
-        element: <HomePage />,
+        element: L(HomePage),
       },
       {
         path: 'd-generator',
-        element: <DGeneratorPage />,
+        element: L(DGeneratorPage),
       },
       {
         path: 'owner',
         children: [
           { index: true, element: <Placeholder title="业主个人中心" /> },
-          { path: '3d-generator', element: <DGeneratorPage /> },
-          { path: 'calculator', element: <CalculatorPage /> },
+          { path: '3d-generator', element: L(DGeneratorPage) },
+          { path: 'calculator', element: L(CalculatorPage) },
           {
             path: 'inspiration',
             children: [
-              { index: true, element: <InspirationLibrary /> },
-              { path: 'search', element: <ImageSearchPage /> },
-              { path: ':id', element: <InspirationDetail /> },
+              { index: true, element: L(InspirationLibrary) },
+              { path: 'search', element: L(ImageSearchPage) },
+              { path: ':id', element: L(InspirationDetail) },
             ],
           },
-          { path: 'materials', element: <MaterialLibrary /> },
+          { path: 'materials', element: L(MaterialLibrary) },
           {
             path: 'companies',
             children: [
-              { index: true, element: <CompanyListPage /> },
-              { path: ':id', element: <CompanyDetailPage /> },
+              { index: true, element: L(CompanyListPage) },
+              { path: ':id', element: L(CompanyDetailPage) },
             ],
           },
-          { path: 'appointments', element: <AppointmentList /> },
-          { path: 'compare', element: <ComparisonBoard /> },
+          { path: 'appointments', element: L(AppointmentList) },
+          { path: 'compare', element: L(ComparisonBoard) },
           {
             path: 'knowledge',
             children: [
-              { path: 'process', element: <ProcessLibrary /> },
-              { path: 'process/:id', element: <ProcessDetail /> },
-              { path: 'pitfalls', element: <PitfallGuide /> },
+              { path: 'process', element: L(ProcessLibrary) },
+              { path: 'process/:id', element: L(ProcessDetail) },
+              { path: 'pitfalls', element: L(PitfallGuide) },
             ],
           },
           {
             path: 'community',
             children: [
-              { index: true, element: <CommunityHome /> },
-              {
-                path: 'questions/:id',
-                element: <QuestionDetail />,
-              },
+              { index: true, element: L(CommunityHome) },
+              { path: 'questions/:id', element: L(QuestionDetail) },
             ],
           },
           {
@@ -111,21 +173,21 @@ const router = createBrowserRouter([
       {
         path: 'provider',
         children: [
-          { index: true, element: <ProviderWorkspace /> },
-          { path: 'audit', element: <QualificationAudit /> },
-          { path: 'appointments', element: <AppointmentSchedule /> },
+          { index: true, element: L(ProviderWorkspace) },
+          { path: 'audit', element: L(QualificationAudit) },
+          { path: 'appointments', element: L(AppointmentSchedule) },
           {
             path: 'plans',
             children: [
-              { index: true, element: <PlanManagement /> },
-              { path: 'create', element: <PlanCreator /> },
+              { index: true, element: L(PlanManagement) },
+              { path: 'create', element: L(PlanCreator) },
             ],
           },
           {
             path: 'sites',
             children: [
-              { index: true, element: <SiteManagement /> },
-              { path: ':id/log', element: <SiteDailyLog /> },
+              { index: true, element: L(SiteManagement) },
+              { path: ':id/log', element: L(SiteDailyLog) },
             ],
           },
           { path: 'profile', element: <Placeholder title="公司信息维护" /> },
@@ -134,16 +196,16 @@ const router = createBrowserRouter([
       {
         path: 'admin',
         children: [
-          { index: true, element: <AdminDashboard /> },
-          { path: 'company-audit', element: <CompanyAuditQueue /> },
-          { path: 'gantt', element: <ProjectGantt /> },
-          { path: 'supply-chain', element: <SupplyChainAPI /> },
-          { path: 'materials', element: <MaterialSKUAdmin /> },
+          { index: true, element: L(AdminDashboard) },
+          { path: 'company-audit', element: L(CompanyAuditQueue) },
+          { path: 'gantt', element: L(ProjectGantt) },
+          { path: 'supply-chain', element: L(SupplyChainAPI) },
+          { path: 'materials', element: L(MaterialSKUAdmin) },
           {
             path: 'disputes',
             children: [
-              { index: true, element: <DisputeList /> },
-              { path: ':id', element: <DisputeDetail /> },
+              { index: true, element: L(DisputeList) },
+              { path: ':id', element: L(DisputeDetail) },
             ],
           },
         ],

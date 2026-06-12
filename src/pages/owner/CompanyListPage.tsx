@@ -73,12 +73,12 @@ function generateCaseImage(seed: number, style: string): string {
   };
   const styles = Object.keys(stylePrompts);
   const prompt = stylePrompts[styles[seed % styles.length]];
-  return `https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=${encodeURIComponent(prompt + ', photorealistic, professional photography')}&image_size=square_hd&seed=${seed + 500}`;
+  return `/api/ide/v1/text_to_image?prompt=${encodeURIComponent(prompt + ', photorealistic, professional photography')}&image_size=square_hd&seed=${seed + 500}`;
 }
 
 function generateLogo(seed: number, name: string): string {
   const prompt = `Minimalist logo design for decoration company "${name}", modern elegant, geometric shapes, wood and terracotta color palette, professional branding`;
-  return `https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=${encodeURIComponent(prompt)}&image_size=square&seed=${seed + 1000}`;
+  return `/api/ide/v1/text_to_image?prompt=${encodeURIComponent(prompt)}&image_size=square&seed=${seed + 1000}`;
 }
 
 interface CompanyData {

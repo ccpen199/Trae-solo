@@ -75,11 +75,11 @@ function RatingStars({ rating, size = 'sm' }: { rating: number; size?: 'sm' | 'm
 }
 
 function generateImage(prompt: string, seed: number): string {
-  return `https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=${encodeURIComponent(prompt)}&image_size=landscape_4_3&seed=${seed + 2000}`;
+  return `/api/ide/v1/text_to_image?prompt=${encodeURIComponent(prompt)}&image_size=landscape_4_3&seed=${seed + 2000}`;
 }
 
 function generateSquareImage(prompt: string, seed: number): string {
-  return `https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=${encodeURIComponent(prompt)}&image_size=square_hd&seed=${seed + 3000}`;
+  return `/api/ide/v1/text_to_image?prompt=${encodeURIComponent(prompt)}&image_size=square_hd&seed=${seed + 3000}`;
 }
 
 const companyInfo = {

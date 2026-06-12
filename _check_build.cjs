@@ -1,0 +1,12 @@
+const fs = require('fs');
+const path = require('path');
+const html = fs.readFileSync('./dist/index.html', 'utf8');
+console.log('HTML has root div:', html.includes('id="root"'));
+console.log('HTML scripts:', (html.match(/<script/g) || []).length);
+const assetsDir = path.join(__dirname, 'dist/assets');
+const files = fs.readdirSync(assetsDir);
+console.log('Total asset files:', files.length);
+console.log('Home chunk:', files.find(f => f.startsWith('Home-')) || 'not found');
+console.log('Layout chunk:', files.find(f => f.includes('AppLayout')) || 'not found');
+console.log('Main chunk:', files.find(f => f.startsWith('index-') && f.endsWith('.js')) || 'not found');
+console.log('Router chunk:', files.find(f => f.includes('index.tsx') || f.startsWith('index-0v')) || '');

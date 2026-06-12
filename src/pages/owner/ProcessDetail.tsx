@@ -213,7 +213,7 @@ export default function ProcessDetail() {
                         <p className="text-sm text-carbon-600 leading-relaxed mb-4">{step.desc}</p>
                         <div className="aspect-video rounded-lg overflow-hidden bg-ivory-100">
                           <img
-                            src={`https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=${encodeURIComponent(
+                            src={`/api/ide/v1/text_to_image?prompt=${encodeURIComponent(
                               `construction site step ${idx + 1} ${step.title} home renovation professional documentary photography`
                             )}&image_size=landscape_16_9&seed=6${idx}0`}
                             alt={step.title}

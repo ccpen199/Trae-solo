@@ -819,23 +819,17 @@ function createRooms(count: number): RoomConfig[] {
     const names = ROOM_NAMES[type];
     const nameIndex = i < names.length ? i : i - Math.floor(i / names.length) * names.length;
 
+    const roomWidth = faker.number.float({ min: 2.4, max: 6, fractionDigits: 1 });
+    const roomLength = faker.number.float({ min: 2.4, max: 8, fractionDigits: 1 });
+
     rooms.push({
       id: `room-${faker.string.uuid().slice(0, 8)}`,
       type,
       name: type === 'bedroom' && usedTypes.has(type) ? names[1] : names[nameIndex % names.length],
-      width: faker.number.float({ min: 2.4, max: 6, fractionDigits: 1 }),
-      length: faker.number.float({ min: 2.4, max: 8, fractionDigits: 1 }),
+      width: roomWidth,
+      length: roomLength,
       height: faker.helpers.arrayElement([2.7, 2.8, 2.9, 3.0]),
-      walls: createWalls(0, 0).map((w, idx) => {
-        const dims = idx < 2 ? 0 : 0;
-        return {
-          ...w,
-          width:
-            idx === 0 || idx === 1
-              ? faker.number.float({ min: 2.4, max: 6, fractionDigits: 1 })
-              : faker.number.float({ min: 2.4, max: 8, fractionDigits: 1 }),
-        };
-      }),
+      walls: createWalls(roomWidth, roomLength),
     });
     usedTypes.add(type);
   }
