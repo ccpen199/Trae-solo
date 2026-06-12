@@ -1,0 +1,193 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@import url('https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap');
+
+@layer base {
+  html {
+    font-family: '"PingFang SC"', '"HarmonyOS Sans"', system-ui, sans-serif;
+    scroll-behavior: smooth;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  body {
+    background-color: #FAF8F5;
+    color: #3D3A35;
+    line-height: 1.6;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    font-family: '"Noto Serif SC"', Georgia, serif;
+    font-weight: 600;
+    letter-spacing: -0.01em;
+    color: #2B2824;
+  }
+
+  .font-mono {
+    font-family: '"JetBrains Mono"', Consolas, monospace;
+    font-variant-numeric: tabular-nums;
+  }
+
+  ::selection {
+    background-color: rgba(139, 105, 20, 0.2);
+    color: #4A380B;
+  }
+}
+
+@layer components {
+  .card-base {
+    @apply bg-white rounded-card border border-ivory-300 shadow-card transition-all duration-300;
+  }
+
+  .card-hoverable {
+    @apply card-base hover:shadow-card-hover hover:-translate-y-1;
+  }
+
+  .btn-primary {
+    @apply inline-flex items-center justify-center gap-2 px-5 py-2.5 rounded-btn
+      bg-gradient-to-b from-terracotta-400 to-terracotta-500
+      text-white font-medium
+      border border-terracotta-500/20
+      shadow-sm shadow-terracotta-500/20
+      hover:from-terracotta-500 hover:to-terracotta-600
+      hover:-translate-y-0.5 hover:shadow-terracotta-500/30
+      active:translate-y-0 active:shadow-inner
+      transition-all duration-200
+      focus:outline-none focus:ring-2 focus:ring-terracotta-400 focus:ring-offset-2;
+  }
+
+  .btn-secondary {
+    @apply inline-flex items-center justify-center gap-2 px-5 py-2.5 rounded-btn
+      bg-white text-wood-700 font-medium
+      border border-wood-300
+      hover:bg-wood-50 hover:border-wood-400
+      active:bg-wood-100
+      transition-all duration-200
+      focus:outline-none focus:ring-2 focus:ring-wood-300 focus:ring-offset-2;
+  }
+
+  .btn-ghost {
+    @apply inline-flex items-center justify-center gap-2 px-4 py-2 rounded-btn
+      text-carbon-600 font-medium
+      hover:bg-ivory-200 hover:text-carbon-800
+      transition-all duration-200
+      focus:outline-none;
+  }
+
+  .btn-cta {
+    @apply relative inline-flex items-center justify-center gap-2 px-6 py-3 rounded-btn
+      bg-gradient-to-b from-terracotta-400 to-terracotta-600
+      text-white font-semibold text-lg
+      border-2 border-amber-200/60
+      shadow-glow-terracotta
+      before:absolute before:inset-0 before:rounded-btn before:animate-pulse-slow before:bg-terracotta-400/30
+      hover:shadow-lg hover:shadow-terracotta-500/40 hover:-translate-y-1
+      active:translate-y-0.5
+      transition-all duration-300;
+  }
+
+  .input-base {
+    @apply w-full px-4 py-2.5 rounded-btn
+      bg-white border border-ivory-300
+      text-carbon-800 placeholder-ivory-500
+      focus:border-wood-400 focus:ring-2 focus:ring-wood-200 focus:outline-none
+      transition-all duration-200;
+  }
+
+  .section-title {
+    @apply font-serif text-2xl md:text-3xl text-carbon-800 mb-2;
+  }
+
+  .section-subtitle {
+    @apply text-ivory-600 mb-8;
+  }
+
+  .badge {
+    @apply inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-xs font-medium;
+  }
+
+  .badge-wood {
+    @apply badge bg-wood-100 text-wood-700 border border-wood-200;
+  }
+
+  .badge-haze {
+    @apply badge bg-haze-100 text-haze-700 border border-haze-200;
+  }
+
+  .badge-terracotta {
+    @apply badge bg-terracotta-100 text-terracotta-700 border border-terracotta-200;
+  }
+
+  .badge-success {
+    @apply badge bg-emerald-50 text-emerald-700 border border-emerald-200;
+  }
+
+  .badge-warning {
+    @apply badge bg-amber-50 text-amber-700 border border-amber-200;
+  }
+
+  .badge-danger {
+    @apply badge bg-rose-50 text-rose-700 border border-rose-200;
+  }
+
+  .grain-overlay {
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+    opacity: 0.025;
+  }
+
+  .scrollbar-thin {
+    scrollbar-width: thin;
+    scrollbar-color: #D6D0C5 transparent;
+  }
+
+  .scrollbar-thin::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+  }
+
+  .scrollbar-thin::-webkit-scrollbar-track {
+    background: transparent;
+  }
+
+  .scrollbar-thin::-webkit-scrollbar-thumb {
+    background: #D6D0C5;
+    border-radius: 3px;
+  }
+
+  .scrollbar-thin::-webkit-scrollbar-thumb:hover {
+    background: #9A9489;
+  }
+}
+
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+
+  .bg-grain {
+    position: relative;
+  }
+
+  .bg-grain::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+    opacity: 0.03;
+    mix-blend-mode: multiply;
+  }
+
+  .bg-wood-texture {
+    background-image:
+      repeating-linear-gradient(
+        90deg,
+        transparent,
+        transparent 2px,
+        rgba(139, 105, 20, 0.03) 2px,
+        rgba(139, 105, 20, 0.03) 4px
+      );
+  }
+}
