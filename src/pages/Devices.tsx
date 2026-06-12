@@ -214,7 +214,10 @@ export default function Devices() {
     return "pending";
   };
 
-  const primaryDevice = devices[0] || null;
+  const uniqueDevices = devices.filter(
+    (device, index, list) => list.findIndex((item) => item.id === device.id) === index,
+  );
+  const primaryDevice = uniqueDevices[0] || null;
 
   const syncStatusText = {
     idle: "待机中",
@@ -720,12 +723,12 @@ export default function Devices() {
       )}
 
       <Card>
-        <h2 className="text-lg font-semibold mb-4 text-white">已绑定设备 ({devices.length})</h2>
-        {devices.length === 0 ? (
+        <h2 className="text-lg font-semibold mb-4 text-white">已绑定设备 ({uniqueDevices.length})</h2>
+        {uniqueDevices.length === 0 ? (
           <p className="text-center text-gray-400 py-8">暂无绑定设备</p>
         ) : (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-            {devices.map((device) => (
+            {uniqueDevices.map((device) => (
               <div key={device.id} className="p-4 rounded-xl bg-gray-800/50 border border-gray-700">
                 <div className="flex items-start justify-between mb-3">
                   <div className="flex items-center gap-3">

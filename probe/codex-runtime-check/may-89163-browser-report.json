@@ -1,0 +1,2628 @@
+{
+  "ok": true,
+  "generatedAt": "2026-06-12T09:29:24.358Z",
+  "order": "may-89163",
+  "roundIndex": 5,
+  "captureId": "may-89163-codex",
+  "url": "http://127.0.0.1:49163/",
+  "initialUrl": "http://127.0.0.1:49163/",
+  "finalUrl": "http://127.0.0.1:49163/",
+  "status": 200,
+  "title": "智能健康数据中台",
+  "initialTitle": "智能健康数据中台",
+  "navigationError": "",
+  "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89163/probe/codex-runtime-check/may-89163-codex-frontend.png",
+  "screenshotPaths": [
+    "/Users/chen/Documents/trae_projects/local_projects/may-89163/probe/codex-runtime-check/may-89163-codex-structure-01-首屏.png",
+    "/Users/chen/Documents/trae_projects/local_projects/may-89163/probe/codex-runtime-check/may-89163-codex-structure-02-导航-设备管理.png",
+    "/Users/chen/Documents/trae_projects/local_projects/may-89163/probe/codex-runtime-check/may-89163-codex-structure-03-操作-查看档案详情.png",
+    "/Users/chen/Documents/trae_projects/local_projects/may-89163/probe/codex-runtime-check/may-89163-codex-structure-04-二层操作-查看档案详情-导出-JSON.png",
+    "/Users/chen/Documents/trae_projects/local_projects/may-89163/probe/codex-runtime-check/may-89163-codex-structure-05-操作-扫描设备.png",
+    "/Users/chen/Documents/trae_projects/local_projects/may-89163/probe/codex-runtime-check/may-89163-codex-structure-06-二层操作-扫描设备-绑定.png",
+    "/Users/chen/Documents/trae_projects/local_projects/may-89163/probe/codex-runtime-check/may-89163-codex-structure-07-导航-运动健康.png",
+    "/Users/chen/Documents/trae_projects/local_projects/may-89163/probe/codex-runtime-check/may-89163-codex-structure-08-操作-7天.png",
+    "/Users/chen/Documents/trae_projects/local_projects/may-89163/probe/codex-runtime-check/may-89163-codex-structure-09-操作-30天.png",
+    "/Users/chen/Documents/trae_projects/local_projects/may-89163/probe/codex-runtime-check/may-89163-codex-structure-10-导航-睡眠分析.png",
+    "/Users/chen/Documents/trae_projects/local_projects/may-89163/probe/codex-runtime-check/may-89163-codex-structure-11-操作-7天.png",
+    "/Users/chen/Documents/trae_projects/local_projects/may-89163/probe/codex-runtime-check/may-89163-codex-structure-12-操作-30天.png"
+  ],
+  "issueTextPreview": "",
+  "targetReason": "页面存在后台入口，优先复验后台管理链路；页面存在搜索/发现入口，优先复验检索链路；页面存在我的/账号入口，优先复验个人中心链路",
+  "targetKind": "personal",
+  "targetMatched": true,
+  "targetActions": [
+    {
+      "action": "click",
+      "label": "页面存在我的/账号入口，优先复验个人中心链路",
+      "ok": true
+    },
+    {
+      "action": "target-verify",
+      "label": "页面存在我的/账号入口，优先复验个人中心链路",
+      "ok": true,
+      "finalUrl": "http://127.0.0.1:49163/profile"
+    }
+  ],
+  "authFlow": {
+    "detected": false,
+    "attempted": false,
+    "success": false,
+    "finalUrl": "http://127.0.0.1:49163/",
+    "message": "",
+    "actions": []
+  },
+  "businessAudit": {
+    "actions": [
+      {
+        "action": "click",
+        "label": "关闭弹窗/抽屉",
+        "ok": true
+      },
+      {
+        "action": "click",
+        "label": "关闭弹窗/抽屉",
+        "ok": true
+      },
+      {
+        "action": "click",
+        "label": "关闭弹窗/抽屉",
+        "ok": true
+      },
+      {
+        "action": "click",
+        "label": "导航:数据总览",
+        "ok": false,
+        "error": "locator.click: Timeout 900ms exceeded.\nCall log:\n\u001b[2m  - waiting for getByRole('link', { name: /^\\s*数据总览\\s*$/ }).first()\u001b[22m\n\u001b[2m    - locator resolved to <a href=\"/\" aria-current=\"page\" data-discover=\"true\" class=\"flex"
+      },
+      {
+        "action": "click",
+        "label": "导航:数据总览",
+        "ok": false,
+        "error": "locator.click: Timeout 900ms exceeded.\nCall log:\n\u001b[2m  - waiting for locator('a,button,[role=\"button\"],[role=\"menuitem\"],[onclick],[tabindex]:not([tabindex=\"-1\"]),[class*=\"nav-item\" i],[class*=\"menu-item\" i],[class*=\"men"
+      },
+      {
+        "action": "click",
+        "label": "导航:数据总览",
+        "ok": false,
+        "error": "locator.click: Timeout 900ms exceeded.\nCall log:\n\u001b[2m  - waiting for locator('a,button,[role=\"button\"],[role=\"menuitem\"],[onclick],[tabindex]:not([tabindex=\"-1\"]),[class*=\"nav-item\" i],[class*=\"menu-item\" i],[class*=\"men"
+      },
+      {
+        "action": "click",
+        "label": "关闭弹窗/抽屉",
+        "ok": true
+      },
+      {
+        "action": "click",
+        "label": "导航:设备管理",
+        "ok": true
+      },
+      {
+        "action": "click",
+        "label": "操作:查看档案详情",
+        "ok": true,
+        "result": {
+          "ok": true,
+          "matched": 1
+        }
+      },
+      {
+        "action": "click",
+        "label": "二层操作:查看档案详情:导出 JSON",
+        "ok": true,
+        "result": {
+          "ok": true,
+          "matched": 1
+        }
+      },
+      {
+        "action": "click",
+        "label": "关闭弹窗/抽屉",
+        "ok": true
+      },
+      {
+        "action": "click",
+        "label": "操作:扫描设备",
+        "ok": true,
+        "result": {
+          "ok": true,
+          "matched": 1
+        }
+      },
+      {
+        "action": "click",
+        "label": "二层操作:扫描设备:绑定",
+        "ok": true,
+        "result": {
+          "ok": true,
+          "matched": 3
+        }
+      },
+      {
+        "action": "click",
+        "label": "导航:运动健康",
+        "ok": true
+      },
+      {
+        "action": "click",
+        "label": "操作:7天",
+        "ok": true,
+        "result": {
+          "ok": true,
+          "matched": 1
+        }
+      },
+      {
+        "action": "click",
+        "label": "操作:30天",
+        "ok": true,
+        "result": {
+          "ok": true,
+          "matched": 1
+        }
+      },
+      {
+        "action": "click",
+        "label": "导航:睡眠分析",
+        "ok": true
+      },
+      {
+        "action": "click",
+        "label": "操作:7天",
+        "ok": true,
+        "result": {
+          "ok": true,
+          "matched": 1
+        }
+      },
+      {
+        "action": "click",
+        "label": "操作:30天",
+        "ok": true,
+        "result": {
+          "ok": true,
+          "matched": 1
+        }
+      }
+    ],
+    "snapshots": [
+      {
+        "label": "首屏",
+        "url": "http://127.0.0.1:49163/",
+        "title": "智能健康数据中台",
+        "headings": [
+          "健康中台",
+          "数据总览",
+          "健康评分",
+          "设备连接",
+          "预警摘要",
+          "今日健康概览"
+        ],
+        "navLabels": [
+          "健康中台 Health Data Platform",
+          "连接已断开",
+          "数据总览",
+          "设备管理",
+          "运动健康",
+          "睡眠分析",
+          "生理监测",
+          "预警中心",
+          "健康档案",
+          "发现分类",
+          "个人中心",
+          "张三 普通用户"
+        ],
+        "buttons": [],
+        "links": [
+          "数据总览",
+          "设备管理",
+          "运动健康",
+          "睡眠分析",
+          "生理监测",
+          "预警中心",
+          "健康档案",
+          "发现分类",
+          "个人中心",
+          "张三 普通用户"
+        ],
+        "inputs": [],
+        "tables": [],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "健康中台Health Data Platform连接已断开数据总览设备管理运动健康睡眠分析生理监测预警中心健康档案发现分类个人中心张三普通用户数据总览2026年6月12日星期五 · 12:28:39缓存数据· 12:28:39连接断开健康评分 缓存值0综合健康睡眠--活动--心脏--压力--数据来源设备已断开，显示最后一次缓存数据（2026/6/12 12:28:39）评分数据每 30 秒自动刷新，缓存保留 24 小时心率--BPM缓存数据血氧饱和度--%缓存数据压力指数--缓存数据HRV 变异性0ms缓存数据设备连接预警摘要 离线预警保留暂无预警记录今日健康概览统计数据8432步数420卡路里 (kcal)45运动时长 (分钟)7.5睡眠时长 (小时)",
+        "layout": {
+          "viewportWidth": 1504,
+          "viewportHeight": 1378,
+          "scrollWidth": 1504,
+          "scrollHeight": 1378,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89163-codex-structure-01-首屏",
+          "label": "首屏",
+          "finalUrl": "http://127.0.0.1:49163/",
+          "title": "智能健康数据中台",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89163/probe/codex-runtime-check/may-89163-codex-structure-01-首屏.json",
+          "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89163/probe/codex-runtime-check/may-89163-codex-structure-01-首屏.png",
+          "elementCount": 364,
+          "interactiveCount": 10,
+          "interactiveLabels": [
+            "数据总览",
+            "设备管理",
+            "运动健康",
+            "睡眠分析",
+            "生理监测",
+            "预警中心",
+            "健康档案",
+            "发现分类",
+            "个人中心",
+            "张三 普通用户"
+          ]
+        }
+      },
+      {
+        "label": "导航:设备管理",
+        "url": "http://127.0.0.1:49163/devices",
+        "title": "智能健康数据中台",
+        "headings": [
+          "健康中台",
+          "设备管理中心",
+          "信号同步结果",
+          "多品牌适配状态",
+          "脱敏存储标识",
+          "标准化健康档案",
+          "绑定流程",
+          "已绑定设备 (3)",
+          "Mi Band 7",
+          "Apple Watch",
+          "我的小米手环",
+          "支持品牌与协议"
+        ],
+        "navLabels": [
+          "健康中台 Health Data Platform",
+          "数据实时同步中",
+          "数据总览",
+          "设备管理",
+          "运动健康",
+          "睡眠分析",
+          "生理监测",
+          "预警中心",
+          "健康档案",
+          "发现分类",
+          "个人中心",
+          "张三 普通用户"
+        ],
+        "buttons": [
+          "扫描设备",
+          "查看档案详情",
+          "已连接"
+        ],
+        "links": [
+          "数据总览",
+          "设备管理",
+          "运动健康",
+          "睡眠分析",
+          "生理监测",
+          "预警中心",
+          "健康档案",
+          "发现分类",
+          "个人中心",
+          "张三 普通用户"
+        ],
+        "inputs": [],
+        "tables": [],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "健康中台Health Data Platform数据实时同步中数据总览设备管理运动健康睡眠分析生理监测预警中心健康档案发现分类个人中心张三普通用户设备管理中心 扫描设备信号同步结果Mi Band 7同步成功同步记录229 条失败数0 条同步耗时6s完成时间12:04:03多品牌适配状态协议适配器运行状态已适配心率监测血氧监测睡眠分析压力评估HRV分析运动追踪协议版本BLE 5.2 / GATT / HRS v1.0标准合规性HRS 1.0适配说明厂商扩展命令已适配，心率广播间隔 1s脱敏存储标识数据安全与隐私保护已加密 加密算法AES-256 脱敏等级高级符合标准HIPAAGDPR等保三级标准化健康档案健康档案输出状态已生成最近同步数据档案2026/6/12 09:04:03格式:JSONPDF移动健康终端规范查看档案详情绑定流程1扫描2选择3配对4同步已绑定设备 (3)Mi Band 7Xiaomi Mi Band 7固件: 1.0.0 电量76%已连接Apple WatchApple Watch Series 9固件: 1.0.0 电量83%已连接我的小米手环Xiaomi Mi Band 8固件: 1.0.0 电量63%已连接支持品牌与协议小米BLE/GATT/HRSMi Band 7-9, Redmi Band 2华为BLE/GATT/HRSWatch GT3-4, Watch 4 ProAppleBLE/GATT/HRSWatch Series 8-9, Ultra通用标准 BLE HRS*",
+        "layout": {
+          "viewportWidth": 1536,
+          "viewportHeight": 1395,
+          "scrollWidth": 1536,
+          "scrollHeight": 1395,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89163-codex-structure-02-导航-设备管理",
+          "label": "导航:设备管理",
+          "finalUrl": "http://127.0.0.1:49163/devices",
+          "title": "智能健康数据中台",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89163/probe/codex-runtime-check/may-89163-codex-structure-02-导航-设备管理.json",
+          "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89163/probe/codex-runtime-check/may-89163-codex-structure-02-导航-设备管理.png",
+          "elementCount": 422,
+          "interactiveCount": 21,
+          "interactiveLabels": [
+            "数据总览",
+            "设备管理",
+            "运动健康",
+            "睡眠分析",
+            "生理监测",
+            "预警中心",
+            "健康档案",
+            "发现分类",
+            "个人中心",
+            "张三 普通用户",
+            "扫描设备",
+            "查看档案详情",
+            "已连接"
+          ]
+        }
+      },
+      {
+        "label": "操作:查看档案详情",
+        "url": "http://127.0.0.1:49163/devices",
+        "title": "智能健康数据中台",
+        "headings": [
+          "健康中台",
+          "设备管理中心",
+          "信号同步结果",
+          "多品牌适配状态",
+          "脱敏存储标识",
+          "标准化健康档案",
+          "标准化健康档案 · 符合《移动健康终端设备数据交互规范》",
+          "绑定流程",
+          "已绑定设备 (3)",
+          "Mi Band 7",
+          "Apple Watch",
+          "我的小米手环"
+        ],
+        "navLabels": [
+          "健康中台 Health Data Platform",
+          "数据实时同步中",
+          "数据总览",
+          "设备管理",
+          "运动健康",
+          "睡眠分析",
+          "生理监测",
+          "预警中心",
+          "健康档案",
+          "发现分类",
+          "个人中心",
+          "张三 普通用户"
+        ],
+        "buttons": [
+          "扫描设备",
+          "收起档案",
+          "导出 JSON",
+          "导出 PDF",
+          "已连接"
+        ],
+        "links": [
+          "数据总览",
+          "设备管理",
+          "运动健康",
+          "睡眠分析",
+          "生理监测",
+          "预警中心",
+          "健康档案",
+          "发现分类",
+          "个人中心",
+          "张三 普通用户"
+        ],
+        "inputs": [],
+        "tables": [],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "健康中台Health Data Platform数据实时同步中数据总览设备管理运动健康睡眠分析生理监测预警中心健康档案发现分类个人中心张三普通用户设备管理中心 扫描设备信号同步结果Mi Band 7同步成功同步记录229 条失败数0 条同步耗时6s完成时间12:04:03多品牌适配状态协议适配器运行状态已适配心率监测血氧监测睡眠分析压力评估HRV分析运动追踪协议版本BLE 5.2 / GATT / HRS v1.0标准合规性HRS 1.0适配说明厂商扩展命令已适配，心率广播间隔 1s脱敏存储标识数据安全与隐私保护已加密 加密算法AES-256 脱敏等级高级符合标准HIPAAGDPR等保三级标准化健康档案健康档案输出状态已生成最近同步数据档案2026/6/12 09:04:03格式:JSONPDF移动健康终端规范收起档案标准化健康档案 · 符合《移动健康终端设备数据交互规范》 张三 2026/6/12心率监测68 BPM静息心率正常，窦性心律血氧饱和度97 %夜间最低 94%，无低氧事件睡眠总时长7.4 小时深睡 1.1h · REM 1.9h运动记录14 次/30天总时长 758 分钟 生理指标摘要静息心率基线65 BPMHRV (平均)55 ms压力指数 (平均)32睡眠质量评分65 分今日步数8,432 步今日卡路里420 kcal 风险评估心血管风险低睡眠呼吸暂停风险低压力相关风险低运动不足风险中* 风险评估仅供参考，如有疑虑请咨询专业医生本档案已脱敏存储 · AES-256 加密 · 符合 HIPAA/GDPR/等保三级 导出 JSON 导出 PDF绑定流程1扫描2选择3配对4同步已绑定设备 (3)Mi Band 7Xiaomi Mi Band 7固件: 1.0.0 电量76%已连接Apple WatchApple Watch Series 9固件: 1.0.0 电量83%已连接我的小米手环Xiaomi Mi Band 8固件: 1.0.0 电量63%已连接支持品牌与协议小米BLE/GATT/HRSMi Band 7-9, Redmi Band 2华为BLE/GATT/HRSWatch GT3-4, Watch 4 ProAppleBLE/GATT/HRSWatch Series 8-9, Ultra通用标准 BLE HRS*",
+        "layout": {
+          "viewportWidth": 1568,
+          "viewportHeight": 1600,
+          "scrollWidth": 1568,
+          "scrollHeight": 1929,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89163-codex-structure-03-操作-查看档案详情",
+          "label": "操作:查看档案详情",
+          "finalUrl": "http://127.0.0.1:49163/devices",
+          "title": "智能健康数据中台",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89163/probe/codex-runtime-check/may-89163-codex-structure-03-操作-查看档案详情.json",
+          "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89163/probe/codex-runtime-check/may-89163-codex-structure-03-操作-查看档案详情.png",
+          "elementCount": 538,
+          "interactiveCount": 23,
+          "interactiveLabels": [
+            "数据总览",
+            "设备管理",
+            "运动健康",
+            "睡眠分析",
+            "生理监测",
+            "预警中心",
+            "健康档案",
+            "发现分类",
+            "个人中心",
+            "张三 普通用户",
+            "扫描设备",
+            "收起档案",
+            "导出 JSON",
+            "导出 PDF",
+            "已连接"
+          ]
+        }
+      },
+      {
+        "label": "二层操作:查看档案详情->导出 JSON",
+        "url": "http://127.0.0.1:49163/devices",
+        "title": "智能健康数据中台",
+        "headings": [
+          "健康中台",
+          "设备管理中心",
+          "信号同步结果",
+          "多品牌适配状态",
+          "脱敏存储标识",
+          "标准化健康档案",
+          "标准化健康档案 · 符合《移动健康终端设备数据交互规范》",
+          "绑定流程",
+          "已绑定设备 (3)",
+          "Mi Band 7",
+          "Apple Watch",
+          "我的小米手环"
+        ],
+        "navLabels": [
+          "健康中台 Health Data Platform",
+          "数据实时同步中",
+          "数据总览",
+          "设备管理",
+          "运动健康",
+          "睡眠分析",
+          "生理监测",
+          "预警中心",
+          "健康档案",
+          "发现分类",
+          "个人中心",
+          "张三 普通用户"
+        ],
+        "buttons": [
+          "扫描设备",
+          "收起档案",
+          "关闭",
+          "预约挂号",
+          "已连接"
+        ],
+        "links": [
+          "数据总览",
+          "设备管理",
+          "运动健康",
+          "睡眠分析",
+          "生理监测",
+          "预警中心",
+          "健康档案",
+          "发现分类",
+          "个人中心",
+          "张三 普通用户",
+          "下载 JSON 档案包"
+        ],
+        "inputs": [],
+        "tables": [],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "健康中台Health Data Platform数据实时同步中数据总览设备管理运动健康睡眠分析生理监测预警中心健康档案发现分类个人中心张三普通用户设备管理中心 扫描设备信号同步结果Mi Band 7同步成功同步记录229 条失败数0 条同步耗时6s完成时间12:04:03多品牌适配状态协议适配器运行状态已适配心率监测血氧监测睡眠分析压力评估HRV分析运动追踪协议版本BLE 5.2 / GATT / HRS v1.0标准合规性HRS 1.0适配说明厂商扩展命令已适配，心率广播间隔 1s脱敏存储标识数据安全与隐私保护已加密 加密算法AES-256 脱敏等级高级符合标准HIPAAGDPR等保三级标准化健康档案健康档案输出状态已生成最近同步数据档案2026/6/12 09:04:03格式:JSONPDF移动健康终端规范收起档案标准化健康档案 · 符合《移动健康终端设备数据交互规范》 张三 2026/6/12心率监测68 BPM静息心率正常，窦性心律血氧饱和度97 %夜间最低 94%，无低氧事件睡眠总时长7.4 小时深睡 1.1h · REM 1.9h运动记录14 次/30天总时长 758 分钟 生理指标摘要静息心率基线65 BPMHRV (平均)55 ms压力指数 (平均)32睡眠质量评分65 分今日步数8,432 步今日卡路里420 kcal 风险评估心血管风险低睡眠呼吸暂停风险低压力相关风险低运动不足风险中* 风险评估仅供参考，如有疑虑请咨询专业医生本档案已脱敏存储 · AES-256 加密 · 符合 HIPAA/GDPR/等保三级 关闭标准化健康档案包已生成档案包编号9l2snxmqaaa生成时间2026/6/12 09:28:51数据范围2026-06-05 ~ 2026-06-12标准规范移动健康终端设备数据交互规范 下载 JSON 档案包 预约挂号绑定流程1扫描2选择3配对4同步已绑定设备 (3)Mi Band 7Xiaomi Mi Band 7固件: 1.0.0 电量76%已连接Apple WatchApple Watch Series 9固件: 1.0.0 电量83%已连接我的小米手环Xiaomi Mi Band 8固件: 1.0.0 电量63%已连接支持品牌与协议小米BLE/GATT/HRSMi Band 7-9, Redmi Band 2华为BLE/GATT/HRSWatch GT3-4, Watch 4 ProAppleBLE/GATT/HRSWatch Series 8-9, Ultra通用标准 BLE HRS*",
+        "layout": {
+          "viewportWidth": 1600,
+          "viewportHeight": 1600,
+          "scrollWidth": 1600,
+          "scrollHeight": 2149,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89163-codex-structure-04-二层操作-查看档案详情-导出-JSON",
+          "label": "二层操作:查看档案详情->导出 JSON",
+          "finalUrl": "http://127.0.0.1:49163/devices",
+          "title": "智能健康数据中台",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89163/probe/codex-runtime-check/may-89163-codex-structure-04-二层操作-查看档案详情-导出-JSON.json",
+          "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89163/probe/codex-runtime-check/may-89163-codex-structure-04-二层操作-查看档案详情-导出-JSON.png",
+          "elementCount": 562,
+          "interactiveCount": 24,
+          "interactiveLabels": [
+            "数据总览",
+            "设备管理",
+            "运动健康",
+            "睡眠分析",
+            "生理监测",
+            "预警中心",
+            "健康档案",
+            "发现分类",
+            "个人中心",
+            "张三 普通用户",
+            "扫描设备",
+            "收起档案",
+            "关闭",
+            "下载 JSON 档案包",
+            "预约挂号",
+            "已连接"
+          ]
+        }
+      },
+      {
+        "label": "操作:扫描设备",
+        "url": "http://127.0.0.1:49163/devices",
+        "title": "智能健康数据中台",
+        "headings": [
+          "健康中台",
+          "设备管理中心",
+          "信号同步结果",
+          "多品牌适配状态",
+          "脱敏存储标识",
+          "标准化健康档案",
+          "标准化健康档案 · 符合《移动健康终端设备数据交互规范》",
+          "绑定流程",
+          "设备扫描",
+          "Mi Band 7",
+          "Watch GT3",
+          "Watch Series 8"
+        ],
+        "navLabels": [
+          "健康中台 Health Data Platform",
+          "数据实时同步中",
+          "数据总览",
+          "设备管理",
+          "运动健康",
+          "睡眠分析",
+          "生理监测",
+          "预警中心",
+          "健康档案",
+          "发现分类",
+          "个人中心",
+          "张三 普通用户"
+        ],
+        "buttons": [
+          "扫描设备",
+          "收起档案",
+          "导出 JSON",
+          "导出 PDF",
+          "绑定",
+          "已连接"
+        ],
+        "links": [
+          "数据总览",
+          "设备管理",
+          "运动健康",
+          "睡眠分析",
+          "生理监测",
+          "预警中心",
+          "健康档案",
+          "发现分类",
+          "个人中心",
+          "张三 普通用户"
+        ],
+        "inputs": [],
+        "tables": [],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "健康中台Health Data Platform数据实时同步中数据总览设备管理运动健康睡眠分析生理监测预警中心健康档案发现分类个人中心张三普通用户设备管理中心 扫描设备信号同步结果Mi Band 7同步成功同步记录229 条失败数0 条同步耗时6s完成时间12:04:03多品牌适配状态协议适配器运行状态已适配心率监测血氧监测睡眠分析压力评估HRV分析运动追踪协议版本BLE 5.2 / GATT / HRS v1.0标准合规性HRS 1.0适配说明厂商扩展命令已适配，心率广播间隔 1s脱敏存储标识数据安全与隐私保护已加密 加密算法AES-256 脱敏等级高级符合标准HIPAAGDPR等保三级标准化健康档案健康档案输出状态已生成最近同步数据档案2026/6/12 09:04:03格式:JSONPDF移动健康终端规范收起档案标准化健康档案 · 符合《移动健康终端设备数据交互规范》 张三 2026/6/12心率监测68 BPM静息心率正常，窦性心律血氧饱和度97 %夜间最低 94%，无低氧事件睡眠总时长7.4 小时深睡 1.1h · REM 1.9h运动记录14 次/30天总时长 758 分钟 生理指标摘要静息心率基线65 BPMHRV (平均)55 ms压力指数 (平均)32睡眠质量评分65 分今日步数8,432 步今日卡路里420 kcal 风险评估心血管风险低睡眠呼吸暂停风险低压力相关风险低运动不足风险中* 风险评估仅供参考，如有疑虑请咨询专业医生本档案已脱敏存储 · AES-256 加密 · 符合 HIPAA/GDPR/等保三级 导出 JSON 导出 PDF绑定流程扫描2选择3配对4同步设备扫描Mi Band 7Xiaomi协议: BLE, GATT, HRS绑定Watch GT3Huawei协议: BLE, GATT, HRS绑定Watch Series 8Apple协议: BLE, GATT, HRS绑定已绑定设备 (3)Mi Band 7Xiaomi Mi Band 7固件: 1.0.0 电量76%已连接Apple WatchApple Watch Series 9固件: 1.0.0 电量83%已连接我的小米手环Xiaomi Mi Band 8固件: 1.0.0 电量63%已连接支持品牌与协议小米BLE/GATT/HRSMi Band 7-9, Redmi Band 2华为BLE/GATT/HRSWatch GT3-4, Watch 4 ProAppleBLE/GATT/HRSWatch Series 8-9, Ultra通用标准 BLE HRS*",
+        "layout": {
+          "viewportWidth": 1632,
+          "viewportHeight": 1600,
+          "scrollWidth": 1632,
+          "scrollHeight": 2205,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89163-codex-structure-05-操作-扫描设备",
+          "label": "操作:扫描设备",
+          "finalUrl": "http://127.0.0.1:49163/devices",
+          "title": "智能健康数据中台",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89163/probe/codex-runtime-check/may-89163-codex-structure-05-操作-扫描设备.json",
+          "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89163/probe/codex-runtime-check/may-89163-codex-structure-05-操作-扫描设备.png",
+          "elementCount": 597,
+          "interactiveCount": 26,
+          "interactiveLabels": [
+            "数据总览",
+            "设备管理",
+            "运动健康",
+            "睡眠分析",
+            "生理监测",
+            "预警中心",
+            "健康档案",
+            "发现分类",
+            "个人中心",
+            "张三 普通用户",
+            "扫描设备",
+            "收起档案",
+            "导出 JSON",
+            "导出 PDF",
+            "绑定",
+            "已连接"
+          ]
+        }
+      },
+      {
+        "label": "二层操作:扫描设备->绑定",
+        "url": "http://127.0.0.1:49163/devices",
+        "title": "智能健康数据中台",
+        "headings": [
+          "健康中台",
+          "设备管理中心",
+          "信号同步结果",
+          "多品牌适配状态",
+          "脱敏存储标识",
+          "标准化健康档案",
+          "标准化健康档案 · 符合《移动健康终端设备数据交互规范》",
+          "绑定流程",
+          "设备扫描",
+          "Watch GT3",
+          "Watch Series 8",
+          "已绑定设备 (3)"
+        ],
+        "navLabels": [
+          "健康中台 Health Data Platform",
+          "数据实时同步中",
+          "数据总览",
+          "设备管理",
+          "运动健康",
+          "睡眠分析",
+          "生理监测",
+          "预警中心",
+          "健康档案",
+          "发现分类",
+          "个人中心",
+          "张三 普通用户"
+        ],
+        "buttons": [
+          "扫描设备",
+          "重试同步失败项",
+          "收起档案",
+          "导出 JSON",
+          "导出 PDF",
+          "绑定",
+          "已连接"
+        ],
+        "links": [
+          "数据总览",
+          "设备管理",
+          "运动健康",
+          "睡眠分析",
+          "生理监测",
+          "预警中心",
+          "健康档案",
+          "发现分类",
+          "个人中心",
+          "张三 普通用户"
+        ],
+        "inputs": [],
+        "tables": [],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "健康中台Health Data Platform数据实时同步中数据总览设备管理运动健康睡眠分析生理监测预警中心健康档案发现分类个人中心张三普通用户设备管理中心 扫描设备信号同步结果Mi Band 7同步成功同步记录231 条失败数1 条同步耗时13s完成时间12:28:55 同步失败详情heart_rateGATT 特征值读取超时已重试 0 次 重试同步失败项多品牌适配状态协议适配器运行状态已适配心率监测血氧监测睡眠分析压力评估HRV分析运动追踪协议版本BLE 5.2 / GATT / HRS v1.0标准合规性GATT 自定义适配说明厂商扩展命令已适配，心率广播间隔 1s协议差异部分数据类型需轮询获取脱敏存储标识数据安全与隐私保护已加密 加密算法AES-256 脱敏等级高级符合标准HIPAAGDPR等保三级标准化健康档案健康档案输出状态已生成最近同步数据档案2026/6/12 09:28:55格式:JSONPDF移动健康终端规范收起档案标准化健康档案 · 符合《移动健康终端设备数据交互规范》 张三 2026/6/12心率监测68 BPM静息心率正常，窦性心律血氧饱和度97 %夜间最低 94%，无低氧事件睡眠总时长7.4 小时深睡 1.1h · REM 1.9h运动记录14 次/30天总时长 758 分钟 生理指标摘要静息心率基线65 BPMHRV (平均)55 ms压力指数 (平均)32睡眠质量评分65 分今日步数8,432 步今日卡路里420 kcal 风险评估心血管风险低睡眠呼吸暂停风险低压力相关风险低运动不足风险中* 风险评估仅供参考，如有疑虑请咨询专业医生本档案已脱敏存储 · AES-256 加密 · 符合 HIPAA/GDPR/等保三级 导出 JSON 导出 PDF绑定流程扫描选择配对同步设备扫描Watch GT3Huawei协议: BLE, GATT, HRS绑定Watch Series 8Apple协议: BLE, GATT, HRS绑定已绑定设备 (3)Mi Band 7Xiaomi Mi Band 7固件: 1.0.0 电量75%已连接Apple WatchApple Watch Series 9固件: 1.0.0 电量83%已连接我的小米手环Xiaomi Mi Band 8固件: 1.0.0 电量63%已连接支持品牌与协议小米BLE/GATT/HRSMi Band 7-9, Redmi Band 2华为BLE/GATT/HRSWatch GT3-4, Watch 4 ProAppleBLE/GATT/HRSWatch Series 8-9, Ultra通用标准 BLE HRS*",
+        "layout": {
+          "viewportWidth": 1664,
+          "viewportHeight": 1600,
+          "scrollWidth": 1664,
+          "scrollHeight": 2270,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89163-codex-structure-06-二层操作-扫描设备-绑定",
+          "label": "二层操作:扫描设备->绑定",
+          "finalUrl": "http://127.0.0.1:49163/devices",
+          "title": "智能健康数据中台",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89163/probe/codex-runtime-check/may-89163-codex-structure-06-二层操作-扫描设备-绑定.json",
+          "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89163/probe/codex-runtime-check/may-89163-codex-structure-06-二层操作-扫描设备-绑定.png",
+          "elementCount": 609,
+          "interactiveCount": 26,
+          "interactiveLabels": [
+            "数据总览",
+            "设备管理",
+            "运动健康",
+            "睡眠分析",
+            "生理监测",
+            "预警中心",
+            "健康档案",
+            "发现分类",
+            "个人中心",
+            "张三 普通用户",
+            "扫描设备",
+            "重试同步失败项",
+            "收起档案",
+            "导出 JSON",
+            "导出 PDF",
+            "绑定",
+            "已连接"
+          ]
+        }
+      },
+      {
+        "label": "导航:运动健康",
+        "url": "http://127.0.0.1:49163/fitness",
+        "title": "智能健康数据中台",
+        "headings": [
+          "健康中台",
+          "运动健康",
+          "运动计划推荐",
+          "完成率追踪",
+          "2026年6月",
+          "最近运动记录"
+        ],
+        "navLabels": [
+          "健康中台 Health Data Platform",
+          "数据实时同步中",
+          "数据总览",
+          "设备管理",
+          "运动健康",
+          "睡眠分析",
+          "生理监测",
+          "预警中心",
+          "健康档案",
+          "发现分类",
+          "个人中心",
+          "张三 普通用户"
+        ],
+        "buttons": [
+          "7天",
+          "30天",
+          "完成",
+          "展开依据明细"
+        ],
+        "links": [
+          "数据总览",
+          "设备管理",
+          "运动健康",
+          "睡眠分析",
+          "生理监测",
+          "预警中心",
+          "健康档案",
+          "发现分类",
+          "个人中心",
+          "张三 普通用户"
+        ],
+        "inputs": [],
+        "tables": [],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "健康中台Health Data Platform数据实时同步中数据总览设备管理运动健康睡眠分析生理监测预警中心健康档案发现分类个人中心张三普通用户运动健康7天30天本周运动次数3次↑12%总距离2.4km总卡路里1659kcal平均配速45.83min/km 运动计划推荐72%完成率周一瑜伽放松45分中完成周二快走30分低晨跑 5 公里60分高完成快走60分高周三晨跑 5 公里30分低骑行40分低周四力量训练60分高瑜伽放松60分高瑜伽放松30分低周五快走60分高骑行60分中完成快走60分高完成周六瑜伽放松30分低游泳60分高HIIT 训练45分高周日瑜伽放松60分高完成晨跑 5 公里45分中力量训练30分低💡 基于近7天 3 次运动记录和 100% 的周期完成率，配合 HRV 恢复指数良好（54 ms），本周可适当增加有氧训练强度。📊 近 7 天 HRV 指数均值 54 ms（来源：7 条记录），自主神经恢复良好。展开依据明细完成率追踪2026年6月日一二三四五六311234567891011121314151617181920212223242526272829301234567891011少多最近运动记录快走6月11日47分2.4km538kcalZ1Z2Z3Z4瑜伽6月8日42分0km526kcalZ1Z2Z3Z4游泳6月6日21分0km595kcalZ1Z2Z3Z4",
+        "layout": {
+          "viewportWidth": 1696,
+          "viewportHeight": 1600,
+          "scrollWidth": 1696,
+          "scrollHeight": 2511,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89163-codex-structure-07-导航-运动健康",
+          "label": "导航:运动健康",
+          "finalUrl": "http://127.0.0.1:49163/fitness",
+          "title": "智能健康数据中台",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89163/probe/codex-runtime-check/may-89163-codex-structure-07-导航-运动健康.json",
+          "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89163/probe/codex-runtime-check/may-89163-codex-structure-07-导航-运动健康.png",
+          "elementCount": 576,
+          "interactiveCount": 18,
+          "interactiveLabels": [
+            "数据总览",
+            "设备管理",
+            "运动健康",
+            "睡眠分析",
+            "生理监测",
+            "预警中心",
+            "健康档案",
+            "发现分类",
+            "个人中心",
+            "张三 普通用户",
+            "7天",
+            "30天",
+            "完成",
+            "展开依据明细"
+          ]
+        }
+      },
+      {
+        "label": "操作:7天",
+        "url": "http://127.0.0.1:49163/fitness",
+        "title": "智能健康数据中台",
+        "headings": [
+          "健康中台",
+          "运动健康",
+          "运动计划推荐",
+          "完成率追踪",
+          "2026年6月",
+          "最近运动记录"
+        ],
+        "navLabels": [
+          "健康中台 Health Data Platform",
+          "数据实时同步中",
+          "数据总览",
+          "设备管理",
+          "运动健康",
+          "睡眠分析",
+          "生理监测",
+          "预警中心",
+          "健康档案",
+          "发现分类",
+          "个人中心",
+          "张三 普通用户"
+        ],
+        "buttons": [
+          "7天",
+          "30天",
+          "完成",
+          "展开依据明细"
+        ],
+        "links": [
+          "数据总览",
+          "设备管理",
+          "运动健康",
+          "睡眠分析",
+          "生理监测",
+          "预警中心",
+          "健康档案",
+          "发现分类",
+          "个人中心",
+          "张三 普通用户"
+        ],
+        "inputs": [],
+        "tables": [],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "健康中台Health Data Platform数据实时同步中数据总览设备管理运动健康睡眠分析生理监测预警中心健康档案发现分类个人中心张三普通用户运动健康7天30天本周运动次数3次↑12%总距离2.4km总卡路里1659kcal平均配速45.83min/km 运动计划推荐72%完成率周一瑜伽放松45分中完成周二快走30分低晨跑 5 公里60分高完成快走60分高周三晨跑 5 公里30分低骑行40分低周四力量训练60分高瑜伽放松60分高瑜伽放松30分低周五快走60分高骑行60分中完成快走60分高完成周六瑜伽放松30分低游泳60分高HIIT 训练45分高周日瑜伽放松60分高完成晨跑 5 公里45分中力量训练30分低💡 基于近7天 3 次运动记录和 100% 的周期完成率，配合 HRV 恢复指数良好（54 ms），本周可适当增加有氧训练强度。📊 近 7 天 HRV 指数均值 54 ms（来源：7 条记录），自主神经恢复良好。展开依据明细完成率追踪2026年6月日一二三四五六311234567891011121314151617181920212223242526272829301234567891011少多最近运动记录快走6月11日47分2.4km538kcalZ1Z2Z3Z4瑜伽6月8日42分0km526kcalZ1Z2Z3Z4游泳6月6日21分0km595kcalZ1Z2Z3Z4",
+        "layout": {
+          "viewportWidth": 1728,
+          "viewportHeight": 1600,
+          "scrollWidth": 1728,
+          "scrollHeight": 2539,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89163-codex-structure-08-操作-7天",
+          "label": "操作:7天",
+          "finalUrl": "http://127.0.0.1:49163/fitness",
+          "title": "智能健康数据中台",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89163/probe/codex-runtime-check/may-89163-codex-structure-08-操作-7天.json",
+          "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89163/probe/codex-runtime-check/may-89163-codex-structure-08-操作-7天.png",
+          "elementCount": 576,
+          "interactiveCount": 18,
+          "interactiveLabels": [
+            "数据总览",
+            "设备管理",
+            "运动健康",
+            "睡眠分析",
+            "生理监测",
+            "预警中心",
+            "健康档案",
+            "发现分类",
+            "个人中心",
+            "张三 普通用户",
+            "7天",
+            "30天",
+            "完成",
+            "展开依据明细"
+          ]
+        }
+      },
+      {
+        "label": "操作:30天",
+        "url": "http://127.0.0.1:49163/fitness",
+        "title": "智能健康数据中台",
+        "headings": [
+          "健康中台",
+          "运动健康",
+          "运动计划推荐",
+          "完成率追踪",
+          "2026年6月",
+          "最近运动记录"
+        ],
+        "navLabels": [
+          "健康中台 Health Data Platform",
+          "数据实时同步中",
+          "数据总览",
+          "设备管理",
+          "运动健康",
+          "睡眠分析",
+          "生理监测",
+          "预警中心",
+          "健康档案",
+          "发现分类",
+          "个人中心",
+          "张三 普通用户"
+        ],
+        "buttons": [
+          "7天",
+          "30天",
+          "完成",
+          "展开依据明细"
+        ],
+        "links": [
+          "数据总览",
+          "设备管理",
+          "运动健康",
+          "睡眠分析",
+          "生理监测",
+          "预警中心",
+          "健康档案",
+          "发现分类",
+          "个人中心",
+          "张三 普通用户"
+        ],
+        "inputs": [],
+        "tables": [],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "健康中台Health Data Platform数据实时同步中数据总览设备管理运动健康睡眠分析生理监测预警中心健康档案发现分类个人中心张三普通用户运动健康7天30天本周运动次数14次↑12%总距离56.0km总卡路里5630kcal平均配速13.54min/km 运动计划推荐72%完成率周一瑜伽放松45分中完成周二快走30分低晨跑 5 公里60分高完成快走60分高周三晨跑 5 公里30分低骑行40分低周四力量训练60分高瑜伽放松60分高瑜伽放松30分低周五快走60分高骑行60分中完成快走60分高完成周六瑜伽放松30分低游泳60分高HIIT 训练45分高周日瑜伽放松60分高完成晨跑 5 公里45分中力量训练30分低💡 基于近30天 14 次运动记录和 100% 的周期完成率，配合 HRV 恢复指数良好（55 ms），本周可适当增加有氧训练强度。📊 近 30 天 HRV 指数均值 55 ms（来源：30 条记录），自主神经恢复良好。展开依据明细完成率追踪2026年6月日一二三四五六311234567891011121314151617181920212223242526272829301234567891011少多最近运动记录快走6月11日47分2.4km538kcalZ1Z2Z3Z4瑜伽6月8日42分0km526kcalZ1Z2Z3Z4游泳6月6日21分0km595kcalZ1Z2Z3Z4跑步6月3日28分8.4km403kcalZ1Z2Z3Z4瑜伽6月2日73分0km440kcalZ1Z2Z3Z4快走6月1日46分9.4km178kcalZ1Z2Z3Z4跑步5月31日29分4.7km402kcalZ1Z2Z3Z4游泳5月26日80分0km152kcalZ1Z2Z3Z4",
+        "layout": {
+          "viewportWidth": 1760,
+          "viewportHeight": 1600,
+          "scrollWidth": 1760,
+          "scrollHeight": 2956,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89163-codex-structure-09-操作-30天",
+          "label": "操作:30天",
+          "finalUrl": "http://127.0.0.1:49163/fitness",
+          "title": "智能健康数据中台",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89163/probe/codex-runtime-check/may-89163-codex-structure-09-操作-30天.json",
+          "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89163/probe/codex-runtime-check/may-89163-codex-structure-09-操作-30天.png",
+          "elementCount": 711,
+          "interactiveCount": 18,
+          "interactiveLabels": [
+            "数据总览",
+            "设备管理",
+            "运动健康",
+            "睡眠分析",
+            "生理监测",
+            "预警中心",
+            "健康档案",
+            "发现分类",
+            "个人中心",
+            "张三 普通用户",
+            "7天",
+            "30天",
+            "完成",
+            "展开依据明细"
+          ]
+        }
+      },
+      {
+        "label": "导航:睡眠分析",
+        "url": "http://127.0.0.1:49163/sleep",
+        "title": "智能健康数据中台",
+        "headings": [
+          "健康中台",
+          "睡眠分析",
+          "睡眠分期",
+          "睡眠质量趋势",
+          "环境噪音关联",
+          "睡眠改善建议"
+        ],
+        "navLabels": [
+          "健康中台 Health Data Platform",
+          "数据实时同步中",
+          "数据总览",
+          "设备管理",
+          "运动健康",
+          "睡眠分析",
+          "生理监测",
+          "预警中心",
+          "健康档案",
+          "发现分类",
+          "个人中心",
+          "张三 普通用户"
+        ],
+        "buttons": [
+          "7天",
+          "30天"
+        ],
+        "links": [
+          "数据总览",
+          "设备管理",
+          "运动健康",
+          "睡眠分析",
+          "生理监测",
+          "预警中心",
+          "健康档案",
+          "发现分类",
+          "个人中心",
+          "张三 普通用户"
+        ],
+        "inputs": [],
+        "tables": [],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "健康中台Health Data Platform数据实时同步中数据总览设备管理运动健康睡眠分析生理监测预警中心健康档案发现分类个人中心张三普通用户睡眠分析7天30天总时长7h23m深睡时长1h6mREM时长1h51m质量评分65分睡眠分期65%深睡15%浅睡53%REM25%清醒7%睡眠质量趋势06-05环境噪音关联06-0506-06 检测到噪音异常，平均 53 dB，最高时段约 11:00，该时段可能出现浅睡比例上升，建议使用白噪音设备或耳塞改善。睡眠改善建议深睡比例偏低深睡仅占总睡眠 15%，建议睡前1小时避免蓝光，保持卧室温度18-22°C。 15",
+        "layout": {
+          "viewportWidth": 1792,
+          "viewportHeight": 1600,
+          "scrollWidth": 1792,
+          "scrollHeight": 1600,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89163-codex-structure-10-导航-睡眠分析",
+          "label": "导航:睡眠分析",
+          "finalUrl": "http://127.0.0.1:49163/sleep",
+          "title": "智能健康数据中台",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89163/probe/codex-runtime-check/may-89163-codex-structure-10-导航-睡眠分析.json",
+          "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89163/probe/codex-runtime-check/may-89163-codex-structure-10-导航-睡眠分析.png",
+          "elementCount": 399,
+          "interactiveCount": 12,
+          "interactiveLabels": [
+            "数据总览",
+            "设备管理",
+            "运动健康",
+            "睡眠分析",
+            "生理监测",
+            "预警中心",
+            "健康档案",
+            "发现分类",
+            "个人中心",
+            "张三 普通用户",
+            "7天",
+            "30天"
+          ]
+        }
+      },
+      {
+        "label": "操作:7天",
+        "url": "http://127.0.0.1:49163/sleep",
+        "title": "智能健康数据中台",
+        "headings": [
+          "健康中台",
+          "睡眠分析",
+          "睡眠分期",
+          "睡眠质量趋势",
+          "环境噪音关联",
+          "睡眠改善建议"
+        ],
+        "navLabels": [
+          "健康中台 Health Data Platform",
+          "数据实时同步中",
+          "数据总览",
+          "设备管理",
+          "运动健康",
+          "睡眠分析",
+          "生理监测",
+          "预警中心",
+          "健康档案",
+          "发现分类",
+          "个人中心",
+          "张三 普通用户"
+        ],
+        "buttons": [
+          "7天",
+          "30天"
+        ],
+        "links": [
+          "数据总览",
+          "设备管理",
+          "运动健康",
+          "睡眠分析",
+          "生理监测",
+          "预警中心",
+          "健康档案",
+          "发现分类",
+          "个人中心",
+          "张三 普通用户"
+        ],
+        "inputs": [],
+        "tables": [],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "健康中台Health Data Platform数据实时同步中数据总览设备管理运动健康睡眠分析生理监测预警中心健康档案发现分类个人中心张三普通用户睡眠分析7天30天总时长7h23m深睡时长1h6mREM时长1h51m质量评分65分睡眠分期65%深睡15%浅睡53%REM25%清醒7%睡眠质量趋势06-05环境噪音关联06-0506-06 检测到噪音异常，平均 53 dB，最高时段约 11:00，该时段可能出现浅睡比例上升，建议使用白噪音设备或耳塞改善。睡眠改善建议深睡比例偏低深睡仅占总睡眠 15%，建议睡前1小时避免蓝光，保持卧室温度18-22°C。 15",
+        "layout": {
+          "viewportWidth": 1824,
+          "viewportHeight": 1600,
+          "scrollWidth": 1824,
+          "scrollHeight": 1600,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89163-codex-structure-11-操作-7天",
+          "label": "操作:7天",
+          "finalUrl": "http://127.0.0.1:49163/sleep",
+          "title": "智能健康数据中台",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89163/probe/codex-runtime-check/may-89163-codex-structure-11-操作-7天.json",
+          "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89163/probe/codex-runtime-check/may-89163-codex-structure-11-操作-7天.png",
+          "elementCount": 398,
+          "interactiveCount": 12,
+          "interactiveLabels": [
+            "数据总览",
+            "设备管理",
+            "运动健康",
+            "睡眠分析",
+            "生理监测",
+            "预警中心",
+            "健康档案",
+            "发现分类",
+            "个人中心",
+            "张三 普通用户",
+            "7天",
+            "30天"
+          ]
+        }
+      },
+      {
+        "label": "操作:30天",
+        "url": "http://127.0.0.1:49163/sleep",
+        "title": "智能健康数据中台",
+        "headings": [
+          "健康中台",
+          "睡眠分析",
+          "睡眠分期",
+          "睡眠质量趋势",
+          "环境噪音关联",
+          "睡眠改善建议"
+        ],
+        "navLabels": [
+          "健康中台 Health Data Platform",
+          "数据实时同步中",
+          "数据总览",
+          "设备管理",
+          "运动健康",
+          "睡眠分析",
+          "生理监测",
+          "预警中心",
+          "健康档案",
+          "发现分类",
+          "个人中心",
+          "张三 普通用户"
+        ],
+        "buttons": [
+          "7天",
+          "30天"
+        ],
+        "links": [
+          "数据总览",
+          "设备管理",
+          "运动健康",
+          "睡眠分析",
+          "生理监测",
+          "预警中心",
+          "健康档案",
+          "发现分类",
+          "个人中心",
+          "张三 普通用户"
+        ],
+        "inputs": [],
+        "tables": [],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "健康中台Health Data Platform数据实时同步中数据总览设备管理运动健康睡眠分析生理监测预警中心健康档案发现分类个人中心张三普通用户睡眠分析7天30天总时长7h23m深睡时长1h6mREM时长1h51m质量评分65分睡眠分期65%深睡15%浅睡53%REM25%清醒7%睡眠质量趋势05-13环境噪音关联05-1305-13 检测到噪音异常，平均 51 dB，最高时段约 -13:00，该时段可能出现浅睡比例上升，建议使用白噪音设备或耳塞改善。睡眠改善建议深睡比例偏低深睡仅占总睡眠 15%，建议睡前1小时避免蓝光，保持卧室温度18-22°C。 15",
+        "layout": {
+          "viewportWidth": 1856,
+          "viewportHeight": 1600,
+          "scrollWidth": 1856,
+          "scrollHeight": 1600,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89163-codex-structure-12-操作-30天",
+          "label": "操作:30天",
+          "finalUrl": "http://127.0.0.1:49163/sleep",
+          "title": "智能健康数据中台",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89163/probe/codex-runtime-check/may-89163-codex-structure-12-操作-30天.json",
+          "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89163/probe/codex-runtime-check/may-89163-codex-structure-12-操作-30天.png",
+          "elementCount": 537,
+          "interactiveCount": 12,
+          "interactiveLabels": [
+            "数据总览",
+            "设备管理",
+            "运动健康",
+            "睡眠分析",
+            "生理监测",
+            "预警中心",
+            "健康档案",
+            "发现分类",
+            "个人中心",
+            "张三 普通用户",
+            "7天",
+            "30天"
+          ]
+        }
+      }
+    ],
+    "findings": [],
+    "actionHints": [],
+    "emptyPages": [],
+    "overflowPages": [],
+    "blankPages": [],
+    "apiFailurePaths": [],
+    "goalTerms": [],
+    "clickedActionDescriptors": [
+      {
+        "nav": "设备管理",
+        "label": "查看档案详情",
+        "ordinal": 0,
+        "unsafe": false
+      },
+      {
+        "nav": "设备管理",
+        "label": "查看档案详情->导出 JSON",
+        "ordinal": 0,
+        "secondary": true,
+        "unsafe": false
+      },
+      {
+        "nav": "设备管理",
+        "label": "扫描设备",
+        "ordinal": 0,
+        "unsafe": false
+      },
+      {
+        "nav": "设备管理",
+        "label": "扫描设备->绑定",
+        "ordinal": 0,
+        "secondary": true,
+        "unsafe": false
+      },
+      {
+        "nav": "运动健康",
+        "label": "7天",
+        "ordinal": 0,
+        "unsafe": false
+      },
+      {
+        "nav": "运动健康",
+        "label": "30天",
+        "ordinal": 0,
+        "unsafe": false
+      },
+      {
+        "nav": "睡眠分析",
+        "label": "7天",
+        "ordinal": 0,
+        "unsafe": false
+      },
+      {
+        "nav": "睡眠分析",
+        "label": "30天",
+        "ordinal": 0,
+        "unsafe": false
+      }
+    ],
+    "secondaryActionClicks": 2,
+    "structureCaptures": [
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89163-codex-structure-01-首屏",
+        "label": "首屏",
+        "finalUrl": "http://127.0.0.1:49163/",
+        "title": "智能健康数据中台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89163/probe/codex-runtime-check/may-89163-codex-structure-01-首屏.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89163/probe/codex-runtime-check/may-89163-codex-structure-01-首屏.png",
+        "elementCount": 364,
+        "interactiveCount": 10,
+        "interactiveLabels": [
+          "数据总览",
+          "设备管理",
+          "运动健康",
+          "睡眠分析",
+          "生理监测",
+          "预警中心",
+          "健康档案",
+          "发现分类",
+          "个人中心",
+          "张三 普通用户"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89163-codex-structure-02-导航-设备管理",
+        "label": "导航:设备管理",
+        "finalUrl": "http://127.0.0.1:49163/devices",
+        "title": "智能健康数据中台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89163/probe/codex-runtime-check/may-89163-codex-structure-02-导航-设备管理.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89163/probe/codex-runtime-check/may-89163-codex-structure-02-导航-设备管理.png",
+        "elementCount": 422,
+        "interactiveCount": 21,
+        "interactiveLabels": [
+          "数据总览",
+          "设备管理",
+          "运动健康",
+          "睡眠分析",
+          "生理监测",
+          "预警中心",
+          "健康档案",
+          "发现分类",
+          "个人中心",
+          "张三 普通用户",
+          "扫描设备",
+          "查看档案详情",
+          "已连接"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89163-codex-structure-03-操作-查看档案详情",
+        "label": "操作:查看档案详情",
+        "finalUrl": "http://127.0.0.1:49163/devices",
+        "title": "智能健康数据中台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89163/probe/codex-runtime-check/may-89163-codex-structure-03-操作-查看档案详情.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89163/probe/codex-runtime-check/may-89163-codex-structure-03-操作-查看档案详情.png",
+        "elementCount": 538,
+        "interactiveCount": 23,
+        "interactiveLabels": [
+          "数据总览",
+          "设备管理",
+          "运动健康",
+          "睡眠分析",
+          "生理监测",
+          "预警中心",
+          "健康档案",
+          "发现分类",
+          "个人中心",
+          "张三 普通用户",
+          "扫描设备",
+          "收起档案",
+          "导出 JSON",
+          "导出 PDF",
+          "已连接"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89163-codex-structure-04-二层操作-查看档案详情-导出-JSON",
+        "label": "二层操作:查看档案详情->导出 JSON",
+        "finalUrl": "http://127.0.0.1:49163/devices",
+        "title": "智能健康数据中台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89163/probe/codex-runtime-check/may-89163-codex-structure-04-二层操作-查看档案详情-导出-JSON.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89163/probe/codex-runtime-check/may-89163-codex-structure-04-二层操作-查看档案详情-导出-JSON.png",
+        "elementCount": 562,
+        "interactiveCount": 24,
+        "interactiveLabels": [
+          "数据总览",
+          "设备管理",
+          "运动健康",
+          "睡眠分析",
+          "生理监测",
+          "预警中心",
+          "健康档案",
+          "发现分类",
+          "个人中心",
+          "张三 普通用户",
+          "扫描设备",
+          "收起档案",
+          "关闭",
+          "下载 JSON 档案包",
+          "预约挂号",
+          "已连接"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89163-codex-structure-05-操作-扫描设备",
+        "label": "操作:扫描设备",
+        "finalUrl": "http://127.0.0.1:49163/devices",
+        "title": "智能健康数据中台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89163/probe/codex-runtime-check/may-89163-codex-structure-05-操作-扫描设备.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89163/probe/codex-runtime-check/may-89163-codex-structure-05-操作-扫描设备.png",
+        "elementCount": 597,
+        "interactiveCount": 26,
+        "interactiveLabels": [
+          "数据总览",
+          "设备管理",
+          "运动健康",
+          "睡眠分析",
+          "生理监测",
+          "预警中心",
+          "健康档案",
+          "发现分类",
+          "个人中心",
+          "张三 普通用户",
+          "扫描设备",
+          "收起档案",
+          "导出 JSON",
+          "导出 PDF",
+          "绑定",
+          "已连接"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89163-codex-structure-06-二层操作-扫描设备-绑定",
+        "label": "二层操作:扫描设备->绑定",
+        "finalUrl": "http://127.0.0.1:49163/devices",
+        "title": "智能健康数据中台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89163/probe/codex-runtime-check/may-89163-codex-structure-06-二层操作-扫描设备-绑定.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89163/probe/codex-runtime-check/may-89163-codex-structure-06-二层操作-扫描设备-绑定.png",
+        "elementCount": 609,
+        "interactiveCount": 26,
+        "interactiveLabels": [
+          "数据总览",
+          "设备管理",
+          "运动健康",
+          "睡眠分析",
+          "生理监测",
+          "预警中心",
+          "健康档案",
+          "发现分类",
+          "个人中心",
+          "张三 普通用户",
+          "扫描设备",
+          "重试同步失败项",
+          "收起档案",
+          "导出 JSON",
+          "导出 PDF",
+          "绑定",
+          "已连接"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89163-codex-structure-07-导航-运动健康",
+        "label": "导航:运动健康",
+        "finalUrl": "http://127.0.0.1:49163/fitness",
+        "title": "智能健康数据中台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89163/probe/codex-runtime-check/may-89163-codex-structure-07-导航-运动健康.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89163/probe/codex-runtime-check/may-89163-codex-structure-07-导航-运动健康.png",
+        "elementCount": 576,
+        "interactiveCount": 18,
+        "interactiveLabels": [
+          "数据总览",
+          "设备管理",
+          "运动健康",
+          "睡眠分析",
+          "生理监测",
+          "预警中心",
+          "健康档案",
+          "发现分类",
+          "个人中心",
+          "张三 普通用户",
+          "7天",
+          "30天",
+          "完成",
+          "展开依据明细"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89163-codex-structure-08-操作-7天",
+        "label": "操作:7天",
+        "finalUrl": "http://127.0.0.1:49163/fitness",
+        "title": "智能健康数据中台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89163/probe/codex-runtime-check/may-89163-codex-structure-08-操作-7天.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89163/probe/codex-runtime-check/may-89163-codex-structure-08-操作-7天.png",
+        "elementCount": 576,
+        "interactiveCount": 18,
+        "interactiveLabels": [
+          "数据总览",
+          "设备管理",
+          "运动健康",
+          "睡眠分析",
+          "生理监测",
+          "预警中心",
+          "健康档案",
+          "发现分类",
+          "个人中心",
+          "张三 普通用户",
+          "7天",
+          "30天",
+          "完成",
+          "展开依据明细"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89163-codex-structure-09-操作-30天",
+        "label": "操作:30天",
+        "finalUrl": "http://127.0.0.1:49163/fitness",
+        "title": "智能健康数据中台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89163/probe/codex-runtime-check/may-89163-codex-structure-09-操作-30天.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89163/probe/codex-runtime-check/may-89163-codex-structure-09-操作-30天.png",
+        "elementCount": 711,
+        "interactiveCount": 18,
+        "interactiveLabels": [
+          "数据总览",
+          "设备管理",
+          "运动健康",
+          "睡眠分析",
+          "生理监测",
+          "预警中心",
+          "健康档案",
+          "发现分类",
+          "个人中心",
+          "张三 普通用户",
+          "7天",
+          "30天",
+          "完成",
+          "展开依据明细"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89163-codex-structure-10-导航-睡眠分析",
+        "label": "导航:睡眠分析",
+        "finalUrl": "http://127.0.0.1:49163/sleep",
+        "title": "智能健康数据中台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89163/probe/codex-runtime-check/may-89163-codex-structure-10-导航-睡眠分析.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89163/probe/codex-runtime-check/may-89163-codex-structure-10-导航-睡眠分析.png",
+        "elementCount": 399,
+        "interactiveCount": 12,
+        "interactiveLabels": [
+          "数据总览",
+          "设备管理",
+          "运动健康",
+          "睡眠分析",
+          "生理监测",
+          "预警中心",
+          "健康档案",
+          "发现分类",
+          "个人中心",
+          "张三 普通用户",
+          "7天",
+          "30天"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89163-codex-structure-11-操作-7天",
+        "label": "操作:7天",
+        "finalUrl": "http://127.0.0.1:49163/sleep",
+        "title": "智能健康数据中台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89163/probe/codex-runtime-check/may-89163-codex-structure-11-操作-7天.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89163/probe/codex-runtime-check/may-89163-codex-structure-11-操作-7天.png",
+        "elementCount": 398,
+        "interactiveCount": 12,
+        "interactiveLabels": [
+          "数据总览",
+          "设备管理",
+          "运动健康",
+          "睡眠分析",
+          "生理监测",
+          "预警中心",
+          "健康档案",
+          "发现分类",
+          "个人中心",
+          "张三 普通用户",
+          "7天",
+          "30天"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89163-codex-structure-12-操作-30天",
+        "label": "操作:30天",
+        "finalUrl": "http://127.0.0.1:49163/sleep",
+        "title": "智能健康数据中台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89163/probe/codex-runtime-check/may-89163-codex-structure-12-操作-30天.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89163/probe/codex-runtime-check/may-89163-codex-structure-12-操作-30天.png",
+        "elementCount": 537,
+        "interactiveCount": 12,
+        "interactiveLabels": [
+          "数据总览",
+          "设备管理",
+          "运动健康",
+          "睡眠分析",
+          "生理监测",
+          "预警中心",
+          "健康档案",
+          "发现分类",
+          "个人中心",
+          "张三 普通用户",
+          "7天",
+          "30天"
+        ]
+      }
+    ],
+    "representativeScreenshotUrl": "http://127.0.0.1:49163/",
+    "representativeScreenshotLabel": "健康中台"
+  },
+  "websiteStructureCapture": {
+    "module": "website_structure_capture",
+    "captureCount": 12,
+    "captures": [
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89163-codex-structure-01-首屏",
+        "label": "首屏",
+        "finalUrl": "http://127.0.0.1:49163/",
+        "title": "智能健康数据中台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89163/probe/codex-runtime-check/may-89163-codex-structure-01-首屏.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89163/probe/codex-runtime-check/may-89163-codex-structure-01-首屏.png",
+        "elementCount": 364,
+        "interactiveCount": 10,
+        "interactiveLabels": [
+          "数据总览",
+          "设备管理",
+          "运动健康",
+          "睡眠分析",
+          "生理监测",
+          "预警中心",
+          "健康档案",
+          "发现分类",
+          "个人中心",
+          "张三 普通用户"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89163-codex-structure-02-导航-设备管理",
+        "label": "导航:设备管理",
+        "finalUrl": "http://127.0.0.1:49163/devices",
+        "title": "智能健康数据中台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89163/probe/codex-runtime-check/may-89163-codex-structure-02-导航-设备管理.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89163/probe/codex-runtime-check/may-89163-codex-structure-02-导航-设备管理.png",
+        "elementCount": 422,
+        "interactiveCount": 21,
+        "interactiveLabels": [
+          "数据总览",
+          "设备管理",
+          "运动健康",
+          "睡眠分析",
+          "生理监测",
+          "预警中心",
+          "健康档案",
+          "发现分类",
+          "个人中心",
+          "张三 普通用户",
+          "扫描设备",
+          "查看档案详情",
+          "已连接"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89163-codex-structure-03-操作-查看档案详情",
+        "label": "操作:查看档案详情",
+        "finalUrl": "http://127.0.0.1:49163/devices",
+        "title": "智能健康数据中台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89163/probe/codex-runtime-check/may-89163-codex-structure-03-操作-查看档案详情.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89163/probe/codex-runtime-check/may-89163-codex-structure-03-操作-查看档案详情.png",
+        "elementCount": 538,
+        "interactiveCount": 23,
+        "interactiveLabels": [
+          "数据总览",
+          "设备管理",
+          "运动健康",
+          "睡眠分析",
+          "生理监测",
+          "预警中心",
+          "健康档案",
+          "发现分类",
+          "个人中心",
+          "张三 普通用户",
+          "扫描设备",
+          "收起档案",
+          "导出 JSON",
+          "导出 PDF",
+          "已连接"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89163-codex-structure-04-二层操作-查看档案详情-导出-JSON",
+        "label": "二层操作:查看档案详情->导出 JSON",
+        "finalUrl": "http://127.0.0.1:49163/devices",
+        "title": "智能健康数据中台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89163/probe/codex-runtime-check/may-89163-codex-structure-04-二层操作-查看档案详情-导出-JSON.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89163/probe/codex-runtime-check/may-89163-codex-structure-04-二层操作-查看档案详情-导出-JSON.png",
+        "elementCount": 562,
+        "interactiveCount": 24,
+        "interactiveLabels": [
+          "数据总览",
+          "设备管理",
+          "运动健康",
+          "睡眠分析",
+          "生理监测",
+          "预警中心",
+          "健康档案",
+          "发现分类",
+          "个人中心",
+          "张三 普通用户",
+          "扫描设备",
+          "收起档案",
+          "关闭",
+          "下载 JSON 档案包",
+          "预约挂号",
+          "已连接"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89163-codex-structure-05-操作-扫描设备",
+        "label": "操作:扫描设备",
+        "finalUrl": "http://127.0.0.1:49163/devices",
+        "title": "智能健康数据中台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89163/probe/codex-runtime-check/may-89163-codex-structure-05-操作-扫描设备.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89163/probe/codex-runtime-check/may-89163-codex-structure-05-操作-扫描设备.png",
+        "elementCount": 597,
+        "interactiveCount": 26,
+        "interactiveLabels": [
+          "数据总览",
+          "设备管理",
+          "运动健康",
+          "睡眠分析",
+          "生理监测",
+          "预警中心",
+          "健康档案",
+          "发现分类",
+          "个人中心",
+          "张三 普通用户",
+          "扫描设备",
+          "收起档案",
+          "导出 JSON",
+          "导出 PDF",
+          "绑定",
+          "已连接"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89163-codex-structure-06-二层操作-扫描设备-绑定",
+        "label": "二层操作:扫描设备->绑定",
+        "finalUrl": "http://127.0.0.1:49163/devices",
+        "title": "智能健康数据中台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89163/probe/codex-runtime-check/may-89163-codex-structure-06-二层操作-扫描设备-绑定.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89163/probe/codex-runtime-check/may-89163-codex-structure-06-二层操作-扫描设备-绑定.png",
+        "elementCount": 609,
+        "interactiveCount": 26,
+        "interactiveLabels": [
+          "数据总览",
+          "设备管理",
+          "运动健康",
+          "睡眠分析",
+          "生理监测",
+          "预警中心",
+          "健康档案",
+          "发现分类",
+          "个人中心",
+          "张三 普通用户",
+          "扫描设备",
+          "重试同步失败项",
+          "收起档案",
+          "导出 JSON",
+          "导出 PDF",
+          "绑定",
+          "已连接"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89163-codex-structure-07-导航-运动健康",
+        "label": "导航:运动健康",
+        "finalUrl": "http://127.0.0.1:49163/fitness",
+        "title": "智能健康数据中台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89163/probe/codex-runtime-check/may-89163-codex-structure-07-导航-运动健康.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89163/probe/codex-runtime-check/may-89163-codex-structure-07-导航-运动健康.png",
+        "elementCount": 576,
+        "interactiveCount": 18,
+        "interactiveLabels": [
+          "数据总览",
+          "设备管理",
+          "运动健康",
+          "睡眠分析",
+          "生理监测",
+          "预警中心",
+          "健康档案",
+          "发现分类",
+          "个人中心",
+          "张三 普通用户",
+          "7天",
+          "30天",
+          "完成",
+          "展开依据明细"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89163-codex-structure-08-操作-7天",
+        "label": "操作:7天",
+        "finalUrl": "http://127.0.0.1:49163/fitness",
+        "title": "智能健康数据中台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89163/probe/codex-runtime-check/may-89163-codex-structure-08-操作-7天.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89163/probe/codex-runtime-check/may-89163-codex-structure-08-操作-7天.png",
+        "elementCount": 576,
+        "interactiveCount": 18,
+        "interactiveLabels": [
+          "数据总览",
+          "设备管理",
+          "运动健康",
+          "睡眠分析",
+          "生理监测",
+          "预警中心",
+          "健康档案",
+          "发现分类",
+          "个人中心",
+          "张三 普通用户",
+          "7天",
+          "30天",
+          "完成",
+          "展开依据明细"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89163-codex-structure-09-操作-30天",
+        "label": "操作:30天",
+        "finalUrl": "http://127.0.0.1:49163/fitness",
+        "title": "智能健康数据中台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89163/probe/codex-runtime-check/may-89163-codex-structure-09-操作-30天.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89163/probe/codex-runtime-check/may-89163-codex-structure-09-操作-30天.png",
+        "elementCount": 711,
+        "interactiveCount": 18,
+        "interactiveLabels": [
+          "数据总览",
+          "设备管理",
+          "运动健康",
+          "睡眠分析",
+          "生理监测",
+          "预警中心",
+          "健康档案",
+          "发现分类",
+          "个人中心",
+          "张三 普通用户",
+          "7天",
+          "30天",
+          "完成",
+          "展开依据明细"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89163-codex-structure-10-导航-睡眠分析",
+        "label": "导航:睡眠分析",
+        "finalUrl": "http://127.0.0.1:49163/sleep",
+        "title": "智能健康数据中台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89163/probe/codex-runtime-check/may-89163-codex-structure-10-导航-睡眠分析.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89163/probe/codex-runtime-check/may-89163-codex-structure-10-导航-睡眠分析.png",
+        "elementCount": 399,
+        "interactiveCount": 12,
+        "interactiveLabels": [
+          "数据总览",
+          "设备管理",
+          "运动健康",
+          "睡眠分析",
+          "生理监测",
+          "预警中心",
+          "健康档案",
+          "发现分类",
+          "个人中心",
+          "张三 普通用户",
+          "7天",
+          "30天"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89163-codex-structure-11-操作-7天",
+        "label": "操作:7天",
+        "finalUrl": "http://127.0.0.1:49163/sleep",
+        "title": "智能健康数据中台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89163/probe/codex-runtime-check/may-89163-codex-structure-11-操作-7天.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89163/probe/codex-runtime-check/may-89163-codex-structure-11-操作-7天.png",
+        "elementCount": 398,
+        "interactiveCount": 12,
+        "interactiveLabels": [
+          "数据总览",
+          "设备管理",
+          "运动健康",
+          "睡眠分析",
+          "生理监测",
+          "预警中心",
+          "健康档案",
+          "发现分类",
+          "个人中心",
+          "张三 普通用户",
+          "7天",
+          "30天"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89163-codex-structure-12-操作-30天",
+        "label": "操作:30天",
+        "finalUrl": "http://127.0.0.1:49163/sleep",
+        "title": "智能健康数据中台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89163/probe/codex-runtime-check/may-89163-codex-structure-12-操作-30天.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89163/probe/codex-runtime-check/may-89163-codex-structure-12-操作-30天.png",
+        "elementCount": 537,
+        "interactiveCount": 12,
+        "interactiveLabels": [
+          "数据总览",
+          "设备管理",
+          "运动健康",
+          "睡眠分析",
+          "生理监测",
+          "预警中心",
+          "健康档案",
+          "发现分类",
+          "个人中心",
+          "张三 普通用户",
+          "7天",
+          "30天"
+        ]
+      }
+    ]
+  },
+  "screenshotMetrics": {
+    "width": 1888,
+    "height": 1600,
+    "scrollWidth": 1856,
+    "scrollHeight": 1600
+  },
+  "initialBodyTextPreview": "健康中台\n\nHealth Data Platform\n\n数据实时同步中\n数据总览\n设备管理\n运动健康\n睡眠分析\n生理监测\n预警中心\n健康档案\n发现分类\n个人中心\n\n张三\n\n普通用户\n\n数据总览\n\n2026年6月12日星期五 · 12:28:36\n\n实时数据\n实时连接\n健康评分\n78\n综合健康\n睡眠\n84\n活动\n60\n心脏\n89\n压力\n65\n心率\n61\nBPM\n血氧饱和度\n97\n%\n压力指数\n32\nHRV 变异性\n53\nms\n设备连接\n\nXiaomi Mi Band 7\n\nMi Band 7\n\n76%\n已连接\n\nApple Watch Series 9\n\nApple Watch\n\n83%\n已连接\n\nXiaomi Mi Band 8\n\n我的小米手环\n\n63%\n已连接\n预警摘要\n紧急\n已忽略\n09:09\n静息心率异常升高\n\n您的静息心率较基线值升高 28%，已持续 2.5 小时，建议休息并监测身体状况。\n\n忽略人：系统\n（普通用户）\n忽略时间：2026/6/12 11:41:48\n已关闭\n警告\n已确认\n07:39\n压力指数偏高\n\n过去 4 小时您的平均压力指数达到 78，建议进行深呼吸或冥想放松。\n\n处置人：系统\n（普通用户）\n处置时间：2026/6/12 11:41:50\n关闭\n已确认\n警告\n待复核\n03:39\n血氧饱和度偏低\n\n睡眠期间血氧饱和度最低值为 91%，建议检查睡眠环境通风情况。\n\n处置人：张三\n（普通用户）\n处置时间：2026/6/12 09:39:14\n处置：建议转诊\n\n夜间血氧持续偏低，建议转诊至呼吸内科进一步检查\n\n复查时间：2026/6/14 11:39:14\n等待医生复核\n待医生复核\n复查：2026/6/14\n今日健康概览\n统计数据\n\n8432\n\n步数\n\n420\n\n卡路里 (kcal)\n\n45\n\n运动时长 (分钟)\n\n7.5\n\n睡眠时长 (小时)",
+  "bodyTextPreview": "健康中台\n\nHealth Data Platform\n\n连接已断开\n数据总览\n设备管理\n运动健康\n睡眠分析\n生理监测\n预警中心\n健康档案\n发现分类\n个人中心\n\n张三\n\n普通用户\n\n数据总览\n\n2026年6月12日星期五 · 12:29:12\n\n缓存数据\n· 12:29:12\n连接断开\n健康评分\n缓存值\n0\n综合健康\n睡眠\n--\n活动\n--\n心脏\n--\n压力\n--\n\n数据来源\n\n设备已断开，显示最后一次缓存数据（2026/6/12 12:29:12）\n\n评分数据每 30 秒自动刷新，缓存保留 24 小时\n\n心率\n--\nBPM\n缓存数据\n血氧饱和度\n--\n%\n缓存数据\n压力指数\n--\n缓存数据\nHRV 变异性\n0\nms\n缓存数据\n设备连接\n预警摘要\n离线预警保留\n\n暂无预警记录\n\n今日健康概览\n统计数据\n\n8432\n\n步数\n\n420\n\n卡路里 (kcal)\n\n45\n\n运动时长 (分钟)\n\n7.5\n\n睡眠时长 (小时)",
+  "apiBase": "",
+  "businessGoalPreview": "",
+  "apiResponses": [
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49163/api/devices"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49163/api/vitals/realtime"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49163/api/health-score"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49163/api/hrv?range=7d"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49163/api/stress?range=7d"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49163/api/heart-rate?range=7d"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49163/api/blood-oxygen?range=7d"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49163/api/sleep?range=30d"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49163/api/exercise?range=30d"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49163/api/plans/current"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49163/api/alerts"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49163/api/alerts/active"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49163/api/alerts/rules"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49163/api/archives"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49163/api/archives/his/departments"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49163/api/archives/his/doctors"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49163/api/archives/his/appointments"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49163/api/archives/authorization"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49163/api/devices"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49163/api/vitals/realtime"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49163/api/health-score"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49163/api/heart-rate?range=7d"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49163/api/hrv?range=7d"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49163/api/stress?range=7d"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49163/api/blood-oxygen?range=7d"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49163/api/sleep?range=30d"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49163/api/exercise?range=30d"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49163/api/plans/current"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49163/api/alerts"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49163/api/alerts/active"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49163/api/alerts/rules"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49163/api/archives"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49163/api/archives/his/departments"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49163/api/archives/his/doctors"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49163/api/archives/his/appointments"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49163/api/archives/authorization"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49163/api/devices"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49163/api/vitals/realtime"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49163/api/health-score"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49163/api/hrv?range=7d"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49163/api/stress?range=7d"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49163/api/heart-rate?range=7d"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49163/api/blood-oxygen?range=7d"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49163/api/sleep?range=30d"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49163/api/exercise?range=30d"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49163/api/plans/current"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49163/api/alerts"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49163/api/alerts/active"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49163/api/alerts/rules"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49163/api/archives"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49163/api/archives/his/departments"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49163/api/archives/his/doctors"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49163/api/archives/his/appointments"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49163/api/archives/authorization"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49163/api/devices"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49163/api/vitals/realtime"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49163/api/health-score"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49163/api/hrv?range=7d"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49163/api/stress?range=7d"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49163/api/heart-rate?range=7d"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49163/api/blood-oxygen?range=7d"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49163/api/sleep?range=30d"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49163/api/exercise?range=30d"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49163/api/plans/current"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49163/api/alerts"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49163/api/alerts/active"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49163/api/alerts/rules"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49163/api/archives"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49163/api/archives/his/departments"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49163/api/archives/his/doctors"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49163/api/archives/his/appointments"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49163/api/archives/authorization"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49163/api/devices"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49163/api/devices"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49163/api/sleep?range=30d"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49163/api/exercise?range=30d"
+    },
+    {
+      "method": "POST",
+      "status": 200,
+      "url": "http://127.0.0.1:49163/api/archives/generate"
+    },
+    {
+      "method": "POST",
+      "status": 200,
+      "url": "http://127.0.0.1:49163/api/devices/scan"
+    },
+    {
+      "method": "POST",
+      "status": 200,
+      "url": "http://127.0.0.1:49163/api/devices/bind"
+    },
+    {
+      "method": "POST",
+      "status": 200,
+      "url": "http://127.0.0.1:49163/api/devices/3xxeid120sk/sync"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49163/api/exercise?range=7d"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49163/api/plans/current"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49163/api/exercise?range=7d"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49163/api/plans/current"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49163/api/exercise?range=30d"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49163/api/plans/current"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49163/api/sleep?range=7d"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49163/api/sleep?range=7d"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49163/api/sleep?range=30d"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49163/api/devices"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49163/api/vitals/realtime"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49163/api/health-score"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49163/api/hrv?range=7d"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49163/api/stress?range=7d"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49163/api/heart-rate?range=7d"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49163/api/blood-oxygen?range=7d"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49163/api/sleep?range=30d"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49163/api/exercise?range=30d"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49163/api/plans/current"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49163/api/alerts"
+    }
+  ],
+  "apiChecks": [],
+  "dialogs": [],
+  "consoleMessages": [
+    {
+      "type": "debug",
+      "text": "[vite] connecting...",
+      "location": {
+        "url": "http://127.0.0.1:49163/@vite/client",
+        "lineNumber": 788,
+        "columnNumber": 8
+      }
+    },
+    {
+      "type": "debug",
+      "text": "[vite] connected.",
+      "location": {
+        "url": "http://127.0.0.1:49163/@vite/client",
+        "lineNumber": 911,
+        "columnNumber": 14
+      }
+    },
+    {
+      "type": "info",
+      "text": "%cDownload the React DevTools for a better development experience: https://reactjs.org/link/react-devtools font-weight:bold",
+      "location": {
+        "url": "http://127.0.0.1:49163/node_modules/.vite/deps/chunk-NXESFFTV.js?v=06a02ec0",
+        "lineNumber": 21608,
+        "columnNumber": 24
+      }
+    },
+    {
+      "type": "warning",
+      "text": "WebSocket connection to 'ws://127.0.0.1:59163/ws/realtime' failed: WebSocket is closed before the connection is established.",
+      "location": {
+        "url": "http://127.0.0.1:49163/src/hooks/useWebSocket.ts",
+        "lineNumber": 64,
+        "columnNumber": 0
+      }
+    },
+    {
+      "type": "warning",
+      "text": "WebSocket recoverable error: Event",
+      "location": {
+        "url": "http://127.0.0.1:49163/src/hooks/useWebSocket.ts",
+        "lineNumber": 47,
+        "columnNumber": 18
+      }
+    },
+    {
+      "type": "log",
+      "text": "WebSocket connected",
+      "location": {
+        "url": "http://127.0.0.1:49163/src/hooks/useWebSocket.ts",
+        "lineNumber": 21,
+        "columnNumber": 18
+      }
+    },
+    {
+      "type": "log",
+      "text": "WebSocket connected",
+      "location": {
+        "url": "http://127.0.0.1:49163/src/hooks/useWebSocket.ts",
+        "lineNumber": 21,
+        "columnNumber": 18
+      }
+    },
+    {
+      "type": "debug",
+      "text": "[vite] connecting...",
+      "location": {
+        "url": "http://127.0.0.1:49163/@vite/client",
+        "lineNumber": 788,
+        "columnNumber": 8
+      }
+    },
+    {
+      "type": "debug",
+      "text": "[vite] connected.",
+      "location": {
+        "url": "http://127.0.0.1:49163/@vite/client",
+        "lineNumber": 911,
+        "columnNumber": 14
+      }
+    },
+    {
+      "type": "info",
+      "text": "%cDownload the React DevTools for a better development experience: https://reactjs.org/link/react-devtools font-weight:bold",
+      "location": {
+        "url": "http://127.0.0.1:49163/node_modules/.vite/deps/chunk-NXESFFTV.js?v=06a02ec0",
+        "lineNumber": 21608,
+        "columnNumber": 24
+      }
+    },
+    {
+      "type": "warning",
+      "text": "WebSocket connection to 'ws://127.0.0.1:59163/ws/realtime' failed: WebSocket is closed before the connection is established.",
+      "location": {
+        "url": "http://127.0.0.1:49163/src/hooks/useWebSocket.ts",
+        "lineNumber": 64,
+        "columnNumber": 0
+      }
+    },
+    {
+      "type": "warning",
+      "text": "WebSocket recoverable error: Event",
+      "location": {
+        "url": "http://127.0.0.1:49163/src/hooks/useWebSocket.ts",
+        "lineNumber": 47,
+        "columnNumber": 18
+      }
+    },
+    {
+      "type": "log",
+      "text": "WebSocket connected",
+      "location": {
+        "url": "http://127.0.0.1:49163/src/hooks/useWebSocket.ts",
+        "lineNumber": 21,
+        "columnNumber": 18
+      }
+    },
+    {
+      "type": "log",
+      "text": "WebSocket connected",
+      "location": {
+        "url": "http://127.0.0.1:49163/src/hooks/useWebSocket.ts",
+        "lineNumber": 21,
+        "columnNumber": 18
+      }
+    },
+    {
+      "type": "debug",
+      "text": "[vite] connecting...",
+      "location": {
+        "url": "http://127.0.0.1:49163/@vite/client",
+        "lineNumber": 788,
+        "columnNumber": 8
+      }
+    },
+    {
+      "type": "debug",
+      "text": "[vite] connected.",
+      "location": {
+        "url": "http://127.0.0.1:49163/@vite/client",
+        "lineNumber": 911,
+        "columnNumber": 14
+      }
+    },
+    {
+      "type": "info",
+      "text": "%cDownload the React DevTools for a better development experience: https://reactjs.org/link/react-devtools font-weight:bold",
+      "location": {
+        "url": "http://127.0.0.1:49163/node_modules/.vite/deps/chunk-NXESFFTV.js?v=06a02ec0",
+        "lineNumber": 21608,
+        "columnNumber": 24
+      }
+    },
+    {
+      "type": "warning",
+      "text": "WebSocket connection to 'ws://127.0.0.1:59163/ws/realtime' failed: WebSocket is closed before the connection is established.",
+      "location": {
+        "url": "http://127.0.0.1:49163/src/hooks/useWebSocket.ts",
+        "lineNumber": 64,
+        "columnNumber": 0
+      }
+    },
+    {
+      "type": "warning",
+      "text": "WebSocket recoverable error: Event",
+      "location": {
+        "url": "http://127.0.0.1:49163/src/hooks/useWebSocket.ts",
+        "lineNumber": 47,
+        "columnNumber": 18
+      }
+    },
+    {
+      "type": "log",
+      "text": "WebSocket connected",
+      "location": {
+        "url": "http://127.0.0.1:49163/src/hooks/useWebSocket.ts",
+        "lineNumber": 21,
+        "columnNumber": 18
+      }
+    },
+    {
+      "type": "log",
+      "text": "WebSocket connected",
+      "location": {
+        "url": "http://127.0.0.1:49163/src/hooks/useWebSocket.ts",
+        "lineNumber": 21,
+        "columnNumber": 18
+      }
+    }
+  ],
+  "requestFailures": [],
+  "responseErrors": []
+}
