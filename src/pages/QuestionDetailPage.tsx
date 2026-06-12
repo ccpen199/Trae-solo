@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import {
   Hash,
   Eye,
@@ -16,12 +17,13 @@ import {
   Flag,
   User,
   Search,
+  Home,
+  Users,
 } from 'lucide-react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/Card';
 import Button from '@/components/ui/Button';
 import Badge from '@/components/ui/Badge';
 import Tag from '@/components/ui/Tag';
-import Input from '@/components/ui/Input';
 
 const questionData = {
   id: 1,
@@ -47,10 +49,15 @@ const questionData = {
   isAnonymous: true,
   schoolGroup: '按院校',
   category: '985高校圈',
+  groupType: '院校圈',
+  authorName: '张同学',
+  authorSchool: '浙江大学',
   relatedQuestions: [
-    '双非本科进大厂的真实路径分享',
-    '零基础转码可行性分析？',
-    '大三才开始准备实习来得及吗？',
+    { id: 101, title: '双非本科进大厂的真实路径分享' },
+    { id: 102, title: '零基础转码可行性分析？' },
+    { id: 103, title: '大三才开始准备实习来得及吗？' },
+    { id: 104, title: '产品岗简历怎么写才能通过筛选？' },
+    { id: 105, title: '运营岗面试高频问题及回答技巧' },
   ],
 };
 
@@ -61,7 +68,8 @@ const answers = [
     isSenior: true,
     authorName: '李学长',
     authorTitle: '字节跳动·高级产品经理',
-    authorCompany: '2年带教经验·辅导过40+同学上岸',
+    authorCompany: '字节·产品·2年经验',
+    authorDesc: '2年带教经验·辅导过40+同学上岸',
     authorBg: 'from-teal-400 to-brand-400',
     time: '1小时前',
     likes: 568,
@@ -118,7 +126,8 @@ const answers = [
     isSenior: true,
     authorName: '王学姐',
     authorTitle: '腾讯·运营主管',
-    authorCompany: '前校招HR·阅简历5000+',
+    authorCompany: '腾讯·运营·3年经验',
+    authorDesc: '前校招HR·阅简历5000+',
     authorBg: 'from-amber-400 to-orange-500',
     time: '45分钟前',
     likes: 312,
@@ -150,7 +159,9 @@ EE背景其实有优势的，技术理解力比纯文科强。面试的时候可
     authorName: '匿名用户',
     authorTitle: '去年上岸的学长',
     authorCompany: '某大厂运营实习中',
+    authorDesc: '',
     authorBg: 'from-ink-300 to-ink-400',
+    isAnonymousAuthor: true,
     time: '30分钟前',
     likes: 156,
     comments: 12,
@@ -178,6 +189,7 @@ EE背景其实有优势的，技术理解力比纯文科强。面试的时候可
     authorName: '陈同学',
     authorTitle: '27届·同是求职者',
     authorCompany: '已收到3个面试',
+    authorDesc: '',
     authorBg: 'from-sky-400 to-indigo-500',
     time: '15分钟前',
     likes: 87,
@@ -196,11 +208,50 @@ EE背景其实有优势的，技术理解力比纯文科强。面试的时候可
   },
 ];
 
+const mentorsList = [
+  {
+    id: 1,
+    name: '李学长',
+    title: '字节跳动·产品经理',
+    tag: '字节·产品·2年',
+    bg: 'from-teal-400 to-brand-400',
+    online: true,
+  },
+  {
+    id: 2,
+    name: '王学姐',
+    title: '腾讯·运营主管',
+    tag: '腾讯·运营·3年',
+    bg: 'from-amber-400 to-orange-500',
+    online: true,
+  },
+  {
+    id: 3,
+    name: '赵学长',
+    title: '美团·算法工程师',
+    tag: '美团·算法·2年',
+    bg: 'from-violet-400 to-purple-500',
+    online: false,
+  },
+  {
+    id: 4,
+    name: '刘学姐',
+    title: '阿里·HRBP',
+    tag: '阿里·HR·4年',
+    bg: 'from-rose-400 to-pink-500',
+    online: true,
+  },
+];
+
 export default function QuestionDetailPage() {
+  const navigate = useNavigate();
   const [likedAnswers, setLikedAnswers] = useState<number[]>([]);
   const [answerText, setAnswerText] = useState('');
   const [questionLiked, setQuestionLiked] = useState(false);
   const [questionFollowed, setQuestionFollowed] = useState(false);
+  const [isAnonymousAnswer, setIsAnonymousAnswer] = useState(false);
+
+  const isQuestionOwner = true;
 
   const toggleLikeAnswer = (id: number) => {
     setLikedAnswers((prev) =>
@@ -211,17 +262,39 @@ export default function QuestionDetailPage() {
   const adoptedAnswer = answers.find((a) => a.isAdopted);
 
   return (
-    <div className="min-h-screen bg-cream-50 py-8">
+    <div className="min-h-screen bg-cream-50 py-6">
       <div className="container grid lg:grid-cols-12 gap-6">
-        {/* 主内容 */}
+        <div className="lg:col-span-12 mb-2">
+          <nav className="flex items-center gap-2 text-sm text-ink-500 animate-fade-in-up">
+            <button
+              onClick={() => navigate('/')}
+              className="flex items-center gap-1 hover:text-brand-600 transition-colors"
+            >
+              <Home size={14} />
+              首页
+            </button>
+            <ChevronRight size={14} className="text-ink-300" />
+            <button
+              onClick={() => navigate('/community')}
+              className="hover:text-brand-600 transition-colors"
+            >
+              社区广场
+            </button>
+            <ChevronRight size={14} className="text-ink-300" />
+            <span className="text-ink-700 font-medium">问题详情</span>
+          </nav>
+        </div>
+
         <main className="lg:col-span-8 space-y-6">
-          {/* 问题卡 */}
           <Card className="animate-fade-in-up overflow-hidden">
             <div className="h-1.5 bg-gradient-to-r from-brand-500 via-amber-400 to-teal-500" />
             <CardContent className="space-y-5 pt-8">
               <div className="flex items-center gap-2 flex-wrap">
                 <Badge variant="info" size="sm" className="flex items-center gap-1">
                   <Hash size={12} /> {questionData.category}
+                </Badge>
+                <Badge variant="brand" size="sm" className="flex items-center gap-1">
+                  <Users size={12} /> {questionData.groupType}
                 </Badge>
                 {questionData.isAnonymous && (
                   <Badge variant="anonymous" size="sm">匿名提问</Badge>
@@ -235,6 +308,29 @@ export default function QuestionDetailPage() {
                 {questionData.title}
               </h1>
 
+              <div className="flex items-center gap-3">
+                {questionData.isAnonymous ? (
+                  <div className="flex items-center gap-3">
+                    <div className="w-10 h-10 rounded-full bg-gradient-to-br from-ink-300 to-ink-400 flex items-center justify-center text-white shadow-md">
+                      <User size={18} />
+                    </div>
+                    <div>
+                      <div className="font-semibold text-ink-800">匿名同学</div>
+                    </div>
+                  </div>
+                ) : (
+                  <div className="flex items-center gap-3">
+                    <div className={`w-10 h-10 rounded-full bg-gradient-to-br from-brand-400 to-amber-400 flex items-center justify-center text-white font-bold shadow-md`}>
+                      {questionData.authorName.charAt(0)}
+                    </div>
+                    <div>
+                      <div className="font-semibold text-ink-800">{questionData.authorName}</div>
+                      <div className="text-xs text-ink-500">{questionData.authorSchool}</div>
+                    </div>
+                  </div>
+                )}
+              </div>
+
               <div className="flex items-center gap-2 flex-wrap">
                 {questionData.tags.map((t, i) => (
                   <Tag
@@ -245,6 +341,18 @@ export default function QuestionDetailPage() {
                     #{t}
                   </Tag>
                 ))}
+              </div>
+
+              <div className="flex items-center gap-2 flex-wrap pt-1">
+                <Badge variant="senior" size="sm" className="flex items-center gap-1">
+                  <Users size={11} /> 双非交流圈
+                </Badge>
+                <Badge variant="info" size="sm" className="flex items-center gap-1">
+                  <Hash size={11} /> 计算机专业圈
+                </Badge>
+                <Badge variant="brand" size="sm" className="flex items-center gap-1">
+                  <MapPinIcon size={11} /> 上海实习圈
+                </Badge>
               </div>
 
               <div className="p-5 rounded-2xl bg-cream-100/70 border border-cream-200">
@@ -262,7 +370,7 @@ export default function QuestionDetailPage() {
                     <MessageCircle size={16} /> <span className="font-num">{questionData.answers}</span> 回答
                   </span>
                   <span className="flex items-center gap-1.5">
-                    <User size={16} /> <span className="font-num">{questionData.followers.toLocaleString()}</span> 关注
+                    <ThumbsUp size={16} /> <span className="font-num">{questionData.likes.toLocaleString()}</span> 点赞
                   </span>
                 </div>
                 <div className="flex items-center gap-2">
@@ -286,7 +394,10 @@ export default function QuestionDetailPage() {
                     }`}
                   >
                     <Bookmark size={15} fill={questionFollowed ? 'currentColor' : 'none'} />
-                    {questionFollowed ? '已关注' : '关注问题'}
+                    {questionFollowed ? '已收藏' : '收藏'}
+                  </button>
+                  <button className="w-9 h-9 rounded-xl flex items-center justify-center text-ink-400 hover:bg-ink-50 hover:text-danger-500 transition-all">
+                    <Flag size={16} />
                   </button>
                   <button className="w-9 h-9 rounded-xl flex items-center justify-center text-ink-400 hover:bg-ink-50 hover:text-ink-600 transition-all">
                     <Share2 size={16} />
@@ -299,7 +410,6 @@ export default function QuestionDetailPage() {
             </CardContent>
           </Card>
 
-          {/* 回答列表 */}
           <div className="space-y-4">
             <div className="flex items-end justify-between">
               <h2 className="text-xl font-bold text-ink-900 font-display flex items-center gap-3">
@@ -328,16 +438,21 @@ export default function QuestionDetailPage() {
               <Card
                 key={a.id}
                 className={`animate-fade-in-up overflow-hidden ${
-                  a.isSenior
+                  a.isAdopted
+                    ? 'border-2 border-emerald-300 bg-gradient-to-br from-emerald-50/60 via-teal-50/30 to-white'
+                    : a.isSenior
                     ? 'border-2 border-teal-200/80 bg-gradient-to-br from-white via-teal-50/30 to-white'
                     : ''
-                } ${a.isAdopted ? 'ring-2 ring-offset-2 ring-emerald-300/50' : ''}`}
+                }`}
                 style={{ animationDelay: `${60 + i * 80}ms` }}
               >
                 {a.isAdopted && (
-                  <div className="h-8 bg-gradient-to-r from-emerald-500 to-teal-500 flex items-center justify-between px-5 text-white text-sm font-medium">
+                  <div className="h-10 bg-gradient-to-r from-emerald-500 to-teal-500 flex items-center justify-between px-5 text-white text-sm font-medium">
                     <span className="flex items-center gap-2">
-                      <Check size={16} /> 提问者已采纳此回答为最佳答案
+                      <div className="w-6 h-6 rounded-full bg-white/20 flex items-center justify-center">
+                        <Check size={16} className="text-white" strokeWidth={3} />
+                      </div>
+                      提问者已采纳此回答为最佳答案
                     </span>
                     <Badge variant="success" size="xs" className="bg-white/20 border-white/30 text-white">
                       <Star size={10} className="mr-0.5" /> 优质回答
@@ -347,12 +462,18 @@ export default function QuestionDetailPage() {
                 <CardContent className="space-y-4">
                   <div className="flex items-start gap-4">
                     <div className={`relative shrink-0`}>
-                      <div className={`w-12 h-12 rounded-2xl bg-gradient-to-br ${a.authorBg} flex items-center justify-center text-white font-bold text-lg shadow-md`}>
-                        {a.authorName.charAt(0)}
-                      </div>
+                      {a.isAnonymousAuthor ? (
+                        <div className="w-12 h-12 rounded-2xl bg-gradient-to-br from-ink-300 to-ink-400 flex items-center justify-center text-white shadow-md">
+                          <User size={20} />
+                        </div>
+                      ) : (
+                        <div className={`w-12 h-12 rounded-2xl bg-gradient-to-br ${a.authorBg} flex items-center justify-center text-white font-bold text-lg shadow-md`}>
+                          {a.authorName.charAt(0)}
+                        </div>
+                      )}
                       {a.isSenior && (
-                        <div className="absolute -bottom-1 -right-1 w-5 h-5 rounded-full bg-teal-500 border-2 border-white flex items-center justify-center shadow">
-                          <ShieldCheck size={11} className="text-white" />
+                        <div className="absolute -bottom-1 -right-1 w-6 h-6 rounded-full bg-teal-500 border-2 border-white flex items-center justify-center shadow-lg">
+                          <Check size={13} className="text-white" strokeWidth={3} />
                         </div>
                       )}
                     </div>
@@ -360,9 +481,14 @@ export default function QuestionDetailPage() {
                       <div className="flex items-center gap-2 flex-wrap mb-1">
                         <span className="font-bold text-ink-900 text-base">{a.authorName}</span>
                         {a.isSenior && (
-                          <Badge variant="senior" size="xs" className="flex items-center gap-0.5">
-                            <ShieldCheck size={10} /> 学长认证
-                          </Badge>
+                          <>
+                            <Badge variant="senior" size="xs" className="flex items-center gap-0.5">
+                              <ShieldCheck size={10} /> 已认证学长
+                            </Badge>
+                            <Badge variant="info" size="xs">
+                              {a.authorCompany}
+                            </Badge>
+                          </>
                         )}
                         {a.rating === 5 && (
                           <div className="flex items-center gap-0.5">
@@ -374,8 +500,8 @@ export default function QuestionDetailPage() {
                       </div>
                       <div className="text-sm text-ink-600 font-medium">{a.authorTitle}</div>
                       <div className="flex items-center gap-3 text-xs text-ink-400 mt-0.5 flex-wrap">
-                        <span>{a.authorCompany}</span>
-                        <span>·</span>
+                        {a.isSenior && a.authorDesc && <span>{a.authorDesc}</span>}
+                        {a.isSenior && a.authorDesc && <span>·</span>}
                         <span className="flex items-center gap-1"><Clock size={11} /> {a.time}</span>
                       </div>
                     </div>
@@ -385,7 +511,11 @@ export default function QuestionDetailPage() {
                   </div>
 
                   <div className={`p-4 rounded-2xl ${
-                    a.isSenior ? 'bg-white/70 border border-teal-100/60' : 'bg-cream-50/60 border border-cream-200'
+                    a.isAdopted
+                      ? 'bg-white/80 border border-emerald-200/60'
+                      : a.isSenior
+                      ? 'bg-white/70 border border-teal-100/60'
+                      : 'bg-cream-50/60 border border-cream-200'
                   }`}>
                     <div className="prose prose-sm max-w-none text-ink-700 leading-relaxed whitespace-pre-line">
                       {a.content}
@@ -413,16 +543,22 @@ export default function QuestionDetailPage() {
                         <Share2 size={16} />
                       </button>
                     </div>
-                    <button className="flex items-center gap-1 text-xs text-ink-400 hover:text-danger-500 transition-colors">
-                      <Flag size={13} /> 举报
-                    </button>
+                    <div className="flex items-center gap-2">
+                      {isQuestionOwner && !a.isAdopted && (
+                        <Button variant="outline" size="sm" className="text-emerald-600 border-emerald-200 hover:bg-emerald-50">
+                          <Check size={13} /> 采纳
+                        </Button>
+                      )}
+                      <button className="flex items-center gap-1 text-xs text-ink-400 hover:text-danger-500 transition-colors px-2 h-8 rounded-lg hover:bg-danger-50">
+                        <Flag size={13} /> 举报
+                      </button>
+                    </div>
                   </div>
                 </CardContent>
               </Card>
             ))}
           </div>
 
-          {/* 写回答 */}
           <Card className="animate-fade-in-up" style={{ animationDelay: '320ms' }}>
             <CardHeader>
               <CardTitle className="text-lg flex items-center gap-2">
@@ -431,32 +567,51 @@ export default function QuestionDetailPage() {
               </CardTitle>
             </CardHeader>
             <CardContent className="space-y-4">
-              <div className="flex items-center gap-3 p-3 rounded-xl bg-cream-100/60 border border-cream-200">
-                <div className="w-10 h-10 rounded-full bg-gradient-to-br from-ink-300 to-ink-400 flex items-center justify-center text-white font-semibold shrink-0">
-                  我
+              <div className="flex items-center justify-between p-3 rounded-xl bg-cream-100/60 border border-cream-200">
+                <div className="flex items-center gap-3">
+                  <div className="w-10 h-10 rounded-full bg-gradient-to-br from-ink-300 to-ink-400 flex items-center justify-center text-white font-semibold shrink-0">
+                    我
+                  </div>
+                  <div>
+                    <div className="font-medium text-ink-800 text-sm">
+                      {isAnonymousAnswer ? '匿名回答' : '以我的身份回答'}
+                    </div>
+                    <div className="text-xs text-ink-500">
+                      {isAnonymousAnswer ? '回答将匿名展示，保护隐私' : '回答将展示你的公开信息'}
+                    </div>
+                  </div>
                 </div>
-                <div className="flex-1">
-                  <div className="font-medium text-ink-800 text-sm">以我的身份回答</div>
-                  <div className="text-xs text-ink-500">回答将展示你的公开信息</div>
+                <div className="flex items-center gap-3">
+                  <span className="text-sm text-ink-600">匿名回答</span>
+                  <button
+                    onClick={() => setIsAnonymousAnswer(!isAnonymousAnswer)}
+                    className={`relative w-11 h-6 rounded-full transition-all ${
+                      isAnonymousAnswer ? 'bg-brand-500' : 'bg-ink-200'
+                    }`}
+                  >
+                    <span
+                      className={`absolute top-0.5 w-5 h-5 rounded-full bg-white shadow-md transition-all ${
+                        isAnonymousAnswer ? 'left-[22px]' : 'left-0.5'
+                      }`}
+                    />
+                  </button>
                 </div>
-                <Badge variant="anonymous" size="xs" className="cursor-pointer hover:border-brand-300 transition-colors">
-                  切换匿名
-                </Badge>
               </div>
               <div className="relative">
                 <textarea
                   value={answerText}
                   onChange={(e) => setAnswerText(e.target.value)}
                   placeholder="分享你的经验和见解，帮助更多同学..."
-                  className="w-full h-40 px-4 py-3 rounded-xl border border-ink-200 bg-white text-sm text-ink-800 placeholder:text-ink-300 focus:border-brand-400 focus:ring-2 focus:ring-brand-400/20 transition-all outline-none resize-none"
+                  className="w-full h-48 px-4 py-3 rounded-xl border border-ink-200 bg-white text-sm text-ink-800 placeholder:text-ink-300 focus:border-brand-400 focus:ring-2 focus:ring-brand-400/20 transition-all outline-none resize-none"
                 />
                 <div className="absolute bottom-3 right-3 text-xs text-ink-400 font-num">
                   {answerText.length}/2000
                 </div>
               </div>
               <div className="flex items-center justify-between flex-wrap gap-3">
-                <div className="text-xs text-ink-500">
-                  💡 优质回答将获得<b className="text-brand-600">学长认证加分</b>和曝光推荐
+                <div className="text-xs text-ink-500 flex items-center gap-1">
+                  <LightbulbIcon size={14} className="text-amber-500" />
+                  回答字数建议<b className="text-brand-600">≥50字</b>，优质回答有机会获得<b className="text-brand-600">平台学长认证</b>
                 </div>
                 <div className="flex items-center gap-3">
                   <Button variant="outline" size="sm">
@@ -471,10 +626,35 @@ export default function QuestionDetailPage() {
           </Card>
         </main>
 
-        {/* 右侧栏 */}
         <aside className="lg:col-span-4 space-y-5">
-          {/* 回答者推荐 */}
-          <Card className="animate-fade-in-up sticky top-8" style={{ animationDelay: '40ms' }}>
+          <Card className="animate-fade-in-up" style={{ animationDelay: '40ms' }}>
+            <CardHeader>
+              <CardTitle className="text-base flex items-center gap-2">
+                <Search size={18} className="text-brand-500" />
+                同类问题推荐
+              </CardTitle>
+            </CardHeader>
+            <CardContent className="pt-0 space-y-2">
+              {questionData.relatedQuestions.map((q, i) => (
+                <button
+                  key={q.id}
+                  onClick={() => navigate(`/questions/${q.id}`)}
+                  className="w-full text-left p-3 rounded-xl hover:bg-ink-50 transition-colors group"
+                >
+                  <div className="flex items-start gap-3">
+                    <span className="w-6 h-6 rounded-lg bg-brand-50 text-brand-600 flex items-center justify-center text-xs font-bold shrink-0 mt-0.5">
+                      {i + 1}
+                    </span>
+                    <span className="text-sm text-ink-700 leading-snug group-hover:text-brand-600 transition-colors line-clamp-2">
+                      {q.title}
+                    </span>
+                  </div>
+                </button>
+              ))}
+            </CardContent>
+          </Card>
+
+          <Card className="animate-fade-in-up sticky top-8" style={{ animationDelay: '80ms' }}>
             <CardHeader>
               <CardTitle className="text-base flex items-center gap-2">
                 <ShieldCheck size={18} className="text-teal-500" />
@@ -482,26 +662,35 @@ export default function QuestionDetailPage() {
               </CardTitle>
             </CardHeader>
             <CardContent className="space-y-3 pt-0">
-              {answers.filter((a) => a.isSenior).map((a) => (
+              {mentorsList.map((m, i) => (
                 <div
-                  key={a.id}
+                  key={m.id}
                   className="flex items-center gap-3 p-3 rounded-xl hover:bg-ink-50 transition-all cursor-pointer border border-transparent hover:border-teal-200"
                 >
                   <div className="relative shrink-0">
-                    <div className={`w-11 h-11 rounded-xl bg-gradient-to-br ${a.authorBg} flex items-center justify-center text-white font-bold shadow`}>
-                      {a.authorName.charAt(0)}
+                    <div className={`w-11 h-11 rounded-xl bg-gradient-to-br ${m.bg} flex items-center justify-center text-white font-bold shadow`}>
+                      {m.name.charAt(0)}
                     </div>
-                    <div className="absolute -bottom-0.5 -right-0.5 w-4 h-4 rounded-full bg-emerald-500 border-2 border-white animate-pulse-dot" />
+                    {m.online ? (
+                      <div className="absolute -bottom-0.5 -right-0.5 w-4 h-4 rounded-full bg-emerald-500 border-2 border-white animate-pulse-dot" />
+                    ) : (
+                      <div className="absolute -bottom-0.5 -right-0.5 w-4 h-4 rounded-full bg-ink-300 border-2 border-white" />
+                    )}
                   </div>
                   <div className="flex-1 min-w-0">
                     <div className="flex items-center gap-1.5">
-                      <span className="font-semibold text-ink-800 text-sm">{a.authorName}</span>
+                      <span className="font-semibold text-ink-800 text-sm">{m.name}</span>
                       <ShieldCheck size={12} className="text-teal-500" />
                     </div>
-                    <div className="text-xs text-ink-500 truncate">{a.authorTitle}</div>
+                    <div className="text-xs text-ink-500 truncate">{m.title}</div>
                   </div>
-                  <Button size="xs" variant="outline">
-                    <MessageCircle size={12} className="mr-1" /> 私聊
+                  <Button
+                    size="xs"
+                    variant="primary"
+                    onClick={() => alert('即将跳转到私信页面~')}
+                    className="shrink-0"
+                  >
+                    <MessageCircle size={12} className="mr-1" /> 咨询TA
                   </Button>
                 </div>
               ))}
@@ -512,34 +701,6 @@ export default function QuestionDetailPage() {
             </CardContent>
           </Card>
 
-          {/* 相关问题 */}
-          <Card className="animate-fade-in-up" style={{ animationDelay: '80ms' }}>
-            <CardHeader>
-              <CardTitle className="text-base flex items-center gap-2">
-                <Search size={18} className="text-brand-500" />
-                相关问题推荐
-              </CardTitle>
-            </CardHeader>
-            <CardContent className="pt-0 space-y-2">
-              {questionData.relatedQuestions.map((q, i) => (
-                <button
-                  key={q}
-                  className="w-full text-left p-3 rounded-xl hover:bg-ink-50 transition-colors group"
-                >
-                  <div className="flex items-start gap-3">
-                    <span className="w-6 h-6 rounded-lg bg-brand-50 text-brand-600 flex items-center justify-center text-xs font-bold shrink-0 mt-0.5">
-                      {i + 1}
-                    </span>
-                    <span className="text-sm text-ink-700 leading-snug group-hover:text-brand-600 transition-colors">
-                      {q}
-                    </span>
-                  </div>
-                </button>
-              ))}
-            </CardContent>
-          </Card>
-
-          {/* 社区数据 */}
           <Card className="animate-fade-in-up border-gradient-to-r from-brand-100 to-teal-100 bg-gradient-to-br from-cream-50 via-white to-teal-50/40" style={{ animationDelay: '120ms' }}>
             <CardContent>
               <div className="text-center mb-4">
@@ -568,5 +729,24 @@ export default function QuestionDetailPage() {
         </aside>
       </div>
     </div>
+  );
+}
+
+function MapPinIcon(props: any) {
+  return (
+    <svg width={props.size || 16} height={props.size || 16} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+      <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z" />
+      <circle cx="12" cy="10" r="3" />
+    </svg>
+  );
+}
+
+function LightbulbIcon(props: any) {
+  return (
+    <svg width={props.size || 16} height={props.size || 16} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+      <path d="M9 18h6" />
+      <path d="M10 22h4" />
+      <path d="M15.09 14c.18-.98.65-1.74 1.41-2.5A4.65 4.65 0 0 0 18 8 6 6 0 0 0 6 8c0 1 .23 2.23 1.5 3.5A4.61 4.61 0 0 1 8.91 14" />
+    </svg>
   );
 }

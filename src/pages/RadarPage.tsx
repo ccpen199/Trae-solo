@@ -12,6 +12,8 @@ import {
   Leaf,
   TrendingUp,
   Award,
+  CheckCircle2,
+  ChevronDown,
 } from 'lucide-react';
 import {
   RadarChart,
@@ -55,7 +57,14 @@ const companies = [
     industry: '互联网/科技',
     feedbackCount: 2856,
     verified: true,
+    traceable: true,
     rank: 1,
+    salaryRange: '￥8-15K',
+    salaryPerDay: 280,
+    convertRate: 88,
+    studentFeedback: 256,
+    hrSupplement: 12,
+    salarySample: 126,
     scores: {
       overall: 91,
       salary: 92,
@@ -80,7 +89,14 @@ const companies = [
     industry: '互联网/科技',
     feedbackCount: 2341,
     verified: true,
+    traceable: true,
     rank: 2,
+    salaryRange: '￥10-18K',
+    salaryPerDay: 320,
+    convertRate: 82,
+    studentFeedback: 312,
+    hrSupplement: 8,
+    salarySample: 145,
     scores: {
       overall: 90,
       salary: 95,
@@ -105,7 +121,14 @@ const companies = [
     industry: '电商/科技',
     feedbackCount: 2189,
     verified: true,
+    traceable: true,
     rank: 3,
+    salaryRange: '￥9-16K',
+    salaryPerDay: 300,
+    convertRate: 85,
+    studentFeedback: 278,
+    hrSupplement: 15,
+    salarySample: 132,
     scores: {
       overall: 89,
       salary: 90,
@@ -130,7 +153,14 @@ const companies = [
     industry: '本地生活',
     feedbackCount: 1876,
     verified: true,
+    traceable: true,
     rank: 4,
+    salaryRange: '￥6-12K',
+    salaryPerDay: 220,
+    convertRate: 80,
+    studentFeedback: 189,
+    hrSupplement: 6,
+    salarySample: 98,
     scores: {
       overall: 84,
       salary: 85,
@@ -155,7 +185,14 @@ const companies = [
     industry: '游戏/娱乐',
     feedbackCount: 1543,
     verified: true,
+    traceable: true,
     rank: 5,
+    salaryRange: '￥7-14K',
+    salaryPerDay: 250,
+    convertRate: 83,
+    studentFeedback: 167,
+    hrSupplement: 9,
+    salarySample: 87,
     scores: {
       overall: 87,
       salary: 88,
@@ -180,7 +217,14 @@ const companies = [
     industry: '金融/银行',
     feedbackCount: 986,
     verified: true,
+    traceable: false,
     rank: 6,
+    salaryRange: '￥15-30K',
+    salaryPerDay: 500,
+    convertRate: 70,
+    studentFeedback: 98,
+    hrSupplement: 3,
+    salarySample: 56,
     scores: {
       overall: 88,
       salary: 96,
@@ -205,7 +249,14 @@ const companies = [
     industry: '快消/零售',
     feedbackCount: 872,
     verified: true,
+    traceable: true,
     rank: 7,
+    salaryRange: '￥5-10K',
+    salaryPerDay: 180,
+    convertRate: 78,
+    studentFeedback: 134,
+    hrSupplement: 7,
+    salarySample: 72,
     scores: {
       overall: 86,
       salary: 82,
@@ -230,7 +281,14 @@ const companies = [
     industry: '硬件/科技',
     feedbackCount: 1234,
     verified: true,
+    traceable: false,
     rank: 8,
+    salaryRange: '￥6-11K',
+    salaryPerDay: 200,
+    convertRate: 76,
+    studentFeedback: 112,
+    hrSupplement: 5,
+    salarySample: 64,
     scores: {
       overall: 82,
       salary: 78,
@@ -296,20 +354,40 @@ function MiniRadar({ data }: { data: { subject: string; value: number }[] }) {
   );
 }
 
+const filterTags = [
+  { name: '可追溯数据', key: 'traceable' },
+  { name: '转正率>50%', key: 'convert' },
+  { name: '薪资>200/天', key: 'salary' },
+  { name: '环境评分>4.0', key: 'env' },
+];
+
 export default function RadarPage() {
   const [activeIndustry, setActiveIndustry] = useState(0);
   const [activeSort, setActiveSort] = useState(0);
   const [searchText, setSearchText] = useState('');
+  const [activeFilters, setActiveFilters] = useState<string[]>([]);
   const navigate = useNavigate();
+
+  const toggleFilter = (key: string) => {
+    setActiveFilters((prev) =>
+      prev.includes(key) ? prev.filter((k) => k !== key) : [...prev, key]
+    );
+  };
 
   const sortKey = sortOptions[activeSort].key as 'overall' | 'salary' | 'env' | 'convert';
   const filteredCompanies = [...companies]
     .filter((c) => {
       if (searchText && !c.name.includes(searchText)) return false;
       if (activeIndustry > 0 && c.industry !== industries[activeIndustry].name) return false;
+      if (activeFilters.includes('traceable') && !c.traceable) return false;
+      if (activeFilters.includes('convert') && c.convertRate <= 50) return false;
+      if (activeFilters.includes('salary') && c.salaryPerDay <= 200) return false;
+      if (activeFilters.includes('env') && c.scores.env <= 80) return false;
       return true;
     })
     .sort((a, b) => b.scores[sortKey] - a.scores[sortKey]);
+
+  const traceableCount = filteredCompanies.filter((c) => c.traceable).length;
 
   return (
     <div className="min-h-screen bg-cream-50 py-8">
@@ -335,54 +413,83 @@ export default function RadarPage() {
 
         {/* 搜索 + 筛选 + 排序 */}
         <Card className="animate-fade-in-up" style={{ animationDelay: '40ms' }}>
-          <CardContent className="flex flex-wrap items-end gap-4">
-            <div className="flex-1 min-w-[280px] max-w-md">
-              <Input
-                label="搜索企业"
-                placeholder="输入企业名称..."
-                leftIcon={<Search size={16} />}
-                value={searchText}
-                onChange={(e) => setSearchText(e.target.value)}
-              />
-            </div>
-            <div className="flex-1 min-w-[300px]">
-              <label className="text-sm font-medium text-ink-700 ml-0.5 mb-1.5 block">行业筛选</label>
-              <div className="flex flex-wrap gap-2">
-                {industries.slice(0, 5).map((ind, i) => (
-                  <button
-                    key={ind.name}
-                    onClick={() => setActiveIndustry(i)}
-                    className={`px-3.5 py-2 rounded-xl text-sm font-medium transition-all ${
-                      activeIndustry === i
-                        ? 'bg-brand-gradient text-white shadow-float'
-                        : 'bg-ink-50 text-ink-600 hover:bg-ink-100'
-                    }`}
-                  >
-                    {ind.name}
-                    <span className={`ml-1.5 text-xs ${activeIndustry === i ? 'text-white/80' : 'text-ink-400'} font-num`}>
-                      {ind.count}
-                    </span>
+          <CardContent className="space-y-4">
+            <div className="flex flex-wrap items-end gap-4">
+              <div className="flex-1 min-w-[280px] max-w-md">
+                <Input
+                  label="搜索企业"
+                  placeholder="输入企业名称..."
+                  leftIcon={<Search size={16} />}
+                  value={searchText}
+                  onChange={(e) => setSearchText(e.target.value)}
+                />
+              </div>
+              <div className="flex-1 min-w-[300px]">
+                <div className="flex items-center justify-between mb-1.5">
+                  <label className="text-sm font-medium text-ink-700 ml-0.5">行业筛选</label>
+                  <span className="text-xs text-ink-500">
+                    共找到 <span className="font-bold text-brand-600 font-num">{filteredCompanies.length}</span> 家企业
+                    <span className="mx-1">·</span>
+                    其中 <span className="font-bold text-teal-600 font-num">{traceableCount}</span> 家数据可追溯
+                  </span>
+                </div>
+                <div className="flex flex-wrap gap-2">
+                  {industries.slice(0, 5).map((ind, i) => (
+                    <button
+                      key={ind.name}
+                      onClick={() => setActiveIndustry(i)}
+                      className={`px-3.5 py-2 rounded-xl text-sm font-medium transition-all ${
+                        activeIndustry === i
+                          ? 'bg-brand-gradient text-white shadow-float'
+                          : 'bg-ink-50 text-ink-600 hover:bg-ink-100'
+                      }`}
+                    >
+                      {ind.name}
+                      <span className={`ml-1.5 text-xs ${activeIndustry === i ? 'text-white/80' : 'text-ink-400'} font-num`}>
+                        {ind.count}
+                      </span>
+                    </button>
+                  ))}
+                  <button className="px-3.5 py-2 rounded-xl text-sm font-medium bg-ink-50 text-ink-500 hover:bg-ink-100 flex items-center gap-1">
+                    <Filter size={14} /> 更多
                   </button>
-                ))}
-                <button className="px-3.5 py-2 rounded-xl text-sm font-medium bg-ink-50 text-ink-500 hover:bg-ink-100 flex items-center gap-1">
-                  <Filter size={14} /> 更多
-                </button>
+                </div>
+              </div>
+              <div className="shrink-0">
+                <label className="text-sm font-medium text-ink-700 ml-0.5 mb-1.5 block">维度排序</label>
+                <div className="flex p-1 bg-ink-50 rounded-xl">
+                  {sortOptions.map((s, i) => (
+                    <button
+                      key={s.key}
+                      onClick={() => setActiveSort(i)}
+                      className={`px-3.5 py-2 rounded-lg text-sm font-medium transition-all ${
+                        activeSort === i
+                          ? 'bg-white text-ink-900 shadow-soft'
+                          : 'text-ink-500 hover:text-ink-700'
+                      }`}
+                    >
+                      {s.label}
+                    </button>
+                  ))}
+                </div>
               </div>
             </div>
-            <div className="shrink-0">
-              <label className="text-sm font-medium text-ink-700 ml-0.5 mb-1.5 block">维度排序</label>
-              <div className="flex p-1 bg-ink-50 rounded-xl">
-                {sortOptions.map((s, i) => (
+            <div className="pt-3 border-t border-ink-100">
+              <div className="flex items-center justify-between mb-2">
+                <label className="text-sm font-medium text-ink-700">快捷筛选</label>
+              </div>
+              <div className="flex flex-wrap gap-2">
+                {filterTags.map((tag) => (
                   <button
-                    key={s.key}
-                    onClick={() => setActiveSort(i)}
-                    className={`px-3.5 py-2 rounded-lg text-sm font-medium transition-all ${
-                      activeSort === i
-                        ? 'bg-white text-ink-900 shadow-soft'
-                        : 'text-ink-500 hover:text-ink-700'
+                    key={tag.key}
+                    onClick={() => toggleFilter(tag.key)}
+                    className={`px-4 py-2 rounded-xl text-sm font-medium transition-all ${
+                      activeFilters.includes(tag.key)
+                        ? 'bg-teal-500 text-white shadow-soft'
+                        : 'bg-ink-50 text-ink-600 hover:bg-ink-100 border border-ink-200'
                     }`}
                   >
-                    {s.label}
+                    {tag.name}
                   </button>
                 ))}
               </div>
@@ -448,7 +555,7 @@ export default function RadarPage() {
               style={{ animationDelay: `${120 + i * 60}ms` }}
               onClick={() => navigate('/company/' + c.id)}
             >
-              <CardContent className="flex items-center gap-6 flex-wrap">
+              <CardContent className="flex items-start gap-6 flex-wrap">
                 <div className="flex items-center gap-4 min-w-[240px]">
                   <div className={`w-8 h-8 rounded-xl flex items-center justify-center text-sm font-bold font-num ${
                     c.rank <= 3 ? 'bg-gradient-to-br from-amber-400 to-orange-500 text-white' : 'bg-ink-100 text-ink-500'
@@ -459,12 +566,35 @@ export default function RadarPage() {
                     {c.logoText}
                   </div>
                   <div className="min-w-0">
-                    <div className="flex items-center gap-2 mb-1">
+                    <div className="flex items-center gap-2 mb-1 flex-wrap">
                       <h3 className="font-bold text-xl text-ink-900">{c.name}</h3>
                       {c.verified && <Badge variant="verified" size="xs"><ShieldCheck size={10} /> 认证</Badge>}
+                      {c.traceable && (
+                        <Badge variant="success" size="xs" className="bg-emerald-500">
+                          <CheckCircle2 size={10} className="mr-0.5" /> 可追溯
+                        </Badge>
+                      )}
                     </div>
-                    <div className="flex items-center gap-2 mb-2">
+                    <div className="flex items-center gap-2 mb-2 flex-wrap">
                       <Tag variant="teal" size="xs">{c.industry}</Tag>
+                      <div className="flex items-center gap-1">
+                        <span className="text-2xl font-bold text-brand-500 font-num">{c.salaryRange}</span>
+                        <span
+                          className="text-ink-400 cursor-help text-base"
+                          title="基于近3个月126名实习生日薪换算"
+                        >
+                          ❓
+                        </span>
+                      </div>
+                      <Badge variant="success" size="sm" className="font-num">
+                        {c.convertRate}%
+                        <span
+                          className="ml-1 text-emerald-100 cursor-help"
+                          title="口径：近6个月转正人数/入职人数"
+                        >
+                          ❓
+                        </span>
+                      </Badge>
                     </div>
                     <div className="flex items-center gap-1.5 text-xs text-ink-500">
                       <Users size={12} />
@@ -473,11 +603,21 @@ export default function RadarPage() {
                   </div>
                 </div>
 
-                <div className="flex-1 min-w-[320px] grid grid-cols-2 gap-x-8 gap-y-3">
-                  <ScoreBar label="薪资待遇" value={c.scores.salary} color="bg-brand-500" />
-                  <ScoreBar label="工作环境" value={c.scores.env} color="bg-teal-500" />
-                  <ScoreBar label="转正机会" value={c.scores.convert} color="bg-amber-500" />
-                  <ScoreBar label="成长空间" value={c.scores.growth} color="bg-sky-500" />
+                <div className="flex-1 min-w-[320px]">
+                  <div className="grid grid-cols-2 gap-x-8 gap-y-3">
+                    <ScoreBar label="薪资待遇" value={c.scores.salary} color="bg-brand-500" />
+                    <ScoreBar label="工作环境" value={c.scores.env} color="bg-teal-500" />
+                    <ScoreBar label="转正机会" value={c.scores.convert} color="bg-amber-500" />
+                    <ScoreBar label="成长空间" value={c.scores.growth} color="bg-sky-500" />
+                  </div>
+                  <div className="mt-2 text-xs text-ink-400 flex items-center gap-1">
+                    <span>数据来源：</span>
+                    <span className="font-num text-brand-500">{c.studentFeedback}</span>
+                    <span>条学生匿名反馈</span>
+                    <span className="mx-1">+</span>
+                    <span className="font-num text-teal-500">{c.hrSupplement}</span>
+                    <span>条HR补充</span>
+                  </div>
                 </div>
 
                 <div className="flex items-center gap-5 shrink-0">

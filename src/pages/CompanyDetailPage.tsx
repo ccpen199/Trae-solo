@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import {
   MapPin,
@@ -13,6 +14,14 @@ import {
   MessageCircle,
   ArrowRight,
   ChevronRight,
+  CheckCircle2,
+  ChevronDown,
+  ChevronUp,
+  FileText,
+  Calendar,
+  UserCheck,
+  RefreshCw,
+  Database,
 } from 'lucide-react';
 import {
   RadarChart,
@@ -73,6 +82,10 @@ const reviews = [
     likes: 128,
     anonymous: false,
     initial: '李',
+    reviewStatus: 'verified',
+    reviewMonth: 5,
+    type: 'student',
+    hrReply: null,
   },
   {
     id: 2,
@@ -86,6 +99,10 @@ const reviews = [
     likes: 96,
     anonymous: true,
     initial: '匿',
+    reviewStatus: 'verified',
+    reviewMonth: 3,
+    type: 'student',
+    hrReply: null,
   },
   {
     id: 3,
@@ -99,6 +116,15 @@ const reviews = [
     likes: 210,
     anonymous: false,
     initial: '王',
+    reviewStatus: 'verified',
+    reviewMonth: 6,
+    type: 'student',
+    hrReply: {
+      name: 'HR张经理',
+      date: '3天前',
+      content: '感谢王同学的真实反馈，算法团队一直是我们重点建设的团队，欢迎后续有机会再次加入！',
+      verified: true,
+    },
   },
   {
     id: 4,
@@ -112,6 +138,10 @@ const reviews = [
     likes: 67,
     anonymous: false,
     initial: '张',
+    reviewStatus: 'pending',
+    reviewMonth: 4,
+    type: 'student',
+    hrReply: null,
   },
   {
     id: 5,
@@ -125,6 +155,10 @@ const reviews = [
     likes: 145,
     anonymous: true,
     initial: '匿',
+    reviewStatus: 'verified',
+    reviewMonth: 5,
+    type: 'student',
+    hrReply: null,
   },
   {
     id: 6,
@@ -138,7 +172,57 @@ const reviews = [
     likes: 88,
     anonymous: false,
     initial: '陈',
+    reviewStatus: 'verified',
+    reviewMonth: 6,
+    type: 'student',
+    hrReply: {
+      name: 'HR李经理',
+      date: '5天前',
+      content: '基础架构团队转正名额确实有限，但这段大厂经历含金量很高，恭喜陈同学拿到其他心仪offer！',
+      verified: true,
+    },
   },
+];
+
+const auditRecords = [
+  {
+    id: 1,
+    date: '06-10',
+    content: '新增3条学生反馈',
+    icon: FileText,
+    color: 'text-brand-500',
+    bgColor: 'bg-brand-50',
+  },
+  {
+    id: 2,
+    date: '06-08',
+    content: '企业HR补充薪资说明',
+    icon: UserCheck,
+    color: 'text-amber-500',
+    bgColor: 'bg-amber-50',
+  },
+  {
+    id: 3,
+    date: '06-05',
+    content: '平台抽查20份问卷核实',
+    icon: RefreshCw,
+    color: 'text-teal-500',
+    bgColor: 'bg-teal-50',
+  },
+  {
+    id: 4,
+    date: '06-01',
+    content: '数据季度大更新',
+    icon: Database,
+    color: 'text-sky-500',
+    bgColor: 'bg-sky-50',
+  },
+];
+
+const salaryQuantiles = [
+  { label: 'P25', value: 200, unit: '/天', desc: '有25%的实习生薪资低于此值' },
+  { label: 'P50', value: 272, unit: '/天', desc: '中位数，有一半的实习生薪资在此之上' },
+  { label: 'P75', value: 350, unit: '/天', desc: '有75%的实习生薪资低于此值' },
 ];
 
 const openPositions = [
@@ -197,7 +281,9 @@ function ReviewCard({ r }: { r: typeof reviews[0] }) {
                 <span className="font-semibold text-ink-800 text-sm">
                   {r.anonymous ? '匿名实习生' : `${r.initial}同学`}
                 </span>
-                <Badge variant="verified" size="xs">已核实</Badge>
+                <Tag variant="teal" size="xs" className="bg-teal-50 text-teal-600 border border-teal-100">
+                  第{r.reviewMonth}个月实习评价
+                </Tag>
               </div>
               <div className="flex items-center gap-2 text-xs text-ink-500 mt-0.5 flex-wrap">
                 <span>{r.role}</span>
@@ -208,14 +294,25 @@ function ReviewCard({ r }: { r: typeof reviews[0] }) {
               </div>
             </div>
           </div>
-          <div className="flex items-center gap-0.5 shrink-0">
-            {Array.from({ length: 5 }).map((_, i) => (
-              <Star
-                key={i}
-                size={16}
-                className={i < r.rating ? 'text-amber-400 fill-amber-400' : 'text-ink-200'}
-              />
-            ))}
+          <div className="flex items-center gap-3 shrink-0">
+            {r.reviewStatus === 'verified' ? (
+              <Badge variant="success" size="xs" className="bg-emerald-500 text-white">
+                <CheckCircle2 size={10} className="mr-0.5" /> 平台已核实
+              </Badge>
+            ) : (
+              <Badge variant="warn" size="xs">
+                ⏳ 待复核
+              </Badge>
+            )}
+            <div className="flex items-center gap-0.5">
+              {Array.from({ length: 5 }).map((_, i) => (
+                <Star
+                  key={i}
+                  size={16}
+                  className={i < r.rating ? 'text-amber-400 fill-amber-400' : 'text-ink-200'}
+                />
+              ))}
+            </div>
           </div>
         </div>
         <p className="text-sm text-ink-600 leading-relaxed mb-3">{r.content}</p>
@@ -237,7 +334,26 @@ function ReviewCard({ r }: { r: typeof reviews[0] }) {
             </button>
           </div>
         </div>
-        <div className="text-xs text-ink-300 mt-2">
+        {r.hrReply && (
+          <div className="mt-4 p-4 rounded-xl bg-amber-50 border border-amber-100 animate-fade-in-up" style={{ animationDelay: '60ms' }}>
+            <div className="flex items-center justify-between mb-2 flex-wrap gap-2">
+              <div className="flex items-center gap-2">
+                <Tag variant="amber" size="xs">
+                  官方补充
+                </Tag>
+                <span className="text-sm font-semibold text-amber-800">{r.hrReply.name}</span>
+                <span className="text-xs text-amber-600">· {r.hrReply.date}</span>
+              </div>
+              {r.hrReply.verified && (
+                <Badge variant="success" size="xs" className="bg-emerald-500">
+                  内容与实际一致 ✓
+                </Badge>
+              )}
+            </div>
+            <p className="text-sm text-amber-900 leading-relaxed">{r.hrReply.content}</p>
+          </div>
+        )}
+        <div className="text-xs text-ink-300 mt-3">
           数据来源：{r.anonymous ? '实习生匿名反馈' : '企业HR补充'}
         </div>
       </div>
@@ -247,6 +363,7 @@ function ReviewCard({ r }: { r: typeof reviews[0] }) {
 
 export default function CompanyDetailPage() {
   const navigate = useNavigate();
+  const [showDataSpecs, setShowDataSpecs] = useState(true);
 
   return (
     <div className="min-h-screen bg-cream-50 py-8">
@@ -285,6 +402,10 @@ export default function CompanyDetailPage() {
                     <span className="flex items-center gap-1.5 text-amber-600 font-semibold font-num">
                       <TrendingUp size={16} /> 综合评分 91
                     </span>
+                    <Badge variant="success" className="bg-emerald-500 text-white">
+                      <CheckCircle2 size={12} className="mr-1" /> 数据可追溯
+                      <span className="ml-1 text-emerald-100 text-xs">256条反馈已核实</span>
+                    </Badge>
                   </div>
                 </div>
               </div>
@@ -308,7 +429,7 @@ export default function CompanyDetailPage() {
                     <TrendingUp size={20} className="text-brand-500" /> 综合能力雷达
                   </CardTitle>
                 </CardHeader>
-                <CardContent>
+                <CardContent className="space-y-4">
                   <div className="h-[300px]">
                     <ResponsiveContainer width="100%" height="100%">
                       <RadarChart data={radarData} cx="50%" cy="50%" outerRadius="75%">
@@ -340,6 +461,50 @@ export default function CompanyDetailPage() {
                       </RadarChart>
                     </ResponsiveContainer>
                   </div>
+                  <div className="border-t border-ink-100 pt-4 animate-fade-in-up" style={{ animationDelay: '80ms' }}>
+                    <button
+                      onClick={() => setShowDataSpecs(!showDataSpecs)}
+                      className="w-full flex items-center justify-between text-sm font-medium text-ink-700 hover:text-brand-600 transition-colors"
+                    >
+                      <span className="flex items-center gap-2">
+                        <Database size={16} className="text-teal-500" />
+                        数据口径说明
+                      </span>
+                      {showDataSpecs ? <ChevronUp size={18} /> : <ChevronDown size={18} />}
+                    </button>
+                    {showDataSpecs && (
+                      <div className="mt-4 space-y-3 animate-fade-in-up" style={{ animationDelay: '40ms' }}>
+                        <div className="flex items-start gap-3 p-3 rounded-xl bg-brand-50/50 border border-brand-100">
+                          <Banknote size={16} className="text-brand-500 mt-0.5 shrink-0" />
+                          <div className="flex-1 min-w-0">
+                            <div className="text-sm font-semibold text-brand-700">薪资区间</div>
+                            <div className="text-xs text-ink-600 mt-0.5">基于近3个月126名实习生日薪换算</div>
+                          </div>
+                        </div>
+                        <div className="flex items-start gap-3 p-3 rounded-xl bg-amber-50/50 border border-amber-100">
+                          <TrendingUp size={16} className="text-amber-500 mt-0.5 shrink-0" />
+                          <div className="flex-1 min-w-0">
+                            <div className="text-sm font-semibold text-amber-700">转正率</div>
+                            <div className="text-xs text-ink-600 mt-0.5">近6个月转正人数 / 总入职人数</div>
+                          </div>
+                        </div>
+                        <div className="flex items-start gap-3 p-3 rounded-xl bg-teal-50/50 border border-teal-100">
+                          <Building2 size={16} className="text-teal-500 mt-0.5 shrink-0" />
+                          <div className="flex-1 min-w-0">
+                            <div className="text-sm font-semibold text-teal-700">环境评分</div>
+                            <div className="text-xs text-ink-600 mt-0.5">办公设施、团队氛围、福利待遇、管理制度、地理位置 5维度加权</div>
+                          </div>
+                        </div>
+                        <div className="flex items-start gap-3 p-3 rounded-xl bg-sky-50/50 border border-sky-100">
+                          <Calendar size={16} className="text-sky-500 mt-0.5 shrink-0" />
+                          <div className="flex-1 min-w-0">
+                            <div className="text-sm font-semibold text-sky-700">数据更新时间</div>
+                            <div className="text-xs text-ink-600 mt-0.5">2025-06-10</div>
+                          </div>
+                        </div>
+                      </div>
+                    )}
+                  </div>
                 </CardContent>
               </Card>
 
@@ -350,7 +515,7 @@ export default function CompanyDetailPage() {
                     <Banknote size={20} className="text-amber-500" /> 实习薪资分布
                   </CardTitle>
                 </CardHeader>
-                <CardContent>
+                <CardContent className="space-y-4">
                   <div className="h-[300px]">
                     <ResponsiveContainer width="100%" height="100%">
                       <BarChart data={salaryDistribution} barCategoryGap="25%">
@@ -387,30 +552,93 @@ export default function CompanyDetailPage() {
                       </BarChart>
                     </ResponsiveContainer>
                   </div>
+                  <div className="p-4 rounded-xl bg-gradient-to-br from-amber-50 to-orange-50 border border-amber-100 animate-fade-in-up" style={{ animationDelay: '80ms' }}>
+                    <div className="flex items-center gap-2 mb-3">
+                      <Database size={14} className="text-amber-500" />
+                      <span className="text-sm font-semibold text-amber-800">薪资口径说明</span>
+                      <Badge variant="warn" size="xs">样本量 n=126</Badge>
+                    </div>
+                    <div className="grid grid-cols-3 gap-3">
+                      {salaryQuantiles.map((q) => (
+                        <div key={q.label} className="p-3 rounded-xl bg-white/80 text-center">
+                          <div className="text-xs text-ink-500 mb-1">{q.label}</div>
+                          <div className="text-xl font-bold text-amber-600 font-num">
+                            ¥{q.value}
+                            <span className="text-xs font-normal text-amber-500 ml-0.5">{q.unit}</span>
+                          </div>
+                          <div className="text-[10px] text-ink-400 mt-1 leading-tight">{q.desc}</div>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
                 </CardContent>
               </Card>
             </div>
 
-            {/* 评价时间轴 */}
-            <Card className="animate-fade-in-up" style={{ animationDelay: '140ms' }}>
-              <CardHeader>
-                <div className="flex items-center justify-between">
+            {/* 评价时间轴 + 复查记录 */}
+            <div className="grid lg:grid-cols-3 gap-6 animate-fade-in-up" style={{ animationDelay: '140ms' }}>
+              {/* 评价时间轴 */}
+              <Card className="lg:col-span-2 overflow-hidden">
+                <CardHeader>
+                  <div className="flex items-center justify-between">
+                    <CardTitle className="text-lg flex items-center gap-2">
+                      <MessageCircle size={20} className="text-teal-500" />
+                      实习生匿名评价
+                      <Badge variant="success" size="xs" className="ml-2">{reviews.length * 478}条</Badge>
+                    </CardTitle>
+                    <Button variant="ghost" size="sm" rightIcon={<ChevronRight size={14} />} onClick={() => navigate('/feedback')}>查看全部</Button>
+                  </div>
+                </CardHeader>
+                <CardContent className="bg-cream-50/50 -mx-5 -mb-5 rounded-b-card pt-0 overflow-hidden">
+                  <div className="pt-5">
+                    {reviews.map((r) => (
+                      <ReviewCard key={r.id} r={r} />
+                    ))}
+                  </div>
+                </CardContent>
+              </Card>
+
+              {/* 复查记录时间线 */}
+              <Card className="overflow-hidden">
+                <CardHeader>
                   <CardTitle className="text-lg flex items-center gap-2">
-                    <MessageCircle size={20} className="text-teal-500" />
-                    实习生匿名评价
-                    <Badge variant="success" size="xs" className="ml-2">{reviews.length * 478}条</Badge>
+                    <RefreshCw size={18} className="text-sky-500" />
+                    复查记录时间线
                   </CardTitle>
-                  <Button variant="ghost" size="sm" rightIcon={<ChevronRight size={14} />} onClick={() => navigate('/feedback')}>查看全部</Button>
-                </div>
-              </CardHeader>
-              <CardContent className="bg-cream-50/50 -mx-5 -mb-5 mx-0 rounded-b-card pt-0">
-                <div className="pt-5">
-                  {reviews.map((r) => (
-                    <ReviewCard key={r.id} r={r} />
-                  ))}
-                </div>
-              </CardContent>
-            </Card>
+                </CardHeader>
+                <CardContent className="bg-gradient-to-b from-sky-50/50 to-cream-50 -mx-5 -mb-5 rounded-b-card pt-2">
+                  <div className="pt-3 pb-5">
+                    {auditRecords.map((record, i) => {
+                      const IconComp = record.icon;
+                      return (
+                        <div
+                          key={record.id}
+                          className={`relative pl-10 pb-6 last:pb-0 animate-fade-in-up`}
+                          style={{ animationDelay: `${i * 60 + 40}ms` }}
+                        >
+                          <div className={`absolute left-0 top-1 w-8 h-8 rounded-xl ${record.bgColor} flex items-center justify-center ring-4 ring-white`}>
+                            <IconComp size={16} className={record.color} />
+                          </div>
+                          {i !== auditRecords.length - 1 && (
+                            <div className="absolute left-[15px] top-10 bottom-0 w-px bg-gradient-to-b from-sky-200 to-transparent" />
+                          )}
+                          <div className="pt-1">
+                            <div className="flex items-center gap-2 mb-1">
+                              <Badge variant="brand" size="xs" className="bg-sky-500 text-white">
+                                {record.date}
+                              </Badge>
+                            </div>
+                            <div className="text-sm font-medium text-ink-800 leading-snug">
+                              {record.content}
+                            </div>
+                          </div>
+                        </div>
+                      );
+                    })}
+                  </div>
+                </CardContent>
+              </Card>
+            </div>
           </div>
 
           {/* 右栏 - 数据摘要 + 评分明细 */}

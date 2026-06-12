@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import {
   Hash,
   Eye,
@@ -14,12 +15,14 @@ import {
   ShieldCheck,
   ChevronRight,
   X,
+  Sparkles,
 } from 'lucide-react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/Card';
 import Button from '@/components/ui/Button';
 import Badge from '@/components/ui/Badge';
 import Tag from '@/components/ui/Tag';
 import Input from '@/components/ui/Input';
+import Modal from '@/components/ui/Modal';
 
 const groupTabs = [
   { id: 'all', name: '全部动态', count: '12.8k' },
@@ -277,8 +280,32 @@ const tagVariantMap = {
 };
 
 export default function CommunityPage() {
+  const navigate = useNavigate();
   const [activeTab, setActiveTab] = useState(0);
   const [searchText, setSearchText] = useState('');
+  const [activeGroup, setActiveGroup] = useState('all');
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [newQuestion, setNewQuestion] = useState({
+    title: '',
+    content: '',
+    groupType: 'school',
+    groupValue: '',
+    isAnonymous: false,
+  });
+
+  const filteredQuestions = activeGroup === 'all'
+    ? questions
+    : questions.filter((q) => q.school === groupTabs.find((t) => t.id === activeGroup)?.name);
+
+  const handleTabClick = (tabId: string, idx: number) => {
+    setActiveTab(idx);
+    setActiveGroup(tabId);
+  };
+
+  const handleSubmitQuestion = () => {
+    setIsModalOpen(false);
+    setNewQuestion({ title: '', content: '', groupType: 'school', groupValue: '', isAnonymous: false });
+  };
 
   return (
     <div className="min-h-screen bg-cream-50 py-8 relative">
@@ -296,7 +323,8 @@ export default function CommunityPage() {
               {hotTopics.map((t) => (
                 <button
                   key={t.rank}
-                  className="w-full flex items-start gap-3 p-3 rounded-xl hover:bg-ink-50 transition-all group text-left"
+                  onClick={() => navigate('/community/topic/' + t.rank)}
+                  className="w-full flex items-start gap-3 p-3 rounded-xl hover:bg-ink-50 transition-all group text-left cursor-pointer"
                 >
                   <span className={`w-6 h-6 rounded-lg flex items-center justify-center text-xs font-bold shrink-0 mt-0.5 ${
                     t.rank <= 3
@@ -354,15 +382,15 @@ export default function CommunityPage() {
                 {groupTabs.map((tab, i) => (
                   <button
                     key={tab.id}
-                    onClick={() => setActiveTab(i)}
+                    onClick={() => handleTabClick(tab.id, i)}
                     className={`px-4 py-2.5 rounded-lg text-sm font-medium whitespace-nowrap transition-all flex items-center gap-2 ${
                       activeTab === i
-                        ? 'bg-white text-ink-900 shadow-soft'
-                        : 'text-ink-500 hover:text-ink-800'
+                        ? 'bg-brand-500 text-white shadow-soft'
+                        : 'bg-ink-100 text-ink-500 hover:text-ink-800 hover:bg-ink-200'
                     }`}
                   >
                     {tab.name}
-                    <span className={`text-xs font-num ${activeTab === i ? 'text-brand-500' : 'text-ink-400'}`}>
+                    <span className={`text-xs font-num ${activeTab === i ? 'text-white/90' : 'text-ink-400'}`}>
                       {tab.count}
                     </span>
                   </button>
@@ -379,11 +407,12 @@ export default function CommunityPage() {
 
           {/* 问题列表 */}
           <div className="space-y-4">
-            {questions.map((q, i) => (
+            {filteredQuestions.map((q, i) => (
               <Card
                 key={q.id}
                 hoverable
-                className="animate-fade-in-up"
+                className="animate-fade-in-up cursor-pointer hover:shadow-card transition"
+                onClick={() => navigate('/community/' + q.id)}
                 style={{ animationDelay: `${80 + i * 50}ms` }}
               >
                 <CardContent className="space-y-4">
@@ -503,11 +532,17 @@ export default function CommunityPage() {
                     </div>
                     <div className="text-xs text-ink-500 truncate">{m.title}</div>
                   </div>
-                  <button className={`w-7 h-7 rounded-lg flex items-center justify-center transition-all ${
-                    m.online
-                      ? 'bg-brand-50 text-brand-500 opacity-0 group-hover:opacity-100'
-                      : 'bg-ink-100 text-ink-400'
-                  }`}>
+                  <button
+                    className={`w-7 h-7 rounded-lg flex items-center justify-center transition-all ${
+                      m.online
+                        ? 'bg-brand-50 text-brand-500 opacity-0 group-hover:opacity-100'
+                        : 'bg-ink-100 text-ink-400'
+                    }`}
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      navigate('/community/' + 1);
+                    }}
+                  >
                     <MessageCircle size={14} />
                   </button>
                 </div>
@@ -529,7 +564,7 @@ export default function CommunityPage() {
                   <p className="text-xs text-ink-500">3分钟内必有学长回答</p>
                 </div>
               </div>
-              <Button className="w-full" leftIcon={<Plus size={16} />}>
+              <Button className="w-full" leftIcon={<Plus size={16} />} onClick={() => setIsModalOpen(true)}>
                 发起新提问
               </Button>
               <div className="grid grid-cols-3 gap-2 text-center pt-2 border-t border-ink-100">
@@ -552,9 +587,112 @@ export default function CommunityPage() {
       </div>
 
       {/* 悬浮提问按钮 (移动端) */}
-      <button className="lg:hidden fixed bottom-6 right-6 w-14 h-14 rounded-2xl bg-brand-gradient text-white shadow-float flex items-center justify-center z-40 active:scale-95 transition-transform">
+      <button
+        className="lg:hidden fixed bottom-6 right-6 w-14 h-14 rounded-2xl bg-brand-gradient text-white shadow-float flex items-center justify-center z-40 active:scale-95 transition-transform"
+        onClick={() => setIsModalOpen(true)}
+      >
         <Plus size={28} strokeWidth={2.5} />
       </button>
+
+      {/* 发布提问 Modal */}
+      <Modal
+        open={isModalOpen}
+        onClose={() => setIsModalOpen(false)}
+        title="发布新提问"
+        description="向学长学姐们请教你的困惑吧"
+        size="lg"
+        footer={
+          <>
+            <Button variant="ghost" onClick={() => setIsModalOpen(false)}>取消</Button>
+            <Button onClick={handleSubmitQuestion} leftIcon={<Send size={16} />}>发布提问</Button>
+          </>
+        }
+      >
+        <div className="space-y-5">
+          <div>
+            <label className="block text-sm font-medium text-ink-700 mb-2">问题标题</label>
+            <Input
+              placeholder="一句话描述你的问题，例如：大三如何准备暑期实习？"
+              value={newQuestion.title}
+              onChange={(e) => setNewQuestion({ ...newQuestion, title: e.target.value })}
+            />
+          </div>
+
+          <div>
+            <label className="block text-sm font-medium text-ink-700 mb-2">问题详情</label>
+            <textarea
+              className="w-full min-h-[140px] px-4 py-3 rounded-xl2 bg-white border border-ink-200 hover:border-ink-300 focus:border-brand-400 focus:ring-2 focus:ring-brand-400/20 outline-none transition-all text-sm text-ink-800 placeholder:text-ink-300 resize-none"
+              placeholder="详细描述你的背景、具体问题和期望获得的帮助..."
+              value={newQuestion.content}
+              onChange={(e) => setNewQuestion({ ...newQuestion, content: e.target.value })}
+            />
+          </div>
+
+          <div className="grid grid-cols-2 gap-4">
+            <div>
+              <label className="block text-sm font-medium text-ink-700 mb-2">分群类型</label>
+              <div className="flex gap-2">
+                {[
+                  { id: 'school', label: '按院校' },
+                  { id: 'major', label: '按专业' },
+                  { id: 'city', label: '按城市' },
+                ].map((opt) => (
+                  <button
+                    key={opt.id}
+                    onClick={() => setNewQuestion({ ...newQuestion, groupType: opt.id })}
+                    className={`flex-1 py-2.5 rounded-xl text-sm font-medium transition-all ${
+                      newQuestion.groupType === opt.id
+                        ? 'bg-brand-500 text-white shadow-soft'
+                        : 'bg-ink-100 text-ink-600 hover:bg-ink-200'
+                    }`}
+                  >
+                    {opt.label}
+                  </button>
+                ))}
+              </div>
+            </div>
+            <div>
+              <label className="block text-sm font-medium text-ink-700 mb-2">所属分群</label>
+              <Input
+                placeholder={
+                  newQuestion.groupType === 'school'
+                    ? '例如：清华大学'
+                    : newQuestion.groupType === 'major'
+                    ? '例如：计算机科学'
+                    : '例如：北京'
+                }
+                value={newQuestion.groupValue}
+                onChange={(e) => setNewQuestion({ ...newQuestion, groupValue: e.target.value })}
+              />
+            </div>
+          </div>
+
+          <div className="flex items-center justify-between p-4 rounded-xl bg-cream-100/60 border border-ink-100">
+            <div className="flex items-start gap-3">
+              <div className="w-9 h-9 rounded-xl bg-brand-100 flex items-center justify-center text-brand-500 shrink-0">
+                <Sparkles size={18} />
+              </div>
+              <div>
+                <p className="text-sm font-medium text-ink-800">匿名提问</p>
+                <p className="text-xs text-ink-500 mt-0.5">隐藏你的个人信息，其他用户无法看到你的身份</p>
+              </div>
+            </div>
+            <button
+              onClick={() => setNewQuestion({ ...newQuestion, isAnonymous: !newQuestion.isAnonymous })}
+              className={`relative w-12 h-7 rounded-full transition-all duration-200 ${
+                newQuestion.isAnonymous ? 'bg-brand-500' : 'bg-ink-200'
+              }`}
+            >
+              <span
+                className={`absolute top-0.5 w-6 h-6 rounded-full bg-white shadow-md transition-all duration-200 ${
+                  newQuestion.isAnonymous ? 'left-5.5 translate-x-0.5' : 'left-0.5'
+                }`}
+                style={{ left: newQuestion.isAnonymous ? '22px' : '2px' }}
+              />
+            </button>
+          </div>
+        </div>
+      </Modal>
     </div>
   );
 }

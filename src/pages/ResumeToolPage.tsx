@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import {
   Sparkles,
   Upload,
@@ -13,6 +14,11 @@ import {
   Zap,
   AlertCircle,
   Award,
+  Home,
+  Wrench,
+  ChevronRight,
+  BrainCircuit,
+  MessageSquare,
 } from 'lucide-react';
 import { Card, CardHeader, CardTitle, CardContent } from '@/components/ui/Card';
 import Button from '@/components/ui/Button';
@@ -82,6 +88,7 @@ const optimizedResume = `李思远
 方向：性能优化 · 工程化 · 组件库设计 · AI应用开发`;
 
 export default function ResumeToolPage() {
+  const navigate = useNavigate();
   const [jdText, setJdText] = useState(`【字节跳动-抖音电商-前端开发实习生】
 岗位职责：
 1. 负责电商业务线后台管理系统的前端开发与维护
@@ -117,8 +124,37 @@ export default function ResumeToolPage() {
   };
 
   return (
-    <div className="min-h-screen bg-cream-50 py-8">
+    <div className="min-h-screen bg-cream-50 py-6">
       <div className="container mx-auto px-4 max-w-6xl space-y-6">
+        <nav className="flex items-center gap-2 text-sm text-ink-500 animate-fade-in-up">
+          <button
+            onClick={() => navigate('/')}
+            className="flex items-center gap-1 hover:text-brand-600 transition-colors"
+          >
+            <Home size={14} />
+            首页
+          </button>
+          <ChevronRight size={14} className="text-ink-300" />
+          <button
+            onClick={() => navigate('/tools')}
+            className="flex items-center gap-1 hover:text-brand-600 transition-colors"
+          >
+            <Wrench size={14} />
+            工具箱
+          </button>
+          <ChevronRight size={14} className="text-ink-300" />
+          <span className="text-ink-700 font-medium">AI简历优化</span>
+          <Button
+            variant="outline"
+            size="sm"
+            className="ml-auto"
+            onClick={() => navigate('/tools')}
+          >
+            <ChevronRight size={14} className="rotate-180" />
+            返回工具箱
+          </Button>
+        </nav>
+
         <div className="animate-fade-in-up flex items-center gap-4">
           <div className="w-14 h-14 rounded-2xl bg-gradient-to-br from-brand-400 to-amber-400 text-white flex items-center justify-center shadow-float">
             <Sparkles size={26} />
@@ -325,7 +361,7 @@ export default function ResumeToolPage() {
               </CardContent>
             </Card>
 
-            <div className="flex flex-col sm:flex-row items-center justify-center gap-4 pt-2 pb-6">
+            <div className="flex flex-col sm:flex-row items-center justify-center gap-4 pt-2">
               <Button variant="outline" size="lg">
                 <AlertCircle size={18} />
                 继续优化
@@ -334,6 +370,49 @@ export default function ResumeToolPage() {
                 <FileDown size={18} />
                 导出 PDF 简历
               </Button>
+            </div>
+
+            <div className="pt-6 pb-6">
+              <h3 className="text-lg font-bold text-ink-900 mb-4 flex items-center gap-2">
+                <Sparkles size={18} className="text-amber-500" />
+                接下来你可能需要
+              </h3>
+              <div className="grid md:grid-cols-2 gap-4">
+                <Card
+                  hoverable
+                  className="cursor-pointer overflow-hidden group"
+                  onClick={() => navigate('/tools/assessment')}
+                >
+                  <CardContent className="p-5 flex items-center gap-4">
+                    <div className="w-14 h-14 rounded-2xl bg-gradient-to-br from-sky-400 via-indigo-400 to-violet-400 text-white flex items-center justify-center shadow-md shrink-0 group-hover:scale-105 transition-transform">
+                      <BrainCircuit size={26} />
+                    </div>
+                    <div className="flex-1 min-w-0">
+                      <h4 className="font-bold text-ink-900 text-lg mb-1">职业测评</h4>
+                      <p className="text-sm text-ink-500">MBTI + 霍兰德职业兴趣测试，精准定位适合你的岗位方向</p>
+                    </div>
+                    <ChevronRight size={20} className="text-ink-300 group-hover:text-brand-500 group-hover:translate-x-1 transition-all shrink-0" />
+                  </CardContent>
+                </Card>
+
+                <Card
+                  hoverable
+                  className="cursor-pointer overflow-hidden group"
+                  onClick={() => alert('即将上线，敬请期待~')}
+                >
+                  <CardContent className="p-5 flex items-center gap-4">
+                    <div className="w-14 h-14 rounded-2xl bg-gradient-to-br from-teal-400 to-brand-400 text-white flex items-center justify-center shadow-md shrink-0 group-hover:scale-105 transition-transform">
+                      <MessageSquare size={26} />
+                    </div>
+                    <div className="flex-1 min-w-0">
+                      <h4 className="font-bold text-ink-900 text-lg mb-1">模拟面试</h4>
+                      <p className="text-sm text-ink-500">AI面试官真人模拟，提前演练高频问题，提升面试通过率</p>
+                      <Badge variant="warn" size="xs" className="mt-2">即将上线</Badge>
+                    </div>
+                    <ChevronRight size={20} className="text-ink-300 group-hover:text-brand-500 group-hover:translate-x-1 transition-all shrink-0" />
+                  </CardContent>
+                </Card>
+              </div>
             </div>
           </div>
         )}

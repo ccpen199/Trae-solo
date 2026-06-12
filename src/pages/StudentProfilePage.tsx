@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import {
   User,
   GraduationCap,
@@ -19,6 +20,7 @@ import {
   Calendar,
   Building2,
   ShieldCheck,
+  ArrowRight,
 } from 'lucide-react';
 import { Card, CardHeader, CardTitle, CardContent } from '@/components/ui/Card';
 import Button from '@/components/ui/Button';
@@ -35,8 +37,10 @@ const statusConfig: Record<VerificationStatus, { label: string; variant: any; ic
 };
 
 export default function StudentProfilePage() {
+  const navigate = useNavigate();
   const [activeTab, setActiveTab] = useState<TabKey>('basic');
-  const [verificationStatus] = useState<VerificationStatus>('verified');
+  const [verificationStatus] = useState<VerificationStatus>('pending');
+  const profileComplete = 0.78;
 
   const tabs: { key: TabKey; label: string; icon: any }[] = [
     { key: 'basic', label: '基本信息', icon: User },
@@ -84,6 +88,22 @@ export default function StudentProfilePage() {
   return (
     <div className="min-h-screen bg-cream-50 py-8">
       <div className="container mx-auto px-4 max-w-6xl space-y-6">
+        {verificationStatus !== 'verified' && (
+          <div className="animate-fade-in-up bg-amber-50 border border-amber-200 rounded-2xl px-5 py-4 flex items-center justify-between gap-4 flex-wrap">
+            <div className="flex items-center gap-3">
+              <div className="w-10 h-10 rounded-xl bg-amber-100 flex items-center justify-center shrink-0">
+                <Clock size={20} className="text-amber-600" />
+              </div>
+              <div>
+                <div className="font-semibold text-amber-800">学籍验证审核中</div>
+                <div className="text-sm text-amber-600">预计1-2个工作日完成审核，完成后可解锁专属内推通道</div>
+              </div>
+            </div>
+            <Button variant="primary" size="sm" leftIcon={<Upload size={14} />}>
+              重新提交材料
+            </Button>
+          </div>
+        )}
         <Card className="animate-fade-in-up overflow-hidden">
           <div className="relative h-44 bg-gradient-to-r from-brand-500 via-brand-400 to-teal-400">
             <div className="absolute inset-0 bg-hero-gradient opacity-40" />
@@ -122,7 +142,7 @@ export default function StudentProfilePage() {
                   </span>
                 </div>
               </div>
-              <div className="pb-2 flex gap-3">
+              <div className="pb-2 flex gap-3 flex-wrap">
                 <Button variant="outline" size="md">
                   <Eye size={16} />
                   预览简历
@@ -130,6 +150,19 @@ export default function StudentProfilePage() {
                 <Button variant="primary" size="md">
                   <Edit3 size={16} />
                   编辑资料
+                </Button>
+                <Button
+                  variant="secondary"
+                  size="md"
+                  className="relative"
+                  onClick={() => navigate('/me/applications')}
+                >
+                  <Briefcase size={16} />
+                  我的投递记录
+                  <span className="ml-1">(5)</span>
+                  <span className="absolute -top-1 -right-1 w-5 h-5 rounded-full bg-rose-500 text-white text-xs font-bold flex items-center justify-center shadow-sm">
+                    5
+                  </span>
                 </Button>
               </div>
             </div>
@@ -184,6 +217,134 @@ export default function StudentProfilePage() {
                 <Button variant="primary" size="sm">
                   <CheckCircle size={14} />
                   提交验证
+                </Button>
+              </div>
+            </div>
+          </CardContent>
+        </Card>
+
+        {/* 投递准备进度卡 */}
+        <Card className="animate-fade-in-up border-gradient-to-r from-brand-100 to-teal-100" style={{ animationDelay: '0.15s' }}>
+          <CardContent>
+            <div className="flex flex-col lg:flex-row lg:items-center gap-6">
+              {/* 左：圆环进度 */}
+              <div className="flex items-center gap-6 lg:w-56 shrink-0">
+                <div className="relative w-28 h-28 shrink-0">
+                  <svg className="w-full h-full -rotate-90" viewBox="0 0 120 120">
+                    <circle
+                      cx="60"
+                      cy="60"
+                      r="52"
+                      fill="none"
+                      stroke="currentColor"
+                      strokeWidth="10"
+                      className="text-ink-100"
+                    />
+                    <circle
+                      cx="60"
+                      cy="60"
+                      r="52"
+                      fill="none"
+                      stroke="url(#progressGradient)"
+                      strokeWidth="10"
+                      strokeLinecap="round"
+                      strokeDasharray={`${2 * Math.PI * 52}`}
+                      strokeDashoffset={`${2 * Math.PI * 52 * (1 - profileComplete)}`}
+                      className="transition-all duration-700"
+                    />
+                    <defs>
+                      <linearGradient id="progressGradient" x1="0%" y1="0%" x2="100%" y2="0%">
+                        <stop offset="0%" stopColor="#0ea5e9" />
+                        <stop offset="50%" stopColor="#6366f1" />
+                        <stop offset="100%" stopColor="#10b981" />
+                      </linearGradient>
+                    </defs>
+                  </svg>
+                  <div className="absolute inset-0 flex flex-col items-center justify-center">
+                    <span className="text-2xl font-bold text-ink-900 font-num">{Math.round(profileComplete * 100)}%</span>
+                    <span className="text-xs text-ink-500">完整度</span>
+                  </div>
+                </div>
+                <div>
+                  <h4 className="font-bold text-ink-900">求职档案进度</h4>
+                  <p className="text-xs text-ink-500 mt-1">完善档案解锁更多岗位</p>
+                </div>
+              </div>
+
+              {/* 中：分项目标列表 */}
+              <div className="flex-1 min-w-0">
+                <div className="grid sm:grid-cols-2 lg:grid-cols-1 xl:grid-cols-2 gap-3">
+                  <div className="flex items-center gap-3 p-3 rounded-xl bg-emerald-50/60 border border-emerald-100">
+                    <div className="w-7 h-7 rounded-lg bg-emerald-500 flex items-center justify-center shrink-0">
+                      <CheckCircle size={16} className="text-white" />
+                    </div>
+                    <div className="flex-1 min-w-0">
+                      <div className="font-medium text-ink-800 text-sm">学籍验证</div>
+                      <div className="text-xs text-emerald-600">审核中</div>
+                    </div>
+                  </div>
+                  <div className="flex items-center gap-3 p-3 rounded-xl bg-emerald-50/60 border border-emerald-100">
+                    <div className="w-7 h-7 rounded-lg bg-emerald-500 flex items-center justify-center shrink-0">
+                      <CheckCircle size={16} className="text-white" />
+                    </div>
+                    <div className="flex-1 min-w-0">
+                      <div className="font-medium text-ink-800 text-sm">基本信息</div>
+                      <div className="text-xs text-emerald-600">已完善</div>
+                    </div>
+                  </div>
+                  <div className="flex items-center gap-3 p-3 rounded-xl bg-amber-50/60 border border-amber-100">
+                    <div className="w-7 h-7 rounded-lg bg-amber-400 flex items-center justify-center shrink-0">
+                      <Clock size={16} className="text-white" />
+                    </div>
+                    <div className="flex-1 min-w-0">
+                      <div className="font-medium text-ink-800 text-sm flex items-center gap-1.5">
+                        <Award size={14} className="text-amber-500" />
+                        技能证书
+                      </div>
+                      <div className="text-xs text-amber-600">2 / 3 个</div>
+                    </div>
+                  </div>
+                  <div className="flex items-center gap-3 p-3 rounded-xl bg-amber-50/60 border border-amber-100">
+                    <div className="w-7 h-7 rounded-lg bg-amber-400 flex items-center justify-center shrink-0">
+                      <Clock size={16} className="text-white" />
+                    </div>
+                    <div className="flex-1 min-w-0">
+                      <div className="font-medium text-ink-800 text-sm flex items-center gap-1.5">
+                        <FolderKanban size={14} className="text-amber-500" />
+                        实训项目
+                      </div>
+                      <div className="text-xs text-amber-600">2 / 3 个</div>
+                    </div>
+                  </div>
+                  <div className="flex items-center gap-3 p-3 rounded-xl bg-emerald-50/60 border border-emerald-100 sm:col-span-2 lg:col-span-1 xl:col-span-2">
+                    <div className="w-7 h-7 rounded-lg bg-emerald-500 flex items-center justify-center shrink-0">
+                      <CheckCircle size={16} className="text-white" />
+                    </div>
+                    <div className="flex-1 min-w-0">
+                      <div className="font-medium text-ink-800 text-sm flex items-center gap-1.5">
+                        <Edit3 size={14} className="text-emerald-500" />
+                        自我描述
+                      </div>
+                      <div className="text-xs text-emerald-600">已完成（320字）</div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              {/* 右：可投递岗位提示 */}
+              <div className="lg:w-56 shrink-0 p-5 rounded-2xl bg-gradient-to-br from-brand-50 to-teal-50 border border-brand-100/60 text-center lg:text-left">
+                <div className="text-4xl mb-2">🎯</div>
+                <div className="text-sm text-ink-600 mb-1">完成后可解锁</div>
+                <div className="text-3xl font-bold text-brand-600 font-num mb-1">128<span className="text-lg font-medium">个</span></div>
+                <div className="text-sm text-ink-600 mb-4">优质实习岗位</div>
+                <Button
+                  variant="primary"
+                  size="sm"
+                  className="w-full"
+                  rightIcon={<ArrowRight size={14} />}
+                  onClick={() => navigate('/jobs')}
+                >
+                  去岗位广场看看
                 </Button>
               </div>
             </div>

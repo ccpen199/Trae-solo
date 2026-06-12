@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import {
   BrainCircuit,
   Clock,
@@ -13,6 +14,10 @@ import {
   Award,
   RefreshCw,
   CheckCircle2,
+  Home,
+  Wrench,
+  FileText,
+  ArrowRight,
 } from 'lucide-react';
 import {
   Radar, RadarChart, PolarGrid, PolarAngleAxis, PolarRadiusAxis, ResponsiveContainer,
@@ -94,6 +99,7 @@ const careerAdvice = [
 ];
 
 export default function AssessmentPage() {
+  const navigate = useNavigate();
   const [stage, setStage] = useState<Stage>('intro');
   const [currentQ, setCurrentQ] = useState(0);
   const [answers, setAnswers] = useState<Record<number, string>>({});
@@ -124,8 +130,37 @@ export default function AssessmentPage() {
   const progress = stage === 'quiz' ? ((currentQ + 1) / questions.length) * 100 : 0;
 
   return (
-    <div className="min-h-screen bg-cream-50 py-8">
+    <div className="min-h-screen bg-cream-50 py-6">
       <div className="container mx-auto px-4 max-w-5xl space-y-6">
+        <nav className="flex items-center gap-2 text-sm text-ink-500 animate-fade-in-up">
+          <button
+            onClick={() => navigate('/')}
+            className="flex items-center gap-1 hover:text-brand-600 transition-colors"
+          >
+            <Home size={14} />
+            首页
+          </button>
+          <ChevronRight size={14} className="text-ink-300" />
+          <button
+            onClick={() => navigate('/tools')}
+            className="flex items-center gap-1 hover:text-brand-600 transition-colors"
+          >
+            <Wrench size={14} />
+            工具箱
+          </button>
+          <ChevronRight size={14} className="text-ink-300" />
+          <span className="text-ink-700 font-medium">职业测评</span>
+          <Button
+            variant="outline"
+            size="sm"
+            className="ml-auto"
+            onClick={() => navigate('/tools')}
+          >
+            <ChevronRight size={14} className="rotate-180" />
+            返回工具箱
+          </Button>
+        </nav>
+
         <div className="animate-fade-in-up flex items-center gap-4">
           <div className="w-14 h-14 rounded-2xl bg-gradient-to-br from-sky-400 via-indigo-400 to-violet-400 text-white flex items-center justify-center shadow-float">
             <BrainCircuit size={26} />
@@ -447,7 +482,94 @@ export default function AssessmentPage() {
               </CardContent>
             </Card>
 
-            <div className="flex flex-col sm:flex-row items-center justify-center gap-4 pb-6">
+            <div className="pt-4">
+              <h3 className="text-lg font-bold text-ink-900 mb-4 flex items-center gap-2">
+                <TrendingUp size={18} className="text-teal-500" />
+                为你推荐
+              </h3>
+              <div className="grid md:grid-cols-2 gap-4">
+                <Card
+                  hoverable
+                  className="cursor-pointer overflow-hidden group border-2 border-teal-100 bg-gradient-to-br from-teal-50/50 via-white to-white"
+                >
+                  <CardContent className="p-5">
+                    <div className="flex items-start justify-between mb-3">
+                      <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-teal-400 to-brand-400 text-white flex items-center justify-center shadow-md shrink-0 group-hover:scale-105 transition-transform">
+                        <Briefcase size={22} />
+                      </div>
+                      <Badge variant="success" size="sm">
+                        匹配 {recommendedJobs[0].match}%
+                      </Badge>
+                    </div>
+                    <h4 className="font-bold text-ink-900 text-xl mb-1">为你匹配的岗位</h4>
+                    <p className="text-sm text-ink-500 mb-4">
+                      基于你的 ENFJ + IES 性格特质，精选 {recommendedJobs.length} 个高匹配度岗位
+                    </p>
+                    <div className="flex flex-wrap gap-1.5 mb-4">
+                      {recommendedJobs.slice(0, 3).map((j) => (
+                        <Badge key={j.id} variant="info" size="xs">
+                          {j.name}
+                        </Badge>
+                      ))}
+                    </div>
+                    <Button
+                      variant="primary"
+                      size="md"
+                      className="w-full"
+                      onClick={() => navigate('/jobs')}
+                    >
+                      查看全部匹配岗位
+                      <ArrowRight size={15} />
+                    </Button>
+                  </CardContent>
+                </Card>
+
+                <Card
+                  hoverable
+                  className="cursor-pointer overflow-hidden group border-2 border-brand-100 bg-gradient-to-br from-brand-50/50 via-white to-white"
+                >
+                  <CardContent className="p-5">
+                    <div className="flex items-start justify-between mb-3">
+                      <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-brand-400 to-amber-400 text-white flex items-center justify-center shadow-md shrink-0 group-hover:scale-105 transition-transform">
+                        <FileText size={22} />
+                      </div>
+                      <Badge variant="brand" size="sm">
+                        重要
+                      </Badge>
+                    </div>
+                    <h4 className="font-bold text-ink-900 text-xl mb-1">完善简历提升匹配度</h4>
+                    <p className="text-sm text-ink-500 mb-4">
+                      AI智能优化简历，精准匹配目标岗位JD，预计通过率提升 2-3 倍
+                    </p>
+                    <div className="space-y-2 mb-4">
+                      <div className="flex items-center gap-2 text-xs text-ink-600">
+                        <CheckCircle2 size={14} className="text-teal-500" />
+                        关键词智能匹配 ATS 系统
+                      </div>
+                      <div className="flex items-center gap-2 text-xs text-ink-600">
+                        <CheckCircle2 size={14} className="text-teal-500" />
+                        STAR法则重写项目经历
+                      </div>
+                      <div className="flex items-center gap-2 text-xs text-ink-600">
+                        <CheckCircle2 size={14} className="text-teal-500" />
+                        量化成果数据化呈现
+                      </div>
+                    </div>
+                    <Button
+                      variant="secondary"
+                      size="md"
+                      className="w-full"
+                      onClick={() => navigate('/tools/resume')}
+                    >
+                      <Sparkles size={15} />
+                      立即优化简历
+                    </Button>
+                  </CardContent>
+                </Card>
+              </div>
+            </div>
+
+            <div className="flex flex-col sm:flex-row items-center justify-center gap-4 pt-6 pb-6">
               <Button variant="outline" size="lg" onClick={() => setStage('intro')}>
                 <RefreshCw size={16} />
                 重新测评

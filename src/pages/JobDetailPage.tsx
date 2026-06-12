@@ -22,6 +22,10 @@ import {
   ArrowRight,
   Building2,
   MessageCircle,
+  Award,
+  FolderKanban,
+  Edit3,
+  CheckCircle,
 } from 'lucide-react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/Card';
 import Button from '@/components/ui/Button';
@@ -88,6 +92,10 @@ export default function JobDetailPage() {
   );
   const [liked, setLiked] = useState(false);
   const [applied, setApplied] = useState(false);
+  const [profileComplete, setProfileComplete] = useState(0.65);
+  const [verified, setVerified] = useState(false);
+  const [showGuideModal, setShowGuideModal] = useState(false);
+  const [showToast, setShowToast] = useState(false);
 
   const toggleSection = (idx: number) => {
     setSections((prev) =>
@@ -399,7 +407,17 @@ export default function JobDetailPage() {
                   className="w-full"
                   variant={applied ? 'outline' : 'primary'}
                   leftIcon={<Briefcase size={18} />}
-                  onClick={() => applied ? navigate('/me/applications') : setApplied(true)}
+                  onClick={() => {
+                    if (applied) {
+                      navigate('/me/applications');
+                    } else if (!verified || profileComplete < 0.8) {
+                      setShowGuideModal(true);
+                    } else {
+                      setApplied(true);
+                      setShowToast(true);
+                      setTimeout(() => setShowToast(false), 5000);
+                    }
+                  }}
                 >
                   {applied ? '已投递 ✓' : '立即投递简历'}
                 </Button>
@@ -447,6 +465,138 @@ export default function JobDetailPage() {
           </div>
         </section>
       </div>
+
+      {/* 投递引导Modal */}
+      {showGuideModal && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
+          <div className="absolute inset-0 bg-ink-900/50 backdrop-blur-sm" onClick={() => setShowGuideModal(false)} />
+          <div className="relative w-full max-w-md animate-fade-in-up">
+            <div className="bg-white rounded-3xl shadow-2xl overflow-hidden">
+              <div className="h-2 bg-gradient-to-r from-amber-400 via-brand-400 to-teal-400" />
+              <div className="p-6">
+                <div className="text-center mb-6">
+                  <div className="w-16 h-16 mx-auto mb-4 rounded-2xl bg-gradient-to-br from-amber-100 to-brand-100 flex items-center justify-center">
+                    <ShieldCheck size={32} className="text-brand-600" />
+                  </div>
+                  <h3 className="text-xl font-bold text-ink-900">投递前请完善你的求职准备</h3>
+                  <p className="text-sm text-ink-500 mt-2">完成以下两项，解锁更多优质岗位</p>
+                </div>
+
+                <div className="space-y-4">
+                  {/* Step1 学籍验证 */}
+                  <div className="p-4 rounded-2xl border-2 border-amber-200 bg-amber-50/50">
+                    <div className="flex items-start justify-between gap-3">
+                      <div className="flex items-start gap-3">
+                        <div className="w-8 h-8 rounded-lg bg-amber-400 text-white font-bold flex items-center justify-center text-sm shrink-0">1</div>
+                        <div>
+                          <div className="font-semibold text-ink-800 flex items-center gap-2">
+                            <GraduationCap size={16} className="text-amber-500" />
+                            学籍验证
+                            <span className="text-xs px-2 py-0.5 rounded-full bg-amber-200 text-amber-700 font-medium">未完成</span>
+                          </div>
+                          <p className="text-xs text-ink-500 mt-1">完成学籍认证，获得专属内推通道</p>
+                        </div>
+                      </div>
+                    </div>
+                    <Button
+                      variant="primary"
+                      size="sm"
+                      className="w-full mt-4"
+                      onClick={() => { setShowGuideModal(false); navigate('/student/profile'); }}
+                    >
+                      立即验证
+                    </Button>
+                  </div>
+
+                  {/* Step2 档案完整度 */}
+                  <div className="p-4 rounded-2xl border border-ink-200 bg-cream-50/50">
+                    <div className="flex items-start gap-3 mb-4">
+                      <div className="w-8 h-8 rounded-lg bg-brand-500 text-white font-bold flex items-center justify-center text-sm shrink-0">2</div>
+                      <div className="flex-1">
+                        <div className="font-semibold text-ink-800 mb-3">档案完整度</div>
+                        <div className="flex items-center gap-3 mb-4">
+                          <div className="flex-1 h-3 bg-ink-100 rounded-full overflow-hidden">
+                            <div className="h-full w-[65%] bg-gradient-to-r from-brand-400 to-teal-400 rounded-full" />
+                          </div>
+                          <span className="text-lg font-bold text-brand-600 font-num">65%</span>
+                        </div>
+                        <div className="space-y-2 text-sm">
+                          <div className="flex items-center gap-2 text-amber-600">
+                            <Award size={14} />
+                            <span>技能证书</span>
+                            <span className="text-ink-400">已上传 2 / 3 个</span>
+                          </div>
+                          <div className="flex items-center gap-2 text-amber-600">
+                            <FolderKanban size={14} />
+                            <span>实训项目</span>
+                            <span className="text-ink-400">需补充 1 个</span>
+                          </div>
+                          <div className="flex items-center gap-2 text-amber-600">
+                            <Edit3 size={14} />
+                            <span>自我描述</span>
+                            <span className="text-ink-400">建议 150 字+</span>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <Button
+                      variant="secondary"
+                      size="sm"
+                      className="w-full"
+                      onClick={() => { setShowGuideModal(false); navigate('/student/profile'); }}
+                    >
+                      完善档案
+                    </Button>
+                  </div>
+                </div>
+
+                <div className="mt-6 flex gap-3">
+                  <Button variant="ghost" className="flex-1" onClick={() => setShowGuideModal(false)}>
+                    稍后再说
+                  </Button>
+                  <Button
+                    variant="primary"
+                    className="flex-1"
+                    onClick={() => {
+                      setShowGuideModal(false);
+                      if (verified && profileComplete >= 0.8) {
+                        setApplied(true);
+                        setShowToast(true);
+                        setTimeout(() => setShowToast(false), 5000);
+                      }
+                    }}
+                  >
+                    我已完善，重新投递
+                  </Button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* 投递成功Toast */}
+      {showToast && (
+        <div className="fixed bottom-6 left-1/2 -translate-x-1/2 z-50 animate-fade-in-up">
+          <div className="bg-ink-900 text-white rounded-2xl shadow-2xl px-6 py-4 flex items-center gap-4 max-w-md">
+            <div className="w-10 h-10 rounded-xl bg-emerald-500 flex items-center justify-center shrink-0">
+              <CheckCircle size={22} />
+            </div>
+            <div className="flex-1 min-w-0">
+              <div className="font-semibold">投递成功！</div>
+              <div className="text-xs text-ink-300 mt-0.5">HR 将在 1-3 个工作日内查看</div>
+            </div>
+            <Button
+              variant="ghost"
+              size="sm"
+              className="text-white hover:bg-white/10 border-white/20 shrink-0"
+              onClick={() => navigate('/me/applications')}
+            >
+              查看投递进度
+            </Button>
+          </div>
+        </div>
+      )}
     </div>
   );
 }

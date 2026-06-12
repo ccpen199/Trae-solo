@@ -1,3 +1,5 @@
+import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import {
   Sparkles,
   ClipboardEdit,
@@ -14,6 +16,7 @@ import {
   Calendar,
   Award,
   FileCheck,
+  Info,
 } from 'lucide-react';
 import { Card, CardHeader, CardTitle, CardContent } from '@/components/ui/Card';
 import Button from '@/components/ui/Button';
@@ -82,8 +85,24 @@ const historyRecords = [
 ];
 
 export default function ToolsHomePage() {
+  const navigate = useNavigate();
+  const [toast, setToast] = useState<{ show: boolean; message: string }>({ show: false, message: '' });
+
+  const showToast = (message: string) => {
+    setToast({ show: true, message });
+    setTimeout(() => setToast({ show: false, message: '' }), 2000);
+  };
+
   return (
-    <div className="min-h-screen bg-cream-50 py-8">
+    <div className="min-h-screen bg-cream-50 py-8 relative">
+      {toast.show && (
+        <div className="fixed top-6 left-1/2 -translate-x-1/2 z-50 animate-fade-in-up">
+          <div className="bg-ink-900/90 backdrop-blur-sm text-white px-5 py-3 rounded-xl shadow-lg flex items-center gap-2">
+            <Info size={16} className="text-brand-400" />
+            <span className="text-sm">{toast.message}</span>
+          </div>
+        </div>
+      )}
       <div className="container mx-auto px-4 max-w-6xl space-y-8">
         <div className="animate-fade-in-up">
           <div className="flex items-center gap-3 mb-2">
@@ -132,7 +151,16 @@ export default function ToolsHomePage() {
                     ))}
                   </div>
 
-                  <Button variant="primary" size="md" className="w-full">
+                  <Button
+                    variant="primary"
+                    size="md"
+                    className="w-full"
+                    onClick={() => {
+                      if (tool.key === 'resume') navigate('/tools/resume');
+                      else if (tool.key === 'journal') navigate('/tools/journal');
+                      else if (tool.key === 'assessment') navigate('/tools/assessment');
+                    }}
+                  >
                     {tool.cta}
                     <ArrowRight size={15} />
                   </Button>
@@ -151,24 +179,36 @@ export default function ToolsHomePage() {
             {smallTools.map((t, idx) => {
               const Icon = t.icon;
               return (
-                <Card
+                <div
                   key={t.key}
-                  hoverable
-                  className="animate-fade-in-up cursor-pointer"
+                  className="relative group"
                   style={{ animationDelay: `${0.32 + idx * 0.04}s` }}
                 >
-                  <CardContent className="flex flex-col items-center text-center p-5">
-                    <div className={`w-12 h-12 rounded-xl bg-gradient-to-br ${t.color} text-white flex items-center justify-center mb-3 shadow`}>
-                      <Icon size={22} />
-                    </div>
-                    <h4 className="font-semibold text-ink-800 text-sm mb-0.5">{t.name}</h4>
-                    <p className="text-[11px] text-ink-500 mb-2">{t.desc}</p>
-                    <span className="text-[10px] text-ink-400 flex items-center gap-0.5">
-                      <History size={10} />
-                      使用 {t.used} 次
-                    </span>
-                  </CardContent>
-                </Card>
+                  <Card
+                    hoverable
+                    className="animate-fade-in-up cursor-pointer"
+                    onClick={() => {
+                      showToast('即将上线，敬请期待！');
+                      navigate('/tools');
+                    }}
+                  >
+                    <CardContent className="flex flex-col items-center text-center p-5">
+                      <div className={`w-12 h-12 rounded-xl bg-gradient-to-br ${t.color} text-white flex items-center justify-center mb-3 shadow`}>
+                        <Icon size={22} />
+                      </div>
+                      <h4 className="font-semibold text-ink-800 text-sm mb-0.5">{t.name}</h4>
+                      <p className="text-[11px] text-ink-500 mb-2">{t.desc}</p>
+                      <span className="text-[10px] text-ink-400 flex items-center gap-0.5">
+                        <History size={10} />
+                        使用 {t.used} 次
+                      </span>
+                    </CardContent>
+                  </Card>
+                  <div className="absolute -top-10 left-1/2 -translate-x-1/2 px-3 py-1.5 bg-ink-900 text-white text-xs rounded-lg whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none z-10 shadow-lg">
+                    即将上线
+                    <div className="absolute -bottom-1 left-1/2 -translate-x-1/2 w-2 h-2 bg-ink-900 rotate-45" />
+                  </div>
+                </div>
               );
             })}
           </div>

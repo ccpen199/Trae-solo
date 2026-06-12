@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import {
   ClipboardEdit,
   CheckCircle2,
@@ -11,6 +12,10 @@ import {
   FileText,
   Award,
   Sparkles,
+  Home,
+  Wrench,
+  ChevronRight as ChevronRightIcon,
+  BrainCircuit,
 } from 'lucide-react';
 import { Card, CardHeader, CardTitle, CardContent } from '@/components/ui/Card';
 import Button from '@/components/ui/Button';
@@ -35,6 +40,7 @@ const historyLogs = [
 ];
 
 export default function JournalToolPage() {
+  const navigate = useNavigate();
   const [currentMonth, setCurrentMonth] = useState(new Date(2025, 5, 1));
   const [selectedDate] = useState(new Date(2025, 5, 12));
   const [mood, setMood] = useState('great');
@@ -55,8 +61,37 @@ export default function JournalToolPage() {
   const weekdays = ['日', '一', '二', '三', '四', '五', '六'];
 
   return (
-    <div className="min-h-screen bg-cream-50 py-8">
+    <div className="min-h-screen bg-cream-50 py-6">
       <div className="container mx-auto px-4 max-w-6xl space-y-6">
+        <nav className="flex items-center gap-2 text-sm text-ink-500 animate-fade-in-up">
+          <button
+            onClick={() => navigate('/')}
+            className="flex items-center gap-1 hover:text-brand-600 transition-colors"
+          >
+            <Home size={14} />
+            首页
+          </button>
+          <ChevronRightIcon size={14} className="text-ink-300" />
+          <button
+            onClick={() => navigate('/tools')}
+            className="flex items-center gap-1 hover:text-brand-600 transition-colors"
+          >
+            <Wrench size={14} />
+            工具箱
+          </button>
+          <ChevronRightIcon size={14} className="text-ink-300" />
+          <span className="text-ink-700 font-medium">实习日志</span>
+          <Button
+            variant="outline"
+            size="sm"
+            className="ml-auto"
+            onClick={() => navigate('/tools')}
+          >
+            <ChevronRightIcon size={14} className="rotate-180" />
+            返回工具箱
+          </Button>
+        </nav>
+
         <div className="animate-fade-in-up flex flex-col sm:flex-row sm:items-center gap-4 sm:justify-between">
           <div className="flex items-center gap-4">
             <div className="w-14 h-14 rounded-2xl bg-gradient-to-br from-teal-400 to-sky-400 text-white flex items-center justify-center shadow-[0_8px_24px_-10px_rgba(46,196,182,0.5)]">
@@ -309,6 +344,48 @@ export default function JournalToolPage() {
                   </Card>
                 );
               })}
+            </div>
+
+            <div className="mt-5 pt-5 border-t border-ink-100">
+              <h4 className="font-bold text-ink-900 mb-3 flex items-center gap-2">
+                <Sparkles size={16} className="text-amber-500" />
+                更多工具推荐
+              </h4>
+              <div className="space-y-3">
+                <Card
+                  hoverable
+                  className="cursor-pointer overflow-hidden group"
+                  onClick={() => navigate('/tools/resume')}
+                >
+                  <CardContent className="p-4 flex items-center gap-3">
+                    <div className="w-11 h-11 rounded-xl bg-gradient-to-br from-brand-400 to-amber-400 text-white flex items-center justify-center shadow shrink-0 group-hover:scale-105 transition-transform">
+                      <FileText size={20} />
+                    </div>
+                    <div className="flex-1 min-w-0">
+                      <h5 className="font-semibold text-ink-900">AI简历优化</h5>
+                      <p className="text-xs text-ink-500">智能匹配JD关键词，提升通过率</p>
+                    </div>
+                    <ChevronRightIcon size={18} className="text-ink-300 group-hover:text-brand-500 shrink-0" />
+                  </CardContent>
+                </Card>
+
+                <Card
+                  hoverable
+                  className="cursor-pointer overflow-hidden group"
+                  onClick={() => navigate('/tools/assessment')}
+                >
+                  <CardContent className="p-4 flex items-center gap-3">
+                    <div className="w-11 h-11 rounded-xl bg-gradient-to-br from-sky-400 via-indigo-400 to-violet-400 text-white flex items-center justify-center shadow shrink-0 group-hover:scale-105 transition-transform">
+                      <BrainCircuit size={20} />
+                    </div>
+                    <div className="flex-1 min-w-0">
+                      <h5 className="font-semibold text-ink-900">职业测评</h5>
+                      <p className="text-xs text-ink-500">MBTI+霍兰德，精准定位职业方向</p>
+                    </div>
+                    <ChevronRightIcon size={18} className="text-ink-300 group-hover:text-brand-500 shrink-0" />
+                  </CardContent>
+                </Card>
+              </div>
             </div>
           </CardContent>
         </Card>
