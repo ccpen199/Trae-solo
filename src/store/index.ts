@@ -41,3 +41,23 @@ export const useAuthStore = create<AuthState>((set) => ({
     set({ user })
   },
 }))
+
+interface ToastState {
+  toast: (type: string, message: string) => void
+}
+
+export const useToastStore = create<ToastState>(() => ({
+  toast: (type, message) => {
+    const colors: Record<string, string> = { success: '#16a34a', error: '#dc2626', warning: '#d97706', info: '#2563eb' }
+    const el = document.createElement('div')
+    el.textContent = message
+    Object.assign(el.style, {
+      position: 'fixed', top: '20px', right: '20px', zIndex: '9999',
+      padding: '12px 20px', borderRadius: '8px', color: '#fff',
+      backgroundColor: colors[type] || colors.info, fontSize: '14px',
+      boxShadow: '0 4px 12px rgba(0,0,0,0.15)', transition: 'opacity 0.3s',
+    })
+    document.body.appendChild(el)
+    setTimeout(() => { el.style.opacity = '0'; setTimeout(() => el.remove(), 300) }, 3000)
+  },
+}))

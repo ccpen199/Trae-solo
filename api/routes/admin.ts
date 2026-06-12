@@ -91,12 +91,13 @@ router.get('/jobs/review', async (req: Request, res: Response): Promise<void> =>
 
 router.put('/jobs/:id/review', async (req: Request, res: Response): Promise<void> => {
   try {
+    const userId = req.headers['x-user-id']
     const userRole = req.headers['x-user-role']
     if (userRole !== 'admin') {
       res.status(403).json({ success: false, error: '仅管理员可操作' })
       return
     }
-    const { status, ai_review_note } = req.body
+    const { status, review_note, ai_review_note } = req.body
     if (!['active', 'rejected'].includes(status)) {
       res.status(400).json({ success: false, error: '无效的审核状态' })
       return
@@ -106,8 +107,17 @@ router.put('/jobs/:id/review', async (req: Request, res: Response): Promise<void
       res.status(404).json({ success: false, error: '职位不存在' })
       return
     }
-    db.prepare('UPDATE jobs SET status = ?, updated_at = datetime(\'now\') WHERE id = ?').run(status, req.params.id)
-    const job = db.prepare('SELECT * FROM jobs WHERE id = ?').get(req.params.id)
+    const now = new Date().toISOString()
+    db.prepare(`
+      UPDATE jobs SET status = ?, approved_by = ?, approved_at = ?, review_note = ?, updated_at = datetime('now')
+      WHERE id = ?
+    `).run(status, userId, now, review_note, req.params.id)
+    const job = db.prepare(`
+      SELECT j.*, u.name as approved_by_name
+      FROM jobs j
+      LEFT JOIN users u ON j.approved_by = u.id
+      WHERE j.id = ?
+    `).get(req.params.id)
     res.json({ success: true, data: { job, ai_review_note: ai_review_note || `AI审核完成，风险评分: ${existing.ai_risk_score}/100` } })
   } catch (err: any) {
     res.status(500).json({ success: false, error: err.message })
@@ -165,14 +175,33 @@ router.get('/dashboard', async (req: Request, res: Response): Promise<void> => {
     const pendingReviews = (db.prepare("SELECT COUNT(*) as count FROM institution_profiles WHERE review_status = 'pending'").get() as any).count
     const pendingJobs = (db.prepare("SELECT COUNT(*) as count FROM jobs WHERE status = 'pending'").get() as any).count
 
+    const applicationFunnel = db.prepare(`
+      SELECT status, COUNT(*) as count FROM applications GROUP BY status ORDER BY
+        CASE status
+          WHEN 'applied' THEN 1
+          WHEN 'read' THEN 2
+          WHEN 'invited' THEN 3
+          WHEN 'interview' THEN 4
+          WHEN 'offered' THEN 5
+          WHEN 'rejected' THEN 6
+        END
+    `).all()
+
     const regionHeatmap = db.prepare(`
-      SELECT j.location as region, COUNT(*) as count
-      FROM jobs j WHERE j.status = 'active' GROUP BY j.location ORDER BY count DESC
+      SELECT j.location as region, ip.institution_type, COUNT(*) as count
+      FROM jobs j
+      JOIN institution_profiles ip ON j.institution_id = ip.id
+      WHERE j.status = 'active'
+      GROUP BY j.location, ip.institution_type
+      ORDER BY count DESC
     `).all()
 
     const departmentHeatmap = db.prepare(`
-      SELECT j.department, COUNT(*) as count
-      FROM jobs j WHERE j.status = 'active' GROUP BY j.department ORDER BY count DESC
+      SELECT j.department, j.required_title, COUNT(*) as count
+      FROM jobs j
+      WHERE j.status = 'active'
+      GROUP BY j.department, j.required_title
+      ORDER BY count DESC
     `).all()
 
     const positionHeatmap = db.prepare(`
@@ -185,8 +214,12 @@ router.get('/dashboard', async (req: Request, res: Response): Promise<void> => {
     `).all()
 
     const monthlyApplications = db.prepare(`
-      SELECT strftime('%Y-%m', created_at) as month, COUNT(*) as count
-      FROM applications GROUP BY month ORDER BY month DESC LIMIT 6
+      SELECT strftime('%Y-%m', a.created_at) as month, j.department, COUNT(*) as count
+      FROM applications a
+      JOIN jobs j ON a.job_id = j.id
+      GROUP BY month, j.department
+      ORDER BY month DESC, count DESC
+      LIMIT 24
     `).all()
 
     const monthlyJobs = db.prepare(`
@@ -194,13 +227,51 @@ router.get('/dashboard', async (req: Request, res: Response): Promise<void> => {
       FROM jobs GROUP BY month ORDER BY month DESC LIMIT 6
     `).all()
 
+    const institutionsPendingRenewal = (db.prepare(`
+      SELECT COUNT(*) as count FROM institution_profiles
+      WHERE license_expiry IS NOT NULL
+      AND date(license_expiry) <= date('now', '+90 days')
+      AND review_status = 'approved'
+    `).get() as any).count
+
+    const highRiskJobs = (db.prepare(`
+      SELECT COUNT(*) as count FROM jobs
+      WHERE ai_risk_score >= 30 AND status IN ('pending', 'active')
+    `).get() as any).count
+
+    const months = [...new Set(monthlyApplications.map((item: any) => item.month))].slice(0, 6).reverse()
+    const departments = [...new Set(monthlyApplications.map((item: any) => item.department))]
+
+    const monthlyTrendByDept = months.map(month => {
+      const monthData: any = { month }
+      for (const dept of departments) {
+        const record = monthlyApplications.find((r: any) => r.month === month && r.department === dept) as any
+        monthData[dept] = record ? record.count : 0
+      }
+      return monthData
+    })
+
     res.json({
       success: true,
       data: {
         overview: { totalUsers, totalTalents, totalInstitutions, totalJobs, activeJobs, totalApplications, totalResumes, pendingReviews, pendingJobs },
-        heatmaps: { region: regionHeatmap, department: departmentHeatmap, position: positionHeatmap },
+        funnel: applicationFunnel,
+        heatmaps: {
+          region: regionHeatmap,
+          department: departmentHeatmap,
+          position: positionHeatmap,
+        },
         distributions: { applicationStatus: applicationStatusDist },
-        trends: { applications: monthlyApplications, jobs: monthlyJobs },
+        trends: {
+          applications: monthlyJobs,
+          jobs: monthlyJobs,
+          byDepartment: monthlyTrendByDept,
+        },
+        compliance: {
+          pendingJobsReview: pendingJobs,
+          institutionsPendingRenewal,
+          highRiskJobs,
+        },
       },
     })
   } catch (err: any) {

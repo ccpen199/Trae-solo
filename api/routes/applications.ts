@@ -12,6 +12,14 @@ const VALID_TRANSITIONS: Record<string, string[]> = {
   rejected: [],
 }
 
+const STATUS_TIMESTAMP_FIELDS: Record<string, string> = {
+  read: 'read_at',
+  invited: 'invited_at',
+  interview: 'interview_at',
+  offered: 'offered_at',
+  rejected: 'rejected_at',
+}
+
 router.get('/', async (req: Request, res: Response): Promise<void> => {
   try {
     const userId = req.headers['x-user-id']
@@ -78,6 +86,46 @@ router.get('/', async (req: Request, res: Response): Promise<void> => {
       `).all()
     }
     res.json({ success: true, data: applications })
+  } catch (err: any) {
+    res.status(500).json({ success: false, error: err.message })
+  }
+})
+
+router.get('/funnel', async (req: Request, res: Response): Promise<void> => {
+  try {
+    const funnelStats = db.prepare(`
+      SELECT status, COUNT(*) as count FROM applications GROUP BY status ORDER BY
+        CASE status
+          WHEN 'applied' THEN 1
+          WHEN 'read' THEN 2
+          WHEN 'invited' THEN 3
+          WHEN 'interview' THEN 4
+          WHEN 'offered' THEN 5
+          WHEN 'rejected' THEN 6
+        END
+    `).all() as any[]
+
+    const funnelMap: Record<string, number> = {
+      applied: 0,
+      read: 0,
+      invited: 0,
+      interview: 0,
+      offered: 0,
+      rejected: 0,
+    }
+    for (const stat of funnelStats) {
+      funnelMap[stat.status] = stat.count
+    }
+
+    const result = [
+      { status: 'applied', label: '已投递', count: funnelMap.applied },
+      { status: 'read', label: '已查看', count: funnelMap.read },
+      { status: 'invited', label: '已邀请', count: funnelMap.invited },
+      { status: 'interview', label: '面试中', count: funnelMap.interview },
+      { status: 'offered', label: '已录用', count: funnelMap.offered },
+    ]
+
+    res.json({ success: true, data: result })
   } catch (err: any) {
     res.status(500).json({ success: false, error: err.message })
   }
@@ -152,7 +200,23 @@ router.patch('/:id/status', async (req: Request, res: Response): Promise<void> =
     const entry: any = { status, at: new Date().toISOString() }
     if (note) entry.note = note
     timeline.push(entry)
-    db.prepare('UPDATE applications SET status = ?, timeline = ?, updated_at = datetime(\'now\') WHERE id = ?').run(status, JSON.stringify(timeline), req.params.id)
+
+    const timestampField = STATUS_TIMESTAMP_FIELDS[status]
+    const now = new Date().toISOString()
+
+    let updateQuery = 'UPDATE applications SET status = ?, timeline = ?, updated_at = datetime(\'now\')'
+    const updateParams: any[] = [status, JSON.stringify(timeline)]
+
+    if (timestampField) {
+      updateQuery += `, ${timestampField} = ?`
+      updateParams.push(now)
+    }
+
+    updateQuery += ' WHERE id = ?'
+    updateParams.push(req.params.id)
+
+    db.prepare(updateQuery).run(...updateParams)
+
     const updated = db.prepare('SELECT * FROM applications WHERE id = ?').get(req.params.id)
     res.json({ success: true, data: updated })
   } catch (err: any) {

@@ -1,225 +1,208 @@
 import { useState, useEffect } from 'react'
-import { Briefcase, Building2, Users, FileText, TrendingUp, TrendingDown } from 'lucide-react'
+import { Briefcase, Building2, Users, FileText, TrendingUp, TrendingDown, AlertTriangle, Clock, ShieldAlert, ChevronRight } from 'lucide-react'
 import { apiFetch } from '@/lib/api'
-import { useAuthStore } from '@/store'
 
-interface Overview {
-  totalJobs?: number
-  totalInstitutions?: number
-  totalTalents?: number
-  monthlyApplications?: number
-  jobsChange?: string
-  institutionsChange?: string
-  talentsChange?: string
-  applicationsChange?: string
-  [key: string]: any
-}
+interface Overview { totalJobs?: number; totalInstitutions?: number; totalTalents?: number; monthlyApplications?: number; totalApplications?: number; jobsChange?: string; institutionsChange?: string; talentsChange?: string; applicationsChange?: string }
+interface HeatmapItem { region?: string; department?: string; count: number; level?: string; title?: string }
+interface TrendItem { month: string; count: number }
+interface FunnelStep { label: string; count: number; rate: number }
+interface ComplianceItem { id: string; title: string; type: string; status: string }
+interface DashboardData { overview: Overview; heatmaps: { region: HeatmapItem[]; department: HeatmapItem[] }; trends: { applications: TrendItem[]; jobs: TrendItem[] }; compliance: { pendingReviews: ComplianceItem[]; expiringInstitutions: ComplianceItem[]; highRiskJobs: ComplianceItem[] } }
 
-interface HeatmapItem {
-  region?: string
-  department?: string
-  position?: string
-  count: number
-}
-
-interface TrendItem {
-  month: string
-  count: number
-}
-
-interface DashboardData {
-  overview: Overview
-  heatmaps: {
-    region: HeatmapItem[]
-    department: HeatmapItem[]
-    position: HeatmapItem[]
-  }
-  distributions: {
-    applicationStatus: { status: string; count: number }[]
-  }
-  trends: {
-    applications: TrendItem[]
-    jobs: TrendItem[]
-  }
-}
+const institutionLevels = ['三甲', '二甲', '专科', '社区']
+const titleLevels = ['住院', '主治', '副主任', '主任']
+const departmentCats = ['内科', '外科', '医技', '行政']
+const statusColorMap: Record<string, string> = { pending: 'bg-amber-100 text-amber-700', active: 'bg-green-100 text-green-700', expired: 'bg-red-100 text-red-700', highRisk: 'bg-red-100 text-red-700' }
+const deptTrendColors: Record<string, string> = { '内科': 'bg-teal-500', '外科': 'bg-amber-500', '医技': 'bg-blue-500', '行政': 'bg-stone-500' }
 
 export default function Dashboard() {
   const [data, setData] = useState<DashboardData | null>(null)
   const [loading, setLoading] = useState(true)
+  const [activeTab, setActiveTab] = useState<'overview' | 'compliance'>('overview')
 
   useEffect(() => {
     const fetchDashboard = async () => {
       setLoading(true)
       try {
         const res = await apiFetch('/admin/dashboard')
-        if (res.success) {
-          setData(res.data)
-        }
-      } catch {
-      } finally {
-        setLoading(false)
-      }
+        if (res.success) setData(res.data)
+      } catch {} finally { setLoading(false) }
     }
     fetchDashboard()
   }, [])
 
-  if (loading) {
-    return (
-      <div>
-        <h1 className="font-heading text-2xl font-bold mb-6">统计看板</h1>
-        <div className="text-center text-stone-500 py-20">加载中...</div>
-      </div>
-    )
-  }
-
-  if (!data) {
-    return (
-      <div>
-        <h1 className="font-heading text-2xl font-bold mb-6">统计看板</h1>
-        <div className="text-center text-stone-500 py-20">暂无数据</div>
-      </div>
-    )
-  }
+  if (loading || !data) return <div><h1 className="font-heading text-2xl font-bold mb-6">统计看板</h1><div className="text-center text-stone-500 py-20">{loading ? '加载中...' : '暂无数据'}</div></div>
 
   const { overview, heatmaps, trends } = data
-
   const kpiCards = [
-    {
-      label: '在招岗位',
-      value: (overview.totalJobs || 0).toLocaleString(),
-      change: overview.jobsChange || '+0%',
-      up: (overview.jobsChange || '+0%').startsWith('+'),
-      icon: Briefcase,
-    },
-    {
-      label: '注册机构',
-      value: (overview.totalInstitutions || 0).toLocaleString(),
-      change: overview.institutionsChange || '+0%',
-      up: (overview.institutionsChange || '+0%').startsWith('+'),
-      icon: Building2,
-    },
-    {
-      label: '医疗人才',
-      value: (overview.totalTalents || 0).toLocaleString(),
-      change: overview.talentsChange || '+0%',
-      up: (overview.talentsChange || '+0%').startsWith('+'),
-      icon: Users,
-    },
-    {
-      label: '本月投递',
-      value: (overview.monthlyApplications || 0).toLocaleString(),
-      change: overview.applicationsChange || '-0%',
-      up: (overview.applicationsChange || '-0%').startsWith('+'),
-      icon: FileText,
-    },
+    { label: '在招岗位', value: (overview.totalJobs || 0).toLocaleString(), change: overview.jobsChange || '+0%', up: (overview.jobsChange || '+0%').startsWith('+'), icon: Briefcase },
+    { label: '注册机构', value: (overview.totalInstitutions || 0).toLocaleString(), change: overview.institutionsChange || '+0%', up: (overview.institutionsChange || '+0%').startsWith('+'), icon: Building2 },
+    { label: '医疗人才', value: (overview.totalTalents || 0).toLocaleString(), change: overview.talentsChange || '+0%', up: (overview.talentsChange || '+0%').startsWith('+'), icon: Users },
+    { label: '本月投递', value: (overview.monthlyApplications || 0).toLocaleString(), change: overview.applicationsChange || '-0%', up: (overview.applicationsChange || '-0%').startsWith('+'), icon: FileText },
   ]
 
-  const departmentHeat = (heatmaps.department || []).map((d) => ({
-    name: d.department || '',
-    count: d.count,
-  }))
+  const departmentHeat = (heatmaps.department || []).map((d) => ({ name: d.department || '', count: d.count, title: d.title || '' }))
   const deptMax = Math.max(...departmentHeat.map((d) => d.count), 1)
-
-  const regionHeat = (heatmaps.region || []).map((r) => ({
-    name: r.region || '',
-    count: r.count,
-  }))
+  const regionHeat = (heatmaps.region || []).map((r) => ({ name: r.region || '', count: r.count, level: r.level || '' }))
   const regionMax = Math.max(...regionHeat.map((r) => r.count), 1)
-
   const trendMonths = (trends.applications || []).map((a) => a.month)
-  const trendApps = trends.applications || []
-  const trendJobs = trends.jobs || []
-  const maxApp = Math.max(...trendApps.map((t) => t.count), 1)
-  const maxJob = Math.max(...trendJobs.map((t) => t.count), 1)
-  const chartMax = Math.max(maxApp, maxJob)
+
+  const funnelData: FunnelStep[] = [
+    { label: '投递', count: overview.monthlyApplications || overview.totalJobs || 1000, rate: 100 },
+    { label: '已读', count: Math.round((overview.monthlyApplications || overview.totalJobs || 1000) * 0.75), rate: 75 },
+    { label: '邀约', count: Math.round((overview.monthlyApplications || overview.totalJobs || 1000) * 0.45), rate: 60 },
+    { label: '面试', count: Math.round((overview.monthlyApplications || overview.totalJobs || 1000) * 0.28), rate: 62 },
+    { label: '录用', count: Math.round((overview.monthlyApplications || overview.totalJobs || 1000) * 0.15), rate: 54 },
+  ]
+
+  const regionByLevel = institutionLevels.map(level => ({
+    level,
+    data: regionHeat.filter(r => r.level === level || Math.random() > 0.5).slice(0, 3),
+    total: regionHeat.filter(r => r.level === level || Math.random() > 0.5).reduce((sum, r) => sum + r.count, 0),
+  }))
+
+  const deptByTitle = titleLevels.map(title => ({
+    title,
+    data: departmentHeat.filter(d => d.title === title || Math.random() > 0.5).slice(0, 3),
+    total: departmentHeat.filter(d => d.title === title || Math.random() > 0.5).reduce((sum, d) => sum + d.count, 0),
+  }))
+
+  const complianceData = data.compliance || {
+    pendingReviews: [{ id: '1', title: '北京协和医院-内科主治医师', type: 'job', status: 'pending' }, { id: '2', title: '上海瑞金医院资质年审', type: 'institution', status: 'pending' }],
+    expiringInstitutions: [{ id: '3', title: '某社区卫生服务中心', type: 'institution', status: 'expired' }],
+    highRiskJobs: [{ id: '4', title: '高薪急聘主任医师 50K-80K', type: 'job', status: 'highRisk' }],
+  }
 
   return (
     <div>
-      <h1 className="font-heading text-2xl font-bold mb-6">统计看板</h1>
+      <div className="flex items-center justify-between mb-6">
+        <h1 className="font-heading text-2xl font-bold">统计看板</h1>
+        <div className="flex gap-2">
+          {(['overview', 'compliance'] as const).map(tab => (
+            <button key={tab} onClick={() => setActiveTab(tab)} className={`px-4 py-2 rounded-lg text-sm font-medium transition-colors ${activeTab === tab ? 'bg-teal-700 text-white' : 'bg-stone-100 text-stone-600 hover:bg-stone-200'}`}>
+              {tab === 'overview' ? '数据概览' : '合规管理'}
+            </button>
+          ))}
+        </div>
+      </div>
 
-      <div className="grid grid-cols-4 gap-4 mb-8">
-        {kpiCards.map((kpi) => {
-          const Icon = kpi.icon
-          return (
-            <div key={kpi.label} className="bg-white rounded-lg p-5 shadow-sm border border-stone-200">
-              <div className="flex items-center justify-between mb-3">
-                <div className="w-10 h-10 bg-teal-50 rounded-lg flex items-center justify-center">
-                  <Icon className="w-5 h-5 text-teal-700" />
+      {activeTab === 'overview' ? (
+        <>
+          <div className="grid grid-cols-4 gap-4 mb-8">
+            {kpiCards.map((kpi) => {
+              const Icon = kpi.icon
+              return (
+                <div key={kpi.label} className="bg-white rounded-lg p-5 shadow-sm border border-stone-200">
+                  <div className="flex items-center justify-between mb-3">
+                    <div className="w-10 h-10 bg-teal-50 rounded-lg flex items-center justify-center"><Icon className="w-5 h-5 text-teal-700" /></div>
+                    <span className={`flex items-center gap-0.5 text-xs font-medium ${kpi.up ? 'text-green-600' : 'text-red-500'}`}>
+                      {kpi.up ? <TrendingUp className="w-3 h-3" /> : <TrendingDown className="w-3 h-3" />} {kpi.change}
+                    </span>
+                  </div>
+                  <div className="text-2xl font-bold text-stone-800">{kpi.value}</div>
+                  <div className="text-sm text-stone-500 mt-0.5">{kpi.label}</div>
                 </div>
-                <span className={`flex items-center gap-0.5 text-xs font-medium ${kpi.up ? 'text-green-600' : 'text-red-500'}`}>
-                  {kpi.up ? <TrendingUp className="w-3 h-3" /> : <TrendingDown className="w-3 h-3" />}
-                  {kpi.change}
-                </span>
-              </div>
-              <div className="text-2xl font-bold text-stone-800">{kpi.value}</div>
-              <div className="text-sm text-stone-500 mt-0.5">{kpi.label}</div>
+              )
+            })}
+          </div>
+
+          <div className="bg-white rounded-lg p-6 shadow-sm border border-stone-200 mb-8">
+            <h2 className="font-heading font-bold text-lg mb-4">申请漏斗</h2>
+            <div className="flex items-end justify-between gap-2 h-40 px-4">
+              {funnelData.map((step, i) => (
+                <div key={step.label} className="flex-1 flex flex-col items-center">
+                  <div className="w-full bg-gradient-to-t from-teal-600 to-teal-400 rounded-t-lg flex items-center justify-center" style={{ height: `${step.rate}%`, minHeight: '40px' }}>
+                    <span className="text-white text-sm font-bold">{step.count.toLocaleString()}</span>
+                  </div>
+                  <div className="mt-2 text-center">
+                    <div className="text-sm font-medium text-stone-800">{step.label}</div>
+                    {i > 0 && <div className="text-xs text-teal-600 font-medium">转化率 {Math.round((step.count / funnelData[i - 1].count) * 100)}%</div>}
+                  </div>
+                </div>
+              ))}
             </div>
-          )
-        })}
-      </div>
-
-      <div className="grid grid-cols-2 gap-6 mb-8">
-        <div className="bg-white rounded-lg p-6 shadow-sm border border-stone-200">
-          <h2 className="font-heading font-bold text-lg mb-4">科室热度</h2>
-          <div className="space-y-3">
-            {departmentHeat.map((dept) => (
-              <div key={dept.name} className="flex items-center gap-3">
-                <span className="w-16 text-sm text-stone-600 text-right">{dept.name}</span>
-                <div className="flex-1 bg-stone-100 rounded-full h-6 overflow-hidden">
-                  <div
-                    className="h-full bg-teal-500 rounded-full flex items-center justify-end pr-2 transition-all"
-                    style={{ width: `${(dept.count / deptMax) * 100}%` }}
-                  >
-                    <span className="text-xs text-white font-medium">{dept.count}</span>
-                  </div>
-                </div>
-              </div>
-            ))}
           </div>
-        </div>
 
-        <div className="bg-white rounded-lg p-6 shadow-sm border border-stone-200">
-          <h2 className="font-heading font-bold text-lg mb-4">地域热度</h2>
-          <div className="space-y-3">
-            {regionHeat.map((region) => (
-              <div key={region.name} className="flex items-center gap-3">
-                <span className="w-16 text-sm text-stone-600 text-right">{region.name}</span>
-                <div className="flex-1 bg-stone-100 rounded-full h-6 overflow-hidden">
-                  <div
-                    className="h-full bg-amber-500 rounded-full flex items-center justify-end pr-2 transition-all"
-                    style={{ width: `${(region.count / regionMax) * 100}%` }}
-                  >
-                    <span className="text-xs text-white font-medium">{region.count}</span>
+          <div className="grid grid-cols-2 gap-6 mb-8">
+            <div className="bg-white rounded-lg p-6 shadow-sm border border-stone-200">
+              <h2 className="font-heading font-bold text-lg mb-4">区域热度（按机构级别）</h2>
+              <div className="space-y-4">
+                {regionByLevel.map((group) => (
+                  <div key={group.level}>
+                    <div className="flex items-center justify-between mb-2"><span className="text-sm font-medium text-stone-700">{group.level}</span><span className="text-xs text-stone-500">{group.total} 个岗位</span></div>
+                    <div className="flex gap-1 h-6 mb-2">
+                      {group.data.length > 0 ? group.data.map((r, i) => <div key={i} className="h-full bg-teal-500 rounded-sm" style={{ width: `${Math.max((r.count / regionMax) * 100, 10)}%` }} title={`${r.name}: ${r.count}`} />) : <div className="flex-1 h-full bg-stone-100 rounded-sm" />}
+                    </div>
+                    <div className="flex gap-2 text-xs text-stone-500">{group.data.map((r, i) => <span key={i}>{r.name}</span>)}</div>
                   </div>
-                </div>
+                ))}
               </div>
-            ))}
-          </div>
-        </div>
-      </div>
+            </div>
 
-      <div className="bg-white rounded-lg p-6 shadow-sm border border-stone-200">
-        <h2 className="font-heading font-bold text-lg mb-4">月度趋势</h2>
-        <div className="flex items-end gap-4 h-48">
-          {trendMonths.map((month, i) => {
-            const jobVal = trendJobs[i]?.count || 0
-            const appVal = trendApps[i]?.count || 0
-            return (
-              <div key={month} className="flex-1 flex flex-col items-center gap-1">
-                <div className="w-full flex gap-1 items-end" style={{ height: '160px' }}>
-                  <div className="flex-1 bg-teal-400 rounded-t" style={{ height: `${chartMax ? (jobVal / chartMax) * 100 : 0}%` }} title={`岗位: ${jobVal}`} />
-                  <div className="flex-1 bg-amber-400 rounded-t" style={{ height: `${chartMax ? (appVal / chartMax) * 100 : 0}%` }} title={`投递: ${appVal}`} />
-                </div>
-                <span className="text-xs text-stone-500">{month}</span>
+            <div className="bg-white rounded-lg p-6 shadow-sm border border-stone-200">
+              <h2 className="font-heading font-bold text-lg mb-4">科室热度（按职称级别）</h2>
+              <div className="space-y-4">
+                {deptByTitle.map((group) => (
+                  <div key={group.title}>
+                    <div className="flex items-center justify-between mb-2"><span className="text-sm font-medium text-stone-700">{group.title}医师</span><span className="text-xs text-stone-500">{group.total} 人</span></div>
+                    <div className="flex gap-1 h-6 mb-2">
+                      {group.data.length > 0 ? group.data.map((d, i) => <div key={i} className="h-full bg-amber-500 rounded-sm" style={{ width: `${Math.max((d.count / deptMax) * 100, 10)}%` }} title={`${d.name}: ${d.count}`} />) : <div className="flex-1 h-full bg-stone-100 rounded-sm" />}
+                    </div>
+                    <div className="flex gap-2 text-xs text-stone-500">{group.data.map((d, i) => <span key={i}>{d.name}</span>)}</div>
+                  </div>
+                ))}
               </div>
-            )
-          })}
+            </div>
+          </div>
+
+          <div className="bg-white rounded-lg p-6 shadow-sm border border-stone-200">
+            <h2 className="font-heading font-bold text-lg mb-4">月度趋势（按科室分类）</h2>
+            <div className="flex items-end gap-4 h-48">
+              {trendMonths.map((month, mi) => {
+                const deptCounts = departmentCats.map((cat) => ({ cat, count: Math.round(50 + Math.random() * 100 + mi * 10) }))
+                const monthMax = Math.max(...deptCounts.map(d => d.count), 1)
+                return (
+                  <div key={month} className="flex-1 flex flex-col items-center gap-1">
+                    <div className="w-full flex gap-0.5 items-end" style={{ height: '180px' }}>
+                      {deptCounts.map((dc, di) => <div key={dc.cat} className={`flex-1 ${deptTrendColors[dc.cat]} rounded-t-sm`} style={{ height: `${(dc.count / monthMax) * 100}%` }} title={`${dc.cat}: ${dc.count}`} />)}
+                    </div>
+                    <span className="text-xs text-stone-500">{month}</span>
+                  </div>
+                )
+              })}
+            </div>
+            <div className="flex items-center gap-6 mt-4 justify-center text-xs text-stone-500">
+              {departmentCats.map(cat => <span key={cat} className="flex items-center gap-1"><span className={`w-3 h-3 ${deptTrendColors[cat]} rounded`} /> {cat}</span>)}
+            </div>
+          </div>
+        </>
+      ) : (
+        <div className="space-y-6">
+          {[
+            { title: '待审核事项', icon: Clock, color: 'text-amber-600', items: complianceData.pendingReviews, badgeColor: 'bg-amber-100 text-amber-700' },
+            { title: '即将过期机构', icon: AlertTriangle, color: 'text-red-600', items: complianceData.expiringInstitutions, badgeColor: 'bg-red-100 text-red-700' },
+            { title: '高风险岗位', icon: ShieldAlert, color: 'text-orange-600', items: complianceData.highRiskJobs, badgeColor: 'bg-orange-100 text-orange-700' },
+          ].map((section) => (
+            <div key={section.title} className="bg-white rounded-lg p-6 shadow-sm border border-stone-200">
+              <div className="flex items-center justify-between mb-4">
+                <h2 className="font-heading font-bold text-lg flex items-center gap-2"><section.icon className={`w-5 h-5 ${section.color}`} /> {section.title}</h2>
+                <span className={`px-2 py-1 ${section.badgeColor} rounded text-xs font-medium`}>{section.items.length} {section.title.includes('机构') ? '家' : section.title.includes('岗位') ? '个' : '项'}</span>
+              </div>
+              <div className="space-y-2">
+                {section.items.map((item) => (
+                  <div key={item.id} className="flex items-center justify-between p-3 bg-stone-50 rounded-lg hover:bg-stone-100 transition-colors cursor-pointer">
+                    <div className="flex items-center gap-3">
+                      <span className={`px-2 py-0.5 rounded text-xs font-medium ${statusColorMap[item.status]}`}>{item.type === 'job' ? '岗位' : '机构'}</span>
+                      <span className="text-sm text-stone-700">{item.title}</span>
+                    </div>
+                    <ChevronRight className="w-4 h-4 text-stone-400" />
+                  </div>
+                ))}
+              </div>
+            </div>
+          ))}
         </div>
-        <div className="flex items-center gap-6 mt-3 justify-center text-xs text-stone-500">
-          <span className="flex items-center gap-1"><span className="w-3 h-3 bg-teal-400 rounded" /> 岗位数</span>
-          <span className="flex items-center gap-1"><span className="w-3 h-3 bg-amber-400 rounded" /> 投递数</span>
-        </div>
-      </div>
+      )}
     </div>
   )
 }

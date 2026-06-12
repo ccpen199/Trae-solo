@@ -1,6 +1,6 @@
 import { useState, useEffect, useCallback } from 'react'
 import { Link, useSearchParams, useNavigate } from 'react-router-dom'
-import { MapPin, Building2, ChevronDown, X, Loader2, Check, AlertTriangle } from 'lucide-react'
+import { MapPin, Building2, ChevronDown, X, Loader2, Check, AlertTriangle, CheckCircle2, Clock } from 'lucide-react'
 import { apiFetch } from '@/lib/api'
 import { useAuthStore } from '@/store'
 
@@ -23,15 +23,28 @@ const jsMap: Record<string, { label: string; color: string }> = {
   closed: { label: '已下架', color: 'bg-stone-100 text-stone-600' },
 }
 
+const verifyBadgeMap: Record<string, { label: string; color: string; icon: any }> = {
+  verified: { label: '机构已认证', color: 'bg-green-100 text-green-700 border-green-200', icon: CheckCircle2 },
+  reviewing: { label: '年审中', color: 'bg-amber-100 text-amber-700 border-amber-200', icon: Clock },
+  expired: { label: '资质待审核', color: 'bg-red-100 text-red-700 border-red-200', icon: AlertTriangle },
+  unverified: { label: '资质待审核', color: 'bg-red-100 text-red-700 border-red-200', icon: AlertTriangle },
+}
+
 interface J {
   id: string; title: string; department: string; institution_name: string
   institution_type: string; location: string; salary_min: number; salary_max: number
   required_title: string; created_at: string; status: string; ai_risk_score?: number
+  institution_verified?: string; close_reason?: string; reviewer_name?: string; reviewed_at?: string
 }
 
 const fmtSal = (min: number, max: number) => {
   const f = (n: number) => (n >= 1000 ? `${Math.round(n / 1000)}K` : `${n}`)
   return `${f(min)}-${f(max)}`
+}
+
+const getVerifyBadge = (status?: string) => {
+  const key = status || 'unverified'
+  return verifyBadgeMap[key] || verifyBadgeMap.unverified
 }
 
 export default function Jobs() {
@@ -207,52 +220,73 @@ export default function Jobs() {
             <div className="text-center text-stone-500 py-12">加载中...</div>
           ) : (
             <div className="grid grid-cols-2 gap-4">
-              {cur.map(j => (
-                <div key={j.id} className="bg-white border border-stone-200 rounded-lg p-5 hover:shadow-md transition-shadow">
-                  <div className="flex items-start justify-between mb-2">
-                    <div>
-                      {tab === 'all' ? (
-                        <Link to={`/jobs/${j.id}`} className="font-medium text-lg text-stone-800 hover:text-teal-700">{j.title}</Link>
-                      ) : <h3 className="font-medium text-lg text-stone-800">{j.title}</h3>}
-                      <div className="flex items-center gap-2 mt-2 text-sm text-stone-500">
-                        <span className="px-2 py-0.5 bg-teal-50 text-teal-700 rounded">{j.department}</span>
-                        <span className="px-2 py-0.5 bg-stone-100 text-stone-600 rounded">{j.required_title}</span>
+              {cur.map(j => {
+                const badge = getVerifyBadge(j.institution_verified)
+                const BadgeIcon = badge.icon
+                return (
+                  <div key={j.id} className="bg-white border border-stone-200 rounded-lg p-5 hover:shadow-md transition-shadow">
+                    <div className="flex items-start justify-between mb-2">
+                      <div className="flex-1">
+                        <div className="flex items-center gap-2 mb-1">
+                          {tab === 'all' ? (
+                            <Link to={`/jobs/${j.id}`} className="font-medium text-lg text-stone-800 hover:text-teal-700">{j.title}</Link>
+                          ) : <h3 className="font-medium text-lg text-stone-800">{j.title}</h3>}
+                          <span className={`px-1.5 py-0.5 border rounded text-xs font-medium flex items-center gap-0.5 ${badge.color}`}>
+                            <BadgeIcon className="w-3 h-3" /> {badge.label}
+                          </span>
+                        </div>
+                        <div className="flex items-center gap-2 mt-2 text-sm text-stone-500">
+                          <span className="px-2 py-0.5 bg-teal-50 text-teal-700 rounded">{j.department}</span>
+                          <span className="px-2 py-0.5 bg-stone-100 text-stone-600 rounded">{j.required_title}</span>
+                        </div>
+                      </div>
+                      <div className="flex flex-col items-end gap-1">
+                        <span className="text-amber-600 font-bold whitespace-nowrap">{fmtSal(j.salary_min, j.salary_max)}</span>
+                        {tab === 'my' && (
+                          <div className="flex items-center gap-1">
+                            <span className={`px-2 py-0.5 rounded text-xs font-medium ${jsMap[j.status]?.color || 'bg-stone-100 text-stone-600'}`}>
+                              {jsMap[j.status]?.label || j.status}
+                            </span>
+                            {j.ai_risk_score && j.ai_risk_score > 50 && (
+                              <span className="px-2 py-0.5 rounded text-xs font-medium bg-red-100 text-red-700 flex items-center gap-1">
+                                <AlertTriangle className="w-3 h-3" />风险 {j.ai_risk_score}
+                              </span>
+                            )}
+                          </div>
+                        )}
                       </div>
                     </div>
-                    <div className="flex flex-col items-end gap-1">
-                      <span className="text-amber-600 font-bold whitespace-nowrap">{fmtSal(j.salary_min, j.salary_max)}</span>
-                      {tab === 'my' && (
-                        <div className="flex items-center gap-1">
-                          <span className={`px-2 py-0.5 rounded text-xs font-medium ${jsMap[j.status]?.color || 'bg-stone-100 text-stone-600'}`}>
-                            {jsMap[j.status]?.label || j.status}
-                          </span>
-                          {j.ai_risk_score && j.ai_risk_score > 50 && (
-                            <span className="px-2 py-0.5 rounded text-xs font-medium bg-red-100 text-red-700 flex items-center gap-1">
-                              <AlertTriangle className="w-3 h-3" />风险 {j.ai_risk_score}
-                            </span>
-                          )}
+                    <div className="flex items-center gap-4 mt-3 text-sm text-stone-500">
+                      <span className="flex items-center gap-1"><Building2 className="w-4 h-4" />{j.institution_name}</span>
+                      <span className="flex items-center gap-1"><MapPin className="w-4 h-4" />{j.location}</span>
+                    </div>
+                    {(j.status === 'closed' || j.status === 'rejected') && j.close_reason && (
+                      <div className="mt-3 pt-3 border-t border-stone-100">
+                        <div className="group relative inline-block">
+                          <span className="text-xs text-stone-500">查看处理详情</span>
+                          <div className="absolute bottom-full left-0 mb-2 hidden group-hover:block z-10 w-64 p-3 bg-stone-800 text-white text-xs rounded-lg shadow-lg">
+                            <div className="font-medium mb-1">处理原因: {j.close_reason}</div>
+                            <div>审核人: {j.reviewer_name || '系统'}</div>
+                            <div>审核时间: {j.reviewed_at || '-'}</div>
+                          </div>
                         </div>
-                      )}
-                    </div>
+                      </div>
+                    )}
+                    {tab === 'my' && isInst && (
+                      <div className="mt-4 pt-4 border-t border-stone-100 flex gap-2">
+                        {j.status === 'active' && (
+                          <button onClick={() => closeJob(j.id)} disabled={actLoad === j.id}
+                            className={`${btnBase} border border-red-300 text-red-600 hover:bg-red-50`}>
+                            {actLoad === j.id && <Loader2 className="w-3.5 h-3.5 animate-spin" />}下架
+                          </button>
+                        )}
+                        <button onClick={() => nav(`/applications?jobId=${j.id}`)} className={btnSec}>查看投递</button>
+                        <button onClick={() => nav(`/job/post?id=${j.id}`)} className={btnSec}>编辑</button>
+                      </div>
+                    )}
                   </div>
-                  <div className="flex items-center gap-4 mt-3 text-sm text-stone-500">
-                    <span className="flex items-center gap-1"><Building2 className="w-4 h-4" />{j.institution_name}</span>
-                    <span className="flex items-center gap-1"><MapPin className="w-4 h-4" />{j.location}</span>
-                  </div>
-                  {tab === 'my' && isInst && (
-                    <div className="mt-4 pt-4 border-t border-stone-100 flex gap-2">
-                      {j.status === 'active' && (
-                        <button onClick={() => closeJob(j.id)} disabled={actLoad === j.id}
-                          className={`${btnBase} border border-red-300 text-red-600 hover:bg-red-50`}>
-                          {actLoad === j.id && <Loader2 className="w-3.5 h-3.5 animate-spin" />}下架
-                        </button>
-                      )}
-                      <button onClick={() => nav(`/applications?jobId=${j.id}`)} className={btnSec}>查看投递</button>
-                      <button onClick={() => nav(`/job/post?id=${j.id}`)} className={btnSec}>编辑</button>
-                    </div>
-                  )}
-                </div>
-              ))}
+                )
+              })}
             </div>
           )}
 

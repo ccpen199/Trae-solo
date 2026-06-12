@@ -136,6 +136,33 @@ db.exec(`
   );
 `)
 
+try {
+  db.exec(`
+    ALTER TABLE jobs ADD COLUMN approved_by INTEGER REFERENCES users(id);
+    ALTER TABLE jobs ADD COLUMN approved_at TEXT;
+    ALTER TABLE jobs ADD COLUMN closed_reason TEXT;
+    ALTER TABLE jobs ADD COLUMN closed_at TEXT;
+    ALTER TABLE jobs ADD COLUMN closed_by INTEGER REFERENCES users(id);
+    ALTER TABLE jobs ADD COLUMN review_note TEXT;
+  `)
+} catch (e) {}
+
+try {
+  db.exec(`
+    ALTER TABLE applications ADD COLUMN read_at TEXT;
+    ALTER TABLE applications ADD COLUMN invited_at TEXT;
+    ALTER TABLE applications ADD COLUMN interview_at TEXT;
+    ALTER TABLE applications ADD COLUMN offered_at TEXT;
+    ALTER TABLE applications ADD COLUMN rejected_at TEXT;
+  `)
+} catch (e) {}
+
+try {
+  db.exec(`
+    ALTER TABLE institution_profiles ADD COLUMN verified_level INTEGER DEFAULT 0;
+  `)
+} catch (e) {}
+
 const userCount = db.prepare('SELECT COUNT(*) as count FROM users').get() as { count: number }
 if (userCount.count === 0) {
   const insertUser = db.prepare(`
@@ -145,16 +172,16 @@ if (userCount.count === 0) {
     INSERT INTO talent_profiles (user_id, practice_category, department, title, gender, age, email, location) VALUES (?, ?, ?, ?, ?, ?, ?, ?)
   `)
   const insertInstitutionProfile = db.prepare(`
-    INSERT INTO institution_profiles (user_id, institution_name, institution_type, credit_code, license_expiry, review_status, last_review_date, location, description) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
+    INSERT INTO institution_profiles (user_id, institution_name, institution_type, credit_code, license_expiry, review_status, last_review_date, location, description, verified_level) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
   `)
   const insertResume = db.prepare(`
     INSERT INTO resumes (talent_id, basic_info, education, certifications, work_experience, privacy_settings) VALUES (?, ?, ?, ?, ?, ?)
   `)
   const insertJob = db.prepare(`
-    INSERT INTO jobs (institution_id, title, department, required_title, required_category, location, salary_min, salary_max, description, requirements, status, ai_risk_score) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+    INSERT INTO jobs (institution_id, title, department, required_title, required_category, location, salary_min, salary_max, description, requirements, status, ai_risk_score, approved_by, approved_at, review_note) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
   `)
   const insertApplication = db.prepare(`
-    INSERT INTO applications (job_id, talent_id, status, timeline) VALUES (?, ?, ?, ?)
+    INSERT INTO applications (job_id, talent_id, status, timeline, read_at, invited_at, interview_at, offered_at, rejected_at) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
   `)
   const insertConversation = db.prepare(`
     INSERT INTO conversations (talent_id, institution_id, last_message, updated_at) VALUES (?, ?, ?, datetime('now'))
@@ -191,10 +218,10 @@ if (userCount.count === 0) {
     }
 
     const instData = [
-      { name: '北京协和医院', type: '三甲医院', code: '91110000MA01A001', expiry: '2027-12-31', review: 'approved', lastDate: '2025-01-15', location: '北京', desc: '中国最顶尖的综合性医院之一' },
-      { name: '上海市第一人民医院', type: '二甲医院', code: '91310000MA01B002', expiry: '2026-06-30', review: 'approved', lastDate: '2024-11-20', location: '上海', desc: '上海市历史悠久的综合性医院' },
-      { name: '广州妇儿医疗中心', type: '专科医院', code: '91440100MA01C003', expiry: '2026-03-15', review: 'pending', lastDate: null, location: '广州', desc: '专注于妇女儿童健康的专科医疗机构' },
-      { name: '杭州西湖社区卫生服务中心', type: '社区医院', code: '91330100MA01D004', expiry: '2025-09-30', review: 'approved', lastDate: '2024-08-10', location: '杭州', desc: '服务社区的基层医疗机构' },
+      { name: '北京协和医院', type: '三甲医院', code: '91110000MA01A001', expiry: '2027-12-31', review: 'approved', lastDate: '2025-01-15', location: '北京', desc: '中国最顶尖的综合性医院之一', verifiedLevel: 2 },
+      { name: '上海市第一人民医院', type: '二甲医院', code: '91310000MA01B002', expiry: '2026-06-30', review: 'approved', lastDate: '2024-11-20', location: '上海', desc: '上海市历史悠久的综合性医院', verifiedLevel: 2 },
+      { name: '广州妇儿医疗中心', type: '专科医院', code: '91440100MA01C003', expiry: '2026-03-15', review: 'pending', lastDate: null, location: '广州', desc: '专注于妇女儿童健康的专科医疗机构', verifiedLevel: 0 },
+      { name: '杭州西湖社区卫生服务中心', type: '社区医院', code: '91330100MA01D004', expiry: '2025-09-30', review: 'approved', lastDate: '2024-08-10', location: '杭州', desc: '服务社区的基层医疗机构', verifiedLevel: 1 },
     ]
 
     const instUserIds: number[] = []
@@ -203,7 +230,7 @@ if (userCount.count === 0) {
     for (const inst of instData) {
       const r = insertUser.run(`1390000000${instProfileIds.length + 1}`, '123456', inst.name, 'institution', 1)
       instUserIds.push(Number(r.lastInsertRowid))
-      const pr = insertInstitutionProfile.run(r.lastInsertRowid, inst.name, inst.type, inst.code, inst.expiry, inst.review, inst.lastDate, inst.location, inst.desc)
+      const pr = insertInstitutionProfile.run(r.lastInsertRowid, inst.name, inst.type, inst.code, inst.expiry, inst.review, inst.lastDate, inst.location, inst.desc, inst.verifiedLevel)
       instProfileIds.push(Number(pr.lastInsertRowid))
     }
 
@@ -229,36 +256,36 @@ if (userCount.count === 0) {
     }
 
     const jobData = [
-      { inst: 0, title: '内科主治医师', dept: '内科', reqTitle: '主治医师', reqCat: '临床', loc: '北京', salMin: 15000, salMax: 25000, desc: '负责内科门诊及住院患者的诊疗工作', req: '内科主治医师职称，3年以上临床经验', status: 'active', risk: 0 },
-      { inst: 0, title: '外科副主任医师', dept: '外科', reqTitle: '副主任医师', reqCat: '临床', loc: '北京', salMin: 20000, salMax: 35000, desc: '负责外科手术及疑难病例会诊', req: '外科副主任医师职称，5年以上临床经验', status: 'active', risk: 0 },
-      { inst: 1, title: '儿科住院医师', dept: '儿科', reqTitle: '住院医师', reqCat: '临床', loc: '上海', salMin: 10000, salMax: 18000, desc: '负责儿科门诊及病房工作', req: '儿科住院医师规范化培训合格', status: 'active', risk: 0 },
-      { inst: 1, title: '妇产科主治医师', dept: '妇产科', reqTitle: '主治医师', reqCat: '临床', loc: '上海', salMin: 14000, salMax: 22000, desc: '负责妇产科门诊及手术', req: '妇产科主治医师职称，2年以上临床经验', status: 'active', risk: 0 },
-      { inst: 2, title: '儿科主治医师', dept: '儿科', reqTitle: '主治医师', reqCat: '临床', loc: '广州', salMin: 12000, salMax: 20000, desc: '负责儿童常见病的诊疗', req: '儿科主治医师职称', status: 'active', risk: 0 },
-      { inst: 2, title: '产科住院医师', dept: '妇产科', reqTitle: '住院医师', reqCat: '临床', loc: '广州', salMin: 10000, salMax: 16000, desc: '负责产科病房及分娩工作', req: '妇产科住院医师规范化培训合格', status: 'pending', risk: 10 },
-      { inst: 3, title: '全科医生', dept: '全科', reqTitle: '主治医师', reqCat: '临床', loc: '杭州', salMin: 8000, salMax: 15000, desc: '负责社区居民常见病诊疗及健康管理', req: '全科医学主治医师职称', status: 'active', risk: 0 },
-      { inst: 3, title: '药房主管', dept: '药学', reqTitle: '主管药师', reqCat: '药学', loc: '杭州', salMin: 9000, salMax: 14000, desc: '负责药房日常管理及药品调配', req: '主管药师及以上职称，2年以上药房管理经验', status: 'active', risk: 0 },
-      { inst: 0, title: '急诊科医师', dept: '急诊科', reqTitle: '主治医师', reqCat: '临床', loc: '北京', salMin: 18000, salMax: 30000, desc: '负责急诊患者的救治及抢救工作', req: '急诊科主治医师职称，3年以上急诊经验', status: 'active', risk: 5 },
+      { inst: 0, title: '内科主治医师', dept: '内科', reqTitle: '主治医师', reqCat: '临床', loc: '北京', salMin: 15000, salMax: 25000, desc: '负责内科门诊及住院患者的诊疗工作', req: '内科主治医师职称，3年以上临床经验', status: 'active', risk: 0, approvedBy: 1, approvedAt: '2025-01-20T10:00:00Z', reviewNote: '资质齐全，信息真实，予以通过' },
+      { inst: 0, title: '外科副主任医师', dept: '外科', reqTitle: '副主任医师', reqCat: '临床', loc: '北京', salMin: 20000, salMax: 35000, desc: '负责外科手术及疑难病例会诊', req: '外科副主任医师职称，5年以上临床经验', status: 'active', risk: 0, approvedBy: 1, approvedAt: '2025-01-22T14:30:00Z', reviewNote: '高职称岗位，薪资合理，予以通过' },
+      { inst: 1, title: '儿科住院医师', dept: '儿科', reqTitle: '住院医师', reqCat: '临床', loc: '上海', salMin: 10000, salMax: 18000, desc: '负责儿科门诊及病房工作', req: '儿科住院医师规范化培训合格', status: 'active', risk: 0, approvedBy: 1, approvedAt: '2025-02-01T09:15:00Z', reviewNote: '住院医师岗位，要求合理，予以通过' },
+      { inst: 1, title: '妇产科主治医师', dept: '妇产科', reqTitle: '主治医师', reqCat: '临床', loc: '上海', salMin: 14000, salMax: 22000, desc: '负责妇产科门诊及手术', req: '妇产科主治医师职称，2年以上临床经验', status: 'active', risk: 0, approvedBy: 1, approvedAt: '2025-02-05T11:00:00Z', reviewNote: '主治医师岗位，信息完整，予以通过' },
+      { inst: 2, title: '儿科主治医师', dept: '儿科', reqTitle: '主治医师', reqCat: '临床', loc: '广州', salMin: 12000, salMax: 20000, desc: '负责儿童常见病的诊疗', req: '儿科主治医师职称', status: 'active', risk: 0, approvedBy: 1, approvedAt: '2025-02-10T16:45:00Z', reviewNote: '专科医院岗位，予以通过' },
+      { inst: 2, title: '产科住院医师', dept: '妇产科', reqTitle: '住院医师', reqCat: '临床', loc: '广州', salMin: 10000, salMax: 16000, desc: '负责产科病房及分娩工作', req: '妇产科住院医师规范化培训合格', status: 'pending', risk: 10, approvedBy: null, approvedAt: null, reviewNote: null },
+      { inst: 3, title: '全科医生', dept: '全科', reqTitle: '主治医师', reqCat: '临床', loc: '杭州', salMin: 8000, salMax: 15000, desc: '负责社区居民常见病诊疗及健康管理', req: '全科医学主治医师职称', status: 'active', risk: 0, approvedBy: 1, approvedAt: '2025-01-25T13:20:00Z', reviewNote: '社区医院岗位，需求合理，予以通过' },
+      { inst: 3, title: '药房主管', dept: '药学', reqTitle: '主管药师', reqCat: '药学', loc: '杭州', salMin: 9000, salMax: 14000, desc: '负责药房日常管理及药品调配', req: '主管药师及以上职称，2年以上药房管理经验', status: 'active', risk: 0, approvedBy: 1, approvedAt: '2025-01-28T10:30:00Z', reviewNote: '药学岗位，资质要求明确，予以通过' },
+      { inst: 0, title: '急诊科医师', dept: '急诊科', reqTitle: '主治医师', reqCat: '临床', loc: '北京', salMin: 18000, salMax: 30000, desc: '负责急诊患者的救治及抢救工作', req: '急诊科主治医师职称，3年以上急诊经验', status: 'active', risk: 5, approvedBy: 1, approvedAt: '2025-02-15T09:00:00Z', reviewNote: '急诊岗位，风险评分5，需关注薪资合理性' },
     ]
 
     const jobIds: number[] = []
     for (const j of jobData) {
-      const r = insertJob.run(instProfileIds[j.inst], j.title, j.dept, j.reqTitle, j.reqCat, j.loc, j.salMin, j.salMax, j.desc, j.req, j.status, j.risk)
+      const r = insertJob.run(instProfileIds[j.inst], j.title, j.dept, j.reqTitle, j.reqCat, j.loc, j.salMin, j.salMax, j.desc, j.req, j.status, j.risk, j.approvedBy, j.approvedAt, j.reviewNote)
       jobIds.push(Number(r.lastInsertRowid))
     }
 
     const appData = [
-      { job: 0, talent: 0, status: 'interview', timeline: '[{"status":"applied","at":"2025-03-01"},{"status":"read","at":"2025-03-02"},{"status":"invited","at":"2025-03-05"},{"status":"interview","at":"2025-03-10"}]' },
-      { job: 1, talent: 1, status: 'offered', timeline: '[{"status":"applied","at":"2025-02-15"},{"status":"read","at":"2025-02-16"},{"status":"invited","at":"2025-02-20"},{"status":"interview","at":"2025-02-25"},{"status":"offered","at":"2025-03-01"}]' },
-      { job: 2, talent: 2, status: 'read', timeline: '[{"status":"applied","at":"2025-04-01"},{"status":"read","at":"2025-04-02"}]' },
-      { job: 3, talent: 3, status: 'applied', timeline: '[{"status":"applied","at":"2025-04-10"}]' },
-      { job: 4, talent: 2, status: 'invited', timeline: '[{"status":"applied","at":"2025-03-20"},{"status":"read","at":"2025-03-21"},{"status":"invited","at":"2025-03-25"}]' },
-      { job: 6, talent: 3, status: 'rejected', timeline: '[{"status":"applied","at":"2025-03-15"},{"status":"read","at":"2025-03-16"},{"status":"rejected","at":"2025-03-20"}]' },
-      { job: 7, talent: 4, status: 'applied', timeline: '[{"status":"applied","at":"2025-04-05"}]' },
-      { job: 8, talent: 0, status: 'applied', timeline: '[{"status":"applied","at":"2025-04-12"}]' },
+      { job: 0, talent: 0, status: 'interview', timeline: '[{"status":"applied","at":"2025-03-01"},{"status":"read","at":"2025-03-02"},{"status":"invited","at":"2025-03-05"},{"status":"interview","at":"2025-03-10"}]', readAt: '2025-03-02T10:00:00Z', invitedAt: '2025-03-05T14:30:00Z', interviewAt: '2025-03-10T09:00:00Z', offeredAt: null, rejectedAt: null },
+      { job: 1, talent: 1, status: 'offered', timeline: '[{"status":"applied","at":"2025-02-15"},{"status":"read","at":"2025-02-16"},{"status":"invited","at":"2025-02-20"},{"status":"interview","at":"2025-02-25"},{"status":"offered","at":"2025-03-01"}]', readAt: '2025-02-16T11:00:00Z', invitedAt: '2025-02-20T15:00:00Z', interviewAt: '2025-02-25T10:00:00Z', offeredAt: '2025-03-01T16:00:00Z', rejectedAt: null },
+      { job: 2, talent: 2, status: 'read', timeline: '[{"status":"applied","at":"2025-04-01"},{"status":"read","at":"2025-04-02"}]', readAt: '2025-04-02T09:30:00Z', invitedAt: null, interviewAt: null, offeredAt: null, rejectedAt: null },
+      { job: 3, talent: 3, status: 'applied', timeline: '[{"status":"applied","at":"2025-04-10"}]', readAt: null, invitedAt: null, interviewAt: null, offeredAt: null, rejectedAt: null },
+      { job: 4, talent: 2, status: 'invited', timeline: '[{"status":"applied","at":"2025-03-20"},{"status":"read","at":"2025-03-21"},{"status":"invited","at":"2025-03-25"}]', readAt: '2025-03-21T14:00:00Z', invitedAt: '2025-03-25T10:30:00Z', interviewAt: null, offeredAt: null, rejectedAt: null },
+      { job: 6, talent: 3, status: 'rejected', timeline: '[{"status":"applied","at":"2025-03-15"},{"status":"read","at":"2025-03-16"},{"status":"rejected","at":"2025-03-20"}]', readAt: '2025-03-16T11:00:00Z', invitedAt: null, interviewAt: null, offeredAt: null, rejectedAt: '2025-03-20T16:00:00Z' },
+      { job: 7, talent: 4, status: 'applied', timeline: '[{"status":"applied","at":"2025-04-05"}]', readAt: null, invitedAt: null, interviewAt: null, offeredAt: null, rejectedAt: null },
+      { job: 8, talent: 0, status: 'applied', timeline: '[{"status":"applied","at":"2025-04-12"}]', readAt: null, invitedAt: null, interviewAt: null, offeredAt: null, rejectedAt: null },
     ]
 
     for (const a of appData) {
-      insertApplication.run(jobIds[a.job], talentProfileIds[a.talent], a.status, a.timeline)
+      insertApplication.run(jobIds[a.job], talentProfileIds[a.talent], a.status, a.timeline, a.readAt, a.invitedAt, a.interviewAt, a.offeredAt, a.rejectedAt)
     }
 
     const conv1 = insertConversation.run(talentProfileIds[0], instProfileIds[0], '您好，请问面试时间方便安排吗？')
