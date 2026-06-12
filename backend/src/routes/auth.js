@@ -8,13 +8,19 @@ const router = express.Router();
 router.post('/register', (req, res) => {
   const { username, email, password, nickname } = req.body;
 
-  if (!username || !email || !password) {
-    return res.status(400).json({ error: 'Username, email and password are required' });
+  if (!username || !password) {
+    return res.status(400).json({ error: '用户名和密码不能为空' });
   }
 
-  const existingUser = db.prepare('SELECT id FROM users WHERE username = ? OR email = ?').get(username, email);
+  if (password.length < 6) {
+    return res.status(400).json({ error: '密码长度至少6位' });
+  }
+
+  const finalEmail = email || `${username}@example.com`;
+
+  const existingUser = db.prepare('SELECT id FROM users WHERE username = ? OR email = ?').get(username, finalEmail);
   if (existingUser) {
-    return res.status(400).json({ error: 'Username or email already exists' });
+    return res.status(400).json({ error: '该用户名已存在，请更换用户名' });
   }
 
   const passwordHash = bcrypt.hashSync(password, 10);
@@ -22,7 +28,7 @@ router.post('/register', (req, res) => {
   const result = db.prepare(`
     INSERT INTO users (username, email, password_hash, nickname, n_coins)
     VALUES (?, ?, ?, ?, 100)
-  `).run(username, email, passwordHash, nickname || username);
+  `).run(username, finalEmail, passwordHash, nickname || username);
 
   const userId = result.lastInsertRowid;
   const token = generateToken(userId);
@@ -39,13 +45,21 @@ router.post('/login', (req, res) => {
   const { username, password } = req.body;
 
   if (!username || !password) {
-    return res.status(400).json({ error: 'Username and password are required' });
+    return res.status(400).json({ error: '用户名和密码不能为空' });
   }
 
   const user = db.prepare('SELECT * FROM users WHERE username = ? OR email = ?').get(username, username);
 
-  if (!user || !bcrypt.compareSync(password, user.password_hash)) {
-    return res.status(401).json({ error: 'Invalid username or password' });
+  if (!user) {
+    return res.status(401).json({ error: '该账号不存在，请检查用户名或注册新账号' });
+  }
+
+  if (!bcrypt.compareSync(password, user.password_hash)) {
+    return res.status(401).json({ error: '密码错误，请重新输入' });
+  }
+
+  if (user.status === 'banned' || user.status === 'disabled') {
+    return res.status(403).json({ error: '该账号已被禁用，请联系管理员' });
   }
 
   const token = generateToken(user.id);

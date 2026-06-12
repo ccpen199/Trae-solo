@@ -1,8 +1,10 @@
 import React, { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import api from '../utils/api'
+import { useAuth } from '../App.jsx'
 
-export default function Dashboard({ user }) {
+export default function Dashboard() {
+  const { user } = useAuth()
   const [stats, setStats] = useState(null)
   const [recentRides, setRecentRides] = useState([])
   const [devices, setDevices] = useState([])
@@ -72,6 +74,39 @@ export default function Dashboard({ user }) {
         <StatCard icon="📏" label="总里程" value={`${stats?.totalDistance || 0} km`} color="orange" />
         <StatCard icon="⏱️" label="总时长" value={`${stats?.totalDuration || 0} 分`} color="pink" />
         <StatCard icon="💰" label="N币" value={stats?.nCoins || 0} color="yellow" />
+      </div>
+
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
+        <div className="lg:col-span-2 bg-white rounded-xl p-5 shadow-sm">
+          <div className="flex items-center justify-between mb-3">
+            <h3 className="text-lg font-semibold text-gray-800">搜索筛选中心</h3>
+            <Link to="/shop" className="text-sm text-primary-600 hover:text-primary-700">进入分类发现 →</Link>
+          </div>
+          <div className="flex flex-col md:flex-row gap-3">
+            <input
+              className="flex-1 px-4 py-2.5 border border-gray-200 rounded-lg outline-none focus:ring-2 focus:ring-primary-200 focus:border-primary-500"
+              placeholder="搜索设备、订单、话题或商城商品"
+            />
+            <div className="flex gap-2">
+              {['整车', '配件', '维修', '社区'].map(item => (
+                <Link
+                  to={item === '社区' ? '/social' : item === '维修' ? '/service' : '/shop'}
+                  className="px-3 py-2 bg-gray-100 text-gray-700 rounded-lg text-sm hover:bg-primary-50 hover:text-primary-700"
+                >
+                  {item}
+                </Link>
+              ))}
+            </div>
+          </div>
+        </div>
+
+        <div className="bg-red-50 border border-red-100 rounded-xl p-5 shadow-sm">
+          <h3 className="text-lg font-semibold text-red-800">后台管理入口</h3>
+          <p className="text-sm text-red-600 mt-1">用户管理、设备管理、内容审核、工单与固件管理</p>
+          <Link to="/admin" className="inline-flex mt-4 px-4 py-2 bg-red-600 text-white rounded-lg text-sm hover:bg-red-700">
+            打开管理后台
+          </Link>
+        </div>
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">

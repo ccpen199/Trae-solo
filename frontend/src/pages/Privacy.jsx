@@ -1,7 +1,9 @@
 import React, { useState, useEffect } from 'react'
 import api from '../utils/api'
+import { useAuth } from '../App.jsx'
 
-export default function Privacy({ user }) {
+export default function Privacy() {
+  const { user } = useAuth()
   const [info, setInfo] = useState(null)
   const [requests, setRequests] = useState([])
   const [loading, setLoading] = useState(true)
