@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 
-function MasterReviewModal({ nameData, baziData, onClose }) {
+function MasterReviewModal({ nameData, baziData, onClose, onSubmitSuccess }) {
   const [masters, setMasters] = useState([]);
   const [selectedMaster, setSelectedMaster] = useState(null);
   const [userContact, setUserContact] = useState('');
@@ -63,6 +63,9 @@ function MasterReviewModal({ nameData, baziData, onClose }) {
       if (result.success) {
         setSubmitted(true);
         setReviewId(result.data.reviewId);
+        if (onSubmitSuccess) {
+          onSubmitSuccess(result.data.reviewId);
+        }
       } else {
         alert(result.message || '提交失败');
       }
