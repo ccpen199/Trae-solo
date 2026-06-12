@@ -12,6 +12,13 @@ export function formatMoney(amount: number, currency: string = "CNY") {
   }).format(amount);
 }
 
+export function formatNumber(value: number, decimals: number = 0) {
+  return new Intl.NumberFormat("zh-CN", {
+    minimumFractionDigits: decimals,
+    maximumFractionDigits: decimals,
+  }).format(value);
+}
+
 export function formatDate(date: Date | string | number, format?: string) {
   const d = new Date(date);
   if (format) {

@@ -24,7 +24,7 @@ import {
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/Card";
 import { Badge } from "@/components/ui/Badge";
 import { Button } from "@/components/ui/Button";
-import { cn, formatMoney } from "@/lib/utils";
+import { cn, formatNumber } from "@/lib/utils";
 import {
   BarChart as RechartsBarChart,
   Bar,
@@ -193,7 +193,7 @@ export default function SalaryReportPage() {
                   </span>
                 </div>
                 <p className="text-2xl font-bold text-white">
-                  {formatMoney(item.value, 0)}
+                  {formatNumber(item.value, 0)}
                 </p>
                 <p className="text-xs text-white/60 mt-1">{item.description}</p>
               </div>
@@ -356,7 +356,7 @@ export default function SalaryReportPage() {
                       <p className="text-sm text-slate-500">你的薪资水平</p>
                       <div className="flex items-baseline gap-1 mt-0.5">
                         <span className="text-2xl font-bold text-slate-900">
-                          {formatMoney(currentSalary, 0)}
+                          {formatNumber(currentSalary, 0)}
                         </span>
                         <span className="text-sm text-slate-500">/月</span>
                       </div>
@@ -496,7 +496,7 @@ export default function SalaryReportPage() {
                     >
                       <p className="text-sm text-slate-600 mb-2">{item.industry}</p>
                       <p className="text-xl font-bold text-slate-900 mb-1">
-                        {formatMoney(item.salary, 0)}
+                        {formatNumber(item.salary, 0)}
                       </p>
                       <div
                         className={cn(
@@ -536,26 +536,26 @@ export default function SalaryReportPage() {
                             <span className="font-medium text-slate-900">{item.city}</span>
                           </div>
                           <span className="text-lg font-bold text-blue-600">
-                            {formatMoney(item.avg, 0)}
+                            {formatNumber(item.avg, 0)}
                           </span>
                         </div>
                         <div className="grid grid-cols-3 gap-2 text-center">
                           <div className="p-2 rounded-lg bg-white">
                             <p className="text-xs text-slate-500">P25</p>
                             <p className="font-semibold text-slate-700 text-sm">
-                              {formatMoney(item.p25 / 1000, 1)}K
+                              {formatNumber(item.p25 / 1000, 1)}K
                             </p>
                           </div>
                           <div className="p-2 rounded-lg bg-emerald-50">
                             <p className="text-xs text-emerald-600">P50</p>
                             <p className="font-semibold text-emerald-700 text-sm">
-                              {formatMoney(item.p50 / 1000, 1)}K
+                              {formatNumber(item.p50 / 1000, 1)}K
                             </p>
                           </div>
                           <div className="p-2 rounded-lg bg-white">
                             <p className="text-xs text-slate-500">P75</p>
                             <p className="font-semibold text-slate-700 text-sm">
-                              {formatMoney(item.p75 / 1000, 1)}K
+                              {formatNumber(item.p75 / 1000, 1)}K
                             </p>
                           </div>
                         </div>
@@ -586,7 +586,7 @@ export default function SalaryReportPage() {
                           <div className="flex items-center gap-4 text-sm">
                             <span className="text-slate-500">P50: </span>
                             <span className="font-semibold text-slate-900">
-                              {formatMoney(item.p50, 0)}
+                              {formatNumber(item.p50, 0)}
                             </span>
                             <ChevronRight className="h-4 w-4 text-slate-400" />
                           </div>

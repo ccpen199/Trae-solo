@@ -31,6 +31,7 @@ import {
   Settings,
   LogOut,
   Home,
+  ChevronRight,
 } from "lucide-react";
 import { Button } from "@/components/ui/Button";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/Card";
