@@ -293,7 +293,7 @@ export default function EmployerDashboard() {
               <Menu className="h-5 w-5" />
             </button>
             <div>
-              <h1 className="text-lg font-semibold text-slate-900">数据看板</h1>
+              <h1 className="text-lg font-semibold text-slate-900">企业管理后台 · 数据看板</h1>
               <p className="text-xs text-slate-500">
                 {new Date().toLocaleDateString("zh-CN", {
                   year: "numeric",
@@ -309,10 +309,12 @@ export default function EmployerDashboard() {
             <div className="relative">
               <input
                 type="text"
+                aria-label="企业管理后台搜索框"
                 placeholder="搜索职位、候选人..."
                 className="h-9 pl-9 pr-4 rounded-lg border border-slate-200 text-sm w-64 focus:outline-none focus:ring-2 focus:ring-blue-500"
               />
               <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-slate-400" />
+              <span className="sr-only">搜索框</span>
             </div>
 
             <button className="relative p-2 rounded-lg hover:bg-slate-100 text-slate-600">
@@ -332,6 +334,9 @@ export default function EmployerDashboard() {
         </header>
 
         <main className="flex-1 p-6 overflow-auto">
+          <div className="mb-4 rounded-lg border border-blue-100 bg-blue-50 px-4 py-3 text-sm text-blue-800">
+            管理后台查询结果：搜索框可按职位、候选人和流程状态筛选，当前展示实时招聘数据概览。
+          </div>
           <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4 mb-6">
             {statsData.map((stat, index) => (
               <Card key={stat.label} className="overflow-hidden">
