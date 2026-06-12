@@ -1,5 +1,5 @@
 import React, { useState, useEffect, createContext, useContext } from 'react'
-import { Routes, Route, Navigate, useLocation, useNavigate, Outlet, Link } from 'react-router-dom'
+import { Routes, Route, Navigate, useLocation, useNavigate, Outlet } from 'react-router-dom'
 import Layout from './components/Layout.jsx'
 import Login from './pages/Login.jsx'
 import Dashboard from './pages/Dashboard.jsx'
@@ -19,19 +19,10 @@ import Shop from './pages/Shop.jsx'
 import Orders from './pages/Orders.jsx'
 import Privacy from './pages/Privacy.jsx'
 import Admin from './pages/Admin.jsx'
+import UserCenter from './pages/UserCenter.jsx'
 import api from './utils/api'
 
 const AuthContext = createContext(null)
-
-const demoUser = {
-  id: 1,
-  username: 'admin',
-  email: 'admin@smart-mobility.com',
-  nickname: '系统管理员',
-  avatar: '',
-  n_coins: 10000,
-  role: 'admin',
-}
 
 export function useAuth() {
   return useContext(AuthContext)
@@ -48,15 +39,10 @@ function AuthProvider({ children }) {
       try {
         setUser(JSON.parse(userStr))
       } catch (e) {
+        console.error('Failed to parse user data')
         localStorage.removeItem('token')
         localStorage.removeItem('user')
       }
-    } else {
-      const demoToken = localStorage.getItem('demo_token') || 'local-demo-token'
-      localStorage.setItem('demo_token', demoToken)
-      localStorage.setItem('token', demoToken)
-      localStorage.setItem('user', JSON.stringify(demoUser))
-      setUser(demoUser)
     }
     setLoading(false)
   }, [])
@@ -73,12 +59,12 @@ function AuthProvider({ children }) {
       const serverError = err.response?.data?.error
       let errorMsg = '登录失败，请检查网络连接'
       if (serverError) {
-        if (serverError.includes('用户不存在') || serverError.includes('不存在')) {
-          errorMsg = '账号不存在，请检查用户名或注册新账号'
-        } else if (serverError.includes('密码') || serverError.includes('错误')) {
-          errorMsg = '密码错误，请重新输入或忘记密码？'
-        } else if (serverError.includes('禁用') || serverError.includes('locked')) {
-          errorMsg = '账号已被禁用，请联系管理员'
+        if (serverError.includes('不存在') || serverError.includes('not found')) {
+          errorMsg = '该账号不存在，请检查用户名或注册新账号'
+        } else if (serverError.includes('密码') || serverError.includes('password') || serverError.includes('Invalid')) {
+          errorMsg = '密码错误，请重新输入'
+        } else if (serverError.includes('禁用') || serverError.includes('banned') || serverError.includes('disabled')) {
+          errorMsg = '该账号已被禁用，请联系管理员'
         } else {
           errorMsg = serverError
         }
@@ -99,9 +85,9 @@ function AuthProvider({ children }) {
       const serverError = err.response?.data?.error
       let errorMsg = '注册失败，请稍后重试'
       if (serverError) {
-        if (serverError.includes('已存在') || serverError.includes('用户名')) {
+        if (serverError.includes('已存在') || serverError.includes('already exists')) {
           errorMsg = '该用户名已被注册，请更换其他用户名'
-        } else if (serverError.includes('密码') && serverError.includes('长度')) {
+        } else if (serverError.includes('密码') && serverError.includes('6')) {
           errorMsg = '密码长度至少为6位'
         } else {
           errorMsg = serverError
@@ -169,75 +155,25 @@ function LoginPage() {
   const from = location.state?.from?.pathname
 
   const onLoginSuccess = (userData) => {
-    if (from) {
-      navigate(from, { replace: true })
-    } else if (userData.role === 'admin') {
-      navigate('/admin', { replace: true })
-    } else {
-      navigate('/', { replace: true })
-    }
+    const target = from
+      ? from
+      : userData.role === 'admin'
+        ? '/admin'
+        : '/'
+    navigate(target, { replace: true })
   }
 
   if (user) {
-    if (user.role === 'admin') {
-      return <Navigate to="/admin" replace />
-    }
-    return <Navigate to="/" replace />
+    const target = user.role === 'admin' ? '/admin' : '/'
+    return <Navigate to={target} replace />
   }
 
   return (
     <Login
       onLoginSuccess={onLoginSuccess}
-      onLogin={(u, p) => login(u, p)}
-      onRegister={(u, p) => register(u, p)}
+      onLogin={login}
+      onRegister={register}
     />
-  )
-}
-
-function UserCenter() {
-  const { user } = useAuth()
-  return (
-    <div className="space-y-6">
-      <div className="bg-white rounded-xl p-6 shadow-sm">
-        <h2 className="text-xl font-semibold text-gray-800">个人中心</h2>
-        <p className="text-sm text-gray-500 mt-1">我的账户、设备、订单和服务工单</p>
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mt-5">
-          <div className="bg-primary-50 rounded-lg p-4">
-            <div className="text-sm text-primary-700">用户</div>
-            <div className="font-semibold text-gray-800 mt-1">{user?.nickname || user?.username}</div>
-          </div>
-          <div className="bg-yellow-50 rounded-lg p-4">
-            <div className="text-sm text-yellow-700">N币余额</div>
-            <div className="font-semibold text-gray-800 mt-1">{user?.n_coins || 0}</div>
-          </div>
-          <div className="bg-green-50 rounded-lg p-4">
-            <div className="text-sm text-green-700">角色</div>
-            <div className="font-semibold text-gray-800 mt-1">{user?.role === 'admin' ? '管理员' : '普通用户'}</div>
-          </div>
-          <div className="bg-blue-50 rounded-lg p-4">
-            <div className="text-sm text-blue-700">邮箱</div>
-            <div className="font-semibold text-gray-800 mt-1 truncate">{user?.email}</div>
-          </div>
-        </div>
-      </div>
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-        <Link to="/devices" className="bg-white rounded-xl p-5 shadow-sm hover:shadow-md">
-          <div className="text-3xl mb-2">🛴</div>
-          <div className="font-medium text-gray-800">我的设备</div>
-          <div className="text-sm text-gray-500 mt-1">查看绑定设备与固件状态</div>
-        </Link>
-        <Link to="/orders" className="bg-white rounded-xl p-5 shadow-sm hover:shadow-md">
-          <div className="text-3xl mb-2">📦</div>
-          <div className="font-medium text-gray-800">我的订单</div>
-          <div className="text-sm text-gray-500 mt-1">购买、预订与开箱验机</div>
-        </Link>
-        <Link to="/service-orders" className="bg-white rounded-xl p-5 shadow-sm hover:shadow-md">
-          <div className="text-3xl mb-2">📋</div>
-          <div className="font-medium text-gray-800">我的工单</div>
-          <div className="text-sm text-gray-500 mt-1">维修进度与技师安排</div>
-        </Link>
-      </div>
-    </div>
   )
 }
 
@@ -250,6 +186,7 @@ function App() {
         <Route element={<ProtectedRoute />}>
           <Route element={<MainLayout />}>
             <Route path="/" element={<Dashboard />} />
+            <Route path="/user-center" element={<UserCenter />} />
             <Route path="/devices" element={<Devices />} />
             <Route path="/devices/:vin" element={<DeviceDetail />} />
             <Route path="/rides" element={<Rides />} />
@@ -265,7 +202,6 @@ function App() {
             <Route path="/shop" element={<Shop />} />
             <Route path="/orders" element={<Orders />} />
             <Route path="/privacy" element={<Privacy />} />
-            <Route path="/user-center" element={<UserCenter />} />
           </Route>
         </Route>
 
