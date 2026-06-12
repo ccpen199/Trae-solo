@@ -1,0 +1,1366 @@
+{
+  "ok": true,
+  "generatedAt": "2026-06-12T02:17:02.487Z",
+  "order": "may-89173",
+  "roundIndex": 5497,
+  "captureId": "may-89173-codex-repair",
+  "url": "http://127.0.0.1:49173/",
+  "initialUrl": "http://127.0.0.1:49173/",
+  "finalUrl": "http://127.0.0.1:49173/",
+  "status": 200,
+  "title": "My Trae Project",
+  "initialTitle": "My Trae Project",
+  "navigationError": "",
+  "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89173/probe/codex-repair-20260612/may-89173-codex-repair-frontend.png",
+  "screenshotPaths": [
+    "/Users/chen/Documents/trae_projects/local_projects/may-89173/probe/codex-repair-20260612/may-89173-codex-repair-structure-01-首屏.png",
+    "/Users/chen/Documents/trae_projects/local_projects/may-89173/probe/codex-repair-20260612/may-89173-codex-repair-structure-02-导航-首页.png",
+    "/Users/chen/Documents/trae_projects/local_projects/may-89173/probe/codex-repair-20260612/may-89173-codex-repair-structure-03-操作-查看核验详情.png",
+    "/Users/chen/Documents/trae_projects/local_projects/may-89173/probe/codex-repair-20260612/may-89173-codex-repair-structure-04-二层操作-查看核验详情-查看完整.png",
+    "/Users/chen/Documents/trae_projects/local_projects/may-89173/probe/codex-repair-20260612/may-89173-codex-repair-structure-05-操作-搜索.png"
+  ],
+  "issueTextPreview": "",
+  "targetReason": "页面存在后台入口，优先复验后台管理链路；页面存在搜索/发现入口，优先复验检索链路；页面存在我的/账号入口，优先复验个人中心链路；页面存在内容列表，优先复验详情链路",
+  "targetKind": "admin",
+  "targetMatched": true,
+  "targetActions": [
+    {
+      "action": "click",
+      "label": "页面存在后台入口，优先复验后台管理链路",
+      "ok": true
+    },
+    {
+      "action": "target-verify",
+      "label": "页面存在后台入口，优先复验后台管理链路",
+      "ok": true,
+      "finalUrl": "http://127.0.0.1:49173/admin/dashboard"
+    }
+  ],
+  "authFlow": {
+    "detected": false,
+    "attempted": false,
+    "success": false,
+    "finalUrl": "http://127.0.0.1:49173/",
+    "message": "",
+    "actions": []
+  },
+  "businessAudit": {
+    "actions": [
+      {
+        "action": "click",
+        "label": "导航:首页",
+        "ok": true
+      },
+      {
+        "action": "click",
+        "label": "操作:查看核验详情 →",
+        "ok": true,
+        "result": {
+          "ok": true,
+          "matched": 4
+        }
+      },
+      {
+        "action": "click",
+        "label": "二层操作:查看核验详情 →:查看完整",
+        "ok": true,
+        "result": {
+          "ok": true,
+          "matched": 1
+        }
+      },
+      {
+        "action": "click",
+        "label": "关闭弹窗/抽屉",
+        "ok": true
+      },
+      {
+        "action": "click",
+        "label": "操作:搜索",
+        "ok": true,
+        "result": {
+          "ok": true,
+          "matched": 1
+        }
+      }
+    ],
+    "snapshots": [
+      {
+        "label": "首屏",
+        "url": "http://127.0.0.1:49173/",
+        "title": "My Trae Project",
+        "headings": [
+          "快速链接",
+          "关于我们",
+          "联系我们"
+        ],
+        "navLabels": [
+          "首页",
+          "房源",
+          "价格分析",
+          "房价时光机",
+          "举报中心",
+          "用户中心"
+        ],
+        "buttons": [
+          "二手房",
+          "新房",
+          "租赁",
+          "海外",
+          "旅居",
+          "搜索"
+        ],
+        "links": [
+          "安居智联",
+          "首页",
+          "房源",
+          "价格分析",
+          "房价时光机",
+          "举报中心",
+          "用户中心",
+          "登录",
+          "注册",
+          "房源列表",
+          "公司简介",
+          "服务条款",
+          "隐私政策",
+          "帮助中心"
+        ],
+        "inputs": [
+          {
+            "tag": "input",
+            "type": "text",
+            "placeholder": "搜索小区、地址、房源...",
+            "name": "",
+            "label": ""
+          }
+        ],
+        "tables": [],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "安居智联首页房源价格分析房价时光机举报中心用户中心登录注册二手房新房租赁海外旅居搜索加载中...安居智联房产全周期价格治理平台，依托区块链存证与AI价格预警，构建透明、可信的房产交易环境。快速链接房源列表价格分析房价时光机举报中心关于我们公司简介服务条款隐私政策帮助中心联系我们400-888-8888contact@anju.com北京市朝阳区建国路88号© 2024 安居智联 版权所有 | 京ICP备12345678号",
+        "layout": {
+          "viewportWidth": 1504,
+          "viewportHeight": 1600,
+          "scrollWidth": 1504,
+          "scrollHeight": 2053,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89173-codex-repair-structure-01-首屏",
+          "label": "首屏",
+          "finalUrl": "http://127.0.0.1:49173/",
+          "title": "My Trae Project",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89173/probe/codex-repair-20260612/may-89173-codex-repair-structure-01-首屏.json",
+          "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89173/probe/codex-repair-20260612/may-89173-codex-repair-structure-01-首屏.png",
+          "elementCount": 132,
+          "interactiveCount": 24,
+          "interactiveLabels": [
+            "安居智联",
+            "首页",
+            "房源",
+            "价格分析",
+            "房价时光机",
+            "举报中心",
+            "用户中心",
+            "登录",
+            "注册",
+            "二手房",
+            "新房",
+            "租赁",
+            "海外",
+            "旅居",
+            "搜索小区、地址、房源...",
+            "搜索",
+            "房源列表",
+            "公司简介",
+            "服务条款",
+            "隐私政策",
+            "帮助中心"
+          ]
+        }
+      },
+      {
+        "label": "导航:首页",
+        "url": "http://127.0.0.1:49173/",
+        "title": "My Trae Project",
+        "headings": [
+          "房产全周期价格治理平台",
+          "市场概览驾驶舱",
+          "五大房类独立面板",
+          "二手房价格指标",
+          "真房源核验状态",
+          "跨渠道来源对比",
+          "挂牌时效分布 平均 28 天",
+          "二手房挂牌价偏离预警 TOP 3",
+          "片区7日热力图",
+          "片区价格热力分布",
+          "片区价格数据明细",
+          "同户型成交时序散点图"
+        ],
+        "navLabels": [
+          "首页",
+          "房源",
+          "价格分析",
+          "房价时光机",
+          "举报中心",
+          "用户中心"
+        ],
+        "buttons": [
+          "二手房",
+          "新房",
+          "租赁",
+          "海外",
+          "旅居",
+          "搜索",
+          "开始探索",
+          "了解更多",
+          "全部",
+          "偏高预警",
+          "偏低预警",
+          "严重偏离",
+          "查看核验详情 →"
+        ],
+        "links": [
+          "安居智联",
+          "首页",
+          "房源",
+          "价格分析",
+          "房价时光机",
+          "举报中心",
+          "用户中心",
+          "登录",
+          "注册",
+          "查看更多",
+          "前往举报中心",
+          "查看风控详情",
+          "管理我的订阅",
+          "房价时光机 回溯历史价格，见证市场变迁 已保存 128 个历史快照",
+          "降价订阅提醒 订阅房源价格变动，第一时间获取通知 128 位用户已订阅",
+          "虚假房源举报 共同维护真实可信的交易环境 本月处理举报 326 件",
+          "运营管理后台 经纪人风控·市场健康度仪表盘 2 条高风险预警",
+          "房源列表",
+          "公司简介",
+          "服务条款",
+          "隐私政策",
+          "帮助中心"
+        ],
+        "inputs": [
+          {
+            "tag": "input",
+            "type": "text",
+            "placeholder": "搜索小区、地址、房源...",
+            "name": "",
+            "label": ""
+          }
+        ],
+        "tables": [
+          {
+            "headers": [
+              "来源渠道",
+              "挂牌数",
+              "均价",
+              "占比"
+            ],
+            "rowCount": 4,
+            "hasEmptyText": false,
+            "textPreview": "来源渠道 挂牌数 均价 占比 链家 996 6.29万/㎡ 38% 贝壳 507 6.61万/㎡ 19% 安居客 441 6.16万/㎡ 17% 58同城 674 6.13万/㎡ 26%"
+          },
+          {
+            "headers": [
+              "片区名称",
+              "均价",
+              "7日涨跌%",
+              "30日涨跌%",
+              "在架房源"
+            ],
+            "rowCount": 16,
+            "hasEmptyText": false,
+            "textPreview": "片区名称 均价 7日涨跌% 30日涨跌% 在架房源 东城区 12.83万/㎡ -2.43% +3.67% 440 西城区 10.87万/㎡ +0.25% -0.35% 315 朝阳区 8.75万/㎡ +0.33% +1.49% 350 丰台区 5.48万/㎡ +1.91% -0.88% 539 石景山区 6.34万/㎡ +0.59% -4.57% 285 海淀区 8.88万/㎡ +0.67% -3.58% 269 门头沟区 5.56万/㎡ +1.10% +0.73% 463 房山区 6.30万/㎡ +0.61% +1.13% 395 通州区 6.17万/㎡ +1.23% -1.17% 402 "
+          },
+          {
+            "headers": [
+              "房源标题",
+              "挂牌价",
+              "片区均价",
+              "偏离度%",
+              "预警类型",
+              "来源",
+              "核验状态"
+            ],
+            "rowCount": 10,
+            "hasEmptyText": false,
+            "textPreview": "房源标题 挂牌价 片区均价 偏离度% 预警类型 来源 核验状态 朝阳区 2室1卫 sol cubicularis demulceo 6.21万/㎡ 8.04万/㎡ 22.8% 偏低·严重 58同城 待核验 昌平区 4室3卫 xiphias torrens 57.899元/㎡ 81元/㎡ 28.5% 偏低·严重 链家 已核验 东城区 3室2卫 laborum vesica 3.86万/㎡ 3.21万/㎡ +20.4% 偏高·严重 贝壳 已核验 丰台区 4室3卫 qui explicabo 3.40万/㎡ 4.19万/㎡ 18.8% 偏低·中度 58同城 待核验 延庆区 1室1卫 advoco a"
+          },
+          {
+            "headers": [
+              "房源",
+              "距离",
+              "面积",
+              "户型",
+              "总价",
+              "单价",
+              "价格偏差",
+              "来源"
+            ],
+            "rowCount": 9,
+            "hasEmptyText": false,
+            "textPreview": "房源 距离 面积 户型 总价 单价 价格偏差 来源 西城区 4室2卫 优质房源 0.34 km 133 ㎡ 1室 ¥863.0万 +13470.9% ¥64,794/㎡ -4.99% 贝壳 西城区 3室1卫 优质房源 0.4 km 115 ㎡ 2室 ¥787.0万 +12276.3% ¥68,198/㎡ +0% 58同城 西城区 2室2卫 优质房源 1.12 km 121 ㎡ 1室 ¥880.0万 +13738.5% ¥72,736/㎡ +6.66% 安居客 西城区 4室2卫 优质房源 1.97 km 129 ㎡ 2室 ¥763.0万 +11898.9% ¥59,250/㎡ -13.12% 安"
+          },
+          {
+            "headers": [
+              "举报房源",
+              "类型",
+              "提交时间",
+              "状态",
+              "进度"
+            ],
+            "rowCount": 3,
+            "hasEmptyText": false,
+            "textPreview": "举报房源 类型 提交时间 状态 进度 朝阳区某房源虚假图片举报 虚假图片 10分钟前 待处理 25% 海淀区学区房价格欺诈举报 价格欺诈 2小时前 运营审核中 50% 丰台区已售房源重复挂牌 重复挂牌 昨天 18:30 房源已下架 100%"
+          },
+          {
+            "headers": [
+              "房源编号",
+              "复查类型",
+              "复查时间",
+              "复查结果",
+              "操作人"
+            ],
+            "rowCount": 5,
+            "hasEmptyText": false,
+            "textPreview": "房源编号 复查类型 复查时间 复查结果 操作人 FY20240601001 自动复查 2024-06-12 14:32 合格 系统自动 FY20240601002 人工抽检 2024-06-12 14:15 合格 张审核 FY20240601003 自动复查 2024-06-12 13:58 不合格 系统自动 FY20240601004 人工抽检 2024-06-12 11:20 合格 李审核 FY20240601005 自动复查 2024-06-12 10:45 合格 系统自动"
+          }
+        ],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "安居智联首页房源价格分析房价时光机举报中心用户中心登录注册二手房新房租赁海外旅居搜索真房源认证 · 价格透明 · 数据可信房产全周期价格治理平台基于区块链存证的真房源核验系统，聚合全平台挂牌数据，提供专业的价格分析、趋势预测与市场洞察。开始探索了解更多市场概览驾驶舱实时掌握房产市场核心指标与动态数据更新于 2026/6/12 05:15今日挂牌量4,134+2.3%较昨日今日成交量194-1.5%较昨日全市均价6.36万/㎡-0.5%7日涨跌7日涨跌-0.54%-0.5%较上周供需比1.25+0.8%较上周库存去化周期45天-2.1%较上周五大房类独立面板按房产类型查看细分市场深度数据二手房新房租赁海外旅居二手房价格指标挂牌均价6.55万/㎡成交均价6.23万/㎡30日环比+0.39%同比去年-1.99%真房源核验状态已核验数1,856套核验通过率91.2%待审核数216套跨渠道清洗结果来源抓取数7,903去重后有效数3,742清洗通过率83.3%跨渠道来源对比来源渠道挂牌数均价占比链家9966.29万/㎡38%贝壳5076.61万/㎡19%安居客4416.16万/㎡17%58同城6746.13万/㎡26%挂牌时效分布平均 28 天二手房挂牌价偏离预警 TOP 3偏高+12.7%二手房·朝阳区 优质3居室挂牌价7.31万/㎡片区均价6.36万/㎡偏低+17%二手房·海淀区 学区2居室挂牌价5.41万/㎡片区均价6.36万/㎡偏高+13.4%二手房·丰台区 南北通透4居挂牌价7.00万/㎡片区均价6.36万/㎡片区7日热力图各行政区价格变化热度与详细数据基于平台挂牌数据聚合1涨幅 TOP1密云区+2.42%5.50万/㎡2涨幅 TOP2丰台区+1.91%5.48万/㎡3涨幅 TOP3昌平区+1.52%5.51万/㎡1跌幅 TOP1东城区-2.43%12.83万/㎡2跌幅 TOP2大兴区-1.47%5.47万/㎡3跌幅 TOP3怀柔区-1.19%6.10万/㎡片区价格热力分布片区价格数据明细共 16 个片区片区名称均价7日涨跌%30日涨跌%在架房源东城区12.83万/㎡-2.43%+3.67%440西城区10.87万/㎡+0.25%-0.35%315朝阳区8.75万/㎡+0.33%+1.49%350丰台区5.48万/㎡+1.91%-0.88%539石景山区6.34万/㎡+0.59%-4.57%285海淀区8.88万/㎡+0.67%-3.58%269门头沟区5.56万/㎡+1.10%+0.73%463房山区6.30万/㎡+0.61%+1.13%395通州区6.17万/㎡+1.23%-1.17%402顺义区6.36万/㎡-1.01%+4.28%538昌平区5.51万/㎡+1.52%-1.18%141大兴区5.47万/㎡-1.47%+0.03%288怀柔区6.10万/㎡-1.19%+2.22%241平谷区6.28万/㎡-0.91%-4.54%354密云区5.50万/㎡+2.42%+0.40%194延庆区5.93万/㎡-0.29%-1.48%179同户型成交时序散点图近3个月同户型成交价格分布与趋势成交均价6.67万/㎡最高单价6.86万/㎡最低单价6.39万/㎡成交量10套与上月环比+3.5%挂牌价偏离预警清单平台自动识别价格异常房源，辅助风险判断全部偏高预警偏低预警严重偏离房源标题挂牌价片区均价偏离度%预警类型来源核验状态朝阳区 2室1卫 sol cubicularis demulceo6.21万/㎡8.04万/㎡22.8%偏低·严重58同城待核验昌平区 4室3卫 xiphias torrens57.899元/㎡81元/㎡28.5%偏低·严重链家已核验东城区 3室2卫 laborum vesica3.86万/㎡3.21万/㎡+20.4%偏高·严重贝壳已核验丰台区 4室3卫 qui explicabo3.40万/㎡4.19万/㎡18.8%偏低·中度58同城待核验延庆区 1室1卫 advoco arto3.72万/㎡5.61万/㎡33.6%偏低·严重安居客已核验石景山区 1室1卫 sumptus veritas delectus11.56万/㎡8.76万/㎡+31.9%偏高·严重链家已核验通州区 2室1卫 solus barba auctus5.",
+        "layout": {
+          "viewportWidth": 1536,
+          "viewportHeight": 1600,
+          "scrollWidth": 1536,
+          "scrollHeight": 7646,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89173-codex-repair-structure-02-导航-首页",
+          "label": "导航:首页",
+          "finalUrl": "http://127.0.0.1:49173/",
+          "title": "My Trae Project",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89173/probe/codex-repair-20260612/may-89173-codex-repair-structure-02-导航-首页.json",
+          "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89173/probe/codex-repair-20260612/may-89173-codex-repair-structure-02-导航-首页.png",
+          "elementCount": 1200,
+          "interactiveCount": 47,
+          "interactiveLabels": [
+            "安居智联",
+            "首页",
+            "房源",
+            "价格分析",
+            "房价时光机",
+            "举报中心",
+            "用户中心",
+            "登录",
+            "注册",
+            "二手房",
+            "新房",
+            "租赁",
+            "海外",
+            "旅居",
+            "搜索小区、地址、房源...",
+            "搜索",
+            "开始探索",
+            "了解更多",
+            "全部",
+            "偏高预警",
+            "偏低预警",
+            "严重偏离",
+            "查看更多",
+            "查看核验详情 →",
+            "前往举报中心",
+            "查看风控详情",
+            "管理我的订阅",
+            "房价时光机 回溯历史价格，见证市场变迁 已保存 128 个历史快照",
+            "降价订阅提醒 订阅房源价格变动，第一时间获取通知 128 位用户已订阅",
+            "虚假房源举报 共同维护真实可信的交易环境 本月处理举报 326 件"
+          ]
+        }
+      },
+      {
+        "label": "操作:查看核验详情 →",
+        "url": "http://127.0.0.1:49173/",
+        "title": "My Trae Project",
+        "headings": [
+          "西城区 3室2卫 aliqua valde admoveo",
+          "核验流程总览",
+          "房产全周期价格治理平台",
+          "市场概览驾驶舱",
+          "五大房类独立面板",
+          "二手房价格指标",
+          "真房源核验状态",
+          "跨渠道来源对比",
+          "挂牌时效分布 平均 28 天",
+          "二手房挂牌价偏离预警 TOP 3",
+          "片区7日热力图",
+          "片区价格热力分布"
+        ],
+        "navLabels": [
+          "首页",
+          "房源",
+          "价格分析",
+          "房价时光机",
+          "举报中心",
+          "用户中心"
+        ],
+        "buttons": [
+          "二手房",
+          "新房",
+          "租赁",
+          "海外",
+          "旅居",
+          "搜索",
+          "查看完整",
+          "关闭",
+          "下载核验报告",
+          "开始探索",
+          "了解更多",
+          "全部",
+          "偏高预警",
+          "偏低预警",
+          "严重偏离",
+          "查看核验详情 →"
+        ],
+        "links": [
+          "安居智联",
+          "首页",
+          "房源",
+          "价格分析",
+          "房价时光机",
+          "举报中心",
+          "用户中心",
+          "登录",
+          "注册",
+          "查看更多",
+          "前往举报中心",
+          "查看风控详情",
+          "管理我的订阅",
+          "房价时光机 回溯历史价格，见证市场变迁 已保存 128 个历史快照",
+          "降价订阅提醒 订阅房源价格变动，第一时间获取通知 128 位用户已订阅",
+          "虚假房源举报 共同维护真实可信的交易环境 本月处理举报 326 件",
+          "运营管理后台 经纪人风控·市场健康度仪表盘 2 条高风险预警",
+          "房源列表",
+          "公司简介",
+          "服务条款",
+          "隐私政策",
+          "帮助中心"
+        ],
+        "inputs": [
+          {
+            "tag": "input",
+            "type": "text",
+            "placeholder": "搜索小区、地址、房源...",
+            "name": "",
+            "label": ""
+          }
+        ],
+        "tables": [
+          {
+            "headers": [
+              "来源渠道",
+              "挂牌数",
+              "均价",
+              "占比"
+            ],
+            "rowCount": 4,
+            "hasEmptyText": false,
+            "textPreview": "来源渠道 挂牌数 均价 占比 链家 996 6.29万/㎡ 38% 贝壳 507 6.61万/㎡ 19% 安居客 441 6.16万/㎡ 17% 58同城 674 6.13万/㎡ 26%"
+          },
+          {
+            "headers": [
+              "片区名称",
+              "均价",
+              "7日涨跌%",
+              "30日涨跌%",
+              "在架房源"
+            ],
+            "rowCount": 16,
+            "hasEmptyText": false,
+            "textPreview": "片区名称 均价 7日涨跌% 30日涨跌% 在架房源 东城区 12.83万/㎡ -2.43% +3.67% 440 西城区 10.87万/㎡ +0.25% -0.35% 315 朝阳区 8.75万/㎡ +0.33% +1.49% 350 丰台区 5.48万/㎡ +1.91% -0.88% 539 石景山区 6.34万/㎡ +0.59% -4.57% 285 海淀区 8.88万/㎡ +0.67% -3.58% 269 门头沟区 5.56万/㎡ +1.10% +0.73% 463 房山区 6.30万/㎡ +0.61% +1.13% 395 通州区 6.17万/㎡ +1.23% -1.17% 402 "
+          },
+          {
+            "headers": [
+              "房源标题",
+              "挂牌价",
+              "片区均价",
+              "偏离度%",
+              "预警类型",
+              "来源",
+              "核验状态"
+            ],
+            "rowCount": 10,
+            "hasEmptyText": false,
+            "textPreview": "房源标题 挂牌价 片区均价 偏离度% 预警类型 来源 核验状态 朝阳区 2室1卫 sol cubicularis demulceo 6.21万/㎡ 8.04万/㎡ 22.8% 偏低·严重 58同城 待核验 昌平区 4室3卫 xiphias torrens 57.899元/㎡ 81元/㎡ 28.5% 偏低·严重 链家 已核验 东城区 3室2卫 laborum vesica 3.86万/㎡ 3.21万/㎡ +20.4% 偏高·严重 贝壳 已核验 丰台区 4室3卫 qui explicabo 3.40万/㎡ 4.19万/㎡ 18.8% 偏低·中度 58同城 待核验 延庆区 1室1卫 advoco a"
+          },
+          {
+            "headers": [
+              "房源",
+              "距离",
+              "面积",
+              "户型",
+              "总价",
+              "单价",
+              "价格偏差",
+              "来源"
+            ],
+            "rowCount": 9,
+            "hasEmptyText": false,
+            "textPreview": "房源 距离 面积 户型 总价 单价 价格偏差 来源 西城区 4室2卫 优质房源 0.34 km 133 ㎡ 1室 ¥863.0万 +13470.9% ¥64,794/㎡ -4.99% 贝壳 西城区 3室1卫 优质房源 0.4 km 115 ㎡ 2室 ¥787.0万 +12276.3% ¥68,198/㎡ +0% 58同城 西城区 2室2卫 优质房源 1.12 km 121 ㎡ 1室 ¥880.0万 +13738.5% ¥72,736/㎡ +6.66% 安居客 西城区 4室2卫 优质房源 1.97 km 129 ㎡ 2室 ¥763.0万 +11898.9% ¥59,250/㎡ -13.12% 安"
+          },
+          {
+            "headers": [
+              "举报房源",
+              "类型",
+              "提交时间",
+              "状态",
+              "进度"
+            ],
+            "rowCount": 3,
+            "hasEmptyText": false,
+            "textPreview": "举报房源 类型 提交时间 状态 进度 朝阳区某房源虚假图片举报 虚假图片 10分钟前 待处理 25% 海淀区学区房价格欺诈举报 价格欺诈 2小时前 运营审核中 50% 丰台区已售房源重复挂牌 重复挂牌 昨天 18:30 房源已下架 100%"
+          },
+          {
+            "headers": [
+              "房源编号",
+              "复查类型",
+              "复查时间",
+              "复查结果",
+              "操作人"
+            ],
+            "rowCount": 5,
+            "hasEmptyText": false,
+            "textPreview": "房源编号 复查类型 复查时间 复查结果 操作人 FY20240601001 自动复查 2024-06-12 14:32 合格 系统自动 FY20240601002 人工抽检 2024-06-12 14:15 合格 张审核 FY20240601003 自动复查 2024-06-12 13:58 不合格 系统自动 FY20240601004 人工抽检 2024-06-12 11:20 合格 李审核 FY20240601005 自动复查 2024-06-12 10:45 合格 系统自动"
+          }
+        ],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "安居智联首页房源价格分析房价时光机举报中心用户中心登录注册二手房新房租赁海外旅居搜索已通过全链核验房源编号：6db52873-da1西城区 3室2卫 aliqua valde admoveo西城区 · 北京市 · 125㎡ · 3室2卫核验流程总览经纪人实名认证验证经纪人执业资格与身份信息核验通过操作人：琦梓豪2026/05/18 21:54佐证材料：1 份文件业主产权核验核验房源产权归属与业主授权委托书核验通过操作人：郁玉兰2026/06/11 08:37佐证材料：1 份文件VR实景采集现场VR拍摄与房源实景水印验证核验通过操作人：VR系统2026/05/26 11:29佐证材料：1 份文件区块链存证核验数据上链存证，生成不可篡改哈希核验通过操作人：区块链存证2026/05/28 21:24存证哈希：0x506e2b...de8380f3查看完整核验完成度100%链上存证时间2026/05/28数据已永久存证房源所属经纪人谈开慧陕西省峻熙传媒（集团）有限公司所有核验数据已通过区块链技术加密存证，不可篡改关闭下载核验报告真房源认证 · 价格透明 · 数据可信房产全周期价格治理平台基于区块链存证的真房源核验系统，聚合全平台挂牌数据，提供专业的价格分析、趋势预测与市场洞察。开始探索了解更多市场概览驾驶舱实时掌握房产市场核心指标与动态数据更新于 2026/6/12 05:15今日挂牌量4,134+2.3%较昨日今日成交量194-1.5%较昨日全市均价6.36万/㎡-0.5%7日涨跌7日涨跌-0.54%-0.5%较上周供需比1.25+0.8%较上周库存去化周期45天-2.1%较上周五大房类独立面板按房产类型查看细分市场深度数据二手房新房租赁海外旅居二手房价格指标挂牌均价6.55万/㎡成交均价6.23万/㎡30日环比+0.39%同比去年-1.99%真房源核验状态已核验数1,856套核验通过率91.2%待审核数216套跨渠道清洗结果来源抓取数7,903去重后有效数3,742清洗通过率83.3%跨渠道来源对比来源渠道挂牌数均价占比链家9966.29万/㎡38%贝壳5076.61万/㎡19%安居客4416.16万/㎡17%58同城6746.13万/㎡26%挂牌时效分布平均 28 天二手房挂牌价偏离预警 TOP 3偏高+12.7%二手房·朝阳区 优质3居室挂牌价7.31万/㎡片区均价6.36万/㎡偏低+17%二手房·海淀区 学区2居室挂牌价5.41万/㎡片区均价6.36万/㎡偏高+13.4%二手房·丰台区 南北通透4居挂牌价7.00万/㎡片区均价6.36万/㎡片区7日热力图各行政区价格变化热度与详细数据基于平台挂牌数据聚合1涨幅 TOP1密云区+2.42%5.50万/㎡2涨幅 TOP2丰台区+1.91%5.48万/㎡3涨幅 TOP3昌平区+1.52%5.51万/㎡1跌幅 TOP1东城区-2.43%12.83万/㎡2跌幅 TOP2大兴区-1.47%5.47万/㎡3跌幅 TOP3怀柔区-1.19%6.10万/㎡片区价格热力分布片区价格数据明细共 16 个片区片区名称均价7日涨跌%30日涨跌%在架房源东城区12.83万/㎡-2.43%+3.67%440西城区10.87万/㎡+0.25%-0.35%315朝阳区8.75万/㎡+0.33%+1.49%350丰台区5.48万/㎡+1.91%-0.88%539石景山区6.34万/㎡+0.59%-4.57%285海淀区8.88万/㎡+0.67%-3.58%269门头沟区5.56万/㎡+1.10%+0.73%463房山区6.30万/㎡+0.61%+1.13%395通州区6.17万/㎡+1.23%-1.17%402顺义区6.36万/㎡-1.01%+4.28%538昌平区5.51万/㎡+1.52%-1.18%141大兴区5.47万/㎡-1.47%+0.03%288怀柔区6.10万/㎡-1.19%+2.22%241平谷区6.28万/㎡-0.91%-4.54%354密云区5.50万/㎡+2.42%+0.40%194延庆区5.93万/㎡-0.29%-1.48%179同户型成交时序散点图近3个月同户型成交价格分布与趋势成交均价6.67万/㎡最高单价6.86万/㎡最低单价6.39万/㎡成交量10套与上月环比+3.5%挂牌价偏离预警清单",
+        "layout": {
+          "viewportWidth": 1568,
+          "viewportHeight": 1600,
+          "scrollWidth": 1568,
+          "scrollHeight": 7646,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89173-codex-repair-structure-03-操作-查看核验详情",
+          "label": "操作:查看核验详情 →",
+          "finalUrl": "http://127.0.0.1:49173/",
+          "title": "My Trae Project",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89173/probe/codex-repair-20260612/may-89173-codex-repair-structure-03-操作-查看核验详情.json",
+          "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89173/probe/codex-repair-20260612/may-89173-codex-repair-structure-03-操作-查看核验详情.png",
+          "elementCount": 1200,
+          "interactiveCount": 51,
+          "interactiveLabels": [
+            "安居智联",
+            "首页",
+            "房源",
+            "价格分析",
+            "房价时光机",
+            "举报中心",
+            "用户中心",
+            "登录",
+            "注册",
+            "二手房",
+            "新房",
+            "租赁",
+            "海外",
+            "旅居",
+            "搜索小区、地址、房源...",
+            "搜索",
+            "查看完整",
+            "关闭",
+            "下载核验报告",
+            "开始探索",
+            "了解更多",
+            "全部",
+            "偏高预警",
+            "偏低预警",
+            "严重偏离",
+            "查看更多",
+            "查看核验详情 →",
+            "前往举报中心",
+            "查看风控详情",
+            "管理我的订阅"
+          ]
+        }
+      },
+      {
+        "label": "二层操作:查看核验详情 →->查看完整",
+        "url": "http://127.0.0.1:49173/",
+        "title": "My Trae Project",
+        "headings": [
+          "西城区 3室2卫 aliqua valde admoveo",
+          "核验流程总览",
+          "房产全周期价格治理平台",
+          "市场概览驾驶舱",
+          "五大房类独立面板",
+          "二手房价格指标",
+          "真房源核验状态",
+          "跨渠道来源对比",
+          "挂牌时效分布 平均 28 天",
+          "二手房挂牌价偏离预警 TOP 3",
+          "片区7日热力图",
+          "片区价格热力分布"
+        ],
+        "navLabels": [
+          "首页",
+          "房源",
+          "价格分析",
+          "房价时光机",
+          "举报中心",
+          "用户中心"
+        ],
+        "buttons": [
+          "二手房",
+          "新房",
+          "租赁",
+          "海外",
+          "旅居",
+          "搜索",
+          "查看完整",
+          "关闭",
+          "下载核验报告",
+          "开始探索",
+          "了解更多",
+          "全部",
+          "偏高预警",
+          "偏低预警",
+          "严重偏离",
+          "查看核验详情 →"
+        ],
+        "links": [
+          "安居智联",
+          "首页",
+          "房源",
+          "价格分析",
+          "房价时光机",
+          "举报中心",
+          "用户中心",
+          "登录",
+          "注册",
+          "查看更多",
+          "前往举报中心",
+          "查看风控详情",
+          "管理我的订阅",
+          "房价时光机 回溯历史价格，见证市场变迁 已保存 128 个历史快照",
+          "降价订阅提醒 订阅房源价格变动，第一时间获取通知 128 位用户已订阅",
+          "虚假房源举报 共同维护真实可信的交易环境 本月处理举报 326 件",
+          "运营管理后台 经纪人风控·市场健康度仪表盘 2 条高风险预警",
+          "房源列表",
+          "公司简介",
+          "服务条款",
+          "隐私政策",
+          "帮助中心"
+        ],
+        "inputs": [
+          {
+            "tag": "input",
+            "type": "text",
+            "placeholder": "搜索小区、地址、房源...",
+            "name": "",
+            "label": ""
+          }
+        ],
+        "tables": [
+          {
+            "headers": [
+              "来源渠道",
+              "挂牌数",
+              "均价",
+              "占比"
+            ],
+            "rowCount": 4,
+            "hasEmptyText": false,
+            "textPreview": "来源渠道 挂牌数 均价 占比 链家 996 6.29万/㎡ 38% 贝壳 507 6.61万/㎡ 19% 安居客 441 6.16万/㎡ 17% 58同城 674 6.13万/㎡ 26%"
+          },
+          {
+            "headers": [
+              "片区名称",
+              "均价",
+              "7日涨跌%",
+              "30日涨跌%",
+              "在架房源"
+            ],
+            "rowCount": 16,
+            "hasEmptyText": false,
+            "textPreview": "片区名称 均价 7日涨跌% 30日涨跌% 在架房源 东城区 12.83万/㎡ -2.43% +3.67% 440 西城区 10.87万/㎡ +0.25% -0.35% 315 朝阳区 8.75万/㎡ +0.33% +1.49% 350 丰台区 5.48万/㎡ +1.91% -0.88% 539 石景山区 6.34万/㎡ +0.59% -4.57% 285 海淀区 8.88万/㎡ +0.67% -3.58% 269 门头沟区 5.56万/㎡ +1.10% +0.73% 463 房山区 6.30万/㎡ +0.61% +1.13% 395 通州区 6.17万/㎡ +1.23% -1.17% 402 "
+          },
+          {
+            "headers": [
+              "房源标题",
+              "挂牌价",
+              "片区均价",
+              "偏离度%",
+              "预警类型",
+              "来源",
+              "核验状态"
+            ],
+            "rowCount": 10,
+            "hasEmptyText": false,
+            "textPreview": "房源标题 挂牌价 片区均价 偏离度% 预警类型 来源 核验状态 朝阳区 2室1卫 sol cubicularis demulceo 6.21万/㎡ 8.04万/㎡ 22.8% 偏低·严重 58同城 待核验 昌平区 4室3卫 xiphias torrens 57.899元/㎡ 81元/㎡ 28.5% 偏低·严重 链家 已核验 东城区 3室2卫 laborum vesica 3.86万/㎡ 3.21万/㎡ +20.4% 偏高·严重 贝壳 已核验 丰台区 4室3卫 qui explicabo 3.40万/㎡ 4.19万/㎡ 18.8% 偏低·中度 58同城 待核验 延庆区 1室1卫 advoco a"
+          },
+          {
+            "headers": [
+              "房源",
+              "距离",
+              "面积",
+              "户型",
+              "总价",
+              "单价",
+              "价格偏差",
+              "来源"
+            ],
+            "rowCount": 9,
+            "hasEmptyText": false,
+            "textPreview": "房源 距离 面积 户型 总价 单价 价格偏差 来源 西城区 4室2卫 优质房源 0.34 km 133 ㎡ 1室 ¥863.0万 +13470.9% ¥64,794/㎡ -4.99% 贝壳 西城区 3室1卫 优质房源 0.4 km 115 ㎡ 2室 ¥787.0万 +12276.3% ¥68,198/㎡ +0% 58同城 西城区 2室2卫 优质房源 1.12 km 121 ㎡ 1室 ¥880.0万 +13738.5% ¥72,736/㎡ +6.66% 安居客 西城区 4室2卫 优质房源 1.97 km 129 ㎡ 2室 ¥763.0万 +11898.9% ¥59,250/㎡ -13.12% 安"
+          },
+          {
+            "headers": [
+              "举报房源",
+              "类型",
+              "提交时间",
+              "状态",
+              "进度"
+            ],
+            "rowCount": 3,
+            "hasEmptyText": false,
+            "textPreview": "举报房源 类型 提交时间 状态 进度 朝阳区某房源虚假图片举报 虚假图片 10分钟前 待处理 25% 海淀区学区房价格欺诈举报 价格欺诈 2小时前 运营审核中 50% 丰台区已售房源重复挂牌 重复挂牌 昨天 18:30 房源已下架 100%"
+          },
+          {
+            "headers": [
+              "房源编号",
+              "复查类型",
+              "复查时间",
+              "复查结果",
+              "操作人"
+            ],
+            "rowCount": 5,
+            "hasEmptyText": false,
+            "textPreview": "房源编号 复查类型 复查时间 复查结果 操作人 FY20240601001 自动复查 2024-06-12 14:32 合格 系统自动 FY20240601002 人工抽检 2024-06-12 14:15 合格 张审核 FY20240601003 自动复查 2024-06-12 13:58 不合格 系统自动 FY20240601004 人工抽检 2024-06-12 11:20 合格 李审核 FY20240601005 自动复查 2024-06-12 10:45 合格 系统自动"
+          }
+        ],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "安居智联首页房源价格分析房价时光机举报中心用户中心登录注册二手房新房租赁海外旅居搜索已通过全链核验房源编号：6db52873-da1西城区 3室2卫 aliqua valde admoveo西城区 · 北京市 · 125㎡ · 3室2卫核验流程总览经纪人实名认证验证经纪人执业资格与身份信息核验通过操作人：琦梓豪2026/05/18 21:54佐证材料：1 份文件业主产权核验核验房源产权归属与业主授权委托书核验通过操作人：郁玉兰2026/06/11 08:37佐证材料：1 份文件VR实景采集现场VR拍摄与房源实景水印验证核验通过操作人：VR系统2026/05/26 11:29佐证材料：1 份文件区块链存证核验数据上链存证，生成不可篡改哈希核验通过操作人：区块链存证2026/05/28 21:24存证哈希：0x506e2b...de8380f3查看完整核验完成度100%链上存证时间2026/05/28数据已永久存证房源所属经纪人谈开慧陕西省峻熙传媒（集团）有限公司所有核验数据已通过区块链技术加密存证，不可篡改关闭下载核验报告真房源认证 · 价格透明 · 数据可信房产全周期价格治理平台基于区块链存证的真房源核验系统，聚合全平台挂牌数据，提供专业的价格分析、趋势预测与市场洞察。开始探索了解更多市场概览驾驶舱实时掌握房产市场核心指标与动态数据更新于 2026/6/12 05:15今日挂牌量4,134+2.3%较昨日今日成交量194-1.5%较昨日全市均价6.36万/㎡-0.5%7日涨跌7日涨跌-0.54%-0.5%较上周供需比1.25+0.8%较上周库存去化周期45天-2.1%较上周五大房类独立面板按房产类型查看细分市场深度数据二手房新房租赁海外旅居二手房价格指标挂牌均价6.55万/㎡成交均价6.23万/㎡30日环比+0.39%同比去年-1.99%真房源核验状态已核验数1,856套核验通过率91.2%待审核数216套跨渠道清洗结果来源抓取数7,903去重后有效数3,742清洗通过率83.3%跨渠道来源对比来源渠道挂牌数均价占比链家9966.29万/㎡38%贝壳5076.61万/㎡19%安居客4416.16万/㎡17%58同城6746.13万/㎡26%挂牌时效分布平均 28 天二手房挂牌价偏离预警 TOP 3偏高+12.7%二手房·朝阳区 优质3居室挂牌价7.31万/㎡片区均价6.36万/㎡偏低+17%二手房·海淀区 学区2居室挂牌价5.41万/㎡片区均价6.36万/㎡偏高+13.4%二手房·丰台区 南北通透4居挂牌价7.00万/㎡片区均价6.36万/㎡片区7日热力图各行政区价格变化热度与详细数据基于平台挂牌数据聚合1涨幅 TOP1密云区+2.42%5.50万/㎡2涨幅 TOP2丰台区+1.91%5.48万/㎡3涨幅 TOP3昌平区+1.52%5.51万/㎡1跌幅 TOP1东城区-2.43%12.83万/㎡2跌幅 TOP2大兴区-1.47%5.47万/㎡3跌幅 TOP3怀柔区-1.19%6.10万/㎡片区价格热力分布片区价格数据明细共 16 个片区片区名称均价7日涨跌%30日涨跌%在架房源东城区12.83万/㎡-2.43%+3.67%440西城区10.87万/㎡+0.25%-0.35%315朝阳区8.75万/㎡+0.33%+1.49%350丰台区5.48万/㎡+1.91%-0.88%539石景山区6.34万/㎡+0.59%-4.57%285海淀区8.88万/㎡+0.67%-3.58%269门头沟区5.56万/㎡+1.10%+0.73%463房山区6.30万/㎡+0.61%+1.13%395通州区6.17万/㎡+1.23%-1.17%402顺义区6.36万/㎡-1.01%+4.28%538昌平区5.51万/㎡+1.52%-1.18%141大兴区5.47万/㎡-1.47%+0.03%288怀柔区6.10万/㎡-1.19%+2.22%241平谷区6.28万/㎡-0.91%-4.54%354密云区5.50万/㎡+2.42%+0.40%194延庆区5.93万/㎡-0.29%-1.48%179同户型成交时序散点图近3个月同户型成交价格分布与趋势成交均价6.67万/㎡最高单价6.86万/㎡最低单价6.39万/㎡成交量10套与上月环比+3.5%挂牌价偏离预警清单",
+        "layout": {
+          "viewportWidth": 1600,
+          "viewportHeight": 1600,
+          "scrollWidth": 1600,
+          "scrollHeight": 7646,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89173-codex-repair-structure-04-二层操作-查看核验详情-查看完整",
+          "label": "二层操作:查看核验详情 →->查看完整",
+          "finalUrl": "http://127.0.0.1:49173/",
+          "title": "My Trae Project",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89173/probe/codex-repair-20260612/may-89173-codex-repair-structure-04-二层操作-查看核验详情-查看完整.json",
+          "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89173/probe/codex-repair-20260612/may-89173-codex-repair-structure-04-二层操作-查看核验详情-查看完整.png",
+          "elementCount": 1200,
+          "interactiveCount": 51,
+          "interactiveLabels": [
+            "安居智联",
+            "首页",
+            "房源",
+            "价格分析",
+            "房价时光机",
+            "举报中心",
+            "用户中心",
+            "登录",
+            "注册",
+            "二手房",
+            "新房",
+            "租赁",
+            "海外",
+            "旅居",
+            "搜索小区、地址、房源...",
+            "搜索",
+            "查看完整",
+            "关闭",
+            "下载核验报告",
+            "开始探索",
+            "了解更多",
+            "全部",
+            "偏高预警",
+            "偏低预警",
+            "严重偏离",
+            "查看更多",
+            "查看核验详情 →",
+            "前往举报中心",
+            "查看风控详情",
+            "管理我的订阅"
+          ]
+        }
+      },
+      {
+        "label": "操作:搜索",
+        "url": "http://127.0.0.1:49173/properties",
+        "title": "My Trae Project",
+        "headings": [],
+        "navLabels": [],
+        "buttons": [],
+        "links": [],
+        "inputs": [],
+        "tables": [],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "",
+        "layout": {
+          "viewportWidth": 1632,
+          "viewportHeight": 1600,
+          "scrollWidth": 1632,
+          "scrollHeight": 1600,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89173-codex-repair-structure-05-操作-搜索",
+          "label": "操作:搜索",
+          "finalUrl": "http://127.0.0.1:49173/properties",
+          "title": "My Trae Project",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89173/probe/codex-repair-20260612/may-89173-codex-repair-structure-05-操作-搜索.json",
+          "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89173/probe/codex-repair-20260612/may-89173-codex-repair-structure-05-操作-搜索.png",
+          "elementCount": 8,
+          "interactiveCount": 0,
+          "interactiveLabels": []
+        }
+      }
+    ],
+    "findings": [
+      "搜索入口 页面打开后是空白，没有渲染业务内容、表单或列表。"
+    ],
+    "actionHints": [
+      "修复 搜索入口 的路由组件挂载、接口初始化和错误兜底，确保进入页面后直接显示可操作内容。"
+    ],
+    "emptyPages": [],
+    "overflowPages": [],
+    "blankPages": [
+      "搜索入口"
+    ],
+    "apiFailurePaths": [],
+    "goalTerms": [],
+    "clickedActionDescriptors": [
+      {
+        "nav": "首页",
+        "label": "查看核验详情 →",
+        "ordinal": 0,
+        "unsafe": false
+      },
+      {
+        "nav": "首页",
+        "label": "查看核验详情 →->查看完整",
+        "ordinal": 0,
+        "secondary": true,
+        "unsafe": false
+      },
+      {
+        "nav": "首页",
+        "label": "搜索",
+        "ordinal": 0,
+        "unsafe": false
+      }
+    ],
+    "secondaryActionClicks": 1,
+    "structureCaptures": [
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89173-codex-repair-structure-01-首屏",
+        "label": "首屏",
+        "finalUrl": "http://127.0.0.1:49173/",
+        "title": "My Trae Project",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89173/probe/codex-repair-20260612/may-89173-codex-repair-structure-01-首屏.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89173/probe/codex-repair-20260612/may-89173-codex-repair-structure-01-首屏.png",
+        "elementCount": 132,
+        "interactiveCount": 24,
+        "interactiveLabels": [
+          "安居智联",
+          "首页",
+          "房源",
+          "价格分析",
+          "房价时光机",
+          "举报中心",
+          "用户中心",
+          "登录",
+          "注册",
+          "二手房",
+          "新房",
+          "租赁",
+          "海外",
+          "旅居",
+          "搜索小区、地址、房源...",
+          "搜索",
+          "房源列表",
+          "公司简介",
+          "服务条款",
+          "隐私政策",
+          "帮助中心"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89173-codex-repair-structure-02-导航-首页",
+        "label": "导航:首页",
+        "finalUrl": "http://127.0.0.1:49173/",
+        "title": "My Trae Project",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89173/probe/codex-repair-20260612/may-89173-codex-repair-structure-02-导航-首页.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89173/probe/codex-repair-20260612/may-89173-codex-repair-structure-02-导航-首页.png",
+        "elementCount": 1200,
+        "interactiveCount": 47,
+        "interactiveLabels": [
+          "安居智联",
+          "首页",
+          "房源",
+          "价格分析",
+          "房价时光机",
+          "举报中心",
+          "用户中心",
+          "登录",
+          "注册",
+          "二手房",
+          "新房",
+          "租赁",
+          "海外",
+          "旅居",
+          "搜索小区、地址、房源...",
+          "搜索",
+          "开始探索",
+          "了解更多",
+          "全部",
+          "偏高预警",
+          "偏低预警",
+          "严重偏离",
+          "查看更多",
+          "查看核验详情 →",
+          "前往举报中心",
+          "查看风控详情",
+          "管理我的订阅",
+          "房价时光机 回溯历史价格，见证市场变迁 已保存 128 个历史快照",
+          "降价订阅提醒 订阅房源价格变动，第一时间获取通知 128 位用户已订阅",
+          "虚假房源举报 共同维护真实可信的交易环境 本月处理举报 326 件"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89173-codex-repair-structure-03-操作-查看核验详情",
+        "label": "操作:查看核验详情 →",
+        "finalUrl": "http://127.0.0.1:49173/",
+        "title": "My Trae Project",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89173/probe/codex-repair-20260612/may-89173-codex-repair-structure-03-操作-查看核验详情.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89173/probe/codex-repair-20260612/may-89173-codex-repair-structure-03-操作-查看核验详情.png",
+        "elementCount": 1200,
+        "interactiveCount": 51,
+        "interactiveLabels": [
+          "安居智联",
+          "首页",
+          "房源",
+          "价格分析",
+          "房价时光机",
+          "举报中心",
+          "用户中心",
+          "登录",
+          "注册",
+          "二手房",
+          "新房",
+          "租赁",
+          "海外",
+          "旅居",
+          "搜索小区、地址、房源...",
+          "搜索",
+          "查看完整",
+          "关闭",
+          "下载核验报告",
+          "开始探索",
+          "了解更多",
+          "全部",
+          "偏高预警",
+          "偏低预警",
+          "严重偏离",
+          "查看更多",
+          "查看核验详情 →",
+          "前往举报中心",
+          "查看风控详情",
+          "管理我的订阅"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89173-codex-repair-structure-04-二层操作-查看核验详情-查看完整",
+        "label": "二层操作:查看核验详情 →->查看完整",
+        "finalUrl": "http://127.0.0.1:49173/",
+        "title": "My Trae Project",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89173/probe/codex-repair-20260612/may-89173-codex-repair-structure-04-二层操作-查看核验详情-查看完整.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89173/probe/codex-repair-20260612/may-89173-codex-repair-structure-04-二层操作-查看核验详情-查看完整.png",
+        "elementCount": 1200,
+        "interactiveCount": 51,
+        "interactiveLabels": [
+          "安居智联",
+          "首页",
+          "房源",
+          "价格分析",
+          "房价时光机",
+          "举报中心",
+          "用户中心",
+          "登录",
+          "注册",
+          "二手房",
+          "新房",
+          "租赁",
+          "海外",
+          "旅居",
+          "搜索小区、地址、房源...",
+          "搜索",
+          "查看完整",
+          "关闭",
+          "下载核验报告",
+          "开始探索",
+          "了解更多",
+          "全部",
+          "偏高预警",
+          "偏低预警",
+          "严重偏离",
+          "查看更多",
+          "查看核验详情 →",
+          "前往举报中心",
+          "查看风控详情",
+          "管理我的订阅"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89173-codex-repair-structure-05-操作-搜索",
+        "label": "操作:搜索",
+        "finalUrl": "http://127.0.0.1:49173/properties",
+        "title": "My Trae Project",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89173/probe/codex-repair-20260612/may-89173-codex-repair-structure-05-操作-搜索.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89173/probe/codex-repair-20260612/may-89173-codex-repair-structure-05-操作-搜索.png",
+        "elementCount": 8,
+        "interactiveCount": 0,
+        "interactiveLabels": []
+      }
+    ],
+    "representativeScreenshotUrl": "http://127.0.0.1:49173/",
+    "representativeScreenshotLabel": "快速链接"
+  },
+  "websiteStructureCapture": {
+    "module": "website_structure_capture",
+    "captureCount": 5,
+    "captures": [
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89173-codex-repair-structure-01-首屏",
+        "label": "首屏",
+        "finalUrl": "http://127.0.0.1:49173/",
+        "title": "My Trae Project",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89173/probe/codex-repair-20260612/may-89173-codex-repair-structure-01-首屏.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89173/probe/codex-repair-20260612/may-89173-codex-repair-structure-01-首屏.png",
+        "elementCount": 132,
+        "interactiveCount": 24,
+        "interactiveLabels": [
+          "安居智联",
+          "首页",
+          "房源",
+          "价格分析",
+          "房价时光机",
+          "举报中心",
+          "用户中心",
+          "登录",
+          "注册",
+          "二手房",
+          "新房",
+          "租赁",
+          "海外",
+          "旅居",
+          "搜索小区、地址、房源...",
+          "搜索",
+          "房源列表",
+          "公司简介",
+          "服务条款",
+          "隐私政策",
+          "帮助中心"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89173-codex-repair-structure-02-导航-首页",
+        "label": "导航:首页",
+        "finalUrl": "http://127.0.0.1:49173/",
+        "title": "My Trae Project",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89173/probe/codex-repair-20260612/may-89173-codex-repair-structure-02-导航-首页.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89173/probe/codex-repair-20260612/may-89173-codex-repair-structure-02-导航-首页.png",
+        "elementCount": 1200,
+        "interactiveCount": 47,
+        "interactiveLabels": [
+          "安居智联",
+          "首页",
+          "房源",
+          "价格分析",
+          "房价时光机",
+          "举报中心",
+          "用户中心",
+          "登录",
+          "注册",
+          "二手房",
+          "新房",
+          "租赁",
+          "海外",
+          "旅居",
+          "搜索小区、地址、房源...",
+          "搜索",
+          "开始探索",
+          "了解更多",
+          "全部",
+          "偏高预警",
+          "偏低预警",
+          "严重偏离",
+          "查看更多",
+          "查看核验详情 →",
+          "前往举报中心",
+          "查看风控详情",
+          "管理我的订阅",
+          "房价时光机 回溯历史价格，见证市场变迁 已保存 128 个历史快照",
+          "降价订阅提醒 订阅房源价格变动，第一时间获取通知 128 位用户已订阅",
+          "虚假房源举报 共同维护真实可信的交易环境 本月处理举报 326 件"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89173-codex-repair-structure-03-操作-查看核验详情",
+        "label": "操作:查看核验详情 →",
+        "finalUrl": "http://127.0.0.1:49173/",
+        "title": "My Trae Project",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89173/probe/codex-repair-20260612/may-89173-codex-repair-structure-03-操作-查看核验详情.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89173/probe/codex-repair-20260612/may-89173-codex-repair-structure-03-操作-查看核验详情.png",
+        "elementCount": 1200,
+        "interactiveCount": 51,
+        "interactiveLabels": [
+          "安居智联",
+          "首页",
+          "房源",
+          "价格分析",
+          "房价时光机",
+          "举报中心",
+          "用户中心",
+          "登录",
+          "注册",
+          "二手房",
+          "新房",
+          "租赁",
+          "海外",
+          "旅居",
+          "搜索小区、地址、房源...",
+          "搜索",
+          "查看完整",
+          "关闭",
+          "下载核验报告",
+          "开始探索",
+          "了解更多",
+          "全部",
+          "偏高预警",
+          "偏低预警",
+          "严重偏离",
+          "查看更多",
+          "查看核验详情 →",
+          "前往举报中心",
+          "查看风控详情",
+          "管理我的订阅"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89173-codex-repair-structure-04-二层操作-查看核验详情-查看完整",
+        "label": "二层操作:查看核验详情 →->查看完整",
+        "finalUrl": "http://127.0.0.1:49173/",
+        "title": "My Trae Project",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89173/probe/codex-repair-20260612/may-89173-codex-repair-structure-04-二层操作-查看核验详情-查看完整.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89173/probe/codex-repair-20260612/may-89173-codex-repair-structure-04-二层操作-查看核验详情-查看完整.png",
+        "elementCount": 1200,
+        "interactiveCount": 51,
+        "interactiveLabels": [
+          "安居智联",
+          "首页",
+          "房源",
+          "价格分析",
+          "房价时光机",
+          "举报中心",
+          "用户中心",
+          "登录",
+          "注册",
+          "二手房",
+          "新房",
+          "租赁",
+          "海外",
+          "旅居",
+          "搜索小区、地址、房源...",
+          "搜索",
+          "查看完整",
+          "关闭",
+          "下载核验报告",
+          "开始探索",
+          "了解更多",
+          "全部",
+          "偏高预警",
+          "偏低预警",
+          "严重偏离",
+          "查看更多",
+          "查看核验详情 →",
+          "前往举报中心",
+          "查看风控详情",
+          "管理我的订阅"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89173-codex-repair-structure-05-操作-搜索",
+        "label": "操作:搜索",
+        "finalUrl": "http://127.0.0.1:49173/properties",
+        "title": "My Trae Project",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89173/probe/codex-repair-20260612/may-89173-codex-repair-structure-05-操作-搜索.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89173/probe/codex-repair-20260612/may-89173-codex-repair-structure-05-操作-搜索.png",
+        "elementCount": 8,
+        "interactiveCount": 0,
+        "interactiveLabels": []
+      }
+    ]
+  },
+  "screenshotMetrics": {
+    "width": 1664,
+    "height": 1600,
+    "scrollWidth": 1632,
+    "scrollHeight": 2053
+  },
+  "initialBodyTextPreview": "安居智联\n首页\n房源\n价格分析\n房价时光机\n举报中心\n用户中心\n登录\n注册\n二手房\n新房\n租赁\n海外\n旅居\n搜索\n真房源认证 · 价格透明 · 数据可信\n房产全周期价格治理平台\n\n基于区块链存证的真房源核验系统，聚合全平台挂牌数据，提供专业的价格分析、趋势预测与市场洞察。\n\n开始探索\n了解更多\n市场概览驾驶舱\n\n实时掌握房产市场核心指标与动态\n\n数据更新于 2026/6/12 05:15\n\n今日挂牌量\n\n5,663\n\n+2.3%\n较昨日\n\n今日成交量\n\n190\n\n-1.5%\n较昨日\n\n全市均价\n\n6.77万/㎡\n\n+0.6%\n7日涨跌\n\n7日涨跌\n\n0.57%\n\n+0.6%\n较上周\n\n供需比\n\n1.25\n\n+0.8%\n较上周\n\n库存去化周期\n\n45天\n\n-2.1%\n较上周\n五大房类独立面板\n\n按房产类型查看细分市场深度数据\n\n二手房\n新房\n租赁\n海外\n旅居\n二手房价格指标\n\n挂牌均价\n\n6.97万/㎡\n\n成交均价\n\n6.64万/㎡\n\n30日环比\n\n+2.08%\n\n同比去年\n\n-4.29%\n\n真房源核验状态\n\n已核验数\n\n1,314\n\n套\n\n核验通过率\n\n94.1%\n\n待审核数\n\n235\n\n套\n\n跨渠道清洗结果\n来源抓取数\n5,182\n去重后有效数\n5,465\n清洗通过率\n88.0%\n跨渠道来源对比\n来源渠道\t挂牌数\t均价\t占比\n\n链家\n\t1,092\t6.98万/㎡\t\n32%\n\n\n贝壳\n\t896\t6.54万/㎡\t\n26%\n\n\n安居客\n\t760\t6.89万/㎡\t\n22%\n\n\n58同城\n\t646\t6.56万/㎡\t\n19%\n挂牌时效分布\n平均 26 天\n0\n100\n200\n300\n400\n500\n600\n7天内\n8-30天\n31-90天\n90天以上\n125\n504\n366\n64\n二手房挂牌价偏离预警 TOP 3\n偏高\n+21.3%\n二手房·朝阳区 优质3居室\n挂牌价\n7.79万/㎡\n片区均价\n6.77万/㎡\n偏低\n+23.4%\n二手房·海淀区 学区2居室\n挂牌价\n5.76万/㎡\n片区均价\n6.77万/㎡\n偏高\n+15%\n二手房·丰台区 南北通透4居\n挂牌价\n7.45万/㎡\n片区均价\n6.77万/㎡\n片区7日热力图\n\n各行政区价格变化热度与详细数据\n\n基于平台挂牌数据聚合\n1\n涨幅 TOP1\n\n东城区\n\n+2.30%\n\n12.79万/㎡\n\n2\n涨幅 TOP2\n\n密云区\n\n+1.94%\n\n5.88万/㎡\n\n3\n涨幅 TOP3\n\n顺义区\n\n+1.29%\n\n6.13万/㎡\n\n1\n跌幅 TOP1\n\n大兴区\n\n-2.30%\n\n6.50万/㎡\n\n2\n跌幅 TOP2\n\n海淀区\n\n-1.96%\n\n8.96万/㎡\n\n3\n跌幅 TOP3\n\n朝阳区\n\n-1.74%\n\n8.78万/㎡\n\n片区价格热力分布\n片区价格数据明细\n共 16 个片区\n片区名称\t均价\t7日涨跌%\t30日涨跌%\t在架房源\n\n东城区\n\t12.79万/㎡\t\n+2.30%\t\n+3.55%\t208\n\n西城区\n\t11.95万/㎡\t\n+0.10%\t\n+4.79%\t472\n\n朝阳区\n\t8.78万/㎡\t\n-1.74%\t\n-1.11%\t344\n\n丰台区\n\t6.33万/㎡\t\n+0.21%\t\n-3.18%\t327\n\n石景山区\n\t5.91万/㎡\t\n-0.47%\t\n+4.09%\t99\n\n海淀区\n\t8.96万/㎡\t\n-1.96%\t\n+1.14%\t58\n\n门头沟区\n\t6.01万/㎡\t\n-0.76%\t\n-2.10%\t245\n\n房山区\n\t5.48万/㎡\t\n-0.96%\t\n+4.95%\t442\n\n通州区\n\t6.38万/㎡\t\n+0.38%\t\n+3.54%\t336\n\n顺义区\n\t6.13万/㎡\t\n+1.29%\t\n-2.20%\t143\n\n昌平区\n\t6.18万/㎡\t\n-0.81%\t\n+2.77%\t414\n\n大兴区\n\t6.50万/㎡\t\n-2.30%\t\n+",
+  "bodyTextPreview": "安居智联\n首页\n房源\n价格分析\n房价时光机\n举报中心\n用户中心\n登录\n注册\n二手房\n新房\n租赁\n海外\n旅居\n搜索\n\n加载中...\n\n安居智联\n\n房产全周期价格治理平台，依托区块链存证与AI价格预警，构建透明、可信的房产交易环境。\n\n快速链接\n房源列表\n价格分析\n房价时光机\n举报中心\n关于我们\n公司简介\n服务条款\n隐私政策\n帮助中心\n联系我们\n400-888-8888\ncontact@anju.com\n北京市朝阳区建国路88号\n\n© 2024 安居智联 版权所有 | 京ICP备12345678号",
+  "apiBase": "",
+  "businessGoalPreview": "",
+  "apiResponses": [
+    {
+      "method": "GET",
+      "status": 301,
+      "url": "https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=%E7%8E%B0%E4%BB%A3%E7%AE%80%E7%BA%A6%E9%A3%8E%E6%A0%BC%E5%AE%A2%E5%8E%85%E8%A3%85%E4%BF%AE%20%E6%88%BF%E4%BA%A7%E7%85%A7%E7%89%87%20%E7%9C%9F%E5%AE%9E%E6%84%9F&image_size=square_hd"
+    },
+    {
+      "method": "GET",
+      "status": 301,
+      "url": "https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=%E7%8E%B0%E4%BB%A3%E7%AE%80%E7%BA%A6%E9%A3%8E%E6%A0%BC%E5%AE%A2%E5%8E%85%E8%A3%85%E4%BF%AE%20%E6%88%BF%E4%BA%A7%E7%85%A7%E7%89%87%20%E7%9C%9F%E5%AE%9E%E6%84%9F&image_size=square_hd"
+    }
+  ],
+  "apiChecks": [],
+  "dialogs": [],
+  "consoleMessages": [
+    {
+      "type": "debug",
+      "text": "[vite] connecting...",
+      "location": {
+        "url": "http://127.0.0.1:49173/@vite/client",
+        "lineNumber": 788,
+        "columnNumber": 8
+      }
+    },
+    {
+      "type": "debug",
+      "text": "[vite] connected.",
+      "location": {
+        "url": "http://127.0.0.1:49173/@vite/client",
+        "lineNumber": 911,
+        "columnNumber": 14
+      }
+    },
+    {
+      "type": "info",
+      "text": "%cDownload the React DevTools for a better development experience: https://reactjs.org/link/react-devtools font-weight:bold",
+      "location": {
+        "url": "http://127.0.0.1:49173/node_modules/.vite/deps/chunk-NXESFFTV.js?v=6748e658",
+        "lineNumber": 21608,
+        "columnNumber": 24
+      }
+    },
+    {
+      "type": "debug",
+      "text": "[vite] connecting...",
+      "location": {
+        "url": "http://127.0.0.1:49173/@vite/client",
+        "lineNumber": 788,
+        "columnNumber": 8
+      }
+    },
+    {
+      "type": "debug",
+      "text": "[vite] connected.",
+      "location": {
+        "url": "http://127.0.0.1:49173/@vite/client",
+        "lineNumber": 911,
+        "columnNumber": 14
+      }
+    },
+    {
+      "type": "info",
+      "text": "%cDownload the React DevTools for a better development experience: https://reactjs.org/link/react-devtools font-weight:bold",
+      "location": {
+        "url": "http://127.0.0.1:49173/node_modules/.vite/deps/chunk-NXESFFTV.js?v=6748e658",
+        "lineNumber": 21608,
+        "columnNumber": 24
+      }
+    },
+    {
+      "type": "warning",
+      "text": "No routes matched location \"/properties\" ",
+      "location": {
+        "url": "http://127.0.0.1:49173/node_modules/.vite/deps/react-router-dom.js?v=6748e658",
+        "lineNumber": 648,
+        "columnNumber": 48
+      }
+    },
+    {
+      "type": "warning",
+      "text": "No routes matched location \"/properties\" ",
+      "location": {
+        "url": "http://127.0.0.1:49173/node_modules/.vite/deps/react-router-dom.js?v=6748e658",
+        "lineNumber": 648,
+        "columnNumber": 48
+      }
+    },
+    {
+      "type": "debug",
+      "text": "[vite] connecting...",
+      "location": {
+        "url": "http://127.0.0.1:49173/@vite/client",
+        "lineNumber": 788,
+        "columnNumber": 8
+      }
+    },
+    {
+      "type": "debug",
+      "text": "[vite] connected.",
+      "location": {
+        "url": "http://127.0.0.1:49173/@vite/client",
+        "lineNumber": 911,
+        "columnNumber": 14
+      }
+    },
+    {
+      "type": "info",
+      "text": "%cDownload the React DevTools for a better development experience: https://reactjs.org/link/react-devtools font-weight:bold",
+      "location": {
+        "url": "http://127.0.0.1:49173/node_modules/.vite/deps/chunk-NXESFFTV.js?v=6748e658",
+        "lineNumber": 21608,
+        "columnNumber": 24
+      }
+    }
+  ],
+  "requestFailures": [
+    {
+      "method": "GET",
+      "url": "https://lf-cdn.trae.com.cn/obj/trae-ai-image/page_image/fb61a040267650d511d6f51fd94c8068.jpeg",
+      "errorText": "net::ERR_ABORTED"
+    }
+  ],
+  "responseErrors": []
+}

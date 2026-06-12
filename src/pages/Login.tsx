@@ -15,6 +15,7 @@ import {
   EyeOff,
 } from 'lucide-react';
 import { login } from '@/services/api';
+import { useAppStore } from '@/store/useAppStore';
 import { cn } from '@/lib/utils';
 
 const loginSchema = z.object({
@@ -36,6 +37,7 @@ const roleOptions = [
 
 export default function Login() {
   const navigate = useNavigate();
+  const setUser = useAppStore((state) => state.setUser);
   const [showPassword, setShowPassword] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [error, setError] = useState('');
@@ -43,6 +45,7 @@ export default function Login() {
   const {
     register,
     handleSubmit,
+    setValue,
     formState: { errors },
   } = useForm<LoginFormData>({
     resolver: zodResolver(loginSchema),
@@ -62,6 +65,15 @@ export default function Login() {
         password: data.password,
         role: data.role,
       });
+      setUser({
+        id: response.user.id,
+        phone: response.user.phone,
+        role: response.user.role,
+        nickname: response.user.name,
+        isVerified: response.user.isVerified,
+        createdAt: new Date().toISOString(),
+        lastLoginAt: new Date().toISOString(),
+      });
 
       if (data.rememberMe) {
         localStorage.setItem('rememberedPhone', data.phone);
@@ -70,7 +82,7 @@ export default function Login() {
       }
 
       if (response.user.role === 'admin') {
-        navigate('/admin');
+        navigate('/admin/dashboard');
       } else {
         navigate('/');
       }
@@ -79,6 +91,14 @@ export default function Login() {
     } finally {
       setIsSubmitting(false);
     }
+  };
+
+  const handleDemoLogin = (role: LoginFormData['role'], phone: string) => {
+    setValue('role', role, { shouldValidate: true });
+    setValue('phone', phone, { shouldValidate: true });
+    setValue('password', '123456', { shouldValidate: true });
+    setValue('rememberMe', true);
+    void onSubmit({ role, phone, password: '123456', rememberMe: true });
   };
 
   return (
@@ -277,16 +297,33 @@ export default function Login() {
           </form>
 
           <div className="mt-6 text-center">
-            <p className="text-sm text-neutral-500">
-              还没有账号？
-              <button
-                type="button"
-                className="text-primary-800 hover:text-primary-700 font-medium ml-1"
-              >
-                立即注册
-              </button>
-            </p>
-          </div>
+              <p className="text-sm text-neutral-500">
+                还没有账号？
+                <button
+                  type="button"
+                  className="text-primary-800 hover:text-primary-700 font-medium ml-1"
+                  onClick={() => navigate('/register')}
+                >
+                  立即注册
+                </button>
+              </p>
+              <div className="mt-4 grid grid-cols-2 gap-2 text-xs">
+                <button
+                  type="button"
+                  className="rounded-lg border border-neutral-200 px-3 py-2 text-neutral-600 hover:border-primary-300 hover:text-primary-800"
+                  onClick={() => handleDemoLogin('user', '13800138000')}
+                >
+                  用户演示登录
+                </button>
+                <button
+                  type="button"
+                  className="rounded-lg border border-neutral-200 px-3 py-2 text-neutral-600 hover:border-primary-300 hover:text-primary-800"
+                  onClick={() => handleDemoLogin('admin', '13900139000')}
+                >
+                  管理员演示登录
+                </button>
+              </div>
+            </div>
         </motion.div>
       </motion.div>
     </div>

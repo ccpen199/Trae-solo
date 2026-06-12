@@ -17,6 +17,7 @@ export default function App() {
       <Routes>
         <Route element={<Layout />}>
           <Route path="/" element={<Home />} />
+          <Route path="/properties" element={<PropertyList />} />
           <Route path="/properties/:category" element={<PropertyList />} />
           <Route path="/property/:id" element={<PropertyDetail />} />
           <Route path="/price-analysis" element={<PriceAnalysis />} />
@@ -24,11 +25,15 @@ export default function App() {
           <Route path="/report" element={<ReportCenter />} />
           <Route path="/user-center" element={<UserCenter />} />
           <Route path="/login" element={<Login />} />
+          <Route path="/register" element={<Login />} />
         </Route>
         <Route element={<AdminLayout />}>
+          <Route path="/admin" element={<AdminDashboard />} />
           <Route path="/admin/dashboard" element={<AdminDashboard />} />
           <Route path="/admin/reports" element={<AdminDashboard />} />
           <Route path="/admin/agents" element={<AdminDashboard />} />
+          <Route path="/admin/brokers" element={<AdminDashboard />} />
+          <Route path="/admin/market-health" element={<AdminDashboard />} />
         </Route>
       </Routes>
     </Router>
