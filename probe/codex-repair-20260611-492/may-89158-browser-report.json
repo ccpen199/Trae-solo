@@ -1,0 +1,743 @@
+{
+  "ok": true,
+  "generatedAt": "2026-06-11T18:11:17.193Z",
+  "order": "may-89158",
+  "roundIndex": 2,
+  "captureId": "may-89158-codex-492",
+  "url": "http://127.0.0.1:49159/",
+  "initialUrl": "http://127.0.0.1:49159/",
+  "finalUrl": "http://127.0.0.1:49159/login",
+  "status": 200,
+  "title": "萌宠健康 - 宠物健康全周期管理平台",
+  "initialTitle": "萌宠健康 - 宠物健康全周期管理平台",
+  "navigationError": "",
+  "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89158/probe/codex-repair-20260611-492/may-89158-codex-492-frontend.png",
+  "screenshotPaths": [
+    "/Users/chen/Documents/trae_projects/local_projects/may-89158/probe/codex-repair-20260611-492/may-89158-codex-492-structure-01-首屏.png"
+  ],
+  "issueTextPreview": "service startup frontend backup port",
+  "targetReason": "页面存在后台入口，优先复验后台管理链路；页面存在我的/账号入口，优先复验个人中心链路",
+  "targetKind": "admin",
+  "targetMatched": false,
+  "targetActions": [
+    {
+      "action": "click",
+      "label": "页面存在我的/账号入口，优先复验个人中心链路",
+      "ok": true
+    },
+    {
+      "action": "target-verify",
+      "label": "页面存在我的/账号入口，优先复验个人中心链路",
+      "ok": false,
+      "finalUrl": "http://127.0.0.1:49159/login"
+    }
+  ],
+  "authFlow": {
+    "detected": true,
+    "attempted": true,
+    "success": false,
+    "finalUrl": "http://127.0.0.1:49159/login",
+    "message": "已尝试登录但仍停留在登录页",
+    "actions": [
+      {
+        "action": "login-fill-username",
+        "label": "admin",
+        "ok": true
+      },
+      {
+        "action": "login-fill-password",
+        "label": "admin:******",
+        "ok": true
+      },
+      {
+        "action": "click",
+        "label": "登录:admin",
+        "ok": true
+      },
+      {
+        "action": "login-submit",
+        "label": "admin",
+        "ok": true,
+        "beforeUrl": "http://127.0.0.1:49159/login"
+      },
+      {
+        "action": "login-result",
+        "label": "admin",
+        "ok": false,
+        "finalUrl": "http://127.0.0.1:49159/login",
+        "feedback": []
+      },
+      {
+        "action": "login-fill-username",
+        "label": "platform",
+        "ok": true
+      },
+      {
+        "action": "login-fill-password",
+        "label": "platform:******",
+        "ok": true
+      },
+      {
+        "action": "click",
+        "label": "登录:platform",
+        "ok": true
+      },
+      {
+        "action": "login-submit",
+        "label": "platform",
+        "ok": true,
+        "beforeUrl": "http://127.0.0.1:49159/login"
+      },
+      {
+        "action": "login-result",
+        "label": "platform",
+        "ok": false,
+        "finalUrl": "http://127.0.0.1:49159/login",
+        "feedback": []
+      },
+      {
+        "action": "login-fill-username",
+        "label": "ops",
+        "ok": true
+      },
+      {
+        "action": "login-fill-password",
+        "label": "ops:******",
+        "ok": true
+      },
+      {
+        "action": "click",
+        "label": "登录:ops",
+        "ok": true
+      },
+      {
+        "action": "login-submit",
+        "label": "ops",
+        "ok": true,
+        "beforeUrl": "http://127.0.0.1:49159/login"
+      },
+      {
+        "action": "login-result",
+        "label": "ops",
+        "ok": false,
+        "finalUrl": "http://127.0.0.1:49159/login",
+        "feedback": []
+      }
+    ]
+  },
+  "businessAudit": {
+    "actions": [],
+    "snapshots": [
+      {
+        "label": "首屏",
+        "url": "http://127.0.0.1:49159/login",
+        "title": "萌宠健康 - 宠物健康全周期管理平台",
+        "headings": [
+          "宠护康"
+        ],
+        "navLabels": [],
+        "buttons": [
+          "宠主端",
+          "门店端",
+          "兽医端",
+          "密码登录",
+          "验证码登录",
+          "登录",
+          "立即注册"
+        ],
+        "links": [],
+        "inputs": [
+          {
+            "tag": "input",
+            "type": "tel",
+            "placeholder": "请输入手机号",
+            "name": "phone",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "password",
+            "placeholder": "请输入密码",
+            "name": "password",
+            "label": ""
+          }
+        ],
+        "tables": [],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "宠护康宠物健康全周期管理平台选择登录方式宠主端门店端兽医端管理宠物、预约服务密码登录验证码登录手机号密码登录还没有账号？立即注册登录即表示同意《用户协议》和《隐私政策》",
+        "layout": {
+          "viewportWidth": 1504,
+          "viewportHeight": 1000,
+          "scrollWidth": 1504,
+          "scrollHeight": 1000,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89158-codex-492-structure-01-首屏",
+          "label": "首屏",
+          "finalUrl": "http://127.0.0.1:49159/login",
+          "title": "萌宠健康 - 宠物健康全周期管理平台",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89158/probe/codex-repair-20260611-492/may-89158-codex-492-structure-01-首屏.json",
+          "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89158/probe/codex-repair-20260611-492/may-89158-codex-492-structure-01-首屏.png",
+          "elementCount": 79,
+          "interactiveCount": 9,
+          "interactiveLabels": [
+            "宠主端",
+            "门店端",
+            "兽医端",
+            "密码登录",
+            "验证码登录",
+            "请输入手机号",
+            "请输入密码",
+            "登录",
+            "立即注册"
+          ]
+        }
+      }
+    ],
+    "findings": [
+      "登录页可见，但自动填充可见演示账号后仍停留在登录页，没有进入登录后的首页或工作台。"
+    ],
+    "actionHints": [
+      "优先修复登录表单、演示账号、登录接口和登录后跳转，让自动化能先完成登录再复验首页业务链路。"
+    ],
+    "emptyPages": [],
+    "overflowPages": [],
+    "blankPages": [],
+    "apiFailurePaths": [],
+    "goalTerms": [],
+    "clickedActionDescriptors": [],
+    "secondaryActionClicks": 0,
+    "structureCaptures": [
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89158-codex-492-structure-01-首屏",
+        "label": "首屏",
+        "finalUrl": "http://127.0.0.1:49159/login",
+        "title": "萌宠健康 - 宠物健康全周期管理平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89158/probe/codex-repair-20260611-492/may-89158-codex-492-structure-01-首屏.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89158/probe/codex-repair-20260611-492/may-89158-codex-492-structure-01-首屏.png",
+        "elementCount": 79,
+        "interactiveCount": 9,
+        "interactiveLabels": [
+          "宠主端",
+          "门店端",
+          "兽医端",
+          "密码登录",
+          "验证码登录",
+          "请输入手机号",
+          "请输入密码",
+          "登录",
+          "立即注册"
+        ]
+      }
+    ],
+    "representativeScreenshotUrl": "http://127.0.0.1:49159/login",
+    "representativeScreenshotLabel": "宠护康"
+  },
+  "websiteStructureCapture": {
+    "module": "website_structure_capture",
+    "captureCount": 1,
+    "captures": [
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89158-codex-492-structure-01-首屏",
+        "label": "首屏",
+        "finalUrl": "http://127.0.0.1:49159/login",
+        "title": "萌宠健康 - 宠物健康全周期管理平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89158/probe/codex-repair-20260611-492/may-89158-codex-492-structure-01-首屏.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89158/probe/codex-repair-20260611-492/may-89158-codex-492-structure-01-首屏.png",
+        "elementCount": 79,
+        "interactiveCount": 9,
+        "interactiveLabels": [
+          "宠主端",
+          "门店端",
+          "兽医端",
+          "密码登录",
+          "验证码登录",
+          "请输入手机号",
+          "请输入密码",
+          "登录",
+          "立即注册"
+        ]
+      }
+    ]
+  },
+  "screenshotMetrics": {
+    "width": 1536,
+    "height": 1000,
+    "scrollWidth": 1504,
+    "scrollHeight": 1000
+  },
+  "initialBodyTextPreview": "宠护康\n\n宠物健康全周期管理平台\n\n选择登录方式\n\n宠主端\n\n门店端\n\n兽医端\n\n管理宠物、预约服务\n密码登录\n验证码登录\n手机号\n密码\n登录\n\n还没有账号？立即注册\n\n登录即表示同意《用户协议》和《隐私政策》",
+  "bodyTextPreview": "宠护康\n\n宠物健康全周期管理平台\n\n选择登录方式\n\n宠主端\n\n门店端\n\n兽医端\n\n管理宠物、预约服务\n密码登录\n验证码登录\n手机号\n密码\n登录\n\n还没有账号？立即注册\n\n登录即表示同意《用户协议》和《隐私政策》",
+  "apiBase": "http://127.0.0.1:59158/api",
+  "businessGoalPreview": "",
+  "apiResponses": [],
+  "apiChecks": [
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59158/api/health",
+      "path": "/api/health",
+      "status": 200,
+      "ok": true,
+      "bodyPreview": "{\"ok\":true,\"service\":\"may-89158-backend\",\"app\":\"宠物健康全周期管理 SaaS 平台\",\"dataMode\":\"local mock fixtures\",\"timestamp\":\"2026-06-11T18:09:24.113Z\"}"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59158/api/teachers",
+      "path": "/api/teachers",
+      "status": 404,
+      "ok": false,
+      "bodyPreview": "<!DOCTYPE html>\n<html lang=\"en\">\n<head>\n<meta charset=\"utf-8\">\n<title>Error</title>\n</head>\n<body>\n<pre>Cannot GET /api/teachers</pre>\n</body>\n</html>\n"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59158/api/courses",
+      "path": "/api/courses",
+      "status": 404,
+      "ok": false,
+      "bodyPreview": "<!DOCTYPE html>\n<html lang=\"en\">\n<head>\n<meta charset=\"utf-8\">\n<title>Error</title>\n</head>\n<body>\n<pre>Cannot GET /api/courses</pre>\n</body>\n</html>\n"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59158/api/bookings",
+      "path": "/api/bookings",
+      "status": 404,
+      "ok": false,
+      "bodyPreview": "<!DOCTYPE html>\n<html lang=\"en\">\n<head>\n<meta charset=\"utf-8\">\n<title>Error</title>\n</head>\n<body>\n<pre>Cannot GET /api/bookings</pre>\n</body>\n</html>\n"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59158/api/orders",
+      "path": "/api/orders",
+      "status": 404,
+      "ok": false,
+      "bodyPreview": "<!DOCTYPE html>\n<html lang=\"en\">\n<head>\n<meta charset=\"utf-8\">\n<title>Error</title>\n</head>\n<body>\n<pre>Cannot GET /api/orders</pre>\n</body>\n</html>\n"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59158/api/auth/me",
+      "path": "/api/auth/me",
+      "status": 404,
+      "ok": false,
+      "bodyPreview": "<!DOCTYPE html>\n<html lang=\"en\">\n<head>\n<meta charset=\"utf-8\">\n<title>Error</title>\n</head>\n<body>\n<pre>Cannot GET /api/auth/me</pre>\n</body>\n</html>\n"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59158/api/users/profile",
+      "path": "/api/users/profile",
+      "status": 404,
+      "ok": false,
+      "bodyPreview": "<!DOCTYPE html>\n<html lang=\"en\">\n<head>\n<meta charset=\"utf-8\">\n<title>Error</title>\n</head>\n<body>\n<pre>Cannot GET /api/users/profile</pre>\n</body>\n</html>\n"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59158/api/user/profile",
+      "path": "/api/user/profile",
+      "status": 404,
+      "ok": false,
+      "bodyPreview": "<!DOCTYPE html>\n<html lang=\"en\">\n<head>\n<meta charset=\"utf-8\">\n<title>Error</title>\n</head>\n<body>\n<pre>Cannot GET /api/user/profile</pre>\n</body>\n</html>\n"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59158/api/admin/stats",
+      "path": "/api/admin/stats",
+      "status": 404,
+      "ok": false,
+      "bodyPreview": "<!DOCTYPE html>\n<html lang=\"en\">\n<head>\n<meta charset=\"utf-8\">\n<title>Error</title>\n</head>\n<body>\n<pre>Cannot GET /api/admin/stats</pre>\n</body>\n</html>\n"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59158/api/admin/dashboard",
+      "path": "/api/admin/dashboard",
+      "status": 404,
+      "ok": false,
+      "bodyPreview": "<!DOCTYPE html>\n<html lang=\"en\">\n<head>\n<meta charset=\"utf-8\">\n<title>Error</title>\n</head>\n<body>\n<pre>Cannot GET /api/admin/dashboard</pre>\n</body>\n</html>\n"
+    }
+  ],
+  "dialogs": [],
+  "consoleMessages": [
+    {
+      "type": "debug",
+      "text": "[vite] connecting...",
+      "location": {
+        "url": "http://127.0.0.1:49159/@vite/client",
+        "lineNumber": 494,
+        "columnNumber": 8
+      }
+    },
+    {
+      "type": "info",
+      "text": "%cDownload the React DevTools for a better development experience: https://reactjs.org/link/react-devtools font-weight:bold",
+      "location": {
+        "url": "http://127.0.0.1:49159/node_modules/.vite/deps/chunk-UXDD7MME.js?v=a14f9e1c",
+        "lineNumber": 21550,
+        "columnNumber": 24
+      }
+    },
+    {
+      "type": "debug",
+      "text": "[vite] connected.",
+      "location": {
+        "url": "http://127.0.0.1:49159/@vite/client",
+        "lineNumber": 617,
+        "columnNumber": 14
+      }
+    },
+    {
+      "type": "startGroupCollapsed",
+      "text": "%c[MSW] Mocking enabled. color:orangered;font-weight:bold;",
+      "location": {
+        "url": "http://127.0.0.1:49159/node_modules/.vite/deps/msw_browser.js?v=a14f9e1c",
+        "lineNumber": 3564,
+        "columnNumber": 10
+      }
+    },
+    {
+      "type": "log",
+      "text": "%cDocumentation: %chttps://mswjs.io/docs font-weight:bold font-weight:normal",
+      "location": {
+        "url": "http://127.0.0.1:49159/node_modules/.vite/deps/msw_browser.js?v=a14f9e1c",
+        "lineNumber": 3568,
+        "columnNumber": 10
+      }
+    },
+    {
+      "type": "log",
+      "text": "Found an issue? https://github.com/mswjs/msw/issues",
+      "location": {
+        "url": "http://127.0.0.1:49159/node_modules/.vite/deps/msw_browser.js?v=a14f9e1c",
+        "lineNumber": 3573,
+        "columnNumber": 10
+      }
+    },
+    {
+      "type": "log",
+      "text": "Worker script URL: http://127.0.0.1:49159/mockServiceWorker.js",
+      "location": {
+        "url": "http://127.0.0.1:49159/node_modules/.vite/deps/msw_browser.js?v=a14f9e1c",
+        "lineNumber": 3574,
+        "columnNumber": 10
+      }
+    },
+    {
+      "type": "log",
+      "text": "Worker scope: http://127.0.0.1:49159/",
+      "location": {
+        "url": "http://127.0.0.1:49159/node_modules/.vite/deps/msw_browser.js?v=a14f9e1c",
+        "lineNumber": 3575,
+        "columnNumber": 10
+      }
+    },
+    {
+      "type": "log",
+      "text": "Client ID: %s (%s) 3c7461c2-44d6-4bc8-ac71-c8d1c7c4e18c top-level",
+      "location": {
+        "url": "http://127.0.0.1:49159/node_modules/.vite/deps/msw_browser.js?v=a14f9e1c",
+        "lineNumber": 3577,
+        "columnNumber": 12
+      }
+    },
+    {
+      "type": "endGroup",
+      "text": "console.groupEnd",
+      "location": {
+        "url": "http://127.0.0.1:49159/node_modules/.vite/deps/msw_browser.js?v=a14f9e1c",
+        "lineNumber": 3579,
+        "columnNumber": 10
+      }
+    },
+    {
+      "type": "log",
+      "text": "MSW mocking enabled",
+      "location": {
+        "url": "http://127.0.0.1:49159/src/mock/browser.ts",
+        "lineNumber": 21,
+        "columnNumber": 12
+      }
+    },
+    {
+      "type": "warning",
+      "text": "⚠️ React Router Future Flag Warning: React Router will begin wrapping state updates in `React.startTransition` in v7. You can use the `v7_startTransition` future flag to opt-in early. For more information, see https://reactrouter.com/v6/upgrading/future#v7_starttransition.",
+      "location": {
+        "url": "http://127.0.0.1:49159/node_modules/.vite/deps/react-router-dom.js?v=a14f9e1c",
+        "lineNumber": 4426,
+        "columnNumber": 12
+      }
+    },
+    {
+      "type": "warning",
+      "text": "⚠️ React Router Future Flag Warning: Relative route resolution within Splat routes is changing in v7. You can use the `v7_relativeSplatPath` future flag to opt-in early. For more information, see https://reactrouter.com/v6/upgrading/future#v7_relativesplatpath.",
+      "location": {
+        "url": "http://127.0.0.1:49159/node_modules/.vite/deps/react-router-dom.js?v=a14f9e1c",
+        "lineNumber": 4426,
+        "columnNumber": 12
+      }
+    },
+    {
+      "type": "verbose",
+      "text": "[DOM] Input elements should have autocomplete attributes (suggested: \"current-password\"): (More info: https://goo.gl/9p2vKq) %o",
+      "location": {
+        "url": "http://127.0.0.1:49159/login",
+        "lineNumber": 0,
+        "columnNumber": 0
+      }
+    },
+    {
+      "type": "debug",
+      "text": "[vite] connecting...",
+      "location": {
+        "url": "http://127.0.0.1:49159/@vite/client",
+        "lineNumber": 494,
+        "columnNumber": 8
+      }
+    },
+    {
+      "type": "debug",
+      "text": "[vite] connected.",
+      "location": {
+        "url": "http://127.0.0.1:49159/@vite/client",
+        "lineNumber": 617,
+        "columnNumber": 14
+      }
+    },
+    {
+      "type": "info",
+      "text": "%cDownload the React DevTools for a better development experience: https://reactjs.org/link/react-devtools font-weight:bold",
+      "location": {
+        "url": "http://127.0.0.1:49159/node_modules/.vite/deps/chunk-UXDD7MME.js?v=a14f9e1c",
+        "lineNumber": 21550,
+        "columnNumber": 24
+      }
+    },
+    {
+      "type": "startGroupCollapsed",
+      "text": "%c[MSW] Mocking enabled. color:orangered;font-weight:bold;",
+      "location": {
+        "url": "http://127.0.0.1:49159/node_modules/.vite/deps/msw_browser.js?v=a14f9e1c",
+        "lineNumber": 3564,
+        "columnNumber": 10
+      }
+    },
+    {
+      "type": "log",
+      "text": "%cDocumentation: %chttps://mswjs.io/docs font-weight:bold font-weight:normal",
+      "location": {
+        "url": "http://127.0.0.1:49159/node_modules/.vite/deps/msw_browser.js?v=a14f9e1c",
+        "lineNumber": 3568,
+        "columnNumber": 10
+      }
+    },
+    {
+      "type": "log",
+      "text": "Found an issue? https://github.com/mswjs/msw/issues",
+      "location": {
+        "url": "http://127.0.0.1:49159/node_modules/.vite/deps/msw_browser.js?v=a14f9e1c",
+        "lineNumber": 3573,
+        "columnNumber": 10
+      }
+    },
+    {
+      "type": "log",
+      "text": "Worker script URL: http://127.0.0.1:49159/mockServiceWorker.js",
+      "location": {
+        "url": "http://127.0.0.1:49159/node_modules/.vite/deps/msw_browser.js?v=a14f9e1c",
+        "lineNumber": 3574,
+        "columnNumber": 10
+      }
+    },
+    {
+      "type": "log",
+      "text": "Worker scope: http://127.0.0.1:49159/",
+      "location": {
+        "url": "http://127.0.0.1:49159/node_modules/.vite/deps/msw_browser.js?v=a14f9e1c",
+        "lineNumber": 3575,
+        "columnNumber": 10
+      }
+    },
+    {
+      "type": "log",
+      "text": "Client ID: %s (%s) 91708293-62a1-4a80-95d7-3796f3866fab top-level",
+      "location": {
+        "url": "http://127.0.0.1:49159/node_modules/.vite/deps/msw_browser.js?v=a14f9e1c",
+        "lineNumber": 3577,
+        "columnNumber": 12
+      }
+    },
+    {
+      "type": "endGroup",
+      "text": "console.groupEnd",
+      "location": {
+        "url": "http://127.0.0.1:49159/node_modules/.vite/deps/msw_browser.js?v=a14f9e1c",
+        "lineNumber": 3579,
+        "columnNumber": 10
+      }
+    },
+    {
+      "type": "log",
+      "text": "MSW mocking enabled",
+      "location": {
+        "url": "http://127.0.0.1:49159/src/mock/browser.ts",
+        "lineNumber": 21,
+        "columnNumber": 12
+      }
+    },
+    {
+      "type": "warning",
+      "text": "⚠️ React Router Future Flag Warning: React Router will begin wrapping state updates in `React.startTransition` in v7. You can use the `v7_startTransition` future flag to opt-in early. For more information, see https://reactrouter.com/v6/upgrading/future#v7_starttransition.",
+      "location": {
+        "url": "http://127.0.0.1:49159/node_modules/.vite/deps/react-router-dom.js?v=a14f9e1c",
+        "lineNumber": 4426,
+        "columnNumber": 12
+      }
+    },
+    {
+      "type": "warning",
+      "text": "⚠️ React Router Future Flag Warning: Relative route resolution within Splat routes is changing in v7. You can use the `v7_relativeSplatPath` future flag to opt-in early. For more information, see https://reactrouter.com/v6/upgrading/future#v7_relativesplatpath.",
+      "location": {
+        "url": "http://127.0.0.1:49159/node_modules/.vite/deps/react-router-dom.js?v=a14f9e1c",
+        "lineNumber": 4426,
+        "columnNumber": 12
+      }
+    },
+    {
+      "type": "verbose",
+      "text": "[DOM] Input elements should have autocomplete attributes (suggested: \"current-password\"): (More info: https://goo.gl/9p2vKq) %o",
+      "location": {
+        "url": "http://127.0.0.1:49159/login",
+        "lineNumber": 0,
+        "columnNumber": 0
+      }
+    },
+    {
+      "type": "debug",
+      "text": "[vite] connecting...",
+      "location": {
+        "url": "http://127.0.0.1:49159/@vite/client",
+        "lineNumber": 494,
+        "columnNumber": 8
+      }
+    },
+    {
+      "type": "debug",
+      "text": "[vite] connected.",
+      "location": {
+        "url": "http://127.0.0.1:49159/@vite/client",
+        "lineNumber": 617,
+        "columnNumber": 14
+      }
+    },
+    {
+      "type": "info",
+      "text": "%cDownload the React DevTools for a better development experience: https://reactjs.org/link/react-devtools font-weight:bold",
+      "location": {
+        "url": "http://127.0.0.1:49159/node_modules/.vite/deps/chunk-UXDD7MME.js?v=a14f9e1c",
+        "lineNumber": 21550,
+        "columnNumber": 24
+      }
+    },
+    {
+      "type": "startGroupCollapsed",
+      "text": "%c[MSW] Mocking enabled. color:orangered;font-weight:bold;",
+      "location": {
+        "url": "http://127.0.0.1:49159/node_modules/.vite/deps/msw_browser.js?v=a14f9e1c",
+        "lineNumber": 3564,
+        "columnNumber": 10
+      }
+    },
+    {
+      "type": "log",
+      "text": "%cDocumentation: %chttps://mswjs.io/docs font-weight:bold font-weight:normal",
+      "location": {
+        "url": "http://127.0.0.1:49159/node_modules/.vite/deps/msw_browser.js?v=a14f9e1c",
+        "lineNumber": 3568,
+        "columnNumber": 10
+      }
+    },
+    {
+      "type": "log",
+      "text": "Found an issue? https://github.com/mswjs/msw/issues",
+      "location": {
+        "url": "http://127.0.0.1:49159/node_modules/.vite/deps/msw_browser.js?v=a14f9e1c",
+        "lineNumber": 3573,
+        "columnNumber": 10
+      }
+    },
+    {
+      "type": "log",
+      "text": "Worker script URL: http://127.0.0.1:49159/mockServiceWorker.js",
+      "location": {
+        "url": "http://127.0.0.1:49159/node_modules/.vite/deps/msw_browser.js?v=a14f9e1c",
+        "lineNumber": 3574,
+        "columnNumber": 10
+      }
+    },
+    {
+      "type": "log",
+      "text": "Worker scope: http://127.0.0.1:49159/",
+      "location": {
+        "url": "http://127.0.0.1:49159/node_modules/.vite/deps/msw_browser.js?v=a14f9e1c",
+        "lineNumber": 3575,
+        "columnNumber": 10
+      }
+    },
+    {
+      "type": "log",
+      "text": "Client ID: %s (%s) 9ab3ddac-3910-48ca-b1b2-9e26cb42b3ef top-level",
+      "location": {
+        "url": "http://127.0.0.1:49159/node_modules/.vite/deps/msw_browser.js?v=a14f9e1c",
+        "lineNumber": 3577,
+        "columnNumber": 12
+      }
+    },
+    {
+      "type": "endGroup",
+      "text": "console.groupEnd",
+      "location": {
+        "url": "http://127.0.0.1:49159/node_modules/.vite/deps/msw_browser.js?v=a14f9e1c",
+        "lineNumber": 3579,
+        "columnNumber": 10
+      }
+    },
+    {
+      "type": "log",
+      "text": "MSW mocking enabled",
+      "location": {
+        "url": "http://127.0.0.1:49159/src/mock/browser.ts",
+        "lineNumber": 21,
+        "columnNumber": 12
+      }
+    },
+    {
+      "type": "warning",
+      "text": "⚠️ React Router Future Flag Warning: React Router will begin wrapping state updates in `React.startTransition` in v7. You can use the `v7_startTransition` future flag to opt-in early. For more information, see https://reactrouter.com/v6/upgrading/future#v7_starttransition.",
+      "location": {
+        "url": "http://127.0.0.1:49159/node_modules/.vite/deps/react-router-dom.js?v=a14f9e1c",
+        "lineNumber": 4426,
+        "columnNumber": 12
+      }
+    },
+    {
+      "type": "warning",
+      "text": "⚠️ React Router Future Flag Warning: Relative route resolution within Splat routes is changing in v7. You can use the `v7_relativeSplatPath` future flag to opt-in early. For more information, see https://reactrouter.com/v6/upgrading/future#v7_relativesplatpath.",
+      "location": {
+        "url": "http://127.0.0.1:49159/node_modules/.vite/deps/react-router-dom.js?v=a14f9e1c",
+        "lineNumber": 4426,
+        "columnNumber": 12
+      }
+    },
+    {
+      "type": "verbose",
+      "text": "[DOM] Input elements should have autocomplete attributes (suggested: \"current-password\"): (More info: https://goo.gl/9p2vKq) %o",
+      "location": {
+        "url": "http://127.0.0.1:49159/login",
+        "lineNumber": 0,
+        "columnNumber": 0
+      }
+    }
+  ],
+  "requestFailures": [],
+  "responseErrors": []
+}

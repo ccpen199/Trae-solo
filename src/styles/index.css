@@ -1,0 +1,74 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    font-family: 'Noto Sans SC', system-ui, sans-serif;
+    background-color: #F7F5F0;
+    color: #2D3436;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    font-family: 'Noto Serif SC', serif;
+    font-weight: 600;
+  }
+
+  * {
+    box-sizing: border-box;
+  }
+}
+
+@layer utilities {
+  .font-display {
+    font-family: 'Noto Serif SC', serif;
+  }
+
+  .font-body {
+    font-family: 'Noto Sans SC', system-ui, sans-serif;
+  }
+
+  .bg-gradient-primary {
+    background: linear-gradient(135deg, #2E7D5E 0%, #8BC6A9 100%);
+  }
+
+  .bg-gradient-accent {
+    background: linear-gradient(135deg, #FF8A4C 0%, #FFB088 100%);
+  }
+
+  .text-gradient {
+    background: linear-gradient(135deg, #2E7D5E 0%, #8BC6A9 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .shadow-card {
+    box-shadow: 0 8px 30px rgba(46, 125, 94, 0.12);
+  }
+
+  .shadow-float {
+    box-shadow: 0 12px 40px rgba(46, 125, 94, 0.16);
+  }
+
+  .scrollbar-hide {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+
+  .scrollbar-hide::-webkit-scrollbar {
+    display: none;
+  }
+
+  .glass-effect {
+    background: rgba(255, 255, 255, 0.8);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+  }
+}
