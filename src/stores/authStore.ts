@@ -3,18 +3,25 @@ import { persist } from 'zustand/middleware';
 import type { User, UserRole, LoginRequest } from '@/types/auth';
 import { authService } from '@/services/authService';
 
+interface LoginResult {
+  redirectPath: string;
+  welcomeMessage: string;
+}
+
 interface AuthState {
   user: User | null;
   token: string | null;
   isAuthenticated: boolean;
   isLoading: boolean;
   error: string | null;
-  login: (data: LoginRequest) => Promise<void>;
+  lastLoginResult: LoginResult | null;
+  login: (data: LoginRequest) => Promise<LoginResult>;
   logout: () => Promise<void>;
   fetchCurrentUser: () => Promise<void>;
   clearError: () => void;
   switchRole: (role: UserRole) => void;
   initialize: () => Promise<void>;
+  clearLoginResult: () => void;
 }
 
 const mockUsers: Record<UserRole, User> = {
@@ -81,21 +88,38 @@ export const useAuthStore = create<AuthState>()(
       isAuthenticated: false,
       isLoading: false,
       error: null,
+      lastLoginResult: null,
 
       login: async (data) => {
-        set({ isLoading: true, error: null });
+        set({ isLoading: true, error: null, lastLoginResult: null });
         try {
           const response = await authService.login(data);
+
+          const user = response.user;
+          const token = response.token || `token_${data.role}_${Date.now()}`;
+          const redirectPath = response.redirectPath || getDefaultRedirectPath(data.role);
+          const welcomeMessage = response.welcomeMessage || `登录成功，正在进入${getRoleLabel(data.role)}...`;
+
           set({
-            user: response.user,
-            token: response.token,
+            user,
+            token,
             isAuthenticated: true,
             isLoading: false,
+            error: null,
+            lastLoginResult: { redirectPath, welcomeMessage },
           });
+
+          localStorage.setItem('auth_token', token);
+          return { redirectPath, welcomeMessage };
         } catch (err) {
+          const errorMessage = err instanceof Error ? err.message : '登录失败，请检查账号密码';
           set({
-            error: err instanceof Error ? err.message : '登录失败',
+            user: null,
+            token: null,
+            isAuthenticated: false,
             isLoading: false,
+            error: errorMessage,
+            lastLoginResult: null,
           });
           throw err;
         }
@@ -107,11 +131,13 @@ export const useAuthStore = create<AuthState>()(
         } catch (err) {
           console.error('Logout error:', err);
         }
+        localStorage.removeItem('auth_token');
         set({
           user: null,
           token: null,
           isAuthenticated: false,
           error: null,
+          lastLoginResult: null,
         });
       },
 
@@ -121,6 +147,7 @@ export const useAuthStore = create<AuthState>()(
           const user = await authService.getCurrentUser();
           set({ user, isLoading: false });
         } catch (err) {
+          localStorage.removeItem('auth_token');
           set({
             user: null,
             token: null,
@@ -132,8 +159,21 @@ export const useAuthStore = create<AuthState>()(
 
       clearError: () => set({ error: null }),
 
+      clearLoginResult: () => set({ lastLoginResult: null }),
+
       switchRole: (role) => {
-        set({ user: mockUsers[role] });
+        const user = mockUsers[role];
+        const token = `token_${role}_${Date.now()}`;
+        localStorage.setItem('auth_token', token);
+        set({
+          user,
+          token,
+          isAuthenticated: true,
+          lastLoginResult: {
+            redirectPath: getDefaultRedirectPath(role),
+            welcomeMessage: `已切换到${getRoleLabel(role)}，正在跳转...`,
+          },
+        });
       },
 
       initialize: async () => {
@@ -163,3 +203,32 @@ export const useAuthStore = create<AuthState>()(
     }
   )
 );
+
+function getRoleLabel(role: UserRole): string {
+  const labels: Record<UserRole, string> = {
+    owner: '宠主端',
+    store_admin: '门店管理员',
+    store_staff: '门店员工',
+    store_manager: '门店店长',
+    veterinarian: '执业兽医',
+    operator: '平台运营',
+  };
+  return labels[role] || role;
+}
+
+function getDefaultRedirectPath(role: UserRole): string {
+  switch (role) {
+    case 'owner':
+      return '/owner';
+    case 'store_admin':
+    case 'store_staff':
+    case 'store_manager':
+    case 'veterinarian':
+    case 'operator':
+      return '/store';
+    default:
+      return '/owner';
+  }
+}
+
+export { getRoleLabel, getDefaultRedirectPath };

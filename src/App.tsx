@@ -225,7 +225,8 @@ function AppContent() {
     );
   }
 
-  if (user?.role === 'store_staff' || user?.role === 'store_manager') {
+  const storeRoles = ['store_admin', 'store_staff', 'store_manager', 'veterinarian', 'operator'];
+  if (user?.role && storeRoles.includes(user.role)) {
     return (
       <Routes location={location} key={location.pathname}>
         <Route path="/store/*" element={<StoreRoutes />} />
@@ -234,16 +235,12 @@ function AppContent() {
     );
   }
 
-  if (user?.role === 'veterinarian') {
-    return (
-      <Routes location={location} key={location.pathname}>
-        <Route path="/store/*" element={<StoreRoutes />} />
-        <Route path="*" element={<Navigate to="/store" replace />} />
-      </Routes>
-    );
-  }
-
-  return <Navigate to="/login" replace />;
+  return (
+    <Routes location={location} key={location.pathname}>
+      <Route path="/login" element={<Login />} />
+      <Route path="*" element={<Navigate to="/login" replace />} />
+    </Routes>
+  );
 }
 
 export default function App() {
