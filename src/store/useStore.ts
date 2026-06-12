@@ -60,6 +60,8 @@ interface AppState {
   rechargeBalance: (amount: number) => void;
   updateWorkOrderStatus: (eventId: string, status: ExceptionEvent['status']) => void;
   createAppointment: (outletId: string, businessType: string, time: string) => Promise<boolean>;
+  payPendingFee: (recordId: string, payMethod: 'balance' | 'wechat' | 'alipay') => Promise<boolean>;
+  enableAutoPay: () => void;
 }
 
 export const useStore = create<AppState>((set, get) => ({
@@ -140,5 +142,36 @@ export const useStore = create<AppState>((set, get) => ({
     const queueNo = `A${String(Math.floor(Math.random() * 1000)).padStart(3, '0')}`;
     console.log('预约成功:', { outletId, businessType, time, queueNo });
     return true;
+  },
+
+  payPendingFee: async (recordId, payMethod) => {
+    const record = get().trafficRecords.find((r) => r.id === recordId);
+    if (!record || record.status !== '待扣费') return false;
+
+    await new Promise((resolve) => setTimeout(resolve, 1000));
+
+    set((state) => {
+      let newBalance = state.etcCard.balance;
+      if (payMethod === 'balance') {
+        newBalance = Math.round((state.etcCard.balance - record.actualFee) * 100) / 100;
+      }
+
+      return {
+        trafficRecords: state.trafficRecords.map((r) =>
+          r.id === recordId
+            ? { ...r, status: '已完成' as const, paymentMethod: payMethod === 'autopay' ? 'autopay' : 'balance' }
+            : r
+        ),
+        etcCard: { ...state.etcCard, balance: newBalance },
+      };
+    });
+
+    return true;
+  },
+
+  enableAutoPay: () => {
+    set((state) => ({
+      etcCard: { ...state.etcCard, autoPayEnabled: true },
+    }));
   },
 }));

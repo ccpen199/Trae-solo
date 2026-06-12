@@ -50,6 +50,12 @@ export interface TrafficRecord {
   actualFee: number;
   discountType: '95折' | '85折' | '无折扣';
   status: '已完成' | '待扣费' | '异常';
+  paymentRetryCount?: number;
+  lastPaymentAttempt?: string | null;
+  paymentMethod?: 'balance' | 'autopay';
+  autoPayEnabled?: boolean;
+  isHolidayFree?: boolean;
+  holidayName?: string;
 }
 
 export interface TollCalculateRequest {
