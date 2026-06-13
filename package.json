@@ -1,0 +1,31 @@
+{
+  "name": "gx-rs-total-platform",
+  "private": true,
+  "version": "1.0.0",
+  "type": "module",
+  "workspaces": [
+    "apps/*",
+    "packages/*"
+  ],
+  "scripts": {
+    "dev:user": "yarn workspace @gx-rs/user-client dev",
+    "dev:admin": "yarn workspace @gx-rs/admin-client dev",
+    "dev:api": "yarn workspace @gx-rs/api-server dev",
+    "dev:all": "concurrently -n user,admin,api -c blue,green,yellow \"yarn dev:user\" \"yarn dev:admin\" \"yarn dev:api\"",
+    "build:user": "yarn workspace @gx-rs/user-client build",
+    "build:admin": "yarn workspace @gx-rs/admin-client build",
+    "build:api": "yarn workspace @gx-rs/api-server build",
+    "build:all": "yarn build:user && yarn build:admin && yarn build:api",
+    "check:user": "yarn workspace @gx-rs/user-client check",
+    "check:admin": "yarn workspace @gx-rs/admin-client check",
+    "check:api": "yarn workspace @gx-rs/api-server check",
+    "check:all": "yarn check:user && yarn check:admin && yarn check:api",
+    "install:all": "yarn install"
+  },
+  "devDependencies": {
+    "@types/node": "^22.15.30",
+    "concurrently": "^9.2.0",
+    "tsx": "^4.20.3",
+    "typescript": "~5.4.5"
+  }
+}

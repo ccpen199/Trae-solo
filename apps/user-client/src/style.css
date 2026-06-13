@@ -1,0 +1,128 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  body {
+    @apply bg-bg text-gray-800 font-sans tabular-nums antialiased;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC',
+      'Hiragino Sans GB', 'Microsoft YaHei', 'Helvetica Neue', Helvetica, Arial,
+      sans-serif;
+  }
+
+  ::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+  }
+
+  ::-webkit-scrollbar-track {
+    background: #f0f5ff;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background: #b3d4fc;
+    border-radius: 3px;
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    background: #0A5CAF;
+  }
+}
+
+@layer components {
+  .page-gradient-bg {
+    background: linear-gradient(135deg, #E6F2FF, #F5FAFF);
+    min-height: 100vh;
+  }
+
+  .zhuangjin-pattern {
+    background-image:
+      repeating-linear-gradient(
+        0deg,
+        transparent,
+        transparent 19px,
+        rgba(10, 92, 175, 0.04) 19px,
+        rgba(10, 92, 175, 0.04) 20px
+      ),
+      repeating-linear-gradient(
+        90deg,
+        transparent,
+        transparent 19px,
+        rgba(10, 92, 175, 0.04) 19px,
+        rgba(10, 92, 175, 0.04) 20px
+      ),
+      repeating-linear-gradient(
+        45deg,
+        transparent,
+        transparent 28px,
+        rgba(24, 144, 255, 0.03) 28px,
+        rgba(24, 144, 255, 0.03) 29px
+      ),
+      repeating-linear-gradient(
+        -45deg,
+        transparent,
+        transparent 28px,
+        rgba(24, 144, 255, 0.03) 28px,
+        rgba(24, 144, 255, 0.03) 29px
+      );
+  }
+
+  .card-base {
+    @apply bg-white rounded-card shadow-card transition-all duration-300;
+  }
+
+  .card-hover:hover {
+    @apply shadow-card-hover;
+    transform: translateY(-2px);
+  }
+
+  .btn-primary {
+    @apply bg-gov-gradient text-white rounded-btn px-6 py-2.5 font-medium
+      transition-all duration-200 hover:shadow-lg hover:brightness-110
+      active:scale-[0.98];
+  }
+
+  .btn-outline {
+    @apply border-2 border-primary text-primary rounded-btn px-6 py-2 font-medium
+      transition-all duration-200 hover:bg-primary hover:text-white
+      active:scale-[0.98];
+  }
+
+  .table-zebra tr:nth-child(even) {
+    @apply bg-primary-50/30;
+  }
+
+  .pulse-ring {
+    animation: pulse-ring 1.5s cubic-bezier(0.215, 0.61, 0.355, 1) infinite;
+  }
+
+  @keyframes pulse-ring {
+    0% {
+      transform: scale(0.9);
+      opacity: 1;
+    }
+    50% {
+      transform: scale(1.1);
+      opacity: 0.6;
+    }
+    100% {
+      transform: scale(0.9);
+      opacity: 1;
+    }
+  }
+
+  .scan-line {
+    animation: scan 2s ease-in-out infinite;
+  }
+
+  @keyframes scan {
+    0%, 100% {
+      transform: translateY(0);
+      opacity: 0.6;
+    }
+    50% {
+      transform: translateY(100%);
+      opacity: 1;
+    }
+  }
+}

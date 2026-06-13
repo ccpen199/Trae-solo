@@ -1,0 +1,36 @@
+{
+  "name": "@gx-rs/user-client",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vue-tsc --noEmit && vite build",
+    "preview": "vite preview",
+    "check": "vue-tsc --noEmit"
+  },
+  "dependencies": {
+    "@gx-rs/shared": "workspace:*",
+    "axios": "^1.7.0",
+    "clsx": "^2.1.0",
+    "crypto-js": "^4.2.0",
+    "dayjs": "^1.11.0",
+    "echarts": "^5.5.0",
+    "lucide-vue-next": "^0.511.0",
+    "pinia": "^2.1.0",
+    "tailwind-merge": "^3.3.0",
+    "vue": "^3.4.0",
+    "vue-echarts": "^7.0.0",
+    "vue-router": "^4.2.0"
+  },
+  "devDependencies": {
+    "@types/crypto-js": "^4.2.0",
+    "@vitejs/plugin-vue": "^5.0.0",
+    "autoprefixer": "^10.4.0",
+    "postcss": "^8.4.0",
+    "tailwindcss": "^3.4.0",
+    "typescript": "~5.4.5",
+    "vite": "^5.0.0",
+    "vue-tsc": "^2.0.0"
+  }
+}
