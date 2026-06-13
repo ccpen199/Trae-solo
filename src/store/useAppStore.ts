@@ -34,53 +34,64 @@ import {
   generateTracking,
   mockAnnouncements,
 } from "@/mock";
+import { setCurrentUser, clearCurrentUser, getCurrentUser } from "@/utils/auth";
 
 interface AppState {
   user: User | null;
   login: (username: string, password: string) => boolean;
   logout: () => void;
-
+  syncUserFromStorage: () => void;
   orders: ExpressOrder[];
   updateOrderStatus: (id: string, status: ExpressOrder["status"]) => void;
   addOrder: (o: ExpressOrder) => void;
-
   customers: Customer[];
   bindCustomer: (phone: string) => Customer | null;
-
   templates: WaybillTemplate[];
   printJobs: PrintJob[];
   createPrintJob: (orderIds: string[], templateId: string) => void;
-
   metrics: BusinessMetrics[];
   splitRules: SplitRule[];
   settlements: SettlementDetail[];
-
   summary: DashboardSummary;
   tasks: TaskItem[];
   completeTask: (id: string) => void;
-
   auditLog: AuditLogEntry[];
   permissions: PermissionConfig[];
   compliance: ComplianceConfig;
   updateCompliance: (c: Partial<ComplianceConfig>) => void;
-
   getTracking: (no: string) => TrackingEvent[];
   announcements: Announcement[];
 }
 
+const initialUser = (() => {
+  try {
+    return getCurrentUser();
+  } catch {
+    return null;
+  }
+})();
+
 export const useAppStore = create<AppState>()(
   persist(
     (set, get) => ({
-      user: null,
+      user: initialUser,
       login: (username, _password) => {
-        const found = mockUsers.find((u) => u.username === username);
+        const found = mockUsers.find((u) => u.username === username.trim().toLowerCase());
         if (found) {
           set({ user: found });
+          setCurrentUser(found);
           return true;
         }
         return false;
       },
-      logout: () => set({ user: null }),
+      logout: () => {
+        set({ user: null });
+        clearCurrentUser();
+      },
+      syncUserFromStorage: () => {
+        const u = getCurrentUser();
+        if (u) set({ user: u });
+      },
 
       orders: mockOrders,
       updateOrderStatus: (id, status) =>

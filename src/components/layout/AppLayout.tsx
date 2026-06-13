@@ -2,58 +2,42 @@ import { useState, useEffect } from "react";
 import { Outlet, useNavigate } from "react-router-dom";
 import Sidebar from "./Sidebar";
 import Topbar from "./Topbar";
+import { getCurrentUser } from "@/utils/auth";
 import { useAppStore } from "@/store/useAppStore";
-import { AlertTriangle } from "lucide-react";
+import { AlertTriangle, LogIn } from "lucide-react";
 
 export default function AppLayout() {
   const [collapsed, setCollapsed] = useState(false);
   const [checking, setChecking] = useState(true);
-  const [checkFailed, setCheckFailed] = useState(false);
-  const user = useAppStore((s) => s.user);
+  const [hasUser, setHasUser] = useState(false);
   const nav = useNavigate();
+  const storeUser = useAppStore((s) => s.user);
+  const syncUserFromStorage = useAppStore((s) => s.syncUserFromStorage);
 
   useEffect(() => {
     let mounted = true;
 
-    async function doCheck() {
-      try {
-        await useAppStore.persist.rehydrate();
-      } catch (e) {
-        console.warn("rehydrate error", e);
+    const user = getCurrentUser();
+    if (user) {
+      if (!storeUser) {
+        syncUserFromStorage();
       }
-
-      if (!mounted) return;
-
-      const currentUser = useAppStore.getState().user;
-      if (currentUser) {
+      if (mounted) {
+        setHasUser(true);
         setChecking(false);
-      } else {
+      }
+    } else {
+      if (mounted) {
         setChecking(false);
+        setHasUser(false);
         nav("/login", { replace: true });
       }
     }
-
-    const failTimer = setTimeout(() => {
-      if (mounted && !useAppStore.getState().user) {
-        setCheckFailed(true);
-        setChecking(false);
-        nav("/login", { replace: true });
-      }
-    }, 2000);
-
-    doCheck();
 
     return () => {
       mounted = false;
-      clearTimeout(failTimer);
     };
-  }, [nav]);
-
-  useEffect(() => {
-    if (!checking && !user && !checkFailed) {
-      nav("/login", { replace: true });
-    }
-  }, [user, checking, checkFailed, nav]);
+  }, [nav, storeUser, syncUserFromStorage]);
 
   if (checking) {
     return (
@@ -67,28 +51,26 @@ export default function AppLayout() {
     );
   }
 
-  if (checkFailed) {
+  if (!hasUser) {
     return (
       <div className="h-screen w-screen flex flex-col items-center justify-center bg-hero-grad">
-        <div className="flex flex-col items-center gap-4 max-w-md text-center">
+        <div className="flex flex-col items-center gap-4 max-w-md text-center px-6">
           <AlertTriangle className="h-12 w-12 text-ember-400" />
-          <div className="text-white text-lg font-semibold">登录验证超时</div>
-          <div className="text-ink-300 text-sm">请返回登录页重新登录</div>
+          <div className="text-white text-lg font-semibold">未检测到登录状态</div>
+          <div className="text-ink-300 text-sm">
+            登录凭证已过期或未登录，请先登录再进入工作台
+          </div>
           <button
-            onClick={() => {
-              localStorage.removeItem("syt-app-store");
-              nav("/login", { replace: true });
-            }}
-            className="btn-primary mt-2"
+            onClick={() => nav("/login", { replace: true })}
+            className="btn-primary mt-2 flex items-center gap-2"
           >
-            清除缓存并返回登录
+            <LogIn className="h-4 w-4" />
+            前往登录
           </button>
         </div>
       </div>
     );
   }
-
-  if (!user) return null;
 
   return (
     <div className="flex h-screen w-screen overflow-hidden bg-ink-50">

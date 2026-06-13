@@ -1,15 +1,19 @@
 /**
  * local server entry file, for local development
  */
+import dotenv from 'dotenv';
 import app from './app.js';
+
+dotenv.config();
 
 /**
  * start server with port
  */
-const PORT = process.env.PORT || 3001;
+const PORT = Number(process.env.BACKEND_PORT || process.env.PORT || 59192);
+const HOST = process.env.HOST || '127.0.0.1';
 
-const server = app.listen(PORT, () => {
-  console.log(`Server ready on port ${PORT}`);
+const server = app.listen(PORT, HOST, () => {
+  console.log(`Server ready on http://${HOST}:${PORT}`);
 });
 
 /**

@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import {
   Truck,
@@ -12,16 +12,16 @@ import {
   Eye,
   EyeOff,
   Info,
+  AlertTriangle,
+  Sparkles,
+  MapPin,
+  BarChart3,
+  FileText,
 } from "lucide-react";
+import { login as authLogin, roleAccounts, roleLabel } from "@/utils/auth";
 import { useAppStore } from "@/store/useAppStore";
 import { cn } from "@/lib/utils";
 import type { UserRole } from "@/types";
-
-const roles: { value: UserRole | "all"; label: string; icon: typeof Package; desc: string }[] = [
-  { value: "branch_admin", label: "网点管理员", icon: Building2, desc: "网点运营管理" },
-  { value: "courier", label: "快递员", icon: Package, desc: "揽收派送作业" },
-  { value: "regional_supervisor", label: "区域主管", icon: ShieldCheck, desc: "区域经营分析" },
-];
 
 const expressCompanies = [
   "顺丰速运", "京东物流", "中通快递", "圆通速递",
@@ -29,67 +29,67 @@ const expressCompanies = [
   "德邦快递", "菜鸟驿站", "丹鸟物流", "跨越速运",
 ];
 
+type LoginStage = "idle" | "loading" | "success" | "error";
+
 export default function Login() {
   const nav = useNavigate();
-  const login = useAppStore((s) => s.login);
-  const user = useAppStore((s) => s.user);
+  const storeLogin = useAppStore((s) => s.login);
   const [username, setUsername] = useState("admin");
   const [password, setPassword] = useState("123456");
   const [remember, setRemember] = useState(true);
   const [selectedRole, setSelectedRole] = useState<UserRole | "all">("all");
   const [showPwd, setShowPwd] = useState(false);
-  const [error, setError] = useState("");
-  const [loading, setLoading] = useState(false);
-  const [loginSuccess, setLoginSuccess] = useState(false);
+  const [stage, setStage] = useState<LoginStage>("idle");
+  const [errorMsg, setErrorMsg] = useState("");
 
-  useEffect(() => {
-    if (user && !loginSuccess) {
-      nav("/dashboard", { replace: true });
-    }
-  }, [user, nav, loginSuccess]);
+  const doLogin = (u: string, p: string) => {
+    setStage("loading");
+    setErrorMsg("");
 
-  const clearCache = () => {
-    try {
-      localStorage.removeItem("syt-app-store");
-    } catch (e) {}
-    window.location.reload();
+    setTimeout(() => {
+      const user = authLogin(u, p);
+      storeLogin(u, p);
+      if (user) {
+        setStage("success");
+        setTimeout(() => {
+          nav("/dashboard", { replace: true });
+        }, 400);
+      } else {
+        setStage("error");
+        const valid = ["admin", "courier1", "courier2", "super"];
+        if (valid.includes(u.trim().toLowerCase())) {
+          setErrorMsg("登录校验失败，请清除浏览器缓存后重试，或更换其他测试账号");
+        } else {
+          setErrorMsg(
+            `账号「${u}」不存在。请选择下方的角色卡片，查看对应的测试账号后再登录。`
+          );
+        }
+      }
+    }, 700);
   };
 
   const onSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    setError("");
     if (!username.trim()) {
-      setError("请输入用户名");
+      setStage("error");
+      setErrorMsg("请输入用户名");
       return;
     }
-    setLoading(true);
-
-    setTimeout(() => {
-      const ok = login(username.trim(), password);
-      setLoading(false);
-      if (ok) {
-        setLoginSuccess(true);
-        setTimeout(() => {
-          nav("/dashboard", { replace: true });
-        }, 350);
-      } else {
-        const validAccounts = ["admin", "courier1", "courier2", "super"];
-        if (validAccounts.includes(username.trim().toLowerCase())) {
-          setError(
-            "登录验证异常，请点击下方「清除缓存重试」按钮，或刷新页面后再次尝试"
-          );
-        } else {
-          setError(
-            `账号「${username}」不存在。请使用以下测试账号登录：\n• admin（网点管理员）\n• courier1 / courier2（快递员）\n• super（区域主管）`
-          );
-        }
-      }
-    }, 650);
+    doLogin(username.trim(), password);
   };
 
   const fillAccount = (u: string) => {
     setUsername(u);
-    setError("");
+    setStage("idle");
+    setErrorMsg("");
+  };
+
+  const clearCache = () => {
+    try {
+      localStorage.clear();
+      sessionStorage.clear();
+    } catch (e) {}
+    window.location.reload();
   };
 
   return (
@@ -107,7 +107,7 @@ export default function Login() {
             </div>
             <div>
               <div className="text-2xl font-bold tracking-wide font-display">速驿通</div>
-              <div className="text-sm text-ink-300">ExpressLink Pro</div>
+              <div className="text-sm text-ink-300">ExpressLink Pro · 物流协同工作台</div>
             </div>
           </div>
 
@@ -120,22 +120,24 @@ export default function Login() {
               </span>
             </h1>
             <p className="max-w-md text-lg text-ink-200 leading-relaxed">
-              专业的快递网点一体化管理平台，覆盖揽收、打单、轨迹、分账全流程，助力网点降本增效。
+              面向快递员与末端网点经营者的一体化作业平台，覆盖揽收调度、面单云打印、客户关系、轨迹聚合、经营分析全流程。
             </p>
 
-            <div className="space-y-4">
-              <div className="flex items-center gap-2 text-sm text-ink-300">
-                <CheckCircle2 className="h-4 w-4 text-mint-400" />
-                已支持全国 2100+ 快递公司面单模板
-              </div>
-              <div className="flex items-center gap-2 text-sm text-ink-300">
-                <CheckCircle2 className="h-4 w-4 text-mint-400" />
-                实时轨迹追踪 + 异常件智能预警
-              </div>
-              <div className="flex items-center gap-2 text-sm text-ink-300">
-                <CheckCircle2 className="h-4 w-4 text-mint-400" />
-                多级分账结算，数据合规可审计
-              </div>
+            <div className="grid grid-cols-2 gap-4">
+              {[
+                { icon: MapPin, label: "2100+ 快递公司面单", color: "text-ember-400" },
+                { icon: FileText, label: "批量录单 + OCR 识别", color: "text-mint-400" },
+                { icon: BarChart3, label: "经营看板 · 区域热力", color: "text-ember-300" },
+                { icon: ShieldCheck, label: "三级权限 · 合规审计", color: "text-mint-300" },
+              ].map((item) => {
+                const Icon = item.icon;
+                return (
+                  <div key={item.label} className="flex items-center gap-3 rounded-xl border border-ink-700/50 bg-ink-800/40 p-3 backdrop-blur-sm">
+                    <Icon className={cn("h-5 w-5", item.color)} />
+                    <span className="text-sm text-ink-200">{item.label}</span>
+                  </div>
+                );
+              })}
             </div>
 
             <div className="space-y-3">
@@ -154,7 +156,7 @@ export default function Login() {
           </div>
 
           <div className="text-xs text-ink-500">
-            © 2026 速驿通 ExpressLink Pro · 数据安全等保三级认证
+            © 2026 速驿通 ExpressLink Pro · 数据安全等保三级认证 · 邮政行业合规
           </div>
         </div>
 
@@ -170,28 +172,71 @@ export default function Login() {
               </div>
             </div>
 
-            <div className="rounded-2xl border border-ink-700/50 bg-ink-900/70 p-8 shadow-card-hover backdrop-blur-xl">
-              <h2 className="mb-1 text-2xl font-bold text-white font-display">欢迎登录</h2>
-              <p className="mb-6 text-sm text-ink-400">请选择角色并使用测试账号登录</p>
+            <div className="rounded-2xl border border-ink-700/50 bg-ink-900/70 p-7 shadow-card-hover backdrop-blur-xl">
+              <div className="mb-5">
+                <h2 className="mb-1 text-2xl font-bold text-white font-display">欢迎登录</h2>
+                <p className="text-sm text-ink-400">
+                  选择角色查看对应权限，使用测试账号进入工作台
+                </p>
+              </div>
 
-              <div className="mb-5 grid grid-cols-3 gap-2">
-                {roles.map((r) => {
-                  const Icon = r.icon;
-                  const active = selectedRole === r.value;
+              <div className="mb-5 space-y-2">
+                {roleAccounts.map((r) => {
+                  const Icon =
+                    r.role === "branch_admin"
+                      ? Building2
+                      : r.role === "courier"
+                      ? Package
+                      : ShieldCheck;
+                  const active = selectedRole === r.role;
                   return (
                     <button
-                      key={r.value}
+                      key={r.role}
                       type="button"
-                      onClick={() => setSelectedRole(r.value)}
+                      onClick={() => setSelectedRole(active ? "all" : r.role)}
                       className={cn(
-                        "flex flex-col items-center gap-1 rounded-xl border p-3 transition-all",
+                        "w-full text-left rounded-xl border p-3.5 transition-all",
                         active
-                          ? "border-ember-500/60 bg-ember-500/10 text-ember-400"
-                          : "border-ink-700/60 bg-ink-800/40 text-ink-400 hover:border-ink-600 hover:text-ink-200"
+                          ? "border-ember-500/50 bg-ember-500/10"
+                          : "border-ink-700/60 bg-ink-800/40 hover:border-ink-600"
                       )}
                     >
-                      <Icon className="h-5 w-5" />
-                      <span className="text-xs font-medium">{r.label}</span>
+                      <div className="flex items-center gap-3">
+                        <div
+                          className={cn(
+                            "flex h-9 w-9 items-center justify-center rounded-lg",
+                            active
+                              ? "bg-ember-500/20 text-ember-400"
+                              : "bg-ink-800 text-ink-400"
+                          )}
+                        >
+                          <Icon size={18} />
+                        </div>
+                        <div className="flex-1 min-w-0">
+                          <div className={cn("font-medium text-sm", active ? "text-ember-300" : "text-white")}>
+                            {r.label}
+                          </div>
+                          <div className="text-xs text-ink-400">{r.desc}</div>
+                        </div>
+                        <div className="text-right">
+                          <div className="text-[11px] text-ink-500">测试账号</div>
+                          <div className="text-xs font-mono text-ink-300">
+                            {r.accounts.join(" / ")}
+                          </div>
+                        </div>
+                      </div>
+                      {active && (
+                        <div className="mt-3 pt-3 border-t border-ember-500/20">
+                          <div className="grid grid-cols-2 gap-1.5">
+                            {r.features.map((f) => (
+                              <div key={f} className="flex items-center gap-1.5 text-xs text-ink-300">
+                                <CheckCircle2 size={12} className="text-mint-400 flex-shrink-0" />
+                                <span className="truncate">{f}</span>
+                              </div>
+                            ))}
+                          </div>
+                        </div>
+                      )}
                     </button>
                   );
                 })}
@@ -206,8 +251,11 @@ export default function Login() {
                     <User className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-ink-500 group-focus-within:text-ember-400" />
                     <input
                       value={username}
-                      onChange={(e) => setUsername(e.target.value)}
-                      placeholder="请输入用户名"
+                      onChange={(e) => {
+                        setUsername(e.target.value);
+                        if (stage === "error") setStage("idle");
+                      }}
+                      placeholder="请输入用户名，如 admin"
                       className="w-full rounded-lg border border-ink-700/60 bg-ink-800/60 py-2.5 pl-10 pr-3 text-sm text-white placeholder:text-ink-500 outline-none transition focus:border-ember-500 focus:bg-ink-800"
                     />
                   </div>
@@ -223,7 +271,7 @@ export default function Login() {
                       type={showPwd ? "text" : "password"}
                       value={password}
                       onChange={(e) => setPassword(e.target.value)}
-                      placeholder="请输入密码（任意）"
+                      placeholder="任意密码均可登录"
                       className="w-full rounded-lg border border-ink-700/60 bg-ink-800/60 py-2.5 pl-10 pr-10 text-sm text-white placeholder:text-ink-500 outline-none transition focus:border-ember-500 focus:bg-ink-800"
                     />
                     <button
@@ -236,23 +284,28 @@ export default function Login() {
                   </div>
                 </div>
 
-                {error && (
-                  <div className="rounded-lg border border-alert-500/30 bg-alert-500/10 px-3 py-2">
+                {stage === "error" && errorMsg && (
+                  <div className="animate-slideUp rounded-lg border border-alert-500/30 bg-alert-500/10 px-3 py-2.5">
                     <div className="flex items-start gap-2">
-                      <Info className="h-4 w-4 flex-shrink-0 mt-0.5 text-alert-400" />
-                      <div className="text-xs text-alert-400 whitespace-pre-line leading-relaxed">
-                        {error}
-                      </div>
+                      <AlertTriangle className="h-4 w-4 flex-shrink-0 mt-0.5 text-alert-400" />
+                      <div className="text-xs text-alert-300 leading-relaxed">{errorMsg}</div>
                     </div>
-                    {error.includes("登录验证异常") && (
-                      <button
-                        type="button"
-                        onClick={clearCache}
-                        className="mt-2 w-full text-xs bg-alert-500/20 hover:bg-alert-500/30 text-alert-300 py-1.5 rounded-md transition"
-                      >
-                        清除缓存并重试
-                      </button>
-                    )}
+                    <button
+                      type="button"
+                      onClick={clearCache}
+                      className="mt-2.5 w-full text-xs bg-alert-500/20 hover:bg-alert-500/30 text-alert-200 py-1.5 rounded-md transition font-medium"
+                    >
+                      清除缓存并重试
+                    </button>
+                  </div>
+                )}
+
+                {stage === "success" && (
+                  <div className="animate-slideUp rounded-lg border border-mint-500/30 bg-mint-500/10 px-3 py-2.5">
+                    <div className="flex items-center gap-2">
+                      <CheckCircle2 className="h-4 w-4 text-mint-400" />
+                      <div className="text-xs text-mint-300">登录成功，正在进入工作台...</div>
+                    </div>
                   </div>
                 )}
 
@@ -273,24 +326,27 @@ export default function Login() {
 
                 <button
                   type="submit"
-                  disabled={loading || loginSuccess}
+                  disabled={stage === "loading" || stage === "success"}
                   className={cn(
-                    "group flex w-full items-center justify-center gap-2 rounded-lg py-3 text-sm font-semibold text-white shadow-glow transition active:scale-[0.98] disabled:opacity-60",
-                    loginSuccess
+                    "group flex w-full items-center justify-center gap-2 rounded-lg py-3 text-sm font-semibold text-white shadow-glow transition active:scale-[0.98] disabled:opacity-70",
+                    stage === "success"
                       ? "bg-mint-500"
                       : "bg-ember-500 hover:bg-ember-600"
                   )}
                 >
-                  {loading ? (
-                    <div className="h-4 w-4 animate-spin rounded-full border-2 border-white/30 border-t-white" />
-                  ) : loginSuccess ? (
+                  {stage === "loading" ? (
                     <>
-                      <CheckCircle2 className="h-4 w-4" />
-                      登录成功，正在进入...
+                      <div className="h-4 w-4 animate-spin rounded-full border-2 border-white/30 border-t-white" />
+                      正在登录...
+                    </>
+                  ) : stage === "success" ? (
+                    <>
+                      <Sparkles className="h-4 w-4" />
+                      登录成功
                     </>
                   ) : (
                     <>
-                      登 录
+                      登 录 工作台
                       <ArrowRight className="h-4 w-4 transition group-hover:translate-x-0.5" />
                     </>
                   )}
@@ -300,30 +356,39 @@ export default function Login() {
               <div className="mt-5 rounded-lg border border-ink-700/50 bg-ink-800/40 p-3">
                 <div className="mb-2 flex items-center gap-1.5 text-xs font-medium text-ink-300">
                   <Info className="h-3.5 w-3.5 text-mint-400" />
-                  测试账号（密码任意）
+                  快速体验 · 点击账号一键填入
                 </div>
                 <div className="flex flex-wrap gap-1.5">
-                  {["admin", "courier1", "courier2", "super"].map((u) => (
-                    <button
-                      key={u}
-                      type="button"
-                      onClick={() => fillAccount(u)}
-                      className={cn(
-                        "rounded-md border px-2 py-1 text-xs transition",
-                        username === u
-                          ? "border-ember-500/60 bg-ember-500/15 text-ember-300"
-                          : "border-ink-700 bg-ink-800/60 text-ink-400 hover:border-ink-600 hover:text-ink-200"
-                      )}
-                    >
-                      {u}
-                    </button>
-                  ))}
+                  {["admin", "courier1", "courier2", "super"].map((u) => {
+                    const role =
+                      u === "admin"
+                        ? "branch_admin"
+                        : u === "super"
+                        ? "regional_supervisor"
+                        : "courier";
+                    return (
+                      <button
+                        key={u}
+                        type="button"
+                        onClick={() => fillAccount(u)}
+                        className={cn(
+                          "flex items-center gap-1.5 rounded-md border px-2.5 py-1 text-xs transition",
+                          username === u
+                            ? "border-ember-500/60 bg-ember-500/15 text-ember-300"
+                            : "border-ink-700 bg-ink-800/60 text-ink-400 hover:border-ink-600 hover:text-ink-200"
+                        )}
+                      >
+                        <span className="font-mono">{u}</span>
+                        <span className="text-[10px] opacity-70">· {roleLabel(role)}</span>
+                      </button>
+                    );
+                  })}
                 </div>
               </div>
             </div>
 
             <p className="mt-6 text-center text-xs text-ink-500">
-              登录即表示同意《服务协议》与《隐私政策》
+              登录即表示同意《服务协议》与《隐私政策》 · 数据符合邮政行业安全规范
             </p>
           </div>
         </div>
