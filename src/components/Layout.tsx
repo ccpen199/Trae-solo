@@ -50,24 +50,17 @@ export default function Layout() {
   const { voiceNavigation, highContrast, fontSize, screenReader, speak } = useAccessibilityStore();
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
-  const authChecked = useRef(false);
 
   const a11yEnabled = voiceNavigation || screenReader || highContrast || fontSize !== 'normal';
 
   useEffect(() => {
-    if (!authChecked.current) {
-      authChecked.current = true;
-      if (!isAuthenticated && location.pathname !== '/login') {
+    const unsub = useUserStore.subscribe((state, prevState) => {
+      if (!state.isAuthenticated && prevState.isAuthenticated) {
         navigate('/login', { replace: true });
       }
-    }
-  }, []);
-
-  useEffect(() => {
-    if (authChecked.current && !isAuthenticated) {
-      navigate('/login', { replace: true });
-    }
-  }, [isAuthenticated, navigate]);
+    });
+    return unsub;
+  }, [navigate]);
 
   useEffect(() => {
     const handleClickOutside = (e: MouseEvent) => {
@@ -81,7 +74,6 @@ export default function Layout() {
 
   const handleLogout = () => {
     logout();
-    navigate('/login', { replace: true });
   };
 
   const handleNavClick = (label: string) => {
@@ -98,11 +90,16 @@ export default function Layout() {
 
   if (!isAuthenticated) {
     return (
-      <div className="min-h-screen flex items-center justify-center bg-slate-50">
-        <div className="text-center">
-          <div className="w-10 h-10 border-2 border-gov-600 border-t-transparent rounded-full animate-spin mx-auto" />
-          <p className="mt-3 text-sm text-slate-500">正在验证身份...</p>
-        </div>
+      <div className="min-h-screen flex flex-col items-center justify-center bg-slate-50 px-4">
+        <div className="w-12 h-12 border-3 border-gov-600 border-t-transparent rounded-full animate-spin" style={{ borderWidth: '3px' }} />
+        <p className="mt-4 text-slate-600 font-medium">正在验证身份...</p>
+        <button
+          type="button"
+          onClick={() => navigate('/login', { replace: true })}
+          className="mt-6 px-5 py-2 rounded-lg border border-gov-200 text-gov-700 hover:bg-gov-50 transition-all text-sm"
+        >
+          返回登录页
+        </button>
       </div>
     );
   }

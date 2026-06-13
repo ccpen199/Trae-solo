@@ -17,9 +17,11 @@ interface UserState {
   logout: () => void
   updateUserCity: (city: City) => void
   restoreSession: () => void
+  syncLoginSuccess: (user: User, method: AuthMethod) => void
 }
 
 const STORAGE_KEY = 'gov_user_session'
+const LOGIN_EVENT_KEY = 'gov_login_success'
 
 const saveToStorage = (state: Pick<UserState, 'user' | 'isAuthenticated' | 'authMethod'>) => {
   try {
@@ -48,12 +50,14 @@ export const useUserStore = create<UserState>((set, get) => ({
   loading: false,
 
   login: async (method, credentials) => {
+    console.log('[Auth] 开始登录', { method, hasIdCard: !!credentials.idCard, hasPhone: !!credentials.phone })
     set({ loading: true })
 
-    await new Promise((resolve) => setTimeout(resolve, 400))
+    await new Promise((resolve) => setTimeout(resolve, 300))
 
     const { password } = credentials
     if (password !== '123456') {
+      console.warn('[Auth] 密码错误，期望 123456，实际:', password)
       set({ loading: false })
       return false
     }
@@ -75,12 +79,14 @@ export const useUserStore = create<UserState>((set, get) => ({
           lastLoginTime: new Date().toISOString().replace('T', ' ').slice(0, 19),
           isRealNameVerified: true,
         }
+        console.log('[Auth] 未找到现有用户，创建新用户:', matchedUser.name)
       } else {
         matchedUser = {
           ...matchedUser,
           authMethod: method,
           lastLoginTime: new Date().toISOString().replace('T', ' ').slice(0, 19),
         }
+        console.log('[Auth] 找到现有用户:', matchedUser.name)
       }
     } else if (method === 'phone' && credentials.phone) {
       matchedUser = mockUsers.find((u) => u.phone === credentials.phone)
@@ -115,9 +121,12 @@ export const useUserStore = create<UserState>((set, get) => ({
     }
 
     if (!matchedUser) {
+      console.error('[Auth] 登录失败：未匹配到用户')
       set({ loading: false })
       return false
     }
+
+    console.log('[Auth] 登录成功，设置全局状态:', matchedUser.name)
 
     const newState = {
       user: matchedUser,
@@ -127,10 +136,31 @@ export const useUserStore = create<UserState>((set, get) => ({
     }
     set(newState)
     saveToStorage(newState)
+
+    try {
+      window.dispatchEvent(new CustomEvent(LOGIN_EVENT_KEY, { detail: newState }))
+      localStorage.setItem(LOGIN_EVENT_KEY, String(Date.now()))
+      console.log('[Auth] 已派发登录事件')
+    } catch (e) {
+      console.warn('[Auth] 派发事件失败，但状态已设置:', e)
+    }
+
     return true
   },
 
+  syncLoginSuccess: (user: User, method: AuthMethod) => {
+    const newState = {
+      user,
+      isAuthenticated: true as const,
+      authMethod: method,
+      loading: false,
+    }
+    set(newState)
+    saveToStorage(newState)
+  },
+
   logout: () => {
+    console.log('[Auth] 退出登录')
     set({
       user: null,
       isAuthenticated: false,
@@ -159,12 +189,15 @@ export const useUserStore = create<UserState>((set, get) => ({
 
   restoreSession: () => {
     const saved = loadFromStorage()
-    if (saved && saved.user) {
+    if (saved && saved.user && saved.isAuthenticated) {
+      console.log('[Auth] 恢复会话:', saved.user.name)
       set({
         user: saved.user,
         isAuthenticated: saved.isAuthenticated,
         authMethod: saved.authMethod,
       })
+    } else {
+      console.log('[Auth] 无有效会话，保持未登录状态')
     }
   },
 }))
