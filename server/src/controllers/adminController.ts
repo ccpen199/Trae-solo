@@ -137,11 +137,6 @@ export async function getSkillGaps(req: Request, res: Response) {
       },
     })
     
-    const taskSkills = await prisma.task.groupBy({
-      by: [],
-      _count: true,
-    })
-    
     const allTaskSkills = await prisma.$queryRaw`
       SELECT s.id, s.name, s.category, COUNT(t.id) as taskCount
       FROM skills s
@@ -153,7 +148,7 @@ export async function getSkillGaps(req: Request, res: Response) {
     
     const result = allTaskSkills.map(skill => {
       const supplyCount = skills.find(s => s.id === skill.id)?._count.users || 0
-      const demandCount = skill.taskcount || 0
+      const demandCount = Number(skill.taskCount ?? skill.taskcount ?? 0)
       
       let gapType = 'BALANCE'
       let gapPercentage = 0

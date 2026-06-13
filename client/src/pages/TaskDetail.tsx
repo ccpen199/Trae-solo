@@ -204,7 +204,9 @@ export default function TaskDetail() {
 
   const status = getStatusBadge(task.status)
   const isEmployer = user?.id === task.employerId
-  const isSelectedProvider = task.selectedBid && task.selectedBid.providerId === user?.id
+  const isSelectedProvider = task.bids?.some(
+    (bid) => bid.id === task.selectedBidId && bid.providerId === user?.id
+  )
   const hasBid = task.bids?.some((b) => b.providerId === user?.id)
 
   return (
