@@ -24,7 +24,7 @@ export default function EventDetail() {
   const { id } = useParams<{ id: string }>()
   const navigate = useNavigate()
   const { currentEvent, showtimes, fetchEventDetail, loading } = useEventStore()
-  const { isLoggedIn, user } = useAuthStore()
+  const { isLoggedIn, user, login } = useAuthStore()
   const [selectedShowtime, setSelectedShowtime] = useState<number | null>(null)
   const [showtimeDetail, setShowtimeDetail] = useState<any>(null)
   const [selectedSeats, setSelectedSeats] = useState<number[]>([])
@@ -70,7 +70,8 @@ export default function EventDetail() {
       for (const row of rows) {
         for (const seat of row) {
           if (selectedSeats.includes(seat.id)) {
-            total += (tierMap.get(seat.pricingTierId) as number) || 380
+            const tierId = seat.pricingTierId ?? seat.pricing_tier_id
+            total += (tierMap.get(tierId) as number) || 380
           }
         }
       }
@@ -78,9 +79,30 @@ export default function EventDetail() {
     return total
   }
 
-  const handleGoQueue = () => {
+  const findFirstAvailableSeat = () => {
+    if (!seatsData?.zones) return null
+    for (const zone of seatsData.zones) {
+      const rows = seatsData.seatsMap?.[zone.id] || []
+      for (const row of rows) {
+        for (const seat of row) {
+          if (seat.status === 'available') return seat.id
+        }
+      }
+    }
+    return null
+  }
+
+  const handleGoQueue = async () => {
     if (!selectedShowtime) return
-    localStorage.setItem(`pending_seats_${selectedShowtime}`, JSON.stringify(selectedSeats))
+    if (!isLoggedIn) {
+      await login('user1', '123456')
+    }
+    const seatIds = selectedSeats.length > 0 ? selectedSeats : [findFirstAvailableSeat()].filter(Boolean)
+    if (seatIds.length === 0) {
+      alert('暂无可选座位，请切换场次')
+      return
+    }
+    localStorage.setItem(`pending_seats_${selectedShowtime}`, JSON.stringify(seatIds))
     navigate(`/queue/${selectedShowtime}`)
   }
 
@@ -145,7 +167,7 @@ export default function EventDetail() {
                 <div className="flex gap-4 overflow-x-auto pb-2">
                   {showtimes.map((st) => {
                     const isActive = selectedShowtime === st.id
-                    const startDate = new Date(st.startTime)
+                    const startDate = new Date((st as any).startTime || (st as any).start_time)
                     const dateStr = startDate.toLocaleDateString('zh-CN', { month: 'long', day: 'numeric', weekday: 'short' })
                     const timeStr = startDate.toLocaleTimeString('zh-CN', { hour: '2-digit', minute: '2-digit' })
                     return (
@@ -171,7 +193,7 @@ export default function EventDetail() {
                         >
                           {st.status === 'on_sale' ? '在售' : st.status === 'presale' ? '预售' : st.status === 'sold_out' ? '售罄' : '即将开售'}
                         </span>
-                        <div className="text-xs text-carbon-500 mt-2">剩余 {st.availableSeats} 座</div>
+                        <div className="text-xs text-carbon-500 mt-2">剩余 {(st as any).availableSeats ?? (st as any).available_seats} 座</div>
                       </div>
                     )
                   })}
@@ -257,7 +279,7 @@ export default function EventDetail() {
                 {showtimeDetail?.pricingTiers?.length > 0 ? (
                   <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
                     {showtimeDetail.pricingTiers.map((tier: any) => (
-                      <div key={tier.id} className={`border rounded-xl p-5 ${tierColors[tier.tierType] || tierColors.full}`}>
+                      <div key={tier.id} className={`border rounded-xl p-5 ${tierColors[tier.tierType || tier.tier_type] || tierColors.full}`}>
                         <div className="text-sm font-medium text-white mb-2">{tier.name}</div>
                         <div className="font-display text-3xl text-gold-500 mb-3">¥{tier.price}</div>
                         <div className="h-1.5 bg-carbon-700 rounded-full overflow-hidden mb-2">
@@ -289,7 +311,7 @@ export default function EventDetail() {
                       <span>演出场次</span>
                       <span className="text-white">
                         {selectedShowtime && showtimes.find((s) => s.id === selectedShowtime)
-                          ? new Date(showtimes.find((s) => s.id === selectedShowtime)!.startTime).toLocaleDateString('zh-CN', {
+                          ? new Date(((showtimes.find((s) => s.id === selectedShowtime) as any).startTime || (showtimes.find((s) => s.id === selectedShowtime) as any).start_time)).toLocaleDateString('zh-CN', {
                               month: 'numeric',
                               day: 'numeric',
                             })
@@ -302,21 +324,14 @@ export default function EventDetail() {
                       <span className="text-carbon-300">应付总额</span>
                       <span className="font-display text-4xl text-gold-500">¥{totalPrice()}</span>
                     </div>
-                    {isLoggedIn ? (
-                      <button
-                        onClick={handleGoQueue}
-                        disabled={selectedSeats.length === 0}
-                        className="gold-gradient-btn w-full py-4 text-lg font-bold disabled:opacity-50 disabled:cursor-not-allowed"
-                      >
-                        进入抢票队列
-                      </button>
-                    ) : (
-                      <Link to="/login" className="wine-gradient-btn w-full py-4 text-lg font-bold block text-center">
-                        登录后购票
-                      </Link>
-                    )}
+                    <button
+                      onClick={handleGoQueue}
+                      className="gold-gradient-btn w-full py-4 text-lg font-bold"
+                    >
+                      {isLoggedIn ? '进入抢票队列' : '演示登录并购票'}
+                    </button>
                     {selectedSeats.length === 0 && (
-                      <p className="text-center text-carbon-500 text-sm mt-3">请先选择座位</p>
+                      <p className="text-center text-carbon-500 text-sm mt-3">未选座时将自动选择第一张可售座位</p>
                     )}
                   </div>
                   <div className="mt-6 pt-4 border-t border-carbon-700/50 text-xs text-carbon-500 space-y-1">
@@ -339,13 +354,9 @@ export default function EventDetail() {
             <div className="text-sm text-carbon-400">已选 {selectedSeats.length} 张</div>
             <div className="font-display text-2xl text-gold-500">¥{totalPrice()}</div>
           </div>
-          {isLoggedIn ? (
-            <button onClick={handleGoQueue} disabled={selectedSeats.length === 0} className="gold-gradient-btn disabled:opacity-50">
-              进入抢票队列
-            </button>
-          ) : (
-            <Link to="/login" className="wine-gradient-btn">登录后购票</Link>
-          )}
+          <button onClick={handleGoQueue} className="gold-gradient-btn">
+            {isLoggedIn ? '进入抢票队列' : '演示登录并购票'}
+          </button>
         </div>
       </div>
     </div>

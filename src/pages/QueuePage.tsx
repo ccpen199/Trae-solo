@@ -8,7 +8,7 @@ export default function QueuePage() {
   const { showtimeId } = useParams<{ showtimeId: string }>()
   const navigate = useNavigate()
   const { queueId, position, status, estimatedWait, priorityWeight, orderId, joinQueue, fetchStatus, boost, reset } = useQueueStore()
-  const { user } = useAuthStore()
+  const { user, isLoggedIn, login } = useAuthStore()
   const [boosted, setBoosted] = useState<Record<string, boolean>>({})
   const timerRef = useRef<number | null>(null)
   const joinedRef = useRef(false)
@@ -19,9 +19,15 @@ export default function QueuePage() {
       joinedRef.current = true
       const seatStr = localStorage.getItem(`pending_seats_${showtimeId}`)
       const seatIds = seatStr ? JSON.parse(seatStr) : []
-      joinQueue(parseInt(showtimeId), seatIds).catch(() => {})
+      const join = async () => {
+        if (!isLoggedIn) {
+          await login('user1', '123456')
+        }
+        await joinQueue(parseInt(showtimeId), seatIds)
+      }
+      join().catch(() => {})
     }
-  }, [showtimeId, joinQueue])
+  }, [showtimeId, joinQueue, isLoggedIn, login])
 
   useEffect(() => {
     if (status === 'waiting' || status === 'processing') {

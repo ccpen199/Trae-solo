@@ -4,8 +4,8 @@ import useAuthStore from '@/stores/authStore'
 
 export default function Login() {
   const [tab, setTab] = useState<'login' | 'register'>('login')
-  const [phone, setPhone] = useState('')
-  const [password, setPassword] = useState('')
+  const [phone, setPhone] = useState('user1')
+  const [password, setPassword] = useState('123456')
   const [realName, setRealName] = useState('')
   const [idCard, setIdCard] = useState('')
   const { login, register, loading, error, setError } = useAuthStore()
@@ -119,6 +119,25 @@ export default function Login() {
           <p className="mt-1">admin/123456 (管理员)</p>
           <p>organizer/123456 (主办方)</p>
           <p>user1/123456 (普通用户)</p>
+        </div>
+        <div className="mt-4 grid grid-cols-3 gap-2">
+          {[
+            ['user1', '普通用户'],
+            ['admin', '管理员'],
+            ['organizer', '主办方'],
+          ].map(([account, label]) => (
+            <button
+              key={account}
+              type="button"
+              onClick={() => {
+                setPhone(account)
+                setPassword('123456')
+              }}
+              className="rounded-lg border border-carbon-700 px-2 py-2 text-xs text-carbon-300 hover:border-gold-500 hover:text-gold-400"
+            >
+              {label}
+            </button>
+          ))}
         </div>
       </div>
     </div>
