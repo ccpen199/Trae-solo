@@ -1,5 +1,5 @@
 import { Link, useLocation, Outlet } from 'react-router-dom'
-import { Package, Search, MapPin, Calculator, User, Menu, X, Settings } from 'lucide-react'
+import { Package, Search, MapPin, Calculator, User, Menu, X } from 'lucide-react'
 import { useState } from 'react'
 
 const cNavItems = [
@@ -58,13 +58,6 @@ export default function Layout() {
                 </div>
                 <span className="text-sm">张伟</span>
               </Link>
-              <Link
-                to="/admin/alerts"
-                className="flex items-center gap-1.5 text-white/50 hover:text-white text-xs px-3 py-1.5 rounded-md border border-white/15 hover:border-accent/50 hover:bg-accent/10 transition-all"
-              >
-                <Settings className="w-3.5 h-3.5" />
-                运营管理
-              </Link>
             </div>
 
             <button
@@ -98,14 +91,6 @@ export default function Layout() {
                   </Link>
                 )
               })}
-              <Link
-                to="/admin/alerts"
-                onClick={() => setMobileMenuOpen(false)}
-                className="flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium text-white/40 hover:text-white/70 hover:bg-white/5 transition-all border-t border-white/10 mt-2 pt-3"
-              >
-                <Settings className="w-5 h-5" />
-                运营管理后台
-              </Link>
             </nav>
           </div>
         )}

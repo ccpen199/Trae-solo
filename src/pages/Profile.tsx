@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
-import { Package, MapPin, Ticket, Trash2, Plus, X, ArrowRight } from 'lucide-react'
+import { Package, MapPin, Ticket, Trash2, Plus, X, ArrowRight, TrendingUp, ShoppingBag, Zap } from 'lucide-react'
 import { useAppStore } from '@/stores/appStore'
 
 const tabs = [
@@ -19,6 +19,20 @@ const statusMap: Record<string, { label: string; cls: string }> = {
 }
 
 const tagIcon: Record<string, string> = { home: '🏠', office: '🏢', other: '📍' }
+
+const couponReasonMap: Record<string, string> = {
+  NEW10: '新用户注册专享福利',
+  SUMMER20: '夏季活动，品类偏好定向推送',
+  VIP50: 'VIP高价值用户专属',
+  SPRING15: '春季寄件专属，基于区域聚类',
+}
+
+const couponTagMap: Record<string, { tag: string; color: string }> = {
+  NEW10: { tag: '新用户', color: 'bg-blue-100 text-blue-700' },
+  SUMMER20: { tag: '品类偏好', color: 'bg-pink-100 text-pink-700' },
+  VIP50: { tag: '高价值', color: 'bg-amber-100 text-amber-700' },
+  SPRING15: { tag: '区域定向', color: 'bg-green-100 text-green-700' },
+}
 
 const emptyAddr = { name: '', phone: '', province: '', city: '', district: '', address: '', isDefault: false, tag: 'home' as 'home' | 'office' | 'other' }
 
@@ -45,6 +59,10 @@ export default function Profile() {
   const used = coupons.filter((c) => c.used)
   const expired = coupons.filter((c) => !c.used && new Date(c.expiresAt) <= now)
 
+  const totalOrders = orders.length
+  const activeCategory = '服装'
+  const activeRegion = '上海'
+
   return (
     <div className="space-y-4 pb-4">
       <div className="gradient-navy rounded-2xl p-5 text-white flex items-center gap-4 animate-slide-up relative overflow-hidden">
@@ -54,10 +72,29 @@ export default function Profile() {
         <div className="flex-1">
           <p className="font-bold text-lg">{currentUser?.name || '未登录'}</p>
           <p className="text-white/60 text-xs">{currentUser?.phone || ''}</p>
+          <div className="flex items-center gap-1.5 mt-1.5">
+            <span className="text-[10px] bg-white/15 rounded px-1.5 py-0.5">C端用户</span>
+            <span className="text-[10px] bg-accent/30 rounded px-1.5 py-0.5">月寄 {totalOrders} 单</span>
+          </div>
         </div>
-        <Link to="/admin/alerts" className="bg-white/10 hover:bg-white/20 border border-white/20 text-[10px] px-2 py-1 rounded-lg text-white/50 transition-colors">
-          管理
-        </Link>
+      </div>
+
+      <div className="grid grid-cols-3 gap-2 animate-slide-up stagger-1">
+        <div className="card p-3 text-center">
+          <TrendingUp className="w-5 h-5 text-amber-500 mx-auto mb-1" />
+          <p className="text-lg font-bold text-navy">{totalOrders}</p>
+          <p className="text-[10px] text-text-light">本月寄件</p>
+        </div>
+        <div className="card p-3 text-center">
+          <ShoppingBag className="w-5 h-5 text-pink-500 mx-auto mb-1" />
+          <p className="text-lg font-bold text-navy">{activeCategory}</p>
+          <p className="text-[10px] text-text-light">常用品类</p>
+        </div>
+        <div className="card p-3 text-center">
+          <Zap className="w-5 h-5 text-blue-500 mx-auto mb-1" />
+          <p className="text-lg font-bold text-navy">{activeRegion}</p>
+          <p className="text-[10px] text-text-light">高频区域</p>
+        </div>
       </div>
 
       <div className="flex gap-1 bg-surface rounded-xl p-1">
@@ -165,7 +202,10 @@ export default function Profile() {
               <h3 className="section-title text-sm mb-2">{sec.label}（{sec.list.length}）</h3>
               {sec.list.length === 0 && <p className="text-xs text-text-lighter pl-1">暂无</p>}
               <div className="space-y-2">
-                {sec.list.map((c) => (
+                {sec.list.map((c) => {
+                  const meta = couponTagMap[c.code] || { tag: '通用券', color: 'bg-gray-100 text-gray-600' }
+                  const reason = couponReasonMap[c.code] || '系统自动发放'
+                  return (
                   <div key={c.id} className={`card p-4 flex items-center gap-4 ${!sec.active ? 'opacity-50' : ''}`}>
                     <div className={`w-16 h-16 rounded-xl flex flex-col items-center justify-center flex-shrink-0 ${
                       sec.active ? 'gradient-accent text-white' : 'bg-gray-200 text-gray-400'
@@ -176,12 +216,18 @@ export default function Profile() {
                       </span>
                     </div>
                     <div className="flex-1 min-w-0">
-                      <p className={`text-sm font-bold ${sec.active ? 'text-navy' : 'text-gray-400'}`}>{c.code}</p>
+                      <div className="flex items-center gap-2 flex-wrap">
+                        <p className={`text-sm font-bold ${sec.active ? 'text-navy' : 'text-gray-400'}`}>{c.code}</p>
+                        {sec.active && <span className={`text-[10px] font-medium px-2 py-0.5 rounded-full ${meta.color}`}>{meta.tag}</span>}
+                      </div>
+                      {sec.active && <p className="text-[11px] text-text-light mt-1">{reason}</p>}
                       <p className="text-xs text-text-lighter mt-1">有效期至 {c.expiresAt}</p>
                     </div>
                     {!sec.active && <span className="text-xs text-text-lighter">{sec.label === '已使用' ? '已使用' : '已过期'}</span>}
+                    {sec.active && <Link to="/order" className="text-xs font-bold text-accent hover:underline whitespace-nowrap">去使用 →</Link>}
                   </div>
-                ))}
+                  )
+                })}
               </div>
             </div>
           ))}
