@@ -47,9 +47,12 @@ export default function Layout({ children }: { children: React.ReactNode }) {
             <p className="text-xs text-blue-100 mb-3">
               一对一专属顾问，免费专车带看
             </p>
-            <button className="w-full py-2 bg-white text-blue-600 rounded-lg text-sm font-medium hover:bg-blue-50 transition-colors">
+            <Link
+              to="/butler?action=new"
+              className="block w-full py-2 bg-white text-blue-600 rounded-lg text-sm font-medium hover:bg-blue-50 transition-colors text-center"
+            >
               立即咨询
-            </button>
+            </Link>
           </div>
         </div>
       </aside>

@@ -30,6 +30,32 @@ interface Property {
   greenRate: number;
   plotRatio: number;
   monthlySales: number;
+  developer: {
+    id: string;
+    name: string;
+    qualification: string;
+    level: string;
+    registeredCapital: number;
+    establishedYear: number;
+  };
+  licenses: Array<{
+    id: string;
+    name: string;
+    number: string;
+    issueDate: string;
+    issuingAuthority: string;
+  }>;
+  buildings: Array<{
+    id: string;
+    name: string;
+    totalFloors: number;
+    totalUnits: number;
+    availableUnits: number;
+    deliveryDate: string;
+  }>;
+  governmentPrice: number;
+  secondhandPrice: number;
+  salesRate: number;
 }
 
 interface FilterOptions {
@@ -375,7 +401,7 @@ export default function PropertyList() {
                   <MapPin className="w-4 h-4 flex-shrink-0" />
                   <span className="truncate">{property.district} · {property.area}</span>
                 </div>
-                <div className="flex items-end justify-between mb-3">
+                <div className="flex items-end justify-between mb-2">
                   <div>
                     <p className="text-2xl font-bold text-orange-500">
                       {property.price.toLocaleString()}
@@ -384,7 +410,7 @@ export default function PropertyList() {
                     <p className="text-xs text-gray-500">{property.totalPriceRange}</p>
                   </div>
                 </div>
-                <div className="flex flex-wrap gap-1">
+                <div className="flex flex-wrap gap-1 mb-3">
                   {property.tags.slice(0, 3).map((tag, idx) => (
                     <span
                       key={idx}
@@ -394,9 +420,43 @@ export default function PropertyList() {
                     </span>
                   ))}
                 </div>
-                <div className="flex items-center justify-between mt-3 pt-3 border-t border-gray-100 text-xs text-gray-400">
-                  <span>绿化率 {property.greenRate}%</span>
-                  <span>月销 {property.monthlySales} 套</span>
+                <div className="border-t border-gray-100 pt-2 space-y-1.5">
+                  <div className="flex items-center justify-between text-xs">
+                    <span className="text-gray-400">开发商</span>
+                    <span className="text-gray-700 font-medium">{property.developer?.name || '--'}（{property.developer?.level || '--'}）</span>
+                  </div>
+                  <div className="flex items-center justify-between text-xs">
+                    <span className="text-gray-400">五证状态</span>
+                    <span className={property.licenses?.length >= 5 ? 'text-green-600 font-medium' : 'text-yellow-600 font-medium'}>
+                      {property.licenses?.length >= 5 ? '齐全' : `${property.licenses?.length || 0}/5`}
+                    </span>
+                  </div>
+                  <div className="flex items-center justify-between text-xs">
+                    <span className="text-gray-400">在售楼栋</span>
+                    <span className="text-gray-700 font-medium">{property.buildings?.length || 0}栋 · {property.buildings?.reduce((s, b) => s + (b.availableUnits || 0), 0) || 0}套可售</span>
+                  </div>
+                  <div className="flex items-center justify-between text-xs">
+                    <span className="text-gray-400">容积率/绿化率</span>
+                    <span className="text-gray-700 font-medium">{property.plotRatio} / {property.greenRate}%</span>
+                  </div>
+                  <div className="flex items-center justify-between text-xs">
+                    <span className="text-gray-400">政府公示价</span>
+                    <span className="text-blue-600 font-medium">{property.governmentPrice ? `${property.governmentPrice.toLocaleString()} 元/㎡` : '--'}</span>
+                  </div>
+                  <div className="flex items-center justify-between text-xs">
+                    <span className="text-gray-400">二手房均价</span>
+                    <span className="text-purple-600 font-medium">{property.secondhandPrice ? `${property.secondhandPrice.toLocaleString()} 元/㎡` : '--'}</span>
+                  </div>
+                  <div className="flex items-center justify-between text-xs">
+                    <span className="text-gray-400">去化率</span>
+                    <span className={property.salesRate >= 70 ? 'text-green-600 font-medium' : property.salesRate >= 40 ? 'text-orange-600 font-medium' : 'text-red-600 font-medium'}>
+                      {property.salesRate ? `${property.salesRate}%` : '--'}
+                    </span>
+                  </div>
+                  <div className="flex items-center justify-between text-xs text-gray-400">
+                    <span>月销</span>
+                    <span>{property.monthlySales} 套</span>
+                  </div>
                 </div>
               </div>
             </Link>
@@ -417,12 +477,18 @@ export default function PropertyList() {
               </div>
               <div className="flex-1 p-4 flex flex-col justify-between">
                 <div>
-                  <h3 className="text-lg font-bold text-gray-900 mb-1">{property.name}</h3>
+                  <div className="flex items-center gap-2 mb-1">
+                    <h3 className="text-lg font-bold text-gray-900">{property.name}</h3>
+                    <span className={cn(
+                      'px-2 py-0.5 rounded text-xs font-medium text-white',
+                      statusColors[property.status] || 'bg-blue-500',
+                    )}>{property.status}</span>
+                  </div>
                   <div className="flex items-center gap-2 text-sm text-gray-500 mb-2">
                     <MapPin className="w-4 h-4" />
                     {property.district} · {property.area} · {property.address}
                   </div>
-                  <div className="flex flex-wrap gap-1">
+                  <div className="flex flex-wrap gap-1 mb-2">
                     {property.tags.slice(0, 4).map((tag, idx) => (
                       <span
                         key={idx}
@@ -431,6 +497,16 @@ export default function PropertyList() {
                         {tag}
                       </span>
                     ))}
+                  </div>
+                  <div className="grid grid-cols-4 gap-x-6 gap-y-1 text-xs mb-2">
+                    <div><span className="text-gray-400">开发商</span> <span className="text-gray-700 font-medium">{property.developer?.name || '--'}（{property.developer?.level || '--'}）</span></div>
+                    <div><span className="text-gray-400">五证</span> <span className={property.licenses?.length >= 5 ? 'text-green-600 font-medium' : 'text-yellow-600 font-medium'}>{property.licenses?.length >= 5 ? '齐全' : `${property.licenses?.length || 0}/5`}</span></div>
+                    <div><span className="text-gray-400">楼栋</span> <span className="text-gray-700 font-medium">{property.buildings?.length || 0}栋 · {property.buildings?.reduce((s, b) => s + (b.availableUnits || 0), 0) || 0}套</span></div>
+                    <div><span className="text-gray-400">容积率</span> <span className="text-gray-700 font-medium">{property.plotRatio}</span></div>
+                    <div><span className="text-gray-400">政府价</span> <span className="text-blue-600 font-medium">{property.governmentPrice ? `${property.governmentPrice.toLocaleString()}元/㎡` : '--'}</span></div>
+                    <div><span className="text-gray-400">二手房</span> <span className="text-purple-600 font-medium">{property.secondhandPrice ? `${property.secondhandPrice.toLocaleString()}元/㎡` : '--'}</span></div>
+                    <div><span className="text-gray-400">去化率</span> <span className={property.salesRate >= 70 ? 'text-green-600 font-medium' : property.salesRate >= 40 ? 'text-orange-600 font-medium' : 'text-red-600 font-medium'}>{property.salesRate ? `${property.salesRate}%` : '--'}</span></div>
+                    <div><span className="text-gray-400">绿化率</span> <span className="text-gray-700 font-medium">{property.greenRate}%</span></div>
                   </div>
                 </div>
                 <div className="flex items-center justify-between">
@@ -441,9 +517,7 @@ export default function PropertyList() {
                     <span className="text-sm text-gray-400"> 元/㎡</span>
                     <span className="text-xs text-gray-400 ml-2">{property.totalPriceRange}</span>
                   </div>
-                  <div className="text-xs text-gray-400">
-                    容积率 {property.plotRatio} · 绿化率 {property.greenRate}%
-                  </div>
+                  <span className="text-xs text-gray-400">月销 {property.monthlySales} 套</span>
                 </div>
               </div>
             </Link>

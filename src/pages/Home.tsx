@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useRef } from 'react';
 import { Link } from 'react-router-dom';
 import {
   Building2,
@@ -44,12 +44,33 @@ interface MarketOverview {
   districtStats: any[];
 }
 
+interface HomeCache {
+  summary: PropertySummary | null;
+  marketOverview: MarketOverview | null;
+  featuredProperties: any[];
+  timestamp: number;
+}
+
+let homeCache: HomeCache | null = null;
+const CACHE_TTL = 5 * 60 * 1000;
+
 export default function Home() {
-  const [summary, setSummary] = useState<PropertySummary | null>(null);
-  const [marketOverview, setMarketOverview] = useState<MarketOverview | null>(null);
-  const [featuredProperties, setFeaturedProperties] = useState<any[]>([]);
+  const [summary, setSummary] = useState<PropertySummary | null>(homeCache?.summary ?? null);
+  const [marketOverview, setMarketOverview] = useState<MarketOverview | null>(homeCache?.marketOverview ?? null);
+  const [featuredProperties, setFeaturedProperties] = useState<any[]>(homeCache?.featuredProperties ?? []);
+  const fetchedRef = useRef(false);
 
   useEffect(() => {
+    if (homeCache && Date.now() - homeCache.timestamp < CACHE_TTL) {
+      setSummary(homeCache.summary);
+      setMarketOverview(homeCache.marketOverview);
+      setFeaturedProperties(homeCache.featuredProperties);
+      return;
+    }
+
+    if (fetchedRef.current) return;
+    fetchedRef.current = true;
+
     const fetchData = async () => {
       const [summaryRes, marketRes, propsRes] = await Promise.all([
         propertyApi.getStats(),
@@ -59,6 +80,13 @@ export default function Home() {
 
       if (summaryRes.success) {
         setSummary(summaryRes.data);
+        homeCache = {
+          ...homeCache,
+          summary: summaryRes.data,
+          marketOverview: marketRes.success ? marketRes.data : homeCache?.marketOverview ?? null,
+          featuredProperties: propsRes.success ? propsRes.data.list : homeCache?.featuredProperties ?? [],
+          timestamp: Date.now(),
+        };
       }
       if (marketRes.success) {
         setMarketOverview(marketRes.data);
@@ -70,6 +98,11 @@ export default function Home() {
 
     fetchData();
   }, []);
+
+  const displayValue = (val: number | undefined | null, formatter?: (v: number) => string) => {
+    if (val === undefined || val === null) return homeCache ? '--' : '--';
+    return formatter ? formatter(val) : String(val);
+  };
 
   const quickActions = [
     {
@@ -83,7 +116,7 @@ export default function Home() {
       icon: UserCog,
       title: '购房管家',
       desc: 'AI智能匹配推荐',
-      path: '/butler',
+      path: '/butler?action=new',
       color: 'from-purple-500 to-pink-500',
     },
     {
@@ -104,7 +137,6 @@ export default function Home() {
 
   return (
     <div className="space-y-8">
-      {/* Hero Section */}
       <div className="relative overflow-hidden rounded-2xl bg-gradient-to-br from-blue-600 via-blue-700 to-indigo-800 p-8 lg:p-12 text-white">
         <div className="absolute top-0 right-0 w-96 h-96 bg-white/10 rounded-full -translate-y-1/2 translate-x-1/2" />
         <div className="absolute bottom-0 left-0 w-64 h-64 bg-white/10 rounded-full translate-y-1/2 -translate-x-1/2" />
@@ -124,17 +156,16 @@ export default function Home() {
               浏览楼盘
             </Link>
             <Link
-              to="/butler"
+              to="/butler?action=new"
               className="inline-flex items-center gap-2 px-6 py-3 bg-white/20 backdrop-blur text-white rounded-xl font-medium hover:bg-white/30 transition-colors"
             >
               <UserCog className="w-5 h-5" />
-              智能匹配
+              提交购房需求
             </Link>
           </div>
         </div>
       </div>
 
-      {/* Stats Cards */}
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
         <div className="bg-white rounded-xl p-5 border border-gray-200">
           <div className="flex items-center gap-3 mb-3">
@@ -144,7 +175,7 @@ export default function Home() {
             <span className="text-gray-500 text-sm">楼盘总数</span>
           </div>
           <p className="text-2xl font-bold text-gray-900">
-            {summary?.totalProperties || '--'}
+            {summary?.totalProperties != null ? summary.totalProperties : '--'}
           </p>
           <p className="text-xs text-gray-400 mt-1">覆盖沈阳各大区域</p>
         </div>
@@ -156,7 +187,7 @@ export default function Home() {
             <span className="text-gray-500 text-sm">在售均价</span>
           </div>
           <p className="text-2xl font-bold text-gray-900">
-            {summary?.avgPrice ? `${summary.avgPrice.toLocaleString()}` : '--'}
+            {summary?.avgPrice != null ? `${summary.avgPrice.toLocaleString()}` : '--'}
             <span className="text-sm font-normal text-gray-500"> 元/㎡</span>
           </p>
           <p className="text-xs text-green-500 mt-1">较上月 ↑ 2.3%</p>
@@ -169,7 +200,7 @@ export default function Home() {
             <span className="text-gray-500 text-sm">覆盖区域</span>
           </div>
           <p className="text-2xl font-bold text-gray-900">
-            {summary?.districtCount || '--'}
+            {summary?.districtCount != null ? summary.districtCount : '--'}
             <span className="text-sm font-normal text-gray-500"> 个区域</span>
           </p>
           <p className="text-xs text-gray-400 mt-1">和平、沈河、皇姑等</p>
@@ -182,14 +213,13 @@ export default function Home() {
             <span className="text-gray-500 text-sm">月均成交</span>
           </div>
           <p className="text-2xl font-bold text-gray-900">
-            {marketOverview?.summary.totalMonthlySales || '--'}
+            {marketOverview?.summary.totalMonthlySales != null ? marketOverview.summary.totalMonthlySales : '--'}
             <span className="text-sm font-normal text-gray-500"> 套</span>
           </p>
           <p className="text-xs text-gray-400 mt-1">市场活跃度高</p>
         </div>
       </div>
 
-      {/* Quick Actions */}
       <div>
         <h2 className="text-xl font-bold text-gray-900 mb-4">快速入口</h2>
         <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
@@ -216,7 +246,6 @@ export default function Home() {
         </div>
       </div>
 
-      {/* Featured Properties */}
       <div>
         <div className="flex items-center justify-between mb-4">
           <h2 className="text-xl font-bold text-gray-900">热门楼盘</h2>
@@ -275,7 +304,6 @@ export default function Home() {
         </div>
       </div>
 
-      {/* Districts */}
       {summary?.districtStats && (
         <div>
           <h2 className="text-xl font-bold text-gray-900 mb-4">区域房价</h2>

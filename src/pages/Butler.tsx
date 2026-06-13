@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useSearchParams } from 'react-router-dom';
 import {
   UserCog,
   FileText,
@@ -77,6 +77,7 @@ interface MatchReport {
 }
 
 export default function Butler() {
+  const [searchParams] = useSearchParams();
   const [activeTab, setActiveTab] = useState<TabType>('requirements');
   const [requirements, setRequirements] = useState<Requirement[]>([]);
   const [consultants, setConsultants] = useState<Consultant[]>([]);
@@ -104,6 +105,9 @@ export default function Butler() {
   });
 
   useEffect(() => {
+    if (searchParams.get('action') === 'new') {
+      setShowForm(true);
+    }
     fetchRequirements();
     fetchConsultants();
   }, []);
