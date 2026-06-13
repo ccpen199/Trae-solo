@@ -20,31 +20,95 @@ import { useStore } from '../store/useStore';
 import dayjs from 'dayjs';
 
 export default function Recharge() {
-  const { etcCard, rechargeMethods, rechargeOrders, rechargeBalance } = useStore();
-  const [selectedMethod, setSelectedMethod] = useState<string | null>(null);
+  const {
+    etcCard,
+    rechargeMethods,
+    rechargeOrders,
+    rechargeBalance,
+    autoPayConfig,
+    updateAutoPayConfig,
+    authorizePayChannel,
+    triggerAutoPayForPending,
+  } = useStore();
+  const [selectedMethod, setSelectedMethod] = useState<string | null>(
+    rechargeMethods.find((method) => method.available)?.id || null
+  );
   const [amount, setAmount] = useState(200);
-  const [payChannel, setPayChannel] = useState<'wechat' | 'alipay' | 'bank'>('wechat');
+  const [payChannel, setPayChannel] = useState<'wechat' | 'alipay' | 'bank'>(autoPayConfig.payChannel);
   const [showAutoPayModal, setShowAutoPayModal] = useState(false);
-  const [autoPayThreshold, setAutoPayThreshold] = useState(100);
-  const [autoPayAmount, setAutoPayAmount] = useState(200);
+  const [autoPayThreshold, setAutoPayThreshold] = useState(autoPayConfig.threshold);
+  const [autoPayAmount, setAutoPayAmount] = useState(autoPayConfig.rechargeAmount);
   const [isProcessing, setIsProcessing] = useState(false);
   const [showSuccess, setShowSuccess] = useState(false);
+  const [lastRechargeAmount, setLastRechargeAmount] = useState<number | null>(null);
+  const [autoPaySaving, setAutoPaySaving] = useState(false);
+  const [autoPayStatusMessage, setAutoPayStatusMessage] = useState('');
 
   const quickAmounts = [50, 100, 200, 500, 1000];
 
   const handleRecharge = async () => {
     if (!selectedMethod) return;
+    setLastRechargeAmount(null);
     setIsProcessing(true);
     await new Promise((resolve) => setTimeout(resolve, 1500));
     rechargeBalance(amount);
     setIsProcessing(false);
+    setLastRechargeAmount(amount);
     setShowSuccess(true);
     setTimeout(() => setShowSuccess(false), 3000);
   };
 
-  const handleAutoPaySave = () => {
-    console.log('自动代扣设置:', { autoPayThreshold, autoPayAmount, payChannel });
+  const handleAutoPaySave = async () => {
+    setAutoPaySaving(true);
+    const channelAuthorizedBefore = isChannelAuthorized(payChannel);
+    if (!channelAuthorizedBefore) {
+      await authorizePayChannel(payChannel);
+    }
+    updateAutoPayConfig({
+      enabled: true,
+      threshold: autoPayThreshold,
+      rechargeAmount: autoPayAmount,
+      payChannel,
+    });
+    const autoPayTriggered = await triggerAutoPayForPending();
+    const pendingBefore = useStore.getState().trafficRecords.filter(
+      (r) => r.status === '待扣费' && !r.isHolidayFree
+    ).length;
+    if (autoPayTriggered) {
+      setAutoPayStatusMessage(
+        pendingBefore > 0
+          ? `代扣设置已保存，成功补缴 ${pendingBefore} 笔待扣费记录`
+          : '代扣设置已保存，当前暂无待扣费记录'
+      );
+    } else {
+      const records = useStore.getState().trafficRecords.filter(
+        (r) => r.status === '待扣费' && !r.isHolidayFree
+      );
+      const hasFail = records.some((r) => r.autoPayResult === 'failed');
+      setAutoPayStatusMessage(
+        hasFail
+          ? '代扣设置已保存，但仍有待扣费记录，请到通行记录页面手动补缴'
+          : '代扣设置已保存，支付渠道授权状态已更新'
+      );
+    }
+    setAutoPaySaving(false);
     setShowAutoPayModal(false);
+    setTimeout(() => setAutoPayStatusMessage(''), 6000);
+  };
+
+  const handleTriggerAutoPay = async () => {
+    setAutoPaySaving(true);
+    const success = await triggerAutoPayForPending();
+    const remaining = useStore.getState().trafficRecords.filter(
+      (r) => r.status === '待扣费' && !r.isHolidayFree
+    ).length;
+    if (success) {
+      setAutoPayStatusMessage(remaining === 0 ? '代扣执行成功，所有待扣费记录已完成补缴' : `代扣执行成功，剩余 ${remaining} 笔待处理`);
+    } else {
+      setAutoPayStatusMessage('代扣执行失败，请检查支付渠道授权状态');
+    }
+    setAutoPaySaving(false);
+    setTimeout(() => setAutoPayStatusMessage(''), 5000);
   };
 
   const getMethodIcon = (type: string) => {
@@ -77,6 +141,12 @@ export default function Recharge() {
     { id: 'bank' as const, name: '银行卡', color: '#0F52BA', icon: '💳' },
   ];
 
+  const isChannelAuthorized = (channel: 'wechat' | 'alipay' | 'bank') => {
+    if (channel === 'wechat') return autoPayConfig.wechatAuthorized;
+    if (channel === 'alipay') return autoPayConfig.alipayAuthorized;
+    return autoPayConfig.bankAuthorized;
+  };
+
   return (
     <div className="min-h-screen bg-dark-100 py-8">
       <div className="container">
@@ -86,8 +156,8 @@ export default function Recharge() {
           transition={{ duration: 0.5 }}
           className="mb-8"
         >
-          <h1 className="text-2xl font-bold text-dark-800 mb-2">充值中心</h1>
-          <p className="text-dark-500">为您的粤通卡账户充值，支持多种充值方式</p>
+          <h1 className="text-2xl font-bold text-dark-800 mb-2">充值中心 · 提交订单</h1>
+          <p className="text-dark-500">为您的粤通卡账户购买充值服务，支持多种充值方式</p>
         </motion.div>
 
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
@@ -141,6 +211,9 @@ export default function Recharge() {
                 <RefreshCw className="w-5 h-5 text-primary-500" />
                 选择充值方式
               </h3>
+              <div className="mb-4 rounded-xl border border-primary-100 bg-primary-50 px-4 py-3 text-sm text-primary-700">
+                已默认选择可用的在线充值方式，充值金额和支付渠道确认后可直接提交订单。
+              </div>
               <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                 {rechargeMethods.map((method) => {
                   const Icon = getMethodIcon(method.type);
@@ -273,9 +346,23 @@ export default function Recharge() {
                         充值处理中...
                       </span>
                     ) : (
-                      `确认充值 ¥${amount.toFixed(2)}`
+                      `提交订单 ¥${amount.toFixed(2)}`
                     )}
                   </button>
+
+                  {lastRechargeAmount !== null && !isProcessing && (
+                    <div className="mt-4 rounded-xl border border-success/30 bg-green-50 p-4 text-success">
+                      <div className="flex items-start gap-3">
+                        <CheckCircle className="mt-0.5 h-5 w-5 flex-none" />
+                        <div>
+                          <p className="font-semibold">充值成功</p>
+                          <p className="mt-1 text-sm text-dark-600">
+                            订单已完成，¥{lastRechargeAmount.toFixed(2)} 已到账，充值记录已同步更新。
+                          </p>
+                        </div>
+                      </div>
+                    </div>
+                  )}
                 </motion.div>
               )}
             </AnimatePresence>
@@ -299,18 +386,70 @@ export default function Recharge() {
                   <ChevronRight className="w-4 h-4" />
                 </button>
               </div>
-              <div className="p-4 bg-primary-50 rounded-xl">
-                <div className="flex items-center gap-3 mb-2">
-                  <Shield className="w-5 h-5 text-primary-500" />
-                  <span className="font-medium text-primary-800">智能代扣已开启</span>
+              <div className={`p-4 rounded-xl ${
+                autoPayConfig.enabled ? 'bg-primary-50' : 'bg-dark-50'
+              }`}>
+                <div className="flex items-center gap-3 mb-3">
+                  <Shield className={`w-5 h-5 ${
+                    autoPayConfig.enabled ? 'text-primary-500' : 'text-dark-400'
+                  }`} />
+                  <span className={`font-medium ${
+                    autoPayConfig.enabled ? 'text-primary-800' : 'text-dark-600'
+                  }`}>
+                    {autoPayConfig.enabled ? '智能代扣已开启' : '智能代扣未开启'}
+                  </span>
+                  {autoPayConfig.enabled && (
+                    <span className="badge badge-success text-[10px] px-2 py-0.5">运行中</span>
+                  )}
                 </div>
-                <p className="text-sm text-primary-600">
-                  当余额低于 ¥{autoPayThreshold} 时，自动充值 ¥{autoPayAmount}
-                </p>
-                <p className="text-xs text-primary-500 mt-2">
-                  绑定支付方式：{payChannels.find((c) => c.id === payChannel)?.name}
-                </p>
+                {autoPayConfig.enabled ? (
+                  <>
+                    <p className="text-sm text-primary-600">
+                      当余额低于 ¥{autoPayConfig.threshold} 时，自动充值 ¥{autoPayConfig.rechargeAmount}
+                    </p>
+                    <p className="text-xs text-primary-500 mt-2">
+                      绑定支付方式：{payChannels.find((c) => c.id === autoPayConfig.payChannel)?.name}
+                      <span className="ml-1 text-success">
+                        ({isChannelAuthorized(autoPayConfig.payChannel) ? '已授权' : '未授权'})
+                      </span>
+                    </p>
+                    <div className="mt-4 pt-4 border-t border-primary-200 grid grid-cols-2 gap-3">
+                      <div>
+                        <p className="text-xs text-primary-500">累计自动充值</p>
+                        <p className="text-lg font-bold font-mono text-primary-700">
+                          {autoPayConfig.totalAutoRechargeCount} 次
+                        </p>
+                      </div>
+                      <div>
+                        <p className="text-xs text-primary-500">累计充值金额</p>
+                        <p className="text-lg font-bold font-mono text-primary-700">
+                          ¥{autoPayConfig.totalAutoRechargeAmount.toFixed(0)}
+                        </p>
+                      </div>
+                    </div>
+                    {autoPayConfig.lastTriggeredAt && (
+                      <p className="text-xs text-primary-400 mt-3 flex items-center gap-1">
+                        <Clock className="w-3 h-3" />
+                        最近触发：{dayjs(autoPayConfig.lastTriggeredAt).format('MM-DD HH:mm')}
+                      </p>
+                    )}
+                  </>
+                ) : (
+                  <p className="text-sm text-dark-500">
+                    开通后，余额不足时自动充值，通行记录自动扣费
+                  </p>
+                )}
               </div>
+              {autoPayConfig.enabled && (
+                <button
+                  onClick={handleTriggerAutoPay}
+                  disabled={autoPaySaving}
+                  className="w-full mt-4 btn-secondary text-sm flex items-center justify-center gap-2"
+                >
+                  <RefreshCw className={`w-4 h-4 ${autoPaySaving ? 'animate-spin' : ''}`} />
+                  {autoPaySaving ? '执行中...' : '立即执行代扣'}
+                </button>
+              )}
             </motion.div>
           </div>
 
@@ -381,6 +520,20 @@ export default function Recharge() {
         </AnimatePresence>
 
         <AnimatePresence>
+          {autoPayStatusMessage && (
+            <motion.div
+              initial={{ opacity: 0, y: 50, scale: 0.9 }}
+              animate={{ opacity: 1, y: 0, scale: 1 }}
+              exit={{ opacity: 0, y: 20, scale: 0.9 }}
+              className="fixed bottom-8 left-8 z-50 max-w-md rounded-2xl bg-primary-600 p-5 text-white shadow-2xl"
+            >
+              <p className="font-semibold">自动代扣已更新</p>
+              <p className="text-sm text-white/80">{autoPayStatusMessage}</p>
+            </motion.div>
+          )}
+        </AnimatePresence>
+
+        <AnimatePresence>
           {showAutoPayModal && (
             <motion.div
               initial={{ opacity: 0 }}
@@ -444,24 +597,61 @@ export default function Recharge() {
                   </div>
 
                   <div>
-                    <label className="block text-sm font-medium text-dark-700 mb-2">
+                    <label className="block text-sm font-medium text-dark-700 mb-3">
                       代扣支付方式
                     </label>
-                    <div className="grid grid-cols-3 gap-2">
-                      {payChannels.map((channel) => (
-                        <button
-                          key={channel.id}
-                          onClick={() => setPayChannel(channel.id)}
-                          className={`p-3 rounded-lg border-2 transition-all duration-200 ${
-                            payChannel === channel.id
-                              ? 'border-primary-500 bg-primary-50'
-                              : 'border-dark-200'
-                          }`}
-                        >
-                          <p className="text-xl mb-1">{channel.icon}</p>
-                          <p className="text-xs font-medium text-dark-800">{channel.name}</p>
-                        </button>
-                      ))}
+                    <div className="space-y-2">
+                      {payChannels.map((channel) => {
+                        const authorized = isChannelAuthorized(channel.id);
+                        const isSelected = payChannel === channel.id;
+                        return (
+                          <button
+                            key={channel.id}
+                            onClick={() => setPayChannel(channel.id)}
+                            className={`w-full p-3 rounded-xl border-2 transition-all duration-200 text-left flex items-center gap-3 ${
+                              isSelected
+                                ? 'border-primary-500 bg-primary-50'
+                                : 'border-dark-200 hover:border-dark-300'
+                            }`}
+                          >
+                            <span className="text-2xl">{channel.icon}</span>
+                            <div className="flex-1">
+                              <p className="text-sm font-medium text-dark-800">{channel.name}</p>
+                              <p className={`text-xs ${authorized ? 'text-success' : 'text-warning'} flex items-center gap-1`}>
+                                {authorized ? (
+                                  <>
+                                    <CheckCircle className="w-3 h-3" />
+                                    已授权
+                                  </>
+                                ) : (
+                                  <>
+                                    <AlertTriangle className="w-3 h-3" />
+                                    待授权（保存时自动完成）
+                                  </>
+                                )}
+                              </p>
+                            </div>
+                            <div className={`w-5 h-5 rounded-full border-2 flex items-center justify-center ${
+                              isSelected
+                                ? 'border-primary-500 bg-primary-500'
+                                : 'border-dark-300'
+                            }`}>
+                              {isSelected && <CheckCircle className="w-3 h-3 text-white" />}
+                            </div>
+                          </button>
+                        );
+                      })}
+                    </div>
+                    <div className="mt-3 rounded-lg border border-primary-100 bg-primary-50 p-3 text-xs text-primary-700">
+                      <p className="font-medium mb-1 flex items-center gap-1">
+                        <Shield className="w-3 h-3" />
+                        授权说明
+                      </p>
+                      <ul className="space-y-1 ml-4 list-disc">
+                        <li>保存后将完成所选支付渠道的授权签约</li>
+                        <li>余额低于阈值时自动充值，无需手动操作</li>
+                        <li>通行记录中的待扣费将自动从账户扣除</li>
+                      </ul>
                     </div>
                   </div>
                 </div>
@@ -475,9 +665,10 @@ export default function Recharge() {
                   </button>
                   <button
                     onClick={handleAutoPaySave}
+                    disabled={autoPaySaving}
                     className="flex-1 btn-primary"
                   >
-                    保存设置
+                    {autoPaySaving ? '保存并授权中...' : '保存设置'}
                   </button>
                 </div>
               </motion.div>

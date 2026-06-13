@@ -25,7 +25,7 @@ export default function Navbar() {
     { path: '/', label: '首页', icon: LayoutDashboard },
     { path: '/traffic', label: '通行记录', icon: Car },
     { path: '/toll-calculator', label: '路费查询', icon: Calculator },
-    { path: '/recharge', label: '充值中心', icon: Wallet },
+    { path: '/recharge', label: '购买/提交订单', icon: Wallet },
     { path: '/outlets', label: '网点服务', icon: MapPin },
   ];
 

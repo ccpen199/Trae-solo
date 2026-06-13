@@ -13,6 +13,7 @@ import type {
   RechargeOrder,
   RouteOption,
   TollStation,
+  AutoPayConfig,
 } from '../../shared/types';
 import {
   mockUser,
@@ -53,6 +54,7 @@ interface AppState {
   selectedTrafficRecord: TrafficRecord | null;
   selectedOutlet: Outlet | null;
   isAdminView: boolean;
+  autoPayConfig: AutoPayConfig;
   setIsAdminView: (value: boolean) => void;
   selectTrafficRecord: (record: TrafficRecord | null) => void;
   selectOutlet: (outlet: Outlet | null) => void;
@@ -62,6 +64,9 @@ interface AppState {
   createAppointment: (outletId: string, businessType: string, time: string) => Promise<boolean>;
   payPendingFee: (recordId: string, payMethod: 'balance' | 'wechat' | 'alipay') => Promise<boolean>;
   enableAutoPay: () => void;
+  updateAutoPayConfig: (config: Partial<AutoPayConfig>) => void;
+  authorizePayChannel: (channel: 'wechat' | 'alipay' | 'bank') => Promise<boolean>;
+  triggerAutoPayForPending: () => Promise<boolean>;
 }
 
 export const useStore = create<AppState>((set, get) => ({
@@ -84,6 +89,18 @@ export const useStore = create<AppState>((set, get) => ({
   selectedTrafficRecord: null,
   selectedOutlet: null,
   isAdminView: false,
+  autoPayConfig: {
+    enabled: false,
+    threshold: 100,
+    rechargeAmount: 200,
+    payChannel: 'wechat',
+    wechatAuthorized: false,
+    alipayAuthorized: true,
+    bankAuthorized: false,
+    lastTriggeredAt: null,
+    totalAutoRechargeCount: 3,
+    totalAutoRechargeAmount: 600,
+  },
 
   setIsAdminView: (value) => set({ isAdminView: value }),
 
@@ -159,7 +176,14 @@ export const useStore = create<AppState>((set, get) => ({
       return {
         trafficRecords: state.trafficRecords.map((r) =>
           r.id === recordId
-            ? { ...r, status: '已完成' as const, paymentMethod: payMethod === 'autopay' ? 'autopay' : 'balance' }
+            ? {
+                ...r,
+                status: '已完成' as const,
+                paymentMethod: payMethod,
+                paymentFailureReason: undefined,
+                paymentFailureCode: undefined,
+                autoPayResult: 'success',
+              }
             : r
         ),
         etcCard: { ...state.etcCard, balance: newBalance },
@@ -172,6 +196,110 @@ export const useStore = create<AppState>((set, get) => ({
   enableAutoPay: () => {
     set((state) => ({
       etcCard: { ...state.etcCard, autoPayEnabled: true },
+      autoPayConfig: { ...state.autoPayConfig, enabled: true },
     }));
+  },
+
+  updateAutoPayConfig: (config) => {
+    set((state) => ({
+      autoPayConfig: { ...state.autoPayConfig, ...config },
+      etcCard: {
+        ...state.etcCard,
+        autoPayEnabled: config.enabled !== undefined ? config.enabled : state.etcCard.autoPayEnabled,
+      },
+    }));
+  },
+
+  authorizePayChannel: async (channel) => {
+    await new Promise((resolve) => setTimeout(resolve, 1500));
+    set((state) => ({
+      autoPayConfig: {
+        ...state.autoPayConfig,
+        [`${channel}Authorized`]: true,
+        payChannel: channel,
+      },
+    }));
+    return true;
+  },
+
+  triggerAutoPayForPending: async () => {
+    const state = get();
+    if (!state.autoPayConfig.enabled) return false;
+
+    const pendingRecords = state.trafficRecords.filter(
+      (r) => r.status === '待扣费' && !r.isHolidayFree
+    );
+    if (pendingRecords.length === 0) return false;
+
+    await new Promise((resolve) => setTimeout(resolve, 1500));
+
+    const channelAuthorized =
+      (state.autoPayConfig.payChannel === 'wechat' && state.autoPayConfig.wechatAuthorized) ||
+      (state.autoPayConfig.payChannel === 'alipay' && state.autoPayConfig.alipayAuthorized) ||
+      (state.autoPayConfig.payChannel === 'bank' && state.autoPayConfig.bankAuthorized);
+
+    let newBalance = state.etcCard.balance;
+    let recharged = false;
+    if (!channelAuthorized) {
+      set((s) => ({
+        trafficRecords: s.trafficRecords.map((r) =>
+          r.status === '待扣费' && !r.isHolidayFree
+            ? {
+                ...r,
+                paymentFailureReason: `${state.autoPayConfig.payChannel === 'wechat' ? '微信' : state.autoPayConfig.payChannel === 'alipay' ? '支付宝' : '银行卡'}代扣未授权，请先完成授权`,
+                paymentFailureCode: 'E_AUTH_REQUIRED',
+                autoPayTriggered: true,
+                autoPayTriggeredAt: new Date().toISOString(),
+                autoPayResult: 'failed',
+                paymentRetryCount: (r.paymentRetryCount || 0) + 1,
+                lastPaymentAttempt: new Date().toISOString(),
+              }
+            : r
+        ),
+      }));
+      return false;
+    }
+
+    const totalPending = pendingRecords.reduce((sum, r) => sum + r.actualFee, 0);
+    if (newBalance < totalPending && state.autoPayConfig.enabled) {
+      newBalance = newBalance + state.autoPayConfig.rechargeAmount;
+      recharged = true;
+    }
+    newBalance = Math.max(0, newBalance - totalPending);
+
+    set((s) => ({
+      trafficRecords: s.trafficRecords.map((r) =>
+        r.status === '待扣费' && !r.isHolidayFree
+          ? {
+              ...r,
+              status: '已完成' as const,
+              paymentMethod: 'autopay',
+              autoPayTriggered: true,
+              autoPayTriggeredAt: new Date().toISOString(),
+              autoPayResult: 'success',
+              paymentFailureReason: undefined,
+              paymentFailureCode: undefined,
+              lowBalanceWarning: false,
+              lowBalanceWarningAt: null,
+              lastPaymentAttempt: new Date().toISOString(),
+            }
+          : r
+      ),
+      etcCard: { ...s.etcCard, balance: Math.round(newBalance * 100) / 100 },
+      autoPayConfig: {
+        ...s.autoPayConfig,
+        lastTriggeredAt: new Date().toISOString(),
+        totalAutoRechargeCount:
+          recharged
+            ? s.autoPayConfig.totalAutoRechargeCount + 1
+            : s.autoPayConfig.totalAutoRechargeCount,
+        totalAutoRechargeAmount:
+          recharged
+            ? s.autoPayConfig.totalAutoRechargeAmount + s.autoPayConfig.rechargeAmount
+            : s.autoPayConfig.totalAutoRechargeAmount,
+      },
+    }));
+
+    return true;
   },
 }));

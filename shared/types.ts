@@ -16,6 +16,7 @@ export interface EtcCard {
   userId: string;
   vehicleId: string;
   expiryDate: string;
+  autoPayEnabled?: boolean;
 }
 
 export interface Vehicle {
@@ -52,10 +53,30 @@ export interface TrafficRecord {
   status: '已完成' | '待扣费' | '异常';
   paymentRetryCount?: number;
   lastPaymentAttempt?: string | null;
-  paymentMethod?: 'balance' | 'autopay';
+  paymentMethod?: 'balance' | 'autopay' | 'wechat' | 'alipay';
   autoPayEnabled?: boolean;
   isHolidayFree?: boolean;
   holidayName?: string;
+  paymentFailureReason?: string;
+  paymentFailureCode?: string;
+  autoPayTriggered?: boolean;
+  autoPayTriggeredAt?: string | null;
+  autoPayResult?: 'success' | 'failed' | 'pending' | null;
+  lowBalanceWarning?: boolean;
+  lowBalanceWarningAt?: string | null;
+}
+
+export interface AutoPayConfig {
+  enabled: boolean;
+  threshold: number;
+  rechargeAmount: number;
+  payChannel: 'wechat' | 'alipay' | 'bank';
+  wechatAuthorized: boolean;
+  alipayAuthorized: boolean;
+  bankAuthorized: boolean;
+  lastTriggeredAt?: string | null;
+  totalAutoRechargeCount: number;
+  totalAutoRechargeAmount: number;
 }
 
 export interface TollCalculateRequest {

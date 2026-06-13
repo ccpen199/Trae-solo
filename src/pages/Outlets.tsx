@@ -16,17 +16,17 @@ import {
   X,
   Ticket,
 } from 'lucide-react';
-import { MapContainer, TileLayer, Marker, Popup, Circle } from 'react-leaflet';
+import { MapContainer, Marker, Popup, Circle } from 'react-leaflet';
 import L from 'leaflet';
 import { useStore } from '../store/useStore';
 import dayjs from 'dayjs';
 
-const customIcon = new L.Icon({
-  iconUrl: 'https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-violet.png',
-  iconSize: [30, 45],
-  iconAnchor: [15, 45],
-  popupAnchor: [1, -34],
-  shadowSize: [41, 41],
+const customIcon = L.divIcon({
+  className: '',
+  html: '<span class="local-map-marker local-map-marker-outlet"></span>',
+  iconSize: [30, 30],
+  iconAnchor: [15, 15],
+  popupAnchor: [0, -15],
 });
 
 export default function Outlets() {
@@ -171,11 +171,8 @@ export default function Outlets() {
                     center={mapCenter as [number, number]}
                     zoom={11}
                     style={{ height: '100%', width: '100%' }}
+                    className="local-leaflet-map"
                   >
-                    <TileLayer
-                      attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>'
-                      url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-                    />
                     {filteredOutlets.map((outlet) => (
                       <div key={outlet.id}>
                         <Circle

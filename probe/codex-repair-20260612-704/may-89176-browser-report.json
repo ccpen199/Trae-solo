@@ -1,0 +1,187 @@
+{
+  "ok": true,
+  "generatedAt": "2026-06-12T07:23:44.745Z",
+  "order": "may-89176",
+  "roundIndex": 704,
+  "captureId": "may-89176-codex-704",
+  "url": "http://127.0.0.1:49176/",
+  "initialUrl": "http://127.0.0.1:49176/",
+  "finalUrl": "http://127.0.0.1:49176/",
+  "status": 200,
+  "title": "My Trae Project",
+  "initialTitle": "My Trae Project",
+  "navigationError": "",
+  "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89176/probe/codex-repair-20260612-704/may-89176-codex-704-frontend.png",
+  "screenshotPaths": [
+    "/Users/chen/Documents/trae_projects/local_projects/may-89176/probe/codex-repair-20260612-704/may-89176-codex-704-structure-01-首屏.png"
+  ],
+  "issueTextPreview": "",
+  "targetReason": "未识别到特定问题页，保留首屏验收截图",
+  "targetKind": "smoke",
+  "targetMatched": false,
+  "targetActions": [
+    {
+      "action": "keep-current-page",
+      "label": "未识别到特定问题页，保留首屏验收截图",
+      "ok": true
+    }
+  ],
+  "authFlow": {
+    "detected": false,
+    "attempted": false,
+    "success": false,
+    "finalUrl": "http://127.0.0.1:49176/",
+    "message": "",
+    "actions": []
+  },
+  "businessAudit": {
+    "actions": [],
+    "snapshots": [
+      {
+        "label": "首屏",
+        "url": "http://127.0.0.1:49176/",
+        "title": "My Trae Project",
+        "headings": [],
+        "navLabels": [],
+        "buttons": [],
+        "links": [],
+        "inputs": [],
+        "tables": [],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "",
+        "layout": {
+          "viewportWidth": 1504,
+          "viewportHeight": 1000,
+          "scrollWidth": 1504,
+          "scrollHeight": 1000,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89176-codex-704-structure-01-首屏",
+          "label": "首屏",
+          "finalUrl": "http://127.0.0.1:49176/",
+          "title": "My Trae Project",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89176/probe/codex-repair-20260612-704/may-89176-codex-704-structure-01-首屏.json",
+          "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89176/probe/codex-repair-20260612-704/may-89176-codex-704-structure-01-首屏.png",
+          "elementCount": 9,
+          "interactiveCount": 0,
+          "interactiveLabels": []
+        }
+      }
+    ],
+    "findings": [
+      "首屏 页面打开后是空白，没有渲染业务内容、表单或列表。"
+    ],
+    "actionHints": [
+      "修复 首屏 的路由组件挂载、接口初始化和错误兜底，确保进入页面后直接显示可操作内容。"
+    ],
+    "emptyPages": [],
+    "overflowPages": [],
+    "blankPages": [
+      "首屏"
+    ],
+    "apiFailurePaths": [],
+    "goalTerms": [],
+    "clickedActionDescriptors": [],
+    "secondaryActionClicks": 0,
+    "structureCaptures": [
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89176-codex-704-structure-01-首屏",
+        "label": "首屏",
+        "finalUrl": "http://127.0.0.1:49176/",
+        "title": "My Trae Project",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89176/probe/codex-repair-20260612-704/may-89176-codex-704-structure-01-首屏.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89176/probe/codex-repair-20260612-704/may-89176-codex-704-structure-01-首屏.png",
+        "elementCount": 9,
+        "interactiveCount": 0,
+        "interactiveLabels": []
+      }
+    ],
+    "representativeScreenshotUrl": "http://127.0.0.1:49176/",
+    "representativeScreenshotLabel": "首屏"
+  },
+  "websiteStructureCapture": {
+    "module": "website_structure_capture",
+    "captureCount": 1,
+    "captures": [
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89176-codex-704-structure-01-首屏",
+        "label": "首屏",
+        "finalUrl": "http://127.0.0.1:49176/",
+        "title": "My Trae Project",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89176/probe/codex-repair-20260612-704/may-89176-codex-704-structure-01-首屏.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89176/probe/codex-repair-20260612-704/may-89176-codex-704-structure-01-首屏.png",
+        "elementCount": 9,
+        "interactiveCount": 0,
+        "interactiveLabels": []
+      }
+    ]
+  },
+  "screenshotMetrics": {
+    "width": 1536,
+    "height": 1000,
+    "scrollWidth": 1504,
+    "scrollHeight": 1000
+  },
+  "initialBodyTextPreview": "",
+  "bodyTextPreview": "",
+  "apiBase": "",
+  "businessGoalPreview": "",
+  "apiResponses": [],
+  "apiChecks": [],
+  "dialogs": [],
+  "consoleMessages": [
+    {
+      "type": "debug",
+      "text": "[vite] connecting...",
+      "location": {
+        "url": "http://127.0.0.1:49176/@vite/client",
+        "lineNumber": 788,
+        "columnNumber": 8
+      }
+    },
+    {
+      "type": "debug",
+      "text": "[vite] connected.",
+      "location": {
+        "url": "http://127.0.0.1:49176/@vite/client",
+        "lineNumber": 911,
+        "columnNumber": 14
+      }
+    },
+    {
+      "type": "error",
+      "text": "/Users/chen/Documents/trae_projects/local_projects/may-89176/src/pages/TrafficRecords.tsx: Unexpected token, expected \",\" (333:86)\n\n  331 |               </div>\n  332 |\n> 333 |               {filter === '待扣费' && (pendingRecords.length > 0 || holidayPendingRecords\n      |                                                                                       ^\n331|                </div>\n332|  \n333|                {filter === '待扣费' && (pendingRecords.length > 0 || holidayPendingRecords\n   |                                                                                        ^",
+      "location": {
+        "url": "http://127.0.0.1:49176/index.html?html-proxy&index=0.js",
+        "lineNumber": 4,
+        "columnNumber": 20
+      }
+    },
+    {
+      "type": "error",
+      "text": "Failed to load resource: the server responded with a status of 500 (Internal Server Error)",
+      "location": {
+        "url": "http://127.0.0.1:49176/src/pages/TrafficRecords.tsx",
+        "lineNumber": 0,
+        "columnNumber": 0
+      }
+    }
+  ],
+  "requestFailures": [
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:49176/src/pages/TrafficRecords.tsx",
+      "errorText": "net::ERR_ABORTED"
+    }
+  ],
+  "responseErrors": [
+    {
+      "status": 500,
+      "url": "http://127.0.0.1:49176/src/pages/TrafficRecords.tsx"
+    }
+  ]
+}

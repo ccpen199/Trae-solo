@@ -104,11 +104,54 @@ body {
 .leaflet-container {
   border-radius: 0.75rem;
   font-family: inherit;
+  background:
+    linear-gradient(90deg, rgba(15, 82, 186, 0.08) 1px, transparent 1px),
+    linear-gradient(0deg, rgba(15, 82, 186, 0.08) 1px, transparent 1px),
+    radial-gradient(circle at 25% 35%, rgba(16, 185, 129, 0.24), transparent 20%),
+    radial-gradient(circle at 72% 55%, rgba(255, 107, 53, 0.2), transparent 18%),
+    #eef6ff;
+  background-size: 44px 44px, 44px 44px, 100% 100%, 100% 100%, auto;
 }
 
 .leaflet-popup-content-wrapper {
   border-radius: 0.75rem;
   box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+}
+
+.local-leaflet-map::after {
+  content: '';
+  position: absolute;
+  inset: 18px;
+  pointer-events: none;
+  border-radius: 0.75rem;
+  background:
+    linear-gradient(135deg, transparent 0 46%, rgba(15, 82, 186, 0.16) 46% 49%, transparent 49%),
+    linear-gradient(26deg, transparent 0 56%, rgba(255, 107, 53, 0.14) 56% 59%, transparent 59%);
+}
+
+.local-map-marker {
+  display: block;
+  width: 100%;
+  height: 100%;
+  border: 3px solid #ffffff;
+  border-radius: 9999px;
+  box-shadow: 0 8px 18px rgba(15, 23, 42, 0.28);
+}
+
+.local-map-marker-start {
+  background: #10b981;
+}
+
+.local-map-marker-end {
+  background: #ef4444;
+}
+
+.local-map-marker-gantry {
+  background: #0ea5e9;
+}
+
+.local-map-marker-outlet {
+  background: #8b5cf6;
 }
 
 /* Custom scrollbar */

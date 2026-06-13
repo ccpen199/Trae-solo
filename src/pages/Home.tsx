@@ -1,8 +1,10 @@
+import { useState } from 'react';
 import { motion } from 'framer-motion';
 import {
   Wallet,
   Car,
   TrendingUp,
+  TrendingDown,
   BadgePercent,
   ArrowRight,
   CreditCard,
@@ -11,15 +13,30 @@ import {
   RefreshCw,
   Bell,
   ChevronRight,
+  BarChart3,
+  Activity,
 } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
-import { Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, AreaChart, Area } from 'recharts';
+import {
+  Line,
+  XAxis,
+  YAxis,
+  CartesianGrid,
+  Tooltip,
+  ResponsiveContainer,
+  AreaChart,
+  Area,
+  Legend,
+  ComposedChart,
+  Bar,
+} from 'recharts';
 import { useStore } from '../store/useStore';
 import dayjs from 'dayjs';
 
 export default function Home() {
   const navigate = useNavigate();
   const { etcCard, vehicle, user, trafficRecords, monthlyTrafficData, rechargeBalance } = useStore();
+  const [chartType, setChartType] = useState<'trend' | 'comparison'>('trend');
 
   const quickActions = [
     { label: '立即充值', icon: CreditCard, color: 'from-primary-500 to-primary-600', path: '/recharge' },
@@ -42,6 +59,21 @@ export default function Home() {
   const handleQuickRecharge = (amount: number) => {
     rechargeBalance(amount);
   };
+
+  const avgMonthlyAmount = monthlyTrafficData.length > 0
+    ? monthlyTrafficData.reduce((sum, d) => sum + d.amount, 0) / monthlyTrafficData.length
+    : 0;
+  const avgMonthlyCount = monthlyTrafficData.length > 0
+    ? monthlyTrafficData.reduce((sum, d) => sum + d.count, 0) / monthlyTrafficData.length
+    : 0;
+  const latestMonth = monthlyTrafficData[monthlyTrafficData.length - 1];
+  const prevMonth = monthlyTrafficData[monthlyTrafficData.length - 2];
+  const amountMoM = prevMonth && prevMonth.amount > 0
+    ? ((latestMonth?.amount || 0) - prevMonth.amount) / prevMonth.amount * 100
+    : 0;
+  const countMoM = prevMonth && prevMonth.count > 0
+    ? ((latestMonth?.count || 0) - prevMonth.count) / prevMonth.count * 100
+    : 0;
 
   return (
     <div className="min-h-screen bg-dark-100 py-8">
@@ -172,65 +204,258 @@ export default function Home() {
 
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
           <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, delay: 0.2 }}
-            className="lg:col-span-2 card p-6"
-          >
-            <div className="flex items-center justify-between mb-6">
-              <h3 className="text-lg font-semibold text-dark-800">通行趋势</h3>
-              <div className="flex items-center gap-4 text-sm">
-                <span className="flex items-center gap-2">
-                  <span className="w-3 h-3 bg-primary-500 rounded-full" />
-                  通行次数
-                </span>
-                <span className="flex items-center gap-2">
-                  <span className="w-3 h-3 bg-accent-500 rounded-full" />
-                  消费金额
-                </span>
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5, delay: 0.2 }}
+          className="lg:col-span-2 card p-6"
+        >
+          <div className="flex items-center justify-between mb-5 flex-wrap gap-3">
+            <div>
+              <h3 className="text-lg font-semibold text-dark-800 flex items-center gap-2">
+                <BarChart3 className="w-5 h-5 text-primary-500" />
+                通行趋势
+              </h3>
+              <p className="text-xs text-dark-400 mt-0.5">
+                数据统计：{monthlyTrafficData.length} 个月运营数据 · 自动更新
+              </p>
+            </div>
+            <div className="flex items-center gap-2">
+              <div className="flex bg-dark-100 rounded-lg p-0.5">
+                <button
+                  onClick={() => setChartType('trend')}
+                  className={`px-3 py-1.5 rounded-md text-xs font-medium transition-all ${
+                    chartType === 'trend'
+                      ? 'bg-white text-primary-600 shadow-sm'
+                      : 'text-dark-500 hover:text-dark-700'
+                  }`}
+                >
+                  趋势图
+                </button>
+                <button
+                  onClick={() => setChartType('comparison')}
+                  className={`px-3 py-1.5 rounded-md text-xs font-medium transition-all ${
+                    chartType === 'comparison'
+                      ? 'bg-white text-primary-600 shadow-sm'
+                      : 'text-dark-500 hover:text-dark-700'
+                  }`}
+                >
+                  对比图
+                </button>
               </div>
             </div>
-            <div className="h-64">
-              <ResponsiveContainer width="100%" height="100%">
-                <AreaChart data={monthlyTrafficData}>
+          </div>
+
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-3 mb-5">
+            <div className="p-3 bg-dark-50 rounded-xl">
+              <p className="text-xs text-dark-500">月均消费</p>
+              <p className="text-lg font-bold font-mono text-accent-600">¥{avgMonthlyAmount.toFixed(0)}</p>
+              <p className={`text-xs mt-0.5 flex items-center gap-0.5 ${amountMoM >= 0 ? 'text-success' : 'text-danger'}`}>
+                {amountMoM >= 0 ? <TrendingUp className="w-3 h-3" /> : <TrendingDown className="w-3 h-3" />}
+                {Math.abs(amountMoM).toFixed(1)}% 环比
+              </p>
+            </div>
+            <div className="p-3 bg-dark-50 rounded-xl">
+              <p className="text-xs text-dark-500">月均通行</p>
+              <p className="text-lg font-bold font-mono text-primary-600">{Math.round(avgMonthlyCount)} 次</p>
+              <p className={`text-xs mt-0.5 flex items-center gap-0.5 ${countMoM >= 0 ? 'text-success' : 'text-danger'}`}>
+                {countMoM >= 0 ? <TrendingUp className="w-3 h-3" /> : <TrendingDown className="w-3 h-3" />}
+                {Math.abs(countMoM).toFixed(1)}% 环比
+              </p>
+            </div>
+            <div className="p-3 bg-dark-50 rounded-xl">
+              <p className="text-xs text-dark-500">累计消费</p>
+              <p className="text-lg font-bold font-mono text-dark-800">
+                ¥{monthlyTrafficData.reduce((s, d) => s + d.amount, 0).toFixed(0)}
+              </p>
+              <p className="text-xs mt-0.5 text-dark-400">
+                {monthlyTrafficData.length} 个月
+              </p>
+            </div>
+            <div className="p-3 bg-dark-50 rounded-xl">
+              <p className="text-xs text-dark-500">累计通行</p>
+              <p className="text-lg font-bold font-mono text-dark-800">
+                {monthlyTrafficData.reduce((s, d) => s + d.count, 0)} 次
+              </p>
+              <p className="text-xs mt-0.5 text-dark-400">
+                日均 {Math.round(monthlyTrafficData.reduce((s, d) => s + d.count, 0) / (monthlyTrafficData.length * 30))} 次
+              </p>
+            </div>
+          </div>
+
+          <div className="h-72 min-h-[288px] w-full min-w-0 relative" style={{ position: 'relative', width: '100%', height: 288 }}>
+            <ResponsiveContainer width="100%" height="100%">
+              {chartType === 'trend' ? (
+                <AreaChart data={monthlyTrafficData} margin={{ top: 10, right: 20, left: 0, bottom: 0 }}>
                   <defs>
                     <linearGradient id="colorAmount" x1="0" y1="0" x2="0" y2="1">
-                      <stop offset="5%" stopColor="#FF6B35" stopOpacity={0.3} />
+                      <stop offset="5%" stopColor="#FF6B35" stopOpacity={0.25} />
                       <stop offset="95%" stopColor="#FF6B35" stopOpacity={0} />
                     </linearGradient>
+                    <linearGradient id="colorCount" x1="0" y1="0" x2="0" y2="1">
+                      <stop offset="5%" stopColor="#0F52BA" stopOpacity={0.15} />
+                      <stop offset="95%" stopColor="#0F52BA" stopOpacity={0} />
+                    </linearGradient>
                   </defs>
-                  <CartesianGrid strokeDasharray="3 3" stroke="#E5E7EB" />
-                  <XAxis dataKey="month" stroke="#6B7280" fontSize={12} />
-                  <YAxis stroke="#6B7280" fontSize={12} />
+                  <CartesianGrid strokeDasharray="3 3" stroke="#E5E7EB" vertical={false} />
+                  <XAxis
+                    dataKey="month"
+                    stroke="#9CA3AF"
+                    fontSize={11}
+                    tickLine={false}
+                    axisLine={{ stroke: '#E5E7EB' }}
+                  />
+                  <YAxis
+                    yAxisId="left"
+                    stroke="#FF6B35"
+                    fontSize={11}
+                    tickLine={false}
+                    axisLine={false}
+                    tickFormatter={(value) => `¥${value}`}
+                  />
+                  <YAxis
+                    yAxisId="right"
+                    orientation="right"
+                    stroke="#0F52BA"
+                    fontSize={11}
+                    tickLine={false}
+                    axisLine={false}
+                    tickFormatter={(value) => `${value}次`}
+                  />
                   <Tooltip
                     contentStyle={{
                       backgroundColor: 'white',
                       border: '1px solid #E5E7EB',
-                      borderRadius: '8px',
-                      boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.1)',
+                      borderRadius: '10px',
+                      boxShadow: '0 10px 25px -5px rgba(0, 0, 0, 0.1)',
+                      padding: '10px 14px',
                     }}
+                    labelStyle={{
+                      fontWeight: 600,
+                      color: '#1F2937',
+                      marginBottom: 6,
+                      fontSize: 13,
+                    }}
+                    itemStyle={{ fontSize: 12, padding: 2 }}
+                    formatter={(value, name) => [
+                      name === '消费金额' ? `¥${Number(value).toFixed(2)}` : `${value} 次`,
+                      name
+                    ]}
+                  />
+                  <Legend
+                    iconType="circle"
+                    iconSize={8}
+                    wrapperStyle={{ fontSize: 12, paddingTop: 8 }}
                   />
                   <Area
+                    yAxisId="left"
                     type="monotone"
                     dataKey="amount"
                     stroke="#FF6B35"
-                    strokeWidth={2}
+                    strokeWidth={2.5}
                     fill="url(#colorAmount)"
                     name="消费金额"
+                    activeDot={{ r: 5, strokeWidth: 2, stroke: '#fff' }}
                   />
-                  <Line
+                  <Area
+                    yAxisId="right"
                     type="monotone"
                     dataKey="count"
                     stroke="#0F52BA"
                     strokeWidth={2}
-                    dot={{ fill: '#0F52BA', strokeWidth: 2 }}
+                    fill="url(#colorCount)"
                     name="通行次数"
-                    yAxisId={0}
+                    activeDot={{ r: 5, strokeWidth: 2, stroke: '#fff' }}
                   />
                 </AreaChart>
-              </ResponsiveContainer>
+              ) : (
+                <ComposedChart data={monthlyTrafficData} margin={{ top: 10, right: 20, left: 0, bottom: 0 }}>
+                  <defs>
+                    <linearGradient id="barAmount" x1="0" y1="0" x2="0" y2="1">
+                      <stop offset="0%" stopColor="#FF6B35" stopOpacity={0.9} />
+                      <stop offset="100%" stopColor="#FF6B35" stopOpacity={0.6} />
+                    </linearGradient>
+                  </defs>
+                  <CartesianGrid strokeDasharray="3 3" stroke="#E5E7EB" vertical={false} />
+                  <XAxis
+                    dataKey="month"
+                    stroke="#9CA3AF"
+                    fontSize={11}
+                    tickLine={false}
+                    axisLine={{ stroke: '#E5E7EB' }}
+                  />
+                  <YAxis
+                    yAxisId="left"
+                    stroke="#FF6B35"
+                    fontSize={11}
+                    tickLine={false}
+                    axisLine={false}
+                    tickFormatter={(value) => `¥${value}`}
+                  />
+                  <YAxis
+                    yAxisId="right"
+                    orientation="right"
+                    stroke="#0F52BA"
+                    fontSize={11}
+                    tickLine={false}
+                    axisLine={false}
+                    tickFormatter={(value) => `${value}次`}
+                  />
+                  <Tooltip
+                    contentStyle={{
+                      backgroundColor: 'white',
+                      border: '1px solid #E5E7EB',
+                      borderRadius: '10px',
+                      boxShadow: '0 10px 25px -5px rgba(0, 0, 0, 0.1)',
+                      padding: '10px 14px',
+                    }}
+                    labelStyle={{
+                      fontWeight: 600,
+                      color: '#1F2937',
+                      marginBottom: 6,
+                      fontSize: 13,
+                    }}
+                    itemStyle={{ fontSize: 12, padding: 2 }}
+                    formatter={(value, name) => [
+                      name === '消费金额' ? `¥${Number(value).toFixed(2)}` : `${value} 次`,
+                      name
+                    ]}
+                  />
+                  <Legend
+                    iconType="circle"
+                    iconSize={8}
+                    wrapperStyle={{ fontSize: 12, paddingTop: 8 }}
+                  />
+                  <Bar
+                    yAxisId="left"
+                    dataKey="amount"
+                    fill="url(#barAmount)"
+                    radius={[4, 4, 0, 0]}
+                    name="消费金额"
+                    barSize={28}
+                  />
+                  <Line
+                    yAxisId="right"
+                    type="monotone"
+                    dataKey="count"
+                    stroke="#0F52BA"
+                    strokeWidth={2.5}
+                    dot={{ fill: '#fff', stroke: '#0F52BA', strokeWidth: 2, r: 4 }}
+                    name="通行次数"
+                    activeDot={{ r: 6, strokeWidth: 2, stroke: '#fff' }}
+                  />
+                </ComposedChart>
+              )}
+            </ResponsiveContainer>
+          </div>
+
+          <div className="mt-4 pt-4 border-t border-dark-100 flex items-center justify-between text-xs text-dark-400">
+            <div className="flex items-center gap-1">
+              <Activity className="w-3.5 h-3.5 text-success" />
+              <span>数据正常</span>
             </div>
-          </motion.div>
+            <span>数据更新时间：{dayjs().format('YYYY-MM-DD HH:mm')}</span>
+          </div>
+        </motion.div>
 
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -253,7 +478,7 @@ export default function Home() {
                 <div
                   key={record.id}
                   className="p-4 bg-dark-50 rounded-xl hover:bg-dark-100 transition-all duration-300 cursor-pointer group"
-                  onClick={() => navigate(`/traffic/${record.id}`)}
+                  onClick={() => navigate('/traffic')}
                 >
                   <div className="flex items-center justify-between mb-2">
                     <div className="flex items-center gap-3">

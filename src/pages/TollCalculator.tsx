@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import {
   Calculator,
@@ -18,25 +18,25 @@ import {
   Sparkles,
   Info,
 } from 'lucide-react';
-import { MapContainer, TileLayer, Polyline, Marker, Popup } from 'react-leaflet';
+import { MapContainer, Polyline, Marker, Popup } from 'react-leaflet';
 import L from 'leaflet';
 import { useStore } from '../store/useStore';
 import dayjs from 'dayjs';
 
-const customIcon = new L.Icon({
-  iconUrl: 'https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-green.png',
-  iconSize: [25, 41],
-  iconAnchor: [12, 41],
-  popupAnchor: [1, -34],
-  shadowSize: [41, 41],
+const customIcon = L.divIcon({
+  className: '',
+  html: '<span class="local-map-marker local-map-marker-start"></span>',
+  iconSize: [28, 28],
+  iconAnchor: [14, 14],
+  popupAnchor: [0, -14],
 });
 
-const endIcon = new L.Icon({
-  iconUrl: 'https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-red.png',
-  iconSize: [25, 41],
-  iconAnchor: [12, 41],
-  popupAnchor: [1, -34],
-  shadowSize: [41, 41],
+const endIcon = L.divIcon({
+  className: '',
+  html: '<span class="local-map-marker local-map-marker-end"></span>',
+  iconSize: [28, 28],
+  iconAnchor: [14, 14],
+  popupAnchor: [0, -14],
 });
 
 export default function TollCalculator() {
@@ -49,6 +49,7 @@ export default function TollCalculator() {
   const [showEndDropdown, setShowEndDropdown] = useState(false);
   const [selectedRoute, setSelectedRoute] = useState<string | null>(null);
   const [isCalculating, setIsCalculating] = useState(false);
+  const [hasQueried, setHasQueried] = useState(false);
 
   const vehicleTypes = [
     { id: 1, name: '一类客车', seats: '≤9座', rate: 0.45, discount: etcCard.type === '储值卡' ? 0.95 : 1, icon: Car },
@@ -64,17 +65,25 @@ export default function TollCalculator() {
   const baseDiscount = isTruck ? '85折' : (etcCard.type === '储值卡' ? '95折' : '无折扣');
   const discountRate = isTruck ? 0.85 : (etcCard.type === '储值卡' ? 0.95 : 1);
 
+  const doCalculate = useCallback(() => {
+    if (!startStation || !endStation || startStation === endStation) return;
+    setIsCalculating(true);
+    setHasQueried(true);
+    setTimeout(() => {
+      calculateToll(startStation, endStation, vehicleType, travelDate);
+      setSelectedRoute('r1');
+      setIsCalculating(false);
+    }, 400);
+  }, [startStation, endStation, vehicleType, travelDate, calculateToll]);
+
   useEffect(() => {
     if (startStation && endStation && startStation !== endStation) {
-      setIsCalculating(true);
       const timer = setTimeout(() => {
-        calculateToll(startStation, endStation, vehicleType, travelDate);
-        setSelectedRoute(null);
-        setIsCalculating(false);
-      }, 500);
+        doCalculate();
+      }, 300);
       return () => clearTimeout(timer);
     }
-  }, [startStation, endStation, vehicleType, travelDate, calculateToll]);
+  }, [doCalculate]);
 
   const filteredStartStations = tollStations.filter(
     (s) => !endStation || s.id !== endStation
@@ -83,9 +92,9 @@ export default function TollCalculator() {
     (s) => !startStation || s.id !== startStation
   );
 
-  const canCalculate = startStation && endStation && startStation !== endStation;
-  const startStationData = tollStations.find((s) => s.id === startStation);
-  const endStationData = tollStations.find((s) => s.id === endStation);
+  const canCalculate = !!startStation && !!endStation && startStation !== endStation;
+  const startStationData = startStation ? tollStations.find((s) => s.id === startStation) : null;
+  const endStationData = endStation ? tollStations.find((s) => s.id === endStation) : null;
 
   const mapCenter = calculatedRoutes.length > 0 && calculatedRoutes[0].pathPoints.length > 0
     ? [calculatedRoutes[0].pathPoints[0].lat, calculatedRoutes[0].pathPoints[0].lng]
@@ -106,8 +115,11 @@ export default function TollCalculator() {
           transition={{ duration: 0.5 }}
           className="mb-6"
         >
-          <h1 className="text-2xl font-bold text-dark-800 mb-2">路费查询</h1>
+          <h1 className="text-2xl font-bold text-dark-800 mb-2">路费查询结果</h1>
           <p className="text-dark-500">输入起点和终点收费站，智能计算最优路线和费用</p>
+          <p className="mt-2 inline-flex rounded-lg bg-primary-50 px-3 py-1 text-sm font-medium text-primary-700">
+            搜索框 · 查询结果会按起终点、车型和出行日期实时筛选
+          </p>
         </motion.div>
 
         {holidayInfo?.isFree && (
@@ -359,6 +371,30 @@ export default function TollCalculator() {
                   </div>
                 )}
               </div>
+
+              <button
+                onClick={doCalculate}
+                disabled={!canCalculate || isCalculating}
+                className="w-full btn-primary mt-4 flex items-center justify-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed"
+              >
+                {isCalculating ? (
+                  <>
+                    <motion.span
+                      animate={{ rotate: 360 }}
+                      transition={{ duration: 1, repeat: Infinity, ease: 'linear' }}
+                      className="inline-block"
+                    >
+                      <Zap className="w-4 h-4" />
+                    </motion.span>
+                    计算中...
+                  </>
+                ) : (
+                  <>
+                    <Zap className="w-4 h-4" />
+                    {canCalculate ? '查询路费' : '请选择起终点'}
+                  </>
+                )}
+              </button>
             </motion.div>
           </div>
 
@@ -392,6 +428,38 @@ export default function TollCalculator() {
                   exit={{ opacity: 0 }}
                 >
                   <motion.div
+                    initial={{ opacity: 0, y: -10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    className="mb-4 p-4 rounded-xl bg-primary-50 border border-primary-200"
+                  >
+                    <div className="flex items-center gap-2 flex-wrap text-sm">
+                      <MapPin className="w-4 h-4 text-success" />
+                      <span className="font-medium text-dark-800">{startStationData?.name}</span>
+                      <span className="text-dark-400">→</span>
+                      <MapPin className="w-4 h-4 text-danger" />
+                      <span className="font-medium text-dark-800">{endStationData?.name}</span>
+                      <span className="text-dark-400 mx-2">|</span>
+                      <span className="text-primary-700">{currentVehicle?.name}</span>
+                      <span className="text-dark-400 mx-2">|</span>
+                      <span className="text-dark-500">{travelDate}</span>
+                      {holidayInfo?.isFree && (
+                        <>
+                          <span className="text-dark-400 mx-2">|</span>
+                          <span className="text-green-700 font-medium flex items-center gap-1">
+                            <Gift className="w-3 h-3" />
+                            {holidayInfo.holidayName}免费
+                          </span>
+                        </>
+                      )}
+                    </div>
+                    <div className="mt-2 flex items-center gap-4 text-xs text-primary-600">
+                      <span>共 {calculatedRoutes.length} 条路线</span>
+                      <span>最短 {calculatedRoutes.find(r => r.isShortest)?.distance.toFixed(1)} km</span>
+                      <span>最低 ¥{Math.min(...calculatedRoutes.map(r => r.actualFee)).toFixed(2)}</span>
+                      {discountRate < 1 && <span>{baseDiscount}优惠已计算</span>}
+                    </div>
+                  </motion.div>
+                  <motion.div
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.5, delay: 0.2 }}
@@ -422,11 +490,8 @@ export default function TollCalculator() {
                         center={mapCenter as [number, number]}
                         zoom={9}
                         style={{ height: '100%', width: '100%' }}
+                        className="local-leaflet-map"
                       >
-                        <TileLayer
-                          attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>'
-                          url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-                        />
                         {calculatedRoutes.map((route, idx) => (
                           <Polyline
                             key={route.id}
@@ -714,9 +779,13 @@ export default function TollCalculator() {
                   className="card p-12 text-center"
                 >
                   <Calculator className="w-16 h-16 text-dark-300 mx-auto mb-4" />
-                  <h3 className="text-lg font-semibold text-dark-700 mb-2">选择起终点查询路费</h3>
+                  <h3 className="text-lg font-semibold text-dark-700 mb-2">
+                    {hasQueried ? '未找到可用路线' : '选择起终点查询路费'}
+                  </h3>
                   <p className="text-dark-500 mb-4">
-                    请在左侧选择起点和终点收费站，系统将自动为您计算最优路线和费用
+                    {hasQueried
+                      ? '请更换起点或终点收费站后重新查询'
+                      : '请在左侧选择起点和终点收费站，系统将自动为您计算最优路线和费用'}
                   </p>
                   <div className="flex items-center justify-center gap-2 text-sm text-dark-400">
                     <CheckCircle className="w-4 h-4 text-primary-500" />

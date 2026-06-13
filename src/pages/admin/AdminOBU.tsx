@@ -18,7 +18,6 @@ import {
   Calendar,
 } from 'lucide-react';
 import { useStore } from '../../store/useStore';
-import AdminSidebar from '../../components/AdminSidebar';
 import dayjs from 'dayjs';
 
 export default function AdminOBU() {
@@ -80,9 +79,7 @@ export default function AdminOBU() {
   });
 
   return (
-    <div className="flex min-h-screen bg-dark-900">
-      <AdminSidebar />
-      <div className="flex-1 p-8">
+    <div>
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
@@ -280,7 +277,6 @@ export default function AdminOBU() {
             </div>
           )}
         </motion.div>
-      </div>
     </div>
   );
 }

@@ -1,0 +1,29 @@
+{
+  "order": "may-89176",
+  "url": "http://127.0.0.1:49176/",
+  "steps": [
+    {
+      "step": "open-home",
+      "ok": true,
+      "title": "粤通卡服务 - 省级交通缴费数字中台"
+    },
+    {
+      "step": "open-purchase-submit-page",
+      "ok": true,
+      "url": "http://127.0.0.1:49176/recharge"
+    },
+    {
+      "step": "select-recharge-method-and-amount",
+      "ok": true
+    },
+    {
+      "step": "submit-order-success",
+      "ok": true,
+      "successText": "充值成功"
+    }
+  ],
+  "consoleErrors": [],
+  "requestFailures": [],
+  "responseErrors": [],
+  "ok": true
+}

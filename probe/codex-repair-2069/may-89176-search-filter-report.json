@@ -1,0 +1,25 @@
+{
+  "order": "may-89176",
+  "url": "http://127.0.0.1:49176/traffic",
+  "steps": [
+    {
+      "step": "open-traffic",
+      "ok": true,
+      "title": "粤通卡服务 - 省级交通缴费数字中台"
+    },
+    {
+      "step": "search-station-filter",
+      "ok": true,
+      "matched": "东莞站 → 深圳北站",
+      "unrelatedVisibleCount": 0
+    },
+    {
+      "step": "status-filter-pending",
+      "ok": true
+    }
+  ],
+  "consoleErrors": [],
+  "requestFailures": [],
+  "responseErrors": [],
+  "ok": true
+}

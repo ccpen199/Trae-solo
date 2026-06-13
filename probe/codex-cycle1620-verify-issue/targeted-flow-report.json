@@ -1,0 +1,26 @@
+{
+  "order": "may-89176",
+  "url": "http://127.0.0.1:49176/",
+  "steps": [
+    {
+      "step": "open-home",
+      "ok": true
+    },
+    {
+      "step": "traffic-search-filter",
+      "ok": true
+    },
+    {
+      "step": "purchase-submit",
+      "ok": true
+    },
+    {
+      "step": "admin-dashboard",
+      "ok": true
+    }
+  ],
+  "consoleErrors": [],
+  "requestFailures": [],
+  "responseErrors": [],
+  "ok": true
+}
