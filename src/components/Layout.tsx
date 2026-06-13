@@ -50,14 +50,24 @@ export default function Layout() {
   const { voiceNavigation, highContrast, fontSize, screenReader, speak } = useAccessibilityStore();
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
+  const authChecked = useRef(false);
 
   const a11yEnabled = voiceNavigation || screenReader || highContrast || fontSize !== 'normal';
 
   useEffect(() => {
-    if (!isAuthenticated && location.pathname !== '/login') {
+    if (!authChecked.current) {
+      authChecked.current = true;
+      if (!isAuthenticated && location.pathname !== '/login') {
+        navigate('/login', { replace: true });
+      }
+    }
+  }, []);
+
+  useEffect(() => {
+    if (authChecked.current && !isAuthenticated) {
       navigate('/login', { replace: true });
     }
-  }, [isAuthenticated, location.pathname, navigate]);
+  }, [isAuthenticated, navigate]);
 
   useEffect(() => {
     const handleClickOutside = (e: MouseEvent) => {
@@ -87,7 +97,14 @@ export default function Layout() {
   }
 
   if (!isAuthenticated) {
-    return null;
+    return (
+      <div className="min-h-screen flex items-center justify-center bg-slate-50">
+        <div className="text-center">
+          <div className="w-10 h-10 border-2 border-gov-600 border-t-transparent rounded-full animate-spin mx-auto" />
+          <p className="mt-3 text-sm text-slate-500">正在验证身份...</p>
+        </div>
+      </div>
+    );
   }
 
   return (

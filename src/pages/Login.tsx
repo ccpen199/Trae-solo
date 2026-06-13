@@ -49,10 +49,17 @@ const FEATURE_TAGS = [
   '无障碍模式',
 ];
 
+const DEMO_ACCOUNTS = [
+  { method: 'idcard' as AuthMethod, label: '身份证登录', idNumber: '510104198505120011', password: '123456', name: '张明华' },
+  { method: 'socialcard' as AuthMethod, label: '社保卡登录', idNumber: '510104198505120011', password: '123456', name: '张明华' },
+  { method: 'medicalcard' as AuthMethod, label: '医保凭证登录', idNumber: '510104198505120011', password: '123456', name: '张明华' },
+];
+
 export default function Login() {
   const navigate = useNavigate();
   const login = useUserStore((s) => s.login);
   const loading = useUserStore((s) => s.loading);
+  const isAuthenticated = useUserStore((s) => s.isAuthenticated);
 
   const [formData, setFormData] = useState<FormData>({
     idNumber: '',
@@ -64,6 +71,13 @@ export default function Login() {
   const [faceScanning, setFaceScanning] = useState(false);
   const [faceScanProgress, setFaceScanProgress] = useState(0);
   const [error, setError] = useState('');
+  const [logging, setLogging] = useState(false);
+
+  useEffect(() => {
+    if (isAuthenticated) {
+      navigate('/', { replace: true });
+    }
+  }, [isAuthenticated, navigate]);
 
   const currentTab = TABS.find((t) => t.key === formData.authMethod) || TABS[0];
 
@@ -94,16 +108,54 @@ export default function Login() {
       return;
     }
 
-    const success = await login(formData.authMethod, {
-      idCard: formData.idNumber,
-      password: formData.password,
-    });
+    setLogging(true);
+    try {
+      const success = await login(formData.authMethod, {
+        idCard: formData.idNumber,
+        password: formData.password,
+      });
 
-    if (success) {
-      navigate('/');
-    } else {
-      setError('登录失败，请检查账号或密码（默认密码：123456）');
+      if (success) {
+        navigate('/', { replace: true });
+      } else {
+        setError('登录失败，请检查账号或密码（默认密码：123456）');
+      }
+    } catch {
+      setError('登录异常，请稍后重试');
+    } finally {
+      setLogging(false);
     }
+  };
+
+  const handleDemoLogin = async (demo: typeof DEMO_ACCOUNTS[number]) => {
+    setError('');
+    setLogging(true);
+    try {
+      const success = await login(demo.method, {
+        idCard: demo.idNumber,
+        password: demo.password,
+      });
+
+      if (success) {
+        navigate('/', { replace: true });
+      } else {
+        setError('演示账号登录失败');
+      }
+    } catch {
+      setError('登录异常，请稍后重试');
+    } finally {
+      setLogging(false);
+    }
+  };
+
+  const fillDemo = (demo: typeof DEMO_ACCOUNTS[number]) => {
+    setFormData({
+      idNumber: demo.idNumber,
+      password: demo.password,
+      authMethod: demo.method,
+      agreed: true,
+    });
+    setError('');
   };
 
   const startFaceScan = () => {
@@ -131,12 +183,20 @@ export default function Login() {
   useEffect(() => {
     if (faceScanProgress >= 100 && faceScanning) {
       const doFaceLogin = async () => {
-        const success = await login('face', { password: '123456' });
-        if (success) {
-          navigate('/');
-        } else {
-          setError('人脸识别登录失败');
+        setLogging(true);
+        try {
+          const success = await login('face', { password: '123456' });
+          if (success) {
+            navigate('/', { replace: true });
+          } else {
+            setError('人脸识别登录失败');
+            setFaceScanning(false);
+          }
+        } catch {
+          setError('登录异常');
           setFaceScanning(false);
+        } finally {
+          setLogging(false);
         }
       };
       doFaceLogin();
@@ -297,6 +357,7 @@ export default function Login() {
                 </button>
               </div>
             ) : (
+              <>
               <form onSubmit={handleSubmit} className="space-y-5">
                 <div className="flex bg-slate-50 rounded-xl p-1 grid grid-cols-3 gap-1">
                   {TABS.map((tab) => {
@@ -385,10 +446,10 @@ export default function Login() {
 
                 <button
                   type="submit"
-                  disabled={loading}
+                  disabled={loading || logging}
                   className="w-full py-3 bg-gov-gradient text-white font-medium rounded-xl hover:opacity-90 hover:shadow-gov disabled:opacity-70 disabled:cursor-not-allowed transition-all flex items-center justify-center gap-2"
                 >
-                  {loading ? (
+                  {loading || logging ? (
                     <>
                       <Loader2 className="w-5 h-5 animate-spin" />
                       登录中...
@@ -410,12 +471,40 @@ export default function Login() {
                 <button
                   type="button"
                   onClick={startFaceScan}
-                  className="w-full py-2.5 border border-slate-200 text-slate-700 font-medium rounded-xl hover:bg-slate-50 hover:border-slate-300 transition-all flex items-center justify-center gap-2"
+                  disabled={loading || logging}
+                  className="w-full py-2.5 border border-slate-200 text-slate-700 font-medium rounded-xl hover:bg-slate-50 hover:border-slate-300 transition-all flex items-center justify-center gap-2 disabled:opacity-50"
                 >
                   <Camera className="w-5 h-5 text-gov-600" />
                   人脸识别登录
                 </button>
               </form>
+
+              <div className="mt-6 pt-5 border-t border-slate-100">
+                <p className="text-xs text-slate-400 mb-3 text-center">演示账号 — 一键登录体验</p>
+                <div className="space-y-2">
+                  {DEMO_ACCOUNTS.map((demo) => (
+                    <div key={demo.method} className="flex items-center gap-2">
+                      <button
+                        type="button"
+                        onClick={() => fillDemo(demo)}
+                        className="flex-1 text-left px-3 py-2 rounded-lg border border-slate-200 text-sm text-slate-600 hover:bg-gov-50 hover:border-gov-300 transition-all"
+                      >
+                        <span className="font-medium text-slate-800">{demo.label}</span>
+                        <span className="text-xs text-slate-400 ml-2">{demo.idNumber.slice(0, 6)}****{demo.idNumber.slice(-4)}</span>
+                      </button>
+                      <button
+                        type="button"
+                        onClick={() => handleDemoLogin(demo)}
+                        disabled={loading || logging}
+                        className="px-4 py-2 rounded-lg bg-gov-600 text-white text-sm font-medium hover:bg-gov-700 disabled:opacity-50 disabled:cursor-not-allowed transition-all"
+                      >
+                        {loading || logging ? '登录中' : '一键登录'}
+                      </button>
+                    </div>
+                  ))}
+                </div>
+              </div>
+              </>
             )}
           </div>
 

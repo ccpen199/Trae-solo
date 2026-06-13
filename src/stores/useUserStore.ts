@@ -50,7 +50,7 @@ export const useUserStore = create<UserState>((set, get) => ({
   login: async (method, credentials) => {
     set({ loading: true })
 
-    await new Promise((resolve) => setTimeout(resolve, 1000))
+    await new Promise((resolve) => setTimeout(resolve, 400))
 
     const { password } = credentials
     if (password !== '123456') {
@@ -121,7 +121,7 @@ export const useUserStore = create<UserState>((set, get) => ({
 
     const newState = {
       user: matchedUser,
-      isAuthenticated: true,
+      isAuthenticated: true as const,
       authMethod: method,
       loading: false,
     }
