@@ -1,7 +1,8 @@
 import { Link, useLocation } from "react-router-dom";
-import { Bell, Search, ChevronRight, Package } from "lucide-react";
+import { Bell, Search, ChevronRight, Package, LogOut, User } from "lucide-react";
 import { useAppStore } from "@/store/useAppStore";
-import { useMemo } from "react";
+import { logout } from "@/utils/auth";
+import { useMemo, useState } from "react";
 
 const routeTitleMap: Record<string, string> = {
   dashboard: "工作台",
@@ -15,8 +16,9 @@ const routeTitleMap: Record<string, string> = {
 };
 
 export default function Topbar() {
-  const { user, announcements } = useAppStore();
+  const { user, announcements, logout: storeLogout } = useAppStore();
   const loc = useLocation();
+  const [menuOpen, setMenuOpen] = useState(false);
   const crumbs = useMemo(() => {
     const parts = loc.pathname.split("/").filter(Boolean);
     return parts.map((p, i) => ({
@@ -24,6 +26,18 @@ export default function Topbar() {
       path: "/" + parts.slice(0, i + 1).join("/"),
     }));
   }, [loc.pathname]);
+
+  const doLogout = () => {
+    try {
+      storeLogout();
+      logout();
+    } catch (e) {}
+    try {
+      window.location.replace("/login");
+    } catch (e) {
+      window.location.href = "/login";
+    }
+  };
 
   return (
     <header className="h-16 border-b border-divider bg-white/80 backdrop-blur sticky top-0 z-30 flex items-center px-6 gap-6">
@@ -90,14 +104,52 @@ export default function Topbar() {
 
         <div className="h-8 w-px bg-ink-100" />
 
-        <div className="flex items-center gap-3">
-          <div className="text-right hidden sm:block">
-            <div className="text-sm font-medium">{user?.realName}</div>
-            <div className="text-[11px] text-ink-400">{user?.branchName}</div>
-          </div>
-          <div className="w-10 h-10 rounded-full bg-gradient-to-br from-ember-400 to-ember-600 flex items-center justify-center text-white font-semibold shadow-glow/60">
-            {user?.realName?.charAt(0) || "U"}
-          </div>
+        <div className="relative">
+          <button
+            onClick={() => setMenuOpen((v) => !v)}
+            onBlur={() => setTimeout(() => setMenuOpen(false), 150)}
+            className="flex items-center gap-3 rounded-lg hover:bg-ink-50 px-2 py-1.5 transition"
+          >
+            <div className="text-right hidden sm:block">
+              <div className="text-sm font-medium">{user?.realName}</div>
+              <div className="text-[11px] text-ink-400">{user?.branchName}</div>
+            </div>
+            <div className="w-10 h-10 rounded-full bg-gradient-to-br from-ember-400 to-ember-600 flex items-center justify-center text-white font-semibold shadow-glow/60">
+              {user?.realName?.charAt(0) || "U"}
+            </div>
+          </button>
+          {menuOpen && (
+            <div className="absolute right-0 top-12 w-56 rounded-xl border border-ink-100 bg-white p-1 shadow-card-hover z-50 animate-slideUp">
+              <div className="px-3 py-2.5 border-b border-ink-100">
+                <div className="flex items-center gap-2.5">
+                  <div className="w-9 h-9 rounded-full bg-gradient-to-br from-ember-400 to-ember-600 flex items-center justify-center text-white text-sm font-semibold">
+                    {user?.realName?.charAt(0) || "U"}
+                  </div>
+                  <div>
+                    <div className="text-sm font-medium text-ink-800">{user?.realName}</div>
+                    <div className="text-[11px] text-ink-400">
+                      {user?.role === "branch_admin"
+                        ? "网点管理员"
+                        : user?.role === "courier"
+                        ? "快递员"
+                        : "区域主管"}
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <button className="w-full flex items-center gap-2 px-3 py-2 text-sm text-ink-600 hover:bg-ink-50 rounded-lg transition">
+                <User size={14} />
+                个人资料
+              </button>
+              <button
+                onClick={doLogout}
+                className="w-full flex items-center gap-2 px-3 py-2 text-sm text-alert-600 hover:bg-alert-50 rounded-lg transition"
+              >
+                <LogOut size={14} />
+                退出登录
+              </button>
+            </div>
+          )}
         </div>
       </div>
     </header>

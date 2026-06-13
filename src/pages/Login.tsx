@@ -1,5 +1,4 @@
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
 import {
   Truck,
   User,
@@ -32,7 +31,6 @@ const expressCompanies = [
 type LoginStage = "idle" | "loading" | "success" | "error";
 
 export default function Login() {
-  const nav = useNavigate();
   const storeLogin = useAppStore((s) => s.login);
   const [username, setUsername] = useState("admin");
   const [password, setPassword] = useState("123456");
@@ -41,27 +39,55 @@ export default function Login() {
   const [showPwd, setShowPwd] = useState(false);
   const [stage, setStage] = useState<LoginStage>("idle");
   const [errorMsg, setErrorMsg] = useState("");
+  const [debugLog, setDebugLog] = useState<string[]>([]);
+
+  const pushLog = (msg: string) => {
+    setDebugLog((prev) => [...prev.slice(-5), `[${new Date().toLocaleTimeString()}] ${msg}`]);
+  };
+
+  const hardRedirect = (path: string) => {
+    try {
+      window.location.replace(path);
+    } catch (e) {
+      window.location.href = path;
+    }
+  };
 
   const doLogin = (u: string, p: string) => {
+    const normalizedUser = u.trim().toLowerCase();
+    pushLog(`开始登录 → 用户=${normalizedUser}`);
     setStage("loading");
     setErrorMsg("");
 
     setTimeout(() => {
-      const user = authLogin(u, p);
-      storeLogin(u, p);
+      pushLog(`调用 authLogin('${normalizedUser}')`);
+      const user = authLogin(normalizedUser, p);
+      pushLog(user ? `登录成功 → ${user.realName}(${roleLabel(user.role)})` : `登录失败 → authLogin 返回 null`);
+
       if (user) {
+        try {
+          storeLogin(normalizedUser, p);
+          pushLog("Store 状态已同步");
+        } catch (e) {
+          pushLog(`Store 同步失败（不影响跳转）: ${e}`);
+        }
         setStage("success");
+        pushLog(`准备跳转 → /dashboard`);
         setTimeout(() => {
-          nav("/dashboard", { replace: true });
-        }, 400);
+          pushLog(`执行 window.location.replace('/dashboard')`);
+          hardRedirect("/dashboard");
+        }, 500);
       } else {
         setStage("error");
         const valid = ["admin", "courier1", "courier2", "super"];
-        if (valid.includes(u.trim().toLowerCase())) {
-          setErrorMsg("登录校验失败，请清除浏览器缓存后重试，或更换其他测试账号");
+        if (valid.includes(normalizedUser)) {
+          setErrorMsg(
+            `登录校验异常：测试账号「${normalizedUser}」在 mockUsers 中未找到匹配。\n请点击下方「清除缓存重试」，或联系技术支持排查。`
+          );
+          pushLog(`警告: ${normalizedUser} 属于测试账号白名单但未通过认证`);
         } else {
           setErrorMsg(
-            `账号「${u}」不存在。请选择下方的角色卡片，查看对应的测试账号后再登录。`
+            `账号「${u}」不存在。\n请选择下方角色卡片查看对应测试账号，或点击底部「快速体验」按钮一键填入。`
           );
         }
       }
@@ -89,7 +115,7 @@ export default function Login() {
       localStorage.clear();
       sessionStorage.clear();
     } catch (e) {}
-    window.location.reload();
+    hardRedirect("/login");
   };
 
   return (
@@ -160,9 +186,9 @@ export default function Login() {
           </div>
         </div>
 
-        <div className="flex w-full lg:w-1/2 items-center justify-center p-6 lg:p-12">
+        <div className="flex w-full lg:w-1/2 items-center justify-center p-4 sm:p-6 lg:p-12">
           <div className="w-full max-w-md">
-            <div className="mb-8 flex items-center gap-3 lg:hidden">
+            <div className="mb-6 flex items-center gap-3 lg:hidden">
               <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-ember-500 shadow-glow">
                 <Truck className="h-6 w-6 text-white" />
               </div>
@@ -172,11 +198,11 @@ export default function Login() {
               </div>
             </div>
 
-            <div className="rounded-2xl border border-ink-700/50 bg-ink-900/70 p-7 shadow-card-hover backdrop-blur-xl">
+            <div className="rounded-2xl border border-ink-700/50 bg-ink-900/70 p-5 sm:p-7 shadow-card-hover backdrop-blur-xl">
               <div className="mb-5">
                 <h2 className="mb-1 text-2xl font-bold text-white font-display">欢迎登录</h2>
                 <p className="text-sm text-ink-400">
-                  选择角色查看对应权限，使用测试账号进入工作台
+                  点击角色卡片查看权限，使用测试账号进入对应工作台
                 </p>
               </div>
 
@@ -193,9 +219,11 @@ export default function Login() {
                     <button
                       key={r.role}
                       type="button"
-                      onClick={() => setSelectedRole(active ? "all" : r.role)}
+                      onClick={() => {
+                        setSelectedRole(active ? "all" : r.role);
+                      }}
                       className={cn(
-                        "w-full text-left rounded-xl border p-3.5 transition-all",
+                        "w-full text-left rounded-xl border p-3 transition-all",
                         active
                           ? "border-ember-500/50 bg-ember-500/10"
                           : "border-ink-700/60 bg-ink-800/40 hover:border-ink-600"
@@ -204,7 +232,7 @@ export default function Login() {
                       <div className="flex items-center gap-3">
                         <div
                           className={cn(
-                            "flex h-9 w-9 items-center justify-center rounded-lg",
+                            "flex h-9 w-9 items-center justify-center rounded-lg flex-shrink-0",
                             active
                               ? "bg-ember-500/20 text-ember-400"
                               : "bg-ink-800 text-ink-400"
@@ -216,18 +244,18 @@ export default function Login() {
                           <div className={cn("font-medium text-sm", active ? "text-ember-300" : "text-white")}>
                             {r.label}
                           </div>
-                          <div className="text-xs text-ink-400">{r.desc}</div>
+                          <div className="text-xs text-ink-400 truncate">{r.desc}</div>
                         </div>
-                        <div className="text-right">
-                          <div className="text-[11px] text-ink-500">测试账号</div>
+                        <div className="text-right flex-shrink-0">
+                          <div className="text-[10px] text-ink-500">测试账号</div>
                           <div className="text-xs font-mono text-ink-300">
-                            {r.accounts.join(" / ")}
+                            {r.accounts.join("/")}
                           </div>
                         </div>
                       </div>
                       {active && (
                         <div className="mt-3 pt-3 border-t border-ember-500/20">
-                          <div className="grid grid-cols-2 gap-1.5">
+                          <div className="grid grid-cols-1 sm:grid-cols-2 gap-1.5">
                             {r.features.map((f) => (
                               <div key={f} className="flex items-center gap-1.5 text-xs text-ink-300">
                                 <CheckCircle2 size={12} className="text-mint-400 flex-shrink-0" />
@@ -242,7 +270,7 @@ export default function Login() {
                 })}
               </div>
 
-              <form onSubmit={onSubmit} className="space-y-4">
+              <form onSubmit={onSubmit} className="space-y-3.5">
                 <div>
                   <label className="mb-1.5 block text-xs font-medium text-ink-300">
                     用户名
@@ -255,7 +283,7 @@ export default function Login() {
                         setUsername(e.target.value);
                         if (stage === "error") setStage("idle");
                       }}
-                      placeholder="请输入用户名，如 admin"
+                      placeholder="如: admin / courier1 / super"
                       className="w-full rounded-lg border border-ink-700/60 bg-ink-800/60 py-2.5 pl-10 pr-3 text-sm text-white placeholder:text-ink-500 outline-none transition focus:border-ember-500 focus:bg-ink-800"
                     />
                   </div>
@@ -271,7 +299,7 @@ export default function Login() {
                       type={showPwd ? "text" : "password"}
                       value={password}
                       onChange={(e) => setPassword(e.target.value)}
-                      placeholder="任意密码均可登录"
+                      placeholder="任意密码均可登录，如 123456"
                       className="w-full rounded-lg border border-ink-700/60 bg-ink-800/60 py-2.5 pl-10 pr-10 text-sm text-white placeholder:text-ink-500 outline-none transition focus:border-ember-500 focus:bg-ink-800"
                     />
                     <button
@@ -288,7 +316,7 @@ export default function Login() {
                   <div className="animate-slideUp rounded-lg border border-alert-500/30 bg-alert-500/10 px-3 py-2.5">
                     <div className="flex items-start gap-2">
                       <AlertTriangle className="h-4 w-4 flex-shrink-0 mt-0.5 text-alert-400" />
-                      <div className="text-xs text-alert-300 leading-relaxed">{errorMsg}</div>
+                      <div className="text-xs text-alert-300 leading-relaxed whitespace-pre-line">{errorMsg}</div>
                     </div>
                     <button
                       type="button"
@@ -304,7 +332,7 @@ export default function Login() {
                   <div className="animate-slideUp rounded-lg border border-mint-500/30 bg-mint-500/10 px-3 py-2.5">
                     <div className="flex items-center gap-2">
                       <CheckCircle2 className="h-4 w-4 text-mint-400" />
-                      <div className="text-xs text-mint-300">登录成功，正在进入工作台...</div>
+                      <div className="text-xs text-mint-300">✓ 身份验证通过，正在进入工作台...</div>
                     </div>
                   </div>
                 )}
@@ -319,7 +347,7 @@ export default function Login() {
                     />
                     记住登录状态
                   </label>
-                  <a className="text-xs text-ember-400 hover:text-ember-300" href="#">
+                  <a className="text-xs text-ember-400 hover:text-ember-300" href="#" onClick={(e) => e.preventDefault()}>
                     忘记密码？
                   </a>
                 </div>
@@ -353,10 +381,10 @@ export default function Login() {
                 </button>
               </form>
 
-              <div className="mt-5 rounded-lg border border-ink-700/50 bg-ink-800/40 p-3">
+              <div className="mt-4 rounded-lg border border-ink-700/50 bg-ink-800/40 p-3">
                 <div className="mb-2 flex items-center gap-1.5 text-xs font-medium text-ink-300">
                   <Info className="h-3.5 w-3.5 text-mint-400" />
-                  快速体验 · 点击账号一键填入
+                  快速体验 · 点击账号一键填入并登录
                 </div>
                 <div className="flex flex-wrap gap-1.5">
                   {["admin", "courier1", "courier2", "super"].map((u) => {
@@ -370,7 +398,10 @@ export default function Login() {
                       <button
                         key={u}
                         type="button"
-                        onClick={() => fillAccount(u)}
+                        onClick={() => {
+                          fillAccount(u);
+                          setTimeout(() => doLogin(u, password), 150);
+                        }}
                         className={cn(
                           "flex items-center gap-1.5 rounded-md border px-2.5 py-1 text-xs transition",
                           username === u
@@ -380,11 +411,21 @@ export default function Login() {
                       >
                         <span className="font-mono">{u}</span>
                         <span className="text-[10px] opacity-70">· {roleLabel(role)}</span>
+                        <ArrowRight className="h-3 w-3 opacity-50 ml-0.5" />
                       </button>
                     );
                   })}
                 </div>
               </div>
+
+              {debugLog.length > 0 && (
+                <div className="mt-3 rounded-lg border border-ink-700/50 bg-black/30 p-2 font-mono text-[10px] leading-relaxed text-ink-400">
+                  <div className="mb-1 text-ink-500">🔧 调试日志（仅开发可见）</div>
+                  {debugLog.map((l, i) => (
+                    <div key={i}>{l}</div>
+                  ))}
+                </div>
+              )}
             </div>
 
             <p className="mt-6 text-center text-xs text-ink-500">

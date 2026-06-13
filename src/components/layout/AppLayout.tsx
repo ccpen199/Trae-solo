@@ -1,16 +1,23 @@
 import { useState, useEffect } from "react";
-import { Outlet, useNavigate } from "react-router-dom";
+import { Outlet } from "react-router-dom";
 import Sidebar from "./Sidebar";
 import Topbar from "./Topbar";
 import { getCurrentUser } from "@/utils/auth";
 import { useAppStore } from "@/store/useAppStore";
 import { AlertTriangle, LogIn } from "lucide-react";
 
+function hardRedirect(path: string) {
+  try {
+    window.location.replace(path);
+  } catch (e) {
+    window.location.href = path;
+  }
+}
+
 export default function AppLayout() {
   const [collapsed, setCollapsed] = useState(false);
   const [checking, setChecking] = useState(true);
   const [hasUser, setHasUser] = useState(false);
-  const nav = useNavigate();
   const storeUser = useAppStore((s) => s.user);
   const syncUserFromStorage = useAppStore((s) => s.syncUserFromStorage);
 
@@ -20,7 +27,11 @@ export default function AppLayout() {
     const user = getCurrentUser();
     if (user) {
       if (!storeUser) {
-        syncUserFromStorage();
+        try {
+          syncUserFromStorage();
+        } catch (e) {
+          // ignore
+        }
       }
       if (mounted) {
         setHasUser(true);
@@ -30,14 +41,14 @@ export default function AppLayout() {
       if (mounted) {
         setChecking(false);
         setHasUser(false);
-        nav("/login", { replace: true });
+        hardRedirect("/login");
       }
     }
 
     return () => {
       mounted = false;
     };
-  }, [nav, storeUser, syncUserFromStorage]);
+  }, [storeUser, syncUserFromStorage]);
 
   if (checking) {
     return (
@@ -61,8 +72,8 @@ export default function AppLayout() {
             登录凭证已过期或未登录，请先登录再进入工作台
           </div>
           <button
-            onClick={() => nav("/login", { replace: true })}
-            className="btn-primary mt-2 flex items-center gap-2"
+            onClick={() => hardRedirect("/login")}
+            className="mt-2 flex items-center gap-2 rounded-lg bg-ember-500 px-5 py-2.5 text-sm font-semibold text-white shadow-glow hover:bg-ember-600"
           >
             <LogIn className="h-4 w-4" />
             前往登录
