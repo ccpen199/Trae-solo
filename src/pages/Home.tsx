@@ -237,7 +237,39 @@ export default function Home() {
           </section>
         )}
 
-        {showQueueDemo && (
+        {!isLoggedIn && (
+          <section className="glass-card p-6 mb-8 border border-yellow-500/30">
+            <div className="flex items-center gap-4 mb-4">
+              <div className="w-12 h-12 rounded-full bg-yellow-500/20 flex items-center justify-center">
+                <Zap size={22} className="text-yellow-400" />
+              </div>
+              <div>
+                <h3 className="text-white font-bold">抢票加速队列</h3>
+                <p className="text-xs text-carbon-400">登录后实名认证 → 获得基础权重 1.0x → 信用加速 +0.20x → 最高 2.0x</p>
+              </div>
+            </div>
+            <div className="grid grid-cols-3 gap-3 mb-4">
+              <div className="bg-carbon-800/40 rounded-xl p-3 text-center">
+                <div className="text-[11px] text-carbon-500 mb-1">未登录</div>
+                <div className="font-display text-xl text-carbon-500">0x</div>
+              </div>
+              <div className="bg-carbon-800/40 rounded-xl p-3 text-center">
+                <div className="text-[11px] text-carbon-500 mb-1">实名认证后</div>
+                <div className="font-display text-xl text-green-400">1.0x</div>
+              </div>
+              <div className="bg-carbon-800/40 rounded-xl p-3 text-center">
+                <div className="text-[11px] text-carbon-500 mb-1">信用+加速满</div>
+                <div className="font-display text-xl text-gold-400">2.0x</div>
+              </div>
+            </div>
+            <Link to="/login" className="gold-gradient-btn w-full text-center inline-flex items-center justify-center gap-2">
+              <Users size={16} />
+              登录后进入抢票队列 · 实名+信用联动
+            </Link>
+          </section>
+        )}
+
+        {isLoggedIn && showQueueDemo && (
           <section className="glass-card p-6 mb-8 border border-gold-500/20 shadow-glow-gold">
             <div className="flex items-center gap-3 mb-5">
               <div className="w-10 h-10 rounded-lg bg-green-500/20 flex items-center justify-center">
@@ -510,6 +542,48 @@ export default function Home() {
               )
             })}
           </div>
+          <div className="mt-4 grid grid-cols-2 md:grid-cols-4 gap-3">
+            <Link to="/admin" state={{ defaultTab: 'tickets' }} className="glass-card p-3 flex items-center gap-3 hover:border-gold-500/30 transition group">
+              <div className="w-9 h-9 rounded-lg bg-gold-500/10 flex items-center justify-center shrink-0">
+                <Shield size={18} className="text-gold-400" />
+              </div>
+              <div>
+                <div className="text-sm text-white font-medium group-hover:text-gold-400 transition">票源保真复查</div>
+                <div className="text-[10px] text-carbon-500">防伪码 + 区块链存证明细</div>
+              </div>
+              <ChevronRight size={14} className="ml-auto text-carbon-600 group-hover:text-gold-400 transition" />
+            </Link>
+            <Link to="/orders" state={{ defaultTab: 'verify' }} className="glass-card p-3 flex items-center gap-3 hover:border-blue-500/30 transition group">
+              <div className="w-9 h-9 rounded-lg bg-blue-500/10 flex items-center justify-center shrink-0">
+                <QrCode size={18} className="text-blue-400" />
+              </div>
+              <div>
+                <div className="text-sm text-white font-medium group-hover:text-blue-400 transition">防伪码 · 闸机核销</div>
+                <div className="text-[10px] text-carbon-500">扫码核验 + 三重校验</div>
+              </div>
+              <ChevronRight size={14} className="ml-auto text-carbon-600 group-hover:text-blue-400 transition" />
+            </Link>
+            <Link to="/admin" state={{ defaultTab: 'refund' }} className="glass-card p-3 flex items-center gap-3 hover:border-purple-500/30 transition group">
+              <div className="w-9 h-9 rounded-lg bg-purple-500/10 flex items-center justify-center shrink-0">
+                <RefreshCw size={18} className="text-purple-400" />
+              </div>
+              <div>
+                <div className="text-sm text-white font-medium group-hover:text-purple-400 transition">退票风控 · 聚类分析</div>
+                <div className="text-[10px] text-carbon-500">梯度手续费 + 原因聚类</div>
+              </div>
+              <ChevronRight size={14} className="ml-auto text-carbon-600 group-hover:text-purple-400 transition" />
+            </Link>
+            <Link to="/admin" state={{ defaultTab: 'ranking' }} className="glass-card p-3 flex items-center gap-3 hover:border-green-500/30 transition group">
+              <div className="w-9 h-9 rounded-lg bg-green-500/10 flex items-center justify-center shrink-0">
+                <Award size={18} className="text-green-400" />
+              </div>
+              <div>
+                <div className="text-sm text-white font-medium group-hover:text-green-400 transition">区域销量 TOP 榜</div>
+                <div className="text-[10px] text-carbon-500">分区排名 + 营收明细</div>
+              </div>
+              <ChevronRight size={14} className="ml-auto text-carbon-600 group-hover:text-green-400 transition" />
+            </Link>
+          </div>
         </section>
 
         <section className="mb-14">
@@ -665,13 +739,23 @@ export default function Home() {
                           <Zap size={14} />
                           选座购票
                         </Link>
-                        <button
-                          onClick={() => setShowQueueDemo(true)}
-                          className="px-3 py-2.5 rounded-lg border border-gold-500/40 text-gold-400 text-sm hover:bg-gold-500/10 transition"
-                          title="查看抢票队列状态"
-                        >
-                          <Zap size={16} />
-                        </button>
+                        {isLoggedIn ? (
+                          <button
+                            onClick={() => setShowQueueDemo(true)}
+                            className="px-3 py-2.5 rounded-lg border border-gold-500/40 text-gold-400 text-sm hover:bg-gold-500/10 transition"
+                            title="查看抢票队列状态"
+                          >
+                            <Zap size={16} />
+                          </button>
+                        ) : (
+                          <Link
+                            to="/login"
+                            className="px-3 py-2.5 rounded-lg border border-yellow-500/40 text-yellow-400 text-sm hover:bg-yellow-500/10 transition"
+                            title="登录后查看抢票队列"
+                          >
+                            <Zap size={16} />
+                          </Link>
+                        )}
                       </div>
                     </div>
                   </article>
@@ -682,71 +766,110 @@ export default function Home() {
         </section>
 
         <section className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-14">
-          <Link to="/organizer" className="glass-card p-8 card-hover group">
-            <div className="flex items-start gap-5">
+          <div className="glass-card p-8">
+            <div className="flex items-start gap-5 mb-5">
               <div className="w-14 h-14 rounded-xl bg-gradient-to-br from-gold-500/20 to-wine-500/20 flex items-center justify-center flex-shrink-0">
                 <Building size={28} className="text-gold-400" />
               </div>
               <div className="flex-1">
-                <h3 className="text-xl font-bold text-white mb-1 group-hover:text-gold-400 transition">
-                  主办方入驻审核
-                </h3>
-                <p className="text-sm text-carbon-400 mb-3">
-                  提交资质 → 平台审核 → 审核通过发布演出 → 配置场次（座位分区、阶梯票价、预售时间）→ 销售数据统计。
-                </p>
-                <div className="grid grid-cols-3 gap-2 mb-3">
-                  <div className="text-center p-2 rounded-lg bg-carbon-800/40">
-                    <div className="text-gold-400 font-bold">8</div>
-                    <div className="text-[10px] text-carbon-500">待审核</div>
-                  </div>
-                  <div className="text-center p-2 rounded-lg bg-carbon-800/40">
-                    <div className="text-green-400 font-bold">126</div>
-                    <div className="text-[10px] text-carbon-500">已入驻</div>
-                  </div>
-                  <div className="text-center p-2 rounded-lg bg-carbon-800/40">
-                    <div className="text-blue-400 font-bold">342</div>
-                    <div className="text-[10px] text-carbon-500">总场次</div>
-                  </div>
-                </div>
-                <span className="text-gold-400 text-sm flex items-center gap-1">
-                  立即申请 / 进入主办方工作台 <ChevronRight size={16} />
-                </span>
+                <h3 className="text-xl font-bold text-white mb-1">主办方入驻审核</h3>
+                <p className="text-sm text-carbon-400">提交资质 → 平台审核 → 发布演出 → 配置场次 → 销售数据</p>
               </div>
             </div>
-          </Link>
+            <div className="space-y-2.5 mb-5">
+              <div className="flex items-center justify-between p-3 rounded-xl bg-yellow-500/10 border border-yellow-500/20">
+                <div className="flex items-center gap-2">
+                  <Clock size={14} className="text-yellow-400" />
+                  <span className="text-sm text-white">上海笑果文化传媒</span>
+                </div>
+                <div className="flex items-center gap-2">
+                  <span className="text-[10px] text-yellow-400">待审核</span>
+                  <Link to="/admin" state={{ defaultTab: 'organizers' }} className="text-[10px] px-2 py-0.5 rounded bg-gold-500/20 text-gold-400 hover:bg-gold-500/30">审核</Link>
+                </div>
+              </div>
+              <div className="flex items-center justify-between p-3 rounded-xl bg-yellow-500/10 border border-yellow-500/20">
+                <div className="flex items-center gap-2">
+                  <Clock size={14} className="text-yellow-400" />
+                  <span className="text-sm text-white">北京大麦文化传播</span>
+                </div>
+                <div className="flex items-center gap-2">
+                  <span className="text-[10px] text-yellow-400">待审核</span>
+                  <Link to="/admin" state={{ defaultTab: 'organizers' }} className="text-[10px] px-2 py-0.5 rounded bg-gold-500/20 text-gold-400 hover:bg-gold-500/30">审核</Link>
+                </div>
+              </div>
+              <div className="flex items-center justify-between p-3 rounded-xl bg-green-500/10 border border-green-500/20">
+                <div className="flex items-center gap-2">
+                  <CheckCircle size={14} className="text-green-400" />
+                  <span className="text-sm text-white">北京时代峰峻文化艺术</span>
+                </div>
+                <span className="text-[10px] text-green-400">已通过</span>
+              </div>
+            </div>
+            <div className="flex gap-3">
+              <Link to="/admin" state={{ defaultTab: 'organizers' }} className="wine-gradient-btn text-xs inline-flex items-center gap-1.5">
+                <FileCheck size={14} />
+                审核队列（2 待审）
+              </Link>
+              <Link to="/organizer" className="px-4 py-2 rounded-lg border border-gold-500/40 text-gold-400 text-xs hover:bg-gold-500/10 transition inline-flex items-center gap-1.5">
+                <Building size={14} />
+                主办方工作台
+              </Link>
+            </div>
+          </div>
 
-          <Link to="/admin" className="glass-card p-8 card-hover group">
-            <div className="flex items-start gap-5">
+          <div className="glass-card p-8">
+            <div className="flex items-start gap-5 mb-5">
               <div className="w-14 h-14 rounded-xl bg-gradient-to-br from-blue-500/20 to-purple-500/20 flex items-center justify-center flex-shrink-0">
                 <BarChart3 size={28} className="text-blue-400" />
               </div>
               <div className="flex-1">
-                <h3 className="text-xl font-bold text-white mb-1 group-hover:text-gold-400 transition">
-                  运营数据中心
-                </h3>
-                <p className="text-sm text-carbon-400 mb-3">
-                  上座率热力图 · 区域销量TOP榜 · 退票原因聚类分析 · 主办方审核队列 · 全维度实时洞察。
-                </p>
-                <div className="grid grid-cols-3 gap-2 mb-3">
-                  <div className="text-center p-2 rounded-lg bg-carbon-800/40">
-                    <div className="text-gold-400 font-bold">78.5%</div>
-                    <div className="text-[10px] text-carbon-500">总上座率</div>
-                  </div>
-                  <div className="text-center p-2 rounded-lg bg-carbon-800/40">
-                    <div className="text-green-400 font-bold">¥218万</div>
-                    <div className="text-[10px] text-carbon-500">本月营收</div>
-                  </div>
-                  <div className="text-center p-2 rounded-lg bg-carbon-800/40">
-                    <div className="text-blue-400 font-bold">3.2%</div>
-                    <div className="text-[10px] text-carbon-500">退票率</div>
-                  </div>
-                </div>
-                <span className="text-gold-400 text-sm flex items-center gap-1">
-                  查看完整运营大屏 <ChevronRight size={16} />
-                </span>
+                <h3 className="text-xl font-bold text-white mb-1">运营数据中心</h3>
+                <p className="text-sm text-carbon-400">热力图 · 销量TOP · 退票聚类 · 场次审计 · 票源复查</p>
               </div>
             </div>
-          </Link>
+            <div className="space-y-2.5 mb-5">
+              <Link to="/admin" state={{ defaultTab: 'heatmap' }} className="flex items-center justify-between p-3 rounded-xl bg-gold-500/10 border border-gold-500/20 hover:bg-gold-500/15 transition">
+                <div className="flex items-center gap-2">
+                  <MapPin size={14} className="text-gold-400" />
+                  <span className="text-sm text-white">上座率热力图</span>
+                </div>
+                <div className="flex items-center gap-2">
+                  <span className="text-[10px] text-gold-400">VIP 82% · A区 65%</span>
+                  <ChevronRight size={14} className="text-gold-400" />
+                </div>
+              </Link>
+              <Link to="/admin" state={{ defaultTab: 'ranking' }} className="flex items-center justify-between p-3 rounded-xl bg-green-500/10 border border-green-500/20 hover:bg-green-500/15 transition">
+                <div className="flex items-center gap-2">
+                  <Award size={14} className="text-green-400" />
+                  <span className="text-sm text-white">区域销量 TOP 榜</span>
+                </div>
+                <div className="flex items-center gap-2">
+                  <span className="text-[10px] text-green-400">TOP1 周杰伦 VIP</span>
+                  <ChevronRight size={14} className="text-green-400" />
+                </div>
+              </Link>
+              <Link to="/admin" state={{ defaultTab: 'refund' }} className="flex items-center justify-between p-3 rounded-xl bg-purple-500/10 border border-purple-500/20 hover:bg-purple-500/15 transition">
+                <div className="flex items-center gap-2">
+                  <RefreshCw size={14} className="text-purple-400" />
+                  <span className="text-sm text-white">退票原因聚类分析</span>
+                </div>
+                <div className="flex items-center gap-2">
+                  <span className="text-[10px] text-purple-400">3.2% · 100 笔</span>
+                  <ChevronRight size={14} className="text-purple-400" />
+                </div>
+              </Link>
+            </div>
+            <div className="flex gap-3">
+              <Link to="/admin" state={{ defaultTab: 'heatmap' }} className="wine-gradient-btn text-xs inline-flex items-center gap-1.5">
+                <BarChart3 size={14} />
+                完整运营大屏
+              </Link>
+              <Link to="/admin" state={{ defaultTab: 'tickets' }} className="px-4 py-2 rounded-lg border border-gold-500/40 text-gold-400 text-xs hover:bg-gold-500/10 transition inline-flex items-center gap-1.5">
+                <Shield size={14} />
+                票源保真复查
+              </Link>
+            </div>
+          </div>
         </section>
 
         <section className="mb-16">

@@ -15,6 +15,8 @@ import {
   Ticket,
   Users,
   ChevronRight,
+  CheckCircle,
+  AlertCircle,
   AlertTriangle,
   Sparkles,
 } from 'lucide-react'
@@ -760,18 +762,56 @@ export default function Orders() {
                   </div>
                 </div>
 
-                <div className="px-6 py-3 bg-carbon-800/20 border-t border-carbon-700/30 text-xs text-carbon-500 flex flex-wrap items-center gap-4">
-                  <RefreshCw size={14} />
-                  <span>下单时间: {new Date(order.createdAt).toLocaleString('zh-CN')}</span>
-                  {order.paymentMethod === 'credit' && (
-                    <span className="text-blue-400 inline-flex items-center gap-1">
-                      <CreditCard size={12} />
-                      先看后付 · 观演完成自动扣款
-                    </span>
-                  )}
-                  <Link to="/" className="ml-auto text-gold-400 hover:text-gold-300 inline-flex items-center gap-0.5">
-                    继续购票 <ChevronRight size={14} />
-                  </Link>
+                <div className="px-6 py-4 bg-carbon-800/20 border-t border-carbon-700/30">
+                  <div className="flex flex-wrap items-center gap-3 text-xs text-carbon-500 mb-3">
+                    <RefreshCw size={14} />
+                    <span>下单时间: {new Date(order.createdAt).toLocaleString('zh-CN')}</span>
+                    {order.paymentMethod === 'credit' && (
+                      <span className="text-blue-400 inline-flex items-center gap-1">
+                        <CreditCard size={12} />
+                        先看后付 · 观演完成自动扣款
+                      </span>
+                    )}
+                    <Link to="/" className="ml-auto text-gold-400 hover:text-gold-300 inline-flex items-center gap-0.5">
+                      继续购票 <ChevronRight size={14} />
+                    </Link>
+                  </div>
+                  <div className="grid grid-cols-2 md:grid-cols-5 gap-2 p-3 bg-carbon-800/40 rounded-xl border border-carbon-700/40">
+                    <div className="flex items-center gap-1.5 text-[11px]">
+                      <CheckCircle size={13} className="text-green-400" />
+                      <span className="text-green-400">实名: {user?.realName}</span>
+                    </div>
+                    <div className="flex items-center gap-1.5 text-[11px]">
+                      {(user?.creditScore ?? 0) >= 600 ? (
+                        <CheckCircle size={13} className="text-blue-400" />
+                      ) : (
+                        <AlertCircle size={13} className="text-yellow-400" />
+                      )}
+                      <span className={(user?.creditScore ?? 0) >= 600 ? 'text-blue-400' : 'text-yellow-400'}>
+                        信用: {user?.creditScore}
+                      </span>
+                    </div>
+                    <div className="flex items-center gap-1.5 text-[11px]">
+                      {order.paymentMethod === 'credit' ? (
+                        <CheckCircle size={13} className="text-gold-400" />
+                      ) : (
+                        <Check size={13} className="text-carbon-400" />
+                      )}
+                      <span className={order.paymentMethod === 'credit' ? 'text-gold-400' : 'text-carbon-400'}>
+                        {order.paymentMethod === 'credit' ? '先看后付已授信' : '已支付'}
+                      </span>
+                    </div>
+                    <div className="flex items-center gap-1.5 text-[11px]">
+                      <Shield size={13} className="text-gold-500" />
+                      <span className="text-gold-400">防伪码已上链</span>
+                    </div>
+                    <div className="flex items-center gap-1.5 text-[11px]">
+                      <QrCode size={13} className="text-amber-400" />
+                      <span className="text-amber-400">
+                        {order.paymentStatus === 'refunded' ? '已退票' : '待入场核验'}
+                      </span>
+                    </div>
+                  </div>
                 </div>
               </div>
             ))}
