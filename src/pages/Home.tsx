@@ -237,133 +237,122 @@ export default function Home() {
           </section>
         )}
 
-        {!isLoggedIn && (
-          <section className="glass-card p-6 mb-8 border border-yellow-500/30">
-            <div className="flex items-center gap-4 mb-4">
-              <div className="w-12 h-12 rounded-full bg-yellow-500/20 flex items-center justify-center">
-                <Zap size={22} className="text-yellow-400" />
-              </div>
-              <div>
-                <h3 className="text-white font-bold">抢票加速队列</h3>
-                <p className="text-xs text-carbon-400">登录后实名认证 → 获得基础权重 1.0x → 信用加速 +0.20x → 最高 2.0x</p>
-              </div>
-            </div>
-            <div className="grid grid-cols-3 gap-3 mb-4">
-              <div className="bg-carbon-800/40 rounded-xl p-3 text-center">
-                <div className="text-[11px] text-carbon-500 mb-1">未登录</div>
-                <div className="font-display text-xl text-carbon-500">0x</div>
-              </div>
-              <div className="bg-carbon-800/40 rounded-xl p-3 text-center">
-                <div className="text-[11px] text-carbon-500 mb-1">实名认证后</div>
-                <div className="font-display text-xl text-green-400">1.0x</div>
-              </div>
-              <div className="bg-carbon-800/40 rounded-xl p-3 text-center">
-                <div className="text-[11px] text-carbon-500 mb-1">信用+加速满</div>
-                <div className="font-display text-xl text-gold-400">2.0x</div>
-              </div>
-            </div>
-            <Link to="/login" className="gold-gradient-btn w-full text-center inline-flex items-center justify-center gap-2">
-              <Users size={16} />
-              登录后进入抢票队列 · 实名+信用联动
-            </Link>
-          </section>
-        )}
-
-        {isLoggedIn && showQueueDemo && (
+        {(!isLoggedIn || showQueueDemo) && (
           <section className="glass-card p-6 mb-8 border border-gold-500/20 shadow-glow-gold">
-            <div className="flex items-center gap-3 mb-5">
-              <div className="w-10 h-10 rounded-lg bg-green-500/20 flex items-center justify-center">
-                <Zap size={20} className="text-green-400" />
+            <div className="flex items-center justify-between mb-5 flex-wrap gap-3">
+              <div className="flex items-center gap-3">
+                <div className="w-10 h-10 rounded-lg bg-green-500/20 flex items-center justify-center">
+                  <Zap size={20} className="text-green-400" />
+                </div>
+                <div>
+                  <h3 className="text-white font-bold flex items-center gap-2">
+                    抢票加速队列 · 实时状态
+                    {!isLoggedIn && (
+                      <span className="text-[10px] px-2 py-0.5 rounded-full bg-yellow-500/20 text-yellow-400 font-normal">演示模式</span>
+                    )}
+                  </h3>
+                  <p className="text-xs text-carbon-500">排队ID + 优先级权重 + 加速通道 + 场次库存 + 购票资格</p>
+                </div>
               </div>
-              <div>
-                <h3 className="text-white font-bold">抢票加速队列 · 实时状态</h3>
-                <p className="text-xs text-carbon-500">排队ID + 优先级权重计算 + 多种加速通道叠加</p>
+              <div className="flex items-center gap-2 text-xs">
+                <span className="text-carbon-500">当前场次:</span>
+                <span className="text-gold-400 font-medium">周杰伦嘉年华世界巡回演唱会 · 北京站</span>
+              </div>
+            </div>
+
+            <div className="grid grid-cols-2 md:grid-cols-5 gap-3 mb-5">
+              <div className="bg-carbon-800/40 rounded-xl p-3">
+                <div className="text-[11px] text-carbon-500 mb-1">排队ID</div>
+                <div className="font-mono text-gold-500 font-bold text-base">{isLoggedIn ? localBoost.queueId : 'Q20260615-88342'}</div>
+              </div>
+              <div className="bg-carbon-800/40 rounded-xl p-3">
+                <div className="text-[11px] text-carbon-500 mb-1">当前位置</div>
+                <div className="font-display text-2xl text-white">{isLoggedIn ? localBoost.position : 892}</div>
+              </div>
+              <div className="bg-carbon-800/40 rounded-xl p-3">
+                <div className="text-[11px] text-carbon-500 mb-1">优先级权重</div>
+                <div className="font-display text-2xl text-green-400">
+                  {(isLoggedIn ? localBoost.priority : 1.2).toFixed(2)}<span className="text-xs">x</span>
+                </div>
+              </div>
+              <div className="bg-carbon-800/40 rounded-xl p-3">
+                <div className="text-[11px] text-carbon-500 mb-1">剩余库存</div>
+                <div className="font-display text-2xl text-amber-400">328<span className="text-xs">张</span></div>
+              </div>
+              <div className="bg-carbon-800/40 rounded-xl p-3">
+                <div className="text-[11px] text-carbon-500 mb-1">预计等待</div>
+                <div className="font-display text-2xl text-blue-400">
+                  {isLoggedIn ? localBoost.estimatedWait : 6}<span className="text-xs">分钟</span>
+                </div>
               </div>
             </div>
 
             <div className="bg-carbon-800/40 rounded-xl p-4 mb-5 border border-carbon-700/50">
-              <div className="text-xs text-carbon-500 mb-2 flex items-center gap-1">
+              <div className="text-xs text-carbon-500 mb-3 flex items-center gap-1">
                 <Shield size={13} />
-                实名/授信联动状态（权重计算依据）
+                实名 / 信用 / 先看后付 · 购票资格联动校验
               </div>
               <div className="grid grid-cols-2 md:grid-cols-4 gap-3 text-xs">
                 <div className="flex items-center gap-2">
-                  {realNameVerified ? (
+                  {isLoggedIn && user?.realName ? (
                     <CheckCircle size={15} className="text-green-400" />
                   ) : (
                     <AlertCircle size={15} className="text-yellow-400" />
                   )}
-                  <span className={realNameVerified ? 'text-green-400' : 'text-yellow-400'}>
-                    {realNameVerified ? `✓ 已实名 (${user?.realName})` : '未实名'}
+                  <span className={(isLoggedIn && user?.realName) ? 'text-green-400' : 'text-yellow-400'}>
+                    {isLoggedIn && user?.realName ? `✓ 已实名 (${user.realName})` : '⚠️ 需实名认证'}
                   </span>
                 </div>
                 <div className="flex items-center gap-2">
-                  {creditBoostEligible || boostState.credit ? (
+                  {(isLoggedIn ? (user?.creditScore ?? 0) >= 600 : true) ? (
                     <CheckCircle size={15} className="text-blue-400" />
                   ) : (
-                    <AlertCircle size={15} className="text-carbon-500" />
+                    <AlertCircle size={15} className="text-red-400" />
                   )}
-                  <span className={creditBoostEligible || boostState.credit ? 'text-blue-400' : 'text-carbon-500'}>
-                    {isLoggedIn ? `信用 ${user?.creditScore ?? 0} ${(user?.creditScore ?? 0) >= 600 ? '✓ 达标' : '<600 未达标'}` : '登录后查信用分'}
+                  <span className={(isLoggedIn ? (user?.creditScore ?? 0) >= 600 : true) ? 'text-blue-400' : 'text-red-400'}>
+                    {isLoggedIn ? `信用 ${user?.creditScore} ${(user?.creditScore ?? 0) >= 600 ? '✓ 达标' : '<600 未达标'}` : '信用 650 ✓ 达标 (演示)'}
                   </span>
                 </div>
                 <div className="flex items-center gap-2">
-                  {(user?.creditScore ?? 0) >= 600 ? (
+                  {(isLoggedIn ? (user?.creditScore ?? 0) >= 600 : true) ? (
                     <CheckCircle size={15} className="text-gold-400" />
                   ) : (
                     <AlertCircle size={15} className="text-carbon-500" />
                   )}
-                  <span className={(user?.creditScore ?? 0) >= 600 ? 'text-gold-400' : 'text-carbon-500'}>
-                    {(user?.creditScore ?? 0) >= 600 ? '✓ 先看后付已开通' : '先看后付未开通'}
+                  <span className={(isLoggedIn ? (user?.creditScore ?? 0) >= 600 : true) ? 'text-gold-400' : 'text-carbon-500'}>
+                    {(isLoggedIn ? (user?.creditScore ?? 0) >= 600 : true) ? '✓ 先看后付可用' : '先看后付未开通'}
                   </span>
                 </div>
                 <div className="flex items-center gap-2">
-                  <CheckCircle size={15} className="text-purple-400" />
-                  <span className="text-purple-400">
-                    权重 = 实名 {realNameVerified ? '1.00x' : '0'} + 信用 {(user?.creditScore ?? 0) >= 600 ? '0.20x' : '0'} + 加速
+                  {(isLoggedIn && user?.realName) || !isLoggedIn ? (
+                    <CheckCircle size={15} className="text-purple-400" />
+                  ) : (
+                    <AlertCircle size={15} className="text-yellow-400" />
+                  )}
+                  <span className={`${(isLoggedIn && user?.realName) || !isLoggedIn ? 'text-purple-400' : 'text-yellow-400'}`}>
+                    {(isLoggedIn && user?.realName) || !isLoggedIn ? '✓ 具备购票资格' : '暂无购票资格'}
                   </span>
                 </div>
               </div>
             </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-4 gap-5 mb-6">
-              <div className="bg-carbon-800/40 rounded-xl p-4">
-                <div className="text-xs text-carbon-500 mb-1">排队ID</div>
-                <div className="font-mono text-gold-500 font-bold text-lg">{localBoost.queueId}</div>
-              </div>
-              <div className="bg-carbon-800/40 rounded-xl p-4">
-                <div className="text-xs text-carbon-500 mb-1">当前位置</div>
-                <div className="font-display text-3xl text-white">{localBoost.position}</div>
-              </div>
-              <div className="bg-carbon-800/40 rounded-xl p-4">
-                <div className="text-xs text-carbon-500 mb-1">优先级权重</div>
-                <div className="font-display text-3xl text-green-400">
-                  {localBoost.priority.toFixed(2)}<span className="text-sm">x</span>
-                </div>
-              </div>
-              <div className="bg-carbon-800/40 rounded-xl p-4">
-                <div className="text-xs text-carbon-500 mb-1">预计等待</div>
-                <div className="font-display text-3xl text-blue-400">
-                  {localBoost.estimatedWait}<span className="text-sm">分钟</span>
-                </div>
-              </div>
-            </div>
             <div className="flex items-center justify-between mb-3">
-              <span className="text-sm text-carbon-400">使用加速通道（上限 2.0x）</span>
-              <span className="text-xs text-carbon-500">点击即可叠加加速</span>
+              <span className="text-sm text-carbon-400">使用加速通道（上限 2.0x，可叠加）</span>
+              <span className="text-xs text-carbon-500">点击立即生效 · 权重实时变化</span>
             </div>
             <div className="grid grid-cols-3 gap-4">
               {[
-                { key: 'member' as const, icon: Crown, name: '会员加速', desc: 'VIP会员专享', value: 0.30, eligible: isLoggedIn },
-                { key: 'credit' as const, icon: Shield, name: '信用加速', desc: isLoggedIn ? `芝麻信用 ${user?.creditScore ?? 0} ${(user?.creditScore ?? 0) >= 600 ? '✓ 达标' : '未达标'}` : '登录后查看信用分', value: 0.20, eligible: creditBoostEligible },
-                { key: 'invite' as const, icon: Users, name: '邀请加速', desc: '好友助力完成', value: 0.15, eligible: true },
+                { key: 'member' as const, icon: Crown, name: '会员加速', desc: isLoggedIn ? 'VIP会员专享' : '演示 · VIP会员专享', value: 0.30, eligible: isLoggedIn ? true : true, demo: !isLoggedIn },
+                { key: 'credit' as const, icon: Shield, name: '信用加速', desc: isLoggedIn ? `芝麻信用 ${user?.creditScore ?? 0} ${(user?.creditScore ?? 0) >= 600 ? '✓ 达标' : '未达标'}` : '芝麻信用 650 ✓ 达标 (演示)', value: 0.20, eligible: isLoggedIn ? creditBoostEligible : true, demo: !isLoggedIn },
+                { key: 'invite' as const, icon: Users, name: '邀请加速', desc: '好友助力完成 · 每人 +0.15x', value: 0.15, eligible: true, demo: !isLoggedIn },
               ].map((opt) => {
                 const Icon = opt.icon
-                const used = boostState[opt.key]
+                const used = opt.demo ? demoBoostState[opt.key] : boostState[opt.key]
+                const onClick = () => opt.demo ? applyDemoBoost(opt.key) : applyBoost(opt.key)
                 return (
                   <button
                     key={opt.key}
-                    onClick={() => applyBoost(opt.key)}
+                    onClick={onClick}
                     disabled={used || !opt.eligible}
                     className={`glass-card p-4 text-left transition-all disabled:opacity-50 ${
                       used ? 'border-gold-500/50 shadow-glow-gold' : opt.eligible ? 'hover:-translate-y-1 hover:shadow-glow-gold' : ''
@@ -378,8 +367,10 @@ export default function Home() {
                           <span className="text-gold-500 text-sm font-bold">+{opt.value.toFixed(2)}x</span>
                           {used ? (
                             <span className="text-xs px-2 py-0.5 rounded-full bg-gold-500/20 text-gold-400">已使用</span>
-                          ) : (
+                          ) : opt.eligible ? (
                             <span className="text-xs px-2 py-0.5 rounded-full bg-green-500/20 text-green-400">立即使用</span>
+                          ) : (
+                            <span className="text-xs px-2 py-0.5 rounded-full bg-carbon-600/50 text-carbon-400">不满足</span>
                           )}
                         </div>
                       </div>
@@ -388,66 +379,28 @@ export default function Home() {
                 )
               })}
             </div>
-            <Link to="/queue/1" className="gold-gradient-btn mt-6 inline-flex items-center gap-2">
-              <Zap size={18} />
-              进入完整抢票流程
-            </Link>
 
-            <div className="mt-8 pt-6 border-t border-carbon-700/60">
-              <h4 className="text-white font-medium mb-4 flex items-center gap-2">
-                <Shield size={18} className="text-gold-400" />
-                优先级权重计算依据 · 与实名 / 信用 / 先看后付闭环
-              </h4>
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                <div className="bg-carbon-800/40 rounded-xl p-4 border border-rose-500/20">
-                  <div className="flex items-center gap-2 mb-2">
-                    <Users size={16} className="text-rose-400" />
-                    <span className="text-white text-sm font-medium">实名购票 (基础)</span>
-                  </div>
-                  <p className="text-xs text-carbon-400 mb-2">
-                    完成实名认证后获得基础排队权重 1.0x，一人一票，票证人合一。
-                  </p>
-                  <div className="text-xs text-rose-300">
-                    当前状态: <span className="font-medium">{isLoggedIn && user?.realName ? '✓ 已实名' : '未实名'}</span>
+            {!isLoggedIn && (
+              <div className="mt-5 p-4 bg-yellow-500/10 border border-yellow-500/20 rounded-xl flex items-center justify-between flex-wrap gap-3">
+                <div className="flex items-center gap-3">
+                  <AlertTriangle size={18} className="text-yellow-400" />
+                  <div className="text-xs text-yellow-300">
+                    当前为演示队列数据（模拟信用 650 / 实名 张三 / 排队ID Q20260615-88342），
+                    <span className="text-yellow-200 font-medium">登录后自动切换为您的真实数据</span>。
                   </div>
                 </div>
-                <div className="bg-carbon-800/40 rounded-xl p-4 border border-blue-500/20">
-                  <div className="flex items-center gap-2 mb-2">
-                    <CreditCard size={16} className="text-blue-400" />
-                    <span className="text-white text-sm font-medium">芝麻信用授信 (+0.20x)</span>
-                  </div>
-                  <p className="text-xs text-carbon-400 mb-2">
-                    芝麻信用分 ≥ 600 分自动获得信用加速，同时解锁先看后付能力。
-                  </p>
-                  <div className="text-xs text-blue-300">
-                    当前信用分: <span className="font-medium">{isLoggedIn ? user?.creditScore : '登录后可查'}</span>
-                    {isLoggedIn && (user?.creditScore ?? 0) >= 600 && ' ✓ 达标'}
-                  </div>
-                </div>
-                <div className="bg-carbon-800/40 rounded-xl p-4 border border-purple-500/20">
-                  <div className="flex items-center gap-2 mb-2">
-                    <Crown size={16} className="text-purple-400" />
-                    <span className="text-white text-sm font-medium">会员 / 邀请 (+0.45x)</span>
-                  </div>
-                  <p className="text-xs text-carbon-400 mb-2">
-                    VIP会员 +0.30x，好友邀请助力 +0.15x，可叠加使用。
-                  </p>
-                  <div className="text-xs text-purple-300">
-                    上限: <span className="font-medium">2.00x</span> · 当前 {localBoost.priority.toFixed(2)}x
-                  </div>
-                </div>
+                <Link to="/login" className="gold-gradient-btn text-xs whitespace-nowrap">
+                  登录查看真实队列
+                </Link>
               </div>
-              <div className="mt-4 p-3 bg-gold-500/5 border border-gold-500/20 rounded-xl">
-                <div className="text-xs text-gold-300 flex items-start gap-2">
-                  <Sparkles size={14} className="flex-shrink-0 mt-0.5" />
-                  <div>
-                    <span className="font-medium">计算逻辑：</span>
-                    基础 1.0x + 信用 0.20x + 会员 0.30x + 邀请 0.15x = 最高 1.65x（会员+信用+邀请三通道），
-                    与先看后付、票源保真、阶梯退票等履约能力完全打通。
-                  </div>
-                </div>
-              </div>
-            </div>
+            )}
+
+            {isLoggedIn && (
+              <Link to="/queue/1" className="gold-gradient-btn mt-5 inline-flex items-center gap-2">
+                <Zap size={18} />
+                进入完整抢票流程 · 选座购票
+              </Link>
+            )}
           </section>
         )}
 
