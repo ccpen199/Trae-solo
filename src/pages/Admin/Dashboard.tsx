@@ -12,9 +12,16 @@ import {
   TrendingUp,
   AlertTriangle,
   Trophy,
+  MessageSquare,
+  ThumbsUp,
+  ThumbsDown,
+  BarChart3,
+  FileBarChart,
+  Award,
+  FileCheck2,
 } from 'lucide-react';
 import { cn } from '@/lib/utils';
-import { mockProviders } from '@/mock';
+import { mockProviders, mockNpsRecords } from '@/mock';
 
 const TIME_RANGES = ['近7天', '近30天', '本季度', '本年度'] as const;
 
@@ -408,6 +415,157 @@ function ProviderDetail() {
   );
 }
 
+function StageDurationDetail() {
+  const rows = [
+    { stage: '需求诊断', avg: 5.2, min: 2, max: 12, std: 2.1, projects: 128, bottleneck: false },
+    { stage: '方案报价', avg: 11.8, min: 5, max: 25, std: 4.3, projects: 115, bottleneck: true },
+    { stage: '施工排期', avg: 7.5, min: 3, max: 15, std: 2.8, projects: 102, bottleneck: false },
+    { stage: '材料进场', avg: 17.6, min: 8, max: 35, std: 6.5, projects: 96, bottleneck: true },
+    { stage: '施工执行', avg: 25.3, min: 12, max: 48, std: 9.1, projects: 88, bottleneck: true },
+    { stage: '竣工验收', avg: 3.1, min: 1, max: 8, std: 1.4, projects: 75, bottleneck: false },
+    { stage: '质保跟踪', avg: 2.4, min: 1, max: 6, std: 1.1, projects: 68, bottleneck: false },
+  ];
+  return (
+    <div className="overflow-x-auto">
+      <table className="w-full text-xs">
+        <thead>
+          <tr className="text-neutral-400 border-b border-white/5">
+            <th className="py-2 text-left font-medium">环节</th>
+            <th className="py-2 text-right font-medium">平均耗时</th>
+            <th className="py-2 text-right font-medium">最短</th>
+            <th className="py-2 text-right font-medium">最长</th>
+            <th className="py-2 text-right font-medium">标准差</th>
+            <th className="py-2 text-right font-medium">项目数</th>
+            <th className="py-2 text-center font-medium">状态</th>
+          </tr>
+        </thead>
+        <tbody>
+          {rows.map(r => (
+            <tr key={r.stage} className="border-b border-white/5 hover:bg-primary-800/30 transition-colors">
+              <td className="py-2.5 text-neutral-200">{r.stage}</td>
+              <td className="py-2.5 text-right font-mono text-gold-300 font-bold">{r.avg}天</td>
+              <td className="py-2.5 text-right font-mono text-emerald-400">{r.min}天</td>
+              <td className="py-2.5 text-right font-mono text-rose-400">{r.max}天</td>
+              <td className="py-2.5 text-right font-mono text-neutral-400">±{r.std}</td>
+              <td className="py-2.5 text-right font-mono text-neutral-300">{r.projects}</td>
+              <td className="py-2.5 text-center">
+                {r.bottleneck ? (
+                  <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-rose-500/15 border border-rose-500/30 text-rose-300 text-[10px]">
+                    <AlertTriangle className="w-3 h-3" />瓶颈
+                  </span>
+                ) : (
+                  <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-emerald-500/15 border border-emerald-500/30 text-emerald-300 text-[10px]">
+                    <CheckCircle2 className="w-3 h-3" />正常
+                  </span>
+                )}
+              </td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
+  );
+}
+
+function NpsCollectionTable() {
+  return (
+    <div className="overflow-x-auto max-h-[320px] overflow-y-auto">
+      <table className="w-full text-xs">
+        <thead className="sticky top-0 bg-primary-800/90 backdrop-blur-sm z-10">
+          <tr className="text-neutral-400 border-b border-white/5">
+            <th className="py-2 text-left font-medium">项目</th>
+            <th className="py-2 text-left font-medium">客户</th>
+            <th className="py-2 text-center font-medium">角色</th>
+            <th className="py-2 text-center font-medium">评分</th>
+            <th className="py-2 text-center font-medium">类型</th>
+            <th className="py-2 text-left font-medium">反馈摘要</th>
+            <th className="py-2 text-center font-medium">处理状态</th>
+            <th className="py-2 text-right font-medium">采集时间</th>
+          </tr>
+        </thead>
+        <tbody>
+          {mockNpsRecords.map(r => (
+            <tr key={r.id} className="border-b border-white/5 hover:bg-primary-800/30 transition-colors">
+              <td className="py-2.5 text-neutral-200 truncate max-w-[140px]">{r.workOrderTitle}</td>
+              <td className="py-2.5 text-neutral-300">{r.reviewerName}</td>
+              <td className="py-2.5 text-center">
+                <span className="px-1.5 py-0.5 rounded text-[10px] bg-primary-700/50 text-neutral-300 border border-white/5">
+                  {r.reviewerRole}
+                </span>
+              </td>
+              <td className="py-2.5 text-center">
+                <span className={cn(
+                  'font-mono font-bold text-sm',
+                  r.score >= 9 ? 'text-emerald-400' :
+                  r.score >= 7 ? 'text-gold-300' : 'text-rose-400'
+                )}>{r.score}</span>
+              </td>
+              <td className="py-2.5 text-center">
+                {r.score >= 9 ? <ThumbsUp className="w-3.5 h-3.5 text-emerald-400 inline" /> :
+                 r.score >= 7 ? <Star className="w-3.5 h-3.5 text-gold-300 inline" /> :
+                 <ThumbsDown className="w-3.5 h-3.5 text-rose-400 inline" />}
+              </td>
+              <td className="py-2.5 text-neutral-400 truncate max-w-[200px]">{r.comment}</td>
+              <td className="py-2.5 text-center">
+                <span className={cn(
+                  'inline-block px-2 py-0.5 rounded-full text-[10px]',
+                  r.responseStatus === '已回复' ? 'bg-emerald-500/15 text-emerald-300 border border-emerald-500/30' :
+                  r.responseStatus === '已处理' ? 'bg-info-500/15 text-info-400 border border-info-500/30' :
+                  'bg-amber-500/15 text-amber-300 border border-amber-500/30'
+                )}>{r.responseStatus}</span>
+              </td>
+              <td className="py-2.5 text-right text-neutral-500 whitespace-nowrap">{r.reviewDate}</td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
+  );
+}
+
+function ProviderFullRankTable() {
+  const sorted = [...mockProviders].sort((a, b) => b.rating.overall - a.rating.overall);
+  const levelColor: Record<string, string> = { 'S级': 'bg-gold-500/20 text-gold-300 border-gold-500/40', 'A级': 'bg-info-500/20 text-info-500 border-info-500/40', 'B级': 'bg-neutral-500/20 text-neutral-400 border-neutral-500/40' };
+  return (
+    <div className="overflow-x-auto max-h-[320px] overflow-y-auto">
+      <table className="w-full text-xs">
+        <thead className="sticky top-0 bg-primary-800/90 backdrop-blur-sm z-10">
+          <tr className="text-neutral-400 border-b border-white/5">
+            <th className="py-2 text-left w-10">排名</th>
+            <th className="py-2 text-left">供应商</th>
+            <th className="py-2 text-center w-14">等级</th>
+            <th className="py-2 text-center">综合分</th>
+            <th className="py-2 text-center">交付</th>
+            <th className="py-2 text-center">响应</th>
+            <th className="py-2 text-center">性价比</th>
+            <th className="py-2 text-center">设计</th>
+            <th className="py-2 text-center">售后</th>
+            <th className="py-2 text-center">准时率</th>
+            <th className="py-2 text-center">项目数</th>
+          </tr>
+        </thead>
+        <tbody>
+          {sorted.map((p, i) => (
+            <tr key={p.id} className="border-b border-white/5 hover:bg-primary-800/30 transition-colors">
+              <td className="py-2.5 font-mono text-neutral-400">#{i + 1}</td>
+              <td className="py-2.5 text-neutral-200">{p.shortName}</td>
+              <td className="py-2.5 text-center"><span className={cn('inline-block rounded px-1.5 py-0.5 border text-[10px]', levelColor[p.level] || levelColor['B级'])}>{p.level}</span></td>
+              <td className="py-2.5 text-center font-mono font-bold text-gold-300">{p.rating.overall}</td>
+              <td className="py-2.5 text-center font-mono text-neutral-300">{p.rating.deliveryQuality}</td>
+              <td className="py-2.5 text-center font-mono text-neutral-300">{p.rating.responseSpeed}</td>
+              <td className="py-2.5 text-center font-mono text-neutral-300">{p.rating.costPerformance}</td>
+              <td className="py-2.5 text-center font-mono text-neutral-300">{p.rating.designLevel}</td>
+              <td className="py-2.5 text-center font-mono text-neutral-300">{p.rating.afterSales}</td>
+              <td className="py-2.5 text-center font-mono text-emerald-400">{p.rating.onTimeRate}%</td>
+              <td className="py-2.5 text-center font-mono text-neutral-400">{p.rating.totalOrders}</td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
+  );
+}
+
 export default function AdminDashboard() {
   const [timeRange, setTimeRange] = useState<number>(1);
 
@@ -458,18 +616,45 @@ export default function AdminDashboard() {
           </motion.div>
         </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
-          <motion.div initial={stagger(4)} animate={staggerAnimate(4)} className="card-base p-5">
-            <h3 className="text-sm font-semibold text-neutral-200 mb-3">供应商综合评分排行榜</h3>
-            <ProviderRankTable />
-          </motion.div>
-          <motion.div initial={stagger(5)} animate={staggerAnimate(5)} className="card-base p-5">
-            <h3 className="text-sm font-semibold text-neutral-200 mb-3">供应商能力雷达图对比</h3>
-            <ProviderRadarChart />
-          </motion.div>
+        <div className="grid grid-cols-1 gap-4">
           <motion.div initial={stagger(6)} animate={staggerAnimate(6)} className="card-base p-5">
-            <h3 className="text-sm font-semibold text-neutral-200 mb-3">供应商交付质量详情</h3>
-            <ProviderDetail />
+            <div className="flex items-center justify-between mb-3">
+              <h3 className="text-sm font-semibold text-neutral-200 flex items-center gap-2">
+                <FileCheck2 className="w-4 h-4 text-gold-400" />
+                NPS采集记录明细
+              </h3>
+              <span className="text-xs text-neutral-500">共 {mockNpsRecords.length} 条记录</span>
+            </div>
+            <NpsCollectionTable />
+          </motion.div>
+        </div>
+
+        <div className="grid grid-cols-1 gap-4">
+          <motion.div initial={stagger(7)} animate={staggerAnimate(7)} className="card-base p-5">
+            <div className="flex items-center justify-between mb-3">
+              <h3 className="text-sm font-semibold text-neutral-200 flex items-center gap-2">
+                <BarChart3 className="w-4 h-4 text-gold-400" />
+                各环节耗时明细报表
+              </h3>
+              <div className="flex items-center gap-3 text-xs text-neutral-400">
+                <span className="inline-flex items-center gap-1"><span className="w-2 h-2 rounded-full bg-rose-400"></span>瓶颈环节</span>
+                <span className="inline-flex items-center gap-1"><span className="w-2 h-2 rounded-full bg-emerald-400"></span>正常环节</span>
+              </div>
+            </div>
+            <StageDurationDetail />
+          </motion.div>
+        </div>
+
+        <div className="grid grid-cols-1 gap-4">
+          <motion.div initial={stagger(8)} animate={staggerAnimate(8)} className="card-base p-5">
+            <div className="flex items-center justify-between mb-3">
+              <h3 className="text-sm font-semibold text-neutral-200 flex items-center gap-2">
+                <Award className="w-4 h-4 text-gold-400" />
+                供应商交付质量完整评分表
+              </h3>
+              <span className="text-xs text-neutral-500">共 {mockProviders.length} 家供应商</span>
+            </div>
+            <ProviderFullRankTable />
           </motion.div>
         </div>
       </div>

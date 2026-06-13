@@ -16,6 +16,11 @@ import {
   AlertCircle,
   User,
   CalendarDays,
+  Ruler,
+  Banknote,
+  Palette,
+  Calendar,
+  Sparkles,
   type LucideIcon,
 } from 'lucide-react';
 
@@ -474,7 +479,7 @@ function Dashboard() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, delay: 0.7 }}
-            className="space-y-4 rounded-2xl bg-white p-6 shadow-card"
+            className="space-y-4 rounded-2xl bg-white p-6 shadow-card lg:col-span-1"
           >
             <h3 className="text-base font-semibold text-primary-900">快捷操作</h3>
             <div className="space-y-3">
@@ -500,6 +505,83 @@ function Dashboard() {
                 onClick={() => navigate('/orders')}
               />
             </div>
+
+            <div className="pt-4 border-t border-neutral-100">
+              <div className="flex items-center justify-between mb-3">
+                <h4 className="text-sm font-medium text-primary-900">快速需求诊断</h4>
+                <span className="text-[11px] text-neutral-400">热门房源</span>
+              </div>
+              <div className="grid grid-cols-2 gap-2">
+                <button
+                  onClick={() => navigate('/orders/create?propertyId=prop-001')}
+                  className="group p-3 rounded-xl bg-gradient-to-br from-primary-50 to-white border border-primary-100 hover:border-gold-400/60 hover:shadow-md transition-all text-left"
+                >
+                  <div className="flex items-center gap-1.5 text-xs text-gold-600 font-medium mb-1">
+                    <Sparkles className="w-3.5 h-3.5" />
+                    环球金融中心
+                  </div>
+                  <p className="text-[11px] text-neutral-500">T3 座 28 层 · 586㎡</p>
+                  <p className="text-[11px] text-primary-600 mt-1.5 group-hover:text-gold-600 font-medium">
+                    一键发起装修 →
+                  </p>
+                </button>
+                <button
+                  onClick={() => navigate('/orders/create?propertyId=prop-002')}
+                  className="group p-3 rounded-xl bg-gradient-to-br from-emerald-50 to-white border border-emerald-100 hover:border-gold-400/60 hover:shadow-md transition-all text-left"
+                >
+                  <div className="flex items-center gap-1.5 text-xs text-emerald-600 font-medium mb-1">
+                    <Sparkles className="w-3.5 h-3.5" />
+                    虹桥万科中心
+                  </div>
+                  <p className="text-[11px] text-neutral-500">12 层 · 320㎡</p>
+                  <p className="text-[11px] text-emerald-600 mt-1.5 group-hover:text-gold-600 font-medium">
+                    一键发起装修 →
+                  </p>
+                </button>
+              </div>
+            </div>
+
+            <div className="pt-4 border-t border-neutral-100">
+              <h4 className="text-sm font-medium text-primary-900 mb-3">装修快速入口</h4>
+              <div className="grid grid-cols-4 gap-2">
+                <button
+                  onClick={() => navigate('/orders/create')}
+                  className="flex flex-col items-center gap-1.5 p-3 rounded-xl bg-neutral-50 hover:bg-gold-50 border border-transparent hover:border-gold-300/50 transition-all group"
+                >
+                  <div className="w-9 h-9 rounded-lg bg-gradient-to-br from-sky-500 to-sky-400 flex items-center justify-center text-white group-hover:scale-110 transition-transform">
+                    <Ruler className="w-4.5 h-4.5" />
+                  </div>
+                  <span className="text-[11px] text-neutral-600 font-medium">面积测算</span>
+                </button>
+                <button
+                  onClick={() => navigate('/orders/create')}
+                  className="flex flex-col items-center gap-1.5 p-3 rounded-xl bg-neutral-50 hover:bg-gold-50 border border-transparent hover:border-gold-300/50 transition-all group"
+                >
+                  <div className="w-9 h-9 rounded-lg bg-gradient-to-br from-amber-500 to-amber-400 flex items-center justify-center text-white group-hover:scale-110 transition-transform">
+                    <Banknote className="w-4.5 h-4.5" />
+                  </div>
+                  <span className="text-[11px] text-neutral-600 font-medium">预算估算</span>
+                </button>
+                <button
+                  onClick={() => navigate('/orders/create')}
+                  className="flex flex-col items-center gap-1.5 p-3 rounded-xl bg-neutral-50 hover:bg-gold-50 border border-transparent hover:border-gold-300/50 transition-all group"
+                >
+                  <div className="w-9 h-9 rounded-lg bg-gradient-to-br from-violet-500 to-violet-400 flex items-center justify-center text-white group-hover:scale-110 transition-transform">
+                    <Calendar className="w-4.5 h-4.5" />
+                  </div>
+                  <span className="text-[11px] text-neutral-600 font-medium">工期规划</span>
+                </button>
+                <button
+                  onClick={() => navigate('/matching')}
+                  className="flex flex-col items-center gap-1.5 p-3 rounded-xl bg-neutral-50 hover:bg-gold-50 border border-transparent hover:border-gold-300/50 transition-all group"
+                >
+                  <div className="w-9 h-9 rounded-lg bg-gradient-to-br from-rose-500 to-rose-400 flex items-center justify-center text-white group-hover:scale-110 transition-transform">
+                    <Palette className="w-4.5 h-4.5" />
+                  </div>
+                  <span className="text-[11px] text-neutral-600 font-medium">风格偏好</span>
+                </button>
+              </div>
+            </div>
           </motion.div>
 
           <motion.div
@@ -510,7 +592,10 @@ function Dashboard() {
           >
             <div className="mb-4 flex items-center justify-between">
               <h3 className="text-base font-semibold text-primary-900">最近工单</h3>
-              <button className="flex items-center gap-1 text-sm text-primary-600 transition-colors hover:text-primary-700">
+              <button
+                onClick={() => navigate('/orders')}
+                className="flex items-center gap-1 text-sm text-primary-600 transition-colors hover:text-primary-700"
+              >
                 查看全部
                 <ChevronRight className="h-4 w-4" />
               </button>
@@ -577,6 +662,32 @@ function Dashboard() {
                         <CalendarDays className="h-3 w-3" />
                         <span>{order.deadline}</span>
                       </div>
+                    </div>
+                    <div className="hidden lg:flex items-center gap-1.5 shrink-0">
+                      <button
+                        onClick={() => navigate(`/orders/${order.id}#material`)}
+                        className="px-2.5 py-1.5 text-[11px] rounded-md bg-neutral-100 text-neutral-600 hover:bg-sky-50 hover:text-sky-600 transition-colors"
+                      >
+                        材料进场
+                      </button>
+                      <button
+                        onClick={() => navigate(`/orders/${order.id}#acceptance`)}
+                        className="px-2.5 py-1.5 text-[11px] rounded-md bg-neutral-100 text-neutral-600 hover:bg-violet-50 hover:text-violet-600 transition-colors"
+                      >
+                        竣工验收
+                      </button>
+                      <button
+                        onClick={() => navigate(`/orders/${order.id}#bim`)}
+                        className="px-2.5 py-1.5 text-[11px] rounded-md bg-neutral-100 text-neutral-600 hover:bg-emerald-50 hover:text-emerald-600 transition-colors"
+                      >
+                        BIM
+                      </button>
+                      <button
+                        onClick={() => navigate(`/orders/${order.id}`)}
+                        className="ml-2 px-3 py-1.5 text-[11px] rounded-md bg-primary-600 text-white hover:bg-primary-700 transition-colors"
+                      >
+                        详情
+                      </button>
                     </div>
                   </motion.div>
                 );

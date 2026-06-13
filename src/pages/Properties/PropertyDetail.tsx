@@ -30,6 +30,7 @@ import {
   Percent,
   Clock,
   CreditCard,
+  Ruler,
   type LucideIcon,
 } from 'lucide-react';
 import type {
