@@ -1,16 +1,14 @@
 import { Link, useLocation, Outlet } from 'react-router-dom'
-import { Package, Search, MapPin, Calculator, User, Menu, X, ShieldCheck } from 'lucide-react'
+import { Package, Search, MapPin, Calculator, User, Menu, X, Settings } from 'lucide-react'
 import { useState } from 'react'
 
-const navItems = [
+const cNavItems = [
   { path: '/', label: '首页', icon: Package },
   { path: '/track', label: '查件', icon: Search },
   { path: '/order', label: '下单', icon: Package },
   { path: '/coverage', label: '范围', icon: MapPin },
   { path: '/estimate', label: '试算', icon: Calculator },
   { path: '/profile', label: '我的', icon: User },
-  { path: '/login', label: '登录', icon: User },
-  { path: '/admin/alerts', label: '后台', icon: ShieldCheck },
 ]
 
 export default function Layout() {
@@ -30,9 +28,9 @@ export default function Layout() {
             </Link>
 
             <nav className="hidden md:flex items-center gap-1">
-              {navItems.map((item) => {
+              {cNavItems.map((item) => {
                 const Icon = item.icon
-                const isActive = item.path.startsWith('/admin') ? location.pathname.startsWith('/admin') : location.pathname === item.path
+                const isActive = location.pathname === item.path
                 return (
                   <Link
                     key={item.path}
@@ -52,25 +50,20 @@ export default function Layout() {
 
             <div className="hidden md:flex items-center gap-3">
               <Link
-                to="/login"
-                className="text-white/60 hover:text-white text-xs px-3 py-1.5 rounded-md border border-white/20 hover:border-accent hover:bg-accent/20 transition-all"
-              >
-                登录/注册
-              </Link>
-              <Link
-                to="/admin/alerts"
-                className="text-white/60 hover:text-white text-xs px-3 py-1.5 rounded-md border border-white/20 hover:border-accent hover:bg-accent/20 transition-all"
-              >
-                运营后台
-              </Link>
-              <Link
                 to="/profile"
                 className="flex items-center gap-2 text-white/80 hover:text-white transition-colors"
               >
                 <div className="w-8 h-8 bg-accent/20 rounded-full flex items-center justify-center">
                   <User className="w-4 h-4 text-accent-light" />
                 </div>
-                <span className="text-sm">张三</span>
+                <span className="text-sm">张伟</span>
+              </Link>
+              <Link
+                to="/admin/alerts"
+                className="flex items-center gap-1.5 text-white/50 hover:text-white text-xs px-3 py-1.5 rounded-md border border-white/15 hover:border-accent/50 hover:bg-accent/10 transition-all"
+              >
+                <Settings className="w-3.5 h-3.5" />
+                运营管理
               </Link>
             </div>
 
@@ -86,9 +79,9 @@ export default function Layout() {
         {mobileMenuOpen && (
           <div className="md:hidden bg-navy-dark border-t border-white/10 animate-slide-up">
             <nav className="px-4 py-3 space-y-1">
-              {navItems.map((item) => {
+              {cNavItems.map((item) => {
                 const Icon = item.icon
-                const isActive = item.path.startsWith('/admin') ? location.pathname.startsWith('/admin') : location.pathname === item.path
+                const isActive = location.pathname === item.path
                 return (
                   <Link
                     key={item.path}
@@ -105,6 +98,14 @@ export default function Layout() {
                   </Link>
                 )
               })}
+              <Link
+                to="/admin/alerts"
+                onClick={() => setMobileMenuOpen(false)}
+                className="flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium text-white/40 hover:text-white/70 hover:bg-white/5 transition-all border-t border-white/10 mt-2 pt-3"
+              >
+                <Settings className="w-5 h-5" />
+                运营管理后台
+              </Link>
             </nav>
           </div>
         )}
@@ -122,9 +123,9 @@ export default function Layout() {
 
       <nav className="md:hidden fixed bottom-0 left-0 right-0 bg-white border-t border-gray-200 z-50 safe-area-bottom">
         <div className="flex items-center justify-around py-1">
-          {navItems.map((item) => {
+          {cNavItems.map((item) => {
             const Icon = item.icon
-            const isActive = item.path.startsWith('/admin') ? location.pathname.startsWith('/admin') : location.pathname === item.path
+            const isActive = location.pathname === item.path
             return (
               <Link
                 key={item.path}

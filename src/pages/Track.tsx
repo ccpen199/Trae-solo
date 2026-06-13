@@ -48,9 +48,13 @@ export default function Track() {
 
   const handleSearch = async () => {
     const value = searchValue.trim()
-    if (!value) return
-
     const type = activeTab === 2 ? 'waybill' : tabTypes[activeTab]
+
+    if (!value) {
+      setQueryError(type === 'phone' ? '请输入手机号' : type === 'waybill' ? '请输入运单号' : '请输入查询内容')
+      setHasSearched(true)
+      return
+    }
 
     setHasSearched(true)
     setQueryError(null)
@@ -76,7 +80,7 @@ export default function Track() {
   }
 
   const handleScanSuccess = () => {
-    const waybill = 'YT20250602002'
+    const waybill = 'YT20260602002'
     setSearchValue(waybill)
     setActiveTab(1)
     setScanManual(false)

@@ -1,5 +1,5 @@
 import { useState, useEffect, useMemo, ReactNode } from 'react'
-import { User, Phone, MapPin, ChevronRight, ChevronLeft, X, Check, Plus, Package, FileText } from 'lucide-react'
+import { User, Phone, MapPin, ChevronRight, ChevronLeft, X, Check, Plus, Package, FileText, CheckCircle2 } from 'lucide-react'
 import { useAppStore } from '@/stores/appStore'
 import { useNavigate } from 'react-router-dom'
 
@@ -39,6 +39,8 @@ export default function Order() {
   const [showAddAddress, setShowAddAddress] = useState<'sender' | 'receiver' | null>(null)
   const [waybillResult, setWaybillResult] = useState<Record<string, unknown> | null>(null)
   const [errors, setErrors] = useState<Record<string, string>>({})
+  const [newAddrErrors, setNewAddrErrors] = useState<Record<string, string>>({})
+  const [toast, setToast] = useState<{ msg: string; type: 'success' | 'error' } | null>(null)
   const firstProv = provinces[0]
   const firstCity = Object.keys(regionData[firstProv])[0]
   const [newAddr, setNewAddr] = useState<AddressForm>({ name: '', phone: '', province: firstProv, city: firstCity, district: regionData[firstProv][firstCity][0], address: '', isDefault: false, tag: 'other' })
@@ -83,8 +85,20 @@ export default function Order() {
   const handlePrev = () => { setErrors({}); setStep((s) => Math.max(0, s - 1)) }
   const handleSubmit = async () => { const r = await createOrder(form); if (r) { setWaybillResult(r); setShowWaybill(true) } }
   const handleAddAddress = async () => {
-    if (!newAddr.name.trim() || !newAddr.phone.trim() || !newAddr.address.trim()) return
-    await addAddress(newAddr); setShowAddAddress(null); setNewAddr({ name: '', phone: '', province: firstProv, city: firstCity, district: regionData[firstProv][firstCity][0], address: '', isDefault: false, tag: 'other' })
+    const e: Record<string, string> = {}
+    if (!newAddr.name.trim()) e.name = '请输入姓名'
+    if (!newAddr.phone.trim()) e.phone = '请输入手机号'
+    else if (!/^\d{11}$/.test(newAddr.phone.trim())) e.phone = '手机号格式不正确'
+    if (!newAddr.address.trim()) e.address = '请输入详细地址'
+    setNewAddrErrors(e)
+    if (Object.keys(e).length > 0) return
+    setToast({ msg: '正在保存...', type: 'success' })
+    await addAddress(newAddr)
+    setShowAddAddress(null)
+    setNewAddr({ name: '', phone: '', province: firstProv, city: firstCity, district: regionData[firstProv][firstCity][0], address: '', isDefault: false, tag: 'other' })
+    setNewAddrErrors({})
+    setToast({ msg: '地址保存成功！', type: 'success' })
+    setTimeout(() => setToast(null), 2500)
   }
 
   const cityList = useMemo(() => Object.keys(regionData[newAddr.province] || {}), [newAddr.province])
@@ -258,12 +272,13 @@ export default function Order() {
           <div className="bg-white rounded-t-2xl sm:rounded-2xl p-5 w-full sm:max-w-md animate-slide-up max-h-[90vh] overflow-y-auto">
             <div className="flex items-center justify-between mb-4"><h3 className="font-bold text-navy">新建地址</h3><button onClick={() => setShowAddAddress(null)}><X className="w-5 h-5 text-text-lighter" /></button></div>
             <div className="space-y-3">
-              <div className="relative"><FieldIcon icon={User} /><input className="input-field pl-10" placeholder="姓名" value={newAddr.name} onChange={(e) => setNewAddr((p) => ({ ...p, name: e.target.value }))} /></div>
-              <div className="relative"><FieldIcon icon={Phone} /><input className="input-field pl-10" placeholder="手机号" value={newAddr.phone} onChange={(e) => setNewAddr((p) => ({ ...p, phone: e.target.value }))} /></div>
+              <div className="relative"><FieldIcon icon={User} /><input className={`input-field pl-10 ${newAddrErrors.name ? 'border-red-400' : ''}`} placeholder="姓名" value={newAddr.name} onChange={(e) => { setNewAddr((p) => ({ ...p, name: e.target.value })); setNewAddrErrors((p) => ({ ...p, name: '' })) }} />{newAddrErrors.name && <p className="text-xs text-red-500 mt-1">{newAddrErrors.name}</p>}</div>
+              <div className="relative"><FieldIcon icon={Phone} /><input className={`input-field pl-10 ${newAddrErrors.phone ? 'border-red-400' : ''}`} placeholder="手机号" value={newAddr.phone} onChange={(e) => { setNewAddr((p) => ({ ...p, phone: e.target.value })); setNewAddrErrors((p) => ({ ...p, phone: '' })) }} />{newAddrErrors.phone && <p className="text-xs text-red-500 mt-1">{newAddrErrors.phone}</p>}</div>
               {[{ v: newAddr.province, o: provinces, fn: (v: string) => setNewAddr((p) => ({ ...p, province: v, city: Object.keys(regionData[v])[0], district: regionData[v][Object.keys(regionData[v])[0]][0] })) }, { v: newAddr.city, o: cityList, fn: (v: string) => setNewAddr((p) => ({ ...p, city: v, district: regionData[p.province][v][0] })) }, { v: newAddr.district, o: districtList, fn: (v: string) => setNewAddr((p) => ({ ...p, district: v })) }].map((sel, i) => (
                 <select key={i} className="input-field" value={sel.v} onChange={(e) => sel.fn(e.target.value)}>{sel.o.map((x) => <option key={x} value={x}>{x}</option>)}</select>
               ))}
-              <textarea className="input-field min-h-[64px] resize-none" placeholder="详细地址" value={newAddr.address} onChange={(e) => setNewAddr((p) => ({ ...p, address: e.target.value }))} />
+              <textarea className={`input-field min-h-[64px] resize-none ${newAddrErrors.address ? 'border-red-400' : ''}`} placeholder="详细地址" value={newAddr.address} onChange={(e) => { setNewAddr((p) => ({ ...p, address: e.target.value })); setNewAddrErrors((p) => ({ ...p, address: '' })) }} />
+              {newAddrErrors.address && <p className="text-xs text-red-500 -mt-1">{newAddrErrors.address}</p>}
               <div><p className="text-xs text-text-light mb-2">标签</p><div className="flex gap-2">{tagList.map((t) => (<button key={t.key} onClick={() => setNewAddr((p) => ({ ...p, tag: t.key }))} className={`flex-1 py-2 text-xs rounded-lg border transition-all ${newAddr.tag === t.key ? 'border-accent bg-accent/5 text-accent font-medium' : 'border-gray-200 text-text-light'}`}>{t.icon} {t.label}</button>))}</div></div>
               <label className="flex items-center gap-2 text-xs text-text-light"><input type="checkbox" checked={newAddr.isDefault} onChange={(e) => setNewAddr((p) => ({ ...p, isDefault: e.target.checked }))} />设为默认地址</label>
             </div>
@@ -308,6 +323,11 @@ export default function Order() {
               <button onClick={() => setShowWaybill(false)} className="btn-primary w-full flex items-center justify-center gap-2 py-2.5"><Check className="w-4 h-4" /> 立即去支付</button>
             </div>
           </div>
+        </div>
+      )}
+      {toast && (
+        <div className={`fixed top-4 left-1/2 -translate-x-1/2 z-[100] px-5 py-3 rounded-xl shadow-xl text-white text-sm font-medium flex items-center gap-2 animate-slide-up ${toast.type === 'success' ? 'bg-green-500' : 'bg-red-500'}`}>
+          <CheckCircle2 className="w-4 h-4" />{toast.msg}
         </div>
       )}
     </div>

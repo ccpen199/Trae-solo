@@ -158,28 +158,39 @@ export const useAppStore = create<AppState>((set, get) => ({
       const json = await res.json()
       if (json.success && json.data?.list?.length > 0) {
         const t = json.data.list[0]
-        const nodes: TrackingNode[] = (t.nodes || []).map((n: any) => ({
-          time: n.time,
-          location: n.location,
-          status: STATUS_MAP[n.status] || n.status,
-          description: n.description,
-        }))
+        let parsedNodes: TrackingNode[] = []
+        try {
+          const rawNodes = typeof t.nodes === 'string' ? JSON.parse(t.nodes) : t.nodes
+          parsedNodes = (Array.isArray(rawNodes) ? rawNodes : []).map((n: any) => ({
+            time: n.time,
+            location: n.location,
+            status: STATUS_MAP[n.status] || n.status,
+            description: n.description,
+          }))
+        } catch { parsedNodes = [] }
+        let curPos = { lat: 31.23, lng: 121.47 }
+        try {
+          const raw = t.current_position || t.current_location
+          curPos = typeof raw === 'string' ? JSON.parse(raw) : (raw && typeof raw === 'object' ? raw : { lat: 31.23, lng: 121.47 })
+        } catch { /* fallback */ }
+        const senderAddr = t.sender_address || ''
+        const receiverAddr = t.receiver_address || ''
         const result: TrackingResult = {
           waybillNo: t.waybill_no,
           status: t.status as any,
-          sender: { name: (t.sender_name || '寄件人').slice(0, 1) + '**', city: (t.sender_address || '').slice(0, 2) },
-          receiver: { name: (t.receiver_name || '收件人').slice(0, 1) + '**', city: (t.receiver_address || '').slice(0, 2) },
-          nodes,
-          currentPosition: t.current_location ? JSON.parse(t.current_location) : { lat: 31.23, lng: 121.47 },
+          sender: { name: (t.sender_name || '寄件人').slice(0, 1) + '**', city: senderAddr.slice(0, 2) || '上海' },
+          receiver: { name: (t.receiver_name || '收件人').slice(0, 1) + '**', city: receiverAddr.slice(0, 2) || '北京' },
+          nodes: parsedNodes,
+          currentPosition: curPos,
           estimatedDelivery: t.estimated_delivery || '2026-06-15',
-          exception: t.exception_info ? { type: t.exception_type || '异常', message: t.exception_info } : undefined,
+          exception: t.exception_message ? { type: t.exception_type || '异常', message: t.exception_message } : (t.exception_type ? { type: t.exception_type, message: '快件异常，请联系客服' } : undefined),
         }
         set({ trackingResult: result, loading: false })
         return
       }
-      set({ trackingResult: mockTracking, loading: false })
+      set({ trackingResult: null, loading: false })
     } catch {
-      set({ trackingResult: mockTracking, loading: false })
+      set({ trackingResult: null, loading: false })
     }
   },
 
@@ -218,19 +229,14 @@ export const useAppStore = create<AppState>((set, get) => ({
         body: JSON.stringify({ user_id: uid, ...data, is_default: data.isDefault ? 1 : 0 }),
       })
       const json = await res.json()
-      if (json.success && json.data) {
-        const a = json.data
-        const item: AddressBookItem = {
-          id: a.id, name: a.name, phone: a.phone, province: a.province,
-          city: a.city, district: a.district, address: a.address,
-          isDefault: !!a.is_default, tag: a.tag || 'other',
-        }
-        set((s) => ({ addressBook: [...s.addressBook, item] }))
-        return
+      if (json.success) {
+        await get().fetchAddressBook()
+        return json.data || null
       }
-    } catch { /* noop */ }
-    const newItem: AddressBookItem = { ...data, id: `addr_${Date.now()}` }
-    set((s) => ({ addressBook: [...s.addressBook, newItem] }))
+      return null
+    } catch {
+      return null
+    }
   },
 
   deleteAddress: async (id) => {
@@ -365,13 +371,13 @@ export const useAppStore = create<AppState>((set, get) => ({
 }))
 
 const mockOrders: OrderItem[] = [
-  { id: '1', waybillNo: 'YT20250601001', status: 'delivered', serviceType: 'standard', weight: 2.5, fee: 18, senderAddress: '上海市浦东新区陆家嘴环路1000号', receiverAddress: '北京市朝阳区建国门外大街1号', createdAt: '2026-06-08 09:00' },
-  { id: '2', waybillNo: 'YT20250602002', status: 'in_transit', serviceType: 'express', weight: 0.8, fee: 25, senderAddress: '上海市徐汇区漕溪北路398号', receiverAddress: '广州市天河区天河路385号', createdAt: '2026-06-12 08:30' },
-  { id: '3', waybillNo: 'YT20250603003', status: 'exception', serviceType: 'economy', weight: 5.0, fee: 15, senderAddress: '北京市海淀区中关村大街1号', receiverAddress: '成都市武侯区人民南路四段1号', createdAt: '2026-06-10 14:00' },
+  { id: '1', waybillNo: 'YT20260601001', status: 'delivered', serviceType: 'standard', weight: 2.5, fee: 18, senderAddress: '上海市浦东新区陆家嘴环路1000号', receiverAddress: '北京市朝阳区建国门外大街1号', createdAt: '2026-06-08 09:00' },
+  { id: '2', waybillNo: 'YT20260602002', status: 'in_transit', serviceType: 'express', weight: 0.8, fee: 25, senderAddress: '上海市徐汇区漕溪北路398号', receiverAddress: '广州市天河区天河路385号', createdAt: '2026-06-12 08:30' },
+  { id: '3', waybillNo: 'YT20260603003', status: 'exception', serviceType: 'economy', weight: 5.0, fee: 15, senderAddress: '北京市海淀区中关村大街1号', receiverAddress: '成都市武侯区人民南路四段1号', createdAt: '2026-06-10 14:00' },
 ]
 
 const mockTracking: TrackingResult = {
-  waybillNo: 'YT20250602002',
+  waybillNo: 'YT20260602002',
   status: 'in_transit',
   sender: { name: '张**', city: '上海' },
   receiver: { name: '李**', city: '广州' },

@@ -14,11 +14,11 @@ router.get('/', (req: Request, res: Response): void => {
   let params: any[] = []
 
   if (waybill_no) {
-    whereClauses.push('waybill_no LIKE ?')
+    whereClauses.push('t.waybill_no LIKE ?')
     params.push(`%${waybill_no}%`)
   }
   if (value && (!type || type === 'waybill')) {
-    whereClauses.push('waybill_no LIKE ?')
+    whereClauses.push('t.waybill_no LIKE ?')
     params.push(`%${value}%`)
   }
   if (value && type === 'phone') {
@@ -32,20 +32,20 @@ router.get('/', (req: Request, res: Response): void => {
       res.json({ success: true, data: { list: [], total: 0, page: pageNum, pageSize: pageSizeNum } })
       return
     }
-    whereClauses.push(`waybill_no IN (${rows.map(() => '?').join(', ')})`)
+    whereClauses.push(`t.waybill_no IN (${rows.map(() => '?').join(', ')})`)
     params.push(...rows.map((row) => row.waybill_no))
   }
   if (status) {
-    whereClauses.push('status = ?')
+    whereClauses.push('t.status = ?')
     params.push(status)
   }
 
   const whereSql = whereClauses.length > 0 ? 'WHERE ' + whereClauses.join(' AND ') : ''
 
-  const totalStmt = db.prepare(`SELECT COUNT(*) as count FROM tracking ${whereSql}`)
+  const totalStmt = db.prepare(`SELECT COUNT(*) as count FROM tracking t ${whereSql}`)
   const total = totalStmt.get(...params) as { count: number }
 
-  const stmt = db.prepare(`SELECT * FROM tracking ${whereSql} ORDER BY updated_at DESC LIMIT ? OFFSET ?`)
+  const stmt = db.prepare(`SELECT t.*, o.sender_name, o.sender_phone, o.sender_address, o.receiver_name, o.receiver_phone, o.receiver_address FROM tracking t LEFT JOIN orders o ON t.order_id = o.id ${whereSql} ORDER BY t.updated_at DESC LIMIT ? OFFSET ?`)
   const trackings = stmt.all(...params, pageSizeNum, offset)
 
   const parsed = trackings.map((t: any) => ({

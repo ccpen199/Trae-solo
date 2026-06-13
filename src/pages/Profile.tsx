@@ -55,8 +55,8 @@ export default function Profile() {
           <p className="font-bold text-lg">{currentUser?.name || '未登录'}</p>
           <p className="text-white/60 text-xs">{currentUser?.phone || ''}</p>
         </div>
-        <Link to="/admin/alerts" className="bg-white/10 hover:bg-white/20 border border-white/20 text-xs px-3 py-2 rounded-lg text-white/90 transition-colors">
-          运营后台
+        <Link to="/admin/alerts" className="bg-white/10 hover:bg-white/20 border border-white/20 text-[10px] px-2 py-1 rounded-lg text-white/50 transition-colors">
+          管理
         </Link>
       </div>
 
