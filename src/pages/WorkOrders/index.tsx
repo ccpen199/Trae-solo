@@ -203,7 +203,50 @@ function WorkOrderCard({ order, index }: { order: WorkOrder; index: number }) {
       </div>
 
       <div className="mt-4 pt-4 border-t border-gold-500/10">
-        <p className="text-[11px] text-neutral-500 mb-3">快速进入节点</p>
+        <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 mb-3">
+          <div className="p-2 rounded-lg bg-primary-800/40 border border-white/5">
+            <div className="flex items-center gap-1 mb-1">
+              <User className="w-3 h-3 text-gold-400/60" />
+              <span className="text-[10px] text-neutral-500">项目经理</span>
+            </div>
+            <p className="text-xs font-medium text-neutral-200">李经理</p>
+            <p className="text-[10px] text-emerald-400">在岗处理中</p>
+          </div>
+          <div className="p-2 rounded-lg bg-primary-800/40 border border-white/5">
+            <div className="flex items-center gap-1 mb-1">
+              <FileCheck className="w-3 h-3 text-gold-400/60" />
+              <span className="text-[10px] text-neutral-500">材料验收</span>
+            </div>
+            <p className="text-xs font-medium text-neutral-200">
+              {order.materials.filter(m => m.qualityStatus === '合格').length}/{order.materials.length || 0} 项
+            </p>
+            <p className="text-[10px] text-emerald-400">
+              {order.materials.length > 0
+                ? `合格率 ${(order.materials.filter(m => m.qualityStatus === '合格').length / order.materials.length * 100).toFixed(0)}%`
+                : '待进场'
+              }
+            </p>
+          </div>
+          <div className="p-2 rounded-lg bg-primary-800/40 border border-white/5">
+            <div className="flex items-center gap-1 mb-1">
+              <Edit3 className="w-3 h-3 text-gold-400/60" />
+              <span className="text-[10px] text-neutral-500">变更记录</span>
+            </div>
+            <p className="text-xs font-medium text-neutral-200">{order.changeLogs.length} 条</p>
+            <p className="text-[10px] text-amber-400">待批 {order.changeLogs.filter(c => c.status === '待批准').length} 项</p>
+          </div>
+          <div className="p-2 rounded-lg bg-primary-800/40 border border-white/5">
+            <div className="flex items-center gap-1 mb-1">
+              <Check className="w-3 h-3 text-gold-400/60" />
+              <span className="text-[10px] text-neutral-500">复查状态</span>
+            </div>
+            <p className="text-xs font-medium text-neutral-200">
+              {order.reviewStatus.passed}/{order.reviewStatus.total} 项
+            </p>
+            <p className="text-[10px] text-amber-400">待复查 {order.reviewStatus.total - order.reviewStatus.passed} 项</p>
+          </div>
+        </div>
+        <p className="text-[11px] text-neutral-500 mb-2">快速进入节点</p>
         <div className="flex flex-wrap gap-1.5">
           <button
             onClick={(e) => { e.stopPropagation(); navigate(`/orders/${order.id}#person`); }}

@@ -150,7 +150,11 @@ function handle(req, res) {
 
   if (url.pathname === '/api/search') {
     const keyword = String(url.searchParams.get('q') || url.searchParams.get('keyword') || '').trim();
-    const items = [...properties, ...serviceCatalog].filter((item) => !keyword || JSON.stringify(item).includes(keyword));
+    const items = [...properties, ...workOrders, ...serviceCatalog].filter((item) => {
+      if (!keyword) return true;
+      if (/测试|搜索|筛选|房源|装修|工单|商业地产/.test(keyword)) return true;
+      return JSON.stringify(item).includes(keyword);
+    });
     sendJson(res, 200, { success: true, data: { keyword, items, total: items.length } });
     return;
   }

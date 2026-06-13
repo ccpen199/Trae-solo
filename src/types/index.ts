@@ -238,6 +238,8 @@ export interface WorkOrder {
   acceptance?: AcceptanceRecord;
   bimModels: BimModel[];
   timeline: WorkOrderTimeline[];
+  changeLogs: ChangeLog[];
+  reviewStatus: ReviewStatus;
   initiatorId: string;
   initiatorName: string;
   initiatorPhone: string;
@@ -459,6 +461,29 @@ export interface ChangeRecord {
   date: string;
   operator: string;
   bothAgreed: boolean;
+}
+
+export interface ChangeLog {
+  id: string;
+  date: string;
+  type: '设计变更' | '材料变更' | '工期调整' | '施工变更';
+  description: string;
+  originator: string;
+  reviewer: string;
+  approver: string;
+  impact: string;
+  status: '已批准' | '待批准' | '已拒绝';
+  attachments: string[];
+}
+
+export interface ReviewStatus {
+  passed: number;
+  total: number;
+  items: {
+    label: string;
+    status: '已通过' | '待复查' | '未开始';
+    date?: string;
+  }[];
 }
 
 export interface Contract {

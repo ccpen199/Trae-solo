@@ -158,19 +158,22 @@ function VRViewer({ property }: { property: Property }) {
             onError={() => { setVrError(true); handleSceneImageError(activeScene); }}
             className={cn(
               'absolute inset-0 w-full h-full object-cover transition-opacity duration-700',
-              vrLoaded ? 'opacity-30' : 'opacity-0'
+              vrLoaded ? 'opacity-100' : 'opacity-0'
             )}
           />
 
           <div
-            className="absolute inset-0"
+            className={cn(
+              'absolute inset-0 transition-opacity duration-700',
+              vrLoaded ? 'opacity-0' : 'opacity-100'
+            )}
             style={{
               background:
                 'radial-gradient(ellipse at 50% 40%, rgba(61, 93, 151, 0.6) 0%, rgba(15, 30, 49, 0.95) 70%), linear-gradient(180deg, #162C48 0%, #0F1E31 100%)',
             }}
           />
 
-          <div className="absolute inset-0 opacity-30">
+          <div className={cn('absolute inset-0 transition-opacity duration-700', vrLoaded ? 'opacity-0' : 'opacity-30')}>
             <svg className="w-full h-full" viewBox="0 0 100 100" preserveAspectRatio="none">
               <defs>
                 <pattern id="vrGrid" width="5" height="5" patternUnits="userSpaceOnUse">
@@ -186,7 +189,7 @@ function VRViewer({ property }: { property: Property }) {
             </svg>
           </div>
 
-          <div className="absolute inset-0 flex items-center justify-center">
+          <div className={cn('absolute inset-0 flex items-center justify-center transition-opacity duration-700', vrLoaded ? 'opacity-0 pointer-events-none' : 'opacity-100')}>
             <div className="relative">
               <motion.div
                 animate={{ rotate: rotation }}
