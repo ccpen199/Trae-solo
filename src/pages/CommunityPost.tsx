@@ -40,7 +40,7 @@ export default function CommunityPost() {
       try {
         const [postRes, commentsRes] = await Promise.all([
           apiFetch<{ success: boolean; data: any }>(`/community/posts/${id}`),
-          apiFetch<{ success: boolean; data: any[] }>(`/community/posts/${id}/comments`),
+          apiFetch<{ success: boolean; data: any[] | { items?: any[] } }>(`/community/posts/${id}/comments`),
         ])
         if (postRes.success && postRes.data) {
           const p = postRes.data
@@ -56,8 +56,11 @@ export default function CommunityPost() {
           setLikeCount(p.likes || 0)
         }
         if (commentsRes.success && commentsRes.data) {
+          const commentItems = Array.isArray(commentsRes.data)
+            ? commentsRes.data
+            : commentsRes.data.items || postRes.data?.commentList || []
           setComments(
-            commentsRes.data.map((c) => ({
+            commentItems.map((c) => ({
               id: String(c.id),
               author: c.author_name || c.author || '',
               content: c.content,

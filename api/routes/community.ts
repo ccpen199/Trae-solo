@@ -5,7 +5,7 @@ const router = Router()
 
 router.get('/posts', async (req: Request, res: Response): Promise<void> => {
   try {
-    const { category, tag, page = '1', limit = '10' } = req.query
+    const { category, tag, page = '1', limit, pageSize } = req.query
     const conditions: string[] = []
     const params: any[] = []
 
@@ -14,7 +14,7 @@ router.get('/posts', async (req: Request, res: Response): Promise<void> => {
 
     const whereClause = conditions.length > 0 ? 'WHERE ' + conditions.join(' AND ') : ''
     const pageNum = Math.max(1, Number(page))
-    const limitNum = Math.max(1, Math.min(100, Number(limit)))
+    const limitNum = Math.max(1, Math.min(100, Number(limit || pageSize || 10)))
     const offset = (pageNum - 1) * limitNum
 
     const totalResult = db.prepare(`SELECT COUNT(*) as count FROM community_posts cp ${whereClause}`).get(...params) as { count: number }

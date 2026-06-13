@@ -14,6 +14,8 @@ import Applications from '@/pages/Applications'
 import Messages from '@/pages/Messages'
 import Community from '@/pages/Community'
 import CommunityPost from '@/pages/CommunityPost'
+import CommunityNew from '@/pages/CommunityNew'
+import CommunityCreate from '@/pages/CommunityCreate'
 import Dashboard from '@/pages/admin/Dashboard'
 import Institutions from '@/pages/admin/Institutions'
 import JobsReview from '@/pages/admin/JobsReview'
@@ -37,9 +39,11 @@ export default function App() {
           <Route path="/messages" element={<Messages />} />
           <Route path="/messages/:id" element={<Messages />} />
           <Route path="/community" element={<Community />} />
+          <Route path="/community/new" element={<CommunityCreate />} />
           <Route path="/community/:id" element={<CommunityPost />} />
         </Route>
         <Route element={<AdminLayout />}>
+          <Route path="/admin" element={<Dashboard />} />
           <Route path="/admin/dashboard" element={<Dashboard />} />
           <Route path="/admin/institutions" element={<Institutions />} />
           <Route path="/admin/jobs-review" element={<JobsReview />} />

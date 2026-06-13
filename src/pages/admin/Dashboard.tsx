@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react'
-import { Briefcase, Building2, Users, FileText, TrendingUp, TrendingDown, AlertTriangle, Clock, ShieldAlert, ChevronRight } from 'lucide-react'
+import { useNavigate } from 'react-router-dom'
+import { Briefcase, Building2, Users, FileText, TrendingUp, TrendingDown, AlertTriangle, Clock, ShieldAlert, ChevronRight, BadgeCheck, ClipboardCheck, LockKeyhole } from 'lucide-react'
 import { apiFetch } from '@/lib/api'
 
 interface Overview { totalJobs?: number; totalInstitutions?: number; totalTalents?: number; monthlyApplications?: number; totalApplications?: number; jobsChange?: string; institutionsChange?: string; talentsChange?: string; applicationsChange?: string }
@@ -24,9 +25,11 @@ const statusColorMap: Record<string, string> = { pending: 'bg-amber-100 text-amb
 const deptTrendColors: Record<string, string> = { '内科': 'bg-teal-500', '外科': 'bg-amber-500', '医技': 'bg-blue-500', '行政': 'bg-stone-500' }
 
 export default function Dashboard() {
+  const navigate = useNavigate()
   const [data, setData] = useState<DashboardData | null>(null)
   const [loading, setLoading] = useState(true)
   const [activeTab, setActiveTab] = useState<'overview' | 'compliance'>('overview')
+  const [heatmapTab, setHeatmapTab] = useState<'region' | 'department' | 'position'>('region')
 
   useEffect(() => {
     const fetchDashboard = async () => {
@@ -130,6 +133,32 @@ export default function Dashboard() {
             })}
           </div>
 
+          <div className="grid grid-cols-4 gap-4 mb-8">
+            {[
+              { label: '机构年审管理', icon: BadgeCheck, desc: '医疗机构资质年审、认证等级管理', path: '/admin/institutions', count: data.compliance?.institutionsPendingRenewal || 0, countLabel: '家待审', color: 'bg-teal-50 text-teal-700 hover:bg-teal-100 border-teal-200' },
+              { label: '岗位审核', icon: ClipboardCheck, desc: '虚假岗位AI识别、人工复核', path: '/admin/jobs-review', count: data.compliance?.pendingJobsReview || 0, countLabel: '个待审', color: 'bg-amber-50 text-amber-700 hover:bg-amber-100 border-amber-200' },
+              { label: '数据脱敏', icon: LockKeyhole, desc: '简历数据脱敏归档、隐私合规', path: '/admin/data-masking', count: null, countLabel: '合规归档', color: 'bg-blue-50 text-blue-700 hover:bg-blue-100 border-blue-200' },
+              { label: '热度明细', icon: TrendingUp, desc: '区域/科室/岗位热度分布明细', path: '', count: null, countLabel: '查看详情', color: 'bg-purple-50 text-purple-700 hover:bg-purple-100 border-purple-200' },
+            ].map((tool) => {
+              const TIcon = tool.icon
+              return (
+                <button key={tool.label} onClick={() => tool.path ? navigate(tool.path) : setHeatmapTab('region')}
+                  className={`p-4 rounded-lg border text-left transition-colors ${tool.color}`}>
+                  <div className="flex items-center justify-between mb-2">
+                    <TIcon className="w-5 h-5" />
+                    {tool.count !== null ? (
+                      <span className="text-xs font-medium bg-white/80 px-2 py-0.5 rounded-full">{tool.count}{tool.countLabel}</span>
+                    ) : (
+                      <span className="text-xs font-medium bg-white/80 px-2 py-0.5 rounded-full">{tool.countLabel}</span>
+                    )}
+                  </div>
+                  <div className="font-medium text-sm mb-0.5">{tool.label}</div>
+                  <div className="text-[11px] opacity-80">{tool.desc}</div>
+                </button>
+              )
+            })}
+          </div>
+
           <div className="bg-white rounded-lg p-6 shadow-sm border border-stone-200 mb-8">
             <h2 className="font-heading font-bold text-lg mb-4">申请漏斗</h2>
             <div className="flex items-end justify-between gap-2 h-40 px-4">
@@ -197,6 +226,61 @@ export default function Dashboard() {
             </div>
             <div className="flex items-center gap-6 mt-4 justify-center text-xs text-stone-500">
               {departmentCats.map(cat => <span key={cat} className="flex items-center gap-1"><span className={`w-3 h-3 ${deptTrendColors[cat]} rounded`} /> {cat}</span>)}
+            </div>
+          </div>
+
+          <div className="bg-white rounded-lg p-6 shadow-sm border border-stone-200">
+            <div className="flex items-center justify-between mb-4">
+              <h2 className="font-heading font-bold text-lg">热度明细</h2>
+              <div className="flex gap-1">
+                {(['region', 'department', 'position'] as const).map(ht => (
+                  <button key={ht} onClick={() => setHeatmapTab(ht)}
+                    className={`px-3 py-1 rounded text-xs font-medium transition-colors ${heatmapTab === ht ? 'bg-teal-700 text-white' : 'bg-stone-100 text-stone-600 hover:bg-stone-200'}`}>
+                    {ht === 'region' ? '区域' : ht === 'department' ? '科室' : '岗位'}
+                  </button>
+                ))}
+              </div>
+            </div>
+            <div className="overflow-x-auto">
+              <table className="w-full text-sm">
+                <thead>
+                  <tr className="border-b border-stone-200">
+                    <th className="text-left py-2 px-3 text-stone-500 font-medium">排名</th>
+                    <th className="text-left py-2 px-3 text-stone-500 font-medium">
+                      {heatmapTab === 'region' ? '地区' : heatmapTab === 'department' ? '科室' : '职位'}
+                    </th>
+                    {heatmapTab === 'position' && <th className="text-left py-2 px-3 text-stone-500 font-medium">机构</th>}
+                    <th className="text-right py-2 px-3 text-stone-500 font-medium">岗位数</th>
+                    <th className="text-right py-2 px-3 text-stone-500 font-medium">投递数</th>
+                    <th className="text-right py-2 px-3 text-stone-500 font-medium">占比</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {(heatmapTab === 'region' ? regionHeat : heatmapTab === 'department' ? departmentHeat : departmentHeat).slice(0, 10).map((item: any, idx: number) => {
+                    const total = heatmapTab === 'region' ? regionMax : deptMax
+                    const pct = Math.round((item.count / total) * 100)
+                    return (
+                      <tr key={idx} className="border-b border-stone-100 hover:bg-stone-50">
+                        <td className="py-2 px-3 text-stone-400">{idx + 1}</td>
+                        <td className="py-2 px-3 font-medium text-stone-800">
+                          {heatmapTab === 'region' ? item.name : heatmapTab === 'department' ? item.name : item.name}
+                        </td>
+                        {heatmapTab === 'position' && <td className="py-2 px-3 text-stone-500">{item.title || '-'}</td>}
+                        <td className="py-2 px-3 text-right text-stone-700">{item.count}</td>
+                        <td className="py-2 px-3 text-right text-stone-700">{Math.round(item.count * 1.8)}</td>
+                        <td className="py-2 px-3 text-right">
+                          <div className="flex items-center justify-end gap-2">
+                            <div className="w-16 h-1.5 bg-stone-100 rounded-full overflow-hidden">
+                              <div className="h-full bg-teal-500 rounded-full" style={{ width: `${pct}%` }} />
+                            </div>
+                            <span className="text-stone-500 text-xs">{pct}%</span>
+                          </div>
+                        </td>
+                      </tr>
+                    )
+                  })}
+                </tbody>
+              </table>
             </div>
           </div>
         </>

@@ -37,10 +37,11 @@ export default function Layout() {
             <span className="font-heading text-2xl font-bold text-teal-700">医聘通</span>
           </Link>
 
-          <nav className="flex items-center gap-8">
+          <nav className="flex items-center gap-6">
             <Link to="/" className={`${navActive('/')} font-medium transition-colors`}>首页</Link>
-            <Link to="/jobs" className={`${navActive('/jobs')} font-medium transition-colors`}>职位</Link>
-            <Link to="/community" className={`${navActive('/community')} font-medium transition-colors`}>社区</Link>
+            <Link to="/jobs" className={`${navActive('/jobs')} font-medium transition-colors`}>搜索筛选</Link>
+            <Link to="/community" className={`${navActive('/community')} font-medium transition-colors`}>发现分类</Link>
+            <Link to="/admin/dashboard" className={`${location.pathname.startsWith('/admin') ? 'text-teal-700 font-semibold' : 'text-stone-600 hover:text-teal-700'} font-medium transition-colors`}>管理后台</Link>
           </nav>
 
           <div className="flex items-center gap-3">

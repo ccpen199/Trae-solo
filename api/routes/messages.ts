@@ -16,11 +16,13 @@ router.get('/conversations', async (req: Request, res: Response): Promise<void> 
     if (userRole === 'talent') {
       const talent = db.prepare('SELECT id FROM talent_profiles WHERE user_id = ?').get(userId) as any
       if (!talent) {
-        res.status(404).json({ success: false, error: '人才资料不存在' })
+        res.status(403).json({ success: false, error: '请先创建人才简历后再使用沟通功能' })
         return
       }
       conversations = db.prepare(`
-        SELECT c.*, ip.institution_name, u.name as institution_user_name
+        SELECT c.*, ip.institution_name, u.name as institution_user_name,
+          (SELECT j.title FROM applications a JOIN jobs j ON a.job_id = j.id WHERE a.talent_id = c.talent_id AND j.institution_id = c.institution_id ORDER BY a.id DESC LIMIT 1) as job_title,
+          (SELECT a.status FROM applications a JOIN jobs j ON a.job_id = j.id WHERE a.talent_id = c.talent_id AND j.institution_id = c.institution_id ORDER BY a.id DESC LIMIT 1) as application_status
         FROM conversations c
         JOIN institution_profiles ip ON c.institution_id = ip.id
         JOIN users u ON ip.user_id = u.id
@@ -30,11 +32,13 @@ router.get('/conversations', async (req: Request, res: Response): Promise<void> 
     } else if (userRole === 'institution') {
       const instProfile = db.prepare('SELECT id FROM institution_profiles WHERE user_id = ?').get(userId) as any
       if (!instProfile) {
-        res.status(404).json({ success: false, error: '机构资料不存在' })
+        res.status(403).json({ success: false, error: '请先完成机构认证后再使用沟通功能' })
         return
       }
       conversations = db.prepare(`
-        SELECT c.*, tp.title as talent_title, tp.department as talent_dept, u.name as talent_name
+        SELECT c.*, tp.title as talent_title, tp.department as talent_dept, u.name as talent_name,
+          (SELECT j.title FROM applications a JOIN jobs j ON a.job_id = j.id WHERE a.talent_id = c.talent_id AND j.institution_id = c.institution_id ORDER BY a.id DESC LIMIT 1) as job_title,
+          (SELECT a.status FROM applications a JOIN jobs j ON a.job_id = j.id WHERE a.talent_id = c.talent_id AND j.institution_id = c.institution_id ORDER BY a.id DESC LIMIT 1) as application_status
         FROM conversations c
         JOIN talent_profiles tp ON c.talent_id = tp.id
         JOIN users u ON tp.user_id = u.id
@@ -44,7 +48,9 @@ router.get('/conversations', async (req: Request, res: Response): Promise<void> 
     } else {
       conversations = db.prepare(`
         SELECT c.*, ip.institution_name, u_inst.name as institution_user_name,
-        tp.title as talent_title, u_talent.name as talent_name
+        tp.title as talent_title, u_talent.name as talent_name,
+          (SELECT j.title FROM applications a JOIN jobs j ON a.job_id = j.id WHERE a.talent_id = c.talent_id AND j.institution_id = c.institution_id ORDER BY a.id DESC LIMIT 1) as job_title,
+          (SELECT a.status FROM applications a JOIN jobs j ON a.job_id = j.id WHERE a.talent_id = c.talent_id AND j.institution_id = c.institution_id ORDER BY a.id DESC LIMIT 1) as application_status
         FROM conversations c
         JOIN institution_profiles ip ON c.institution_id = ip.id
         JOIN users u_inst ON ip.user_id = u_inst.id
@@ -98,6 +104,21 @@ router.post('/send', async (req: Request, res: Response): Promise<void> => {
       res.status(401).json({ success: false, error: '未登录' })
       return
     }
+
+    if (userRole === 'talent') {
+      const talent = db.prepare('SELECT id FROM talent_profiles WHERE user_id = ?').get(userId) as any
+      if (!talent) {
+        res.status(403).json({ success: false, error: '请先创建人才简历后再使用沟通功能' })
+        return
+      }
+    } else if (userRole === 'institution') {
+      const instProfile = db.prepare('SELECT id FROM institution_profiles WHERE user_id = ?').get(userId) as any
+      if (!instProfile) {
+        res.status(403).json({ success: false, error: '请先完成机构认证后再使用沟通功能' })
+        return
+      }
+    }
+
     const { conversation_id, receiver_id, content, type = 'text' } = req.body
     if (!content) {
       res.status(400).json({ success: false, error: '消息内容不能为空' })
@@ -143,8 +164,8 @@ router.post('/send', async (req: Request, res: Response): Promise<void> => {
 
     const result = db.prepare('INSERT INTO messages (conversation_id, sender_id, sender_role, content, type) VALUES (?, ?, ?, ?, ?)').run(convId, userId, userRole, content, type)
     db.prepare('UPDATE conversations SET last_message = ?, updated_at = datetime(\'now\') WHERE id = ?').run(content, convId)
-    const message = db.prepare('SELECT * FROM messages WHERE id = ?').get(result.lastInsertRowid)
-    res.status(201).json({ success: true, data: message })
+    const message = db.prepare('SELECT * FROM messages WHERE id = ?').get(result.lastInsertRowid) as any
+    res.status(201).json({ success: true, data: { ...message, conversation_id: convId } })
   } catch (err: any) {
     res.status(500).json({ success: false, error: err.message })
   }

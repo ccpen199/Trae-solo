@@ -79,19 +79,24 @@ export default function Community() {
   return (
     <div className="container mx-auto px-4 py-8">
       <div className="flex items-center justify-between mb-6">
-        <h1 className="font-heading text-2xl font-bold">医疗人社区</h1>
+        <div>
+          <h1 className="font-heading text-2xl font-bold">发现分类</h1>
+          <p className="mt-1 text-sm text-stone-500">按政策解读、继续教育、行业动态分类发现医疗社区内容。</p>
+        </div>
       </div>
 
-      <div className="flex gap-2 mb-6">
+      <div className="flex gap-2 mb-6" aria-label="社区分类筛选">
         {tagOptions.map((tag) => (
           <button
             key={tag}
+            type="button"
+            aria-label={tag}
             onClick={() => handleTagChange(tag)}
             className={`flex items-center gap-1 px-4 py-2 rounded-lg text-sm font-medium transition-colors ${
               activeTag === tag ? 'bg-teal-700 text-white' : 'bg-stone-100 text-stone-600 hover:bg-stone-200'
             }`}
           >
-            <Tag className="w-3.5 h-3.5" /> #{tag}
+            <Tag className="w-3.5 h-3.5" /> {tag}
           </button>
         ))}
       </div>
@@ -110,7 +115,7 @@ export default function Community() {
                   displayTag === '继续教育' ? 'bg-teal-50 text-teal-700' :
                   'bg-blue-50 text-blue-700'
                 }`}>
-                  #{displayTag}
+                  {displayTag}
                 </span>
                 <h3 className="font-medium text-lg text-stone-800 mt-3 line-clamp-2">{post.title}</h3>
                 <p className="text-sm text-stone-500 mt-2 line-clamp-2">{post.summary}</p>

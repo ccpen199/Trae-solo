@@ -22,7 +22,11 @@ export default function Login() {
         method: 'POST',
         body: JSON.stringify({ phone, password, role }),
       })
-      login(data.user, data.token)
+      const payload = data.data || data
+      if (!payload?.user || !payload?.token) {
+        throw new Error('登录响应缺少用户信息')
+      }
+      login(payload.user, payload.token)
       navigate('/')
     } catch (err: any) {
       setError(err.message || '登录失败')
@@ -37,6 +41,7 @@ export default function Login() {
         <div className="text-center mb-8">
           <Stethoscope className="w-12 h-12 text-teal-700 mx-auto mb-3" />
           <h1 className="font-heading text-2xl font-bold">登录医聘通</h1>
+          <p className="mt-2 text-sm text-stone-500">演示账号：admin / admin123</p>
         </div>
         <form onSubmit={handleSubmit} className="bg-white rounded-xl p-8 shadow-sm border border-stone-200">
           {error && <div className="mb-4 p-3 bg-red-50 text-red-600 text-sm rounded-lg">{error}</div>}

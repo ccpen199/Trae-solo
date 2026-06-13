@@ -1,0 +1,2163 @@
+{
+  "ok": true,
+  "generatedAt": "2026-06-13T00:35:20.116Z",
+  "order": "may-89180",
+  "roundIndex": 99,
+  "captureId": "may-89180-codex-repair",
+  "url": "http://127.0.0.1:49180/",
+  "initialUrl": "http://127.0.0.1:49180/",
+  "finalUrl": "http://127.0.0.1:49180/",
+  "status": 200,
+  "title": "医聘通 - 医疗行业垂直招聘平台",
+  "initialTitle": "医聘通 - 医疗行业垂直招聘平台",
+  "navigationError": "",
+  "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89180/probe/codex-20260613-repair-runtime/may-89180-codex-repair-frontend.png",
+  "screenshotPaths": [
+    "/Users/chen/Documents/trae_projects/local_projects/may-89180/probe/codex-20260613-repair-runtime/may-89180-codex-repair-structure-01-首屏.png",
+    "/Users/chen/Documents/trae_projects/local_projects/may-89180/probe/codex-20260613-repair-runtime/may-89180-codex-repair-structure-02-导航-首页.png",
+    "/Users/chen/Documents/trae_projects/local_projects/may-89180/probe/codex-20260613-repair-runtime/may-89180-codex-repair-structure-03-操作-发起沟通.png",
+    "/Users/chen/Documents/trae_projects/local_projects/may-89180/probe/codex-20260613-repair-runtime/may-89180-codex-repair-structure-04-二层操作-发起沟通-前往登录.png",
+    "/Users/chen/Documents/trae_projects/local_projects/may-89180/probe/codex-20260613-repair-runtime/may-89180-codex-repair-structure-05-操作-隐私设置.png",
+    "/Users/chen/Documents/trae_projects/local_projects/may-89180/probe/codex-20260613-repair-runtime/may-89180-codex-repair-structure-06-二层操作-隐私设置-发布帖子.png",
+    "/Users/chen/Documents/trae_projects/local_projects/may-89180/probe/codex-20260613-repair-runtime/may-89180-codex-repair-structure-07-导航-搜索筛选.png",
+    "/Users/chen/Documents/trae_projects/local_projects/may-89180/probe/codex-20260613-repair-runtime/may-89180-codex-repair-structure-08-导航-发现分类.png"
+  ],
+  "issueTextPreview": "登录注册相关问题；搜索/筛选相关问题；后台管理相关问题；发现/分类相关问题",
+  "targetReason": "登录注册相关问题；搜索/筛选相关问题；后台管理相关问题；发现/分类相关问题",
+  "targetKind": "auth",
+  "targetMatched": true,
+  "targetActions": [
+    {
+      "action": "click",
+      "label": "登录注册相关问题",
+      "ok": true
+    },
+    {
+      "action": "target-verify",
+      "label": "登录注册相关问题",
+      "ok": true,
+      "finalUrl": "http://127.0.0.1:49180/login"
+    }
+  ],
+  "authFlow": {
+    "detected": false,
+    "attempted": false,
+    "success": false,
+    "finalUrl": "http://127.0.0.1:49180/",
+    "message": "",
+    "actions": []
+  },
+  "businessAudit": {
+    "actions": [
+      {
+        "action": "click",
+        "label": "导航:首页",
+        "ok": true
+      },
+      {
+        "action": "click",
+        "label": "操作:发起沟通",
+        "ok": true,
+        "result": {
+          "ok": true,
+          "matched": 4
+        }
+      },
+      {
+        "action": "click",
+        "label": "二层操作:发起沟通:前往登录",
+        "ok": true,
+        "result": {
+          "ok": true,
+          "matched": 1
+        }
+      },
+      {
+        "action": "click",
+        "label": "操作:隐私设置",
+        "ok": true,
+        "result": {
+          "ok": true,
+          "matched": 1
+        }
+      },
+      {
+        "action": "click",
+        "label": "二层操作:隐私设置:发布帖子",
+        "ok": true,
+        "result": {
+          "ok": true,
+          "matched": 1
+        }
+      },
+      {
+        "action": "click",
+        "label": "导航:搜索筛选",
+        "ok": true
+      },
+      {
+        "action": "click",
+        "label": "导航:发现分类",
+        "ok": true
+      }
+    ],
+    "snapshots": [
+      {
+        "label": "首屏",
+        "url": "http://127.0.0.1:49180/",
+        "title": "医聘通 - 医疗行业垂直招聘平台",
+        "headings": [
+          "医聘通",
+          "医疗人才注册",
+          "医疗机构入驻",
+          "投递转化漏斗（可点击查看明细）",
+          "区域热度 Top5",
+          "科室热度 Top5",
+          "热门科室",
+          "最新职位",
+          "内科主治医师",
+          "外科副主任医师",
+          "儿科住院医师",
+          "妇产科主治医师"
+        ],
+        "navLabels": [
+          "首页",
+          "搜索筛选",
+          "发现分类",
+          "管理后台"
+        ],
+        "buttons": [
+          "查看完整数据看板",
+          "立即注册",
+          "上传执业许可证",
+          "机构入驻",
+          "合规详情",
+          "立即投递",
+          "发起沟通",
+          "全部",
+          "政策解读",
+          "继续教育",
+          "行业动态",
+          "发布帖子",
+          "128",
+          "💬 45 评论",
+          "阅读全文 →",
+          "256",
+          "💬 89 评论",
+          "342",
+          "💬 67 评论",
+          "去解析",
+          "查看",
+          "去沟通",
+          "无权限",
+          "隐私设置"
+        ],
+        "links": [
+          "医聘通",
+          "首页",
+          "搜索筛选",
+          "发现分类",
+          "管理后台",
+          "登录",
+          "注册",
+          "全部科室",
+          "全部职位",
+          "更多"
+        ],
+        "inputs": [
+          {
+            "tag": "input",
+            "type": "text",
+            "placeholder": "姓名",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "tel",
+            "placeholder": "手机号",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "select",
+            "type": "",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "text",
+            "placeholder": "机构名称",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "select",
+            "type": "",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          }
+        ],
+        "tables": [],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "医聘通首页搜索筛选发现分类管理后台登录注册医聘通连接优质医疗人才与可信医疗机构5在招岗位4认证机构6医疗人才3已投递1已查看1已邀请1面试中1已录用 查看完整数据看板医疗人才注册持证医生、护士、医技、药师专属通道选择执业资质执业医师执业护士执业药师医技人员其他 立即注册医疗机构入驻医院、诊所、药企资质审核后发布招聘选择机构类型公立医院民营医院社区卫生中心诊所药企其他 上传执业许可证 机构入驻 投递转化漏斗（可点击查看明细）已投递3查看明细 →已查看1查看明细 →已邀请1查看明细 →面试中1查看明细 →已录用1查看明细 →每个投递都有完整状态链路追踪，点击候选人可直接进入在线沟通 区域热度 Top5北京3上海2 科室热度 Top5儿科1内科1外科1妇产科1急诊科1热门科室全部科室 内科128 个岗位外科96 个岗位儿科72 个岗位妇产科64 个岗位急诊科85 个岗位药学53 个岗位影像科41 个岗位检验科37 个岗位最新职位全部职位 内科主治医师已上架北京协和医院高级认证 北京 内科主治医师15K-25K/月 合规详情立即投递发起沟通审核人：系统管理员 · 2025/1/20外科副主任医师已上架北京协和医院高级认证 北京 外科副主任医师20K-35K/月 合规详情立即投递发起沟通审核人：系统管理员 · 2025/1/22儿科住院医师已上架上海市第一人民医院高级认证 上海 儿科住院医师10K-18K/月 合规详情立即投递发起沟通审核人：系统管理员 · 2025/2/1妇产科主治医师已上架上海市第一人民医院高级认证 上海 妇产科主治医师14K-22K/月 合规详情立即投递发起沟通审核人：系统管理员 · 2025/2/5⏳ 审核中：机构未完成高级认证，职位暂缓上架儿科主治医师待审核广州妇儿医疗中心未认证 广州 儿科主治医师12K-20K/月 合规详情等待审核预计1-2个工作日⏳ 审核中：机构未完成高级认证，职位暂缓上架产科住院医师待审核广州妇儿医疗中心未认证 广州 妇产科住院医师10K-16K/月 合规详情等待审核预计1-2个工作日社区资讯全部政策解读继续教育行业动态 发布帖子更多 2025年医疗卫生体制改革最新政策解读政策解读#医改#分级诊疗#政策张伟 128💬 45 评论阅读全文 →住院医师规范化培训经验分享继续教育#规培#经验分享#医学教育李娜 256💬 89 评论阅读全文 →人工智能在医疗影像诊断中的应用进展行业动态#AI#医疗影像#前沿技术张伟 342💬 67 评论阅读全文 →平台公告政策解读2026-06-10卫健委发布2026年医师资格考试报名通知平台公告2026-06-08本月经32家机构资质审核通过，12家待复核继续教育2026-06-05国家级继续医学教育项目申报开始平台服务简历管理待解析去解析智能匹配6位可匹配查看资质年审个人认证查看人才沟通可在线沟通去沟通岗位审核4个待审无权限数据脱敏合规归档隐私设置",
+        "layout": {
+          "viewportWidth": 1504,
+          "viewportHeight": 1600,
+          "scrollWidth": 1504,
+          "scrollHeight": 2848,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89180-codex-repair-structure-01-首屏",
+          "label": "首屏",
+          "finalUrl": "http://127.0.0.1:49180/",
+          "title": "医聘通 - 医疗行业垂直招聘平台",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89180/probe/codex-20260613-repair-runtime/may-89180-codex-repair-structure-01-首屏.json",
+          "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89180/probe/codex-20260613-repair-runtime/may-89180-codex-repair-structure-01-首屏.png",
+          "elementCount": 753,
+          "interactiveCount": 54,
+          "interactiveLabels": [
+            "医聘通",
+            "首页",
+            "搜索筛选",
+            "发现分类",
+            "管理后台",
+            "登录",
+            "注册",
+            "查看完整数据看板",
+            "姓名",
+            "手机号",
+            "选择执业资质 执业医师 执业护士 执业药师 医技人员 其他",
+            "立即注册",
+            "机构名称",
+            "选择机构类型 公立医院 民营医院 社区卫生中心 诊所 药企 其他",
+            "上传执业许可证",
+            "机构入驻",
+            "全部科室",
+            "全部职位",
+            "合规详情",
+            "立即投递",
+            "发起沟通",
+            "全部",
+            "政策解读",
+            "继续教育",
+            "行业动态",
+            "发布帖子",
+            "更多",
+            "128",
+            "45 评论",
+            "阅读全文 →"
+          ]
+        }
+      },
+      {
+        "label": "导航:首页",
+        "url": "http://127.0.0.1:49180/",
+        "title": "医聘通 - 医疗行业垂直招聘平台",
+        "headings": [
+          "医聘通",
+          "医疗人才注册",
+          "医疗机构入驻",
+          "投递转化漏斗（可点击查看明细）",
+          "区域热度 Top5",
+          "科室热度 Top5",
+          "热门科室",
+          "最新职位",
+          "内科主治医师",
+          "外科副主任医师",
+          "儿科住院医师",
+          "妇产科主治医师"
+        ],
+        "navLabels": [
+          "首页",
+          "搜索筛选",
+          "发现分类",
+          "管理后台"
+        ],
+        "buttons": [
+          "查看完整数据看板",
+          "立即注册",
+          "上传执业许可证",
+          "机构入驻",
+          "合规详情",
+          "立即投递",
+          "发起沟通",
+          "全部",
+          "政策解读",
+          "继续教育",
+          "行业动态",
+          "发布帖子",
+          "128",
+          "💬 45 评论",
+          "阅读全文 →",
+          "256",
+          "💬 89 评论",
+          "342",
+          "💬 67 评论",
+          "去解析",
+          "查看",
+          "去沟通",
+          "无权限",
+          "隐私设置"
+        ],
+        "links": [
+          "医聘通",
+          "首页",
+          "搜索筛选",
+          "发现分类",
+          "管理后台",
+          "登录",
+          "注册",
+          "全部科室",
+          "全部职位",
+          "更多"
+        ],
+        "inputs": [
+          {
+            "tag": "input",
+            "type": "text",
+            "placeholder": "姓名",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "tel",
+            "placeholder": "手机号",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "select",
+            "type": "",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "text",
+            "placeholder": "机构名称",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "select",
+            "type": "",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          }
+        ],
+        "tables": [],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "医聘通首页搜索筛选发现分类管理后台登录注册医聘通连接优质医疗人才与可信医疗机构5在招岗位4认证机构6医疗人才3已投递1已查看1已邀请1面试中1已录用 查看完整数据看板医疗人才注册持证医生、护士、医技、药师专属通道选择执业资质执业医师执业护士执业药师医技人员其他 立即注册医疗机构入驻医院、诊所、药企资质审核后发布招聘选择机构类型公立医院民营医院社区卫生中心诊所药企其他 上传执业许可证 机构入驻 投递转化漏斗（可点击查看明细）已投递3查看明细 →已查看1查看明细 →已邀请1查看明细 →面试中1查看明细 →已录用1查看明细 →每个投递都有完整状态链路追踪，点击候选人可直接进入在线沟通 区域热度 Top5北京3上海2 科室热度 Top5儿科1内科1外科1妇产科1急诊科1热门科室全部科室 内科128 个岗位外科96 个岗位儿科72 个岗位妇产科64 个岗位急诊科85 个岗位药学53 个岗位影像科41 个岗位检验科37 个岗位最新职位全部职位 内科主治医师已上架北京协和医院高级认证 北京 内科主治医师15K-25K/月 合规详情立即投递发起沟通审核人：系统管理员 · 2025/1/20外科副主任医师已上架北京协和医院高级认证 北京 外科副主任医师20K-35K/月 合规详情立即投递发起沟通审核人：系统管理员 · 2025/1/22儿科住院医师已上架上海市第一人民医院高级认证 上海 儿科住院医师10K-18K/月 合规详情立即投递发起沟通审核人：系统管理员 · 2025/2/1妇产科主治医师已上架上海市第一人民医院高级认证 上海 妇产科主治医师14K-22K/月 合规详情立即投递发起沟通审核人：系统管理员 · 2025/2/5⏳ 审核中：机构未完成高级认证，职位暂缓上架儿科主治医师待审核广州妇儿医疗中心未认证 广州 儿科主治医师12K-20K/月 合规详情等待审核预计1-2个工作日⏳ 审核中：机构未完成高级认证，职位暂缓上架产科住院医师待审核广州妇儿医疗中心未认证 广州 妇产科住院医师10K-16K/月 合规详情等待审核预计1-2个工作日社区资讯全部政策解读继续教育行业动态 发布帖子更多 2025年医疗卫生体制改革最新政策解读政策解读#医改#分级诊疗#政策张伟 128💬 45 评论阅读全文 →住院医师规范化培训经验分享继续教育#规培#经验分享#医学教育李娜 256💬 89 评论阅读全文 →人工智能在医疗影像诊断中的应用进展行业动态#AI#医疗影像#前沿技术张伟 342💬 67 评论阅读全文 →平台公告政策解读2026-06-10卫健委发布2026年医师资格考试报名通知平台公告2026-06-08本月经32家机构资质审核通过，12家待复核继续教育2026-06-05国家级继续医学教育项目申报开始平台服务简历管理待解析去解析智能匹配6位可匹配查看资质年审个人认证查看人才沟通可在线沟通去沟通岗位审核4个待审无权限数据脱敏合规归档隐私设置",
+        "layout": {
+          "viewportWidth": 1536,
+          "viewportHeight": 1600,
+          "scrollWidth": 1536,
+          "scrollHeight": 2848,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89180-codex-repair-structure-02-导航-首页",
+          "label": "导航:首页",
+          "finalUrl": "http://127.0.0.1:49180/",
+          "title": "医聘通 - 医疗行业垂直招聘平台",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89180/probe/codex-20260613-repair-runtime/may-89180-codex-repair-structure-02-导航-首页.json",
+          "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89180/probe/codex-20260613-repair-runtime/may-89180-codex-repair-structure-02-导航-首页.png",
+          "elementCount": 753,
+          "interactiveCount": 54,
+          "interactiveLabels": [
+            "医聘通",
+            "首页",
+            "搜索筛选",
+            "发现分类",
+            "管理后台",
+            "登录",
+            "注册",
+            "查看完整数据看板",
+            "姓名",
+            "手机号",
+            "选择执业资质 执业医师 执业护士 执业药师 医技人员 其他",
+            "立即注册",
+            "机构名称",
+            "选择机构类型 公立医院 民营医院 社区卫生中心 诊所 药企 其他",
+            "上传执业许可证",
+            "机构入驻",
+            "全部科室",
+            "全部职位",
+            "合规详情",
+            "立即投递",
+            "发起沟通",
+            "全部",
+            "政策解读",
+            "继续教育",
+            "行业动态",
+            "发布帖子",
+            "更多",
+            "128",
+            "45 评论",
+            "阅读全文 →"
+          ]
+        }
+      },
+      {
+        "label": "操作:发起沟通",
+        "url": "http://127.0.0.1:49180/messages",
+        "title": "医聘通 - 医疗行业垂直招聘平台",
+        "headings": [
+          "消息",
+          "请先登录后使用沟通功能"
+        ],
+        "navLabels": [
+          "首页",
+          "搜索筛选",
+          "发现分类",
+          "管理后台"
+        ],
+        "buttons": [
+          "前往登录"
+        ],
+        "links": [
+          "医聘通",
+          "首页",
+          "搜索筛选",
+          "发现分类",
+          "管理后台",
+          "登录",
+          "注册"
+        ],
+        "inputs": [],
+        "tables": [],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "医聘通首页搜索筛选发现分类管理后台登录注册消息⚠️请先登录后使用沟通功能登录后即可与机构HR或候选人进行在线沟通前往登录",
+        "layout": {
+          "viewportWidth": 1568,
+          "viewportHeight": 1600,
+          "scrollWidth": 1568,
+          "scrollHeight": 1600,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89180-codex-repair-structure-03-操作-发起沟通",
+          "label": "操作:发起沟通",
+          "finalUrl": "http://127.0.0.1:49180/messages",
+          "title": "医聘通 - 医疗行业垂直招聘平台",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89180/probe/codex-20260613-repair-runtime/may-89180-codex-repair-structure-03-操作-发起沟通.json",
+          "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89180/probe/codex-20260613-repair-runtime/may-89180-codex-repair-structure-03-操作-发起沟通.png",
+          "elementCount": 36,
+          "interactiveCount": 8,
+          "interactiveLabels": [
+            "医聘通",
+            "首页",
+            "搜索筛选",
+            "发现分类",
+            "管理后台",
+            "登录",
+            "注册",
+            "前往登录"
+          ]
+        }
+      },
+      {
+        "label": "二层操作:发起沟通->前往登录",
+        "url": "http://127.0.0.1:49180/login",
+        "title": "医聘通 - 医疗行业垂直招聘平台",
+        "headings": [
+          "登录医聘通"
+        ],
+        "navLabels": [
+          "首页",
+          "搜索筛选",
+          "发现分类",
+          "管理后台"
+        ],
+        "buttons": [
+          "登录"
+        ],
+        "links": [
+          "医聘通",
+          "首页",
+          "搜索筛选",
+          "发现分类",
+          "管理后台",
+          "登录",
+          "注册",
+          "立即注册"
+        ],
+        "inputs": [
+          {
+            "tag": "select",
+            "type": "",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "tel",
+            "placeholder": "请输入手机号",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "password",
+            "placeholder": "请输入密码",
+            "name": "",
+            "label": ""
+          }
+        ],
+        "tables": [],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "医聘通首页搜索筛选发现分类管理后台登录注册登录医聘通演示账号：admin / admin123角色医疗人才医疗机构手机号密码登录还没有账号？立即注册",
+        "layout": {
+          "viewportWidth": 1600,
+          "viewportHeight": 1600,
+          "scrollWidth": 1600,
+          "scrollHeight": 1601,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89180-codex-repair-structure-04-二层操作-发起沟通-前往登录",
+          "label": "二层操作:发起沟通->前往登录",
+          "finalUrl": "http://127.0.0.1:49180/login",
+          "title": "医聘通 - 医疗行业垂直招聘平台",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89180/probe/codex-20260613-repair-runtime/may-89180-codex-repair-structure-04-二层操作-发起沟通-前往登录.json",
+          "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89180/probe/codex-20260613-repair-runtime/may-89180-codex-repair-structure-04-二层操作-发起沟通-前往登录.png",
+          "elementCount": 64,
+          "interactiveCount": 12,
+          "interactiveLabels": [
+            "医聘通",
+            "首页",
+            "搜索筛选",
+            "发现分类",
+            "管理后台",
+            "登录",
+            "注册",
+            "医疗人才 医疗机构",
+            "请输入手机号",
+            "请输入密码",
+            "立即注册"
+          ]
+        }
+      },
+      {
+        "label": "操作:隐私设置",
+        "url": "http://127.0.0.1:49180/",
+        "title": "医聘通 - 医疗行业垂直招聘平台",
+        "headings": [
+          "医聘通",
+          "医疗人才注册",
+          "医疗机构入驻",
+          "投递转化漏斗（可点击查看明细）",
+          "区域热度 Top5",
+          "科室热度 Top5",
+          "热门科室",
+          "最新职位",
+          "内科主治医师",
+          "外科副主任医师",
+          "儿科住院医师",
+          "妇产科主治医师"
+        ],
+        "navLabels": [
+          "首页",
+          "搜索筛选",
+          "发现分类",
+          "管理后台"
+        ],
+        "buttons": [
+          "查看完整数据看板",
+          "立即注册",
+          "上传执业许可证",
+          "机构入驻",
+          "合规详情",
+          "立即投递",
+          "发起沟通",
+          "全部",
+          "政策解读",
+          "继续教育",
+          "行业动态",
+          "发布帖子",
+          "128",
+          "💬 45 评论",
+          "阅读全文 →",
+          "256",
+          "💬 89 评论",
+          "342",
+          "💬 67 评论",
+          "去解析",
+          "查看",
+          "去沟通",
+          "无权限",
+          "隐私设置"
+        ],
+        "links": [
+          "医聘通",
+          "首页",
+          "搜索筛选",
+          "发现分类",
+          "管理后台",
+          "登录",
+          "注册",
+          "全部科室",
+          "全部职位",
+          "更多"
+        ],
+        "inputs": [
+          {
+            "tag": "input",
+            "type": "text",
+            "placeholder": "姓名",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "tel",
+            "placeholder": "手机号",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "select",
+            "type": "",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "text",
+            "placeholder": "机构名称",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "select",
+            "type": "",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          }
+        ],
+        "tables": [],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "医聘通首页搜索筛选发现分类管理后台登录注册医聘通连接优质医疗人才与可信医疗机构5在招岗位4认证机构6医疗人才3已投递1已查看1已邀请1面试中1已录用 查看完整数据看板医疗人才注册持证医生、护士、医技、药师专属通道选择执业资质执业医师执业护士执业药师医技人员其他 立即注册医疗机构入驻医院、诊所、药企资质审核后发布招聘选择机构类型公立医院民营医院社区卫生中心诊所药企其他 上传执业许可证 机构入驻 投递转化漏斗（可点击查看明细）已投递3查看明细 →已查看1查看明细 →已邀请1查看明细 →面试中1查看明细 →已录用1查看明细 →每个投递都有完整状态链路追踪，点击候选人可直接进入在线沟通 区域热度 Top5北京3上海2 科室热度 Top5儿科1内科1外科1妇产科1急诊科1热门科室全部科室 内科128 个岗位外科96 个岗位儿科72 个岗位妇产科64 个岗位急诊科85 个岗位药学53 个岗位影像科41 个岗位检验科37 个岗位最新职位全部职位 内科主治医师已上架北京协和医院高级认证 北京 内科主治医师15K-25K/月 合规详情立即投递发起沟通审核人：系统管理员 · 2025/1/20外科副主任医师已上架北京协和医院高级认证 北京 外科副主任医师20K-35K/月 合规详情立即投递发起沟通审核人：系统管理员 · 2025/1/22儿科住院医师已上架上海市第一人民医院高级认证 上海 儿科住院医师10K-18K/月 合规详情立即投递发起沟通审核人：系统管理员 · 2025/2/1妇产科主治医师已上架上海市第一人民医院高级认证 上海 妇产科主治医师14K-22K/月 合规详情立即投递发起沟通审核人：系统管理员 · 2025/2/5⏳ 审核中：机构未完成高级认证，职位暂缓上架儿科主治医师待审核广州妇儿医疗中心未认证 广州 儿科主治医师12K-20K/月 合规详情等待审核预计1-2个工作日⏳ 审核中：机构未完成高级认证，职位暂缓上架产科住院医师待审核广州妇儿医疗中心未认证 广州 妇产科住院医师10K-16K/月 合规详情等待审核预计1-2个工作日社区资讯全部政策解读继续教育行业动态 发布帖子更多 2025年医疗卫生体制改革最新政策解读政策解读#医改#分级诊疗#政策张伟 128💬 45 评论阅读全文 →住院医师规范化培训经验分享继续教育#规培#经验分享#医学教育李娜 256💬 89 评论阅读全文 →人工智能在医疗影像诊断中的应用进展行业动态#AI#医疗影像#前沿技术张伟 342💬 67 评论阅读全文 →平台公告政策解读2026-06-10卫健委发布2026年医师资格考试报名通知平台公告2026-06-08本月经32家机构资质审核通过，12家待复核继续教育2026-06-05国家级继续医学教育项目申报开始平台服务简历管理待解析去解析智能匹配6位可匹配查看资质年审个人认证查看人才沟通可在线沟通去沟通岗位审核4个待审无权限数据脱敏合规归档隐私设置隐私字段授权设置您的敏感字段在求职展示中的可见范围手机号联系电话 可见 脱敏 隐藏邮箱电子邮箱 可见 脱敏 隐藏住址居住地址 可见 脱敏 隐藏身份证号身份证号码 可见 脱敏 隐藏紧急联系人紧急联系人信息 可见 脱敏 隐藏取消 保存",
+        "layout": {
+          "viewportWidth": 1632,
+          "viewportHeight": 1600,
+          "scrollWidth": 1632,
+          "scrollHeight": 2848,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89180-codex-repair-structure-05-操作-隐私设置",
+          "label": "操作:隐私设置",
+          "finalUrl": "http://127.0.0.1:49180/",
+          "title": "医聘通 - 医疗行业垂直招聘平台",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89180/probe/codex-20260613-repair-runtime/may-89180-codex-repair-structure-05-操作-隐私设置.json",
+          "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89180/probe/codex-20260613-repair-runtime/may-89180-codex-repair-structure-05-操作-隐私设置.png",
+          "elementCount": 869,
+          "interactiveCount": 72,
+          "interactiveLabels": [
+            "医聘通",
+            "首页",
+            "搜索筛选",
+            "发现分类",
+            "管理后台",
+            "登录",
+            "注册",
+            "查看完整数据看板",
+            "姓名",
+            "手机号",
+            "选择执业资质 执业医师 执业护士 执业药师 医技人员 其他",
+            "立即注册",
+            "机构名称",
+            "选择机构类型 公立医院 民营医院 社区卫生中心 诊所 药企 其他",
+            "上传执业许可证",
+            "机构入驻",
+            "全部科室",
+            "全部职位",
+            "合规详情",
+            "立即投递",
+            "发起沟通",
+            "全部",
+            "政策解读",
+            "继续教育",
+            "行业动态",
+            "发布帖子",
+            "更多",
+            "128",
+            "45 评论",
+            "阅读全文 →"
+          ]
+        }
+      },
+      {
+        "label": "二层操作:隐私设置->发布帖子",
+        "url": "http://127.0.0.1:49180/community/new",
+        "title": "医聘通 - 医疗行业垂直招聘平台",
+        "headings": [
+          "发布帖子"
+        ],
+        "navLabels": [
+          "首页",
+          "搜索筛选",
+          "发现分类",
+          "管理后台"
+        ],
+        "buttons": [
+          "返回社区",
+          "提交发布"
+        ],
+        "links": [
+          "医聘通",
+          "首页",
+          "搜索筛选",
+          "发现分类",
+          "管理后台",
+          "登录",
+          "注册"
+        ],
+        "inputs": [
+          {
+            "tag": "input",
+            "type": "",
+            "placeholder": "请输入帖子标题",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "select",
+            "type": "",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "",
+            "placeholder": "用英文逗号分隔",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "textarea",
+            "type": "",
+            "placeholder": "请输入正文内容",
+            "name": "",
+            "label": ""
+          }
+        ],
+        "tables": [],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "医聘通首页搜索筛选发现分类管理后台登录注册 返回社区发布帖子提交后会进入社区资讯列表和详情页标题分类政策解读继续教育行业动态标签正文分享一条医疗招聘、执业成长或机构管理相关经验。 提交发布",
+        "layout": {
+          "viewportWidth": 1664,
+          "viewportHeight": 1600,
+          "scrollWidth": 1664,
+          "scrollHeight": 1600,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89180-codex-repair-structure-06-二层操作-隐私设置-发布帖子",
+          "label": "二层操作:隐私设置->发布帖子",
+          "finalUrl": "http://127.0.0.1:49180/community/new",
+          "title": "医聘通 - 医疗行业垂直招聘平台",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89180/probe/codex-20260613-repair-runtime/may-89180-codex-repair-structure-06-二层操作-隐私设置-发布帖子.json",
+          "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89180/probe/codex-20260613-repair-runtime/may-89180-codex-repair-structure-06-二层操作-隐私设置-发布帖子.png",
+          "elementCount": 57,
+          "interactiveCount": 13,
+          "interactiveLabels": [
+            "医聘通",
+            "首页",
+            "搜索筛选",
+            "发现分类",
+            "管理后台",
+            "登录",
+            "注册",
+            "返回社区",
+            "医疗行业交流新帖",
+            "政策解读 继续教育 行业动态",
+            "医聘通,经验分享",
+            "分享一条医疗招聘、执业成长或机构管理相关经验。",
+            "提交发布"
+          ]
+        }
+      },
+      {
+        "label": "导航:搜索筛选",
+        "url": "http://127.0.0.1:49180/jobs",
+        "title": "医聘通 - 医疗行业垂直招聘平台",
+        "headings": [
+          "筛选条件",
+          "职位搜索与筛选"
+        ],
+        "navLabels": [
+          "首页",
+          "搜索筛选",
+          "发现分类",
+          "管理后台",
+          "筛选条件",
+          "内科",
+          "外科",
+          "儿科",
+          "妇产科",
+          "急诊科",
+          "药学",
+          "影像科",
+          "检验科",
+          "主任医师",
+          "副主任医师",
+          "主治医师",
+          "住院医师",
+          "5K以下",
+          "5K-10K",
+          "10K-20K",
+          "20K-30K",
+          "30K-50K",
+          "50K以上"
+        ],
+        "buttons": [],
+        "links": [
+          "医聘通",
+          "首页",
+          "搜索筛选",
+          "发现分类",
+          "管理后台",
+          "登录",
+          "注册",
+          "内科主治医师",
+          "外科副主任医师",
+          "儿科住院医师",
+          "妇产科主治医师",
+          "急诊科医师"
+        ],
+        "inputs": [
+          {
+            "tag": "input",
+            "type": "search",
+            "placeholder": "请输入搜索职位、科室、机构",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "checkbox",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "checkbox",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "checkbox",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "checkbox",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "checkbox",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "checkbox",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "checkbox",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "checkbox",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "select",
+            "type": "",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "checkbox",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "checkbox",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "checkbox",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "checkbox",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "radio",
+            "placeholder": "",
+            "name": "salary",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "radio",
+            "placeholder": "",
+            "name": "salary",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "radio",
+            "placeholder": "",
+            "name": "salary",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "radio",
+            "placeholder": "",
+            "name": "salary",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "radio",
+            "placeholder": "",
+            "name": "salary",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "radio",
+            "placeholder": "",
+            "name": "salary",
+            "label": ""
+          }
+        ],
+        "tables": [],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "医聘通首页搜索筛选发现分类管理后台登录注册筛选条件职位搜索科室内科外科儿科妇产科急诊科药学影像科检验科地域全部北京上海广州深圳杭州成都武汉南京职称主任医师副主任医师主治医师住院医师薪资范围5K以下5K-10K10K-20K20K-30K30K-50K50K以上职位搜索与筛选查询结果会按关键词、科室、地域、职称和薪资范围实时更新。查询结果：共 5 个职位内科主治医师 高级认证内科主治医师15K-25K北京协和医院北京外科副主任医师 高级认证外科副主任医师20K-35K北京协和医院北京儿科住院医师 高级认证儿科住院医师10K-18K上海市第一人民医院上海妇产科主治医师 高级认证妇产科主治医师14K-22K上海市第一人民医院上海急诊科医师 高级认证急诊科主治医师18K-30K北京协和医院北京",
+        "layout": {
+          "viewportWidth": 1696,
+          "viewportHeight": 1600,
+          "scrollWidth": 1696,
+          "scrollHeight": 1600,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89180-codex-repair-structure-07-导航-搜索筛选",
+          "label": "导航:搜索筛选",
+          "finalUrl": "http://127.0.0.1:49180/jobs",
+          "title": "医聘通 - 医疗行业垂直招聘平台",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89180/probe/codex-20260613-repair-runtime/may-89180-codex-repair-structure-07-导航-搜索筛选.json",
+          "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89180/probe/codex-20260613-repair-runtime/may-89180-codex-repair-structure-07-导航-搜索筛选.png",
+          "elementCount": 267,
+          "interactiveCount": 32,
+          "interactiveLabels": [
+            "医聘通",
+            "首页",
+            "搜索筛选",
+            "发现分类",
+            "管理后台",
+            "登录",
+            "注册",
+            "请输入搜索职位、科室、机构",
+            "on",
+            "全部 北京 上海 广州 深圳 杭州 成都 武汉 南京",
+            "内科主治医师",
+            "外科副主任医师",
+            "儿科住院医师",
+            "妇产科主治医师",
+            "急诊科医师"
+          ]
+        }
+      },
+      {
+        "label": "导航:发现分类",
+        "url": "http://127.0.0.1:49180/community",
+        "title": "医聘通 - 医疗行业垂直招聘平台",
+        "headings": [
+          "发现分类",
+          "2025年医疗卫生体制改革最新政策解读",
+          "住院医师规范化培训经验分享",
+          "人工智能在医疗影像诊断中的应用进展",
+          "儿科医生短缺问题的深层原因分析",
+          "执业药师继续教育新规解读",
+          "社区医院信息化建设实践与思考"
+        ],
+        "navLabels": [
+          "首页",
+          "搜索筛选",
+          "发现分类",
+          "管理后台"
+        ],
+        "buttons": [
+          "全部",
+          "政策解读",
+          "继续教育",
+          "行业动态"
+        ],
+        "links": [
+          "医聘通",
+          "首页",
+          "搜索筛选",
+          "发现分类",
+          "管理后台",
+          "登录",
+          "注册",
+          "政策解读 2025年医疗卫生体制改革最新政策解读 · 128 45",
+          "继续教育 住院医师规范化培训经验分享 · 256 89",
+          "行业动态 人工智能在医疗影像诊断中的应用进展 · 342 67",
+          "政策解读 儿科医生短缺问题的深层原因分析 · 189 56",
+          "继续教育 执业药师继续教育新规解读 · 95 32",
+          "行业动态 社区医院信息化建设实践与思考 · 67 21"
+        ],
+        "inputs": [],
+        "tables": [],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "医聘通首页搜索筛选发现分类管理后台登录注册发现分类按政策解读、继续教育、行业动态分类发现医疗社区内容。 全部 政策解读 继续教育 行业动态政策解读2025年医疗卫生体制改革最新政策解读 · 12845继续教育住院医师规范化培训经验分享 · 25689行业动态人工智能在医疗影像诊断中的应用进展 · 34267政策解读儿科医生短缺问题的深层原因分析 · 18956继续教育执业药师继续教育新规解读 · 9532行业动态社区医院信息化建设实践与思考 · 6721",
+        "layout": {
+          "viewportWidth": 1728,
+          "viewportHeight": 1600,
+          "scrollWidth": 1728,
+          "scrollHeight": 1600,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89180-codex-repair-structure-08-导航-发现分类",
+          "label": "导航:发现分类",
+          "finalUrl": "http://127.0.0.1:49180/community",
+          "title": "医聘通 - 医疗行业垂直招聘平台",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89180/probe/codex-20260613-repair-runtime/may-89180-codex-repair-structure-08-导航-发现分类.json",
+          "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89180/probe/codex-20260613-repair-runtime/may-89180-codex-repair-structure-08-导航-发现分类.png",
+          "elementCount": 129,
+          "interactiveCount": 17,
+          "interactiveLabels": [
+            "医聘通",
+            "首页",
+            "搜索筛选",
+            "发现分类",
+            "管理后台",
+            "登录",
+            "注册",
+            "全部",
+            "政策解读",
+            "继续教育",
+            "行业动态",
+            "政策解读 2025年医疗卫生体制改革最新政策解读 · 128 45",
+            "继续教育 住院医师规范化培训经验分享 · 256 89",
+            "行业动态 人工智能在医疗影像诊断中的应用进展 · 342 67",
+            "政策解读 儿科医生短缺问题的深层原因分析 · 189 56",
+            "继续教育 执业药师继续教育新规解读 · 95 32",
+            "行业动态 社区医院信息化建设实践与思考 · 67 21"
+          ]
+        }
+      }
+    ],
+    "findings": [],
+    "actionHints": [],
+    "emptyPages": [],
+    "overflowPages": [],
+    "blankPages": [],
+    "apiFailurePaths": [],
+    "goalTerms": [],
+    "clickedActionDescriptors": [
+      {
+        "nav": "首页",
+        "label": "发起沟通",
+        "ordinal": 0,
+        "unsafe": false
+      },
+      {
+        "nav": "首页",
+        "label": "发起沟通->前往登录",
+        "ordinal": 0,
+        "secondary": true,
+        "unsafe": false
+      },
+      {
+        "nav": "首页",
+        "label": "隐私设置",
+        "ordinal": 0,
+        "unsafe": false
+      },
+      {
+        "nav": "首页",
+        "label": "隐私设置->发布帖子",
+        "ordinal": 0,
+        "secondary": true,
+        "unsafe": false
+      }
+    ],
+    "secondaryActionClicks": 2,
+    "structureCaptures": [
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89180-codex-repair-structure-01-首屏",
+        "label": "首屏",
+        "finalUrl": "http://127.0.0.1:49180/",
+        "title": "医聘通 - 医疗行业垂直招聘平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89180/probe/codex-20260613-repair-runtime/may-89180-codex-repair-structure-01-首屏.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89180/probe/codex-20260613-repair-runtime/may-89180-codex-repair-structure-01-首屏.png",
+        "elementCount": 753,
+        "interactiveCount": 54,
+        "interactiveLabels": [
+          "医聘通",
+          "首页",
+          "搜索筛选",
+          "发现分类",
+          "管理后台",
+          "登录",
+          "注册",
+          "查看完整数据看板",
+          "姓名",
+          "手机号",
+          "选择执业资质 执业医师 执业护士 执业药师 医技人员 其他",
+          "立即注册",
+          "机构名称",
+          "选择机构类型 公立医院 民营医院 社区卫生中心 诊所 药企 其他",
+          "上传执业许可证",
+          "机构入驻",
+          "全部科室",
+          "全部职位",
+          "合规详情",
+          "立即投递",
+          "发起沟通",
+          "全部",
+          "政策解读",
+          "继续教育",
+          "行业动态",
+          "发布帖子",
+          "更多",
+          "128",
+          "45 评论",
+          "阅读全文 →"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89180-codex-repair-structure-02-导航-首页",
+        "label": "导航:首页",
+        "finalUrl": "http://127.0.0.1:49180/",
+        "title": "医聘通 - 医疗行业垂直招聘平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89180/probe/codex-20260613-repair-runtime/may-89180-codex-repair-structure-02-导航-首页.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89180/probe/codex-20260613-repair-runtime/may-89180-codex-repair-structure-02-导航-首页.png",
+        "elementCount": 753,
+        "interactiveCount": 54,
+        "interactiveLabels": [
+          "医聘通",
+          "首页",
+          "搜索筛选",
+          "发现分类",
+          "管理后台",
+          "登录",
+          "注册",
+          "查看完整数据看板",
+          "姓名",
+          "手机号",
+          "选择执业资质 执业医师 执业护士 执业药师 医技人员 其他",
+          "立即注册",
+          "机构名称",
+          "选择机构类型 公立医院 民营医院 社区卫生中心 诊所 药企 其他",
+          "上传执业许可证",
+          "机构入驻",
+          "全部科室",
+          "全部职位",
+          "合规详情",
+          "立即投递",
+          "发起沟通",
+          "全部",
+          "政策解读",
+          "继续教育",
+          "行业动态",
+          "发布帖子",
+          "更多",
+          "128",
+          "45 评论",
+          "阅读全文 →"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89180-codex-repair-structure-03-操作-发起沟通",
+        "label": "操作:发起沟通",
+        "finalUrl": "http://127.0.0.1:49180/messages",
+        "title": "医聘通 - 医疗行业垂直招聘平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89180/probe/codex-20260613-repair-runtime/may-89180-codex-repair-structure-03-操作-发起沟通.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89180/probe/codex-20260613-repair-runtime/may-89180-codex-repair-structure-03-操作-发起沟通.png",
+        "elementCount": 36,
+        "interactiveCount": 8,
+        "interactiveLabels": [
+          "医聘通",
+          "首页",
+          "搜索筛选",
+          "发现分类",
+          "管理后台",
+          "登录",
+          "注册",
+          "前往登录"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89180-codex-repair-structure-04-二层操作-发起沟通-前往登录",
+        "label": "二层操作:发起沟通->前往登录",
+        "finalUrl": "http://127.0.0.1:49180/login",
+        "title": "医聘通 - 医疗行业垂直招聘平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89180/probe/codex-20260613-repair-runtime/may-89180-codex-repair-structure-04-二层操作-发起沟通-前往登录.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89180/probe/codex-20260613-repair-runtime/may-89180-codex-repair-structure-04-二层操作-发起沟通-前往登录.png",
+        "elementCount": 64,
+        "interactiveCount": 12,
+        "interactiveLabels": [
+          "医聘通",
+          "首页",
+          "搜索筛选",
+          "发现分类",
+          "管理后台",
+          "登录",
+          "注册",
+          "医疗人才 医疗机构",
+          "请输入手机号",
+          "请输入密码",
+          "立即注册"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89180-codex-repair-structure-05-操作-隐私设置",
+        "label": "操作:隐私设置",
+        "finalUrl": "http://127.0.0.1:49180/",
+        "title": "医聘通 - 医疗行业垂直招聘平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89180/probe/codex-20260613-repair-runtime/may-89180-codex-repair-structure-05-操作-隐私设置.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89180/probe/codex-20260613-repair-runtime/may-89180-codex-repair-structure-05-操作-隐私设置.png",
+        "elementCount": 869,
+        "interactiveCount": 72,
+        "interactiveLabels": [
+          "医聘通",
+          "首页",
+          "搜索筛选",
+          "发现分类",
+          "管理后台",
+          "登录",
+          "注册",
+          "查看完整数据看板",
+          "姓名",
+          "手机号",
+          "选择执业资质 执业医师 执业护士 执业药师 医技人员 其他",
+          "立即注册",
+          "机构名称",
+          "选择机构类型 公立医院 民营医院 社区卫生中心 诊所 药企 其他",
+          "上传执业许可证",
+          "机构入驻",
+          "全部科室",
+          "全部职位",
+          "合规详情",
+          "立即投递",
+          "发起沟通",
+          "全部",
+          "政策解读",
+          "继续教育",
+          "行业动态",
+          "发布帖子",
+          "更多",
+          "128",
+          "45 评论",
+          "阅读全文 →"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89180-codex-repair-structure-06-二层操作-隐私设置-发布帖子",
+        "label": "二层操作:隐私设置->发布帖子",
+        "finalUrl": "http://127.0.0.1:49180/community/new",
+        "title": "医聘通 - 医疗行业垂直招聘平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89180/probe/codex-20260613-repair-runtime/may-89180-codex-repair-structure-06-二层操作-隐私设置-发布帖子.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89180/probe/codex-20260613-repair-runtime/may-89180-codex-repair-structure-06-二层操作-隐私设置-发布帖子.png",
+        "elementCount": 57,
+        "interactiveCount": 13,
+        "interactiveLabels": [
+          "医聘通",
+          "首页",
+          "搜索筛选",
+          "发现分类",
+          "管理后台",
+          "登录",
+          "注册",
+          "返回社区",
+          "医疗行业交流新帖",
+          "政策解读 继续教育 行业动态",
+          "医聘通,经验分享",
+          "分享一条医疗招聘、执业成长或机构管理相关经验。",
+          "提交发布"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89180-codex-repair-structure-07-导航-搜索筛选",
+        "label": "导航:搜索筛选",
+        "finalUrl": "http://127.0.0.1:49180/jobs",
+        "title": "医聘通 - 医疗行业垂直招聘平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89180/probe/codex-20260613-repair-runtime/may-89180-codex-repair-structure-07-导航-搜索筛选.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89180/probe/codex-20260613-repair-runtime/may-89180-codex-repair-structure-07-导航-搜索筛选.png",
+        "elementCount": 267,
+        "interactiveCount": 32,
+        "interactiveLabels": [
+          "医聘通",
+          "首页",
+          "搜索筛选",
+          "发现分类",
+          "管理后台",
+          "登录",
+          "注册",
+          "请输入搜索职位、科室、机构",
+          "on",
+          "全部 北京 上海 广州 深圳 杭州 成都 武汉 南京",
+          "内科主治医师",
+          "外科副主任医师",
+          "儿科住院医师",
+          "妇产科主治医师",
+          "急诊科医师"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89180-codex-repair-structure-08-导航-发现分类",
+        "label": "导航:发现分类",
+        "finalUrl": "http://127.0.0.1:49180/community",
+        "title": "医聘通 - 医疗行业垂直招聘平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89180/probe/codex-20260613-repair-runtime/may-89180-codex-repair-structure-08-导航-发现分类.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89180/probe/codex-20260613-repair-runtime/may-89180-codex-repair-structure-08-导航-发现分类.png",
+        "elementCount": 129,
+        "interactiveCount": 17,
+        "interactiveLabels": [
+          "医聘通",
+          "首页",
+          "搜索筛选",
+          "发现分类",
+          "管理后台",
+          "登录",
+          "注册",
+          "全部",
+          "政策解读",
+          "继续教育",
+          "行业动态",
+          "政策解读 2025年医疗卫生体制改革最新政策解读 · 128 45",
+          "继续教育 住院医师规范化培训经验分享 · 256 89",
+          "行业动态 人工智能在医疗影像诊断中的应用进展 · 342 67",
+          "政策解读 儿科医生短缺问题的深层原因分析 · 189 56",
+          "继续教育 执业药师继续教育新规解读 · 95 32",
+          "行业动态 社区医院信息化建设实践与思考 · 67 21"
+        ]
+      }
+    ],
+    "representativeScreenshotUrl": "http://127.0.0.1:49180/",
+    "representativeScreenshotLabel": "医聘通"
+  },
+  "websiteStructureCapture": {
+    "module": "website_structure_capture",
+    "captureCount": 8,
+    "captures": [
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89180-codex-repair-structure-01-首屏",
+        "label": "首屏",
+        "finalUrl": "http://127.0.0.1:49180/",
+        "title": "医聘通 - 医疗行业垂直招聘平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89180/probe/codex-20260613-repair-runtime/may-89180-codex-repair-structure-01-首屏.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89180/probe/codex-20260613-repair-runtime/may-89180-codex-repair-structure-01-首屏.png",
+        "elementCount": 753,
+        "interactiveCount": 54,
+        "interactiveLabels": [
+          "医聘通",
+          "首页",
+          "搜索筛选",
+          "发现分类",
+          "管理后台",
+          "登录",
+          "注册",
+          "查看完整数据看板",
+          "姓名",
+          "手机号",
+          "选择执业资质 执业医师 执业护士 执业药师 医技人员 其他",
+          "立即注册",
+          "机构名称",
+          "选择机构类型 公立医院 民营医院 社区卫生中心 诊所 药企 其他",
+          "上传执业许可证",
+          "机构入驻",
+          "全部科室",
+          "全部职位",
+          "合规详情",
+          "立即投递",
+          "发起沟通",
+          "全部",
+          "政策解读",
+          "继续教育",
+          "行业动态",
+          "发布帖子",
+          "更多",
+          "128",
+          "45 评论",
+          "阅读全文 →"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89180-codex-repair-structure-02-导航-首页",
+        "label": "导航:首页",
+        "finalUrl": "http://127.0.0.1:49180/",
+        "title": "医聘通 - 医疗行业垂直招聘平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89180/probe/codex-20260613-repair-runtime/may-89180-codex-repair-structure-02-导航-首页.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89180/probe/codex-20260613-repair-runtime/may-89180-codex-repair-structure-02-导航-首页.png",
+        "elementCount": 753,
+        "interactiveCount": 54,
+        "interactiveLabels": [
+          "医聘通",
+          "首页",
+          "搜索筛选",
+          "发现分类",
+          "管理后台",
+          "登录",
+          "注册",
+          "查看完整数据看板",
+          "姓名",
+          "手机号",
+          "选择执业资质 执业医师 执业护士 执业药师 医技人员 其他",
+          "立即注册",
+          "机构名称",
+          "选择机构类型 公立医院 民营医院 社区卫生中心 诊所 药企 其他",
+          "上传执业许可证",
+          "机构入驻",
+          "全部科室",
+          "全部职位",
+          "合规详情",
+          "立即投递",
+          "发起沟通",
+          "全部",
+          "政策解读",
+          "继续教育",
+          "行业动态",
+          "发布帖子",
+          "更多",
+          "128",
+          "45 评论",
+          "阅读全文 →"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89180-codex-repair-structure-03-操作-发起沟通",
+        "label": "操作:发起沟通",
+        "finalUrl": "http://127.0.0.1:49180/messages",
+        "title": "医聘通 - 医疗行业垂直招聘平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89180/probe/codex-20260613-repair-runtime/may-89180-codex-repair-structure-03-操作-发起沟通.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89180/probe/codex-20260613-repair-runtime/may-89180-codex-repair-structure-03-操作-发起沟通.png",
+        "elementCount": 36,
+        "interactiveCount": 8,
+        "interactiveLabels": [
+          "医聘通",
+          "首页",
+          "搜索筛选",
+          "发现分类",
+          "管理后台",
+          "登录",
+          "注册",
+          "前往登录"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89180-codex-repair-structure-04-二层操作-发起沟通-前往登录",
+        "label": "二层操作:发起沟通->前往登录",
+        "finalUrl": "http://127.0.0.1:49180/login",
+        "title": "医聘通 - 医疗行业垂直招聘平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89180/probe/codex-20260613-repair-runtime/may-89180-codex-repair-structure-04-二层操作-发起沟通-前往登录.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89180/probe/codex-20260613-repair-runtime/may-89180-codex-repair-structure-04-二层操作-发起沟通-前往登录.png",
+        "elementCount": 64,
+        "interactiveCount": 12,
+        "interactiveLabels": [
+          "医聘通",
+          "首页",
+          "搜索筛选",
+          "发现分类",
+          "管理后台",
+          "登录",
+          "注册",
+          "医疗人才 医疗机构",
+          "请输入手机号",
+          "请输入密码",
+          "立即注册"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89180-codex-repair-structure-05-操作-隐私设置",
+        "label": "操作:隐私设置",
+        "finalUrl": "http://127.0.0.1:49180/",
+        "title": "医聘通 - 医疗行业垂直招聘平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89180/probe/codex-20260613-repair-runtime/may-89180-codex-repair-structure-05-操作-隐私设置.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89180/probe/codex-20260613-repair-runtime/may-89180-codex-repair-structure-05-操作-隐私设置.png",
+        "elementCount": 869,
+        "interactiveCount": 72,
+        "interactiveLabels": [
+          "医聘通",
+          "首页",
+          "搜索筛选",
+          "发现分类",
+          "管理后台",
+          "登录",
+          "注册",
+          "查看完整数据看板",
+          "姓名",
+          "手机号",
+          "选择执业资质 执业医师 执业护士 执业药师 医技人员 其他",
+          "立即注册",
+          "机构名称",
+          "选择机构类型 公立医院 民营医院 社区卫生中心 诊所 药企 其他",
+          "上传执业许可证",
+          "机构入驻",
+          "全部科室",
+          "全部职位",
+          "合规详情",
+          "立即投递",
+          "发起沟通",
+          "全部",
+          "政策解读",
+          "继续教育",
+          "行业动态",
+          "发布帖子",
+          "更多",
+          "128",
+          "45 评论",
+          "阅读全文 →"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89180-codex-repair-structure-06-二层操作-隐私设置-发布帖子",
+        "label": "二层操作:隐私设置->发布帖子",
+        "finalUrl": "http://127.0.0.1:49180/community/new",
+        "title": "医聘通 - 医疗行业垂直招聘平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89180/probe/codex-20260613-repair-runtime/may-89180-codex-repair-structure-06-二层操作-隐私设置-发布帖子.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89180/probe/codex-20260613-repair-runtime/may-89180-codex-repair-structure-06-二层操作-隐私设置-发布帖子.png",
+        "elementCount": 57,
+        "interactiveCount": 13,
+        "interactiveLabels": [
+          "医聘通",
+          "首页",
+          "搜索筛选",
+          "发现分类",
+          "管理后台",
+          "登录",
+          "注册",
+          "返回社区",
+          "医疗行业交流新帖",
+          "政策解读 继续教育 行业动态",
+          "医聘通,经验分享",
+          "分享一条医疗招聘、执业成长或机构管理相关经验。",
+          "提交发布"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89180-codex-repair-structure-07-导航-搜索筛选",
+        "label": "导航:搜索筛选",
+        "finalUrl": "http://127.0.0.1:49180/jobs",
+        "title": "医聘通 - 医疗行业垂直招聘平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89180/probe/codex-20260613-repair-runtime/may-89180-codex-repair-structure-07-导航-搜索筛选.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89180/probe/codex-20260613-repair-runtime/may-89180-codex-repair-structure-07-导航-搜索筛选.png",
+        "elementCount": 267,
+        "interactiveCount": 32,
+        "interactiveLabels": [
+          "医聘通",
+          "首页",
+          "搜索筛选",
+          "发现分类",
+          "管理后台",
+          "登录",
+          "注册",
+          "请输入搜索职位、科室、机构",
+          "on",
+          "全部 北京 上海 广州 深圳 杭州 成都 武汉 南京",
+          "内科主治医师",
+          "外科副主任医师",
+          "儿科住院医师",
+          "妇产科主治医师",
+          "急诊科医师"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89180-codex-repair-structure-08-导航-发现分类",
+        "label": "导航:发现分类",
+        "finalUrl": "http://127.0.0.1:49180/community",
+        "title": "医聘通 - 医疗行业垂直招聘平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89180/probe/codex-20260613-repair-runtime/may-89180-codex-repair-structure-08-导航-发现分类.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89180/probe/codex-20260613-repair-runtime/may-89180-codex-repair-structure-08-导航-发现分类.png",
+        "elementCount": 129,
+        "interactiveCount": 17,
+        "interactiveLabels": [
+          "医聘通",
+          "首页",
+          "搜索筛选",
+          "发现分类",
+          "管理后台",
+          "登录",
+          "注册",
+          "全部",
+          "政策解读",
+          "继续教育",
+          "行业动态",
+          "政策解读 2025年医疗卫生体制改革最新政策解读 · 128 45",
+          "继续教育 住院医师规范化培训经验分享 · 256 89",
+          "行业动态 人工智能在医疗影像诊断中的应用进展 · 342 67",
+          "政策解读 儿科医生短缺问题的深层原因分析 · 189 56",
+          "继续教育 执业药师继续教育新规解读 · 95 32",
+          "行业动态 社区医院信息化建设实践与思考 · 67 21"
+        ]
+      }
+    ]
+  },
+  "screenshotMetrics": {
+    "width": 1760,
+    "height": 1600,
+    "scrollWidth": 1728,
+    "scrollHeight": 2848
+  },
+  "initialBodyTextPreview": "医聘通\n首页\n搜索筛选\n发现分类\n管理后台\n登录\n注册\n医聘通\n\n连接优质医疗人才与可信医疗机构\n\n5\n在招岗位\n4\n认证机构\n6\n医疗人才\n3\n已投递\n1\n已查看\n1\n已邀请\n1\n面试中\n1\n已录用\n查看完整数据看板\n医疗人才注册\n\n持证医生、护士、医技、药师专属通道\n\n选择执业资质\n执业医师\n执业护士\n执业药师\n医技人员\n其他\n立即注册\n医疗机构入驻\n\n医院、诊所、药企资质审核后发布招聘\n\n选择机构类型\n公立医院\n民营医院\n社区卫生中心\n诊所\n药企\n其他\n上传执业许可证\n机构入驻\n投递转化漏斗（可点击查看明细）\n已投递\n3\n查看明细 →\n已查看\n1\n查看明细 →\n已邀请\n1\n查看明细 →\n面试中\n1\n查看明细 →\n已录用\n1\n查看明细 →\n\n每个投递都有完整状态链路追踪，点击候选人可直接进入在线沟通\n\n区域热度 Top5\n北京\n3\n上海\n2\n科室热度 Top5\n儿科\n1\n内科\n1\n外科\n1\n妇产科\n1\n急诊科\n1\n热门科室\n全部科室\n内科\n128 个岗位\n外科\n96 个岗位\n儿科\n72 个岗位\n妇产科\n64 个岗位\n急诊科\n85 个岗位\n药学\n53 个岗位\n影像科\n41 个岗位\n检验科\n37 个岗位\n最新职位\n全部职位\n内科主治医师\n已上架\n北京协和医院\n高级认证\n北京\n内科\n主治医师\n15K-25K/月\n合规详情\n立即投递\n发起沟通\n审核人：系统管理员 · 2025/1/20\n外科副主任医师\n已上架\n北京协和医院\n高级认证\n北京\n外科\n副主任医师\n20K-35K/月\n合规详情\n立即投递\n发起沟通\n审核人：系统管理员 · 2025/1/22\n儿科住院医师\n已上架\n上海市第一人民医院\n高级认证\n上海\n儿科\n住院医师\n10K-18K/月\n合规详情\n立即投递\n发起沟通\n审核人：系统管理员 · 2025/2/1\n妇产科主治医师\n已上架\n上海市第一人民医院\n高级认证\n上海\n妇产科\n主治医师\n14K-22K/月\n合规详情\n立即投递\n发起沟通\n审核人：系统管理员 · 2025/2/5\n⏳ 审核中：机构未完成高级认证，职位暂缓上架\n儿科主治医师\n待审核\n广州妇儿医疗中心\n未认证\n广州\n儿科\n主治医师\n12K-20K/月\n合规详情\n等待审核\n预计1-2个工作日\n⏳ 审核中：机构未完成高级认证，职位暂缓上架\n产科住院医师\n待审核\n广州妇儿医疗中心\n未认证\n广州\n妇产科\n住院医师\n10K-16K/月\n合规详情\n等待审核\n预计1-2个工作日\n社区资讯\n全部\n政策解读\n继续教育\n行业动态\n发布帖子\n更多\n2025年医疗卫生体制改革最新政策解读\n政策解读\n#医改\n#分级诊疗\n#政策\n张伟\n128\n💬 45 评论\n阅读全文 →\n住院医师规范化培训经验分享\n继续教育\n#规培\n#经验分享\n#医学教育\n李娜\n256\n💬 89 评论\n阅读全文 →\n人工智能在医疗影像诊断中的应用进展\n行业动态\n#AI\n#医疗影像\n#前沿技术\n张伟\n342\n💬 67 评论\n阅读全文 →\n平台公告\n政策解读\n2026-06-10\n\n卫健委发布2026年医师资格考试报名通知\n\n平台公告\n2026-06-08\n\n本月经32家机构资质审核通过，12家待复核\n\n继续教育\n2026-06-05\n\n国家级继续医学教育项目申报开始\n\n平台服务\n简历管理\n待解析\n去解析\n智能匹配\n6位可匹配\n查看\n资质年审\n个人认证\n查看\n人才沟通\n可在线沟通\n去沟通\n岗位审核\n4个待审\n无权限\n数据脱敏\n合规归档\n隐私设置",
+  "bodyTextPreview": "医聘通\n首页\n搜索筛选\n发现分类\n管理后台\n登录\n注册\n医聘通\n\n连接优质医疗人才与可信医疗机构\n\n5\n在招岗位\n4\n认证机构\n6\n医疗人才\n3\n已投递\n1\n已查看\n1\n已邀请\n1\n面试中\n1\n已录用\n查看完整数据看板\n医疗人才注册\n\n持证医生、护士、医技、药师专属通道\n\n选择执业资质\n执业医师\n执业护士\n执业药师\n医技人员\n其他\n立即注册\n医疗机构入驻\n\n医院、诊所、药企资质审核后发布招聘\n\n选择机构类型\n公立医院\n民营医院\n社区卫生中心\n诊所\n药企\n其他\n上传执业许可证\n机构入驻\n投递转化漏斗（可点击查看明细）\n已投递\n3\n查看明细 →\n已查看\n1\n查看明细 →\n已邀请\n1\n查看明细 →\n面试中\n1\n查看明细 →\n已录用\n1\n查看明细 →\n\n每个投递都有完整状态链路追踪，点击候选人可直接进入在线沟通\n\n区域热度 Top5\n北京\n3\n上海\n2\n科室热度 Top5\n儿科\n1\n内科\n1\n外科\n1\n妇产科\n1\n急诊科\n1\n热门科室\n全部科室\n内科\n128 个岗位\n外科\n96 个岗位\n儿科\n72 个岗位\n妇产科\n64 个岗位\n急诊科\n85 个岗位\n药学\n53 个岗位\n影像科\n41 个岗位\n检验科\n37 个岗位\n最新职位\n全部职位\n内科主治医师\n已上架\n北京协和医院\n高级认证\n北京\n内科\n主治医师\n15K-25K/月\n合规详情\n立即投递\n发起沟通\n审核人：系统管理员 · 2025/1/20\n外科副主任医师\n已上架\n北京协和医院\n高级认证\n北京\n外科\n副主任医师\n20K-35K/月\n合规详情\n立即投递\n发起沟通\n审核人：系统管理员 · 2025/1/22\n儿科住院医师\n已上架\n上海市第一人民医院\n高级认证\n上海\n儿科\n住院医师\n10K-18K/月\n合规详情\n立即投递\n发起沟通\n审核人：系统管理员 · 2025/2/1\n妇产科主治医师\n已上架\n上海市第一人民医院\n高级认证\n上海\n妇产科\n主治医师\n14K-22K/月\n合规详情\n立即投递\n发起沟通\n审核人：系统管理员 · 2025/2/5\n⏳ 审核中：机构未完成高级认证，职位暂缓上架\n儿科主治医师\n待审核\n广州妇儿医疗中心\n未认证\n广州\n儿科\n主治医师\n12K-20K/月\n合规详情\n等待审核\n预计1-2个工作日\n⏳ 审核中：机构未完成高级认证，职位暂缓上架\n产科住院医师\n待审核\n广州妇儿医疗中心\n未认证\n广州\n妇产科\n住院医师\n10K-16K/月\n合规详情\n等待审核\n预计1-2个工作日\n社区资讯\n全部\n政策解读\n继续教育\n行业动态\n发布帖子\n更多\n2025年医疗卫生体制改革最新政策解读\n政策解读\n#医改\n#分级诊疗\n#政策\n张伟\n128\n💬 45 评论\n阅读全文 →\n住院医师规范化培训经验分享\n继续教育\n#规培\n#经验分享\n#医学教育\n李娜\n256\n💬 89 评论\n阅读全文 →\n人工智能在医疗影像诊断中的应用进展\n行业动态\n#AI\n#医疗影像\n#前沿技术\n张伟\n342\n💬 67 评论\n阅读全文 →\n平台公告\n政策解读\n2026-06-10\n\n卫健委发布2026年医师资格考试报名通知\n\n平台公告\n2026-06-08\n\n本月经32家机构资质审核通过，12家待复核\n\n继续教育\n2026-06-05\n\n国家级继续医学教育项目申报开始\n\n平台服务\n简历管理\n待解析\n去解析\n智能匹配\n6位可匹配\n查看\n资质年审\n个人认证\n查看\n人才沟通\n可在线沟通\n去沟通\n岗位审核\n4个待审\n无权限\n数据脱敏\n合规归档\n隐私设置",
+  "apiBase": "http://127.0.0.1:59180",
+  "businessGoalPreview": "",
+  "apiResponses": [
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49180/api/jobs?page=1&limit=6"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49180/api/community/posts?page=1&pageSize=3"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49180/api/applications/funnel"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49180/api/jobs?page=1&limit=6"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49180/api/community/posts?page=1&pageSize=3"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49180/api/applications/funnel"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49180/api/admin/dashboard"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49180/api/admin/dashboard"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49180/api/jobs?page=1&limit=6"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49180/api/community/posts?page=1&pageSize=3"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49180/api/applications/funnel"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49180/api/jobs?page=1&limit=6"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49180/api/community/posts?page=1&pageSize=3"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49180/api/applications/funnel"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49180/api/admin/dashboard"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49180/api/admin/dashboard"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49180/api/jobs?page=1&limit=6"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49180/api/community/posts?page=1&pageSize=3"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49180/api/applications/funnel"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49180/api/jobs?page=1&limit=6"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49180/api/community/posts?page=1&pageSize=3"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49180/api/applications/funnel"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49180/api/admin/dashboard"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49180/api/admin/dashboard"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49180/api/jobs?page=1&limit=6"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49180/api/community/posts?page=1&pageSize=3"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49180/api/applications/funnel"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49180/api/jobs?page=1&limit=6"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49180/api/community/posts?page=1&pageSize=3"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49180/api/applications/funnel"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49180/api/admin/dashboard"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49180/api/admin/dashboard"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49180/api/jobs?page=1&pageSize=6&status=active"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49180/api/jobs?page=1&pageSize=6&status=active"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49180/api/community/posts?page=1&pageSize=10"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49180/api/community/posts?page=1&pageSize=10"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49180/api/jobs?page=1&limit=6"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49180/api/community/posts?page=1&pageSize=3"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49180/api/applications/funnel"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49180/api/jobs?page=1&limit=6"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49180/api/community/posts?page=1&pageSize=3"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49180/api/applications/funnel"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49180/api/admin/dashboard"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49180/api/admin/dashboard"
+    }
+  ],
+  "apiChecks": [
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59180/api/health",
+      "path": "/api/health",
+      "status": 200,
+      "ok": true,
+      "bodyPreview": "{\"success\":true,\"message\":\"ok\"}"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59180/api/jobs?page=1&limit=6",
+      "path": "/api/jobs?page=1&limit=6",
+      "status": 200,
+      "ok": true,
+      "bodyPreview": "{\"success\":true,\"data\":{\"items\":[{\"id\":1,\"institution_id\":1,\"title\":\"内科主治医师\",\"department\":\"内科\",\"required_title\":\"主治医师\",\"required_category\":\"临床\",\"location\":\"北京\",\"salary_min\":15000,\"salary_max\":25000,\"description\":\"负责内科门诊及住院患者的诊疗工作\",\"requirements\":\"内科主治医师职称，3年以上临床经验\",\"status\":\"active\",\"ai_risk_score\":0,\"created_at\":\"2026-06-12 22:16:42\",\"updated_at\":\"2026-06-12 22:16:42\",\"approved_by\":1,\"approved_at\":\"2025-01-20T10:00:00Z\",\"closed_reason\":null,\"closed_at\":null,\"closed_by\":null,\"review_note\":\"资质齐全，"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59180/api/community/posts?page=1&pageSize=3",
+      "path": "/api/community/posts?page=1&pageSize=3",
+      "status": 200,
+      "ok": true,
+      "bodyPreview": "{\"success\":true,\"data\":{\"items\":[{\"id\":1,\"author_id\":2,\"title\":\"2025年医疗卫生体制改革最新政策解读\",\"content\":\"近日，国务院发布了最新的医疗卫生体制改革方案，重点推进分级诊疗制度建设，加强基层医疗服务能力。方案明确提出到2025年底，县域就诊率要达到90%以上...\",\"tags\":\"[\\\"医改\\\",\\\"分级诊疗\\\",\\\"政策\\\"]\",\"category\":\"policy\",\"likes\":128,\"comments\":45,\"created_at\":\"2026-06-12 22:16:42\",\"author_name\":\"张伟\",\"author_role\":\"talent\"},{\"id\":2,\"author_id\":3,\"title\":\"住院医师规范化培训经验分享\",\"content\":\"作为一名刚刚完成住院医师规范化培训的医生，我想分享一下自己的培训经历和心得。规培三年，我在内科轮转了多个科室，积累了丰富的临床经验...\",\"tags\":\"[\\\"规培\\\",\\\"经验分享\\\",\\\"医学教育\\\"]\",\"cat"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59180/api/applications/funnel",
+      "path": "/api/applications/funnel",
+      "status": 200,
+      "ok": true,
+      "bodyPreview": "{\"success\":true,\"data\":[{\"status\":\"applied\",\"label\":\"已投递\",\"count\":3},{\"status\":\"read\",\"label\":\"已查看\",\"count\":1},{\"status\":\"invited\",\"label\":\"已邀请\",\"count\":1},{\"status\":\"interview\",\"label\":\"面试中\",\"count\":1},{\"status\":\"offered\",\"label\":\"已录用\",\"count\":1}]}"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59180/api/admin/dashboard",
+      "path": "/api/admin/dashboard",
+      "status": 200,
+      "ok": true,
+      "bodyPreview": "{\"success\":true,\"data\":{\"overview\":{\"totalUsers\":11,\"totalTalents\":6,\"totalInstitutions\":4,\"totalJobs\":9,\"activeJobs\":5,\"totalApplications\":8,\"totalResumes\":5,\"pendingReviews\":1,\"pendingJobs\":4},\"funnel\":[{\"status\":\"applied\",\"count\":3},{\"status\":\"read\",\"count\":1},{\"status\":\"invited\",\"count\":1},{\"status\":\"interview\",\"count\":1},{\"status\":\"offered\",\"count\":1},{\"status\":\"rejected\",\"count\":1}],\"heatmaps\":{\"region\":[{\"region\":\"北京\",\"institution_type\":\"三甲医院\",\"count\":3},{\"region\":\"上海\",\"institution_type\":"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59180/api/jobs?page=1&pageSize=6&status=active",
+      "path": "/api/jobs?page=1&pageSize=6&status=active",
+      "status": 200,
+      "ok": true,
+      "bodyPreview": "{\"success\":true,\"data\":{\"items\":[{\"id\":1,\"institution_id\":1,\"title\":\"内科主治医师\",\"department\":\"内科\",\"required_title\":\"主治医师\",\"required_category\":\"临床\",\"location\":\"北京\",\"salary_min\":15000,\"salary_max\":25000,\"description\":\"负责内科门诊及住院患者的诊疗工作\",\"requirements\":\"内科主治医师职称，3年以上临床经验\",\"status\":\"active\",\"ai_risk_score\":0,\"created_at\":\"2026-06-12 22:16:42\",\"updated_at\":\"2026-06-12 22:16:42\",\"approved_by\":1,\"approved_at\":\"2025-01-20T10:00:00Z\",\"closed_reason\":null,\"closed_at\":null,\"closed_by\":null,\"review_note\":\"资质齐全，"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59180/api/community/posts?page=1&pageSize=10",
+      "path": "/api/community/posts?page=1&pageSize=10",
+      "status": 200,
+      "ok": true,
+      "bodyPreview": "{\"success\":true,\"data\":{\"items\":[{\"id\":1,\"author_id\":2,\"title\":\"2025年医疗卫生体制改革最新政策解读\",\"content\":\"近日，国务院发布了最新的医疗卫生体制改革方案，重点推进分级诊疗制度建设，加强基层医疗服务能力。方案明确提出到2025年底，县域就诊率要达到90%以上...\",\"tags\":\"[\\\"医改\\\",\\\"分级诊疗\\\",\\\"政策\\\"]\",\"category\":\"policy\",\"likes\":128,\"comments\":45,\"created_at\":\"2026-06-12 22:16:42\",\"author_name\":\"张伟\",\"author_role\":\"talent\"},{\"id\":2,\"author_id\":3,\"title\":\"住院医师规范化培训经验分享\",\"content\":\"作为一名刚刚完成住院医师规范化培训的医生，我想分享一下自己的培训经历和心得。规培三年，我在内科轮转了多个科室，积累了丰富的临床经验...\",\"tags\":\"[\\\"规培\\\",\\\"经验分享\\\",\\\"医学教育\\\"]\",\"cat"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59180/api/auth/me",
+      "path": "/api/auth/me",
+      "status": 200,
+      "ok": true,
+      "bodyPreview": "{\"success\":true,\"data\":{\"user\":{\"id\":1,\"phone\":\"13800000001\",\"name\":\"系统管理员\",\"role\":\"admin\",\"verified\":1,\"created_at\":\"2026-06-12 22:16:42\"},\"profile\":null}}"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59180/api/users/profile",
+      "path": "/api/users/profile",
+      "status": 200,
+      "ok": true,
+      "bodyPreview": "{\"success\":true,\"data\":{\"user\":{\"id\":1,\"phone\":\"13800000001\",\"name\":\"系统管理员\",\"role\":\"admin\",\"verified\":1,\"created_at\":\"2026-06-12 22:16:42\"},\"profile\":null}}"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59180/api/user/profile",
+      "path": "/api/user/profile",
+      "status": 200,
+      "ok": true,
+      "bodyPreview": "{\"success\":true,\"data\":{\"user\":{\"id\":1,\"phone\":\"13800000001\",\"name\":\"系统管理员\",\"role\":\"admin\",\"verified\":1,\"created_at\":\"2026-06-12 22:16:42\"},\"profile\":null}}"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59180/api/search?q=%E6%B5%8B%E8%AF%95",
+      "path": "/api/search?q=%E6%B5%8B%E8%AF%95",
+      "status": 404,
+      "ok": false,
+      "bodyPreview": "{\"success\":false,\"error\":\"API not found\"}"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59180/api/admin/stats",
+      "path": "/api/admin/stats",
+      "status": 404,
+      "ok": false,
+      "bodyPreview": "{\"success\":false,\"error\":\"API not found\"}"
+    }
+  ],
+  "dialogs": [],
+  "consoleMessages": [
+    {
+      "type": "debug",
+      "text": "[vite] connecting...",
+      "location": {
+        "url": "http://127.0.0.1:49180/@vite/client",
+        "lineNumber": 788,
+        "columnNumber": 8
+      }
+    },
+    {
+      "type": "debug",
+      "text": "[vite] connected.",
+      "location": {
+        "url": "http://127.0.0.1:49180/@vite/client",
+        "lineNumber": 911,
+        "columnNumber": 14
+      }
+    },
+    {
+      "type": "info",
+      "text": "%cDownload the React DevTools for a better development experience: https://reactjs.org/link/react-devtools font-weight:bold",
+      "location": {
+        "url": "http://127.0.0.1:49180/node_modules/.vite/deps/chunk-SVG7M4VJ.js?v=4913878e",
+        "lineNumber": 21606,
+        "columnNumber": 24
+      }
+    },
+    {
+      "type": "verbose",
+      "text": "[DOM] Input elements should have autocomplete attributes (suggested: \"current-password\"): (More info: https://goo.gl/9p2vKq) %o",
+      "location": {
+        "url": "http://127.0.0.1:49180/login",
+        "lineNumber": 0,
+        "columnNumber": 0
+      }
+    },
+    {
+      "type": "debug",
+      "text": "[vite] connecting...",
+      "location": {
+        "url": "http://127.0.0.1:49180/@vite/client",
+        "lineNumber": 788,
+        "columnNumber": 8
+      }
+    },
+    {
+      "type": "debug",
+      "text": "[vite] connected.",
+      "location": {
+        "url": "http://127.0.0.1:49180/@vite/client",
+        "lineNumber": 911,
+        "columnNumber": 14
+      }
+    },
+    {
+      "type": "info",
+      "text": "%cDownload the React DevTools for a better development experience: https://reactjs.org/link/react-devtools font-weight:bold",
+      "location": {
+        "url": "http://127.0.0.1:49180/node_modules/.vite/deps/chunk-SVG7M4VJ.js?v=4913878e",
+        "lineNumber": 21606,
+        "columnNumber": 24
+      }
+    },
+    {
+      "type": "verbose",
+      "text": "[DOM] Input elements should have autocomplete attributes (suggested: \"current-password\"): (More info: https://goo.gl/9p2vKq) %o",
+      "location": {
+        "url": "http://127.0.0.1:49180/login",
+        "lineNumber": 0,
+        "columnNumber": 0
+      }
+    },
+    {
+      "type": "debug",
+      "text": "[vite] connecting...",
+      "location": {
+        "url": "http://127.0.0.1:49180/@vite/client",
+        "lineNumber": 788,
+        "columnNumber": 8
+      }
+    },
+    {
+      "type": "debug",
+      "text": "[vite] connected.",
+      "location": {
+        "url": "http://127.0.0.1:49180/@vite/client",
+        "lineNumber": 911,
+        "columnNumber": 14
+      }
+    },
+    {
+      "type": "info",
+      "text": "%cDownload the React DevTools for a better development experience: https://reactjs.org/link/react-devtools font-weight:bold",
+      "location": {
+        "url": "http://127.0.0.1:49180/node_modules/.vite/deps/chunk-SVG7M4VJ.js?v=4913878e",
+        "lineNumber": 21606,
+        "columnNumber": 24
+      }
+    },
+    {
+      "type": "debug",
+      "text": "[vite] connecting...",
+      "location": {
+        "url": "http://127.0.0.1:49180/@vite/client",
+        "lineNumber": 788,
+        "columnNumber": 8
+      }
+    },
+    {
+      "type": "debug",
+      "text": "[vite] connected.",
+      "location": {
+        "url": "http://127.0.0.1:49180/@vite/client",
+        "lineNumber": 911,
+        "columnNumber": 14
+      }
+    },
+    {
+      "type": "info",
+      "text": "%cDownload the React DevTools for a better development experience: https://reactjs.org/link/react-devtools font-weight:bold",
+      "location": {
+        "url": "http://127.0.0.1:49180/node_modules/.vite/deps/chunk-SVG7M4VJ.js?v=4913878e",
+        "lineNumber": 21606,
+        "columnNumber": 24
+      }
+    },
+    {
+      "type": "debug",
+      "text": "[vite] connecting...",
+      "location": {
+        "url": "http://127.0.0.1:49180/@vite/client",
+        "lineNumber": 788,
+        "columnNumber": 8
+      }
+    },
+    {
+      "type": "debug",
+      "text": "[vite] connected.",
+      "location": {
+        "url": "http://127.0.0.1:49180/@vite/client",
+        "lineNumber": 911,
+        "columnNumber": 14
+      }
+    },
+    {
+      "type": "info",
+      "text": "%cDownload the React DevTools for a better development experience: https://reactjs.org/link/react-devtools font-weight:bold",
+      "location": {
+        "url": "http://127.0.0.1:49180/node_modules/.vite/deps/chunk-SVG7M4VJ.js?v=4913878e",
+        "lineNumber": 21606,
+        "columnNumber": 24
+      }
+    }
+  ],
+  "requestFailures": [],
+  "responseErrors": []
+}

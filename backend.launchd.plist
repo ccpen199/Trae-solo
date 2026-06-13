@@ -9,7 +9,8 @@
   <key>ProgramArguments</key>
   <array>
     <string>/bin/zsh</string>
-    <string>/Users/chen/Documents/trae_projects/local_projects/may-89180/start-backend.zsh</string>
+    <string>-lc</string>
+    <string>exec /Users/chen/Documents/trae_projects/local_projects/may-89180/start-backend.zsh</string>
   </array>
   <key>EnvironmentVariables</key>
   <dict>

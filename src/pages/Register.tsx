@@ -64,12 +64,33 @@ export default function Register() {
     setError('')
     setLoading(true)
     try {
-      const body = role === 'talent' ? { ...talentForm, role } : { ...institutionForm, role }
+      const body = role === 'talent'
+        ? {
+            role,
+            name: talentForm.name,
+            phone: talentForm.phone,
+            password: talentForm.password,
+            practice_category: talentForm.practiceCategory,
+            department: talentForm.department,
+            title: talentForm.title,
+          }
+        : {
+            role,
+            name: institutionForm.institutionName,
+            phone: institutionForm.phone,
+            password: institutionForm.password,
+            institution_type: institutionForm.institutionType,
+            credit_code: institutionForm.creditCode,
+          }
       const data = await apiFetch('/auth/register', {
         method: 'POST',
         body: JSON.stringify(body),
       })
-      login(data.user, data.token)
+      const payload = data.data || data
+      if (!payload?.user || !payload?.token) {
+        throw new Error('注册响应缺少用户信息')
+      }
+      login(payload.user, payload.token)
       setSubmitted(true)
     } catch (err: any) {
       setError(err.message || '注册失败')

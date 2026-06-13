@@ -21,21 +21,33 @@ const VERIFIED_LEVEL_MAP: Record<number, string> = {
 
 router.get('/', async (req: Request, res: Response): Promise<void> => {
   try {
-    const { department, location, title, category, salary_min, salary_max, status, page = '1', limit = '10' } = req.query
+    const { department, location, title, required_title, category, salary_min, salary_max, status, page = '1', limit, pageSize } = req.query
     const conditions: string[] = []
     const params: any[] = []
 
-    if (department) { conditions.push('j.department = ?'); params.push(department) }
-    if (location) { conditions.push('j.location = ?'); params.push(location) }
-    if (title) { conditions.push('j.title LIKE ?'); params.push(`%${title}%`) }
-    if (category) { conditions.push('j.required_category = ?'); params.push(category) }
+    const addMultiFilter = (field: string, value: unknown) => {
+      const values = String(value || '').split(',').map((item) => item.trim()).filter(Boolean)
+      if (values.length === 1) {
+        conditions.push(`${field} = ?`)
+        params.push(values[0])
+      } else if (values.length > 1) {
+        conditions.push(`${field} IN (${values.map(() => '?').join(', ')})`)
+        params.push(...values)
+      }
+    }
+
+    addMultiFilter('j.department', department)
+    addMultiFilter('j.location', location)
+    addMultiFilter('j.required_title', required_title)
+    addMultiFilter('j.required_category', category)
+    if (title) { conditions.push('(j.title LIKE ? OR j.required_title LIKE ?)'); params.push(`%${title}%`, `%${title}%`) }
     if (salary_min) { conditions.push('j.salary_max >= ?'); params.push(Number(salary_min)) }
     if (salary_max) { conditions.push('j.salary_min <= ?'); params.push(Number(salary_max)) }
     if (status) { conditions.push('j.status = ?'); params.push(status) }
 
     const whereClause = conditions.length > 0 ? 'WHERE ' + conditions.join(' AND ') : ''
     const pageNum = Math.max(1, Number(page))
-    const limitNum = Math.max(1, Math.min(100, Number(limit)))
+    const limitNum = Math.max(1, Math.min(100, Number(limit || pageSize || 10)))
     const offset = (pageNum - 1) * limitNum
 
     const totalResult = db.prepare(`SELECT COUNT(*) as count FROM jobs j ${whereClause}`).get(...params) as { count: number }
@@ -183,11 +195,15 @@ router.put('/:id/close', async (req: Request, res: Response): Promise<void> => {
       WHERE id = ?
     `).run(close_reason, now, userId, req.params.id)
     const job = db.prepare(`
-      SELECT j.*, u.name as closed_by_name
+      SELECT j.*, ip.verified_level, u.name as closed_by_name
       FROM jobs j
+      JOIN institution_profiles ip ON j.institution_id = ip.id
       LEFT JOIN users u ON j.closed_by = u.id
       WHERE j.id = ?
-    `).get(req.params.id)
+    `).get(req.params.id) as any
+    if (job) {
+      job.verified_level_text = VERIFIED_LEVEL_MAP[job.verified_level as number] || '未知'
+    }
     res.json({ success: true, data: job })
   } catch (err: any) {
     res.status(500).json({ success: false, error: err.message })
@@ -217,7 +233,15 @@ router.post('/', async (req: Request, res: Response): Promise<void> => {
       INSERT INTO jobs (institution_id, title, department, required_title, required_category, location, salary_min, salary_max, description, requirements, status, ai_risk_score)
       VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, 'pending', ?)
     `).run(instProfile.id, title, department, required_title, required_category, location, salary_min, salary_max, description, requirements, riskScore)
-    const job = db.prepare('SELECT * FROM jobs WHERE id = ?').get(result.lastInsertRowid)
+    const job = db.prepare(`
+      SELECT j.*, ip.verified_level
+      FROM jobs j
+      JOIN institution_profiles ip ON j.institution_id = ip.id
+      WHERE j.id = ?
+    `).get(result.lastInsertRowid) as any
+    if (job) {
+      job.verified_level_text = VERIFIED_LEVEL_MAP[job.verified_level as number] || '未知'
+    }
     res.status(201).json({ success: true, data: job })
   } catch (err: any) {
     res.status(500).json({ success: false, error: err.message })
@@ -258,7 +282,15 @@ router.put('/:id', async (req: Request, res: Response): Promise<void> => {
       description = COALESCE(?, description), requirements = COALESCE(?, requirements),
       status = COALESCE(?, status), updated_at = datetime('now') WHERE id = ?
     `).run(title, department, required_title, required_category, location, salary_min, salary_max, description, requirements, status, req.params.id)
-    const job = db.prepare('SELECT * FROM jobs WHERE id = ?').get(req.params.id)
+    const job = db.prepare(`
+      SELECT j.*, ip.verified_level
+      FROM jobs j
+      JOIN institution_profiles ip ON j.institution_id = ip.id
+      WHERE j.id = ?
+    `).get(req.params.id) as any
+    if (job) {
+      job.verified_level_text = VERIFIED_LEVEL_MAP[job.verified_level as number] || '未知'
+    }
     res.json({ success: true, data: job })
   } catch (err: any) {
     res.status(500).json({ success: false, error: err.message })

@@ -191,7 +191,7 @@ export default function Home() {
 
   const handleAppStatusUpdate = async (appId: string, newStatus: string) => {
     try {
-      const res = await apiFetch(`/applications/${appId}`, { method: 'PUT', body: JSON.stringify({ status: newStatus }) })
+      const res = await apiFetch(`/applications/${appId}/status`, { method: 'PATCH', body: JSON.stringify({ status: newStatus }) })
       if (res.success) {
         toast('success', '状态已更新')
         const appsRes = await apiFetch('/applications')
@@ -245,6 +245,7 @@ export default function Home() {
         body: JSON.stringify({
           phone: guestTalentPhone,
           name: guestTalentName,
+          password: '123456',
           role: 'talent',
           practice_category: guestTalentCert
         })
@@ -269,6 +270,7 @@ export default function Home() {
         body: JSON.stringify({
           phone: guestTalentPhone || '13800138000',
           name: guestInstName,
+          password: '123456',
           role: 'institution',
           institution_type: guestInstType
         })
@@ -285,6 +287,18 @@ export default function Home() {
   const handlePdfExport = () => {
     if (resumeId) { navigate('/resume/preview'); return }
     toast('error', '请先上传简历')
+  }
+
+  const handleViewDashboard = () => {
+    if (user?.role === 'admin') {
+      navigate('/admin/dashboard')
+    } else if (user?.role === 'institution') {
+      toast('success', '查看机构数据看板')
+      setShowDashboardModal(true)
+    } else {
+      toast('success', '查看平台数据看板')
+      setShowDashboardModal(true)
+    }
   }
 
   if (loading) return <div className="text-center text-stone-500 py-20">加载中...</div>
@@ -927,10 +941,44 @@ export default function Home() {
               </div>
             )}
           </div>
-          <button onClick={() => setShowDashboardModal(true)} className="inline-flex items-center gap-1 px-5 py-2.5 bg-white/20 backdrop-blur border border-white/30 text-white rounded-lg text-sm font-medium hover:bg-white/30 transition-colors">
+          <button onClick={handleViewDashboard} className="inline-flex items-center gap-2 bg-teal-700 text-white px-4 py-2 rounded-lg text-sm font-medium hover:bg-teal-800 transition-colors">
             <BarChart3 className="w-4 h-4" /> 查看完整数据看板
           </button>
         </div>
+        {user?.role === 'admin' && (
+          <div className="max-w-4xl mx-auto mt-6 grid grid-cols-2 md:grid-cols-4 gap-3">
+            <button onClick={() => navigate('/admin/institutions')} className="bg-white/10 backdrop-blur border border-white/20 rounded-xl p-4 text-left hover:bg-white/20 transition-colors">
+              <div className="flex items-center justify-between mb-2">
+                <span className="text-2xl">📋</span>
+                <span className="bg-amber-500 text-white text-xs px-2 py-0.5 rounded-full font-medium">
+                  {dashboard?.compliance?.institutionsPendingRenewal || 0} 待审
+                </span>
+              </div>
+              <div className="text-sm font-medium text-white">机构年审</div>
+            </button>
+            <button onClick={() => navigate('/admin/jobs-review')} className="bg-white/10 backdrop-blur border border-white/20 rounded-xl p-4 text-left hover:bg-white/20 transition-colors">
+              <div className="flex items-center justify-between mb-2">
+                <span className="text-2xl">🔍</span>
+                <span className="bg-red-500 text-white text-xs px-2 py-0.5 rounded-full font-medium">
+                  {dashboard?.compliance?.highRiskJobs || 0} 高风险
+                </span>
+              </div>
+              <div className="text-sm font-medium text-white">虚假岗位复核</div>
+            </button>
+            <button onClick={() => navigate('/admin/data-masking')} className="bg-white/10 backdrop-blur border border-white/20 rounded-xl p-4 text-left hover:bg-white/20 transition-colors">
+              <div className="flex items-center justify-between mb-2">
+                <span className="text-2xl">🔒</span>
+              </div>
+              <div className="text-sm font-medium text-white">数据脱敏归档</div>
+            </button>
+            <button onClick={() => navigate('/admin/dashboard')} className="bg-white/10 backdrop-blur border border-white/20 rounded-xl p-4 text-left hover:bg-white/20 transition-colors">
+              <div className="flex items-center justify-between mb-2">
+                <span className="text-2xl">📊</span>
+              </div>
+              <div className="text-sm font-medium text-white">热度明细看板</div>
+            </button>
+          </div>
+        )}
       </div>
 
       {user?.role === 'talent' && renderTalentPanel()}
@@ -1096,11 +1144,11 @@ export default function Home() {
               <div className="flex gap-1.5">
                 {[
                   { label: '全部', value: '' },
-                  { label: '🏥 政策解读', value: 'policy' },
-                  { label: '📚 继续教育', value: 'education' },
-                  { label: '🔬 行业动态', value: 'news' },
+                  { label: '政策解读', value: 'policy' },
+                  { label: '继续教育', value: 'education' },
+                  { label: '行业动态', value: 'news' },
                 ].map(tag => (
-                  <button key={tag.value || 'all'} onClick={() => setActiveTag(tag.value)}
+                  <button key={tag.value || 'all'} type="button" aria-label={tag.label} onClick={() => setActiveTag(tag.value)}
                     className={`text-xs px-2.5 py-1 rounded-full font-medium transition-colors ${
                       activeTag === tag.value ? 'bg-teal-700 text-white' : 'bg-teal-50 text-teal-700 border border-teal-200 hover:bg-teal-100'
                     }`}>
