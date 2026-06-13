@@ -16,7 +16,7 @@ export class VendorEntity {
   @Column({ type: 'text', nullable: true })
   description: string;
 
-  @Column({ type: 'enum', enum: VendorAuthType, default: VendorAuthType.API_KEY })
+  @Column({ type: 'simple-enum', enum: VendorAuthType, default: VendorAuthType.API_KEY })
   authType: VendorAuthType;
 
   @Column({ unique: true })
@@ -28,7 +28,7 @@ export class VendorEntity {
   @Column({ default: true })
   whitelistEnabled: boolean;
 
-  @Column({ type: 'jsonb', nullable: true })
+  @Column({ type: 'simple-json', nullable: true })
   allowedIpRanges: string[];
 
   @Column({ default: 1000 })
@@ -40,7 +40,7 @@ export class VendorEntity {
   @Column({ type: 'varchar', length: 20, default: 'active' })
   status: 'active' | 'suspended' | 'pending';
 
-  @Column({ type: 'jsonb', nullable: true })
+  @Column({ type: 'simple-json', nullable: true })
   capabilityMappings: Record<string, any>;
 
   @OneToMany(() => DeviceEntity, device => device.vendor)

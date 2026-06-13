@@ -21,13 +21,13 @@ export class DeviceShareEntity {
   @Column()
   shareeId: string;
 
-  @Column({ type: 'enum', enum: SharePermission, default: SharePermission.VIEW_ONLY })
+  @Column({ type: 'simple-enum', enum: SharePermission, default: SharePermission.VIEW_ONLY })
   permission: SharePermission;
 
-  @Column({ type: 'timestamp', nullable: true })
+  @Column({ type: 'datetime', nullable: true })
   expiredAt: Date;
 
-  @Column({ type: 'jsonb', nullable: true })
+  @Column({ type: 'simple-json', nullable: true })
   restrictedCapabilities: string[];
 
   @ManyToOne(() => DeviceEntity, device => device.shares, { onDelete: 'CASCADE' })

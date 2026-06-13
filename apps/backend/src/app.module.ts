@@ -15,6 +15,7 @@ import { AnalyticsModule } from './modules/analytics/analytics.module';
 import { HomeModule } from './modules/home/home.module';
 import { RedisModule } from './modules/redis/redis.module';
 import { MqttModule } from './modules/mqtt/mqtt.module';
+import { SeederModule } from './modules/seeder/seeder.module';
 
 @Module({
   imports: [
@@ -22,6 +23,7 @@ import { MqttModule } from './modules/mqtt/mqtt.module';
     ScheduleModule.forRoot(),
     RedisModule,
     MqttModule,
+    SeederModule,
     AuthModule,
     VendorModule,
     HomeModule,

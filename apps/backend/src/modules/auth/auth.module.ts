@@ -8,12 +8,14 @@ import { JwtStrategy } from './jwt.strategy';
 import { VendorAuthStrategy } from './vendor-auth.strategy';
 import { VendorAuthGuard, JwtAuthGuard, PermissionGuard } from './guards';
 import { UserEntity } from '../../database/entities/user.entity';
+import { HomeEntity } from '../../database/entities/home.entity';
 import { VendorEntity } from '../../database/entities/vendor.entity';
+import { DeviceEntity } from '../../database/entities/device.entity';
 import { DeviceShareEntity } from '../../database/entities/device-share.entity';
 
 @Module({
   imports: [
-    TypeOrmModule.forFeature([UserEntity, VendorEntity, DeviceShareEntity]),
+    TypeOrmModule.forFeature([UserEntity, HomeEntity, VendorEntity, DeviceEntity, DeviceShareEntity]),
     PassportModule.register({ defaultStrategy: 'jwt' }),
     JwtModule.register({
       secret: process.env.JWT_SECRET || 'iot_platform_jwt_super_secret_key_2024_change_me',

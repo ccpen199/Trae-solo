@@ -27,7 +27,7 @@ export class HomeEntity {
   @JoinColumn({ name: 'ownerId' })
   owner: UserEntity;
 
-  @Column({ type: 'jsonb', nullable: true })
+  @Column({ type: 'simple-json', nullable: true })
   members: { userId: string; role: 'owner' | 'admin' | 'member' }[];
 
   @OneToMany(() => RoomEntity, room => room.home)

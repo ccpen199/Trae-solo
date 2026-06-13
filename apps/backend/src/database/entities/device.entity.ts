@@ -24,22 +24,22 @@ export class DeviceEntity {
   @Column({ length: 50, nullable: true })
   model: string;
 
-  @Column({ type: 'enum', enum: DeviceCategory })
+  @Column({ type: 'simple-enum', enum: DeviceCategory })
   category: DeviceCategory;
 
-  @Column({ type: 'jsonb' })
+  @Column({ type: 'simple-json' })
   connectivity: DeviceConnectivity[];
 
-  @Column({ type: 'enum', enum: DeviceStatus, default: DeviceStatus.OFFLINE })
+  @Column({ type: 'simple-enum', enum: DeviceStatus, default: DeviceStatus.OFFLINE })
   status: DeviceStatus;
 
   @Column({ nullable: true })
   firmwareVersion: string;
 
-  @Column({ type: 'jsonb', default: {} })
+  @Column({ type: 'simple-json', default: '{}' })
   properties: Record<string, any>;
 
-  @Column({ type: 'jsonb', default: [] })
+  @Column({ type: 'simple-json', default: '[]' })
   capabilities: string[];
 
   @Column({ type: 'float', default: 0 })
@@ -52,10 +52,10 @@ export class DeviceEntity {
   @Column({ nullable: true })
   homeId: string;
 
-  @Column({ type: 'timestamp', nullable: true })
+  @Column({ type: 'datetime', nullable: true })
   lastSeen: Date;
 
-  @Column({ type: 'timestamp', nullable: true })
+  @Column({ type: 'datetime', nullable: true })
   lastTelemetryAt: Date;
 
   @Column({ default: 0 })
@@ -64,7 +64,7 @@ export class DeviceEntity {
   @Column({ default: false })
   isFavorite: boolean;
 
-  @Column({ type: 'jsonb', nullable: true })
+  @Column({ type: 'simple-json', nullable: true })
   tags: string[];
 
   @ManyToOne(() => VendorEntity, vendor => vendor.devices)

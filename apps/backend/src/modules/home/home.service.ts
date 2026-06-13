@@ -16,14 +16,29 @@ export class HomeService {
   ) {}
 
   async getUserHomes(userId: string) {
-    return this.homeRepo
+    const allHomes = await this.homeRepo
       .createQueryBuilder('h')
       .leftJoinAndSelect('h.rooms', 'r')
       .where('h.ownerId = :userId', { userId })
-      .orWhere(":userId = ANY(ARRAY(SELECT jsonb_array_elements_text(h.members->'userId')))", { userId })
       .orderBy('h.createdAt', 'DESC')
       .addOrderBy('r.sortOrder', 'ASC')
       .getMany();
+
+    const memberHomes = await this.homeRepo
+      .createQueryBuilder('h')
+      .leftJoinAndSelect('h.rooms', 'r')
+      .where('h.ownerId != :userId', { userId })
+      .andWhere("h.members LIKE :pattern", { pattern: `%"userId":"${userId}"%` })
+      .orderBy('h.createdAt', 'DESC')
+      .addOrderBy('r.sortOrder', 'ASC')
+      .getMany();
+
+    const seenIds = new Set<string>();
+    return [...allHomes, ...memberHomes].filter(h => {
+      if (seenIds.has(h.id)) return false;
+      seenIds.add(h.id);
+      return true;
+    });
   }
 
   async createHome(userId: string, dto: { name: string; address?: string; latitude?: number; longitude?: number }) {

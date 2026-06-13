@@ -15,10 +15,10 @@ export class TelemetryEntity {
   vendorId: string;
 
   @Index()
-  @Column({ type: 'timestamp' })
+  @Column({ type: 'datetime' })
   timestamp: Date;
 
-  @Column({ type: 'jsonb' })
+  @Column({ type: 'simple-json' })
   properties: Record<string, any>;
 
   @Column({ type: 'float', nullable: true })
@@ -54,7 +54,7 @@ export class DeviceCommandEntity {
   @Column()
   command: string;
 
-  @Column({ type: 'jsonb', default: {} })
+  @Column({ type: 'simple-json', default: '{}' })
   params: Record<string, any>;
 
   @Column()
@@ -75,16 +75,16 @@ export class DeviceCommandEntity {
   @Column({ default: false })
   success: boolean;
 
-  @Column({ type: 'jsonb', nullable: true })
+  @Column({ type: 'simple-json', nullable: true })
   result: any;
 
   @Column({ type: 'text', nullable: true })
   errorMessage: string;
 
-  @Column({ type: 'timestamp', nullable: true })
+  @Column({ type: 'datetime', nullable: true })
   deliveredAt: Date;
 
-  @Column({ type: 'timestamp', nullable: true })
+  @Column({ type: 'datetime', nullable: true })
   executedAt: Date;
 
   @CreateDateColumn()
@@ -107,19 +107,19 @@ export class ScheduleTaskEntity {
   @Column({ nullable: true })
   deviceId: string;
 
-  @Column({ type: 'jsonb' })
+  @Column({ type: 'simple-json' })
   commands: Record<string, any>;
 
   @Column({ length: 20 })
   triggerType: 'once' | 'daily' | 'weekly' | 'cron';
 
-  @Column({ type: 'timestamp', nullable: true })
+  @Column({ type: 'datetime', nullable: true })
   triggerAt: Date;
 
   @Column({ nullable: true })
   cronExpression: string;
 
-  @Column({ type: 'jsonb', nullable: true })
+  @Column({ type: 'simple-json', nullable: true })
   weekdays: number[];
 
   @Column({ default: true })
@@ -128,7 +128,7 @@ export class ScheduleTaskEntity {
   @Column({ default: 0 })
   executionCount: number;
 
-  @Column({ type: 'timestamp', nullable: true })
+  @Column({ type: 'datetime', nullable: true })
   lastExecutedAt: Date;
 
   @CreateDateColumn()
@@ -159,7 +159,7 @@ export class UserBehaviorLogEntity {
   @Column({ length: 50 })
   action: string;
 
-  @Column({ type: 'jsonb', nullable: true })
+  @Column({ type: 'simple-json', nullable: true })
   context: Record<string, any>;
 
   @CreateDateColumn()

@@ -19,14 +19,14 @@ export class SceneEntity {
   @Column({ nullable: true })
   coverImage: string;
 
-  @Column({ type: 'jsonb', default: [] })
+  @Column({ type: 'simple-json', default: '[]' })
   triggers: {
     id: string;
     type: SceneTriggerType;
     config: Record<string, any>;
   }[];
 
-  @Column({ type: 'jsonb', default: [] })
+  @Column({ type: 'simple-json', default: '[]' })
   conditions: {
     id: string;
     field: string;
@@ -35,7 +35,7 @@ export class SceneEntity {
     value2?: any;
   }[];
 
-  @Column({ type: 'jsonb', default: [] })
+  @Column({ type: 'simple-json', default: '[]' })
   actions: {
     id: string;
     type: SceneActionType;
@@ -44,16 +44,16 @@ export class SceneEntity {
     config: Record<string, any>;
   }[];
 
-  @Column({ type: 'enum', enum: SceneStatus, default: SceneStatus.ENABLED })
+  @Column({ type: 'simple-enum', enum: SceneStatus, default: SceneStatus.ENABLED })
   status: SceneStatus;
 
-  @Column({ type: 'timestamp', nullable: true })
+  @Column({ type: 'datetime', nullable: true })
   lastExecutedAt: Date;
 
   @Column({ default: 0 })
   executionCount: number;
 
-  @Column({ type: 'jsonb', nullable: true })
+  @Column({ type: 'simple-json', nullable: true })
   learningData: {
     optimalTriggerTimes?: Record<string, number>;
     usageCount?: number;

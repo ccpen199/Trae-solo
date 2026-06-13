@@ -6,10 +6,10 @@ export class AlertEntity {
   @PrimaryGeneratedColumn('uuid')
   id: string;
 
-  @Column({ type: 'enum', enum: AlertType })
+  @Column({ type: 'simple-enum', enum: AlertType })
   type: AlertType;
 
-  @Column({ type: 'enum', enum: AlertSeverity, default: AlertSeverity.WARNING })
+  @Column({ type: 'simple-enum', enum: AlertSeverity, default: AlertSeverity.WARNING })
   severity: AlertSeverity;
 
   @Index()
@@ -29,16 +29,16 @@ export class AlertEntity {
   @Column({ type: 'text' })
   message: string;
 
-  @Column({ type: 'jsonb', nullable: true })
+  @Column({ type: 'simple-json', nullable: true })
   data: Record<string, any>;
 
-  @Column({ type: 'enum', enum: AlertStatus, default: AlertStatus.OPEN })
+  @Column({ type: 'simple-enum', enum: AlertStatus, default: AlertStatus.OPEN })
   status: AlertStatus;
 
-  @Column({ type: 'jsonb', default: [NotificationChannel.IN_APP, NotificationChannel.PUSH] })
+  @Column({ type: 'simple-json', default: '["in_app","push"]' })
   channels: NotificationChannel[];
 
-  @Column({ type: 'jsonb', nullable: true })
+  @Column({ type: 'simple-json', nullable: true })
   notifications: {
     channel: NotificationChannel;
     sentAt: Date;
@@ -46,10 +46,10 @@ export class AlertEntity {
     error?: string;
   }[];
 
-  @Column({ type: 'timestamp', nullable: true })
+  @Column({ type: 'datetime', nullable: true })
   acknowledgedAt: Date;
 
-  @Column({ type: 'timestamp', nullable: true })
+  @Column({ type: 'datetime', nullable: true })
   resolvedAt: Date;
 
   @Column({ nullable: true })

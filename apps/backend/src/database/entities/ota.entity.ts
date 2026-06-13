@@ -40,7 +40,7 @@ export class FirmwareEntity {
   @Column({ default: 0 })
   upgradeCount: number;
 
-  @Column({ type: 'timestamp', nullable: true })
+  @Column({ type: 'datetime', nullable: true })
   releasedAt: Date;
 
   @CreateDateColumn()
@@ -66,16 +66,16 @@ export class OtaJobEntity {
   @Column({ length: 50 })
   toVersion: string;
 
-  @Column({ type: 'enum', enum: OtaStatus, default: OtaStatus.PENDING })
+  @Column({ type: 'simple-enum', enum: OtaStatus, default: OtaStatus.PENDING })
   status: OtaStatus;
 
   @Column({ type: 'int', default: 0 })
   progress: number;
 
-  @Column({ type: 'timestamp', nullable: true })
+  @Column({ type: 'datetime', nullable: true })
   startedAt: Date;
 
-  @Column({ type: 'timestamp', nullable: true })
+  @Column({ type: 'datetime', nullable: true })
   completedAt: Date;
 
   @Column({ type: 'text', nullable: true })
