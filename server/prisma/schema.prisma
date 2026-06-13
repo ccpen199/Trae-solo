@@ -1,0 +1,457 @@
+// Prisma schema for 创意服务众包平台
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+// ============ 用户模块 ============
+
+model User {
+  id              Int       @id @default(autoincrement())
+  email           String    @unique
+  username        String    @unique
+  passwordHash    String
+  avatar          String?
+  phone           String?
+  realName        String?
+  idCard          String?
+  role            String    @default("EMPLOYER") // EMPLOYER, PROVIDER, BOTH, ADMIN
+  status          String    @default("ACTIVE")   // ACTIVE, SUSPENDED, VERIFYING
+  bio             String?
+  location        String?
+  
+  // 威客相关
+  skills          Skill[]
+  rating          Float     @default(5.0)
+  totalOrders     Int       @default(0)
+  completedOrders Int       @default(0)
+  complaintCount  Int       @default(0)
+  level           Int       @default(1)
+  experience      Int       @default(0)
+  
+  // 财务
+  balance         Float     @default(0)
+  frozenBalance   Float     @default(0)
+  
+  createdAt       DateTime  @default(now())
+  updatedAt       DateTime  @updatedAt
+  
+  // 关联
+  tasksPosted     Task[]    @relation("TaskEmployer")
+  bids            Bid[]
+  payments        Payment[]
+  approvedMilestones Milestone[] @relation("MilestoneApprover")
+  uploadedFiles   FileVersion[]
+  initiatedDisputes Dispute[] @relation("DisputeInitiator")
+  expertDisputes  Dispute[]  @relation("DisputeExpert")
+  complaintsFrom  Complaint[] @relation("ComplaintFrom")
+  complaintsTo    Complaint[] @relation("ComplaintTo")
+  riskReports     RiskReport[]
+  disputeEvidences DisputeEvidence[]
+  ratingSnapshots ProviderRatingSnapshot[]
+  collaborations  Collaboration[]
+  
+  @@map("users")
+}
+
+model Skill {
+  id          Int      @id @default(autoincrement())
+  name        String   @unique
+  category    String
+  description String?
+  icon        String?
+  demandCount Int      @default(0)
+  supplyCount Int      @default(0)
+  
+  users       User[]
+  tasks       Task[]
+  skillGap    SkillGap?
+  
+  @@map("skills")
+}
+
+// ============ 任务模块 ============
+
+model Task {
+  id                Int          @id @default(autoincrement())
+  title             String
+  description       String
+  category          String  // DESIGN, DEVELOPMENT, COPYWRITING, MARKETING, DECORATION, VIDEO, CONSULTING, OTHER
+  status            String       @default("DRAFT") // DRAFT, PUBLISHED, BIDDING, SELECTED, IN_PROGRESS, DELIVERED, COMPLETED, CANCELLED, DISPUTED
+  
+  // 预算区间
+  budgetMin         Float
+  budgetMax         Float
+  
+  // 交付周期
+  deadline          DateTime
+  publishedAt       DateTime?
+  
+  // 雇主
+  employerId        Int
+  employer          User         @relation("TaskEmployer", fields: [employerId], references: [id])
+  
+  // 技能标签
+  skills            Skill[]
+  
+  // 附件
+  attachments       TaskAttachment[]
+  
+  // 投标
+  bids              Bid[]
+  selectedBidId     Int? @unique
+  selectedBid       Bid?         @relation("SelectedBid", fields: [selectedBidId], references: [id])
+  
+  // 里程碑
+  milestones        Milestone[]
+  
+  // 文件版本
+  fileVersions      FileVersion[]
+  
+  // 协同标注
+  collaborations    Collaboration[]
+  
+  // 支付与资金托管
+  totalAmount       Float?       // 最终确定金额
+  escrowAmount      Float        @default(0) // 托管金额
+  
+  // 风控
+  riskScore         Float        @default(0)
+  fraudWarning      Boolean      @default(false)
+  
+  // 争议
+  dispute           Dispute?
+  
+  // 支付记录
+  payments          Payment[]
+  
+  // 风控报告
+  riskReports       RiskReport[]
+  
+  // 投诉
+  complaints        Complaint[]
+  
+  // 原创性检测
+  originalityChecks OriginalityCheck[]
+  
+  createdAt         DateTime     @default(now())
+  updatedAt         DateTime     @updatedAt
+  
+  @@map("tasks")
+}
+
+model TaskAttachment {
+  id          Int      @id @default(autoincrement())
+  taskId      Int
+  task        Task     @relation(fields: [taskId], references: [id])
+  fileName    String
+  fileUrl     String
+  fileSize    Int
+  fileType    String
+  uploadedAt  DateTime @default(now())
+  
+  @@map("task_attachments")
+}
+
+// ============ 投标模块 ============
+
+model Bid {
+  id          Int       @id @default(autoincrement())
+  taskId      Int
+  task        Task      @relation(fields: [taskId], references: [id])
+  providerId  Int
+  provider    User      @relation(fields: [providerId], references: [id])
+  
+  price       Float
+  deliveryDays Int
+  proposal    String
+  status      String    @default("PENDING") // PENDING, ACCEPTED, REJECTED, WITHDRAWN
+  
+  // 过往案例
+  portfolioUrls String?
+  
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+  
+  selectedTask Task?   @relation("SelectedBid")
+  
+  @@unique([taskId, providerId])
+  @@map("bids")
+}
+
+// ============ 里程碑与任务管理 ============
+
+model Milestone {
+  id           Int             @id @default(autoincrement())
+  taskId       Int
+  task         Task            @relation(fields: [taskId], references: [id])
+  title        String
+  description  String?
+  amount       Float
+  percentage   Float           // 占总金额百分比
+  orderIndex   Int
+  status       String          @default("PENDING") // PENDING, IN_PROGRESS, SUBMITTED, APPROVED, REJECTED, PAID
+  
+  deadline     DateTime?
+  submittedAt  DateTime?
+  approvedAt   DateTime?
+  paidAt       DateTime?
+  
+  approverId   Int?
+  approver     User?           @relation("MilestoneApprover", fields: [approverId], references: [id])
+  
+  feedback     String?
+  rating       Int?
+  
+  fileVersions FileVersion[]
+  payments     Payment[]
+  
+  createdAt    DateTime        @default(now())
+  updatedAt    DateTime        @updatedAt
+  
+  @@map("milestones")
+}
+
+// 文件版本留痕
+model FileVersion {
+  id          Int      @id @default(autoincrement())
+  taskId      Int
+  task        Task     @relation(fields: [taskId], references: [id])
+  milestoneId Int?
+  milestone   Milestone? @relation(fields: [milestoneId], references: [id])
+  uploaderId  Int
+  uploader    User     @relation(fields: [uploaderId], references: [id])
+  
+  version     String   // v1, v2, v3...
+  fileName    String
+  fileUrl     String
+  fileSize    Int
+  description String?
+  isFinal     Boolean  @default(false)
+  
+  originalityChecks OriginalityCheck[]
+  
+  createdAt   DateTime @default(now())
+  
+  @@map("file_versions")
+}
+
+// 在线协同标注
+model Collaboration {
+  id          Int      @id @default(autoincrement())
+  taskId      Int
+  task        Task     @relation(fields: [taskId], references: [id])
+  userId      Int
+  user        User     @relation(fields: [userId], references: [id])
+  
+  fileVersionId Int?
+  type        String   // comment, annotation, suggestion
+  content     String
+  positionX   Float?
+  positionY   Float?
+  pageNumber  Int?
+  resolved    Boolean  @default(false)
+  
+  createdAt   DateTime @default(now())
+  
+  @@map("collaborations")
+}
+
+// ============ 资金托管 ============
+
+model Payment {
+  id          Int           @id @default(autoincrement())
+  userId      Int
+  user        User          @relation(fields: [userId], references: [id])
+  taskId      Int?
+  task        Task?         @relation(fields: [taskId], references: [id])
+  milestoneId Int?
+  milestone   Milestone?    @relation(fields: [milestoneId], references: [id])
+  
+  type        String        // ESCROW_DEPOSIT, MILESTONE_RELEASE, REFUND, WITHDRAWAL, PLATFORM_FEE
+  amount      Float
+  status      String        @default("PENDING") // PENDING, PROCESSING, COMPLETED, FAILED, CANCELLED
+  
+  // 三方托管相关
+  escrowAccount String?
+  thirdPartyTxnId String?
+  
+  remark      String?
+  paidAt      DateTime?
+  
+  createdAt   DateTime      @default(now())
+  
+  @@map("payments")
+}
+
+// ============ 风控模块 ============
+
+model RiskReport {
+  id          Int        @id @default(autoincrement())
+  userId      Int
+  user        User       @relation(fields: [userId], references: [id])
+  taskId      Int?
+  task        Task?      @relation(fields: [taskId], references: [id])
+  
+  type        String     // FRAUD_SUSPICION, PLAGIARISM, OVERDUE, COMPLAINT, DISPUTE
+  level       String     // LOW, MEDIUM, HIGH, CRITICAL
+  title       String
+  description String?
+  evidence    String?
+  
+  handled     Boolean    @default(false)
+  handledBy   Int?
+  handledAt   DateTime?
+  result      String?
+  
+  createdAt   DateTime   @default(now())
+  
+  @@map("risk_reports")
+}
+
+// 投诉记录
+model Complaint {
+  id            Int      @id @default(autoincrement())
+  fromUserId    Int
+  fromUser      User     @relation("ComplaintFrom", fields: [fromUserId], references: [id])
+  toUserId      Int
+  toUser        User     @relation("ComplaintTo", fields: [toUserId], references: [id])
+  taskId        Int?
+  task          Task?    @relation(fields: [taskId], references: [id])
+  
+  reason        String
+  description   String?
+  evidenceUrls  String?
+  
+  status        String   @default("PENDING") // PENDING, INVESTIGATING, RESOLVED, REJECTED
+  result        String?
+  
+  createdAt     DateTime @default(now())
+  
+  @@map("complaints")
+}
+
+// 原创性检测记录
+model OriginalityCheck {
+  id             Int      @id @default(autoincrement())
+  taskId         Int
+  task           Task     @relation(fields: [taskId], references: [id])
+  fileVersionId  Int?
+  fileVersion    FileVersion? @relation(fields: [fileVersionId], references: [id])
+  
+  contentType    String   // IMAGE, TEXT, CODE
+  similarityRate Float    // 相似度百分比
+  matchedSources String?  // 匹配到的来源（JSON）
+  
+  isPlagiarism   Boolean  @default(false)
+  checkedBy      String?  // 检测方式：AUTO/MANUAL
+  
+  createdAt      DateTime @default(now())
+  
+  @@map("originality_checks")
+}
+
+// 争议仲裁
+model Dispute {
+  id            Int      @id @default(autoincrement())
+  taskId        Int      @unique
+  task          Task     @relation(fields: [taskId], references: [id])
+  initiatorId   Int
+  initiator     User     @relation("DisputeInitiator", fields: [initiatorId], references: [id])
+  
+  reason        String
+  description   String
+  evidenceUrls  String?
+  
+  status        String   @default("PENDING") // PENDING, EVIDENCE_COLLECTING, EXPERT_REVIEWING, RESOLVED
+  expertId      Int?
+  expert        User?    @relation("DisputeExpert", fields: [expertId], references: [id])
+  
+  // 仲裁结果
+  verdict       String?  // EMPLOYER_WINS, PROVIDER_WINS, SPLIT
+  refundRatio   Float?   // 退款比例
+  description_result String?
+  
+  evidences     DisputeEvidence[]
+  
+  createdAt     DateTime @default(now())
+  resolvedAt    DateTime?
+  
+  @@map("disputes")
+}
+
+// 争议证据
+model DisputeEvidence {
+  id         Int      @id @default(autoincrement())
+  disputeId  Int
+  dispute    Dispute  @relation(fields: [disputeId], references: [id])
+  userId     Int
+  user       User     @relation(fields: [userId], references: [id])
+  
+  fileName   String
+  fileUrl    String
+  description String?
+  
+  createdAt  DateTime @default(now())
+  
+  @@map("dispute_evidences")
+}
+
+// ============ 后台管理 ============
+
+// 服务商星级动态计算（历史快照）
+model ProviderRatingSnapshot {
+  id             Int      @id @default(autoincrement())
+  userId         Int
+  user           User     @relation(fields: [userId], references: [id])
+  
+  overallRating  Float
+  qualityScore   Float    // 质量分
+  deliveryScore  Float    // 交付分
+  serviceScore   Float    // 服务分
+  complianceScore Float   // 合规分
+  
+  orderCount     Int
+  periodStart    DateTime
+  periodEnd      DateTime
+  
+  createdAt      DateTime @default(now())
+  
+  @@map("provider_rating_snapshots")
+}
+
+// 行业需求趋势
+model IndustryTrend {
+  id           Int      @id @default(autoincrement())
+  category     String
+  date         DateTime
+  taskCount    Int      // 发布任务数
+  bidCount     Int      // 投标数
+  avgBudget    Float    // 平均预算
+  completionRate Float  // 完成率
+  
+  createdAt    DateTime @default(now())
+  
+  @@unique([category, date])
+  @@map("industry_trends")
+}
+
+// 技能供需缺口
+model SkillGap {
+  id            Int      @id @default(autoincrement())
+  skillId       Int      @unique
+  skill         Skill    @relation(fields: [skillId], references: [id])
+  
+  demandCount   Int      // 需求量（任务数）
+  supplyCount   Int      // 供给量（威客数）
+  gapType       String   // SHORTAGE, BALANCE, SURPLUS
+  gapPercentage Float    // 缺口百分比
+  
+  updatedAt     DateTime @updatedAt
+  
+  @@map("skill_gaps")
+}
