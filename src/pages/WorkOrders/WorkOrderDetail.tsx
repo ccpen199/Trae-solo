@@ -57,6 +57,11 @@ import type {
 import { mockWorkOrders } from '@/mock';
 import { cn } from '@/lib/utils';
 
+const allTabs: DetailTab[] = [
+  '需求诊断', '方案报价', '施工排期', '材料进场', '施工执行', '竣工验收', '质保跟踪',
+  '变更记录', 'BIM模型', '节点责任人',
+];
+
 const statusList: WorkOrderStatus[] = [
   '需求诊断',
   '方案报价',
@@ -67,9 +72,9 @@ const statusList: WorkOrderStatus[] = [
   '质保跟踪',
 ];
 
-type DetailTab = WorkOrderStatus | 'BIM模型';
+type DetailTab = WorkOrderStatus | '变更记录' | 'BIM模型' | '节点责任人';
 
-const statusTabIcons: Record<WorkOrderStatus, LucideIcon> = {
+const statusTabIcons: Record<DetailTab, LucideIcon> = {
   '需求诊断': ClipboardList,
   '方案报价': FileText,
   '施工排期': CalendarDays,
@@ -77,6 +82,9 @@ const statusTabIcons: Record<WorkOrderStatus, LucideIcon> = {
   '施工执行': Hammer,
   '竣工验收': Award,
   '质保跟踪': HardHat,
+  '变更记录': PenTool,
+  'BIM模型': Box,
+  '节点责任人': User,
 };
 
 const statusColorMap: Record<WorkOrderStatus, string> = {
@@ -913,6 +921,185 @@ function ContactSidebar({ order }: { order: WorkOrder }) {
   );
 }
 
+function ChangeLogSection() {
+  const changeLogs = [
+    {
+      id: 'CHG-001', date: '2026-06-08 14:30', type: '设计变更',
+      description: '会议室隔墙由轻钢龙骨石膏板改为玻璃隔断，增加隔音处理',
+      originator: '甲方：陈总', reviewer: '设计：张工', approver: '项目经理：李工',
+      impact: '工期+3天，费用+¥28,000', status: '已批准' as const, attachments: ['变更图纸_V2.pdf'],
+    },
+    {
+      id: 'CHG-002', date: '2026-06-05 10:15', type: '材料变更',
+      description: '前台区域地面由PVC地板升级为大理石瓷砖，品牌东鹏800×800',
+      originator: '甲方：陈总', reviewer: '采购：王主管', approver: '项目经理：李工',
+      impact: '费用+¥45,000，工期不变', status: '已批准' as const, attachments: ['材料对比单.pdf', '东鹏样品确认函.jpg'],
+    },
+    {
+      id: 'CHG-003', date: '2026-05-28 16:00', type: '工期调整',
+      description: '因消防报审流程延期，施工排期整体顺延5个工作日',
+      originator: '项目经理：李工', reviewer: '甲方：陈总', approver: '甲方：陈总',
+      impact: '工期+5天，费用不变', status: '已批准' as const, attachments: ['消防报审回执.pdf'],
+    },
+    {
+      id: 'CHG-004', date: '2026-05-20 09:30', type: '施工变更',
+      description: '机房区域增加UPS电源独立回路，原设计未包含备用电力线路',
+      originator: '机电施工：赵工', reviewer: '设计：张工', approver: '项目经理：李工',
+      impact: '工期+2天，费用+¥15,000', status: '待批准' as const, attachments: ['机房电气变更图.pdf'],
+    },
+    {
+      id: 'CHG-005', date: '2026-05-15 11:45', type: '设计变更',
+      description: '开放工位区由96席调整为108席，增加12个工位及配套强弱电点位',
+      originator: '甲方：行政部', reviewer: '设计：张工', approver: '项目经理：李工',
+      impact: '工期+1天，费用+¥22,000', status: '已批准' as const, attachments: ['工位布局V3.dwg', '预算调整单.xlsx'],
+    },
+  ];
+
+  return (
+    <motion.div initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} className="space-y-4">
+      <div className="card-base p-5">
+        <div className="flex items-center justify-between mb-4">
+          <h3 className="text-sm font-semibold text-gold-300 flex items-center gap-2">
+            <PenTool className="w-4 h-4" />变更留痕记录
+          </h3>
+          <span className="text-xs text-neutral-500">共 {changeLogs.length} 条变更</span>
+        </div>
+        <div className="space-y-3">
+          {changeLogs.map((log, idx) => (
+            <div key={log.id} className="p-4 rounded-xl bg-primary-800/40 border border-white/5 hover:border-gold-500/20 transition-all">
+              <div className="flex items-start justify-between gap-3">
+                <div className="flex-1">
+                  <div className="flex items-center gap-2 mb-1.5">
+                    <span className={cn(
+                      'px-2 py-0.5 rounded text-[10px] font-medium border',
+                      log.type === '设计变更' && 'bg-violet-500/15 border-violet-500/30 text-violet-300',
+                      log.type === '材料变更' && 'bg-orange-500/15 border-orange-500/30 text-orange-300',
+                      log.type === '工期调整' && 'bg-sky-500/15 border-sky-500/30 text-sky-300',
+                      log.type === '施工变更' && 'bg-rose-500/15 border-rose-500/30 text-rose-300',
+                    )}>{log.type}</span>
+                    <span className="text-[11px] text-neutral-500 font-mono">{log.id}</span>
+                  </div>
+                  <p className="text-sm text-neutral-200 mb-2">{log.description}</p>
+                  <div className="flex flex-wrap gap-x-4 gap-y-1 text-[11px] text-neutral-400">
+                    <span>提出：{log.originator}</span>
+                    <span>审核：{log.reviewer}</span>
+                    <span>批准：{log.approver}</span>
+                  </div>
+                  <div className="flex items-center gap-3 mt-2 text-[11px]">
+                    <span className="text-amber-300 font-medium">影响：{log.impact}</span>
+                    <span className="text-neutral-500">附件：{log.attachments.length}份</span>
+                  </div>
+                </div>
+                <div className="shrink-0">
+                  <span className={cn(
+                    'inline-flex items-center px-2.5 py-1 rounded-md text-[11px] font-medium',
+                    log.status === '已批准'
+                      ? 'bg-emerald-500/15 border border-emerald-500/30 text-emerald-300'
+                      : 'bg-amber-500/15 border border-amber-500/30 text-amber-300'
+                  )}>
+                    {log.status === '已批准' && <Check className="w-3 h-3 mr-1" />}
+                    {log.status}
+                  </span>
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </motion.div>
+  );
+}
+
+function PersonInChargeSection() {
+  const persons = [
+    { stage: '需求诊断', name: '陈总', role: '甲方决策人', phone: '138****6789', status: '已确认', signDate: '2026-05-10' },
+    { stage: '方案报价', name: '张工', role: '主案设计师', phone: '139****2345', status: '已确认', signDate: '2026-05-18' },
+    { stage: '施工排期', name: '李工', role: '项目经理', phone: '137****8901', status: '已确认', signDate: '2026-05-25' },
+    { stage: '材料进场', name: '王主管', role: '采购负责人', phone: '136****5678', status: '已确认', signDate: '2026-06-01' },
+    { stage: '施工执行', name: '李工', role: '项目经理', phone: '137****8901', status: '在岗', signDate: '—' },
+    { stage: '竣工验收', name: '甲方王工', role: '甲方验收代表', phone: '135****3456', status: '待验收', signDate: '—' },
+    { stage: '质保跟踪', name: '赵工', role: '售后工程师', phone: '133****7890', status: '待上岗', signDate: '—' },
+  ];
+
+  return (
+    <motion.div initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} className="space-y-4">
+      <div className="card-base p-5">
+        <h3 className="text-sm font-semibold text-gold-300 mb-4 flex items-center gap-2">
+          <User className="w-4 h-4" />各节点责任人记录
+        </h3>
+        <div className="overflow-x-auto">
+          <table className="w-full text-sm">
+            <thead className="bg-primary-800/80">
+              <tr>
+                <th className="px-4 py-3 text-left text-xs font-medium text-neutral-300">流程节点</th>
+                <th className="px-4 py-3 text-left text-xs font-medium text-neutral-300">责任人</th>
+                <th className="px-4 py-3 text-left text-xs font-medium text-neutral-300">角色</th>
+                <th className="px-4 py-3 text-center text-xs font-medium text-neutral-300">联系方式</th>
+                <th className="px-4 py-3 text-center text-xs font-medium text-neutral-300">状态</th>
+                <th className="px-4 py-3 text-center text-xs font-medium text-neutral-300">确认日期</th>
+              </tr>
+            </thead>
+            <tbody>
+              {persons.map((p) => (
+                <tr key={p.stage} className="border-t border-white/5 hover:bg-primary-800/30">
+                  <td className="px-4 py-3 text-neutral-200 font-medium">{p.stage}</td>
+                  <td className="px-4 py-3 text-neutral-200">{p.name}</td>
+                  <td className="px-4 py-3 text-neutral-400">{p.role}</td>
+                  <td className="px-4 py-3 text-center text-neutral-400 font-mono">{p.phone}</td>
+                  <td className="px-4 py-3 text-center">
+                    <span className={cn(
+                      'inline-flex items-center px-2 py-0.5 rounded text-[11px] font-medium',
+                      p.status === '已确认' && 'bg-emerald-500/15 text-emerald-300',
+                      p.status === '在岗' && 'bg-gold-500/15 text-gold-300',
+                      p.status === '待验收' && 'bg-sky-500/15 text-sky-300',
+                      p.status === '待上岗' && 'bg-neutral-500/15 text-neutral-400',
+                    )}>
+                      {p.status === '已确认' && <Check className="w-3 h-3 mr-1" />}
+                      {p.status}
+                    </span>
+                  </td>
+                  <td className="px-4 py-3 text-center text-neutral-400 text-xs">{p.signDate}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <div className="card-base p-5">
+        <h3 className="text-sm font-semibold text-gold-300 mb-4 flex items-center gap-2">
+          <CheckCircle2 className="w-4 h-4" />复查状态总览
+        </h3>
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
+          {[
+            { label: '需求确认', status: '已通过', date: '2026-05-10' },
+            { label: '方案审核', status: '已通过', date: '2026-05-18' },
+            { label: '施工交底', status: '已通过', date: '2026-05-28' },
+            { label: '隐蔽验收', status: '待复查', date: '—' },
+            { label: '材料报验', status: '已通过', date: '2026-06-05' },
+            { label: '中间验收', status: '待复查', date: '—' },
+            { label: '竣工验收', status: '未开始', date: '—' },
+            { label: '最终交付', status: '未开始', date: '—' },
+          ].map(item => (
+            <div key={item.label} className="p-3 rounded-lg bg-primary-800/40 border border-white/5 text-center">
+              <p className="text-xs text-neutral-400 mb-1">{item.label}</p>
+              <span className={cn(
+                'inline-flex items-center text-sm font-semibold',
+                item.status === '已通过' && 'text-emerald-400',
+                item.status === '待复查' && 'text-amber-300',
+                item.status === '未开始' && 'text-neutral-500',
+              )}>
+                {item.status === '已通过' && <Check className="w-3.5 h-3.5 mr-1" />}
+                {item.status}
+              </span>
+              <p className="text-[10px] text-neutral-600 mt-1">{item.date}</p>
+            </div>
+          ))}
+        </div>
+      </div>
+    </motion.div>
+  );
+}
+
 export default function WorkOrderDetail() {
   const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
@@ -924,6 +1111,15 @@ export default function WorkOrderDetail() {
   const currentStatusIndex = getStatusIndex(order.status);
   const defaultTab: DetailTab = order.status;
   const [activeTab, setActiveTab] = useState<DetailTab>(defaultTab);
+
+  const handleTabChange = (tab: DetailTab) => {
+    setActiveTab(tab);
+    if (typeof window !== 'undefined') {
+      const map: Record<string, string> = { '材料进场': 'material', '竣工验收': 'acceptance', '变更记录': 'changes', 'BIM模型': 'bim', '节点责任人': 'person' };
+      const h = map[tab];
+      if (h) setTimeout(() => document.getElementById(h)?.scrollIntoView({ behavior: 'smooth', block: 'start' }), 50);
+    }
+  };
 
   const actualCostPercent = order.actualCost ? (order.actualCost / order.totalBudget) * 100 : 0;
 
@@ -1016,16 +1212,17 @@ export default function WorkOrderDetail() {
           <div className="xl:col-span-7 space-y-5">
             <motion.div initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.08 }} className="card-base p-2">
               <div className="flex flex-wrap gap-1">
-                {statusList.map((s, idx) => {
+                {allTabs.map((s, idx) => {
                   const Icon = statusTabIcons[s];
-                  const statusIdx = idx;
-                  const isCompleted = statusIdx < currentStatusIndex;
+                  const statusIdx = statusList.indexOf(s as WorkOrderStatus);
+                  const isProcessTab = statusIdx >= 0;
+                  const isCompleted = isProcessTab && statusIdx < currentStatusIndex;
                   const isCurrent = statusIdx === currentStatusIndex;
                   const isActive = activeTab === s;
                   return (
                     <button
                       key={s}
-                      onClick={() => setActiveTab(s)}
+                      onClick={() => handleTabChange(s)}
                       className={cn(
                         'flex items-center gap-2 px-3.5 py-2 rounded-lg text-xs font-medium transition-all border',
                         isActive
@@ -1036,12 +1233,13 @@ export default function WorkOrderDetail() {
                       <span
                         className={cn(
                           'w-5 h-5 rounded-full flex items-center justify-center text-[10px] font-bold border',
-                          isCompleted ? 'bg-emerald-500 border-emerald-400 text-white'
-                            : isCurrent ? 'bg-gold-500 border-gold-400 text-primary-900 animate-glow-pulse'
-                            : 'bg-primary-900 border-neutral-600 text-neutral-500'
+                          !isProcessTab && 'bg-transparent border-gold-500/30 text-gold-300',
+                          isProcessTab && isCompleted ? 'bg-emerald-500 border-emerald-400 text-white'
+                            : isProcessTab && isCurrent ? 'bg-gold-500 border-gold-400 text-primary-900 animate-glow-pulse'
+                            : isProcessTab ? 'bg-primary-900 border-neutral-600 text-neutral-500' : ''
                         )}
                       >
-                        {isCompleted ? <Check className="w-3 h-3" /> : idx + 1}
+                        {!isProcessTab ? '·' : isCompleted ? <Check className="w-3 h-3" /> : statusIdx + 1}
                       </span>
                       <Icon className="w-3.5 h-3.5" />
                       {s}
@@ -1056,8 +1254,8 @@ export default function WorkOrderDetail() {
                 {activeTab === '需求诊断' && <DemandDiagnosisSection demand={order.demand} />}
                 {activeTab === '方案报价' && <QuotationSection quotations={order.quotations} selectedId={order.selectedQuotationId} />}
                 {activeTab === '施工排期' && <ScheduleSection schedule={order.schedule} />}
-                {activeTab === '材料进场' && <MaterialsSection materials={order.materials} />}
-                {activeTab === '竣工验收' && <AcceptanceSection acceptance={order.acceptance} />}
+                <div id="material">{activeTab === '材料进场' && <MaterialsSection materials={order.materials} />}</div>
+                <div id="acceptance">{activeTab === '竣工验收' && <AcceptanceSection acceptance={order.acceptance} />}</div>
                 {activeTab === '施工执行' && (
                   <motion.div initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} className="space-y-5">
                     <div className="card-base p-8 text-center">
@@ -1067,10 +1265,10 @@ export default function WorkOrderDetail() {
                         本阶段由项目经理负责现场管理，可查看施工排期了解进度，或在材料进场中查看材料验收情况。
                       </p>
                       <div className="flex items-center justify-center gap-3">
-                        <button onClick={() => setActiveTab('施工排期')} className="btn-primary">
+                        <button onClick={() => handleTabChange('施工排期')} className="btn-primary">
                           <CalendarDays className="w-4 h-4" />查看排期
                         </button>
-                        <button onClick={() => setActiveTab('材料进场')} className="btn-gold">
+                        <button onClick={() => handleTabChange('材料进场')} className="btn-gold">
                           <Package className="w-4 h-4" />材料管理
                         </button>
                       </div>
@@ -1088,7 +1286,9 @@ export default function WorkOrderDetail() {
                     </div>
                   </motion.div>
                 )}
-                {activeTab === 'BIM模型' && <BimSection bimModels={order.bimModels} />}
+                <div id="changes">{activeTab === '变更记录' && <ChangeLogSection />}</div>
+                <div id="bim">{activeTab === 'BIM模型' && <BimSection bimModels={order.bimModels} />}</div>
+                <div id="person">{activeTab === '节点责任人' && <PersonInChargeSection />}</div>
               </motion.div>
             </AnimatePresence>
           </div>

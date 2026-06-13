@@ -513,7 +513,7 @@ function Dashboard() {
               </div>
               <div className="grid grid-cols-2 gap-2">
                 <button
-                  onClick={() => navigate('/orders/create?propertyId=prop-001')}
+                  onClick={() => navigate('/orders/create?propertyId=P001')}
                   className="group p-3 rounded-xl bg-gradient-to-br from-primary-50 to-white border border-primary-100 hover:border-gold-400/60 hover:shadow-md transition-all text-left"
                 >
                   <div className="flex items-center gap-1.5 text-xs text-gold-600 font-medium mb-1">
@@ -526,7 +526,7 @@ function Dashboard() {
                   </p>
                 </button>
                 <button
-                  onClick={() => navigate('/orders/create?propertyId=prop-002')}
+                  onClick={() => navigate('/orders/create?propertyId=P002')}
                   className="group p-3 rounded-xl bg-gradient-to-br from-emerald-50 to-white border border-emerald-100 hover:border-gold-400/60 hover:shadow-md transition-all text-left"
                 >
                   <div className="flex items-center gap-1.5 text-xs text-emerald-600 font-medium mb-1">

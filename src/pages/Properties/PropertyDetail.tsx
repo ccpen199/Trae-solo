@@ -31,6 +31,8 @@ import {
   Clock,
   CreditCard,
   Ruler,
+  AlertTriangle,
+  CheckCircle2,
   type LucideIcon,
 } from 'lucide-react';
 import type {
@@ -104,11 +106,62 @@ function VRViewer({ property }: { property: Property }) {
   const scenes = vrImage?.vrScenes ?? ['大堂入口', '前台区域', '开放办公区', '会议室'];
   const [activeScene, setActiveScene] = useState(0);
   const [rotation, setRotation] = useState(0);
+  const [vrLoaded, setVrLoaded] = useState(false);
+  const [vrError, setVrError] = useState(false);
+  const [imageStates, setImageStates] = useState<Record<number, 'loading' | 'loaded' | 'error'>>({});
+
+  const sceneImages: Record<string, string> = {
+    '大堂入口': `https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=modern+office+lobby+entrance+marble+floor+reception+desk&image_size=landscape_16_9`,
+    '前台区域': `https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=contemporary+office+reception+area+with+gold+accents&image_size=landscape_16_9`,
+    '开放办公区': `https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=open+plan+office+workspace+with+desks+and+chairs&image_size=landscape_16_9`,
+    '会议室': `https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=modern+meeting+room+glass+walls+conference+table&image_size=landscape_16_9`,
+  };
+
+  const handleSceneImageLoad = (idx: number) => {
+    setImageStates(prev => ({ ...prev, [idx]: 'loaded' }));
+  };
+  const handleSceneImageError = (idx: number) => {
+    setImageStates(prev => ({ ...prev, [idx]: 'error' }));
+  };
 
   return (
     <div className="space-y-5">
       <div className="card-base p-1 overflow-hidden">
         <div className="relative aspect-[16/9] rounded-lg overflow-hidden">
+          {!vrLoaded && !vrError && (
+            <div className="absolute inset-0 z-10 flex items-center justify-center"
+              style={{ background: 'radial-gradient(ellipse at 50% 40%, rgba(61,93,151,0.4) 0%, rgba(15,30,49,0.95) 70%)' }}>
+              <div className="text-center">
+                <div className="w-12 h-12 rounded-full border-2 border-gold-500/30 border-t-gold-500 animate-spin mx-auto mb-3" />
+                <p className="text-sm text-neutral-400">VR全景加载中...</p>
+                <p className="text-[11px] text-neutral-600 mt-1">正在加载高清全景影像</p>
+              </div>
+            </div>
+          )}
+          {vrError && (
+            <div className="absolute inset-0 z-10 flex items-center justify-center bg-primary-900/90">
+              <div className="text-center">
+                <AlertTriangle className="w-12 h-12 text-amber-400/50 mx-auto mb-3" />
+                <p className="text-sm text-neutral-300">VR全景加载失败</p>
+                <button onClick={() => { setVrError(false); setVrLoaded(false); }}
+                  className="mt-3 px-4 py-1.5 text-xs rounded-lg bg-gold-500/15 border border-gold-500/30 text-gold-300 hover:bg-gold-500/25 transition-all">
+                  重新加载
+                </button>
+              </div>
+            </div>
+          )}
+
+          <img
+            src={sceneImages[scenes[activeScene]]}
+            alt={scenes[activeScene]}
+            onLoad={() => { setVrLoaded(true); handleSceneImageLoad(activeScene); }}
+            onError={() => { setVrError(true); handleSceneImageError(activeScene); }}
+            className={cn(
+              'absolute inset-0 w-full h-full object-cover transition-opacity duration-700',
+              vrLoaded ? 'opacity-30' : 'opacity-0'
+            )}
+          />
+
           <div
             className="absolute inset-0"
             style={{
@@ -220,9 +273,15 @@ function VRViewer({ property }: { property: Property }) {
             </div>
           </div>
 
-          <div className="absolute bottom-4 right-4 chip">
-            <Eye className="w-3 h-3 text-gold-400/70" />
-            VR浏览量: <span className="text-gold-300 font-semibold ml-1">{property.vrViews.toLocaleString()}</span>
+          <div className="absolute bottom-4 right-4 flex items-center gap-2">
+            <span className="chip">
+              <Eye className="w-3 h-3 text-gold-400/70" />
+              VR浏览量: <span className="text-gold-300 font-semibold ml-1">{property.vrViews.toLocaleString()}</span>
+            </span>
+            <span className="inline-flex items-center gap-1 px-2 py-1 rounded-md bg-emerald-500/15 border border-emerald-500/30 text-[10px] text-emerald-300 backdrop-blur-sm">
+              <CheckCircle2 className="w-3 h-3" />
+              共同验收依据
+            </span>
           </div>
 
           <div className="absolute bottom-4 left-4 right-4 flex justify-center gap-2">
@@ -231,6 +290,8 @@ function VRViewer({ property }: { property: Property }) {
                 key={scene}
                 onClick={() => {
                   setActiveScene(idx);
+                  setVrLoaded(false);
+                  setVrError(false);
                   setRotation((r) => r + (idx - activeScene) * 72);
                 }}
                 className={cn(
@@ -240,6 +301,7 @@ function VRViewer({ property }: { property: Property }) {
                     : 'bg-primary-900/50 border-neutral-500/20 text-neutral-400 hover:border-gold-500/30 hover:text-neutral-200'
                 )}
               >
+                {imageStates[idx] === 'error' && <AlertTriangle className="w-3 h-3 inline mr-1 text-amber-400" />}
                 {scene}
               </button>
             ))}
@@ -253,7 +315,7 @@ function VRViewer({ property }: { property: Property }) {
           {scenes.map((scene, idx) => (
             <button
               key={scene}
-              onClick={() => setActiveScene(idx)}
+              onClick={() => { setActiveScene(idx); setVrLoaded(false); setVrError(false); }}
               className={cn(
                 'relative aspect-video rounded-lg overflow-hidden border transition-all',
                 activeScene === idx
@@ -261,18 +323,23 @@ function VRViewer({ property }: { property: Property }) {
                   : 'border-neutral-500/20 hover:border-gold-500/40'
               )}
             >
-              <div
-                className="absolute inset-0"
-                style={{
-                  background:
-                    idx % 2 === 0
-                      ? 'linear-gradient(135deg, #162C48 0%, #1E3A5F 100%)'
-                      : 'linear-gradient(135deg, #1E3A5F 0%, #2E4A80 100%)',
-                }}
+              <img
+                src={sceneImages[scene]}
+                alt={scene}
+                className="absolute inset-0 w-full h-full object-cover"
+                onError={(e) => { (e.target as HTMLImageElement).style.display = 'none'; }}
               />
-              <div className="absolute inset-0 flex items-center justify-center">
-                <LayoutGrid className="w-6 h-6 text-gold-400/40" />
-              </div>
+              <div className="absolute inset-0 bg-primary-900/40" />
+              {imageStates[idx] === 'error' && (
+                <div className="absolute inset-0 flex items-center justify-center">
+                  <AlertTriangle className="w-5 h-5 text-amber-400/60" />
+                </div>
+              )}
+              {imageStates[idx] !== 'error' && imageStates[idx] !== 'loaded' && (
+                <div className="absolute inset-0 flex items-center justify-center animate-pulse">
+                  <LayoutGrid className="w-5 h-5 text-gold-400/30" />
+                </div>
+              )}
               <div className="absolute bottom-0 left-0 right-0 px-2 py-1 bg-gradient-to-t from-primary-900/90 to-transparent">
                 <span
                   className={cn(
@@ -288,6 +355,26 @@ function VRViewer({ property }: { property: Property }) {
               )}
             </button>
           ))}
+        </div>
+      </div>
+
+      <div className="card-base p-4 bg-gradient-to-r from-emerald-500/5 to-transparent border-emerald-500/20">
+        <div className="flex items-start gap-3">
+          <div className="w-9 h-9 rounded-lg bg-emerald-500/15 border border-emerald-500/30 flex items-center justify-center shrink-0">
+            <CheckCircle2 className="w-4 h-4 text-emerald-400" />
+          </div>
+          <div className="flex-1">
+            <h4 className="text-sm font-semibold text-neutral-200 mb-1">VR全景验收依据</h4>
+            <p className="text-xs text-neutral-400">
+              本房源VR全景影像已通过业主、租户及装饰公司三方共同确认，可作为装修验收和交付的视觉依据。所有场景影像均已加密存证，确保验收流程的合规性和可追溯性。
+            </p>
+            <div className="flex items-center gap-4 mt-2 text-[11px] text-neutral-500">
+              <span className="inline-flex items-center gap-1"><CheckCircle2 className="w-3 h-3 text-emerald-400" />业主已确认</span>
+              <span className="inline-flex items-center gap-1"><CheckCircle2 className="w-3 h-3 text-emerald-400" />租户已确认</span>
+              <span className="inline-flex items-center gap-1"><CheckCircle2 className="w-3 h-3 text-emerald-400" />装饰公司已确认</span>
+              <span className="inline-flex items-center gap-1"><Clock className="w-3 h-3 text-gold-400" />存证时间：2026-05-15</span>
+            </div>
+          </div>
         </div>
       </div>
     </div>

@@ -26,6 +26,7 @@ import {
   CheckCircle2,
   ClipboardList,
   FileCheck2,
+  Target,
   type LucideIcon,
 } from 'lucide-react';
 import type {
@@ -235,6 +236,7 @@ export default function CreateWorkOrder() {
   const propertyIdParam = searchParams.get('propertyId');
   const [currentStep, setCurrentStep] = useState<Step>(1);
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [submittedOrderId, setSubmittedOrderId] = useState<string | null>(null);
 
   const [propertyData, setPropertyData] = useState<PropertyFormData>({
     mode: 'existing',
@@ -269,7 +271,26 @@ export default function CreateWorkOrder() {
       const property = mockProperties.find((p) => p.id === propertyIdParam);
       if (property) {
         setPropertyData((prev) => ({ ...prev, selectedPropertyId: propertyIdParam }));
-        setDemandData((prev) => ({ ...prev, area: property.spec.area }));
+        const area = property.spec.area;
+        const isOffice = property.type === '写字楼';
+        const isRetail = property.type === '商铺';
+        const budgetLow = Math.round(area * (isRetail ? 3500 : isOffice ? 2800 : 2200));
+        const budgetHigh = Math.round(area * (isRetail ? 6000 : isOffice ? 5000 : 4000));
+        const duration = isRetail ? 105 : isOffice ? 90 : 80;
+        setDemandData((prev) => ({
+          ...prev,
+          area: area,
+          budgetRange: [budgetLow, budgetHigh],
+          duration: duration,
+          staffCount: isRetail ? 30 : isOffice ? 50 : 40,
+          designStyles: isRetail ? ['工业风', '现代简约'] : isOffice ? ['商务轻奢', '现代简约'] : ['现代简约'],
+          colorPreference: isRetail ? ['白色', '原木色'] : isOffice ? ['深灰', '米色'] : ['白色', '米色'],
+          specialRequirements: isRetail
+            ? '商铺人流大，须选用耐磨A级防火地面材料，加强LOGO形象墙设计'
+            : isOffice
+              ? '建议开放工位+独立会议室组合，网络布线满足高密度办公'
+              : '厂房优先满足承重和消防喷淋要求，办公区与生产区分隔设计',
+        }));
         setTimeout(() => setCurrentStep(2), 150);
       }
     }
@@ -332,9 +353,25 @@ export default function CreateWorkOrder() {
 
   const handleSubmit = async () => {
     setIsSubmitting(true);
-    await new Promise((resolve) => setTimeout(resolve, 1500));
+    await new Promise((resolve) => setTimeout(resolve, 2000));
     setIsSubmitting(false);
-    navigate('/orders');
+    const newOrderId = 'WO-2026-' + String(Date.now()).slice(-5);
+    setSubmittedOrderId(newOrderId);
+  };
+
+  const buildMatchingQuery = () => {
+    const params = new URLSearchParams();
+    params.append('area', String(demandData.area));
+    params.append('budgetMin', String(demandData.budgetRange[0]));
+    params.append('budgetMax', String(demandData.budgetRange[1]));
+    params.append('duration', String(demandData.duration));
+    if (demandData.designStyles.length > 0) params.append('style', demandData.designStyles.join(','));
+    const p = selectedProperty;
+    if (p) {
+      params.append('district', p.location.district);
+      params.append('type', p.type);
+    }
+    return params.toString();
   };
 
   const toggleStyle = (style: DesignStyle) => {
@@ -361,6 +398,156 @@ export default function CreateWorkOrder() {
       [key]: !prev[key],
     }));
   };
+
+  if (submittedOrderId) {
+    const currentSelectedPlan = quotationPlans.find(p => p.level === selectedPlanLevel);
+    const nextSteps = [
+      {
+        id: 1, title: '工单已创建成功', icon: CheckCircle2, status: 'done' as const,
+        desc: `工单编号：${submittedOrderId}`,
+        color: 'bg-emerald-500/15 border-emerald-500/40 text-emerald-400',
+      },
+      {
+        id: 2, title: '智能匹配服务商', icon: Target, status: 'active' as const,
+        desc: '基于面积/预算/工期/风格为您匹配最优服务商',
+        color: 'bg-gold-500/15 border-gold-500/40 text-gold-400',
+        action: `去匹配 →`,
+        onClick: () => navigate(`/matching?${buildMatchingQuery()}`),
+      },
+      {
+        id: 3, title: '在线议价确认', icon: MessageSquare, status: 'pending' as const,
+        desc: '与匹配服务商在线沟通报价细节',
+        color: 'bg-primary-700/40 border-neutral-600/40 text-neutral-400',
+        action: `待匹配`,
+      },
+      {
+        id: 4, title: '电子合同签署', icon: FileCheck2, status: 'pending' as const,
+        desc: '确认条款后完成电子签章，链上存证',
+        color: 'bg-primary-700/40 border-neutral-600/40 text-neutral-400',
+        action: `待议价`,
+      },
+    ];
+
+    const summaryItems = [
+      { label: '房源名称', value: selectedProperty?.name || propertyData.manualName },
+      { label: '建筑面积', value: `${demandData.area} ㎡` },
+      { label: '装修方案', value: `${selectedPlanLevel}·¥${(currentSelectedPlan?.totalPrice || 0).toLocaleString('zh-CN')}` },
+      { label: '预算范围', value: `¥${demandData.budgetRange[0].toLocaleString('zh-CN')} ~ ¥${demandData.budgetRange[1].toLocaleString('zh-CN')}` },
+      { label: '预计工期', value: `${demandData.duration} 天` },
+      { label: '风格偏好', value: demandData.designStyles.join('、') || '未指定' },
+    ];
+
+    return (
+      <div className="min-h-screen bg-mesh-tech p-6 md:p-10">
+        <div className="max-w-4xl mx-auto">
+          <motion.div initial={{ opacity: 0, scale: 0.95 }} animate={{ opacity: 1, scale: 1 }}
+            className="card-base p-8 text-center mb-6">
+            <div className="w-20 h-20 rounded-full bg-gradient-to-br from-emerald-400 to-emerald-600 mx-auto flex items-center justify-center mb-5 shadow-[0_0_60px_rgba(16,185,129,0.4)]">
+              <CheckCircle2 className="w-10 h-10 text-white" />
+            </div>
+            <h1 className="text-2xl font-bold animate-shimmer-gold mb-2">工单创建成功 🎉</h1>
+            <p className="text-sm text-neutral-400">
+              工单编号 <span className="font-mono text-gold-300 font-bold">{submittedOrderId}</span> 已提交系统
+            </p>
+          </motion.div>
+
+          <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.1 }}
+            className="card-base p-5 mb-6">
+            <h3 className="text-sm font-semibold text-neutral-200 mb-4 flex items-center gap-2">
+              <ClipboardList className="w-4 h-4 text-gold-400" />
+              工单信息摘要
+            </h3>
+            <div className="grid grid-cols-2 md:grid-cols-3 gap-3">
+              {summaryItems.map(item => (
+                <div key={item.label} className="p-3 rounded-lg bg-primary-800/40 border border-white/5">
+                  <p className="text-[11px] text-neutral-500 mb-1">{item.label}</p>
+                  <p className="text-sm font-medium text-neutral-100 truncate">{item.value}</p>
+                </div>
+              ))}
+            </div>
+          </motion.div>
+
+          <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.2 }}
+            className="card-base p-5 mb-6">
+            <h3 className="text-sm font-semibold text-neutral-200 mb-5 flex items-center gap-2">
+              <Sparkles className="w-4 h-4 text-gold-400" />
+              下一步流程（点击进入）
+            </h3>
+            <div className="space-y-3">
+              {nextSteps.map((step, i) => {
+                const StepIcon = step.icon;
+                return (
+                  <div key={step.id} className="relative flex items-start gap-4">
+                    {i < nextSteps.length - 1 && (
+                      <div className="absolute left-[22px] top-[44px] w-px h-10 bg-gradient-to-b from-gold-500/50 to-transparent" />
+                    )}
+                    <div
+                      onClick={step.onClick}
+                      className={cn(
+                        'w-11 h-11 rounded-xl border flex items-center justify-center shrink-0 transition-all',
+                        step.color,
+                        step.onClick && 'cursor-pointer hover:scale-105 hover:shadow-gold-glow'
+                      )}
+                    >
+                      <StepIcon className="w-5 h-5" />
+                    </div>
+                    <div className="flex-1 pt-1">
+                      <div className="flex items-center justify-between">
+                        <div className="flex items-center gap-2">
+                          <h4 className={cn(
+                            'text-sm font-semibold',
+                            step.status === 'done' && 'text-emerald-300',
+                            step.status === 'active' && 'text-gold-300 animate-glow-pulse',
+                            step.status === 'pending' && 'text-neutral-400'
+                          )}>
+                            {step.title}
+                          </h4>
+                          {step.status === 'done' && <Check className="w-4 h-4 text-emerald-400" />}
+                        </div>
+                        {step.action && (
+                          <button
+                            onClick={step.onClick}
+                            disabled={!step.onClick}
+                            className={cn(
+                              'text-xs px-3 py-1 rounded-md font-medium transition-all',
+                              step.onClick
+                                ? 'bg-gold-gradient text-primary-900 hover:shadow-gold-glow'
+                                : 'bg-primary-800/50 text-neutral-500 cursor-not-allowed'
+                            )}
+                          >
+                            {step.action}
+                          </button>
+                        )}
+                      </div>
+                      <p className="text-xs text-neutral-500 mt-1">{step.desc}</p>
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
+          </motion.div>
+
+          <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.3 }}
+            className="flex flex-col md:flex-row items-center justify-center gap-3">
+            <button
+              onClick={() => navigate(`/matching?${buildMatchingQuery()}`)}
+              className="btn-gold w-full md:w-auto px-8 py-3 flex items-center justify-center gap-2"
+            >
+              <Target className="w-4 h-4" />
+              立即智能匹配服务商
+              <ChevronRight className="w-4 h-4" />
+            </button>
+            <button
+              onClick={() => navigate('/orders')}
+              className="px-8 py-3 rounded-xl text-sm border border-neutral-600/40 text-neutral-300 hover:border-gold-500/40 hover:text-gold-300 transition-all w-full md:w-auto"
+            >
+              返回工单中心
+            </button>
+          </motion.div>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen bg-mesh-tech">
