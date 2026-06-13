@@ -1,0 +1,54 @@
+version: '3.8'
+
+services:
+  postgres:
+    image: postgres:15-alpine
+    container_name: iot-postgres
+    environment:
+      POSTGRES_DB: iot_platform
+      POSTGRES_USER: iot_admin
+      POSTGRES_PASSWORD: ${DB_PASSWORD:-iot_secure_pwd_2024}
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U iot_admin"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+  redis:
+    image: redis:7-alpine
+    container_name: iot-redis
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis_data:/data
+    command: redis-server --appendonly yes --requirepass ${REDIS_PASSWORD:-redis_secure_pwd_2024}
+
+  emqx:
+    image: emqx/emqx:5.3.0
+    container_name: iot-emqx
+    ports:
+      - "1883:1883"
+      - "8083:8083"
+      - "8084:8084"
+      - "8883:8883"
+      - "18083:18083"
+    environment:
+      EMQX_NAME: iot-emqx
+      EMQX_HOST: 127.0.0.1
+      EMQX_ALLOW_ANONYMOUS: "false"
+      EMQX_LISTENER__TCP__DEFAULT__MAX_CONNECTIONS: 100000
+    volumes:
+      - emqx_data:/opt/emqx/data
+      - emqx_log:/opt/emqx/log
+      - emqx_etc:/opt/emqx/etc
+
+volumes:
+  postgres_data:
+  redis_data:
+  emqx_data:
+  emqx_log:
+  emqx_etc:

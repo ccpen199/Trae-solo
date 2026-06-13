@@ -1,0 +1,21 @@
+{
+  "name": "iot-unified-platform",
+  "version": "1.0.0",
+  "private": true,
+  "description": "跨品牌IoT设备统一管控平台",
+  "workspaces": [
+    "apps/*",
+    "packages/*"
+  ],
+  "scripts": {
+    "dev:backend": "npm run start:dev --workspace=apps/backend",
+    "dev:frontend": "npm run dev --workspace=apps/frontend",
+    "build:backend": "npm run build --workspace=apps/backend",
+    "build:frontend": "npm run build --workspace=apps/frontend",
+    "infra:up": "docker compose -f docker-compose.yml up -d",
+    "infra:down": "docker compose -f docker-compose.yml down"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  }
+}
