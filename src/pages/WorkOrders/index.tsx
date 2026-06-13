@@ -11,6 +11,11 @@ import {
   Check,
   Clock,
   Filter,
+  User,
+  Package,
+  FileCheck,
+  Edit3,
+  Box,
   type LucideIcon,
 } from 'lucide-react';
 import type {
@@ -85,7 +90,7 @@ function WorkOrderCard({ order, index }: { order: WorkOrder; index: number }) {
       transition={{ duration: 0.5, delay: index * 0.06 }}
       whileHover={{ y: -4, transition: { duration: 0.25 } }}
       className="card-base group cursor-pointer relative overflow-hidden"
-      onClick={() => navigate(`/workorders/${order.id}`)}
+      onClick={() => navigate(`/orders/${order.id}`)}
     >
       <div
       className={cn(
@@ -197,6 +202,57 @@ function WorkOrderCard({ order, index }: { order: WorkOrder; index: number }) {
         </div>
       </div>
 
+      <div className="mt-4 pt-4 border-t border-gold-500/10">
+        <p className="text-[11px] text-neutral-500 mb-3">快速进入节点</p>
+        <div className="flex flex-wrap gap-1.5">
+          <button
+            onClick={(e) => { e.stopPropagation(); navigate(`/orders/${order.id}#person`); }}
+            className="inline-flex items-center gap-1 px-2.5 py-1.5 rounded-md text-[11px] bg-primary-800/60 border border-neutral-600/30 text-neutral-300 hover:border-gold-500/40 hover:text-gold-300 transition-all"
+          >
+            <User className="w-3 h-3" />
+            责任人
+          </button>
+          <button
+            onClick={(e) => { e.stopPropagation(); navigate(`/orders/${order.id}#material`); }}
+            className={cn(
+              "inline-flex items-center gap-1 px-2.5 py-1.5 rounded-md text-[11px] transition-all",
+              statusList.indexOf(order.status) >= statusList.indexOf('材料进场')
+                ? "bg-emerald-500/15 border border-emerald-500/40 text-emerald-300"
+                : "bg-primary-800/60 border border-neutral-600/30 text-neutral-300 hover:border-gold-500/40 hover:text-gold-300"
+            )}
+          >
+            <Package className="w-3 h-3" />
+            材料进场
+          </button>
+          <button
+            onClick={(e) => { e.stopPropagation(); navigate(`/orders/${order.id}#acceptance`); }}
+            className={cn(
+              "inline-flex items-center gap-1 px-2.5 py-1.5 rounded-md text-[11px] transition-all",
+              statusList.indexOf(order.status) >= statusList.indexOf('竣工验收')
+                ? "bg-violet-500/15 border border-violet-500/40 text-violet-300"
+                : "bg-primary-800/60 border border-neutral-600/30 text-neutral-300 hover:border-gold-500/40 hover:text-gold-300"
+            )}
+          >
+            <FileCheck className="w-3 h-3" />
+            竣工验收
+          </button>
+          <button
+            onClick={(e) => { e.stopPropagation(); navigate(`/orders/${order.id}#changes`); }}
+            className="inline-flex items-center gap-1 px-2.5 py-1.5 rounded-md text-[11px] bg-primary-800/60 border border-neutral-600/30 text-neutral-300 hover:border-gold-500/40 hover:text-gold-300 transition-all"
+          >
+            <Edit3 className="w-3 h-3" />
+            变更记录
+          </button>
+          <button
+            onClick={(e) => { e.stopPropagation(); navigate(`/orders/${order.id}#bim`); }}
+            className="inline-flex items-center gap-1 px-2.5 py-1.5 rounded-md text-[11px] bg-sky-500/15 border border-sky-500/30 text-sky-300 hover:border-sky-400/60 transition-all"
+          >
+            <Box className="w-3 h-3" />
+            BIM模型
+          </button>
+        </div>
+      </div>
+
       <div className="mt-4 flex items-center justify-between">
         <div className="flex items-center gap-3">
           {order.overdueWarning && (
@@ -210,7 +266,7 @@ function WorkOrderCard({ order, index }: { order: WorkOrder; index: number }) {
           className="btn-gold !py-1.5 !px-3.5 !text-xs"
           onClick={(e) => {
             e.stopPropagation();
-            navigate(`/workorders/${order.id}`);
+            navigate(`/orders/${order.id}`);
           }}
         >
           查看详情

@@ -1,4 +1,5 @@
 import { useMemo } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import ReactECharts from 'echarts-for-react';
 import {
@@ -84,11 +85,13 @@ type QuickActionProps = {
   title: string;
   desc: string;
   color: string;
+  onClick?: () => void;
 };
 
-function QuickAction({ icon: Icon, title, desc, color }: QuickActionProps) {
+function QuickAction({ icon: Icon, title, desc, color, onClick }: QuickActionProps) {
   return (
     <motion.button
+      onClick={onClick}
       whileHover={{ x: 4, transition: { duration: 0.15 } }}
       whileTap={{ scale: 0.98 }}
       className="group flex w-full items-center gap-4 rounded-xl border border-neutral-100 p-4 text-left transition-all hover:border-primary-200 hover:shadow-card"
@@ -178,6 +181,7 @@ const priorityMap = {
 };
 
 function Dashboard() {
+  const navigate = useNavigate();
   const heatmapOption = useMemo(
     () => ({
       tooltip: { trigger: 'axis' },
@@ -393,7 +397,7 @@ function Dashboard() {
           <KPICard
             icon={Building2}
             label="房源总数"
-            value={1286}
+            value={128}
             trend={+12.5}
             delay={0}
           />
@@ -479,18 +483,21 @@ function Dashboard() {
                 title="发布房源"
                 desc="新增房源信息上线"
                 color="from-primary-700 to-primary-500"
+                onClick={() => navigate('/properties/publish')}
               />
               <QuickAction
                 icon={ClipboardList}
                 title="发起工单"
                 desc="创建新的工作流程"
                 color="from-gold-600 to-gold-400"
+                onClick={() => navigate('/orders/create')}
               />
               <QuickAction
                 icon={ListTodo}
                 title="查看待办"
                 desc="处理待办事项清单"
                 color="from-emerald-600 to-emerald-400"
+                onClick={() => navigate('/orders')}
               />
             </div>
           </motion.div>

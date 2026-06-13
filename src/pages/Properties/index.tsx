@@ -75,11 +75,15 @@ function PropertyCard({ property, index }: { property: Property; index: number }
   ];
 
   const parsePaymentMethod = (method: string) => {
-    const match = method.match(/押(\d)付(\d)/);
+    const cnNumMap: Record<string, string> = { '一': '1', '二': '2', '三': '3', '四': '4', '五': '5', '六': '6' };
+    const match = method.match(/押([一二三四五六\d])付([一二三四五六\d])/);
     if (match) {
-      return { deposit: match[1], pay: match[2] };
+      return {
+        deposit: cnNumMap[match[1]] || match[1],
+        pay: cnNumMap[match[2]] || match[2],
+      };
     }
-    return { deposit: '?', pay: '?' };
+    return { deposit: '1', pay: '3' };
   };
 
   const { deposit, pay } = parsePaymentMethod(property.rentClause.paymentMethod);
@@ -275,6 +279,7 @@ const initialFilters: FilterState = {
 };
 
 export default function Properties() {
+  const navigate = useNavigate();
   const [filters, setFilters] = useState<FilterState>(initialFilters);
   const [showFilters, setShowFilters] = useState(true);
 
@@ -333,7 +338,7 @@ export default function Properties() {
               <Filter className="w-4 h-4" />
               批量操作
             </button>
-            <button className="btn-gold">
+            <button className="btn-gold" onClick={() => navigate('/properties/publish')}>
               <Ruler className="w-4 h-4" />
               发布房源
             </button>

@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+  <key>Label</key>
+  <string>local.trae.may-89184.frontend</string>
+  <key>WorkingDirectory</key>
+  <string>/Users/chen/Documents/trae_projects/local_projects/may-89184</string>
+  <key>EnvironmentVariables</key>
+  <dict>
+    <key>HOST</key>
+    <string>127.0.0.1</string>
+    <key>FRONTEND_PORT</key>
+    <string>49184</string>
+    <key>BACKEND_PORT</key>
+    <string>59184</string>
+    <key>PORT</key>
+    <string>59184</string>
+    <key>VITE_API_BASE_URL</key>
+    <string>http://127.0.0.1:59184</string>
+  </dict>
+  <key>ProgramArguments</key>
+  <array>
+    <string>/Users/chen/.nvm/versions/node/v22.22.0/bin/node</string>
+    <string>/Users/chen/Documents/trae_projects/local_projects/may-89184/node_modules/vite/bin/vite.js</string>
+    <string>--host</string>
+    <string>127.0.0.1</string>
+    <string>--port</string>
+    <string>49184</string>
+    <string>--strictPort</string>
+    <string>--clearScreen</string>
+    <string>false</string>
+  </array>
+  <key>StandardOutPath</key>
+  <string>/Users/chen/Documents/trae_projects/local_projects/may-89184/frontend.log</string>
+  <key>StandardErrorPath</key>
+  <string>/Users/chen/Documents/trae_projects/local_projects/may-89184/frontend.log</string>
+  <key>RunAtLoad</key>
+  <true/>
+</dict>
+</plist>

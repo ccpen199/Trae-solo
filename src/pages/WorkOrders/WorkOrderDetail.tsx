@@ -931,7 +931,7 @@ export default function WorkOrderDetail() {
     <div className="min-h-screen bg-mesh-tech p-6">
       <div className="mx-auto max-w-[1400px] space-y-5">
         <motion.div initial={{ opacity: 0, y: -12 }} animate={{ opacity: 1, y: 0 }} className="flex items-center gap-3">
-          <button onClick={() => navigate('/workorders')} className="btn-primary !py-2 !px-3">
+          <button onClick={() => navigate('/orders')} className="btn-primary !py-2 !px-3">
             <ArrowLeft className="w-4 h-4" />返回
           </button>
           <div className="flex-1">
@@ -1106,4 +1106,3 @@ export default function WorkOrderDetail() {
     </div>
   );
 }
-

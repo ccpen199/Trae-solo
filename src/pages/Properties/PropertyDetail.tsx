@@ -898,7 +898,7 @@ export default function PropertyDetail() {
                 {property.ownerPhone}
               </span>
             </div>
-            <button className="btn-primary">
+            <button className="btn-primary" onClick={() => navigate(`/orders/create?propertyId=${property.id}`)}>
               <FileText className="w-4 h-4" />
               发起装修
             </button>
@@ -906,6 +906,63 @@ export default function PropertyDetail() {
               <Phone className="w-4 h-4" />
               联系业主
             </button>
+          </div>
+        </motion.div>
+
+        <motion.div
+          initial={{ opacity: 0, y: 8 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.4, delay: 0.08 }}
+          className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-3"
+        >
+          <div className="card-base p-4">
+            <div className="flex items-center gap-2 mb-2">
+              <Ruler className="w-4 h-4 text-gold-400/70" />
+              <span className="text-[11px] text-neutral-500">建筑面积</span>
+            </div>
+            <p className="text-xl font-bold glow-text-gold">{property.spec.area}<span className="text-xs text-neutral-500 ml-1">㎡</span></p>
+          </div>
+          <div className="card-base p-4">
+            <div className="flex items-center gap-2 mb-2">
+              <Layers className="w-4 h-4 text-gold-400/70" />
+              <span className="text-[11px] text-neutral-500">层高</span>
+            </div>
+            <p className="text-xl font-bold text-neutral-100">{property.spec.ceilingHeight}<span className="text-xs text-neutral-500 ml-1">m</span></p>
+          </div>
+          <div className="card-base p-4">
+            <div className="flex items-center gap-2 mb-2">
+              <Box className="w-4 h-4 text-gold-400/70" />
+              <span className="text-[11px] text-neutral-500">承重</span>
+            </div>
+            <p className="text-xl font-bold text-neutral-100">{property.spec.loadCapacity}<span className="text-xs text-neutral-500 ml-1">kg/㎡</span></p>
+          </div>
+          <div className="card-base p-4">
+            <div className="flex items-center gap-2 mb-2">
+              <ShieldCheck className="w-4 h-4 text-gold-400/70" />
+              <span className="text-[11px] text-neutral-500">消防验收</span>
+            </div>
+            <p className={cn(
+              "text-lg font-bold",
+              property.ownership.fireInspectionStatus === '已通过' ? 'text-emerald-400' :
+              property.ownership.fireInspectionStatus === '待验收' ? 'text-amber-400' :
+              property.ownership.fireInspectionStatus === '整改中' ? 'text-rose-400' : 'text-neutral-400'
+            )}>
+              {property.ownership.fireInspectionStatus}
+            </p>
+          </div>
+          <div className="card-base p-4">
+            <div className="flex items-center gap-2 mb-2">
+              <Banknote className="w-4 h-4 text-gold-400/70" />
+              <span className="text-[11px] text-neutral-500">月租金</span>
+            </div>
+            <p className="text-xl font-bold glow-text-gold">¥{property.rentClause.monthlyRent}<span className="text-xs text-neutral-500 ml-1">/㎡·天</span></p>
+          </div>
+          <div className="card-base p-4">
+            <div className="flex items-center gap-2 mb-2">
+              <CreditCard className="w-4 h-4 text-gold-400/70" />
+              <span className="text-[11px] text-neutral-500">付款方式</span>
+            </div>
+            <p className="text-lg font-bold text-neutral-100">{property.rentClause.paymentMethod}</p>
           </div>
         </motion.div>
 

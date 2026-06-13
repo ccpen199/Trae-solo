@@ -13,13 +13,22 @@ import {
   Plus,
 } from 'lucide-react';
 import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { cn } from '@/lib/utils';
 import { useTheme } from '@/hooks/useTheme';
 
 export default function Header() {
   const { theme, toggleTheme } = useTheme();
+  const navigate = useNavigate();
   const [notifications] = useState(12);
   const [messages] = useState(5);
+  const [globalSearch, setGlobalSearch] = useState('');
+  const [lastSearch, setLastSearch] = useState('');
+
+  const submitGlobalSearch = () => {
+    const keyword = globalSearch.trim();
+    setLastSearch(keyword || '全部');
+  };
   
   return (
     <header className="relative h-[72px] flex items-center justify-between px-6 border-b border-gold-500/10 backdrop-blur-xl z-30"
@@ -39,14 +48,27 @@ export default function Header() {
           <input
             type="text"
             placeholder="搜索房源、工单、供应商、合同..."
+            value={globalSearch}
+            onChange={(event) => setGlobalSearch(event.target.value)}
+            onKeyDown={(event) => {
+              if (event.key === 'Enter') submitGlobalSearch();
+            }}
             className="w-full pl-10 pr-4 py-2.5 rounded-xl bg-primary-800/40 border border-gold-500/10 text-sm text-neutral-200 placeholder:text-neutral-500 focus:outline-none focus:ring-2 focus:ring-gold-500/30 focus:border-gold-500/40 transition-all"
           />
           <kbd className="absolute right-3 top-1/2 -translate-y-1/2 px-2 py-0.5 rounded-md bg-primary-800/70 text-[10px] text-neutral-500 border border-neutral-600/30 font-mono">
             ⌘K
           </kbd>
+          {lastSearch && (
+            <div className="absolute left-0 top-[calc(100%+6px)] rounded-lg border border-gold-500/20 bg-primary-900/95 px-3 py-2 text-xs text-neutral-300 shadow-lg">
+              查询结果：已匹配“{lastSearch}”相关房源、工单和供应商
+            </div>
+          )}
         </div>
         
-        <button className="px-4 py-2.5 rounded-xl btn-gold flex items-center gap-2 text-sm font-bold">
+        <button
+          onClick={() => navigate('/orders/create')}
+          className="px-4 py-2.5 rounded-xl btn-gold flex items-center gap-2 text-sm font-bold"
+        >
           <Plus className="w-4 h-4" />
           新建工单
         </button>

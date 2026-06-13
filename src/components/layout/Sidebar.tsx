@@ -29,13 +29,13 @@ const navItems: NavItem[] = [
     label: "房源管理",
     path: "/properties",
     icon: Building2,
-    badge: "128",
+    badge: "7",
   },
   {
     label: "装修工单",
     path: "/orders",
     icon: Wrench,
-    badge: "36",
+    badge: "5",
   },
   {
     label: "供需匹配",
