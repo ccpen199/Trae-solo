@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import {
   Truck,
@@ -32,6 +32,7 @@ const expressCompanies = [
 export default function Login() {
   const nav = useNavigate();
   const login = useAppStore((s) => s.login);
+  const user = useAppStore((s) => s.user);
   const [username, setUsername] = useState("admin");
   const [password, setPassword] = useState("123456");
   const [remember, setRemember] = useState(true);
@@ -39,6 +40,20 @@ export default function Login() {
   const [showPwd, setShowPwd] = useState(false);
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
+  const [loginSuccess, setLoginSuccess] = useState(false);
+
+  useEffect(() => {
+    if (user && !loginSuccess) {
+      nav("/dashboard", { replace: true });
+    }
+  }, [user, nav, loginSuccess]);
+
+  const clearCache = () => {
+    try {
+      localStorage.removeItem("syt-app-store");
+    } catch (e) {}
+    window.location.reload();
+  };
 
   const onSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -48,15 +63,28 @@ export default function Login() {
       return;
     }
     setLoading(true);
+
     setTimeout(() => {
       const ok = login(username.trim(), password);
       setLoading(false);
       if (ok) {
-        nav("/dashboard", { replace: true });
+        setLoginSuccess(true);
+        setTimeout(() => {
+          nav("/dashboard", { replace: true });
+        }, 350);
       } else {
-        setError("用户名不存在，请检查测试账号");
+        const validAccounts = ["admin", "courier1", "courier2", "super"];
+        if (validAccounts.includes(username.trim().toLowerCase())) {
+          setError(
+            "登录验证异常，请点击下方「清除缓存重试」按钮，或刷新页面后再次尝试"
+          );
+        } else {
+          setError(
+            `账号「${username}」不存在。请使用以下测试账号登录：\n• admin（网点管理员）\n• courier1 / courier2（快递员）\n• super（区域主管）`
+          );
+        }
       }
-    }, 600);
+    }, 650);
   };
 
   const fillAccount = (u: string) => {
@@ -209,9 +237,22 @@ export default function Login() {
                 </div>
 
                 {error && (
-                  <div className="flex items-center gap-2 rounded-lg border border-alert-500/30 bg-alert-500/10 px-3 py-2 text-xs text-alert-400">
-                    <Info className="h-4 w-4 flex-shrink-0" />
-                    {error}
+                  <div className="rounded-lg border border-alert-500/30 bg-alert-500/10 px-3 py-2">
+                    <div className="flex items-start gap-2">
+                      <Info className="h-4 w-4 flex-shrink-0 mt-0.5 text-alert-400" />
+                      <div className="text-xs text-alert-400 whitespace-pre-line leading-relaxed">
+                        {error}
+                      </div>
+                    </div>
+                    {error.includes("登录验证异常") && (
+                      <button
+                        type="button"
+                        onClick={clearCache}
+                        className="mt-2 w-full text-xs bg-alert-500/20 hover:bg-alert-500/30 text-alert-300 py-1.5 rounded-md transition"
+                      >
+                        清除缓存并重试
+                      </button>
+                    )}
                   </div>
                 )}
 
@@ -232,11 +273,21 @@ export default function Login() {
 
                 <button
                   type="submit"
-                  disabled={loading}
-                  className="group flex w-full items-center justify-center gap-2 rounded-lg bg-ember-500 py-3 text-sm font-semibold text-white shadow-glow transition hover:bg-ember-600 active:scale-[0.98] disabled:opacity-60"
+                  disabled={loading || loginSuccess}
+                  className={cn(
+                    "group flex w-full items-center justify-center gap-2 rounded-lg py-3 text-sm font-semibold text-white shadow-glow transition active:scale-[0.98] disabled:opacity-60",
+                    loginSuccess
+                      ? "bg-mint-500"
+                      : "bg-ember-500 hover:bg-ember-600"
+                  )}
                 >
                   {loading ? (
                     <div className="h-4 w-4 animate-spin rounded-full border-2 border-white/30 border-t-white" />
+                  ) : loginSuccess ? (
+                    <>
+                      <CheckCircle2 className="h-4 w-4" />
+                      登录成功，正在进入...
+                    </>
                   ) : (
                     <>
                       登 录
