@@ -1,4 +1,4 @@
-import { useEffect, useState, useRef } from 'react';
+import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import {
   Building2,
@@ -52,47 +52,38 @@ interface HomeCache {
 }
 
 let homeCache: HomeCache | null = null;
-const CACHE_TTL = 5 * 60 * 1000;
 
 export default function Home() {
   const [summary, setSummary] = useState<PropertySummary | null>(homeCache?.summary ?? null);
   const [marketOverview, setMarketOverview] = useState<MarketOverview | null>(homeCache?.marketOverview ?? null);
   const [featuredProperties, setFeaturedProperties] = useState<any[]>(homeCache?.featuredProperties ?? []);
-  const fetchedRef = useRef(false);
 
   useEffect(() => {
-    if (homeCache && Date.now() - homeCache.timestamp < CACHE_TTL) {
-      setSummary(homeCache.summary);
-      setMarketOverview(homeCache.marketOverview);
-      setFeaturedProperties(homeCache.featuredProperties);
-      return;
-    }
-
-    if (fetchedRef.current) return;
-    fetchedRef.current = true;
-
     const fetchData = async () => {
-      const [summaryRes, marketRes, propsRes] = await Promise.all([
-        propertyApi.getStats(),
-        operationApi.getMarketOverview(),
-        propertyApi.getList({ pageSize: 6, sortBy: 'sales', sortOrder: 'desc' }),
-      ]);
+      try {
+        const [summaryRes, marketRes, propsRes] = await Promise.all([
+          propertyApi.getStats(),
+          operationApi.getMarketOverview(),
+          propertyApi.getList({ pageSize: 6, sortBy: 'sales', sortOrder: 'desc' }),
+        ]);
 
-      if (summaryRes.success) {
-        setSummary(summaryRes.data);
-        homeCache = {
-          ...homeCache,
-          summary: summaryRes.data,
-          marketOverview: marketRes.success ? marketRes.data : homeCache?.marketOverview ?? null,
-          featuredProperties: propsRes.success ? propsRes.data.list : homeCache?.featuredProperties ?? [],
-          timestamp: Date.now(),
-        };
-      }
-      if (marketRes.success) {
-        setMarketOverview(marketRes.data);
-      }
-      if (propsRes.success) {
-        setFeaturedProperties(propsRes.data.list);
+        if (summaryRes.success) {
+          setSummary(summaryRes.data);
+          homeCache = { ...homeCache!, summary: summaryRes.data } as HomeCache;
+        }
+        if (marketRes.success) {
+          setMarketOverview(marketRes.data);
+          homeCache = { ...homeCache!, marketOverview: marketRes.data } as HomeCache;
+        }
+        if (propsRes.success) {
+          setFeaturedProperties(propsRes.data.list);
+          homeCache = { ...homeCache!, featuredProperties: propsRes.data.list } as HomeCache;
+        }
+        if (homeCache) {
+          homeCache.timestamp = Date.now();
+        }
+      } catch (e) {
+        console.warn('首页数据刷新失败，使用缓存数据', e);
       }
     };
 

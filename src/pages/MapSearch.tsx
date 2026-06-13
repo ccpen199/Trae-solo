@@ -481,29 +481,29 @@ export default function MapSearch() {
           heatmapType === 'transaction' ? 'bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50' :
           'bg-gradient-to-br from-yellow-50 via-orange-50 to-amber-50'
         )}>
-          <svg className="absolute inset-0 w-full h-full opacity-20">
+          <svg className="absolute inset-0 w-full h-full opacity-20" viewBox="0 0 100 100" preserveAspectRatio="none">
             {Array.from({ length: 11 }, (_, i) => (
               <line
                 key={`h-${i}`}
                 x1="0"
-                y1={`${i * 10}%`}
-                x2="100%"
-                y2={`${i * 10}%`}
+                y1={i * 10}
+                x2="100"
+                y2={i * 10}
                 stroke="#94a3b8"
-                strokeWidth="1"
-                strokeDasharray="5,5"
+                strokeWidth="0.2"
+                strokeDasharray="1,1"
               />
             ))}
             {Array.from({ length: 11 }, (_, i) => (
               <line
                 key={`v-${i}`}
-                x1={`${i * 10}%`}
+                x1={i * 10}
                 y1="0"
-                x2={`${i * 10}%`}
-                y2="100%"
+                x2={i * 10}
+                y2="100"
                 stroke="#94a3b8"
-                strokeWidth="1"
-                strokeDasharray="5,5"
+                strokeWidth="0.2"
+                strokeDasharray="1,1"
               />
             ))}
           </svg>
@@ -534,12 +534,12 @@ export default function MapSearch() {
           </div>
 
           {layers.school && (
-            <svg className="absolute inset-0 w-full h-full" style={{ pointerEvents: 'none' }}>
+            <svg className="absolute inset-0 w-full h-full" viewBox="0 0 100 100" preserveAspectRatio="none" style={{ pointerEvents: 'none' }}>
               {schoolDistricts.map((school) => {
                 const points = school.boundary
                   .map((p) => {
                     const { x, y } = latLngToXY(p.lat, p.lng);
-                    return `${x}%,${y}%`;
+                    return `${x},${y}`;
                   })
                   .join(' ');
                 const center = latLngToXY(school.lat, school.lng);
@@ -550,39 +550,43 @@ export default function MapSearch() {
                       points={points}
                       fill={levelStyle.fill}
                       stroke={levelStyle.stroke}
-                      strokeWidth="2.5"
-                      strokeDasharray="8,4"
+                      strokeWidth="0.4"
+                      strokeDasharray="1.5,0.8"
                     />
                     <circle
-                      cx={`${center.x}%`}
-                      cy={`${center.y - 0.8}%`}
-                      r="12"
+                      cx={center.x}
+                      cy={center.y - 1.2}
+                      r="2"
                       fill={levelStyle.stroke}
                       opacity="0.9"
                     />
                     <text
-                      x={`${center.x}%`}
-                      y={`${center.y - 0.8}%`}
+                      x={center.x}
+                      y={center.y - 1.2}
                       textAnchor="middle"
                       dominantBaseline="central"
-                      className="text-[8px] fill-white font-bold"
+                      fontSize="1.2"
+                      fill="white"
+                      fontWeight="bold"
                     >
                       {school.level}
                     </text>
                     <text
-                      x={`${center.x}%`}
-                      y={`${center.y + 0.6}%`}
+                      x={center.x}
+                      y={center.y + 0.8}
                       textAnchor="middle"
-                      className="text-[9px] font-bold"
+                      fontSize="1.3"
+                      fontWeight="bold"
                       fill={levelStyle.text}
                     >
                       {school.name}
                     </text>
                     <text
-                      x={`${center.x}%`}
-                      y={`${center.y + 1.8}%`}
+                      x={center.x}
+                      y={center.y + 2.4}
                       textAnchor="middle"
-                      className="text-[7px] fill-gray-500"
+                      fontSize="1"
+                      fill="#9ca3af"
                     >
                       {school.type} · {school.correspondingProperties.length}个楼盘
                     </text>
@@ -593,18 +597,17 @@ export default function MapSearch() {
           )}
 
           {layers.heatmap && (
-            <svg className="absolute inset-0 w-full h-full" style={{ pointerEvents: 'none' }}>
+            <svg className="absolute inset-0 w-full h-full" viewBox="0 0 100 100" preserveAspectRatio="none" style={{ pointerEvents: 'none' }}>
               {heatmapData.map((point, idx) => {
                 const { x, y } = latLngToXY(point.lat, point.lng);
                 const size = 8 + (point.value / maxHeatmapValue) * 12;
                 return (
                   <circle
                     key={idx}
-                    cx={`${x}%`}
-                    cy={`${y}%`}
-                    r={`${size}%`}
+                    cx={x}
+                    cy={y}
+                    r={size}
                     fill={getHeatmapColor(point.value, maxHeatmapValue)}
-                    style={{ filter: 'blur(8px)' }}
                   />
                 );
               })}
