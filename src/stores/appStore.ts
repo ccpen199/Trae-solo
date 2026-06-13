@@ -330,12 +330,31 @@ export const useAppStore = create<AppState>((set, get) => ({
       const res = await fetch('/api/orders', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ user_id: uid, ...data }),
+        body: JSON.stringify({
+          user_id: uid,
+          service_type: data.serviceType,
+          weight: data.weight,
+          volume: data.volume,
+          fee: data.estimatedFee || data.fee || 0,
+          sender_name: data.senderName,
+          sender_phone: data.senderPhone,
+          sender_address: data.senderAddress,
+          receiver_name: data.receiverName,
+          receiver_phone: data.receiverPhone,
+          receiver_address: data.receiverAddress,
+          package_category: data.category,
+          remark: data.remark || '',
+        }),
       })
       const json = await res.json()
       set({ loading: false })
       if (json.success && json.data) {
-        return json.data
+        return {
+          ...json.data,
+          orderId: json.data.orderId || json.data.id,
+          waybillNo: json.data.waybillNo || json.data.waybill_no,
+          estimatedFee: json.data.estimatedFee || json.data.fee,
+        }
       }
       return { orderId: `ORD${Date.now()}`, waybillNo: `YT${Math.random().toString().slice(2, 14)}`, estimatedFee: 23.5, estimatedDelivery: '2-3天' }
     } catch {

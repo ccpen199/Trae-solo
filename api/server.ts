@@ -9,10 +9,11 @@ seed();
 /**
  * start server with port
  */
-const PORT = process.env.PORT || 3001;
+const HOST = process.env.HOST || '127.0.0.1';
+const PORT = Number(process.env.BACKEND_PORT || process.env.PORT || 59185);
 
-const server = app.listen(PORT, () => {
-  console.log(`Server ready on port ${PORT}`);
+const server = app.listen(PORT, HOST, () => {
+  console.log(`Server ready on http://${HOST}:${PORT}`);
   console.log(`Database path: ${process.cwd()}/data/logistics.db`);
 });
 

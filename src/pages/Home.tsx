@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom'
-import { Search, Package, Calculator, MapPin, Ticket } from 'lucide-react'
+import { Search, Package, Calculator, MapPin, Ticket, BarChart3, AlertTriangle, BookOpen } from 'lucide-react'
 import { useEffect } from 'react'
 import { useAppStore } from '@/stores/appStore'
 
@@ -8,6 +8,13 @@ const quickEntries = [
   { icon: Package, label: '下单', path: '/order', color: 'bg-accent' },
   { icon: Calculator, label: '试算', path: '/estimate', color: 'bg-green-500' },
   { icon: MapPin, label: '范围', path: '/coverage', color: 'bg-purple-500' },
+]
+
+const adminEntries = [
+  { icon: AlertTriangle, label: '异常预警', path: '/admin/alerts', color: 'bg-red-500', desc: '24h滞留件监控' },
+  { icon: BarChart3, label: '用户画像', path: '/admin/profiling', color: 'bg-amber-500', desc: '频次/区域/品类分析' },
+  { icon: BookOpen, label: '知识库工单', path: '/admin/knowledge', color: 'bg-sky-500', desc: '客服智能答疑' },
+  { icon: MapPin, label: '网点围栏', path: '/admin/networks', color: 'bg-teal-500', desc: '地理围栏管理' },
 ]
 
 const statusMap: Record<string, { label: string; cls: string }> = {
@@ -94,6 +101,30 @@ export default function Home() {
         <Link to="/profile" className="bg-white text-accent font-bold text-sm px-4 py-2 rounded-lg hover:bg-white/90 transition-colors">
           领取
         </Link>
+      </div>
+
+      <div className="animate-slide-up stagger-6">
+        <div className="flex items-center justify-between mb-3">
+          <h2 className="section-title mb-0">运营管理中心</h2>
+          <Link to="/admin/alerts" className="text-xs text-accent hover:underline">查看全部 →</Link>
+        </div>
+        <div className="grid grid-cols-2 gap-3">
+          {adminEntries.map((entry, i) => (
+            <Link
+              key={entry.path}
+              to={entry.path}
+              className="card card-hover p-3 flex items-start gap-3"
+            >
+              <div className={`w-10 h-10 ${entry.color} rounded-lg flex items-center justify-center flex-shrink-0`}>
+                <entry.icon className="w-5 h-5 text-white" />
+              </div>
+              <div className="min-w-0 flex-1">
+                <p className="text-sm font-bold text-navy">{entry.label}</p>
+                <p className="text-[11px] text-text-light mt-0.5">{entry.desc}</p>
+              </div>
+            </Link>
+          ))}
+        </div>
       </div>
     </div>
   )

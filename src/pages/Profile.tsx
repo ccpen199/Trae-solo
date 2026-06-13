@@ -47,14 +47,17 @@ export default function Profile() {
 
   return (
     <div className="space-y-4 pb-4">
-      <div className="gradient-navy rounded-2xl p-5 text-white flex items-center gap-4 animate-slide-up">
+      <div className="gradient-navy rounded-2xl p-5 text-white flex items-center gap-4 animate-slide-up relative overflow-hidden">
         <div className="w-14 h-14 bg-white/20 rounded-full flex items-center justify-center text-2xl font-bold">
           {currentUser?.name?.[0] || '?'}
         </div>
-        <div>
+        <div className="flex-1">
           <p className="font-bold text-lg">{currentUser?.name || '未登录'}</p>
           <p className="text-white/60 text-xs">{currentUser?.phone || ''}</p>
         </div>
+        <Link to="/admin/alerts" className="bg-white/10 hover:bg-white/20 border border-white/20 text-xs px-3 py-2 rounded-lg text-white/90 transition-colors">
+          运营后台
+        </Link>
       </div>
 
       <div className="flex gap-1 bg-surface rounded-xl p-1">

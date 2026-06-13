@@ -1,4 +1,4 @@
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-dom";
 import Layout from "@/components/Layout";
 import AdminLayout from "@/components/AdminLayout";
 import Home from "@/pages/Home";
@@ -7,6 +7,7 @@ import Order from "@/pages/Order";
 import Coverage from "@/pages/Coverage";
 import Estimate from "@/pages/Estimate";
 import Profile from "@/pages/Profile";
+import Auth from "@/pages/Auth";
 import AdminAlerts from "@/pages/admin/Alerts";
 import AdminNetworks from "@/pages/admin/Networks";
 import AdminKnowledge from "@/pages/admin/Knowledge";
@@ -23,8 +24,11 @@ export default function App() {
           <Route path="/coverage" element={<Coverage />} />
           <Route path="/estimate" element={<Estimate />} />
           <Route path="/profile" element={<Profile />} />
+          <Route path="/login" element={<Auth mode="login" />} />
+          <Route path="/register" element={<Auth mode="register" />} />
         </Route>
         <Route path="/admin" element={<AdminLayout />}>
+          <Route index element={<Navigate to="alerts" replace />} />
           <Route path="alerts" element={<AdminAlerts />} />
           <Route path="networks" element={<AdminNetworks />} />
           <Route path="knowledge" element={<AdminKnowledge />} />

@@ -80,13 +80,47 @@ router.get('/:id', (req: Request, res: Response): void => {
 
 router.post('/', (req: Request, res: Response): void => {
   const {
-    user_id, service_type = 'standard', weight = 0, volume = 0, fee = 0,
-    sender_name, sender_phone, sender_address,
-    receiver_name, receiver_phone, receiver_address,
-    package_category, remark = '',
+    user_id,
+    service_type,
+    serviceType,
+    weight = 0,
+    volume = 0,
+    fee,
+    estimatedFee,
+    sender_name,
+    senderName,
+    sender_phone,
+    senderPhone,
+    sender_address,
+    senderAddress,
+    receiver_name,
+    receiverName,
+    receiver_phone,
+    receiverPhone,
+    receiver_address,
+    receiverAddress,
+    package_category,
+    category,
+    remark = '',
   } = req.body
 
-  if (!user_id || !sender_name || !sender_phone || !sender_address || !receiver_name || !receiver_phone || !receiver_address) {
+  const payload = {
+    user_id,
+    service_type: service_type || serviceType || 'standard',
+    weight,
+    volume,
+    fee: fee ?? estimatedFee ?? 0,
+    sender_name: sender_name || senderName,
+    sender_phone: sender_phone || senderPhone,
+    sender_address: sender_address || senderAddress,
+    receiver_name: receiver_name || receiverName,
+    receiver_phone: receiver_phone || receiverPhone,
+    receiver_address: receiver_address || receiverAddress,
+    package_category: package_category || category,
+    remark,
+  }
+
+  if (!payload.user_id || !payload.sender_name || !payload.sender_phone || !payload.sender_address || !payload.receiver_name || !payload.receiver_phone || !payload.receiver_address) {
     res.status(400).json({ success: false, error: '必填参数不能为空' })
     return
   }
@@ -100,9 +134,9 @@ router.post('/', (req: Request, res: Response): void => {
       package_category, remark)
     VALUES (?, ?, ?, 'pending', ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
   `)
-  stmt.run(id, user_id, waybill_no, service_type, weight, volume, fee,
-    sender_name, sender_phone, sender_address, receiver_name, receiver_phone, receiver_address,
-    package_category, remark)
+  stmt.run(id, payload.user_id, waybill_no, payload.service_type, payload.weight, payload.volume, payload.fee,
+    payload.sender_name, payload.sender_phone, payload.sender_address, payload.receiver_name, payload.receiver_phone, payload.receiver_address,
+    payload.package_category, payload.remark)
 
   const trackingId = randomUUID()
   const trackingStmt = db.prepare(`
@@ -111,10 +145,16 @@ router.post('/', (req: Request, res: Response): void => {
   `)
   trackingStmt.run(trackingId, id, waybill_no)
 
-  const newOrder = db.prepare('SELECT * FROM orders WHERE id = ?').get(id)
+  const newOrder = db.prepare('SELECT * FROM orders WHERE id = ?').get(id) as any
   res.status(201).json({
     success: true,
-    data: newOrder,
+    data: {
+      ...newOrder,
+      orderId: newOrder.id,
+      waybillNo: newOrder.waybill_no,
+      estimatedFee: newOrder.fee,
+      estimatedDelivery: '2-3天',
+    },
   })
 })
 

@@ -49,6 +49,73 @@ app.use('/api/tickets', ticketsRoutes)
 app.use('/api/profiling', profilingRoutes)
 app.use('/api/address-book', addressBookRoutes)
 
+app.get(['/api/users/profile', '/api/user/profile'], (_req: Request, res: Response): void => {
+  res.json({
+    success: true,
+    data: {
+      id: 'u1',
+      phone: '138****8000',
+      name: '张伟',
+      role: 'user',
+      membership: 'VIP',
+    },
+  })
+})
+
+app.get(['/api/admin/stats', '/api/admin/dashboard'], (_req: Request, res: Response): void => {
+  res.json({
+    success: true,
+    data: {
+      overview: {
+        activeAlerts: 12,
+        deliveryNetworkNodes: 36,
+        knowledgeItems: 128,
+        profiledUsers: 8600,
+      },
+      modules: ['异常预警', '网点围栏', '知识库', '行为画像'],
+    },
+  })
+})
+
+app.get('/api/products', (_req: Request, res: Response): void => {
+  res.json({
+    success: true,
+    data: [
+      { id: 'standard', name: '标准寄件服务', price: 23.5, category: 'shipping', inventory: 999 },
+      { id: 'express', name: '特快寄件服务', price: 38, category: 'shipping', inventory: 999 },
+      { id: 'insurance', name: '保价增值服务', price: 5, category: 'addon', inventory: 999 },
+    ],
+  })
+})
+
+app.get('/api/cart', (_req: Request, res: Response): void => {
+  res.json({
+    success: true,
+    data: {
+      items: [{ productId: 'standard', name: '标准寄件服务', quantity: 1, price: 23.5 }],
+      total: 23.5,
+    },
+  })
+})
+
+app.get('/api/search', (req: Request, res: Response): void => {
+  const keyword = String(req.query.q || req.query.keyword || '').trim()
+  const items = [
+    { type: 'waybill', title: 'YT20250602002', status: '运输中' },
+    { type: 'service', title: '标准寄件服务', status: '可下单' },
+    { type: 'network', title: '浦东陆家嘴营业部', status: '营业中' },
+  ].filter((item) => !keyword || `${item.title}${item.status}`.includes(keyword))
+
+  res.json({
+    success: true,
+    data: {
+      keyword,
+      items,
+      total: items.length,
+    },
+  })
+})
+
 /**
  * health
  */

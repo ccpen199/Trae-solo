@@ -1,5 +1,5 @@
 import { Link, useLocation, Outlet } from 'react-router-dom'
-import { Package, Search, MapPin, Calculator, User, Menu, X } from 'lucide-react'
+import { Package, Search, MapPin, Calculator, User, Menu, X, ShieldCheck } from 'lucide-react'
 import { useState } from 'react'
 
 const navItems = [
@@ -9,6 +9,8 @@ const navItems = [
   { path: '/coverage', label: '范围', icon: MapPin },
   { path: '/estimate', label: '试算', icon: Calculator },
   { path: '/profile', label: '我的', icon: User },
+  { path: '/login', label: '登录', icon: User },
+  { path: '/admin/alerts', label: '后台', icon: ShieldCheck },
 ]
 
 export default function Layout() {
@@ -30,7 +32,7 @@ export default function Layout() {
             <nav className="hidden md:flex items-center gap-1">
               {navItems.map((item) => {
                 const Icon = item.icon
-                const isActive = location.pathname === item.path
+                const isActive = item.path.startsWith('/admin') ? location.pathname.startsWith('/admin') : location.pathname === item.path
                 return (
                   <Link
                     key={item.path}
@@ -49,6 +51,18 @@ export default function Layout() {
             </nav>
 
             <div className="hidden md:flex items-center gap-3">
+              <Link
+                to="/login"
+                className="text-white/60 hover:text-white text-xs px-3 py-1.5 rounded-md border border-white/20 hover:border-accent hover:bg-accent/20 transition-all"
+              >
+                登录/注册
+              </Link>
+              <Link
+                to="/admin/alerts"
+                className="text-white/60 hover:text-white text-xs px-3 py-1.5 rounded-md border border-white/20 hover:border-accent hover:bg-accent/20 transition-all"
+              >
+                运营后台
+              </Link>
               <Link
                 to="/profile"
                 className="flex items-center gap-2 text-white/80 hover:text-white transition-colors"
@@ -74,7 +88,7 @@ export default function Layout() {
             <nav className="px-4 py-3 space-y-1">
               {navItems.map((item) => {
                 const Icon = item.icon
-                const isActive = location.pathname === item.path
+                const isActive = item.path.startsWith('/admin') ? location.pathname.startsWith('/admin') : location.pathname === item.path
                 return (
                   <Link
                     key={item.path}
@@ -110,7 +124,7 @@ export default function Layout() {
         <div className="flex items-center justify-around py-1">
           {navItems.map((item) => {
             const Icon = item.icon
-            const isActive = location.pathname === item.path
+            const isActive = item.path.startsWith('/admin') ? location.pathname.startsWith('/admin') : location.pathname === item.path
             return (
               <Link
                 key={item.path}

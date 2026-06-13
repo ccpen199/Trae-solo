@@ -5,7 +5,7 @@ import { randomUUID } from 'crypto'
 const router = Router()
 
 router.get('/', (req: Request, res: Response): void => {
-  const { waybill_no, status, page = '1', pageSize = '10' } = req.query
+  const { waybill_no, status, type, value, page = '1', pageSize = '10' } = req.query
   const pageNum = parseInt(page as string)
   const pageSizeNum = parseInt(pageSize as string)
   const offset = (pageNum - 1) * pageSizeNum
@@ -16,6 +16,24 @@ router.get('/', (req: Request, res: Response): void => {
   if (waybill_no) {
     whereClauses.push('waybill_no LIKE ?')
     params.push(`%${waybill_no}%`)
+  }
+  if (value && (!type || type === 'waybill')) {
+    whereClauses.push('waybill_no LIKE ?')
+    params.push(`%${value}%`)
+  }
+  if (value && type === 'phone') {
+    const rows = db.prepare(`
+      SELECT DISTINCT t.waybill_no
+      FROM tracking t
+      JOIN orders o ON o.id = t.order_id
+      WHERE o.sender_phone LIKE ? OR o.receiver_phone LIKE ?
+    `).all(`%${value}%`, `%${value}%`) as any[]
+    if (rows.length === 0) {
+      res.json({ success: true, data: { list: [], total: 0, page: pageNum, pageSize: pageSizeNum } })
+      return
+    }
+    whereClauses.push(`waybill_no IN (${rows.map(() => '?').join(', ')})`)
+    params.push(...rows.map((row) => row.waybill_no))
   }
   if (status) {
     whereClauses.push('status = ?')
