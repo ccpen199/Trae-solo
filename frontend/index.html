@@ -1,0 +1,144 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>工程协同运营台</title>
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <header class="topbar">
+      <a class="brand" href="#overview" aria-label="返回首页">
+        <span class="brand-mark">M</span>
+        <span>工程协同运营台</span>
+      </a>
+      <nav class="nav" aria-label="主导航">
+        <a href="#overview">首页</a>
+        <a href="#projects">项目列表</a>
+        <a href="#tickets">工单管理</a>
+        <a href="#appointments">预约排期</a>
+        <a href="#profile">个人中心</a>
+        <a href="#admin">管理后台</a>
+      </nav>
+      <button class="ghost-button" id="refreshButton" type="button">刷新数据</button>
+    </header>
+
+    <main>
+      <section class="hero" id="overview">
+        <div class="hero-copy">
+          <p class="eyebrow">SQLite 本地数据 · 前后端全链路</p>
+          <h1>施工、巡检、工单和预约统一调度</h1>
+          <p class="lead">
+            为本地项目团队提供实时项目进度、质量问题闭环、服务预约排期和运营复核视图。
+          </p>
+          <div class="hero-actions">
+            <a class="primary-button" href="#projects">查看项目</a>
+            <a class="secondary-button" href="#tickets">处理工单</a>
+          </div>
+        </div>
+        <div class="status-panel" aria-label="服务状态">
+          <div class="status-row">
+            <span>前端服务</span>
+            <strong>127.0.0.1:49190</strong>
+          </div>
+          <div class="status-row">
+            <span>后端 API</span>
+            <strong>127.0.0.1:59190</strong>
+          </div>
+          <div class="status-row">
+            <span>数据库</span>
+            <strong>backend/src/db/app.sqlite</strong>
+          </div>
+        </div>
+      </section>
+
+      <section class="metric-grid" aria-label="关键指标">
+        <article class="metric">
+          <span>活跃项目</span>
+          <strong id="metricProjects">--</strong>
+        </article>
+        <article class="metric">
+          <span>平均进度</span>
+          <strong id="metricProgress">--</strong>
+        </article>
+        <article class="metric">
+          <span>开放工单</span>
+          <strong id="metricTickets">--</strong>
+        </article>
+        <article class="metric">
+          <span>已确认预约</span>
+          <strong id="metricAppointments">--</strong>
+        </article>
+      </section>
+
+      <section class="content-section" id="projects">
+        <div class="section-heading">
+          <div>
+            <p class="eyebrow">项目列表</p>
+            <h2>在建项目进度</h2>
+          </div>
+          <label class="search-box">
+            <span>搜索</span>
+            <input id="projectSearch" type="search" placeholder="项目、业主、经理或状态" />
+          </label>
+        </div>
+        <div class="project-grid" id="projectGrid"></div>
+      </section>
+
+      <section class="split-section">
+        <div class="content-section compact" id="tickets">
+          <div class="section-heading">
+            <div>
+              <p class="eyebrow">工单管理</p>
+              <h2>质量与交付问题</h2>
+            </div>
+          </div>
+          <form class="ticket-form" id="ticketForm">
+            <input name="title" type="text" placeholder="新增工单标题" required />
+            <select name="priority" aria-label="优先级">
+              <option value="高">高</option>
+              <option value="中" selected>中</option>
+              <option value="低">低</option>
+            </select>
+            <button type="submit">新增</button>
+          </form>
+          <div class="list" id="ticketList"></div>
+        </div>
+
+        <div class="content-section compact" id="appointments">
+          <div class="section-heading">
+            <div>
+              <p class="eyebrow">预约排期</p>
+              <h2>近期服务安排</h2>
+            </div>
+          </div>
+          <div class="list" id="appointmentList"></div>
+        </div>
+      </section>
+
+      <section class="split-section">
+        <div class="content-section compact" id="profile">
+          <div class="section-heading">
+            <div>
+              <p class="eyebrow">个人中心</p>
+              <h2>运营负责人</h2>
+            </div>
+          </div>
+          <div class="profile-card" id="profileCard"></div>
+        </div>
+
+        <div class="content-section compact" id="admin">
+          <div class="section-heading">
+            <div>
+              <p class="eyebrow">管理后台</p>
+              <h2>最新动态</h2>
+            </div>
+          </div>
+          <div class="timeline" id="activityList"></div>
+        </div>
+      </section>
+    </main>
+
+    <script src="./app.js" defer></script>
+  </body>
+</html>
