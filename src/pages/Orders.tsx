@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react'
-import { Link, useNavigate } from 'react-router-dom'
+import { Link, useNavigate, useLocation } from 'react-router-dom'
 import {
   Check,
   ChevronLeft,
@@ -75,13 +75,24 @@ const fulfillmentSteps = [
 
 export default function Orders() {
   const navigate = useNavigate()
+  const location = useLocation()
+  const state: any = location.state || {}
   const { user, isLoggedIn } = useAuthStore()
   const { orders, fetchOrders, requestRefund, loading } = useOrderStore()
   const [activeTab, setActiveTab] = useState('all')
   const [refundTicketId, setRefundTicketId] = useState<number | null>(null)
   const [refundReason, setRefundReason] = useState('')
   const [refundCategory, setRefundCategory] = useState('personal')
-  const [previewStep, setPreviewStep] = useState(0)
+  const [previewStep, setPreviewStep] = useState<number>(() => {
+    if (state.defaultTab === 'refund') return 4
+    if (state.defaultTab === 'verify') return 3
+    return 0
+  })
+
+  useEffect(() => {
+    if (state.defaultTab === 'refund') setPreviewStep(4)
+    else if (state.defaultTab === 'verify') setPreviewStep(3)
+  }, [state.defaultTab])
 
   useEffect(() => {
     if (isLoggedIn) {
@@ -120,6 +131,17 @@ export default function Orders() {
         </nav>
 
         <div className="container mx-auto px-6 py-8 max-w-5xl">
+          <div className="bg-blue-500/10 border border-blue-500/30 rounded-2xl p-4 mb-8 flex items-start gap-3">
+            <AlertTriangle size={20} className="text-blue-400 flex-shrink-0 mt-0.5" />
+            <div className="text-sm text-blue-300">
+              <div className="font-medium text-blue-200 mb-1">您正在查看演示数据 · 非真实订单</div>
+              <div className="text-xs text-blue-300/80 leading-relaxed">
+                以下 STEP 1~5 展示的「张三」脱敏实名信息、芝麻信用 650 分授信、防伪码 FAKE-* 等均为演示场景数据，
+                仅用于展示履约闭环。<Link to="/login" className="underline mx-1">立即登录</Link>后系统将自动切换为您本人的真实实名信息、信用评估和订单数据。
+              </div>
+            </div>
+          </div>
+
           <div className="text-center mb-10">
             <h1 className="font-display text-3xl text-gold-400 mb-2">订单履约闭环预览</h1>
             <p className="text-carbon-400">

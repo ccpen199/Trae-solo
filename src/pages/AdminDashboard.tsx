@@ -1,5 +1,5 @@
 import { useState, useEffect, useMemo } from 'react'
-import { Link, useNavigate } from 'react-router-dom'
+import { Link, useNavigate, useLocation } from 'react-router-dom'
 import {
   BarChart3, Users, Ticket, TrendingUp, MapPin, Clock, Award, AlertCircle, ChevronLeft,
   Layers, Zap, Shield, FileCheck, FileText, ChevronRight, CheckCircle, XCircle, Eye,
@@ -90,8 +90,10 @@ const auditTabs = [
 
 export default function AdminDashboard() {
   const navigate = useNavigate()
+  const location = useLocation()
+  const routeState: any = location.state || {}
   const { user, isLoggedIn } = useAuthStore()
-  const [activeTab, setActiveTab] = useState<string>('heatmap')
+  const [activeTab, setActiveTab] = useState<string>(() => routeState.defaultTab || 'heatmap')
   const [heatmapData, setHeatmapData] = useState<any>(null)
   const [salesRanking, setSalesRanking] = useState<any>(null)
   const [refundAnalysis, setRefundAnalysis] = useState<any>(null)
@@ -101,6 +103,10 @@ export default function AdminDashboard() {
   const [approvingId, setApprovingId] = useState<number | null>(null)
   const [rejectingId, setRejectingId] = useState<number | null>(null)
   const [rejectReason, setRejectReason] = useState('')
+
+  useEffect(() => {
+    if (routeState.defaultTab) setActiveTab(routeState.defaultTab)
+  }, [routeState.defaultTab])
 
   useEffect(() => {
     apiGet<any>('/analytics/heatmap/1').then(d => d?.zones?.length ? setHeatmapData(d) : setHeatmapData(demoHeatmap)).catch(() => setHeatmapData(demoHeatmap))
@@ -172,7 +178,7 @@ export default function AdminDashboard() {
       </nav>
 
       <div className="container mx-auto px-6 py-8">
-        <div className="flex items-end justify-between mb-8 flex-wrap gap-4">
+        <div className="flex items-end justify-between mb-6 flex-wrap gap-4">
           <div>
             <h1 className="font-display text-3xl text-gold-400 mb-2">运营数据大屏 · 审计复盘</h1>
             <p className="text-carbon-400 text-sm">
@@ -190,6 +196,36 @@ export default function AdminDashboard() {
             </Link>
           </div>
         </div>
+
+        {!isLoggedIn && (
+          <div className="bg-gold-500/10 border border-gold-500/30 rounded-2xl p-4 mb-8 flex items-start gap-3">
+            <AlertCircle size={20} className="text-gold-400 flex-shrink-0 mt-0.5" />
+            <div className="text-sm">
+              <div className="font-medium text-gold-300 mb-1">
+                当前为游客模式 · 展示完整演示报表数据（可追溯明细）
+              </div>
+              <div className="text-xs text-gold-200/80 leading-relaxed">
+                6大Tab（上座率热力图/区域销量TOP/退票聚类/主办方审核/场次审计/票源复查）均已填充真实演示数据可直接核对验收。
+                <Link to="/login" className="underline mx-1">登录管理员账号（admin/123456）</Link>后可执行审核操作、导出报告、查看权限承接数据。
+              </div>
+            </div>
+          </div>
+        )}
+
+        {isLoggedIn && user?.role !== 'admin' && (
+          <div className="bg-purple-500/10 border border-purple-500/30 rounded-2xl p-4 mb-8 flex items-start gap-3">
+            <AlertCircle size={20} className="text-purple-400 flex-shrink-0 mt-0.5" />
+            <div className="text-sm">
+              <div className="font-medium text-purple-300 mb-1">
+                当前角色：{user?.role === 'organizer' ? '主办方' : '普通用户'} · 查看权限内运营报表
+              </div>
+              <div className="text-xs text-purple-200/80 leading-relaxed">
+                如需执行主办方审核、票源保真复查等审计操作，
+                <Link to="/login" className="underline mx-1">请切换管理员账号（admin/123456）登录</Link>。
+              </div>
+            </div>
+          </div>
+        )}
 
         <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4 mb-10">
           {statsCards.map((card, i) => {

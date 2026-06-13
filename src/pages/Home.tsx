@@ -1,9 +1,11 @@
 import { useEffect, useMemo, useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import {
+  AlertCircle,
   BarChart3,
   Building,
   Calendar,
+  CheckCircle,
   ChevronRight,
   CreditCard,
   LayoutGrid,
@@ -90,13 +92,6 @@ const demoTiers = [
   { name: 'VIP票', price: 1680, type: 'vip', badge: 'bg-gold-500/20 text-gold-400' },
 ]
 
-const demoBoost = {
-  queueId: 'Q20260615-' + Math.floor(Math.random() * 90000 + 10000),
-  priority: 1.0,
-  position: 1286,
-  estimatedWait: 8,
-}
-
 export default function Home() {
   const navigate = useNavigate()
   const { events, fetchEvents, loading } = useEventStore()
@@ -109,7 +104,34 @@ export default function Home() {
     credit: false,
     invite: false,
   })
-  const [localBoost, setLocalBoost] = useState(demoBoost)
+
+  const basePriority = useMemo(() => {
+    let p = 0
+    if (isLoggedIn && user?.realName) p += 1.0
+    if (isLoggedIn && (user?.creditScore ?? 0) >= 600) p += 0.20
+    return +p.toFixed(2)
+  }, [isLoggedIn, user])
+
+  const creditBoostEligible = isLoggedIn && (user?.creditScore ?? 0) >= 600 && !boostState.credit
+  const realNameVerified = isLoggedIn && !!user?.realName
+
+  const localBoost = useMemo(() => {
+    const queueId = isLoggedIn
+      ? `Q${Date.now().toString().slice(-6)}-${(user?.id ?? 0).toString().padStart(4, '0')}`
+      : 'Q20260615-' + Math.floor(Math.random() * 90000 + 10000)
+    let priority = basePriority
+    let position = isLoggedIn ? 820 : 1286
+    let estimatedWait = isLoggedIn ? 5 : 8
+    if (boostState.credit) { priority += 0.20; position = Math.floor(position * 0.94); estimatedWait = Math.floor(estimatedWait * 0.94) }
+    if (boostState.member) { priority += 0.30; position = Math.floor(position * 0.91); estimatedWait = Math.floor(estimatedWait * 0.91) }
+    if (boostState.invite) { priority += 0.15; position = Math.floor(position * 0.955); estimatedWait = Math.floor(estimatedWait * 0.955) }
+    return {
+      queueId,
+      priority: Math.min(2.0, +priority.toFixed(2)),
+      position: Math.max(1, position),
+      estimatedWait: Math.max(1, estimatedWait),
+    }
+  }, [isLoggedIn, user, boostState, basePriority])
 
   useEffect(() => {
     fetchEvents({ category: activeCategory || undefined, keyword: keyword || undefined })
@@ -129,15 +151,9 @@ export default function Home() {
     navigate('/')
   }
 
-  const applyBoost = (type: 'member' | 'credit' | 'invite', value: number) => {
+  const applyBoost = (type: 'member' | 'credit' | 'invite') => {
     if (boostState[type]) return
     setBoostState((prev) => ({ ...prev, [type]: true }))
-    setLocalBoost((prev) => ({
-      ...prev,
-      priority: Math.min(2.0, +(prev.priority + value).toFixed(2)),
-      position: Math.max(1, Math.floor(prev.position * (1 - value * 0.3))),
-      estimatedWait: Math.max(1, Math.floor(prev.estimatedWait * (1 - value * 0.3))),
-    }))
   }
 
   return (
@@ -232,6 +248,52 @@ export default function Home() {
                 <p className="text-xs text-carbon-500">排队ID + 优先级权重计算 + 多种加速通道叠加</p>
               </div>
             </div>
+
+            <div className="bg-carbon-800/40 rounded-xl p-4 mb-5 border border-carbon-700/50">
+              <div className="text-xs text-carbon-500 mb-2 flex items-center gap-1">
+                <Shield size={13} />
+                实名/授信联动状态（权重计算依据）
+              </div>
+              <div className="grid grid-cols-2 md:grid-cols-4 gap-3 text-xs">
+                <div className="flex items-center gap-2">
+                  {realNameVerified ? (
+                    <CheckCircle size={15} className="text-green-400" />
+                  ) : (
+                    <AlertCircle size={15} className="text-yellow-400" />
+                  )}
+                  <span className={realNameVerified ? 'text-green-400' : 'text-yellow-400'}>
+                    {realNameVerified ? `✓ 已实名 (${user?.realName})` : '未实名'}
+                  </span>
+                </div>
+                <div className="flex items-center gap-2">
+                  {creditBoostEligible || boostState.credit ? (
+                    <CheckCircle size={15} className="text-blue-400" />
+                  ) : (
+                    <AlertCircle size={15} className="text-carbon-500" />
+                  )}
+                  <span className={creditBoostEligible || boostState.credit ? 'text-blue-400' : 'text-carbon-500'}>
+                    {isLoggedIn ? `信用 ${user?.creditScore ?? 0} ${(user?.creditScore ?? 0) >= 600 ? '✓ 达标' : '<600 未达标'}` : '登录后查信用分'}
+                  </span>
+                </div>
+                <div className="flex items-center gap-2">
+                  {(user?.creditScore ?? 0) >= 600 ? (
+                    <CheckCircle size={15} className="text-gold-400" />
+                  ) : (
+                    <AlertCircle size={15} className="text-carbon-500" />
+                  )}
+                  <span className={(user?.creditScore ?? 0) >= 600 ? 'text-gold-400' : 'text-carbon-500'}>
+                    {(user?.creditScore ?? 0) >= 600 ? '✓ 先看后付已开通' : '先看后付未开通'}
+                  </span>
+                </div>
+                <div className="flex items-center gap-2">
+                  <CheckCircle size={15} className="text-purple-400" />
+                  <span className="text-purple-400">
+                    权重 = 实名 {realNameVerified ? '1.00x' : '0'} + 信用 {(user?.creditScore ?? 0) >= 600 ? '0.20x' : '0'} + 加速
+                  </span>
+                </div>
+              </div>
+            </div>
+
             <div className="grid grid-cols-1 md:grid-cols-4 gap-5 mb-6">
               <div className="bg-carbon-800/40 rounded-xl p-4">
                 <div className="text-xs text-carbon-500 mb-1">排队ID</div>
@@ -260,19 +322,19 @@ export default function Home() {
             </div>
             <div className="grid grid-cols-3 gap-4">
               {[
-                { key: 'member' as const, icon: Crown, name: '会员加速', desc: 'VIP会员专享', value: 0.3 },
-                { key: 'credit' as const, icon: Shield, name: '信用加速', desc: `芝麻信用 ${user?.creditScore || 600}+`, value: 0.2 },
-                { key: 'invite' as const, icon: Users, name: '邀请加速', desc: '好友助力完成', value: 0.15 },
+                { key: 'member' as const, icon: Crown, name: '会员加速', desc: 'VIP会员专享', value: 0.30, eligible: isLoggedIn },
+                { key: 'credit' as const, icon: Shield, name: '信用加速', desc: isLoggedIn ? `芝麻信用 ${user?.creditScore ?? 0} ${(user?.creditScore ?? 0) >= 600 ? '✓ 达标' : '未达标'}` : '登录后查看信用分', value: 0.20, eligible: creditBoostEligible },
+                { key: 'invite' as const, icon: Users, name: '邀请加速', desc: '好友助力完成', value: 0.15, eligible: true },
               ].map((opt) => {
                 const Icon = opt.icon
                 const used = boostState[opt.key]
                 return (
                   <button
                     key={opt.key}
-                    onClick={() => applyBoost(opt.key, opt.value)}
-                    disabled={used}
-                    className={`glass-card p-4 text-left transition-all ${
-                      used ? 'border-gold-500/50 shadow-glow-gold' : 'hover:-translate-y-1 hover:shadow-glow-gold'
+                    onClick={() => applyBoost(opt.key)}
+                    disabled={used || !opt.eligible}
+                    className={`glass-card p-4 text-left transition-all disabled:opacity-50 ${
+                      used ? 'border-gold-500/50 shadow-glow-gold' : opt.eligible ? 'hover:-translate-y-1 hover:shadow-glow-gold' : ''
                     }`}
                   >
                     <div className="flex items-start gap-3">
@@ -557,9 +619,42 @@ export default function Home() {
                       <div className="h-1.5 bg-carbon-700 rounded-full mb-2 overflow-hidden">
                         <div className="h-full bg-gradient-gold rounded-full" style={{ width: '66%' }} />
                       </div>
-                      <div className="flex justify-between text-[11px] mb-4">
+                      <div className="flex justify-between text-[11px] mb-3">
                         <span className="text-carbon-400">已售 66%</span>
                         <span className="text-gold-400 font-medium">剩余席位紧张</span>
+                      </div>
+
+                      <div className="grid grid-cols-2 gap-1.5 mb-3">
+                        <Link
+                          to="/admin"
+                          state={{ defaultTab: 'tickets' }}
+                          className="text-[10px] px-2 py-1.5 rounded-lg bg-gold-500/10 text-gold-400 hover:bg-gold-500/20 transition inline-flex items-center justify-center gap-1 border border-gold-500/20"
+                        >
+                          <Shield size={11} />
+                          票源保真
+                        </Link>
+                        <Link
+                          to="/orders"
+                          className="text-[10px] px-2 py-1.5 rounded-lg bg-blue-500/10 text-blue-400 hover:bg-blue-500/20 transition inline-flex items-center justify-center gap-1 border border-blue-500/20"
+                        >
+                          <QrCode size={11} />
+                          防伪码存证
+                        </Link>
+                        <Link
+                          to="/orders"
+                          className="text-[10px] px-2 py-1.5 rounded-lg bg-green-500/10 text-green-400 hover:bg-green-500/20 transition inline-flex items-center justify-center gap-1 border border-green-500/20"
+                        >
+                          <FileCheck size={11} />
+                          闸机核销
+                        </Link>
+                        <Link
+                          to="/orders"
+                          state={{ defaultTab: 'refund' }}
+                          className="text-[10px] px-2 py-1.5 rounded-lg bg-purple-500/10 text-purple-400 hover:bg-purple-500/20 transition inline-flex items-center justify-center gap-1 border border-purple-500/20"
+                        >
+                          <RefreshCw size={11} />
+                          退票风控
+                        </Link>
                       </div>
 
                       <div className="mt-auto flex gap-2">
