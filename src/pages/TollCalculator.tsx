@@ -41,8 +41,8 @@ const endIcon = L.divIcon({
 
 export default function TollCalculator() {
   const { tollStations, calculateToll, calculatedRoutes, holidayInfo, etcCard } = useStore();
-  const [startStation, setStartStation] = useState('');
-  const [endStation, setEndStation] = useState('');
+  const [startStation, setStartStation] = useState('s001');
+  const [endStation, setEndStation] = useState('s004');
   const [vehicleType, setVehicleType] = useState(1);
   const [travelDate, setTravelDate] = useState(dayjs().format('YYYY-MM-DD'));
   const [showStartDropdown, setShowStartDropdown] = useState(false);

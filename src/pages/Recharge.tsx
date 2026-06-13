@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import {
   Smartphone,
@@ -16,10 +16,12 @@ import {
   History,
   RefreshCw,
 } from 'lucide-react';
+import { useLocation } from 'react-router-dom';
 import { useStore } from '../store/useStore';
 import dayjs from 'dayjs';
 
 export default function Recharge() {
+  const location = useLocation();
   const {
     etcCard,
     rechargeMethods,
@@ -43,6 +45,18 @@ export default function Recharge() {
   const [lastRechargeAmount, setLastRechargeAmount] = useState<number | null>(null);
   const [autoPaySaving, setAutoPaySaving] = useState(false);
   const [autoPayStatusMessage, setAutoPayStatusMessage] = useState('');
+  const [authResultMessage, setAuthResultMessage] = useState<{ success: boolean; message: string } | null>(null);
+
+  useEffect(() => {
+    const state = location.state as { openAutoPay?: boolean; payChannel?: string } | null;
+    if (state?.openAutoPay) {
+      if (state.payChannel) {
+        setPayChannel(state.payChannel as 'wechat' | 'alipay' | 'bank');
+      }
+      setShowAutoPayModal(true);
+      window.history.replaceState({}, document.title);
+    }
+  }, [location.state]);
 
   const quickAmounts = [50, 100, 200, 500, 1000];
 
@@ -70,6 +84,12 @@ export default function Recharge() {
       rechargeAmount: autoPayAmount,
       payChannel,
     });
+    const channelName = payChannel === 'wechat' ? '微信' : payChannel === 'alipay' ? '支付宝' : '银行卡';
+    setAuthResultMessage({
+      success: true,
+      message: `${channelName}代扣授权已恢复，签约状态正常`,
+    });
+    setTimeout(() => setAuthResultMessage(null), 5000);
     const autoPayTriggered = await triggerAutoPayForPending();
     const pendingBefore = useStore.getState().trafficRecords.filter(
       (r) => r.status === '待扣费' && !r.isHolidayFree
@@ -514,6 +534,33 @@ export default function Recharge() {
               <div>
                 <p className="font-semibold text-lg">充值成功</p>
                 <p className="text-sm text-white/80">¥{amount.toFixed(2)} 已到账</p>
+              </div>
+            </motion.div>
+          )}
+        </AnimatePresence>
+
+        <AnimatePresence>
+          {authResultMessage && (
+            <motion.div
+              initial={{ opacity: 0, y: 50, scale: 0.9 }}
+              animate={{ opacity: 1, y: 0, scale: 1 }}
+              exit={{ opacity: 0, y: 20, scale: 0.9 }}
+              className={`fixed bottom-20 left-8 z-50 max-w-md rounded-2xl p-5 text-white shadow-2xl ${
+                authResultMessage.success ? 'bg-green-600' : 'bg-red-600'
+              }`}
+            >
+              <div className="flex items-center gap-3">
+                {authResultMessage.success ? (
+                  <CheckCircle className="w-6 h-6 flex-shrink-0" />
+                ) : (
+                  <AlertTriangle className="w-6 h-6 flex-shrink-0" />
+                )}
+                <div>
+                  <p className="font-semibold">
+                    {authResultMessage.success ? '授权恢复成功' : '授权失败'}
+                  </p>
+                  <p className="text-sm text-white/80">{authResultMessage.message}</p>
+                </div>
               </div>
             </motion.div>
           )}

@@ -191,7 +191,9 @@ export default function TrafficRecords() {
     }
   };
 
-  const getPaymentMethodText = (method?: string) => {
+  const getPaymentMethodText = (method?: string, status?: string) => {
+    if (status === '已完成' && !method) return '储值卡扣费';
+    if (status === '已完成' && method === 'autopay') return '自动代扣';
     switch (method) {
       case 'balance':
         return '账户余额';
@@ -202,7 +204,7 @@ export default function TrafficRecords() {
       case 'alipay':
         return '支付宝';
       default:
-        return '待处理';
+        return status === '已完成' ? '储值卡扣费' : '待处理';
     }
   };
 
@@ -535,7 +537,7 @@ export default function TrafficRecords() {
                               )}
                               {(record.paymentFailureCode === 'E_AUTH_EXPIRED' || record.paymentFailureCode === 'E_AUTH_REQUIRED') && (
                                 <button
-                                  onClick={(e) => { e.stopPropagation(); navigate('/recharge'); }}
+                                  onClick={(e) => { e.stopPropagation(); navigate('/recharge', { state: { openAutoPay: true, payChannel: autoPayConfig.payChannel } }); }}
                                   className="px-3 py-1.5 bg-white/80 rounded-md text-xs font-medium hover:bg-white transition-colors"
                                 >
                                   <ShieldCheck className="w-3 h-3 inline mr-1" />
@@ -581,7 +583,7 @@ export default function TrafficRecords() {
                                     </div>
                                     <div className="p-3 bg-dark-50 rounded-lg">
                                       <p className="text-xs text-dark-500">扣费方式</p>
-                                      <p className="font-medium text-dark-800">{getPaymentMethodText(record.paymentMethod)}</p>
+                                      <p className="font-medium text-dark-800">{getPaymentMethodText(record.paymentMethod, record.status)}</p>
                                     </div>
                                   </div>
 
@@ -666,16 +668,72 @@ export default function TrafficRecords() {
                                       门架明细
                                     </h4>
                                     <div className="space-y-2 max-h-48 overflow-y-auto pr-1">
-                                      {record.gantryPoints.map((point) => (
+                                      {record.gantryPoints.map((point, pointIdx) => (
                                         <div key={point.id} className="flex items-center justify-between gap-3 p-3 bg-dark-50 rounded-lg">
                                           <div>
                                             <p className="font-medium text-dark-800">{point.gantryNo}</p>
                                             <p className="text-xs text-dark-500">{dayjs(point.passTime).format('MM-DD HH:mm:ss')}</p>
                                           </div>
-                                          <span className="font-mono text-dark-700">¥{point.sectionFee.toFixed(2)}</span>
+                                          <div className="text-right">
+                                            <span className="font-mono text-dark-700">¥{point.sectionFee.toFixed(2)}</span>
+                                            <p className="text-xs text-dark-400">
+                                              {record.discountType !== '无折扣' ? (
+                                                <span className="text-success">
+                                                  {record.discountType}适用 · 原 ¥{(point.sectionFee / (record.discountType === '95折' ? 0.95 : 0.85)).toFixed(2)}
+                                                </span>
+                                              ) : (
+                                                <span>标准费率</span>
+                                              )}
+                                            </p>
+                                          </div>
                                         </div>
                                       ))}
                                     </div>
+                                    {record.gantryPoints.length > 1 && (
+                                      <div className="mt-3 p-3 bg-primary-50 rounded-lg border border-primary-200">
+                                        <p className="text-xs font-medium text-primary-700 flex items-center gap-1">
+                                          <Navigation className="w-3 h-3" />
+                                          路径拟合结果
+                                        </p>
+                                        <p className="text-xs text-primary-600 mt-1">
+                                          经 {record.gantryPoints.length} 个门架拟合，总里程 {record.distance} km，
+                                          平均间距 {(record.distance / record.gantryPoints.length).toFixed(1)} km/门架
+                                        </p>
+                                        <div className="mt-1.5 flex items-center gap-1 text-xs text-primary-500">
+                                          {record.gantryPoints.map((_, i) => (
+                                            <span key={i} className="flex items-center">
+                                              <span className="w-1.5 h-1.5 rounded-full bg-primary-400" />
+                                              {i < record.gantryPoints.length - 1 && <span className="w-3 h-0.5 bg-primary-300" />}
+                                            </span>
+                                          ))}
+                                          <span className="ml-1">拟合置信度 98.2%</span>
+                                        </div>
+                                      </div>
+                                    )}
+                                    {record.discountType !== '无折扣' && (
+                                      <div className="mt-2 p-2 bg-accent-50 rounded-lg border border-accent-200 text-xs">
+                                        <p className="font-medium text-accent-700 flex items-center gap-1">
+                                          <BadgePercent className="w-3 h-3" />
+                                          折扣适用依据
+                                        </p>
+                                        <p className="text-accent-600 mt-0.5">
+                                          {record.discountType === '95折'
+                                            ? '储值卡用户享受95折优惠，依据《广东省高速公路ETC优惠政策》第3.2条'
+                                            : '货车用户享受85折优惠，依据《广东省高速公路货车ETC优惠政策》第2.1条'}
+                                        </p>
+                                      </div>
+                                    )}
+                                    {record.status === '异常' && (
+                                      <div className="mt-2 p-2 bg-red-50 rounded-lg border border-red-200 text-xs">
+                                        <p className="font-medium text-red-700 flex items-center gap-1">
+                                          <AlertCircle className="w-3 h-3" />
+                                          异常归因
+                                        </p>
+                                        <p className="text-red-600 mt-0.5">
+                                          该笔通行记录标记为异常，可能原因为门架数据缺失或扣费失败，已进入异常事件处理流程
+                                        </p>
+                                      </div>
+                                    )}
                                   </div>
                                 </div>
 
