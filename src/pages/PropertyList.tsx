@@ -68,6 +68,13 @@ interface FilterOptions {
   bedroomOptions: { label: string; value: string }[];
 }
 
+const statusColors: Record<string, string> = {
+  '在售': 'bg-green-500',
+  '待售': 'bg-yellow-500',
+  '售罄': 'bg-gray-400',
+  '尾盘': 'bg-orange-500',
+};
+
 export default function PropertyList() {
   const [searchParams, setSearchParams] = useSearchParams();
   const [properties, setProperties] = useState<Property[]>([]);
