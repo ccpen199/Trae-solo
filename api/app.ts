@@ -22,7 +22,29 @@ dotenv.config()
 
 const app: express.Application = express()
 
-app.use(cors())
+const FRONTEND_ORIGINS = [
+  'http://localhost:5173',
+  'http://localhost:5174',
+  'http://localhost:5175',
+  'http://127.0.0.1:5173',
+  'http://127.0.0.1:5174',
+  'http://127.0.0.1:5175',
+]
+
+app.use(
+  cors({
+    origin: (origin, callback) => {
+      if (!origin || FRONTEND_ORIGINS.includes(origin) || origin.includes('localhost')) {
+        callback(null, true)
+      } else {
+        callback(null, false)
+      }
+    },
+    credentials: true,
+    methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS', 'PATCH'],
+    allowedHeaders: ['Content-Type', 'Authorization', 'X-Requested-With'],
+  }),
+)
 app.use(express.json({ limit: '10mb' }))
 app.use(express.urlencoded({ extended: true, limit: '10mb' }))
 

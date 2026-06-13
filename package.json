@@ -4,13 +4,18 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
-    "client:dev": "vite",
-    "build": "tsc -b && vite build",
-    "lint": "eslint .",
+    "dev": "concurrently \"npm run dev:client\" \"npm run dev:server\"",
+    "dev:client": "vite",
+    "dev:server": "nodemon",
+    "start": "node dist/server/server.js",
+    "build": "npm run build:client && npm run build:server",
+    "build:client": "vite build",
+    "build:server": "tsc -p tsconfig.json",
     "preview": "vite preview",
     "check": "tsc --noEmit",
-    "server:dev": "nodemon",
-    "dev": "concurrently \"npm run client:dev\" \"npm run server:dev\""
+    "lint": "eslint .",
+    "server:build": "tsc -p tsconfig.json",
+    "server:start": "tsx api/server.ts"
   },
   "dependencies": {
     "clsx": "^2.1.1",
