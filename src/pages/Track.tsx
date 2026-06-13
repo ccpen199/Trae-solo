@@ -28,12 +28,14 @@ export default function Track() {
 
   useEffect(() => {
     const q = searchParams.get('q')
+    const t = searchParams.get('type')
     if (q && q.trim()) {
+      const searchType = t === 'phone' ? 'phone' : 'waybill'
       setSearchValue(q.trim())
-      setActiveTab(1)
+      setActiveTab(searchType === 'phone' ? 0 : 1)
       setHasSearched(true)
       setQueryError(null)
-      fetchTracking('waybill', q.trim())
+      fetchTracking(searchType, q.trim())
     }
   }, [])
 

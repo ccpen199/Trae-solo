@@ -82,6 +82,7 @@ interface AppState {
   currentUser: User | null
   orders: OrderItem[]
   trackingResult: TrackingResult | null
+  trackingResults: TrackingResult[]
   addressBook: AddressBookItem[]
   coupons: Coupon[]
   networkPoints: NetworkPoint[]
@@ -118,6 +119,7 @@ export const useAppStore = create<AppState>((set, get) => ({
   },
   orders: [],
   trackingResult: null,
+  trackingResults: [],
   addressBook: [],
   coupons: [],
   networkPoints: [],
@@ -157,40 +159,60 @@ export const useAppStore = create<AppState>((set, get) => ({
       const res = await fetch(`/api/tracking?type=${type}&value=${encodeURIComponent(value)}`)
       const json = await res.json()
       if (json.success && json.data?.list?.length > 0) {
-        const t = json.data.list[0]
-        let parsedNodes: TrackingNode[] = []
-        try {
-          const rawNodes = typeof t.nodes === 'string' ? JSON.parse(t.nodes) : t.nodes
-          parsedNodes = (Array.isArray(rawNodes) ? rawNodes : []).map((n: any) => ({
-            time: n.time,
-            location: n.location,
-            status: STATUS_MAP[n.status] || n.status,
-            description: n.description,
-          }))
-        } catch { parsedNodes = [] }
-        let curPos = { lat: 31.23, lng: 121.47 }
-        try {
-          const raw = t.current_position || t.current_location
-          curPos = typeof raw === 'string' ? JSON.parse(raw) : (raw && typeof raw === 'object' ? raw : { lat: 31.23, lng: 121.47 })
-        } catch { /* fallback */ }
-        const senderAddr = t.sender_address || ''
-        const receiverAddr = t.receiver_address || ''
-        const result: TrackingResult = {
-          waybillNo: t.waybill_no,
-          status: t.status as any,
-          sender: { name: (t.sender_name || '寄件人').slice(0, 1) + '**', city: senderAddr.slice(0, 2) || '上海' },
-          receiver: { name: (t.receiver_name || '收件人').slice(0, 1) + '**', city: receiverAddr.slice(0, 2) || '北京' },
-          nodes: parsedNodes,
-          currentPosition: curPos,
-          estimatedDelivery: t.estimated_delivery || '2026-06-15',
-          exception: t.exception_message ? { type: t.exception_type || '异常', message: t.exception_message } : (t.exception_type ? { type: t.exception_type, message: '快件异常，请联系客服' } : undefined),
-        }
-        set({ trackingResult: result, loading: false })
+        const results: TrackingResult[] = json.data.list.map((t: any) => {
+          let parsedNodes: TrackingNode[] = []
+          try {
+            const rawNodes = typeof t.nodes === 'string' ? JSON.parse(t.nodes) : t.nodes
+            parsedNodes = (Array.isArray(rawNodes) ? rawNodes : []).map((n: any) => ({
+              time: n.time,
+              location: n.location,
+              status: STATUS_MAP[n.status] || n.status,
+              description: n.description,
+            }))
+          } catch { parsedNodes = [] }
+          let curPos = { lat: 31.23, lng: 121.47 }
+          try {
+            const raw = t.current_position || t.current_location
+            curPos = typeof raw === 'string' ? JSON.parse(raw) : (raw && typeof raw === 'object' ? raw : { lat: 31.23, lng: 121.47 })
+          } catch { /* fallback */ }
+          const senderAddr = t.sender_address || ''
+          const receiverAddr = t.receiver_address || ''
+          const st = t.status as string
+          const hasException = st === 'exception' || t.exception_type || t.exception_message
+          let exceptionData: { type: string; message: string } | undefined
+          if (hasException) {
+            exceptionData = {
+              type: t.exception_type || (st === 'exception' ? '滞留预警' : '异常'),
+              message: t.exception_message || '快件异常，已触发人工介入流程',
+            }
+          }
+          if (parsedNodes.length === 0) {
+            parsedNodes = [
+              { time: t.created_at?.replace('T', ' ').slice(0, 16) || '2026-06-12 08:30', location: senderAddr.slice(0, 6) || '上海', status: '已揽收', description: '快件已揽收' },
+            ]
+            if (st === 'in_transit') parsedNodes.push({ time: '', location: '运输中', status: '运输中', description: '快件正在运输途中' })
+            if (st === 'out_for_delivery') parsedNodes.push({ time: '', location: receiverAddr.slice(0, 6) || '目的地', status: '派送中', description: '快递员正在派送' })
+            if (st === 'delivered') parsedNodes.push({ time: '', location: receiverAddr.slice(0, 6) || '目的地', status: '已签收', description: '快件已签收' })
+            if (st === 'pending') parsedNodes.push({ time: '', location: '末端网点', status: '待取件', description: '快件到达末端网点，请及时取件' })
+            if (hasException) parsedNodes.push({ time: '', location: '未知', status: '异常', description: exceptionData?.message || '快件异常' })
+          }
+          return {
+            waybillNo: t.waybill_no,
+            status: st as any,
+            sender: { name: (t.sender_name || '寄件人').slice(0, 1) + '**', city: senderAddr.slice(0, 2) || '上海' },
+            receiver: { name: (t.receiver_name || '收件人').slice(0, 1) + '**', city: receiverAddr.slice(0, 2) || '北京' },
+            nodes: parsedNodes,
+            currentPosition: curPos,
+            estimatedDelivery: t.estimated_delivery || '2026-06-16',
+            exception: exceptionData,
+          }
+        })
+        set({ trackingResult: results[0], trackingResults: results, loading: false })
         return
       }
-      set({ trackingResult: null, loading: false })
+      set({ trackingResult: null, trackingResults: [], loading: false })
     } catch {
-      set({ trackingResult: null, loading: false })
+      set({ trackingResult: null, trackingResults: [], loading: false })
     }
   },
 

@@ -42,10 +42,24 @@ export default function Profile() {
   const [showForm, setShowForm] = useState(false)
   const [form, setForm] = useState(emptyAddr)
 
+  const [portraitData, setPortraitData] = useState<{ totalOrders: number; topCategory: string; topRegion: string } | null>(null)
+
   useEffect(() => {
     fetchOrders()
     fetchAddressBook()
     fetchCoupons()
+    fetch('/api/profiling/statistics/overview').then(r => r.json()).then(json => {
+      if (json.success && json.data) {
+        const d = json.data
+        const cats = d.top_categories || []
+        const regs = d.top_regions || []
+        setPortraitData({
+          totalOrders: d.total_orders || 0,
+          topCategory: cats.length > 0 ? cats[0].category : '服装',
+          topRegion: regs.length > 0 ? regs[0].region : '上海',
+        })
+      }
+    }).catch(() => {})
   }, [fetchOrders, fetchAddressBook, fetchCoupons])
 
   const handleAdd = async () => {
@@ -59,9 +73,9 @@ export default function Profile() {
   const used = coupons.filter((c) => c.used)
   const expired = coupons.filter((c) => !c.used && new Date(c.expiresAt) <= now)
 
-  const totalOrders = orders.length
-  const activeCategory = '服装'
-  const activeRegion = '上海'
+  const totalOrders = portraitData?.totalOrders || orders.length
+  const activeCategory = portraitData?.topCategory || '服装'
+  const activeRegion = portraitData?.topRegion || '上海'
 
   return (
     <div className="space-y-4 pb-4">
