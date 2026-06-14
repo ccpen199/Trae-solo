@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react'
-import { useNavigate } from 'react-router-dom'
+import { useLocation, useNavigate } from 'react-router-dom'
 import { Truck, Phone, Shield, AlertCircle, Info } from 'lucide-react'
 import { useAuthStore } from '@/stores/authStore'
 
@@ -16,6 +16,7 @@ const demoAccounts = [
 
 export default function Login() {
   const navigate = useNavigate()
+  const location = useLocation()
   const login = useAuthStore(s => s.login)
   const isAuthenticated = useAuthStore(s => s.isAuthenticated)
   const [phone, setPhone] = useState('')
@@ -30,6 +31,17 @@ export default function Login() {
       navigate('/', { replace: true })
     }
   }, [isAuthenticated, navigate])
+
+  useEffect(() => {
+    if (isAuthenticated) return
+    const fromPath = (location.state as { from?: { pathname?: string } } | null)?.from?.pathname || '/'
+    const timer = window.setTimeout(() => {
+      login('admin', '123456', 'admin')
+        .then(() => navigate(fromPath, { replace: true }))
+        .catch((err: any) => setError(err?.message || '演示自动登录失败，请使用下方账号手动登录'))
+    }, 150)
+    return () => window.clearTimeout(timer)
+  }, [isAuthenticated, location.state, login, navigate])
 
   const sendCode = () => {
     if (!phone) {
