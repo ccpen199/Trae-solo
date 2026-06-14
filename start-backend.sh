@@ -1,71 +1,121 @@
-#!/usr/bin/env bash
+#!/bin/bash
 set -e
 
-PROJECT_DIR="$(cd "$(dirname "$0")" && pwd)"
-cd "$PROJECT_DIR"
-if [ -f "$PROJECT_DIR/.env" ]; then
-  set -a
-  # shellcheck disable=SC1091
-  source "$PROJECT_DIR/.env"
-  set +a
-fi
-FRONTEND_PORT="${FRONTEND_PORT:-49059}"
-BACKEND_PORT="${BACKEND_PORT:-59059}"
-NODE22_BIN="/Users/chen/.nvm/versions/node/v22.22.0/bin"
-if [ -x "$NODE22_BIN/node" ]; then
-  export PATH="$NODE22_BIN:$PATH"
-  NODE_BIN="$NODE22_BIN/node"
-else
-  NODE_BIN="$(command -v node)"
-fi
+ROOT="$(cd "$(dirname "$0")" && pwd)"
+export PATH="/Users/chen/.nvm/versions/node/v22.22.0/bin:/opt/homebrew/bin:/usr/local/bin:/usr/bin:/bin:$PATH"
+set -a
+[ -f "$ROOT/.env" ] && . "$ROOT/.env"
+set +a
 
-echo "=== Starting backend on port $BACKEND_PORT ==="
+ENV_FILE="$ROOT/.env"
+BASE_PORT="${BACKEND_PORT:-58822}"
+PORT="$BASE_PORT"
 
-get_pid_cwd() {
-  local pid="$1"
-  lsof -p "$pid" -d cwd -a 2>/dev/null | awk 'NR==2 {print $NF}'
+set_env_value() {
+  local key="$1"
+  local value="$2"
+  local tmp_file
+
+  touch "$ENV_FILE"
+  tmp_file="$(mktemp)"
+  awk -v key="$key" -v value="$value" '
+    BEGIN { updated = 0 }
+    $0 ~ "^" key "=" {
+      print key "=" value
+      updated = 1
+      next
+    }
+    { print }
+    END {
+      if (!updated) print key "=" value
+    }
+  ' "$ENV_FILE" > "$tmp_file"
+  mv "$tmp_file" "$ENV_FILE"
+  export "$key=$value"
 }
 
-# Stop only this project's existing listener on the backend port.
-pid=$(lsof -nP -iTCP:$BACKEND_PORT -sTCP:LISTEN -t 2>/dev/null | head -n1)
-if [ -n "$pid" ]; then
-  cwd=$(get_pid_cwd "$pid")
-  cmd=$(ps -o command= -p "$pid" 2>/dev/null)
-  case "$cwd" in
-    "$PROJECT_DIR"*) echo "Stopping existing backend PID $pid"; kill "$pid" 2>/dev/null || true; sleep 2 ;;
-    *) echo "Skip kill: cwd=$cwd cmd=$cmd"; exit 1 ;;
-  esac
+health_url_for_port() {
+  echo "http://127.0.0.1:$1/api/health"
+}
+
+existing_pid_for_port() {
+  lsof -nP -iTCP:"$1" -sTCP:LISTEN -t 2>/dev/null | head -n 1
+}
+
+pid_cwd() {
+  lsof -a -p "$1" -d cwd -Fn 2>/dev/null | sed -n 's/^n//p' | head -n 1
+}
+
+wait_for_port_release() {
+  local port="$1"
+  local attempt
+  for attempt in $(seq 1 20); do
+    if [ -z "$(existing_pid_for_port "$port")" ]; then
+      return 0
+    fi
+    sleep 0.25
+  done
+  return 1
+}
+
+choose_backend_port() {
+  local offset
+  local candidate
+  local pid
+  local cwd
+  local health_url
+
+  for offset in $(seq 0 6); do
+    candidate=$((BASE_PORT + offset * 1000))
+    if [ "$candidate" -gt 65535 ]; then
+      continue
+    fi
+
+    pid="$(existing_pid_for_port "$candidate")"
+    health_url="$(health_url_for_port "$candidate")"
+    if [ -z "$pid" ]; then
+      PORT="$candidate"
+      return 0
+    fi
+
+    cwd="$(pid_cwd "$pid")"
+    if [ "$cwd" = "$ROOT/backend" ]; then
+      if curl -fsS --max-time 2 "$health_url" >/dev/null 2>&1; then
+        PORT="$candidate"
+        if [ "$PORT" != "$BASE_PORT" ]; then
+          set_env_value BACKEND_PORT "$PORT"
+          set_env_value API_BASE_URL "http://127.0.0.1:${PORT}"
+          echo "Using backend backup port ${PORT}; .env updated"
+        fi
+        echo "$pid" > "$ROOT/backend.pid"
+        echo "Backend already running on http://127.0.0.1:${PORT} (pid ${pid})"
+        exit 0
+      fi
+
+      echo "Backend pid ${pid} is unhealthy on ${health_url}; restarting this project process" >&2
+      kill "$pid" 2>/dev/null || true
+      if wait_for_port_release "$candidate"; then
+        PORT="$candidate"
+        return 0
+      fi
+      echo "Port ${candidate} did not release after stopping pid ${pid}" >&2
+      continue
+    fi
+
+    echo "Backend port ${candidate} is occupied by pid ${pid} outside this project: ${cwd:-unknown cwd}; trying backup slot" >&2
+  done
+
+  echo "No available backend port found from ${BASE_PORT} backup slots" >&2
+  return 1
+}
+
+choose_backend_port
+if [ "$PORT" != "$BASE_PORT" ]; then
+  set_env_value BACKEND_PORT "$PORT"
+  set_env_value API_BASE_URL "http://127.0.0.1:${PORT}"
+  echo "Using backend backup port ${PORT}; .env updated"
 fi
 
-export FRONTEND_PORT
-export BACKEND_PORT
-export NODE_ENV=development
-
-if command -v screen >/dev/null 2>&1; then
-  screen -S may-89059-backend -X quit >/dev/null 2>&1 || true
-  screen -dmS may-89059-backend bash -lc 'cd "$1"; exec env FRONTEND_PORT="$2" BACKEND_PORT="$3" NODE_ENV=development "$4" ./node_modules/tsx/dist/cli.mjs api/server.ts > backend.log 2>&1' _ "$PROJECT_DIR" "$FRONTEND_PORT" "$BACKEND_PORT" "$NODE_BIN"
-else
-  nohup "$NODE_BIN" ./node_modules/tsx/dist/cli.mjs api/server.ts < /dev/null > backend.log 2>&1 &
-fi
-echo "Backend launch requested"
-
-for _ in {1..30}; do
-  if lsof -nP -iTCP:"$BACKEND_PORT" -sTCP:LISTEN -t >/dev/null 2>&1; then
-    break
-  fi
-  sleep 1
-done
-echo ""
-echo "=== Backend log (last 30 lines) ==="
-tail -30 backend.log
-echo ""
-echo "=== Port check for $BACKEND_PORT ==="
-lsof -nP -iTCP:$BACKEND_PORT -sTCP:LISTEN
-PID=$(lsof -nP -iTCP:"$BACKEND_PORT" -sTCP:LISTEN -t 2>/dev/null | head -n1 || true)
-echo "$PID" > backend.pid
-echo ""
-echo "=== Backend health check ==="
-curl -sS --max-time 5 http://127.0.0.1:$BACKEND_PORT/api/health
-echo ""
-echo "=== Process status ==="
-ps -p "$PID" -o pid=,ppid=,stat=,command= 2>/dev/null || echo "Process not running"
+cd "$ROOT/backend"
+echo "$$" > "$ROOT/backend.pid"
+exec "${NODE_BIN:-node}" src/index.js
