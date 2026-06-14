@@ -1,109 +1,122 @@
 import React, { useState } from 'react';
-import { Form, Input, Button, Card, Tabs } from 'antd';
-import { UserOutlined, LockOutlined } from '@ant-design/icons';
-import { authAPI } from '../services/api';
+import { Form, Input, Button, Card, Tabs, message } from 'antd';
+import { UserOutlined, LockOutlined, SafetyOutlined } from '@ant-design/icons';
+import { useNavigate } from 'react-router-dom';
+import { login, adminLogin } from '../api/auth';
 
-function Login({ onLogin }) {
-  const [activeTab, setActiveTab] = useState('login');
+const DEMO_USER = { phone: '13800000000', password: '123456' };
+const DEMO_ADMIN = { username: 'admin', password: 'admin123' };
+
+const Login = () => {
+  const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
-  const [notice, setNotice] = useState(null);
+  const [activeTab, setActiveTab] = useState('user');
 
-  const handleLogin = async (values) => {
+  const handleUserLogin = async (values) => {
     setLoading(true);
     try {
-      const res = await authAPI.login(values);
-      localStorage.setItem('token', res.data.token);
-      localStorage.setItem('user', JSON.stringify(res.data.user));
-      onLogin();
+      const res = await login(values);
+      localStorage.setItem('tft_token', res.token);
+      localStorage.setItem('tft_user', JSON.stringify(res.user));
+      message.success('登录成功');
+      navigate('/home');
     } catch (err) {
-      setNotice({ type: 'error', text: err.response?.data?.error || '登录失败' });
+      console.error(err);
     } finally {
       setLoading(false);
     }
   };
 
-  const handleRegister = async (values) => {
-    if (values.password !== values.confirmPassword) {
-      setNotice({ type: 'error', text: '两次密码不一致' });
-      return;
-    }
+  const handleAdminLogin = async (values) => {
     setLoading(true);
     try {
-      const res = await authAPI.register(values);
-      localStorage.setItem('token', res.data.token);
-      localStorage.setItem('user', JSON.stringify(res.data.user));
-      onLogin();
+      const res = await adminLogin(values);
+      localStorage.setItem('tft_token', res.token);
+      localStorage.setItem('tft_admin_token', res.token);
+      localStorage.setItem('tft_admin', JSON.stringify(res.admin));
+      message.success('管理员登录成功');
+      navigate('/admin/dashboard');
     } catch (err) {
-      setNotice({ type: 'error', text: err.response?.data?.error || '注册失败' });
+      console.error(err);
     } finally {
       setLoading(false);
     }
   };
 
-  const loginItems = [
-    {
-      key: 'login',
-      label: '登录',
-      children: (
-        <Form onFinish={handleLogin} layout="vertical">
-          <Form.Item name="username" rules={[{ required: true, message: '请输入用户名' }]}>
-            <Input prefix={<UserOutlined />} placeholder="用户名" size="large" />
-          </Form.Item>
-          <Form.Item name="password" rules={[{ required: true, message: '请输入密码' }]}>
-            <Input.Password prefix={<LockOutlined />} placeholder="密码" size="large" />
-          </Form.Item>
-          <Form.Item>
-            <Button type="primary" htmlType="submit" size="large" block loading={loading}>
-              登录
-            </Button>
-          </Form.Item>
-          <div style={{ textAlign: 'center', color: '#999', fontSize: 12 }}>
-            <p>测试账号：</p>
-            <p>管理员：admin / 123456</p>
-            <p>企业用户：enterprise1 / 123456</p>
-            <p>个人用户：citizen1 / 123456</p>
-          </div>
-        </Form>
-      )
-    },
-    {
-      key: 'register',
-      label: '注册',
-      children: (
-        <Form onFinish={handleRegister} layout="vertical">
-          <Form.Item name="username" rules={[{ required: true, message: '请输入用户名' }]}>
-            <Input prefix={<UserOutlined />} placeholder="用户名" size="large" />
-          </Form.Item>
-          <Form.Item name="realName" rules={[{ required: true, message: '请输入真实姓名' }]}>
-            <Input placeholder="真实姓名" size="large" />
-          </Form.Item>
-          <Form.Item name="phone" rules={[{ required: true, message: '请输入手机号' }]}>
-            <Input placeholder="手机号" size="large" />
-          </Form.Item>
-          <Form.Item name="idCard" rules={[{ required: true, message: '请输入身份证号' }]}>
-            <Input placeholder="身份证号" size="large" />
-          </Form.Item>
-          <Form.Item name="userType" initialValue="citizen">
-            <select style={{ width: '100%', height: 40, padding: '0 12px', borderRadius: 6, border: '1px solid #d9d9d9' }}>
-              <option value="citizen">个人用户</option>
-              <option value="enterprise">企业用户</option>
-            </select>
-          </Form.Item>
-          <Form.Item name="password" rules={[{ required: true, message: '请输入密码' }]}>
-            <Input.Password prefix={<LockOutlined />} placeholder="密码" size="large" />
-          </Form.Item>
-          <Form.Item name="confirmPassword" rules={[{ required: true, message: '请确认密码' }]}>
-            <Input.Password prefix={<LockOutlined />} placeholder="确认密码" size="large" />
-          </Form.Item>
-          <Form.Item>
-            <Button type="primary" htmlType="submit" size="large" block loading={loading}>
-              注册
-            </Button>
-          </Form.Item>
-        </Form>
-      )
-    }
-  ];
+  const userForm = (
+    <Form
+      name="user_login"
+      onFinish={handleUserLogin}
+      initialValues={DEMO_USER}
+      autoComplete="off"
+      size="large"
+    >
+      <Form.Item
+        name="phone"
+        rules={[{ required: true, message: '请输入手机号' }, { pattern: /^1[3-9]\d{9}$/, message: '手机号格式不正确' }]}
+      >
+        <Input prefix={<UserOutlined />} placeholder="请输入手机号" />
+      </Form.Item>
+      <Form.Item
+        name="password"
+        rules={[{ required: true, message: '请输入密码' }]}
+      >
+        <Input.Password prefix={<LockOutlined />} placeholder="请输入密码" />
+      </Form.Item>
+      <Form.Item>
+        <Button type="primary" htmlType="submit" block loading={loading}>
+          用户登录
+        </Button>
+      </Form.Item>
+      <Form.Item>
+        <Button block onClick={() => handleUserLogin(DEMO_USER)} loading={loading}>
+          一键体验用户首页
+        </Button>
+      </Form.Item>
+      <div style={{ textAlign: 'center' }}>
+        还没有账号？<a onClick={() => navigate('/register')}>立即注册</a>
+      </div>
+      <div style={{ textAlign: 'center', color: '#999', fontSize: 12, marginTop: 8 }}>
+        默认用户账号：13800000000 / 123456
+      </div>
+    </Form>
+  );
+
+  const adminForm = (
+    <Form
+      name="admin_login"
+      onFinish={handleAdminLogin}
+      initialValues={DEMO_ADMIN}
+      autoComplete="off"
+      size="large"
+    >
+      <Form.Item
+        name="username"
+        rules={[{ required: true, message: '请输入用户名' }]}
+      >
+        <Input prefix={<SafetyOutlined />} placeholder="请输入管理员用户名" />
+      </Form.Item>
+      <Form.Item
+        name="password"
+        rules={[{ required: true, message: '请输入密码' }]}
+      >
+        <Input.Password prefix={<LockOutlined />} placeholder="请输入密码" />
+      </Form.Item>
+      <Form.Item>
+        <Button type="primary" htmlType="submit" block loading={loading}>
+          管理员登录
+        </Button>
+      </Form.Item>
+      <Form.Item>
+        <Button block onClick={() => handleAdminLogin(DEMO_ADMIN)} loading={loading}>
+          一键进入管理后台
+        </Button>
+      </Form.Item>
+      <div style={{ textAlign: 'center', color: '#999', fontSize: 12 }}>
+        默认管理员账号：admin / admin123
+      </div>
+    </Form>
+  );
 
   return (
     <div style={{ 
@@ -113,20 +126,25 @@ function Login({ onLogin }) {
       justifyContent: 'center',
       background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)'
     }}>
-      <Card style={{ width: 400, boxShadow: '0 4px 20px rgba(0,0,0,0.1)' }}>
-        <div style={{ textAlign: 'center', marginBottom: 24 }}>
-          <h1 style={{ marginBottom: 8 }}>浙江省一网通办平台</h1>
-          <p style={{ color: '#999' }}>让政务服务更便捷</p>
+      <Card style={{ width: 420, borderRadius: 16, boxShadow: '0 8px 32px rgba(0,0,0,0.1)' }}>
+        <div style={{ textAlign: 'center', marginBottom: 32 }}>
+          <div style={{ fontSize: 32, marginBottom: 8 }}>🚌</div>
+          <h1 style={{ fontSize: 24, margin: 0, color: '#1890ff' }}>天府通</h1>
+          <p style={{ color: '#999', margin: '8px 0 0' }}>成都市域一体化交通生活服务中台</p>
         </div>
-        {notice && (
-          <div style={{ color: notice.type === 'error' ? '#ff4d4f' : '#52c41a', textAlign: 'center', marginBottom: 12 }}>
-            {notice.text}
-          </div>
-        )}
-        <Tabs activeKey={activeTab} onChange={setActiveTab} items={loginItems} centered />
+        <Tabs
+          activeKey={activeTab}
+          onChange={setActiveTab}
+          centered
+          items={[
+            { key: 'user', label: '用户登录' },
+            { key: 'admin', label: '管理员登录' }
+          ]}
+        />
+        {activeTab === 'user' ? userForm : adminForm}
       </Card>
     </div>
   );
-}
+};
 
 export default Login;

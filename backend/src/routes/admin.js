@@ -1,253 +1,537 @@
 const express = require('express');
+const db = require('../db');
+const { authenticateAdmin } = require('../middleware/auth');
+
 const router = express.Router();
-const db = require('../database');
-const auth = require('../middleware/auth');
 
-router.use(auth);
+function logOperation(adminId, action, targetType, targetId, ip) {
+  db.prepare('INSERT INTO operation_logs (admin_id, action, target_type, target_id, ip_address) VALUES (?, ?, ?, ?, ?)')
+    .run(adminId, action, targetType, targetId, ip);
+}
 
-router.use((req, res, next) => {
-  if (req.userType !== 'admin') {
-    return res.status(403).json({ error: '无权限访问' });
-  }
-  next();
-});
-
-router.get('/overview', auth, (req, res) => {
-  const today = new Date().toISOString().split('T')[0];
+router.get('/dashboard', authenticateAdmin, (req, res) => {
+  const userCount = db.prepare('SELECT COUNT(*) as count FROM users').get().count;
+  const cardCount = db.prepare('SELECT COUNT(*) as count FROM tianfutong_cards').get().count;
+  const transactionCount = db.prepare('SELECT COUNT(*) as count FROM transactions WHERE created_at >= datetime("now", "-30 days")').get().count;
+  const totalAmount = db.prepare('SELECT COALESCE(SUM(amount), 0) as total FROM transactions WHERE transaction_type = "ride_complete" AND created_at >= datetime("now", "-30 days")').get().total;
   
-  const totalUsers = db.prepare('SELECT COUNT(*) as count FROM users').get().count;
-  const totalEnterprises = db.prepare('SELECT COUNT(*) as count FROM enterprises').get().count;
-  const totalPolicies = db.prepare('SELECT COUNT(*) as count FROM policies WHERE status = ?').get('published').count;
-  const totalReservations = db.prepare('SELECT COUNT(*) as count FROM reservations').get().count;
-  
-  const todayReservations = db.prepare(`
-    SELECT COUNT(*) as count FROM reservations 
-    WHERE reservation_date = ?
-  `).get(today).count;
-  
-  const todayApplications = db.prepare(`
-    SELECT COUNT(*) as count FROM policy_applications 
-    WHERE DATE(submitted_at) = ?
-  `).get(today).count;
-  
-  const pendingApplications = db.prepare(`
-    SELECT COUNT(*) as count FROM policy_applications 
-    WHERE status = 'submitted'
-  `).get().count;
-  
-  res.json({
-    statistics: {
-      totalUsers,
-      totalEnterprises,
-      totalPolicies,
-      totalReservations,
-      todayReservations,
-      todayApplications,
-      pendingApplications
-    }
-  });
-});
-
-router.get('/policy-effectiveness', auth, (req, res) => {
-  const policies = db.prepare(`
-    SELECT p.id, p.title, p.department, p.benefit_amount, p.benefit_type,
-           COUNT(pa.id) as application_count,
-           SUM(CASE WHEN pa.status = 'approved' THEN 1 ELSE 0 END) as approved_count,
-           SUM(CASE WHEN pa.status = 'paid' THEN 1 ELSE 0 END) as paid_count
-    FROM policies p
-    LEFT JOIN policy_applications pa ON p.id = pa.policy_id
-    GROUP BY p.id
-    ORDER BY application_count DESC
-    LIMIT 10
+  const regionStats = db.prepare(`
+    SELECT r.region_name, COUNT(c.id) as card_count
+    FROM regions r
+    LEFT JOIN tianfutong_cards c ON c.region = r.region_name
+    WHERE r.level = 2
+    GROUP BY r.id
+    ORDER BY card_count DESC
   `).all();
   
-  const totalBenefit = db.prepare(`
-    SELECT SUM(p.benefit_amount) as total, COUNT(*) as count
-    FROM policy_applications pa
-    JOIN policies p ON pa.policy_id = p.id
-    WHERE pa.status = 'paid'
-  `).get();
+  const dailyTransactions = db.prepare(`
+    SELECT DATE(created_at) as date, COUNT(*) as count, COALESCE(SUM(amount), 0) as amount
+    FROM transactions
+    WHERE created_at >= datetime("now", "-7 days")
+    GROUP BY DATE(created_at)
+    ORDER BY date
+  `).all();
   
-  res.json({
-    policies,
-    totalBenefitDisbursed: totalBenefit.total || 0,
-    totalPaidApplications: totalBenefit.count || 0
-  });
+  const transportStats = db.prepare(`
+    SELECT transport_type, COUNT(*) as count, COALESCE(SUM(amount), 0) as amount
+    FROM transactions
+    WHERE transaction_type = "ride_complete" AND created_at >= datetime("now", "-30 days")
+    GROUP BY transport_type
+  `).all();
+  
+  const flaggedTx = db.prepare('SELECT COUNT(*) as count FROM blocked_transactions WHERE resolved = 0').get().count;
+  const pendingRenewals = db.prepare('SELECT COUNT(*) as count FROM card_renewals WHERE review_status = "pending"').get().count;
+  
+  res.success({
+    user_count: userCount,
+    card_count: cardCount,
+    transaction_count_30d: transactionCount,
+    total_amount_30d: totalAmount,
+    region_stats: regionStats,
+    daily_transactions: dailyTransactions,
+    transport_stats: transportStats,
+    flagged_transactions: flaggedTx,
+    pending_renewals: pendingRenewals
+  }, '获取成功');
 });
 
-router.get('/applications', auth, (req, res) => {
-  const { page = 1, pageSize = 10, status } = req.query;
-  const offset = (page - 1) * pageSize;
+router.get('/users', authenticateAdmin, (req, res) => {
+  const { page = 1, page_size = 20, keyword, status } = req.query;
+  const offset = (page - 1) * page_size;
   
-  let where = [];
-  let params = [];
+  let sql = 'SELECT id, phone, real_name, user_type, status, created_at FROM users WHERE 1=1';
+  const params = [];
+  
+  if (keyword) {
+    sql += ' AND (phone LIKE ? OR real_name LIKE ?)';
+    const kw = `%${keyword}%`;
+    params.push(kw, kw);
+  }
+
+  if (status !== undefined && status !== '') {
+    const normalizedStatus = status === 'active' ? 1 : status === 'inactive' ? 0 : Number(status);
+    sql += ' AND status = ?';
+    params.push(normalizedStatus);
+  }
+  
+  sql += ' ORDER BY created_at DESC LIMIT ? OFFSET ?';
+  params.push(parseInt(page_size), offset);
+  
+  const users = db.prepare(sql).all(...params);
+  
+  let countSql = 'SELECT COUNT(*) as count FROM users WHERE 1=1';
+  if (keyword) {
+    countSql += ' AND (phone LIKE ? OR real_name LIKE ?)';
+  }
+  if (status !== undefined && status !== '') {
+    countSql += ' AND status = ?';
+  }
+  const countParams = params.slice(0, -2);
+  const total = db.prepare(countSql).get(...countParams).count;
+  
+  res.success({
+    list: users,
+    total,
+    page: parseInt(page),
+    page_size: parseInt(page_size)
+  }, '获取成功');
+});
+
+router.get('/users/:id', authenticateAdmin, (req, res) => {
+  const user = db.prepare('SELECT id, phone, real_name, id_card, user_type, avatar, address, status, created_at FROM users WHERE id = ?').get(req.params.id);
+  
+  if (!user) {
+    return res.error('用户不存在', 404);
+  }
+  
+  const cards = db.prepare('SELECT * FROM tianfutong_cards WHERE user_id = ?').all(req.params.id);
+  const points = db.prepare('SELECT * FROM user_points WHERE user_id = ?').get(req.params.id);
+  
+  res.success({ user, cards, points }, '获取成功');
+});
+
+router.put('/users/:id/status', authenticateAdmin, (req, res) => {
+  const { status } = req.body;
+  const normalizedStatus = status === 'active' ? 1 : status === 'inactive' ? 0 : Number(status);
+  
+  db.prepare('UPDATE users SET status = ?, updated_at = CURRENT_TIMESTAMP WHERE id = ?')
+    .run(normalizedStatus, req.params.id);
+  
+  logOperation(req.admin.id, 'update_user_status', 'user', req.params.id, req.ip);
+  
+  res.success(null, '更新成功');
+});
+
+router.get('/cards', authenticateAdmin, (req, res) => {
+  const { page = 1, page_size = 20, keyword, card_type, status, region } = req.query;
+  const offset = (page - 1) * page_size;
+  
+  let sql = `
+    SELECT tc.*, u.phone, u.real_name
+    FROM tianfutong_cards tc
+    LEFT JOIN users u ON tc.user_id = u.id
+    WHERE 1=1
+  `;
+  const params = [];
+  
+  if (keyword) {
+    sql += ' AND (tc.card_no LIKE ? OR u.phone LIKE ? OR u.real_name LIKE ?)';
+    const kw = `%${keyword}%`;
+    params.push(kw, kw, kw);
+  }
+  
+  if (card_type) {
+    sql += ' AND tc.card_type = ?';
+    params.push(card_type);
+  }
   
   if (status) {
-    where.push('pa.status = ?');
+    sql += ' AND tc.card_status = ?';
     params.push(status);
   }
   
-  const whereSql = where.length ? 'WHERE ' + where.join(' AND ') : '';
-  
-  const applications = db.prepare(`
-    SELECT pa.*, p.title as policy_title, e.name as enterprise_name,
-           u.real_name as applicant_name, u.phone as applicant_phone
-    FROM policy_applications pa
-    JOIN policies p ON pa.policy_id = p.id
-    JOIN enterprises e ON pa.enterprise_id = e.id
-    JOIN users u ON pa.user_id = u.id
-    ${whereSql}
-    ORDER BY pa.submitted_at DESC
-    LIMIT ? OFFSET ?
-  `).all(...params, parseInt(pageSize), offset);
-  
-  const total = db.prepare(`
-    SELECT COUNT(*) as count FROM policy_applications pa ${whereSql}
-  `).get(...params).count;
-  
-  res.json({ list: applications, total });
-});
-
-router.put('/applications/:id/review', auth, (req, res) => {
-  const { action, remark } = req.body;
-  const { id } = req.params;
-  
-  const application = db.prepare('SELECT * FROM policy_applications WHERE id = ?').get(id);
-  if (!application) {
-    return res.status(404).json({ error: '申请不存在' });
+  if (region) {
+    sql += ' AND tc.region = ?';
+    params.push(region);
   }
   
-  let newStatus, newStage;
+  sql += ' ORDER BY tc.created_at DESC LIMIT ? OFFSET ?';
+  params.push(parseInt(page_size), offset);
   
-  if (action === 'approve') {
-    newStatus = 'reviewing';
-    newStage = 'approval';
+  const cards = db.prepare(sql).all(...params);
+  
+  let countSql = `
+    SELECT COUNT(*) as count
+    FROM tianfutong_cards tc
+    LEFT JOIN users u ON tc.user_id = u.id
+    WHERE 1=1
+  `;
+  const countParams = params.slice(0, -2);
+  const total = db.prepare(countSql).get(...countParams).count;
+  
+  res.success({
+    list: cards,
+    total,
+    page: parseInt(page),
+    page_size: parseInt(page_size)
+  }, '获取成功');
+});
+
+router.put('/cards/:id/status', authenticateAdmin, (req, res) => {
+  const { card_status, status } = req.body;
+  const nextStatus = card_status || status;
+  
+  db.prepare('UPDATE tianfutong_cards SET card_status = ?, updated_at = CURRENT_TIMESTAMP WHERE id = ?')
+    .run(nextStatus, req.params.id);
+  
+  logOperation(req.admin.id, 'update_card_status', 'card', req.params.id, req.ip);
+  
+  res.success(null, '更新成功');
+});
+
+router.get('/transactions', authenticateAdmin, (req, res) => {
+  const { page = 1, page_size = 20, keyword, start_date, end_date, transport_type, status } = req.query;
+  const offset = (page - 1) * page_size;
+  
+  let sql = `
+    SELECT t.*, u.phone, u.real_name
+    FROM transactions t
+    LEFT JOIN users u ON t.user_id = u.id
+    WHERE 1=1
+  `;
+  const params = [];
+  
+  if (keyword) {
+    sql += ' AND (t.transaction_no LIKE ? OR t.card_no LIKE ? OR u.phone LIKE ?)';
+    const kw = `%${keyword}%`;
+    params.push(kw, kw, kw);
+  }
+  
+  if (start_date) {
+    sql += ' AND t.created_at >= ?';
+    params.push(start_date);
+  }
+  
+  if (end_date) {
+    sql += ' AND t.created_at <= ?';
+    params.push(end_date + ' 23:59:59');
+  }
+  
+  if (transport_type) {
+    sql += ' AND t.transport_type = ?';
+    params.push(transport_type);
+  }
+  
+  if (status) {
+    sql += ' AND t.status = ?';
+    params.push(status);
+  }
+  
+  sql += ' ORDER BY t.created_at DESC LIMIT ? OFFSET ?';
+  params.push(parseInt(page_size), offset);
+  
+  const transactions = db.prepare(sql).all(...params);
+  
+  let countSql = `
+    SELECT COUNT(*) as count
+    FROM transactions t
+    LEFT JOIN users u ON t.user_id = u.id
+    WHERE 1=1
+  `;
+  const countParams = params.slice(0, -2);
+  const total = db.prepare(countSql).get(...countParams).count;
+  
+  res.success({
+    list: transactions,
+    total,
+    page: parseInt(page),
+    page_size: parseInt(page_size)
+  }, '获取成功');
+});
+
+router.get('/transactions/:id', authenticateAdmin, (req, res) => {
+  const transaction = db.prepare(`
+    SELECT t.*, u.phone, u.real_name
+    FROM transactions t
+    LEFT JOIN users u ON t.user_id = u.id
+    WHERE t.id = ?
+  `).get(req.params.id);
+  
+  if (!transaction) {
+    return res.error('交易不存在', 404);
+  }
+  
+  res.success(transaction, '获取成功');
+});
+
+router.get('/risk/blocked', authenticateAdmin, (req, res) => {
+  const { page = 1, page_size = 20, resolved } = req.query;
+  const offset = (page - 1) * page_size;
+  
+  let sql = `
+    SELECT bt.*, t.transaction_no, t.amount, t.user_id, t.card_no, u.phone, u.real_name
+    FROM blocked_transactions bt
+    LEFT JOIN transactions t ON bt.transaction_id = t.id
+    LEFT JOIN users u ON t.user_id = u.id
+    WHERE 1=1
+  `;
+  const params = [];
+  
+  if (resolved !== undefined) {
+    sql += ' AND bt.resolved = ?';
+    params.push(resolved ? 1 : 0);
+  }
+  
+  sql += ' ORDER BY bt.blocked_at DESC LIMIT ? OFFSET ?';
+  params.push(parseInt(page_size), offset);
+  
+  const blocked = db.prepare(sql).all(...params);
+  
+  const total = db.prepare('SELECT COUNT(*) as count FROM blocked_transactions WHERE resolved = 0').get().count;
+  
+  res.success({
+    list: blocked,
+    total,
+    page: parseInt(page),
+    page_size: parseInt(page_size)
+  }, '获取成功');
+});
+
+router.post('/risk/blocked/:id/resolve', authenticateAdmin, (req, res) => {
+  const { action, comment } = req.body;
+  
+  const blocked = db.prepare('SELECT * FROM blocked_transactions WHERE id = ?').get(req.params.id);
+  
+  if (!blocked) {
+    return res.error('记录不存在', 404);
+  }
+  
+  if (action === 'release') {
+    db.prepare('UPDATE transactions SET status = "success", is_flagged = 1 WHERE id = ?').run(blocked.transaction_id);
   } else if (action === 'reject') {
-    newStatus = 'rejected';
-    newStage = 'completed';
-  } else if (action === 'approve_final') {
-    newStatus = 'approved';
-    newStage = 'payment';
-  } else if (action === 'pay') {
-    newStatus = 'paid';
-    newStage = 'completed';
-  } else {
-    return res.status(400).json({ error: '无效操作' });
+    db.prepare('UPDATE transactions SET status = "rejected", is_flagged = 1 WHERE id = ?').run(blocked.transaction_id);
   }
   
   db.prepare(`
-    UPDATE policy_applications 
-    SET status = ?, current_stage = ?, reviewed_at = CURRENT_TIMESTAMP, reject_reason = ?
+    UPDATE blocked_transactions 
+    SET resolved = 1, resolved_by = ?, resolved_at = CURRENT_TIMESTAMP, reason = ?
     WHERE id = ?
-  `).run(newStatus, newStage, action === 'reject' ? remark : null, id);
+  `).run(req.admin.id, comment || '', req.params.id);
   
-  db.prepare(`
-    INSERT INTO policy_application_logs (application_id, stage, status, operator, remark)
-    VALUES (?, ?, ?, ?, ?)
-  `).run(id, newStage, newStatus, '管理员', remark || '');
+  logOperation(req.admin.id, `resolve_risk_${action}`, 'blocked_transaction', req.params.id, req.ip);
   
-  res.json({ message: '操作成功', status: newStatus });
+  res.success(null, '处理成功');
 });
 
-router.get('/services', auth, (req, res) => {
-  const services = db.prepare(`
-    SELECT * FROM service_items
-    ORDER BY item_code
-  `).all();
+router.get('/renewals', authenticateAdmin, (req, res) => {
+  const { page = 1, page_size = 20, status } = req.query;
+  const offset = (page - 1) * page_size;
   
-  res.json(services);
-});
-
-router.post('/services', auth, (req, res) => {
-  const { itemCode, name, department, category, description, requiredMaterials, handlingTime } = req.body;
+  let sql = `
+    SELECT cr.*, tc.card_no, tc.card_type, u.phone, u.real_name
+    FROM card_renewals cr
+    LEFT JOIN tianfutong_cards tc ON cr.card_id = tc.id
+    LEFT JOIN users u ON cr.user_id = u.id
+    WHERE 1=1
+  `;
+  const params = [];
   
-  try {
-    const result = db.prepare(`
-      INSERT INTO service_items (item_code, name, department, category, description, required_materials, handling_time)
-      VALUES (?, ?, ?, ?, ?, ?, ?)
-    `).run(itemCode, name, department, category, description, requiredMaterials, handlingTime);
-    
-    res.json({ id: result.lastInsertRowid, message: '创建成功' });
-  } catch (err) {
-    if (err.message.includes('UNIQUE')) {
-      return res.status(400).json({ error: '事项编码已存在' });
-    }
-    res.status(500).json({ error: '创建失败' });
+  if (status) {
+    sql += ' AND cr.review_status = ?';
+    params.push(status);
   }
+  
+  sql += ' ORDER BY cr.created_at DESC LIMIT ? OFFSET ?';
+  params.push(parseInt(page_size), offset);
+  
+  const renewals = db.prepare(sql).all(...params);
+  
+  const total = db.prepare('SELECT COUNT(*) as count FROM card_renewals WHERE review_status = "pending"').get().count;
+  
+  res.success({
+    list: renewals,
+    total,
+    page: parseInt(page),
+    page_size: parseInt(page_size)
+  }, '获取成功');
 });
 
-router.put('/services/:code', auth, (req, res) => {
-  const { name, department, category, description, requiredMaterials, handlingTime, status } = req.body;
+router.post('/renewals/:id/review', authenticateAdmin, (req, res) => {
+  const { review_status, review_comment } = req.body;
+  
+  const renewal = db.prepare('SELECT * FROM card_renewals WHERE id = ?').get(req.params.id);
+  
+  if (!renewal) {
+    return res.error('记录不存在', 404);
+  }
   
   db.prepare(`
-    UPDATE service_items 
-    SET name = ?, department = ?, category = ?, description = ?, required_materials = ?, handling_time = ?, status = ?, version = version + 1, updated_at = CURRENT_TIMESTAMP
-    WHERE item_code = ?
-  `).run(name, department, category, description, requiredMaterials, handlingTime, status || 'active', req.params.code);
+    UPDATE card_renewals 
+    SET review_status = ?, review_comment = ?, reviewer_id = ?, reviewed_at = CURRENT_TIMESTAMP
+    WHERE id = ?
+  `).run(review_status, review_comment || '', req.admin.id, req.params.id);
   
-  res.json({ message: '更新成功' });
+  if (review_status === 'approved') {
+    const newExpiry = new Date();
+    newExpiry.setFullYear(newExpiry.getFullYear() + 1);
+    db.prepare('UPDATE tianfutong_cards SET expiry_date = ?, updated_at = CURRENT_TIMESTAMP WHERE id = ?')
+      .run(newExpiry.toISOString().split('T')[0], renewal.card_id);
+  }
+  
+  logOperation(req.admin.id, `review_renewal_${review_status}`, 'card_renewal', req.params.id, req.ip);
+  
+  res.success(null, '审核完成');
 });
 
-router.post('/publish', auth, (req, res) => {
-  const { itemType, itemId, platform, version } = req.body;
+router.get('/regions', authenticateAdmin, (req, res) => {
+  const regions = db.prepare('SELECT * FROM regions ORDER BY level, region_code').all();
   
-  const platforms = platform.split(',');
+  const tree = [];
+  const map = {};
   
-  platforms.forEach(p => {
-    db.prepare(`
-      INSERT INTO publish_records (item_type, item_id, platform, version, published_by)
-      VALUES (?, ?, ?, ?, ?)
-    `).run(itemType, itemId, p.trim(), version, 'admin');
+  regions.forEach(r => {
+    map[r.region_code] = { ...r, children: [] };
   });
   
-  res.json({ message: '发布成功', platforms });
-});
-
-router.get('/publish/history', auth, (req, res) => {
-  const records = db.prepare(`
-    SELECT * FROM publish_records
-    ORDER BY published_at DESC
-    LIMIT 50
-  `).all();
+  regions.forEach(r => {
+    if (r.parent_code && map[r.parent_code]) {
+      map[r.parent_code].children.push(map[r.region_code]);
+    } else if (!r.parent_code) {
+      tree.push(map[r.region_code]);
+    }
+  });
   
-  res.json(records);
+  res.success({ list: regions, tree }, '获取成功');
 });
 
-router.get('/enterprises', auth, (req, res) => {
-  const enterprises = db.prepare(`
-    SELECT e.*, COUNT(eb.id) as employee_count
-    FROM enterprises e
-    LEFT JOIN enterprise_bindings eb ON e.id = eb.enterprise_id
-    GROUP BY e.id
-    ORDER BY e.created_at DESC
-  `).all();
+router.get('/routes', authenticateAdmin, (req, res) => {
+  const routes = db.prepare('SELECT * FROM routes ORDER BY transport_type, route_no').all();
   
-  res.json(enterprises);
-});
-
-router.get('/bindings/pending', auth, (req, res) => {
-  const bindings = db.prepare(`
-    SELECT eb.*, u.real_name, u.phone, u.id_card, e.name as enterprise_name
-    FROM enterprise_bindings eb
-    JOIN users u ON eb.user_id = u.id
-    JOIN enterprises e ON eb.enterprise_id = e.id
-    WHERE eb.status = 'pending'
-    ORDER BY eb.created_at DESC
-  `).all();
+  routes.forEach(r => {
+    r.stations = JSON.parse(r.stations || '[]');
+    r.crowding_data = JSON.parse(r.crowding_data || '{}');
+  });
   
-  res.json(bindings);
+  res.success(routes, '获取成功');
 });
 
-router.put('/bindings/:id/verify', auth, (req, res) => {
-  const { status } = req.body;
+router.post('/routes', authenticateAdmin, (req, res) => {
+  const { route_no, route_name, transport_type, start_station, end_station, first_departure, last_departure, fare, stations } = req.body;
+  
+  const result = db.prepare(`
+    INSERT INTO routes (route_no, route_name, transport_type, start_station, end_station, first_departure, last_departure, fare, stations, crowding_data)
+    VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+  `).run(route_no, route_name, transport_type, start_station, end_station, first_departure, last_departure, fare, JSON.stringify(stations || []), JSON.stringify({}));
+  
+  logOperation(req.admin.id, 'create_route', 'route', result.lastInsertRowid, req.ip);
+  
+  res.success({ id: result.lastInsertRowid }, '创建成功');
+});
+
+router.put('/routes/:id', authenticateAdmin, (req, res) => {
+  const { route_no, route_name, transport_type, start_station, end_station, first_departure, last_departure, fare, stations, status } = req.body;
+  
+  const current = db.prepare('SELECT * FROM routes WHERE id = ?').get(req.params.id);
+  const currentStations = JSON.parse(current.stations || '[]');
+  const currentCrowding = JSON.parse(current.crowding_data || '{}');
   
   db.prepare(`
-    UPDATE enterprise_bindings 
-    SET status = ?, verified_at = CURRENT_TIMESTAMP
+    UPDATE routes 
+    SET route_no = ?, route_name = ?, transport_type = ?, start_station = ?, end_station = ?, 
+        first_departure = ?, last_departure = ?, fare = ?, stations = ?, status = ?, updated_at = CURRENT_TIMESTAMP
     WHERE id = ?
-  `).run(status === 'verified' ? 'verified' : 'rejected', req.params.id);
+  `).run(route_no || current.route_no, route_name || current.route_name, transport_type || current.transport_type,
+         start_station || current.start_station, end_station || current.end_station,
+         first_departure || current.first_departure, last_departure || current.last_departure,
+         fare || current.fare, JSON.stringify(stations || currentStations),
+         status !== undefined ? status : current.status, req.params.id);
   
-  res.json({ message: '审核完成' });
+  logOperation(req.admin.id, 'update_route', 'route', req.params.id, req.ip);
+  
+  res.success(null, '更新成功');
+});
+
+router.get('/products', authenticateAdmin, (req, res) => {
+  const products = db.prepare('SELECT * FROM point_products ORDER BY points_cost').all();
+  res.success(products, '获取成功');
+});
+
+router.post('/products', authenticateAdmin, (req, res) => {
+  const { product_code, product_name, description, points_cost, stock, category } = req.body;
+  
+  const result = db.prepare(`
+    INSERT INTO point_products (product_code, product_name, description, points_cost, stock, category)
+    VALUES (?, ?, ?, ?, ?, ?)
+  `).run(product_code, product_name, description || '', points_cost, stock || 0, category || '');
+  
+  logOperation(req.admin.id, 'create_product', 'point_product', result.lastInsertRowid, req.ip);
+  
+  res.success({ id: result.lastInsertRowid }, '创建成功');
+});
+
+router.put('/products/:id', authenticateAdmin, (req, res) => {
+  const { product_name, description, points_cost, stock, category, status } = req.body;
+  
+  db.prepare(`
+    UPDATE point_products 
+    SET product_name = ?, description = ?, points_cost = ?, stock = ?, category = ?, status = ?
+    WHERE id = ?
+  `).run(product_name, description, points_cost, stock, category, status, req.params.id);
+  
+  logOperation(req.admin.id, 'update_product', 'point_product', req.params.id, req.ip);
+  
+  res.success(null, '更新成功');
+});
+
+router.get('/operation-logs', authenticateAdmin, (req, res) => {
+  const { page = 1, page_size = 20 } = req.query;
+  const offset = (page - 1) * page_size;
+  
+  const logs = db.prepare(`
+    SELECT ol.*, a.username, a.real_name
+    FROM operation_logs ol
+    LEFT JOIN admins a ON ol.admin_id = a.id
+    ORDER BY ol.created_at DESC
+    LIMIT ? OFFSET ?
+  `).all(parseInt(page_size), offset);
+  
+  const total = db.prepare('SELECT COUNT(*) as count FROM operation_logs').get().count;
+  
+  res.success({
+    list: logs,
+    total,
+    page: parseInt(page),
+    page_size: parseInt(page_size)
+  }, '获取成功');
+});
+
+router.get('/admins', authenticateAdmin, (req, res) => {
+  if (req.admin.role !== 'super_admin') {
+    return res.error('无权限访问', 403);
+  }
+  
+  const admins = db.prepare('SELECT id, username, real_name, role, region, status, created_at FROM admins ORDER BY created_at').all();
+  res.success(admins, '获取成功');
+});
+
+router.post('/admins', authenticateAdmin, (req, res) => {
+  if (req.admin.role !== 'super_admin') {
+    return res.error('无权限访问', 403);
+  }
+  
+  const bcrypt = require('bcryptjs');
+  const { username, password, real_name, role, region } = req.body;
+  
+  const hash = bcrypt.hashSync(password, 10);
+  
+  const result = db.prepare(`
+    INSERT INTO admins (username, password, real_name, role, region)
+    VALUES (?, ?, ?, ?, ?)
+  `).run(username, hash, real_name, role || 'operator', region || '');
+  
+  logOperation(req.admin.id, 'create_admin', 'admin', result.lastInsertRowid, req.ip);
+  
+  res.success({ id: result.lastInsertRowid }, '创建成功');
 });
 
 module.exports = router;
