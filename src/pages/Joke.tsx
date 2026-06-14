@@ -11,7 +11,7 @@ interface Joke {
 
 const Joke = () => {
   const navigate = useNavigate();
-  const { isLoggedIn } = useUserStore();
+  const { isLoggedIn, fetchProfile } = useUserStore();
   const [jokes, setJokes] = useState<Joke[]>([]);
   const [currentIndex, setCurrentIndex] = useState(0);
   const [readCount, setReadCount] = useState(0);
@@ -20,7 +20,7 @@ const Joke = () => {
 
   useEffect(() => {
     if (!isLoggedIn) {
-      navigate('/login');
+      navigate('/login?from=' + encodeURIComponent('/tasks/joke'));
       return;
     }
     loadJokes();
@@ -49,6 +49,7 @@ const Joke = () => {
           if (res.success && res.reward) {
             setRewardAmount(res.reward);
             setShowReward(true);
+            fetchProfile();
             setTimeout(() => setShowReward(false), 1500);
           }
         } catch (error) {

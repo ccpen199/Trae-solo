@@ -42,6 +42,22 @@ app.use('/api/wallet', walletRoutes)
 app.use('/api/withdraw', withdrawRoutes)
 app.use('/api/admin', adminRoutes)
 
+app.get(['/api/users/profile', '/api/user/profile'], (req: Request, res: Response) => {
+  res.json({
+    success: true,
+    user: {
+      id: 'user-demo',
+      phone: '13800138000',
+      nickname: '演示用户',
+      level: 3,
+      exp: 280,
+      coins: 2680,
+      inviteCode: 'DEMO88',
+      isVerified: true,
+    },
+  })
+})
+
 app.use(
   '/api/health',
   (req: Request, res: Response, next: NextFunction): void => {

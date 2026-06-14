@@ -38,7 +38,7 @@ const FashionQuiz = ({ type }: FashionQuizProps) => {
 
   useEffect(() => {
     if (!isLoggedIn) {
-      navigate('/login');
+      navigate('/login?from=' + encodeURIComponent(type === 'hairstyle' ? '/tasks/fashion/hairstyle' : '/tasks/fashion/clothing'));
       return;
     }
     setQuizTitle(titles[type]);

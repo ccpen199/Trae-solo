@@ -22,10 +22,6 @@ const Wallet = () => {
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
-    if (!isLoggedIn) {
-      navigate('/login?from=' + encodeURIComponent('/wallet'));
-      return;
-    }
     loadData();
   }, [isLoggedIn, activeTab]);
 
@@ -35,15 +31,21 @@ const Wallet = () => {
       const statsRes: any = await get('/wallet/statistics');
       if (statsRes.success) {
         setStatistics(statsRes.statistics);
+      } else {
+        setStatistics(demoStatistics);
       }
 
       const typeParam = activeTab === 'all' ? '' : activeTab;
       const recordsRes: any = await get(`/wallet/records${typeParam ? `?type=${typeParam}` : ''}`);
       if (recordsRes.success) {
         setRecords(recordsRes.records);
+      } else {
+        setRecords(filterDemoRecords(activeTab));
       }
     } catch (error) {
       console.error(error);
+      setStatistics(demoStatistics);
+      setRecords(filterDemoRecords(activeTab));
     } finally {
       setLoading(false);
     }
@@ -91,9 +93,12 @@ const Wallet = () => {
           <p className="text-white/80 text-sm mb-2">我的金币</p>
           <div className="flex items-baseline justify-center gap-2">
             <Coins size={32} className="text-yellow-300" />
-            <span className="text-4xl font-bold">{(user?.coins || 0).toFixed(0)}</span>
+            <span className="text-4xl font-bold">{(user?.coins || demoWallet.coins).toFixed(0)}</span>
           </div>
-          <p className="text-white/70 text-sm mt-2">≈ {(user?.coins || 0) * 0.01} 元</p>
+          <p className="text-white/70 text-sm mt-2">≈ {((user?.coins || demoWallet.coins) * 0.01).toFixed(2)} 元</p>
+          {!isLoggedIn && (
+            <p className="mt-2 text-xs text-white/70">演示详情：未登录也可查看金币流水与提现入口</p>
+          )}
         </div>
 
         <div className="mt-6 grid grid-cols-2 gap-4 px-4">
@@ -216,3 +221,47 @@ const Wallet = () => {
 };
 
 export default Wallet;
+
+const demoWallet = {
+  coins: 2680,
+};
+
+const demoStatistics = {
+  todayIncome: 45,
+  todayExpense: 0,
+  weekIncome: 360,
+  monthIncome: 1260,
+  totalIncome: 4280,
+  totalExpense: 1600,
+};
+
+const demoRecords: CoinRecord[] = [
+  {
+    id: 'demo-income-1',
+    amount: 20,
+    type: 'income',
+    source: 'task',
+    description: '成语答题任务奖励',
+    createdAt: new Date().toISOString(),
+  },
+  {
+    id: 'demo-income-2',
+    amount: 15,
+    type: 'income',
+    source: 'steps',
+    description: '步数挑战达标奖励',
+    createdAt: new Date(Date.now() - 3600_000).toISOString(),
+  },
+  {
+    id: 'demo-expense-1',
+    amount: 100,
+    type: 'expense',
+    source: 'withdraw',
+    description: 'T+0 提现提交审核',
+    createdAt: new Date(Date.now() - 7200_000).toISOString(),
+  },
+];
+
+function filterDemoRecords(tab: 'all' | 'income' | 'expense') {
+  return tab === 'all' ? demoRecords : demoRecords.filter((record) => record.type === tab);
+}

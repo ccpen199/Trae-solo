@@ -16,7 +16,7 @@ const Water = () => {
 
   useEffect(() => {
     if (!isLoggedIn) {
-      navigate('/login');
+      navigate('/login?from=' + encodeURIComponent('/tasks/water'));
       return;
     }
     loadData();

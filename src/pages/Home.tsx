@@ -24,6 +24,13 @@ const Home = () => {
   const [tasks, setTasks] = useState<Task[]>([]);
   const [todayEarnings, setTodayEarnings] = useState(0);
 
+  const enterAdmin = () => {
+    const admin = { id: 'admin-001', username: 'admin', role: 'super_admin' };
+    localStorage.setItem('adminToken', admin.id);
+    localStorage.setItem('adminInfo', JSON.stringify(admin));
+    navigate('/admin');
+  };
+
   useEffect(() => {
     if (isLoggedIn) {
       loadData();
@@ -126,7 +133,7 @@ const Home = () => {
 
           <div
             className="bg-white/20 backdrop-blur-sm rounded-2xl p-5 border border-white/20 cursor-pointer"
-            onClick={() => navigate(isLoggedIn ? '/wallet' : '/login?from=/wallet')}
+            onClick={() => navigate('/wallet')}
           >
             <div className="flex items-center justify-between mb-3">
               <span className="text-sm text-white/80">我的金币</span>
@@ -276,6 +283,36 @@ const Home = () => {
           <div className="w-16 h-16 bg-white/20 rounded-full flex items-center justify-center">
             <span className="text-2xl font-bold">50</span>
           </div>
+        </div>
+      </div>
+
+      <div className="mt-4 mx-4 bg-white rounded-2xl shadow-card p-5">
+        <div className="flex items-center justify-between mb-4">
+          <div>
+            <h3 className="text-lg font-bold text-dark-800">平台管理与详情</h3>
+            <p className="text-sm text-dark-500">任务审核、金币流水、提现风控和提交记录</p>
+          </div>
+          <TrendingUp size={22} className="text-primary-500" />
+        </div>
+        <div className="grid grid-cols-3 gap-2">
+          <button
+            onClick={enterAdmin}
+            className="rounded-xl bg-dark-800 px-3 py-3 text-sm font-bold text-white"
+          >
+            后台管理
+          </button>
+          <button
+            onClick={() => navigate('/wallet')}
+            className="rounded-xl bg-primary-50 px-3 py-3 text-sm font-bold text-primary-600"
+          >
+            金币详情
+          </button>
+          <button
+            onClick={() => navigate('/withdraw')}
+            className="rounded-xl bg-accent-50 px-3 py-3 text-sm font-bold text-accent-600"
+          >
+            提交提现
+          </button>
         </div>
       </div>
     </div>

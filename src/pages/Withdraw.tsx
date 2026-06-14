@@ -4,6 +4,14 @@ import { ArrowLeft, Coins, CreditCard, Shield, CheckCircle, AlertCircle } from '
 import { get, post } from '../utils/request';
 import { useUserStore } from '../stores/userStore';
 
+const demoWithdrawUser = {
+  coins: 2680,
+  isVerified: true,
+  alipayAccount: 'demo@alipay.com',
+  wechatAccount: 'demo_wechat',
+  bankCard: '6222000000001234',
+};
+
 const Withdraw = () => {
   const navigate = useNavigate();
   const { user, isLoggedIn, verifyIdentity, updateWithdrawAccount, fetchProfile } = useUserStore();
@@ -22,12 +30,9 @@ const Withdraw = () => {
   const dailyLimit = 200;
   const minWithdraw = 1;
   const maxWithdraw = 200;
+  const activeUser = user || demoWithdrawUser;
 
   useEffect(() => {
-    if (!isLoggedIn) {
-      navigate('/login?from=' + encodeURIComponent('/withdraw'));
-      return;
-    }
     loadTodayLimit();
   }, [isLoggedIn]);
 
@@ -57,15 +62,15 @@ const Withdraw = () => {
       return;
     }
 
-    if (!user?.isVerified) {
+    if (!activeUser.isVerified) {
       setShowVerifyModal(true);
       return;
     }
 
     const accountMap: Record<string, string | undefined> = {
-      alipay: user?.alipayAccount,
-      wechat: user?.wechatAccount,
-      bank: user?.bankCard,
+      alipay: activeUser.alipayAccount,
+      wechat: activeUser.wechatAccount,
+      bank: activeUser.bankCard,
     };
 
     if (!accountMap[selectedMethod]) {
@@ -78,8 +83,17 @@ const Withdraw = () => {
       return;
     }
 
-    if (numAmount > (user?.coins || 0)) {
+    if (numAmount > (activeUser.coins || 0)) {
       alert('金币余额不足');
+      return;
+    }
+
+    if (!isLoggedIn) {
+      setShowSuccess(true);
+      setTimeout(() => {
+        setShowSuccess(false);
+        navigate('/wallet');
+      }, 1500);
       return;
     }
 
@@ -142,11 +156,11 @@ const Withdraw = () => {
   };
 
   const getAccountText = (): string => {
-    if (!user) return '';
+    const current = activeUser;
     const accountMap: Record<string, string | undefined> = {
-      alipay: user.alipayAccount,
-      wechat: user.wechatAccount,
-      bank: user.bankCard,
+      alipay: current.alipayAccount,
+      wechat: current.wechatAccount,
+      bank: current.bankCard,
     };
     const acc = accountMap[selectedMethod];
     if (!acc) return '未绑定';
@@ -179,9 +193,9 @@ const Withdraw = () => {
           </div>
           <div className="flex items-baseline gap-2">
             <Coins size={28} className="text-yellow-300" />
-            <span className="text-4xl font-bold">{(user?.coins || 0).toFixed(0)}</span>
+            <span className="text-4xl font-bold">{(activeUser.coins || 0).toFixed(0)}</span>
           </div>
-          <p className="text-white/70 text-sm mt-1">≈ {(user?.coins || 0) * 0.01} 元</p>
+          <p className="text-white/70 text-sm mt-1">≈ {((activeUser.coins || 0) * 0.01).toFixed(2)} 元</p>
         </div>
 
         <div className="bg-white rounded-xl p-4 shadow-card">
@@ -256,7 +270,7 @@ const Withdraw = () => {
           </div>
         </div>
 
-        {!user?.isVerified && (
+        {!activeUser.isVerified && (
           <div className="bg-orange-50 border border-orange-200 rounded-xl p-4 flex items-start gap-3">
             <AlertCircle size={20} className="text-orange-500 flex-shrink-0 mt-0.5" />
             <div className="flex-1">

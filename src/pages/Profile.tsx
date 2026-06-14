@@ -27,7 +27,7 @@ const Profile = () => {
   };
 
   const goToLogin = () => {
-    navigate('/login');
+    navigate('/login?from=' + encodeURIComponent('/profile'));
   };
 
   return (
@@ -120,7 +120,7 @@ const Profile = () => {
                 if (isLoggedIn) {
                   navigate(item.path);
                 } else {
-                  navigate('/login');
+                  navigate('/login?from=' + encodeURIComponent(item.path));
                 }
               }}
               className={`w-full flex items-center gap-4 px-5 py-4 hover:bg-dark-50 transition-colors ${

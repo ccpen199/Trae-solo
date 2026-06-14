@@ -19,7 +19,7 @@ const Fashion = () => {
 
   useEffect(() => {
     if (!isLoggedIn) {
-      navigate('/login');
+      navigate('/login?from=' + encodeURIComponent('/tasks/fashion'));
       return;
     }
     loadQuizzes();

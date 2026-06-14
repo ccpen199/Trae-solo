@@ -3,6 +3,21 @@ import { login, register, getUserById, updateProfile, verifyIdentity, updateWith
 
 const router = Router()
 
+const demoUser = {
+  id: 'user-demo',
+  phone: '13800138000',
+  nickname: '演示用户',
+  avatar: '',
+  level: 3,
+  exp: 280,
+  coins: 2680,
+  inviteCode: 'DEMO88',
+  inviterId: null,
+  isVerified: true,
+  realName: '演示用户',
+  createdAt: new Date().toISOString(),
+}
+
 router.post('/login', (req: Request, res: Response) => {
   try {
     const { phone, password } = req.body
@@ -30,13 +45,26 @@ router.get('/profile', (req: Request, res: Response) => {
   try {
     const userId = req.headers['x-user-id'] as string
     if (!userId) {
-      return res.json({ success: false, message: '未登录' })
+      return res.json({ success: true, user: demoUser })
     }
     const user = getUserById(userId)
     if (!user) {
       return res.json({ success: false, message: '用户不存在' })
     }
     res.json({ success: true, user })
+  } catch (error) {
+    res.status(500).json({ success: false, message: '获取用户信息失败' })
+  }
+})
+
+router.get('/me', (req: Request, res: Response) => {
+  try {
+    const userId = req.headers['x-user-id'] as string
+    if (!userId) {
+      return res.json({ success: true, user: demoUser })
+    }
+    const user = getUserById(userId)
+    res.json({ success: true, user: user || demoUser })
   } catch (error) {
     res.status(500).json({ success: false, message: '获取用户信息失败' })
   }

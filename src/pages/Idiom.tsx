@@ -14,7 +14,7 @@ interface Question {
 
 const Idiom = () => {
   const navigate = useNavigate();
-  const { isLoggedIn } = useUserStore();
+  const { isLoggedIn, fetchProfile } = useUserStore();
   const [questions, setQuestions] = useState<Question[]>([]);
   const [currentIndex, setCurrentIndex] = useState(0);
   const [selectedAnswer, setSelectedAnswer] = useState<string | null>(null);
@@ -29,7 +29,7 @@ const Idiom = () => {
 
   useEffect(() => {
     if (!isLoggedIn) {
-      navigate('/login');
+      navigate('/login?from=' + encodeURIComponent('/tasks/idiom'));
       return;
     }
     loadQuestions();
@@ -75,6 +75,7 @@ const Idiom = () => {
           if (res.success && res.reward) {
             setRewardAmount(res.reward);
             setShowReward(true);
+            fetchProfile();
             setCompletedCount(completedCount + 1);
             setTimeout(() => setShowReward(false), 1500);
           }
