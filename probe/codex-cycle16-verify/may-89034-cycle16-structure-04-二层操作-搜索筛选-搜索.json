@@ -1,0 +1,7192 @@
+{
+  "meta": {
+    "title": "蓝领就业精准撮合平台",
+    "url": "http://127.0.0.1:50034/jobs",
+    "timestamp": "2026-06-04T12:36:52.842Z",
+    "viewport": {
+      "width": 1600,
+      "height": 1600
+    },
+    "document": {
+      "scrollWidth": 1600,
+      "scrollHeight": 3060
+    }
+  },
+  "text": {
+    "bodyPreview": "蓝领就业平台首页搜索筛选岗位管理后台登录注册搜索结果与查询结果搜索框支持按岗位关键词、工作地点和薪资筛选蓝领岗位。薪资不限3000以上5000以上8000以上10000以上技能不限电工焊工叉车分拣保洁通勤半径3公里内5公里内10公里内搜索匹配条件覆盖技能标签、期望薪资、工作地点、通勤半径、企业认证和福利项；结果卡片可直接进入投递详情。共找到 10 个岗位急招电工蓝领科技有限公司北京市朝阳区 · 全职包吃包住五险一金硬性条件：持有低压电工证,3年以上工作经验,能吃苦耐劳,年龄20-50岁 · 期望薪资 ¥7000-9000企业评分：5 · 技能/地点/薪资已进入匹配排序0¥7000-9000/月建筑焊工蓝领科技有限公司北京市朝阳区 · 全职包吃包住五险一金硬性条件：持有焊工证,5年以上焊接经验,会二保焊/氩弧焊,能高空作业 · 期望薪资 ¥8000-12000企业评分：5 · 技能/地点/薪资已进入匹配排序0¥8000-12000/月快递分拣员北京建工集团北京市通州区 · 全职包吃五险一金硬性条件：年龄18-45岁,身体健康,能吃苦耐劳,认识26个英文字母,无犯罪记录 · 期望薪资 ¥5500-7500企业评分：4.8 · 技能/地点/薪资已进入匹配排序已认证企业¥5500-7500/月顺丰快递员北京建工集团北京市通州区 · 全职五险一金硬性条件：年龄18-40岁,身体健康,无不良记录,熟悉当地地形,自带电动车优先 · 期望薪资 ¥6000-10000企业评分：4.8 · 技能/地点/薪资已进入匹配排序已认证企业¥6000-10000/月住家月嫂顺丰速运北京分公司北京市海淀区 · 住家包吃包住五险一金硬性条件：持有月嫂证/育婴师证,2年以上月嫂经验,年龄30-55岁,无传染病,有健康证 · 期望薪资 ¥8000-15000企业评分：4.6 · 技能/地点/薪资已进入匹配排序已认证企业¥8000-15000/月钟点保洁工顺丰速运北京分公司北京市海淀区 · 兼职硬性条件：年龄25-55岁,身体健康,有家政保洁经验,做事认真仔细,无不良记录 · 期望薪资 ¥4000-6000企业评分：4.6 · 技能/地点/薪资已进入匹配排序已认证企业¥4000-6000/月仓储管理员北京爱家家政服务公司北京市大兴区 · 全职包吃包住五险一金硬性条件：年龄18-45岁,初中以上学历,有仓储管理经验,会简单电脑操作,有叉车证优先 · 期望薪资 ¥5000-7000企业评分：4.9 · 技能/地点/薪资已进入匹配排序已认证企业¥5000-7000/月叉车司机北京爱家家政服务公司北京市大兴区 · 全职包吃包住五险一金硬性条件：持有叉车证(N1证),1年以上叉车驾驶经验,能吃苦耐劳,服从安排,无不良记录 · 期望薪资 ¥6000-8000企业评分：4.9 · 技能/地点/薪资已进入匹配排序已认证企业¥6000-8000/月餐厅服务员京东物流北京仓储中心北京市东城区 · 全职包吃包住五险一金硬性条件：年龄18-35岁,形象气质佳,有餐饮服务经验优先,普通话标准 · 期望薪资 ¥4500-6000企业评分：4.7 · 技能/地点/薪资已进入匹配排序已认证企业¥4500-6000/月后厨打荷京东物流北京仓储中心北京市东城区 · 全职包吃包住五险一金硬性条件：年龄18-50岁,身体健康,能吃苦耐劳,有无经验均可,想学厨师优先 · 期望薪资 ¥4000-5500企业评分：4.7 · 技能/地点/薪资已进入匹配排序已认证企业¥4000-5500/月",
+    "emptyTextCount": 0
+  },
+  "domTree": {
+    "tag": "html",
+    "id": "",
+    "className": "",
+    "selectorHint": "html",
+    "text": "蓝领就业平台 首页 搜索筛选岗位 管理后台 登录 注册 搜索结果与查询结果 搜索框支持按岗位关键词、工作地点和薪资筛选蓝领岗位。 薪资不限 3000以上 500",
+    "visible": true,
+    "childCount": 2,
+    "children": [
+      {
+        "tag": "head",
+        "id": "",
+        "className": "",
+        "selectorHint": "head",
+        "text": "import { injectIntoGlobalHook } from \"/@react-refresh\"; injectIntoGlobalHook(win",
+        "visible": false,
+        "childCount": 8,
+        "children": [
+          {
+            "tag": "meta",
+            "id": "",
+            "className": "",
+            "selectorHint": "meta",
+            "text": "",
+            "visible": false,
+            "childCount": 0,
+            "children": []
+          },
+          {
+            "tag": "meta",
+            "id": "",
+            "className": "",
+            "selectorHint": "meta",
+            "text": "",
+            "visible": false,
+            "childCount": 0,
+            "children": []
+          },
+          {
+            "tag": "link",
+            "id": "",
+            "className": "",
+            "selectorHint": "link",
+            "text": "",
+            "visible": false,
+            "childCount": 0,
+            "children": []
+          },
+          {
+            "tag": "title",
+            "id": "",
+            "className": "",
+            "selectorHint": "title",
+            "text": "蓝领就业精准撮合平台",
+            "visible": false,
+            "childCount": 0,
+            "children": []
+          }
+        ]
+      },
+      {
+        "tag": "body",
+        "id": "",
+        "className": "",
+        "selectorHint": "body",
+        "text": "蓝领就业平台 首页 搜索筛选岗位 管理后台 登录 注册 搜索结果与查询结果 搜索框支持按岗位关键词、工作地点和薪资筛选蓝领岗位。 薪资不限 3000以上 500",
+        "visible": true,
+        "childCount": 2,
+        "children": [
+          {
+            "tag": "div",
+            "id": "root",
+            "className": "",
+            "selectorHint": "div#root",
+            "text": "蓝领就业平台 首页 搜索筛选岗位 管理后台 登录 注册 搜索结果与查询结果 搜索框支持按岗位关键词、工作地点和薪资筛选蓝领岗位。 薪资不限 3000以上 500",
+            "visible": true,
+            "childCount": 1,
+            "children": [
+              {
+                "tag": "div",
+                "id": "",
+                "className": "",
+                "selectorHint": "div",
+                "text": "蓝领就业平台 首页 搜索筛选岗位 管理后台 登录 注册 搜索结果与查询结果 搜索框支持按岗位关键词、工作地点和薪资筛选蓝领岗位。 薪资不限 3000以上 500",
+                "visible": true,
+                "childCount": 2,
+                "children": [
+                  {
+                    "tag": "header",
+                    "id": "",
+                    "className": "header",
+                    "selectorHint": "header.header",
+                    "text": "蓝领就业平台 首页 搜索筛选岗位 管理后台 登录 注册",
+                    "visible": true,
+                    "childCount": 1,
+                    "children": [
+                      {
+                        "tag": "div",
+                        "id": "",
+                        "className": "header-content",
+                        "selectorHint": "div.header-content",
+                        "text": "蓝领就业平台 首页 搜索筛选岗位 管理后台 登录 注册",
+                        "visible": true,
+                        "childCount": 3,
+                        "children": []
+                      }
+                    ]
+                  },
+                  {
+                    "tag": "div",
+                    "id": "",
+                    "className": "container",
+                    "selectorHint": "div.container",
+                    "text": "搜索结果与查询结果 搜索框支持按岗位关键词、工作地点和薪资筛选蓝领岗位。 薪资不限 3000以上 5000以上 8000以上 10000以上 技能不限 电工 焊",
+                    "visible": true,
+                    "childCount": 14,
+                    "children": [
+                      {
+                        "tag": "h1",
+                        "id": "",
+                        "className": "page-title",
+                        "selectorHint": "h1.page-title",
+                        "text": "搜索结果与查询结果",
+                        "visible": true,
+                        "childCount": 0,
+                        "children": []
+                      },
+                      {
+                        "tag": "p",
+                        "id": "",
+                        "className": "text-secondary mb-24",
+                        "selectorHint": "p.text-secondary.mb-24",
+                        "text": "搜索框支持按岗位关键词、工作地点和薪资筛选蓝领岗位。",
+                        "visible": true,
+                        "childCount": 0,
+                        "children": []
+                      },
+                      {
+                        "tag": "div",
+                        "id": "",
+                        "className": "card mb-24",
+                        "selectorHint": "div.card.mb-24",
+                        "text": "薪资不限 3000以上 5000以上 8000以上 10000以上 技能不限 电工 焊工 叉车 分拣 保洁 通勤半径 3公里内 5公里内 10公里内 搜索 匹配",
+                        "visible": true,
+                        "childCount": 1,
+                        "children": []
+                      },
+                      {
+                        "tag": "div",
+                        "id": "",
+                        "className": "",
+                        "selectorHint": "div",
+                        "text": "共找到 10 个岗位",
+                        "visible": true,
+                        "childCount": 1,
+                        "children": []
+                      },
+                      {
+                        "tag": "a",
+                        "id": "",
+                        "className": "",
+                        "selectorHint": "a",
+                        "text": "急招电工 蓝领科技有限公司 北京市朝阳区 · 全职 包吃包住五险一金 硬性条件：持有低压电工证,3年以上工作经验,能吃苦耐劳,年龄20-50岁 · 期望薪资 ¥",
+                        "visible": true,
+                        "childCount": 1,
+                        "children": []
+                      },
+                      {
+                        "tag": "a",
+                        "id": "",
+                        "className": "",
+                        "selectorHint": "a",
+                        "text": "建筑焊工 蓝领科技有限公司 北京市朝阳区 · 全职 包吃包住五险一金 硬性条件：持有焊工证,5年以上焊接经验,会二保焊/氩弧焊,能高空作业 · 期望薪资 ¥80",
+                        "visible": true,
+                        "childCount": 1,
+                        "children": []
+                      },
+                      {
+                        "tag": "a",
+                        "id": "",
+                        "className": "",
+                        "selectorHint": "a",
+                        "text": "快递分拣员 北京建工集团 北京市通州区 · 全职 包吃五险一金 硬性条件：年龄18-45岁,身体健康,能吃苦耐劳,认识26个英文字母,无犯罪记录 · 期望薪资 ",
+                        "visible": true,
+                        "childCount": 1,
+                        "children": []
+                      },
+                      {
+                        "tag": "a",
+                        "id": "",
+                        "className": "",
+                        "selectorHint": "a",
+                        "text": "顺丰快递员 北京建工集团 北京市通州区 · 全职 五险一金 硬性条件：年龄18-40岁,身体健康,无不良记录,熟悉当地地形,自带电动车优先 · 期望薪资 ¥60",
+                        "visible": true,
+                        "childCount": 1,
+                        "children": []
+                      },
+                      {
+                        "tag": "a",
+                        "id": "",
+                        "className": "",
+                        "selectorHint": "a",
+                        "text": "住家月嫂 顺丰速运北京分公司 北京市海淀区 · 住家 包吃包住五险一金 硬性条件：持有月嫂证/育婴师证,2年以上月嫂经验,年龄30-55岁,无传染病,有健康证 ",
+                        "visible": true,
+                        "childCount": 1,
+                        "children": []
+                      },
+                      {
+                        "tag": "a",
+                        "id": "",
+                        "className": "",
+                        "selectorHint": "a",
+                        "text": "钟点保洁工 顺丰速运北京分公司 北京市海淀区 · 兼职 硬性条件：年龄25-55岁,身体健康,有家政保洁经验,做事认真仔细,无不良记录 · 期望薪资 ¥4000",
+                        "visible": true,
+                        "childCount": 1,
+                        "children": []
+                      },
+                      {
+                        "tag": "a",
+                        "id": "",
+                        "className": "",
+                        "selectorHint": "a",
+                        "text": "仓储管理员 北京爱家家政服务公司 北京市大兴区 · 全职 包吃包住五险一金 硬性条件：年龄18-45岁,初中以上学历,有仓储管理经验,会简单电脑操作,有叉车证优",
+                        "visible": true,
+                        "childCount": 1,
+                        "children": []
+                      },
+                      {
+                        "tag": "a",
+                        "id": "",
+                        "className": "",
+                        "selectorHint": "a",
+                        "text": "叉车司机 北京爱家家政服务公司 北京市大兴区 · 全职 包吃包住五险一金 硬性条件：持有叉车证(N1证),1年以上叉车驾驶经验,能吃苦耐劳,服从安排,无不良记录",
+                        "visible": true,
+                        "childCount": 1,
+                        "children": []
+                      },
+                      {
+                        "tag": "a",
+                        "id": "",
+                        "className": "",
+                        "selectorHint": "a",
+                        "text": "餐厅服务员 京东物流北京仓储中心 北京市东城区 · 全职 包吃包住五险一金 硬性条件：年龄18-35岁,形象气质佳,有餐饮服务经验优先,普通话标准 · 期望薪资",
+                        "visible": true,
+                        "childCount": 1,
+                        "children": []
+                      },
+                      {
+                        "tag": "a",
+                        "id": "",
+                        "className": "",
+                        "selectorHint": "a",
+                        "text": "后厨打荷 京东物流北京仓储中心 北京市东城区 · 全职 包吃包住五险一金 硬性条件：年龄18-50岁,身体健康,能吃苦耐劳,有无经验均可,想学厨师优先 · 期望",
+                        "visible": true,
+                        "childCount": 1,
+                        "children": []
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  "allElements": [
+    {
+      "index": 0,
+      "tag": "html",
+      "id": "",
+      "className": "",
+      "selectorHint": "html",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "蓝领就业平台 首页 搜索筛选岗位 管理后台 登录 注册 搜索结果与查询结果 搜索框支持按岗位关键词、工作地点和薪资筛选蓝领岗位。 薪资不限 3000以上 5000以上 8000以上 10000以上 技能不限 电工 焊工 叉车 分拣 保洁 通勤半径 3公里内 5公里内 10公里内 搜索 匹配条件覆盖技能标签、期望薪资、工作地点、通勤半径、企业认证和福利项；结果",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 2,
+      "rect": {
+        "x": 0,
+        "y": 0,
+        "width": 1600,
+        "height": 3060
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 1,
+      "tag": "head",
+      "id": "",
+      "className": "",
+      "selectorHint": "head",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "import { injectIntoGlobalHook } from \"/@react-refresh\"; injectIntoGlobalHook(window); window.$RefreshReg$ = () => {}; window.$RefreshSig$ = () => (type) => type; 蓝领就业精准撮合平台 * { mar",
+      "href": "",
+      "disabled": false,
+      "visible": false,
+      "childCount": 8,
+      "rect": {
+        "x": 0,
+        "y": 0,
+        "width": 0,
+        "height": 0
+      },
+      "style": {
+        "display": "none",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 2,
+      "tag": "meta",
+      "id": "",
+      "className": "",
+      "selectorHint": "meta",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "",
+      "href": "",
+      "disabled": false,
+      "visible": false,
+      "childCount": 0,
+      "rect": {
+        "x": 0,
+        "y": 0,
+        "width": 0,
+        "height": 0
+      },
+      "style": {
+        "display": "none",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 3,
+      "tag": "meta",
+      "id": "",
+      "className": "",
+      "selectorHint": "meta",
+      "name": "viewport",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "",
+      "href": "",
+      "disabled": false,
+      "visible": false,
+      "childCount": 0,
+      "rect": {
+        "x": 0,
+        "y": 0,
+        "width": 0,
+        "height": 0
+      },
+      "style": {
+        "display": "none",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 4,
+      "tag": "link",
+      "id": "",
+      "className": "",
+      "selectorHint": "link",
+      "name": "",
+      "type": "image/svg+xml",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "",
+      "href": "/favicon.svg",
+      "disabled": false,
+      "visible": false,
+      "childCount": 0,
+      "rect": {
+        "x": 0,
+        "y": 0,
+        "width": 0,
+        "height": 0
+      },
+      "style": {
+        "display": "none",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 5,
+      "tag": "title",
+      "id": "",
+      "className": "",
+      "selectorHint": "title",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "蓝领就业精准撮合平台",
+      "href": "",
+      "disabled": false,
+      "visible": false,
+      "childCount": 0,
+      "rect": {
+        "x": 0,
+        "y": 0,
+        "width": 0,
+        "height": 0
+      },
+      "style": {
+        "display": "none",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 6,
+      "tag": "body",
+      "id": "",
+      "className": "",
+      "selectorHint": "body",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "蓝领就业平台 首页 搜索筛选岗位 管理后台 登录 注册 搜索结果与查询结果 搜索框支持按岗位关键词、工作地点和薪资筛选蓝领岗位。 薪资不限 3000以上 5000以上 8000以上 10000以上 技能不限 电工 焊工 叉车 分拣 保洁 通勤半径 3公里内 5公里内 10公里内 搜索 匹配条件覆盖技能标签、期望薪资、工作地点、通勤半径、企业认证和福利项；结果",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 2,
+      "rect": {
+        "x": 0,
+        "y": 0,
+        "width": 1600,
+        "height": 3060
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 7,
+      "tag": "div",
+      "id": "root",
+      "className": "",
+      "selectorHint": "div#root",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "蓝领就业平台 首页 搜索筛选岗位 管理后台 登录 注册 搜索结果与查询结果 搜索框支持按岗位关键词、工作地点和薪资筛选蓝领岗位。 薪资不限 3000以上 5000以上 8000以上 10000以上 技能不限 电工 焊工 叉车 分拣 保洁 通勤半径 3公里内 5公里内 10公里内 搜索 匹配条件覆盖技能标签、期望薪资、工作地点、通勤半径、企业认证和福利项；结果",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 1,
+      "rect": {
+        "x": 0,
+        "y": 0,
+        "width": 1600,
+        "height": 3060
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 8,
+      "tag": "div",
+      "id": "",
+      "className": "",
+      "selectorHint": "div",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "蓝领就业平台 首页 搜索筛选岗位 管理后台 登录 注册 搜索结果与查询结果 搜索框支持按岗位关键词、工作地点和薪资筛选蓝领岗位。 薪资不限 3000以上 5000以上 8000以上 10000以上 技能不限 电工 焊工 叉车 分拣 保洁 通勤半径 3公里内 5公里内 10公里内 搜索 匹配条件覆盖技能标签、期望薪资、工作地点、通勤半径、企业认证和福利项；结果",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 2,
+      "rect": {
+        "x": 0,
+        "y": 0,
+        "width": 1600,
+        "height": 3060
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 9,
+      "tag": "header",
+      "id": "",
+      "className": "header",
+      "selectorHint": "header.header",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "蓝领就业平台 首页 搜索筛选岗位 管理后台 登录 注册",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 1,
+      "rect": {
+        "x": 0,
+        "y": 0,
+        "width": 1600,
+        "height": 64
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 10,
+      "tag": "div",
+      "id": "",
+      "className": "header-content",
+      "selectorHint": "div.header-content",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "蓝领就业平台 首页 搜索筛选岗位 管理后台 登录 注册",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 3,
+      "rect": {
+        "x": 200,
+        "y": 0,
+        "width": 1200,
+        "height": 64
+      },
+      "style": {
+        "display": "flex",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 11,
+      "tag": "a",
+      "id": "",
+      "className": "logo",
+      "selectorHint": "a.logo",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "蓝领就业平台",
+      "href": "/",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 220,
+        "y": 16,
+        "width": 120,
+        "height": 32
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 12,
+      "tag": "nav",
+      "id": "",
+      "className": "nav",
+      "selectorHint": "nav.nav",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "首页 搜索筛选岗位 管理后台",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 3,
+      "rect": {
+        "x": 700,
+        "y": 21,
+        "width": 216,
+        "height": 22
+      },
+      "style": {
+        "display": "flex",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 13,
+      "tag": "a",
+      "id": "",
+      "className": "",
+      "selectorHint": "a",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "首页",
+      "href": "/",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 700,
+        "y": 21,
+        "width": 28,
+        "height": 22
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 14,
+      "tag": "a",
+      "id": "",
+      "className": "active",
+      "selectorHint": "a.active",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "搜索筛选岗位",
+      "href": "/jobs",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 752,
+        "y": 21,
+        "width": 84,
+        "height": 22
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 15,
+      "tag": "a",
+      "id": "",
+      "className": "",
+      "selectorHint": "a",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "管理后台",
+      "href": "/admin/dashboard",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 860,
+        "y": 21,
+        "width": 56,
+        "height": 22
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 16,
+      "tag": "div",
+      "id": "",
+      "className": "nav",
+      "selectorHint": "div.nav",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "登录 注册",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 2,
+      "rect": {
+        "x": 1276,
+        "y": 17,
+        "width": 104,
+        "height": 30
+      },
+      "style": {
+        "display": "flex",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 17,
+      "tag": "a",
+      "id": "",
+      "className": "",
+      "selectorHint": "a",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "登录",
+      "href": "/login",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 1276,
+        "y": 17,
+        "width": 28,
+        "height": 30
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 18,
+      "tag": "a",
+      "id": "",
+      "className": "btn btn-primary btn-sm",
+      "selectorHint": "a.btn.btn-primary.btn-sm",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "注册",
+      "href": "/register",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 1328,
+        "y": 17,
+        "width": 52,
+        "height": 30
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 19,
+      "tag": "div",
+      "id": "",
+      "className": "container",
+      "selectorHint": "div.container",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "搜索结果与查询结果 搜索框支持按岗位关键词、工作地点和薪资筛选蓝领岗位。 薪资不限 3000以上 5000以上 8000以上 10000以上 技能不限 电工 焊工 叉车 分拣 保洁 通勤半径 3公里内 5公里内 10公里内 搜索 匹配条件覆盖技能标签、期望薪资、工作地点、通勤半径、企业认证和福利项；结果卡片可直接进入投递详情。 共找到 10 个岗位 急招电工",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 14,
+      "rect": {
+        "x": 200,
+        "y": 64,
+        "width": 1200,
+        "height": 2996
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 20,
+      "tag": "h1",
+      "id": "",
+      "className": "page-title",
+      "selectorHint": "h1.page-title",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "搜索结果与查询结果",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 220,
+        "y": 104,
+        "width": 1160,
+        "height": 38
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 21,
+      "tag": "p",
+      "id": "",
+      "className": "text-secondary mb-24",
+      "selectorHint": "p.text-secondary.mb-24",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "搜索框支持按岗位关键词、工作地点和薪资筛选蓝领岗位。",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 220,
+        "y": 162,
+        "width": 1160,
+        "height": 26
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 22,
+      "tag": "div",
+      "id": "",
+      "className": "card mb-24",
+      "selectorHint": "div.card.mb-24",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "薪资不限 3000以上 5000以上 8000以上 10000以上 技能不限 电工 焊工 叉车 分拣 保洁 通勤半径 3公里内 5公里内 10公里内 搜索 匹配条件覆盖技能标签、期望薪资、工作地点、通勤半径、企业认证和福利项；结果卡片可直接进入投递详情。",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 1,
+      "rect": {
+        "x": 220,
+        "y": 212,
+        "width": 1160,
+        "height": 167
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 23,
+      "tag": "form",
+      "id": "",
+      "className": "",
+      "selectorHint": "form",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "薪资不限 3000以上 5000以上 8000以上 10000以上 技能不限 电工 焊工 叉车 分拣 保洁 通勤半径 3公里内 5公里内 10公里内 搜索 匹配条件覆盖技能标签、期望薪资、工作地点、通勤半径、企业认证和福利项；结果卡片可直接进入投递详情。",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 2,
+      "rect": {
+        "x": 240,
+        "y": 232,
+        "width": 1120,
+        "height": 127
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 24,
+      "tag": "div",
+      "id": "",
+      "className": "grid grid-4",
+      "selectorHint": "div.grid.grid-4",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "薪资不限 3000以上 5000以上 8000以上 10000以上 技能不限 电工 焊工 叉车 分拣 保洁 通勤半径 3公里内 5公里内 10公里内 搜索",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 6,
+      "rect": {
+        "x": 240,
+        "y": 232,
+        "width": 1120,
+        "height": 96
+      },
+      "style": {
+        "display": "grid",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 25,
+      "tag": "div",
+      "id": "",
+      "className": "form-group",
+      "selectorHint": "div.form-group",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 1,
+      "rect": {
+        "x": 240,
+        "y": 232,
+        "width": 268,
+        "height": 40
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 26,
+      "tag": "input",
+      "id": "",
+      "className": "form-input",
+      "selectorHint": "input.form-input",
+      "name": "",
+      "type": "text",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "搜索岗位关键词",
+      "text": "",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 240,
+        "y": 232,
+        "width": 268,
+        "height": 38
+      },
+      "style": {
+        "display": "inline-block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 27,
+      "tag": "div",
+      "id": "",
+      "className": "form-group",
+      "selectorHint": "div.form-group",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 1,
+      "rect": {
+        "x": 524,
+        "y": 232,
+        "width": 268,
+        "height": 40
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 28,
+      "tag": "input",
+      "id": "",
+      "className": "form-input",
+      "selectorHint": "input.form-input",
+      "name": "",
+      "type": "text",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "工作地点",
+      "text": "",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 524,
+        "y": 232,
+        "width": 268,
+        "height": 38
+      },
+      "style": {
+        "display": "inline-block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 29,
+      "tag": "div",
+      "id": "",
+      "className": "form-group",
+      "selectorHint": "div.form-group",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "薪资不限 3000以上 5000以上 8000以上 10000以上",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 1,
+      "rect": {
+        "x": 808,
+        "y": 232,
+        "width": 268,
+        "height": 40
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 30,
+      "tag": "select",
+      "id": "",
+      "className": "form-select",
+      "selectorHint": "select.form-select",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "薪资不限 3000以上 5000以上 8000以上 10000以上",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 5,
+      "rect": {
+        "x": 808,
+        "y": 232,
+        "width": 268,
+        "height": 40
+      },
+      "style": {
+        "display": "inline-block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 31,
+      "tag": "option",
+      "id": "",
+      "className": "",
+      "selectorHint": "option",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "薪资不限",
+      "href": "",
+      "disabled": false,
+      "visible": false,
+      "childCount": 0,
+      "rect": {
+        "x": 0,
+        "y": 0,
+        "width": 0,
+        "height": 0
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 32,
+      "tag": "option",
+      "id": "",
+      "className": "",
+      "selectorHint": "option",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "3000以上",
+      "href": "",
+      "disabled": false,
+      "visible": false,
+      "childCount": 0,
+      "rect": {
+        "x": 0,
+        "y": 0,
+        "width": 0,
+        "height": 0
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 33,
+      "tag": "option",
+      "id": "",
+      "className": "",
+      "selectorHint": "option",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "5000以上",
+      "href": "",
+      "disabled": false,
+      "visible": false,
+      "childCount": 0,
+      "rect": {
+        "x": 0,
+        "y": 0,
+        "width": 0,
+        "height": 0
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 34,
+      "tag": "option",
+      "id": "",
+      "className": "",
+      "selectorHint": "option",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "8000以上",
+      "href": "",
+      "disabled": false,
+      "visible": false,
+      "childCount": 0,
+      "rect": {
+        "x": 0,
+        "y": 0,
+        "width": 0,
+        "height": 0
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 35,
+      "tag": "option",
+      "id": "",
+      "className": "",
+      "selectorHint": "option",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "10000以上",
+      "href": "",
+      "disabled": false,
+      "visible": false,
+      "childCount": 0,
+      "rect": {
+        "x": 0,
+        "y": 0,
+        "width": 0,
+        "height": 0
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 36,
+      "tag": "div",
+      "id": "",
+      "className": "form-group",
+      "selectorHint": "div.form-group",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "技能不限 电工 焊工 叉车 分拣 保洁",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 1,
+      "rect": {
+        "x": 1092,
+        "y": 232,
+        "width": 268,
+        "height": 40
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 37,
+      "tag": "select",
+      "id": "",
+      "className": "form-select",
+      "selectorHint": "select.form-select",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "技能不限 电工 焊工 叉车 分拣 保洁",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 6,
+      "rect": {
+        "x": 1092,
+        "y": 232,
+        "width": 268,
+        "height": 40
+      },
+      "style": {
+        "display": "inline-block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 38,
+      "tag": "option",
+      "id": "",
+      "className": "",
+      "selectorHint": "option",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "技能不限",
+      "href": "",
+      "disabled": false,
+      "visible": false,
+      "childCount": 0,
+      "rect": {
+        "x": 0,
+        "y": 0,
+        "width": 0,
+        "height": 0
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 39,
+      "tag": "option",
+      "id": "",
+      "className": "",
+      "selectorHint": "option",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "电工",
+      "href": "",
+      "disabled": false,
+      "visible": false,
+      "childCount": 0,
+      "rect": {
+        "x": 0,
+        "y": 0,
+        "width": 0,
+        "height": 0
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 40,
+      "tag": "option",
+      "id": "",
+      "className": "",
+      "selectorHint": "option",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "焊工",
+      "href": "",
+      "disabled": false,
+      "visible": false,
+      "childCount": 0,
+      "rect": {
+        "x": 0,
+        "y": 0,
+        "width": 0,
+        "height": 0
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 41,
+      "tag": "option",
+      "id": "",
+      "className": "",
+      "selectorHint": "option",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "叉车",
+      "href": "",
+      "disabled": false,
+      "visible": false,
+      "childCount": 0,
+      "rect": {
+        "x": 0,
+        "y": 0,
+        "width": 0,
+        "height": 0
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 42,
+      "tag": "option",
+      "id": "",
+      "className": "",
+      "selectorHint": "option",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "分拣",
+      "href": "",
+      "disabled": false,
+      "visible": false,
+      "childCount": 0,
+      "rect": {
+        "x": 0,
+        "y": 0,
+        "width": 0,
+        "height": 0
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 43,
+      "tag": "option",
+      "id": "",
+      "className": "",
+      "selectorHint": "option",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "保洁",
+      "href": "",
+      "disabled": false,
+      "visible": false,
+      "childCount": 0,
+      "rect": {
+        "x": 0,
+        "y": 0,
+        "width": 0,
+        "height": 0
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 44,
+      "tag": "div",
+      "id": "",
+      "className": "form-group",
+      "selectorHint": "div.form-group",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "通勤半径 3公里内 5公里内 10公里内",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 1,
+      "rect": {
+        "x": 240,
+        "y": 288,
+        "width": 268,
+        "height": 40
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 45,
+      "tag": "select",
+      "id": "",
+      "className": "form-select",
+      "selectorHint": "select.form-select",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "通勤半径 3公里内 5公里内 10公里内",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 4,
+      "rect": {
+        "x": 240,
+        "y": 288,
+        "width": 268,
+        "height": 40
+      },
+      "style": {
+        "display": "inline-block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 46,
+      "tag": "option",
+      "id": "",
+      "className": "",
+      "selectorHint": "option",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "通勤半径",
+      "href": "",
+      "disabled": false,
+      "visible": false,
+      "childCount": 0,
+      "rect": {
+        "x": 0,
+        "y": 0,
+        "width": 0,
+        "height": 0
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 47,
+      "tag": "option",
+      "id": "",
+      "className": "",
+      "selectorHint": "option",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "3公里内",
+      "href": "",
+      "disabled": false,
+      "visible": false,
+      "childCount": 0,
+      "rect": {
+        "x": 0,
+        "y": 0,
+        "width": 0,
+        "height": 0
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 48,
+      "tag": "option",
+      "id": "",
+      "className": "",
+      "selectorHint": "option",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "5公里内",
+      "href": "",
+      "disabled": false,
+      "visible": false,
+      "childCount": 0,
+      "rect": {
+        "x": 0,
+        "y": 0,
+        "width": 0,
+        "height": 0
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 49,
+      "tag": "option",
+      "id": "",
+      "className": "",
+      "selectorHint": "option",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "10公里内",
+      "href": "",
+      "disabled": false,
+      "visible": false,
+      "childCount": 0,
+      "rect": {
+        "x": 0,
+        "y": 0,
+        "width": 0,
+        "height": 0
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 50,
+      "tag": "button",
+      "id": "",
+      "className": "btn btn-primary",
+      "selectorHint": "button.btn.btn-primary",
+      "name": "",
+      "type": "submit",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "搜索",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 524,
+        "y": 288,
+        "width": 268,
+        "height": 40
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 51,
+      "tag": "div",
+      "id": "",
+      "className": "text-secondary text-sm",
+      "selectorHint": "div.text-secondary.text-sm",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "匹配条件覆盖技能标签、期望薪资、工作地点、通勤半径、企业认证和福利项；结果卡片可直接进入投递详情。",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 240,
+        "y": 340,
+        "width": 1120,
+        "height": 19
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 52,
+      "tag": "div",
+      "id": "",
+      "className": "",
+      "selectorHint": "div",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "共找到 10 个岗位",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 1,
+      "rect": {
+        "x": 220,
+        "y": 403,
+        "width": 1160,
+        "height": 26
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 53,
+      "tag": "span",
+      "id": "",
+      "className": "text-secondary",
+      "selectorHint": "span.text-secondary",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "共找到 10 个岗位",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 220,
+        "y": 406,
+        "width": 121,
+        "height": 18
+      },
+      "style": {
+        "display": "inline",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 54,
+      "tag": "a",
+      "id": "",
+      "className": "",
+      "selectorHint": "a",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "急招电工 蓝领科技有限公司 北京市朝阳区 · 全职 包吃包住五险一金 硬性条件：持有低压电工证,3年以上工作经验,能吃苦耐劳,年龄20-50岁 · 期望薪资 ¥7000-9000 企业评分：5 · 技能/地点/薪资已进入匹配排序 0 ¥7000-9000 /月",
+      "href": "/jobs/1",
+      "disabled": false,
+      "visible": true,
+      "childCount": 1,
+      "rect": {
+        "x": 220,
+        "y": 445,
+        "width": 1160,
+        "height": 240
+      },
+      "style": {
+        "display": "inline",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 55,
+      "tag": "div",
+      "id": "",
+      "className": "card job-card",
+      "selectorHint": "div.card.job-card",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "急招电工 蓝领科技有限公司 北京市朝阳区 · 全职 包吃包住五险一金 硬性条件：持有低压电工证,3年以上工作经验,能吃苦耐劳,年龄20-50岁 · 期望薪资 ¥7000-9000 企业评分：5 · 技能/地点/薪资已进入匹配排序 0 ¥7000-9000 /月",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 1,
+      "rect": {
+        "x": 220,
+        "y": 445,
+        "width": 1160,
+        "height": 240
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 56,
+      "tag": "div",
+      "id": "",
+      "className": "flex flex-between",
+      "selectorHint": "div.flex.flex-between",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "急招电工 蓝领科技有限公司 北京市朝阳区 · 全职 包吃包住五险一金 硬性条件：持有低压电工证,3年以上工作经验,能吃苦耐劳,年龄20-50岁 · 期望薪资 ¥7000-9000 企业评分：5 · 技能/地点/薪资已进入匹配排序 0 ¥7000-9000 /月",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 2,
+      "rect": {
+        "x": 240,
+        "y": 465,
+        "width": 1120,
+        "height": 200
+      },
+      "style": {
+        "display": "flex",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 57,
+      "tag": "div",
+      "id": "",
+      "className": "",
+      "selectorHint": "div",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "急招电工 蓝领科技有限公司 北京市朝阳区 · 全职 包吃包住五险一金 硬性条件：持有低压电工证,3年以上工作经验,能吃苦耐劳,年龄20-50岁 · 期望薪资 ¥7000-9000 企业评分：5 · 技能/地点/薪资已进入匹配排序 0",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 6,
+      "rect": {
+        "x": 240,
+        "y": 465,
+        "width": 1010,
+        "height": 200
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 58,
+      "tag": "div",
+      "id": "",
+      "className": "job-title",
+      "selectorHint": "div.job-title",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "急招电工",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 240,
+        "y": 465,
+        "width": 1010,
+        "height": 29
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 59,
+      "tag": "div",
+      "id": "",
+      "className": "text-secondary mb-8",
+      "selectorHint": "div.text-secondary.mb-8",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "蓝领科技有限公司",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 240,
+        "y": 502,
+        "width": 1010,
+        "height": 26
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 60,
+      "tag": "div",
+      "id": "",
+      "className": "text-secondary mb-16 text-sm",
+      "selectorHint": "div.text-secondary.mb-16.text-sm",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "北京市朝阳区 · 全职",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 240,
+        "y": 535,
+        "width": 1010,
+        "height": 19
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 61,
+      "tag": "div",
+      "id": "",
+      "className": "",
+      "selectorHint": "div",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "包吃包住五险一金",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 3,
+      "rect": {
+        "x": 240,
+        "y": 570,
+        "width": 1010,
+        "height": 30
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 62,
+      "tag": "span",
+      "id": "",
+      "className": "tag tag-primary",
+      "selectorHint": "span.tag.tag-primary",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "包吃",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 240,
+        "y": 571,
+        "width": 42,
+        "height": 25
+      },
+      "style": {
+        "display": "inline-block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 63,
+      "tag": "span",
+      "id": "",
+      "className": "tag tag-primary",
+      "selectorHint": "span.tag.tag-primary",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "包住",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 290,
+        "y": 571,
+        "width": 42,
+        "height": 25
+      },
+      "style": {
+        "display": "inline-block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 64,
+      "tag": "span",
+      "id": "",
+      "className": "tag tag-primary",
+      "selectorHint": "span.tag.tag-primary",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "五险一金",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 340,
+        "y": 571,
+        "width": 66,
+        "height": 25
+      },
+      "style": {
+        "display": "inline-block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 65,
+      "tag": "div",
+      "id": "",
+      "className": "text-secondary text-sm mt-8",
+      "selectorHint": "div.text-secondary.text-sm.mt-8",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "硬性条件：持有低压电工证,3年以上工作经验,能吃苦耐劳,年龄20-50岁 · 期望薪资 ¥7000-9000",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 240,
+        "y": 601,
+        "width": 1010,
+        "height": 19
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 66,
+      "tag": "div",
+      "id": "",
+      "className": "text-secondary text-sm mt-8",
+      "selectorHint": "div.text-secondary.text-sm.mt-8",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "企业评分：5 · 技能/地点/薪资已进入匹配排序",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 240,
+        "y": 620,
+        "width": 1010,
+        "height": 19
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 67,
+      "tag": "div",
+      "id": "",
+      "className": "",
+      "selectorHint": "div",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "¥7000-9000 /月",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 2,
+      "rect": {
+        "x": 1250,
+        "y": 465,
+        "width": 110,
+        "height": 200
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 68,
+      "tag": "div",
+      "id": "",
+      "className": "salary",
+      "selectorHint": "div.salary",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "¥7000-9000",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 1250,
+        "y": 465,
+        "width": 110,
+        "height": 29
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 69,
+      "tag": "div",
+      "id": "",
+      "className": "text-secondary text-sm",
+      "selectorHint": "div.text-secondary.text-sm",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "/月",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 1250,
+        "y": 494,
+        "width": 110,
+        "height": 19
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 70,
+      "tag": "a",
+      "id": "",
+      "className": "",
+      "selectorHint": "a",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "建筑焊工 蓝领科技有限公司 北京市朝阳区 · 全职 包吃包住五险一金 硬性条件：持有焊工证,5年以上焊接经验,会二保焊/氩弧焊,能高空作业 · 期望薪资 ¥8000-12000 企业评分：5 · 技能/地点/薪资已进入匹配排序 0 ¥8000-12000 /月",
+      "href": "/jobs/2",
+      "disabled": false,
+      "visible": true,
+      "childCount": 1,
+      "rect": {
+        "x": 220,
+        "y": 701,
+        "width": 1160,
+        "height": 240
+      },
+      "style": {
+        "display": "inline",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 71,
+      "tag": "div",
+      "id": "",
+      "className": "card job-card",
+      "selectorHint": "div.card.job-card",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "建筑焊工 蓝领科技有限公司 北京市朝阳区 · 全职 包吃包住五险一金 硬性条件：持有焊工证,5年以上焊接经验,会二保焊/氩弧焊,能高空作业 · 期望薪资 ¥8000-12000 企业评分：5 · 技能/地点/薪资已进入匹配排序 0 ¥8000-12000 /月",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 1,
+      "rect": {
+        "x": 220,
+        "y": 701,
+        "width": 1160,
+        "height": 240
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 72,
+      "tag": "div",
+      "id": "",
+      "className": "flex flex-between",
+      "selectorHint": "div.flex.flex-between",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "建筑焊工 蓝领科技有限公司 北京市朝阳区 · 全职 包吃包住五险一金 硬性条件：持有焊工证,5年以上焊接经验,会二保焊/氩弧焊,能高空作业 · 期望薪资 ¥8000-12000 企业评分：5 · 技能/地点/薪资已进入匹配排序 0 ¥8000-12000 /月",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 2,
+      "rect": {
+        "x": 240,
+        "y": 721,
+        "width": 1120,
+        "height": 200
+      },
+      "style": {
+        "display": "flex",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 73,
+      "tag": "div",
+      "id": "",
+      "className": "",
+      "selectorHint": "div",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "建筑焊工 蓝领科技有限公司 北京市朝阳区 · 全职 包吃包住五险一金 硬性条件：持有焊工证,5年以上焊接经验,会二保焊/氩弧焊,能高空作业 · 期望薪资 ¥8000-12000 企业评分：5 · 技能/地点/薪资已进入匹配排序 0",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 6,
+      "rect": {
+        "x": 240,
+        "y": 721,
+        "width": 1000,
+        "height": 200
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 74,
+      "tag": "div",
+      "id": "",
+      "className": "job-title",
+      "selectorHint": "div.job-title",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "建筑焊工",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 240,
+        "y": 721,
+        "width": 1000,
+        "height": 29
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 75,
+      "tag": "div",
+      "id": "",
+      "className": "text-secondary mb-8",
+      "selectorHint": "div.text-secondary.mb-8",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "蓝领科技有限公司",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 240,
+        "y": 757,
+        "width": 1000,
+        "height": 26
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 76,
+      "tag": "div",
+      "id": "",
+      "className": "text-secondary mb-16 text-sm",
+      "selectorHint": "div.text-secondary.mb-16.text-sm",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "北京市朝阳区 · 全职",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 240,
+        "y": 791,
+        "width": 1000,
+        "height": 19
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 77,
+      "tag": "div",
+      "id": "",
+      "className": "",
+      "selectorHint": "div",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "包吃包住五险一金",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 3,
+      "rect": {
+        "x": 240,
+        "y": 826,
+        "width": 1000,
+        "height": 30
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 78,
+      "tag": "span",
+      "id": "",
+      "className": "tag tag-primary",
+      "selectorHint": "span.tag.tag-primary",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "包吃",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 240,
+        "y": 827,
+        "width": 42,
+        "height": 25
+      },
+      "style": {
+        "display": "inline-block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 79,
+      "tag": "span",
+      "id": "",
+      "className": "tag tag-primary",
+      "selectorHint": "span.tag.tag-primary",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "包住",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 290,
+        "y": 827,
+        "width": 42,
+        "height": 25
+      },
+      "style": {
+        "display": "inline-block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 80,
+      "tag": "span",
+      "id": "",
+      "className": "tag tag-primary",
+      "selectorHint": "span.tag.tag-primary",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "五险一金",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 340,
+        "y": 827,
+        "width": 66,
+        "height": 25
+      },
+      "style": {
+        "display": "inline-block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 81,
+      "tag": "div",
+      "id": "",
+      "className": "text-secondary text-sm mt-8",
+      "selectorHint": "div.text-secondary.text-sm.mt-8",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "硬性条件：持有焊工证,5年以上焊接经验,会二保焊/氩弧焊,能高空作业 · 期望薪资 ¥8000-12000",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 240,
+        "y": 856,
+        "width": 1000,
+        "height": 19
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 82,
+      "tag": "div",
+      "id": "",
+      "className": "text-secondary text-sm mt-8",
+      "selectorHint": "div.text-secondary.text-sm.mt-8",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "企业评分：5 · 技能/地点/薪资已进入匹配排序",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 240,
+        "y": 875,
+        "width": 1000,
+        "height": 19
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 83,
+      "tag": "div",
+      "id": "",
+      "className": "",
+      "selectorHint": "div",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "¥8000-12000 /月",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 2,
+      "rect": {
+        "x": 1240,
+        "y": 721,
+        "width": 120,
+        "height": 200
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 84,
+      "tag": "div",
+      "id": "",
+      "className": "salary",
+      "selectorHint": "div.salary",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "¥8000-12000",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 1240,
+        "y": 721,
+        "width": 120,
+        "height": 29
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 85,
+      "tag": "div",
+      "id": "",
+      "className": "text-secondary text-sm",
+      "selectorHint": "div.text-secondary.text-sm",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "/月",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 1240,
+        "y": 749,
+        "width": 120,
+        "height": 19
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 86,
+      "tag": "a",
+      "id": "",
+      "className": "",
+      "selectorHint": "a",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "快递分拣员 北京建工集团 北京市通州区 · 全职 包吃五险一金 硬性条件：年龄18-45岁,身体健康,能吃苦耐劳,认识26个英文字母,无犯罪记录 · 期望薪资 ¥5500-7500 企业评分：4.8 · 技能/地点/薪资已进入匹配排序 已认证企业 ¥5500-7500 /月",
+      "href": "/jobs/3",
+      "disabled": false,
+      "visible": true,
+      "childCount": 1,
+      "rect": {
+        "x": 220,
+        "y": 956,
+        "width": 1160,
+        "height": 246
+      },
+      "style": {
+        "display": "inline",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 87,
+      "tag": "div",
+      "id": "",
+      "className": "card job-card",
+      "selectorHint": "div.card.job-card",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "快递分拣员 北京建工集团 北京市通州区 · 全职 包吃五险一金 硬性条件：年龄18-45岁,身体健康,能吃苦耐劳,认识26个英文字母,无犯罪记录 · 期望薪资 ¥5500-7500 企业评分：4.8 · 技能/地点/薪资已进入匹配排序 已认证企业 ¥5500-7500 /月",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 1,
+      "rect": {
+        "x": 220,
+        "y": 956,
+        "width": 1160,
+        "height": 246
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 88,
+      "tag": "div",
+      "id": "",
+      "className": "flex flex-between",
+      "selectorHint": "div.flex.flex-between",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "快递分拣员 北京建工集团 北京市通州区 · 全职 包吃五险一金 硬性条件：年龄18-45岁,身体健康,能吃苦耐劳,认识26个英文字母,无犯罪记录 · 期望薪资 ¥5500-7500 企业评分：4.8 · 技能/地点/薪资已进入匹配排序 已认证企业 ¥5500-7500 /月",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 2,
+      "rect": {
+        "x": 240,
+        "y": 976,
+        "width": 1120,
+        "height": 206
+      },
+      "style": {
+        "display": "flex",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 89,
+      "tag": "div",
+      "id": "",
+      "className": "",
+      "selectorHint": "div",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "快递分拣员 北京建工集团 北京市通州区 · 全职 包吃五险一金 硬性条件：年龄18-45岁,身体健康,能吃苦耐劳,认识26个英文字母,无犯罪记录 · 期望薪资 ¥5500-7500 企业评分：4.8 · 技能/地点/薪资已进入匹配排序 已认证企业",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 7,
+      "rect": {
+        "x": 240,
+        "y": 976,
+        "width": 1011,
+        "height": 206
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 90,
+      "tag": "div",
+      "id": "",
+      "className": "job-title",
+      "selectorHint": "div.job-title",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "快递分拣员",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 240,
+        "y": 976,
+        "width": 1011,
+        "height": 29
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 91,
+      "tag": "div",
+      "id": "",
+      "className": "text-secondary mb-8",
+      "selectorHint": "div.text-secondary.mb-8",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "北京建工集团",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 240,
+        "y": 1013,
+        "width": 1011,
+        "height": 26
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 92,
+      "tag": "div",
+      "id": "",
+      "className": "text-secondary mb-16 text-sm",
+      "selectorHint": "div.text-secondary.mb-16.text-sm",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "北京市通州区 · 全职",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 240,
+        "y": 1047,
+        "width": 1011,
+        "height": 19
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 93,
+      "tag": "div",
+      "id": "",
+      "className": "",
+      "selectorHint": "div",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "包吃五险一金",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 2,
+      "rect": {
+        "x": 240,
+        "y": 1082,
+        "width": 1011,
+        "height": 30
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 94,
+      "tag": "span",
+      "id": "",
+      "className": "tag tag-primary",
+      "selectorHint": "span.tag.tag-primary",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "包吃",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 240,
+        "y": 1083,
+        "width": 42,
+        "height": 25
+      },
+      "style": {
+        "display": "inline-block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 95,
+      "tag": "span",
+      "id": "",
+      "className": "tag tag-primary",
+      "selectorHint": "span.tag.tag-primary",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "五险一金",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 290,
+        "y": 1083,
+        "width": 66,
+        "height": 25
+      },
+      "style": {
+        "display": "inline-block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 96,
+      "tag": "div",
+      "id": "",
+      "className": "text-secondary text-sm mt-8",
+      "selectorHint": "div.text-secondary.text-sm.mt-8",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "硬性条件：年龄18-45岁,身体健康,能吃苦耐劳,认识26个英文字母,无犯罪记录 · 期望薪资 ¥5500-7500",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 240,
+        "y": 1112,
+        "width": 1011,
+        "height": 19
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 97,
+      "tag": "div",
+      "id": "",
+      "className": "text-secondary text-sm mt-8",
+      "selectorHint": "div.text-secondary.text-sm.mt-8",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "企业评分：4.8 · 技能/地点/薪资已进入匹配排序",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 240,
+        "y": 1131,
+        "width": 1011,
+        "height": 19
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 98,
+      "tag": "span",
+      "id": "",
+      "className": "badge badge-success",
+      "selectorHint": "span.badge.badge-success",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "已认证企业",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 240,
+        "y": 1158,
+        "width": 76,
+        "height": 23
+      },
+      "style": {
+        "display": "inline-block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 99,
+      "tag": "div",
+      "id": "",
+      "className": "",
+      "selectorHint": "div",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "¥5500-7500 /月",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 2,
+      "rect": {
+        "x": 1251,
+        "y": 976,
+        "width": 109,
+        "height": 206
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 100,
+      "tag": "div",
+      "id": "",
+      "className": "salary",
+      "selectorHint": "div.salary",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "¥5500-7500",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 1251,
+        "y": 976,
+        "width": 109,
+        "height": 29
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 101,
+      "tag": "div",
+      "id": "",
+      "className": "text-secondary text-sm",
+      "selectorHint": "div.text-secondary.text-sm",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "/月",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 1251,
+        "y": 1005,
+        "width": 109,
+        "height": 19
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 102,
+      "tag": "a",
+      "id": "",
+      "className": "",
+      "selectorHint": "a",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "顺丰快递员 北京建工集团 北京市通州区 · 全职 五险一金 硬性条件：年龄18-40岁,身体健康,无不良记录,熟悉当地地形,自带电动车优先 · 期望薪资 ¥6000-10000 企业评分：4.8 · 技能/地点/薪资已进入匹配排序 已认证企业 ¥6000-10000 /月",
+      "href": "/jobs/4",
+      "disabled": false,
+      "visible": true,
+      "childCount": 1,
+      "rect": {
+        "x": 220,
+        "y": 1218,
+        "width": 1160,
+        "height": 246
+      },
+      "style": {
+        "display": "inline",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 103,
+      "tag": "div",
+      "id": "",
+      "className": "card job-card",
+      "selectorHint": "div.card.job-card",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "顺丰快递员 北京建工集团 北京市通州区 · 全职 五险一金 硬性条件：年龄18-40岁,身体健康,无不良记录,熟悉当地地形,自带电动车优先 · 期望薪资 ¥6000-10000 企业评分：4.8 · 技能/地点/薪资已进入匹配排序 已认证企业 ¥6000-10000 /月",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 1,
+      "rect": {
+        "x": 220,
+        "y": 1218,
+        "width": 1160,
+        "height": 246
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 104,
+      "tag": "div",
+      "id": "",
+      "className": "flex flex-between",
+      "selectorHint": "div.flex.flex-between",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "顺丰快递员 北京建工集团 北京市通州区 · 全职 五险一金 硬性条件：年龄18-40岁,身体健康,无不良记录,熟悉当地地形,自带电动车优先 · 期望薪资 ¥6000-10000 企业评分：4.8 · 技能/地点/薪资已进入匹配排序 已认证企业 ¥6000-10000 /月",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 2,
+      "rect": {
+        "x": 240,
+        "y": 1238,
+        "width": 1120,
+        "height": 206
+      },
+      "style": {
+        "display": "flex",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 105,
+      "tag": "div",
+      "id": "",
+      "className": "",
+      "selectorHint": "div",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "顺丰快递员 北京建工集团 北京市通州区 · 全职 五险一金 硬性条件：年龄18-40岁,身体健康,无不良记录,熟悉当地地形,自带电动车优先 · 期望薪资 ¥6000-10000 企业评分：4.8 · 技能/地点/薪资已进入匹配排序 已认证企业",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 7,
+      "rect": {
+        "x": 240,
+        "y": 1238,
+        "width": 1000,
+        "height": 206
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 106,
+      "tag": "div",
+      "id": "",
+      "className": "job-title",
+      "selectorHint": "div.job-title",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "顺丰快递员",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 240,
+        "y": 1238,
+        "width": 1000,
+        "height": 29
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 107,
+      "tag": "div",
+      "id": "",
+      "className": "text-secondary mb-8",
+      "selectorHint": "div.text-secondary.mb-8",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "北京建工集团",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 240,
+        "y": 1275,
+        "width": 1000,
+        "height": 26
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 108,
+      "tag": "div",
+      "id": "",
+      "className": "text-secondary mb-16 text-sm",
+      "selectorHint": "div.text-secondary.mb-16.text-sm",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "北京市通州区 · 全职",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 240,
+        "y": 1308,
+        "width": 1000,
+        "height": 19
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 109,
+      "tag": "div",
+      "id": "",
+      "className": "",
+      "selectorHint": "div",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "五险一金",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 1,
+      "rect": {
+        "x": 240,
+        "y": 1344,
+        "width": 1000,
+        "height": 30
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 110,
+      "tag": "span",
+      "id": "",
+      "className": "tag tag-primary",
+      "selectorHint": "span.tag.tag-primary",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "五险一金",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 240,
+        "y": 1345,
+        "width": 66,
+        "height": 25
+      },
+      "style": {
+        "display": "inline-block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 111,
+      "tag": "div",
+      "id": "",
+      "className": "text-secondary text-sm mt-8",
+      "selectorHint": "div.text-secondary.text-sm.mt-8",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "硬性条件：年龄18-40岁,身体健康,无不良记录,熟悉当地地形,自带电动车优先 · 期望薪资 ¥6000-10000",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 240,
+        "y": 1374,
+        "width": 1000,
+        "height": 19
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 112,
+      "tag": "div",
+      "id": "",
+      "className": "text-secondary text-sm mt-8",
+      "selectorHint": "div.text-secondary.text-sm.mt-8",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "企业评分：4.8 · 技能/地点/薪资已进入匹配排序",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 240,
+        "y": 1393,
+        "width": 1000,
+        "height": 19
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 113,
+      "tag": "span",
+      "id": "",
+      "className": "badge badge-success",
+      "selectorHint": "span.badge.badge-success",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "已认证企业",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 240,
+        "y": 1420,
+        "width": 76,
+        "height": 23
+      },
+      "style": {
+        "display": "inline-block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 114,
+      "tag": "div",
+      "id": "",
+      "className": "",
+      "selectorHint": "div",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "¥6000-10000 /月",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 2,
+      "rect": {
+        "x": 1240,
+        "y": 1238,
+        "width": 120,
+        "height": 206
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 115,
+      "tag": "div",
+      "id": "",
+      "className": "salary",
+      "selectorHint": "div.salary",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "¥6000-10000",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 1240,
+        "y": 1238,
+        "width": 120,
+        "height": 29
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 116,
+      "tag": "div",
+      "id": "",
+      "className": "text-secondary text-sm",
+      "selectorHint": "div.text-secondary.text-sm",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "/月",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 1240,
+        "y": 1267,
+        "width": 120,
+        "height": 19
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 117,
+      "tag": "a",
+      "id": "",
+      "className": "",
+      "selectorHint": "a",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "住家月嫂 顺丰速运北京分公司 北京市海淀区 · 住家 包吃包住五险一金 硬性条件：持有月嫂证/育婴师证,2年以上月嫂经验,年龄30-55岁,无传染病,有健康证 · 期望薪资 ¥8000-15000 企业评分：4.6 · 技能/地点/薪资已进入匹配排序 已认证企业 ¥8000-15000 /月",
+      "href": "/jobs/5",
+      "disabled": false,
+      "visible": true,
+      "childCount": 1,
+      "rect": {
+        "x": 220,
+        "y": 1480,
+        "width": 1160,
+        "height": 246
+      },
+      "style": {
+        "display": "inline",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 118,
+      "tag": "div",
+      "id": "",
+      "className": "card job-card",
+      "selectorHint": "div.card.job-card",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "住家月嫂 顺丰速运北京分公司 北京市海淀区 · 住家 包吃包住五险一金 硬性条件：持有月嫂证/育婴师证,2年以上月嫂经验,年龄30-55岁,无传染病,有健康证 · 期望薪资 ¥8000-15000 企业评分：4.6 · 技能/地点/薪资已进入匹配排序 已认证企业 ¥8000-15000 /月",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 1,
+      "rect": {
+        "x": 220,
+        "y": 1480,
+        "width": 1160,
+        "height": 246
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 119,
+      "tag": "div",
+      "id": "",
+      "className": "flex flex-between",
+      "selectorHint": "div.flex.flex-between",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "住家月嫂 顺丰速运北京分公司 北京市海淀区 · 住家 包吃包住五险一金 硬性条件：持有月嫂证/育婴师证,2年以上月嫂经验,年龄30-55岁,无传染病,有健康证 · 期望薪资 ¥8000-15000 企业评分：4.6 · 技能/地点/薪资已进入匹配排序 已认证企业 ¥8000-15000 /月",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 2,
+      "rect": {
+        "x": 240,
+        "y": 1500,
+        "width": 1120,
+        "height": 206
+      },
+      "style": {
+        "display": "flex",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 120,
+      "tag": "div",
+      "id": "",
+      "className": "",
+      "selectorHint": "div",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "住家月嫂 顺丰速运北京分公司 北京市海淀区 · 住家 包吃包住五险一金 硬性条件：持有月嫂证/育婴师证,2年以上月嫂经验,年龄30-55岁,无传染病,有健康证 · 期望薪资 ¥8000-15000 企业评分：4.6 · 技能/地点/薪资已进入匹配排序 已认证企业",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 7,
+      "rect": {
+        "x": 240,
+        "y": 1500,
+        "width": 1000,
+        "height": 206
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 121,
+      "tag": "div",
+      "id": "",
+      "className": "job-title",
+      "selectorHint": "div.job-title",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "住家月嫂",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 240,
+        "y": 1500,
+        "width": 1000,
+        "height": 29
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 122,
+      "tag": "div",
+      "id": "",
+      "className": "text-secondary mb-8",
+      "selectorHint": "div.text-secondary.mb-8",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "顺丰速运北京分公司",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 240,
+        "y": 1537,
+        "width": 1000,
+        "height": 26
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 123,
+      "tag": "div",
+      "id": "",
+      "className": "text-secondary mb-16 text-sm",
+      "selectorHint": "div.text-secondary.mb-16.text-sm",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "北京市海淀区 · 住家",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 240,
+        "y": 1570,
+        "width": 1000,
+        "height": 19
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 124,
+      "tag": "div",
+      "id": "",
+      "className": "",
+      "selectorHint": "div",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "包吃包住五险一金",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 3,
+      "rect": {
+        "x": 240,
+        "y": 1605,
+        "width": 1000,
+        "height": 30
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 125,
+      "tag": "span",
+      "id": "",
+      "className": "tag tag-primary",
+      "selectorHint": "span.tag.tag-primary",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "包吃",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 240,
+        "y": 1606,
+        "width": 42,
+        "height": 25
+      },
+      "style": {
+        "display": "inline-block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 126,
+      "tag": "span",
+      "id": "",
+      "className": "tag tag-primary",
+      "selectorHint": "span.tag.tag-primary",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "包住",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 290,
+        "y": 1606,
+        "width": 42,
+        "height": 25
+      },
+      "style": {
+        "display": "inline-block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 127,
+      "tag": "span",
+      "id": "",
+      "className": "tag tag-primary",
+      "selectorHint": "span.tag.tag-primary",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "五险一金",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 340,
+        "y": 1606,
+        "width": 66,
+        "height": 25
+      },
+      "style": {
+        "display": "inline-block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 128,
+      "tag": "div",
+      "id": "",
+      "className": "text-secondary text-sm mt-8",
+      "selectorHint": "div.text-secondary.text-sm.mt-8",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "硬性条件：持有月嫂证/育婴师证,2年以上月嫂经验,年龄30-55岁,无传染病,有健康证 · 期望薪资 ¥8000-15000",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 240,
+        "y": 1635,
+        "width": 1000,
+        "height": 19
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 129,
+      "tag": "div",
+      "id": "",
+      "className": "text-secondary text-sm mt-8",
+      "selectorHint": "div.text-secondary.text-sm.mt-8",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "企业评分：4.6 · 技能/地点/薪资已进入匹配排序",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 240,
+        "y": 1655,
+        "width": 1000,
+        "height": 19
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 130,
+      "tag": "span",
+      "id": "",
+      "className": "badge badge-success",
+      "selectorHint": "span.badge.badge-success",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "已认证企业",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 240,
+        "y": 1682,
+        "width": 76,
+        "height": 23
+      },
+      "style": {
+        "display": "inline-block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 131,
+      "tag": "div",
+      "id": "",
+      "className": "",
+      "selectorHint": "div",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "¥8000-15000 /月",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 2,
+      "rect": {
+        "x": 1240,
+        "y": 1500,
+        "width": 120,
+        "height": 206
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 132,
+      "tag": "div",
+      "id": "",
+      "className": "salary",
+      "selectorHint": "div.salary",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "¥8000-15000",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 1240,
+        "y": 1500,
+        "width": 120,
+        "height": 29
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 133,
+      "tag": "div",
+      "id": "",
+      "className": "text-secondary text-sm",
+      "selectorHint": "div.text-secondary.text-sm",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "/月",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 1240,
+        "y": 1529,
+        "width": 120,
+        "height": 19
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 134,
+      "tag": "a",
+      "id": "",
+      "className": "",
+      "selectorHint": "a",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "钟点保洁工 顺丰速运北京分公司 北京市海淀区 · 兼职 硬性条件：年龄25-55岁,身体健康,有家政保洁经验,做事认真仔细,无不良记录 · 期望薪资 ¥4000-6000 企业评分：4.6 · 技能/地点/薪资已进入匹配排序 已认证企业 ¥4000-6000 /月",
+      "href": "/jobs/6",
+      "disabled": false,
+      "visible": true,
+      "childCount": 1,
+      "rect": {
+        "x": 220,
+        "y": 1741,
+        "width": 1160,
+        "height": 216
+      },
+      "style": {
+        "display": "inline",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 135,
+      "tag": "div",
+      "id": "",
+      "className": "card job-card",
+      "selectorHint": "div.card.job-card",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "钟点保洁工 顺丰速运北京分公司 北京市海淀区 · 兼职 硬性条件：年龄25-55岁,身体健康,有家政保洁经验,做事认真仔细,无不良记录 · 期望薪资 ¥4000-6000 企业评分：4.6 · 技能/地点/薪资已进入匹配排序 已认证企业 ¥4000-6000 /月",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 1,
+      "rect": {
+        "x": 220,
+        "y": 1741,
+        "width": 1160,
+        "height": 216
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 136,
+      "tag": "div",
+      "id": "",
+      "className": "flex flex-between",
+      "selectorHint": "div.flex.flex-between",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "钟点保洁工 顺丰速运北京分公司 北京市海淀区 · 兼职 硬性条件：年龄25-55岁,身体健康,有家政保洁经验,做事认真仔细,无不良记录 · 期望薪资 ¥4000-6000 企业评分：4.6 · 技能/地点/薪资已进入匹配排序 已认证企业 ¥4000-6000 /月",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 2,
+      "rect": {
+        "x": 240,
+        "y": 1761,
+        "width": 1120,
+        "height": 176
+      },
+      "style": {
+        "display": "flex",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 137,
+      "tag": "div",
+      "id": "",
+      "className": "",
+      "selectorHint": "div",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "钟点保洁工 顺丰速运北京分公司 北京市海淀区 · 兼职 硬性条件：年龄25-55岁,身体健康,有家政保洁经验,做事认真仔细,无不良记录 · 期望薪资 ¥4000-6000 企业评分：4.6 · 技能/地点/薪资已进入匹配排序 已认证企业",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 7,
+      "rect": {
+        "x": 240,
+        "y": 1761,
+        "width": 1008,
+        "height": 176
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 138,
+      "tag": "div",
+      "id": "",
+      "className": "job-title",
+      "selectorHint": "div.job-title",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "钟点保洁工",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 240,
+        "y": 1761,
+        "width": 1008,
+        "height": 29
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 139,
+      "tag": "div",
+      "id": "",
+      "className": "text-secondary mb-8",
+      "selectorHint": "div.text-secondary.mb-8",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "顺丰速运北京分公司",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 240,
+        "y": 1798,
+        "width": 1008,
+        "height": 26
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 140,
+      "tag": "div",
+      "id": "",
+      "className": "text-secondary mb-16 text-sm",
+      "selectorHint": "div.text-secondary.mb-16.text-sm",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "北京市海淀区 · 兼职",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 240,
+        "y": 1832,
+        "width": 1008,
+        "height": 19
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 141,
+      "tag": "div",
+      "id": "",
+      "className": "",
+      "selectorHint": "div",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "",
+      "href": "",
+      "disabled": false,
+      "visible": false,
+      "childCount": 0,
+      "rect": {
+        "x": 240,
+        "y": 1867,
+        "width": 1008,
+        "height": 0
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 142,
+      "tag": "div",
+      "id": "",
+      "className": "text-secondary text-sm mt-8",
+      "selectorHint": "div.text-secondary.text-sm.mt-8",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "硬性条件：年龄25-55岁,身体健康,有家政保洁经验,做事认真仔细,无不良记录 · 期望薪资 ¥4000-6000",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 240,
+        "y": 1867,
+        "width": 1008,
+        "height": 19
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 143,
+      "tag": "div",
+      "id": "",
+      "className": "text-secondary text-sm mt-8",
+      "selectorHint": "div.text-secondary.text-sm.mt-8",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "企业评分：4.6 · 技能/地点/薪资已进入匹配排序",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 240,
+        "y": 1886,
+        "width": 1008,
+        "height": 19
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 144,
+      "tag": "span",
+      "id": "",
+      "className": "badge badge-success",
+      "selectorHint": "span.badge.badge-success",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "已认证企业",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 240,
+        "y": 1913,
+        "width": 76,
+        "height": 23
+      },
+      "style": {
+        "display": "inline-block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 145,
+      "tag": "div",
+      "id": "",
+      "className": "",
+      "selectorHint": "div",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "¥4000-6000 /月",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 2,
+      "rect": {
+        "x": 1248,
+        "y": 1761,
+        "width": 112,
+        "height": 176
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 146,
+      "tag": "div",
+      "id": "",
+      "className": "salary",
+      "selectorHint": "div.salary",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "¥4000-6000",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 1248,
+        "y": 1761,
+        "width": 112,
+        "height": 29
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 147,
+      "tag": "div",
+      "id": "",
+      "className": "text-secondary text-sm",
+      "selectorHint": "div.text-secondary.text-sm",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "/月",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 1248,
+        "y": 1790,
+        "width": 112,
+        "height": 19
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 148,
+      "tag": "a",
+      "id": "",
+      "className": "",
+      "selectorHint": "a",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "仓储管理员 北京爱家家政服务公司 北京市大兴区 · 全职 包吃包住五险一金 硬性条件：年龄18-45岁,初中以上学历,有仓储管理经验,会简单电脑操作,有叉车证优先 · 期望薪资 ¥5000-7000 企业评分：4.9 · 技能/地点/薪资已进入匹配排序 已认证企业 ¥5000-7000 /月",
+      "href": "/jobs/7",
+      "disabled": false,
+      "visible": true,
+      "childCount": 1,
+      "rect": {
+        "x": 220,
+        "y": 1973,
+        "width": 1160,
+        "height": 246
+      },
+      "style": {
+        "display": "inline",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 149,
+      "tag": "div",
+      "id": "",
+      "className": "card job-card",
+      "selectorHint": "div.card.job-card",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "仓储管理员 北京爱家家政服务公司 北京市大兴区 · 全职 包吃包住五险一金 硬性条件：年龄18-45岁,初中以上学历,有仓储管理经验,会简单电脑操作,有叉车证优先 · 期望薪资 ¥5000-7000 企业评分：4.9 · 技能/地点/薪资已进入匹配排序 已认证企业 ¥5000-7000 /月",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 1,
+      "rect": {
+        "x": 220,
+        "y": 1973,
+        "width": 1160,
+        "height": 246
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 150,
+      "tag": "div",
+      "id": "",
+      "className": "flex flex-between",
+      "selectorHint": "div.flex.flex-between",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "仓储管理员 北京爱家家政服务公司 北京市大兴区 · 全职 包吃包住五险一金 硬性条件：年龄18-45岁,初中以上学历,有仓储管理经验,会简单电脑操作,有叉车证优先 · 期望薪资 ¥5000-7000 企业评分：4.9 · 技能/地点/薪资已进入匹配排序 已认证企业 ¥5000-7000 /月",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 2,
+      "rect": {
+        "x": 240,
+        "y": 1993,
+        "width": 1120,
+        "height": 206
+      },
+      "style": {
+        "display": "flex",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 151,
+      "tag": "div",
+      "id": "",
+      "className": "",
+      "selectorHint": "div",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "仓储管理员 北京爱家家政服务公司 北京市大兴区 · 全职 包吃包住五险一金 硬性条件：年龄18-45岁,初中以上学历,有仓储管理经验,会简单电脑操作,有叉车证优先 · 期望薪资 ¥5000-7000 企业评分：4.9 · 技能/地点/薪资已进入匹配排序 已认证企业",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 7,
+      "rect": {
+        "x": 240,
+        "y": 1993,
+        "width": 1010,
+        "height": 206
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 152,
+      "tag": "div",
+      "id": "",
+      "className": "job-title",
+      "selectorHint": "div.job-title",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "仓储管理员",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 240,
+        "y": 1993,
+        "width": 1010,
+        "height": 29
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 153,
+      "tag": "div",
+      "id": "",
+      "className": "text-secondary mb-8",
+      "selectorHint": "div.text-secondary.mb-8",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "北京爱家家政服务公司",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 240,
+        "y": 2030,
+        "width": 1010,
+        "height": 26
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 154,
+      "tag": "div",
+      "id": "",
+      "className": "text-secondary mb-16 text-sm",
+      "selectorHint": "div.text-secondary.mb-16.text-sm",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "北京市大兴区 · 全职",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 240,
+        "y": 2063,
+        "width": 1010,
+        "height": 19
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 155,
+      "tag": "div",
+      "id": "",
+      "className": "",
+      "selectorHint": "div",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "包吃包住五险一金",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 3,
+      "rect": {
+        "x": 240,
+        "y": 2099,
+        "width": 1010,
+        "height": 30
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 156,
+      "tag": "span",
+      "id": "",
+      "className": "tag tag-primary",
+      "selectorHint": "span.tag.tag-primary",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "包吃",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 240,
+        "y": 2100,
+        "width": 42,
+        "height": 25
+      },
+      "style": {
+        "display": "inline-block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 157,
+      "tag": "span",
+      "id": "",
+      "className": "tag tag-primary",
+      "selectorHint": "span.tag.tag-primary",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "包住",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 290,
+        "y": 2100,
+        "width": 42,
+        "height": 25
+      },
+      "style": {
+        "display": "inline-block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 158,
+      "tag": "span",
+      "id": "",
+      "className": "tag tag-primary",
+      "selectorHint": "span.tag.tag-primary",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "五险一金",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 340,
+        "y": 2100,
+        "width": 66,
+        "height": 25
+      },
+      "style": {
+        "display": "inline-block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 159,
+      "tag": "div",
+      "id": "",
+      "className": "text-secondary text-sm mt-8",
+      "selectorHint": "div.text-secondary.text-sm.mt-8",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "硬性条件：年龄18-45岁,初中以上学历,有仓储管理经验,会简单电脑操作,有叉车证优先 · 期望薪资 ¥5000-7000",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 240,
+        "y": 2129,
+        "width": 1010,
+        "height": 19
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 160,
+      "tag": "div",
+      "id": "",
+      "className": "text-secondary text-sm mt-8",
+      "selectorHint": "div.text-secondary.text-sm.mt-8",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "企业评分：4.9 · 技能/地点/薪资已进入匹配排序",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 240,
+        "y": 2148,
+        "width": 1010,
+        "height": 19
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 161,
+      "tag": "span",
+      "id": "",
+      "className": "badge badge-success",
+      "selectorHint": "span.badge.badge-success",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "已认证企业",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 240,
+        "y": 2175,
+        "width": 76,
+        "height": 23
+      },
+      "style": {
+        "display": "inline-block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 162,
+      "tag": "div",
+      "id": "",
+      "className": "",
+      "selectorHint": "div",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "¥5000-7000 /月",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 2,
+      "rect": {
+        "x": 1250,
+        "y": 1993,
+        "width": 110,
+        "height": 206
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 163,
+      "tag": "div",
+      "id": "",
+      "className": "salary",
+      "selectorHint": "div.salary",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "¥5000-7000",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 1250,
+        "y": 1993,
+        "width": 110,
+        "height": 29
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 164,
+      "tag": "div",
+      "id": "",
+      "className": "text-secondary text-sm",
+      "selectorHint": "div.text-secondary.text-sm",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "/月",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 1250,
+        "y": 2022,
+        "width": 110,
+        "height": 19
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 165,
+      "tag": "a",
+      "id": "",
+      "className": "",
+      "selectorHint": "a",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "叉车司机 北京爱家家政服务公司 北京市大兴区 · 全职 包吃包住五险一金 硬性条件：持有叉车证(N1证),1年以上叉车驾驶经验,能吃苦耐劳,服从安排,无不良记录 · 期望薪资 ¥6000-8000 企业评分：4.9 · 技能/地点/薪资已进入匹配排序 已认证企业 ¥6000-8000 /月",
+      "href": "/jobs/8",
+      "disabled": false,
+      "visible": true,
+      "childCount": 1,
+      "rect": {
+        "x": 220,
+        "y": 2235,
+        "width": 1160,
+        "height": 246
+      },
+      "style": {
+        "display": "inline",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 166,
+      "tag": "div",
+      "id": "",
+      "className": "card job-card",
+      "selectorHint": "div.card.job-card",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "叉车司机 北京爱家家政服务公司 北京市大兴区 · 全职 包吃包住五险一金 硬性条件：持有叉车证(N1证),1年以上叉车驾驶经验,能吃苦耐劳,服从安排,无不良记录 · 期望薪资 ¥6000-8000 企业评分：4.9 · 技能/地点/薪资已进入匹配排序 已认证企业 ¥6000-8000 /月",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 1,
+      "rect": {
+        "x": 220,
+        "y": 2235,
+        "width": 1160,
+        "height": 246
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 167,
+      "tag": "div",
+      "id": "",
+      "className": "flex flex-between",
+      "selectorHint": "div.flex.flex-between",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "叉车司机 北京爱家家政服务公司 北京市大兴区 · 全职 包吃包住五险一金 硬性条件：持有叉车证(N1证),1年以上叉车驾驶经验,能吃苦耐劳,服从安排,无不良记录 · 期望薪资 ¥6000-8000 企业评分：4.9 · 技能/地点/薪资已进入匹配排序 已认证企业 ¥6000-8000 /月",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 2,
+      "rect": {
+        "x": 240,
+        "y": 2255,
+        "width": 1120,
+        "height": 206
+      },
+      "style": {
+        "display": "flex",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 168,
+      "tag": "div",
+      "id": "",
+      "className": "",
+      "selectorHint": "div",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "叉车司机 北京爱家家政服务公司 北京市大兴区 · 全职 包吃包住五险一金 硬性条件：持有叉车证(N1证),1年以上叉车驾驶经验,能吃苦耐劳,服从安排,无不良记录 · 期望薪资 ¥6000-8000 企业评分：4.9 · 技能/地点/薪资已进入匹配排序 已认证企业",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 7,
+      "rect": {
+        "x": 240,
+        "y": 2255,
+        "width": 1008,
+        "height": 206
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 169,
+      "tag": "div",
+      "id": "",
+      "className": "job-title",
+      "selectorHint": "div.job-title",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "叉车司机",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 240,
+        "y": 2255,
+        "width": 1008,
+        "height": 29
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 170,
+      "tag": "div",
+      "id": "",
+      "className": "text-secondary mb-8",
+      "selectorHint": "div.text-secondary.mb-8",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "北京爱家家政服务公司",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 240,
+        "y": 2292,
+        "width": 1008,
+        "height": 26
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 171,
+      "tag": "div",
+      "id": "",
+      "className": "text-secondary mb-16 text-sm",
+      "selectorHint": "div.text-secondary.mb-16.text-sm",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "北京市大兴区 · 全职",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 240,
+        "y": 2325,
+        "width": 1008,
+        "height": 19
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 172,
+      "tag": "div",
+      "id": "",
+      "className": "",
+      "selectorHint": "div",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "包吃包住五险一金",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 3,
+      "rect": {
+        "x": 240,
+        "y": 2360,
+        "width": 1008,
+        "height": 30
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 173,
+      "tag": "span",
+      "id": "",
+      "className": "tag tag-primary",
+      "selectorHint": "span.tag.tag-primary",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "包吃",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 240,
+        "y": 2361,
+        "width": 42,
+        "height": 25
+      },
+      "style": {
+        "display": "inline-block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 174,
+      "tag": "span",
+      "id": "",
+      "className": "tag tag-primary",
+      "selectorHint": "span.tag.tag-primary",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "包住",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 290,
+        "y": 2361,
+        "width": 42,
+        "height": 25
+      },
+      "style": {
+        "display": "inline-block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 175,
+      "tag": "span",
+      "id": "",
+      "className": "tag tag-primary",
+      "selectorHint": "span.tag.tag-primary",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "五险一金",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 340,
+        "y": 2361,
+        "width": 66,
+        "height": 25
+      },
+      "style": {
+        "display": "inline-block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 176,
+      "tag": "div",
+      "id": "",
+      "className": "text-secondary text-sm mt-8",
+      "selectorHint": "div.text-secondary.text-sm.mt-8",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "硬性条件：持有叉车证(N1证),1年以上叉车驾驶经验,能吃苦耐劳,服从安排,无不良记录 · 期望薪资 ¥6000-8000",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 240,
+        "y": 2390,
+        "width": 1008,
+        "height": 19
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 177,
+      "tag": "div",
+      "id": "",
+      "className": "text-secondary text-sm mt-8",
+      "selectorHint": "div.text-secondary.text-sm.mt-8",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "企业评分：4.9 · 技能/地点/薪资已进入匹配排序",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 240,
+        "y": 2410,
+        "width": 1008,
+        "height": 19
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 178,
+      "tag": "span",
+      "id": "",
+      "className": "badge badge-success",
+      "selectorHint": "span.badge.badge-success",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "已认证企业",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 240,
+        "y": 2437,
+        "width": 76,
+        "height": 23
+      },
+      "style": {
+        "display": "inline-block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 179,
+      "tag": "div",
+      "id": "",
+      "className": "",
+      "selectorHint": "div",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "¥6000-8000 /月",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 2,
+      "rect": {
+        "x": 1248,
+        "y": 2255,
+        "width": 112,
+        "height": 206
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 180,
+      "tag": "div",
+      "id": "",
+      "className": "salary",
+      "selectorHint": "div.salary",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "¥6000-8000",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 1248,
+        "y": 2255,
+        "width": 112,
+        "height": 29
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 181,
+      "tag": "div",
+      "id": "",
+      "className": "text-secondary text-sm",
+      "selectorHint": "div.text-secondary.text-sm",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "/月",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 1248,
+        "y": 2284,
+        "width": 112,
+        "height": 19
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 182,
+      "tag": "a",
+      "id": "",
+      "className": "",
+      "selectorHint": "a",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "餐厅服务员 京东物流北京仓储中心 北京市东城区 · 全职 包吃包住五险一金 硬性条件：年龄18-35岁,形象气质佳,有餐饮服务经验优先,普通话标准 · 期望薪资 ¥4500-6000 企业评分：4.7 · 技能/地点/薪资已进入匹配排序 已认证企业 ¥4500-6000 /月",
+      "href": "/jobs/9",
+      "disabled": false,
+      "visible": true,
+      "childCount": 1,
+      "rect": {
+        "x": 220,
+        "y": 2496,
+        "width": 1160,
+        "height": 246
+      },
+      "style": {
+        "display": "inline",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 183,
+      "tag": "div",
+      "id": "",
+      "className": "card job-card",
+      "selectorHint": "div.card.job-card",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "餐厅服务员 京东物流北京仓储中心 北京市东城区 · 全职 包吃包住五险一金 硬性条件：年龄18-35岁,形象气质佳,有餐饮服务经验优先,普通话标准 · 期望薪资 ¥4500-6000 企业评分：4.7 · 技能/地点/薪资已进入匹配排序 已认证企业 ¥4500-6000 /月",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 1,
+      "rect": {
+        "x": 220,
+        "y": 2496,
+        "width": 1160,
+        "height": 246
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 184,
+      "tag": "div",
+      "id": "",
+      "className": "flex flex-between",
+      "selectorHint": "div.flex.flex-between",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "餐厅服务员 京东物流北京仓储中心 北京市东城区 · 全职 包吃包住五险一金 硬性条件：年龄18-35岁,形象气质佳,有餐饮服务经验优先,普通话标准 · 期望薪资 ¥4500-6000 企业评分：4.7 · 技能/地点/薪资已进入匹配排序 已认证企业 ¥4500-6000 /月",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 2,
+      "rect": {
+        "x": 240,
+        "y": 2516,
+        "width": 1120,
+        "height": 206
+      },
+      "style": {
+        "display": "flex",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 185,
+      "tag": "div",
+      "id": "",
+      "className": "",
+      "selectorHint": "div",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "餐厅服务员 京东物流北京仓储中心 北京市东城区 · 全职 包吃包住五险一金 硬性条件：年龄18-35岁,形象气质佳,有餐饮服务经验优先,普通话标准 · 期望薪资 ¥4500-6000 企业评分：4.7 · 技能/地点/薪资已进入匹配排序 已认证企业",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 7,
+      "rect": {
+        "x": 240,
+        "y": 2516,
+        "width": 1008,
+        "height": 206
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 186,
+      "tag": "div",
+      "id": "",
+      "className": "job-title",
+      "selectorHint": "div.job-title",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "餐厅服务员",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 240,
+        "y": 2516,
+        "width": 1008,
+        "height": 29
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 187,
+      "tag": "div",
+      "id": "",
+      "className": "text-secondary mb-8",
+      "selectorHint": "div.text-secondary.mb-8",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "京东物流北京仓储中心",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 240,
+        "y": 2553,
+        "width": 1008,
+        "height": 26
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 188,
+      "tag": "div",
+      "id": "",
+      "className": "text-secondary mb-16 text-sm",
+      "selectorHint": "div.text-secondary.mb-16.text-sm",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "北京市东城区 · 全职",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 240,
+        "y": 2587,
+        "width": 1008,
+        "height": 19
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 189,
+      "tag": "div",
+      "id": "",
+      "className": "",
+      "selectorHint": "div",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "包吃包住五险一金",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 3,
+      "rect": {
+        "x": 240,
+        "y": 2622,
+        "width": 1008,
+        "height": 30
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 190,
+      "tag": "span",
+      "id": "",
+      "className": "tag tag-primary",
+      "selectorHint": "span.tag.tag-primary",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "包吃",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 240,
+        "y": 2623,
+        "width": 42,
+        "height": 25
+      },
+      "style": {
+        "display": "inline-block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 191,
+      "tag": "span",
+      "id": "",
+      "className": "tag tag-primary",
+      "selectorHint": "span.tag.tag-primary",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "包住",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 290,
+        "y": 2623,
+        "width": 42,
+        "height": 25
+      },
+      "style": {
+        "display": "inline-block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 192,
+      "tag": "span",
+      "id": "",
+      "className": "tag tag-primary",
+      "selectorHint": "span.tag.tag-primary",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "五险一金",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 340,
+        "y": 2623,
+        "width": 66,
+        "height": 25
+      },
+      "style": {
+        "display": "inline-block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 193,
+      "tag": "div",
+      "id": "",
+      "className": "text-secondary text-sm mt-8",
+      "selectorHint": "div.text-secondary.text-sm.mt-8",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "硬性条件：年龄18-35岁,形象气质佳,有餐饮服务经验优先,普通话标准 · 期望薪资 ¥4500-6000",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 240,
+        "y": 2652,
+        "width": 1008,
+        "height": 19
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 194,
+      "tag": "div",
+      "id": "",
+      "className": "text-secondary text-sm mt-8",
+      "selectorHint": "div.text-secondary.text-sm.mt-8",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "企业评分：4.7 · 技能/地点/薪资已进入匹配排序",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 240,
+        "y": 2671,
+        "width": 1008,
+        "height": 19
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 195,
+      "tag": "span",
+      "id": "",
+      "className": "badge badge-success",
+      "selectorHint": "span.badge.badge-success",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "已认证企业",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 240,
+        "y": 2699,
+        "width": 76,
+        "height": 23
+      },
+      "style": {
+        "display": "inline-block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 196,
+      "tag": "div",
+      "id": "",
+      "className": "",
+      "selectorHint": "div",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "¥4500-6000 /月",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 2,
+      "rect": {
+        "x": 1248,
+        "y": 2516,
+        "width": 112,
+        "height": 206
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 197,
+      "tag": "div",
+      "id": "",
+      "className": "salary",
+      "selectorHint": "div.salary",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "¥4500-6000",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 1248,
+        "y": 2516,
+        "width": 112,
+        "height": 29
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 198,
+      "tag": "div",
+      "id": "",
+      "className": "text-secondary text-sm",
+      "selectorHint": "div.text-secondary.text-sm",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "/月",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 1248,
+        "y": 2545,
+        "width": 112,
+        "height": 19
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 199,
+      "tag": "a",
+      "id": "",
+      "className": "",
+      "selectorHint": "a",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "后厨打荷 京东物流北京仓储中心 北京市东城区 · 全职 包吃包住五险一金 硬性条件：年龄18-50岁,身体健康,能吃苦耐劳,有无经验均可,想学厨师优先 · 期望薪资 ¥4000-5500 企业评分：4.7 · 技能/地点/薪资已进入匹配排序 已认证企业 ¥4000-5500 /月",
+      "href": "/jobs/10",
+      "disabled": false,
+      "visible": true,
+      "childCount": 1,
+      "rect": {
+        "x": 220,
+        "y": 2758,
+        "width": 1160,
+        "height": 246
+      },
+      "style": {
+        "display": "inline",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 200,
+      "tag": "div",
+      "id": "",
+      "className": "card job-card",
+      "selectorHint": "div.card.job-card",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "后厨打荷 京东物流北京仓储中心 北京市东城区 · 全职 包吃包住五险一金 硬性条件：年龄18-50岁,身体健康,能吃苦耐劳,有无经验均可,想学厨师优先 · 期望薪资 ¥4000-5500 企业评分：4.7 · 技能/地点/薪资已进入匹配排序 已认证企业 ¥4000-5500 /月",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 1,
+      "rect": {
+        "x": 220,
+        "y": 2758,
+        "width": 1160,
+        "height": 246
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 201,
+      "tag": "div",
+      "id": "",
+      "className": "flex flex-between",
+      "selectorHint": "div.flex.flex-between",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "后厨打荷 京东物流北京仓储中心 北京市东城区 · 全职 包吃包住五险一金 硬性条件：年龄18-50岁,身体健康,能吃苦耐劳,有无经验均可,想学厨师优先 · 期望薪资 ¥4000-5500 企业评分：4.7 · 技能/地点/薪资已进入匹配排序 已认证企业 ¥4000-5500 /月",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 2,
+      "rect": {
+        "x": 240,
+        "y": 2778,
+        "width": 1120,
+        "height": 206
+      },
+      "style": {
+        "display": "flex",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 202,
+      "tag": "div",
+      "id": "",
+      "className": "",
+      "selectorHint": "div",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "后厨打荷 京东物流北京仓储中心 北京市东城区 · 全职 包吃包住五险一金 硬性条件：年龄18-50岁,身体健康,能吃苦耐劳,有无经验均可,想学厨师优先 · 期望薪资 ¥4000-5500 企业评分：4.7 · 技能/地点/薪资已进入匹配排序 已认证企业",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 7,
+      "rect": {
+        "x": 240,
+        "y": 2778,
+        "width": 1009,
+        "height": 206
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 203,
+      "tag": "div",
+      "id": "",
+      "className": "job-title",
+      "selectorHint": "div.job-title",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "后厨打荷",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 240,
+        "y": 2778,
+        "width": 1009,
+        "height": 29
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 204,
+      "tag": "div",
+      "id": "",
+      "className": "text-secondary mb-8",
+      "selectorHint": "div.text-secondary.mb-8",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "京东物流北京仓储中心",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 240,
+        "y": 2815,
+        "width": 1009,
+        "height": 26
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 205,
+      "tag": "div",
+      "id": "",
+      "className": "text-secondary mb-16 text-sm",
+      "selectorHint": "div.text-secondary.mb-16.text-sm",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "北京市东城区 · 全职",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 240,
+        "y": 2849,
+        "width": 1009,
+        "height": 19
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 206,
+      "tag": "div",
+      "id": "",
+      "className": "",
+      "selectorHint": "div",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "包吃包住五险一金",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 3,
+      "rect": {
+        "x": 240,
+        "y": 2884,
+        "width": 1009,
+        "height": 30
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 207,
+      "tag": "span",
+      "id": "",
+      "className": "tag tag-primary",
+      "selectorHint": "span.tag.tag-primary",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "包吃",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 240,
+        "y": 2885,
+        "width": 42,
+        "height": 25
+      },
+      "style": {
+        "display": "inline-block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 208,
+      "tag": "span",
+      "id": "",
+      "className": "tag tag-primary",
+      "selectorHint": "span.tag.tag-primary",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "包住",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 290,
+        "y": 2885,
+        "width": 42,
+        "height": 25
+      },
+      "style": {
+        "display": "inline-block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 209,
+      "tag": "span",
+      "id": "",
+      "className": "tag tag-primary",
+      "selectorHint": "span.tag.tag-primary",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "五险一金",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 340,
+        "y": 2885,
+        "width": 66,
+        "height": 25
+      },
+      "style": {
+        "display": "inline-block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 210,
+      "tag": "div",
+      "id": "",
+      "className": "text-secondary text-sm mt-8",
+      "selectorHint": "div.text-secondary.text-sm.mt-8",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "硬性条件：年龄18-50岁,身体健康,能吃苦耐劳,有无经验均可,想学厨师优先 · 期望薪资 ¥4000-5500",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 240,
+        "y": 2914,
+        "width": 1009,
+        "height": 19
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 211,
+      "tag": "div",
+      "id": "",
+      "className": "text-secondary text-sm mt-8",
+      "selectorHint": "div.text-secondary.text-sm.mt-8",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "企业评分：4.7 · 技能/地点/薪资已进入匹配排序",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 240,
+        "y": 2933,
+        "width": 1009,
+        "height": 19
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 212,
+      "tag": "span",
+      "id": "",
+      "className": "badge badge-success",
+      "selectorHint": "span.badge.badge-success",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "已认证企业",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 240,
+        "y": 2960,
+        "width": 76,
+        "height": 23
+      },
+      "style": {
+        "display": "inline-block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 213,
+      "tag": "div",
+      "id": "",
+      "className": "",
+      "selectorHint": "div",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "¥4000-5500 /月",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 2,
+      "rect": {
+        "x": 1249,
+        "y": 2778,
+        "width": 111,
+        "height": 206
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 214,
+      "tag": "div",
+      "id": "",
+      "className": "salary",
+      "selectorHint": "div.salary",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "¥4000-5500",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 1249,
+        "y": 2778,
+        "width": 111,
+        "height": 29
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 215,
+      "tag": "div",
+      "id": "",
+      "className": "text-secondary text-sm",
+      "selectorHint": "div.text-secondary.text-sm",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "/月",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 1249,
+        "y": 2807,
+        "width": 111,
+        "height": 19
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    }
+  ],
+  "interactiveElements": [
+    {
+      "index": 0,
+      "tag": "a",
+      "id": "",
+      "className": "logo",
+      "selectorHint": "a.logo",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "蓝领就业平台",
+      "href": "/",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 220,
+        "y": 16,
+        "width": 120,
+        "height": 32
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 1,
+      "tag": "a",
+      "id": "",
+      "className": "",
+      "selectorHint": "a",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "首页",
+      "href": "/",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 700,
+        "y": 21,
+        "width": 28,
+        "height": 22
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 2,
+      "tag": "a",
+      "id": "",
+      "className": "active",
+      "selectorHint": "a.active",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "搜索筛选岗位",
+      "href": "/jobs",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 752,
+        "y": 21,
+        "width": 84,
+        "height": 22
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 3,
+      "tag": "a",
+      "id": "",
+      "className": "",
+      "selectorHint": "a",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "管理后台",
+      "href": "/admin/dashboard",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 860,
+        "y": 21,
+        "width": 56,
+        "height": 22
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 4,
+      "tag": "a",
+      "id": "",
+      "className": "",
+      "selectorHint": "a",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "登录",
+      "href": "/login",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 1276,
+        "y": 17,
+        "width": 28,
+        "height": 30
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 5,
+      "tag": "a",
+      "id": "",
+      "className": "btn btn-primary btn-sm",
+      "selectorHint": "a.btn.btn-primary.btn-sm",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "注册",
+      "href": "/register",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 1328,
+        "y": 17,
+        "width": 52,
+        "height": 30
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 6,
+      "tag": "input",
+      "id": "",
+      "className": "form-input",
+      "selectorHint": "input.form-input",
+      "name": "",
+      "type": "text",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "搜索岗位关键词",
+      "text": "",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 240,
+        "y": 232,
+        "width": 268,
+        "height": 38
+      },
+      "style": {
+        "display": "inline-block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 7,
+      "tag": "input",
+      "id": "",
+      "className": "form-input",
+      "selectorHint": "input.form-input",
+      "name": "",
+      "type": "text",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "工作地点",
+      "text": "",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 524,
+        "y": 232,
+        "width": 268,
+        "height": 38
+      },
+      "style": {
+        "display": "inline-block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 8,
+      "tag": "select",
+      "id": "",
+      "className": "form-select",
+      "selectorHint": "select.form-select",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "薪资不限 3000以上 5000以上 8000以上 10000以上",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 5,
+      "rect": {
+        "x": 808,
+        "y": 232,
+        "width": 268,
+        "height": 40
+      },
+      "style": {
+        "display": "inline-block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 9,
+      "tag": "select",
+      "id": "",
+      "className": "form-select",
+      "selectorHint": "select.form-select",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "技能不限 电工 焊工 叉车 分拣 保洁",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 6,
+      "rect": {
+        "x": 1092,
+        "y": 232,
+        "width": 268,
+        "height": 40
+      },
+      "style": {
+        "display": "inline-block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 10,
+      "tag": "select",
+      "id": "",
+      "className": "form-select",
+      "selectorHint": "select.form-select",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "通勤半径 3公里内 5公里内 10公里内",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 4,
+      "rect": {
+        "x": 240,
+        "y": 288,
+        "width": 268,
+        "height": 40
+      },
+      "style": {
+        "display": "inline-block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 11,
+      "tag": "button",
+      "id": "",
+      "className": "btn btn-primary",
+      "selectorHint": "button.btn.btn-primary",
+      "name": "",
+      "type": "submit",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "搜索",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 524,
+        "y": 288,
+        "width": 268,
+        "height": 40
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 12,
+      "tag": "a",
+      "id": "",
+      "className": "",
+      "selectorHint": "a",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "急招电工 蓝领科技有限公司 北京市朝阳区 · 全职 包吃包住五险一金 硬性条件：持有低压电工证,3年以上工作经验,能吃苦耐劳,年龄20-50岁 · 期望薪资 ¥7000-9000 企业评分：5 · 技能/地点/薪资已进入匹配排序 0 ¥7000-9000 /月",
+      "href": "/jobs/1",
+      "disabled": false,
+      "visible": true,
+      "childCount": 1,
+      "rect": {
+        "x": 220,
+        "y": 445,
+        "width": 1160,
+        "height": 240
+      },
+      "style": {
+        "display": "inline",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 13,
+      "tag": "a",
+      "id": "",
+      "className": "",
+      "selectorHint": "a",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "建筑焊工 蓝领科技有限公司 北京市朝阳区 · 全职 包吃包住五险一金 硬性条件：持有焊工证,5年以上焊接经验,会二保焊/氩弧焊,能高空作业 · 期望薪资 ¥8000-12000 企业评分：5 · 技能/地点/薪资已进入匹配排序 0 ¥8000-12000 /月",
+      "href": "/jobs/2",
+      "disabled": false,
+      "visible": true,
+      "childCount": 1,
+      "rect": {
+        "x": 220,
+        "y": 701,
+        "width": 1160,
+        "height": 240
+      },
+      "style": {
+        "display": "inline",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 14,
+      "tag": "a",
+      "id": "",
+      "className": "",
+      "selectorHint": "a",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "快递分拣员 北京建工集团 北京市通州区 · 全职 包吃五险一金 硬性条件：年龄18-45岁,身体健康,能吃苦耐劳,认识26个英文字母,无犯罪记录 · 期望薪资 ¥5500-7500 企业评分：4.8 · 技能/地点/薪资已进入匹配排序 已认证企业 ¥5500-7500 /月",
+      "href": "/jobs/3",
+      "disabled": false,
+      "visible": true,
+      "childCount": 1,
+      "rect": {
+        "x": 220,
+        "y": 956,
+        "width": 1160,
+        "height": 246
+      },
+      "style": {
+        "display": "inline",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 15,
+      "tag": "a",
+      "id": "",
+      "className": "",
+      "selectorHint": "a",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "顺丰快递员 北京建工集团 北京市通州区 · 全职 五险一金 硬性条件：年龄18-40岁,身体健康,无不良记录,熟悉当地地形,自带电动车优先 · 期望薪资 ¥6000-10000 企业评分：4.8 · 技能/地点/薪资已进入匹配排序 已认证企业 ¥6000-10000 /月",
+      "href": "/jobs/4",
+      "disabled": false,
+      "visible": true,
+      "childCount": 1,
+      "rect": {
+        "x": 220,
+        "y": 1218,
+        "width": 1160,
+        "height": 246
+      },
+      "style": {
+        "display": "inline",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 16,
+      "tag": "a",
+      "id": "",
+      "className": "",
+      "selectorHint": "a",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "住家月嫂 顺丰速运北京分公司 北京市海淀区 · 住家 包吃包住五险一金 硬性条件：持有月嫂证/育婴师证,2年以上月嫂经验,年龄30-55岁,无传染病,有健康证 · 期望薪资 ¥8000-15000 企业评分：4.6 · 技能/地点/薪资已进入匹配排序 已认证企业 ¥8000-15000 /月",
+      "href": "/jobs/5",
+      "disabled": false,
+      "visible": true,
+      "childCount": 1,
+      "rect": {
+        "x": 220,
+        "y": 1480,
+        "width": 1160,
+        "height": 246
+      },
+      "style": {
+        "display": "inline",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 17,
+      "tag": "a",
+      "id": "",
+      "className": "",
+      "selectorHint": "a",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "钟点保洁工 顺丰速运北京分公司 北京市海淀区 · 兼职 硬性条件：年龄25-55岁,身体健康,有家政保洁经验,做事认真仔细,无不良记录 · 期望薪资 ¥4000-6000 企业评分：4.6 · 技能/地点/薪资已进入匹配排序 已认证企业 ¥4000-6000 /月",
+      "href": "/jobs/6",
+      "disabled": false,
+      "visible": true,
+      "childCount": 1,
+      "rect": {
+        "x": 220,
+        "y": 1741,
+        "width": 1160,
+        "height": 216
+      },
+      "style": {
+        "display": "inline",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 18,
+      "tag": "a",
+      "id": "",
+      "className": "",
+      "selectorHint": "a",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "仓储管理员 北京爱家家政服务公司 北京市大兴区 · 全职 包吃包住五险一金 硬性条件：年龄18-45岁,初中以上学历,有仓储管理经验,会简单电脑操作,有叉车证优先 · 期望薪资 ¥5000-7000 企业评分：4.9 · 技能/地点/薪资已进入匹配排序 已认证企业 ¥5000-7000 /月",
+      "href": "/jobs/7",
+      "disabled": false,
+      "visible": true,
+      "childCount": 1,
+      "rect": {
+        "x": 220,
+        "y": 1973,
+        "width": 1160,
+        "height": 246
+      },
+      "style": {
+        "display": "inline",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 19,
+      "tag": "a",
+      "id": "",
+      "className": "",
+      "selectorHint": "a",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "叉车司机 北京爱家家政服务公司 北京市大兴区 · 全职 包吃包住五险一金 硬性条件：持有叉车证(N1证),1年以上叉车驾驶经验,能吃苦耐劳,服从安排,无不良记录 · 期望薪资 ¥6000-8000 企业评分：4.9 · 技能/地点/薪资已进入匹配排序 已认证企业 ¥6000-8000 /月",
+      "href": "/jobs/8",
+      "disabled": false,
+      "visible": true,
+      "childCount": 1,
+      "rect": {
+        "x": 220,
+        "y": 2235,
+        "width": 1160,
+        "height": 246
+      },
+      "style": {
+        "display": "inline",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 20,
+      "tag": "a",
+      "id": "",
+      "className": "",
+      "selectorHint": "a",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "餐厅服务员 京东物流北京仓储中心 北京市东城区 · 全职 包吃包住五险一金 硬性条件：年龄18-35岁,形象气质佳,有餐饮服务经验优先,普通话标准 · 期望薪资 ¥4500-6000 企业评分：4.7 · 技能/地点/薪资已进入匹配排序 已认证企业 ¥4500-6000 /月",
+      "href": "/jobs/9",
+      "disabled": false,
+      "visible": true,
+      "childCount": 1,
+      "rect": {
+        "x": 220,
+        "y": 2496,
+        "width": 1160,
+        "height": 246
+      },
+      "style": {
+        "display": "inline",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 21,
+      "tag": "a",
+      "id": "",
+      "className": "",
+      "selectorHint": "a",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "后厨打荷 京东物流北京仓储中心 北京市东城区 · 全职 包吃包住五险一金 硬性条件：年龄18-50岁,身体健康,能吃苦耐劳,有无经验均可,想学厨师优先 · 期望薪资 ¥4000-5500 企业评分：4.7 · 技能/地点/薪资已进入匹配排序 已认证企业 ¥4000-5500 /月",
+      "href": "/jobs/10",
+      "disabled": false,
+      "visible": true,
+      "childCount": 1,
+      "rect": {
+        "x": 220,
+        "y": 2758,
+        "width": 1160,
+        "height": 246
+      },
+      "style": {
+        "display": "inline",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    }
+  ]
+}

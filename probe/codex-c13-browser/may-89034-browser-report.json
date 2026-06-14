@@ -1,0 +1,1043 @@
+{
+  "ok": true,
+  "generatedAt": "2026-06-04T12:44:33.982Z",
+  "order": "may-89034",
+  "roundIndex": 13,
+  "captureId": "may-89034-c13",
+  "url": "http://127.0.0.1:50034/",
+  "initialUrl": "http://127.0.0.1:50034/",
+  "finalUrl": "chrome-error://chromewebdata/",
+  "status": 200,
+  "title": "127.0.0.1",
+  "initialTitle": "蓝领就业精准撮合平台",
+  "navigationError": "",
+  "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89034/probe/codex-c13-browser/may-89034-c13-frontend.png",
+  "screenshotPaths": [
+    "/Users/chen/Documents/trae_projects/local_projects/may-89034/probe/codex-c13-browser/may-89034-c13-structure-01-首屏.png",
+    "/Users/chen/Documents/trae_projects/local_projects/may-89034/probe/codex-c13-browser/may-89034-c13-structure-02-导航-首页.png",
+    "/Users/chen/Documents/trae_projects/local_projects/may-89034/probe/codex-c13-browser/may-89034-c13-structure-03-操作-搜索筛选.png",
+    "/Users/chen/Documents/trae_projects/local_projects/may-89034/probe/codex-c13-browser/may-89034-c13-structure-04-二层操作-搜索筛选-搜索.png"
+  ],
+  "issueTextPreview": "搜索 筛选 后台管理",
+  "targetReason": "搜索/筛选相关问题；后台管理相关问题",
+  "targetKind": "search",
+  "targetMatched": false,
+  "targetActions": [],
+  "authFlow": {
+    "detected": false,
+    "attempted": false,
+    "success": false,
+    "finalUrl": "http://127.0.0.1:50034/",
+    "message": "",
+    "actions": []
+  },
+  "businessAudit": {
+    "actions": [
+      {
+        "action": "click",
+        "label": "导航:首页",
+        "ok": true
+      },
+      {
+        "action": "click",
+        "label": "操作:搜索筛选",
+        "ok": true,
+        "result": {
+          "ok": true,
+          "matched": 1
+        }
+      },
+      {
+        "action": "click",
+        "label": "二层操作:搜索筛选:搜索",
+        "ok": true,
+        "result": {
+          "ok": true,
+          "matched": 1
+        }
+      }
+    ],
+    "snapshots": [
+      {
+        "label": "首屏",
+        "url": "http://127.0.0.1:50034/",
+        "title": "蓝领就业精准撮合平台",
+        "headings": [],
+        "navLabels": [],
+        "buttons": [],
+        "links": [],
+        "inputs": [],
+        "tables": [],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "",
+        "layout": {
+          "viewportWidth": 1504,
+          "viewportHeight": 1349,
+          "scrollWidth": 1504,
+          "scrollHeight": 1349,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89034-c13-structure-01-首屏",
+          "label": "首屏",
+          "finalUrl": "http://127.0.0.1:50034/",
+          "title": "蓝领就业精准撮合平台",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89034/probe/codex-c13-browser/may-89034-c13-structure-01-首屏.json",
+          "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89034/probe/codex-c13-browser/may-89034-c13-structure-01-首屏.png",
+          "elementCount": 8,
+          "interactiveCount": 0,
+          "interactiveLabels": []
+        }
+      },
+      {
+        "label": "导航:首页",
+        "url": "http://127.0.0.1:50034/",
+        "title": "蓝领就业精准撮合平台",
+        "headings": [
+          "蓝领就业精准撮合平台",
+          "岗位分类发现",
+          "申请提交跟踪",
+          "后台审核管理",
+          "智能匹配",
+          "快速入职",
+          "安全保障",
+          "热门岗位",
+          "加入我们"
+        ],
+        "navLabels": [
+          "首页",
+          "搜索筛选岗位",
+          "管理后台"
+        ],
+        "buttons": [
+          "搜索筛选"
+        ],
+        "links": [
+          "蓝领就业平台",
+          "首页",
+          "搜索筛选岗位",
+          "管理后台",
+          "登录",
+          "注册",
+          "立即找工作",
+          "免费注册",
+          "岗位分类发现 普工、焊工、叉车、仓储、质检等分类快速进入",
+          "申请提交跟踪 查看投递、面试、入职和消息沟通状态",
+          "后台审核管理 企业认证、岗位审核、举报处理和数据概览",
+          "查看更多 →"
+        ],
+        "inputs": [
+          {
+            "tag": "input",
+            "type": "",
+            "placeholder": "搜索岗位、技能、城市或工种分类",
+            "name": "",
+            "label": ""
+          }
+        ],
+        "tables": [],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "蓝领就业平台首页搜索筛选岗位管理后台登录注册蓝领就业精准撮合平台智能匹配·快速入职·安全可靠搜索筛选立即找工作管理后台免费注册岗位分类发现普工、焊工、叉车、仓储、质检等分类快速进入申请提交跟踪查看投递、面试、入职和消息沟通状态后台审核管理企业认证、岗位审核、举报处理和数据概览🎯智能匹配基于技能、薪资、地点多维度精准匹配⚡快速入职简化流程，最快当天面试，3天入职🛡️安全保障企业资质认证，虚假信息零容忍热门岗位查看更多 →加入我们已有10000+求职者和企业在平台成功对接5000+注册求职者1000+认证企业8000+发布岗位95%匹配成功率",
+        "layout": {
+          "viewportWidth": 1536,
+          "viewportHeight": 1349,
+          "scrollWidth": 1536,
+          "scrollHeight": 1349,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89034-c13-structure-02-导航-首页",
+          "label": "导航:首页",
+          "finalUrl": "http://127.0.0.1:50034/",
+          "title": "蓝领就业精准撮合平台",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89034/probe/codex-c13-browser/may-89034-c13-structure-02-导航-首页.json",
+          "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89034/probe/codex-c13-browser/may-89034-c13-structure-02-导航-首页.png",
+          "elementCount": 76,
+          "interactiveCount": 15,
+          "interactiveLabels": [
+            "蓝领就业平台",
+            "首页",
+            "搜索筛选岗位",
+            "管理后台",
+            "登录",
+            "注册",
+            "搜索岗位、技能、城市或工种分类",
+            "搜索筛选",
+            "立即找工作",
+            "免费注册",
+            "岗位分类发现 普工、焊工、叉车、仓储、质检等分类快速进入",
+            "申请提交跟踪 查看投递、面试、入职和消息沟通状态",
+            "后台审核管理 企业认证、岗位审核、举报处理和数据概览",
+            "查看更多 →"
+          ]
+        }
+      },
+      {
+        "label": "操作:搜索筛选",
+        "url": "http://127.0.0.1:50034/jobs",
+        "title": "蓝领就业精准撮合平台",
+        "headings": [
+          "搜索结果与查询结果"
+        ],
+        "navLabels": [
+          "首页",
+          "搜索筛选岗位",
+          "管理后台"
+        ],
+        "buttons": [
+          "搜索"
+        ],
+        "links": [
+          "蓝领就业平台",
+          "首页",
+          "搜索筛选岗位",
+          "管理后台",
+          "登录",
+          "注册"
+        ],
+        "inputs": [
+          {
+            "tag": "input",
+            "type": "text",
+            "placeholder": "搜索岗位关键词",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "text",
+            "placeholder": "工作地点",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "select",
+            "type": "",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "select",
+            "type": "",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "select",
+            "type": "",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          }
+        ],
+        "tables": [],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "蓝领就业平台首页搜索筛选岗位管理后台登录注册搜索结果与查询结果搜索框支持按岗位关键词、工作地点和薪资筛选蓝领岗位。薪资不限3000以上5000以上8000以上10000以上技能不限电工焊工叉车分拣保洁通勤半径3公里内5公里内10公里内搜索匹配条件覆盖技能标签、期望薪资、工作地点、通勤半径、企业认证和福利项；结果卡片可直接进入投递详情。暂无匹配的岗位",
+        "layout": {
+          "viewportWidth": 1568,
+          "viewportHeight": 1349,
+          "scrollWidth": 1568,
+          "scrollHeight": 1349,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89034-c13-structure-03-操作-搜索筛选",
+          "label": "操作:搜索筛选",
+          "finalUrl": "http://127.0.0.1:50034/jobs",
+          "title": "蓝领就业精准撮合平台",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89034/probe/codex-c13-browser/may-89034-c13-structure-03-操作-搜索筛选.json",
+          "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89034/probe/codex-c13-browser/may-89034-c13-structure-03-操作-搜索筛选.png",
+          "elementCount": 54,
+          "interactiveCount": 12,
+          "interactiveLabels": [
+            "蓝领就业平台",
+            "首页",
+            "搜索筛选岗位",
+            "管理后台",
+            "登录",
+            "注册",
+            "搜索岗位关键词",
+            "工作地点",
+            "薪资不限 3000以上 5000以上 8000以上 10000以上",
+            "技能不限 电工 焊工 叉车 分拣 保洁",
+            "通勤半径 3公里内 5公里内 10公里内",
+            "搜索"
+          ]
+        }
+      },
+      {
+        "label": "二层操作:搜索筛选->搜索",
+        "url": "http://127.0.0.1:50034/jobs",
+        "title": "蓝领就业精准撮合平台",
+        "headings": [
+          "搜索结果与查询结果"
+        ],
+        "navLabels": [
+          "首页",
+          "搜索筛选岗位",
+          "管理后台"
+        ],
+        "buttons": [
+          "搜索"
+        ],
+        "links": [
+          "蓝领就业平台",
+          "首页",
+          "搜索筛选岗位",
+          "管理后台",
+          "登录",
+          "注册"
+        ],
+        "inputs": [
+          {
+            "tag": "input",
+            "type": "text",
+            "placeholder": "搜索岗位关键词",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "text",
+            "placeholder": "工作地点",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "select",
+            "type": "",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "select",
+            "type": "",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "select",
+            "type": "",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          }
+        ],
+        "tables": [],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "蓝领就业平台首页搜索筛选岗位管理后台登录注册搜索结果与查询结果搜索框支持按岗位关键词、工作地点和薪资筛选蓝领岗位。薪资不限3000以上5000以上8000以上10000以上技能不限电工焊工叉车分拣保洁通勤半径3公里内5公里内10公里内搜索匹配条件覆盖技能标签、期望薪资、工作地点、通勤半径、企业认证和福利项；结果卡片可直接进入投递详情。暂无匹配的岗位",
+        "layout": {
+          "viewportWidth": 1600,
+          "viewportHeight": 1349,
+          "scrollWidth": 1600,
+          "scrollHeight": 1349,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89034-c13-structure-04-二层操作-搜索筛选-搜索",
+          "label": "二层操作:搜索筛选->搜索",
+          "finalUrl": "http://127.0.0.1:50034/jobs",
+          "title": "蓝领就业精准撮合平台",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89034/probe/codex-c13-browser/may-89034-c13-structure-04-二层操作-搜索筛选-搜索.json",
+          "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89034/probe/codex-c13-browser/may-89034-c13-structure-04-二层操作-搜索筛选-搜索.png",
+          "elementCount": 54,
+          "interactiveCount": 12,
+          "interactiveLabels": [
+            "蓝领就业平台",
+            "首页",
+            "搜索筛选岗位",
+            "管理后台",
+            "登录",
+            "注册",
+            "搜索岗位关键词",
+            "工作地点",
+            "薪资不限 3000以上 5000以上 8000以上 10000以上",
+            "技能不限 电工 焊工 叉车 分拣 保洁",
+            "通勤半径 3公里内 5公里内 10公里内",
+            "搜索"
+          ]
+        }
+      }
+    ],
+    "findings": [
+      "接口 /api/jobs 返回 HTTP 500，对应业务模块无法完成数据读取。",
+      "首屏 页面打开后是空白，没有渲染业务内容、表单或列表。"
+    ],
+    "actionHints": [
+      "补齐 /api/jobs 后端接口、SQLite 数据和前端错误处理。",
+      "修复 首屏 的路由组件挂载、接口初始化和错误兜底，确保进入页面后直接显示可操作内容。"
+    ],
+    "emptyPages": [],
+    "overflowPages": [],
+    "blankPages": [
+      "首屏"
+    ],
+    "apiFailurePaths": [
+      "/api/jobs"
+    ],
+    "goalTerms": [],
+    "clickedActionDescriptors": [
+      {
+        "nav": "首页",
+        "label": "搜索筛选",
+        "ordinal": 0,
+        "unsafe": false
+      },
+      {
+        "nav": "首页",
+        "label": "搜索筛选->搜索",
+        "ordinal": 0,
+        "secondary": true,
+        "unsafe": false
+      }
+    ],
+    "secondaryActionClicks": 1,
+    "structureCaptures": [
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89034-c13-structure-01-首屏",
+        "label": "首屏",
+        "finalUrl": "http://127.0.0.1:50034/",
+        "title": "蓝领就业精准撮合平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89034/probe/codex-c13-browser/may-89034-c13-structure-01-首屏.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89034/probe/codex-c13-browser/may-89034-c13-structure-01-首屏.png",
+        "elementCount": 8,
+        "interactiveCount": 0,
+        "interactiveLabels": []
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89034-c13-structure-02-导航-首页",
+        "label": "导航:首页",
+        "finalUrl": "http://127.0.0.1:50034/",
+        "title": "蓝领就业精准撮合平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89034/probe/codex-c13-browser/may-89034-c13-structure-02-导航-首页.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89034/probe/codex-c13-browser/may-89034-c13-structure-02-导航-首页.png",
+        "elementCount": 76,
+        "interactiveCount": 15,
+        "interactiveLabels": [
+          "蓝领就业平台",
+          "首页",
+          "搜索筛选岗位",
+          "管理后台",
+          "登录",
+          "注册",
+          "搜索岗位、技能、城市或工种分类",
+          "搜索筛选",
+          "立即找工作",
+          "免费注册",
+          "岗位分类发现 普工、焊工、叉车、仓储、质检等分类快速进入",
+          "申请提交跟踪 查看投递、面试、入职和消息沟通状态",
+          "后台审核管理 企业认证、岗位审核、举报处理和数据概览",
+          "查看更多 →"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89034-c13-structure-03-操作-搜索筛选",
+        "label": "操作:搜索筛选",
+        "finalUrl": "http://127.0.0.1:50034/jobs",
+        "title": "蓝领就业精准撮合平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89034/probe/codex-c13-browser/may-89034-c13-structure-03-操作-搜索筛选.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89034/probe/codex-c13-browser/may-89034-c13-structure-03-操作-搜索筛选.png",
+        "elementCount": 54,
+        "interactiveCount": 12,
+        "interactiveLabels": [
+          "蓝领就业平台",
+          "首页",
+          "搜索筛选岗位",
+          "管理后台",
+          "登录",
+          "注册",
+          "搜索岗位关键词",
+          "工作地点",
+          "薪资不限 3000以上 5000以上 8000以上 10000以上",
+          "技能不限 电工 焊工 叉车 分拣 保洁",
+          "通勤半径 3公里内 5公里内 10公里内",
+          "搜索"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89034-c13-structure-04-二层操作-搜索筛选-搜索",
+        "label": "二层操作:搜索筛选->搜索",
+        "finalUrl": "http://127.0.0.1:50034/jobs",
+        "title": "蓝领就业精准撮合平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89034/probe/codex-c13-browser/may-89034-c13-structure-04-二层操作-搜索筛选-搜索.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89034/probe/codex-c13-browser/may-89034-c13-structure-04-二层操作-搜索筛选-搜索.png",
+        "elementCount": 54,
+        "interactiveCount": 12,
+        "interactiveLabels": [
+          "蓝领就业平台",
+          "首页",
+          "搜索筛选岗位",
+          "管理后台",
+          "登录",
+          "注册",
+          "搜索岗位关键词",
+          "工作地点",
+          "薪资不限 3000以上 5000以上 8000以上 10000以上",
+          "技能不限 电工 焊工 叉车 分拣 保洁",
+          "通勤半径 3公里内 5公里内 10公里内",
+          "搜索"
+        ]
+      }
+    ],
+    "representativeScreenshotUrl": "http://127.0.0.1:50034/",
+    "representativeScreenshotLabel": "首屏"
+  },
+  "websiteStructureCapture": {
+    "module": "website_structure_capture",
+    "captureCount": 4,
+    "captures": [
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89034-c13-structure-01-首屏",
+        "label": "首屏",
+        "finalUrl": "http://127.0.0.1:50034/",
+        "title": "蓝领就业精准撮合平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89034/probe/codex-c13-browser/may-89034-c13-structure-01-首屏.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89034/probe/codex-c13-browser/may-89034-c13-structure-01-首屏.png",
+        "elementCount": 8,
+        "interactiveCount": 0,
+        "interactiveLabels": []
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89034-c13-structure-02-导航-首页",
+        "label": "导航:首页",
+        "finalUrl": "http://127.0.0.1:50034/",
+        "title": "蓝领就业精准撮合平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89034/probe/codex-c13-browser/may-89034-c13-structure-02-导航-首页.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89034/probe/codex-c13-browser/may-89034-c13-structure-02-导航-首页.png",
+        "elementCount": 76,
+        "interactiveCount": 15,
+        "interactiveLabels": [
+          "蓝领就业平台",
+          "首页",
+          "搜索筛选岗位",
+          "管理后台",
+          "登录",
+          "注册",
+          "搜索岗位、技能、城市或工种分类",
+          "搜索筛选",
+          "立即找工作",
+          "免费注册",
+          "岗位分类发现 普工、焊工、叉车、仓储、质检等分类快速进入",
+          "申请提交跟踪 查看投递、面试、入职和消息沟通状态",
+          "后台审核管理 企业认证、岗位审核、举报处理和数据概览",
+          "查看更多 →"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89034-c13-structure-03-操作-搜索筛选",
+        "label": "操作:搜索筛选",
+        "finalUrl": "http://127.0.0.1:50034/jobs",
+        "title": "蓝领就业精准撮合平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89034/probe/codex-c13-browser/may-89034-c13-structure-03-操作-搜索筛选.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89034/probe/codex-c13-browser/may-89034-c13-structure-03-操作-搜索筛选.png",
+        "elementCount": 54,
+        "interactiveCount": 12,
+        "interactiveLabels": [
+          "蓝领就业平台",
+          "首页",
+          "搜索筛选岗位",
+          "管理后台",
+          "登录",
+          "注册",
+          "搜索岗位关键词",
+          "工作地点",
+          "薪资不限 3000以上 5000以上 8000以上 10000以上",
+          "技能不限 电工 焊工 叉车 分拣 保洁",
+          "通勤半径 3公里内 5公里内 10公里内",
+          "搜索"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89034-c13-structure-04-二层操作-搜索筛选-搜索",
+        "label": "二层操作:搜索筛选->搜索",
+        "finalUrl": "http://127.0.0.1:50034/jobs",
+        "title": "蓝领就业精准撮合平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89034/probe/codex-c13-browser/may-89034-c13-structure-04-二层操作-搜索筛选-搜索.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89034/probe/codex-c13-browser/may-89034-c13-structure-04-二层操作-搜索筛选-搜索.png",
+        "elementCount": 54,
+        "interactiveCount": 12,
+        "interactiveLabels": [
+          "蓝领就业平台",
+          "首页",
+          "搜索筛选岗位",
+          "管理后台",
+          "登录",
+          "注册",
+          "搜索岗位关键词",
+          "工作地点",
+          "薪资不限 3000以上 5000以上 8000以上 10000以上",
+          "技能不限 电工 焊工 叉车 分拣 保洁",
+          "通勤半径 3公里内 5公里内 10公里内",
+          "搜索"
+        ]
+      }
+    ]
+  },
+  "screenshotMetrics": {
+    "width": 1632,
+    "height": 1349,
+    "scrollWidth": 1600,
+    "scrollHeight": 1349
+  },
+  "initialBodyTextPreview": "蓝领就业平台\n首页\n搜索筛选岗位\n管理后台\n登录\n注册\n蓝领就业精准撮合平台\n\n智能匹配·快速入职·安全可靠\n\n搜索筛选\n立即找工作\n管理后台\n免费注册\n岗位分类发现\n\n普工、焊工、叉车、仓储、质检等分类快速进入\n\n申请提交跟踪\n\n查看投递、面试、入职和消息沟通状态\n\n后台审核管理\n\n企业认证、岗位审核、举报处理和数据概览\n\n🎯\n智能匹配\n\n基于技能、薪资、地点多维度精准匹配\n\n⚡\n快速入职\n\n简化流程，最快当天面试，3天入职\n\n🛡️\n安全保障\n\n企业资质认证，虚假信息零容忍\n\n热门岗位\n查看更多 →\n加入我们\n\n已有10000+求职者和企业在平台成功对接\n\n5000+\n注册求职者\n1000+\n认证企业\n8000+\n发布岗位\n95%\n匹配成功率",
+  "bodyTextPreview": "无法访问此网站\n\n127.0.0.1 拒绝了我们的连接请求。\n\n请试试以下办法：\n\n检查网络连接\n检查代理服务器和防火墙\nERR_CONNECTION_REFUSED\n重新加载\n详情",
+  "apiBase": "http://127.0.0.1:59034",
+  "businessGoalPreview": "",
+  "apiResponses": [
+    {
+      "method": "GET",
+      "status": 500,
+      "url": "http://127.0.0.1:50034/api/jobs?limit=6"
+    },
+    {
+      "method": "GET",
+      "status": 500,
+      "url": "http://127.0.0.1:50034/api/jobs?limit=6"
+    },
+    {
+      "method": "GET",
+      "status": 500,
+      "url": "http://127.0.0.1:50034/api/jobs?limit=6"
+    },
+    {
+      "method": "GET",
+      "status": 500,
+      "url": "http://127.0.0.1:50034/api/jobs?limit=6"
+    },
+    {
+      "method": "GET",
+      "status": 500,
+      "url": "http://127.0.0.1:50034/api/jobs?page=1&limit=20&keyword=&location=&salaryMin=&salaryMax=&skills=&workType=&radius="
+    },
+    {
+      "method": "GET",
+      "status": 500,
+      "url": "http://127.0.0.1:50034/api/jobs?page=1&limit=20&keyword=&location=&salaryMin=&salaryMax=&skills=&workType=&radius="
+    },
+    {
+      "method": "GET",
+      "status": 500,
+      "url": "http://127.0.0.1:50034/api/jobs?page=1&limit=20&keyword=&location=&salaryMin=&salaryMax=&skills=&workType=&radius="
+    }
+  ],
+  "apiChecks": [
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59034/api/health",
+      "path": "/api/health",
+      "status": 0,
+      "ok": false,
+      "error": "apiRequestContext.get: connect ECONNREFUSED 127.0.0.1:59034\nCall log:\n\u001b[2m  - → GET http://127.0.0.1:59034/api/health\u001b[22m\n\u001b[2m    - user-agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/148.0.0.0 Saf"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59034/api/jobs?limit=6",
+      "path": "/api/jobs?limit=6",
+      "status": 0,
+      "ok": false,
+      "error": "apiRequestContext.get: connect ECONNREFUSED 127.0.0.1:59034\nCall log:\n\u001b[2m  - → GET http://127.0.0.1:59034/api/jobs?limit=6\u001b[22m\n\u001b[2m    - user-agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/148.0.0"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59034/api/jobs?page=1&limit=20&keyword=&location=&salaryMin=&salaryMax=&skills=&workType=&radius=",
+      "path": "/api/jobs?page=1&limit=20&keyword=&location=&salaryMin=&salaryMax=&skills=&workType=&radius=",
+      "status": 0,
+      "ok": false,
+      "error": "apiRequestContext.get: connect ECONNREFUSED 127.0.0.1:59034\nCall log:\n\u001b[2m  - → GET http://127.0.0.1:59034/api/jobs?page=1&limit=20&keyword=&location=&salaryMin=&salaryMax=&skills=&workType=&radius=\u001b[22m\n\u001b[2m    - user-agent: Mozilla/5.0 (Macintosh; Intel Mac "
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59034/api/search?q=%E6%B5%8B%E8%AF%95",
+      "path": "/api/search?q=%E6%B5%8B%E8%AF%95",
+      "status": 0,
+      "ok": false,
+      "error": "apiRequestContext.get: connect ECONNREFUSED 127.0.0.1:59034\nCall log:\n\u001b[2m  - → GET http://127.0.0.1:59034/api/search?q=%E6%B5%8B%E8%AF%95\u001b[22m\n\u001b[2m    - user-agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Headles"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59034/api/admin/stats",
+      "path": "/api/admin/stats",
+      "status": 0,
+      "ok": false,
+      "error": "apiRequestContext.get: connect ECONNREFUSED 127.0.0.1:59034\nCall log:\n\u001b[2m  - → GET http://127.0.0.1:59034/api/admin/stats\u001b[22m\n\u001b[2m    - user-agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/148.0.0."
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59034/api/admin/dashboard",
+      "path": "/api/admin/dashboard",
+      "status": 0,
+      "ok": false,
+      "error": "apiRequestContext.get: connect ECONNREFUSED 127.0.0.1:59034\nCall log:\n\u001b[2m  - → GET http://127.0.0.1:59034/api/admin/dashboard\u001b[22m\n\u001b[2m    - user-agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/148."
+    }
+  ],
+  "dialogs": [],
+  "consoleMessages": [
+    {
+      "type": "debug",
+      "text": "[vite] connecting...",
+      "location": {
+        "url": "http://127.0.0.1:50034/@vite/client",
+        "lineNumber": 494,
+        "columnNumber": 8
+      }
+    },
+    {
+      "type": "debug",
+      "text": "[vite] connected.",
+      "location": {
+        "url": "http://127.0.0.1:50034/@vite/client",
+        "lineNumber": 617,
+        "columnNumber": 14
+      }
+    },
+    {
+      "type": "info",
+      "text": "%cDownload the React DevTools for a better development experience: https://reactjs.org/link/react-devtools font-weight:bold",
+      "location": {
+        "url": "http://127.0.0.1:50034/node_modules/.vite/deps/chunk-PJEEZAML.js?v=0759d983",
+        "lineNumber": 21550,
+        "columnNumber": 24
+      }
+    },
+    {
+      "type": "warning",
+      "text": "⚠️ React Router Future Flag Warning: React Router will begin wrapping state updates in `React.startTransition` in v7. You can use the `v7_startTransition` future flag to opt-in early. For more information, see https://reactrouter.com/v6/upgrading/future#v7_starttransition.",
+      "location": {
+        "url": "http://127.0.0.1:50034/node_modules/.vite/deps/react-router-dom.js?v=0759d983",
+        "lineNumber": 4426,
+        "columnNumber": 12
+      }
+    },
+    {
+      "type": "warning",
+      "text": "⚠️ React Router Future Flag Warning: Relative route resolution within Splat routes is changing in v7. You can use the `v7_relativeSplatPath` future flag to opt-in early. For more information, see https://reactrouter.com/v6/upgrading/future#v7_relativesplatpath.",
+      "location": {
+        "url": "http://127.0.0.1:50034/node_modules/.vite/deps/react-router-dom.js?v=0759d983",
+        "lineNumber": 4426,
+        "columnNumber": 12
+      }
+    },
+    {
+      "type": "error",
+      "text": "Failed to load resource: the server responded with a status of 500 (Internal Server Error)",
+      "location": {
+        "url": "http://127.0.0.1:50034/api/jobs?limit=6",
+        "lineNumber": 0,
+        "columnNumber": 0
+      }
+    },
+    {
+      "type": "error",
+      "text": "Failed to fetch jobs: AxiosError: Request failed with status code 500\n    at settle (http://127.0.0.1:50034/node_modules/.vite/deps/axios.js?v=0759d983:1457:12)\n    at XMLHttpRequest.onloadend (http://127.0.0.1:50034/node_modules/.vite/deps/axios.js?v=0759d983:1862:7)",
+      "location": {
+        "url": "http://127.0.0.1:50034/src/pages/HomePage.jsx",
+        "lineNumber": 34,
+        "columnNumber": 14
+      }
+    },
+    {
+      "type": "error",
+      "text": "Failed to load resource: the server responded with a status of 500 (Internal Server Error)",
+      "location": {
+        "url": "http://127.0.0.1:50034/api/jobs?limit=6",
+        "lineNumber": 0,
+        "columnNumber": 0
+      }
+    },
+    {
+      "type": "error",
+      "text": "Failed to fetch jobs: AxiosError: Request failed with status code 500\n    at settle (http://127.0.0.1:50034/node_modules/.vite/deps/axios.js?v=0759d983:1457:12)\n    at XMLHttpRequest.onloadend (http://127.0.0.1:50034/node_modules/.vite/deps/axios.js?v=0759d983:1862:7)",
+      "location": {
+        "url": "http://127.0.0.1:50034/src/pages/HomePage.jsx",
+        "lineNumber": 34,
+        "columnNumber": 14
+      }
+    },
+    {
+      "type": "log",
+      "text": "[vite] server connection lost. Polling for restart...",
+      "location": {
+        "url": "http://127.0.0.1:50034/@vite/client",
+        "lineNumber": 559,
+        "columnNumber": 14
+      }
+    },
+    {
+      "type": "error",
+      "text": "Failed to load resource: net::ERR_CONNECTION_REFUSED",
+      "location": {
+        "url": "http://127.0.0.1:50034/",
+        "lineNumber": 0,
+        "columnNumber": 0
+      }
+    },
+    {
+      "type": "error",
+      "text": "Failed to load resource: net::ERR_CONNECTION_REFUSED",
+      "location": {
+        "url": "http://127.0.0.1:50034/",
+        "lineNumber": 0,
+        "columnNumber": 0
+      }
+    },
+    {
+      "type": "error",
+      "text": "Failed to load resource: net::ERR_CONNECTION_REFUSED",
+      "location": {
+        "url": "http://127.0.0.1:50034/",
+        "lineNumber": 0,
+        "columnNumber": 0
+      }
+    },
+    {
+      "type": "error",
+      "text": "Failed to load resource: net::ERR_CONNECTION_REFUSED",
+      "location": {
+        "url": "http://127.0.0.1:50034/",
+        "lineNumber": 0,
+        "columnNumber": 0
+      }
+    },
+    {
+      "type": "debug",
+      "text": "[vite] connecting...",
+      "location": {
+        "url": "http://127.0.0.1:50034/@vite/client",
+        "lineNumber": 494,
+        "columnNumber": 8
+      }
+    },
+    {
+      "type": "debug",
+      "text": "[vite] connected.",
+      "location": {
+        "url": "http://127.0.0.1:50034/@vite/client",
+        "lineNumber": 617,
+        "columnNumber": 14
+      }
+    },
+    {
+      "type": "info",
+      "text": "%cDownload the React DevTools for a better development experience: https://reactjs.org/link/react-devtools font-weight:bold",
+      "location": {
+        "url": "http://127.0.0.1:50034/node_modules/.vite/deps/chunk-PJEEZAML.js?v=be25ee9f",
+        "lineNumber": 21550,
+        "columnNumber": 24
+      }
+    },
+    {
+      "type": "warning",
+      "text": "⚠️ React Router Future Flag Warning: React Router will begin wrapping state updates in `React.startTransition` in v7. You can use the `v7_startTransition` future flag to opt-in early. For more information, see https://reactrouter.com/v6/upgrading/future#v7_starttransition.",
+      "location": {
+        "url": "http://127.0.0.1:50034/node_modules/.vite/deps/react-router-dom.js?v=1932aa8e",
+        "lineNumber": 4426,
+        "columnNumber": 12
+      }
+    },
+    {
+      "type": "warning",
+      "text": "⚠️ React Router Future Flag Warning: Relative route resolution within Splat routes is changing in v7. You can use the `v7_relativeSplatPath` future flag to opt-in early. For more information, see https://reactrouter.com/v6/upgrading/future#v7_relativesplatpath.",
+      "location": {
+        "url": "http://127.0.0.1:50034/node_modules/.vite/deps/react-router-dom.js?v=1932aa8e",
+        "lineNumber": 4426,
+        "columnNumber": 12
+      }
+    },
+    {
+      "type": "error",
+      "text": "Failed to load resource: the server responded with a status of 500 (Internal Server Error)",
+      "location": {
+        "url": "http://127.0.0.1:50034/api/jobs?limit=6",
+        "lineNumber": 0,
+        "columnNumber": 0
+      }
+    },
+    {
+      "type": "error",
+      "text": "Failed to fetch jobs: AxiosError: Request failed with status code 500\n    at settle (http://127.0.0.1:50034/node_modules/.vite/deps/axios.js?v=2f582251:1457:12)\n    at XMLHttpRequest.onloadend (http://127.0.0.1:50034/node_modules/.vite/deps/axios.js?v=2f582251:1862:7)",
+      "location": {
+        "url": "http://127.0.0.1:50034/src/pages/HomePage.jsx",
+        "lineNumber": 34,
+        "columnNumber": 14
+      }
+    },
+    {
+      "type": "error",
+      "text": "Failed to load resource: the server responded with a status of 500 (Internal Server Error)",
+      "location": {
+        "url": "http://127.0.0.1:50034/api/jobs?limit=6",
+        "lineNumber": 0,
+        "columnNumber": 0
+      }
+    },
+    {
+      "type": "error",
+      "text": "Failed to fetch jobs: AxiosError: Request failed with status code 500\n    at settle (http://127.0.0.1:50034/node_modules/.vite/deps/axios.js?v=2f582251:1457:12)\n    at XMLHttpRequest.onloadend (http://127.0.0.1:50034/node_modules/.vite/deps/axios.js?v=2f582251:1862:7)",
+      "location": {
+        "url": "http://127.0.0.1:50034/src/pages/HomePage.jsx",
+        "lineNumber": 34,
+        "columnNumber": 14
+      }
+    },
+    {
+      "type": "error",
+      "text": "Failed to load resource: the server responded with a status of 500 (Internal Server Error)",
+      "location": {
+        "url": "http://127.0.0.1:50034/api/jobs?page=1&limit=20&keyword=&location=&salaryMin=&salaryMax=&skills=&workType=&radius=",
+        "lineNumber": 0,
+        "columnNumber": 0
+      }
+    },
+    {
+      "type": "error",
+      "text": "Failed to fetch jobs: AxiosError: Request failed with status code 500\n    at settle (http://127.0.0.1:50034/node_modules/.vite/deps/axios.js?v=2f582251:1457:12)\n    at XMLHttpRequest.onloadend (http://127.0.0.1:50034/node_modules/.vite/deps/axios.js?v=2f582251:1862:7)",
+      "location": {
+        "url": "http://127.0.0.1:50034/src/pages/JobListPage.jsx",
+        "lineNumber": 50,
+        "columnNumber": 14
+      }
+    },
+    {
+      "type": "error",
+      "text": "Failed to load resource: the server responded with a status of 500 (Internal Server Error)",
+      "location": {
+        "url": "http://127.0.0.1:50034/api/jobs?page=1&limit=20&keyword=&location=&salaryMin=&salaryMax=&skills=&workType=&radius=",
+        "lineNumber": 0,
+        "columnNumber": 0
+      }
+    },
+    {
+      "type": "error",
+      "text": "Failed to fetch jobs: AxiosError: Request failed with status code 500\n    at settle (http://127.0.0.1:50034/node_modules/.vite/deps/axios.js?v=2f582251:1457:12)\n    at XMLHttpRequest.onloadend (http://127.0.0.1:50034/node_modules/.vite/deps/axios.js?v=2f582251:1862:7)",
+      "location": {
+        "url": "http://127.0.0.1:50034/src/pages/JobListPage.jsx",
+        "lineNumber": 50,
+        "columnNumber": 14
+      }
+    },
+    {
+      "type": "error",
+      "text": "Failed to load resource: the server responded with a status of 500 (Internal Server Error)",
+      "location": {
+        "url": "http://127.0.0.1:50034/api/jobs?page=1&limit=20&keyword=&location=&salaryMin=&salaryMax=&skills=&workType=&radius=",
+        "lineNumber": 0,
+        "columnNumber": 0
+      }
+    },
+    {
+      "type": "error",
+      "text": "Failed to fetch jobs: AxiosError: Request failed with status code 500\n    at settle (http://127.0.0.1:50034/node_modules/.vite/deps/axios.js?v=2f582251:1457:12)\n    at XMLHttpRequest.onloadend (http://127.0.0.1:50034/node_modules/.vite/deps/axios.js?v=2f582251:1862:7)",
+      "location": {
+        "url": "http://127.0.0.1:50034/src/pages/JobListPage.jsx",
+        "lineNumber": 50,
+        "columnNumber": 14
+      }
+    },
+    {
+      "type": "log",
+      "text": "[vite] server connection lost. Polling for restart...",
+      "location": {
+        "url": "http://127.0.0.1:50034/@vite/client",
+        "lineNumber": 559,
+        "columnNumber": 14
+      }
+    },
+    {
+      "type": "error",
+      "text": "Failed to load resource: net::ERR_CONNECTION_REFUSED",
+      "location": {
+        "url": "http://127.0.0.1:50034/",
+        "lineNumber": 0,
+        "columnNumber": 0
+      }
+    }
+  ],
+  "requestFailures": [
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:50034/",
+      "errorText": "net::ERR_CONNECTION_REFUSED"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:50034/",
+      "errorText": "net::ERR_CONNECTION_REFUSED"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:50034/",
+      "errorText": "net::ERR_CONNECTION_REFUSED"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:50034/",
+      "errorText": "net::ERR_CONNECTION_REFUSED"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:50034/",
+      "errorText": "net::ERR_ABORTED"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:50034/",
+      "errorText": "net::ERR_CONNECTION_REFUSED"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:50034/",
+      "errorText": "net::ERR_CONNECTION_REFUSED"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:50034/",
+      "errorText": "net::ERR_CONNECTION_REFUSED"
+    }
+  ],
+  "responseErrors": [
+    {
+      "status": 500,
+      "url": "http://127.0.0.1:50034/api/jobs?limit=6"
+    },
+    {
+      "status": 500,
+      "url": "http://127.0.0.1:50034/api/jobs?limit=6"
+    },
+    {
+      "status": 500,
+      "url": "http://127.0.0.1:50034/api/jobs?limit=6"
+    },
+    {
+      "status": 500,
+      "url": "http://127.0.0.1:50034/api/jobs?limit=6"
+    },
+    {
+      "status": 500,
+      "url": "http://127.0.0.1:50034/api/jobs?page=1&limit=20&keyword=&location=&salaryMin=&salaryMax=&skills=&workType=&radius="
+    },
+    {
+      "status": 500,
+      "url": "http://127.0.0.1:50034/api/jobs?page=1&limit=20&keyword=&location=&salaryMin=&salaryMax=&skills=&workType=&radius="
+    },
+    {
+      "status": 500,
+      "url": "http://127.0.0.1:50034/api/jobs?page=1&limit=20&keyword=&location=&salaryMin=&salaryMax=&skills=&workType=&radius="
+    }
+  ]
+}

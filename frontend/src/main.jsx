@@ -1,23 +1,13 @@
-import React from 'react'
-import ReactDOM from 'react-dom/client'
-import { BrowserRouter } from 'react-router-dom'
-import { ConfigProvider } from 'antd'
-import zhCN from 'antd/locale/zh_CN'
-import dayjs from 'dayjs'
-import relativeTime from 'dayjs/plugin/relativeTime'
-import 'dayjs/locale/zh-cn'
-import App from './App.jsx'
-import './App.css'
-
-dayjs.extend(relativeTime)
-dayjs.locale('zh-cn')
+import React from 'react';
+import ReactDOM from 'react-dom/client';
+import { BrowserRouter } from 'react-router-dom';
+import App from './App.jsx';
+import './index.css';
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
     <BrowserRouter>
-      <ConfigProvider locale={zhCN}>
-        <App />
-      </ConfigProvider>
+      <App />
     </BrowserRouter>
   </React.StrictMode>
-)
+);

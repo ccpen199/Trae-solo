@@ -1,0 +1,32 @@
+{
+  "order": "may-89034",
+  "frontend": "http://127.0.0.1:50034/",
+  "backend": "http://127.0.0.1:59034",
+  "status": 200,
+  "title": "蓝领就业精准撮合平台",
+  "bodyLen": 603,
+  "responseErrors": [],
+  "requestFailures": [],
+  "apiChecks": [
+    {
+      "path": "/api/health",
+      "status": 200,
+      "ok": true,
+      "body": "{\"status\":\"ok\",\"timestamp\":\"2026-06-04T12:52:35.562Z\"}"
+    },
+    {
+      "path": "/api/jobs?limit=6",
+      "status": 200,
+      "ok": true,
+      "body": "{\"jobs\":[{\"id\":1,\"employer_id\":1,\"title\":\"急招电工\",\"description\":\"负责厂区电气设备日常维护、检修，能够独立处理电气故障。要求持证上岗，有工厂维修经验优先。\",\"salary_min"
+    },
+    {
+      "path": "/api/jobs?page=1&limit=20&keyword=&location=&salaryMin=&salaryMax=&skills=&workType=&radius=",
+      "status": 200,
+      "ok": true,
+      "body": "{\"jobs\":[{\"id\":1,\"employer_id\":1,\"title\":\"急招电工\",\"description\":\"负责厂区电气设备日常维护、检修，能够独立处理电气故障。要求持证上岗，有工厂维修经验优先。\",\"salary_min"
+    }
+  ],
+  "ok": true,
+  "error": ""
+}

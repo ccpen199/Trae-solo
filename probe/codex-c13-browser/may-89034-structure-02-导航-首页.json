@@ -1,0 +1,2809 @@
+{
+  "meta": {
+    "title": "蓝领就业精准撮合平台",
+    "url": "http://127.0.0.1:50034/",
+    "timestamp": "2026-06-04T12:33:43.492Z",
+    "viewport": {
+      "width": 1536,
+      "height": 1600
+    },
+    "document": {
+      "scrollWidth": 1536,
+      "scrollHeight": 1600
+    }
+  },
+  "text": {
+    "bodyPreview": "蓝领就业平台首页搜索筛选岗位管理后台登录注册蓝领就业精准撮合平台智能匹配·快速入职·安全可靠搜索筛选立即找工作管理后台免费注册岗位分类发现普工、焊工、叉车、仓储、质检等分类快速进入申请提交跟踪查看投递、面试、入职和消息沟通状态后台审核管理企业认证、岗位审核、举报处理和数据概览🎯智能匹配基于技能、薪资、地点多维度精准匹配⚡快速入职简化流程，最快当天面试，3天入职🛡️安全保障企业资质认证，虚假信息零容忍热门岗位查看更多 →加入我们已有10000+求职者和企业在平台成功对接5000+注册求职者1000+认证企业8000+发布岗位95%匹配成功率",
+    "emptyTextCount": 0
+  },
+  "domTree": {
+    "tag": "html",
+    "id": "",
+    "className": "",
+    "selectorHint": "html",
+    "text": "蓝领就业平台 首页 搜索筛选岗位 管理后台 登录 注册 蓝领就业精准撮合平台 智能匹配·快速入职·安全可靠 搜索筛选 立即找工作 管理后台 免费注册 岗位分类发",
+    "visible": true,
+    "childCount": 2,
+    "children": [
+      {
+        "tag": "head",
+        "id": "",
+        "className": "",
+        "selectorHint": "head",
+        "text": "import { injectIntoGlobalHook } from \"/@react-refresh\"; injectIntoGlobalHook(win",
+        "visible": false,
+        "childCount": 8,
+        "children": [
+          {
+            "tag": "meta",
+            "id": "",
+            "className": "",
+            "selectorHint": "meta",
+            "text": "",
+            "visible": false,
+            "childCount": 0,
+            "children": []
+          },
+          {
+            "tag": "meta",
+            "id": "",
+            "className": "",
+            "selectorHint": "meta",
+            "text": "",
+            "visible": false,
+            "childCount": 0,
+            "children": []
+          },
+          {
+            "tag": "link",
+            "id": "",
+            "className": "",
+            "selectorHint": "link",
+            "text": "",
+            "visible": false,
+            "childCount": 0,
+            "children": []
+          },
+          {
+            "tag": "title",
+            "id": "",
+            "className": "",
+            "selectorHint": "title",
+            "text": "蓝领就业精准撮合平台",
+            "visible": false,
+            "childCount": 0,
+            "children": []
+          }
+        ]
+      },
+      {
+        "tag": "body",
+        "id": "",
+        "className": "",
+        "selectorHint": "body",
+        "text": "蓝领就业平台 首页 搜索筛选岗位 管理后台 登录 注册 蓝领就业精准撮合平台 智能匹配·快速入职·安全可靠 搜索筛选 立即找工作 管理后台 免费注册 岗位分类发",
+        "visible": true,
+        "childCount": 2,
+        "children": [
+          {
+            "tag": "div",
+            "id": "root",
+            "className": "",
+            "selectorHint": "div#root",
+            "text": "蓝领就业平台 首页 搜索筛选岗位 管理后台 登录 注册 蓝领就业精准撮合平台 智能匹配·快速入职·安全可靠 搜索筛选 立即找工作 管理后台 免费注册 岗位分类发",
+            "visible": true,
+            "childCount": 1,
+            "children": [
+              {
+                "tag": "div",
+                "id": "",
+                "className": "",
+                "selectorHint": "div",
+                "text": "蓝领就业平台 首页 搜索筛选岗位 管理后台 登录 注册 蓝领就业精准撮合平台 智能匹配·快速入职·安全可靠 搜索筛选 立即找工作 管理后台 免费注册 岗位分类发",
+                "visible": true,
+                "childCount": 2,
+                "children": [
+                  {
+                    "tag": "header",
+                    "id": "",
+                    "className": "header",
+                    "selectorHint": "header.header",
+                    "text": "蓝领就业平台 首页 搜索筛选岗位 管理后台 登录 注册",
+                    "visible": true,
+                    "childCount": 1,
+                    "children": [
+                      {
+                        "tag": "div",
+                        "id": "",
+                        "className": "header-content",
+                        "selectorHint": "div.header-content",
+                        "text": "蓝领就业平台 首页 搜索筛选岗位 管理后台 登录 注册",
+                        "visible": true,
+                        "childCount": 3,
+                        "children": []
+                      }
+                    ]
+                  },
+                  {
+                    "tag": "div",
+                    "id": "",
+                    "className": "",
+                    "selectorHint": "div",
+                    "text": "蓝领就业精准撮合平台 智能匹配·快速入职·安全可靠 搜索筛选 立即找工作 管理后台 免费注册 岗位分类发现 普工、焊工、叉车、仓储、质检等分类快速进入 申请提交",
+                    "visible": true,
+                    "childCount": 2,
+                    "children": [
+                      {
+                        "tag": "div",
+                        "id": "",
+                        "className": "",
+                        "selectorHint": "div",
+                        "text": "蓝领就业精准撮合平台 智能匹配·快速入职·安全可靠 搜索筛选 立即找工作 管理后台 免费注册",
+                        "visible": true,
+                        "childCount": 1,
+                        "children": []
+                      },
+                      {
+                        "tag": "div",
+                        "id": "",
+                        "className": "container",
+                        "selectorHint": "div.container",
+                        "text": "岗位分类发现 普工、焊工、叉车、仓储、质检等分类快速进入 申请提交跟踪 查看投递、面试、入职和消息沟通状态 后台审核管理 企业认证、岗位审核、举报处理和数据概览",
+                        "visible": true,
+                        "childCount": 4,
+                        "children": []
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  "allElements": [
+    {
+      "index": 0,
+      "tag": "html",
+      "id": "",
+      "className": "",
+      "selectorHint": "html",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "蓝领就业平台 首页 搜索筛选岗位 管理后台 登录 注册 蓝领就业精准撮合平台 智能匹配·快速入职·安全可靠 搜索筛选 立即找工作 管理后台 免费注册 岗位分类发现 普工、焊工、叉车、仓储、质检等分类快速进入 申请提交跟踪 查看投递、面试、入职和消息沟通状态 后台审核管理 企业认证、岗位审核、举报处理和数据概览 🎯 智能匹配 基于技能、薪资、地点多维度精准匹",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 2,
+      "rect": {
+        "x": 0,
+        "y": 0,
+        "width": 1536,
+        "height": 1349
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 1,
+      "tag": "head",
+      "id": "",
+      "className": "",
+      "selectorHint": "head",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "import { injectIntoGlobalHook } from \"/@react-refresh\"; injectIntoGlobalHook(window); window.$RefreshReg$ = () => {}; window.$RefreshSig$ = () => (type) => type; 蓝领就业精准撮合平台 * { mar",
+      "href": "",
+      "disabled": false,
+      "visible": false,
+      "childCount": 8,
+      "rect": {
+        "x": 0,
+        "y": 0,
+        "width": 0,
+        "height": 0
+      },
+      "style": {
+        "display": "none",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 2,
+      "tag": "meta",
+      "id": "",
+      "className": "",
+      "selectorHint": "meta",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "",
+      "href": "",
+      "disabled": false,
+      "visible": false,
+      "childCount": 0,
+      "rect": {
+        "x": 0,
+        "y": 0,
+        "width": 0,
+        "height": 0
+      },
+      "style": {
+        "display": "none",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 3,
+      "tag": "meta",
+      "id": "",
+      "className": "",
+      "selectorHint": "meta",
+      "name": "viewport",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "",
+      "href": "",
+      "disabled": false,
+      "visible": false,
+      "childCount": 0,
+      "rect": {
+        "x": 0,
+        "y": 0,
+        "width": 0,
+        "height": 0
+      },
+      "style": {
+        "display": "none",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 4,
+      "tag": "link",
+      "id": "",
+      "className": "",
+      "selectorHint": "link",
+      "name": "",
+      "type": "image/svg+xml",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "",
+      "href": "/favicon.svg",
+      "disabled": false,
+      "visible": false,
+      "childCount": 0,
+      "rect": {
+        "x": 0,
+        "y": 0,
+        "width": 0,
+        "height": 0
+      },
+      "style": {
+        "display": "none",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 5,
+      "tag": "title",
+      "id": "",
+      "className": "",
+      "selectorHint": "title",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "蓝领就业精准撮合平台",
+      "href": "",
+      "disabled": false,
+      "visible": false,
+      "childCount": 0,
+      "rect": {
+        "x": 0,
+        "y": 0,
+        "width": 0,
+        "height": 0
+      },
+      "style": {
+        "display": "none",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 6,
+      "tag": "body",
+      "id": "",
+      "className": "",
+      "selectorHint": "body",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "蓝领就业平台 首页 搜索筛选岗位 管理后台 登录 注册 蓝领就业精准撮合平台 智能匹配·快速入职·安全可靠 搜索筛选 立即找工作 管理后台 免费注册 岗位分类发现 普工、焊工、叉车、仓储、质检等分类快速进入 申请提交跟踪 查看投递、面试、入职和消息沟通状态 后台审核管理 企业认证、岗位审核、举报处理和数据概览 🎯 智能匹配 基于技能、薪资、地点多维度精准匹",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 2,
+      "rect": {
+        "x": 0,
+        "y": 0,
+        "width": 1536,
+        "height": 1349
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 7,
+      "tag": "div",
+      "id": "root",
+      "className": "",
+      "selectorHint": "div#root",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "蓝领就业平台 首页 搜索筛选岗位 管理后台 登录 注册 蓝领就业精准撮合平台 智能匹配·快速入职·安全可靠 搜索筛选 立即找工作 管理后台 免费注册 岗位分类发现 普工、焊工、叉车、仓储、质检等分类快速进入 申请提交跟踪 查看投递、面试、入职和消息沟通状态 后台审核管理 企业认证、岗位审核、举报处理和数据概览 🎯 智能匹配 基于技能、薪资、地点多维度精准匹",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 1,
+      "rect": {
+        "x": 0,
+        "y": 0,
+        "width": 1536,
+        "height": 1349
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 8,
+      "tag": "div",
+      "id": "",
+      "className": "",
+      "selectorHint": "div",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "蓝领就业平台 首页 搜索筛选岗位 管理后台 登录 注册 蓝领就业精准撮合平台 智能匹配·快速入职·安全可靠 搜索筛选 立即找工作 管理后台 免费注册 岗位分类发现 普工、焊工、叉车、仓储、质检等分类快速进入 申请提交跟踪 查看投递、面试、入职和消息沟通状态 后台审核管理 企业认证、岗位审核、举报处理和数据概览 🎯 智能匹配 基于技能、薪资、地点多维度精准匹",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 2,
+      "rect": {
+        "x": 0,
+        "y": 0,
+        "width": 1536,
+        "height": 1349
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 9,
+      "tag": "header",
+      "id": "",
+      "className": "header",
+      "selectorHint": "header.header",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "蓝领就业平台 首页 搜索筛选岗位 管理后台 登录 注册",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 1,
+      "rect": {
+        "x": 0,
+        "y": 0,
+        "width": 1536,
+        "height": 64
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 10,
+      "tag": "div",
+      "id": "",
+      "className": "header-content",
+      "selectorHint": "div.header-content",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "蓝领就业平台 首页 搜索筛选岗位 管理后台 登录 注册",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 3,
+      "rect": {
+        "x": 168,
+        "y": 0,
+        "width": 1200,
+        "height": 64
+      },
+      "style": {
+        "display": "flex",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 11,
+      "tag": "a",
+      "id": "",
+      "className": "logo",
+      "selectorHint": "a.logo",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "蓝领就业平台",
+      "href": "/",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 188,
+        "y": 16,
+        "width": 120,
+        "height": 32
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 12,
+      "tag": "nav",
+      "id": "",
+      "className": "nav",
+      "selectorHint": "nav.nav",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "首页 搜索筛选岗位 管理后台",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 3,
+      "rect": {
+        "x": 668,
+        "y": 21,
+        "width": 216,
+        "height": 22
+      },
+      "style": {
+        "display": "flex",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 13,
+      "tag": "a",
+      "id": "",
+      "className": "active",
+      "selectorHint": "a.active",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "首页",
+      "href": "/",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 668,
+        "y": 21,
+        "width": 28,
+        "height": 22
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 14,
+      "tag": "a",
+      "id": "",
+      "className": "",
+      "selectorHint": "a",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "搜索筛选岗位",
+      "href": "/jobs",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 720,
+        "y": 21,
+        "width": 84,
+        "height": 22
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 15,
+      "tag": "a",
+      "id": "",
+      "className": "",
+      "selectorHint": "a",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "管理后台",
+      "href": "/admin/dashboard",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 828,
+        "y": 21,
+        "width": 56,
+        "height": 22
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 16,
+      "tag": "div",
+      "id": "",
+      "className": "nav",
+      "selectorHint": "div.nav",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "登录 注册",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 2,
+      "rect": {
+        "x": 1244,
+        "y": 17,
+        "width": 104,
+        "height": 30
+      },
+      "style": {
+        "display": "flex",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 17,
+      "tag": "a",
+      "id": "",
+      "className": "",
+      "selectorHint": "a",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "登录",
+      "href": "/login",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 1244,
+        "y": 17,
+        "width": 28,
+        "height": 30
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 18,
+      "tag": "a",
+      "id": "",
+      "className": "btn btn-primary btn-sm",
+      "selectorHint": "a.btn.btn-primary.btn-sm",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "注册",
+      "href": "/register",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 1296,
+        "y": 17,
+        "width": 52,
+        "height": 30
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 19,
+      "tag": "div",
+      "id": "",
+      "className": "",
+      "selectorHint": "div",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "蓝领就业精准撮合平台 智能匹配·快速入职·安全可靠 搜索筛选 立即找工作 管理后台 免费注册 岗位分类发现 普工、焊工、叉车、仓储、质检等分类快速进入 申请提交跟踪 查看投递、面试、入职和消息沟通状态 后台审核管理 企业认证、岗位审核、举报处理和数据概览 🎯 智能匹配 基于技能、薪资、地点多维度精准匹配 ⚡ 快速入职 简化流程，最快当天面试，3天入职 🛡",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 2,
+      "rect": {
+        "x": 0,
+        "y": 64,
+        "width": 1536,
+        "height": 1285
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 20,
+      "tag": "div",
+      "id": "",
+      "className": "",
+      "selectorHint": "div",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "蓝领就业精准撮合平台 智能匹配·快速入职·安全可靠 搜索筛选 立即找工作 管理后台 免费注册",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 1,
+      "rect": {
+        "x": 0,
+        "y": 64,
+        "width": 1536,
+        "height": 417
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 21,
+      "tag": "div",
+      "id": "",
+      "className": "container",
+      "selectorHint": "div.container",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "蓝领就业精准撮合平台 智能匹配·快速入职·安全可靠 搜索筛选 立即找工作 管理后台 免费注册",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 4,
+      "rect": {
+        "x": 168,
+        "y": 144,
+        "width": 1200,
+        "height": 257
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 22,
+      "tag": "h1",
+      "id": "",
+      "className": "",
+      "selectorHint": "h1",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "蓝领就业精准撮合平台",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 188,
+        "y": 144,
+        "width": 1160,
+        "height": 58
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 23,
+      "tag": "p",
+      "id": "",
+      "className": "",
+      "selectorHint": "p",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "智能匹配·快速入职·安全可靠",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 188,
+        "y": 218,
+        "width": 1160,
+        "height": 29
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "0.9"
+      }
+    },
+    {
+      "index": 24,
+      "tag": "form",
+      "id": "",
+      "className": "",
+      "selectorHint": "form",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "搜索筛选",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 2,
+      "rect": {
+        "x": 428,
+        "y": 278,
+        "width": 680,
+        "height": 47
+      },
+      "style": {
+        "display": "flex",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 25,
+      "tag": "input",
+      "id": "",
+      "className": "",
+      "selectorHint": "input",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "搜索岗位、技能、城市或工种分类",
+      "text": "",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 428,
+        "y": 278,
+        "width": 556,
+        "height": 47
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 26,
+      "tag": "button",
+      "id": "",
+      "className": "btn btn-lg",
+      "selectorHint": "button.btn.btn-lg",
+      "name": "",
+      "type": "submit",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "搜索筛选",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 996,
+        "y": 278,
+        "width": 112,
+        "height": 47
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 27,
+      "tag": "div",
+      "id": "",
+      "className": "",
+      "selectorHint": "div",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "立即找工作 管理后台 免费注册",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 3,
+      "rect": {
+        "x": 188,
+        "y": 349,
+        "width": 1160,
+        "height": 52
+      },
+      "style": {
+        "display": "flex",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 28,
+      "tag": "a",
+      "id": "",
+      "className": "btn btn-lg",
+      "selectorHint": "a.btn.btn-lg",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "立即找工作",
+      "href": "/jobs",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 574,
+        "y": 349,
+        "width": 128,
+        "height": 52
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 29,
+      "tag": "a",
+      "id": "",
+      "className": "btn btn-lg btn-outline",
+      "selectorHint": "a.btn.btn-lg.btn-outline",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "管理后台",
+      "href": "/admin/dashboard",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 718,
+        "y": 349,
+        "width": 114,
+        "height": 52
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 30,
+      "tag": "a",
+      "id": "",
+      "className": "btn btn-lg btn-outline",
+      "selectorHint": "a.btn.btn-lg.btn-outline",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "免费注册",
+      "href": "/register",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 848,
+        "y": 349,
+        "width": 114,
+        "height": 52
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 31,
+      "tag": "div",
+      "id": "",
+      "className": "container",
+      "selectorHint": "div.container",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "岗位分类发现 普工、焊工、叉车、仓储、质检等分类快速进入 申请提交跟踪 查看投递、面试、入职和消息沟通状态 后台审核管理 企业认证、岗位审核、举报处理和数据概览 🎯 智能匹配 基于技能、薪资、地点多维度精准匹配 ⚡ 快速入职 简化流程，最快当天面试，3天入职 🛡️ 安全保障 企业资质认证，虚假信息零容忍 热门岗位 查看更多 → 加入我们 已有10000+",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 4,
+      "rect": {
+        "x": 168,
+        "y": 481,
+        "width": 1200,
+        "height": 868
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 32,
+      "tag": "div",
+      "id": "",
+      "className": "grid grid-3",
+      "selectorHint": "div.grid.grid-3",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "岗位分类发现 普工、焊工、叉车、仓储、质检等分类快速进入 申请提交跟踪 查看投递、面试、入职和消息沟通状态 后台审核管理 企业认证、岗位审核、举报处理和数据概览",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 3,
+      "rect": {
+        "x": 188,
+        "y": 541,
+        "width": 1160,
+        "height": 120
+      },
+      "style": {
+        "display": "grid",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 33,
+      "tag": "a",
+      "id": "",
+      "className": "card",
+      "selectorHint": "a.card",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "岗位分类发现 普工、焊工、叉车、仓储、质检等分类快速进入",
+      "href": "/jobs",
+      "disabled": false,
+      "visible": true,
+      "childCount": 2,
+      "rect": {
+        "x": 188,
+        "y": 541,
+        "width": 376,
+        "height": 104
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 34,
+      "tag": "h3",
+      "id": "",
+      "className": "",
+      "selectorHint": "h3",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "岗位分类发现",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 208,
+        "y": 561,
+        "width": 336,
+        "height": 30
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 35,
+      "tag": "p",
+      "id": "",
+      "className": "text-secondary",
+      "selectorHint": "p.text-secondary",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "普工、焊工、叉车、仓储、质检等分类快速进入",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 208,
+        "y": 599,
+        "width": 336,
+        "height": 26
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 36,
+      "tag": "a",
+      "id": "",
+      "className": "card",
+      "selectorHint": "a.card",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "申请提交跟踪 查看投递、面试、入职和消息沟通状态",
+      "href": "/jobs",
+      "disabled": false,
+      "visible": true,
+      "childCount": 2,
+      "rect": {
+        "x": 580,
+        "y": 541,
+        "width": 376,
+        "height": 104
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 37,
+      "tag": "h3",
+      "id": "",
+      "className": "",
+      "selectorHint": "h3",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "申请提交跟踪",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 600,
+        "y": 561,
+        "width": 336,
+        "height": 30
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 38,
+      "tag": "p",
+      "id": "",
+      "className": "text-secondary",
+      "selectorHint": "p.text-secondary",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "查看投递、面试、入职和消息沟通状态",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 600,
+        "y": 599,
+        "width": 336,
+        "height": 26
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 39,
+      "tag": "a",
+      "id": "",
+      "className": "card",
+      "selectorHint": "a.card",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "后台审核管理 企业认证、岗位审核、举报处理和数据概览",
+      "href": "/admin/dashboard",
+      "disabled": false,
+      "visible": true,
+      "childCount": 2,
+      "rect": {
+        "x": 972,
+        "y": 541,
+        "width": 376,
+        "height": 104
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 40,
+      "tag": "h3",
+      "id": "",
+      "className": "",
+      "selectorHint": "h3",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "后台审核管理",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 992,
+        "y": 561,
+        "width": 336,
+        "height": 30
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 41,
+      "tag": "p",
+      "id": "",
+      "className": "text-secondary",
+      "selectorHint": "p.text-secondary",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "企业认证、岗位审核、举报处理和数据概览",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 992,
+        "y": 599,
+        "width": 336,
+        "height": 26
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 42,
+      "tag": "div",
+      "id": "",
+      "className": "",
+      "selectorHint": "div",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "🎯 智能匹配 基于技能、薪资、地点多维度精准匹配 ⚡ 快速入职 简化流程，最快当天面试，3天入职 🛡️ 安全保障 企业资质认证，虚假信息零容忍",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 3,
+      "rect": {
+        "x": 188,
+        "y": 701,
+        "width": 1160,
+        "height": 216
+      },
+      "style": {
+        "display": "grid",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 43,
+      "tag": "div",
+      "id": "",
+      "className": "card text-center",
+      "selectorHint": "div.card.text-center",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "🎯 智能匹配 基于技能、薪资、地点多维度精准匹配",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 3,
+      "rect": {
+        "x": 188,
+        "y": 701,
+        "width": 371,
+        "height": 200
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 44,
+      "tag": "div",
+      "id": "",
+      "className": "",
+      "selectorHint": "div",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "🎯",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 208,
+        "y": 721,
+        "width": 331,
+        "height": 77
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 45,
+      "tag": "h3",
+      "id": "",
+      "className": "",
+      "selectorHint": "h3",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "智能匹配",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 208,
+        "y": 813,
+        "width": 331,
+        "height": 30
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 46,
+      "tag": "p",
+      "id": "",
+      "className": "text-secondary",
+      "selectorHint": "p.text-secondary",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "基于技能、薪资、地点多维度精准匹配",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 208,
+        "y": 855,
+        "width": 331,
+        "height": 26
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 47,
+      "tag": "div",
+      "id": "",
+      "className": "card text-center",
+      "selectorHint": "div.card.text-center",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "⚡ 快速入职 简化流程，最快当天面试，3天入职",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 3,
+      "rect": {
+        "x": 583,
+        "y": 701,
+        "width": 371,
+        "height": 200
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 48,
+      "tag": "div",
+      "id": "",
+      "className": "",
+      "selectorHint": "div",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "⚡",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 603,
+        "y": 721,
+        "width": 331,
+        "height": 77
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 49,
+      "tag": "h3",
+      "id": "",
+      "className": "",
+      "selectorHint": "h3",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "快速入职",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 603,
+        "y": 813,
+        "width": 331,
+        "height": 30
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 50,
+      "tag": "p",
+      "id": "",
+      "className": "text-secondary",
+      "selectorHint": "p.text-secondary",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "简化流程，最快当天面试，3天入职",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 603,
+        "y": 855,
+        "width": 331,
+        "height": 26
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 51,
+      "tag": "div",
+      "id": "",
+      "className": "card text-center",
+      "selectorHint": "div.card.text-center",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "🛡️ 安全保障 企业资质认证，虚假信息零容忍",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 3,
+      "rect": {
+        "x": 977,
+        "y": 701,
+        "width": 371,
+        "height": 200
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 52,
+      "tag": "div",
+      "id": "",
+      "className": "",
+      "selectorHint": "div",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "🛡️",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 997,
+        "y": 721,
+        "width": 331,
+        "height": 77
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 53,
+      "tag": "h3",
+      "id": "",
+      "className": "",
+      "selectorHint": "h3",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "安全保障",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 997,
+        "y": 813,
+        "width": 331,
+        "height": 30
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 54,
+      "tag": "p",
+      "id": "",
+      "className": "text-secondary",
+      "selectorHint": "p.text-secondary",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "企业资质认证，虚假信息零容忍",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 997,
+        "y": 855,
+        "width": 331,
+        "height": 26
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 55,
+      "tag": "div",
+      "id": "",
+      "className": "",
+      "selectorHint": "div",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "热门岗位 查看更多 →",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 2,
+      "rect": {
+        "x": 188,
+        "y": 977,
+        "width": 1160,
+        "height": 62
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 56,
+      "tag": "div",
+      "id": "",
+      "className": "flex flex-between flex-center mb-24",
+      "selectorHint": "div.flex.flex-between.flex-center",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "热门岗位 查看更多 →",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 2,
+      "rect": {
+        "x": 188,
+        "y": 977,
+        "width": 1160,
+        "height": 38
+      },
+      "style": {
+        "display": "flex",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 57,
+      "tag": "h2",
+      "id": "",
+      "className": "page-title",
+      "selectorHint": "h2.page-title",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "热门岗位",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 188,
+        "y": 977,
+        "width": 96,
+        "height": 38
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 58,
+      "tag": "a",
+      "id": "",
+      "className": "text-secondary",
+      "selectorHint": "a.text-secondary",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "查看更多 →",
+      "href": "/jobs",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 1266,
+        "y": 983,
+        "width": 82,
+        "height": 26
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 59,
+      "tag": "div",
+      "id": "",
+      "className": "grid grid-3",
+      "selectorHint": "div.grid.grid-3",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "",
+      "href": "",
+      "disabled": false,
+      "visible": false,
+      "childCount": 0,
+      "rect": {
+        "x": 188,
+        "y": 1039,
+        "width": 1160,
+        "height": 0
+      },
+      "style": {
+        "display": "grid",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 60,
+      "tag": "div",
+      "id": "",
+      "className": "",
+      "selectorHint": "div",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "加入我们 已有10000+求职者和企业在平台成功对接 5000+ 注册求职者 1000+ 认证企业 8000+ 发布岗位 95% 匹配成功率",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 3,
+      "rect": {
+        "x": 188,
+        "y": 1099,
+        "width": 1160,
+        "height": 190
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 61,
+      "tag": "h2",
+      "id": "",
+      "className": "page-title",
+      "selectorHint": "h2.page-title",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "加入我们",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 188,
+        "y": 1099,
+        "width": 1160,
+        "height": 38
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 62,
+      "tag": "p",
+      "id": "",
+      "className": "text-secondary mb-24",
+      "selectorHint": "p.text-secondary.mb-24",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "已有10000+求职者和企业在平台成功对接",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 188,
+        "y": 1158,
+        "width": 1160,
+        "height": 26
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 63,
+      "tag": "div",
+      "id": "",
+      "className": "grid grid-4",
+      "selectorHint": "div.grid.grid-4",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "5000+ 注册求职者 1000+ 认证企业 8000+ 发布岗位 95% 匹配成功率",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 4,
+      "rect": {
+        "x": 368,
+        "y": 1207,
+        "width": 800,
+        "height": 82
+      },
+      "style": {
+        "display": "grid",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 64,
+      "tag": "div",
+      "id": "",
+      "className": "stat-card",
+      "selectorHint": "div.stat-card",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "5000+ 注册求职者",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 2,
+      "rect": {
+        "x": 368,
+        "y": 1207,
+        "width": 188,
+        "height": 82
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 65,
+      "tag": "div",
+      "id": "",
+      "className": "stat-value",
+      "selectorHint": "div.stat-value",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "5000+",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 368,
+        "y": 1207,
+        "width": 188,
+        "height": 51
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 66,
+      "tag": "div",
+      "id": "",
+      "className": "stat-label",
+      "selectorHint": "div.stat-label",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "注册求职者",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 368,
+        "y": 1266,
+        "width": 188,
+        "height": 22
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 67,
+      "tag": "div",
+      "id": "",
+      "className": "stat-card",
+      "selectorHint": "div.stat-card",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "1000+ 认证企业",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 2,
+      "rect": {
+        "x": 572,
+        "y": 1207,
+        "width": 188,
+        "height": 82
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 68,
+      "tag": "div",
+      "id": "",
+      "className": "stat-value",
+      "selectorHint": "div.stat-value",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "1000+",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 572,
+        "y": 1207,
+        "width": 188,
+        "height": 51
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 69,
+      "tag": "div",
+      "id": "",
+      "className": "stat-label",
+      "selectorHint": "div.stat-label",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "认证企业",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 572,
+        "y": 1266,
+        "width": 188,
+        "height": 22
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 70,
+      "tag": "div",
+      "id": "",
+      "className": "stat-card",
+      "selectorHint": "div.stat-card",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "8000+ 发布岗位",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 2,
+      "rect": {
+        "x": 776,
+        "y": 1207,
+        "width": 188,
+        "height": 82
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 71,
+      "tag": "div",
+      "id": "",
+      "className": "stat-value",
+      "selectorHint": "div.stat-value",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "8000+",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 776,
+        "y": 1207,
+        "width": 188,
+        "height": 51
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 72,
+      "tag": "div",
+      "id": "",
+      "className": "stat-label",
+      "selectorHint": "div.stat-label",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "发布岗位",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 776,
+        "y": 1266,
+        "width": 188,
+        "height": 22
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 73,
+      "tag": "div",
+      "id": "",
+      "className": "stat-card",
+      "selectorHint": "div.stat-card",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "95% 匹配成功率",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 2,
+      "rect": {
+        "x": 980,
+        "y": 1207,
+        "width": 188,
+        "height": 82
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 74,
+      "tag": "div",
+      "id": "",
+      "className": "stat-value",
+      "selectorHint": "div.stat-value",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "95%",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 980,
+        "y": 1207,
+        "width": 188,
+        "height": 51
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 75,
+      "tag": "div",
+      "id": "",
+      "className": "stat-label",
+      "selectorHint": "div.stat-label",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "匹配成功率",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 980,
+        "y": 1266,
+        "width": 188,
+        "height": 22
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    }
+  ],
+  "interactiveElements": [
+    {
+      "index": 0,
+      "tag": "a",
+      "id": "",
+      "className": "logo",
+      "selectorHint": "a.logo",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "蓝领就业平台",
+      "href": "/",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 188,
+        "y": 16,
+        "width": 120,
+        "height": 32
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 1,
+      "tag": "a",
+      "id": "",
+      "className": "active",
+      "selectorHint": "a.active",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "首页",
+      "href": "/",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 668,
+        "y": 21,
+        "width": 28,
+        "height": 22
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 2,
+      "tag": "a",
+      "id": "",
+      "className": "",
+      "selectorHint": "a",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "搜索筛选岗位",
+      "href": "/jobs",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 720,
+        "y": 21,
+        "width": 84,
+        "height": 22
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 3,
+      "tag": "a",
+      "id": "",
+      "className": "",
+      "selectorHint": "a",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "管理后台",
+      "href": "/admin/dashboard",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 828,
+        "y": 21,
+        "width": 56,
+        "height": 22
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 4,
+      "tag": "a",
+      "id": "",
+      "className": "",
+      "selectorHint": "a",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "登录",
+      "href": "/login",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 1244,
+        "y": 17,
+        "width": 28,
+        "height": 30
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 5,
+      "tag": "a",
+      "id": "",
+      "className": "btn btn-primary btn-sm",
+      "selectorHint": "a.btn.btn-primary.btn-sm",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "注册",
+      "href": "/register",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 1296,
+        "y": 17,
+        "width": 52,
+        "height": 30
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 6,
+      "tag": "input",
+      "id": "",
+      "className": "",
+      "selectorHint": "input",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "搜索岗位、技能、城市或工种分类",
+      "text": "",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 428,
+        "y": 278,
+        "width": 556,
+        "height": 47
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 7,
+      "tag": "button",
+      "id": "",
+      "className": "btn btn-lg",
+      "selectorHint": "button.btn.btn-lg",
+      "name": "",
+      "type": "submit",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "搜索筛选",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 996,
+        "y": 278,
+        "width": 112,
+        "height": 47
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 8,
+      "tag": "a",
+      "id": "",
+      "className": "btn btn-lg",
+      "selectorHint": "a.btn.btn-lg",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "立即找工作",
+      "href": "/jobs",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 574,
+        "y": 349,
+        "width": 128,
+        "height": 52
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 9,
+      "tag": "a",
+      "id": "",
+      "className": "btn btn-lg btn-outline",
+      "selectorHint": "a.btn.btn-lg.btn-outline",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "管理后台",
+      "href": "/admin/dashboard",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 718,
+        "y": 349,
+        "width": 114,
+        "height": 52
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 10,
+      "tag": "a",
+      "id": "",
+      "className": "btn btn-lg btn-outline",
+      "selectorHint": "a.btn.btn-lg.btn-outline",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "免费注册",
+      "href": "/register",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 848,
+        "y": 349,
+        "width": 114,
+        "height": 52
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 11,
+      "tag": "a",
+      "id": "",
+      "className": "card",
+      "selectorHint": "a.card",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "岗位分类发现 普工、焊工、叉车、仓储、质检等分类快速进入",
+      "href": "/jobs",
+      "disabled": false,
+      "visible": true,
+      "childCount": 2,
+      "rect": {
+        "x": 188,
+        "y": 541,
+        "width": 376,
+        "height": 104
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 12,
+      "tag": "a",
+      "id": "",
+      "className": "card",
+      "selectorHint": "a.card",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "申请提交跟踪 查看投递、面试、入职和消息沟通状态",
+      "href": "/jobs",
+      "disabled": false,
+      "visible": true,
+      "childCount": 2,
+      "rect": {
+        "x": 580,
+        "y": 541,
+        "width": 376,
+        "height": 104
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 13,
+      "tag": "a",
+      "id": "",
+      "className": "card",
+      "selectorHint": "a.card",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "后台审核管理 企业认证、岗位审核、举报处理和数据概览",
+      "href": "/admin/dashboard",
+      "disabled": false,
+      "visible": true,
+      "childCount": 2,
+      "rect": {
+        "x": 972,
+        "y": 541,
+        "width": 376,
+        "height": 104
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 14,
+      "tag": "a",
+      "id": "",
+      "className": "text-secondary",
+      "selectorHint": "a.text-secondary",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "查看更多 →",
+      "href": "/jobs",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 1266,
+        "y": 983,
+        "width": 82,
+        "height": 26
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    }
+  ]
+}
