@@ -1,0 +1,187 @@
+{
+  "ok": false,
+  "generatedAt": "2026-06-08T14:53:45.650Z",
+  "order": "may-89090",
+  "roundIndex": 97,
+  "captureId": "may-89090-cycle97-final",
+  "url": "http://localhost:49090/",
+  "initialUrl": "http://localhost:49090/",
+  "finalUrl": "chrome-error://chromewebdata/",
+  "status": null,
+  "title": "localhost",
+  "initialTitle": "localhost",
+  "navigationError": "page.goto: net::ERR_CONNECTION_REFUSED at http://localhost:49090/\nCall log:\n\u001b[2m  - navigating to \"http://localhost:49090/\", waiting until \"domcontentloaded\"\u001b[22m\n",
+  "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89090/runtime-check/codex-20260608-cycle97-final/may-89090-cycle97-final-frontend.png",
+  "screenshotPaths": [
+    "/Users/chen/Documents/trae_projects/local_projects/may-89090/runtime-check/codex-20260608-cycle97-final/may-89090-cycle97-final-structure-01-首屏.png"
+  ],
+  "issueTextPreview": "页面结构采集已读取到业务内容；健康检查与后台接口需返回可解释响应",
+  "targetReason": "后台管理相关问题",
+  "targetKind": "admin",
+  "targetMatched": false,
+  "targetActions": [],
+  "authFlow": {
+    "detected": false,
+    "attempted": false,
+    "success": false,
+    "finalUrl": "chrome-error://chromewebdata/",
+    "message": "",
+    "actions": []
+  },
+  "businessAudit": {
+    "actions": [],
+    "snapshots": [
+      {
+        "label": "首屏",
+        "url": "chrome-error://chromewebdata/",
+        "title": "localhost",
+        "headings": [
+          "无法访问此网站"
+        ],
+        "navLabels": [],
+        "buttons": [
+          "重新加载",
+          "详情"
+        ],
+        "links": [
+          "检查代理服务器和防火墙"
+        ],
+        "inputs": [],
+        "tables": [],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "无法访问此网站 localhost 拒绝了我们的连接请求。 请试试以下办法： 检查网络连接 检查代理服务器和防火墙 ERR_CONNECTION_REFUSED 重新加载 详情 请检查您的互联网连接是否正常 请检查所有网线是否都已连好，然后重新启动您可能正在使用的任何路由器、调制解调器或其他网络设备。 在防火墙或防病毒设置部分设为允许 Chrome 访问网络。 如果它已在可访问网络的程序列表中，请尝试将它从该列表中移除，然后重新添加到其中。 如果您使用代理服务器… 依次前往“应用”>“系统设置”>“网络”，选择有效的网络，点击“详情…”按钮，然后取消选择所有已选的代理。 localhost 拒绝了我们的连接请求。",
+        "layout": {
+          "viewportWidth": 1504,
+          "viewportHeight": 1000,
+          "scrollWidth": 1504,
+          "scrollHeight": 1000,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89090-cycle97-final-structure-01-首屏",
+          "label": "首屏",
+          "finalUrl": "chrome-error://chromewebdata/",
+          "title": "localhost",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89090/runtime-check/codex-20260608-cycle97-final/may-89090-cycle97-final-structure-01-首屏.json",
+          "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89090/runtime-check/codex-20260608-cycle97-final/may-89090-cycle97-final-structure-01-首屏.png",
+          "elementCount": 45,
+          "interactiveCount": 3,
+          "interactiveLabels": [
+            "检查代理服务器和防火墙",
+            "重新加载",
+            "详情"
+          ]
+        }
+      }
+    ],
+    "findings": [],
+    "actionHints": [],
+    "emptyPages": [],
+    "overflowPages": [],
+    "blankPages": [],
+    "apiFailurePaths": [],
+    "goalTerms": [],
+    "clickedActionDescriptors": [],
+    "secondaryActionClicks": 0,
+    "structureCaptures": [
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89090-cycle97-final-structure-01-首屏",
+        "label": "首屏",
+        "finalUrl": "chrome-error://chromewebdata/",
+        "title": "localhost",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89090/runtime-check/codex-20260608-cycle97-final/may-89090-cycle97-final-structure-01-首屏.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89090/runtime-check/codex-20260608-cycle97-final/may-89090-cycle97-final-structure-01-首屏.png",
+        "elementCount": 45,
+        "interactiveCount": 3,
+        "interactiveLabels": [
+          "检查代理服务器和防火墙",
+          "重新加载",
+          "详情"
+        ]
+      }
+    ],
+    "representativeScreenshotUrl": "chrome-error://chromewebdata/",
+    "representativeScreenshotLabel": "无法访问此网站"
+  },
+  "websiteStructureCapture": {
+    "module": "website_structure_capture",
+    "captureCount": 1,
+    "captures": [
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89090-cycle97-final-structure-01-首屏",
+        "label": "首屏",
+        "finalUrl": "chrome-error://chromewebdata/",
+        "title": "localhost",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89090/runtime-check/codex-20260608-cycle97-final/may-89090-cycle97-final-structure-01-首屏.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89090/runtime-check/codex-20260608-cycle97-final/may-89090-cycle97-final-structure-01-首屏.png",
+        "elementCount": 45,
+        "interactiveCount": 3,
+        "interactiveLabels": [
+          "检查代理服务器和防火墙",
+          "重新加载",
+          "详情"
+        ]
+      }
+    ]
+  },
+  "screenshotMetrics": {
+    "width": 1536,
+    "height": 1000,
+    "scrollWidth": 1504,
+    "scrollHeight": 1000
+  },
+  "initialBodyTextPreview": "无法访问此网站\n\nlocalhost 拒绝了我们的连接请求。\n\n请试试以下办法：\n\n检查网络连接\n检查代理服务器和防火墙\nERR_CONNECTION_REFUSED\n重新加载\n详情",
+  "bodyTextPreview": "无法访问此网站\n\nlocalhost 拒绝了我们的连接请求。\n\n请试试以下办法：\n\n检查网络连接\n检查代理服务器和防火墙\nERR_CONNECTION_REFUSED\n重新加载\n详情",
+  "apiBase": "http://127.0.0.1:59090",
+  "businessGoalPreview": "",
+  "apiResponses": [],
+  "apiChecks": [
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59090/api/health",
+      "path": "/api/health",
+      "status": 200,
+      "ok": true,
+      "bodyPreview": "{\"ok\":true,\"status\":\"ok\",\"project\":\"may-89090\",\"db\":\"/Users/chen/Documents/trae_projects/local_projects/may-89090/data/app.sqlite\",\"time\":1780930423883}"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59090/api/admin/stats",
+      "path": "/api/admin/stats",
+      "status": 200,
+      "ok": true,
+      "bodyPreview": "{\"ok\":true,\"data\":{\"users\":2,\"services\":16,\"orders\":7,\"submissions\":0,\"revenue\":1393,\"newsArticles\":1,\"ugcClues\":0,\"governmentServices\":0,\"publicOpinions\":20,\"positiveOpinions\":12,\"neutralOpinions\":4,\"negativeOpinions\":4,\"avgSentimentScore\":0.3625,\"emergencyCommands\":0,\"pendingEmergency\":0,\"hotlineRecords\":0,\"serviceAccess\":0,\"editorialWorkflows\":1,\"modules\":[\"登录注册\",\"搜索筛选\",\"购买提交\",\"个人中心\",\"后台管理\",\"新闻生产\",\"城市服务\",\"舆情监测\",\"应急管理\"],\"logs\":[{\"id\":8,\"actor\":\"user\",\"action\":\"提交订单 #7\",\"created_at\":\"2026-06-08"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59090/api/admin/dashboard",
+      "path": "/api/admin/dashboard",
+      "status": 200,
+      "ok": true,
+      "bodyPreview": "{\"ok\":true,\"data\":{\"users\":2,\"services\":16,\"orders\":7,\"submissions\":0,\"revenue\":1393,\"newsArticles\":1,\"ugcClues\":0,\"governmentServices\":0,\"publicOpinions\":20,\"positiveOpinions\":12,\"neutralOpinions\":4,\"negativeOpinions\":4,\"avgSentimentScore\":0.3625,\"emergencyCommands\":0,\"pendingEmergency\":0,\"hotlineRecords\":0,\"serviceAccess\":0,\"editorialWorkflows\":1,\"modules\":[\"登录注册\",\"搜索筛选\",\"购买提交\",\"个人中心\",\"后台管理\",\"新闻生产\",\"城市服务\",\"舆情监测\",\"应急管理\"],\"logs\":[{\"id\":8,\"actor\":\"user\",\"action\":\"提交订单 #7\",\"created_at\":\"2026-06-08"
+    }
+  ],
+  "dialogs": [],
+  "consoleMessages": [],
+  "requestFailures": [
+    {
+      "method": "GET",
+      "url": "http://localhost:49090/",
+      "errorText": "net::ERR_CONNECTION_REFUSED"
+    },
+    {
+      "method": "GET",
+      "url": "http://localhost:49090/",
+      "errorText": "net::ERR_CONNECTION_REFUSED"
+    },
+    {
+      "method": "GET",
+      "url": "http://localhost:49090/",
+      "errorText": "net::ERR_CONNECTION_REFUSED"
+    }
+  ],
+  "responseErrors": []
+}
