@@ -41,54 +41,72 @@ const menuItems: MenuProps['items'] = [
   {
     key: '/dashboard',
     icon: <LayoutDashboard size={18} />,
-    label: 'Dashboard',
+    label: '运营看板',
   },
   {
     key: '/nurses',
     icon: <UserCheck size={18} />,
-    label: '护士资质',
+    label: '护士资质准入',
   },
   {
     key: '/orders',
     icon: <ClipboardList size={18} />,
-    label: '订单调度',
+    label: '订单分级调度',
   },
   {
-    key: '/service-control',
+    key: '/service/ongoing',
     icon: <ShieldCheck size={18} />,
-    label: '服务管控',
+    label: '服务过程管控',
+    children: [
+      { key: '/service/ongoing', icon: <Stethoscope size={16} />, label: '进行中服务' },
+      { key: '/service-control-records', disabled: true, icon: <FileCheck size={16} />, label: '服务记录（详情入口）' },
+    ],
   },
   {
-    key: '/audit',
+    key: '/audit/todo',
     icon: <FileCheck size={18} />,
-    label: '审核中心',
+    label: '三级审核中心',
+    children: [
+      { key: '/audit/todo', icon: <FileCheck size={16} />, label: '审核待办' },
+    ],
   },
   {
-    key: '/risk-control',
+    key: '/risk/tickets',
     icon: <AlertTriangle size={18} />,
-    label: '风控中心',
+    label: '风控工单中心',
   },
   {
-    key: '/insurance',
+    key: '/insurance/policies',
     icon: <Shield size={18} />,
-    label: '保险中心',
+    label: '保险自动投保',
+    children: [
+      { key: '/insurance/policies', icon: <Shield size={16} />, label: '保单列表' },
+      { key: '/insurance/config', icon: <Settings size={16} />, label: '投保配置' },
+    ],
   },
   {
-    key: '/statistics',
+    key: '/reports',
     icon: <BarChart3 size={18} />,
-    label: '统计报表',
+    label: '统计报表中心',
   },
 ];
 
 const breadcrumbMap: Record<string, string[]> = {
-  '/dashboard': ['首页', 'Dashboard'],
-  '/nurses': ['首页', '护士资质管理'],
-  '/orders': ['首页', '订单调度管理'],
-  '/service-control': ['首页', '服务管控'],
-  '/audit': ['首页', '审核中心'],
-  '/risk-control': ['首页', '风控中心'],
-  '/insurance': ['首页', '保险中心'],
-  '/statistics': ['首页', '统计报表'],
+  '/dashboard': ['首页', '运营看板'],
+  '/nurses': ['首页', '护士资质准入', '资质列表'],
+  '/nurses/verify': ['首页', '护士资质准入', '资质核验'],
+  '/orders': ['首页', '订单分级调度', '订单列表'],
+  '/orders/detail': ['首页', '订单分级调度', '订单详情'],
+  '/orders/risk-assessment': ['首页', '订单分级调度', '风险评估'],
+  '/service/ongoing': ['首页', '服务过程管控', '进行中服务'],
+  '/service/record': ['首页', '服务过程管控', '服务记录'],
+  '/audit/todo': ['首页', '三级审核中心', '审核待办'],
+  '/audit/workbench': ['首页', '三级审核中心', '审核工作台'],
+  '/risk/tickets': ['首页', '风控工单中心', '工单列表'],
+  '/risk/tickets/detail': ['首页', '风控工单中心', '工单详情'],
+  '/insurance/policies': ['首页', '保险自动投保', '保单列表'],
+  '/insurance/config': ['首页', '保险自动投保', '投保配置'],
+  '/reports': ['首页', '统计报表中心'],
 };
 
 export default function MainLayout() {
@@ -100,10 +118,36 @@ export default function MainLayout() {
     token: { colorBgContainer, borderRadiusLG },
   } = theme.useToken();
 
-  const selectedKey = location.pathname === '/' ? '/dashboard' : location.pathname;
+  const getSelectedKeys = (): string[] => {
+    const p = location.pathname;
+    if (p.startsWith('/nurses/verify')) return ['/nurses'];
+    if (p.startsWith('/orders/')) return ['/orders'];
+    if (p.startsWith('/service/')) return ['/service/ongoing'];
+    if (p.startsWith('/audit/')) return ['/audit/todo'];
+    if (p.startsWith('/risk/')) return ['/risk/tickets'];
+    if (p.startsWith('/insurance/')) return ['/insurance/policies'];
+    if (p.startsWith('/reports')) return ['/reports'];
+    return [p === '/' ? '/dashboard' : p];
+  };
+
+  const getOpenKeys = (): string[] => {
+    const p = location.pathname;
+    const keys: string[] = [];
+    if (p.startsWith('/service/')) keys.push('/service/ongoing');
+    if (p.startsWith('/audit/')) keys.push('/audit/todo');
+    if (p.startsWith('/insurance/')) keys.push('/insurance/policies');
+    return keys;
+  };
+
+  const [openKeys, setOpenKeys] = useState<string[]>(getOpenKeys());
+  const selectedKeys = getSelectedKeys();
 
   const handleMenuClick: MenuProps['onClick'] = ({ key }) => {
     navigate(key);
+  };
+
+  const handleOpenChange: MenuProps['onOpenChange'] = (keys) => {
+    setOpenKeys(keys as string[]);
   };
 
   const userMenuItems: MenuProps['items'] = [
@@ -135,7 +179,12 @@ export default function MainLayout() {
     }
   };
 
-  const breadcrumbItems = (breadcrumbMap[selectedKey] || ['首页']).map((item) => ({
+  const breadcrumbKey = Object.keys(breadcrumbMap).find((k) => {
+    if (k === location.pathname) return true;
+    if (location.pathname.startsWith(k) && k !== '/') return true;
+    return false;
+  });
+  const breadcrumbItems = (breadcrumbMap[breadcrumbKey || '/dashboard'] || ['首页']).map((item) => ({
     title: item,
   }));
 
@@ -193,7 +242,9 @@ export default function MainLayout() {
           <Menu
             theme="dark"
             mode="inline"
-            selectedKeys={[selectedKey]}
+            selectedKeys={selectedKeys}
+            openKeys={openKeys}
+            onOpenChange={handleOpenChange}
             items={menuItems}
             onClick={handleMenuClick}
             className="border-r-0 py-2"
