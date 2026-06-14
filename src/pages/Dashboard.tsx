@@ -1,18 +1,17 @@
 import { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import {
   AreaChart, Area, XAxis, YAxis, CartesianGrid, Tooltip,
   ResponsiveContainer, type TooltipProps
 } from 'recharts';
 import {
-  Edit3, Heart, MessageCircle, Users, Trash2, Clock, Calendar, ChevronRight
+  User, Edit3, Heart, MessageCircle, Users, Trash2, Clock, Calendar, ChevronRight
 } from 'lucide-react';
 import { useProfileStore } from '@/store/useProfileStore';
 import { useSessionStore } from '@/store/useSessionStore';
 import { RISK_LEVEL_CONFIG, LIFE_EVENT_LABELS } from '@/types';
-import type { SessionSummary } from '@/types';
-import { DEMO_PROFILE, buildDemoEmotionTrends, buildDemoSessions } from '@/lib/demoData';
+import type { Session, EmotionTrend, SessionSummary } from '@/types';
 
 const statusConfig: Record<string, { label: string; color: string; bg: string }> = {
   scheduled: { label: '已预约', color: 'text-sky-500', bg: 'bg-sky-50' },
@@ -36,9 +35,9 @@ function CustomTooltip({ active, payload, label }: TooltipProps<number, string>)
 }
 
 export default function Dashboard() {
+  const navigate = useNavigate();
   const { profile } = useProfileStore();
   const { sessions, setSessions, emotionTrends, setEmotionTrends, setCurrentSummary } = useSessionStore();
-  const effectiveProfile = profile ?? DEMO_PROFILE;
 
   const [range, setRange] = useState<'7d' | '30d' | '90d'>('30d');
   const [viewSummary, setViewSummary] = useState<SessionSummary | null>(null);
@@ -54,32 +53,55 @@ export default function Dashboard() {
   );
 
   useEffect(() => {
-    fetch(`/api/emotion/trend?profileId=${effectiveProfile.id}&range=${range}`)
+    if (!profile) return;
+
+    fetch(`/api/emotion/trend?profileId=${profile.id}&range=${range}`)
       .then((res) => res.json())
       .then((json) => {
-        if (json.success && json.data?.length) {
-          setEmotionTrends(json.data);
-          return;
-        }
-        setEmotionTrends(buildDemoEmotionTrends(effectiveProfile.id, range));
+        if (json.success) setEmotionTrends(json.data);
       })
       .catch(() => {
-        setEmotionTrends(buildDemoEmotionTrends(effectiveProfile.id, range));
+        const demoData: EmotionTrend[] = Array.from({ length: range === '7d' ? 7 : range === '30d' ? 30 : 90 }, (_, i) => {
+          const d = new Date();
+          d.setDate(d.getDate() - (range === '7d' ? 7 : range === '30d' ? 30 : 90) + i + 1);
+          return {
+            id: `demo-${i}`,
+            profile_id: profile.id,
+            record_date: d.toISOString().split('T')[0],
+            phq9_score: Math.max(0, Math.min(27, 10 + Math.sin(i * 0.3) * 5 + Math.random() * 3)),
+            gad7_score: Math.max(0, Math.min(21, 8 + Math.cos(i * 0.25) * 4 + Math.random() * 2)),
+            dominant_emotion: i % 3 === 0 ? '焦虑' : i % 3 === 1 ? '低落' : '平静',
+          };
+        });
+        setEmotionTrends(demoData);
       });
 
-    fetch(`/api/sessions/history?profileId=${effectiveProfile.id}`)
+    fetch(`/api/sessions/history?profileId=${profile.id}`)
       .then((res) => res.json())
       .then((json) => {
-        if (json.success && json.data?.length) {
-          setSessions(json.data);
-          return;
-        }
-        setSessions(buildDemoSessions(effectiveProfile.id));
+        if (json.success) setSessions(json.data);
       })
       .catch(() => {
-        setSessions(buildDemoSessions(effectiveProfile.id));
+        const demoSessions: Session[] = [
+          {
+            id: 's-1', profile_id: profile.id, counselor_id: 'c-1',
+            counselor_name: '林咨询师', counselor_tags: ['职场', '家庭'],
+            scheduled_at: '2025-05-20T14:00:00Z', duration: 50, status: 'completed', created_at: '2025-05-20T14:00:00Z',
+          },
+          {
+            id: 's-2', profile_id: profile.id, counselor_id: 'c-2',
+            counselor_name: '陈咨询师', counselor_tags: ['恋爱', '成长'],
+            scheduled_at: '2025-05-27T10:00:00Z', duration: 50, status: 'completed', created_at: '2025-05-27T10:00:00Z',
+          },
+          {
+            id: 's-3', profile_id: profile.id, counselor_id: 'c-1',
+            counselor_name: '林咨询师', counselor_tags: ['职场', '家庭'],
+            scheduled_at: '2025-06-03T15:00:00Z', duration: 0, status: 'scheduled', created_at: '2025-06-01T09:00:00Z',
+          },
+        ];
+        setSessions(demoSessions);
       });
-  }, [effectiveProfile.id, range, setEmotionTrends, setSessions]);
+  }, [profile, range]);
 
   const handleViewSummary = async (sessionId: string) => {
     setViewSummaryLoading(true);
@@ -106,7 +128,32 @@ export default function Dashboard() {
     }
   };
 
-  const riskConf = RISK_LEVEL_CONFIG[effectiveProfile.risk_level] || RISK_LEVEL_CONFIG.low;
+  if (!profile) {
+    return (
+      <div className="container mx-auto px-4 py-16 text-center">
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          className="max-w-md mx-auto"
+        >
+          <div className="w-20 h-20 rounded-full bg-lavender-100 flex items-center justify-center mx-auto mb-6">
+            <User size={36} className="text-lavender-500" />
+          </div>
+          <h2 className="font-serif text-2xl text-lavender-600 mb-3">创建你的匿名档案</h2>
+          <p className="text-slate-dark-400 mb-6">开始使用心屿前，请先创建一个匿名心理健康档案</p>
+          <Link
+            to="/profile"
+            className="inline-flex items-center gap-2 px-6 py-3 bg-lavender-500 text-white rounded-xl font-medium hover:bg-lavender-600 transition-colors"
+          >
+            <Edit3 size={18} />
+            创建档案
+          </Link>
+        </motion.div>
+      </div>
+    );
+  }
+
+  const riskConf = RISK_LEVEL_CONFIG[profile.risk_level] || RISK_LEVEL_CONFIG.low;
 
   const chartData = emotionTrends.map((t) => ({
     date: t.record_date.slice(5),
@@ -130,18 +177,18 @@ export default function Dashboard() {
       >
         <div className="bg-white rounded-2xl p-6 shadow-soft flex flex-col sm:flex-row items-start sm:items-center gap-4">
           <div className="w-14 h-14 rounded-full bg-lavender-100 flex items-center justify-center shrink-0">
-            <span className="text-lavender-600 text-xl font-serif">{effectiveProfile.anonymous_name[0]}</span>
+            <span className="text-lavender-600 text-xl font-serif">{profile.anonymous_name[0]}</span>
           </div>
           <div className="flex-1 min-w-0">
             <div className="flex items-center gap-2 flex-wrap">
-              <h2 className="font-serif text-lg text-slate-dark font-medium">{effectiveProfile.anonymous_name}</h2>
+              <h2 className="font-serif text-lg text-slate-dark font-medium">{profile.anonymous_name}</h2>
               <span className={`px-2.5 py-0.5 rounded-full text-xs font-medium ${riskConf.bg} ${riskConf.color}`}>
                 {riskConf.label}
               </span>
             </div>
             <div className="flex items-center gap-4 mt-1.5 text-sm text-slate-dark-400">
-              <span>PHQ-9：<span className="text-lavender-600 font-medium">{effectiveProfile.phq9_score}</span></span>
-              <span>GAD-7：<span className="text-coral-500 font-medium">{effectiveProfile.gad7_score}</span></span>
+              <span>PHQ-9：<span className="text-lavender-600 font-medium">{profile.phq9_score}</span></span>
+              <span>GAD-7：<span className="text-coral-500 font-medium">{profile.gad7_score}</span></span>
             </div>
           </div>
           <Link
@@ -216,13 +263,13 @@ export default function Dashboard() {
                 <Calendar size={28} className="text-lavender-300" />
               </div>
               <p className="text-slate-dark-400 mb-4">还没有咨询记录</p>
-              <Link
-                to="/match"
+              <button
+                onClick={() => navigate('/match')}
                 className="inline-flex items-center gap-2 px-5 py-2.5 bg-lavender-500 text-white rounded-xl text-sm font-medium hover:bg-lavender-600 transition-colors"
               >
                 <Users size={16} />
                 开始匹配咨询师
-              </Link>
+              </button>
             </div>
           ) : (
             <div className="relative pl-6">

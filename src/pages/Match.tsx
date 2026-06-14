@@ -1,23 +1,17 @@
 import { useState, useEffect, useCallback } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import { Star, RefreshCw, X, CalendarCheck, ShieldCheck } from 'lucide-react';
+import { ShieldCheck, Star, RefreshCw } from 'lucide-react';
 import { useProfileStore } from '@/store/useProfileStore';
 import { useSessionStore } from '@/store/useSessionStore';
 import { LIFE_EVENT_LABELS, type LifeEventTag, type MatchResult } from '@/types';
-import { DEMO_PROFILE } from '@/lib/demoData';
 
 const LIFE_EVENT_KEYS = Object.keys(LIFE_EVENT_LABELS) as LifeEventTag[];
 
-function asPercent(score: number) {
-  return Math.max(0, Math.min(100, Math.round(score <= 1 ? score * 100 : score)));
-}
-
 function ScoreCircle({ score }: { score: number }) {
-  const value = asPercent(score);
   const radius = 28;
   const circumference = 2 * Math.PI * radius;
-  const offset = circumference - (value / 100) * circumference;
+  const offset = circumference - (score / 100) * circumference;
 
   return (
     <div className="relative w-16 h-16 flex items-center justify-center">
@@ -35,7 +29,7 @@ function ScoreCircle({ score }: { score: number }) {
           strokeLinecap="round"
         />
       </svg>
-      <span className="absolute text-sm font-semibold text-lavender-600">{value}%</span>
+      <span className="absolute text-sm font-semibold text-lavender-600">{score}%</span>
     </div>
   );
 }
@@ -45,22 +39,14 @@ function ScoreBar({ label, value, color }: { label: string; value: number; color
     <div className="flex items-center gap-2 text-xs">
       <span className="text-slate-dark-400 w-12 shrink-0">{label}</span>
       <div className="flex-1 h-1.5 bg-lavender-50 rounded-full overflow-hidden">
-        <div className={`h-full rounded-full ${color}`} style={{ width: `${asPercent(value)}%` }} />
+        <div className={`h-full rounded-full ${color}`} style={{ width: `${value}%` }} />
       </div>
-      <span className="text-slate-dark-500 w-8 text-right">{asPercent(value)}%</span>
+      <span className="text-slate-dark-500 w-8 text-right">{value}%</span>
     </div>
   );
 }
 
-function CounselorCard({
-  result,
-  onBook,
-  onViewDetails,
-}: {
-  result: MatchResult;
-  onBook: (counselorId: string) => void;
-  onViewDetails: (result: MatchResult) => void;
-}) {
+function CounselorCard({ result, onBook }: { result: MatchResult; onBook: (counselorId: string) => void }) {
   const { counselor, score, breakdown } = result;
   const firstChar = counselor.anonymous_name.charAt(0);
 
@@ -120,10 +106,7 @@ function CounselorCard({
         >
           预约咨询
         </button>
-        <button
-          onClick={() => onViewDetails(result)}
-          className="text-sm text-lavender-500 hover:text-lavender-600 transition"
-        >
+        <button className="text-sm text-lavender-500 hover:text-lavender-600 transition">
           查看详情
         </button>
       </div>
@@ -131,112 +114,20 @@ function CounselorCard({
   );
 }
 
-function CounselorDetailModal({
-  result,
-  onClose,
-  onBook,
-}: {
-  result: MatchResult;
-  onClose: () => void;
-  onBook: (counselorId: string) => void;
-}) {
-  const { counselor, score, breakdown } = result;
-
-  return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center bg-slate-dark-900/60 px-4 py-8" onClick={onClose}>
-      <motion.div
-        initial={{ opacity: 0, scale: 0.96, y: 12 }}
-        animate={{ opacity: 1, scale: 1, y: 0 }}
-        className="w-full max-w-xl rounded-2xl bg-white p-6 shadow-lavender-lg"
-        onClick={(event) => event.stopPropagation()}
-      >
-        <div className="flex items-start justify-between gap-4">
-          <div className="flex items-center gap-3">
-            <div className="w-14 h-14 rounded-full bg-lavender-100 text-lavender-600 flex items-center justify-center text-xl font-serif">
-              {counselor.anonymous_name[0]}
-            </div>
-            <div>
-              <h2 className="font-serif text-2xl text-lavender-700">{counselor.anonymous_name}</h2>
-              <div className="mt-1 flex items-center gap-2 text-sm text-slate-dark-500">
-                <Star className="w-4 h-4 text-yellow-400 fill-yellow-400" />
-                {counselor.rating.toFixed(1)}
-                <span>服务 {counselor.session_count} 次</span>
-              </div>
-            </div>
-          </div>
-          <button onClick={onClose} className="rounded-full p-2 text-slate-dark-400 hover:bg-lavender-50 hover:text-lavender-600">
-            <X size={18} />
-          </button>
-        </div>
-
-        <div className="mt-6 grid gap-4 sm:grid-cols-3">
-          <div className="rounded-xl bg-lavender-50 p-4">
-            <div className="text-xs text-slate-dark-400">综合匹配</div>
-            <div className="mt-1 text-2xl font-semibold text-lavender-700">{asPercent(score)}%</div>
-          </div>
-          <div className="rounded-xl bg-mint-50 p-4">
-            <div className="text-xs text-slate-dark-400">可约时段</div>
-            <div className="mt-1 text-2xl font-semibold text-mint-500">{asPercent(breakdown.schedule_score)}%</div>
-          </div>
-          <div className="rounded-xl bg-sky-50 p-4">
-            <div className="text-xs text-slate-dark-400">资质状态</div>
-            <div className="mt-1 text-sm font-semibold text-sky-500">证书与库验通过</div>
-          </div>
-        </div>
-
-        <div className="mt-5">
-          <h3 className="text-sm font-medium text-slate-dark-500 mb-2">专长方向</h3>
-          <div className="flex flex-wrap gap-2">
-            {counselor.expertise_tags.map((tag) => (
-              <span key={tag} className="rounded-full bg-lavender-50 px-3 py-1 text-xs text-lavender-600">
-                {LIFE_EVENT_LABELS[tag]}
-              </span>
-            ))}
-          </div>
-        </div>
-
-        <div className="mt-5 rounded-xl border border-lavender-100 p-4">
-          <div className="flex items-center gap-2 text-sm font-medium text-slate-dark-700">
-            <ShieldCheck size={16} className="text-mint-500" />
-            匿名档案适配说明
-          </div>
-          <p className="mt-2 text-sm leading-relaxed text-slate-dark-500">
-            当前匹配综合考虑咨询场景、近期可约时段、评分与资质等级，适合用于情绪管理、压力来源梳理和后续行动计划制定。
-          </p>
-        </div>
-
-        <div className="mt-6 flex flex-col sm:flex-row gap-3">
-          <button
-            onClick={() => onBook(counselor.id)}
-            className="flex-1 rounded-full bg-lavender-500 py-3 text-sm font-medium text-white hover:bg-lavender-600 transition"
-          >
-            预约咨询
-          </button>
-          <button className="flex flex-1 items-center justify-center gap-2 rounded-full border border-lavender-200 py-3 text-sm font-medium text-lavender-600 hover:bg-lavender-50 transition">
-            <CalendarCheck size={16} />
-            查看可约时间
-          </button>
-        </div>
-      </motion.div>
-    </div>
-  );
-}
-
 export default function Match() {
   const navigate = useNavigate();
   const { profile } = useProfileStore();
   const { matchedCounselors, setMatchedCounselors } = useSessionStore();
-  const effectiveProfile = profile ?? DEMO_PROFILE;
 
   const [selectedEvents, setSelectedEvents] = useState<Set<LifeEventTag>>(new Set());
   const [minRating, setMinRating] = useState(4.0);
   const [loading, setLoading] = useState(false);
-  const [selectedResult, setSelectedResult] = useState<MatchResult | null>(null);
 
   const fetchMatches = useCallback(async () => {
+    if (!profile) return;
     setLoading(true);
     try {
-      const res = await fetch(`/api/counselors/match?profileId=${effectiveProfile.id}`);
+      const res = await fetch(`/api/counselors/match?profileId=${profile.id}`);
       const json = await res.json();
       if (json.success) {
         setMatchedCounselors(json.data);
@@ -246,7 +137,7 @@ export default function Match() {
     } finally {
       setLoading(false);
     }
-  }, [effectiveProfile.id, setMatchedCounselors]);
+  }, [profile, setMatchedCounselors]);
 
   useEffect(() => {
     fetchMatches();
@@ -271,12 +162,13 @@ export default function Match() {
   });
 
   const handleBook = async (counselorId: string) => {
+    if (!profile) return;
     try {
       const res = await fetch('/api/sessions', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
-          profile_id: effectiveProfile.id,
+          profile_id: profile.id,
           counselor_id: counselorId,
           scheduled_at: new Date().toISOString(),
         }),
@@ -289,6 +181,24 @@ export default function Match() {
       console.error('预约失败');
     }
   };
+
+  if (!profile) {
+    return (
+      <div className="container mx-auto px-4 py-16 flex items-center justify-center min-h-[60vh]">
+        <div className="bg-white rounded-3xl p-8 shadow-soft text-center max-w-md">
+          <ShieldCheck className="w-12 h-12 text-lavender-400 mx-auto mb-4" />
+          <h2 className="font-serif text-2xl text-lavender-600 mb-2">请先完成匿名建档</h2>
+          <p className="text-slate-dark-400 mb-6">创建你的心理健康档案后，即可匹配咨询师</p>
+          <Link
+            to="/profile"
+            className="inline-block bg-lavender-500 text-white rounded-full px-8 py-3 hover:bg-lavender-600 transition"
+          >
+            前往建档
+          </Link>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="container mx-auto px-4 py-8">
@@ -366,20 +276,13 @@ export default function Match() {
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: i * 0.1 }}
                 >
-                  <CounselorCard result={result} onBook={handleBook} onViewDetails={setSelectedResult} />
+                  <CounselorCard result={result} onBook={handleBook} />
                 </motion.div>
               ))}
             </div>
           )}
         </div>
       </div>
-      {selectedResult && (
-        <CounselorDetailModal
-          result={selectedResult}
-          onClose={() => setSelectedResult(null)}
-          onBook={handleBook}
-        />
-      )}
     </div>
   );
 }
