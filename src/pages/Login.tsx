@@ -5,6 +5,7 @@ import { useAuthStore, UserRole } from '@/store/auth';
 import Button from '@/components/ui/Button';
 import Input from '@/components/ui/Input';
 import Badge from '@/components/ui/Badge';
+import request from '@/lib/axios';
 
 type LoginRole = Exclude<UserRole, 'admin' | 'officer'>;
 
@@ -36,18 +37,83 @@ export default function Login() {
 
     setLoading(true);
 
-    await new Promise((r) => setTimeout(r, 800));
+    try {
+      const response = await request.post('/auth/login', { phone, password, role }) as {
+        success: boolean;
+        data: {
+          token: string;
+          user: {
+            id: number;
+            role: UserRole;
+            phone?: string;
+            username?: string;
+            avatar?: string;
+            created_at?: string;
+          };
+        };
+      };
 
-    login('mock-jwt-token-' + Date.now(), {
-      id: role === 'student' ? 2 : 3,
-      role,
-      phone,
-      nickname: role === 'student' ? '张小橙' : 'HR李小姐',
-      createdAt: new Date().toISOString(),
-    });
+      const { token, user } = response.data;
+      login(token, {
+        id: user.id,
+        role: user.role,
+        phone: user.phone || phone,
+        nickname: user.username,
+        avatar: user.avatar,
+        createdAt: user.created_at || new Date().toISOString(),
+      });
 
-    setLoading(false);
-    navigate(redirect || (role === 'student' ? '/' : '/enterprise/dashboard'));
+      navigate(redirect || (role === 'student' ? '/' : '/enterprise/dashboard'));
+    } catch (err: any) {
+      setError(err?.response?.data?.error || '登录失败，请检查手机号和密码');
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handleDemoLogin = async (nextRole: LoginRole) => {
+    const demoPhone = nextRole === 'student' ? '13910000000' : '13800001000';
+    const demoPassword = nextRole === 'student' ? 'student123' : 'enterprise123';
+    setRole(nextRole);
+    setPhone(demoPhone);
+    setPassword(demoPassword);
+    setError('');
+    setLoading(true);
+    try {
+      const response = await request.post('/auth/login', {
+        phone: demoPhone,
+        password: demoPassword,
+        role: nextRole,
+      }) as {
+        success: boolean;
+        data: {
+          token: string;
+          user: {
+            id: number;
+            role: UserRole;
+            phone?: string;
+            username?: string;
+            avatar?: string;
+            created_at?: string;
+          };
+        };
+      };
+
+      const { token, user } = response.data;
+      login(token, {
+        id: user.id,
+        role: user.role,
+        phone: user.phone || demoPhone,
+        nickname: user.username,
+        avatar: user.avatar,
+        createdAt: user.created_at || new Date().toISOString(),
+      });
+      navigate(redirect || (nextRole === 'student' ? '/' : '/enterprise/dashboard'));
+    } catch (err: any) {
+      setError(err?.response?.data?.error || '演示登录失败');
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -168,6 +234,27 @@ export default function Login() {
               <div className="h-px flex-1 bg-ink-100" />
               <span className="text-xs text-ink-400">其他方式</span>
               <div className="h-px flex-1 bg-ink-100" />
+            </div>
+
+            <div className="grid grid-cols-2 gap-2">
+              <Button
+                type="button"
+                variant="outline"
+                size="sm"
+                onClick={() => handleDemoLogin('student')}
+                className="w-full"
+              >
+                学生演示账号
+              </Button>
+              <Button
+                type="button"
+                variant="outline"
+                size="sm"
+                onClick={() => handleDemoLogin('enterprise')}
+                className="w-full"
+              >
+                企业演示账号
+              </Button>
             </div>
 
             <div className="flex items-center justify-center gap-2 text-xs text-ink-500">

@@ -86,6 +86,25 @@ export default function JobListPage() {
   const [selectedTypes, setSelectedTypes] = useState<string[]>([]);
   const [keyword, setKeyword] = useState('');
 
+  const filteredJobs = jobs.filter((job) => {
+    const normalizedKeyword = keyword.trim().toLowerCase();
+    const matchesKeyword = !normalizedKeyword || [
+      job.title,
+      job.company,
+      job.city,
+      job.type,
+      job.mentor.name,
+      job.mentor.title,
+      ...job.tags,
+    ].some((text) => text.toLowerCase().includes(normalizedKeyword));
+    const matchesTypes = selectedTypes.length === 0 || selectedTypes.includes(job.type);
+    const matchesConvertRate = job.convertRate >= minConvertRate;
+    const maxSalary = Number(job.salary.match(/-(\d+)/)?.[1] || 0);
+    const matchesSalary = maxSalary <= salaryRange[1];
+
+    return matchesKeyword && matchesTypes && matchesConvertRate && matchesSalary;
+  });
+
   const toggleType = (t: string) => {
     setSelectedTypes((prev) =>
       prev.includes(t) ? prev.filter((x) => x !== t) : [...prev, t]
@@ -113,7 +132,10 @@ export default function JobListPage() {
               <div className="space-y-3">
                 <label className="text-sm font-semibold text-ink-700">关键词搜索</label>
                 <Input
-                  placeholder="输入岗位/公司名..."
+                  type="search"
+                  name="job-search"
+                  aria-label="岗位搜索框"
+                  placeholder="请输入搜索岗位、公司或城市"
                   leftIcon={<Search size={16} />}
                   value={keyword}
                   onChange={(e) => setKeyword(e.target.value)}
@@ -237,9 +259,9 @@ export default function JobListPage() {
             <CardContent className="flex items-center justify-between flex-wrap gap-4">
               <div className="flex items-center gap-3 flex-wrap">
                 <h2 className="text-xl font-bold text-ink-900">
-                  岗位广场
+                  搜索结果 · 岗位广场
                   <span className="ml-3 text-sm font-normal text-ink-500">
-                    共 <span className="font-bold text-brand-600 font-num">12,846</span> 个结果
+                    查询结果 <span className="font-bold text-brand-600 font-num">{filteredJobs.length}</span> 个
                   </span>
                 </h2>
                 {(selectedIndustry || selectedTypes.length > 0) && (
@@ -298,8 +320,18 @@ export default function JobListPage() {
             </CardContent>
           </Card>
 
+          <div className="rounded-2xl border border-brand-100 bg-white px-4 py-3 text-sm text-ink-600 shadow-soft">
+            <span className="font-semibold text-ink-900">搜索框</span>
+            <span className="mx-2 text-ink-300">/</span>
+            <span>
+              {keyword.trim()
+                ? `正在展示“${keyword.trim()}”的查询结果`
+                : '请输入搜索关键词，支持岗位、公司、城市和带教人匹配'}
+            </span>
+          </div>
+
           <div className={viewMode === 'grid' ? 'grid grid-cols-2 gap-5' : 'space-y-4'}>
-            {jobs.map((job, i) => (
+            {filteredJobs.map((job, i) => (
               <Card
                 key={job.id}
                 hoverable
@@ -371,6 +403,15 @@ export default function JobListPage() {
                 </CardContent>
               </Card>
             ))}
+            {filteredJobs.length === 0 && (
+              <Card className="col-span-2">
+                <CardContent className="py-12 text-center">
+                  <Search className="mx-auto mb-3 h-10 w-10 text-ink-300" />
+                  <h3 className="text-lg font-semibold text-ink-900">暂无匹配的搜索结果</h3>
+                  <p className="mt-2 text-sm text-ink-500">换一个岗位、公司或城市关键词继续查询。</p>
+                </CardContent>
+              </Card>
+            )}
           </div>
 
           <div className="flex items-center justify-center gap-2 py-4">

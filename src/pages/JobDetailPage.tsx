@@ -92,8 +92,8 @@ export default function JobDetailPage() {
   );
   const [liked, setLiked] = useState(false);
   const [applied, setApplied] = useState(false);
-  const [profileComplete, setProfileComplete] = useState(0.65);
-  const [verified, setVerified] = useState(false);
+  const [profileComplete] = useState(0.9);
+  const [verified] = useState(true);
   const [showGuideModal, setShowGuideModal] = useState(false);
   const [showToast, setShowToast] = useState(false);
 
@@ -492,7 +492,7 @@ export default function JobDetailPage() {
                           <div className="font-semibold text-ink-800 flex items-center gap-2">
                             <GraduationCap size={16} className="text-amber-500" />
                             学籍验证
-                            <span className="text-xs px-2 py-0.5 rounded-full bg-amber-200 text-amber-700 font-medium">未完成</span>
+                            <span className="text-xs px-2 py-0.5 rounded-full bg-teal-100 text-teal-700 font-medium">已完成</span>
                           </div>
                           <p className="text-xs text-ink-500 mt-1">完成学籍认证，获得专属内推通道</p>
                         </div>
@@ -516,9 +516,9 @@ export default function JobDetailPage() {
                         <div className="font-semibold text-ink-800 mb-3">档案完整度</div>
                         <div className="flex items-center gap-3 mb-4">
                           <div className="flex-1 h-3 bg-ink-100 rounded-full overflow-hidden">
-                            <div className="h-full w-[65%] bg-gradient-to-r from-brand-400 to-teal-400 rounded-full" />
+                            <div className="h-full w-[90%] bg-gradient-to-r from-brand-400 to-teal-400 rounded-full" />
                           </div>
-                          <span className="text-lg font-bold text-brand-600 font-num">65%</span>
+                          <span className="text-lg font-bold text-brand-600 font-num">90%</span>
                         </div>
                         <div className="space-y-2 text-sm">
                           <div className="flex items-center gap-2 text-amber-600">

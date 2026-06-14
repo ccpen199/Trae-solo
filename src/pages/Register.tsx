@@ -23,6 +23,7 @@ import { useAuthStore, UserRole } from '@/store/auth';
 import Button from '@/components/ui/Button';
 import Input from '@/components/ui/Input';
 import Badge from '@/components/ui/Badge';
+import request from '@/lib/axios';
 
 type RegisterRole = Exclude<UserRole, 'admin' | 'officer'>;
 type Step = 1 | 2 | 3 | 4 | 5;
@@ -242,18 +243,50 @@ export default function Register() {
     }
     setError('');
     setLoading(true);
-    await new Promise((r) => setTimeout(r, 1000));
+    try {
+      const accountName = role === 'student' ? nickname.trim() : companyName.trim();
+      const response = await request.post('/auth/register', {
+        username: accountName || phone,
+        email: `${phone}@zhanchi.local`,
+        password,
+        role,
+        phone,
+        nickname: nickname.trim() || accountName || phone,
+        school: school.trim(),
+        major,
+        company_name: companyName.trim(),
+        legal_rep: legalRep.trim(),
+      }) as {
+        success: boolean;
+        data: {
+          token: string;
+          user: {
+            id: number;
+            role: UserRole;
+            phone?: string;
+            username?: string;
+            avatar?: string;
+            created_at?: string;
+          };
+        };
+      };
 
-    login('mock-jwt-token-' + Date.now(), {
-      id: role === 'student' ? 2 : 3,
-      role,
-      phone,
-      nickname: nickname.trim(),
-      createdAt: new Date().toISOString(),
-    });
+      const { token, user } = response.data;
+      login(token, {
+        id: user.id,
+        role: user.role,
+        phone: user.phone || phone,
+        nickname: user.username || accountName || phone,
+        avatar: user.avatar,
+        createdAt: user.created_at || new Date().toISOString(),
+      });
 
-    setLoading(false);
-    navigate(role === 'student' ? '/student/profile' : '/enterprise/qualification');
+      navigate(role === 'student' ? '/student/profile' : '/enterprise/qualification');
+    } catch (err: any) {
+      setError(err?.response?.data?.error || '注册失败，请稍后重试');
+    } finally {
+      setLoading(false);
+    }
   };
 
   const renderStepIndicator = () => (

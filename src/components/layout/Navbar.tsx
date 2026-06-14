@@ -30,6 +30,7 @@ const navItems = [
 const roleLabels: Record<UserRole, string> = {
   student: '学生',
   enterprise: '企业',
+  mentor: '导师',
   officer: '学工老师',
   admin: '管理员',
 };

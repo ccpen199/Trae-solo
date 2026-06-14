@@ -7,17 +7,15 @@ import type { User, UserRole } from '../../shared/types.js'
 const router = Router()
 
 router.post('/register', async (req: Request, res: Response): Promise<void> => {
-  const { username, email, password, role } = req.body as {
-    username: string
-    email: string
-    password: string
-    role: UserRole
-  }
+  const { password, role } = req.body as { password: string; role: UserRole }
+  const phone = String(req.body.phone || '').trim()
+  const username = String(req.body.username || req.body.nickname || req.body.company_name || phone).trim()
+  const email = String(req.body.email || (phone ? `${phone}@zhanchi.local` : '')).trim()
 
   if (!username || !email || !password || !role) {
     res.status(400).json({
       success: false,
-      error: '缺少必要字段：用户名、邮箱、密码和角色',
+      error: '缺少必要字段：用户名或手机号、密码和角色',
     })
     return
   }
@@ -40,11 +38,11 @@ router.post('/register', async (req: Request, res: Response): Promise<void> => {
 
   const db = getDb()
 
-  const existingUser = db.prepare('SELECT id FROM users WHERE email = ? OR username = ?').get(email, username)
+  const existingUser = db.prepare('SELECT id FROM users WHERE email = ? OR username = ? OR phone = ?').get(email, username, phone || null)
   if (existingUser) {
     res.status(409).json({
       success: false,
-      error: '用户名或邮箱已被注册',
+      error: '用户名、邮箱或手机号已被注册',
     })
     return
   }
@@ -53,20 +51,20 @@ router.post('/register', async (req: Request, res: Response): Promise<void> => {
   const now = new Date().toISOString()
 
   const insertUser = db.prepare(
-    'INSERT INTO users (username, email, password_hash, role, created_at, updated_at) VALUES (?, ?, ?, ?, ?, ?)'
+    'INSERT INTO users (username, email, password_hash, role, phone, created_at, updated_at) VALUES (?, ?, ?, ?, ?, ?, ?)'
   )
 
-  const result = insertUser.run(username, email, passwordHash, role, now, now)
+  const result = insertUser.run(username, email, passwordHash, role, phone || null, now, now)
   const userId = result.lastInsertRowid as number
 
   if (role === 'student') {
     db.prepare(
       'INSERT INTO student_profiles (user_id, real_name, school, major, grade) VALUES (?, ?, ?, ?, ?)'
-    ).run(userId, username, '待完善', '待完善', '待完善')
+    ).run(userId, req.body.nickname || username, req.body.school || '待完善', req.body.major || '待完善', req.body.grade || '大专在读')
   } else if (role === 'enterprise') {
     db.prepare(
-      'INSERT INTO enterprise_profiles (user_id, company_name, verified) VALUES (?, ?, ?)'
-    ).run(userId, username, 0)
+      'INSERT INTO enterprise_profiles (user_id, company_name, contact_name, contact_phone, verified) VALUES (?, ?, ?, ?, ?)'
+    ).run(userId, req.body.company_name || username, req.body.legal_rep || null, phone || null, 0)
   } else if (role === 'mentor') {
     db.prepare(
       'INSERT INTO mentors (user_id, real_name, company, position) VALUES (?, ?, ?, ?)'
@@ -88,23 +86,30 @@ router.post('/register', async (req: Request, res: Response): Promise<void> => {
 })
 
 router.post('/login', async (req: Request, res: Response): Promise<void> => {
-  const { email, password } = req.body as { email: string; password: string }
+  const { password } = req.body as { password: string }
+  const identifier = String(req.body.email || req.body.phone || req.body.username || '').trim()
+  const role = req.body.role as UserRole | undefined
 
-  if (!email || !password) {
+  if (!identifier || !password) {
     res.status(400).json({
       success: false,
-      error: '请输入邮箱和密码',
+      error: '请输入账号和密码',
     })
     return
   }
 
   const db = getDb()
-  const user = db.prepare('SELECT * FROM users WHERE email = ?').get(email) as User | undefined
+  const user = db.prepare(`
+    SELECT * FROM users
+    WHERE (email = ? OR phone = ? OR username = ?)
+      AND (? IS NULL OR role = ?)
+    LIMIT 1
+  `).get(identifier, identifier, identifier, role || null, role || null) as User | undefined
 
   if (!user) {
     res.status(401).json({
       success: false,
-      error: '邮箱或密码错误',
+      error: '账号或密码错误',
     })
     return
   }
@@ -113,7 +118,7 @@ router.post('/login', async (req: Request, res: Response): Promise<void> => {
   if (!isPasswordValid) {
     res.status(401).json({
       success: false,
-      error: '邮箱或密码错误',
+      error: '账号或密码错误',
     })
     return
   }
