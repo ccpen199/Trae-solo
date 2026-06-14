@@ -18,6 +18,10 @@ import {
   ChevronRight,
   Minus,
   X,
+  ShieldCheck,
+  AlertTriangle,
+  Clock,
+  ClipboardCheck,
 } from 'lucide-react';
 import { mockMaterials } from '@/mock/data';
 import { useAppStore } from '@/store';
@@ -25,11 +29,16 @@ import type { Material, LocalSupplier } from '@shared/types';
 
 const CATEGORIES = ['全部', '瓷砖', '地板', '卫浴', '橱柜', '门窗', '乳胶漆'];
 
+type PurchaseStatus = 'none' | 'added' | 'compared' | 'ordered';
+type ValidationStatus = 'verified' | 'pending' | 'expired';
+
 interface TableRowItem {
   material: Material;
   quantity: number;
   selected: boolean;
   expanded: boolean;
+  purchaseStatus: PurchaseStatus;
+  validationStatus: ValidationStatus;
 }
 
 function getBestPrice(material: Material): { price: number; channel: 'jd' | 'tmall' | 'local'; supplier?: LocalSupplier } {
@@ -54,11 +63,13 @@ export default function PurchaseList() {
   const [activeCategory, setActiveCategory] = useState('全部');
   const [searchKeyword, setSearchKeyword] = useState('');
   const [tableItems, setTableItems] = useState<TableRowItem[]>(() =>
-    mockMaterials.map((m) => ({
+    mockMaterials.map((m, i) => ({
       material: m,
       quantity: 1,
       selected: false,
       expanded: false,
+      purchaseStatus: 'none' as PurchaseStatus,
+      validationStatus: (['verified', 'pending', 'expired'] as ValidationStatus[])[i % 3],
     }))
   );
   const [showCalculator, setShowCalculator] = useState(false);
@@ -147,6 +158,38 @@ export default function PurchaseList() {
       unit: item.material.unit,
     });
     showToast(`已添加 ${item.material.name} 到采购清单`);
+  };
+
+  const handleStatusCycle = (id: string) => {
+    setTableItems((prev) =>
+      prev.map((it) => {
+        if (it.material.id !== id) return it;
+        const next: Record<PurchaseStatus, PurchaseStatus> = {
+          none: 'added',
+          added: 'compared',
+          compared: 'ordered',
+          ordered: 'ordered',
+        };
+        const newStatus = next[it.purchaseStatus];
+        if (it.purchaseStatus === 'none') {
+          addToPurchaseList({
+            id: it.material.id,
+            materialId: it.material.id,
+            name: it.material.name,
+            brand: it.material.brand,
+            model: it.material.model,
+            quantity: it.quantity,
+            unit: it.material.unit,
+          });
+          showToast(`已添加 ${it.material.name} 到采购清单`);
+        } else if (newStatus === 'compared') {
+          showToast(`${it.material.name} 已完成比价`);
+        } else if (newStatus === 'ordered') {
+          showToast(`${it.material.name} 已下单`);
+        }
+        return { ...it, purchaseStatus: newStatus };
+      })
+    );
   };
 
   const handleAddCalcResult = (category: string, qty: number, unit: string) => {
@@ -331,6 +374,7 @@ export default function PurchaseList() {
                     </span>
                   </th>
                   <th className="px-4 py-3 text-center text-sm font-semibold text-gray-700 w-36">本地市场价</th>
+                  <th className="px-4 py-3 text-center text-sm font-semibold text-gray-700 w-28">验证状态</th>
                   <th className="px-4 py-3 text-center text-sm font-semibold text-gray-700 w-44">操作</th>
                 </tr>
               </thead>
@@ -421,6 +465,7 @@ export default function PurchaseList() {
                               <div className={`font-bold ${jdIsBest ? 'text-emerald-600' : 'text-gray-800'}`}>
                                 ¥{item.material.jdPrice.toLocaleString()}
                               </div>
+                              <span className="mt-0.5 inline-flex items-center gap-0.5 px-1.5 py-0.5 bg-red-500 text-white text-[10px] font-medium rounded">京东API</span>
                               {jdIsBest && (
                                 <span className="inline-flex items-center gap-0.5 mt-0.5 text-xs font-medium text-emerald-600">
                                   <Star className="w-3 h-3 fill-current" />
@@ -442,6 +487,7 @@ export default function PurchaseList() {
                               <div className={`font-bold ${tmallIsBest ? 'text-emerald-600' : 'text-gray-800'}`}>
                                 ¥{item.material.tmallPrice.toLocaleString()}
                               </div>
+                              <span className="mt-0.5 inline-flex items-center gap-0.5 px-1.5 py-0.5 bg-orange-500 text-white text-[10px] font-medium rounded">天猫API</span>
                               {tmallIsBest && (
                                 <span className="inline-flex items-center gap-0.5 mt-0.5 text-xs font-medium text-emerald-600">
                                   <Star className="w-3 h-3 fill-current" />
@@ -464,6 +510,7 @@ export default function PurchaseList() {
                               <div className={`font-bold ${localIsBest ? 'text-emerald-600' : 'text-gray-800'}`}>
                                 ¥{localBest.price.toLocaleString()}
                               </div>
+                              <span className="mt-0.5 inline-flex items-center gap-0.5 px-1.5 py-0.5 bg-emerald-500 text-white text-[10px] font-medium rounded">实地采价</span>
                               <span className="inline-flex items-center gap-0.5 mt-0.5 text-xs text-gray-500">
                                 {localIsBest && (
                                   <span className="inline-flex items-center gap-0.5 text-emerald-600 font-medium mr-1">
@@ -481,15 +528,61 @@ export default function PurchaseList() {
                             <span className="text-gray-400 text-sm">-</span>
                           )}
                         </td>
+                        <td className="px-4 py-4 text-center">
+                          {item.validationStatus === 'verified' && (
+                            <span className="inline-flex items-center gap-1 px-2.5 py-1 bg-green-50 text-green-700 text-xs font-medium rounded-full">
+                              <ShieldCheck className="w-3.5 h-3.5" />
+                              ✓ 已验证
+                            </span>
+                          )}
+                          {item.validationStatus === 'pending' && (
+                            <span className="inline-flex items-center gap-1 px-2.5 py-1 bg-yellow-50 text-yellow-700 text-xs font-medium rounded-full">
+                              <Clock className="w-3.5 h-3.5" />
+                              ⏳ 待验证
+                            </span>
+                          )}
+                          {item.validationStatus === 'expired' && (
+                            <span className="inline-flex items-center gap-1 px-2.5 py-1 bg-red-50 text-red-600 text-xs font-medium rounded-full">
+                              <AlertTriangle className="w-3.5 h-3.5" />
+                              ✗ 已过期
+                            </span>
+                          )}
+                        </td>
                         <td className="px-4 py-4">
                           <div className="flex items-center justify-center gap-1">
-                            <button
-                              onClick={() => handleAddToList(item)}
-                              className="flex items-center gap-1 px-3 py-1.5 bg-orange-500 text-white text-xs font-medium rounded-lg hover:bg-orange-600 transition-colors shadow-sm"
-                            >
-                              <Plus className="w-3.5 h-3.5" />
-                              加入清单
-                            </button>
+                            {item.purchaseStatus === 'none' && (
+                              <button
+                                onClick={() => handleStatusCycle(item.material.id)}
+                                className="flex items-center gap-1 px-3 py-1.5 bg-orange-500 text-white text-xs font-medium rounded-lg hover:bg-orange-600 transition-colors shadow-sm"
+                              >
+                                <Plus className="w-3.5 h-3.5" />
+                                加入清单
+                              </button>
+                            )}
+                            {item.purchaseStatus === 'added' && (
+                              <button
+                                onClick={() => handleStatusCycle(item.material.id)}
+                                className="flex items-center gap-1 px-3 py-1.5 bg-teal-600 text-white text-xs font-medium rounded-lg hover:bg-teal-700 transition-colors shadow-sm"
+                              >
+                                <Check className="w-3.5 h-3.5" />
+                                已加入 ✓
+                              </button>
+                            )}
+                            {item.purchaseStatus === 'compared' && (
+                              <button
+                                onClick={() => handleStatusCycle(item.material.id)}
+                                className="flex items-center gap-1 px-3 py-1.5 bg-blue-600 text-white text-xs font-medium rounded-lg hover:bg-blue-700 transition-colors shadow-sm"
+                              >
+                                <Check className="w-3.5 h-3.5" />
+                                已比价
+                              </button>
+                            )}
+                            {item.purchaseStatus === 'ordered' && (
+                              <span className="inline-flex items-center gap-1 px-3 py-1.5 bg-gray-100 text-gray-600 text-xs font-medium rounded-lg">
+                                <ShoppingCart className="w-3.5 h-3.5" />
+                                已下单
+                              </span>
+                            )}
                             <button className="flex items-center gap-1 px-3 py-1.5 bg-white border border-gray-200 text-gray-600 text-xs font-medium rounded-lg hover:bg-gray-50 hover:text-gray-900 transition-colors">
                               <ExternalLink className="w-3.5 h-3.5" />
                               详情
@@ -502,7 +595,7 @@ export default function PurchaseList() {
                       </tr>
                       {item.expanded && item.material.localSuppliers && item.material.localSuppliers.length > 0 && (
                         <tr key={`${item.material.id}-expanded`} className="bg-gray-50">
-                          <td colSpan={10} className="px-4 py-0">
+                          <td colSpan={11} className="px-4 py-0">
                             <div className="py-4 border-t border-dashed border-gray-200">
                               <div className="text-sm font-semibold text-gray-700 mb-3 flex items-center gap-2">
                                 <MapPin className="w-4 h-4 text-teal-700" />
@@ -563,7 +656,7 @@ export default function PurchaseList() {
                 })}
                 {filteredItems.length === 0 && (
                   <tr>
-                    <td colSpan={10} className="px-4 py-16 text-center">
+                    <td colSpan={11} className="px-4 py-16 text-center">
                       <div className="w-20 h-20 mx-auto mb-4 rounded-full bg-gray-100 flex items-center justify-center">
                         <Search className="w-10 h-10 text-gray-300" />
                       </div>
@@ -577,7 +670,39 @@ export default function PurchaseList() {
         </div>
 
         <div className="mt-6 grid lg:grid-cols-3 gap-6">
-          <div className="lg:col-span-2"></div>
+          <div className="lg:col-span-2">
+            <div className="bg-white rounded-2xl shadow-sm border border-gray-200 p-6">
+              <h2 className="text-lg font-semibold text-gray-900 mb-4 flex items-center gap-2">
+                <ClipboardCheck className="w-5 h-5 text-teal-700" />
+                验收检查清单
+              </h2>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                {[
+                  { category: '瓷砖', items: ['平整度：2m靠尺偏差≤2mm', '色差：同批次色差ΔE≤1.5', '空鼓率：单块≤5%，总体≤3%', '缝隙均匀度：缝宽偏差≤0.5mm', '阴阳角方正度：偏差≤3mm'] },
+                  { category: '地板', items: ['平整度：2m靠尺偏差≤2mm', '拼接缝隙：≤0.5mm', '行走无异响', '伸缩缝预留：8-12mm', '踢脚线安装牢固'] },
+                  { category: '卫浴', items: ['防水层涂刷均匀无漏刷', '闭水试验48h无渗漏', '地漏排水顺畅无积水', '洁具安装牢固无松动', '冷热水标识正确'] },
+                  { category: '橱柜', items: ['柜体安装水平稳固', '门板开合顺畅无异响', '台面拼接无明显缝隙', '五金件铰链灵活', '水槽与台面密封良好'] },
+                  { category: '门窗', items: ['框体安装垂直水平', '开关灵活无阻滞', '密封条完整无脱落', '玻璃无划痕气泡', '锁具安装牢固'] },
+                  { category: '乳胶漆', items: ['墙面平整无明显波纹', '色泽均匀无色差', '无流坠无刷痕', '阴阳角顺直', '涂层附着力达标'] },
+                ].map((group) => (
+                  <div key={group.category} className="p-4 bg-gray-50 rounded-xl border border-gray-100">
+                    <div className="flex items-center gap-2 mb-3">
+                      <span className="inline-block px-2.5 py-1 bg-teal-50 text-teal-700 text-xs font-medium rounded-md">{group.category}</span>
+                      <span className="text-sm font-medium text-gray-700">验收标准</span>
+                    </div>
+                    <ul className="space-y-1.5">
+                      {group.items.map((point, idx) => (
+                        <li key={idx} className="flex items-start gap-2 text-sm text-gray-600">
+                          <Check className="w-3.5 h-3.5 text-emerald-500 mt-0.5 flex-shrink-0" />
+                          <span>{point}</span>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
           <div className="lg:col-span-1">
             <div className="bg-white rounded-2xl shadow-sm border border-gray-200 p-6 sticky top-24">
               <h2 className="text-lg font-semibold text-gray-900 mb-4 flex items-center gap-2">

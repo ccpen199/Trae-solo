@@ -1,5 +1,6 @@
 import { useState } from 'react';
-import { Heart, Star, MapPin, Home, Ruler, Wallet } from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
+import { Heart, Star, MapPin, Home, Ruler, Wallet, Check } from 'lucide-react';
 import type { Case } from '@shared/types';
 
 interface CaseCardProps {
@@ -19,6 +20,7 @@ const coverColors = [
 ];
 
 export default function CaseCard({ caseData, variant = 'default' }: CaseCardProps) {
+  const navigate = useNavigate();
   const [liked, setLiked] = useState(false);
   const [hovered, setHovered] = useState(false);
 
@@ -34,9 +36,40 @@ export default function CaseCard({ caseData, variant = 'default' }: CaseCardProp
 
   const isCompact = variant === 'compact';
 
+  const hasFloorPlan = !!caseData.floorPlanSvg;
+  const hasElectricPlan = !!caseData.electricPlanSvg;
+  const materialCount = caseData.materials?.length ?? 0;
+  const acceptanceStages = caseData.acceptancePhotos
+    ? new Set(caseData.acceptancePhotos.map((p) => p.stage)).size
+    : 0;
+
+  const stageNames: Record<string, string> = {
+    'concealed': '隐蔽工程',
+    'mud-wood': '泥木',
+    'paint': '油漆',
+  };
+  const completedStages = caseData.acceptancePhotos
+    ? Array.from(new Set(caseData.acceptancePhotos.map((p) => p.stage)))
+    : [];
+
+  const topBrands = caseData.materials?.slice(0, 2).map(m => `${m.brand}${m.name.slice(0, 2)}`).join(' · ') || '';
+
+  const badgeBase = isCompact
+    ? 'px-2 py-0.5 text-[10px] font-medium rounded'
+    : 'px-2.5 py-1 text-[11px] font-medium rounded';
+
   return (
     <div
       className="card group cursor-pointer"
+      role="button"
+      tabIndex={0}
+      onClick={() => navigate(`/cases/${caseData.id}`)}
+      onKeyDown={(event) => {
+        if (event.key === 'Enter' || event.key === ' ') {
+          event.preventDefault();
+          navigate(`/cases/${caseData.id}`);
+        }
+      }}
       onMouseEnter={() => setHovered(true)}
       onMouseLeave={() => setHovered(false)}
     >
@@ -95,23 +128,23 @@ export default function CaseCard({ caseData, variant = 'default' }: CaseCardProp
       </div>
 
       <div className={`${isCompact ? 'p-4' : 'p-5'}`}>
-        <h3 className={`font-semibold text-gray-900 dark:text-gray-100 mb-2 line-clamp-1 ${isCompact ? 'text-sm' : 'text-base'}`}>
+        <h3 className={`font-semibold text-gray-900 dark:text-gray-100 mb-3 line-clamp-1 ${isCompact ? 'text-sm' : 'text-base'}`}>
           {caseData.title}
         </h3>
 
-        <div className="flex items-center gap-1.5 text-sm text-gray-500 dark:text-gray-400 mb-3">
-          <MapPin className="w-3.5 h-3.5 flex-shrink-0" />
-          <span className="truncate">{caseData.city} · {caseData.district || caseData.title.split('·')[0]}</span>
+        <div className="flex items-center gap-1.5 text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+          <MapPin className="w-4 h-4 flex-shrink-0 text-primary" />
+          <span className="truncate">施工城市：{caseData.city} · {caseData.district || caseData.title.split('·')[0]}</span>
         </div>
 
-        <div className="flex flex-wrap items-center gap-x-4 gap-y-2 text-sm text-gray-600 dark:text-gray-300 mb-3">
+        <div className="flex flex-wrap items-center gap-x-4 gap-y-1.5 text-sm text-gray-600 dark:text-gray-300 mb-3">
           <div className="flex items-center gap-1">
             <Home className="w-3.5 h-3.5 text-primary" />
-            <span>{caseData.houseType || caseData.layout || `${caseData.rooms || caseData.bedrooms || 3}室${caseData.bathrooms || 1}卫`}</span>
-          </div>
-          <div className="flex items-center gap-1">
-            <Ruler className="w-3.5 h-3.5 text-primary" />
-            <span>{caseData.area}㎡</span>
+            <span className="font-medium">
+              {`${caseData.rooms || caseData.bedrooms || 3}室${(caseData.houseType?.match(/厅(\d)/) || [, '1'])[1]}厅${caseData.bathrooms || 1}卫`}
+              <span className="mx-1 text-gray-300 dark:text-gray-500">·</span>
+              {caseData.area}㎡
+            </span>
           </div>
           <div className="flex items-center gap-1">
             <Wallet className="w-3.5 h-3.5 text-accent" />
@@ -119,8 +152,45 @@ export default function CaseCard({ caseData, variant = 'default' }: CaseCardProp
           </div>
         </div>
 
+        {topBrands && (
+          <div className="text-sm text-gray-600 dark:text-gray-300 mb-2">
+            <span className="text-gray-500 dark:text-gray-400">品牌：</span>
+            <span className="font-medium text-orange-600 dark:text-orange-400">{topBrands}</span>
+          </div>
+        )}
+
+        {completedStages.length > 0 && (
+          <div className="flex flex-wrap items-center text-sm text-gray-600 dark:text-gray-300 mb-3">
+            <span className="text-gray-500 dark:text-gray-400 mr-1.5">已验收：</span>
+            {completedStages.map((stage, idx) => (
+              <span key={stage} className="inline-flex items-center">
+                <span className="inline-flex items-center gap-0.5 text-purple-600 dark:text-purple-400 font-medium">
+                  {stageNames[stage] || stage}
+                  <Check className="w-3 h-3" />
+                </span>
+                {idx < completedStages.length - 1 && <span className="text-gray-300 dark:text-gray-500 mx-1">/</span>}
+              </span>
+            ))}
+          </div>
+        )}
+
+        <div className="flex flex-wrap gap-1.5 mt-3">
+          <span className={`${badgeBase} ${hasFloorPlan ? 'bg-teal-100 text-teal-700 dark:bg-teal-900/40 dark:text-teal-300' : 'bg-gray-100 text-gray-400 dark:bg-gray-800 dark:text-gray-500'}`}>
+            户型SVG {hasFloorPlan ? '✓' : '✗'}
+          </span>
+          <span className={`${badgeBase} ${hasElectricPlan ? 'bg-teal-100 text-teal-700 dark:bg-teal-900/40 dark:text-teal-300' : 'bg-gray-100 text-gray-400 dark:bg-gray-800 dark:text-gray-500'}`}>
+            水电点位 {hasElectricPlan ? '✓' : '✗'}
+          </span>
+          <span className={`${badgeBase} ${materialCount > 0 ? 'bg-orange-100 text-orange-700 dark:bg-orange-900/40 dark:text-orange-300' : 'bg-gray-100 text-gray-400 dark:bg-gray-800 dark:text-gray-500'}`}>
+            建材 {materialCount > 0 ? `${materialCount}项` : '✗'}
+          </span>
+          <span className={`${badgeBase} ${acceptanceStages > 0 ? 'bg-purple-100 text-purple-700 dark:bg-purple-900/40 dark:text-purple-300' : 'bg-gray-100 text-gray-400 dark:bg-gray-800 dark:text-gray-500'}`}>
+            验收 {acceptanceStages > 0 ? `${acceptanceStages}阶段` : '✗'}
+          </span>
+        </div>
+
         {!isCompact && (
-          <div className="flex items-center justify-between pt-3 border-t border-gray-100 dark:border-gray-700">
+          <div className="flex items-center justify-between pt-3 mt-3 border-t border-gray-100 dark:border-gray-700">
             <div className="flex items-center gap-2">
               {caseData.designerAvatar ? (
                 <img
@@ -152,6 +222,17 @@ export default function CaseCard({ caseData, variant = 'default' }: CaseCardProp
             </span>
           </div>
         )}
+
+        <button
+          type="button"
+          onClick={(event) => {
+            event.stopPropagation();
+            navigate(`/cases/${caseData.id}`);
+          }}
+          className="mt-4 w-full rounded-lg bg-primary px-3 py-2 text-sm font-medium text-white transition-colors hover:bg-primary-600"
+        >
+          查看详情
+        </button>
       </div>
     </div>
   );

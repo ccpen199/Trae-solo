@@ -1,0 +1,1540 @@
+{
+  "ok": true,
+  "generatedAt": "2026-06-14T15:12:29.695Z",
+  "order": "may-89197",
+  "roundIndex": 100,
+  "captureId": "codex-20260614-fixed-may-89197",
+  "url": "http://127.0.0.1:49197/",
+  "initialUrl": "http://127.0.0.1:49197/",
+  "finalUrl": "http://127.0.0.1:49197/",
+  "status": 200,
+  "title": "My Trae Project",
+  "initialTitle": "My Trae Project",
+  "navigationError": "",
+  "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89197/runtime-check/codex-20260614-fixed/codex-20260614-fixed-may-89197-frontend.png",
+  "screenshotPaths": [
+    "/Users/chen/Documents/trae_projects/local_projects/may-89197/runtime-check/codex-20260614-fixed/codex-20260614-fixed-may-89197-structure-01-首屏.png",
+    "/Users/chen/Documents/trae_projects/local_projects/may-89197/runtime-check/codex-20260614-fixed/codex-20260614-fixed-may-89197-structure-02-导航-首页.png",
+    "/Users/chen/Documents/trae_projects/local_projects/may-89197/runtime-check/codex-20260614-fixed/codex-20260614-fixed-may-89197-structure-03-操作-2-查看详细数据-户型图-水电图-验收照片.png",
+    "/Users/chen/Documents/trae_projects/local_projects/may-89197/runtime-check/codex-20260614-fixed/codex-20260614-fixed-may-89197-structure-04-二层操作-2-查看详细数据-户型图-水电图-验收照片-1室.png",
+    "/Users/chen/Documents/trae_projects/local_projects/may-89197/runtime-check/codex-20260614-fixed/codex-20260614-fixed-may-89197-structure-05-操作-3-3D方案预览-AI户型匹配与3D漫游.png"
+  ],
+  "issueTextPreview": "搜索/筛选相关问题；详情/内容页相关问题",
+  "targetReason": "搜索/筛选相关问题；详情/内容页相关问题",
+  "targetKind": "search",
+  "targetMatched": true,
+  "targetActions": [
+    {
+      "action": "click",
+      "label": "搜索/筛选相关问题",
+      "ok": false,
+      "error": "locator.click: Timeout 900ms exceeded.\nCall log:\n\u001b[2m  - waiting for getByRole('button', { name: /搜索/ }).first()\u001b[22m\n\u001b[2m    - locator resolved to <button type=\"submit\" trae-inspector-end-line=\"201\" trae-inspector-end-c"
+    },
+    {
+      "action": "click",
+      "label": "搜索/筛选相关问题",
+      "ok": true
+    },
+    {
+      "action": "fill-search",
+      "label": "搜索输入框",
+      "ok": true
+    },
+    {
+      "action": "target-verify",
+      "label": "搜索/筛选相关问题",
+      "ok": true,
+      "finalUrl": "http://127.0.0.1:49197/cases?keyword=%E6%B5%8B%E8%AF%95"
+    }
+  ],
+  "authFlow": {
+    "detected": false,
+    "attempted": false,
+    "success": false,
+    "finalUrl": "http://127.0.0.1:49197/",
+    "message": "",
+    "actions": []
+  },
+  "businessAudit": {
+    "actions": [
+      {
+        "action": "click",
+        "label": "导航:首页",
+        "ok": true
+      },
+      {
+        "action": "click",
+        "label": "操作:2 查看详细数据 户型图/水电图/验收照片",
+        "ok": true,
+        "result": {
+          "ok": true,
+          "matched": 1
+        }
+      },
+      {
+        "action": "click",
+        "label": "二层操作:2 查看详细数据 户型图/水电图/验收照片:1室",
+        "ok": true,
+        "result": {
+          "ok": true,
+          "matched": 1
+        }
+      },
+      {
+        "action": "click",
+        "label": "操作:3 3D方案预览 AI户型匹配与3D漫游",
+        "ok": true,
+        "result": {
+          "ok": true,
+          "matched": 1
+        }
+      }
+    ],
+    "snapshots": [
+      {
+        "label": "首屏",
+        "url": "http://127.0.0.1:49197/",
+        "title": "My Trae Project",
+        "headings": [
+          "真实施工数据， 让装修决策有据可依",
+          "平台数据",
+          "热门城市",
+          "精选案例",
+          "阳光城市花园·北欧风三居",
+          "星河湾·美式轻奢大四居",
+          "万科城·新中式雅致三居",
+          "保利中央公园·现代简约两居",
+          "华润万象城·工业风LOFT",
+          "龙湖天街·日式禅意三居",
+          "决策链路",
+          "上传户型图，一键匹配 相似真实装修案例"
+        ],
+        "navLabels": [
+          "首页",
+          "案例库",
+          "发现分类",
+          "户型匹配",
+          "采购清单",
+          "设计师入驻",
+          "管理后台"
+        ],
+        "buttons": [
+          "搜索案例",
+          "上传户型图找相似",
+          "浏览全部案例",
+          "查看全部",
+          "北京 2 案例",
+          "上海 2 案例",
+          "杭州 1 案例",
+          "广州 1 案例",
+          "深圳 1 案例",
+          "成都 1 案例",
+          "武汉 1 案例",
+          "南京 1 案例",
+          "西安 1 案例",
+          "重庆 1 案例",
+          "苏州 1 案例",
+          "天津 1 案例",
+          "查看更多",
+          "查看详情",
+          "1 浏览案例 按城市、风格、户型筛选",
+          "2 查看详细数据 户型图/水电图/验收照片",
+          "3 3D方案预览 AI户型匹配与3D漫游",
+          "4 采购清单比价 建材多渠道比价",
+          "5 生成PDF交付包 一键导出完整方案",
+          "上传户型图"
+        ],
+        "links": [
+          "筑家数据",
+          "首页",
+          "案例库",
+          "发现分类",
+          "户型匹配",
+          "采购清单",
+          "设计师入驻",
+          "管理后台",
+          "登录",
+          "注册"
+        ],
+        "inputs": [
+          {
+            "tag": "input",
+            "type": "text",
+            "placeholder": "搜索案例、风格、城市...",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "text",
+            "placeholder": "搜索城市、小区、风格、户型...",
+            "name": "",
+            "label": ""
+          }
+        ],
+        "tables": [],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "筑家数据首页案例库发现分类户型匹配采购清单设计师入驻管理后台登录注册全国装修案例数据平台真实施工数据，让装修决策有据可依汇聚真实装修案例，覆盖多座城市，让你找到最适合自己家的设计方案与预算参考搜索案例上传户型图找相似浏览全部案例验收照片实地拍摄建材数据真实比价户型匹配AI智能平台数据用真实数据说话，让装修不再盲目0个已收录案例0个覆盖城市0位认证设计师0.00平均质量评分热门城市选择你所在的城市，查看本地真实装修案例查看全部北京2 案例上海2 案例杭州1 案例广州1 案例深圳1 案例成都1 案例武汉1 案例南京1 案例西安1 案例重庆1 案例苏州1 案例天津1 案例精选案例高评分真实装修案例，给你灵感与参考查看更多北欧三居4.915,820 浏览阳光城市花园·北欧风三居北京 · 朝阳区三室两厅两卫128㎡28.0万📐 ✓⚡ ✓🏷️ 6项📷 3阶段张明4.9北欧风格查看详情美式轻奢5.023,650 浏览星河湾·美式轻奢大四居上海 · 浦东新区四室两厅两卫168㎡52.0万📐 ✓⚡ ✓🏷️ 6项📷 3阶段王芳5.0美式查看详情新中式三居4.88,930 浏览万科城·新中式雅致三居杭州 · 西湖区三室两厅一卫115㎡35.0万📐 ✓⚡ ✓🏷️ 6项📷 3阶段李华4.8新中式查看详情现代简约两居4.56,720 浏览保利中央公园·现代简约两居广州 · 天河区两室一厅一卫78㎡12.8万📐 ✓⚡ ✓🏷️ 6项📷 3阶段刘洋4.5现代简约查看详情工业风LOFT4.811,240 浏览华润万象城·工业风LOFT深圳 · 南山区LOFT复式95㎡26.0万📐 ✓⚡ ✓🏷️ 6项📷 3阶段陈伟4.8工业风查看详情日式禅意4.89,560 浏览龙湖天街·日式禅意三居成都 · 锦江区三室两厅一卫108㎡19.8万📐 ✓⚡ ✓🏷️ 6项📷 3阶段张明4.8日式查看详情查看更多案例决策链路从浏览到交付，一站式闭环服务1浏览案例按城市、风格、户型筛选2查看详细数据户型图/水电图/验收照片33D方案预览AI户型匹配与3D漫游4采购清单比价建材多渠道比价5生成PDF交付包一键导出完整方案AI 智能户型匹配上传户型图，一键匹配相似真实装修案例AI 智能识别户型结构，从真实案例库中为你匹配最相似的装修方案，预算、风格、建材一目了然上传户型图了解更多户型识别AI 自动识别户型结构智能匹配相似度算法精准推荐质量评分真实验收质量数据本地案例同城同小区真实案例筑家数据关于我们筑家数据是专注于家装案例数字化的平台我们致力于为用户提供真实、详细、可落地的装修案例参考覆盖全国主要城市，汇聚上千位优秀设计师的作品快速链接首页案例库户型匹配采购清单设计师入驻联系方式浙江省杭州市西湖区文三路 478 号华星时代广场400-888-8888contact@zhujia.com© 2024 筑家数据 版权所有浙ICP备2024000000号-1浙公网安备 33010602000000号",
+        "layout": {
+          "viewportWidth": 1504,
+          "viewportHeight": 1600,
+          "scrollWidth": 1504,
+          "scrollHeight": 5532,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "codex-20260614-fixed-may-89197-structure-01-首屏",
+          "label": "首屏",
+          "finalUrl": "http://127.0.0.1:49197/",
+          "title": "My Trae Project",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89197/runtime-check/codex-20260614-fixed/codex-20260614-fixed-may-89197-structure-01-首屏.json",
+          "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89197/runtime-check/codex-20260614-fixed/codex-20260614-fixed-may-89197-structure-01-首屏.png",
+          "elementCount": 875,
+          "interactiveCount": 61,
+          "interactiveLabels": [
+            "筑家数据",
+            "首页",
+            "案例库",
+            "发现分类",
+            "户型匹配",
+            "采购清单",
+            "设计师入驻",
+            "管理后台",
+            "搜索案例、风格、城市...",
+            "登录",
+            "注册",
+            "搜索城市、小区、风格、户型...",
+            "搜索案例",
+            "上传户型图找相似",
+            "浏览全部案例",
+            "查看全部",
+            "北京 2 案例",
+            "上海 2 案例",
+            "杭州 1 案例",
+            "广州 1 案例",
+            "深圳 1 案例",
+            "成都 1 案例",
+            "武汉 1 案例",
+            "南京 1 案例",
+            "西安 1 案例",
+            "重庆 1 案例",
+            "苏州 1 案例",
+            "天津 1 案例",
+            "查看更多",
+            "北欧 三居 4.9 15,820 浏览 阳光城市花园·北欧风三居 北京 · 朝阳区 三室两厅两卫 128㎡ 28.0万 📐 ✓ ⚡ ✓ 🏷️ 6项 📷 3阶段 张明 4.9 北欧风格 查看详情"
+          ]
+        }
+      },
+      {
+        "label": "导航:首页",
+        "url": "http://127.0.0.1:49197/",
+        "title": "My Trae Project",
+        "headings": [
+          "真实施工数据， 让装修决策有据可依",
+          "平台数据",
+          "热门城市",
+          "精选案例",
+          "阳光城市花园·北欧风三居",
+          "星河湾·美式轻奢大四居",
+          "万科城·新中式雅致三居",
+          "保利中央公园·现代简约两居",
+          "华润万象城·工业风LOFT",
+          "龙湖天街·日式禅意三居",
+          "决策链路",
+          "上传户型图，一键匹配 相似真实装修案例"
+        ],
+        "navLabels": [
+          "首页",
+          "案例库",
+          "发现分类",
+          "户型匹配",
+          "采购清单",
+          "设计师入驻",
+          "管理后台"
+        ],
+        "buttons": [
+          "搜索案例",
+          "上传户型图找相似",
+          "浏览全部案例",
+          "查看全部",
+          "北京 2 案例",
+          "上海 2 案例",
+          "杭州 1 案例",
+          "广州 1 案例",
+          "深圳 1 案例",
+          "成都 1 案例",
+          "武汉 1 案例",
+          "南京 1 案例",
+          "西安 1 案例",
+          "重庆 1 案例",
+          "苏州 1 案例",
+          "天津 1 案例",
+          "查看更多",
+          "查看详情",
+          "1 浏览案例 按城市、风格、户型筛选",
+          "2 查看详细数据 户型图/水电图/验收照片",
+          "3 3D方案预览 AI户型匹配与3D漫游",
+          "4 采购清单比价 建材多渠道比价",
+          "5 生成PDF交付包 一键导出完整方案",
+          "上传户型图"
+        ],
+        "links": [
+          "筑家数据",
+          "首页",
+          "案例库",
+          "发现分类",
+          "户型匹配",
+          "采购清单",
+          "设计师入驻",
+          "管理后台",
+          "登录",
+          "注册"
+        ],
+        "inputs": [
+          {
+            "tag": "input",
+            "type": "text",
+            "placeholder": "搜索案例、风格、城市...",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "text",
+            "placeholder": "搜索城市、小区、风格、户型...",
+            "name": "",
+            "label": ""
+          }
+        ],
+        "tables": [],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "筑家数据首页案例库发现分类户型匹配采购清单设计师入驻管理后台登录注册全国装修案例数据平台真实施工数据，让装修决策有据可依汇聚真实装修案例，覆盖多座城市，让你找到最适合自己家的设计方案与预算参考搜索案例上传户型图找相似浏览全部案例验收照片实地拍摄建材数据真实比价户型匹配AI智能平台数据用真实数据说话，让装修不再盲目0个已收录案例0个覆盖城市0位认证设计师0.00平均质量评分热门城市选择你所在的城市，查看本地真实装修案例查看全部北京2 案例上海2 案例杭州1 案例广州1 案例深圳1 案例成都1 案例武汉1 案例南京1 案例西安1 案例重庆1 案例苏州1 案例天津1 案例精选案例高评分真实装修案例，给你灵感与参考查看更多北欧三居4.915,820 浏览阳光城市花园·北欧风三居北京 · 朝阳区三室两厅两卫128㎡28.0万📐 ✓⚡ ✓🏷️ 6项📷 3阶段张明4.9北欧风格查看详情美式轻奢5.023,650 浏览星河湾·美式轻奢大四居上海 · 浦东新区四室两厅两卫168㎡52.0万📐 ✓⚡ ✓🏷️ 6项📷 3阶段王芳5.0美式查看详情新中式三居4.88,930 浏览万科城·新中式雅致三居杭州 · 西湖区三室两厅一卫115㎡35.0万📐 ✓⚡ ✓🏷️ 6项📷 3阶段李华4.8新中式查看详情现代简约两居4.56,720 浏览保利中央公园·现代简约两居广州 · 天河区两室一厅一卫78㎡12.8万📐 ✓⚡ ✓🏷️ 6项📷 3阶段刘洋4.5现代简约查看详情工业风LOFT4.811,240 浏览华润万象城·工业风LOFT深圳 · 南山区LOFT复式95㎡26.0万📐 ✓⚡ ✓🏷️ 6项📷 3阶段陈伟4.8工业风查看详情日式禅意4.89,560 浏览龙湖天街·日式禅意三居成都 · 锦江区三室两厅一卫108㎡19.8万📐 ✓⚡ ✓🏷️ 6项📷 3阶段张明4.8日式查看详情查看更多案例决策链路从浏览到交付，一站式闭环服务1浏览案例按城市、风格、户型筛选2查看详细数据户型图/水电图/验收照片33D方案预览AI户型匹配与3D漫游4采购清单比价建材多渠道比价5生成PDF交付包一键导出完整方案AI 智能户型匹配上传户型图，一键匹配相似真实装修案例AI 智能识别户型结构，从真实案例库中为你匹配最相似的装修方案，预算、风格、建材一目了然上传户型图了解更多户型识别AI 自动识别户型结构智能匹配相似度算法精准推荐质量评分真实验收质量数据本地案例同城同小区真实案例筑家数据关于我们筑家数据是专注于家装案例数字化的平台我们致力于为用户提供真实、详细、可落地的装修案例参考覆盖全国主要城市，汇聚上千位优秀设计师的作品快速链接首页案例库户型匹配采购清单设计师入驻联系方式浙江省杭州市西湖区文三路 478 号华星时代广场400-888-8888contact@zhujia.com© 2024 筑家数据 版权所有浙ICP备2024000000号-1浙公网安备 33010602000000号",
+        "layout": {
+          "viewportWidth": 1536,
+          "viewportHeight": 1600,
+          "scrollWidth": 1536,
+          "scrollHeight": 5532,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "codex-20260614-fixed-may-89197-structure-02-导航-首页",
+          "label": "导航:首页",
+          "finalUrl": "http://127.0.0.1:49197/",
+          "title": "My Trae Project",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89197/runtime-check/codex-20260614-fixed/codex-20260614-fixed-may-89197-structure-02-导航-首页.json",
+          "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89197/runtime-check/codex-20260614-fixed/codex-20260614-fixed-may-89197-structure-02-导航-首页.png",
+          "elementCount": 875,
+          "interactiveCount": 61,
+          "interactiveLabels": [
+            "筑家数据",
+            "首页",
+            "案例库",
+            "发现分类",
+            "户型匹配",
+            "采购清单",
+            "设计师入驻",
+            "管理后台",
+            "搜索案例、风格、城市...",
+            "登录",
+            "注册",
+            "搜索城市、小区、风格、户型...",
+            "搜索案例",
+            "上传户型图找相似",
+            "浏览全部案例",
+            "查看全部",
+            "北京 2 案例",
+            "上海 2 案例",
+            "杭州 1 案例",
+            "广州 1 案例",
+            "深圳 1 案例",
+            "成都 1 案例",
+            "武汉 1 案例",
+            "南京 1 案例",
+            "西安 1 案例",
+            "重庆 1 案例",
+            "苏州 1 案例",
+            "天津 1 案例",
+            "查看更多",
+            "北欧 三居 4.9 15,820 浏览 阳光城市花园·北欧风三居 北京 · 朝阳区 三室两厅两卫 128㎡ 28.0万 📐 ✓ ⚡ ✓ 🏷️ 6项 📷 3阶段 张明 4.9 北欧风格 查看详情"
+          ]
+        }
+      },
+      {
+        "label": "操作:2 查看详细数据 户型图/水电图/验收照片",
+        "url": "http://127.0.0.1:49197/cases",
+        "title": "My Trae Project",
+        "headings": [
+          "SOHO现代城·ins风温馨一居",
+          "碧桂园·ins风温馨两居",
+          "保利中央公园·现代简约两居",
+          "青年公寓·日式极简一居",
+          "龙湖天街·日式禅意三居",
+          "万科城·新中式雅致三居",
+          "中海寰宇天下·轻奢品质三居",
+          "华润万象城·工业风LOFT",
+          "阳光城市花园·北欧风三居",
+          "关于我们",
+          "快速链接",
+          "联系方式"
+        ],
+        "navLabels": [
+          "首页",
+          "案例库",
+          "发现分类",
+          "户型匹配",
+          "采购清单",
+          "设计师入驻",
+          "管理后台",
+          "筛选条件",
+          "城市",
+          "北京",
+          "上海",
+          "广州",
+          "深圳",
+          "杭州",
+          "成都",
+          "武汉",
+          "南京",
+          "西安",
+          "重庆",
+          "苏州",
+          "天津",
+          "户型",
+          "一居",
+          "两居"
+        ],
+        "buttons": [
+          "北京",
+          "上海",
+          "广州",
+          "深圳",
+          "杭州",
+          "成都",
+          "武汉",
+          "南京",
+          "西安",
+          "重庆",
+          "苏州",
+          "天津",
+          "一居",
+          "两居",
+          "三居",
+          "四居及以上",
+          "复式/LOFT",
+          "别墅",
+          "1室",
+          "2室",
+          "3室",
+          "4室",
+          "5室",
+          "现代简约"
+        ],
+        "links": [
+          "筑家数据",
+          "首页",
+          "案例库",
+          "发现分类",
+          "户型匹配",
+          "采购清单",
+          "设计师入驻",
+          "管理后台",
+          "登录",
+          "注册"
+        ],
+        "inputs": [
+          {
+            "tag": "input",
+            "type": "text",
+            "placeholder": "搜索案例、风格、城市...",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "text",
+            "placeholder": "搜索城市、小区、风格、户型...",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "range",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "range",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "range",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "range",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          }
+        ],
+        "tables": [],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "筑家数据首页案例库发现分类户型匹配采购清单设计师入驻管理后台登录注册筛选条件城市北京上海广州深圳杭州成都武汉南京西安重庆苏州天津户型一居两居三居四居及以上复式/LOFT别墅居室数1室2室3室4室5室面积区间0㎡—300㎡风格现代简约北欧风格新中式日式美式法式轻奢风格工业风极简主义ins风欧式古典地中海预算区间0元—100万共找到13个案例请输入搜索关键词或使用筛选条件查看查询结果最新发布ins风一居4.44,580 浏览SOHO现代城·ins风温馨一居北京 · 朝阳区一室一厅一卫45㎡6.8万📐 ✓⚡ ✓🏷️ 6项📷 3阶段刘洋4.4ins风查看详情ins风两居4.55,890 浏览碧桂园·ins风温馨两居南京 · 玄武区两室两厅一卫89㎡15.6万📐 ✓⚡ ✓🏷️ 6项📷 3阶段刘洋4.5ins风查看详情现代简约两居4.56,720 浏览保利中央公园·现代简约两居广州 · 天河区两室一厅一卫78㎡12.8万📐 ✓⚡ ✓🏷️ 6项📷 3阶段刘洋4.5现代简约查看详情日式一居4.76,120 浏览青年公寓·日式极简一居上海 · 静安区一室零厅一卫38㎡5.2万📐 ✓⚡ ✓🏷️ 6项📷 3阶段张明4.7日式查看详情日式禅意4.89,560 浏览龙湖天街·日式禅意三居成都 · 锦江区三室两厅一卫108㎡19.8万📐 ✓⚡ ✓🏷️ 6项📷 3阶段张明4.8日式查看详情新中式三居4.88,930 浏览万科城·新中式雅致三居杭州 · 西湖区三室两厅一卫115㎡35.0万📐 ✓⚡ ✓🏷️ 6项📷 3阶段李华4.8新中式查看详情轻奢三居4.67,840 浏览中海寰宇天下·轻奢品质三居西安 · 高新区三室两厅两卫132㎡38.0万📐 ✓⚡ ✓🏷️ 6项📷 3阶段李华4.6轻奢风格查看详情工业风LOFT4.811,240 浏览华润万象城·工业风LOFT深圳 · 南山区LOFT复式95㎡26.0万📐 ✓⚡ ✓🏷️ 6项📷 3阶段陈伟4.8工业风查看详情北欧三居4.915,820 浏览阳光城市花园·北欧风三居北京 · 朝阳区三室两厅两卫128㎡28.0万📐 ✓⚡ ✓🏷️ 6项📷 3阶段张明4.9北欧风格查看详情12筑家数据关于我们筑家数据是专注于家装案例数字化的平台我们致力于为用户提供真实、详细、可落地的装修案例参考覆盖全国主要城市，汇聚上千位优秀设计师的作品快速链接首页案例库户型匹配采购清单设计师入驻联系方式浙江省杭州市西湖区文三路 478 号华星时代广场400-888-8888contact@zhujia.com© 2024 筑家数据 版权所有浙ICP备2024000000号-1浙公网安备 33010602000000号",
+        "layout": {
+          "viewportWidth": 1568,
+          "viewportHeight": 1600,
+          "scrollWidth": 1568,
+          "scrollHeight": 2253,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "codex-20260614-fixed-may-89197-structure-03-操作-2-查看详细数据-户型图-水电图-验收照片",
+          "label": "操作:2 查看详细数据 户型图/水电图/验收照片",
+          "finalUrl": "http://127.0.0.1:49197/cases",
+          "title": "My Trae Project",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89197/runtime-check/codex-20260614-fixed/codex-20260614-fixed-may-89197-structure-03-操作-2-查看详细数据-户型图-水电图-验收照片.json",
+          "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89197/runtime-check/codex-20260614-fixed/codex-20260614-fixed-may-89197-structure-03-操作-2-查看详细数据-户型图-水电图-验收照片.png",
+          "elementCount": 841,
+          "interactiveCount": 92,
+          "interactiveLabels": [
+            "筑家数据",
+            "首页",
+            "案例库",
+            "发现分类",
+            "户型匹配",
+            "采购清单",
+            "设计师入驻",
+            "管理后台",
+            "搜索案例、风格、城市...",
+            "登录",
+            "注册",
+            "搜索城市、小区、风格、户型...",
+            "北京",
+            "上海",
+            "广州",
+            "深圳",
+            "杭州",
+            "成都",
+            "武汉",
+            "南京",
+            "西安",
+            "重庆",
+            "苏州",
+            "天津",
+            "一居",
+            "两居",
+            "三居",
+            "四居及以上",
+            "复式/LOFT",
+            "别墅"
+          ]
+        }
+      },
+      {
+        "label": "二层操作:2 查看详细数据 户型图/水电图/验收照片->1室",
+        "url": "http://127.0.0.1:49197/cases",
+        "title": "My Trae Project",
+        "headings": [
+          "SOHO现代城·ins风温馨一居",
+          "青年公寓·日式极简一居",
+          "关于我们",
+          "快速链接",
+          "联系方式"
+        ],
+        "navLabels": [
+          "首页",
+          "案例库",
+          "发现分类",
+          "户型匹配",
+          "采购清单",
+          "设计师入驻",
+          "管理后台",
+          "筛选条件 1",
+          "筛选条件",
+          "城市",
+          "北京",
+          "上海",
+          "广州",
+          "深圳",
+          "杭州",
+          "成都",
+          "武汉",
+          "南京",
+          "西安",
+          "重庆",
+          "苏州",
+          "天津",
+          "户型",
+          "一居"
+        ],
+        "buttons": [
+          "北京",
+          "上海",
+          "广州",
+          "深圳",
+          "杭州",
+          "成都",
+          "武汉",
+          "南京",
+          "西安",
+          "重庆",
+          "苏州",
+          "天津",
+          "一居",
+          "两居",
+          "三居",
+          "四居及以上",
+          "复式/LOFT",
+          "别墅",
+          "1室",
+          "2室",
+          "3室",
+          "4室",
+          "5室",
+          "现代简约"
+        ],
+        "links": [
+          "筑家数据",
+          "首页",
+          "案例库",
+          "发现分类",
+          "户型匹配",
+          "采购清单",
+          "设计师入驻",
+          "管理后台",
+          "登录",
+          "注册"
+        ],
+        "inputs": [
+          {
+            "tag": "input",
+            "type": "text",
+            "placeholder": "搜索案例、风格、城市...",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "text",
+            "placeholder": "搜索城市、小区、风格、户型...",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "range",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "range",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "range",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "range",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          }
+        ],
+        "tables": [],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "筑家数据首页案例库发现分类户型匹配采购清单设计师入驻管理后台登录注册1筛选条件1城市北京上海广州深圳杭州成都武汉南京西安重庆苏州天津户型一居两居三居四居及以上复式/LOFT别墅居室数1室2室3室4室5室面积区间0㎡—300㎡风格现代简约北欧风格新中式日式美式法式轻奢风格工业风极简主义ins风欧式古典地中海预算区间0元—100万清除全部筛选 (1)共找到2个案例筛选结果 / 查询结果：当前筛选条件匹配 2 个真实装修案例最新发布ins风一居4.44,580 浏览SOHO现代城·ins风温馨一居北京 · 朝阳区一室一厅一卫45㎡6.8万📐 ✓⚡ ✓🏷️ 6项📷 3阶段刘洋4.4ins风查看详情日式一居4.76,120 浏览青年公寓·日式极简一居上海 · 静安区一室零厅一卫38㎡5.2万📐 ✓⚡ ✓🏷️ 6项📷 3阶段张明4.7日式查看详情筑家数据关于我们筑家数据是专注于家装案例数字化的平台我们致力于为用户提供真实、详细、可落地的装修案例参考覆盖全国主要城市，汇聚上千位优秀设计师的作品快速链接首页案例库户型匹配采购清单设计师入驻联系方式浙江省杭州市西湖区文三路 478 号华星时代广场400-888-8888contact@zhujia.com© 2024 筑家数据 版权所有浙ICP备2024000000号-1浙公网安备 33010602000000号",
+        "layout": {
+          "viewportWidth": 1600,
+          "viewportHeight": 1600,
+          "scrollWidth": 1600,
+          "scrollHeight": 2052,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "codex-20260614-fixed-may-89197-structure-04-二层操作-2-查看详细数据-户型图-水电图-验收照片-1室",
+          "label": "二层操作:2 查看详细数据 户型图/水电图/验收照片->1室",
+          "finalUrl": "http://127.0.0.1:49197/cases",
+          "title": "My Trae Project",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89197/runtime-check/codex-20260614-fixed/codex-20260614-fixed-may-89197-structure-04-二层操作-2-查看详细数据-户型图-水电图-验收照片-1室.json",
+          "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89197/runtime-check/codex-20260614-fixed/codex-20260614-fixed-may-89197-structure-04-二层操作-2-查看详细数据-户型图-水电图-验收照片-1室.png",
+          "elementCount": 432,
+          "interactiveCount": 68,
+          "interactiveLabels": [
+            "筑家数据",
+            "首页",
+            "案例库",
+            "发现分类",
+            "户型匹配",
+            "采购清单",
+            "设计师入驻",
+            "管理后台",
+            "搜索案例、风格、城市...",
+            "登录",
+            "注册",
+            "搜索城市、小区、风格、户型...",
+            "1",
+            "北京",
+            "上海",
+            "广州",
+            "深圳",
+            "杭州",
+            "成都",
+            "武汉",
+            "南京",
+            "西安",
+            "重庆",
+            "苏州",
+            "天津",
+            "一居",
+            "两居",
+            "三居",
+            "四居及以上",
+            "复式/LOFT"
+          ]
+        }
+      },
+      {
+        "label": "操作:3 3D方案预览 AI户型匹配与3D漫游",
+        "url": "http://127.0.0.1:49197/floorplan-match",
+        "title": "My Trae Project",
+        "headings": [
+          "户型图智能匹配",
+          "上传户型图",
+          "填写户型信息",
+          "匹配结果预览",
+          "关于我们",
+          "快速链接",
+          "联系方式"
+        ],
+        "navLabels": [
+          "首页",
+          "案例库",
+          "发现分类",
+          "户型匹配",
+          "采购清单",
+          "设计师入驻",
+          "管理后台"
+        ],
+        "buttons": [
+          "开始智能匹配"
+        ],
+        "links": [
+          "筑家数据",
+          "首页",
+          "案例库",
+          "发现分类",
+          "户型匹配",
+          "采购清单",
+          "设计师入驻",
+          "管理后台",
+          "登录",
+          "注册"
+        ],
+        "inputs": [
+          {
+            "tag": "input",
+            "type": "text",
+            "placeholder": "搜索案例、风格、城市...",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "number",
+            "placeholder": "请输入面积",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "select",
+            "type": "",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "number",
+            "placeholder": "例如：3",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "number",
+            "placeholder": "例如：2",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "select",
+            "type": "",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "number",
+            "placeholder": "最低",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "number",
+            "placeholder": "最高",
+            "name": "",
+            "label": ""
+          }
+        ],
+        "tables": [],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "筑家数据首页案例库发现分类户型匹配采购清单设计师入驻管理后台登录注册AI 智能匹配户型图智能匹配上传户型图或填写户型信息，AI 将从千万级案例库中为你匹配最相似的真实装修方案上传户型图点击或拖拽上传户型图支持 JPG、PNG、PDF 格式填写户型信息面积 (㎡)户型请选择户型一居室两居室三居室四居室复式别墅卧室数卫生间数装修风格不限风格现代简约北欧风格新中式轻奢风格日式风格预算范围 (万)-开始智能匹配匹配结果预览填写信息后点击匹配AI 将为你推荐最相似的真实装修案例筑家数据关于我们筑家数据是专注于家装案例数字化的平台我们致力于为用户提供真实、详细、可落地的装修案例参考覆盖全国主要城市，汇聚上千位优秀设计师的作品快速链接首页案例库户型匹配采购清单设计师入驻联系方式浙江省杭州市西湖区文三路 478 号华星时代广场400-888-8888contact@zhujia.com© 2024 筑家数据 版权所有浙ICP备2024000000号-1浙公网安备 33010602000000号",
+        "layout": {
+          "viewportWidth": 1632,
+          "viewportHeight": 1600,
+          "scrollWidth": 1632,
+          "scrollHeight": 2052,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "codex-20260614-fixed-may-89197-structure-05-操作-3-3D方案预览-AI户型匹配与3D漫游",
+          "label": "操作:3 3D方案预览 AI户型匹配与3D漫游",
+          "finalUrl": "http://127.0.0.1:49197/floorplan-match",
+          "title": "My Trae Project",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89197/runtime-check/codex-20260614-fixed/codex-20260614-fixed-may-89197-structure-05-操作-3-3D方案预览-AI户型匹配与3D漫游.json",
+          "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89197/runtime-check/codex-20260614-fixed/codex-20260614-fixed-may-89197-structure-05-操作-3-3D方案预览-AI户型匹配与3D漫游.png",
+          "elementCount": 237,
+          "interactiveCount": 25,
+          "interactiveLabels": [
+            "筑家数据",
+            "首页",
+            "案例库",
+            "发现分类",
+            "户型匹配",
+            "采购清单",
+            "设计师入驻",
+            "管理后台",
+            "搜索案例、风格、城市...",
+            "登录",
+            "注册",
+            "100",
+            "请选择户型 一居室 两居室 三居室 四居室 复式 别墅",
+            "3",
+            "1",
+            "不限风格 现代简约 北欧风格 新中式 轻奢风格 日式风格",
+            "10",
+            "50",
+            "开始智能匹配"
+          ]
+        }
+      }
+    ],
+    "findings": [],
+    "actionHints": [],
+    "emptyPages": [],
+    "overflowPages": [],
+    "blankPages": [],
+    "apiFailurePaths": [],
+    "goalTerms": [],
+    "clickedActionDescriptors": [
+      {
+        "nav": "首页",
+        "label": "2 查看详细数据 户型图/水电图/验收照片",
+        "ordinal": 0,
+        "unsafe": false
+      },
+      {
+        "nav": "首页",
+        "label": "2 查看详细数据 户型图/水电图/验收照片->1室",
+        "ordinal": 0,
+        "secondary": true,
+        "unsafe": false
+      },
+      {
+        "nav": "首页",
+        "label": "3 3D方案预览 AI户型匹配与3D漫游",
+        "ordinal": 0,
+        "unsafe": false
+      }
+    ],
+    "secondaryActionClicks": 1,
+    "structureCaptures": [
+      {
+        "module": "website_structure_capture",
+        "runId": "codex-20260614-fixed-may-89197-structure-01-首屏",
+        "label": "首屏",
+        "finalUrl": "http://127.0.0.1:49197/",
+        "title": "My Trae Project",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89197/runtime-check/codex-20260614-fixed/codex-20260614-fixed-may-89197-structure-01-首屏.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89197/runtime-check/codex-20260614-fixed/codex-20260614-fixed-may-89197-structure-01-首屏.png",
+        "elementCount": 875,
+        "interactiveCount": 61,
+        "interactiveLabels": [
+          "筑家数据",
+          "首页",
+          "案例库",
+          "发现分类",
+          "户型匹配",
+          "采购清单",
+          "设计师入驻",
+          "管理后台",
+          "搜索案例、风格、城市...",
+          "登录",
+          "注册",
+          "搜索城市、小区、风格、户型...",
+          "搜索案例",
+          "上传户型图找相似",
+          "浏览全部案例",
+          "查看全部",
+          "北京 2 案例",
+          "上海 2 案例",
+          "杭州 1 案例",
+          "广州 1 案例",
+          "深圳 1 案例",
+          "成都 1 案例",
+          "武汉 1 案例",
+          "南京 1 案例",
+          "西安 1 案例",
+          "重庆 1 案例",
+          "苏州 1 案例",
+          "天津 1 案例",
+          "查看更多",
+          "北欧 三居 4.9 15,820 浏览 阳光城市花园·北欧风三居 北京 · 朝阳区 三室两厅两卫 128㎡ 28.0万 📐 ✓ ⚡ ✓ 🏷️ 6项 📷 3阶段 张明 4.9 北欧风格 查看详情"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "codex-20260614-fixed-may-89197-structure-02-导航-首页",
+        "label": "导航:首页",
+        "finalUrl": "http://127.0.0.1:49197/",
+        "title": "My Trae Project",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89197/runtime-check/codex-20260614-fixed/codex-20260614-fixed-may-89197-structure-02-导航-首页.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89197/runtime-check/codex-20260614-fixed/codex-20260614-fixed-may-89197-structure-02-导航-首页.png",
+        "elementCount": 875,
+        "interactiveCount": 61,
+        "interactiveLabels": [
+          "筑家数据",
+          "首页",
+          "案例库",
+          "发现分类",
+          "户型匹配",
+          "采购清单",
+          "设计师入驻",
+          "管理后台",
+          "搜索案例、风格、城市...",
+          "登录",
+          "注册",
+          "搜索城市、小区、风格、户型...",
+          "搜索案例",
+          "上传户型图找相似",
+          "浏览全部案例",
+          "查看全部",
+          "北京 2 案例",
+          "上海 2 案例",
+          "杭州 1 案例",
+          "广州 1 案例",
+          "深圳 1 案例",
+          "成都 1 案例",
+          "武汉 1 案例",
+          "南京 1 案例",
+          "西安 1 案例",
+          "重庆 1 案例",
+          "苏州 1 案例",
+          "天津 1 案例",
+          "查看更多",
+          "北欧 三居 4.9 15,820 浏览 阳光城市花园·北欧风三居 北京 · 朝阳区 三室两厅两卫 128㎡ 28.0万 📐 ✓ ⚡ ✓ 🏷️ 6项 📷 3阶段 张明 4.9 北欧风格 查看详情"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "codex-20260614-fixed-may-89197-structure-03-操作-2-查看详细数据-户型图-水电图-验收照片",
+        "label": "操作:2 查看详细数据 户型图/水电图/验收照片",
+        "finalUrl": "http://127.0.0.1:49197/cases",
+        "title": "My Trae Project",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89197/runtime-check/codex-20260614-fixed/codex-20260614-fixed-may-89197-structure-03-操作-2-查看详细数据-户型图-水电图-验收照片.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89197/runtime-check/codex-20260614-fixed/codex-20260614-fixed-may-89197-structure-03-操作-2-查看详细数据-户型图-水电图-验收照片.png",
+        "elementCount": 841,
+        "interactiveCount": 92,
+        "interactiveLabels": [
+          "筑家数据",
+          "首页",
+          "案例库",
+          "发现分类",
+          "户型匹配",
+          "采购清单",
+          "设计师入驻",
+          "管理后台",
+          "搜索案例、风格、城市...",
+          "登录",
+          "注册",
+          "搜索城市、小区、风格、户型...",
+          "北京",
+          "上海",
+          "广州",
+          "深圳",
+          "杭州",
+          "成都",
+          "武汉",
+          "南京",
+          "西安",
+          "重庆",
+          "苏州",
+          "天津",
+          "一居",
+          "两居",
+          "三居",
+          "四居及以上",
+          "复式/LOFT",
+          "别墅"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "codex-20260614-fixed-may-89197-structure-04-二层操作-2-查看详细数据-户型图-水电图-验收照片-1室",
+        "label": "二层操作:2 查看详细数据 户型图/水电图/验收照片->1室",
+        "finalUrl": "http://127.0.0.1:49197/cases",
+        "title": "My Trae Project",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89197/runtime-check/codex-20260614-fixed/codex-20260614-fixed-may-89197-structure-04-二层操作-2-查看详细数据-户型图-水电图-验收照片-1室.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89197/runtime-check/codex-20260614-fixed/codex-20260614-fixed-may-89197-structure-04-二层操作-2-查看详细数据-户型图-水电图-验收照片-1室.png",
+        "elementCount": 432,
+        "interactiveCount": 68,
+        "interactiveLabels": [
+          "筑家数据",
+          "首页",
+          "案例库",
+          "发现分类",
+          "户型匹配",
+          "采购清单",
+          "设计师入驻",
+          "管理后台",
+          "搜索案例、风格、城市...",
+          "登录",
+          "注册",
+          "搜索城市、小区、风格、户型...",
+          "1",
+          "北京",
+          "上海",
+          "广州",
+          "深圳",
+          "杭州",
+          "成都",
+          "武汉",
+          "南京",
+          "西安",
+          "重庆",
+          "苏州",
+          "天津",
+          "一居",
+          "两居",
+          "三居",
+          "四居及以上",
+          "复式/LOFT"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "codex-20260614-fixed-may-89197-structure-05-操作-3-3D方案预览-AI户型匹配与3D漫游",
+        "label": "操作:3 3D方案预览 AI户型匹配与3D漫游",
+        "finalUrl": "http://127.0.0.1:49197/floorplan-match",
+        "title": "My Trae Project",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89197/runtime-check/codex-20260614-fixed/codex-20260614-fixed-may-89197-structure-05-操作-3-3D方案预览-AI户型匹配与3D漫游.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89197/runtime-check/codex-20260614-fixed/codex-20260614-fixed-may-89197-structure-05-操作-3-3D方案预览-AI户型匹配与3D漫游.png",
+        "elementCount": 237,
+        "interactiveCount": 25,
+        "interactiveLabels": [
+          "筑家数据",
+          "首页",
+          "案例库",
+          "发现分类",
+          "户型匹配",
+          "采购清单",
+          "设计师入驻",
+          "管理后台",
+          "搜索案例、风格、城市...",
+          "登录",
+          "注册",
+          "100",
+          "请选择户型 一居室 两居室 三居室 四居室 复式 别墅",
+          "3",
+          "1",
+          "不限风格 现代简约 北欧风格 新中式 轻奢风格 日式风格",
+          "10",
+          "50",
+          "开始智能匹配"
+        ]
+      }
+    ],
+    "representativeScreenshotUrl": "http://127.0.0.1:49197/",
+    "representativeScreenshotLabel": "真实施工数据， 让装修决策有据可依"
+  },
+  "websiteStructureCapture": {
+    "module": "website_structure_capture",
+    "captureCount": 5,
+    "captures": [
+      {
+        "module": "website_structure_capture",
+        "runId": "codex-20260614-fixed-may-89197-structure-01-首屏",
+        "label": "首屏",
+        "finalUrl": "http://127.0.0.1:49197/",
+        "title": "My Trae Project",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89197/runtime-check/codex-20260614-fixed/codex-20260614-fixed-may-89197-structure-01-首屏.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89197/runtime-check/codex-20260614-fixed/codex-20260614-fixed-may-89197-structure-01-首屏.png",
+        "elementCount": 875,
+        "interactiveCount": 61,
+        "interactiveLabels": [
+          "筑家数据",
+          "首页",
+          "案例库",
+          "发现分类",
+          "户型匹配",
+          "采购清单",
+          "设计师入驻",
+          "管理后台",
+          "搜索案例、风格、城市...",
+          "登录",
+          "注册",
+          "搜索城市、小区、风格、户型...",
+          "搜索案例",
+          "上传户型图找相似",
+          "浏览全部案例",
+          "查看全部",
+          "北京 2 案例",
+          "上海 2 案例",
+          "杭州 1 案例",
+          "广州 1 案例",
+          "深圳 1 案例",
+          "成都 1 案例",
+          "武汉 1 案例",
+          "南京 1 案例",
+          "西安 1 案例",
+          "重庆 1 案例",
+          "苏州 1 案例",
+          "天津 1 案例",
+          "查看更多",
+          "北欧 三居 4.9 15,820 浏览 阳光城市花园·北欧风三居 北京 · 朝阳区 三室两厅两卫 128㎡ 28.0万 📐 ✓ ⚡ ✓ 🏷️ 6项 📷 3阶段 张明 4.9 北欧风格 查看详情"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "codex-20260614-fixed-may-89197-structure-02-导航-首页",
+        "label": "导航:首页",
+        "finalUrl": "http://127.0.0.1:49197/",
+        "title": "My Trae Project",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89197/runtime-check/codex-20260614-fixed/codex-20260614-fixed-may-89197-structure-02-导航-首页.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89197/runtime-check/codex-20260614-fixed/codex-20260614-fixed-may-89197-structure-02-导航-首页.png",
+        "elementCount": 875,
+        "interactiveCount": 61,
+        "interactiveLabels": [
+          "筑家数据",
+          "首页",
+          "案例库",
+          "发现分类",
+          "户型匹配",
+          "采购清单",
+          "设计师入驻",
+          "管理后台",
+          "搜索案例、风格、城市...",
+          "登录",
+          "注册",
+          "搜索城市、小区、风格、户型...",
+          "搜索案例",
+          "上传户型图找相似",
+          "浏览全部案例",
+          "查看全部",
+          "北京 2 案例",
+          "上海 2 案例",
+          "杭州 1 案例",
+          "广州 1 案例",
+          "深圳 1 案例",
+          "成都 1 案例",
+          "武汉 1 案例",
+          "南京 1 案例",
+          "西安 1 案例",
+          "重庆 1 案例",
+          "苏州 1 案例",
+          "天津 1 案例",
+          "查看更多",
+          "北欧 三居 4.9 15,820 浏览 阳光城市花园·北欧风三居 北京 · 朝阳区 三室两厅两卫 128㎡ 28.0万 📐 ✓ ⚡ ✓ 🏷️ 6项 📷 3阶段 张明 4.9 北欧风格 查看详情"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "codex-20260614-fixed-may-89197-structure-03-操作-2-查看详细数据-户型图-水电图-验收照片",
+        "label": "操作:2 查看详细数据 户型图/水电图/验收照片",
+        "finalUrl": "http://127.0.0.1:49197/cases",
+        "title": "My Trae Project",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89197/runtime-check/codex-20260614-fixed/codex-20260614-fixed-may-89197-structure-03-操作-2-查看详细数据-户型图-水电图-验收照片.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89197/runtime-check/codex-20260614-fixed/codex-20260614-fixed-may-89197-structure-03-操作-2-查看详细数据-户型图-水电图-验收照片.png",
+        "elementCount": 841,
+        "interactiveCount": 92,
+        "interactiveLabels": [
+          "筑家数据",
+          "首页",
+          "案例库",
+          "发现分类",
+          "户型匹配",
+          "采购清单",
+          "设计师入驻",
+          "管理后台",
+          "搜索案例、风格、城市...",
+          "登录",
+          "注册",
+          "搜索城市、小区、风格、户型...",
+          "北京",
+          "上海",
+          "广州",
+          "深圳",
+          "杭州",
+          "成都",
+          "武汉",
+          "南京",
+          "西安",
+          "重庆",
+          "苏州",
+          "天津",
+          "一居",
+          "两居",
+          "三居",
+          "四居及以上",
+          "复式/LOFT",
+          "别墅"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "codex-20260614-fixed-may-89197-structure-04-二层操作-2-查看详细数据-户型图-水电图-验收照片-1室",
+        "label": "二层操作:2 查看详细数据 户型图/水电图/验收照片->1室",
+        "finalUrl": "http://127.0.0.1:49197/cases",
+        "title": "My Trae Project",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89197/runtime-check/codex-20260614-fixed/codex-20260614-fixed-may-89197-structure-04-二层操作-2-查看详细数据-户型图-水电图-验收照片-1室.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89197/runtime-check/codex-20260614-fixed/codex-20260614-fixed-may-89197-structure-04-二层操作-2-查看详细数据-户型图-水电图-验收照片-1室.png",
+        "elementCount": 432,
+        "interactiveCount": 68,
+        "interactiveLabels": [
+          "筑家数据",
+          "首页",
+          "案例库",
+          "发现分类",
+          "户型匹配",
+          "采购清单",
+          "设计师入驻",
+          "管理后台",
+          "搜索案例、风格、城市...",
+          "登录",
+          "注册",
+          "搜索城市、小区、风格、户型...",
+          "1",
+          "北京",
+          "上海",
+          "广州",
+          "深圳",
+          "杭州",
+          "成都",
+          "武汉",
+          "南京",
+          "西安",
+          "重庆",
+          "苏州",
+          "天津",
+          "一居",
+          "两居",
+          "三居",
+          "四居及以上",
+          "复式/LOFT"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "codex-20260614-fixed-may-89197-structure-05-操作-3-3D方案预览-AI户型匹配与3D漫游",
+        "label": "操作:3 3D方案预览 AI户型匹配与3D漫游",
+        "finalUrl": "http://127.0.0.1:49197/floorplan-match",
+        "title": "My Trae Project",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89197/runtime-check/codex-20260614-fixed/codex-20260614-fixed-may-89197-structure-05-操作-3-3D方案预览-AI户型匹配与3D漫游.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89197/runtime-check/codex-20260614-fixed/codex-20260614-fixed-may-89197-structure-05-操作-3-3D方案预览-AI户型匹配与3D漫游.png",
+        "elementCount": 237,
+        "interactiveCount": 25,
+        "interactiveLabels": [
+          "筑家数据",
+          "首页",
+          "案例库",
+          "发现分类",
+          "户型匹配",
+          "采购清单",
+          "设计师入驻",
+          "管理后台",
+          "搜索案例、风格、城市...",
+          "登录",
+          "注册",
+          "100",
+          "请选择户型 一居室 两居室 三居室 四居室 复式 别墅",
+          "3",
+          "1",
+          "不限风格 现代简约 北欧风格 新中式 轻奢风格 日式风格",
+          "10",
+          "50",
+          "开始智能匹配"
+        ]
+      }
+    ]
+  },
+  "screenshotMetrics": {
+    "width": 1664,
+    "height": 1600,
+    "scrollWidth": 1632,
+    "scrollHeight": 5532
+  },
+  "initialBodyTextPreview": "筑家数据\n首页\n案例库\n发现分类\n户型匹配\n采购清单\n设计师入驻\n管理后台\n登录\n注册\n全国装修案例数据平台\n真实施工数据，\n让装修决策有据可依\n\n汇聚真实装修案例，覆盖多座城市，让你找到最适合自己家的设计方案与预算参考\n\n搜索案例\n上传户型图找相似\n浏览全部案例\n验收照片实地拍摄\n建材数据真实比价\n户型匹配AI智能\n平台数据\n\n用真实数据说话，让装修不再盲目\n\n0个\n已收录案例\n0个\n覆盖城市\n0位\n认证设计师\n0.00\n平均质量评分\n热门城市\n\n选择你所在的城市，查看本地真实装修案例\n\n查看全部\n北京\n2 案例\n上海\n2 案例\n杭州\n1 案例\n广州\n1 案例\n深圳\n1 案例\n成都\n1 案例\n武汉\n1 案例\n南京\n1 案例\n西安\n1 案例\n重庆\n1 案例\n苏州\n1 案例\n天津\n1 案例\n精选案例\n\n高评分真实装修案例，给你灵感与参考\n\n查看更多\n北欧\n三居\n4.9\n15,820 浏览\n阳光城市花园·北欧风三居\n北京 · 朝阳区\n三室两厅两卫\n128㎡\n28.0万\n📐 ✓\n⚡ ✓\n🏷️ 6项\n📷 3阶段\n张明\n4.9\n北欧风格\n查看详情\n美式\n轻奢\n5.0\n23,650 浏览\n星河湾·美式轻奢大四居\n上海 · 浦东新区\n四室两厅两卫\n168㎡\n52.0万\n📐 ✓\n⚡ ✓\n🏷️ 6项\n📷 3阶段\n王芳\n5.0\n美式\n查看详情\n新中式\n三居\n4.8\n8,930 浏览\n万科城·新中式雅致三居\n杭州 · 西湖区\n三室两厅一卫\n115㎡\n35.0万\n📐 ✓\n⚡ ✓\n🏷️ 6项\n📷 3阶段\n李华\n4.8\n新中式\n查看详情\n现代简约\n两居\n4.5\n6,720 浏览\n保利中央公园·现代简约两居\n广州 · 天河区\n两室一厅一卫\n78㎡\n12.8万\n📐 ✓\n⚡ ✓\n🏷️ 6项\n📷 3阶段\n刘洋\n4.5\n现代简约\n查看详情\n工业风\nLOFT\n4.8\n11,240 浏览\n华润万象城·工业风LOFT\n深圳 · 南山区\nLOFT复式\n95㎡\n26.0万\n📐 ✓\n⚡ ✓\n🏷️ 6项\n📷 3阶段\n陈伟\n4.8\n工业风\n查看详情\n日式\n禅意\n4.8\n9,560 浏览\n龙湖天街·日式禅意三居\n成都 · 锦江区\n三室两厅一卫\n108㎡\n19.8万\n📐 ✓\n⚡ ✓\n🏷️ 6项\n📷 3阶段\n张明\n4.8\n日式\n查看详情\n决策链路\n\n从浏览到交付，一站式闭环服务\n\n1\n浏览案例\n按城市、风格、户型筛选\n2\n查看详细数据\n户型图/水电图/验收照片\n3\n3D方案预览\nAI户型匹配与3D漫游\n4\n采购清单比价\n建材多渠道比价\n5\n生成PDF交付包\n一键导出完整方案\nAI 智能户型匹配\n上传户型图，一键匹配\n相似真实装修案例\n\nAI 智能识别户型结构，从真实案例库中为你匹配最相似的装修方案，预算、风格、建材一目了然\n\n上传户型图\n了解更多\n户型识别\nAI 自动识别户型结构\n智能匹配\n相似度算法精准推荐\n质量评分\n真实验收质量数据\n本地案例\n同城同小区真实案例\n筑家数据\n关于我们\n筑家数据是专注于家装案例数字化的平台\n我们致力于为用户提供真实、详细、可落地的装修案例参考\n覆盖全国主要城市，汇聚上千位优秀设计师的作品\n快速链接\n首页\n案例库\n户型匹配\n采购清单\n设计师入驻\n联系方式\n浙江省杭州市西湖区文三路 478 号华星时代广场\n400-888-8888\ncontact@zhujia.com\n© 2024 筑家数据 版权所有\n浙ICP备2024000000号-1\n浙公网安备 33010602000000号",
+  "bodyTextPreview": "筑家数据\n首页\n案例库\n发现分类\n户型匹配\n采购清单\n设计师入驻\n管理后台\n登录\n注册\n全国装修案例数据平台\n真实施工数据，\n让装修决策有据可依\n\n汇聚真实装修案例，覆盖多座城市，让你找到最适合自己家的设计方案与预算参考\n\n搜索案例\n上传户型图找相似\n浏览全部案例\n验收照片实地拍摄\n建材数据真实比价\n户型匹配AI智能\n平台数据\n\n用真实数据说话，让装修不再盲目\n\n0个\n已收录案例\n0个\n覆盖城市\n0位\n认证设计师\n0.00\n平均质量评分\n热门城市\n\n选择你所在的城市，查看本地真实装修案例\n\n查看全部\n北京\n2 案例\n上海\n2 案例\n杭州\n1 案例\n广州\n1 案例\n深圳\n1 案例\n成都\n1 案例\n武汉\n1 案例\n南京\n1 案例\n西安\n1 案例\n重庆\n1 案例\n苏州\n1 案例\n天津\n1 案例\n精选案例\n\n高评分真实装修案例，给你灵感与参考\n\n查看更多\n北欧\n三居\n4.9\n15,820 浏览\n阳光城市花园·北欧风三居\n北京 · 朝阳区\n三室两厅两卫\n128㎡\n28.0万\n📐 ✓\n⚡ ✓\n🏷️ 6项\n📷 3阶段\n张明\n4.9\n北欧风格\n查看详情\n美式\n轻奢\n5.0\n23,650 浏览\n星河湾·美式轻奢大四居\n上海 · 浦东新区\n四室两厅两卫\n168㎡\n52.0万\n📐 ✓\n⚡ ✓\n🏷️ 6项\n📷 3阶段\n王芳\n5.0\n美式\n查看详情\n新中式\n三居\n4.8\n8,930 浏览\n万科城·新中式雅致三居\n杭州 · 西湖区\n三室两厅一卫\n115㎡\n35.0万\n📐 ✓\n⚡ ✓\n🏷️ 6项\n📷 3阶段\n李华\n4.8\n新中式\n查看详情\n现代简约\n两居\n4.5\n6,720 浏览\n保利中央公园·现代简约两居\n广州 · 天河区\n两室一厅一卫\n78㎡\n12.8万\n📐 ✓\n⚡ ✓\n🏷️ 6项\n📷 3阶段\n刘洋\n4.5\n现代简约\n查看详情\n工业风\nLOFT\n4.8\n11,240 浏览\n华润万象城·工业风LOFT\n深圳 · 南山区\nLOFT复式\n95㎡\n26.0万\n📐 ✓\n⚡ ✓\n🏷️ 6项\n📷 3阶段\n陈伟\n4.8\n工业风\n查看详情\n日式\n禅意\n4.8\n9,560 浏览\n龙湖天街·日式禅意三居\n成都 · 锦江区\n三室两厅一卫\n108㎡\n19.8万\n📐 ✓\n⚡ ✓\n🏷️ 6项\n📷 3阶段\n张明\n4.8\n日式\n查看详情\n决策链路\n\n从浏览到交付，一站式闭环服务\n\n1\n浏览案例\n按城市、风格、户型筛选\n2\n查看详细数据\n户型图/水电图/验收照片\n3\n3D方案预览\nAI户型匹配与3D漫游\n4\n采购清单比价\n建材多渠道比价\n5\n生成PDF交付包\n一键导出完整方案\nAI 智能户型匹配\n上传户型图，一键匹配\n相似真实装修案例\n\nAI 智能识别户型结构，从真实案例库中为你匹配最相似的装修方案，预算、风格、建材一目了然\n\n上传户型图\n了解更多\n户型识别\nAI 自动识别户型结构\n智能匹配\n相似度算法精准推荐\n质量评分\n真实验收质量数据\n本地案例\n同城同小区真实案例\n筑家数据\n关于我们\n筑家数据是专注于家装案例数字化的平台\n我们致力于为用户提供真实、详细、可落地的装修案例参考\n覆盖全国主要城市，汇聚上千位优秀设计师的作品\n快速链接\n首页\n案例库\n户型匹配\n采购清单\n设计师入驻\n联系方式\n浙江省杭州市西湖区文三路 478 号华星时代广场\n400-888-8888\ncontact@zhujia.com\n© 2024 筑家数据 版权所有\n浙ICP备2024000000号-1\n浙公网安备 33010602000000号",
+  "apiBase": "http://127.0.0.1:59197",
+  "businessGoalPreview": "",
+  "apiResponses": [],
+  "apiChecks": [
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59197/api/health",
+      "path": "/api/health",
+      "status": 200,
+      "ok": true,
+      "bodyPreview": "{\"success\":true,\"message\":\"ok\"}"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59197/api/auth/me",
+      "path": "/api/auth/me",
+      "status": 200,
+      "ok": true,
+      "bodyPreview": "{\"success\":true,\"data\":{\"id\":\"user-demo\",\"phone\":\"13800138001\",\"nickname\":\"演示用户\",\"role\":\"user\",\"createdAt\":\"2026-01-01T00:00:00.000Z\"}}"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59197/api/users/profile",
+      "path": "/api/users/profile",
+      "status": 404,
+      "ok": false,
+      "bodyPreview": "{\"success\":false,\"error\":\"API not found\"}"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59197/api/user/profile",
+      "path": "/api/user/profile",
+      "status": 404,
+      "ok": false,
+      "bodyPreview": "{\"success\":false,\"error\":\"API not found\"}"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59197/api/search?q=%E6%B5%8B%E8%AF%95",
+      "path": "/api/search?q=%E6%B5%8B%E8%AF%95",
+      "status": 404,
+      "ok": false,
+      "bodyPreview": "{\"success\":false,\"error\":\"API not found\"}"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59197/api/admin/stats",
+      "path": "/api/admin/stats",
+      "status": 404,
+      "ok": false,
+      "bodyPreview": "{\"success\":false,\"error\":\"API not found\"}"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59197/api/admin/dashboard",
+      "path": "/api/admin/dashboard",
+      "status": 404,
+      "ok": false,
+      "bodyPreview": "{\"success\":false,\"error\":\"API not found\"}"
+    }
+  ],
+  "dialogs": [],
+  "consoleMessages": [
+    {
+      "type": "debug",
+      "text": "[vite] connecting...",
+      "location": {
+        "url": "http://127.0.0.1:49197/@vite/client",
+        "lineNumber": 788,
+        "columnNumber": 8
+      }
+    },
+    {
+      "type": "debug",
+      "text": "[vite] connected.",
+      "location": {
+        "url": "http://127.0.0.1:49197/@vite/client",
+        "lineNumber": 911,
+        "columnNumber": 14
+      }
+    },
+    {
+      "type": "info",
+      "text": "%cDownload the React DevTools for a better development experience: https://reactjs.org/link/react-devtools font-weight:bold",
+      "location": {
+        "url": "http://127.0.0.1:49197/node_modules/.vite/deps/chunk-DYKRQPZ6.js?v=89d50b04",
+        "lineNumber": 21608,
+        "columnNumber": 24
+      }
+    },
+    {
+      "type": "debug",
+      "text": "[vite] connecting...",
+      "location": {
+        "url": "http://127.0.0.1:49197/@vite/client",
+        "lineNumber": 788,
+        "columnNumber": 8
+      }
+    },
+    {
+      "type": "debug",
+      "text": "[vite] connected.",
+      "location": {
+        "url": "http://127.0.0.1:49197/@vite/client",
+        "lineNumber": 911,
+        "columnNumber": 14
+      }
+    },
+    {
+      "type": "info",
+      "text": "%cDownload the React DevTools for a better development experience: https://reactjs.org/link/react-devtools font-weight:bold",
+      "location": {
+        "url": "http://127.0.0.1:49197/node_modules/.vite/deps/chunk-DYKRQPZ6.js?v=89d50b04",
+        "lineNumber": 21608,
+        "columnNumber": 24
+      }
+    },
+    {
+      "type": "debug",
+      "text": "[vite] connecting...",
+      "location": {
+        "url": "http://127.0.0.1:49197/@vite/client",
+        "lineNumber": 788,
+        "columnNumber": 8
+      }
+    },
+    {
+      "type": "debug",
+      "text": "[vite] connected.",
+      "location": {
+        "url": "http://127.0.0.1:49197/@vite/client",
+        "lineNumber": 911,
+        "columnNumber": 14
+      }
+    },
+    {
+      "type": "info",
+      "text": "%cDownload the React DevTools for a better development experience: https://reactjs.org/link/react-devtools font-weight:bold",
+      "location": {
+        "url": "http://127.0.0.1:49197/node_modules/.vite/deps/chunk-DYKRQPZ6.js?v=89d50b04",
+        "lineNumber": 21608,
+        "columnNumber": 24
+      }
+    },
+    {
+      "type": "debug",
+      "text": "[vite] connecting...",
+      "location": {
+        "url": "http://127.0.0.1:49197/@vite/client",
+        "lineNumber": 788,
+        "columnNumber": 8
+      }
+    },
+    {
+      "type": "debug",
+      "text": "[vite] connected.",
+      "location": {
+        "url": "http://127.0.0.1:49197/@vite/client",
+        "lineNumber": 911,
+        "columnNumber": 14
+      }
+    },
+    {
+      "type": "info",
+      "text": "%cDownload the React DevTools for a better development experience: https://reactjs.org/link/react-devtools font-weight:bold",
+      "location": {
+        "url": "http://127.0.0.1:49197/node_modules/.vite/deps/chunk-DYKRQPZ6.js?v=89d50b04",
+        "lineNumber": 21608,
+        "columnNumber": 24
+      }
+    },
+    {
+      "type": "debug",
+      "text": "[vite] hot updated: /src/pages/Home.tsx",
+      "location": {
+        "url": "http://127.0.0.1:49197/@vite/client",
+        "lineNumber": 882,
+        "columnNumber": 31
+      }
+    },
+    {
+      "type": "debug",
+      "text": "[vite] hot updated: /src/index.css",
+      "location": {
+        "url": "http://127.0.0.1:49197/@vite/client",
+        "lineNumber": 882,
+        "columnNumber": 31
+      }
+    },
+    {
+      "type": "debug",
+      "text": "[vite] hot updated: /src/pages/Home.tsx",
+      "location": {
+        "url": "http://127.0.0.1:49197/@vite/client",
+        "lineNumber": 882,
+        "columnNumber": 31
+      }
+    },
+    {
+      "type": "debug",
+      "text": "[vite] hot updated: /src/index.css",
+      "location": {
+        "url": "http://127.0.0.1:49197/@vite/client",
+        "lineNumber": 882,
+        "columnNumber": 31
+      }
+    },
+    {
+      "type": "debug",
+      "text": "[vite] hot updated: /src/components/CaseCard.tsx",
+      "location": {
+        "url": "http://127.0.0.1:49197/@vite/client",
+        "lineNumber": 882,
+        "columnNumber": 31
+      }
+    },
+    {
+      "type": "debug",
+      "text": "[vite] hot updated: /src/index.css",
+      "location": {
+        "url": "http://127.0.0.1:49197/@vite/client",
+        "lineNumber": 882,
+        "columnNumber": 31
+      }
+    }
+  ],
+  "requestFailures": [],
+  "responseErrors": []
+}

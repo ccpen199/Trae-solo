@@ -17,9 +17,11 @@ import { useAppStore } from '@/store';
 const navLinks = [
   { label: '首页', path: '/', icon: Home },
   { label: '案例库', path: '/cases', icon: Building2 },
+  { label: '发现分类', path: '/cases?category=discover', icon: Search },
   { label: '户型匹配', path: '/floorplan-match' },
   { label: '采购清单', path: '/purchase-list', icon: ShoppingCart },
   { label: '设计师入驻', path: '/designer/register' },
+  { label: '管理后台', path: '/admin/dashboard', icon: Settings },
 ];
 
 export default function Navbar() {
@@ -32,8 +34,9 @@ export default function Navbar() {
   const handleSearch = (e: React.FormEvent) => {
     e.preventDefault();
     if (searchValue.trim()) {
-      setSearchFilters({ keyword: searchValue.trim() });
-      navigate('/cases');
+      const keyword = searchValue.trim();
+      setSearchFilters({ keyword });
+      navigate(`/cases?keyword=${encodeURIComponent(keyword)}`);
     }
   };
 

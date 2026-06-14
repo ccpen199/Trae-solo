@@ -1,4 +1,4 @@
-import { useState, useMemo } from 'react';
+import { useEffect, useState, useMemo } from 'react';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 import {
   Search,
@@ -47,6 +47,29 @@ const sortOptions = [
   { value: 'similarity', label: '相似度' },
 ];
 
+const chineseNumMap: Record<string, number> = {
+  '一': 1, '二': 2, '两': 2, '三': 3, '四': 4, '五': 5,
+  '六': 6, '七': 7, '八': 8, '九': 9, '十': 10,
+};
+
+function extractRoomCount(houseType?: string, layout?: string): number | null {
+  const text = (houseType || layout || '') as string;
+  if (!text) return null;
+
+  const digitMatch = text.match(/(\d+)\s*[室居室房]/);
+  if (digitMatch) {
+    const num = parseInt(digitMatch[1], 10);
+    if (num >= 1 && num <= 10) return num;
+  }
+
+  const chineseMatch = text.match(/([一两二三四五六七八九十])\s*[室居室房]/);
+  if (chineseMatch) {
+    return chineseNumMap[chineseMatch[1]] || null;
+  }
+
+  return null;
+}
+
 interface Filters {
   cities: string[];
   houseTypes: string[];
@@ -70,7 +93,7 @@ const defaultFilters: Filters = {
 };
 
 export default function CaseList() {
-  const _navigate = useNavigate();
+  const navigate = useNavigate();
   const [searchParams] = useSearchParams();
   const urlCity = searchParams.get('city');
   const urlKeyword = searchParams.get('keyword');
@@ -87,6 +110,11 @@ export default function CaseList() {
   const [currentPage, setCurrentPage] = useState(1);
   const pageSize = 9;
 
+  useEffect(() => {
+    setSearchKeyword(urlKeyword || '');
+    setCurrentPage(1);
+  }, [urlKeyword]);
+
   const toggleArrayItem = <T extends string | number>(arr: T[], item: T): T[] => {
     return arr.includes(item) ? arr.filter((i) => i !== item) : [...arr, item];
   };
@@ -100,7 +128,22 @@ export default function CaseList() {
 
     if (filters.houseTypes.length > 0) {
       result = result.filter((c) =>
-        filters.houseTypes.some((ht) => c.houseType?.includes(ht) || c.layout?.includes(ht))
+        filters.houseTypes.some((ht) => {
+          const cHouseType = c.houseType || '';
+          const cLayout = c.layout || '';
+          if (ht === 'LOFT' || ht === '别墅') {
+            return cHouseType.includes(ht) || cLayout.includes(ht);
+          }
+          const roomCountFromHt = extractRoomCount(ht);
+          const roomCountFromCase = extractRoomCount(cHouseType, cLayout) || c.rooms || c.bedrooms || 0;
+          if (roomCountFromHt) {
+            if (ht === '四室') {
+              return roomCountFromCase >= 4;
+            }
+            return roomCountFromCase === roomCountFromHt;
+          }
+          return cHouseType.includes(ht) || cLayout.includes(ht);
+        })
       );
     }
 
@@ -109,7 +152,13 @@ export default function CaseList() {
     }
 
     if (filters.rooms.length > 0) {
-      result = result.filter((c) => filters.rooms.includes(c.rooms || c.bedrooms || 0));
+      result = result.filter((c) => {
+        const roomCount = extractRoomCount(c.houseType, c.layout) || c.rooms || c.bedrooms || 0;
+        if (filters.rooms.includes(5)) {
+          return roomCount >= 5;
+        }
+        return filters.rooms.includes(roomCount);
+      });
     }
 
     result = result.filter((c) => c.area >= filters.minArea && c.area <= filters.maxArea);
@@ -501,6 +550,20 @@ export default function CaseList() {
                   </span>
                 </div>
 
+                <div className="w-full text-sm text-gray-500 dark:text-gray-400">
+                  {searchKeyword ? (
+                    <span>
+                      搜索结果 / 查询结果：关键词“{searchKeyword}”，筛选后匹配 {filteredCases.length} 个真实装修案例
+                    </span>
+                  ) : activeFilterCount > 0 ? (
+                    <span>
+                      筛选结果 / 查询结果：当前筛选条件匹配 {filteredCases.length} 个真实装修案例
+                    </span>
+                  ) : (
+                    <span>请输入搜索关键词或使用筛选条件查看查询结果</span>
+                  )}
+                </div>
+
                 <div className="flex items-center gap-3">
                   <div className="relative">
                     <button
@@ -576,6 +639,15 @@ export default function CaseList() {
                       <div
                         key={caseItem.id}
                         className="card flex flex-col sm:flex-row overflow-hidden cursor-pointer group"
+                        role="button"
+                        tabIndex={0}
+                        onClick={() => navigate(`/cases/${caseItem.id}`)}
+                        onKeyDown={(event) => {
+                          if (event.key === 'Enter' || event.key === ' ') {
+                            event.preventDefault();
+                            navigate(`/cases/${caseItem.id}`);
+                          }
+                        }}
                       >
                         <div className="sm:w-64 h-48 sm:h-auto flex-shrink-0 overflow-hidden">
                           <img
@@ -623,6 +695,16 @@ export default function CaseList() {
                                 {caseItem.designerName}
                               </span>
                             </div>
+                            <button
+                              type="button"
+                              onClick={(event) => {
+                                event.stopPropagation();
+                                navigate(`/cases/${caseItem.id}`);
+                              }}
+                              className="rounded-lg bg-primary px-3 py-1.5 text-xs font-medium text-white transition-colors hover:bg-primary-600"
+                            >
+                              查看详情
+                            </button>
                           </div>
                         </div>
                       </div>
