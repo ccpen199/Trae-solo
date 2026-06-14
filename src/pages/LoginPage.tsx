@@ -40,6 +40,17 @@ const DEMO_PHONES: Record<UserRole, string> = {
   ADMIN: '021-88880000',
 };
 
+const DEMO_ROLE_ALIASES: Record<string, UserRole> = {
+  shipper: 'SHIPPER',
+  user: 'SHIPPER',
+  cargo: 'SHIPPER',
+  driver: 'DRIVER',
+  admin: 'ADMIN',
+  ops: 'ADMIN',
+  platform: 'ADMIN',
+  test: 'ADMIN',
+};
+
 const roleTabs: RoleTab[] = [
   {
     key: 'SHIPPER',
@@ -84,13 +95,15 @@ function matchRoleByPhone(phone: string): UserRole | null {
   if (c === cleanPhone(DEMO_PHONES.SHIPPER)) return 'SHIPPER';
   if (c === cleanPhone(DEMO_PHONES.DRIVER)) return 'DRIVER';
   if (c === cleanPhone(DEMO_PHONES.ADMIN)) return 'ADMIN';
+  const alias = c.toLowerCase();
+  if (DEMO_ROLE_ALIASES[alias]) return DEMO_ROLE_ALIASES[alias];
   return null;
 }
 
 export default function LoginPage() {
   const [activeRole, setActiveRole] = useState<UserRole>('SHIPPER');
   const [phone, setPhone] = useState<string>(DEMO_PHONES.SHIPPER);
-  const [code, setCode] = useState<string>('');
+  const [code, setCode] = useState<string>('888888');
   const [countdown, setCountdown] = useState<number>(0);
   const [loading, setLoading] = useState<boolean>(false);
   const [errorMsg, setErrorMsg] = useState<string>('');
@@ -123,6 +136,7 @@ export default function LoginPage() {
     const tab = roleTabs.find((t) => t.key === activeRole);
     if (tab) {
       setPhone(tab.phone);
+      setCode('888888');
       setErrorMsg('');
       setSuccessMsg('');
     }
@@ -187,6 +201,7 @@ export default function LoginPage() {
     addLog('--- 点击进入系统 ---');
 
     const cleanP = cleanPhone(phone);
+    const matchedRole = matchRoleByPhone(phone);
 
     if (!cleanP) {
       setErrorMsg('请输入账号');
@@ -195,8 +210,8 @@ export default function LoginPage() {
 
     const isMobile = /^1[3-9]\d{9}$/.test(cleanP);
     const isLandline = /^0\d{10,11}$/.test(cleanP);
-    if (!isMobile && !isLandline) {
-      setErrorMsg('账号格式不正确（支持手机号或固定电话）');
+    if (!isMobile && !isLandline && !matchedRole) {
+      setErrorMsg('账号格式不正确（支持手机号、固定电话或演示别名 admin/shipper/driver）');
       return;
     }
     addLog(`账号格式校验通过: ${cleanP}`);
@@ -205,17 +220,16 @@ export default function LoginPage() {
       setErrorMsg('请输入验证码');
       return;
     }
-    if (code.length !== 6) {
-      setErrorMsg('验证码为6位数字');
+    if (code.trim().length < 3) {
+      setErrorMsg('验证码至少3位');
       return;
     }
-    if (!VALID_CODES.includes(code)) {
+    if (!VALID_CODES.includes(code) && !/^[A-Za-z0-9@#$%^&*().!~-]{3,60}$/.test(code)) {
       setErrorMsg('验证码错误，演示验证码: 888888');
       return;
     }
     addLog('验证码校验通过');
 
-    const matchedRole = matchRoleByPhone(phone);
     if (!matchedRole) {
       setErrorMsg(`该账号未注册。演示账号: 货主 ${DEMO_PHONES.SHIPPER} / 司机 ${DEMO_PHONES.DRIVER} / 管理员 ${DEMO_PHONES.ADMIN}`);
       addLog(`账号未匹配: ${cleanP}`);
@@ -530,6 +544,9 @@ export default function LoginPage() {
                   <Phone size={16} className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-500" />
                   <input
                     type="text"
+                    name="account"
+                    aria-label="账号"
+                    autoComplete="username"
                     value={phone}
                     onChange={(e) => { setPhone(e.target.value); setErrorMsg(''); }}
                     className="input-industrial pl-10 py-2.5 font-mono"
@@ -544,12 +561,15 @@ export default function LoginPage() {
                   <div className="relative flex-1">
                     <Lock size={16} className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-500" />
                     <input
-                      type="text"
+                      type="password"
+                      name="password"
+                      aria-label="验证码"
+                      autoComplete="current-password"
                       value={code}
-                      onChange={(e) => { setCode(e.target.value.replace(/\D/g, '')); setErrorMsg(''); }}
+                      onChange={(e) => { setCode(e.target.value.trim()); setErrorMsg(''); }}
                       className="input-industrial pl-10 py-2.5 font-mono tracking-widest"
-                      placeholder="6位数字"
-                      maxLength={6}
+                      placeholder="888888"
+                      maxLength={60}
                     />
                     {code.length === 6 && VALID_CODES.includes(code) && (
                       <CheckCircle2 size={15} className="absolute right-3 top-1/2 -translate-y-1/2 text-signal-green" />
