@@ -1,0 +1,20 @@
+{
+  "order": "may-88829",
+  "checkedAt": "2026-06-01T12:24:34.844Z",
+  "frontendUrl": "http://127.0.0.1:48829/",
+  "backendHealthUrl": "http://127.0.0.1:58829/api/health",
+  "frontend": {
+    "status": 200,
+    "ok": true
+  },
+  "backend": {
+    "status": 200,
+    "ok": true
+  },
+  "browser": {
+    "ok": true,
+    "reportPath": "/Users/chen/Documents/trae_projects/local_projects/may-88829/browser-report-codex-20260601-cycle1.json",
+    "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-88829/browser-check-codex-20260601-cycle1.png"
+  },
+  "ok": true
+}

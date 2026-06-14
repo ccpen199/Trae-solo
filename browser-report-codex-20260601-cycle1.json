@@ -1,0 +1,30 @@
+{
+  "order": "may-88829",
+  "checkedAt": "2026-06-01T12:23:06.956Z",
+  "frontendUrl": "http://127.0.0.1:48829/",
+  "browserStatus": 200,
+  "finalUrl": "http://127.0.0.1:48829/",
+  "title": "广州市融媒体公共服务中枢平台",
+  "heading": "广州市融媒体公共服务中枢平台",
+  "dashboard": {
+    "status": 200,
+    "body": {
+      "success": true,
+      "data": {
+        "total_news": 5,
+        "total_complaints": 3,
+        "total_services": 23,
+        "total_pois": 5,
+        "total_media": 0,
+        "total_users": 3,
+        "complaint_completion_rate": 0,
+        "avg_satisfaction": 0,
+        "active_users": 3
+      }
+    }
+  },
+  "consoleMessages": [],
+  "pageErrors": [],
+  "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-88829/browser-check-codex-20260601-cycle1.png",
+  "ok": true
+}
