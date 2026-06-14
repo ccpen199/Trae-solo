@@ -2,19 +2,26 @@ import React, { useState, useEffect } from 'react';
 import {
   Card, Form, Input, Button, Space, Select, List, Switch,
   Divider, Tag, InputNumber, TimePicker, Modal, App,
-  Row, Col, Empty,
+  Row, Col, Empty, Radio,
 } from 'antd';
 import {
   PlusOutlined, SaveOutlined, ArrowLeftOutlined,
-  ThunderboltOutlined, ClockCircleOutlined, BulbOutlined,
-  DeleteOutlined, SettingOutlined,
+  ThunderboltOutlined, BulbOutlined,
+  DeleteOutlined,
 } from '@ant-design/icons';
 import { useNavigate, useParams, useSearchParams } from 'react-router-dom';
 import { sceneAPI, deviceAPI } from '../../services/api';
-import dayjs from 'dayjs';
 
 const { Option } = Select;
 const { TextArea } = Input;
+
+const categoryLabels: Record<string, string> = {
+  light: '灯光', switch: '开关', plug: '插座', curtain: '窗帘',
+  air_conditioner: '空调', thermostat: '温控器', camera: '摄像头',
+  door_lock: '门锁', sensor: '传感器', speaker: '音箱',
+  humidifier: '加湿器', purifier: '净化器', tv: '电视',
+  fan: '风扇', gateway: '网关', other: '其他',
+};
 
 const triggerTypes = [
   { type: 'manual', label: '手动触发', icon: '👆', desc: '点击或语音触发' },
@@ -157,6 +164,40 @@ const SceneBuilderPage: React.FC = () => {
     }
   };
 
+  const getTriggerDesc = (t: any) => {
+    if (t.type === 'manual') return '手动点击或语音触发';
+    if (t.type === 'voice') return `语音关键词："${t.config?.keyword || ''}"`;
+    if (t.type === 'time') {
+      const days = t.config?.days || [];
+      const dayLabels = ['周日', '周一', '周二', '周三', '周四', '周五', '周六'];
+      const dayStr = days.length === 7 ? '每天' : days.sort().map((d: number) => dayLabels[d]).join('、');
+      return `${dayStr || '每天'} ${t.config?.time || '--:--'} 执行`;
+    }
+    if (t.type === 'condition') {
+      const dev = devices.find((d) => d.id === t.config?.deviceId);
+      const propMap: Record<string, string> = { temperature: '温度', humidity: '湿度', battery: '电量', motion: '人体感应', door: '门磁', pm25: 'PM2.5', brightness: '亮度', current: '电流', voltage: '电压' };
+      const opMap: Record<string, string> = { gt: '>', lt: '<', eq: '=', gte: '≥', lte: '≤', ne: '≠' };
+      return `${dev?.name || '设备'} · ${propMap[t.config?.property] || t.config?.property || ''} ${opMap[t.config?.operator] || t.config?.operator} ${t.config?.value ?? ''}`;
+    }
+    return '';
+  };
+
+  const getActionDesc = (a: any) => {
+    const dev = devices.find((d) => d.id === a.deviceId);
+    const cmdMap: Record<string, string> = { onoff: '开关', brightness: '亮度', temperature: '温度', mode: '模式', color: '颜色' };
+    const params = a.params || {};
+    const paramStr = Object.entries(params)
+      .map(([k, v]) => {
+        if (k === 'on') return v ? '开' : '关';
+        if (k === 'brightness') return `${v}%`;
+        if (k === 'temperature') return `${v}°C`;
+        return `${v}`;
+      })
+      .join(' ');
+    const delayStr = a.delayMs ? `（延迟 ${a.delayMs / 1000}s）` : '';
+    return `${dev?.name || a.deviceName} · ${cmdMap[a.command] || a.command} ${paramStr}${delayStr}`;
+  };
+
   const removeTrigger = (id: string) => {
     setTriggers(triggers.filter((t) => t.id !== id));
   };
@@ -230,11 +271,7 @@ const SceneBuilderPage: React.FC = () => {
                         </div>
                       }
                       title={triggerTypes.find((t) => t.type === item.type)?.label || item.type}
-                      description={
-                        item.type === 'time' && item.config?.time
-                          ? `每天 ${item.config.time} 执行`
-                          : triggerTypes.find((t) => t.type === item.type)?.desc
-                      }
+                      description={getTriggerDesc(item)}
                     />
                   </List.Item>
                 )}
@@ -275,7 +312,7 @@ const SceneBuilderPage: React.FC = () => {
                           </div>
                         }
                         title={device?.name || item.deviceName || item.deviceId}
-                        description={`${item.command}${item.params ? ` - ${JSON.stringify(item.params)}` : ''}`}
+                        description={getActionDesc(item)}
                       />
                     </List.Item>
                   );
@@ -308,43 +345,75 @@ const SceneBuilderPage: React.FC = () => {
             <Divider>IF - 触发条件</Divider>
             <Space direction="vertical" style={{ width: '100%' }} size="small">
               {triggers.map((t) => (
-                <Tag key={t.id} color="blue" style={{ margin: 0 }}>
-                  {triggerTypes.find((x) => x.type === t.type)?.label || t.type}
-                </Tag>
+                <div key={t.id} style={{
+                  padding: '8px 12px', background: '#f0f5ff', borderRadius: 6,
+                  border: '1px solid #bae0ff',
+                }}>
+                  <div style={{ fontWeight: 500, color: '#1677ff' }}>
+                    {triggerTypes.find((x) => x.type === t.type)?.icon || '⚙️'} {triggerTypes.find((x) => x.type === t.type)?.label || t.type}
+                  </div>
+                  <div style={{ fontSize: 12, color: '#595959', marginTop: 4, wordBreak: 'break-all' }}>
+                    {getTriggerDesc(t)}
+                  </div>
+                </div>
               ))}
               {triggers.length === 0 && <Tag color="default">暂无触发条件</Tag>}
             </Space>
 
             <Divider>THEN - 执行动作</Divider>
             <Space direction="vertical" style={{ width: '100%' }} size="small">
-              {actions.map((a) => {
+              {actions.map((a, idx) => {
                 const device = devices.find((d) => d.id === a.deviceId);
                 return (
-                  <Tag key={a.id} color="green" style={{ margin: 0 }}>
-                    {device?.name || a.deviceName} - {a.command}
-                  </Tag>
+                  <div key={a.id} style={{
+                    padding: '8px 12px', background: '#f6ffed', borderRadius: 6,
+                    border: '1px solid #b7eb8f',
+                  }}>
+                    <div style={{ fontWeight: 500, color: '#389e0d' }}>
+                      动作 {idx + 1}: {device?.name || a.deviceName}
+                    </div>
+                    <div style={{ fontSize: 12, color: '#595959', marginTop: 4, wordBreak: 'break-all' }}>
+                      {getActionDesc(a)}
+                    </div>
+                  </div>
                 );
               })}
               {actions.length === 0 && <Tag color="default">暂无动作</Tag>}
+              {actions.length >= 2 && (
+                <Tag color="purple" style={{ marginTop: 8 }}>
+                  💡 已配置 {actions.length} 个设备组合动作
+                </Tag>
+              )}
             </Space>
           </Card>
         </Col>
       </Row>
 
-      <Modal title="添加触发条件" open={triggerModal} onCancel={() => setTriggerModal(false)} footer={null}>
+      <Modal title="添加触发条件" open={triggerModal} onCancel={() => setTriggerModal(false)} footer={null} width={640}>
         <Form form={triggerForm} layout="vertical" onFinish={handleAddTrigger}>
           <Form.Item name="type" label="触发类型" rules={[{ required: true }]} initialValue="manual">
-            <Select>
-              {triggerTypes.map((t) => (
-                <Option key={t.type} value={t.type}>
-                  <Space>
-                    <span>{t.icon}</span>
-                    <span>{t.label}</span>
-                    <span style={{ color: '#8c8c8c', fontSize: 12 }}>{t.desc}</span>
-                  </Space>
-                </Option>
-              ))}
-            </Select>
+            <Radio.Group style={{ width: '100%' }}>
+              <Row gutter={12}>
+                {triggerTypes.map((t) => (
+                  <Col span={12} key={t.type}>
+                    <Radio.Button value={t.type} style={{
+                      height: 'auto', padding: '12px 16px', lineHeight: 1.4,
+                      width: '100%', border: '1px solid #d9d9d9', borderRadius: 8, marginRight: 0,
+                      alignItems: 'flex-start', justifyContent: 'flex-start',
+                      display: 'flex', gap: 8,
+                    }}>
+                      <div>
+                        <div style={{ fontSize: 24, lineHeight: 1 }}>{t.icon}</div>
+                      </div>
+                      <div>
+                        <div style={{ fontWeight: 500 }}>{t.label}</div>
+                        <div style={{ fontSize: 12, color: '#8c8c8c' }}>{t.desc}</div>
+                      </div>
+                    </Radio.Button>
+                  </Col>
+                ))}
+              </Row>
+            </Radio.Group>
           </Form.Item>
 
           <Form.Item shouldUpdate noStyle>
@@ -373,34 +442,107 @@ const SceneBuilderPage: React.FC = () => {
               if (type === 'condition') {
                 return (
                   <Space direction="vertical" style={{ width: '100%' }}>
-                    <Form.Item name={['config', 'deviceId']} label="传感器设备" rules={[{ required: true }]}>
-                      <Select>
-                        {devices.filter((d) => d.category === 'sensor').map((d) => (
-                          <Option key={d.id} value={d.id}>{d.name}</Option>
+                    <Form.Item name={['config', 'deviceId']} label="触发设备" rules={[{ required: true }]}>
+                      <Select
+                        placeholder="选择带有可监控属性的设备"
+                        showSearch
+                        optionFilterProp="children"
+                        onChange={() => triggerForm.setFieldsValue({ config: { property: undefined, operator: undefined, value: undefined } })}
+                      >
+                        {devices.filter((d) => {
+                          const props = d.properties || {};
+                          return Object.keys(props).some((k) =>
+                            ['temperature', 'humidity', 'battery', 'motion', 'door', 'pm25', 'brightness', 'current', 'voltage'].includes(k)
+                          );
+                        }).map((d) => (
+                          <Option key={d.id} value={d.id}>
+                            <Space>
+                              <span>{d.name}</span>
+                              <Tag color="blue">{categoryLabels[d.category] || d.category}</Tag>
+                              {Object.entries(d.properties || {})
+                                .filter(([k]) => ['temperature', 'humidity', 'battery', 'pm25', 'brightness'].includes(k))
+                                .slice(0, 2)
+                                .map(([k, v]: any) => (
+                                  <Tag key={k} style={{ margin: 0 }}>
+                                    {k === 'temperature' ? '温度' : k === 'humidity' ? '湿度' : k === 'battery' ? '电量' : k === 'pm25' ? 'PM2.5' : '亮度'}:{v}
+                                  </Tag>
+                                ))}
+                            </Space>
+                          </Option>
                         ))}
                       </Select>
                     </Form.Item>
-                    <Form.Item name={['config', 'property']} label="属性">
-                      <Select>
-                        <Option value="temperature">温度</Option>
-                        <Option value="humidity">湿度</Option>
-                        <Option value="battery">电量</Option>
-                        <Option value="motion">人体感应</Option>
-                      </Select>
-                    </Form.Item>
-                    <Form.Item name={['config', 'operator']} label="比较符">
-                      <Select>
-                        <Option value="gt">大于</Option>
-                        <Option value="lt">小于</Option>
-                        <Option value="eq">等于</Option>
-                        <Option value="gte">大于等于</Option>
-                        <Option value="lte">小于等于</Option>
-                      </Select>
-                    </Form.Item>
-                    <Form.Item name={['config', 'value']} label="阈值">
-                      <InputNumber style={{ width: '100%' }} />
+                    <Form.Item noStyle shouldUpdate={(prev: any, cur: any) => prev?.config?.deviceId !== cur?.config?.deviceId}>
+                      {() => {
+                        const deviceId = triggerForm.getFieldValue(['config', 'deviceId']);
+                        const device = devices.find((d) => d.id === deviceId);
+                        if (!device) return null;
+                        const availableProps = Object.keys(device.properties || {}).filter((k) =>
+                          ['temperature', 'humidity', 'battery', 'motion', 'door', 'pm25', 'brightness', 'current', 'voltage'].includes(k)
+                        );
+                        const propLabels: Record<string, string> = {
+                          temperature: '温度 (°C)', humidity: '湿度 (%)', battery: '电量 (%)',
+                          motion: '人体感应', door: '门磁状态', pm25: 'PM2.5 (μg/m³)',
+                          brightness: '亮度 (%)', current: '电流 (A)', voltage: '电压 (V)',
+                        };
+                        return (
+                          <Space direction="vertical" style={{ width: '100%' }}>
+                            <Form.Item name={['config', 'property']} label="监控属性" rules={[{ required: true }]}>
+                              <Select placeholder="选择要监控的属性">
+                                {availableProps.map((k) => (
+                                  <Option key={k} value={k}>{propLabels[k] || k}</Option>
+                                ))}
+                              </Select>
+                            </Form.Item>
+                            <Form.Item name={['config', 'operator']} label="比较条件" rules={[{ required: true }]} initialValue="gt">
+                              <Select>
+                                <Option value="gt">大于 {'(>'}</Option>
+                                <Option value="lt">小于 {'(<)'}</Option>
+                                <Option value="eq">等于 (=)</Option>
+                                <Option value="gte">大于等于 (≥)</Option>
+                                <Option value="lte">小于等于 (≤)</Option>
+                                <Option value="ne">不等于 (≠)</Option>
+                              </Select>
+                            </Form.Item>
+                            <Form.Item noStyle shouldUpdate={(p: any, c: any) => p?.config?.property !== c?.config?.property}>
+                              {() => {
+                                const prop = triggerForm.getFieldValue(['config', 'property']);
+                                const boolProps = ['motion', 'door'];
+                                if (boolProps.includes(prop)) {
+                                  return (
+                                    <Form.Item name={['config', 'value']} label="触发值" rules={[{ required: true }]}>
+                                      <Select>
+                                        <Option value={true}>开启/有人/开</Option>
+                                        <Option value={false}>关闭/无人/关</Option>
+                                      </Select>
+                                    </Form.Item>
+                                  );
+                                }
+                                let min = 0, max = 100, step = 1;
+                                if (prop === 'temperature') { min = -20; max = 60; }
+                                if (prop === 'voltage') { min = 0; max = 400; step = 0.1; }
+                                if (prop === 'current') { min = 0; max = 30; step = 0.1; }
+                                if (prop === 'pm25') { min = 0; max = 500; }
+                                const defaults: Record<string, number> = { temperature: 26, humidity: 60, battery: 15, brightness: 50, pm25: 75 };
+                                return (
+                                  <Form.Item name={['config', 'value']} label="阈值" rules={[{ required: true }]} initialValue={defaults[prop] || 50}>
+                                    <InputNumber min={min} max={max} step={step} style={{ width: '100%' }} />
+                                  </Form.Item>
+                                );
+                              }}
+                            </Form.Item>
+                          </Space>
+                        );
+                      }}
                     </Form.Item>
                   </Space>
+                );
+              }
+              if (type === 'voice') {
+                return (
+                  <Form.Item name={['config', 'keyword']} label="语音关键词" rules={[{ required: true }]}>
+                    <Input placeholder="例如：打开回家模式、我要睡觉了" />
+                  </Form.Item>
                 );
               }
               return null;

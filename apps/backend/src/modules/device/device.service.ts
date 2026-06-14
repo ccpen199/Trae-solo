@@ -65,12 +65,16 @@ export class DeviceService {
     const page = +query.page || 1;
     const pageSize = +query.pageSize || 20;
 
+    const allHomes = await this.homeRepo.find({ where: { ownerId: userId } });
+    const homeIds = allHomes.map((h) => h.id);
+    if (!homeIds.includes(homeId)) homeIds.push(homeId);
+
     const qb = this.deviceRepo
       .createQueryBuilder('d')
       .leftJoinAndSelect('d.vendor', 'v')
       .leftJoinAndSelect('d.shares', 'sh')
       .where(new Brackets(qbInner => {
-        qbInner.where('d.homeId = :homeId', { homeId })
+        qbInner.where('d.homeId IN (:...homeIds)', { homeIds })
           .orWhere('sh.shareeId = :userId', { userId });
       }));
 
@@ -78,7 +82,7 @@ export class DeviceService {
     if (query.vendorId) qb.andWhere('d.vendorId = :vid', { vid: query.vendorId });
     if (query.roomId) qb.andWhere('d.roomId = :rid', { rid: query.roomId });
     if (query.status) qb.andWhere('d.status = :st', { st: query.status });
-    if (query.keyword) qb.andWhere('d.name ILIKE :kw', { kw: `%${query.keyword}%` });
+    if (query.keyword) qb.andWhere('LOWER(d.name) LIKE :kw', { kw: `%${query.keyword.toLowerCase()}%` });
     if (query.isFavorite) qb.andWhere('d.isFavorite = true');
 
     const [items, total] = await qb
@@ -185,23 +189,30 @@ export class DeviceService {
   }
 
   async getStats(homeId: string) {
-    const total = await this.deviceRepo.count({ where: { homeId } });
-    const online = await this.deviceRepo.count({ where: { homeId, status: DeviceStatus.ONLINE } });
-    const offline = await this.deviceRepo.count({ where: { homeId, status: DeviceStatus.OFFLINE } });
+    const home = await this.homeRepo.findOne({ where: { id: homeId } });
+    let homeIds: string[] = [homeId];
+    if (home) {
+      const allHomes = await this.homeRepo.find({ where: { ownerId: home.ownerId } });
+      homeIds = allHomes.map((h) => h.id);
+    }
+
+    const total = await this.deviceRepo.count({ where: { homeId: In(homeIds) } });
+    const online = await this.deviceRepo.count({ where: { homeId: In(homeIds), status: DeviceStatus.ONLINE } });
+    const offline = await this.deviceRepo.count({ where: { homeId: In(homeIds), status: DeviceStatus.OFFLINE } });
 
     const byCategory = await this.deviceRepo
       .createQueryBuilder('d')
       .select('d.category', 'category')
       .addSelect('COUNT(*)', 'count')
-      .where('d.homeId = :homeId', { homeId })
+      .where('d.homeId IN (:...homeIds)', { homeIds })
       .groupBy('d.category')
       .getRawMany();
 
     const lowBattery = await this.deviceRepo
       .createQueryBuilder('d')
-      .where("d.properties->>'battery' IS NOT NULL")
-      .andWhere("CAST(d.properties->>'battery' AS FLOAT) <= 15")
-      .andWhere('d.homeId = :homeId', { homeId })
+      .where("json_extract(d.properties, '$.battery') IS NOT NULL")
+      .andWhere("CAST(json_extract(d.properties, '$.battery') AS FLOAT) <= 15")
+      .andWhere('d.homeId IN (:...homeIds)', { homeIds })
       .getCount();
 
     return { total, online, offline, onlineRate: total > 0 ? (online / total) * 100 : 0, byCategory, lowBattery };

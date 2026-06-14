@@ -12,6 +12,7 @@ import { monitoringAPI, deviceAPI, sceneAPI } from '../services/api';
 
 const DashboardPage: React.FC = () => {
   const navigate = useNavigate();
+  const { message } = App.useApp();
   const [loading, setLoading] = useState(true);
   const [dashboard, setDashboard] = useState<any>(null);
   const [deviceStats, setDeviceStats] = useState<any>(null);
@@ -26,8 +27,8 @@ const DashboardPage: React.FC = () => {
     try {
       setLoading(true);
       const [d, s, sc, al] = await Promise.all([
-        monitoringAPI.getDashboard(),
-        deviceAPI.getStats(),
+        monitoringAPI.getDashboard().catch((e) => { console.warn('dashboard:', e); return {}; }),
+        deviceAPI.getStats().catch((e) => { console.warn('stats:', e); return {}; }),
         sceneAPI.getList().catch(() => ({ items: [] })),
         monitoringAPI.getAlerts({ pageSize: 5, status: 'open' }).catch(() => ({ items: [] })),
       ]);
@@ -35,6 +36,8 @@ const DashboardPage: React.FC = () => {
       setDeviceStats(s);
       setScenes((sc as any).items || []);
       setAlerts((al as any).items || []);
+    } catch (e) {
+      console.error('Dashboard loadData error:', e);
     } finally {
       setLoading(false);
     }
@@ -200,9 +203,13 @@ const DashboardPage: React.FC = () => {
                       <Tag key="st" color={item.status === 'enabled' ? 'green' : 'default'}>
                         {item.status === 'enabled' ? '已启用' : '已停用'}
                       </Tag>,
-                      <a key="run" onClick={() => {
-                        sceneAPI.execute(item.id);
-                        App.useApp().message.success(`执行场景: ${item.name}`);
+                      <a key="run" onClick={async () => {
+                        try {
+                          await sceneAPI.execute(item.id);
+                          message.success(`执行场景: ${item.name}`);
+                        } catch (e: any) {
+                          message.error(e.message || '执行失败');
+                        }
                       }}>执行</a>,
                     ]}
                   >

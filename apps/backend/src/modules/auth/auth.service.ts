@@ -72,11 +72,15 @@ export class AuthService {
       throw new UnauthorizedException('用户名或密码错误');
     }
 
-    const home = await this.homeRepo.findOne({ where: { ownerId: user.id } });
+    const homes = await this.homeRepo.find({ where: { ownerId: user.id }, order: { createdAt: 'ASC' } });
+    let defaultHome = homes.find((h) => h.name.includes('我的家') || h.name.includes('我的'));
+    if (!defaultHome) {
+      defaultHome = homes[0];
+    }
 
     await this.userRepo.update(user.id, { lastLoginAt: new Date() });
 
-    return this.generateTokens(user, home?.id);
+    return this.generateTokens(user, defaultHome?.id);
   }
 
   private async generateTokens(user: UserEntity, homeId?: string) {

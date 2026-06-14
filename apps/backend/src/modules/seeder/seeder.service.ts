@@ -292,7 +292,7 @@ export class SeederService implements OnModuleInit {
     const lock = devices.find(d => d.category === DeviceCategory.DOOR_LOCK);
     const purifier = devices.find(d => d.category === DeviceCategory.PURIFIER);
 
-    const sceneTemplates = [
+    const sceneTemplates: Array<Record<string, any>> = [
       {
         name: '回家模式',
         description: '打开客厅灯和空调，拉开窗帘',
@@ -416,7 +416,7 @@ export class SeederService implements OnModuleInit {
         homeId,
         executionCount: Math.floor(Math.random() * 200),
         lastExecutedAt: new Date(Date.now() - Math.floor(Math.random() * 86400000 * 7)),
-      }));
+      } as any));
     }
   }
 
@@ -436,7 +436,7 @@ export class SeederService implements OnModuleInit {
       'filter_maintenance': AlertType.DEVICE_FAULT,
     };
 
-    const alertTemplates = [
+    const alertTemplates: Array<Record<string, any>> = [
       {
         title: '智能门锁电量过低',
         message: '客厅智能门锁电量仅剩8%，请及时更换电池！',
@@ -498,7 +498,7 @@ export class SeederService implements OnModuleInit {
         ...tpl,
         homeId,
         channels: ['in_app', 'push', 'email'],
-      }));
+      } as any));
     }
   }
 

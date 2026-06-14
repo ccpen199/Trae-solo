@@ -28,9 +28,15 @@ export class MonitoringService {
 
   async getHomeDashboard(homeId: string) {
     const home = await this.homeRepo.findOne({ where: { id: homeId } });
-    if (!home) throw new NotFoundException('家庭不存在');
+    let homeIds: string[] = [homeId];
+    if (home) {
+      const allHomes = await this.homeRepo.find({ where: { ownerId: home.ownerId } });
+      homeIds = allHomes.map((h) => h.id);
+    }
 
-    const devices = await this.deviceRepo.find({ where: { homeId } });
+    const devices = await this.deviceRepo.createQueryBuilder('d')
+      .where('d.homeId IN (:...homeIds)', { homeIds })
+      .getMany();
     const totalDevices = devices.length;
     const onlineDevices = devices.filter(d => d.status === DeviceStatus.ONLINE).length;
     const offlineDevices = totalDevices - onlineDevices;
@@ -46,7 +52,7 @@ export class MonitoringService {
       return acc;
     }, {} as Record<string, number>);
 
-    const openAlerts = await this.alertService.getAlerts(homeId, { status: AlertStatus.OPEN });
+    const openAlerts = await this.alertService.getAlerts(homeIds[0], { status: AlertStatus.OPEN });
 
     const todayStart = new Date();
     todayStart.setHours(0, 0, 0, 0);
@@ -54,7 +60,7 @@ export class MonitoringService {
     const todayPowerConsumption = await this.telemetryRepo
       .createQueryBuilder('t')
       .select('SUM(t.powerConsumption)', 'total')
-      .where('t.deviceId IN (SELECT id FROM devices WHERE "homeId" = :homeId)', { homeId })
+      .where('t.deviceId IN (SELECT id FROM devices WHERE "homeId" IN (:...homeIds))', { homeIds })
       .andWhere('t.timestamp >= :start', { start: todayStart })
       .getRawOne();
 
@@ -65,12 +71,12 @@ export class MonitoringService {
     const weeklyTrend = await this.telemetryRepo
       .createQueryBuilder('t')
       .select([
-        `DATE_TRUNC('day', t.timestamp) as day`,
+        `strftime('%Y-%m-%d', t.timestamp) as day`,
         'AVG(t.powerConsumption) as avg_power',
         'SUM(t.powerConsumption) as total_power',
         'COUNT(DISTINCT t.deviceId) as active_devices',
       ])
-      .where('t.deviceId IN (SELECT id FROM devices WHERE "homeId" = :homeId)', { homeId })
+      .where('t.deviceId IN (SELECT id FROM devices WHERE "homeId" IN (:...homeIds))', { homeIds })
       .andWhere('t.timestamp >= :start', { start: weekStart })
       .groupBy('day')
       .orderBy('day', 'ASC')
@@ -247,8 +253,8 @@ export class MonitoringService {
     this.logger.debug('Running low battery check...');
     const devices = await this.deviceRepo
       .createQueryBuilder('d')
-      .where("d.properties->>'battery' IS NOT NULL")
-      .andWhere("CAST(d.properties->>'battery' AS FLOAT) <= 10")
+      .where("json_extract(d.properties, '$.battery') IS NOT NULL")
+      .andWhere("CAST(json_extract(d.properties, '$.battery') AS FLOAT) <= 10")
       .getMany();
 
     for (const device of devices) {

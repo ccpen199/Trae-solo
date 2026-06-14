@@ -36,7 +36,7 @@ export class VendorService {
 
   async findAll(page = 1, pageSize = 20, keyword?: string, status?: string) {
     const qb = this.vendorRepo.createQueryBuilder('v');
-    if (keyword) qb.where('v.name ILIKE :kw', { kw: `%${keyword}%` });
+    if (keyword) qb.where('LOWER(v.name) LIKE :kw', { kw: `%${keyword.toLowerCase()}%` });
     if (status) qb.andWhere('v.status = :st', { st: status });
 
     const [items, total] = await qb

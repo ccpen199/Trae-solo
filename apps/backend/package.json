@@ -4,7 +4,7 @@
   "description": "IoT统一管控平台后端服务",
   "private": true,
   "scripts": {
-    "build": "nest build",
+    "build": "tsc -p tsconfig.json --incremental false",
     "start": "nest start",
     "start:dev": "nest start --watch",
     "start:prod": "node dist/main",

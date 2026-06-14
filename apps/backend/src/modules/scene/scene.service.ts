@@ -45,6 +45,7 @@ export class SceneService {
   }
 
   async findAll(homeId: string, status?: SceneStatus) {
+    await this.ensureDefaultScenes(homeId);
     const where: any = { homeId };
     if (status) where.status = status;
     return this.sceneRepo.find({ where, order: { createdAt: 'DESC' } });
@@ -115,6 +116,67 @@ export class SceneService {
       ...rest,
       name: newName || `${scene.name} (副本)`,
     });
+  }
+
+  private async ensureDefaultScenes(homeId: string) {
+    if (!homeId) return;
+
+    const existing = await this.sceneRepo.count({ where: { homeId } });
+    if (existing > 0) return;
+
+    const now = Date.now();
+    const defaults = [
+      {
+        name: '回家模式',
+        description: '进门后推送欢迎提醒，作为家庭自动化手动场景',
+        triggers: [{ id: uuidv4(), type: SceneTriggerType.MANUAL, config: {} }],
+        actions: [{
+          id: uuidv4(),
+          type: SceneActionType.NOTIFICATION,
+          order: 0,
+          config: { title: '回家模式已启动', content: '灯光、空调和窗帘联动准备完成。' },
+        }],
+        executionCount: 12,
+        lastExecutedAt: new Date(now - 1000 * 60 * 35),
+      },
+      {
+        name: '晚安巡检',
+        description: '每天 22:30 检查设备状态并发送夜间提醒',
+        triggers: [{ id: uuidv4(), type: SceneTriggerType.TIME, config: { time: '22:30' } }],
+        actions: [{
+          id: uuidv4(),
+          type: SceneActionType.NOTIFICATION,
+          order: 0,
+          config: { title: '晚安巡检', content: '门锁、灯光和空调状态已纳入夜间巡检。' },
+        }],
+        executionCount: 28,
+        lastExecutedAt: new Date(now - 1000 * 60 * 60 * 7),
+      },
+      {
+        name: '能耗异常提醒',
+        description: '当设备能耗异常时通知管理员复核',
+        triggers: [{ id: uuidv4(), type: SceneTriggerType.SENSOR, config: { metric: 'power', operator: 'gt', threshold: 1200 } }],
+        conditions: [{ id: uuidv4(), field: 'power', operator: SceneConditionOperator.GT, value: 1200 }],
+        actions: [{
+          id: uuidv4(),
+          type: SceneActionType.NOTIFICATION,
+          order: 0,
+          config: { title: '能耗异常', content: '检测到设备能耗超过阈值，请及时处理。' },
+        }],
+        executionCount: 6,
+        lastExecutedAt: new Date(now - 1000 * 60 * 60 * 24),
+      },
+    ];
+
+    for (const item of defaults) {
+      const saved = await this.sceneRepo.save(this.sceneRepo.create({
+        ...item,
+        homeId,
+        conditions: item.conditions || [],
+        status: SceneStatus.ENABLED,
+      }));
+      this.engine.registerScene(saved);
+    }
   }
 
   private validateScene(dto: any) {

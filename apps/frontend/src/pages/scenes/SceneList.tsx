@@ -96,7 +96,15 @@ const SceneListPage: React.FC = () => {
   };
 
   const triggerTypeLabels: Record<string, string> = {
-    manual: '手动触发', time: '定时触发', condition: '条件触发', voice: '语音触发',
+    manual: '手动触发',
+    time: '定时触发',
+    cron: '周期触发',
+    device_state: '设备状态触发',
+    sensor: '传感器触发',
+    geofence: '地理围栏触发',
+    weather: '天气触发',
+    condition: '条件触发',
+    voice: '语音触发',
   };
 
   const columns = [

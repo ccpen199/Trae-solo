@@ -2,11 +2,23 @@ import 'dotenv/config';
 import { NestFactory } from '@nestjs/core';
 import { ValidationPipe, Logger } from '@nestjs/common';
 import { SwaggerModule, DocumentBuilder } from '@nestjs/swagger';
+import type { Request, Response } from 'express';
 import { AppModule } from './app.module';
 
 async function bootstrap() {
   const logger = new Logger('Bootstrap');
   const app = await NestFactory.create(AppModule, { cors: true });
+
+  const expressApp = app.getHttpAdapter().getInstance();
+  const healthHandler = (_req: Request, res: Response) => {
+    res.status(200).json({
+      success: true,
+      message: 'ok',
+      service: 'iot-unified-platform',
+    });
+  };
+  expressApp.get('/api/health', healthHandler);
+  expressApp.get('/health', healthHandler);
 
   app.setGlobalPrefix('api/v1');
   app.useGlobalPipes(
@@ -37,10 +49,11 @@ async function bootstrap() {
   const document = SwaggerModule.createDocument(app, config);
   SwaggerModule.setup('docs', app, document);
 
-  const port = parseInt(process.env.BACKEND_PORT || '3000', 10);
-  await app.listen(port, process.env.BACKEND_HOST || '0.0.0.0');
-  logger.log(`IoT Platform Backend running on http://localhost:${port}`);
-  logger.log(`Swagger API Docs: http://localhost:${port}/docs`);
+  const port = parseInt(process.env.BACKEND_PORT || process.env.PORT || '3000', 10);
+  const host = process.env.BACKEND_HOST || process.env.HOST || '127.0.0.1';
+  await app.listen(port, host);
+  logger.log(`IoT Platform Backend running on http://${host}:${port}`);
+  logger.log(`Swagger API Docs: http://${host}:${port}/docs`);
 }
 
 bootstrap();

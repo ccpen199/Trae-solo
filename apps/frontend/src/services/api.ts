@@ -27,8 +27,13 @@ axiosInstance.interceptors.response.use(
   (response) => response.data,
   (error) => {
     if (error.response) {
-      const { status, data } = error.response;
-      if (status === 401) {
+      const { status, data, config } = error.response;
+      const isAuthEndpoint = config?.url && (
+        config.url.includes('/auth/login') ||
+        config.url.includes('/auth/register') ||
+        config.url.includes('/auth/vendor')
+      );
+      if (status === 401 && !isAuthEndpoint) {
         message.error('登录已过期，请重新登录');
         useAuthStore.getState().logout();
         if (!window.location.pathname.startsWith('/login')) {
@@ -37,14 +42,14 @@ axiosInstance.interceptors.response.use(
       } else if (status === 403) {
         message.error('没有权限执行此操作');
       } else if (status === 404) {
-        message.error('资源不存在');
+        // 404 不弹 message，交给调用方处理
       } else if (status >= 500) {
         message.error(data?.message || '服务器错误，请稍后重试');
-      } else if (data?.message) {
+      } else if (data?.message && !isAuthEndpoint) {
         message.error(data.message);
       }
     } else if (error.request) {
-      message.error('网络错误，请检查网络连接');
+      message.error('网络错误，请检查后端服务是否启动');
     }
     return Promise.reject(error);
   },
