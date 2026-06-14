@@ -1,0 +1,41 @@
+{
+  "order": "may-89073",
+  "frontendUrl": "http://127.0.0.1:49073/",
+  "backendUrl": "http://127.0.0.1:59073",
+  "checks": [
+    {
+      "name": "home page business content",
+      "ok": true,
+      "details": ""
+    },
+    {
+      "name": "university search page visible",
+      "ok": true,
+      "details": ""
+    },
+    {
+      "name": "university filter visible",
+      "ok": true,
+      "details": ""
+    },
+    {
+      "name": "university results visible",
+      "ok": true,
+      "details": ""
+    },
+    {
+      "name": "no local request failures",
+      "ok": true,
+      "details": "[]"
+    },
+    {
+      "name": "no local http errors",
+      "ok": true,
+      "details": "[]"
+    }
+  ],
+  "consoleErrors": [],
+  "requestFailures": [],
+  "responseErrors": [],
+  "ok": true
+}

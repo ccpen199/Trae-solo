@@ -1,13 +1,22 @@
+/**
+ * local server entry file, for local development
+ */
 import 'dotenv/config';
 import app from './app.js';
 
-const PORT = parseInt(process.env.BACKEND_PORT || process.env.PORT || '60105', 10);
-const HOST = process.env.HOST || '127.0.0.1';
+/**
+ * start server with port
+ */
+const PORT = parseInt(process.env.BACKEND_PORT || '59073');
+const HOST = '127.0.0.1';
 
 const server = app.listen(PORT, HOST, () => {
   console.log(`Server ready on http://${HOST}:${PORT}`);
 });
 
+/**
+ * close server
+ */
 process.on('SIGTERM', () => {
   console.log('SIGTERM signal received');
   server.close(() => {

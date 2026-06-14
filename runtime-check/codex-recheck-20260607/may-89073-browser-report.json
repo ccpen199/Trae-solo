@@ -1,0 +1,2249 @@
+{
+  "ok": true,
+  "generatedAt": "2026-06-07T20:15:39.996Z",
+  "order": "may-89073",
+  "roundIndex": 3,
+  "captureId": "may-89073-codex-recheck",
+  "url": "http://127.0.0.1:49073/",
+  "initialUrl": "http://127.0.0.1:49073/",
+  "finalUrl": "http://127.0.0.1:49073/",
+  "status": 200,
+  "title": "智愿通 - 智能高考志愿填报系统",
+  "initialTitle": "智愿通 - 智能高考志愿填报系统",
+  "navigationError": "",
+  "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89073/runtime-check/codex-recheck-20260607/may-89073-codex-recheck-frontend.png",
+  "screenshotPaths": [
+    "/Users/chen/Documents/trae_projects/local_projects/may-89073/runtime-check/codex-recheck-20260607/may-89073-codex-recheck-structure-01-首屏.png",
+    "/Users/chen/Documents/trae_projects/local_projects/may-89073/runtime-check/codex-recheck-20260607/may-89073-codex-recheck-structure-02-导航-首页.png",
+    "/Users/chen/Documents/trae_projects/local_projects/may-89073/runtime-check/codex-recheck-20260607/may-89073-codex-recheck-structure-03-操作-查询院校.png",
+    "/Users/chen/Documents/trae_projects/local_projects/may-89073/runtime-check/codex-recheck-20260607/may-89073-codex-recheck-structure-04-二层操作-查询院校-筛选.png",
+    "/Users/chen/Documents/trae_projects/local_projects/may-89073/runtime-check/codex-recheck-20260607/may-89073-codex-recheck-structure-05-操作-北京.png",
+    "/Users/chen/Documents/trae_projects/local_projects/may-89073/runtime-check/codex-recheck-20260607/may-89073-codex-recheck-structure-06-导航-院校查询.png",
+    "/Users/chen/Documents/trae_projects/local_projects/may-89073/runtime-check/codex-recheck-20260607/may-89073-codex-recheck-structure-07-操作-筛选.png",
+    "/Users/chen/Documents/trae_projects/local_projects/may-89073/runtime-check/codex-recheck-20260607/may-89073-codex-recheck-structure-08-二层操作-筛选-财经.png",
+    "/Users/chen/Documents/trae_projects/local_projects/may-89073/runtime-check/codex-recheck-20260607/may-89073-codex-recheck-structure-09-操作-管-员-管理员.png"
+  ],
+  "issueTextPreview": "后台管理相关问题；详情/内容页相关问题；发现/分类相关问题",
+  "targetReason": "后台管理相关问题；详情/内容页相关问题；发现/分类相关问题",
+  "targetKind": "admin",
+  "targetMatched": true,
+  "targetActions": [
+    {
+      "action": "click",
+      "label": "后台管理相关问题",
+      "ok": true
+    },
+    {
+      "action": "target-verify",
+      "label": "后台管理相关问题",
+      "ok": true,
+      "finalUrl": "http://127.0.0.1:49073/admin"
+    }
+  ],
+  "authFlow": {
+    "detected": false,
+    "attempted": false,
+    "success": false,
+    "finalUrl": "http://127.0.0.1:49073/",
+    "message": "",
+    "actions": []
+  },
+  "businessAudit": {
+    "actions": [
+      {
+        "action": "click",
+        "label": "导航:首页",
+        "ok": true
+      },
+      {
+        "action": "click",
+        "label": "操作:查询院校",
+        "ok": true,
+        "result": {
+          "ok": true,
+          "matched": 1
+        }
+      },
+      {
+        "action": "click",
+        "label": "二层操作:查询院校:筛选",
+        "ok": true,
+        "result": {
+          "ok": true,
+          "matched": 1
+        }
+      },
+      {
+        "action": "click",
+        "label": "操作:北京",
+        "ok": true,
+        "result": {
+          "ok": true,
+          "matched": 1
+        }
+      },
+      {
+        "action": "click",
+        "label": "导航:院校查询",
+        "ok": true
+      },
+      {
+        "action": "click",
+        "label": "操作:筛选",
+        "ok": true,
+        "result": {
+          "ok": true,
+          "matched": 1
+        }
+      },
+      {
+        "action": "click",
+        "label": "二层操作:筛选:财经",
+        "ok": true,
+        "result": {
+          "ok": true,
+          "matched": 1
+        }
+      },
+      {
+        "action": "click",
+        "label": "操作:管*员 管理员",
+        "ok": true,
+        "result": {
+          "ok": true,
+          "matched": 1
+        }
+      }
+    ],
+    "snapshots": [
+      {
+        "label": "首屏",
+        "url": "http://127.0.0.1:49073/",
+        "title": "智愿通 - 智能高考志愿填报系统",
+        "headings": [
+          "智能志愿填报精准规划未来",
+          "快速填报",
+          "六大核心功能",
+          "智能推荐",
+          "冲稳保方案",
+          "院校对比",
+          "协作空间",
+          "问答社区",
+          "直播答疑",
+          "准备好开启你的志愿填报之旅了吗？"
+        ],
+        "navLabels": [
+          "首页",
+          "院校查询",
+          "志愿填报",
+          "志愿方案",
+          "协作空间",
+          "问答社区",
+          "直播",
+          "管理后台"
+        ],
+        "buttons": [
+          "管*员 管理员",
+          "开始填报",
+          "查询院校",
+          "物理",
+          "化学",
+          "生物",
+          "历史",
+          "地理",
+          "政治",
+          "北京",
+          "上海",
+          "广州",
+          "深圳",
+          "杭州",
+          "南京",
+          "武汉",
+          "成都",
+          "西安",
+          "重庆",
+          "天津",
+          "苏州",
+          "长沙",
+          "郑州",
+          "青岛"
+        ],
+        "links": [
+          "智愿通",
+          "首页",
+          "院校查询",
+          "志愿填报",
+          "志愿方案",
+          "协作空间",
+          "问答社区",
+          "直播",
+          "管理后台"
+        ],
+        "inputs": [
+          {
+            "tag": "input",
+            "type": "number",
+            "placeholder": "请输入高考分数（0-750）",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "number",
+            "placeholder": "请输入全省位次",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "select",
+            "type": "",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          }
+        ],
+        "tables": [],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "智愿通首页院校查询志愿填报志愿方案协作空间问答社区直播管理后台管*员管理员2024年志愿填报季正式开启智能志愿填报精准规划未来基于百万级历史数据和先进AI算法，为每位考生量身定制最优志愿方案， 让每一分都发挥最大价值，助力考生迈入理想大学。开始填报查询院校2800+高校数据1600+专业信息98%录取准确率已帮助 100,000+ 考生成功填报志愿快速填报输入基本信息，立即获取个性化推荐高考分数 *全省位次 *所在省份 *请选择省份北京天津河北山西内蒙古辽宁吉林黑龙江上海江苏浙江安徽福建江西山东河南湖北湖南广东广西海南重庆四川贵州云南西藏陕西甘肃青海宁夏新疆选科组合 *（至少选择3个）物理化学生物历史地理政治目标城市 （可多选，可选）北京上海广州深圳杭州南京武汉成都西安重庆天津苏州长沙郑州青岛大连宁波厦门合肥福州济南昆明贵阳哈尔滨长春沈阳南昌南宁兰州乌鲁木齐兴趣测评快捷入口完成霍兰德和MBTI测评，获得更精准推荐家庭意愿输入填写家庭期望，让推荐更符合家人期待立即获取智能推荐点击后将直接生成推荐结果并跳转至结果页面六大核心功能全方位覆盖志愿填报的每一个环节，提供专业、智能、贴心的服务体验智能推荐基于AI算法，结合分数、位次、兴趣，精准推荐院校和专业立即体验冲稳保方案科学梯度设计，最大化录取概率，降低滑档风险查看示例院校对比多维度对比分析，层次、类型、投档线、就业一目了然开始对比协作空间邀请老师、家长共同参与，多人协作填报志愿创建空间问答社区专家在线答疑，解决选科、志愿、政策各类问题提问专家直播答疑资深专家直播讲解，实时互动解答志愿填报疑问查看直播准备好开启你的志愿填报之旅了吗？立即注册，免费体验智能志愿推荐系统，让专业的AI助你一臂之力立即开始",
+        "layout": {
+          "viewportWidth": 1504,
+          "viewportHeight": 1600,
+          "scrollWidth": 1504,
+          "scrollHeight": 3043,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89073-codex-recheck-structure-01-首屏",
+          "label": "首屏",
+          "finalUrl": "http://127.0.0.1:49073/",
+          "title": "智愿通 - 智能高考志愿填报系统",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89073/runtime-check/codex-recheck-20260607/may-89073-codex-recheck-structure-01-首屏.json",
+          "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89073/runtime-check/codex-recheck-20260607/may-89073-codex-recheck-structure-01-首屏.png",
+          "elementCount": 439,
+          "interactiveCount": 62,
+          "interactiveLabels": [
+            "智愿通",
+            "首页",
+            "院校查询",
+            "志愿填报",
+            "志愿方案",
+            "协作空间",
+            "问答社区",
+            "直播",
+            "管理后台",
+            "管*员 管理员",
+            "开始填报",
+            "查询院校",
+            "请输入高考分数（0-750）",
+            "请输入全省位次",
+            "请选择省份 北京 天津 河北 山西 内蒙古 辽宁 吉林 黑龙江 上海 江苏 浙江 安徽 福建 江西 山东 河南 湖北 湖南 广东 广西 海南 重庆 四川 贵州 云南 西藏 陕西 甘肃 青海 宁夏 新疆",
+            "物理",
+            "化学",
+            "生物",
+            "历史",
+            "地理",
+            "政治",
+            "北京",
+            "上海",
+            "广州",
+            "深圳",
+            "杭州",
+            "南京",
+            "武汉",
+            "成都",
+            "西安"
+          ]
+        }
+      },
+      {
+        "label": "导航:首页",
+        "url": "http://127.0.0.1:49073/",
+        "title": "智愿通 - 智能高考志愿填报系统",
+        "headings": [
+          "智能志愿填报精准规划未来",
+          "快速填报",
+          "六大核心功能",
+          "智能推荐",
+          "冲稳保方案",
+          "院校对比",
+          "协作空间",
+          "问答社区",
+          "直播答疑",
+          "准备好开启你的志愿填报之旅了吗？"
+        ],
+        "navLabels": [
+          "首页",
+          "院校查询",
+          "志愿填报",
+          "志愿方案",
+          "协作空间",
+          "问答社区",
+          "直播",
+          "管理后台"
+        ],
+        "buttons": [
+          "管*员 管理员",
+          "开始填报",
+          "查询院校",
+          "物理",
+          "化学",
+          "生物",
+          "历史",
+          "地理",
+          "政治",
+          "北京",
+          "上海",
+          "广州",
+          "深圳",
+          "杭州",
+          "南京",
+          "武汉",
+          "成都",
+          "西安",
+          "重庆",
+          "天津",
+          "苏州",
+          "长沙",
+          "郑州",
+          "青岛"
+        ],
+        "links": [
+          "智愿通",
+          "首页",
+          "院校查询",
+          "志愿填报",
+          "志愿方案",
+          "协作空间",
+          "问答社区",
+          "直播",
+          "管理后台"
+        ],
+        "inputs": [
+          {
+            "tag": "input",
+            "type": "number",
+            "placeholder": "请输入高考分数（0-750）",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "number",
+            "placeholder": "请输入全省位次",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "select",
+            "type": "",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          }
+        ],
+        "tables": [],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "智愿通首页院校查询志愿填报志愿方案协作空间问答社区直播管理后台管*员管理员2024年志愿填报季正式开启智能志愿填报精准规划未来基于百万级历史数据和先进AI算法，为每位考生量身定制最优志愿方案， 让每一分都发挥最大价值，助力考生迈入理想大学。开始填报查询院校2800+高校数据1600+专业信息98%录取准确率已帮助 100,000+ 考生成功填报志愿快速填报输入基本信息，立即获取个性化推荐高考分数 *全省位次 *所在省份 *请选择省份北京天津河北山西内蒙古辽宁吉林黑龙江上海江苏浙江安徽福建江西山东河南湖北湖南广东广西海南重庆四川贵州云南西藏陕西甘肃青海宁夏新疆选科组合 *（至少选择3个）物理化学生物历史地理政治目标城市 （可多选，可选）北京上海广州深圳杭州南京武汉成都西安重庆天津苏州长沙郑州青岛大连宁波厦门合肥福州济南昆明贵阳哈尔滨长春沈阳南昌南宁兰州乌鲁木齐兴趣测评快捷入口完成霍兰德和MBTI测评，获得更精准推荐家庭意愿输入填写家庭期望，让推荐更符合家人期待立即获取智能推荐点击后将直接生成推荐结果并跳转至结果页面六大核心功能全方位覆盖志愿填报的每一个环节，提供专业、智能、贴心的服务体验智能推荐基于AI算法，结合分数、位次、兴趣，精准推荐院校和专业立即体验冲稳保方案科学梯度设计，最大化录取概率，降低滑档风险查看示例院校对比多维度对比分析，层次、类型、投档线、就业一目了然开始对比协作空间邀请老师、家长共同参与，多人协作填报志愿创建空间问答社区专家在线答疑，解决选科、志愿、政策各类问题提问专家直播答疑资深专家直播讲解，实时互动解答志愿填报疑问查看直播准备好开启你的志愿填报之旅了吗？立即注册，免费体验智能志愿推荐系统，让专业的AI助你一臂之力立即开始",
+        "layout": {
+          "viewportWidth": 1536,
+          "viewportHeight": 1600,
+          "scrollWidth": 1536,
+          "scrollHeight": 3043,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89073-codex-recheck-structure-02-导航-首页",
+          "label": "导航:首页",
+          "finalUrl": "http://127.0.0.1:49073/",
+          "title": "智愿通 - 智能高考志愿填报系统",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89073/runtime-check/codex-recheck-20260607/may-89073-codex-recheck-structure-02-导航-首页.json",
+          "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89073/runtime-check/codex-recheck-20260607/may-89073-codex-recheck-structure-02-导航-首页.png",
+          "elementCount": 439,
+          "interactiveCount": 62,
+          "interactiveLabels": [
+            "智愿通",
+            "首页",
+            "院校查询",
+            "志愿填报",
+            "志愿方案",
+            "协作空间",
+            "问答社区",
+            "直播",
+            "管理后台",
+            "管*员 管理员",
+            "开始填报",
+            "查询院校",
+            "请输入高考分数（0-750）",
+            "请输入全省位次",
+            "请选择省份 北京 天津 河北 山西 内蒙古 辽宁 吉林 黑龙江 上海 江苏 浙江 安徽 福建 江西 山东 河南 湖北 湖南 广东 广西 海南 重庆 四川 贵州 云南 西藏 陕西 甘肃 青海 宁夏 新疆",
+            "物理",
+            "化学",
+            "生物",
+            "历史",
+            "地理",
+            "政治",
+            "北京",
+            "上海",
+            "广州",
+            "深圳",
+            "杭州",
+            "南京",
+            "武汉",
+            "成都",
+            "西安"
+          ]
+        }
+      },
+      {
+        "label": "操作:查询院校",
+        "url": "http://127.0.0.1:49073/universities",
+        "title": "智愿通 - 智能高考志愿填报系统",
+        "headings": [
+          "院校查询",
+          "北**学",
+          "清**学",
+          "复**学",
+          "上****学",
+          "浙**学",
+          "南**学",
+          "中******学",
+          "武**学",
+          "中**学",
+          "西****学",
+          "哈*****学"
+        ],
+        "navLabels": [
+          "首页",
+          "院校查询",
+          "志愿填报",
+          "志愿方案",
+          "协作空间",
+          "问答社区",
+          "直播",
+          "管理后台"
+        ],
+        "buttons": [
+          "管*员 管理员",
+          "筛选"
+        ],
+        "links": [
+          "智愿通",
+          "首页",
+          "院校查询",
+          "志愿填报",
+          "志愿方案",
+          "协作空间",
+          "问答社区",
+          "直播",
+          "管理后台"
+        ],
+        "inputs": [
+          {
+            "tag": "input",
+            "type": "text",
+            "placeholder": "搜索院校名称...",
+            "name": "",
+            "label": ""
+          }
+        ],
+        "tables": [],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "智愿通首页院校查询志愿填报志愿方案协作空间问答社区直播管理后台管*员管理员院校查询搜索和了解全国各高校的详细信息筛选北**学985北京市综合50 硕45 博98.5%清**学985北京市综合48 硕42 博98.2%复**学985上海市综合46 硕40 博97.8%上****学985上海市综合45 硕38 博97.5%浙**学985浙江省综合47 硕41 博97.2%南**学985江苏省综合44 硕39 博96.8%中******学985安徽省理工38 硕35 博96.5%武**学985湖北省综合43 硕37 博96.2%中**学985广东省综合42 硕36 博95.8%西****学985陕西省综合40 硕34 博95.5%哈*****学985黑龙江省理工39 硕33 博95.2%北******学985北京市理工36 硕30 博97%同**学985上海市综合38 硕32 博95%北****学985北京市师范35 硕28 博94.8%中****学985北京市综合34 硕26 博96%北****学985北京市理工32 硕25 博94.5%东**学985江苏省综合33 硕27 博94.2%四**学985四川省综合35 硕28 博93.8%吉**学985吉林省综合34 硕27 博93.5%山**学985山东省综合33 硕26 博93.2%北****学211北京市理工28 硕18 博96.5%上****学211上海市财经22 硕12 博95.8%中****学211北京市财经20 硕10 博95.2%对******学211北京市财经18 硕8 博94.5%北*****学211北京市语言16 硕6 博93.8%上*****学211上海市语言15 硕5 博93.2%中****学211北京市政法18 硕8 博92.8%北*****院双一流北京市医药12 硕15 博98%南****学双一流江苏省理工22 硕12 博94%杭******学普通本科浙江省理工18 硕6 博92.5%",
+        "layout": {
+          "viewportWidth": 1568,
+          "viewportHeight": 1600,
+          "scrollWidth": 1568,
+          "scrollHeight": 2759,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89073-codex-recheck-structure-03-操作-查询院校",
+          "label": "操作:查询院校",
+          "finalUrl": "http://127.0.0.1:49073/universities",
+          "title": "智愿通 - 智能高考志愿填报系统",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89073/runtime-check/codex-recheck-20260607/may-89073-codex-recheck-structure-03-操作-查询院校.json",
+          "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89073/runtime-check/codex-recheck-20260607/may-89073-codex-recheck-structure-03-操作-查询院校.png",
+          "elementCount": 1200,
+          "interactiveCount": 43,
+          "interactiveLabels": [
+            "智愿通",
+            "首页",
+            "院校查询",
+            "志愿填报",
+            "志愿方案",
+            "协作空间",
+            "问答社区",
+            "直播",
+            "管理后台",
+            "管*员 管理员",
+            "搜索院校名称...",
+            "筛选"
+          ]
+        }
+      },
+      {
+        "label": "二层操作:查询院校->筛选",
+        "url": "http://127.0.0.1:49073/universities",
+        "title": "智愿通 - 智能高考志愿填报系统",
+        "headings": [
+          "院校查询",
+          "北**学",
+          "清**学",
+          "复**学",
+          "上****学",
+          "浙**学",
+          "南**学",
+          "中******学",
+          "武**学",
+          "中**学",
+          "西****学",
+          "哈*****学"
+        ],
+        "navLabels": [
+          "首页",
+          "院校查询",
+          "志愿填报",
+          "志愿方案",
+          "协作空间",
+          "问答社区",
+          "直播",
+          "管理后台"
+        ],
+        "buttons": [
+          "管*员 管理员",
+          "筛选",
+          "全部",
+          "985",
+          "211",
+          "双一流",
+          "普通本科",
+          "综合",
+          "理工",
+          "师范",
+          "医药",
+          "财经",
+          "政法",
+          "农林",
+          "艺术"
+        ],
+        "links": [
+          "智愿通",
+          "首页",
+          "院校查询",
+          "志愿填报",
+          "志愿方案",
+          "协作空间",
+          "问答社区",
+          "直播",
+          "管理后台"
+        ],
+        "inputs": [
+          {
+            "tag": "input",
+            "type": "text",
+            "placeholder": "搜索院校名称...",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "select",
+            "type": "",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          }
+        ],
+        "tables": [],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "智愿通首页院校查询志愿填报志愿方案协作空间问答社区直播管理后台管*员管理员院校查询搜索和了解全国各高校的详细信息筛选院校层次全部985211双一流普通本科所在省份全部北京天津河北山西辽宁吉林黑龙江上海江苏浙江安徽福建江西山东河南湖北湖南广东广西海南重庆四川贵州云南陕西甘肃新疆院校类型全部综合理工师范医药财经政法农林艺术北**学985北京市综合50 硕45 博98.5%清**学985北京市综合48 硕42 博98.2%复**学985上海市综合46 硕40 博97.8%上****学985上海市综合45 硕38 博97.5%浙**学985浙江省综合47 硕41 博97.2%南**学985江苏省综合44 硕39 博96.8%中******学985安徽省理工38 硕35 博96.5%武**学985湖北省综合43 硕37 博96.2%中**学985广东省综合42 硕36 博95.8%西****学985陕西省综合40 硕34 博95.5%哈*****学985黑龙江省理工39 硕33 博95.2%北******学985北京市理工36 硕30 博97%同**学985上海市综合38 硕32 博95%北****学985北京市师范35 硕28 博94.8%中****学985北京市综合34 硕26 博96%北****学985北京市理工32 硕25 博94.5%东**学985江苏省综合33 硕27 博94.2%四**学985四川省综合35 硕28 博93.8%吉**学985吉林省综合34 硕27 博93.5%山**学985山东省综合33 硕26 博93.2%北****学211北京市理工28 硕18 博96.5%上****学211上海市财经22 硕12 博95.8%中****学211北京市财经20 硕10 博95.2%对******学211北京市财经18 硕8 博94.5%北*****学211北京市语言16 硕6 博93.8%上*****学211上海市语言15 硕5 博93.2%中****学211北京市政法18 硕8 博92.8%北*****院双一流北京市医药12 硕15 博98%南****学双一流江苏省理工22 硕12 博94%杭******学普通本科浙江省理工18 硕6 博92.5%",
+        "layout": {
+          "viewportWidth": 1600,
+          "viewportHeight": 1600,
+          "scrollWidth": 1600,
+          "scrollHeight": 2884,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89073-codex-recheck-structure-04-二层操作-查询院校-筛选",
+          "label": "二层操作:查询院校->筛选",
+          "finalUrl": "http://127.0.0.1:49073/universities",
+          "title": "智愿通 - 智能高考志愿填报系统",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89073/runtime-check/codex-recheck-20260607/may-89073-codex-recheck-structure-04-二层操作-查询院校-筛选.json",
+          "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89073/runtime-check/codex-recheck-20260607/may-89073-codex-recheck-structure-04-二层操作-查询院校-筛选.png",
+          "elementCount": 1200,
+          "interactiveCount": 58,
+          "interactiveLabels": [
+            "智愿通",
+            "首页",
+            "院校查询",
+            "志愿填报",
+            "志愿方案",
+            "协作空间",
+            "问答社区",
+            "直播",
+            "管理后台",
+            "管*员 管理员",
+            "搜索院校名称...",
+            "筛选",
+            "全部",
+            "985",
+            "211",
+            "双一流",
+            "普通本科",
+            "全部 北京 天津 河北 山西 辽宁 吉林 黑龙江 上海 江苏 浙江 安徽 福建 江西 山东 河南 湖北 湖南 广东 广西 海南 重庆 四川 贵州 云南 陕西 甘肃 新疆",
+            "综合",
+            "理工",
+            "师范",
+            "医药",
+            "财经",
+            "政法",
+            "农林",
+            "艺术"
+          ]
+        }
+      },
+      {
+        "label": "操作:北京",
+        "url": "http://127.0.0.1:49073/",
+        "title": "智愿通 - 智能高考志愿填报系统",
+        "headings": [
+          "智能志愿填报精准规划未来",
+          "快速填报",
+          "六大核心功能",
+          "智能推荐",
+          "冲稳保方案",
+          "院校对比",
+          "协作空间",
+          "问答社区",
+          "直播答疑",
+          "准备好开启你的志愿填报之旅了吗？"
+        ],
+        "navLabels": [
+          "首页",
+          "院校查询",
+          "志愿填报",
+          "志愿方案",
+          "协作空间",
+          "问答社区",
+          "直播",
+          "管理后台"
+        ],
+        "buttons": [
+          "管*员 管理员",
+          "开始填报",
+          "查询院校",
+          "物理",
+          "化学",
+          "生物",
+          "历史",
+          "地理",
+          "政治",
+          "北京",
+          "上海",
+          "广州",
+          "深圳",
+          "杭州",
+          "南京",
+          "武汉",
+          "成都",
+          "西安",
+          "重庆",
+          "天津",
+          "苏州",
+          "长沙",
+          "郑州",
+          "青岛"
+        ],
+        "links": [
+          "智愿通",
+          "首页",
+          "院校查询",
+          "志愿填报",
+          "志愿方案",
+          "协作空间",
+          "问答社区",
+          "直播",
+          "管理后台"
+        ],
+        "inputs": [
+          {
+            "tag": "input",
+            "type": "number",
+            "placeholder": "请输入高考分数（0-750）",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "number",
+            "placeholder": "请输入全省位次",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "select",
+            "type": "",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          }
+        ],
+        "tables": [],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "智愿通首页院校查询志愿填报志愿方案协作空间问答社区直播管理后台管*员管理员2024年志愿填报季正式开启智能志愿填报精准规划未来基于百万级历史数据和先进AI算法，为每位考生量身定制最优志愿方案， 让每一分都发挥最大价值，助力考生迈入理想大学。开始填报查询院校2800+高校数据1600+专业信息98%录取准确率已帮助 100,000+ 考生成功填报志愿快速填报输入基本信息，立即获取个性化推荐高考分数 *全省位次 *所在省份 *请选择省份北京天津河北山西内蒙古辽宁吉林黑龙江上海江苏浙江安徽福建江西山东河南湖北湖南广东广西海南重庆四川贵州云南西藏陕西甘肃青海宁夏新疆选科组合 *（至少选择3个）物理化学生物历史地理政治目标城市 （可多选，可选）北京上海广州深圳杭州南京武汉成都西安重庆天津苏州长沙郑州青岛大连宁波厦门合肥福州济南昆明贵阳哈尔滨长春沈阳南昌南宁兰州乌鲁木齐已选择 1 个目标城市兴趣测评快捷入口完成霍兰德和MBTI测评，获得更精准推荐家庭意愿输入填写家庭期望，让推荐更符合家人期待立即获取智能推荐点击后将直接生成推荐结果并跳转至结果页面六大核心功能全方位覆盖志愿填报的每一个环节，提供专业、智能、贴心的服务体验智能推荐基于AI算法，结合分数、位次、兴趣，精准推荐院校和专业立即体验冲稳保方案科学梯度设计，最大化录取概率，降低滑档风险查看示例院校对比多维度对比分析，层次、类型、投档线、就业一目了然开始对比协作空间邀请老师、家长共同参与，多人协作填报志愿创建空间问答社区专家在线答疑，解决选科、志愿、政策各类问题提问专家直播答疑资深专家直播讲解，实时互动解答志愿填报疑问查看直播准备好开启你的志愿填报之旅了吗？立即注册，免费体验智能志愿推荐系统，让专业的AI助你一臂之力立即开始",
+        "layout": {
+          "viewportWidth": 1632,
+          "viewportHeight": 1600,
+          "scrollWidth": 1632,
+          "scrollHeight": 3075,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89073-codex-recheck-structure-05-操作-北京",
+          "label": "操作:北京",
+          "finalUrl": "http://127.0.0.1:49073/",
+          "title": "智愿通 - 智能高考志愿填报系统",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89073/runtime-check/codex-recheck-20260607/may-89073-codex-recheck-structure-05-操作-北京.json",
+          "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89073/runtime-check/codex-recheck-20260607/may-89073-codex-recheck-structure-05-操作-北京.png",
+          "elementCount": 445,
+          "interactiveCount": 62,
+          "interactiveLabels": [
+            "智愿通",
+            "首页",
+            "院校查询",
+            "志愿填报",
+            "志愿方案",
+            "协作空间",
+            "问答社区",
+            "直播",
+            "管理后台",
+            "管*员 管理员",
+            "开始填报",
+            "查询院校",
+            "请输入高考分数（0-750）",
+            "请输入全省位次",
+            "请选择省份 北京 天津 河北 山西 内蒙古 辽宁 吉林 黑龙江 上海 江苏 浙江 安徽 福建 江西 山东 河南 湖北 湖南 广东 广西 海南 重庆 四川 贵州 云南 西藏 陕西 甘肃 青海 宁夏 新疆",
+            "物理",
+            "化学",
+            "生物",
+            "历史",
+            "地理",
+            "政治",
+            "北京",
+            "上海",
+            "广州",
+            "深圳",
+            "杭州",
+            "南京",
+            "武汉",
+            "成都",
+            "西安"
+          ]
+        }
+      },
+      {
+        "label": "导航:院校查询",
+        "url": "http://127.0.0.1:49073/universities",
+        "title": "智愿通 - 智能高考志愿填报系统",
+        "headings": [
+          "院校查询",
+          "北**学",
+          "清**学",
+          "复**学",
+          "上****学",
+          "浙**学",
+          "南**学",
+          "中******学",
+          "武**学",
+          "中**学",
+          "西****学",
+          "哈*****学"
+        ],
+        "navLabels": [
+          "首页",
+          "院校查询",
+          "志愿填报",
+          "志愿方案",
+          "协作空间",
+          "问答社区",
+          "直播",
+          "管理后台"
+        ],
+        "buttons": [
+          "管*员 管理员",
+          "筛选"
+        ],
+        "links": [
+          "智愿通",
+          "首页",
+          "院校查询",
+          "志愿填报",
+          "志愿方案",
+          "协作空间",
+          "问答社区",
+          "直播",
+          "管理后台"
+        ],
+        "inputs": [
+          {
+            "tag": "input",
+            "type": "text",
+            "placeholder": "搜索院校名称...",
+            "name": "",
+            "label": ""
+          }
+        ],
+        "tables": [],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "智愿通首页院校查询志愿填报志愿方案协作空间问答社区直播管理后台管*员管理员院校查询搜索和了解全国各高校的详细信息筛选北**学985北京市综合50 硕45 博98.5%清**学985北京市综合48 硕42 博98.2%复**学985上海市综合46 硕40 博97.8%上****学985上海市综合45 硕38 博97.5%浙**学985浙江省综合47 硕41 博97.2%南**学985江苏省综合44 硕39 博96.8%中******学985安徽省理工38 硕35 博96.5%武**学985湖北省综合43 硕37 博96.2%中**学985广东省综合42 硕36 博95.8%西****学985陕西省综合40 硕34 博95.5%哈*****学985黑龙江省理工39 硕33 博95.2%北******学985北京市理工36 硕30 博97%同**学985上海市综合38 硕32 博95%北****学985北京市师范35 硕28 博94.8%中****学985北京市综合34 硕26 博96%北****学985北京市理工32 硕25 博94.5%东**学985江苏省综合33 硕27 博94.2%四**学985四川省综合35 硕28 博93.8%吉**学985吉林省综合34 硕27 博93.5%山**学985山东省综合33 硕26 博93.2%北****学211北京市理工28 硕18 博96.5%上****学211上海市财经22 硕12 博95.8%中****学211北京市财经20 硕10 博95.2%对******学211北京市财经18 硕8 博94.5%北*****学211北京市语言16 硕6 博93.8%上*****学211上海市语言15 硕5 博93.2%中****学211北京市政法18 硕8 博92.8%北*****院双一流北京市医药12 硕15 博98%南****学双一流江苏省理工22 硕12 博94%杭******学普通本科浙江省理工18 硕6 博92.5%",
+        "layout": {
+          "viewportWidth": 1664,
+          "viewportHeight": 1600,
+          "scrollWidth": 1664,
+          "scrollHeight": 2759,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89073-codex-recheck-structure-06-导航-院校查询",
+          "label": "导航:院校查询",
+          "finalUrl": "http://127.0.0.1:49073/universities",
+          "title": "智愿通 - 智能高考志愿填报系统",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89073/runtime-check/codex-recheck-20260607/may-89073-codex-recheck-structure-06-导航-院校查询.json",
+          "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89073/runtime-check/codex-recheck-20260607/may-89073-codex-recheck-structure-06-导航-院校查询.png",
+          "elementCount": 1200,
+          "interactiveCount": 43,
+          "interactiveLabels": [
+            "智愿通",
+            "首页",
+            "院校查询",
+            "志愿填报",
+            "志愿方案",
+            "协作空间",
+            "问答社区",
+            "直播",
+            "管理后台",
+            "管*员 管理员",
+            "搜索院校名称...",
+            "筛选"
+          ]
+        }
+      },
+      {
+        "label": "操作:筛选",
+        "url": "http://127.0.0.1:49073/universities",
+        "title": "智愿通 - 智能高考志愿填报系统",
+        "headings": [
+          "院校查询",
+          "北**学",
+          "清**学",
+          "复**学",
+          "上****学",
+          "浙**学",
+          "南**学",
+          "中******学",
+          "武**学",
+          "中**学",
+          "西****学",
+          "哈*****学"
+        ],
+        "navLabels": [
+          "首页",
+          "院校查询",
+          "志愿填报",
+          "志愿方案",
+          "协作空间",
+          "问答社区",
+          "直播",
+          "管理后台"
+        ],
+        "buttons": [
+          "管*员 管理员",
+          "筛选",
+          "全部",
+          "985",
+          "211",
+          "双一流",
+          "普通本科",
+          "综合",
+          "理工",
+          "师范",
+          "医药",
+          "财经",
+          "政法",
+          "农林",
+          "艺术"
+        ],
+        "links": [
+          "智愿通",
+          "首页",
+          "院校查询",
+          "志愿填报",
+          "志愿方案",
+          "协作空间",
+          "问答社区",
+          "直播",
+          "管理后台"
+        ],
+        "inputs": [
+          {
+            "tag": "input",
+            "type": "text",
+            "placeholder": "搜索院校名称...",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "select",
+            "type": "",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          }
+        ],
+        "tables": [],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "智愿通首页院校查询志愿填报志愿方案协作空间问答社区直播管理后台管*员管理员院校查询搜索和了解全国各高校的详细信息筛选院校层次全部985211双一流普通本科所在省份全部北京天津河北山西辽宁吉林黑龙江上海江苏浙江安徽福建江西山东河南湖北湖南广东广西海南重庆四川贵州云南陕西甘肃新疆院校类型全部综合理工师范医药财经政法农林艺术北**学985北京市综合50 硕45 博98.5%清**学985北京市综合48 硕42 博98.2%复**学985上海市综合46 硕40 博97.8%上****学985上海市综合45 硕38 博97.5%浙**学985浙江省综合47 硕41 博97.2%南**学985江苏省综合44 硕39 博96.8%中******学985安徽省理工38 硕35 博96.5%武**学985湖北省综合43 硕37 博96.2%中**学985广东省综合42 硕36 博95.8%西****学985陕西省综合40 硕34 博95.5%哈*****学985黑龙江省理工39 硕33 博95.2%北******学985北京市理工36 硕30 博97%同**学985上海市综合38 硕32 博95%北****学985北京市师范35 硕28 博94.8%中****学985北京市综合34 硕26 博96%北****学985北京市理工32 硕25 博94.5%东**学985江苏省综合33 硕27 博94.2%四**学985四川省综合35 硕28 博93.8%吉**学985吉林省综合34 硕27 博93.5%山**学985山东省综合33 硕26 博93.2%北****学211北京市理工28 硕18 博96.5%上****学211上海市财经22 硕12 博95.8%中****学211北京市财经20 硕10 博95.2%对******学211北京市财经18 硕8 博94.5%北*****学211北京市语言16 硕6 博93.8%上*****学211上海市语言15 硕5 博93.2%中****学211北京市政法18 硕8 博92.8%北*****院双一流北京市医药12 硕15 博98%南****学双一流江苏省理工22 硕12 博94%杭******学普通本科浙江省理工18 硕6 博92.5%",
+        "layout": {
+          "viewportWidth": 1696,
+          "viewportHeight": 1600,
+          "scrollWidth": 1696,
+          "scrollHeight": 2884,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89073-codex-recheck-structure-07-操作-筛选",
+          "label": "操作:筛选",
+          "finalUrl": "http://127.0.0.1:49073/universities",
+          "title": "智愿通 - 智能高考志愿填报系统",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89073/runtime-check/codex-recheck-20260607/may-89073-codex-recheck-structure-07-操作-筛选.json",
+          "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89073/runtime-check/codex-recheck-20260607/may-89073-codex-recheck-structure-07-操作-筛选.png",
+          "elementCount": 1200,
+          "interactiveCount": 58,
+          "interactiveLabels": [
+            "智愿通",
+            "首页",
+            "院校查询",
+            "志愿填报",
+            "志愿方案",
+            "协作空间",
+            "问答社区",
+            "直播",
+            "管理后台",
+            "管*员 管理员",
+            "搜索院校名称...",
+            "筛选",
+            "全部",
+            "985",
+            "211",
+            "双一流",
+            "普通本科",
+            "全部 北京 天津 河北 山西 辽宁 吉林 黑龙江 上海 江苏 浙江 安徽 福建 江西 山东 河南 湖北 湖南 广东 广西 海南 重庆 四川 贵州 云南 陕西 甘肃 新疆",
+            "综合",
+            "理工",
+            "师范",
+            "医药",
+            "财经",
+            "政法",
+            "农林",
+            "艺术"
+          ]
+        }
+      },
+      {
+        "label": "二层操作:筛选->财经",
+        "url": "http://127.0.0.1:49073/universities",
+        "title": "智愿通 - 智能高考志愿填报系统",
+        "headings": [
+          "院校查询",
+          "上****学",
+          "中****学",
+          "对******学"
+        ],
+        "navLabels": [
+          "首页",
+          "院校查询",
+          "志愿填报",
+          "志愿方案",
+          "协作空间",
+          "问答社区",
+          "直播",
+          "管理后台"
+        ],
+        "buttons": [
+          "管*员 管理员",
+          "筛选",
+          "全部",
+          "985",
+          "211",
+          "双一流",
+          "普通本科",
+          "综合",
+          "理工",
+          "师范",
+          "医药",
+          "财经",
+          "政法",
+          "农林",
+          "艺术"
+        ],
+        "links": [
+          "智愿通",
+          "首页",
+          "院校查询",
+          "志愿填报",
+          "志愿方案",
+          "协作空间",
+          "问答社区",
+          "直播",
+          "管理后台"
+        ],
+        "inputs": [
+          {
+            "tag": "input",
+            "type": "text",
+            "placeholder": "搜索院校名称...",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "select",
+            "type": "",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          }
+        ],
+        "tables": [],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "智愿通首页院校查询志愿填报志愿方案协作空间问答社区直播管理后台管*员管理员院校查询搜索和了解全国各高校的详细信息筛选院校层次全部985211双一流普通本科所在省份全部北京天津河北山西辽宁吉林黑龙江上海江苏浙江安徽福建江西山东河南湖北湖南广东广西海南重庆四川贵州云南陕西甘肃新疆院校类型全部综合理工师范医药财经政法农林艺术上****学211上海市财经22 硕12 博95.8%中****学211北京市财经20 硕10 博95.2%对******学211北京市财经18 硕8 博94.5%",
+        "layout": {
+          "viewportWidth": 1728,
+          "viewportHeight": 1600,
+          "scrollWidth": 1728,
+          "scrollHeight": 1665,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89073-codex-recheck-structure-08-二层操作-筛选-财经",
+          "label": "二层操作:筛选->财经",
+          "finalUrl": "http://127.0.0.1:49073/universities",
+          "title": "智愿通 - 智能高考志愿填报系统",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89073/runtime-check/codex-recheck-20260607/may-89073-codex-recheck-structure-08-二层操作-筛选-财经.json",
+          "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89073/runtime-check/codex-recheck-20260607/may-89073-codex-recheck-structure-08-二层操作-筛选-财经.png",
+          "elementCount": 275,
+          "interactiveCount": 31,
+          "interactiveLabels": [
+            "智愿通",
+            "首页",
+            "院校查询",
+            "志愿填报",
+            "志愿方案",
+            "协作空间",
+            "问答社区",
+            "直播",
+            "管理后台",
+            "管*员 管理员",
+            "搜索院校名称...",
+            "筛选",
+            "全部",
+            "985",
+            "211",
+            "双一流",
+            "普通本科",
+            "全部 北京 天津 河北 山西 辽宁 吉林 黑龙江 上海 江苏 浙江 安徽 福建 江西 山东 河南 湖北 湖南 广东 广西 海南 重庆 四川 贵州 云南 陕西 甘肃 新疆",
+            "综合",
+            "理工",
+            "师范",
+            "医药",
+            "财经",
+            "政法",
+            "农林",
+            "艺术"
+          ]
+        }
+      },
+      {
+        "label": "操作:管*员 管理员",
+        "url": "http://127.0.0.1:49073/universities",
+        "title": "智愿通 - 智能高考志愿填报系统",
+        "headings": [
+          "院校查询",
+          "上****学",
+          "中****学",
+          "对******学"
+        ],
+        "navLabels": [
+          "首页",
+          "院校查询",
+          "志愿填报",
+          "志愿方案",
+          "协作空间",
+          "问答社区",
+          "直播",
+          "管理后台"
+        ],
+        "buttons": [
+          "管*员 管理员",
+          "我的志愿方案",
+          "退出登录",
+          "筛选",
+          "全部",
+          "985",
+          "211",
+          "双一流",
+          "普通本科",
+          "综合",
+          "理工",
+          "师范",
+          "医药",
+          "财经",
+          "政法",
+          "农林",
+          "艺术"
+        ],
+        "links": [
+          "智愿通",
+          "首页",
+          "院校查询",
+          "志愿填报",
+          "志愿方案",
+          "协作空间",
+          "问答社区",
+          "直播",
+          "管理后台"
+        ],
+        "inputs": [
+          {
+            "tag": "input",
+            "type": "text",
+            "placeholder": "搜索院校名称...",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "select",
+            "type": "",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          }
+        ],
+        "tables": [],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "智愿通首页院校查询志愿填报志愿方案协作空间问答社区直播管理后台管*员管理员管*员138****0005我的志愿方案退出登录院校查询搜索和了解全国各高校的详细信息筛选院校层次全部985211双一流普通本科所在省份全部北京天津河北山西辽宁吉林黑龙江上海江苏浙江安徽福建江西山东河南湖北湖南广东广西海南重庆四川贵州云南陕西甘肃新疆院校类型全部综合理工师范医药财经政法农林艺术上****学211上海市财经22 硕12 博95.8%中****学211北京市财经20 硕10 博95.2%对******学211北京市财经18 硕8 博94.5%",
+        "layout": {
+          "viewportWidth": 1760,
+          "viewportHeight": 1600,
+          "scrollWidth": 1760,
+          "scrollHeight": 1665,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89073-codex-recheck-structure-09-操作-管-员-管理员",
+          "label": "操作:管*员 管理员",
+          "finalUrl": "http://127.0.0.1:49073/universities",
+          "title": "智愿通 - 智能高考志愿填报系统",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89073/runtime-check/codex-recheck-20260607/may-89073-codex-recheck-structure-09-操作-管-员-管理员.json",
+          "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89073/runtime-check/codex-recheck-20260607/may-89073-codex-recheck-structure-09-操作-管-员-管理员.png",
+          "elementCount": 292,
+          "interactiveCount": 33,
+          "interactiveLabels": [
+            "智愿通",
+            "首页",
+            "院校查询",
+            "志愿填报",
+            "志愿方案",
+            "协作空间",
+            "问答社区",
+            "直播",
+            "管理后台",
+            "管*员 管理员",
+            "我的志愿方案",
+            "退出登录",
+            "搜索院校名称...",
+            "筛选",
+            "全部",
+            "985",
+            "211",
+            "双一流",
+            "普通本科",
+            "全部 北京 天津 河北 山西 辽宁 吉林 黑龙江 上海 江苏 浙江 安徽 福建 江西 山东 河南 湖北 湖南 广东 广西 海南 重庆 四川 贵州 云南 陕西 甘肃 新疆",
+            "综合",
+            "理工",
+            "师范",
+            "医药",
+            "财经",
+            "政法",
+            "农林",
+            "艺术"
+          ]
+        }
+      }
+    ],
+    "findings": [],
+    "actionHints": [],
+    "emptyPages": [],
+    "overflowPages": [],
+    "blankPages": [],
+    "apiFailurePaths": [],
+    "goalTerms": [],
+    "clickedActionDescriptors": [
+      {
+        "nav": "首页",
+        "label": "查询院校",
+        "ordinal": 0,
+        "unsafe": false
+      },
+      {
+        "nav": "首页",
+        "label": "查询院校->筛选",
+        "ordinal": 0,
+        "secondary": true,
+        "unsafe": false
+      },
+      {
+        "nav": "首页",
+        "label": "北京",
+        "ordinal": 0,
+        "unsafe": false
+      },
+      {
+        "nav": "院校查询",
+        "label": "筛选",
+        "ordinal": 0,
+        "unsafe": false
+      },
+      {
+        "nav": "院校查询",
+        "label": "筛选->财经",
+        "ordinal": 0,
+        "secondary": true,
+        "unsafe": false
+      },
+      {
+        "nav": "院校查询",
+        "label": "管*员 管理员",
+        "ordinal": 0,
+        "unsafe": false
+      }
+    ],
+    "secondaryActionClicks": 2,
+    "structureCaptures": [
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89073-codex-recheck-structure-01-首屏",
+        "label": "首屏",
+        "finalUrl": "http://127.0.0.1:49073/",
+        "title": "智愿通 - 智能高考志愿填报系统",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89073/runtime-check/codex-recheck-20260607/may-89073-codex-recheck-structure-01-首屏.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89073/runtime-check/codex-recheck-20260607/may-89073-codex-recheck-structure-01-首屏.png",
+        "elementCount": 439,
+        "interactiveCount": 62,
+        "interactiveLabels": [
+          "智愿通",
+          "首页",
+          "院校查询",
+          "志愿填报",
+          "志愿方案",
+          "协作空间",
+          "问答社区",
+          "直播",
+          "管理后台",
+          "管*员 管理员",
+          "开始填报",
+          "查询院校",
+          "请输入高考分数（0-750）",
+          "请输入全省位次",
+          "请选择省份 北京 天津 河北 山西 内蒙古 辽宁 吉林 黑龙江 上海 江苏 浙江 安徽 福建 江西 山东 河南 湖北 湖南 广东 广西 海南 重庆 四川 贵州 云南 西藏 陕西 甘肃 青海 宁夏 新疆",
+          "物理",
+          "化学",
+          "生物",
+          "历史",
+          "地理",
+          "政治",
+          "北京",
+          "上海",
+          "广州",
+          "深圳",
+          "杭州",
+          "南京",
+          "武汉",
+          "成都",
+          "西安"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89073-codex-recheck-structure-02-导航-首页",
+        "label": "导航:首页",
+        "finalUrl": "http://127.0.0.1:49073/",
+        "title": "智愿通 - 智能高考志愿填报系统",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89073/runtime-check/codex-recheck-20260607/may-89073-codex-recheck-structure-02-导航-首页.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89073/runtime-check/codex-recheck-20260607/may-89073-codex-recheck-structure-02-导航-首页.png",
+        "elementCount": 439,
+        "interactiveCount": 62,
+        "interactiveLabels": [
+          "智愿通",
+          "首页",
+          "院校查询",
+          "志愿填报",
+          "志愿方案",
+          "协作空间",
+          "问答社区",
+          "直播",
+          "管理后台",
+          "管*员 管理员",
+          "开始填报",
+          "查询院校",
+          "请输入高考分数（0-750）",
+          "请输入全省位次",
+          "请选择省份 北京 天津 河北 山西 内蒙古 辽宁 吉林 黑龙江 上海 江苏 浙江 安徽 福建 江西 山东 河南 湖北 湖南 广东 广西 海南 重庆 四川 贵州 云南 西藏 陕西 甘肃 青海 宁夏 新疆",
+          "物理",
+          "化学",
+          "生物",
+          "历史",
+          "地理",
+          "政治",
+          "北京",
+          "上海",
+          "广州",
+          "深圳",
+          "杭州",
+          "南京",
+          "武汉",
+          "成都",
+          "西安"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89073-codex-recheck-structure-03-操作-查询院校",
+        "label": "操作:查询院校",
+        "finalUrl": "http://127.0.0.1:49073/universities",
+        "title": "智愿通 - 智能高考志愿填报系统",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89073/runtime-check/codex-recheck-20260607/may-89073-codex-recheck-structure-03-操作-查询院校.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89073/runtime-check/codex-recheck-20260607/may-89073-codex-recheck-structure-03-操作-查询院校.png",
+        "elementCount": 1200,
+        "interactiveCount": 43,
+        "interactiveLabels": [
+          "智愿通",
+          "首页",
+          "院校查询",
+          "志愿填报",
+          "志愿方案",
+          "协作空间",
+          "问答社区",
+          "直播",
+          "管理后台",
+          "管*员 管理员",
+          "搜索院校名称...",
+          "筛选"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89073-codex-recheck-structure-04-二层操作-查询院校-筛选",
+        "label": "二层操作:查询院校->筛选",
+        "finalUrl": "http://127.0.0.1:49073/universities",
+        "title": "智愿通 - 智能高考志愿填报系统",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89073/runtime-check/codex-recheck-20260607/may-89073-codex-recheck-structure-04-二层操作-查询院校-筛选.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89073/runtime-check/codex-recheck-20260607/may-89073-codex-recheck-structure-04-二层操作-查询院校-筛选.png",
+        "elementCount": 1200,
+        "interactiveCount": 58,
+        "interactiveLabels": [
+          "智愿通",
+          "首页",
+          "院校查询",
+          "志愿填报",
+          "志愿方案",
+          "协作空间",
+          "问答社区",
+          "直播",
+          "管理后台",
+          "管*员 管理员",
+          "搜索院校名称...",
+          "筛选",
+          "全部",
+          "985",
+          "211",
+          "双一流",
+          "普通本科",
+          "全部 北京 天津 河北 山西 辽宁 吉林 黑龙江 上海 江苏 浙江 安徽 福建 江西 山东 河南 湖北 湖南 广东 广西 海南 重庆 四川 贵州 云南 陕西 甘肃 新疆",
+          "综合",
+          "理工",
+          "师范",
+          "医药",
+          "财经",
+          "政法",
+          "农林",
+          "艺术"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89073-codex-recheck-structure-05-操作-北京",
+        "label": "操作:北京",
+        "finalUrl": "http://127.0.0.1:49073/",
+        "title": "智愿通 - 智能高考志愿填报系统",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89073/runtime-check/codex-recheck-20260607/may-89073-codex-recheck-structure-05-操作-北京.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89073/runtime-check/codex-recheck-20260607/may-89073-codex-recheck-structure-05-操作-北京.png",
+        "elementCount": 445,
+        "interactiveCount": 62,
+        "interactiveLabels": [
+          "智愿通",
+          "首页",
+          "院校查询",
+          "志愿填报",
+          "志愿方案",
+          "协作空间",
+          "问答社区",
+          "直播",
+          "管理后台",
+          "管*员 管理员",
+          "开始填报",
+          "查询院校",
+          "请输入高考分数（0-750）",
+          "请输入全省位次",
+          "请选择省份 北京 天津 河北 山西 内蒙古 辽宁 吉林 黑龙江 上海 江苏 浙江 安徽 福建 江西 山东 河南 湖北 湖南 广东 广西 海南 重庆 四川 贵州 云南 西藏 陕西 甘肃 青海 宁夏 新疆",
+          "物理",
+          "化学",
+          "生物",
+          "历史",
+          "地理",
+          "政治",
+          "北京",
+          "上海",
+          "广州",
+          "深圳",
+          "杭州",
+          "南京",
+          "武汉",
+          "成都",
+          "西安"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89073-codex-recheck-structure-06-导航-院校查询",
+        "label": "导航:院校查询",
+        "finalUrl": "http://127.0.0.1:49073/universities",
+        "title": "智愿通 - 智能高考志愿填报系统",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89073/runtime-check/codex-recheck-20260607/may-89073-codex-recheck-structure-06-导航-院校查询.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89073/runtime-check/codex-recheck-20260607/may-89073-codex-recheck-structure-06-导航-院校查询.png",
+        "elementCount": 1200,
+        "interactiveCount": 43,
+        "interactiveLabels": [
+          "智愿通",
+          "首页",
+          "院校查询",
+          "志愿填报",
+          "志愿方案",
+          "协作空间",
+          "问答社区",
+          "直播",
+          "管理后台",
+          "管*员 管理员",
+          "搜索院校名称...",
+          "筛选"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89073-codex-recheck-structure-07-操作-筛选",
+        "label": "操作:筛选",
+        "finalUrl": "http://127.0.0.1:49073/universities",
+        "title": "智愿通 - 智能高考志愿填报系统",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89073/runtime-check/codex-recheck-20260607/may-89073-codex-recheck-structure-07-操作-筛选.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89073/runtime-check/codex-recheck-20260607/may-89073-codex-recheck-structure-07-操作-筛选.png",
+        "elementCount": 1200,
+        "interactiveCount": 58,
+        "interactiveLabels": [
+          "智愿通",
+          "首页",
+          "院校查询",
+          "志愿填报",
+          "志愿方案",
+          "协作空间",
+          "问答社区",
+          "直播",
+          "管理后台",
+          "管*员 管理员",
+          "搜索院校名称...",
+          "筛选",
+          "全部",
+          "985",
+          "211",
+          "双一流",
+          "普通本科",
+          "全部 北京 天津 河北 山西 辽宁 吉林 黑龙江 上海 江苏 浙江 安徽 福建 江西 山东 河南 湖北 湖南 广东 广西 海南 重庆 四川 贵州 云南 陕西 甘肃 新疆",
+          "综合",
+          "理工",
+          "师范",
+          "医药",
+          "财经",
+          "政法",
+          "农林",
+          "艺术"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89073-codex-recheck-structure-08-二层操作-筛选-财经",
+        "label": "二层操作:筛选->财经",
+        "finalUrl": "http://127.0.0.1:49073/universities",
+        "title": "智愿通 - 智能高考志愿填报系统",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89073/runtime-check/codex-recheck-20260607/may-89073-codex-recheck-structure-08-二层操作-筛选-财经.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89073/runtime-check/codex-recheck-20260607/may-89073-codex-recheck-structure-08-二层操作-筛选-财经.png",
+        "elementCount": 275,
+        "interactiveCount": 31,
+        "interactiveLabels": [
+          "智愿通",
+          "首页",
+          "院校查询",
+          "志愿填报",
+          "志愿方案",
+          "协作空间",
+          "问答社区",
+          "直播",
+          "管理后台",
+          "管*员 管理员",
+          "搜索院校名称...",
+          "筛选",
+          "全部",
+          "985",
+          "211",
+          "双一流",
+          "普通本科",
+          "全部 北京 天津 河北 山西 辽宁 吉林 黑龙江 上海 江苏 浙江 安徽 福建 江西 山东 河南 湖北 湖南 广东 广西 海南 重庆 四川 贵州 云南 陕西 甘肃 新疆",
+          "综合",
+          "理工",
+          "师范",
+          "医药",
+          "财经",
+          "政法",
+          "农林",
+          "艺术"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89073-codex-recheck-structure-09-操作-管-员-管理员",
+        "label": "操作:管*员 管理员",
+        "finalUrl": "http://127.0.0.1:49073/universities",
+        "title": "智愿通 - 智能高考志愿填报系统",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89073/runtime-check/codex-recheck-20260607/may-89073-codex-recheck-structure-09-操作-管-员-管理员.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89073/runtime-check/codex-recheck-20260607/may-89073-codex-recheck-structure-09-操作-管-员-管理员.png",
+        "elementCount": 292,
+        "interactiveCount": 33,
+        "interactiveLabels": [
+          "智愿通",
+          "首页",
+          "院校查询",
+          "志愿填报",
+          "志愿方案",
+          "协作空间",
+          "问答社区",
+          "直播",
+          "管理后台",
+          "管*员 管理员",
+          "我的志愿方案",
+          "退出登录",
+          "搜索院校名称...",
+          "筛选",
+          "全部",
+          "985",
+          "211",
+          "双一流",
+          "普通本科",
+          "全部 北京 天津 河北 山西 辽宁 吉林 黑龙江 上海 江苏 浙江 安徽 福建 江西 山东 河南 湖北 湖南 广东 广西 海南 重庆 四川 贵州 云南 陕西 甘肃 新疆",
+          "综合",
+          "理工",
+          "师范",
+          "医药",
+          "财经",
+          "政法",
+          "农林",
+          "艺术"
+        ]
+      }
+    ],
+    "representativeScreenshotUrl": "http://127.0.0.1:49073/",
+    "representativeScreenshotLabel": "智能志愿填报精准规划未来"
+  },
+  "websiteStructureCapture": {
+    "module": "website_structure_capture",
+    "captureCount": 9,
+    "captures": [
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89073-codex-recheck-structure-01-首屏",
+        "label": "首屏",
+        "finalUrl": "http://127.0.0.1:49073/",
+        "title": "智愿通 - 智能高考志愿填报系统",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89073/runtime-check/codex-recheck-20260607/may-89073-codex-recheck-structure-01-首屏.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89073/runtime-check/codex-recheck-20260607/may-89073-codex-recheck-structure-01-首屏.png",
+        "elementCount": 439,
+        "interactiveCount": 62,
+        "interactiveLabels": [
+          "智愿通",
+          "首页",
+          "院校查询",
+          "志愿填报",
+          "志愿方案",
+          "协作空间",
+          "问答社区",
+          "直播",
+          "管理后台",
+          "管*员 管理员",
+          "开始填报",
+          "查询院校",
+          "请输入高考分数（0-750）",
+          "请输入全省位次",
+          "请选择省份 北京 天津 河北 山西 内蒙古 辽宁 吉林 黑龙江 上海 江苏 浙江 安徽 福建 江西 山东 河南 湖北 湖南 广东 广西 海南 重庆 四川 贵州 云南 西藏 陕西 甘肃 青海 宁夏 新疆",
+          "物理",
+          "化学",
+          "生物",
+          "历史",
+          "地理",
+          "政治",
+          "北京",
+          "上海",
+          "广州",
+          "深圳",
+          "杭州",
+          "南京",
+          "武汉",
+          "成都",
+          "西安"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89073-codex-recheck-structure-02-导航-首页",
+        "label": "导航:首页",
+        "finalUrl": "http://127.0.0.1:49073/",
+        "title": "智愿通 - 智能高考志愿填报系统",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89073/runtime-check/codex-recheck-20260607/may-89073-codex-recheck-structure-02-导航-首页.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89073/runtime-check/codex-recheck-20260607/may-89073-codex-recheck-structure-02-导航-首页.png",
+        "elementCount": 439,
+        "interactiveCount": 62,
+        "interactiveLabels": [
+          "智愿通",
+          "首页",
+          "院校查询",
+          "志愿填报",
+          "志愿方案",
+          "协作空间",
+          "问答社区",
+          "直播",
+          "管理后台",
+          "管*员 管理员",
+          "开始填报",
+          "查询院校",
+          "请输入高考分数（0-750）",
+          "请输入全省位次",
+          "请选择省份 北京 天津 河北 山西 内蒙古 辽宁 吉林 黑龙江 上海 江苏 浙江 安徽 福建 江西 山东 河南 湖北 湖南 广东 广西 海南 重庆 四川 贵州 云南 西藏 陕西 甘肃 青海 宁夏 新疆",
+          "物理",
+          "化学",
+          "生物",
+          "历史",
+          "地理",
+          "政治",
+          "北京",
+          "上海",
+          "广州",
+          "深圳",
+          "杭州",
+          "南京",
+          "武汉",
+          "成都",
+          "西安"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89073-codex-recheck-structure-03-操作-查询院校",
+        "label": "操作:查询院校",
+        "finalUrl": "http://127.0.0.1:49073/universities",
+        "title": "智愿通 - 智能高考志愿填报系统",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89073/runtime-check/codex-recheck-20260607/may-89073-codex-recheck-structure-03-操作-查询院校.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89073/runtime-check/codex-recheck-20260607/may-89073-codex-recheck-structure-03-操作-查询院校.png",
+        "elementCount": 1200,
+        "interactiveCount": 43,
+        "interactiveLabels": [
+          "智愿通",
+          "首页",
+          "院校查询",
+          "志愿填报",
+          "志愿方案",
+          "协作空间",
+          "问答社区",
+          "直播",
+          "管理后台",
+          "管*员 管理员",
+          "搜索院校名称...",
+          "筛选"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89073-codex-recheck-structure-04-二层操作-查询院校-筛选",
+        "label": "二层操作:查询院校->筛选",
+        "finalUrl": "http://127.0.0.1:49073/universities",
+        "title": "智愿通 - 智能高考志愿填报系统",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89073/runtime-check/codex-recheck-20260607/may-89073-codex-recheck-structure-04-二层操作-查询院校-筛选.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89073/runtime-check/codex-recheck-20260607/may-89073-codex-recheck-structure-04-二层操作-查询院校-筛选.png",
+        "elementCount": 1200,
+        "interactiveCount": 58,
+        "interactiveLabels": [
+          "智愿通",
+          "首页",
+          "院校查询",
+          "志愿填报",
+          "志愿方案",
+          "协作空间",
+          "问答社区",
+          "直播",
+          "管理后台",
+          "管*员 管理员",
+          "搜索院校名称...",
+          "筛选",
+          "全部",
+          "985",
+          "211",
+          "双一流",
+          "普通本科",
+          "全部 北京 天津 河北 山西 辽宁 吉林 黑龙江 上海 江苏 浙江 安徽 福建 江西 山东 河南 湖北 湖南 广东 广西 海南 重庆 四川 贵州 云南 陕西 甘肃 新疆",
+          "综合",
+          "理工",
+          "师范",
+          "医药",
+          "财经",
+          "政法",
+          "农林",
+          "艺术"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89073-codex-recheck-structure-05-操作-北京",
+        "label": "操作:北京",
+        "finalUrl": "http://127.0.0.1:49073/",
+        "title": "智愿通 - 智能高考志愿填报系统",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89073/runtime-check/codex-recheck-20260607/may-89073-codex-recheck-structure-05-操作-北京.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89073/runtime-check/codex-recheck-20260607/may-89073-codex-recheck-structure-05-操作-北京.png",
+        "elementCount": 445,
+        "interactiveCount": 62,
+        "interactiveLabels": [
+          "智愿通",
+          "首页",
+          "院校查询",
+          "志愿填报",
+          "志愿方案",
+          "协作空间",
+          "问答社区",
+          "直播",
+          "管理后台",
+          "管*员 管理员",
+          "开始填报",
+          "查询院校",
+          "请输入高考分数（0-750）",
+          "请输入全省位次",
+          "请选择省份 北京 天津 河北 山西 内蒙古 辽宁 吉林 黑龙江 上海 江苏 浙江 安徽 福建 江西 山东 河南 湖北 湖南 广东 广西 海南 重庆 四川 贵州 云南 西藏 陕西 甘肃 青海 宁夏 新疆",
+          "物理",
+          "化学",
+          "生物",
+          "历史",
+          "地理",
+          "政治",
+          "北京",
+          "上海",
+          "广州",
+          "深圳",
+          "杭州",
+          "南京",
+          "武汉",
+          "成都",
+          "西安"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89073-codex-recheck-structure-06-导航-院校查询",
+        "label": "导航:院校查询",
+        "finalUrl": "http://127.0.0.1:49073/universities",
+        "title": "智愿通 - 智能高考志愿填报系统",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89073/runtime-check/codex-recheck-20260607/may-89073-codex-recheck-structure-06-导航-院校查询.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89073/runtime-check/codex-recheck-20260607/may-89073-codex-recheck-structure-06-导航-院校查询.png",
+        "elementCount": 1200,
+        "interactiveCount": 43,
+        "interactiveLabels": [
+          "智愿通",
+          "首页",
+          "院校查询",
+          "志愿填报",
+          "志愿方案",
+          "协作空间",
+          "问答社区",
+          "直播",
+          "管理后台",
+          "管*员 管理员",
+          "搜索院校名称...",
+          "筛选"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89073-codex-recheck-structure-07-操作-筛选",
+        "label": "操作:筛选",
+        "finalUrl": "http://127.0.0.1:49073/universities",
+        "title": "智愿通 - 智能高考志愿填报系统",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89073/runtime-check/codex-recheck-20260607/may-89073-codex-recheck-structure-07-操作-筛选.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89073/runtime-check/codex-recheck-20260607/may-89073-codex-recheck-structure-07-操作-筛选.png",
+        "elementCount": 1200,
+        "interactiveCount": 58,
+        "interactiveLabels": [
+          "智愿通",
+          "首页",
+          "院校查询",
+          "志愿填报",
+          "志愿方案",
+          "协作空间",
+          "问答社区",
+          "直播",
+          "管理后台",
+          "管*员 管理员",
+          "搜索院校名称...",
+          "筛选",
+          "全部",
+          "985",
+          "211",
+          "双一流",
+          "普通本科",
+          "全部 北京 天津 河北 山西 辽宁 吉林 黑龙江 上海 江苏 浙江 安徽 福建 江西 山东 河南 湖北 湖南 广东 广西 海南 重庆 四川 贵州 云南 陕西 甘肃 新疆",
+          "综合",
+          "理工",
+          "师范",
+          "医药",
+          "财经",
+          "政法",
+          "农林",
+          "艺术"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89073-codex-recheck-structure-08-二层操作-筛选-财经",
+        "label": "二层操作:筛选->财经",
+        "finalUrl": "http://127.0.0.1:49073/universities",
+        "title": "智愿通 - 智能高考志愿填报系统",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89073/runtime-check/codex-recheck-20260607/may-89073-codex-recheck-structure-08-二层操作-筛选-财经.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89073/runtime-check/codex-recheck-20260607/may-89073-codex-recheck-structure-08-二层操作-筛选-财经.png",
+        "elementCount": 275,
+        "interactiveCount": 31,
+        "interactiveLabels": [
+          "智愿通",
+          "首页",
+          "院校查询",
+          "志愿填报",
+          "志愿方案",
+          "协作空间",
+          "问答社区",
+          "直播",
+          "管理后台",
+          "管*员 管理员",
+          "搜索院校名称...",
+          "筛选",
+          "全部",
+          "985",
+          "211",
+          "双一流",
+          "普通本科",
+          "全部 北京 天津 河北 山西 辽宁 吉林 黑龙江 上海 江苏 浙江 安徽 福建 江西 山东 河南 湖北 湖南 广东 广西 海南 重庆 四川 贵州 云南 陕西 甘肃 新疆",
+          "综合",
+          "理工",
+          "师范",
+          "医药",
+          "财经",
+          "政法",
+          "农林",
+          "艺术"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89073-codex-recheck-structure-09-操作-管-员-管理员",
+        "label": "操作:管*员 管理员",
+        "finalUrl": "http://127.0.0.1:49073/universities",
+        "title": "智愿通 - 智能高考志愿填报系统",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89073/runtime-check/codex-recheck-20260607/may-89073-codex-recheck-structure-09-操作-管-员-管理员.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89073/runtime-check/codex-recheck-20260607/may-89073-codex-recheck-structure-09-操作-管-员-管理员.png",
+        "elementCount": 292,
+        "interactiveCount": 33,
+        "interactiveLabels": [
+          "智愿通",
+          "首页",
+          "院校查询",
+          "志愿填报",
+          "志愿方案",
+          "协作空间",
+          "问答社区",
+          "直播",
+          "管理后台",
+          "管*员 管理员",
+          "我的志愿方案",
+          "退出登录",
+          "搜索院校名称...",
+          "筛选",
+          "全部",
+          "985",
+          "211",
+          "双一流",
+          "普通本科",
+          "全部 北京 天津 河北 山西 辽宁 吉林 黑龙江 上海 江苏 浙江 安徽 福建 江西 山东 河南 湖北 湖南 广东 广西 海南 重庆 四川 贵州 云南 陕西 甘肃 新疆",
+          "综合",
+          "理工",
+          "师范",
+          "医药",
+          "财经",
+          "政法",
+          "农林",
+          "艺术"
+        ]
+      }
+    ]
+  },
+  "screenshotMetrics": {
+    "width": 1792,
+    "height": 1600,
+    "scrollWidth": 1760,
+    "scrollHeight": 3043
+  },
+  "initialBodyTextPreview": "智愿通\n首页\n院校查询\n志愿填报\n志愿方案\n协作空间\n问答社区\n直播\n管理后台\n\n管*员\n\n管理员\n\n2024年志愿填报季正式开启\n智能志愿填报精准规划未来\n\n基于百万级历史数据和先进AI算法，为每位考生量身定制最优志愿方案， 让每一分都发挥最大价值，助力考生迈入理想大学。\n\n开始填报\n查询院校\n2800+\n高校数据\n1600+\n专业信息\n98%\n录取准确率\n已帮助 100,000+ 考生成功填报志愿\n快速填报\n\n输入基本信息，立即获取个性化推荐\n\n高考分数 *\n全省位次 *\n所在省份 *\n请选择省份\n北京\n天津\n河北\n山西\n内蒙古\n辽宁\n吉林\n黑龙江\n上海\n江苏\n浙江\n安徽\n福建\n江西\n山东\n河南\n湖北\n湖南\n广东\n广西\n海南\n重庆\n四川\n贵州\n云南\n西藏\n陕西\n甘肃\n青海\n宁夏\n新疆\n选科组合 *（至少选择3个）\n物理\n化学\n生物\n历史\n地理\n政治\n目标城市 （可多选，可选）\n北京\n上海\n广州\n深圳\n杭州\n南京\n武汉\n成都\n西安\n重庆\n天津\n苏州\n长沙\n郑州\n青岛\n大连\n宁波\n厦门\n合肥\n福州\n济南\n昆明\n贵阳\n哈尔滨\n长春\n沈阳\n南昌\n南宁\n兰州\n乌鲁木齐\n兴趣测评快捷入口\n完成霍兰德和MBTI测评，获得更精准推荐\n家庭意愿输入\n填写家庭期望，让推荐更符合家人期待\n立即获取智能推荐\n\n点击后将直接生成推荐结果并跳转至结果页面\n\n六大核心功能\n\n全方位覆盖志愿填报的每一个环节，提供专业、智能、贴心的服务体验\n\n智能推荐\n\n基于AI算法，结合分数、位次、兴趣，精准推荐院校和专业\n\n立即体验\n冲稳保方案\n\n科学梯度设计，最大化录取概率，降低滑档风险\n\n查看示例\n院校对比\n\n多维度对比分析，层次、类型、投档线、就业一目了然\n\n开始对比\n协作空间\n\n邀请老师、家长共同参与，多人协作填报志愿\n\n创建空间\n问答社区\n\n专家在线答疑，解决选科、志愿、政策各类问题\n\n提问专家\n直播答疑\n\n资深专家直播讲解，实时互动解答志愿填报疑问\n\n查看直播\n准备好开启你的志愿填报之旅了吗？\n\n立即注册，免费体验智能志愿推荐系统，让专业的AI助你一臂之力\n\n立即开始",
+  "bodyTextPreview": "智愿通\n首页\n院校查询\n志愿填报\n志愿方案\n协作空间\n问答社区\n直播\n管理后台\n\n管*员\n\n管理员\n\n2024年志愿填报季正式开启\n智能志愿填报精准规划未来\n\n基于百万级历史数据和先进AI算法，为每位考生量身定制最优志愿方案， 让每一分都发挥最大价值，助力考生迈入理想大学。\n\n开始填报\n查询院校\n2800+\n高校数据\n1600+\n专业信息\n98%\n录取准确率\n已帮助 100,000+ 考生成功填报志愿\n快速填报\n\n输入基本信息，立即获取个性化推荐\n\n高考分数 *\n全省位次 *\n所在省份 *\n请选择省份\n北京\n天津\n河北\n山西\n内蒙古\n辽宁\n吉林\n黑龙江\n上海\n江苏\n浙江\n安徽\n福建\n江西\n山东\n河南\n湖北\n湖南\n广东\n广西\n海南\n重庆\n四川\n贵州\n云南\n西藏\n陕西\n甘肃\n青海\n宁夏\n新疆\n选科组合 *（至少选择3个）\n物理\n化学\n生物\n历史\n地理\n政治\n目标城市 （可多选，可选）\n北京\n上海\n广州\n深圳\n杭州\n南京\n武汉\n成都\n西安\n重庆\n天津\n苏州\n长沙\n郑州\n青岛\n大连\n宁波\n厦门\n合肥\n福州\n济南\n昆明\n贵阳\n哈尔滨\n长春\n沈阳\n南昌\n南宁\n兰州\n乌鲁木齐\n兴趣测评快捷入口\n完成霍兰德和MBTI测评，获得更精准推荐\n家庭意愿输入\n填写家庭期望，让推荐更符合家人期待\n立即获取智能推荐\n\n点击后将直接生成推荐结果并跳转至结果页面\n\n六大核心功能\n\n全方位覆盖志愿填报的每一个环节，提供专业、智能、贴心的服务体验\n\n智能推荐\n\n基于AI算法，结合分数、位次、兴趣，精准推荐院校和专业\n\n立即体验\n冲稳保方案\n\n科学梯度设计，最大化录取概率，降低滑档风险\n\n查看示例\n院校对比\n\n多维度对比分析，层次、类型、投档线、就业一目了然\n\n开始对比\n协作空间\n\n邀请老师、家长共同参与，多人协作填报志愿\n\n创建空间\n问答社区\n\n专家在线答疑，解决选科、志愿、政策各类问题\n\n提问专家\n直播答疑\n\n资深专家直播讲解，实时互动解答志愿填报疑问\n\n查看直播\n准备好开启你的志愿填报之旅了吗？\n\n立即注册，免费体验智能志愿推荐系统，让专业的AI助你一臂之力\n\n立即开始",
+  "apiBase": "http://127.0.0.1:59073/api",
+  "businessGoalPreview": "",
+  "apiResponses": [
+    {
+      "method": "POST",
+      "status": 200,
+      "url": "http://127.0.0.1:59073/api/auth/login"
+    },
+    {
+      "method": "POST",
+      "status": 200,
+      "url": "http://127.0.0.1:59073/api/auth/login"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:59073/api/admin/statistics"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:59073/api/admin/heatmap"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:59073/api/admin/statistics"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:59073/api/admin/heatmap"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:59073/api/auth/me"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:59073/api/auth/me"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:59073/api/universities?pageSize=50"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:59073/api/universities?pageSize=50"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:59073/api/auth/me"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:59073/api/auth/me"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:59073/api/universities?pageSize=50"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:59073/api/universities?pageSize=50"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:59073/api/universities?pageSize=50&type=%E8%B4%A2%E7%BB%8F"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:59073/api/auth/me"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:59073/api/auth/me"
+    }
+  ],
+  "apiChecks": [
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59073/api/health",
+      "path": "/api/health",
+      "status": 200,
+      "ok": true,
+      "bodyPreview": "{\"success\":true,\"data\":{\"status\":\"ok\",\"timestamp\":\"2026-06-07T20:15:37.511Z\"},\"message\":\"服务运行正常\"}"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59073/api/admin/statistics",
+      "path": "/api/admin/statistics",
+      "status": 200,
+      "ok": true,
+      "bodyPreview": "{\"success\":true,\"data\":{\"totalUsers\":5,\"totalPlans\":2,\"totalQuestions\":3,\"totalLiveSessions\":3,\"userRoleBreakdown\":{\"student\":1,\"parent\":1,\"teacher\":1,\"expert\":1,\"admin\":1},\"recentActivity\":{\"last7DaysNewUsers\":5,\"last7DaysNewPlans\":2,\"last7DaysNewQuestions\":3}}}"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59073/api/admin/heatmap",
+      "path": "/api/admin/heatmap",
+      "status": 200,
+      "ok": true,
+      "bodyPreview": "{\"success\":true,\"data\":[]}"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59073/api/auth/me",
+      "path": "/api/auth/me",
+      "status": 200,
+      "ok": true,
+      "bodyPreview": "{\"success\":true,\"data\":{\"id\":5,\"phone\":\"138****0005\",\"role\":\"admin\",\"name\":\"管*员\",\"avatar\":null,\"schoolName\":null,\"province\":null,\"relationship\":null,\"expertCertified\":false,\"createdAt\":\"2026-06-07 09:17:34\"}}"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59073/api/universities?pageSize=50",
+      "path": "/api/universities?pageSize=50",
+      "status": 200,
+      "ok": true,
+      "bodyPreview": "{\"success\":true,\"data\":{\"items\":[{\"id\":1,\"name\":\"北**学\",\"shortName\":\"北大\",\"province\":\"北京市\",\"city\":\"北京市\",\"level\":\"985\",\"type\":\"综合\",\"subjects\":[\"A+ 哲学\",\"A+ 经济学\",\"A+ 法学\",\"A+ 社会学\",\"A+ 中国语言文学\",\"A+ 历史学\",\"A+ 数学\",\"A+ 物理学\",\"A+ 化学\"],\"masterPoints\":50,\"doctorPoints\":45,\"employmentRate\":98.5,\"logoUrl\":null,\"description\":\"北京大学创立于1898年，是中国第一所国立综合性大学。\",\"createdAt\":\"2026-06-07 09:17:34\"},{\"id\":2,\"name\":\"清**学\",\"shortName\":\"清华\",\"province\":\"北京市\",\"city\":\"北京市\",\"level\":\"985\",\"type\":\"综合\",\"subjects\":[\"A+ 马克思主义理论\",\"A+ 化学\""
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59073/api/universities?pageSize=50&type=%E8%B4%A2%E7%BB%8F",
+      "path": "/api/universities?pageSize=50&type=%E8%B4%A2%E7%BB%8F",
+      "status": 200,
+      "ok": true,
+      "bodyPreview": "{\"success\":true,\"data\":{\"items\":[{\"id\":22,\"name\":\"上****学\",\"shortName\":\"上财\",\"province\":\"上海市\",\"city\":\"上海市\",\"level\":\"211\",\"type\":\"财经\",\"subjects\":[\"A+ 应用经济学\",\"A 工商管理\",\"A 统计学\",\"B+ 理论经济学\",\"B+ 马克思主义理论\"],\"masterPoints\":22,\"doctorPoints\":12,\"employmentRate\":95.8,\"logoUrl\":null,\"description\":\"上海财经大学是中国历史最为悠久的财经高等学府。\",\"createdAt\":\"2026-06-07 09:17:34\"},{\"id\":23,\"name\":\"中****学\",\"shortName\":\"央财\",\"province\":\"北京市\",\"city\":\"北京市\",\"level\":\"211\",\"type\":\"财经\",\"subjects\":[\"A+ 应用经济学\",\"A+ 马克思主义理论\",\"B+ 统计学\",\"B 工商管理\",\"B 公"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59073/api/teachers",
+      "path": "/api/teachers",
+      "status": 404,
+      "ok": false,
+      "bodyPreview": "{\"success\":false,\"error\":\"Not Found\",\"message\":\"Route GET /api/teachers not found\"}"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59073/api/courses",
+      "path": "/api/courses",
+      "status": 404,
+      "ok": false,
+      "bodyPreview": "{\"success\":false,\"error\":\"Not Found\",\"message\":\"Route GET /api/courses not found\"}"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59073/api/bookings",
+      "path": "/api/bookings",
+      "status": 404,
+      "ok": false,
+      "bodyPreview": "{\"success\":false,\"error\":\"Not Found\",\"message\":\"Route GET /api/bookings not found\"}"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59073/api/orders",
+      "path": "/api/orders",
+      "status": 404,
+      "ok": false,
+      "bodyPreview": "{\"success\":false,\"error\":\"Not Found\",\"message\":\"Route GET /api/orders not found\"}"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59073/api/users/profile",
+      "path": "/api/users/profile",
+      "status": 404,
+      "ok": false,
+      "bodyPreview": "{\"success\":false,\"error\":\"Not Found\",\"message\":\"Route GET /api/users/profile not found\"}"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59073/api/user/profile",
+      "path": "/api/user/profile",
+      "status": 404,
+      "ok": false,
+      "bodyPreview": "{\"success\":false,\"error\":\"Not Found\",\"message\":\"Route GET /api/user/profile not found\"}"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59073/api/search?q=%E6%B5%8B%E8%AF%95",
+      "path": "/api/search?q=%E6%B5%8B%E8%AF%95",
+      "status": 404,
+      "ok": false,
+      "bodyPreview": "{\"success\":false,\"error\":\"Not Found\",\"message\":\"Route GET /api/search not found\"}"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59073/api/admin/stats",
+      "path": "/api/admin/stats",
+      "status": 404,
+      "ok": false,
+      "bodyPreview": "{\"success\":false,\"error\":\"Not Found\",\"message\":\"Route GET /api/admin/stats not found\"}"
+    }
+  ],
+  "dialogs": [],
+  "consoleMessages": [
+    {
+      "type": "debug",
+      "text": "[vite] connecting...",
+      "location": {
+        "url": "http://127.0.0.1:49073/@vite/client",
+        "lineNumber": 788,
+        "columnNumber": 8
+      }
+    },
+    {
+      "type": "debug",
+      "text": "[vite] connected.",
+      "location": {
+        "url": "http://127.0.0.1:49073/@vite/client",
+        "lineNumber": 911,
+        "columnNumber": 14
+      }
+    },
+    {
+      "type": "info",
+      "text": "%cDownload the React DevTools for a better development experience: https://reactjs.org/link/react-devtools font-weight:bold",
+      "location": {
+        "url": "http://127.0.0.1:49073/node_modules/.vite/deps/chunk-NXESFFTV.js?v=e3f1739a",
+        "lineNumber": 21608,
+        "columnNumber": 24
+      }
+    },
+    {
+      "type": "debug",
+      "text": "[vite] connecting...",
+      "location": {
+        "url": "http://127.0.0.1:49073/@vite/client",
+        "lineNumber": 788,
+        "columnNumber": 8
+      }
+    },
+    {
+      "type": "debug",
+      "text": "[vite] connected.",
+      "location": {
+        "url": "http://127.0.0.1:49073/@vite/client",
+        "lineNumber": 911,
+        "columnNumber": 14
+      }
+    },
+    {
+      "type": "info",
+      "text": "%cDownload the React DevTools for a better development experience: https://reactjs.org/link/react-devtools font-weight:bold",
+      "location": {
+        "url": "http://127.0.0.1:49073/node_modules/.vite/deps/chunk-NXESFFTV.js?v=e3f1739a",
+        "lineNumber": 21608,
+        "columnNumber": 24
+      }
+    },
+    {
+      "type": "debug",
+      "text": "[vite] connecting...",
+      "location": {
+        "url": "http://127.0.0.1:49073/@vite/client",
+        "lineNumber": 788,
+        "columnNumber": 8
+      }
+    },
+    {
+      "type": "info",
+      "text": "%cDownload the React DevTools for a better development experience: https://reactjs.org/link/react-devtools font-weight:bold",
+      "location": {
+        "url": "http://127.0.0.1:49073/node_modules/.vite/deps/chunk-NXESFFTV.js?v=e3f1739a",
+        "lineNumber": 21608,
+        "columnNumber": 24
+      }
+    },
+    {
+      "type": "debug",
+      "text": "[vite] connected.",
+      "location": {
+        "url": "http://127.0.0.1:49073/@vite/client",
+        "lineNumber": 911,
+        "columnNumber": 14
+      }
+    },
+    {
+      "type": "debug",
+      "text": "[vite] connecting...",
+      "location": {
+        "url": "http://127.0.0.1:49073/@vite/client",
+        "lineNumber": 788,
+        "columnNumber": 8
+      }
+    },
+    {
+      "type": "debug",
+      "text": "[vite] connected.",
+      "location": {
+        "url": "http://127.0.0.1:49073/@vite/client",
+        "lineNumber": 911,
+        "columnNumber": 14
+      }
+    },
+    {
+      "type": "info",
+      "text": "%cDownload the React DevTools for a better development experience: https://reactjs.org/link/react-devtools font-weight:bold",
+      "location": {
+        "url": "http://127.0.0.1:49073/node_modules/.vite/deps/chunk-NXESFFTV.js?v=e3f1739a",
+        "lineNumber": 21608,
+        "columnNumber": 24
+      }
+    }
+  ],
+  "requestFailures": [],
+  "responseErrors": []
+}

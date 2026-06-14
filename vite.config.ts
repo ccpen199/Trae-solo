@@ -3,11 +3,12 @@ import react from '@vitejs/plugin-react'
 import tsconfigPaths from "vite-tsconfig-paths";
 import { traeBadgePlugin } from 'vite-plugin-trae-solo-badge';
 
+// https://vite.dev/config/
 export default defineConfig(({ mode }) => {
-  const env = loadEnv(mode, process.cwd(), '');
-  const FRONTEND_PORT = parseInt(env.FRONTEND_PORT || '50105');
-  const BACKEND_PORT = parseInt(env.BACKEND_PORT || '60105');
-
+  const env = loadEnv(mode, process.cwd(), '')
+  const FRONTEND_PORT = parseInt(env.FRONTEND_PORT || '49073')
+  const BACKEND_PORT = parseInt(env.BACKEND_PORT || '59073')
+  
   return {
     plugins: [
       react({
@@ -29,9 +30,9 @@ export default defineConfig(({ mode }) => {
       tsconfigPaths(),
     ],
     server: {
-      host: '127.0.0.1',
       port: FRONTEND_PORT,
       strictPort: true,
+      host: '127.0.0.1',
       proxy: {
         '/api': {
           target: `http://127.0.0.1:${BACKEND_PORT}`,
@@ -40,5 +41,5 @@ export default defineConfig(({ mode }) => {
         }
       }
     }
-  };
+  }
 })

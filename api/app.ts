@@ -1,82 +1,66 @@
+/**
+ * 新高考志愿决策支持平台 API 服务
+ */
+
 import express, {
   type Request,
   type Response,
   type NextFunction,
 } from 'express'
-import cors from 'cors'
 import path from 'path'
 import dotenv from 'dotenv'
 import { fileURLToPath } from 'url'
-import { initDatabase } from './db/index.js'
-import { responseMiddleware } from './middleware/response.js'
+
+import { cors } from './middleware/cors.js'
+import { desensitize } from './middleware/desensitize.js'
+import { errorHandler, notFoundHandler } from './middleware/errorHandler.js'
+
 import authRoutes from './routes/auth.js'
-import freightRatesRoutes from './routes/freightRates.js'
-import cargoRoutes from './routes/cargo.js'
-import waybillsRoutes from './routes/waybills.js'
-import trackingRoutes from './routes/tracking.js'
-import ordersRoutes from './routes/orders.js'
-import billsRoutes from './routes/bills.js'
-import settlementRoutes from './routes/settlement.js'
-import capacityRoutes from './routes/capacity.js'
-import exceptionsRoutes from './routes/exceptions.js'
+import universityRoutes from './routes/universities.js'
+import majorRoutes from './routes/majors.js'
+import recommendRoutes from './routes/recommend.js'
+import planRoutes from './routes/plans.js'
+import collaborationRoutes from './routes/collaboration.js'
+import qaRoutes from './routes/qa.js'
+import liveRoutes from './routes/live.js'
+import adminRoutes from './routes/admin.js'
+import admissionScoreRoutes from './routes/admissionScores.js'
 
 const __filename = fileURLToPath(import.meta.url)
 const __dirname = path.dirname(__filename)
 
 dotenv.config()
 
-initDatabase()
-
 const app: express.Application = express()
 
-app.use(cors({
-  origin: ['http://127.0.0.1:50105', 'http://localhost:50105'],
-  credentials: true,
-  methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH', 'OPTIONS'],
-  allowedHeaders: ['Content-Type', 'Authorization'],
-}))
-
+app.use(cors)
 app.use(express.json({ limit: '10mb' }))
 app.use(express.urlencoded({ extended: true, limit: '10mb' }))
-app.use(responseMiddleware)
+app.use(desensitize)
+
+app.get('/api/health', (req: Request, res: Response): void => {
+  res.status(200).json({
+    success: true,
+    data: {
+      status: 'ok',
+      timestamp: new Date().toISOString(),
+    },
+    message: '服务运行正常',
+  })
+})
 
 app.use('/api/auth', authRoutes)
-app.use('/api/freight-rates', freightRatesRoutes)
-app.use('/api/cargo', cargoRoutes)
-app.use('/api/waybills', waybillsRoutes)
-app.use('/api/tracking', trackingRoutes)
-app.use('/api/orders', ordersRoutes)
-app.use('/api/bills', billsRoutes)
-app.use('/api/settlement', settlementRoutes)
-app.use('/api/capacity', capacityRoutes)
-app.use('/api/exceptions', exceptionsRoutes)
+app.use('/api/universities', universityRoutes)
+app.use('/api/majors', majorRoutes)
+app.use('/api/recommend', recommendRoutes)
+app.use('/api/plans', planRoutes)
+app.use('/api/collaboration', collaborationRoutes)
+app.use('/api/qa', qaRoutes)
+app.use('/api/live', liveRoutes)
+app.use('/api/admin', adminRoutes)
+app.use('/api/admission-scores', admissionScoreRoutes)
 
-app.use(
-  '/api/health',
-  (req: Request, res: Response, next: NextFunction): void => {
-    res.status(200).json({
-      success: true,
-      message: 'ok',
-    })
-  },
-)
-
-app.use((error: Error, req: Request, res: Response, next: NextFunction) => {
-  res.status(500).json({
-    code: 500,
-    message: error.message || '服务器内部错误',
-    data: null,
-    timestamp: Date.now(),
-  })
-})
-
-app.use((req: Request, res: Response) => {
-  res.status(404).json({
-    code: 404,
-    message: 'API 不存在',
-    data: null,
-    timestamp: Date.now(),
-  })
-})
+app.use(notFoundHandler)
+app.use(errorHandler)
 
 export default app
