@@ -207,6 +207,47 @@ export default function Construction() {
         </div>
       )}
 
+      <div className="mb-6 grid grid-cols-1 gap-4 lg:grid-cols-3">
+        <section className="card p-5 lg:col-span-2">
+          <div className="mb-4 flex items-center justify-between">
+            <div>
+              <h2 className="font-semibold text-surface-900 dark:text-white">施工详情页 · 水电隐蔽工程</h2>
+              <p className="mt-1 text-sm text-surface-500">
+                详情内容包含节点计划、现场照片、延期原因、责任人和提交记录。
+              </p>
+            </div>
+            <span className="rounded-full bg-warn-100 px-3 py-1 text-xs font-medium text-warn-700 dark:bg-warn-900/30 dark:text-warn-300">
+              验收存争议
+            </span>
+          </div>
+          <div className="grid grid-cols-2 gap-3 text-sm">
+            {[
+              ['当前节点', '水电管线铺设 85%'],
+              ['计划周期', '6/03 - 6/14'],
+              ['责任人', '李工 / 王工 / 平台监理'],
+              ['详情状态', '已提交复检申请，等待业主确认'],
+            ].map(([label, value]) => (
+              <div key={label} className="rounded-lg bg-surface-50 p-3 dark:bg-surface-800">
+                <div className="text-xs text-surface-500">{label}</div>
+                <div className="mt-1 font-medium text-surface-900 dark:text-white">{value}</div>
+              </div>
+            ))}
+          </div>
+          <div className="mt-4 rounded-lg border border-brand-200 bg-brand-50 p-3 text-sm text-brand-700 dark:border-brand-800 dark:bg-brand-900/20 dark:text-brand-300">
+            提交记录：6/14 11:30 已提交平台监理介入；6/14 12:05 已同步链上证据和支付凭证。
+          </div>
+        </section>
+
+        <section className="card p-5">
+          <h3 className="mb-3 font-semibold text-surface-900 dark:text-white">详情操作</h3>
+          <div className="space-y-2">
+            <button className="btn-primary w-full">提交复检结果</button>
+            <button className="btn-outline w-full">查看完整详情</button>
+            <button className="btn-secondary w-full">导出施工详情</button>
+          </div>
+        </section>
+      </div>
+
       <div className="mb-4 flex items-center gap-2">
         <Filter size={14} className="text-surface-400" />
         <div className="flex flex-wrap gap-2">

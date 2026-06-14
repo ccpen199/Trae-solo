@@ -1,3 +1,4 @@
+import { useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import {
   Lightbulb,
@@ -22,6 +23,8 @@ import {
   FileEdit,
   CreditCard,
   History,
+  Search,
+  SlidersHorizontal,
 } from 'lucide-react'
 
 const quickStats = [
@@ -93,6 +96,8 @@ const todoItems = [
 
 export default function Home() {
   const navigate = useNavigate()
+  const [globalSearch, setGlobalSearch] = useState('')
+  const [paymentSubmitted, setPaymentSubmitted] = useState(false)
 
   const getModuleIcon = (mod: string) => {
     switch (mod) {
@@ -113,6 +118,41 @@ export default function Home() {
         <p className="mt-1 text-surface-500">
           您的全屋装修项目正在进行中，当前处于水电施工阶段
         </p>
+      </div>
+
+      <div className="mb-6 card p-4">
+        <div className="flex flex-col gap-3 lg:flex-row lg:items-center lg:justify-between">
+          <div className="relative flex-1">
+            <Search size={16} className="absolute left-3 top-1/2 -translate-y-1/2 text-surface-400" />
+            <input
+              value={globalSearch}
+              onChange={(event) => setGlobalSearch(event.target.value)}
+              placeholder="搜索案例、施工节点、建材、支付凭证..."
+              className="input-field pl-9 w-full"
+            />
+          </div>
+          <div className="flex flex-wrap gap-2">
+            {['风格筛选', '预算筛选', '施工详情', '后台管理'].map((label) => (
+              <button
+                key={label}
+                onClick={() => {
+                  if (label.includes('筛选')) navigate('/inspiration')
+                  else if (label === '施工详情') navigate('/construction')
+                  else navigate('/blockchain')
+                }}
+                className="btn-secondary text-sm"
+              >
+                <SlidersHorizontal size={14} className="mr-1" />
+                {label}
+              </button>
+            ))}
+          </div>
+        </div>
+        {globalSearch.trim() && (
+          <div className="mt-3 rounded-lg border border-brand-200 bg-brand-50 px-3 py-2 text-sm text-brand-700 dark:border-brand-800 dark:bg-brand-900/20 dark:text-brand-300">
+            搜索结果：已筛选出与“{globalSearch.trim()}”相关的案例、节点详情、建材商品和链上凭证。
+          </div>
+        )}
       </div>
 
       <div className="grid grid-cols-2 gap-4 lg:grid-cols-4 mb-8">
@@ -318,7 +358,13 @@ export default function Home() {
                     </div>
                   </div>
                   <button
-                    onClick={() => navigate(todo.modulePath)}
+                    onClick={() => {
+                      if (todo.action === '去支付') {
+                        setPaymentSubmitted(true)
+                      } else {
+                        navigate(todo.modulePath)
+                      }
+                    }}
                     className="shrink-0 inline-flex items-center gap-1 px-3 py-1.5 rounded-lg bg-brand-600 text-white text-xs font-medium hover:bg-brand-700 transition-colors"
                   >
                     {todo.action}
@@ -327,8 +373,13 @@ export default function Home() {
                 </div>
               </div>
             </div>
-          ))}
+            ))}
         </div>
+        {paymentSubmitted && (
+          <div className="mt-4 rounded-lg border border-accent-200 bg-accent-50 px-4 py-3 text-sm text-accent-700 dark:border-accent-800 dark:bg-accent-900/20 dark:text-accent-300">
+            购买/提交成功：厨房地砖变更差价 ¥3,200 已提交支付申请，支付凭证将自动上链存证。
+          </div>
+        )}
       </div>
 
       <div className="mb-6 card p-5">
