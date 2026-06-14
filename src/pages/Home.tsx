@@ -17,6 +17,7 @@ import {
   Heart,
   ArrowRight,
   Filter,
+  Info,
 } from 'lucide-react';
 import {
   LineChart,
@@ -416,16 +417,32 @@ export default function HomePage() {
             <section className="card p-6">
               <h3 className="text-lg font-semibold mb-4">热门筛选</h3>
               <div className="flex flex-wrap gap-2">
-                {['近地铁', '学区房', '精装修', '满五唯一', '低总价', '小户型', '江景房', '花园洋房'].map((tag) => (
+                {[
+                  { label: '近地铁', params: { nearMetro: 'true' } },
+                  { label: '学区房', params: { schoolDistrict: 'true' } },
+                  { label: '精装修', params: { decoration: '精装修,豪华装修' } },
+                  { label: '满五唯一', params: { verifiedOnly: 'true', special: 'only_one_five' } },
+                  { label: '低总价', params: { priceMax: '3000000', sortBy: 'price' } },
+                  { label: '小户型', params: { rooms: '1,2', sortBy: 'price' } },
+                  { label: '江景房', params: { keyword: '江景', sortBy: 'time' } },
+                  { label: '花园洋房', params: { keyword: '洋房花园', sortBy: 'time' } },
+                ].map((item) => (
                   <button
-                    key={tag}
-                    onClick={() => navigate(`/properties?keyword=${encodeURIComponent(tag)}`)}
+                    key={item.label}
+                    onClick={() => {
+                      const params = new URLSearchParams(item.params as any);
+                      navigate(`/properties?${params.toString()}`);
+                    }}
                     className="px-3 py-1.5 text-sm bg-gray-100 hover:bg-primary-100 hover:text-primary-600 rounded-full transition-colors"
                   >
-                    {tag}
+                    {item.label}
                   </button>
                 ))}
               </div>
+              <p className="text-xs text-gray-400 mt-3 flex items-center gap-1">
+                <Info className="w-3 h-3" />
+                低总价口径：总价 ≤ 300万；小户型口径：1-2居室；近地铁：距地铁站 ≤ 1km
+              </p>
             </section>
 
             {/* Agent CTA */}

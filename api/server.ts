@@ -9,7 +9,8 @@ import { generateMockData } from './data/mockData.js';
 /**
  * start server with port
  */
-const PORT = process.env.PORT || 3001;
+const HOST = process.env.BACKEND_HOST || process.env.HOST || '127.0.0.1';
+const PORT = Number(process.env.BACKEND_PORT || process.env.PORT || 59208);
 
 async function startServer() {
   try {
@@ -21,8 +22,8 @@ async function startServer() {
       await generateMockData();
     }
 
-    const server = app.listen(PORT, () => {
-      console.log(`Server ready on port ${PORT}`);
+    const server = app.listen(PORT, HOST, () => {
+      console.log(`Server ready on http://${HOST}:${PORT}`);
     });
 
     process.on('SIGTERM', () => {

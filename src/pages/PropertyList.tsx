@@ -76,22 +76,50 @@ export default function PropertyList() {
   const [searchKeyword, setSearchKeyword] = useState(searchParams.get('keyword') || '');
 
   const { filters, setFilters, resetFilters, toggleFavorite, favorites, mapState, setMapState } = usePropertyStore();
+  const [prevTotal, setPrevTotal] = useState<number | null>(null);
+  const [showSmartSearch, setShowSmartSearch] = useState(false);
+  const [smartSearchType, setSmartSearchType] = useState<'metro' | 'school' | 'map' | null>(null);
 
   useEffect(() => {
     const typeParam = searchParams.get('type') as SearchFilters['type'];
     const keywordParam = searchParams.get('keyword');
-    const sortParam = searchParams.get('sort') as SearchFilters['sortBy'];
+    const sortParam = searchParams.get('sortBy') as SearchFilters['sortBy'];
+    const priceMinParam = searchParams.get('priceMin');
+    const priceMaxParam = searchParams.get('priceMax');
+    const areaMinParam = searchParams.get('areaMin');
+    const areaMaxParam = searchParams.get('areaMax');
+    const roomsParam = searchParams.get('rooms');
+    const decorationParam = searchParams.get('decoration');
+    const nearMetroParam = searchParams.get('nearMetro');
+    const schoolDistrictParam = searchParams.get('schoolDistrict');
+    const hasVRParam = searchParams.get('hasVR');
+    const verifiedOnlyParam = searchParams.get('verifiedOnly');
+    const districtParam = searchParams.get('district');
 
-    if (typeParam) {
-      setFilters({ type: typeParam });
-    }
-    if (sortParam) {
-      setFilters({ sortBy: sortParam });
+    const newFilters: Partial<SearchFilters> = {};
+    if (typeParam) newFilters.type = typeParam;
+    if (sortParam) newFilters.sortBy = sortParam;
+    if (priceMinParam) newFilters.priceMin = Number(priceMinParam);
+    if (priceMaxParam) newFilters.priceMax = Number(priceMaxParam);
+    if (areaMinParam) newFilters.areaMin = Number(areaMinParam);
+    if (areaMaxParam) newFilters.areaMax = Number(areaMaxParam);
+    if (roomsParam) newFilters.rooms = roomsParam.split(',').map(Number);
+    if (decorationParam) newFilters.decoration = decorationParam.split(',');
+    if (nearMetroParam === 'true') newFilters.nearMetro = true;
+    if (schoolDistrictParam === 'true') newFilters.schoolDistrict = true;
+    if (hasVRParam === 'true') newFilters.hasVR = true;
+    if (verifiedOnlyParam === 'true') newFilters.verifiedOnly = true;
+    if (districtParam) newFilters.district = districtParam.split(',');
+
+    if (Object.keys(newFilters).length > 0) {
+      setFilters(newFilters);
     }
     if (keywordParam) {
       setSearchKeyword(keywordParam);
     }
   }, [searchParams, setFilters]);
+
+  const [resultChange, setResultChange] = useState<{ type: 'increase' | 'decrease' | 'none'; diff: number } | null>(null);
 
   useEffect(() => {
     const fetchProperties = async () => {
@@ -106,6 +134,17 @@ export default function PropertyList() {
         if (response.success && response.data) {
           const list = (response.data as any).list || response.data;
           const propertyList = Array.isArray(list) ? list : [];
+          
+          if (prevTotal !== null && propertyList.length !== prevTotal) {
+            const diff = propertyList.length - prevTotal;
+            setResultChange({
+              type: diff > 0 ? 'increase' : 'decrease',
+              diff: Math.abs(diff),
+            });
+            setTimeout(() => setResultChange(null), 3000);
+          }
+          
+          setPrevTotal(propertyList.length);
           setProperties(propertyList);
           usePropertyStore.getState().setProperties(propertyList);
         }
@@ -115,6 +154,53 @@ export default function PropertyList() {
     };
     fetchProperties();
   }, [filters, searchKeyword]);
+
+  const activeFilterSummary = useMemo(() => {
+    const items: { label: string; onRemove: () => void }[] = [];
+    if (filters.type) {
+      items.push({
+        label: filters.type === 'secondhand' ? '二手房' : filters.type === 'new' ? '新房' : '租房',
+        onRemove: () => setFilters({ type: undefined }),
+      });
+    }
+    if (filters.priceMin !== undefined || filters.priceMax !== undefined) {
+      const label = `${filters.priceMin ? `${(filters.priceMin / 10000).toFixed(0)}万` : ''}-${filters.priceMax ? `${(filters.priceMax / 10000).toFixed(0)}万` : '不限'}`;
+      items.push({ label: `价格 ${label.replace(/^-/, '').replace(/-$/, '')}`, onRemove: () => setFilters({ priceMin: undefined, priceMax: undefined }) });
+    }
+    if (filters.areaMin !== undefined || filters.areaMax !== undefined) {
+      const label = `${filters.areaMin || ''}-${filters.areaMax || ''}㎡`.replace(/^-/, '').replace(/-$/, '');
+      items.push({ label: `面积 ${label}`, onRemove: () => setFilters({ areaMin: undefined, areaMax: undefined }) });
+    }
+    if (filters.rooms && filters.rooms.length > 0) {
+      filters.rooms.forEach((room) => {
+        items.push({ label: `${room}室`, onRemove: () => {
+          const newRooms = filters.rooms?.filter((r) => r !== room);
+          setFilters({ rooms: newRooms?.length ? newRooms : undefined });
+        }});
+      });
+    }
+    if (filters.district && filters.district.length > 0) {
+      filters.district.forEach((d) => {
+        items.push({ label: d, onRemove: () => {
+          const newDistricts = filters.district?.filter((x) => x !== d);
+          setFilters({ district: newDistricts?.length ? newDistricts : undefined });
+        }});
+      });
+    }
+    if (filters.decoration && filters.decoration.length > 0) {
+      filters.decoration.forEach((d) => {
+        items.push({ label: d, onRemove: () => {
+          const newDec = filters.decoration?.filter((x) => x !== d);
+          setFilters({ decoration: newDec?.length ? newDec : undefined });
+        }});
+      });
+    }
+    if (filters.nearMetro) items.push({ label: '🚇 近地铁≤1km', onRemove: () => setFilters({ nearMetro: false }) });
+    if (filters.schoolDistrict) items.push({ label: '🎓 学区房', onRemove: () => setFilters({ schoolDistrict: false }) });
+    if (filters.hasVR) items.push({ label: '🎥 有VR', onRemove: () => setFilters({ hasVR: false }) });
+    if (filters.verifiedOnly) items.push({ label: '✓ 已核验', onRemove: () => setFilters({ verifiedOnly: false }) });
+    return items;
+  }, [filters, setFilters]);
 
   const totalPages = Math.ceil(properties.length / ITEMS_PER_PAGE);
 
@@ -179,6 +265,8 @@ export default function PropertyList() {
 
   const PropertyCard = ({ property }: { property: Property }) => {
     const isFavorite = favorites.includes(property.id);
+    const { ownerVerified, agentVerified, antiFraudPassed, listingDays, decayWeight } = property.verification;
+    const isFiveOnly = property.propertyRight.isFiveYears && property.propertyRight.isOnlyOne;
 
     return (
       <div className="card group cursor-pointer flex flex-col md:flex-row" onClick={() => navigate(`/property/${property.id}`)}>
@@ -197,32 +285,63 @@ export default function PropertyList() {
           >
             <Heart className={`w-4 h-4 ${isFavorite ? 'fill-red-500 text-red-500' : 'text-gray-600'}`} />
           </button>
-          <div className="absolute top-3 left-3 flex gap-1">
+          <div className="absolute top-3 left-3 flex flex-wrap gap-1 max-w-[80%]">
             {property.type === 'new' && <span className="badge badge-secondary">新房</span>}
             {property.type === 'rent' && <span className="badge badge-primary">租房</span>}
-            {property.verification.antiFraudPassed && (
-              <span className="badge badge-success">已核验</span>
+            {property.vrUrl && (
+              <span className="px-1.5 py-0.5 bg-purple-600 text-white text-xs font-medium rounded">🎥 VR</span>
             )}
-            {property.vrUrl && <span className="badge badge-primary">VR看房</span>}
+            {property.metroInfo && (
+              <span className="px-1.5 py-0.5 bg-green-600 text-white text-xs font-medium rounded">
+                🚇 {property.metroInfo.nearestStation.slice(0, 4)}{Math.round(property.metroInfo.distance)}m
+              </span>
+            )}
+            {property.schoolDistrict && (
+              <span className="px-1.5 py-0.5 bg-orange-500 text-white text-xs font-medium rounded">
+                🎓 {property.schoolDistrict.quality === 'key' ? '重点' : ''}{property.schoolDistrict.name.slice(0, 4)}
+              </span>
+            )}
+            {isFiveOnly && (
+              <span className="px-1.5 py-0.5 bg-teal-600 text-white text-xs font-medium rounded">满五唯一</span>
+            )}
+            {antiFraudPassed && ownerVerified && (
+              <span className="px-1.5 py-0.5 bg-blue-600 text-white text-xs font-medium rounded">✓真房源</span>
+            )}
           </div>
         </div>
         <div className="p-4 flex-1 flex flex-col">
           <h3 className="font-semibold text-gray-900 mb-2 line-clamp-2">{property.title}</h3>
           <div className="flex items-center gap-1 text-sm text-gray-500 mb-2">
-            <MapPin className="w-3 h-3" />
+            <MapPin className="w-3 h-3 flex-shrink-0" />
             <span className="truncate">{property.district} · {property.address}</span>
           </div>
-          <div className="flex flex-wrap gap-2 mb-3">
-            <span className="text-sm text-gray-600">{formatRooms(property.rooms, property.halls, property.bathrooms)}</span>
-            <span className="text-sm text-gray-600">{formatArea(property.area)}</span>
-            <span className="text-sm text-gray-600">{property.orientation}</span>
-            <span className="text-sm text-gray-600">{property.floor}</span>
-            <span className="text-sm text-gray-600">{property.decoration}</span>
+          <div className="flex flex-wrap gap-1.5 mb-3">
+            <span className="px-1.5 py-0.5 bg-gray-100 rounded text-xs text-gray-700">{formatRooms(property.rooms, property.halls, property.bathrooms)}</span>
+            <span className="px-1.5 py-0.5 bg-gray-100 rounded text-xs text-gray-700">{formatArea(property.area)}</span>
+            <span className="px-1.5 py-0.5 bg-gray-100 rounded text-xs text-gray-700">{property.orientation}</span>
+            <span className="px-1.5 py-0.5 bg-gray-100 rounded text-xs text-gray-700">{property.decoration}</span>
+            <span className={`px-1.5 py-0.5 rounded text-xs ${
+              property.propertyRight.status === 'normal' ? 'bg-green-100 text-green-700' :
+              property.propertyRight.status === 'mortgaged' ? 'bg-yellow-100 text-yellow-700' :
+              'bg-red-100 text-red-700'
+            }`}>
+              {property.propertyRight.status === 'normal' ? '产权清晰' :
+               property.propertyRight.status === 'mortgaged' ? '抵押中' : '已查封'}
+            </span>
           </div>
-          <div className="flex flex-wrap gap-1 mb-3">
-            {property.tags.slice(0, 3).map((tag) => (
-              <span key={tag} className="badge badge-gray">{tag}</span>
-            ))}
+          <div className={`flex flex-wrap gap-1.5 p-2 rounded-md text-xs mb-3 ${
+            (antiFraudPassed && ownerVerified) ? 'bg-blue-50 border border-blue-100' : 'bg-gray-50 border border-gray-100'
+          }`}>
+            <span className={ownerVerified ? 'text-green-600' : 'text-gray-400'}>📱业主验</span>
+            <span className="text-gray-300">|</span>
+            <span className={agentVerified ? 'text-blue-600' : 'text-gray-400'}>🏢中介备</span>
+            <span className="text-gray-300">|</span>
+            <span className={antiFraudPassed ? 'text-purple-600' : 'text-gray-400'}>🛡️反诈验</span>
+            <span className="text-gray-300">|</span>
+            <span className="text-orange-600">⏱{listingDays}天</span>
+            <span className={`font-medium ${decayWeight >= 0.8 ? 'text-green-600' : decayWeight >= 0.6 ? 'text-orange-600' : 'text-red-600'}`}>
+              权重{decayWeight.toFixed(2)}
+            </span>
           </div>
           <div className="mt-auto flex items-center justify-between">
             <div className="flex items-baseline gap-1">
@@ -235,6 +354,167 @@ export default function PropertyList() {
               <Clock className="w-3 h-3" />
               {formatRelativeTime(property.publishTime)}
             </span>
+          </div>
+        </div>
+      </div>
+    );
+  };
+
+  const metroStations = ['宣武门', '西直门', '国贸', '望京', '中关村', '五道口', '朝阳门', '复兴门', '公主坟', '人民广场', '陆家嘴', '静安寺'];
+  const schoolNames = ['北京第一实验小学', '中关村第一小学', '史家胡同小学', '人大附中实验小学', '上海实验小学', '明珠小学'];
+
+  const SmartSearchModal = ({ type, onClose, onApply }: {
+    type: 'metro' | 'school' | 'map';
+    onClose: () => void;
+    onApply: (params: any) => void;
+  }) => {
+    const [station, setStation] = useState(metroStations[0]);
+    const [radius, setRadius] = useState(1500);
+    const [school, setSchool] = useState(schoolNames[0]);
+    const [quality, setQuality] = useState<'all' | 'key' | 'normal'>('all');
+
+    const titles: Record<string, { icon: string; title: string; desc: string }> = {
+      metro: { icon: '🚇', title: '地铁站半径检索', desc: '以选定地铁站为中心，搜索指定半径内的房源' },
+      school: { icon: '🎓', title: '学区划片匹配', desc: '根据学校名称筛选划片范围内的对口房源' },
+      map: { icon: '📍', title: '地图圈选搜索', desc: '切换到地图视图，在地图上框选区域进行范围搜索' },
+    };
+
+    return (
+      <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 backdrop-blur-sm animate-fade-in" onClick={onClose}>
+        <div
+          className="bg-white rounded-2xl shadow-2xl w-full max-w-md mx-4 overflow-hidden"
+          onClick={(e) => e.stopPropagation()}
+        >
+          <div className="p-5 bg-gradient-to-r from-primary-600 to-primary-700 text-white">
+            <div className="flex items-start justify-between">
+              <div>
+                <h3 className="text-lg font-semibold flex items-center gap-2">
+                  <span className="text-2xl">{titles[type].icon}</span>
+                  {titles[type].title}
+                </h3>
+                <p className="text-sm text-primary-100 mt-1">{titles[type].desc}</p>
+              </div>
+              <button onClick={onClose} className="w-8 h-8 rounded-full bg-white/20 hover:bg-white/30 flex items-center justify-center transition-colors">
+                <X className="w-4 h-4" />
+              </button>
+            </div>
+          </div>
+
+          <div className="p-5 space-y-5">
+            {type === 'metro' && (
+              <>
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-2">选择地铁站</label>
+                  <select
+                    value={station}
+                    onChange={(e) => setStation(e.target.value)}
+                    className="w-full px-3 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-primary-500 outline-none"
+                  >
+                    {metroStations.map((s) => <option key={s} value={s}>{s}站</option>)}
+                  </select>
+                </div>
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-2">
+                    搜索半径：<span className="text-primary-600 font-semibold">{radius}m</span>
+                  </label>
+                  <input
+                    type="range"
+                    min="500"
+                    max="3000"
+                    step="100"
+                    value={radius}
+                    onChange={(e) => setRadius(Number(e.target.value))}
+                    className="w-full accent-primary-600"
+                  />
+                  <div className="flex justify-between text-xs text-gray-400 mt-1">
+                    <span>500m</span><span>1.5km</span><span>3km</span>
+                  </div>
+                </div>
+              </>
+            )}
+
+            {type === 'school' && (
+              <>
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-2">选择学校</label>
+                  <select
+                    value={school}
+                    onChange={(e) => setSchool(e.target.value)}
+                    className="w-full px-3 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-primary-500 outline-none"
+                  >
+                    {schoolNames.map((s) => <option key={s} value={s}>{s}</option>)}
+                  </select>
+                </div>
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-2">学校级别</label>
+                  <div className="flex gap-2">
+                    {[
+                      { value: 'all', label: '全部' },
+                      { value: 'key', label: '🏆 重点校' },
+                      { value: 'normal', label: '普通校' },
+                    ].map((opt) => (
+                      <button
+                        key={opt.value}
+                        onClick={() => setQuality(opt.value as any)}
+                        className={`flex-1 py-2 rounded-lg text-sm transition-colors ${
+                          quality === opt.value
+                            ? 'bg-primary-600 text-white font-medium'
+                            : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
+                        }`}
+                      >
+                        {opt.label}
+                      </button>
+                    ))}
+                  </div>
+                </div>
+              </>
+            )}
+
+            {type === 'map' && (
+              <div className="py-4 text-center">
+                <div className="w-20 h-20 mx-auto mb-4 rounded-2xl bg-blue-50 flex items-center justify-center text-4xl">
+                  🗺️
+                </div>
+                <p className="text-gray-700 mb-2">即将切换到地图视图</p>
+                <p className="text-sm text-gray-500 mb-4">
+                  在地图上按住鼠标拖动绘制选框，即可筛选该范围内的所有房源
+                </p>
+                <div className="flex gap-2 justify-center flex-wrap text-xs">
+                  <span className="px-2 py-1 bg-green-100 text-green-700 rounded">支持多边形圈选</span>
+                  <span className="px-2 py-1 bg-blue-100 text-blue-700 rounded">实时数量预览</span>
+                  <span className="px-2 py-1 bg-purple-100 text-purple-700 rounded">距离热力计算</span>
+                </div>
+              </div>
+            )}
+          </div>
+
+          <div className="p-5 bg-gray-50 border-t border-gray-100 flex gap-3">
+            <button
+              onClick={onClose}
+              className="flex-1 py-2.5 border border-gray-300 rounded-lg text-gray-700 font-medium hover:bg-gray-100 transition-colors"
+            >
+              取消
+            </button>
+            <button
+              onClick={() => {
+                if (type === 'metro') {
+                  onApply({ stationName: station, radius, filters: {} });
+                } else if (type === 'school') {
+                  propertyApi.searchByKeyword(school, filters).then((res) => {
+                    if (res.success && res.data) {
+                      const list = (res.data as any).list || res.data;
+                      setProperties(list as Property[]);
+                    }
+                  });
+                  onClose();
+                } else {
+                  onClose();
+                }
+              }}
+              className="flex-1 py-2.5 bg-primary-600 text-white rounded-lg font-medium hover:bg-primary-700 transition-colors"
+            >
+              {type === 'map' ? '进入地图视图' : '开始搜索'}
+            </button>
           </div>
         </div>
       </div>
@@ -437,11 +717,21 @@ export default function PropertyList() {
           <main className="flex-1">
             {/* Toolbar */}
             <div className="bg-white rounded-xl shadow-card p-4 mb-4">
-              <div className="flex flex-wrap items-center justify-between gap-4">
-                <div className="flex items-center gap-4">
-                  <span className="text-gray-600">
-                    共找到 <span className="font-semibold text-primary-600">{properties.length}</span> 套房源
-                  </span>
+              <div className="flex flex-wrap items-center justify-between gap-4 mb-3">
+                <div className="flex items-center gap-4 flex-wrap">
+                  <div className="flex items-center gap-2">
+                    <span className="text-gray-600">
+                      共找到 <span className="font-semibold text-primary-600 text-lg">{properties.length}</span> 套房源
+                    </span>
+                    {resultChange && (
+                      <span className={`inline-flex items-center gap-1 px-2 py-0.5 rounded text-xs font-medium animate-pulse ${
+                        resultChange.type === 'increase' ? 'bg-green-100 text-green-700' :
+                        'bg-orange-100 text-orange-700'
+                      }`}>
+                        {resultChange.type === 'increase' ? '↑ +' : '↓ -'}{resultChange.diff}套
+                      </span>
+                    )}
+                  </div>
                   <div className="flex items-center gap-2">
                     <ArrowUpDown className="w-4 h-4 text-gray-400" />
                     <select
@@ -457,65 +747,100 @@ export default function PropertyList() {
                     </select>
                   </div>
                 </div>
-                <div className="flex items-center gap-1 bg-gray-100 rounded-lg p-1">
-                  <button
-                    onClick={toggleView}
-                    className={`px-3 py-1.5 rounded-md text-sm font-medium transition-colors ${
-                      !mapState.isMapView ? 'bg-white shadow-sm text-primary-600' : 'text-gray-500'
-                    }`}
-                  >
-                    <Grid3X3 className="w-4 h-4 inline mr-1" />
-                    列表
-                  </button>
-                  <button
-                    onClick={toggleView}
-                    className={`px-3 py-1.5 rounded-md text-sm font-medium transition-colors ${
-                      mapState.isMapView ? 'bg-white shadow-sm text-primary-600' : 'text-gray-500'
-                    }`}
-                  >
-                    <Map className="w-4 h-4 inline mr-1" />
-                    地图
-                  </button>
+                <div className="flex items-center gap-2 flex-wrap">
+                  <div className="flex items-center gap-1 bg-gradient-to-r from-green-50 to-blue-50 border border-green-200 rounded-lg p-1">
+                    <button
+                      onClick={() => { setShowSmartSearch(true); setSmartSearchType('metro'); }}
+                      className="px-2.5 py-1.5 rounded-md text-xs font-medium hover:bg-white hover:shadow-sm text-green-700 transition-all"
+                    >
+                      🚇 地铁搜
+                    </button>
+                    <button
+                      onClick={() => { setShowSmartSearch(true); setSmartSearchType('school'); }}
+                      className="px-2.5 py-1.5 rounded-md text-xs font-medium hover:bg-white hover:shadow-sm text-orange-700 transition-all"
+                    >
+                      🎓 学区搜
+                    </button>
+                    <button
+                      onClick={() => { setShowSmartSearch(true); setSmartSearchType('map'); toggleView(); }}
+                      className="px-2.5 py-1.5 rounded-md text-xs font-medium hover:bg-white hover:shadow-sm text-blue-700 transition-all"
+                    >
+                      📍 圈选搜
+                    </button>
+                  </div>
+                  <div className="flex items-center gap-1 bg-gray-100 rounded-lg p-1">
+                    <button
+                      onClick={toggleView}
+                      className={`px-3 py-1.5 rounded-md text-sm font-medium transition-colors ${
+                        !mapState.isMapView ? 'bg-white shadow-sm text-primary-600' : 'text-gray-500'
+                      }`}
+                    >
+                      <Grid3X3 className="w-4 h-4 inline mr-1" />
+                      列表
+                    </button>
+                    <button
+                      onClick={toggleView}
+                      className={`px-3 py-1.5 rounded-md text-sm font-medium transition-colors ${
+                        mapState.isMapView ? 'bg-white shadow-sm text-primary-600' : 'text-gray-500'
+                      }`}
+                    >
+                      <Map className="w-4 h-4 inline mr-1" />
+                      地图
+                    </button>
+                  </div>
                 </div>
               </div>
 
-              {/* Active Filters */}
-              {(filters.type || filters.priceMin || filters.priceMax || filters.rooms?.length || filters.district?.length) && (
-                <div className="flex flex-wrap items-center gap-2 mt-4 pt-4 border-t border-gray-100">
-                  <span className="text-sm text-gray-500">已选：</span>
-                  {filters.type && (
-                    <span className="inline-flex items-center gap-1 px-2 py-1 bg-primary-50 text-primary-600 rounded text-sm">
-                      {filters.type === 'secondhand' ? '二手房' : filters.type === 'new' ? '新房' : '租房'}
-                      <X className="w-3 h-3 cursor-pointer" onClick={() => setFilters({ type: undefined })} />
+              {/* Active Filters Summary */}
+              {activeFilterSummary.length > 0 && (
+                <div className="flex flex-wrap items-center gap-2 pt-3 border-t border-gray-100">
+                  <div className="flex items-center gap-1.5 text-xs text-gray-500 pr-2 border-r border-gray-200">
+                    <Filter className="w-3.5 h-3.5" />
+                    {activeFilterSummary.length}个筛选条件
+                  </div>
+                  {activeFilterSummary.map((item, idx) => (
+                    <span
+                      key={idx}
+                      className="inline-flex items-center gap-1 px-2.5 py-1 bg-primary-50 text-primary-700 rounded-full text-xs font-medium hover:bg-primary-100 transition-colors"
+                    >
+                      {item.label}
+                      <X
+                        className="w-3 h-3 cursor-pointer hover:text-red-500"
+                        onClick={item.onRemove}
+                      />
                     </span>
+                  ))}
+                  {activeFilterSummary.length > 3 && (
+                    <button
+                      onClick={resetFilters}
+                      className="text-xs text-gray-500 hover:text-red-600 underline underline-offset-2"
+                    >
+                      清空全部
+                    </button>
                   )}
-                  {filters.rooms?.map((room) => (
-                    <span key={room} className="inline-flex items-center gap-1 px-2 py-1 bg-primary-50 text-primary-600 rounded text-sm">
-                      {room}室
-                      <X
-                        className="w-3 h-3 cursor-pointer"
-                        onClick={() => {
-                          const newRooms = filters.rooms?.filter((r) => r !== room);
-                          setFilters({ rooms: newRooms?.length ? newRooms : undefined });
-                        }}
-                      />
-                    </span>
-                  ))}
-                  {filters.district?.map((district) => (
-                    <span key={district} className="inline-flex items-center gap-1 px-2 py-1 bg-primary-50 text-primary-600 rounded text-sm">
-                      {district}
-                      <X
-                        className="w-3 h-3 cursor-pointer"
-                        onClick={() => {
-                          const newDistricts = filters.district?.filter((d) => d !== district);
-                          setFilters({ district: newDistricts?.length ? newDistricts : undefined });
-                        }}
-                      />
-                    </span>
-                  ))}
                 </div>
               )}
             </div>
+
+            {/* Smart Search Modal */}
+            {showSmartSearch && smartSearchType && (
+              <SmartSearchModal
+                type={smartSearchType}
+                onClose={() => { setShowSmartSearch(false); setSmartSearchType(null); }}
+                onApply={(params) => {
+                  if (smartSearchType === 'metro') {
+                    propertyApi.searchByMetro(params as any).then((res) => {
+                      if (res.success && res.data) {
+                        setProperties(res.data);
+                        usePropertyStore.getState().setProperties(res.data);
+                      }
+                    });
+                  }
+                  setShowSmartSearch(false);
+                  setSmartSearchType(null);
+                }}
+              />
+            )}
 
             {/* Property List */}
             {loading ? (
@@ -534,10 +859,26 @@ export default function PropertyList() {
               </div>
             ) : paginatedProperties.length === 0 ? (
               <div className="card p-12 text-center">
-                <div className="text-6xl mb-4">🔍</div>
-                <h3 className="text-xl font-semibold text-gray-900 mb-2">暂无符合条件的房源</h3>
-                <p className="text-gray-500 mb-4">试试调整筛选条件，或清除筛选后重新搜索</p>
-                <button onClick={resetFilters} className="btn-primary">清除筛选</button>
+                <div className="text-6xl mb-4">🏠</div>
+                <h3 className="text-xl font-semibold text-gray-900 mb-2">暂未找到匹配房源</h3>
+                <p className="text-gray-500 mb-2">
+                  当前筛选条件过于严格，建议：
+                </p>
+                <div className="flex flex-col items-start gap-1 text-sm text-gray-500 mb-6 max-w-md mx-auto">
+                  <div>• 放宽 <span className="text-primary-600 font-medium">价格区间</span>：试试上下浮动20%</div>
+                  <div>• 增加 <span className="text-primary-600 font-medium">户型/区域</span>：可选2~3个作为备选</div>
+                  <div>• 减少 <span className="text-primary-600 font-medium">特色标签</span>：如取消"满五唯一""近地铁"等硬性限制</div>
+                  <div>• 启用 <span className="text-primary-600 font-medium">智能搜索</span>：试试地铁半径或学区匹配</div>
+                </div>
+                <div className="flex items-center justify-center gap-3">
+                  <button onClick={resetFilters} className="btn-outline">清除全部筛选</button>
+                  <button
+                    onClick={() => { setFilters({ priceMax: undefined, priceMin: undefined, areaMax: undefined, areaMin: undefined }); }}
+                    className="btn-primary"
+                  >
+                    放宽价格面积
+                  </button>
+                </div>
               </div>
             ) : (
               <>
