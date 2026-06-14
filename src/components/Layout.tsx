@@ -46,7 +46,9 @@ const friendLinks = [
 export default function Layout() {
   const location = useLocation();
   const navigate = useNavigate();
-  const { user, isAuthenticated, logout } = useUserStore();
+  const user = useUserStore((s) => s.user);
+  const isAuthenticated = useUserStore((s) => s.isAuthenticated);
+  const logout = useUserStore((s) => s.logout);
   const { voiceNavigation, highContrast, fontSize, screenReader, speak } = useAccessibilityStore();
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
@@ -54,13 +56,10 @@ export default function Layout() {
   const a11yEnabled = voiceNavigation || screenReader || highContrast || fontSize !== 'normal';
 
   useEffect(() => {
-    const unsub = useUserStore.subscribe((state, prevState) => {
-      if (!state.isAuthenticated && prevState.isAuthenticated) {
-        navigate('/login', { replace: true });
-      }
-    });
-    return unsub;
-  }, [navigate]);
+    if (!isAuthenticated) {
+      navigate('/login', { replace: true });
+    }
+  }, [isAuthenticated, navigate]);
 
   useEffect(() => {
     const handleClickOutside = (e: MouseEvent) => {
@@ -77,29 +76,16 @@ export default function Layout() {
   };
 
   const handleNavClick = (label: string) => {
-    if (voiceNavigation) {
-      speak(label);
-    }
+    if (voiceNavigation) speak(label);
   };
 
   const cityName = user?.city ? CITY_NAMES[user.city] : '成都';
 
-  if (location.pathname === '/login') {
-    return <Outlet />;
-  }
-
   if (!isAuthenticated) {
     return (
       <div className="min-h-screen flex flex-col items-center justify-center bg-slate-50 px-4">
-        <div className="w-12 h-12 border-3 border-gov-600 border-t-transparent rounded-full animate-spin" style={{ borderWidth: '3px' }} />
-        <p className="mt-4 text-slate-600 font-medium">正在验证身份...</p>
-        <button
-          type="button"
-          onClick={() => navigate('/login', { replace: true })}
-          className="mt-6 px-5 py-2 rounded-lg border border-gov-200 text-gov-700 hover:bg-gov-50 transition-all text-sm"
-        >
-          返回登录页
-        </button>
+        <div className="w-10 h-10 border-2 border-gov-600 border-t-transparent rounded-full animate-spin" />
+        <p className="mt-4 text-slate-600 font-medium">正在跳转到登录页...</p>
       </div>
     );
   }
@@ -114,10 +100,7 @@ export default function Layout() {
                 <Shield className="w-6 h-6 text-white" />
               </div>
               <div className="flex flex-col">
-                <h1
-                  className="text-lg font-bold text-slate-900 leading-tight"
-                  aria-label={a11yEnabled ? '成都都市圈政务服务平台' : undefined}
-                >
+                <h1 className="text-lg font-bold text-slate-900 leading-tight" aria-label={a11yEnabled ? '成都都市圈政务服务平台' : undefined}>
                   成都都市圈政务服务平台
                 </h1>
                 <div className="flex items-center gap-1.5 text-xs text-slate-500">
@@ -127,11 +110,7 @@ export default function Layout() {
               </div>
             </div>
 
-            <nav
-              className="hidden lg:flex items-center gap-1"
-              aria-label={a11yEnabled ? '主导航' : undefined}
-              role="navigation"
-            >
+            <nav className="hidden lg:flex items-center gap-1" aria-label={a11yEnabled ? '主导航' : undefined} role="navigation">
               {navItems.map(({ to, label, icon: Icon }) => (
                 <NavLink
                   key={to}
@@ -142,9 +121,7 @@ export default function Layout() {
                   className={({ isActive }) =>
                     cn(
                       'flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-medium transition-all duration-200',
-                      isActive
-                        ? 'bg-gov-50 text-gov-700 shadow-inner'
-                        : 'text-slate-600 hover:text-gov-700 hover:bg-gov-50/60'
+                      isActive ? 'bg-gov-50 text-gov-700 shadow-inner' : 'text-slate-600 hover:text-gov-700 hover:bg-gov-50/60'
                     )
                   }
                 >
@@ -175,57 +152,35 @@ export default function Layout() {
                     {user?.name?.charAt(0) || 'U'}
                   </div>
                   <div className="hidden sm:flex flex-col items-start">
-                    <span className="text-sm font-medium text-slate-800 leading-tight">
-                      {user?.name || '用户'}
-                    </span>
+                    <span className="text-sm font-medium text-slate-800 leading-tight">{user?.name || '用户'}</span>
                     <span className="text-xs text-slate-500 leading-tight">已认证</span>
                   </div>
-                  <ChevronDown
-                    className={cn(
-                      'w-4 h-4 text-slate-400 transition-transform duration-200',
-                      dropdownOpen && 'rotate-180'
-                    )}
-                  />
+                  <ChevronDown className={cn('w-4 h-4 text-slate-400 transition-transform duration-200', dropdownOpen && 'rotate-180')} />
                 </button>
 
                 {dropdownOpen && (
-                  <div
-                    className="absolute right-0 top-full mt-2 w-48 bg-white rounded-xl border border-slate-200 shadow-lg py-2 animate-fade-in z-50"
-                    role="menu"
-                  >
+                  <div className="absolute right-0 top-full mt-2 w-48 bg-white rounded-xl border border-slate-200 shadow-lg py-2 animate-fade-in z-50" role="menu">
                     <button
-                      onClick={() => {
-                        setDropdownOpen(false);
-                        navigate('/profile');
-                      }}
+                      onClick={() => { setDropdownOpen(false); navigate('/profile'); }}
                       role="menuitem"
                       className="w-full flex items-center gap-3 px-4 py-2.5 text-sm text-slate-700 hover:bg-gov-50 hover:text-gov-700 transition-colors duration-150"
-                      aria-label={a11yEnabled ? '个人中心' : undefined}
                     >
                       <User className="w-4 h-4" />
                       <span>个人中心</span>
                     </button>
                     <button
-                      onClick={() => {
-                        setDropdownOpen(false);
-                        navigate('/accessibility');
-                      }}
+                      onClick={() => { setDropdownOpen(false); navigate('/accessibility'); }}
                       role="menuitem"
                       className="w-full flex items-center gap-3 px-4 py-2.5 text-sm text-slate-700 hover:bg-gov-50 hover:text-gov-700 transition-colors duration-150"
-                      aria-label={a11yEnabled ? '无障碍设置' : undefined}
                     >
                       <Settings className="w-4 h-4" />
                       <span>无障碍设置</span>
                     </button>
                     <div className="my-1 mx-4 border-t border-slate-100" />
                     <button
-                      onClick={() => {
-                        setDropdownOpen(false);
-                        handleLogout();
-                      }}
+                      onClick={() => { setDropdownOpen(false); handleLogout(); }}
                       role="menuitem"
                       className="w-full flex items-center gap-3 px-4 py-2.5 text-sm text-danger-600 hover:bg-danger-50 transition-colors duration-150"
-                      aria-label={a11yEnabled ? '退出登录' : undefined}
                     >
                       <LogOut className="w-4 h-4" />
                       <span>退出登录</span>
@@ -238,10 +193,7 @@ export default function Layout() {
         </div>
       </header>
 
-      <nav
-        className="lg:hidden bg-white border-b border-slate-200 overflow-x-auto scrollbar-thin"
-        aria-label={a11yEnabled ? '移动端导航' : undefined}
-      >
+      <nav className="lg:hidden bg-white border-b border-slate-200 overflow-x-auto scrollbar-thin" aria-label={a11yEnabled ? '移动端导航' : undefined}>
         <div className="container flex items-center gap-1 py-2 min-w-max">
           {navItems.map(({ to, label, icon: Icon }) => (
             <NavLink
@@ -253,9 +205,7 @@ export default function Layout() {
               className={({ isActive }) =>
                 cn(
                   'flex flex-col items-center gap-1 px-3 py-1.5 rounded-lg text-xs font-medium transition-all duration-200 shrink-0',
-                  isActive
-                    ? 'bg-gov-50 text-gov-700'
-                    : 'text-slate-600 hover:text-gov-700 hover:bg-gov-50/60'
+                  isActive ? 'bg-gov-50 text-gov-700' : 'text-slate-600 hover:text-gov-700 hover:bg-gov-50/60'
                 )
               }
             >
@@ -289,10 +239,7 @@ export default function Layout() {
               <h4 className="text-white font-medium mb-4">四城协同</h4>
               <div className="grid grid-cols-2 gap-3">
                 {Object.entries(CITY_NAMES).map(([code, name]) => (
-                  <div
-                    key={code}
-                    className="flex items-center gap-2 px-3 py-2 rounded-lg bg-slate-800/50 text-sm"
-                  >
+                  <div key={code} className="flex items-center gap-2 px-3 py-2 rounded-lg bg-slate-800/50 text-sm">
                     <div className="w-2 h-2 rounded-full bg-gov-400" />
                     <span>{name}市</span>
                   </div>
@@ -304,11 +251,7 @@ export default function Layout() {
               <h4 className="text-white font-medium mb-4">友情链接</h4>
               <div className="flex flex-col gap-2">
                 {friendLinks.map((link) => (
-                  <a
-                    key={link.name}
-                    href={link.url}
-                    className="text-sm text-slate-400 hover:text-gov-400 transition-colors duration-200"
-                  >
+                  <a key={link.name} href={link.url} className="text-sm text-slate-400 hover:text-gov-400 transition-colors duration-200">
                     {link.name}
                   </a>
                 ))}
@@ -317,12 +260,8 @@ export default function Layout() {
           </div>
 
           <div className="mt-8 pt-6 border-t border-slate-800 flex flex-col md:flex-row items-center justify-between gap-4">
-            <p className="text-xs text-slate-500">
-              © 2025 成都都市圈政务服务平台 版权所有 | 蜀ICP备XXXXXXXX号
-            </p>
-            <p className="text-xs text-slate-500">
-              技术支持：成都都市圈政务服务大数据中心
-            </p>
+            <p className="text-xs text-slate-500">© 2025 成都都市圈政务服务平台 版权所有 | 蜀ICP备XXXXXXXX号</p>
+            <p className="text-xs text-slate-500">技术支持：成都都市圈政务服务大数据中心</p>
           </div>
         </div>
       </footer>

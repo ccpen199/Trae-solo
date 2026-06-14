@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import type { AuthMethod } from '@/types';
 import { useUserStore } from '@/stores/useUserStore';
@@ -55,16 +55,6 @@ const DEMO_ACCOUNTS = [
   { method: 'medicalcard' as AuthMethod, label: '医保凭证登录', idNumber: '510104198505120011', password: '123456', name: '张明华' },
 ];
 
-const doNavigateHome = () => {
-  console.log('[Redirect] 执行跳转至首页');
-  try {
-    window.location.replace('/');
-  } catch (e) {
-    console.warn('[Redirect] replace 失败，使用 href:', e);
-    window.location.href = '/';
-  }
-};
-
 export default function Login() {
   const navigate = useNavigate();
   const login = useUserStore((s) => s.login);
@@ -81,74 +71,13 @@ export default function Login() {
   const [faceScanning, setFaceScanning] = useState(false);
   const [faceScanProgress, setFaceScanProgress] = useState(0);
   const [error, setError] = useState('');
-  const [logging, setLogging] = useState(false);
-  const redirectTimer = useRef<number | null>(null);
+  const [submitting, setSubmitting] = useState(false);
 
   useEffect(() => {
     if (isAuthenticated) {
-      console.log('[Redirect] isAuthenticated 变为 true，准备跳转');
-      if (redirectTimer.current) window.clearTimeout(redirectTimer.current);
-      try {
-        navigate('/', { replace: true });
-        console.log('[Redirect] navigate 已调用');
-      } catch (e) {
-        console.warn('[Redirect] navigate 异常，使用强制跳转:', e);
-      }
-      redirectTimer.current = window.setTimeout(() => {
-        console.log('[Redirect] navigate 超时保险，强制跳转');
-        doNavigateHome();
-      }, 600);
+      navigate('/', { replace: true });
     }
-    return () => {
-      if (redirectTimer.current) {
-        window.clearTimeout(redirectTimer.current);
-        redirectTimer.current = null;
-      }
-    };
   }, [isAuthenticated, navigate]);
-
-  useEffect(() => {
-    const checkSaved = () => {
-      try {
-        const raw = localStorage.getItem('gov_user_session');
-        if (raw) {
-          const parsed = JSON.parse(raw);
-          if (parsed?.isAuthenticated && parsed?.user) {
-            console.log('[Redirect] localStorage 已有登录会话，立即跳转');
-            doNavigateHome();
-          }
-        }
-      } catch {
-        // ignore
-      }
-    };
-    checkSaved();
-
-    const onStorage = (e: StorageEvent) => {
-      if (e.key === 'gov_user_session' && e.newValue) {
-        try {
-          const parsed = JSON.parse(e.newValue);
-          if (parsed?.isAuthenticated) {
-            doNavigateHome();
-          }
-        } catch {
-          // ignore
-        }
-      }
-    };
-    window.addEventListener('storage', onStorage);
-
-    const onLoginEvent = () => {
-      console.log('[Redirect] 收到登录事件，跳转');
-      doNavigateHome();
-    };
-    window.addEventListener('gov_login_success', onLoginEvent);
-
-    return () => {
-      window.removeEventListener('storage', onStorage);
-      window.removeEventListener('gov_login_success', onLoginEvent);
-    };
-  }, []);
 
   const currentTab = TABS.find((t) => t.key === formData.authMethod) || TABS[0];
 
@@ -163,46 +92,25 @@ export default function Login() {
   };
 
   const doLogin = async (method: AuthMethod, creds: { idCard?: string; password: string }) => {
-    setLogging(true);
+    setSubmitting(true);
     setError('');
-    console.log('[Login] 发起登录请求', method);
     try {
       const success = await login(method, creds);
-      console.log('[Login] login 返回:', success, '当前 store.isAuthenticated=', useUserStore.getState().isAuthenticated);
       if (success) {
-        if (useUserStore.getState().isAuthenticated) {
-          console.log('[Login] 状态已更新，启动跳转');
-          try {
-            navigate('/', { replace: true });
-          } catch (e) {
-            console.warn('[Login] navigate 失败:', e);
-          }
-          if (redirectTimer.current) window.clearTimeout(redirectTimer.current);
-          redirectTimer.current = window.setTimeout(() => {
-            if (useUserStore.getState().isAuthenticated) {
-              console.log('[Login] 强制跳转保险触发');
-              doNavigateHome();
-            }
-          }, 500);
-        } else {
-          console.error('[Login] 返回 success 但 isAuthenticated 为 false');
-          setError('登录状态异常，请重试');
-        }
+        navigate('/', { replace: true });
       } else {
         setError('登录失败，请检查账号或密码（默认密码：123456）');
       }
-    } catch (e) {
-      console.error('[Login] 异常:', e);
+    } catch {
       setError('登录异常，请稍后重试');
     } finally {
-      setLogging(false);
+      setSubmitting(false);
     }
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setError('');
-
     if (!formData.idNumber.trim()) {
       setError(`请输入${currentTab.fieldLabel}`);
       return;
@@ -215,29 +123,17 @@ export default function Login() {
       setError('请先阅读并同意服务条款');
       return;
     }
-    await doLogin(formData.authMethod, {
-      idCard: formData.idNumber,
-      password: formData.password,
-    });
+    await doLogin(formData.authMethod, { idCard: formData.idNumber, password: formData.password });
   };
 
   const handleDemoLogin = (demo: typeof DEMO_ACCOUNTS[number]) => {
-    setFormData({
-      idNumber: demo.idNumber,
-      password: demo.password,
-      authMethod: demo.method,
-      agreed: true,
-    });
+    setFormData({ idNumber: demo.idNumber, password: demo.password, authMethod: demo.method, agreed: true });
+    setError('');
     doLogin(demo.method, { idCard: demo.idNumber, password: demo.password });
   };
 
   const fillDemo = (demo: typeof DEMO_ACCOUNTS[number]) => {
-    setFormData({
-      idNumber: demo.idNumber,
-      password: demo.password,
-      authMethod: demo.method,
-      agreed: true,
-    });
+    setFormData({ idNumber: demo.idNumber, password: demo.password, authMethod: demo.method, agreed: true });
     setError('');
   };
 
@@ -263,21 +159,19 @@ export default function Login() {
 
   useEffect(() => {
     if (faceScanProgress >= 100 && faceScanning) {
-      doLogin('face', { password: '123456' }).catch(() => {
-        setFaceScanning(false);
-      });
+      doLogin('face', { password: '123456' }).catch(() => setFaceScanning(false));
     }
   }, [faceScanProgress, faceScanning]);
 
   const circumference = 2 * Math.PI * 44;
   const strokeDashoffset = circumference - (faceScanProgress / 100) * circumference;
+  const busy = loading || submitting;
 
   return (
     <div className="min-h-screen flex bg-slate-50">
       <div className="hidden lg:flex lg:w-1/2 relative overflow-hidden bg-gov-gradient">
         <div className="absolute inset-0 bg-grid-texture bg-grid opacity-60" />
         <div className="absolute inset-0 bg-hero-pattern" />
-
         <div className="relative z-10 flex flex-col justify-between h-full p-12 text-white">
           <div>
             <div className="flex items-center gap-3 mb-10">
@@ -289,7 +183,6 @@ export default function Login() {
                 <p className="text-sm text-white/70 mt-0.5">政务服务一体化平台</p>
               </div>
             </div>
-
             <div className="mt-16">
               <h2 className="text-4xl font-bold leading-tight">
                 四城协同
@@ -301,19 +194,11 @@ export default function Login() {
                 让数据多跑路，群众少跑腿。
               </p>
             </div>
-
             <div className="mt-10 grid grid-cols-2 gap-4">
               {CITIES.map((city) => {
                 const Icon = city.icon;
                 return (
-                  <div
-                    key={city.name}
-                    className={cn(
-                      'group relative overflow-hidden rounded-xl p-5 bg-gradient-to-br backdrop-blur-sm border border-white/10',
-                      city.color
-                    )}
-                    style={{ animationDelay: city.delay }}
-                  >
+                  <div key={city.name} className={cn('group relative overflow-hidden rounded-xl p-5 bg-gradient-to-br backdrop-blur-sm border border-white/10', city.color)} style={{ animationDelay: city.delay }}>
                     <div className="flex items-center gap-3">
                       <div className="w-10 h-10 rounded-lg bg-white/20 flex items-center justify-center">
                         <Icon className="w-5 h-5" />
@@ -328,15 +213,11 @@ export default function Login() {
               })}
             </div>
           </div>
-
           <div>
             <p className="text-sm font-medium text-white/70 mb-3">平台特色能力</p>
             <div className="flex flex-wrap gap-2">
               {FEATURE_TAGS.map((tag) => (
-                <span
-                  key={tag}
-                  className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-white/10 backdrop-blur-sm text-sm border border-white/15"
-                >
+                <span key={tag} className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-white/10 backdrop-blur-sm text-sm border border-white/15">
                   <Sparkles className="w-3.5 h-3.5 text-warm-400" />
                   {tag}
                 </span>
@@ -369,18 +250,7 @@ export default function Login() {
                 <div className="relative w-32 h-32">
                   <svg className="w-32 h-32 -rotate-90" viewBox="0 0 100 100">
                     <circle cx="50" cy="50" r="44" fill="none" stroke="#E2E8F0" strokeWidth="4" />
-                    <circle
-                      cx="50"
-                      cy="50"
-                      r="44"
-                      fill="none"
-                      stroke="url(#faceGradient)"
-                      strokeWidth="4"
-                      strokeLinecap="round"
-                      strokeDasharray={circumference}
-                      strokeDashoffset={strokeDashoffset}
-                      className="transition-all duration-75 ease-linear"
-                    />
+                    <circle cx="50" cy="50" r="44" fill="none" stroke="url(#faceGradient)" strokeWidth="4" strokeLinecap="round" strokeDasharray={circumference} strokeDashoffset={strokeDashoffset} className="transition-all duration-75 ease-linear" />
                     <defs>
                       <linearGradient id="faceGradient" x1="0%" y1="0%" x2="100%" y2="0%">
                         <stop offset="0%" stopColor="#3B82F6" />
@@ -389,31 +259,12 @@ export default function Login() {
                     </defs>
                   </svg>
                   <div className="absolute inset-0 flex items-center justify-center">
-                    {faceScanProgress < 100 ? (
-                      <Camera className="w-12 h-12 text-gov-600" />
-                    ) : (
-                      <CheckCircle2 className="w-12 h-12 text-success-600 animate-pulse" />
-                    )}
+                    {faceScanProgress < 100 ? <Camera className="w-12 h-12 text-gov-600" /> : <CheckCircle2 className="w-12 h-12 text-success-600 animate-pulse" />}
                   </div>
                 </div>
-                <p className="mt-6 text-lg font-medium text-slate-800">
-                  {faceScanProgress < 100 ? '正在识别中...' : '识别成功'}
-                </p>
-                <p className="mt-1 text-sm text-slate-500">
-                  {faceScanProgress < 100
-                    ? `请将面部对准摄像头 ${faceScanProgress}%`
-                    : '正在完成登录...'}
-                </p>
-                <button
-                  type="button"
-                  onClick={() => {
-                    setFaceScanning(false);
-                    setFaceScanProgress(0);
-                  }}
-                  className="mt-6 px-4 py-2 text-sm text-slate-500 hover:text-slate-700"
-                >
-                  取消
-                </button>
+                <p className="mt-6 text-lg font-medium text-slate-800">{faceScanProgress < 100 ? '正在识别中...' : '识别成功'}</p>
+                <p className="mt-1 text-sm text-slate-500">{faceScanProgress < 100 ? `请将面部对准摄像头 ${faceScanProgress}%` : '正在完成登录...'}</p>
+                <button type="button" onClick={() => { setFaceScanning(false); setFaceScanProgress(0); }} className="mt-6 px-4 py-2 text-sm text-slate-500 hover:text-slate-700">取消</button>
               </div>
             ) : (
               <>
@@ -423,17 +274,7 @@ export default function Login() {
                       const TabIcon = tab.icon;
                       const isActive = formData.authMethod === tab.key;
                       return (
-                        <button
-                          key={tab.key}
-                          type="button"
-                          onClick={() => handleTabChange(tab.key)}
-                          className={cn(
-                            'relative flex flex-col items-center justify-center gap-1.5 py-2.5 rounded-lg text-xs font-medium transition-all duration-200',
-                            isActive
-                              ? 'bg-white text-gov-700 shadow-sm'
-                              : 'text-slate-500 hover:text-slate-700'
-                          )}
-                        >
+                        <button key={tab.key} type="button" onClick={() => handleTabChange(tab.key)} className={cn('relative flex flex-col items-center justify-center gap-1.5 py-2.5 rounded-lg text-xs font-medium transition-all duration-200', isActive ? 'bg-white text-gov-700 shadow-sm' : 'text-slate-500 hover:text-slate-700')}>
                           <TabIcon className="w-4 h-4" />
                           {tab.label}
                         </button>
@@ -442,21 +283,12 @@ export default function Login() {
                   </div>
 
                   <div>
-                    <label className="block text-sm font-medium text-slate-700 mb-1.5">
-                      {currentTab.fieldLabel}
-                    </label>
+                    <label className="block text-sm font-medium text-slate-700 mb-1.5">{currentTab.fieldLabel}</label>
                     <div className="relative">
                       <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
                         <CircleUser className="w-5 h-5 text-slate-400" />
                       </div>
-                      <input
-                        type="text"
-                        value={formData.idNumber}
-                        onChange={(e) => handleInputChange('idNumber', e.target.value)}
-                        placeholder={currentTab.placeholder}
-                        autoComplete="username"
-                        className="w-full pl-10 pr-4 py-2.5 border border-slate-200 rounded-lg text-slate-900 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-gov-500/30 focus:border-gov-500 transition-all"
-                      />
+                      <input type="text" value={formData.idNumber} onChange={(e) => handleInputChange('idNumber', e.target.value)} placeholder={currentTab.placeholder} autoComplete="username" className="w-full pl-10 pr-4 py-2.5 border border-slate-200 rounded-lg text-slate-900 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-gov-500/30 focus:border-gov-500 transition-all" />
                     </div>
                   </div>
 
@@ -466,75 +298,32 @@ export default function Login() {
                       <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
                         <CreditCard className="w-5 h-5 text-slate-400" />
                       </div>
-                      <input
-                        type={showPassword ? 'text' : 'password'}
-                        value={formData.password}
-                        onChange={(e) => handleInputChange('password', e.target.value)}
-                        placeholder="请输入登录密码（默认：123456）"
-                        autoComplete="current-password"
-                        className="w-full pl-10 pr-12 py-2.5 border border-slate-200 rounded-lg text-slate-900 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-gov-500/30 focus:border-gov-500 transition-all"
-                      />
-                      <button
-                        type="button"
-                        onClick={() => setShowPassword(!showPassword)}
-                        className="absolute inset-y-0 right-0 pr-3 flex items-center text-slate-400 hover:text-slate-600"
-                      >
+                      <input type={showPassword ? 'text' : 'password'} value={formData.password} onChange={(e) => handleInputChange('password', e.target.value)} placeholder="请输入登录密码（默认：123456）" autoComplete="current-password" className="w-full pl-10 pr-12 py-2.5 border border-slate-200 rounded-lg text-slate-900 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-gov-500/30 focus:border-gov-500 transition-all" />
+                      <button type="button" onClick={() => setShowPassword(!showPassword)} className="absolute inset-y-0 right-0 pr-3 flex items-center text-slate-400 hover:text-slate-600">
                         {showPassword ? <EyeOff className="w-5 h-5" /> : <Eye className="w-5 h-5" />}
                       </button>
                     </div>
                   </div>
 
-                  {error && (
-                    <div className="p-3 bg-danger-50 border border-danger-500/20 rounded-lg text-sm text-danger-600">
-                      {error}
-                    </div>
-                  )}
+                  {error && <div className="p-3 bg-danger-50 border border-danger-500/20 rounded-lg text-sm text-danger-600">{error}</div>}
 
                   <label className="flex items-start gap-2 cursor-pointer">
-                    <input
-                      type="checkbox"
-                      checked={formData.agreed}
-                      onChange={(e) => handleInputChange('agreed', e.target.checked)}
-                      className="mt-0.5 w-4 h-4 rounded border-slate-300 text-gov-600 focus:ring-gov-500"
-                    />
+                    <input type="checkbox" checked={formData.agreed} onChange={(e) => handleInputChange('agreed', e.target.checked)} className="mt-0.5 w-4 h-4 rounded border-slate-300 text-gov-600 focus:ring-gov-500" />
                     <span className="text-sm text-slate-600 leading-relaxed">
-                      我已阅读并同意
-                      <a href="#" className="text-gov-600 hover:text-gov-700 mx-0.5">《服务条款》</a>
-                      和
-                      <a href="#" className="text-gov-600 hover:text-gov-700 mx-0.5">《隐私政策》</a>
+                      我已阅读并同意<a href="#" className="text-gov-600 hover:text-gov-700 mx-0.5">《服务条款》</a>和<a href="#" className="text-gov-600 hover:text-gov-700 mx-0.5">《隐私政策》</a>
                     </span>
                   </label>
 
-                  <button
-                    type="submit"
-                    disabled={loading || logging}
-                    className="w-full py-3 bg-gov-gradient text-white font-medium rounded-xl hover:opacity-90 hover:shadow-gov disabled:opacity-70 disabled:cursor-not-allowed transition-all flex items-center justify-center gap-2"
-                  >
-                    {loading || logging ? (
-                      <>
-                        <Loader2 className="w-5 h-5 animate-spin" />
-                        登录中...
-                      </>
-                    ) : (
-                      '登录'
-                    )}
+                  <button type="submit" disabled={busy} className="w-full py-3 bg-gov-gradient text-white font-medium rounded-xl hover:opacity-90 hover:shadow-gov disabled:opacity-70 disabled:cursor-not-allowed transition-all flex items-center justify-center gap-2">
+                    {busy ? <><Loader2 className="w-5 h-5 animate-spin" />登录中...</> : '登录'}
                   </button>
 
                   <div className="relative">
-                    <div className="absolute inset-0 flex items-center">
-                      <div className="w-full border-t border-slate-200" />
-                    </div>
-                    <div className="relative flex justify-center text-xs">
-                      <span className="px-3 bg-white text-slate-400">其他登录方式</span>
-                    </div>
+                    <div className="absolute inset-0 flex items-center"><div className="w-full border-t border-slate-200" /></div>
+                    <div className="relative flex justify-center text-xs"><span className="px-3 bg-white text-slate-400">其他登录方式</span></div>
                   </div>
 
-                  <button
-                    type="button"
-                    onClick={startFaceScan}
-                    disabled={loading || logging}
-                    className="w-full py-2.5 border border-slate-200 text-slate-700 font-medium rounded-xl hover:bg-slate-50 hover:border-slate-300 transition-all flex items-center justify-center gap-2 disabled:opacity-50"
-                  >
+                  <button type="button" onClick={startFaceScan} disabled={busy} className="w-full py-2.5 border border-slate-200 text-slate-700 font-medium rounded-xl hover:bg-slate-50 hover:border-slate-300 transition-all flex items-center justify-center gap-2 disabled:opacity-50">
                     <Camera className="w-5 h-5 text-gov-600" />
                     人脸识别登录
                   </button>
@@ -545,21 +334,12 @@ export default function Login() {
                   <div className="space-y-2">
                     {DEMO_ACCOUNTS.map((demo) => (
                       <div key={demo.method} className="flex items-center gap-2">
-                        <button
-                          type="button"
-                          onClick={() => fillDemo(demo)}
-                          className="flex-1 text-left px-3 py-2 rounded-lg border border-slate-200 text-sm text-slate-600 hover:bg-gov-50 hover:border-gov-300 transition-all"
-                        >
+                        <button type="button" onClick={() => fillDemo(demo)} className="flex-1 text-left px-3 py-2 rounded-lg border border-slate-200 text-sm text-slate-600 hover:bg-gov-50 hover:border-gov-300 transition-all">
                           <span className="font-medium text-slate-800">{demo.label}</span>
                           <span className="text-xs text-slate-400 ml-2">{demo.idNumber.slice(0, 6)}****{demo.idNumber.slice(-4)}</span>
                         </button>
-                        <button
-                          type="button"
-                          onClick={() => handleDemoLogin(demo)}
-                          disabled={loading || logging}
-                          className="px-4 py-2 rounded-lg bg-gov-600 text-white text-sm font-medium hover:bg-gov-700 disabled:opacity-50 disabled:cursor-not-allowed transition-all"
-                        >
-                          {loading || logging ? '登录中' : '一键登录'}
+                        <button type="button" onClick={() => handleDemoLogin(demo)} disabled={busy} className="px-4 py-2 rounded-lg bg-gov-600 text-white text-sm font-medium hover:bg-gov-700 disabled:opacity-50 disabled:cursor-not-allowed transition-all">
+                          {busy ? '登录中' : '一键登录'}
                         </button>
                       </div>
                     ))}

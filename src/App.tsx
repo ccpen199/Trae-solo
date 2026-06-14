@@ -1,5 +1,4 @@
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import { useEffect } from 'react';
 import Layout from '@/components/Layout';
 import Login from '@/pages/Login';
 import Home from '@/pages/Home';
@@ -10,20 +9,10 @@ import Family from '@/pages/Family';
 import Accessibility from '@/pages/Accessibility';
 import Heatmap from '@/pages/Heatmap';
 import Profile from '@/pages/Profile';
-import { useUserStore } from '@/stores/useUserStore';
-
-function SessionRestorer() {
-  const restoreSession = useUserStore((s) => s.restoreSession);
-  useEffect(() => {
-    restoreSession();
-  }, [restoreSession]);
-  return null;
-}
 
 export default function App() {
   return (
     <Router>
-      <SessionRestorer />
       <Routes>
         <Route path="/login" element={<Login />} />
         <Route element={<Layout />}>
