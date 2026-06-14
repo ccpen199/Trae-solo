@@ -24,7 +24,7 @@ const PAGE_I18N = {
     eyebrow: '覆盖内地 · 港澳台 · 日韩 · 东南亚',
     title: '跨境演出票务基础设施',
     sub: '动态定价 · 假票溯源 · 无票赔付 · IP 资产图谱 · 跨城轨迹',
-    cta1: '浏览在售演出',
+    cta1: '立即购买 / 购票下单',
     cta2: '工单中心',
     stageTitle: '今日动态定价指数',
     gmvTitle: '跨境 GMV 分币种',
@@ -189,7 +189,7 @@ export default function Dashboard() {
               {t.sub}
             </p>
             <div className="mt-8 flex flex-wrap gap-3">
-              <Link to="/events" className="btn-primary">
+              <Link to="/events/ev-sahara-tp" className="btn-primary">
                 <Sparkles className="w-4 h-4" /> {t.cta1} <ArrowRight className="w-4 h-4" />
               </Link>
               <Link to="/tickets" className="btn-ghost">

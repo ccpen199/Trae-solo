@@ -52,7 +52,7 @@ CREATE TABLE IF NOT EXISTS venues (
 
 CREATE TABLE IF NOT EXISTS organizers (
   id TEXT PRIMARY KEY,
-  name_zh TEXT NOT NULL, name_en TEXT NOT NULL,
+  name_zh TEXT NOT NULL, name_en TEXT NOT NULL, name_ja TEXT, name_ko TEXT,
   logo TEXT, region TEXT NOT NULL
 );
 
@@ -173,6 +173,8 @@ db.exec(SCHEMA);
   addColIfMissing('ticket_issues', 'summary', 'TEXT');
   addColIfMissing('ticket_issues', 'evidence', 'TEXT');
   addColIfMissing('ticket_issues', 'reporter', 'TEXT');
+  addColIfMissing('organizers', 'name_ja', 'TEXT');
+  addColIfMissing('organizers', 'name_ko', 'TEXT');
   addColIfMissing('verify_terminals', 'terminal_type', 'TEXT DEFAULT "HANDHELD"');
   addColIfMissing('verify_terminals', 'gate_no', 'TEXT');
   addColIfMissing('verify_terminals', 'sign_key', 'TEXT');

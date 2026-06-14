@@ -199,14 +199,14 @@ export function listEvents(q: {
   const artists = loadArtistsById();
   const wh: string[] = [];
   const args: any[] = [];
-  if (q.region) { wh.push('region=?'); args.push(q.region); }
-  if (q.type) { wh.push('type=?'); args.push(q.type); }
+  if (q.region && q.region !== 'all') { wh.push('region=?'); args.push(q.region); }
+  if (q.type && q.type !== 'all') { wh.push('type=?'); args.push(q.type); }
   if (q.keyword) {
     const k = `%${q.keyword}%`;
     wh.push('(title_zh LIKE ? OR title_en LIKE ? OR title_ja LIKE ? OR title_ko LIKE ? OR EXISTS (SELECT 1 FROM venues v WHERE v.id=events.venue_id AND (v.name_zh LIKE ? OR v.name_en LIKE ?)))');
     args.push(k, k, k, k, k, k);
   }
-  if (q.currency) {
+  if (q.currency && q.currency !== 'all') {
     wh.push('currencies LIKE ?');
     args.push(`%${q.currency}%`);
   }
@@ -340,7 +340,7 @@ function toIssueRow(r: any): TicketIssue {
 
 export function listIssues(filter: { type?: string; status?: string; keyword?: string } = {}): TicketIssue[] {
   const wh: string[] = []; const args: any[] = [];
-  if (filter.type) { wh.push('type=?'); args.push(filter.type); }
+  if (filter.type && filter.type !== 'all') { wh.push('type=?'); args.push(filter.type); }
   if (filter.status) { wh.push('UPPER(status)=?'); args.push(filter.status.toUpperCase()); }
   if (filter.keyword) {
     wh.push('(title LIKE ? OR description LIKE ? OR crypto_tag LIKE ? OR order_id LIKE ?)');
