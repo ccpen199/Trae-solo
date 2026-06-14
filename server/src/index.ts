@@ -11,6 +11,9 @@ import milestoneRoutes from './routes/milestoneRoutes'
 import paymentRoutes from './routes/paymentRoutes'
 import riskRoutes from './routes/riskRoutes'
 import adminRoutes from './routes/adminRoutes'
+import collaborationRoutes from './routes/collaborationRoutes'
+import fileVersionRoutes from './routes/fileVersionRoutes'
+import { refreshDemoData } from './utils/refreshData'
 
 const app = express()
 const HOST = process.env.HOST || '127.0.0.1'
@@ -31,6 +34,8 @@ app.use('/api/milestones', milestoneRoutes)
 app.use('/api/payments', paymentRoutes)
 app.use('/api/risk', riskRoutes)
 app.use('/api/admin', adminRoutes)
+app.use('/api/collaborations', collaborationRoutes)
+app.use('/api/file-versions', fileVersionRoutes)
 
 app.get('/api/health', (req, res) => {
   res.json({ status: 'ok', message: '创意服务众包平台 API 运行正常' })
@@ -84,9 +89,12 @@ app.use((err: Error, req: express.Request, res: express.Response, next: express.
   res.status(500).json({ error: '服务器内部错误' })
 })
 
-const server = app.listen(PORT, HOST, () => {
+const server = app.listen(PORT, HOST, async () => {
   console.log(`服务器运行在 http://${HOST}:${PORT}`)
   console.log(`上传目录: ${path.join(process.cwd(), uploadDir)}`)
+  setTimeout(() => {
+    refreshDemoData().catch(e => console.error('自动刷新数据失败:', e))
+  }, 1500)
 })
 
 process.on('SIGTERM', () => {

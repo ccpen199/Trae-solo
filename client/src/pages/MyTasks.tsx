@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom'
 import { useAuthStore } from '../store/authStore'
 import api from '../api'
 import { Task } from '../types'
-import { Clock, DollarSign, Users, Briefcase } from 'lucide-react'
+import { Clock, DollarSign, Users, Briefcase, Edit, Trash2 } from 'lucide-react'
 
 export default function MyTasks() {
   const { user, isAuthenticated } = useAuthStore()
@@ -14,6 +14,7 @@ export default function MyTasks() {
 
   const statusFilters = [
     { value: 'ALL', label: '全部' },
+    { value: 'DRAFT', label: '草稿' },
     { value: 'BIDDING', label: '招标中' },
     { value: 'SELECTED', label: '已选标' },
     { value: 'IN_PROGRESS', label: '进行中' },
@@ -194,10 +195,10 @@ export default function MyTasks() {
         <div className="space-y-4">
           {tasks.map((task) => {
             const badge = statusBadge[task.status] || { label: task.status, color: 'bg-gray-100 text-gray-600' }
+            const isDraft = task.status === 'DRAFT'
             return (
-              <Link
+              <div
                 key={task.id}
-                to={`/tasks/${task.id}`}
                 className="card p-5 hover:shadow-md transition-all block"
               >
                 <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
@@ -230,9 +231,45 @@ export default function MyTasks() {
                     <div className="text-sm text-gray-400 mt-1">
                       {new Date(task.createdAt).toLocaleDateString()}
                     </div>
+                    <div className="flex items-center gap-2 mt-3 justify-start md:justify-end">
+                      {isDraft ? (
+                        <>
+                          <Link
+                            to={`/tasks/${task.id}/edit`}
+                            className="inline-flex items-center gap-1 px-3 py-1.5 text-sm text-primary-600 bg-primary-50 rounded-lg hover:bg-primary-100 transition-colors"
+                          >
+                            <Edit className="w-4 h-4" />
+                            编辑
+                          </Link>
+                          <button
+                            onClick={async () => {
+                              if (confirm('确定删除这个草稿吗？')) {
+                                try {
+                                  await api.delete(`/tasks/${task.id}`)
+                                  setTasks(prev => prev.filter(t => t.id !== task.id))
+                                } catch (err: any) {
+                                  alert(err.response?.data?.error || '删除失败')
+                                }
+                              }
+                            }}
+                            className="inline-flex items-center gap-1 px-3 py-1.5 text-sm text-red-600 bg-red-50 rounded-lg hover:bg-red-100 transition-colors"
+                          >
+                            <Trash2 className="w-4 h-4" />
+                            删除
+                          </button>
+                        </>
+                      ) : (
+                        <Link
+                          to={`/tasks/${task.id}`}
+                          className="inline-flex items-center gap-1 px-3 py-1.5 text-sm text-primary-600 bg-primary-50 rounded-lg hover:bg-primary-100 transition-colors"
+                        >
+                          查看详情
+                        </Link>
+                      )}
+                    </div>
                   </div>
                 </div>
-              </Link>
+              </div>
             )
           })}
         </div>

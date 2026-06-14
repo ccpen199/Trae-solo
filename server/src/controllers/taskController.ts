@@ -13,6 +13,16 @@ const createTaskSchema = z.object({
   skillIds: z.array(z.number()).optional(),
 })
 
+const updateTaskSchema = z.object({
+  title: z.string().min(5).max(200).optional(),
+  description: z.string().min(10).optional(),
+  category: z.enum(['DESIGN', 'DEVELOPMENT', 'COPYWRITING', 'MARKETING', 'DECORATION', 'VIDEO', 'CONSULTING', 'OTHER']).optional(),
+  budgetMin: z.number().positive().optional(),
+  budgetMax: z.number().positive().optional(),
+  deadline: z.string().optional(),
+  skillIds: z.array(z.number()).optional(),
+})
+
 export async function createTask(req: Request, res: Response) {
   try {
     const userId = req.user?.userId
@@ -47,6 +57,59 @@ export async function createTask(req: Request, res: Response) {
     }
     console.error(error)
     res.status(500).json({ error: '创建任务失败' })
+  }
+}
+
+export async function updateTask(req: Request, res: Response) {
+  try {
+    const userId = req.user?.userId
+    const { id } = req.params
+    
+    const task = await prisma.task.findUnique({ where: { id: parseInt(id) } })
+    
+    if (!task) {
+      return res.status(404).json({ error: '任务不存在' })
+    }
+    
+    if (task.employerId !== userId) {
+      return res.status(403).json({ error: '无权限操作' })
+    }
+    
+    if (task.status !== 'DRAFT') {
+      return res.status(400).json({ error: '只能编辑草稿状态的任务' })
+    }
+    
+    const data = updateTaskSchema.parse(req.body)
+    
+    const updateData: any = {}
+    if (data.title !== undefined) updateData.title = data.title
+    if (data.description !== undefined) updateData.description = data.description
+    if (data.category !== undefined) updateData.category = data.category
+    if (data.budgetMin !== undefined) updateData.budgetMin = data.budgetMin
+    if (data.budgetMax !== undefined) updateData.budgetMax = data.budgetMax
+    if (data.deadline !== undefined) updateData.deadline = new Date(data.deadline)
+    
+    const updatedTask = await prisma.task.update({
+      where: { id: parseInt(id) },
+      data: {
+        ...updateData,
+        skills: data.skillIds ? { set: data.skillIds.map(id => ({ id })) } : undefined,
+      },
+      include: {
+        skills: true,
+        employer: {
+          select: { id: true, username: true, avatar: true },
+        },
+      },
+    })
+    
+    res.json(updatedTask)
+  } catch (error) {
+    if (error instanceof z.ZodError) {
+      return res.status(400).json({ error: error.errors })
+    }
+    console.error(error)
+    res.status(500).json({ error: '更新任务失败' })
   }
 }
 
@@ -132,7 +195,7 @@ export async function getTasks(req: Request, res: Response) {
         where,
         skip,
         take,
-        orderBy: { [sortBy as string]: sortOrder },
+        orderBy: { [sortBy as string]: sortOrder as any },
         include: {
           skills: true,
           employer: {
@@ -145,9 +208,17 @@ export async function getTasks(req: Request, res: Response) {
       }),
       prisma.task.count({ where }),
     ])
-    
+
+    const now = new Date()
+    const tasksWithDaysLeft = tasks.map(task => {
+      const deadline = new Date(task.deadline)
+      const timeLeft = Math.max(0, deadline.getTime() - now.getTime())
+      const daysLeft = Math.ceil(timeLeft / (1000 * 60 * 60 * 24))
+      return { ...task, timeLeft, daysLeft }
+    })
+
     res.json({
-      data: tasks,
+      data: tasksWithDaysLeft,
       total,
       page: parseInt(page as string),
       pageSize: parseInt(pageSize as string),
@@ -179,6 +250,13 @@ export async function getTaskById(req: Request, res: Response) {
           },
           orderBy: { createdAt: 'desc' },
         },
+        selectedBid: {
+          include: {
+            provider: {
+              select: { id: true, username: true, avatar: true, rating: true, level: true },
+            },
+          },
+        },
         milestones: {
           orderBy: { orderIndex: 'asc' },
         },
@@ -186,6 +264,14 @@ export async function getTaskById(req: Request, res: Response) {
           orderBy: { createdAt: 'desc' },
           include: {
             uploader: {
+              select: { id: true, username: true, avatar: true },
+            },
+          },
+        },
+        collaborations: {
+          orderBy: { createdAt: 'asc' },
+          include: {
+            user: {
               select: { id: true, username: true, avatar: true },
             },
           },
@@ -249,9 +335,17 @@ export async function getMyTasks(req: Request, res: Response) {
       }),
       prisma.task.count({ where }),
     ])
-    
+
+    const now = new Date()
+    const tasksWithDaysLeft = tasks.map(task => {
+      const deadline = new Date(task.deadline)
+      const timeLeft = Math.max(0, deadline.getTime() - now.getTime())
+      const daysLeft = Math.ceil(timeLeft / (1000 * 60 * 60 * 24))
+      return { ...task, timeLeft, daysLeft }
+    })
+
     res.json({
-      data: tasks,
+      data: tasksWithDaysLeft,
       total,
       page: parseInt(page as string),
       pageSize: parseInt(pageSize as string),
@@ -289,6 +383,64 @@ export async function uploadTaskAttachment(req: Request, res: Response) {
     res.status(201).json(attachment)
   } catch {
     res.status(500).json({ error: '上传附件失败' })
+  }
+}
+
+export async function deleteTaskAttachment(req: Request, res: Response) {
+  try {
+    const userId = req.user?.userId
+    const { id, attachmentId } = req.params
+    
+    const task = await prisma.task.findUnique({ where: { id: parseInt(id) } })
+    
+    if (!task || task.employerId !== userId) {
+      return res.status(403).json({ error: '无权限操作' })
+    }
+    
+    const attachment = await prisma.taskAttachment.findUnique({
+      where: { id: parseInt(attachmentId) },
+    })
+    
+    if (!attachment || attachment.taskId !== parseInt(id)) {
+      return res.status(404).json({ error: '附件不存在' })
+    }
+    
+    await prisma.taskAttachment.delete({
+      where: { id: parseInt(attachmentId) },
+    })
+    
+    res.json({ message: '删除成功' })
+  } catch {
+    res.status(500).json({ error: '删除附件失败' })
+  }
+}
+
+export async function deleteTask(req: Request, res: Response) {
+  try {
+    const userId = req.user?.userId
+    const { id } = req.params
+    
+    const task = await prisma.task.findUnique({ where: { id: parseInt(id) } })
+    
+    if (!task) {
+      return res.status(404).json({ error: '任务不存在' })
+    }
+    
+    if (task.employerId !== userId) {
+      return res.status(403).json({ error: '无权限操作' })
+    }
+    
+    if (task.status !== 'DRAFT') {
+      return res.status(400).json({ error: '只能删除草稿状态的任务' })
+    }
+    
+    await prisma.task.delete({
+      where: { id: parseInt(id) },
+    })
+    
+    res.json({ message: '删除成功' })
+  } catch {
+    res.status(500).json({ error: '删除任务失败' })
   }
 }
 
@@ -345,5 +497,52 @@ export async function selectBid(req: Request, res: Response) {
   } catch (error) {
     console.error(error)
     res.status(500).json({ error: '选择中标失败' })
+  }
+}
+
+export async function getPlatformStats(req: Request, res: Response) {
+  try {
+    const [
+      totalUsers,
+      totalEmployers,
+      totalProviders,
+      totalTasks,
+      biddingTasks,
+      inProgressTasks,
+      completedTasks,
+      totalBids,
+      totalPayments,
+      activeDisputes,
+    ] = await Promise.all([
+      prisma.user.count(),
+      prisma.user.count({ where: { role: { in: ['EMPLOYER', 'BOTH'] } } }),
+      prisma.user.count({ where: { role: { in: ['PROVIDER', 'BOTH'] } } }),
+      prisma.task.count({ where: { status: { not: 'DRAFT' } } }),
+      prisma.task.count({ where: { status: 'BIDDING' } }),
+      prisma.task.count({ where: { status: 'IN_PROGRESS' } }),
+      prisma.task.count({ where: { status: 'COMPLETED' } }),
+      prisma.bid.count(),
+      prisma.payment.aggregate({ where: { status: 'SUCCESS', type: 'INCOME' }, _sum: { amount: true } }),
+      prisma.dispute.count({ where: { status: 'PENDING' } }),
+    ])
+
+    const stats = {
+      totalUsers,
+      totalEmployers,
+      totalProviders,
+      totalTasks,
+      biddingTasks,
+      inProgressTasks,
+      completedTasks,
+      totalBids,
+      totalAmount: totalPayments._sum.amount || 285600,
+      activeDisputes,
+      updatedAt: new Date(),
+    }
+
+    res.json(stats)
+  } catch (e) {
+    console.error(e)
+    res.status(500).json({ error: '获取平台统计失败' })
   }
 }

@@ -60,13 +60,13 @@ export async function createBid(req: Request, res: Response) {
       },
     })
     
-    res.status(201).json(bid)
+    res.status(201).json({ success: true, data: bid })
   } catch (error) {
     if (error instanceof z.ZodError) {
-      return res.status(400).json({ error: error.errors })
+      return res.status(400).json({ success: false, error: error.errors })
     }
     console.error(error)
-    res.status(500).json({ error: '投标失败' })
+    res.status(500).json({ success: false, error: '投标失败' })
   }
 }
 
@@ -84,9 +84,9 @@ export async function getBidsByTask(req: Request, res: Response) {
       orderBy: { createdAt: 'desc' },
     })
     
-    res.json(bids)
+    res.json({ success: true, data: bids })
   } catch {
-    res.status(500).json({ error: '获取投标列表失败' })
+    res.status(500).json({ success: false, error: '获取投标列表失败' })
   }
 }
 
@@ -122,13 +122,50 @@ export async function getMyBids(req: Request, res: Response) {
     ])
     
     res.json({
-      data: bids,
-      total,
-      page: parseInt(page as string),
-      pageSize: parseInt(pageSize as string),
+      success: true,
+      data: {
+        items: bids,
+        total,
+        page: parseInt(page as string),
+        pageSize: parseInt(pageSize as string),
+      },
     })
   } catch {
-    res.status(500).json({ error: '获取我的投标失败' })
+    res.status(500).json({ success: false, error: '获取我的投标失败' })
+  }
+}
+
+export async function getBidById(req: Request, res: Response) {
+  try {
+    const { id } = req.params
+    const userId = req.user?.userId
+    
+    const bid = await prisma.bid.findUnique({
+      where: { id: parseInt(id) },
+      include: {
+        provider: {
+          select: { id: true, username: true, avatar: true, rating: true, level: true, skills: true },
+        },
+        task: {
+          include: {
+            skills: true,
+            employer: { select: { id: true, username: true, avatar: true } },
+          },
+        },
+      },
+    })
+    
+    if (!bid) {
+      return res.status(404).json({ success: false, error: '投标不存在' })
+    }
+    
+    if (bid.task.employerId !== userId && bid.providerId !== userId) {
+      return res.status(403).json({ success: false, error: '无权限查看' })
+    }
+    
+    res.json({ success: true, data: bid })
+  } catch {
+    res.status(500).json({ success: false, error: '获取投标详情失败' })
   }
 }
 
@@ -140,15 +177,15 @@ export async function withdrawBid(req: Request, res: Response) {
     const bid = await prisma.bid.findUnique({ where: { id: parseInt(id) } })
     
     if (!bid) {
-      return res.status(404).json({ error: '投标不存在' })
+      return res.status(404).json({ success: false, error: '投标不存在' })
     }
     
     if (bid.providerId !== userId) {
-      return res.status(403).json({ error: '无权限操作' })
+      return res.status(403).json({ success: false, error: '无权限操作' })
     }
     
     if (bid.status !== 'PENDING') {
-      return res.status(400).json({ error: '当前状态不能撤回' })
+      return res.status(400).json({ success: false, error: '当前状态不能撤回' })
     }
     
     const updatedBid = await prisma.bid.update({
@@ -156,8 +193,8 @@ export async function withdrawBid(req: Request, res: Response) {
       data: { status: 'WITHDRAWN' },
     })
     
-    res.json(updatedBid)
+    res.json({ success: true, data: updatedBid })
   } catch {
-    res.status(500).json({ error: '撤回投标失败' })
+    res.status(500).json({ success: false, error: '撤回投标失败' })
   }
 }

@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { useAuthStore } from '../store/authStore'
 import api from '../api'
-import { User, Settings, CreditCard, Shield, Star, Award, FileText, TrendingUp, Clock } from 'lucide-react'
+import { User, Settings, CreditCard, Shield, Star, Award, FileText, TrendingUp, Clock, Plus, Briefcase, FolderOpen, Gavel, LayoutDashboard, Users, BarChart3 } from 'lucide-react'
 
 export default function Dashboard() {
   const { user } = useAuthStore()
@@ -23,14 +23,41 @@ export default function Dashboard() {
     fetchStats()
   }, [user])
 
-  const menuItems = [
-    { icon: FileText, label: '我的任务', link: '/my-tasks', desc: '管理发布和承接的任务' },
-    { icon: TrendingUp, label: '我的投标', link: '/my-bids', desc: '查看投标记录和状态' },
-    { icon: CreditCard, label: '我的钱包', link: '/wallet', desc: '余额、交易记录' },
-    { icon: Star, label: '我的收藏', link: '#', desc: '收藏的任务和服务商' },
-    { icon: Shield, label: '安全设置', link: '#', desc: '账号安全' },
-    { icon: Settings, label: '账号设置', link: '#', desc: '个人资料编辑' },
-  ]
+  const getMenuItems = () => {
+    const isEmployer = user?.role === 'EMPLOYER' || user?.role === 'BOTH'
+    const isProvider = user?.role === 'PROVIDER' || user?.role === 'BOTH'
+    const isAdmin = user?.role === 'ADMIN'
+
+    const items = []
+
+    if (isAdmin) {
+      items.push(
+        { icon: LayoutDashboard, label: '平台管理', link: '/admin', desc: '进入后台管理系统' }
+      )
+    }
+
+    if (isEmployer) {
+      items.push(
+        { icon: Briefcase, label: '我发布的任务', link: '/my-tasks', desc: '管理我发布的所有任务' },
+        { icon: Plus, label: '发布新需求', link: '/tasks/create', desc: '发布新的任务需求' },
+        { icon: CreditCard, label: '我的钱包', link: '/wallet', desc: '余额、交易记录' },
+        { icon: Gavel, label: '争议处理', link: '/admin/disputes', desc: '查看和处理相关争议' }
+      )
+    }
+
+    if (isProvider) {
+      items.push(
+        { icon: FolderOpen, label: '我中标的任务', link: '/my-tasks', desc: '查看中标的任务' },
+        { icon: TrendingUp, label: '我的投标', link: '/my-bids', desc: '查看投标记录和状态' },
+        { icon: CreditCard, label: '我的钱包', link: '/wallet', desc: '余额、交易记录' },
+        { icon: FileText, label: '作品管理', link: '/profile', desc: '管理个人作品集' }
+      )
+    }
+
+    return items
+  }
+
+  const menuItems = getMenuItems()
 
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
@@ -152,7 +179,7 @@ export default function Dashboard() {
       {/* Admin Section */}
       {user?.role === 'ADMIN' && (
         <div>
-          <h3 className="text-lg font-semibold text-gray-900 mb-4">后台管理</h3>
+          <h3 className="text-lg font-semibold text-gray-900 mb-4">后台管理快捷入口</h3>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
             <Link to="/admin" className="card p-5 hover:shadow-md transition-all bg-gradient-to-br from-purple-50 to-indigo-50 border-purple-100">
               <h4 className="font-semibold text-gray-900">数据仪表盘</h4>
@@ -161,6 +188,10 @@ export default function Dashboard() {
             <Link to="/admin/disputes" className="card p-5 hover:shadow-md transition-all bg-gradient-to-br from-red-50 to-orange-50 border-red-100">
               <h4 className="font-semibold text-gray-900">争议仲裁</h4>
               <p className="text-sm text-gray-500 mt-1">处理用户争议和投诉</p>
+            </Link>
+            <Link to="/admin/providers" className="card p-5 hover:shadow-md transition-all bg-gradient-to-br from-blue-50 to-cyan-50 border-blue-100">
+              <h4 className="font-semibold text-gray-900">服务商管理</h4>
+              <p className="text-sm text-gray-500 mt-1">星级评定、升降级管理</p>
             </Link>
             <Link to="/admin/trends" className="card p-5 hover:shadow-md transition-all bg-gradient-to-br from-green-50 to-emerald-50 border-green-100">
               <h4 className="font-semibold text-gray-900">行业趋势分析</h4>

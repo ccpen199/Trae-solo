@@ -14,7 +14,9 @@ import Wallet from './pages/Wallet'
 import AdminDashboard from './pages/AdminDashboard'
 import AdminDisputes from './pages/AdminDisputes'
 import AdminTrends from './pages/AdminTrends'
+import AdminProviders from './pages/AdminProviders'
 import Profile from './pages/Profile'
+import Skills from './pages/Skills'
 import { useAuthStore } from './store/authStore'
 
 function App() {
@@ -34,16 +36,19 @@ function App() {
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
         <Route path="/tasks" element={<TaskList />} />
-        <Route path="/tasks/:id" element={<TaskDetail />} />
+        <Route path="/skills" element={<Skills />} />
         <Route path="/tasks/create" element={<CreateTask />} />
+        <Route path="/tasks/:id" element={<TaskDetail />} />
         <Route path="/my-tasks" element={<MyTasks />} />
         <Route path="/my-bids" element={<MyBids />} />
         <Route path="/dashboard" element={<Dashboard />} />
         <Route path="/wallet" element={<Wallet />} />
+        <Route path="/profile" element={<Profile />} />
         <Route path="/profile/:id" element={<Profile />} />
         <Route path="/admin" element={<AdminDashboard />} />
         <Route path="/admin/disputes" element={<AdminDisputes />} />
         <Route path="/admin/trends" element={<AdminTrends />} />
+        <Route path="/admin/providers" element={<AdminProviders />} />
       </Routes>
 
       <footer className="bg-gray-900 text-gray-400 py-12 mt-16">

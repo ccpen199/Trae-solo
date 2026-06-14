@@ -8,9 +8,11 @@ export default function AdminDisputes() {
   const [disputes, setDisputes] = useState<Dispute[]>([])
   const [loading, setLoading] = useState(true)
   const [selectedDispute, setSelectedDispute] = useState<Dispute | null>(null)
+  const [loadingDetail, setLoadingDetail] = useState(false)
   const [verdict, setVerdict] = useState('')
   const [refundRatio, setRefundRatio] = useState('50')
   const [description, setDescription] = useState('')
+  const [submitting, setSubmitting] = useState(false)
 
   const statusMap: Record<string, { label: string; color: string; icon: any }> = {
     PENDING: { label: '待处理', color: 'bg-yellow-50 text-yellow-700', icon: Clock },
@@ -32,22 +34,44 @@ export default function AdminDisputes() {
     }
   }
 
-  const handleResolve = async () => {
+  const fetchDisputeDetail = async (id: number) => {
+    setLoadingDetail(true)
+    try {
+      const { data } = await api.get(`/admin/disputes/${id}`)
+      setSelectedDispute(data.data || data)
+      setVerdict('')
+      setRefundRatio('50')
+      setDescription('')
+    } catch (err: any) {
+      alert(err.response?.data?.error || '获取争议详情失败')
+    } finally {
+      setLoadingDetail(false)
+    }
+  }
+
+  const handleSelectDispute = (dispute: Dispute) => {
+    fetchDisputeDetail(dispute.id)
+  }
+
+  const handleSubmitVerdict = async () => {
     if (!selectedDispute || !verdict) {
       alert('请选择仲裁结果')
       return
     }
+    setSubmitting(true)
     try {
-      await api.post(`/admin/disputes/${selectedDispute.id}/resolve`, {
+      await api.post(`/admin/disputes/${selectedDispute.id}/verdict`, {
         verdict,
         refundRatio: parseFloat(refundRatio) / 100,
         description,
       })
-      alert('仲裁完成')
+      alert('仲裁结果已提交')
       setSelectedDispute(null)
       fetchDisputes()
     } catch (err: any) {
-      alert(err.response?.data?.error || '操作失败')
+      alert(err.response?.data?.error || '提交失败')
+    } finally {
+      setSubmitting(false)
     }
   }
 
@@ -105,7 +129,7 @@ export default function AdminDisputes() {
                   return (
                     <div
                       key={d.id}
-                      onClick={() => setSelectedDispute(d)}
+                      onClick={() => handleSelectDispute(d)}
                       className={`p-5 hover:bg-gray-50 cursor-pointer transition-colors ${
                         selectedDispute?.id === d.id ? 'bg-blue-50' : ''
                       }`}
@@ -148,7 +172,12 @@ export default function AdminDisputes() {
         {/* Detail */}
         <div className="lg:col-span-1">
           <div className="card p-6 sticky top-24">
-            {!selectedDispute ? (
+            {loadingDetail ? (
+              <div className="text-center py-16">
+                <div className="animate-spin w-8 h-8 border-2 border-primary-500 border-t-transparent rounded-full mx-auto mb-4"></div>
+                <p className="text-gray-500">加载争议详情...</p>
+              </div>
+            ) : !selectedDispute ? (
               <div className="text-center py-16">
                 <Gavel className="w-16 h-16 text-gray-300 mx-auto mb-4" />
                 <p className="text-gray-500">请选择一个争议进行处理</p>
@@ -164,13 +193,30 @@ export default function AdminDisputes() {
                   </div>
 
                   <div className="p-4 bg-gray-50 rounded-xl">
+                    <p className="text-sm text-gray-500 mb-1">相关任务</p>
+                    <p className="font-medium text-gray-900">{selectedDispute.task?.title}</p>
+                    <p className="text-xs text-gray-500 mt-1">任务ID: {selectedDispute.taskId}</p>
+                  </div>
+
+                  <div className="grid grid-cols-2 gap-3">
+                    <div className="p-3 bg-blue-50 rounded-xl">
+                      <p className="text-xs text-blue-600 mb-1">发起人</p>
+                      <p className="font-medium text-gray-900 text-sm">{selectedDispute.initiator?.username}</p>
+                    </div>
+                    <div className="p-3 bg-orange-50 rounded-xl">
+                      <p className="text-xs text-orange-600 mb-1">发起时间</p>
+                      <p className="font-medium text-gray-900 text-sm">{new Date(selectedDispute.createdAt).toLocaleDateString()}</p>
+                    </div>
+                  </div>
+
+                  <div className="p-4 bg-gray-50 rounded-xl">
                     <p className="text-sm text-gray-500 mb-1">详细描述</p>
                     <p className="text-gray-700 text-sm">{selectedDispute.description}</p>
                   </div>
 
                   {selectedDispute.evidences?.length > 0 && (
                     <div>
-                      <p className="text-sm font-medium text-gray-700 mb-2">证据材料</p>
+                      <p className="text-sm font-medium text-gray-700 mb-2">双方证据材料</p>
                       <div className="space-y-2">
                         {selectedDispute.evidences.map((e) => (
                           <a
@@ -192,7 +238,7 @@ export default function AdminDisputes() {
 
                   {selectedDispute.status !== 'RESOLVED' && (
                     <div className="pt-4 border-t border-gray-100">
-                      <h4 className="font-semibold text-gray-900 mb-3">专家仲裁</h4>
+                      <h4 className="font-semibold text-gray-900 mb-3">专家仲裁裁决</h4>
 
                       <div className="space-y-4">
                         <div>
@@ -240,17 +286,18 @@ export default function AdminDisputes() {
                             value={description}
                             onChange={(e) => setDescription(e.target.value)}
                             rows={3}
-                            placeholder="请说明仲裁理由..."
+                            placeholder="请详细说明仲裁理由和依据..."
                             className="input-field resize-none"
                           />
                         </div>
 
                         <button
-                          onClick={handleResolve}
-                          className="w-full btn-primary !py-3"
+                          onClick={handleSubmitVerdict}
+                          disabled={submitting}
+                          className="w-full btn-primary !py-3 disabled:opacity-50"
                         >
                           <Gavel className="w-4 h-4 inline mr-1" />
-                          确认仲裁结果
+                          {submitting ? '提交中...' : '提交仲裁结果'}
                         </button>
                       </div>
                     </div>

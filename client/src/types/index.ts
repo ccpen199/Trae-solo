@@ -29,6 +29,22 @@ export interface Skill {
   icon: string | null
   demandCount: number
   supplyCount: number
+  gapPercentage: number
+  gapType: string
+}
+
+export interface PlatformStats {
+  totalUsers: number
+  totalEmployers: number
+  totalProviders: number
+  totalTasks: number
+  biddingTasks: number
+  inProgressTasks: number
+  completedTasks: number
+  totalBids: number
+  totalAmount: number
+  activeDisputes: number
+  updatedAt: string
 }
 
 export interface Task {
@@ -52,6 +68,8 @@ export interface Task {
   bids: Bid[]
   milestones: Milestone[]
   fileVersions: FileVersion[]
+  collaborations: Collaboration[]
+  selectedBid?: Bid | null
   totalAmount: number | null
   escrowAmount: number
   riskScore: number
@@ -255,12 +273,18 @@ export interface SkillGap {
 export interface DashboardStats {
   overview: {
     totalUsers: number
+    totalProviders: number
     totalTasks: number
     totalBids: number
     totalAmount: number
     activeTasks: number
     pendingDisputes: number
+    pendingRiskReports: number
+    originalityCheckCount: number
+    newUsersToday: number
+    completedTasksToday: number
   }
   recentTasks: Task[]
   topProviders: User[]
+  recentDisputes: Dispute[]
 }
