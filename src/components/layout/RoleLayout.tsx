@@ -1,5 +1,6 @@
-import { NavLink, Outlet, useNavigate } from 'react-router-dom';
+import { NavLink, useNavigate } from 'react-router-dom';
 import { useAuthStore } from '@/store/authStore';
+import type { ReactNode } from 'react';
 import type { LucideIcon } from 'lucide-react';
 import {
   LayoutDashboard,
@@ -44,7 +45,7 @@ const roleTitles: Record<UserRole, { title: string; subtitle: string }> = {
   ADMIN: { title: '运营管理中心', subtitle: 'OPS CONTROL CENTER' },
 };
 
-export function RoleLayout() {
+export function RoleLayout({ children }: { children: ReactNode }) {
   const user = useAuthStore((s) => s.user);
   const logout = useAuthStore((s) => s.logout);
   const navigate = useNavigate();
@@ -144,7 +145,7 @@ export function RoleLayout() {
         </header>
 
         <main className="flex-1 p-6 overflow-auto">
-          <Outlet />
+          {children}
         </main>
       </div>
     </div>

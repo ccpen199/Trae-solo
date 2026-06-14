@@ -1,4 +1,4 @@
-import { createContext, useContext, useEffect } from 'react';
+import { createContext, useContext, useEffect, useState } from 'react';
 import { useOrderStore } from '@/store/orderStore';
 import { useDispatchStore } from '@/store/dispatchStore';
 import { useAuthStore } from '@/store/authStore';
@@ -6,7 +6,7 @@ import { Navigate, useLocation } from 'react-router-dom';
 import type { ReactNode } from 'react';
 import type { UserRole } from '@/types';
 
-const AppCtx = createContext(null);
+const AppCtx = createContext<null>(null);
 
 export function DataProvider({ children }: { children: ReactNode }) {
   const initOrders = useOrderStore((s) => s.init);
@@ -57,23 +57,39 @@ export function ProtectedRoute({
 }) {
   const user = useAuthStore((s) => s.user);
   const isAuthenticated = useAuthStore((s) => s.isAuthenticated);
+  const restoreSession = useAuthStore((s) => s.restoreSession);
   const location = useLocation();
-  const login = useAuthStore((s) => s.login);
+  const [checking, setChecking] = useState(true);
 
   useEffect(() => {
-    if (!isAuthenticated) {
-      const saved = localStorage.getItem('tc_auth_role') as UserRole;
-      if (saved && ['SHIPPER', 'DRIVER', 'ADMIN'].includes(saved)) {
-        login(saved);
-      }
+    if (isAuthenticated) {
+      setChecking(false);
+      return;
     }
-  }, [isAuthenticated, login]);
+    const restored = restoreSession();
+    if (!restored) {
+      setChecking(false);
+    } else {
+      setChecking(false);
+    }
+  }, [isAuthenticated, restoreSession]);
 
-  if (!isAuthenticated) {
+  if (checking) {
+    return (
+      <div className="flex items-center justify-center h-screen w-screen text-slate-400 font-display">
+        <div className="flex flex-col items-center gap-3">
+          <div className="w-10 h-10 border-2 border-ink-600 border-t-orange-500 rounded-full animate-spin" />
+          <div className="text-xs tracking-widest text-slate-500">VERIFYING SESSION...</div>
+        </div>
+      </div>
+    );
+  }
+
+  if (!isAuthenticated || !user) {
     return <Navigate to="/login" state={{ from: location }} replace />;
   }
 
-  if (user && !allowedRoles.includes(user.role)) {
+  if (!allowedRoles.includes(user.role)) {
     const defaultRoute =
       user.role === 'SHIPPER'
         ? '/shipper/dashboard'
