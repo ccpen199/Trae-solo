@@ -72,6 +72,12 @@ export interface EventSummary {
   languages: Language[];
   currencies: Currency[];
   hotIndex: number;
+  totalSeats: number;
+  soldSeats: number;
+  remainingPct: number;
+  activeTierCount: number;
+  peakDeltaPct: number;
+  hasCrossBorderPay: boolean;
 }
 
 export interface EventDetail extends EventSummary {
@@ -139,6 +145,7 @@ export interface TicketIssue {
   reporter?: string;
   paymentChannel?: PaymentChannel;
   createdAt: string;
+  updatedAt: string;
   slaDeadline?: string;
 }
 

@@ -23,13 +23,26 @@ export function AppLayout({ children }: { children: React.ReactNode }) {
 
   useEffect(() => { setMenu(false); }, [location.pathname]);
 
+  const NAV_LABELS: Record<string, { zh: string; en: string; ja: string; ko: string }> = {
+    '/': { zh: '首页仪表板', en: 'Dashboard', ja: 'ダッシュボード', ko: '대시보드' },
+    '/events': { zh: '演出票务', en: 'Ticketing', ja: '公演チケット', ko: '공연 티켓' },
+    '/tickets': { zh: '工单中心', en: 'Ops Center', ja: '業務センター', ko: '운영 센터' },
+    '/schedule': { zh: '排期验票', en: 'Schedule', ja: 'スケジュール', ko: '스케줄' },
+    '/admin': { zh: '管理后台', en: 'Admin', ja: '管理画面', ko: '관리자' },
+    '/profile': { zh: '个人中心', en: 'Profile', ja: 'プロフィール', ko: '프로필' },
+  };
+  const pick = (path: string) => {
+    const m = NAV_LABELS[path] || NAV_LABELS['/'];
+    return m[language] || m.zh;
+  };
+
   const navs = [
-    { to: '/', label: '首页仪表板', icon: LayoutDashboard },
-    { to: '/events', label: '演出票务', icon: Sparkles },
-    { to: '/tickets', label: '工单中心', icon: ClipboardList },
-    { to: '/schedule', label: '排期验票', icon: CalendarClock },
-    { to: '/admin', label: '管理后台', icon: LineChartIcon },
-    { to: '/profile', label: '个人中心', icon: UserCircle },
+    { to: '/', label: pick('/'), icon: LayoutDashboard },
+    { to: '/events', label: pick('/events'), icon: Sparkles },
+    { to: '/tickets', label: pick('/tickets'), icon: ClipboardList },
+    { to: '/schedule', label: pick('/schedule'), icon: CalendarClock },
+    { to: '/admin', label: pick('/admin'), icon: LineChartIcon },
+    { to: '/profile', label: pick('/profile'), icon: UserCircle },
   ];
 
   const nav = useNavigate();
@@ -37,6 +50,20 @@ export function AppLayout({ children }: { children: React.ReactNode }) {
     e.preventDefault();
     if (search.trim()) nav(`/events?keyword=${encodeURIComponent(search.trim())}`);
   };
+
+  const SEARCH_PLACEHOLDER: Record<Language, string> = {
+    zh: '搜索艺人 / 演出 / 场馆',
+    en: 'Search artist, event, venue',
+    ja: 'アーティスト / 公演 / 会場を検索',
+    ko: '아티스트 / 공연 / 장소 검색',
+  };
+  const FOOTER: Record<Language, { title: string; sub: string; l1: string; l2: string }> = {
+    zh: { title: 'StarPass · 星程票务', sub: '全国性演出票务基础设施平台 · 内地 / 港澳台 / 日韩 / 东南亚', l1: '跨境支付 · Alipay+ · Visa · 当地钱包', l2: '动态定价 · 假票溯源 · 无票赔付 · IP 图谱 · 跨城轨迹' },
+    en: { title: 'StarPass', sub: 'Global Live Ticketing Infrastructure · CN / HK/MO/TW / JP/KR / SEA', l1: 'Cross-border pay · Alipay+ · Visa · Local wallets', l2: 'Dynamic pricing · Fake-ticket trace · Compensation · IP graph · Cross-city' },
+    ja: { title: 'StarPass 公演チケット', sub: 'グローバル公演チケット基盤 · 中国本土・港澳台・日韓・東南アジア', l1: '越境決済 · Alipay+ · Visa · 現地ウォレット', l2: '動的価格・偽チケ追跡・不発券補償・IP資産・都市間移動' },
+    ko: { title: 'StarPass 티켓', sub: '글로벌 공연 티켓 인프라 · 본토 · 홍콩/대만 · 일본/한국 · 동남아', l1: '크로스보더 결제 · Alipay+ · Visa · 로컬 월렛', l2: '동적가격 · 위조티켓 추적 · 미발권 보상 · IP 그래프 · 도시간 이동' },
+  };
+  const footer = FOOTER[language];
 
   return (
     <div className="min-h-screen">
@@ -78,13 +105,13 @@ export function AppLayout({ children }: { children: React.ReactNode }) {
               value={search}
               onChange={(e) => setSearch(e.target.value)}
               className="flex-1 bg-transparent outline-none text-sm placeholder-white/30"
-              placeholder={language === 'zh' ? '搜索艺人 / 演出 / 场馆' : 'Search artist, event, venue'}
+              placeholder={SEARCH_PLACEHOLDER[language]}
             />
             <span className="kbd">⌘K</span>
           </form>
 
           <LangSwitcher value={language} onChange={setLanguage} />
-          <CurrencySwitcher value={currency} onChange={setCurrency} />
+          <CurrencySwitcher value={currency} onChange={setCurrency} language={language} />
 
           <button className="lg:hidden ml-auto p-2 rounded-lg border border-white/10" onClick={() => setMenu((v) => !v)}>
             {menu ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
@@ -115,12 +142,12 @@ export function AppLayout({ children }: { children: React.ReactNode }) {
       <footer className="border-t border-white/10 mt-16">
         <div className="container py-8 flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
           <div>
-            <div className="font-display font-bold text-xl">StarPass · 星程票务</div>
-            <div className="text-sm text-white/50 mt-1">全国性演出票务基础设施平台 · 内地 / 港澳台 / 日韩 / 东南亚</div>
+            <div className="font-display font-bold text-xl">{footer.title}</div>
+            <div className="text-sm text-white/50 mt-1">{footer.sub}</div>
           </div>
           <div className="text-xs text-white/40 space-y-1">
-            <div>跨境支付 · Alipay+ · Visa · 当地钱包</div>
-            <div>动态定价 · 假票溯源 · 无票赔付 · IP 图谱 · 跨城轨迹</div>
+            <div>{footer.l1}</div>
+            <div>{footer.l2}</div>
           </div>
         </div>
       </footer>
@@ -148,9 +175,15 @@ function LangSwitcher({ value, onChange }: { value: Language; onChange: (l: Lang
   );
 }
 
-function CurrencySwitcher({ value, onChange }: { value: Currency; onChange: (c: Currency) => void }) {
+function CurrencySwitcher({ value, onChange, language }: { value: Currency; onChange: (c: Currency) => void; language: Language }) {
   const [open, setOpen] = useState(false);
   const currs: Currency[] = ['CNY', 'HKD', 'TWD', 'JPY', 'KRW', 'USD', 'SGD', 'THB', 'MYR'];
+  const name = (c: Currency) => {
+    const m = CURRENCY_META[c];
+    if (language === 'ja') return m.nameJa;
+    if (language === 'ko') return m.nameKo;
+    return m.name;
+  };
   return (
     <div className="relative">
       <button
@@ -161,7 +194,7 @@ function CurrencySwitcher({ value, onChange }: { value: Currency; onChange: (c: 
         {CURRENCY_META[value].sym} {value}
       </button>
       {open && (
-        <div className="absolute right-0 mt-2 w-48 rounded-2xl border border-white/10 bg-ink-900/95 backdrop-blur-xl shadow-card p-1 z-50">
+        <div className="absolute right-0 mt-2 w-52 rounded-2xl border border-white/10 bg-ink-900/95 backdrop-blur-xl shadow-card p-1 z-50">
           {currs.map((c) => (
             <button
               key={c}
@@ -171,7 +204,7 @@ function CurrencySwitcher({ value, onChange }: { value: Currency; onChange: (c: 
                 value === c ? 'bg-neon-amber/15 text-neon-amber' : 'text-white/70 hover:bg-white/5',
               )}
             >
-              <span>{CURRENCY_META[c].name} <span className="opacity-50 text-xs">{c}</span></span>
+              <span>{name(c)} <span className="opacity-50 text-xs">{c}</span></span>
               <span className="font-semibold">{CURRENCY_META[c].sym}</span>
             </button>
           ))}

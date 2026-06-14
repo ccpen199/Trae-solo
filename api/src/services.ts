@@ -88,7 +88,13 @@ export function getEventSummary(row: any, venues: Record<string, Venue>, artists
   const venue = venues[row.venue_id];
   const aids = (db.prepare('SELECT artist_id FROM event_artists WHERE event_id=? ORDER BY seq').all(row.id) as any[]).map((x) => x.artist_id);
   const artistNames = aids.map((id) => artists[id]?.name).filter(Boolean);
-  const tiers = db.prepare('SELECT MIN(current_price) AS mn, MAX(current_price) AS mx FROM ticket_tiers WHERE event_id=?').get(row.id) as any;
+  const tierAgg = db.prepare(
+    'SELECT MIN(current_price) AS mn, MAX(current_price) AS mx, SUM(total_seats) AS ts, SUM(sold_seats) AS ss, COUNT(*) AS tc, MAX(delta_pct) AS pd FROM ticket_tiers WHERE event_id=?',
+  ).get(row.id) as any;
+  const currencies: Currency[] = JSON.parse(row.currencies || '["CNY"]');
+  const totalSeats = Number(tierAgg?.ts ?? 0);
+  const soldSeats = Number(tierAgg?.ss ?? 0);
+  const remainingPct = totalSeats > 0 ? Math.max(0, Math.min(100, Math.round((1 - soldSeats / totalSeats) * 100))) : 0;
   return {
     id: row.id,
     title: ml(row.title_zh, row.title_en, row.title_ja, row.title_ko),
@@ -100,11 +106,17 @@ export function getEventSummary(row: any, venues: Record<string, Venue>, artists
     type: row.type,
     status: row.status,
     artistNames,
-    priceMin: tiers?.mn ?? 0,
-    priceMax: tiers?.mx ?? 0,
+    priceMin: Number(tierAgg?.mn ?? 0),
+    priceMax: Number(tierAgg?.mx ?? 0),
     languages: JSON.parse(row.languages || '["zh"]'),
-    currencies: JSON.parse(row.currencies || '["CNY"]'),
+    currencies,
     hotIndex: row.hot_index,
+    totalSeats,
+    soldSeats,
+    remainingPct,
+    activeTierCount: Number(tierAgg?.tc ?? 0),
+    peakDeltaPct: Number(tierAgg?.pd ?? 0),
+    hasCrossBorderPay: currencies.some((c) => c !== 'CNY'),
   };
 }
 
@@ -334,6 +346,7 @@ function toIssueRow(r: any): TicketIssue {
     compensationAmount: compAmt,
     reporter: r.owner,
     createdAt: r.created_at,
+    updatedAt: r.updated_at || r.created_at,
     slaDeadline: r.sla_deadline ?? undefined,
   };
 }
@@ -356,13 +369,14 @@ export function createIssue(payload: Partial<TicketIssue> & { type: TicketIssue[
   const id = `iss-${Date.now().toString(36)}`;
   const slaMap: Record<string, number> = { P0: 4, P1: 24, P2: 72, P3: 168 };
   const pri = 'P1' as const;
+  const now = new Date().toISOString();
   const sla = new Date(Date.now() + slaMap[pri] * 3600 * 1000).toISOString();
   const cfg = typeMap[payload.type] ?? { owner: '运营组', comp: false };
   const owner = payload.reporter ?? cfg.owner;
   const comp = Number(payload.compensationAmount) || (cfg.comp ? 2500 : 0);
   db.prepare(
-    "INSERT INTO ticket_issues (id,type,order_id,event_id,crypto_tag,title,description,priority,status,owner,sla_deadline,created_at,compensation_amount) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?)",
-  ).run(id, payload.type, payload.relatedOrderId ?? null, payload.eventId ?? null, payload.cryptoTag ?? null, payload.summary, payload.evidence ?? '', pri, 'OPEN', owner, sla, new Date().toISOString(), comp);
+    "INSERT INTO ticket_issues (id,type,order_id,event_id,crypto_tag,title,description,priority,status,owner,sla_deadline,created_at,updated_at,compensation_amount) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?)",
+  ).run(id, payload.type, payload.relatedOrderId ?? null, payload.eventId ?? null, payload.cryptoTag ?? null, payload.summary, payload.evidence ?? '', pri, 'OPEN', owner, sla, now, now, comp);
   return listIssues({ keyword: id })[0];
 }
 
@@ -371,7 +385,8 @@ export function updateIssue(id: string, patch: Partial<Pick<TicketIssue, 'status
   if (patch.status) { fields.push('status=?'); args.push(patch.status); }
   if (patch.reporter) { fields.push('owner=?'); args.push(patch.reporter); }
   if (!fields.length) return false;
-  args.push(id);
+  fields.push('updated_at=?');
+  args.push(new Date().toISOString(), id);
   const info = db.prepare(`UPDATE ticket_issues SET ${fields.join(',')} WHERE id=?`).run(...args);
   return info.changes > 0;
 }

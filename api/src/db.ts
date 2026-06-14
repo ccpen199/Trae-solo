@@ -173,6 +173,7 @@ db.exec(SCHEMA);
   addColIfMissing('ticket_issues', 'summary', 'TEXT');
   addColIfMissing('ticket_issues', 'evidence', 'TEXT');
   addColIfMissing('ticket_issues', 'reporter', 'TEXT');
+  addColIfMissing('ticket_issues', 'updated_at', 'TEXT');
   addColIfMissing('organizers', 'name_ja', 'TEXT');
   addColIfMissing('organizers', 'name_ko', 'TEXT');
   addColIfMissing('verify_terminals', 'terminal_type', 'TEXT DEFAULT "HANDHELD"');

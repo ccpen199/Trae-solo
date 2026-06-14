@@ -14,7 +14,7 @@ import { useAppStore } from '@/store/app';
 import {
   CURRENCY_META, classNames, fmtCny, fmtMoney, pickML, REGION_LABEL,
 } from '@/utils/meta';
-import type { Currency } from '@/shared/types';
+import type { Currency, Language } from '@/shared/types';
 
 const FX_RATES: Record<Currency, number> = { CNY: 1, HKD: 0.92, TWD: 0.22, JPY: 0.047, KRW: 0.0054, USD: 7.18, SGD: 5.3, THB: 0.2, MYR: 1.53 };
 function fxRate(c: Currency) { return FX_RATES[c] || 1; }
@@ -270,7 +270,7 @@ export default function Dashboard() {
               <Flame className="w-3.5 h-3.5" /> {language === 'zh' ? '最近 72 小时' : 'Last 72h'}
             </span>
           </div>
-          {data ? <PricingHeatChart heat={data.pricingHeat} language={language} /> : <div className="h-64 animate-pulse rounded-xl bg-white/5" />}
+          {data ? <PricingHeatChart heat={data.pricingHeat} language={language} nav={nav} /> : <div className="h-64 animate-pulse rounded-xl bg-white/5" />}
         </div>
 
         <div className="space-y-5">
@@ -281,7 +281,7 @@ export default function Dashboard() {
                 <h2 className="font-display font-bold text-2xl">{t.gmvTitle}</h2>
               </div>
             </div>
-            {data ? <GMVChart bd={data.currencyBreakdown} currency={currency} language={language} /> : <div className="h-48 animate-pulse rounded-xl bg-white/5" />}
+            {data ? <GMVChart bd={data.currencyBreakdown} currency={currency} language={language} nav={nav} /> : <div className="h-48 animate-pulse rounded-xl bg-white/5" />}
           </div>
           <div className="card p-5">
             <div className="section-head">
@@ -290,7 +290,7 @@ export default function Dashboard() {
                 <h2 className="font-display font-bold text-2xl">{t.trendingTitle}</h2>
               </div>
             </div>
-            {data ? <ArtistRanking artists={data.trendingArtists} language={language} /> : <div className="h-40 animate-pulse rounded-xl bg-white/5" />}
+            {data ? <ArtistRanking artists={data.trendingArtists} language={language} nav={nav} /> : <div className="h-40 animate-pulse rounded-xl bg-white/5" />}
           </div>
         </div>
       </section>
@@ -321,9 +321,10 @@ export default function Dashboard() {
   );
 }
 
-function PricingHeatChart({ heat, language }: { heat: DashboardKpi['pricingHeat']; language: 'zh' | 'en' | 'ja' | 'ko' }) {
+function PricingHeatChart({ heat, language, nav }: { heat: DashboardKpi['pricingHeat']; language: Language; nav: (p: string) => void }) {
   const data = heat.map((h) => ({
     name: pickML(h.title, language).slice(0, 8),
+    eventId: h.eventId,
     delta: Number(h.deltaPct.toFixed(1)),
     heat: h.heatIndex,
     remain: h.remainingPct,
@@ -336,41 +337,43 @@ function PricingHeatChart({ heat, language }: { heat: DashboardKpi['pricingHeat'
   })();
   // #endregion
   return (
-    <ResponsiveContainer width="100%" height={320}>
-      <ComposedChart data={data} margin={{ left: 8, right: 16, top: 10, bottom: 8 }}>
-        <defs>
-          <linearGradient id="gdHeat" x1="0" y1="0" x2="0" y2="1">
-            <stop offset="0%" stopColor="#F5B544" stopOpacity={0.7} />
-            <stop offset="100%" stopColor="#FF2E88" stopOpacity={0.1} />
-          </linearGradient>
-        </defs>
-        <CartesianGrid stroke="rgba(255,255,255,0.06)" vertical={false} />
-        <XAxis dataKey="name" stroke="#ffffff55" tick={{ fill: '#ffffff99', fontSize: 11 }} />
-        <YAxis yAxisId="l" stroke="#ffffff55" tick={{ fill: '#ffffff99', fontSize: 11 }} label={{ value: language === 'zh' ? '涨跌幅%' : 'Δ%', angle: -90, position: 'insideLeft', fill: '#ffffff99', fontSize: 11 }} />
-        <YAxis yAxisId="r" orientation="right" stroke="#ffffff55" tick={{ fill: '#ffffff99', fontSize: 11 }} label={{ value: language === 'zh' ? '热度/余票%' : 'Heat/Remain', angle: 90, position: 'insideRight', fill: '#ffffff99', fontSize: 11 }} />
-        <Tooltip
-          contentStyle={{ background: '#111F4A', border: '1px solid #ffffff20', borderRadius: 12, color: '#fff' }}
-          cursor={{ stroke: '#ffffff30' }}
-        />
-        <Area yAxisId="r" type="monotone" dataKey="heat" stroke="#F5B544" fill="url(#gdHeat)" strokeWidth={2} />
-        <Bar yAxisId="l" dataKey="delta" barSize={22} radius={[6, 6, 0, 0]}>
-          {data.map((d, i) => (
-            <Cell key={i} fill={d.delta >= 0 ? 'url(#barGrad1)' : '#2DD4BF'} />
-          ))}
+    <div onClick={() => nav('/events?sort=hot_desc')} className="cursor-pointer">
+      <ResponsiveContainer width="100%" height={320}>
+        <ComposedChart data={data} margin={{ left: 8, right: 16, top: 10, bottom: 8 }}>
           <defs>
-            <linearGradient id="barGrad1" x1="0" y1="0" x2="0" y2="1">
-              <stop offset="0%" stopColor="#FF2E88" />
-              <stop offset="100%" stopColor="#8B5CF6" />
+            <linearGradient id="gdHeat" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0%" stopColor="#F5B544" stopOpacity={0.7} />
+              <stop offset="100%" stopColor="#FF2E88" stopOpacity={0.1} />
             </linearGradient>
           </defs>
-        </Bar>
-        <Area yAxisId="r" type="monotone" dataKey="remain" stroke="#2DD4BF" fill="#2DD4BF22" strokeWidth={1.5} strokeDasharray="3 3" />
-      </ComposedChart>
-    </ResponsiveContainer>
+          <CartesianGrid stroke="rgba(255,255,255,0.06)" vertical={false} />
+          <XAxis dataKey="name" stroke="#ffffff55" tick={{ fill: '#ffffff99', fontSize: 11 }} />
+          <YAxis yAxisId="l" stroke="#ffffff55" tick={{ fill: '#ffffff99', fontSize: 11 }} label={{ value: language === 'zh' ? '涨跌幅%' : language === 'ja' ? '騰落率%' : language === 'ko' ? '등락률%' : 'Δ%', angle: -90, position: 'insideLeft', fill: '#ffffff99', fontSize: 11 }} />
+          <YAxis yAxisId="r" orientation="right" stroke="#ffffff55" tick={{ fill: '#ffffff99', fontSize: 11 }} label={{ value: language === 'zh' ? '热度/余票%' : language === 'ja' ? '人気度/残席%' : language === 'ko' ? '인기도/잔여%' : 'Heat/Remain', angle: 90, position: 'insideRight', fill: '#ffffff99', fontSize: 11 }} />
+          <Tooltip
+            contentStyle={{ background: '#111F4A', border: '1px solid #ffffff20', borderRadius: 12, color: '#fff' }}
+            cursor={{ stroke: '#ffffff30' }}
+          />
+          <Area yAxisId="r" type="monotone" dataKey="heat" stroke="#F5B544" fill="url(#gdHeat)" strokeWidth={2} />
+          <Bar yAxisId="l" dataKey="delta" barSize={22} radius={[6, 6, 0, 0]}>
+            {data.map((d, i) => (
+              <Cell key={i} fill={d.delta >= 0 ? 'url(#barGrad1)' : '#2DD4BF'} />
+            ))}
+            <defs>
+              <linearGradient id="barGrad1" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0%" stopColor="#FF2E88" />
+                <stop offset="100%" stopColor="#8B5CF6" />
+              </linearGradient>
+            </defs>
+          </Bar>
+          <Area yAxisId="r" type="monotone" dataKey="remain" stroke="#2DD4BF" fill="#2DD4BF22" strokeWidth={1.5} strokeDasharray="3 3" />
+        </ComposedChart>
+      </ResponsiveContainer>
+    </div>
   );
 }
 
-function GMVChart({ bd, currency, language }: { bd: DashboardKpi['currencyBreakdown']; currency: Currency; language: 'zh' | 'en' | 'ja' | 'ko' }) {
+function GMVChart({ bd, currency, language, nav }: { bd: DashboardKpi['currencyBreakdown']; currency: Currency; language: Language; nav: (p: string) => void }) {
   // #region debug-point H2H5:gmv-chart
   (() => {
     const _u = 'http://127.0.0.1:7777/event', _s = 'dashboard-blank-crash';
@@ -383,27 +386,29 @@ function GMVChart({ bd, currency, language }: { bd: DashboardKpi['currencyBreakd
     ...b,
     color: palette[i % palette.length],
     display: fmtMoney(b.amount, b.c),
-    cname: CURRENCY_META[b.c].name,
+    cname: (language === 'ja' ? (CURRENCY_META[b.c] as any).nameJa : language === 'ko' ? (CURRENCY_META[b.c] as any).nameKo : CURRENCY_META[b.c].name) || CURRENCY_META[b.c].name,
   }));
   const total = bd.reduce((s, b) => s + b.amount / FX_RATES[b.c], 0);
   return (
     <div className="grid md:grid-cols-2 gap-4 items-center">
-      <ResponsiveContainer width="100%" height={180}>
-        <PieChart>
-          <Pie data={bd.map((b, i) => ({ name: b.c, value: b.amount / FX_RATES[b.c], fill: palette[i % palette.length] }))}
-            innerRadius={48} outerRadius={76} paddingAngle={2} dataKey="value" stroke="none"
-          >
-          </Pie>
-          <Tooltip contentStyle={{ background: '#111F4A', border: '1px solid #ffffff20', borderRadius: 12, color: '#fff' }} />
-        </PieChart>
-      </ResponsiveContainer>
+      <div onClick={() => nav('/events')} className="cursor-pointer">
+        <ResponsiveContainer width="100%" height={180}>
+          <PieChart>
+            <Pie data={bd.map((b, i) => ({ name: b.c, value: b.amount / FX_RATES[b.c], fill: palette[i % palette.length] }))}
+              innerRadius={48} outerRadius={76} paddingAngle={2} dataKey="value" stroke="none"
+            >
+            </Pie>
+            <Tooltip contentStyle={{ background: '#111F4A', border: '1px solid #ffffff20', borderRadius: 12, color: '#fff' }} />
+          </PieChart>
+        </ResponsiveContainer>
+      </div>
       <div className="space-y-2 text-sm">
         <div className="flex items-center justify-between">
-          <span className="text-white/40">{CURRENCY_META[currency].name} {language === 'zh' ? '基准合计' : 'Total base'}</span>
+          <span className="text-white/40">{(language === 'ja' ? (CURRENCY_META[currency] as any).nameJa : language === 'ko' ? (CURRENCY_META[currency] as any).nameKo : CURRENCY_META[currency].name) || CURRENCY_META[currency].name} {language === 'zh' ? '基准合计' : language === 'ja' ? '合計' : language === 'ko' ? '합계' : 'Total base'}</span>
           <span className="num font-bold text-neon-amber">{fmtCny(Math.round(total))}</span>
         </div>
         {rows.map((r, i) => (
-          <div key={i} className="space-y-1">
+          <button key={i} onClick={() => nav(`/events?currency=${r.c}`)} className="w-full text-left space-y-1 hover:bg-white/5 rounded-lg px-1 -mx-1 transition-colors">
             <div className="flex items-center justify-between">
               <span className="flex items-center gap-2 text-white/80">
                 <span className="w-2.5 h-2.5 rounded-full" style={{ background: r.color }} />
@@ -420,14 +425,14 @@ function GMVChart({ bd, currency, language }: { bd: DashboardKpi['currencyBreakd
                   }}
                 />
               </div>
-          </div>
+          </button>
         ))}
       </div>
     </div>
   );
 }
 
-function ArtistRanking({ artists, language }: { artists: DashboardKpi['trendingArtists']; language: 'zh' | 'en' | 'ja' | 'ko' }) {
+function ArtistRanking({ artists, language, nav }: { artists: DashboardKpi['trendingArtists']; language: Language; nav: (p: string) => void }) {
   // #region debug-point H2H5:artist-ranking
   (() => {
     const _u = 'http://127.0.0.1:7777/event', _s = 'dashboard-blank-crash';
@@ -440,7 +445,7 @@ function ArtistRanking({ artists, language }: { artists: DashboardKpi['trendingA
       {artists.map((a, i) => {
         const color = ['#FF2E88', '#F5B544', '#8B5CF6', '#2DD4BF', '#60A5FA', '#F472B6'][i % 6];
         return (
-          <li key={a.id} className="flex items-center gap-3 p-2 rounded-xl hover:bg-white/5 transition-colors">
+          <li key={a.id} onClick={() => nav(`/events?keyword=${encodeURIComponent(pickML(a.name, 'zh'))}&sort=hot_desc`)} className="flex items-center gap-3 p-2 rounded-xl hover:bg-white/5 transition-colors cursor-pointer">
             <div className="num font-black text-lg w-7" style={{ color: i < 3 ? color : '#ffffff66' }}>#{i + 1}</div>
             <div className="w-10 h-10 rounded-xl grid place-items-center font-bold text-white shadow-md shrink-0" style={{ background: `linear-gradient(135deg, ${color}, #0B1A3A)` }}>
               {pickML(a.name, language).slice(0, 1)}
@@ -449,7 +454,7 @@ function ArtistRanking({ artists, language }: { artists: DashboardKpi['trendingA
               <div className="font-semibold truncate">{pickML(a.name, language)}</div>
               <div className="flex items-center gap-3 text-[11px] text-white/50 mt-0.5">
                 <span className="flex items-center gap-1"><Flame className="w-3 h-3 text-neon-amber" /> {a.heatIndex}</span>
-                <DeltaTag pct={a.delta * 2} />
+                <DeltaTag delta={a.delta * 2} />
               </div>
             </div>
             <div className="flex-1 max-w-[140px]">

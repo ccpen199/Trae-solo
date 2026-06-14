@@ -1,11 +1,18 @@
-import { MapPin, CalendarDays, Flame, Languages, Coins, TrendingUp, TrendingDown, Minus } from 'lucide-react';
+import { MapPin, CalendarDays, Flame, Languages, Coins, TrendingUp, TrendingDown, Minus, Ticket as TicketIcon, CreditCard, Users } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import type { EventSummary, TicketGrade } from '@/shared/types';
 import { useAppStore } from '@/store/app';
 import {
   EVENT_STATUS_LABEL, EVENT_TYPE_LABEL, GRADE_LABEL, REGION_LABEL,
-  classNames, fmtDate, fmtMoney, pickML,
+  classNames, fmtDate, fmtMoney, pickML, pickRegionLabel, pickEventTypeLabel, pickEventStatusLabel,
 } from '@/utils/meta';
+
+const REMAIN_LABEL: Record<string, { zh: string; en: string; ja: string; ko: string }> = {
+  remaining: { zh: '余票率', en: 'Remaining', ja: '残席率', ko: '잔여율' },
+  tiers: { zh: '票档', en: 'Tiers', ja: '席種', ko: '좌석 등급' },
+  price: { zh: '票价区间', en: 'Ticket Range', ja: '価格帯', ko: '가격대' },
+};
+const RL = (k: keyof typeof REMAIN_LABEL, l: string) => (REMAIN_LABEL[k] as any)[l] || (REMAIN_LABEL[k] as any).zh;
 
 export default function EventCard({ ev }: { ev: EventSummary }) {
   const { language, currency } = useAppStore();
@@ -19,6 +26,7 @@ export default function EventCard({ ev }: { ev: EventSummary }) {
     B: 'from-[#8B5CF6] to-[#60A5FA]',
     C: 'from-[#94a3b8] to-[#475569]',
   };
+  const remainColor = ev.remainingPct < 20 ? '#FF2E88' : ev.remainingPct < 50 ? '#F5B544' : '#2EE8B3';
   return (
     <Link
       to={`/events/${ev.id}`}
@@ -51,12 +59,14 @@ export default function EventCard({ ev }: { ev: EventSummary }) {
         </div>
         <div className="absolute top-3 left-3 flex flex-wrap gap-1.5">
           <span className={classNames('chip border-white/20 bg-ink-900/70', region.color)}>
-            {language === 'zh' ? region.zh : region.en}
+            {pickRegionLabel(ev.region, language)}
           </span>
-          <span className="chip border-white/10 bg-white/5 text-white/75">{tp.icon} {language === 'zh' ? tp.zh : tp.en}</span>
+          <span className="chip border-white/10 bg-white/5 text-white/75">{tp.icon} {pickEventTypeLabel(ev.type, language)}</span>
+          {ev.hasCrossBorderPay && <span className="chip border-neon-teal/30 bg-neon-teal/10 text-neon-teal"><CreditCard className="w-3 h-3" /></span>}
         </div>
-        <div className="absolute top-3 right-3">
-          <span className={classNames('chip border', st.cls)}>{language === 'zh' ? st.zh : st.en}</span>
+        <div className="absolute top-3 right-3 flex items-center gap-1.5">
+          <DeltaTag delta={ev.peakDeltaPct} small />
+          <span className={classNames('chip border', st.cls)}>{pickEventStatusLabel(ev.status, language)}</span>
         </div>
         {/* 艺人小头像行 */}
         <div className="absolute bottom-3 left-3 flex -space-x-2">
@@ -105,11 +115,25 @@ export default function EventCard({ ev }: { ev: EventSummary }) {
               <Coins className="w-3 h-3" /> {c}
             </span>
           ))}
+          <span className="chip border-neon-violet/30 bg-neon-violet/10 text-neon-violet">
+            <Users className="w-3 h-3" /> {ev.activeTierCount} {RL('tiers', language)}
+          </span>
         </div>
 
-        <div className="mt-4 flex items-end justify-between">
+        {/* 余票进度条 */}
+        <div className="mt-3">
+          <div className="flex items-center justify-between text-[11px] text-white/50 mb-1">
+            <span className="inline-flex items-center gap-1"><TicketIcon className="w-3 h-3" />{RL('remaining', language)}</span>
+            <span className="num font-semibold" style={{ color: remainColor }}>{ev.remainingPct}%</span>
+          </div>
+          <div className="h-1.5 rounded-full bg-white/5 overflow-hidden">
+            <div className="h-full rounded-full transition-all duration-500" style={{ width: `${ev.remainingPct}%`, background: `linear-gradient(90deg, ${remainColor}, #F5B544)` }} />
+          </div>
+        </div>
+
+        <div className="mt-3 flex items-end justify-between">
           <div>
-            <div className="text-[11px] text-white/40 uppercase tracking-wider">{language === 'zh' ? '票价区间' : 'Ticket Range'}</div>
+            <div className="text-[11px] text-white/40 uppercase tracking-wider">{RL('price', language)}</div>
             <div className="num font-bold text-lg text-white">
               {fmtMoney(ev.priceMin, currency)} <span className="text-white/30 font-normal text-sm mx-1">~</span> {fmtMoney(ev.priceMax, currency)}
             </div>
@@ -133,17 +157,18 @@ export default function EventCard({ ev }: { ev: EventSummary }) {
   );
 }
 
-export function DeltaTag({ pct }: { pct: number }) {
-  const up = pct > 1;
-  const flat = Math.abs(pct) <= 1;
+export function DeltaTag({ delta, small }: { delta: number; small?: boolean }) {
+  const up = delta > 1;
+  const flat = Math.abs(delta) <= 1;
   return (
     <span className={classNames(
-      'inline-flex items-center gap-0.5 px-1.5 py-0.5 rounded-md text-[11px] font-bold',
+      'inline-flex items-center gap-0.5 px-1.5 py-0.5 rounded-md font-bold',
+      small ? 'text-[10px]' : 'text-[11px]',
       flat ? 'bg-white/5 text-white/60' :
-        up ? 'bg-neon-pink/15 text-neon-pink' : 'bg-neon-teal/15 text-neon-teal',
+        up ? 'bg-neon-pink/15 text-neon-pink border border-neon-pink/30' : 'bg-neon-teal/15 text-neon-teal border border-neon-teal/30',
     )}>
       {flat ? <Minus className="w-3 h-3" /> : up ? <TrendingUp className="w-3 h-3" /> : <TrendingDown className="w-3 h-3" />}
-      {pct > 0 ? '+' : ''}{pct.toFixed(1)}%
+      {delta > 0 ? '+' : ''}{delta.toFixed(1)}%
     </span>
   );
 }
