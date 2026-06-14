@@ -19,6 +19,6 @@
       "@iot/shared/*": ["../../packages/shared/dist/*"]
     }
   },
-  "include": ["src/**/*", "vite.config.ts"],
+  "include": ["src/**/*"],
   "exclude": ["node_modules", "dist"]
 }

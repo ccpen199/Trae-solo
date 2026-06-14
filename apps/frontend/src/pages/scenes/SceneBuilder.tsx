@@ -496,8 +496,8 @@ const SceneBuilderPage: React.FC = () => {
                             </Form.Item>
                             <Form.Item name={['config', 'operator']} label="比较条件" rules={[{ required: true }]} initialValue="gt">
                               <Select>
-                                <Option value="gt">大于 {'(>'}</Option>
-                                <Option value="lt">小于 {'(<)'}</Option>
+                                <Option value="gt">大于 (&gt;)</Option>
+                                <Option value="lt">小于 (&lt;)</Option>
                                 <Option value="eq">等于 (=)</Option>
                                 <Option value="gte">大于等于 (≥)</Option>
                                 <Option value="lte">小于等于 (≤)</Option>

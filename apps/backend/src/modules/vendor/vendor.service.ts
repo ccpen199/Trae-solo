@@ -35,17 +35,18 @@ export class VendorService {
   }
 
   async findAll(page = 1, pageSize = 20, keyword?: string, status?: string) {
+    const pagination = this.normalizePagination(page, pageSize, 20);
     const qb = this.vendorRepo.createQueryBuilder('v');
     if (keyword) qb.where('LOWER(v.name) LIKE :kw', { kw: `%${keyword.toLowerCase()}%` });
     if (status) qb.andWhere('v.status = :st', { st: status });
 
     const [items, total] = await qb
       .orderBy('v.createdAt', 'DESC')
-      .skip((page - 1) * pageSize)
-      .take(pageSize)
+      .skip((pagination.page - 1) * pagination.pageSize)
+      .take(pagination.pageSize)
       .getManyAndCount();
 
-    return { items, total, page, pageSize };
+    return { items, total, ...pagination };
   }
 
   async findOne(id: string) {
@@ -82,13 +83,14 @@ export class VendorService {
   }
 
   async getVendorDevices(vendorId: string, page = 1, pageSize = 50) {
+    const pagination = this.normalizePagination(page, pageSize, 50);
     const [items, total] = await this.deviceRepo.findAndCount({
       where: { vendorId },
       order: { createdAt: 'DESC' },
-      skip: (page - 1) * pageSize,
-      take: pageSize,
+      skip: (pagination.page - 1) * pagination.pageSize,
+      take: pagination.pageSize,
     });
-    return { items, total, page, pageSize };
+    return { items, total, ...pagination };
   }
 
   async getStats() {
@@ -105,5 +107,12 @@ export class VendorService {
 
   private generateApiSecret(): string {
     return Buffer.from(uuidv4() + uuidv4()).toString('base64').replace(/[^a-zA-Z0-9]/g, '').slice(0, 48);
+  }
+
+  private normalizePagination(page: number, pageSize: number, defaultPageSize: number) {
+    const safePage = Number.isFinite(page) && page > 0 ? Math.floor(page) : 1;
+    const safePageSize =
+      Number.isFinite(pageSize) && pageSize > 0 ? Math.min(Math.floor(pageSize), 200) : defaultPageSize;
+    return { page: safePage, pageSize: safePageSize };
   }
 }
