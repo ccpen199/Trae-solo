@@ -1,7 +1,7 @@
 import { useState, useMemo } from 'react';
 import { Search, MessageCircle, User } from 'lucide-react';
 import { useNavigate, useParams } from 'react-router-dom';
-import type { Conversation } from '../../../../shared/types';
+import type { Conversation } from '../../../shared/types';
 import { cn } from '@/lib/utils';
 import ChatDetail from './ChatDetail';
 

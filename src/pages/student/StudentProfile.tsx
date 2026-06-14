@@ -11,7 +11,7 @@ import {
   Plus,
   X,
 } from 'lucide-react';
-import type { Student } from '../../../../shared/types';
+import type { Student } from '../../../shared/types';
 import { api } from '@/utils/api';
 import { cn } from '@/lib/utils';
 

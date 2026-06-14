@@ -10,7 +10,7 @@ import {
   Smartphone,
   QrCode,
 } from 'lucide-react';
-import type { Wallet as WalletType, WithdrawRecord } from '../../../../shared/types';
+import type { Wallet as WalletType, WithdrawRecord } from '../../../shared/types';
 import { api } from '@/utils/api';
 import { cn } from '@/lib/utils';
 

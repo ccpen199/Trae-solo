@@ -22,7 +22,7 @@ import {
 import { useAuthStore } from '@/store/auth';
 import { api } from '@/utils/api';
 import { cn } from '@/lib/utils';
-import type { UserRole } from '../../../shared/types';
+import type { UserRole, Student, Company, Admin } from '../../shared/types';
 
 type TabType = 'student' | 'company' | 'admin';
 type ModeType = 'login' | 'register';
@@ -201,7 +201,7 @@ export default function Login() {
         break;
     }
 
-    const res = await api.post<{ token: string; user: object }>(endpoint, body);
+    const res = await api.post<{ token: string; user: Student | Company | Admin }>(endpoint, body);
     login(res.token, res.user, activeTab as UserRole);
 
     const target = (location.state as { from?: Location })?.from?.pathname || getDefaultRedirect(activeTab);
@@ -250,7 +250,7 @@ export default function Login() {
         throw new Error('管理员账号需由教育局统一分配，不支持自助注册');
     }
 
-    const res = await api.post<{ token: string; user: object }>(endpoint, body);
+    const res = await api.post<{ token: string; user: Student | Company | Admin }>(endpoint, body);
     login(res.token, res.user, activeTab as UserRole);
     navigate(getDefaultRedirect(activeTab), { replace: true });
   };
@@ -694,7 +694,6 @@ export default function Login() {
                         'font-medium ml-1',
                         activeTab === 'student' && 'text-primary-600 hover:text-primary-700',
                         activeTab === 'company' && 'text-accent-500 hover:text-accent-600',
-                        activeTab === 'admin' && 'text-success-500 hover:text-success-600',
                       )}
                     >
                       {mode === 'login' ? '立即注册' : '立即登录'}

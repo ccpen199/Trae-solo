@@ -9,7 +9,7 @@ import {
   MapPin,
   BarChart3,
 } from 'lucide-react';
-import type { ScheduleCourse } from '../../../../shared/types';
+import type { ScheduleCourse } from '../../../shared/types';
 import { api } from '@/utils/api';
 import { cn } from '@/lib/utils';
 

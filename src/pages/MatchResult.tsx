@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import { Sparkles, Briefcase, Clock, Star, ChevronRight, TrendingUp } from 'lucide-react';
 import api from '@/utils/api';
 import { useAuthStore } from '@/store/auth';
-import type { MatchResult as MatchResultType } from '../../../shared/types';
+import type { MatchResult as MatchResultType } from '../../shared/types';
 import { useNavigate } from 'react-router-dom';
 
 export default function MatchResult() {
@@ -18,7 +18,7 @@ export default function MatchResult() {
   const loadMatches = async () => {
     try {
       setLoading(true);
-      const res = await api.get('/jobs/match/results');
+      const res = await api.get<{ matches: MatchResultType[] }>('/jobs/match/results');
       setMatches(res.matches || []);
     } catch (err) {
       console.error('加载匹配结果失败:', err);

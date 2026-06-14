@@ -15,7 +15,7 @@ import {
 } from 'lucide-react';
 import { api } from '@/utils/api';
 import { cn } from '@/lib/utils';
-import type { Job } from '../../../shared/types';
+import type { Job } from '../../shared/types';
 
 interface JobListResponse {
   list: Job[];

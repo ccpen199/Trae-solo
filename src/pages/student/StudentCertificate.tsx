@@ -11,7 +11,7 @@ import {
   Calendar,
   FileCheck,
 } from 'lucide-react';
-import type { Certificate, Application } from '../../../../shared/types';
+import type { Certificate, Application } from '../../../shared/types';
 import { api } from '@/utils/api';
 import { cn } from '@/lib/utils';
 

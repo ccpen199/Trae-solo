@@ -7,7 +7,7 @@ import {
   ChevronRight,
   Search,
 } from 'lucide-react';
-import type { Application, ApplicationStatus } from '../../../../shared/types';
+import type { Application, ApplicationStatus } from '../../../shared/types';
 import { api } from '@/utils/api';
 import { cn } from '@/lib/utils';
 

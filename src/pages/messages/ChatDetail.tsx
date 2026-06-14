@@ -1,6 +1,6 @@
 import { useState, useRef, useEffect } from 'react';
 import { ArrowLeft, User, Send, Paperclip, Award, Phone, MoreVertical } from 'lucide-react';
-import type { Message, Conversation } from '../../../../shared/types';
+import type { Message, Conversation } from '../../../shared/types';
 import { api } from '@/utils/api';
 import { cn } from '@/lib/utils';
 
@@ -120,7 +120,7 @@ export default function ChatDetail({ conversationId, onBack }: ChatDetailProps) 
   const messagesEndRef = useRef<HTMLDivElement>(null);
 
   const currentUserId = '1';
-  const currentUserType: 'student' | 'company' = 'student';
+  const currentUserType: 'student' | 'company' = 'student' as 'student' | 'company';
 
   useEffect(() => {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });

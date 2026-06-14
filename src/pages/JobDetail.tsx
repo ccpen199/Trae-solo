@@ -21,7 +21,7 @@ import {
 import { api } from '@/utils/api';
 import { useAuthStore } from '@/store/auth';
 import { cn } from '@/lib/utils';
-import type { Job, FilingForm, Company } from '../../../shared/types';
+import type { Job, FilingForm, Company } from '../../shared/types';
 
 interface JobDetailResponse extends Job {
   company?: Company;

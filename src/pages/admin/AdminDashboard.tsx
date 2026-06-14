@@ -22,7 +22,7 @@ import {
   TrendingUp,
   DollarSign,
 } from 'lucide-react';
-import type { AdminOverview } from '../../../../shared/types';
+import type { AdminOverview } from '../../../shared/types';
 import { api } from '@/utils/api';
 import { cn } from '@/lib/utils';
 

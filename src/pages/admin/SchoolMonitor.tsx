@@ -9,7 +9,7 @@ import {
   TrendingUp,
   Search,
 } from 'lucide-react';
-import type { SchoolStats } from '../../../../shared/types';
+import type { SchoolStats } from '../../../shared/types';
 import { cn } from '@/lib/utils';
 
 const mockSchools: SchoolStats[] = [

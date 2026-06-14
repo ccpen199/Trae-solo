@@ -14,7 +14,7 @@ import {
   MessageSquare,
   CheckSquare,
 } from 'lucide-react';
-import type { Complaint, ComplaintStatus, ComplaintType } from '../../../../shared/types';
+import type { Complaint, ComplaintStatus, ComplaintType } from '../../../shared/types';
 import { cn } from '@/lib/utils';
 
 const mockComplaints: Complaint[] = [
