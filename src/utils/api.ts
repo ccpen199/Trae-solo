@@ -53,15 +53,33 @@ export async function requestRaw<T>(url: string, options: RequestInit = {}): Pro
     headers['Authorization'] = `Bearer ${token}`
   }
 
-  const res = await fetch(`${BASE_URL}${url}`, {
-    ...options,
-    headers,
-  })
-
-  if (!res.ok) {
-    const error = await res.json().catch(() => ({ message: '请求失败' }))
-    throw new Error(error.error || error.message || `HTTP ${res.status}`)
+  let res: Response
+  try {
+    res = await fetch(`${BASE_URL}${url}`, {
+      ...options,
+      headers,
+    })
+  } catch (networkErr: any) {
+    throw new Error('网络连接失败，请检查网络后重试')
   }
 
-  return res.json() as Promise<T>
+  let data: any
+  try {
+    data = await res.json()
+  } catch {
+    if (!res.ok) {
+      throw new Error(`服务器错误 (HTTP ${res.status})`)
+    }
+    throw new Error('服务器返回数据格式异常')
+  }
+
+  if (!res.ok) {
+    throw new Error(data.error || data.message || `请求失败 (HTTP ${res.status})`)
+  }
+
+  if (data.success === false) {
+    throw new Error(data.error || data.message || '操作失败')
+  }
+
+  return data as T
 }

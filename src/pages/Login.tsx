@@ -1,25 +1,36 @@
-import { useState } from 'react'
-import { useNavigate, Link } from 'react-router-dom'
-import { Truck, Phone, Shield, Eye, EyeOff } from 'lucide-react'
+import { useState, useEffect } from 'react'
+import { useNavigate } from 'react-router-dom'
+import { Truck, Phone, Shield, AlertCircle, Info } from 'lucide-react'
 import { useAuthStore } from '@/stores/authStore'
 
 type Role = 'driver' | 'shipper'
 
+const demoAccounts = [
+  { label: '司机 · 张立国', phone: '13800138001', role: 'driver' as Role },
+  { label: '司机 · 李建军', phone: '13800138002', role: 'driver' as Role },
+  { label: '货主 · 王经理', phone: '13900139001', role: 'shipper' as Role },
+  { label: '货主 · 赵总', phone: '13900139002', role: 'shipper' as Role },
+]
+
 export default function Login() {
   const navigate = useNavigate()
-  const { login } = useAuthStore()
-  const [isRegister, setIsRegister] = useState(false)
+  const { login, isAuthenticated } = useAuthStore()
   const [phone, setPhone] = useState('')
   const [code, setCode] = useState('')
-  const [name, setName] = useState('')
   const [role, setRole] = useState<Role>('driver')
   const [countdown, setCountdown] = useState(0)
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState('')
 
+  useEffect(() => {
+    if (isAuthenticated) {
+      navigate('/', { replace: true })
+    }
+  }, [isAuthenticated, navigate])
+
   const sendCode = () => {
-    if (!phone || phone.length !== 11) {
-      setError('请输入正确的手机号')
+    if (!phone || !/^1\d{10}$/.test(phone)) {
+      setError('请输入正确的11位手机号')
       return
     }
     setCountdown(60)
@@ -37,32 +48,37 @@ export default function Login() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
     setError('')
-    if (!phone || !code) {
-      setError('请填写完整信息')
+    if (!phone) {
+      setError('请输入手机号')
       return
     }
+    if (!code) {
+      setError('请输入验证码')
+      return
+    }
+    localStorage.removeItem('token')
+    localStorage.removeItem('userRole')
     setLoading(true)
     try {
-      if (isRegister) {
-        if (!name) {
-          setError('请输入姓名')
-          setLoading(false)
-          return
-        }
-        await login(phone, code, role)
-      } else {
-        await login(phone, code, role)
-      }
-      navigate('/')
+      await login(phone, code, role)
+      navigate('/', { replace: true })
     } catch (err: any) {
-      setError(err.message || '操作失败')
+      const msg = err?.message || '登录失败，请重试'
+      setError(msg)
     } finally {
       setLoading(false)
     }
   }
 
+  const fillDemo = (acc: typeof demoAccounts[0]) => {
+    setPhone(acc.phone)
+    setCode('123456')
+    setRole(acc.role)
+    setError('')
+  }
+
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-navy-500 via-navy-600 to-navy-700 px-4">
+    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-navy-500 via-navy-600 to-navy-700 px-4 py-8">
       <div className="w-full max-w-md">
         <div className="bg-white rounded-2xl shadow-2xl p-8">
           <div className="flex flex-col items-center mb-8">
@@ -70,12 +86,13 @@ export default function Login() {
               <Truck className="h-8 w-8 text-white" />
             </div>
             <h1 className="text-3xl font-bold text-navy-500">运税通</h1>
-            <p className="text-sm text-gray-500 mt-1">货运司机税务合规平台</p>
+            <p className="text-sm text-gray-500 mt-1">货运司机财税合规平台</p>
           </div>
 
           {error && (
-            <div className="mb-4 p-3 bg-coral-50 border border-coral-200 rounded-lg text-coral-600 text-sm">
-              {error}
+            <div className="mb-4 p-3 bg-red-50 border border-red-300 rounded-lg text-red-600 text-sm flex items-start gap-2">
+              <AlertCircle className="h-4 w-4 mt-0.5 flex-shrink-0" />
+              <span>{error}</span>
             </div>
           )}
 
@@ -87,26 +104,13 @@ export default function Login() {
                 <input
                   type="tel"
                   value={phone}
-                  onChange={(e) => setPhone(e.target.value)}
-                  placeholder="请输入手机号"
+                  onChange={(e) => { setPhone(e.target.value); setError('') }}
+                  placeholder="11位手机号"
                   maxLength={11}
                   className="w-full pl-10 pr-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-amber-500 focus:border-amber-500 outline-none transition-colors"
                 />
               </div>
             </div>
-
-            {isRegister && (
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">姓名</label>
-                <input
-                  type="text"
-                  value={name}
-                  onChange={(e) => setName(e.target.value)}
-                  placeholder="请输入真实姓名"
-                  className="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-amber-500 focus:border-amber-500 outline-none transition-colors"
-                />
-              </div>
-            )}
 
             <div>
               <label className="block text-sm font-medium text-gray-700 mb-1">验证码</label>
@@ -116,8 +120,8 @@ export default function Login() {
                   <input
                     type="text"
                     value={code}
-                    onChange={(e) => setCode(e.target.value)}
-                    placeholder="请输入验证码"
+                    onChange={(e) => { setCode(e.target.value); setError('') }}
+                    placeholder="验证码"
                     maxLength={6}
                     className="w-full pl-10 pr-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-amber-500 focus:border-amber-500 outline-none transition-colors"
                   />
@@ -131,32 +135,33 @@ export default function Login() {
                   {countdown > 0 ? `${countdown}s` : '获取验证码'}
                 </button>
               </div>
+              <p className="text-xs text-gray-400 mt-1">演示环境验证码：123456</p>
             </div>
 
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">角色</label>
+              <label className="block text-sm font-medium text-gray-700 mb-1">身份角色</label>
               <div className="flex gap-3">
                 <button
                   type="button"
-                  onClick={() => setRole('driver')}
+                  onClick={() => { setRole('driver'); setError('') }}
                   className={`flex-1 py-2.5 rounded-lg text-sm font-medium border transition-colors ${
                     role === 'driver'
                       ? 'bg-amber-500 text-white border-amber-500'
                       : 'bg-white text-gray-600 border-gray-300 hover:border-amber-300'
                   }`}
                 >
-                  司机
+                  🚛 司机
                 </button>
                 <button
                   type="button"
-                  onClick={() => setRole('shipper')}
+                  onClick={() => { setRole('shipper'); setError('') }}
                   className={`flex-1 py-2.5 rounded-lg text-sm font-medium border transition-colors ${
                     role === 'shipper'
                       ? 'bg-amber-500 text-white border-amber-500'
                       : 'bg-white text-gray-600 border-gray-300 hover:border-amber-300'
                   }`}
                 >
-                  货主
+                  📦 货主
                 </button>
               </div>
             </div>
@@ -164,24 +169,31 @@ export default function Login() {
             <button
               type="submit"
               disabled={loading}
-              className="w-full py-3 bg-amber-500 text-white font-medium rounded-lg hover:bg-amber-600 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+              className="w-full py-3 bg-amber-500 text-white font-medium rounded-lg hover:bg-amber-600 disabled:opacity-50 disabled:cursor-not-allowed transition-colors text-base"
             >
-              {loading ? '处理中...' : isRegister ? '注册' : '登录'}
+              {loading ? '正在登录...' : '登 录'}
             </button>
           </form>
 
-          <p className="text-center text-sm text-gray-500 mt-6">
-            {isRegister ? '已有账号？' : '没有账号？'}
-            <button
-              onClick={() => {
-                setIsRegister(!isRegister)
-                setError('')
-              }}
-              className="text-amber-500 font-medium hover:text-amber-600 ml-1"
-            >
-              {isRegister ? '去登录' : '立即注册'}
-            </button>
-          </p>
+          <div className="mt-6 p-3 bg-gray-50 rounded-lg">
+            <div className="flex items-center gap-1.5 text-xs text-gray-500 mb-2">
+              <Info className="h-3.5 w-3.5" />
+              <span className="font-medium">演示账号（点击快速填入）</span>
+            </div>
+            <div className="grid grid-cols-2 gap-2">
+              {demoAccounts.map((acc) => (
+                <button
+                  key={acc.phone}
+                  type="button"
+                  onClick={() => fillDemo(acc)}
+                  className="text-left px-2.5 py-1.5 text-xs rounded border border-gray-200 hover:border-amber-300 hover:bg-amber-50 transition-colors"
+                >
+                  <div className="font-medium text-gray-700">{acc.label}</div>
+                  <div className="text-gray-400">{acc.phone}</div>
+                </button>
+              ))}
+            </div>
+          </div>
         </div>
       </div>
     </div>
