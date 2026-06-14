@@ -18,7 +18,7 @@ export default defineConfig(({ mode }) => {
     server: {
       port: frontendPort,
       host: frontendHost,
-      strictPort: false,
+      strictPort: true,
       proxy: {
         [apiPrefix]: {
           target: `http://127.0.0.1:${backendPort}`,

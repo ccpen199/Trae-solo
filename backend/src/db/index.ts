@@ -4,7 +4,7 @@ import fs from 'fs';
 
 let db: Database.Database | null = null;
 
-export function initDb() {
+export function initDb(): any {
   const dbPath = process.env.DB_PATH || './data/reader.db';
   const resolvedPath = path.resolve(process.cwd(), dbPath);
   const dir = path.dirname(resolvedPath);
@@ -24,7 +24,7 @@ export function initDb() {
   return db;
 }
 
-export function getDb(): Database.Database {
+export function getDb(): any {
   if (!db) {
     throw new Error('Database not initialized');
   }

@@ -1,4 +1,4 @@
-import { useState, useMemo, useCallback } from 'react';
+import { useState, useMemo, useCallback, useEffect } from 'react';
 import JSZip from 'jszip';
 import { saveAs } from 'file-saver';
 import { db } from '@/db';
@@ -33,9 +33,9 @@ export default function ExportCenter() {
     progress: 0,
   });
 
-  useState(() => {
+  useEffect(() => {
     loadBooks();
-  });
+  }, [loadBooks]);
 
   const update = useCallback(
     (partial: Partial<ExportState>) =>

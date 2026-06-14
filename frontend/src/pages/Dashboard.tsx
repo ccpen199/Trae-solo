@@ -1,5 +1,5 @@
-import { useEffect, useMemo } from 'react';
-import { Clock, FileText, BookOpen, AlertTriangle, Play, Pause, Square } from 'lucide-react';
+import { useEffect, useMemo, useState } from 'react';
+import { Clock, FileText, BookOpen, AlertTriangle, Play, Pause, Square, Mic, MousePointer2, Hand, Activity, User, Calendar } from 'lucide-react';
 import { useBookStore } from '@/stores/bookStore';
 import { useTimerStore } from '@/stores/timerStore';
 import { useNoteStore } from '@/stores/noteStore';
@@ -22,9 +22,16 @@ const MODE_LABELS: Record<TimerMode, string> = {
   voice: '语音同步',
 };
 
+const MODE_ICONS: Record<TimerMode, any> = {
+  manual: Hand,
+  dwell: MousePointer2,
+  voice: Mic,
+};
+
 export default function Dashboard() {
   const books = useBookStore(s => s.books);
   const loadBooks = useBookStore(s => s.loadBooks);
+  const tags = useBookStore(s => s.tags);
 
   const isRunning = useTimerStore(s => s.isRunning);
   const isPaused = useTimerStore(s => s.isPaused);
@@ -32,6 +39,7 @@ export default function Dashboard() {
   const elapsedSeconds = useTimerStore(s => s.elapsedSeconds);
   const bookId = useTimerStore(s => s.bookId);
   const sessionLog = useTimerStore(s => s.sessionLog);
+  const dwellTimeout = useTimerStore(s => s.dwellTimeout);
   const startTimer = useTimerStore(s => s.startTimer);
   const pauseTimer = useTimerStore(s => s.pauseTimer);
   const resumeTimer = useTimerStore(s => s.resumeTimer);
@@ -42,11 +50,36 @@ export default function Dashboard() {
   const notes = useNoteStore(s => s.notes);
   const loadNotes = useNoteStore(s => s.loadNotes);
 
+  const [dwellActive, setDwellActive] = useState(true);
+  const [voiceLevel, setVoiceLevel] = useState(0);
+
   useEffect(() => {
     loadBooks();
     loadRecentSessions();
     loadNotes();
   }, [loadBooks, loadRecentSessions, loadNotes]);
+
+  useEffect(() => {
+    if (mode !== 'dwell' || !isRunning) {
+      setDwellActive(true);
+      return;
+    }
+    const checkActivity = setInterval(() => {
+      setDwellActive(!!dwellTimeout);
+    }, 500);
+    return () => clearInterval(checkActivity);
+  }, [mode, isRunning, dwellTimeout]);
+
+  useEffect(() => {
+    if (mode !== 'voice' || !isRunning || isPaused) {
+      setVoiceLevel(0);
+      return;
+    }
+    const id = setInterval(() => {
+      setVoiceLevel(20 + Math.random() * 80);
+    }, 200);
+    return () => clearInterval(id);
+  }, [mode, isRunning, isPaused]);
 
   const todayTotalSeconds = useMemo(() => {
     const today = dayjs().format('YYYY-MM-DD');
@@ -171,21 +204,55 @@ export default function Dashboard() {
 
           <div className="flex-1 space-y-4">
             <div className="flex gap-2">
-              {(['manual', 'dwell', 'voice'] as TimerMode[]).map(m => (
-                <button
-                  key={m}
-                  onClick={() => switchMode(m)}
-                  className={cn(
-                    'tab-item',
-                    mode === m && 'tab-item-active',
-                    isRunning && 'opacity-50 cursor-not-allowed'
-                  )}
-                  disabled={isRunning}
-                >
-                  {MODE_LABELS[m]}
-                </button>
-              ))}
+              {(['manual', 'dwell', 'voice'] as TimerMode[]).map(m => {
+                const Icon = MODE_ICONS[m];
+                return (
+                  <button
+                    key={m}
+                    onClick={() => switchMode(m)}
+                    className={cn(
+                      'tab-item gap-1.5',
+                      mode === m && 'tab-item-active',
+                      isRunning && 'opacity-50 cursor-not-allowed'
+                    )}
+                    disabled={isRunning}
+                  >
+                    <Icon className="w-3.5 h-3.5" />
+                    {MODE_LABELS[m]}
+                  </button>
+                );
+              })}
             </div>
+
+            {isRunning && mode === 'dwell' && (
+              <div className={cn(
+                'flex items-center gap-2 px-3 py-2 rounded-lg text-xs',
+                dwellActive ? 'bg-classic-turquoise/10 text-classic-turquoise' : 'bg-classic-cinnabar/10 text-classic-cinnabar'
+              )}>
+                <Activity className="w-3.5 h-3.5" />
+                {dwellActive ? '检测到页面活动，计时正常进行' : '检测到停留超过5分钟，自动暂停中'}
+              </div>
+            )}
+
+            {isRunning && mode === 'voice' && (
+              <div className="flex items-center gap-3 px-3 py-2 rounded-lg bg-classic-gold/5 border border-classic-gold/15">
+                <Mic className={cn('w-4 h-4 text-classic-gold', !isPaused && 'animate-breathe')} />
+                <div className="flex items-end gap-0.5 h-5 flex-1">
+                  {Array.from({ length: 24 }).map((_, i) => (
+                    <div
+                      key={i}
+                      className="w-0.5 bg-classic-gold/60 rounded-full transition-all duration-200"
+                      style={{
+                        height: isPaused ? 4 : `${4 + (Math.sin(i * 0.6 + voiceLevel / 20) * 0.5 + 0.5) * (voiceLevel * 0.16)}px`,
+                      }}
+                    />
+                  ))}
+                </div>
+                <span className="text-xs text-classic-gold font-medium">
+                  {isPaused ? '已暂停' : '朗读同步中'}
+                </span>
+              </div>
+            )}
 
             {isRunning && currentTimerBook && (
               <div className="text-sm text-ink-500">
@@ -220,30 +287,55 @@ export default function Dashboard() {
       </div>
 
       <div className="animate-fade-in-up stagger-5">
-        <h2 className="font-serif font-semibold text-lg mb-4">最近阅读</h2>
+        <div className="flex items-center justify-between mb-4">
+          <h2 className="font-serif font-semibold text-lg">最近阅读</h2>
+          <span className="text-xs text-ink-400">共 {recentBooks.length} 本在读</span>
+        </div>
         {recentBooks.length === 0 ? (
           <div className="card-parchment-solid p-6 text-center text-ink-400">
             暂无阅读中的书籍
           </div>
         ) : (
           <div className="flex gap-4 overflow-x-auto pb-2 scrollbar-hide">
-            {recentBooks.map(book => (
-              <div key={book.id} className="card-parchment-solid p-4 min-w-[160px] flex-shrink-0">
-                <div className="w-full h-40 rounded-lg bg-parchment-200 mb-3 flex items-center justify-center overflow-hidden">
-                  {book.coverImage ? (
-                    <img
-                      src={book.coverImage}
-                      alt={book.title}
-                      className="w-full h-full object-cover"
-                    />
-                  ) : (
-                    <BookOpen className="w-8 h-8 text-ink-300" />
+            {recentBooks.map(book => {
+              const bookTags = tags.filter(t => book.tagIds.includes(t.id));
+              const todaySeconds = sessionLog
+                .filter(s => s.bookId === book.id && dayjs(s.startTime).format('YYYY-MM-DD') === dayjs().format('YYYY-MM-DD'))
+                .reduce((sum, s) => sum + s.durationSeconds, 0);
+              return (
+                <div key={book.id} className="card-parchment-solid p-4 min-w-[220px] flex-shrink-0">
+                  <div className="w-full h-48 rounded-lg bg-parchment-200 mb-3 flex items-center justify-center overflow-hidden">
+                    {book.coverImageData || book.coverImage ? (
+                      <img
+                        src={book.coverImageData || book.coverImage}
+                        alt={book.title}
+                        className="w-full h-full object-cover"
+                      />
+                    ) : (
+                      <BookOpen className="w-10 h-10 text-ink-300" />
+                    )}
+                  </div>
+                  <div className="text-sm font-semibold text-ink-800 line-clamp-1 mb-0.5">{book.title}</div>
+                  <div className="text-xs text-ink-400 line-clamp-1 mb-2 flex items-center gap-1">
+                    <User className="w-3 h-3" />
+                    {book.authors.join('、')}
+                  </div>
+                  {bookTags.length > 0 && (
+                    <div className="flex gap-1 flex-wrap mb-2">
+                      {bookTags.slice(0, 2).map(tag => (
+                        <span
+                          key={tag.id}
+                          className="text-[10px] px-1.5 py-0.5 rounded-full"
+                          style={{ color: tag.color, backgroundColor: `${tag.color}15` }}
+                        >
+                          {tag.name}
+                        </span>
+                      ))}
+                    </div>
                   )}
-                </div>
-                <div className="text-sm font-medium text-ink-700 truncate">{book.title}</div>
-                <div className="mt-2">
-                  <div className="flex items-center justify-between text-xs text-ink-400 mb-1">
-                    <span>{book.progress}%</span>
+                  <div className="flex items-center justify-between text-xs text-ink-500 mb-1.5">
+                    <span>今日 {Math.floor(todaySeconds / 60)} 分钟</span>
+                    <span className="font-medium text-ink-700">{book.progress}%</span>
                   </div>
                   <div className="h-1.5 bg-parchment-300 rounded-full overflow-hidden">
                     <div
@@ -251,9 +343,13 @@ export default function Dashboard() {
                       style={{ width: `${book.progress}%` }}
                     />
                   </div>
+                  <div className="mt-2 flex items-center gap-1 text-[11px] text-ink-400">
+                    <Calendar className="w-3 h-3" />
+                    {dayjs(book.updatedAt).format('MM/DD HH:mm')} 更新
+                  </div>
                 </div>
-              </div>
-            ))}
+              );
+            })}
           </div>
         )}
       </div>

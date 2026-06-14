@@ -62,7 +62,7 @@ router.get('/daily', (req, res) => {
   const dailyStats: any[] = [];
   for (let i = 0; i < numDays; i++) {
     const date = dayjs().subtract(i, 'day').format('YYYY-MM-DD');
-    const dayRow = rows.find((r: any) => r.date === date);
+    const dayRow: any = rows.find((r: any) => r.date === date);
     dailyStats.push({
       date,
       totalSeconds: dayRow?.total_seconds || 0,

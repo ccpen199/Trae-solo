@@ -1,6 +1,7 @@
 import { useState, useRef, useCallback, useEffect } from 'react';
 import { useNoteStore } from '@/stores/noteStore';
 import { useBookStore } from '@/stores/bookStore';
+import { db } from '@/db';
 import { Upload, X, Play, Plus, Trash2, Save } from 'lucide-react';
 import type { NoteParagraph } from '@/types';
 
@@ -158,8 +159,34 @@ export default function OCRNotes() {
         updated[index] = { ...updated[index], text: newText };
         return updated;
       });
+      const para = paragraphs[index];
+      if (para && !para.id.startsWith('temp-') && !para.id.startsWith('new-')) {
+        useNoteStore.getState().updateParagraph(para.id, newText);
+      }
     },
-    [],
+    [paragraphs],
+  );
+
+  const handlePageNumberChange = useCallback(
+    async (index: number, pageVal: string) => {
+      setParagraphs((prev) => {
+        const updated = [...prev];
+        updated[index] = { ...updated[index], pageNumber: pageVal };
+        return updated;
+      });
+      if (!currentNoteId) return;
+      const pageNum = parseInt(pageVal, 10);
+      if (!isNaN(pageNum) && pageNum > 0) {
+        const { addPageAnchor, anchors } = useNoteStore.getState();
+        const existing = anchors.find(a => a.noteId === currentNoteId);
+        if (existing) {
+          await db.pageAnchors.update(existing.id, { pageNumber: pageNum });
+        } else {
+          await addPageAnchor(currentNoteId, pageNum, 0.9);
+        }
+      }
+    },
+    [currentNoteId],
   );
 
   const handleAddParagraph = useCallback(() => {
@@ -344,14 +371,7 @@ export default function OCRNotes() {
                     placeholder="页码"
                     value={para.pageNumber}
                     onChange={(e) => {
-                      setParagraphs((prev) => {
-                        const updated = [...prev];
-                        updated[index] = {
-                          ...updated[index],
-                          pageNumber: e.target.value,
-                        };
-                        return updated;
-                      });
+                      handlePageNumberChange(index, e.target.value);
                     }}
                   />
                   <button
