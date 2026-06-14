@@ -32,6 +32,7 @@ import {
   mockRiskTrendData,
   mockReportStats,
   mockRiskQuestions,
+  mockAuditTasks,
 } from '@/mock';
 
 interface DashboardStats {
@@ -73,7 +74,7 @@ interface PatientTypeDistItem {
   percentage: number;
 }
 
-interface NurseRankingItem {
+export interface NurseRankingItem {
   id: string;
   name: string;
   completedOrders: number;

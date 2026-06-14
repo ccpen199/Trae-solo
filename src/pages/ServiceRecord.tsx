@@ -1,4 +1,5 @@
-import { useParams, useState, useMemo } from 'react';
+import { useState, useMemo } from 'react';
+import { useParams } from 'react-router-dom';
 import {
   Tabs, Descriptions, Tag, Table, Timeline as AntTimeline,
   Alert, Card, Progress, Button, Avatar, Space, Tooltip, Divider, message,

@@ -125,7 +125,7 @@ export default function NurseVerify() {
       description: nurse.verifyResult?.manualRemark ?? '等待审核员处理',
       time: nurse.verifyStatus === 'verified' || nurse.verifyStatus === 'rejected' ? nurse.createdAt : undefined,
       status: (nurse.verifyStatus === 'verified' || nurse.verifyStatus === 'rejected' ? 'completed' : 'current') as const,
-      color: nurse.verifyStatus === 'rejected' ? 'red' : nurse.verifyStatus === 'verified' ? 'green' : undefined,
+      color: (nurse.verifyStatus === 'rejected' ? 'red' : nurse.verifyStatus === 'verified' ? 'green' : undefined) as 'red' | 'green' | undefined,
     },
   ];
 

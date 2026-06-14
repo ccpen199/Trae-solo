@@ -26,8 +26,8 @@ import {
   LogOut,
   Settings,
   User,
-  MenuFoldOutlined,
-  MenuUnfoldOutlined,
+  ChevronLeft,
+  ChevronRight,
   Stethoscope,
 } from 'lucide-react';
 import { cn } from '@/lib/utils';
@@ -209,9 +209,9 @@ export default function MainLayout() {
                 type="text"
                 icon={
                   collapsed ? (
-                    <MenuUnfoldOutlined />
+                    <ChevronRight size={18} />
                   ) : (
-                    <MenuFoldOutlined />
+                    <ChevronLeft size={18} />
                   )
                 }
                 onClick={() => setCollapsed(!collapsed)}
