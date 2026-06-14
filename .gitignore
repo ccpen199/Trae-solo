@@ -1,13 +1,13 @@
-.DS_Store
-.DS_Store?
-._*
-.Spotlight-V100
-.Trashes
-ehthumbs.db
-Thumbs.db
-
-# IDE
+node_modules
+dist
+coverage
+*.log
+.env.local
+.env.production
+uploads/
+logs/
+*.swp
 .idea/
 .vscode/
-*.swp
-*.swo
+.DS_Store
+prisma/migrations/**/migration_lock.toml.bak

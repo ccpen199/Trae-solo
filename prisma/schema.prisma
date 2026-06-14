@@ -1,0 +1,493 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum AuthType {
+  YUE_SHENGSHI
+  FACE_RECOGNITION
+  SOCIAL_CARD_NFC
+  ID_CARD
+  PASSWORD
+}
+
+enum ApplicationStatus {
+  DRAFT
+  APPOINTED
+  MATERIALS_UPLOADED
+  PRE_REVIEWING
+  PRE_REVIEW_PASSED
+  PRE_REVIEW_REJECTED
+  APPROVING
+  APPROVED
+  REJECTED
+  CERTIFICATE_ISSUED
+  COMPLETED
+  CANCELLED
+  EXPIRED
+}
+
+enum NotificationChannel {
+  SMS
+  WECHAT
+  IN_APP
+  EMAIL
+}
+
+enum NotificationStatus {
+  PENDING
+  SENT
+  FAILED
+  READ
+}
+
+enum MaterialType {
+  ID_CARD
+  RESIDENCE_PERMIT
+  PROOF_OF_INCOME
+  PROPERTY_CERTIFICATE
+  MARRIAGE_CERTIFICATE
+  BIRTH_CERTIFICATE
+  EDUCATION_CERTIFICATE
+  OTHER
+}
+
+enum PolicyCategory {
+  LAW
+  REGULATION
+  NOTICE
+  OPINION
+  GUIDE
+  INTERPRETATION
+}
+
+enum Department {
+  CIVIL_AFFAIRS
+  PUBLIC_SECURITY
+  TAXATION
+  SOCIAL_SECURITY
+  HOUSING
+  EDUCATION
+  HEALTH
+  TRANSPORTATION
+  INDUSTRY_COMMERCE
+  OTHER
+}
+
+enum ApiScope {
+  PUBLIC
+  INTERNAL
+  THIRD_PARTY
+}
+
+model User {
+  id              String         @id @default(uuid())
+  idCardNumber    String?        @unique
+  realName        String?
+  phoneNumber     String?        @unique
+  email           String?        @unique
+  avatarUrl       String?
+  address         String?
+  authType        AuthType?
+  authOpenId      String?
+  socialCardNo    String?
+  isVerified      Boolean        @default(false)
+  verifiedAt      DateTime?
+  createdAt       DateTime       @default(now())
+  updatedAt       DateTime       @updatedAt
+  lastLoginAt     DateTime?
+  lastLoginIp     String?
+  applications    Application[]
+  notifications   Notification[]
+  auditLogs       AuditLog[]
+
+  @@index([idCardNumber])
+  @@index([phoneNumber])
+  @@index([authType, authOpenId])
+}
+
+model ServiceItem {
+  id                  String              @id @default(uuid())
+  itemCode            String              @unique
+  itemName            String
+  itemAlias           String?
+  category            String
+  subCategory         String?
+  description         String?
+  handlingDepartment  Department
+  handlingAddress     String?
+  handlingTimeLimit   Int
+  timeLimitUnit       String              @default("working_days")
+  feeStandard         String?
+  feeBasis            String?
+  onlineProcessUrl    String?
+  offlineProcessUrl   String?
+  serviceObject       String?
+  applicationConditions String?
+  handlingProcess     Json?
+  status              Boolean             @default(true)
+  version             Int                 @default(1)
+  publishedBy         String?
+  publishedAt         DateTime?
+  createdAt           DateTime            @default(now())
+  updatedAt           DateTime            @updatedAt
+  parentId            String?
+  parent              ServiceItem?        @relation("ItemHierarchy", fields: [parentId], references: [id])
+  children            ServiceItem[]       @relation("ItemHierarchy")
+  materials           MaterialTemplate[]
+  formTemplates       FormTemplate[]
+  applications        Application[]
+  hotData             ServiceHotSpot[]
+
+  @@index([itemCode])
+  @@index([category, subCategory])
+  @@index([handlingDepartment])
+}
+
+model MaterialTemplate {
+  id             String        @id @default(uuid())
+  serviceItemId  String
+  serviceItem    ServiceItem   @relation(fields: [serviceItemId], references: [id])
+  materialName   String
+  materialType   MaterialType
+  isRequired     Boolean       @default(true)
+  format         String
+  maxSize        Int           @default(10)
+  description    String?
+  sampleUrl      String?
+  sortOrder      Int           @default(0)
+  createdAt      DateTime      @default(now())
+  updatedAt      DateTime      @updatedAt
+  materials      ApplicationMaterial[]
+
+  @@index([serviceItemId])
+}
+
+model FormTemplate {
+  id             String        @id @default(uuid())
+  serviceItemId  String
+  serviceItem    ServiceItem   @relation(fields: [serviceItemId], references: [id])
+  templateName   String
+  templateCode   String        @unique
+  version        String        @default("1.0")
+  schema         Json
+  uiConfig       Json?
+  isActive       Boolean       @default(true)
+  createdAt      DateTime      @default(now())
+  updatedAt      DateTime      @updatedAt
+  applications   Application[]
+}
+
+model Application {
+  id                    String                  @id @default(uuid())
+  applicationNo         String                  @unique
+  serviceItemId         String
+  serviceItem           ServiceItem             @relation(fields: [serviceItemId], references: [id])
+  userId                String
+  user                  User                    @relation(fields: [userId], references: [id])
+  formTemplateId        String?
+  formTemplate          FormTemplate?           @relation(fields: [formTemplateId], references: [id])
+  formData              Json?
+  status                ApplicationStatus       @default(DRAFT)
+  appointmentTime       DateTime?
+  appointmentLocation   String?
+  currentNode           String?
+  currentHandler        String?
+  currentDepartment     Department?
+  preReviewOpinion      String?
+  preReviewedBy         String?
+  preReviewedAt         DateTime?
+  approvalOpinion       String?
+  approvedBy            String?
+  approvedAt            DateTime?
+  submittedAt           DateTime?
+  completedAt           DateTime?
+  dueDate               DateTime?
+  isExpedited           Boolean                 @default(false)
+  rejectionReason       String?
+  createdAt             DateTime                @default(now())
+  updatedAt             DateTime                @updatedAt
+  materials             ApplicationMaterial[]
+  timeline              ApplicationTimeline[]
+  certificate           ElectronicCertificate?
+  notifications         Notification[]
+  approvals             ApprovalRecord[]
+  auditLogs             AuditLog[]
+
+  @@index([applicationNo])
+  @@index([userId, status])
+  @@index([serviceItemId, status])
+  @@index([status, dueDate])
+  @@index([createdAt])
+}
+
+model ApplicationMaterial {
+  id              String          @id @default(uuid())
+  applicationId   String
+  application     Application     @relation(fields: [applicationId], references: [id])
+  templateId      String
+  template        MaterialTemplate @relation(fields: [templateId], references: [id])
+  fileName        String
+  fileUrl         String
+  fileSize        Int
+  fileType        String
+  uploaderId      String
+  uploaderName    String
+  isVerified      Boolean         @default(false)
+  verifiedBy      String?
+  verifiedAt      DateTime?
+  verificationNote String?
+  ocrData         Json?
+  createdAt       DateTime        @default(now())
+
+  @@index([applicationId])
+}
+
+model ApplicationTimeline {
+  id              String          @id @default(uuid())
+  applicationId   String
+  application     Application     @relation(fields: [applicationId], references: [id])
+  nodeCode        String
+  nodeName        String
+  status          String
+  operatorId      String?
+  operatorName    String?
+  department      Department?
+  opinion         String?
+  startTime       DateTime        @default(now())
+  endTime         DateTime?
+  duration        Int?
+  isTimeout       Boolean         @default(false)
+  warningLevel    Int?
+  metadata        Json?
+  createdAt       DateTime        @default(now())
+
+  @@index([applicationId, nodeCode])
+  @@index([isTimeout])
+}
+
+model ApprovalRecord {
+  id              String          @id @default(uuid())
+  applicationId   String
+  application     Application     @relation(fields: [applicationId], references: [id])
+  nodeName        String
+  approverId      String
+  approverName    String
+  department      Department
+  action          String
+  opinion         String?
+  signatureUrl    String?
+  signedAt        DateTime        @default(now())
+  createdAt       DateTime        @default(now())
+
+  @@index([applicationId])
+  @@index([approverId])
+}
+
+model ElectronicCertificate {
+  id              String          @id @default(uuid())
+  applicationId   String          @unique
+  application     Application     @relation(fields: [applicationId], references: [id])
+  certNo          String          @unique
+  certType        String
+  certName        String
+  holderName      String
+  holderIdCard    String
+  issueDate       DateTime        @default(now())
+  validFrom       DateTime
+  validTo         DateTime
+  issuer          String
+  issuerDept      Department
+  status          String          @default("valid")
+  certData        Json?
+  fileUrl         String?
+  qrCodeUrl       String?
+  verifyCount     Int             @default(0)
+  lastVerifiedAt  DateTime?
+  createdAt       DateTime        @default(now())
+  updatedAt       DateTime        @updatedAt
+  revokedAt       DateTime?
+  revokeReason    String?
+
+  @@index([certNo])
+  @@index([holderIdCard])
+}
+
+model Notification {
+  id              String                  @id @default(uuid())
+  userId          String
+  user            User                    @relation(fields: [userId], references: [id])
+  applicationId   String?
+  application     Application?            @relation(fields: [applicationId], references: [id])
+  title           String
+  content         String
+  channel         NotificationChannel
+  status          NotificationStatus      @default(PENDING)
+  templateCode    String?
+  params          Json?
+  sentAt          DateTime?
+  readAt          DateTime?
+  failureReason   String?
+  retryCount      Int                     @default(0)
+  createdAt       DateTime                @default(now())
+  updatedAt       DateTime                @updatedAt
+
+  @@index([userId, status])
+  @@index([channel, status])
+  @@index([createdAt])
+}
+
+model PolicyDocument {
+  id              String          @id @default(uuid())
+  title           String
+  documentNo      String?
+  category        PolicyCategory
+  issuingDept     Department
+  issueDate       DateTime
+  effectiveDate   DateTime?
+  expiryDate      DateTime?
+  summary         String?
+  content         String
+  keywords        String[]
+  attachments     Json?
+  status          String          @default("published")
+  viewCount       Int             @default(0)
+  downloadCount   Int             @default(0)
+  structuredData  Json?
+  aiTrained       Boolean         @default(false)
+  trainedAt       DateTime?
+  createdBy       String?
+  createdAt       DateTime        @default(now())
+  updatedAt       DateTime        @updatedAt
+
+  @@index([category, status])
+  @@index([issuingDept, issueDate])
+  @@index([keywords])
+}
+
+model AiTrainingCorpus {
+  id              String          @id @default(uuid())
+  question        String
+  answer          String
+  category        String
+  intent          String
+  entities        Json?
+  sourceType      String
+  sourceId        String?
+  difficulty      Int             @default(1)
+  usageCount      Int             @default(0)
+  helpfulCount    Int             @default(0)
+  isApproved      Boolean         @default(true)
+  approvedBy      String?
+  approvedAt      DateTime?
+  version         Int             @default(1)
+  createdBy       String?
+  createdAt       DateTime        @default(now())
+  updatedAt       DateTime        @updatedAt
+
+  @@index([category, intent])
+  @@index([isApproved])
+}
+
+model ServiceHotSpot {
+  id              String          @id @default(uuid())
+  serviceItemId   String
+  serviceItem     ServiceItem     @relation(fields: [serviceItemId], references: [id])
+  date            DateTime
+  applyCount      Int             @default(0)
+  appointmentCount Int            @default(0)
+  completionCount Int             @default(0)
+  avgHandlingTime Float           @default(0)
+  timeoutCount    Int             @default(0)
+  satisfactionScore Float         @default(0)
+  region          String?
+  ageGroup        String?
+  channel         String?
+  createdAt       DateTime        @default(now())
+
+  @@index([serviceItemId, date])
+  @@index([date])
+}
+
+model ThirdPartyApp {
+  id              String          @id @default(uuid())
+  appId           String          @unique
+  appName         String
+  appSecret       String
+  description     String?
+  developer       String
+  contactPhone    String?
+  scopes          ApiScope[]
+  rateLimit       Int             @default(1000)
+  rateLimitPeriod String          @default("hour")
+  ipWhitelist     String[]
+  isActive        Boolean         @default(true)
+  lastUsedAt      DateTime?
+  createdBy       String?
+  createdAt       DateTime        @default(now())
+  updatedAt       DateTime        @updatedAt
+  apiCalls        ApiCallLog[]
+
+  @@index([appId])
+}
+
+model ApiCallLog {
+  id              String          @id @default(uuid())
+  appId           String
+  thirdPartyApp   ThirdPartyApp   @relation(fields: [appId], references: [appId])
+  endpoint        String
+  method          String
+  statusCode      Int
+  responseTime    Int
+  requestIp       String?
+  userId          String?
+  requestData     Json?
+  responseData    Json?
+  errorMessage    String?
+  createdAt       DateTime        @default(now())
+
+  @@index([appId, createdAt])
+  @@index([endpoint, createdAt])
+}
+
+model AuditLog {
+  id              String          @id @default(uuid())
+  userId          String?
+  user            User?           @relation(fields: [userId], references: [id])
+  applicationId   String?
+  application     Application?    @relation(fields: [applicationId], references: [id])
+  action          String
+  module          String
+  description     String?
+  ipAddress       String?
+  userAgent       String?
+  requestData     Json?
+  responseData    Json?
+  status          String          @default("success")
+  createdAt       DateTime        @default(now())
+
+  @@index([userId, createdAt])
+  @@index([module, action])
+  @@index([createdAt])
+}
+
+model SystemConfig {
+  id              String          @id @default(uuid())
+  configKey       String          @unique
+  configValue     String
+  configType      String          @default("string")
+  description     String?
+  isEncrypted     Boolean         @default(false)
+  updatedBy       String?
+  createdAt       DateTime        @default(now())
+  updatedAt       DateTime        @updatedAt
+
+  @@index([configKey])
+}
