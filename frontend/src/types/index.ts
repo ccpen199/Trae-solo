@@ -47,6 +47,12 @@ export interface ReadingSession {
   startPage?: number;
   endPage?: number;
   notes?: string;
+  pauseReason?: 'user' | 'dwell_timeout' | 'voice_pause' | 'app_background' | null;
+  voiceProgress?: number | null;
+  targetProgress?: number | null;
+  progressDelta?: number | null;
+  savedAt?: Date | string | null;
+  status?: 'active' | 'paused' | 'completed' | 'discarded';
 }
 
 export interface Note {

@@ -25,7 +25,7 @@ interface NoteStore {
   addNote: (note: Omit<Note, 'id' | 'createdAt' | 'updatedAt'>) => Promise<string>;
   updateNote: (id: string, changes: Partial<Note>) => Promise<void>;
   deleteNote: (id: string) => Promise<void>;
-  addParagraph: (noteId: string, text: string, orderIndex: number) => Promise<string>;
+  addParagraph: (noteId: string, text: string, orderIndex: number, bbox?: NoteParagraph['bbox']) => Promise<string>;
   updateParagraph: (id: string, text: string) => Promise<void>;
   deleteParagraph: (id: string) => Promise<void>;
   addPageAnchor: (noteId: string, pageNumber: number, confidence?: number) => Promise<string>;
@@ -98,9 +98,9 @@ export const useNoteStore = create<NoteStore>((set, get) => ({
     }));
   },
 
-  addParagraph: async (noteId, text, orderIndex) => {
+  addParagraph: async (noteId, text, orderIndex, bbox) => {
     const id = generateId();
-    const para: NoteParagraph = { id, noteId, text, orderIndex };
+    const para: NoteParagraph = { id, noteId, text, orderIndex, bbox };
     await db.noteParagraphs.add(para);
     set(state => {
       if (state.currentNote?.id === noteId) {

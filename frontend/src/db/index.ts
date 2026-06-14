@@ -24,10 +24,10 @@ export class ReaderDatabase extends Dexie {
 
   constructor() {
     super('reader_knowledge_db');
-    this.version(1).stores({
+    this.version(2).stores({
       tags: 'id, name, createdAt',
       books: 'id, title, isbn10, isbn13, category, status, progress, createdAt, updatedAt',
-      readingSessions: 'id, bookId, mode, startTime, endTime, durationSeconds',
+      readingSessions: 'id, bookId, mode, startTime, endTime, durationSeconds, pauseReason, status, savedAt',
       notes: 'id, bookId, sourceType, createdAt, updatedAt',
       noteParagraphs: 'id, noteId, orderIndex',
       pageAnchors: 'id, noteId, pageNumber',

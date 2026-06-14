@@ -268,7 +268,7 @@ export default function Dashboard() {
               ) : (
                 <>
                   {!isPaused ? (
-                    <button onClick={pauseTimer} className="btn-ink">
+                    <button onClick={() => pauseTimer('user')} className="btn-ink">
                       <Pause className="w-4 h-4" /> 暂停
                     </button>
                   ) : (

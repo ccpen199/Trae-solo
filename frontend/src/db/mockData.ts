@@ -202,6 +202,9 @@ export async function seedMockData(): Promise<void> {
     bookIds.push(id);
   }
 
+  const pauseReasons: any[] = ['user', 'dwell_timeout', 'voice_pause', null, null];
+  const statuses: any[] = ['completed', 'completed', 'completed', 'active', 'discarded'];
+
   for (let dayOffset = 30; dayOffset >= 0; dayOffset--) {
     const sessionsPerDay = Math.floor(Math.random() * 3) + 1;
     for (let s = 0; s < sessionsPerDay; s++) {
@@ -213,17 +216,43 @@ export async function seedMockData(): Promise<void> {
         .hour(startHour)
         .minute(Math.floor(Math.random() * 60))
         .toISOString();
+      const mode = ['manual', 'dwell', 'voice'][Math.floor(Math.random() * 3)] as any;
+      const startPage = Math.floor(Math.random() * 200) + 1;
+      const endPage = startPage + Math.floor(Math.random() * 50) + 5;
+      const targetProgress = Math.min(100, Math.floor(Math.random() * 30) + 40);
+      const progressDelta = Math.floor(Math.random() * 15) + 1;
+      const pauseReason = pauseReasons[Math.floor(Math.random() * pauseReasons.length)];
+      const status = dayOffset === 0 && s === sessionsPerDay - 1 ? 'active' : statuses[Math.floor(Math.random() * 3)];
 
-      await db.readingSessions.add({
+      const session: any = {
         id: generateId(),
         bookId: bookIds[bookIdx],
-        mode: ['manual', 'dwell', 'voice'][Math.floor(Math.random() * 3)] as any,
+        mode,
         durationSeconds: duration,
         startTime,
         endTime: dayjs(startTime).add(duration, 'second').toISOString(),
-        startPage: Math.floor(Math.random() * 200) + 1,
-        endPage: Math.floor(Math.random() * 200) + 200,
-      });
+        startPage,
+        endPage,
+        targetProgress,
+        progressDelta,
+        pauseReason,
+        status,
+        savedAt: dayjs(startTime).add(duration, 'second').toISOString(),
+      };
+
+      if (mode === 'voice') {
+        session.voiceProgress = Math.min(100, Math.floor(Math.random() * 60) + 30);
+      }
+
+      if (mode === 'dwell' && Math.random() > 0.7) {
+        session.pauseReason = 'dwell_timeout';
+      }
+
+      if (status === 'discarded') {
+        session.pauseReason = 'user';
+      }
+
+      await db.readingSessions.add(session);
     }
   }
 

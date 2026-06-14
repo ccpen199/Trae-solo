@@ -136,8 +136,11 @@ export const useBookStore = create<BookStore>((set, get) => ({
         authors: info.authors || [],
         publisher: info.publisher || '',
         publishDate: info.publishedDate || '',
+        isbn13: info.industryIdentifiers?.find((i: any) => i.type === 'ISBN_13')?.identifier || '',
+        isbn10: info.industryIdentifiers?.find((i: any) => i.type === 'ISBN_10')?.identifier || '',
         category: info.categories?.[0] || '',
         totalPages: info.pageCount || 0,
+        summary: info.description || '',
         coverImage: info.imageLinks?.thumbnail?.replace('http:', 'https:') || '',
       } as Partial<Book>;
     } catch {
