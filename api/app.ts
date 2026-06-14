@@ -66,6 +66,45 @@ const listings = [
   { id: 'home-1003', title: '静安阳光一居', city: '上海', district: '静安', price: 6800, tags: ['商圈', '拎包入住'] },
 ]
 
+const escapeXml = (value: string): string =>
+  value
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&apos;')
+
+const buildPlaceholderImage = (prompt: string, imageSize: string): string => {
+  const label = escapeXml((prompt || '房源核验图片').slice(0, 36))
+  const subtitle = escapeXml(imageSize || 'local-placeholder')
+
+  return `<svg xmlns="http://www.w3.org/2000/svg" width="960" height="720" viewBox="0 0 960 720">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#eef2ff"/>
+      <stop offset="55%" stop-color="#dbeafe"/>
+      <stop offset="100%" stop-color="#f8fafc"/>
+    </linearGradient>
+  </defs>
+  <rect width="960" height="720" fill="url(#bg)"/>
+  <rect x="80" y="84" width="800" height="552" rx="32" fill="#ffffff" opacity="0.72"/>
+  <path d="M160 506l132-142 94 98 122-146 190 190H160z" fill="#93c5fd" opacity="0.8"/>
+  <circle cx="690" cy="214" r="58" fill="#bfdbfe"/>
+  <text x="480" y="606" text-anchor="middle" font-family="Arial, sans-serif" font-size="34" font-weight="700" fill="#1e3a8a">${label}</text>
+  <text x="480" y="650" text-anchor="middle" font-family="Arial, sans-serif" font-size="20" fill="#475569">${subtitle}</text>
+</svg>`
+}
+
+app.get('/api/ide/v1/text_to_image', (req: Request, res: Response): void => {
+  const prompt = String(req.query.prompt || '')
+  const imageSize = String(req.query.image_size || 'landscape_4_3')
+
+  res
+    .status(200)
+    .type('image/svg+xml')
+    .send(buildPlaceholderImage(prompt, imageSize))
+})
+
 app.get('/api/auth/me', (_req: Request, res: Response): void => {
   res.json({ success: true, data: userProfile })
 })

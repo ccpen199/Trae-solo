@@ -58,7 +58,7 @@ export default function PropertyCard({
       <div className="relative">
         <div className="aspect-[4/3] overflow-hidden bg-neutral-100">
           <img
-            src={property.images[0] || 'https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=modern%20luxury%20apartment%20exterior%20real%20estate%20property&image_size=square'}
+            src={property.images[0] || '/api/ide/v1/text_to_image?prompt=modern%20luxury%20apartment%20exterior%20real%20estate%20property&image_size=square'}
             alt={property.title}
             className="h-full w-full object-cover transition-transform duration-500 hover:scale-105"
           />

@@ -14,6 +14,13 @@ import {
   AgentRiskProfile,
   MarketHealth,
   LoginResponse,
+  TransactionRecord,
+  PriceBracketVolume,
+  HousingTypeDistribution,
+  TransactionStats,
+  PriceForecastData,
+  DistrictComparisonItem,
+  CompetitorAnalysis,
   mockProperties,
   mockDistrictPrices,
   mockPriceAlerts,
@@ -27,6 +34,14 @@ import {
   mockAdminUser,
   generateCompetitorMatrix,
   generateTimeMachineSnapshot,
+  generateTransactionRecords,
+  generatePriceBracketVolumes,
+  generateHousingTypeDistribution,
+  generateTransactionStats,
+  generatePriceForecast,
+  generateDistrictComparison,
+  generateCompetitorAnalysis,
+  enhanceCompetitorMatrix,
 } from '@/mock/data';
 
 const apiClient = axios.create({
@@ -253,7 +268,8 @@ export const getCompetitorMatrix = async (params: GetCompetitorMatrixParams): Pr
     throw new Error('房源不存在');
   }
 
-  return generateCompetitorMatrix(property, params.radius || 3);
+  const matrix = generateCompetitorMatrix(property, params.radius || 3);
+  return enhanceCompetitorMatrix(matrix);
 };
 
 interface GetTimeMachineSnapshotParams {
@@ -365,6 +381,83 @@ export const getMarketHealth = async (params: GetMarketHealthParams = {}): Promi
   await delay(300 + Math.random() * 500);
 
   return mockMarketHealth;
+};
+
+interface GetTransactionRecordsParams {
+  district?: string;
+  category?: PropertyCategory;
+  days?: number;
+}
+
+export const getTransactionRecords = async (params: GetTransactionRecordsParams = {}): Promise<TransactionRecord[]> => {
+  await delay(300 + Math.random() * 400);
+
+  const basePrice = params.category === 'rental' ? 80 : 65000;
+  return generateTransactionRecords(50, basePrice);
+};
+
+interface GetPriceBracketVolumesParams {
+  district?: string;
+  category?: PropertyCategory;
+}
+
+export const getPriceBracketVolumes = async (params: GetPriceBracketVolumesParams = {}): Promise<PriceBracketVolume[]> => {
+  await delay(200 + Math.random() * 300);
+
+  const isRental = params.category === 'rental';
+  return generatePriceBracketVolumes(200, isRental);
+};
+
+interface GetHousingTypeDistributionParams {
+  district?: string;
+  category?: PropertyCategory;
+}
+
+export const getHousingTypeDistribution = async (params: GetHousingTypeDistributionParams = {}): Promise<HousingTypeDistribution[]> => {
+  await delay(200 + Math.random() * 300);
+
+  return generateHousingTypeDistribution(200);
+};
+
+interface GetTransactionStatsParams {
+  district?: string;
+  category?: PropertyCategory;
+}
+
+export const getTransactionStats = async (params: GetTransactionStatsParams = {}): Promise<TransactionStats> => {
+  await delay(200 + Math.random() * 300);
+
+  const basePrice = params.category === 'rental' ? 80 : 65000;
+  return generateTransactionStats(basePrice);
+};
+
+interface GetPriceForecastParams {
+  district?: string;
+  category?: PropertyCategory;
+}
+
+export const getPriceForecast = async (params: GetPriceForecastParams = {}): Promise<PriceForecastData> => {
+  await delay(400 + Math.random() * 400);
+
+  const basePrice = params.category === 'rental' ? 80 : 65000;
+  return generatePriceForecast(basePrice);
+};
+
+interface GetDistrictComparisonParams {
+  districts: string[];
+  category?: PropertyCategory;
+}
+
+export const getDistrictComparison = async (params: GetDistrictComparisonParams): Promise<DistrictComparisonItem[]> => {
+  await delay(300 + Math.random() * 400);
+
+  return generateDistrictComparison(params.districts);
+};
+
+export const getCompetitorAnalysis = async (): Promise<CompetitorAnalysis> => {
+  await delay(200 + Math.random() * 300);
+
+  return generateCompetitorAnalysis();
 };
 
 interface LoginParams {

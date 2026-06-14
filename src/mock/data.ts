@@ -89,6 +89,94 @@ export interface CompetitorItem {
   bedrooms: number;
   deviation: number;
   source: string;
+  propertyFee?: number;
+  greenRate?: number;
+  plotRatio?: number;
+  decoration?: string;
+  openingDate?: string;
+  availableCount?: number;
+  radarScores?: {
+    price: number;
+    traffic: number;
+    facilities: number;
+    environment: number;
+    school: number;
+    potential: number;
+  };
+}
+
+export interface TransactionRecord {
+  id: string;
+  date: string;
+  communityName: string;
+  bedrooms: number;
+  area: number;
+  totalPrice: number;
+  unitPrice: number;
+  listingPriceDiff: number;
+  listingPriceDiffPercent: number;
+  transactionCycle: number;
+}
+
+export interface PriceBracketVolume {
+  range: string;
+  minPrice: number;
+  maxPrice: number;
+  count: number;
+  percentage: number;
+}
+
+export interface HousingTypeDistribution {
+  type: string;
+  count: number;
+  percentage: number;
+}
+
+export interface TransactionStats {
+  totalTransactions: number;
+  avgPrice: number;
+  medianPrice: number;
+  priceChange: number;
+  avgArea: number;
+  medianCycleDays: number;
+  negotiationSpace: number;
+}
+
+export interface PriceForecastPoint {
+  date: string;
+  price: number;
+  isForecast: boolean;
+  upperBound?: number;
+  lowerBound?: number;
+}
+
+export interface PriceForecastData {
+  history: PriceForecastPoint[];
+  forecast: PriceForecastPoint[];
+  confidence: number;
+  factors: {
+    name: string;
+    impact: 'positive' | 'negative' | 'neutral';
+    description: string;
+  }[];
+  disclaimer: string;
+}
+
+export interface DistrictComparisonItem {
+  districtName: string;
+  avgPrice: number;
+  priceChange7d: number;
+  priceChange30d: number;
+  totalListings: number;
+  transactionVolume7d: number;
+  avgArea: number;
+  avgPricePerSqm: number;
+  supplyDemandRatio: number;
+}
+
+export interface CompetitorAnalysis {
+  advantages: string[];
+  disadvantages: string[];
 }
 
 export interface SnapshotData {
@@ -324,7 +412,7 @@ export const generateProperties = (count: number): Property[] => {
         lng: 116.4 + (Math.random() - 0.5) * 0.4,
       },
       images: Array.from({ length: Math.floor(Math.random() * 5) + 3 }, () =>
-        `https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=${encodeURIComponent('现代简约风格客厅装修 房产照片 真实感')}&image_size=square_hd`
+        `/api/ide/v1/text_to_image?prompt=${encodeURIComponent('现代简约风格客厅装修 房产照片 真实感')}&image_size=square_hd`
       ),
       vrUrl: Math.random() > 0.5 ? faker.internet.url() : undefined,
       description: faker.lorem.paragraph({ min: 3, max: 5 }),
@@ -639,6 +727,226 @@ export const generateAdminDashboard = (reports: Report[]): AdminDashboardData =>
     })),
     marketTrend,
   };
+};
+
+const communityNames = [
+  '万科城市花园', '保利香槟国际', '绿地世纪城', '恒大华府', '碧桂园凤凰城',
+  '融创滨江壹号', '龙湖天街', '华润橡树湾', '中海国际社区', '招商蛇口',
+  '金地自在城', '绿城玫瑰园', '阳光100', '融科城', '北辰三角洲',
+];
+
+export const generateTransactionRecords = (count: number, basePrice: number): TransactionRecord[] => {
+  const records: TransactionRecord[] = [];
+  const today = new Date();
+
+  for (let i = 0; i < count; i++) {
+    const daysAgo = Math.floor(Math.random() * 90);
+    const date = new Date(today);
+    date.setDate(date.getDate() - daysAgo);
+
+    const bedrooms = Math.floor(Math.random() * 4) + 1;
+    const area = Math.round(60 + Math.random() * 120);
+    const pricePerSqm = basePrice * (1 + (Math.random() - 0.5) * 0.2);
+    const totalPrice = Math.round(pricePerSqm * area);
+    const listingDiffPercent = parseFloat((-(Math.random() * 8 + 2)).toFixed(1));
+    const listingDiff = Math.round(totalPrice * listingDiffPercent / 100);
+    const cycleDays = Math.floor(Math.random() * 60) + 7;
+
+    records.push({
+      id: faker.string.uuid(),
+      date: date.toISOString().split('T')[0],
+      communityName: communityNames[Math.floor(Math.random() * communityNames.length)],
+      bedrooms,
+      area,
+      totalPrice,
+      unitPrice: Math.round(pricePerSqm),
+      listingPriceDiff: listingDiff,
+      listingPriceDiffPercent: listingDiffPercent,
+      transactionCycle: cycleDays,
+    });
+  }
+
+  return records.sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
+};
+
+export const generatePriceBracketVolumes = (totalTransactions: number, isRental: boolean = false): PriceBracketVolume[] => {
+  if (isRental) {
+    const brackets = [
+      { range: '3000以下', min: 0, max: 3000, pct: 0.2 },
+      { range: '3000-5000', min: 3000, max: 5000, pct: 0.3 },
+      { range: '5000-8000', min: 5000, max: 8000, pct: 0.25 },
+      { range: '8000-10000', min: 8000, max: 10000, pct: 0.15 },
+      { range: '10000以上', min: 10000, max: Infinity, pct: 0.1 },
+    ];
+    return brackets.map(b => ({
+      ...b,
+      minPrice: b.min,
+      maxPrice: b.max,
+      count: Math.floor(totalTransactions * b.pct),
+      percentage: Math.round(b.pct * 100),
+    }));
+  }
+
+  const brackets = [
+    { range: '500万以下', min: 0, max: 5000000, pct: 0.15 },
+    { range: '500-800万', min: 5000000, max: 8000000, pct: 0.3 },
+    { range: '800-1200万', min: 8000000, max: 12000000, pct: 0.3 },
+    { range: '1200-2000万', min: 12000000, max: 20000000, pct: 0.15 },
+    { range: '2000万以上', min: 20000000, max: Infinity, pct: 0.1 },
+  ];
+
+  return brackets.map(b => ({
+    ...b,
+    minPrice: b.min,
+    maxPrice: b.max,
+    count: Math.floor(totalTransactions * b.pct),
+    percentage: Math.round(b.pct * 100),
+  }));
+};
+
+export const generateHousingTypeDistribution = (totalTransactions: number): HousingTypeDistribution[] => {
+  const types = [
+    { type: '1室', pct: 0.15 },
+    { type: '2室', pct: 0.35 },
+    { type: '3室', pct: 0.3 },
+    { type: '4室', pct: 0.15 },
+    { type: '5室+', pct: 0.05 },
+  ];
+
+  return types.map(t => ({
+    ...t,
+    count: Math.floor(totalTransactions * t.pct),
+    percentage: Math.round(t.pct * 100),
+  }));
+};
+
+export const generateTransactionStats = (basePrice: number): TransactionStats => {
+  const totalTransactions = Math.floor(Math.random() * 100) + 50;
+  return {
+    totalTransactions,
+    avgPrice: Math.round(basePrice * (1 + (Math.random() - 0.5) * 0.1)),
+    medianPrice: Math.round(basePrice * (1 + (Math.random() - 0.5) * 0.08)),
+    priceChange: parseFloat(((Math.random() - 0.4) * 5).toFixed(2)),
+    avgArea: Math.round(80 + Math.random() * 40),
+    medianCycleDays: Math.floor(Math.random() * 30) + 15,
+    negotiationSpace: parseFloat((Math.random() * 5 + 3).toFixed(1)),
+  };
+};
+
+export const generatePriceForecast = (basePrice: number): PriceForecastData => {
+  const history: PriceForecastPoint[] = [];
+  const forecast: PriceForecastPoint[] = [];
+  const today = new Date();
+  let currentPrice = basePrice * 0.95;
+
+  for (let i = 180; i >= 0; i--) {
+    const date = new Date(today);
+    date.setDate(date.getDate() - i);
+    const change = (Math.random() - 0.48) * basePrice * 0.005;
+    currentPrice = Math.max(currentPrice + change, basePrice * 0.85);
+    history.push({
+      date: date.toISOString().split('T')[0],
+      price: Math.round(currentPrice),
+      isForecast: false,
+    });
+  }
+
+  const lastPrice = currentPrice;
+  const forecastTrend = (Math.random() - 0.3) * 0.02;
+  for (let i = 1; i <= 180; i++) {
+    const date = new Date(today);
+    date.setDate(date.getDate() + i);
+    const trendChange = lastPrice * forecastTrend * (i / 180);
+    const volatility = (Math.random() - 0.5) * basePrice * 0.01;
+    const forecastPrice = Math.round(lastPrice + trendChange + volatility);
+    const range = forecastPrice * 0.05;
+    forecast.push({
+      date: date.toISOString().split('T')[0],
+      price: forecastPrice,
+      isForecast: true,
+      upperBound: Math.round(forecastPrice + range),
+      lowerBound: Math.round(forecastPrice - range),
+    });
+  }
+
+  const factors = [
+    { name: '政策调控', impact: 'negative' as const, description: '限购限贷政策收紧，抑制房价上涨' },
+    { name: '供需关系', impact: 'neutral' as const, description: '供需基本平衡，市场趋于稳定' },
+    { name: '经济环境', impact: 'positive' as const, description: '经济稳步增长，居民收入提升' },
+    { name: '人口流入', impact: 'positive' as const, description: '持续人口流入，住房需求旺盛' },
+    { name: '贷款利率', impact: 'negative' as const, description: '利率上升，购房成本增加' },
+  ];
+
+  return {
+    history,
+    forecast,
+    confidence: parseFloat((0.65 + Math.random() * 0.2).toFixed(2)),
+    factors,
+    disclaimer: '本预测基于历史数据和市场模型生成，仅供参考，不构成投资建议。实际房价受多种因素影响，可能与预测存在较大差异。',
+  };
+};
+
+export const generateDistrictComparison = (districtNames: string[]): DistrictComparisonItem[] => {
+  return districtNames.map(name => {
+    const isCore = name === '东城区' || name === '西城区' || name === '海淀区' || name === '朝阳区';
+    const basePrice = isCore ? 90000 : 55000;
+    return {
+      districtName: name,
+      avgPrice: Math.round(basePrice * (1 + (Math.random() - 0.5) * 0.15)),
+      priceChange7d: parseFloat(((Math.random() - 0.45) * 3).toFixed(2)),
+      priceChange30d: parseFloat(((Math.random() - 0.4) * 8).toFixed(2)),
+      totalListings: Math.floor(Math.random() * 2000) + 500,
+      transactionVolume7d: Math.floor(Math.random() * 100) + 20,
+      avgArea: Math.round(70 + Math.random() * 50),
+      avgPricePerSqm: Math.round(basePrice * (1 + (Math.random() - 0.5) * 0.1)),
+      supplyDemandRatio: parseFloat((0.8 + Math.random() * 0.5).toFixed(2)),
+    };
+  });
+};
+
+export const generateCompetitorAnalysis = (): CompetitorAnalysis => {
+  const advantages = [
+    '价格低于周边竞品平均水平5%，性价比突出',
+    '绿化率高达35%，居住环境优质',
+    '配套设施完善，生活便利度高',
+    '学区资源优质，教育配套领先',
+    '交通便利，距离地铁站仅500米',
+    '品牌开发商，品质有保障',
+  ];
+  const disadvantages = [
+    '物业费略高于周边平均水平',
+    '容积率偏高，居住密度较大',
+    '部分楼栋临街，存在噪音影响',
+  ];
+
+  const shuffledAdv = [...advantages].sort(() => Math.random() - 0.5);
+  const shuffledDis = [...disadvantages].sort(() => Math.random() - 0.5);
+
+  return {
+    advantages: shuffledAdv.slice(0, 3 + Math.floor(Math.random() * 3)),
+    disadvantages: shuffledDis.slice(0, 2 + Math.floor(Math.random() * 2)),
+  };
+};
+
+export const enhanceCompetitorMatrix = (competitors: CompetitorItem[]): CompetitorItem[] => {
+  const decorations = ['毛坯', '简装', '精装', '豪装'];
+  return competitors.map(c => ({
+    ...c,
+    propertyFee: parseFloat((2 + Math.random() * 5).toFixed(2)),
+    greenRate: parseFloat((25 + Math.random() * 20).toFixed(1)),
+    plotRatio: parseFloat((1.5 + Math.random() * 2).toFixed(2)),
+    decoration: decorations[Math.floor(Math.random() * decorations.length)],
+    openingDate: faker.date.past({ years: 2 }).toISOString().split('T')[0],
+    availableCount: Math.floor(Math.random() * 50) + 5,
+    radarScores: {
+      price: Math.round(50 + Math.random() * 50),
+      traffic: Math.round(40 + Math.random() * 60),
+      facilities: Math.round(40 + Math.random() * 60),
+      environment: Math.round(40 + Math.random() * 60),
+      school: Math.round(30 + Math.random() * 70),
+      potential: Math.round(40 + Math.random() * 60),
+    },
+  }));
 };
 
 export const mockProperties: Property[] = generateProperties(100);
