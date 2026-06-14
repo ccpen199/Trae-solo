@@ -1,0 +1,17 @@
+{
+  "name": "construction-risk-control",
+  "version": "1.0.0",
+  "description": "建筑行业企业级风控数据服务平台",
+  "private": true,
+  "workspaces": [
+    "backend",
+    "frontend"
+  ],
+  "scripts": {
+    "install:all": "npm install --workspaces",
+    "dev:backend": "cd backend && npm run dev",
+    "dev:frontend": "cd frontend && npm run dev",
+    "build": "cd frontend && npm run build",
+    "start": "cd backend && npm start"
+  }
+}

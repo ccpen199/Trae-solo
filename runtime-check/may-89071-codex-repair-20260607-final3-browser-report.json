@@ -1,0 +1,34 @@
+{
+  "order": "may-89071",
+  "checkedAt": "2026-06-07T11:13:16.549Z",
+  "frontendUrl": "http://127.0.0.1:49071/",
+  "backendUrl": "http://127.0.0.1:59071",
+  "steps": [
+    {
+      "name": "home",
+      "ok": true,
+      "durationMs": 883,
+      "status": 200,
+      "title": "健康度仪表盘 - 建筑风控平台",
+      "url": "http://127.0.0.1:49071/dashboard"
+    },
+    {
+      "name": "admin",
+      "ok": true,
+      "durationMs": 894,
+      "status": 200,
+      "title": "管理后台 - 建筑风控平台",
+      "url": "http://127.0.0.1:49071/admin"
+    },
+    {
+      "name": "search-filter",
+      "ok": true,
+      "durationMs": 2325,
+      "status": 200,
+      "title": "企业查询 - 建筑风控平台",
+      "url": "http://127.0.0.1:49071/search"
+    }
+  ],
+  "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89071/runtime-check/may-89071-codex-repair-20260607-final3-frontend.png",
+  "ok": true
+}
