@@ -1,0 +1,17 @@
+{
+  "total": 12,
+  "files": [
+    "/Users/chen/Documents/trae_projects/local_projects/may-89072/frontend/src/views/admin/Alerts.vue",
+    "/Users/chen/Documents/trae_projects/local_projects/may-89072/frontend/src/views/admin/Applications.vue",
+    "/Users/chen/Documents/trae_projects/local_projects/may-89072/frontend/src/views/admin/AuditLogs.vue",
+    "/Users/chen/Documents/trae_projects/local_projects/may-89072/frontend/src/views/admin/Dashboard.vue",
+    "/Users/chen/Documents/trae_projects/local_projects/may-89072/frontend/src/views/admin/Departments.vue",
+    "/Users/chen/Documents/trae_projects/local_projects/may-89072/frontend/src/views/admin/Evaluations.vue",
+    "/Users/chen/Documents/trae_projects/local_projects/may-89072/frontend/src/views/admin/Policies.vue",
+    "/Users/chen/Documents/trae_projects/local_projects/may-89072/frontend/src/views/admin/Regions.vue",
+    "/Users/chen/Documents/trae_projects/local_projects/may-89072/frontend/src/views/admin/Scenarios.vue",
+    "/Users/chen/Documents/trae_projects/local_projects/may-89072/frontend/src/views/admin/ServiceItems.vue",
+    "/Users/chen/Documents/trae_projects/local_projects/may-89072/frontend/src/views/admin/Statistics.vue",
+    "/Users/chen/Documents/trae_projects/local_projects/may-89072/frontend/src/views/admin/Users.vue"
+  ]
+}

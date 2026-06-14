@@ -1,0 +1,4 @@
+
+> sichuan-gov-service-backend@1.0.0 dev
+> nodemon --watch src -e js,json src/index.js > ../backend.log 2>&1
+
