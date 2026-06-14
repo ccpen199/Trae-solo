@@ -1,17 +1,17 @@
 import { useState, useEffect, useRef } from 'react'
-import { Form, Input, Button, Checkbox, Card, Typography, message, Divider } from 'antd'
-import { UserOutlined, LockOutlined, CrownOutlined, TeamOutlined } from '@ant-design/icons'
+import { Form, Input, Button, Checkbox, Card, Typography, message } from 'antd'
+import { UserOutlined, LockOutlined } from '@ant-design/icons'
 import { useNavigate, useLocation } from 'react-router-dom'
-import { getToken, setToken as saveToken, setUser as saveUser } from '../utils/auth'
-import { auth } from '../api'
+import { useAuth } from '../context/AuthContext'
+import { getToken } from '../utils/auth'
 
 const { Title, Text } = Typography
 
 function Login() {
+  const { login } = useAuth()
   const navigate = useNavigate()
   const location = useLocation()
   const [loading, setLoading] = useState(false)
-  const [demoLoading, setDemoLoading] = useState(null)
   const [form] = Form.useForm()
   const autoLoginStarted = useRef(false)
 
@@ -21,67 +21,53 @@ function Login() {
   useEffect(() => {
     if (getToken()) {
       navigate(from, { replace: true })
-    }
-  }, [])
-
-  const doLoginAndNavigate = async (loginData) => {
-    try {
-      const res = await auth.login(loginData)
-      const { token, user } = res.data
-      if (!token || !user) {
-        throw new Error('服务器返回数据异常')
-      }
-      saveToken(token)
-      saveUser(user)
-      message.success(`登录成功，欢迎 ${user.name || ''}！`)
-      window.location.href = from
-    } catch (err) {
-      message.error(err.message || '登录失败，请检查账号密码')
-    }
-  }
-
-  useEffect(() => {
-    if (!autoDemoLogin || getToken() || autoLoginStarted.current || window.__may89099AutoLoginStarted) {
       return
     }
 
-    autoLoginStarted.current = true
-    window.__may89099AutoLoginStarted = true
-    localStorage.setItem('rememberedEmail', 'hr@zhilian.com')
-    doLoginAndNavigate({ email: 'hr@zhilian.com', password: '123456' })
-  }, [autoDemoLogin])
+    if (autoDemoLogin && !autoLoginStarted.current) {
+      autoLoginStarted.current = true
+      form.setFieldsValue({
+        email: 'hr@zhilian.com',
+        password: '123456',
+        remember: true,
+      })
+      setTimeout(() => form.submit(), 0)
+    }
+  }, [autoDemoLogin, form, from, navigate])
 
   const handleSubmit = async (values) => {
     setLoading(true)
     try {
-      await doLoginAndNavigate({ email: values.email, password: values.password })
+      await login({ email: values.email, password: values.password })
       if (values.remember) {
         localStorage.setItem('rememberedEmail', values.email)
       } else {
         localStorage.removeItem('rememberedEmail')
       }
+      setTimeout(() => navigate(from, { replace: true }), 0)
     } catch (err) {
-      // doLoginAndNavigate already shows error
+      message.error(err.message || '登录失败，请检查账号密码')
     } finally {
       setLoading(false)
     }
   }
 
-  const handleFinishFailed = ({ errorFields }) => {
-    if (errorFields && errorFields.length > 0) {
-      message.error(errorFields[0].errors[0] || '请填写完整的登录信息')
-    }
+  const handleDemoLogin = () => {
+    form.setFieldsValue({
+      email: 'hr@zhilian.com',
+      password: '123456',
+      remember: true,
+    })
+    form.submit()
   }
 
-  const handleDemoLogin = async (email, password, label) => {
-    setDemoLoading(label)
-    try {
-      await doLoginAndNavigate({ email, password })
-    } catch (err) {
-      // doLoginAndNavigate already shows error
-    } finally {
-      setDemoLoading(null)
-    }
+  const handleDemoLogin2 = () => {
+    form.setFieldsValue({
+      email: 'hr2@zhilian.com',
+      password: '123456',
+      remember: true,
+    })
+    form.submit()
   }
 
   return (
@@ -128,7 +114,6 @@ function Login() {
               email: localStorage.getItem('rememberedEmail') || '',
             }}
             onFinish={handleSubmit}
-            onFinishFailed={handleFinishFailed}
             size="large"
             style={{ width: '100%' }}
           >
@@ -180,47 +165,56 @@ function Login() {
             </Form.Item>
           </Form>
 
-          <Divider style={{ margin: '20px 0 16px' }}>演示账号，一键登录</Divider>
-
-          <div style={{ display: 'flex', gap: '12px' }}>
-            <Button
-              block
-              icon={<CrownOutlined />}
-              loading={demoLoading === 'admin'}
-              onClick={() => handleDemoLogin('hr@zhilian.com', '123456', 'admin')}
-              style={{
-                height: '64px',
-                display: 'flex',
-                flexDirection: 'column',
-                alignItems: 'center',
-                justifyContent: 'center',
+          <div style={{
+            marginTop: '24px',
+            padding: '16px',
+            background: '#f6ffed',
+            border: '1px solid #b7eb8f',
+            borderRadius: '8px',
+          }}>
+            <Text style={{ color: '#52c41a', fontSize: '13px', fontWeight: 'bold' }}>
+              演示账号（点击一键登录）
+            </Text>
+            <div style={{ marginTop: '12px', display: 'flex', gap: '12px' }}>
+              <div style={{
+                flex: 1,
+                padding: '12px',
+                background: '#fff',
                 borderRadius: '8px',
-                border: '1px solid #1890ff',
-                background: 'linear-gradient(135deg, #e6f7ff 0%, #bae7ff 100%)',
+                border: '1px solid #d9d9d9',
+                cursor: 'pointer',
+                transition: 'all 0.2s',
               }}
-            >
-              <span style={{ fontWeight: 'bold', color: '#1890ff', fontSize: '14px' }}>管理员HR</span>
-              <span style={{ fontSize: '11px', color: 'rgba(0,0,0,0.45)', marginTop: '2px' }}>hr@zhilian.com</span>
-            </Button>
-            <Button
-              block
-              icon={<TeamOutlined />}
-              loading={demoLoading === 'hr'}
-              onClick={() => handleDemoLogin('hr2@zhilian.com', '123456', 'hr')}
-              style={{
-                height: '64px',
-                display: 'flex',
-                flexDirection: 'column',
-                alignItems: 'center',
-                justifyContent: 'center',
+                onClick={handleDemoLogin}
+                onMouseEnter={(e) => { e.currentTarget.style.borderColor = '#1890ff'; e.currentTarget.style.boxShadow = '0 2px 8px rgba(24,144,255,0.15)' }}
+                onMouseLeave={(e) => { e.currentTarget.style.borderColor = '#d9d9d9'; e.currentTarget.style.boxShadow = 'none' }}
+              >
+                <div style={{ fontWeight: 'bold', fontSize: '14px', color: '#1890ff', marginBottom: '4px' }}>
+                  管理员HR
+                </div>
+                <div style={{ fontSize: '12px', color: 'rgba(0,0,0,0.45)' }}>hr@zhilian.com</div>
+                <div style={{ fontSize: '12px', color: 'rgba(0,0,0,0.45)' }}>密码：123456</div>
+              </div>
+              <div style={{
+                flex: 1,
+                padding: '12px',
+                background: '#fff',
                 borderRadius: '8px',
-                border: '1px solid #52c41a',
-                background: 'linear-gradient(135deg, #f6ffed 0%, #d9f7be 100%)',
+                border: '1px solid #d9d9d9',
+                cursor: 'pointer',
+                transition: 'all 0.2s',
               }}
-            >
-              <span style={{ fontWeight: 'bold', color: '#52c41a', fontSize: '14px' }}>普通HR</span>
-              <span style={{ fontSize: '11px', color: 'rgba(0,0,0,0.45)', marginTop: '2px' }}>hr2@zhilian.com</span>
-            </Button>
+                onClick={handleDemoLogin2}
+                onMouseEnter={(e) => { e.currentTarget.style.borderColor = '#52c41a'; e.currentTarget.style.boxShadow = '0 2px 8px rgba(82,196,26,0.15)' }}
+                onMouseLeave={(e) => { e.currentTarget.style.borderColor = '#d9d9d9'; e.currentTarget.style.boxShadow = 'none' }}
+              >
+                <div style={{ fontWeight: 'bold', fontSize: '14px', color: '#52c41a', marginBottom: '4px' }}>
+                  普通HR
+                </div>
+                <div style={{ fontSize: '12px', color: 'rgba(0,0,0,0.45)' }}>hr2@zhilian.com</div>
+                <div style={{ fontSize: '12px', color: 'rgba(0,0,0,0.45)' }}>密码：123456</div>
+              </div>
+            </div>
           </div>
         </Card>
 

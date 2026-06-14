@@ -3,7 +3,6 @@ import {
   Table,
   Button,
   Input,
-  InputNumber,
   Select,
   Space,
   Modal,
@@ -18,8 +17,6 @@ import {
   Row,
   Col,
   Card,
-  DatePicker,
-  TimePicker,
 } from 'antd';
 import {
   PlusOutlined,
@@ -33,7 +30,7 @@ import {
 } from '@ant-design/icons';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
-import { candidates, jobs, interviews, applications, offers } from '../api';
+import { candidates, jobs } from '../api';
 import dayjs from 'dayjs';
 
 const { Search } = Input;
@@ -44,12 +41,6 @@ const { TextArea } = Input;
 const educationOptions = ['大专', '本科', '硕士', '博士'];
 const experienceOptions = ['不限', '0-1年', '1-3年', '3-5年', '5-10年', '10年以上'];
 const cityOptions = ['北京', '上海', '广州', '深圳', '杭州', '成都', '武汉', '西安', '南京', '重庆'];
-const genderOptions = ['男', '女'];
-const interviewTypeOptions = [
-  { value: 'video', label: '视频面试' },
-  { value: 'phone', label: '电话面试' },
-  { value: 'onsite', label: '现场面试' },
-];
 
 function Candidates() {
   const { token } = useAuth();
@@ -68,16 +59,6 @@ function Candidates() {
   const [jobOptions, setJobOptions] = useState([]);
   const [addModalVisible, setAddModalVisible] = useState(false);
   const [uploadModalVisible, setUploadModalVisible] = useState(false);
-  const [matchModalVisible, setMatchModalVisible] = useState(false);
-  const [selectedJob, setSelectedJob] = useState(null);
-  const [matchLoading, setMatchLoading] = useState(false);
-  const [currentRecord, setCurrentRecord] = useState(null);
-  const [interviewModalVisible, setInterviewModalVisible] = useState(false);
-  const [interviewLoading, setInterviewLoading] = useState(false);
-  const [interviewForm] = Form.useForm();
-  const [offerModalVisible, setOfferModalVisible] = useState(false);
-  const [offerLoading, setOfferLoading] = useState(false);
-  const [offerForm] = Form.useForm();
   const [form] = Form.useForm();
 
   useEffect(() => {
@@ -139,25 +120,7 @@ function Candidates() {
 
   const handleAddCandidate = async (values) => {
     try {
-      const payload = {
-        name: values.name,
-        phone: values.phone,
-        email: values.email,
-        gender: values.gender,
-        birthday: values.birthday ? values.birthday.format('YYYY-MM-DD') : undefined,
-        city: values.city,
-        highest_education: values.highest_education,
-        work_years: values.work_years,
-        expected_position: values.expected_position,
-        expected_salary_min: values.expected_salary_min,
-        expected_salary_max: values.expected_salary_max,
-        expected_city: values.expected_city,
-        current_company: values.current_company,
-        current_position: values.current_position,
-        skill_tags: values.skill_tags ? values.skill_tags.join(',') : undefined,
-        parsed_content: values.parsed_content,
-      };
-      const res = await candidates.create(payload);
+      const res = await candidates.create(values);
       if (res.code === 0) {
         message.success('添加成功');
         setAddModalVisible(false);
@@ -213,6 +176,13 @@ function Candidates() {
       ),
     },
     {
+      title: '头像',
+      dataIndex: 'avatar',
+      key: 'avatar',
+      width: 80,
+      render: (avatar) => <Avatar src={avatar} size={40} />,
+    },
+    {
       title: '手机号',
       dataIndex: 'phone',
       key: 'phone',
@@ -227,40 +197,33 @@ function Candidates() {
     },
     {
       title: '学历',
-      dataIndex: 'highest_education',
-      key: 'highest_education',
+      dataIndex: 'education',
+      key: 'education',
       width: 80,
-      render: (text) => text ? <Tag color="blue">{text}</Tag> : '-',
+      render: (text) => <Tag color="blue">{text}</Tag>,
     },
     {
       title: '工作年限',
-      dataIndex: 'work_years',
-      key: 'work_years',
+      dataIndex: 'experience',
+      key: 'experience',
       width: 100,
-      render: (text) => text != null ? `${text}年` : '-',
     },
     {
       title: '期望薪资',
-      key: 'expected_salary',
-      width: 140,
-      render: (_, record) => {
-        if (record.expected_salary_min != null && record.expected_salary_max != null) {
-          return `${record.expected_salary_min}-${record.expected_salary_max}K`;
-        }
-        if (record.expected_salary_min != null) return `${record.expected_salary_min}K起`;
-        return '-';
-      },
+      dataIndex: 'expectedSalary',
+      key: 'expectedSalary',
+      width: 120,
     },
     {
       title: '意向城市',
-      dataIndex: 'expected_city',
-      key: 'expected_city',
+      dataIndex: 'expectedCity',
+      key: 'expectedCity',
       width: 100,
     },
     {
       title: '简历评分',
-      dataIndex: 'resume_score',
-      key: 'resume_score',
+      dataIndex: 'resumeScore',
+      key: 'resumeScore',
       width: 150,
       render: (score) => (
         <Progress
@@ -314,132 +277,25 @@ function Candidates() {
     },
   ];
 
-  const handleAIMatch = (record) => {
-    setCurrentRecord(record);
-    setSelectedJob(null);
-    setMatchModalVisible(true);
-  };
-
-  const handleMatchSubmit = async () => {
-    if (!selectedJob) {
-      message.warning('请选择要匹配的岗位');
-      return;
-    }
-    setMatchLoading(true);
+  const handleAIMatch = async (record) => {
     try {
-      const res = await candidates.match(selectedJob, currentRecord.id);
+      const res = await candidates.match(null, record.id);
       if (res.code === 0) {
         message.success('AI匹配完成');
-        setMatchModalVisible(false);
-        navigate(`/candidates/${currentRecord.id}`);
+        navigate(`/candidates/${record.id}`);
       }
     } catch (err) {
       console.error('AI匹配失败:', err);
       message.error('AI匹配失败');
-    } finally {
-      setMatchLoading(false);
     }
-  };
-
-  const ensureApplication = async (candidateId, jobId) => {
-    try {
-      const res = await applications.getList({ candidate_id: candidateId, job_id: jobId, pageSize: 1 });
-      if (res.code === 0 && res.data?.list?.length > 0) {
-        return res.data.list[0];
-      }
-    } catch (err) {
-      console.error('查询申请失败:', err);
-    }
-    const res = await applications.create({
-      candidate_id: candidateId,
-      job_id: jobId,
-      status: 'screening',
-    });
-    if (res.code === 0) return res.data;
-    throw new Error('创建申请失败');
   };
 
   const handleInterview = (record) => {
-    setCurrentRecord(record);
-    interviewForm.resetFields();
-    setInterviewModalVisible(true);
-  };
-
-  const handleInterviewSubmit = async () => {
-    try {
-      const values = await interviewForm.validateFields();
-      setInterviewLoading(true);
-      const application = await ensureApplication(currentRecord.id, values.job_id);
-      const scheduleTime = values.schedule_date && values.schedule_time
-        ? dayjs(values.schedule_date)
-            .hour(values.schedule_time.hour())
-            .minute(values.schedule_time.minute())
-            .format('YYYY-MM-DD HH:mm:ss')
-        : undefined;
-      const res = await interviews.create({
-        application_id: application.id,
-        job_id: values.job_id,
-        candidate_id: currentRecord.id,
-        interview_type: values.interview_type,
-        schedule_time: scheduleTime,
-        duration: values.duration,
-        interviewer_name: values.interviewer_name,
-        interviewer_phone: values.interviewer_phone,
-      });
-      if (res.code === 0) {
-        message.success('面试安排成功');
-        setInterviewModalVisible(false);
-        interviewForm.resetFields();
-      } else {
-        message.error(res.message || '面试安排失败');
-      }
-    } catch (err) {
-      if (err.errorFields) return;
-      console.error('面试安排失败:', err);
-      message.error('面试安排失败');
-    } finally {
-      setInterviewLoading(false);
-    }
+    message.info(`正在为 ${record.name} 发起面试...`);
   };
 
   const handleOffer = (record) => {
-    setCurrentRecord(record);
-    offerForm.resetFields();
-    setOfferModalVisible(true);
-  };
-
-  const handleOfferSubmit = async () => {
-    try {
-      const values = await offerForm.validateFields();
-      setOfferLoading(true);
-      const application = await ensureApplication(currentRecord.id, values.job_id);
-      const res = await offers.create({
-        application_id: application.id,
-        job_id: values.job_id,
-        candidate_id: currentRecord.id,
-        salary_min: values.salary_min,
-        salary_max: values.salary_max,
-        entry_date: values.entry_date ? values.entry_date.format('YYYY-MM-DD') : undefined,
-        probation_salary: values.probation_salary,
-        probation_period: values.probation_period,
-        work_place: values.work_place,
-        benefits: values.benefits,
-        other_terms: values.other_terms,
-      });
-      if (res.code === 0) {
-        message.success('Offer发送成功');
-        setOfferModalVisible(false);
-        offerForm.resetFields();
-      } else {
-        message.error(res.message || 'Offer发送失败');
-      }
-    } catch (err) {
-      if (err.errorFields) return;
-      console.error('Offer发送失败:', err);
-      message.error('Offer发送失败');
-    } finally {
-      setOfferLoading(false);
-    }
+    message.info(`正在为 ${record.name} 发送Offer...`);
   };
 
   const uploadProps = {
@@ -558,129 +414,73 @@ function Candidates() {
         onCancel={() => setAddModalVisible(false)}
         footer={null}
         destroyOnClose
-        width={640}
       >
         <Form
           form={form}
           layout="vertical"
           onFinish={handleAddCandidate}
         >
-          <Row gutter={16}>
-            <Col span={12}>
-              <Form.Item
-                name="name"
-                label="姓名"
-                rules={[{ required: true, message: '请输入姓名' }]}
-              >
-                <Input placeholder="请输入姓名" />
-              </Form.Item>
-            </Col>
-            <Col span={12}>
-              <Form.Item name="gender" label="性别">
-                <Select placeholder="请选择性别" allowClear>
-                  {genderOptions.map((item) => (
-                    <Option key={item} value={item}>{item}</Option>
-                  ))}
-                </Select>
-              </Form.Item>
-            </Col>
-          </Row>
-          <Row gutter={16}>
-            <Col span={12}>
-              <Form.Item
-                name="phone"
-                label="手机号"
-                rules={[
-                  { required: true, message: '请输入手机号' },
-                  { pattern: /^1[3-9]\d{9}$/, message: '请输入有效的手机号' },
-                ]}
-              >
-                <Input placeholder="请输入手机号" />
-              </Form.Item>
-            </Col>
-            <Col span={12}>
-              <Form.Item
-                name="email"
-                label="邮箱"
-                rules={[
-                  { required: true, message: '请输入邮箱' },
-                  { type: 'email', message: '请输入有效的邮箱' },
-                ]}
-              >
-                <Input placeholder="请输入邮箱" />
-              </Form.Item>
-            </Col>
-          </Row>
-          <Row gutter={16}>
-            <Col span={12}>
-              <Form.Item name="birthday" label="出生日期">
-                <DatePicker style={{ width: '100%' }} placeholder="请选择出生日期" />
-              </Form.Item>
-            </Col>
-            <Col span={12}>
-              <Form.Item name="city" label="工作城市">
-                <Select placeholder="请选择工作城市" allowClear>
-                  {cityOptions.map((item) => (
-                    <Option key={item} value={item}>{item}</Option>
-                  ))}
-                </Select>
-              </Form.Item>
-            </Col>
-          </Row>
-          <Row gutter={16}>
-            <Col span={12}>
-              <Form.Item name="highest_education" label="最高学历">
-                <Select placeholder="请选择学历" allowClear>
-                  {educationOptions.map((item) => (
-                    <Option key={item} value={item}>{item}</Option>
-                  ))}
-                </Select>
-              </Form.Item>
-            </Col>
-            <Col span={12}>
-              <Form.Item name="work_years" label="工作年限">
-                <InputNumber min={0} max={50} style={{ width: '100%' }} placeholder="请输入工作年限" addonAfter="年" />
-              </Form.Item>
-            </Col>
-          </Row>
-          <Row gutter={16}>
-            <Col span={12}>
-              <Form.Item name="current_company" label="当前公司">
-                <Input placeholder="请输入当前公司" />
-              </Form.Item>
-            </Col>
-            <Col span={12}>
-              <Form.Item name="current_position" label="当前职位">
-                <Input placeholder="请输入当前职位" />
-              </Form.Item>
-            </Col>
-          </Row>
-          <Form.Item name="expected_position" label="期望职位">
-            <Input placeholder="请输入期望职位" />
+          <Form.Item
+            name="name"
+            label="姓名"
+            rules={[{ required: true, message: '请输入姓名' }]}
+          >
+            <Input placeholder="请输入姓名" />
           </Form.Item>
-          <Row gutter={16}>
-            <Col span={12}>
-              <Form.Item name="expected_salary_min" label="期望薪资下限（K/月）">
-                <InputNumber min={0} style={{ width: '100%' }} placeholder="最低期望薪资" />
-              </Form.Item>
-            </Col>
-            <Col span={12}>
-              <Form.Item name="expected_salary_max" label="期望薪资上限（K/月）">
-                <InputNumber min={0} style={{ width: '100%' }} placeholder="最高期望薪资" />
-              </Form.Item>
-            </Col>
-          </Row>
-          <Form.Item name="expected_city" label="意向城市">
-            <Select placeholder="请选择意向城市" allowClear>
-              {cityOptions.map((item) => (
-                <Option key={item} value={item}>{item}</Option>
+          <Form.Item
+            name="phone"
+            label="手机号"
+            rules={[
+              { required: true, message: '请输入手机号' },
+              { pattern: /^1[3-9]\d{9}$/, message: '请输入有效的手机号' },
+            ]}
+          >
+            <Input placeholder="请输入手机号" />
+          </Form.Item>
+          <Form.Item
+            name="email"
+            label="邮箱"
+            rules={[
+              { required: true, message: '请输入邮箱' },
+              { type: 'email', message: '请输入有效的邮箱' },
+            ]}
+          >
+            <Input placeholder="请输入邮箱" />
+          </Form.Item>
+          <Form.Item name="education" label="学历">
+            <Select placeholder="请选择学历">
+              {educationOptions.map((item) => (
+                <Option key={item} value={item}>
+                  {item}
+                </Option>
               ))}
             </Select>
           </Form.Item>
-          <Form.Item name="skill_tags" label="技能标签">
+          <Form.Item name="experience" label="工作年限">
+            <Select placeholder="请选择工作年限">
+              {experienceOptions.map((item) => (
+                <Option key={item} value={item}>
+                  {item}
+                </Option>
+              ))}
+            </Select>
+          </Form.Item>
+          <Form.Item name="expectedSalary" label="期望薪资">
+            <Input placeholder="例如：15-25K" />
+          </Form.Item>
+          <Form.Item name="expectedCity" label="意向城市">
+            <Select placeholder="请选择意向城市">
+              {cityOptions.map((item) => (
+                <Option key={item} value={item}>
+                  {item}
+                </Option>
+              ))}
+            </Select>
+          </Form.Item>
+          <Form.Item name="skills" label="技能标签">
             <Select mode="tags" placeholder="输入技能后回车" />
           </Form.Item>
-          <Form.Item name="parsed_content" label="简历内容">
+          <Form.Item name="resume" label="简历内容">
             <TextArea rows={4} placeholder="请输入简历内容" />
           </Form.Item>
           <Form.Item>
@@ -714,172 +514,6 @@ function Candidates() {
         <div style={{ marginTop: 16, textAlign: 'center', color: '#999' }}>
           <p>上传后将自动解析简历内容并创建求职者档案</p>
         </div>
-      </Modal>
-
-      <Modal
-        title="AI岗位匹配"
-        open={matchModalVisible}
-        onCancel={() => setMatchModalVisible(false)}
-        footer={[
-          <Button key="cancel" onClick={() => setMatchModalVisible(false)}>
-            取消
-          </Button>,
-          <Button key="submit" type="primary" loading={matchLoading} onClick={handleMatchSubmit}>
-            开始匹配
-          </Button>,
-        ]}
-        destroyOnClose
-      >
-        <div style={{ marginBottom: 16 }}>
-          <span style={{ color: '#999' }}>
-            选择要匹配的岗位，AI将自动分析求职者与岗位的匹配度
-          </span>
-        </div>
-        <Select
-          placeholder="请选择岗位"
-          style={{ width: '100%' }}
-          onChange={setSelectedJob}
-          showSearch
-          optionFilterProp="children"
-        >
-          {jobOptions.map((job) => (
-            <Option key={job.id} value={job.id}>
-              {job.title}
-            </Option>
-          ))}
-        </Select>
-      </Modal>
-
-      <Modal
-        title="发起面试"
-        open={interviewModalVisible}
-        onCancel={() => {
-          setInterviewModalVisible(false);
-          interviewForm.resetFields();
-        }}
-        confirmLoading={interviewLoading}
-        onOk={handleInterviewSubmit}
-        destroyOnClose
-        width={560}
-      >
-        <Form form={interviewForm} layout="vertical" preserve={false}>
-          <Form.Item
-            name="job_id"
-            label="选择岗位"
-            rules={[{ required: true, message: '请选择岗位' }]}
-          >
-            <Select placeholder="请选择岗位" showSearch optionFilterProp="children">
-              {jobOptions.map((job) => (
-                <Option key={job.id} value={job.id}>
-                  {job.title}
-                </Option>
-              ))}
-            </Select>
-          </Form.Item>
-          <Row gutter={16}>
-            <Col span={12}>
-              <Form.Item name="schedule_date" label="面试日期">
-                <DatePicker style={{ width: '100%' }} />
-              </Form.Item>
-            </Col>
-            <Col span={12}>
-              <Form.Item name="schedule_time" label="面试时间">
-                <TimePicker style={{ width: '100%' }} format="HH:mm" />
-              </Form.Item>
-            </Col>
-          </Row>
-          <Form.Item
-            name="interview_type"
-            label="面试方式"
-            rules={[{ required: true, message: '请选择面试方式' }]}
-          >
-            <Select placeholder="请选择面试方式">
-              {interviewTypeOptions.map((item) => (
-                <Option key={item.value} value={item.value}>{item.label}</Option>
-              ))}
-            </Select>
-          </Form.Item>
-          <Form.Item name="duration" label="面试时长（分钟）">
-            <InputNumber min={15} max={480} style={{ width: '100%' }} placeholder="请输入面试时长" />
-          </Form.Item>
-          <Row gutter={16}>
-            <Col span={12}>
-              <Form.Item name="interviewer_name" label="面试官姓名">
-                <Input placeholder="请输入面试官姓名" />
-              </Form.Item>
-            </Col>
-            <Col span={12}>
-              <Form.Item name="interviewer_phone" label="面试官电话">
-                <Input placeholder="请输入面试官电话" />
-              </Form.Item>
-            </Col>
-          </Row>
-        </Form>
-      </Modal>
-
-      <Modal
-        title="发送Offer"
-        open={offerModalVisible}
-        onCancel={() => {
-          setOfferModalVisible(false);
-          offerForm.resetFields();
-        }}
-        confirmLoading={offerLoading}
-        onOk={handleOfferSubmit}
-        destroyOnClose
-        width={560}
-      >
-        <Form form={offerForm} layout="vertical" preserve={false}>
-          <Form.Item
-            name="job_id"
-            label="选择岗位"
-            rules={[{ required: true, message: '请选择岗位' }]}
-          >
-            <Select placeholder="请选择岗位" showSearch optionFilterProp="children">
-              {jobOptions.map((job) => (
-                <Option key={job.id} value={job.id}>
-                  {job.title}
-                </Option>
-              ))}
-            </Select>
-          </Form.Item>
-          <Row gutter={16}>
-            <Col span={12}>
-              <Form.Item name="salary_min" label="薪资下限（K/月）" rules={[{ required: true, message: '请输入薪资下限' }]}>
-                <InputNumber min={0} style={{ width: '100%' }} placeholder="薪资下限" />
-              </Form.Item>
-            </Col>
-            <Col span={12}>
-              <Form.Item name="salary_max" label="薪资上限（K/月）" rules={[{ required: true, message: '请输入薪资上限' }]}>
-                <InputNumber min={0} style={{ width: '100%' }} placeholder="薪资上限" />
-              </Form.Item>
-            </Col>
-          </Row>
-          <Form.Item name="entry_date" label="入职日期" rules={[{ required: true, message: '请选择入职日期' }]}>
-            <DatePicker style={{ width: '100%' }} />
-          </Form.Item>
-          <Row gutter={16}>
-            <Col span={12}>
-              <Form.Item name="probation_salary" label="试用期薪资（K/月）">
-                <InputNumber min={0} style={{ width: '100%' }} placeholder="试用期薪资" />
-              </Form.Item>
-            </Col>
-            <Col span={12}>
-              <Form.Item name="probation_period" label="试用期（月）">
-                <InputNumber min={0} max={12} style={{ width: '100%' }} placeholder="试用期月数" />
-              </Form.Item>
-            </Col>
-          </Row>
-          <Form.Item name="work_place" label="工作地点">
-            <Input placeholder="请输入工作地点" />
-          </Form.Item>
-          <Form.Item name="benefits" label="福利待遇">
-            <Input placeholder="请输入福利待遇" />
-          </Form.Item>
-          <Form.Item name="other_terms" label="Offer内容">
-            <TextArea rows={4} placeholder="请输入Offer详细内容" />
-          </Form.Item>
-        </Form>
       </Modal>
     </div>
   );

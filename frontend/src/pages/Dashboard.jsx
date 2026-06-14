@@ -29,9 +29,9 @@ function Dashboard() {
   const loadDashboardData = async () => {
     setLoading(true);
     try {
-      let [dashboardRes, interviewsRes, funnelRes, roiRes, jobsRes] = await Promise.all([
+      const [dashboardRes, interviewsRes, funnelRes, roiRes, jobsRes] = await Promise.all([
         analytics.getDashboard(),
-        interviews.getList({ date_from: dayjs().subtract(30, 'day').format('YYYY-MM-DD'), date_to: dayjs().add(30, 'day').format('YYYY-MM-DD'), pageSize: 5 }),
+        interviews.getList({ date_from: dayjs().format('YYYY-MM-DD'), date_to: dayjs().format('YYYY-MM-DD') }),
         analytics.getFunnel(),
         analytics.getChannelROI(),
         analytics.getJobPerformance({ pageSize: 5 }),
@@ -41,16 +41,7 @@ function Dashboard() {
         setStats(dashboardRes.data.stats);
       }
       if (interviewsRes.code === 0) {
-        let list = interviewsRes.data.list || [];
-        if (list.length === 0) {
-          try {
-            const allRes = await interviews.getList({ pageSize: 5 });
-            if (allRes.code === 0) {
-              list = allRes.data.list || [];
-            }
-          } catch (e) { /* ignore */ }
-        }
-        setTodayInterviews(list);
+        setTodayInterviews(interviewsRes.data.list || []);
       }
       if (funnelRes.code === 0) {
         setFunnelData(funnelRes.data.funnel || []);
@@ -131,40 +122,6 @@ function Dashboard() {
         return <Tag color={color}>{text}</Tag>;
       },
       responsive: ['sm', 'md', 'lg', 'xl'],
-    },
-  ];
-
-  const channelROIColumns = [
-    {
-      title: '渠道',
-      dataIndex: 'channel_name',
-      key: 'channel_name',
-      render: (text, record) => text || record.channel,
-    },
-    {
-      title: '投递数',
-      dataIndex: 'total_applications',
-      key: 'total_applications',
-      align: 'right',
-    },
-    {
-      title: '面试数',
-      dataIndex: 'total_interviews',
-      key: 'total_interviews',
-      align: 'right',
-    },
-    {
-      title: '入职数',
-      dataIndex: 'total_hires',
-      key: 'total_hires',
-      align: 'right',
-    },
-    {
-      title: '单人招聘成本',
-      dataIndex: 'cost_per_hire',
-      key: 'cost_per_hire',
-      align: 'right',
-      render: (val) => val != null ? `¥${Number(val).toLocaleString()}` : '-',
     },
   ];
 
@@ -349,7 +306,7 @@ function Dashboard() {
 
       <Row gutter={[16, 16]} style={{ marginTop: '16px' }}>
         <Col xs={24} lg={12}>
-          <Card title="近期面试安排" extra={<Tag color="blue">近30天 {todayInterviews.length} 场</Tag>}>
+          <Card title="今日面试安排" extra={<Tag color="blue">{todayInterviews.length} 场</Tag>}>
             <Table
               dataSource={todayInterviews}
               columns={interviewColumns}
@@ -363,14 +320,6 @@ function Dashboard() {
         <Col xs={24} lg={12}>
           <Card title="渠道ROI分析">
             <ReactECharts option={getChannelROIOption()} style={{ height: '350px' }} />
-            <Table
-              dataSource={channelROI}
-              columns={channelROIColumns}
-              rowKey={(record) => record.channel_name || record.channel}
-              pagination={false}
-              size="small"
-              style={{ marginTop: '16px' }}
-            />
           </Card>
         </Col>
       </Row>
@@ -379,46 +328,6 @@ function Dashboard() {
         <Col xs={24} lg={12}>
           <Card title="招聘转化漏斗">
             <ReactECharts option={getFunnelOption()} style={{ height: '350px' }} />
-            {funnelData.length > 0 && (
-              <div style={{ marginTop: '16px' }}>
-                {funnelData.map((stage, index) => {
-                  const convRate = index > 0 && funnelData[index - 1].count > 0
-                    ? ((stage.count / funnelData[index - 1].count) * 100).toFixed(1)
-                    : null;
-                  return (
-                    <div
-                      key={stage.label || stage.stage || index}
-                      style={{
-                        display: 'flex',
-                        alignItems: 'center',
-                        padding: '8px 12px',
-                        borderBottom: index < funnelData.length - 1 ? '1px solid #f0f0f0' : 'none',
-                        fontSize: '13px',
-                      }}
-                    >
-                      <span
-                        style={{
-                          display: 'inline-block',
-                          width: '8px',
-                          height: '8px',
-                          borderRadius: '50%',
-                          background: ['#1890ff', '#52c41a', '#faad14', '#722ed1', '#eb2f96'][index],
-                          marginRight: '8px',
-                          flexShrink: 0,
-                        }}
-                      />
-                      <span style={{ flex: 1, color: '#333' }}>{stage.label || stage.stage}</span>
-                      <span style={{ fontWeight: 500, marginRight: '12px' }}>{stage.count}</span>
-                      {convRate !== null && (
-                        <Tag color="blue" style={{ margin: 0 }}>
-                          转化率 {convRate}%
-                        </Tag>
-                      )}
-                    </div>
-                  );
-                })}
-              </div>
-            )}
           </Card>
         </Col>
         <Col xs={24} lg={12}>
