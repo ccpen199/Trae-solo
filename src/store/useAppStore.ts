@@ -42,8 +42,7 @@ interface AppStore {
   addAuditLog: (entry: AuditLogEntry) => void
 }
 
-const autoDemoRole: UserRole | null = import.meta.env.VITE_AUTO_DEMO_LOGIN === 'true' ? 'insured' : null
-const initialRole = readInitialRole() || autoDemoRole
+const initialRole = readInitialRole()
 
 export const useAppStore = create<AppStore>((set) => ({
   user: initialRole ? mockUsers[initialRole] : null,
