@@ -1,0 +1,20 @@
+{
+  "order": "may-89030",
+  "frontend": "http://127.0.0.1:49030/",
+  "backend": "http://127.0.0.1:59030",
+  "status": 200,
+  "title": "直连家园 - 去中介化居住交易平台",
+  "bodyLen": 508,
+  "responseErrors": [],
+  "requestFailures": [],
+  "apiChecks": [
+    {
+      "path": "/api/health",
+      "status": 200,
+      "ok": true,
+      "body": "{\"status\":\"ok\",\"timestamp\":\"2026-06-04T12:52:29.694Z\",\"service\":\"direct-home-platform-api\"}"
+    }
+  ],
+  "ok": true,
+  "error": ""
+}

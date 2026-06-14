@@ -1,0 +1,606 @@
+{
+  "ok": true,
+  "generatedAt": "2026-06-04T11:24:50.713Z",
+  "order": "may-89030",
+  "roundIndex": 99,
+  "captureId": "may-89030-final",
+  "url": "http://127.0.0.1:49030/",
+  "initialUrl": "http://127.0.0.1:49030/",
+  "finalUrl": "http://127.0.0.1:49030/",
+  "status": 200,
+  "title": "直连家园 - 去中介化居住交易平台",
+  "initialTitle": "直连家园 - 去中介化居住交易平台",
+  "navigationError": "",
+  "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89030/probe/codex-final-20260604/may-89030-final-frontend.png",
+  "screenshotPaths": [
+    "/Users/chen/Documents/trae_projects/local_projects/may-89030/probe/codex-final-20260604/may-89030-final-structure-01-首屏.png"
+  ],
+  "issueTextPreview": "",
+  "targetReason": "页面存在后台入口，优先复验后台管理链路；页面存在搜索/发现入口，优先复验检索链路",
+  "targetKind": "admin",
+  "targetMatched": true,
+  "targetActions": [
+    {
+      "action": "click",
+      "label": "页面存在后台入口，优先复验后台管理链路",
+      "ok": false,
+      "error": "locator.click: Timeout 900ms exceeded.\nCall log:\n\u001b[2m  - waiting for getByRole('link', { name: /管理后台/ }).first()\u001b[22m\n\u001b[2m    - locator resolved to <a href=\"/admin\">管理后台</a>\u001b[22m\n\u001b[2m  - attempting click action\u001b[22m\n\u001b[2m"
+    },
+    {
+      "action": "click",
+      "label": "页面存在后台入口，优先复验后台管理链路",
+      "ok": false,
+      "error": "locator.click: Timeout 900ms exceeded.\nCall log:\n\u001b[2m  - waiting for locator('a,button,[role=\"button\"],[role=\"menuitem\"],[onclick],[tabindex]:not([tabindex=\"-1\"]),[class*=\"nav-item\" i],[class*=\"menu-item\" i],[class*=\"men"
+    },
+    {
+      "action": "click",
+      "label": "页面存在后台入口，优先复验后台管理链路",
+      "ok": false,
+      "error": "locator.click: Timeout 900ms exceeded.\nCall log:\n\u001b[2m  - waiting for getByText(/管理后台/).first()\u001b[22m\n\u001b[2m    - locator resolved to <a href=\"/admin\">管理后台</a>\u001b[22m\n\u001b[2m  - attempting click action\u001b[22m\n\u001b[2m    - waiting for "
+    },
+    {
+      "action": "click",
+      "label": "页面存在后台入口，优先复验后台管理链路",
+      "ok": false,
+      "error": "locator.click: Timeout 900ms exceeded.\nCall log:\n\u001b[2m  - waiting for getByRole('link', { name: /后台/ }).first()\u001b[22m\n\u001b[2m    - locator resolved to <a href=\"/admin\">管理后台</a>\u001b[22m\n\u001b[2m  - attempting click action\u001b[22m\n\u001b[2m  "
+    },
+    {
+      "action": "click",
+      "label": "页面存在后台入口，优先复验后台管理链路",
+      "ok": false,
+      "error": "locator.click: Timeout 900ms exceeded.\nCall log:\n\u001b[2m  - waiting for locator('a,button,[role=\"button\"],[role=\"menuitem\"],[onclick],[tabindex]:not([tabindex=\"-1\"]),[class*=\"nav-item\" i],[class*=\"menu-item\" i],[class*=\"men"
+    },
+    {
+      "action": "click",
+      "label": "页面存在后台入口，优先复验后台管理链路",
+      "ok": false,
+      "error": "locator.click: Timeout 900ms exceeded.\nCall log:\n\u001b[2m  - waiting for getByText(/后台/).first()\u001b[22m\n\u001b[2m    - locator resolved to <a href=\"/admin\">管理后台</a>\u001b[22m\n\u001b[2m  - attempting click action\u001b[22m\n\u001b[2m    - waiting for el"
+    },
+    {
+      "action": "target-already-visible",
+      "label": "页面存在后台入口，优先复验后台管理链路",
+      "ok": true
+    },
+    {
+      "action": "target-verify",
+      "label": "页面存在后台入口，优先复验后台管理链路",
+      "ok": true,
+      "finalUrl": "http://127.0.0.1:49030/admin"
+    }
+  ],
+  "authFlow": {
+    "detected": false,
+    "attempted": false,
+    "success": false,
+    "finalUrl": "http://127.0.0.1:49030/",
+    "message": "",
+    "actions": []
+  },
+  "businessAudit": {
+    "actions": [
+      {
+        "action": "click",
+        "label": "导航:首页",
+        "ok": false,
+        "error": "locator.click: Timeout 900ms exceeded.\nCall log:\n\u001b[2m  - waiting for getByRole('link', { name: /^\\s*首页\\s*$/ }).first()\u001b[22m\n\u001b[2m    - locator resolved to <a href=\"/\">首页</a>\u001b[22m\n\u001b[2m  - attempting click action\u001b[22m\n\u001b[2m "
+      },
+      {
+        "action": "click",
+        "label": "导航:首页",
+        "ok": false,
+        "error": "locator.click: Timeout 900ms exceeded.\nCall log:\n\u001b[2m  - waiting for locator('a,button,[role=\"button\"],[role=\"menuitem\"],[onclick],[tabindex]:not([tabindex=\"-1\"]),[class*=\"nav-item\" i],[class*=\"menu-item\" i],[class*=\"men"
+      },
+      {
+        "action": "click",
+        "label": "导航:首页",
+        "ok": false,
+        "error": "locator.click: Timeout 900ms exceeded.\nCall log:\n\u001b[2m  - waiting for locator('a,button,[role=\"button\"],[role=\"menuitem\"],[onclick],[tabindex]:not([tabindex=\"-1\"]),[class*=\"nav-item\" i],[class*=\"menu-item\" i],[class*=\"men"
+      },
+      {
+        "action": "click",
+        "label": "导航:搜索结果",
+        "ok": false,
+        "error": "locator.click: Timeout 900ms exceeded.\nCall log:\n\u001b[2m  - waiting for getByRole('link', { name: /^\\s*搜索结果\\s*$/ }).first()\u001b[22m\n\u001b[2m    - locator resolved to <a href=\"/search\">搜索结果</a>\u001b[22m\n\u001b[2m  - attempting click action\u001b"
+      },
+      {
+        "action": "click",
+        "label": "导航:搜索结果",
+        "ok": false,
+        "error": "locator.click: Timeout 900ms exceeded.\nCall log:\n\u001b[2m  - waiting for locator('a,button,[role=\"button\"],[role=\"menuitem\"],[onclick],[tabindex]:not([tabindex=\"-1\"]),[class*=\"nav-item\" i],[class*=\"menu-item\" i],[class*=\"men"
+      },
+      {
+        "action": "click",
+        "label": "导航:搜索结果",
+        "ok": false,
+        "error": "locator.click: Timeout 900ms exceeded.\nCall log:\n\u001b[2m  - waiting for locator('a,button,[role=\"button\"],[role=\"menuitem\"],[onclick],[tabindex]:not([tabindex=\"-1\"]),[class*=\"nav-item\" i],[class*=\"menu-item\" i],[class*=\"men"
+      }
+    ],
+    "snapshots": [
+      {
+        "label": "首屏",
+        "url": "http://127.0.0.1:49030/",
+        "title": "直连家园 - 去中介化居住交易平台",
+        "headings": [
+          "找到你的理想之家",
+          "真实房源",
+          "直接交易",
+          "资金托管",
+          "电子合同",
+          "精选房源",
+          "朝阳区精装两居室",
+          "海淀区温馨单间",
+          "西城区大三居",
+          "东城区loft公寓",
+          "丰台区两室一厅",
+          "🏠 直连家园"
+        ],
+        "navLabels": [
+          "首页",
+          "搜索结果",
+          "搜索筛选房源",
+          "租金指数",
+          "管理后台",
+          "发布房源 ▼",
+          "服务选购 ▼",
+          "交易保障 ▼",
+          "管理后台 ▼",
+          "演 演示管理员 ▼"
+        ],
+        "buttons": [
+          "提交搜索",
+          "查看搜索结果",
+          "查看更多搜索筛选"
+        ],
+        "links": [
+          "🏠 直连家园",
+          "首页",
+          "搜索结果",
+          "搜索筛选房源",
+          "租金指数",
+          "管理后台",
+          "发布房源 ▼",
+          "服务选购 ▼",
+          "交易保障 ▼",
+          "管理后台 ▼",
+          "演 演示管理员 ▼"
+        ],
+        "inputs": [
+          {
+            "tag": "input",
+            "type": "text",
+            "placeholder": "请输入搜索小区、地址、关键词...",
+            "name": "",
+            "label": ""
+          }
+        ],
+        "tables": [],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "🏠 直连家园首页搜索结果搜索筛选房源租金指数管理后台发布房源 ▼服务选购 ▼交易保障 ▼管理后台 ▼演演示管理员 ▼找到你的理想之家去中介化居住交易平台，房东租客直接沟通提交搜索查看搜索结果✅真实房源四重验证，100%真实🤝直接交易去中介化，费用透明💰资金托管安全保障，放心支付📜电子合同法律认可，存证保全精选房源查看更多搜索筛选朝阳区精装两居室北京市朝阳区建国路88号近地铁学区房有电梯¥5500/月2室 85㎡海淀区温馨单间北京市海淀区中关村大街1号近地铁独立卫浴¥2200/月1室 18㎡西城区大三居北京市西城区金融街10号学区房近公园有车位¥8500/月3室 120㎡东城区loft公寓北京市东城区东直门内大街近地铁loft¥4800/月1室 55㎡丰台区两室一厅北京市丰台区南三环西路性价比高¥3800/月2室 70㎡🏠 直连家园去中介化居住交易直连平台© 2024 直连家园. 保留所有权利.",
+        "layout": {
+          "viewportWidth": 1504,
+          "viewportHeight": 1600,
+          "scrollWidth": 1504,
+          "scrollHeight": 1755,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89030-final-structure-01-首屏",
+          "label": "首屏",
+          "finalUrl": "http://127.0.0.1:49030/",
+          "title": "直连家园 - 去中介化居住交易平台",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89030/probe/codex-final-20260604/may-89030-final-structure-01-首屏.json",
+          "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89030/probe/codex-final-20260604/may-89030-final-structure-01-首屏.png",
+          "elementCount": 129,
+          "interactiveCount": 15,
+          "interactiveLabels": [
+            "直连家园",
+            "首页",
+            "搜索结果",
+            "搜索筛选房源",
+            "租金指数",
+            "管理后台",
+            "发布房源 ▼",
+            "服务选购 ▼",
+            "交易保障 ▼",
+            "管理后台 ▼",
+            "演 演示管理员 ▼",
+            "请输入搜索小区、地址、关键词...",
+            "提交搜索",
+            "查看搜索结果",
+            "查看更多搜索筛选"
+          ]
+        }
+      }
+    ],
+    "findings": [],
+    "actionHints": [],
+    "emptyPages": [],
+    "overflowPages": [],
+    "blankPages": [],
+    "apiFailurePaths": [],
+    "goalTerms": [],
+    "clickedActionDescriptors": [],
+    "secondaryActionClicks": 0,
+    "structureCaptures": [
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89030-final-structure-01-首屏",
+        "label": "首屏",
+        "finalUrl": "http://127.0.0.1:49030/",
+        "title": "直连家园 - 去中介化居住交易平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89030/probe/codex-final-20260604/may-89030-final-structure-01-首屏.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89030/probe/codex-final-20260604/may-89030-final-structure-01-首屏.png",
+        "elementCount": 129,
+        "interactiveCount": 15,
+        "interactiveLabels": [
+          "直连家园",
+          "首页",
+          "搜索结果",
+          "搜索筛选房源",
+          "租金指数",
+          "管理后台",
+          "发布房源 ▼",
+          "服务选购 ▼",
+          "交易保障 ▼",
+          "管理后台 ▼",
+          "演 演示管理员 ▼",
+          "请输入搜索小区、地址、关键词...",
+          "提交搜索",
+          "查看搜索结果",
+          "查看更多搜索筛选"
+        ]
+      }
+    ],
+    "representativeScreenshotUrl": "http://127.0.0.1:49030/",
+    "representativeScreenshotLabel": "找到你的理想之家"
+  },
+  "websiteStructureCapture": {
+    "module": "website_structure_capture",
+    "captureCount": 1,
+    "captures": [
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89030-final-structure-01-首屏",
+        "label": "首屏",
+        "finalUrl": "http://127.0.0.1:49030/",
+        "title": "直连家园 - 去中介化居住交易平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89030/probe/codex-final-20260604/may-89030-final-structure-01-首屏.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89030/probe/codex-final-20260604/may-89030-final-structure-01-首屏.png",
+        "elementCount": 129,
+        "interactiveCount": 15,
+        "interactiveLabels": [
+          "直连家园",
+          "首页",
+          "搜索结果",
+          "搜索筛选房源",
+          "租金指数",
+          "管理后台",
+          "发布房源 ▼",
+          "服务选购 ▼",
+          "交易保障 ▼",
+          "管理后台 ▼",
+          "演 演示管理员 ▼",
+          "请输入搜索小区、地址、关键词...",
+          "提交搜索",
+          "查看搜索结果",
+          "查看更多搜索筛选"
+        ]
+      }
+    ]
+  },
+  "screenshotMetrics": {
+    "width": 1536,
+    "height": 1600,
+    "scrollWidth": 1504,
+    "scrollHeight": 1755
+  },
+  "initialBodyTextPreview": "🏠 直连家园\n首页\n搜索结果\n搜索筛选房源\n租金指数\n管理后台\n发布房源 ▼\n服务选购 ▼\n交易保障 ▼\n管理后台 ▼\n演\n演示管理员 ▼\n找到你的理想之家\n\n去中介化居住交易平台，房东租客直接沟通\n\n提交搜索\n查看搜索结果\n✅\n真实房源\n\n四重验证，100%真实\n\n🤝\n直接交易\n\n去中介化，费用透明\n\n💰\n资金托管\n\n安全保障，放心支付\n\n📜\n电子合同\n\n法律认可，存证保全\n\n精选房源\n查看更多搜索筛选\n朝阳区精装两居室\n\n北京市朝阳区建国路88号\n\n近地铁学区房有电梯\n¥5500/月\n2室 85㎡\n海淀区温馨单间\n\n北京市海淀区中关村大街1号\n\n近地铁独立卫浴\n¥2200/月\n1室 18㎡\n西城区大三居\n\n北京市西城区金融街10号\n\n学区房近公园有车位\n¥8500/月\n3室 120㎡\n东城区loft公寓\n\n北京市东城区东直门内大街\n\n近地铁loft\n¥4800/月\n1室 55㎡\n丰台区两室一厅\n\n北京市丰台区南三环西路\n\n性价比高\n¥3800/月\n2室 70㎡\n🏠 直连家园\n\n去中介化居住交易直连平台\n\n© 2024 直连家园. 保留所有权利.",
+  "bodyTextPreview": "🏠 直连家园\n首页\n搜索结果\n搜索筛选房源\n租金指数\n管理后台\n发布房源 ▼\n服务选购 ▼\n交易保障 ▼\n管理后台 ▼\n演\n演示管理员 ▼\n找到你的理想之家\n\n去中介化居住交易平台，房东租客直接沟通\n\n提交搜索\n查看搜索结果\n✅\n真实房源\n\n四重验证，100%真实\n\n🤝\n直接交易\n\n去中介化，费用透明\n\n💰\n资金托管\n\n安全保障，放心支付\n\n📜\n电子合同\n\n法律认可，存证保全\n\n精选房源\n查看更多搜索筛选\n朝阳区精装两居室\n\n北京市朝阳区建国路88号\n\n近地铁学区房有电梯\n¥5500/月\n2室 85㎡\n海淀区温馨单间\n\n北京市海淀区中关村大街1号\n\n近地铁独立卫浴\n¥2200/月\n1室 18㎡\n西城区大三居\n\n北京市西城区金融街10号\n\n学区房近公园有车位\n¥8500/月\n3室 120㎡\n东城区loft公寓\n\n北京市东城区东直门内大街\n\n近地铁loft\n¥4800/月\n1室 55㎡\n丰台区两室一厅\n\n北京市丰台区南三环西路\n\n性价比高\n¥3800/月\n2室 70㎡\n🏠 直连家园\n\n去中介化居住交易直连平台\n\n© 2024 直连家园. 保留所有权利.",
+  "apiBase": "",
+  "businessGoalPreview": "",
+  "apiResponses": [
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49030/api/properties?limit=6"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49030/api/properties?limit=6"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49030/api/admin/dashboard"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49030/api/admin/dashboard"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49030/api/properties?limit=6"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49030/api/properties?limit=6"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49030/api/properties?limit=6"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49030/api/properties?limit=6"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49030/api/properties?"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49030/api/properties?"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49030/api/properties?limit=6"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49030/api/properties?limit=6"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49030/api/properties?limit=6"
+    }
+  ],
+  "apiChecks": [],
+  "dialogs": [],
+  "consoleMessages": [
+    {
+      "type": "debug",
+      "text": "[vite] connecting...",
+      "location": {
+        "url": "http://127.0.0.1:49030/@vite/client",
+        "lineNumber": 494,
+        "columnNumber": 8
+      }
+    },
+    {
+      "type": "debug",
+      "text": "[vite] connected.",
+      "location": {
+        "url": "http://127.0.0.1:49030/@vite/client",
+        "lineNumber": 617,
+        "columnNumber": 14
+      }
+    },
+    {
+      "type": "info",
+      "text": "%cDownload the React DevTools for a better development experience: https://reactjs.org/link/react-devtools font-weight:bold",
+      "location": {
+        "url": "http://127.0.0.1:49030/node_modules/.vite/deps/chunk-PJEEZAML.js?v=cd8d8c79",
+        "lineNumber": 21550,
+        "columnNumber": 24
+      }
+    },
+    {
+      "type": "warning",
+      "text": "⚠️ React Router Future Flag Warning: React Router will begin wrapping state updates in `React.startTransition` in v7. You can use the `v7_startTransition` future flag to opt-in early. For more information, see https://reactrouter.com/v6/upgrading/future#v7_starttransition.",
+      "location": {
+        "url": "http://127.0.0.1:49030/node_modules/.vite/deps/react-router-dom.js?v=cd8d8c79",
+        "lineNumber": 4426,
+        "columnNumber": 12
+      }
+    },
+    {
+      "type": "warning",
+      "text": "⚠️ React Router Future Flag Warning: Relative route resolution within Splat routes is changing in v7. You can use the `v7_relativeSplatPath` future flag to opt-in early. For more information, see https://reactrouter.com/v6/upgrading/future#v7_relativesplatpath.",
+      "location": {
+        "url": "http://127.0.0.1:49030/node_modules/.vite/deps/react-router-dom.js?v=cd8d8c79",
+        "lineNumber": 4426,
+        "columnNumber": 12
+      }
+    },
+    {
+      "type": "debug",
+      "text": "[vite] connecting...",
+      "location": {
+        "url": "http://127.0.0.1:49030/@vite/client",
+        "lineNumber": 494,
+        "columnNumber": 8
+      }
+    },
+    {
+      "type": "debug",
+      "text": "[vite] connected.",
+      "location": {
+        "url": "http://127.0.0.1:49030/@vite/client",
+        "lineNumber": 617,
+        "columnNumber": 14
+      }
+    },
+    {
+      "type": "info",
+      "text": "%cDownload the React DevTools for a better development experience: https://reactjs.org/link/react-devtools font-weight:bold",
+      "location": {
+        "url": "http://127.0.0.1:49030/node_modules/.vite/deps/chunk-PJEEZAML.js?v=cd8d8c79",
+        "lineNumber": 21550,
+        "columnNumber": 24
+      }
+    },
+    {
+      "type": "warning",
+      "text": "⚠️ React Router Future Flag Warning: React Router will begin wrapping state updates in `React.startTransition` in v7. You can use the `v7_startTransition` future flag to opt-in early. For more information, see https://reactrouter.com/v6/upgrading/future#v7_starttransition.",
+      "location": {
+        "url": "http://127.0.0.1:49030/node_modules/.vite/deps/react-router-dom.js?v=cd8d8c79",
+        "lineNumber": 4426,
+        "columnNumber": 12
+      }
+    },
+    {
+      "type": "warning",
+      "text": "⚠️ React Router Future Flag Warning: Relative route resolution within Splat routes is changing in v7. You can use the `v7_relativeSplatPath` future flag to opt-in early. For more information, see https://reactrouter.com/v6/upgrading/future#v7_relativesplatpath.",
+      "location": {
+        "url": "http://127.0.0.1:49030/node_modules/.vite/deps/react-router-dom.js?v=cd8d8c79",
+        "lineNumber": 4426,
+        "columnNumber": 12
+      }
+    },
+    {
+      "type": "debug",
+      "text": "[vite] connecting...",
+      "location": {
+        "url": "http://127.0.0.1:49030/@vite/client",
+        "lineNumber": 494,
+        "columnNumber": 8
+      }
+    },
+    {
+      "type": "debug",
+      "text": "[vite] connected.",
+      "location": {
+        "url": "http://127.0.0.1:49030/@vite/client",
+        "lineNumber": 617,
+        "columnNumber": 14
+      }
+    },
+    {
+      "type": "info",
+      "text": "%cDownload the React DevTools for a better development experience: https://reactjs.org/link/react-devtools font-weight:bold",
+      "location": {
+        "url": "http://127.0.0.1:49030/node_modules/.vite/deps/chunk-PJEEZAML.js?v=cd8d8c79",
+        "lineNumber": 21550,
+        "columnNumber": 24
+      }
+    },
+    {
+      "type": "warning",
+      "text": "⚠️ React Router Future Flag Warning: React Router will begin wrapping state updates in `React.startTransition` in v7. You can use the `v7_startTransition` future flag to opt-in early. For more information, see https://reactrouter.com/v6/upgrading/future#v7_starttransition.",
+      "location": {
+        "url": "http://127.0.0.1:49030/node_modules/.vite/deps/react-router-dom.js?v=cd8d8c79",
+        "lineNumber": 4426,
+        "columnNumber": 12
+      }
+    },
+    {
+      "type": "warning",
+      "text": "⚠️ React Router Future Flag Warning: Relative route resolution within Splat routes is changing in v7. You can use the `v7_relativeSplatPath` future flag to opt-in early. For more information, see https://reactrouter.com/v6/upgrading/future#v7_relativesplatpath.",
+      "location": {
+        "url": "http://127.0.0.1:49030/node_modules/.vite/deps/react-router-dom.js?v=cd8d8c79",
+        "lineNumber": 4426,
+        "columnNumber": 12
+      }
+    },
+    {
+      "type": "debug",
+      "text": "[vite] connecting...",
+      "location": {
+        "url": "http://127.0.0.1:49030/@vite/client",
+        "lineNumber": 494,
+        "columnNumber": 8
+      }
+    },
+    {
+      "type": "debug",
+      "text": "[vite] connected.",
+      "location": {
+        "url": "http://127.0.0.1:49030/@vite/client",
+        "lineNumber": 617,
+        "columnNumber": 14
+      }
+    },
+    {
+      "type": "info",
+      "text": "%cDownload the React DevTools for a better development experience: https://reactjs.org/link/react-devtools font-weight:bold",
+      "location": {
+        "url": "http://127.0.0.1:49030/node_modules/.vite/deps/chunk-PJEEZAML.js?v=cd8d8c79",
+        "lineNumber": 21550,
+        "columnNumber": 24
+      }
+    },
+    {
+      "type": "warning",
+      "text": "⚠️ React Router Future Flag Warning: React Router will begin wrapping state updates in `React.startTransition` in v7. You can use the `v7_startTransition` future flag to opt-in early. For more information, see https://reactrouter.com/v6/upgrading/future#v7_starttransition.",
+      "location": {
+        "url": "http://127.0.0.1:49030/node_modules/.vite/deps/react-router-dom.js?v=cd8d8c79",
+        "lineNumber": 4426,
+        "columnNumber": 12
+      }
+    },
+    {
+      "type": "warning",
+      "text": "⚠️ React Router Future Flag Warning: Relative route resolution within Splat routes is changing in v7. You can use the `v7_relativeSplatPath` future flag to opt-in early. For more information, see https://reactrouter.com/v6/upgrading/future#v7_relativesplatpath.",
+      "location": {
+        "url": "http://127.0.0.1:49030/node_modules/.vite/deps/react-router-dom.js?v=cd8d8c79",
+        "lineNumber": 4426,
+        "columnNumber": 12
+      }
+    },
+    {
+      "type": "debug",
+      "text": "[vite] connecting...",
+      "location": {
+        "url": "http://127.0.0.1:49030/@vite/client",
+        "lineNumber": 494,
+        "columnNumber": 8
+      }
+    },
+    {
+      "type": "debug",
+      "text": "[vite] connected.",
+      "location": {
+        "url": "http://127.0.0.1:49030/@vite/client",
+        "lineNumber": 617,
+        "columnNumber": 14
+      }
+    },
+    {
+      "type": "info",
+      "text": "%cDownload the React DevTools for a better development experience: https://reactjs.org/link/react-devtools font-weight:bold",
+      "location": {
+        "url": "http://127.0.0.1:49030/node_modules/.vite/deps/chunk-PJEEZAML.js?v=cd8d8c79",
+        "lineNumber": 21550,
+        "columnNumber": 24
+      }
+    },
+    {
+      "type": "warning",
+      "text": "⚠️ React Router Future Flag Warning: React Router will begin wrapping state updates in `React.startTransition` in v7. You can use the `v7_startTransition` future flag to opt-in early. For more information, see https://reactrouter.com/v6/upgrading/future#v7_starttransition.",
+      "location": {
+        "url": "http://127.0.0.1:49030/node_modules/.vite/deps/react-router-dom.js?v=cd8d8c79",
+        "lineNumber": 4426,
+        "columnNumber": 12
+      }
+    },
+    {
+      "type": "warning",
+      "text": "⚠️ React Router Future Flag Warning: Relative route resolution within Splat routes is changing in v7. You can use the `v7_relativeSplatPath` future flag to opt-in early. For more information, see https://reactrouter.com/v6/upgrading/future#v7_relativesplatpath.",
+      "location": {
+        "url": "http://127.0.0.1:49030/node_modules/.vite/deps/react-router-dom.js?v=cd8d8c79",
+        "lineNumber": 4426,
+        "columnNumber": 12
+      }
+    }
+  ],
+  "requestFailures": [
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:49030/api/properties?limit=6",
+      "errorText": "net::ERR_ABORTED"
+    }
+  ],
+  "responseErrors": []
+}
