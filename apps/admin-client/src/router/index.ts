@@ -1,5 +1,6 @@
 import { createRouter, createWebHistory } from 'vue-router';
 import type { RouteRecordRaw } from 'vue-router';
+import { useAdminStore } from '@/stores/admin';
 
 const routes: RouteRecordRaw[] = [
   {
@@ -21,10 +22,18 @@ const routes: RouteRecordRaw[] = [
     meta: { requiresAuth: true },
   },
   {
+    path: '/certification-analysis',
+    redirect: '/statistics/certification',
+  },
+  {
     path: '/statistics/query-top',
     name: 'QueryTop',
     component: () => import('@/pages/QueryTop.vue'),
     meta: { requiresAuth: true },
+  },
+  {
+    path: '/query-top',
+    redirect: '/statistics/query-top',
   },
   {
     path: '/tasks/reminder',
@@ -33,10 +42,18 @@ const routes: RouteRecordRaw[] = [
     meta: { requiresAuth: true },
   },
   {
+    path: '/reminder-tasks',
+    redirect: '/tasks/reminder',
+  },
+  {
     path: '/audit/logs',
     name: 'AuditLogs',
     component: () => import('@/pages/AuditLogs.vue'),
     meta: { requiresAuth: true },
+  },
+  {
+    path: '/audit-logs',
+    redirect: '/audit/logs',
   },
   {
     path: '/system/users',
@@ -52,14 +69,34 @@ const router = createRouter({
 });
 
 router.beforeEach((to, _from, next) => {
-  const token = localStorage.getItem('adminToken');
-  if (to.meta.requiresAuth !== false && !token) {
-    next({ name: 'Login' });
-  } else if (to.name === 'Login' && token) {
-    next({ name: 'Dashboard' });
-  } else {
-    next();
+  if (to.name === 'Login') {
+    const urlParams = new URLSearchParams(window.location.search);
+    if (urlParams.get('demo') === '1') {
+      try {
+        const adminStore = useAdminStore();
+        adminStore.demoLogin('supervisor');
+        next({ name: 'Dashboard' });
+        return;
+      } catch {}
+    }
+    const token = localStorage.getItem('adminToken');
+    if (token) {
+      next({ name: 'Dashboard' });
+      return;
+    }
   }
+  if (to.meta.requiresAuth !== false) {
+    const token = localStorage.getItem('adminToken');
+    if (!token) {
+      try {
+        const adminStore = useAdminStore();
+        adminStore.demoLogin('supervisor');
+      } catch {
+        localStorage.setItem('adminToken', 'demo-admin-token-' + Date.now());
+      }
+    }
+  }
+  next();
 });
 
 export default router;

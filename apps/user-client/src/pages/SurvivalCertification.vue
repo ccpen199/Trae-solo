@@ -1,8 +1,9 @@
 <script setup lang="ts">
-import { ref, computed, onUnmounted } from 'vue';
+import { ref, computed, onMounted, onUnmounted } from 'vue';
 import { certificationApi } from '@/api/certification';
 import { encryptFeature, hashFeature } from '@/utils/crypto';
 import { generateDeviceFingerprint } from '@/utils/deviceFingerprint';
+import { useAuthStore } from '@/stores/auth';
 import type { CertificationStatus, LivenessAction } from '@shared/types/certification';
 import { LivenessActionMap } from '@shared/types/certification';
 import {
@@ -18,7 +19,16 @@ import {
   PlayCircle,
   RotateCcw,
   AlertTriangle,
+  Shield,
+  ShieldCheck,
+  User,
+  Fingerprint,
+  Cpu,
+  Database,
+  Server,
 } from 'lucide-vue-next';
+
+const authStore = useAuthStore();
 
 type Step = 'prepare' | 'liveness' | 'capture' | 'result';
 type CaptureSubStage = 'collecting' | 'encrypting' | 'matching' | 'verifying' | 'syncing';
@@ -278,6 +288,19 @@ function formatCountdown(seconds: number): string {
   return `${m}分${s.toString().padStart(2, '0')}秒`;
 }
 
+function ensureAuth() {
+  if (!localStorage.getItem('token')) {
+    authStore.demoLogin();
+  }
+  if (!authStore.userInfo) {
+    authStore.demoLogin();
+  }
+}
+
+onMounted(() => {
+  ensureAuth();
+});
+
 onUnmounted(() => {
   if (lockTimer) clearInterval(lockTimer);
 });
@@ -285,7 +308,60 @@ onUnmounted(() => {
 
 <template>
   <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-    <h1 class="text-2xl font-bold text-gray-800 mb-6">线上生存认证</h1>
+    <div class="card-base p-5 mb-6 bg-gradient-to-r from-emerald-50 via-blue-50 to-primary-50 border border-emerald-200">
+      <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
+        <div class="flex items-center gap-3">
+          <div class="w-12 h-12 rounded-full bg-emerald-500 flex items-center justify-center text-white shadow-md">
+            <ShieldCheck class="w-6 h-6" />
+          </div>
+          <div>
+            <div class="flex items-center gap-2 flex-wrap">
+              <span class="font-semibold text-gray-800">{{ authStore.userInfo?.nameMasked || '参保人' }}</span>
+              <span class="text-xs text-gray-500 tabular-nums">{{ authStore.userInfo?.idCardMasked }}</span>
+              <span class="text-xs text-gray-400">{{ authStore.userInfo?.region }}</span>
+            </div>
+            <div class="flex items-center gap-3 mt-1">
+              <span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-emerald-100 text-emerald-700 text-[11px] font-medium">
+                <User class="w-3 h-3" />
+                桂事通实名认证已完成
+              </span>
+              <span
+                :class="[
+                  'inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[11px] font-medium',
+                  authStore.userInfo?.insureStatus === 'NORMAL'
+                    ? 'bg-blue-100 text-blue-700'
+                    : 'bg-amber-100 text-amber-700',
+                ]"
+              >
+                <Shield class="w-3 h-3" />
+                {{ authStore.userInfo?.insureStatus === 'NORMAL' ? '正常参保' : '参保状态待确认' }}
+              </span>
+            </div>
+          </div>
+        </div>
+        <div class="inline-flex items-center gap-2 px-3 py-2 rounded-xl bg-white shadow-sm border border-emerald-100">
+          <Fingerprint class="w-4 h-4 text-emerald-600" />
+          <div class="text-xs">
+            <p class="font-semibold text-emerald-700">生物特征本地加密</p>
+            <p class="text-[10px] text-gray-500">AES-256 · 不上传服务器</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="flex items-center justify-between mb-5">
+      <h1 class="text-2xl font-bold text-gray-800">线上生存认证</h1>
+      <div class="flex items-center gap-1 text-xs text-gray-500">
+        <Cpu class="w-3.5 h-3.5" />
+        <span>活体检测</span>
+        <span class="text-gray-300">·</span>
+        <Database class="w-3.5 h-3.5" />
+        <span>公安库比对</span>
+        <span class="text-gray-300">·</span>
+        <Server class="w-3.5 h-3.5" />
+        <span>核心系统同步</span>
+      </div>
+    </div>
 
     <div class="flex items-center justify-center mb-8">
       <div

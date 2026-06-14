@@ -23,7 +23,7 @@ export default defineConfig(({ mode }) => {
     },
     server: {
       host: frontendHost,
-      port: Number(env.ADMIN_FRONTEND_PORT || 49199),
+      port: Number(env.ADMIN_FRONTEND_PORT || 49289),
       strictPort: true,
       proxy: {
         '/api': {

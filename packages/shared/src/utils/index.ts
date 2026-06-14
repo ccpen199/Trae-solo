@@ -52,7 +52,8 @@ export const maskUtils = {
 /**
  * 金额格式化
  */
-export const formatCurrency = (amount: number, currency: string = 'CNY'): string => {
+export const formatCurrency = (amount: number | undefined | null, currency: string = 'CNY'): string => {
+  if (amount === undefined || amount === null || isNaN(amount)) return '-';
   return new Intl.NumberFormat('zh-CN', {
     style: 'currency',
     currency,
@@ -63,14 +64,16 @@ export const formatCurrency = (amount: number, currency: string = 'CNY'): string
 /**
  * 百分比格式化
  */
-export const formatPercent = (value: number, decimals: number = 1): string => {
+export const formatPercent = (value: number | undefined | null, decimals: number = 1): string => {
+  if (value === undefined || value === null || isNaN(value)) return '-%';
   return `${value.toFixed(decimals)}%`;
 };
 
 /**
  * 数字格式化（千分位）
  */
-export const formatNumber = (num: number): string => {
+export const formatNumber = (num: number | undefined | null): string => {
+  if (num === undefined || num === null || isNaN(num)) return '-';
   return new Intl.NumberFormat('zh-CN').format(num);
 };
 

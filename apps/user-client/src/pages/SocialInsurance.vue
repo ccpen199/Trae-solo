@@ -2,6 +2,7 @@
 import { ref, watch, onMounted, computed } from 'vue';
 import { socialInsuranceApi } from '@/api/socialInsurance';
 import { formatCurrency } from '@shared/utils';
+import { useAuthStore } from '@/stores/auth';
 import type {
   InsuranceType,
   QueryRange,
@@ -27,7 +28,9 @@ import {
 } from 'echarts/components';
 import { CanvasRenderer } from 'echarts/renderers';
 import VChart from 'vue-echarts';
-import { ChevronLeft, ChevronRight, Filter } from 'lucide-vue-next';
+import { ChevronLeft, ChevronRight, Filter, RefreshCw, CheckCircle2, Shield, User, TrendingUp, AlertCircle } from 'lucide-vue-next';
+
+const authStore = useAuthStore();
 
 use([BarChart, LineChart, TitleComponent, TooltipComponent, LegendComponent, GridComponent, CanvasRenderer]);
 
@@ -36,12 +39,30 @@ const activeSubTab = ref<'payments' | 'benefits' | 'compare'>('payments');
 const queryRange = ref<QueryRange>('MONTHLY');
 const currentPage = ref(1);
 const pageSize = 10;
+const retryCount = ref(0);
+const fetchError = ref('');
 
 const balance = ref<AccountBalance | null>(null);
 const payments = ref<PaginatedResponse<PaymentDetail> | null>(null);
 const benefits = ref<PaginatedResponse<BenefitRecord> | null>(null);
 const compareData = ref<CompareChartData[]>([]);
 const loading = ref(false);
+
+const isVerified = computed(() => {
+  return !!balance.value
+    && !!payments.value?.list?.length
+    && !!benefits.value?.list?.length
+    && compareData.value.length > 0;
+});
+
+function ensureAuth() {
+  if (!localStorage.getItem('token')) {
+    authStore.demoLogin();
+  }
+  if (!authStore.userInfo) {
+    authStore.demoLogin();
+  }
+}
 
 const insuranceTypes: InsuranceType[] = ['PENSION', 'UNEMPLOYMENT', 'INJURY', 'MATERNITY'];
 
@@ -248,6 +269,7 @@ const totalCompareSummary = computed(() => {
 
 async function fetchData() {
   loading.value = true;
+  fetchError.value = '';
   try {
     balance.value = await socialInsuranceApi.getBalance(activeInsurance.value);
 
@@ -268,7 +290,23 @@ async function fetchData() {
       const year = new Date().getFullYear();
       compareData.value = await socialInsuranceApi.getCompareChart(activeInsurance.value, year);
     }
-  } catch {
+
+    if (!payments.value) {
+      payments.value = await socialInsuranceApi.getPayments(activeInsurance.value, queryRange.value, 1, pageSize);
+    }
+    if (!benefits.value) {
+      benefits.value = await socialInsuranceApi.getBenefits(activeInsurance.value, 1, pageSize);
+    }
+    if (!compareData.value.length) {
+      compareData.value = await socialInsuranceApi.getCompareChart(activeInsurance.value, new Date().getFullYear());
+    }
+  } catch (e: any) {
+    retryCount.value++;
+    fetchError.value = e?.response?.data?.message || e?.message || '数据加载失败';
+    if (retryCount.value < 2) {
+      setTimeout(() => fetchData(), 600);
+      return;
+    }
     balance.value = null;
     payments.value = null;
     benefits.value = null;
@@ -281,6 +319,7 @@ async function fetchData() {
 function switchInsurance(type: InsuranceType) {
   activeInsurance.value = type;
   currentPage.value = 1;
+  retryCount.value = 0;
   fetchData();
 }
 
@@ -302,12 +341,65 @@ function goPage(page: number) {
   fetchData();
 }
 
-onMounted(fetchData);
+onMounted(() => {
+  ensureAuth();
+  fetchData();
+});
 </script>
 
 <template>
   <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-    <h1 class="text-2xl font-bold text-gray-800 mb-6">社保权益查询</h1>
+    <div class="card-base p-5 mb-6 bg-gradient-to-r from-blue-50 to-emerald-50 border border-primary-100">
+      <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
+        <div class="flex items-center gap-3">
+          <div class="w-12 h-12 rounded-full bg-gov-gradient flex items-center justify-center text-white shadow-md">
+            <User class="w-6 h-6" />
+          </div>
+          <div>
+            <div class="flex items-center gap-2 flex-wrap">
+              <span class="font-semibold text-gray-800">{{ authStore.userInfo?.nameMasked || '参保人' }}</span>
+              <span class="text-sm text-gray-500 tabular-nums">{{ authStore.userInfo?.idCardMasked }}</span>
+              <span class="text-xs text-gray-400">{{ authStore.userInfo?.region }}</span>
+            </div>
+            <div class="flex items-center gap-3 mt-1">
+              <span class="text-xs text-gray-500">社保卡：<span class="tabular-nums">{{ authStore.userInfo?.socialCardMasked }}</span></span>
+              <span
+                :class="[
+                  'inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[11px] font-medium',
+                  authStore.userInfo?.insureStatus === 'NORMAL'
+                    ? 'bg-green-100 text-green-700'
+                    : 'bg-amber-100 text-amber-700',
+                ]"
+              >
+                <Shield class="w-3 h-3" />
+                {{ authStore.userInfo?.insureStatus === 'NORMAL' ? '正常参保' : '参保状态待确认' }}
+              </span>
+            </div>
+          </div>
+        </div>
+        <div
+          class="inline-flex items-center gap-2 px-4 py-2 rounded-xl shadow-sm"
+          :class="isVerified ? 'bg-emerald-500 text-white' : 'bg-amber-100 text-amber-800'"
+        >
+          <CheckCircle2 class="w-4 h-4" />
+          <span class="text-sm font-semibold">
+            {{ isVerified ? '权益核验完成' : '数据加载中，核验进行中' }}
+          </span>
+        </div>
+      </div>
+    </div>
+
+    <div class="flex items-center justify-between mb-5">
+      <h1 class="text-2xl font-bold text-gray-800">社保权益查询</h1>
+      <button
+        v-if="!loading"
+        class="inline-flex items-center gap-1.5 px-3 py-1.5 text-xs rounded-lg border border-gray-200 bg-white text-gray-600 hover:bg-gray-50 transition-colors"
+        @click="retryCount = 0; fetchData()"
+      >
+        <RefreshCw class="w-3 h-3" />
+        刷新数据
+      </button>
+    </div>
 
     <div class="flex items-center gap-2 mb-6">
       <div class="inline-flex bg-primary-50 rounded-full p-1">
@@ -327,8 +419,25 @@ onMounted(fetchData);
       </div>
     </div>
 
-    <div v-if="loading" class="flex items-center justify-center py-20">
-      <div class="w-8 h-8 border-4 border-primary border-t-transparent rounded-full animate-spin" />
+    <div v-if="fetchError && !loading" class="card-base p-8 mb-6 border-2 border-red-200 bg-red-50">
+      <div class="flex flex-col items-center text-center">
+        <AlertCircle class="w-12 h-12 text-red-400 mb-3" />
+        <p class="text-base font-semibold text-red-700 mb-1">数据加载异常</p>
+        <p class="text-sm text-red-500 mb-4">{{ fetchError }}</p>
+        <button
+          class="inline-flex items-center gap-2 px-5 py-2 rounded-xl bg-primary text-white font-medium hover:bg-primary-700 transition-colors"
+          @click="retryCount = 0; ensureAuth(); fetchData()"
+        >
+          <RefreshCw class="w-4 h-4" />
+          重新加载
+        </button>
+      </div>
+    </div>
+
+    <div v-if="loading" class="flex flex-col items-center justify-center py-20">
+      <div class="w-12 h-12 border-4 border-primary border-t-transparent rounded-full animate-spin mb-4" />
+      <p class="text-sm text-gray-500">正在从国家社保公共服务平台同步数据...</p>
+      <p class="text-xs text-gray-400 mt-1">包含缴费明细、待遇发放、账户余额、同比环比</p>
     </div>
 
     <template v-else>

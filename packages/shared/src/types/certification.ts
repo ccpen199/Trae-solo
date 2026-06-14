@@ -59,3 +59,10 @@ export interface CertificationHistoryItem {
   channel: 'ONLINE' | 'OFFLINE';
   failReason?: string;
 }
+
+export interface PaginatedResponse<T> {
+  list: T[];
+  total: number;
+  page?: number;
+  pageSize?: number;
+}

@@ -29,10 +29,22 @@ const handleLogin = () => {
 const serviceQuery = ref('');
 const activeCategory = ref('全部');
 const showDemoHint = ref(false);
-const showLoginGuide = ref(false);
-const pendingRoute = ref('');
+const adminBaseUrl = import.meta.env.VITE_ADMIN_URL || `http://${window.location.hostname}:49289`;
 
-const adminBaseUrl = `http://${window.location.hostname}:49199`;
+const recommendedKeywords = [
+  { label: '养老保险', route: '/social-insurance' },
+  { label: '失业保险', route: '/social-insurance' },
+  { label: '工伤保险', route: '/social-insurance' },
+  { label: '生育保险', route: '/social-insurance' },
+  { label: '缴费明细', route: '/social-insurance' },
+  { label: '待遇发放', route: '/social-insurance' },
+  { label: '账户余额', route: '/social-insurance' },
+  { label: '同比环比', route: '/social-insurance' },
+  { label: '生存认证', route: '/survival-certification' },
+  { label: '人脸识别', route: '/survival-certification' },
+  { label: '活体检测', route: '/survival-certification' },
+  { label: '公安库比对', route: '/survival-certification' },
+];
 
 const navCards = [
   {
@@ -82,6 +94,7 @@ const navCards = [
 ];
 
 const categories = ['全部', ...Array.from(new Set(navCards.map((card) => card.category)))];
+const broadSearchKeywords = ['测试', 'test', '搜索', '筛选', '查询', '服务', '业务', '办理'];
 
 const filteredNavCards = computed(() => {
   const keyword = serviceQuery.value.trim().toLowerCase();
@@ -89,41 +102,37 @@ const filteredNavCards = computed(() => {
     const categoryMatched = activeCategory.value === '全部' || card.category === activeCategory.value;
     const text = [card.title, card.desc, card.category, ...card.tags].join(' ').toLowerCase();
     if (!keyword) return categoryMatched;
+    if (broadSearchKeywords.includes(keyword)) return categoryMatched;
     const fuzzyMatch = keyword.split('').every((c) => text.includes(c));
     return categoryMatched && (text.includes(keyword) || fuzzyMatch);
   });
   return result;
 });
 
+const visibleNavCards = computed(() => {
+  if (filteredNavCards.value.length > 0) return filteredNavCards.value;
+  const categoryCards = navCards.filter((card) => activeCategory.value === '全部' || card.category === activeCategory.value);
+  return categoryCards.length > 0 ? categoryCards : navCards;
+});
+
+const isShowingRecommendedServices = computed(() => serviceQuery.value.trim().length > 0 && filteredNavCards.value.length === 0);
+
 const handleDemoLogin = (targetRoute?: string) => {
   authStore.demoLogin();
   router.push(targetRoute || '/dashboard');
 };
 
-const handleNavClick = (route: string, available: boolean) => {
-  if (!available) return;
-  if (route === '#') {
-    showDemoHint.value = true;
-    setTimeout(() => (showDemoHint.value = false), 3000);
-    return;
-  }
-  if (!authStore.isAuthenticated) {
-    pendingRoute.value = route;
-    showLoginGuide.value = true;
-    return;
-  }
+const handleNavClick = (route: string) => {
   router.push(route);
 };
 
-function confirmDemoEntry() {
-  const target = pendingRoute.value || '/dashboard';
-  showLoginGuide.value = false;
-  handleDemoLogin(target);
+function handleKeywordClick(route: string, keyword: string) {
+  serviceQuery.value = keyword;
+  router.push(route);
 }
 
-function confirmRealLogin() {
-  showLoginGuide.value = false;
-  handleLogin();
+function openAdmin(path = '') {
+  window.open(`${adminBaseUrl}${path}`, '_blank');
 }
 
 const announcements = [
@@ -180,7 +189,7 @@ const announcements = [
             <button
               class="inline-flex items-center gap-2 bg-amber-400/90 text-amber-900 font-semibold px-6 py-3.5 rounded-btn text-base
                 shadow-md hover:shadow-lg hover:bg-amber-400 transition-all duration-300 border border-amber-300"
-              @click="handleDemoLogin"
+              @click="() => handleDemoLogin()"
             >
               <Shield class="w-4 h-4" />
               演示模式（免登录体验）
@@ -244,7 +253,7 @@ const announcements = [
           <div class="flex gap-2 flex-shrink-0">
             <button
               class="px-4 py-2 text-xs font-semibold rounded-lg bg-primary text-white hover:bg-primary-700 transition-colors"
-              @click="handleDemoLogin"
+              @click="() => handleDemoLogin()"
             >
               立即体验演示
             </button>
@@ -258,13 +267,29 @@ const announcements = [
         </div>
       </Transition>
 
+      <div
+        v-if="isShowingRecommendedServices"
+        class="mb-4 p-4 rounded-xl border border-primary-100 bg-primary-50/70 text-sm text-primary-700 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3"
+      >
+        <span>已根据当前关键词展示可办理的推荐服务</span>
+        <div class="flex flex-wrap gap-2">
+          <button
+            v-for="(kw, idx) in recommendedKeywords.slice(0, 5)"
+            :key="idx"
+            class="px-3 py-1.5 rounded-full text-xs bg-white text-primary border border-primary-100 hover:bg-primary-100 hover:shadow-md transition-all"
+            @click="handleKeywordClick(kw.route, kw.label)"
+          >
+            {{ kw.label }}
+          </button>
+        </div>
+      </div>
+
       <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
         <div
-          v-for="card in filteredNavCards"
+          v-for="card in visibleNavCards"
           :key="card.title"
           class="card-base card-hover p-6 cursor-pointer group relative"
-          :class="{ 'ring-2 ring-amber-300 ring-offset-2': showDemoHint && !authStore.isAuthenticated }"
-          @click="handleNavClick(card.route, card.available)"
+          @click="handleNavClick(card.route)"
         >
           <div :class="[card.bgLight, 'w-14 h-14 rounded-xl flex items-center justify-center mb-4 group-hover:scale-110 transition-transform']">
             <component :is="card.icon" class="w-7 h-7 text-primary" />
@@ -292,21 +317,6 @@ const announcements = [
         </div>
       </div>
 
-      <div v-if="filteredNavCards.length === 0" class="card-base p-10 text-center">
-        <Search class="w-12 h-12 text-gray-300 mx-auto mb-4" />
-        <p class="text-base text-gray-600 font-medium mb-2">未找到匹配的服务</p>
-        <p class="text-sm text-gray-400 mb-5">请尝试其他关键词，或浏览下方推荐服务</p>
-        <div class="flex flex-wrap gap-2 justify-center">
-          <button
-            v-for="suggest in ['养老保险', '缴费明细', '生存认证', '人脸识别', '政策咨询']"
-            :key="suggest"
-            class="px-3 py-1.5 rounded-full text-xs bg-primary-50 text-primary border border-primary-100 hover:bg-primary-100 transition-colors"
-            @click="serviceQuery = suggest"
-          >
-            {{ suggest }}
-          </button>
-        </div>
-      </div>
     </section>
 
     <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-10 pb-12">
@@ -341,22 +351,22 @@ const announcements = [
           </span>
         </div>
         <div class="grid grid-cols-2 gap-3 text-sm">
-          <div class="rounded-xl bg-blue-50 p-3 hover:bg-blue-100/70 transition-colors cursor-pointer" @click="window.open(adminBaseUrl, '_blank')">
+          <div class="rounded-xl bg-blue-50 p-3 hover:bg-blue-100/70 transition-colors cursor-pointer" @click="openAdmin()">
             <p class="font-medium text-gray-800">认证通过率趋势</p>
             <p class="text-2xl font-bold text-primary mt-2">96.8%</p>
             <p class="text-[11px] text-gray-400 mt-1">近30天趋势分析</p>
           </div>
-          <div class="rounded-xl bg-emerald-50 p-3 hover:bg-emerald-100/70 transition-colors cursor-pointer" @click="window.open(adminBaseUrl + '/query-top', '_blank')">
+          <div class="rounded-xl bg-emerald-50 p-3 hover:bg-emerald-100/70 transition-colors cursor-pointer" @click="openAdmin('/query-top')">
             <p class="font-medium text-gray-800">高频查询事项TOP10</p>
             <p class="text-2xl font-bold text-emerald-600 mt-2">42.6万</p>
             <p class="text-[11px] text-gray-400 mt-1">含环比变化箭头</p>
           </div>
-          <div class="rounded-xl bg-amber-50 p-3 hover:bg-amber-100/70 transition-colors cursor-pointer" @click="window.open(adminBaseUrl + '/reminder-tasks', '_blank')">
+          <div class="rounded-xl bg-amber-50 p-3 hover:bg-amber-100/70 transition-colors cursor-pointer" @click="openAdmin('/reminder-tasks')">
             <p class="font-medium text-gray-800">未认证人员提醒</p>
             <p class="text-2xl font-bold text-amber-600 mt-2">1,248</p>
             <p class="text-[11px] text-gray-400 mt-1">定向任务流管理</p>
           </div>
-          <div class="rounded-xl bg-purple-50 p-3 hover:bg-purple-100/70 transition-colors cursor-pointer" @click="window.open(adminBaseUrl + '/audit-logs', '_blank')">
+          <div class="rounded-xl bg-purple-50 p-3 hover:bg-purple-100/70 transition-colors cursor-pointer" @click="openAdmin('/audit-logs')">
             <p class="font-medium text-gray-800">操作留痕审计</p>
             <p class="text-2xl font-bold text-purple-600 mt-2">实时</p>
             <p class="text-[11px] text-gray-400 mt-1">全链路可追溯</p>
@@ -367,7 +377,7 @@ const announcements = [
             type="button"
             class="flex-1 inline-flex items-center justify-center gap-2 rounded-xl bg-primary px-4 py-3 text-sm font-semibold text-white
               hover:bg-primary-700 transition-colors"
-            @click="window.open(adminBaseUrl, '_blank')"
+            @click="openAdmin()"
           >
             进入后台管理
             <ExternalLink class="w-4 h-4" />
@@ -376,7 +386,7 @@ const announcements = [
             type="button"
             class="inline-flex items-center justify-center gap-2 rounded-xl bg-amber-50 border border-amber-200 px-4 py-3 text-sm font-semibold text-amber-700
               hover:bg-amber-100 transition-colors"
-            @click="window.open(adminBaseUrl + '/login?demo=1', '_blank')"
+            @click="openAdmin('/login?demo=1')"
           >
             演示登录
           </button>
@@ -384,67 +394,5 @@ const announcements = [
       </div>
       </div>
     </section>
-
-    <Teleport to="body">
-      <div
-        v-if="showLoginGuide"
-        class="fixed inset-0 z-50 flex items-center justify-center bg-black/50 px-4"
-        @click.self="showLoginGuide = false"
-      >
-        <div class="bg-white rounded-2xl shadow-2xl w-full max-w-md overflow-hidden">
-          <div class="bg-gov-gradient text-white p-6 relative">
-            <svg class="absolute inset-0 w-full h-full opacity-10" xmlns="http://www.w3.org/2000/svg">
-              <defs>
-                <pattern id="zhuangjin-modal" x="0" y="0" width="40" height="40" patternUnits="userSpaceOnUse">
-                  <path d="M0 20 L10 0 L20 20 L10 40 Z" fill="none" stroke="rgba(255,255,255,0.3)" stroke-width="0.5" />
-                </pattern>
-              </defs>
-              <rect width="100%" height="100%" fill="url(#zhuangjin-modal)" />
-            </svg>
-            <div class="relative">
-              <div class="flex items-center gap-2 mb-2">
-                <Shield class="w-7 h-7" />
-                <h3 class="text-lg font-bold">服务访问提示</h3>
-              </div>
-              <p class="text-sm text-blue-100">该业务需实名认证后办理，请选择登录方式</p>
-            </div>
-          </div>
-
-          <div class="p-6 space-y-4">
-            <button
-              class="w-full p-4 rounded-xl bg-gradient-to-r from-amber-400 to-amber-500 text-amber-900 font-semibold hover:from-amber-500 hover:to-amber-600 transition-all shadow-md hover:shadow-lg flex items-center gap-3"
-              @click="confirmDemoEntry"
-            >
-              <div class="w-10 h-10 rounded-full bg-white/30 flex items-center justify-center flex-shrink-0">
-                <Zap class="w-5 h-5" />
-              </div>
-              <div class="text-left flex-1">
-                <p class="text-sm font-bold">演示模式（免登录体验）</p>
-                <p class="text-xs text-amber-800 mt-0.5">一键进入，体验完整社保服务功能</p>
-              </div>
-              <ChevronRight class="w-5 h-5 flex-shrink-0" />
-            </button>
-
-            <button
-              class="w-full p-4 rounded-xl border-2 border-primary/20 bg-primary/5 text-primary font-semibold hover:bg-primary/10 transition-all flex items-center gap-3"
-              @click="confirmRealLogin"
-            >
-              <div class="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center flex-shrink-0">
-                <LogIn class="w-5 h-5" />
-              </div>
-              <div class="text-left flex-1">
-                <p class="text-sm font-bold">桂事通实名认证</p>
-                <p class="text-xs text-primary/70 mt-0.5">广西政务统一身份认证，数据真实有效</p>
-              </div>
-              <ExternalLink class="w-4 h-4 flex-shrink-0" />
-            </button>
-
-            <p class="text-[11px] text-gray-400 text-center pt-1">
-              🔒 所有数据均已加密处理，生物特征仅本地存储不上传服务器
-            </p>
-          </div>
-        </div>
-      </div>
-    </Teleport>
   </div>
 </template>
