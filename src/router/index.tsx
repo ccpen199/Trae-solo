@@ -72,11 +72,13 @@ const CompanyListPage = lazy(() => import('@/pages/owner/CompanyListPage'));
 const CompanyDetailPage = lazy(() => import('@/pages/owner/CompanyDetailPage'));
 const AppointmentList = lazy(() => import('@/pages/owner/AppointmentList'));
 const ComparisonBoard = lazy(() => import('@/pages/owner/ComparisonBoard'));
+const ProgressTracker = lazy(() => import('@/pages/owner/ProgressTracker'));
 const ProcessLibrary = lazy(() => import('@/pages/owner/ProcessLibrary'));
 const ProcessDetail = lazy(() => import('@/pages/owner/ProcessDetail'));
 const PitfallGuide = lazy(() => import('@/pages/owner/PitfallGuide'));
 const CommunityHome = lazy(() => import('@/pages/owner/CommunityHome'));
 const QuestionDetail = lazy(() => import('@/pages/owner/QuestionDetail'));
+const OwnerProfile = lazy(() => import('@/pages/owner/OwnerProfile'));
 
 const ProviderWorkspace = lazy(() => import('@/pages/provider/ProviderWorkspace'));
 const QualificationAudit = lazy(() => import('@/pages/provider/QualificationAudit'));
@@ -85,6 +87,7 @@ const PlanManagement = lazy(() => import('@/pages/provider/PlanManagement'));
 const PlanCreator = lazy(() => import('@/pages/provider/PlanCreator'));
 const SiteManagement = lazy(() => import('@/pages/provider/SiteManagement'));
 const SiteDailyLog = lazy(() => import('@/pages/provider/SiteDailyLog'));
+const CompanyProfile = lazy(() => import('@/pages/provider/CompanyProfile'));
 
 const AdminDashboard = lazy(() => import('@/pages/admin/AdminDashboard'));
 const CompanyAuditQueue = lazy(() => import('@/pages/admin/CompanyAuditQueue'));
@@ -104,13 +107,6 @@ function L(Comp: LC) {
   );
 }
 
-const Placeholder = ({ title }: { title: string }) => (
-  <div className="card-base p-12 m-8">
-    <h1 className="section-title">{title}</h1>
-    <p className="text-ivory-600 mt-2">页面功能开发中，敬请期待...</p>
-  </div>
-);
-
 const router = createBrowserRouter([
   {
     path: '/',
@@ -127,7 +123,7 @@ const router = createBrowserRouter([
       {
         path: 'owner',
         children: [
-          { index: true, element: <Placeholder title="业主个人中心" /> },
+          { index: true, element: L(OwnerProfile) },
           { path: '3d-generator', element: L(DGeneratorPage) },
           { path: 'calculator', element: L(CalculatorPage) },
           {
@@ -165,9 +161,9 @@ const router = createBrowserRouter([
           },
           {
             path: 'progress/:projectId',
-            element: <Placeholder title="我的装修进度追踪" />,
+            element: L(ProgressTracker),
           },
-          { path: 'profile', element: <Placeholder title="个人资料与收藏管理" /> },
+          { path: 'profile', element: L(OwnerProfile) },
         ],
       },
       {
@@ -190,7 +186,7 @@ const router = createBrowserRouter([
               { path: ':id/log', element: L(SiteDailyLog) },
             ],
           },
-          { path: 'profile', element: <Placeholder title="公司信息维护" /> },
+          { path: 'profile', element: L(CompanyProfile) },
         ],
       },
       {

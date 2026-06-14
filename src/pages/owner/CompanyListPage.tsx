@@ -15,9 +15,17 @@ import {
   Briefcase,
   Calendar,
   Phone,
+  Eye,
+  GitCompareArrows,
+  Hammer,
+  Home,
+  Ruler,
+  DollarSign,
+  Sparkles,
+  CheckCircle2,
 } from 'lucide-react';
-import { useNavigate } from 'react-router-dom';
-import { Pagination } from 'antd';
+import { useNavigate, useLocation } from 'react-router-dom';
+import { Pagination, message } from 'antd';
 import { cn } from '@/lib/utils';
 
 const cityOptions = [
@@ -51,9 +59,13 @@ const sortOptions = [
 ];
 
 const serviceScopeOptions = ['局部改造', '整装', '软装', '全案设计'];
+const decorationTypeOptions = ['半包', '全包', '整装'];
+const areaRangeOptions = ['60㎡以下', '60-90㎡', '90-120㎡', '120-150㎡', '150㎡以上'];
+const budgetRangeOptions = ['10万以下', '10-20万', '20-50万', '50-100万', '100万以上'];
 const priceRangeOptions = ['10万以下', '10-20万', '20-50万', '50万以上'];
 const durationOptions = ['60天内', '90天内', '120天内'];
 const featureTagsOptions = ['免费量房', '零增项', '环保承诺', '延期赔付', '金牌工长'];
+const mainStyleOptions = ['现代简约', '北欧', '新中式', '轻奢', '日式', '地中海', '工业风', '美式'];
 
 const companyNames = [
   '筑美装饰', '雅居家装', '尚品装饰', '名匠装修', '美家工坊',
@@ -90,10 +102,15 @@ interface CompanyData {
   reviewCount: number;
   servedHouseholds: number;
   caseCount: number;
+  dealCount: number;
   avgPrice: number;
   city: string;
   serviceScopes: string[];
+  decorationTypes: string[];
+  mainStyles: string[];
   priceRange: string;
+  budgetRange: string;
+  areaRange: string;
   duration: string;
   features: string[];
   cases: { image: string; title: string }[];
@@ -112,10 +129,15 @@ function generateCompanies(count: number): CompanyData[] {
       reviewCount: Math.floor(Math.random() * 800) + 120,
       servedHouseholds: Math.floor(Math.random() * 3000) + 500,
       caseCount: Math.floor(Math.random() * 500) + 80,
+      dealCount: Math.floor(Math.random() * 2000) + 300,
       avgPrice: [880, 980, 1080, 1280, 1580, 1880][i % 6],
       city: cities[i % cities.length],
       serviceScopes: serviceScopeOptions.slice(0, 2 + (i % 3)),
+      decorationTypes: ['新房装修', '旧房翻新', '局部改造'].slice(0, 2 + (i % 2)),
+      mainStyles: ['现代简约', '北欧', '新中式', '轻奢', '美式'].sort(() => Math.random() - 0.5).slice(0, 3),
       priceRange: priceRangeOptions[i % 4],
+      budgetRange: ['10-20万', '20-50万', '50-100万', '100万以上'][i % 4],
+      areaRange: ['60-90㎡', '90-120㎡', '120-150㎡', '150㎡以上'][i % 4],
       duration: durationOptions[i % 3],
       features: featureTagsOptions.sort(() => Math.random() - 0.5).slice(0, 3 + (i % 3)),
       cases: [

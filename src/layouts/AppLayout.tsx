@@ -152,6 +152,32 @@ export default function AppLayout() {
             </kbd>
           </div>
 
+          {isHome && (
+            <nav className="hidden lg:flex items-center gap-1 shrink-0" aria-label="首页快捷导航">
+              <NavLink
+                to="/owner/profile"
+                onClick={() => setRole('owner')}
+                className="px-3 py-2 rounded-lg text-sm font-medium text-carbon-600 hover:bg-ivory-100 hover:text-terracotta-700 transition-colors"
+              >
+                个人中心
+              </NavLink>
+              <NavLink
+                to="/owner/companies/company-1"
+                onClick={() => setRole('owner')}
+                className="px-3 py-2 rounded-lg text-sm font-medium text-carbon-600 hover:bg-ivory-100 hover:text-terracotta-700 transition-colors"
+              >
+                查看详情
+              </NavLink>
+              <NavLink
+                to="/admin"
+                onClick={() => setRole('admin')}
+                className="px-3 py-2 rounded-lg text-sm font-medium text-carbon-600 hover:bg-ivory-100 hover:text-terracotta-700 transition-colors"
+              >
+                管理后台
+              </NavLink>
+            </nav>
+          )}
+
           {!isHome && (
             <div className="hidden md:flex items-center bg-ivory-100 rounded-btn p-1 ml-auto shrink-0">
               {roleTabs.map((tab) => (

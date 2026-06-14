@@ -19,8 +19,13 @@ import {
   Copy,
   AlertTriangle,
   Check,
+  History,
+  User,
+  Clock,
+  MessageSquare,
+  UserCheck,
 } from 'lucide-react';
-import { Table, Tabs, Progress, Switch, Modal, Drawer, Rate, Input, Select, Slider, Card } from 'antd';
+import { Table, Tabs, Progress, Switch, Modal, Drawer, Rate, Input, Select, Slider, Card, Tag, message } from 'antd';
 import type { ColumnsType } from 'antd/es/table';
 import type { TabsProps } from 'antd';
 import dayjs from 'dayjs';
@@ -30,6 +35,16 @@ const { Option } = Select;
 
 type AuditStatus = 'pending' | 'auditing' | 'passed' | 'rejected';
 type QualificationLevel = 'A' | 'B' | 'C';
+
+interface AuditHistoryItem {
+  id: string;
+  stage: 'submitted' | 'first_audit' | 'recheck' | 'passed' | 'rejected' | 'supplement';
+  auditor: string;
+  auditorRole: string;
+  time: string;
+  opinion: string;
+  result: 'pass' | 'reject' | 'pending' | 'supplement';
+}
 
 interface CompanyItem {
   key: string;
@@ -48,6 +63,8 @@ interface CompanyItem {
   ocrTotalCount: number;
   status: AuditStatus;
   city: string;
+  historyProjectCount: number;
+  auditHistory: AuditHistoryItem[];
 }
 
 const mockCompanies: CompanyItem[] = [
@@ -73,6 +90,10 @@ const mockCompanies: CompanyItem[] = [
     ocrTotalCount: 4,
     status: 'pending',
     city: '上海',
+    historyProjectCount: 328,
+    auditHistory: [
+      { id: 'h1', stage: 'submitted', auditor: '系统', auditorRole: '自动', time: '2024-06-12 09:15:23', opinion: '公司提交入驻申请，材料齐全', result: 'pending' },
+    ],
   },
   {
     key: '2',
@@ -96,6 +117,11 @@ const mockCompanies: CompanyItem[] = [
     ocrTotalCount: 4,
     status: 'pending',
     city: '北京',
+    historyProjectCount: 586,
+    auditHistory: [
+      { id: 'h1', stage: 'submitted', auditor: '系统', auditorRole: '自动', time: '2024-06-11 16:42:08', opinion: '公司提交入驻申请', result: 'pending' },
+      { id: 'h2', stage: 'first_audit', auditor: '王审核', auditorRole: '初审员', time: '2024-06-11 18:05:12', opinion: 'OCR识别2项异常，安全生产证需人工核验', result: 'pending' },
+    ],
   },
   {
     key: '3',
@@ -119,6 +145,11 @@ const mockCompanies: CompanyItem[] = [
     ocrTotalCount: 4,
     status: 'pending',
     city: '深圳',
+    historyProjectCount: 142,
+    auditHistory: [
+      { id: 'h1', stage: 'submitted', auditor: '系统', auditorRole: '自动', time: '2024-06-12 11:28:45', opinion: '公司提交入驻申请，巡检报告待补充', result: 'supplement' },
+      { id: 'h2', stage: 'supplement', auditor: '优家 admin', auditorRole: '申请方', time: '2024-06-12 14:22:08', opinion: '已补充巡检报告照片，安全生产证重新上传', result: 'pending' },
+    ],
   },
   {
     key: '4',
@@ -142,6 +173,12 @@ const mockCompanies: CompanyItem[] = [
     ocrTotalCount: 4,
     status: 'auditing',
     city: '杭州',
+    historyProjectCount: 289,
+    auditHistory: [
+      { id: 'h1', stage: 'submitted', auditor: '系统', auditorRole: '自动', time: '2024-06-10 14:05:32', opinion: '提交入驻申请，材料齐全', result: 'pending' },
+      { id: 'h2', stage: 'first_audit', auditor: '李审核', auditorRole: '初审员', time: '2024-06-10 16:30:45', opinion: '初审通过，资质评分88分，建议进入复审', result: 'pass' },
+      { id: 'h3', stage: 'recheck', auditor: '张主管', auditorRole: '复审员', time: '2024-06-11 09:15:22', opinion: '复审中，正在核查历史项目业主评价...', result: 'pending' },
+    ],
   },
   {
     key: '5',
@@ -165,6 +202,13 @@ const mockCompanies: CompanyItem[] = [
     ocrTotalCount: 4,
     status: 'passed',
     city: '成都',
+    historyProjectCount: 76,
+    auditHistory: [
+      { id: 'h1', stage: 'submitted', auditor: '系统', auditorRole: '自动', time: '2024-06-11 10:33:17', opinion: '提交入驻申请', result: 'pending' },
+      { id: 'h2', stage: 'first_audit', auditor: '王审核', auditorRole: '初审员', time: '2024-06-11 14:22:08', opinion: '初审通过，OCR全部匹配，综合评分82分', result: 'pass' },
+      { id: 'h3', stage: 'recheck', auditor: '张主管', auditorRole: '复审员', time: '2024-06-12 09:05:33', opinion: '复审通过，评分达标，准予入驻', result: 'pass' },
+      { id: 'h4', stage: 'passed', auditor: '系统', auditorRole: '自动', time: '2024-06-12 09:05:34', opinion: '审核完成，已开通服务商后台权限', result: 'pass' },
+    ],
   },
   {
     key: '6',
@@ -188,6 +232,12 @@ const mockCompanies: CompanyItem[] = [
     ocrTotalCount: 4,
     status: 'auditing',
     city: '广州',
+    historyProjectCount: 198,
+    auditHistory: [
+      { id: 'h1', stage: 'submitted', auditor: '系统', auditorRole: '自动', time: '2024-06-08 09:50:44', opinion: '提交入驻申请', result: 'pending' },
+      { id: 'h2', stage: 'first_audit', auditor: '李审核', auditorRole: '初审员', time: '2024-06-08 15:20:18', opinion: '初审发现安全生产证OCR匹配度92%，需复审员人工确认', result: 'pending' },
+      { id: 'h3', stage: 'recheck', auditor: '张主管', auditorRole: '复审员', time: '2024-06-09 10:45:33', opinion: '人工核验通过，证件信息真实有效', result: 'pass' },
+    ],
   },
 ];
 
@@ -210,13 +260,26 @@ const AuditModal: React.FC<{
   open: boolean;
   onClose: () => void;
   company: CompanyItem | null;
-}> = ({ open, onClose, company }) => {
+  onPass?: (id: string) => void;
+  onReject?: (id: string, reason: string) => void;
+}> = ({ open, onClose, company, onPass, onReject }) => {
   const [activeTab, setActiveTab] = useState('license');
   const [ocrChecks, setOcrChecks] = useState<Record<string, boolean>>({});
   const [comment, setComment] = useState('');
   const [qualificationScore, setQualificationScore] = useState(85);
   const [historyScore, setHistoryScore] = useState(90);
   const [inspectionScore, setInspectionScore] = useState(82);
+  const [rejectModalOpen, setRejectModalOpen] = useState(false);
+  const [rejectReason, setRejectReason] = useState('');
+
+  const stageConfig: Record<AuditHistoryItem['stage'], { label: string; color: string; icon: any }> = {
+    submitted: { label: '提交申请', color: 'bg-haze-500', icon: FileText },
+    first_audit: { label: '初审', color: 'bg-terracotta-500', icon: ClipboardCheck },
+    recheck: { label: '复审', color: 'bg-wood-600', icon: UserCheck },
+    passed: { label: '审核通过', color: 'bg-emerald-500', icon: CheckCircle2 },
+    rejected: { label: '已驳回', color: 'bg-rose-500', icon: XCircle },
+    supplement: { label: '补充材料', color: 'bg-amber-500', icon: AlertTriangle },
+  };
 
   if (!company) return null;
 
@@ -426,28 +489,173 @@ const AuditModal: React.FC<{
           </div>
 
           <div className="mt-6 flex items-center gap-3">
-            <button className="flex-1 btn-primary">
+            <button
+              onClick={() => {
+                Modal.confirm({
+                  title: '确认通过审核？',
+                  content: `确认通过「${company.name}」的入驻申请？该操作将开通服务商后台权限，并发送通知邮件。`,
+                  okText: '确认通过',
+                  cancelText: '取消',
+                  okButtonProps: { style: { background: '#C4623A', borderColor: '#C4623A' } },
+                  onOk: () => {
+                    onPass?.(company.id);
+                    message.success(`已通过「${company.name}」的审核`);
+                    onClose();
+                  },
+                });
+              }}
+              className="flex-1 btn-primary"
+            >
               <CheckCircle2 className="w-4 h-4" />
               通过审核
             </button>
-            <button className="flex-1 inline-flex items-center justify-center gap-2 px-5 py-2.5 rounded-btn
+            <button
+              onClick={() => {
+                if (!comment.trim() && !rejectReason.trim()) {
+                  setRejectModalOpen(true);
+                } else {
+                  Modal.confirm({
+                    title: '确认驳回申请？',
+                    content: (
+                      <div>
+                        <p>驳回原因：{comment || rejectReason || '（未填写）'}</p>
+                        <p className="mt-2 text-xs text-ivory-500">该公司将收到驳回通知，可修正后重新提交。</p>
+                      </div>
+                    ),
+                    okText: '确认驳回',
+                    okButtonProps: { danger: true },
+                    cancelText: '取消',
+                    onOk: () => {
+                      onReject?.(company.id, comment || rejectReason);
+                      message.error(`已驳回「${company.name}」的申请`);
+                      onClose();
+                    },
+                  });
+                }
+              }}
+              className="flex-1 inline-flex items-center justify-center gap-2 px-5 py-2.5 rounded-btn
               bg-rose-50 text-rose-700 font-medium border border-rose-200
-              hover:bg-rose-100 transition-all duration-200">
+              hover:bg-rose-100 transition-all duration-200"
+            >
               <XCircle className="w-4 h-4" />
               驳回（需填原因）
             </button>
-            <button className="inline-flex items-center justify-center gap-2 px-5 py-2.5 rounded-btn
+            <button
+              onClick={() => {
+                message.warning(`已向「${company.name}」发送补充材料通知`);
+              }}
+              className="inline-flex items-center justify-center gap-2 px-5 py-2.5 rounded-btn
               bg-amber-50 text-amber-700 font-medium border border-amber-200
-              hover:bg-amber-100 transition-all duration-200">
+              hover:bg-amber-100 transition-all duration-200"
+            >
               <AlertTriangle className="w-4 h-4" />
               退回补充
             </button>
           </div>
-          <button className="w-full mt-3 py-2.5 rounded-btn border border-ivory-300 text-sm text-carbon-600 font-medium hover:bg-ivory-100 transition-colors">
+          <button
+            onClick={() => message.success('审核草稿已保存')}
+            className="w-full mt-3 py-2.5 rounded-btn border border-ivory-300 text-sm text-carbon-600 font-medium hover:bg-ivory-100 transition-colors"
+          >
             保存审核结果草稿
           </button>
+
+          <div className="mt-6 pt-5 border-t border-ivory-200">
+            <h4 className="font-serif font-semibold text-carbon-800 mb-3 flex items-center gap-2">
+              <History className="w-4 h-4 text-haze-500" />
+              审核复查记录
+              <span className="ml-auto text-xs font-normal text-ivory-500">共 {company.auditHistory.length} 条</span>
+            </h4>
+            <div className="relative pl-2 space-y-4 max-h-[260px] overflow-y-auto pr-1">
+              <div className="absolute left-[11px] top-1 bottom-1 w-px bg-gradient-to-b from-haze-200 via-wood-200 to-emerald-200" />
+              {company.auditHistory.map((item) => {
+                const cfg = stageConfig[item.stage];
+                const Icon = cfg.icon;
+                return (
+                  <div key={item.id} className="relative pl-8">
+                    <div className={`absolute left-0 top-0 w-[22px] h-[22px] rounded-full ${cfg.color} text-white flex items-center justify-center shadow-md ring-2 ring-white`}>
+                      <Icon className="w-3 h-3" />
+                    </div>
+                    <div className={`rounded-card p-3 border ${
+                      item.result === 'pass' ? 'bg-emerald-50/60 border-emerald-200/60' :
+                      item.result === 'reject' ? 'bg-rose-50/60 border-rose-200/60' :
+                      item.result === 'supplement' ? 'bg-amber-50/60 border-amber-200/60' :
+                      'bg-ivory-50/60 border-ivory-200/60'
+                    }`}>
+                      <div className="flex items-center justify-between mb-1.5">
+                        <div className="flex items-center gap-2">
+                          <span className="text-xs font-semibold text-carbon-800">{cfg.label}</span>
+                          <Tag color={
+                            item.result === 'pass' ? 'success' :
+                            item.result === 'reject' ? 'error' :
+                            item.result === 'supplement' ? 'warning' : 'default'
+                          } className="!text-[10px] !py-0 !mx-0">
+                            {item.result === 'pass' ? '通过' : item.result === 'reject' ? '驳回' : item.result === 'supplement' ? '待补充' : '处理中'}
+                          </Tag>
+                        </div>
+                        <div className="flex items-center gap-1 text-[10px] text-ivory-500">
+                          <Clock className="w-3 h-3" />
+                          <span className="font-mono">{item.time}</span>
+                        </div>
+                      </div>
+                      <div className="flex items-center gap-1.5 text-xs text-carbon-600 mb-1.5">
+                        <User className="w-3 h-3 text-haze-500" />
+                        <span className="font-medium">{item.auditor}</span>
+                        <span className="text-ivory-400">·</span>
+                        <span className="text-ivory-500">{item.auditorRole}</span>
+                      </div>
+                      <div className="flex items-start gap-1.5 text-xs text-carbon-700 bg-white/60 rounded-lg p-2 border border-ivory-100">
+                        <MessageSquare className="w-3 h-3 mt-0.5 text-terracotta-500 shrink-0" />
+                        <span className="leading-relaxed">{item.opinion}</span>
+                      </div>
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
+          </div>
         </div>
       </div>
+
+      <Modal
+        title={
+          <div className="flex items-center gap-2">
+            <XCircle className="w-5 h-5 text-rose-500" />
+            <span>填写驳回原因</span>
+          </div>
+        }
+        open={rejectModalOpen}
+        onCancel={() => setRejectModalOpen(false)}
+        okText="提交驳回"
+        cancelText="取消"
+        okButtonProps={{ danger: true }}
+        onOk={() => {
+          if (!rejectReason.trim()) {
+            message.warning('请填写驳回原因');
+            return Promise.reject();
+          }
+          onReject?.(company.id, rejectReason);
+          message.error(`已驳回「${company.name}」的申请，原因：${rejectReason.slice(0, 30)}...`);
+          setRejectModalOpen(false);
+          onClose();
+        }}
+      >
+        <div className="mt-3 space-y-3">
+          <p className="text-xs text-carbon-600">请详细说明驳回原因，申请方将收到此通知：</p>
+          <TextArea
+            rows={5}
+            placeholder="例如：1. 营业执照经营范围不包含室内外装饰装修工程；2. 资质证书已过有效期（有效期至2023-12-31）；..."
+            value={rejectReason}
+            onChange={(e) => setRejectReason(e.target.value)}
+            className="!rounded-btn !border-ivory-300"
+          />
+          <div className="flex items-start gap-2 p-3 rounded-lg bg-amber-50 border border-amber-200/60">
+            <AlertTriangle className="w-4 h-4 text-amber-600 shrink-0 mt-0.5" />
+            <p className="text-xs text-amber-700 leading-relaxed">
+              建议逐条列出问题点，以便申请方快速修正后重新提交。驳回原因将永久记录在审核档案中。
+            </p>
+          </div>
+        </div>
+      </Modal>
     </Modal>
   );
 };
@@ -478,25 +686,34 @@ const CompanyAuditQueue: React.FC = () => {
     return true;
   });
 
+  const statusConfig: Record<AuditStatus, { label: string; color: string; bg: string; dot: string }> = {
+    pending: { label: '待审核', color: 'text-amber-700', bg: 'bg-amber-50', dot: 'bg-amber-500' },
+    auditing: { label: '审核中', color: 'text-blue-700', bg: 'bg-blue-50', dot: 'bg-blue-500' },
+    passed: { label: '已通过', color: 'text-emerald-700', bg: 'bg-emerald-50', dot: 'bg-emerald-500' },
+    rejected: { label: '已驳回', color: 'text-rose-700', bg: 'bg-rose-50', dot: 'bg-rose-500' },
+  };
+
   const columns: ColumnsType<CompanyItem> = [
     {
-      title: '公司信息',
+      title: '申请公司',
       dataIndex: 'name',
-      width: 280,
+      width: 300,
+      fixed: 'left',
       render: (_, record) => (
         <div className="flex items-center gap-3">
           <img
             src={record.logo}
             alt={record.name}
-            className="w-11 h-11 rounded-xl border border-ivory-200 bg-white p-1"
+            className="w-11 h-11 rounded-xl border border-ivory-200 bg-white p-1 shrink-0"
           />
           <div className="min-w-0">
             <div className="flex items-center gap-2">
-              <span className="font-medium text-carbon-800 text-sm truncate max-w-[160px]">{record.name}</span>
+              <span className="font-medium text-carbon-800 text-sm truncate max-w-[160px]" title={record.name}>{record.name}</span>
+              <span className="text-[10px] font-mono text-ivory-400 shrink-0">{record.id}</span>
             </div>
             <div className="flex items-center gap-2 mt-1">
               <LevelBadge level={record.level} />
-              <span className="text-[11px] text-ivory-500 font-mono">{record.foundedYear}年成立</span>
+              <span className="text-[11px] text-ivory-500 font-mono">{record.foundedYear}年成立 · {record.city}</span>
             </div>
           </div>
         </div>
@@ -505,7 +722,7 @@ const CompanyAuditQueue: React.FC = () => {
     {
       title: '提交时间',
       dataIndex: 'submitTime',
-      width: 160,
+      width: 150,
       render: (v: string) => (
         <div>
           <div className="font-mono text-sm text-carbon-700">{dayjs(v).format('YYYY-MM-DD')}</div>
@@ -515,13 +732,71 @@ const CompanyAuditQueue: React.FC = () => {
       sorter: (a, b) => dayjs(a.submitTime).valueOf() - dayjs(b.submitTime).valueOf(),
     },
     {
+      title: '资质等级',
+      dataIndex: 'level',
+      width: 100,
+      render: (l: QualificationLevel) => <LevelBadge level={l} />,
+    },
+    {
+      title: 'OCR匹配度',
+      dataIndex: 'ocrPassCount',
+      width: 130,
+      render: (_: number, record) => {
+        const pct = Math.round((record.ocrPassCount / record.ocrTotalCount) * 100);
+        return (
+          <div>
+            <div className="flex items-center justify-between mb-1">
+              <span className="text-xs text-ivory-600">{record.ocrPassCount}/{record.ocrTotalCount}</span>
+              <span className={`font-mono text-sm font-semibold ${pct >= 100 ? 'text-emerald-600' : pct >= 75 ? 'text-amber-600' : 'text-rose-600'}`}>{pct}%</span>
+            </div>
+            <Progress
+              percent={pct}
+              showInfo={false}
+              size="small"
+              strokeColor={pct >= 100 ? '#22C55E' : pct >= 75 ? '#F59E0B' : '#F43F5E'}
+              trailColor="#E8E4DD"
+            />
+          </div>
+        );
+      },
+    },
+    {
+      title: '历史项目数',
+      dataIndex: 'historyProjectCount',
+      width: 110,
+      render: (n: number, record) => (
+        <div>
+          <div className="font-mono text-lg font-bold text-carbon-800 leading-none">{n}</div>
+          <div className="flex items-center gap-1 mt-1.5">
+            <Star className="w-3 h-3 text-amber-400 fill-amber-400" />
+            <span className="font-mono text-[11px] text-carbon-600 font-semibold">{record.rating}</span>
+            <span className="text-[10px] text-ivory-500">({record.reviewCount}评)</span>
+          </div>
+        </div>
+      ),
+    },
+    {
+      title: '状态',
+      dataIndex: 'status',
+      width: 110,
+      render: (s: AuditStatus) => {
+        const cfg = statusConfig[s];
+        return (
+          <span className={`inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-semibold border ${cfg.bg} ${cfg.color} border-current/20`}>
+            <span className={`w-2 h-2 rounded-full ${cfg.dot}`} />
+            {cfg.label}
+          </span>
+        );
+      },
+    },
+    {
       title: '材料完成度',
       dataIndex: 'materialProgress',
-      width: 260,
+      width: 180,
       render: (progress: number, record) => (
         <div>
           <div className="flex items-center justify-between mb-1.5">
-            <span className="text-xs text-ivory-600">共{record.materials.length}项材料</span>
+            <span className="text-xs text-ivory-600">共{record.materials.length}项</span>
             <span className="font-mono text-sm font-semibold text-terracotta-600">{progress}%</span>
           </div>
           <Progress
@@ -531,89 +806,86 @@ const CompanyAuditQueue: React.FC = () => {
             strokeColor={{ '0%': '#DE8F69', '100%': '#C4623A' }}
             trailColor="#E8E4DD"
           />
-          <div className="grid grid-cols-2 gap-x-3 gap-y-1 mt-2">
-            {record.materials.map((m) => (
-              <div key={m.name} className="flex items-center gap-1.5">
-                <div className="flex-1 h-1 rounded-full bg-ivory-200 overflow-hidden">
-                  <div
-                    className="h-full bg-gradient-to-r from-wood-400 to-terracotta-500 rounded-full"
-                    style={{ width: `${m.progress}%` }}
-                  />
-                </div>
-                <span className="text-[10px] text-ivory-600 whitespace-nowrap w-14">{m.name}</span>
-              </div>
-            ))}
-          </div>
         </div>
-      ),
-    },
-    {
-      title: '历史项目评分',
-      dataIndex: 'rating',
-      width: 140,
-      render: (rating: number, record) => (
-        <div>
-          <div className="flex items-center gap-1.5">
-            <Star className="w-4 h-4 text-amber-400 fill-amber-400" />
-            <span className="font-mono text-lg font-bold text-carbon-800">{rating}</span>
-          </div>
-          <div className="text-xs text-ivory-500 mt-0.5">
-            <span className="font-mono">{record.reviewCount}</span>条评价
-          </div>
-        </div>
-      ),
-    },
-    {
-      title: 'OCR核验',
-      dataIndex: 'ocrStatus',
-      width: 130,
-      render: (_: string, record) => (
-        record.ocrStatus === 'all_pass' ? (
-          <div className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-emerald-50 border border-emerald-200">
-            <CheckCircle2 className="w-4 h-4 text-emerald-500" />
-            <span className="text-xs font-medium text-emerald-700">全部通过</span>
-          </div>
-        ) : (
-          <div className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-amber-50 border border-amber-200">
-            <AlertCircle className="w-4 h-4 text-amber-500" />
-            <span className="text-xs font-medium text-amber-700">
-              {record.ocrTotalCount - record.ocrPassCount}项待人工
-            </span>
-          </div>
-        )
       ),
     },
     {
       title: '操作',
       dataIndex: 'action',
-      width: 220,
+      width: 260,
       fixed: 'right',
       render: (_, record) => (
-        <div className="flex items-center gap-2">
+        <div className="flex items-center gap-1.5">
           <button
             onClick={() => {
               setCurrentCompany(record);
               setAuditModalOpen(true);
+              message.info(`正在加载「${record.name}」的审核资料...`);
             }}
-            className="inline-flex items-center gap-1 px-3.5 py-1.5 rounded-btn text-xs font-medium
+            className="inline-flex items-center gap-1 px-3 py-1.5 rounded-btn text-xs font-medium
               bg-gradient-to-b from-terracotta-400 to-terracotta-500 text-white
               border border-terracotta-500/20 shadow-sm
               hover:from-terracotta-500 hover:to-terracotta-600 transition-all"
           >
-            <CheckCircle2 className="w-3.5 h-3.5" />
-            进入审核
+            <FileText className="w-3.5 h-3.5" />
+            查看资料
           </button>
-          <button className="inline-flex items-center gap-1 px-3 py-1.5 rounded-btn text-xs font-medium
-            bg-white text-carbon-600 border border-ivory-300
-            hover:bg-ivory-100 transition-all">
-            <XCircle className="w-3.5 h-3.5" />
-            驳回
-          </button>
-          <button className="inline-flex items-center gap-1 px-2 py-1.5 rounded-btn text-xs font-medium
-            text-haze-600 hover:bg-haze-50 transition-all">
-            <Eye className="w-3.5 h-3.5" />
-            详情
-          </button>
+          {record.status !== 'passed' && (
+            <button
+              onClick={() =>
+                Modal.confirm({
+                  title: `快速通过「${record.name}」？`,
+                  content: '确认通过后将开通服务商权限，请确保材料已核验。',
+                  okText: '确认通过',
+                  cancelText: '取消',
+                  okButtonProps: { style: { background: '#22C55E', borderColor: '#22C55E' } },
+                  onOk: () => message.success(`已通过「${record.name}」的审核`),
+                })
+              }
+              className="inline-flex items-center gap-1 px-3 py-1.5 rounded-btn text-xs font-medium
+                bg-emerald-50 text-emerald-700 border border-emerald-200
+                hover:bg-emerald-100 transition-all"
+            >
+              <CheckCircle2 className="w-3.5 h-3.5" />
+              通过
+            </button>
+          )}
+          {record.status !== 'rejected' && (
+            <button
+              onClick={() => {
+                if (record.status === 'passed') {
+                  message.warning('已通过的记录无法驳回，请走申诉流程');
+                  return;
+                }
+                Modal.confirm({
+                  title: `快速驳回「${record.name}」？`,
+                  content: (
+                    <div className="pt-2">
+                      <TextArea
+                        rows={3}
+                        placeholder="请输入驳回原因（可选）..."
+                        className="!rounded-btn !border-ivory-300"
+                        id={`quick-reject-${record.id}`}
+                      />
+                    </div>
+                  ),
+                  okText: '确认驳回',
+                  okButtonProps: { danger: true },
+                  cancelText: '取消',
+                  onOk: () => {
+                    const ta = document.getElementById(`quick-reject-${record.id}`) as HTMLTextAreaElement;
+                    message.error(`已驳回「${record.name}」${ta?.value ? `：${ta.value.slice(0, 20)}` : ''}`);
+                  },
+                });
+              }}
+              className="inline-flex items-center gap-1 px-3 py-1.5 rounded-btn text-xs font-medium
+                bg-white text-carbon-600 border border-ivory-300
+                hover:bg-ivory-100 transition-all"
+            >
+              <XCircle className="w-3.5 h-3.5" />
+              驳回
+            </button>
+          )}
         </div>
       ),
     },
@@ -731,18 +1003,56 @@ const CompanyAuditQueue: React.FC = () => {
               </div>
             </div>
             <div className="flex items-center gap-2">
-              <button className="btn-primary text-sm !py-2">
+              <button
+                onClick={() =>
+                  Modal.confirm({
+                    title: `批量通过 ${selectedRowKeys.length} 家公司？`,
+                    content: '确认后将为选中的所有公司开通服务商后台权限，此操作不可撤销。',
+                    okText: '确认批量通过',
+                    cancelText: '取消',
+                    okButtonProps: { style: { background: '#22C55E', borderColor: '#22C55E' } },
+                    onOk: () => {
+                      message.success(`已通过 ${selectedRowKeys.length} 家公司的入驻申请`);
+                      setSelectedRowKeys([]);
+                    },
+                  })
+                }
+                className="btn-primary text-sm !py-2"
+              >
                 <CheckCircle2 className="w-4 h-4" />
                 批量通过
               </button>
-              <button className="inline-flex items-center gap-2 px-4 py-2 rounded-btn text-sm font-medium
+              <button
+                onClick={() =>
+                  Modal.confirm({
+                    title: `批量驳回 ${selectedRowKeys.length} 家公司？`,
+                    content: (
+                      <div className="pt-2 space-y-3">
+                        <p className="text-sm">将驳回选中的所有公司：</p>
+                        <TextArea rows={3} placeholder="请输入统一驳回原因..." className="!rounded-btn !border-ivory-300" id="batch-reject-reason" />
+                      </div>
+                    ),
+                    okText: '确认批量驳回',
+                    okButtonProps: { danger: true },
+                    cancelText: '取消',
+                    onOk: () => {
+                      const ta = document.getElementById('batch-reject-reason') as HTMLTextAreaElement;
+                      message.error(`已驳回 ${selectedRowKeys.length} 家公司${ta?.value ? `：${ta.value.slice(0, 20)}` : ''}`);
+                      setSelectedRowKeys([]);
+                    },
+                  })
+                }
+                className="inline-flex items-center gap-2 px-4 py-2 rounded-btn text-sm font-medium
                 bg-rose-50 text-rose-700 border border-rose-200
                 hover:bg-rose-100 transition-all">
                 <XCircle className="w-4 h-4" />
                 批量驳回
               </button>
               <button
-                onClick={() => setSelectedRowKeys([])}
+                onClick={() => {
+                  setSelectedRowKeys([]);
+                  message.info('已取消选择');
+                }}
                 className="text-sm text-ivory-600 hover:text-carbon-800 transition-colors ml-2"
               >
                 取消选择
@@ -766,7 +1076,7 @@ const CompanyAuditQueue: React.FC = () => {
             showQuickJumper: true,
             showTotal: (total) => `共 ${total} 条记录`,
           }}
-          scroll={{ x: 1200 }}
+          scroll={{ x: 1450 }}
           className="admin-table"
         />
       </Card>

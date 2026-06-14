@@ -163,7 +163,7 @@ function OverallBadge({ overall }: { overall: string }) {
 }
 
 function CellContent({ dim, plan }: { dim: typeof DIMS[number]; plan: Plan }) {
-  const val = (plan as Record<string, unknown>)[dim.key];
+  const val = (plan as unknown as Record<string, unknown>)[dim.key];
 
   if (dim.type === 'price') {
     const price = val as number;
@@ -321,7 +321,7 @@ export default function ComparisonBoard() {
 
   const isSame = (dimKey: string) => {
     if (active.length < 2) return false;
-    const vals = active.map((p) => JSON.stringify((p as Record<string, unknown>)[dimKey]));
+    const vals = active.map((p) => JSON.stringify((p as unknown as Record<string, unknown>)[dimKey]));
     return new Set(vals).size === 1;
   };
 

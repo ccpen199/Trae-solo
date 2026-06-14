@@ -8,6 +8,10 @@ export async function enableMocking() {
     return;
   }
 
+  if (import.meta.env.VITE_ENABLE_MOCKS !== 'true') {
+    return;
+  }
+
   await worker.start({
     onUnhandledRequest: 'bypass',
   });

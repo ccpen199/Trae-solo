@@ -22,7 +22,7 @@ import {
 import { clsx } from 'clsx';
 
 const fadeInUp = {
-  hidden: { opacity: 0, y: 30 },
+  hidden: { opacity: 1, y: 0 },
   visible: (i: number) => ({
     opacity: 1,
     y: 0,
@@ -31,7 +31,7 @@ const fadeInUp = {
 };
 
 const fadeIn = {
-  hidden: { opacity: 0 },
+  hidden: { opacity: 1 },
   visible: (i: number) => ({
     opacity: 1,
     transition: { delay: i * 0.1, duration: 0.6 },
@@ -232,12 +232,12 @@ export default function HomePage() {
   return (
     <div className="bg-ivory-50">
       {/* Hero 区域 */}
-      <section className="relative min-h-screen flex items-center overflow-hidden bg-gradient-to-br from-ivory-50 via-wood-50/60 to-haze-50/80">
+      <section className="relative min-h-[720px] flex items-center overflow-hidden bg-gradient-to-br from-ivory-50 via-wood-50/60 to-haze-50/80">
         <div className="absolute inset-0 bg-wood-texture opacity-40 pointer-events-none" />
         <div className="absolute -top-32 -right-32 w-[600px] h-[600px] rounded-full bg-gradient-to-br from-terracotta-200/40 to-transparent blur-3xl pointer-events-none" />
         <div className="absolute -bottom-40 -left-32 w-[500px] h-[500px] rounded-full bg-gradient-to-tr from-haze-200/50 to-transparent blur-3xl pointer-events-none" />
 
-        <div className="container relative z-10 grid lg:grid-cols-2 gap-12 lg:gap-8 items-center py-20 lg:py-0">
+        <div className="container relative z-10 grid lg:grid-cols-2 gap-12 lg:gap-8 items-center py-16">
           <div className="max-w-xl">
             <motion.div
               custom={0}
@@ -831,7 +831,7 @@ export default function HomePage() {
               <h4 className="text-white font-semibold mb-4 text-sm">平台与支持</h4>
               <ul className="space-y-2.5 text-sm">
                 <li><Link to="/provider" className="hover:text-white transition-colors">服务商入驻</Link></li>
-                <li><Link to="/admin" className="hover:text-white transition-colors">运营管理</Link></li>
+                <li><Link to="/admin" className="hover:text-white transition-colors">管理后台</Link></li>
                 <li><Link to="/owner/knowledge/pitfalls" className="hover:text-white transition-colors">装修避坑</Link></li>
                 <li><Link to="/owner/compare" className="hover:text-white transition-colors">方案比价</Link></li>
                 <li><a href="#" className="hover:text-white transition-colors">用户协议</a></li>

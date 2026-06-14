@@ -26,9 +26,17 @@ import {
   Hammer,
   LayoutDashboard,
   Filter,
+  CheckCircle2,
+  Truck,
+  Calendar,
+  AlertTriangle,
+  AlertOctagon,
+  Factory,
+  Truck as TruckIcon,
+  Gauge,
 } from 'lucide-react';
-import { Table, Drawer, Tabs, Input, Select, Checkbox, InputNumber, Upload as AntUpload, Slider, Rate, Switch, message, Card } from 'antd';
-import type { ColumnsType, TableProps } from 'antd';
+import { Table, Drawer, Tabs, Input, Select, Checkbox, InputNumber, Upload as AntUpload, Slider, Rate, Switch, message, Card, Modal, DatePicker, Progress } from 'antd';
+import type { ColumnsType, TableProps } from 'antd/es/table';
 type TableRowSelection<T extends object = any> = TableProps<T>['rowSelection'];
 import type { TabsProps, UploadFile, UploadProps } from 'antd';
 import { clsx } from 'clsx';
@@ -243,20 +251,34 @@ const mockSKUs: SKUItem[] = [
 
 const stockBadge = (status: StockStatus, stock: number, safety: number) => {
   const map = {
-    abundant: { color: 'bg-emerald-50 text-emerald-700 border-emerald-200', label: '充足' },
-    normal: { color: 'bg-haze-50 text-haze-700 border-haze-200', label: '正常' },
-    warning: { color: 'bg-amber-50 text-amber-700 border-amber-200', label: '告警' },
-    out_of_stock: { color: 'bg-rose-50 text-rose-700 border-rose-200', label: '缺货' },
+    abundant: { color: 'bg-emerald-50 text-emerald-700 border-emerald-200', label: '充足', bar: 'bg-emerald-500' },
+    normal: { color: 'bg-haze-50 text-haze-700 border-haze-200', label: '正常', bar: 'bg-haze-500' },
+    warning: { color: 'bg-amber-50 text-amber-700 border-amber-200', label: '告警', bar: 'bg-amber-500' },
+    out_of_stock: { color: 'bg-rose-50 text-rose-700 border-rose-200', label: '缺货', bar: 'bg-rose-500' },
   };
   const cfg = map[status];
+  const pct = Math.min(100, safety > 0 ? (stock / safety) * 50 : 0);
   return (
-    <div>
-      <span className={`inline-flex items-center px-2 py-0.5 rounded-full text-[11px] font-medium border ${cfg.color}`}>
-        {cfg.label}
-      </span>
-      {status === 'warning' && (
-        <div className="text-[10px] text-amber-600 mt-0.5">安全线: {safety}</div>
-      )}
+    <div className="mt-1">
+      <div className="flex items-center gap-1.5 mb-1">
+        <span className={`inline-flex items-center px-2 py-0.5 rounded-full text-[11px] font-medium border ${cfg.color}`}>
+          {cfg.label}
+        </span>
+        <span className={`text-[10px] font-mono ${status === 'out_of_stock' ? 'text-rose-600' : status === 'warning' ? 'text-amber-600' : 'text-ivory-500'}`}>
+          安全线 {safety.toLocaleString()}
+        </span>
+      </div>
+      <div className="h-1.5 rounded-full bg-ivory-200 overflow-hidden relative">
+        <div
+          className={`h-full rounded-full transition-all ${cfg.bar} ${status === 'out_of_stock' || status === 'warning' ? 'animate-pulse' : ''}`}
+          style={{ width: `${Math.max(pct, status === 'out_of_stock' ? 4 : pct)}%` }}
+        />
+        <div
+          className="absolute top-0 bottom-0 w-px bg-carbon-900/40"
+          style={{ left: '50%' }}
+          title={`安全线: ${safety} 件`}
+        />
+      </div>
     </div>
   );
 };
@@ -315,6 +337,48 @@ const MaterialSKUAdmin: React.FC = () => {
   const [editingCell, setEditingCell] = useState<{ key: string; field: 'costPrice' | 'salePrice' | 'stock' } | null>(null);
   const [editingValue, setEditingValue] = useState<number>(0);
   const inputRef = useRef<HTMLInputElement>(null);
+
+  const [restockModalOpen, setRestockModalOpen] = useState(false);
+  const [restockTarget, setRestockTarget] = useState<SKUItem[]>([]);
+  const [restockForm, setRestockForm] = useState({
+    supplier: '东方建材集团',
+    qty: 0,
+    eta: dayjs().add(7, 'day').format('YYYY-MM-DD'),
+    remark: '',
+  });
+
+  const openRestock = (sku?: SKUItem) => {
+    const targets = sku
+      ? [sku]
+      : mockSKUs.filter(s => selectedRowKeys.includes(s.key));
+    if (!targets.length) {
+      message.warning('请先选择需要补货的 SKU');
+      return;
+    }
+    setRestockTarget(targets);
+    setRestockForm(f => ({
+      ...f,
+      qty: Math.max(100, targets.reduce((a, b) => a + Math.max(0, b.safetyStock - b.stock) + 50, 0)),
+    }));
+    setRestockModalOpen(true);
+  };
+
+  const submitRestock = () => {
+    if (restockForm.qty <= 0) {
+      message.warning('补货数量必须大于 0');
+      return;
+    }
+    message.loading({ content: `正在创建补货单（${restockTarget.length} 个 SKU）...`, key: 'restock-sub', duration: 0 });
+    setTimeout(() => {
+      message.success({
+        content: `✅ 补货单已提交，供应商：${restockForm.supplier} · 合计 ${restockForm.qty.toLocaleString()} 件 · 预计 ${restockForm.eta} 入库`,
+        key: 'restock-sub',
+        duration: 4,
+      });
+      setRestockModalOpen(false);
+      setSelectedRowKeys([]);
+    }, 1400);
+  };
 
   useEffect(() => {
     if (editingCell && inputRef.current) {
@@ -437,28 +501,52 @@ const MaterialSKUAdmin: React.FC = () => {
     {
       title: '库存',
       dataIndex: 'stock',
-      width: 140,
+      width: 210,
       render: (v: number, record) => (
         <div>
-          {editingCell?.key === record.key && editingCell?.field === 'stock' ? (
-            <Input
-              ref={inputRef as any}
-              size="small"
-              type="number"
-              value={editingValue}
-              onChange={e => setEditingValue(Number(e.target.value))}
-              onBlur={finishInlineEdit}
-              onPressEnter={finishInlineEdit}
-              style={{ borderRadius: 6 }}
-            />
-          ) : (
-            <div
-              onClick={() => startInlineEdit(record.key, 'stock', v)}
-              className="cursor-pointer"
-            >
-              <span className="font-mono text-sm font-semibold hover:text-terracotta-600">{v.toLocaleString()}</span>
-            </div>
-          )}
+          <div className="flex items-center gap-2">
+            {editingCell?.key === record.key && editingCell?.field === 'stock' ? (
+              <Input
+                ref={inputRef as any}
+                size="small"
+                type="number"
+                value={editingValue}
+                onChange={e => setEditingValue(Number(e.target.value))}
+                onBlur={finishInlineEdit}
+                onPressEnter={finishInlineEdit}
+                style={{ borderRadius: 6 }}
+              />
+            ) : (
+              <div
+                onClick={() => startInlineEdit(record.key, 'stock', v)}
+                className="cursor-pointer flex items-center gap-2 min-w-0"
+              >
+                <span className={`font-mono text-sm font-semibold hover:text-terracotta-600 ${
+                  record.stockStatus === 'out_of_stock' ? 'text-rose-600' :
+                  record.stockStatus === 'warning' ? 'text-amber-600' : ''
+                }`}>
+                  {v.toLocaleString()}
+                </span>
+                <span className="text-[10px] text-ivory-400">{record.unit}</span>
+                {(record.stockStatus === 'warning' || record.stockStatus === 'out_of_stock') && (
+                  <button
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      openRestock(record);
+                    }}
+                    className={`shrink-0 px-2 py-0.5 rounded-full text-[10px] font-semibold inline-flex items-center gap-1 border transition-all ${
+                      record.stockStatus === 'out_of_stock'
+                        ? 'bg-rose-600 text-white border-rose-600 hover:bg-rose-700 animate-pulse shadow-sm shadow-rose-200'
+                        : 'bg-amber-100 text-amber-800 border-amber-300 hover:bg-amber-200'
+                    }`}
+                  >
+                    <Truck className="w-3 h-3" />
+                    {record.stockStatus === 'out_of_stock' ? '紧急补货' : '补货'}
+                  </button>
+                )}
+              </div>
+            )}
+          </div>
           {stockBadge(record.stockStatus, v, record.safetyStock)}
         </div>
       ),
@@ -487,25 +575,71 @@ const MaterialSKUAdmin: React.FC = () => {
     },
     {
       title: '操作',
-      width: 200,
+      width: 260,
       fixed: 'right',
       render: (_, record) => (
         <div className="flex items-center gap-1">
           <button onClick={() => openDrawer(record)} className="px-2.5 py-1.5 rounded-md text-xs bg-haze-50 hover:bg-haze-100 text-haze-700 transition-colors inline-flex items-center gap-1">
             <Edit className="w-3.5 h-3.5" />编辑
           </button>
-          <button className={`px-2.5 py-1.5 rounded-md text-xs transition-colors inline-flex items-center gap-1 ${
-            record.status === 'on_sale'
-              ? 'bg-ivory-100 hover:bg-ivory-200 text-ivory-700'
-              : 'bg-terracotta-50 hover:bg-terracotta-100 text-terracotta-700'
-          }`}>
+          <button
+            onClick={() => {
+              if (record.status === 'on_sale') {
+                Modal.confirm({
+                  title: `下架「${record.name}」？`,
+                  content: '下架后所有关联项目将无法添加此SKU，已创建订单不受影响',
+                  okText: '确认下架',
+                  cancelText: '取消',
+                  onOk: () => message.warning(`SKU「${record.skuCode}」已下架`),
+                });
+              } else {
+                message.success(`SKU「${record.skuCode}」已重新上架`);
+              }
+            }}
+            className={`px-2.5 py-1.5 rounded-md text-xs transition-colors inline-flex items-center gap-1 ${
+              record.status === 'on_sale'
+                ? 'bg-ivory-100 hover:bg-ivory-200 text-ivory-700'
+                : 'bg-terracotta-50 hover:bg-terracotta-100 text-terracotta-700'
+            }`}
+          >
             {record.status === 'on_sale' ? <EyeOff className="w-3.5 h-3.5" /> : <Eye className="w-3.5 h-3.5" />}
             {record.status === 'on_sale' ? '下架' : '上架'}
           </button>
-          <button className="px-2 py-1.5 rounded-md text-xs text-wood-600 hover:bg-wood-50 transition-colors" title="复制SKU">
+          <button
+            onClick={() => {
+              navigator.clipboard?.writeText(record.skuCode);
+              message.success(`已复制SKU编码：${record.skuCode}`);
+            }}
+            className="px-2 py-1.5 rounded-md text-xs text-wood-600 hover:bg-wood-50 transition-colors"
+            title="复制SKU"
+          >
             <Copy className="w-3.5 h-3.5" />
           </button>
-          <button className="px-2 py-1.5 rounded-md text-xs text-rose-600 hover:bg-rose-50 transition-colors" title="删除">
+          {(record.stockStatus === 'warning' || record.stockStatus === 'out_of_stock') && (
+            <button
+              onClick={() => openRestock(record)}
+              className={`px-2 py-1.5 rounded-md text-xs transition-colors inline-flex items-center gap-1 ${
+                record.stockStatus === 'out_of_stock'
+                  ? 'bg-rose-100 text-rose-700 hover:bg-rose-200'
+                  : 'bg-amber-100 text-amber-700 hover:bg-amber-200'
+              }`}
+              title="补货"
+            >
+              <Truck className="w-3.5 h-3.5" />
+            </button>
+          )}
+          <button
+            onClick={() => Modal.confirm({
+              title: `删除 SKU「${record.skuCode}」？`,
+              content: '删除后数据将无法恢复，建议使用"下架"替代',
+              okText: '确认删除',
+              okButtonProps: { danger: true },
+              cancelText: '取消',
+              onOk: () => message.error(`已删除 SKU：${record.skuCode}`),
+            })}
+            className="px-2 py-1.5 rounded-md text-xs text-rose-600 hover:bg-rose-50 transition-colors"
+            title="删除"
+          >
             <Trash2 className="w-3.5 h-3.5" />
           </button>
         </div>
@@ -598,18 +732,73 @@ const MaterialSKUAdmin: React.FC = () => {
               <Option value="on_sale">已上架</Option>
               <Option value="off_shelf">已下架</Option>
             </Select>
-            <div className="ml-auto flex items-center gap-2">
-              <button className="btn-secondary text-sm !py-2 inline-flex items-center gap-1.5">
+            <div className="ml-auto flex items-center gap-2 flex-wrap">
+              <button
+                onClick={() => Modal.info({
+                  title: '批量导入 SKU',
+                  content: (
+                    <div className="space-y-4 pt-2">
+                      <div className="rounded-xl border-2 border-dashed border-haze-200 bg-haze-50/40 p-6 text-center">
+                        <UploadIcon className="w-10 h-10 mx-auto text-haze-400 mb-2" />
+                        <p className="text-sm text-carbon-700">拖拽 Excel/CSV 文件到此处</p>
+                        <p className="text-xs text-ivory-500 mt-1">支持 .xlsx / .csv 格式，最大 5MB</p>
+                      </div>
+                      <div className="text-xs text-ivory-600 space-y-1">
+                        <p>📌 导入模板说明：</p>
+                        <ul className="list-disc pl-5 space-y-0.5">
+                          <li>必填列：SKU编码、品名、品牌、分类、单位、销售价</li>
+                          <li>可选列：成本价、初始库存、安全库存、规格参数</li>
+                        </ul>
+                      </div>
+                    </div>
+                  ),
+                  okText: '确认导入',
+                  onOk: () => {
+                    message.loading({ content: '正在解析导入文件...', key: 'import-sku', duration: 0 });
+                    setTimeout(() => {
+                      message.success({ content: '✅ 导入成功！新增 86 个SKU，更新 23 个SKU，3 条格式错误', key: 'import-sku', duration: 4 });
+                    }, 1600);
+                  },
+                })}
+                className="btn-secondary text-sm !py-2 inline-flex items-center gap-1.5"
+              >
                 <Upload className="w-4 h-4" />批量导入
               </button>
-              <button className="btn-secondary text-sm !py-2 inline-flex items-center gap-1.5">
+              <button
+                onClick={() => {
+                  message.loading({ content: `正在导出 ${filteredSKUs.length} 个 SKU 数据...`, key: 'export-sku', duration: 0 });
+                  setTimeout(() => {
+                    message.success({ content: `✅ 导出完成！已下载 SKU_Data_${dayjs().format('YYYYMMDD_HHmm')}.xlsx`, key: 'export-sku' });
+                  }, 1400);
+                }}
+                className="btn-secondary text-sm !py-2 inline-flex items-center gap-1.5"
+              >
                 <Download className="w-4 h-4" />批量导出
               </button>
               <div className="w-px h-6 bg-ivory-300 mx-1" />
-              <button className="btn-secondary text-sm !py-2 inline-flex items-center gap-1.5">
+              <button
+                onClick={() => {
+                  Modal.confirm({
+                    title: '批量上架所有筛选结果？',
+                    content: `当前筛选条件下共有 ${filteredSKUs.filter(s => s.status === 'off_shelf').length} 个未上架 SKU`,
+                    onOk: () => message.success('已提交批量上架任务'),
+                  });
+                }}
+                className="btn-secondary text-sm !py-2 inline-flex items-center gap-1.5"
+              >
                 <Eye className="w-4 h-4" />批量上架
               </button>
-              <button className="btn-secondary text-sm !py-2 inline-flex items-center gap-1.5">
+              <button
+                onClick={() => {
+                  Modal.confirm({
+                    title: '批量下架所有筛选结果？',
+                    content: `当前筛选条件下共有 ${filteredSKUs.filter(s => s.status === 'on_sale').length} 个已上架 SKU`,
+                    okText: '确认下架',
+                    onOk: () => message.warning('已提交批量下架任务'),
+                  });
+                }}
+                className="btn-secondary text-sm !py-2 inline-flex items-center gap-1.5"
+              >
                 <EyeOff className="w-4 h-4" />批量下架
               </button>
               <button onClick={() => openDrawer()} className="btn-primary text-sm !py-2 inline-flex items-center gap-1.5">
@@ -633,20 +822,59 @@ const MaterialSKUAdmin: React.FC = () => {
                     <p className="text-xs text-ivory-600">已选中 <span className="font-mono font-semibold text-terracotta-600">{selectedRowKeys.length}</span> 个SKU</p>
                   </div>
                 </div>
-                <div className="flex items-center gap-2">
-                  <button className="px-4 py-1.5 rounded-btn text-xs bg-white text-terracotta-700 border border-terracotta-200 hover:bg-terracotta-50 transition-colors inline-flex items-center gap-1">
+                <div className="flex items-center gap-2 flex-wrap">
+                  <button
+                    onClick={() => openRestock()}
+                    className="px-4 py-1.5 rounded-btn text-xs bg-white text-amber-700 border border-amber-300 hover:bg-amber-50 transition-colors inline-flex items-center gap-1"
+                  >
+                    <Truck className="w-3.5 h-3.5" />批量补货
+                  </button>
+                  <button
+                    onClick={() => {
+                      Modal.confirm({
+                        title: `批量调整 ${selectedRowKeys.length} 个 SKU 价格？`,
+                        content: '可统一设置折扣比例或固定金额',
+                        okText: '继续',
+                        onOk: () => message.success(`已为 ${selectedRowKeys.length} 个SKU提交批量调价任务`),
+                      });
+                    }}
+                    className="px-4 py-1.5 rounded-btn text-xs bg-white text-terracotta-700 border border-terracotta-200 hover:bg-terracotta-50 transition-colors inline-flex items-center gap-1"
+                  >
                     <DollarSign className="w-3.5 h-3.5" />批量调价
                   </button>
-                  <button className="px-4 py-1.5 rounded-btn text-xs bg-white text-wood-700 border border-wood-200 hover:bg-wood-50 transition-colors inline-flex items-center gap-1">
+                  <button
+                    onClick={() => message.success(`已为 ${selectedRowKeys.length} 个SKU更新库存记录`)}
+                    className="px-4 py-1.5 rounded-btn text-xs bg-white text-wood-700 border border-wood-200 hover:bg-wood-50 transition-colors inline-flex items-center gap-1"
+                  >
                     <Package className="w-3.5 h-3.5" />批量改库存
                   </button>
-                  <button className="px-4 py-1.5 rounded-btn text-xs bg-white text-emerald-700 border border-emerald-200 hover:bg-emerald-50 transition-colors inline-flex items-center gap-1">
+                  <button
+                    onClick={() => message.success(`已批量上架 ${selectedRowKeys.length} 个SKU`)}
+                    className="px-4 py-1.5 rounded-btn text-xs bg-white text-emerald-700 border border-emerald-200 hover:bg-emerald-50 transition-colors inline-flex items-center gap-1"
+                  >
                     <Eye className="w-3.5 h-3.5" />上架
                   </button>
-                  <button className="px-4 py-1.5 rounded-btn text-xs bg-white text-ivory-700 border border-ivory-300 hover:bg-ivory-100 transition-colors inline-flex items-center gap-1">
+                  <button
+                    onClick={() => Modal.confirm({
+                      title: `批量下架 ${selectedRowKeys.length} 个 SKU？`,
+                      content: '批量下架后所有关联项目将无法添加这些SKU',
+                      okText: '确认下架',
+                      onOk: () => message.warning(`已批量下架 ${selectedRowKeys.length} 个SKU`),
+                    })}
+                    className="px-4 py-1.5 rounded-btn text-xs bg-white text-ivory-700 border border-ivory-300 hover:bg-ivory-100 transition-colors inline-flex items-center gap-1"
+                  >
                     <EyeOff className="w-3.5 h-3.5" />下架
                   </button>
-                  <button className="px-4 py-1.5 rounded-btn text-xs bg-rose-50 text-rose-700 border border-rose-200 hover:bg-rose-100 transition-colors inline-flex items-center gap-1">
+                  <button
+                    onClick={() => Modal.confirm({
+                      title: `批量删除 ${selectedRowKeys.length} 个 SKU？`,
+                      content: '删除后数据将无法恢复，请谨慎操作',
+                      okText: '确认删除',
+                      okButtonProps: { danger: true },
+                      onOk: () => message.error(`已删除 ${selectedRowKeys.length} 个SKU`),
+                    })}
+                    className="px-4 py-1.5 rounded-btn text-xs bg-rose-50 text-rose-700 border border-rose-200 hover:bg-rose-100 transition-colors inline-flex items-center gap-1"
+                  >
                     <Trash2 className="w-3.5 h-3.5" />删除
                   </button>
                   <button onClick={() => setSelectedRowKeys([])} className="text-xs text-ivory-600 hover:text-carbon-800 ml-2">取消</button>
@@ -669,6 +897,13 @@ const MaterialSKUAdmin: React.FC = () => {
               }}
               className="sku-admin-table flex-1 [&_.ant-table-body]:!overflow-x-auto"
               size="middle"
+              rowClassName={(r) =>
+                r.stockStatus === 'out_of_stock'
+                  ? '!bg-rose-50/60 hover:!bg-rose-50 !border-l-4 !border-l-rose-500'
+                  : r.stockStatus === 'warning'
+                  ? '!bg-amber-50/50 hover:!bg-amber-50 !border-l-4 !border-l-amber-500'
+                  : ''
+              }
             />
           </Card>
         </div>
@@ -693,8 +928,23 @@ const MaterialSKUAdmin: React.FC = () => {
         bodyStyle={{ padding: 0 }}
         extra={
           <div className="flex items-center gap-2">
-            <button onClick={() => setDrawerOpen(false)} className="px-4 py-2 rounded-btn text-sm text-carbon-600 hover:bg-ivory-100 transition-colors">取消</button>
-            <button className="btn-primary text-sm !py-2">
+            <button
+              onClick={() => {
+                setDrawerOpen(false);
+                message.info('已取消编辑，未保存改动');
+              }}
+              className="px-4 py-2 rounded-btn text-sm text-carbon-600 hover:bg-ivory-100 transition-colors"
+            >取消</button>
+            <button
+              onClick={() => {
+                message.loading({ content: '正在保存 SKU 信息...', key: 'save-sku', duration: 0 });
+                setTimeout(() => {
+                  message.success({ content: `✅ SKU「${editingSKU?.skuCode ?? 'NEW'}」已保存，已同步至 4 个供应商`, key: 'save-sku' });
+                  setDrawerOpen(false);
+                }, 900);
+              }}
+              className="btn-primary text-sm !py-2"
+            >
               <CheckCircle2 className="w-4 h-4" />保存
             </button>
           </div>
@@ -875,10 +1125,162 @@ const MaterialSKUAdmin: React.FC = () => {
           )}
         </div>
       </Drawer>
+
+      <Modal
+        open={restockModalOpen}
+        onCancel={() => setRestockModalOpen(false)}
+        title={
+          <div className="flex items-center gap-3">
+            <div className="w-10 h-10 rounded-xl bg-amber-100 flex items-center justify-center">
+              <Truck className="w-5 h-5 text-amber-700" />
+            </div>
+            <div>
+              <h3 className="font-serif font-semibold text-carbon-800 text-lg">
+                创建补货单 · {restockTarget.length} 个 SKU
+              </h3>
+              <p className="text-xs text-ivory-500">
+                {restockTarget.reduce((a, b) => a + Math.max(0, b.safetyStock - b.stock), 0) > 0
+                  ? `安全缺口 ${restockTarget.reduce((a, b) => a + Math.max(0, b.safetyStock - b.stock), 0).toLocaleString()} 件，建议及时补货`
+                  : '请输入补货数量'}
+              </p>
+            </div>
+          </div>
+        }
+        width={760}
+        footer={null}
+        destroyOnClose
+      >
+        <div className="space-y-5 pt-2">
+          <div className="grid grid-cols-3 gap-4">
+            <div>
+              <label className="block text-xs text-ivory-600 mb-1.5">供应商 *</label>
+              <Select
+                value={restockForm.supplier}
+                onChange={v => setRestockForm(f => ({ ...f, supplier: v }))}
+                style={{ width: '100%', borderRadius: 8 }}
+                size="middle"
+              >
+                <Option value="东方建材集团">东方建材集团（已连接）</Option>
+                <Option value="精工陶瓷">精工陶瓷（已连接）</Option>
+                <Option value="宜家木地板">宜家木地板（已连接）</Option>
+                <Option value="海尔智能家居">海尔智能家居（已连接）</Option>
+              </Select>
+            </div>
+            <div>
+              <label className="block text-xs text-ivory-600 mb-1.5">补货数量（合计）*</label>
+              <InputNumber
+                value={restockForm.qty}
+                onChange={v => setRestockForm(f => ({ ...f, qty: Number(v) || 0 }))}
+                min={0}
+                style={{ width: '100%', borderRadius: 8 }}
+                size="middle"
+              />
+            </div>
+            <div>
+              <label className="block text-xs text-ivory-600 mb-1.5">预计到货日期 *</label>
+              <DatePicker
+                value={dayjs(restockForm.eta)}
+                onChange={d => setRestockForm(f => ({ ...f, eta: d?.format('YYYY-MM-DD') ?? restockForm.eta }))}
+                style={{ width: '100%', borderRadius: 8 }}
+                size="middle"
+                minDate={dayjs().add(1, 'day')}
+              />
+            </div>
+          </div>
+
+          <div>
+            <label className="block text-xs text-ivory-600 mb-2">
+              补货 SKU 明细（合计缺口 {restockTarget.reduce((a, b) => a + Math.max(0, b.safetyStock - b.stock), 0).toLocaleString()} 件）
+            </label>
+            <div className="rounded-xl border border-ivory-200 overflow-hidden max-h-64 overflow-y-auto">
+              <table className="w-full text-sm">
+                <thead className="bg-ivory-50 sticky top-0 z-10">
+                  <tr>
+                    <th className="text-left px-3 py-2 text-xs font-medium text-ivory-600">SKU</th>
+                    <th className="text-left px-3 py-2 text-xs font-medium text-ivory-600">品名</th>
+                    <th className="text-right px-3 py-2 text-xs font-medium text-ivory-600">当前库存</th>
+                    <th className="text-right px-3 py-2 text-xs font-medium text-ivory-600">安全线</th>
+                    <th className="text-right px-3 py-2 text-xs font-medium text-ivory-600">缺口</th>
+                    <th className="text-right px-3 py-2 text-xs font-medium text-ivory-600">状态</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {restockTarget.map(s => {
+                    const gap = Math.max(0, s.safetyStock - s.stock);
+                    return (
+                      <tr key={s.key} className="border-t border-ivory-100">
+                        <td className="px-3 py-2 font-mono text-xs text-carbon-800">{s.skuCode}</td>
+                        <td className="px-3 py-2 text-xs text-carbon-700 max-w-[180px] truncate">{s.name}</td>
+                        <td className="px-3 py-2 text-right font-mono text-xs">{s.stock.toLocaleString()}</td>
+                        <td className="px-3 py-2 text-right font-mono text-xs text-ivory-500">{s.safetyStock.toLocaleString()}</td>
+                        <td className="px-3 py-2 text-right">
+                          <span className={`font-mono text-xs font-bold ${gap > 0 ? (s.stock === 0 ? 'text-rose-600' : 'text-amber-600') : 'text-emerald-600'}`}>
+                            {gap > 0 ? `-${gap.toLocaleString()}` : `+${(-gap).toLocaleString()}`}
+                          </span>
+                        </td>
+                        <td className="px-3 py-2 text-right">
+                          {stockBadge(s.stockStatus, s.stock, s.safetyStock)}
+                        </td>
+                      </tr>
+                    );
+                  })}
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          <div>
+            <label className="block text-xs text-ivory-600 mb-1.5">到货进度模拟</label>
+            <Progress
+              percent={Math.floor(Math.random() * 30)}
+              status="active"
+              strokeColor={{ from: '#C4623A', to: '#8B6914' }}
+              size="small"
+            />
+            <p className="text-[10px] text-ivory-500 mt-1 font-mono">
+              预计流程：下单 → 供应商确认 → 发货 → 质检入库（{dayjs(restockForm.eta).diff(dayjs(), 'day')} 天）
+            </p>
+          </div>
+
+          <div>
+            <label className="block text-xs text-ivory-600 mb-1.5">备注</label>
+            <TextArea
+              rows={2}
+              value={restockForm.remark}
+              onChange={e => setRestockForm(f => ({ ...f, remark: e.target.value }))}
+              placeholder="例如：优先配送市区仓库，随货附质检报告"
+              style={{ borderRadius: 8 }}
+            />
+          </div>
+
+          <div className="flex gap-3 pt-2 border-t border-ivory-200">
+            <button
+              onClick={() => setRestockModalOpen(false)}
+              className="btn-secondary flex-1 !py-2.5 text-sm"
+            >
+              取消
+            </button>
+            <button
+              onClick={() => message.success(`已保存为草稿，可在采购管理中继续编辑`)}
+              className="flex-1 inline-flex items-center justify-center gap-2 px-4 py-2.5 rounded-btn
+                bg-haze-50 text-haze-700 text-sm font-medium border border-haze-200
+                hover:bg-haze-100 transition-all"
+            >
+              <Package className="w-4 h-4" />
+              保存为草稿
+            </button>
+            <button
+              onClick={submitRestock}
+              className="btn-primary flex-1 !py-2.5 text-sm"
+            >
+              <Truck className="w-4 h-4" />
+              提交补货单
+            </button>
+          </div>
+        </div>
+      </Modal>
     </div>
   );
 };
-
-const CheckCircle2 = Checkbox;
 
 export default MaterialSKUAdmin;

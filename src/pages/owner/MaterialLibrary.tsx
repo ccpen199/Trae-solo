@@ -9,19 +9,37 @@ import {
   Check,
   X,
   Search,
+  Heart,
+  Plus,
+  Scale,
+  ExternalLink,
 } from 'lucide-react';
-import { useNavigate } from 'react-router-dom';
+import { message, Drawer, Table, Tag } from 'antd';
+import type { TableProps } from 'antd';
 import { cn } from '@/lib/utils';
 
 const categories = [
-  { key: 'floor', label: '地板', count: 328 },
-  { key: 'tile', label: '瓷砖', count: 456 },
-  { key: 'paint', label: '墙面漆', count: 189 },
-  { key: 'cabinet', label: '橱柜', count: 234 },
-  { key: 'door', label: '门窗', count: 312 },
-  { key: 'bathroom', label: '卫浴', count: 267 },
-  { key: 'lighting', label: '灯具', count: 421 },
-  { key: 'soft', label: '软装', count: 578 },
+  { key: 'floor', label: '地板', count: 328, icon: '🪵' },
+  { key: 'tile', label: '瓷砖', count: 456, icon: '🔲' },
+  { key: 'paint', label: '墙面涂料', count: 189, icon: '🎨' },
+  { key: 'wallpaper', label: '墙纸', count: 156, icon: '📜' },
+  { key: 'door', label: '木门', count: 312, icon: '🚪' },
+  { key: 'cabinet', label: '橱柜', count: 234, icon: '🗄️' },
+  { key: 'bathroom', label: '卫浴', count: 267, icon: '🚿' },
+  { key: 'lighting', label: '灯具', count: 421, icon: '💡' },
+  { key: 'furniture', label: '家具', count: 389, icon: '🛋️' },
+  { key: 'soft', label: '软装', count: 578, icon: '🧸' },
+];
+
+const styleOptions = [
+  { key: 'all', label: '全部风格' },
+  { key: 'nordic', label: '北欧' },
+  { key: 'modern', label: '现代简约' },
+  { key: 'chinese', label: '中式' },
+  { key: 'american', label: '美式' },
+  { key: 'japanese', label: '日式' },
+  { key: 'luxury', label: '轻奢' },
+  { key: 'industrial', label: '工业风' },
 ];
 
 const brands: Record<string, string[]> = {
@@ -53,6 +71,11 @@ interface MaterialItem {
   unit: string;
   image: string;
   rating: number;
+  style: string[];
+  material: string;
+  origin: string;
+  warranty: string;
+  ecoLevel: string;
 }
 
 const materialNames: Record<string, string[]> = {
@@ -71,9 +94,54 @@ const units: Record<string, string> = {
   door: '扇', bathroom: '套', lighting: '盏', soft: '件',
 };
 
+const specsByCategory: Record<string, string[]> = {
+  floor: ['1210×195×15mm', '910×125×18mm', '1200×180×12mm', '600×120×15mm'],
+  tile: ['800×800mm', '600×1200mm', '300×600mm', '750×1500mm'],
+  paint: ['5L', '18L', '20kg', '1L色彩样罐'],
+  cabinet: ['一字型3m', 'L型4m', '高柜600mm', '台面20mm'],
+  door: ['2100×900mm', '2200×950mm', '2400×1000mm', '厨卫窄边框'],
+  bathroom: ['700mm浴室柜', '305mm坑距', '恒温三出水', '1.5m浴缸'],
+  lighting: ['36W', '48W', '三色调光', '轨道磁吸款'],
+  soft: ['三人位', '1.8m床配套', '160×230cm', '定制宽幅'],
+  wallpaper: ['0.53×10m/卷', '0.7×10m/卷', '墙布2.8m高', '定制壁画'],
+  furniture: ['1200×600mm', '1600×800mm', '1800×2000mm', '模块组合'],
+};
+
+const materialStyles: Record<string, string[][]> = {
+  floor: [['nordic', 'modern', 'japanese'], ['modern', 'industrial'], ['modern', 'minimalist'], ['chinese', 'american'], ['nordic', 'modern'], ['modern', 'industrial'], ['luxury', 'chinese'], ['american', 'chinese']],
+  tile: [['luxury', 'modern'], ['modern', 'nordic'], ['nordic', 'modern'], ['industrial', 'modern'], ['nordic', 'japanese'], ['mediterranean', 'nordic'], ['luxury', 'modern'], ['mediterranean', 'american']],
+  paint: [['nordic', 'modern'], ['modern', 'minimalist'], ['industrial', 'modern'], ['modern', 'nordic'], ['japanese', 'nordic'], ['modern', 'nordic'], ['industrial', 'modern'], ['modern', 'nordic']],
+  cabinet: [['nordic', 'modern'], ['luxury', 'modern'], ['industrial', 'modern'], ['chinese', 'luxury'], ['modern', 'minimalist'], ['american', 'chinese'], ['modern', 'luxury'], ['japanese', 'nordic']],
+  door: [['modern', 'minimalist'], ['nordic', 'modern'], ['american', 'french'], ['modern', 'nordic'], ['chinese', 'luxury'], ['industrial', 'modern'], ['american', 'chinese'], ['modern', 'nordic']],
+  bathroom: [['modern', 'luxury'], ['modern', 'nordic'], ['modern', 'minimalist'], ['american', 'modern'], ['modern', 'luxury'], ['luxury', 'modern'], ['japanese', 'nordic'], ['modern', 'luxury']],
+  lighting: [['modern', 'luxury'], ['nordic', 'modern'], ['japanese', 'nordic'], ['luxury', 'modern'], ['industrial', 'modern'], ['chinese', 'luxury'], ['nordic', 'modern'], ['industrial', 'modern']],
+  soft: [['nordic', 'modern'], ['nordic', 'japanese'], ['nordic', 'modern'], ['modern', 'luxury'], ['french', 'american'], ['modern', 'nordic'], ['modern', 'nordic'], ['modern', 'industrial']],
+  wallpaper: [['nordic', 'modern'], ['chinese', 'luxury'], ['modern', 'minimalist'], ['nordic', 'japanese'], ['american', 'french'], ['modern', 'luxury'], ['industrial', 'modern'], ['nordic', 'modern']],
+  furniture: [['nordic', 'modern'], ['modern', 'luxury'], ['japanese', 'nordic'], ['chinese', 'luxury'], ['modern', 'minimalist'], ['american', 'chinese'], ['nordic', 'modern'], ['industrial', 'modern']],
+};
+
+const materialTypes: Record<string, string[]> = {
+  floor: ['白橡木', '黑胡桃', '强化复合', '柚木', '亚花梨', '枫木', '黑胡桃', '番龙眼'],
+  tile: ['大理石', '陶瓷', '莫兰迪瓷', '水泥砖', '木纹砖', '陶瓷', '岩板', '仿古砖'],
+  paint: ['乳胶漆', '乳胶漆', '艺术漆', '环保漆', '硅藻泥', '净味漆', '水泥漆', '儿童漆'],
+  cabinet: ['颗粒板', '多层实木板', '密度板', '实木', 'PET板', '实木', '烤漆板', '原木'],
+  door: ['实木复合', '白橡木', '密度板', '玻璃+铝合金', '实木', '实木', '实木复合', '实木复合'],
+  bathroom: ['陶瓷', '铜+不锈钢', '岩板+实木', '亚克力', '陶瓷', '黄铜', '实木+陶瓷', '陶瓷'],
+  lighting: ['黄铜+玻璃', '铁艺+玻璃', '原木+亚克力', '水晶+金属', '铝合金+LED', '实木+羊皮纸', '亚克力+金属', '铁艺+玻璃'],
+  soft: ['亚麻+实木', '棉麻+实木', '实木', '岩板+实木', '密度板+油漆', '羊毛+晴纶', '亚麻+涤纶', '黄铜+铁'],
+  wallpaper: ['无纺布', 'PVC', '纯纸', '无纺布', '丝绸', '无纺布', 'PVC', '无纺布'],
+};
+
+const origins = ['中国广东', '中国浙江', '德国进口', '意大利进口', '日本进口', '中国江苏', '中国福建', '中国山东'];
+const warranties = ['1年', '2年', '3年', '5年', '10年', '15年', '20年', '终身质保'];
+const ecoLevels = ['E0级', 'ENF级', 'E1级', '国家A级', '欧盟CE认证', 'CARB P2', 'F★★★★', '十环认证'];
+
 function generateMaterials(category: string): MaterialItem[] {
   const names = materialNames[category] || materialNames.floor;
   const brandList = brands[category] || brands.floor;
+  const styles = materialStyles[category] || materialStyles.floor;
+  const types = materialTypes[category] || materialTypes.floor;
+  const specs = specsByCategory[category] || specsByCategory.floor;
   const categoryPrompts: Record<string, string> = {
     floor: 'wood floor texture product shot professional lighting',
     tile: 'ceramic tile marble texture product photography',
@@ -83,40 +151,56 @@ function generateMaterials(category: string): MaterialItem[] {
     bathroom: 'bathroom fixture product photography white background',
     lighting: 'modern pendant lamp chandelier product shot',
     soft: 'sofa furniture product photography studio lighting',
+    wallpaper: 'wallpaper roll pattern texture product photography',
+    furniture: 'wooden furniture product photography studio lighting',
   };
   const unit = units[category];
 
   return names.map((name, i) => {
     const basePrice = [188, 356, 488, 698, 988, 1288, 1880, 2680][i];
+    const priceOffset = (i * 37 + category.length * 13) % 100;
+    const ratingOffset = ((i * 17 + category.length) % 7) / 10;
     const prompt = `${name}, ${categoryPrompts[category]}, e-commerce product photography, high quality, white or neutral background`;
     return {
       id: `${category}-${i}`,
       name,
       category,
       brand: brandList[i % brandList.length],
-      spec: '1210×195×15mm',
-      price: basePrice + Math.floor(Math.random() * 100),
+      spec: specs[i % specs.length],
+      price: basePrice + priceOffset,
       unit,
       image: `/api/ide/v1/text_to_image?prompt=${encodeURIComponent(prompt)}&image_size=square&seed=${i + 400}`,
-      rating: 4.3 + Math.random() * 0.7,
+      rating: 4.3 + ratingOffset,
+      style: styles[i],
+      material: types[i],
+      origin: origins[i],
+      warranty: warranties[i],
+      ecoLevel: ecoLevels[i],
     };
   });
 }
 
 export default function MaterialLibrary() {
-  const navigate = useNavigate();
   const [activeCategory, setActiveCategory] = useState('floor');
+  const [activeStyle, setActiveStyle] = useState('all');
   const [expandedFilters, setExpandedFilters] = useState<Record<string, boolean>>({
     brand: true,
     price: true,
     spec: false,
+    style: true,
   });
   const [selectedBrands, setSelectedBrands] = useState<Set<string>>(new Set());
   const [selectedPrice, setSelectedPrice] = useState<number | null>(null);
+  const [selectedSpecs, setSelectedSpecs] = useState<Set<string>>(new Set());
   const [selectedMaterials, setSelectedMaterials] = useState<Set<string>>(new Set());
+  const [compareMaterials, setCompareMaterials] = useState<Set<string>>(new Set());
+  const [favorites, setFavorites] = useState<Set<string>>(new Set());
+  const [compareDrawerVisible, setCompareDrawerVisible] = useState(false);
+  const [activeMaterial, setActiveMaterial] = useState<MaterialItem | null>(null);
   const [searchQuery, setSearchQuery] = useState('');
 
   const materials = generateMaterials(activeCategory);
+  const specOptions = specsByCategory[activeCategory] || specsByCategory.floor;
 
   const toggleBrand = (brand: string) => {
     setSelectedBrands(prev => {
@@ -140,6 +224,45 @@ export default function MaterialLibrary() {
     });
   };
 
+  const toggleCompare = (id: string, e: React.MouseEvent) => {
+    e.stopPropagation();
+    setCompareMaterials(prev => {
+      const next = new Set(prev);
+      if (next.has(id)) {
+        next.delete(id);
+        message.success('已移除对比');
+      } else {
+        if (next.size >= 3) {
+          message.warning('最多只能对比3个材质');
+          return prev;
+        }
+        next.add(id);
+        message.success('已加入对比');
+      }
+      return next;
+    });
+  };
+
+  const toggleFavorite = (id: string, e: React.MouseEvent) => {
+    e.stopPropagation();
+    setFavorites(prev => {
+      const next = new Set(prev);
+      if (next.has(id)) {
+        next.delete(id);
+        message.success('已取消收藏');
+      } else {
+        next.add(id);
+        message.success('已收藏材质');
+      }
+      return next;
+    });
+  };
+
+  const addToPlan = (item: MaterialItem, e: React.MouseEvent) => {
+    e.stopPropagation();
+    message.success(`已将「${item.name}」加入选材方案`);
+  };
+
   const removeSelected = (id: string) => {
     setSelectedMaterials(prev => {
       const next = new Set(prev);
@@ -152,7 +275,97 @@ export default function MaterialLibrary() {
     setExpandedFilters(prev => ({ ...prev, [key]: !prev[key] }));
   };
 
+  const toggleSpec = (spec: string) => {
+    setSelectedSpecs(prev => {
+      const next = new Set(prev);
+      if (next.has(spec)) next.delete(spec);
+      else next.add(spec);
+      return next;
+    });
+  };
+
+  const resetFilters = () => {
+    setActiveStyle('all');
+    setSelectedBrands(new Set());
+    setSelectedPrice(null);
+    setSelectedSpecs(new Set());
+    setSearchQuery('');
+  };
+
   const selectedMaterialItems = materials.filter(m => selectedMaterials.has(m.id));
+  const compareItems = materials.filter(m => compareMaterials.has(m.id));
+
+  const styleLabelMap: Record<string, string> = {
+    nordic: '北欧',
+    modern: '现代简约',
+    chinese: '中式',
+    american: '美式',
+    japanese: '日式',
+    luxury: '轻奢',
+    industrial: '工业风',
+    minimalist: '极简',
+    minimalism: '极简',
+    mediterranean: '地中海',
+    french: '法式',
+  };
+
+  const filteredMaterials = materials.filter(item => {
+    if (activeStyle !== 'all' && !item.style.includes(activeStyle)) return false;
+    if (selectedBrands.size > 0 && !selectedBrands.has(item.brand)) return false;
+    if (selectedPrice !== null) {
+      const priceRange = priceRanges[selectedPrice];
+      if (item.price < priceRange.min || item.price > priceRange.max) return false;
+    }
+    if (selectedSpecs.size > 0 && !selectedSpecs.has(item.spec)) return false;
+    if (searchQuery && !item.name.includes(searchQuery) && !item.brand.includes(searchQuery)) return false;
+    return true;
+  });
+
+  const compareColumns: TableProps<{ key: string }>['columns'] = [
+    {
+      title: '参数',
+      dataIndex: 'param',
+      key: 'param',
+      width: 120,
+      render: (_, __, index) => {
+        const params = ['图片', '品牌', '材质', '规格', '价格', '产地', '环保等级', '质保'];
+        return params[index];
+      },
+    },
+    ...compareItems.map((item, idx) => ({
+      title: (
+        <div className="text-center">
+          <div className="font-medium truncate">{item.name}</div>
+          <button
+            onClick={() => {
+              const next = new Set(compareMaterials);
+              next.delete(item.id);
+              setCompareMaterials(next);
+            }}
+            className="text-xs text-haze-500 hover:text-terracotta-500 mt-1"
+          >
+            移除
+          </button>
+        </div>
+      ),
+      key: item.id,
+      render: (_: unknown, __: unknown, index: number) => {
+        const paramRows = [
+          <img key={idx} src={item.image} alt={item.name} className="w-16 h-16 object-cover rounded-lg mx-auto" />,
+          <span key={idx} className="text-wood-600 font-medium">{item.brand}</span>,
+          <span key={idx}>{item.material}</span>,
+          <span key={idx}>{item.spec}</span>,
+          <span key={idx} className="text-terracotta-600 font-semibold">¥{item.price}/{item.unit}</span>,
+          <span key={idx}>{item.origin}</span>,
+          <Tag key={idx} color="green">{item.ecoLevel}</Tag>,
+          <span key={idx}>{item.warranty}</span>,
+        ];
+        return paramRows[index];
+      },
+    })),
+  ];
+
+  const compareTableData = Array(8).fill(null).map((_, i) => ({ key: String(i) }));
 
   return (
     <div className="min-h-screen bg-ivory-50 pb-32">
@@ -170,6 +383,8 @@ export default function MaterialLibrary() {
                 setActiveCategory(cat.key);
                 setSelectedBrands(new Set());
                 setSelectedPrice(null);
+                setSelectedSpecs(new Set());
+                setSearchQuery('');
               }}
               className={cn(
                 'flex-shrink-0 px-5 py-2.5 rounded-btn font-medium transition-all duration-200 border',
@@ -318,8 +533,26 @@ export default function MaterialLibrary() {
                         exit={{ height: 0, opacity: 0 }}
                         className="overflow-hidden"
                       >
-                        <div className="px-5 pb-4 space-y-2 text-sm text-ivory-500">
-                          <p>更多规格筛选开发中...</p>
+                        <div className="px-5 pb-4 space-y-2">
+                          {specOptions.map(spec => (
+                            <label
+                              key={spec}
+                              className="flex items-center gap-2.5 cursor-pointer group"
+                            >
+                              <div
+                                onClick={() => toggleSpec(spec)}
+                                className={cn(
+                                  'w-4 h-4 rounded border flex items-center justify-center transition-all',
+                                  selectedSpecs.has(spec)
+                                    ? 'bg-terracotta-500 border-terracotta-500'
+                                    : 'border-ivory-300 group-hover:border-wood-400'
+                                )}
+                              >
+                                {selectedSpecs.has(spec) && <Check className="w-3 h-3 text-white" />}
+                              </div>
+                              <span className="text-sm text-carbon-600 group-hover:text-carbon-800">{spec}</span>
+                            </label>
+                          ))}
                         </div>
                       </motion.div>
                     )}
@@ -327,7 +560,7 @@ export default function MaterialLibrary() {
                 </div>
               </div>
 
-              <button className="btn-ghost w-full text-sm">
+              <button onClick={resetFilters} className="btn-ghost w-full text-sm">
                 <SlidersHorizontal className="w-4 h-4" />
                 重置筛选
               </button>
@@ -335,8 +568,18 @@ export default function MaterialLibrary() {
           </div>
 
           <div className="col-span-9">
-            <div className="grid grid-cols-4 gap-4">
-              {materials.map((mat, idx) => (
+            <div className="mb-4 flex items-center justify-between text-sm text-ivory-600">
+              <span>已筛选出 {filteredMaterials.length} 款 {categories.find(cat => cat.key === activeCategory)?.label}</span>
+              {(selectedBrands.size > 0 || selectedPrice !== null || selectedSpecs.size > 0 || searchQuery || activeStyle !== 'all') && (
+                <button onClick={resetFilters} className="text-terracotta-700 hover:text-terracotta-800 font-medium">
+                  清除全部条件
+                </button>
+              )}
+            </div>
+
+            {filteredMaterials.length > 0 ? (
+              <div className="grid grid-cols-4 gap-4">
+                {filteredMaterials.map((mat, idx) => (
                 <motion.div
                   key={mat.id}
                   initial={{ opacity: 0, y: 20 }}
@@ -346,7 +589,7 @@ export default function MaterialLibrary() {
                     'card-hoverable overflow-hidden relative',
                     selectedMaterials.has(mat.id) && 'ring-2 ring-terracotta-500 shadow-lg shadow-terracotta-500/20'
                   )}
-                  onClick={() => navigate(`/owner/materials/${mat.id}`)}
+                  onClick={() => setActiveMaterial(mat)}
                 >
                   <label
                     className="absolute top-3 left-3 z-10 cursor-pointer"
@@ -390,10 +633,53 @@ export default function MaterialLibrary() {
                       <span className="text-terracotta-600 font-bold text-lg">¥{mat.price}</span>
                       <span className="text-xs text-ivory-400">/{mat.unit}</span>
                     </div>
+                    <div className="mt-3 flex items-center gap-2">
+                      <button
+                        onClick={(e) => toggleFavorite(mat.id, e)}
+                        className={cn(
+                          'h-8 w-8 rounded-lg border flex items-center justify-center transition-colors',
+                          favorites.has(mat.id)
+                            ? 'border-rose-200 bg-rose-50 text-rose-600'
+                            : 'border-ivory-300 bg-white text-ivory-600 hover:text-rose-600'
+                        )}
+                        title="收藏"
+                      >
+                        <Heart className={cn('w-4 h-4', favorites.has(mat.id) && 'fill-current')} />
+                      </button>
+                      <button
+                        onClick={(e) => toggleCompare(mat.id, e)}
+                        className={cn(
+                          'h-8 w-8 rounded-lg border flex items-center justify-center transition-colors',
+                          compareMaterials.has(mat.id)
+                            ? 'border-haze-200 bg-haze-50 text-haze-700'
+                            : 'border-ivory-300 bg-white text-ivory-600 hover:text-haze-700'
+                        )}
+                        title="加入对比"
+                      >
+                        <Scale className="w-4 h-4" />
+                      </button>
+                      <button
+                        onClick={(e) => addToPlan(mat, e)}
+                        className="ml-auto h-8 rounded-lg border border-wood-200 bg-wood-50 px-2.5 text-xs font-medium text-wood-700 hover:bg-wood-100 transition-colors"
+                      >
+                        <Plus className="inline-block w-3.5 h-3.5 mr-1" />
+                        加入方案
+                      </button>
+                    </div>
                   </div>
                 </motion.div>
-              ))}
-            </div>
+                ))}
+              </div>
+            ) : (
+              <div className="card-base p-12 text-center">
+                <Search className="w-10 h-10 mx-auto mb-3 text-ivory-400" />
+                <h3 className="font-serif text-xl text-carbon-800 mb-2">没有匹配的材质</h3>
+                <p className="text-sm text-ivory-600 mb-5">请调整品牌、价格、规格或搜索关键词后重新筛选。</p>
+                <button onClick={resetFilters} className="btn-secondary text-sm">
+                  重置筛选条件
+                </button>
+              </div>
+            )}
           </div>
         </div>
       </div>
@@ -450,6 +736,7 @@ export default function MaterialLibrary() {
                 </button>
                 <button
                   disabled={selectedMaterialItems.length < 2}
+                  onClick={() => setCompareDrawerVisible(true)}
                   className={cn(
                     'btn-primary',
                     selectedMaterialItems.length < 2 && 'opacity-50 cursor-not-allowed pointer-events-none'
@@ -463,6 +750,89 @@ export default function MaterialLibrary() {
           </motion.div>
         )}
       </AnimatePresence>
+
+      <Drawer
+        title={activeMaterial?.name}
+        open={Boolean(activeMaterial)}
+        onClose={() => setActiveMaterial(null)}
+        width={480}
+        destroyOnClose
+      >
+        {activeMaterial && (
+          <div className="space-y-5">
+            <img
+              src={activeMaterial.image}
+              alt={activeMaterial.name}
+              className="w-full aspect-square object-cover rounded-xl bg-ivory-100"
+            />
+            <div className="flex items-center justify-between gap-3">
+              <div>
+                <div className="badge-wood mb-2">{activeMaterial.brand}</div>
+                <h3 className="font-serif text-xl text-carbon-800">{activeMaterial.name}</h3>
+              </div>
+              <div className="text-right">
+                <div className="text-terracotta-600 font-bold text-2xl">¥{activeMaterial.price}</div>
+                <div className="text-xs text-ivory-500">/{activeMaterial.unit}</div>
+              </div>
+            </div>
+
+            <div className="grid grid-cols-2 gap-3 text-sm">
+              {[
+                ['材质', activeMaterial.material],
+                ['规格', activeMaterial.spec],
+                ['产地', activeMaterial.origin],
+                ['环保等级', activeMaterial.ecoLevel],
+                ['质保', activeMaterial.warranty],
+                ['适配风格', activeMaterial.style.map(s => styleLabelMap[s] || s).join(' / ')],
+              ].map(([label, value]) => (
+                <div key={label} className="rounded-xl border border-ivory-200 bg-ivory-50 p-3">
+                  <div className="text-xs text-ivory-500 mb-1">{label}</div>
+                  <div className="font-medium text-carbon-800">{value}</div>
+                </div>
+              ))}
+            </div>
+
+            <div className="flex gap-3 pt-2">
+              <button onClick={(e) => addToPlan(activeMaterial, e)} className="btn-primary flex-1">
+                <Plus className="w-4 h-4" />
+                加入选材方案
+              </button>
+              <button onClick={(e) => toggleCompare(activeMaterial.id, e)} className="btn-secondary">
+                <Scale className="w-4 h-4" />
+                对比
+              </button>
+              <button onClick={(e) => toggleFavorite(activeMaterial.id, e)} className="btn-ghost">
+                <Heart className={cn('w-4 h-4', favorites.has(activeMaterial.id) && 'fill-current text-rose-600')} />
+              </button>
+            </div>
+          </div>
+        )}
+      </Drawer>
+
+      <Drawer
+        title="材质参数对比"
+        open={compareDrawerVisible}
+        onClose={() => setCompareDrawerVisible(false)}
+        width={820}
+        destroyOnClose
+      >
+        {compareItems.length >= 2 ? (
+          <Table
+            columns={compareColumns}
+            dataSource={compareTableData}
+            pagination={false}
+            bordered
+            size="middle"
+            scroll={{ x: 640 }}
+          />
+        ) : (
+          <div className="card-base p-10 text-center">
+            <Scale className="w-10 h-10 mx-auto mb-3 text-ivory-400" />
+            <h3 className="font-serif text-xl text-carbon-800 mb-2">请选择至少两款材质</h3>
+            <p className="text-sm text-ivory-600">可在卡片中点击对比按钮，最多同时对比三款材质。</p>
+          </div>
+        )}
+      </Drawer>
     </div>
   );
 }

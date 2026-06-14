@@ -1,4 +1,4 @@
-import React, { useState, useMemo } from 'react';
+import React, { useState, useMemo, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import {
   ChevronRight,
@@ -19,8 +19,13 @@ import {
   MapPin,
   Phone,
   Diamond,
+  UserCheck,
+  Flag,
+  GripVertical,
+  History,
+  AlertOctagon,
 } from 'lucide-react';
-import { Tabs, Select, DatePicker, Tooltip as AntTooltip, Switch } from 'antd';
+import { Tabs, Select, DatePicker, Tooltip as AntTooltip, Switch, Modal, message } from 'antd';
 import type { TabsProps } from 'antd';
 import dayjs, { Dayjs } from 'dayjs';
 
@@ -234,6 +239,34 @@ const statusColorMap: Record<TaskStatus, { bg: string; border: string; text: str
   milestone: { bg: 'bg-amber-100', border: 'border-amber-400', text: 'text-amber-700', bar: 'bg-amber-500' },
 };
 
+const statusLabelMap: Record<TaskStatus, string> = {
+  not_started: '规划中',
+  in_progress: '进行中',
+  completed: '已完成',
+  delayed: '延期',
+  milestone: '里程碑',
+};
+
+type PhaseType = 'demolition' | 'plumbing' | 'masonry' | 'paint' | 'installation' | 'acceptance' | 'other';
+const phaseColorMap: Record<PhaseType, { bar: string; bg: string; border: string; text: string; label: string }> = {
+  demolition:   { bar: 'bg-gradient-to-r from-rose-500 to-rose-600',     bg: 'bg-rose-100',     border: 'border-rose-400',     text: 'text-rose-700',     label: '拆改' },
+  plumbing:     { bar: 'bg-gradient-to-r from-orange-500 to-orange-600', bg: 'bg-orange-100',   border: 'border-orange-400',   text: 'text-orange-700',   label: '水电' },
+  masonry:      { bar: 'bg-gradient-to-r from-amber-400 to-amber-500',   bg: 'bg-amber-100',    border: 'border-amber-400',    text: 'text-amber-700',    label: '泥木' },
+  paint:        { bar: 'bg-gradient-to-r from-emerald-500 to-emerald-600', bg: 'bg-emerald-100', border: 'border-emerald-400',  text: 'text-emerald-700',  label: '油漆' },
+  installation: { bar: 'bg-gradient-to-r from-blue-500 to-blue-600',     bg: 'bg-blue-100',     border: 'border-blue-400',     text: 'text-blue-700',     label: '安装' },
+  acceptance:   { bar: 'bg-gradient-to-r from-purple-500 to-purple-600', bg: 'bg-purple-100',   border: 'border-purple-400',   text: 'text-purple-700',   label: '验收' },
+  other:        { bar: 'bg-gradient-to-r from-haze-500 to-haze-600',     bg: 'bg-haze-100',     border: 'border-haze-400',     text: 'text-haze-700',     label: '其他' },
+};
+const detectPhaseType = (name: string): PhaseType => {
+  if (/拆|砸|改|demolition/i.test(name)) return 'demolition';
+  if (/水|电|管|线|plumb|electric/i.test(name)) return 'plumbing';
+  if (/泥|瓦|砖|木|吊顶|maso|tile|carpenter/i.test(name)) return 'masonry';
+  if (/油|漆|墙|面|paint/i.test(name)) return 'paint';
+  if (/安装|橱柜|地板|门|灯|install/i.test(name)) return 'installation';
+  if (/验收|竣工|交接|accept/i.test(name)) return 'acceptance';
+  return 'other';
+};
+
 const DAY_WIDTH = 32;
 const TOTAL_DAYS = endDate.diff(startDate, 'day') + 1;
 const TIMELINE_WIDTH = TOTAL_DAYS * DAY_WIDTH;
@@ -248,6 +281,10 @@ const ProjectGantt: React.FC = () => {
   const [dateRange, setDateRange] = useState<[Dayjs, Dayjs]>([startDate, endDate]);
   const [selectedTasks, setSelectedTasks] = useState<Set<string>>(new Set());
   const [showPlan, setShowPlan] = useState(true);
+
+  const [phaseDetailModal, setPhaseDetailModal] = useState<{ open: boolean; project: Project | null; phase: Phase | null; level: number }>({ open: false, project: null, phase: null, level: 0 });
+  const [dragging, setDragging] = useState<{ taskId: string; startX: number; startLeft: number; startWidth: number; mode: 'move' | 'resize' } | null>(null);
+  const dragRef = useRef<HTMLDivElement>(null);
 
   const toggleProject = (id: string) => {
     const next = new Set(expandedProjects);
@@ -299,83 +336,147 @@ const ProjectGantt: React.FC = () => {
   const renderGanttBar = (
     task: { id: string; name: string; start: Dayjs; end: Dayjs; actualStart?: Dayjs; actualEnd?: Dayjs; progress: number; status: TaskStatus; assignee?: string; remark?: string },
     rowLevel: number,
+    extra?: { project?: Project; phase?: Phase },
   ) => {
-    const colors = statusColorMap[task.status];
+    const statusColors = statusColorMap[task.status];
+    const phaseType = detectPhaseType(task.name);
+    const phaseColors = phaseColorMap[phaseType];
+    const usePhaseColors = rowLevel >= 1;
+    const barColors = usePhaseColors ? phaseColors : statusColors;
+    const isDelayed = task.status === 'delayed';
     const planPos = getTaskPosition(task.start, task.end, true);
+    const isToday = startDate.add(35, 'day').isAfter(task.start) && startDate.add(35, 'day').isBefore(task.end);
 
     return (
       <div
         key={task.id}
-        className="relative h-[42px] border-b border-ivory-100 hover:bg-ivory-50/60 transition-colors group"
+        ref={dragRef}
+        className={`relative h-[42px] border-b border-ivory-100 hover:bg-ivory-50/60 transition-colors group ${isDelayed ? 'bg-rose-50/20' : ''}`}
         style={{ paddingLeft: rowLevel * 16 }}
       >
+        {isDelayed && (
+          <div
+            className="absolute top-0 bottom-0 w-0.5 z-20"
+            style={{
+              left: planPos.left + planPos.width,
+              background: `repeating-linear-gradient(to bottom, #F43F5E 0, #F43F5E 4px, transparent 4px, transparent 8px)`,
+              animation: 'ganttBlink 1s ease-in-out infinite',
+            }}
+          />
+        )}
         <div
           className="absolute inset-0 flex items-center pointer-events-none"
           style={{ width: TIMELINE_WIDTH }}
         >
           {task.status !== 'milestone' ? (
             <>
-              {showPlan && task.actualStart && (
+              {showPlan && (
                 <div
-                  className={`h-3 rounded-full border-2 border-dashed ${colors.border} opacity-60`}
+                  className={`h-3 rounded-full border-2 border-dashed ${isDelayed ? 'border-rose-400' : phaseColors.border} ${isDelayed ? 'opacity-90' : 'opacity-60'}`}
                   style={{
                     marginLeft: planPos.left,
                     width: planPos.width,
                   }}
                 />
               )}
-              {task.actualStart && !showPlan ? null : (
-                <AntTooltip
-                  title={
-                    <div className="space-y-1.5 text-xs p-1">
-                      <div className="font-semibold text-white">{task.name}</div>
-                      <div className="text-ivory-200">计划: {task.start.format('MM/DD')} ~ {task.end.format('MM/DD')}</div>
-                      {task.actualStart && <div className="text-ivory-200">实际: {task.actualStart.format('MM/DD')} ~</div>}
-                      <div className="text-ivory-200">完成度: {task.progress}%</div>
-                      {task.assignee && <div className="text-ivory-200">负责人: {task.assignee}</div>}
-                      {task.remark && <div className="text-amber-300">⚠️ {task.remark}</div>}
+              <AntTooltip
+                title={
+                  <div className="space-y-1.5 text-xs p-1">
+                    <div className="font-semibold text-white flex items-center gap-1.5">
+                      {usePhaseColors && <span className={`inline-block w-2 h-2 rounded ${phaseColors.bar.replace('bg-gradient-to-r ', 'bg-').split(' ')[0]}`} />}
+                      {task.name}
                     </div>
-                  }
-                >
-                  <div
-                    className={`relative h-7 rounded-lg ${colors.bar} shadow-sm cursor-pointer
-                      hover:brightness-110 transition-all border ${colors.border} overflow-hidden`}
-                    style={{
-                      marginLeft: task.actualStart ? getTaskPosition(task.actualStart, task.actualEnd ?? task.end, false).left : planPos.left,
-                      width: task.actualStart ? getTaskPosition(task.actualStart, task.actualEnd ?? task.end, false).width : planPos.width,
-                    }}
-                    onClick={() => {
+                    <div className="text-ivory-200">计划: {task.start.format('MM/DD')} ~ {task.end.format('MM/DD')}（{task.end.diff(task.start, 'day') + 1}天）</div>
+                    {task.actualStart && <div className="text-ivory-200">实际: {task.actualStart.format('MM/DD')} ~</div>}
+                    <div className="text-ivory-200">完成度: {task.progress}%</div>
+                    {task.assignee && <div className="text-ivory-200">负责人: {task.assignee}</div>}
+                    {task.remark && <div className="text-amber-300">⚠️ {task.remark}</div>}
+                    {isDelayed && <div className="text-rose-300 font-semibold">🚨 延期预警！进度落后于计划</div>}
+                    <div className="pt-1 mt-1 border-t border-white/10 text-ivory-300 text-[10px]">💡 点击查看详情 · 拖动调整时间 · 拖右边缘改工期</div>
+                  </div>
+                }
+              >
+                <div
+                  className={`relative h-7 rounded-lg shadow-sm cursor-grab active:cursor-grabbing
+                    hover:brightness-110 hover:shadow-lg transition-all border overflow-hidden
+                    ${isDelayed ? 'ring-2 ring-rose-400/70 ring-offset-1' : ''}
+                    ${dragging?.taskId === task.id ? 'ring-2 ring-terracotta-500 shadow-xl z-30 scale-[1.02]' : ''}
+                    ${barColors.bar} ${barColors.border}`}
+                  style={{
+                    marginLeft: task.actualStart ? getTaskPosition(task.actualStart, task.actualEnd ?? task.end, false).left : planPos.left,
+                    width: task.actualStart ? getTaskPosition(task.actualStart, task.actualEnd ?? task.end, false).width : planPos.width,
+                    animation: isDelayed ? 'ganttBlink 1.2s ease-in-out infinite' : undefined,
+                  }}
+                  onMouseDown={(e) => {
+                    e.stopPropagation();
+                    setDragging({ taskId: task.id, startX: e.clientX, startLeft: task.actualStart ? getTaskPosition(task.actualStart, task.actualEnd ?? task.end, false).left : planPos.left, startWidth: task.actualStart ? getTaskPosition(task.actualStart, task.actualEnd ?? task.end, false).width : planPos.width, mode: 'move' });
+                  }}
+                  onMouseMove={(e) => {
+                    if (!dragging || dragging.taskId !== task.id) return;
+                    e.preventDefault();
+                  }}
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    if (dragging) { setDragging(null); return; }
+                    if (rowLevel === 1 && extra?.project && extra?.phase) {
+                      setPhaseDetailModal({ open: true, project: extra.project, phase: extra.phase, level: rowLevel });
+                      message.info(`已打开「${task.name}」阶段详情`);
+                    } else {
                       const next = new Set(selectedTasks);
                       if (next.has(task.id)) next.delete(task.id); else next.add(task.id);
                       setSelectedTasks(next);
+                    }
+                  }}
+                >
+                  {isToday && (
+                    <div className="absolute -left-1 -top-1 z-20">
+                      <div className="w-4 h-4 rounded-full bg-terracotta-500 text-white flex items-center justify-center shadow-md animate-pulse">
+                        <Flag className="w-2.5 h-2.5" />
+                      </div>
+                    </div>
+                  )}
+                  <div
+                    className="absolute left-0 top-0 h-full bg-black/20"
+                    style={{ width: `${task.progress}%` }}
+                  />
+                  <div className="absolute left-0 top-0 w-1.5 h-full cursor-grab active:cursor-grabbing opacity-0 group-hover:opacity-100 hover:bg-white/30 transition-opacity flex items-center justify-center"
+                    onMouseDown={(e) => {
+                      e.stopPropagation();
+                      setDragging({ taskId: task.id, startX: e.clientX, startLeft: task.actualStart ? getTaskPosition(task.actualStart, task.actualEnd ?? task.end, false).left : planPos.left, startWidth: task.actualStart ? getTaskPosition(task.actualStart, task.actualEnd ?? task.end, false).width : planPos.width, mode: 'move' });
                     }}
                   >
-                    <div
-                      className={`absolute left-0 top-0 h-full ${statusColorMap[task.status].bg} opacity-50`}
-                      style={{ width: `${task.progress}%` }}
-                    />
-                    <div className="relative z-10 h-full flex items-center px-2 gap-1">
-                      {selectedTasks.has(task.id) && (
-                        <div className="w-4 h-4 rounded bg-white/90 flex items-center justify-center shrink-0">
-                          <CheckCircle2 className="w-3 h-3 text-haze-600" />
-                        </div>
-                      )}
-                      <span className={`text-[11px] font-medium truncate ${selectedTasks.has(task.id) ? '' : ''}`}>
-                        {task.name}
-                      </span>
-                      {task.progress > 0 && task.progress < 100 && (
-                        <span className="text-[10px] font-mono font-semibold ml-auto shrink-0 bg-white/30 px-1.5 py-0.5 rounded">
-                          {task.progress}%
-                        </span>
-                      )}
-                    </div>
-                    <div
-                      className="absolute right-0 top-0 w-1.5 h-full cursor-ew-resize opacity-0 group-hover:opacity-100 hover:bg-white/40 transition-opacity"
-                      onClick={(e) => e.stopPropagation()}
-                    />
+                    <GripVertical className="w-3 h-3 text-white/70" />
                   </div>
-                </AntTooltip>
-              )}
+                  <div className="relative z-10 h-full flex items-center px-2 gap-1 text-white">
+                    {selectedTasks.has(task.id) && (
+                      <div className="w-4 h-4 rounded bg-white/90 flex items-center justify-center shrink-0">
+                        <CheckCircle2 className="w-3 h-3 text-haze-600" />
+                      </div>
+                    )}
+                    <span className="text-[11px] font-semibold truncate drop-shadow-sm">
+                      {task.name}
+                    </span>
+                    {task.progress > 0 && task.progress < 100 && (
+                      <span className="text-[10px] font-mono font-bold ml-auto shrink-0 bg-white/25 backdrop-blur px-1.5 py-0.5 rounded">
+                        {task.progress}%
+                      </span>
+                    )}
+                    {task.progress === 100 && (
+                      <CheckCircle2 className="w-3.5 h-3.5 ml-auto shrink-0" />
+                    )}
+                  </div>
+                  <div
+                    className="absolute right-0 top-0 w-2.5 h-full cursor-ew-resize opacity-0 group-hover:opacity-100 hover:bg-white/40 transition-all flex items-center justify-center"
+                    onMouseDown={(e) => {
+                      e.stopPropagation();
+                      setDragging({ taskId: task.id, startX: e.clientX, startLeft: task.actualStart ? getTaskPosition(task.actualStart, task.actualEnd ?? task.end, false).left : planPos.left, startWidth: task.actualStart ? getTaskPosition(task.actualStart, task.actualEnd ?? task.end, false).width : planPos.width, mode: 'resize' });
+                    }}
+                    onClick={(e) => e.stopPropagation()}
+                  >
+                    <div className="w-0.5 h-4 rounded-full bg-white/70" />
+                  </div>
+                </div>
+              </AntTooltip>
             </>
           ) : (
             <div
@@ -383,7 +484,7 @@ const ProjectGantt: React.FC = () => {
               style={{ left: planPos.left + planPos.width / 2 - 8 }}
             >
               <AntTooltip title={`里程碑: ${task.name} (${task.start.format('MM/DD')})`}>
-                <Diamond className={`w-4 h-4 ${colors.text} fill-current drop-shadow-sm cursor-pointer`} />
+                <Diamond className={`w-4 h-4 ${statusColors.text} fill-current drop-shadow-sm cursor-pointer hover:scale-125 transition-transform`} />
               </AntTooltip>
             </div>
           )}
@@ -392,8 +493,16 @@ const ProjectGantt: React.FC = () => {
     );
   };
 
+  const visibleProjects = mockProjects.filter(project => statusFilter === 'all' || project.status === statusFilter);
+  const visiblePhaseCount = visibleProjects.reduce((sum, project) => sum + project.phases.length, 0);
+  const visibleTaskCount = visibleProjects.reduce(
+    (sum, project) => sum + project.phases.reduce((phaseSum, phase) => phaseSum + phase.subtasks.length, 0),
+    0,
+  );
+  const delayedProjectCount = visibleProjects.filter(project => project.status === 'delayed').length;
+
   const treeRows: { type: string; data: any; level: number; project?: Project; phase?: Phase }[] = [];
-  mockProjects.forEach((project) => {
+  visibleProjects.forEach((project) => {
     treeRows.push({ type: 'project', data: project, level: 0 });
     if (expandedProjects.has(project.id)) {
       project.phases.forEach((phase) => {
@@ -632,7 +741,21 @@ const ProjectGantt: React.FC = () => {
                   </div>
                 </div>
 
-                <div className="relative">
+                <div
+                  className="relative"
+                  onMouseUp={(e) => {
+                    if (dragging) {
+                      const dx = e.clientX - dragging.startX;
+                      const days = Math.round(dx / DAY_WIDTH);
+                      const actionText = dragging.mode === 'move'
+                        ? (days === 0 ? '位置未变' : `移动 ${days > 0 ? '+' : ''}${days} 天`)
+                        : `工期调整 ${days > 0 ? '+' : ''}${days} 天`;
+                      message.success(`已${dragging.mode === 'move' ? '移动' : '调整'}「${dragging.taskId}」: ${actionText}`);
+                      setDragging(null);
+                    }
+                  }}
+                  onMouseLeave={() => { if (dragging) setDragging(null); }}
+                >
                   {treeRows.map((row) => {
                     if (row.type === 'project') {
                       return renderGanttBar({
@@ -642,7 +765,7 @@ const ProjectGantt: React.FC = () => {
                         end: row.data.end,
                         progress: row.data.progress,
                         status: row.data.status,
-                      }, row.level);
+                      }, row.level, { project: row.project });
                     }
                     if (row.type === 'phase') {
                       return renderGanttBar({
@@ -652,18 +775,124 @@ const ProjectGantt: React.FC = () => {
                         end: row.data.end,
                         progress: row.data.progress,
                         status: row.data.status,
-                      }, row.level);
+                      }, row.level, { project: row.project, phase: row.phase });
                     }
-                    return renderGanttBar(row.data as SubTask, row.level);
+                    return renderGanttBar(row.data as SubTask, row.level, { phase: row.phase, project: row.project });
                   })}
                 </div>
               </div>
             </div>
           </div>
         ) : (
-          <div className="p-8 text-center text-ivory-600">
-            <LayoutList className="w-12 h-12 mx-auto mb-3 text-ivory-400" />
-            <p>列表视图开发中...</p>
+          <div className="h-full overflow-y-auto scrollbar-thin bg-ivory-50/50">
+            <div className="sticky top-0 z-10 grid grid-cols-4 gap-3 border-b border-ivory-200 bg-white/95 p-4 backdrop-blur">
+              {[
+                ['项目数', visibleProjects.length],
+                ['阶段数', visiblePhaseCount],
+                ['任务数', visibleTaskCount],
+                ['延期预警', delayedProjectCount],
+              ].map(([label, value]) => (
+                <div key={label} className="rounded-xl border border-ivory-200 bg-ivory-50 px-4 py-3">
+                  <div className="font-mono text-xl font-semibold text-carbon-800">{value}</div>
+                  <div className="text-xs text-ivory-500 mt-1">{label}</div>
+                </div>
+              ))}
+            </div>
+
+            <div className="p-4 space-y-4">
+              {visibleProjects.map((project) => {
+                const colors = statusColorMap[project.status];
+                const duration = project.end.diff(project.start, 'day') + 1;
+                return (
+                  <div
+                    key={project.id}
+                    className="rounded-xl border border-ivory-200 bg-white p-5 shadow-sm hover:shadow-card transition-shadow cursor-pointer"
+                    onClick={() => {
+                      setSelectedProject(project);
+                      setDetailPanelOpen(true);
+                    }}
+                  >
+                    <div className="flex flex-wrap items-start justify-between gap-4">
+                      <div className="min-w-0">
+                        <div className="flex flex-wrap items-center gap-2 mb-2">
+                          <h3 className="font-serif text-lg text-carbon-800">{project.name}</h3>
+                          <span className={`inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-xs font-medium ${colors.bg} ${colors.border} border ${colors.text}`}>
+                            {project.status === 'delayed' && <AlertTriangle className="w-3 h-3" />}
+                            {statusLabelMap[project.status]}
+                          </span>
+                        </div>
+                        <div className="flex flex-wrap gap-4 text-sm text-ivory-600">
+                          <span className="inline-flex items-center gap-1.5"><User className="w-4 h-4" />{project.owner}</span>
+                          <span className="inline-flex items-center gap-1.5"><Building2 className="w-4 h-4" />{project.provider}</span>
+                          <span className="inline-flex items-center gap-1.5"><MapPin className="w-4 h-4" />{project.city}</span>
+                          <span className="inline-flex items-center gap-1.5"><Clock className="w-4 h-4" />{project.start.format('MM/DD')} - {project.end.format('MM/DD')} · {duration}天</span>
+                        </div>
+                      </div>
+                      <div className="w-44">
+                        <div className="flex items-center justify-between text-xs text-ivory-600 mb-1.5">
+                          <span>整体进度</span>
+                          <span className={`font-mono font-semibold ${colors.text}`}>{project.progress}%</span>
+                        </div>
+                        <div className="h-2 rounded-full bg-ivory-200 overflow-hidden">
+                          <div className={`h-full ${colors.bar}`} style={{ width: `${project.progress}%` }} />
+                        </div>
+                      </div>
+                    </div>
+
+                    {project.warning && project.warning.length > 0 && (
+                      <div className="mt-4 grid gap-2">
+                        {project.warning.map((warning, index) => (
+                          <div key={`${warning.type}-${index}`} className="flex items-start gap-2 rounded-lg border border-amber-200 bg-amber-50 px-3 py-2 text-sm text-amber-800">
+                            <AlertOctagon className="w-4 h-4 mt-0.5 shrink-0" />
+                            <span>{warning.type}：{warning.content}</span>
+                          </div>
+                        ))}
+                      </div>
+                    )}
+
+                    <div className="mt-5 grid gap-3">
+                      {project.phases.length > 0 ? (
+                        project.phases.map((phase) => {
+                          const phaseColors = statusColorMap[phase.status];
+                          return (
+                            <div key={phase.id} className="rounded-lg border border-ivory-200 bg-ivory-50 p-3">
+                              <div className="flex items-center justify-between gap-3">
+                                <div className="min-w-0">
+                                  <div className="flex items-center gap-2">
+                                    <span className={`h-2 w-2 rounded-full ${phaseColors.bar}`} />
+                                    <span className="font-medium text-carbon-700">{phase.name}</span>
+                                    <span className={`text-xs ${phaseColors.text}`}>{statusLabelMap[phase.status]}</span>
+                                  </div>
+                                  <div className="mt-1 text-xs text-ivory-500">
+                                    {phase.start.format('MM/DD')} - {phase.end.format('MM/DD')} · {phase.subtasks.length} 个任务
+                                  </div>
+                                </div>
+                                <span className={`font-mono text-sm font-semibold ${phaseColors.text}`}>{phase.progress}%</span>
+                              </div>
+                              <div className="mt-2 h-1.5 rounded-full bg-white overflow-hidden">
+                                <div className={`h-full ${phaseColors.bar}`} style={{ width: `${phase.progress}%` }} />
+                              </div>
+                            </div>
+                          );
+                        })
+                      ) : (
+                        <div className="rounded-lg border border-dashed border-ivory-300 bg-ivory-50 p-4 text-sm text-ivory-600">
+                          已建立项目主计划，待服务商同步详细阶段任务。
+                        </div>
+                      )}
+                    </div>
+                  </div>
+                );
+              })}
+
+              {visibleProjects.length === 0 && (
+                <div className="rounded-xl border border-ivory-200 bg-white p-10 text-center">
+                  <LayoutList className="w-10 h-10 mx-auto mb-3 text-ivory-400" />
+                  <h3 className="font-serif text-xl text-carbon-800 mb-2">没有符合条件的项目</h3>
+                  <p className="text-sm text-ivory-600">请切换项目状态筛选后查看。</p>
+                </div>
+              )}
+            </div>
           </div>
         )}
 
@@ -694,7 +923,7 @@ const ProjectGantt: React.FC = () => {
                     </div>
                     <span className={`inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-xs font-medium ${statusColorMap[selectedProject.status].bg} ${statusColorMap[selectedProject.status].border} border ${statusColorMap[selectedProject.status].text}`}>
                       {selectedProject.status === 'delayed' ? <AlertTriangle className="w-3 h-3" /> : null}
-                      {{ not_started: '规划中', in_progress: '进行中', delayed: '延期', completed: '已完成', milestone: '里程碑' }[selectedProject.status]}
+                      {statusLabelMap[selectedProject.status]}
                     </span>
                   </div>
                   <div className="grid grid-cols-2 gap-3 text-sm">
@@ -781,49 +1010,311 @@ const ProjectGantt: React.FC = () => {
                   </div>
                 )}
 
-                <div className="flex gap-2 pt-2">
-                  <button className="flex-1 btn-primary text-sm">
+                <div className="flex flex-wrap gap-2 pt-2">
+                  <button
+                    onClick={() =>
+                      Modal.confirm({
+                        title: '确认标记项目阶段更新？',
+                        content: `将更新「${selectedProject.name}」的进度并同步通知项目经理和业主。`,
+                        okText: '确认更新',
+                        cancelText: '取消',
+                        okButtonProps: { style: { background: '#22C55E', borderColor: '#22C55E' } },
+                        onOk: () => message.success(`已更新「${selectedProject.name}」的进度状态`),
+                      })
+                    }
+                    className="flex-1 btn-primary text-sm min-w-[120px]"
+                  >
+                    <CheckCircle2 className="w-4 h-4" />
+                    标记进度更新
+                  </button>
+                  <button
+                    onClick={() => message.info(`正在打开「${selectedProject.name}」的工期调整面板...`)}
+                    className="btn-secondary text-sm"
+                  >
                     <ArrowLeftRight className="w-4 h-4" />
                     调整工期
                   </button>
-                  <button className="btn-secondary text-sm">查看完整进度</button>
+                  {selectedProject.warning && selectedProject.warning.length > 0 && (
+                    <button
+                      onClick={() => message.warning(`已升级「${selectedProject.name}」的延期预警，将通知运营主管介入`)}
+                      className="w-full mt-1 inline-flex items-center justify-center gap-2 px-4 py-2 rounded-btn text-sm font-medium
+                        bg-rose-50 text-rose-700 border border-rose-200
+                        hover:bg-rose-100 transition-all"
+                    >
+                      <AlertOctagon className="w-4 h-4" />
+                      升级延期预警，通知主管介入
+                    </button>
+                  )}
                 </div>
               </div>
             </motion.div>
           )}
         </AnimatePresence>
+
+        <Modal
+          open={phaseDetailModal.open}
+          onCancel={() => setPhaseDetailModal({ ...phaseDetailModal, open: false })}
+          footer={null}
+          width={720}
+          destroyOnClose
+          title={
+            phaseDetailModal.phase ? (
+              <div className="flex items-center gap-3 pr-12">
+                <div className={`w-10 h-10 rounded-xl ${phaseColorMap[detectPhaseType(phaseDetailModal.phase.name)].bar} text-white flex items-center justify-center shadow-md`}>
+                  {(() => { const Icon = phaseDetailModal.phase!.status === 'completed' ? CheckCircle2 : phaseDetailModal.phase!.status === 'delayed' ? AlertTriangle : Calendar; return <Icon className="w-5 h-5" />; })()}
+                </div>
+                <div>
+                  <h3 className="font-serif text-lg font-semibold text-carbon-800">{phaseDetailModal.phase.name}</h3>
+                  <div className="flex items-center gap-2 mt-0.5">
+                    <span className="text-xs text-ivory-500 font-mono">{phaseDetailModal.phase.id}</span>
+                    <span className={`inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[11px] font-semibold border ${statusColorMap[phaseDetailModal.phase.status].bg} ${statusColorMap[phaseDetailModal.phase.status].text} ${statusColorMap[phaseDetailModal.phase.status].border}`}>
+                      {{ not_started: '未开始', in_progress: '进行中', delayed: '延期', completed: '已完成', milestone: '里程碑' }[phaseDetailModal.phase.status]}
+                    </span>
+                  </div>
+                </div>
+              </div>
+            ) : null
+          }
+        >
+          {phaseDetailModal.project && phaseDetailModal.phase && (
+            <div className="pt-2 space-y-5">
+              <div className="grid grid-cols-3 gap-4">
+                {[
+                  { label: '计划开始', value: phaseDetailModal.phase.start.format('YYYY-MM-DD'), icon: Calendar, color: 'haze' },
+                  { label: '计划完成', value: phaseDetailModal.phase.end.format('YYYY-MM-DD'), icon: Flag, color: 'terracotta' },
+                  { label: '工期', value: `${phaseDetailModal.phase.end.diff(phaseDetailModal.phase.start, 'day') + 1} 天`, icon: Clock, color: 'wood' },
+                ].map((m) => (
+                  <div key={m.label} className="rounded-card p-3 bg-ivory-50 border border-ivory-200">
+                    <div className="flex items-center gap-1.5 text-xs text-ivory-500 mb-1.5">
+                      <m.icon className={`w-3.5 h-3.5 text-${m.color}-500`} />
+                      {m.label}
+                    </div>
+                    <div className="font-mono text-base font-bold text-carbon-800">{m.value}</div>
+                  </div>
+                ))}
+              </div>
+
+              <div className="rounded-card p-4 bg-gradient-to-r from-ivory-50 to-white border border-ivory-200">
+                <div className="flex items-center justify-between mb-2">
+                  <span className="text-sm font-semibold text-carbon-700 flex items-center gap-1.5">
+                    <BarChart3 className="w-4 h-4 text-terracotta-500" />
+                    阶段总进度
+                  </span>
+                  <span className="font-mono text-2xl font-bold text-terracotta-600">{phaseDetailModal.phase.progress}%</span>
+                </div>
+                <div className="h-3 rounded-full bg-ivory-200 overflow-hidden">
+                  <motion.div
+                    initial={{ width: 0 }}
+                    animate={{ width: `${phaseDetailModal.phase.progress}%` }}
+                    transition={{ duration: 0.6, ease: 'easeOut' }}
+                    className={`h-full rounded-full ${phaseColorMap[detectPhaseType(phaseDetailModal.phase.name)].bar}`}
+                  />
+                </div>
+              </div>
+
+              <div className="grid grid-cols-2 gap-4">
+                <div className="rounded-card p-4 bg-haze-50/60 border border-haze-200/60">
+                  <h5 className="text-xs font-semibold text-haze-700 mb-2 flex items-center gap-1.5">
+                    <UserCheck className="w-3.5 h-3.5" />
+                    阶段负责人
+                  </h5>
+                  <div className="space-y-2">
+                    {phaseDetailModal.project.members?.slice(0, 2).map((m) => (
+                      <div key={m.name} className="flex items-center gap-2">
+                        <img src={m.avatar} className="w-8 h-8 rounded-full border border-haze-200" alt={m.name} />
+                        <div>
+                          <div className="text-sm font-medium text-carbon-700">{m.name}</div>
+                          <div className="text-[10px] text-haze-500">{m.role}</div>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+                <div className="rounded-card p-4 bg-wood-50/60 border border-wood-200/60">
+                  <h5 className="text-xs font-semibold text-wood-700 mb-2 flex items-center gap-1.5">
+                    <History className="w-3.5 h-3.5" />
+                    最近更新
+                  </h5>
+                  <div className="space-y-2 text-xs">
+                    <div className="flex items-start gap-1.5 p-2 rounded bg-white/60 border border-ivory-100">
+                      <span className="font-mono text-wood-500 shrink-0">10:32</span>
+                      <span className="text-carbon-700">墙砖完成第4面，项目经理已打卡确认</span>
+                    </div>
+                    <div className="flex items-start gap-1.5 p-2 rounded bg-white/60 border border-ivory-100">
+                      <span className="font-mono text-wood-500 shrink-0">昨日</span>
+                      <span className="text-carbon-700">材料验收：瓷砖批次 #T2024合格入库</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              {phaseDetailModal.phase.status === 'delayed' && (
+                <div className="rounded-card p-4 bg-rose-50 border border-rose-200">
+                  <h5 className="text-xs font-semibold text-rose-700 mb-2 flex items-center gap-1.5">
+                    <AlertTriangle className="w-4 h-4" />
+                    风险提示
+                  </h5>
+                  <ul className="space-y-1.5 text-sm text-rose-800">
+                    <li className="flex items-start gap-2">
+                      <span className="mt-1 w-1 h-1 rounded-full bg-rose-500 shrink-0" />
+                      <span>当前进度落后 <b>2-3 天</b>，主要原因：防水工程返工</span>
+                    </li>
+                    <li className="flex items-start gap-2">
+                      <span className="mt-1 w-1 h-1 rounded-full bg-rose-500 shrink-0" />
+                      <span>后续油漆阶段可通过加班追赶，预计整体延期 <b>≤1天</b></span>
+                    </li>
+                  </ul>
+                </div>
+              )}
+
+              <div className="rounded-card overflow-hidden border border-ivory-200">
+                <div className="px-4 py-2.5 bg-ivory-50 border-b border-ivory-200 flex items-center justify-between">
+                  <h5 className="text-xs font-semibold text-carbon-700 flex items-center gap-1.5">
+                    <Layers className="w-3.5 h-3.5 text-haze-500" />
+                    子任务进度
+                  </h5>
+                  <span className="text-[10px] text-ivory-500">共 {phaseDetailModal.phase.subtasks.length} 项</span>
+                </div>
+                <div className="max-h-40 overflow-y-auto divide-y divide-ivory-100">
+                  {phaseDetailModal.phase.subtasks.map((st, i) => (
+                    <div key={st.id} className="px-4 py-2.5 flex items-center gap-3 hover:bg-ivory-50 transition-colors">
+                      <span className="font-mono text-[10px] text-ivory-400 w-6">#{String(i + 1).padStart(2, '0')}</span>
+                      <div className="flex-1 min-w-0">
+                        <div className="text-sm text-carbon-700 truncate">{st.name}</div>
+                        <div className="flex items-center gap-2 text-[10px] text-ivory-500 mt-0.5">
+                          <span>{st.start.format('MM/DD')}-{st.end.format('MM/DD')}</span>
+                          <span>· {st.assignee}</span>
+                        </div>
+                      </div>
+                      <div className="w-24 shrink-0">
+                        <div className="h-1.5 rounded-full bg-ivory-200 overflow-hidden">
+                          <div
+                            className={`h-full rounded-full ${phaseColorMap[detectPhaseType(phaseDetailModal.phase!.name)].bar}`}
+                            style={{ width: `${st.progress}%` }}
+                          />
+                        </div>
+                      </div>
+                      <span className={`font-mono text-xs font-bold w-10 text-right ${st.progress === 100 ? 'text-emerald-600' : st.progress > 0 ? 'text-terracotta-600' : 'text-ivory-500'}`}>
+                        {st.progress}%
+                      </span>
+                    </div>
+                  ))}
+                </div>
+              </div>
+
+              <div className="flex items-center gap-2 pt-1">
+                {phaseDetailModal.phase.progress < 100 ? (
+                  <button
+                    onClick={() =>
+                      Modal.confirm({
+                        title: `标记「${phaseDetailModal.phase!.name}」为已完成？`,
+                        content: (
+                          <div className="pt-2 space-y-3">
+                            <p className="text-sm">该操作将：</p>
+                            <ul className="text-xs space-y-1 text-carbon-600">
+                              <li>✅ 更新所有子任务为 100% 完成</li>
+                              <li>📧 通知业主和监理阶段验收</li>
+                              <li>📊 自动触发下一阶段的排期提醒</li>
+                              <li>💰 阶段款项进入结算流程</li>
+                            </ul>
+                          </div>
+                        ),
+                        okText: '确认标记完成',
+                        cancelText: '取消',
+                        okButtonProps: { style: { background: '#22C55E', borderColor: '#22C55E' } },
+                        onOk: () => {
+                          message.success(`✅「${phaseDetailModal.phase!.name}」已标记为完成，已通知相关人员`);
+                          setPhaseDetailModal({ ...phaseDetailModal, open: false });
+                        },
+                      })
+                    }
+                    className="flex-1 inline-flex items-center justify-center gap-2 px-5 py-2.5 rounded-btn
+                      bg-gradient-to-r from-emerald-500 to-emerald-600 text-white font-medium shadow-sm
+                      hover:from-emerald-600 hover:to-emerald-700 transition-all"
+                  >
+                    <CheckCircle2 className="w-4 h-4" />
+                    标记阶段完成
+                  </button>
+                ) : (
+                  <div className="flex-1 inline-flex items-center justify-center gap-2 px-5 py-2.5 rounded-btn
+                    bg-emerald-50 text-emerald-700 font-medium border border-emerald-200">
+                    <CheckCircle2 className="w-4 h-4" />
+                    此阶段已完成
+                  </div>
+                )}
+                <button
+                  onClick={() => { message.info('正在打开工期调整对话框...'); }}
+                  className="inline-flex items-center justify-center gap-2 px-5 py-2.5 rounded-btn
+                    bg-haze-50 text-haze-700 font-medium border border-haze-200
+                    hover:bg-haze-100 transition-all"
+                >
+                  <ArrowLeftRight className="w-4 h-4" />
+                  调整起止时间
+                </button>
+                <button
+                  onClick={() => message.warning(`已升级「${phaseDetailModal.phase!.name}」的风险`)}
+                  className="inline-flex items-center justify-center gap-2 px-4 py-2.5 rounded-btn
+                    bg-white text-carbon-600 border border-ivory-300
+                    hover:bg-ivory-50 transition-all"
+                >
+                  <AlertTriangle className="w-4 h-4" />
+                </button>
+              </div>
+            </div>
+          )}
+        </Modal>
       </div>
 
-      <div className="card-base px-5 py-3 flex flex-wrap items-center gap-x-6 gap-y-2 text-xs">
-        <span className="text-ivory-600 font-medium shrink-0">图例：</span>
+      <div className="card-base px-5 py-3 flex flex-wrap items-center gap-x-5 gap-y-2 text-xs">
+        <span className="text-ivory-600 font-medium shrink-0">阶段类型：</span>
+        {Object.entries(phaseColorMap).filter(([k]) => k !== 'other').map(([key, cfg]) => (
+          <div key={key} className="flex items-center gap-1.5">
+            <div className={`w-5 h-3 rounded ${cfg.bar}`} />
+            <span className="text-ivory-700">{cfg.label}</span>
+          </div>
+        ))}
+        <span className="mx-1 w-px h-4 bg-ivory-200 shrink-0" />
+        <span className="text-ivory-600 font-medium shrink-0">状态：</span>
         {Object.entries({
           not_started: '未开始',
           in_progress: '进行中',
           completed: '已完成',
           delayed: '延期',
         }).map(([key, label]) => (
-          <div key={key} className="flex items-center gap-2">
-            <div className={`w-5 h-3 rounded ${statusColorMap[key as TaskStatus].bar}`} />
+          <div key={key} className="flex items-center gap-1.5">
+            <div className={`w-4 h-4 rounded-full flex items-center justify-center ${statusColorMap[key as TaskStatus].bg} ${statusColorMap[key as TaskStatus].border} border`}>
+              <div className={`w-2 h-2 rounded-full ${statusColorMap[key as TaskStatus].bar}`} />
+            </div>
             <span className="text-ivory-700">{label}</span>
           </div>
         ))}
-        <div className="flex items-center gap-2">
-          <Diamond className="w-4 h-4 text-amber-500 fill-amber-500" />
+        <div className="flex items-center gap-1.5">
+          <Diamond className="w-3.5 h-3.5 text-amber-500 fill-amber-500" />
           <span className="text-ivory-700">里程碑</span>
         </div>
-        <div className="flex items-center gap-2">
-          <div className="w-5 h-3 rounded border-2 border-dashed border-carbon-400" />
-          <span className="text-ivory-700">计划线</span>
+        <div className="flex items-center gap-1.5">
+          <div className="w-5 h-3 rounded border-2 border-dashed border-rose-400 bg-rose-100/50" style={{ animation: 'ganttBlink 1.2s ease-in-out infinite' }} />
+          <span className="text-rose-600 font-medium">延期预警</span>
         </div>
-        <div className="ml-auto text-ivory-500 flex items-center gap-2">
-          <span>选中任务数: <span className="font-mono font-semibold text-terracotta-600">{selectedTasks.size}</span></span>
+        <div className="ml-auto text-ivory-500 flex items-center gap-3">
+          <span>选中: <span className="font-mono font-semibold text-terracotta-600">{selectedTasks.size}</span> 项</span>
           {selectedTasks.size >= 2 && (
-            <button className="text-haze-600 hover:text-haze-800 underline underline-offset-2">
-              批量调整依赖关系
+            <button
+              onClick={() => message.success(`已对 ${selectedTasks.size} 个任务建立依赖链`)}
+              className="text-haze-600 hover:text-haze-800 underline underline-offset-2"
+            >
+              批量调整依赖
             </button>
           )}
         </div>
       </div>
+
+      <style>{`
+        @keyframes ganttBlink {
+          0%, 100% { opacity: 1; box-shadow: 0 0 0 0 rgba(244, 63, 94, 0.4); }
+          50% { opacity: 0.55; box-shadow: 0 0 0 6px rgba(244, 63, 94, 0); }
+        }
+      `}</style>
     </div>
   );
 };

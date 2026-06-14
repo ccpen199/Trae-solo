@@ -2,7 +2,7 @@
   "meta": {
     "title": "居智通 - 装修全链路决策支持平台",
     "url": "http://127.0.0.1:49177/owner/profile",
-    "timestamp": "2026-06-12T09:09:09.150Z",
+    "timestamp": "2026-06-12T19:43:00.698Z",
     "viewport": {
       "width": 1536,
       "height": 1600
@@ -13,7 +13,7 @@
     }
   },
   "text": {
-    "bodyPreview": "居智通个人中心查看详情管理后台Ctrl K业主服务商管理后台业主用户业主端首页3D效果图装修计算器灵感库找装修公司方案比价施工工艺避坑指南问答社区我的订单首页3D效果图装修计算器灵感库找装修公司方案比价施工工艺避坑指南问答社区我的订单个人资料与收藏管理页面功能开发中，敬请期待...",
+    "bodyPreview": "居智通Ctrl K业主服务商管理后台业主用户业主端首页3D效果图装修计算器灵感库找装修公司方案比价施工工艺避坑指南问答社区我的订单首页3D效果图装修计算器灵感库找装修公司方案比价施工工艺避坑指南问答社区我的订单个人资料与收藏管理页面功能开发中，敬请期待...",
     "emptyTextCount": 0
   },
   "domTree": {
@@ -21,7 +21,7 @@
     "id": "",
     "className": "",
     "selectorHint": "html",
-    "text": "居智通 个人中心 查看详情 管理后台 Ctrl K 业主 服务商 管理后台 业主用户 业主端 首页 3D效果图 装修计算器 灵感库 找装修公司 方案比价 施工工",
+    "text": "居智通 Ctrl K 业主 服务商 管理后台 业主用户 业主端 首页 3D效果图 装修计算器 灵感库 找装修公司 方案比价 施工工艺 避坑指南 问答社区 我的订",
     "visible": true,
     "childCount": 2,
     "children": [
@@ -111,7 +111,7 @@
         "id": "",
         "className": "",
         "selectorHint": "body",
-        "text": "居智通 个人中心 查看详情 管理后台 Ctrl K 业主 服务商 管理后台 业主用户 业主端 首页 3D效果图 装修计算器 灵感库 找装修公司 方案比价 施工工",
+        "text": "居智通 Ctrl K 业主 服务商 管理后台 业主用户 业主端 首页 3D效果图 装修计算器 灵感库 找装修公司 方案比价 施工工艺 避坑指南 问答社区 我的订",
         "visible": true,
         "childCount": 2,
         "children": [
@@ -120,7 +120,7 @@
             "id": "root",
             "className": "",
             "selectorHint": "div#root",
-            "text": "居智通 个人中心 查看详情 管理后台 Ctrl K 业主 服务商 管理后台 业主用户 业主端 首页 3D效果图 装修计算器 灵感库 找装修公司 方案比价 施工工",
+            "text": "居智通 Ctrl K 业主 服务商 管理后台 业主用户 业主端 首页 3D效果图 装修计算器 灵感库 找装修公司 方案比价 施工工艺 避坑指南 问答社区 我的订",
             "visible": true,
             "childCount": 1,
             "children": [
@@ -129,7 +129,7 @@
                 "id": "",
                 "className": "min-h-screen bg-ivory-100 flex flex-col",
                 "selectorHint": "div.min-h-screen.bg-ivory-100.flex",
-                "text": "居智通 个人中心 查看详情 管理后台 Ctrl K 业主 服务商 管理后台 业主用户 业主端 首页 3D效果图 装修计算器 灵感库 找装修公司 方案比价 施工工",
+                "text": "居智通 Ctrl K 业主 服务商 管理后台 业主用户 业主端 首页 3D效果图 装修计算器 灵感库 找装修公司 方案比价 施工工艺 避坑指南 问答社区 我的订",
                 "visible": true,
                 "childCount": 2,
                 "children": [
@@ -138,7 +138,7 @@
                     "id": "",
                     "className": "sticky top-0 z-50 bg-white/90 backdrop-blur-md border-b border-ivory-300 h-16 flex items-center px-4 md:px-6",
                     "selectorHint": "header.sticky.top-0.z-50",
-                    "text": "居智通 个人中心 查看详情 管理后台 Ctrl K 业主 服务商 管理后台 业主用户",
+                    "text": "居智通 Ctrl K 业主 服务商 管理后台 业主用户",
                     "visible": true,
                     "childCount": 1,
                     "children": [
@@ -147,9 +147,9 @@
                         "id": "",
                         "className": "flex items-center gap-4 w-full",
                         "selectorHint": "div.flex.items-center.gap-4",
-                        "text": "居智通 个人中心 查看详情 管理后台 Ctrl K 业主 服务商 管理后台 业主用户",
+                        "text": "居智通 Ctrl K 业主 服务商 管理后台 业主用户",
                         "visible": true,
-                        "childCount": 6,
+                        "childCount": 5,
                         "children": []
                       }
                     ]
@@ -226,7 +226,7 @@
       "ariaLabel": "",
       "title": "",
       "placeholder": "",
-      "text": "居智通 个人中心 查看详情 管理后台 Ctrl K 业主 服务商 管理后台 业主用户 业主端 首页 3D效果图 装修计算器 灵感库 找装修公司 方案比价 施工工艺 避坑指南 问答社区 我的订单 个人资料与收藏管理 页面功能开发中，敬请期待...",
+      "text": "居智通 Ctrl K 业主 服务商 管理后台 业主用户 业主端 首页 3D效果图 装修计算器 灵感库 找装修公司 方案比价 施工工艺 避坑指南 问答社区 我的订单 个人资料与收藏管理 页面功能开发中，敬请期待...",
       "href": "",
       "disabled": false,
       "visible": true,
@@ -487,7 +487,7 @@
       "ariaLabel": "",
       "title": "",
       "placeholder": "",
-      "text": "居智通 个人中心 查看详情 管理后台 Ctrl K 业主 服务商 管理后台 业主用户 业主端 首页 3D效果图 装修计算器 灵感库 找装修公司 方案比价 施工工艺 避坑指南 问答社区 我的订单 个人资料与收藏管理 页面功能开发中，敬请期待...",
+      "text": "居智通 Ctrl K 业主 服务商 管理后台 业主用户 业主端 首页 3D效果图 装修计算器 灵感库 找装修公司 方案比价 施工工艺 避坑指南 问答社区 我的订单 个人资料与收藏管理 页面功能开发中，敬请期待...",
       "href": "",
       "disabled": false,
       "visible": true,
@@ -516,7 +516,7 @@
       "ariaLabel": "",
       "title": "",
       "placeholder": "",
-      "text": "居智通 个人中心 查看详情 管理后台 Ctrl K 业主 服务商 管理后台 业主用户 业主端 首页 3D效果图 装修计算器 灵感库 找装修公司 方案比价 施工工艺 避坑指南 问答社区 我的订单 个人资料与收藏管理 页面功能开发中，敬请期待...",
+      "text": "居智通 Ctrl K 业主 服务商 管理后台 业主用户 业主端 首页 3D效果图 装修计算器 灵感库 找装修公司 方案比价 施工工艺 避坑指南 问答社区 我的订单 个人资料与收藏管理 页面功能开发中，敬请期待...",
       "href": "",
       "disabled": false,
       "visible": true,
@@ -545,7 +545,7 @@
       "ariaLabel": "",
       "title": "",
       "placeholder": "",
-      "text": "居智通 个人中心 查看详情 管理后台 Ctrl K 业主 服务商 管理后台 业主用户 业主端 首页 3D效果图 装修计算器 灵感库 找装修公司 方案比价 施工工艺 避坑指南 问答社区 我的订单 个人资料与收藏管理 页面功能开发中，敬请期待...",
+      "text": "居智通 Ctrl K 业主 服务商 管理后台 业主用户 业主端 首页 3D效果图 装修计算器 灵感库 找装修公司 方案比价 施工工艺 避坑指南 问答社区 我的订单 个人资料与收藏管理 页面功能开发中，敬请期待...",
       "href": "",
       "disabled": false,
       "visible": true,
@@ -574,7 +574,7 @@
       "ariaLabel": "",
       "title": "",
       "placeholder": "",
-      "text": "居智通 个人中心 查看详情 管理后台 Ctrl K 业主 服务商 管理后台 业主用户",
+      "text": "居智通 Ctrl K 业主 服务商 管理后台 业主用户",
       "href": "",
       "disabled": false,
       "visible": true,
@@ -603,11 +603,11 @@
       "ariaLabel": "",
       "title": "",
       "placeholder": "",
-      "text": "居智通 个人中心 查看详情 管理后台 Ctrl K 业主 服务商 管理后台 业主用户",
+      "text": "居智通 Ctrl K 业主 服务商 管理后台 业主用户",
       "href": "",
       "disabled": false,
       "visible": true,
-      "childCount": 6,
+      "childCount": 5,
       "rect": {
         "x": 24,
         "y": 12,
@@ -825,122 +825,6 @@
     },
     {
       "index": 21,
-      "tag": "nav",
-      "id": "",
-      "className": "hidden xl:flex items-center gap-1 shrink-0",
-      "selectorHint": "nav.hidden.xl:flex.items-center",
-      "name": "",
-      "type": "",
-      "role": "",
-      "ariaLabel": "",
-      "title": "",
-      "placeholder": "",
-      "text": "个人中心 查看详情 管理后台",
-      "href": "",
-      "disabled": false,
-      "visible": true,
-      "childCount": 3,
-      "rect": {
-        "x": 146,
-        "y": 16,
-        "width": 248,
-        "height": 32
-      },
-      "style": {
-        "display": "flex",
-        "visibility": "visible",
-        "opacity": "1"
-      }
-    },
-    {
-      "index": 22,
-      "tag": "a",
-      "id": "",
-      "className": "px-3 py-1.5 rounded-btn text-sm font-medium text-carbon-600 hover:bg-ivory-100 hover:text-carbon-900 transition-colors active",
-      "selectorHint": "a.px-3.py-1.5.rounded-btn",
-      "name": "",
-      "type": "",
-      "role": "",
-      "ariaLabel": "",
-      "title": "",
-      "placeholder": "",
-      "text": "个人中心",
-      "href": "/owner/profile",
-      "disabled": false,
-      "visible": true,
-      "childCount": 0,
-      "rect": {
-        "x": 146,
-        "y": 16,
-        "width": 80,
-        "height": 32
-      },
-      "style": {
-        "display": "block",
-        "visibility": "visible",
-        "opacity": "1"
-      }
-    },
-    {
-      "index": 23,
-      "tag": "a",
-      "id": "",
-      "className": "px-3 py-1.5 rounded-btn text-sm font-medium text-carbon-600 hover:bg-ivory-100 hover:text-carbon-900 transition-colors",
-      "selectorHint": "a.px-3.py-1.5.rounded-btn",
-      "name": "",
-      "type": "",
-      "role": "",
-      "ariaLabel": "",
-      "title": "",
-      "placeholder": "",
-      "text": "查看详情",
-      "href": "/owner/companies/company-001",
-      "disabled": false,
-      "visible": true,
-      "childCount": 0,
-      "rect": {
-        "x": 230,
-        "y": 16,
-        "width": 80,
-        "height": 32
-      },
-      "style": {
-        "display": "block",
-        "visibility": "visible",
-        "opacity": "1"
-      }
-    },
-    {
-      "index": 24,
-      "tag": "a",
-      "id": "",
-      "className": "px-3 py-1.5 rounded-btn text-sm font-medium text-carbon-600 hover:bg-ivory-100 hover:text-carbon-900 transition-colors",
-      "selectorHint": "a.px-3.py-1.5.rounded-btn",
-      "name": "",
-      "type": "",
-      "role": "",
-      "ariaLabel": "",
-      "title": "",
-      "placeholder": "",
-      "text": "管理后台",
-      "href": "/admin",
-      "disabled": false,
-      "visible": true,
-      "childCount": 0,
-      "rect": {
-        "x": 314,
-        "y": 16,
-        "width": 80,
-        "height": 32
-      },
-      "style": {
-        "display": "block",
-        "visibility": "visible",
-        "opacity": "1"
-      }
-    },
-    {
-      "index": 25,
       "tag": "button",
       "id": "",
       "className": "lg:hidden p-2 rounded-lg hover:bg-ivory-200 text-carbon-600 transition-colors",
@@ -969,7 +853,7 @@
       }
     },
     {
-      "index": 26,
+      "index": 22,
       "tag": "svg",
       "id": "",
       "className": "",
@@ -990,6 +874,122 @@
         "y": 0,
         "width": 0,
         "height": 0
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 23,
+      "tag": "path",
+      "id": "",
+      "className": "",
+      "selectorHint": "path",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "",
+      "href": "",
+      "disabled": false,
+      "visible": false,
+      "childCount": 0,
+      "rect": {
+        "x": 0,
+        "y": 0,
+        "width": 0,
+        "height": 0
+      },
+      "style": {
+        "display": "inline",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 24,
+      "tag": "path",
+      "id": "",
+      "className": "",
+      "selectorHint": "path",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "",
+      "href": "",
+      "disabled": false,
+      "visible": false,
+      "childCount": 0,
+      "rect": {
+        "x": 0,
+        "y": 0,
+        "width": 0,
+        "height": 0
+      },
+      "style": {
+        "display": "inline",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 25,
+      "tag": "div",
+      "id": "",
+      "className": "hidden md:flex items-center bg-ivory-100 border border-ivory-300 rounded-btn px-3 py-2 gap-2 flex-1 max-w-md mx-6",
+      "selectorHint": "div.hidden.md:flex.items-center",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "Ctrl K",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 3,
+      "rect": {
+        "x": 170,
+        "y": 12,
+        "width": 448,
+        "height": 40
+      },
+      "style": {
+        "display": "flex",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 26,
+      "tag": "svg",
+      "id": "",
+      "className": "",
+      "selectorHint": "svg",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 2,
+      "rect": {
+        "x": 183,
+        "y": 24,
+        "width": 16,
+        "height": 16
       },
       "style": {
         "display": "block",
@@ -1012,126 +1012,10 @@
       "text": "",
       "href": "",
       "disabled": false,
-      "visible": false,
-      "childCount": 0,
-      "rect": {
-        "x": 0,
-        "y": 0,
-        "width": 0,
-        "height": 0
-      },
-      "style": {
-        "display": "inline",
-        "visibility": "visible",
-        "opacity": "1"
-      }
-    },
-    {
-      "index": 28,
-      "tag": "path",
-      "id": "",
-      "className": "",
-      "selectorHint": "path",
-      "name": "",
-      "type": "",
-      "role": "",
-      "ariaLabel": "",
-      "title": "",
-      "placeholder": "",
-      "text": "",
-      "href": "",
-      "disabled": false,
-      "visible": false,
-      "childCount": 0,
-      "rect": {
-        "x": 0,
-        "y": 0,
-        "width": 0,
-        "height": 0
-      },
-      "style": {
-        "display": "inline",
-        "visibility": "visible",
-        "opacity": "1"
-      }
-    },
-    {
-      "index": 29,
-      "tag": "div",
-      "id": "",
-      "className": "hidden md:flex items-center bg-ivory-100 border border-ivory-300 rounded-btn px-3 py-2 gap-2 flex-1 max-w-md mx-6",
-      "selectorHint": "div.hidden.md:flex.items-center",
-      "name": "",
-      "type": "",
-      "role": "",
-      "ariaLabel": "",
-      "title": "",
-      "placeholder": "",
-      "text": "Ctrl K",
-      "href": "",
-      "disabled": false,
-      "visible": true,
-      "childCount": 3,
-      "rect": {
-        "x": 434,
-        "y": 12,
-        "width": 448,
-        "height": 40
-      },
-      "style": {
-        "display": "flex",
-        "visibility": "visible",
-        "opacity": "1"
-      }
-    },
-    {
-      "index": 30,
-      "tag": "svg",
-      "id": "",
-      "className": "",
-      "selectorHint": "svg",
-      "name": "",
-      "type": "",
-      "role": "",
-      "ariaLabel": "",
-      "title": "",
-      "placeholder": "",
-      "text": "",
-      "href": "",
-      "disabled": false,
-      "visible": true,
-      "childCount": 2,
-      "rect": {
-        "x": 447,
-        "y": 24,
-        "width": 16,
-        "height": 16
-      },
-      "style": {
-        "display": "block",
-        "visibility": "visible",
-        "opacity": "1"
-      }
-    },
-    {
-      "index": 31,
-      "tag": "path",
-      "id": "",
-      "className": "",
-      "selectorHint": "path",
-      "name": "",
-      "type": "",
-      "role": "",
-      "ariaLabel": "",
-      "title": "",
-      "placeholder": "",
-      "text": "",
-      "href": "",
-      "disabled": false,
       "visible": true,
       "childCount": 0,
       "rect": {
-        "x": 458,
+        "x": 194,
         "y": 35,
         "width": 3,
         "height": 3
@@ -1143,7 +1027,7 @@
       }
     },
     {
-      "index": 32,
+      "index": 28,
       "tag": "circle",
       "id": "",
       "className": "",
@@ -1160,7 +1044,7 @@
       "visible": true,
       "childCount": 0,
       "rect": {
-        "x": 449,
+        "x": 185,
         "y": 26,
         "width": 11,
         "height": 11
@@ -1172,7 +1056,7 @@
       }
     },
     {
-      "index": 33,
+      "index": 29,
       "tag": "input",
       "id": "",
       "className": "bg-transparent outline-none flex-1 text-sm text-carbon-800 placeholder-ivory-500",
@@ -1189,7 +1073,7 @@
       "visible": true,
       "childCount": 0,
       "rect": {
-        "x": 471,
+        "x": 207,
         "y": 22,
         "width": 340,
         "height": 20
@@ -1201,7 +1085,7 @@
       }
     },
     {
-      "index": 34,
+      "index": 30,
       "tag": "kbd",
       "id": "",
       "className": "hidden lg:inline-flex text-[10px] px-1.5 py-0.5 rounded border border-ivory-300 bg-white text-ivory-600 font-mono",
@@ -1218,7 +1102,7 @@
       "visible": true,
       "childCount": 0,
       "rect": {
-        "x": 819,
+        "x": 555,
         "y": 21,
         "width": 50,
         "height": 22
@@ -1230,7 +1114,7 @@
       }
     },
     {
-      "index": 35,
+      "index": 31,
       "tag": "div",
       "id": "",
       "className": "hidden md:flex items-center bg-ivory-100 rounded-btn p-1 ml-auto shrink-0",
@@ -1259,7 +1143,7 @@
       }
     },
     {
-      "index": 36,
+      "index": 32,
       "tag": "button",
       "id": "",
       "className": "px-4 py-1.5 text-sm font-medium rounded-md transition-all duration-200 bg-white text-terracotta-600 shadow-sm",
@@ -1288,7 +1172,7 @@
       }
     },
     {
-      "index": 37,
+      "index": 33,
       "tag": "button",
       "id": "",
       "className": "px-4 py-1.5 text-sm font-medium rounded-md transition-all duration-200 text-carbon-600 hover:text-carbon-800",
@@ -1317,7 +1201,7 @@
       }
     },
     {
-      "index": 38,
+      "index": 34,
       "tag": "button",
       "id": "",
       "className": "px-4 py-1.5 text-sm font-medium rounded-md transition-all duration-200 text-carbon-600 hover:text-carbon-800",
@@ -1346,7 +1230,7 @@
       }
     },
     {
-      "index": 39,
+      "index": 35,
       "tag": "div",
       "id": "",
       "className": "flex items-center gap-2 ml-auto md:ml-0 md:ml-4 shrink-0",
@@ -1375,7 +1259,7 @@
       }
     },
     {
-      "index": 40,
+      "index": 36,
       "tag": "button",
       "id": "",
       "className": "p-2 rounded-lg hover:bg-ivory-200 text-carbon-600 transition-colors",
@@ -1404,7 +1288,7 @@
       }
     },
     {
-      "index": 41,
+      "index": 37,
       "tag": "svg",
       "id": "",
       "className": "",
@@ -1433,7 +1317,7 @@
       }
     },
     {
-      "index": 42,
+      "index": 38,
       "tag": "path",
       "id": "",
       "className": "",
@@ -1462,7 +1346,7 @@
       }
     },
     {
-      "index": 43,
+      "index": 39,
       "tag": "button",
       "id": "",
       "className": "relative p-2 rounded-lg hover:bg-ivory-200 text-carbon-600 transition-colors",
@@ -1491,7 +1375,7 @@
       }
     },
     {
-      "index": 44,
+      "index": 40,
       "tag": "svg",
       "id": "",
       "className": "",
@@ -1520,7 +1404,7 @@
       }
     },
     {
-      "index": 45,
+      "index": 41,
       "tag": "path",
       "id": "",
       "className": "",
@@ -1549,7 +1433,7 @@
       }
     },
     {
-      "index": 46,
+      "index": 42,
       "tag": "path",
       "id": "",
       "className": "",
@@ -1578,7 +1462,7 @@
       }
     },
     {
-      "index": 47,
+      "index": 43,
       "tag": "span",
       "id": "",
       "className": "absolute top-1.5 right-1.5 w-2 h-2 rounded-full bg-terracotta-500 ring-2 ring-white",
@@ -1607,7 +1491,7 @@
       }
     },
     {
-      "index": 48,
+      "index": 44,
       "tag": "button",
       "id": "",
       "className": "flex items-center gap-2 pl-1 pr-2 py-1 rounded-lg hover:bg-ivory-200 transition-colors",
@@ -1636,7 +1520,7 @@
       }
     },
     {
-      "index": 49,
+      "index": 45,
       "tag": "div",
       "id": "",
       "className": "w-8 h-8 rounded-full bg-gradient-to-br from-wood-300 to-haze-400 flex items-center justify-center",
@@ -1665,7 +1549,7 @@
       }
     },
     {
-      "index": 50,
+      "index": 46,
       "tag": "svg",
       "id": "",
       "className": "",
@@ -1694,7 +1578,7 @@
       }
     },
     {
-      "index": 51,
+      "index": 47,
       "tag": "path",
       "id": "",
       "className": "",
@@ -1723,7 +1607,7 @@
       }
     },
     {
-      "index": 52,
+      "index": 48,
       "tag": "circle",
       "id": "",
       "className": "",
@@ -1752,7 +1636,7 @@
       }
     },
     {
-      "index": 53,
+      "index": 49,
       "tag": "span",
       "id": "",
       "className": "hidden sm:block text-sm font-medium text-carbon-700 max-w-[80px] truncate",
@@ -1781,7 +1665,7 @@
       }
     },
     {
-      "index": 54,
+      "index": 50,
       "tag": "svg",
       "id": "",
       "className": "",
@@ -1810,7 +1694,7 @@
       }
     },
     {
-      "index": 55,
+      "index": 51,
       "tag": "path",
       "id": "",
       "className": "",
@@ -1839,7 +1723,7 @@
       }
     },
     {
-      "index": 56,
+      "index": 52,
       "tag": "div",
       "id": "",
       "className": "flex flex-1 min-h-0",
@@ -1868,7 +1752,7 @@
       }
     },
     {
-      "index": 57,
+      "index": 53,
       "tag": "aside",
       "id": "",
       "className": "hidden lg:block shrink-0 h-[calc(100vh-4rem)] sticky top-16 overflow-hidden border-r border-ivory-300 bg-white",
@@ -1897,7 +1781,7 @@
       }
     },
     {
-      "index": 58,
+      "index": 54,
       "tag": "div",
       "id": "",
       "className": "h-full overflow-y-auto scrollbar-thin py-4 px-3",
@@ -1926,7 +1810,7 @@
       }
     },
     {
-      "index": 59,
+      "index": 55,
       "tag": "div",
       "id": "",
       "className": "px-3 mb-2 text-[11px] uppercase tracking-wider font-semibold text-ivory-500",
@@ -1955,7 +1839,7 @@
       }
     },
     {
-      "index": 60,
+      "index": 56,
       "tag": "nav",
       "id": "",
       "className": "flex flex-col gap-1",
@@ -1984,7 +1868,7 @@
       }
     },
     {
-      "index": 61,
+      "index": 57,
       "tag": "a",
       "id": "",
       "className": "group flex items-center gap-3 px-3 py-2.5 rounded-btn text-sm font-medium transition-all duration-200 text-carbon-600 hover:bg-ivory-100 hover:text-carbon-800 border border-transparent",
@@ -2013,7 +1897,7 @@
       }
     },
     {
-      "index": 62,
+      "index": 58,
       "tag": "svg",
       "id": "",
       "className": "",
@@ -2042,7 +1926,7 @@
       }
     },
     {
-      "index": 63,
+      "index": 59,
       "tag": "path",
       "id": "",
       "className": "",
@@ -2071,7 +1955,7 @@
       }
     },
     {
-      "index": 64,
+      "index": 60,
       "tag": "path",
       "id": "",
       "className": "",
@@ -2100,7 +1984,7 @@
       }
     },
     {
-      "index": 65,
+      "index": 61,
       "tag": "span",
       "id": "",
       "className": "",
@@ -2129,7 +2013,7 @@
       }
     },
     {
-      "index": 66,
+      "index": 62,
       "tag": "a",
       "id": "",
       "className": "group flex items-center gap-3 px-3 py-2.5 rounded-btn text-sm font-medium transition-all duration-200 text-carbon-600 hover:bg-ivory-100 hover:text-carbon-800 border border-transparent",
@@ -2158,7 +2042,7 @@
       }
     },
     {
-      "index": 67,
+      "index": 63,
       "tag": "svg",
       "id": "",
       "className": "",
@@ -2187,7 +2071,7 @@
       }
     },
     {
-      "index": 68,
+      "index": 64,
       "tag": "path",
       "id": "",
       "className": "",
@@ -2216,7 +2100,7 @@
       }
     },
     {
-      "index": 69,
+      "index": 65,
       "tag": "path",
       "id": "",
       "className": "",
@@ -2245,7 +2129,7 @@
       }
     },
     {
-      "index": 70,
+      "index": 66,
       "tag": "path",
       "id": "",
       "className": "",
@@ -2274,7 +2158,7 @@
       }
     },
     {
-      "index": 71,
+      "index": 67,
       "tag": "span",
       "id": "",
       "className": "",
@@ -2303,7 +2187,7 @@
       }
     },
     {
-      "index": 72,
+      "index": 68,
       "tag": "a",
       "id": "",
       "className": "group flex items-center gap-3 px-3 py-2.5 rounded-btn text-sm font-medium transition-all duration-200 text-carbon-600 hover:bg-ivory-100 hover:text-carbon-800 border border-transparent",
@@ -2332,7 +2216,7 @@
       }
     },
     {
-      "index": 73,
+      "index": 69,
       "tag": "svg",
       "id": "",
       "className": "",
@@ -2361,7 +2245,7 @@
       }
     },
     {
-      "index": 74,
+      "index": 70,
       "tag": "rect",
       "id": "",
       "className": "",
@@ -2390,7 +2274,7 @@
       }
     },
     {
-      "index": 75,
+      "index": 71,
       "tag": "line",
       "id": "",
       "className": "",
@@ -2419,7 +2303,7 @@
       }
     },
     {
-      "index": 76,
+      "index": 72,
       "tag": "line",
       "id": "",
       "className": "",
@@ -2448,7 +2332,7 @@
       }
     },
     {
-      "index": 77,
+      "index": 73,
       "tag": "path",
       "id": "",
       "className": "",
@@ -2467,6 +2351,122 @@
       "rect": {
         "x": 36,
         "y": 217,
+        "width": 0,
+        "height": 0
+      },
+      "style": {
+        "display": "inline",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 74,
+      "tag": "path",
+      "id": "",
+      "className": "",
+      "selectorHint": "path",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "",
+      "href": "",
+      "disabled": false,
+      "visible": false,
+      "childCount": 0,
+      "rect": {
+        "x": 33,
+        "y": 217,
+        "width": 0,
+        "height": 0
+      },
+      "style": {
+        "display": "inline",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 75,
+      "tag": "path",
+      "id": "",
+      "className": "",
+      "selectorHint": "path",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "",
+      "href": "",
+      "disabled": false,
+      "visible": false,
+      "childCount": 0,
+      "rect": {
+        "x": 30,
+        "y": 217,
+        "width": 0,
+        "height": 0
+      },
+      "style": {
+        "display": "inline",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 76,
+      "tag": "path",
+      "id": "",
+      "className": "",
+      "selectorHint": "path",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "",
+      "href": "",
+      "disabled": false,
+      "visible": false,
+      "childCount": 0,
+      "rect": {
+        "x": 33,
+        "y": 220,
+        "width": 0,
+        "height": 0
+      },
+      "style": {
+        "display": "inline",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 77,
+      "tag": "path",
+      "id": "",
+      "className": "",
+      "selectorHint": "path",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "",
+      "href": "",
+      "disabled": false,
+      "visible": false,
+      "childCount": 0,
+      "rect": {
+        "x": 30,
+        "y": 220,
         "width": 0,
         "height": 0
       },
@@ -2495,7 +2495,7 @@
       "childCount": 0,
       "rect": {
         "x": 33,
-        "y": 217,
+        "y": 223,
         "width": 0,
         "height": 0
       },
@@ -2524,7 +2524,7 @@
       "childCount": 0,
       "rect": {
         "x": 30,
-        "y": 217,
+        "y": 223,
         "width": 0,
         "height": 0
       },
@@ -2536,122 +2536,6 @@
     },
     {
       "index": 80,
-      "tag": "path",
-      "id": "",
-      "className": "",
-      "selectorHint": "path",
-      "name": "",
-      "type": "",
-      "role": "",
-      "ariaLabel": "",
-      "title": "",
-      "placeholder": "",
-      "text": "",
-      "href": "",
-      "disabled": false,
-      "visible": false,
-      "childCount": 0,
-      "rect": {
-        "x": 33,
-        "y": 220,
-        "width": 0,
-        "height": 0
-      },
-      "style": {
-        "display": "inline",
-        "visibility": "visible",
-        "opacity": "1"
-      }
-    },
-    {
-      "index": 81,
-      "tag": "path",
-      "id": "",
-      "className": "",
-      "selectorHint": "path",
-      "name": "",
-      "type": "",
-      "role": "",
-      "ariaLabel": "",
-      "title": "",
-      "placeholder": "",
-      "text": "",
-      "href": "",
-      "disabled": false,
-      "visible": false,
-      "childCount": 0,
-      "rect": {
-        "x": 30,
-        "y": 220,
-        "width": 0,
-        "height": 0
-      },
-      "style": {
-        "display": "inline",
-        "visibility": "visible",
-        "opacity": "1"
-      }
-    },
-    {
-      "index": 82,
-      "tag": "path",
-      "id": "",
-      "className": "",
-      "selectorHint": "path",
-      "name": "",
-      "type": "",
-      "role": "",
-      "ariaLabel": "",
-      "title": "",
-      "placeholder": "",
-      "text": "",
-      "href": "",
-      "disabled": false,
-      "visible": false,
-      "childCount": 0,
-      "rect": {
-        "x": 33,
-        "y": 223,
-        "width": 0,
-        "height": 0
-      },
-      "style": {
-        "display": "inline",
-        "visibility": "visible",
-        "opacity": "1"
-      }
-    },
-    {
-      "index": 83,
-      "tag": "path",
-      "id": "",
-      "className": "",
-      "selectorHint": "path",
-      "name": "",
-      "type": "",
-      "role": "",
-      "ariaLabel": "",
-      "title": "",
-      "placeholder": "",
-      "text": "",
-      "href": "",
-      "disabled": false,
-      "visible": false,
-      "childCount": 0,
-      "rect": {
-        "x": 30,
-        "y": 223,
-        "width": 0,
-        "height": 0
-      },
-      "style": {
-        "display": "inline",
-        "visibility": "visible",
-        "opacity": "1"
-      }
-    },
-    {
-      "index": 84,
       "tag": "span",
       "id": "",
       "className": "",
@@ -2680,7 +2564,7 @@
       }
     },
     {
-      "index": 85,
+      "index": 81,
       "tag": "a",
       "id": "",
       "className": "group flex items-center gap-3 px-3 py-2.5 rounded-btn text-sm font-medium transition-all duration-200 text-carbon-600 hover:bg-ivory-100 hover:text-carbon-800 border border-transparent",
@@ -2709,7 +2593,7 @@
       }
     },
     {
-      "index": 86,
+      "index": 82,
       "tag": "svg",
       "id": "",
       "className": "",
@@ -2738,7 +2622,7 @@
       }
     },
     {
-      "index": 87,
+      "index": 83,
       "tag": "path",
       "id": "",
       "className": "",
@@ -2767,7 +2651,7 @@
       }
     },
     {
-      "index": 88,
+      "index": 84,
       "tag": "circle",
       "id": "",
       "className": "",
@@ -2796,7 +2680,7 @@
       }
     },
     {
-      "index": 89,
+      "index": 85,
       "tag": "circle",
       "id": "",
       "className": "",
@@ -2825,7 +2709,7 @@
       }
     },
     {
-      "index": 90,
+      "index": 86,
       "tag": "circle",
       "id": "",
       "className": "",
@@ -2854,7 +2738,7 @@
       }
     },
     {
-      "index": 91,
+      "index": 87,
       "tag": "circle",
       "id": "",
       "className": "",
@@ -2883,7 +2767,7 @@
       }
     },
     {
-      "index": 92,
+      "index": 88,
       "tag": "span",
       "id": "",
       "className": "",
@@ -2912,7 +2796,7 @@
       }
     },
     {
-      "index": 93,
+      "index": 89,
       "tag": "a",
       "id": "",
       "className": "group flex items-center gap-3 px-3 py-2.5 rounded-btn text-sm font-medium transition-all duration-200 text-carbon-600 hover:bg-ivory-100 hover:text-carbon-800 border border-transparent",
@@ -2941,7 +2825,7 @@
       }
     },
     {
-      "index": 94,
+      "index": 90,
       "tag": "svg",
       "id": "",
       "className": "",
@@ -2970,7 +2854,7 @@
       }
     },
     {
-      "index": 95,
+      "index": 91,
       "tag": "path",
       "id": "",
       "className": "",
@@ -2999,7 +2883,7 @@
       }
     },
     {
-      "index": 96,
+      "index": 92,
       "tag": "path",
       "id": "",
       "className": "",
@@ -3028,7 +2912,7 @@
       }
     },
     {
-      "index": 97,
+      "index": 93,
       "tag": "path",
       "id": "",
       "className": "",
@@ -3057,7 +2941,7 @@
       }
     },
     {
-      "index": 98,
+      "index": 94,
       "tag": "path",
       "id": "",
       "className": "",
@@ -3086,7 +2970,7 @@
       }
     },
     {
-      "index": 99,
+      "index": 95,
       "tag": "path",
       "id": "",
       "className": "",
@@ -3115,7 +2999,7 @@
       }
     },
     {
-      "index": 100,
+      "index": 96,
       "tag": "path",
       "id": "",
       "className": "",
@@ -3144,7 +3028,7 @@
       }
     },
     {
-      "index": 101,
+      "index": 97,
       "tag": "path",
       "id": "",
       "className": "",
@@ -3173,7 +3057,7 @@
       }
     },
     {
-      "index": 102,
+      "index": 98,
       "tag": "span",
       "id": "",
       "className": "",
@@ -3202,7 +3086,7 @@
       }
     },
     {
-      "index": 103,
+      "index": 99,
       "tag": "a",
       "id": "",
       "className": "group flex items-center gap-3 px-3 py-2.5 rounded-btn text-sm font-medium transition-all duration-200 text-carbon-600 hover:bg-ivory-100 hover:text-carbon-800 border border-transparent",
@@ -3231,7 +3115,7 @@
       }
     },
     {
-      "index": 104,
+      "index": 100,
       "tag": "svg",
       "id": "",
       "className": "",
@@ -3260,7 +3144,7 @@
       }
     },
     {
-      "index": 105,
+      "index": 101,
       "tag": "circle",
       "id": "",
       "className": "",
@@ -3289,7 +3173,7 @@
       }
     },
     {
-      "index": 106,
+      "index": 102,
       "tag": "circle",
       "id": "",
       "className": "",
@@ -3318,7 +3202,7 @@
       }
     },
     {
-      "index": 107,
+      "index": 103,
       "tag": "path",
       "id": "",
       "className": "",
@@ -3347,7 +3231,7 @@
       }
     },
     {
-      "index": 108,
+      "index": 104,
       "tag": "path",
       "id": "",
       "className": "",
@@ -3376,7 +3260,7 @@
       }
     },
     {
-      "index": 109,
+      "index": 105,
       "tag": "span",
       "id": "",
       "className": "",
@@ -3405,7 +3289,7 @@
       }
     },
     {
-      "index": 110,
+      "index": 106,
       "tag": "a",
       "id": "",
       "className": "group flex items-center gap-3 px-3 py-2.5 rounded-btn text-sm font-medium transition-all duration-200 text-carbon-600 hover:bg-ivory-100 hover:text-carbon-800 border border-transparent",
@@ -3434,7 +3318,7 @@
       }
     },
     {
-      "index": 111,
+      "index": 107,
       "tag": "svg",
       "id": "",
       "className": "",
@@ -3463,7 +3347,7 @@
       }
     },
     {
-      "index": 112,
+      "index": 108,
       "tag": "path",
       "id": "",
       "className": "",
@@ -3492,7 +3376,7 @@
       }
     },
     {
-      "index": 113,
+      "index": 109,
       "tag": "span",
       "id": "",
       "className": "",
@@ -3521,7 +3405,7 @@
       }
     },
     {
-      "index": 114,
+      "index": 110,
       "tag": "a",
       "id": "",
       "className": "group flex items-center gap-3 px-3 py-2.5 rounded-btn text-sm font-medium transition-all duration-200 text-carbon-600 hover:bg-ivory-100 hover:text-carbon-800 border border-transparent",
@@ -3550,7 +3434,7 @@
       }
     },
     {
-      "index": 115,
+      "index": 111,
       "tag": "svg",
       "id": "",
       "className": "",
@@ -3579,7 +3463,7 @@
       }
     },
     {
-      "index": 116,
+      "index": 112,
       "tag": "path",
       "id": "",
       "className": "",
@@ -3608,7 +3492,7 @@
       }
     },
     {
-      "index": 117,
+      "index": 113,
       "tag": "path",
       "id": "",
       "className": "",
@@ -3637,7 +3521,7 @@
       }
     },
     {
-      "index": 118,
+      "index": 114,
       "tag": "path",
       "id": "",
       "className": "",
@@ -3666,7 +3550,7 @@
       }
     },
     {
-      "index": 119,
+      "index": 115,
       "tag": "span",
       "id": "",
       "className": "",
@@ -3695,7 +3579,7 @@
       }
     },
     {
-      "index": 120,
+      "index": 116,
       "tag": "a",
       "id": "",
       "className": "group flex items-center gap-3 px-3 py-2.5 rounded-btn text-sm font-medium transition-all duration-200 text-carbon-600 hover:bg-ivory-100 hover:text-carbon-800 border border-transparent",
@@ -3724,7 +3608,7 @@
       }
     },
     {
-      "index": 121,
+      "index": 117,
       "tag": "svg",
       "id": "",
       "className": "",
@@ -3753,7 +3637,7 @@
       }
     },
     {
-      "index": 122,
+      "index": 118,
       "tag": "path",
       "id": "",
       "className": "",
@@ -3782,7 +3666,7 @@
       }
     },
     {
-      "index": 123,
+      "index": 119,
       "tag": "path",
       "id": "",
       "className": "",
@@ -3811,7 +3695,7 @@
       }
     },
     {
-      "index": 124,
+      "index": 120,
       "tag": "path",
       "id": "",
       "className": "",
@@ -3840,7 +3724,7 @@
       }
     },
     {
-      "index": 125,
+      "index": 121,
       "tag": "span",
       "id": "",
       "className": "",
@@ -3869,7 +3753,7 @@
       }
     },
     {
-      "index": 126,
+      "index": 122,
       "tag": "a",
       "id": "",
       "className": "group flex items-center gap-3 px-3 py-2.5 rounded-btn text-sm font-medium transition-all duration-200 text-carbon-600 hover:bg-ivory-100 hover:text-carbon-800 border border-transparent",
@@ -3898,7 +3782,7 @@
       }
     },
     {
-      "index": 127,
+      "index": 123,
       "tag": "svg",
       "id": "",
       "className": "",
@@ -3927,7 +3811,7 @@
       }
     },
     {
-      "index": 128,
+      "index": 124,
       "tag": "circle",
       "id": "",
       "className": "",
@@ -3956,7 +3840,7 @@
       }
     },
     {
-      "index": 129,
+      "index": 125,
       "tag": "circle",
       "id": "",
       "className": "",
@@ -3985,7 +3869,7 @@
       }
     },
     {
-      "index": 130,
+      "index": 126,
       "tag": "path",
       "id": "",
       "className": "",
@@ -4014,7 +3898,7 @@
       }
     },
     {
-      "index": 131,
+      "index": 127,
       "tag": "span",
       "id": "",
       "className": "",
@@ -4043,7 +3927,7 @@
       }
     },
     {
-      "index": 132,
+      "index": 128,
       "tag": "div",
       "id": "",
       "className": "fixed inset-0 top-16 z-40 bg-black/30 lg:hidden backdrop-blur-sm",
@@ -4072,7 +3956,7 @@
       }
     },
     {
-      "index": 133,
+      "index": 129,
       "tag": "aside",
       "id": "",
       "className": "fixed lg:hidden top-16 left-0 z-50 w-64 h-[calc(100vh-4rem)] bg-white border-r border-ivory-300 overflow-y-auto scrollbar-thin py-4 px-3",
@@ -4101,7 +3985,7 @@
       }
     },
     {
-      "index": 134,
+      "index": 130,
       "tag": "nav",
       "id": "",
       "className": "flex flex-col gap-1",
@@ -4130,7 +4014,7 @@
       }
     },
     {
-      "index": 135,
+      "index": 131,
       "tag": "a",
       "id": "",
       "className": "flex items-center gap-3 px-3 py-2.5 rounded-btn text-sm font-medium transition-all duration-200 text-carbon-600 hover:bg-ivory-100 border border-transparent",
@@ -4159,7 +4043,7 @@
       }
     },
     {
-      "index": 136,
+      "index": 132,
       "tag": "svg",
       "id": "",
       "className": "",
@@ -4188,7 +4072,7 @@
       }
     },
     {
-      "index": 137,
+      "index": 133,
       "tag": "path",
       "id": "",
       "className": "",
@@ -4212,6 +4096,122 @@
       },
       "style": {
         "display": "inline",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 134,
+      "tag": "path",
+      "id": "",
+      "className": "",
+      "selectorHint": "path",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "",
+      "href": "",
+      "disabled": false,
+      "visible": false,
+      "childCount": 0,
+      "rect": {
+        "x": 0,
+        "y": 0,
+        "width": 0,
+        "height": 0
+      },
+      "style": {
+        "display": "inline",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 135,
+      "tag": "span",
+      "id": "",
+      "className": "",
+      "selectorHint": "span",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "首页",
+      "href": "",
+      "disabled": false,
+      "visible": false,
+      "childCount": 0,
+      "rect": {
+        "x": 0,
+        "y": 0,
+        "width": 0,
+        "height": 0
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 136,
+      "tag": "a",
+      "id": "",
+      "className": "flex items-center gap-3 px-3 py-2.5 rounded-btn text-sm font-medium transition-all duration-200 text-carbon-600 hover:bg-ivory-100 border border-transparent",
+      "selectorHint": "a.flex.items-center.gap-3",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "3D效果图",
+      "href": "/owner/3d-generator",
+      "disabled": false,
+      "visible": false,
+      "childCount": 2,
+      "rect": {
+        "x": 0,
+        "y": 0,
+        "width": 0,
+        "height": 0
+      },
+      "style": {
+        "display": "flex",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 137,
+      "tag": "svg",
+      "id": "",
+      "className": "",
+      "selectorHint": "svg",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "",
+      "href": "",
+      "disabled": false,
+      "visible": false,
+      "childCount": 3,
+      "rect": {
+        "x": 0,
+        "y": 0,
+        "width": 0,
+        "height": 0
+      },
+      "style": {
+        "display": "block",
         "visibility": "visible",
         "opacity": "1"
       }
@@ -4247,17 +4247,17 @@
     },
     {
       "index": 139,
-      "tag": "span",
+      "tag": "path",
       "id": "",
       "className": "",
-      "selectorHint": "span",
+      "selectorHint": "path",
       "name": "",
       "type": "",
       "role": "",
       "ariaLabel": "",
       "title": "",
       "placeholder": "",
-      "text": "首页",
+      "text": "",
       "href": "",
       "disabled": false,
       "visible": false,
@@ -4269,46 +4269,17 @@
         "height": 0
       },
       "style": {
-        "display": "block",
+        "display": "inline",
         "visibility": "visible",
         "opacity": "1"
       }
     },
     {
       "index": 140,
-      "tag": "a",
-      "id": "",
-      "className": "flex items-center gap-3 px-3 py-2.5 rounded-btn text-sm font-medium transition-all duration-200 text-carbon-600 hover:bg-ivory-100 border border-transparent",
-      "selectorHint": "a.flex.items-center.gap-3",
-      "name": "",
-      "type": "",
-      "role": "",
-      "ariaLabel": "",
-      "title": "",
-      "placeholder": "",
-      "text": "3D效果图",
-      "href": "/owner/3d-generator",
-      "disabled": false,
-      "visible": false,
-      "childCount": 2,
-      "rect": {
-        "x": 0,
-        "y": 0,
-        "width": 0,
-        "height": 0
-      },
-      "style": {
-        "display": "flex",
-        "visibility": "visible",
-        "opacity": "1"
-      }
-    },
-    {
-      "index": 141,
-      "tag": "svg",
+      "tag": "path",
       "id": "",
       "className": "",
-      "selectorHint": "svg",
+      "selectorHint": "path",
       "name": "",
       "type": "",
       "role": "",
@@ -4319,7 +4290,36 @@
       "href": "",
       "disabled": false,
       "visible": false,
-      "childCount": 3,
+      "childCount": 0,
+      "rect": {
+        "x": 0,
+        "y": 0,
+        "width": 0,
+        "height": 0
+      },
+      "style": {
+        "display": "inline",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 141,
+      "tag": "span",
+      "id": "",
+      "className": "",
+      "selectorHint": "span",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "3D效果图",
+      "href": "",
+      "disabled": false,
+      "visible": false,
+      "childCount": 0,
       "rect": {
         "x": 0,
         "y": 0,
@@ -4334,122 +4334,6 @@
     },
     {
       "index": 142,
-      "tag": "path",
-      "id": "",
-      "className": "",
-      "selectorHint": "path",
-      "name": "",
-      "type": "",
-      "role": "",
-      "ariaLabel": "",
-      "title": "",
-      "placeholder": "",
-      "text": "",
-      "href": "",
-      "disabled": false,
-      "visible": false,
-      "childCount": 0,
-      "rect": {
-        "x": 0,
-        "y": 0,
-        "width": 0,
-        "height": 0
-      },
-      "style": {
-        "display": "inline",
-        "visibility": "visible",
-        "opacity": "1"
-      }
-    },
-    {
-      "index": 143,
-      "tag": "path",
-      "id": "",
-      "className": "",
-      "selectorHint": "path",
-      "name": "",
-      "type": "",
-      "role": "",
-      "ariaLabel": "",
-      "title": "",
-      "placeholder": "",
-      "text": "",
-      "href": "",
-      "disabled": false,
-      "visible": false,
-      "childCount": 0,
-      "rect": {
-        "x": 0,
-        "y": 0,
-        "width": 0,
-        "height": 0
-      },
-      "style": {
-        "display": "inline",
-        "visibility": "visible",
-        "opacity": "1"
-      }
-    },
-    {
-      "index": 144,
-      "tag": "path",
-      "id": "",
-      "className": "",
-      "selectorHint": "path",
-      "name": "",
-      "type": "",
-      "role": "",
-      "ariaLabel": "",
-      "title": "",
-      "placeholder": "",
-      "text": "",
-      "href": "",
-      "disabled": false,
-      "visible": false,
-      "childCount": 0,
-      "rect": {
-        "x": 0,
-        "y": 0,
-        "width": 0,
-        "height": 0
-      },
-      "style": {
-        "display": "inline",
-        "visibility": "visible",
-        "opacity": "1"
-      }
-    },
-    {
-      "index": 145,
-      "tag": "span",
-      "id": "",
-      "className": "",
-      "selectorHint": "span",
-      "name": "",
-      "type": "",
-      "role": "",
-      "ariaLabel": "",
-      "title": "",
-      "placeholder": "",
-      "text": "3D效果图",
-      "href": "",
-      "disabled": false,
-      "visible": false,
-      "childCount": 0,
-      "rect": {
-        "x": 0,
-        "y": 0,
-        "width": 0,
-        "height": 0
-      },
-      "style": {
-        "display": "block",
-        "visibility": "visible",
-        "opacity": "1"
-      }
-    },
-    {
-      "index": 146,
       "tag": "a",
       "id": "",
       "className": "flex items-center gap-3 px-3 py-2.5 rounded-btn text-sm font-medium transition-all duration-200 text-carbon-600 hover:bg-ivory-100 border border-transparent",
@@ -4478,7 +4362,7 @@
       }
     },
     {
-      "index": 147,
+      "index": 143,
       "tag": "svg",
       "id": "",
       "className": "",
@@ -4507,7 +4391,7 @@
       }
     },
     {
-      "index": 148,
+      "index": 144,
       "tag": "rect",
       "id": "",
       "className": "",
@@ -4536,7 +4420,7 @@
       }
     },
     {
-      "index": 149,
+      "index": 145,
       "tag": "line",
       "id": "",
       "className": "",
@@ -4565,11 +4449,127 @@
       }
     },
     {
-      "index": 150,
+      "index": 146,
       "tag": "line",
       "id": "",
       "className": "",
       "selectorHint": "line",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "",
+      "href": "",
+      "disabled": false,
+      "visible": false,
+      "childCount": 0,
+      "rect": {
+        "x": 0,
+        "y": 0,
+        "width": 0,
+        "height": 0
+      },
+      "style": {
+        "display": "inline",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 147,
+      "tag": "path",
+      "id": "",
+      "className": "",
+      "selectorHint": "path",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "",
+      "href": "",
+      "disabled": false,
+      "visible": false,
+      "childCount": 0,
+      "rect": {
+        "x": 0,
+        "y": 0,
+        "width": 0,
+        "height": 0
+      },
+      "style": {
+        "display": "inline",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 148,
+      "tag": "path",
+      "id": "",
+      "className": "",
+      "selectorHint": "path",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "",
+      "href": "",
+      "disabled": false,
+      "visible": false,
+      "childCount": 0,
+      "rect": {
+        "x": 0,
+        "y": 0,
+        "width": 0,
+        "height": 0
+      },
+      "style": {
+        "display": "inline",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 149,
+      "tag": "path",
+      "id": "",
+      "className": "",
+      "selectorHint": "path",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "",
+      "href": "",
+      "disabled": false,
+      "visible": false,
+      "childCount": 0,
+      "rect": {
+        "x": 0,
+        "y": 0,
+        "width": 0,
+        "height": 0
+      },
+      "style": {
+        "display": "inline",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 150,
+      "tag": "path",
+      "id": "",
+      "className": "",
+      "selectorHint": "path",
       "name": "",
       "type": "",
       "role": "",
@@ -4682,17 +4682,17 @@
     },
     {
       "index": 154,
-      "tag": "path",
+      "tag": "span",
       "id": "",
       "className": "",
-      "selectorHint": "path",
+      "selectorHint": "span",
       "name": "",
       "type": "",
       "role": "",
       "ariaLabel": "",
       "title": "",
       "placeholder": "",
-      "text": "",
+      "text": "装修计算器",
       "href": "",
       "disabled": false,
       "visible": false,
@@ -4704,28 +4704,28 @@
         "height": 0
       },
       "style": {
-        "display": "inline",
+        "display": "block",
         "visibility": "visible",
         "opacity": "1"
       }
     },
     {
       "index": 155,
-      "tag": "path",
+      "tag": "a",
       "id": "",
-      "className": "",
-      "selectorHint": "path",
+      "className": "flex items-center gap-3 px-3 py-2.5 rounded-btn text-sm font-medium transition-all duration-200 text-carbon-600 hover:bg-ivory-100 border border-transparent",
+      "selectorHint": "a.flex.items-center.gap-3",
       "name": "",
       "type": "",
       "role": "",
       "ariaLabel": "",
       "title": "",
       "placeholder": "",
-      "text": "",
-      "href": "",
+      "text": "灵感库",
+      "href": "/owner/inspiration",
       "disabled": false,
       "visible": false,
-      "childCount": 0,
+      "childCount": 2,
       "rect": {
         "x": 0,
         "y": 0,
@@ -4733,17 +4733,17 @@
         "height": 0
       },
       "style": {
-        "display": "inline",
+        "display": "flex",
         "visibility": "visible",
         "opacity": "1"
       }
     },
     {
       "index": 156,
-      "tag": "path",
+      "tag": "svg",
       "id": "",
       "className": "",
-      "selectorHint": "path",
+      "selectorHint": "svg",
       "name": "",
       "type": "",
       "role": "",
@@ -4754,7 +4754,7 @@
       "href": "",
       "disabled": false,
       "visible": false,
-      "childCount": 0,
+      "childCount": 5,
       "rect": {
         "x": 0,
         "y": 0,
@@ -4762,7 +4762,7 @@
         "height": 0
       },
       "style": {
-        "display": "inline",
+        "display": "block",
         "visibility": "visible",
         "opacity": "1"
       }
@@ -4798,17 +4798,17 @@
     },
     {
       "index": 158,
-      "tag": "span",
+      "tag": "circle",
       "id": "",
       "className": "",
-      "selectorHint": "span",
+      "selectorHint": "circle",
       "name": "",
       "type": "",
       "role": "",
       "ariaLabel": "",
       "title": "",
       "placeholder": "",
-      "text": "装修计算器",
+      "text": "",
       "href": "",
       "disabled": false,
       "visible": false,
@@ -4820,46 +4820,17 @@
         "height": 0
       },
       "style": {
-        "display": "block",
+        "display": "inline",
         "visibility": "visible",
         "opacity": "1"
       }
     },
     {
       "index": 159,
-      "tag": "a",
-      "id": "",
-      "className": "flex items-center gap-3 px-3 py-2.5 rounded-btn text-sm font-medium transition-all duration-200 text-carbon-600 hover:bg-ivory-100 border border-transparent",
-      "selectorHint": "a.flex.items-center.gap-3",
-      "name": "",
-      "type": "",
-      "role": "",
-      "ariaLabel": "",
-      "title": "",
-      "placeholder": "",
-      "text": "灵感库",
-      "href": "/owner/inspiration",
-      "disabled": false,
-      "visible": false,
-      "childCount": 2,
-      "rect": {
-        "x": 0,
-        "y": 0,
-        "width": 0,
-        "height": 0
-      },
-      "style": {
-        "display": "flex",
-        "visibility": "visible",
-        "opacity": "1"
-      }
-    },
-    {
-      "index": 160,
-      "tag": "svg",
+      "tag": "circle",
       "id": "",
       "className": "",
-      "selectorHint": "svg",
+      "selectorHint": "circle",
       "name": "",
       "type": "",
       "role": "",
@@ -4870,7 +4841,7 @@
       "href": "",
       "disabled": false,
       "visible": false,
-      "childCount": 5,
+      "childCount": 0,
       "rect": {
         "x": 0,
         "y": 0,
@@ -4878,17 +4849,46 @@
         "height": 0
       },
       "style": {
-        "display": "block",
+        "display": "inline",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 160,
+      "tag": "circle",
+      "id": "",
+      "className": "",
+      "selectorHint": "circle",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "",
+      "href": "",
+      "disabled": false,
+      "visible": false,
+      "childCount": 0,
+      "rect": {
+        "x": 0,
+        "y": 0,
+        "width": 0,
+        "height": 0
+      },
+      "style": {
+        "display": "inline",
         "visibility": "visible",
         "opacity": "1"
       }
     },
     {
       "index": 161,
-      "tag": "path",
+      "tag": "circle",
       "id": "",
       "className": "",
-      "selectorHint": "path",
+      "selectorHint": "circle",
       "name": "",
       "type": "",
       "role": "",
@@ -4914,122 +4914,6 @@
     },
     {
       "index": 162,
-      "tag": "circle",
-      "id": "",
-      "className": "",
-      "selectorHint": "circle",
-      "name": "",
-      "type": "",
-      "role": "",
-      "ariaLabel": "",
-      "title": "",
-      "placeholder": "",
-      "text": "",
-      "href": "",
-      "disabled": false,
-      "visible": false,
-      "childCount": 0,
-      "rect": {
-        "x": 0,
-        "y": 0,
-        "width": 0,
-        "height": 0
-      },
-      "style": {
-        "display": "inline",
-        "visibility": "visible",
-        "opacity": "1"
-      }
-    },
-    {
-      "index": 163,
-      "tag": "circle",
-      "id": "",
-      "className": "",
-      "selectorHint": "circle",
-      "name": "",
-      "type": "",
-      "role": "",
-      "ariaLabel": "",
-      "title": "",
-      "placeholder": "",
-      "text": "",
-      "href": "",
-      "disabled": false,
-      "visible": false,
-      "childCount": 0,
-      "rect": {
-        "x": 0,
-        "y": 0,
-        "width": 0,
-        "height": 0
-      },
-      "style": {
-        "display": "inline",
-        "visibility": "visible",
-        "opacity": "1"
-      }
-    },
-    {
-      "index": 164,
-      "tag": "circle",
-      "id": "",
-      "className": "",
-      "selectorHint": "circle",
-      "name": "",
-      "type": "",
-      "role": "",
-      "ariaLabel": "",
-      "title": "",
-      "placeholder": "",
-      "text": "",
-      "href": "",
-      "disabled": false,
-      "visible": false,
-      "childCount": 0,
-      "rect": {
-        "x": 0,
-        "y": 0,
-        "width": 0,
-        "height": 0
-      },
-      "style": {
-        "display": "inline",
-        "visibility": "visible",
-        "opacity": "1"
-      }
-    },
-    {
-      "index": 165,
-      "tag": "circle",
-      "id": "",
-      "className": "",
-      "selectorHint": "circle",
-      "name": "",
-      "type": "",
-      "role": "",
-      "ariaLabel": "",
-      "title": "",
-      "placeholder": "",
-      "text": "",
-      "href": "",
-      "disabled": false,
-      "visible": false,
-      "childCount": 0,
-      "rect": {
-        "x": 0,
-        "y": 0,
-        "width": 0,
-        "height": 0
-      },
-      "style": {
-        "display": "inline",
-        "visibility": "visible",
-        "opacity": "1"
-      }
-    },
-    {
-      "index": 166,
       "tag": "span",
       "id": "",
       "className": "",
@@ -5058,7 +4942,7 @@
       }
     },
     {
-      "index": 167,
+      "index": 163,
       "tag": "a",
       "id": "",
       "className": "flex items-center gap-3 px-3 py-2.5 rounded-btn text-sm font-medium transition-all duration-200 text-carbon-600 hover:bg-ivory-100 border border-transparent",
@@ -5087,7 +4971,7 @@
       }
     },
     {
-      "index": 168,
+      "index": 164,
       "tag": "svg",
       "id": "",
       "className": "",
@@ -5111,6 +4995,122 @@
       },
       "style": {
         "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 165,
+      "tag": "path",
+      "id": "",
+      "className": "",
+      "selectorHint": "path",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "",
+      "href": "",
+      "disabled": false,
+      "visible": false,
+      "childCount": 0,
+      "rect": {
+        "x": 0,
+        "y": 0,
+        "width": 0,
+        "height": 0
+      },
+      "style": {
+        "display": "inline",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 166,
+      "tag": "path",
+      "id": "",
+      "className": "",
+      "selectorHint": "path",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "",
+      "href": "",
+      "disabled": false,
+      "visible": false,
+      "childCount": 0,
+      "rect": {
+        "x": 0,
+        "y": 0,
+        "width": 0,
+        "height": 0
+      },
+      "style": {
+        "display": "inline",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 167,
+      "tag": "path",
+      "id": "",
+      "className": "",
+      "selectorHint": "path",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "",
+      "href": "",
+      "disabled": false,
+      "visible": false,
+      "childCount": 0,
+      "rect": {
+        "x": 0,
+        "y": 0,
+        "width": 0,
+        "height": 0
+      },
+      "style": {
+        "display": "inline",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 168,
+      "tag": "path",
+      "id": "",
+      "className": "",
+      "selectorHint": "path",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "",
+      "href": "",
+      "disabled": false,
+      "visible": false,
+      "childCount": 0,
+      "rect": {
+        "x": 0,
+        "y": 0,
+        "width": 0,
+        "height": 0
+      },
+      "style": {
+        "display": "inline",
         "visibility": "visible",
         "opacity": "1"
       }
@@ -5204,122 +5204,6 @@
     },
     {
       "index": 172,
-      "tag": "path",
-      "id": "",
-      "className": "",
-      "selectorHint": "path",
-      "name": "",
-      "type": "",
-      "role": "",
-      "ariaLabel": "",
-      "title": "",
-      "placeholder": "",
-      "text": "",
-      "href": "",
-      "disabled": false,
-      "visible": false,
-      "childCount": 0,
-      "rect": {
-        "x": 0,
-        "y": 0,
-        "width": 0,
-        "height": 0
-      },
-      "style": {
-        "display": "inline",
-        "visibility": "visible",
-        "opacity": "1"
-      }
-    },
-    {
-      "index": 173,
-      "tag": "path",
-      "id": "",
-      "className": "",
-      "selectorHint": "path",
-      "name": "",
-      "type": "",
-      "role": "",
-      "ariaLabel": "",
-      "title": "",
-      "placeholder": "",
-      "text": "",
-      "href": "",
-      "disabled": false,
-      "visible": false,
-      "childCount": 0,
-      "rect": {
-        "x": 0,
-        "y": 0,
-        "width": 0,
-        "height": 0
-      },
-      "style": {
-        "display": "inline",
-        "visibility": "visible",
-        "opacity": "1"
-      }
-    },
-    {
-      "index": 174,
-      "tag": "path",
-      "id": "",
-      "className": "",
-      "selectorHint": "path",
-      "name": "",
-      "type": "",
-      "role": "",
-      "ariaLabel": "",
-      "title": "",
-      "placeholder": "",
-      "text": "",
-      "href": "",
-      "disabled": false,
-      "visible": false,
-      "childCount": 0,
-      "rect": {
-        "x": 0,
-        "y": 0,
-        "width": 0,
-        "height": 0
-      },
-      "style": {
-        "display": "inline",
-        "visibility": "visible",
-        "opacity": "1"
-      }
-    },
-    {
-      "index": 175,
-      "tag": "path",
-      "id": "",
-      "className": "",
-      "selectorHint": "path",
-      "name": "",
-      "type": "",
-      "role": "",
-      "ariaLabel": "",
-      "title": "",
-      "placeholder": "",
-      "text": "",
-      "href": "",
-      "disabled": false,
-      "visible": false,
-      "childCount": 0,
-      "rect": {
-        "x": 0,
-        "y": 0,
-        "width": 0,
-        "height": 0
-      },
-      "style": {
-        "display": "inline",
-        "visibility": "visible",
-        "opacity": "1"
-      }
-    },
-    {
-      "index": 176,
       "tag": "span",
       "id": "",
       "className": "",
@@ -5348,7 +5232,7 @@
       }
     },
     {
-      "index": 177,
+      "index": 173,
       "tag": "a",
       "id": "",
       "className": "flex items-center gap-3 px-3 py-2.5 rounded-btn text-sm font-medium transition-all duration-200 text-carbon-600 hover:bg-ivory-100 border border-transparent",
@@ -5377,7 +5261,7 @@
       }
     },
     {
-      "index": 178,
+      "index": 174,
       "tag": "svg",
       "id": "",
       "className": "",
@@ -5406,7 +5290,7 @@
       }
     },
     {
-      "index": 179,
+      "index": 175,
       "tag": "circle",
       "id": "",
       "className": "",
@@ -5435,7 +5319,7 @@
       }
     },
     {
-      "index": 180,
+      "index": 176,
       "tag": "circle",
       "id": "",
       "className": "",
@@ -5464,7 +5348,7 @@
       }
     },
     {
-      "index": 181,
+      "index": 177,
       "tag": "path",
       "id": "",
       "className": "",
@@ -5488,6 +5372,122 @@
       },
       "style": {
         "display": "inline",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 178,
+      "tag": "path",
+      "id": "",
+      "className": "",
+      "selectorHint": "path",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "",
+      "href": "",
+      "disabled": false,
+      "visible": false,
+      "childCount": 0,
+      "rect": {
+        "x": 0,
+        "y": 0,
+        "width": 0,
+        "height": 0
+      },
+      "style": {
+        "display": "inline",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 179,
+      "tag": "span",
+      "id": "",
+      "className": "",
+      "selectorHint": "span",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "方案比价",
+      "href": "",
+      "disabled": false,
+      "visible": false,
+      "childCount": 0,
+      "rect": {
+        "x": 0,
+        "y": 0,
+        "width": 0,
+        "height": 0
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 180,
+      "tag": "a",
+      "id": "",
+      "className": "flex items-center gap-3 px-3 py-2.5 rounded-btn text-sm font-medium transition-all duration-200 text-carbon-600 hover:bg-ivory-100 border border-transparent",
+      "selectorHint": "a.flex.items-center.gap-3",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "施工工艺",
+      "href": "/owner/knowledge/process",
+      "disabled": false,
+      "visible": false,
+      "childCount": 2,
+      "rect": {
+        "x": 0,
+        "y": 0,
+        "width": 0,
+        "height": 0
+      },
+      "style": {
+        "display": "flex",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 181,
+      "tag": "svg",
+      "id": "",
+      "className": "",
+      "selectorHint": "svg",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "",
+      "href": "",
+      "disabled": false,
+      "visible": false,
+      "childCount": 1,
+      "rect": {
+        "x": 0,
+        "y": 0,
+        "width": 0,
+        "height": 0
+      },
+      "style": {
+        "display": "block",
         "visibility": "visible",
         "opacity": "1"
       }
@@ -5533,7 +5533,7 @@
       "ariaLabel": "",
       "title": "",
       "placeholder": "",
-      "text": "方案比价",
+      "text": "施工工艺",
       "href": "",
       "disabled": false,
       "visible": false,
@@ -5562,8 +5562,8 @@
       "ariaLabel": "",
       "title": "",
       "placeholder": "",
-      "text": "施工工艺",
-      "href": "/owner/knowledge/process",
+      "text": "避坑指南",
+      "href": "/owner/knowledge/pitfalls",
       "disabled": false,
       "visible": false,
       "childCount": 2,
@@ -5595,7 +5595,7 @@
       "href": "",
       "disabled": false,
       "visible": false,
-      "childCount": 1,
+      "childCount": 3,
       "rect": {
         "x": 0,
         "y": 0,
@@ -5639,6 +5639,64 @@
     },
     {
       "index": 187,
+      "tag": "path",
+      "id": "",
+      "className": "",
+      "selectorHint": "path",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "",
+      "href": "",
+      "disabled": false,
+      "visible": false,
+      "childCount": 0,
+      "rect": {
+        "x": 0,
+        "y": 0,
+        "width": 0,
+        "height": 0
+      },
+      "style": {
+        "display": "inline",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 188,
+      "tag": "path",
+      "id": "",
+      "className": "",
+      "selectorHint": "path",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "",
+      "href": "",
+      "disabled": false,
+      "visible": false,
+      "childCount": 0,
+      "rect": {
+        "x": 0,
+        "y": 0,
+        "width": 0,
+        "height": 0
+      },
+      "style": {
+        "display": "inline",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 189,
       "tag": "span",
       "id": "",
       "className": "",
@@ -5649,7 +5707,7 @@
       "ariaLabel": "",
       "title": "",
       "placeholder": "",
-      "text": "施工工艺",
+      "text": "避坑指南",
       "href": "",
       "disabled": false,
       "visible": false,
@@ -5667,7 +5725,7 @@
       }
     },
     {
-      "index": 188,
+      "index": 190,
       "tag": "a",
       "id": "",
       "className": "flex items-center gap-3 px-3 py-2.5 rounded-btn text-sm font-medium transition-all duration-200 text-carbon-600 hover:bg-ivory-100 border border-transparent",
@@ -5678,8 +5736,8 @@
       "ariaLabel": "",
       "title": "",
       "placeholder": "",
-      "text": "避坑指南",
-      "href": "/owner/knowledge/pitfalls",
+      "text": "问答社区",
+      "href": "/owner/community",
       "disabled": false,
       "visible": false,
       "childCount": 2,
@@ -5696,7 +5754,7 @@
       }
     },
     {
-      "index": 189,
+      "index": 191,
       "tag": "svg",
       "id": "",
       "className": "",
@@ -5720,64 +5778,6 @@
       },
       "style": {
         "display": "block",
-        "visibility": "visible",
-        "opacity": "1"
-      }
-    },
-    {
-      "index": 190,
-      "tag": "path",
-      "id": "",
-      "className": "",
-      "selectorHint": "path",
-      "name": "",
-      "type": "",
-      "role": "",
-      "ariaLabel": "",
-      "title": "",
-      "placeholder": "",
-      "text": "",
-      "href": "",
-      "disabled": false,
-      "visible": false,
-      "childCount": 0,
-      "rect": {
-        "x": 0,
-        "y": 0,
-        "width": 0,
-        "height": 0
-      },
-      "style": {
-        "display": "inline",
-        "visibility": "visible",
-        "opacity": "1"
-      }
-    },
-    {
-      "index": 191,
-      "tag": "path",
-      "id": "",
-      "className": "",
-      "selectorHint": "path",
-      "name": "",
-      "type": "",
-      "role": "",
-      "ariaLabel": "",
-      "title": "",
-      "placeholder": "",
-      "text": "",
-      "href": "",
-      "disabled": false,
-      "visible": false,
-      "childCount": 0,
-      "rect": {
-        "x": 0,
-        "y": 0,
-        "width": 0,
-        "height": 0
-      },
-      "style": {
-        "display": "inline",
         "visibility": "visible",
         "opacity": "1"
       }
@@ -5813,17 +5813,17 @@
     },
     {
       "index": 193,
-      "tag": "span",
+      "tag": "path",
       "id": "",
       "className": "",
-      "selectorHint": "span",
+      "selectorHint": "path",
       "name": "",
       "type": "",
       "role": "",
       "ariaLabel": "",
       "title": "",
       "placeholder": "",
-      "text": "避坑指南",
+      "text": "",
       "href": "",
       "disabled": false,
       "visible": false,
@@ -5835,46 +5835,17 @@
         "height": 0
       },
       "style": {
-        "display": "block",
+        "display": "inline",
         "visibility": "visible",
         "opacity": "1"
       }
     },
     {
       "index": 194,
-      "tag": "a",
-      "id": "",
-      "className": "flex items-center gap-3 px-3 py-2.5 rounded-btn text-sm font-medium transition-all duration-200 text-carbon-600 hover:bg-ivory-100 border border-transparent",
-      "selectorHint": "a.flex.items-center.gap-3",
-      "name": "",
-      "type": "",
-      "role": "",
-      "ariaLabel": "",
-      "title": "",
-      "placeholder": "",
-      "text": "问答社区",
-      "href": "/owner/community",
-      "disabled": false,
-      "visible": false,
-      "childCount": 2,
-      "rect": {
-        "x": 0,
-        "y": 0,
-        "width": 0,
-        "height": 0
-      },
-      "style": {
-        "display": "flex",
-        "visibility": "visible",
-        "opacity": "1"
-      }
-    },
-    {
-      "index": 195,
-      "tag": "svg",
+      "tag": "path",
       "id": "",
       "className": "",
-      "selectorHint": "svg",
+      "selectorHint": "path",
       "name": "",
       "type": "",
       "role": "",
@@ -5885,7 +5856,36 @@
       "href": "",
       "disabled": false,
       "visible": false,
-      "childCount": 3,
+      "childCount": 0,
+      "rect": {
+        "x": 0,
+        "y": 0,
+        "width": 0,
+        "height": 0
+      },
+      "style": {
+        "display": "inline",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 195,
+      "tag": "span",
+      "id": "",
+      "className": "",
+      "selectorHint": "span",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "问答社区",
+      "href": "",
+      "disabled": false,
+      "visible": false,
+      "childCount": 0,
       "rect": {
         "x": 0,
         "y": 0,
@@ -5900,122 +5900,6 @@
     },
     {
       "index": 196,
-      "tag": "path",
-      "id": "",
-      "className": "",
-      "selectorHint": "path",
-      "name": "",
-      "type": "",
-      "role": "",
-      "ariaLabel": "",
-      "title": "",
-      "placeholder": "",
-      "text": "",
-      "href": "",
-      "disabled": false,
-      "visible": false,
-      "childCount": 0,
-      "rect": {
-        "x": 0,
-        "y": 0,
-        "width": 0,
-        "height": 0
-      },
-      "style": {
-        "display": "inline",
-        "visibility": "visible",
-        "opacity": "1"
-      }
-    },
-    {
-      "index": 197,
-      "tag": "path",
-      "id": "",
-      "className": "",
-      "selectorHint": "path",
-      "name": "",
-      "type": "",
-      "role": "",
-      "ariaLabel": "",
-      "title": "",
-      "placeholder": "",
-      "text": "",
-      "href": "",
-      "disabled": false,
-      "visible": false,
-      "childCount": 0,
-      "rect": {
-        "x": 0,
-        "y": 0,
-        "width": 0,
-        "height": 0
-      },
-      "style": {
-        "display": "inline",
-        "visibility": "visible",
-        "opacity": "1"
-      }
-    },
-    {
-      "index": 198,
-      "tag": "path",
-      "id": "",
-      "className": "",
-      "selectorHint": "path",
-      "name": "",
-      "type": "",
-      "role": "",
-      "ariaLabel": "",
-      "title": "",
-      "placeholder": "",
-      "text": "",
-      "href": "",
-      "disabled": false,
-      "visible": false,
-      "childCount": 0,
-      "rect": {
-        "x": 0,
-        "y": 0,
-        "width": 0,
-        "height": 0
-      },
-      "style": {
-        "display": "inline",
-        "visibility": "visible",
-        "opacity": "1"
-      }
-    },
-    {
-      "index": 199,
-      "tag": "span",
-      "id": "",
-      "className": "",
-      "selectorHint": "span",
-      "name": "",
-      "type": "",
-      "role": "",
-      "ariaLabel": "",
-      "title": "",
-      "placeholder": "",
-      "text": "问答社区",
-      "href": "",
-      "disabled": false,
-      "visible": false,
-      "childCount": 0,
-      "rect": {
-        "x": 0,
-        "y": 0,
-        "width": 0,
-        "height": 0
-      },
-      "style": {
-        "display": "block",
-        "visibility": "visible",
-        "opacity": "1"
-      }
-    },
-    {
-      "index": 200,
       "tag": "a",
       "id": "",
       "className": "flex items-center gap-3 px-3 py-2.5 rounded-btn text-sm font-medium transition-all duration-200 text-carbon-600 hover:bg-ivory-100 border border-transparent",
@@ -6044,7 +5928,7 @@
       }
     },
     {
-      "index": 201,
+      "index": 197,
       "tag": "svg",
       "id": "",
       "className": "",
@@ -6073,7 +5957,7 @@
       }
     },
     {
-      "index": 202,
+      "index": 198,
       "tag": "circle",
       "id": "",
       "className": "",
@@ -6102,7 +5986,7 @@
       }
     },
     {
-      "index": 203,
+      "index": 199,
       "tag": "circle",
       "id": "",
       "className": "",
@@ -6131,7 +6015,7 @@
       }
     },
     {
-      "index": 204,
+      "index": 200,
       "tag": "path",
       "id": "",
       "className": "",
@@ -6160,7 +6044,7 @@
       }
     },
     {
-      "index": 205,
+      "index": 201,
       "tag": "span",
       "id": "",
       "className": "",
@@ -6189,7 +6073,7 @@
       }
     },
     {
-      "index": 206,
+      "index": 202,
       "tag": "main",
       "id": "",
       "className": "flex-1 min-w-0 overflow-x-hidden",
@@ -6218,7 +6102,7 @@
       }
     },
     {
-      "index": 207,
+      "index": 203,
       "tag": "div",
       "id": "",
       "className": "p-4 md:p-6 lg:p-8",
@@ -6247,7 +6131,7 @@
       }
     },
     {
-      "index": 208,
+      "index": 204,
       "tag": "div",
       "id": "",
       "className": "card-base p-12 m-8",
@@ -6276,7 +6160,7 @@
       }
     },
     {
-      "index": 209,
+      "index": 205,
       "tag": "h1",
       "id": "",
       "className": "section-title",
@@ -6305,7 +6189,7 @@
       }
     },
     {
-      "index": 210,
+      "index": 206,
       "tag": "p",
       "id": "",
       "className": "text-ivory-600 mt-2",
@@ -6366,93 +6250,6 @@
     },
     {
       "index": 1,
-      "tag": "a",
-      "id": "",
-      "className": "px-3 py-1.5 rounded-btn text-sm font-medium text-carbon-600 hover:bg-ivory-100 hover:text-carbon-900 transition-colors active",
-      "selectorHint": "a.px-3.py-1.5.rounded-btn",
-      "name": "",
-      "type": "",
-      "role": "",
-      "ariaLabel": "",
-      "title": "",
-      "placeholder": "",
-      "text": "个人中心",
-      "href": "/owner/profile",
-      "disabled": false,
-      "visible": true,
-      "childCount": 0,
-      "rect": {
-        "x": 146,
-        "y": 16,
-        "width": 80,
-        "height": 32
-      },
-      "style": {
-        "display": "block",
-        "visibility": "visible",
-        "opacity": "1"
-      }
-    },
-    {
-      "index": 2,
-      "tag": "a",
-      "id": "",
-      "className": "px-3 py-1.5 rounded-btn text-sm font-medium text-carbon-600 hover:bg-ivory-100 hover:text-carbon-900 transition-colors",
-      "selectorHint": "a.px-3.py-1.5.rounded-btn",
-      "name": "",
-      "type": "",
-      "role": "",
-      "ariaLabel": "",
-      "title": "",
-      "placeholder": "",
-      "text": "查看详情",
-      "href": "/owner/companies/company-001",
-      "disabled": false,
-      "visible": true,
-      "childCount": 0,
-      "rect": {
-        "x": 230,
-        "y": 16,
-        "width": 80,
-        "height": 32
-      },
-      "style": {
-        "display": "block",
-        "visibility": "visible",
-        "opacity": "1"
-      }
-    },
-    {
-      "index": 3,
-      "tag": "a",
-      "id": "",
-      "className": "px-3 py-1.5 rounded-btn text-sm font-medium text-carbon-600 hover:bg-ivory-100 hover:text-carbon-900 transition-colors",
-      "selectorHint": "a.px-3.py-1.5.rounded-btn",
-      "name": "",
-      "type": "",
-      "role": "",
-      "ariaLabel": "",
-      "title": "",
-      "placeholder": "",
-      "text": "管理后台",
-      "href": "/admin",
-      "disabled": false,
-      "visible": true,
-      "childCount": 0,
-      "rect": {
-        "x": 314,
-        "y": 16,
-        "width": 80,
-        "height": 32
-      },
-      "style": {
-        "display": "block",
-        "visibility": "visible",
-        "opacity": "1"
-      }
-    },
-    {
-      "index": 4,
       "tag": "button",
       "id": "",
       "className": "lg:hidden p-2 rounded-lg hover:bg-ivory-200 text-carbon-600 transition-colors",
@@ -6481,7 +6278,7 @@
       }
     },
     {
-      "index": 5,
+      "index": 2,
       "tag": "input",
       "id": "",
       "className": "bg-transparent outline-none flex-1 text-sm text-carbon-800 placeholder-ivory-500",
@@ -6498,7 +6295,7 @@
       "visible": true,
       "childCount": 0,
       "rect": {
-        "x": 471,
+        "x": 207,
         "y": 22,
         "width": 340,
         "height": 20
@@ -6510,7 +6307,7 @@
       }
     },
     {
-      "index": 6,
+      "index": 3,
       "tag": "button",
       "id": "",
       "className": "px-4 py-1.5 text-sm font-medium rounded-md transition-all duration-200 bg-white text-terracotta-600 shadow-sm",
@@ -6539,7 +6336,7 @@
       }
     },
     {
-      "index": 7,
+      "index": 4,
       "tag": "button",
       "id": "",
       "className": "px-4 py-1.5 text-sm font-medium rounded-md transition-all duration-200 text-carbon-600 hover:text-carbon-800",
@@ -6568,7 +6365,7 @@
       }
     },
     {
-      "index": 8,
+      "index": 5,
       "tag": "button",
       "id": "",
       "className": "px-4 py-1.5 text-sm font-medium rounded-md transition-all duration-200 text-carbon-600 hover:text-carbon-800",
@@ -6597,7 +6394,7 @@
       }
     },
     {
-      "index": 9,
+      "index": 6,
       "tag": "button",
       "id": "",
       "className": "p-2 rounded-lg hover:bg-ivory-200 text-carbon-600 transition-colors",
@@ -6626,7 +6423,7 @@
       }
     },
     {
-      "index": 10,
+      "index": 7,
       "tag": "button",
       "id": "",
       "className": "relative p-2 rounded-lg hover:bg-ivory-200 text-carbon-600 transition-colors",
@@ -6655,7 +6452,7 @@
       }
     },
     {
-      "index": 11,
+      "index": 8,
       "tag": "button",
       "id": "",
       "className": "flex items-center gap-2 pl-1 pr-2 py-1 rounded-lg hover:bg-ivory-200 transition-colors",
@@ -6684,7 +6481,7 @@
       }
     },
     {
-      "index": 12,
+      "index": 9,
       "tag": "a",
       "id": "",
       "className": "group flex items-center gap-3 px-3 py-2.5 rounded-btn text-sm font-medium transition-all duration-200 text-carbon-600 hover:bg-ivory-100 hover:text-carbon-800 border border-transparent",
@@ -6713,7 +6510,7 @@
       }
     },
     {
-      "index": 13,
+      "index": 10,
       "tag": "a",
       "id": "",
       "className": "group flex items-center gap-3 px-3 py-2.5 rounded-btn text-sm font-medium transition-all duration-200 text-carbon-600 hover:bg-ivory-100 hover:text-carbon-800 border border-transparent",
@@ -6742,7 +6539,7 @@
       }
     },
     {
-      "index": 14,
+      "index": 11,
       "tag": "a",
       "id": "",
       "className": "group flex items-center gap-3 px-3 py-2.5 rounded-btn text-sm font-medium transition-all duration-200 text-carbon-600 hover:bg-ivory-100 hover:text-carbon-800 border border-transparent",
@@ -6771,7 +6568,7 @@
       }
     },
     {
-      "index": 15,
+      "index": 12,
       "tag": "a",
       "id": "",
       "className": "group flex items-center gap-3 px-3 py-2.5 rounded-btn text-sm font-medium transition-all duration-200 text-carbon-600 hover:bg-ivory-100 hover:text-carbon-800 border border-transparent",
@@ -6800,7 +6597,7 @@
       }
     },
     {
-      "index": 16,
+      "index": 13,
       "tag": "a",
       "id": "",
       "className": "group flex items-center gap-3 px-3 py-2.5 rounded-btn text-sm font-medium transition-all duration-200 text-carbon-600 hover:bg-ivory-100 hover:text-carbon-800 border border-transparent",
@@ -6829,7 +6626,7 @@
       }
     },
     {
-      "index": 17,
+      "index": 14,
       "tag": "a",
       "id": "",
       "className": "group flex items-center gap-3 px-3 py-2.5 rounded-btn text-sm font-medium transition-all duration-200 text-carbon-600 hover:bg-ivory-100 hover:text-carbon-800 border border-transparent",
@@ -6858,7 +6655,7 @@
       }
     },
     {
-      "index": 18,
+      "index": 15,
       "tag": "a",
       "id": "",
       "className": "group flex items-center gap-3 px-3 py-2.5 rounded-btn text-sm font-medium transition-all duration-200 text-carbon-600 hover:bg-ivory-100 hover:text-carbon-800 border border-transparent",
@@ -6887,7 +6684,7 @@
       }
     },
     {
-      "index": 19,
+      "index": 16,
       "tag": "a",
       "id": "",
       "className": "group flex items-center gap-3 px-3 py-2.5 rounded-btn text-sm font-medium transition-all duration-200 text-carbon-600 hover:bg-ivory-100 hover:text-carbon-800 border border-transparent",
@@ -6916,7 +6713,7 @@
       }
     },
     {
-      "index": 20,
+      "index": 17,
       "tag": "a",
       "id": "",
       "className": "group flex items-center gap-3 px-3 py-2.5 rounded-btn text-sm font-medium transition-all duration-200 text-carbon-600 hover:bg-ivory-100 hover:text-carbon-800 border border-transparent",
@@ -6945,7 +6742,7 @@
       }
     },
     {
-      "index": 21,
+      "index": 18,
       "tag": "a",
       "id": "",
       "className": "group flex items-center gap-3 px-3 py-2.5 rounded-btn text-sm font-medium transition-all duration-200 text-carbon-600 hover:bg-ivory-100 hover:text-carbon-800 border border-transparent",
@@ -6974,7 +6771,7 @@
       }
     },
     {
-      "index": 22,
+      "index": 19,
       "tag": "a",
       "id": "",
       "className": "flex items-center gap-3 px-3 py-2.5 rounded-btn text-sm font-medium transition-all duration-200 text-carbon-600 hover:bg-ivory-100 border border-transparent",
@@ -7003,7 +6800,7 @@
       }
     },
     {
-      "index": 23,
+      "index": 20,
       "tag": "a",
       "id": "",
       "className": "flex items-center gap-3 px-3 py-2.5 rounded-btn text-sm font-medium transition-all duration-200 text-carbon-600 hover:bg-ivory-100 border border-transparent",
@@ -7032,7 +6829,7 @@
       }
     },
     {
-      "index": 24,
+      "index": 21,
       "tag": "a",
       "id": "",
       "className": "flex items-center gap-3 px-3 py-2.5 rounded-btn text-sm font-medium transition-all duration-200 text-carbon-600 hover:bg-ivory-100 border border-transparent",
@@ -7061,7 +6858,7 @@
       }
     },
     {
-      "index": 25,
+      "index": 22,
       "tag": "a",
       "id": "",
       "className": "flex items-center gap-3 px-3 py-2.5 rounded-btn text-sm font-medium transition-all duration-200 text-carbon-600 hover:bg-ivory-100 border border-transparent",
@@ -7090,7 +6887,7 @@
       }
     },
     {
-      "index": 26,
+      "index": 23,
       "tag": "a",
       "id": "",
       "className": "flex items-center gap-3 px-3 py-2.5 rounded-btn text-sm font-medium transition-all duration-200 text-carbon-600 hover:bg-ivory-100 border border-transparent",
@@ -7119,7 +6916,7 @@
       }
     },
     {
-      "index": 27,
+      "index": 24,
       "tag": "a",
       "id": "",
       "className": "flex items-center gap-3 px-3 py-2.5 rounded-btn text-sm font-medium transition-all duration-200 text-carbon-600 hover:bg-ivory-100 border border-transparent",
@@ -7148,7 +6945,7 @@
       }
     },
     {
-      "index": 28,
+      "index": 25,
       "tag": "a",
       "id": "",
       "className": "flex items-center gap-3 px-3 py-2.5 rounded-btn text-sm font-medium transition-all duration-200 text-carbon-600 hover:bg-ivory-100 border border-transparent",
@@ -7177,7 +6974,7 @@
       }
     },
     {
-      "index": 29,
+      "index": 26,
       "tag": "a",
       "id": "",
       "className": "flex items-center gap-3 px-3 py-2.5 rounded-btn text-sm font-medium transition-all duration-200 text-carbon-600 hover:bg-ivory-100 border border-transparent",
@@ -7206,7 +7003,7 @@
       }
     },
     {
-      "index": 30,
+      "index": 27,
       "tag": "a",
       "id": "",
       "className": "flex items-center gap-3 px-3 py-2.5 rounded-btn text-sm font-medium transition-all duration-200 text-carbon-600 hover:bg-ivory-100 border border-transparent",
@@ -7235,7 +7032,7 @@
       }
     },
     {
-      "index": 31,
+      "index": 28,
       "tag": "a",
       "id": "",
       "className": "flex items-center gap-3 px-3 py-2.5 rounded-btn text-sm font-medium transition-all duration-200 text-carbon-600 hover:bg-ivory-100 border border-transparent",

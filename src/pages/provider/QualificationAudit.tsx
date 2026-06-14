@@ -3,7 +3,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { useDropzone } from 'react-dropzone';
 import {
   CheckCircle2, Clock, Upload, X, FileText, Shield, Building2,
-  ChevronDown, ChevronUp, HelpCircle, AlertCircle, Eye,
+  ChevronDown, ChevronUp, ChevronRight, HelpCircle, AlertCircle, Eye,
   Camera, FileCheck, ScanLine, Award, Star, MapPin,
 } from 'lucide-react';
 import { Collapse, Progress, Table, Avatar, Rate, Tag } from 'antd';

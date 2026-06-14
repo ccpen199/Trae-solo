@@ -255,7 +255,7 @@ const PlanManagement = () => {
             size="middle"
             allowClear
             defaultValue="all"
-            onChange={(v) => setStatusFilter(v)}
+            onChange={(v: PlanStatus | 'all' | undefined) => setStatusFilter(v ?? 'all')}
             suffixIcon={<Filter className="w-4 h-4 text-ivory-400" />}
           >
             <Option value="all">全部状态</Option>

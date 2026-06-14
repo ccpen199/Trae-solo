@@ -63,7 +63,7 @@ const appointments: Appointment[] = [
     address: '阳光花园3栋',
     fullAddress: '阳光花园小区3栋2301室',
     area: 128,
-    date: weekDays()[0].date,
+    date: weekDays[0].date,
     startTime: '10:00',
     endTime: '11:30',
     status: 'pending',
@@ -80,7 +80,7 @@ const appointments: Appointment[] = [
     address: '滨江壹号5栋',
     fullAddress: '滨江壹号小区5栋1202室',
     area: 186,
-    date: weekDays()[0].date,
+    date: weekDays[0].date,
     startTime: '14:00',
     endTime: '16:00',
     status: 'accepted',
@@ -97,7 +97,7 @@ const appointments: Appointment[] = [
     address: '绿城春江月',
     fullAddress: '绿城春江月小区7栋803室',
     area: 105,
-    date: weekDays()[0].date,
+    date: weekDays[0].date,
     startTime: '09:30',
     endTime: '10:30',
     status: 'ongoing',
@@ -114,7 +114,7 @@ const appointments: Appointment[] = [
     address: '万科城六期',
     fullAddress: '万科城六期2栋1501室',
     area: 89,
-    date: weekDays()[1].date,
+    date: weekDays[1].date,
     startTime: '10:00',
     endTime: '11:00',
     status: 'completed',
@@ -131,7 +131,7 @@ const appointments: Appointment[] = [
     address: '江南府',
     fullAddress: '江南府小区10栋1806室',
     area: 142,
-    date: weekDays()[1].date,
+    date: weekDays[1].date,
     startTime: '14:30',
     endTime: '16:00',
     status: 'accepted',
@@ -148,7 +148,7 @@ const appointments: Appointment[] = [
     address: '春风十里3栋',
     fullAddress: '春风十里花园3栋1102室',
     area: 133,
-    date: weekDays()[2].date,
+    date: weekDays[2].date,
     startTime: '09:00',
     endTime: '10:30',
     status: 'pending',
@@ -164,7 +164,7 @@ const appointments: Appointment[] = [
     address: '保利时光印象',
     fullAddress: '保利时光印象6栋905室',
     area: 98,
-    date: weekDays()[3].date,
+    date: weekDays[3].date,
     startTime: '15:00',
     endTime: '16:30',
     status: 'pending',
@@ -189,7 +189,7 @@ const AppointmentSchedule = () => {
   const [modalAppointment, setModalAppointment] = useState<Appointment | null>(null);
   const [modalVisible, setModalVisible] = useState(false);
 
-  const days = weekDays();
+  const days = weekDays;
   const currentDate = days[selectedDay].date;
 
   const dayAppointments = useMemo(() => {
@@ -323,7 +323,7 @@ const AppointmentSchedule = () => {
             defaultValue="all"
             className="!w-36"
             size="middle"
-            onChange={(v) => setStatusFilter(v)}
+            onChange={(v: AppointmentStatus | 'all' | undefined) => setStatusFilter(v ?? 'all')}
           >
             <Option value="all">全部状态</Option>
             <Option value="pending">待确认</Option>

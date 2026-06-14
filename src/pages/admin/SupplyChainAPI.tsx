@@ -40,7 +40,7 @@ import {
   Boxes,
   User,
 } from 'lucide-react';
-import { Tabs, Drawer, Input, Select, Slider, Switch, Checkbox, Button, Table, Modal, Tag, Tooltip, Progress, Card } from 'antd';
+import { Tabs, Drawer, Input, Select, Slider, Switch, Checkbox, Button, Table, Modal, Tag, Tooltip, Progress, Card, message, Space, Badge } from 'antd';
 import type { TabsProps } from 'antd';
 import type { ColumnsType } from 'antd/es/table';
 import dayjs from 'dayjs';
@@ -385,10 +385,53 @@ const SupplyChainAPI: React.FC = () => {
                     </div>
                     <div className="flex items-center gap-2">
                       <Tooltip title="配置"><button onClick={() => openConfig(s)} className="w-9 h-9 rounded-lg bg-haze-50 hover:bg-haze-100 text-haze-600 flex items-center justify-center transition-colors"><Settings className="w-4 h-4" /></button></Tooltip>
-                      <Tooltip title="立即同步"><button className="w-9 h-9 rounded-lg bg-wood-50 hover:bg-wood-100 text-wood-600 flex items-center justify-center transition-colors"><RefreshIcon className="w-4 h-4" /></button></Tooltip>
-                      <Tooltip title="测试连接"><button className="w-9 h-9 rounded-lg bg-emerald-50 hover:bg-emerald-100 text-emerald-600 flex items-center justify-center transition-colors"><Zap className="w-4 h-4" /></button></Tooltip>
+                      <Tooltip title="立即同步">
+                        <button
+                          onClick={() => {
+                            message.loading({ content: `正在从「${s.name}」同步SKU数据...`, key: 'sync-' + s.id, duration: 0 });
+                            setTimeout(() => {
+                              message.success({ content: `同步完成：新增12款、更新价格 ${Math.floor(Math.random() * 80 + 20)} 项`, key: 'sync-' + s.id });
+                            }, 1600);
+                          }}
+                          className="w-9 h-9 rounded-lg bg-wood-50 hover:bg-wood-100 text-wood-600 flex items-center justify-center transition-colors"
+                        >
+                          <RefreshIcon className="w-4 h-4" />
+                        </button>
+                      </Tooltip>
+                      <Tooltip title="测试连接">
+                        <button
+                          onClick={() => {
+                            message.loading({ content: `正在测试「${s.name}」API连通性...`, key: 'tc-' + s.id, duration: 0 });
+                            setTimeout(() => {
+                              const ok = Math.random() > 0.15;
+                              if (ok) {
+                                message.success({ content: `连接成功！响应时间 ${Math.floor(Math.random() * 80 + 20)}ms，鉴权通过`, key: 'tc-' + s.id });
+                              } else {
+                                message.error({ content: '连接失败：504 Gateway Timeout，请检查API地址或联系供应商', key: 'tc-' + s.id });
+                              }
+                            }, 1200);
+                          }}
+                          className="w-9 h-9 rounded-lg bg-emerald-50 hover:bg-emerald-100 text-emerald-600 flex items-center justify-center transition-colors"
+                        >
+                          <Zap className="w-4 h-4" />
+                        </button>
+                      </Tooltip>
                       <Tooltip title={s.status === 'disconnected' ? '启用' : '停用'}>
-                        <button className={`w-9 h-9 rounded-lg flex items-center justify-center transition-colors ${s.status === 'disconnected' ? 'bg-amber-50 hover:bg-amber-100 text-amber-600' : 'bg-rose-50 hover:bg-rose-100 text-rose-600'}`}>
+                        <button
+                          onClick={() => {
+                            if (s.status === 'disconnected') {
+                              message.success(`已启用「${s.name}」的数据同步通道`);
+                            } else {
+                              Modal.confirm({
+                                title: `确认停用「${s.name}」？`,
+                                content: '停用后将暂停自动库存同步和订单推送，正在进行的同步任务将不受影响。',
+                                okText: '确认停用', okButtonProps: { danger: true }, cancelText: '取消',
+                                onOk: () => message.warning(`已停用「${s.name}」`),
+                              });
+                            }
+                          }}
+                          className={`w-9 h-9 rounded-lg flex items-center justify-center transition-colors ${s.status === 'disconnected' ? 'bg-amber-50 hover:bg-amber-100 text-amber-600' : 'bg-rose-50 hover:bg-rose-100 text-rose-600'}`}
+                        >
                           {s.status === 'disconnected' ? <Power className="w-4 h-4" /> : <PowerOff className="w-4 h-4" />}
                         </button>
                       </Tooltip>
@@ -424,6 +467,229 @@ const SupplyChainAPI: React.FC = () => {
               rowExpandable: record => !!record.errorStack,
             }}
             rowClassName={(record) => record.status === 'failed' ? '!bg-rose-50/40' : record.status === 'partial' ? '!bg-amber-50/30' : ''}
+          />
+        </div>
+      ),
+    },
+    {
+      key: 'call_logs',
+      label: (
+        <span className="flex items-center gap-2 text-sm">
+          <Activity className="w-4 h-4" />
+          调用日志
+        </span>
+      ),
+      children: (
+        <div className="pt-2">
+          <div className="flex items-center justify-between mb-4 flex-wrap gap-3">
+            <div className="flex items-center gap-2">
+              <Select defaultValue="all" className="!w-40" size="middle">
+                <Option value="all">全部供应商</Option>
+                <Option value="1">东方建材集团</Option>
+                <Option value="2">精工陶瓷</Option>
+              </Select>
+              <Select defaultValue="all" className="!w-32" size="middle">
+                <Option value="all">全部状态</Option>
+                <Option value="2">2xx 成功</Option>
+                <Option value="4">4xx 客户端错误</Option>
+                <Option value="5">5xx 服务端错误</Option>
+              </Select>
+              <Select defaultValue="all" className="!w-40" size="middle">
+                <Option value="all">全部接口</Option>
+                <Option value="sku">SKU查询</Option>
+                <Option value="stock">库存同步</Option>
+                <Option value="order">订单推送</Option>
+              </Select>
+            </div>
+            <div className="flex items-center gap-2">
+              <button
+                onClick={() => message.success('调用日志已导出为 CSV（328 条）')}
+                className="btn-secondary text-sm !py-2"
+              >
+                <Button type="text" icon={<FileText className="w-4 h-4" />} className="!p-0 !h-auto">导出日志</Button>
+              </button>
+            </div>
+          </div>
+          <Table
+            size="middle"
+            pagination={{ pageSize: 8, showSizeChanger: true, showTotal: t => `共 ${t} 条 API 调用记录` }}
+            columns={[
+              {
+                title: '时间',
+                dataIndex: 'time',
+                width: 170,
+                render: (v: string) => (
+                  <div>
+                    <div className="font-mono text-xs text-carbon-700">{dayjs(v).format('YYYY-MM-DD HH:mm:ss')}</div>
+                    <div className="font-mono text-[10px] text-ivory-400 mt-0.5">+{dayjs(v).millisecond()}ms</div>
+                  </div>
+                ),
+                sorter: (a: any, b: any) => dayjs(a.time).valueOf() - dayjs(b.time).valueOf(),
+                defaultSortOrder: 'descend',
+              } as any,
+              {
+                title: '接口',
+                dataIndex: 'endpoint',
+                width: 260,
+                render: (v: string, r: any) => (
+                  <div className="flex items-start gap-2">
+                    <Tag
+                      color={
+                        r.method === 'GET' ? 'blue' :
+                        r.method === 'POST' ? 'green' :
+                        r.method === 'PUT' ? 'orange' : 'default'
+                      }
+                      className="!text-[10px] !mx-0 shrink-0 font-mono font-bold"
+                    >{r.method}</Tag>
+                    <div className="min-w-0">
+                      <div className="font-mono text-xs text-carbon-800 break-all">{v}</div>
+                      <div className="text-[10px] text-ivory-500 mt-0.5 flex items-center gap-1">
+                        <Shield className="w-3 h-3" />供应商: <span className="font-medium">{r.supplier}</span>
+                      </div>
+                    </div>
+                  </div>
+                ),
+              },
+              {
+                title: '状态码',
+                dataIndex: 'statusCode',
+                width: 100,
+                render: (code: number) => (
+                  <div className="flex items-center gap-1.5">
+                    {code < 300 ? (
+                      <CheckCircle2 className="w-4 h-4 text-emerald-500 shrink-0" />
+                    ) : code < 500 ? (
+                      <AlertTriangle className="w-4 h-4 text-amber-500 shrink-0" />
+                    ) : (
+                      <XCircle className="w-4 h-4 text-rose-500 shrink-0" />
+                    )}
+                    <span className={`font-mono text-sm font-bold ${
+                      code < 300 ? 'text-emerald-600' : code < 500 ? 'text-amber-600' : 'text-rose-600'
+                    }`}>{code}</span>
+                  </div>
+                ),
+              },
+              {
+                title: '耗时',
+                dataIndex: 'duration',
+                width: 130,
+                render: (ms: number) => (
+                  <div>
+                    <div className="flex items-center justify-between mb-1">
+                      <span className={`font-mono text-xs font-bold ${
+                        ms < 200 ? 'text-emerald-600' : ms < 800 ? 'text-haze-600' : 'text-rose-600'
+                      }`}>{ms} ms</span>
+                    </div>
+                    <div className="h-1.5 rounded-full bg-ivory-200 overflow-hidden">
+                      <div
+                        className={`h-full rounded-full ${
+                          ms < 200 ? 'bg-emerald-500' : ms < 800 ? 'bg-haze-500' : 'bg-rose-500'
+                        }`}
+                        style={{ width: `${Math.min(100, ms / 10)}%` }}
+                      />
+                    </div>
+                  </div>
+                ),
+              },
+              {
+                title: '请求摘要',
+                dataIndex: 'summary',
+                render: (v: string, r: any) => (
+                  <div className="text-xs text-carbon-700">
+                    <div className="line-clamp-2">{v}</div>
+                    {r.responseSize && (
+                      <div className="text-[10px] text-ivory-400 mt-1 font-mono">
+                        响应 {r.responseSize} KB · {r.traceId}
+                      </div>
+                    )}
+                  </div>
+                ),
+              },
+              {
+                title: '操作',
+                key: 'act',
+                width: 120,
+                fixed: 'right',
+                render: (_, r: any) => (
+                  <Space size="small">
+                    <Button
+                      type="link"
+                      size="small"
+                      icon={<Eye className="w-3 h-3" />}
+                      onClick={() => Modal.info({
+                        title: `API 调用详情 #${r.traceId}`,
+                        width: 800,
+                        content: (
+                          <div className="space-y-4 pt-2">
+                            <div>
+                              <p className="text-xs text-ivory-500 mb-1">请求 URL</p>
+                              <code className="block bg-carbon-900 text-emerald-400 p-3 rounded text-xs font-mono break-all">
+                                {r.method} {r.endpoint}
+                              </code>
+                            </div>
+                            <div>
+                              <p className="text-xs text-ivory-500 mb-1">响应体（摘要）</p>
+                              <pre className="bg-carbon-900 text-ivory-200 p-3 rounded text-xs font-mono overflow-x-auto max-h-60">
+{r.statusCode < 300 ? `{
+  "code": 0,
+  "message": "success",
+  "data": { "items": ${Math.floor(Math.random() * 100)}, "total": ${Math.floor(Math.random() * 500)} }
+}` : `{
+  "code": ${r.statusCode},
+  "message": "${r.statusCode === 404 ? 'Not Found' : r.statusCode === 500 ? 'Internal Server Error' : 'Gateway Timeout'}",
+  "trace_id": "${r.traceId}"
+}`}
+                              </pre>
+                            </div>
+                          </div>
+                        ),
+                      })}
+                    >详情</Button>
+                    {r.statusCode >= 400 && (
+                      <Button
+                        type="link"
+                        size="small"
+                        danger
+                        icon={<Repeat className="w-3 h-3" />}
+                        onClick={() => {
+                          message.loading({ content: `正在重试请求 #${r.traceId}...`, key: 'retry-' + r.traceId, duration: 0 });
+                          setTimeout(() => {
+                            message.success({ content: `重试成功！响应 ${Math.floor(Math.random() * 200 + 80)}ms`, key: 'retry-' + r.traceId });
+                          }, 1500);
+                        }}
+                      >重试</Button>
+                    )}
+                  </Space>
+                ),
+              },
+            ] as ColumnsType<any>}
+            dataSource={Array.from({ length: 20 }).map((_, i) => {
+              const statusPool = [200, 200, 200, 200, 200, 201, 204, 400, 401, 404, 500, 502, 504];
+              const code = statusPool[Math.floor(Math.random() * statusPool.length)];
+              const endpoints = [
+                ['GET', '/api/v1/sku/list?category=tile&page=1&size=50', '查询瓷砖分类SKU列表，返回48条记录'],
+                ['POST', '/api/v1/stock/sync/batch', '批量同步库存数据（SKU编号：SKU-23841, SKU-23842等共12款）'],
+                ['POST', '/api/v1/order/push', '推送订单 PO-20240612-0891：业主王先生，3件商品，合计¥18,620'],
+                ['GET', '/api/v1/price/query?sku=SKU-23841', '查询SKU-23841最新价格和阶梯折扣'],
+                ['PUT', '/api/v1/order/status/PO-20240612-0891', '更新订单状态为"已发货"，运单号SF1234567890'],
+              ];
+              const [method, endpoint, summary] = endpoints[i % 5];
+              const suppliers = ['东方建材集团', '精工陶瓷', '宜家木地板', '海尔智能家居'];
+              return {
+                key: 'cl-' + i,
+                time: dayjs().subtract(i * 13 + Math.floor(Math.random() * 10), 'minute').format('YYYY-MM-DD HH:mm:ss.SSS'),
+                method,
+                endpoint,
+                statusCode: code,
+                duration: code < 300 ? Math.floor(Math.random() * 400 + 40) : Math.floor(Math.random() * 3000 + 800),
+                summary,
+                supplier: suppliers[i % 4],
+                responseSize: Math.floor(Math.random() * 200 + 10),
+                traceId: 'TRACE-' + Math.random().toString(36).slice(2, 10).toUpperCase(),
+              };
+            })}
+            rowClassName={(r: any) => r.statusCode >= 500 ? '!bg-rose-50/40' : r.statusCode >= 400 ? '!bg-amber-50/30' : ''}
+            scroll={{ x: 1200 }}
           />
         </div>
       ),
@@ -756,10 +1022,33 @@ const SupplyChainAPI: React.FC = () => {
               <div className="space-y-4">
                 <div>
                   <label className="block text-xs text-ivory-600 mb-1.5">Webhook URL</label>
-                  <Input size="middle" defaultValue={`https://api.juzhitong.com/webhook/supplier/${currentSupplier.id}`} style={{ borderRadius: 8 }} prefix={<Link2 className="w-4 h-4 text-ivory-400" />} />
+                  <div className="flex items-center gap-2">
+                    <Input
+                      size="middle"
+                      defaultValue={`https://api.juzhitong.com/webhook/supplier/${currentSupplier.id}`}
+                      style={{ borderRadius: 8 }}
+                      prefix={<Link2 className="w-4 h-4 text-ivory-400" />}
+                      className="flex-1"
+                    />
+                    <Button
+                      type="primary"
+                      ghost
+                      size="middle"
+                      icon={<Zap className="w-4 h-4" />}
+                      style={{ borderRadius: 8, borderColor: '#6B8E9F', color: '#6B8E9F' }}
+                      onClick={() => {
+                        message.loading({ content: '正在发送测试请求到 Webhook URL...', key: 'webhook-test', duration: 0 });
+                        setTimeout(() => {
+                          message.success({ content: '✅ Webhook 测试成功！供应商已接收事件推送，延迟 128ms', key: 'webhook-test' });
+                        }, 1500);
+                      }}
+                    >
+                      测试
+                    </Button>
+                  </div>
                 </div>
                 <div>
-                  <label className="block text-xs text-ivory-600 mb-2">订阅事件</label>
+                  <label className="block text-xs text-ivory-600 mb-2">订阅事件（{eventSubs.length}/4）</label>
                   <div className="flex flex-wrap gap-3">
                     {[
                       { key: 'price', label: '价格变动' },
@@ -767,10 +1056,21 @@ const SupplyChainAPI: React.FC = () => {
                       { key: 'order', label: '订单状态' },
                       { key: 'new', label: '新品上架' },
                     ].map(e => (
-                      <Checkbox key={e.key} checked={eventSubs.includes(e.key)} onChange={ev => {
-                        if (ev.target.checked) setEventSubs([...eventSubs, e.key]);
-                        else setEventSubs(eventSubs.filter(k => k !== e.key));
-                      }} className="!text-sm">{e.label}</Checkbox>
+                      <Checkbox
+                        key={e.key}
+                        checked={eventSubs.includes(e.key)}
+                        onChange={ev => {
+                          const before = eventSubs.length;
+                          if (ev.target.checked) {
+                            setEventSubs([...eventSubs, e.key]);
+                            message.success(`已订阅「${e.label}」事件`);
+                          } else {
+                            setEventSubs(eventSubs.filter(k => k !== e.key));
+                            message.info(`已取消订阅「${e.label}」事件`);
+                          }
+                        }}
+                        className="!text-sm"
+                      >{e.label}</Checkbox>
                     ))}
                   </div>
                 </div>
@@ -778,17 +1078,78 @@ const SupplyChainAPI: React.FC = () => {
             </section>
 
             <div className="flex gap-3 pt-2 border-t border-ivory-200 sticky bottom-0 bg-white -mx-6 px-6 py-4">
-              <button className="btn-secondary text-sm flex-1 !py-2.5">
+              <button
+                onClick={() => {
+                  message.loading({ content: `正在测试「${currentSupplier.name}」API 连通性...`, key: 'drawer-tc', duration: 0 });
+                  setTimeout(() => {
+                    const ok = Math.random() > 0.2;
+                    if (ok) {
+                      message.success({
+                        content: (
+                          <span>
+                            ✅ 连接成功！<br />
+                            <span className="font-mono text-xs opacity-80">
+                              PING {currentSupplier.apiEndpoint} · 响应时间 {Math.floor(Math.random() * 120 + 30)}ms<br />
+                              Token 鉴权: PASS · 接口权限: 12/12 可用
+                            </span>
+                          </span>
+                        ),
+                        key: 'drawer-tc',
+                        duration: 4,
+                      });
+                    } else {
+                      message.error({
+                        content: '❌ 连接失败：Invalid AppID 或 Secret 不匹配，请核对配置后重试',
+                        key: 'drawer-tc',
+                        duration: 5,
+                      });
+                    }
+                  }, 1400);
+                }}
+                className="btn-secondary text-sm flex-1 !py-2.5"
+              >
                 <Zap className="w-4 h-4" />
                 测试连接
               </button>
-              <button className="btn-primary text-sm flex-1 !py-2.5">
+              <button
+                onClick={() => {
+                  message.loading({ content: '正在保存供应商配置...', key: 'save-cfg', duration: 0 });
+                  setTimeout(() => {
+                    message.success({ content: `✅「${currentSupplier.name}」配置已保存，已加入 ${syncInterval} 分钟轮询队列`, key: 'save-cfg' });
+                    setDrawerOpen(false);
+                  }, 1000);
+                }}
+                className="btn-primary text-sm flex-1 !py-2.5"
+              >
                 <Shield className="w-4 h-4" />
                 保存配置
               </button>
-              <button className="inline-flex items-center justify-center gap-2 px-4 py-2.5 rounded-btn
+              <button
+                onClick={() => Modal.confirm({
+                  title: `删除「${currentSupplier.name}」对接配置？`,
+                  content: (
+                    <div className="pt-2 space-y-2 text-sm">
+                      <AlertTriangle className="w-5 h-5 text-amber-500 mb-1" />
+                      <p>该操作将：</p>
+                      <ul className="space-y-1 text-xs text-ivory-600 pl-3 list-disc">
+                        <li>立即停止所有自动同步（库存/价格/订单）</li>
+                        <li>历史同步日志将保留 30 天</li>
+                        <li>相关 SKU 将切换为"手动维护"模式</li>
+                      </ul>
+                    </div>
+                  ),
+                  okText: '确认删除',
+                  okButtonProps: { danger: true },
+                  cancelText: '取消',
+                  onOk: () => {
+                    message.error(`已删除「${currentSupplier.name}」的对接配置`);
+                    setDrawerOpen(false);
+                  },
+                })}
+                className="inline-flex items-center justify-center gap-2 px-4 py-2.5 rounded-btn
                 bg-rose-50 text-rose-700 text-sm font-medium border border-rose-200
-                hover:bg-rose-100 transition-all">
+                hover:bg-rose-100 transition-all"
+              >
                 <Trash2 className="w-4 h-4" />
                 删除
               </button>

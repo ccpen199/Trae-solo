@@ -31,6 +31,8 @@ const siteInfo = {
   managerPhone: '138****8899',
   supervisor: '李监理',
   supervisorPhone: '139****6677',
+  inspectionCount: 18,
+  photoCount: 126,
 };
 
 const dailyLogs = [
