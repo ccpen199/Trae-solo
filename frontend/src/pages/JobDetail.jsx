@@ -1,466 +1,398 @@
-import { useState, useEffect } from 'react';
-import {
-  Card,
-  Row,
-  Col,
-  Button,
-  Tag,
-  Table,
-  Avatar,
-  Progress,
-  Space,
-  Descriptions,
-  Spin,
-  message,
-  Typography,
-  Popconfirm,
-} from 'antd';
-import {
-  ArrowLeftOutlined,
-  EditOutlined,
-  UploadOutlined,
-  DownloadOutlined,
-  UserOutlined,
-  FileTextOutlined,
-  CalendarOutlined,
-  GiftOutlined,
-  EnvironmentOutlined,
-  MoneyCollectOutlined,
-  ReadOutlined,
-  ExperimentOutlined,
-} from '@ant-design/icons';
-import { useNavigate, useParams } from 'react-router-dom';
-import dayjs from 'dayjs';
-import { useAuth } from '../context/AuthContext';
-import { jobs, interviews, offers } from '../api';
+import React, { useState, useEffect } from 'react';
+import { useParams, useNavigate, Link } from 'react-router-dom';
+import api from '../utils/api';
+import { useApp } from '../contexts/AppContext';
 
-const { Title, Text, Paragraph } = Typography;
-
-function JobDetail() {
-  const { token } = useAuth();
-  const navigate = useNavigate();
+export default function JobDetail() {
   const { id } = useParams();
-  const [loading, setLoading] = useState(true);
+  const navigate = useNavigate();
+  const { user, isJobseeker, t, language } = useApp();
   const [job, setJob] = useState(null);
-  const [applications, setApplications] = useState([]);
-  const [actionLoading, setActionLoading] = useState({});
+  const [loading, setLoading] = useState(true);
+  const [applying, setApplying] = useState(false);
+  const [showApplyModal, setShowApplyModal] = useState(false);
+  const [coverLetter, setCoverLetter] = useState('');
+  const [activeLang, setActiveLang] = useState(language);
+  const [applySuccess, setApplySuccess] = useState(false);
+  const isEnglish = language === 'en';
 
   useEffect(() => {
-    if (token && id) {
-      loadJobDetail();
-    }
-  }, [token, id]);
+    setActiveLang(language);
+  }, [language]);
 
-  const loadJobDetail = async () => {
-    setLoading(true);
+  useEffect(() => {
+    fetchJobDetail();
+  }, [id]);
+
+  const fetchJobDetail = async () => {
     try {
-      const [jobRes, appRes] = await Promise.all([
-        jobs.getDetail(id),
-        jobs.getDetail(id),
-      ]);
-
-      if (jobRes.code === 0) {
-        setJob(jobRes.data.job);
-        setApplications(jobRes.data.applications || []);
+      const response = await api.get(`/jobs/${id}`);
+      setJob(response.data);
+    } catch (error) {
+      console.error(isEnglish ? 'Failed to fetch job details:' : '获取职位详情失败:', error);
+      if (error.response?.status === 404) {
+        navigate('/jobs');
       }
-    } catch (err) {
-      message.error('加载岗位详情失败');
-      console.error('加载岗位详情失败:', err);
     } finally {
       setLoading(false);
     }
   };
 
-  const handlePublish = async (id, currentStatus) => {
+  const handleApply = async (e) => {
+    e.preventDefault();
+    if (!isJobseeker) {
+      navigate('/login');
+      return;
+    }
+
+    setApplying(true);
     try {
-      setActionLoading((prev) => ({ ...prev, publish: true }));
-      let res;
-      if (currentStatus === 'published') {
-        res = await jobs.unpublish(id);
-      } else {
-        res = await jobs.publish(id);
-      }
-      if (res.code === 0) {
-        message.success(currentStatus === 'published' ? '下架成功' : '发布成功');
-        setJob((prev) => ({
-          ...prev,
-          status: currentStatus === 'published' ? 'offline' : 'published',
-        }));
-      }
-    } catch (err) {
-      message.error('操作失败');
-      console.error('操作失败:', err);
+      await api.post(`/jobs/${id}/apply`, { cover_letter: coverLetter });
+      setApplySuccess(true);
+      setTimeout(() => {
+        setShowApplyModal(false);
+        setApplySuccess(false);
+        setCoverLetter('');
+      }, 2000);
+    } catch (error) {
+      alert(error.response?.data?.error || (isEnglish ? 'Application failed, please try again' : '申请失败，请重试'));
     } finally {
-      setActionLoading((prev) => ({ ...prev, publish: false }));
+      setApplying(false);
     }
   };
-
-  const handleViewResume = (application) => {
-    message.info(`查看 ${application.candidate_name} 的简历`);
-  };
-
-  const handleStartInterview = async (application) => {
-    try {
-      setActionLoading((prev) => ({ ...prev, [`interview_${application.id}`]: true }));
-      const res = await interviews.create({
-        application_id: application.id,
-        schedule_time: dayjs().add(1, 'day').format('YYYY-MM-DD HH:mm:ss'),
-        interview_type: 'video',
-        interview_round: 1,
-        duration: 30,
-      });
-      if (res.code === 0) {
-        message.success('面试已安排');
-        loadJobDetail();
-      }
-    } catch (err) {
-      message.error('发起面试失败');
-      console.error('发起面试失败:', err);
-    } finally {
-      setActionLoading((prev) => ({ ...prev, [`interview_${application.id}`]: false }));
-    }
-  };
-
-  const handleSendOffer = async (application) => {
-    try {
-      setActionLoading((prev) => ({ ...prev, [`offer_${application.id}`]: true }));
-      const res = await offers.create({
-        application_id: application.id,
-        job_id: job.id,
-        candidate_id: application.candidate_id,
-        salary_min: job.salary_min,
-        salary_max: job.salary_max,
-        entry_date: dayjs().add(1, 'month').format('YYYY-MM-DD'),
-      });
-      if (res.code === 0) {
-        message.success('Offer已发送');
-        loadJobDetail();
-      }
-    } catch (err) {
-      message.error('发送Offer失败');
-      console.error('发送Offer失败:', err);
-    } finally {
-      setActionLoading((prev) => ({ ...prev, [`offer_${application.id}`]: false }));
-    }
-  };
-
-  const getStatusTag = (status) => {
-    const statusMap = {
-      published: { color: 'success', text: '已发布' },
-      draft: { color: 'default', text: '草稿' },
-      closed: { color: 'error', text: '已关闭' },
-      offline: { color: 'warning', text: '已下架' },
-    };
-    const { color, text } = statusMap[status] || { color: 'default', text: status };
-    return <Tag color={color}>{text}</Tag>;
-  };
-
-  const getApplicationStatusTag = (status) => {
-    const statusMap = {
-      applied: { color: 'default', text: '已投递' },
-      reviewing: { color: 'processing', text: '简历筛选中' },
-      interview: { color: 'blue', text: '面试中' },
-      offer: { color: 'purple', text: 'Offer阶段' },
-      hired: { color: 'success', text: '已入职' },
-      rejected: { color: 'error', text: '已拒绝' },
-    };
-    const { color, text } = statusMap[status] || { color: 'default', text: status };
-    return <Tag color={color}>{text}</Tag>;
-  };
-
-  const getMatchProgressColor = (score) => {
-    if (score >= 80) return '#52c41a';
-    if (score >= 60) return '#faad14';
-    return '#f5222d';
-  };
-
-  const getEducationText = (edu) => {
-    const map = {
-      high_school: '高中及以下',
-      college: '大专',
-      bachelor: '本科',
-      master: '硕士',
-      doctor: '博士',
-    };
-    return map[edu] || edu;
-  };
-
-  const getExperienceText = (exp) => {
-    const map = {
-      no_limit: '不限',
-      fresh: '应届生',
-      '1-3': '1-3年',
-      '3-5': '3-5年',
-      '5-10': '5-10年',
-      '10+': '10年以上',
-    };
-    return map[exp] || exp;
-  };
-
-  const applicationColumns = [
-    {
-      title: '候选人',
-      dataIndex: 'candidate_name',
-      key: 'candidate_name',
-      render: (text, record) => (
-        <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
-          <Avatar size={40} src={record.avatar} icon={<UserOutlined />} />
-          <div>
-            <div style={{ fontWeight: 500 }}>{text}</div>
-            <Text type="secondary" style={{ fontSize: 12 }}>
-              {record.expected_position}
-            </Text>
-          </div>
-        </div>
-      ),
-      responsive: ['xs', 'sm', 'md', 'lg', 'xl'],
-    },
-    {
-      title: '匹配度',
-      dataIndex: 'match_score',
-      key: 'match_score',
-      width: 150,
-      render: (score) => (
-        <div style={{ width: 100 }}>
-          <Progress
-            percent={score || 0}
-            size="small"
-            strokeColor={getMatchProgressColor(score)}
-            format={(p) => `${p}%`}
-          />
-        </div>
-      ),
-      responsive: ['sm', 'md', 'lg', 'xl'],
-    },
-    {
-      title: '状态',
-      dataIndex: 'status',
-      key: 'status',
-      render: (status) => getApplicationStatusTag(status),
-      responsive: ['sm', 'md', 'lg', 'xl'],
-    },
-    {
-      title: '学历/经验',
-      key: 'profile',
-      render: (_, record) => (
-        <div>
-          <div>{getEducationText(record.highest_education)}</div>
-          <Text type="secondary" style={{ fontSize: 12 }}>
-            {record.work_years}年工作经验
-          </Text>
-        </div>
-      ),
-      responsive: ['md', 'lg', 'xl'],
-    },
-    {
-      title: '操作',
-      key: 'action',
-      fixed: 'right',
-      width: 240,
-      render: (_, record) => (
-        <Space size="small">
-          <Button
-            type="link"
-            size="small"
-            icon={<FileTextOutlined />}
-            onClick={() => handleViewResume(record)}
-          >
-            简历
-          </Button>
-          {record.status !== 'interview' && record.status !== 'offer' && record.status !== 'hired' && record.status !== 'rejected' && (
-            <Button
-              type="link"
-              size="small"
-              icon={<CalendarOutlined />}
-              loading={actionLoading[`interview_${record.id}`]}
-              onClick={() => handleStartInterview(record)}
-            >
-              面试
-            </Button>
-          )}
-          {(record.status === 'interview' || record.status === 'reviewing') && (
-            <Popconfirm
-              title="确定要发送Offer吗？"
-              onConfirm={() => handleSendOffer(record)}
-              okText="确定"
-              cancelText="取消"
-            >
-              <Button
-                type="link"
-                size="small"
-                icon={<GiftOutlined />}
-                loading={actionLoading[`offer_${record.id}`]}
-              >
-                Offer
-              </Button>
-            </Popconfirm>
-          )}
-        </Space>
-      ),
-      responsive: ['xs', 'sm', 'md', 'lg', 'xl'],
-    },
-  ];
 
   if (loading) {
     return (
-      <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '400px' }}>
-        <Spin size="large" />
+      <div style={{ display: 'flex', justifyContent: 'center', padding: '100px' }}>
+        <div className="loading"></div>
       </div>
     );
   }
 
-  if (!job) {
-    return (
-      <Card>
-        <div style={{ textAlign: 'center', padding: '40px 0' }}>
-          <Text type="secondary">岗位不存在或已被删除</Text>
-          <div style={{ marginTop: 16 }}>
-            <Button onClick={() => navigate('/jobs')}>返回列表</Button>
-          </div>
-        </div>
-      </Card>
-    );
-  }
+  if (!job) return null;
 
   return (
-    <div>
-      <Card style={{ marginBottom: 16 }}>
-        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', flexWrap: 'wrap', gap: 16 }}>
-          <div>
-            <Space wrap>
-              <Button icon={<ArrowLeftOutlined />} onClick={() => navigate('/jobs')}>
-                返回
-              </Button>
-              <Title level={3} style={{ margin: 0 }}>
-                {job.title}
-              </Title>
-              {getStatusTag(job.status)}
-            </Space>
-            <div style={{ marginTop: 8, color: 'rgba(0,0,0,0.45)' }}>
-              {job.department} · {job.hr_name || 'HR'}
+    <div style={{ backgroundColor: '#f5f7fa', minHeight: '100vh' }}>
+      <div style={{
+        background: 'linear-gradient(135deg, #00695c, #00897b)',
+        color: 'white',
+        padding: '40px 0',
+      }}>
+        <div className="container">
+          <button
+            onClick={() => navigate(-1)}
+            style={{
+              background: 'rgba(255,255,255,0.2)',
+              color: 'white',
+              border: 'none',
+              padding: '8px 16px',
+              borderRadius: '6px',
+              cursor: 'pointer',
+              marginBottom: '16px',
+            }}
+          >
+            {t('jobDetail.backToList')}
+          </button>
+          <div className="flex justify-between items-start" style={{ gap: '24px' }}>
+            <div style={{ flex: 1 }}>
+              <div style={{ fontSize: '14px', opacity: 0.85, marginBottom: '8px' }}>{activeLang === 'cn' ? '职位详情' : 'Job Details'}</div>
+              <h1 style={{ fontSize: '32px', marginBottom: '12px' }}>
+                {activeLang === 'cn' ? job.title_cn : (job.title_en || job.title_cn)}
+              </h1>
+              {job.title_en && activeLang === 'cn' && (
+                <div style={{ opacity: 0.8, marginBottom: '16px' }}>{job.title_en}</div>
+              )}
+              <div className="flex items-center gap-md" style={{ flexWrap: 'wrap' }}>
+                <span style={{ fontSize: '28px', fontWeight: '700', color: '#ffd54f' }}>
+                  {job.salary_min && job.salary_max
+                    ? (job.salary_min / 10000) + (isEnglish ? 'k-' : '万-') + (job.salary_max / 10000) + (isEnglish ? 'k/month' : '万/月')
+                    : t('jobDetail.negotiable')}
+                </span>
+                <span style={{ opacity: 0.9 }}>📍 {job.location || (isEnglish ? 'Hainan' : '海南')}</span>
+                <span style={{ opacity: 0.9 }}>💼 {job.employment_type || (isEnglish ? 'Full-time' : '全职')}</span>
+              </div>
+              <div className="flex gap-sm mt-md" style={{ flexWrap: 'wrap' }}>
+                <span className="badge" style={{ background: 'rgba(255,255,255,0.25)', color: 'white' }}>
+                  {job.category_name || job.category}
+                </span>
+                {job.has_ftz_subsidy && (
+                  <span className="subsidy-tag" style={{ background: '#ff9800', color: 'white' }}>
+                    {t('jobDetail.ftzSubsidy')}
+                  </span>
+                )}
+                {job.is_encouraged_industry && (
+                  <span className="badge badge-success" style={{ background: 'rgba(76,175,80,0.25)', color: '#c8e6c9' }}>
+                    {t('jobDetail.encouragedIndustry')}
+                  </span>
+                )}
+              </div>
+            </div>
+            <div>
+              {isJobseeker ? (
+                <button
+                  onClick={() => setShowApplyModal(true)}
+                  className="btn"
+                  style={{
+                    background: 'white',
+                    color: '#00695c',
+                    padding: '14px 40px',
+                    fontSize: '16px',
+                    fontWeight: '600',
+                  }}
+                >
+                  {t('jobDetail.applyNow')}
+                </button>
+              ) : user ? (
+                <button className="btn" style={{
+                  background: 'rgba(255,255,255,0.2)',
+                  color: 'white',
+                  padding: '14px 40px',
+                  fontSize: '16px',
+                }} disabled>
+                  {t('jobDetail.applyWithJobseeker')}
+                </button>
+              ) : (
+                <button
+                  onClick={() => navigate('/login')}
+                  className="btn"
+                  style={{
+                    background: 'white',
+                    color: '#00695c',
+                    padding: '14px 40px',
+                    fontSize: '16px',
+                    fontWeight: '600',
+                  }}
+                >
+                  {t('jobDetail.loginToApply')}
+                </button>
+              )}
             </div>
           </div>
-          <Space>
-            <Button
-              icon={<EditOutlined />}
-              onClick={() => navigate(`/jobs/create?id=${job.id}`)}
-            >
-              编辑
-            </Button>
-            <Button
-              type={job.status === 'published' ? 'default' : 'primary'}
-              icon={job.status === 'published' ? <DownloadOutlined /> : <UploadOutlined />}
-              loading={actionLoading.publish}
-              onClick={() => handlePublish(job.id, job.status)}
-            >
-              {job.status === 'published' ? '下架' : '发布'}
-            </Button>
-          </Space>
         </div>
-      </Card>
+      </div>
 
-      <Row gutter={[16, 16]}>
-        <Col xs={24} lg={16}>
-          <Card title="基本信息" style={{ marginBottom: 16 }}>
-            <Descriptions column={{ xs: 1, sm: 2, md: 3 }}>
-              <Descriptions.Item label={<Space><MoneyCollectOutlined />薪资</Space>}>
-                {job.salary_negotiable ? (
-                  <Tag>面议</Tag>
-                ) : (
-                  <Text strong style={{ color: '#f5222d' }}>
-                    {job.salary_min}K - {job.salary_max}K
-                  </Text>
+      <div className="container" style={{ padding: '40px 20px' }}>
+        <div className="grid grid-3" style={{ alignItems: 'flex-start' }}>
+          <div style={{ gridColumn: 'span 2' }}>
+            <div className="card">
+              <div className="bilingual-tabs">
+                <div
+                  className={`bilingual-tab ${activeLang === 'cn' ? 'active' : ''}`}
+                  onClick={() => setActiveLang('cn')}
+                >
+                  {t('jobDetail.chinese')}
+                </div>
+                <div
+                  className={`bilingual-tab ${activeLang === 'en' ? 'active' : ''}`}
+                  onClick={() => setActiveLang('en')}
+                >
+                  {t('jobDetail.english')}
+                </div>
+              </div>
+
+              <h3 style={{ marginBottom: '16px' }}>{t('jobDetail.jobDescription')}</h3>
+              <p style={{ whiteSpace: 'pre-line', lineHeight: '2', color: '#424242' }}>
+                {activeLang === 'cn' ? job.description_cn : (job.description_en || job.description_cn)}
+              </p>
+
+              <div className="divider"></div>
+
+              <h3 style={{ marginBottom: '16px', marginTop: '24px' }}>{t('jobDetail.jobRequirements')}</h3>
+              <p style={{ whiteSpace: 'pre-line', lineHeight: '2', color: '#424242' }}>
+                {activeLang === 'cn' 
+                  ? (job.requirements_cn || t('common.noData')) 
+                  : (job.requirements_en || job.requirements_cn || t('common.noData'))}
+              </p>
+
+              <div className="divider"></div>
+
+              <div style={{ marginTop: '24px' }}>
+                <h4 style={{ marginBottom: '12px' }}>{t('jobDetail.tags')}</h4>
+                <div style={{ display: 'flex', flexWrap: 'wrap', gap: '8px' }}>
+                  {job.tags && job.tags.map((tag, i) => (
+                    <span key={i} className="tag tag-primary">{tag}</span>
+                  ))}
+                </div>
+              </div>
+
+              {job.rcep_skills && job.rcep_skills.length > 0 && (
+                <div style={{ marginTop: '16px' }}>
+                  <h4 style={{ marginBottom: '12px' }}>{t('jobDetail.rcepSkills')}</h4>
+                  <div style={{ display: 'flex', flexWrap: 'wrap', gap: '8px' }}>
+                    {job.rcep_skills.map((skill, i) => (
+                      <span key={i} className="tag tag-accent">{skill}</span>
+                    ))}
+                  </div>
+                </div>
+              )}
+            </div>
+
+            {job.has_ftz_subsidy && (
+              <div className="card" style={{ marginTop: '24px' }}>
+                <h3 style={{ marginBottom: '16px', color: '#e65100' }}>
+                  {t('jobDetail.ftzBenefits')}
+                </h3>
+
+                {job.subsidy_policy_ref && (
+                  <div className="alert-info" style={{ marginBottom: '16px' }}>
+                    <strong>{t('jobDetail.policyBasis')}：</strong>
+                    {job.subsidy_policy_ref.split(',').map((ref, i) => (
+                      <React.Fragment key={i}>
+                        {i > 0 && '、'}
+                        <Link 
+                          to={'/policies?policyNumber=' + ref.trim()} 
+                          style={{ color: '#0288d1', textDecoration: 'underline', fontWeight: 600 }}
+                        >
+                          {ref.trim()}
+                        </Link>
+                      </React.Fragment>
+                    ))}
+                    <Link 
+                      to="/policies" 
+                      style={{ 
+                        marginLeft: '12px', 
+                        fontSize: '13px', 
+                        color: '#00897b',
+                        textDecoration: 'none'
+                      }}
+                    >
+                      {t('jobDetail.viewAllPolicies')}
+                    </Link>
+                  </div>
                 )}
-              </Descriptions.Item>
-              <Descriptions.Item label={<Space><EnvironmentOutlined />工作地点</Space>}>
-                {job.work_city} {job.work_district}
-              </Descriptions.Item>
-              <Descriptions.Item label={<Space><ReadOutlined />学历要求</Space>}>
-                {getEducationText(job.education)}
-              </Descriptions.Item>
-              <Descriptions.Item label={<Space><ExperimentOutlined />经验要求</Space>}>
-                {getExperienceText(job.experience)}
-              </Descriptions.Item>
-              <Descriptions.Item label="职位类型">
-                {job.job_type === 'full_time' ? '全职' : job.job_type === 'part_time' ? '兼职' : job.job_type === 'internship' ? '实习' : '合同'}
-              </Descriptions.Item>
-              <Descriptions.Item label="发布时间">
-                {job.publish_time ? dayjs(job.publish_time).format('YYYY-MM-DD') : '未发布'}
-              </Descriptions.Item>
-            </Descriptions>
-          </Card>
 
-          <Card title="职位描述" style={{ marginBottom: 16 }}>
-            <Paragraph style={{ whiteSpace: 'pre-wrap', lineHeight: 1.8 }}>
-              {job.jd_content}
-            </Paragraph>
-          </Card>
-
-          {job.competency_tags && (
-            <Card title="胜任力标签" style={{ marginBottom: 16 }}>
-              <Space wrap>
-                {job.competency_tags.split(',').map((tag, idx) => (
-                  <Tag key={idx} color="blue">
-                    {tag}
-                  </Tag>
-                ))}
-              </Space>
-            </Card>
-          )}
-
-          {job.benefits && (
-            <Card title="福利待遇" style={{ marginBottom: 16 }}>
-              <Space wrap>
-                {job.benefits.split(',').map((benefit, idx) => (
-                  <Tag key={idx} color="green">
-                    {benefit}
-                  </Tag>
-                ))}
-              </Space>
-            </Card>
-          )}
-        </Col>
-
-        <Col xs={24} lg={8}>
-          <Card title="岗位数据" style={{ marginBottom: 16 }}>
-            <Row gutter={[16, 16]}>
-              <Col span={12}>
-                <div style={{ textAlign: 'center' }}>
-                  <div style={{ fontSize: 24, fontWeight: 'bold', color: '#1890ff' }}>
-                    {job.application_count || 0}
+                {job.policy_basis && (
+                  <div style={{ 
+                    marginBottom: '16px', 
+                    whiteSpace: 'pre-line', 
+                    color: '#5d4037',
+                    padding: '16px',
+                    background: '#fff8e1',
+                    borderRadius: '8px',
+                    borderLeft: '4px solid #ff9800'
+                  }}>
+                    <div style={{ fontWeight: 600, marginBottom: '8px', color: '#e65100' }}>
+                      📋 {t('jobDetail.subsidyEligibility')}
+                    </div>
+                    {job.policy_basis}
                   </div>
-                  <Text type="secondary">投递人数</Text>
-                </div>
-              </Col>
-              <Col span={12}>
-                <div style={{ textAlign: 'center' }}>
-                  <div style={{ fontSize: 24, fontWeight: 'bold', color: '#52c41a' }}>
-                    {job.interview_count || 0}
-                  </div>
-                  <Text type="secondary">面试人数</Text>
-                </div>
-              </Col>
-            </Row>
-          </Card>
+                )}
 
-          <Card
-            title={`投递者列表 (${applications.length})`}
-            extra={<a onClick={() => navigate('/applications')}>查看全部</a>}
-          >
-            <Table
-              dataSource={applications}
-              columns={applicationColumns}
-              rowKey="id"
-              pagination={false}
-              size="middle"
-              scroll={{ x: 400 }}
-              locale={{ emptyText: '暂无投递者' }}
-            />
-          </Card>
-        </Col>
-      </Row>
+                {job.applicable_policies && job.applicable_policies.length > 0 && (
+                  <div>
+                    <h4 style={{ marginBottom: '12px' }}>{t('jobDetail.applicablePolicies')}</h4>
+                    {job.applicable_policies.map((policy, index) => (
+                      <div key={index} className="policy-box" style={{ cursor: 'pointer' }}>
+                        <Link 
+                          to={'/policies?policyNumber=' + (policy.policy_number || '')} 
+                          style={{ textDecoration: 'none', color: 'inherit' }}
+                        >
+                          <div className="policy-number" style={{ color: '#0288d1', fontWeight: 600 }}>
+                            {policy.policy_number} {isEnglish ? '→' : '→'}
+                          </div>
+                          <div className="policy-title">{activeLang === 'cn' ? policy.title_cn : (policy.title_en || policy.title_cn)}</div>
+                          <div className="policy-content">{activeLang === 'cn' ? policy.content_cn : (policy.content_en || policy.content_cn)}</div>
+                        </Link>
+                      </div>
+                    ))}
+                  </div>
+                )}
+              </div>
+            )}
+          </div>
+
+          <div>
+            <div className="card">
+              <h3 style={{ marginBottom: '16px' }}>{t('jobDetail.companyInfo')}</h3>
+              <h4 style={{ marginBottom: '8px' }}>{job.company_name}</h4>
+              {job.is_encouraged_industry && (
+                <span className="badge badge-success" style={{ marginBottom: '12px', display: 'inline-block' }}>
+                  {t('jobDetail.encouragedIndustryTag')}
+                </span>
+              )}
+              <p className="text-sm text-secondary" style={{ lineHeight: '1.8', marginTop: '12px' }}>
+                {job.company_description || t('common.noData')}
+              </p>
+            </div>
+
+            {job.recording && (
+              <div className="card" style={{ marginTop: '16px' }}>
+                <h4 style={{ marginBottom: '12px' }}>{t('jobDetail.recordingInfo')}</h4>
+                <div className="text-sm">
+                  <div style={{ marginBottom: '8px' }}>
+                    <span className="text-secondary">{t('jobDetail.recordingStatus')}：</span>
+                    <span className={`badge ${job.recording.recording_status === 'recorded' ? 'badge-success' : 'badge-warning'}`}>
+                      {job.recording.recording_status === 'recorded' ? t('jobDetail.recorded') : t('jobDetail.pendingRecording')}
+                    </span>
+                  </div>
+                  {job.recording.recorded_at && (
+                    <div className="text-secondary">
+                      {t('jobDetail.recordingTime')}：{job.recording.recorded_at}
+                    </div>
+                  )}
+                  {job.recording.bureau_response && (
+                    <div className="text-secondary mt-sm" style={{ marginTop: '8px' }}>
+                      {job.recording.bureau_response}
+                    </div>
+                  )}
+                </div>
+              </div>
+            )}
+
+            <div className="card" style={{ marginTop: '16px' }}>
+              <h4 style={{ marginBottom: '12px' }}>{t('jobDetail.tips')}</h4>
+              <ul className="text-sm text-secondary" style={{ paddingLeft: '20px', lineHeight: '2' }}>
+                <li>{t('jobDetail.tip1')}</li>
+                <li>{t('jobDetail.tip2')}</li>
+                <li>{t('jobDetail.tip3')}</li>
+                <li>{t('jobDetail.tip4')}</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {showApplyModal && (
+        <div className="modal-overlay" onClick={() => setShowApplyModal(false)}>
+          <div className="modal-content" onClick={e => e.stopPropagation()}>
+            {applySuccess ? (
+              <div style={{ textAlign: 'center', padding: '40px' }}>
+                <div style={{ fontSize: '64px', marginBottom: '16px' }}>✅</div>
+                <h3>{t('jobDetail.applySuccess')}</h3>
+                <p className="text-secondary">{t('jobDetail.applySuccessDesc')}</p>
+              </div>
+            ) : (
+              <>
+                <h3 style={{ marginBottom: '20px' }}>{t('jobDetail.applyModalTitle')}：{activeLang === 'cn' ? job.title_cn : (job.title_en || job.title_cn)}</h3>
+                <form onSubmit={handleApply}>
+                  <div className="form-group">
+                    <label className="form-label">{t('jobDetail.coverLetter')}</label>
+                    <textarea
+                      value={coverLetter}
+                      onChange={(e) => setCoverLetter(e.target.value)}
+                      placeholder={t('jobDetail.coverLetterPlaceholder')}
+                      className="form-textarea"
+                      rows={5}
+                    />
+                  </div>
+                  <div className="flex justify-end gap-sm">
+                    <button
+                      type="button"
+                      onClick={() => setShowApplyModal(false)}
+                      className="btn btn-secondary"
+                    >
+                      {t('common.cancel')}
+                    </button>
+                    <button type="submit" className="btn btn-primary" disabled={applying}>
+                      {applying ? t('jobDetail.applying') : t('jobDetail.confirmApply')}
+                    </button>
+                  </div>
+                </form>
+              </>
+            )}
+          </div>
+        </div>
+      )}
     </div>
   );
 }
-
-export default JobDetail;

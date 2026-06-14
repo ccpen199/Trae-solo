@@ -1,278 +1,352 @@
 const express = require('express');
-const db = require('../db');
-const { success, error, paginate } = require('../utils/response');
-const { authMiddleware } = require('../middleware/auth');
+const { db } = require('../database');
+const { authenticateToken, requireRole } = require('../middleware');
 
 const router = express.Router();
 
-function detectFraud(job) {
-  let score = 0;
-  const factors = [];
-  
-  if (job.salary_min > 0 && job.salary_max > 0) {
-    const ratio = job.salary_max / job.salary_min;
-    if (ratio > 3) {
-      score += 25;
-      factors.push('薪资范围异常，最高薪资是最低薪资的3倍以上');
-    }
+function parseJSONField(value) {
+  try {
+    return value ? JSON.parse(value) : null;
+  } catch (e) {
+    return value;
   }
-  
-  if (job.title && job.title.length > 50) {
-    score += 10;
-    factors.push('职位名称过长，可能包含关键词堆砌');
-  }
-  
-  if (job.jd_content && job.jd_content.length < 50) {
-    score += 30;
-    factors.push('职位描述过短，信息不完整');
-  }
-  
-  const keywords = ['高薪', '日结', '兼职', '刷单', '在家办公', '无需经验'];
-  keywords.forEach(kw => {
-    if ((job.title + job.jd_content).includes(kw)) {
-      score += 15;
-      factors.push(`包含高风险关键词：${kw}`);
-    }
-  });
-  
-  if (!job.work_address || job.work_address.length < 5) {
-    score += 20;
-    factors.push('工作地址不详细');
-  }
-  
-  let riskLevel = 'low';
-  if (score >= 50) riskLevel = 'medium';
-  if (score >= 75) riskLevel = 'high';
-  
-  return { score, riskLevel, factors };
 }
 
-router.get('/', authMiddleware, (req, res) => {
-  const { page = 1, pageSize = 20, status, keyword, job_type, work_city } = req.query;
-  const offset = (page - 1) * pageSize;
+function formatJob(job) {
+  if (!job) return null;
+  return {
+    ...job,
+    tags: parseJSONField(job.tags),
+    rcep_skills: parseJSONField(job.rcep_skills),
+    has_ftz_subsidy: !!job.has_ftz_subsidy,
+    is_approved: !!job.is_approved,
+    is_active: !!job.is_active,
+    is_encouraged_industry: !!job.is_encouraged_industry
+  };
+}
+
+router.get('/', (req, res) => {
+  const { 
+    category, keyword, has_ftz_subsidy, salary_min, salary_max, rcep_skill, page = 1, limit = 10 } = req.query;
   
-  let whereCount = 'WHERE company_id = ?';
-  let whereList = 'WHERE j.company_id = ?';
-  const params = [req.companyId];
-  
-  if (status && status !== 'all') {
-    whereCount += ' AND status = ?';
-    whereList += ' AND j.status = ?';
-    params.push(status);
+  let sql = `
+    SELECT j.*, c.company_name, c.is_encouraged_industry, ic.name_cn as category_name, ic.name_en as category_name_en
+    FROM jobs j
+    LEFT JOIN companies c ON j.company_id = c.id
+    LEFT JOIN industry_catalog ic ON j.category = ic.code
+    WHERE j.is_active = 1 AND j.is_approved = 1
+  `;
+  const params = [];
+
+  if (category) {
+    sql += ' AND j.category = ?';
+    params.push(category);
   }
+
   if (keyword) {
-    whereCount += ' AND (title LIKE ? OR jd_content LIKE ? OR department LIKE ?)';
-    whereList += ' AND (j.title LIKE ? OR j.jd_content LIKE ? OR j.department LIKE ?)';
-    const kw = `%${keyword}%`;
-    params.push(kw, kw, kw);
+    sql += ` AND (
+      j.title_cn LIKE ? OR j.title_en LIKE ? OR j.description_cn LIKE ? OR j.description_en LIKE ?
+      OR j.requirements_cn LIKE ? OR j.requirements_en LIKE ? OR j.tags LIKE ? OR j.rcep_skills LIKE ?
+    )`;
+    params.push(
+      `%${keyword}%`, `%${keyword}%`, `%${keyword}%`, `%${keyword}%`,
+      `%${keyword}%`, `%${keyword}%`, `%${keyword}%`, `%${keyword}%`
+    );
   }
-  if (job_type) {
-    whereCount += ' AND job_type = ?';
-    whereList += ' AND j.job_type = ?';
-    params.push(job_type);
+
+  if (has_ftz_subsidy === '1') {
+    sql += ' AND j.has_ftz_subsidy = 1';
   }
-  if (work_city) {
-    whereCount += ' AND work_city = ?';
-    whereList += ' AND j.work_city = ?';
-    params.push(work_city);
+
+  if (salary_min) {
+    sql += ' AND j.salary_max >= ?';
+    params.push(parseInt(salary_min));
   }
-  
-  const total = db.prepare(`SELECT COUNT(*) as count FROM jobs ${whereCount}`).get(...params).count;
-  
-  const list = db.prepare(`
-    SELECT j.*, hu.name as hr_name, hu.avatar as hr_avatar
+
+  if (salary_max) {
+    sql += ' AND j.salary_min <= ?';
+    params.push(parseInt(salary_max));
+  }
+
+  if (rcep_skill) {
+    sql += ' AND (j.rcep_skills LIKE ? OR j.tags LIKE ? OR j.requirements_cn LIKE ? OR j.requirements_en LIKE ?)';
+    params.push(`%"${rcep_skill}"%`, `%${rcep_skill}%`, `%${rcep_skill}%`, `%${rcep_skill}%`);
+  }
+
+  const countSql = `SELECT COUNT(*) as count FROM (${sql}) as filtered_jobs`;
+  const total = db.prepare(countSql).get(...params).count;
+
+  const offset = (parseInt(page) - 1) * parseInt(limit);
+  sql += ' ORDER BY j.created_at DESC LIMIT ? OFFSET ?';
+  params.push(parseInt(limit), offset);
+
+  const jobs = db.prepare(sql).all(...params);
+
+  res.json({
+    jobs: jobs.map(formatJob),
+    total,
+    page: parseInt(page),
+    limit: parseInt(limit),
+    totalPages: Math.ceil(total / parseInt(limit))
+  });
+});
+
+router.get('/company/my', authenticateToken, requireRole(['company']), (req, res) => {
+  const company = db.prepare('SELECT id FROM companies WHERE user_id = ?').get(req.user.id);
+  if (!company) {
+    return res.status(404).json({ error: '未找到企业信息' });
+  }
+
+  const jobs = db.prepare(`
+    SELECT j.*, ic.name_cn as category_name
     FROM jobs j
-    LEFT JOIN hr_users hu ON j.hr_id = hu.id
-    ${whereList}
+    LEFT JOIN industry_catalog ic ON j.category = ic.code
+    WHERE j.company_id = ?
     ORDER BY j.created_at DESC
-    LIMIT ? OFFSET ?
-  `).all(...params, parseInt(pageSize), offset);
-  
-  res.json(paginate(list, total, parseInt(page), parseInt(pageSize)));
+  `).all(company.id);
+
+  res.json(jobs.map(formatJob));
 });
 
-router.get('/templates', authMiddleware, (req, res) => {
-  const { category } = req.query;
-  
-  let where = 'WHERE is_system = 1';
-  const params = [];
-  
-  if (category) {
-    where += ' AND category = ?';
-    params.push(category);
-  }
-  
-  const systemTemplates = db.prepare(`SELECT * FROM jd_templates ${where} ORDER BY id ASC`).all(...params);
-  
-  const companyTemplates = db.prepare(`
-    SELECT * FROM jd_templates 
-    WHERE company_id = ? 
-    ORDER BY created_at DESC
-  `).all(req.companyId);
-  
-  res.json(success({
-    systemTemplates,
-    companyTemplates
-  }));
-});
-
-router.post('/templates', authMiddleware, (req, res) => {
-  const { name, category, content } = req.body;
-  
-  const info = db.prepare(`
-    INSERT INTO jd_templates (company_id, name, category, content, is_system)
-    VALUES (?, ?, ?, ?, 0)
-  `).run(req.companyId, name, category, content);
-  
-  res.json(success({ id: info.lastInsertRowid }, '模板创建成功'));
-});
-
-router.get('/tags', authMiddleware, (req, res) => {
-  const { category } = req.query;
-  
-  let where = '';
-  const params = [];
-  
-  if (category) {
-    where = 'WHERE category = ?';
-    params.push(category);
-  }
-  
-  const tags = db.prepare(`SELECT * FROM competency_tags ${where} ORDER BY name ASC`).all(...params);
-  
-  res.json(success(tags));
-});
-
-router.get('/:id', authMiddleware, (req, res) => {
+router.get('/:id', (req, res) => {
   const job = db.prepare(`
-    SELECT j.*, hu.name as hr_name, hu.avatar as hr_avatar,
-      (SELECT COUNT(*) FROM job_applications WHERE job_id = j.id) as application_count,
-      (SELECT COUNT(*) FROM job_applications WHERE job_id = j.id AND status = 'interview') as interview_count
+    SELECT j.*, c.company_name, c.description as company_description, c.is_encouraged_industry, 
+           ic.name_cn as category_name, ic.name_en as category_name_en
     FROM jobs j
-    LEFT JOIN hr_users hu ON j.hr_id = hu.id
-    WHERE j.id = ? AND j.company_id = ?
-  `).get(req.params.id, req.companyId);
-  
+    LEFT JOIN companies c ON j.company_id = c.id
+    LEFT JOIN industry_catalog ic ON j.category = ic.code
+    WHERE j.id = ?
+  `).get(req.params.id);
+
   if (!job) {
-    return res.json(error('职位不存在'));
+    return res.status(404).json({ error: '职位不存在' });
+  }
+
+  const formatted = formatJob(job);
+  
+  const recording = db.prepare('SELECT * FROM job_recordings WHERE job_id = ?').get(req.params.id);
+  formatted.recording = recording || null;
+
+  if (recording) {
+    formatted.recording = {
+      ...recording,
+    };
+  }
+
+  const policies = [];
+  if (job.subsidy_policy_ref) {
+    const policyRefs = job.subsidy_policy_ref.split(',');
+    for (const ref of policyRefs) {
+      const policy = db.prepare('SELECT * FROM policies WHERE policy_number = ? AND is_active = 1').get(ref.trim());
+      if (policy) policies.push(policy);
+    }
+  }
+  formatted.applicable_policies = policies;
+
+  res.json(formatted);
+});
+
+router.post('/', authenticateToken, requireRole(['company', 'admin']), (req, res) => {
+  const {
+    title_cn, title_en, description_cn, description_en,
+    requirements_cn, requirements_en, category,
+    salary_min, salary_max, location, employment_type,
+    tags, rcep_skills, has_ftz_subsidy, subsidy_policy_ref, policy_basis
+  } = req.body;
+
+  if (!title_cn || !description_cn || !category) {
+    return res.status(400).json({ error: '请填写必填字段' });
+  }
+
+  let companyId = null;
+  if (req.user.role === 'company') {
+    const company = db.prepare('SELECT id FROM companies WHERE user_id = ?').get(req.user.id);
+    if (!company) {
+      return res.status(400).json({ error: '企业用户未找到企业信息' });
+    }
+    companyId = company.id;
+  } else if (req.user.role === 'admin') {
+    companyId = req.body.company_id;
+    if (!companyId) {
+      return res.status(400).json({ error: '请指定企业ID' });
+    }
+  }
+
+  const company = db.prepare('SELECT is_encouraged_industry FROM companies WHERE id = ?').get(companyId);
+  
+  let finalHasFtzSubsidy = has_ftz_subsidy ? 1 : 0;
+  let autoMatchPolicies = [];
+  
+  if (company && company.is_encouraged_industry) {
+    finalHasFtzSubsidy = 1;
+    autoMatchPolicies.push('财税〔2020〕31号');
+  }
+
+  let finalPolicyRef = subsidy_policy_ref;
+  let finalPolicyBasis = policy_basis;
+  
+  if (finalHasFtzSubsidy && !finalPolicyRef) {
+    const matchedPolicies = matchPoliciesForJob(category, salary_max, employment_type);
+    if (matchedPolicies.length > 0) {
+      finalPolicyRef = matchedPolicies.join(',');
+      finalPolicyBasis = generatePolicyBasis(matchedPolicies);
+    }
+  }
+
+  const result = db.prepare(`
+    INSERT INTO jobs (company_id, title_cn, title_en, description_cn, description_en,
+      requirements_cn, requirements_en, category, salary_min, salary_max, location, employment_type,
+      tags, rcep_skills, has_ftz_subsidy, subsidy_policy_ref, policy_basis, is_approved)
+    VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+  `).run(
+    companyId,
+    title_cn, title_en || null,
+    description_cn, description_en || null,
+    requirements_cn || null, requirements_en || null,
+    category,
+    salary_min || null, salary_max || null,
+    location || null, employment_type || null,
+    tags ? JSON.stringify(tags || []) : null,
+    rcep_skills ? JSON.stringify(rcep_skills || []) : null,
+    finalHasFtzSubsidy,
+    finalPolicyRef || null,
+    finalPolicyBasis || null,
+    req.user.role === 'admin' ? 1 : 0
+  );
+
+  const jobId = result.lastInsertRowid;
+
+  db.prepare('INSERT INTO job_recordings (job_id, recording_status) VALUES (?, ?)').run(jobId, 'pending');
+
+  res.status(201).json({ id: jobId, message: req.user.role === 'admin' ? '职位已发布' : '职位已提交，等待审核' });
+});
+
+function matchPoliciesForJob(category, salaryMax, employmentType) {
+  const policies = [];
+  
+  if (salaryMax && salaryMax >= 20000) {
+    policies.push('财税〔2020〕32号');
   }
   
+  policies.push('琼办发〔2019〕41号');
+  
+  return policies;
+}
+
+function generatePolicyBasis(policyRefs) {
+  const basis = [];
+  for (const ref of policyRefs) {
+    const policy = db.prepare('SELECT title_cn, content_cn FROM policies WHERE policy_number = ?').get(ref);
+    if (policy) {
+      basis.push(`${policy.title_cn}：${policy.content_cn.substring(0, 50)}...`);
+    }
+  }
+  return basis.join('\n');
+}
+
+router.put('/:id', authenticateToken, requireRole(['company', 'admin']), (req, res) => {
+  const job = db.prepare('SELECT * FROM jobs WHERE id = ?').get(req.params.id);
+  if (!job) {
+    return res.status(404).json({ error: '职位不存在' });
+  }
+
+  if (req.user.role === 'company') {
+    const company = db.prepare('SELECT id FROM companies WHERE user_id = ?').get(req.user.id);
+    if (!company || company.id !== job.company_id) {
+      return res.status(403).json({ error: '无权修改此职位' });
+    }
+  }
+
+  const {
+    title_cn, title_en, description_cn, description_en,
+    requirements_cn, requirements_en, category,
+    salary_min, salary_max, location, employment_type,
+    tags, rcep_skills, has_ftz_subsidy, subsidy_policy_ref, policy_basis, is_active
+  } = req.body;
+
+  db.prepare(`
+    UPDATE jobs SET 
+      title_cn = COALESCE(?, title_cn),
+      title_en = COALESCE(?, title_en),
+      description_cn = COALESCE(?, description_cn),
+      description_en = COALESCE(?, description_en),
+      requirements_cn = COALESCE(?, requirements_cn),
+      requirements_en = COALESCE(?, requirements_en),
+      category = COALESCE(?, category),
+      salary_min = COALESCE(?, salary_min),
+      salary_max = COALESCE(?, salary_max),
+      location = COALESCE(?, location),
+      employment_type = COALESCE(?, employment_type),
+      tags = COALESCE(?, tags),
+      rcep_skills = COALESCE(?, rcep_skills),
+      has_ftz_subsidy = COALESCE(?, has_ftz_subsidy),
+      subsidy_policy_ref = COALESCE(?, subsidy_policy_ref),
+      policy_basis = COALESCE(?, policy_basis),
+      is_active = COALESCE(?, is_active),
+      updated_at = CURRENT_TIMESTAMP
+    WHERE id = ?
+  `).run(
+    title_cn, title_en, description_cn, description_en,
+    requirements_cn, requirements_en, category,
+    salary_min, salary_max, location, employment_type,
+    tags ? JSON.stringify(tags || []) : null,
+    rcep_skills ? JSON.stringify(rcep_skills || []) : null,
+    has_ftz_subsidy ? 1 : 0,
+    subsidy_policy_ref, policy_basis,
+    is_active !== undefined ? (is_active ? 1 : 0) : null,
+    req.params.id
+  );
+
+  res.json({ message: '职位已更新' });
+});
+
+router.post('/:id/apply', authenticateToken, requireRole(['jobseeker']), (req, res) => {
+  const jobseeker = db.prepare('SELECT id FROM jobseekers WHERE user_id = ?').get(req.user.id);
+  if (!jobseeker) {
+    return res.status(400).json({ error: '未找到求职者信息' });
+  }
+
+  const existing = db.prepare('SELECT id FROM applications WHERE job_id = ? AND jobseeker_id = ?').get(req.params.id, jobseeker.id);
+  if (existing) {
+    return res.status(400).json({ error: '您已申请过此职位' });
+  }
+
+  const { cover_letter } = req.body;
+
+  db.prepare('INSERT INTO applications (job_id, jobseeker_id, cover_letter) VALUES (?, ?, ?)').run(
+    req.params.id, jobseeker.id, cover_letter || null
+  );
+
+  res.status(201).json({ message: '申请已提交' });
+});
+
+router.get('/:id/applications', authenticateToken, requireRole(['company', 'admin']), (req, res) => {
+  const job = db.prepare('SELECT * FROM jobs WHERE id = ?').get(req.params.id);
+  if (!job) {
+    return res.status(404).json({ error: '职位不存在' });
+  }
+
+  if (req.user.role === 'company') {
+    const company = db.prepare('SELECT id FROM companies WHERE user_id = ?').get(req.user.id);
+    if (!company || company.id !== job.company_id) {
+      return res.status(403).json({ error: '无权查看此职位的申请' });
+    }
+  }
+
   const applications = db.prepare(`
-    SELECT ja.*, c.name as candidate_name, c.phone, c.email, c.avatar,
-      c.expected_position, c.work_years, c.highest_education, c.skill_tags, c.resume_score
-    FROM job_applications ja
-    LEFT JOIN candidates c ON ja.candidate_id = c.id
-    WHERE ja.job_id = ?
-    ORDER BY ja.match_score DESC
-    LIMIT 20
+    SELECT a.*, u.name as jobseeker_name, u.email, u.phone,
+           jk.skills, jk.experience_years, jk.education
+    FROM applications a
+    LEFT JOIN jobseekers jk ON a.jobseeker_id = jk.id
+    LEFT JOIN users u ON jk.user_id = u.id
+    WHERE a.job_id = ?
+    ORDER BY a.created_at DESC
   `).all(req.params.id);
-  
-  res.json(success({
-    job,
-    applications
-  }));
-});
 
-router.post('/', authMiddleware, (req, res) => {
-  const { title, department, job_type, work_city, work_district, work_address, longitude, latitude, salary_min, salary_max, salary_negotiable, education, experience, jd_content, jd_template_id, competency_tags, benefits, channel } = req.body;
-  
-  if (!title || !work_city || !salary_min || !salary_max || !jd_content) {
-    return res.json(error('请填写完整信息'));
-  }
-  
-  const jobData = { title, department, job_type, work_city, work_district, work_address, longitude, latitude, salary_min, salary_max, salary_negotiable: salary_negotiable ? 1 : 0, education, experience, jd_content, jd_template_id, competency_tags: Array.isArray(competency_tags) ? competency_tags.join(',') : competency_tags, benefits: Array.isArray(benefits) ? benefits.join(',') : benefits, channel, hr_id: req.userId, company_id: req.companyId };
-  
-  const fraud = detectFraud(jobData);
-  
-  jobData.fraud_score = fraud.score;
-  jobData.fraud_status = fraud.score >= 75 ? 'rejected' : (fraud.score >= 50 ? 'warning' : 'normal');
-  jobData.fraud_reason = fraud.factors.join('; ');
-  
-  const info = db.prepare(`
-    INSERT INTO jobs (company_id, hr_id, title, department, job_type, work_city, work_district, work_address, longitude, latitude, salary_min, salary_max, salary_negotiable, education, experience, jd_content, jd_template_id, competency_tags, benefits, channel, status, fraud_score, fraud_status, fraud_reason)
-    VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, 'draft', ?, ?, ?)
-  `).run(req.companyId, req.userId, title, department, job_type, work_city, work_district, work_address, longitude, latitude, salary_min, salary_max, salary_negotiable, education, experience, jd_content, jd_template_id, jobData.competency_tags, jobData.benefits, channel, fraud.score, jobData.fraud_status, jobData.fraud_reason);
-  
-  db.prepare(`
-    INSERT INTO fraud_detections (job_id, company_id, risk_score, risk_level, risk_factors)
-    VALUES (?, ?, ?, ?, ?)
-  `).run(info.lastInsertRowid, req.companyId, fraud.score, fraud.riskLevel, JSON.stringify(fraud.factors));
-  
-  res.json(success({ id: info.lastInsertRowid, fraud }, '职位创建成功'));
-});
-
-router.put('/:id', authMiddleware, (req, res) => {
-  const { title, department, job_type, work_city, work_district, work_address, longitude, latitude, salary_min, salary_max, salary_negotiable, education, experience, jd_content, jd_template_id, competency_tags, benefits, channel, status } = req.body;
-  
-  const job = db.prepare('SELECT * FROM jobs WHERE id = ? AND company_id = ?').get(req.params.id, req.companyId);
-  if (!job) {
-    return res.json(error('职位不存在'));
-  }
-  
-  const tagsStr = Array.isArray(competency_tags) ? competency_tags.join(',') : competency_tags;
-  const benefitsStr = Array.isArray(benefits) ? benefits.join(',') : benefits;
-  
-  db.prepare(`
-    UPDATE jobs SET
-      title = ?, department = ?, job_type = ?, work_city = ?, work_district = ?,
-      work_address = ?, longitude = ?, latitude = ?, salary_min = ?, salary_max = ?,
-      salary_negotiable = ?, education = ?, experience = ?, jd_content = ?, jd_template_id = ?,
-      competency_tags = ?, benefits = ?, channel = ?, status = ?, updated_at = datetime('now')
-    WHERE id = ? AND company_id = ?
-  `).run(title, department, job_type, work_city, work_district, work_address, longitude, latitude, salary_min, salary_max, salary_negotiable ? 1 : 0, education, experience, jd_content, jd_template_id, tagsStr, benefitsStr, channel, status || job.status, req.params.id, req.companyId);
-  
-  res.json(success(null, '更新成功'));
-});
-
-router.post('/:id/publish', authMiddleware, (req, res) => {
-  const job = db.prepare('SELECT * FROM jobs WHERE id = ? AND company_id = ?').get(req.params.id, req.companyId);
-  if (!job) {
-    return res.json(error('职位不存在'));
-  }
-  
-  if (job.fraud_status === 'rejected') {
-    return res.json(error('职位存在风险，无法发布，请先修改'));
-  }
-  
-  db.prepare(`
-    UPDATE jobs SET status = 'published', publish_time = datetime('now'), updated_at = datetime('now')
-    WHERE id = ? AND company_id = ?
-  `).run(req.params.id, req.companyId);
-  
-  res.json(success(null, '发布成功'));
-});
-
-router.post('/:id/offline', authMiddleware, (req, res) => {
-  db.prepare(`
-    UPDATE jobs SET status = 'offline', updated_at = datetime('now')
-    WHERE id = ? AND company_id = ?
-  `).run(req.params.id, req.companyId);
-  
-  res.json(success(null, '已下架'));
-});
-
-router.delete('/:id', authMiddleware, (req, res) => {
-  db.prepare(`DELETE FROM jobs WHERE id = ? AND company_id = ?`).run(req.params.id, req.companyId);
-  res.json(success(null, '删除成功'));
-});
-
-router.get('/hot/areas', authMiddleware, (req, res) => {
-  const { city, date } = req.query;
-  const recordDate = date || new Date().toISOString().split('T')[0];
-  
-  let where = 'WHERE record_date = ?';
-  const params = [recordDate];
-  
-  if (city) {
-    where += ' AND city = ?';
-    params.push(city);
-  }
-  
-  const areas = db.prepare(`
-    SELECT * FROM hot_area_records ${where} ORDER BY hot_score DESC LIMIT 50
-  `).all(...params);
-  
-  res.json(success(areas));
+  res.json(applications.map(app => ({
+    ...app,
+    skills: parseJSONField(app.skills)
+  })));
 });
 
 module.exports = router;

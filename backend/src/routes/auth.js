@@ -1,127 +1,117 @@
 const express = require('express');
 const bcrypt = require('bcryptjs');
-const db = require('../db');
-const { success, error } = require('../utils/response');
-const { generateToken, authMiddleware } = require('../middleware/auth');
+const { db } = require('../database');
+const { generateToken, authenticateToken } = require('../middleware');
 
 const router = express.Router();
 
 router.post('/login', (req, res) => {
   const { email, password } = req.body;
-  
   if (!email || !password) {
-    return res.json(error('邮箱和密码不能为空'));
+    return res.status(400).json({ error: '邮箱和密码不能为空' });
   }
 
-  const loginKey = String(email).trim().toLowerCase();
-  const loginAliases = {
-    admin: 'hr@zhilian.com',
-    platform: 'hr@zhilian.com',
-    ops: 'hr@zhilian.com'
-  };
-  const loginEmail = loginAliases[loginKey] || email;
-  const loginPassword = loginAliases[loginKey] ? '123456' : password;
-  
-  const user = db.prepare(`
-    SELECT hu.*, c.name as company_name, c.logo as company_logo, c.verification_status, c.credit_score
-    FROM hr_users hu
-    LEFT JOIN companies c ON hu.company_id = c.id
-    WHERE hu.email = ? OR hu.phone = ?
-  `).get(loginEmail, loginEmail);
-  
+  const user = db.prepare('SELECT * FROM users WHERE email = ?').get(email);
   if (!user) {
-    return res.json(error('用户不存在'));
+    return res.status(401).json({ error: '邮箱或密码错误' });
   }
-  
-  if (user.status !== 'active') {
-    return res.json(error('账号已被禁用'));
+
+  const isValid = bcrypt.compareSync(password, user.password);
+  if (!isValid) {
+    return res.status(401).json({ error: '邮箱或密码错误' });
   }
+
+  const token = generateToken(user.id);
   
-  const valid = bcrypt.compareSync(loginPassword, user.password_hash);
-  if (!valid) {
-    return res.json(error('密码错误'));
+  let profile = null;
+  if (user.role === 'jobseeker') {
+    profile = db.prepare('SELECT * FROM jobseekers WHERE user_id = ?').get(user.id);
+  } else if (user.role === 'company') {
+    profile = db.prepare('SELECT * FROM companies WHERE user_id = ?').get(user.id);
   }
-  
-  db.prepare(`
-    UPDATE hr_users SET last_login_at = datetime('now') WHERE id = ?
-  `).run(user.id);
-  
-  const token = generateToken(user);
-  
-  delete user.password_hash;
-  
-  res.json(success({
-    user,
-    token
-  }, '登录成功'));
+
+  res.json({
+    token,
+    user: {
+      id: user.id,
+      email: user.email,
+      role: user.role,
+      name: user.name,
+      phone: user.phone,
+      profile
+    }
+  });
 });
 
-router.post('/logout', authMiddleware, (req, res) => {
-  res.json(success(null, '退出成功'));
-});
-
-router.get('/me', (req, res) => {
-  const user = db.prepare(`
-    SELECT hu.id, hu.company_id, hu.email, hu.phone, hu.name, hu.avatar, hu.role, hu.department, hu.position, hu.status,
-      c.name as company_name, c.logo as company_logo, c.verification_status, c.credit_score
-    FROM hr_users hu
-    LEFT JOIN companies c ON hu.company_id = c.id
-    WHERE hu.email = 'hr@zhilian.com'
-  `).get();
-
-  res.json(success({ user }));
-});
-
-router.get('/profile', authMiddleware, (req, res) => {
-  const user = db.prepare(`
-    SELECT hu.*, c.name as company_name, c.logo as company_logo, c.verification_status, c.credit_score
-    FROM hr_users hu
-    LEFT JOIN companies c ON hu.company_id = c.id
-    WHERE hu.id = ?
-  `).get(req.userId);
+router.post('/register', (req, res) => {
+  const { email, password, role, name, phone } = req.body;
   
-  delete user.password_hash;
-  
-  res.json(success(user));
-});
-
-router.put('/profile', authMiddleware, (req, res) => {
-  const { name, phone, avatar, department, position } = req.body;
-  
-  db.prepare(`
-    UPDATE hr_users 
-    SET name = ?, phone = ?, avatar = ?, department = ?, position = ?, updated_at = datetime('now')
-    WHERE id = ?
-  `).run(name, phone, avatar, department, position, req.userId);
-  
-  const user = db.prepare('SELECT * FROM hr_users WHERE id = ?').get(req.userId);
-  delete user.password_hash;
-  
-  res.json(success(user, '更新成功'));
-});
-
-router.put('/password', authMiddleware, (req, res) => {
-  const { oldPassword, newPassword } = req.body;
-  
-  if (!oldPassword || !newPassword) {
-    return res.json(error('旧密码和新密码不能为空'));
+  if (!email || !password || !role || !name) {
+    return res.status(400).json({ error: '请填写完整信息' });
   }
-  
-  if (newPassword.length < 6) {
-    return res.json(error('新密码长度不能少于6位'));
+
+  if (!['jobseeker', 'company'].includes(role)) {
+    return res.status(400).json({ error: '角色类型无效' });
   }
-  
-  const user = db.prepare('SELECT * FROM hr_users WHERE id = ?').get(req.userId);
-  
-  const valid = bcrypt.compareSync(oldPassword, user.password_hash);
-  if (!valid) {
-    return res.json(error('旧密码错误'));
+
+  const existingUser = db.prepare('SELECT id FROM users WHERE email = ?').get(email);
+  if (existingUser) {
+    return res.status(400).json({ error: '该邮箱已被注册' });
   }
+
+  const hashedPassword = bcrypt.hashSync(password, 10);
   
-  const hash = bcrypt.hashSync(newPassword, 10);
-  db.prepare('UPDATE hr_users SET password_hash = ? WHERE id = ?').run(hash, req.userId);
+  const result = db.prepare('INSERT INTO users (email, password, role, name, phone) VALUES (?, ?, ?, ?, ?)').run(
+    email, hashedPassword, role, name, phone || null
+  );
+
+  const userId = result.lastInsertRowid;
+
+  if (role === 'jobseeker') {
+    db.prepare('INSERT INTO jobseekers (user_id) VALUES (?)').run(userId);
+  } else if (role === 'company') {
+    db.prepare('INSERT INTO companies (user_id, company_name) VALUES (?, ?)').run(userId, name);
+  }
+
+  const token = generateToken(userId);
+
+  res.status(201).json({
+    token,
+    user: {
+      id: userId,
+      email,
+      role,
+      name,
+      phone
+    }
+  });
+});
+
+router.get('/me', authenticateToken, (req, res) => {
+  const user = req.user;
   
-  res.json(success(null, '密码修改成功'));
+  let profile = null;
+  if (user.role === 'jobseeker') {
+    profile = db.prepare('SELECT * FROM jobseekers WHERE user_id = ?').get(user.id);
+    if (profile) {
+      profile.skills = profile.skills ? JSON.parse(profile.skills) : [];
+      profile.languages = profile.languages ? JSON.parse(profile.languages) : [];
+      profile.ftz_preferences = profile.ftz_preferences ? JSON.parse(profile.ftz_preferences) : {};
+    }
+  } else if (user.role === 'company') {
+    profile = db.prepare('SELECT * FROM companies WHERE user_id = ?').get(user.id);
+  }
+
+  res.json({
+    user: {
+      id: user.id,
+      email: user.email,
+      role: user.role,
+      name: user.name,
+      phone: user.phone,
+      profile
+    }
+  });
 });
 
 module.exports = router;

@@ -1,53 +1,60 @@
-import { createContext, useContext, useState, useEffect } from 'react';
+import React, { createContext, useContext, useState, useEffect, useMemo } from 'react';
+import { getUser, clearAuth } from '../utils/auth';
+import api from '../utils/api';
+import { useTranslation } from '../i18n';
 
-const AppContext = createContext(null);
+const AppContext = createContext();
 
 export function AppProvider({ children }) {
-  const [sidebarCollapsed, setSidebarCollapsed] = useState(
-    localStorage.getItem('sidebarCollapsed') === 'true'
-  );
-  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-  const [isMobile, setIsMobile] = useState(false);
+  const [user, setUser] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const [language, setLanguage] = useState('cn');
 
   useEffect(() => {
-    const checkMobile = () => {
-      setIsMobile(window.innerWidth < 768);
-      if (window.innerWidth < 768) {
-        setSidebarCollapsed(true);
+    const initAuth = async () => {
+      const savedUser = getUser();
+      if (savedUser) {
+        try {
+          const response = await api.get('/auth/me');
+          setUser(response.data.user);
+        } catch (error) {
+          clearAuth();
+          setUser(null);
+        }
       }
+      setLoading(false);
     };
-
-    checkMobile();
-    window.addEventListener('resize', checkMobile);
-    return () => window.removeEventListener('resize', checkMobile);
+    initAuth();
   }, []);
 
-  const toggleSidebar = () => {
-    const newCollapsed = !sidebarCollapsed;
-    setSidebarCollapsed(newCollapsed);
-    localStorage.setItem('sidebarCollapsed', String(newCollapsed));
+  const { t } = useTranslation(language);
+
+  const logout = () => {
+    clearAuth();
+    setUser(null);
   };
 
-  const toggleMobileMenu = () => {
-    setMobileMenuOpen(!mobileMenuOpen);
+  const toggleLanguage = () => {
+    setLanguage(prev => prev === 'cn' ? 'en' : 'cn');
   };
 
-  const closeMobileMenu = () => {
-    setMobileMenuOpen(false);
-  };
+  const value = useMemo(() => ({
+    user,
+    setUser,
+    loading,
+    language,
+    setLanguage,
+    toggleLanguage,
+    logout,
+    t,
+    isAuthenticated: !!user,
+    isJobseeker: user?.role === 'jobseeker',
+    isCompany: user?.role === 'company',
+    isAdmin: user?.role === 'admin',
+  }), [user, loading, language, t]);
 
   return (
-    <AppContext.Provider
-      value={{
-        sidebarCollapsed,
-        setSidebarCollapsed,
-        toggleSidebar,
-        mobileMenuOpen,
-        toggleMobileMenu,
-        closeMobileMenu,
-        isMobile,
-      }}
-    >
+    <AppContext.Provider value={value}>
       {children}
     </AppContext.Provider>
   );
@@ -56,9 +63,7 @@ export function AppProvider({ children }) {
 export function useApp() {
   const context = useContext(AppContext);
   if (!context) {
-    throw new Error('useApp must be used within an AppProvider');
+    throw new Error('useApp must be used within AppProvider');
   }
   return context;
 }
-
-export default AppContext;

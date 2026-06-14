@@ -1,32 +1,32 @@
-const TOKEN_KEY = 'recruit_token'
-const USER_KEY = 'recruit_user'
+export const setAuth = (token, user) => {
+  localStorage.setItem('token', token);
+  localStorage.setItem('user', JSON.stringify(user));
+};
 
-export function getToken() {
-  return localStorage.getItem(TOKEN_KEY)
-}
+export const getToken = () => {
+  return localStorage.getItem('token');
+};
 
-export function setToken(token) {
-  return localStorage.setItem(TOKEN_KEY, token)
-}
+export const getUser = () => {
+  const userStr = localStorage.getItem('user');
+  return userStr ? JSON.parse(userStr) : null;
+};
 
-export function removeToken() {
-  return localStorage.removeItem(TOKEN_KEY)
-}
+export const clearAuth = () => {
+  localStorage.removeItem('token');
+  localStorage.removeItem('user');
+};
 
-export function getUser() {
-  const userStr = localStorage.getItem(USER_KEY)
-  return userStr ? JSON.parse(userStr) : null
-}
+export const isAuthenticated = () => {
+  return !!getToken();
+};
 
-export function setUser(user) {
-  return localStorage.setItem(USER_KEY, JSON.stringify(user))
-}
+export const hasRole = (role) => {
+  const user = getUser();
+  return user && user.role === role;
+};
 
-export function removeUser() {
-  return localStorage.removeItem(USER_KEY)
-}
-
-export function logout() {
-  removeToken()
-  removeUser()
-}
+export const hasAnyRole = (roles) => {
+  const user = getUser();
+  return user && roles.includes(user.role);
+};
