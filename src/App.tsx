@@ -6,6 +6,7 @@ import Worker from '@/pages/Worker';
 import Tracking from '@/pages/Tracking';
 import Escrow from '@/pages/Escrow';
 import Quality from '@/pages/Quality';
+import AdminSettings from '@/pages/AdminSettings';
 
 export default function App() {
   const [currentPage, setCurrentPage] = useState('dashboard');
@@ -18,6 +19,7 @@ export default function App() {
       case 'tracking': return <Tracking />;
       case 'escrow': return <Escrow />;
       case 'quality': return <Quality />;
+      case 'admin': return <AdminSettings />;
       default: return <Dashboard />;
     }
   };

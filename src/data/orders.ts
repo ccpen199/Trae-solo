@@ -23,6 +23,15 @@ export const orders: Order[] = [
     description: '家里空调开了半天吹出来还是热风，去年加过氟，不知道是不是又漏了。',
     faultPhotos: [],
     status: 'in_service',
+    city: '上海',
+    matchScore: 98,
+    distanceKm: 1.2,
+    matchReasons: [
+      { reason: '距离最近', detail: '距服务地点仅1.2km，预计8分钟到达', type: 'distance' },
+      { reason: '技能匹配', detail: '持有空调安装维修资质证+低压电工操作证，双证齐全', type: 'skill' },
+      { reason: '评分优秀', detail: '523单历史服务，评分4.9分，空调类满意度97%', type: 'rating' },
+      { reason: '历史好评', detail: '曾3次服务本小区，业主好评率100%', type: 'history' },
+    ],
     quote: {
       parts: [
         { partId: 'p004', name: '制冷剂 R32', price: 120, quantity: 2 },
@@ -60,6 +69,10 @@ export const orders: Order[] = [
     description: '厨房一用电就跳闸，怀疑是线路有问题，需要紧急维修。',
     faultPhotos: [],
     status: 'pending',
+    city: '上海',
+    matchScore: 0,
+    distanceKm: 0,
+    matchReasons: [],
     checkIns: [],
     processPhotos: [],
     createdAt: '2024-06-14 10:15:00',
@@ -78,6 +91,14 @@ export const orders: Order[] = [
     description: '防盗门换C级锁芯，旧锁有点卡了。',
     faultPhotos: [],
     status: 'matched',
+    city: '上海',
+    matchScore: 92,
+    distanceKm: 2.8,
+    matchReasons: [
+      { reason: '距离较近', detail: '距服务地点2.8km，预计15分钟到达', type: 'distance' },
+      { reason: '技能匹配', detail: '持有C级锁安装认证+防盗门维修资质，证件齐全', type: 'skill' },
+      { reason: '评分优秀', detail: '387单历史服务，评分4.7分，门锁类满意度95%', type: 'rating' },
+    ],
     checkIns: [],
     processPhotos: [],
     createdAt: '2024-06-14 09:45:00',
@@ -96,6 +117,14 @@ export const orders: Order[] = [
     description: '老房子厨房翻新，需要重新走水电，大约6平米。',
     faultPhotos: [],
     status: 'completed',
+    city: '上海',
+    matchScore: 96,
+    distanceKm: 1.8,
+    matchReasons: [
+      { reason: '距离较近', detail: '距服务地点1.8km，预计10分钟到达', type: 'distance' },
+      { reason: '技能匹配', detail: '持有水电安装工程资质+低压电工操作证，双证齐全', type: 'skill' },
+      { reason: '评分优秀', detail: '412单历史服务，评分4.8分，水电改造满意度98%', type: 'rating' },
+    ],
     quote: {
       parts: [
         { partId: 'p011', name: 'BV铜线 2.5平方 1米', price: 8, quantity: 50 },

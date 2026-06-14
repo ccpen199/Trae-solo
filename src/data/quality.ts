@@ -99,6 +99,14 @@ export const qualityIssues: QualityIssue[] = [
     reviewRating: 2,
     createdAt: '2024-06-12 14:30:00',
     assignee: '王主管',
+    rootCause: '调查中：初步核实师傅确实迟到35分钟，额外收取的配件费未提前告知业主，已要求师傅解释原因',
+    investigation: [
+      { action: '差评关键词自动抓取', operator: '系统', operatorRole: '平台系统', timestamp: '2024-06-12 14:32:00', remark: '检测到"迟到""乱收费""态度差"3个高风险关键词，自动生成复盘工单' },
+      { action: '工单分配', operator: '王主管', operatorRole: '质量专员', timestamp: '2024-06-12 15:00:00', remark: '分配给王主管处理，优先级：高' },
+      { action: '联系业主核实', operator: '王主管', operatorRole: '质量专员', timestamp: '2024-06-12 16:20:00', remark: '业主确认迟到35分钟，实际收费¥260，报价¥210，价差¥50' },
+      { action: '联系师傅核实', operator: '王主管', operatorRole: '质量专员', timestamp: '2024-06-13 10:30:00', remark: '师傅承认未事先告知额外配件费用，正在等待师傅书面说明' },
+    ],
+    recheckRecords: [],
   },
   {
     id: 'qi002',
@@ -112,6 +120,17 @@ export const qualityIssues: QualityIssue[] = [
     reviewRating: 4,
     createdAt: '2024-06-11 17:30:00',
     assignee: '李主管',
+    rootCause: '师傅在前往业主家途中遇到临时交通管制，电话中预估时间未考虑实际路况',
+    correctiveAction: '已对周师傅进行时间预估培训，建议遇到交通异常时提前15分钟通知业主',
+    closedAt: '2024-06-12 14:00:00',
+    investigation: [
+      { action: '差评关键词自动抓取', operator: '系统', operatorRole: '平台系统', timestamp: '2024-06-11 17:35:00', remark: '检测到"准时一般"关键词，自动生成工单，优先级：低' },
+      { action: '工单分配', operator: '李主管', operatorRole: '质量专员', timestamp: '2024-06-12 09:00:00', remark: '分配给李主管处理' },
+      { action: '师傅谈话记录', operator: '李主管', operatorRole: '质量专员', timestamp: '2024-06-12 11:00:00', remark: '周师傅对到达时间预估偏差表示歉意，承诺改进' },
+    ],
+    recheckRecords: [
+      { recheckType: 'phone', recheckResult: 'pass', operator: '李主管', timestamp: '2024-06-13 15:00:00', homeownerFeedback: '平台处理态度很好，师傅后续态度诚恳，可以接受。', remark: '业主接受处理结果，无进一步诉求' },
+    ],
   },
   {
     id: 'qi003',
@@ -124,6 +143,8 @@ export const qualityIssues: QualityIssue[] = [
     reviewComment: '修了不到一周又坏了，感觉技术不太行。',
     reviewRating: 2,
     createdAt: '2024-06-10 19:00:00',
+    investigation: [],
+    recheckRecords: [],
   },
 ];
 

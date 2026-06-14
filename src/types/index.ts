@@ -125,6 +125,12 @@ export interface Review {
   createdAt: string;
 }
 
+export interface MatchReason {
+  reason: string;
+  detail: string;
+  type: 'distance' | 'skill' | 'rating' | 'history';
+}
+
 export interface Order {
   id: string;
   homeownerName: string;
@@ -145,6 +151,10 @@ export interface Order {
   review?: Review;
   createdAt: string;
   serviceTime?: string;
+  city?: string;
+  matchReasons?: MatchReason[];
+  matchScore?: number;
+  distanceKm?: number;
 }
 
 export type EscrowStatus = 'frozen' | 'released' | 'refunded';
@@ -167,6 +177,23 @@ export interface EscrowRecord {
 export type QualityIssueSeverity = 'low' | 'medium' | 'high';
 export type QualityIssueStatus = 'open' | 'investigating' | 'resolved';
 
+export interface QualityInvestigationRecord {
+  action: string;
+  operator: string;
+  operatorRole: string;
+  timestamp: string;
+  remark: string;
+}
+
+export interface QualityRecheckRecord {
+  recheckType: 'phone' | 'onsite' | 'remote';
+  recheckResult: 'pass' | 'fail' | 'pending';
+  operator: string;
+  timestamp: string;
+  homeownerFeedback?: string;
+  remark: string;
+}
+
 export interface QualityIssue {
   id: string;
   orderId: string;
@@ -179,6 +206,11 @@ export interface QualityIssue {
   reviewRating: number;
   createdAt: string;
   assignee?: string;
+  investigation?: QualityInvestigationRecord[];
+  recheckRecords?: QualityRecheckRecord[];
+  rootCause?: string;
+  correctiveAction?: string;
+  closedAt?: string;
 }
 
 export interface DashboardStats {
