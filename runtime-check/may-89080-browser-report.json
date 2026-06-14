@@ -1,0 +1,4013 @@
+{
+  "ok": true,
+  "generatedAt": "2026-06-07T07:58:56.020Z",
+  "order": "may-89080",
+  "roundIndex": 2,
+  "captureId": "may-89080-codex-final-20260607",
+  "url": "http://127.0.0.1:49080/",
+  "initialUrl": "http://127.0.0.1:49080/",
+  "finalUrl": "http://127.0.0.1:49080/dashboard",
+  "status": 200,
+  "title": "建筑业劳务供需智能撮合平台",
+  "initialTitle": "建筑业劳务供需智能撮合平台",
+  "navigationError": "",
+  "screenshotPath": "runtime-check/may-89080-codex-final-20260607-frontend.png",
+  "screenshotPaths": [
+    "/Users/chen/Documents/trae_projects/local_projects/may-89080/runtime-check/may-89080-codex-final-20260607-structure-01-首屏.png",
+    "/Users/chen/Documents/trae_projects/local_projects/may-89080/runtime-check/may-89080-codex-final-20260607-structure-02-导航-数据看板.png",
+    "/Users/chen/Documents/trae_projects/local_projects/may-89080/runtime-check/may-89080-codex-final-20260607-structure-03-导航-工人管理.png",
+    "/Users/chen/Documents/trae_projects/local_projects/may-89080/runtime-check/may-89080-codex-final-20260607-structure-04-操作-查看详情.png",
+    "/Users/chen/Documents/trae_projects/local_projects/may-89080/runtime-check/may-89080-codex-final-20260607-structure-05-二层操作-查看详情-返回列表.png",
+    "/Users/chen/Documents/trae_projects/local_projects/may-89080/runtime-check/may-89080-codex-final-20260607-structure-06-操作-新增工人.png",
+    "/Users/chen/Documents/trae_projects/local_projects/may-89080/runtime-check/may-89080-codex-final-20260607-structure-07-二层操作-新增工人-取-消.png",
+    "/Users/chen/Documents/trae_projects/local_projects/may-89080/runtime-check/may-89080-codex-final-20260607-structure-08-导航-招工需求.png",
+    "/Users/chen/Documents/trae_projects/local_projects/may-89080/runtime-check/may-89080-codex-final-20260607-structure-09-操作-查看详情.png",
+    "/Users/chen/Documents/trae_projects/local_projects/may-89080/runtime-check/may-89080-codex-final-20260607-structure-10-二层操作-查看详情-返回列表.png",
+    "/Users/chen/Documents/trae_projects/local_projects/may-89080/runtime-check/may-89080-codex-final-20260607-structure-11-操作-发布招工.png",
+    "/Users/chen/Documents/trae_projects/local_projects/may-89080/runtime-check/may-89080-codex-final-20260607-structure-12-二层操作-发布招工-返回列表.png"
+  ],
+  "issueTextPreview": "page issue: runtime start report was not generated; page reached and business content visible; verify admin business routes and API data",
+  "targetReason": "搜索/筛选相关问题；后台管理相关问题",
+  "targetKind": "admin",
+  "targetMatched": true,
+  "targetActions": [
+    {
+      "action": "click",
+      "label": "后台管理相关问题",
+      "ok": true
+    },
+    {
+      "action": "target-verify",
+      "label": "后台管理相关问题",
+      "ok": true,
+      "finalUrl": "http://127.0.0.1:49080/dashboard"
+    }
+  ],
+  "authFlow": {
+    "detected": false,
+    "attempted": false,
+    "success": false,
+    "finalUrl": "http://127.0.0.1:49080/dashboard",
+    "message": "",
+    "actions": []
+  },
+  "businessAudit": {
+    "actions": [
+      {
+        "action": "click",
+        "label": "导航:数据看板",
+        "ok": true
+      },
+      {
+        "action": "click",
+        "label": "导航:工人管理",
+        "ok": true
+      },
+      {
+        "action": "click",
+        "label": "操作:查看详情",
+        "ok": true,
+        "result": {
+          "ok": true,
+          "matched": 8
+        }
+      },
+      {
+        "action": "click",
+        "label": "二层操作:查看详情:返回列表",
+        "ok": true,
+        "result": {
+          "ok": true,
+          "matched": 1
+        }
+      },
+      {
+        "action": "click",
+        "label": "操作:新增工人",
+        "ok": true,
+        "result": {
+          "ok": true,
+          "matched": 1
+        }
+      },
+      {
+        "action": "click",
+        "label": "二层操作:新增工人:取 消",
+        "ok": true,
+        "result": {
+          "ok": true,
+          "matched": 1
+        }
+      },
+      {
+        "action": "click",
+        "label": "导航:招工需求",
+        "ok": true
+      },
+      {
+        "action": "click",
+        "label": "操作:查看详情",
+        "ok": true,
+        "result": {
+          "ok": true,
+          "matched": 8
+        }
+      },
+      {
+        "action": "click",
+        "label": "二层操作:查看详情:返回列表",
+        "ok": true,
+        "result": {
+          "ok": true,
+          "matched": 1
+        }
+      },
+      {
+        "action": "click",
+        "label": "操作:发布招工",
+        "ok": true,
+        "result": {
+          "ok": true,
+          "matched": 1
+        }
+      },
+      {
+        "action": "click",
+        "label": "二层操作:发布招工:返回列表",
+        "ok": true,
+        "result": {
+          "ok": true,
+          "matched": 1
+        }
+      },
+      {
+        "action": "click",
+        "label": "导航:智能匹配",
+        "ok": true
+      },
+      {
+        "action": "click",
+        "label": "操作:接受",
+        "ok": true,
+        "result": {
+          "ok": true,
+          "matched": 3
+        }
+      }
+    ],
+    "snapshots": [
+      {
+        "label": "首屏",
+        "url": "http://127.0.0.1:49080/dashboard",
+        "title": "建筑业劳务供需智能撮合平台",
+        "headings": [
+          "数据看板"
+        ],
+        "navLabels": [
+          "数据看板 工人管理 招工需求 智能匹配 合同管理 工资支付 分析统计 雇主管理 工种管理",
+          "数据看板",
+          "dashboard",
+          "工人管理",
+          "team",
+          "招工需求",
+          "shopping",
+          "智能匹配",
+          "swap",
+          "合同管理",
+          "file-text",
+          "工资支付",
+          "money-collect",
+          "分析统计",
+          "bar-chart",
+          "雇主管理",
+          "apartment",
+          "工种管理",
+          "appstore"
+        ],
+        "buttons": [],
+        "links": [
+          "数据看板",
+          "工人管理",
+          "招工需求",
+          "智能匹配",
+          "合同管理",
+          "工资支付",
+          "分析统计",
+          "雇主管理",
+          "工种管理"
+        ],
+        "inputs": [],
+        "tables": [
+          {
+            "headers": [
+              "项目名称",
+              "工种",
+              "需求人数",
+              "日薪",
+              "状态"
+            ],
+            "rowCount": 5,
+            "hasEmptyText": false,
+            "textPreview": "项目名称 工种 需求人数 日薪 状态 北京CBD核心区商业综合体项目 钢筋工 15 ¥380 已发布 北京CBD核心区商业综合体项目 模板工 10 ¥360 已发布 上海张江科技园标准厂房项目 装配式工 20 ¥420 待审核 上海张江科技园标准厂房项目 钢筋工 8 ¥390 已发布 广州天河智慧城办公楼项目 电工 6 ¥400 已发布"
+          },
+          {
+            "headers": [
+              "匹配ID",
+              "工人ID",
+              "匹配度",
+              "状态",
+              "匹配时间"
+            ],
+            "rowCount": 3,
+            "hasEmptyText": false,
+            "textPreview": "匹配ID 工人ID 匹配度 状态 匹配时间 20 2 待确认 2026-06-07 07:15 19 1 待确认 2026-06-07 07:15 21 5 63% 待确认 2026-06-07 07:15"
+          }
+        ],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "🏗️建筑业劳务供需智能撮合平台住建部门劳务监管管理端 | 今日: 2026/6/7数据看板工人管理招工需求智能匹配合同管理工资支付分析统计雇主管理工种管理数据看板欠薪风险预警高风险: 0 家中风险: 0 家低风险: 0 家工人总数8人雇主总数3家招工需求数8条智能匹配数3次合同数0份工资支付数0笔最近招工需求共 5 条项目名称工种需求人数日薪状态北京CBD核心区商业综合体项目钢筋工15¥380已发布北京CBD核心区商业综合体项目模板工10¥360已发布上海张江科技园标准厂房项目装配式工20¥420待审核上海张江科技园标准厂房项目钢筋工8¥390已发布广州天河智慧城办公楼项目电工6¥400已发布最近匹配记录共 3 条匹配ID工人ID匹配度状态匹配时间202待确认2026-06-07 07:15191待确认2026-06-07 07:1521563%待确认2026-06-07 07:15",
+        "layout": {
+          "viewportWidth": 1504,
+          "viewportHeight": 1600,
+          "scrollWidth": 1504,
+          "scrollHeight": 1667,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89080-codex-final-20260607-structure-01-首屏",
+          "label": "首屏",
+          "finalUrl": "http://127.0.0.1:49080/dashboard",
+          "title": "建筑业劳务供需智能撮合平台",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89080/runtime-check/may-89080-codex-final-20260607-structure-01-首屏.json",
+          "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89080/runtime-check/may-89080-codex-final-20260607-structure-01-首屏.png",
+          "elementCount": 337,
+          "interactiveCount": 19,
+          "interactiveLabels": [
+            "数据看板 工人管理 招工需求 智能匹配 合同管理 工资支付 分析统计 雇主管理 工种管理",
+            "数据看板",
+            "工人管理",
+            "招工需求",
+            "智能匹配",
+            "合同管理",
+            "工资支付",
+            "分析统计",
+            "雇主管理",
+            "工种管理"
+          ]
+        }
+      },
+      {
+        "label": "导航:数据看板",
+        "url": "http://127.0.0.1:49080/dashboard",
+        "title": "建筑业劳务供需智能撮合平台",
+        "headings": [
+          "数据看板"
+        ],
+        "navLabels": [
+          "数据看板 工人管理 招工需求 智能匹配 合同管理 工资支付 分析统计 雇主管理 工种管理",
+          "数据看板",
+          "dashboard",
+          "工人管理",
+          "team",
+          "招工需求",
+          "shopping",
+          "智能匹配",
+          "swap",
+          "合同管理",
+          "file-text",
+          "工资支付",
+          "money-collect",
+          "分析统计",
+          "bar-chart",
+          "雇主管理",
+          "apartment",
+          "工种管理",
+          "appstore"
+        ],
+        "buttons": [],
+        "links": [
+          "数据看板",
+          "工人管理",
+          "招工需求",
+          "智能匹配",
+          "合同管理",
+          "工资支付",
+          "分析统计",
+          "雇主管理",
+          "工种管理"
+        ],
+        "inputs": [],
+        "tables": [
+          {
+            "headers": [
+              "项目名称",
+              "工种",
+              "需求人数",
+              "日薪",
+              "状态"
+            ],
+            "rowCount": 5,
+            "hasEmptyText": false,
+            "textPreview": "项目名称 工种 需求人数 日薪 状态 北京CBD核心区商业综合体项目 钢筋工 15 ¥380 已发布 北京CBD核心区商业综合体项目 模板工 10 ¥360 已发布 上海张江科技园标准厂房项目 装配式工 20 ¥420 待审核 上海张江科技园标准厂房项目 钢筋工 8 ¥390 已发布 广州天河智慧城办公楼项目 电工 6 ¥400 已发布"
+          },
+          {
+            "headers": [
+              "匹配ID",
+              "工人ID",
+              "匹配度",
+              "状态",
+              "匹配时间"
+            ],
+            "rowCount": 3,
+            "hasEmptyText": false,
+            "textPreview": "匹配ID 工人ID 匹配度 状态 匹配时间 20 2 待确认 2026-06-07 07:15 19 1 待确认 2026-06-07 07:15 21 5 63% 待确认 2026-06-07 07:15"
+          }
+        ],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "🏗️建筑业劳务供需智能撮合平台住建部门劳务监管管理端 | 今日: 2026/6/7数据看板工人管理招工需求智能匹配合同管理工资支付分析统计雇主管理工种管理数据看板欠薪风险预警高风险: 0 家中风险: 0 家低风险: 0 家工人总数8人雇主总数3家招工需求数8条智能匹配数3次合同数0份工资支付数0笔最近招工需求共 5 条项目名称工种需求人数日薪状态北京CBD核心区商业综合体项目钢筋工15¥380已发布北京CBD核心区商业综合体项目模板工10¥360已发布上海张江科技园标准厂房项目装配式工20¥420待审核上海张江科技园标准厂房项目钢筋工8¥390已发布广州天河智慧城办公楼项目电工6¥400已发布最近匹配记录共 3 条匹配ID工人ID匹配度状态匹配时间202待确认2026-06-07 07:15191待确认2026-06-07 07:1521563%待确认2026-06-07 07:15",
+        "layout": {
+          "viewportWidth": 1536,
+          "viewportHeight": 1600,
+          "scrollWidth": 1536,
+          "scrollHeight": 1667,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89080-codex-final-20260607-structure-02-导航-数据看板",
+          "label": "导航:数据看板",
+          "finalUrl": "http://127.0.0.1:49080/dashboard",
+          "title": "建筑业劳务供需智能撮合平台",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89080/runtime-check/may-89080-codex-final-20260607-structure-02-导航-数据看板.json",
+          "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89080/runtime-check/may-89080-codex-final-20260607-structure-02-导航-数据看板.png",
+          "elementCount": 337,
+          "interactiveCount": 19,
+          "interactiveLabels": [
+            "数据看板 工人管理 招工需求 智能匹配 合同管理 工资支付 分析统计 雇主管理 工种管理",
+            "数据看板",
+            "工人管理",
+            "招工需求",
+            "智能匹配",
+            "合同管理",
+            "工资支付",
+            "分析统计",
+            "雇主管理",
+            "工种管理"
+          ]
+        }
+      },
+      {
+        "label": "导航:工人管理",
+        "url": "http://127.0.0.1:49080/workers",
+        "title": "建筑业劳务供需智能撮合平台",
+        "headings": [
+          "工人管理"
+        ],
+        "navLabels": [
+          "数据看板 工人管理 招工需求 智能匹配 合同管理 工资支付 分析统计 雇主管理 工种管理",
+          "数据看板",
+          "dashboard",
+          "工人管理",
+          "team",
+          "招工需求",
+          "shopping",
+          "智能匹配",
+          "swap",
+          "合同管理",
+          "file-text",
+          "工资支付",
+          "money-collect",
+          "分析统计",
+          "bar-chart",
+          "雇主管理",
+          "apartment",
+          "工种管理",
+          "appstore"
+        ],
+        "buttons": [
+          "新增工人",
+          "查看详情"
+        ],
+        "links": [
+          "数据看板",
+          "工人管理",
+          "招工需求",
+          "智能匹配",
+          "合同管理",
+          "工资支付",
+          "分析统计",
+          "雇主管理",
+          "工种管理"
+        ],
+        "inputs": [
+          {
+            "tag": "input",
+            "type": "search",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "search",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "search",
+            "placeholder": "搜索姓名、手机号、住址",
+            "name": "",
+            "label": ""
+          }
+        ],
+        "tables": [
+          {
+            "headers": [
+              "ID",
+              "姓名",
+              "性别",
+              "年龄",
+              "手机号",
+              "住址",
+              "工种",
+              "健康状态",
+              "履约评分",
+              "操作",
+              "ID",
+              "姓名"
+            ],
+            "rowCount": 8,
+            "hasEmptyText": false,
+            "textPreview": "ID 姓名 性别 年龄 手机号 住址 工种 健康状态 履约评分 操作 ID 姓名 性别 年龄 手机号 住址 工种 健康状态 履约评分 操作 3 张铁柱 男 36 13900139003 北京市东城区王府井大街3号 架子工, 砌筑工 绿色 4.8% 查看详情 8 周安全 男 31 13900139008 北京市朝阳区三里屯8号 安全工, 架子工 绿色 4.7% 查看详情 4 陈志强 男 34 13900139004 上海市黄浦区南京东路4号 预制构件工, 灌浆工 黄色 4.6% 查看详情 1 王建国 男 35 13900139001 北京市海淀区中关村大街1号 钢筋工, 模板工 绿色 4.5% "
+          }
+        ],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "🏗️建筑业劳务供需智能撮合平台住建部门劳务监管管理端 | 今日: 2026/6/7数据看板工人管理招工需求智能匹配合同管理工资支付分析统计雇主管理工种管理工人管理新增工人选择工种选择健康状态ID姓名性别年龄手机号住址工种健康状态履约评分操作ID姓名性别年龄手机号住址工种健康状态履约评分操作3张铁柱男3613900139003北京市东城区王府井大街3号架子工, 砌筑工绿色4.8%查看详情8周安全男3113900139008北京市朝阳区三里屯8号安全工, 架子工绿色4.7%查看详情4陈志强男3413900139004上海市黄浦区南京东路4号预制构件工, 灌浆工黄色4.6%查看详情1王建国男3513900139001北京市海淀区中关村大街1号钢筋工, 模板工绿色4.5%查看详情6赵工头男3513900139006广州市越秀区北京路6号电工, 焊工绿色4.3%查看详情2李明华男3213900139002北京市西城区西单大街2号钢筋工, 混凝土工绿色4.2%查看详情7孙大锤男3713900139007广州市天河区天河路7号油漆工, 防水工绿色4%查看详情5刘建设男3313900139005上海市徐汇区衡山路5号钢筋工, 抹灰工绿色3.9%查看详情共 8 条1",
+        "layout": {
+          "viewportWidth": 1568,
+          "viewportHeight": 1600,
+          "scrollWidth": 1568,
+          "scrollHeight": 1600,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89080-codex-final-20260607-structure-03-导航-工人管理",
+          "label": "导航:工人管理",
+          "finalUrl": "http://127.0.0.1:49080/workers",
+          "title": "建筑业劳务供需智能撮合平台",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89080/runtime-check/may-89080-codex-final-20260607-structure-03-导航-工人管理.json",
+          "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89080/runtime-check/may-89080-codex-final-20260607-structure-03-导航-工人管理.png",
+          "elementCount": 374,
+          "interactiveCount": 37,
+          "interactiveLabels": [
+            "数据看板 工人管理 招工需求 智能匹配 合同管理 工资支付 分析统计 雇主管理 工种管理",
+            "数据看板",
+            "工人管理",
+            "招工需求",
+            "智能匹配",
+            "合同管理",
+            "工资支付",
+            "分析统计",
+            "雇主管理",
+            "工种管理",
+            "新增工人",
+            "搜索姓名、手机号、住址",
+            "查看详情",
+            "1"
+          ]
+        }
+      },
+      {
+        "label": "操作:查看详情",
+        "url": "http://127.0.0.1:49080/workers/3",
+        "title": "建筑业劳务供需智能撮合平台",
+        "headings": [
+          "工人详情"
+        ],
+        "navLabels": [
+          "数据看板 工人管理 招工需求 智能匹配 合同管理 工资支付 分析统计 雇主管理 工种管理",
+          "数据看板",
+          "dashboard",
+          "工人管理",
+          "team",
+          "招工需求",
+          "shopping",
+          "智能匹配",
+          "swap",
+          "合同管理",
+          "file-text",
+          "工资支付",
+          "money-collect",
+          "分析统计",
+          "bar-chart",
+          "雇主管理",
+          "apartment",
+          "工种管理",
+          "appstore"
+        ],
+        "buttons": [
+          "返回列表"
+        ],
+        "links": [
+          "数据看板",
+          "工人管理",
+          "招工需求",
+          "智能匹配",
+          "合同管理",
+          "工资支付",
+          "分析统计",
+          "雇主管理",
+          "工种管理"
+        ],
+        "inputs": [],
+        "tables": [
+          {
+            "headers": [
+              "ID",
+              "姓名",
+              "性别",
+              "年龄",
+              "身份证号",
+              "手机号",
+              "住址",
+              "健康状态",
+              "工种",
+              "履约评分",
+              "创建时间",
+              "更新时间"
+            ],
+            "rowCount": 5,
+            "hasEmptyText": false,
+            "textPreview": "ID 3 姓名 张铁柱 性别 男 年龄 36 身份证号 110101198803030003 手机号 13900139003 住址 北京市东城区王府井大街3号 健康状态 绿色 工种 架子工, 砌筑工 履约评分 4.8% 创建时间 2026-06-07 05:58:21 更新时间 2026-06-07 05:58:21"
+          },
+          {
+            "headers": [
+              "证书类型",
+              "证书编号",
+              "发证机关",
+              "发证日期",
+              "有效期",
+              "OCR识别结果",
+              "审核状态"
+            ],
+            "rowCount": 2,
+            "hasEmptyText": false,
+            "textPreview": "证书类型 证书编号 发证机关 发证日期 有效期 OCR识别结果 审核状态 特种作业操作证 CERT311780811901454 住房和城乡建设部 2022-01-01 2027-01-01 {\"name\":\"特种作业操作证\",\"number\":\"CERT31\"} 已审核 高级技工证 CERT301780811901453 住房和城乡建设部 2022-01-01 2027-01-01 {\"name\":\"高级技工证\",\"number\":\"CERT30\"} 已审核"
+          }
+        ],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "🏗️建筑业劳务供需智能撮合平台住建部门劳务监管管理端 | 今日: 2026/6/7数据看板工人管理招工需求智能匹配合同管理工资支付分析统计雇主管理工种管理返回列表工人详情基本信息ID3姓名张铁柱性别男年龄36身份证号110101198803030003手机号13900139003住址北京市东城区王府井大街3号健康状态绿色工种架子工, 砌筑工履约评分4.8%创建时间2026-06-07 05:58:21更新时间2026-06-07 05:58:21技能证书履约评价安全培训匹配记录证书类型证书编号发证机关发证日期有效期OCR识别结果审核状态特种作业操作证CERT311780811901454住房和城乡建设部2022-01-012027-01-01{\"name\":\"特种作业操作证\",\"number\":\"CERT31\"}已审核高级技工证CERT301780811901453住房和城乡建设部2022-01-012027-01-01{\"name\":\"高级技工证\",\"number\":\"CERT30\"}已审核",
+        "layout": {
+          "viewportWidth": 1600,
+          "viewportHeight": 1600,
+          "scrollWidth": 1600,
+          "scrollHeight": 1600,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89080-codex-final-20260607-structure-04-操作-查看详情",
+          "label": "操作:查看详情",
+          "finalUrl": "http://127.0.0.1:49080/workers/3",
+          "title": "建筑业劳务供需智能撮合平台",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89080/runtime-check/may-89080-codex-final-20260607-structure-04-操作-查看详情.json",
+          "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89080/runtime-check/may-89080-codex-final-20260607-structure-04-操作-查看详情.png",
+          "elementCount": 222,
+          "interactiveCount": 23,
+          "interactiveLabels": [
+            "数据看板 工人管理 招工需求 智能匹配 合同管理 工资支付 分析统计 雇主管理 工种管理",
+            "数据看板",
+            "工人管理",
+            "招工需求",
+            "智能匹配",
+            "合同管理",
+            "工资支付",
+            "分析统计",
+            "雇主管理",
+            "工种管理",
+            "返回列表",
+            "技能证书",
+            "证书类型 证书编号 发证机关 发证日期 有效期 OCR识别结果 审核状态 特种作业操作证 CERT311780811901454 住房和城乡建设部 2022-01-01 2027-01-01 {\"name\":\"特种作业操作证\",\"number\":\"CERT31\"} 已审核 高级技工证 CERT301780811901453 住房和城乡建设部 2022-01-"
+          ]
+        }
+      },
+      {
+        "label": "二层操作:查看详情->返回列表",
+        "url": "http://127.0.0.1:49080/workers",
+        "title": "建筑业劳务供需智能撮合平台",
+        "headings": [
+          "工人管理"
+        ],
+        "navLabels": [
+          "数据看板 工人管理 招工需求 智能匹配 合同管理 工资支付 分析统计 雇主管理 工种管理",
+          "数据看板",
+          "dashboard",
+          "工人管理",
+          "team",
+          "招工需求",
+          "shopping",
+          "智能匹配",
+          "swap",
+          "合同管理",
+          "file-text",
+          "工资支付",
+          "money-collect",
+          "分析统计",
+          "bar-chart",
+          "雇主管理",
+          "apartment",
+          "工种管理",
+          "appstore"
+        ],
+        "buttons": [
+          "新增工人",
+          "查看详情"
+        ],
+        "links": [
+          "数据看板",
+          "工人管理",
+          "招工需求",
+          "智能匹配",
+          "合同管理",
+          "工资支付",
+          "分析统计",
+          "雇主管理",
+          "工种管理"
+        ],
+        "inputs": [
+          {
+            "tag": "input",
+            "type": "search",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "search",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "search",
+            "placeholder": "搜索姓名、手机号、住址",
+            "name": "",
+            "label": ""
+          }
+        ],
+        "tables": [
+          {
+            "headers": [
+              "ID",
+              "姓名",
+              "性别",
+              "年龄",
+              "手机号",
+              "住址",
+              "工种",
+              "健康状态",
+              "履约评分",
+              "操作",
+              "ID",
+              "姓名"
+            ],
+            "rowCount": 8,
+            "hasEmptyText": false,
+            "textPreview": "ID 姓名 性别 年龄 手机号 住址 工种 健康状态 履约评分 操作 ID 姓名 性别 年龄 手机号 住址 工种 健康状态 履约评分 操作 3 张铁柱 男 36 13900139003 北京市东城区王府井大街3号 架子工, 砌筑工 绿色 4.8% 查看详情 8 周安全 男 31 13900139008 北京市朝阳区三里屯8号 安全工, 架子工 绿色 4.7% 查看详情 4 陈志强 男 34 13900139004 上海市黄浦区南京东路4号 预制构件工, 灌浆工 黄色 4.6% 查看详情 1 王建国 男 35 13900139001 北京市海淀区中关村大街1号 钢筋工, 模板工 绿色 4.5% "
+          }
+        ],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "🏗️建筑业劳务供需智能撮合平台住建部门劳务监管管理端 | 今日: 2026/6/7数据看板工人管理招工需求智能匹配合同管理工资支付分析统计雇主管理工种管理工人管理新增工人选择工种选择健康状态ID姓名性别年龄手机号住址工种健康状态履约评分操作ID姓名性别年龄手机号住址工种健康状态履约评分操作3张铁柱男3613900139003北京市东城区王府井大街3号架子工, 砌筑工绿色4.8%查看详情8周安全男3113900139008北京市朝阳区三里屯8号安全工, 架子工绿色4.7%查看详情4陈志强男3413900139004上海市黄浦区南京东路4号预制构件工, 灌浆工黄色4.6%查看详情1王建国男3513900139001北京市海淀区中关村大街1号钢筋工, 模板工绿色4.5%查看详情6赵工头男3513900139006广州市越秀区北京路6号电工, 焊工绿色4.3%查看详情2李明华男3213900139002北京市西城区西单大街2号钢筋工, 混凝土工绿色4.2%查看详情7孙大锤男3713900139007广州市天河区天河路7号油漆工, 防水工绿色4%查看详情5刘建设男3313900139005上海市徐汇区衡山路5号钢筋工, 抹灰工绿色3.9%查看详情共 8 条1",
+        "layout": {
+          "viewportWidth": 1632,
+          "viewportHeight": 1600,
+          "scrollWidth": 1632,
+          "scrollHeight": 1600,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89080-codex-final-20260607-structure-05-二层操作-查看详情-返回列表",
+          "label": "二层操作:查看详情->返回列表",
+          "finalUrl": "http://127.0.0.1:49080/workers",
+          "title": "建筑业劳务供需智能撮合平台",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89080/runtime-check/may-89080-codex-final-20260607-structure-05-二层操作-查看详情-返回列表.json",
+          "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89080/runtime-check/may-89080-codex-final-20260607-structure-05-二层操作-查看详情-返回列表.png",
+          "elementCount": 374,
+          "interactiveCount": 37,
+          "interactiveLabels": [
+            "数据看板 工人管理 招工需求 智能匹配 合同管理 工资支付 分析统计 雇主管理 工种管理",
+            "数据看板",
+            "工人管理",
+            "招工需求",
+            "智能匹配",
+            "合同管理",
+            "工资支付",
+            "分析统计",
+            "雇主管理",
+            "工种管理",
+            "新增工人",
+            "搜索姓名、手机号、住址",
+            "查看详情",
+            "1"
+          ]
+        }
+      },
+      {
+        "label": "操作:新增工人",
+        "url": "http://127.0.0.1:49080/workers",
+        "title": "建筑业劳务供需智能撮合平台",
+        "headings": [
+          "工人管理"
+        ],
+        "navLabels": [
+          "数据看板 工人管理 招工需求 智能匹配 合同管理 工资支付 分析统计 雇主管理 工种管理",
+          "数据看板",
+          "dashboard",
+          "工人管理",
+          "team",
+          "招工需求",
+          "shopping",
+          "智能匹配",
+          "swap",
+          "合同管理",
+          "file-text",
+          "工资支付",
+          "money-collect",
+          "分析统计",
+          "bar-chart",
+          "雇主管理",
+          "apartment",
+          "工种管理",
+          "appstore"
+        ],
+        "buttons": [
+          "新增工人",
+          "查看详情",
+          "Close",
+          "取 消",
+          "提 交"
+        ],
+        "links": [
+          "数据看板",
+          "工人管理",
+          "招工需求",
+          "智能匹配",
+          "合同管理",
+          "工资支付",
+          "分析统计",
+          "雇主管理",
+          "工种管理"
+        ],
+        "inputs": [
+          {
+            "tag": "input",
+            "type": "search",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "search",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "search",
+            "placeholder": "搜索姓名、手机号、住址",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "text",
+            "placeholder": "请输入身份证号",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "text",
+            "placeholder": "请输入姓名",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "search",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "",
+            "placeholder": "年龄",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "text",
+            "placeholder": "请输入手机号",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "text",
+            "placeholder": "请输入住址",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "search",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "search",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          }
+        ],
+        "tables": [
+          {
+            "headers": [
+              "ID",
+              "姓名",
+              "性别",
+              "年龄",
+              "手机号",
+              "住址",
+              "工种",
+              "健康状态",
+              "履约评分",
+              "操作",
+              "ID",
+              "姓名"
+            ],
+            "rowCount": 8,
+            "hasEmptyText": false,
+            "textPreview": "ID 姓名 性别 年龄 手机号 住址 工种 健康状态 履约评分 操作 ID 姓名 性别 年龄 手机号 住址 工种 健康状态 履约评分 操作 3 张铁柱 男 36 13900139003 北京市东城区王府井大街3号 架子工, 砌筑工 绿色 4.8% 查看详情 8 周安全 男 31 13900139008 北京市朝阳区三里屯8号 安全工, 架子工 绿色 4.7% 查看详情 4 陈志强 男 34 13900139004 上海市黄浦区南京东路4号 预制构件工, 灌浆工 黄色 4.6% 查看详情 1 王建国 男 35 13900139001 北京市海淀区中关村大街1号 钢筋工, 模板工 绿色 4.5% "
+          }
+        ],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "🏗️建筑业劳务供需智能撮合平台住建部门劳务监管管理端 | 今日: 2026/6/7数据看板工人管理招工需求智能匹配合同管理工资支付分析统计雇主管理工种管理工人管理新增工人选择工种选择健康状态ID姓名性别年龄手机号住址工种健康状态履约评分操作ID姓名性别年龄手机号住址工种健康状态履约评分操作3张铁柱男3613900139003北京市东城区王府井大街3号架子工, 砌筑工绿色4.8%查看详情8周安全男3113900139008北京市朝阳区三里屯8号安全工, 架子工绿色4.7%查看详情4陈志强男3413900139004上海市黄浦区南京东路4号预制构件工, 灌浆工黄色4.6%查看详情1王建国男3513900139001北京市海淀区中关村大街1号钢筋工, 模板工绿色4.5%查看详情6赵工头男3513900139006广州市越秀区北京路6号电工, 焊工绿色4.3%查看详情2李明华男3213900139002北京市西城区西单大街2号钢筋工, 混凝土工绿色4.2%查看详情7孙大锤男3713900139007广州市天河区天河路7号油漆工, 防水工绿色4%查看详情5刘建设男3313900139005上海市徐汇区衡山路5号钢筋工, 抹灰工绿色3.9%查看详情共 8 条1 新增工人身份证号姓名性别请选择性别年龄手机号住址工种 请选择工种健康状态绿色取 消提 交",
+        "layout": {
+          "viewportWidth": 1664,
+          "viewportHeight": 1600,
+          "scrollWidth": 1664,
+          "scrollHeight": 1600,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89080-codex-final-20260607-structure-06-操作-新增工人",
+          "label": "操作:新增工人",
+          "finalUrl": "http://127.0.0.1:49080/workers",
+          "title": "建筑业劳务供需智能撮合平台",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89080/runtime-check/may-89080-codex-final-20260607-structure-06-操作-新增工人.json",
+          "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89080/runtime-check/may-89080-codex-final-20260607-structure-06-操作-新增工人.png",
+          "elementCount": 510,
+          "interactiveCount": 52,
+          "interactiveLabels": [
+            "数据看板 工人管理 招工需求 智能匹配 合同管理 工资支付 分析统计 雇主管理 工种管理",
+            "数据看板",
+            "工人管理",
+            "招工需求",
+            "智能匹配",
+            "合同管理",
+            "工资支付",
+            "分析统计",
+            "雇主管理",
+            "工种管理",
+            "新增工人",
+            "搜索姓名、手机号、住址",
+            "查看详情",
+            "1",
+            "新增工人 身份证号 姓名 性别 请选择性别 年龄 手机号 住址 工种 请选择工种 健康状态 绿色 取 消 提 交",
+            "Close",
+            "请输入身份证号",
+            "请输入姓名",
+            "Increase Value",
+            "Decrease Value",
+            "年龄",
+            "请输入手机号",
+            "请输入住址",
+            "取 消",
+            "提 交"
+          ]
+        }
+      },
+      {
+        "label": "二层操作:新增工人->取 消",
+        "url": "http://127.0.0.1:49080/workers",
+        "title": "建筑业劳务供需智能撮合平台",
+        "headings": [
+          "工人管理"
+        ],
+        "navLabels": [
+          "数据看板 工人管理 招工需求 智能匹配 合同管理 工资支付 分析统计 雇主管理 工种管理",
+          "数据看板",
+          "dashboard",
+          "工人管理",
+          "team",
+          "招工需求",
+          "shopping",
+          "智能匹配",
+          "swap",
+          "合同管理",
+          "file-text",
+          "工资支付",
+          "money-collect",
+          "分析统计",
+          "bar-chart",
+          "雇主管理",
+          "apartment",
+          "工种管理",
+          "appstore"
+        ],
+        "buttons": [
+          "新增工人",
+          "查看详情"
+        ],
+        "links": [
+          "数据看板",
+          "工人管理",
+          "招工需求",
+          "智能匹配",
+          "合同管理",
+          "工资支付",
+          "分析统计",
+          "雇主管理",
+          "工种管理"
+        ],
+        "inputs": [
+          {
+            "tag": "input",
+            "type": "search",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "search",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "search",
+            "placeholder": "搜索姓名、手机号、住址",
+            "name": "",
+            "label": ""
+          }
+        ],
+        "tables": [
+          {
+            "headers": [
+              "ID",
+              "姓名",
+              "性别",
+              "年龄",
+              "手机号",
+              "住址",
+              "工种",
+              "健康状态",
+              "履约评分",
+              "操作",
+              "ID",
+              "姓名"
+            ],
+            "rowCount": 8,
+            "hasEmptyText": false,
+            "textPreview": "ID 姓名 性别 年龄 手机号 住址 工种 健康状态 履约评分 操作 ID 姓名 性别 年龄 手机号 住址 工种 健康状态 履约评分 操作 3 张铁柱 男 36 13900139003 北京市东城区王府井大街3号 架子工, 砌筑工 绿色 4.8% 查看详情 8 周安全 男 31 13900139008 北京市朝阳区三里屯8号 安全工, 架子工 绿色 4.7% 查看详情 4 陈志强 男 34 13900139004 上海市黄浦区南京东路4号 预制构件工, 灌浆工 黄色 4.6% 查看详情 1 王建国 男 35 13900139001 北京市海淀区中关村大街1号 钢筋工, 模板工 绿色 4.5% "
+          }
+        ],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "🏗️建筑业劳务供需智能撮合平台住建部门劳务监管管理端 | 今日: 2026/6/7数据看板工人管理招工需求智能匹配合同管理工资支付分析统计雇主管理工种管理工人管理新增工人选择工种选择健康状态ID姓名性别年龄手机号住址工种健康状态履约评分操作ID姓名性别年龄手机号住址工种健康状态履约评分操作3张铁柱男3613900139003北京市东城区王府井大街3号架子工, 砌筑工绿色4.8%查看详情8周安全男3113900139008北京市朝阳区三里屯8号安全工, 架子工绿色4.7%查看详情4陈志强男3413900139004上海市黄浦区南京东路4号预制构件工, 灌浆工黄色4.6%查看详情1王建国男3513900139001北京市海淀区中关村大街1号钢筋工, 模板工绿色4.5%查看详情6赵工头男3513900139006广州市越秀区北京路6号电工, 焊工绿色4.3%查看详情2李明华男3213900139002北京市西城区西单大街2号钢筋工, 混凝土工绿色4.2%查看详情7孙大锤男3713900139007广州市天河区天河路7号油漆工, 防水工绿色4%查看详情5刘建设男3313900139005上海市徐汇区衡山路5号钢筋工, 抹灰工绿色3.9%查看详情共 8 条1 新增工人身份证号姓名性别请选择性别年龄手机号住址工种 请选择工种健康状态绿色取 消提 交",
+        "layout": {
+          "viewportWidth": 1696,
+          "viewportHeight": 1600,
+          "scrollWidth": 1696,
+          "scrollHeight": 1600,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89080-codex-final-20260607-structure-07-二层操作-新增工人-取-消",
+          "label": "二层操作:新增工人->取 消",
+          "finalUrl": "http://127.0.0.1:49080/workers",
+          "title": "建筑业劳务供需智能撮合平台",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89080/runtime-check/may-89080-codex-final-20260607-structure-07-二层操作-新增工人-取-消.json",
+          "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89080/runtime-check/may-89080-codex-final-20260607-structure-07-二层操作-新增工人-取-消.png",
+          "elementCount": 509,
+          "interactiveCount": 52,
+          "interactiveLabels": [
+            "数据看板 工人管理 招工需求 智能匹配 合同管理 工资支付 分析统计 雇主管理 工种管理",
+            "数据看板",
+            "工人管理",
+            "招工需求",
+            "智能匹配",
+            "合同管理",
+            "工资支付",
+            "分析统计",
+            "雇主管理",
+            "工种管理",
+            "新增工人",
+            "搜索姓名、手机号、住址",
+            "查看详情",
+            "1",
+            "新增工人身份证号姓名性别请选择性别年龄手机号住址工种 请选择工种健康状态绿色取 消提 交",
+            "Close",
+            "请输入身份证号",
+            "请输入姓名",
+            "Increase Value",
+            "Decrease Value",
+            "年龄",
+            "请输入手机号",
+            "请输入住址",
+            "取 消",
+            "提 交"
+          ]
+        }
+      },
+      {
+        "label": "导航:招工需求",
+        "url": "http://127.0.0.1:49080/jobs",
+        "title": "建筑业劳务供需智能撮合平台",
+        "headings": [
+          "招工需求管理"
+        ],
+        "navLabels": [
+          "数据看板 工人管理 招工需求 智能匹配 合同管理 工资支付 分析统计 雇主管理 工种管理",
+          "数据看板",
+          "dashboard",
+          "工人管理",
+          "team",
+          "招工需求",
+          "shopping",
+          "智能匹配",
+          "swap",
+          "合同管理",
+          "file-text",
+          "工资支付",
+          "money-collect",
+          "分析统计",
+          "bar-chart",
+          "雇主管理",
+          "apartment",
+          "工种管理",
+          "appstore"
+        ],
+        "buttons": [
+          "AI审核",
+          "人工审核",
+          "工地核验",
+          "发布招工",
+          "查看详情",
+          "智能匹配"
+        ],
+        "links": [
+          "数据看板",
+          "工人管理",
+          "招工需求",
+          "智能匹配",
+          "合同管理",
+          "工资支付",
+          "分析统计",
+          "雇主管理",
+          "工种管理"
+        ],
+        "inputs": [
+          {
+            "tag": "input",
+            "type": "search",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "search",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "search",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "search",
+            "placeholder": "搜索项目名称、地址",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "radio",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "search",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "radio",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "search",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "radio",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "search",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "radio",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "search",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "radio",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "search",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "radio",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "search",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "radio",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "search",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "radio",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "search",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          }
+        ],
+        "tables": [
+          {
+            "headers": [
+              "ID",
+              "项目名称",
+              "项目地址",
+              "工种",
+              "招聘人数",
+              "日薪",
+              "工期",
+              "状态",
+              "雇主名称",
+              "操作",
+              "ID",
+              "项目名称"
+            ],
+            "rowCount": 8,
+            "hasEmptyText": false,
+            "textPreview": "ID 项目名称 项目地址 工种 招聘人数 日薪 工期 状态 雇主名称 操作 ID 项目名称 项目地址 工种 招聘人数 日薪 工期 状态 雇主名称 操作 1 北京CBD核心区商业综合体项目 北京市朝阳区建国路88号 钢筋工 15 ¥380 2024-07-01 ~ 2024-12-31 已发布 中建集团第一工程有限公司 查看详情 智能匹配 状态切换 2 北京CBD核心区商业综合体项目 北京市朝阳区建国路88号 模板工 10 ¥360 2024-07-01 ~ 2024-12-31 已发布 中建集团第一工程有限公司 查看详情 智能匹配 状态切换 3 上海张江科技园标准厂房项目 上海市浦东新区张江高"
+          }
+        ],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "🏗️建筑业劳务供需智能撮合平台住建部门劳务监管管理端 | 今日: 2026/6/7数据看板工人管理招工需求智能匹配合同管理工资支付分析统计雇主管理工种管理招工需求管理AI审核人工审核工地核验发布招工选择雇主选择工种选择状态ID项目名称项目地址工种招聘人数日薪工期状态雇主名称操作 ID项目名称项目地址工种招聘人数日薪工期状态雇主名称操作1北京CBD核心区商业综合体项目北京市朝阳区建国路88号钢筋工15¥3802024-07-01 ~ 2024-12-31已发布中建集团第一工程有限公司查看详情智能匹配状态切换2北京CBD核心区商业综合体项目北京市朝阳区建国路88号模板工10¥3602024-07-01 ~ 2024-12-31已发布中建集团第一工程有限公司查看详情智能匹配状态切换3上海张江科技园标准厂房项目上海市浦东新区张江高科技园区装配式工20¥4202024-07-15 ~ 2025-03-31待审核上海建工集团查看详情智能匹配状态切换4上海张江科技园标准厂房项目上海市浦东新区张江高科技园区钢筋工8¥3902024-07-10 ~ 2025-03-31已发布上海建工集团查看详情智能匹配状态切换5广州天河智慧城办公楼项目广州市天河区高唐路电工6¥4002024-08-01 ~ 2025-06-30已发布广州建筑集团查看详情智能匹配状态切换6广州天河智慧城办公楼项目广州市天河区高唐路焊工4¥4202024-08-01 ~ 2025-06-30AI已审核广州建筑集团查看详情智能匹配状态切换7北京通州副中心住宅项目北京市通州区潞城镇架子工12¥4502024-07-20 ~ 2025-05-31人工已审核中建集团第一工程有限公司查看详情智能匹配状态切换8上海临港新片区安置房项目上海市浦东新区临港新城抹灰工25¥3402024-08-15 ~ 2025-04-30已核验上海建工集团查看详情智能匹配状态切换共 8 条1",
+        "layout": {
+          "viewportWidth": 1728,
+          "viewportHeight": 1600,
+          "scrollWidth": 1728,
+          "scrollHeight": 1600,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89080-codex-final-20260607-structure-08-导航-招工需求",
+          "label": "导航:招工需求",
+          "finalUrl": "http://127.0.0.1:49080/jobs",
+          "title": "建筑业劳务供需智能撮合平台",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89080/runtime-check/may-89080-codex-final-20260607-structure-08-导航-招工需求.json",
+          "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89080/runtime-check/may-89080-codex-final-20260607-structure-08-导航-招工需求.png",
+          "elementCount": 541,
+          "interactiveCount": 65,
+          "interactiveLabels": [
+            "数据看板 工人管理 招工需求 智能匹配 合同管理 工资支付 分析统计 雇主管理 工种管理",
+            "数据看板",
+            "工人管理",
+            "招工需求",
+            "智能匹配",
+            "合同管理",
+            "工资支付",
+            "分析统计",
+            "雇主管理",
+            "工种管理",
+            "AI审核",
+            "人工审核",
+            "工地核验",
+            "发布招工",
+            "搜索项目名称、地址",
+            "on",
+            "查看详情",
+            "1"
+          ]
+        }
+      },
+      {
+        "label": "操作:查看详情",
+        "url": "http://127.0.0.1:49080/jobs/1",
+        "title": "建筑业劳务供需智能撮合平台",
+        "headings": [
+          "招工需求详情"
+        ],
+        "navLabels": [
+          "数据看板 工人管理 招工需求 智能匹配 合同管理 工资支付 分析统计 雇主管理 工种管理",
+          "数据看板",
+          "dashboard",
+          "工人管理",
+          "team",
+          "招工需求",
+          "shopping",
+          "智能匹配",
+          "swap",
+          "合同管理",
+          "file-text",
+          "工资支付",
+          "money-collect",
+          "分析统计",
+          "bar-chart",
+          "雇主管理",
+          "apartment",
+          "工种管理",
+          "appstore"
+        ],
+        "buttons": [
+          "返回列表",
+          "开始智能匹配",
+          "生成合同"
+        ],
+        "links": [
+          "数据看板",
+          "工人管理",
+          "招工需求",
+          "智能匹配",
+          "合同管理",
+          "工资支付",
+          "分析统计",
+          "雇主管理",
+          "工种管理"
+        ],
+        "inputs": [],
+        "tables": [
+          {
+            "headers": [
+              "ID",
+              "项目名称",
+              "雇主",
+              "项目地址",
+              "状态",
+              "工种",
+              "招聘人数",
+              "日薪",
+              "开始日期",
+              "结束日期",
+              "工作时间",
+              "资质要求"
+            ],
+            "rowCount": 7,
+            "hasEmptyText": false,
+            "textPreview": "ID 1 项目名称 北京CBD核心区商业综合体项目 雇主 中建集团第一工程有限公司 项目地址 北京市朝阳区建国路88号 状态 已发布 工种 钢筋工 招聘人数 15 人 日薪 ¥380 开始日期 2024-07-01 结束日期 2024-12-31 工作时间 8:00-18:00 资质要求 高级技工证 项目描述 需熟练掌握钢筋绑扎、下料工艺，有大型商业项目经验优先 创建时间 2026-06-07 05:58:21 更新时间 2026-06-07 05:58:21"
+          },
+          {
+            "headers": [
+              "审核级别",
+              "审核人",
+              "结果",
+              "意见",
+              "日期"
+            ],
+            "rowCount": 1,
+            "hasEmptyText": false,
+            "textPreview": "审核级别 审核人 结果 意见 日期 暂无审核记录"
+          }
+        ],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "🏗️建筑业劳务供需智能撮合平台住建部门劳务监管管理端 | 今日: 2026/6/7数据看板工人管理招工需求智能匹配合同管理工资支付分析统计雇主管理工种管理返回列表招工需求详情开始智能匹配生成合同基本信息ID1项目名称北京CBD核心区商业综合体项目雇主中建集团第一工程有限公司项目地址北京市朝阳区建国路88号状态已发布工种钢筋工招聘人数15 人日薪¥380开始日期2024-07-01结束日期2024-12-31工作时间8:00-18:00资质要求高级技工证项目描述需熟练掌握钢筋绑扎、下料工艺，有大型商业项目经验优先创建时间2026-06-07 05:58:21更新时间2026-06-07 05:58:21审核记录智能匹配结果已录用工人合同记录审核级别审核人结果意见日期暂无审核记录",
+        "layout": {
+          "viewportWidth": 1760,
+          "viewportHeight": 1600,
+          "scrollWidth": 1760,
+          "scrollHeight": 1600,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89080-codex-final-20260607-structure-09-操作-查看详情",
+          "label": "操作:查看详情",
+          "finalUrl": "http://127.0.0.1:49080/jobs/1",
+          "title": "建筑业劳务供需智能撮合平台",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89080/runtime-check/may-89080-codex-final-20260607-structure-09-操作-查看详情.json",
+          "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89080/runtime-check/may-89080-codex-final-20260607-structure-09-操作-查看详情.png",
+          "elementCount": 228,
+          "interactiveCount": 25,
+          "interactiveLabels": [
+            "数据看板 工人管理 招工需求 智能匹配 合同管理 工资支付 分析统计 雇主管理 工种管理",
+            "数据看板",
+            "工人管理",
+            "招工需求",
+            "智能匹配",
+            "合同管理",
+            "工资支付",
+            "分析统计",
+            "雇主管理",
+            "工种管理",
+            "返回列表",
+            "开始智能匹配",
+            "生成合同",
+            "审核记录",
+            "审核级别 审核人 结果 意见 日期 暂无审核记录"
+          ]
+        }
+      },
+      {
+        "label": "二层操作:查看详情->返回列表",
+        "url": "http://127.0.0.1:49080/jobs",
+        "title": "建筑业劳务供需智能撮合平台",
+        "headings": [
+          "招工需求管理"
+        ],
+        "navLabels": [
+          "数据看板 工人管理 招工需求 智能匹配 合同管理 工资支付 分析统计 雇主管理 工种管理",
+          "数据看板",
+          "dashboard",
+          "工人管理",
+          "team",
+          "招工需求",
+          "shopping",
+          "智能匹配",
+          "swap",
+          "合同管理",
+          "file-text",
+          "工资支付",
+          "money-collect",
+          "分析统计",
+          "bar-chart",
+          "雇主管理",
+          "apartment",
+          "工种管理",
+          "appstore"
+        ],
+        "buttons": [
+          "AI审核",
+          "人工审核",
+          "工地核验",
+          "发布招工",
+          "查看详情",
+          "智能匹配"
+        ],
+        "links": [
+          "数据看板",
+          "工人管理",
+          "招工需求",
+          "智能匹配",
+          "合同管理",
+          "工资支付",
+          "分析统计",
+          "雇主管理",
+          "工种管理"
+        ],
+        "inputs": [
+          {
+            "tag": "input",
+            "type": "search",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "search",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "search",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "search",
+            "placeholder": "搜索项目名称、地址",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "radio",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "search",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "radio",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "search",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "radio",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "search",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "radio",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "search",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "radio",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "search",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "radio",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "search",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "radio",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "search",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "radio",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "search",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          }
+        ],
+        "tables": [
+          {
+            "headers": [
+              "ID",
+              "项目名称",
+              "项目地址",
+              "工种",
+              "招聘人数",
+              "日薪",
+              "工期",
+              "状态",
+              "雇主名称",
+              "操作",
+              "ID",
+              "项目名称"
+            ],
+            "rowCount": 8,
+            "hasEmptyText": false,
+            "textPreview": "ID 项目名称 项目地址 工种 招聘人数 日薪 工期 状态 雇主名称 操作 ID 项目名称 项目地址 工种 招聘人数 日薪 工期 状态 雇主名称 操作 1 北京CBD核心区商业综合体项目 北京市朝阳区建国路88号 钢筋工 15 ¥380 2024-07-01 ~ 2024-12-31 已发布 中建集团第一工程有限公司 查看详情 智能匹配 状态切换 2 北京CBD核心区商业综合体项目 北京市朝阳区建国路88号 模板工 10 ¥360 2024-07-01 ~ 2024-12-31 已发布 中建集团第一工程有限公司 查看详情 智能匹配 状态切换 3 上海张江科技园标准厂房项目 上海市浦东新区张江高"
+          }
+        ],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "🏗️建筑业劳务供需智能撮合平台住建部门劳务监管管理端 | 今日: 2026/6/7数据看板工人管理招工需求智能匹配合同管理工资支付分析统计雇主管理工种管理招工需求管理AI审核人工审核工地核验发布招工选择雇主选择工种选择状态ID项目名称项目地址工种招聘人数日薪工期状态雇主名称操作 ID项目名称项目地址工种招聘人数日薪工期状态雇主名称操作1北京CBD核心区商业综合体项目北京市朝阳区建国路88号钢筋工15¥3802024-07-01 ~ 2024-12-31已发布中建集团第一工程有限公司查看详情智能匹配状态切换2北京CBD核心区商业综合体项目北京市朝阳区建国路88号模板工10¥3602024-07-01 ~ 2024-12-31已发布中建集团第一工程有限公司查看详情智能匹配状态切换3上海张江科技园标准厂房项目上海市浦东新区张江高科技园区装配式工20¥4202024-07-15 ~ 2025-03-31待审核上海建工集团查看详情智能匹配状态切换4上海张江科技园标准厂房项目上海市浦东新区张江高科技园区钢筋工8¥3902024-07-10 ~ 2025-03-31已发布上海建工集团查看详情智能匹配状态切换5广州天河智慧城办公楼项目广州市天河区高唐路电工6¥4002024-08-01 ~ 2025-06-30已发布广州建筑集团查看详情智能匹配状态切换6广州天河智慧城办公楼项目广州市天河区高唐路焊工4¥4202024-08-01 ~ 2025-06-30AI已审核广州建筑集团查看详情智能匹配状态切换7北京通州副中心住宅项目北京市通州区潞城镇架子工12¥4502024-07-20 ~ 2025-05-31人工已审核中建集团第一工程有限公司查看详情智能匹配状态切换8上海临港新片区安置房项目上海市浦东新区临港新城抹灰工25¥3402024-08-15 ~ 2025-04-30已核验上海建工集团查看详情智能匹配状态切换共 8 条1",
+        "layout": {
+          "viewportWidth": 1792,
+          "viewportHeight": 1600,
+          "scrollWidth": 1792,
+          "scrollHeight": 1600,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89080-codex-final-20260607-structure-10-二层操作-查看详情-返回列表",
+          "label": "二层操作:查看详情->返回列表",
+          "finalUrl": "http://127.0.0.1:49080/jobs",
+          "title": "建筑业劳务供需智能撮合平台",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89080/runtime-check/may-89080-codex-final-20260607-structure-10-二层操作-查看详情-返回列表.json",
+          "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89080/runtime-check/may-89080-codex-final-20260607-structure-10-二层操作-查看详情-返回列表.png",
+          "elementCount": 541,
+          "interactiveCount": 65,
+          "interactiveLabels": [
+            "数据看板 工人管理 招工需求 智能匹配 合同管理 工资支付 分析统计 雇主管理 工种管理",
+            "数据看板",
+            "工人管理",
+            "招工需求",
+            "智能匹配",
+            "合同管理",
+            "工资支付",
+            "分析统计",
+            "雇主管理",
+            "工种管理",
+            "AI审核",
+            "人工审核",
+            "工地核验",
+            "发布招工",
+            "搜索项目名称、地址",
+            "on",
+            "查看详情",
+            "1"
+          ]
+        }
+      },
+      {
+        "label": "操作:发布招工",
+        "url": "http://127.0.0.1:49080/jobs/new",
+        "title": "建筑业劳务供需智能撮合平台",
+        "headings": [
+          "发布招工需求"
+        ],
+        "navLabels": [
+          "数据看板 工人管理 招工需求 智能匹配 合同管理 工资支付 分析统计 雇主管理 工种管理",
+          "数据看板",
+          "dashboard",
+          "工人管理",
+          "team",
+          "招工需求",
+          "shopping",
+          "智能匹配",
+          "swap",
+          "合同管理",
+          "file-text",
+          "工资支付",
+          "money-collect",
+          "分析统计",
+          "bar-chart",
+          "雇主管理",
+          "apartment",
+          "工种管理",
+          "appstore"
+        ],
+        "buttons": [
+          "返回列表",
+          "取 消",
+          "提交发布"
+        ],
+        "links": [
+          "数据看板",
+          "工人管理",
+          "招工需求",
+          "智能匹配",
+          "合同管理",
+          "工资支付",
+          "分析统计",
+          "雇主管理",
+          "工种管理"
+        ],
+        "inputs": [
+          {
+            "tag": "input",
+            "type": "search",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "text",
+            "placeholder": "请输入项目名称",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "text",
+            "placeholder": "请输入详细项目地址",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "",
+            "placeholder": "纬度",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "",
+            "placeholder": "经度",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "search",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "",
+            "placeholder": "招聘人数（人）",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "",
+            "placeholder": "开始日期",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "",
+            "placeholder": "结束日期",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "",
+            "placeholder": "日薪（元/天）",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "text",
+            "placeholder": "例如：8:00-18:00",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "search",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "textarea",
+            "type": "",
+            "placeholder": "请详细描述项目内容、工作要求、福利待遇等信息",
+            "name": "",
+            "label": ""
+          }
+        ],
+        "tables": [],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "🏗️建筑业劳务供需智能撮合平台住建部门劳务监管管理端 | 今日: 2026/6/7数据看板工人管理招工需求智能匹配合同管理工资支付分析统计雇主管理工种管理返回列表发布招工需求雇主选择请选择雇主项目名称项目地址纬度经度工种选择请选择工种招聘人数工期（开始-结束日期）日薪工作时间资质要求无要求项目描述0 / 1000取 消提交发布",
+        "layout": {
+          "viewportWidth": 1824,
+          "viewportHeight": 1600,
+          "scrollWidth": 1824,
+          "scrollHeight": 1600,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89080-codex-final-20260607-structure-11-操作-发布招工",
+          "label": "操作:发布招工",
+          "finalUrl": "http://127.0.0.1:49080/jobs/new",
+          "title": "建筑业劳务供需智能撮合平台",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89080/runtime-check/may-89080-codex-final-20260607-structure-11-操作-发布招工.json",
+          "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89080/runtime-check/may-89080-codex-final-20260607-structure-11-操作-发布招工.png",
+          "elementCount": 305,
+          "interactiveCount": 43,
+          "interactiveLabels": [
+            "数据看板 工人管理 招工需求 智能匹配 合同管理 工资支付 分析统计 雇主管理 工种管理",
+            "数据看板",
+            "工人管理",
+            "招工需求",
+            "智能匹配",
+            "合同管理",
+            "工资支付",
+            "分析统计",
+            "雇主管理",
+            "工种管理",
+            "返回列表",
+            "请输入项目名称",
+            "请输入详细项目地址",
+            "Increase Value",
+            "Decrease Value",
+            "纬度",
+            "经度",
+            "1",
+            "开始日期",
+            "结束日期",
+            "200",
+            "8:00-18:00",
+            "请详细描述项目内容、工作要求、福利待遇等信息",
+            "取 消",
+            "提交发布"
+          ]
+        }
+      },
+      {
+        "label": "二层操作:发布招工->返回列表",
+        "url": "http://127.0.0.1:49080/jobs",
+        "title": "建筑业劳务供需智能撮合平台",
+        "headings": [
+          "招工需求管理"
+        ],
+        "navLabels": [
+          "数据看板 工人管理 招工需求 智能匹配 合同管理 工资支付 分析统计 雇主管理 工种管理",
+          "数据看板",
+          "dashboard",
+          "工人管理",
+          "team",
+          "招工需求",
+          "shopping",
+          "智能匹配",
+          "swap",
+          "合同管理",
+          "file-text",
+          "工资支付",
+          "money-collect",
+          "分析统计",
+          "bar-chart",
+          "雇主管理",
+          "apartment",
+          "工种管理",
+          "appstore"
+        ],
+        "buttons": [
+          "AI审核",
+          "人工审核",
+          "工地核验",
+          "发布招工",
+          "查看详情",
+          "智能匹配"
+        ],
+        "links": [
+          "数据看板",
+          "工人管理",
+          "招工需求",
+          "智能匹配",
+          "合同管理",
+          "工资支付",
+          "分析统计",
+          "雇主管理",
+          "工种管理"
+        ],
+        "inputs": [
+          {
+            "tag": "input",
+            "type": "search",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "search",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "search",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "search",
+            "placeholder": "搜索项目名称、地址",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "radio",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "search",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "radio",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "search",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "radio",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "search",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "radio",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "search",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "radio",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "search",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "radio",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "search",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "radio",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "search",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "radio",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "search",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          }
+        ],
+        "tables": [
+          {
+            "headers": [
+              "ID",
+              "项目名称",
+              "项目地址",
+              "工种",
+              "招聘人数",
+              "日薪",
+              "工期",
+              "状态",
+              "雇主名称",
+              "操作",
+              "ID",
+              "项目名称"
+            ],
+            "rowCount": 8,
+            "hasEmptyText": false,
+            "textPreview": "ID 项目名称 项目地址 工种 招聘人数 日薪 工期 状态 雇主名称 操作 ID 项目名称 项目地址 工种 招聘人数 日薪 工期 状态 雇主名称 操作 1 北京CBD核心区商业综合体项目 北京市朝阳区建国路88号 钢筋工 15 ¥380 2024-07-01 ~ 2024-12-31 已发布 中建集团第一工程有限公司 查看详情 智能匹配 状态切换 2 北京CBD核心区商业综合体项目 北京市朝阳区建国路88号 模板工 10 ¥360 2024-07-01 ~ 2024-12-31 已发布 中建集团第一工程有限公司 查看详情 智能匹配 状态切换 3 上海张江科技园标准厂房项目 上海市浦东新区张江高"
+          }
+        ],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "🏗️建筑业劳务供需智能撮合平台住建部门劳务监管管理端 | 今日: 2026/6/7数据看板工人管理招工需求智能匹配合同管理工资支付分析统计雇主管理工种管理招工需求管理AI审核人工审核工地核验发布招工选择雇主选择工种选择状态ID项目名称项目地址工种招聘人数日薪工期状态雇主名称操作 ID项目名称项目地址工种招聘人数日薪工期状态雇主名称操作1北京CBD核心区商业综合体项目北京市朝阳区建国路88号钢筋工15¥3802024-07-01 ~ 2024-12-31已发布中建集团第一工程有限公司查看详情智能匹配状态切换2北京CBD核心区商业综合体项目北京市朝阳区建国路88号模板工10¥3602024-07-01 ~ 2024-12-31已发布中建集团第一工程有限公司查看详情智能匹配状态切换3上海张江科技园标准厂房项目上海市浦东新区张江高科技园区装配式工20¥4202024-07-15 ~ 2025-03-31待审核上海建工集团查看详情智能匹配状态切换4上海张江科技园标准厂房项目上海市浦东新区张江高科技园区钢筋工8¥3902024-07-10 ~ 2025-03-31已发布上海建工集团查看详情智能匹配状态切换5广州天河智慧城办公楼项目广州市天河区高唐路电工6¥4002024-08-01 ~ 2025-06-30已发布广州建筑集团查看详情智能匹配状态切换6广州天河智慧城办公楼项目广州市天河区高唐路焊工4¥4202024-08-01 ~ 2025-06-30AI已审核广州建筑集团查看详情智能匹配状态切换7北京通州副中心住宅项目北京市通州区潞城镇架子工12¥4502024-07-20 ~ 2025-05-31人工已审核中建集团第一工程有限公司查看详情智能匹配状态切换8上海临港新片区安置房项目上海市浦东新区临港新城抹灰工25¥3402024-08-15 ~ 2025-04-30已核验上海建工集团查看详情智能匹配状态切换共 8 条1",
+        "layout": {
+          "viewportWidth": 1856,
+          "viewportHeight": 1600,
+          "scrollWidth": 1856,
+          "scrollHeight": 1600,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89080-codex-final-20260607-structure-12-二层操作-发布招工-返回列表",
+          "label": "二层操作:发布招工->返回列表",
+          "finalUrl": "http://127.0.0.1:49080/jobs",
+          "title": "建筑业劳务供需智能撮合平台",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89080/runtime-check/may-89080-codex-final-20260607-structure-12-二层操作-发布招工-返回列表.json",
+          "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89080/runtime-check/may-89080-codex-final-20260607-structure-12-二层操作-发布招工-返回列表.png",
+          "elementCount": 541,
+          "interactiveCount": 65,
+          "interactiveLabels": [
+            "数据看板 工人管理 招工需求 智能匹配 合同管理 工资支付 分析统计 雇主管理 工种管理",
+            "数据看板",
+            "工人管理",
+            "招工需求",
+            "智能匹配",
+            "合同管理",
+            "工资支付",
+            "分析统计",
+            "雇主管理",
+            "工种管理",
+            "AI审核",
+            "人工审核",
+            "工地核验",
+            "发布招工",
+            "搜索项目名称、地址",
+            "on",
+            "查看详情",
+            "1"
+          ]
+        }
+      },
+      {
+        "label": "导航:智能匹配",
+        "url": "http://127.0.0.1:49080/matches",
+        "title": "建筑业劳务供需智能撮合平台",
+        "headings": [
+          "智能匹配管理"
+        ],
+        "navLabels": [
+          "数据看板 工人管理 招工需求 智能匹配 合同管理 工资支付 分析统计 雇主管理 工种管理",
+          "数据看板",
+          "dashboard",
+          "工人管理",
+          "team",
+          "招工需求",
+          "shopping",
+          "智能匹配",
+          "swap",
+          "合同管理",
+          "file-text",
+          "工资支付",
+          "money-collect",
+          "分析统计",
+          "bar-chart",
+          "雇主管理",
+          "apartment",
+          "工种管理",
+          "appstore"
+        ],
+        "buttons": [
+          "接受",
+          "拒绝"
+        ],
+        "links": [
+          "数据看板",
+          "工人管理",
+          "招工需求",
+          "智能匹配",
+          "合同管理",
+          "工资支付",
+          "分析统计",
+          "雇主管理",
+          "工种管理"
+        ],
+        "inputs": [
+          {
+            "tag": "input",
+            "type": "number",
+            "placeholder": "项目ID",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "number",
+            "placeholder": "工人ID",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "search",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "search",
+            "placeholder": "搜索项目名称、工人姓名、工人电话",
+            "name": "",
+            "label": ""
+          }
+        ],
+        "tables": [
+          {
+            "headers": [
+              "ID",
+              "项目名称",
+              "工人姓名",
+              "工人电话",
+              "工种",
+              "日薪",
+              "匹配总分",
+              "技能匹配分",
+              "位置匹配分",
+              "履约匹配分",
+              "状态",
+              "匹配时间"
+            ],
+            "rowCount": 3,
+            "hasEmptyText": false,
+            "textPreview": "ID 项目名称 工人姓名 工人电话 工种 日薪 匹配总分 技能匹配分 位置匹配分 履约匹配分 状态 匹配时间 操作 ID 项目名称 工人姓名 工人电话 工种 日薪 匹配总分 技能匹配分 位置匹配分 履约匹配分 状态 匹配时间 操作 20 北京CBD核心区商业综合体项目 李明华 13900139002 钢筋工 ¥380 91% 100.0 84.4 84.0 待确认 2026-06-07 07:15:24 接受 拒绝 19 北京CBD核心区商业综合体项目 王建国 13900139001 钢筋工 ¥380 88% 100.0 69.6 90.0 待确认 2026-06-07 07:15:24 接受"
+          }
+        ],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "🏗️建筑业劳务供需智能撮合平台住建部门劳务监管管理端 | 今日: 2026/6/7数据看板工人管理招工需求智能匹配合同管理工资支付分析统计雇主管理工种管理智能匹配管理选择状态ID项目名称工人姓名工人电话工种日薪匹配总分技能匹配分位置匹配分履约匹配分状态匹配时间操作ID项目名称工人姓名工人电话工种日薪匹配总分技能匹配分位置匹配分履约匹配分状态匹配时间操作20北京CBD核心区商业综合体项目李明华13900139002钢筋工¥38091%100.084.484.0待确认2026-06-07 07:15:24接受拒绝19北京CBD核心区商业综合体项目王建国13900139001钢筋工¥38088%100.069.690.0待确认2026-06-07 07:15:24接受拒绝21北京CBD核心区商业综合体项目刘建设13900139005钢筋工¥38063%100.00.078.0待确认2026-06-07 07:15:24接受拒绝共 3 条1",
+        "layout": {
+          "viewportWidth": 1888,
+          "viewportHeight": 1600,
+          "scrollWidth": 1888,
+          "scrollHeight": 1600,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89080-codex-final-20260607-structure-13-导航-智能匹配",
+          "label": "导航:智能匹配",
+          "finalUrl": "http://127.0.0.1:49080/matches",
+          "title": "建筑业劳务供需智能撮合平台",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89080/runtime-check/may-89080-codex-final-20260607-structure-13-导航-智能匹配.json",
+          "screenshotPath": "",
+          "elementCount": 305,
+          "interactiveCount": 37,
+          "interactiveLabels": [
+            "数据看板 工人管理 招工需求 智能匹配 合同管理 工资支付 分析统计 雇主管理 工种管理",
+            "数据看板",
+            "工人管理",
+            "招工需求",
+            "智能匹配",
+            "合同管理",
+            "工资支付",
+            "分析统计",
+            "雇主管理",
+            "工种管理",
+            "项目ID",
+            "工人ID",
+            "搜索项目名称、工人姓名、工人电话",
+            "接受",
+            "拒绝",
+            "1"
+          ]
+        }
+      },
+      {
+        "label": "操作:接受",
+        "url": "http://127.0.0.1:49080/matches",
+        "title": "建筑业劳务供需智能撮合平台",
+        "headings": [
+          "智能匹配管理"
+        ],
+        "navLabels": [
+          "数据看板 工人管理 招工需求 智能匹配 合同管理 工资支付 分析统计 雇主管理 工种管理",
+          "数据看板",
+          "dashboard",
+          "工人管理",
+          "team",
+          "招工需求",
+          "shopping",
+          "智能匹配",
+          "swap",
+          "合同管理",
+          "file-text",
+          "工资支付",
+          "money-collect",
+          "分析统计",
+          "bar-chart",
+          "雇主管理",
+          "apartment",
+          "工种管理",
+          "appstore"
+        ],
+        "buttons": [
+          "接受",
+          "拒绝",
+          "取 消",
+          "确 认"
+        ],
+        "links": [
+          "数据看板",
+          "工人管理",
+          "招工需求",
+          "智能匹配",
+          "合同管理",
+          "工资支付",
+          "分析统计",
+          "雇主管理",
+          "工种管理"
+        ],
+        "inputs": [
+          {
+            "tag": "input",
+            "type": "number",
+            "placeholder": "项目ID",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "number",
+            "placeholder": "工人ID",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "search",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "search",
+            "placeholder": "搜索项目名称、工人姓名、工人电话",
+            "name": "",
+            "label": ""
+          }
+        ],
+        "tables": [
+          {
+            "headers": [
+              "ID",
+              "项目名称",
+              "工人姓名",
+              "工人电话",
+              "工种",
+              "日薪",
+              "匹配总分",
+              "技能匹配分",
+              "位置匹配分",
+              "履约匹配分",
+              "状态",
+              "匹配时间"
+            ],
+            "rowCount": 3,
+            "hasEmptyText": false,
+            "textPreview": "ID 项目名称 工人姓名 工人电话 工种 日薪 匹配总分 技能匹配分 位置匹配分 履约匹配分 状态 匹配时间 操作 ID 项目名称 工人姓名 工人电话 工种 日薪 匹配总分 技能匹配分 位置匹配分 履约匹配分 状态 匹配时间 操作 20 北京CBD核心区商业综合体项目 李明华 13900139002 钢筋工 ¥380 91% 100.0 84.4 84.0 待确认 2026-06-07 07:15:24 接受 拒绝 19 北京CBD核心区商业综合体项目 王建国 13900139001 钢筋工 ¥380 88% 100.0 69.6 90.0 待确认 2026-06-07 07:15:24 接受"
+          }
+        ],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "🏗️建筑业劳务供需智能撮合平台住建部门劳务监管管理端 | 今日: 2026/6/7数据看板工人管理招工需求智能匹配合同管理工资支付分析统计雇主管理工种管理智能匹配管理选择状态ID项目名称工人姓名工人电话工种日薪匹配总分技能匹配分位置匹配分履约匹配分状态匹配时间操作ID项目名称工人姓名工人电话工种日薪匹配总分技能匹配分位置匹配分履约匹配分状态匹配时间操作20北京CBD核心区商业综合体项目李明华13900139002钢筋工¥38091%100.084.484.0待确认2026-06-07 07:15:24接受拒绝19北京CBD核心区商业综合体项目王建国13900139001钢筋工¥38088%100.069.690.0待确认2026-06-07 07:15:24接受拒绝21北京CBD核心区商业综合体项目刘建设13900139005钢筋工¥38063%100.00.078.0待确认2026-06-07 07:15:24接受拒绝共 3 条1 确认接受确定要接受该匹配吗？取 消确 认",
+        "layout": {
+          "viewportWidth": 1920,
+          "viewportHeight": 1600,
+          "scrollWidth": 1920,
+          "scrollHeight": 1600,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89080-codex-final-20260607-structure-14-操作-接受",
+          "label": "操作:接受",
+          "finalUrl": "http://127.0.0.1:49080/matches",
+          "title": "建筑业劳务供需智能撮合平台",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89080/runtime-check/may-89080-codex-final-20260607-structure-14-操作-接受.json",
+          "screenshotPath": "",
+          "elementCount": 325,
+          "interactiveCount": 39,
+          "interactiveLabels": [
+            "数据看板 工人管理 招工需求 智能匹配 合同管理 工资支付 分析统计 雇主管理 工种管理",
+            "数据看板",
+            "工人管理",
+            "招工需求",
+            "智能匹配",
+            "合同管理",
+            "工资支付",
+            "分析统计",
+            "雇主管理",
+            "工种管理",
+            "项目ID",
+            "工人ID",
+            "搜索项目名称、工人姓名、工人电话",
+            "接受",
+            "拒绝",
+            "1",
+            "取 消",
+            "确 认"
+          ]
+        }
+      }
+    ],
+    "findings": [],
+    "actionHints": [],
+    "emptyPages": [],
+    "overflowPages": [],
+    "blankPages": [],
+    "apiFailurePaths": [],
+    "goalTerms": [],
+    "clickedActionDescriptors": [
+      {
+        "nav": "工人管理",
+        "label": "查看详情",
+        "ordinal": 0,
+        "unsafe": false
+      },
+      {
+        "nav": "工人管理",
+        "label": "查看详情->返回列表",
+        "ordinal": 0,
+        "secondary": true,
+        "unsafe": false
+      },
+      {
+        "nav": "工人管理",
+        "label": "新增工人",
+        "ordinal": 0,
+        "unsafe": false
+      },
+      {
+        "nav": "工人管理",
+        "label": "新增工人->取 消",
+        "ordinal": 0,
+        "secondary": true,
+        "unsafe": false
+      },
+      {
+        "nav": "招工需求",
+        "label": "查看详情",
+        "ordinal": 0,
+        "unsafe": false
+      },
+      {
+        "nav": "招工需求",
+        "label": "查看详情->返回列表",
+        "ordinal": 0,
+        "secondary": true,
+        "unsafe": false
+      },
+      {
+        "nav": "招工需求",
+        "label": "发布招工",
+        "ordinal": 0,
+        "unsafe": false
+      },
+      {
+        "nav": "招工需求",
+        "label": "发布招工->返回列表",
+        "ordinal": 0,
+        "secondary": true,
+        "unsafe": false
+      },
+      {
+        "nav": "智能匹配",
+        "label": "接受",
+        "ordinal": 0,
+        "unsafe": false
+      }
+    ],
+    "secondaryActionClicks": 4,
+    "structureCaptures": [
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89080-codex-final-20260607-structure-01-首屏",
+        "label": "首屏",
+        "finalUrl": "http://127.0.0.1:49080/dashboard",
+        "title": "建筑业劳务供需智能撮合平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89080/runtime-check/may-89080-codex-final-20260607-structure-01-首屏.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89080/runtime-check/may-89080-codex-final-20260607-structure-01-首屏.png",
+        "elementCount": 337,
+        "interactiveCount": 19,
+        "interactiveLabels": [
+          "数据看板 工人管理 招工需求 智能匹配 合同管理 工资支付 分析统计 雇主管理 工种管理",
+          "数据看板",
+          "工人管理",
+          "招工需求",
+          "智能匹配",
+          "合同管理",
+          "工资支付",
+          "分析统计",
+          "雇主管理",
+          "工种管理"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89080-codex-final-20260607-structure-02-导航-数据看板",
+        "label": "导航:数据看板",
+        "finalUrl": "http://127.0.0.1:49080/dashboard",
+        "title": "建筑业劳务供需智能撮合平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89080/runtime-check/may-89080-codex-final-20260607-structure-02-导航-数据看板.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89080/runtime-check/may-89080-codex-final-20260607-structure-02-导航-数据看板.png",
+        "elementCount": 337,
+        "interactiveCount": 19,
+        "interactiveLabels": [
+          "数据看板 工人管理 招工需求 智能匹配 合同管理 工资支付 分析统计 雇主管理 工种管理",
+          "数据看板",
+          "工人管理",
+          "招工需求",
+          "智能匹配",
+          "合同管理",
+          "工资支付",
+          "分析统计",
+          "雇主管理",
+          "工种管理"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89080-codex-final-20260607-structure-03-导航-工人管理",
+        "label": "导航:工人管理",
+        "finalUrl": "http://127.0.0.1:49080/workers",
+        "title": "建筑业劳务供需智能撮合平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89080/runtime-check/may-89080-codex-final-20260607-structure-03-导航-工人管理.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89080/runtime-check/may-89080-codex-final-20260607-structure-03-导航-工人管理.png",
+        "elementCount": 374,
+        "interactiveCount": 37,
+        "interactiveLabels": [
+          "数据看板 工人管理 招工需求 智能匹配 合同管理 工资支付 分析统计 雇主管理 工种管理",
+          "数据看板",
+          "工人管理",
+          "招工需求",
+          "智能匹配",
+          "合同管理",
+          "工资支付",
+          "分析统计",
+          "雇主管理",
+          "工种管理",
+          "新增工人",
+          "搜索姓名、手机号、住址",
+          "查看详情",
+          "1"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89080-codex-final-20260607-structure-04-操作-查看详情",
+        "label": "操作:查看详情",
+        "finalUrl": "http://127.0.0.1:49080/workers/3",
+        "title": "建筑业劳务供需智能撮合平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89080/runtime-check/may-89080-codex-final-20260607-structure-04-操作-查看详情.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89080/runtime-check/may-89080-codex-final-20260607-structure-04-操作-查看详情.png",
+        "elementCount": 222,
+        "interactiveCount": 23,
+        "interactiveLabels": [
+          "数据看板 工人管理 招工需求 智能匹配 合同管理 工资支付 分析统计 雇主管理 工种管理",
+          "数据看板",
+          "工人管理",
+          "招工需求",
+          "智能匹配",
+          "合同管理",
+          "工资支付",
+          "分析统计",
+          "雇主管理",
+          "工种管理",
+          "返回列表",
+          "技能证书",
+          "证书类型 证书编号 发证机关 发证日期 有效期 OCR识别结果 审核状态 特种作业操作证 CERT311780811901454 住房和城乡建设部 2022-01-01 2027-01-01 {\"name\":\"特种作业操作证\",\"number\":\"CERT31\"} 已审核 高级技工证 CERT301780811901453 住房和城乡建设部 2022-01-"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89080-codex-final-20260607-structure-05-二层操作-查看详情-返回列表",
+        "label": "二层操作:查看详情->返回列表",
+        "finalUrl": "http://127.0.0.1:49080/workers",
+        "title": "建筑业劳务供需智能撮合平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89080/runtime-check/may-89080-codex-final-20260607-structure-05-二层操作-查看详情-返回列表.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89080/runtime-check/may-89080-codex-final-20260607-structure-05-二层操作-查看详情-返回列表.png",
+        "elementCount": 374,
+        "interactiveCount": 37,
+        "interactiveLabels": [
+          "数据看板 工人管理 招工需求 智能匹配 合同管理 工资支付 分析统计 雇主管理 工种管理",
+          "数据看板",
+          "工人管理",
+          "招工需求",
+          "智能匹配",
+          "合同管理",
+          "工资支付",
+          "分析统计",
+          "雇主管理",
+          "工种管理",
+          "新增工人",
+          "搜索姓名、手机号、住址",
+          "查看详情",
+          "1"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89080-codex-final-20260607-structure-06-操作-新增工人",
+        "label": "操作:新增工人",
+        "finalUrl": "http://127.0.0.1:49080/workers",
+        "title": "建筑业劳务供需智能撮合平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89080/runtime-check/may-89080-codex-final-20260607-structure-06-操作-新增工人.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89080/runtime-check/may-89080-codex-final-20260607-structure-06-操作-新增工人.png",
+        "elementCount": 510,
+        "interactiveCount": 52,
+        "interactiveLabels": [
+          "数据看板 工人管理 招工需求 智能匹配 合同管理 工资支付 分析统计 雇主管理 工种管理",
+          "数据看板",
+          "工人管理",
+          "招工需求",
+          "智能匹配",
+          "合同管理",
+          "工资支付",
+          "分析统计",
+          "雇主管理",
+          "工种管理",
+          "新增工人",
+          "搜索姓名、手机号、住址",
+          "查看详情",
+          "1",
+          "新增工人 身份证号 姓名 性别 请选择性别 年龄 手机号 住址 工种 请选择工种 健康状态 绿色 取 消 提 交",
+          "Close",
+          "请输入身份证号",
+          "请输入姓名",
+          "Increase Value",
+          "Decrease Value",
+          "年龄",
+          "请输入手机号",
+          "请输入住址",
+          "取 消",
+          "提 交"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89080-codex-final-20260607-structure-07-二层操作-新增工人-取-消",
+        "label": "二层操作:新增工人->取 消",
+        "finalUrl": "http://127.0.0.1:49080/workers",
+        "title": "建筑业劳务供需智能撮合平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89080/runtime-check/may-89080-codex-final-20260607-structure-07-二层操作-新增工人-取-消.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89080/runtime-check/may-89080-codex-final-20260607-structure-07-二层操作-新增工人-取-消.png",
+        "elementCount": 509,
+        "interactiveCount": 52,
+        "interactiveLabels": [
+          "数据看板 工人管理 招工需求 智能匹配 合同管理 工资支付 分析统计 雇主管理 工种管理",
+          "数据看板",
+          "工人管理",
+          "招工需求",
+          "智能匹配",
+          "合同管理",
+          "工资支付",
+          "分析统计",
+          "雇主管理",
+          "工种管理",
+          "新增工人",
+          "搜索姓名、手机号、住址",
+          "查看详情",
+          "1",
+          "新增工人身份证号姓名性别请选择性别年龄手机号住址工种 请选择工种健康状态绿色取 消提 交",
+          "Close",
+          "请输入身份证号",
+          "请输入姓名",
+          "Increase Value",
+          "Decrease Value",
+          "年龄",
+          "请输入手机号",
+          "请输入住址",
+          "取 消",
+          "提 交"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89080-codex-final-20260607-structure-08-导航-招工需求",
+        "label": "导航:招工需求",
+        "finalUrl": "http://127.0.0.1:49080/jobs",
+        "title": "建筑业劳务供需智能撮合平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89080/runtime-check/may-89080-codex-final-20260607-structure-08-导航-招工需求.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89080/runtime-check/may-89080-codex-final-20260607-structure-08-导航-招工需求.png",
+        "elementCount": 541,
+        "interactiveCount": 65,
+        "interactiveLabels": [
+          "数据看板 工人管理 招工需求 智能匹配 合同管理 工资支付 分析统计 雇主管理 工种管理",
+          "数据看板",
+          "工人管理",
+          "招工需求",
+          "智能匹配",
+          "合同管理",
+          "工资支付",
+          "分析统计",
+          "雇主管理",
+          "工种管理",
+          "AI审核",
+          "人工审核",
+          "工地核验",
+          "发布招工",
+          "搜索项目名称、地址",
+          "on",
+          "查看详情",
+          "1"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89080-codex-final-20260607-structure-09-操作-查看详情",
+        "label": "操作:查看详情",
+        "finalUrl": "http://127.0.0.1:49080/jobs/1",
+        "title": "建筑业劳务供需智能撮合平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89080/runtime-check/may-89080-codex-final-20260607-structure-09-操作-查看详情.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89080/runtime-check/may-89080-codex-final-20260607-structure-09-操作-查看详情.png",
+        "elementCount": 228,
+        "interactiveCount": 25,
+        "interactiveLabels": [
+          "数据看板 工人管理 招工需求 智能匹配 合同管理 工资支付 分析统计 雇主管理 工种管理",
+          "数据看板",
+          "工人管理",
+          "招工需求",
+          "智能匹配",
+          "合同管理",
+          "工资支付",
+          "分析统计",
+          "雇主管理",
+          "工种管理",
+          "返回列表",
+          "开始智能匹配",
+          "生成合同",
+          "审核记录",
+          "审核级别 审核人 结果 意见 日期 暂无审核记录"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89080-codex-final-20260607-structure-10-二层操作-查看详情-返回列表",
+        "label": "二层操作:查看详情->返回列表",
+        "finalUrl": "http://127.0.0.1:49080/jobs",
+        "title": "建筑业劳务供需智能撮合平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89080/runtime-check/may-89080-codex-final-20260607-structure-10-二层操作-查看详情-返回列表.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89080/runtime-check/may-89080-codex-final-20260607-structure-10-二层操作-查看详情-返回列表.png",
+        "elementCount": 541,
+        "interactiveCount": 65,
+        "interactiveLabels": [
+          "数据看板 工人管理 招工需求 智能匹配 合同管理 工资支付 分析统计 雇主管理 工种管理",
+          "数据看板",
+          "工人管理",
+          "招工需求",
+          "智能匹配",
+          "合同管理",
+          "工资支付",
+          "分析统计",
+          "雇主管理",
+          "工种管理",
+          "AI审核",
+          "人工审核",
+          "工地核验",
+          "发布招工",
+          "搜索项目名称、地址",
+          "on",
+          "查看详情",
+          "1"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89080-codex-final-20260607-structure-11-操作-发布招工",
+        "label": "操作:发布招工",
+        "finalUrl": "http://127.0.0.1:49080/jobs/new",
+        "title": "建筑业劳务供需智能撮合平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89080/runtime-check/may-89080-codex-final-20260607-structure-11-操作-发布招工.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89080/runtime-check/may-89080-codex-final-20260607-structure-11-操作-发布招工.png",
+        "elementCount": 305,
+        "interactiveCount": 43,
+        "interactiveLabels": [
+          "数据看板 工人管理 招工需求 智能匹配 合同管理 工资支付 分析统计 雇主管理 工种管理",
+          "数据看板",
+          "工人管理",
+          "招工需求",
+          "智能匹配",
+          "合同管理",
+          "工资支付",
+          "分析统计",
+          "雇主管理",
+          "工种管理",
+          "返回列表",
+          "请输入项目名称",
+          "请输入详细项目地址",
+          "Increase Value",
+          "Decrease Value",
+          "纬度",
+          "经度",
+          "1",
+          "开始日期",
+          "结束日期",
+          "200",
+          "8:00-18:00",
+          "请详细描述项目内容、工作要求、福利待遇等信息",
+          "取 消",
+          "提交发布"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89080-codex-final-20260607-structure-12-二层操作-发布招工-返回列表",
+        "label": "二层操作:发布招工->返回列表",
+        "finalUrl": "http://127.0.0.1:49080/jobs",
+        "title": "建筑业劳务供需智能撮合平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89080/runtime-check/may-89080-codex-final-20260607-structure-12-二层操作-发布招工-返回列表.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89080/runtime-check/may-89080-codex-final-20260607-structure-12-二层操作-发布招工-返回列表.png",
+        "elementCount": 541,
+        "interactiveCount": 65,
+        "interactiveLabels": [
+          "数据看板 工人管理 招工需求 智能匹配 合同管理 工资支付 分析统计 雇主管理 工种管理",
+          "数据看板",
+          "工人管理",
+          "招工需求",
+          "智能匹配",
+          "合同管理",
+          "工资支付",
+          "分析统计",
+          "雇主管理",
+          "工种管理",
+          "AI审核",
+          "人工审核",
+          "工地核验",
+          "发布招工",
+          "搜索项目名称、地址",
+          "on",
+          "查看详情",
+          "1"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89080-codex-final-20260607-structure-13-导航-智能匹配",
+        "label": "导航:智能匹配",
+        "finalUrl": "http://127.0.0.1:49080/matches",
+        "title": "建筑业劳务供需智能撮合平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89080/runtime-check/may-89080-codex-final-20260607-structure-13-导航-智能匹配.json",
+        "screenshotPath": "",
+        "elementCount": 305,
+        "interactiveCount": 37,
+        "interactiveLabels": [
+          "数据看板 工人管理 招工需求 智能匹配 合同管理 工资支付 分析统计 雇主管理 工种管理",
+          "数据看板",
+          "工人管理",
+          "招工需求",
+          "智能匹配",
+          "合同管理",
+          "工资支付",
+          "分析统计",
+          "雇主管理",
+          "工种管理",
+          "项目ID",
+          "工人ID",
+          "搜索项目名称、工人姓名、工人电话",
+          "接受",
+          "拒绝",
+          "1"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89080-codex-final-20260607-structure-14-操作-接受",
+        "label": "操作:接受",
+        "finalUrl": "http://127.0.0.1:49080/matches",
+        "title": "建筑业劳务供需智能撮合平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89080/runtime-check/may-89080-codex-final-20260607-structure-14-操作-接受.json",
+        "screenshotPath": "",
+        "elementCount": 325,
+        "interactiveCount": 39,
+        "interactiveLabels": [
+          "数据看板 工人管理 招工需求 智能匹配 合同管理 工资支付 分析统计 雇主管理 工种管理",
+          "数据看板",
+          "工人管理",
+          "招工需求",
+          "智能匹配",
+          "合同管理",
+          "工资支付",
+          "分析统计",
+          "雇主管理",
+          "工种管理",
+          "项目ID",
+          "工人ID",
+          "搜索项目名称、工人姓名、工人电话",
+          "接受",
+          "拒绝",
+          "1",
+          "取 消",
+          "确 认"
+        ]
+      }
+    ],
+    "representativeScreenshotUrl": "http://127.0.0.1:49080/dashboard",
+    "representativeScreenshotLabel": "数据看板"
+  },
+  "websiteStructureCapture": {
+    "module": "website_structure_capture",
+    "captureCount": 14,
+    "captures": [
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89080-codex-final-20260607-structure-01-首屏",
+        "label": "首屏",
+        "finalUrl": "http://127.0.0.1:49080/dashboard",
+        "title": "建筑业劳务供需智能撮合平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89080/runtime-check/may-89080-codex-final-20260607-structure-01-首屏.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89080/runtime-check/may-89080-codex-final-20260607-structure-01-首屏.png",
+        "elementCount": 337,
+        "interactiveCount": 19,
+        "interactiveLabels": [
+          "数据看板 工人管理 招工需求 智能匹配 合同管理 工资支付 分析统计 雇主管理 工种管理",
+          "数据看板",
+          "工人管理",
+          "招工需求",
+          "智能匹配",
+          "合同管理",
+          "工资支付",
+          "分析统计",
+          "雇主管理",
+          "工种管理"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89080-codex-final-20260607-structure-02-导航-数据看板",
+        "label": "导航:数据看板",
+        "finalUrl": "http://127.0.0.1:49080/dashboard",
+        "title": "建筑业劳务供需智能撮合平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89080/runtime-check/may-89080-codex-final-20260607-structure-02-导航-数据看板.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89080/runtime-check/may-89080-codex-final-20260607-structure-02-导航-数据看板.png",
+        "elementCount": 337,
+        "interactiveCount": 19,
+        "interactiveLabels": [
+          "数据看板 工人管理 招工需求 智能匹配 合同管理 工资支付 分析统计 雇主管理 工种管理",
+          "数据看板",
+          "工人管理",
+          "招工需求",
+          "智能匹配",
+          "合同管理",
+          "工资支付",
+          "分析统计",
+          "雇主管理",
+          "工种管理"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89080-codex-final-20260607-structure-03-导航-工人管理",
+        "label": "导航:工人管理",
+        "finalUrl": "http://127.0.0.1:49080/workers",
+        "title": "建筑业劳务供需智能撮合平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89080/runtime-check/may-89080-codex-final-20260607-structure-03-导航-工人管理.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89080/runtime-check/may-89080-codex-final-20260607-structure-03-导航-工人管理.png",
+        "elementCount": 374,
+        "interactiveCount": 37,
+        "interactiveLabels": [
+          "数据看板 工人管理 招工需求 智能匹配 合同管理 工资支付 分析统计 雇主管理 工种管理",
+          "数据看板",
+          "工人管理",
+          "招工需求",
+          "智能匹配",
+          "合同管理",
+          "工资支付",
+          "分析统计",
+          "雇主管理",
+          "工种管理",
+          "新增工人",
+          "搜索姓名、手机号、住址",
+          "查看详情",
+          "1"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89080-codex-final-20260607-structure-04-操作-查看详情",
+        "label": "操作:查看详情",
+        "finalUrl": "http://127.0.0.1:49080/workers/3",
+        "title": "建筑业劳务供需智能撮合平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89080/runtime-check/may-89080-codex-final-20260607-structure-04-操作-查看详情.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89080/runtime-check/may-89080-codex-final-20260607-structure-04-操作-查看详情.png",
+        "elementCount": 222,
+        "interactiveCount": 23,
+        "interactiveLabels": [
+          "数据看板 工人管理 招工需求 智能匹配 合同管理 工资支付 分析统计 雇主管理 工种管理",
+          "数据看板",
+          "工人管理",
+          "招工需求",
+          "智能匹配",
+          "合同管理",
+          "工资支付",
+          "分析统计",
+          "雇主管理",
+          "工种管理",
+          "返回列表",
+          "技能证书",
+          "证书类型 证书编号 发证机关 发证日期 有效期 OCR识别结果 审核状态 特种作业操作证 CERT311780811901454 住房和城乡建设部 2022-01-01 2027-01-01 {\"name\":\"特种作业操作证\",\"number\":\"CERT31\"} 已审核 高级技工证 CERT301780811901453 住房和城乡建设部 2022-01-"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89080-codex-final-20260607-structure-05-二层操作-查看详情-返回列表",
+        "label": "二层操作:查看详情->返回列表",
+        "finalUrl": "http://127.0.0.1:49080/workers",
+        "title": "建筑业劳务供需智能撮合平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89080/runtime-check/may-89080-codex-final-20260607-structure-05-二层操作-查看详情-返回列表.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89080/runtime-check/may-89080-codex-final-20260607-structure-05-二层操作-查看详情-返回列表.png",
+        "elementCount": 374,
+        "interactiveCount": 37,
+        "interactiveLabels": [
+          "数据看板 工人管理 招工需求 智能匹配 合同管理 工资支付 分析统计 雇主管理 工种管理",
+          "数据看板",
+          "工人管理",
+          "招工需求",
+          "智能匹配",
+          "合同管理",
+          "工资支付",
+          "分析统计",
+          "雇主管理",
+          "工种管理",
+          "新增工人",
+          "搜索姓名、手机号、住址",
+          "查看详情",
+          "1"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89080-codex-final-20260607-structure-06-操作-新增工人",
+        "label": "操作:新增工人",
+        "finalUrl": "http://127.0.0.1:49080/workers",
+        "title": "建筑业劳务供需智能撮合平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89080/runtime-check/may-89080-codex-final-20260607-structure-06-操作-新增工人.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89080/runtime-check/may-89080-codex-final-20260607-structure-06-操作-新增工人.png",
+        "elementCount": 510,
+        "interactiveCount": 52,
+        "interactiveLabels": [
+          "数据看板 工人管理 招工需求 智能匹配 合同管理 工资支付 分析统计 雇主管理 工种管理",
+          "数据看板",
+          "工人管理",
+          "招工需求",
+          "智能匹配",
+          "合同管理",
+          "工资支付",
+          "分析统计",
+          "雇主管理",
+          "工种管理",
+          "新增工人",
+          "搜索姓名、手机号、住址",
+          "查看详情",
+          "1",
+          "新增工人 身份证号 姓名 性别 请选择性别 年龄 手机号 住址 工种 请选择工种 健康状态 绿色 取 消 提 交",
+          "Close",
+          "请输入身份证号",
+          "请输入姓名",
+          "Increase Value",
+          "Decrease Value",
+          "年龄",
+          "请输入手机号",
+          "请输入住址",
+          "取 消",
+          "提 交"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89080-codex-final-20260607-structure-07-二层操作-新增工人-取-消",
+        "label": "二层操作:新增工人->取 消",
+        "finalUrl": "http://127.0.0.1:49080/workers",
+        "title": "建筑业劳务供需智能撮合平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89080/runtime-check/may-89080-codex-final-20260607-structure-07-二层操作-新增工人-取-消.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89080/runtime-check/may-89080-codex-final-20260607-structure-07-二层操作-新增工人-取-消.png",
+        "elementCount": 509,
+        "interactiveCount": 52,
+        "interactiveLabels": [
+          "数据看板 工人管理 招工需求 智能匹配 合同管理 工资支付 分析统计 雇主管理 工种管理",
+          "数据看板",
+          "工人管理",
+          "招工需求",
+          "智能匹配",
+          "合同管理",
+          "工资支付",
+          "分析统计",
+          "雇主管理",
+          "工种管理",
+          "新增工人",
+          "搜索姓名、手机号、住址",
+          "查看详情",
+          "1",
+          "新增工人身份证号姓名性别请选择性别年龄手机号住址工种 请选择工种健康状态绿色取 消提 交",
+          "Close",
+          "请输入身份证号",
+          "请输入姓名",
+          "Increase Value",
+          "Decrease Value",
+          "年龄",
+          "请输入手机号",
+          "请输入住址",
+          "取 消",
+          "提 交"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89080-codex-final-20260607-structure-08-导航-招工需求",
+        "label": "导航:招工需求",
+        "finalUrl": "http://127.0.0.1:49080/jobs",
+        "title": "建筑业劳务供需智能撮合平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89080/runtime-check/may-89080-codex-final-20260607-structure-08-导航-招工需求.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89080/runtime-check/may-89080-codex-final-20260607-structure-08-导航-招工需求.png",
+        "elementCount": 541,
+        "interactiveCount": 65,
+        "interactiveLabels": [
+          "数据看板 工人管理 招工需求 智能匹配 合同管理 工资支付 分析统计 雇主管理 工种管理",
+          "数据看板",
+          "工人管理",
+          "招工需求",
+          "智能匹配",
+          "合同管理",
+          "工资支付",
+          "分析统计",
+          "雇主管理",
+          "工种管理",
+          "AI审核",
+          "人工审核",
+          "工地核验",
+          "发布招工",
+          "搜索项目名称、地址",
+          "on",
+          "查看详情",
+          "1"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89080-codex-final-20260607-structure-09-操作-查看详情",
+        "label": "操作:查看详情",
+        "finalUrl": "http://127.0.0.1:49080/jobs/1",
+        "title": "建筑业劳务供需智能撮合平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89080/runtime-check/may-89080-codex-final-20260607-structure-09-操作-查看详情.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89080/runtime-check/may-89080-codex-final-20260607-structure-09-操作-查看详情.png",
+        "elementCount": 228,
+        "interactiveCount": 25,
+        "interactiveLabels": [
+          "数据看板 工人管理 招工需求 智能匹配 合同管理 工资支付 分析统计 雇主管理 工种管理",
+          "数据看板",
+          "工人管理",
+          "招工需求",
+          "智能匹配",
+          "合同管理",
+          "工资支付",
+          "分析统计",
+          "雇主管理",
+          "工种管理",
+          "返回列表",
+          "开始智能匹配",
+          "生成合同",
+          "审核记录",
+          "审核级别 审核人 结果 意见 日期 暂无审核记录"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89080-codex-final-20260607-structure-10-二层操作-查看详情-返回列表",
+        "label": "二层操作:查看详情->返回列表",
+        "finalUrl": "http://127.0.0.1:49080/jobs",
+        "title": "建筑业劳务供需智能撮合平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89080/runtime-check/may-89080-codex-final-20260607-structure-10-二层操作-查看详情-返回列表.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89080/runtime-check/may-89080-codex-final-20260607-structure-10-二层操作-查看详情-返回列表.png",
+        "elementCount": 541,
+        "interactiveCount": 65,
+        "interactiveLabels": [
+          "数据看板 工人管理 招工需求 智能匹配 合同管理 工资支付 分析统计 雇主管理 工种管理",
+          "数据看板",
+          "工人管理",
+          "招工需求",
+          "智能匹配",
+          "合同管理",
+          "工资支付",
+          "分析统计",
+          "雇主管理",
+          "工种管理",
+          "AI审核",
+          "人工审核",
+          "工地核验",
+          "发布招工",
+          "搜索项目名称、地址",
+          "on",
+          "查看详情",
+          "1"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89080-codex-final-20260607-structure-11-操作-发布招工",
+        "label": "操作:发布招工",
+        "finalUrl": "http://127.0.0.1:49080/jobs/new",
+        "title": "建筑业劳务供需智能撮合平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89080/runtime-check/may-89080-codex-final-20260607-structure-11-操作-发布招工.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89080/runtime-check/may-89080-codex-final-20260607-structure-11-操作-发布招工.png",
+        "elementCount": 305,
+        "interactiveCount": 43,
+        "interactiveLabels": [
+          "数据看板 工人管理 招工需求 智能匹配 合同管理 工资支付 分析统计 雇主管理 工种管理",
+          "数据看板",
+          "工人管理",
+          "招工需求",
+          "智能匹配",
+          "合同管理",
+          "工资支付",
+          "分析统计",
+          "雇主管理",
+          "工种管理",
+          "返回列表",
+          "请输入项目名称",
+          "请输入详细项目地址",
+          "Increase Value",
+          "Decrease Value",
+          "纬度",
+          "经度",
+          "1",
+          "开始日期",
+          "结束日期",
+          "200",
+          "8:00-18:00",
+          "请详细描述项目内容、工作要求、福利待遇等信息",
+          "取 消",
+          "提交发布"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89080-codex-final-20260607-structure-12-二层操作-发布招工-返回列表",
+        "label": "二层操作:发布招工->返回列表",
+        "finalUrl": "http://127.0.0.1:49080/jobs",
+        "title": "建筑业劳务供需智能撮合平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89080/runtime-check/may-89080-codex-final-20260607-structure-12-二层操作-发布招工-返回列表.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89080/runtime-check/may-89080-codex-final-20260607-structure-12-二层操作-发布招工-返回列表.png",
+        "elementCount": 541,
+        "interactiveCount": 65,
+        "interactiveLabels": [
+          "数据看板 工人管理 招工需求 智能匹配 合同管理 工资支付 分析统计 雇主管理 工种管理",
+          "数据看板",
+          "工人管理",
+          "招工需求",
+          "智能匹配",
+          "合同管理",
+          "工资支付",
+          "分析统计",
+          "雇主管理",
+          "工种管理",
+          "AI审核",
+          "人工审核",
+          "工地核验",
+          "发布招工",
+          "搜索项目名称、地址",
+          "on",
+          "查看详情",
+          "1"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89080-codex-final-20260607-structure-13-导航-智能匹配",
+        "label": "导航:智能匹配",
+        "finalUrl": "http://127.0.0.1:49080/matches",
+        "title": "建筑业劳务供需智能撮合平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89080/runtime-check/may-89080-codex-final-20260607-structure-13-导航-智能匹配.json",
+        "screenshotPath": "",
+        "elementCount": 305,
+        "interactiveCount": 37,
+        "interactiveLabels": [
+          "数据看板 工人管理 招工需求 智能匹配 合同管理 工资支付 分析统计 雇主管理 工种管理",
+          "数据看板",
+          "工人管理",
+          "招工需求",
+          "智能匹配",
+          "合同管理",
+          "工资支付",
+          "分析统计",
+          "雇主管理",
+          "工种管理",
+          "项目ID",
+          "工人ID",
+          "搜索项目名称、工人姓名、工人电话",
+          "接受",
+          "拒绝",
+          "1"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89080-codex-final-20260607-structure-14-操作-接受",
+        "label": "操作:接受",
+        "finalUrl": "http://127.0.0.1:49080/matches",
+        "title": "建筑业劳务供需智能撮合平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89080/runtime-check/may-89080-codex-final-20260607-structure-14-操作-接受.json",
+        "screenshotPath": "",
+        "elementCount": 325,
+        "interactiveCount": 39,
+        "interactiveLabels": [
+          "数据看板 工人管理 招工需求 智能匹配 合同管理 工资支付 分析统计 雇主管理 工种管理",
+          "数据看板",
+          "工人管理",
+          "招工需求",
+          "智能匹配",
+          "合同管理",
+          "工资支付",
+          "分析统计",
+          "雇主管理",
+          "工种管理",
+          "项目ID",
+          "工人ID",
+          "搜索项目名称、工人姓名、工人电话",
+          "接受",
+          "拒绝",
+          "1",
+          "取 消",
+          "确 认"
+        ]
+      }
+    ]
+  },
+  "screenshotMetrics": {
+    "width": 1952,
+    "height": 1600,
+    "scrollWidth": 1920,
+    "scrollHeight": 1667
+  },
+  "initialBodyTextPreview": "🏗️\n建筑业劳务供需智能撮合平台\n住建部门劳务监管管理端 | 今日: 2026/6/7\n数据看板\n工人管理\n招工需求\n智能匹配\n合同管理\n工资支付\n分析统计\n雇主管理\n工种管理\n数据看板\n欠薪风险预警\n高风险: 0 家\n中风险: 0 家\n低风险: 0 家\n工人总数\n8人\n雇主总数\n3家\n招工需求数\n8条\n智能匹配数\n3次\n合同数\n0份\n工资支付数\n0笔\n最近招工需求\n共 5 条\n项目名称\t工种\t需求人数\t日薪\t状态\n北京CBD核心区商业综合体项目\t钢筋工\t15\t¥380\t已发布\n北京CBD核心区商业综合体项目\t模板工\t10\t¥360\t已发布\n上海张江科技园标准厂房项目\t装配式工\t20\t¥420\t待审核\n上海张江科技园标准厂房项目\t钢筋工\t8\t¥390\t已发布\n广州天河智慧城办公楼项目\t电工\t6\t¥400\t已发布\n最近匹配记录\n共 3 条\n匹配ID\t工人ID\t匹配度\t状态\t匹配时间\n20\t2\t\n\t待确认\t2026-06-07 07:15\n19\t1\t\n\t待确认\t2026-06-07 07:15\n21\t5\t\n63%\n\t待确认\t2026-06-07 07:15",
+  "bodyTextPreview": "🏗️\n建筑业劳务供需智能撮合平台\n住建部门劳务监管管理端 | 今日: 2026/6/7\n数据看板\n工人管理\n招工需求\n智能匹配\n合同管理\n工资支付\n分析统计\n雇主管理\n工种管理\n数据看板\n欠薪风险预警\n高风险: 0 家\n中风险: 0 家\n低风险: 0 家\n工人总数\n8人\n雇主总数\n3家\n招工需求数\n8条\n智能匹配数\n3次\n合同数\n0份\n工资支付数\n0笔\n最近招工需求\n共 5 条\n项目名称\t工种\t需求人数\t日薪\t状态\n北京CBD核心区商业综合体项目\t钢筋工\t15\t¥380\t已发布\n北京CBD核心区商业综合体项目\t模板工\t10\t¥360\t已发布\n上海张江科技园标准厂房项目\t装配式工\t20\t¥420\t待审核\n上海张江科技园标准厂房项目\t钢筋工\t8\t¥390\t已发布\n广州天河智慧城办公楼项目\t电工\t6\t¥400\t已发布\n最近匹配记录\n共 3 条\n匹配ID\t工人ID\t匹配度\t状态\t匹配时间\n20\t2\t\n\t待确认\t2026-06-07 07:15\n19\t1\t\n\t待确认\t2026-06-07 07:15\n21\t5\t\n63%\n\t待确认\t2026-06-07 07:15",
+  "apiBase": "http://127.0.0.1:59080/api",
+  "businessGoalPreview": "建筑业劳务供需智能撮合平台管理端：数据看板、工人管理、招工需求、智能匹配等核心业务链路需要可打开、可交互并展示真实接口数据。",
+  "apiResponses": [
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:59080/api/analytics/dashboard-stats"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:59080/api/analytics/work-trend"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:59080/api/trades/stats"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:59080/api/jobs?page=1&pageSize=5"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:59080/api/matches?page=1&pageSize=5"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:59080/api/analytics/wage-arrears-risk"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:59080/api/analytics/dashboard-stats"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:59080/api/analytics/work-trend"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:59080/api/trades/stats"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:59080/api/jobs?page=1&pageSize=5"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:59080/api/matches?page=1&pageSize=5"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:59080/api/analytics/wage-arrears-risk"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:59080/api/analytics/dashboard-stats"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:59080/api/analytics/work-trend"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:59080/api/trades/stats"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:59080/api/jobs?page=1&pageSize=5"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:59080/api/matches?page=1&pageSize=5"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:59080/api/analytics/wage-arrears-risk"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:59080/api/analytics/dashboard-stats"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:59080/api/analytics/work-trend"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:59080/api/trades/stats"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:59080/api/jobs?page=1&pageSize=5"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:59080/api/matches?page=1&pageSize=5"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:59080/api/analytics/wage-arrears-risk"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:59080/api/trades"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:59080/api/workers?page=1&pageSize=20"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:59080/api/trades"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:59080/api/workers?page=1&pageSize=20"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:59080/api/workers/3"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:59080/api/trades"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:59080/api/workers/3"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:59080/api/trades"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:59080/api/workers/3/certificates"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:59080/api/workers/3/reviews"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:59080/api/workers/3/trainings"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:59080/api/matches?workerId=3&pageSize=100"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:59080/api/workers/3/certificates"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:59080/api/workers/3/reviews"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:59080/api/workers/3/trainings"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:59080/api/matches?workerId=3&pageSize=100"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:59080/api/trades"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:59080/api/workers?page=1&pageSize=20"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:59080/api/trades"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:59080/api/workers?page=1&pageSize=20"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:59080/api/trades"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:59080/api/employers?pageSize=1000"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:59080/api/jobs?page=1&pageSize=20"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:59080/api/trades"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:59080/api/employers?pageSize=1000"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:59080/api/jobs?page=1&pageSize=20"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:59080/api/jobs/1"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:59080/api/jobs/1"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:59080/api/jobs/1"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:59080/api/jobs/1/matches"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:59080/api/contracts?jobId=1&pageSize=100"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:59080/api/jobs/1/matches"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:59080/api/jobs/1"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:59080/api/jobs/1/matches"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:59080/api/contracts?jobId=1&pageSize=100"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:59080/api/jobs/1/matches"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:59080/api/trades"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:59080/api/employers?pageSize=1000"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:59080/api/jobs?page=1&pageSize=20"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:59080/api/trades"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:59080/api/employers?pageSize=1000"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:59080/api/jobs?page=1&pageSize=20"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:59080/api/trades"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:59080/api/employers?pageSize=1000"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:59080/api/trades"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:59080/api/employers?pageSize=1000"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:59080/api/trades"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:59080/api/employers?pageSize=1000"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:59080/api/jobs?page=1&pageSize=20"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:59080/api/trades"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:59080/api/employers?pageSize=1000"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:59080/api/jobs?page=1&pageSize=20"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:59080/api/matches?page=1&pageSize=20"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:59080/api/matches?page=1&pageSize=20"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:59080/api/analytics/dashboard-stats"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:59080/api/analytics/work-trend"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:59080/api/trades/stats"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:59080/api/jobs?page=1&pageSize=5"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:59080/api/matches?page=1&pageSize=5"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:59080/api/analytics/wage-arrears-risk"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:59080/api/analytics/dashboard-stats"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:59080/api/analytics/work-trend"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:59080/api/trades/stats"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:59080/api/jobs?page=1&pageSize=5"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:59080/api/matches?page=1&pageSize=5"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:59080/api/analytics/wage-arrears-risk"
+    }
+  ],
+  "apiChecks": [
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59080/api/health",
+      "path": "/api/health",
+      "status": 200,
+      "ok": true,
+      "bodyPreview": "{\"code\":0,\"message\":\"success\",\"data\":{\"status\":\"ok\",\"timestamp\":1780819133551,\"uptime\":906.191309333,\"project\":\"ConstructionLaborPlatform\",\"port\":59080},\"timestamp\":1780819133551}"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59080/api/analytics/dashboard-stats",
+      "path": "/api/analytics/dashboard-stats",
+      "status": 200,
+      "ok": true,
+      "bodyPreview": "{\"code\":0,\"message\":\"success\",\"data\":{\"total_workers\":8,\"total_employers\":3,\"total_jobs\":8,\"published_jobs\":4,\"pending_jobs\":3,\"total_matches\":3,\"total_contracts\":0,\"signed_contracts\":0,\"total_payments\":0,\"paid_payments\":0,\"overdue_payments\":0,\"total_trades\":89,\"active_trades\":3,\"avg_daily_wage\":383,\"trade_shortage_index\":2300,\"most_needed_trade\":\"钢筋工\",\"health_status\":{\"green\":7,\"yellow\":1,\"red\":0}},\"timestamp\":1780819133555}"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59080/api/analytics/work-trend",
+      "path": "/api/analytics/work-trend",
+      "status": 200,
+      "ok": true,
+      "bodyPreview": "{\"code\":0,\"message\":\"success\",\"data\":[{\"month\":\"2025-07\",\"job_count\":0,\"match_count\":0},{\"month\":\"2025-08\",\"job_count\":0,\"match_count\":0},{\"month\":\"2025-09\",\"job_count\":0,\"match_count\":0},{\"month\":\"2025-10\",\"job_count\":0,\"match_count\":0},{\"month\":\"2025-11\",\"job_count\":0,\"match_count\":0},{\"month\":\"2025-12\",\"job_count\":0,\"match_count\":0},{\"month\":\"2026-01\",\"job_count\":0,\"match_count\":0},{\"month\":\"2026-02\",\"job_count\":0,\"match_count\":0},{\"month\":\"2026-03\",\"job_count\":0,\"match_count\":0},{\"month\":\"20"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59080/api/trades/stats",
+      "path": "/api/trades/stats",
+      "status": 200,
+      "ok": true,
+      "bodyPreview": "{\"code\":0,\"message\":\"success\",\"data\":[{\"id\":1,\"name\":\"钢筋工\",\"category\":\"主体结构\",\"worker_count\":3,\"job_count\":2,\"avg_wage\":385},{\"id\":4,\"name\":\"架子工\",\"category\":\"主体结构\",\"worker_count\":2,\"job_count\":0,\"avg_wage\":0},{\"id\":28,\"name\":\"安全工\",\"category\":\"安全管理\",\"worker_count\":1,\"job_count\":0,\"avg_wage\":0},{\"id\":6,\"name\":\"抹灰工\",\"category\":\"装饰装修\",\"worker_count\":1,\"job_count\":0,\"avg_wage\":0},{\"id\":2,\"name\":\"模板工\",\"category\":\"主体结构\",\"worker_count\":1,\"job_count\":1,\"avg_wage\":360},{\"id\":7,\"name\":\"油漆工\",\"category\":\"装饰装修"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59080/api/jobs?page=1&pageSize=5",
+      "path": "/api/jobs?page=1&pageSize=5",
+      "status": 200,
+      "ok": true,
+      "bodyPreview": "{\"code\":0,\"message\":\"success\",\"data\":{\"list\":[{\"id\":1,\"employer_id\":1,\"project_name\":\"北京CBD核心区商业综合体项目\",\"project_address\":\"北京市朝阳区建国路88号\",\"latitude\":39.9147,\"longitude\":116.4607,\"trade_id\":1,\"trade_name\":\"钢筋工\",\"quantity\":15,\"start_date\":\"2024-07-01\",\"end_date\":\"2024-12-31\",\"daily_wage\":380,\"work_hours\":\"8:00-18:00\",\"qualification_required\":\"高级技工证\",\"description\":\"需熟练掌握钢筋绑扎、下料工艺，有大型商业项目经验优先\",\"status\":\"published\",\"ai_review_result\":null,\"ai_review_score\":0,\"manual_review_comment\":null,\"manual_reviewe"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59080/api/matches?page=1&pageSize=5",
+      "path": "/api/matches?page=1&pageSize=5",
+      "status": 200,
+      "ok": true,
+      "bodyPreview": "{\"code\":0,\"message\":\"success\",\"data\":{\"list\":[{\"id\":20,\"job_id\":1,\"worker_id\":2,\"match_score\":91,\"skill_match_score\":100,\"location_match_score\":84.35706040184874,\"performance_match_score\":84,\"status\":\"pending\",\"worker_notified\":0,\"employer_notified\":0,\"created_at\":\"2026-06-07 07:15:24\",\"worker_name\":\"李明华\",\"worker_phone\":\"13900139002\",\"performance_score\":4.2,\"project_name\":\"北京CBD核心区商业综合体项目\",\"trade_name\":\"钢筋工\",\"daily_wage\":380,\"project_address\":\"北京市朝阳区建国路88号\",\"employer_name\":\"中建集团第一工程有限公司\"},{\"id\":"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59080/api/analytics/wage-arrears-risk",
+      "path": "/api/analytics/wage-arrears-risk",
+      "status": 200,
+      "ok": true,
+      "bodyPreview": "{\"code\":0,\"message\":\"success\",\"data\":[],\"timestamp\":1780819133570}"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59080/api/trades",
+      "path": "/api/trades",
+      "status": 200,
+      "ok": true,
+      "bodyPreview": "{\"code\":0,\"message\":\"success\",\"data\":{\"list\":[{\"id\":1,\"name\":\"钢筋工\",\"category\":\"主体结构\",\"description\":\"负责建筑工程中钢筋的加工与绑扎安装\",\"skill_level\":3,\"created_at\":\"2026-06-07 05:58:21\",\"updated_at\":\"2026-06-07 05:58:21\"},{\"id\":2,\"name\":\"模板工\",\"category\":\"主体结构\",\"description\":\"负责模板制作、安装与拆除作业\",\"skill_level\":3,\"created_at\":\"2026-06-07 05:58:21\",\"updated_at\":\"2026-06-07 05:58:21\"},{\"id\":3,\"name\":\"混凝土工\",\"category\":\"主体结构\",\"description\":\"负责混凝土搅拌、浇筑与养护\",\"skill_level\":2,\"created_at\":\"2026-06-07 05:58:21\",\"updated_at\":\"20"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59080/api/workers?page=1&pageSize=20",
+      "path": "/api/workers?page=1&pageSize=20",
+      "status": 200,
+      "ok": true,
+      "bodyPreview": "{\"code\":0,\"message\":\"success\",\"data\":{\"list\":[{\"id\":3,\"id_card\":\"110101198803030003\",\"name\":\"张铁柱\",\"gender\":\"男\",\"age\":36,\"phone\":\"13900139003\",\"address\":\"北京市东城区王府井大街3号\",\"latitude\":39.9139,\"longitude\":116.4074,\"trade_ids\":[4,5],\"performance_score\":4.8,\"health_status\":\"green\",\"created_at\":\"2026-06-07 05:58:21\",\"updated_at\":\"2026-06-07 05:58:21\"},{\"id\":8,\"id_card\":\"110101199308080008\",\"name\":\"周安全\",\"gender\":\"男\",\"age\":31,\"phone\":\"13900139008\",\"address\":\"北京市朝阳区三里屯8号\",\"latitude\":39.9375,\"longitude\":116."
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59080/api/workers/3",
+      "path": "/api/workers/3",
+      "status": 200,
+      "ok": true,
+      "bodyPreview": "{\"code\":0,\"message\":\"success\",\"data\":{\"id\":3,\"id_card\":\"110101198803030003\",\"name\":\"张铁柱\",\"gender\":\"男\",\"age\":36,\"phone\":\"13900139003\",\"address\":\"北京市东城区王府井大街3号\",\"latitude\":39.9139,\"longitude\":116.4074,\"trade_ids\":[4,5],\"performance_score\":4.8,\"health_status\":\"green\",\"created_at\":\"2026-06-07 05:58:21\",\"updated_at\":\"2026-06-07 05:58:21\"},\"timestamp\":1780819133575}"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59080/api/workers/3/certificates",
+      "path": "/api/workers/3/certificates",
+      "status": 200,
+      "ok": true,
+      "bodyPreview": "{\"code\":0,\"message\":\"success\",\"data\":[{\"id\":6,\"worker_id\":3,\"certificate_type\":\"特种作业操作证\",\"certificate_number\":\"CERT311780811901454\",\"issuing_authority\":\"住房和城乡建设部\",\"issue_date\":\"2022-01-01\",\"expiry_date\":\"2027-01-01\",\"ocr_result\":\"{\\\"name\\\":\\\"特种作业操作证\\\",\\\"number\\\":\\\"CERT31\\\"}\",\"verified\":1,\"image_url\":null,\"created_at\":\"2026-06-07 05:58:21\"},{\"id\":5,\"worker_id\":3,\"certificate_type\":\"高级技工证\",\"certificate_number\":\"CERT301780811901453\",\"issuing_authority\":\"住房和城乡建设部\",\"issue_date\":\"2022-01-01\",\"expiry_d"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59080/api/workers/3/reviews",
+      "path": "/api/workers/3/reviews",
+      "status": 200,
+      "ok": true,
+      "bodyPreview": "{\"code\":0,\"message\":\"success\",\"data\":[{\"id\":6,\"worker_id\":3,\"project_id\":2,\"project_name\":\"CBD商务中心项目\",\"rating\":4,\"comment\":\"工作表现良好，技术过硬\",\"reviewer\":\"项目经理\",\"review_date\":\"2024-02-15\",\"work_quality\":4,\"attendance\":4,\"discipline\":4,\"safety\":4,\"teamwork\":4,\"created_at\":\"2026-06-07 05:58:21\"},{\"id\":5,\"worker_id\":3,\"project_id\":1,\"project_name\":\"中关村科技园项目\",\"rating\":4,\"comment\":\"工作表现良好，技术过硬\",\"reviewer\":\"项目经理\",\"review_date\":\"2024-01-15\",\"work_quality\":4,\"attendance\":4,\"discipline\":4,\"safety\":4,\"teamwork\""
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59080/api/workers/3/trainings",
+      "path": "/api/workers/3/trainings",
+      "status": 200,
+      "ok": true,
+      "bodyPreview": "{\"code\":0,\"message\":\"success\",\"data\":[{\"id\":6,\"worker_id\":3,\"training_name\":\"消防安全培训\",\"training_date\":\"2024-02-10\",\"training_hours\":8,\"exam_score\":86.2995933415624,\"passed\":1,\"certificate_number\":\"TRAIN31\",\"created_at\":\"2026-06-07 05:58:21\"},{\"id\":5,\"worker_id\":3,\"training_name\":\"安全生产培训\",\"training_date\":\"2024-01-10\",\"training_hours\":8,\"exam_score\":88.72824552104892,\"passed\":1,\"certificate_number\":\"TRAIN30\",\"created_at\":\"2026-06-07 05:58:21\"}],\"timestamp\":1780819133586}"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59080/api/matches?workerId=3&pageSize=100",
+      "path": "/api/matches?workerId=3&pageSize=100",
+      "status": 200,
+      "ok": true,
+      "bodyPreview": "{\"code\":0,\"message\":\"success\",\"data\":{\"list\":[],\"total\":0,\"page\":1,\"page_size\":100},\"timestamp\":1780819133587}"
+    }
+  ],
+  "dialogs": [],
+  "consoleMessages": [
+    {
+      "type": "debug",
+      "text": "[vite] connecting...",
+      "location": {
+        "url": "http://127.0.0.1:49080/@vite/client",
+        "lineNumber": 494,
+        "columnNumber": 8
+      }
+    },
+    {
+      "type": "debug",
+      "text": "[vite] connected.",
+      "location": {
+        "url": "http://127.0.0.1:49080/@vite/client",
+        "lineNumber": 617,
+        "columnNumber": 14
+      }
+    },
+    {
+      "type": "info",
+      "text": "%cDownload the React DevTools for a better development experience: https://reactjs.org/link/react-devtools font-weight:bold",
+      "location": {
+        "url": "http://127.0.0.1:49080/node_modules/.vite/deps/chunk-5DIXNSNT.js?v=014b2381",
+        "lineNumber": 21550,
+        "columnNumber": 24
+      }
+    },
+    {
+      "type": "warning",
+      "text": "⚠️ React Router Future Flag Warning: React Router will begin wrapping state updates in `React.startTransition` in v7. You can use the `v7_startTransition` future flag to opt-in early. For more information, see https://reactrouter.com/v6/upgrading/future#v7_starttransition.",
+      "location": {
+        "url": "http://127.0.0.1:49080/node_modules/.vite/deps/react-router-dom.js?v=014b2381",
+        "lineNumber": 4426,
+        "columnNumber": 12
+      }
+    },
+    {
+      "type": "warning",
+      "text": "⚠️ React Router Future Flag Warning: Relative route resolution within Splat routes is changing in v7. You can use the `v7_relativeSplatPath` future flag to opt-in early. For more information, see https://reactrouter.com/v6/upgrading/future#v7_relativesplatpath.",
+      "location": {
+        "url": "http://127.0.0.1:49080/node_modules/.vite/deps/react-router-dom.js?v=014b2381",
+        "lineNumber": 4426,
+        "columnNumber": 12
+      }
+    },
+    {
+      "type": "debug",
+      "text": "[vite] connecting...",
+      "location": {
+        "url": "http://127.0.0.1:49080/@vite/client",
+        "lineNumber": 494,
+        "columnNumber": 8
+      }
+    },
+    {
+      "type": "debug",
+      "text": "[vite] connected.",
+      "location": {
+        "url": "http://127.0.0.1:49080/@vite/client",
+        "lineNumber": 617,
+        "columnNumber": 14
+      }
+    },
+    {
+      "type": "info",
+      "text": "%cDownload the React DevTools for a better development experience: https://reactjs.org/link/react-devtools font-weight:bold",
+      "location": {
+        "url": "http://127.0.0.1:49080/node_modules/.vite/deps/chunk-5DIXNSNT.js?v=014b2381",
+        "lineNumber": 21550,
+        "columnNumber": 24
+      }
+    },
+    {
+      "type": "warning",
+      "text": "⚠️ React Router Future Flag Warning: React Router will begin wrapping state updates in `React.startTransition` in v7. You can use the `v7_startTransition` future flag to opt-in early. For more information, see https://reactrouter.com/v6/upgrading/future#v7_starttransition.",
+      "location": {
+        "url": "http://127.0.0.1:49080/node_modules/.vite/deps/react-router-dom.js?v=014b2381",
+        "lineNumber": 4426,
+        "columnNumber": 12
+      }
+    },
+    {
+      "type": "warning",
+      "text": "⚠️ React Router Future Flag Warning: Relative route resolution within Splat routes is changing in v7. You can use the `v7_relativeSplatPath` future flag to opt-in early. For more information, see https://reactrouter.com/v6/upgrading/future#v7_relativesplatpath.",
+      "location": {
+        "url": "http://127.0.0.1:49080/node_modules/.vite/deps/react-router-dom.js?v=014b2381",
+        "lineNumber": 4426,
+        "columnNumber": 12
+      }
+    },
+    {
+      "type": "debug",
+      "text": "[vite] connecting...",
+      "location": {
+        "url": "http://127.0.0.1:49080/@vite/client",
+        "lineNumber": 494,
+        "columnNumber": 8
+      }
+    },
+    {
+      "type": "info",
+      "text": "%cDownload the React DevTools for a better development experience: https://reactjs.org/link/react-devtools font-weight:bold",
+      "location": {
+        "url": "http://127.0.0.1:49080/node_modules/.vite/deps/chunk-5DIXNSNT.js?v=014b2381",
+        "lineNumber": 21550,
+        "columnNumber": 24
+      }
+    },
+    {
+      "type": "warning",
+      "text": "⚠️ React Router Future Flag Warning: React Router will begin wrapping state updates in `React.startTransition` in v7. You can use the `v7_startTransition` future flag to opt-in early. For more information, see https://reactrouter.com/v6/upgrading/future#v7_starttransition.",
+      "location": {
+        "url": "http://127.0.0.1:49080/node_modules/.vite/deps/react-router-dom.js?v=014b2381",
+        "lineNumber": 4426,
+        "columnNumber": 12
+      }
+    },
+    {
+      "type": "warning",
+      "text": "⚠️ React Router Future Flag Warning: Relative route resolution within Splat routes is changing in v7. You can use the `v7_relativeSplatPath` future flag to opt-in early. For more information, see https://reactrouter.com/v6/upgrading/future#v7_relativesplatpath.",
+      "location": {
+        "url": "http://127.0.0.1:49080/node_modules/.vite/deps/react-router-dom.js?v=014b2381",
+        "lineNumber": 4426,
+        "columnNumber": 12
+      }
+    },
+    {
+      "type": "debug",
+      "text": "[vite] connected.",
+      "location": {
+        "url": "http://127.0.0.1:49080/@vite/client",
+        "lineNumber": 617,
+        "columnNumber": 14
+      }
+    }
+  ],
+  "requestFailures": [],
+  "responseErrors": []
+}
