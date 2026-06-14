@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+  <key>Label</key>
+  <string>local.may-89101.backend</string>
+  <key>WorkingDirectory</key>
+  <string>/Users/chen/Documents/trae_projects/local_projects/may-89101/backend</string>
+  <key>ProgramArguments</key>
+  <array>
+    <string>/opt/homebrew/bin/node</string>
+    <string>/Users/chen/Documents/trae_projects/local_projects/may-89101/backend/src/server.js</string>
+  </array>
+  <key>EnvironmentVariables</key>
+  <dict>
+    <key>PROJECT_DIR</key>
+    <string>/Users/chen/Documents/trae_projects/local_projects/may-89101</string>
+    <key>PROJECT_NAME</key>
+    <string>may-89101</string>
+    <key>FRONTEND_PORT</key>
+    <string>49101</string>
+    <key>BACKEND_PORT</key>
+    <string>59101</string>
+    <key>API_BASE_URL</key>
+    <string>http://127.0.0.1:59101/api</string>
+    <key>VITE_API_URL</key>
+    <string>http://127.0.0.1:59101/api</string>
+    <key>BIND_HOST</key>
+    <string>127.0.0.1</string>
+    <key>CORS_ORIGIN</key>
+    <string>http://127.0.0.1:49101</string>
+    <key>SQLITE_BIN</key>
+    <string>/usr/bin/sqlite3</string>
+    <key>NODE_ENV</key>
+    <string>development</string>
+  </dict>
+  <key>StandardOutPath</key>
+  <string>/Users/chen/Documents/trae_projects/local_projects/may-89101/backend.log</string>
+  <key>StandardErrorPath</key>
+  <string>/Users/chen/Documents/trae_projects/local_projects/may-89101/backend.log</string>
+  <key>RunAtLoad</key>
+  <true/>
+  <key>KeepAlive</key>
+  <true/>
+</dict>
+</plist>

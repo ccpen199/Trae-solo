@@ -1,0 +1,167 @@
+import React, { useState } from 'react';
+import { Layout, Menu, Avatar, Dropdown, Badge, Input } from 'antd';
+import {
+  DashboardOutlined,
+  UnorderedListOutlined,
+  PlusOutlined,
+  TeamOutlined,
+  AlertOutlined,
+  WalletOutlined,
+  SettingOutlined,
+  BellOutlined,
+  MessageOutlined,
+  SearchOutlined,
+  LogoutOutlined,
+  UserOutlined
+} from '@ant-design/icons';
+import { Outlet, useNavigate, useLocation } from 'react-router-dom';
+import { useUserStore } from '@/store/userStore';
+import { message } from 'antd';
+
+const { Header, Sider, Content } = Layout;
+
+const EmployerLayout: React.FC = () => {
+  const navigate = useNavigate();
+  const location = useLocation();
+  const { userInfo, logout } = useUserStore();
+  const [collapsed, setCollapsed] = useState(false);
+
+  const menuItems = [
+    {
+      key: '/employer/dashboard',
+      icon: <DashboardOutlined />,
+      label: '工作台',
+      onClick: () => navigate('/employer/dashboard')
+    },
+    {
+      key: '/employer/tasks',
+      icon: <UnorderedListOutlined />,
+      label: '任务管理',
+      onClick: () => navigate('/employer/tasks')
+    },
+    {
+      key: '/employer/tasks/publish',
+      icon: <PlusOutlined />,
+      label: '发布任务',
+      onClick: () => navigate('/employer/tasks/publish')
+    },
+    {
+      key: '/employer/talent',
+      icon: <TeamOutlined />,
+      label: '人才库',
+      onClick: () => navigate('/employer/talent')
+    },
+    {
+      key: '/employer/disputes',
+      icon: <AlertOutlined />,
+      label: '争议中心',
+      onClick: () => navigate('/employer/disputes')
+    },
+    {
+      key: '/employer/finance',
+      icon: <WalletOutlined />,
+      label: '财务中心',
+      onClick: () => navigate('/employer/finance')
+    },
+    {
+      key: '/employer/settings',
+      icon: <SettingOutlined />,
+      label: '账户设置',
+      onClick: () => navigate('/employer/settings')
+    }
+  ];
+
+  const handleLogout = async () => {
+    try {
+      await logout();
+      message.success('退出登录成功');
+      navigate('/login');
+    } catch (e) {
+      console.error('Logout error:', e);
+    }
+  };
+
+  const userMenu = [
+    {
+      key: 'profile',
+      icon: <UserOutlined />,
+      label: '个人中心',
+      onClick: () => navigate('/employer/settings')
+    },
+    {
+      type: 'divider' as const
+    },
+    {
+      key: 'logout',
+      icon: <LogoutOutlined />,
+      label: '退出登录',
+      onClick: handleLogout
+    }
+  ];
+
+  const selectedKey = location.pathname.includes('/tasks/publish') 
+    ? '/employer/tasks/publish'
+    : location.pathname.includes('/tasks/')
+    ? '/employer/tasks'
+    : location.pathname.includes('/talent/')
+    ? '/employer/talent'
+    : location.pathname;
+
+  return (
+    <Layout className="min-h-screen">
+      <Sider
+        width={220}
+        collapsed={collapsed}
+        onCollapse={setCollapsed}
+        className="bg-white"
+      >
+        <div className="h-16 flex items-center justify-center border-b border-gray-100">
+          <h1 className={`font-bold text-primary-800 ${collapsed ? 'text-xl' : 'text-xl'}`}>
+            {collapsed ? 'CS' : '创意众包'}
+          </h1>
+        </div>
+        <Menu
+          mode="inline"
+          selectedKeys={[selectedKey]}
+          items={menuItems}
+          className="h-full border-none"
+        />
+      </Sider>
+      <Layout>
+        <Header className="bg-white px-6 flex items-center justify-between border-b border-gray-100 h-16">
+          <div className="flex items-center gap-4 flex-1 max-w-xl">
+            <Input
+              placeholder="搜索任务、服务商..."
+              prefix={<SearchOutlined className="text-gray-400" />}
+              className="w-full"
+            />
+          </div>
+          <div className="flex items-center gap-4">
+            <Badge count={3}>
+              <MessageOutlined className="text-xl text-gray-600 cursor-pointer hover:text-primary-700 transition-colors" />
+            </Badge>
+            <Badge count={5}>
+              <BellOutlined className="text-xl text-gray-600 cursor-pointer hover:text-primary-700 transition-colors" />
+            </Badge>
+            <Dropdown menu={{ items: userMenu }} placement="bottomRight">
+              <div className="flex items-center gap-2 cursor-pointer hover:bg-gray-50 px-3 py-1.5 rounded-lg transition-colors">
+                <Avatar size={32} src={userInfo?.avatar} icon={<UserOutlined />}>
+                  {userInfo?.name?.charAt(0)}
+                </Avatar>
+                <div className="hidden sm:block">
+                  <div className="text-sm font-medium text-gray-800">{userInfo?.name}</div>
+                  <div className="text-xs text-gray-500">雇主</div>
+                </div>
+              </div>
+            </Dropdown>
+          </div>
+        </Header>
+        <Content className="p-6 overflow-auto">
+          <Outlet />
+        </Content>
+      </Layout>
+    </Layout>
+  );
+};
+
+export default EmployerLayout;

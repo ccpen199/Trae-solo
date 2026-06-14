@@ -1,0 +1,5096 @@
+{
+  "meta": {
+    "title": "常州市城市级公共服务聚合平台",
+    "url": "http://127.0.0.1:49101/",
+    "timestamp": "2026-06-08T15:04:24.045Z",
+    "viewport": {
+      "width": 1504,
+      "height": 1600
+    },
+    "document": {
+      "scrollWidth": 1504,
+      "scrollHeight": 2271
+    }
+  },
+  "text": {
+    "bodyPreview": "Changzhou Public Service Hub 常州市城市级公共服务聚合平台 办事大厅 登录注册 场景服务 公交场馆 个人中心 市民反馈 后台管理 一网通办 / 一网统管 / 一网协同 统一聚合政务、民生与社区治理服务 通过统一用户中心、电子证照、事项编排和服务监测，把常用公共服务放在同一个可办理入口。 立即办事 查看运营态势 前端http://127.0.0.1:49101 后端http://127.0.0.1:59101/api 健康检查正常 统一账号 登录注册与实名服务 登录 / 注册 办事大厅 服务搜索与在线办理 重置筛选 在线办理 提交办件申请 请使用电子证照自动关联材料，并通知办理进度。 提交办理 场景化事项编排 一件事服务 民生服务 公交查询与场馆预约 公交实时查询 公共场馆预约 预约场馆 个人中心 / 我的 资料、证照与办件进度 市民反馈闭环 提交投诉建议 建议 投诉 报修 希望在办件状态变化时发送消息通知，并展示处理人员。 提交反馈 管理后台 服务监控与数据分析 刷新后台",
+    "emptyTextCount": 0
+  },
+  "domTree": {
+    "tag": "html",
+    "id": "",
+    "className": "",
+    "selectorHint": "html",
+    "text": "CHANGZHOU PUBLIC SERVICE HUB 常州市城市级公共服务聚合平台 办事大厅 登录注册 场景服务 公交场馆 个人中心 市民反馈 后台管理 一",
+    "visible": true,
+    "childCount": 2,
+    "children": [
+      {
+        "tag": "head",
+        "id": "",
+        "className": "",
+        "selectorHint": "head",
+        "text": "常州市城市级公共服务聚合平台",
+        "visible": false,
+        "childCount": 4,
+        "children": [
+          {
+            "tag": "meta",
+            "id": "",
+            "className": "",
+            "selectorHint": "meta",
+            "text": "",
+            "visible": false,
+            "childCount": 0,
+            "children": []
+          },
+          {
+            "tag": "meta",
+            "id": "",
+            "className": "",
+            "selectorHint": "meta",
+            "text": "",
+            "visible": false,
+            "childCount": 0,
+            "children": []
+          },
+          {
+            "tag": "title",
+            "id": "",
+            "className": "",
+            "selectorHint": "title",
+            "text": "常州市城市级公共服务聚合平台",
+            "visible": false,
+            "childCount": 0,
+            "children": []
+          },
+          {
+            "tag": "link",
+            "id": "",
+            "className": "",
+            "selectorHint": "link",
+            "text": "",
+            "visible": false,
+            "childCount": 0,
+            "children": []
+          }
+        ]
+      },
+      {
+        "tag": "body",
+        "id": "",
+        "className": "",
+        "selectorHint": "body",
+        "text": "CHANGZHOU PUBLIC SERVICE HUB 常州市城市级公共服务聚合平台 办事大厅 登录注册 场景服务 公交场馆 个人中心 市民反馈 后台管理 一",
+        "visible": true,
+        "childCount": 4,
+        "children": [
+          {
+            "tag": "header",
+            "id": "",
+            "className": "topbar",
+            "selectorHint": "header.topbar",
+            "text": "CHANGZHOU PUBLIC SERVICE HUB 常州市城市级公共服务聚合平台 办事大厅 登录注册 场景服务 公交场馆 个人中心 市民反馈 后台管理",
+            "visible": true,
+            "childCount": 2,
+            "children": [
+              {
+                "tag": "div",
+                "id": "",
+                "className": "",
+                "selectorHint": "div",
+                "text": "CHANGZHOU PUBLIC SERVICE HUB 常州市城市级公共服务聚合平台",
+                "visible": true,
+                "childCount": 2,
+                "children": [
+                  {
+                    "tag": "p",
+                    "id": "",
+                    "className": "eyebrow",
+                    "selectorHint": "p.eyebrow",
+                    "text": "CHANGZHOU PUBLIC SERVICE HUB",
+                    "visible": true,
+                    "childCount": 0,
+                    "children": []
+                  },
+                  {
+                    "tag": "h1",
+                    "id": "",
+                    "className": "",
+                    "selectorHint": "h1",
+                    "text": "常州市城市级公共服务聚合平台",
+                    "visible": true,
+                    "childCount": 0,
+                    "children": []
+                  }
+                ]
+              },
+              {
+                "tag": "nav",
+                "id": "",
+                "className": "",
+                "selectorHint": "nav",
+                "text": "办事大厅 登录注册 场景服务 公交场馆 个人中心 市民反馈 后台管理",
+                "visible": true,
+                "childCount": 7,
+                "children": [
+                  {
+                    "tag": "a",
+                    "id": "",
+                    "className": "",
+                    "selectorHint": "a",
+                    "text": "办事大厅",
+                    "visible": true,
+                    "childCount": 0,
+                    "children": []
+                  },
+                  {
+                    "tag": "a",
+                    "id": "",
+                    "className": "",
+                    "selectorHint": "a",
+                    "text": "登录注册",
+                    "visible": true,
+                    "childCount": 0,
+                    "children": []
+                  },
+                  {
+                    "tag": "a",
+                    "id": "",
+                    "className": "",
+                    "selectorHint": "a",
+                    "text": "场景服务",
+                    "visible": true,
+                    "childCount": 0,
+                    "children": []
+                  },
+                  {
+                    "tag": "a",
+                    "id": "",
+                    "className": "",
+                    "selectorHint": "a",
+                    "text": "公交场馆",
+                    "visible": true,
+                    "childCount": 0,
+                    "children": []
+                  },
+                  {
+                    "tag": "a",
+                    "id": "",
+                    "className": "",
+                    "selectorHint": "a",
+                    "text": "个人中心",
+                    "visible": true,
+                    "childCount": 0,
+                    "children": []
+                  },
+                  {
+                    "tag": "a",
+                    "id": "",
+                    "className": "",
+                    "selectorHint": "a",
+                    "text": "市民反馈",
+                    "visible": true,
+                    "childCount": 0,
+                    "children": []
+                  },
+                  {
+                    "tag": "a",
+                    "id": "",
+                    "className": "",
+                    "selectorHint": "a",
+                    "text": "后台管理",
+                    "visible": true,
+                    "childCount": 0,
+                    "children": []
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "tag": "main",
+            "id": "",
+            "className": "",
+            "selectorHint": "main",
+            "text": "一网通办 / 一网统管 / 一网协同 统一聚合政务、民生与社区治理服务 通过统一用户中心、电子证照、事项编排和服务监测，把常用公共服务放在同一个可办理入口。 立",
+            "visible": true,
+            "childCount": 10,
+            "children": [
+              {
+                "tag": "section",
+                "id": "",
+                "className": "hero",
+                "selectorHint": "section.hero",
+                "text": "一网通办 / 一网统管 / 一网协同 统一聚合政务、民生与社区治理服务 通过统一用户中心、电子证照、事项编排和服务监测，把常用公共服务放在同一个可办理入口。 立",
+                "visible": true,
+                "childCount": 2,
+                "children": [
+                  {
+                    "tag": "div",
+                    "id": "",
+                    "className": "",
+                    "selectorHint": "div",
+                    "text": "一网通办 / 一网统管 / 一网协同 统一聚合政务、民生与社区治理服务 通过统一用户中心、电子证照、事项编排和服务监测，把常用公共服务放在同一个可办理入口。 立",
+                    "visible": true,
+                    "childCount": 4,
+                    "children": [
+                      {
+                        "tag": "p",
+                        "id": "",
+                        "className": "eyebrow",
+                        "selectorHint": "p.eyebrow",
+                        "text": "一网通办 / 一网统管 / 一网协同",
+                        "visible": true,
+                        "childCount": 0,
+                        "children": []
+                      },
+                      {
+                        "tag": "h2",
+                        "id": "",
+                        "className": "",
+                        "selectorHint": "h2",
+                        "text": "统一聚合政务、民生与社区治理服务",
+                        "visible": true,
+                        "childCount": 0,
+                        "children": []
+                      },
+                      {
+                        "tag": "p",
+                        "id": "",
+                        "className": "",
+                        "selectorHint": "p",
+                        "text": "通过统一用户中心、电子证照、事项编排和服务监测，把常用公共服务放在同一个可办理入口。",
+                        "visible": true,
+                        "childCount": 0,
+                        "children": []
+                      },
+                      {
+                        "tag": "div",
+                        "id": "",
+                        "className": "hero-actions",
+                        "selectorHint": "div.hero-actions",
+                        "text": "立即办事 查看运营态势",
+                        "visible": true,
+                        "childCount": 2,
+                        "children": []
+                      }
+                    ]
+                  },
+                  {
+                    "tag": "div",
+                    "id": "",
+                    "className": "status-panel",
+                    "selectorHint": "div.status-panel",
+                    "text": "前端 http://127.0.0.1:49101 后端 http://127.0.0.1:59101/api 健康检查 正常",
+                    "visible": true,
+                    "childCount": 6,
+                    "children": [
+                      {
+                        "tag": "span",
+                        "id": "",
+                        "className": "",
+                        "selectorHint": "span",
+                        "text": "前端",
+                        "visible": true,
+                        "childCount": 0,
+                        "children": []
+                      },
+                      {
+                        "tag": "strong",
+                        "id": "frontendUrl",
+                        "className": "",
+                        "selectorHint": "strong#frontendUrl",
+                        "text": "http://127.0.0.1:49101",
+                        "visible": true,
+                        "childCount": 0,
+                        "children": []
+                      },
+                      {
+                        "tag": "span",
+                        "id": "",
+                        "className": "",
+                        "selectorHint": "span",
+                        "text": "后端",
+                        "visible": true,
+                        "childCount": 0,
+                        "children": []
+                      },
+                      {
+                        "tag": "strong",
+                        "id": "backendUrl",
+                        "className": "",
+                        "selectorHint": "strong#backendUrl",
+                        "text": "http://127.0.0.1:59101/api",
+                        "visible": true,
+                        "childCount": 0,
+                        "children": []
+                      },
+                      {
+                        "tag": "span",
+                        "id": "",
+                        "className": "",
+                        "selectorHint": "span",
+                        "text": "健康检查",
+                        "visible": true,
+                        "childCount": 0,
+                        "children": []
+                      },
+                      {
+                        "tag": "strong",
+                        "id": "healthText",
+                        "className": "",
+                        "selectorHint": "strong#healthText",
+                        "text": "正常",
+                        "visible": true,
+                        "childCount": 0,
+                        "children": []
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "tag": "section",
+                "id": "metrics",
+                "className": "metrics",
+                "selectorHint": "section#metrics.metrics",
+                "text": "",
+                "visible": false,
+                "childCount": 0,
+                "children": []
+              },
+              {
+                "tag": "section",
+                "id": "account",
+                "className": "section-grid",
+                "selectorHint": "section#account.section-grid",
+                "text": "统一账号 登录注册与实名服务 登录 / 注册",
+                "visible": true,
+                "childCount": 3,
+                "children": [
+                  {
+                    "tag": "div",
+                    "id": "",
+                    "className": "section-head",
+                    "selectorHint": "div.section-head",
+                    "text": "统一账号 登录注册与实名服务",
+                    "visible": true,
+                    "childCount": 2,
+                    "children": [
+                      {
+                        "tag": "p",
+                        "id": "",
+                        "className": "eyebrow",
+                        "selectorHint": "p.eyebrow",
+                        "text": "统一账号",
+                        "visible": true,
+                        "childCount": 0,
+                        "children": []
+                      },
+                      {
+                        "tag": "h2",
+                        "id": "",
+                        "className": "",
+                        "selectorHint": "h2",
+                        "text": "登录注册与实名服务",
+                        "visible": true,
+                        "childCount": 0,
+                        "children": []
+                      }
+                    ]
+                  },
+                  {
+                    "tag": "form",
+                    "id": "accountForm",
+                    "className": "form-grid",
+                    "selectorHint": "form#accountForm.form-grid",
+                    "text": "登录 / 注册",
+                    "visible": true,
+                    "childCount": 3,
+                    "children": [
+                      {
+                        "tag": "input",
+                        "id": "",
+                        "className": "",
+                        "selectorHint": "input",
+                        "text": "13800138001",
+                        "visible": true,
+                        "childCount": 0,
+                        "children": []
+                      },
+                      {
+                        "tag": "input",
+                        "id": "",
+                        "className": "",
+                        "selectorHint": "input",
+                        "text": "张三",
+                        "visible": true,
+                        "childCount": 0,
+                        "children": []
+                      },
+                      {
+                        "tag": "button",
+                        "id": "",
+                        "className": "primary",
+                        "selectorHint": "button.primary",
+                        "text": "登录 / 注册",
+                        "visible": true,
+                        "childCount": 0,
+                        "children": []
+                      }
+                    ]
+                  },
+                  {
+                    "tag": "pre",
+                    "id": "accountResult",
+                    "className": "",
+                    "selectorHint": "pre#accountResult",
+                    "text": "",
+                    "visible": true,
+                    "childCount": 0,
+                    "children": []
+                  }
+                ]
+              },
+              {
+                "tag": "section",
+                "id": "services",
+                "className": "section-grid",
+                "selectorHint": "section#services.section-grid",
+                "text": "办事大厅 服务搜索与在线办理 重置筛选",
+                "visible": true,
+                "childCount": 3,
+                "children": [
+                  {
+                    "tag": "div",
+                    "id": "",
+                    "className": "section-head",
+                    "selectorHint": "div.section-head",
+                    "text": "办事大厅 服务搜索与在线办理",
+                    "visible": true,
+                    "childCount": 2,
+                    "children": [
+                      {
+                        "tag": "p",
+                        "id": "",
+                        "className": "eyebrow",
+                        "selectorHint": "p.eyebrow",
+                        "text": "办事大厅",
+                        "visible": true,
+                        "childCount": 0,
+                        "children": []
+                      },
+                      {
+                        "tag": "h2",
+                        "id": "",
+                        "className": "",
+                        "selectorHint": "h2",
+                        "text": "服务搜索与在线办理",
+                        "visible": true,
+                        "childCount": 0,
+                        "children": []
+                      }
+                    ]
+                  },
+                  {
+                    "tag": "div",
+                    "id": "",
+                    "className": "toolbar",
+                    "selectorHint": "div.toolbar",
+                    "text": "重置筛选",
+                    "visible": true,
+                    "childCount": 3,
+                    "children": [
+                      {
+                        "tag": "input",
+                        "id": "searchInput",
+                        "className": "",
+                        "selectorHint": "input#searchInput",
+                        "text": "",
+                        "visible": true,
+                        "childCount": 0,
+                        "children": []
+                      },
+                      {
+                        "tag": "select",
+                        "id": "categorySelect",
+                        "className": "",
+                        "selectorHint": "select#categorySelect",
+                        "text": "",
+                        "visible": true,
+                        "childCount": 0,
+                        "children": []
+                      },
+                      {
+                        "tag": "button",
+                        "id": "resetBtn",
+                        "className": "",
+                        "selectorHint": "button#resetBtn",
+                        "text": "重置筛选",
+                        "visible": true,
+                        "childCount": 0,
+                        "children": []
+                      }
+                    ]
+                  },
+                  {
+                    "tag": "div",
+                    "id": "serviceCards",
+                    "className": "cards",
+                    "selectorHint": "div#serviceCards.cards",
+                    "text": "",
+                    "visible": false,
+                    "childCount": 0,
+                    "children": []
+                  }
+                ]
+              },
+              {
+                "tag": "section",
+                "id": "submit",
+                "className": "section-grid",
+                "selectorHint": "section#submit.section-grid",
+                "text": "在线办理 提交办件申请 提交办理",
+                "visible": true,
+                "childCount": 3,
+                "children": [
+                  {
+                    "tag": "div",
+                    "id": "",
+                    "className": "section-head",
+                    "selectorHint": "div.section-head",
+                    "text": "在线办理 提交办件申请",
+                    "visible": true,
+                    "childCount": 2,
+                    "children": [
+                      {
+                        "tag": "p",
+                        "id": "",
+                        "className": "eyebrow",
+                        "selectorHint": "p.eyebrow",
+                        "text": "在线办理",
+                        "visible": true,
+                        "childCount": 0,
+                        "children": []
+                      },
+                      {
+                        "tag": "h2",
+                        "id": "",
+                        "className": "",
+                        "selectorHint": "h2",
+                        "text": "提交办件申请",
+                        "visible": true,
+                        "childCount": 0,
+                        "children": []
+                      }
+                    ]
+                  },
+                  {
+                    "tag": "form",
+                    "id": "applicationForm",
+                    "className": "form-grid",
+                    "selectorHint": "form#applicationForm.form-grid",
+                    "text": "提交办理",
+                    "visible": true,
+                    "childCount": 6,
+                    "children": [
+                      {
+                        "tag": "select",
+                        "id": "serviceSelect",
+                        "className": "",
+                        "selectorHint": "select#serviceSelect",
+                        "text": "",
+                        "visible": true,
+                        "childCount": 0,
+                        "children": []
+                      },
+                      {
+                        "tag": "input",
+                        "id": "",
+                        "className": "",
+                        "selectorHint": "input",
+                        "text": "张三",
+                        "visible": true,
+                        "childCount": 0,
+                        "children": []
+                      },
+                      {
+                        "tag": "input",
+                        "id": "",
+                        "className": "",
+                        "selectorHint": "input",
+                        "text": "13800138001",
+                        "visible": true,
+                        "childCount": 0,
+                        "children": []
+                      },
+                      {
+                        "tag": "input",
+                        "id": "",
+                        "className": "",
+                        "selectorHint": "input",
+                        "text": "常州市新北区",
+                        "visible": true,
+                        "childCount": 0,
+                        "children": []
+                      },
+                      {
+                        "tag": "textarea",
+                        "id": "",
+                        "className": "",
+                        "selectorHint": "textarea",
+                        "text": "请使用电子证照自动关联材料，并通知办理进度。",
+                        "visible": true,
+                        "childCount": 0,
+                        "children": []
+                      },
+                      {
+                        "tag": "button",
+                        "id": "",
+                        "className": "primary",
+                        "selectorHint": "button.primary",
+                        "text": "提交办理",
+                        "visible": true,
+                        "childCount": 0,
+                        "children": []
+                      }
+                    ]
+                  },
+                  {
+                    "tag": "pre",
+                    "id": "applicationResult",
+                    "className": "",
+                    "selectorHint": "pre#applicationResult",
+                    "text": "",
+                    "visible": true,
+                    "childCount": 0,
+                    "children": []
+                  }
+                ]
+              },
+              {
+                "tag": "section",
+                "id": "scenes",
+                "className": "section-grid",
+                "selectorHint": "section#scenes.section-grid",
+                "text": "场景化事项编排 一件事服务",
+                "visible": true,
+                "childCount": 2,
+                "children": [
+                  {
+                    "tag": "div",
+                    "id": "",
+                    "className": "section-head",
+                    "selectorHint": "div.section-head",
+                    "text": "场景化事项编排 一件事服务",
+                    "visible": true,
+                    "childCount": 2,
+                    "children": [
+                      {
+                        "tag": "p",
+                        "id": "",
+                        "className": "eyebrow",
+                        "selectorHint": "p.eyebrow",
+                        "text": "场景化事项编排",
+                        "visible": true,
+                        "childCount": 0,
+                        "children": []
+                      },
+                      {
+                        "tag": "h2",
+                        "id": "",
+                        "className": "",
+                        "selectorHint": "h2",
+                        "text": "一件事服务",
+                        "visible": true,
+                        "childCount": 0,
+                        "children": []
+                      }
+                    ]
+                  },
+                  {
+                    "tag": "div",
+                    "id": "sceneCards",
+                    "className": "cards compact",
+                    "selectorHint": "div#sceneCards.cards.compact",
+                    "text": "",
+                    "visible": false,
+                    "childCount": 0,
+                    "children": []
+                  }
+                ]
+              },
+              {
+                "tag": "section",
+                "id": "transit",
+                "className": "section-grid",
+                "selectorHint": "section#transit.section-grid",
+                "text": "民生服务 公交查询与场馆预约 公交实时查询 公共场馆预约 预约场馆",
+                "visible": true,
+                "childCount": 2,
+                "children": [
+                  {
+                    "tag": "div",
+                    "id": "",
+                    "className": "section-head",
+                    "selectorHint": "div.section-head",
+                    "text": "民生服务 公交查询与场馆预约",
+                    "visible": true,
+                    "childCount": 2,
+                    "children": [
+                      {
+                        "tag": "p",
+                        "id": "",
+                        "className": "eyebrow",
+                        "selectorHint": "p.eyebrow",
+                        "text": "民生服务",
+                        "visible": true,
+                        "childCount": 0,
+                        "children": []
+                      },
+                      {
+                        "tag": "h2",
+                        "id": "",
+                        "className": "",
+                        "selectorHint": "h2",
+                        "text": "公交查询与场馆预约",
+                        "visible": true,
+                        "childCount": 0,
+                        "children": []
+                      }
+                    ]
+                  },
+                  {
+                    "tag": "div",
+                    "id": "",
+                    "className": "split",
+                    "selectorHint": "div.split",
+                    "text": "公交实时查询 公共场馆预约 预约场馆",
+                    "visible": true,
+                    "childCount": 2,
+                    "children": [
+                      {
+                        "tag": "div",
+                        "id": "",
+                        "className": "",
+                        "selectorHint": "div",
+                        "text": "公交实时查询",
+                        "visible": true,
+                        "childCount": 2,
+                        "children": []
+                      },
+                      {
+                        "tag": "div",
+                        "id": "",
+                        "className": "",
+                        "selectorHint": "div",
+                        "text": "公共场馆预约 预约场馆",
+                        "visible": true,
+                        "childCount": 3,
+                        "children": []
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "tag": "section",
+                "id": "profile",
+                "className": "section-grid",
+                "selectorHint": "section#profile.section-grid",
+                "text": "个人中心 / 我的 资料、证照与办件进度",
+                "visible": true,
+                "childCount": 2,
+                "children": [
+                  {
+                    "tag": "div",
+                    "id": "",
+                    "className": "section-head",
+                    "selectorHint": "div.section-head",
+                    "text": "个人中心 / 我的 资料、证照与办件进度",
+                    "visible": true,
+                    "childCount": 2,
+                    "children": [
+                      {
+                        "tag": "p",
+                        "id": "",
+                        "className": "eyebrow",
+                        "selectorHint": "p.eyebrow",
+                        "text": "个人中心 / 我的",
+                        "visible": true,
+                        "childCount": 0,
+                        "children": []
+                      },
+                      {
+                        "tag": "h2",
+                        "id": "",
+                        "className": "",
+                        "selectorHint": "h2",
+                        "text": "资料、证照与办件进度",
+                        "visible": true,
+                        "childCount": 0,
+                        "children": []
+                      }
+                    ]
+                  },
+                  {
+                    "tag": "div",
+                    "id": "",
+                    "className": "split",
+                    "selectorHint": "div.split",
+                    "text": "",
+                    "visible": false,
+                    "childCount": 2,
+                    "children": [
+                      {
+                        "tag": "div",
+                        "id": "profileCard",
+                        "className": "",
+                        "selectorHint": "div#profileCard",
+                        "text": "",
+                        "visible": false,
+                        "childCount": 0,
+                        "children": []
+                      },
+                      {
+                        "tag": "div",
+                        "id": "requestList",
+                        "className": "list",
+                        "selectorHint": "div#requestList.list",
+                        "text": "",
+                        "visible": false,
+                        "childCount": 0,
+                        "children": []
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "tag": "section",
+                "id": "feedback",
+                "className": "section-grid",
+                "selectorHint": "section#feedback.section-grid",
+                "text": "市民反馈闭环 提交投诉建议 建议 投诉 报修 提交反馈",
+                "visible": true,
+                "childCount": 3,
+                "children": [
+                  {
+                    "tag": "div",
+                    "id": "",
+                    "className": "section-head",
+                    "selectorHint": "div.section-head",
+                    "text": "市民反馈闭环 提交投诉建议",
+                    "visible": true,
+                    "childCount": 2,
+                    "children": [
+                      {
+                        "tag": "p",
+                        "id": "",
+                        "className": "eyebrow",
+                        "selectorHint": "p.eyebrow",
+                        "text": "市民反馈闭环",
+                        "visible": true,
+                        "childCount": 0,
+                        "children": []
+                      },
+                      {
+                        "tag": "h2",
+                        "id": "",
+                        "className": "",
+                        "selectorHint": "h2",
+                        "text": "提交投诉建议",
+                        "visible": true,
+                        "childCount": 0,
+                        "children": []
+                      }
+                    ]
+                  },
+                  {
+                    "tag": "form",
+                    "id": "feedbackForm",
+                    "className": "form-grid",
+                    "selectorHint": "form#feedbackForm.form-grid",
+                    "text": "建议 投诉 报修 提交反馈",
+                    "visible": true,
+                    "childCount": 5,
+                    "children": [
+                      {
+                        "tag": "select",
+                        "id": "",
+                        "className": "",
+                        "selectorHint": "select",
+                        "text": "建议 投诉 报修",
+                        "visible": true,
+                        "childCount": 3,
+                        "children": []
+                      },
+                      {
+                        "tag": "input",
+                        "id": "",
+                        "className": "",
+                        "selectorHint": "input",
+                        "text": "优化在线办理进度提醒",
+                        "visible": true,
+                        "childCount": 0,
+                        "children": []
+                      },
+                      {
+                        "tag": "input",
+                        "id": "",
+                        "className": "",
+                        "selectorHint": "input",
+                        "text": "13800138001",
+                        "visible": true,
+                        "childCount": 0,
+                        "children": []
+                      },
+                      {
+                        "tag": "textarea",
+                        "id": "",
+                        "className": "",
+                        "selectorHint": "textarea",
+                        "text": "希望在办件状态变化时发送消息通知，并展示处理人员。",
+                        "visible": true,
+                        "childCount": 0,
+                        "children": []
+                      },
+                      {
+                        "tag": "button",
+                        "id": "",
+                        "className": "primary",
+                        "selectorHint": "button.primary",
+                        "text": "提交反馈",
+                        "visible": true,
+                        "childCount": 0,
+                        "children": []
+                      }
+                    ]
+                  },
+                  {
+                    "tag": "div",
+                    "id": "feedbackList",
+                    "className": "list",
+                    "selectorHint": "div#feedbackList.list",
+                    "text": "",
+                    "visible": false,
+                    "childCount": 0,
+                    "children": []
+                  }
+                ]
+              },
+              {
+                "tag": "section",
+                "id": "admin",
+                "className": "section-grid",
+                "selectorHint": "section#admin.section-grid",
+                "text": "管理后台 服务监控与数据分析 刷新后台",
+                "visible": true,
+                "childCount": 3,
+                "children": [
+                  {
+                    "tag": "div",
+                    "id": "",
+                    "className": "section-head",
+                    "selectorHint": "div.section-head",
+                    "text": "管理后台 服务监控与数据分析 刷新后台",
+                    "visible": true,
+                    "childCount": 3,
+                    "children": [
+                      {
+                        "tag": "p",
+                        "id": "",
+                        "className": "eyebrow",
+                        "selectorHint": "p.eyebrow",
+                        "text": "管理后台",
+                        "visible": true,
+                        "childCount": 0,
+                        "children": []
+                      },
+                      {
+                        "tag": "h2",
+                        "id": "",
+                        "className": "",
+                        "selectorHint": "h2",
+                        "text": "服务监控与数据分析",
+                        "visible": true,
+                        "childCount": 0,
+                        "children": []
+                      },
+                      {
+                        "tag": "button",
+                        "id": "refreshAdmin",
+                        "className": "",
+                        "selectorHint": "button#refreshAdmin",
+                        "text": "刷新后台",
+                        "visible": true,
+                        "childCount": 0,
+                        "children": []
+                      }
+                    ]
+                  },
+                  {
+                    "tag": "div",
+                    "id": "adminSummary",
+                    "className": "metrics",
+                    "selectorHint": "div#adminSummary.metrics",
+                    "text": "",
+                    "visible": false,
+                    "childCount": 0,
+                    "children": []
+                  },
+                  {
+                    "tag": "div",
+                    "id": "heatmap",
+                    "className": "cards compact",
+                    "selectorHint": "div#heatmap.cards.compact",
+                    "text": "",
+                    "visible": false,
+                    "childCount": 0,
+                    "children": []
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  "allElements": [
+    {
+      "index": 0,
+      "tag": "html",
+      "id": "",
+      "className": "",
+      "selectorHint": "html",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "CHANGZHOU PUBLIC SERVICE HUB 常州市城市级公共服务聚合平台 办事大厅 登录注册 场景服务 公交场馆 个人中心 市民反馈 后台管理 一网通办 / 一网统管 / 一网协同 统一聚合政务、民生与社区治理服务 通过统一用户中心、电子证照、事项编排和服务监测，把常用公共服务放在同一个可办理入口。 立即办事 查看运营态势 前端 http://",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 2,
+      "rect": {
+        "x": 0,
+        "y": 0,
+        "width": 1504,
+        "height": 2271
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 1,
+      "tag": "head",
+      "id": "",
+      "className": "",
+      "selectorHint": "head",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "常州市城市级公共服务聚合平台",
+      "href": "",
+      "disabled": false,
+      "visible": false,
+      "childCount": 4,
+      "rect": {
+        "x": 0,
+        "y": 0,
+        "width": 0,
+        "height": 0
+      },
+      "style": {
+        "display": "none",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 2,
+      "tag": "meta",
+      "id": "",
+      "className": "",
+      "selectorHint": "meta",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "",
+      "href": "",
+      "disabled": false,
+      "visible": false,
+      "childCount": 0,
+      "rect": {
+        "x": 0,
+        "y": 0,
+        "width": 0,
+        "height": 0
+      },
+      "style": {
+        "display": "none",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 3,
+      "tag": "meta",
+      "id": "",
+      "className": "",
+      "selectorHint": "meta",
+      "name": "viewport",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "",
+      "href": "",
+      "disabled": false,
+      "visible": false,
+      "childCount": 0,
+      "rect": {
+        "x": 0,
+        "y": 0,
+        "width": 0,
+        "height": 0
+      },
+      "style": {
+        "display": "none",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 4,
+      "tag": "title",
+      "id": "",
+      "className": "",
+      "selectorHint": "title",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "常州市城市级公共服务聚合平台",
+      "href": "",
+      "disabled": false,
+      "visible": false,
+      "childCount": 0,
+      "rect": {
+        "x": 0,
+        "y": 0,
+        "width": 0,
+        "height": 0
+      },
+      "style": {
+        "display": "none",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 5,
+      "tag": "link",
+      "id": "",
+      "className": "",
+      "selectorHint": "link",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "",
+      "href": "/styles.css",
+      "disabled": false,
+      "visible": false,
+      "childCount": 0,
+      "rect": {
+        "x": 0,
+        "y": 0,
+        "width": 0,
+        "height": 0
+      },
+      "style": {
+        "display": "none",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 6,
+      "tag": "body",
+      "id": "",
+      "className": "",
+      "selectorHint": "body",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "CHANGZHOU PUBLIC SERVICE HUB 常州市城市级公共服务聚合平台 办事大厅 登录注册 场景服务 公交场馆 个人中心 市民反馈 后台管理 一网通办 / 一网统管 / 一网协同 统一聚合政务、民生与社区治理服务 通过统一用户中心、电子证照、事项编排和服务监测，把常用公共服务放在同一个可办理入口。 立即办事 查看运营态势 前端 http://",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 4,
+      "rect": {
+        "x": 0,
+        "y": 0,
+        "width": 1504,
+        "height": 2271
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 7,
+      "tag": "header",
+      "id": "",
+      "className": "topbar",
+      "selectorHint": "header.topbar",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "CHANGZHOU PUBLIC SERVICE HUB 常州市城市级公共服务聚合平台 办事大厅 登录注册 场景服务 公交场馆 个人中心 市民反馈 后台管理",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 2,
+      "rect": {
+        "x": 0,
+        "y": 0,
+        "width": 1504,
+        "height": 79
+      },
+      "style": {
+        "display": "flex",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 8,
+      "tag": "div",
+      "id": "",
+      "className": "",
+      "selectorHint": "div",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "CHANGZHOU PUBLIC SERVICE HUB 常州市城市级公共服务聚合平台",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 2,
+      "rect": {
+        "x": 32,
+        "y": 14,
+        "width": 294,
+        "height": 50
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 9,
+      "tag": "p",
+      "id": "",
+      "className": "eyebrow",
+      "selectorHint": "p.eyebrow",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "CHANGZHOU PUBLIC SERVICE HUB",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 32,
+        "y": 14,
+        "width": 294,
+        "height": 15
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 10,
+      "tag": "h1",
+      "id": "",
+      "className": "",
+      "selectorHint": "h1",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "常州市城市级公共服务聚合平台",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 32,
+        "y": 35,
+        "width": 294,
+        "height": 29
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 11,
+      "tag": "nav",
+      "id": "",
+      "className": "",
+      "selectorHint": "nav",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "办事大厅 登录注册 场景服务 公交场馆 个人中心 市民反馈 后台管理",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 7,
+      "rect": {
+        "x": 836,
+        "y": 21,
+        "width": 636,
+        "height": 36
+      },
+      "style": {
+        "display": "flex",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 12,
+      "tag": "a",
+      "id": "",
+      "className": "",
+      "selectorHint": "a",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "办事大厅",
+      "href": "#services",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 836,
+        "y": 21,
+        "width": 84,
+        "height": 36
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 13,
+      "tag": "a",
+      "id": "",
+      "className": "",
+      "selectorHint": "a",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "登录注册",
+      "href": "#account",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 928,
+        "y": 21,
+        "width": 84,
+        "height": 36
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 14,
+      "tag": "a",
+      "id": "",
+      "className": "",
+      "selectorHint": "a",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "场景服务",
+      "href": "#scenes",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 1020,
+        "y": 21,
+        "width": 84,
+        "height": 36
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 15,
+      "tag": "a",
+      "id": "",
+      "className": "",
+      "selectorHint": "a",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "公交场馆",
+      "href": "#transit",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 1112,
+        "y": 21,
+        "width": 84,
+        "height": 36
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 16,
+      "tag": "a",
+      "id": "",
+      "className": "",
+      "selectorHint": "a",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "个人中心",
+      "href": "#profile",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 1204,
+        "y": 21,
+        "width": 84,
+        "height": 36
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 17,
+      "tag": "a",
+      "id": "",
+      "className": "",
+      "selectorHint": "a",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "市民反馈",
+      "href": "#feedback",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 1296,
+        "y": 21,
+        "width": 84,
+        "height": 36
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 18,
+      "tag": "a",
+      "id": "",
+      "className": "",
+      "selectorHint": "a",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "后台管理",
+      "href": "#admin",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 1388,
+        "y": 21,
+        "width": 84,
+        "height": 36
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 19,
+      "tag": "main",
+      "id": "",
+      "className": "",
+      "selectorHint": "main",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "一网通办 / 一网统管 / 一网协同 统一聚合政务、民生与社区治理服务 通过统一用户中心、电子证照、事项编排和服务监测，把常用公共服务放在同一个可办理入口。 立即办事 查看运营态势 前端 http://127.0.0.1:49101 后端 http://127.0.0.1:59101/api 健康检查 正常 统一账号 登录注册与实名服务 登录 / 注册 办事",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 10,
+      "rect": {
+        "x": 152,
+        "y": 79,
+        "width": 1200,
+        "height": 2192
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 20,
+      "tag": "section",
+      "id": "",
+      "className": "hero",
+      "selectorHint": "section.hero",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "一网通办 / 一网统管 / 一网协同 统一聚合政务、民生与社区治理服务 通过统一用户中心、电子证照、事项编排和服务监测，把常用公共服务放在同一个可办理入口。 立即办事 查看运营态势 前端 http://127.0.0.1:49101 后端 http://127.0.0.1:59101/api 健康检查 正常",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 2,
+      "rect": {
+        "x": 152,
+        "y": 103,
+        "width": 1200,
+        "height": 330
+      },
+      "style": {
+        "display": "grid",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 21,
+      "tag": "div",
+      "id": "",
+      "className": "",
+      "selectorHint": "div",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "一网通办 / 一网统管 / 一网协同 统一聚合政务、民生与社区治理服务 通过统一用户中心、电子证照、事项编排和服务监测，把常用公共服务放在同一个可办理入口。 立即办事 查看运营态势",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 4,
+      "rect": {
+        "x": 188,
+        "y": 139,
+        "width": 736,
+        "height": 258
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 22,
+      "tag": "p",
+      "id": "",
+      "className": "eyebrow",
+      "selectorHint": "p.eyebrow",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "一网通办 / 一网统管 / 一网协同",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 188,
+        "y": 139,
+        "width": 736,
+        "height": 17
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 23,
+      "tag": "h2",
+      "id": "",
+      "className": "",
+      "selectorHint": "h2",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "统一聚合政务、民生与社区治理服务",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 188,
+        "y": 162,
+        "width": 720,
+        "height": 47
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 24,
+      "tag": "p",
+      "id": "",
+      "className": "",
+      "selectorHint": "p",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "通过统一用户中心、电子证照、事项编排和服务监测，把常用公共服务放在同一个可办理入口。",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 188,
+        "y": 226,
+        "width": 690,
+        "height": 58
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 25,
+      "tag": "div",
+      "id": "",
+      "className": "hero-actions",
+      "selectorHint": "div.hero-actions",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "立即办事 查看运营态势",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 2,
+      "rect": {
+        "x": 188,
+        "y": 306,
+        "width": 736,
+        "height": 40
+      },
+      "style": {
+        "display": "flex",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 26,
+      "tag": "a",
+      "id": "",
+      "className": "button primary",
+      "selectorHint": "a.button.primary",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "立即办事",
+      "href": "#services",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 188,
+        "y": 306,
+        "width": 94,
+        "height": 40
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 27,
+      "tag": "a",
+      "id": "",
+      "className": "button",
+      "selectorHint": "a.button",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "查看运营态势",
+      "href": "#admin",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 294,
+        "y": 306,
+        "width": 126,
+        "height": 40
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 28,
+      "tag": "div",
+      "id": "",
+      "className": "status-panel",
+      "selectorHint": "div.status-panel",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "前端 http://127.0.0.1:49101 后端 http://127.0.0.1:59101/api 健康检查 正常",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 6,
+      "rect": {
+        "x": 948,
+        "y": 273,
+        "width": 368,
+        "height": 124
+      },
+      "style": {
+        "display": "grid",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 29,
+      "tag": "span",
+      "id": "",
+      "className": "",
+      "selectorHint": "span",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "前端",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 967,
+        "y": 292,
+        "width": 64,
+        "height": 22
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 30,
+      "tag": "strong",
+      "id": "frontendUrl",
+      "className": "",
+      "selectorHint": "strong#frontendUrl",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "http://127.0.0.1:49101",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 1045,
+        "y": 292,
+        "width": 252,
+        "height": 22
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 31,
+      "tag": "span",
+      "id": "",
+      "className": "",
+      "selectorHint": "span",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "后端",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 967,
+        "y": 324,
+        "width": 64,
+        "height": 22
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 32,
+      "tag": "strong",
+      "id": "backendUrl",
+      "className": "",
+      "selectorHint": "strong#backendUrl",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "http://127.0.0.1:59101/api",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 1045,
+        "y": 324,
+        "width": 252,
+        "height": 22
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 33,
+      "tag": "span",
+      "id": "",
+      "className": "",
+      "selectorHint": "span",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "健康检查",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 967,
+        "y": 356,
+        "width": 64,
+        "height": 22
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 34,
+      "tag": "strong",
+      "id": "healthText",
+      "className": "",
+      "selectorHint": "strong#healthText",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "正常",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 1045,
+        "y": 356,
+        "width": 252,
+        "height": 22
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 35,
+      "tag": "section",
+      "id": "metrics",
+      "className": "metrics",
+      "selectorHint": "section#metrics.metrics",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "",
+      "href": "",
+      "disabled": false,
+      "visible": false,
+      "childCount": 0,
+      "rect": {
+        "x": 152,
+        "y": 451,
+        "width": 1200,
+        "height": 0
+      },
+      "style": {
+        "display": "grid",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 36,
+      "tag": "section",
+      "id": "account",
+      "className": "section-grid",
+      "selectorHint": "section#account.section-grid",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "统一账号 登录注册与实名服务 登录 / 注册",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 3,
+      "rect": {
+        "x": 152,
+        "y": 469,
+        "width": 1200,
+        "height": 227
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 37,
+      "tag": "div",
+      "id": "",
+      "className": "section-head",
+      "selectorHint": "div.section-head",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "统一账号 登录注册与实名服务",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 2,
+      "rect": {
+        "x": 175,
+        "y": 492,
+        "width": 1154,
+        "height": 33
+      },
+      "style": {
+        "display": "flex",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 38,
+      "tag": "p",
+      "id": "",
+      "className": "eyebrow",
+      "selectorHint": "p.eyebrow",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "统一账号",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 175,
+        "y": 497,
+        "width": 48,
+        "height": 17
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 39,
+      "tag": "h2",
+      "id": "",
+      "className": "",
+      "selectorHint": "h2",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "登录注册与实名服务",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 1113,
+        "y": 492,
+        "width": 216,
+        "height": 33
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 40,
+      "tag": "form",
+      "id": "accountForm",
+      "className": "form-grid",
+      "selectorHint": "form#accountForm.form-grid",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "登录 / 注册",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 3,
+      "rect": {
+        "x": 175,
+        "y": 541,
+        "width": 1154,
+        "height": 92
+      },
+      "style": {
+        "display": "grid",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 41,
+      "tag": "input",
+      "id": "",
+      "className": "",
+      "selectorHint": "input",
+      "name": "phone",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "手机号或用户名",
+      "text": "13800138001",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 175,
+        "y": 541,
+        "width": 571,
+        "height": 40
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 42,
+      "tag": "input",
+      "id": "",
+      "className": "",
+      "selectorHint": "input",
+      "name": "realName",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "姓名",
+      "text": "张三",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 758,
+        "y": 541,
+        "width": 571,
+        "height": 40
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 43,
+      "tag": "button",
+      "id": "",
+      "className": "primary",
+      "selectorHint": "button.primary",
+      "name": "",
+      "type": "submit",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "登录 / 注册",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 175,
+        "y": 593,
+        "width": 1154,
+        "height": 40
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 44,
+      "tag": "pre",
+      "id": "accountResult",
+      "className": "",
+      "selectorHint": "pre#accountResult",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 175,
+        "y": 649,
+        "width": 1154,
+        "height": 24
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 45,
+      "tag": "section",
+      "id": "services",
+      "className": "section-grid",
+      "selectorHint": "section#services.section-grid",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "办事大厅 服务搜索与在线办理 重置筛选",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 3,
+      "rect": {
+        "x": 152,
+        "y": 714,
+        "width": 1200,
+        "height": 151
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 46,
+      "tag": "div",
+      "id": "",
+      "className": "section-head",
+      "selectorHint": "div.section-head",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "办事大厅 服务搜索与在线办理",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 2,
+      "rect": {
+        "x": 175,
+        "y": 737,
+        "width": 1154,
+        "height": 33
+      },
+      "style": {
+        "display": "flex",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 47,
+      "tag": "p",
+      "id": "",
+      "className": "eyebrow",
+      "selectorHint": "p.eyebrow",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "办事大厅",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 175,
+        "y": 742,
+        "width": 48,
+        "height": 17
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 48,
+      "tag": "h2",
+      "id": "",
+      "className": "",
+      "selectorHint": "h2",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "服务搜索与在线办理",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 1113,
+        "y": 737,
+        "width": 216,
+        "height": 33
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 49,
+      "tag": "div",
+      "id": "",
+      "className": "toolbar",
+      "selectorHint": "div.toolbar",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "重置筛选",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 3,
+      "rect": {
+        "x": 175,
+        "y": 786,
+        "width": 1154,
+        "height": 40
+      },
+      "style": {
+        "display": "grid",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 50,
+      "tag": "input",
+      "id": "searchInput",
+      "className": "",
+      "selectorHint": "input#searchInput",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "搜索公积金、户籍、公交、场馆、报修",
+      "text": "",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 175,
+        "y": 786,
+        "width": 659,
+        "height": 40
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 51,
+      "tag": "select",
+      "id": "categorySelect",
+      "className": "",
+      "selectorHint": "select#categorySelect",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 846,
+        "y": 786,
+        "width": 377,
+        "height": 40
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 52,
+      "tag": "button",
+      "id": "resetBtn",
+      "className": "",
+      "selectorHint": "button#resetBtn",
+      "name": "",
+      "type": "button",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "重置筛选",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 1235,
+        "y": 786,
+        "width": 94,
+        "height": 40
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 53,
+      "tag": "div",
+      "id": "serviceCards",
+      "className": "cards",
+      "selectorHint": "div#serviceCards.cards",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "",
+      "href": "",
+      "disabled": false,
+      "visible": false,
+      "childCount": 0,
+      "rect": {
+        "x": 175,
+        "y": 842,
+        "width": 1154,
+        "height": 0
+      },
+      "style": {
+        "display": "grid",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 54,
+      "tag": "section",
+      "id": "submit",
+      "className": "section-grid",
+      "selectorHint": "section#submit.section-grid",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "在线办理 提交办件申请 提交办理",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 3,
+      "rect": {
+        "x": 152,
+        "y": 883,
+        "width": 1200,
+        "height": 387
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 55,
+      "tag": "div",
+      "id": "",
+      "className": "section-head",
+      "selectorHint": "div.section-head",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "在线办理 提交办件申请",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 2,
+      "rect": {
+        "x": 175,
+        "y": 906,
+        "width": 1154,
+        "height": 33
+      },
+      "style": {
+        "display": "flex",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 56,
+      "tag": "p",
+      "id": "",
+      "className": "eyebrow",
+      "selectorHint": "p.eyebrow",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "在线办理",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 175,
+        "y": 911,
+        "width": 48,
+        "height": 17
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 57,
+      "tag": "h2",
+      "id": "",
+      "className": "",
+      "selectorHint": "h2",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "提交办件申请",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 1185,
+        "y": 906,
+        "width": 144,
+        "height": 33
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 58,
+      "tag": "form",
+      "id": "applicationForm",
+      "className": "form-grid",
+      "selectorHint": "form#applicationForm.form-grid",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "提交办理",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 6,
+      "rect": {
+        "x": 175,
+        "y": 955,
+        "width": 1154,
+        "height": 252
+      },
+      "style": {
+        "display": "grid",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 59,
+      "tag": "select",
+      "id": "serviceSelect",
+      "className": "",
+      "selectorHint": "select#serviceSelect",
+      "name": "serviceId",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 175,
+        "y": 955,
+        "width": 571,
+        "height": 40
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 60,
+      "tag": "input",
+      "id": "",
+      "className": "",
+      "selectorHint": "input",
+      "name": "realName",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "申请人姓名",
+      "text": "张三",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 758,
+        "y": 955,
+        "width": 571,
+        "height": 40
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 61,
+      "tag": "input",
+      "id": "",
+      "className": "",
+      "selectorHint": "input",
+      "name": "phone",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "联系电话",
+      "text": "13800138001",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 175,
+        "y": 1007,
+        "width": 571,
+        "height": 40
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 62,
+      "tag": "input",
+      "id": "",
+      "className": "",
+      "selectorHint": "input",
+      "name": "region",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "所在区域",
+      "text": "常州市新北区",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 758,
+        "y": 1007,
+        "width": 571,
+        "height": 40
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 63,
+      "tag": "textarea",
+      "id": "",
+      "className": "",
+      "selectorHint": "textarea",
+      "name": "description",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "办理说明",
+      "text": "请使用电子证照自动关联材料，并通知办理进度。",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 175,
+        "y": 1059,
+        "width": 1154,
+        "height": 96
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 64,
+      "tag": "button",
+      "id": "",
+      "className": "primary",
+      "selectorHint": "button.primary",
+      "name": "",
+      "type": "submit",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "提交办理",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 175,
+        "y": 1167,
+        "width": 1154,
+        "height": 40
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 65,
+      "tag": "pre",
+      "id": "applicationResult",
+      "className": "",
+      "selectorHint": "pre#applicationResult",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 175,
+        "y": 1223,
+        "width": 1154,
+        "height": 24
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 66,
+      "tag": "section",
+      "id": "scenes",
+      "className": "section-grid",
+      "selectorHint": "section#scenes.section-grid",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "场景化事项编排 一件事服务",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 2,
+      "rect": {
+        "x": 152,
+        "y": 1288,
+        "width": 1200,
+        "height": 95
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 67,
+      "tag": "div",
+      "id": "",
+      "className": "section-head",
+      "selectorHint": "div.section-head",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "场景化事项编排 一件事服务",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 2,
+      "rect": {
+        "x": 175,
+        "y": 1311,
+        "width": 1154,
+        "height": 33
+      },
+      "style": {
+        "display": "flex",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 68,
+      "tag": "p",
+      "id": "",
+      "className": "eyebrow",
+      "selectorHint": "p.eyebrow",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "场景化事项编排",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 175,
+        "y": 1316,
+        "width": 84,
+        "height": 17
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 69,
+      "tag": "h2",
+      "id": "",
+      "className": "",
+      "selectorHint": "h2",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "一件事服务",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 1209,
+        "y": 1311,
+        "width": 120,
+        "height": 33
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 70,
+      "tag": "div",
+      "id": "sceneCards",
+      "className": "cards compact",
+      "selectorHint": "div#sceneCards.cards.compact",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "",
+      "href": "",
+      "disabled": false,
+      "visible": false,
+      "childCount": 0,
+      "rect": {
+        "x": 175,
+        "y": 1360,
+        "width": 1154,
+        "height": 0
+      },
+      "style": {
+        "display": "grid",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 71,
+      "tag": "section",
+      "id": "transit",
+      "className": "section-grid",
+      "selectorHint": "section#transit.section-grid",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "民生服务 公交查询与场馆预约 公交实时查询 公共场馆预约 预约场馆",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 2,
+      "rect": {
+        "x": 152,
+        "y": 1401,
+        "width": 1200,
+        "height": 198
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 72,
+      "tag": "div",
+      "id": "",
+      "className": "section-head",
+      "selectorHint": "div.section-head",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "民生服务 公交查询与场馆预约",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 2,
+      "rect": {
+        "x": 175,
+        "y": 1424,
+        "width": 1154,
+        "height": 33
+      },
+      "style": {
+        "display": "flex",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 73,
+      "tag": "p",
+      "id": "",
+      "className": "eyebrow",
+      "selectorHint": "p.eyebrow",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "民生服务",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 175,
+        "y": 1429,
+        "width": 48,
+        "height": 17
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 74,
+      "tag": "h2",
+      "id": "",
+      "className": "",
+      "selectorHint": "h2",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "公交查询与场馆预约",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 1113,
+        "y": 1424,
+        "width": 216,
+        "height": 33
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 75,
+      "tag": "div",
+      "id": "",
+      "className": "split",
+      "selectorHint": "div.split",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "公交实时查询 公共场馆预约 预约场馆",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 2,
+      "rect": {
+        "x": 175,
+        "y": 1473,
+        "width": 1154,
+        "height": 103
+      },
+      "style": {
+        "display": "grid",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 76,
+      "tag": "div",
+      "id": "",
+      "className": "",
+      "selectorHint": "div",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "公交实时查询",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 2,
+      "rect": {
+        "x": 175,
+        "y": 1473,
+        "width": 569,
+        "height": 103
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 77,
+      "tag": "h3",
+      "id": "",
+      "className": "",
+      "selectorHint": "h3",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "公交实时查询",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 175,
+        "y": 1492,
+        "width": 569,
+        "height": 26
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 78,
+      "tag": "div",
+      "id": "busList",
+      "className": "list",
+      "selectorHint": "div#busList.list",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "",
+      "href": "",
+      "disabled": false,
+      "visible": false,
+      "childCount": 0,
+      "rect": {
+        "x": 175,
+        "y": 1536,
+        "width": 569,
+        "height": 0
+      },
+      "style": {
+        "display": "grid",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 79,
+      "tag": "div",
+      "id": "",
+      "className": "",
+      "selectorHint": "div",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "公共场馆预约 预约场馆",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 3,
+      "rect": {
+        "x": 760,
+        "y": 1473,
+        "width": 569,
+        "height": 103
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 80,
+      "tag": "h3",
+      "id": "",
+      "className": "",
+      "selectorHint": "h3",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "公共场馆预约",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 760,
+        "y": 1492,
+        "width": 569,
+        "height": 26
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 81,
+      "tag": "div",
+      "id": "venueList",
+      "className": "list",
+      "selectorHint": "div#venueList.list",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "",
+      "href": "",
+      "disabled": false,
+      "visible": false,
+      "childCount": 0,
+      "rect": {
+        "x": 760,
+        "y": 1536,
+        "width": 569,
+        "height": 0
+      },
+      "style": {
+        "display": "grid",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 82,
+      "tag": "button",
+      "id": "bookingBtn",
+      "className": "",
+      "selectorHint": "button#bookingBtn",
+      "name": "",
+      "type": "button",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "预约场馆",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 760,
+        "y": 1536,
+        "width": 94,
+        "height": 40
+      },
+      "style": {
+        "display": "inline-block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 83,
+      "tag": "section",
+      "id": "profile",
+      "className": "section-grid",
+      "selectorHint": "section#profile.section-grid",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "个人中心 / 我的 资料、证照与办件进度",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 2,
+      "rect": {
+        "x": 152,
+        "y": 1617,
+        "width": 1200,
+        "height": 95
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 84,
+      "tag": "div",
+      "id": "",
+      "className": "section-head",
+      "selectorHint": "div.section-head",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "个人中心 / 我的 资料、证照与办件进度",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 2,
+      "rect": {
+        "x": 175,
+        "y": 1640,
+        "width": 1154,
+        "height": 33
+      },
+      "style": {
+        "display": "flex",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 85,
+      "tag": "p",
+      "id": "",
+      "className": "eyebrow",
+      "selectorHint": "p.eyebrow",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "个人中心 / 我的",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 175,
+        "y": 1645,
+        "width": 82,
+        "height": 17
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 86,
+      "tag": "h2",
+      "id": "",
+      "className": "",
+      "selectorHint": "h2",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "资料、证照与办件进度",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 1089,
+        "y": 1640,
+        "width": 240,
+        "height": 33
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 87,
+      "tag": "div",
+      "id": "",
+      "className": "split",
+      "selectorHint": "div.split",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "",
+      "href": "",
+      "disabled": false,
+      "visible": false,
+      "childCount": 2,
+      "rect": {
+        "x": 175,
+        "y": 1689,
+        "width": 1154,
+        "height": 0
+      },
+      "style": {
+        "display": "grid",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 88,
+      "tag": "div",
+      "id": "profileCard",
+      "className": "",
+      "selectorHint": "div#profileCard",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "",
+      "href": "",
+      "disabled": false,
+      "visible": false,
+      "childCount": 0,
+      "rect": {
+        "x": 175,
+        "y": 1689,
+        "width": 569,
+        "height": 0
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 89,
+      "tag": "div",
+      "id": "requestList",
+      "className": "list",
+      "selectorHint": "div#requestList.list",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "",
+      "href": "",
+      "disabled": false,
+      "visible": false,
+      "childCount": 0,
+      "rect": {
+        "x": 760,
+        "y": 1689,
+        "width": 569,
+        "height": 0
+      },
+      "style": {
+        "display": "grid",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 90,
+      "tag": "section",
+      "id": "feedback",
+      "className": "section-grid",
+      "selectorHint": "section#feedback.section-grid",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "市民反馈闭环 提交投诉建议 建议 投诉 报修 提交反馈",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 3,
+      "rect": {
+        "x": 152,
+        "y": 1730,
+        "width": 1200,
+        "height": 363
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 91,
+      "tag": "div",
+      "id": "",
+      "className": "section-head",
+      "selectorHint": "div.section-head",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "市民反馈闭环 提交投诉建议",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 2,
+      "rect": {
+        "x": 175,
+        "y": 1753,
+        "width": 1154,
+        "height": 33
+      },
+      "style": {
+        "display": "flex",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 92,
+      "tag": "p",
+      "id": "",
+      "className": "eyebrow",
+      "selectorHint": "p.eyebrow",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "市民反馈闭环",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 175,
+        "y": 1758,
+        "width": 72,
+        "height": 17
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 93,
+      "tag": "h2",
+      "id": "",
+      "className": "",
+      "selectorHint": "h2",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "提交投诉建议",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 1185,
+        "y": 1753,
+        "width": 144,
+        "height": 33
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 94,
+      "tag": "form",
+      "id": "feedbackForm",
+      "className": "form-grid",
+      "selectorHint": "form#feedbackForm.form-grid",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "建议 投诉 报修 提交反馈",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 5,
+      "rect": {
+        "x": 175,
+        "y": 1802,
+        "width": 1154,
+        "height": 252
+      },
+      "style": {
+        "display": "grid",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 95,
+      "tag": "select",
+      "id": "",
+      "className": "",
+      "selectorHint": "select",
+      "name": "type",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "建议 投诉 报修",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 3,
+      "rect": {
+        "x": 175,
+        "y": 1802,
+        "width": 571,
+        "height": 40
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 96,
+      "tag": "option",
+      "id": "",
+      "className": "",
+      "selectorHint": "option",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "建议",
+      "href": "",
+      "disabled": false,
+      "visible": false,
+      "childCount": 0,
+      "rect": {
+        "x": 0,
+        "y": 0,
+        "width": 0,
+        "height": 0
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 97,
+      "tag": "option",
+      "id": "",
+      "className": "",
+      "selectorHint": "option",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "投诉",
+      "href": "",
+      "disabled": false,
+      "visible": false,
+      "childCount": 0,
+      "rect": {
+        "x": 0,
+        "y": 0,
+        "width": 0,
+        "height": 0
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 98,
+      "tag": "option",
+      "id": "",
+      "className": "",
+      "selectorHint": "option",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "报修",
+      "href": "",
+      "disabled": false,
+      "visible": false,
+      "childCount": 0,
+      "rect": {
+        "x": 0,
+        "y": 0,
+        "width": 0,
+        "height": 0
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 99,
+      "tag": "input",
+      "id": "",
+      "className": "",
+      "selectorHint": "input",
+      "name": "title",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "反馈标题",
+      "text": "优化在线办理进度提醒",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 758,
+        "y": 1802,
+        "width": 571,
+        "height": 40
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 100,
+      "tag": "input",
+      "id": "",
+      "className": "",
+      "selectorHint": "input",
+      "name": "contact",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "联系方式",
+      "text": "13800138001",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 175,
+        "y": 1854,
+        "width": 571,
+        "height": 40
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 101,
+      "tag": "textarea",
+      "id": "",
+      "className": "",
+      "selectorHint": "textarea",
+      "name": "content",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "反馈内容",
+      "text": "希望在办件状态变化时发送消息通知，并展示处理人员。",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 175,
+        "y": 1906,
+        "width": 1154,
+        "height": 96
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 102,
+      "tag": "button",
+      "id": "",
+      "className": "primary",
+      "selectorHint": "button.primary",
+      "name": "",
+      "type": "submit",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "提交反馈",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 175,
+        "y": 2014,
+        "width": 1154,
+        "height": 40
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 103,
+      "tag": "div",
+      "id": "feedbackList",
+      "className": "list",
+      "selectorHint": "div#feedbackList.list",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "",
+      "href": "",
+      "disabled": false,
+      "visible": false,
+      "childCount": 0,
+      "rect": {
+        "x": 175,
+        "y": 2070,
+        "width": 1154,
+        "height": 0
+      },
+      "style": {
+        "display": "grid",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 104,
+      "tag": "section",
+      "id": "admin",
+      "className": "section-grid",
+      "selectorHint": "section#admin.section-grid",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "管理后台 服务监控与数据分析 刷新后台",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 3,
+      "rect": {
+        "x": 152,
+        "y": 2111,
+        "width": 1200,
+        "height": 104
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 105,
+      "tag": "div",
+      "id": "",
+      "className": "section-head",
+      "selectorHint": "div.section-head",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "管理后台 服务监控与数据分析 刷新后台",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 3,
+      "rect": {
+        "x": 175,
+        "y": 2134,
+        "width": 1154,
+        "height": 40
+      },
+      "style": {
+        "display": "flex",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 106,
+      "tag": "p",
+      "id": "",
+      "className": "eyebrow",
+      "selectorHint": "p.eyebrow",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "管理后台",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 175,
+        "y": 2143,
+        "width": 48,
+        "height": 17
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 107,
+      "tag": "h2",
+      "id": "",
+      "className": "",
+      "selectorHint": "h2",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "服务监控与数据分析",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 621,
+        "y": 2138,
+        "width": 216,
+        "height": 33
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 108,
+      "tag": "button",
+      "id": "refreshAdmin",
+      "className": "",
+      "selectorHint": "button#refreshAdmin",
+      "name": "",
+      "type": "button",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "刷新后台",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 1235,
+        "y": 2134,
+        "width": 94,
+        "height": 40
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 109,
+      "tag": "div",
+      "id": "adminSummary",
+      "className": "metrics",
+      "selectorHint": "div#adminSummary.metrics",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "",
+      "href": "",
+      "disabled": false,
+      "visible": false,
+      "childCount": 0,
+      "rect": {
+        "x": 175,
+        "y": 2192,
+        "width": 1154,
+        "height": 0
+      },
+      "style": {
+        "display": "grid",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 110,
+      "tag": "div",
+      "id": "heatmap",
+      "className": "cards compact",
+      "selectorHint": "div#heatmap.cards.compact",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "",
+      "href": "",
+      "disabled": false,
+      "visible": false,
+      "childCount": 0,
+      "rect": {
+        "x": 175,
+        "y": 2192,
+        "width": 1154,
+        "height": 0
+      },
+      "style": {
+        "display": "grid",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    }
+  ],
+  "interactiveElements": [
+    {
+      "index": 0,
+      "tag": "a",
+      "id": "",
+      "className": "",
+      "selectorHint": "a",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "办事大厅",
+      "href": "#services",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 836,
+        "y": 21,
+        "width": 84,
+        "height": 36
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 1,
+      "tag": "a",
+      "id": "",
+      "className": "",
+      "selectorHint": "a",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "登录注册",
+      "href": "#account",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 928,
+        "y": 21,
+        "width": 84,
+        "height": 36
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 2,
+      "tag": "a",
+      "id": "",
+      "className": "",
+      "selectorHint": "a",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "场景服务",
+      "href": "#scenes",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 1020,
+        "y": 21,
+        "width": 84,
+        "height": 36
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 3,
+      "tag": "a",
+      "id": "",
+      "className": "",
+      "selectorHint": "a",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "公交场馆",
+      "href": "#transit",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 1112,
+        "y": 21,
+        "width": 84,
+        "height": 36
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 4,
+      "tag": "a",
+      "id": "",
+      "className": "",
+      "selectorHint": "a",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "个人中心",
+      "href": "#profile",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 1204,
+        "y": 21,
+        "width": 84,
+        "height": 36
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 5,
+      "tag": "a",
+      "id": "",
+      "className": "",
+      "selectorHint": "a",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "市民反馈",
+      "href": "#feedback",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 1296,
+        "y": 21,
+        "width": 84,
+        "height": 36
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 6,
+      "tag": "a",
+      "id": "",
+      "className": "",
+      "selectorHint": "a",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "后台管理",
+      "href": "#admin",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 1388,
+        "y": 21,
+        "width": 84,
+        "height": 36
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 7,
+      "tag": "a",
+      "id": "",
+      "className": "button primary",
+      "selectorHint": "a.button.primary",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "立即办事",
+      "href": "#services",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 188,
+        "y": 306,
+        "width": 94,
+        "height": 40
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 8,
+      "tag": "a",
+      "id": "",
+      "className": "button",
+      "selectorHint": "a.button",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "查看运营态势",
+      "href": "#admin",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 294,
+        "y": 306,
+        "width": 126,
+        "height": 40
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 9,
+      "tag": "input",
+      "id": "",
+      "className": "",
+      "selectorHint": "input",
+      "name": "phone",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "手机号或用户名",
+      "text": "13800138001",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 175,
+        "y": 541,
+        "width": 571,
+        "height": 40
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 10,
+      "tag": "input",
+      "id": "",
+      "className": "",
+      "selectorHint": "input",
+      "name": "realName",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "姓名",
+      "text": "张三",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 758,
+        "y": 541,
+        "width": 571,
+        "height": 40
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 11,
+      "tag": "button",
+      "id": "",
+      "className": "primary",
+      "selectorHint": "button.primary",
+      "name": "",
+      "type": "submit",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "登录 / 注册",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 175,
+        "y": 593,
+        "width": 1154,
+        "height": 40
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 12,
+      "tag": "input",
+      "id": "searchInput",
+      "className": "",
+      "selectorHint": "input#searchInput",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "搜索公积金、户籍、公交、场馆、报修",
+      "text": "",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 175,
+        "y": 786,
+        "width": 659,
+        "height": 40
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 13,
+      "tag": "select",
+      "id": "categorySelect",
+      "className": "",
+      "selectorHint": "select#categorySelect",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 846,
+        "y": 786,
+        "width": 377,
+        "height": 40
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 14,
+      "tag": "button",
+      "id": "resetBtn",
+      "className": "",
+      "selectorHint": "button#resetBtn",
+      "name": "",
+      "type": "button",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "重置筛选",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 1235,
+        "y": 786,
+        "width": 94,
+        "height": 40
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 15,
+      "tag": "select",
+      "id": "serviceSelect",
+      "className": "",
+      "selectorHint": "select#serviceSelect",
+      "name": "serviceId",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 175,
+        "y": 955,
+        "width": 571,
+        "height": 40
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 16,
+      "tag": "input",
+      "id": "",
+      "className": "",
+      "selectorHint": "input",
+      "name": "realName",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "申请人姓名",
+      "text": "张三",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 758,
+        "y": 955,
+        "width": 571,
+        "height": 40
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 17,
+      "tag": "input",
+      "id": "",
+      "className": "",
+      "selectorHint": "input",
+      "name": "phone",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "联系电话",
+      "text": "13800138001",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 175,
+        "y": 1007,
+        "width": 571,
+        "height": 40
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 18,
+      "tag": "input",
+      "id": "",
+      "className": "",
+      "selectorHint": "input",
+      "name": "region",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "所在区域",
+      "text": "常州市新北区",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 758,
+        "y": 1007,
+        "width": 571,
+        "height": 40
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 19,
+      "tag": "textarea",
+      "id": "",
+      "className": "",
+      "selectorHint": "textarea",
+      "name": "description",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "办理说明",
+      "text": "请使用电子证照自动关联材料，并通知办理进度。",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 175,
+        "y": 1059,
+        "width": 1154,
+        "height": 96
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 20,
+      "tag": "button",
+      "id": "",
+      "className": "primary",
+      "selectorHint": "button.primary",
+      "name": "",
+      "type": "submit",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "提交办理",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 175,
+        "y": 1167,
+        "width": 1154,
+        "height": 40
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 21,
+      "tag": "button",
+      "id": "bookingBtn",
+      "className": "",
+      "selectorHint": "button#bookingBtn",
+      "name": "",
+      "type": "button",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "预约场馆",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 760,
+        "y": 1536,
+        "width": 94,
+        "height": 40
+      },
+      "style": {
+        "display": "inline-block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 22,
+      "tag": "select",
+      "id": "",
+      "className": "",
+      "selectorHint": "select",
+      "name": "type",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "建议 投诉 报修",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 3,
+      "rect": {
+        "x": 175,
+        "y": 1802,
+        "width": 571,
+        "height": 40
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 23,
+      "tag": "input",
+      "id": "",
+      "className": "",
+      "selectorHint": "input",
+      "name": "title",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "反馈标题",
+      "text": "优化在线办理进度提醒",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 758,
+        "y": 1802,
+        "width": 571,
+        "height": 40
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 24,
+      "tag": "input",
+      "id": "",
+      "className": "",
+      "selectorHint": "input",
+      "name": "contact",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "联系方式",
+      "text": "13800138001",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 175,
+        "y": 1854,
+        "width": 571,
+        "height": 40
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 25,
+      "tag": "textarea",
+      "id": "",
+      "className": "",
+      "selectorHint": "textarea",
+      "name": "content",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "反馈内容",
+      "text": "希望在办件状态变化时发送消息通知，并展示处理人员。",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 175,
+        "y": 1906,
+        "width": 1154,
+        "height": 96
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 26,
+      "tag": "button",
+      "id": "",
+      "className": "primary",
+      "selectorHint": "button.primary",
+      "name": "",
+      "type": "submit",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "提交反馈",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 175,
+        "y": 2014,
+        "width": 1154,
+        "height": 40
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 27,
+      "tag": "button",
+      "id": "refreshAdmin",
+      "className": "",
+      "selectorHint": "button#refreshAdmin",
+      "name": "",
+      "type": "button",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "刷新后台",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 1235,
+        "y": 2134,
+        "width": 94,
+        "height": 40
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    }
+  ]
+}
