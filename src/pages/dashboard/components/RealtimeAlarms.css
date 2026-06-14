@@ -1,0 +1,210 @@
+.realtime-alarms-container {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 1vh;
+}
+
+.alarms-stats {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 0.5vw;
+  padding: 1vh 0;
+}
+
+.alarm-stat-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.3vh;
+  padding: 1vh 0.5vw;
+  background: rgba(0, 212, 255, 0.05);
+  border-radius: 6px;
+  border: 1px solid rgba(0, 212, 255, 0.15);
+}
+
+.stat-value {
+  font-size: 2.2vh;
+  font-weight: 700;
+  font-family: 'Courier New', monospace;
+}
+
+.stat-value.critical {
+  color: #ff4757;
+  text-shadow: 0 0 10px rgba(255, 71, 87, 0.5);
+}
+
+.stat-value.warning {
+  color: #ffa500;
+  text-shadow: 0 0 10px rgba(255, 165, 0, 0.5);
+}
+
+.stat-value.info {
+  color: #00d4ff;
+  text-shadow: 0 0 10px rgba(0, 212, 255, 0.5);
+}
+
+.stat-label {
+  font-size: 1.2vh;
+  color: rgba(224, 230, 237, 0.6);
+}
+
+.alarms-scroll-container {
+  flex: 1;
+  overflow: hidden;
+  position: relative;
+  mask-image: linear-gradient(to bottom, transparent, #000 8%, #000 92%, transparent);
+  -webkit-mask-image: linear-gradient(to bottom, transparent, #000 8%, #000 92%, transparent);
+}
+
+.alarms-list {
+  display: flex;
+  flex-direction: column;
+  gap: 1vh;
+  padding: 1vh 0;
+}
+
+.alarm-item {
+  position: relative;
+  background: linear-gradient(135deg, rgba(13, 33, 55, 0.8) 0%, rgba(10, 22, 40, 0.9) 100%);
+  border: 1px solid rgba(0, 212, 255, 0.2);
+  border-left: 3px solid;
+  border-radius: 6px;
+  padding: 1.2vh 1vw;
+  transition: all 0.3s ease;
+  opacity: 0;
+  transform: translateX(-20px);
+  animation: alarmSlideIn 0.5s ease forwards;
+  overflow: hidden;
+}
+
+@keyframes alarmSlideIn {
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+.alarm-item:hover {
+  background: linear-gradient(135deg, rgba(0, 212, 255, 0.1) 0%, rgba(0, 128, 255, 0.1) 100%);
+  border-color: rgba(0, 212, 255, 0.4);
+  transform: translateX(5px);
+}
+
+.alarm-critical {
+  animation: alarmSlideIn 0.5s ease forwards, alarmCriticalPulse 2s ease-in-out infinite;
+}
+
+@keyframes alarmCriticalPulse {
+  0%, 100% {
+    box-shadow: 0 0 0 0 rgba(255, 71, 87, 0);
+  }
+  50% {
+    box-shadow: 0 0 20px 5px rgba(255, 71, 87, 0.3);
+  }
+}
+
+.alarm-item-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 0.8vh;
+}
+
+.alarm-level-badge {
+  padding: 0.3vh 0.8vw;
+  border-radius: 4px;
+  font-size: 1.2vh;
+  font-weight: 600;
+  border: 1px solid;
+}
+
+.alarm-status {
+  font-size: 1.2vh;
+  font-weight: 500;
+}
+
+.alarm-item-content {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5vh;
+}
+
+.alarm-place {
+  font-size: 1.4vh;
+  font-weight: 600;
+  color: #fff;
+  display: flex;
+  align-items: center;
+}
+
+.alarm-type {
+  font-size: 1.2vh;
+  color: #00d4ff;
+}
+
+.alarm-message {
+  font-size: 1.3vh;
+  color: rgba(224, 230, 237, 0.8);
+  line-height: 1.4;
+}
+
+.alarm-item-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 0.8vh;
+  padding-top: 0.8vh;
+  border-top: 1px solid rgba(0, 212, 255, 0.1);
+}
+
+.alarm-time {
+  font-size: 1.1vh;
+  color: rgba(224, 230, 237, 0.5);
+  font-family: 'Courier New', monospace;
+}
+
+.alarm-pulse {
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+  font-size: 12px;
+  animation: alarmBellShake 1s ease-in-out infinite;
+}
+
+@keyframes alarmBellShake {
+  0%, 100% {
+    transform: rotate(0deg);
+  }
+  25% {
+    transform: rotate(-15deg);
+  }
+  75% {
+    transform: rotate(15deg);
+  }
+}
+
+.alarm-glow {
+  position: absolute;
+  top: 50%;
+  right: -30px;
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  opacity: 0.15;
+  filter: blur(20px);
+  transform: translateY(-50%);
+  pointer-events: none;
+}
+
+.alarms-scroll-hint {
+  text-align: center;
+  font-size: 1.1vh;
+  color: rgba(224, 230, 237, 0.4);
+  padding: 0.5vh 0;
+}
