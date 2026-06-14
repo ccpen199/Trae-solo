@@ -1,0 +1,367 @@
+@use '@/styles/variables.scss' as *;
+
+.tabBar {
+  display: flex;
+  background: $color-bg-card;
+  border-radius: $radius-md;
+  padding: 8rpx;
+  margin-bottom: $spacing-md;
+  box-shadow: $shadow-card;
+  gap: 8rpx;
+
+  .tab {
+    flex: 1;
+    text-align: center;
+    padding: $spacing-sm 0;
+    border-radius: $radius-sm;
+    font-size: $font-size-sm;
+    color: $color-text-secondary;
+    transition: all $transition-fast;
+
+    &.active {
+      background: $color-primary;
+      color: $color-text-white;
+      font-weight: $font-weight-semibold;
+    }
+  }
+}
+
+.qrSection {
+  background: linear-gradient(135deg, $color-tech 0%, $color-tech-light 100%);
+  border-radius: $radius-lg;
+  padding: $spacing-xl $spacing-lg;
+  margin-bottom: $spacing-md;
+  box-shadow: 0 8rpx 24rpx rgba(139, 92, 246, 0.25);
+  color: $color-text-white;
+
+  .header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: $spacing-lg;
+
+    .title {
+      font-size: $font-size-lg;
+      font-weight: $font-weight-semibold;
+    }
+
+    .method {
+      font-size: $font-size-xs;
+      opacity: 0.85;
+      background: rgba(255, 255, 255, 0.2);
+      padding: 6rpx 16rpx;
+      border-radius: $radius-round;
+    }
+  }
+
+  .qrBox {
+    background: $color-bg-card;
+    border-radius: $radius-md;
+    padding: $spacing-lg;
+    margin-bottom: $spacing-lg;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    .qrPlaceholder {
+      width: 360rpx;
+      height: 360rpx;
+      border: 2rpx dashed $color-border;
+      border-radius: $radius-sm;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      overflow: hidden;
+
+      .scanLine {
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 4rpx;
+        background: linear-gradient(90deg, transparent, $color-primary, transparent);
+        animation: scan 2s linear infinite;
+      }
+
+      .center {
+        text-align: center;
+
+        .qrIcon {
+          font-size: 80rpx;
+          opacity: 0.3;
+        }
+
+        .tip {
+          font-size: $font-size-xs;
+          color: $color-text-tertiary;
+          margin-top: 8rpx;
+        }
+      }
+    }
+
+    .codeText {
+      margin-top: $spacing-md;
+      font-size: $font-size-sm;
+      color: $color-text-secondary;
+      letter-spacing: 4rpx;
+      font-weight: $font-weight-medium;
+    }
+
+    .valid {
+      margin-top: 8rpx;
+      font-size: $font-size-xs;
+      color: $color-text-tertiary;
+    }
+  }
+
+  .actions {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: $spacing-sm;
+
+    .btn {
+      background: rgba(255, 255, 255, 0.15);
+      border-radius: $radius-md;
+      padding: $spacing-md 0;
+      text-align: center;
+      backdrop-filter: blur(10px);
+
+      .icon {
+        font-size: 40rpx;
+        display: block;
+        margin-bottom: 8rpx;
+      }
+
+      .label {
+        font-size: $font-size-xs;
+        opacity: 0.95;
+      }
+    }
+  }
+}
+
+@keyframes scan {
+  0% { top: 0; }
+  100% { top: 100%; }
+}
+
+.deviceList {
+  .deviceItem {
+    display: flex;
+    align-items: center;
+    gap: $spacing-md;
+    padding: $spacing-md 0;
+    border-bottom: 1rpx solid $color-divider;
+
+    &:last-child { border-bottom: none; padding-bottom: 0; }
+    &:first-child { padding-top: 0; }
+
+    .iconBox {
+      width: 80rpx;
+      height: 80rpx;
+      border-radius: $radius-md;
+      background: rgba(46, 124, 246, 0.1);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 36rpx;
+      flex-shrink: 0;
+    }
+
+    .info {
+      flex: 1;
+      min-width: 0;
+
+      .name {
+        font-size: $font-size-md;
+        font-weight: $font-weight-medium;
+        color: $color-text-primary;
+        display: flex;
+        align-items: center;
+        gap: 12rpx;
+      }
+
+      .location {
+        font-size: $font-size-xs;
+        color: $color-text-tertiary;
+        margin-top: 6rpx;
+      }
+    }
+
+    .openBtn {
+      width: 120rpx;
+      height: 64rpx;
+      border-radius: $radius-button;
+      background: $color-primary;
+      color: $color-text-white;
+      font-size: $font-size-xs;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      transition: all $transition-base;
+
+      &:active {
+        opacity: 0.85;
+        transform: scale(0.96);
+      }
+
+      &.disabled {
+        background: $color-border;
+        color: $color-text-tertiary;
+      }
+    }
+  }
+}
+
+.logList {
+  .logItem {
+    display: flex;
+    gap: $spacing-md;
+    padding: $spacing-md 0;
+    border-bottom: 1rpx solid $color-divider;
+
+    &:last-child { border-bottom: none; padding-bottom: 0; }
+    &:first-child { padding-top: 0; }
+
+    .avatar {
+      width: 64rpx;
+      height: 64rpx;
+      border-radius: 50%;
+      background: rgba(46, 124, 246, 0.1);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 28rpx;
+      flex-shrink: 0;
+    }
+
+    .content {
+      flex: 1;
+      min-width: 0;
+
+      .top {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: $spacing-sm;
+
+        .user {
+          font-size: $font-size-md;
+          font-weight: $font-weight-medium;
+          color: $color-text-primary;
+          @include text-ellipsis;
+        }
+
+        .method {
+          font-size: $font-size-xs;
+          padding: 2rpx 12rpx;
+          border-radius: $radius-xs;
+          flex-shrink: 0;
+
+          &.bluetooth { background: rgba(16, 185, 129, 0.1); color: $color-success; }
+          &.nfc { background: rgba(139, 92, 246, 0.1); color: $color-tech; }
+          &.qrcode { background: rgba(46, 124, 246, 0.1); color: $color-primary; }
+          &.card { background: rgba(245, 158, 11, 0.1); color: $color-warning; }
+        }
+      }
+
+      .bottom {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        margin-top: 6rpx;
+
+        .device {
+          font-size: $font-size-xs;
+          color: $color-text-tertiary;
+          @include text-ellipsis;
+        }
+
+        .time {
+          font-size: $font-size-xs;
+          color: $color-text-tertiary;
+          flex-shrink: 0;
+          margin-left: $spacing-sm;
+        }
+      }
+
+      .failReason {
+        margin-top: 8rpx;
+        font-size: $font-size-xs;
+        color: $color-error;
+        background: rgba(239, 68, 68, 0.06);
+        padding: 8rpx 12rpx;
+        border-radius: $radius-xs;
+        display: inline-block;
+      }
+    }
+  }
+}
+
+.visitorList {
+  .vItem {
+    background: rgba(245, 247, 250, 0.6);
+    border-radius: $radius-md;
+    padding: $spacing-md;
+    margin-bottom: $spacing-sm;
+
+    &:last-child { margin-bottom: 0; }
+
+    .top {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 12rpx;
+
+      .info {
+        display: flex;
+        align-items: center;
+        gap: $spacing-sm;
+
+        .avatar {
+          width: 56rpx;
+          height: 56rpx;
+          border-radius: 50%;
+          background: rgba(245, 158, 11, 0.1);
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          font-size: 26rpx;
+        }
+
+        .name {
+          font-size: $font-size-md;
+          font-weight: $font-weight-medium;
+          color: $color-text-primary;
+        }
+
+        .phone {
+          font-size: $font-size-xs;
+          color: $color-text-tertiary;
+          margin-top: 4rpx;
+        }
+      }
+    }
+
+    .meta {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      font-size: $font-size-xs;
+      color: $color-text-secondary;
+
+      .valid {
+        display: flex;
+        align-items: center;
+        gap: 8rpx;
+      }
+
+      .action {
+        color: $color-primary;
+        font-weight: $font-weight-medium;
+      }
+    }
+  }
+}

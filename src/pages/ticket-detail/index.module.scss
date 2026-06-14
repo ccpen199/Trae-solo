@@ -1,0 +1,87 @@
+@use '@/styles/variables.scss' as *;
+
+.headerCard {
+  background: linear-gradient(135deg, $color-primary 0%, $color-primary-light 100%);
+  margin: 0 (-$page-padding);
+  margin-top: (-$spacing-lg);
+  padding: $spacing-xl $page-spacing;
+  color: $color-text-white;
+  border-radius: 0 0 $radius-lg $radius-lg;
+  margin-bottom: $spacing-md;
+
+  .row1 { display: flex; align-items: flex-start; justify-content: space-between; gap: $spacing-md; }
+  .title { font-size: $font-size-xl; font-weight: $font-weight-bold; flex: 1; line-height: 1.4; }
+  .meta { display: flex; flex-wrap: wrap; gap: $spacing-sm $spacing-lg; margin-top: $spacing-md; font-size: $font-size-sm; opacity: 0.9;
+    .item { display: flex; align-items: center; gap: 6rpx; }
+  }
+}
+
+.infoGrid {
+  display: grid; grid-template-columns: repeat(2, 1fr); gap: $spacing-sm; margin-bottom: $spacing-md;
+  .infoItem { background: rgba(245, 247, 250, 0.6); border-radius: $radius-md; padding: $spacing-md;
+    .l { font-size: $font-size-xs; color: $color-text-tertiary; }
+    .v { font-size: $font-size-md; font-weight: $font-weight-semibold; color: $color-text-primary; margin-top: 6rpx; }
+  }
+}
+
+.descBox {
+  background: rgba(245, 247, 250, 0.6);
+  border-radius: $radius-md;
+  padding: $spacing-md;
+  margin-bottom: $spacing-md;
+
+  .label { font-size: $font-size-sm; color: $color-text-secondary; font-weight: $font-weight-medium; margin-bottom: $spacing-sm; }
+  .content { font-size: $font-size-md; color: $color-text-primary; line-height: $line-height-loose; }
+  .imgs { display: flex; gap: $spacing-sm; margin-top: $spacing-md; flex-wrap: wrap;
+    .img { width: 200rpx; height: 200rpx; border-radius: $radius-sm; object-fit: cover; }
+  }
+}
+
+.satisfaction {
+  background: linear-gradient(135deg, rgba(16, 185, 129, 0.08) 0%, rgba(46, 124, 246, 0.08) 100%);
+  border-radius: $radius-md;
+  padding: $spacing-lg;
+  border: 2rpx solid rgba(16, 185, 129, 0.2);
+  margin-bottom: $spacing-md;
+
+  .head { display: flex; align-items: center; justify-content: space-between; margin-bottom: $spacing-md;
+    .label { font-size: $font-size-md; font-weight: $font-weight-semibold; color: $color-text-primary; }
+  }
+  .stars { display: flex; gap: $spacing-md; margin-bottom: $spacing-md;
+    .star { font-size: 64rpx; opacity: 0.3; transition: all $transition-fast;
+      &.active { opacity: 1; transform: scale(1.1); }
+    }
+  }
+  .textareaBox { background: $color-bg-card; border-radius: $radius-md; padding: $spacing-md; min-height: 160rpx;
+    font-size: $font-size-sm; color: $color-text-primary;
+  }
+  .submitRow { display: flex; justify-content: flex-end; margin-top: $spacing-md;
+    .btn { height: 64rpx; padding: 0 40rpx; border-radius: $radius-round; background: $color-success; color: $color-text-white; font-size: $font-size-sm; display: flex; align-items: center; justify-content: center; }
+  }
+  .showBox {
+    .starsRow { display: flex; align-items: center; gap: $spacing-sm; margin-bottom: $spacing-sm;
+      .star { font-size: 36rpx; }
+      .score { font-size: $font-size-md; font-weight: $font-weight-semibold; color: $color-warning; }
+    }
+    .label { font-size: $font-size-xs; color: $color-text-tertiary; }
+    .text { font-size: $font-size-sm; color: $color-text-secondary; margin-top: $spacing-sm; line-height: $line-height-normal; }
+  }
+}
+
+.bottomBar {
+  position: fixed; left: 0; right: 0; bottom: 0;
+  padding: $spacing-md $page-padding calc(env(safe-area-inset-bottom) + #{$spacing-md});
+  background: $color-bg-card;
+  box-shadow: 0 -4rpx 16rpx rgba(0,0,0,0.06);
+  display: flex; gap: $spacing-md;
+
+  .btn {
+    flex: 1; height: $button-height-lg; border-radius: $radius-button;
+    display: flex; align-items: center; justify-content: center;
+    font-size: $font-size-md; font-weight: $font-weight-semibold;
+    &.outline { border: 2rpx solid $color-border; color: $color-text-secondary; }
+    &.primary { background: linear-gradient(135deg, $color-primary 0%, $color-primary-light 100%); color: $color-text-white; }
+    &.success { background: linear-gradient(135deg, $color-success 0%, $color-success-light 100%); color: $color-text-white; }
+    &:active { opacity: 0.9; transform: scale(0.98); }
+  }
+}

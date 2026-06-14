@@ -1,0 +1,60 @@
+@use '@/styles/variables.scss' as *;
+
+.tabs {
+  display: flex; gap: $spacing-sm; margin-bottom: $spacing-md; overflow-x: auto; flex-wrap: nowrap;
+  background: $color-bg-page; position: sticky; top: 0; z-index: 10; padding: $spacing-sm 0;
+  .tab {
+    flex-shrink: 0; padding: $spacing-sm $spacing-lg; border-radius: $radius-round;
+    background: $color-bg-card; font-size: $font-size-sm; color: $color-text-secondary;
+    &.active { background: $color-primary; color: $color-text-white; font-weight: $font-weight-medium; }
+  }
+}
+
+.orderCard {
+  background: $color-bg-card; border-radius: $radius-lg; overflow: hidden;
+  box-shadow: $shadow-card; margin-bottom: $spacing-md;
+
+  .header { display: flex; align-items: center; justify-content: space-between;
+    padding: $spacing-md $spacing-lg; border-bottom: 1rpx solid $color-divider;
+    .shop { display: flex; align-items: center; gap: 8rpx;
+      .shopName { font-size: $font-size-md; font-weight: $font-weight-semibold; color: $color-text-primary; }
+    }
+    .status { font-size: $font-size-sm; font-weight: $font-weight-medium; }
+  }
+
+  .items { padding: $spacing-md $spacing-lg;
+    .item { display: flex; gap: $spacing-md; margin-bottom: $spacing-md;
+      &:last-child { margin-bottom: 0; }
+      .img { width: 160rpx; height: 160rpx; border-radius: $radius-md; object-fit: cover; flex-shrink: 0; }
+      .info { flex: 1; min-width: 0; display: flex; flex-direction: column; justify-content: space-between;
+        .name { font-size: $font-size-md; color: $color-text-primary; line-height: 1.4;
+          overflow: hidden; text-overflow: ellipsis; display: -webkit-box;
+          -webkit-line-clamp: 2; -webkit-box-orient: vertical;
+        }
+        .spec { font-size: $font-size-xs; color: $color-text-tertiary; margin-top: 6rpx; }
+        .bottom { display: flex; justify-content: space-between; align-items: center;
+          .price { font-size: $font-size-md; font-weight: $font-weight-bold; color: $color-error; }
+          .count { font-size: $font-size-sm; color: $color-text-tertiary; }
+        }
+      }
+    }
+  }
+
+  .footer { padding: $spacing-md $spacing-lg; border-top: 1rpx solid $color-divider;
+    .summary { display: flex; justify-content: flex-end; align-items: center; gap: $spacing-sm;
+      .totalCount { font-size: $font-size-xs; color: $color-text-tertiary; }
+      .totalAmount { font-size: $font-size-md; color: $color-text-primary;
+        .num { font-size: $font-size-xl; font-weight: $font-weight-bold; color: $color-error; }
+      }
+    }
+    .actions { display: flex; justify-content: flex-end; gap: $spacing-sm; margin-top: $spacing-md;
+      .btn {
+        padding: $spacing-sm $spacing-lg; border-radius: $radius-round; font-size: $font-size-sm;
+        transition: all $transition-fast;
+        &.outline { border: 2rpx solid $color-border; color: $color-text-secondary; }
+        &.primary { background: $color-error; color: $color-text-white; font-weight: $font-weight-medium; }
+        &.normal { background: $color-primary; color: $color-text-white; font-weight: $font-weight-medium; }
+      }
+    }
+  }
+}

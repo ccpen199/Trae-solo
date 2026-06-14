@@ -1,0 +1,40 @@
+@use '@/styles/variables.scss' as *;
+
+.tabs { display: flex; gap: $spacing-sm; margin-bottom: $spacing-md;
+  .tab { flex: 1; padding: $spacing-sm 0; text-align: center; border-radius: $radius-md;
+    background: $color-bg-card; font-size: $font-size-sm; color: $color-text-secondary;
+    &.active { background: $color-primary; color: $color-text-white; font-weight: $font-weight-medium; }
+    .badge { display: inline-block; min-width: 32rpx; padding: 0 10rpx; margin-left: 8rpx;
+      background: $color-error; color: white; border-radius: 16rpx; font-size: 20rpx; }
+  }
+}
+
+.applyCard {
+  background: $color-bg-card; border-radius: $radius-lg; overflow: hidden;
+  box-shadow: $shadow-card; margin-bottom: $spacing-md;
+
+  .head { padding: $spacing-lg; border-bottom: 1rpx solid $color-divider;
+    display: flex; align-items: center; gap: $spacing-md;
+    .logo { width: 96rpx; height: 96rpx; border-radius: $radius-md; object-fit: cover; flex-shrink: 0; }
+    .info { flex: 1; min-width: 0;
+      .name { font-size: $font-size-lg; font-weight: $font-weight-semibold; color: $color-text-primary; }
+      .category { margin-top: 8rpx; font-size: $font-size-xs; color: $color-text-tertiary; }
+    }
+  }
+  .body { padding: $spacing-lg;
+    .row { display: flex; justify-content: space-between; padding: $spacing-sm 0;
+      .label { font-size: $font-size-sm; color: $color-text-tertiary; }
+      .value { font-size: $font-size-sm; color: $color-text-primary; font-weight: $font-weight-medium; max-width: 60%; text-align: right; }
+    }
+  }
+  .footer { padding: $spacing-md $spacing-lg; border-top: 1rpx solid $color-divider;
+    display: flex; gap: $spacing-sm;
+    .btn { flex: 1; padding: $spacing-sm 0; text-align: center; border-radius: $radius-md;
+      font-size: $font-size-sm; transition: all $transition-fast;
+      &.reject { border: 2rpx solid $color-error; color: $color-error; }
+      &.approve { background: linear-gradient(135deg, $color-success 0%, $color-success-light 100%); color: $color-text-white; font-weight: $font-weight-medium; }
+      &.view { border: 2rpx solid $color-border; color: $color-text-secondary; }
+      &:active { opacity: 0.9; }
+    }
+  }
+}

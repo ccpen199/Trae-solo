@@ -1,0 +1,115 @@
+@use '@/styles/variables.scss' as *;
+
+.steps {
+  position: relative;
+  padding-left: 16rpx;
+}
+
+.step {
+  display: flex;
+  gap: $spacing-md;
+  padding-bottom: $spacing-lg;
+  position: relative;
+
+  &:last-child {
+    padding-bottom: 0;
+  }
+
+  &:not(:last-child)::after {
+    content: '';
+    position: absolute;
+    left: 16rpx;
+    top: 40rpx;
+    width: 4rpx;
+    height: calc(100% - 40rpx);
+    background: $color-divider;
+  }
+
+  &.done::after,
+  &.active::after {
+    background: linear-gradient(180deg, $color-primary 0%, rgba(46, 124, 246, 0.2) 100%);
+  }
+}
+
+.dot {
+  width: 32rpx;
+  height: 32rpx;
+  border-radius: 50%;
+  flex-shrink: 0;
+  margin-top: 6rpx;
+  position: relative;
+  z-index: 1;
+
+  &.pending {
+    background: $color-bg-card;
+    border: 4rpx solid $color-border;
+  }
+
+  &.active {
+    background: $color-primary;
+    box-shadow: 0 0 0 8rpx rgba(46, 124, 246, 0.15);
+  }
+
+  &.done {
+    background: $color-success;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    &::after {
+      content: '✓';
+      color: white;
+      font-size: 20rpx;
+      font-weight: bold;
+    }
+  }
+}
+
+.content {
+  flex: 1;
+  min-width: 0;
+}
+
+.topRow {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 8rpx;
+}
+
+.status {
+  font-size: $font-size-md;
+  font-weight: $font-weight-semibold;
+  color: $color-text-primary;
+}
+
+.time {
+  font-size: $font-size-xs;
+  color: $color-text-tertiary;
+}
+
+.operator {
+  font-size: $font-size-sm;
+  color: $color-text-secondary;
+  margin-bottom: 8rpx;
+}
+
+.remark {
+  font-size: $font-size-sm;
+  color: $color-text-tertiary;
+  line-height: $line-height-normal;
+}
+
+.images {
+  display: flex;
+  gap: $spacing-sm;
+  margin-top: $spacing-sm;
+  flex-wrap: wrap;
+
+  .img {
+    width: 160rpx;
+    height: 160rpx;
+    border-radius: $radius-sm;
+    object-fit: cover;
+  }
+}

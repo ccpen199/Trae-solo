@@ -1,0 +1,44 @@
+@use '@/styles/variables.scss' as *;
+
+.infoCard {
+  background: linear-gradient(135deg, $color-tech 0%, $color-tech-light 100%);
+  border-radius: $radius-lg; padding: $spacing-xl; color: $color-text-white;
+  margin-bottom: $spacing-md;
+
+  .name { font-size: $font-size-xl; font-weight: $font-weight-bold; display: flex; align-items: center; gap: 12rpx; }
+  .loc { font-size: $font-size-sm; opacity: 0.9; margin-top: 12rpx; }
+  .stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: $spacing-md; margin-top: $spacing-lg;
+    padding-top: $spacing-lg; border-top: 1rpx solid rgba(255,255,255,0.2);
+    .item { text-align: center;
+      .num { font-size: $font-size-xl; font-weight: $font-weight-bold; }
+      .label { font-size: $font-size-xs; opacity: 0.85; margin-top: 6rpx; }
+    }
+  }
+}
+
+.dateSelector {
+  display: flex; gap: $spacing-sm; margin-bottom: $spacing-md;
+  .item { flex: 1; padding: $spacing-sm 0; text-align: center; border-radius: $radius-md;
+    background: $color-bg-card; font-size: $font-size-sm; color: $color-text-secondary;
+    &.active { background: $color-primary; color: $color-text-white; font-weight: $font-weight-medium; }
+  }
+}
+
+.logItem {
+  display: flex; align-items: center; gap: $spacing-md; padding: $spacing-lg;
+  background: $color-bg-card; border-radius: $radius-lg; box-shadow: $shadow-card;
+  margin-bottom: $spacing-sm;
+
+  .avatar { width: 72rpx; height: 72rpx; border-radius: 50%; flex-shrink: 0; object-fit: cover; }
+  .info { flex: 1; min-width: 0;
+    .row1 { display: flex; align-items: center; justify-content: space-between;
+      .name { font-size: $font-size-md; font-weight: $font-weight-semibold; color: $color-text-primary; }
+      .time { font-size: 22rpx; color: $color-text-tertiary; }
+    }
+    .row2 { margin-top: 6rpx; display: flex; align-items: center; gap: $spacing-md;
+      font-size: $font-size-xs; color: $color-text-tertiary;
+      .tag { padding: 2rpx 12rpx; border-radius: $radius-round; }
+    }
+  }
+  .statusIcon { font-size: 36rpx; flex-shrink: 0; }
+}
