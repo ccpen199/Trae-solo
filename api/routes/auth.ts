@@ -17,12 +17,17 @@ router.post('/send-code', (req: Request, res: Response): void => {
 
 router.post('/login', (req: Request, res: Response): void => {
   const { phone, code, role } = req.body
+
   if (!phone || !code || !role) {
-    res.status(400).json({ success: false, error: '参数不完整' })
+    res.status(400).json({ success: false, error: '请填写手机号、验证码和角色' })
+    return
+  }
+  if (!/^1\d{10}$/.test(phone)) {
+    res.status(400).json({ success: false, error: '手机号格式不正确' })
     return
   }
   if (code !== '123456') {
-    res.status(400).json({ success: false, error: '验证码错误' })
+    res.status(400).json({ success: false, error: '验证码错误（演示环境：123456）' })
     return
   }
   if (!['driver', 'shipper', 'admin'].includes(role)) {
@@ -33,17 +38,53 @@ router.post('/login', (req: Request, res: Response): void => {
   let user = db.prepare('SELECT * FROM users WHERE phone = ? AND role = ?').get(phone, role) as any
 
   if (!user) {
-    const id = `u_${role.substring(0, 3)}_${uuidv4().substring(0, 8)}`
-    const defaultName = role === 'driver' ? '新司机用户' : role === 'shipper' ? '新货主用户' : '管理员'
-    db.prepare('INSERT INTO users (id, phone, name, role) VALUES (?, ?, ?, ?)').run(id, phone, defaultName, role)
-    
-    if (role === 'driver') {
-      db.prepare('INSERT INTO driver_profiles (id, user_id) VALUES (?, ?)').run(uuidv4(), id)
-    } else if (role === 'shipper') {
-      db.prepare('INSERT INTO shipper_profiles (id, user_id) VALUES (?, ?)').run(uuidv4(), id)
+    const rolePhoneUser = db.prepare('SELECT * FROM users WHERE phone = ?').get(phone) as any
+    if (rolePhoneUser) {
+      res.status(400).json({
+        success: false,
+        error: `该账号已注册为「${rolePhoneUser.role === 'driver' ? '司机' : rolePhoneUser.role === 'shipper' ? '货主' : '管理员'}」，请选择正确角色登录`
+      })
+      return
     }
-    
-    user = db.prepare('SELECT * FROM users WHERE id = ?').get(id)
+
+    if (role === 'admin') {
+      res.status(400).json({ success: false, error: '管理员账号不存在，请联系系统管理员' })
+      return
+    }
+
+    const userCols = db.prepare('PRAGMA table_info(users)').all() as { name: string; type: string; pk: number }[]
+    const idCol = userCols.find(c => c.pk === 1)
+    const isIntId = idCol && /INT/i.test(idCol.type)
+
+    const defaultName = role === 'driver' ? '新司机用户' : '新货主用户'
+    let info
+    if (isIntId) {
+      info = db.prepare('INSERT INTO users (phone, name, role, username, password, avatar) VALUES (?, ?, ?, ?, \'xxxx\', \'\')').run(phone, defaultName, role, phone)
+    } else {
+      const id = `u_${role.substring(0, 3)}_${uuidv4().substring(0, 8)}`
+      info = db.prepare('INSERT INTO users (id, phone, name, role, username, password, avatar) VALUES (?, ?, ?, ?, ?, \'xxxx\', \'\')').run(id, phone, defaultName, role, phone)
+    }
+    const uid = String(info.lastInsertRowid)
+
+    const dpCols = db.prepare('PRAGMA table_info(driver_profiles)').all() as { name: string; type: string; pk: number }[]
+    const dpIntId = (dpCols.find(c => c.pk === 1)?.type || '').toUpperCase()
+    if (role === 'driver') {
+      if (/INT/i.test(dpIntId)) {
+        db.prepare('INSERT INTO driver_profiles (user_id) VALUES (?)').run(uid)
+      } else {
+        db.prepare('INSERT INTO driver_profiles (id, user_id) VALUES (?, ?)').run(uuidv4(), uid)
+      }
+    } else if (role === 'shipper') {
+      const spCols = db.prepare('PRAGMA table_info(shipper_profiles)').all() as { name: string; type: string; pk: number }[]
+      const spIntId = (spCols.find(c => c.pk === 1)?.type || '').toUpperCase()
+      if (/INT/i.test(spIntId)) {
+        db.prepare('INSERT INTO shipper_profiles (user_id) VALUES (?)').run(uid)
+      } else {
+        db.prepare('INSERT INTO shipper_profiles (id, user_id) VALUES (?, ?)').run(uuidv4(), uid)
+      }
+    }
+
+    user = db.prepare('SELECT * FROM users WHERE id = ?').get(uid)
   }
 
   const token = signToken({ userId: String(user.id), role: user.role, phone: user.phone })

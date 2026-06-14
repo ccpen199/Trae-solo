@@ -1,4 +1,4 @@
-import { NavLink, Outlet, useLocation } from 'react-router-dom'
+import { NavLink, Outlet, useLocation, useNavigate } from 'react-router-dom'
 import {
   Home,
   PackageSearch,
@@ -14,27 +14,40 @@ import {
   WifiOff,
   RefreshCw,
   Truck,
+  LogOut,
+  Building2,
+  Upload,
 } from 'lucide-react'
 import { useEffect } from 'react'
 import { useAuthStore } from '@/stores/authStore'
 import { useAppStore } from '@/stores/appStore'
 import { cn } from '@/lib/utils'
 
-const navItems = [
-  { path: '/', label: '首页', icon: Home },
-  { path: '/freight', label: '货源大厅', icon: PackageSearch },
-  { path: '/orders', label: '运单中心', icon: ClipboardList },
-  { path: '/invoices', label: '发票管理', icon: Receipt },
-  { path: '/settlement', label: '结算中心', icon: Wallet },
-  { path: '/safety', label: '安全台账', icon: ShieldCheck },
-  { path: '/certification', label: '实名认证', icon: UserCheck },
-  { path: '/profile', label: '个人中心', icon: User },
+type RoleKey = 'driver' | 'shipper' | 'admin'
+const allNavItems: ({ path: string; label: string; icon: any; roles: RoleKey[] })[] = [
+  { path: '/', label: '工作台', icon: Home, roles: ['driver', 'shipper', 'admin'] },
+  { path: '/freight', label: '货源大厅', icon: PackageSearch, roles: ['driver', 'shipper', 'admin'] },
+  { path: '/freight/create', label: '发布货源', icon: Upload, roles: ['shipper', 'admin'] },
+  { path: '/orders', label: '运单中心', icon: ClipboardList, roles: ['driver', 'shipper', 'admin'] },
+  { path: '/invoices', label: '发票管理', icon: Receipt, roles: ['driver', 'shipper', 'admin'] },
+  { path: '/invoices/entity', label: '开票主体', icon: Building2, roles: ['shipper', 'admin'] },
+  { path: '/settlement', label: '结算中心', icon: Wallet, roles: ['driver', 'shipper', 'admin'] },
+  { path: '/safety', label: '安全台账', icon: ShieldCheck, roles: ['driver', 'shipper', 'admin'] },
+  { path: '/certification', label: '证照核验', icon: UserCheck, roles: ['driver', 'admin'] },
+  { path: '/profile', label: '个人中心', icon: User, roles: ['driver', 'shipper', 'admin'] },
 ]
 
 export default function Layout() {
-  const { user } = useAuthStore()
+  const { user, loadUser, logout, isAuthenticated } = useAuthStore()
   const { sidebarOpen, onlineStatus, syncing, toggleSidebar, setOnlineStatus } = useAppStore()
   const location = useLocation()
+  const navigate = useNavigate()
+
+  useEffect(() => {
+    if (isAuthenticated) {
+      loadUser()
+    }
+  }, [isAuthenticated, loadUser])
 
   useEffect(() => {
     const handleOnline = () => setOnlineStatus(true)
@@ -59,6 +72,15 @@ export default function Layout() {
     window.addEventListener('resize', handleResize)
     return () => window.removeEventListener('resize', handleResize)
   }, [])
+
+  const role = (user?.role as RoleKey) || 'driver'
+  const navItems = allNavItems.filter(item => item.roles.includes(role))
+  const roleText = role === 'driver' ? '司机' : role === 'shipper' ? '货主' : '管理员'
+
+  const handleLogout = () => {
+    logout()
+    navigate('/login', { replace: true })
+  }
 
   return (
     <div className="flex h-screen bg-gray-50">
@@ -197,10 +219,15 @@ export default function Layout() {
               </div>
               <div className="hidden sm:block">
                 <p className="text-sm font-medium text-gray-900">{user?.name || '用户'}</p>
-                <p className="text-xs text-gray-500">
-                  {user?.role === 'driver' ? '司机' : '货主'}
-                </p>
+                <p className="text-xs text-gray-500">{roleText}</p>
               </div>
+              <button
+                onClick={handleLogout}
+                className="ml-1 p-1.5 rounded-lg text-gray-400 hover:text-coral-500 hover:bg-coral-50 transition-colors"
+                title="退出登录"
+              >
+                <LogOut className="h-4 w-4" />
+              </button>
             </div>
           </div>
         </header>
