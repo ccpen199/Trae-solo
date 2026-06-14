@@ -1,0 +1,45 @@
+{
+  "ok": true,
+  "generatedAt": "2026-06-05T20:38:24.297Z",
+  "checks": [
+    {
+      "name": "home renders without vite error",
+      "ok": true,
+      "status": 200
+    },
+    {
+      "name": "home search/filter shows result text",
+      "ok": true,
+      "preview": "南京市公共服务聚合平台\n首页\n挂号\n交通\n文旅\n社保\n公安\n登录\n注册\n南京市公共服务聚合平台\n\n一网通办  ·  一码通行  ·  一键诉求\n\n搜索框可查询热门服务，输入后下方展示查询结果\n\n卫健挂号\n预约挂号 · 健康档案\n6家医院\n\n1,286个可约号源\n\n交通出行\n公交地铁 · 实时查询\n3条地铁\n\n5条公交线路实时更新\n\n文旅预约\n景点预约 · 文"
+    },
+    {
+      "name": "register creates logged-in citizen",
+      "ok": true,
+      "status": 200,
+      "finalUrl": "http://127.0.0.1:49062/",
+      "phone": "13991908227"
+    },
+    {
+      "name": "profile page reachable after auth",
+      "ok": true,
+      "status": 200,
+      "finalUrl": "http://127.0.0.1:49062/profile"
+    },
+    {
+      "name": "admin login succeeds",
+      "ok": true,
+      "status": 200,
+      "finalUrl": "http://127.0.0.1:49062/"
+    },
+    {
+      "name": "admin services page loads data",
+      "ok": true,
+      "status": 200,
+      "finalUrl": "http://127.0.0.1:49062/admin/services"
+    }
+  ],
+  "consoleErrors": [],
+  "pageErrors": [],
+  "requestFailures": [],
+  "responseErrors": []
+}

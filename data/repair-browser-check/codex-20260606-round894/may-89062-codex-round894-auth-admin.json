@@ -1,0 +1,34 @@
+{
+  "ok": true,
+  "checks": [
+    {
+      "name": "home-search",
+      "ok": true,
+      "url": "http://127.0.0.1:49062/"
+    },
+    {
+      "name": "register-temp-user",
+      "ok": true,
+      "phone": "13602033543",
+      "url": "http://127.0.0.1:49062/"
+    },
+    {
+      "name": "admin-login",
+      "ok": true,
+      "url": "http://127.0.0.1:49062/"
+    },
+    {
+      "name": "profile-page",
+      "ok": true,
+      "url": "http://127.0.0.1:49062/profile"
+    },
+    {
+      "name": "admin-services-page",
+      "ok": true,
+      "url": "http://127.0.0.1:49062/admin/services"
+    }
+  ],
+  "consoleErrors": [],
+  "requestFailures": [],
+  "responseErrors": []
+}
