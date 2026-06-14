@@ -1,0 +1,4469 @@
+{
+  "ok": true,
+  "generatedAt": "2026-06-08T08:19:03.301Z",
+  "order": "may-89094",
+  "roundIndex": 172,
+  "captureId": "may-89094-cycle172-repair",
+  "url": "http://127.0.0.1:49094/",
+  "initialUrl": "http://127.0.0.1:49094/",
+  "finalUrl": "http://127.0.0.1:49094/",
+  "status": 200,
+  "title": "山东区域垂直招聘平台",
+  "initialTitle": "山东区域垂直招聘平台",
+  "navigationError": "",
+  "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89094/runtime-check/codex-20260608-cycle172-repair/may-89094-cycle172-repair-frontend.png",
+  "screenshotPaths": [
+    "/Users/chen/Documents/trae_projects/local_projects/may-89094/runtime-check/codex-20260608-cycle172-repair/may-89094-cycle172-repair-structure-01-首屏.png",
+    "/Users/chen/Documents/trae_projects/local_projects/may-89094/runtime-check/codex-20260608-cycle172-repair/may-89094-cycle172-repair-structure-02-导航-搜索筛选.png",
+    "/Users/chen/Documents/trae_projects/local_projects/may-89094/runtime-check/codex-20260608-cycle172-repair/may-89094-cycle172-repair-structure-03-操作-重置筛选.png",
+    "/Users/chen/Documents/trae_projects/local_projects/may-89094/runtime-check/codex-20260608-cycle172-repair/may-89094-cycle172-repair-structure-04-二层操作-重置筛选-提交购买.png",
+    "/Users/chen/Documents/trae_projects/local_projects/may-89094/runtime-check/codex-20260608-cycle172-repair/may-89094-cycle172-repair-structure-05-操作-刷新.png",
+    "/Users/chen/Documents/trae_projects/local_projects/may-89094/runtime-check/codex-20260608-cycle172-repair/may-89094-cycle172-repair-structure-06-二层操作-刷新-提交购买.png",
+    "/Users/chen/Documents/trae_projects/local_projects/may-89094/runtime-check/codex-20260608-cycle172-repair/may-89094-cycle172-repair-structure-07-导航-购买提交.png",
+    "/Users/chen/Documents/trae_projects/local_projects/may-89094/runtime-check/codex-20260608-cycle172-repair/may-89094-cycle172-repair-structure-08-操作-重置筛选.png",
+    "/Users/chen/Documents/trae_projects/local_projects/may-89094/runtime-check/codex-20260608-cycle172-repair/may-89094-cycle172-repair-structure-09-二层操作-重置筛选-提交购买.png",
+    "/Users/chen/Documents/trae_projects/local_projects/may-89094/runtime-check/codex-20260608-cycle172-repair/may-89094-cycle172-repair-structure-10-操作-刷新.png",
+    "/Users/chen/Documents/trae_projects/local_projects/may-89094/runtime-check/codex-20260608-cycle172-repair/may-89094-cycle172-repair-structure-11-二层操作-刷新-提交购买.png",
+    "/Users/chen/Documents/trae_projects/local_projects/may-89094/runtime-check/codex-20260608-cycle172-repair/may-89094-cycle172-repair-structure-12-导航-个人中心.png"
+  ],
+  "issueTextPreview": "网页已打开但复验失败；搜索/筛选相关问题；购买/提交相关问题；个人中心/我的相关问题；后台管理相关问题；详情/内容页相关问题",
+  "targetReason": "个人中心/我的相关问题；搜索/筛选相关问题；后台管理相关问题；购买/提交相关问题；详情/内容页相关问题",
+  "targetKind": "personal",
+  "targetMatched": true,
+  "targetActions": [
+    {
+      "action": "click",
+      "label": "个人中心/我的相关问题",
+      "ok": true
+    },
+    {
+      "action": "target-verify",
+      "label": "个人中心/我的相关问题",
+      "ok": true,
+      "finalUrl": "http://127.0.0.1:49094/#profile"
+    }
+  ],
+  "authFlow": {
+    "detected": false,
+    "attempted": false,
+    "success": false,
+    "finalUrl": "http://127.0.0.1:49094/",
+    "message": "",
+    "actions": []
+  },
+  "businessAudit": {
+    "actions": [
+      {
+        "action": "click",
+        "label": "导航:搜索筛选",
+        "ok": true
+      },
+      {
+        "action": "click",
+        "label": "操作:重置筛选",
+        "ok": true,
+        "result": {
+          "ok": true,
+          "matched": 1
+        }
+      },
+      {
+        "action": "click",
+        "label": "二层操作:重置筛选:提交购买",
+        "ok": true,
+        "result": {
+          "ok": true,
+          "matched": 1
+        }
+      },
+      {
+        "action": "click",
+        "label": "操作:刷新",
+        "ok": true,
+        "result": {
+          "ok": true,
+          "matched": 1
+        }
+      },
+      {
+        "action": "click",
+        "label": "二层操作:刷新:提交购买",
+        "ok": true,
+        "result": {
+          "ok": true,
+          "matched": 1
+        }
+      },
+      {
+        "action": "click",
+        "label": "导航:购买提交",
+        "ok": true
+      },
+      {
+        "action": "click",
+        "label": "操作:重置筛选",
+        "ok": true,
+        "result": {
+          "ok": true,
+          "matched": 1
+        }
+      },
+      {
+        "action": "click",
+        "label": "二层操作:重置筛选:提交购买",
+        "ok": true,
+        "result": {
+          "ok": true,
+          "matched": 1
+        }
+      },
+      {
+        "action": "click",
+        "label": "操作:刷新",
+        "ok": true,
+        "result": {
+          "ok": true,
+          "matched": 1
+        }
+      },
+      {
+        "action": "click",
+        "label": "二层操作:刷新:提交购买",
+        "ok": true,
+        "result": {
+          "ok": true,
+          "matched": 1
+        }
+      },
+      {
+        "action": "click",
+        "label": "导航:个人中心",
+        "ok": true
+      },
+      {
+        "action": "click",
+        "label": "操作:重置筛选",
+        "ok": true,
+        "result": {
+          "ok": true,
+          "matched": 1
+        }
+      },
+      {
+        "action": "click",
+        "label": "操作:刷新",
+        "ok": true,
+        "result": {
+          "ok": true,
+          "matched": 1
+        }
+      },
+      {
+        "action": "click",
+        "label": "导航:后台管理",
+        "ok": true
+      },
+      {
+        "action": "click",
+        "label": "操作:重置筛选",
+        "ok": true,
+        "result": {
+          "ok": true,
+          "matched": 1
+        }
+      },
+      {
+        "action": "click",
+        "label": "操作:刷新",
+        "ok": true,
+        "result": {
+          "ok": true,
+          "matched": 1
+        }
+      }
+    ],
+    "snapshots": [
+      {
+        "label": "首屏",
+        "url": "http://127.0.0.1:49094/",
+        "title": "山东区域垂直招聘平台",
+        "headings": [
+          "山东区域垂直招聘平台",
+          "求职者、企业HR、院校与监管账号入口",
+          "搜索结果 / 简历建档、岗位匹配与本地服务",
+          "求职者智能建档与简历OCR",
+          "山东地市岗位智能匹配",
+          "企业资质强审核",
+          "区域人才供需热力与虚假职位拦截",
+          "简历OCR建档与解析",
+          "LBS岗位精准匹配",
+          "面试协同与录用意向",
+          "面试预约与录用意向",
+          "人才供需热力分析"
+        ],
+        "navLabels": [
+          "搜索筛选",
+          "购买提交",
+          "个人中心",
+          "后台管理"
+        ],
+        "buttons": [
+          "登录 / 注册",
+          "重置筛选",
+          "购买",
+          "提交购买",
+          "提交需求",
+          "刷新",
+          "刷新后台"
+        ],
+        "links": [
+          "搜索筛选",
+          "购买提交",
+          "个人中心",
+          "后台管理"
+        ],
+        "inputs": [
+          {
+            "tag": "input",
+            "type": "",
+            "placeholder": "姓名",
+            "name": "name",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "",
+            "placeholder": "手机号",
+            "name": "phone",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "",
+            "placeholder": "搜索山东地市、LBS、简历OCR、社保核验",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "select",
+            "type": "",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "select",
+            "type": "",
+            "placeholder": "",
+            "name": "serviceId",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "",
+            "placeholder": "联系人",
+            "name": "customer",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "",
+            "placeholder": "联系电话",
+            "name": "phone",
+            "label": ""
+          },
+          {
+            "tag": "textarea",
+            "type": "",
+            "placeholder": "需求说明",
+            "name": "note",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "",
+            "placeholder": "需求标题",
+            "name": "title",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "",
+            "placeholder": "联系方式",
+            "name": "contact",
+            "label": ""
+          },
+          {
+            "tag": "textarea",
+            "type": "",
+            "placeholder": "详细描述",
+            "name": "detail",
+            "label": ""
+          }
+        ],
+        "tables": [],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "Regional Talent Matching 山东区域垂直招聘平台 搜索筛选 购买提交 个人中心 后台管理 前端 http://127.0.0.1:49094 后端 http://127.0.0.1:59094/api 健康检查 正常 登录注册 求职者、企业HR、院校与监管账号入口 可使用 13800138000 或直接注册新手机号，登录后会写入本地状态。 登录 / 注册 搜索 / 筛选 搜索结果 / 简历建档、岗位匹配与本地服务 全部企业审核后台管理岗位匹配搜索筛选本地服务求职者服务简历建档面试协同 重置筛选 求职者服务 可建档 求职者智能建档与简历OCR 解析学历、技能、经验和期望薪资标签，支持简历OCR自动补全。 山东人才档案中心 评分 4.9 ¥49 购买 岗位匹配 可购买 山东地市岗位智能匹配 按山东地市、LBS距离、经验年限、技能栈和期望薪资推荐合适岗位。 区域人才算法中心 评分 4.9 ¥199 购买 企业审核 审核中 企业资质强审核 核验营业执照、社保缴纳数据和用工黑名单，拦截异常招聘主体。 资质风控台 评分 4.8 ¥199 购买 后台管理 监测中 区域人才供需热力与虚假职位拦截 展示区域人才供需热力图、简历转化率、面试到场率、offer接受率和虚假职位实时拦截。 招聘监管驾驶舱 评分 4.8 ¥299 购买 简历建档 可购买 简历OCR建档与解析 上传简历或证书后自动抽取学历、工作经历、技能标签和求职意向。 人才数据服务台 评分 4.8 ¥129 购买 岗位匹配 推荐中 LBS岗位精准匹配 按山东16地市、行业、经验年限、技能栈和通勤距离匹配岗位与人才。 双向推荐算法 评分 4.7 ¥99 购买 后台管理 审核中 企业资质强审核 核验营业执照、社保缴纳、用工黑名单和虚假职位风险。 招聘监管看板 评分 4.7 ¥299 购买 面试协同 可预约 面试协同与录用意向 支持在线预约、视频面试、面试评价模板和录用意向一键发送。 招聘流程工作台 评分 4.6 ¥129 购买 本地服务 可购买 面试预约与录用意向 连接求职者、企业HR和院校就业办，沉淀面试、录用和补贴申请记录。 招聘协同中心 评分 4.6 ¥89 购买 搜索筛选 可购买 人才供需热力分析 按城市、行业、薪资和技能缺口筛选人才供需热力与招聘效能。 山东人才地图 评分 4.5 ¥159 购买 购买 / 提交 提交岗位匹配、面试预约或录用意向 表单会调用后端接口并写入 SQLite，后台管理和个人中心会立即刷新。 求职者智能建档与简历OCR - ¥49山东地市岗位智能匹配 - ¥199企业资质强审核 - ¥199区域人才供需热力与虚假职位拦截 - ¥299简历OCR建档与解析 - ¥129LBS岗位精准匹配 - ¥99企业资质强审核 - ¥299面试协同与录用意向 - ¥129面试预约与录用意向 - ¥89人才供需热力分析 - ¥159 请安排顾问跟进本次服务。 提交购买 需求提交 提交资质审核、补贴申领或培训报名需求 希望按月分析收支并给出提醒规则。 提交需求 个人中心 / 我的 我的订单与资料 刷新 用户演示用户 手机13800138000 订单295 需求1 #295 演示用户已提交 ¥49#294 演示用户已提交 ¥49#293 演示用户已提交 ¥49#292 演示用户已提交 ¥49#291 演示用户已提交 ¥49#290 演示用户已提交 ¥49#289 演示用户已提交 ¥49#288 演示用户已提交 ¥49#287 演示用户已提交 ¥49#286 演示用户已提交 ¥49#285 演示用户已提交 ¥49#284 演示用户已提交 ¥49 后台管理 人才供需热力、招聘效能与虚假职位拦截 刷新后台 用户2 服务10 订单295 收入¥14585 user提交订单 #295user提交订单 #294user提交订单 #293user提交订单 #292user提交订单 #291 接口响应 { \"ok\": true, \"status\": \"ok\", \"project\": \"may-89094\", \"db\": \"/Users/chen/Documents/trae_projects/local_projects/may-89094/data/app.sqlite\", \"",
+        "layout": {
+          "viewportWidth": 1504,
+          "viewportHeight": 1600,
+          "scrollWidth": 1504,
+          "scrollHeight": 3961,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89094-cycle172-repair-structure-01-首屏",
+          "label": "首屏",
+          "finalUrl": "http://127.0.0.1:49094/",
+          "title": "山东区域垂直招聘平台",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89094/runtime-check/codex-20260608-cycle172-repair/may-89094-cycle172-repair-structure-01-首屏.json",
+          "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89094/runtime-check/codex-20260608-cycle172-repair/may-89094-cycle172-repair-structure-01-首屏.png",
+          "elementCount": 300,
+          "interactiveCount": 31,
+          "interactiveLabels": [
+            "搜索筛选",
+            "购买提交",
+            "个人中心",
+            "后台管理",
+            "演示用户",
+            "13800138000",
+            "登录 / 注册",
+            "搜索山东地市、LBS、简历OCR、社保核验",
+            "全部 企业审核 后台管理 岗位匹配 搜索筛选 本地服务 求职者服务 简历建档 面试协同",
+            "重置筛选",
+            "购买",
+            "求职者智能建档与简历OCR - ¥49 山东地市岗位智能匹配 - ¥199 企业资质强审核 - ¥199 区域人才供需热力与虚假职位拦截 - ¥299 简历OCR建档与解析 - ¥129 LBS岗位精准匹配 - ¥99 企业资质强审核 - ¥299 面试协同与录用意向 - ¥129 面试预约与录用意向 - ¥89 人才供需热力分析 - ¥159",
+            "请根据地市、经验年限、技能栈和期望薪资推荐岗位并预约面试。",
+            "提交购买",
+            "企业资质强审核申请",
+            "需要核验营业执照、社保缴纳数据和用工黑名单，并进入招聘效能分析。",
+            "提交需求",
+            "刷新",
+            "刷新后台"
+          ]
+        }
+      },
+      {
+        "label": "导航:搜索筛选",
+        "url": "http://127.0.0.1:49094/#search",
+        "title": "山东区域垂直招聘平台",
+        "headings": [
+          "山东区域垂直招聘平台",
+          "求职者、企业HR、院校与监管账号入口",
+          "搜索结果 / 简历建档、岗位匹配与本地服务",
+          "求职者智能建档与简历OCR",
+          "山东地市岗位智能匹配",
+          "企业资质强审核",
+          "区域人才供需热力与虚假职位拦截",
+          "简历OCR建档与解析",
+          "LBS岗位精准匹配",
+          "面试协同与录用意向",
+          "面试预约与录用意向",
+          "人才供需热力分析"
+        ],
+        "navLabels": [
+          "搜索筛选",
+          "购买提交",
+          "个人中心",
+          "后台管理"
+        ],
+        "buttons": [
+          "登录 / 注册",
+          "重置筛选",
+          "购买",
+          "提交购买",
+          "提交需求",
+          "刷新",
+          "刷新后台"
+        ],
+        "links": [
+          "搜索筛选",
+          "购买提交",
+          "个人中心",
+          "后台管理"
+        ],
+        "inputs": [
+          {
+            "tag": "input",
+            "type": "",
+            "placeholder": "姓名",
+            "name": "name",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "",
+            "placeholder": "手机号",
+            "name": "phone",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "",
+            "placeholder": "搜索山东地市、LBS、简历OCR、社保核验",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "select",
+            "type": "",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "select",
+            "type": "",
+            "placeholder": "",
+            "name": "serviceId",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "",
+            "placeholder": "联系人",
+            "name": "customer",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "",
+            "placeholder": "联系电话",
+            "name": "phone",
+            "label": ""
+          },
+          {
+            "tag": "textarea",
+            "type": "",
+            "placeholder": "需求说明",
+            "name": "note",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "",
+            "placeholder": "需求标题",
+            "name": "title",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "",
+            "placeholder": "联系方式",
+            "name": "contact",
+            "label": ""
+          },
+          {
+            "tag": "textarea",
+            "type": "",
+            "placeholder": "详细描述",
+            "name": "detail",
+            "label": ""
+          }
+        ],
+        "tables": [],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "Regional Talent Matching 山东区域垂直招聘平台 搜索筛选 购买提交 个人中心 后台管理 前端 http://127.0.0.1:49094 后端 http://127.0.0.1:59094/api 健康检查 正常 登录注册 求职者、企业HR、院校与监管账号入口 可使用 13800138000 或直接注册新手机号，登录后会写入本地状态。 登录 / 注册 搜索 / 筛选 搜索结果 / 简历建档、岗位匹配与本地服务 全部企业审核后台管理岗位匹配搜索筛选本地服务求职者服务简历建档面试协同 重置筛选 求职者服务 可建档 求职者智能建档与简历OCR 解析学历、技能、经验和期望薪资标签，支持简历OCR自动补全。 山东人才档案中心 评分 4.9 ¥49 购买 岗位匹配 可购买 山东地市岗位智能匹配 按山东地市、LBS距离、经验年限、技能栈和期望薪资推荐合适岗位。 区域人才算法中心 评分 4.9 ¥199 购买 企业审核 审核中 企业资质强审核 核验营业执照、社保缴纳数据和用工黑名单，拦截异常招聘主体。 资质风控台 评分 4.8 ¥199 购买 后台管理 监测中 区域人才供需热力与虚假职位拦截 展示区域人才供需热力图、简历转化率、面试到场率、offer接受率和虚假职位实时拦截。 招聘监管驾驶舱 评分 4.8 ¥299 购买 简历建档 可购买 简历OCR建档与解析 上传简历或证书后自动抽取学历、工作经历、技能标签和求职意向。 人才数据服务台 评分 4.8 ¥129 购买 岗位匹配 推荐中 LBS岗位精准匹配 按山东16地市、行业、经验年限、技能栈和通勤距离匹配岗位与人才。 双向推荐算法 评分 4.7 ¥99 购买 后台管理 审核中 企业资质强审核 核验营业执照、社保缴纳、用工黑名单和虚假职位风险。 招聘监管看板 评分 4.7 ¥299 购买 面试协同 可预约 面试协同与录用意向 支持在线预约、视频面试、面试评价模板和录用意向一键发送。 招聘流程工作台 评分 4.6 ¥129 购买 本地服务 可购买 面试预约与录用意向 连接求职者、企业HR和院校就业办，沉淀面试、录用和补贴申请记录。 招聘协同中心 评分 4.6 ¥89 购买 搜索筛选 可购买 人才供需热力分析 按城市、行业、薪资和技能缺口筛选人才供需热力与招聘效能。 山东人才地图 评分 4.5 ¥159 购买 购买 / 提交 提交岗位匹配、面试预约或录用意向 表单会调用后端接口并写入 SQLite，后台管理和个人中心会立即刷新。 求职者智能建档与简历OCR - ¥49山东地市岗位智能匹配 - ¥199企业资质强审核 - ¥199区域人才供需热力与虚假职位拦截 - ¥299简历OCR建档与解析 - ¥129LBS岗位精准匹配 - ¥99企业资质强审核 - ¥299面试协同与录用意向 - ¥129面试预约与录用意向 - ¥89人才供需热力分析 - ¥159 请安排顾问跟进本次服务。 提交购买 需求提交 提交资质审核、补贴申领或培训报名需求 希望按月分析收支并给出提醒规则。 提交需求 个人中心 / 我的 我的订单与资料 刷新 用户演示用户 手机13800138000 订单295 需求1 #295 演示用户已提交 ¥49#294 演示用户已提交 ¥49#293 演示用户已提交 ¥49#292 演示用户已提交 ¥49#291 演示用户已提交 ¥49#290 演示用户已提交 ¥49#289 演示用户已提交 ¥49#288 演示用户已提交 ¥49#287 演示用户已提交 ¥49#286 演示用户已提交 ¥49#285 演示用户已提交 ¥49#284 演示用户已提交 ¥49 后台管理 人才供需热力、招聘效能与虚假职位拦截 刷新后台 用户2 服务10 订单295 收入¥14585 user提交订单 #295user提交订单 #294user提交订单 #293user提交订单 #292user提交订单 #291 接口响应 { \"ok\": true, \"status\": \"ok\", \"project\": \"may-89094\", \"db\": \"/Users/chen/Documents/trae_projects/local_projects/may-89094/data/app.sqlite\", \"",
+        "layout": {
+          "viewportWidth": 1536,
+          "viewportHeight": 1600,
+          "scrollWidth": 1536,
+          "scrollHeight": 3961,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89094-cycle172-repair-structure-02-导航-搜索筛选",
+          "label": "导航:搜索筛选",
+          "finalUrl": "http://127.0.0.1:49094/#search",
+          "title": "山东区域垂直招聘平台",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89094/runtime-check/codex-20260608-cycle172-repair/may-89094-cycle172-repair-structure-02-导航-搜索筛选.json",
+          "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89094/runtime-check/codex-20260608-cycle172-repair/may-89094-cycle172-repair-structure-02-导航-搜索筛选.png",
+          "elementCount": 300,
+          "interactiveCount": 31,
+          "interactiveLabels": [
+            "搜索筛选",
+            "购买提交",
+            "个人中心",
+            "后台管理",
+            "演示用户",
+            "13800138000",
+            "登录 / 注册",
+            "搜索山东地市、LBS、简历OCR、社保核验",
+            "全部 企业审核 后台管理 岗位匹配 搜索筛选 本地服务 求职者服务 简历建档 面试协同",
+            "重置筛选",
+            "购买",
+            "求职者智能建档与简历OCR - ¥49 山东地市岗位智能匹配 - ¥199 企业资质强审核 - ¥199 区域人才供需热力与虚假职位拦截 - ¥299 简历OCR建档与解析 - ¥129 LBS岗位精准匹配 - ¥99 企业资质强审核 - ¥299 面试协同与录用意向 - ¥129 面试预约与录用意向 - ¥89 人才供需热力分析 - ¥159",
+            "请根据地市、经验年限、技能栈和期望薪资推荐岗位并预约面试。",
+            "提交购买",
+            "企业资质强审核申请",
+            "需要核验营业执照、社保缴纳数据和用工黑名单，并进入招聘效能分析。",
+            "提交需求",
+            "刷新",
+            "刷新后台"
+          ]
+        }
+      },
+      {
+        "label": "操作:重置筛选",
+        "url": "http://127.0.0.1:49094/#search",
+        "title": "山东区域垂直招聘平台",
+        "headings": [
+          "山东区域垂直招聘平台",
+          "求职者、企业HR、院校与监管账号入口",
+          "搜索结果 / 简历建档、岗位匹配与本地服务",
+          "求职者智能建档与简历OCR",
+          "山东地市岗位智能匹配",
+          "企业资质强审核",
+          "区域人才供需热力与虚假职位拦截",
+          "简历OCR建档与解析",
+          "LBS岗位精准匹配",
+          "面试协同与录用意向",
+          "面试预约与录用意向",
+          "人才供需热力分析"
+        ],
+        "navLabels": [
+          "搜索筛选",
+          "购买提交",
+          "个人中心",
+          "后台管理"
+        ],
+        "buttons": [
+          "登录 / 注册",
+          "重置筛选",
+          "购买",
+          "提交购买",
+          "提交需求",
+          "刷新",
+          "刷新后台"
+        ],
+        "links": [
+          "搜索筛选",
+          "购买提交",
+          "个人中心",
+          "后台管理"
+        ],
+        "inputs": [
+          {
+            "tag": "input",
+            "type": "",
+            "placeholder": "姓名",
+            "name": "name",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "",
+            "placeholder": "手机号",
+            "name": "phone",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "",
+            "placeholder": "搜索山东地市、LBS、简历OCR、社保核验",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "select",
+            "type": "",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "select",
+            "type": "",
+            "placeholder": "",
+            "name": "serviceId",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "",
+            "placeholder": "联系人",
+            "name": "customer",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "",
+            "placeholder": "联系电话",
+            "name": "phone",
+            "label": ""
+          },
+          {
+            "tag": "textarea",
+            "type": "",
+            "placeholder": "需求说明",
+            "name": "note",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "",
+            "placeholder": "需求标题",
+            "name": "title",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "",
+            "placeholder": "联系方式",
+            "name": "contact",
+            "label": ""
+          },
+          {
+            "tag": "textarea",
+            "type": "",
+            "placeholder": "详细描述",
+            "name": "detail",
+            "label": ""
+          }
+        ],
+        "tables": [],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "Regional Talent Matching 山东区域垂直招聘平台 搜索筛选 购买提交 个人中心 后台管理 前端 http://127.0.0.1:49094 后端 http://127.0.0.1:59094/api 健康检查 正常 登录注册 求职者、企业HR、院校与监管账号入口 可使用 13800138000 或直接注册新手机号，登录后会写入本地状态。 登录 / 注册 搜索 / 筛选 搜索结果 / 简历建档、岗位匹配与本地服务 全部企业审核后台管理岗位匹配搜索筛选本地服务求职者服务简历建档面试协同 重置筛选 求职者服务 可建档 求职者智能建档与简历OCR 解析学历、技能、经验和期望薪资标签，支持简历OCR自动补全。 山东人才档案中心 评分 4.9 ¥49 购买 岗位匹配 可购买 山东地市岗位智能匹配 按山东地市、LBS距离、经验年限、技能栈和期望薪资推荐合适岗位。 区域人才算法中心 评分 4.9 ¥199 购买 企业审核 审核中 企业资质强审核 核验营业执照、社保缴纳数据和用工黑名单，拦截异常招聘主体。 资质风控台 评分 4.8 ¥199 购买 后台管理 监测中 区域人才供需热力与虚假职位拦截 展示区域人才供需热力图、简历转化率、面试到场率、offer接受率和虚假职位实时拦截。 招聘监管驾驶舱 评分 4.8 ¥299 购买 简历建档 可购买 简历OCR建档与解析 上传简历或证书后自动抽取学历、工作经历、技能标签和求职意向。 人才数据服务台 评分 4.8 ¥129 购买 岗位匹配 推荐中 LBS岗位精准匹配 按山东16地市、行业、经验年限、技能栈和通勤距离匹配岗位与人才。 双向推荐算法 评分 4.7 ¥99 购买 后台管理 审核中 企业资质强审核 核验营业执照、社保缴纳、用工黑名单和虚假职位风险。 招聘监管看板 评分 4.7 ¥299 购买 面试协同 可预约 面试协同与录用意向 支持在线预约、视频面试、面试评价模板和录用意向一键发送。 招聘流程工作台 评分 4.6 ¥129 购买 本地服务 可购买 面试预约与录用意向 连接求职者、企业HR和院校就业办，沉淀面试、录用和补贴申请记录。 招聘协同中心 评分 4.6 ¥89 购买 搜索筛选 可购买 人才供需热力分析 按城市、行业、薪资和技能缺口筛选人才供需热力与招聘效能。 山东人才地图 评分 4.5 ¥159 购买 购买 / 提交 提交岗位匹配、面试预约或录用意向 表单会调用后端接口并写入 SQLite，后台管理和个人中心会立即刷新。 求职者智能建档与简历OCR - ¥49山东地市岗位智能匹配 - ¥199企业资质强审核 - ¥199区域人才供需热力与虚假职位拦截 - ¥299简历OCR建档与解析 - ¥129LBS岗位精准匹配 - ¥99企业资质强审核 - ¥299面试协同与录用意向 - ¥129面试预约与录用意向 - ¥89人才供需热力分析 - ¥159 请安排顾问跟进本次服务。 提交购买 需求提交 提交资质审核、补贴申领或培训报名需求 希望按月分析收支并给出提醒规则。 提交需求 个人中心 / 我的 我的订单与资料 刷新 用户演示用户 手机13800138000 订单295 需求1 #295 演示用户已提交 ¥49#294 演示用户已提交 ¥49#293 演示用户已提交 ¥49#292 演示用户已提交 ¥49#291 演示用户已提交 ¥49#290 演示用户已提交 ¥49#289 演示用户已提交 ¥49#288 演示用户已提交 ¥49#287 演示用户已提交 ¥49#286 演示用户已提交 ¥49#285 演示用户已提交 ¥49#284 演示用户已提交 ¥49 后台管理 人才供需热力、招聘效能与虚假职位拦截 刷新后台 用户2 服务10 订单295 收入¥14585 user提交订单 #295user提交订单 #294user提交订单 #293user提交订单 #292user提交订单 #291 接口响应 { \"ok\": true, \"status\": \"ok\", \"project\": \"may-89094\", \"db\": \"/Users/chen/Documents/trae_projects/local_projects/may-89094/data/app.sqlite\", \"",
+        "layout": {
+          "viewportWidth": 1568,
+          "viewportHeight": 1600,
+          "scrollWidth": 1568,
+          "scrollHeight": 3961,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89094-cycle172-repair-structure-03-操作-重置筛选",
+          "label": "操作:重置筛选",
+          "finalUrl": "http://127.0.0.1:49094/#search",
+          "title": "山东区域垂直招聘平台",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89094/runtime-check/codex-20260608-cycle172-repair/may-89094-cycle172-repair-structure-03-操作-重置筛选.json",
+          "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89094/runtime-check/codex-20260608-cycle172-repair/may-89094-cycle172-repair-structure-03-操作-重置筛选.png",
+          "elementCount": 300,
+          "interactiveCount": 31,
+          "interactiveLabels": [
+            "搜索筛选",
+            "购买提交",
+            "个人中心",
+            "后台管理",
+            "演示用户",
+            "13800138000",
+            "登录 / 注册",
+            "搜索山东地市、LBS、简历OCR、社保核验",
+            "全部 企业审核 后台管理 岗位匹配 搜索筛选 本地服务 求职者服务 简历建档 面试协同",
+            "重置筛选",
+            "购买",
+            "求职者智能建档与简历OCR - ¥49 山东地市岗位智能匹配 - ¥199 企业资质强审核 - ¥199 区域人才供需热力与虚假职位拦截 - ¥299 简历OCR建档与解析 - ¥129 LBS岗位精准匹配 - ¥99 企业资质强审核 - ¥299 面试协同与录用意向 - ¥129 面试预约与录用意向 - ¥89 人才供需热力分析 - ¥159",
+            "请根据地市、经验年限、技能栈和期望薪资推荐岗位并预约面试。",
+            "提交购买",
+            "企业资质强审核申请",
+            "需要核验营业执照、社保缴纳数据和用工黑名单，并进入招聘效能分析。",
+            "提交需求",
+            "刷新",
+            "刷新后台"
+          ]
+        }
+      },
+      {
+        "label": "二层操作:重置筛选->提交购买",
+        "url": "http://127.0.0.1:49094/#search",
+        "title": "山东区域垂直招聘平台",
+        "headings": [
+          "山东区域垂直招聘平台",
+          "求职者、企业HR、院校与监管账号入口",
+          "搜索结果 / 简历建档、岗位匹配与本地服务",
+          "求职者智能建档与简历OCR",
+          "山东地市岗位智能匹配",
+          "企业资质强审核",
+          "区域人才供需热力与虚假职位拦截",
+          "简历OCR建档与解析",
+          "LBS岗位精准匹配",
+          "面试协同与录用意向",
+          "面试预约与录用意向",
+          "人才供需热力分析"
+        ],
+        "navLabels": [
+          "搜索筛选",
+          "购买提交",
+          "个人中心",
+          "后台管理"
+        ],
+        "buttons": [
+          "登录 / 注册",
+          "重置筛选",
+          "购买",
+          "提交购买",
+          "提交需求",
+          "刷新",
+          "刷新后台"
+        ],
+        "links": [
+          "搜索筛选",
+          "购买提交",
+          "个人中心",
+          "后台管理"
+        ],
+        "inputs": [
+          {
+            "tag": "input",
+            "type": "",
+            "placeholder": "姓名",
+            "name": "name",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "",
+            "placeholder": "手机号",
+            "name": "phone",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "",
+            "placeholder": "搜索山东地市、LBS、简历OCR、社保核验",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "select",
+            "type": "",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "select",
+            "type": "",
+            "placeholder": "",
+            "name": "serviceId",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "",
+            "placeholder": "联系人",
+            "name": "customer",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "",
+            "placeholder": "联系电话",
+            "name": "phone",
+            "label": ""
+          },
+          {
+            "tag": "textarea",
+            "type": "",
+            "placeholder": "需求说明",
+            "name": "note",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "",
+            "placeholder": "需求标题",
+            "name": "title",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "",
+            "placeholder": "联系方式",
+            "name": "contact",
+            "label": ""
+          },
+          {
+            "tag": "textarea",
+            "type": "",
+            "placeholder": "详细描述",
+            "name": "detail",
+            "label": ""
+          }
+        ],
+        "tables": [],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "Regional Talent Matching 山东区域垂直招聘平台 搜索筛选 购买提交 个人中心 后台管理 前端 http://127.0.0.1:49094 后端 http://127.0.0.1:59094/api 健康检查 正常 登录注册 求职者、企业HR、院校与监管账号入口 可使用 13800138000 或直接注册新手机号，登录后会写入本地状态。 登录 / 注册 搜索 / 筛选 搜索结果 / 简历建档、岗位匹配与本地服务 全部企业审核后台管理岗位匹配搜索筛选本地服务求职者服务简历建档面试协同 重置筛选 求职者服务 可建档 求职者智能建档与简历OCR 解析学历、技能、经验和期望薪资标签，支持简历OCR自动补全。 山东人才档案中心 评分 4.9 ¥49 购买 岗位匹配 可购买 山东地市岗位智能匹配 按山东地市、LBS距离、经验年限、技能栈和期望薪资推荐合适岗位。 区域人才算法中心 评分 4.9 ¥199 购买 企业审核 审核中 企业资质强审核 核验营业执照、社保缴纳数据和用工黑名单，拦截异常招聘主体。 资质风控台 评分 4.8 ¥199 购买 后台管理 监测中 区域人才供需热力与虚假职位拦截 展示区域人才供需热力图、简历转化率、面试到场率、offer接受率和虚假职位实时拦截。 招聘监管驾驶舱 评分 4.8 ¥299 购买 简历建档 可购买 简历OCR建档与解析 上传简历或证书后自动抽取学历、工作经历、技能标签和求职意向。 人才数据服务台 评分 4.8 ¥129 购买 岗位匹配 推荐中 LBS岗位精准匹配 按山东16地市、行业、经验年限、技能栈和通勤距离匹配岗位与人才。 双向推荐算法 评分 4.7 ¥99 购买 后台管理 审核中 企业资质强审核 核验营业执照、社保缴纳、用工黑名单和虚假职位风险。 招聘监管看板 评分 4.7 ¥299 购买 面试协同 可预约 面试协同与录用意向 支持在线预约、视频面试、面试评价模板和录用意向一键发送。 招聘流程工作台 评分 4.6 ¥129 购买 本地服务 可购买 面试预约与录用意向 连接求职者、企业HR和院校就业办，沉淀面试、录用和补贴申请记录。 招聘协同中心 评分 4.6 ¥89 购买 搜索筛选 可购买 人才供需热力分析 按城市、行业、薪资和技能缺口筛选人才供需热力与招聘效能。 山东人才地图 评分 4.5 ¥159 购买 购买 / 提交 提交岗位匹配、面试预约或录用意向 表单会调用后端接口并写入 SQLite，后台管理和个人中心会立即刷新。 求职者智能建档与简历OCR - ¥49山东地市岗位智能匹配 - ¥199企业资质强审核 - ¥199区域人才供需热力与虚假职位拦截 - ¥299简历OCR建档与解析 - ¥129LBS岗位精准匹配 - ¥99企业资质强审核 - ¥299面试协同与录用意向 - ¥129面试预约与录用意向 - ¥89人才供需热力分析 - ¥159 请安排顾问跟进本次服务。 提交购买 需求提交 提交资质审核、补贴申领或培训报名需求 希望按月分析收支并给出提醒规则。 提交需求 个人中心 / 我的 我的订单与资料 刷新 用户演示用户 手机13800138000 订单296 需求1 #296 演示用户已提交 ¥49#295 演示用户已提交 ¥49#294 演示用户已提交 ¥49#293 演示用户已提交 ¥49#292 演示用户已提交 ¥49#291 演示用户已提交 ¥49#290 演示用户已提交 ¥49#289 演示用户已提交 ¥49#288 演示用户已提交 ¥49#287 演示用户已提交 ¥49#286 演示用户已提交 ¥49#285 演示用户已提交 ¥49 后台管理 人才供需热力、招聘效能与虚假职位拦截 刷新后台 用户2 服务10 订单296 收入¥14634 user提交订单 #296user提交订单 #295user提交订单 #294user提交订单 #293user提交订单 #292 接口响应 { \"ok\": true, \"data\": { \"id\": 296, \"service_id\": 1, \"customer\": \"演示用户\", \"phone\": \"13800138000\", \"amount\": 49, \"status\": \"已提交\", \"note\": \"请根据地市",
+        "layout": {
+          "viewportWidth": 1600,
+          "viewportHeight": 1600,
+          "scrollWidth": 1600,
+          "scrollHeight": 4060,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89094-cycle172-repair-structure-04-二层操作-重置筛选-提交购买",
+          "label": "二层操作:重置筛选->提交购买",
+          "finalUrl": "http://127.0.0.1:49094/#search",
+          "title": "山东区域垂直招聘平台",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89094/runtime-check/codex-20260608-cycle172-repair/may-89094-cycle172-repair-structure-04-二层操作-重置筛选-提交购买.json",
+          "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89094/runtime-check/codex-20260608-cycle172-repair/may-89094-cycle172-repair-structure-04-二层操作-重置筛选-提交购买.png",
+          "elementCount": 300,
+          "interactiveCount": 31,
+          "interactiveLabels": [
+            "搜索筛选",
+            "购买提交",
+            "个人中心",
+            "后台管理",
+            "演示用户",
+            "13800138000",
+            "登录 / 注册",
+            "搜索山东地市、LBS、简历OCR、社保核验",
+            "全部 企业审核 后台管理 岗位匹配 搜索筛选 本地服务 求职者服务 简历建档 面试协同",
+            "重置筛选",
+            "购买",
+            "求职者智能建档与简历OCR - ¥49 山东地市岗位智能匹配 - ¥199 企业资质强审核 - ¥199 区域人才供需热力与虚假职位拦截 - ¥299 简历OCR建档与解析 - ¥129 LBS岗位精准匹配 - ¥99 企业资质强审核 - ¥299 面试协同与录用意向 - ¥129 面试预约与录用意向 - ¥89 人才供需热力分析 - ¥159",
+            "请根据地市、经验年限、技能栈和期望薪资推荐岗位并预约面试。",
+            "提交购买",
+            "企业资质强审核申请",
+            "需要核验营业执照、社保缴纳数据和用工黑名单，并进入招聘效能分析。",
+            "提交需求",
+            "刷新",
+            "刷新后台"
+          ]
+        }
+      },
+      {
+        "label": "操作:刷新",
+        "url": "http://127.0.0.1:49094/#search",
+        "title": "山东区域垂直招聘平台",
+        "headings": [
+          "山东区域垂直招聘平台",
+          "求职者、企业HR、院校与监管账号入口",
+          "搜索结果 / 简历建档、岗位匹配与本地服务",
+          "求职者智能建档与简历OCR",
+          "山东地市岗位智能匹配",
+          "企业资质强审核",
+          "区域人才供需热力与虚假职位拦截",
+          "简历OCR建档与解析",
+          "LBS岗位精准匹配",
+          "面试协同与录用意向",
+          "面试预约与录用意向",
+          "人才供需热力分析"
+        ],
+        "navLabels": [
+          "搜索筛选",
+          "购买提交",
+          "个人中心",
+          "后台管理"
+        ],
+        "buttons": [
+          "登录 / 注册",
+          "重置筛选",
+          "购买",
+          "提交购买",
+          "提交需求",
+          "刷新",
+          "刷新后台"
+        ],
+        "links": [
+          "搜索筛选",
+          "购买提交",
+          "个人中心",
+          "后台管理"
+        ],
+        "inputs": [
+          {
+            "tag": "input",
+            "type": "",
+            "placeholder": "姓名",
+            "name": "name",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "",
+            "placeholder": "手机号",
+            "name": "phone",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "",
+            "placeholder": "搜索山东地市、LBS、简历OCR、社保核验",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "select",
+            "type": "",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "select",
+            "type": "",
+            "placeholder": "",
+            "name": "serviceId",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "",
+            "placeholder": "联系人",
+            "name": "customer",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "",
+            "placeholder": "联系电话",
+            "name": "phone",
+            "label": ""
+          },
+          {
+            "tag": "textarea",
+            "type": "",
+            "placeholder": "需求说明",
+            "name": "note",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "",
+            "placeholder": "需求标题",
+            "name": "title",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "",
+            "placeholder": "联系方式",
+            "name": "contact",
+            "label": ""
+          },
+          {
+            "tag": "textarea",
+            "type": "",
+            "placeholder": "详细描述",
+            "name": "detail",
+            "label": ""
+          }
+        ],
+        "tables": [],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "Regional Talent Matching 山东区域垂直招聘平台 搜索筛选 购买提交 个人中心 后台管理 前端 http://127.0.0.1:49094 后端 http://127.0.0.1:59094/api 健康检查 正常 登录注册 求职者、企业HR、院校与监管账号入口 可使用 13800138000 或直接注册新手机号，登录后会写入本地状态。 登录 / 注册 搜索 / 筛选 搜索结果 / 简历建档、岗位匹配与本地服务 全部企业审核后台管理岗位匹配搜索筛选本地服务求职者服务简历建档面试协同 重置筛选 求职者服务 可建档 求职者智能建档与简历OCR 解析学历、技能、经验和期望薪资标签，支持简历OCR自动补全。 山东人才档案中心 评分 4.9 ¥49 购买 岗位匹配 可购买 山东地市岗位智能匹配 按山东地市、LBS距离、经验年限、技能栈和期望薪资推荐合适岗位。 区域人才算法中心 评分 4.9 ¥199 购买 企业审核 审核中 企业资质强审核 核验营业执照、社保缴纳数据和用工黑名单，拦截异常招聘主体。 资质风控台 评分 4.8 ¥199 购买 后台管理 监测中 区域人才供需热力与虚假职位拦截 展示区域人才供需热力图、简历转化率、面试到场率、offer接受率和虚假职位实时拦截。 招聘监管驾驶舱 评分 4.8 ¥299 购买 简历建档 可购买 简历OCR建档与解析 上传简历或证书后自动抽取学历、工作经历、技能标签和求职意向。 人才数据服务台 评分 4.8 ¥129 购买 岗位匹配 推荐中 LBS岗位精准匹配 按山东16地市、行业、经验年限、技能栈和通勤距离匹配岗位与人才。 双向推荐算法 评分 4.7 ¥99 购买 后台管理 审核中 企业资质强审核 核验营业执照、社保缴纳、用工黑名单和虚假职位风险。 招聘监管看板 评分 4.7 ¥299 购买 面试协同 可预约 面试协同与录用意向 支持在线预约、视频面试、面试评价模板和录用意向一键发送。 招聘流程工作台 评分 4.6 ¥129 购买 本地服务 可购买 面试预约与录用意向 连接求职者、企业HR和院校就业办，沉淀面试、录用和补贴申请记录。 招聘协同中心 评分 4.6 ¥89 购买 搜索筛选 可购买 人才供需热力分析 按城市、行业、薪资和技能缺口筛选人才供需热力与招聘效能。 山东人才地图 评分 4.5 ¥159 购买 购买 / 提交 提交岗位匹配、面试预约或录用意向 表单会调用后端接口并写入 SQLite，后台管理和个人中心会立即刷新。 求职者智能建档与简历OCR - ¥49山东地市岗位智能匹配 - ¥199企业资质强审核 - ¥199区域人才供需热力与虚假职位拦截 - ¥299简历OCR建档与解析 - ¥129LBS岗位精准匹配 - ¥99企业资质强审核 - ¥299面试协同与录用意向 - ¥129面试预约与录用意向 - ¥89人才供需热力分析 - ¥159 请安排顾问跟进本次服务。 提交购买 需求提交 提交资质审核、补贴申领或培训报名需求 希望按月分析收支并给出提醒规则。 提交需求 个人中心 / 我的 我的订单与资料 刷新 用户演示用户 手机13800138000 订单296 需求1 #296 演示用户已提交 ¥49#295 演示用户已提交 ¥49#294 演示用户已提交 ¥49#293 演示用户已提交 ¥49#292 演示用户已提交 ¥49#291 演示用户已提交 ¥49#290 演示用户已提交 ¥49#289 演示用户已提交 ¥49#288 演示用户已提交 ¥49#287 演示用户已提交 ¥49#286 演示用户已提交 ¥49#285 演示用户已提交 ¥49 后台管理 人才供需热力、招聘效能与虚假职位拦截 刷新后台 用户2 服务10 订单296 收入¥14634 user提交订单 #296user提交订单 #295user提交订单 #294user提交订单 #293user提交订单 #292 接口响应 { \"ok\": true, \"data\": { \"id\": 296, \"service_id\": 1, \"customer\": \"演示用户\", \"phone\": \"13800138000\", \"amount\": 49, \"status\": \"已提交\", \"note\": \"请根据地市",
+        "layout": {
+          "viewportWidth": 1632,
+          "viewportHeight": 1600,
+          "scrollWidth": 1632,
+          "scrollHeight": 4060,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89094-cycle172-repair-structure-05-操作-刷新",
+          "label": "操作:刷新",
+          "finalUrl": "http://127.0.0.1:49094/#search",
+          "title": "山东区域垂直招聘平台",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89094/runtime-check/codex-20260608-cycle172-repair/may-89094-cycle172-repair-structure-05-操作-刷新.json",
+          "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89094/runtime-check/codex-20260608-cycle172-repair/may-89094-cycle172-repair-structure-05-操作-刷新.png",
+          "elementCount": 300,
+          "interactiveCount": 31,
+          "interactiveLabels": [
+            "搜索筛选",
+            "购买提交",
+            "个人中心",
+            "后台管理",
+            "演示用户",
+            "13800138000",
+            "登录 / 注册",
+            "搜索山东地市、LBS、简历OCR、社保核验",
+            "全部 企业审核 后台管理 岗位匹配 搜索筛选 本地服务 求职者服务 简历建档 面试协同",
+            "重置筛选",
+            "购买",
+            "求职者智能建档与简历OCR - ¥49 山东地市岗位智能匹配 - ¥199 企业资质强审核 - ¥199 区域人才供需热力与虚假职位拦截 - ¥299 简历OCR建档与解析 - ¥129 LBS岗位精准匹配 - ¥99 企业资质强审核 - ¥299 面试协同与录用意向 - ¥129 面试预约与录用意向 - ¥89 人才供需热力分析 - ¥159",
+            "请根据地市、经验年限、技能栈和期望薪资推荐岗位并预约面试。",
+            "提交购买",
+            "企业资质强审核申请",
+            "需要核验营业执照、社保缴纳数据和用工黑名单，并进入招聘效能分析。",
+            "提交需求",
+            "刷新",
+            "刷新后台"
+          ]
+        }
+      },
+      {
+        "label": "二层操作:刷新->提交购买",
+        "url": "http://127.0.0.1:49094/#search",
+        "title": "山东区域垂直招聘平台",
+        "headings": [
+          "山东区域垂直招聘平台",
+          "求职者、企业HR、院校与监管账号入口",
+          "搜索结果 / 简历建档、岗位匹配与本地服务",
+          "求职者智能建档与简历OCR",
+          "山东地市岗位智能匹配",
+          "企业资质强审核",
+          "区域人才供需热力与虚假职位拦截",
+          "简历OCR建档与解析",
+          "LBS岗位精准匹配",
+          "面试协同与录用意向",
+          "面试预约与录用意向",
+          "人才供需热力分析"
+        ],
+        "navLabels": [
+          "搜索筛选",
+          "购买提交",
+          "个人中心",
+          "后台管理"
+        ],
+        "buttons": [
+          "登录 / 注册",
+          "重置筛选",
+          "购买",
+          "提交购买",
+          "提交需求",
+          "刷新",
+          "刷新后台"
+        ],
+        "links": [
+          "搜索筛选",
+          "购买提交",
+          "个人中心",
+          "后台管理"
+        ],
+        "inputs": [
+          {
+            "tag": "input",
+            "type": "",
+            "placeholder": "姓名",
+            "name": "name",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "",
+            "placeholder": "手机号",
+            "name": "phone",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "",
+            "placeholder": "搜索山东地市、LBS、简历OCR、社保核验",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "select",
+            "type": "",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "select",
+            "type": "",
+            "placeholder": "",
+            "name": "serviceId",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "",
+            "placeholder": "联系人",
+            "name": "customer",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "",
+            "placeholder": "联系电话",
+            "name": "phone",
+            "label": ""
+          },
+          {
+            "tag": "textarea",
+            "type": "",
+            "placeholder": "需求说明",
+            "name": "note",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "",
+            "placeholder": "需求标题",
+            "name": "title",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "",
+            "placeholder": "联系方式",
+            "name": "contact",
+            "label": ""
+          },
+          {
+            "tag": "textarea",
+            "type": "",
+            "placeholder": "详细描述",
+            "name": "detail",
+            "label": ""
+          }
+        ],
+        "tables": [],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "Regional Talent Matching 山东区域垂直招聘平台 搜索筛选 购买提交 个人中心 后台管理 前端 http://127.0.0.1:49094 后端 http://127.0.0.1:59094/api 健康检查 正常 登录注册 求职者、企业HR、院校与监管账号入口 可使用 13800138000 或直接注册新手机号，登录后会写入本地状态。 登录 / 注册 搜索 / 筛选 搜索结果 / 简历建档、岗位匹配与本地服务 全部企业审核后台管理岗位匹配搜索筛选本地服务求职者服务简历建档面试协同 重置筛选 求职者服务 可建档 求职者智能建档与简历OCR 解析学历、技能、经验和期望薪资标签，支持简历OCR自动补全。 山东人才档案中心 评分 4.9 ¥49 购买 岗位匹配 可购买 山东地市岗位智能匹配 按山东地市、LBS距离、经验年限、技能栈和期望薪资推荐合适岗位。 区域人才算法中心 评分 4.9 ¥199 购买 企业审核 审核中 企业资质强审核 核验营业执照、社保缴纳数据和用工黑名单，拦截异常招聘主体。 资质风控台 评分 4.8 ¥199 购买 后台管理 监测中 区域人才供需热力与虚假职位拦截 展示区域人才供需热力图、简历转化率、面试到场率、offer接受率和虚假职位实时拦截。 招聘监管驾驶舱 评分 4.8 ¥299 购买 简历建档 可购买 简历OCR建档与解析 上传简历或证书后自动抽取学历、工作经历、技能标签和求职意向。 人才数据服务台 评分 4.8 ¥129 购买 岗位匹配 推荐中 LBS岗位精准匹配 按山东16地市、行业、经验年限、技能栈和通勤距离匹配岗位与人才。 双向推荐算法 评分 4.7 ¥99 购买 后台管理 审核中 企业资质强审核 核验营业执照、社保缴纳、用工黑名单和虚假职位风险。 招聘监管看板 评分 4.7 ¥299 购买 面试协同 可预约 面试协同与录用意向 支持在线预约、视频面试、面试评价模板和录用意向一键发送。 招聘流程工作台 评分 4.6 ¥129 购买 本地服务 可购买 面试预约与录用意向 连接求职者、企业HR和院校就业办，沉淀面试、录用和补贴申请记录。 招聘协同中心 评分 4.6 ¥89 购买 搜索筛选 可购买 人才供需热力分析 按城市、行业、薪资和技能缺口筛选人才供需热力与招聘效能。 山东人才地图 评分 4.5 ¥159 购买 购买 / 提交 提交岗位匹配、面试预约或录用意向 表单会调用后端接口并写入 SQLite，后台管理和个人中心会立即刷新。 求职者智能建档与简历OCR - ¥49山东地市岗位智能匹配 - ¥199企业资质强审核 - ¥199区域人才供需热力与虚假职位拦截 - ¥299简历OCR建档与解析 - ¥129LBS岗位精准匹配 - ¥99企业资质强审核 - ¥299面试协同与录用意向 - ¥129面试预约与录用意向 - ¥89人才供需热力分析 - ¥159 请安排顾问跟进本次服务。 提交购买 需求提交 提交资质审核、补贴申领或培训报名需求 希望按月分析收支并给出提醒规则。 提交需求 个人中心 / 我的 我的订单与资料 刷新 用户演示用户 手机13800138000 订单297 需求1 #297 演示用户已提交 ¥49#296 演示用户已提交 ¥49#295 演示用户已提交 ¥49#294 演示用户已提交 ¥49#293 演示用户已提交 ¥49#292 演示用户已提交 ¥49#291 演示用户已提交 ¥49#290 演示用户已提交 ¥49#289 演示用户已提交 ¥49#288 演示用户已提交 ¥49#287 演示用户已提交 ¥49#286 演示用户已提交 ¥49 后台管理 人才供需热力、招聘效能与虚假职位拦截 刷新后台 用户2 服务10 订单297 收入¥14683 user提交订单 #297user提交订单 #296user提交订单 #295user提交订单 #294user提交订单 #293 接口响应 { \"ok\": true, \"data\": { \"id\": 297, \"service_id\": 1, \"customer\": \"演示用户\", \"phone\": \"13800138000\", \"amount\": 49, \"status\": \"已提交\", \"note\": \"请根据地市",
+        "layout": {
+          "viewportWidth": 1664,
+          "viewportHeight": 1600,
+          "scrollWidth": 1664,
+          "scrollHeight": 4060,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89094-cycle172-repair-structure-06-二层操作-刷新-提交购买",
+          "label": "二层操作:刷新->提交购买",
+          "finalUrl": "http://127.0.0.1:49094/#search",
+          "title": "山东区域垂直招聘平台",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89094/runtime-check/codex-20260608-cycle172-repair/may-89094-cycle172-repair-structure-06-二层操作-刷新-提交购买.json",
+          "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89094/runtime-check/codex-20260608-cycle172-repair/may-89094-cycle172-repair-structure-06-二层操作-刷新-提交购买.png",
+          "elementCount": 300,
+          "interactiveCount": 31,
+          "interactiveLabels": [
+            "搜索筛选",
+            "购买提交",
+            "个人中心",
+            "后台管理",
+            "演示用户",
+            "13800138000",
+            "登录 / 注册",
+            "搜索山东地市、LBS、简历OCR、社保核验",
+            "全部 企业审核 后台管理 岗位匹配 搜索筛选 本地服务 求职者服务 简历建档 面试协同",
+            "重置筛选",
+            "购买",
+            "求职者智能建档与简历OCR - ¥49 山东地市岗位智能匹配 - ¥199 企业资质强审核 - ¥199 区域人才供需热力与虚假职位拦截 - ¥299 简历OCR建档与解析 - ¥129 LBS岗位精准匹配 - ¥99 企业资质强审核 - ¥299 面试协同与录用意向 - ¥129 面试预约与录用意向 - ¥89 人才供需热力分析 - ¥159",
+            "请根据地市、经验年限、技能栈和期望薪资推荐岗位并预约面试。",
+            "提交购买",
+            "企业资质强审核申请",
+            "需要核验营业执照、社保缴纳数据和用工黑名单，并进入招聘效能分析。",
+            "提交需求",
+            "刷新",
+            "刷新后台"
+          ]
+        }
+      },
+      {
+        "label": "导航:购买提交",
+        "url": "http://127.0.0.1:49094/#purchase",
+        "title": "山东区域垂直招聘平台",
+        "headings": [
+          "山东区域垂直招聘平台",
+          "求职者、企业HR、院校与监管账号入口",
+          "搜索结果 / 简历建档、岗位匹配与本地服务",
+          "求职者智能建档与简历OCR",
+          "山东地市岗位智能匹配",
+          "企业资质强审核",
+          "区域人才供需热力与虚假职位拦截",
+          "简历OCR建档与解析",
+          "LBS岗位精准匹配",
+          "面试协同与录用意向",
+          "面试预约与录用意向",
+          "人才供需热力分析"
+        ],
+        "navLabels": [
+          "搜索筛选",
+          "购买提交",
+          "个人中心",
+          "后台管理"
+        ],
+        "buttons": [
+          "登录 / 注册",
+          "重置筛选",
+          "购买",
+          "提交购买",
+          "提交需求",
+          "刷新",
+          "刷新后台"
+        ],
+        "links": [
+          "搜索筛选",
+          "购买提交",
+          "个人中心",
+          "后台管理"
+        ],
+        "inputs": [
+          {
+            "tag": "input",
+            "type": "",
+            "placeholder": "姓名",
+            "name": "name",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "",
+            "placeholder": "手机号",
+            "name": "phone",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "",
+            "placeholder": "搜索山东地市、LBS、简历OCR、社保核验",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "select",
+            "type": "",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "select",
+            "type": "",
+            "placeholder": "",
+            "name": "serviceId",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "",
+            "placeholder": "联系人",
+            "name": "customer",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "",
+            "placeholder": "联系电话",
+            "name": "phone",
+            "label": ""
+          },
+          {
+            "tag": "textarea",
+            "type": "",
+            "placeholder": "需求说明",
+            "name": "note",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "",
+            "placeholder": "需求标题",
+            "name": "title",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "",
+            "placeholder": "联系方式",
+            "name": "contact",
+            "label": ""
+          },
+          {
+            "tag": "textarea",
+            "type": "",
+            "placeholder": "详细描述",
+            "name": "detail",
+            "label": ""
+          }
+        ],
+        "tables": [],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "Regional Talent Matching 山东区域垂直招聘平台 搜索筛选 购买提交 个人中心 后台管理 前端 http://127.0.0.1:49094 后端 http://127.0.0.1:59094/api 健康检查 正常 登录注册 求职者、企业HR、院校与监管账号入口 可使用 13800138000 或直接注册新手机号，登录后会写入本地状态。 登录 / 注册 搜索 / 筛选 搜索结果 / 简历建档、岗位匹配与本地服务 全部企业审核后台管理岗位匹配搜索筛选本地服务求职者服务简历建档面试协同 重置筛选 求职者服务 可建档 求职者智能建档与简历OCR 解析学历、技能、经验和期望薪资标签，支持简历OCR自动补全。 山东人才档案中心 评分 4.9 ¥49 购买 岗位匹配 可购买 山东地市岗位智能匹配 按山东地市、LBS距离、经验年限、技能栈和期望薪资推荐合适岗位。 区域人才算法中心 评分 4.9 ¥199 购买 企业审核 审核中 企业资质强审核 核验营业执照、社保缴纳数据和用工黑名单，拦截异常招聘主体。 资质风控台 评分 4.8 ¥199 购买 后台管理 监测中 区域人才供需热力与虚假职位拦截 展示区域人才供需热力图、简历转化率、面试到场率、offer接受率和虚假职位实时拦截。 招聘监管驾驶舱 评分 4.8 ¥299 购买 简历建档 可购买 简历OCR建档与解析 上传简历或证书后自动抽取学历、工作经历、技能标签和求职意向。 人才数据服务台 评分 4.8 ¥129 购买 岗位匹配 推荐中 LBS岗位精准匹配 按山东16地市、行业、经验年限、技能栈和通勤距离匹配岗位与人才。 双向推荐算法 评分 4.7 ¥99 购买 后台管理 审核中 企业资质强审核 核验营业执照、社保缴纳、用工黑名单和虚假职位风险。 招聘监管看板 评分 4.7 ¥299 购买 面试协同 可预约 面试协同与录用意向 支持在线预约、视频面试、面试评价模板和录用意向一键发送。 招聘流程工作台 评分 4.6 ¥129 购买 本地服务 可购买 面试预约与录用意向 连接求职者、企业HR和院校就业办，沉淀面试、录用和补贴申请记录。 招聘协同中心 评分 4.6 ¥89 购买 搜索筛选 可购买 人才供需热力分析 按城市、行业、薪资和技能缺口筛选人才供需热力与招聘效能。 山东人才地图 评分 4.5 ¥159 购买 购买 / 提交 提交岗位匹配、面试预约或录用意向 表单会调用后端接口并写入 SQLite，后台管理和个人中心会立即刷新。 求职者智能建档与简历OCR - ¥49山东地市岗位智能匹配 - ¥199企业资质强审核 - ¥199区域人才供需热力与虚假职位拦截 - ¥299简历OCR建档与解析 - ¥129LBS岗位精准匹配 - ¥99企业资质强审核 - ¥299面试协同与录用意向 - ¥129面试预约与录用意向 - ¥89人才供需热力分析 - ¥159 请安排顾问跟进本次服务。 提交购买 需求提交 提交资质审核、补贴申领或培训报名需求 希望按月分析收支并给出提醒规则。 提交需求 个人中心 / 我的 我的订单与资料 刷新 用户演示用户 手机13800138000 订单297 需求1 #297 演示用户已提交 ¥49#296 演示用户已提交 ¥49#295 演示用户已提交 ¥49#294 演示用户已提交 ¥49#293 演示用户已提交 ¥49#292 演示用户已提交 ¥49#291 演示用户已提交 ¥49#290 演示用户已提交 ¥49#289 演示用户已提交 ¥49#288 演示用户已提交 ¥49#287 演示用户已提交 ¥49#286 演示用户已提交 ¥49 后台管理 人才供需热力、招聘效能与虚假职位拦截 刷新后台 用户2 服务10 订单297 收入¥14683 user提交订单 #297user提交订单 #296user提交订单 #295user提交订单 #294user提交订单 #293 接口响应 { \"ok\": true, \"data\": { \"id\": 297, \"service_id\": 1, \"customer\": \"演示用户\", \"phone\": \"13800138000\", \"amount\": 49, \"status\": \"已提交\", \"note\": \"请根据地市",
+        "layout": {
+          "viewportWidth": 1696,
+          "viewportHeight": 1600,
+          "scrollWidth": 1696,
+          "scrollHeight": 4060,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89094-cycle172-repair-structure-07-导航-购买提交",
+          "label": "导航:购买提交",
+          "finalUrl": "http://127.0.0.1:49094/#purchase",
+          "title": "山东区域垂直招聘平台",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89094/runtime-check/codex-20260608-cycle172-repair/may-89094-cycle172-repair-structure-07-导航-购买提交.json",
+          "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89094/runtime-check/codex-20260608-cycle172-repair/may-89094-cycle172-repair-structure-07-导航-购买提交.png",
+          "elementCount": 300,
+          "interactiveCount": 31,
+          "interactiveLabels": [
+            "搜索筛选",
+            "购买提交",
+            "个人中心",
+            "后台管理",
+            "演示用户",
+            "13800138000",
+            "登录 / 注册",
+            "搜索山东地市、LBS、简历OCR、社保核验",
+            "全部 企业审核 后台管理 岗位匹配 搜索筛选 本地服务 求职者服务 简历建档 面试协同",
+            "重置筛选",
+            "购买",
+            "求职者智能建档与简历OCR - ¥49 山东地市岗位智能匹配 - ¥199 企业资质强审核 - ¥199 区域人才供需热力与虚假职位拦截 - ¥299 简历OCR建档与解析 - ¥129 LBS岗位精准匹配 - ¥99 企业资质强审核 - ¥299 面试协同与录用意向 - ¥129 面试预约与录用意向 - ¥89 人才供需热力分析 - ¥159",
+            "请根据地市、经验年限、技能栈和期望薪资推荐岗位并预约面试。",
+            "提交购买",
+            "企业资质强审核申请",
+            "需要核验营业执照、社保缴纳数据和用工黑名单，并进入招聘效能分析。",
+            "提交需求",
+            "刷新",
+            "刷新后台"
+          ]
+        }
+      },
+      {
+        "label": "操作:重置筛选",
+        "url": "http://127.0.0.1:49094/#purchase",
+        "title": "山东区域垂直招聘平台",
+        "headings": [
+          "山东区域垂直招聘平台",
+          "求职者、企业HR、院校与监管账号入口",
+          "搜索结果 / 简历建档、岗位匹配与本地服务",
+          "求职者智能建档与简历OCR",
+          "山东地市岗位智能匹配",
+          "企业资质强审核",
+          "区域人才供需热力与虚假职位拦截",
+          "简历OCR建档与解析",
+          "LBS岗位精准匹配",
+          "面试协同与录用意向",
+          "面试预约与录用意向",
+          "人才供需热力分析"
+        ],
+        "navLabels": [
+          "搜索筛选",
+          "购买提交",
+          "个人中心",
+          "后台管理"
+        ],
+        "buttons": [
+          "登录 / 注册",
+          "重置筛选",
+          "购买",
+          "提交购买",
+          "提交需求",
+          "刷新",
+          "刷新后台"
+        ],
+        "links": [
+          "搜索筛选",
+          "购买提交",
+          "个人中心",
+          "后台管理"
+        ],
+        "inputs": [
+          {
+            "tag": "input",
+            "type": "",
+            "placeholder": "姓名",
+            "name": "name",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "",
+            "placeholder": "手机号",
+            "name": "phone",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "",
+            "placeholder": "搜索山东地市、LBS、简历OCR、社保核验",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "select",
+            "type": "",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "select",
+            "type": "",
+            "placeholder": "",
+            "name": "serviceId",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "",
+            "placeholder": "联系人",
+            "name": "customer",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "",
+            "placeholder": "联系电话",
+            "name": "phone",
+            "label": ""
+          },
+          {
+            "tag": "textarea",
+            "type": "",
+            "placeholder": "需求说明",
+            "name": "note",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "",
+            "placeholder": "需求标题",
+            "name": "title",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "",
+            "placeholder": "联系方式",
+            "name": "contact",
+            "label": ""
+          },
+          {
+            "tag": "textarea",
+            "type": "",
+            "placeholder": "详细描述",
+            "name": "detail",
+            "label": ""
+          }
+        ],
+        "tables": [],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "Regional Talent Matching 山东区域垂直招聘平台 搜索筛选 购买提交 个人中心 后台管理 前端 http://127.0.0.1:49094 后端 http://127.0.0.1:59094/api 健康检查 正常 登录注册 求职者、企业HR、院校与监管账号入口 可使用 13800138000 或直接注册新手机号，登录后会写入本地状态。 登录 / 注册 搜索 / 筛选 搜索结果 / 简历建档、岗位匹配与本地服务 全部企业审核后台管理岗位匹配搜索筛选本地服务求职者服务简历建档面试协同 重置筛选 求职者服务 可建档 求职者智能建档与简历OCR 解析学历、技能、经验和期望薪资标签，支持简历OCR自动补全。 山东人才档案中心 评分 4.9 ¥49 购买 岗位匹配 可购买 山东地市岗位智能匹配 按山东地市、LBS距离、经验年限、技能栈和期望薪资推荐合适岗位。 区域人才算法中心 评分 4.9 ¥199 购买 企业审核 审核中 企业资质强审核 核验营业执照、社保缴纳数据和用工黑名单，拦截异常招聘主体。 资质风控台 评分 4.8 ¥199 购买 后台管理 监测中 区域人才供需热力与虚假职位拦截 展示区域人才供需热力图、简历转化率、面试到场率、offer接受率和虚假职位实时拦截。 招聘监管驾驶舱 评分 4.8 ¥299 购买 简历建档 可购买 简历OCR建档与解析 上传简历或证书后自动抽取学历、工作经历、技能标签和求职意向。 人才数据服务台 评分 4.8 ¥129 购买 岗位匹配 推荐中 LBS岗位精准匹配 按山东16地市、行业、经验年限、技能栈和通勤距离匹配岗位与人才。 双向推荐算法 评分 4.7 ¥99 购买 后台管理 审核中 企业资质强审核 核验营业执照、社保缴纳、用工黑名单和虚假职位风险。 招聘监管看板 评分 4.7 ¥299 购买 面试协同 可预约 面试协同与录用意向 支持在线预约、视频面试、面试评价模板和录用意向一键发送。 招聘流程工作台 评分 4.6 ¥129 购买 本地服务 可购买 面试预约与录用意向 连接求职者、企业HR和院校就业办，沉淀面试、录用和补贴申请记录。 招聘协同中心 评分 4.6 ¥89 购买 搜索筛选 可购买 人才供需热力分析 按城市、行业、薪资和技能缺口筛选人才供需热力与招聘效能。 山东人才地图 评分 4.5 ¥159 购买 购买 / 提交 提交岗位匹配、面试预约或录用意向 表单会调用后端接口并写入 SQLite，后台管理和个人中心会立即刷新。 求职者智能建档与简历OCR - ¥49山东地市岗位智能匹配 - ¥199企业资质强审核 - ¥199区域人才供需热力与虚假职位拦截 - ¥299简历OCR建档与解析 - ¥129LBS岗位精准匹配 - ¥99企业资质强审核 - ¥299面试协同与录用意向 - ¥129面试预约与录用意向 - ¥89人才供需热力分析 - ¥159 请安排顾问跟进本次服务。 提交购买 需求提交 提交资质审核、补贴申领或培训报名需求 希望按月分析收支并给出提醒规则。 提交需求 个人中心 / 我的 我的订单与资料 刷新 用户演示用户 手机13800138000 订单297 需求1 #297 演示用户已提交 ¥49#296 演示用户已提交 ¥49#295 演示用户已提交 ¥49#294 演示用户已提交 ¥49#293 演示用户已提交 ¥49#292 演示用户已提交 ¥49#291 演示用户已提交 ¥49#290 演示用户已提交 ¥49#289 演示用户已提交 ¥49#288 演示用户已提交 ¥49#287 演示用户已提交 ¥49#286 演示用户已提交 ¥49 后台管理 人才供需热力、招聘效能与虚假职位拦截 刷新后台 用户2 服务10 订单297 收入¥14683 user提交订单 #297user提交订单 #296user提交订单 #295user提交订单 #294user提交订单 #293 接口响应 { \"ok\": true, \"data\": { \"id\": 297, \"service_id\": 1, \"customer\": \"演示用户\", \"phone\": \"13800138000\", \"amount\": 49, \"status\": \"已提交\", \"note\": \"请根据地市",
+        "layout": {
+          "viewportWidth": 1728,
+          "viewportHeight": 1600,
+          "scrollWidth": 1728,
+          "scrollHeight": 4060,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89094-cycle172-repair-structure-08-操作-重置筛选",
+          "label": "操作:重置筛选",
+          "finalUrl": "http://127.0.0.1:49094/#purchase",
+          "title": "山东区域垂直招聘平台",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89094/runtime-check/codex-20260608-cycle172-repair/may-89094-cycle172-repair-structure-08-操作-重置筛选.json",
+          "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89094/runtime-check/codex-20260608-cycle172-repair/may-89094-cycle172-repair-structure-08-操作-重置筛选.png",
+          "elementCount": 300,
+          "interactiveCount": 31,
+          "interactiveLabels": [
+            "搜索筛选",
+            "购买提交",
+            "个人中心",
+            "后台管理",
+            "演示用户",
+            "13800138000",
+            "登录 / 注册",
+            "搜索山东地市、LBS、简历OCR、社保核验",
+            "全部 企业审核 后台管理 岗位匹配 搜索筛选 本地服务 求职者服务 简历建档 面试协同",
+            "重置筛选",
+            "购买",
+            "求职者智能建档与简历OCR - ¥49 山东地市岗位智能匹配 - ¥199 企业资质强审核 - ¥199 区域人才供需热力与虚假职位拦截 - ¥299 简历OCR建档与解析 - ¥129 LBS岗位精准匹配 - ¥99 企业资质强审核 - ¥299 面试协同与录用意向 - ¥129 面试预约与录用意向 - ¥89 人才供需热力分析 - ¥159",
+            "请根据地市、经验年限、技能栈和期望薪资推荐岗位并预约面试。",
+            "提交购买",
+            "企业资质强审核申请",
+            "需要核验营业执照、社保缴纳数据和用工黑名单，并进入招聘效能分析。",
+            "提交需求",
+            "刷新",
+            "刷新后台"
+          ]
+        }
+      },
+      {
+        "label": "二层操作:重置筛选->提交购买",
+        "url": "http://127.0.0.1:49094/#purchase",
+        "title": "山东区域垂直招聘平台",
+        "headings": [
+          "山东区域垂直招聘平台",
+          "求职者、企业HR、院校与监管账号入口",
+          "搜索结果 / 简历建档、岗位匹配与本地服务",
+          "求职者智能建档与简历OCR",
+          "山东地市岗位智能匹配",
+          "企业资质强审核",
+          "区域人才供需热力与虚假职位拦截",
+          "简历OCR建档与解析",
+          "LBS岗位精准匹配",
+          "面试协同与录用意向",
+          "面试预约与录用意向",
+          "人才供需热力分析"
+        ],
+        "navLabels": [
+          "搜索筛选",
+          "购买提交",
+          "个人中心",
+          "后台管理"
+        ],
+        "buttons": [
+          "登录 / 注册",
+          "重置筛选",
+          "购买",
+          "提交购买",
+          "提交需求",
+          "刷新",
+          "刷新后台"
+        ],
+        "links": [
+          "搜索筛选",
+          "购买提交",
+          "个人中心",
+          "后台管理"
+        ],
+        "inputs": [
+          {
+            "tag": "input",
+            "type": "",
+            "placeholder": "姓名",
+            "name": "name",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "",
+            "placeholder": "手机号",
+            "name": "phone",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "",
+            "placeholder": "搜索山东地市、LBS、简历OCR、社保核验",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "select",
+            "type": "",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "select",
+            "type": "",
+            "placeholder": "",
+            "name": "serviceId",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "",
+            "placeholder": "联系人",
+            "name": "customer",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "",
+            "placeholder": "联系电话",
+            "name": "phone",
+            "label": ""
+          },
+          {
+            "tag": "textarea",
+            "type": "",
+            "placeholder": "需求说明",
+            "name": "note",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "",
+            "placeholder": "需求标题",
+            "name": "title",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "",
+            "placeholder": "联系方式",
+            "name": "contact",
+            "label": ""
+          },
+          {
+            "tag": "textarea",
+            "type": "",
+            "placeholder": "详细描述",
+            "name": "detail",
+            "label": ""
+          }
+        ],
+        "tables": [],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "Regional Talent Matching 山东区域垂直招聘平台 搜索筛选 购买提交 个人中心 后台管理 前端 http://127.0.0.1:49094 后端 http://127.0.0.1:59094/api 健康检查 正常 登录注册 求职者、企业HR、院校与监管账号入口 可使用 13800138000 或直接注册新手机号，登录后会写入本地状态。 登录 / 注册 搜索 / 筛选 搜索结果 / 简历建档、岗位匹配与本地服务 全部企业审核后台管理岗位匹配搜索筛选本地服务求职者服务简历建档面试协同 重置筛选 求职者服务 可建档 求职者智能建档与简历OCR 解析学历、技能、经验和期望薪资标签，支持简历OCR自动补全。 山东人才档案中心 评分 4.9 ¥49 购买 岗位匹配 可购买 山东地市岗位智能匹配 按山东地市、LBS距离、经验年限、技能栈和期望薪资推荐合适岗位。 区域人才算法中心 评分 4.9 ¥199 购买 企业审核 审核中 企业资质强审核 核验营业执照、社保缴纳数据和用工黑名单，拦截异常招聘主体。 资质风控台 评分 4.8 ¥199 购买 后台管理 监测中 区域人才供需热力与虚假职位拦截 展示区域人才供需热力图、简历转化率、面试到场率、offer接受率和虚假职位实时拦截。 招聘监管驾驶舱 评分 4.8 ¥299 购买 简历建档 可购买 简历OCR建档与解析 上传简历或证书后自动抽取学历、工作经历、技能标签和求职意向。 人才数据服务台 评分 4.8 ¥129 购买 岗位匹配 推荐中 LBS岗位精准匹配 按山东16地市、行业、经验年限、技能栈和通勤距离匹配岗位与人才。 双向推荐算法 评分 4.7 ¥99 购买 后台管理 审核中 企业资质强审核 核验营业执照、社保缴纳、用工黑名单和虚假职位风险。 招聘监管看板 评分 4.7 ¥299 购买 面试协同 可预约 面试协同与录用意向 支持在线预约、视频面试、面试评价模板和录用意向一键发送。 招聘流程工作台 评分 4.6 ¥129 购买 本地服务 可购买 面试预约与录用意向 连接求职者、企业HR和院校就业办，沉淀面试、录用和补贴申请记录。 招聘协同中心 评分 4.6 ¥89 购买 搜索筛选 可购买 人才供需热力分析 按城市、行业、薪资和技能缺口筛选人才供需热力与招聘效能。 山东人才地图 评分 4.5 ¥159 购买 购买 / 提交 提交岗位匹配、面试预约或录用意向 表单会调用后端接口并写入 SQLite，后台管理和个人中心会立即刷新。 求职者智能建档与简历OCR - ¥49山东地市岗位智能匹配 - ¥199企业资质强审核 - ¥199区域人才供需热力与虚假职位拦截 - ¥299简历OCR建档与解析 - ¥129LBS岗位精准匹配 - ¥99企业资质强审核 - ¥299面试协同与录用意向 - ¥129面试预约与录用意向 - ¥89人才供需热力分析 - ¥159 请安排顾问跟进本次服务。 提交购买 需求提交 提交资质审核、补贴申领或培训报名需求 希望按月分析收支并给出提醒规则。 提交需求 个人中心 / 我的 我的订单与资料 刷新 用户演示用户 手机13800138000 订单298 需求1 #298 演示用户已提交 ¥49#297 演示用户已提交 ¥49#296 演示用户已提交 ¥49#295 演示用户已提交 ¥49#294 演示用户已提交 ¥49#293 演示用户已提交 ¥49#292 演示用户已提交 ¥49#291 演示用户已提交 ¥49#290 演示用户已提交 ¥49#289 演示用户已提交 ¥49#288 演示用户已提交 ¥49#287 演示用户已提交 ¥49 后台管理 人才供需热力、招聘效能与虚假职位拦截 刷新后台 用户2 服务10 订单298 收入¥14732 user提交订单 #298user提交订单 #297user提交订单 #296user提交订单 #295user提交订单 #294 接口响应 { \"ok\": true, \"data\": { \"id\": 298, \"service_id\": 1, \"customer\": \"演示用户\", \"phone\": \"13800138000\", \"amount\": 49, \"status\": \"已提交\", \"note\": \"请根据地市",
+        "layout": {
+          "viewportWidth": 1760,
+          "viewportHeight": 1600,
+          "scrollWidth": 1760,
+          "scrollHeight": 4060,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89094-cycle172-repair-structure-09-二层操作-重置筛选-提交购买",
+          "label": "二层操作:重置筛选->提交购买",
+          "finalUrl": "http://127.0.0.1:49094/#purchase",
+          "title": "山东区域垂直招聘平台",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89094/runtime-check/codex-20260608-cycle172-repair/may-89094-cycle172-repair-structure-09-二层操作-重置筛选-提交购买.json",
+          "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89094/runtime-check/codex-20260608-cycle172-repair/may-89094-cycle172-repair-structure-09-二层操作-重置筛选-提交购买.png",
+          "elementCount": 300,
+          "interactiveCount": 31,
+          "interactiveLabels": [
+            "搜索筛选",
+            "购买提交",
+            "个人中心",
+            "后台管理",
+            "演示用户",
+            "13800138000",
+            "登录 / 注册",
+            "搜索山东地市、LBS、简历OCR、社保核验",
+            "全部 企业审核 后台管理 岗位匹配 搜索筛选 本地服务 求职者服务 简历建档 面试协同",
+            "重置筛选",
+            "购买",
+            "求职者智能建档与简历OCR - ¥49 山东地市岗位智能匹配 - ¥199 企业资质强审核 - ¥199 区域人才供需热力与虚假职位拦截 - ¥299 简历OCR建档与解析 - ¥129 LBS岗位精准匹配 - ¥99 企业资质强审核 - ¥299 面试协同与录用意向 - ¥129 面试预约与录用意向 - ¥89 人才供需热力分析 - ¥159",
+            "请根据地市、经验年限、技能栈和期望薪资推荐岗位并预约面试。",
+            "提交购买",
+            "企业资质强审核申请",
+            "需要核验营业执照、社保缴纳数据和用工黑名单，并进入招聘效能分析。",
+            "提交需求",
+            "刷新",
+            "刷新后台"
+          ]
+        }
+      },
+      {
+        "label": "操作:刷新",
+        "url": "http://127.0.0.1:49094/#purchase",
+        "title": "山东区域垂直招聘平台",
+        "headings": [
+          "山东区域垂直招聘平台",
+          "求职者、企业HR、院校与监管账号入口",
+          "搜索结果 / 简历建档、岗位匹配与本地服务",
+          "求职者智能建档与简历OCR",
+          "山东地市岗位智能匹配",
+          "企业资质强审核",
+          "区域人才供需热力与虚假职位拦截",
+          "简历OCR建档与解析",
+          "LBS岗位精准匹配",
+          "面试协同与录用意向",
+          "面试预约与录用意向",
+          "人才供需热力分析"
+        ],
+        "navLabels": [
+          "搜索筛选",
+          "购买提交",
+          "个人中心",
+          "后台管理"
+        ],
+        "buttons": [
+          "登录 / 注册",
+          "重置筛选",
+          "购买",
+          "提交购买",
+          "提交需求",
+          "刷新",
+          "刷新后台"
+        ],
+        "links": [
+          "搜索筛选",
+          "购买提交",
+          "个人中心",
+          "后台管理"
+        ],
+        "inputs": [
+          {
+            "tag": "input",
+            "type": "",
+            "placeholder": "姓名",
+            "name": "name",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "",
+            "placeholder": "手机号",
+            "name": "phone",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "",
+            "placeholder": "搜索山东地市、LBS、简历OCR、社保核验",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "select",
+            "type": "",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "select",
+            "type": "",
+            "placeholder": "",
+            "name": "serviceId",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "",
+            "placeholder": "联系人",
+            "name": "customer",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "",
+            "placeholder": "联系电话",
+            "name": "phone",
+            "label": ""
+          },
+          {
+            "tag": "textarea",
+            "type": "",
+            "placeholder": "需求说明",
+            "name": "note",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "",
+            "placeholder": "需求标题",
+            "name": "title",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "",
+            "placeholder": "联系方式",
+            "name": "contact",
+            "label": ""
+          },
+          {
+            "tag": "textarea",
+            "type": "",
+            "placeholder": "详细描述",
+            "name": "detail",
+            "label": ""
+          }
+        ],
+        "tables": [],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "Regional Talent Matching 山东区域垂直招聘平台 搜索筛选 购买提交 个人中心 后台管理 前端 http://127.0.0.1:49094 后端 http://127.0.0.1:59094/api 健康检查 正常 登录注册 求职者、企业HR、院校与监管账号入口 可使用 13800138000 或直接注册新手机号，登录后会写入本地状态。 登录 / 注册 搜索 / 筛选 搜索结果 / 简历建档、岗位匹配与本地服务 全部企业审核后台管理岗位匹配搜索筛选本地服务求职者服务简历建档面试协同 重置筛选 求职者服务 可建档 求职者智能建档与简历OCR 解析学历、技能、经验和期望薪资标签，支持简历OCR自动补全。 山东人才档案中心 评分 4.9 ¥49 购买 岗位匹配 可购买 山东地市岗位智能匹配 按山东地市、LBS距离、经验年限、技能栈和期望薪资推荐合适岗位。 区域人才算法中心 评分 4.9 ¥199 购买 企业审核 审核中 企业资质强审核 核验营业执照、社保缴纳数据和用工黑名单，拦截异常招聘主体。 资质风控台 评分 4.8 ¥199 购买 后台管理 监测中 区域人才供需热力与虚假职位拦截 展示区域人才供需热力图、简历转化率、面试到场率、offer接受率和虚假职位实时拦截。 招聘监管驾驶舱 评分 4.8 ¥299 购买 简历建档 可购买 简历OCR建档与解析 上传简历或证书后自动抽取学历、工作经历、技能标签和求职意向。 人才数据服务台 评分 4.8 ¥129 购买 岗位匹配 推荐中 LBS岗位精准匹配 按山东16地市、行业、经验年限、技能栈和通勤距离匹配岗位与人才。 双向推荐算法 评分 4.7 ¥99 购买 后台管理 审核中 企业资质强审核 核验营业执照、社保缴纳、用工黑名单和虚假职位风险。 招聘监管看板 评分 4.7 ¥299 购买 面试协同 可预约 面试协同与录用意向 支持在线预约、视频面试、面试评价模板和录用意向一键发送。 招聘流程工作台 评分 4.6 ¥129 购买 本地服务 可购买 面试预约与录用意向 连接求职者、企业HR和院校就业办，沉淀面试、录用和补贴申请记录。 招聘协同中心 评分 4.6 ¥89 购买 搜索筛选 可购买 人才供需热力分析 按城市、行业、薪资和技能缺口筛选人才供需热力与招聘效能。 山东人才地图 评分 4.5 ¥159 购买 购买 / 提交 提交岗位匹配、面试预约或录用意向 表单会调用后端接口并写入 SQLite，后台管理和个人中心会立即刷新。 求职者智能建档与简历OCR - ¥49山东地市岗位智能匹配 - ¥199企业资质强审核 - ¥199区域人才供需热力与虚假职位拦截 - ¥299简历OCR建档与解析 - ¥129LBS岗位精准匹配 - ¥99企业资质强审核 - ¥299面试协同与录用意向 - ¥129面试预约与录用意向 - ¥89人才供需热力分析 - ¥159 请安排顾问跟进本次服务。 提交购买 需求提交 提交资质审核、补贴申领或培训报名需求 希望按月分析收支并给出提醒规则。 提交需求 个人中心 / 我的 我的订单与资料 刷新 用户演示用户 手机13800138000 订单298 需求1 #298 演示用户已提交 ¥49#297 演示用户已提交 ¥49#296 演示用户已提交 ¥49#295 演示用户已提交 ¥49#294 演示用户已提交 ¥49#293 演示用户已提交 ¥49#292 演示用户已提交 ¥49#291 演示用户已提交 ¥49#290 演示用户已提交 ¥49#289 演示用户已提交 ¥49#288 演示用户已提交 ¥49#287 演示用户已提交 ¥49 后台管理 人才供需热力、招聘效能与虚假职位拦截 刷新后台 用户2 服务10 订单298 收入¥14732 user提交订单 #298user提交订单 #297user提交订单 #296user提交订单 #295user提交订单 #294 接口响应 { \"ok\": true, \"data\": { \"id\": 298, \"service_id\": 1, \"customer\": \"演示用户\", \"phone\": \"13800138000\", \"amount\": 49, \"status\": \"已提交\", \"note\": \"请根据地市",
+        "layout": {
+          "viewportWidth": 1792,
+          "viewportHeight": 1600,
+          "scrollWidth": 1792,
+          "scrollHeight": 4060,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89094-cycle172-repair-structure-10-操作-刷新",
+          "label": "操作:刷新",
+          "finalUrl": "http://127.0.0.1:49094/#purchase",
+          "title": "山东区域垂直招聘平台",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89094/runtime-check/codex-20260608-cycle172-repair/may-89094-cycle172-repair-structure-10-操作-刷新.json",
+          "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89094/runtime-check/codex-20260608-cycle172-repair/may-89094-cycle172-repair-structure-10-操作-刷新.png",
+          "elementCount": 300,
+          "interactiveCount": 31,
+          "interactiveLabels": [
+            "搜索筛选",
+            "购买提交",
+            "个人中心",
+            "后台管理",
+            "演示用户",
+            "13800138000",
+            "登录 / 注册",
+            "搜索山东地市、LBS、简历OCR、社保核验",
+            "全部 企业审核 后台管理 岗位匹配 搜索筛选 本地服务 求职者服务 简历建档 面试协同",
+            "重置筛选",
+            "购买",
+            "求职者智能建档与简历OCR - ¥49 山东地市岗位智能匹配 - ¥199 企业资质强审核 - ¥199 区域人才供需热力与虚假职位拦截 - ¥299 简历OCR建档与解析 - ¥129 LBS岗位精准匹配 - ¥99 企业资质强审核 - ¥299 面试协同与录用意向 - ¥129 面试预约与录用意向 - ¥89 人才供需热力分析 - ¥159",
+            "请根据地市、经验年限、技能栈和期望薪资推荐岗位并预约面试。",
+            "提交购买",
+            "企业资质强审核申请",
+            "需要核验营业执照、社保缴纳数据和用工黑名单，并进入招聘效能分析。",
+            "提交需求",
+            "刷新",
+            "刷新后台"
+          ]
+        }
+      },
+      {
+        "label": "二层操作:刷新->提交购买",
+        "url": "http://127.0.0.1:49094/#purchase",
+        "title": "山东区域垂直招聘平台",
+        "headings": [
+          "山东区域垂直招聘平台",
+          "求职者、企业HR、院校与监管账号入口",
+          "搜索结果 / 简历建档、岗位匹配与本地服务",
+          "求职者智能建档与简历OCR",
+          "山东地市岗位智能匹配",
+          "企业资质强审核",
+          "区域人才供需热力与虚假职位拦截",
+          "简历OCR建档与解析",
+          "LBS岗位精准匹配",
+          "面试协同与录用意向",
+          "面试预约与录用意向",
+          "人才供需热力分析"
+        ],
+        "navLabels": [
+          "搜索筛选",
+          "购买提交",
+          "个人中心",
+          "后台管理"
+        ],
+        "buttons": [
+          "登录 / 注册",
+          "重置筛选",
+          "购买",
+          "提交购买",
+          "提交需求",
+          "刷新",
+          "刷新后台"
+        ],
+        "links": [
+          "搜索筛选",
+          "购买提交",
+          "个人中心",
+          "后台管理"
+        ],
+        "inputs": [
+          {
+            "tag": "input",
+            "type": "",
+            "placeholder": "姓名",
+            "name": "name",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "",
+            "placeholder": "手机号",
+            "name": "phone",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "",
+            "placeholder": "搜索山东地市、LBS、简历OCR、社保核验",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "select",
+            "type": "",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "select",
+            "type": "",
+            "placeholder": "",
+            "name": "serviceId",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "",
+            "placeholder": "联系人",
+            "name": "customer",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "",
+            "placeholder": "联系电话",
+            "name": "phone",
+            "label": ""
+          },
+          {
+            "tag": "textarea",
+            "type": "",
+            "placeholder": "需求说明",
+            "name": "note",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "",
+            "placeholder": "需求标题",
+            "name": "title",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "",
+            "placeholder": "联系方式",
+            "name": "contact",
+            "label": ""
+          },
+          {
+            "tag": "textarea",
+            "type": "",
+            "placeholder": "详细描述",
+            "name": "detail",
+            "label": ""
+          }
+        ],
+        "tables": [],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "Regional Talent Matching 山东区域垂直招聘平台 搜索筛选 购买提交 个人中心 后台管理 前端 http://127.0.0.1:49094 后端 http://127.0.0.1:59094/api 健康检查 正常 登录注册 求职者、企业HR、院校与监管账号入口 可使用 13800138000 或直接注册新手机号，登录后会写入本地状态。 登录 / 注册 搜索 / 筛选 搜索结果 / 简历建档、岗位匹配与本地服务 全部企业审核后台管理岗位匹配搜索筛选本地服务求职者服务简历建档面试协同 重置筛选 求职者服务 可建档 求职者智能建档与简历OCR 解析学历、技能、经验和期望薪资标签，支持简历OCR自动补全。 山东人才档案中心 评分 4.9 ¥49 购买 岗位匹配 可购买 山东地市岗位智能匹配 按山东地市、LBS距离、经验年限、技能栈和期望薪资推荐合适岗位。 区域人才算法中心 评分 4.9 ¥199 购买 企业审核 审核中 企业资质强审核 核验营业执照、社保缴纳数据和用工黑名单，拦截异常招聘主体。 资质风控台 评分 4.8 ¥199 购买 后台管理 监测中 区域人才供需热力与虚假职位拦截 展示区域人才供需热力图、简历转化率、面试到场率、offer接受率和虚假职位实时拦截。 招聘监管驾驶舱 评分 4.8 ¥299 购买 简历建档 可购买 简历OCR建档与解析 上传简历或证书后自动抽取学历、工作经历、技能标签和求职意向。 人才数据服务台 评分 4.8 ¥129 购买 岗位匹配 推荐中 LBS岗位精准匹配 按山东16地市、行业、经验年限、技能栈和通勤距离匹配岗位与人才。 双向推荐算法 评分 4.7 ¥99 购买 后台管理 审核中 企业资质强审核 核验营业执照、社保缴纳、用工黑名单和虚假职位风险。 招聘监管看板 评分 4.7 ¥299 购买 面试协同 可预约 面试协同与录用意向 支持在线预约、视频面试、面试评价模板和录用意向一键发送。 招聘流程工作台 评分 4.6 ¥129 购买 本地服务 可购买 面试预约与录用意向 连接求职者、企业HR和院校就业办，沉淀面试、录用和补贴申请记录。 招聘协同中心 评分 4.6 ¥89 购买 搜索筛选 可购买 人才供需热力分析 按城市、行业、薪资和技能缺口筛选人才供需热力与招聘效能。 山东人才地图 评分 4.5 ¥159 购买 购买 / 提交 提交岗位匹配、面试预约或录用意向 表单会调用后端接口并写入 SQLite，后台管理和个人中心会立即刷新。 求职者智能建档与简历OCR - ¥49山东地市岗位智能匹配 - ¥199企业资质强审核 - ¥199区域人才供需热力与虚假职位拦截 - ¥299简历OCR建档与解析 - ¥129LBS岗位精准匹配 - ¥99企业资质强审核 - ¥299面试协同与录用意向 - ¥129面试预约与录用意向 - ¥89人才供需热力分析 - ¥159 请安排顾问跟进本次服务。 提交购买 需求提交 提交资质审核、补贴申领或培训报名需求 希望按月分析收支并给出提醒规则。 提交需求 个人中心 / 我的 我的订单与资料 刷新 用户演示用户 手机13800138000 订单299 需求1 #299 演示用户已提交 ¥49#298 演示用户已提交 ¥49#297 演示用户已提交 ¥49#296 演示用户已提交 ¥49#295 演示用户已提交 ¥49#294 演示用户已提交 ¥49#293 演示用户已提交 ¥49#292 演示用户已提交 ¥49#291 演示用户已提交 ¥49#290 演示用户已提交 ¥49#289 演示用户已提交 ¥49#288 演示用户已提交 ¥49 后台管理 人才供需热力、招聘效能与虚假职位拦截 刷新后台 用户2 服务10 订单299 收入¥14781 user提交订单 #299user提交订单 #298user提交订单 #297user提交订单 #296user提交订单 #295 接口响应 { \"ok\": true, \"data\": { \"id\": 299, \"service_id\": 1, \"customer\": \"演示用户\", \"phone\": \"13800138000\", \"amount\": 49, \"status\": \"已提交\", \"note\": \"请根据地市",
+        "layout": {
+          "viewportWidth": 1824,
+          "viewportHeight": 1600,
+          "scrollWidth": 1824,
+          "scrollHeight": 4060,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89094-cycle172-repair-structure-11-二层操作-刷新-提交购买",
+          "label": "二层操作:刷新->提交购买",
+          "finalUrl": "http://127.0.0.1:49094/#purchase",
+          "title": "山东区域垂直招聘平台",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89094/runtime-check/codex-20260608-cycle172-repair/may-89094-cycle172-repair-structure-11-二层操作-刷新-提交购买.json",
+          "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89094/runtime-check/codex-20260608-cycle172-repair/may-89094-cycle172-repair-structure-11-二层操作-刷新-提交购买.png",
+          "elementCount": 300,
+          "interactiveCount": 31,
+          "interactiveLabels": [
+            "搜索筛选",
+            "购买提交",
+            "个人中心",
+            "后台管理",
+            "演示用户",
+            "13800138000",
+            "登录 / 注册",
+            "搜索山东地市、LBS、简历OCR、社保核验",
+            "全部 企业审核 后台管理 岗位匹配 搜索筛选 本地服务 求职者服务 简历建档 面试协同",
+            "重置筛选",
+            "购买",
+            "求职者智能建档与简历OCR - ¥49 山东地市岗位智能匹配 - ¥199 企业资质强审核 - ¥199 区域人才供需热力与虚假职位拦截 - ¥299 简历OCR建档与解析 - ¥129 LBS岗位精准匹配 - ¥99 企业资质强审核 - ¥299 面试协同与录用意向 - ¥129 面试预约与录用意向 - ¥89 人才供需热力分析 - ¥159",
+            "请根据地市、经验年限、技能栈和期望薪资推荐岗位并预约面试。",
+            "提交购买",
+            "企业资质强审核申请",
+            "需要核验营业执照、社保缴纳数据和用工黑名单，并进入招聘效能分析。",
+            "提交需求",
+            "刷新",
+            "刷新后台"
+          ]
+        }
+      },
+      {
+        "label": "导航:个人中心",
+        "url": "http://127.0.0.1:49094/#profile",
+        "title": "山东区域垂直招聘平台",
+        "headings": [
+          "山东区域垂直招聘平台",
+          "求职者、企业HR、院校与监管账号入口",
+          "搜索结果 / 简历建档、岗位匹配与本地服务",
+          "求职者智能建档与简历OCR",
+          "山东地市岗位智能匹配",
+          "企业资质强审核",
+          "区域人才供需热力与虚假职位拦截",
+          "简历OCR建档与解析",
+          "LBS岗位精准匹配",
+          "面试协同与录用意向",
+          "面试预约与录用意向",
+          "人才供需热力分析"
+        ],
+        "navLabels": [
+          "搜索筛选",
+          "购买提交",
+          "个人中心",
+          "后台管理"
+        ],
+        "buttons": [
+          "登录 / 注册",
+          "重置筛选",
+          "购买",
+          "提交购买",
+          "提交需求",
+          "刷新",
+          "刷新后台"
+        ],
+        "links": [
+          "搜索筛选",
+          "购买提交",
+          "个人中心",
+          "后台管理"
+        ],
+        "inputs": [
+          {
+            "tag": "input",
+            "type": "",
+            "placeholder": "姓名",
+            "name": "name",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "",
+            "placeholder": "手机号",
+            "name": "phone",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "",
+            "placeholder": "搜索山东地市、LBS、简历OCR、社保核验",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "select",
+            "type": "",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "select",
+            "type": "",
+            "placeholder": "",
+            "name": "serviceId",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "",
+            "placeholder": "联系人",
+            "name": "customer",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "",
+            "placeholder": "联系电话",
+            "name": "phone",
+            "label": ""
+          },
+          {
+            "tag": "textarea",
+            "type": "",
+            "placeholder": "需求说明",
+            "name": "note",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "",
+            "placeholder": "需求标题",
+            "name": "title",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "",
+            "placeholder": "联系方式",
+            "name": "contact",
+            "label": ""
+          },
+          {
+            "tag": "textarea",
+            "type": "",
+            "placeholder": "详细描述",
+            "name": "detail",
+            "label": ""
+          }
+        ],
+        "tables": [],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "Regional Talent Matching 山东区域垂直招聘平台 搜索筛选 购买提交 个人中心 后台管理 前端 http://127.0.0.1:49094 后端 http://127.0.0.1:59094/api 健康检查 正常 登录注册 求职者、企业HR、院校与监管账号入口 可使用 13800138000 或直接注册新手机号，登录后会写入本地状态。 登录 / 注册 搜索 / 筛选 搜索结果 / 简历建档、岗位匹配与本地服务 全部企业审核后台管理岗位匹配搜索筛选本地服务求职者服务简历建档面试协同 重置筛选 求职者服务 可建档 求职者智能建档与简历OCR 解析学历、技能、经验和期望薪资标签，支持简历OCR自动补全。 山东人才档案中心 评分 4.9 ¥49 购买 岗位匹配 可购买 山东地市岗位智能匹配 按山东地市、LBS距离、经验年限、技能栈和期望薪资推荐合适岗位。 区域人才算法中心 评分 4.9 ¥199 购买 企业审核 审核中 企业资质强审核 核验营业执照、社保缴纳数据和用工黑名单，拦截异常招聘主体。 资质风控台 评分 4.8 ¥199 购买 后台管理 监测中 区域人才供需热力与虚假职位拦截 展示区域人才供需热力图、简历转化率、面试到场率、offer接受率和虚假职位实时拦截。 招聘监管驾驶舱 评分 4.8 ¥299 购买 简历建档 可购买 简历OCR建档与解析 上传简历或证书后自动抽取学历、工作经历、技能标签和求职意向。 人才数据服务台 评分 4.8 ¥129 购买 岗位匹配 推荐中 LBS岗位精准匹配 按山东16地市、行业、经验年限、技能栈和通勤距离匹配岗位与人才。 双向推荐算法 评分 4.7 ¥99 购买 后台管理 审核中 企业资质强审核 核验营业执照、社保缴纳、用工黑名单和虚假职位风险。 招聘监管看板 评分 4.7 ¥299 购买 面试协同 可预约 面试协同与录用意向 支持在线预约、视频面试、面试评价模板和录用意向一键发送。 招聘流程工作台 评分 4.6 ¥129 购买 本地服务 可购买 面试预约与录用意向 连接求职者、企业HR和院校就业办，沉淀面试、录用和补贴申请记录。 招聘协同中心 评分 4.6 ¥89 购买 搜索筛选 可购买 人才供需热力分析 按城市、行业、薪资和技能缺口筛选人才供需热力与招聘效能。 山东人才地图 评分 4.5 ¥159 购买 购买 / 提交 提交岗位匹配、面试预约或录用意向 表单会调用后端接口并写入 SQLite，后台管理和个人中心会立即刷新。 求职者智能建档与简历OCR - ¥49山东地市岗位智能匹配 - ¥199企业资质强审核 - ¥199区域人才供需热力与虚假职位拦截 - ¥299简历OCR建档与解析 - ¥129LBS岗位精准匹配 - ¥99企业资质强审核 - ¥299面试协同与录用意向 - ¥129面试预约与录用意向 - ¥89人才供需热力分析 - ¥159 请安排顾问跟进本次服务。 提交购买 需求提交 提交资质审核、补贴申领或培训报名需求 希望按月分析收支并给出提醒规则。 提交需求 个人中心 / 我的 我的订单与资料 刷新 用户演示用户 手机13800138000 订单299 需求1 #299 演示用户已提交 ¥49#298 演示用户已提交 ¥49#297 演示用户已提交 ¥49#296 演示用户已提交 ¥49#295 演示用户已提交 ¥49#294 演示用户已提交 ¥49#293 演示用户已提交 ¥49#292 演示用户已提交 ¥49#291 演示用户已提交 ¥49#290 演示用户已提交 ¥49#289 演示用户已提交 ¥49#288 演示用户已提交 ¥49 后台管理 人才供需热力、招聘效能与虚假职位拦截 刷新后台 用户2 服务10 订单299 收入¥14781 user提交订单 #299user提交订单 #298user提交订单 #297user提交订单 #296user提交订单 #295 接口响应 { \"ok\": true, \"data\": { \"id\": 299, \"service_id\": 1, \"customer\": \"演示用户\", \"phone\": \"13800138000\", \"amount\": 49, \"status\": \"已提交\", \"note\": \"请根据地市",
+        "layout": {
+          "viewportWidth": 1856,
+          "viewportHeight": 1600,
+          "scrollWidth": 1856,
+          "scrollHeight": 4060,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89094-cycle172-repair-structure-12-导航-个人中心",
+          "label": "导航:个人中心",
+          "finalUrl": "http://127.0.0.1:49094/#profile",
+          "title": "山东区域垂直招聘平台",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89094/runtime-check/codex-20260608-cycle172-repair/may-89094-cycle172-repair-structure-12-导航-个人中心.json",
+          "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89094/runtime-check/codex-20260608-cycle172-repair/may-89094-cycle172-repair-structure-12-导航-个人中心.png",
+          "elementCount": 300,
+          "interactiveCount": 31,
+          "interactiveLabels": [
+            "搜索筛选",
+            "购买提交",
+            "个人中心",
+            "后台管理",
+            "演示用户",
+            "13800138000",
+            "登录 / 注册",
+            "搜索山东地市、LBS、简历OCR、社保核验",
+            "全部 企业审核 后台管理 岗位匹配 搜索筛选 本地服务 求职者服务 简历建档 面试协同",
+            "重置筛选",
+            "购买",
+            "求职者智能建档与简历OCR - ¥49 山东地市岗位智能匹配 - ¥199 企业资质强审核 - ¥199 区域人才供需热力与虚假职位拦截 - ¥299 简历OCR建档与解析 - ¥129 LBS岗位精准匹配 - ¥99 企业资质强审核 - ¥299 面试协同与录用意向 - ¥129 面试预约与录用意向 - ¥89 人才供需热力分析 - ¥159",
+            "请根据地市、经验年限、技能栈和期望薪资推荐岗位并预约面试。",
+            "提交购买",
+            "企业资质强审核申请",
+            "需要核验营业执照、社保缴纳数据和用工黑名单，并进入招聘效能分析。",
+            "提交需求",
+            "刷新",
+            "刷新后台"
+          ]
+        }
+      },
+      {
+        "label": "操作:重置筛选",
+        "url": "http://127.0.0.1:49094/#profile",
+        "title": "山东区域垂直招聘平台",
+        "headings": [
+          "山东区域垂直招聘平台",
+          "求职者、企业HR、院校与监管账号入口",
+          "搜索结果 / 简历建档、岗位匹配与本地服务",
+          "求职者智能建档与简历OCR",
+          "山东地市岗位智能匹配",
+          "企业资质强审核",
+          "区域人才供需热力与虚假职位拦截",
+          "简历OCR建档与解析",
+          "LBS岗位精准匹配",
+          "面试协同与录用意向",
+          "面试预约与录用意向",
+          "人才供需热力分析"
+        ],
+        "navLabels": [
+          "搜索筛选",
+          "购买提交",
+          "个人中心",
+          "后台管理"
+        ],
+        "buttons": [
+          "登录 / 注册",
+          "重置筛选",
+          "购买",
+          "提交购买",
+          "提交需求",
+          "刷新",
+          "刷新后台"
+        ],
+        "links": [
+          "搜索筛选",
+          "购买提交",
+          "个人中心",
+          "后台管理"
+        ],
+        "inputs": [
+          {
+            "tag": "input",
+            "type": "",
+            "placeholder": "姓名",
+            "name": "name",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "",
+            "placeholder": "手机号",
+            "name": "phone",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "",
+            "placeholder": "搜索山东地市、LBS、简历OCR、社保核验",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "select",
+            "type": "",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "select",
+            "type": "",
+            "placeholder": "",
+            "name": "serviceId",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "",
+            "placeholder": "联系人",
+            "name": "customer",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "",
+            "placeholder": "联系电话",
+            "name": "phone",
+            "label": ""
+          },
+          {
+            "tag": "textarea",
+            "type": "",
+            "placeholder": "需求说明",
+            "name": "note",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "",
+            "placeholder": "需求标题",
+            "name": "title",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "",
+            "placeholder": "联系方式",
+            "name": "contact",
+            "label": ""
+          },
+          {
+            "tag": "textarea",
+            "type": "",
+            "placeholder": "详细描述",
+            "name": "detail",
+            "label": ""
+          }
+        ],
+        "tables": [],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "Regional Talent Matching 山东区域垂直招聘平台 搜索筛选 购买提交 个人中心 后台管理 前端 http://127.0.0.1:49094 后端 http://127.0.0.1:59094/api 健康检查 正常 登录注册 求职者、企业HR、院校与监管账号入口 可使用 13800138000 或直接注册新手机号，登录后会写入本地状态。 登录 / 注册 搜索 / 筛选 搜索结果 / 简历建档、岗位匹配与本地服务 全部企业审核后台管理岗位匹配搜索筛选本地服务求职者服务简历建档面试协同 重置筛选 求职者服务 可建档 求职者智能建档与简历OCR 解析学历、技能、经验和期望薪资标签，支持简历OCR自动补全。 山东人才档案中心 评分 4.9 ¥49 购买 岗位匹配 可购买 山东地市岗位智能匹配 按山东地市、LBS距离、经验年限、技能栈和期望薪资推荐合适岗位。 区域人才算法中心 评分 4.9 ¥199 购买 企业审核 审核中 企业资质强审核 核验营业执照、社保缴纳数据和用工黑名单，拦截异常招聘主体。 资质风控台 评分 4.8 ¥199 购买 后台管理 监测中 区域人才供需热力与虚假职位拦截 展示区域人才供需热力图、简历转化率、面试到场率、offer接受率和虚假职位实时拦截。 招聘监管驾驶舱 评分 4.8 ¥299 购买 简历建档 可购买 简历OCR建档与解析 上传简历或证书后自动抽取学历、工作经历、技能标签和求职意向。 人才数据服务台 评分 4.8 ¥129 购买 岗位匹配 推荐中 LBS岗位精准匹配 按山东16地市、行业、经验年限、技能栈和通勤距离匹配岗位与人才。 双向推荐算法 评分 4.7 ¥99 购买 后台管理 审核中 企业资质强审核 核验营业执照、社保缴纳、用工黑名单和虚假职位风险。 招聘监管看板 评分 4.7 ¥299 购买 面试协同 可预约 面试协同与录用意向 支持在线预约、视频面试、面试评价模板和录用意向一键发送。 招聘流程工作台 评分 4.6 ¥129 购买 本地服务 可购买 面试预约与录用意向 连接求职者、企业HR和院校就业办，沉淀面试、录用和补贴申请记录。 招聘协同中心 评分 4.6 ¥89 购买 搜索筛选 可购买 人才供需热力分析 按城市、行业、薪资和技能缺口筛选人才供需热力与招聘效能。 山东人才地图 评分 4.5 ¥159 购买 购买 / 提交 提交岗位匹配、面试预约或录用意向 表单会调用后端接口并写入 SQLite，后台管理和个人中心会立即刷新。 求职者智能建档与简历OCR - ¥49山东地市岗位智能匹配 - ¥199企业资质强审核 - ¥199区域人才供需热力与虚假职位拦截 - ¥299简历OCR建档与解析 - ¥129LBS岗位精准匹配 - ¥99企业资质强审核 - ¥299面试协同与录用意向 - ¥129面试预约与录用意向 - ¥89人才供需热力分析 - ¥159 请安排顾问跟进本次服务。 提交购买 需求提交 提交资质审核、补贴申领或培训报名需求 希望按月分析收支并给出提醒规则。 提交需求 个人中心 / 我的 我的订单与资料 刷新 用户演示用户 手机13800138000 订单299 需求1 #299 演示用户已提交 ¥49#298 演示用户已提交 ¥49#297 演示用户已提交 ¥49#296 演示用户已提交 ¥49#295 演示用户已提交 ¥49#294 演示用户已提交 ¥49#293 演示用户已提交 ¥49#292 演示用户已提交 ¥49#291 演示用户已提交 ¥49#290 演示用户已提交 ¥49#289 演示用户已提交 ¥49#288 演示用户已提交 ¥49 后台管理 人才供需热力、招聘效能与虚假职位拦截 刷新后台 用户2 服务10 订单299 收入¥14781 user提交订单 #299user提交订单 #298user提交订单 #297user提交订单 #296user提交订单 #295 接口响应 { \"ok\": true, \"data\": { \"id\": 299, \"service_id\": 1, \"customer\": \"演示用户\", \"phone\": \"13800138000\", \"amount\": 49, \"status\": \"已提交\", \"note\": \"请根据地市",
+        "layout": {
+          "viewportWidth": 1888,
+          "viewportHeight": 1600,
+          "scrollWidth": 1888,
+          "scrollHeight": 4060,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89094-cycle172-repair-structure-13-操作-重置筛选",
+          "label": "操作:重置筛选",
+          "finalUrl": "http://127.0.0.1:49094/#profile",
+          "title": "山东区域垂直招聘平台",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89094/runtime-check/codex-20260608-cycle172-repair/may-89094-cycle172-repair-structure-13-操作-重置筛选.json",
+          "screenshotPath": "",
+          "elementCount": 300,
+          "interactiveCount": 31,
+          "interactiveLabels": [
+            "搜索筛选",
+            "购买提交",
+            "个人中心",
+            "后台管理",
+            "演示用户",
+            "13800138000",
+            "登录 / 注册",
+            "搜索山东地市、LBS、简历OCR、社保核验",
+            "全部 企业审核 后台管理 岗位匹配 搜索筛选 本地服务 求职者服务 简历建档 面试协同",
+            "重置筛选",
+            "购买",
+            "求职者智能建档与简历OCR - ¥49 山东地市岗位智能匹配 - ¥199 企业资质强审核 - ¥199 区域人才供需热力与虚假职位拦截 - ¥299 简历OCR建档与解析 - ¥129 LBS岗位精准匹配 - ¥99 企业资质强审核 - ¥299 面试协同与录用意向 - ¥129 面试预约与录用意向 - ¥89 人才供需热力分析 - ¥159",
+            "请根据地市、经验年限、技能栈和期望薪资推荐岗位并预约面试。",
+            "提交购买",
+            "企业资质强审核申请",
+            "需要核验营业执照、社保缴纳数据和用工黑名单，并进入招聘效能分析。",
+            "提交需求",
+            "刷新",
+            "刷新后台"
+          ]
+        }
+      },
+      {
+        "label": "操作:刷新",
+        "url": "http://127.0.0.1:49094/#profile",
+        "title": "山东区域垂直招聘平台",
+        "headings": [
+          "山东区域垂直招聘平台",
+          "求职者、企业HR、院校与监管账号入口",
+          "搜索结果 / 简历建档、岗位匹配与本地服务",
+          "求职者智能建档与简历OCR",
+          "山东地市岗位智能匹配",
+          "企业资质强审核",
+          "区域人才供需热力与虚假职位拦截",
+          "简历OCR建档与解析",
+          "LBS岗位精准匹配",
+          "面试协同与录用意向",
+          "面试预约与录用意向",
+          "人才供需热力分析"
+        ],
+        "navLabels": [
+          "搜索筛选",
+          "购买提交",
+          "个人中心",
+          "后台管理"
+        ],
+        "buttons": [
+          "登录 / 注册",
+          "重置筛选",
+          "购买",
+          "提交购买",
+          "提交需求",
+          "刷新",
+          "刷新后台"
+        ],
+        "links": [
+          "搜索筛选",
+          "购买提交",
+          "个人中心",
+          "后台管理"
+        ],
+        "inputs": [
+          {
+            "tag": "input",
+            "type": "",
+            "placeholder": "姓名",
+            "name": "name",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "",
+            "placeholder": "手机号",
+            "name": "phone",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "",
+            "placeholder": "搜索山东地市、LBS、简历OCR、社保核验",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "select",
+            "type": "",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "select",
+            "type": "",
+            "placeholder": "",
+            "name": "serviceId",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "",
+            "placeholder": "联系人",
+            "name": "customer",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "",
+            "placeholder": "联系电话",
+            "name": "phone",
+            "label": ""
+          },
+          {
+            "tag": "textarea",
+            "type": "",
+            "placeholder": "需求说明",
+            "name": "note",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "",
+            "placeholder": "需求标题",
+            "name": "title",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "",
+            "placeholder": "联系方式",
+            "name": "contact",
+            "label": ""
+          },
+          {
+            "tag": "textarea",
+            "type": "",
+            "placeholder": "详细描述",
+            "name": "detail",
+            "label": ""
+          }
+        ],
+        "tables": [],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "Regional Talent Matching 山东区域垂直招聘平台 搜索筛选 购买提交 个人中心 后台管理 前端 http://127.0.0.1:49094 后端 http://127.0.0.1:59094/api 健康检查 正常 登录注册 求职者、企业HR、院校与监管账号入口 可使用 13800138000 或直接注册新手机号，登录后会写入本地状态。 登录 / 注册 搜索 / 筛选 搜索结果 / 简历建档、岗位匹配与本地服务 全部企业审核后台管理岗位匹配搜索筛选本地服务求职者服务简历建档面试协同 重置筛选 求职者服务 可建档 求职者智能建档与简历OCR 解析学历、技能、经验和期望薪资标签，支持简历OCR自动补全。 山东人才档案中心 评分 4.9 ¥49 购买 岗位匹配 可购买 山东地市岗位智能匹配 按山东地市、LBS距离、经验年限、技能栈和期望薪资推荐合适岗位。 区域人才算法中心 评分 4.9 ¥199 购买 企业审核 审核中 企业资质强审核 核验营业执照、社保缴纳数据和用工黑名单，拦截异常招聘主体。 资质风控台 评分 4.8 ¥199 购买 后台管理 监测中 区域人才供需热力与虚假职位拦截 展示区域人才供需热力图、简历转化率、面试到场率、offer接受率和虚假职位实时拦截。 招聘监管驾驶舱 评分 4.8 ¥299 购买 简历建档 可购买 简历OCR建档与解析 上传简历或证书后自动抽取学历、工作经历、技能标签和求职意向。 人才数据服务台 评分 4.8 ¥129 购买 岗位匹配 推荐中 LBS岗位精准匹配 按山东16地市、行业、经验年限、技能栈和通勤距离匹配岗位与人才。 双向推荐算法 评分 4.7 ¥99 购买 后台管理 审核中 企业资质强审核 核验营业执照、社保缴纳、用工黑名单和虚假职位风险。 招聘监管看板 评分 4.7 ¥299 购买 面试协同 可预约 面试协同与录用意向 支持在线预约、视频面试、面试评价模板和录用意向一键发送。 招聘流程工作台 评分 4.6 ¥129 购买 本地服务 可购买 面试预约与录用意向 连接求职者、企业HR和院校就业办，沉淀面试、录用和补贴申请记录。 招聘协同中心 评分 4.6 ¥89 购买 搜索筛选 可购买 人才供需热力分析 按城市、行业、薪资和技能缺口筛选人才供需热力与招聘效能。 山东人才地图 评分 4.5 ¥159 购买 购买 / 提交 提交岗位匹配、面试预约或录用意向 表单会调用后端接口并写入 SQLite，后台管理和个人中心会立即刷新。 求职者智能建档与简历OCR - ¥49山东地市岗位智能匹配 - ¥199企业资质强审核 - ¥199区域人才供需热力与虚假职位拦截 - ¥299简历OCR建档与解析 - ¥129LBS岗位精准匹配 - ¥99企业资质强审核 - ¥299面试协同与录用意向 - ¥129面试预约与录用意向 - ¥89人才供需热力分析 - ¥159 请安排顾问跟进本次服务。 提交购买 需求提交 提交资质审核、补贴申领或培训报名需求 希望按月分析收支并给出提醒规则。 提交需求 个人中心 / 我的 我的订单与资料 刷新 用户演示用户 手机13800138000 订单299 需求1 #299 演示用户已提交 ¥49#298 演示用户已提交 ¥49#297 演示用户已提交 ¥49#296 演示用户已提交 ¥49#295 演示用户已提交 ¥49#294 演示用户已提交 ¥49#293 演示用户已提交 ¥49#292 演示用户已提交 ¥49#291 演示用户已提交 ¥49#290 演示用户已提交 ¥49#289 演示用户已提交 ¥49#288 演示用户已提交 ¥49 后台管理 人才供需热力、招聘效能与虚假职位拦截 刷新后台 用户2 服务10 订单299 收入¥14781 user提交订单 #299user提交订单 #298user提交订单 #297user提交订单 #296user提交订单 #295 接口响应 { \"ok\": true, \"data\": { \"id\": 299, \"service_id\": 1, \"customer\": \"演示用户\", \"phone\": \"13800138000\", \"amount\": 49, \"status\": \"已提交\", \"note\": \"请根据地市",
+        "layout": {
+          "viewportWidth": 1920,
+          "viewportHeight": 1600,
+          "scrollWidth": 1920,
+          "scrollHeight": 4060,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89094-cycle172-repair-structure-14-操作-刷新",
+          "label": "操作:刷新",
+          "finalUrl": "http://127.0.0.1:49094/#profile",
+          "title": "山东区域垂直招聘平台",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89094/runtime-check/codex-20260608-cycle172-repair/may-89094-cycle172-repair-structure-14-操作-刷新.json",
+          "screenshotPath": "",
+          "elementCount": 300,
+          "interactiveCount": 31,
+          "interactiveLabels": [
+            "搜索筛选",
+            "购买提交",
+            "个人中心",
+            "后台管理",
+            "演示用户",
+            "13800138000",
+            "登录 / 注册",
+            "搜索山东地市、LBS、简历OCR、社保核验",
+            "全部 企业审核 后台管理 岗位匹配 搜索筛选 本地服务 求职者服务 简历建档 面试协同",
+            "重置筛选",
+            "购买",
+            "求职者智能建档与简历OCR - ¥49 山东地市岗位智能匹配 - ¥199 企业资质强审核 - ¥199 区域人才供需热力与虚假职位拦截 - ¥299 简历OCR建档与解析 - ¥129 LBS岗位精准匹配 - ¥99 企业资质强审核 - ¥299 面试协同与录用意向 - ¥129 面试预约与录用意向 - ¥89 人才供需热力分析 - ¥159",
+            "请根据地市、经验年限、技能栈和期望薪资推荐岗位并预约面试。",
+            "提交购买",
+            "企业资质强审核申请",
+            "需要核验营业执照、社保缴纳数据和用工黑名单，并进入招聘效能分析。",
+            "提交需求",
+            "刷新",
+            "刷新后台"
+          ]
+        }
+      },
+      {
+        "label": "导航:后台管理",
+        "url": "http://127.0.0.1:49094/#admin",
+        "title": "山东区域垂直招聘平台",
+        "headings": [
+          "山东区域垂直招聘平台",
+          "求职者、企业HR、院校与监管账号入口",
+          "搜索结果 / 简历建档、岗位匹配与本地服务",
+          "求职者智能建档与简历OCR",
+          "山东地市岗位智能匹配",
+          "企业资质强审核",
+          "区域人才供需热力与虚假职位拦截",
+          "简历OCR建档与解析",
+          "LBS岗位精准匹配",
+          "面试协同与录用意向",
+          "面试预约与录用意向",
+          "人才供需热力分析"
+        ],
+        "navLabels": [
+          "搜索筛选",
+          "购买提交",
+          "个人中心",
+          "后台管理"
+        ],
+        "buttons": [
+          "登录 / 注册",
+          "重置筛选",
+          "购买",
+          "提交购买",
+          "提交需求",
+          "刷新",
+          "刷新后台"
+        ],
+        "links": [
+          "搜索筛选",
+          "购买提交",
+          "个人中心",
+          "后台管理"
+        ],
+        "inputs": [
+          {
+            "tag": "input",
+            "type": "",
+            "placeholder": "姓名",
+            "name": "name",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "",
+            "placeholder": "手机号",
+            "name": "phone",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "",
+            "placeholder": "搜索山东地市、LBS、简历OCR、社保核验",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "select",
+            "type": "",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "select",
+            "type": "",
+            "placeholder": "",
+            "name": "serviceId",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "",
+            "placeholder": "联系人",
+            "name": "customer",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "",
+            "placeholder": "联系电话",
+            "name": "phone",
+            "label": ""
+          },
+          {
+            "tag": "textarea",
+            "type": "",
+            "placeholder": "需求说明",
+            "name": "note",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "",
+            "placeholder": "需求标题",
+            "name": "title",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "",
+            "placeholder": "联系方式",
+            "name": "contact",
+            "label": ""
+          },
+          {
+            "tag": "textarea",
+            "type": "",
+            "placeholder": "详细描述",
+            "name": "detail",
+            "label": ""
+          }
+        ],
+        "tables": [],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "Regional Talent Matching 山东区域垂直招聘平台 搜索筛选 购买提交 个人中心 后台管理 前端 http://127.0.0.1:49094 后端 http://127.0.0.1:59094/api 健康检查 正常 登录注册 求职者、企业HR、院校与监管账号入口 可使用 13800138000 或直接注册新手机号，登录后会写入本地状态。 登录 / 注册 搜索 / 筛选 搜索结果 / 简历建档、岗位匹配与本地服务 全部企业审核后台管理岗位匹配搜索筛选本地服务求职者服务简历建档面试协同 重置筛选 求职者服务 可建档 求职者智能建档与简历OCR 解析学历、技能、经验和期望薪资标签，支持简历OCR自动补全。 山东人才档案中心 评分 4.9 ¥49 购买 岗位匹配 可购买 山东地市岗位智能匹配 按山东地市、LBS距离、经验年限、技能栈和期望薪资推荐合适岗位。 区域人才算法中心 评分 4.9 ¥199 购买 企业审核 审核中 企业资质强审核 核验营业执照、社保缴纳数据和用工黑名单，拦截异常招聘主体。 资质风控台 评分 4.8 ¥199 购买 后台管理 监测中 区域人才供需热力与虚假职位拦截 展示区域人才供需热力图、简历转化率、面试到场率、offer接受率和虚假职位实时拦截。 招聘监管驾驶舱 评分 4.8 ¥299 购买 简历建档 可购买 简历OCR建档与解析 上传简历或证书后自动抽取学历、工作经历、技能标签和求职意向。 人才数据服务台 评分 4.8 ¥129 购买 岗位匹配 推荐中 LBS岗位精准匹配 按山东16地市、行业、经验年限、技能栈和通勤距离匹配岗位与人才。 双向推荐算法 评分 4.7 ¥99 购买 后台管理 审核中 企业资质强审核 核验营业执照、社保缴纳、用工黑名单和虚假职位风险。 招聘监管看板 评分 4.7 ¥299 购买 面试协同 可预约 面试协同与录用意向 支持在线预约、视频面试、面试评价模板和录用意向一键发送。 招聘流程工作台 评分 4.6 ¥129 购买 本地服务 可购买 面试预约与录用意向 连接求职者、企业HR和院校就业办，沉淀面试、录用和补贴申请记录。 招聘协同中心 评分 4.6 ¥89 购买 搜索筛选 可购买 人才供需热力分析 按城市、行业、薪资和技能缺口筛选人才供需热力与招聘效能。 山东人才地图 评分 4.5 ¥159 购买 购买 / 提交 提交岗位匹配、面试预约或录用意向 表单会调用后端接口并写入 SQLite，后台管理和个人中心会立即刷新。 求职者智能建档与简历OCR - ¥49山东地市岗位智能匹配 - ¥199企业资质强审核 - ¥199区域人才供需热力与虚假职位拦截 - ¥299简历OCR建档与解析 - ¥129LBS岗位精准匹配 - ¥99企业资质强审核 - ¥299面试协同与录用意向 - ¥129面试预约与录用意向 - ¥89人才供需热力分析 - ¥159 请安排顾问跟进本次服务。 提交购买 需求提交 提交资质审核、补贴申领或培训报名需求 希望按月分析收支并给出提醒规则。 提交需求 个人中心 / 我的 我的订单与资料 刷新 用户演示用户 手机13800138000 订单299 需求1 #299 演示用户已提交 ¥49#298 演示用户已提交 ¥49#297 演示用户已提交 ¥49#296 演示用户已提交 ¥49#295 演示用户已提交 ¥49#294 演示用户已提交 ¥49#293 演示用户已提交 ¥49#292 演示用户已提交 ¥49#291 演示用户已提交 ¥49#290 演示用户已提交 ¥49#289 演示用户已提交 ¥49#288 演示用户已提交 ¥49 后台管理 人才供需热力、招聘效能与虚假职位拦截 刷新后台 用户2 服务10 订单299 收入¥14781 user提交订单 #299user提交订单 #298user提交订单 #297user提交订单 #296user提交订单 #295 接口响应 { \"ok\": true, \"data\": { \"id\": 299, \"service_id\": 1, \"customer\": \"演示用户\", \"phone\": \"13800138000\", \"amount\": 49, \"status\": \"已提交\", \"note\": \"请根据地市",
+        "layout": {
+          "viewportWidth": 1952,
+          "viewportHeight": 1600,
+          "scrollWidth": 1952,
+          "scrollHeight": 4060,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89094-cycle172-repair-structure-15-导航-后台管理",
+          "label": "导航:后台管理",
+          "finalUrl": "http://127.0.0.1:49094/#admin",
+          "title": "山东区域垂直招聘平台",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89094/runtime-check/codex-20260608-cycle172-repair/may-89094-cycle172-repair-structure-15-导航-后台管理.json",
+          "screenshotPath": "",
+          "elementCount": 300,
+          "interactiveCount": 31,
+          "interactiveLabels": [
+            "搜索筛选",
+            "购买提交",
+            "个人中心",
+            "后台管理",
+            "演示用户",
+            "13800138000",
+            "登录 / 注册",
+            "搜索山东地市、LBS、简历OCR、社保核验",
+            "全部 企业审核 后台管理 岗位匹配 搜索筛选 本地服务 求职者服务 简历建档 面试协同",
+            "重置筛选",
+            "购买",
+            "求职者智能建档与简历OCR - ¥49 山东地市岗位智能匹配 - ¥199 企业资质强审核 - ¥199 区域人才供需热力与虚假职位拦截 - ¥299 简历OCR建档与解析 - ¥129 LBS岗位精准匹配 - ¥99 企业资质强审核 - ¥299 面试协同与录用意向 - ¥129 面试预约与录用意向 - ¥89 人才供需热力分析 - ¥159",
+            "请根据地市、经验年限、技能栈和期望薪资推荐岗位并预约面试。",
+            "提交购买",
+            "企业资质强审核申请",
+            "需要核验营业执照、社保缴纳数据和用工黑名单，并进入招聘效能分析。",
+            "提交需求",
+            "刷新",
+            "刷新后台"
+          ]
+        }
+      },
+      {
+        "label": "操作:重置筛选",
+        "url": "http://127.0.0.1:49094/#admin",
+        "title": "山东区域垂直招聘平台",
+        "headings": [
+          "山东区域垂直招聘平台",
+          "求职者、企业HR、院校与监管账号入口",
+          "搜索结果 / 简历建档、岗位匹配与本地服务",
+          "求职者智能建档与简历OCR",
+          "山东地市岗位智能匹配",
+          "企业资质强审核",
+          "区域人才供需热力与虚假职位拦截",
+          "简历OCR建档与解析",
+          "LBS岗位精准匹配",
+          "面试协同与录用意向",
+          "面试预约与录用意向",
+          "人才供需热力分析"
+        ],
+        "navLabels": [
+          "搜索筛选",
+          "购买提交",
+          "个人中心",
+          "后台管理"
+        ],
+        "buttons": [
+          "登录 / 注册",
+          "重置筛选",
+          "购买",
+          "提交购买",
+          "提交需求",
+          "刷新",
+          "刷新后台"
+        ],
+        "links": [
+          "搜索筛选",
+          "购买提交",
+          "个人中心",
+          "后台管理"
+        ],
+        "inputs": [
+          {
+            "tag": "input",
+            "type": "",
+            "placeholder": "姓名",
+            "name": "name",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "",
+            "placeholder": "手机号",
+            "name": "phone",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "",
+            "placeholder": "搜索山东地市、LBS、简历OCR、社保核验",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "select",
+            "type": "",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "select",
+            "type": "",
+            "placeholder": "",
+            "name": "serviceId",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "",
+            "placeholder": "联系人",
+            "name": "customer",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "",
+            "placeholder": "联系电话",
+            "name": "phone",
+            "label": ""
+          },
+          {
+            "tag": "textarea",
+            "type": "",
+            "placeholder": "需求说明",
+            "name": "note",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "",
+            "placeholder": "需求标题",
+            "name": "title",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "",
+            "placeholder": "联系方式",
+            "name": "contact",
+            "label": ""
+          },
+          {
+            "tag": "textarea",
+            "type": "",
+            "placeholder": "详细描述",
+            "name": "detail",
+            "label": ""
+          }
+        ],
+        "tables": [],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "Regional Talent Matching 山东区域垂直招聘平台 搜索筛选 购买提交 个人中心 后台管理 前端 http://127.0.0.1:49094 后端 http://127.0.0.1:59094/api 健康检查 正常 登录注册 求职者、企业HR、院校与监管账号入口 可使用 13800138000 或直接注册新手机号，登录后会写入本地状态。 登录 / 注册 搜索 / 筛选 搜索结果 / 简历建档、岗位匹配与本地服务 全部企业审核后台管理岗位匹配搜索筛选本地服务求职者服务简历建档面试协同 重置筛选 求职者服务 可建档 求职者智能建档与简历OCR 解析学历、技能、经验和期望薪资标签，支持简历OCR自动补全。 山东人才档案中心 评分 4.9 ¥49 购买 岗位匹配 可购买 山东地市岗位智能匹配 按山东地市、LBS距离、经验年限、技能栈和期望薪资推荐合适岗位。 区域人才算法中心 评分 4.9 ¥199 购买 企业审核 审核中 企业资质强审核 核验营业执照、社保缴纳数据和用工黑名单，拦截异常招聘主体。 资质风控台 评分 4.8 ¥199 购买 后台管理 监测中 区域人才供需热力与虚假职位拦截 展示区域人才供需热力图、简历转化率、面试到场率、offer接受率和虚假职位实时拦截。 招聘监管驾驶舱 评分 4.8 ¥299 购买 简历建档 可购买 简历OCR建档与解析 上传简历或证书后自动抽取学历、工作经历、技能标签和求职意向。 人才数据服务台 评分 4.8 ¥129 购买 岗位匹配 推荐中 LBS岗位精准匹配 按山东16地市、行业、经验年限、技能栈和通勤距离匹配岗位与人才。 双向推荐算法 评分 4.7 ¥99 购买 后台管理 审核中 企业资质强审核 核验营业执照、社保缴纳、用工黑名单和虚假职位风险。 招聘监管看板 评分 4.7 ¥299 购买 面试协同 可预约 面试协同与录用意向 支持在线预约、视频面试、面试评价模板和录用意向一键发送。 招聘流程工作台 评分 4.6 ¥129 购买 本地服务 可购买 面试预约与录用意向 连接求职者、企业HR和院校就业办，沉淀面试、录用和补贴申请记录。 招聘协同中心 评分 4.6 ¥89 购买 搜索筛选 可购买 人才供需热力分析 按城市、行业、薪资和技能缺口筛选人才供需热力与招聘效能。 山东人才地图 评分 4.5 ¥159 购买 购买 / 提交 提交岗位匹配、面试预约或录用意向 表单会调用后端接口并写入 SQLite，后台管理和个人中心会立即刷新。 求职者智能建档与简历OCR - ¥49山东地市岗位智能匹配 - ¥199企业资质强审核 - ¥199区域人才供需热力与虚假职位拦截 - ¥299简历OCR建档与解析 - ¥129LBS岗位精准匹配 - ¥99企业资质强审核 - ¥299面试协同与录用意向 - ¥129面试预约与录用意向 - ¥89人才供需热力分析 - ¥159 请安排顾问跟进本次服务。 提交购买 需求提交 提交资质审核、补贴申领或培训报名需求 希望按月分析收支并给出提醒规则。 提交需求 个人中心 / 我的 我的订单与资料 刷新 用户演示用户 手机13800138000 订单299 需求1 #299 演示用户已提交 ¥49#298 演示用户已提交 ¥49#297 演示用户已提交 ¥49#296 演示用户已提交 ¥49#295 演示用户已提交 ¥49#294 演示用户已提交 ¥49#293 演示用户已提交 ¥49#292 演示用户已提交 ¥49#291 演示用户已提交 ¥49#290 演示用户已提交 ¥49#289 演示用户已提交 ¥49#288 演示用户已提交 ¥49 后台管理 人才供需热力、招聘效能与虚假职位拦截 刷新后台 用户2 服务10 订单299 收入¥14781 user提交订单 #299user提交订单 #298user提交订单 #297user提交订单 #296user提交订单 #295 接口响应 { \"ok\": true, \"data\": { \"id\": 299, \"service_id\": 1, \"customer\": \"演示用户\", \"phone\": \"13800138000\", \"amount\": 49, \"status\": \"已提交\", \"note\": \"请根据地市",
+        "layout": {
+          "viewportWidth": 1984,
+          "viewportHeight": 1600,
+          "scrollWidth": 1984,
+          "scrollHeight": 4060,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89094-cycle172-repair-structure-16-操作-重置筛选",
+          "label": "操作:重置筛选",
+          "finalUrl": "http://127.0.0.1:49094/#admin",
+          "title": "山东区域垂直招聘平台",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89094/runtime-check/codex-20260608-cycle172-repair/may-89094-cycle172-repair-structure-16-操作-重置筛选.json",
+          "screenshotPath": "",
+          "elementCount": 300,
+          "interactiveCount": 31,
+          "interactiveLabels": [
+            "搜索筛选",
+            "购买提交",
+            "个人中心",
+            "后台管理",
+            "演示用户",
+            "13800138000",
+            "登录 / 注册",
+            "搜索山东地市、LBS、简历OCR、社保核验",
+            "全部 企业审核 后台管理 岗位匹配 搜索筛选 本地服务 求职者服务 简历建档 面试协同",
+            "重置筛选",
+            "购买",
+            "求职者智能建档与简历OCR - ¥49 山东地市岗位智能匹配 - ¥199 企业资质强审核 - ¥199 区域人才供需热力与虚假职位拦截 - ¥299 简历OCR建档与解析 - ¥129 LBS岗位精准匹配 - ¥99 企业资质强审核 - ¥299 面试协同与录用意向 - ¥129 面试预约与录用意向 - ¥89 人才供需热力分析 - ¥159",
+            "请根据地市、经验年限、技能栈和期望薪资推荐岗位并预约面试。",
+            "提交购买",
+            "企业资质强审核申请",
+            "需要核验营业执照、社保缴纳数据和用工黑名单，并进入招聘效能分析。",
+            "提交需求",
+            "刷新",
+            "刷新后台"
+          ]
+        }
+      },
+      {
+        "label": "操作:刷新",
+        "url": "http://127.0.0.1:49094/#admin",
+        "title": "山东区域垂直招聘平台",
+        "headings": [
+          "山东区域垂直招聘平台",
+          "求职者、企业HR、院校与监管账号入口",
+          "搜索结果 / 简历建档、岗位匹配与本地服务",
+          "求职者智能建档与简历OCR",
+          "山东地市岗位智能匹配",
+          "企业资质强审核",
+          "区域人才供需热力与虚假职位拦截",
+          "简历OCR建档与解析",
+          "LBS岗位精准匹配",
+          "面试协同与录用意向",
+          "面试预约与录用意向",
+          "人才供需热力分析"
+        ],
+        "navLabels": [
+          "搜索筛选",
+          "购买提交",
+          "个人中心",
+          "后台管理"
+        ],
+        "buttons": [
+          "登录 / 注册",
+          "重置筛选",
+          "购买",
+          "提交购买",
+          "提交需求",
+          "刷新",
+          "刷新后台"
+        ],
+        "links": [
+          "搜索筛选",
+          "购买提交",
+          "个人中心",
+          "后台管理"
+        ],
+        "inputs": [
+          {
+            "tag": "input",
+            "type": "",
+            "placeholder": "姓名",
+            "name": "name",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "",
+            "placeholder": "手机号",
+            "name": "phone",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "",
+            "placeholder": "搜索山东地市、LBS、简历OCR、社保核验",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "select",
+            "type": "",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "select",
+            "type": "",
+            "placeholder": "",
+            "name": "serviceId",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "",
+            "placeholder": "联系人",
+            "name": "customer",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "",
+            "placeholder": "联系电话",
+            "name": "phone",
+            "label": ""
+          },
+          {
+            "tag": "textarea",
+            "type": "",
+            "placeholder": "需求说明",
+            "name": "note",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "",
+            "placeholder": "需求标题",
+            "name": "title",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "",
+            "placeholder": "联系方式",
+            "name": "contact",
+            "label": ""
+          },
+          {
+            "tag": "textarea",
+            "type": "",
+            "placeholder": "详细描述",
+            "name": "detail",
+            "label": ""
+          }
+        ],
+        "tables": [],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "Regional Talent Matching 山东区域垂直招聘平台 搜索筛选 购买提交 个人中心 后台管理 前端 http://127.0.0.1:49094 后端 http://127.0.0.1:59094/api 健康检查 正常 登录注册 求职者、企业HR、院校与监管账号入口 可使用 13800138000 或直接注册新手机号，登录后会写入本地状态。 登录 / 注册 搜索 / 筛选 搜索结果 / 简历建档、岗位匹配与本地服务 全部企业审核后台管理岗位匹配搜索筛选本地服务求职者服务简历建档面试协同 重置筛选 求职者服务 可建档 求职者智能建档与简历OCR 解析学历、技能、经验和期望薪资标签，支持简历OCR自动补全。 山东人才档案中心 评分 4.9 ¥49 购买 岗位匹配 可购买 山东地市岗位智能匹配 按山东地市、LBS距离、经验年限、技能栈和期望薪资推荐合适岗位。 区域人才算法中心 评分 4.9 ¥199 购买 企业审核 审核中 企业资质强审核 核验营业执照、社保缴纳数据和用工黑名单，拦截异常招聘主体。 资质风控台 评分 4.8 ¥199 购买 后台管理 监测中 区域人才供需热力与虚假职位拦截 展示区域人才供需热力图、简历转化率、面试到场率、offer接受率和虚假职位实时拦截。 招聘监管驾驶舱 评分 4.8 ¥299 购买 简历建档 可购买 简历OCR建档与解析 上传简历或证书后自动抽取学历、工作经历、技能标签和求职意向。 人才数据服务台 评分 4.8 ¥129 购买 岗位匹配 推荐中 LBS岗位精准匹配 按山东16地市、行业、经验年限、技能栈和通勤距离匹配岗位与人才。 双向推荐算法 评分 4.7 ¥99 购买 后台管理 审核中 企业资质强审核 核验营业执照、社保缴纳、用工黑名单和虚假职位风险。 招聘监管看板 评分 4.7 ¥299 购买 面试协同 可预约 面试协同与录用意向 支持在线预约、视频面试、面试评价模板和录用意向一键发送。 招聘流程工作台 评分 4.6 ¥129 购买 本地服务 可购买 面试预约与录用意向 连接求职者、企业HR和院校就业办，沉淀面试、录用和补贴申请记录。 招聘协同中心 评分 4.6 ¥89 购买 搜索筛选 可购买 人才供需热力分析 按城市、行业、薪资和技能缺口筛选人才供需热力与招聘效能。 山东人才地图 评分 4.5 ¥159 购买 购买 / 提交 提交岗位匹配、面试预约或录用意向 表单会调用后端接口并写入 SQLite，后台管理和个人中心会立即刷新。 求职者智能建档与简历OCR - ¥49山东地市岗位智能匹配 - ¥199企业资质强审核 - ¥199区域人才供需热力与虚假职位拦截 - ¥299简历OCR建档与解析 - ¥129LBS岗位精准匹配 - ¥99企业资质强审核 - ¥299面试协同与录用意向 - ¥129面试预约与录用意向 - ¥89人才供需热力分析 - ¥159 请安排顾问跟进本次服务。 提交购买 需求提交 提交资质审核、补贴申领或培训报名需求 希望按月分析收支并给出提醒规则。 提交需求 个人中心 / 我的 我的订单与资料 刷新 用户演示用户 手机13800138000 订单299 需求1 #299 演示用户已提交 ¥49#298 演示用户已提交 ¥49#297 演示用户已提交 ¥49#296 演示用户已提交 ¥49#295 演示用户已提交 ¥49#294 演示用户已提交 ¥49#293 演示用户已提交 ¥49#292 演示用户已提交 ¥49#291 演示用户已提交 ¥49#290 演示用户已提交 ¥49#289 演示用户已提交 ¥49#288 演示用户已提交 ¥49 后台管理 人才供需热力、招聘效能与虚假职位拦截 刷新后台 用户2 服务10 订单299 收入¥14781 user提交订单 #299user提交订单 #298user提交订单 #297user提交订单 #296user提交订单 #295 接口响应 { \"ok\": true, \"data\": { \"id\": 299, \"service_id\": 1, \"customer\": \"演示用户\", \"phone\": \"13800138000\", \"amount\": 49, \"status\": \"已提交\", \"note\": \"请根据地市",
+        "layout": {
+          "viewportWidth": 2016,
+          "viewportHeight": 1600,
+          "scrollWidth": 2016,
+          "scrollHeight": 4060,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89094-cycle172-repair-structure-17-操作-刷新",
+          "label": "操作:刷新",
+          "finalUrl": "http://127.0.0.1:49094/#admin",
+          "title": "山东区域垂直招聘平台",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89094/runtime-check/codex-20260608-cycle172-repair/may-89094-cycle172-repair-structure-17-操作-刷新.json",
+          "screenshotPath": "",
+          "elementCount": 300,
+          "interactiveCount": 31,
+          "interactiveLabels": [
+            "搜索筛选",
+            "购买提交",
+            "个人中心",
+            "后台管理",
+            "演示用户",
+            "13800138000",
+            "登录 / 注册",
+            "搜索山东地市、LBS、简历OCR、社保核验",
+            "全部 企业审核 后台管理 岗位匹配 搜索筛选 本地服务 求职者服务 简历建档 面试协同",
+            "重置筛选",
+            "购买",
+            "求职者智能建档与简历OCR - ¥49 山东地市岗位智能匹配 - ¥199 企业资质强审核 - ¥199 区域人才供需热力与虚假职位拦截 - ¥299 简历OCR建档与解析 - ¥129 LBS岗位精准匹配 - ¥99 企业资质强审核 - ¥299 面试协同与录用意向 - ¥129 面试预约与录用意向 - ¥89 人才供需热力分析 - ¥159",
+            "请根据地市、经验年限、技能栈和期望薪资推荐岗位并预约面试。",
+            "提交购买",
+            "企业资质强审核申请",
+            "需要核验营业执照、社保缴纳数据和用工黑名单，并进入招聘效能分析。",
+            "提交需求",
+            "刷新",
+            "刷新后台"
+          ]
+        }
+      }
+    ],
+    "findings": [],
+    "actionHints": [],
+    "emptyPages": [],
+    "overflowPages": [],
+    "blankPages": [],
+    "apiFailurePaths": [],
+    "goalTerms": [],
+    "clickedActionDescriptors": [
+      {
+        "nav": "搜索筛选",
+        "label": "重置筛选",
+        "ordinal": 0,
+        "unsafe": true
+      },
+      {
+        "nav": "搜索筛选",
+        "label": "重置筛选->提交购买",
+        "ordinal": 0,
+        "secondary": true,
+        "unsafe": false
+      },
+      {
+        "nav": "搜索筛选",
+        "label": "刷新",
+        "ordinal": 0,
+        "unsafe": false
+      },
+      {
+        "nav": "搜索筛选",
+        "label": "刷新->提交购买",
+        "ordinal": 0,
+        "secondary": true,
+        "unsafe": false
+      },
+      {
+        "nav": "购买提交",
+        "label": "重置筛选",
+        "ordinal": 0,
+        "unsafe": true
+      },
+      {
+        "nav": "购买提交",
+        "label": "重置筛选->提交购买",
+        "ordinal": 0,
+        "secondary": true,
+        "unsafe": false
+      },
+      {
+        "nav": "购买提交",
+        "label": "刷新",
+        "ordinal": 0,
+        "unsafe": false
+      },
+      {
+        "nav": "购买提交",
+        "label": "刷新->提交购买",
+        "ordinal": 0,
+        "secondary": true,
+        "unsafe": false
+      },
+      {
+        "nav": "个人中心",
+        "label": "重置筛选",
+        "ordinal": 0,
+        "unsafe": true
+      },
+      {
+        "nav": "个人中心",
+        "label": "刷新",
+        "ordinal": 0,
+        "unsafe": false
+      },
+      {
+        "nav": "后台管理",
+        "label": "重置筛选",
+        "ordinal": 0,
+        "unsafe": true
+      },
+      {
+        "nav": "后台管理",
+        "label": "刷新",
+        "ordinal": 0,
+        "unsafe": false
+      }
+    ],
+    "secondaryActionClicks": 4,
+    "structureCaptures": [
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89094-cycle172-repair-structure-01-首屏",
+        "label": "首屏",
+        "finalUrl": "http://127.0.0.1:49094/",
+        "title": "山东区域垂直招聘平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89094/runtime-check/codex-20260608-cycle172-repair/may-89094-cycle172-repair-structure-01-首屏.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89094/runtime-check/codex-20260608-cycle172-repair/may-89094-cycle172-repair-structure-01-首屏.png",
+        "elementCount": 300,
+        "interactiveCount": 31,
+        "interactiveLabels": [
+          "搜索筛选",
+          "购买提交",
+          "个人中心",
+          "后台管理",
+          "演示用户",
+          "13800138000",
+          "登录 / 注册",
+          "搜索山东地市、LBS、简历OCR、社保核验",
+          "全部 企业审核 后台管理 岗位匹配 搜索筛选 本地服务 求职者服务 简历建档 面试协同",
+          "重置筛选",
+          "购买",
+          "求职者智能建档与简历OCR - ¥49 山东地市岗位智能匹配 - ¥199 企业资质强审核 - ¥199 区域人才供需热力与虚假职位拦截 - ¥299 简历OCR建档与解析 - ¥129 LBS岗位精准匹配 - ¥99 企业资质强审核 - ¥299 面试协同与录用意向 - ¥129 面试预约与录用意向 - ¥89 人才供需热力分析 - ¥159",
+          "请根据地市、经验年限、技能栈和期望薪资推荐岗位并预约面试。",
+          "提交购买",
+          "企业资质强审核申请",
+          "需要核验营业执照、社保缴纳数据和用工黑名单，并进入招聘效能分析。",
+          "提交需求",
+          "刷新",
+          "刷新后台"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89094-cycle172-repair-structure-02-导航-搜索筛选",
+        "label": "导航:搜索筛选",
+        "finalUrl": "http://127.0.0.1:49094/#search",
+        "title": "山东区域垂直招聘平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89094/runtime-check/codex-20260608-cycle172-repair/may-89094-cycle172-repair-structure-02-导航-搜索筛选.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89094/runtime-check/codex-20260608-cycle172-repair/may-89094-cycle172-repair-structure-02-导航-搜索筛选.png",
+        "elementCount": 300,
+        "interactiveCount": 31,
+        "interactiveLabels": [
+          "搜索筛选",
+          "购买提交",
+          "个人中心",
+          "后台管理",
+          "演示用户",
+          "13800138000",
+          "登录 / 注册",
+          "搜索山东地市、LBS、简历OCR、社保核验",
+          "全部 企业审核 后台管理 岗位匹配 搜索筛选 本地服务 求职者服务 简历建档 面试协同",
+          "重置筛选",
+          "购买",
+          "求职者智能建档与简历OCR - ¥49 山东地市岗位智能匹配 - ¥199 企业资质强审核 - ¥199 区域人才供需热力与虚假职位拦截 - ¥299 简历OCR建档与解析 - ¥129 LBS岗位精准匹配 - ¥99 企业资质强审核 - ¥299 面试协同与录用意向 - ¥129 面试预约与录用意向 - ¥89 人才供需热力分析 - ¥159",
+          "请根据地市、经验年限、技能栈和期望薪资推荐岗位并预约面试。",
+          "提交购买",
+          "企业资质强审核申请",
+          "需要核验营业执照、社保缴纳数据和用工黑名单，并进入招聘效能分析。",
+          "提交需求",
+          "刷新",
+          "刷新后台"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89094-cycle172-repair-structure-03-操作-重置筛选",
+        "label": "操作:重置筛选",
+        "finalUrl": "http://127.0.0.1:49094/#search",
+        "title": "山东区域垂直招聘平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89094/runtime-check/codex-20260608-cycle172-repair/may-89094-cycle172-repair-structure-03-操作-重置筛选.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89094/runtime-check/codex-20260608-cycle172-repair/may-89094-cycle172-repair-structure-03-操作-重置筛选.png",
+        "elementCount": 300,
+        "interactiveCount": 31,
+        "interactiveLabels": [
+          "搜索筛选",
+          "购买提交",
+          "个人中心",
+          "后台管理",
+          "演示用户",
+          "13800138000",
+          "登录 / 注册",
+          "搜索山东地市、LBS、简历OCR、社保核验",
+          "全部 企业审核 后台管理 岗位匹配 搜索筛选 本地服务 求职者服务 简历建档 面试协同",
+          "重置筛选",
+          "购买",
+          "求职者智能建档与简历OCR - ¥49 山东地市岗位智能匹配 - ¥199 企业资质强审核 - ¥199 区域人才供需热力与虚假职位拦截 - ¥299 简历OCR建档与解析 - ¥129 LBS岗位精准匹配 - ¥99 企业资质强审核 - ¥299 面试协同与录用意向 - ¥129 面试预约与录用意向 - ¥89 人才供需热力分析 - ¥159",
+          "请根据地市、经验年限、技能栈和期望薪资推荐岗位并预约面试。",
+          "提交购买",
+          "企业资质强审核申请",
+          "需要核验营业执照、社保缴纳数据和用工黑名单，并进入招聘效能分析。",
+          "提交需求",
+          "刷新",
+          "刷新后台"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89094-cycle172-repair-structure-04-二层操作-重置筛选-提交购买",
+        "label": "二层操作:重置筛选->提交购买",
+        "finalUrl": "http://127.0.0.1:49094/#search",
+        "title": "山东区域垂直招聘平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89094/runtime-check/codex-20260608-cycle172-repair/may-89094-cycle172-repair-structure-04-二层操作-重置筛选-提交购买.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89094/runtime-check/codex-20260608-cycle172-repair/may-89094-cycle172-repair-structure-04-二层操作-重置筛选-提交购买.png",
+        "elementCount": 300,
+        "interactiveCount": 31,
+        "interactiveLabels": [
+          "搜索筛选",
+          "购买提交",
+          "个人中心",
+          "后台管理",
+          "演示用户",
+          "13800138000",
+          "登录 / 注册",
+          "搜索山东地市、LBS、简历OCR、社保核验",
+          "全部 企业审核 后台管理 岗位匹配 搜索筛选 本地服务 求职者服务 简历建档 面试协同",
+          "重置筛选",
+          "购买",
+          "求职者智能建档与简历OCR - ¥49 山东地市岗位智能匹配 - ¥199 企业资质强审核 - ¥199 区域人才供需热力与虚假职位拦截 - ¥299 简历OCR建档与解析 - ¥129 LBS岗位精准匹配 - ¥99 企业资质强审核 - ¥299 面试协同与录用意向 - ¥129 面试预约与录用意向 - ¥89 人才供需热力分析 - ¥159",
+          "请根据地市、经验年限、技能栈和期望薪资推荐岗位并预约面试。",
+          "提交购买",
+          "企业资质强审核申请",
+          "需要核验营业执照、社保缴纳数据和用工黑名单，并进入招聘效能分析。",
+          "提交需求",
+          "刷新",
+          "刷新后台"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89094-cycle172-repair-structure-05-操作-刷新",
+        "label": "操作:刷新",
+        "finalUrl": "http://127.0.0.1:49094/#search",
+        "title": "山东区域垂直招聘平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89094/runtime-check/codex-20260608-cycle172-repair/may-89094-cycle172-repair-structure-05-操作-刷新.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89094/runtime-check/codex-20260608-cycle172-repair/may-89094-cycle172-repair-structure-05-操作-刷新.png",
+        "elementCount": 300,
+        "interactiveCount": 31,
+        "interactiveLabels": [
+          "搜索筛选",
+          "购买提交",
+          "个人中心",
+          "后台管理",
+          "演示用户",
+          "13800138000",
+          "登录 / 注册",
+          "搜索山东地市、LBS、简历OCR、社保核验",
+          "全部 企业审核 后台管理 岗位匹配 搜索筛选 本地服务 求职者服务 简历建档 面试协同",
+          "重置筛选",
+          "购买",
+          "求职者智能建档与简历OCR - ¥49 山东地市岗位智能匹配 - ¥199 企业资质强审核 - ¥199 区域人才供需热力与虚假职位拦截 - ¥299 简历OCR建档与解析 - ¥129 LBS岗位精准匹配 - ¥99 企业资质强审核 - ¥299 面试协同与录用意向 - ¥129 面试预约与录用意向 - ¥89 人才供需热力分析 - ¥159",
+          "请根据地市、经验年限、技能栈和期望薪资推荐岗位并预约面试。",
+          "提交购买",
+          "企业资质强审核申请",
+          "需要核验营业执照、社保缴纳数据和用工黑名单，并进入招聘效能分析。",
+          "提交需求",
+          "刷新",
+          "刷新后台"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89094-cycle172-repair-structure-06-二层操作-刷新-提交购买",
+        "label": "二层操作:刷新->提交购买",
+        "finalUrl": "http://127.0.0.1:49094/#search",
+        "title": "山东区域垂直招聘平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89094/runtime-check/codex-20260608-cycle172-repair/may-89094-cycle172-repair-structure-06-二层操作-刷新-提交购买.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89094/runtime-check/codex-20260608-cycle172-repair/may-89094-cycle172-repair-structure-06-二层操作-刷新-提交购买.png",
+        "elementCount": 300,
+        "interactiveCount": 31,
+        "interactiveLabels": [
+          "搜索筛选",
+          "购买提交",
+          "个人中心",
+          "后台管理",
+          "演示用户",
+          "13800138000",
+          "登录 / 注册",
+          "搜索山东地市、LBS、简历OCR、社保核验",
+          "全部 企业审核 后台管理 岗位匹配 搜索筛选 本地服务 求职者服务 简历建档 面试协同",
+          "重置筛选",
+          "购买",
+          "求职者智能建档与简历OCR - ¥49 山东地市岗位智能匹配 - ¥199 企业资质强审核 - ¥199 区域人才供需热力与虚假职位拦截 - ¥299 简历OCR建档与解析 - ¥129 LBS岗位精准匹配 - ¥99 企业资质强审核 - ¥299 面试协同与录用意向 - ¥129 面试预约与录用意向 - ¥89 人才供需热力分析 - ¥159",
+          "请根据地市、经验年限、技能栈和期望薪资推荐岗位并预约面试。",
+          "提交购买",
+          "企业资质强审核申请",
+          "需要核验营业执照、社保缴纳数据和用工黑名单，并进入招聘效能分析。",
+          "提交需求",
+          "刷新",
+          "刷新后台"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89094-cycle172-repair-structure-07-导航-购买提交",
+        "label": "导航:购买提交",
+        "finalUrl": "http://127.0.0.1:49094/#purchase",
+        "title": "山东区域垂直招聘平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89094/runtime-check/codex-20260608-cycle172-repair/may-89094-cycle172-repair-structure-07-导航-购买提交.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89094/runtime-check/codex-20260608-cycle172-repair/may-89094-cycle172-repair-structure-07-导航-购买提交.png",
+        "elementCount": 300,
+        "interactiveCount": 31,
+        "interactiveLabels": [
+          "搜索筛选",
+          "购买提交",
+          "个人中心",
+          "后台管理",
+          "演示用户",
+          "13800138000",
+          "登录 / 注册",
+          "搜索山东地市、LBS、简历OCR、社保核验",
+          "全部 企业审核 后台管理 岗位匹配 搜索筛选 本地服务 求职者服务 简历建档 面试协同",
+          "重置筛选",
+          "购买",
+          "求职者智能建档与简历OCR - ¥49 山东地市岗位智能匹配 - ¥199 企业资质强审核 - ¥199 区域人才供需热力与虚假职位拦截 - ¥299 简历OCR建档与解析 - ¥129 LBS岗位精准匹配 - ¥99 企业资质强审核 - ¥299 面试协同与录用意向 - ¥129 面试预约与录用意向 - ¥89 人才供需热力分析 - ¥159",
+          "请根据地市、经验年限、技能栈和期望薪资推荐岗位并预约面试。",
+          "提交购买",
+          "企业资质强审核申请",
+          "需要核验营业执照、社保缴纳数据和用工黑名单，并进入招聘效能分析。",
+          "提交需求",
+          "刷新",
+          "刷新后台"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89094-cycle172-repair-structure-08-操作-重置筛选",
+        "label": "操作:重置筛选",
+        "finalUrl": "http://127.0.0.1:49094/#purchase",
+        "title": "山东区域垂直招聘平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89094/runtime-check/codex-20260608-cycle172-repair/may-89094-cycle172-repair-structure-08-操作-重置筛选.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89094/runtime-check/codex-20260608-cycle172-repair/may-89094-cycle172-repair-structure-08-操作-重置筛选.png",
+        "elementCount": 300,
+        "interactiveCount": 31,
+        "interactiveLabels": [
+          "搜索筛选",
+          "购买提交",
+          "个人中心",
+          "后台管理",
+          "演示用户",
+          "13800138000",
+          "登录 / 注册",
+          "搜索山东地市、LBS、简历OCR、社保核验",
+          "全部 企业审核 后台管理 岗位匹配 搜索筛选 本地服务 求职者服务 简历建档 面试协同",
+          "重置筛选",
+          "购买",
+          "求职者智能建档与简历OCR - ¥49 山东地市岗位智能匹配 - ¥199 企业资质强审核 - ¥199 区域人才供需热力与虚假职位拦截 - ¥299 简历OCR建档与解析 - ¥129 LBS岗位精准匹配 - ¥99 企业资质强审核 - ¥299 面试协同与录用意向 - ¥129 面试预约与录用意向 - ¥89 人才供需热力分析 - ¥159",
+          "请根据地市、经验年限、技能栈和期望薪资推荐岗位并预约面试。",
+          "提交购买",
+          "企业资质强审核申请",
+          "需要核验营业执照、社保缴纳数据和用工黑名单，并进入招聘效能分析。",
+          "提交需求",
+          "刷新",
+          "刷新后台"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89094-cycle172-repair-structure-09-二层操作-重置筛选-提交购买",
+        "label": "二层操作:重置筛选->提交购买",
+        "finalUrl": "http://127.0.0.1:49094/#purchase",
+        "title": "山东区域垂直招聘平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89094/runtime-check/codex-20260608-cycle172-repair/may-89094-cycle172-repair-structure-09-二层操作-重置筛选-提交购买.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89094/runtime-check/codex-20260608-cycle172-repair/may-89094-cycle172-repair-structure-09-二层操作-重置筛选-提交购买.png",
+        "elementCount": 300,
+        "interactiveCount": 31,
+        "interactiveLabels": [
+          "搜索筛选",
+          "购买提交",
+          "个人中心",
+          "后台管理",
+          "演示用户",
+          "13800138000",
+          "登录 / 注册",
+          "搜索山东地市、LBS、简历OCR、社保核验",
+          "全部 企业审核 后台管理 岗位匹配 搜索筛选 本地服务 求职者服务 简历建档 面试协同",
+          "重置筛选",
+          "购买",
+          "求职者智能建档与简历OCR - ¥49 山东地市岗位智能匹配 - ¥199 企业资质强审核 - ¥199 区域人才供需热力与虚假职位拦截 - ¥299 简历OCR建档与解析 - ¥129 LBS岗位精准匹配 - ¥99 企业资质强审核 - ¥299 面试协同与录用意向 - ¥129 面试预约与录用意向 - ¥89 人才供需热力分析 - ¥159",
+          "请根据地市、经验年限、技能栈和期望薪资推荐岗位并预约面试。",
+          "提交购买",
+          "企业资质强审核申请",
+          "需要核验营业执照、社保缴纳数据和用工黑名单，并进入招聘效能分析。",
+          "提交需求",
+          "刷新",
+          "刷新后台"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89094-cycle172-repair-structure-10-操作-刷新",
+        "label": "操作:刷新",
+        "finalUrl": "http://127.0.0.1:49094/#purchase",
+        "title": "山东区域垂直招聘平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89094/runtime-check/codex-20260608-cycle172-repair/may-89094-cycle172-repair-structure-10-操作-刷新.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89094/runtime-check/codex-20260608-cycle172-repair/may-89094-cycle172-repair-structure-10-操作-刷新.png",
+        "elementCount": 300,
+        "interactiveCount": 31,
+        "interactiveLabels": [
+          "搜索筛选",
+          "购买提交",
+          "个人中心",
+          "后台管理",
+          "演示用户",
+          "13800138000",
+          "登录 / 注册",
+          "搜索山东地市、LBS、简历OCR、社保核验",
+          "全部 企业审核 后台管理 岗位匹配 搜索筛选 本地服务 求职者服务 简历建档 面试协同",
+          "重置筛选",
+          "购买",
+          "求职者智能建档与简历OCR - ¥49 山东地市岗位智能匹配 - ¥199 企业资质强审核 - ¥199 区域人才供需热力与虚假职位拦截 - ¥299 简历OCR建档与解析 - ¥129 LBS岗位精准匹配 - ¥99 企业资质强审核 - ¥299 面试协同与录用意向 - ¥129 面试预约与录用意向 - ¥89 人才供需热力分析 - ¥159",
+          "请根据地市、经验年限、技能栈和期望薪资推荐岗位并预约面试。",
+          "提交购买",
+          "企业资质强审核申请",
+          "需要核验营业执照、社保缴纳数据和用工黑名单，并进入招聘效能分析。",
+          "提交需求",
+          "刷新",
+          "刷新后台"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89094-cycle172-repair-structure-11-二层操作-刷新-提交购买",
+        "label": "二层操作:刷新->提交购买",
+        "finalUrl": "http://127.0.0.1:49094/#purchase",
+        "title": "山东区域垂直招聘平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89094/runtime-check/codex-20260608-cycle172-repair/may-89094-cycle172-repair-structure-11-二层操作-刷新-提交购买.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89094/runtime-check/codex-20260608-cycle172-repair/may-89094-cycle172-repair-structure-11-二层操作-刷新-提交购买.png",
+        "elementCount": 300,
+        "interactiveCount": 31,
+        "interactiveLabels": [
+          "搜索筛选",
+          "购买提交",
+          "个人中心",
+          "后台管理",
+          "演示用户",
+          "13800138000",
+          "登录 / 注册",
+          "搜索山东地市、LBS、简历OCR、社保核验",
+          "全部 企业审核 后台管理 岗位匹配 搜索筛选 本地服务 求职者服务 简历建档 面试协同",
+          "重置筛选",
+          "购买",
+          "求职者智能建档与简历OCR - ¥49 山东地市岗位智能匹配 - ¥199 企业资质强审核 - ¥199 区域人才供需热力与虚假职位拦截 - ¥299 简历OCR建档与解析 - ¥129 LBS岗位精准匹配 - ¥99 企业资质强审核 - ¥299 面试协同与录用意向 - ¥129 面试预约与录用意向 - ¥89 人才供需热力分析 - ¥159",
+          "请根据地市、经验年限、技能栈和期望薪资推荐岗位并预约面试。",
+          "提交购买",
+          "企业资质强审核申请",
+          "需要核验营业执照、社保缴纳数据和用工黑名单，并进入招聘效能分析。",
+          "提交需求",
+          "刷新",
+          "刷新后台"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89094-cycle172-repair-structure-12-导航-个人中心",
+        "label": "导航:个人中心",
+        "finalUrl": "http://127.0.0.1:49094/#profile",
+        "title": "山东区域垂直招聘平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89094/runtime-check/codex-20260608-cycle172-repair/may-89094-cycle172-repair-structure-12-导航-个人中心.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89094/runtime-check/codex-20260608-cycle172-repair/may-89094-cycle172-repair-structure-12-导航-个人中心.png",
+        "elementCount": 300,
+        "interactiveCount": 31,
+        "interactiveLabels": [
+          "搜索筛选",
+          "购买提交",
+          "个人中心",
+          "后台管理",
+          "演示用户",
+          "13800138000",
+          "登录 / 注册",
+          "搜索山东地市、LBS、简历OCR、社保核验",
+          "全部 企业审核 后台管理 岗位匹配 搜索筛选 本地服务 求职者服务 简历建档 面试协同",
+          "重置筛选",
+          "购买",
+          "求职者智能建档与简历OCR - ¥49 山东地市岗位智能匹配 - ¥199 企业资质强审核 - ¥199 区域人才供需热力与虚假职位拦截 - ¥299 简历OCR建档与解析 - ¥129 LBS岗位精准匹配 - ¥99 企业资质强审核 - ¥299 面试协同与录用意向 - ¥129 面试预约与录用意向 - ¥89 人才供需热力分析 - ¥159",
+          "请根据地市、经验年限、技能栈和期望薪资推荐岗位并预约面试。",
+          "提交购买",
+          "企业资质强审核申请",
+          "需要核验营业执照、社保缴纳数据和用工黑名单，并进入招聘效能分析。",
+          "提交需求",
+          "刷新",
+          "刷新后台"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89094-cycle172-repair-structure-13-操作-重置筛选",
+        "label": "操作:重置筛选",
+        "finalUrl": "http://127.0.0.1:49094/#profile",
+        "title": "山东区域垂直招聘平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89094/runtime-check/codex-20260608-cycle172-repair/may-89094-cycle172-repair-structure-13-操作-重置筛选.json",
+        "screenshotPath": "",
+        "elementCount": 300,
+        "interactiveCount": 31,
+        "interactiveLabels": [
+          "搜索筛选",
+          "购买提交",
+          "个人中心",
+          "后台管理",
+          "演示用户",
+          "13800138000",
+          "登录 / 注册",
+          "搜索山东地市、LBS、简历OCR、社保核验",
+          "全部 企业审核 后台管理 岗位匹配 搜索筛选 本地服务 求职者服务 简历建档 面试协同",
+          "重置筛选",
+          "购买",
+          "求职者智能建档与简历OCR - ¥49 山东地市岗位智能匹配 - ¥199 企业资质强审核 - ¥199 区域人才供需热力与虚假职位拦截 - ¥299 简历OCR建档与解析 - ¥129 LBS岗位精准匹配 - ¥99 企业资质强审核 - ¥299 面试协同与录用意向 - ¥129 面试预约与录用意向 - ¥89 人才供需热力分析 - ¥159",
+          "请根据地市、经验年限、技能栈和期望薪资推荐岗位并预约面试。",
+          "提交购买",
+          "企业资质强审核申请",
+          "需要核验营业执照、社保缴纳数据和用工黑名单，并进入招聘效能分析。",
+          "提交需求",
+          "刷新",
+          "刷新后台"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89094-cycle172-repair-structure-14-操作-刷新",
+        "label": "操作:刷新",
+        "finalUrl": "http://127.0.0.1:49094/#profile",
+        "title": "山东区域垂直招聘平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89094/runtime-check/codex-20260608-cycle172-repair/may-89094-cycle172-repair-structure-14-操作-刷新.json",
+        "screenshotPath": "",
+        "elementCount": 300,
+        "interactiveCount": 31,
+        "interactiveLabels": [
+          "搜索筛选",
+          "购买提交",
+          "个人中心",
+          "后台管理",
+          "演示用户",
+          "13800138000",
+          "登录 / 注册",
+          "搜索山东地市、LBS、简历OCR、社保核验",
+          "全部 企业审核 后台管理 岗位匹配 搜索筛选 本地服务 求职者服务 简历建档 面试协同",
+          "重置筛选",
+          "购买",
+          "求职者智能建档与简历OCR - ¥49 山东地市岗位智能匹配 - ¥199 企业资质强审核 - ¥199 区域人才供需热力与虚假职位拦截 - ¥299 简历OCR建档与解析 - ¥129 LBS岗位精准匹配 - ¥99 企业资质强审核 - ¥299 面试协同与录用意向 - ¥129 面试预约与录用意向 - ¥89 人才供需热力分析 - ¥159",
+          "请根据地市、经验年限、技能栈和期望薪资推荐岗位并预约面试。",
+          "提交购买",
+          "企业资质强审核申请",
+          "需要核验营业执照、社保缴纳数据和用工黑名单，并进入招聘效能分析。",
+          "提交需求",
+          "刷新",
+          "刷新后台"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89094-cycle172-repair-structure-15-导航-后台管理",
+        "label": "导航:后台管理",
+        "finalUrl": "http://127.0.0.1:49094/#admin",
+        "title": "山东区域垂直招聘平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89094/runtime-check/codex-20260608-cycle172-repair/may-89094-cycle172-repair-structure-15-导航-后台管理.json",
+        "screenshotPath": "",
+        "elementCount": 300,
+        "interactiveCount": 31,
+        "interactiveLabels": [
+          "搜索筛选",
+          "购买提交",
+          "个人中心",
+          "后台管理",
+          "演示用户",
+          "13800138000",
+          "登录 / 注册",
+          "搜索山东地市、LBS、简历OCR、社保核验",
+          "全部 企业审核 后台管理 岗位匹配 搜索筛选 本地服务 求职者服务 简历建档 面试协同",
+          "重置筛选",
+          "购买",
+          "求职者智能建档与简历OCR - ¥49 山东地市岗位智能匹配 - ¥199 企业资质强审核 - ¥199 区域人才供需热力与虚假职位拦截 - ¥299 简历OCR建档与解析 - ¥129 LBS岗位精准匹配 - ¥99 企业资质强审核 - ¥299 面试协同与录用意向 - ¥129 面试预约与录用意向 - ¥89 人才供需热力分析 - ¥159",
+          "请根据地市、经验年限、技能栈和期望薪资推荐岗位并预约面试。",
+          "提交购买",
+          "企业资质强审核申请",
+          "需要核验营业执照、社保缴纳数据和用工黑名单，并进入招聘效能分析。",
+          "提交需求",
+          "刷新",
+          "刷新后台"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89094-cycle172-repair-structure-16-操作-重置筛选",
+        "label": "操作:重置筛选",
+        "finalUrl": "http://127.0.0.1:49094/#admin",
+        "title": "山东区域垂直招聘平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89094/runtime-check/codex-20260608-cycle172-repair/may-89094-cycle172-repair-structure-16-操作-重置筛选.json",
+        "screenshotPath": "",
+        "elementCount": 300,
+        "interactiveCount": 31,
+        "interactiveLabels": [
+          "搜索筛选",
+          "购买提交",
+          "个人中心",
+          "后台管理",
+          "演示用户",
+          "13800138000",
+          "登录 / 注册",
+          "搜索山东地市、LBS、简历OCR、社保核验",
+          "全部 企业审核 后台管理 岗位匹配 搜索筛选 本地服务 求职者服务 简历建档 面试协同",
+          "重置筛选",
+          "购买",
+          "求职者智能建档与简历OCR - ¥49 山东地市岗位智能匹配 - ¥199 企业资质强审核 - ¥199 区域人才供需热力与虚假职位拦截 - ¥299 简历OCR建档与解析 - ¥129 LBS岗位精准匹配 - ¥99 企业资质强审核 - ¥299 面试协同与录用意向 - ¥129 面试预约与录用意向 - ¥89 人才供需热力分析 - ¥159",
+          "请根据地市、经验年限、技能栈和期望薪资推荐岗位并预约面试。",
+          "提交购买",
+          "企业资质强审核申请",
+          "需要核验营业执照、社保缴纳数据和用工黑名单，并进入招聘效能分析。",
+          "提交需求",
+          "刷新",
+          "刷新后台"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89094-cycle172-repair-structure-17-操作-刷新",
+        "label": "操作:刷新",
+        "finalUrl": "http://127.0.0.1:49094/#admin",
+        "title": "山东区域垂直招聘平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89094/runtime-check/codex-20260608-cycle172-repair/may-89094-cycle172-repair-structure-17-操作-刷新.json",
+        "screenshotPath": "",
+        "elementCount": 300,
+        "interactiveCount": 31,
+        "interactiveLabels": [
+          "搜索筛选",
+          "购买提交",
+          "个人中心",
+          "后台管理",
+          "演示用户",
+          "13800138000",
+          "登录 / 注册",
+          "搜索山东地市、LBS、简历OCR、社保核验",
+          "全部 企业审核 后台管理 岗位匹配 搜索筛选 本地服务 求职者服务 简历建档 面试协同",
+          "重置筛选",
+          "购买",
+          "求职者智能建档与简历OCR - ¥49 山东地市岗位智能匹配 - ¥199 企业资质强审核 - ¥199 区域人才供需热力与虚假职位拦截 - ¥299 简历OCR建档与解析 - ¥129 LBS岗位精准匹配 - ¥99 企业资质强审核 - ¥299 面试协同与录用意向 - ¥129 面试预约与录用意向 - ¥89 人才供需热力分析 - ¥159",
+          "请根据地市、经验年限、技能栈和期望薪资推荐岗位并预约面试。",
+          "提交购买",
+          "企业资质强审核申请",
+          "需要核验营业执照、社保缴纳数据和用工黑名单，并进入招聘效能分析。",
+          "提交需求",
+          "刷新",
+          "刷新后台"
+        ]
+      }
+    ],
+    "representativeScreenshotUrl": "http://127.0.0.1:49094/",
+    "representativeScreenshotLabel": "山东区域垂直招聘平台"
+  },
+  "websiteStructureCapture": {
+    "module": "website_structure_capture",
+    "captureCount": 17,
+    "captures": [
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89094-cycle172-repair-structure-01-首屏",
+        "label": "首屏",
+        "finalUrl": "http://127.0.0.1:49094/",
+        "title": "山东区域垂直招聘平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89094/runtime-check/codex-20260608-cycle172-repair/may-89094-cycle172-repair-structure-01-首屏.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89094/runtime-check/codex-20260608-cycle172-repair/may-89094-cycle172-repair-structure-01-首屏.png",
+        "elementCount": 300,
+        "interactiveCount": 31,
+        "interactiveLabels": [
+          "搜索筛选",
+          "购买提交",
+          "个人中心",
+          "后台管理",
+          "演示用户",
+          "13800138000",
+          "登录 / 注册",
+          "搜索山东地市、LBS、简历OCR、社保核验",
+          "全部 企业审核 后台管理 岗位匹配 搜索筛选 本地服务 求职者服务 简历建档 面试协同",
+          "重置筛选",
+          "购买",
+          "求职者智能建档与简历OCR - ¥49 山东地市岗位智能匹配 - ¥199 企业资质强审核 - ¥199 区域人才供需热力与虚假职位拦截 - ¥299 简历OCR建档与解析 - ¥129 LBS岗位精准匹配 - ¥99 企业资质强审核 - ¥299 面试协同与录用意向 - ¥129 面试预约与录用意向 - ¥89 人才供需热力分析 - ¥159",
+          "请根据地市、经验年限、技能栈和期望薪资推荐岗位并预约面试。",
+          "提交购买",
+          "企业资质强审核申请",
+          "需要核验营业执照、社保缴纳数据和用工黑名单，并进入招聘效能分析。",
+          "提交需求",
+          "刷新",
+          "刷新后台"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89094-cycle172-repair-structure-02-导航-搜索筛选",
+        "label": "导航:搜索筛选",
+        "finalUrl": "http://127.0.0.1:49094/#search",
+        "title": "山东区域垂直招聘平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89094/runtime-check/codex-20260608-cycle172-repair/may-89094-cycle172-repair-structure-02-导航-搜索筛选.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89094/runtime-check/codex-20260608-cycle172-repair/may-89094-cycle172-repair-structure-02-导航-搜索筛选.png",
+        "elementCount": 300,
+        "interactiveCount": 31,
+        "interactiveLabels": [
+          "搜索筛选",
+          "购买提交",
+          "个人中心",
+          "后台管理",
+          "演示用户",
+          "13800138000",
+          "登录 / 注册",
+          "搜索山东地市、LBS、简历OCR、社保核验",
+          "全部 企业审核 后台管理 岗位匹配 搜索筛选 本地服务 求职者服务 简历建档 面试协同",
+          "重置筛选",
+          "购买",
+          "求职者智能建档与简历OCR - ¥49 山东地市岗位智能匹配 - ¥199 企业资质强审核 - ¥199 区域人才供需热力与虚假职位拦截 - ¥299 简历OCR建档与解析 - ¥129 LBS岗位精准匹配 - ¥99 企业资质强审核 - ¥299 面试协同与录用意向 - ¥129 面试预约与录用意向 - ¥89 人才供需热力分析 - ¥159",
+          "请根据地市、经验年限、技能栈和期望薪资推荐岗位并预约面试。",
+          "提交购买",
+          "企业资质强审核申请",
+          "需要核验营业执照、社保缴纳数据和用工黑名单，并进入招聘效能分析。",
+          "提交需求",
+          "刷新",
+          "刷新后台"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89094-cycle172-repair-structure-03-操作-重置筛选",
+        "label": "操作:重置筛选",
+        "finalUrl": "http://127.0.0.1:49094/#search",
+        "title": "山东区域垂直招聘平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89094/runtime-check/codex-20260608-cycle172-repair/may-89094-cycle172-repair-structure-03-操作-重置筛选.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89094/runtime-check/codex-20260608-cycle172-repair/may-89094-cycle172-repair-structure-03-操作-重置筛选.png",
+        "elementCount": 300,
+        "interactiveCount": 31,
+        "interactiveLabels": [
+          "搜索筛选",
+          "购买提交",
+          "个人中心",
+          "后台管理",
+          "演示用户",
+          "13800138000",
+          "登录 / 注册",
+          "搜索山东地市、LBS、简历OCR、社保核验",
+          "全部 企业审核 后台管理 岗位匹配 搜索筛选 本地服务 求职者服务 简历建档 面试协同",
+          "重置筛选",
+          "购买",
+          "求职者智能建档与简历OCR - ¥49 山东地市岗位智能匹配 - ¥199 企业资质强审核 - ¥199 区域人才供需热力与虚假职位拦截 - ¥299 简历OCR建档与解析 - ¥129 LBS岗位精准匹配 - ¥99 企业资质强审核 - ¥299 面试协同与录用意向 - ¥129 面试预约与录用意向 - ¥89 人才供需热力分析 - ¥159",
+          "请根据地市、经验年限、技能栈和期望薪资推荐岗位并预约面试。",
+          "提交购买",
+          "企业资质强审核申请",
+          "需要核验营业执照、社保缴纳数据和用工黑名单，并进入招聘效能分析。",
+          "提交需求",
+          "刷新",
+          "刷新后台"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89094-cycle172-repair-structure-04-二层操作-重置筛选-提交购买",
+        "label": "二层操作:重置筛选->提交购买",
+        "finalUrl": "http://127.0.0.1:49094/#search",
+        "title": "山东区域垂直招聘平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89094/runtime-check/codex-20260608-cycle172-repair/may-89094-cycle172-repair-structure-04-二层操作-重置筛选-提交购买.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89094/runtime-check/codex-20260608-cycle172-repair/may-89094-cycle172-repair-structure-04-二层操作-重置筛选-提交购买.png",
+        "elementCount": 300,
+        "interactiveCount": 31,
+        "interactiveLabels": [
+          "搜索筛选",
+          "购买提交",
+          "个人中心",
+          "后台管理",
+          "演示用户",
+          "13800138000",
+          "登录 / 注册",
+          "搜索山东地市、LBS、简历OCR、社保核验",
+          "全部 企业审核 后台管理 岗位匹配 搜索筛选 本地服务 求职者服务 简历建档 面试协同",
+          "重置筛选",
+          "购买",
+          "求职者智能建档与简历OCR - ¥49 山东地市岗位智能匹配 - ¥199 企业资质强审核 - ¥199 区域人才供需热力与虚假职位拦截 - ¥299 简历OCR建档与解析 - ¥129 LBS岗位精准匹配 - ¥99 企业资质强审核 - ¥299 面试协同与录用意向 - ¥129 面试预约与录用意向 - ¥89 人才供需热力分析 - ¥159",
+          "请根据地市、经验年限、技能栈和期望薪资推荐岗位并预约面试。",
+          "提交购买",
+          "企业资质强审核申请",
+          "需要核验营业执照、社保缴纳数据和用工黑名单，并进入招聘效能分析。",
+          "提交需求",
+          "刷新",
+          "刷新后台"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89094-cycle172-repair-structure-05-操作-刷新",
+        "label": "操作:刷新",
+        "finalUrl": "http://127.0.0.1:49094/#search",
+        "title": "山东区域垂直招聘平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89094/runtime-check/codex-20260608-cycle172-repair/may-89094-cycle172-repair-structure-05-操作-刷新.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89094/runtime-check/codex-20260608-cycle172-repair/may-89094-cycle172-repair-structure-05-操作-刷新.png",
+        "elementCount": 300,
+        "interactiveCount": 31,
+        "interactiveLabels": [
+          "搜索筛选",
+          "购买提交",
+          "个人中心",
+          "后台管理",
+          "演示用户",
+          "13800138000",
+          "登录 / 注册",
+          "搜索山东地市、LBS、简历OCR、社保核验",
+          "全部 企业审核 后台管理 岗位匹配 搜索筛选 本地服务 求职者服务 简历建档 面试协同",
+          "重置筛选",
+          "购买",
+          "求职者智能建档与简历OCR - ¥49 山东地市岗位智能匹配 - ¥199 企业资质强审核 - ¥199 区域人才供需热力与虚假职位拦截 - ¥299 简历OCR建档与解析 - ¥129 LBS岗位精准匹配 - ¥99 企业资质强审核 - ¥299 面试协同与录用意向 - ¥129 面试预约与录用意向 - ¥89 人才供需热力分析 - ¥159",
+          "请根据地市、经验年限、技能栈和期望薪资推荐岗位并预约面试。",
+          "提交购买",
+          "企业资质强审核申请",
+          "需要核验营业执照、社保缴纳数据和用工黑名单，并进入招聘效能分析。",
+          "提交需求",
+          "刷新",
+          "刷新后台"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89094-cycle172-repair-structure-06-二层操作-刷新-提交购买",
+        "label": "二层操作:刷新->提交购买",
+        "finalUrl": "http://127.0.0.1:49094/#search",
+        "title": "山东区域垂直招聘平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89094/runtime-check/codex-20260608-cycle172-repair/may-89094-cycle172-repair-structure-06-二层操作-刷新-提交购买.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89094/runtime-check/codex-20260608-cycle172-repair/may-89094-cycle172-repair-structure-06-二层操作-刷新-提交购买.png",
+        "elementCount": 300,
+        "interactiveCount": 31,
+        "interactiveLabels": [
+          "搜索筛选",
+          "购买提交",
+          "个人中心",
+          "后台管理",
+          "演示用户",
+          "13800138000",
+          "登录 / 注册",
+          "搜索山东地市、LBS、简历OCR、社保核验",
+          "全部 企业审核 后台管理 岗位匹配 搜索筛选 本地服务 求职者服务 简历建档 面试协同",
+          "重置筛选",
+          "购买",
+          "求职者智能建档与简历OCR - ¥49 山东地市岗位智能匹配 - ¥199 企业资质强审核 - ¥199 区域人才供需热力与虚假职位拦截 - ¥299 简历OCR建档与解析 - ¥129 LBS岗位精准匹配 - ¥99 企业资质强审核 - ¥299 面试协同与录用意向 - ¥129 面试预约与录用意向 - ¥89 人才供需热力分析 - ¥159",
+          "请根据地市、经验年限、技能栈和期望薪资推荐岗位并预约面试。",
+          "提交购买",
+          "企业资质强审核申请",
+          "需要核验营业执照、社保缴纳数据和用工黑名单，并进入招聘效能分析。",
+          "提交需求",
+          "刷新",
+          "刷新后台"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89094-cycle172-repair-structure-07-导航-购买提交",
+        "label": "导航:购买提交",
+        "finalUrl": "http://127.0.0.1:49094/#purchase",
+        "title": "山东区域垂直招聘平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89094/runtime-check/codex-20260608-cycle172-repair/may-89094-cycle172-repair-structure-07-导航-购买提交.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89094/runtime-check/codex-20260608-cycle172-repair/may-89094-cycle172-repair-structure-07-导航-购买提交.png",
+        "elementCount": 300,
+        "interactiveCount": 31,
+        "interactiveLabels": [
+          "搜索筛选",
+          "购买提交",
+          "个人中心",
+          "后台管理",
+          "演示用户",
+          "13800138000",
+          "登录 / 注册",
+          "搜索山东地市、LBS、简历OCR、社保核验",
+          "全部 企业审核 后台管理 岗位匹配 搜索筛选 本地服务 求职者服务 简历建档 面试协同",
+          "重置筛选",
+          "购买",
+          "求职者智能建档与简历OCR - ¥49 山东地市岗位智能匹配 - ¥199 企业资质强审核 - ¥199 区域人才供需热力与虚假职位拦截 - ¥299 简历OCR建档与解析 - ¥129 LBS岗位精准匹配 - ¥99 企业资质强审核 - ¥299 面试协同与录用意向 - ¥129 面试预约与录用意向 - ¥89 人才供需热力分析 - ¥159",
+          "请根据地市、经验年限、技能栈和期望薪资推荐岗位并预约面试。",
+          "提交购买",
+          "企业资质强审核申请",
+          "需要核验营业执照、社保缴纳数据和用工黑名单，并进入招聘效能分析。",
+          "提交需求",
+          "刷新",
+          "刷新后台"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89094-cycle172-repair-structure-08-操作-重置筛选",
+        "label": "操作:重置筛选",
+        "finalUrl": "http://127.0.0.1:49094/#purchase",
+        "title": "山东区域垂直招聘平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89094/runtime-check/codex-20260608-cycle172-repair/may-89094-cycle172-repair-structure-08-操作-重置筛选.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89094/runtime-check/codex-20260608-cycle172-repair/may-89094-cycle172-repair-structure-08-操作-重置筛选.png",
+        "elementCount": 300,
+        "interactiveCount": 31,
+        "interactiveLabels": [
+          "搜索筛选",
+          "购买提交",
+          "个人中心",
+          "后台管理",
+          "演示用户",
+          "13800138000",
+          "登录 / 注册",
+          "搜索山东地市、LBS、简历OCR、社保核验",
+          "全部 企业审核 后台管理 岗位匹配 搜索筛选 本地服务 求职者服务 简历建档 面试协同",
+          "重置筛选",
+          "购买",
+          "求职者智能建档与简历OCR - ¥49 山东地市岗位智能匹配 - ¥199 企业资质强审核 - ¥199 区域人才供需热力与虚假职位拦截 - ¥299 简历OCR建档与解析 - ¥129 LBS岗位精准匹配 - ¥99 企业资质强审核 - ¥299 面试协同与录用意向 - ¥129 面试预约与录用意向 - ¥89 人才供需热力分析 - ¥159",
+          "请根据地市、经验年限、技能栈和期望薪资推荐岗位并预约面试。",
+          "提交购买",
+          "企业资质强审核申请",
+          "需要核验营业执照、社保缴纳数据和用工黑名单，并进入招聘效能分析。",
+          "提交需求",
+          "刷新",
+          "刷新后台"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89094-cycle172-repair-structure-09-二层操作-重置筛选-提交购买",
+        "label": "二层操作:重置筛选->提交购买",
+        "finalUrl": "http://127.0.0.1:49094/#purchase",
+        "title": "山东区域垂直招聘平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89094/runtime-check/codex-20260608-cycle172-repair/may-89094-cycle172-repair-structure-09-二层操作-重置筛选-提交购买.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89094/runtime-check/codex-20260608-cycle172-repair/may-89094-cycle172-repair-structure-09-二层操作-重置筛选-提交购买.png",
+        "elementCount": 300,
+        "interactiveCount": 31,
+        "interactiveLabels": [
+          "搜索筛选",
+          "购买提交",
+          "个人中心",
+          "后台管理",
+          "演示用户",
+          "13800138000",
+          "登录 / 注册",
+          "搜索山东地市、LBS、简历OCR、社保核验",
+          "全部 企业审核 后台管理 岗位匹配 搜索筛选 本地服务 求职者服务 简历建档 面试协同",
+          "重置筛选",
+          "购买",
+          "求职者智能建档与简历OCR - ¥49 山东地市岗位智能匹配 - ¥199 企业资质强审核 - ¥199 区域人才供需热力与虚假职位拦截 - ¥299 简历OCR建档与解析 - ¥129 LBS岗位精准匹配 - ¥99 企业资质强审核 - ¥299 面试协同与录用意向 - ¥129 面试预约与录用意向 - ¥89 人才供需热力分析 - ¥159",
+          "请根据地市、经验年限、技能栈和期望薪资推荐岗位并预约面试。",
+          "提交购买",
+          "企业资质强审核申请",
+          "需要核验营业执照、社保缴纳数据和用工黑名单，并进入招聘效能分析。",
+          "提交需求",
+          "刷新",
+          "刷新后台"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89094-cycle172-repair-structure-10-操作-刷新",
+        "label": "操作:刷新",
+        "finalUrl": "http://127.0.0.1:49094/#purchase",
+        "title": "山东区域垂直招聘平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89094/runtime-check/codex-20260608-cycle172-repair/may-89094-cycle172-repair-structure-10-操作-刷新.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89094/runtime-check/codex-20260608-cycle172-repair/may-89094-cycle172-repair-structure-10-操作-刷新.png",
+        "elementCount": 300,
+        "interactiveCount": 31,
+        "interactiveLabels": [
+          "搜索筛选",
+          "购买提交",
+          "个人中心",
+          "后台管理",
+          "演示用户",
+          "13800138000",
+          "登录 / 注册",
+          "搜索山东地市、LBS、简历OCR、社保核验",
+          "全部 企业审核 后台管理 岗位匹配 搜索筛选 本地服务 求职者服务 简历建档 面试协同",
+          "重置筛选",
+          "购买",
+          "求职者智能建档与简历OCR - ¥49 山东地市岗位智能匹配 - ¥199 企业资质强审核 - ¥199 区域人才供需热力与虚假职位拦截 - ¥299 简历OCR建档与解析 - ¥129 LBS岗位精准匹配 - ¥99 企业资质强审核 - ¥299 面试协同与录用意向 - ¥129 面试预约与录用意向 - ¥89 人才供需热力分析 - ¥159",
+          "请根据地市、经验年限、技能栈和期望薪资推荐岗位并预约面试。",
+          "提交购买",
+          "企业资质强审核申请",
+          "需要核验营业执照、社保缴纳数据和用工黑名单，并进入招聘效能分析。",
+          "提交需求",
+          "刷新",
+          "刷新后台"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89094-cycle172-repair-structure-11-二层操作-刷新-提交购买",
+        "label": "二层操作:刷新->提交购买",
+        "finalUrl": "http://127.0.0.1:49094/#purchase",
+        "title": "山东区域垂直招聘平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89094/runtime-check/codex-20260608-cycle172-repair/may-89094-cycle172-repair-structure-11-二层操作-刷新-提交购买.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89094/runtime-check/codex-20260608-cycle172-repair/may-89094-cycle172-repair-structure-11-二层操作-刷新-提交购买.png",
+        "elementCount": 300,
+        "interactiveCount": 31,
+        "interactiveLabels": [
+          "搜索筛选",
+          "购买提交",
+          "个人中心",
+          "后台管理",
+          "演示用户",
+          "13800138000",
+          "登录 / 注册",
+          "搜索山东地市、LBS、简历OCR、社保核验",
+          "全部 企业审核 后台管理 岗位匹配 搜索筛选 本地服务 求职者服务 简历建档 面试协同",
+          "重置筛选",
+          "购买",
+          "求职者智能建档与简历OCR - ¥49 山东地市岗位智能匹配 - ¥199 企业资质强审核 - ¥199 区域人才供需热力与虚假职位拦截 - ¥299 简历OCR建档与解析 - ¥129 LBS岗位精准匹配 - ¥99 企业资质强审核 - ¥299 面试协同与录用意向 - ¥129 面试预约与录用意向 - ¥89 人才供需热力分析 - ¥159",
+          "请根据地市、经验年限、技能栈和期望薪资推荐岗位并预约面试。",
+          "提交购买",
+          "企业资质强审核申请",
+          "需要核验营业执照、社保缴纳数据和用工黑名单，并进入招聘效能分析。",
+          "提交需求",
+          "刷新",
+          "刷新后台"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89094-cycle172-repair-structure-12-导航-个人中心",
+        "label": "导航:个人中心",
+        "finalUrl": "http://127.0.0.1:49094/#profile",
+        "title": "山东区域垂直招聘平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89094/runtime-check/codex-20260608-cycle172-repair/may-89094-cycle172-repair-structure-12-导航-个人中心.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89094/runtime-check/codex-20260608-cycle172-repair/may-89094-cycle172-repair-structure-12-导航-个人中心.png",
+        "elementCount": 300,
+        "interactiveCount": 31,
+        "interactiveLabels": [
+          "搜索筛选",
+          "购买提交",
+          "个人中心",
+          "后台管理",
+          "演示用户",
+          "13800138000",
+          "登录 / 注册",
+          "搜索山东地市、LBS、简历OCR、社保核验",
+          "全部 企业审核 后台管理 岗位匹配 搜索筛选 本地服务 求职者服务 简历建档 面试协同",
+          "重置筛选",
+          "购买",
+          "求职者智能建档与简历OCR - ¥49 山东地市岗位智能匹配 - ¥199 企业资质强审核 - ¥199 区域人才供需热力与虚假职位拦截 - ¥299 简历OCR建档与解析 - ¥129 LBS岗位精准匹配 - ¥99 企业资质强审核 - ¥299 面试协同与录用意向 - ¥129 面试预约与录用意向 - ¥89 人才供需热力分析 - ¥159",
+          "请根据地市、经验年限、技能栈和期望薪资推荐岗位并预约面试。",
+          "提交购买",
+          "企业资质强审核申请",
+          "需要核验营业执照、社保缴纳数据和用工黑名单，并进入招聘效能分析。",
+          "提交需求",
+          "刷新",
+          "刷新后台"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89094-cycle172-repair-structure-13-操作-重置筛选",
+        "label": "操作:重置筛选",
+        "finalUrl": "http://127.0.0.1:49094/#profile",
+        "title": "山东区域垂直招聘平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89094/runtime-check/codex-20260608-cycle172-repair/may-89094-cycle172-repair-structure-13-操作-重置筛选.json",
+        "screenshotPath": "",
+        "elementCount": 300,
+        "interactiveCount": 31,
+        "interactiveLabels": [
+          "搜索筛选",
+          "购买提交",
+          "个人中心",
+          "后台管理",
+          "演示用户",
+          "13800138000",
+          "登录 / 注册",
+          "搜索山东地市、LBS、简历OCR、社保核验",
+          "全部 企业审核 后台管理 岗位匹配 搜索筛选 本地服务 求职者服务 简历建档 面试协同",
+          "重置筛选",
+          "购买",
+          "求职者智能建档与简历OCR - ¥49 山东地市岗位智能匹配 - ¥199 企业资质强审核 - ¥199 区域人才供需热力与虚假职位拦截 - ¥299 简历OCR建档与解析 - ¥129 LBS岗位精准匹配 - ¥99 企业资质强审核 - ¥299 面试协同与录用意向 - ¥129 面试预约与录用意向 - ¥89 人才供需热力分析 - ¥159",
+          "请根据地市、经验年限、技能栈和期望薪资推荐岗位并预约面试。",
+          "提交购买",
+          "企业资质强审核申请",
+          "需要核验营业执照、社保缴纳数据和用工黑名单，并进入招聘效能分析。",
+          "提交需求",
+          "刷新",
+          "刷新后台"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89094-cycle172-repair-structure-14-操作-刷新",
+        "label": "操作:刷新",
+        "finalUrl": "http://127.0.0.1:49094/#profile",
+        "title": "山东区域垂直招聘平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89094/runtime-check/codex-20260608-cycle172-repair/may-89094-cycle172-repair-structure-14-操作-刷新.json",
+        "screenshotPath": "",
+        "elementCount": 300,
+        "interactiveCount": 31,
+        "interactiveLabels": [
+          "搜索筛选",
+          "购买提交",
+          "个人中心",
+          "后台管理",
+          "演示用户",
+          "13800138000",
+          "登录 / 注册",
+          "搜索山东地市、LBS、简历OCR、社保核验",
+          "全部 企业审核 后台管理 岗位匹配 搜索筛选 本地服务 求职者服务 简历建档 面试协同",
+          "重置筛选",
+          "购买",
+          "求职者智能建档与简历OCR - ¥49 山东地市岗位智能匹配 - ¥199 企业资质强审核 - ¥199 区域人才供需热力与虚假职位拦截 - ¥299 简历OCR建档与解析 - ¥129 LBS岗位精准匹配 - ¥99 企业资质强审核 - ¥299 面试协同与录用意向 - ¥129 面试预约与录用意向 - ¥89 人才供需热力分析 - ¥159",
+          "请根据地市、经验年限、技能栈和期望薪资推荐岗位并预约面试。",
+          "提交购买",
+          "企业资质强审核申请",
+          "需要核验营业执照、社保缴纳数据和用工黑名单，并进入招聘效能分析。",
+          "提交需求",
+          "刷新",
+          "刷新后台"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89094-cycle172-repair-structure-15-导航-后台管理",
+        "label": "导航:后台管理",
+        "finalUrl": "http://127.0.0.1:49094/#admin",
+        "title": "山东区域垂直招聘平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89094/runtime-check/codex-20260608-cycle172-repair/may-89094-cycle172-repair-structure-15-导航-后台管理.json",
+        "screenshotPath": "",
+        "elementCount": 300,
+        "interactiveCount": 31,
+        "interactiveLabels": [
+          "搜索筛选",
+          "购买提交",
+          "个人中心",
+          "后台管理",
+          "演示用户",
+          "13800138000",
+          "登录 / 注册",
+          "搜索山东地市、LBS、简历OCR、社保核验",
+          "全部 企业审核 后台管理 岗位匹配 搜索筛选 本地服务 求职者服务 简历建档 面试协同",
+          "重置筛选",
+          "购买",
+          "求职者智能建档与简历OCR - ¥49 山东地市岗位智能匹配 - ¥199 企业资质强审核 - ¥199 区域人才供需热力与虚假职位拦截 - ¥299 简历OCR建档与解析 - ¥129 LBS岗位精准匹配 - ¥99 企业资质强审核 - ¥299 面试协同与录用意向 - ¥129 面试预约与录用意向 - ¥89 人才供需热力分析 - ¥159",
+          "请根据地市、经验年限、技能栈和期望薪资推荐岗位并预约面试。",
+          "提交购买",
+          "企业资质强审核申请",
+          "需要核验营业执照、社保缴纳数据和用工黑名单，并进入招聘效能分析。",
+          "提交需求",
+          "刷新",
+          "刷新后台"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89094-cycle172-repair-structure-16-操作-重置筛选",
+        "label": "操作:重置筛选",
+        "finalUrl": "http://127.0.0.1:49094/#admin",
+        "title": "山东区域垂直招聘平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89094/runtime-check/codex-20260608-cycle172-repair/may-89094-cycle172-repair-structure-16-操作-重置筛选.json",
+        "screenshotPath": "",
+        "elementCount": 300,
+        "interactiveCount": 31,
+        "interactiveLabels": [
+          "搜索筛选",
+          "购买提交",
+          "个人中心",
+          "后台管理",
+          "演示用户",
+          "13800138000",
+          "登录 / 注册",
+          "搜索山东地市、LBS、简历OCR、社保核验",
+          "全部 企业审核 后台管理 岗位匹配 搜索筛选 本地服务 求职者服务 简历建档 面试协同",
+          "重置筛选",
+          "购买",
+          "求职者智能建档与简历OCR - ¥49 山东地市岗位智能匹配 - ¥199 企业资质强审核 - ¥199 区域人才供需热力与虚假职位拦截 - ¥299 简历OCR建档与解析 - ¥129 LBS岗位精准匹配 - ¥99 企业资质强审核 - ¥299 面试协同与录用意向 - ¥129 面试预约与录用意向 - ¥89 人才供需热力分析 - ¥159",
+          "请根据地市、经验年限、技能栈和期望薪资推荐岗位并预约面试。",
+          "提交购买",
+          "企业资质强审核申请",
+          "需要核验营业执照、社保缴纳数据和用工黑名单，并进入招聘效能分析。",
+          "提交需求",
+          "刷新",
+          "刷新后台"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89094-cycle172-repair-structure-17-操作-刷新",
+        "label": "操作:刷新",
+        "finalUrl": "http://127.0.0.1:49094/#admin",
+        "title": "山东区域垂直招聘平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89094/runtime-check/codex-20260608-cycle172-repair/may-89094-cycle172-repair-structure-17-操作-刷新.json",
+        "screenshotPath": "",
+        "elementCount": 300,
+        "interactiveCount": 31,
+        "interactiveLabels": [
+          "搜索筛选",
+          "购买提交",
+          "个人中心",
+          "后台管理",
+          "演示用户",
+          "13800138000",
+          "登录 / 注册",
+          "搜索山东地市、LBS、简历OCR、社保核验",
+          "全部 企业审核 后台管理 岗位匹配 搜索筛选 本地服务 求职者服务 简历建档 面试协同",
+          "重置筛选",
+          "购买",
+          "求职者智能建档与简历OCR - ¥49 山东地市岗位智能匹配 - ¥199 企业资质强审核 - ¥199 区域人才供需热力与虚假职位拦截 - ¥299 简历OCR建档与解析 - ¥129 LBS岗位精准匹配 - ¥99 企业资质强审核 - ¥299 面试协同与录用意向 - ¥129 面试预约与录用意向 - ¥89 人才供需热力分析 - ¥159",
+          "请根据地市、经验年限、技能栈和期望薪资推荐岗位并预约面试。",
+          "提交购买",
+          "企业资质强审核申请",
+          "需要核验营业执照、社保缴纳数据和用工黑名单，并进入招聘效能分析。",
+          "提交需求",
+          "刷新",
+          "刷新后台"
+        ]
+      }
+    ]
+  },
+  "screenshotMetrics": {
+    "width": 2048,
+    "height": 1600,
+    "scrollWidth": 2016,
+    "scrollHeight": 3961
+  },
+  "initialBodyTextPreview": "REGIONAL TALENT MATCHING\n\n山东区域垂直招聘平台\n搜索筛选\n购买提交\n个人中心\n后台管理\n前端\nhttp://127.0.0.1:49094\n后端\nhttp://127.0.0.1:59094/api\n健康检查\n正常\n\n登录注册\n\n求职者、企业HR、院校与监管账号入口\n\n可使用 13800138000 或直接注册新手机号，登录后会写入本地状态。\n\n登录 / 注册\n\n搜索 / 筛选\n\n搜索结果 / 简历建档、岗位匹配与本地服务\n全部\n企业审核\n后台管理\n岗位匹配\n搜索筛选\n本地服务\n求职者服务\n简历建档\n面试协同\n重置筛选\n求职者服务\n可建档\n求职者智能建档与简历OCR\n\n解析学历、技能、经验和期望薪资标签，支持简历OCR自动补全。\n\n山东人才档案中心\n评分 4.9\n¥49\n购买\n岗位匹配\n可购买\n山东地市岗位智能匹配\n\n按山东地市、LBS距离、经验年限、技能栈和期望薪资推荐合适岗位。\n\n区域人才算法中心\n评分 4.9\n¥199\n购买\n企业审核\n审核中\n企业资质强审核\n\n核验营业执照、社保缴纳数据和用工黑名单，拦截异常招聘主体。\n\n资质风控台\n评分 4.8\n¥199\n购买\n后台管理\n监测中\n区域人才供需热力与虚假职位拦截\n\n展示区域人才供需热力图、简历转化率、面试到场率、offer接受率和虚假职位实时拦截。\n\n招聘监管驾驶舱\n评分 4.8\n¥299\n购买\n简历建档\n可购买\n简历OCR建档与解析\n\n上传简历或证书后自动抽取学历、工作经历、技能标签和求职意向。\n\n人才数据服务台\n评分 4.8\n¥129\n购买\n岗位匹配\n推荐中\nLBS岗位精准匹配\n\n按山东16地市、行业、经验年限、技能栈和通勤距离匹配岗位与人才。\n\n双向推荐算法\n评分 4.7\n¥99\n购买\n后台管理\n审核中\n企业资质强审核\n\n核验营业执照、社保缴纳、用工黑名单和虚假职位风险。\n\n招聘监管看板\n评分 4.7\n¥299\n购买\n面试协同\n可预约\n面试协同与录用意向\n\n支持在线预约、视频面试、面试评价模板和录用意向一键发送。\n\n招聘流程工作台\n评分 4.6\n¥129\n购买\n本地服务\n可购买\n面试预约与录用意向\n\n连接求职者、企业HR和院校就业办，沉淀面试、录用和补贴申请记录。\n\n招聘协同中心\n评分 4.6\n¥89\n购买\n搜索筛选\n可购买\n人才供需热力分析\n\n按城市、行业、薪资和技能缺口筛选人才供需热力与招聘效能。\n\n山东人才地图\n评分 4.5\n¥159\n购买\n\n购买 / 提交\n\n提交岗位匹配、面试预约或录用意向\n\n表单会调用后端接口并写入 SQLite，后台管理和个人中心会立即刷新。\n\n求职者智能建档与简历OCR - ¥49\n山东地市岗位智能匹配 - ¥199\n企业资质强审核 - ¥199\n区域人才供需热力与虚假职位拦截 - ¥299\n简历OCR建档与解析 - ¥129\nLBS岗位精准匹配 - ¥99\n企业资质强审核 - ¥299\n面试协同与录用意向 - ¥129\n面试预约与录用意向 - ¥89\n人才供需热力分析 - ¥159\n提交购买\n\n需求提交\n\n提交资质审核、补贴申领或培训报名需求\n提交需求\n\n个人中心 / 我的\n\n我的订单与资料\n刷新\n用户\n演示用户\n手机\n13800138000\n订单\n295\n需求\n1\n#295 演示用户\n已提交 ¥49\n#294 演示用户\n已提交 ¥49\n#293 演示用户\n已提交 ¥49\n#292 演示用户\n已提交 ¥49\n#291 演示用户\n已提交 ¥49\n#290 演示用户\n已提交 ¥49\n#289 演示用户\n已提交 ¥49\n#288 演示用户\n已提交 ¥49\n#287 演示用户\n已提交 ¥49\n#286 演示用户\n已提交 ¥49\n#285 演示用户\n已提交 ¥49\n#284 演示用户\n已提交 ¥49\n\n后台管理\n\n人才供需热力、招聘",
+  "bodyTextPreview": "REGIONAL TALENT MATCHING\n\n山东区域垂直招聘平台\n搜索筛选\n购买提交\n个人中心\n后台管理\n前端\nhttp://127.0.0.1:49094\n后端\nhttp://127.0.0.1:59094/api\n健康检查\n正常\n\n登录注册\n\n求职者、企业HR、院校与监管账号入口\n\n可使用 13800138000 或直接注册新手机号，登录后会写入本地状态。\n\n登录 / 注册\n\n搜索 / 筛选\n\n搜索结果 / 简历建档、岗位匹配与本地服务\n全部\n企业审核\n后台管理\n岗位匹配\n搜索筛选\n本地服务\n求职者服务\n简历建档\n面试协同\n重置筛选\n求职者服务\n可建档\n求职者智能建档与简历OCR\n\n解析学历、技能、经验和期望薪资标签，支持简历OCR自动补全。\n\n山东人才档案中心\n评分 4.9\n¥49\n购买\n岗位匹配\n可购买\n山东地市岗位智能匹配\n\n按山东地市、LBS距离、经验年限、技能栈和期望薪资推荐合适岗位。\n\n区域人才算法中心\n评分 4.9\n¥199\n购买\n企业审核\n审核中\n企业资质强审核\n\n核验营业执照、社保缴纳数据和用工黑名单，拦截异常招聘主体。\n\n资质风控台\n评分 4.8\n¥199\n购买\n后台管理\n监测中\n区域人才供需热力与虚假职位拦截\n\n展示区域人才供需热力图、简历转化率、面试到场率、offer接受率和虚假职位实时拦截。\n\n招聘监管驾驶舱\n评分 4.8\n¥299\n购买\n简历建档\n可购买\n简历OCR建档与解析\n\n上传简历或证书后自动抽取学历、工作经历、技能标签和求职意向。\n\n人才数据服务台\n评分 4.8\n¥129\n购买\n岗位匹配\n推荐中\nLBS岗位精准匹配\n\n按山东16地市、行业、经验年限、技能栈和通勤距离匹配岗位与人才。\n\n双向推荐算法\n评分 4.7\n¥99\n购买\n后台管理\n审核中\n企业资质强审核\n\n核验营业执照、社保缴纳、用工黑名单和虚假职位风险。\n\n招聘监管看板\n评分 4.7\n¥299\n购买\n面试协同\n可预约\n面试协同与录用意向\n\n支持在线预约、视频面试、面试评价模板和录用意向一键发送。\n\n招聘流程工作台\n评分 4.6\n¥129\n购买\n本地服务\n可购买\n面试预约与录用意向\n\n连接求职者、企业HR和院校就业办，沉淀面试、录用和补贴申请记录。\n\n招聘协同中心\n评分 4.6\n¥89\n购买\n搜索筛选\n可购买\n人才供需热力分析\n\n按城市、行业、薪资和技能缺口筛选人才供需热力与招聘效能。\n\n山东人才地图\n评分 4.5\n¥159\n购买\n\n购买 / 提交\n\n提交岗位匹配、面试预约或录用意向\n\n表单会调用后端接口并写入 SQLite，后台管理和个人中心会立即刷新。\n\n求职者智能建档与简历OCR - ¥49\n山东地市岗位智能匹配 - ¥199\n企业资质强审核 - ¥199\n区域人才供需热力与虚假职位拦截 - ¥299\n简历OCR建档与解析 - ¥129\nLBS岗位精准匹配 - ¥99\n企业资质强审核 - ¥299\n面试协同与录用意向 - ¥129\n面试预约与录用意向 - ¥89\n人才供需热力分析 - ¥159\n提交购买\n\n需求提交\n\n提交资质审核、补贴申领或培训报名需求\n提交需求\n\n个人中心 / 我的\n\n我的订单与资料\n刷新\n用户\n演示用户\n手机\n13800138000\n订单\n299\n需求\n1\n#299 演示用户\n已提交 ¥49\n#298 演示用户\n已提交 ¥49\n#297 演示用户\n已提交 ¥49\n#296 演示用户\n已提交 ¥49\n#295 演示用户\n已提交 ¥49\n#294 演示用户\n已提交 ¥49\n#293 演示用户\n已提交 ¥49\n#292 演示用户\n已提交 ¥49\n#291 演示用户\n已提交 ¥49\n#290 演示用户\n已提交 ¥49\n#289 演示用户\n已提交 ¥49\n#288 演示用户\n已提交 ¥49\n\n后台管理\n\n人才供需热力、招聘效能与虚假职位拦截\n刷新后台\n用户\n2\n服务\n10\n订单\n299\n收入\n¥14781\nuser\n提交订单 #299\nuser\n提交订单 #298\nuser\n提交订单 #297\nuser\n提交订单 #296\nuser\n提交订单 #295\n\n接口响应\n\n{\n  \"ok\": true,\n  \"status\": \"ok\",\n  \"project\": \"may-89094\",\n  \"db\": \"/Users/chen/Documents/trae_projects/local_projects/may-89094/data/app.sqlite\",\n  \"time\": 1780906734635\n}",
+  "apiBase": "http://127.0.0.1:59094",
+  "businessGoalPreview": "",
+  "apiResponses": [
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:59094/api/health"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:59094/api/categories"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:59094/api/services?search=&category=%E5%85%A8%E9%83%A8"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:59094/api/profile"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:59094/api/orders?limit=12"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:59094/api/admin/summary"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:59094/api/health"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:59094/api/categories"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:59094/api/services?search=&category=%E5%85%A8%E9%83%A8"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:59094/api/profile"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:59094/api/orders?limit=12"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:59094/api/admin/summary"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:59094/api/services?search=&category=%E5%85%A8%E9%83%A8"
+    },
+    {
+      "method": "POST",
+      "status": 200,
+      "url": "http://127.0.0.1:59094/api/orders"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:59094/api/profile"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:59094/api/admin/summary"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:59094/api/orders?limit=12"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:59094/api/profile"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:59094/api/orders?limit=12"
+    },
+    {
+      "method": "POST",
+      "status": 200,
+      "url": "http://127.0.0.1:59094/api/orders"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:59094/api/profile"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:59094/api/admin/summary"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:59094/api/orders?limit=12"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:59094/api/services?search=&category=%E5%85%A8%E9%83%A8"
+    },
+    {
+      "method": "POST",
+      "status": 200,
+      "url": "http://127.0.0.1:59094/api/orders"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:59094/api/profile"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:59094/api/admin/summary"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:59094/api/orders?limit=12"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:59094/api/profile"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:59094/api/orders?limit=12"
+    },
+    {
+      "method": "POST",
+      "status": 200,
+      "url": "http://127.0.0.1:59094/api/orders"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:59094/api/profile"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:59094/api/admin/summary"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:59094/api/orders?limit=12"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:59094/api/services?search=&category=%E5%85%A8%E9%83%A8"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:59094/api/profile"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:59094/api/orders?limit=12"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:59094/api/services?search=&category=%E5%85%A8%E9%83%A8"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:59094/api/profile"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:59094/api/orders?limit=12"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:59094/api/health"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:59094/api/categories"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:59094/api/services?search=&category=%E5%85%A8%E9%83%A8"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:59094/api/profile"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:59094/api/orders?limit=12"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:59094/api/admin/summary"
+    }
+  ],
+  "apiChecks": [
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59094/api/health",
+      "path": "/api/health",
+      "status": 200,
+      "ok": true,
+      "bodyPreview": "{\"ok\":true,\"status\":\"ok\",\"project\":\"may-89094\",\"db\":\"/Users/chen/Documents/trae_projects/local_projects/may-89094/data/app.sqlite\",\"time\":1780906735137}"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59094/api/categories",
+      "path": "/api/categories",
+      "status": 200,
+      "ok": true,
+      "bodyPreview": "{\"ok\":true,\"data\":[\"企业审核\",\"后台管理\",\"岗位匹配\",\"搜索筛选\",\"本地服务\",\"求职者服务\",\"简历建档\",\"面试协同\"]}"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59094/api/services?search=&category=%E5%85%A8%E9%83%A8",
+      "path": "/api/services?search=&category=%E5%85%A8%E9%83%A8",
+      "status": 200,
+      "ok": true,
+      "bodyPreview": "{\"ok\":true,\"data\":[{\"id\":1,\"title\":\"求职者智能建档与简历OCR\",\"category\":\"求职者服务\",\"provider\":\"山东人才档案中心\",\"price\":49,\"rating\":4.9,\"status\":\"可建档\",\"description\":\"解析学历、技能、经验和期望薪资标签，支持简历OCR自动补全。\"},{\"id\":6,\"title\":\"山东地市岗位智能匹配\",\"category\":\"岗位匹配\",\"provider\":\"区域人才算法中心\",\"price\":199,\"rating\":4.9,\"status\":\"可购买\",\"description\":\"按山东地市、LBS距离、经验年限、技能栈和期望薪资推荐合适岗位。\"},{\"id\":2,\"title\":\"企业资质强审核\",\"category\":\"企业审核\",\"provider\":\"资质风控台\",\"price\":199,\"rating\":4.8,\"status\":\"审核中\",\"description\":\"核验营业执照、社保缴纳数据和用工黑名单，拦截异常招聘主体。\"},{\"id\":5,\"tit"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59094/api/profile",
+      "path": "/api/profile",
+      "status": 200,
+      "ok": true,
+      "bodyPreview": "{\"ok\":true,\"data\":{\"user\":{\"id\":1,\"name\":\"演示用户\",\"phone\":\"13800138000\",\"role\":\"user\",\"created_at\":\"2026-06-08 05:20:08\"},\"stats\":{\"orders\":299,\"submissions\":1}}}"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59094/api/orders?limit=12",
+      "path": "/api/orders?limit=12",
+      "status": 200,
+      "ok": true,
+      "bodyPreview": "{\"ok\":true,\"data\":[{\"id\":299,\"service_id\":1,\"customer\":\"演示用户\",\"phone\":\"13800138000\",\"amount\":49,\"status\":\"已提交\",\"note\":\"请根据地市、经验年限、技能栈和期望薪资推荐岗位并预约面试。\",\"created_at\":\"2026-06-08T08:18:41.453Z\"},{\"id\":298,\"service_id\":1,\"customer\":\"演示用户\",\"phone\":\"13800138000\",\"amount\":49,\"status\":\"已提交\",\"note\":\"请根据地市、经验年限、技能栈和期望薪资推荐岗位并预约面试。\",\"created_at\":\"2026-06-08T08:18:37.928Z\"},{\"id\":297,\"service_id\":1,\"customer\":\"演示用户\",\"phone\":\"13800138000\",\"amount\":49,\"status\":\"已提交\",\"note\":\"请根据地市、经验年限、技能栈和期望薪资推荐岗位并预约面试。\",\"creat"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59094/api/admin/summary",
+      "path": "/api/admin/summary",
+      "status": 200,
+      "ok": true,
+      "bodyPreview": "{\"ok\":true,\"data\":{\"users\":2,\"services\":10,\"orders\":299,\"submissions\":1,\"revenue\":14781,\"modules\":[\"登录注册\",\"搜索筛选\",\"购买提交\",\"个人中心\",\"后台管理\"],\"logs\":[{\"id\":299,\"actor\":\"user\",\"action\":\"提交订单 #299\",\"created_at\":\"2026-06-08T08:18:41.453Z\"},{\"id\":298,\"actor\":\"user\",\"action\":\"提交订单 #298\",\"created_at\":\"2026-06-08T08:18:37.928Z\"},{\"id\":297,\"actor\":\"user\",\"action\":\"提交订单 #297\",\"created_at\":\"2026-06-08T08:18:32.555Z\"},{\"id\":296,\"actor\":\"user\",\"action\":\"提交订单 #296\",\"created_at\":\"2026-06-08T08:18:29.028Z\"},{\"id\":295"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59094/api/teachers",
+      "path": "/api/teachers",
+      "status": 200,
+      "ok": true,
+      "bodyPreview": "{\"ok\":true,\"data\":[{\"id\":1,\"title\":\"求职者智能建档与简历OCR\",\"category\":\"求职者服务\",\"provider\":\"山东人才档案中心\",\"price\":49,\"rating\":4.9,\"status\":\"可建档\",\"description\":\"解析学历、技能、经验和期望薪资标签，支持简历OCR自动补全。\"},{\"id\":6,\"title\":\"山东地市岗位智能匹配\",\"category\":\"岗位匹配\",\"provider\":\"区域人才算法中心\",\"price\":199,\"rating\":4.9,\"status\":\"可购买\",\"description\":\"按山东地市、LBS距离、经验年限、技能栈和期望薪资推荐合适岗位。\"},{\"id\":2,\"title\":\"企业资质强审核\",\"category\":\"企业审核\",\"provider\":\"资质风控台\",\"price\":199,\"rating\":4.8,\"status\":\"审核中\",\"description\":\"核验营业执照、社保缴纳数据和用工黑名单，拦截异常招聘主体。\"},{\"id\":5,\"tit"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59094/api/courses",
+      "path": "/api/courses",
+      "status": 200,
+      "ok": true,
+      "bodyPreview": "{\"ok\":true,\"data\":[{\"id\":1,\"title\":\"求职者智能建档与简历OCR\",\"category\":\"求职者服务\",\"provider\":\"山东人才档案中心\",\"price\":49,\"rating\":4.9,\"status\":\"可建档\",\"description\":\"解析学历、技能、经验和期望薪资标签，支持简历OCR自动补全。\"},{\"id\":6,\"title\":\"山东地市岗位智能匹配\",\"category\":\"岗位匹配\",\"provider\":\"区域人才算法中心\",\"price\":199,\"rating\":4.9,\"status\":\"可购买\",\"description\":\"按山东地市、LBS距离、经验年限、技能栈和期望薪资推荐合适岗位。\"},{\"id\":2,\"title\":\"企业资质强审核\",\"category\":\"企业审核\",\"provider\":\"资质风控台\",\"price\":199,\"rating\":4.8,\"status\":\"审核中\",\"description\":\"核验营业执照、社保缴纳数据和用工黑名单，拦截异常招聘主体。\"},{\"id\":5,\"tit"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59094/api/bookings",
+      "path": "/api/bookings",
+      "status": 200,
+      "ok": true,
+      "bodyPreview": "{\"ok\":true,\"data\":[{\"id\":1,\"title\":\"求职者智能建档与简历OCR\",\"category\":\"求职者服务\",\"provider\":\"山东人才档案中心\",\"price\":49,\"rating\":4.9,\"status\":\"可建档\",\"description\":\"解析学历、技能、经验和期望薪资标签，支持简历OCR自动补全。\"},{\"id\":6,\"title\":\"山东地市岗位智能匹配\",\"category\":\"岗位匹配\",\"provider\":\"区域人才算法中心\",\"price\":199,\"rating\":4.9,\"status\":\"可购买\",\"description\":\"按山东地市、LBS距离、经验年限、技能栈和期望薪资推荐合适岗位。\"},{\"id\":2,\"title\":\"企业资质强审核\",\"category\":\"企业审核\",\"provider\":\"资质风控台\",\"price\":199,\"rating\":4.8,\"status\":\"审核中\",\"description\":\"核验营业执照、社保缴纳数据和用工黑名单，拦截异常招聘主体。\"},{\"id\":5,\"tit"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59094/api/orders",
+      "path": "/api/orders",
+      "status": 200,
+      "ok": true,
+      "bodyPreview": "{\"ok\":true,\"data\":[{\"id\":299,\"service_id\":1,\"customer\":\"演示用户\",\"phone\":\"13800138000\",\"amount\":49,\"status\":\"已提交\",\"note\":\"请根据地市、经验年限、技能栈和期望薪资推荐岗位并预约面试。\",\"created_at\":\"2026-06-08T08:18:41.453Z\"},{\"id\":298,\"service_id\":1,\"customer\":\"演示用户\",\"phone\":\"13800138000\",\"amount\":49,\"status\":\"已提交\",\"note\":\"请根据地市、经验年限、技能栈和期望薪资推荐岗位并预约面试。\",\"created_at\":\"2026-06-08T08:18:37.928Z\"},{\"id\":297,\"service_id\":1,\"customer\":\"演示用户\",\"phone\":\"13800138000\",\"amount\":49,\"status\":\"已提交\",\"note\":\"请根据地市、经验年限、技能栈和期望薪资推荐岗位并预约面试。\",\"creat"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59094/api/auth/me",
+      "path": "/api/auth/me",
+      "status": 200,
+      "ok": true,
+      "bodyPreview": "{\"ok\":true,\"data\":{\"id\":1,\"name\":\"演示用户\",\"phone\":\"13800138000\",\"role\":\"user\",\"created_at\":\"2026-06-08 05:20:08\"},\"user\":{\"id\":1,\"name\":\"演示用户\",\"phone\":\"13800138000\",\"role\":\"user\",\"created_at\":\"2026-06-08 05:20:08\"}}"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59094/api/users/profile",
+      "path": "/api/users/profile",
+      "status": 200,
+      "ok": true,
+      "bodyPreview": "{\"ok\":true,\"data\":{\"id\":1,\"name\":\"演示用户\",\"phone\":\"13800138000\",\"role\":\"user\",\"created_at\":\"2026-06-08 05:20:08\"},\"user\":{\"id\":1,\"name\":\"演示用户\",\"phone\":\"13800138000\",\"role\":\"user\",\"created_at\":\"2026-06-08 05:20:08\"}}"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59094/api/user/profile",
+      "path": "/api/user/profile",
+      "status": 200,
+      "ok": true,
+      "bodyPreview": "{\"ok\":true,\"data\":{\"id\":1,\"name\":\"演示用户\",\"phone\":\"13800138000\",\"role\":\"user\",\"created_at\":\"2026-06-08 05:20:08\"},\"user\":{\"id\":1,\"name\":\"演示用户\",\"phone\":\"13800138000\",\"role\":\"user\",\"created_at\":\"2026-06-08 05:20:08\"}}"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59094/api/search?q=%E6%B5%8B%E8%AF%95",
+      "path": "/api/search?q=%E6%B5%8B%E8%AF%95",
+      "status": 200,
+      "ok": true,
+      "bodyPreview": "{\"ok\":true,\"data\":[]}"
+    }
+  ],
+  "dialogs": [],
+  "consoleMessages": [],
+  "requestFailures": [],
+  "responseErrors": []
+}
