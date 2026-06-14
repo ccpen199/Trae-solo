@@ -151,11 +151,12 @@ export default function RiskAssessment() {
   const answeredCount = Object.keys(answers).length;
   const progressPercent = questions.length > 0 ? (answeredCount / questions.length) * 100 : 0;
 
-  const handleOptionChange = (e: RadioChangeEvent) => {
+  const handleOptionChange = (e: RadioChangeEvent | number) => {
     if (!questions[currentIdx]) return;
+    const value = typeof e === 'number' ? e : e.target.value;
     setAnswers((prev) => ({
       ...prev,
-      [questions[currentIdx].id]: e.target.value,
+      [questions[currentIdx].id]: value,
     }));
   };
 
@@ -486,7 +487,7 @@ export default function RiskAssessment() {
                         name={currentQ.id}
                         value={optIdx}
                         checked={currentAnswer === optIdx}
-                        onChange={handleOptionChange}
+                        onChange={() => handleOptionChange(optIdx)}
                         className="sr-only"
                       />
                     </div>

@@ -21,6 +21,7 @@ import {
 import PageHeader from '@/components/PageHeader';
 import StatusBadge from '@/components/StatusBadge';
 import Timeline from '@/components/Timeline';
+import type { TimelineItem } from '@/components/Timeline';
 import { useGlobalStore } from '@/store/useGlobalStore';
 import { mockNurses } from '@/mock';
 import { cn } from '@/lib/utils';
@@ -104,7 +105,7 @@ export default function NurseVerify() {
 
   if (!nurse) return null;
 
-  const verifyHistory = [
+  const verifyHistory: TimelineItem[] = [
     {
       id: 'h1',
       title: '提交资质申请',
@@ -117,14 +118,14 @@ export default function NurseVerify() {
       title: '系统自动核验',
       description: '对接国家卫健委医师执业注册信息系统完成 4 项自动核验',
       time: nurse.verifyStatus !== 'pending' ? nurse.createdAt : undefined,
-      status: (nurse.verifyStatus === 'pending' ? 'pending' : 'completed') as const,
+      status: nurse.verifyStatus === 'pending' ? 'pending' : 'completed',
     },
     {
       id: 'h3',
       title: '人工审核处理',
       description: nurse.verifyResult?.manualRemark ?? '等待审核员处理',
       time: nurse.verifyStatus === 'verified' || nurse.verifyStatus === 'rejected' ? nurse.createdAt : undefined,
-      status: (nurse.verifyStatus === 'verified' || nurse.verifyStatus === 'rejected' ? 'completed' : 'current') as const,
+      status: nurse.verifyStatus === 'verified' || nurse.verifyStatus === 'rejected' ? 'completed' : 'current',
       color: (nurse.verifyStatus === 'rejected' ? 'red' : nurse.verifyStatus === 'verified' ? 'green' : undefined) as 'red' | 'green' | undefined,
     },
   ];
