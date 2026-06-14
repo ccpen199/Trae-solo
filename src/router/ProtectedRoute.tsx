@@ -1,4 +1,4 @@
-import { createContext, useContext, useEffect, useState, useRef, useCallback } from 'react';
+import { createContext, useContext, useEffect, useState } from 'react';
 import { useOrderStore } from '@/store/orderStore';
 import { useDispatchStore } from '@/store/dispatchStore';
 import { useAuthStore } from '@/store/authStore';
@@ -56,38 +56,16 @@ export function ProtectedRoute({
   allowedRoles: UserRole[];
 }) {
   const location = useLocation();
-  const user = useAuthStore((s) => s.user);
   const isAuthenticated = useAuthStore((s) => s.isAuthenticated);
-  const restoreSession = useAuthStore((s) => s.restoreSession);
-  const [checking, setChecking] = useState(true);
-  const sessionChecked = useRef(false);
-
-  const initAuth = useCallback(() => {
-    if (sessionChecked.current) return;
-    sessionChecked.current = true;
-
-    if (isAuthenticated && user) {
-      setChecking(false);
-      return;
-    }
-
-    restoreSession();
-    setTimeout(() => {
-      setChecking(false);
-    }, 100);
-  }, [isAuthenticated, user, restoreSession]);
+  const user = useAuthStore((s) => s.user);
+  const [ready, setReady] = useState(false);
 
   useEffect(() => {
-    initAuth();
-  }, [initAuth]);
+    const timer = setTimeout(() => setReady(true), 50);
+    return () => clearTimeout(timer);
+  }, []);
 
-  useEffect(() => {
-    if (!checking && isAuthenticated && user) {
-      sessionChecked.current = true;
-    }
-  }, [checking, isAuthenticated, user]);
-
-  if (checking) {
+  if (!ready) {
     return (
       <div className="flex items-center justify-center h-screen w-screen text-slate-400 font-display">
         <div className="flex flex-col items-center gap-3">
