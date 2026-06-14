@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Outlet, useNavigate, useLocation } from 'react-router-dom';
 import {
   Layout,
@@ -54,7 +54,7 @@ const menuItems: MenuProps['items'] = [
     label: '订单分级调度',
   },
   {
-    key: '/service/ongoing',
+    key: 'service-group',
     icon: <ShieldCheck size={18} />,
     label: '服务过程管控',
     children: [
@@ -63,7 +63,7 @@ const menuItems: MenuProps['items'] = [
     ],
   },
   {
-    key: '/audit/todo',
+    key: 'audit-group',
     icon: <FileCheck size={18} />,
     label: '三级审核中心',
     children: [
@@ -76,7 +76,7 @@ const menuItems: MenuProps['items'] = [
     label: '风控工单中心',
   },
   {
-    key: '/insurance/policies',
+    key: 'insurance-group',
     icon: <Shield size={18} />,
     label: '保险自动投保',
     children: [
@@ -133,14 +133,18 @@ export default function MainLayout() {
   const getOpenKeys = (): string[] => {
     const p = location.pathname;
     const keys: string[] = [];
-    if (p.startsWith('/service/')) keys.push('/service/ongoing');
-    if (p.startsWith('/audit/')) keys.push('/audit/todo');
-    if (p.startsWith('/insurance/')) keys.push('/insurance/policies');
+    if (p.startsWith('/service/')) keys.push('service-group');
+    if (p.startsWith('/audit/')) keys.push('audit-group');
+    if (p.startsWith('/insurance/')) keys.push('insurance-group');
     return keys;
   };
 
   const [openKeys, setOpenKeys] = useState<string[]>(getOpenKeys());
   const selectedKeys = getSelectedKeys();
+
+  useEffect(() => {
+    setOpenKeys(getOpenKeys());
+  }, [location.pathname]);
 
   const handleMenuClick: MenuProps['onClick'] = ({ key }) => {
     navigate(key);
