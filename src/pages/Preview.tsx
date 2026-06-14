@@ -3,7 +3,7 @@ import { Canvas, useFrame } from "@react-three/fiber";
 import { OrbitControls, Stars } from "@react-three/drei";
 import { EffectComposer, Bloom } from "@react-three/postprocessing";
 import { motion } from "framer-motion";
-import { X, Rotate3d, ZoomIn, Shield, Copy, Check, Link2 } from "lucide-react";
+import { X, Rotate3d, ZoomIn } from "lucide-react";
 import { mockAccounts } from "@/data/mockData";
 
 const account = mockAccounts[0];
@@ -11,12 +11,6 @@ const rarityColor: Record<string, string> = {
   legendary: "bg-cyber-gold/20 text-cyber-gold border-cyber-gold/40",
   epic: "bg-cyber-purple/20 text-cyber-purple border-cyber-purple/40",
   rare: "bg-cyber-cyan/20 text-cyber-cyan border-cyber-cyan/40",
-};
-
-const escrowBadge: Record<string, { label: string; cls: string }> = {
-  selling: { label: "资金托管中", cls: "bg-blue-500/20 text-blue-400 border border-blue-400/30" },
-  rented: { label: "租赁托管中", cls: "bg-yellow-500/20 text-yellow-400 border border-yellow-400/30" },
-  available: { label: "可交易", cls: "bg-cyber-green/20 text-cyber-green border border-cyber-green/30" },
 };
 
 function WeaponMesh() {
@@ -98,24 +92,8 @@ function LoadingFallback() {
   );
 }
 
-function CopyBtn({ text }: { text: string }) {
-  const [copied, setCopied] = useState(false);
-  const handleCopy = () => {
-    navigator.clipboard.writeText(text);
-    setCopied(true);
-    setTimeout(() => setCopied(false), 1500);
-  };
-  return (
-    <button onClick={handleCopy} className="text-cyber-muted hover:text-cyber-cyan transition-colors cursor-pointer">
-      {copied ? <Check className="w-3 h-3 text-cyber-green" /> : <Copy className="w-3 h-3" />}
-    </button>
-  );
-}
-
 export default function Preview() {
   const [selected, setSelected] = useState<typeof account.equipmentSnapshot[0] | null>(null);
-  const escrow = escrowBadge[account.status] ?? escrowBadge.available;
-  const legendaryCount = account.equipmentSnapshot.filter((e) => e.rarity === "legendary").length;
 
   return (
     <div className="relative w-full h-screen overflow-hidden bg-[#050510]">
@@ -127,72 +105,30 @@ export default function Preview() {
         </Suspense>
       </div>
 
-      <div className="absolute top-4 right-4 glass-panel p-3 z-10 min-w-[180px]">
-        <div className="flex items-center gap-3 mb-2">
-          <img src={account.imageUrl} alt="" className="w-10 h-10 rounded object-cover border border-cyber-border" />
-          <div>
-            <div className="text-xs text-cyber-cyan font-orbitron flex items-center gap-1">
-              <Rotate3d className="w-3 h-3" /> 3D预览模式
-            </div>
-            <div className="text-[10px] text-cyber-muted">
-              装备 {account.equipmentSnapshot.length} · 传说 {legendaryCount}
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <div className="absolute bottom-0 left-0 right-0 glass-panel border-t border-cyber-border p-4 z-10 max-h-[45vh] overflow-y-auto">
+      <div className="absolute bottom-0 left-0 right-0 glass-panel border-t border-cyber-border p-4 z-10">
         <div className="max-w-5xl mx-auto flex flex-col gap-3">
-          <div className="flex items-start justify-between gap-4">
-            <div className="space-y-1.5">
-              <div className="flex items-center gap-2">
-                <h2 className="font-orbitron text-lg text-white neon-text">{account.gameName}</h2>
-                <span className="text-xs text-cyber-muted font-mono">{account.gameUid}</span>
-              </div>
-              <p className="text-cyber-muted text-sm">{account.server} · {account.region} · Lv.{account.level} · {account.owner}</p>
-              <div className="flex items-center gap-2 flex-wrap">
-                <span className="px-2 py-0.5 rounded text-xs font-bold bg-cyber-green/20 text-cyber-green border border-cyber-green/30 flex items-center gap-1">
-                  <Link2 className="w-3 h-3" /> ✓ 已上链
-                </span>
-                <span className={`px-2 py-0.5 rounded text-xs font-bold ${escrow.cls}`}>{escrow.label}</span>
-                {account.insuranceActive ? (
-                  <span className="px-2 py-0.5 rounded text-xs font-bold bg-cyber-green/20 text-cyber-green border border-cyber-green/30 flex items-center gap-1">
-                    <Shield className="w-3 h-3" /> 保险生效中
-                  </span>
-                ) : (
-                  <span className="px-2 py-0.5 rounded text-xs font-bold bg-gray-500/20 text-gray-400 border border-gray-400/30">未投保</span>
-                )}
-              </div>
-              <div className="flex items-center gap-3 text-xs">
-                <span className="flex items-center gap-1 text-cyber-muted">
-                  snapshot: <span className="font-mono text-cyber-cyan/80">{account.snapshotHash}</span>
-                  <CopyBtn text={account.snapshotHash} />
-                </span>
-                <span className="flex items-center gap-1 text-cyber-muted">
-                  txHash: <span className="font-mono text-cyber-cyan/80">{account.chainTxHash}</span>
-                  <CopyBtn text={account.chainTxHash} />
-                </span>
-              </div>
+          <div className="flex items-center justify-between">
+            <div>
+              <h2 className="font-orbitron text-lg text-white neon-text">{account.gameName}</h2>
+              <p className="text-cyber-muted text-sm">{account.server} · Lv.{account.level} · {account.owner}</p>
             </div>
-            <div className="font-orbitron text-3xl text-cyber-gold neon-text shrink-0">¥{account.valuation.toLocaleString()}</div>
+            <div className="font-orbitron text-3xl text-cyber-gold neon-text">¥{account.valuation.toLocaleString()}</div>
           </div>
-
           <div className="flex gap-2 overflow-x-auto pb-1 scrollbar-hide">
             {account.equipmentSnapshot.map((eq) => (
               <button
                 key={eq.id}
                 onClick={() => setSelected(eq)}
-                className={`shrink-0 px-3 py-1.5 rounded-md border text-xs font-medium cursor-pointer transition-all hover:scale-105 flex flex-col items-start gap-0.5 ${rarityColor[eq.rarity] || "border-cyber-border text-white/70"}`}
+                className={`shrink-0 px-3 py-1.5 rounded-md border text-xs font-medium cursor-pointer transition-all hover:scale-105 ${rarityColor[eq.rarity] || "border-cyber-border text-white/70"}`}
               >
-                <span>{eq.name}</span>
-                <span className="text-[10px] opacity-70">{eq.type} · Lv.{eq.level}</span>
+                {eq.name}
               </button>
             ))}
           </div>
         </div>
       </div>
 
-      <div className="absolute bottom-32 left-1/2 -translate-x-1/2 flex items-center gap-4 text-cyber-muted text-xs z-10">
+      <div className="absolute bottom-24 left-1/2 -translate-x-1/2 flex items-center gap-4 text-cyber-muted text-xs z-10">
         <span className="flex items-center gap-1"><Rotate3d className="w-3.5 h-3.5" /> 拖拽旋转</span>
         <span className="flex items-center gap-1"><ZoomIn className="w-3.5 h-3.5" /> 滚轮缩放</span>
       </div>
@@ -219,19 +155,14 @@ export default function Preview() {
               <span className={`px-2 py-0.5 rounded text-xs border ${rarityColor[selected.rarity]}`}>{selected.rarity}</span>
               <span className="text-cyber-muted text-xs">{selected.type} · Lv.{selected.level}</span>
             </div>
-            {Object.keys(selected.stats).length > 0 && (
-              <div className="space-y-1.5 mb-3">
-                {Object.entries(selected.stats).map(([key, val]) => (
-                  <div key={key} className="flex justify-between text-sm">
-                    <span className="text-cyber-muted">{key}</span>
-                    <span className="text-cyber-cyan font-orbitron">{val as number}</span>
-                  </div>
-                ))}
-              </div>
-            )}
-            {Object.keys(selected.stats).length === 0 && (
-              <p className="text-cyber-muted text-sm">此装备无属性数据</p>
-            )}
+            <div className="space-y-1.5">
+              {Object.entries(selected.stats).map(([key, val]) => (
+                <div key={key} className="flex justify-between text-sm">
+                  <span className="text-cyber-muted">{key}</span>
+                  <span className="text-cyber-cyan font-orbitron">{val as number}</span>
+                </div>
+              ))}
+            </div>
           </motion.div>
         </motion.div>
       )}
