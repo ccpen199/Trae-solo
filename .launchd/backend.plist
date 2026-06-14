@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+  <key>Label</key>
+  <string>local.may-89115.backend</string>
+  <key>WorkingDirectory</key>
+  <string>/Users/chen/Documents/trae_projects/local_projects/may-89115</string>
+  <key>ProgramArguments</key>
+  <array>
+    <string>/bin/bash</string>
+    <string>/Users/chen/Documents/trae_projects/local_projects/may-89115/.launchd/start-backend.sh</string>
+  </array>
+  <key>EnvironmentVariables</key>
+  <dict>
+    <key>PROJECT_NAME</key>
+    <string>may-89115</string>
+    <key>NODE_ENV</key>
+    <string>development</string>
+    <key>PATH</key>
+    <string>/Users/chen/.nvm/versions/node/v22.22.0/bin:/opt/homebrew/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin</string>
+    <key>HOST</key>
+    <string>127.0.0.1</string>
+    <key>FRONTEND_PORT</key>
+    <string>49115</string>
+    <key>BACKEND_PORT</key>
+    <string>59115</string>
+    <key>FRONTEND_URL</key>
+    <string>http://127.0.0.1:49115</string>
+    <key>BACKEND_URL</key>
+    <string>http://127.0.0.1:59115</string>
+    <key>API_BASE_URL</key>
+    <string>http://127.0.0.1:59115/api</string>
+    <key>VITE_API_URL</key>
+    <string>http://127.0.0.1:59115/api</string>
+    <key>DB_PATH</key>
+    <string>data/app.sqlite</string>
+  </dict>
+  <key>StandardOutPath</key>
+  <string>/Users/chen/Documents/trae_projects/local_projects/may-89115/backend.log</string>
+  <key>StandardErrorPath</key>
+  <string>/Users/chen/Documents/trae_projects/local_projects/may-89115/backend.log</string>
+  <key>RunAtLoad</key>
+  <true/>
+  <key>KeepAlive</key>
+  <true/>
+</dict>
+</plist>
