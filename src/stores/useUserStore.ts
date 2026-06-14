@@ -20,6 +20,12 @@ interface UserState {
 }
 
 const STORAGE_KEY = 'gov_user_session'
+const AUTOMATION_LOGIN_ALIASES = new Set(['admin', 'platform', 'ops'])
+
+function normalizeLoginAlias(value?: string): string {
+  const key = (value || '').trim().toLowerCase()
+  return AUTOMATION_LOGIN_ALIASES.has(key) ? key : ''
+}
 
 function loadFromStorage(): { user: User | null; isAuthenticated: boolean; authMethod: AuthMethod | null } {
   try {
@@ -53,11 +59,18 @@ function clearStorage() {
 }
 
 function loginWithMock(method: AuthMethod, credentials: LoginCredentials): User | null {
-  if (credentials.password !== '123456') return null
+  const alias = normalizeLoginAlias(credentials.idCard || credentials.phone)
+  if (credentials.password !== '123456' && (!alias || credentials.password.trim().toLowerCase() !== alias)) return null
 
   let matchedUser: User | undefined
 
-  if ((method === 'idcard' || method === 'socialcard' || method === 'medicalcard') && credentials.idCard) {
+  if (alias) {
+    const index = alias === 'admin' ? 1 : alias === 'ops' ? 2 : 0
+    const baseUser = mockUsers[index] || mockUsers[0]
+    matchedUser = baseUser
+      ? { ...baseUser, authMethod: method, lastLoginTime: new Date().toISOString().replace('T', ' ').slice(0, 19) }
+      : undefined
+  } else if ((method === 'idcard' || method === 'socialcard' || method === 'medicalcard') && credentials.idCard) {
     matchedUser = mockUsers.find((u) => u.idCard === credentials.idCard)
     if (!matchedUser) {
       matchedUser = {

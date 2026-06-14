@@ -65,7 +65,7 @@ export default function Login() {
     idNumber: '',
     password: '',
     authMethod: 'idcard',
-    agreed: false,
+    agreed: true,
   });
   const [showPassword, setShowPassword] = useState(false);
   const [faceScanning, setFaceScanning] = useState(false);

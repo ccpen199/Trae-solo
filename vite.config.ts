@@ -6,14 +6,16 @@ import { traeBadgePlugin } from 'vite-plugin-trae-solo-badge';
 // https://vite.dev/config/
 export default defineConfig(({ mode }) => {
   const env = loadEnv(mode, process.cwd(), '');
+  const FRONTEND_PORT = Number(env.FRONTEND_PORT || env.APP_PORT) || 49191;
+  const FRONTEND_HOST = env.FRONTEND_HOST || env.HOST || '127.0.0.1';
   const API_PORT = Number(env.VITE_API_PORT) || 3001;
-  const API_BASE = env.VITE_API_BASE || `http://localhost:${API_PORT}`;
+  const API_BASE = env.VITE_API_BASE || `http://127.0.0.1:${API_PORT}`;
 
   return {
     server: {
-      port: 5173,
-      host: true,
-      strictPort: false,
+      port: FRONTEND_PORT,
+      host: FRONTEND_HOST,
+      strictPort: true,
       proxy: {
         '/api': {
           target: API_BASE,
@@ -23,7 +25,8 @@ export default defineConfig(({ mode }) => {
       },
     },
     preview: {
-      port: 5173,
+      port: FRONTEND_PORT,
+      host: FRONTEND_HOST,
     },
     build: {
       sourcemap: 'hidden',
