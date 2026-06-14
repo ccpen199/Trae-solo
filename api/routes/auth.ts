@@ -15,6 +15,9 @@ router.post('/login', (req, res) => {
       .prepare('INSERT INTO users (phone, nickname, role) VALUES (?, ?, ?)')
       .run(phone, `用户${phone.slice(-4)}`, role);
     user = db.prepare('SELECT * FROM users WHERE id = ?').get(result.lastInsertRowid) as any;
+  } else if (role && user.role !== role) {
+    db.prepare('UPDATE users SET role = ? WHERE id = ?').run(role, user.id);
+    user = db.prepare('SELECT * FROM users WHERE id = ?').get(user.id) as any;
   }
   const userData: User = {
     id: user.id,

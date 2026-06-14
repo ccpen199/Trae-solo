@@ -86,11 +86,14 @@ router.get('/:id', (req, res) => {
   const row = db.prepare('SELECT * FROM after_sale_claims WHERE id = ?').get(req.params.id) as any;
   if (!row) return res.status(404).json({ error: '申诉不存在' });
   const waybill = db.prepare('SELECT tracking_no, status FROM waybills WHERE id = ?').get(row.waybill_id) as any;
+  const now = new Date();
+  const pad = (n: number) => String(n).padStart(2, '0');
+  const fmt = (d: Date) => `${d.getFullYear()}-${pad(d.getMonth()+1)}-${pad(d.getDate())} ${pad(d.getHours())}:${pad(d.getMinutes())}:${pad(d.getSeconds())}`;
   const timeline = [
-    { status: 'pending', label: '已提交', time: row.created_at, done: true },
-    { status: 'reviewing', label: '审核中', time: row.updated_at, done: ['reviewing', 'approved', 'paid'].includes(row.status) },
-    { status: 'approved', label: '审核通过', time: row.updated_at, done: ['approved', 'paid'].includes(row.status) },
-    { status: 'paid', label: '已打款', time: row.updated_at, done: row.status === 'paid' },
+    { key: 'pending', status: 'pending', label: '已提交', time: row.created_at, done: true },
+    { key: 'reviewing', status: 'reviewing', label: '审核中', time: row.status !== 'pending' ? row.updated_at : undefined, done: ['reviewing', 'approved', 'paid'].includes(row.status) },
+    { key: 'approved', status: 'approved', label: '审核通过', time: ['approved', 'paid'].includes(row.status) ? row.updated_at : undefined, done: ['approved', 'paid'].includes(row.status) },
+    { key: 'paid', status: 'paid', label: '已打款', time: row.status === 'paid' ? row.updated_at : undefined, done: row.status === 'paid' },
   ];
   const claim: AfterSaleClaim = {
     id: row.id,
@@ -105,6 +108,26 @@ router.get('/:id', (req, res) => {
     updatedAt: row.updated_at,
   };
   res.json({ claim, waybill, timeline });
+});
+
+router.post('/:id/advance', (req, res) => {
+  const row = db.prepare('SELECT * FROM after_sale_claims WHERE id = ?').get(req.params.id) as any;
+  if (!row) return res.status(404).json({ error: '申诉不存在' });
+  const nextMap: Record<string, string> = { pending: 'reviewing', reviewing: 'approved', approved: 'paid' };
+  const next = nextMap[row.status];
+  if (!next) return res.status(400).json({ error: '已是最终状态' });
+  const now = new Date();
+  const pad = (n: number) => String(n).padStart(2, '0');
+  const fmt = (d: Date) => `${d.getFullYear()}-${pad(d.getMonth()+1)}-${pad(d.getDate())} ${pad(d.getHours())}:${pad(d.getMinutes())}:${pad(d.getSeconds())}`;
+  const timeStr = fmt(now);
+  db.prepare('UPDATE after_sale_claims SET status = ?, updated_at = ? WHERE id = ?').run(next, timeStr, row.id);
+  const timeline = [
+    { key: 'pending', status: 'pending', label: '已提交', time: row.created_at, done: true },
+    { key: 'reviewing', status: 'reviewing', label: '审核中', time: next === 'reviewing' ? timeStr : row.updated_at, done: ['reviewing', 'approved', 'paid'].includes(next) },
+    { key: 'approved', status: 'approved', label: '审核通过', time: (next === 'approved' || next === 'paid') ? timeStr : row.updated_at, done: ['approved', 'paid'].includes(next) },
+    { key: 'paid', status: 'paid', label: '已打款', time: next === 'paid' ? timeStr : undefined, done: next === 'paid' },
+  ];
+  res.json({ status: next, timeline });
 });
 
 export default router;

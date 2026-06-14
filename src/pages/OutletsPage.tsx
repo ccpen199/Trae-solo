@@ -22,26 +22,47 @@ export default function OutletsPage() {
   const [keyword, setKeyword] = useState('');
   const [selectedTags, setSelectedTags] = useState<string[]>([]);
   const [openNowOnly, setOpenNowOnly] = useState(false);
-  const [view, setView] = useState<'map' | 'list'>('list');
+  const [hoursFilter, setHoursFilter] = useState('all');
+  const [view, setView] = useState<'map' | 'list'>('map');
   const [selectedOutlet, setSelectedOutlet] = useState<Outlet | null>(null);
   const [showFilters, setShowFilters] = useState(true);
 
   useEffect(() => {
     loadOutlets();
-  }, [selectedTags, openNowOnly]);
+  }, [selectedTags, openNowOnly, keyword, hoursFilter]);
 
   const loadOutlets = async () => {
     const params: Record<string, any> = {};
     if (selectedTags.length) params.serviceTag = selectedTags[0];
     const data = (await api.outlets.list(params)) as Outlet[];
     let filtered = data;
-    if (keyword) {
+    if (keyword.trim()) {
       filtered = filtered.filter(
-        (o) => o.name.includes(keyword) || o.address.includes(keyword)
+        (o) => o.name.includes(keyword.trim()) || o.address.includes(keyword.trim())
       );
     }
-    if (selectedTags.length > 1) {
+    if (selectedTags.length > 0) {
       filtered = filtered.filter((o) => selectedTags.every((t) => o.serviceTags.includes(t)));
+    }
+    if (openNowOnly) {
+      const now = new Date();
+      const hour = now.getHours();
+      filtered = filtered.filter((o) => {
+        const [start, end] = o.businessHours.replace(/[^0-9:\-]/g, '').split('-');
+        if (!start || !end) return true;
+        const [sh, sm] = start.split(':').map(Number);
+        const [eh, em] = end.split(':').map(Number);
+        const nowMin = hour * 60 + now.getMinutes();
+        return nowMin >= sh * 60 + sm && nowMin <= eh * 60 + em;
+      });
+    }
+    if (hoursFilter !== 'all') {
+      filtered = filtered.filter((o) => {
+        if (hoursFilter === 'early') return o.businessHours.startsWith('08');
+        if (hoursFilter === 'standard') return o.businessHours.startsWith('09');
+        if (hoursFilter === 'late') return o.businessHours.includes('22') || o.businessHours.includes('21');
+        return true;
+      });
     }
     setOutlets(filtered);
   };
@@ -141,19 +162,23 @@ export default function OutletsPage() {
 
               <div>
                 <div className="text-sm font-semibold text-neutral-700 mb-2">营业时间</div>
-                <div className="space-y-1 text-xs text-neutral-500">
-                  <div className="flex items-center gap-2">
-                    <div className="w-2 h-2 rounded-full bg-success-500" />
-                    <span>08:00 - 20:00（多数网点）</span>
-                  </div>
-                  <div className="flex items-center gap-2">
-                    <div className="w-2 h-2 rounded-full bg-orange-500" />
-                    <span>09:00 - 19:00（商务网点）</span>
-                  </div>
-                  <div className="flex items-center gap-2">
-                    <div className="w-2 h-2 rounded-full bg-brand-500" />
-                    <span>08:00 - 22:00（核心商圈）</span>
-                  </div>
+                <div className="flex flex-wrap gap-1.5">
+                  {[
+                    { k: 'all', label: '全部' },
+                    { k: 'early', label: '08:00起' },
+                    { k: 'standard', label: '09:00起' },
+                    { k: 'late', label: '营业至21点后' },
+                  ].map((h) => (
+                    <button
+                      key={h.k}
+                      onClick={() => setHoursFilter(h.k)}
+                      className={`px-2.5 py-1 rounded-full text-xs font-medium transition-all ${
+                        hoursFilter === h.k ? 'bg-brand-500 text-white' : 'bg-neutral-100 text-neutral-600 hover:bg-neutral-200'
+                      }`}
+                    >
+                      {h.label}
+                    </button>
+                  ))}
                 </div>
               </div>
             </div>
@@ -185,6 +210,9 @@ export default function OutletsPage() {
               {outlets.map((o, idx) => {
                 const pos = mockMapPoints(o, idx);
                 const isSelected = selectedOutlet?.id === o.id;
+                const quality = o.onTimeRate;
+                const haloColor = quality >= 0.97 ? '#22C55E' : quality >= 0.94 ? '#3B82F6' : quality >= 0.90 ? '#FF6B1A' : '#EF4444';
+                const haloSize = 60 + quality * 60;
                 return (
                   <button
                     key={o.id}
@@ -193,16 +221,26 @@ export default function OutletsPage() {
                     style={{ left: `${Math.max(5, Math.min(95, pos.x))}%`, top: `${Math.max(10, Math.min(90, pos.y))}%` }}
                   >
                     <div className={`relative ${isSelected ? 'z-20 scale-125' : 'z-10 group-hover:scale-110'}`}>
-                      <div className={`w-9 h-9 rounded-full flex items-center justify-center shadow-lg ${
-                        isSelected ? 'bg-accent-500' : 'bg-brand-500 group-hover:bg-brand-600'
+                      <div
+                        className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 rounded-full blur-2xl opacity-40 animate-pulse-slow"
+                        style={{ width: `${haloSize}px`, height: `${haloSize}px`, background: haloColor }}
+                      />
+                      <div className={`relative w-9 h-9 rounded-full flex items-center justify-center shadow-lg ${
+                        isSelected ? 'bg-accent-500' : quality >= 0.97 ? 'bg-success-500 group-hover:bg-success-600' : 'bg-brand-500 group-hover:bg-brand-600'
                       }`}>
                         <MapPin className="w-5 h-5 text-white" />
                       </div>
-                      <div className={`absolute left-1/2 -translate-x-1/2 top-full mt-1 w-48 bg-white rounded-lg shadow-xl p-2 ${
+                      <div className={`absolute left-1/2 -translate-x-1/2 top-full mt-1 w-52 bg-white rounded-lg shadow-xl p-2 ${
                         isSelected ? 'opacity-100' : 'opacity-0 group-hover:opacity-100'
-                      } transition-opacity pointer-events-none`}>
-                        <div className="font-semibold text-xs text-neutral-700 truncate">{o.name}</div>
+                      } transition-opacity pointer-events-none z-30`}>
+                        <div className="flex items-center justify-between mb-1">
+                          <div className="font-semibold text-xs text-neutral-700 truncate">{o.name}</div>
+                          <div className={`text-[10px] px-1.5 py-0.5 rounded ${quality >= 0.97 ? 'bg-green-100 text-green-600' : quality >= 0.94 ? 'bg-blue-100 text-blue-600' : quality >= 0.90 ? 'bg-orange-100 text-orange-600' : 'bg-red-100 text-red-600'}`}>
+                            {(quality * 100).toFixed(0)}%
+                          </div>
+                        </div>
                         <div className="text-[10px] text-neutral-500 line-clamp-1">{o.address}</div>
+                        <div className="text-[10px] text-neutral-400 mt-0.5">{o.businessHours} · 响应{o.avgResponseTime.toFixed(1)}h</div>
                       </div>
                     </div>
                   </button>
@@ -210,11 +248,13 @@ export default function OutletsPage() {
               })}
 
               <div className="absolute bottom-4 right-4 bg-white rounded-xl shadow-lg p-3">
-                <div className="text-xs font-semibold text-neutral-600 mb-2">图例</div>
+                <div className="text-xs font-semibold text-neutral-600 mb-2">图例 · 服务热力</div>
                 <div className="space-y-1.5 text-xs text-neutral-500">
-                  <div className="flex items-center gap-2"><div className="w-3 h-3 rounded-full bg-brand-500" /> 普通网点</div>
-                  <div className="flex items-center gap-2"><div className="w-3 h-3 rounded-full bg-accent-500" /> 选中网点</div>
-                  <div className="flex items-center gap-2"><div className="w-3 h-3 rounded-full bg-success-500" /> 高评分网点</div>
+                  <div className="flex items-center gap-2"><div className="w-3 h-3 rounded-full bg-success-500 shadow-[0_0_8px_#22C55E]" /> 优秀（≥97%）</div>
+                  <div className="flex items-center gap-2"><div className="w-3 h-3 rounded-full bg-brand-500 shadow-[0_0_8px_#0058FF]" /> 良好（≥94%）</div>
+                  <div className="flex items-center gap-2"><div className="w-3 h-3 rounded-full bg-accent-500 shadow-[0_0_8px_#FF6B1A]" /> 一般（≥90%）</div>
+                  <div className="flex items-center gap-2"><div className="w-3 h-3 rounded-full bg-danger-500 shadow-[0_0_8px_#EF4444]" /> 待提升</div>
+                  <div className="mt-2 pt-2 border-t border-neutral-100 text-[10px] text-neutral-400">光圈大小 = 覆盖范围</div>
                 </div>
               </div>
 

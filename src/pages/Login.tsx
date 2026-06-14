@@ -4,9 +4,15 @@ import { Truck, Phone } from 'lucide-react';
 import { api } from '../lib/api';
 import { useAuthStore } from '../store/auth';
 
+const roleOptions = [
+  { v: 'sender', label: '寄件用户', phone: '13800138000' },
+  { v: 'receiver', label: '收件用户', phone: '13900139000' },
+  { v: 'admin', label: '管理员', phone: '13700137000' },
+] as const;
+
 export default function Login() {
   const [phone, setPhone] = useState('13800138000');
-  const [role, setRole] = useState('sender');
+  const [role, setRole] = useState<(typeof roleOptions)[number]['v']>('sender');
   const navigate = useNavigate();
   const login = useAuthStore((s) => s.login);
 
@@ -14,9 +20,10 @@ export default function Login() {
     if (!phone) return;
     try {
       await api.auth.login(phone);
-      await login(phone);
-      if (role === 'admin') navigate('/admin');
-      else navigate('/');
+      await login(phone, role as any);
+      if (role === 'admin') navigate('/admin/dashboard');
+      else if (role === 'receiver') navigate('/track');
+      else navigate('/order');
     } catch (e) {
       alert('登录失败');
     }
@@ -37,14 +44,13 @@ export default function Login() {
           <div>
             <label className="form-label">选择角色</label>
             <div className="grid grid-cols-3 gap-2">
-              {[
-                { v: 'sender', label: '寄件用户' },
-                { v: 'receiver', label: '收件用户' },
-                { v: 'admin', label: '管理员' },
-              ].map((r) => (
+              {roleOptions.map((r) => (
                 <button
                   key={r.v}
-                  onClick={() => setRole(r.v)}
+                  onClick={() => {
+                    setRole(r.v);
+                    setPhone(r.phone);
+                  }}
                   className={`py-2.5 rounded-lg text-sm font-medium transition-all ${
                     role === r.v
                       ? 'bg-brand-500 text-white shadow-md'

@@ -13,6 +13,7 @@ import {
   Calculator,
   Star,
   ArrowRight,
+  LayoutDashboard,
 } from 'lucide-react';
 import { api } from '../lib/api';
 import type { FreightCalculateResponse, Outlet } from '../../shared/types';
@@ -40,6 +41,7 @@ export default function Home() {
     { icon: Search, title: '物流查询', desc: '实时追踪、批量查询、节点推送', color: 'bg-accent-500', to: '/track' },
     { icon: MapPin, title: '网点检索', desc: '地图定位、智能筛选、服务标签', color: 'bg-success-500', to: '/outlets' },
     { icon: ShieldAlert, title: '售后服务', desc: '在线申诉、图片举证、快速理赔', color: 'bg-purple-500', to: '/after-sale' },
+    { icon: LayoutDashboard, title: '运营管理', desc: '后台看板、热力图、CLV 分析', color: 'bg-neutral-700', to: '/admin' },
   ];
 
   return (
@@ -208,7 +210,7 @@ export default function Home() {
       </section>
 
       <section className="container mx-auto px-4 py-16">
-        <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-5 mb-16">
+        <div className="grid md:grid-cols-2 lg:grid-cols-5 gap-5 mb-16">
           {features.map((f, i) => (
             <div
               key={i}

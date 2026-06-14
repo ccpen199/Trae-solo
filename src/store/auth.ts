@@ -4,14 +4,16 @@ import type { User } from '../../shared/types';
 interface AuthState {
   user: User | null;
   token: string | null;
-  login: (phone: string) => Promise<void>;
+  role: 'sender' | 'receiver' | 'admin';
+  login: (phone: string, role?: 'sender' | 'receiver' | 'admin') => Promise<void>;
   logout: () => void;
 }
 
 export const useAuthStore = create<AuthState>((set) => ({
   user: null,
   token: localStorage.getItem('zt_token'),
-  login: async (phone: string) => {
+  role: (localStorage.getItem('zt_role') as any) || 'sender',
+  login: async (phone: string, role: 'sender' | 'receiver' | 'admin' = 'sender') => {
     const res = await fetch('/api/auth/login', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
@@ -19,10 +21,12 @@ export const useAuthStore = create<AuthState>((set) => ({
     });
     const data = await res.json();
     localStorage.setItem('zt_token', data.token);
-    set({ user: data.user, token: data.token });
+    localStorage.setItem('zt_role', role);
+    set({ user: data.user, token: data.token, role });
   },
   logout: () => {
     localStorage.removeItem('zt_token');
-    set({ user: null, token: null });
+    localStorage.removeItem('zt_role');
+    set({ user: null, token: null, role: 'sender' });
   },
 }));

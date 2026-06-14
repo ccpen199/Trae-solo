@@ -15,6 +15,7 @@ import {
   ChevronRight,
   Eye,
   Trash2,
+  Zap,
 } from 'lucide-react';
 import { api } from '../lib/api';
 import type { AfterSaleClaim, ClaimType, ClaimStatus } from '../../shared/types';
@@ -315,17 +316,40 @@ export default function AfterSalePage() {
                 </div>
               )}
               <div>
-                <div className="text-sm font-semibold text-neutral-700 mb-4">处理进度</div>
+                <div className="flex items-center justify-between mb-4">
+                  <div className="text-sm font-semibold text-neutral-700">处理进度</div>
+                  {['pending', 'reviewing', 'approved'].includes(selectedDetail.claim.status) && (
+                    <button
+                      onClick={async () => {
+                        const nextMap: Record<string, string> = { pending: 'reviewing', reviewing: 'approved', approved: 'paid' };
+                        const next = nextMap[selectedDetail.claim.status];
+                        const res = await fetch(`/api/after-sale/${selectedDetail.claim.id}/advance`, { method: 'POST' });
+                        if (res.ok) {
+                          const d = await res.json();
+                          setSelectedDetail({ ...selectedDetail, claim: { ...selectedDetail.claim, status: next }, timeline: d.timeline });
+                          loadClaims();
+                        }
+                      }}
+                      className="text-xs px-3 py-1.5 bg-brand-500 text-white rounded-lg hover:bg-brand-600 transition-all flex items-center gap-1"
+                    >
+                      <Zap className="w-3 h-3" /> 模拟推进 → {({ pending: '审核中', reviewing: '审核通过', approved: '自动打款' } as any)[selectedDetail.claim.status]}
+                    </button>
+                  )}
+                </div>
                 <div className="relative pl-6">
                   <div className="absolute left-2 top-2 bottom-2 w-0.5 bg-neutral-200" />
                   {selectedDetail.timeline?.map((s: any, i: number) => (
                     <div key={i} className="relative pb-5 last:pb-0">
-                      <div className={`absolute -left-[18px] w-5 h-5 rounded-full flex items-center justify-center ${s.done ? 'bg-brand-500 text-white' : 'bg-white border-2 border-neutral-300 text-neutral-400'}`}>
-                        <CheckCircle2 className="w-3 h-3" />
+                      <div className={`absolute -left-[18px] w-5 h-5 rounded-full flex items-center justify-center ${s.done ? (s.key === 'paid' ? 'bg-success-500 text-white' : 'bg-brand-500 text-white') : 'bg-white border-2 border-neutral-300 text-neutral-400'}`}>
+                        {s.done ? <CheckCircle2 className="w-3 h-3" /> : <Clock className="w-3 h-3" />}
                       </div>
                       <div>
-                        <div className={`font-medium text-sm ${s.done ? 'text-neutral-700' : 'text-neutral-400'}`}>{s.label}</div>
+                        <div className={`font-medium text-sm flex items-center gap-2 ${s.done ? 'text-neutral-700' : 'text-neutral-400'}`}>
+                          {s.label}
+                          {s.key === 'paid' && s.done && <span className="tag-green !py-0 text-[10px]">✅ 自动打款完成</span>}
+                        </div>
                         {s.time && <div className="text-xs text-neutral-400">{s.time}</div>}
+                        {s.key === 'paid' && s.done && <div className="text-xs text-success-600 mt-1 bg-success-50 p-2 rounded-lg">💰 理赔金额 ¥{selectedDetail.claim.amount} 已自动支付至尾号 8888 的银行账户</div>}
                       </div>
                     </div>
                   ))}

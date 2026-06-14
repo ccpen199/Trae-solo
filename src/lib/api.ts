@@ -17,7 +17,7 @@ async function request<T>(path: string, options: RequestInit = {}): Promise<T> {
 
 export const api = {
   auth: {
-    login: (phone: string) => request('/auth/login', { method: 'POST', body: JSON.stringify({ phone }) }),
+    login: (phone: string, role = 'sender') => request('/auth/login', { method: 'POST', body: JSON.stringify({ phone, role }) }),
     profile: () => request('/auth/profile'),
   },
   orders: {

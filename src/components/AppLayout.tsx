@@ -14,7 +14,7 @@ import {
 import { useAuthStore } from '../store/auth';
 
 export default function AppLayout() {
-  const { user, logout } = useAuthStore();
+  const { user, logout, role } = useAuthStore();
   const navigate = useNavigate();
 
   const navItems = [
@@ -26,12 +26,12 @@ export default function AppLayout() {
   ];
 
   const adminItems = [
-    { to: '/admin', label: '数据概览', icon: LayoutDashboard },
+    { to: '/admin/dashboard', label: '数据概览', icon: LayoutDashboard },
     { to: '/admin/heatmap', label: '效能热力图', icon: Flame },
     { to: '/admin/clv', label: 'CLV 分析', icon: BarChart3 },
   ];
 
-  const isAdmin = user?.role === 'admin';
+  const isAdmin = role === 'admin' || user?.role === 'admin';
 
   return (
     <div className="min-h-screen flex flex-col bg-neutral-50">

@@ -7,7 +7,7 @@ import type { Waybill, TrackingEvent } from '../../shared/types';
 export default function TrackPage() {
   const [sp, setSp] = useSearchParams();
   const navigate = useNavigate();
-  const [query, setQuery] = useState(sp.get('q') || '');
+  const [query, setQuery] = useState(sp.get('q') || 'ZT7890123456789');
   const [batch, setBatch] = useState<string[]>([]);
   const [batchInput, setBatchInput] = useState('');
   const [result, setResult] = useState<{ waybill: Waybill; events: TrackingEvent[] } | null>(null);
@@ -19,7 +19,7 @@ export default function TrackPage() {
   const [error, setError] = useState('');
 
   useEffect(() => {
-    if (query) doSearch();
+    doSearch();
     api.track.history().then((d) => setHistory(d as any[]));
   }, []);
 
@@ -52,6 +52,15 @@ export default function TrackPage() {
     delivering: { label: '派送中', color: 'tag-orange', icon: MapPin },
     signed: { label: '已签收', color: 'tag-green', icon: UserCheck },
     exception: { label: '异常', color: 'tag-red', icon: X },
+  };
+
+  const eventStatusLabel: Record<string, string> = {
+    pending: '待取件',
+    picked: '已取件',
+    inTransit: '运输中',
+    delivering: '派送中',
+    signed: '已签收',
+    exception: '异常事件',
   };
 
   return (
@@ -186,18 +195,22 @@ export default function TrackPage() {
             <div className="absolute left-2 top-2 bottom-2 w-0.5 bg-neutral-200" />
             {result.events.map((e, i) => {
               const Icon = i === 0 ? Package : MapPin;
+              const isException = e.status === 'exception';
               return (
-                <div key={e.id} className="relative pb-6 last:pb-0 animate-slide-up" style={{ animationDelay: `${i * 60}ms` }}>
+                <div key={e.id} className={`relative pb-6 last:pb-0 animate-slide-up ${isException ? 'bg-red-50/50 -mx-4 px-4 py-3 rounded-lg' : ''}`} style={{ animationDelay: `${i * 60}ms` }}>
                   <div
                     className={`absolute -left-[18px] w-5 h-5 rounded-full flex items-center justify-center ${
-                      i === 0 ? 'bg-brand-500 text-white animate-pulse-slow' : 'bg-white border-2 border-neutral-300 text-neutral-400'
+                      i === 0
+                        ? isException ? 'bg-danger-500 text-white animate-pulse-slow' : 'bg-brand-500 text-white animate-pulse-slow'
+                        : isException ? 'bg-white border-2 border-danger-400 text-danger-500' : 'bg-white border-2 border-neutral-300 text-neutral-400'
                     }`}
                   >
                     <Icon className="w-2.5 h-2.5" />
                   </div>
                   <div className="ml-2">
                     <div className="flex items-baseline gap-2">
-                      <span className={`text-sm font-medium ${i === 0 ? 'text-brand-500' : 'text-neutral-700'}`}>{e.status}</span>
+                      <span className={`text-sm font-medium ${i === 0 ? 'text-brand-500' : isException ? 'text-danger-500' : 'text-neutral-700'}`}>{eventStatusLabel[e.status] || e.status}</span>
+                      {isException && <span className="tag-red !py-0 text-[10px]">异常</span>}
                       <span className="text-xs text-neutral-400">{e.timestamp}</span>
                     </div>
                     <div className="text-sm text-neutral-600 mt-0.5">{e.description}</div>
