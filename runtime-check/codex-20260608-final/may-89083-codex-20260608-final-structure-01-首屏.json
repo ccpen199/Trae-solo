@@ -1,0 +1,375 @@
+{
+  "meta": {
+    "title": "装修产业互联网设计协同平台",
+    "url": "http://127.0.0.1:49083/",
+    "timestamp": "2026-06-08T00:18:13.250Z",
+    "viewport": {
+      "width": 1504,
+      "height": 1175
+    },
+    "document": {
+      "scrollWidth": 1504,
+      "scrollHeight": 1175
+    }
+  },
+  "text": {
+    "bodyPreview": "",
+    "emptyTextCount": 0
+  },
+  "domTree": {
+    "tag": "html",
+    "id": "",
+    "className": "",
+    "selectorHint": "html",
+    "text": ".anticon { display: inline-flex; align-items: center; color: inherit; font-style",
+    "visible": true,
+    "childCount": 2,
+    "children": [
+      {
+        "tag": "head",
+        "id": "",
+        "className": "",
+        "selectorHint": "head",
+        "text": ".anticon { display: inline-flex; align-items: center; color: inherit; font-style",
+        "visible": false,
+        "childCount": 35,
+        "children": [
+          {
+            "tag": "meta",
+            "id": "",
+            "className": "",
+            "selectorHint": "meta",
+            "text": "",
+            "visible": false,
+            "childCount": 0,
+            "children": []
+          },
+          {
+            "tag": "meta",
+            "id": "",
+            "className": "",
+            "selectorHint": "meta",
+            "text": "",
+            "visible": false,
+            "childCount": 0,
+            "children": []
+          }
+        ]
+      },
+      {
+        "tag": "body",
+        "id": "",
+        "className": "",
+        "selectorHint": "body",
+        "text": "",
+        "visible": true,
+        "childCount": 2,
+        "children": [
+          {
+            "tag": "div",
+            "id": "root",
+            "className": "",
+            "selectorHint": "div#root",
+            "text": "",
+            "visible": true,
+            "childCount": 0,
+            "children": []
+          }
+        ]
+      }
+    ]
+  },
+  "allElements": [
+    {
+      "index": 0,
+      "tag": "html",
+      "id": "",
+      "className": "",
+      "selectorHint": "html",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": ".anticon { display: inline-flex; align-items: center; color: inherit; font-style: normal; line-height: 0; text-align: center; text-transform: none; vertical-align: -0.125em; text-r",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 2,
+      "rect": {
+        "x": 0,
+        "y": 0,
+        "width": 1504,
+        "height": 1175
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 1,
+      "tag": "head",
+      "id": "",
+      "className": "",
+      "selectorHint": "head",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": ".anticon { display: inline-flex; align-items: center; color: inherit; font-style: normal; line-height: 0; text-align: center; text-transform: none; vertical-align: -0.125em; text-r",
+      "href": "",
+      "disabled": false,
+      "visible": false,
+      "childCount": 35,
+      "rect": {
+        "x": 0,
+        "y": 0,
+        "width": 0,
+        "height": 0
+      },
+      "style": {
+        "display": "none",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 2,
+      "tag": "meta",
+      "id": "",
+      "className": "",
+      "selectorHint": "meta",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "",
+      "href": "",
+      "disabled": false,
+      "visible": false,
+      "childCount": 0,
+      "rect": {
+        "x": 0,
+        "y": 0,
+        "width": 0,
+        "height": 0
+      },
+      "style": {
+        "display": "none",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 3,
+      "tag": "meta",
+      "id": "",
+      "className": "",
+      "selectorHint": "meta",
+      "name": "viewport",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "",
+      "href": "",
+      "disabled": false,
+      "visible": false,
+      "childCount": 0,
+      "rect": {
+        "x": 0,
+        "y": 0,
+        "width": 0,
+        "height": 0
+      },
+      "style": {
+        "display": "none",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 4,
+      "tag": "link",
+      "id": "",
+      "className": "",
+      "selectorHint": "link",
+      "name": "",
+      "type": "image/svg+xml",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "",
+      "href": "/favicon.svg",
+      "disabled": false,
+      "visible": false,
+      "childCount": 0,
+      "rect": {
+        "x": 0,
+        "y": 0,
+        "width": 0,
+        "height": 0
+      },
+      "style": {
+        "display": "none",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 5,
+      "tag": "link",
+      "id": "",
+      "className": "",
+      "selectorHint": "link",
+      "name": "",
+      "type": "image/x-icon",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "",
+      "href": "/favicon.ico",
+      "disabled": false,
+      "visible": false,
+      "childCount": 0,
+      "rect": {
+        "x": 0,
+        "y": 0,
+        "width": 0,
+        "height": 0
+      },
+      "style": {
+        "display": "none",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 6,
+      "tag": "link",
+      "id": "",
+      "className": "",
+      "selectorHint": "link",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "",
+      "href": "/favicon-192.png",
+      "disabled": false,
+      "visible": false,
+      "childCount": 0,
+      "rect": {
+        "x": 0,
+        "y": 0,
+        "width": 0,
+        "height": 0
+      },
+      "style": {
+        "display": "none",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 7,
+      "tag": "title",
+      "id": "",
+      "className": "",
+      "selectorHint": "title",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "装修产业互联网设计协同平台",
+      "href": "",
+      "disabled": false,
+      "visible": false,
+      "childCount": 0,
+      "rect": {
+        "x": 0,
+        "y": 0,
+        "width": 0,
+        "height": 0
+      },
+      "style": {
+        "display": "none",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 8,
+      "tag": "body",
+      "id": "",
+      "className": "",
+      "selectorHint": "body",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 2,
+      "rect": {
+        "x": 0,
+        "y": 0,
+        "width": 1504,
+        "height": 1175
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    },
+    {
+      "index": 9,
+      "tag": "div",
+      "id": "root",
+      "className": "",
+      "selectorHint": "div#root",
+      "name": "",
+      "type": "",
+      "role": "",
+      "ariaLabel": "",
+      "title": "",
+      "placeholder": "",
+      "text": "",
+      "href": "",
+      "disabled": false,
+      "visible": true,
+      "childCount": 0,
+      "rect": {
+        "x": 0,
+        "y": 0,
+        "width": 1504,
+        "height": 1175
+      },
+      "style": {
+        "display": "block",
+        "visibility": "visible",
+        "opacity": "1"
+      }
+    }
+  ],
+  "interactiveElements": []
+}

@@ -1,0 +1,3550 @@
+{
+  "ok": true,
+  "generatedAt": "2026-06-07T18:41:12.985Z",
+  "order": "may-89083",
+  "roundIndex": 99,
+  "captureId": "may-89083-codex-final",
+  "url": "http://127.0.0.1:49083/",
+  "initialUrl": "http://127.0.0.1:49083/",
+  "finalUrl": "http://127.0.0.1:49083/",
+  "status": 200,
+  "title": "装修产业互联网设计协同平台",
+  "initialTitle": "装修产业互联网设计协同平台",
+  "navigationError": "",
+  "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89083/runtime-check/codex-final-20260607/may-89083-codex-final-frontend.png",
+  "screenshotPaths": [
+    "/Users/chen/Documents/trae_projects/local_projects/may-89083/runtime-check/codex-final-20260607/may-89083-codex-final-structure-01-首屏.png",
+    "/Users/chen/Documents/trae_projects/local_projects/may-89083/runtime-check/codex-final-20260607/may-89083-codex-final-structure-02-导航-首页.png",
+    "/Users/chen/Documents/trae_projects/local_projects/may-89083/runtime-check/codex-final-20260607/may-89083-codex-final-structure-03-操作-查看更多.png",
+    "/Users/chen/Documents/trae_projects/local_projects/may-89083/runtime-check/codex-final-20260607/may-89083-codex-final-structure-04-二层操作-查看更多-AI风格迁移.png",
+    "/Users/chen/Documents/trae_projects/local_projects/may-89083/runtime-check/codex-final-20260607/may-89083-codex-final-structure-05-操作-全部项目.png",
+    "/Users/chen/Documents/trae_projects/local_projects/may-89083/runtime-check/codex-final-20260607/may-89083-codex-final-structure-06-二层操作-全部项目-新建项目.png",
+    "/Users/chen/Documents/trae_projects/local_projects/may-89083/runtime-check/codex-final-20260607/may-89083-codex-final-structure-07-导航-案例图库.png",
+    "/Users/chen/Documents/trae_projects/local_projects/may-89083/runtime-check/codex-final-20260607/may-89083-codex-final-structure-08-操作-AI风格迁移.png",
+    "/Users/chen/Documents/trae_projects/local_projects/may-89083/runtime-check/codex-final-20260607/may-89083-codex-final-structure-09-导航-AI风格迁移.png",
+    "/Users/chen/Documents/trae_projects/local_projects/may-89083/runtime-check/codex-final-20260607/may-89083-codex-final-structure-10-导航-报价管理.png",
+    "/Users/chen/Documents/trae_projects/local_projects/may-89083/runtime-check/codex-final-20260607/may-89083-codex-final-structure-11-操作-查看.png",
+    "/Users/chen/Documents/trae_projects/local_projects/may-89083/runtime-check/codex-final-20260607/may-89083-codex-final-structure-12-二层操作-查看-返回列表.png"
+  ],
+  "issueTextPreview": "",
+  "targetReason": "登录流程已完成，继续复验登录后的首页和业务导航",
+  "targetKind": "auth",
+  "targetMatched": true,
+  "targetActions": [
+    {
+      "action": "login-fill-username",
+      "label": "admin",
+      "ok": true
+    },
+    {
+      "action": "login-fill-password",
+      "label": "admin:******",
+      "ok": true
+    },
+    {
+      "action": "login-enter",
+      "label": "admin",
+      "ok": true
+    },
+    {
+      "action": "login-result",
+      "label": "admin",
+      "ok": true,
+      "finalUrl": "http://127.0.0.1:49083/"
+    },
+    {
+      "action": "target-verify",
+      "label": "登录后首页",
+      "ok": true,
+      "finalUrl": "http://127.0.0.1:49083/"
+    }
+  ],
+  "authFlow": {
+    "detected": true,
+    "attempted": true,
+    "success": true,
+    "finalUrl": "http://127.0.0.1:49083/",
+    "message": "登录成功:admin",
+    "actions": [
+      {
+        "action": "login-fill-username",
+        "label": "admin",
+        "ok": true
+      },
+      {
+        "action": "login-fill-password",
+        "label": "admin:******",
+        "ok": true
+      },
+      {
+        "action": "login-enter",
+        "label": "admin",
+        "ok": true
+      },
+      {
+        "action": "login-result",
+        "label": "admin",
+        "ok": true,
+        "finalUrl": "http://127.0.0.1:49083/"
+      }
+    ],
+    "username": "admin",
+    "credentialSource": "visible-demo-text"
+  },
+  "businessAudit": {
+    "actions": [
+      {
+        "action": "click",
+        "label": "导航:首页",
+        "ok": true
+      },
+      {
+        "action": "click",
+        "label": "操作:查看更多",
+        "ok": true,
+        "result": {
+          "ok": true,
+          "matched": 1
+        }
+      },
+      {
+        "action": "click",
+        "label": "二层操作:查看更多:AI风格迁移",
+        "ok": true,
+        "result": {
+          "ok": true,
+          "matched": 1
+        }
+      },
+      {
+        "action": "click",
+        "label": "操作:全部项目",
+        "ok": true,
+        "result": {
+          "ok": true,
+          "matched": 1
+        }
+      },
+      {
+        "action": "click",
+        "label": "二层操作:全部项目:新建项目",
+        "ok": true,
+        "result": {
+          "ok": true,
+          "matched": 1
+        }
+      },
+      {
+        "action": "click",
+        "label": "导航:案例图库",
+        "ok": true
+      },
+      {
+        "action": "click",
+        "label": "操作:AI风格迁移",
+        "ok": true,
+        "result": {
+          "ok": true,
+          "matched": 1
+        }
+      },
+      {
+        "action": "click",
+        "label": "导航:AI风格迁移",
+        "ok": true
+      },
+      {
+        "action": "click",
+        "label": "导航:报价管理",
+        "ok": true
+      },
+      {
+        "action": "click",
+        "label": "操作:查看",
+        "ok": true,
+        "result": {
+          "ok": true,
+          "matched": 1
+        }
+      },
+      {
+        "action": "click",
+        "label": "二层操作:查看:返回列表",
+        "ok": true,
+        "result": {
+          "ok": true,
+          "matched": 1
+        }
+      },
+      {
+        "action": "click",
+        "label": "操作:快速报价",
+        "ok": true,
+        "result": {
+          "ok": true,
+          "matched": 1
+        }
+      },
+      {
+        "action": "click",
+        "label": "二层操作:快速报价:计算报价",
+        "ok": true,
+        "result": {
+          "ok": true,
+          "matched": 1
+        }
+      },
+      {
+        "action": "click",
+        "label": "关闭弹窗/抽屉",
+        "ok": true
+      }
+    ],
+    "snapshots": [
+      {
+        "label": "首屏",
+        "url": "http://127.0.0.1:49083/",
+        "title": "装修产业互联网设计协同平台",
+        "headings": [],
+        "navLabels": [
+          "首页",
+          "home",
+          "案例图库",
+          "appstore",
+          "AI风格迁移",
+          "picture",
+          "报价管理",
+          "file-text",
+          "项目管理",
+          "project",
+          "ERP协同",
+          "schedule",
+          "装修管家",
+          "audit",
+          "后台管理",
+          "shop",
+          "装修公司审核",
+          "工艺工法知识库",
+          "book",
+          "建材价格监测",
+          "tag",
+          "投诉溯源分析",
+          "alert",
+          "操作审计日志"
+        ],
+        "buttons": [
+          "查看更多",
+          "全部项目"
+        ],
+        "links": [],
+        "inputs": [],
+        "tables": [],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "装修产业协同平台首页案例图库AI风格迁移报价管理项目管理ERP协同装修管家后台管理装修公司审核工艺工法知识库建材价格监测投诉溯源分析操作审计日志欢迎使用装修产业互联网设计协同平台3系统管理员欢迎回来，系统管理员！系统管理员今天是 2026年06月07日 Sunday案例图库30在建项目2报价单1设计师排期12热门案例推荐查看更多 工业风格 · 别墅工业风格别墅案例15别墅工业风格30-50万 4891 95¥9.9万地中海 · 四室两厅地中海四室两厅案例19四室两厅地中海10-15万 4366 258¥30.9万现代简约 · 四室两厅现代简约四室两厅案例28四室两厅现代简约20-30万 4146 64¥26.2万轻奢美式 · 三室一厅轻奢美式三室一厅案例23三室一厅轻奢美式50万以上 4033 215¥21.6万日式极简 · 两室一厅日式极简两室一厅案例14两室一厅日式极简10-15万 4008 159¥48.5万新中式 · 别墅新中式别墅案例16别墅新中式15-20万 3670 115¥30.3万我的项目全部项目 万科城市花园张先生家装修工程进行中115.5㎡ · 现代简约进度 35%龙湖滟澜山李女士家大宅装修进行中180㎡ · 新中式进度 52%",
+        "layout": {
+          "viewportWidth": 1504,
+          "viewportHeight": 1175,
+          "scrollWidth": 1504,
+          "scrollHeight": 1175,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89083-codex-final-structure-01-首屏",
+          "label": "首屏",
+          "finalUrl": "http://127.0.0.1:49083/",
+          "title": "装修产业互联网设计协同平台",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89083/runtime-check/codex-final-20260607/may-89083-codex-final-structure-01-首屏.json",
+          "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89083/runtime-check/codex-final-20260607/may-89083-codex-final-structure-01-首屏.png",
+          "elementCount": 389,
+          "interactiveCount": 17,
+          "interactiveLabels": [
+            "首页 案例图库 AI风格迁移 报价管理 项目管理 ERP协同 装修管家 后台管理 装修公司审核 工艺工法知识库 建材价格监测 投诉溯源分析 操作审计日志",
+            "首页",
+            "案例图库",
+            "AI风格迁移",
+            "报价管理",
+            "项目管理",
+            "ERP协同",
+            "装修管家",
+            "后台管理",
+            "装修公司审核",
+            "工艺工法知识库",
+            "建材价格监测",
+            "投诉溯源分析",
+            "操作审计日志",
+            "查看更多",
+            "全部项目"
+          ]
+        }
+      },
+      {
+        "label": "导航:首页",
+        "url": "http://127.0.0.1:49083/",
+        "title": "装修产业互联网设计协同平台",
+        "headings": [],
+        "navLabels": [
+          "首页",
+          "home",
+          "案例图库",
+          "appstore",
+          "AI风格迁移",
+          "picture",
+          "报价管理",
+          "file-text",
+          "项目管理",
+          "project",
+          "ERP协同",
+          "schedule",
+          "装修管家",
+          "audit",
+          "后台管理",
+          "shop",
+          "装修公司审核",
+          "工艺工法知识库",
+          "book",
+          "建材价格监测",
+          "tag",
+          "投诉溯源分析",
+          "alert",
+          "操作审计日志"
+        ],
+        "buttons": [
+          "查看更多",
+          "全部项目"
+        ],
+        "links": [],
+        "inputs": [],
+        "tables": [],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "装修产业协同平台首页案例图库AI风格迁移报价管理项目管理ERP协同装修管家后台管理装修公司审核工艺工法知识库建材价格监测投诉溯源分析操作审计日志欢迎使用装修产业互联网设计协同平台3系统管理员欢迎回来，系统管理员！系统管理员今天是 2026年06月07日 Sunday案例图库30在建项目2报价单1设计师排期12热门案例推荐查看更多 工业风格 · 别墅工业风格别墅案例15别墅工业风格30-50万 4891 95¥9.9万地中海 · 四室两厅地中海四室两厅案例19四室两厅地中海10-15万 4366 258¥30.9万现代简约 · 四室两厅现代简约四室两厅案例28四室两厅现代简约20-30万 4146 64¥26.2万轻奢美式 · 三室一厅轻奢美式三室一厅案例23三室一厅轻奢美式50万以上 4033 215¥21.6万日式极简 · 两室一厅日式极简两室一厅案例14两室一厅日式极简10-15万 4008 159¥48.5万新中式 · 别墅新中式别墅案例16别墅新中式15-20万 3670 115¥30.3万我的项目全部项目 万科城市花园张先生家装修工程进行中115.5㎡ · 现代简约进度 35%龙湖滟澜山李女士家大宅装修进行中180㎡ · 新中式进度 52%",
+        "layout": {
+          "viewportWidth": 1536,
+          "viewportHeight": 1175,
+          "scrollWidth": 1536,
+          "scrollHeight": 1175,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89083-codex-final-structure-02-导航-首页",
+          "label": "导航:首页",
+          "finalUrl": "http://127.0.0.1:49083/",
+          "title": "装修产业互联网设计协同平台",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89083/runtime-check/codex-final-20260607/may-89083-codex-final-structure-02-导航-首页.json",
+          "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89083/runtime-check/codex-final-20260607/may-89083-codex-final-structure-02-导航-首页.png",
+          "elementCount": 389,
+          "interactiveCount": 17,
+          "interactiveLabels": [
+            "首页 案例图库 AI风格迁移 报价管理 项目管理 ERP协同 装修管家 后台管理 装修公司审核 工艺工法知识库 建材价格监测 投诉溯源分析 操作审计日志",
+            "首页",
+            "案例图库",
+            "AI风格迁移",
+            "报价管理",
+            "项目管理",
+            "ERP协同",
+            "装修管家",
+            "后台管理",
+            "装修公司审核",
+            "工艺工法知识库",
+            "建材价格监测",
+            "投诉溯源分析",
+            "操作审计日志",
+            "查看更多",
+            "全部项目"
+          ]
+        }
+      },
+      {
+        "label": "操作:查看更多",
+        "url": "http://127.0.0.1:49083/cases",
+        "title": "装修产业互联网设计协同平台",
+        "headings": [],
+        "navLabels": [
+          "首页",
+          "home",
+          "案例图库",
+          "appstore",
+          "AI风格迁移",
+          "picture",
+          "报价管理",
+          "file-text",
+          "项目管理",
+          "project",
+          "ERP协同",
+          "schedule",
+          "装修管家",
+          "audit",
+          "后台管理",
+          "shop",
+          "装修公司审核",
+          "工艺工法知识库",
+          "book",
+          "建材价格监测",
+          "tag",
+          "投诉溯源分析",
+          "alert",
+          "操作审计日志"
+        ],
+        "buttons": [
+          "AI风格迁移",
+          "89",
+          "156",
+          "234",
+          "145",
+          "78",
+          "120",
+          "96",
+          "277",
+          "220"
+        ],
+        "links": [],
+        "inputs": [
+          {
+            "tag": "input",
+            "type": "text",
+            "placeholder": "搜索案例标题、描述...",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "search",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "search",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "search",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "search",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "search",
+            "placeholder": "",
+            "name": "",
+            "label": "页码"
+          },
+          {
+            "tag": "input",
+            "type": "text",
+            "placeholder": "",
+            "name": "",
+            "label": "页"
+          }
+        ],
+        "tables": [],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "装修产业协同平台首页案例图库AI风格迁移报价管理项目管理ERP协同装修管家后台管理装修公司审核工艺工法知识库建材价格监测投诉溯源分析操作审计日志欢迎使用装修产业互联网设计协同平台3系统管理员案例图库AI风格迁移户型风格预算最新发布现代简约三居室精品案例北京市 · 万科城市花园现代简约三居室精品案例¥13.8万三室两厅现代简约10-15万115.5㎡年轻夫妇首选，时尚简约风格，空间利用最大化，整体色调以灰白为主，搭配原木色家具，营造温馨舒适的居家氛... 1258 浏览89设计师：设计师王工新中式四居室大宅设计北京市 · 龙湖滟澜山新中式四居室大宅设计¥42.5万四室两厅新中式30-50万180㎡传统文化与现代生活完美融合，实木家具搭配传统元素，展现东方美学韵味。适合三代同堂家庭居住。... 2341 浏览156设计师：设计师刘工北欧风两居室温馨小窝北京市 · 保利中央公园北欧风两居室温馨小窝¥9.8万两室一厅北欧风格8-12万78㎡清新自然北欧风格，白色主调搭配绿植，小户型也能拥有大空间感。适合年轻白领一族。... 3567 浏览234设计师：设计师王工轻奢美式三居室北京市 · 中海紫御公馆轻奢美式三居室¥26.8万三室两厅轻奢美式20-30万135㎡典雅美式风格，金属线条搭配皮质家具，彰显品质生活。全屋智能家居系统配套。... 1892 浏览145设计师：设计师刘工日式极简两居室北京市 · 华润橡树湾日式极简两居室¥17.8万两室两厅日式极简15-20万95㎡禅意日式风格，原木质感，榻榻米设计，注重收纳功能，打造宁静致远的生活空间。... 987 浏览78设计师：设计师王工新中式一室一厅案例6北京市 · 示例小区6新中式一室一厅案例6¥24.6万一室一厅新中式5-10万199㎡精选新中式风格一室一厅装修案例，由资深设计师精心打造，品质保证。... 623 浏览120设计师：设计师刘工日式极简四室两厅案例7北京市 · 示例小区7日式极简四室两厅案例7¥27.3万四室两厅日式极简50万以上138㎡精选日式极简风格四室两厅装修案例，由资深设计师精心打造，品质保证。... 2902 浏览96设计师：设计师刘工工业风格三室两厅案例8北京市 · 示例小区8工业风格三室两厅案例8¥21.0万三室两厅工业风格50万以上77㎡精选工业风格风格三室两厅装修案例，由资深设计师精心打造，品质保证。... 357 浏览277设计师：设计师刘工欧式古典复式案例9北京市 · 示例小区9欧式古典复式案例9¥18.3万复式欧式古典20-30万88㎡精选欧式古典风格复式装修案例，由资深设计师精心打造，品质保证。... 3156 浏览220设计师：设计师刘工共 30 条记录12349 条/页跳至页",
+        "layout": {
+          "viewportWidth": 1568,
+          "viewportHeight": 1460,
+          "scrollWidth": 1568,
+          "scrollHeight": 1460,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89083-codex-final-structure-03-操作-查看更多",
+          "label": "操作:查看更多",
+          "finalUrl": "http://127.0.0.1:49083/cases",
+          "title": "装修产业互联网设计协同平台",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89083/runtime-check/codex-final-20260607/may-89083-codex-final-structure-03-操作-查看更多.json",
+          "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89083/runtime-check/codex-final-20260607/may-89083-codex-final-structure-03-操作-查看更多.png",
+          "elementCount": 523,
+          "interactiveCount": 44,
+          "interactiveLabels": [
+            "首页 案例图库 AI风格迁移 报价管理 项目管理 ERP协同 装修管家 后台管理 装修公司审核 工艺工法知识库 建材价格监测 投诉溯源分析 操作审计日志",
+            "首页",
+            "案例图库",
+            "AI风格迁移",
+            "报价管理",
+            "项目管理",
+            "ERP协同",
+            "装修管家",
+            "后台管理",
+            "装修公司审核",
+            "工艺工法知识库",
+            "建材价格监测",
+            "投诉溯源分析",
+            "操作审计日志",
+            "搜索案例标题、描述...",
+            "89",
+            "156",
+            "234",
+            "145",
+            "78",
+            "120",
+            "96",
+            "277",
+            "220",
+            "1",
+            "2",
+            "3",
+            "4",
+            "下一页",
+            "页码"
+          ]
+        }
+      },
+      {
+        "label": "二层操作:查看更多->AI风格迁移",
+        "url": "http://127.0.0.1:49083/style-migration",
+        "title": "装修产业互联网设计协同平台",
+        "headings": [],
+        "navLabels": [
+          "首页",
+          "home",
+          "案例图库",
+          "appstore",
+          "AI风格迁移",
+          "picture",
+          "报价管理",
+          "file-text",
+          "项目管理",
+          "project",
+          "ERP协同",
+          "schedule",
+          "装修管家",
+          "audit",
+          "后台管理",
+          "shop",
+          "装修公司审核",
+          "工艺工法知识库",
+          "book",
+          "建材价格监测",
+          "tag",
+          "投诉溯源分析",
+          "alert",
+          "操作审计日志"
+        ],
+        "buttons": [
+          "开始AI风格迁移"
+        ],
+        "links": [],
+        "inputs": [
+          {
+            "tag": "input",
+            "type": "search",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          }
+        ],
+        "tables": [],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "装修产业协同平台首页案例图库AI风格迁移报价管理项目管理ERP协同装修管家后台管理装修公司审核工艺工法知识库建材价格监测投诉溯源分析操作审计日志欢迎使用装修产业互联网设计协同平台3系统管理员AI风格迁移上传户型图，AI一键生成多种装修风格效果图上传户型图点击或拖拽上传户型图支持 JPG、PNG 格式，文件大小不超过 10MB设置参数房屋面积100 ㎡30100200300装修档次品质标准（约 ¥1200/㎡）选择目标风格现代简约简洁明快，注重功能性新中式传统与现代的完美融合北欧风格清新自然，简约舒适轻奢美式典雅大气，品质生活日式极简禅意空间，收纳至上欧式古典华丽典雅，复古韵味工业风格原始粗犷，个性十足地中海浪漫清新，海洋风情开始AI风格迁移生成结果上传户型图并选择风格，AI将为您生成多种装修效果图方案支持现代简约、新中式、北欧、美式、日式等多种风格",
+        "layout": {
+          "viewportWidth": 1600,
+          "viewportHeight": 1460,
+          "scrollWidth": 1600,
+          "scrollHeight": 1460,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89083-codex-final-structure-04-二层操作-查看更多-AI风格迁移",
+          "label": "二层操作:查看更多->AI风格迁移",
+          "finalUrl": "http://127.0.0.1:49083/style-migration",
+          "title": "装修产业互联网设计协同平台",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89083/runtime-check/codex-final-20260607/may-89083-codex-final-structure-04-二层操作-查看更多-AI风格迁移.json",
+          "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89083/runtime-check/codex-final-20260607/may-89083-codex-final-structure-04-二层操作-查看更多-AI风格迁移.png",
+          "elementCount": 231,
+          "interactiveCount": 19,
+          "interactiveLabels": [
+            "首页 案例图库 AI风格迁移 报价管理 项目管理 ERP协同 装修管家 后台管理 装修公司审核 工艺工法知识库 建材价格监测 投诉溯源分析 操作审计日志",
+            "首页",
+            "案例图库",
+            "AI风格迁移",
+            "报价管理",
+            "项目管理",
+            "ERP协同",
+            "装修管家",
+            "后台管理",
+            "装修公司审核",
+            "工艺工法知识库",
+            "建材价格监测",
+            "投诉溯源分析",
+            "操作审计日志",
+            "开始AI风格迁移"
+          ]
+        }
+      },
+      {
+        "label": "操作:全部项目",
+        "url": "http://127.0.0.1:49083/projects",
+        "title": "装修产业互联网设计协同平台",
+        "headings": [],
+        "navLabels": [
+          "首页",
+          "home",
+          "案例图库",
+          "appstore",
+          "AI风格迁移",
+          "picture",
+          "报价管理",
+          "file-text",
+          "项目管理",
+          "project",
+          "ERP协同",
+          "schedule",
+          "装修管家",
+          "audit",
+          "后台管理",
+          "shop",
+          "装修公司审核",
+          "工艺工法知识库",
+          "book",
+          "建材价格监测",
+          "tag",
+          "投诉溯源分析",
+          "alert",
+          "操作审计日志"
+        ],
+        "buttons": [
+          "新建项目",
+          "详情"
+        ],
+        "links": [],
+        "inputs": [
+          {
+            "tag": "input",
+            "type": "text",
+            "placeholder": "搜索项目名称、地址",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "search",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "search",
+            "placeholder": "",
+            "name": "",
+            "label": "页码"
+          }
+        ],
+        "tables": [
+          {
+            "headers": [
+              "项目名称",
+              "地址",
+              "户型/面积",
+              "风格",
+              "预算(元)",
+              "项目进度",
+              "状态",
+              "工期",
+              "负责人",
+              "操作"
+            ],
+            "rowCount": 2,
+            "hasEmptyText": false,
+            "textPreview": "项目名称 地址 户型/面积 风格 预算(元) 项目进度 状态 工期 负责人 操作 万科城市花园张先生家装修工程 北京市朝阳区万科城市花园3号楼2单元1502 三室两厅 · 115.5㎡ 现代简约 ¥138,000 35% 35% 进行中 计划: 2026-06-01 ~ 2026-09-15 设计师王工(设计) 管家陈经理(管家) 详情 龙湖滟澜山李女士家大宅装修 北京市顺义区龙湖滟澜山A区5栋101 四室两厅 · 180㎡ 新中式 ¥425,000 52% 52% 进行中 计划: 2026-05-15 ~ 2026-10-30 设计师刘工(设计) 管家赵经理(管家) 详情"
+          }
+        ],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "装修产业协同平台首页案例图库AI风格迁移报价管理项目管理ERP协同装修管家后台管理装修公司审核工艺工法知识库建材价格监测投诉溯源分析操作审计日志欢迎使用装修产业互联网设计协同平台3系统管理员项目管理 新建项目状态筛选项目名称地址户型/面积风格预算(元)项目进度状态工期负责人操作万科城市花园张先生家装修工程北京市朝阳区万科城市花园3号楼2单元1502三室两厅 · 115.5㎡现代简约¥138,00035%35%进行中计划: 2026-06-01 ~ 2026-09-15 设计师王工(设计) 管家陈经理(管家)详情龙湖滟澜山李女士家大宅装修北京市顺义区龙湖滟澜山A区5栋101四室两厅 · 180㎡新中式¥425,00052%52%进行中计划: 2026-05-15 ~ 2026-10-30 设计师刘工(设计) 管家赵经理(管家)详情共 2 条110 条/页",
+        "layout": {
+          "viewportWidth": 1632,
+          "viewportHeight": 1460,
+          "scrollWidth": 1632,
+          "scrollHeight": 1460,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89083-codex-final-structure-05-操作-全部项目",
+          "label": "操作:全部项目",
+          "finalUrl": "http://127.0.0.1:49083/projects",
+          "title": "装修产业互联网设计协同平台",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89083/runtime-check/codex-final-20260607/may-89083-codex-final-structure-05-操作-全部项目.json",
+          "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89083/runtime-check/codex-final-20260607/may-89083-codex-final-structure-05-操作-全部项目.png",
+          "elementCount": 283,
+          "interactiveCount": 26,
+          "interactiveLabels": [
+            "首页 案例图库 AI风格迁移 报价管理 项目管理 ERP协同 装修管家 后台管理 装修公司审核 工艺工法知识库 建材价格监测 投诉溯源分析 操作审计日志",
+            "首页",
+            "案例图库",
+            "AI风格迁移",
+            "报价管理",
+            "项目管理",
+            "ERP协同",
+            "装修管家",
+            "后台管理",
+            "装修公司审核",
+            "工艺工法知识库",
+            "建材价格监测",
+            "投诉溯源分析",
+            "操作审计日志",
+            "新建项目",
+            "搜索项目名称、地址",
+            "详情",
+            "1",
+            "页码"
+          ]
+        }
+      },
+      {
+        "label": "二层操作:全部项目->新建项目",
+        "url": "http://127.0.0.1:49083/projects",
+        "title": "装修产业互联网设计协同平台",
+        "headings": [],
+        "navLabels": [
+          "首页",
+          "home",
+          "案例图库",
+          "appstore",
+          "AI风格迁移",
+          "picture",
+          "报价管理",
+          "file-text",
+          "项目管理",
+          "project",
+          "ERP协同",
+          "schedule",
+          "装修管家",
+          "audit",
+          "后台管理",
+          "shop",
+          "装修公司审核",
+          "工艺工法知识库",
+          "book",
+          "建材价格监测",
+          "tag",
+          "投诉溯源分析",
+          "alert",
+          "操作审计日志"
+        ],
+        "buttons": [
+          "新建项目",
+          "详情"
+        ],
+        "links": [],
+        "inputs": [
+          {
+            "tag": "input",
+            "type": "text",
+            "placeholder": "搜索项目名称、地址",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "search",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "search",
+            "placeholder": "",
+            "name": "",
+            "label": "页码"
+          }
+        ],
+        "tables": [
+          {
+            "headers": [
+              "项目名称",
+              "地址",
+              "户型/面积",
+              "风格",
+              "预算(元)",
+              "项目进度",
+              "状态",
+              "工期",
+              "负责人",
+              "操作"
+            ],
+            "rowCount": 2,
+            "hasEmptyText": false,
+            "textPreview": "项目名称 地址 户型/面积 风格 预算(元) 项目进度 状态 工期 负责人 操作 万科城市花园张先生家装修工程 北京市朝阳区万科城市花园3号楼2单元1502 三室两厅 · 115.5㎡ 现代简约 ¥138,000 35% 35% 进行中 计划: 2026-06-01 ~ 2026-09-15 设计师王工(设计) 管家陈经理(管家) 详情 龙湖滟澜山李女士家大宅装修 北京市顺义区龙湖滟澜山A区5栋101 四室两厅 · 180㎡ 新中式 ¥425,000 52% 52% 进行中 计划: 2026-05-15 ~ 2026-10-30 设计师刘工(设计) 管家赵经理(管家) 详情"
+          }
+        ],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "装修产业协同平台首页案例图库AI风格迁移报价管理项目管理ERP协同装修管家后台管理装修公司审核工艺工法知识库建材价格监测投诉溯源分析操作审计日志欢迎使用装修产业互联网设计协同平台3系统管理员项目管理 新建项目状态筛选项目名称地址户型/面积风格预算(元)项目进度状态工期负责人操作万科城市花园张先生家装修工程北京市朝阳区万科城市花园3号楼2单元1502三室两厅 · 115.5㎡现代简约¥138,00035%35%进行中计划: 2026-06-01 ~ 2026-09-15 设计师王工(设计) 管家陈经理(管家)详情龙湖滟澜山李女士家大宅装修北京市顺义区龙湖滟澜山A区5栋101四室两厅 · 180㎡新中式¥425,00052%52%进行中计划: 2026-05-15 ~ 2026-10-30 设计师刘工(设计) 管家赵经理(管家)详情共 2 条110 条/页",
+        "layout": {
+          "viewportWidth": 1664,
+          "viewportHeight": 1460,
+          "scrollWidth": 1664,
+          "scrollHeight": 1460,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89083-codex-final-structure-06-二层操作-全部项目-新建项目",
+          "label": "二层操作:全部项目->新建项目",
+          "finalUrl": "http://127.0.0.1:49083/projects",
+          "title": "装修产业互联网设计协同平台",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89083/runtime-check/codex-final-20260607/may-89083-codex-final-structure-06-二层操作-全部项目-新建项目.json",
+          "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89083/runtime-check/codex-final-20260607/may-89083-codex-final-structure-06-二层操作-全部项目-新建项目.png",
+          "elementCount": 285,
+          "interactiveCount": 26,
+          "interactiveLabels": [
+            "首页 案例图库 AI风格迁移 报价管理 项目管理 ERP协同 装修管家 后台管理 装修公司审核 工艺工法知识库 建材价格监测 投诉溯源分析 操作审计日志",
+            "首页",
+            "案例图库",
+            "AI风格迁移",
+            "报价管理",
+            "项目管理",
+            "ERP协同",
+            "装修管家",
+            "后台管理",
+            "装修公司审核",
+            "工艺工法知识库",
+            "建材价格监测",
+            "投诉溯源分析",
+            "操作审计日志",
+            "新建项目",
+            "搜索项目名称、地址",
+            "详情",
+            "1",
+            "页码"
+          ]
+        }
+      },
+      {
+        "label": "导航:案例图库",
+        "url": "http://127.0.0.1:49083/cases",
+        "title": "装修产业互联网设计协同平台",
+        "headings": [],
+        "navLabels": [
+          "首页",
+          "home",
+          "案例图库",
+          "appstore",
+          "AI风格迁移",
+          "picture",
+          "报价管理",
+          "file-text",
+          "项目管理",
+          "project",
+          "ERP协同",
+          "schedule",
+          "装修管家",
+          "audit",
+          "后台管理",
+          "shop",
+          "装修公司审核",
+          "工艺工法知识库",
+          "book",
+          "建材价格监测",
+          "tag",
+          "投诉溯源分析",
+          "alert",
+          "操作审计日志"
+        ],
+        "buttons": [
+          "AI风格迁移",
+          "89",
+          "156",
+          "234",
+          "145",
+          "78",
+          "120",
+          "96",
+          "277",
+          "220"
+        ],
+        "links": [],
+        "inputs": [
+          {
+            "tag": "input",
+            "type": "text",
+            "placeholder": "搜索案例标题、描述...",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "search",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "search",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "search",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "search",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "search",
+            "placeholder": "",
+            "name": "",
+            "label": "页码"
+          },
+          {
+            "tag": "input",
+            "type": "text",
+            "placeholder": "",
+            "name": "",
+            "label": "页"
+          }
+        ],
+        "tables": [],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "装修产业协同平台首页案例图库AI风格迁移报价管理项目管理ERP协同装修管家后台管理装修公司审核工艺工法知识库建材价格监测投诉溯源分析操作审计日志欢迎使用装修产业互联网设计协同平台3系统管理员案例图库AI风格迁移户型风格预算最新发布现代简约三居室精品案例北京市 · 万科城市花园现代简约三居室精品案例¥13.8万三室两厅现代简约10-15万115.5㎡年轻夫妇首选，时尚简约风格，空间利用最大化，整体色调以灰白为主，搭配原木色家具，营造温馨舒适的居家氛... 1258 浏览89设计师：设计师王工新中式四居室大宅设计北京市 · 龙湖滟澜山新中式四居室大宅设计¥42.5万四室两厅新中式30-50万180㎡传统文化与现代生活完美融合，实木家具搭配传统元素，展现东方美学韵味。适合三代同堂家庭居住。... 2341 浏览156设计师：设计师刘工北欧风两居室温馨小窝北京市 · 保利中央公园北欧风两居室温馨小窝¥9.8万两室一厅北欧风格8-12万78㎡清新自然北欧风格，白色主调搭配绿植，小户型也能拥有大空间感。适合年轻白领一族。... 3567 浏览234设计师：设计师王工轻奢美式三居室北京市 · 中海紫御公馆轻奢美式三居室¥26.8万三室两厅轻奢美式20-30万135㎡典雅美式风格，金属线条搭配皮质家具，彰显品质生活。全屋智能家居系统配套。... 1892 浏览145设计师：设计师刘工日式极简两居室北京市 · 华润橡树湾日式极简两居室¥17.8万两室两厅日式极简15-20万95㎡禅意日式风格，原木质感，榻榻米设计，注重收纳功能，打造宁静致远的生活空间。... 987 浏览78设计师：设计师王工新中式一室一厅案例6北京市 · 示例小区6新中式一室一厅案例6¥24.6万一室一厅新中式5-10万199㎡精选新中式风格一室一厅装修案例，由资深设计师精心打造，品质保证。... 623 浏览120设计师：设计师刘工日式极简四室两厅案例7北京市 · 示例小区7日式极简四室两厅案例7¥27.3万四室两厅日式极简50万以上138㎡精选日式极简风格四室两厅装修案例，由资深设计师精心打造，品质保证。... 2902 浏览96设计师：设计师刘工工业风格三室两厅案例8北京市 · 示例小区8工业风格三室两厅案例8¥21.0万三室两厅工业风格50万以上77㎡精选工业风格风格三室两厅装修案例，由资深设计师精心打造，品质保证。... 357 浏览277设计师：设计师刘工欧式古典复式案例9北京市 · 示例小区9欧式古典复式案例9¥18.3万复式欧式古典20-30万88㎡精选欧式古典风格复式装修案例，由资深设计师精心打造，品质保证。... 3156 浏览220设计师：设计师刘工共 30 条记录12349 条/页跳至页",
+        "layout": {
+          "viewportWidth": 1696,
+          "viewportHeight": 1460,
+          "scrollWidth": 1696,
+          "scrollHeight": 1460,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89083-codex-final-structure-07-导航-案例图库",
+          "label": "导航:案例图库",
+          "finalUrl": "http://127.0.0.1:49083/cases",
+          "title": "装修产业互联网设计协同平台",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89083/runtime-check/codex-final-20260607/may-89083-codex-final-structure-07-导航-案例图库.json",
+          "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89083/runtime-check/codex-final-20260607/may-89083-codex-final-structure-07-导航-案例图库.png",
+          "elementCount": 523,
+          "interactiveCount": 44,
+          "interactiveLabels": [
+            "首页 案例图库 AI风格迁移 报价管理 项目管理 ERP协同 装修管家 后台管理 装修公司审核 工艺工法知识库 建材价格监测 投诉溯源分析 操作审计日志",
+            "首页",
+            "案例图库",
+            "AI风格迁移",
+            "报价管理",
+            "项目管理",
+            "ERP协同",
+            "装修管家",
+            "后台管理",
+            "装修公司审核",
+            "工艺工法知识库",
+            "建材价格监测",
+            "投诉溯源分析",
+            "操作审计日志",
+            "搜索案例标题、描述...",
+            "89",
+            "156",
+            "234",
+            "145",
+            "78",
+            "120",
+            "96",
+            "277",
+            "220",
+            "1",
+            "2",
+            "3",
+            "4",
+            "下一页",
+            "页码"
+          ]
+        }
+      },
+      {
+        "label": "操作:AI风格迁移",
+        "url": "http://127.0.0.1:49083/style-migration",
+        "title": "装修产业互联网设计协同平台",
+        "headings": [],
+        "navLabels": [
+          "首页",
+          "home",
+          "案例图库",
+          "appstore",
+          "AI风格迁移",
+          "picture",
+          "报价管理",
+          "file-text",
+          "项目管理",
+          "project",
+          "ERP协同",
+          "schedule",
+          "装修管家",
+          "audit",
+          "后台管理",
+          "shop",
+          "装修公司审核",
+          "工艺工法知识库",
+          "book",
+          "建材价格监测",
+          "tag",
+          "投诉溯源分析",
+          "alert",
+          "操作审计日志"
+        ],
+        "buttons": [
+          "开始AI风格迁移"
+        ],
+        "links": [],
+        "inputs": [
+          {
+            "tag": "input",
+            "type": "search",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          }
+        ],
+        "tables": [],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "装修产业协同平台首页案例图库AI风格迁移报价管理项目管理ERP协同装修管家后台管理装修公司审核工艺工法知识库建材价格监测投诉溯源分析操作审计日志欢迎使用装修产业互联网设计协同平台3系统管理员AI风格迁移上传户型图，AI一键生成多种装修风格效果图上传户型图点击或拖拽上传户型图支持 JPG、PNG 格式，文件大小不超过 10MB设置参数房屋面积100 ㎡30100200300装修档次品质标准（约 ¥1200/㎡）选择目标风格现代简约简洁明快，注重功能性新中式传统与现代的完美融合北欧风格清新自然，简约舒适轻奢美式典雅大气，品质生活日式极简禅意空间，收纳至上欧式古典华丽典雅，复古韵味工业风格原始粗犷，个性十足地中海浪漫清新，海洋风情开始AI风格迁移生成结果上传户型图并选择风格，AI将为您生成多种装修效果图方案支持现代简约、新中式、北欧、美式、日式等多种风格",
+        "layout": {
+          "viewportWidth": 1728,
+          "viewportHeight": 1460,
+          "scrollWidth": 1728,
+          "scrollHeight": 1460,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89083-codex-final-structure-08-操作-AI风格迁移",
+          "label": "操作:AI风格迁移",
+          "finalUrl": "http://127.0.0.1:49083/style-migration",
+          "title": "装修产业互联网设计协同平台",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89083/runtime-check/codex-final-20260607/may-89083-codex-final-structure-08-操作-AI风格迁移.json",
+          "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89083/runtime-check/codex-final-20260607/may-89083-codex-final-structure-08-操作-AI风格迁移.png",
+          "elementCount": 231,
+          "interactiveCount": 19,
+          "interactiveLabels": [
+            "首页 案例图库 AI风格迁移 报价管理 项目管理 ERP协同 装修管家 后台管理 装修公司审核 工艺工法知识库 建材价格监测 投诉溯源分析 操作审计日志",
+            "首页",
+            "案例图库",
+            "AI风格迁移",
+            "报价管理",
+            "项目管理",
+            "ERP协同",
+            "装修管家",
+            "后台管理",
+            "装修公司审核",
+            "工艺工法知识库",
+            "建材价格监测",
+            "投诉溯源分析",
+            "操作审计日志",
+            "开始AI风格迁移"
+          ]
+        }
+      },
+      {
+        "label": "导航:AI风格迁移",
+        "url": "http://127.0.0.1:49083/style-migration",
+        "title": "装修产业互联网设计协同平台",
+        "headings": [],
+        "navLabels": [
+          "首页",
+          "home",
+          "案例图库",
+          "appstore",
+          "AI风格迁移",
+          "picture",
+          "报价管理",
+          "file-text",
+          "项目管理",
+          "project",
+          "ERP协同",
+          "schedule",
+          "装修管家",
+          "audit",
+          "后台管理",
+          "shop",
+          "装修公司审核",
+          "工艺工法知识库",
+          "book",
+          "建材价格监测",
+          "tag",
+          "投诉溯源分析",
+          "alert",
+          "操作审计日志"
+        ],
+        "buttons": [
+          "开始AI风格迁移"
+        ],
+        "links": [],
+        "inputs": [
+          {
+            "tag": "input",
+            "type": "search",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          }
+        ],
+        "tables": [],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "装修产业协同平台首页案例图库AI风格迁移报价管理项目管理ERP协同装修管家后台管理装修公司审核工艺工法知识库建材价格监测投诉溯源分析操作审计日志欢迎使用装修产业互联网设计协同平台3系统管理员AI风格迁移上传户型图，AI一键生成多种装修风格效果图上传户型图点击或拖拽上传户型图支持 JPG、PNG 格式，文件大小不超过 10MB设置参数房屋面积100 ㎡30100200300装修档次品质标准（约 ¥1200/㎡）选择目标风格现代简约简洁明快，注重功能性新中式传统与现代的完美融合北欧风格清新自然，简约舒适轻奢美式典雅大气，品质生活日式极简禅意空间，收纳至上欧式古典华丽典雅，复古韵味工业风格原始粗犷，个性十足地中海浪漫清新，海洋风情开始AI风格迁移生成结果上传户型图并选择风格，AI将为您生成多种装修效果图方案支持现代简约、新中式、北欧、美式、日式等多种风格",
+        "layout": {
+          "viewportWidth": 1760,
+          "viewportHeight": 1460,
+          "scrollWidth": 1760,
+          "scrollHeight": 1460,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89083-codex-final-structure-09-导航-AI风格迁移",
+          "label": "导航:AI风格迁移",
+          "finalUrl": "http://127.0.0.1:49083/style-migration",
+          "title": "装修产业互联网设计协同平台",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89083/runtime-check/codex-final-20260607/may-89083-codex-final-structure-09-导航-AI风格迁移.json",
+          "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89083/runtime-check/codex-final-20260607/may-89083-codex-final-structure-09-导航-AI风格迁移.png",
+          "elementCount": 231,
+          "interactiveCount": 19,
+          "interactiveLabels": [
+            "首页 案例图库 AI风格迁移 报价管理 项目管理 ERP协同 装修管家 后台管理 装修公司审核 工艺工法知识库 建材价格监测 投诉溯源分析 操作审计日志",
+            "首页",
+            "案例图库",
+            "AI风格迁移",
+            "报价管理",
+            "项目管理",
+            "ERP协同",
+            "装修管家",
+            "后台管理",
+            "装修公司审核",
+            "工艺工法知识库",
+            "建材价格监测",
+            "投诉溯源分析",
+            "操作审计日志",
+            "开始AI风格迁移"
+          ]
+        }
+      },
+      {
+        "label": "导航:报价管理",
+        "url": "http://127.0.0.1:49083/quotations",
+        "title": "装修产业互联网设计协同平台",
+        "headings": [],
+        "navLabels": [
+          "首页",
+          "home",
+          "案例图库",
+          "appstore",
+          "AI风格迁移",
+          "picture",
+          "报价管理",
+          "file-text",
+          "项目管理",
+          "project",
+          "ERP协同",
+          "schedule",
+          "装修管家",
+          "audit",
+          "后台管理",
+          "shop",
+          "装修公司审核",
+          "工艺工法知识库",
+          "book",
+          "建材价格监测",
+          "tag",
+          "投诉溯源分析",
+          "alert",
+          "操作审计日志"
+        ],
+        "buttons": [
+          "快速报价",
+          "查看"
+        ],
+        "links": [],
+        "inputs": [
+          {
+            "tag": "input",
+            "type": "text",
+            "placeholder": "搜索报价标题",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "search",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "search",
+            "placeholder": "",
+            "name": "",
+            "label": "页码"
+          }
+        ],
+        "tables": [
+          {
+            "headers": [
+              "报价单号",
+              "报价标题",
+              "所属项目",
+              "业主",
+              "总价(元)",
+              "状态",
+              "创建时间",
+              "操作"
+            ],
+            "rowCount": 1,
+            "hasEmptyText": false,
+            "textPreview": "报价单号 报价标题 所属项目 业主 总价(元) 状态 创建时间 操作 QO-000001 万科城市花园张先生家装修报价 万科城市花园张先生家装修工程 业主张先生 ¥138,000 已确认 2026-06-07 15:47 查看"
+          }
+        ],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "装修产业协同平台首页案例图库AI风格迁移报价管理项目管理ERP协同装修管家后台管理装修公司审核工艺工法知识库建材价格监测投诉溯源分析操作审计日志欢迎使用装修产业互联网设计协同平台3系统管理员报价管理 快速报价状态筛选报价单号报价标题所属项目业主总价(元)状态创建时间操作QO-000001万科城市花园张先生家装修报价万科城市花园张先生家装修工程业主张先生¥138,000已确认2026-06-07 15:47查看共 1 条110 条/页",
+        "layout": {
+          "viewportWidth": 1792,
+          "viewportHeight": 1460,
+          "scrollWidth": 1792,
+          "scrollHeight": 1460,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89083-codex-final-structure-10-导航-报价管理",
+          "label": "导航:报价管理",
+          "finalUrl": "http://127.0.0.1:49083/quotations",
+          "title": "装修产业互联网设计协同平台",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89083/runtime-check/codex-final-20260607/may-89083-codex-final-structure-10-导航-报价管理.json",
+          "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89083/runtime-check/codex-final-20260607/may-89083-codex-final-structure-10-导航-报价管理.png",
+          "elementCount": 214,
+          "interactiveCount": 25,
+          "interactiveLabels": [
+            "首页 案例图库 AI风格迁移 报价管理 项目管理 ERP协同 装修管家 后台管理 装修公司审核 工艺工法知识库 建材价格监测 投诉溯源分析 操作审计日志",
+            "首页",
+            "案例图库",
+            "AI风格迁移",
+            "报价管理",
+            "项目管理",
+            "ERP协同",
+            "装修管家",
+            "后台管理",
+            "装修公司审核",
+            "工艺工法知识库",
+            "建材价格监测",
+            "投诉溯源分析",
+            "操作审计日志",
+            "快速报价",
+            "搜索报价标题",
+            "查看",
+            "1",
+            "页码"
+          ]
+        }
+      },
+      {
+        "label": "操作:查看",
+        "url": "http://127.0.0.1:49083/quotations/1",
+        "title": "装修产业互联网设计协同平台",
+        "headings": [
+          "万科城市花园张先生家装修报价"
+        ],
+        "navLabels": [
+          "首页",
+          "home",
+          "案例图库",
+          "appstore",
+          "AI风格迁移",
+          "picture",
+          "报价管理",
+          "file-text",
+          "项目管理",
+          "project",
+          "ERP协同",
+          "schedule",
+          "装修管家",
+          "audit",
+          "后台管理",
+          "shop",
+          "装修公司审核",
+          "工艺工法知识库",
+          "book",
+          "建材价格监测",
+          "tag",
+          "投诉溯源分析",
+          "alert",
+          "操作审计日志"
+        ],
+        "buttons": [
+          "返回列表"
+        ],
+        "links": [],
+        "inputs": [],
+        "tables": [
+          {
+            "headers": [
+              "项目名称",
+              "业主",
+              "联系电话",
+              "装修公司",
+              "联系电话",
+              "创建时间"
+            ],
+            "rowCount": 3,
+            "hasEmptyText": false,
+            "textPreview": "项目名称 万科城市花园张先生家装修工程 业主 业主张先生 联系电话 13900000001 装修公司 尚品装饰工程有限公司 联系电话 400-800-8888 创建时间 2026-06-07 15:47"
+          },
+          {
+            "headers": [
+              "项目名称",
+              "规格",
+              "单位",
+              "数量",
+              "单价(元)",
+              "小计(元)",
+              "备注"
+            ],
+            "rowCount": 2,
+            "hasEmptyText": false,
+            "textPreview": "项目名称 规格 单位 数量 单价(元) 小计(元) 备注 墙体拆除 非承重墙体 平米 28 80.00 2240.00 垃圾清运 外运 车 5 300.00 1500.00"
+          },
+          {
+            "headers": [
+              "项目名称",
+              "规格",
+              "单位",
+              "数量",
+              "单价(元)",
+              "小计(元)",
+              "备注"
+            ],
+            "rowCount": 3,
+            "hasEmptyText": false,
+            "textPreview": "项目名称 规格 单位 数量 单价(元) 小计(元) 备注 水路改造 PPR Dn25 米 65 85.00 5525.00 电路改造 BV2.5mm² 米 180 65.00 11700.00 弱电改造 超五类线 米 80 55.00 4400.00"
+          },
+          {
+            "headers": [
+              "项目名称",
+              "规格",
+              "单位",
+              "数量",
+              "单价(元)",
+              "小计(元)",
+              "备注"
+            ],
+            "rowCount": 4,
+            "hasEmptyText": false,
+            "textPreview": "项目名称 规格 单位 数量 单价(元) 小计(元) 备注 地面找平 水泥砂浆 平米 105 55.00 5775.00 地砖铺贴 800x800 平米 95 120.00 11400.00 墙砖铺贴 300x600 平米 65 110.00 7150.00 防水处理 聚氨酯 平米 45 95.00 4275.00"
+          },
+          {
+            "headers": [
+              "项目名称",
+              "规格",
+              "单位",
+              "数量",
+              "单价(元)",
+              "小计(元)",
+              "备注"
+            ],
+            "rowCount": 2,
+            "hasEmptyText": false,
+            "textPreview": "项目名称 规格 单位 数量 单价(元) 小计(元) 备注 吊顶制作 石膏板 平米 55 180.00 9900.00 定制衣柜 E0级板材 平米 18 680.00 12240.00"
+          },
+          {
+            "headers": [
+              "项目名称",
+              "规格",
+              "单位",
+              "数量",
+              "单价(元)",
+              "小计(元)",
+              "备注"
+            ],
+            "rowCount": 2,
+            "hasEmptyText": false,
+            "textPreview": "项目名称 规格 单位 数量 单价(元) 小计(元) 备注 墙面批灰 耐水腻子 平米 320 45.00 14400.00 乳胶漆 多乐士五合一 平米 320 38.00 12160.00"
+          },
+          {
+            "headers": [
+              "项目名称",
+              "规格",
+              "单位",
+              "数量",
+              "单价(元)",
+              "小计(元)",
+              "备注"
+            ],
+            "rowCount": 3,
+            "hasEmptyText": false,
+            "textPreview": "项目名称 规格 单位 数量 单价(元) 小计(元) 备注 地板铺贴 复合地板 平米 75 25.00 1875.00 洁具安装 马桶、洗手盆 套 2 300.00 600.00 灯具安装 全屋灯具 项 1 800.00 800.00"
+          },
+          {
+            "headers": [
+              "项目名称",
+              "规格",
+              "单位",
+              "数量",
+              "单价(元)",
+              "小计(元)",
+              "备注"
+            ],
+            "rowCount": 4,
+            "hasEmptyText": false,
+            "textPreview": "项目名称 规格 单位 数量 单价(元) 小计(元) 备注 沙发 三人位+贵妃 套 1 8500.00 8500.00 餐桌椅 1桌6椅 套 1 4500.00 4500.00 床 1.8米双人床 张 2 3500.00 7000.00 电视柜 定制 米 2.4 1200.00 2880.00"
+          },
+          {
+            "headers": [
+              "项目名称",
+              "规格",
+              "单位",
+              "数量",
+              "单价(元)",
+              "小计(元)",
+              "备注"
+            ],
+            "rowCount": 3,
+            "hasEmptyText": false,
+            "textPreview": "项目名称 规格 单位 数量 单价(元) 小计(元) 备注 窗帘 全屋定制 套 1 4200.00 4200.00 灯具 主灯+辅灯 套 1 3800.00 3800.00 开关插座 西门子 套 1 1200.00 1200.00"
+          },
+          {
+            "headers": [
+              "项目名称",
+              "规格",
+              "单位",
+              "数量",
+              "单价(元)",
+              "小计(元)",
+              "备注"
+            ],
+            "rowCount": 1,
+            "hasEmptyText": false,
+            "textPreview": "项目名称 规格 单位 数量 单价(元) 小计(元) 备注 装饰画 客厅+卧室 组 3 400.00 1200.00"
+          },
+          {
+            "headers": [
+              "项目名称",
+              "规格",
+              "单位",
+              "数量",
+              "单价(元)",
+              "小计(元)",
+              "备注"
+            ],
+            "rowCount": 3,
+            "hasEmptyText": false,
+            "textPreview": "项目名称 规格 单位 数量 单价(元) 小计(元) 备注 设计费 主案设计师 项 1 8000.00 8000.00 管理费 8% 项 1 9600.00 9600.00 保洁费 开荒保洁 项 1 1200.00 1200.00"
+          }
+        ],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "装修产业协同平台首页案例图库AI风格迁移报价管理项目管理ERP协同装修管家后台管理装修公司审核工艺工法知识库建材价格监测投诉溯源分析操作审计日志欢迎使用装修产业互联网设计协同平台3系统管理员返回列表万科城市花园张先生家装修报价报价单号: QO-000001已确认有效期: 30天总计¥138,000.00硬装78,000软装35,000人工费38,000基本信息项目名称万科城市花园张先生家装修工程业主业主张先生联系电话13900000001装修公司尚品装饰工程有限公司联系电话400-800-8888创建时间2026-06-07 15:47费用构成硬装-拆改¥3,7403%硬装-水电¥21,62516%硬装-泥瓦¥28,60021%硬装-木工¥22,14016%硬装-油漆¥26,56019%硬装-安装¥3,2752%软装-家具¥22,88017%软装-家电¥9,2007%软装-配饰¥1,2001%其他¥18,80014%报价明细硬装-拆改小计: ¥3,740项目名称规格单位数量单价(元)小计(元)备注墙体拆除非承重墙体平米2880.002240.00垃圾清运外运车5300.001500.00硬装-水电小计: ¥21,625项目名称规格单位数量单价(元)小计(元)备注水路改造PPR Dn25米6585.005525.00电路改造BV2.5mm²米18065.0011700.00弱电改造超五类线米8055.004400.00硬装-泥瓦小计: ¥28,600项目名称规格单位数量单价(元)小计(元)备注地面找平水泥砂浆平米10555.005775.00地砖铺贴800x800平米95120.0011400.00墙砖铺贴300x600平米65110.007150.00防水处理聚氨酯平米4595.004275.00硬装-木工小计: ¥22,140项目名称规格单位数量单价(元)小计(元)备注吊顶制作石膏板平米55180.009900.00定制衣柜E0级板材平米18680.0012240.00硬装-油漆小计: ¥26,560项目名称规格单位数量单价(元)小计(元)备注墙面批灰耐水腻子平米32045.0014400.00乳胶漆多乐士五合一平米32038.0012160.00硬装-安装小计: ¥3,275项目名称规格单位数量单价(元)小计(元)备注地板铺贴复合地板平米7525.001875.00洁具安装马桶、洗手盆套2300.00600.00灯具安装全屋灯具项1800.00800.00软装-家具小计: ¥22,880项目名称规格单位数量单价(元)小计(元)备注沙发三人位+贵妃套18500.008500.00餐桌椅1桌6椅套14500.004500.00床1.8米双人床张23500.007000.00电视柜定制米2.41200.002880.00软装-家电小计: ¥9,200项目名称规格单位数量单价(元)小计(元)备注窗帘全屋定制套14200.004200.00灯具主灯+辅灯套13800.003800.00开关插座西门子套11200.001200.00软装-配饰小计: ¥1,200项目名称规格单位数量单价(元)小计(元)备注装饰画客厅+卧室组3400.001200.00其他小计: ¥18,800项目名称规格单位数量单价(元)小计(元)备注设计费主案设计师项18000.008000.00管理费8%项19600.009600.00保洁费开荒保洁项11200.001200.00",
+        "layout": {
+          "viewportWidth": 1824,
+          "viewportHeight": 1600,
+          "scrollWidth": 1824,
+          "scrollHeight": 3244,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89083-codex-final-structure-11-操作-查看",
+          "label": "操作:查看",
+          "finalUrl": "http://127.0.0.1:49083/quotations/1",
+          "title": "装修产业互联网设计协同平台",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89083/runtime-check/codex-final-20260607/may-89083-codex-final-structure-11-操作-查看.json",
+          "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89083/runtime-check/codex-final-20260607/may-89083-codex-final-structure-11-操作-查看.png",
+          "elementCount": 865,
+          "interactiveCount": 16,
+          "interactiveLabels": [
+            "首页 案例图库 AI风格迁移 报价管理 项目管理 ERP协同 装修管家 后台管理 装修公司审核 工艺工法知识库 建材价格监测 投诉溯源分析 操作审计日志",
+            "首页",
+            "案例图库",
+            "AI风格迁移",
+            "报价管理",
+            "项目管理",
+            "ERP协同",
+            "装修管家",
+            "后台管理",
+            "装修公司审核",
+            "工艺工法知识库",
+            "建材价格监测",
+            "投诉溯源分析",
+            "操作审计日志",
+            "返回列表"
+          ]
+        }
+      },
+      {
+        "label": "二层操作:查看->返回列表",
+        "url": "http://127.0.0.1:49083/quotations",
+        "title": "装修产业互联网设计协同平台",
+        "headings": [],
+        "navLabels": [
+          "首页",
+          "home",
+          "案例图库",
+          "appstore",
+          "AI风格迁移",
+          "picture",
+          "报价管理",
+          "file-text",
+          "项目管理",
+          "project",
+          "ERP协同",
+          "schedule",
+          "装修管家",
+          "audit",
+          "后台管理",
+          "shop",
+          "装修公司审核",
+          "工艺工法知识库",
+          "book",
+          "建材价格监测",
+          "tag",
+          "投诉溯源分析",
+          "alert",
+          "操作审计日志"
+        ],
+        "buttons": [
+          "快速报价",
+          "查看"
+        ],
+        "links": [],
+        "inputs": [
+          {
+            "tag": "input",
+            "type": "text",
+            "placeholder": "搜索报价标题",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "search",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "search",
+            "placeholder": "",
+            "name": "",
+            "label": "页码"
+          }
+        ],
+        "tables": [
+          {
+            "headers": [
+              "报价单号",
+              "报价标题",
+              "所属项目",
+              "业主",
+              "总价(元)",
+              "状态",
+              "创建时间",
+              "操作"
+            ],
+            "rowCount": 1,
+            "hasEmptyText": false,
+            "textPreview": "报价单号 报价标题 所属项目 业主 总价(元) 状态 创建时间 操作 QO-000001 万科城市花园张先生家装修报价 万科城市花园张先生家装修工程 业主张先生 ¥138,000 已确认 2026-06-07 15:47 查看"
+          }
+        ],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "装修产业协同平台首页案例图库AI风格迁移报价管理项目管理ERP协同装修管家后台管理装修公司审核工艺工法知识库建材价格监测投诉溯源分析操作审计日志欢迎使用装修产业互联网设计协同平台3系统管理员报价管理 快速报价状态筛选报价单号报价标题所属项目业主总价(元)状态创建时间操作QO-000001万科城市花园张先生家装修报价万科城市花园张先生家装修工程业主张先生¥138,000已确认2026-06-07 15:47查看共 1 条110 条/页",
+        "layout": {
+          "viewportWidth": 1856,
+          "viewportHeight": 1600,
+          "scrollWidth": 1856,
+          "scrollHeight": 1600,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89083-codex-final-structure-12-二层操作-查看-返回列表",
+          "label": "二层操作:查看->返回列表",
+          "finalUrl": "http://127.0.0.1:49083/quotations",
+          "title": "装修产业互联网设计协同平台",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89083/runtime-check/codex-final-20260607/may-89083-codex-final-structure-12-二层操作-查看-返回列表.json",
+          "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89083/runtime-check/codex-final-20260607/may-89083-codex-final-structure-12-二层操作-查看-返回列表.png",
+          "elementCount": 214,
+          "interactiveCount": 25,
+          "interactiveLabels": [
+            "首页 案例图库 AI风格迁移 报价管理 项目管理 ERP协同 装修管家 后台管理 装修公司审核 工艺工法知识库 建材价格监测 投诉溯源分析 操作审计日志",
+            "首页",
+            "案例图库",
+            "AI风格迁移",
+            "报价管理",
+            "项目管理",
+            "ERP协同",
+            "装修管家",
+            "后台管理",
+            "装修公司审核",
+            "工艺工法知识库",
+            "建材价格监测",
+            "投诉溯源分析",
+            "操作审计日志",
+            "快速报价",
+            "搜索报价标题",
+            "查看",
+            "1",
+            "页码"
+          ]
+        }
+      },
+      {
+        "label": "操作:快速报价",
+        "url": "http://127.0.0.1:49083/quotations",
+        "title": "装修产业互联网设计协同平台",
+        "headings": [],
+        "navLabels": [
+          "首页",
+          "home",
+          "案例图库",
+          "appstore",
+          "AI风格迁移",
+          "picture",
+          "报价管理",
+          "file-text",
+          "项目管理",
+          "project",
+          "ERP协同",
+          "schedule",
+          "装修管家",
+          "audit",
+          "后台管理",
+          "shop",
+          "装修公司审核",
+          "工艺工法知识库",
+          "book",
+          "建材价格监测",
+          "tag",
+          "投诉溯源分析",
+          "alert",
+          "操作审计日志"
+        ],
+        "buttons": [
+          "快速报价",
+          "查看",
+          "Close",
+          "计算报价"
+        ],
+        "links": [],
+        "inputs": [
+          {
+            "tag": "input",
+            "type": "text",
+            "placeholder": "搜索报价标题",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "search",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "search",
+            "placeholder": "",
+            "name": "",
+            "label": "页码"
+          },
+          {
+            "tag": "input",
+            "type": "number",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "search",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "search",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          }
+        ],
+        "tables": [
+          {
+            "headers": [
+              "报价单号",
+              "报价标题",
+              "所属项目",
+              "业主",
+              "总价(元)",
+              "状态",
+              "创建时间",
+              "操作"
+            ],
+            "rowCount": 1,
+            "hasEmptyText": false,
+            "textPreview": "报价单号 报价标题 所属项目 业主 总价(元) 状态 创建时间 操作 QO-000001 万科城市花园张先生家装修报价 万科城市花园张先生家装修工程 业主张先生 ¥138,000 已确认 2026-06-07 15:47 查看"
+          }
+        ],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "装修产业协同平台首页案例图库AI风格迁移报价管理项目管理ERP协同装修管家后台管理装修公司审核工艺工法知识库建材价格监测投诉溯源分析操作审计日志欢迎使用装修产业互联网设计协同平台3系统管理员报价管理 快速报价状态筛选报价单号报价标题所属项目业主总价(元)状态创建时间操作QO-000001万科城市花园张先生家装修报价万科城市花园张先生家装修工程业主张先生¥138,000已确认2026-06-07 15:47查看共 1 条110 条/页 快速报价估算面积(㎡)风格现代简约档次品质标准计算报价",
+        "layout": {
+          "viewportWidth": 1888,
+          "viewportHeight": 1600,
+          "scrollWidth": 1888,
+          "scrollHeight": 1600,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89083-codex-final-structure-13-操作-快速报价",
+          "label": "操作:快速报价",
+          "finalUrl": "http://127.0.0.1:49083/quotations",
+          "title": "装修产业互联网设计协同平台",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89083/runtime-check/codex-final-20260607/may-89083-codex-final-structure-13-操作-快速报价.json",
+          "screenshotPath": "",
+          "elementCount": 263,
+          "interactiveCount": 32,
+          "interactiveLabels": [
+            "首页 案例图库 AI风格迁移 报价管理 项目管理 ERP协同 装修管家 后台管理 装修公司审核 工艺工法知识库 建材价格监测 投诉溯源分析 操作审计日志",
+            "首页",
+            "案例图库",
+            "AI风格迁移",
+            "报价管理",
+            "项目管理",
+            "ERP协同",
+            "装修管家",
+            "后台管理",
+            "装修公司审核",
+            "工艺工法知识库",
+            "建材价格监测",
+            "投诉溯源分析",
+            "操作审计日志",
+            "快速报价",
+            "搜索报价标题",
+            "查看",
+            "1",
+            "页码",
+            "快速报价估算 面积(㎡) 风格 现代简约 档次 品质标准 计算报价",
+            "Close",
+            "100",
+            "计算报价"
+          ]
+        }
+      },
+      {
+        "label": "二层操作:快速报价->计算报价",
+        "url": "http://127.0.0.1:49083/quotations",
+        "title": "装修产业互联网设计协同平台",
+        "headings": [],
+        "navLabels": [
+          "首页",
+          "home",
+          "案例图库",
+          "appstore",
+          "AI风格迁移",
+          "picture",
+          "报价管理",
+          "file-text",
+          "项目管理",
+          "project",
+          "ERP协同",
+          "schedule",
+          "装修管家",
+          "audit",
+          "后台管理",
+          "shop",
+          "装修公司审核",
+          "工艺工法知识库",
+          "book",
+          "建材价格监测",
+          "tag",
+          "投诉溯源分析",
+          "alert",
+          "操作审计日志"
+        ],
+        "buttons": [
+          "快速报价",
+          "查看",
+          "Close",
+          "计算报价",
+          "生成正式报价单"
+        ],
+        "links": [],
+        "inputs": [
+          {
+            "tag": "input",
+            "type": "text",
+            "placeholder": "搜索报价标题",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "search",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "search",
+            "placeholder": "",
+            "name": "",
+            "label": "页码"
+          },
+          {
+            "tag": "input",
+            "type": "number",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "search",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "search",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          }
+        ],
+        "tables": [
+          {
+            "headers": [
+              "报价单号",
+              "报价标题",
+              "所属项目",
+              "业主",
+              "总价(元)",
+              "状态",
+              "创建时间",
+              "操作"
+            ],
+            "rowCount": 1,
+            "hasEmptyText": false,
+            "textPreview": "报价单号 报价标题 所属项目 业主 总价(元) 状态 创建时间 操作 QO-000001 万科城市花园张先生家装修报价 万科城市花园张先生家装修工程 业主张先生 ¥138,000 已确认 2026-06-07 15:47 查看"
+          }
+        ],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "装修产业协同平台首页案例图库AI风格迁移报价管理项目管理ERP协同装修管家后台管理装修公司审核工艺工法知识库建材价格监测投诉溯源分析操作审计日志欢迎使用装修产业互联网设计协同平台3系统管理员报价管理 快速报价状态筛选报价单号报价标题所属项目业主总价(元)状态创建时间操作QO-000001万科城市花园张先生家装修报价万科城市花园张先生家装修工程业主张先生¥138,000已确认2026-06-07 15:47查看共 1 条110 条/页 快速报价估算面积(㎡)风格现代简约档次品质标准计算报价预估总价¥120,000约 ¥1200/㎡硬装66,000软装30,000家电18,000设计费6,000生成正式报价单",
+        "layout": {
+          "viewportWidth": 1920,
+          "viewportHeight": 1600,
+          "scrollWidth": 1920,
+          "scrollHeight": 1600,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89083-codex-final-structure-14-二层操作-快速报价-计算报价",
+          "label": "二层操作:快速报价->计算报价",
+          "finalUrl": "http://127.0.0.1:49083/quotations",
+          "title": "装修产业互联网设计协同平台",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89083/runtime-check/codex-final-20260607/may-89083-codex-final-structure-14-二层操作-快速报价-计算报价.json",
+          "screenshotPath": "",
+          "elementCount": 295,
+          "interactiveCount": 33,
+          "interactiveLabels": [
+            "首页 案例图库 AI风格迁移 报价管理 项目管理 ERP协同 装修管家 后台管理 装修公司审核 工艺工法知识库 建材价格监测 投诉溯源分析 操作审计日志",
+            "首页",
+            "案例图库",
+            "AI风格迁移",
+            "报价管理",
+            "项目管理",
+            "ERP协同",
+            "装修管家",
+            "后台管理",
+            "装修公司审核",
+            "工艺工法知识库",
+            "建材价格监测",
+            "投诉溯源分析",
+            "操作审计日志",
+            "快速报价",
+            "搜索报价标题",
+            "查看",
+            "1",
+            "页码",
+            "快速报价估算 面积(㎡) 风格 现代简约 档次 品质标准 计算报价 预估总价 ¥120,000 约 ¥1200/㎡ 硬装 66,000 软装 30,000 家电 18,000 设计费 6,000 生成正式报价单",
+            "Close",
+            "100",
+            "计算报价",
+            "生成正式报价单"
+          ]
+        }
+      }
+    ],
+    "findings": [],
+    "actionHints": [],
+    "emptyPages": [],
+    "overflowPages": [],
+    "blankPages": [],
+    "apiFailurePaths": [],
+    "goalTerms": [],
+    "clickedActionDescriptors": [
+      {
+        "nav": "首页",
+        "label": "查看更多",
+        "ordinal": 0,
+        "unsafe": false
+      },
+      {
+        "nav": "首页",
+        "label": "查看更多->AI风格迁移",
+        "ordinal": 0,
+        "secondary": true,
+        "unsafe": false
+      },
+      {
+        "nav": "首页",
+        "label": "全部项目",
+        "ordinal": 0,
+        "unsafe": false
+      },
+      {
+        "nav": "首页",
+        "label": "全部项目->新建项目",
+        "ordinal": 0,
+        "secondary": true,
+        "unsafe": false
+      },
+      {
+        "nav": "案例图库",
+        "label": "AI风格迁移",
+        "ordinal": 0,
+        "unsafe": false
+      },
+      {
+        "nav": "报价管理",
+        "label": "查看",
+        "ordinal": 0,
+        "unsafe": false
+      },
+      {
+        "nav": "报价管理",
+        "label": "查看->返回列表",
+        "ordinal": 0,
+        "secondary": true,
+        "unsafe": false
+      },
+      {
+        "nav": "报价管理",
+        "label": "快速报价",
+        "ordinal": 0,
+        "unsafe": false
+      },
+      {
+        "nav": "报价管理",
+        "label": "快速报价->计算报价",
+        "ordinal": 0,
+        "secondary": true,
+        "unsafe": false
+      }
+    ],
+    "secondaryActionClicks": 4,
+    "structureCaptures": [
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89083-codex-final-structure-01-首屏",
+        "label": "首屏",
+        "finalUrl": "http://127.0.0.1:49083/",
+        "title": "装修产业互联网设计协同平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89083/runtime-check/codex-final-20260607/may-89083-codex-final-structure-01-首屏.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89083/runtime-check/codex-final-20260607/may-89083-codex-final-structure-01-首屏.png",
+        "elementCount": 389,
+        "interactiveCount": 17,
+        "interactiveLabels": [
+          "首页 案例图库 AI风格迁移 报价管理 项目管理 ERP协同 装修管家 后台管理 装修公司审核 工艺工法知识库 建材价格监测 投诉溯源分析 操作审计日志",
+          "首页",
+          "案例图库",
+          "AI风格迁移",
+          "报价管理",
+          "项目管理",
+          "ERP协同",
+          "装修管家",
+          "后台管理",
+          "装修公司审核",
+          "工艺工法知识库",
+          "建材价格监测",
+          "投诉溯源分析",
+          "操作审计日志",
+          "查看更多",
+          "全部项目"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89083-codex-final-structure-02-导航-首页",
+        "label": "导航:首页",
+        "finalUrl": "http://127.0.0.1:49083/",
+        "title": "装修产业互联网设计协同平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89083/runtime-check/codex-final-20260607/may-89083-codex-final-structure-02-导航-首页.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89083/runtime-check/codex-final-20260607/may-89083-codex-final-structure-02-导航-首页.png",
+        "elementCount": 389,
+        "interactiveCount": 17,
+        "interactiveLabels": [
+          "首页 案例图库 AI风格迁移 报价管理 项目管理 ERP协同 装修管家 后台管理 装修公司审核 工艺工法知识库 建材价格监测 投诉溯源分析 操作审计日志",
+          "首页",
+          "案例图库",
+          "AI风格迁移",
+          "报价管理",
+          "项目管理",
+          "ERP协同",
+          "装修管家",
+          "后台管理",
+          "装修公司审核",
+          "工艺工法知识库",
+          "建材价格监测",
+          "投诉溯源分析",
+          "操作审计日志",
+          "查看更多",
+          "全部项目"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89083-codex-final-structure-03-操作-查看更多",
+        "label": "操作:查看更多",
+        "finalUrl": "http://127.0.0.1:49083/cases",
+        "title": "装修产业互联网设计协同平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89083/runtime-check/codex-final-20260607/may-89083-codex-final-structure-03-操作-查看更多.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89083/runtime-check/codex-final-20260607/may-89083-codex-final-structure-03-操作-查看更多.png",
+        "elementCount": 523,
+        "interactiveCount": 44,
+        "interactiveLabels": [
+          "首页 案例图库 AI风格迁移 报价管理 项目管理 ERP协同 装修管家 后台管理 装修公司审核 工艺工法知识库 建材价格监测 投诉溯源分析 操作审计日志",
+          "首页",
+          "案例图库",
+          "AI风格迁移",
+          "报价管理",
+          "项目管理",
+          "ERP协同",
+          "装修管家",
+          "后台管理",
+          "装修公司审核",
+          "工艺工法知识库",
+          "建材价格监测",
+          "投诉溯源分析",
+          "操作审计日志",
+          "搜索案例标题、描述...",
+          "89",
+          "156",
+          "234",
+          "145",
+          "78",
+          "120",
+          "96",
+          "277",
+          "220",
+          "1",
+          "2",
+          "3",
+          "4",
+          "下一页",
+          "页码"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89083-codex-final-structure-04-二层操作-查看更多-AI风格迁移",
+        "label": "二层操作:查看更多->AI风格迁移",
+        "finalUrl": "http://127.0.0.1:49083/style-migration",
+        "title": "装修产业互联网设计协同平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89083/runtime-check/codex-final-20260607/may-89083-codex-final-structure-04-二层操作-查看更多-AI风格迁移.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89083/runtime-check/codex-final-20260607/may-89083-codex-final-structure-04-二层操作-查看更多-AI风格迁移.png",
+        "elementCount": 231,
+        "interactiveCount": 19,
+        "interactiveLabels": [
+          "首页 案例图库 AI风格迁移 报价管理 项目管理 ERP协同 装修管家 后台管理 装修公司审核 工艺工法知识库 建材价格监测 投诉溯源分析 操作审计日志",
+          "首页",
+          "案例图库",
+          "AI风格迁移",
+          "报价管理",
+          "项目管理",
+          "ERP协同",
+          "装修管家",
+          "后台管理",
+          "装修公司审核",
+          "工艺工法知识库",
+          "建材价格监测",
+          "投诉溯源分析",
+          "操作审计日志",
+          "开始AI风格迁移"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89083-codex-final-structure-05-操作-全部项目",
+        "label": "操作:全部项目",
+        "finalUrl": "http://127.0.0.1:49083/projects",
+        "title": "装修产业互联网设计协同平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89083/runtime-check/codex-final-20260607/may-89083-codex-final-structure-05-操作-全部项目.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89083/runtime-check/codex-final-20260607/may-89083-codex-final-structure-05-操作-全部项目.png",
+        "elementCount": 283,
+        "interactiveCount": 26,
+        "interactiveLabels": [
+          "首页 案例图库 AI风格迁移 报价管理 项目管理 ERP协同 装修管家 后台管理 装修公司审核 工艺工法知识库 建材价格监测 投诉溯源分析 操作审计日志",
+          "首页",
+          "案例图库",
+          "AI风格迁移",
+          "报价管理",
+          "项目管理",
+          "ERP协同",
+          "装修管家",
+          "后台管理",
+          "装修公司审核",
+          "工艺工法知识库",
+          "建材价格监测",
+          "投诉溯源分析",
+          "操作审计日志",
+          "新建项目",
+          "搜索项目名称、地址",
+          "详情",
+          "1",
+          "页码"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89083-codex-final-structure-06-二层操作-全部项目-新建项目",
+        "label": "二层操作:全部项目->新建项目",
+        "finalUrl": "http://127.0.0.1:49083/projects",
+        "title": "装修产业互联网设计协同平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89083/runtime-check/codex-final-20260607/may-89083-codex-final-structure-06-二层操作-全部项目-新建项目.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89083/runtime-check/codex-final-20260607/may-89083-codex-final-structure-06-二层操作-全部项目-新建项目.png",
+        "elementCount": 285,
+        "interactiveCount": 26,
+        "interactiveLabels": [
+          "首页 案例图库 AI风格迁移 报价管理 项目管理 ERP协同 装修管家 后台管理 装修公司审核 工艺工法知识库 建材价格监测 投诉溯源分析 操作审计日志",
+          "首页",
+          "案例图库",
+          "AI风格迁移",
+          "报价管理",
+          "项目管理",
+          "ERP协同",
+          "装修管家",
+          "后台管理",
+          "装修公司审核",
+          "工艺工法知识库",
+          "建材价格监测",
+          "投诉溯源分析",
+          "操作审计日志",
+          "新建项目",
+          "搜索项目名称、地址",
+          "详情",
+          "1",
+          "页码"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89083-codex-final-structure-07-导航-案例图库",
+        "label": "导航:案例图库",
+        "finalUrl": "http://127.0.0.1:49083/cases",
+        "title": "装修产业互联网设计协同平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89083/runtime-check/codex-final-20260607/may-89083-codex-final-structure-07-导航-案例图库.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89083/runtime-check/codex-final-20260607/may-89083-codex-final-structure-07-导航-案例图库.png",
+        "elementCount": 523,
+        "interactiveCount": 44,
+        "interactiveLabels": [
+          "首页 案例图库 AI风格迁移 报价管理 项目管理 ERP协同 装修管家 后台管理 装修公司审核 工艺工法知识库 建材价格监测 投诉溯源分析 操作审计日志",
+          "首页",
+          "案例图库",
+          "AI风格迁移",
+          "报价管理",
+          "项目管理",
+          "ERP协同",
+          "装修管家",
+          "后台管理",
+          "装修公司审核",
+          "工艺工法知识库",
+          "建材价格监测",
+          "投诉溯源分析",
+          "操作审计日志",
+          "搜索案例标题、描述...",
+          "89",
+          "156",
+          "234",
+          "145",
+          "78",
+          "120",
+          "96",
+          "277",
+          "220",
+          "1",
+          "2",
+          "3",
+          "4",
+          "下一页",
+          "页码"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89083-codex-final-structure-08-操作-AI风格迁移",
+        "label": "操作:AI风格迁移",
+        "finalUrl": "http://127.0.0.1:49083/style-migration",
+        "title": "装修产业互联网设计协同平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89083/runtime-check/codex-final-20260607/may-89083-codex-final-structure-08-操作-AI风格迁移.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89083/runtime-check/codex-final-20260607/may-89083-codex-final-structure-08-操作-AI风格迁移.png",
+        "elementCount": 231,
+        "interactiveCount": 19,
+        "interactiveLabels": [
+          "首页 案例图库 AI风格迁移 报价管理 项目管理 ERP协同 装修管家 后台管理 装修公司审核 工艺工法知识库 建材价格监测 投诉溯源分析 操作审计日志",
+          "首页",
+          "案例图库",
+          "AI风格迁移",
+          "报价管理",
+          "项目管理",
+          "ERP协同",
+          "装修管家",
+          "后台管理",
+          "装修公司审核",
+          "工艺工法知识库",
+          "建材价格监测",
+          "投诉溯源分析",
+          "操作审计日志",
+          "开始AI风格迁移"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89083-codex-final-structure-09-导航-AI风格迁移",
+        "label": "导航:AI风格迁移",
+        "finalUrl": "http://127.0.0.1:49083/style-migration",
+        "title": "装修产业互联网设计协同平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89083/runtime-check/codex-final-20260607/may-89083-codex-final-structure-09-导航-AI风格迁移.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89083/runtime-check/codex-final-20260607/may-89083-codex-final-structure-09-导航-AI风格迁移.png",
+        "elementCount": 231,
+        "interactiveCount": 19,
+        "interactiveLabels": [
+          "首页 案例图库 AI风格迁移 报价管理 项目管理 ERP协同 装修管家 后台管理 装修公司审核 工艺工法知识库 建材价格监测 投诉溯源分析 操作审计日志",
+          "首页",
+          "案例图库",
+          "AI风格迁移",
+          "报价管理",
+          "项目管理",
+          "ERP协同",
+          "装修管家",
+          "后台管理",
+          "装修公司审核",
+          "工艺工法知识库",
+          "建材价格监测",
+          "投诉溯源分析",
+          "操作审计日志",
+          "开始AI风格迁移"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89083-codex-final-structure-10-导航-报价管理",
+        "label": "导航:报价管理",
+        "finalUrl": "http://127.0.0.1:49083/quotations",
+        "title": "装修产业互联网设计协同平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89083/runtime-check/codex-final-20260607/may-89083-codex-final-structure-10-导航-报价管理.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89083/runtime-check/codex-final-20260607/may-89083-codex-final-structure-10-导航-报价管理.png",
+        "elementCount": 214,
+        "interactiveCount": 25,
+        "interactiveLabels": [
+          "首页 案例图库 AI风格迁移 报价管理 项目管理 ERP协同 装修管家 后台管理 装修公司审核 工艺工法知识库 建材价格监测 投诉溯源分析 操作审计日志",
+          "首页",
+          "案例图库",
+          "AI风格迁移",
+          "报价管理",
+          "项目管理",
+          "ERP协同",
+          "装修管家",
+          "后台管理",
+          "装修公司审核",
+          "工艺工法知识库",
+          "建材价格监测",
+          "投诉溯源分析",
+          "操作审计日志",
+          "快速报价",
+          "搜索报价标题",
+          "查看",
+          "1",
+          "页码"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89083-codex-final-structure-11-操作-查看",
+        "label": "操作:查看",
+        "finalUrl": "http://127.0.0.1:49083/quotations/1",
+        "title": "装修产业互联网设计协同平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89083/runtime-check/codex-final-20260607/may-89083-codex-final-structure-11-操作-查看.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89083/runtime-check/codex-final-20260607/may-89083-codex-final-structure-11-操作-查看.png",
+        "elementCount": 865,
+        "interactiveCount": 16,
+        "interactiveLabels": [
+          "首页 案例图库 AI风格迁移 报价管理 项目管理 ERP协同 装修管家 后台管理 装修公司审核 工艺工法知识库 建材价格监测 投诉溯源分析 操作审计日志",
+          "首页",
+          "案例图库",
+          "AI风格迁移",
+          "报价管理",
+          "项目管理",
+          "ERP协同",
+          "装修管家",
+          "后台管理",
+          "装修公司审核",
+          "工艺工法知识库",
+          "建材价格监测",
+          "投诉溯源分析",
+          "操作审计日志",
+          "返回列表"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89083-codex-final-structure-12-二层操作-查看-返回列表",
+        "label": "二层操作:查看->返回列表",
+        "finalUrl": "http://127.0.0.1:49083/quotations",
+        "title": "装修产业互联网设计协同平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89083/runtime-check/codex-final-20260607/may-89083-codex-final-structure-12-二层操作-查看-返回列表.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89083/runtime-check/codex-final-20260607/may-89083-codex-final-structure-12-二层操作-查看-返回列表.png",
+        "elementCount": 214,
+        "interactiveCount": 25,
+        "interactiveLabels": [
+          "首页 案例图库 AI风格迁移 报价管理 项目管理 ERP协同 装修管家 后台管理 装修公司审核 工艺工法知识库 建材价格监测 投诉溯源分析 操作审计日志",
+          "首页",
+          "案例图库",
+          "AI风格迁移",
+          "报价管理",
+          "项目管理",
+          "ERP协同",
+          "装修管家",
+          "后台管理",
+          "装修公司审核",
+          "工艺工法知识库",
+          "建材价格监测",
+          "投诉溯源分析",
+          "操作审计日志",
+          "快速报价",
+          "搜索报价标题",
+          "查看",
+          "1",
+          "页码"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89083-codex-final-structure-13-操作-快速报价",
+        "label": "操作:快速报价",
+        "finalUrl": "http://127.0.0.1:49083/quotations",
+        "title": "装修产业互联网设计协同平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89083/runtime-check/codex-final-20260607/may-89083-codex-final-structure-13-操作-快速报价.json",
+        "screenshotPath": "",
+        "elementCount": 263,
+        "interactiveCount": 32,
+        "interactiveLabels": [
+          "首页 案例图库 AI风格迁移 报价管理 项目管理 ERP协同 装修管家 后台管理 装修公司审核 工艺工法知识库 建材价格监测 投诉溯源分析 操作审计日志",
+          "首页",
+          "案例图库",
+          "AI风格迁移",
+          "报价管理",
+          "项目管理",
+          "ERP协同",
+          "装修管家",
+          "后台管理",
+          "装修公司审核",
+          "工艺工法知识库",
+          "建材价格监测",
+          "投诉溯源分析",
+          "操作审计日志",
+          "快速报价",
+          "搜索报价标题",
+          "查看",
+          "1",
+          "页码",
+          "快速报价估算 面积(㎡) 风格 现代简约 档次 品质标准 计算报价",
+          "Close",
+          "100",
+          "计算报价"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89083-codex-final-structure-14-二层操作-快速报价-计算报价",
+        "label": "二层操作:快速报价->计算报价",
+        "finalUrl": "http://127.0.0.1:49083/quotations",
+        "title": "装修产业互联网设计协同平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89083/runtime-check/codex-final-20260607/may-89083-codex-final-structure-14-二层操作-快速报价-计算报价.json",
+        "screenshotPath": "",
+        "elementCount": 295,
+        "interactiveCount": 33,
+        "interactiveLabels": [
+          "首页 案例图库 AI风格迁移 报价管理 项目管理 ERP协同 装修管家 后台管理 装修公司审核 工艺工法知识库 建材价格监测 投诉溯源分析 操作审计日志",
+          "首页",
+          "案例图库",
+          "AI风格迁移",
+          "报价管理",
+          "项目管理",
+          "ERP协同",
+          "装修管家",
+          "后台管理",
+          "装修公司审核",
+          "工艺工法知识库",
+          "建材价格监测",
+          "投诉溯源分析",
+          "操作审计日志",
+          "快速报价",
+          "搜索报价标题",
+          "查看",
+          "1",
+          "页码",
+          "快速报价估算 面积(㎡) 风格 现代简约 档次 品质标准 计算报价 预估总价 ¥120,000 约 ¥1200/㎡ 硬装 66,000 软装 30,000 家电 18,000 设计费 6,000 生成正式报价单",
+          "Close",
+          "100",
+          "计算报价",
+          "生成正式报价单"
+        ]
+      }
+    ],
+    "representativeScreenshotUrl": "http://127.0.0.1:49083/",
+    "representativeScreenshotLabel": "首屏"
+  },
+  "websiteStructureCapture": {
+    "module": "website_structure_capture",
+    "captureCount": 14,
+    "captures": [
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89083-codex-final-structure-01-首屏",
+        "label": "首屏",
+        "finalUrl": "http://127.0.0.1:49083/",
+        "title": "装修产业互联网设计协同平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89083/runtime-check/codex-final-20260607/may-89083-codex-final-structure-01-首屏.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89083/runtime-check/codex-final-20260607/may-89083-codex-final-structure-01-首屏.png",
+        "elementCount": 389,
+        "interactiveCount": 17,
+        "interactiveLabels": [
+          "首页 案例图库 AI风格迁移 报价管理 项目管理 ERP协同 装修管家 后台管理 装修公司审核 工艺工法知识库 建材价格监测 投诉溯源分析 操作审计日志",
+          "首页",
+          "案例图库",
+          "AI风格迁移",
+          "报价管理",
+          "项目管理",
+          "ERP协同",
+          "装修管家",
+          "后台管理",
+          "装修公司审核",
+          "工艺工法知识库",
+          "建材价格监测",
+          "投诉溯源分析",
+          "操作审计日志",
+          "查看更多",
+          "全部项目"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89083-codex-final-structure-02-导航-首页",
+        "label": "导航:首页",
+        "finalUrl": "http://127.0.0.1:49083/",
+        "title": "装修产业互联网设计协同平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89083/runtime-check/codex-final-20260607/may-89083-codex-final-structure-02-导航-首页.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89083/runtime-check/codex-final-20260607/may-89083-codex-final-structure-02-导航-首页.png",
+        "elementCount": 389,
+        "interactiveCount": 17,
+        "interactiveLabels": [
+          "首页 案例图库 AI风格迁移 报价管理 项目管理 ERP协同 装修管家 后台管理 装修公司审核 工艺工法知识库 建材价格监测 投诉溯源分析 操作审计日志",
+          "首页",
+          "案例图库",
+          "AI风格迁移",
+          "报价管理",
+          "项目管理",
+          "ERP协同",
+          "装修管家",
+          "后台管理",
+          "装修公司审核",
+          "工艺工法知识库",
+          "建材价格监测",
+          "投诉溯源分析",
+          "操作审计日志",
+          "查看更多",
+          "全部项目"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89083-codex-final-structure-03-操作-查看更多",
+        "label": "操作:查看更多",
+        "finalUrl": "http://127.0.0.1:49083/cases",
+        "title": "装修产业互联网设计协同平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89083/runtime-check/codex-final-20260607/may-89083-codex-final-structure-03-操作-查看更多.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89083/runtime-check/codex-final-20260607/may-89083-codex-final-structure-03-操作-查看更多.png",
+        "elementCount": 523,
+        "interactiveCount": 44,
+        "interactiveLabels": [
+          "首页 案例图库 AI风格迁移 报价管理 项目管理 ERP协同 装修管家 后台管理 装修公司审核 工艺工法知识库 建材价格监测 投诉溯源分析 操作审计日志",
+          "首页",
+          "案例图库",
+          "AI风格迁移",
+          "报价管理",
+          "项目管理",
+          "ERP协同",
+          "装修管家",
+          "后台管理",
+          "装修公司审核",
+          "工艺工法知识库",
+          "建材价格监测",
+          "投诉溯源分析",
+          "操作审计日志",
+          "搜索案例标题、描述...",
+          "89",
+          "156",
+          "234",
+          "145",
+          "78",
+          "120",
+          "96",
+          "277",
+          "220",
+          "1",
+          "2",
+          "3",
+          "4",
+          "下一页",
+          "页码"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89083-codex-final-structure-04-二层操作-查看更多-AI风格迁移",
+        "label": "二层操作:查看更多->AI风格迁移",
+        "finalUrl": "http://127.0.0.1:49083/style-migration",
+        "title": "装修产业互联网设计协同平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89083/runtime-check/codex-final-20260607/may-89083-codex-final-structure-04-二层操作-查看更多-AI风格迁移.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89083/runtime-check/codex-final-20260607/may-89083-codex-final-structure-04-二层操作-查看更多-AI风格迁移.png",
+        "elementCount": 231,
+        "interactiveCount": 19,
+        "interactiveLabels": [
+          "首页 案例图库 AI风格迁移 报价管理 项目管理 ERP协同 装修管家 后台管理 装修公司审核 工艺工法知识库 建材价格监测 投诉溯源分析 操作审计日志",
+          "首页",
+          "案例图库",
+          "AI风格迁移",
+          "报价管理",
+          "项目管理",
+          "ERP协同",
+          "装修管家",
+          "后台管理",
+          "装修公司审核",
+          "工艺工法知识库",
+          "建材价格监测",
+          "投诉溯源分析",
+          "操作审计日志",
+          "开始AI风格迁移"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89083-codex-final-structure-05-操作-全部项目",
+        "label": "操作:全部项目",
+        "finalUrl": "http://127.0.0.1:49083/projects",
+        "title": "装修产业互联网设计协同平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89083/runtime-check/codex-final-20260607/may-89083-codex-final-structure-05-操作-全部项目.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89083/runtime-check/codex-final-20260607/may-89083-codex-final-structure-05-操作-全部项目.png",
+        "elementCount": 283,
+        "interactiveCount": 26,
+        "interactiveLabels": [
+          "首页 案例图库 AI风格迁移 报价管理 项目管理 ERP协同 装修管家 后台管理 装修公司审核 工艺工法知识库 建材价格监测 投诉溯源分析 操作审计日志",
+          "首页",
+          "案例图库",
+          "AI风格迁移",
+          "报价管理",
+          "项目管理",
+          "ERP协同",
+          "装修管家",
+          "后台管理",
+          "装修公司审核",
+          "工艺工法知识库",
+          "建材价格监测",
+          "投诉溯源分析",
+          "操作审计日志",
+          "新建项目",
+          "搜索项目名称、地址",
+          "详情",
+          "1",
+          "页码"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89083-codex-final-structure-06-二层操作-全部项目-新建项目",
+        "label": "二层操作:全部项目->新建项目",
+        "finalUrl": "http://127.0.0.1:49083/projects",
+        "title": "装修产业互联网设计协同平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89083/runtime-check/codex-final-20260607/may-89083-codex-final-structure-06-二层操作-全部项目-新建项目.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89083/runtime-check/codex-final-20260607/may-89083-codex-final-structure-06-二层操作-全部项目-新建项目.png",
+        "elementCount": 285,
+        "interactiveCount": 26,
+        "interactiveLabels": [
+          "首页 案例图库 AI风格迁移 报价管理 项目管理 ERP协同 装修管家 后台管理 装修公司审核 工艺工法知识库 建材价格监测 投诉溯源分析 操作审计日志",
+          "首页",
+          "案例图库",
+          "AI风格迁移",
+          "报价管理",
+          "项目管理",
+          "ERP协同",
+          "装修管家",
+          "后台管理",
+          "装修公司审核",
+          "工艺工法知识库",
+          "建材价格监测",
+          "投诉溯源分析",
+          "操作审计日志",
+          "新建项目",
+          "搜索项目名称、地址",
+          "详情",
+          "1",
+          "页码"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89083-codex-final-structure-07-导航-案例图库",
+        "label": "导航:案例图库",
+        "finalUrl": "http://127.0.0.1:49083/cases",
+        "title": "装修产业互联网设计协同平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89083/runtime-check/codex-final-20260607/may-89083-codex-final-structure-07-导航-案例图库.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89083/runtime-check/codex-final-20260607/may-89083-codex-final-structure-07-导航-案例图库.png",
+        "elementCount": 523,
+        "interactiveCount": 44,
+        "interactiveLabels": [
+          "首页 案例图库 AI风格迁移 报价管理 项目管理 ERP协同 装修管家 后台管理 装修公司审核 工艺工法知识库 建材价格监测 投诉溯源分析 操作审计日志",
+          "首页",
+          "案例图库",
+          "AI风格迁移",
+          "报价管理",
+          "项目管理",
+          "ERP协同",
+          "装修管家",
+          "后台管理",
+          "装修公司审核",
+          "工艺工法知识库",
+          "建材价格监测",
+          "投诉溯源分析",
+          "操作审计日志",
+          "搜索案例标题、描述...",
+          "89",
+          "156",
+          "234",
+          "145",
+          "78",
+          "120",
+          "96",
+          "277",
+          "220",
+          "1",
+          "2",
+          "3",
+          "4",
+          "下一页",
+          "页码"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89083-codex-final-structure-08-操作-AI风格迁移",
+        "label": "操作:AI风格迁移",
+        "finalUrl": "http://127.0.0.1:49083/style-migration",
+        "title": "装修产业互联网设计协同平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89083/runtime-check/codex-final-20260607/may-89083-codex-final-structure-08-操作-AI风格迁移.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89083/runtime-check/codex-final-20260607/may-89083-codex-final-structure-08-操作-AI风格迁移.png",
+        "elementCount": 231,
+        "interactiveCount": 19,
+        "interactiveLabels": [
+          "首页 案例图库 AI风格迁移 报价管理 项目管理 ERP协同 装修管家 后台管理 装修公司审核 工艺工法知识库 建材价格监测 投诉溯源分析 操作审计日志",
+          "首页",
+          "案例图库",
+          "AI风格迁移",
+          "报价管理",
+          "项目管理",
+          "ERP协同",
+          "装修管家",
+          "后台管理",
+          "装修公司审核",
+          "工艺工法知识库",
+          "建材价格监测",
+          "投诉溯源分析",
+          "操作审计日志",
+          "开始AI风格迁移"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89083-codex-final-structure-09-导航-AI风格迁移",
+        "label": "导航:AI风格迁移",
+        "finalUrl": "http://127.0.0.1:49083/style-migration",
+        "title": "装修产业互联网设计协同平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89083/runtime-check/codex-final-20260607/may-89083-codex-final-structure-09-导航-AI风格迁移.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89083/runtime-check/codex-final-20260607/may-89083-codex-final-structure-09-导航-AI风格迁移.png",
+        "elementCount": 231,
+        "interactiveCount": 19,
+        "interactiveLabels": [
+          "首页 案例图库 AI风格迁移 报价管理 项目管理 ERP协同 装修管家 后台管理 装修公司审核 工艺工法知识库 建材价格监测 投诉溯源分析 操作审计日志",
+          "首页",
+          "案例图库",
+          "AI风格迁移",
+          "报价管理",
+          "项目管理",
+          "ERP协同",
+          "装修管家",
+          "后台管理",
+          "装修公司审核",
+          "工艺工法知识库",
+          "建材价格监测",
+          "投诉溯源分析",
+          "操作审计日志",
+          "开始AI风格迁移"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89083-codex-final-structure-10-导航-报价管理",
+        "label": "导航:报价管理",
+        "finalUrl": "http://127.0.0.1:49083/quotations",
+        "title": "装修产业互联网设计协同平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89083/runtime-check/codex-final-20260607/may-89083-codex-final-structure-10-导航-报价管理.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89083/runtime-check/codex-final-20260607/may-89083-codex-final-structure-10-导航-报价管理.png",
+        "elementCount": 214,
+        "interactiveCount": 25,
+        "interactiveLabels": [
+          "首页 案例图库 AI风格迁移 报价管理 项目管理 ERP协同 装修管家 后台管理 装修公司审核 工艺工法知识库 建材价格监测 投诉溯源分析 操作审计日志",
+          "首页",
+          "案例图库",
+          "AI风格迁移",
+          "报价管理",
+          "项目管理",
+          "ERP协同",
+          "装修管家",
+          "后台管理",
+          "装修公司审核",
+          "工艺工法知识库",
+          "建材价格监测",
+          "投诉溯源分析",
+          "操作审计日志",
+          "快速报价",
+          "搜索报价标题",
+          "查看",
+          "1",
+          "页码"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89083-codex-final-structure-11-操作-查看",
+        "label": "操作:查看",
+        "finalUrl": "http://127.0.0.1:49083/quotations/1",
+        "title": "装修产业互联网设计协同平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89083/runtime-check/codex-final-20260607/may-89083-codex-final-structure-11-操作-查看.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89083/runtime-check/codex-final-20260607/may-89083-codex-final-structure-11-操作-查看.png",
+        "elementCount": 865,
+        "interactiveCount": 16,
+        "interactiveLabels": [
+          "首页 案例图库 AI风格迁移 报价管理 项目管理 ERP协同 装修管家 后台管理 装修公司审核 工艺工法知识库 建材价格监测 投诉溯源分析 操作审计日志",
+          "首页",
+          "案例图库",
+          "AI风格迁移",
+          "报价管理",
+          "项目管理",
+          "ERP协同",
+          "装修管家",
+          "后台管理",
+          "装修公司审核",
+          "工艺工法知识库",
+          "建材价格监测",
+          "投诉溯源分析",
+          "操作审计日志",
+          "返回列表"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89083-codex-final-structure-12-二层操作-查看-返回列表",
+        "label": "二层操作:查看->返回列表",
+        "finalUrl": "http://127.0.0.1:49083/quotations",
+        "title": "装修产业互联网设计协同平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89083/runtime-check/codex-final-20260607/may-89083-codex-final-structure-12-二层操作-查看-返回列表.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89083/runtime-check/codex-final-20260607/may-89083-codex-final-structure-12-二层操作-查看-返回列表.png",
+        "elementCount": 214,
+        "interactiveCount": 25,
+        "interactiveLabels": [
+          "首页 案例图库 AI风格迁移 报价管理 项目管理 ERP协同 装修管家 后台管理 装修公司审核 工艺工法知识库 建材价格监测 投诉溯源分析 操作审计日志",
+          "首页",
+          "案例图库",
+          "AI风格迁移",
+          "报价管理",
+          "项目管理",
+          "ERP协同",
+          "装修管家",
+          "后台管理",
+          "装修公司审核",
+          "工艺工法知识库",
+          "建材价格监测",
+          "投诉溯源分析",
+          "操作审计日志",
+          "快速报价",
+          "搜索报价标题",
+          "查看",
+          "1",
+          "页码"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89083-codex-final-structure-13-操作-快速报价",
+        "label": "操作:快速报价",
+        "finalUrl": "http://127.0.0.1:49083/quotations",
+        "title": "装修产业互联网设计协同平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89083/runtime-check/codex-final-20260607/may-89083-codex-final-structure-13-操作-快速报价.json",
+        "screenshotPath": "",
+        "elementCount": 263,
+        "interactiveCount": 32,
+        "interactiveLabels": [
+          "首页 案例图库 AI风格迁移 报价管理 项目管理 ERP协同 装修管家 后台管理 装修公司审核 工艺工法知识库 建材价格监测 投诉溯源分析 操作审计日志",
+          "首页",
+          "案例图库",
+          "AI风格迁移",
+          "报价管理",
+          "项目管理",
+          "ERP协同",
+          "装修管家",
+          "后台管理",
+          "装修公司审核",
+          "工艺工法知识库",
+          "建材价格监测",
+          "投诉溯源分析",
+          "操作审计日志",
+          "快速报价",
+          "搜索报价标题",
+          "查看",
+          "1",
+          "页码",
+          "快速报价估算 面积(㎡) 风格 现代简约 档次 品质标准 计算报价",
+          "Close",
+          "100",
+          "计算报价"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89083-codex-final-structure-14-二层操作-快速报价-计算报价",
+        "label": "二层操作:快速报价->计算报价",
+        "finalUrl": "http://127.0.0.1:49083/quotations",
+        "title": "装修产业互联网设计协同平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89083/runtime-check/codex-final-20260607/may-89083-codex-final-structure-14-二层操作-快速报价-计算报价.json",
+        "screenshotPath": "",
+        "elementCount": 295,
+        "interactiveCount": 33,
+        "interactiveLabels": [
+          "首页 案例图库 AI风格迁移 报价管理 项目管理 ERP协同 装修管家 后台管理 装修公司审核 工艺工法知识库 建材价格监测 投诉溯源分析 操作审计日志",
+          "首页",
+          "案例图库",
+          "AI风格迁移",
+          "报价管理",
+          "项目管理",
+          "ERP协同",
+          "装修管家",
+          "后台管理",
+          "装修公司审核",
+          "工艺工法知识库",
+          "建材价格监测",
+          "投诉溯源分析",
+          "操作审计日志",
+          "快速报价",
+          "搜索报价标题",
+          "查看",
+          "1",
+          "页码",
+          "快速报价估算 面积(㎡) 风格 现代简约 档次 品质标准 计算报价 预估总价 ¥120,000 约 ¥1200/㎡ 硬装 66,000 软装 30,000 家电 18,000 设计费 6,000 生成正式报价单",
+          "Close",
+          "100",
+          "计算报价",
+          "生成正式报价单"
+        ]
+      }
+    ]
+  },
+  "screenshotMetrics": {
+    "width": 1952,
+    "height": 1600,
+    "scrollWidth": 1920,
+    "scrollHeight": 1600
+  },
+  "initialBodyTextPreview": "装修产业互联网设计协同平台\n\n案例驱动 · AI赋能 · 全链路协同\n\n登录\n注册\n登 录\n\n演示账号：\n\nadmin / 123456 (系统管理员)owner1 / 123456 (业主)designer1 / 123456 (设计师)manager1 / 123456 (装修管家)company1 / 123456 (装修公司)",
+  "bodyTextPreview": "装修产业协同平台\n首页\n案例图库\nAI风格迁移\n报价管理\n项目管理\nERP协同\n装修管家\n后台管理\n装修公司审核\n工艺工法知识库\n建材价格监测\n投诉溯源分析\n操作审计日志\n欢迎使用装修产业互联网设计协同平台\n3\n系统管理员\n欢迎回来，系统管理员！系统管理员\n今天是 2026年06月07日 Sunday\n案例图库\n30\n在建项目\n2\n报价单\n1\n设计师排期\n12\n热门案例推荐\n查看更多\n工业风格 · 别墅\n工业风格别墅案例15\n别墅工业风格30-50万\n 4891\n 95\n¥9.9万\n地中海 · 四室两厅\n地中海四室两厅案例19\n四室两厅地中海10-15万\n 4366\n 258\n¥30.9万\n现代简约 · 四室两厅\n现代简约四室两厅案例28\n四室两厅现代简约20-30万\n 4146\n 64\n¥26.2万\n轻奢美式 · 三室一厅\n轻奢美式三室一厅案例23\n三室一厅轻奢美式50万以上\n 4033\n 215\n¥21.6万\n日式极简 · 两室一厅\n日式极简两室一厅案例14\n两室一厅日式极简10-15万\n 4008\n 159\n¥48.5万\n新中式 · 别墅\n新中式别墅案例16\n别墅新中式15-20万\n 3670\n 115\n¥30.3万\n我的项目\n全部项目\n万科城市花园张先生家装修工程\n进行中\n115.5㎡ · 现代简约进度 35%\n龙湖滟澜山李女士家大宅装修\n进行中\n180㎡ · 新中式进度 52%",
+  "apiBase": "http://127.0.0.1:59083",
+  "businessGoalPreview": "装修产业互联网设计协同平台，验证后台管理、案例、报价、项目和登录链路",
+  "apiResponses": [
+    {
+      "method": "POST",
+      "status": 200,
+      "url": "http://127.0.0.1:49083/api/auth/login"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49083/api/cases?pageSize=6&sort=popular"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49083/api/projects?pageSize=5"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49083/api/quotations?pageSize=10"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49083/api/cases?pageSize=6&sort=popular"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49083/api/projects?pageSize=5"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49083/api/quotations?pageSize=10"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49083/api/cases/filters/options"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49083/api/cases?keyword=&layout_type=&style=&budget_range=&sort=newest&page=1&pageSize=9"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49083/api/cases/filters/options"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49083/api/cases?keyword=&layout_type=&style=&budget_range=&sort=newest&page=1&pageSize=9"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49083/api/cases?pageSize=6&sort=popular"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49083/api/projects?pageSize=5"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49083/api/quotations?pageSize=10"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49083/api/cases?pageSize=6&sort=popular"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49083/api/projects?pageSize=5"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49083/api/quotations?pageSize=10"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49083/api/projects?page=1&pageSize=10&status=&keyword="
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49083/api/projects?page=1&pageSize=10&status=&keyword="
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49083/api/cases?pageSize=6&sort=popular"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49083/api/projects?pageSize=5"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49083/api/quotations?pageSize=10"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49083/api/cases?pageSize=6&sort=popular"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49083/api/projects?pageSize=5"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49083/api/quotations?pageSize=10"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49083/api/cases/filters/options"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49083/api/cases?keyword=&layout_type=&style=&budget_range=&sort=newest&page=1&pageSize=9"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49083/api/cases/filters/options"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49083/api/cases?keyword=&layout_type=&style=&budget_range=&sort=newest&page=1&pageSize=9"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49083/api/cases/filters/options"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49083/api/cases?keyword=&layout_type=&style=&budget_range=&sort=newest&page=1&pageSize=9"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49083/api/cases/filters/options"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49083/api/cases?keyword=&layout_type=&style=&budget_range=&sort=newest&page=1&pageSize=9"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49083/api/quotations?page=1&pageSize=10&status=&keyword="
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49083/api/quotations?page=1&pageSize=10&status=&keyword="
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49083/api/quotations/1"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49083/api/quotations/1"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49083/api/quotations?page=1&pageSize=10&status=&keyword="
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49083/api/quotations?page=1&pageSize=10&status=&keyword="
+    },
+    {
+      "method": "POST",
+      "status": 200,
+      "url": "http://127.0.0.1:49083/api/quotations/calculate"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49083/api/cases?pageSize=6&sort=popular"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49083/api/projects?pageSize=5"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49083/api/quotations?pageSize=10"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49083/api/cases?pageSize=6&sort=popular"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49083/api/projects?pageSize=5"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:49083/api/quotations?pageSize=10"
+    }
+  ],
+  "apiChecks": [
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59083/api/health",
+      "path": "/api/health",
+      "status": 200,
+      "ok": true,
+      "bodyPreview": "{\"code\":200,\"status\":\"ok\",\"timestamp\":\"2026-06-07T18:41:09.303Z\",\"service\":\"renovation-platform-backend\"}"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59083/api/cases?pageSize=6&sort=popular",
+      "path": "/api/cases?pageSize=6&sort=popular",
+      "status": 200,
+      "ok": true,
+      "bodyPreview": "{\"code\":200,\"data\":{\"list\":[{\"id\":15,\"title\":\"工业风格别墅案例15\",\"description\":\"精选工业风格风格别墅装修案例，由资深设计师精心打造，品质保证。\",\"owner_id\":2,\"company_id\":1,\"designer_id\":4,\"layout_type\":\"别墅\",\"style\":\"工业风格\",\"budget_range\":\"30-50万\",\"area\":127,\"city\":\"北京市\",\"community\":\"示例小区15\",\"main_image\":null,\"total_cost\":99404,\"status\":\"published\",\"view_count\":4891,\"like_count\":95,\"created_at\":\"2026-06-07 15:47:44\",\"owner_name\":\"业主张先生\",\"company_name\":\"尚品装饰工程有限公司\",\"designer_name\":\"设计师王工\"},{\"id\":19,\"title\":\"地中海四室两厅案例19\",\"description\":\""
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59083/api/projects?pageSize=5",
+      "path": "/api/projects?pageSize=5",
+      "status": 200,
+      "ok": true,
+      "bodyPreview": "{\"code\":200,\"data\":{\"list\":[{\"id\":1,\"case_id\":null,\"quotation_id\":null,\"owner_id\":2,\"company_id\":1,\"designer_id\":4,\"manager_id\":6,\"title\":\"万科城市花园张先生家装修工程\",\"address\":\"北京市朝阳区万科城市花园3号楼2单元1502\",\"area\":115.5,\"layout_type\":\"三室两厅\",\"style\":\"现代简约\",\"budget\":138000,\"start_date\":\"2026-06-01\",\"end_date\":\"2026-09-15\",\"actual_start_date\":null,\"actual_end_date\":null,\"status\":\"in_progress\",\"progress\":35,\"created_at\":\"2026-06-07 15:47:44\",\"owner_name\":\"业主张先生\",\"company_name\":\"尚品装饰工程有限公司\",\"designer_name\":\"设计师王工\",\"m"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59083/api/quotations?pageSize=10",
+      "path": "/api/quotations?pageSize=10",
+      "status": 200,
+      "ok": true,
+      "bodyPreview": "{\"code\":200,\"data\":{\"list\":[{\"id\":1,\"case_id\":1,\"project_id\":1,\"owner_id\":2,\"company_id\":1,\"title\":\"万科城市花园张先生家装修报价\",\"total_amount\":138000,\"hard_decoration_amount\":78000,\"soft_decoration_amount\":35000,\"material_amount\":65000,\"labor_amount\":38000,\"status\":\"confirmed\",\"valid_days\":30,\"created_at\":\"2026-06-07 15:47:44\",\"project_title\":\"万科城市花园张先生家装修工程\",\"owner_name\":\"业主张先生\",\"company_name\":\"尚品装饰工程有限公司\"}],\"total\":1,\"page\":1,\"pageSize\":10}}"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59083/api/cases/filters/options",
+      "path": "/api/cases/filters/options",
+      "status": 200,
+      "ok": true,
+      "bodyPreview": "{\"code\":200,\"data\":{\"layouts\":[{\"label\":\"三室两厅\",\"value\":\"三室两厅\"},{\"label\":\"四室两厅\",\"value\":\"四室两厅\"},{\"label\":\"两室一厅\",\"value\":\"两室一厅\"},{\"label\":\"两室两厅\",\"value\":\"两室两厅\"},{\"label\":\"一室一厅\",\"value\":\"一室一厅\"},{\"label\":\"复式\",\"value\":\"复式\"},{\"label\":\"别墅\",\"value\":\"别墅\"},{\"label\":\"三室一厅\",\"value\":\"三室一厅\"}],\"styles\":[{\"label\":\"现代简约\",\"value\":\"现代简约\"},{\"label\":\"新中式\",\"value\":\"新中式\"},{\"label\":\"北欧风格\",\"value\":\"北欧风格\"},{\"label\":\"轻奢美式\",\"value\":\"轻奢美式\"},{\"label\":\"日式极简\",\"value\":\"日式极简\"},{\"label\":\"工业风格\",\"value\":\"工业风格\"},{\"label\":\"欧式古典\",\"val"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59083/api/cases?keyword=&layout_type=&style=&budget_range=&sort=newest&page=1&pageSize=9",
+      "path": "/api/cases?keyword=&layout_type=&style=&budget_range=&sort=newest&page=1&pageSize=9",
+      "status": 200,
+      "ok": true,
+      "bodyPreview": "{\"code\":200,\"data\":{\"list\":[{\"id\":1,\"title\":\"现代简约三居室精品案例\",\"description\":\"年轻夫妇首选，时尚简约风格，空间利用最大化，整体色调以灰白为主，搭配原木色家具，营造温馨舒适的居家氛围。\",\"owner_id\":2,\"company_id\":1,\"designer_id\":4,\"layout_type\":\"三室两厅\",\"style\":\"现代简约\",\"budget_range\":\"10-15万\",\"area\":115.5,\"city\":\"北京市\",\"community\":\"万科城市花园\",\"main_image\":null,\"total_cost\":138000,\"status\":\"published\",\"view_count\":1258,\"like_count\":89,\"created_at\":\"2026-06-07 15:47:44\",\"owner_name\":\"业主张先生\",\"company_name\":\"尚品装饰工程有限公司\",\"designer_name\":\"设计师王工\"},{\"id\":2,\"title\":\"新中式"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59083/api/projects?page=1&pageSize=10&status=&keyword=",
+      "path": "/api/projects?page=1&pageSize=10&status=&keyword=",
+      "status": 200,
+      "ok": true,
+      "bodyPreview": "{\"code\":200,\"data\":{\"list\":[{\"id\":1,\"case_id\":null,\"quotation_id\":null,\"owner_id\":2,\"company_id\":1,\"designer_id\":4,\"manager_id\":6,\"title\":\"万科城市花园张先生家装修工程\",\"address\":\"北京市朝阳区万科城市花园3号楼2单元1502\",\"area\":115.5,\"layout_type\":\"三室两厅\",\"style\":\"现代简约\",\"budget\":138000,\"start_date\":\"2026-06-01\",\"end_date\":\"2026-09-15\",\"actual_start_date\":null,\"actual_end_date\":null,\"status\":\"in_progress\",\"progress\":35,\"created_at\":\"2026-06-07 15:47:44\",\"owner_name\":\"业主张先生\",\"company_name\":\"尚品装饰工程有限公司\",\"designer_name\":\"设计师王工\",\"m"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59083/api/quotations?page=1&pageSize=10&status=&keyword=",
+      "path": "/api/quotations?page=1&pageSize=10&status=&keyword=",
+      "status": 200,
+      "ok": true,
+      "bodyPreview": "{\"code\":200,\"data\":{\"list\":[{\"id\":1,\"case_id\":1,\"project_id\":1,\"owner_id\":2,\"company_id\":1,\"title\":\"万科城市花园张先生家装修报价\",\"total_amount\":138000,\"hard_decoration_amount\":78000,\"soft_decoration_amount\":35000,\"material_amount\":65000,\"labor_amount\":38000,\"status\":\"confirmed\",\"valid_days\":30,\"created_at\":\"2026-06-07 15:47:44\",\"project_title\":\"万科城市花园张先生家装修工程\",\"owner_name\":\"业主张先生\",\"company_name\":\"尚品装饰工程有限公司\"}],\"total\":1,\"page\":1,\"pageSize\":10}}"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59083/api/quotations/1",
+      "path": "/api/quotations/1",
+      "status": 200,
+      "ok": true,
+      "bodyPreview": "{\"code\":200,\"data\":{\"id\":1,\"case_id\":1,\"project_id\":1,\"owner_id\":2,\"company_id\":1,\"title\":\"万科城市花园张先生家装修报价\",\"total_amount\":138000,\"hard_decoration_amount\":78000,\"soft_decoration_amount\":35000,\"material_amount\":65000,\"labor_amount\":38000,\"status\":\"confirmed\",\"valid_days\":30,\"created_at\":\"2026-06-07 15:47:44\",\"project_title\":\"万科城市花园张先生家装修工程\",\"owner_name\":\"业主张先生\",\"owner_phone\":\"13900000001\",\"company_name\":\"尚品装饰工程有限公司\",\"company_phone\":\"400-800-8888\",\"items\":[{\"id\":1,\"quotation_id\":1,\"category\":\"硬装-拆改"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59083/api/admin/stats",
+      "path": "/api/admin/stats",
+      "status": 200,
+      "ok": true,
+      "bodyPreview": "{\"code\":200,\"data\":{\"overview\":{\"totalUsers\":8,\"totalCompanies\":1,\"totalProjects\":2,\"totalCases\":30,\"pendingAudits\":0,\"pendingComplaints\":0,\"inProgressProjects\":2},\"projectsByStatus\":[{\"status\":\"in_progress\",\"count\":2}],\"complaintsByType\":[]}}"
+    },
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:59083/api/admin/dashboard",
+      "path": "/api/admin/dashboard",
+      "status": 200,
+      "ok": true,
+      "bodyPreview": "{\"code\":200,\"data\":{\"overview\":{\"totalUsers\":8,\"totalCompanies\":1,\"totalProjects\":2,\"totalCases\":30,\"pendingAudits\":0,\"pendingComplaints\":0,\"inProgressProjects\":2},\"projectsByStatus\":[{\"status\":\"in_progress\",\"count\":2}],\"complaintsByType\":[]}}"
+    }
+  ],
+  "dialogs": [],
+  "consoleMessages": [
+    {
+      "type": "debug",
+      "text": "[vite] connecting...",
+      "location": {
+        "url": "http://127.0.0.1:49083/@vite/client",
+        "lineNumber": 494,
+        "columnNumber": 8
+      }
+    },
+    {
+      "type": "debug",
+      "text": "[vite] connected.",
+      "location": {
+        "url": "http://127.0.0.1:49083/@vite/client",
+        "lineNumber": 617,
+        "columnNumber": 14
+      }
+    },
+    {
+      "type": "info",
+      "text": "%cDownload the React DevTools for a better development experience: https://reactjs.org/link/react-devtools font-weight:bold",
+      "location": {
+        "url": "http://127.0.0.1:49083/node_modules/.vite/deps/chunk-5DIXNSNT.js?v=615aada1",
+        "lineNumber": 21550,
+        "columnNumber": 24
+      }
+    },
+    {
+      "type": "warning",
+      "text": "⚠️ React Router Future Flag Warning: React Router will begin wrapping state updates in `React.startTransition` in v7. You can use the `v7_startTransition` future flag to opt-in early. For more information, see https://reactrouter.com/v6/upgrading/future#v7_starttransition.",
+      "location": {
+        "url": "http://127.0.0.1:49083/node_modules/.vite/deps/react-router-dom.js?v=615aada1",
+        "lineNumber": 4426,
+        "columnNumber": 12
+      }
+    },
+    {
+      "type": "warning",
+      "text": "⚠️ React Router Future Flag Warning: Relative route resolution within Splat routes is changing in v7. You can use the `v7_relativeSplatPath` future flag to opt-in early. For more information, see https://reactrouter.com/v6/upgrading/future#v7_relativesplatpath.",
+      "location": {
+        "url": "http://127.0.0.1:49083/node_modules/.vite/deps/react-router-dom.js?v=615aada1",
+        "lineNumber": 4426,
+        "columnNumber": 12
+      }
+    },
+    {
+      "type": "error",
+      "text": "Warning: [antd: Card] `bordered` is deprecated. Please use `variant` instead.",
+      "location": {
+        "url": "http://127.0.0.1:49083/node_modules/.vite/deps/chunk-AWHL2DS6.js?v=615aada1",
+        "lineNumber": 1247,
+        "columnNumber": 14
+      }
+    },
+    {
+      "type": "error",
+      "text": "Warning: [antd: Tabs] `Tabs.TabPane` is deprecated. Please use `items` instead.",
+      "location": {
+        "url": "http://127.0.0.1:49083/node_modules/.vite/deps/chunk-AWHL2DS6.js?v=615aada1",
+        "lineNumber": 1247,
+        "columnNumber": 14
+      }
+    },
+    {
+      "type": "error",
+      "text": "Failed to load resource: the server responded with a status of 404 (Not Found)",
+      "location": {
+        "url": "http://127.0.0.1:49083/favicon.ico",
+        "lineNumber": 0,
+        "columnNumber": 0
+      }
+    },
+    {
+      "type": "error",
+      "text": "Failed to load resource: the server responded with a status of 404 (Not Found)",
+      "location": {
+        "url": "http://127.0.0.1:49083/favicon.ico",
+        "lineNumber": 0,
+        "columnNumber": 0
+      }
+    },
+    {
+      "type": "verbose",
+      "text": "[DOM] Input elements should have autocomplete attributes (suggested: \"current-password\"): (More info: https://goo.gl/9p2vKq) %o",
+      "location": {
+        "url": "http://127.0.0.1:49083/login",
+        "lineNumber": 0,
+        "columnNumber": 0
+      }
+    },
+    {
+      "type": "error",
+      "text": "Warning: [antd: message] Static function can not consume context like dynamic theme. Please use 'App' component instead.",
+      "location": {
+        "url": "http://127.0.0.1:49083/node_modules/.vite/deps/chunk-AWHL2DS6.js?v=615aada1",
+        "lineNumber": 1247,
+        "columnNumber": 14
+      }
+    },
+    {
+      "type": "debug",
+      "text": "[vite] connecting...",
+      "location": {
+        "url": "http://127.0.0.1:49083/@vite/client",
+        "lineNumber": 494,
+        "columnNumber": 8
+      }
+    },
+    {
+      "type": "debug",
+      "text": "[vite] connected.",
+      "location": {
+        "url": "http://127.0.0.1:49083/@vite/client",
+        "lineNumber": 617,
+        "columnNumber": 14
+      }
+    },
+    {
+      "type": "info",
+      "text": "%cDownload the React DevTools for a better development experience: https://reactjs.org/link/react-devtools font-weight:bold",
+      "location": {
+        "url": "http://127.0.0.1:49083/node_modules/.vite/deps/chunk-5DIXNSNT.js?v=615aada1",
+        "lineNumber": 21550,
+        "columnNumber": 24
+      }
+    },
+    {
+      "type": "error",
+      "text": "Warning: [antd: Card] `bordered` is deprecated. Please use `variant` instead.",
+      "location": {
+        "url": "http://127.0.0.1:49083/node_modules/.vite/deps/chunk-AWHL2DS6.js?v=615aada1",
+        "lineNumber": 1247,
+        "columnNumber": 14
+      }
+    },
+    {
+      "type": "warning",
+      "text": "⚠️ React Router Future Flag Warning: React Router will begin wrapping state updates in `React.startTransition` in v7. You can use the `v7_startTransition` future flag to opt-in early. For more information, see https://reactrouter.com/v6/upgrading/future#v7_starttransition.",
+      "location": {
+        "url": "http://127.0.0.1:49083/node_modules/.vite/deps/react-router-dom.js?v=615aada1",
+        "lineNumber": 4426,
+        "columnNumber": 12
+      }
+    },
+    {
+      "type": "warning",
+      "text": "⚠️ React Router Future Flag Warning: Relative route resolution within Splat routes is changing in v7. You can use the `v7_relativeSplatPath` future flag to opt-in early. For more information, see https://reactrouter.com/v6/upgrading/future#v7_relativesplatpath.",
+      "location": {
+        "url": "http://127.0.0.1:49083/node_modules/.vite/deps/react-router-dom.js?v=615aada1",
+        "lineNumber": 4426,
+        "columnNumber": 12
+      }
+    },
+    {
+      "type": "debug",
+      "text": "[vite] connecting...",
+      "location": {
+        "url": "http://127.0.0.1:49083/@vite/client",
+        "lineNumber": 494,
+        "columnNumber": 8
+      }
+    },
+    {
+      "type": "debug",
+      "text": "[vite] connected.",
+      "location": {
+        "url": "http://127.0.0.1:49083/@vite/client",
+        "lineNumber": 617,
+        "columnNumber": 14
+      }
+    },
+    {
+      "type": "info",
+      "text": "%cDownload the React DevTools for a better development experience: https://reactjs.org/link/react-devtools font-weight:bold",
+      "location": {
+        "url": "http://127.0.0.1:49083/node_modules/.vite/deps/chunk-5DIXNSNT.js?v=615aada1",
+        "lineNumber": 21550,
+        "columnNumber": 24
+      }
+    },
+    {
+      "type": "error",
+      "text": "Warning: [antd: Card] `bordered` is deprecated. Please use `variant` instead.",
+      "location": {
+        "url": "http://127.0.0.1:49083/node_modules/.vite/deps/chunk-AWHL2DS6.js?v=615aada1",
+        "lineNumber": 1247,
+        "columnNumber": 14
+      }
+    },
+    {
+      "type": "warning",
+      "text": "⚠️ React Router Future Flag Warning: React Router will begin wrapping state updates in `React.startTransition` in v7. You can use the `v7_startTransition` future flag to opt-in early. For more information, see https://reactrouter.com/v6/upgrading/future#v7_starttransition.",
+      "location": {
+        "url": "http://127.0.0.1:49083/node_modules/.vite/deps/react-router-dom.js?v=615aada1",
+        "lineNumber": 4426,
+        "columnNumber": 12
+      }
+    },
+    {
+      "type": "warning",
+      "text": "⚠️ React Router Future Flag Warning: Relative route resolution within Splat routes is changing in v7. You can use the `v7_relativeSplatPath` future flag to opt-in early. For more information, see https://reactrouter.com/v6/upgrading/future#v7_relativesplatpath.",
+      "location": {
+        "url": "http://127.0.0.1:49083/node_modules/.vite/deps/react-router-dom.js?v=615aada1",
+        "lineNumber": 4426,
+        "columnNumber": 12
+      }
+    },
+    {
+      "type": "debug",
+      "text": "[vite] connecting...",
+      "location": {
+        "url": "http://127.0.0.1:49083/@vite/client",
+        "lineNumber": 494,
+        "columnNumber": 8
+      }
+    },
+    {
+      "type": "debug",
+      "text": "[vite] connected.",
+      "location": {
+        "url": "http://127.0.0.1:49083/@vite/client",
+        "lineNumber": 617,
+        "columnNumber": 14
+      }
+    },
+    {
+      "type": "info",
+      "text": "%cDownload the React DevTools for a better development experience: https://reactjs.org/link/react-devtools font-weight:bold",
+      "location": {
+        "url": "http://127.0.0.1:49083/node_modules/.vite/deps/chunk-5DIXNSNT.js?v=615aada1",
+        "lineNumber": 21550,
+        "columnNumber": 24
+      }
+    },
+    {
+      "type": "warning",
+      "text": "⚠️ React Router Future Flag Warning: React Router will begin wrapping state updates in `React.startTransition` in v7. You can use the `v7_startTransition` future flag to opt-in early. For more information, see https://reactrouter.com/v6/upgrading/future#v7_starttransition.",
+      "location": {
+        "url": "http://127.0.0.1:49083/node_modules/.vite/deps/react-router-dom.js?v=615aada1",
+        "lineNumber": 4426,
+        "columnNumber": 12
+      }
+    },
+    {
+      "type": "warning",
+      "text": "⚠️ React Router Future Flag Warning: Relative route resolution within Splat routes is changing in v7. You can use the `v7_relativeSplatPath` future flag to opt-in early. For more information, see https://reactrouter.com/v6/upgrading/future#v7_relativesplatpath.",
+      "location": {
+        "url": "http://127.0.0.1:49083/node_modules/.vite/deps/react-router-dom.js?v=615aada1",
+        "lineNumber": 4426,
+        "columnNumber": 12
+      }
+    },
+    {
+      "type": "error",
+      "text": "Warning: [antd: Card] `bordered` is deprecated. Please use `variant` instead.",
+      "location": {
+        "url": "http://127.0.0.1:49083/node_modules/.vite/deps/chunk-AWHL2DS6.js?v=615aada1",
+        "lineNumber": 1247,
+        "columnNumber": 14
+      }
+    },
+    {
+      "type": "debug",
+      "text": "[vite] connecting...",
+      "location": {
+        "url": "http://127.0.0.1:49083/@vite/client",
+        "lineNumber": 494,
+        "columnNumber": 8
+      }
+    },
+    {
+      "type": "debug",
+      "text": "[vite] connected.",
+      "location": {
+        "url": "http://127.0.0.1:49083/@vite/client",
+        "lineNumber": 617,
+        "columnNumber": 14
+      }
+    },
+    {
+      "type": "info",
+      "text": "%cDownload the React DevTools for a better development experience: https://reactjs.org/link/react-devtools font-weight:bold",
+      "location": {
+        "url": "http://127.0.0.1:49083/node_modules/.vite/deps/chunk-5DIXNSNT.js?v=615aada1",
+        "lineNumber": 21550,
+        "columnNumber": 24
+      }
+    },
+    {
+      "type": "error",
+      "text": "Warning: [antd: Card] `bordered` is deprecated. Please use `variant` instead.",
+      "location": {
+        "url": "http://127.0.0.1:49083/node_modules/.vite/deps/chunk-AWHL2DS6.js?v=615aada1",
+        "lineNumber": 1247,
+        "columnNumber": 14
+      }
+    },
+    {
+      "type": "warning",
+      "text": "⚠️ React Router Future Flag Warning: React Router will begin wrapping state updates in `React.startTransition` in v7. You can use the `v7_startTransition` future flag to opt-in early. For more information, see https://reactrouter.com/v6/upgrading/future#v7_starttransition.",
+      "location": {
+        "url": "http://127.0.0.1:49083/node_modules/.vite/deps/react-router-dom.js?v=615aada1",
+        "lineNumber": 4426,
+        "columnNumber": 12
+      }
+    },
+    {
+      "type": "warning",
+      "text": "⚠️ React Router Future Flag Warning: Relative route resolution within Splat routes is changing in v7. You can use the `v7_relativeSplatPath` future flag to opt-in early. For more information, see https://reactrouter.com/v6/upgrading/future#v7_relativesplatpath.",
+      "location": {
+        "url": "http://127.0.0.1:49083/node_modules/.vite/deps/react-router-dom.js?v=615aada1",
+        "lineNumber": 4426,
+        "columnNumber": 12
+      }
+    }
+  ],
+  "requestFailures": [],
+  "responseErrors": []
+}
