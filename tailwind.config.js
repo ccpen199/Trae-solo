@@ -1,0 +1,127 @@
+/** @type {import('tailwindcss').Config} */
+
+export default {
+  darkMode: "class",
+  content: ["./index.html", "./src/**/*.{js,ts,jsx,tsx}"],
+  theme: {
+    container: {
+      center: true,
+      padding: '1rem',
+    },
+    extend: {
+      colors: {
+        primary: {
+          50: '#FFF9E6',
+          100: '#FFF0BF',
+          200: '#FFE68C',
+          300: '#FFDC59',
+          400: '#FFD433',
+          500: '#FFB800',
+          600: '#D69A00',
+          700: '#A87800',
+          800: '#7A5600',
+          900: '#4D3400',
+        },
+        accent: {
+          50: '#FFF1EB',
+          100: '#FFD9C9',
+          200: '#FFBCA0',
+          300: '#FF9F77',
+          400: '#FF8759',
+          500: '#FF6B35',
+          600: '#E6511E',
+          700: '#B33D15',
+          800: '#802B0E',
+          900: '#4D1907',
+        },
+        health: {
+          50: '#E6FFF4',
+          100: '#BFFFE1',
+          200: '#80FFC9',
+          300: '#40FFB0',
+          400: '#1AFFA0',
+          500: '#00C48C',
+          600: '#00A073',
+          700: '#007D5A',
+          800: '#005A41',
+          900: '#003627',
+        },
+        knowledge: {
+          50: '#F0ECFF',
+          100: '#D8D0FF',
+          200: '#B9ACFF',
+          300: '#9A88FF',
+          400: '#826CFF',
+          500: '#7B61FF',
+          600: '#5E46E6',
+          700: '#4430B3',
+          800: '#2E1E80',
+          900: '#1B104D',
+        },
+        dark: {
+          50: '#F5F5F7',
+          100: '#E8E8ED',
+          200: '#D1D1DB',
+          300: '#B0B0C0',
+          400: '#8888A0',
+          500: '#666677',
+          600: '#505060',
+          700: '#3D3D4A',
+          800: '#2A2A35',
+          900: '#1A1A2E',
+        },
+      },
+      fontFamily: {
+        sans: ['-apple-system', 'BlinkMacSystemFont', 'Segoe UI', 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', 'sans-serif'],
+      },
+      animation: {
+        'bounce-slow': 'bounce 2s infinite',
+        'pulse-slow': 'pulse 3s infinite',
+        'float': 'float 3s ease-in-out infinite',
+        'coin-spin': 'coinSpin 2s linear infinite',
+        'slide-up': 'slideUp 0.3s ease-out',
+        'slide-down': 'slideDown 0.3s ease-out',
+        'fade-in': 'fadeIn 0.3s ease-out',
+        'scale-in': 'scaleIn 0.3s ease-out',
+      },
+      keyframes: {
+        float: {
+          '0%, 100%': { transform: 'translateY(0)' },
+          '50%': { transform: 'translateY(-10px)' },
+        },
+        coinSpin: {
+          '0%': { transform: 'rotateY(0deg)' },
+          '100%': { transform: 'rotateY(360deg)' },
+        },
+        slideUp: {
+          '0%': { transform: 'translateY(20px)', opacity: '0' },
+          '100%': { transform: 'translateY(0)', opacity: '1' },
+        },
+        slideDown: {
+          '0%': { transform: 'translateY(-20px)', opacity: '0' },
+          '100%': { transform: 'translateY(0)', opacity: '1' },
+        },
+        fadeIn: {
+          '0%': { opacity: '0' },
+          '100%': { opacity: '1' },
+        },
+        scaleIn: {
+          '0%': { transform: 'scale(0.9)', opacity: '0' },
+          '100%': { transform: 'scale(1)', opacity: '1' },
+        },
+      },
+      boxShadow: {
+        'card': '0 4px 20px rgba(0, 0, 0, 0.08)',
+        'card-hover': '0 8px 30px rgba(0, 0, 0, 0.12)',
+        'button': '0 4px 15px rgba(255, 184, 0, 0.4)',
+      },
+      backgroundImage: {
+        'gradient-primary': 'linear-gradient(135deg, #FFB800 0%, #FF6B35 100%)',
+        'gradient-health': 'linear-gradient(135deg, #00C48C 0%, #00A073 100%)',
+        'gradient-knowledge': 'linear-gradient(135deg, #7B61FF 0%, #5E46E6 100%)',
+        'gradient-gold': 'linear-gradient(135deg, #FFD700 0%, #FFB800 50%, #FF8C00 100%)',
+      },
+    },
+  },
+  plugins: [],
+};
