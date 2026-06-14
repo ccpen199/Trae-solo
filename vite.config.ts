@@ -4,8 +4,14 @@ import tsconfigPaths from "vite-tsconfig-paths";
 import path from "path";
 import { fileURLToPath } from "url";
 import { traeBadgePlugin } from 'vite-plugin-trae-solo-badge';
+import dotenv from 'dotenv';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
+dotenv.config();
+const FRONTEND_HOST = process.env.FRONTEND_HOST || process.env.HOST || '127.0.0.1';
+const FRONTEND_PORT = Number(process.env.FRONTEND_PORT || process.env.APP_PORT || 49200);
+const BACKEND_HOST = process.env.BACKEND_HOST || process.env.HOST || '127.0.0.1';
+const BACKEND_PORT = process.env.BACKEND_PORT || process.env.PORT || '59200';
 
 // https://vite.dev/config/
 export default defineConfig({
@@ -35,9 +41,12 @@ export default defineConfig({
     tsconfigPaths(),
   ],
   server: {
+    host: FRONTEND_HOST,
+    port: FRONTEND_PORT,
+    strictPort: true,
     proxy: {
       '/api': {
-        target: 'http://localhost:3003',
+        target: `http://${BACKEND_HOST}:${BACKEND_PORT}`,
         changeOrigin: true,
         secure: false,
         configure: (proxy, _options) => {
