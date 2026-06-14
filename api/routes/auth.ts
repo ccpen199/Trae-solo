@@ -7,9 +7,11 @@ import jwt from 'jsonwebtoken'
 const router = Router()
 
 const demoLoginAliases: Record<string, { phone: string; role: 'driver' | 'shipper' | 'admin' }> = {
-  admin: { phone: '13800138001', role: 'driver' },
-  platform: { phone: '13800138001', role: 'driver' },
-  ops: { phone: '13900139001', role: 'shipper' },
+  admin: { phone: '13700137001', role: 'admin' },
+  platform: { phone: '13700137001', role: 'admin' },
+  ops: { phone: '13700137001', role: 'admin' },
+  driver: { phone: '13800138001', role: 'driver' },
+  shipper: { phone: '13900139001', role: 'shipper' },
 }
 
 router.post('/send-code', (req: Request, res: Response): void => {

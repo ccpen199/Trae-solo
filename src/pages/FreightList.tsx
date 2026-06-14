@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { MapPin, Weight, PackagePlus, Filter } from 'lucide-react'
+import { MapPin, Weight, PackagePlus, Filter, Truck, Receipt, WifiOff, CheckCircle2, Loader2 } from 'lucide-react'
 import { useAuthStore } from '@/stores/authStore'
 import { requestRaw } from '@/utils/api'
 import PageHeader from '@/components/PageHeader'
@@ -24,9 +24,11 @@ interface FreightItem {
 export default function FreightList() {
   const navigate = useNavigate()
   const { user } = useAuthStore()
+  const isDriver = user?.role === 'driver'
   const [freights, setFreights] = useState<FreightItem[]>([])
   const [needVatFilter, setNeedVatFilter] = useState('')
   const [originFilter, setOriginFilter] = useState('')
+  const [acceptingId, setAcceptingId] = useState<string | null>(null)
 
   useEffect(() => {
     loadFreights()
@@ -44,6 +46,26 @@ export default function FreightList() {
       })
       setFreights(res.list || [])
     } catch {}
+  }
+
+  const handleAccept = async (e: React.MouseEvent, freightId: string) => {
+    e.stopPropagation()
+    if (acceptingId) return
+    setAcceptingId(freightId)
+    try {
+      const token = localStorage.getItem('token')
+      await requestRaw<{ success: boolean; data: any }>(`/api/freights/${freightId}/accept`, {
+        method: 'POST',
+        headers: { 'Authorization': `Bearer ${token}`, 'Content-Type': 'application/json' },
+        body: JSON.stringify({ driverId: user?.id }),
+      })
+      await loadFreights()
+      navigate('/orders')
+    } catch (err: any) {
+      alert(err.message || '接单失败')
+    } finally {
+      setAcceptingId(null)
+    }
   }
 
   return (
@@ -83,6 +105,31 @@ export default function FreightList() {
         </div>
       </div>
 
+      {isDriver && (
+        <div className="bg-navy-50 rounded-xl p-4 mb-4 border border-navy-100">
+          <div className="flex items-center gap-2 mb-2">
+            <Truck className="h-4 w-4 text-navy-500" />
+            <span className="text-sm font-semibold text-navy-700">司机接单流程</span>
+          </div>
+          <div className="flex items-center gap-1 text-xs text-navy-500">
+            <span className="flex items-center gap-1"><CheckCircle2 className="h-3 w-3 text-mint-500" />接单</span>
+            <span>→</span>
+            <span className="flex items-center gap-1"><Receipt className="h-3 w-3 text-amber-500" />专票货源自动开票</span>
+            <span>→</span>
+            <span className="flex items-center gap-1"><WifiOff className="h-3 w-3 text-coral-500" />GPS轨迹上传</span>
+            <span>→</span>
+            <span>T+0分账</span>
+          </div>
+          <button
+            onClick={() => navigate('/profile')}
+            className="mt-2 text-xs text-amber-600 hover:text-amber-700 font-medium flex items-center gap-1"
+          >
+            <WifiOff className="h-3 w-3" />
+            离线模式 & GPS轨迹缓存
+          </button>
+        </div>
+      )}
+
       <div className="space-y-3">
         {freights.length === 0 && (
           <div className="text-center py-16 text-gray-400">暂无可接货源</div>
@@ -103,6 +150,9 @@ export default function FreightList() {
                   {freight.need_vat ? (
                     <StatusBadge variant="warning">专票</StatusBadge>
                   ) : null}
+                  {freight.status === 'accepted' && (
+                    <StatusBadge variant="success">已接</StatusBadge>
+                  )}
                 </div>
                 <div className="flex items-center gap-4 text-sm text-gray-500">
                   <span className="flex items-center gap-1">
@@ -121,9 +171,19 @@ export default function FreightList() {
                   <p className="text-xs text-gray-400 mt-1 truncate">{freight.description}</p>
                 )}
               </div>
-              <div className="text-right">
+              <div className="text-right flex-shrink-0 ml-3">
                 <p className="text-lg font-bold text-amber-500">¥{freight.freight_fee?.toFixed(2)}</p>
                 <p className="text-xs text-gray-400">{freight.shipper_name}</p>
+                {isDriver && freight.status === 'open' && (
+                  <button
+                    onClick={(e) => handleAccept(e, freight.id)}
+                    disabled={acceptingId === freight.id}
+                    className="mt-2 px-4 py-1.5 bg-amber-500 text-white text-xs font-semibold rounded-lg hover:bg-amber-600 disabled:opacity-50 disabled:cursor-not-allowed transition-colors flex items-center gap-1 ml-auto"
+                  >
+                    {acceptingId === freight.id ? <Loader2 className="h-3 w-3 animate-spin" /> : <Truck className="h-3 w-3" />}
+                    立即接单
+                  </button>
+                )}
               </div>
             </div>
           </div>

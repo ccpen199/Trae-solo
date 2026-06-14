@@ -40,6 +40,36 @@ router.get('/summary', authMiddleware, (req: Request, res: Response): void => {
     frozenAmount = pendingWithdrawRow.total
 
     availableBalance = Math.max(0, totalIncome - withdrawTotal)
+  } else if (role === 'shipper') {
+    const totalPaidRow = db.prepare(`
+      SELECT COALESCE(SUM(total_amount), 0) as total
+      FROM settlements WHERE payer_id = ? AND status = 'completed'
+    `).get(userId) as { total: number }
+    totalIncome = totalPaidRow.total
+
+    const pendingSettlementRow = db.prepare(`
+      SELECT COALESCE(SUM(total_amount), 0) as total
+      FROM settlements WHERE payer_id = ? AND status = 'pending'
+    `).get(userId) as { total: number }
+    frozenAmount = pendingSettlementRow.total
+
+    availableBalance = 0
+    totalWithdraw = 0
+  } else if (role === 'admin') {
+    const totalFeeRow = db.prepare(`
+      SELECT COALESCE(SUM(platform_fee), 0) as total
+      FROM settlements WHERE status = 'completed'
+    `).get() as { total: number }
+    totalIncome = totalFeeRow.total
+
+    const pendingFeeRow = db.prepare(`
+      SELECT COALESCE(SUM(platform_fee), 0) as total
+      FROM settlements WHERE status = 'pending'
+    `).get() as { total: number }
+    frozenAmount = pendingFeeRow.total
+
+    availableBalance = totalIncome
+    totalWithdraw = 0
   }
 
   res.json({
@@ -71,7 +101,6 @@ router.get('/', authMiddleware, (req: Request, res: Response): void => {
     conditions.push('s.payer_id = ?')
     params.push(userId)
   }
-
   if (status) {
     conditions.push('s.status = ?')
     params.push(status)

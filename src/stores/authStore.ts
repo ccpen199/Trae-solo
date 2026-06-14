@@ -21,9 +21,11 @@ interface AuthState {
 }
 
 const demoLoginAliases: Record<string, { phone: string; code: string; role: 'driver' | 'shipper' | 'admin' }> = {
-  admin: { phone: '13800138001', code: '123456', role: 'driver' },
-  platform: { phone: '13800138001', code: '123456', role: 'driver' },
-  ops: { phone: '13900139001', code: '123456', role: 'shipper' },
+  admin: { phone: '13700137001', code: '123456', role: 'admin' },
+  platform: { phone: '13700137001', code: '123456', role: 'admin' },
+  ops: { phone: '13700137001', code: '123456', role: 'admin' },
+  driver: { phone: '13800138001', code: '123456', role: 'driver' },
+  shipper: { phone: '13900139001', code: '123456', role: 'shipper' },
 }
 
 const getInitialAuth = () => {

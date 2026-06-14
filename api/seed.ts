@@ -159,8 +159,10 @@ function seedIfEmpty() {
 
   const s1Id = 's_001'
   insertSettlement.run([s1Id, order2Id, shipper1Id, driver2Id, 950, 750, 120, 30, 50, 'completed', '2026-06-12 14:30:00'])
+  insertSettlement.run(['s_002', order1Id, shipper1Id, driver1Id, 5000, 4000, 600, 150, 250, 'completed', '2026-06-13 10:00:00'])
+  insertSettlement.run(['s_003', order1Id, shipper2Id, driver1Id, 3200, 2500, 400, 100, 200, 'pending', '2026-06-14 08:00:00'])
 
-  insertWithdrawal.run(['w_001', driver1Id, 5000, '6222021234567890', 'completed', '2026-06-10 10:00:00'])
+  insertWithdrawal.run(['w_001', driver1Id, 2000, '6222021234567890', 'completed', '2026-06-10 10:00:00'])
   insertWithdrawal.run(['w_002', driver2Id, 3000, '6228489876543210', 'pending', '2026-06-12 16:00:00'])
 
   const checkItems = JSON.stringify([

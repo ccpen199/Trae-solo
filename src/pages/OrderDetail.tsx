@@ -19,6 +19,10 @@ import {
   Circle,
   Hash,
   FileCheck2,
+  ChevronRight,
+  UserCheck,
+  ClipboardList,
+  WifiOff,
 } from 'lucide-react'
 import StatusBadge from '@/components/StatusBadge'
 import EmptyState from '@/components/EmptyState'
@@ -666,6 +670,85 @@ export default function OrderDetail() {
             </div>
           </div>
         )}
+
+        {/* 业务关联快捷入口 */}
+        <div className="bg-white rounded-xl shadow-sm border border-gray-100 p-5">
+          <h2 className="text-base font-semibold text-gray-900 mb-4 flex items-center gap-2">
+            <ClipboardList className="h-5 w-5 text-navy-500" />
+            业务关联
+          </h2>
+          <div className="grid grid-cols-2 gap-3">
+            {isDriver && (
+              <button
+                onClick={() => navigate('/certification')}
+                className="flex items-center gap-3 p-3 rounded-xl bg-gradient-to-br from-navy-50 to-white border border-navy-100 hover:border-navy-300 transition-colors text-left"
+              >
+                <div className="h-10 w-10 rounded-lg bg-navy-500 flex items-center justify-center flex-shrink-0">
+                  <UserCheck className="h-5 w-5 text-white" />
+                </div>
+                <div className="min-w-0">
+                  <p className="text-sm font-semibold text-gray-900">证照核验</p>
+                  <p className="text-[11px] text-gray-500">运输证/资格证</p>
+                </div>
+                <ChevronRight className="h-4 w-4 text-gray-300 ml-auto flex-shrink-0" />
+              </button>
+            )}
+            {order.need_vat === 1 && order.invoice && (
+              <button
+                onClick={() => navigate(`/invoices/${order.invoice.id}`)}
+                className="flex items-center gap-3 p-3 rounded-xl bg-gradient-to-br from-amber-50 to-white border border-amber-100 hover:border-amber-300 transition-colors text-left"
+              >
+                <div className="h-10 w-10 rounded-lg bg-amber-500 flex items-center justify-center flex-shrink-0">
+                  <Receipt className="h-5 w-5 text-white" />
+                </div>
+                <div className="min-w-0">
+                  <p className="text-sm font-semibold text-gray-900">专票详情</p>
+                  <p className="text-[11px] text-gray-500">{order.invoice.invoice_no}</p>
+                </div>
+                <ChevronRight className="h-4 w-4 text-gray-300 ml-auto flex-shrink-0" />
+              </button>
+            )}
+            {order.need_vat === 1 && !order.invoice && (
+              <div className="flex items-center gap-3 p-3 rounded-xl bg-gradient-to-br from-amber-50/50 to-white border border-dashed border-amber-200 text-left">
+                <div className="h-10 w-10 rounded-lg bg-amber-100 flex items-center justify-center flex-shrink-0">
+                  <Receipt className="h-5 w-5 text-amber-400" />
+                </div>
+                <div className="min-w-0">
+                  <p className="text-sm font-medium text-gray-500">专票</p>
+                  <p className="text-[11px] text-amber-500">待开具</p>
+                </div>
+              </div>
+            )}
+            <button
+              onClick={() => navigate('/safety')}
+              className="flex items-center gap-3 p-3 rounded-xl bg-gradient-to-br from-mint-50 to-white border border-mint-100 hover:border-mint-300 transition-colors text-left"
+            >
+              <div className="h-10 w-10 rounded-lg bg-mint-500 flex items-center justify-center flex-shrink-0">
+                <ShieldCheck className="h-5 w-5 text-white" />
+              </div>
+              <div className="min-w-0">
+                <p className="text-sm font-semibold text-gray-900">安全台账</p>
+                <p className="text-[11px] text-gray-500">检查/日志/路单</p>
+              </div>
+              <ChevronRight className="h-4 w-4 text-gray-300 ml-auto flex-shrink-0" />
+            </button>
+            {isDriver && (
+              <button
+                onClick={() => navigate('/profile')}
+                className="flex items-center gap-3 p-3 rounded-xl bg-gradient-to-br from-coral-50 to-white border border-coral-100 hover:border-coral-300 transition-colors text-left"
+              >
+                <div className="h-10 w-10 rounded-lg bg-coral-500 flex items-center justify-center flex-shrink-0">
+                  <WifiOff className="h-5 w-5 text-white" />
+                </div>
+                <div className="min-w-0">
+                  <p className="text-sm font-semibold text-gray-900">离线 & GPS</p>
+                  <p className="text-[11px] text-gray-500">轨迹缓存上传</p>
+                </div>
+                <ChevronRight className="h-4 w-4 text-gray-300 ml-auto flex-shrink-0" />
+              </button>
+            )}
+          </div>
+        </div>
       </div>
 
       {/* 底部操作按钮区 - 司机端 */}
