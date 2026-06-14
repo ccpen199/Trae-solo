@@ -90,7 +90,7 @@ const quickAccounts: QuickAccount[] = [
 
 export default function Login() {
   const navigate = useNavigate();
-  const { login, isLoading, error, clearError, clearLoginResult } = useAuthStore();
+  const { login, loginDirect, isLoading, error, clearError, clearLoginResult } = useAuthStore();
   const [selectedRole, setSelectedRole] = useState<UserRole>('owner');
   const [loginMode, setLoginMode] = useState<'password' | 'sms'>('password');
   const [showPassword, setShowPassword] = useState(false);
@@ -123,26 +123,18 @@ export default function Login() {
     }
   };
 
-  const handleQuickLogin = async (account: QuickAccount) => {
+  const handleQuickLogin = (account: QuickAccount) => {
     clearError();
     setSelectedRole(account.role);
     setValue('phone', account.account);
     setValue('password', account.password);
 
-    try {
-      const result = await login({
-        phone: account.account,
-        password: account.password,
-        role: account.role,
-      });
-      setSuccessMessage(result.welcomeMessage);
-      setShowSuccessAnimation(true);
-      setTimeout(() => {
-        navigate(result.redirectPath, { replace: true });
-      }, 1200);
-    } catch (err) {
-      console.error('Quick login failed:', err);
-    }
+    const result = loginDirect(account.role);
+    setSuccessMessage(result.welcomeMessage);
+    setShowSuccessAnimation(true);
+    setTimeout(() => {
+      navigate(result.redirectPath, { replace: true });
+    }, 800);
   };
 
   const sendSms = () => {
@@ -277,31 +269,28 @@ export default function Login() {
               <h1 className="font-display text-xl font-bold text-neutral-900">宠护康</h1>
             </div>
 
-            <AnimatePresence mode="wait">
+            {error && (
               <motion.div
-                key={error ? 'error' : 'no-error'}
-                initial={{ opacity: 0, height: 0 }}
-                animate={{ opacity: 1, height: 'auto' }}
-                exit={{ opacity: 0, height: 0 }}
+                initial={{ opacity: 0, y: -10 }}
+                animate={{ opacity: 1, y: 0 }}
                 className="mb-4"
               >
-                {error && (
-                  <div className="p-4 bg-red-50 border border-red-200 rounded-xl flex items-start gap-3">
-                    <XCircle className="w-5 h-5 text-red-500 flex-shrink-0 mt-0.5" />
-                    <div className="flex-1">
-                      <p className="font-medium text-red-700 text-sm">登录失败</p>
-                      <p className="text-sm text-red-600 mt-0.5">{error}</p>
-                    </div>
-                    <button
-                      onClick={clearError}
-                      className="text-red-400 hover:text-red-600 transition-colors"
-                    >
-                      ✕
-                    </button>
+                <div className="p-4 bg-red-50 border border-red-200 rounded-xl flex items-start gap-3">
+                  <XCircle className="w-5 h-5 text-red-500 flex-shrink-0 mt-0.5" />
+                  <div className="flex-1">
+                    <p className="font-medium text-red-700 text-sm">登录失败</p>
+                    <p className="text-sm text-red-600 mt-0.5">{error}</p>
                   </div>
-                )}
+                  <button
+                    onClick={clearError}
+                    className="text-red-400 hover:text-red-600 transition-colors"
+                    type="button"
+                  >
+                    ✕
+                  </button>
+                </div>
               </motion.div>
-            </AnimatePresence>
+            )}
 
             <div className="space-y-4 mb-6">
               <div className="flex items-center justify-between">

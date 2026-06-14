@@ -1,0 +1,3178 @@
+{
+  "ok": true,
+  "generatedAt": "2026-06-12T10:42:16.258Z",
+  "order": "may-89158",
+  "roundIndex": 6972,
+  "captureId": "may-89158-codex-final",
+  "url": "http://127.0.0.1:50158/",
+  "initialUrl": "http://127.0.0.1:50158/",
+  "finalUrl": "http://127.0.0.1:50158/store",
+  "status": 200,
+  "title": "萌宠健康 - 宠物健康全周期管理平台",
+  "initialTitle": "萌宠健康 - 宠物健康全周期管理平台",
+  "navigationError": "",
+  "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89158/probe/codex-final-20260612/may-89158-codex-final-frontend.png",
+  "screenshotPaths": [
+    "/Users/chen/Documents/trae_projects/local_projects/may-89158/probe/codex-final-20260612/may-89158-codex-final-structure-01-首屏.png",
+    "/Users/chen/Documents/trae_projects/local_projects/may-89158/probe/codex-final-20260612/may-89158-codex-final-structure-02-导航-管理后台.png",
+    "/Users/chen/Documents/trae_projects/local_projects/may-89158/probe/codex-final-20260612/may-89158-codex-final-structure-03-操作-查看全部.png",
+    "/Users/chen/Documents/trae_projects/local_projects/may-89158/probe/codex-final-20260612/may-89158-codex-final-structure-04-操作-去查看.png",
+    "/Users/chen/Documents/trae_projects/local_projects/may-89158/probe/codex-final-20260612/may-89158-codex-final-structure-05-导航-工作台.png",
+    "/Users/chen/Documents/trae_projects/local_projects/may-89158/probe/codex-final-20260612/may-89158-codex-final-structure-06-操作-查看全部.png",
+    "/Users/chen/Documents/trae_projects/local_projects/may-89158/probe/codex-final-20260612/may-89158-codex-final-structure-07-操作-去查看.png",
+    "/Users/chen/Documents/trae_projects/local_projects/may-89158/probe/codex-final-20260612/may-89158-codex-final-structure-08-导航-排班调度.png",
+    "/Users/chen/Documents/trae_projects/local_projects/may-89158/probe/codex-final-20260612/may-89158-codex-final-structure-09-操作-新建排班.png",
+    "/Users/chen/Documents/trae_projects/local_projects/may-89158/probe/codex-final-20260612/may-89158-codex-final-structure-10-二层操作-新建排班-李明.png",
+    "/Users/chen/Documents/trae_projects/local_projects/may-89158/probe/codex-final-20260612/may-89158-codex-final-structure-11-操作-切换角色.png",
+    "/Users/chen/Documents/trae_projects/local_projects/may-89158/probe/codex-final-20260612/may-89158-codex-final-structure-12-二层操作-切换角色-宠主端.png"
+  ],
+  "issueTextPreview": "",
+  "targetReason": "页面存在后台入口，优先复验后台管理链路",
+  "targetKind": "admin",
+  "targetMatched": true,
+  "targetActions": [
+    {
+      "action": "click",
+      "label": "页面存在后台入口，优先复验后台管理链路",
+      "ok": true
+    },
+    {
+      "action": "target-verify",
+      "label": "页面存在后台入口，优先复验后台管理链路",
+      "ok": true,
+      "finalUrl": "http://127.0.0.1:50158/store"
+    }
+  ],
+  "authFlow": {
+    "detected": false,
+    "attempted": false,
+    "success": false,
+    "finalUrl": "http://127.0.0.1:50158/store",
+    "message": "",
+    "actions": []
+  },
+  "businessAudit": {
+    "actions": [
+      {
+        "action": "click",
+        "label": "导航:管理后台",
+        "ok": true
+      },
+      {
+        "action": "click",
+        "label": "操作:查看全部",
+        "ok": true,
+        "result": {
+          "ok": true,
+          "matched": 1
+        }
+      },
+      {
+        "action": "click",
+        "label": "操作:去查看",
+        "ok": true,
+        "result": {
+          "ok": true,
+          "matched": 1
+        }
+      },
+      {
+        "action": "click",
+        "label": "导航:工作台",
+        "ok": true
+      },
+      {
+        "action": "click",
+        "label": "操作:查看全部",
+        "ok": true,
+        "result": {
+          "ok": true,
+          "matched": 1
+        }
+      },
+      {
+        "action": "click",
+        "label": "操作:去查看",
+        "ok": true,
+        "result": {
+          "ok": true,
+          "matched": 1
+        }
+      },
+      {
+        "action": "click",
+        "label": "导航:排班调度",
+        "ok": true
+      },
+      {
+        "action": "click",
+        "label": "操作:新建排班",
+        "ok": true,
+        "result": {
+          "ok": true,
+          "matched": 1
+        }
+      },
+      {
+        "action": "click",
+        "label": "二层操作:新建排班:李明",
+        "ok": true,
+        "result": {
+          "ok": true,
+          "matched": 1
+        }
+      },
+      {
+        "action": "click",
+        "label": "关闭弹窗/抽屉",
+        "ok": true
+      },
+      {
+        "action": "click",
+        "label": "操作:切换角色",
+        "ok": true,
+        "result": {
+          "ok": true,
+          "matched": 1
+        }
+      },
+      {
+        "action": "click",
+        "label": "二层操作:切换角色:宠主端",
+        "ok": true,
+        "result": {
+          "ok": true,
+          "matched": 1
+        }
+      }
+    ],
+    "snapshots": [
+      {
+        "label": "首屏",
+        "url": "http://127.0.0.1:50158/store",
+        "title": "萌宠健康 - 宠物健康全周期管理平台",
+        "headings": [
+          "爱宠屋",
+          "管理后台",
+          "门店工作台",
+          "今日预约",
+          "快捷操作",
+          "员工排班",
+          "今日目标"
+        ],
+        "navLabels": [
+          "爱宠屋 管理后台 · 直营中心店",
+          "管理后台",
+          "工作台",
+          "排班调度",
+          "服务管理",
+          "病历管理",
+          "库存管理 4",
+          "4",
+          "会员管理",
+          "管理员 店长",
+          "切换角色"
+        ],
+        "buttons": [
+          "切换角色",
+          "+ 新增预约",
+          "切换门店",
+          "查看全部",
+          "排班调度",
+          "服务执行",
+          "库存管理",
+          "病历管理"
+        ],
+        "links": [
+          "管理后台",
+          "工作台",
+          "排班调度",
+          "服务管理",
+          "病历管理",
+          "库存管理 4",
+          "会员管理"
+        ],
+        "inputs": [],
+        "tables": [],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "爱宠屋管理后台 · 直营中心店管理后台工作台排班调度服务管理病历管理库存管理4会员管理?管理员店长切换角色管理后台+ 新增预约营业中门店工作台2026年06月12日 星期五 · 中心店切换门店今日预约0单今日营收¥0.00待服务0单已完成0单今日预约查看全部快捷操作排班调度服务执行库存管理病历管理员工排班今日目标预约完成率0%营收目标0%客户满意度98%",
+        "layout": {
+          "viewportWidth": 1504,
+          "viewportHeight": 1401,
+          "scrollWidth": 1504,
+          "scrollHeight": 1401,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89158-codex-final-structure-01-首屏",
+          "label": "首屏",
+          "finalUrl": "http://127.0.0.1:50158/store",
+          "title": "萌宠健康 - 宠物健康全周期管理平台",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89158/probe/codex-final-20260612/may-89158-codex-final-structure-01-首屏.json",
+          "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89158/probe/codex-final-20260612/may-89158-codex-final-structure-01-首屏.png",
+          "elementCount": 255,
+          "interactiveCount": 16,
+          "interactiveLabels": [
+            "管理后台",
+            "工作台",
+            "排班调度",
+            "服务管理",
+            "病历管理",
+            "库存管理 4",
+            "会员管理",
+            "切换角色",
+            "新增预约",
+            "切换门店",
+            "查看全部",
+            "服务执行",
+            "库存管理"
+          ]
+        }
+      },
+      {
+        "label": "导航:管理后台",
+        "url": "http://127.0.0.1:50158/store",
+        "title": "萌宠健康 - 宠物健康全周期管理平台",
+        "headings": [
+          "爱宠屋",
+          "管理后台",
+          "门店工作台",
+          "今日预约",
+          "快捷操作",
+          "员工排班",
+          "今日目标"
+        ],
+        "navLabels": [
+          "爱宠屋 管理后台 · 直营中心店",
+          "管理后台",
+          "工作台",
+          "排班调度",
+          "服务管理",
+          "病历管理",
+          "库存管理 4",
+          "4",
+          "会员管理",
+          "管理员 店长",
+          "切换角色"
+        ],
+        "buttons": [
+          "切换角色",
+          "+ 新增预约",
+          "切换门店",
+          "去查看",
+          "查看全部",
+          "排班调度",
+          "服务执行",
+          "库存管理",
+          "病历管理"
+        ],
+        "links": [
+          "管理后台",
+          "工作台",
+          "排班调度",
+          "服务管理",
+          "病历管理",
+          "库存管理 4",
+          "会员管理"
+        ],
+        "inputs": [],
+        "tables": [],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "爱宠屋管理后台 · 直营中心店管理后台工作台排班调度服务管理病历管理库存管理4会员管理?管理员店长切换角色管理后台+ 新增预约营业中门店工作台2026年06月12日 星期五 · 中心店切换门店今日预约1单今日营收¥0.00待服务1单已完成2单库存预警有 4 个物品库存不足，请及时补货去查看今日预约查看全部10:00· 待服务精致洗护套餐快捷操作排班调度服务执行库存管理病历管理员工排班李明休息王小美休息张建国休息刘芳休息今日目标预约完成率200%营收目标0%客户满意度98%",
+        "layout": {
+          "viewportWidth": 1536,
+          "viewportHeight": 1401,
+          "scrollWidth": 1536,
+          "scrollHeight": 1401,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89158-codex-final-structure-02-导航-管理后台",
+          "label": "导航:管理后台",
+          "finalUrl": "http://127.0.0.1:50158/store",
+          "title": "萌宠健康 - 宠物健康全周期管理平台",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89158/probe/codex-final-20260612/may-89158-codex-final-structure-02-导航-管理后台.json",
+          "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89158/probe/codex-final-20260612/may-89158-codex-final-structure-02-导航-管理后台.png",
+          "elementCount": 331,
+          "interactiveCount": 17,
+          "interactiveLabels": [
+            "管理后台",
+            "工作台",
+            "排班调度",
+            "服务管理",
+            "病历管理",
+            "库存管理 4",
+            "会员管理",
+            "切换角色",
+            "新增预约",
+            "切换门店",
+            "去查看",
+            "查看全部",
+            "服务执行",
+            "库存管理"
+          ]
+        }
+      },
+      {
+        "label": "操作:查看全部",
+        "url": "http://127.0.0.1:50158/store",
+        "title": "萌宠健康 - 宠物健康全周期管理平台",
+        "headings": [
+          "爱宠屋",
+          "管理后台",
+          "门店工作台",
+          "今日预约",
+          "快捷操作",
+          "员工排班",
+          "今日目标"
+        ],
+        "navLabels": [
+          "爱宠屋 管理后台 · 直营中心店",
+          "管理后台",
+          "工作台",
+          "排班调度",
+          "服务管理",
+          "病历管理",
+          "库存管理 4",
+          "4",
+          "会员管理",
+          "管理员 店长",
+          "切换角色"
+        ],
+        "buttons": [
+          "切换角色",
+          "+ 新增预约",
+          "切换门店",
+          "去查看",
+          "查看全部",
+          "排班调度",
+          "服务执行",
+          "库存管理",
+          "病历管理"
+        ],
+        "links": [
+          "管理后台",
+          "工作台",
+          "排班调度",
+          "服务管理",
+          "病历管理",
+          "库存管理 4",
+          "会员管理"
+        ],
+        "inputs": [],
+        "tables": [],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "爱宠屋管理后台 · 直营中心店管理后台工作台排班调度服务管理病历管理库存管理4会员管理?管理员店长切换角色管理后台+ 新增预约营业中门店工作台2026年06月12日 星期五 · 中心店切换门店今日预约1单今日营收¥0.00待服务1单已完成2单库存预警有 4 个物品库存不足，请及时补货去查看今日预约查看全部10:00· 待服务精致洗护套餐快捷操作排班调度服务执行库存管理病历管理员工排班李明休息王小美休息张建国休息刘芳休息今日目标预约完成率200%营收目标0%客户满意度98%",
+        "layout": {
+          "viewportWidth": 1568,
+          "viewportHeight": 1401,
+          "scrollWidth": 1568,
+          "scrollHeight": 1401,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89158-codex-final-structure-03-操作-查看全部",
+          "label": "操作:查看全部",
+          "finalUrl": "http://127.0.0.1:50158/store",
+          "title": "萌宠健康 - 宠物健康全周期管理平台",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89158/probe/codex-final-20260612/may-89158-codex-final-structure-03-操作-查看全部.json",
+          "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89158/probe/codex-final-20260612/may-89158-codex-final-structure-03-操作-查看全部.png",
+          "elementCount": 331,
+          "interactiveCount": 17,
+          "interactiveLabels": [
+            "管理后台",
+            "工作台",
+            "排班调度",
+            "服务管理",
+            "病历管理",
+            "库存管理 4",
+            "会员管理",
+            "切换角色",
+            "新增预约",
+            "切换门店",
+            "去查看",
+            "查看全部",
+            "服务执行",
+            "库存管理"
+          ]
+        }
+      },
+      {
+        "label": "操作:去查看",
+        "url": "http://127.0.0.1:50158/store",
+        "title": "萌宠健康 - 宠物健康全周期管理平台",
+        "headings": [
+          "爱宠屋",
+          "管理后台",
+          "门店工作台",
+          "今日预约",
+          "快捷操作",
+          "员工排班",
+          "今日目标"
+        ],
+        "navLabels": [
+          "爱宠屋 管理后台 · 直营中心店",
+          "管理后台",
+          "工作台",
+          "排班调度",
+          "服务管理",
+          "病历管理",
+          "库存管理 4",
+          "4",
+          "会员管理",
+          "管理员 店长",
+          "切换角色"
+        ],
+        "buttons": [
+          "切换角色",
+          "+ 新增预约",
+          "切换门店",
+          "去查看",
+          "查看全部",
+          "排班调度",
+          "服务执行",
+          "库存管理",
+          "病历管理"
+        ],
+        "links": [
+          "管理后台",
+          "工作台",
+          "排班调度",
+          "服务管理",
+          "病历管理",
+          "库存管理 4",
+          "会员管理"
+        ],
+        "inputs": [],
+        "tables": [],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "爱宠屋管理后台 · 直营中心店管理后台工作台排班调度服务管理病历管理库存管理4会员管理?管理员店长切换角色管理后台+ 新增预约营业中门店工作台2026年06月12日 星期五 · 中心店切换门店今日预约1单今日营收¥0.00待服务1单已完成2单库存预警有 4 个物品库存不足，请及时补货去查看今日预约查看全部10:00· 待服务精致洗护套餐快捷操作排班调度服务执行库存管理病历管理员工排班李明休息王小美休息张建国休息刘芳休息今日目标预约完成率200%营收目标0%客户满意度98%",
+        "layout": {
+          "viewportWidth": 1600,
+          "viewportHeight": 1401,
+          "scrollWidth": 1600,
+          "scrollHeight": 1401,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89158-codex-final-structure-04-操作-去查看",
+          "label": "操作:去查看",
+          "finalUrl": "http://127.0.0.1:50158/store",
+          "title": "萌宠健康 - 宠物健康全周期管理平台",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89158/probe/codex-final-20260612/may-89158-codex-final-structure-04-操作-去查看.json",
+          "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89158/probe/codex-final-20260612/may-89158-codex-final-structure-04-操作-去查看.png",
+          "elementCount": 331,
+          "interactiveCount": 17,
+          "interactiveLabels": [
+            "管理后台",
+            "工作台",
+            "排班调度",
+            "服务管理",
+            "病历管理",
+            "库存管理 4",
+            "会员管理",
+            "切换角色",
+            "新增预约",
+            "切换门店",
+            "去查看",
+            "查看全部",
+            "服务执行",
+            "库存管理"
+          ]
+        }
+      },
+      {
+        "label": "导航:工作台",
+        "url": "http://127.0.0.1:50158/store",
+        "title": "萌宠健康 - 宠物健康全周期管理平台",
+        "headings": [
+          "爱宠屋",
+          "管理后台",
+          "门店工作台",
+          "今日预约",
+          "快捷操作",
+          "员工排班",
+          "今日目标"
+        ],
+        "navLabels": [
+          "爱宠屋 管理后台 · 直营中心店",
+          "管理后台",
+          "工作台",
+          "排班调度",
+          "服务管理",
+          "病历管理",
+          "库存管理 4",
+          "4",
+          "会员管理",
+          "管理员 店长",
+          "切换角色"
+        ],
+        "buttons": [
+          "切换角色",
+          "+ 新增预约",
+          "切换门店",
+          "去查看",
+          "查看全部",
+          "排班调度",
+          "服务执行",
+          "库存管理",
+          "病历管理"
+        ],
+        "links": [
+          "管理后台",
+          "工作台",
+          "排班调度",
+          "服务管理",
+          "病历管理",
+          "库存管理 4",
+          "会员管理"
+        ],
+        "inputs": [],
+        "tables": [],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "爱宠屋管理后台 · 直营中心店管理后台工作台排班调度服务管理病历管理库存管理4会员管理?管理员店长切换角色管理后台+ 新增预约营业中门店工作台2026年06月12日 星期五 · 中心店切换门店今日预约1单今日营收¥0.00待服务1单已完成2单库存预警有 4 个物品库存不足，请及时补货去查看今日预约查看全部10:00· 待服务精致洗护套餐快捷操作排班调度服务执行库存管理病历管理员工排班李明休息王小美休息张建国休息刘芳休息今日目标预约完成率200%营收目标0%客户满意度98%",
+        "layout": {
+          "viewportWidth": 1632,
+          "viewportHeight": 1401,
+          "scrollWidth": 1632,
+          "scrollHeight": 1401,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89158-codex-final-structure-05-导航-工作台",
+          "label": "导航:工作台",
+          "finalUrl": "http://127.0.0.1:50158/store",
+          "title": "萌宠健康 - 宠物健康全周期管理平台",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89158/probe/codex-final-20260612/may-89158-codex-final-structure-05-导航-工作台.json",
+          "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89158/probe/codex-final-20260612/may-89158-codex-final-structure-05-导航-工作台.png",
+          "elementCount": 331,
+          "interactiveCount": 17,
+          "interactiveLabels": [
+            "管理后台",
+            "工作台",
+            "排班调度",
+            "服务管理",
+            "病历管理",
+            "库存管理 4",
+            "会员管理",
+            "切换角色",
+            "新增预约",
+            "切换门店",
+            "去查看",
+            "查看全部",
+            "服务执行",
+            "库存管理"
+          ]
+        }
+      },
+      {
+        "label": "操作:查看全部",
+        "url": "http://127.0.0.1:50158/store",
+        "title": "萌宠健康 - 宠物健康全周期管理平台",
+        "headings": [
+          "爱宠屋",
+          "管理后台",
+          "门店工作台",
+          "今日预约",
+          "快捷操作",
+          "员工排班",
+          "今日目标"
+        ],
+        "navLabels": [
+          "爱宠屋 管理后台 · 直营中心店",
+          "管理后台",
+          "工作台",
+          "排班调度",
+          "服务管理",
+          "病历管理",
+          "库存管理 4",
+          "4",
+          "会员管理",
+          "管理员 店长",
+          "切换角色"
+        ],
+        "buttons": [
+          "切换角色",
+          "+ 新增预约",
+          "切换门店",
+          "去查看",
+          "查看全部",
+          "排班调度",
+          "服务执行",
+          "库存管理",
+          "病历管理"
+        ],
+        "links": [
+          "管理后台",
+          "工作台",
+          "排班调度",
+          "服务管理",
+          "病历管理",
+          "库存管理 4",
+          "会员管理"
+        ],
+        "inputs": [],
+        "tables": [],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "爱宠屋管理后台 · 直营中心店管理后台工作台排班调度服务管理病历管理库存管理4会员管理?管理员店长切换角色管理后台+ 新增预约营业中门店工作台2026年06月12日 星期五 · 中心店切换门店今日预约1单今日营收¥0.00待服务1单已完成2单库存预警有 4 个物品库存不足，请及时补货去查看今日预约查看全部10:00· 待服务精致洗护套餐快捷操作排班调度服务执行库存管理病历管理员工排班李明休息王小美休息张建国休息刘芳休息今日目标预约完成率200%营收目标0%客户满意度98%",
+        "layout": {
+          "viewportWidth": 1664,
+          "viewportHeight": 1401,
+          "scrollWidth": 1664,
+          "scrollHeight": 1401,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89158-codex-final-structure-06-操作-查看全部",
+          "label": "操作:查看全部",
+          "finalUrl": "http://127.0.0.1:50158/store",
+          "title": "萌宠健康 - 宠物健康全周期管理平台",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89158/probe/codex-final-20260612/may-89158-codex-final-structure-06-操作-查看全部.json",
+          "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89158/probe/codex-final-20260612/may-89158-codex-final-structure-06-操作-查看全部.png",
+          "elementCount": 331,
+          "interactiveCount": 17,
+          "interactiveLabels": [
+            "管理后台",
+            "工作台",
+            "排班调度",
+            "服务管理",
+            "病历管理",
+            "库存管理 4",
+            "会员管理",
+            "切换角色",
+            "新增预约",
+            "切换门店",
+            "去查看",
+            "查看全部",
+            "服务执行",
+            "库存管理"
+          ]
+        }
+      },
+      {
+        "label": "操作:去查看",
+        "url": "http://127.0.0.1:50158/store",
+        "title": "萌宠健康 - 宠物健康全周期管理平台",
+        "headings": [
+          "爱宠屋",
+          "管理后台",
+          "门店工作台",
+          "今日预约",
+          "快捷操作",
+          "员工排班",
+          "今日目标"
+        ],
+        "navLabels": [
+          "爱宠屋 管理后台 · 直营中心店",
+          "管理后台",
+          "工作台",
+          "排班调度",
+          "服务管理",
+          "病历管理",
+          "库存管理 4",
+          "4",
+          "会员管理",
+          "管理员 店长",
+          "切换角色"
+        ],
+        "buttons": [
+          "切换角色",
+          "+ 新增预约",
+          "切换门店",
+          "去查看",
+          "查看全部",
+          "排班调度",
+          "服务执行",
+          "库存管理",
+          "病历管理"
+        ],
+        "links": [
+          "管理后台",
+          "工作台",
+          "排班调度",
+          "服务管理",
+          "病历管理",
+          "库存管理 4",
+          "会员管理"
+        ],
+        "inputs": [],
+        "tables": [],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "爱宠屋管理后台 · 直营中心店管理后台工作台排班调度服务管理病历管理库存管理4会员管理?管理员店长切换角色管理后台+ 新增预约营业中门店工作台2026年06月12日 星期五 · 中心店切换门店今日预约1单今日营收¥0.00待服务1单已完成2单库存预警有 4 个物品库存不足，请及时补货去查看今日预约查看全部10:00· 待服务精致洗护套餐快捷操作排班调度服务执行库存管理病历管理员工排班李明休息王小美休息张建国休息刘芳休息今日目标预约完成率200%营收目标0%客户满意度98%",
+        "layout": {
+          "viewportWidth": 1696,
+          "viewportHeight": 1401,
+          "scrollWidth": 1696,
+          "scrollHeight": 1401,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89158-codex-final-structure-07-操作-去查看",
+          "label": "操作:去查看",
+          "finalUrl": "http://127.0.0.1:50158/store",
+          "title": "萌宠健康 - 宠物健康全周期管理平台",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89158/probe/codex-final-20260612/may-89158-codex-final-structure-07-操作-去查看.json",
+          "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89158/probe/codex-final-20260612/may-89158-codex-final-structure-07-操作-去查看.png",
+          "elementCount": 331,
+          "interactiveCount": 17,
+          "interactiveLabels": [
+            "管理后台",
+            "工作台",
+            "排班调度",
+            "服务管理",
+            "病历管理",
+            "库存管理 4",
+            "会员管理",
+            "切换角色",
+            "新增预约",
+            "切换门店",
+            "去查看",
+            "查看全部",
+            "服务执行",
+            "库存管理"
+          ]
+        }
+      },
+      {
+        "label": "导航:排班调度",
+        "url": "http://127.0.0.1:50158/store/schedule",
+        "title": "萌宠健康 - 宠物健康全周期管理平台",
+        "headings": [
+          "爱宠屋",
+          "排班调度",
+          "日期选择",
+          "2026年06月12日 星期五",
+          "当日预约详情"
+        ],
+        "navLabels": [
+          "爱宠屋 管理后台 · 直营中心店",
+          "管理后台",
+          "工作台",
+          "排班调度",
+          "服务管理",
+          "病历管理",
+          "库存管理 4",
+          "4",
+          "会员管理",
+          "管理员 店长",
+          "切换角色"
+        ],
+        "buttons": [
+          "切换角色",
+          "+ 新增预约",
+          "新建排班",
+          "星期一 06月08日 1单",
+          "星期二 06月09日 0单",
+          "星期三 06月10日 1单",
+          "星期四 06月11日 0单",
+          "星期五 06月12日 1单",
+          "星期六 06月13日 0单",
+          "星期日 06月14日 0单"
+        ],
+        "links": [
+          "管理后台",
+          "工作台",
+          "排班调度",
+          "服务管理",
+          "病历管理",
+          "库存管理 4",
+          "会员管理"
+        ],
+        "inputs": [],
+        "tables": [],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "爱宠屋管理后台 · 直营中心店管理后台工作台排班调度服务管理病历管理库存管理4会员管理?管理员店长切换角色排班调度+ 新增预约营业中排班调度管理员工排班与预约安排新建排班日期选择06月08日 - 06月14日星期一06月08日1单星期二06月09日0单星期三06月10日1单星期四06月11日0单星期五06月12日1单星期六06月13日0单星期日06月14日0单2026年06月12日 星期五共 2 人排班 · 1 单预约排班预约员工/时间09:0009:3010:0010:3011:0011:3012:0012:3013:0013:3014:0014:30李明王小美张建国刘芳当日预约详情待服务AP202606120001 · 精致洗护套餐10:00 - ¥168.00",
+        "layout": {
+          "viewportWidth": 1728,
+          "viewportHeight": 1401,
+          "scrollWidth": 1728,
+          "scrollHeight": 1401,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89158-codex-final-structure-08-导航-排班调度",
+          "label": "导航:排班调度",
+          "finalUrl": "http://127.0.0.1:50158/store/schedule",
+          "title": "萌宠健康 - 宠物健康全周期管理平台",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89158/probe/codex-final-20260612/may-89158-codex-final-structure-08-导航-排班调度.json",
+          "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89158/probe/codex-final-20260612/may-89158-codex-final-structure-08-导航-排班调度.png",
+          "elementCount": 319,
+          "interactiveCount": 20,
+          "interactiveLabels": [
+            "管理后台",
+            "工作台",
+            "排班调度",
+            "服务管理",
+            "病历管理",
+            "库存管理 4",
+            "会员管理",
+            "切换角色",
+            "新增预约",
+            "新建排班",
+            "星期一 06月08日 1单",
+            "星期二 06月09日 0单",
+            "星期三 06月10日 1单",
+            "星期四 06月11日 0单",
+            "星期五 06月12日 1单",
+            "星期六 06月13日 0单",
+            "星期日 06月14日 0单"
+          ]
+        }
+      },
+      {
+        "label": "操作:新建排班",
+        "url": "http://127.0.0.1:50158/store/schedule",
+        "title": "萌宠健康 - 宠物健康全周期管理平台",
+        "headings": [
+          "爱宠屋",
+          "排班调度",
+          "日期选择",
+          "2026年06月12日 星期五",
+          "当日预约详情",
+          "新建排班"
+        ],
+        "navLabels": [
+          "爱宠屋 管理后台 · 直营中心店",
+          "管理后台",
+          "工作台",
+          "排班调度",
+          "服务管理",
+          "病历管理",
+          "库存管理 4",
+          "4",
+          "会员管理",
+          "管理员 店长",
+          "切换角色"
+        ],
+        "buttons": [
+          "切换角色",
+          "+ 新增预约",
+          "新建排班",
+          "星期一 06月08日 1单",
+          "星期二 06月09日 0单",
+          "星期三 06月10日 1单",
+          "星期四 06月11日 0单",
+          "星期五 06月12日 1单",
+          "星期六 06月13日 0单",
+          "星期日 06月14日 0单",
+          "李明",
+          "王小美",
+          "张建国",
+          "刘芳",
+          "取消",
+          "确认排班"
+        ],
+        "links": [
+          "管理后台",
+          "工作台",
+          "排班调度",
+          "服务管理",
+          "病历管理",
+          "库存管理 4",
+          "会员管理"
+        ],
+        "inputs": [
+          {
+            "tag": "input",
+            "type": "time",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "time",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          }
+        ],
+        "tables": [],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "爱宠屋管理后台 · 直营中心店管理后台工作台排班调度服务管理病历管理库存管理4会员管理?管理员店长切换角色排班调度+ 新增预约营业中排班调度管理员工排班与预约安排新建排班日期选择06月08日 - 06月14日星期一06月08日1单星期二06月09日0单星期三06月10日1单星期四06月11日0单星期五06月12日1单星期六06月13日0单星期日06月14日0单2026年06月12日 星期五共 2 人排班 · 1 单预约排班预约员工/时间09:0009:3010:0010:3011:0011:3012:0012:3013:0013:3014:0014:30李明王小美张建国刘芳当日预约详情待服务AP202606120001 · 精致洗护套餐10:00 - ¥168.00新建排班选择员工李明王小美张建国刘芳开始时间结束时间取消确认排班",
+        "layout": {
+          "viewportWidth": 1760,
+          "viewportHeight": 1401,
+          "scrollWidth": 1760,
+          "scrollHeight": 1401,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89158-codex-final-structure-09-操作-新建排班",
+          "label": "操作:新建排班",
+          "finalUrl": "http://127.0.0.1:50158/store/schedule",
+          "title": "萌宠健康 - 宠物健康全周期管理平台",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89158/probe/codex-final-20260612/may-89158-codex-final-structure-09-操作-新建排班.json",
+          "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89158/probe/codex-final-20260612/may-89158-codex-final-structure-09-操作-新建排班.png",
+          "elementCount": 366,
+          "interactiveCount": 28,
+          "interactiveLabels": [
+            "管理后台",
+            "工作台",
+            "排班调度",
+            "服务管理",
+            "病历管理",
+            "库存管理 4",
+            "会员管理",
+            "切换角色",
+            "新增预约",
+            "新建排班",
+            "星期一 06月08日 1单",
+            "星期二 06月09日 0单",
+            "星期三 06月10日 1单",
+            "星期四 06月11日 0单",
+            "星期五 06月12日 1单",
+            "星期六 06月13日 0单",
+            "星期日 06月14日 0单",
+            "李明",
+            "王小美",
+            "张建国",
+            "刘芳",
+            "09:00",
+            "18:00",
+            "取消",
+            "确认排班"
+          ]
+        }
+      },
+      {
+        "label": "二层操作:新建排班->李明",
+        "url": "http://127.0.0.1:50158/store/schedule",
+        "title": "萌宠健康 - 宠物健康全周期管理平台",
+        "headings": [
+          "爱宠屋",
+          "排班调度",
+          "日期选择",
+          "2026年06月12日 星期五",
+          "当日预约详情",
+          "新建排班"
+        ],
+        "navLabels": [
+          "爱宠屋 管理后台 · 直营中心店",
+          "管理后台",
+          "工作台",
+          "排班调度",
+          "服务管理",
+          "病历管理",
+          "库存管理 4",
+          "4",
+          "会员管理",
+          "管理员 店长",
+          "切换角色"
+        ],
+        "buttons": [
+          "切换角色",
+          "+ 新增预约",
+          "新建排班",
+          "星期一 06月08日 1单",
+          "星期二 06月09日 0单",
+          "星期三 06月10日 1单",
+          "星期四 06月11日 0单",
+          "星期五 06月12日 1单",
+          "星期六 06月13日 0单",
+          "星期日 06月14日 0单",
+          "李明",
+          "王小美",
+          "张建国",
+          "刘芳",
+          "取消",
+          "确认排班"
+        ],
+        "links": [
+          "管理后台",
+          "工作台",
+          "排班调度",
+          "服务管理",
+          "病历管理",
+          "库存管理 4",
+          "会员管理"
+        ],
+        "inputs": [
+          {
+            "tag": "input",
+            "type": "time",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          },
+          {
+            "tag": "input",
+            "type": "time",
+            "placeholder": "",
+            "name": "",
+            "label": ""
+          }
+        ],
+        "tables": [],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "爱宠屋管理后台 · 直营中心店管理后台工作台排班调度服务管理病历管理库存管理4会员管理?管理员店长切换角色排班调度+ 新增预约营业中排班调度管理员工排班与预约安排新建排班日期选择06月08日 - 06月14日星期一06月08日1单星期二06月09日0单星期三06月10日1单星期四06月11日0单星期五06月12日1单星期六06月13日0单星期日06月14日0单2026年06月12日 星期五共 2 人排班 · 1 单预约排班预约员工/时间09:0009:3010:0010:3011:0011:3012:0012:3013:0013:3014:0014:30李明王小美张建国刘芳当日预约详情待服务AP202606120001 · 精致洗护套餐10:00 - ¥168.00新建排班选择员工李明王小美张建国刘芳开始时间结束时间取消确认排班",
+        "layout": {
+          "viewportWidth": 1792,
+          "viewportHeight": 1401,
+          "scrollWidth": 1792,
+          "scrollHeight": 1401,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89158-codex-final-structure-10-二层操作-新建排班-李明",
+          "label": "二层操作:新建排班->李明",
+          "finalUrl": "http://127.0.0.1:50158/store/schedule",
+          "title": "萌宠健康 - 宠物健康全周期管理平台",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89158/probe/codex-final-20260612/may-89158-codex-final-structure-10-二层操作-新建排班-李明.json",
+          "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89158/probe/codex-final-20260612/may-89158-codex-final-structure-10-二层操作-新建排班-李明.png",
+          "elementCount": 366,
+          "interactiveCount": 28,
+          "interactiveLabels": [
+            "管理后台",
+            "工作台",
+            "排班调度",
+            "服务管理",
+            "病历管理",
+            "库存管理 4",
+            "会员管理",
+            "切换角色",
+            "新增预约",
+            "新建排班",
+            "星期一 06月08日 1单",
+            "星期二 06月09日 0单",
+            "星期三 06月10日 1单",
+            "星期四 06月11日 0单",
+            "星期五 06月12日 1单",
+            "星期六 06月13日 0单",
+            "星期日 06月14日 0单",
+            "李明",
+            "王小美",
+            "张建国",
+            "刘芳",
+            "09:00",
+            "18:00",
+            "取消",
+            "确认排班"
+          ]
+        }
+      },
+      {
+        "label": "操作:切换角色",
+        "url": "http://127.0.0.1:50158/store/schedule",
+        "title": "萌宠健康 - 宠物健康全周期管理平台",
+        "headings": [
+          "爱宠屋",
+          "排班调度",
+          "日期选择",
+          "2026年06月12日 星期五",
+          "当日预约详情",
+          "切换角色"
+        ],
+        "navLabels": [
+          "爱宠屋 管理后台 · 直营中心店",
+          "管理后台",
+          "工作台",
+          "排班调度",
+          "服务管理",
+          "病历管理",
+          "库存管理 4",
+          "4",
+          "会员管理",
+          "管理员 店长",
+          "切换角色"
+        ],
+        "buttons": [
+          "切换角色",
+          "+ 新增预约",
+          "新建排班",
+          "星期一 06月08日 1单",
+          "星期二 06月09日 0单",
+          "星期三 06月10日 1单",
+          "星期四 06月11日 0单",
+          "星期五 06月12日 1单",
+          "星期六 06月13日 0单",
+          "星期日 06月14日 0单",
+          "宠主端",
+          "门店端",
+          "兽医端"
+        ],
+        "links": [
+          "管理后台",
+          "工作台",
+          "排班调度",
+          "服务管理",
+          "病历管理",
+          "库存管理 4",
+          "会员管理"
+        ],
+        "inputs": [],
+        "tables": [],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "爱宠屋管理后台 · 直营中心店管理后台工作台排班调度服务管理病历管理库存管理4会员管理?管理员店长切换角色排班调度+ 新增预约营业中排班调度管理员工排班与预约安排新建排班日期选择06月08日 - 06月14日星期一06月08日1单星期二06月09日0单星期三06月10日1单星期四06月11日0单星期五06月12日1单星期六06月13日0单星期日06月14日0单2026年06月12日 星期五共 2 人排班 · 1 单预约排班预约员工/时间09:0009:3010:0010:3011:0011:3012:0012:3013:0013:3014:0014:30李明王小美张建国刘芳当日预约详情待服务AP202606120001 · 精致洗护套餐10:00 - ¥168.00切换角色宠主端门店端兽医端",
+        "layout": {
+          "viewportWidth": 1824,
+          "viewportHeight": 1401,
+          "scrollWidth": 1824,
+          "scrollHeight": 1401,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89158-codex-final-structure-11-操作-切换角色",
+          "label": "操作:切换角色",
+          "finalUrl": "http://127.0.0.1:50158/store/schedule",
+          "title": "萌宠健康 - 宠物健康全周期管理平台",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89158/probe/codex-final-20260612/may-89158-codex-final-structure-11-操作-切换角色.json",
+          "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89158/probe/codex-final-20260612/may-89158-codex-final-structure-11-操作-切换角色.png",
+          "elementCount": 341,
+          "interactiveCount": 23,
+          "interactiveLabels": [
+            "管理后台",
+            "工作台",
+            "排班调度",
+            "服务管理",
+            "病历管理",
+            "库存管理 4",
+            "会员管理",
+            "切换角色",
+            "新增预约",
+            "新建排班",
+            "星期一 06月08日 1单",
+            "星期二 06月09日 0单",
+            "星期三 06月10日 1单",
+            "星期四 06月11日 0单",
+            "星期五 06月12日 1单",
+            "星期六 06月13日 0单",
+            "星期日 06月14日 0单",
+            "宠主端",
+            "门店端",
+            "兽医端"
+          ]
+        }
+      },
+      {
+        "label": "二层操作:切换角色->宠主端",
+        "url": "http://127.0.0.1:50158/owner",
+        "title": "萌宠健康 - 宠物健康全周期管理平台",
+        "headings": [
+          "宠护康",
+          "首页",
+          "早上好，铲屎官 ☀️",
+          "小花",
+          "快捷服务",
+          "健康提醒",
+          "我的积分",
+          "最近预约",
+          "推荐门店",
+          "消费统计",
+          "宠物症状自查"
+        ],
+        "navLabels": [
+          "宠护康 宠物健康管理平台",
+          "首页",
+          "宠物档案",
+          "服务预约",
+          "健康档案",
+          "在线商城",
+          "在线问诊",
+          "症状自查",
+          "会员中心",
+          "张小花的铲屎官 黄金会员 · Lv.3"
+        ],
+        "buttons": [
+          "张小花的铲屎官",
+          "小花",
+          "豆豆",
+          "查看档案",
+          "预约服务",
+          "全部服务",
+          "洗护美容",
+          "驱虫服务",
+          "疫苗接种",
+          "健康体检",
+          "查看全部",
+          "积分商城",
+          "查看全部预约",
+          "立即自查"
+        ],
+        "links": [
+          "宠护康 宠物健康管理平台",
+          "首页",
+          "宠物档案",
+          "服务预约",
+          "健康档案",
+          "在线商城",
+          "在线问诊",
+          "症状自查",
+          "会员中心"
+        ],
+        "inputs": [],
+        "tables": [],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "宠护康宠物健康管理平台首页宠物档案服务预约健康档案在线商城在线问诊症状自查会员中心张小花的铲屎官黄金会员 · Lv.3首页张小花的铲屎官2026年06月12日 星期五早上好，铲屎官 ☀️黄金会员小花豆豆92优秀小花英国短毛猫♀ · 4.2kg · 已绝育已绝育健康活泼查看档案预约服务快捷服务全部服务 洗护美容驱虫服务疫苗接种健康体检健康提醒查看全部小花的驱虫提醒到期时间：2026-06-20还有7天小花的疫苗接种到期时间：2026-11-20还有160天我的积分2580可用积分积分商城最近预约精致洗护待服务2026-06-1210:00查看全部预约推荐门店查看全部 爱宠屋·直营中心店北京市朝阳区建国路88号4.91.2km爱宠屋·望京社区店北京市朝阳区望京SOHO4.83.5km消费统计本月2服务次数¥216.00累计消费¥2580.00累计积分3连续月份宠物症状自查AI智能分析，快速了解宠物健康状况立即自查",
+        "layout": {
+          "viewportWidth": 1856,
+          "viewportHeight": 1600,
+          "scrollWidth": 1856,
+          "scrollHeight": 1860,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89158-codex-final-structure-12-二层操作-切换角色-宠主端",
+          "label": "二层操作:切换角色->宠主端",
+          "finalUrl": "http://127.0.0.1:50158/owner",
+          "title": "萌宠健康 - 宠物健康全周期管理平台",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89158/probe/codex-final-20260612/may-89158-codex-final-structure-12-二层操作-切换角色-宠主端.json",
+          "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89158/probe/codex-final-20260612/may-89158-codex-final-structure-12-二层操作-切换角色-宠主端.png",
+          "elementCount": 347,
+          "interactiveCount": 26,
+          "interactiveLabels": [
+            "宠护康 宠物健康管理平台",
+            "首页",
+            "宠物档案",
+            "服务预约",
+            "健康档案",
+            "在线商城",
+            "在线问诊",
+            "症状自查",
+            "会员中心",
+            "张小花的铲屎官",
+            "小花",
+            "豆豆",
+            "查看档案",
+            "预约服务",
+            "全部服务",
+            "洗护美容",
+            "驱虫服务",
+            "疫苗接种",
+            "健康体检",
+            "查看全部",
+            "积分商城",
+            "查看全部预约",
+            "立即自查"
+          ]
+        }
+      }
+    ],
+    "findings": [],
+    "actionHints": [],
+    "emptyPages": [],
+    "overflowPages": [],
+    "blankPages": [],
+    "apiFailurePaths": [],
+    "goalTerms": [],
+    "clickedActionDescriptors": [
+      {
+        "nav": "管理后台",
+        "label": "查看全部",
+        "ordinal": 0,
+        "unsafe": false
+      },
+      {
+        "nav": "管理后台",
+        "label": "去查看",
+        "ordinal": 0,
+        "unsafe": false
+      },
+      {
+        "nav": "工作台",
+        "label": "查看全部",
+        "ordinal": 0,
+        "unsafe": false
+      },
+      {
+        "nav": "工作台",
+        "label": "去查看",
+        "ordinal": 0,
+        "unsafe": false
+      },
+      {
+        "nav": "排班调度",
+        "label": "新建排班",
+        "ordinal": 0,
+        "unsafe": false
+      },
+      {
+        "nav": "排班调度",
+        "label": "新建排班->李明",
+        "ordinal": 0,
+        "secondary": true,
+        "unsafe": false
+      },
+      {
+        "nav": "排班调度",
+        "label": "切换角色",
+        "ordinal": 0,
+        "unsafe": false
+      },
+      {
+        "nav": "排班调度",
+        "label": "切换角色->宠主端",
+        "ordinal": 0,
+        "secondary": true,
+        "unsafe": false
+      }
+    ],
+    "secondaryActionClicks": 2,
+    "structureCaptures": [
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89158-codex-final-structure-01-首屏",
+        "label": "首屏",
+        "finalUrl": "http://127.0.0.1:50158/store",
+        "title": "萌宠健康 - 宠物健康全周期管理平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89158/probe/codex-final-20260612/may-89158-codex-final-structure-01-首屏.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89158/probe/codex-final-20260612/may-89158-codex-final-structure-01-首屏.png",
+        "elementCount": 255,
+        "interactiveCount": 16,
+        "interactiveLabels": [
+          "管理后台",
+          "工作台",
+          "排班调度",
+          "服务管理",
+          "病历管理",
+          "库存管理 4",
+          "会员管理",
+          "切换角色",
+          "新增预约",
+          "切换门店",
+          "查看全部",
+          "服务执行",
+          "库存管理"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89158-codex-final-structure-02-导航-管理后台",
+        "label": "导航:管理后台",
+        "finalUrl": "http://127.0.0.1:50158/store",
+        "title": "萌宠健康 - 宠物健康全周期管理平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89158/probe/codex-final-20260612/may-89158-codex-final-structure-02-导航-管理后台.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89158/probe/codex-final-20260612/may-89158-codex-final-structure-02-导航-管理后台.png",
+        "elementCount": 331,
+        "interactiveCount": 17,
+        "interactiveLabels": [
+          "管理后台",
+          "工作台",
+          "排班调度",
+          "服务管理",
+          "病历管理",
+          "库存管理 4",
+          "会员管理",
+          "切换角色",
+          "新增预约",
+          "切换门店",
+          "去查看",
+          "查看全部",
+          "服务执行",
+          "库存管理"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89158-codex-final-structure-03-操作-查看全部",
+        "label": "操作:查看全部",
+        "finalUrl": "http://127.0.0.1:50158/store",
+        "title": "萌宠健康 - 宠物健康全周期管理平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89158/probe/codex-final-20260612/may-89158-codex-final-structure-03-操作-查看全部.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89158/probe/codex-final-20260612/may-89158-codex-final-structure-03-操作-查看全部.png",
+        "elementCount": 331,
+        "interactiveCount": 17,
+        "interactiveLabels": [
+          "管理后台",
+          "工作台",
+          "排班调度",
+          "服务管理",
+          "病历管理",
+          "库存管理 4",
+          "会员管理",
+          "切换角色",
+          "新增预约",
+          "切换门店",
+          "去查看",
+          "查看全部",
+          "服务执行",
+          "库存管理"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89158-codex-final-structure-04-操作-去查看",
+        "label": "操作:去查看",
+        "finalUrl": "http://127.0.0.1:50158/store",
+        "title": "萌宠健康 - 宠物健康全周期管理平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89158/probe/codex-final-20260612/may-89158-codex-final-structure-04-操作-去查看.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89158/probe/codex-final-20260612/may-89158-codex-final-structure-04-操作-去查看.png",
+        "elementCount": 331,
+        "interactiveCount": 17,
+        "interactiveLabels": [
+          "管理后台",
+          "工作台",
+          "排班调度",
+          "服务管理",
+          "病历管理",
+          "库存管理 4",
+          "会员管理",
+          "切换角色",
+          "新增预约",
+          "切换门店",
+          "去查看",
+          "查看全部",
+          "服务执行",
+          "库存管理"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89158-codex-final-structure-05-导航-工作台",
+        "label": "导航:工作台",
+        "finalUrl": "http://127.0.0.1:50158/store",
+        "title": "萌宠健康 - 宠物健康全周期管理平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89158/probe/codex-final-20260612/may-89158-codex-final-structure-05-导航-工作台.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89158/probe/codex-final-20260612/may-89158-codex-final-structure-05-导航-工作台.png",
+        "elementCount": 331,
+        "interactiveCount": 17,
+        "interactiveLabels": [
+          "管理后台",
+          "工作台",
+          "排班调度",
+          "服务管理",
+          "病历管理",
+          "库存管理 4",
+          "会员管理",
+          "切换角色",
+          "新增预约",
+          "切换门店",
+          "去查看",
+          "查看全部",
+          "服务执行",
+          "库存管理"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89158-codex-final-structure-06-操作-查看全部",
+        "label": "操作:查看全部",
+        "finalUrl": "http://127.0.0.1:50158/store",
+        "title": "萌宠健康 - 宠物健康全周期管理平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89158/probe/codex-final-20260612/may-89158-codex-final-structure-06-操作-查看全部.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89158/probe/codex-final-20260612/may-89158-codex-final-structure-06-操作-查看全部.png",
+        "elementCount": 331,
+        "interactiveCount": 17,
+        "interactiveLabels": [
+          "管理后台",
+          "工作台",
+          "排班调度",
+          "服务管理",
+          "病历管理",
+          "库存管理 4",
+          "会员管理",
+          "切换角色",
+          "新增预约",
+          "切换门店",
+          "去查看",
+          "查看全部",
+          "服务执行",
+          "库存管理"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89158-codex-final-structure-07-操作-去查看",
+        "label": "操作:去查看",
+        "finalUrl": "http://127.0.0.1:50158/store",
+        "title": "萌宠健康 - 宠物健康全周期管理平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89158/probe/codex-final-20260612/may-89158-codex-final-structure-07-操作-去查看.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89158/probe/codex-final-20260612/may-89158-codex-final-structure-07-操作-去查看.png",
+        "elementCount": 331,
+        "interactiveCount": 17,
+        "interactiveLabels": [
+          "管理后台",
+          "工作台",
+          "排班调度",
+          "服务管理",
+          "病历管理",
+          "库存管理 4",
+          "会员管理",
+          "切换角色",
+          "新增预约",
+          "切换门店",
+          "去查看",
+          "查看全部",
+          "服务执行",
+          "库存管理"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89158-codex-final-structure-08-导航-排班调度",
+        "label": "导航:排班调度",
+        "finalUrl": "http://127.0.0.1:50158/store/schedule",
+        "title": "萌宠健康 - 宠物健康全周期管理平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89158/probe/codex-final-20260612/may-89158-codex-final-structure-08-导航-排班调度.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89158/probe/codex-final-20260612/may-89158-codex-final-structure-08-导航-排班调度.png",
+        "elementCount": 319,
+        "interactiveCount": 20,
+        "interactiveLabels": [
+          "管理后台",
+          "工作台",
+          "排班调度",
+          "服务管理",
+          "病历管理",
+          "库存管理 4",
+          "会员管理",
+          "切换角色",
+          "新增预约",
+          "新建排班",
+          "星期一 06月08日 1单",
+          "星期二 06月09日 0单",
+          "星期三 06月10日 1单",
+          "星期四 06月11日 0单",
+          "星期五 06月12日 1单",
+          "星期六 06月13日 0单",
+          "星期日 06月14日 0单"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89158-codex-final-structure-09-操作-新建排班",
+        "label": "操作:新建排班",
+        "finalUrl": "http://127.0.0.1:50158/store/schedule",
+        "title": "萌宠健康 - 宠物健康全周期管理平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89158/probe/codex-final-20260612/may-89158-codex-final-structure-09-操作-新建排班.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89158/probe/codex-final-20260612/may-89158-codex-final-structure-09-操作-新建排班.png",
+        "elementCount": 366,
+        "interactiveCount": 28,
+        "interactiveLabels": [
+          "管理后台",
+          "工作台",
+          "排班调度",
+          "服务管理",
+          "病历管理",
+          "库存管理 4",
+          "会员管理",
+          "切换角色",
+          "新增预约",
+          "新建排班",
+          "星期一 06月08日 1单",
+          "星期二 06月09日 0单",
+          "星期三 06月10日 1单",
+          "星期四 06月11日 0单",
+          "星期五 06月12日 1单",
+          "星期六 06月13日 0单",
+          "星期日 06月14日 0单",
+          "李明",
+          "王小美",
+          "张建国",
+          "刘芳",
+          "09:00",
+          "18:00",
+          "取消",
+          "确认排班"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89158-codex-final-structure-10-二层操作-新建排班-李明",
+        "label": "二层操作:新建排班->李明",
+        "finalUrl": "http://127.0.0.1:50158/store/schedule",
+        "title": "萌宠健康 - 宠物健康全周期管理平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89158/probe/codex-final-20260612/may-89158-codex-final-structure-10-二层操作-新建排班-李明.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89158/probe/codex-final-20260612/may-89158-codex-final-structure-10-二层操作-新建排班-李明.png",
+        "elementCount": 366,
+        "interactiveCount": 28,
+        "interactiveLabels": [
+          "管理后台",
+          "工作台",
+          "排班调度",
+          "服务管理",
+          "病历管理",
+          "库存管理 4",
+          "会员管理",
+          "切换角色",
+          "新增预约",
+          "新建排班",
+          "星期一 06月08日 1单",
+          "星期二 06月09日 0单",
+          "星期三 06月10日 1单",
+          "星期四 06月11日 0单",
+          "星期五 06月12日 1单",
+          "星期六 06月13日 0单",
+          "星期日 06月14日 0单",
+          "李明",
+          "王小美",
+          "张建国",
+          "刘芳",
+          "09:00",
+          "18:00",
+          "取消",
+          "确认排班"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89158-codex-final-structure-11-操作-切换角色",
+        "label": "操作:切换角色",
+        "finalUrl": "http://127.0.0.1:50158/store/schedule",
+        "title": "萌宠健康 - 宠物健康全周期管理平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89158/probe/codex-final-20260612/may-89158-codex-final-structure-11-操作-切换角色.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89158/probe/codex-final-20260612/may-89158-codex-final-structure-11-操作-切换角色.png",
+        "elementCount": 341,
+        "interactiveCount": 23,
+        "interactiveLabels": [
+          "管理后台",
+          "工作台",
+          "排班调度",
+          "服务管理",
+          "病历管理",
+          "库存管理 4",
+          "会员管理",
+          "切换角色",
+          "新增预约",
+          "新建排班",
+          "星期一 06月08日 1单",
+          "星期二 06月09日 0单",
+          "星期三 06月10日 1单",
+          "星期四 06月11日 0单",
+          "星期五 06月12日 1单",
+          "星期六 06月13日 0单",
+          "星期日 06月14日 0单",
+          "宠主端",
+          "门店端",
+          "兽医端"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89158-codex-final-structure-12-二层操作-切换角色-宠主端",
+        "label": "二层操作:切换角色->宠主端",
+        "finalUrl": "http://127.0.0.1:50158/owner",
+        "title": "萌宠健康 - 宠物健康全周期管理平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89158/probe/codex-final-20260612/may-89158-codex-final-structure-12-二层操作-切换角色-宠主端.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89158/probe/codex-final-20260612/may-89158-codex-final-structure-12-二层操作-切换角色-宠主端.png",
+        "elementCount": 347,
+        "interactiveCount": 26,
+        "interactiveLabels": [
+          "宠护康 宠物健康管理平台",
+          "首页",
+          "宠物档案",
+          "服务预约",
+          "健康档案",
+          "在线商城",
+          "在线问诊",
+          "症状自查",
+          "会员中心",
+          "张小花的铲屎官",
+          "小花",
+          "豆豆",
+          "查看档案",
+          "预约服务",
+          "全部服务",
+          "洗护美容",
+          "驱虫服务",
+          "疫苗接种",
+          "健康体检",
+          "查看全部",
+          "积分商城",
+          "查看全部预约",
+          "立即自查"
+        ]
+      }
+    ],
+    "representativeScreenshotUrl": "http://127.0.0.1:50158/store",
+    "representativeScreenshotLabel": "爱宠屋"
+  },
+  "websiteStructureCapture": {
+    "module": "website_structure_capture",
+    "captureCount": 12,
+    "captures": [
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89158-codex-final-structure-01-首屏",
+        "label": "首屏",
+        "finalUrl": "http://127.0.0.1:50158/store",
+        "title": "萌宠健康 - 宠物健康全周期管理平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89158/probe/codex-final-20260612/may-89158-codex-final-structure-01-首屏.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89158/probe/codex-final-20260612/may-89158-codex-final-structure-01-首屏.png",
+        "elementCount": 255,
+        "interactiveCount": 16,
+        "interactiveLabels": [
+          "管理后台",
+          "工作台",
+          "排班调度",
+          "服务管理",
+          "病历管理",
+          "库存管理 4",
+          "会员管理",
+          "切换角色",
+          "新增预约",
+          "切换门店",
+          "查看全部",
+          "服务执行",
+          "库存管理"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89158-codex-final-structure-02-导航-管理后台",
+        "label": "导航:管理后台",
+        "finalUrl": "http://127.0.0.1:50158/store",
+        "title": "萌宠健康 - 宠物健康全周期管理平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89158/probe/codex-final-20260612/may-89158-codex-final-structure-02-导航-管理后台.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89158/probe/codex-final-20260612/may-89158-codex-final-structure-02-导航-管理后台.png",
+        "elementCount": 331,
+        "interactiveCount": 17,
+        "interactiveLabels": [
+          "管理后台",
+          "工作台",
+          "排班调度",
+          "服务管理",
+          "病历管理",
+          "库存管理 4",
+          "会员管理",
+          "切换角色",
+          "新增预约",
+          "切换门店",
+          "去查看",
+          "查看全部",
+          "服务执行",
+          "库存管理"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89158-codex-final-structure-03-操作-查看全部",
+        "label": "操作:查看全部",
+        "finalUrl": "http://127.0.0.1:50158/store",
+        "title": "萌宠健康 - 宠物健康全周期管理平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89158/probe/codex-final-20260612/may-89158-codex-final-structure-03-操作-查看全部.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89158/probe/codex-final-20260612/may-89158-codex-final-structure-03-操作-查看全部.png",
+        "elementCount": 331,
+        "interactiveCount": 17,
+        "interactiveLabels": [
+          "管理后台",
+          "工作台",
+          "排班调度",
+          "服务管理",
+          "病历管理",
+          "库存管理 4",
+          "会员管理",
+          "切换角色",
+          "新增预约",
+          "切换门店",
+          "去查看",
+          "查看全部",
+          "服务执行",
+          "库存管理"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89158-codex-final-structure-04-操作-去查看",
+        "label": "操作:去查看",
+        "finalUrl": "http://127.0.0.1:50158/store",
+        "title": "萌宠健康 - 宠物健康全周期管理平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89158/probe/codex-final-20260612/may-89158-codex-final-structure-04-操作-去查看.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89158/probe/codex-final-20260612/may-89158-codex-final-structure-04-操作-去查看.png",
+        "elementCount": 331,
+        "interactiveCount": 17,
+        "interactiveLabels": [
+          "管理后台",
+          "工作台",
+          "排班调度",
+          "服务管理",
+          "病历管理",
+          "库存管理 4",
+          "会员管理",
+          "切换角色",
+          "新增预约",
+          "切换门店",
+          "去查看",
+          "查看全部",
+          "服务执行",
+          "库存管理"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89158-codex-final-structure-05-导航-工作台",
+        "label": "导航:工作台",
+        "finalUrl": "http://127.0.0.1:50158/store",
+        "title": "萌宠健康 - 宠物健康全周期管理平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89158/probe/codex-final-20260612/may-89158-codex-final-structure-05-导航-工作台.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89158/probe/codex-final-20260612/may-89158-codex-final-structure-05-导航-工作台.png",
+        "elementCount": 331,
+        "interactiveCount": 17,
+        "interactiveLabels": [
+          "管理后台",
+          "工作台",
+          "排班调度",
+          "服务管理",
+          "病历管理",
+          "库存管理 4",
+          "会员管理",
+          "切换角色",
+          "新增预约",
+          "切换门店",
+          "去查看",
+          "查看全部",
+          "服务执行",
+          "库存管理"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89158-codex-final-structure-06-操作-查看全部",
+        "label": "操作:查看全部",
+        "finalUrl": "http://127.0.0.1:50158/store",
+        "title": "萌宠健康 - 宠物健康全周期管理平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89158/probe/codex-final-20260612/may-89158-codex-final-structure-06-操作-查看全部.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89158/probe/codex-final-20260612/may-89158-codex-final-structure-06-操作-查看全部.png",
+        "elementCount": 331,
+        "interactiveCount": 17,
+        "interactiveLabels": [
+          "管理后台",
+          "工作台",
+          "排班调度",
+          "服务管理",
+          "病历管理",
+          "库存管理 4",
+          "会员管理",
+          "切换角色",
+          "新增预约",
+          "切换门店",
+          "去查看",
+          "查看全部",
+          "服务执行",
+          "库存管理"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89158-codex-final-structure-07-操作-去查看",
+        "label": "操作:去查看",
+        "finalUrl": "http://127.0.0.1:50158/store",
+        "title": "萌宠健康 - 宠物健康全周期管理平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89158/probe/codex-final-20260612/may-89158-codex-final-structure-07-操作-去查看.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89158/probe/codex-final-20260612/may-89158-codex-final-structure-07-操作-去查看.png",
+        "elementCount": 331,
+        "interactiveCount": 17,
+        "interactiveLabels": [
+          "管理后台",
+          "工作台",
+          "排班调度",
+          "服务管理",
+          "病历管理",
+          "库存管理 4",
+          "会员管理",
+          "切换角色",
+          "新增预约",
+          "切换门店",
+          "去查看",
+          "查看全部",
+          "服务执行",
+          "库存管理"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89158-codex-final-structure-08-导航-排班调度",
+        "label": "导航:排班调度",
+        "finalUrl": "http://127.0.0.1:50158/store/schedule",
+        "title": "萌宠健康 - 宠物健康全周期管理平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89158/probe/codex-final-20260612/may-89158-codex-final-structure-08-导航-排班调度.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89158/probe/codex-final-20260612/may-89158-codex-final-structure-08-导航-排班调度.png",
+        "elementCount": 319,
+        "interactiveCount": 20,
+        "interactiveLabels": [
+          "管理后台",
+          "工作台",
+          "排班调度",
+          "服务管理",
+          "病历管理",
+          "库存管理 4",
+          "会员管理",
+          "切换角色",
+          "新增预约",
+          "新建排班",
+          "星期一 06月08日 1单",
+          "星期二 06月09日 0单",
+          "星期三 06月10日 1单",
+          "星期四 06月11日 0单",
+          "星期五 06月12日 1单",
+          "星期六 06月13日 0单",
+          "星期日 06月14日 0单"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89158-codex-final-structure-09-操作-新建排班",
+        "label": "操作:新建排班",
+        "finalUrl": "http://127.0.0.1:50158/store/schedule",
+        "title": "萌宠健康 - 宠物健康全周期管理平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89158/probe/codex-final-20260612/may-89158-codex-final-structure-09-操作-新建排班.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89158/probe/codex-final-20260612/may-89158-codex-final-structure-09-操作-新建排班.png",
+        "elementCount": 366,
+        "interactiveCount": 28,
+        "interactiveLabels": [
+          "管理后台",
+          "工作台",
+          "排班调度",
+          "服务管理",
+          "病历管理",
+          "库存管理 4",
+          "会员管理",
+          "切换角色",
+          "新增预约",
+          "新建排班",
+          "星期一 06月08日 1单",
+          "星期二 06月09日 0单",
+          "星期三 06月10日 1单",
+          "星期四 06月11日 0单",
+          "星期五 06月12日 1单",
+          "星期六 06月13日 0单",
+          "星期日 06月14日 0单",
+          "李明",
+          "王小美",
+          "张建国",
+          "刘芳",
+          "09:00",
+          "18:00",
+          "取消",
+          "确认排班"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89158-codex-final-structure-10-二层操作-新建排班-李明",
+        "label": "二层操作:新建排班->李明",
+        "finalUrl": "http://127.0.0.1:50158/store/schedule",
+        "title": "萌宠健康 - 宠物健康全周期管理平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89158/probe/codex-final-20260612/may-89158-codex-final-structure-10-二层操作-新建排班-李明.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89158/probe/codex-final-20260612/may-89158-codex-final-structure-10-二层操作-新建排班-李明.png",
+        "elementCount": 366,
+        "interactiveCount": 28,
+        "interactiveLabels": [
+          "管理后台",
+          "工作台",
+          "排班调度",
+          "服务管理",
+          "病历管理",
+          "库存管理 4",
+          "会员管理",
+          "切换角色",
+          "新增预约",
+          "新建排班",
+          "星期一 06月08日 1单",
+          "星期二 06月09日 0单",
+          "星期三 06月10日 1单",
+          "星期四 06月11日 0单",
+          "星期五 06月12日 1单",
+          "星期六 06月13日 0单",
+          "星期日 06月14日 0单",
+          "李明",
+          "王小美",
+          "张建国",
+          "刘芳",
+          "09:00",
+          "18:00",
+          "取消",
+          "确认排班"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89158-codex-final-structure-11-操作-切换角色",
+        "label": "操作:切换角色",
+        "finalUrl": "http://127.0.0.1:50158/store/schedule",
+        "title": "萌宠健康 - 宠物健康全周期管理平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89158/probe/codex-final-20260612/may-89158-codex-final-structure-11-操作-切换角色.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89158/probe/codex-final-20260612/may-89158-codex-final-structure-11-操作-切换角色.png",
+        "elementCount": 341,
+        "interactiveCount": 23,
+        "interactiveLabels": [
+          "管理后台",
+          "工作台",
+          "排班调度",
+          "服务管理",
+          "病历管理",
+          "库存管理 4",
+          "会员管理",
+          "切换角色",
+          "新增预约",
+          "新建排班",
+          "星期一 06月08日 1单",
+          "星期二 06月09日 0单",
+          "星期三 06月10日 1单",
+          "星期四 06月11日 0单",
+          "星期五 06月12日 1单",
+          "星期六 06月13日 0单",
+          "星期日 06月14日 0单",
+          "宠主端",
+          "门店端",
+          "兽医端"
+        ]
+      },
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89158-codex-final-structure-12-二层操作-切换角色-宠主端",
+        "label": "二层操作:切换角色->宠主端",
+        "finalUrl": "http://127.0.0.1:50158/owner",
+        "title": "萌宠健康 - 宠物健康全周期管理平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89158/probe/codex-final-20260612/may-89158-codex-final-structure-12-二层操作-切换角色-宠主端.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89158/probe/codex-final-20260612/may-89158-codex-final-structure-12-二层操作-切换角色-宠主端.png",
+        "elementCount": 347,
+        "interactiveCount": 26,
+        "interactiveLabels": [
+          "宠护康 宠物健康管理平台",
+          "首页",
+          "宠物档案",
+          "服务预约",
+          "健康档案",
+          "在线商城",
+          "在线问诊",
+          "症状自查",
+          "会员中心",
+          "张小花的铲屎官",
+          "小花",
+          "豆豆",
+          "查看档案",
+          "预约服务",
+          "全部服务",
+          "洗护美容",
+          "驱虫服务",
+          "疫苗接种",
+          "健康体检",
+          "查看全部",
+          "积分商城",
+          "查看全部预约",
+          "立即自查"
+        ]
+      }
+    ]
+  },
+  "screenshotMetrics": {
+    "width": 1888,
+    "height": 1600,
+    "scrollWidth": 1856,
+    "scrollHeight": 1600
+  },
+  "initialBodyTextPreview": "爱宠屋\n\n管理后台 · 直营中心店\n\n管理后台\n工作台\n排班调度\n服务管理\n病历管理\n库存管理\n4\n会员管理\n?\n\n管理员\n\n店长\n\n切换角色\n管理后台\n+ 新增预约\n营业中\n门店工作台\n\n2026年06月12日 星期五 · 中心店\n\n切换门店\n\n今日预约\n\n1单\n\n今日营收\n\n¥0.00\n\n待服务\n\n1单\n\n已完成\n\n2单\n\n库存预警\n\n有 4 个物品库存不足，请及时补货\n\n去查看\n今日预约\n查看全部\n\n10:00\n\n·\n待服务\n\n精致洗护套餐\n\n快捷操作\n\n排班调度\n\n服务执行\n\n库存管理\n\n病历管理\n\n员工排班\n\n李明\n\n休息\n\n王小美\n\n休息\n\n张建国\n\n休息\n\n刘芳\n\n休息\n今日目标\n预约完成率\n200%\n营收目标\n0%\n客户满意度\n98%",
+  "bodyTextPreview": "宠护康\n\n宠物健康管理平台\n\n首页\n宠物档案\n服务预约\n健康档案\n在线商城\n在线问诊\n症状自查\n会员中心\n\n张小花的铲屎官\n\n黄金会员 · Lv.3\n\n首页\n张小花的铲屎官\n\n2026年06月12日 星期五\n\n早上好，铲屎官 ☀️\n快捷服务\n全部服务\n洗护美容\n驱虫服务\n疫苗接种\n健康体检\n健康提醒\n查看全部\n\n暂无健康提醒\n\n我的积分\n\n0\n\n可用积分\n\n积分商城\n最近预约\n暂无预约\n查看全部预约\n推荐门店\n查看全部\n爱宠屋·直营中心店\n\n北京市朝阳区建国路88号\n\n4.9\n1.2km\n爱宠屋·望京社区店\n\n北京市朝阳区望京SOHO\n\n4.8\n3.5km\n消费统计\n本月\n\n0\n\n服务次数\n\n¥0.00\n\n累计消费\n\n¥0.00\n\n累计积分\n\n3\n\n连续月份\n\n宠物症状自查\n\nAI智能分析，快速了解宠物健康状况\n\n立即自查",
+  "apiBase": "",
+  "businessGoalPreview": "",
+  "apiResponses": [
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:50158/api/store/schedules?storeId=store_001"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:50158/api/stores/store_001/staff"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:50158/api/store/inventory/alerts?storeId=store_001"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:50158/api/store/schedules?storeId=store_001"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:50158/api/stores/store_001/staff"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:50158/api/store/inventory/alerts?storeId=store_001"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:50158/api/appointments"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:50158/api/store/inventory?storeId=store_001"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:50158/api/appointments"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:50158/api/store/inventory?storeId=store_001"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:50158/api/store/schedules?storeId=store_001"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:50158/api/stores/store_001/staff"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:50158/api/store/inventory/alerts?storeId=store_001"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:50158/api/store/schedules?storeId=store_001"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:50158/api/stores/store_001/staff"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:50158/api/store/inventory/alerts?storeId=store_001"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:50158/api/appointments"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:50158/api/store/inventory?storeId=store_001"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:50158/api/appointments"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:50158/api/store/inventory?storeId=store_001"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:50158/api/store/schedules?storeId=store_001"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:50158/api/stores/store_001/staff"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:50158/api/store/schedules?storeId=store_001"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:50158/api/stores/store_001/staff"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:50158/api/appointments"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:50158/api/appointments"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:50158/api/pets"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:50158/api/pets"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:50158/api/appointments"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:50158/api/member/profile"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:50158/api/appointments"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:50158/api/member/profile"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:50158/api/pets"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:50158/api/pets"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:50158/api/appointments"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:50158/api/member/profile"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:50158/api/appointments"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:50158/api/member/profile"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:50158/api/pets"
+    },
+    {
+      "method": "GET",
+      "status": 200,
+      "url": "http://127.0.0.1:50158/api/pets"
+    }
+  ],
+  "apiChecks": [],
+  "dialogs": [],
+  "consoleMessages": [
+    {
+      "type": "debug",
+      "text": "[vite] connecting...",
+      "location": {
+        "url": "http://127.0.0.1:50158/@vite/client",
+        "lineNumber": 494,
+        "columnNumber": 8
+      }
+    },
+    {
+      "type": "info",
+      "text": "%cDownload the React DevTools for a better development experience: https://reactjs.org/link/react-devtools font-weight:bold",
+      "location": {
+        "url": "http://127.0.0.1:50158/node_modules/.vite/deps/chunk-UXDD7MME.js?v=a14f9e1c",
+        "lineNumber": 21550,
+        "columnNumber": 24
+      }
+    },
+    {
+      "type": "debug",
+      "text": "[vite] connected.",
+      "location": {
+        "url": "http://127.0.0.1:50158/@vite/client",
+        "lineNumber": 617,
+        "columnNumber": 14
+      }
+    },
+    {
+      "type": "startGroupCollapsed",
+      "text": "%c[MSW] Mocking enabled. color:orangered;font-weight:bold;",
+      "location": {
+        "url": "http://127.0.0.1:50158/node_modules/.vite/deps/msw_browser.js?v=a14f9e1c",
+        "lineNumber": 3564,
+        "columnNumber": 10
+      }
+    },
+    {
+      "type": "log",
+      "text": "%cDocumentation: %chttps://mswjs.io/docs font-weight:bold font-weight:normal",
+      "location": {
+        "url": "http://127.0.0.1:50158/node_modules/.vite/deps/msw_browser.js?v=a14f9e1c",
+        "lineNumber": 3568,
+        "columnNumber": 10
+      }
+    },
+    {
+      "type": "log",
+      "text": "Found an issue? https://github.com/mswjs/msw/issues",
+      "location": {
+        "url": "http://127.0.0.1:50158/node_modules/.vite/deps/msw_browser.js?v=a14f9e1c",
+        "lineNumber": 3573,
+        "columnNumber": 10
+      }
+    },
+    {
+      "type": "log",
+      "text": "Worker script URL: http://127.0.0.1:50158/mockServiceWorker.js",
+      "location": {
+        "url": "http://127.0.0.1:50158/node_modules/.vite/deps/msw_browser.js?v=a14f9e1c",
+        "lineNumber": 3574,
+        "columnNumber": 10
+      }
+    },
+    {
+      "type": "log",
+      "text": "Worker scope: http://127.0.0.1:50158/",
+      "location": {
+        "url": "http://127.0.0.1:50158/node_modules/.vite/deps/msw_browser.js?v=a14f9e1c",
+        "lineNumber": 3575,
+        "columnNumber": 10
+      }
+    },
+    {
+      "type": "log",
+      "text": "Client ID: %s (%s) 4ad9b7f0-24a6-4bf8-ad7e-56507041a9af top-level",
+      "location": {
+        "url": "http://127.0.0.1:50158/node_modules/.vite/deps/msw_browser.js?v=a14f9e1c",
+        "lineNumber": 3577,
+        "columnNumber": 12
+      }
+    },
+    {
+      "type": "endGroup",
+      "text": "console.groupEnd",
+      "location": {
+        "url": "http://127.0.0.1:50158/node_modules/.vite/deps/msw_browser.js?v=a14f9e1c",
+        "lineNumber": 3579,
+        "columnNumber": 10
+      }
+    },
+    {
+      "type": "log",
+      "text": "MSW mocking enabled",
+      "location": {
+        "url": "http://127.0.0.1:50158/src/mock/browser.ts",
+        "lineNumber": 21,
+        "columnNumber": 12
+      }
+    },
+    {
+      "type": "warning",
+      "text": "⚠️ React Router Future Flag Warning: React Router will begin wrapping state updates in `React.startTransition` in v7. You can use the `v7_startTransition` future flag to opt-in early. For more information, see https://reactrouter.com/v6/upgrading/future#v7_starttransition.",
+      "location": {
+        "url": "http://127.0.0.1:50158/node_modules/.vite/deps/react-router-dom.js?v=a14f9e1c",
+        "lineNumber": 4426,
+        "columnNumber": 12
+      }
+    },
+    {
+      "type": "warning",
+      "text": "⚠️ React Router Future Flag Warning: Relative route resolution within Splat routes is changing in v7. You can use the `v7_relativeSplatPath` future flag to opt-in early. For more information, see https://reactrouter.com/v6/upgrading/future#v7_relativesplatpath.",
+      "location": {
+        "url": "http://127.0.0.1:50158/node_modules/.vite/deps/react-router-dom.js?v=a14f9e1c",
+        "lineNumber": 4426,
+        "columnNumber": 12
+      }
+    },
+    {
+      "type": "startGroupCollapsed",
+      "text": "[MSW] 13:41:32 GET /api/store/schedules (%c200 OK%c) color:#69AB32 color:inherit",
+      "location": {
+        "url": "http://127.0.0.1:50158/node_modules/.vite/deps/msw.js?v=a14f9e1c",
+        "lineNumber": 551,
+        "columnNumber": 12
+      }
+    },
+    {
+      "type": "log",
+      "text": "Request {url: URL, method: GET, headers: Object, body: }",
+      "location": {
+        "url": "http://127.0.0.1:50158/node_modules/.vite/deps/msw.js?v=a14f9e1c",
+        "lineNumber": 558,
+        "columnNumber": 12
+      }
+    },
+    {
+      "type": "log",
+      "text": "Handler: HttpHandler",
+      "location": {
+        "url": "http://127.0.0.1:50158/node_modules/.vite/deps/msw.js?v=a14f9e1c",
+        "lineNumber": 559,
+        "columnNumber": 12
+      }
+    },
+    {
+      "type": "log",
+      "text": "Response {status: 200, statusText: OK, headers: Object, body: {\"code\":0,\"message\":\"success\",\"data\":[{\"id\":\"sch_0…tTime\":\"13:00\",\"endTime\":\"18:00\",\"type\":\"work\"}]}}",
+      "location": {
+        "url": "http://127.0.0.1:50158/node_modules/.vite/deps/msw.js?v=a14f9e1c",
+        "lineNumber": 560,
+        "columnNumber": 12
+      }
+    },
+    {
+      "type": "endGroup",
+      "text": "console.groupEnd",
+      "location": {
+        "url": "http://127.0.0.1:50158/node_modules/.vite/deps/msw.js?v=a14f9e1c",
+        "lineNumber": 561,
+        "columnNumber": 12
+      }
+    },
+    {
+      "type": "startGroupCollapsed",
+      "text": "[MSW] 13:41:32 GET /api/stores/store_001/staff (%c200 OK%c) color:#69AB32 color:inherit",
+      "location": {
+        "url": "http://127.0.0.1:50158/node_modules/.vite/deps/msw.js?v=a14f9e1c",
+        "lineNumber": 551,
+        "columnNumber": 12
+      }
+    },
+    {
+      "type": "log",
+      "text": "Request {url: URL, method: GET, headers: Object, body: }",
+      "location": {
+        "url": "http://127.0.0.1:50158/node_modules/.vite/deps/msw.js?v=a14f9e1c",
+        "lineNumber": 558,
+        "columnNumber": 12
+      }
+    },
+    {
+      "type": "log",
+      "text": "Handler: HttpHandler",
+      "location": {
+        "url": "http://127.0.0.1:50158/node_modules/.vite/deps/msw.js?v=a14f9e1c",
+        "lineNumber": 559,
+        "columnNumber": 12
+      }
+    },
+    {
+      "type": "log",
+      "text": "Response {status: 200, statusText: OK, headers: Object, body: {\"code\":0,\"message\":\"success\",\"data\":[{\"id\":\"staff…/7.x/avataaars/svg?seed=liufang\",\"services\":[]}]}}",
+      "location": {
+        "url": "http://127.0.0.1:50158/node_modules/.vite/deps/msw.js?v=a14f9e1c",
+        "lineNumber": 560,
+        "columnNumber": 12
+      }
+    },
+    {
+      "type": "endGroup",
+      "text": "console.groupEnd",
+      "location": {
+        "url": "http://127.0.0.1:50158/node_modules/.vite/deps/msw.js?v=a14f9e1c",
+        "lineNumber": 561,
+        "columnNumber": 12
+      }
+    },
+    {
+      "type": "startGroupCollapsed",
+      "text": "[MSW] 13:41:32 GET /api/store/inventory/alerts (%c200 OK%c) color:#69AB32 color:inherit",
+      "location": {
+        "url": "http://127.0.0.1:50158/node_modules/.vite/deps/msw.js?v=a14f9e1c",
+        "lineNumber": 551,
+        "columnNumber": 12
+      }
+    },
+    {
+      "type": "log",
+      "text": "Request {url: URL, method: GET, headers: Object, body: }",
+      "location": {
+        "url": "http://127.0.0.1:50158/node_modules/.vite/deps/msw.js?v=a14f9e1c",
+        "lineNumber": 558,
+        "columnNumber": 12
+      }
+    },
+    {
+      "type": "log",
+      "text": "Handler: HttpHandler",
+      "location": {
+        "url": "http://127.0.0.1:50158/node_modules/.vite/deps/msw.js?v=a14f9e1c",
+        "lineNumber": 559,
+        "columnNumber": 12
+      }
+    },
+    {
+      "type": "log",
+      "text": "Response {status: 200, statusText: OK, headers: Object, body: {\"code\":0,\"message\":\"success\",\"data\":[{\"id\":\"inv_0…afetyStock\":20,\"unitPrice\":45,\"supplier\":\"梅里亚\"}]}}",
+      "location": {
+        "url": "http://127.0.0.1:50158/node_modules/.vite/deps/msw.js?v=a14f9e1c",
+        "lineNumber": 560,
+        "columnNumber": 12
+      }
+    },
+    {
+      "type": "endGroup",
+      "text": "console.groupEnd",
+      "location": {
+        "url": "http://127.0.0.1:50158/node_modules/.vite/deps/msw.js?v=a14f9e1c",
+        "lineNumber": 561,
+        "columnNumber": 12
+      }
+    },
+    {
+      "type": "startGroupCollapsed",
+      "text": "[MSW] 13:41:32 GET /api/store/schedules (%c200 OK%c) color:#69AB32 color:inherit",
+      "location": {
+        "url": "http://127.0.0.1:50158/node_modules/.vite/deps/msw.js?v=a14f9e1c",
+        "lineNumber": 551,
+        "columnNumber": 12
+      }
+    },
+    {
+      "type": "log",
+      "text": "Request {url: URL, method: GET, headers: Object, body: }",
+      "location": {
+        "url": "http://127.0.0.1:50158/node_modules/.vite/deps/msw.js?v=a14f9e1c",
+        "lineNumber": 558,
+        "columnNumber": 12
+      }
+    },
+    {
+      "type": "log",
+      "text": "Handler: HttpHandler",
+      "location": {
+        "url": "http://127.0.0.1:50158/node_modules/.vite/deps/msw.js?v=a14f9e1c",
+        "lineNumber": 559,
+        "columnNumber": 12
+      }
+    },
+    {
+      "type": "log",
+      "text": "Response {status: 200, statusText: OK, headers: Object, body: {\"code\":0,\"message\":\"success\",\"data\":[{\"id\":\"sch_0…tTime\":\"13:00\",\"endTime\":\"18:00\",\"type\":\"work\"}]}}",
+      "location": {
+        "url": "http://127.0.0.1:50158/node_modules/.vite/deps/msw.js?v=a14f9e1c",
+        "lineNumber": 560,
+        "columnNumber": 12
+      }
+    },
+    {
+      "type": "endGroup",
+      "text": "console.groupEnd",
+      "location": {
+        "url": "http://127.0.0.1:50158/node_modules/.vite/deps/msw.js?v=a14f9e1c",
+        "lineNumber": 561,
+        "columnNumber": 12
+      }
+    },
+    {
+      "type": "startGroupCollapsed",
+      "text": "[MSW] 13:41:32 GET /api/stores/store_001/staff (%c200 OK%c) color:#69AB32 color:inherit",
+      "location": {
+        "url": "http://127.0.0.1:50158/node_modules/.vite/deps/msw.js?v=a14f9e1c",
+        "lineNumber": 551,
+        "columnNumber": 12
+      }
+    },
+    {
+      "type": "log",
+      "text": "Request {url: URL, method: GET, headers: Object, body: }",
+      "location": {
+        "url": "http://127.0.0.1:50158/node_modules/.vite/deps/msw.js?v=a14f9e1c",
+        "lineNumber": 558,
+        "columnNumber": 12
+      }
+    },
+    {
+      "type": "log",
+      "text": "Handler: HttpHandler",
+      "location": {
+        "url": "http://127.0.0.1:50158/node_modules/.vite/deps/msw.js?v=a14f9e1c",
+        "lineNumber": 559,
+        "columnNumber": 12
+      }
+    },
+    {
+      "type": "log",
+      "text": "Response {status: 200, statusText: OK, headers: Object, body: {\"code\":0,\"message\":\"success\",\"data\":[{\"id\":\"staff…/7.x/avataaars/svg?seed=liufang\",\"services\":[]}]}}",
+      "location": {
+        "url": "http://127.0.0.1:50158/node_modules/.vite/deps/msw.js?v=a14f9e1c",
+        "lineNumber": 560,
+        "columnNumber": 12
+      }
+    },
+    {
+      "type": "endGroup",
+      "text": "console.groupEnd",
+      "location": {
+        "url": "http://127.0.0.1:50158/node_modules/.vite/deps/msw.js?v=a14f9e1c",
+        "lineNumber": 561,
+        "columnNumber": 12
+      }
+    },
+    {
+      "type": "startGroupCollapsed",
+      "text": "[MSW] 13:41:32 GET /api/store/inventory/alerts (%c200 OK%c) color:#69AB32 color:inherit",
+      "location": {
+        "url": "http://127.0.0.1:50158/node_modules/.vite/deps/msw.js?v=a14f9e1c",
+        "lineNumber": 551,
+        "columnNumber": 12
+      }
+    },
+    {
+      "type": "log",
+      "text": "Request {url: URL, method: GET, headers: Object, body: }",
+      "location": {
+        "url": "http://127.0.0.1:50158/node_modules/.vite/deps/msw.js?v=a14f9e1c",
+        "lineNumber": 558,
+        "columnNumber": 12
+      }
+    },
+    {
+      "type": "log",
+      "text": "Handler: HttpHandler",
+      "location": {
+        "url": "http://127.0.0.1:50158/node_modules/.vite/deps/msw.js?v=a14f9e1c",
+        "lineNumber": 559,
+        "columnNumber": 12
+      }
+    },
+    {
+      "type": "log",
+      "text": "Response {status: 200, statusText: OK, headers: Object, body: {\"code\":0,\"message\":\"success\",\"data\":[{\"id\":\"inv_0…afetyStock\":20,\"unitPrice\":45,\"supplier\":\"梅里亚\"}]}}",
+      "location": {
+        "url": "http://127.0.0.1:50158/node_modules/.vite/deps/msw.js?v=a14f9e1c",
+        "lineNumber": 560,
+        "columnNumber": 12
+      }
+    },
+    {
+      "type": "endGroup",
+      "text": "console.groupEnd",
+      "location": {
+        "url": "http://127.0.0.1:50158/node_modules/.vite/deps/msw.js?v=a14f9e1c",
+        "lineNumber": 561,
+        "columnNumber": 12
+      }
+    },
+    {
+      "type": "startGroupCollapsed",
+      "text": "[MSW] 13:41:33 GET /api/appointments (%c200 OK%c) color:#69AB32 color:inherit",
+      "location": {
+        "url": "http://127.0.0.1:50158/node_modules/.vite/deps/msw.js?v=a14f9e1c",
+        "lineNumber": 551,
+        "columnNumber": 12
+      }
+    },
+    {
+      "type": "log",
+      "text": "Request {url: URL, method: GET, headers: Object, body: }",
+      "location": {
+        "url": "http://127.0.0.1:50158/node_modules/.vite/deps/msw.js?v=a14f9e1c",
+        "lineNumber": 558,
+        "columnNumber": 12
+      }
+    },
+    {
+      "type": "log",
+      "text": "Handler: HttpHandler",
+      "location": {
+        "url": "http://127.0.0.1:50158/node_modules/.vite/deps/msw.js?v=a14f9e1c",
+        "lineNumber": 559,
+        "columnNumber": 12
+      }
+    },
+    {
+      "type": "log",
+      "text": "Response {status: 200, statusText: OK, headers: Object, body: {\"code\":0,\"message\":\"success\",\"data\":[{\"id\":\"apt_0…dAt\":\"2026-06-05T10:00:00Z\",\"serviceTraces\":[]}]}}",
+      "location": {
+        "url": "http://127.0.0.1:50158/node_modules/.vite/deps/msw.js?v=a14f9e1c",
+        "lineNumber": 560,
+        "columnNumber": 12
+      }
+    },
+    {
+      "type": "endGroup",
+      "text": "console.groupEnd",
+      "location": {
+        "url": "http://127.0.0.1:50158/node_modules/.vite/deps/msw.js?v=a14f9e1c",
+        "lineNumber": 561,
+        "columnNumber": 12
+      }
+    },
+    {
+      "type": "startGroupCollapsed",
+      "text": "[MSW] 13:41:33 GET /api/store/inventory (%c200 OK%c) color:#69AB32 color:inherit",
+      "location": {
+        "url": "http://127.0.0.1:50158/node_modules/.vite/deps/msw.js?v=a14f9e1c",
+        "lineNumber": 551,
+        "columnNumber": 12
+      }
+    },
+    {
+      "type": "log",
+      "text": "Request {url: URL, method: GET, headers: Object, body: }",
+      "location": {
+        "url": "http://127.0.0.1:50158/node_modules/.vite/deps/msw.js?v=a14f9e1c",
+        "lineNumber": 558,
+        "columnNumber": 12
+      }
+    },
+    {
+      "type": "log",
+      "text": "Handler: HttpHandler",
+      "location": {
+        "url": "http://127.0.0.1:50158/node_modules/.vite/deps/msw.js?v=a14f9e1c",
+        "lineNumber": 559,
+        "columnNumber": 12
+      }
+    },
+    {
+      "type": "log",
+      "text": "Response {status: 200, statusText: OK, headers: Object, body: {\"code\":0,\"message\":\"success\",\"data\":[{\"id\":\"inv_0…afetyStock\":20,\"unitPrice\":45,\"supplier\":\"梅里亚\"}]}}",
+      "location": {
+        "url": "http://127.0.0.1:50158/node_modules/.vite/deps/msw.js?v=a14f9e1c",
+        "lineNumber": 560,
+        "columnNumber": 12
+      }
+    },
+    {
+      "type": "endGroup",
+      "text": "console.groupEnd",
+      "location": {
+        "url": "http://127.0.0.1:50158/node_modules/.vite/deps/msw.js?v=a14f9e1c",
+        "lineNumber": 561,
+        "columnNumber": 12
+      }
+    },
+    {
+      "type": "startGroupCollapsed",
+      "text": "[MSW] 13:41:33 GET /api/appointments (%c200 OK%c) color:#69AB32 color:inherit",
+      "location": {
+        "url": "http://127.0.0.1:50158/node_modules/.vite/deps/msw.js?v=a14f9e1c",
+        "lineNumber": 551,
+        "columnNumber": 12
+      }
+    },
+    {
+      "type": "log",
+      "text": "Request {url: URL, method: GET, headers: Object, body: }",
+      "location": {
+        "url": "http://127.0.0.1:50158/node_modules/.vite/deps/msw.js?v=a14f9e1c",
+        "lineNumber": 558,
+        "columnNumber": 12
+      }
+    },
+    {
+      "type": "log",
+      "text": "Handler: HttpHandler",
+      "location": {
+        "url": "http://127.0.0.1:50158/node_modules/.vite/deps/msw.js?v=a14f9e1c",
+        "lineNumber": 559,
+        "columnNumber": 12
+      }
+    },
+    {
+      "type": "log",
+      "text": "Response {status: 200, statusText: OK, headers: Object, body: {\"code\":0,\"message\":\"success\",\"data\":[{\"id\":\"apt_0…dAt\":\"2026-06-05T10:00:00Z\",\"serviceTraces\":[]}]}}",
+      "location": {
+        "url": "http://127.0.0.1:50158/node_modules/.vite/deps/msw.js?v=a14f9e1c",
+        "lineNumber": 560,
+        "columnNumber": 12
+      }
+    },
+    {
+      "type": "endGroup",
+      "text": "console.groupEnd",
+      "location": {
+        "url": "http://127.0.0.1:50158/node_modules/.vite/deps/msw.js?v=a14f9e1c",
+        "lineNumber": 561,
+        "columnNumber": 12
+      }
+    },
+    {
+      "type": "startGroupCollapsed",
+      "text": "[MSW] 13:41:33 GET /api/store/inventory (%c200 OK%c) color:#69AB32 color:inherit",
+      "location": {
+        "url": "http://127.0.0.1:50158/node_modules/.vite/deps/msw.js?v=a14f9e1c",
+        "lineNumber": 551,
+        "columnNumber": 12
+      }
+    },
+    {
+      "type": "log",
+      "text": "Request {url: URL, method: GET, headers: Object, body: }",
+      "location": {
+        "url": "http://127.0.0.1:50158/node_modules/.vite/deps/msw.js?v=a14f9e1c",
+        "lineNumber": 558,
+        "columnNumber": 12
+      }
+    },
+    {
+      "type": "log",
+      "text": "Handler: HttpHandler",
+      "location": {
+        "url": "http://127.0.0.1:50158/node_modules/.vite/deps/msw.js?v=a14f9e1c",
+        "lineNumber": 559,
+        "columnNumber": 12
+      }
+    },
+    {
+      "type": "log",
+      "text": "Response {status: 200, statusText: OK, headers: Object, body: {\"code\":0,\"message\":\"success\",\"data\":[{\"id\":\"inv_0…afetyStock\":20,\"unitPrice\":45,\"supplier\":\"梅里亚\"}]}}",
+      "location": {
+        "url": "http://127.0.0.1:50158/node_modules/.vite/deps/msw.js?v=a14f9e1c",
+        "lineNumber": 560,
+        "columnNumber": 12
+      }
+    },
+    {
+      "type": "endGroup",
+      "text": "console.groupEnd",
+      "location": {
+        "url": "http://127.0.0.1:50158/node_modules/.vite/deps/msw.js?v=a14f9e1c",
+        "lineNumber": 561,
+        "columnNumber": 12
+      }
+    },
+    {
+      "type": "debug",
+      "text": "[vite] connecting...",
+      "location": {
+        "url": "http://127.0.0.1:50158/@vite/client",
+        "lineNumber": 494,
+        "columnNumber": 8
+      }
+    },
+    {
+      "type": "debug",
+      "text": "[vite] connected.",
+      "location": {
+        "url": "http://127.0.0.1:50158/@vite/client",
+        "lineNumber": 617,
+        "columnNumber": 14
+      }
+    },
+    {
+      "type": "info",
+      "text": "%cDownload the React DevTools for a better development experience: https://reactjs.org/link/react-devtools font-weight:bold",
+      "location": {
+        "url": "http://127.0.0.1:50158/node_modules/.vite/deps/chunk-UXDD7MME.js?v=a14f9e1c",
+        "lineNumber": 21550,
+        "columnNumber": 24
+      }
+    },
+    {
+      "type": "startGroupCollapsed",
+      "text": "%c[MSW] Mocking enabled. color:orangered;font-weight:bold;",
+      "location": {
+        "url": "http://127.0.0.1:50158/node_modules/.vite/deps/msw_browser.js?v=a14f9e1c",
+        "lineNumber": 3564,
+        "columnNumber": 10
+      }
+    },
+    {
+      "type": "log",
+      "text": "%cDocumentation: %chttps://mswjs.io/docs font-weight:bold font-weight:normal",
+      "location": {
+        "url": "http://127.0.0.1:50158/node_modules/.vite/deps/msw_browser.js?v=a14f9e1c",
+        "lineNumber": 3568,
+        "columnNumber": 10
+      }
+    },
+    {
+      "type": "log",
+      "text": "Found an issue? https://github.com/mswjs/msw/issues",
+      "location": {
+        "url": "http://127.0.0.1:50158/node_modules/.vite/deps/msw_browser.js?v=a14f9e1c",
+        "lineNumber": 3573,
+        "columnNumber": 10
+      }
+    },
+    {
+      "type": "log",
+      "text": "Worker script URL: http://127.0.0.1:50158/mockServiceWorker.js",
+      "location": {
+        "url": "http://127.0.0.1:50158/node_modules/.vite/deps/msw_browser.js?v=a14f9e1c",
+        "lineNumber": 3574,
+        "columnNumber": 10
+      }
+    },
+    {
+      "type": "log",
+      "text": "Worker scope: http://127.0.0.1:50158/",
+      "location": {
+        "url": "http://127.0.0.1:50158/node_modules/.vite/deps/msw_browser.js?v=a14f9e1c",
+        "lineNumber": 3575,
+        "columnNumber": 10
+      }
+    },
+    {
+      "type": "log",
+      "text": "Client ID: %s (%s) d384a82f-24f5-4122-be68-255fb06ac167 top-level",
+      "location": {
+        "url": "http://127.0.0.1:50158/node_modules/.vite/deps/msw_browser.js?v=a14f9e1c",
+        "lineNumber": 3577,
+        "columnNumber": 12
+      }
+    },
+    {
+      "type": "endGroup",
+      "text": "console.groupEnd",
+      "location": {
+        "url": "http://127.0.0.1:50158/node_modules/.vite/deps/msw_browser.js?v=a14f9e1c",
+        "lineNumber": 3579,
+        "columnNumber": 10
+      }
+    },
+    {
+      "type": "log",
+      "text": "MSW mocking enabled",
+      "location": {
+        "url": "http://127.0.0.1:50158/src/mock/browser.ts",
+        "lineNumber": 21,
+        "columnNumber": 12
+      }
+    },
+    {
+      "type": "warning",
+      "text": "⚠️ React Router Future Flag Warning: React Router will begin wrapping state updates in `React.startTransition` in v7. You can use the `v7_startTransition` future flag to opt-in early. For more information, see https://reactrouter.com/v6/upgrading/future#v7_starttransition.",
+      "location": {
+        "url": "http://127.0.0.1:50158/node_modules/.vite/deps/react-router-dom.js?v=a14f9e1c",
+        "lineNumber": 4426,
+        "columnNumber": 12
+      }
+    },
+    {
+      "type": "warning",
+      "text": "⚠️ React Router Future Flag Warning: Relative route resolution within Splat routes is changing in v7. You can use the `v7_relativeSplatPath` future flag to opt-in early. For more information, see https://reactrouter.com/v6/upgrading/future#v7_relativesplatpath.",
+      "location": {
+        "url": "http://127.0.0.1:50158/node_modules/.vite/deps/react-router-dom.js?v=a14f9e1c",
+        "lineNumber": 4426,
+        "columnNumber": 12
+      }
+    },
+    {
+      "type": "startGroupCollapsed",
+      "text": "[MSW] 13:41:39 GET /api/store/schedules (%c200 OK%c) color:#69AB32 color:inherit",
+      "location": {
+        "url": "http://127.0.0.1:50158/node_modules/.vite/deps/msw.js?v=a14f9e1c",
+        "lineNumber": 551,
+        "columnNumber": 12
+      }
+    },
+    {
+      "type": "log",
+      "text": "Request {url: URL, method: GET, headers: Object, body: }",
+      "location": {
+        "url": "http://127.0.0.1:50158/node_modules/.vite/deps/msw.js?v=a14f9e1c",
+        "lineNumber": 558,
+        "columnNumber": 12
+      }
+    },
+    {
+      "type": "log",
+      "text": "Handler: HttpHandler",
+      "location": {
+        "url": "http://127.0.0.1:50158/node_modules/.vite/deps/msw.js?v=a14f9e1c",
+        "lineNumber": 559,
+        "columnNumber": 12
+      }
+    },
+    {
+      "type": "log",
+      "text": "Response {status: 200, statusText: OK, headers: Object, body: {\"code\":0,\"message\":\"success\",\"data\":[{\"id\":\"sch_0…tTime\":\"13:00\",\"endTime\":\"18:00\",\"type\":\"work\"}]}}",
+      "location": {
+        "url": "http://127.0.0.1:50158/node_modules/.vite/deps/msw.js?v=a14f9e1c",
+        "lineNumber": 560,
+        "columnNumber": 12
+      }
+    },
+    {
+      "type": "endGroup",
+      "text": "console.groupEnd",
+      "location": {
+        "url": "http://127.0.0.1:50158/node_modules/.vite/deps/msw.js?v=a14f9e1c",
+        "lineNumber": 561,
+        "columnNumber": 12
+      }
+    },
+    {
+      "type": "startGroupCollapsed",
+      "text": "[MSW] 13:41:39 GET /api/stores/store_001/staff (%c200 OK%c) color:#69AB32 color:inherit",
+      "location": {
+        "url": "http://127.0.0.1:50158/node_modules/.vite/deps/msw.js?v=a14f9e1c",
+        "lineNumber": 551,
+        "columnNumber": 12
+      }
+    },
+    {
+      "type": "log",
+      "text": "Request {url: URL, method: GET, headers: Object, body: }",
+      "location": {
+        "url": "http://127.0.0.1:50158/node_modules/.vite/deps/msw.js?v=a14f9e1c",
+        "lineNumber": 558,
+        "columnNumber": 12
+      }
+    },
+    {
+      "type": "log",
+      "text": "Handler: HttpHandler",
+      "location": {
+        "url": "http://127.0.0.1:50158/node_modules/.vite/deps/msw.js?v=a14f9e1c",
+        "lineNumber": 559,
+        "columnNumber": 12
+      }
+    },
+    {
+      "type": "log",
+      "text": "Response {status: 200, statusText: OK, headers: Object, body: {\"code\":0,\"message\":\"success\",\"data\":[{\"id\":\"staff…/7.x/avataaars/svg?seed=liufang\",\"services\":[]}]}}",
+      "location": {
+        "url": "http://127.0.0.1:50158/node_modules/.vite/deps/msw.js?v=a14f9e1c",
+        "lineNumber": 560,
+        "columnNumber": 12
+      }
+    },
+    {
+      "type": "endGroup",
+      "text": "console.groupEnd",
+      "location": {
+        "url": "http://127.0.0.1:50158/node_modules/.vite/deps/msw.js?v=a14f9e1c",
+        "lineNumber": 561,
+        "columnNumber": 12
+      }
+    },
+    {
+      "type": "startGroupCollapsed",
+      "text": "[MSW] 13:41:39 GET /api/store/inventory/alerts (%c200 OK%c) color:#69AB32 color:inherit",
+      "location": {
+        "url": "http://127.0.0.1:50158/node_modules/.vite/deps/msw.js?v=a14f9e1c",
+        "lineNumber": 551,
+        "columnNumber": 12
+      }
+    },
+    {
+      "type": "log",
+      "text": "Request {url: URL, method: GET, headers: Object, body: }",
+      "location": {
+        "url": "http://127.0.0.1:50158/node_modules/.vite/deps/msw.js?v=a14f9e1c",
+        "lineNumber": 558,
+        "columnNumber": 12
+      }
+    },
+    {
+      "type": "log",
+      "text": "Handler: HttpHandler",
+      "location": {
+        "url": "http://127.0.0.1:50158/node_modules/.vite/deps/msw.js?v=a14f9e1c",
+        "lineNumber": 559,
+        "columnNumber": 12
+      }
+    },
+    {
+      "type": "log",
+      "text": "Response {status: 200, statusText: OK, headers: Object, body: {\"code\":0,\"message\":\"success\",\"data\":[{\"id\":\"inv_0…afetyStock\":20,\"unitPrice\":45,\"supplier\":\"梅里亚\"}]}}",
+      "location": {
+        "url": "http://127.0.0.1:50158/node_modules/.vite/deps/msw.js?v=a14f9e1c",
+        "lineNumber": 560,
+        "columnNumber": 12
+      }
+    },
+    {
+      "type": "endGroup",
+      "text": "console.groupEnd",
+      "location": {
+        "url": "http://127.0.0.1:50158/node_modules/.vite/deps/msw.js?v=a14f9e1c",
+        "lineNumber": 561,
+        "columnNumber": 12
+      }
+    },
+    {
+      "type": "startGroupCollapsed",
+      "text": "[MSW] 13:41:39 GET /api/store/schedules (%c200 OK%c) color:#69AB32 color:inherit",
+      "location": {
+        "url": "http://127.0.0.1:50158/node_modules/.vite/deps/msw.js?v=a14f9e1c",
+        "lineNumber": 551,
+        "columnNumber": 12
+      }
+    },
+    {
+      "type": "log",
+      "text": "Request {url: URL, method: GET, headers: Object, body: }",
+      "location": {
+        "url": "http://127.0.0.1:50158/node_modules/.vite/deps/msw.js?v=a14f9e1c",
+        "lineNumber": 558,
+        "columnNumber": 12
+      }
+    },
+    {
+      "type": "log",
+      "text": "Handler: HttpHandler",
+      "location": {
+        "url": "http://127.0.0.1:50158/node_modules/.vite/deps/msw.js?v=a14f9e1c",
+        "lineNumber": 559,
+        "columnNumber": 12
+      }
+    },
+    {
+      "type": "log",
+      "text": "Response {status: 200, statusText: OK, headers: Object, body: {\"code\":0,\"message\":\"success\",\"data\":[{\"id\":\"sch_0…tTime\":\"13:00\",\"endTime\":\"18:00\",\"type\":\"work\"}]}}",
+      "location": {
+        "url": "http://127.0.0.1:50158/node_modules/.vite/deps/msw.js?v=a14f9e1c",
+        "lineNumber": 560,
+        "columnNumber": 12
+      }
+    },
+    {
+      "type": "endGroup",
+      "text": "console.groupEnd",
+      "location": {
+        "url": "http://127.0.0.1:50158/node_modules/.vite/deps/msw.js?v=a14f9e1c",
+        "lineNumber": 561,
+        "columnNumber": 12
+      }
+    },
+    {
+      "type": "startGroupCollapsed",
+      "text": "[MSW] 13:41:39 GET /api/stores/store_001/staff (%c200 OK%c) color:#69AB32 color:inherit",
+      "location": {
+        "url": "http://127.0.0.1:50158/node_modules/.vite/deps/msw.js?v=a14f9e1c",
+        "lineNumber": 551,
+        "columnNumber": 12
+      }
+    },
+    {
+      "type": "log",
+      "text": "Request {url: URL, method: GET, headers: Object, body: }",
+      "location": {
+        "url": "http://127.0.0.1:50158/node_modules/.vite/deps/msw.js?v=a14f9e1c",
+        "lineNumber": 558,
+        "columnNumber": 12
+      }
+    },
+    {
+      "type": "log",
+      "text": "Handler: HttpHandler",
+      "location": {
+        "url": "http://127.0.0.1:50158/node_modules/.vite/deps/msw.js?v=a14f9e1c",
+        "lineNumber": 559,
+        "columnNumber": 12
+      }
+    },
+    {
+      "type": "log",
+      "text": "Response {status: 200, statusText: OK, headers: Object, body: {\"code\":0,\"message\":\"success\",\"data\":[{\"id\":\"staff…/7.x/avataaars/svg?seed=liufang\",\"services\":[]}]}}",
+      "location": {
+        "url": "http://127.0.0.1:50158/node_modules/.vite/deps/msw.js?v=a14f9e1c",
+        "lineNumber": 560,
+        "columnNumber": 12
+      }
+    }
+  ],
+  "requestFailures": [],
+  "responseErrors": []
+}

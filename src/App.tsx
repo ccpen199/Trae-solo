@@ -103,7 +103,7 @@ function OwnerRoutes() {
               </motion.div>
             }
           />
-          <Route path="*" element={<Navigate to="/" replace />} />
+          <Route path="*" element={<Navigate to="/owner" replace />} />
         </Routes>
       </AnimatePresence>
     </OwnerLayout>
@@ -179,7 +179,7 @@ function StoreRoutes() {
               </motion.div>
             }
           />
-          <Route path="*" element={<Navigate to="/" replace />} />
+          <Route path="*" element={<Navigate to="/store" replace />} />
         </Routes>
       </AnimatePresence>
     </StoreLayout>
@@ -210,6 +210,8 @@ function AppContent() {
       <AnimatePresence mode="wait">
         <Routes location={location} key={location.pathname}>
           <Route path="/login" element={<Login />} />
+          <Route path="/store/*" element={<StoreRoutes />} />
+          <Route path="/" element={<Navigate to="/store" replace />} />
           <Route path="*" element={<Navigate to="/login" replace />} />
         </Routes>
       </AnimatePresence>
@@ -220,6 +222,7 @@ function AppContent() {
     return (
       <Routes location={location} key={location.pathname}>
         <Route path="/owner/*" element={<OwnerRoutes />} />
+        <Route path="/store/*" element={<StoreRoutes />} />
         <Route path="*" element={<Navigate to="/owner" replace />} />
       </Routes>
     );

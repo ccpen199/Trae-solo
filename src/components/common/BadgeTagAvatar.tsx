@@ -126,20 +126,21 @@ export function Avatar({ src, alt = '', name, size = 'md', status, className, ..
 }
 
 interface AvatarGroupProps {
-  avatars: { src?: string; name: string }[];
+  avatars?: { src?: string; name?: string }[];
   max?: number;
   size?: 'xs' | 'sm' | 'md' | 'lg';
 }
 
-export function AvatarGroup({ avatars, max = 4, size = 'sm' }: AvatarGroupProps) {
-  const displayAvatars = avatars.slice(0, max);
-  const remaining = avatars.length - max;
+export function AvatarGroup({ avatars = [], max = 4, size = 'sm' }: AvatarGroupProps) {
+  const safeAvatars = Array.isArray(avatars) ? avatars.filter(Boolean) : [];
+  const displayAvatars = safeAvatars.slice(0, max);
+  const remaining = safeAvatars.length - max;
 
   return (
     <div className="flex -space-x-2">
       {displayAvatars.map((avatar, index) => (
         <Avatar
-          key={index}
+          key={`${avatar.src || ''}-${avatar.name || index}`}
           src={avatar.src}
           name={avatar.name}
           size={size}

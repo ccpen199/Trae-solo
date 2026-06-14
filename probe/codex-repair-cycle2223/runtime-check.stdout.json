@@ -1,0 +1,393 @@
+{
+  "ok": true,
+  "generatedAt": "2026-06-12T08:13:35.128Z",
+  "order": "may-89158",
+  "roundIndex": 2223,
+  "captureId": "may-89158-cycle2223",
+  "url": "http://127.0.0.1:50158/",
+  "initialUrl": "http://127.0.0.1:50158/",
+  "finalUrl": "http://127.0.0.1:50158/store",
+  "status": 200,
+  "title": "萌宠健康 - 宠物健康全周期管理平台",
+  "initialTitle": "萌宠健康 - 宠物健康全周期管理平台",
+  "navigationError": "",
+  "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89158/probe/codex-repair-cycle2223/may-89158-cycle2223-frontend.png",
+  "screenshotPaths": [
+    "/Users/chen/Documents/trae_projects/local_projects/may-89158/probe/codex-repair-cycle2223/may-89158-cycle2223-structure-01-首屏.png"
+  ],
+  "issueTextPreview": "",
+  "targetReason": "未识别到特定问题页，保留首屏验收截图",
+  "targetKind": "smoke",
+  "targetMatched": false,
+  "targetActions": [
+    {
+      "action": "keep-current-page",
+      "label": "未识别到特定问题页，保留首屏验收截图",
+      "ok": true
+    }
+  ],
+  "authFlow": {
+    "detected": false,
+    "attempted": false,
+    "success": false,
+    "finalUrl": "http://127.0.0.1:50158/store",
+    "message": "",
+    "actions": []
+  },
+  "businessAudit": {
+    "actions": [],
+    "snapshots": [
+      {
+        "label": "首屏",
+        "url": "http://127.0.0.1:50158/store",
+        "title": "萌宠健康 - 宠物健康全周期管理平台",
+        "headings": [],
+        "navLabels": [],
+        "buttons": [],
+        "links": [],
+        "inputs": [],
+        "tables": [],
+        "emptyTextCount": 0,
+        "bodyTextPreview": "",
+        "layout": {
+          "viewportWidth": 1504,
+          "viewportHeight": 1000,
+          "scrollWidth": 1504,
+          "scrollHeight": 1000,
+          "horizontalOverflow": false
+        },
+        "structureCapture": {
+          "module": "website_structure_capture",
+          "runId": "may-89158-cycle2223-structure-01-首屏",
+          "label": "首屏",
+          "finalUrl": "http://127.0.0.1:50158/store",
+          "title": "萌宠健康 - 宠物健康全周期管理平台",
+          "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89158/probe/codex-repair-cycle2223/may-89158-cycle2223-structure-01-首屏.json",
+          "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89158/probe/codex-repair-cycle2223/may-89158-cycle2223-structure-01-首屏.png",
+          "elementCount": 12,
+          "interactiveCount": 0,
+          "interactiveLabels": []
+        }
+      }
+    ],
+    "findings": [
+      "首屏 页面打开后是空白，没有渲染业务内容、表单或列表。"
+    ],
+    "actionHints": [
+      "修复 首屏 的路由组件挂载、接口初始化和错误兜底，确保进入页面后直接显示可操作内容。"
+    ],
+    "emptyPages": [],
+    "overflowPages": [],
+    "blankPages": [
+      "首屏"
+    ],
+    "apiFailurePaths": [],
+    "goalTerms": [],
+    "clickedActionDescriptors": [],
+    "secondaryActionClicks": 0,
+    "structureCaptures": [
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89158-cycle2223-structure-01-首屏",
+        "label": "首屏",
+        "finalUrl": "http://127.0.0.1:50158/store",
+        "title": "萌宠健康 - 宠物健康全周期管理平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89158/probe/codex-repair-cycle2223/may-89158-cycle2223-structure-01-首屏.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89158/probe/codex-repair-cycle2223/may-89158-cycle2223-structure-01-首屏.png",
+        "elementCount": 12,
+        "interactiveCount": 0,
+        "interactiveLabels": []
+      }
+    ],
+    "representativeScreenshotUrl": "http://127.0.0.1:50158/store",
+    "representativeScreenshotLabel": "首屏"
+  },
+  "websiteStructureCapture": {
+    "module": "website_structure_capture",
+    "captureCount": 1,
+    "captures": [
+      {
+        "module": "website_structure_capture",
+        "runId": "may-89158-cycle2223-structure-01-首屏",
+        "label": "首屏",
+        "finalUrl": "http://127.0.0.1:50158/store",
+        "title": "萌宠健康 - 宠物健康全周期管理平台",
+        "structurePath": "/Users/chen/Documents/trae_projects/local_projects/may-89158/probe/codex-repair-cycle2223/may-89158-cycle2223-structure-01-首屏.json",
+        "screenshotPath": "/Users/chen/Documents/trae_projects/local_projects/may-89158/probe/codex-repair-cycle2223/may-89158-cycle2223-structure-01-首屏.png",
+        "elementCount": 12,
+        "interactiveCount": 0,
+        "interactiveLabels": []
+      }
+    ]
+  },
+  "screenshotMetrics": {
+    "width": 1536,
+    "height": 1000,
+    "scrollWidth": 1504,
+    "scrollHeight": 1000
+  },
+  "initialBodyTextPreview": "",
+  "bodyTextPreview": "",
+  "apiBase": "",
+  "businessGoalPreview": "",
+  "apiResponses": [],
+  "apiChecks": [],
+  "dialogs": [],
+  "consoleMessages": [
+    {
+      "type": "debug",
+      "text": "[vite] connecting...",
+      "location": {
+        "url": "http://127.0.0.1:50158/@vite/client",
+        "lineNumber": 494,
+        "columnNumber": 8
+      }
+    },
+    {
+      "type": "info",
+      "text": "%cDownload the React DevTools for a better development experience: https://reactjs.org/link/react-devtools font-weight:bold",
+      "location": {
+        "url": "http://127.0.0.1:50158/node_modules/.vite/deps/chunk-UXDD7MME.js?v=a14f9e1c",
+        "lineNumber": 21550,
+        "columnNumber": 24
+      }
+    },
+    {
+      "type": "debug",
+      "text": "[vite] connected.",
+      "location": {
+        "url": "http://127.0.0.1:50158/@vite/client",
+        "lineNumber": 617,
+        "columnNumber": 14
+      }
+    },
+    {
+      "type": "startGroupCollapsed",
+      "text": "%c[MSW] Mocking enabled. color:orangered;font-weight:bold;",
+      "location": {
+        "url": "http://127.0.0.1:50158/node_modules/.vite/deps/msw_browser.js?v=a14f9e1c",
+        "lineNumber": 3564,
+        "columnNumber": 10
+      }
+    },
+    {
+      "type": "log",
+      "text": "%cDocumentation: %chttps://mswjs.io/docs font-weight:bold font-weight:normal",
+      "location": {
+        "url": "http://127.0.0.1:50158/node_modules/.vite/deps/msw_browser.js?v=a14f9e1c",
+        "lineNumber": 3568,
+        "columnNumber": 10
+      }
+    },
+    {
+      "type": "log",
+      "text": "Found an issue? https://github.com/mswjs/msw/issues",
+      "location": {
+        "url": "http://127.0.0.1:50158/node_modules/.vite/deps/msw_browser.js?v=a14f9e1c",
+        "lineNumber": 3573,
+        "columnNumber": 10
+      }
+    },
+    {
+      "type": "log",
+      "text": "Worker script URL: http://127.0.0.1:50158/mockServiceWorker.js",
+      "location": {
+        "url": "http://127.0.0.1:50158/node_modules/.vite/deps/msw_browser.js?v=a14f9e1c",
+        "lineNumber": 3574,
+        "columnNumber": 10
+      }
+    },
+    {
+      "type": "log",
+      "text": "Worker scope: http://127.0.0.1:50158/",
+      "location": {
+        "url": "http://127.0.0.1:50158/node_modules/.vite/deps/msw_browser.js?v=a14f9e1c",
+        "lineNumber": 3575,
+        "columnNumber": 10
+      }
+    },
+    {
+      "type": "log",
+      "text": "Client ID: %s (%s) 3614d347-31c2-4d8a-b6af-2293358a9591 top-level",
+      "location": {
+        "url": "http://127.0.0.1:50158/node_modules/.vite/deps/msw_browser.js?v=a14f9e1c",
+        "lineNumber": 3577,
+        "columnNumber": 12
+      }
+    },
+    {
+      "type": "endGroup",
+      "text": "console.groupEnd",
+      "location": {
+        "url": "http://127.0.0.1:50158/node_modules/.vite/deps/msw_browser.js?v=a14f9e1c",
+        "lineNumber": 3579,
+        "columnNumber": 10
+      }
+    },
+    {
+      "type": "log",
+      "text": "MSW mocking enabled",
+      "location": {
+        "url": "http://127.0.0.1:50158/src/mock/browser.ts",
+        "lineNumber": 21,
+        "columnNumber": 12
+      }
+    },
+    {
+      "type": "warning",
+      "text": "⚠️ React Router Future Flag Warning: React Router will begin wrapping state updates in `React.startTransition` in v7. You can use the `v7_startTransition` future flag to opt-in early. For more information, see https://reactrouter.com/v6/upgrading/future#v7_starttransition.",
+      "location": {
+        "url": "http://127.0.0.1:50158/node_modules/.vite/deps/react-router-dom.js?v=a14f9e1c",
+        "lineNumber": 4426,
+        "columnNumber": 12
+      }
+    },
+    {
+      "type": "warning",
+      "text": "⚠️ React Router Future Flag Warning: Relative route resolution within Splat routes is changing in v7. You can use the `v7_relativeSplatPath` future flag to opt-in early. For more information, see https://reactrouter.com/v6/upgrading/future#v7_relativesplatpath.",
+      "location": {
+        "url": "http://127.0.0.1:50158/node_modules/.vite/deps/react-router-dom.js?v=a14f9e1c",
+        "lineNumber": 4426,
+        "columnNumber": 12
+      }
+    },
+    {
+      "type": "error",
+      "text": "The above error occurred in the <AvatarGroup> component:\n\n    at AvatarGroup (http://127.0.0.1:50158/src/components/common/BadgeTagAvatar.tsx:153:31)\n    at div\n    at div\n    at div\n    at MotionComponent (http://127.0.0.1:50158/node_modules/.vite/deps/framer-motion.js?v=a14f9e1c:945:40)\n    at StoreDashboard (http://127.0.0.1:50158/src/pages/store/StoreDashboard.tsx:42:112)\n    at div\n    at MotionComponent (http://127.0.0.1:50158/node_modules/.vite/deps/framer-motion.js?v=a14f9e1c:945:40)\n    at RenderedRoute (http://127.0.0.1:50158/node_modules/.vite/deps/react-router-dom.js?v=a14f9e1c:4122:5)\n    at Routes (http://127.0.0.1:50158/node_modules/.vite/deps/react-router-dom.js?v=a14f9e1c:4592:5)\n    at PresenceChild (http://127.0.0.1:50158/node_modules/.vite/deps/framer-motion.js?v=a14f9e1c:121:24)\n    at AnimatePresence (http://127.0.0.1:50158/node_modules/.vite/deps/framer-motion.js?v=a14f9e1c:210:26)\n    at main\n    at div\n    at div\n    at StoreLayout (http://127.0.0.1:50158/src/components/layouts/AppLayout.tsx:417:31)\n    at StoreRoutes\n    at RenderedRoute (http://127.0.0.1:50158/node_modules/.vite/deps/react-router-dom.js?v=a14f9e1c:4122:5)\n    at Routes (http://127.0.0.1:50158/node_modules/.vite/deps/react-router-dom.js?v=a14f9e1c:4592:5)\n    at PresenceChild (http://127.0.0.1:50158/node_modules/.vite/deps/framer-motion.js?v=a14f9e1c:121:24)\n    at AnimatePresence (http://127.0.0.1:50158/node_modules/.vite/deps/framer-motion.js?v=a14f9e1c:210:26)\n    at AppContent (http://127.0.0.1:50158/src/App.tsx:489:60)\n    at Router (http://127.0.0.1:50158/node_modules/.vite/deps/react-router-dom.js?v=a14f9e1c:4535:15)\n    at BrowserRouter (http://127.0.0.1:50158/node_modules/.vite/deps/react-router-dom.js?v=a14f9e1c:5273:5)\n    at App\n\nConsider adding an error boundary to your tree to customize error handling behavior.\nVisit https://reactjs.org/link/error-boundaries to learn more about error boundaries.",
+      "location": {
+        "url": "http://127.0.0.1:50158/node_modules/.vite/deps/chunk-UXDD7MME.js?v=a14f9e1c",
+        "lineNumber": 14031,
+        "columnNumber": 30
+      }
+    },
+    {
+      "type": "debug",
+      "text": "[vite] connecting...",
+      "location": {
+        "url": "http://127.0.0.1:50158/@vite/client",
+        "lineNumber": 494,
+        "columnNumber": 8
+      }
+    },
+    {
+      "type": "debug",
+      "text": "[vite] connected.",
+      "location": {
+        "url": "http://127.0.0.1:50158/@vite/client",
+        "lineNumber": 617,
+        "columnNumber": 14
+      }
+    },
+    {
+      "type": "info",
+      "text": "%cDownload the React DevTools for a better development experience: https://reactjs.org/link/react-devtools font-weight:bold",
+      "location": {
+        "url": "http://127.0.0.1:50158/node_modules/.vite/deps/chunk-UXDD7MME.js?v=a14f9e1c",
+        "lineNumber": 21550,
+        "columnNumber": 24
+      }
+    },
+    {
+      "type": "startGroupCollapsed",
+      "text": "%c[MSW] Mocking enabled. color:orangered;font-weight:bold;",
+      "location": {
+        "url": "http://127.0.0.1:50158/node_modules/.vite/deps/msw_browser.js?v=a14f9e1c",
+        "lineNumber": 3564,
+        "columnNumber": 10
+      }
+    },
+    {
+      "type": "log",
+      "text": "%cDocumentation: %chttps://mswjs.io/docs font-weight:bold font-weight:normal",
+      "location": {
+        "url": "http://127.0.0.1:50158/node_modules/.vite/deps/msw_browser.js?v=a14f9e1c",
+        "lineNumber": 3568,
+        "columnNumber": 10
+      }
+    },
+    {
+      "type": "log",
+      "text": "Found an issue? https://github.com/mswjs/msw/issues",
+      "location": {
+        "url": "http://127.0.0.1:50158/node_modules/.vite/deps/msw_browser.js?v=a14f9e1c",
+        "lineNumber": 3573,
+        "columnNumber": 10
+      }
+    },
+    {
+      "type": "log",
+      "text": "Worker script URL: http://127.0.0.1:50158/mockServiceWorker.js",
+      "location": {
+        "url": "http://127.0.0.1:50158/node_modules/.vite/deps/msw_browser.js?v=a14f9e1c",
+        "lineNumber": 3574,
+        "columnNumber": 10
+      }
+    },
+    {
+      "type": "log",
+      "text": "Worker scope: http://127.0.0.1:50158/",
+      "location": {
+        "url": "http://127.0.0.1:50158/node_modules/.vite/deps/msw_browser.js?v=a14f9e1c",
+        "lineNumber": 3575,
+        "columnNumber": 10
+      }
+    },
+    {
+      "type": "log",
+      "text": "Client ID: %s (%s) 8340b4d4-1c8f-45a8-8824-a662ca6efb36 top-level",
+      "location": {
+        "url": "http://127.0.0.1:50158/node_modules/.vite/deps/msw_browser.js?v=a14f9e1c",
+        "lineNumber": 3577,
+        "columnNumber": 12
+      }
+    },
+    {
+      "type": "endGroup",
+      "text": "console.groupEnd",
+      "location": {
+        "url": "http://127.0.0.1:50158/node_modules/.vite/deps/msw_browser.js?v=a14f9e1c",
+        "lineNumber": 3579,
+        "columnNumber": 10
+      }
+    },
+    {
+      "type": "log",
+      "text": "MSW mocking enabled",
+      "location": {
+        "url": "http://127.0.0.1:50158/src/mock/browser.ts",
+        "lineNumber": 21,
+        "columnNumber": 12
+      }
+    },
+    {
+      "type": "warning",
+      "text": "⚠️ React Router Future Flag Warning: React Router will begin wrapping state updates in `React.startTransition` in v7. You can use the `v7_startTransition` future flag to opt-in early. For more information, see https://reactrouter.com/v6/upgrading/future#v7_starttransition.",
+      "location": {
+        "url": "http://127.0.0.1:50158/node_modules/.vite/deps/react-router-dom.js?v=a14f9e1c",
+        "lineNumber": 4426,
+        "columnNumber": 12
+      }
+    },
+    {
+      "type": "warning",
+      "text": "⚠️ React Router Future Flag Warning: Relative route resolution within Splat routes is changing in v7. You can use the `v7_relativeSplatPath` future flag to opt-in early. For more information, see https://reactrouter.com/v6/upgrading/future#v7_relativesplatpath.",
+      "location": {
+        "url": "http://127.0.0.1:50158/node_modules/.vite/deps/react-router-dom.js?v=a14f9e1c",
+        "lineNumber": 4426,
+        "columnNumber": 12
+      }
+    },
+    {
+      "type": "error",
+      "text": "The above error occurred in the <AvatarGroup> component:\n\n    at AvatarGroup (http://127.0.0.1:50158/src/components/common/BadgeTagAvatar.tsx:153:31)\n    at div\n    at div\n    at div\n    at MotionComponent (http://127.0.0.1:50158/node_modules/.vite/deps/framer-motion.js?v=a14f9e1c:945:40)\n    at StoreDashboard (http://127.0.0.1:50158/src/pages/store/StoreDashboard.tsx:42:112)\n    at div\n    at MotionComponent (http://127.0.0.1:50158/node_modules/.vite/deps/framer-motion.js?v=a14f9e1c:945:40)\n    at RenderedRoute (http://127.0.0.1:50158/node_modules/.vite/deps/react-router-dom.js?v=a14f9e1c:4122:5)\n    at Routes (http://127.0.0.1:50158/node_modules/.vite/deps/react-router-dom.js?v=a14f9e1c:4592:5)\n    at PresenceChild (http://127.0.0.1:50158/node_modules/.vite/deps/framer-motion.js?v=a14f9e1c:121:24)\n    at AnimatePresence (http://127.0.0.1:50158/node_modules/.vite/deps/framer-motion.js?v=a14f9e1c:210:26)\n    at main\n    at div\n    at div\n    at StoreLayout (http://127.0.0.1:50158/src/components/layouts/AppLayout.tsx:417:31)\n    at StoreRoutes\n    at RenderedRoute (http://127.0.0.1:50158/node_modules/.vite/deps/react-router-dom.js?v=a14f9e1c:4122:5)\n    at Routes (http://127.0.0.1:50158/node_modules/.vite/deps/react-router-dom.js?v=a14f9e1c:4592:5)\n    at PresenceChild (http://127.0.0.1:50158/node_modules/.vite/deps/framer-motion.js?v=a14f9e1c:121:24)\n    at AnimatePresence (http://127.0.0.1:50158/node_modules/.vite/deps/framer-motion.js?v=a14f9e1c:210:26)\n    at AppContent (http://127.0.0.1:50158/src/App.tsx:489:60)\n    at Router (http://127.0.0.1:50158/node_modules/.vite/deps/react-router-dom.js?v=a14f9e1c:4535:15)\n    at BrowserRouter (http://127.0.0.1:50158/node_modules/.vite/deps/react-router-dom.js?v=a14f9e1c:5273:5)\n    at App\n\nConsider adding an error boundary to your tree to customize error handling behavior.\nVisit https://reactjs.org/link/error-boundaries to learn more about error boundaries.",
+      "location": {
+        "url": "http://127.0.0.1:50158/node_modules/.vite/deps/chunk-UXDD7MME.js?v=a14f9e1c",
+        "lineNumber": 14031,
+        "columnNumber": 30
+      }
+    }
+  ],
+  "requestFailures": [],
+  "responseErrors": [],
+  "reportPath": "/Users/chen/Documents/trae_projects/local_projects/may-89158/probe/codex-repair-cycle2223/may-89158-browser-report.json"
+}

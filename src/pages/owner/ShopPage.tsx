@@ -70,7 +70,7 @@ export default function ShopPage() {
     >
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="font-display text-2xl font-bold text-neutral-900">在线商城</h1>
+          <h1 className="font-display text-2xl font-bold text-neutral-900">购买/提交订单</h1>
           <p className="text-neutral-500 mt-1">精选宠物好物，执业兽医在线审方</p>
         </div>
         <Button variant="outline" className="relative">
@@ -159,7 +159,7 @@ export default function ShopPage() {
                   {formatCurrency(totalPrice)}
                 </span>
               </div>
-              <Button size="lg">去结算</Button>
+              <Button size="lg">提交订单</Button>
             </motion.div>
           )}
 

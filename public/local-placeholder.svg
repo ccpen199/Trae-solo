@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="480" height="480" viewBox="0 0 480 480" role="img" aria-label="本地占位图">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#e0f2fe"/>
+      <stop offset="0.5" stop-color="#dcfce7"/>
+      <stop offset="1" stop-color="#fef3c7"/>
+    </linearGradient>
+  </defs>
+  <rect width="480" height="480" rx="40" fill="url(#bg)"/>
+  <circle cx="240" cy="205" r="76" fill="#ffffff" fill-opacity="0.82"/>
+  <path d="M164 326c18-58 53-88 76-88s58 30 76 88" fill="none" stroke="#0f766e" stroke-width="22" stroke-linecap="round"/>
+  <circle cx="214" cy="190" r="10" fill="#0f766e"/>
+  <circle cx="266" cy="190" r="10" fill="#0f766e"/>
+  <path d="M220 224c12 10 28 10 40 0" fill="none" stroke="#0f766e" stroke-width="10" stroke-linecap="round"/>
+  <text x="240" y="394" text-anchor="middle" font-family="Arial, sans-serif" font-size="30" font-weight="700" fill="#115e59">Pet Care</text>
+</svg>

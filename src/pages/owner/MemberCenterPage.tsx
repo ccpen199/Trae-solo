@@ -264,10 +264,10 @@ export default function MemberCenterPage() {
                 <CardContent>
                   <div className="grid grid-cols-4 gap-4">
                     {[
-                      { name: '精致洗护服务', points: 1000, image: 'https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=pet%20grooming%20service&image_size=square' },
-                      { name: '驱虫服务', points: 500, image: 'https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=pet%20deworming%20product&image_size=square' },
-                      { name: '宠物益生菌', points: 300, image: 'https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=pet%20probiotic%20supplement&image_size=square' },
-                      { name: '营养卵磷脂', points: 400, image: 'https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=pet%20lecithin%20supplement&image_size=square' },
+                      { name: '精致洗护服务', points: 1000, image: '/local-placeholder.svg' },
+                      { name: '驱虫服务', points: 500, image: '/local-placeholder.svg' },
+                      { name: '宠物益生菌', points: 300, image: '/local-placeholder.svg' },
+                      { name: '营养卵磷脂', points: 400, image: '/local-placeholder.svg' },
                     ].map((item, index) => (
                       <motion.div
                         key={index}

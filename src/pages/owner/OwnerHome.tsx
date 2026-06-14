@@ -325,14 +325,14 @@ export default function OwnerHome() {
                   address: '北京市朝阳区建国路88号',
                   rating: 4.9,
                   distance: '1.2km',
-                  image: 'https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=modern%20pet%20care%20store%20interior%20bright%20clean&image_size=square',
+                  image: '/local-placeholder.svg',
                 },
                 {
                   name: '爱宠屋·望京社区店',
                   address: '北京市朝阳区望京SOHO',
                   rating: 4.8,
                   distance: '3.5km',
-                  image: 'https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=cozy%20pet%20grooming%20shop%20storefront&image_size=square',
+                  image: '/local-placeholder.svg',
                 },
               ].map((store, index) => (
                 <motion.div

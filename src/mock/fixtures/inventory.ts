@@ -158,7 +158,7 @@ export const mockProducts: Product[] = [
     requiresPrescription: true,
     description: '用于治疗犬猫细菌性外耳炎、中耳炎，需兽医处方',
     images: [
-      'https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=pet%20ear%20drops%20bottle%20pharmaceutical%20packaging&image_size=square',
+      '/local-placeholder.svg',
     ],
     stock: 100,
   },
@@ -173,7 +173,7 @@ export const mockProducts: Product[] = [
     requiresPrescription: true,
     description: '适用于慢性肾病猫咪，需兽医处方',
     images: [
-      'https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=premium%20cat%20kidney%20prescription%20food%20bag&image_size=square',
+      '/local-placeholder.svg',
     ],
     stock: 50,
   },
@@ -188,7 +188,7 @@ export const mockProducts: Product[] = [
     requiresPrescription: false,
     description: '美毛护肤，增强皮肤抵抗力',
     images: [
-      'https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=pet%20nutrition%20lecithin%20supplement%20jar&image_size=square',
+      '/local-placeholder.svg',
     ],
     stock: 200,
   },
@@ -202,7 +202,7 @@ export const mockProducts: Product[] = [
     requiresPrescription: false,
     description: '犬猫通用，补充钙质，强健骨骼',
     images: [
-      'https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=pet%20calcium%20supplement%20bottle%20white%20background&image_size=square',
+      '/local-placeholder.svg',
     ],
     stock: 150,
   },
@@ -216,7 +216,7 @@ export const mockProducts: Product[] = [
     requiresPrescription: false,
     description: '专业排梳，去除浮毛，预防毛球',
     images: [
-      'https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=professional%20cat%20grooming%20comb%20premium&image_size=square',
+      '/local-placeholder.svg',
     ],
     stock: 80,
   },
@@ -230,7 +230,7 @@ export const mockProducts: Product[] = [
     requiresPrescription: false,
     description: '调理肠胃，改善腹泻便秘',
     images: [
-      'https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=pet%20probiotic%20supplement%20box&image_size=square',
+      '/local-placeholder.svg',
     ],
     stock: 120,
   },

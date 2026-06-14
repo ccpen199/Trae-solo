@@ -31,14 +31,15 @@ interface OwnerLayoutProps {
 }
 
 const ownerNavItems = [
-  { path: '/', label: '首页', icon: Home },
-  { path: '/pets', label: '宠物档案', icon: PawPrint },
-  { path: '/booking', label: '服务预约', icon: Calendar },
-  { path: '/health', label: '健康档案', icon: FileText },
-  { path: '/shop', label: '在线商城', icon: ShoppingBag },
-  { path: '/consult', label: '在线问诊', icon: MessageCircle },
-  { path: '/symptom-check', label: '症状自查', icon: HeartPulse },
-  { path: '/member', label: '会员中心', icon: User },
+  { path: '/owner', label: '首页', icon: Home },
+  { path: '/owner/pets', label: '宠物档案', icon: PawPrint },
+  { path: '/owner/booking', label: '服务预约', icon: Calendar },
+  { path: '/owner/health-records', label: '健康档案', icon: FileText },
+  { path: '/owner/shop', label: '购买/提交订单', icon: ShoppingBag },
+  { path: '/owner/consult', label: '在线问诊', icon: MessageCircle },
+  { path: '/owner/symptom-check', label: '症状自查', icon: HeartPulse },
+  { path: '/owner/member', label: '会员中心', icon: User },
+  { path: '/store', label: '管理后台', icon: LayoutDashboard },
 ];
 
 export function OwnerLayout({ children }: OwnerLayoutProps) {
@@ -65,7 +66,7 @@ export function OwnerLayout({ children }: OwnerLayoutProps) {
           >
             <div className="h-full flex flex-col">
               <div className="p-6 border-b border-neutral-100">
-                <Link to="/" className="flex items-center gap-3">
+                <Link to="/owner" className="flex items-center gap-3">
                   <div className="w-10 h-10 bg-gradient-primary rounded-xl flex items-center justify-center">
                     <PawPrint className="w-6 h-6 text-white" />
                   </div>
@@ -78,17 +79,23 @@ export function OwnerLayout({ children }: OwnerLayoutProps) {
 
               <nav className="flex-1 p-4 overflow-y-auto">
                 <ul className="space-y-1">
-                  {ownerNavItems.map((item) => {
-                    const Icon = item.icon;
-                    const isActive = location.pathname === item.path;
+                {ownerNavItems.map((item) => {
+                  const Icon = item.icon;
+                  const isActive = location.pathname === item.path;
+                  const handleOwnerNavClick = () => {
+                    if (item.path === '/store') {
+                      navigate('/store');
+                    }
+                  };
 
-                    return (
-                      <li key={item.path}>
-                        <Link
-                          to={item.path}
-                          className={cn(
-                            'flex items-center gap-3 px-4 py-3 rounded-xl transition-all duration-200 group',
-                            isActive
+                  return (
+                    <li key={item.path}>
+                      <Link
+                        to={item.path}
+                        onClick={handleOwnerNavClick}
+                        className={cn(
+                          'flex items-center gap-3 px-4 py-3 rounded-xl transition-all duration-200 group',
+                          isActive
                               ? 'bg-primary-50 text-primary-700 font-medium'
                               : 'text-neutral-600 hover:bg-neutral-50 hover:text-neutral-900'
                           )}
@@ -203,6 +210,7 @@ interface StoreLayoutProps {
 }
 
 const storeNavItems = [
+  { path: '/store', label: '管理后台', icon: LayoutDashboard },
   { path: '/store', label: '工作台', icon: LayoutDashboard },
   { path: '/store/schedule', label: '排班调度', icon: Calendar },
   { path: '/store/services', label: '服务管理', icon: ClipboardList },
@@ -233,7 +241,7 @@ export function StoreLayout({ children }: StoreLayoutProps) {
               </div>
               <div>
                 <h1 className="font-display text-lg font-bold text-white">爱宠屋</h1>
-                <p className="text-xs text-white/70">直营中心店</p>
+                <p className="text-xs text-white/70">管理后台 · 直营中心店</p>
               </div>
             </div>
           </div>
@@ -245,7 +253,7 @@ export function StoreLayout({ children }: StoreLayoutProps) {
                 const isActive = location.pathname === item.path;
 
                 return (
-                  <li key={item.path}>
+                  <li key={`${item.path}-${item.label}`}>
                     <Link
                       to={item.path}
                       className={cn(
@@ -328,7 +336,7 @@ export function StoreLayout({ children }: StoreLayoutProps) {
                 className="w-full justify-start"
                 onClick={() => {
                   switchRole('owner');
-                  navigate('/');
+                  navigate('/owner');
                   setShowRoleSwitch(false);
                 }}
               >

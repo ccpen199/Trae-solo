@@ -237,10 +237,10 @@ export const mockAppointments: Appointment[] = [
         completedAt: '2026-06-10T14:40:00Z',
         completedBy: '李明',
         beforePhotos: [
-          'https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=golden%20retriever%20dog%20before%20deworming%20treatment&image_size=square',
+          '/local-placeholder.svg',
         ],
         afterPhotos: [
-          'https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=golden%20retriever%20dog%20after%20deworming%20treatment%20happy&image_size=square',
+          '/local-placeholder.svg',
         ],
         notes: '体外驱虫药已滴于后颈皮肤，已佩戴伊丽莎白圈',
       },

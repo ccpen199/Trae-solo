@@ -70,17 +70,13 @@ export default function StoreDashboard() {
           </p>
         </div>
         <div className="flex items-center gap-3">
-          <AvatarGroup max={3}>
-            {employees.slice(0, 3).map((emp) => (
-              <Avatar
-                key={emp.id}
-                src={`https://api.dicebear.com/7.x/avataaars/svg?seed=${emp.id}`}
-                name={emp.name}
-                size="sm"
-                status={todaySchedules.find((s) => s.employeeId === emp.id) ? 'online' : 'offline'}
-              />
-            ))}
-          </AvatarGroup>
+          <AvatarGroup
+            max={3}
+            avatars={employees.slice(0, 3).map((emp) => ({
+              src: `https://api.dicebear.com/7.x/avataaars/svg?seed=${emp.id}`,
+              name: emp.name,
+            }))}
+          />
           <Button variant="outline">切换门店</Button>
         </div>
       </div>

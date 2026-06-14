@@ -26,7 +26,16 @@ apiClient.interceptors.response.use(
     return Promise.reject(new Error(data.message || '请求失败'));
   },
   (error) => {
-    return Promise.reject(error);
+    if (error.response?.data) {
+      const errData = error.response.data as ApiResponse;
+      if (errData.message) {
+        return Promise.reject(new Error(errData.message));
+      }
+    }
+    if (error.message) {
+      return Promise.reject(error);
+    }
+    return Promise.reject(new Error('网络请求失败，请检查网络连接'));
   }
 );
 

@@ -93,7 +93,7 @@ export function ImageUploader({
   const handleUpload = () => {
     const newImages = [
       ...images,
-      `https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=pet%20grooming%20service%20photo&image_size=square`,
+      `/local-placeholder.svg`,
     ].slice(0, maxImages);
     onChange(newImages);
   };

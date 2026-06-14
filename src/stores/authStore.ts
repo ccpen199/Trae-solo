@@ -16,6 +16,7 @@ interface AuthState {
   error: string | null;
   lastLoginResult: LoginResult | null;
   login: (data: LoginRequest) => Promise<LoginResult>;
+  loginDirect: (role: UserRole) => LoginResult;
   logout: () => Promise<void>;
   fetchCurrentUser: () => Promise<void>;
   clearError: () => void;
@@ -160,6 +161,25 @@ export const useAuthStore = create<AuthState>()(
       clearError: () => set({ error: null }),
 
       clearLoginResult: () => set({ lastLoginResult: null }),
+
+      loginDirect: (role) => {
+        const user = mockUsers[role];
+        const token = `token_${role}_${Date.now()}`;
+        const redirectPath = getDefaultRedirectPath(role);
+        const welcomeMessage = `欢迎回来，${user.nickname}！正在进入${getRoleLabel(role)}工作台...`;
+
+        localStorage.setItem('auth_token', token);
+        set({
+          user,
+          token,
+          isAuthenticated: true,
+          isLoading: false,
+          error: null,
+          lastLoginResult: { redirectPath, welcomeMessage },
+        });
+
+        return { redirectPath, welcomeMessage };
+      },
 
       switchRole: (role) => {
         const user = mockUsers[role];

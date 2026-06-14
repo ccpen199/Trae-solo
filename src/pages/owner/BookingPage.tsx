@@ -223,7 +223,7 @@ export default function BookingPage() {
                   >
                     <div className="flex items-start gap-4">
                       <img
-                        src={`https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=pet%20care%20store%20interior%20modern&image_size=square`}
+                        src={`/local-placeholder.svg`}
                         alt={store.name}
                         className="w-24 h-24 rounded-xl object-cover flex-shrink-0"
                       />

@@ -46,7 +46,7 @@ export const mockConsults: ConsultSession[] = [
       { id: 'm1', sessionId: 'consult_001', senderType: 'owner', senderId: 'owner_001', messageType: 'text', content: '医生您好，小花最近3天总是抓左耳，看起来很痒的样子', createdAt: '2026-06-10T19:30:00Z' },
       { id: 'm2', sessionId: 'consult_001', senderType: 'veterinarian', senderId: 'vet_001', messageType: 'text', content: '您好，请问耳朵有没有异味或者分泌物？最近有没有洗澡进水？', createdAt: '2026-06-10T19:32:00Z' },
       { id: 'm3', sessionId: 'consult_001', senderType: 'owner', senderId: 'owner_001', messageType: 'text', content: '好像有点褐色的分泌物，味道有点臭臭的', createdAt: '2026-06-10T19:35:00Z' },
-      { id: 'm4', sessionId: 'consult_001', senderType: 'owner', senderId: 'owner_001', messageType: 'image', content: 'https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=cat%20ear%20infection%20close%20up%20medical&image_size=square', createdAt: '2026-06-10T19:36:00Z' },
+      { id: 'm4', sessionId: 'consult_001', senderType: 'owner', senderId: 'owner_001', messageType: 'image', content: '/local-placeholder.svg', createdAt: '2026-06-10T19:36:00Z' },
       { id: 'm5', sessionId: 'consult_001', senderType: 'veterinarian', senderId: 'vet_001', messageType: 'text', content: '从图片看可能是外耳炎，建议来医院做耳道分泌物检查。我先给您开个滴耳液控制一下，需要处方审核。', createdAt: '2026-06-10T19:40:00Z' },
     ],
   },

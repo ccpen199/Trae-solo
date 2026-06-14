@@ -12,7 +12,7 @@ export const mockPets: Pet[] = [
     birthday: '2022-03-15',
     weight: 4.2,
     sterilization: 'yes',
-    avatar: 'https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=cute%20british%20shorthair%20cat%20portrait%20soft%20lighting&image_size=square',
+    avatar: '/local-placeholder.svg',
     allergies: '青霉素过敏',
     healthScore: 92,
     tags: ['已绝育', '健康', '活泼'],
@@ -29,7 +29,7 @@ export const mockPets: Pet[] = [
     birthday: '2021-08-20',
     weight: 28.5,
     sterilization: 'no',
-    avatar: 'https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=golden%20retriever%20dog%20portrait%20happy%20outdoor&image_size=square',
+    avatar: '/local-placeholder.svg',
     healthScore: 78,
     tags: ['活跃', '需要减肥'],
     chronicConditions: [
