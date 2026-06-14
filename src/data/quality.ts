@@ -1,0 +1,136 @@
+import type { EscrowRecord, QualityIssue, BadKeyword, DashboardStats } from '@/types';
+
+export const escrowRecords: EscrowRecord[] = [
+  {
+    id: 'esc001',
+    orderId: 'ORD20240614001',
+    amount: 455,
+    status: 'frozen',
+    frozenAt: '2024-06-14 09:00:00',
+    releaseAt: null,
+    homeownerName: '张先生',
+    workerName: '张师傅',
+    faultTypeName: '空调不制冷',
+  },
+  {
+    id: 'esc002',
+    orderId: 'ORD20240614005',
+    amount: 124,
+    status: 'frozen',
+    frozenAt: '2024-06-14 10:45:00',
+    releaseAt: null,
+    homeownerName: '孙女士',
+    workerName: '李师傅',
+    faultTypeName: '水管漏水',
+  },
+  {
+    id: 'esc003',
+    orderId: 'ORD20240613001',
+    amount: 2330,
+    status: 'released',
+    frozenAt: '2024-06-13 07:30:00',
+    releaseAt: '2024-06-14 20:30:00',
+    homeownerName: '陈先生',
+    workerName: '孙师傅',
+    faultTypeName: '厨房水电改造',
+  },
+  {
+    id: 'esc004',
+    orderId: 'ORD20240612001',
+    amount: 210,
+    status: 'frozen',
+    frozenAt: '2024-06-12 09:30:00',
+    releaseAt: null,
+    homeownerName: '刘女士',
+    workerName: '陈师傅',
+    faultTypeName: '不出热水',
+  },
+  {
+    id: 'esc005',
+    orderId: 'ORD20240611001',
+    amount: 155,
+    status: 'released',
+    frozenAt: '2024-06-11 13:30:00',
+    releaseAt: '2024-06-12 17:00:00',
+    homeownerName: '周先生',
+    workerName: '周师傅',
+    faultTypeName: '洗衣机维修',
+  },
+];
+
+export const badKeywords: BadKeyword[] = [
+  { word: '迟到', count: 12 },
+  { word: '乱收费', count: 8 },
+  { word: '态度差', count: 6 },
+  { word: '不专业', count: 5 },
+  { word: '维修不彻底', count: 4 },
+  { word: '配件差', count: 3 },
+  { word: '沟通难', count: 3 },
+  { word: '时间不准', count: 2 },
+  { word: '报价虚高', count: 2 },
+  { word: '售后差', count: 1 },
+];
+
+export const qualityIssues: QualityIssue[] = [
+  {
+    id: 'qi001',
+    orderId: 'ORD20240612001',
+    workerId: 'w004',
+    workerName: '陈师傅',
+    keywords: ['迟到', '乱收费', '态度差'],
+    severity: 'high',
+    status: 'investigating',
+    reviewComment: '师傅迟到了半个多小时，而且收费比报价贵了50块，说什么配件涨价了，体验不好。',
+    reviewRating: 2,
+    createdAt: '2024-06-12 14:30:00',
+    assignee: '王主管',
+  },
+  {
+    id: 'qi002',
+    orderId: 'ORD20240611001',
+    workerId: 'w008',
+    workerName: '周师傅',
+    keywords: ['准时一般'],
+    severity: 'low',
+    status: 'resolved',
+    reviewComment: '维修速度还可以，价格也合理，就是师傅电话里说的时间不太准。',
+    reviewRating: 4,
+    createdAt: '2024-06-11 17:30:00',
+    assignee: '李主管',
+  },
+  {
+    id: 'qi003',
+    orderId: 'ORD20240610001',
+    workerId: 'w003',
+    workerName: '王师傅',
+    keywords: ['不专业', '维修不彻底'],
+    severity: 'medium',
+    status: 'open',
+    reviewComment: '修了不到一周又坏了，感觉技术不太行。',
+    reviewRating: 2,
+    createdAt: '2024-06-10 19:00:00',
+  },
+];
+
+export const dashboardStats: DashboardStats = {
+  todayOrders: 28,
+  completedOrders: 15,
+  completionRate: 53.6,
+  avgResponseTime: 12,
+  badReviewRate: 3.2,
+  onlineWorkers: 18,
+  activeOrders: 13,
+  escrowAmount: 12580,
+};
+
+export const orderTrendData = {
+  dates: ['6/8', '6/9', '6/10', '6/11', '6/12', '6/13', '6/14'],
+  orders: [22, 25, 31, 28, 35, 30, 28],
+  completed: [20, 24, 28, 27, 32, 28, 15],
+};
+
+export const ratingTrendData = {
+  dates: ['6/8', '6/9', '6/10', '6/11', '6/12', '6/13', '6/14'],
+  avgRating: [4.7, 4.75, 4.68, 4.72, 4.55, 4.8, 4.78],
+  badReviews: [1, 0, 2, 1, 3, 1, 0],
+};
