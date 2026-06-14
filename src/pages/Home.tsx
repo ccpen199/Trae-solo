@@ -43,7 +43,7 @@ const categories = [
 const tools = [
   { icon: Calculator, label: '房贷计算器', path: '/tools/mortgage', color: 'bg-primary-50 text-primary-600' },
   { icon: FileText, label: '税费估算器', path: '/tools/tax', color: 'bg-secondary-50 text-secondary-600' },
-  { icon: GitCompare, label: '房源对比', path: '/tools/compare', color: 'bg-success-50 text-success-600' },
+  { icon: GitCompare, label: '房源对比', path: '/compare', color: 'bg-success-50 text-success-600' },
   { icon: TrendingUp, label: '房价走势', path: '/properties', color: 'bg-purple-50 text-purple-600' },
 ];
 
@@ -421,9 +421,9 @@ export default function HomePage() {
                   { label: '近地铁', params: { nearMetro: 'true' } },
                   { label: '学区房', params: { schoolDistrict: 'true' } },
                   { label: '精装修', params: { decoration: '精装修,豪华装修' } },
-                  { label: '满五唯一', params: { verifiedOnly: 'true', special: 'only_one_five' } },
-                  { label: '低总价', params: { priceMax: '3000000', sortBy: 'price' } },
-                  { label: '小户型', params: { rooms: '1,2', sortBy: 'price' } },
+                  { label: '满五唯一', params: { verifiedOnly: 'true' } },
+                  { label: '低总价', params: { priceMax: '3000000', type: 'secondhand', sortBy: 'price' } },
+                  { label: '小户型', params: { rooms: '1,2', type: 'secondhand', sortBy: 'price' } },
                   { label: '江景房', params: { keyword: '江景', sortBy: 'time' } },
                   { label: '花园洋房', params: { keyword: '洋房花园', sortBy: 'time' } },
                 ].map((item) => (
@@ -441,7 +441,7 @@ export default function HomePage() {
               </div>
               <p className="text-xs text-gray-400 mt-3 flex items-center gap-1">
                 <Info className="w-3 h-3" />
-                低总价口径：总价 ≤ 300万；小户型口径：1-2居室；近地铁：距地铁站 ≤ 1km
+                低总价/小户型仅限二手房（购房口径，排除租房）；近地铁：距地铁站 ≤ 1km
               </p>
             </section>
 

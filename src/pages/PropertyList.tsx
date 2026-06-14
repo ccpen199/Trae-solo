@@ -17,15 +17,22 @@ import {
   Key,
   Filter,
   ArrowUpDown,
+  ExternalLink,
+  AlertTriangle,
+  BadgeCheck,
+  Phone,
+  Award,
+  FileCheck,
 } from 'lucide-react';
 import { propertyApi } from '../utils/api';
 import { formatPrice, formatUnitPrice, formatArea, formatRooms, formatRelativeTime } from '../utils/format';
 import { usePropertyStore } from '../store/usePropertyStore';
+import { PropertyCard as PropertyCardComponent } from '../components/property/PropertyCard';
 import type { Property, SearchFilters } from '@shared/types';
 
 const ITEMS_PER_PAGE = 12;
 
-const priceRanges = [
+const purchasePriceRanges = [
   { label: '不限', min: undefined, max: undefined },
   { label: '100万以下', min: 0, max: 1000000 },
   { label: '100-200万', min: 1000000, max: 2000000 },
@@ -34,6 +41,18 @@ const priceRanges = [
   { label: '500-800万', min: 5000000, max: 8000000 },
   { label: '800万以上', min: 8000000, max: undefined },
 ];
+
+const rentPriceRanges = [
+  { label: '不限', min: undefined, max: undefined },
+  { label: '1000元以下', min: 0, max: 1000 },
+  { label: '1000-2000元', min: 1000, max: 2000 },
+  { label: '2000-3000元', min: 2000, max: 3000 },
+  { label: '3000-5000元', min: 3000, max: 5000 },
+  { label: '5000-8000元', min: 5000, max: 8000 },
+  { label: '8000元以上', min: 8000, max: undefined },
+];
+
+const priceRanges = purchasePriceRanges;
 
 const areaRanges = [
   { label: '不限', min: undefined, max: undefined },
@@ -74,6 +93,7 @@ export default function PropertyList() {
   const [currentPage, setCurrentPage] = useState(1);
   const [showFilters, setShowFilters] = useState(false);
   const [searchKeyword, setSearchKeyword] = useState(searchParams.get('keyword') || '');
+  const [searchMeta, setSearchMeta] = useState<{ keyword: string; fallback: boolean } | null>(null);
 
   const { filters, setFilters, resetFilters, toggleFavorite, favorites, mapState, setMapState } = usePropertyStore();
   const [prevTotal, setPrevTotal] = useState<number | null>(null);
@@ -132,8 +152,14 @@ export default function PropertyList() {
           response = await propertyApi.getPropertyList(filters);
         }
         if (response.success && response.data) {
-          const list = (response.data as any).list || response.data;
+          const data = response.data as any;
+          const list = data.list || response.data;
           const propertyList = Array.isArray(list) ? list : [];
+          setSearchMeta(
+            searchKeyword.trim()
+              ? { keyword: data.matchedKeyword || searchKeyword.trim(), fallback: Boolean(data.fallback) }
+              : null
+          );
           
           if (prevTotal !== null && propertyList.length !== prevTotal) {
             const diff = propertyList.length - prevTotal;
@@ -223,7 +249,7 @@ export default function PropertyList() {
   };
 
   const handleTypeChange = (type: SearchFilters['type']) => {
-    setFilters({ type });
+    setFilters({ type, priceMin: undefined, priceMax: undefined });
     setSearchParams({ type: type || '' });
   };
 
@@ -261,103 +287,6 @@ export default function PropertyList() {
 
   const toggleView = () => {
     setMapState({ isMapView: !mapState.isMapView });
-  };
-
-  const PropertyCard = ({ property }: { property: Property }) => {
-    const isFavorite = favorites.includes(property.id);
-    const { ownerVerified, agentVerified, antiFraudPassed, listingDays, decayWeight } = property.verification;
-    const isFiveOnly = property.propertyRight.isFiveYears && property.propertyRight.isOnlyOne;
-
-    return (
-      <div className="card group cursor-pointer flex flex-col md:flex-row" onClick={() => navigate(`/property/${property.id}`)}>
-        <div className="relative md:w-64 flex-shrink-0">
-          <img
-            src={property.images[0]}
-            alt={property.title}
-            className="w-full h-48 md:h-full object-cover group-hover:scale-105 transition-transform duration-300"
-          />
-          <button
-            onClick={(e) => {
-              e.stopPropagation();
-              toggleFavorite(property.id);
-            }}
-            className="absolute top-3 right-3 w-8 h-8 rounded-full bg-white/80 backdrop-blur-sm flex items-center justify-center hover:bg-white transition-colors"
-          >
-            <Heart className={`w-4 h-4 ${isFavorite ? 'fill-red-500 text-red-500' : 'text-gray-600'}`} />
-          </button>
-          <div className="absolute top-3 left-3 flex flex-wrap gap-1 max-w-[80%]">
-            {property.type === 'new' && <span className="badge badge-secondary">新房</span>}
-            {property.type === 'rent' && <span className="badge badge-primary">租房</span>}
-            {property.vrUrl && (
-              <span className="px-1.5 py-0.5 bg-purple-600 text-white text-xs font-medium rounded">🎥 VR</span>
-            )}
-            {property.metroInfo && (
-              <span className="px-1.5 py-0.5 bg-green-600 text-white text-xs font-medium rounded">
-                🚇 {property.metroInfo.nearestStation.slice(0, 4)}{Math.round(property.metroInfo.distance)}m
-              </span>
-            )}
-            {property.schoolDistrict && (
-              <span className="px-1.5 py-0.5 bg-orange-500 text-white text-xs font-medium rounded">
-                🎓 {property.schoolDistrict.quality === 'key' ? '重点' : ''}{property.schoolDistrict.name.slice(0, 4)}
-              </span>
-            )}
-            {isFiveOnly && (
-              <span className="px-1.5 py-0.5 bg-teal-600 text-white text-xs font-medium rounded">满五唯一</span>
-            )}
-            {antiFraudPassed && ownerVerified && (
-              <span className="px-1.5 py-0.5 bg-blue-600 text-white text-xs font-medium rounded">✓真房源</span>
-            )}
-          </div>
-        </div>
-        <div className="p-4 flex-1 flex flex-col">
-          <h3 className="font-semibold text-gray-900 mb-2 line-clamp-2">{property.title}</h3>
-          <div className="flex items-center gap-1 text-sm text-gray-500 mb-2">
-            <MapPin className="w-3 h-3 flex-shrink-0" />
-            <span className="truncate">{property.district} · {property.address}</span>
-          </div>
-          <div className="flex flex-wrap gap-1.5 mb-3">
-            <span className="px-1.5 py-0.5 bg-gray-100 rounded text-xs text-gray-700">{formatRooms(property.rooms, property.halls, property.bathrooms)}</span>
-            <span className="px-1.5 py-0.5 bg-gray-100 rounded text-xs text-gray-700">{formatArea(property.area)}</span>
-            <span className="px-1.5 py-0.5 bg-gray-100 rounded text-xs text-gray-700">{property.orientation}</span>
-            <span className="px-1.5 py-0.5 bg-gray-100 rounded text-xs text-gray-700">{property.decoration}</span>
-            <span className={`px-1.5 py-0.5 rounded text-xs ${
-              property.propertyRight.status === 'normal' ? 'bg-green-100 text-green-700' :
-              property.propertyRight.status === 'mortgaged' ? 'bg-yellow-100 text-yellow-700' :
-              'bg-red-100 text-red-700'
-            }`}>
-              {property.propertyRight.status === 'normal' ? '产权清晰' :
-               property.propertyRight.status === 'mortgaged' ? '抵押中' : '已查封'}
-            </span>
-          </div>
-          <div className={`flex flex-wrap gap-1.5 p-2 rounded-md text-xs mb-3 ${
-            (antiFraudPassed && ownerVerified) ? 'bg-blue-50 border border-blue-100' : 'bg-gray-50 border border-gray-100'
-          }`}>
-            <span className={ownerVerified ? 'text-green-600' : 'text-gray-400'}>📱业主验</span>
-            <span className="text-gray-300">|</span>
-            <span className={agentVerified ? 'text-blue-600' : 'text-gray-400'}>🏢中介备</span>
-            <span className="text-gray-300">|</span>
-            <span className={antiFraudPassed ? 'text-purple-600' : 'text-gray-400'}>🛡️反诈验</span>
-            <span className="text-gray-300">|</span>
-            <span className="text-orange-600">⏱{listingDays}天</span>
-            <span className={`font-medium ${decayWeight >= 0.8 ? 'text-green-600' : decayWeight >= 0.6 ? 'text-orange-600' : 'text-red-600'}`}>
-              权重{decayWeight.toFixed(2)}
-            </span>
-          </div>
-          <div className="mt-auto flex items-center justify-between">
-            <div className="flex items-baseline gap-1">
-              <span className="text-2xl font-bold text-primary-600">{formatPrice(property.price)}</span>
-              {property.type !== 'rent' && (
-                <span className="text-xs text-gray-400">{formatUnitPrice(property.unitPrice)}</span>
-              )}
-            </div>
-            <span className="text-xs text-gray-400 flex items-center gap-1">
-              <Clock className="w-3 h-3" />
-              {formatRelativeTime(property.publishTime)}
-            </span>
-          </div>
-        </div>
-      </div>
-    );
   };
 
   const metroStations = ['宣武门', '西直门', '国贸', '望京', '中关村', '五道口', '朝阳门', '复兴门', '公主坟', '人民广场', '陆家嘴', '静安寺'];
@@ -599,9 +528,9 @@ export default function PropertyList() {
                   </div>
                 </FilterSection>
 
-                <FilterSection title="价格区间">
+                <FilterSection title={filters.type === 'rent' ? '租金区间（月）' : '价格区间（万）'}>
                   <div className="grid grid-cols-2 gap-2">
-                    {priceRanges.map((range) => (
+                    {(filters.type === 'rent' ? rentPriceRanges : purchasePriceRanges).map((range) => (
                       <FilterButton
                         key={range.label}
                         active={filters.priceMin === range.min && filters.priceMax === range.max}
@@ -723,6 +652,11 @@ export default function PropertyList() {
                     <span className="text-gray-600">
                       共找到 <span className="font-semibold text-primary-600 text-lg">{properties.length}</span> 套房源
                     </span>
+                    {searchMeta && (
+                      <span className="rounded-full bg-primary-50 px-2.5 py-1 text-xs font-medium text-primary-700">
+                        搜索结果：{searchMeta.keyword}{searchMeta.fallback ? ' · 推荐相似房源' : ''}
+                      </span>
+                    )}
                     {resultChange && (
                       <span className={`inline-flex items-center gap-1 px-2 py-0.5 rounded text-xs font-medium animate-pulse ${
                         resultChange.type === 'increase' ? 'bg-green-100 text-green-700' :
@@ -884,7 +818,15 @@ export default function PropertyList() {
               <>
                 <div className="space-y-4">
                   {paginatedProperties.map((property) => (
-                    <PropertyCard key={property.id} property={property} />
+                    <PropertyCardComponent
+                      key={property.id}
+                      property={property}
+                      onFavorite={toggleFavorite}
+                      onCompare={(id) => {}}
+                      onClick={(p) => navigate(`/property/${p.id}`)}
+                      isFavorite={favorites.includes(property.id)}
+                      layout="list"
+                    />
                   ))}
                 </div>
 

@@ -59,7 +59,7 @@ export class PropertyService {
     keyword: string,
     page: number = 1,
     pageSize: number = 20
-  ): Promise<ApiResponse<{ list: Property[]; total: number }>> {
+  ): Promise<ApiResponse<{ list: Property[]; total: number; matchedKeyword?: string; fallback?: boolean }>> {
     try {
       const lowerKeyword = keyword.toLowerCase()
       const allProperties = await PropertyRepository.findAll({}, 1000, 0)
@@ -71,15 +71,23 @@ export class PropertyService {
         p.tags.some(tag => tag.toLowerCase().includes(lowerKeyword))
       )
 
+      const searchable = filtered.length > 0
+        ? filtered
+        : allProperties
+            .filter((p) => p.verification.antiFraudPassed || p.metroInfo || p.schoolDistrict)
+            .sort((a, b) => b.listingWeight - a.listingWeight)
+
       const start = (page - 1) * pageSize
       const end = start + pageSize
-      const list = filtered.slice(start, end)
+      const list = searchable.slice(start, end)
 
       return {
         success: true,
         data: {
           list,
-          total: filtered.length
+          total: searchable.length,
+          matchedKeyword: keyword,
+          fallback: filtered.length === 0
         }
       }
     } catch (error) {

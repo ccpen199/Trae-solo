@@ -10,11 +10,11 @@ interface NavbarProps {
 
 const NAV_ITEMS = [
   { label: '首页', href: '/', icon: Home },
-  { label: '二手房', href: '/secondhand', icon: Building2 },
-  { label: '新房', href: '/new', icon: Building2 },
-  { label: '租房', href: '/rent', icon: Home },
+  { label: '二手房', href: '/properties?type=secondhand', icon: Building2 },
+  { label: '新房', href: '/properties?type=new', icon: Building2 },
+  { label: '租房', href: '/properties?type=rent', icon: Home },
   { label: '地图找房', href: '/map', icon: Map },
-  { label: '房价走势', href: '/trend', icon: TrendingUp },
+  { label: '房价走势', href: '/properties', icon: TrendingUp },
 ];
 
 export const Navbar = ({ onSearch, searchPlaceholder = '搜索小区、地址、房源' }: NavbarProps) => {
@@ -28,7 +28,7 @@ export const Navbar = ({ onSearch, searchPlaceholder = '搜索小区、地址、
     e.preventDefault();
     if (searchQuery.trim()) {
       onSearch?.(searchQuery.trim());
-      navigate(`/search?q=${encodeURIComponent(searchQuery.trim())}`);
+      navigate(`/properties?keyword=${encodeURIComponent(searchQuery.trim())}`);
     }
   };
 

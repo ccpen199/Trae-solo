@@ -11,6 +11,7 @@ import AgentDashboard from '@/pages/agent/Dashboard';
 import ViewingRecords from '@/pages/agent/ViewingRecords';
 import ClientManagement from '@/pages/agent/ClientManagement';
 import DealManagement from '@/pages/agent/DealManagement';
+import MapSearchPage from '@/pages/MapSearchPage';
 
 const PagePlaceholder = ({ title }: { title: string }) => (
   <div className="container mx-auto px-4 py-12">
@@ -21,7 +22,6 @@ const PagePlaceholder = ({ title }: { title: string }) => (
   </div>
 );
 
-const MapSearch = () => <PagePlaceholder title="地图找房" />;
 const Favorites = () => <PagePlaceholder title="我的收藏" />;
 const Register = () => <PagePlaceholder title="注册" />;
 const Profile = () => <PagePlaceholder title="个人中心" />;
@@ -47,7 +47,7 @@ export default function App() {
           <Route path="/" element={<Home />} />
           <Route path="/properties" element={<PropertyList />} />
           <Route path="/property/:id" element={<PropertyDetail />} />
-          <Route path="/map" element={<MapSearch />} />
+          <Route path="/map" element={<MapSearchPage />} />
           <Route path="/tools/mortgage" element={<MortgageCalculator />} />
           <Route path="/tools/tax" element={<TaxCalculator />} />
           <Route path="/compare" element={<PropertyCompare />} />
