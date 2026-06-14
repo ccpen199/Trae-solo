@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { ref } from 'vue';
 import { useRouter } from 'vue-router';
-import { Shield, Eye, EyeOff } from 'lucide-vue-next';
+import { Shield, Eye, EyeOff, Zap, UserCog, FileSearch, BarChart3 } from 'lucide-vue-next';
 import { useAdminStore } from '@/stores/admin';
 
 const router = useRouter();
@@ -28,6 +28,11 @@ async function handleLogin() {
   } finally {
     loading.value = false;
   }
+}
+
+function handleDemoLogin(role: string) {
+  adminStore.demoLogin(role);
+  router.push('/');
 }
 </script>
 
@@ -88,6 +93,52 @@ async function handleLogin() {
             {{ loading ? '登录中...' : '登 录' }}
           </button>
         </form>
+
+        <div class="my-6 flex items-center gap-3">
+          <div class="flex-1 h-px bg-gray-100" />
+          <span class="text-xs text-gray-400">演示入口（免账号）</span>
+          <div class="flex-1 h-px bg-gray-100" />
+        </div>
+
+        <div class="grid grid-cols-3 gap-2">
+          <button
+            class="p-3 rounded-xl border border-amber-200 bg-amber-50 hover:bg-amber-100 transition-colors text-center"
+            @click="handleDemoLogin('supervisor')"
+          >
+            <div class="flex justify-center mb-1">
+              <BarChart3 class="w-5 h-5 text-amber-600" />
+            </div>
+            <p class="text-xs font-medium text-amber-700">超级管理员</p>
+            <p class="text-[10px] text-amber-500 mt-0.5">全局权限</p>
+          </button>
+          <button
+            class="p-3 rounded-xl border border-blue-200 bg-blue-50 hover:bg-blue-100 transition-colors text-center"
+            @click="handleDemoLogin('operator')"
+          >
+            <div class="flex justify-center mb-1">
+              <UserCog class="w-5 h-5 text-blue-600" />
+            </div>
+            <p class="text-xs font-medium text-blue-700">运营专员</p>
+            <p class="text-[10px] text-blue-500 mt-0.5">任务处理</p>
+          </button>
+          <button
+            class="p-3 rounded-xl border border-green-200 bg-green-50 hover:bg-green-100 transition-colors text-center"
+            @click="handleDemoLogin('auditor')"
+          >
+            <div class="flex justify-center mb-1">
+              <FileSearch class="w-5 h-5 text-green-600" />
+            </div>
+            <p class="text-xs font-medium text-green-700">审计员</p>
+            <p class="text-[10px] text-green-500 mt-0.5">日志审查</p>
+          </button>
+        </div>
+
+        <div class="mt-4 p-2.5 rounded-lg bg-amber-50 border border-amber-100 text-center">
+          <p class="text-[11px] text-amber-700">
+            <Zap class="w-3 h-3 inline-block mr-1 -mt-0.5" />
+            演示模式下可体验所有功能，数据为模拟数据
+          </p>
+        </div>
       </div>
 
       <p class="text-center text-blue-300 text-xs mt-6">

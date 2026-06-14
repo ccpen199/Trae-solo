@@ -22,6 +22,7 @@ export interface AccountBalance {
   personalAccount: number;
   pooledAccount: number;
   updatedAt: string;
+  cumulativeMonths?: number;
 }
 
 export interface PaymentDetail {
@@ -45,6 +46,7 @@ export interface BenefitRecord {
   amount: number;
   bankAccountMasked: string;
   status: 'ISSUED' | 'PENDING' | 'FAILED';
+  period?: string;
 }
 
 export const BenefitStatusMap: Record<BenefitRecord['status'], string> = {
@@ -62,7 +64,30 @@ export interface CompareChartData {
   momChange: number;
 }
 
+export interface PaymentSummary {
+  paidCount: number;
+  arrearsCount: number;
+  unpaidCount: number;
+  totalPersonal: number;
+  totalCompany: number;
+  grandTotal: number;
+}
+
+export interface BenefitSummary {
+  issuedCount: number;
+  pendingCount: number;
+  failedCount: number;
+  totalAmount: number;
+}
+
 export interface PaginatedResponse<T> {
   list: T[];
   total: number;
+  page?: number;
+  pageSize?: number;
+  summary?: T extends PaymentDetail
+    ? PaymentSummary
+    : T extends BenefitRecord
+      ? BenefitSummary
+      : Record<string, any>;
 }

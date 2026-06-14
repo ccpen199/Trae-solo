@@ -79,12 +79,20 @@ const benefitStatusClass = (status: BenefitRecord['status']): string => {
   return map[status] || '';
 };
 
+const compareDimension = ref<'YOY' | 'MOM'>('YOY');
+
 const compareChartOption = computed(() => {
   if (!compareData.value.length) return {};
   const months = compareData.value.map((d) => d.period);
   const currentValues = compareData.value.map((d) => d.currentValue);
-  const yoyValues = compareData.value.map((d) => d.yoyValue);
-  const yoyChanges = compareData.value.map((d) => d.yoyChange);
+  const baseValues = compareData.value.map((d) =>
+    compareDimension.value === 'YOY' ? d.yoyValue : d.momValue
+  );
+  const changes = compareData.value.map((d) =>
+    compareDimension.value === 'YOY' ? d.yoyChange : d.momChange
+  );
+  const baseLabel = compareDimension.value === 'YOY' ? '去年同期' : '上月数据';
+  const changeLabel = compareDimension.value === 'YOY' ? '同比变化率' : '环比变化率';
 
   return {
     tooltip: {
@@ -97,26 +105,30 @@ const compareChartOption = computed(() => {
       formatter: (params: any[]) => {
         let html = `<div style="font-weight:600;margin-bottom:4px">${params[0].axisValue}</div>`;
         params.forEach((p: any) => {
-          const unit = p.seriesName === '同比变化率' ? '%' : '元';
-          const val = p.seriesName === '同比变化率' ? p.value.toFixed(1) : formatCurrency(p.value);
+          const isRate = p.seriesName.includes('变化率');
+          const unit = isRate ? '%' : '元';
+          let val = isRate ? p.value.toFixed(1) : formatCurrency(p.value);
+          const arrow = isRate
+            ? (p.value >= 0 ? ' ↑' : ' ↓')
+            : '';
           html += `<div style="display:flex;align-items:center;gap:6px;margin:2px 0">
             ${p.marker}
             <span>${p.seriesName}：</span>
-            <span style="font-weight:600">${val}${unit}</span>
+            <span style="font-weight:600;color:${isRate ? (p.value >= 0 ? '#52C41A' : '#F5222D') : '#333'}">${val}${unit}${arrow}</span>
           </div>`;
         });
         return html;
       },
     },
     legend: {
-      data: ['当期缴费', '去年同期', '同比变化率'],
+      data: ['当期缴费', baseLabel, changeLabel],
       bottom: 0,
       textStyle: { color: '#666' },
     },
     grid: {
       left: '3%',
       right: '4%',
-      bottom: '12%',
+      bottom: '14%',
       top: '8%',
       containLabel: true,
     },
@@ -124,7 +136,7 @@ const compareChartOption = computed(() => {
       type: 'category',
       data: months,
       axisLine: { lineStyle: { color: '#ccc' } },
-      axisLabel: { color: '#666' },
+      axisLabel: { color: '#666', rotate: 30, fontSize: 10 },
     },
     yAxis: [
       {
@@ -147,7 +159,7 @@ const compareChartOption = computed(() => {
         name: '当期缴费',
         type: 'bar',
         data: currentValues,
-        barWidth: '20%',
+        barWidth: '18%',
         itemStyle: {
           color: {
             type: 'linear',
@@ -159,36 +171,78 @@ const compareChartOption = computed(() => {
           },
           borderRadius: [4, 4, 0, 0],
         },
+        markLine: {
+          silent: true,
+          symbol: 'none',
+          lineStyle: { color: '#999', type: 'dashed' },
+          data: [{ type: 'average', name: '平均' }],
+        },
       },
       {
-        name: '去年同期',
+        name: baseLabel,
         type: 'bar',
-        data: yoyValues,
-        barWidth: '20%',
+        data: baseValues,
+        barWidth: '18%',
         itemStyle: {
           color: {
             type: 'linear',
             x: 0, y: 0, x2: 0, y2: 1,
             colorStops: [
-              { offset: 0, color: '#91D5FF' },
-              { offset: 1, color: '#69C0FF' },
+              { offset: 0, color: '#B7EB8F' },
+              { offset: 1, color: '#52C41A' },
             ],
           },
           borderRadius: [4, 4, 0, 0],
+          opacity: 0.7,
         },
       },
       {
-        name: '同比变化率',
+        name: changeLabel,
         type: 'line',
         yAxisIndex: 1,
-        data: yoyChanges,
+        data: changes,
         smooth: true,
         symbol: 'circle',
-        symbolSize: 6,
-        lineStyle: { color: '#FAAD14', width: 2 },
+        symbolSize: 7,
+        lineStyle: { color: '#FAAD14', width: 2.5 },
         itemStyle: { color: '#FAAD14' },
+        areaStyle: {
+          color: {
+            type: 'linear',
+            x: 0, y: 0, x2: 0, y2: 1,
+            colorStops: [
+              { offset: 0, color: 'rgba(250,173,20,0.25)' },
+              { offset: 1, color: 'rgba(250,173,20,0.02)' },
+            ],
+          },
+        },
+        markArea: {
+          silent: true,
+          itemStyle: { opacity: 0.08 },
+          data: [[{ yAxis: 0, itemStyle: { color: '#F5222D' } }, {}]],
+        },
       },
     ],
+  };
+});
+
+const totalCompareSummary = computed(() => {
+  if (!compareData.value.length) return null;
+  const currentSum = compareData.value.reduce((s, d) => s + d.currentValue, 0);
+  const yoySum = compareData.value.reduce((s, d) => s + d.yoyValue, 0);
+  const momSum = compareData.value.reduce((s, d) => s + d.momValue, 0);
+  const avgChange = compareData.value.reduce((s, d) => s + (compareDimension.value === 'YOY' ? d.yoyChange : d.momChange), 0) / compareData.value.length;
+  const positiveMonths = compareData.value.filter((d) =>
+    compareDimension.value === 'YOY' ? d.yoyChange >= 0 : d.momChange >= 0
+  ).length;
+
+  return {
+    currentSum,
+    yoySum,
+    momSum,
+    avgChange: Math.round(avgChange * 10) / 10,
+    positiveMonths,
+    totalMonths: compareData.value.length,
   };
 });
 
@@ -278,20 +332,46 @@ onMounted(fetchData);
     </div>
 
     <template v-else>
-      <div v-if="balance" class="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-6">
-        <div class="card-base p-6 border-l-4 border-primary">
-          <p class="text-sm text-gray-500 mb-1">个人账户余额</p>
-          <p class="text-3xl font-bold text-primary tabular-nums">
-            {{ formatCurrency(balance.personalAccount) }}
-          </p>
-          <p class="text-xs text-gray-400 mt-2">更新于 {{ balance.updatedAt }}</p>
+      <div v-if="balance" class="card-base p-6 mb-6 bg-gradient-to-br from-primary-50 via-white to-accent-50 border border-primary-100">
+        <div class="flex items-center justify-between mb-4">
+          <div class="flex items-center gap-2">
+            <div class="w-10 h-10 rounded-full bg-gov-gradient flex items-center justify-center text-white">
+              {{ InsuranceTypeShortMap[activeInsurance] }}
+            </div>
+            <div>
+              <h2 class="text-lg font-bold text-gray-800">{{ InsuranceTypeMap[activeInsurance] }} - 权益总览</h2>
+              <p class="text-xs text-gray-500">截至 {{ balance.updatedAt }}</p>
+            </div>
+          </div>
+          <span v-if="balance.cumulativeMonths" class="px-3 py-1 rounded-full bg-primary-100 text-primary text-xs font-medium">
+            累计缴费 {{ balance.cumulativeMonths }} 个月
+          </span>
         </div>
-        <div class="card-base p-6 border-l-4 border-accent">
-          <p class="text-sm text-gray-500 mb-1">统筹账户余额</p>
-          <p class="text-3xl font-bold text-accent tabular-nums">
-            {{ formatCurrency(balance.pooledAccount) }}
-          </p>
-          <p class="text-xs text-gray-400 mt-2">更新于 {{ balance.updatedAt }}</p>
+        <div class="grid grid-cols-2 sm:grid-cols-4 gap-4">
+          <div class="bg-white rounded-xl p-4 shadow-sm">
+            <p class="text-xs text-gray-500 mb-1">个人账户余额</p>
+            <p class="text-2xl font-bold text-primary tabular-nums">
+              {{ formatCurrency(balance.personalAccount) }}
+            </p>
+          </div>
+          <div class="bg-white rounded-xl p-4 shadow-sm">
+            <p class="text-xs text-gray-500 mb-1">统筹账户余额</p>
+            <p class="text-2xl font-bold text-accent tabular-nums">
+              {{ formatCurrency(balance.pooledAccount) }}
+            </p>
+          </div>
+          <div class="bg-white rounded-xl p-4 shadow-sm">
+            <p class="text-xs text-gray-500 mb-1">账户总余额</p>
+            <p class="text-2xl font-bold text-gray-800 tabular-nums">
+              {{ formatCurrency(balance.personalAccount + balance.pooledAccount) }}
+            </p>
+          </div>
+          <div class="bg-white rounded-xl p-4 shadow-sm">
+            <p class="text-xs text-gray-500 mb-1">最近更新</p>
+            <p class="text-base font-semibold text-gray-700">
+              {{ balance.updatedAt.split(' ')[0] }}
+            </p>
+          </div>
         </div>
       </div>
 
@@ -311,151 +391,259 @@ onMounted(fetchData);
         </button>
       </div>
 
-      <div v-if="activeSubTab === 'payments'" class="card-base overflow-hidden">
-        <div class="flex items-center gap-3 p-4 border-b border-gray-100">
-          <Filter class="w-4 h-4 text-gray-400" />
-          <div class="inline-flex bg-gray-100 rounded-btn p-0.5">
-            <button
-              v-for="range in (['MONTHLY', 'QUARTERLY', 'YEARLY'] as QueryRange[])"
-              :key="range"
-              :class="[
-                'px-3 py-1 text-xs rounded-md transition-colors',
-                queryRange === range
-                  ? 'bg-white text-primary shadow-sm'
-                  : 'text-gray-500 hover:text-gray-700',
-              ]"
-              @click="switchRange(range)"
-            >
-              {{ range === 'MONTHLY' ? '按月' : range === 'QUARTERLY' ? '按季' : '按年' }}
-            </button>
+      <div v-if="activeSubTab === 'payments'" class="space-y-4">
+        <div v-if="payments?.summary" class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-3">
+          <div class="card-base p-3">
+            <p class="text-[11px] text-gray-500">本页已缴</p>
+            <p class="text-lg font-bold text-success">{{ payments.summary.paidCount }}<span class="text-xs font-normal ml-1">条</span></p>
+          </div>
+          <div class="card-base p-3">
+            <p class="text-[11px] text-gray-500">本页欠缴</p>
+            <p class="text-lg font-bold text-danger">{{ payments.summary.arrearsCount }}<span class="text-xs font-normal ml-1">条</span></p>
+          </div>
+          <div class="card-base p-3">
+            <p class="text-[11px] text-gray-500">本页未缴</p>
+            <p class="text-lg font-bold text-amber-600">{{ payments.summary.unpaidCount }}<span class="text-xs font-normal ml-1">条</span></p>
+          </div>
+          <div class="card-base p-3 border-l-2 border-primary">
+            <p class="text-[11px] text-gray-500">个人缴费合计</p>
+            <p class="text-lg font-bold text-primary tabular-nums">{{ formatCurrency(payments.summary.totalPersonal) }}</p>
+          </div>
+          <div class="card-base p-3 border-l-2 border-accent">
+            <p class="text-[11px] text-gray-500">单位缴费合计</p>
+            <p class="text-lg font-bold text-accent tabular-nums">{{ formatCurrency(payments.summary.totalCompany) }}</p>
+          </div>
+          <div class="card-base p-3 border-l-2 border-gray-700 bg-gradient-to-br from-gray-50 to-white">
+            <p class="text-[11px] text-gray-500">本页总金额</p>
+            <p class="text-lg font-bold text-gray-800 tabular-nums">{{ formatCurrency(payments.summary.grandTotal) }}</p>
           </div>
         </div>
 
-        <div class="overflow-x-auto">
-          <table class="w-full text-sm">
-            <thead>
-              <tr class="bg-primary-50/50 text-gray-600">
-                <th class="text-left py-3 px-4 font-medium">费款所属期</th>
-                <th class="text-right py-3 px-4 font-medium">缴费基数</th>
-                <th class="text-right py-3 px-4 font-medium">个人缴费</th>
-                <th class="text-right py-3 px-4 font-medium">单位缴费</th>
-                <th class="text-right py-3 px-4 font-medium">合计</th>
-                <th class="text-center py-3 px-4 font-medium">状态</th>
-              </tr>
-            </thead>
-            <tbody class="table-zebra">
-              <tr v-if="!payments?.list.length">
-                <td colspan="6" class="text-center py-12 text-gray-400">暂无缴费记录</td>
-              </tr>
-              <tr
-                v-for="(row, idx) in payments?.list"
-                :key="idx"
-                class="border-b border-gray-50 hover:bg-blue-50/30 transition-colors"
-              >
-                <td class="py-3 px-4 font-medium text-gray-700">{{ row.period }}</td>
-                <td class="py-3 px-4 text-right tabular-nums">{{ formatCurrency(row.paymentBase) }}</td>
-                <td class="py-3 px-4 text-right tabular-nums text-primary">{{ formatCurrency(row.personalAmount) }}</td>
-                <td class="py-3 px-4 text-right tabular-nums">{{ formatCurrency(row.companyAmount) }}</td>
-                <td class="py-3 px-4 text-right tabular-nums font-semibold">{{ formatCurrency(row.totalAmount) }}</td>
-                <td class="py-3 px-4 text-center">
-                  <span :class="['px-2 py-0.5 rounded-full text-xs font-medium', paymentStatusClass(row.status)]">
-                    {{ PaymentStatusMap[row.status] }}
-                  </span>
-                </td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
+        <div class="card-base overflow-hidden">
+          <div class="flex items-center justify-between gap-3 p-4 border-b border-gray-100">
+            <div class="flex items-center gap-3">
+              <Filter class="w-4 h-4 text-gray-400" />
+              <div class="inline-flex bg-gray-100 rounded-btn p-0.5">
+                <button
+                  v-for="range in (['MONTHLY', 'QUARTERLY', 'YEARLY'] as QueryRange[])"
+                  :key="range"
+                  :class="[
+                    'px-3 py-1 text-xs rounded-md transition-colors',
+                    queryRange === range
+                      ? 'bg-white text-primary shadow-sm'
+                      : 'text-gray-500 hover:text-gray-700',
+                  ]"
+                  @click="switchRange(range)"
+                >
+                  {{ range === 'MONTHLY' ? '按月' : range === 'QUARTERLY' ? '按季' : '按年' }}
+                </button>
+              </div>
+            </div>
+            <span class="text-xs text-gray-400">共 {{ payments?.total }} 条记录</span>
+          </div>
 
-        <div v-if="totalPages > 1" class="flex items-center justify-between px-4 py-3 border-t border-gray-100">
-          <span class="text-xs text-gray-500">共 {{ payments?.total }} 条</span>
-          <div class="flex items-center gap-1">
-            <button
-              class="p-1 rounded hover:bg-gray-100 disabled:opacity-30"
-              :disabled="currentPage <= 1"
-              @click="goPage(currentPage - 1)"
-            >
-              <ChevronLeft class="w-4 h-4" />
-            </button>
-            <span class="text-sm text-gray-600 px-2">{{ currentPage }} / {{ totalPages }}</span>
-            <button
-              class="p-1 rounded hover:bg-gray-100 disabled:opacity-30"
-              :disabled="currentPage >= totalPages"
-              @click="goPage(currentPage + 1)"
-            >
-              <ChevronRight class="w-4 h-4" />
-            </button>
+          <div class="overflow-x-auto">
+            <table class="w-full text-sm">
+              <thead>
+                <tr class="bg-primary-50/50 text-gray-600">
+                  <th class="text-left py-3 px-4 font-medium">费款所属期</th>
+                  <th class="text-right py-3 px-4 font-medium">缴费基数</th>
+                  <th class="text-right py-3 px-4 font-medium">个人缴费</th>
+                  <th class="text-right py-3 px-4 font-medium">单位缴费</th>
+                  <th class="text-right py-3 px-4 font-medium">合计</th>
+                  <th class="text-center py-3 px-4 font-medium">状态</th>
+                </tr>
+              </thead>
+              <tbody class="table-zebra">
+                <tr v-if="!payments?.list.length">
+                  <td colspan="6" class="text-center py-12 text-gray-400">暂无缴费记录</td>
+                </tr>
+                <tr
+                  v-for="(row, idx) in payments?.list"
+                  :key="idx"
+                  class="border-b border-gray-50 hover:bg-blue-50/30 transition-colors"
+                >
+                  <td class="py-3 px-4 font-medium text-gray-700">{{ row.period }}</td>
+                  <td class="py-3 px-4 text-right tabular-nums">{{ formatCurrency(row.paymentBase) }}</td>
+                  <td class="py-3 px-4 text-right tabular-nums text-primary">{{ formatCurrency(row.personalAmount) }}</td>
+                  <td class="py-3 px-4 text-right tabular-nums">{{ formatCurrency(row.companyAmount) }}</td>
+                  <td class="py-3 px-4 text-right tabular-nums font-semibold">{{ formatCurrency(row.totalAmount) }}</td>
+                  <td class="py-3 px-4 text-center">
+                    <span :class="['px-2 py-0.5 rounded-full text-xs font-medium', paymentStatusClass(row.status)]">
+                      {{ PaymentStatusMap[row.status] }}
+                    </span>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <div v-if="totalPages > 1" class="flex items-center justify-between px-4 py-3 border-t border-gray-100">
+            <span class="text-xs text-gray-500">第 {{ currentPage }} / {{ totalPages }} 页</span>
+            <div class="flex items-center gap-1">
+              <button
+                class="p-1 rounded hover:bg-gray-100 disabled:opacity-30"
+                :disabled="currentPage <= 1"
+                @click="goPage(currentPage - 1)"
+              >
+                <ChevronLeft class="w-4 h-4" />
+              </button>
+              <span class="text-sm text-gray-600 px-2">{{ currentPage }} / {{ totalPages }}</span>
+              <button
+                class="p-1 rounded hover:bg-gray-100 disabled:opacity-30"
+                :disabled="currentPage >= totalPages"
+                @click="goPage(currentPage + 1)"
+              >
+                <ChevronRight class="w-4 h-4" />
+              </button>
+            </div>
           </div>
         </div>
       </div>
 
-      <div v-if="activeSubTab === 'benefits'" class="card-base overflow-hidden">
-        <div class="overflow-x-auto">
-          <table class="w-full text-sm">
-            <thead>
-              <tr class="bg-primary-50/50 text-gray-600">
-                <th class="text-left py-3 px-4 font-medium">发放日期</th>
-                <th class="text-left py-3 px-4 font-medium">项目</th>
-                <th class="text-right py-3 px-4 font-medium">金额</th>
-                <th class="text-left py-3 px-4 font-medium">到账账户</th>
-                <th class="text-center py-3 px-4 font-medium">状态</th>
-              </tr>
-            </thead>
-            <tbody class="table-zebra">
-              <tr v-if="!benefits?.list.length">
-                <td colspan="5" class="text-center py-12 text-gray-400">暂无待遇发放记录</td>
-              </tr>
-              <tr
-                v-for="(row, idx) in benefits?.list"
-                :key="idx"
-                class="border-b border-gray-50 hover:bg-blue-50/30 transition-colors"
-              >
-                <td class="py-3 px-4 font-medium text-gray-700">{{ row.issueDate }}</td>
-                <td class="py-3 px-4 text-gray-600">{{ row.itemName }}</td>
-                <td class="py-3 px-4 text-right tabular-nums font-semibold text-primary">
-                  {{ formatCurrency(row.amount) }}
-                </td>
-                <td class="py-3 px-4 text-gray-500">{{ row.bankAccountMasked }}</td>
-                <td class="py-3 px-4 text-center">
-                  <span :class="['px-2 py-0.5 rounded-full text-xs font-medium', benefitStatusClass(row.status)]">
-                    {{ BenefitStatusMap[row.status] }}
-                  </span>
-                </td>
-              </tr>
-            </tbody>
-          </table>
+      <div v-if="activeSubTab === 'benefits'" class="space-y-4">
+        <div v-if="benefits?.summary" class="grid grid-cols-2 sm:grid-cols-4 gap-3">
+          <div class="card-base p-3">
+            <p class="text-[11px] text-gray-500">已发放</p>
+            <p class="text-lg font-bold text-success">{{ benefits.summary.issuedCount }}<span class="text-xs font-normal ml-1">笔</span></p>
+          </div>
+          <div class="card-base p-3">
+            <p class="text-[11px] text-gray-500">待发放</p>
+            <p class="text-lg font-bold text-amber-600">{{ benefits.summary.pendingCount }}<span class="text-xs font-normal ml-1">笔</span></p>
+          </div>
+          <div class="card-base p-3">
+            <p class="text-[11px] text-gray-500">发放失败</p>
+            <p class="text-lg font-bold text-danger">{{ benefits.summary.failedCount }}<span class="text-xs font-normal ml-1">笔</span></p>
+          </div>
+          <div class="card-base p-3 border-l-2 border-primary">
+            <p class="text-[11px] text-gray-500">本页累计发放</p>
+            <p class="text-lg font-bold text-primary tabular-nums">{{ formatCurrency(benefits.summary.totalAmount) }}</p>
+          </div>
         </div>
 
-        <div v-if="totalPages > 1" class="flex items-center justify-between px-4 py-3 border-t border-gray-100">
-          <span class="text-xs text-gray-500">共 {{ benefits?.total }} 条</span>
-          <div class="flex items-center gap-1">
-            <button
-              class="p-1 rounded hover:bg-gray-100 disabled:opacity-30"
-              :disabled="currentPage <= 1"
-              @click="goPage(currentPage - 1)"
-            >
-              <ChevronLeft class="w-4 h-4" />
-            </button>
-            <span class="text-sm text-gray-600 px-2">{{ currentPage }} / {{ totalPages }}</span>
-            <button
-              class="p-1 rounded hover:bg-gray-100 disabled:opacity-30"
-              :disabled="currentPage >= totalPages"
-              @click="goPage(currentPage + 1)"
-            >
-              <ChevronRight class="w-4 h-4" />
-            </button>
+        <div class="card-base overflow-hidden">
+          <div class="flex items-center justify-between gap-3 p-4 border-b border-gray-100">
+            <h3 class="text-sm font-semibold text-gray-800">待遇发放明细</h3>
+            <span class="text-xs text-gray-400">共 {{ benefits?.total }} 条记录</span>
+          </div>
+          <div class="overflow-x-auto">
+            <table class="w-full text-sm">
+              <thead>
+                <tr class="bg-primary-50/50 text-gray-600">
+                  <th class="text-left py-3 px-4 font-medium">发放日期</th>
+                  <th class="text-left py-3 px-4 font-medium">所属期</th>
+                  <th class="text-left py-3 px-4 font-medium">项目</th>
+                  <th class="text-right py-3 px-4 font-medium">金额</th>
+                  <th class="text-left py-3 px-4 font-medium">到账账户</th>
+                  <th class="text-center py-3 px-4 font-medium">状态</th>
+                </tr>
+              </thead>
+              <tbody class="table-zebra">
+                <tr v-if="!benefits?.list.length">
+                  <td colspan="6" class="text-center py-12 text-gray-400">暂无待遇发放记录</td>
+                </tr>
+                <tr
+                  v-for="(row, idx) in benefits?.list"
+                  :key="idx"
+                  class="border-b border-gray-50 hover:bg-blue-50/30 transition-colors"
+                >
+                  <td class="py-3 px-4 font-medium text-gray-700">{{ row.issueDate }}</td>
+                  <td class="py-3 px-4 text-gray-500 text-xs">{{ row.period || '--' }}</td>
+                  <td class="py-3 px-4 text-gray-600">{{ row.itemName }}</td>
+                  <td class="py-3 px-4 text-right tabular-nums font-semibold text-primary">
+                    {{ formatCurrency(row.amount) }}
+                  </td>
+                  <td class="py-3 px-4 text-gray-500">{{ row.bankAccountMasked }}</td>
+                  <td class="py-3 px-4 text-center">
+                    <span :class="['px-2 py-0.5 rounded-full text-xs font-medium', benefitStatusClass(row.status)]">
+                      {{ BenefitStatusMap[row.status] }}
+                    </span>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <div v-if="totalPages > 1" class="flex items-center justify-between px-4 py-3 border-t border-gray-100">
+            <span class="text-xs text-gray-500">第 {{ currentPage }} / {{ totalPages }} 页</span>
+            <div class="flex items-center gap-1">
+              <button
+                class="p-1 rounded hover:bg-gray-100 disabled:opacity-30"
+                :disabled="currentPage <= 1"
+                @click="goPage(currentPage - 1)"
+              >
+                <ChevronLeft class="w-4 h-4" />
+              </button>
+              <span class="text-sm text-gray-600 px-2">{{ currentPage }} / {{ totalPages }}</span>
+              <button
+                class="p-1 rounded hover:bg-gray-100 disabled:opacity-30"
+                :disabled="currentPage >= totalPages"
+                @click="goPage(currentPage + 1)"
+              >
+                <ChevronRight class="w-4 h-4" />
+              </button>
+            </div>
           </div>
         </div>
       </div>
 
-      <div v-if="activeSubTab === 'compare'" class="card-base p-6">
-        <h3 class="text-base font-semibold text-gray-800 mb-4">
-          {{ InsuranceTypeMap[activeInsurance] }} - 同比环比分析
-        </h3>
-        <div v-if="compareData.length" class="h-[400px]">
-          <VChart :option="compareChartOption" autoresize />
+      <div v-if="activeSubTab === 'compare'" class="space-y-4">
+        <div v-if="totalCompareSummary" class="grid grid-cols-2 sm:grid-cols-4 gap-3">
+          <div class="card-base p-4 bg-gradient-to-br from-primary-50 to-white">
+            <p class="text-xs text-gray-500">本年度累计缴费</p>
+            <p class="text-xl font-bold text-primary tabular-nums">{{ formatCurrency(totalCompareSummary.currentSum) }}</p>
+          </div>
+          <div class="card-base p-4 bg-gradient-to-br from-green-50 to-white">
+            <p class="text-xs text-gray-500">去年同期累计</p>
+            <p class="text-xl font-bold text-success tabular-nums">{{ formatCurrency(totalCompareSummary.yoySum) }}</p>
+          </div>
+          <div class="card-base p-4 bg-gradient-to-br from-amber-50 to-white">
+            <p class="text-xs text-gray-500">平均{{ compareDimension === 'YOY' ? '同比' : '环比' }}变化</p>
+            <p class="text-xl font-bold tabular-nums" :class="totalCompareSummary.avgChange >= 0 ? 'text-success' : 'text-danger'">
+              {{ totalCompareSummary.avgChange >= 0 ? '+' : '' }}{{ totalCompareSummary.avgChange }}%
+            </p>
+          </div>
+          <div class="card-base p-4 bg-gradient-to-br from-purple-50 to-white">
+            <p class="text-xs text-gray-500">正增长月份</p>
+            <p class="text-xl font-bold text-purple-600">{{ totalCompareSummary.positiveMonths }}<span class="text-xs font-normal text-gray-500 ml-1">/{{ totalCompareSummary.totalMonths }}个月</span></p>
+          </div>
         </div>
-        <div v-else class="text-center py-12 text-gray-400">暂无同比环比数据</div>
+
+        <div class="card-base p-6">
+          <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 mb-5">
+            <h3 class="text-base font-semibold text-gray-800">
+              {{ InsuranceTypeMap[activeInsurance] }} - 同比环比分析
+            </h3>
+            <div class="inline-flex rounded-lg bg-gray-100 p-1">
+              <button
+                :class="[
+                  'px-4 py-1.5 text-xs font-medium rounded-md transition-all',
+                  compareDimension === 'YOY'
+                    ? 'bg-white text-primary shadow-sm'
+                    : 'text-gray-500 hover:text-gray-700',
+                ]"
+                @click="compareDimension = 'YOY'"
+              >
+                同比分析
+              </button>
+              <button
+                :class="[
+                  'px-4 py-1.5 text-xs font-medium rounded-md transition-all',
+                  compareDimension === 'MOM'
+                    ? 'bg-white text-primary shadow-sm'
+                    : 'text-gray-500 hover:text-gray-700',
+                ]"
+                @click="compareDimension = 'MOM'"
+              >
+                环比分析
+              </button>
+            </div>
+          </div>
+          <div v-if="compareData.length" class="h-[400px]">
+            <VChart :option="compareChartOption" autoresize />
+          </div>
+          <div v-else class="text-center py-12 text-gray-400">暂无同比环比数据</div>
+        </div>
       </div>
     </template>
   </div>

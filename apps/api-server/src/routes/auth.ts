@@ -15,7 +15,8 @@ function generateTokens(userId: string, role: 'user' | 'admin') {
 
 router.post('/gst/login-url', (_req, res) => {
   const state = `gst_state_${Date.now()}`;
-  const redirectUrl = `https://gst.gxzf.gov.cn/oauth/authorize?appid=${process.env.GST_APP_ID}&redirect_uri=${encodeURIComponent('http://localhost:5176/auth/callback')}&state=${state}`;
+  const frontendUrl = process.env.FRONTEND_URL || `http://127.0.0.1:${process.env.FRONTEND_PORT || 49189}`;
+  const redirectUrl = `https://gst.gxzf.gov.cn/oauth/authorize?appid=${process.env.GST_APP_ID}&redirect_uri=${encodeURIComponent(`${frontendUrl}/auth/callback`)}&state=${state}`;
 
   const response: GstLoginUrlResponse = {
     redirectUrl,

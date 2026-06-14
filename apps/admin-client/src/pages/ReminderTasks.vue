@@ -137,6 +137,67 @@ function getStatusClass(status: TaskStatus) {
   return map[status];
 }
 
+const selectedPersonIds = ref<string[]>([]);
+const selectedTask = ref<ReminderTask | null>(null);
+const showTaskDetail = ref(false);
+const sendingTaskId = ref<string | null>(null);
+
+function togglePerson(id: string) {
+  const i = selectedPersonIds.value.indexOf(id);
+  if (i >= 0) selectedPersonIds.value.splice(i, 1);
+  else selectedPersonIds.value.push(id);
+}
+
+function toggleAllPerson() {
+  if (selectedPersonIds.value.length === people.value.length) {
+    selectedPersonIds.value = [];
+  } else {
+    selectedPersonIds.value = people.value.map((p) => p.id);
+  }
+}
+
+async function sendSingleReminder(id: string) {
+  sendingTaskId.value = id;
+  await new Promise((r) => setTimeout(r, 700));
+  const p = people.value.find((x) => x.id === id);
+  if (p) {
+    people.value = people.value.filter((x) => x.id !== id);
+    peopleTotal.value = Math.max(0, peopleTotal.value - 1);
+  }
+  sendingTaskId.value = null;
+}
+
+async function sendBatchReminder() {
+  if (!selectedPersonIds.value.length) return;
+  sendingTaskId.value = 'batch';
+  await new Promise((r) => setTimeout(r, 1200));
+  const ids = new Set(selectedPersonIds.value);
+  people.value = people.value.filter((x) => !ids.has(x.id));
+  peopleTotal.value = Math.max(0, peopleTotal.value - selectedPersonIds.value.length);
+  selectedPersonIds.value = [];
+  sendingTaskId.value = null;
+}
+
+function openTaskDetail(task: ReminderTask) {
+  selectedTask.value = task;
+  showTaskDetail.value = true;
+}
+
+const deliverRate = computed(() => {
+  if (!selectedTask.value) return 0;
+  return selectedTask.value.targetCount
+    ? selectedTask.value.deliveredCount / selectedTask.value.targetCount
+    : 0;
+});
+const readRate = computed(() => {
+  if (!selectedTask.value || !selectedTask.value.deliveredCount) return 0;
+  return selectedTask.value.readCount / selectedTask.value.deliveredCount;
+});
+const convertRate = computed(() => {
+  if (!selectedTask.value || !selectedTask.value.readCount) return 0;
+  return selectedTask.value.convertedCount / selectedTask.value.readCount;
+});
+
 onMounted(() => {
   searchPeople();
   fetchTasks();
@@ -281,32 +342,65 @@ onMounted(() => {
     </div>
 
     <div class="bg-white rounded-lg shadow-sm p-5">
-      <h3 class="text-base font-semibold text-gray-800 mb-4">
-        筛选结果（共 {{ formatNumber(peopleTotal) }} 人）
-      </h3>
+      <div class="flex items-center justify-between mb-4">
+        <h3 class="text-base font-semibold text-gray-800">
+          筛选结果（共 {{ formatNumber(peopleTotal) }} 人）
+        </h3>
+        <div class="flex items-center gap-2">
+          <span v-if="selectedPersonIds.length" class="text-xs text-primary font-medium">
+            已选 {{ selectedPersonIds.length }} 人
+          </span>
+          <button
+            class="px-3 py-1.5 rounded-lg text-xs font-medium bg-accent text-white hover:bg-blue-500 transition-colors disabled:opacity-40 flex items-center gap-1"
+            :disabled="!selectedPersonIds.length || sendingTaskId !== null"
+            @click="sendBatchReminder"
+          >
+            <Send class="w-3 h-3" />
+            {{ sendingTaskId === 'batch' ? '发送中...' : '批量发送提醒' }}
+          </button>
+        </div>
+      </div>
       <div class="overflow-x-auto">
         <table class="w-full text-sm table-striped">
           <thead>
             <tr class="border-b border-gray-200">
+              <th class="py-3 px-3 text-left w-10">
+                <input
+                  type="checkbox"
+                  :checked="people.length > 0 && selectedPersonIds.length === people.length"
+                  :indeterminate="selectedPersonIds.length > 0 && selectedPersonIds.length < people.length"
+                  @change="toggleAllPerson"
+                  class="accent-primary"
+                />
+              </th>
               <th class="text-left py-3 px-4 text-gray-500 font-medium">姓名</th>
               <th class="text-left py-3 px-4 text-gray-500 font-medium">身份证</th>
               <th class="text-left py-3 px-4 text-gray-500 font-medium">地区</th>
               <th class="text-right py-3 px-4 text-gray-500 font-medium">逾期天数</th>
               <th class="text-left py-3 px-4 text-gray-500 font-medium">手机号</th>
+              <th class="py-3 px-4 text-center w-28 text-gray-500 font-medium">操作</th>
             </tr>
           </thead>
           <tbody>
             <tr v-if="peopleLoading">
-              <td colspan="5" class="py-8 text-center text-gray-400">加载中...</td>
+              <td colspan="7" class="py-8 text-center text-gray-400">加载中...</td>
             </tr>
             <tr v-else-if="!people.length">
-              <td colspan="5" class="py-8 text-center text-gray-400">暂无数据</td>
+              <td colspan="7" class="py-8 text-center text-gray-400">暂无数据</td>
             </tr>
             <tr
               v-for="person in people"
               :key="person.id"
               class="border-b border-gray-100"
             >
+              <td class="py-3 px-3">
+                <input
+                  type="checkbox"
+                  :checked="selectedPersonIds.includes(person.id)"
+                  @change="togglePerson(person.id)"
+                  class="accent-primary"
+                />
+              </td>
               <td class="py-3 px-4">{{ person.nameMasked }}</td>
               <td class="py-3 px-4 tabular-nums">{{ person.idCardMasked }}</td>
               <td class="py-3 px-4">{{ person.region }}</td>
@@ -316,9 +410,21 @@ onMounted(() => {
                 </span>
               </td>
               <td class="py-3 px-4 tabular-nums">{{ person.phoneMasked }}</td>
+              <td class="py-3 px-4 text-center">
+                <button
+                  class="text-xs px-2.5 py-1 rounded bg-primary/10 text-primary hover:bg-primary/20 transition-colors disabled:opacity-40"
+                  :disabled="sendingTaskId === person.id"
+                  @click="sendSingleReminder(person.id)"
+                >
+                  {{ sendingTaskId === person.id ? '发送中' : '发送提醒' }}
+                </button>
+              </td>
             </tr>
           </tbody>
         </table>
+      </div>
+      <div class="mt-3 text-[11px] text-gray-400 flex items-center gap-4">
+        <span>💡 勾选人员后可批量发送短信提醒；单人发送即从待提醒列表移除</span>
       </div>
     </div>
 
@@ -335,19 +441,21 @@ onMounted(() => {
               <th class="text-right py-3 px-4 text-gray-500 font-medium">已读</th>
               <th class="text-right py-3 px-4 text-gray-500 font-medium">转化</th>
               <th class="text-left py-3 px-4 text-gray-500 font-medium">创建时间</th>
+              <th class="py-3 px-4 w-20 text-center text-gray-500 font-medium">操作</th>
             </tr>
           </thead>
           <tbody>
             <tr v-if="tasksLoading">
-              <td colspan="7" class="py-8 text-center text-gray-400">加载中...</td>
+              <td colspan="8" class="py-8 text-center text-gray-400">加载中...</td>
             </tr>
             <tr v-else-if="!tasks.length">
-              <td colspan="7" class="py-8 text-center text-gray-400">暂无任务</td>
+              <td colspan="8" class="py-8 text-center text-gray-400">暂无任务</td>
             </tr>
             <tr
               v-for="task in tasks"
               :key="task.id"
-              class="border-b border-gray-100"
+              class="border-b border-gray-100 hover:bg-blue-50/30 transition-colors cursor-pointer"
+              @click="openTaskDetail(task)"
             >
               <td class="py-3 px-4 font-medium text-gray-800">{{ task.name }}</td>
               <td class="py-3 px-4">
@@ -367,11 +475,145 @@ onMounted(() => {
               <td class="py-3 px-4 text-right tabular-nums">{{ formatNumber(task.readCount) }}</td>
               <td class="py-3 px-4 text-right tabular-nums">{{ formatNumber(task.convertedCount) }}</td>
               <td class="py-3 px-4 text-gray-500">{{ task.createdAt }}</td>
+              <td class="py-3 px-4 text-center" @click.stop>
+                <button
+                  class="text-xs text-primary hover:underline"
+                  @click="openTaskDetail(task)"
+                >
+                  详情
+                </button>
+              </td>
             </tr>
           </tbody>
         </table>
       </div>
+      <p class="text-[11px] text-gray-400 mt-3">💡 点击任意任务行可查看完整转化漏斗明细与闭环状态</p>
     </div>
+
+    <Teleport to="body">
+      <div
+        v-if="showTaskDetail && selectedTask"
+        class="fixed inset-0 z-50 flex items-center justify-center bg-black/40"
+        @click.self="showTaskDetail = false"
+      >
+        <div class="bg-white rounded-xl shadow-xl w-full max-w-2xl mx-4 p-6 max-h-[90vh] overflow-y-auto">
+          <div class="flex items-center justify-between mb-5">
+            <div>
+              <h3 class="text-lg font-semibold text-gray-800">{{ selectedTask.name }}</h3>
+              <p class="text-xs text-gray-400 mt-0.5">
+                {{ selectedTask.createdAt }} 创建
+                <span class="status-tag ml-2" :class="getStatusClass(selectedTask.status)">
+                  {{ TaskStatusMap[selectedTask.status] }}
+                </span>
+              </p>
+            </div>
+            <button
+              class="text-gray-400 hover:text-gray-600"
+              @click="showTaskDetail = false"
+            >
+              <X class="w-5 h-5" />
+            </button>
+          </div>
+
+          <div class="grid grid-cols-4 gap-3 mb-6">
+            <div class="p-3 rounded-xl bg-gray-50 text-center">
+              <p class="text-xs text-gray-400 mb-1">目标人群</p>
+              <p class="text-xl font-bold text-gray-800 tabular-nums">{{ formatNumber(selectedTask.targetCount) }}</p>
+            </div>
+            <div class="p-3 rounded-xl bg-blue-50 text-center">
+              <p class="text-xs text-gray-400 mb-1">已送达</p>
+              <p class="text-xl font-bold text-primary tabular-nums">{{ formatNumber(selectedTask.deliveredCount) }}</p>
+            </div>
+            <div class="p-3 rounded-xl bg-amber-50 text-center">
+              <p class="text-xs text-gray-400 mb-1">已读</p>
+              <p class="text-xl font-bold text-amber-600 tabular-nums">{{ formatNumber(selectedTask.readCount) }}</p>
+            </div>
+            <div class="p-3 rounded-xl bg-green-50 text-center">
+              <p class="text-xs text-gray-400 mb-1">完成认证</p>
+              <p class="text-xl font-bold text-success tabular-nums">{{ formatNumber(selectedTask.convertedCount) }}</p>
+            </div>
+          </div>
+
+          <div class="mb-6">
+            <h4 class="text-sm font-semibold text-gray-700 mb-3">📊 转化漏斗</h4>
+            <div class="space-y-3">
+              <div>
+                <div class="flex items-center justify-between mb-1">
+                  <span class="text-xs text-gray-500">送达率（目标 → 送达）</span>
+                  <span class="text-xs font-medium text-primary tabular-nums">
+                    {{ (deliverRate * 100).toFixed(1) }}%
+                  </span>
+                </div>
+                <div class="h-2 bg-gray-100 rounded-full overflow-hidden">
+                  <div class="h-full bg-primary rounded-full transition-all" :style="{ width: (deliverRate * 100) + '%' }" />
+                </div>
+              </div>
+              <div>
+                <div class="flex items-center justify-between mb-1">
+                  <span class="text-xs text-gray-500">阅读率（送达 → 已读）</span>
+                  <span class="text-xs font-medium text-amber-600 tabular-nums">
+                    {{ (readRate * 100).toFixed(1) }}%
+                  </span>
+                </div>
+                <div class="h-2 bg-gray-100 rounded-full overflow-hidden">
+                  <div class="h-full bg-amber-400 rounded-full transition-all" :style="{ width: (readRate * 100) + '%' }" />
+                </div>
+              </div>
+              <div>
+                <div class="flex items-center justify-between mb-1">
+                  <span class="text-xs text-gray-500">转化率（已读 → 完成认证）</span>
+                  <span class="text-xs font-medium text-success tabular-nums">
+                    {{ (convertRate * 100).toFixed(1) }}%
+                  </span>
+                </div>
+                <div class="h-2 bg-gray-100 rounded-full overflow-hidden">
+                  <div class="h-full bg-success rounded-full transition-all" :style="{ width: (convertRate * 100) + '%' }" />
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="p-4 rounded-xl bg-blue-50 border border-blue-100 mb-5">
+            <h4 class="text-sm font-semibold text-gray-700 mb-2">🔗 任务处理闭环</h4>
+            <div class="flex items-center gap-2 text-xs overflow-x-auto pb-1">
+              <span class="px-2 py-1 rounded-full bg-green-100 text-green-700 flex items-center gap-1">
+                <CheckCircle2 class="w-3 h-3" /> 创建筛选
+              </span>
+              <span class="text-gray-300">→</span>
+              <span class="px-2 py-1 rounded-full bg-green-100 text-green-700 flex items-center gap-1">
+                <CheckCircle2 class="w-3 h-3" /> 发送短信
+              </span>
+              <span class="text-gray-300">→</span>
+              <span class="px-2 py-1 rounded-full bg-amber-100 text-amber-700 flex items-center gap-1">
+                <Bell class="w-3 h-3" /> 用户点击阅读
+              </span>
+              <span class="text-gray-300">→</span>
+              <span class="px-2 py-1 rounded-full bg-primary/10 text-primary flex items-center gap-1">
+                <Users class="w-3 h-3" /> 进入认证页
+              </span>
+              <span class="text-gray-300">→</span>
+              <span class="px-2 py-1 rounded-full bg-green-100 text-green-700 flex items-center gap-1">
+                <CheckCircle2 class="w-3 h-3" /> 完成认证
+              </span>
+            </div>
+          </div>
+
+          <div class="flex justify-end gap-3">
+            <button
+              class="px-5 py-2 border border-gray-200 text-gray-600 rounded-lg text-sm hover:bg-gray-50 transition-colors"
+              @click="showTaskDetail = false"
+            >
+              关闭
+            </button>
+            <button
+              class="px-5 py-2 bg-primary text-white rounded-lg text-sm hover:bg-blue-700 transition-colors"
+            >
+              导出任务报告
+            </button>
+          </div>
+        </div>
+      </div>
+    </Teleport>
 
     <Teleport to="body">
       <div

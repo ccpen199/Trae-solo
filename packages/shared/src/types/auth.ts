@@ -17,10 +17,40 @@ export interface LoginResponse {
     nameMasked: string;
     idCardMasked: string;
     socialCardMasked: string;
+    phoneMasked?: string;
     insureStatus: 'NORMAL' | 'SUSPENDED' | 'RETIRED';
+    region?: string;
   };
 }
 
 export interface TokenRefreshRequest {
   refreshToken: string;
+}
+
+export interface LockStatusResponse {
+  userId: string;
+  failCount: number;
+  maxFailCount: number;
+  locked: boolean;
+  lockExpiresAt?: number;
+}
+
+export interface AdminLoginRequest {
+  username: string;
+  password: string;
+  captcha?: string;
+}
+
+export interface AdminLoginResponse {
+  token: string;
+  refreshToken: string;
+  adminInfo: {
+    id: string;
+    username: string;
+    realNameMasked: string;
+    role: 'SUPER_ADMIN' | 'ADMIN' | 'OPERATOR' | 'AUDITOR';
+    permissions: string[];
+    lastLoginAt: string;
+    lastLoginIp: string;
+  };
 }

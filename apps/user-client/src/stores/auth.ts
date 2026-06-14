@@ -7,6 +7,13 @@ export const useAuthStore = defineStore('auth', () => {
   const token = ref<string>(localStorage.getItem('token') || '');
   const refreshToken = ref<string>(localStorage.getItem('refreshToken') || '');
   const userInfo = ref<LoginResponse['userInfo'] | null>(null);
+  const initFromStorage = () => {
+    const stored = localStorage.getItem('userInfo');
+    if (stored) {
+      try { userInfo.value = JSON.parse(stored); } catch { userInfo.value = null; }
+    }
+  };
+  initFromStorage();
 
   const isAuthenticated = computed(() => !!token.value);
 
@@ -17,12 +24,18 @@ export const useAuthStore = defineStore('auth', () => {
     localStorage.setItem('refreshToken', refresh);
   }
 
+  function setUserInfo(info: LoginResponse['userInfo']) {
+    userInfo.value = info;
+    localStorage.setItem('userInfo', JSON.stringify(info));
+  }
+
   function clearTokens() {
     token.value = '';
     refreshToken.value = '';
     userInfo.value = null;
     localStorage.removeItem('token');
     localStorage.removeItem('refreshToken');
+    localStorage.removeItem('userInfo');
   }
 
   async function login() {
@@ -34,10 +47,28 @@ export const useAuthStore = defineStore('auth', () => {
     }
   }
 
+  function demoLogin() {
+    const mockUser: LoginResponse = {
+      token: 'demo-access-token-' + Date.now(),
+      refreshToken: 'demo-refresh-token-' + Date.now(),
+      userInfo: {
+        id: 'GX20240001001',
+        nameMasked: '张*三',
+        idCardMasked: '450***********1234',
+        socialCardMasked: 'GX****1234',
+        phoneMasked: '138****5678',
+        insureStatus: 'NORMAL',
+        region: '南宁市青秀区',
+      },
+    };
+    setTokens(mockUser.token, mockUser.refreshToken);
+    setUserInfo(mockUser.userInfo);
+  }
+
   async function callback(code: string, state: string) {
     const res = await authApi.callback(code, state);
     setTokens(res.token, res.refreshToken);
-    userInfo.value = res.userInfo;
+    setUserInfo(res.userInfo);
   }
 
   async function refresh() {
@@ -68,6 +99,7 @@ export const useAuthStore = defineStore('auth', () => {
     userInfo,
     isAuthenticated,
     login,
+    demoLogin,
     callback,
     refresh,
     logout,
