@@ -85,7 +85,6 @@ export function seedDatabase() {
   const ownerId = insertUser.run('owner', 'owner1', '张先生', '13800138001', hashPassword('123456'), 'https://api.dicebear.com/7.x/avataaars/svg?seed=owner1').lastInsertRowid as number;
   const owner2Id = insertUser.run('owner', 'owner2', '李女士', '13800138002', hashPassword('123456'), 'https://api.dicebear.com/7.x/avataaars/svg?seed=owner2').lastInsertRowid as number;
   const tenantId = insertUser.run('tenant', 'tenant1', '王先生', '13800138003', hashPassword('123456'), 'https://api.dicebear.com/7.x/avataaars/svg?seed=tenant1').lastInsertRowid as number;
-  const visitorId = insertUser.run('visitor', 'visitor1', '李访客', '13900139001', hashPassword('123456'), 'https://api.dicebear.com/7.x/avataaars/svg?seed=visitor1').lastInsertRowid as number;
   const propertyId = insertUser.run('property', 'property1', '物业管理员', '13800138004', hashPassword('123456'), 'https://api.dicebear.com/7.x/avataaars/svg?seed=property1').lastInsertRowid as number;
   const workerId = insertUser.run('property', 'worker1', '维修师傅', '13800138005', hashPassword('123456'), 'https://api.dicebear.com/7.x/avataaars/svg?seed=worker1').lastInsertRowid as number;
   const merchantUserId = insertUser.run('merchant', 'merchant1', '商户管理员', '13800138006', hashPassword('123456'), 'https://api.dicebear.com/7.x/avataaars/svg?seed=merchant1').lastInsertRowid as number;

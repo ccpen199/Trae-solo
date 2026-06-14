@@ -2,11 +2,10 @@ import React, { useState, useEffect } from 'react';
 import { QRCodeSVG } from 'qrcode.react';
 import { useAuthStore } from '@/store';
 import {
-  Plus, X, Calendar, Clock, User, Phone, MapPin, RefreshCw,
-  Wifi, WifiOff, Camera, QrCode, Bluetooth, Info, AlertTriangle,
+  Plus, X, Calendar, Clock, User, Phone, MapPin, Monitor, CheckCircle, XCircle,
+  Wifi, WifiOff, Camera, QrCode, Bluetooth, Info, AlertTriangle, RefreshCw,
   Settings, Bell, Search, Filter, Download, ChevronDown, MoreHorizontal,
-  CreditCard, KeyRound, Trash2, CalendarClock, History, AlertOctagon, FileText,
-  CheckCircle, XCircle, Monitor
+  CreditCard, KeyRound
 } from 'lucide-react';
 import { accessApi } from '@/api';
 import StatusBadge from '@/components/common/StatusBadge';
@@ -47,10 +46,6 @@ const AccessPage: React.FC = () => {
   const [submitting, setSubmitting] = useState(false);
   const [selectedPass, setSelectedPass] = useState<VisitorPass | null>(null);
   const [passFilter, setPassFilter] = useState<'all' | 'active' | 'expired' | 'used'>('all');
-  const [showExtendModal, setShowExtendModal] = useState(false);
-  const [extendDays, setExtendDays] = useState('1');
-  const [operationLoading, setOperationLoading] = useState<number | null>(null);
-  const [showAbnormalModal, setShowAbnormalModal] = useState(false);
   const [formData, setFormData] = useState({
     visitorName: '',
     visitorPhone: '',
@@ -59,116 +54,6 @@ const AccessPage: React.FC = () => {
     purpose: '',
     times: '1',
   });
-
-  interface OperationLog {
-    id: number;
-    type: 'create' | 'extend' | 'revoke' | 'expire' | 'use';
-    description: string;
-    operator: string;
-    time: string;
-  }
-
-  const operationLogs: OperationLog[] = [
-    { id: 1, type: 'create', description: '创建访客通行证', operator: '张先生(业主)', time: '2024-06-08 09:30' },
-    { id: 2, type: 'use', description: '访客扫码进入小区大门', operator: '系统自动', time: '2024-06-08 10:15' },
-    { id: 3, type: 'use', description: '访客扫码进入1号楼单元门', operator: '系统自动', time: '2024-06-08 10:18' },
-  ];
-
-  const abnormalVisitors = [
-    {
-      id: 1,
-      name: '李某某',
-      phone: '139****0012',
-      accessCount: 8,
-      riskLevel: 'high',
-      cluster: '高频访客家政人员',
-      lastAccess: '2024-06-08 11:20',
-      status: 'pending',
-      handler: null,
-      handleTime: null,
-      handleNote: null,
-    },
-    {
-      id: 2,
-      name: '王某某',
-      phone: '138****0034',
-      accessCount: 5,
-      riskLevel: 'medium',
-      cluster: '同一访客24小时内频繁出入',
-      lastAccess: '2024-06-08 09:45',
-      status: 'processing',
-      handler: '物业管理员',
-      handleTime: '2024-06-08 10:00',
-      handleNote: '已电话联系业主确认访客身份',
-    },
-    {
-      id: 3,
-      name: '张某某',
-      phone: '137****0056',
-      accessCount: 3,
-      riskLevel: 'low',
-      cluster: '非高峰时段异常出入',
-      lastAccess: '2024-06-07 23:30',
-      status: 'resolved',
-      handler: '物业管理员',
-      handleTime: '2024-06-08 08:00',
-      handleNote: '已核实为业主亲友，已排除风险',
-    },
-  ];
-
-  const handleRevoke = async (passId: number) => {
-    if (!confirm('确定要撤销此通行证吗？撤销后访客将无法使用。')) return;
-    setOperationLoading(passId);
-    try {
-      await new Promise(resolve => setTimeout(resolve, 800));
-      setPasses(prev => prev.map(p => 
-        p.id === passId ? { ...p, status: 'revoked' as any } : p
-      ));
-      alert('通行证已撤销');
-    } catch (err) {
-      alert('撤销失败，请稍后重试');
-    } finally {
-      setOperationLoading(null);
-    }
-  };
-
-  const handleExtend = async () => {
-    if (!selectedPass) return;
-    setOperationLoading(-1);
-    try {
-      await new Promise(resolve => setTimeout(resolve, 800));
-      const newValidTo = new Date(selectedPass.valid_to);
-      newValidTo.setDate(newValidTo.getDate() + parseInt(extendDays));
-      setPasses(prev => prev.map(p => 
-        p.id === selectedPass.id ? { ...p, valid_to: newValidTo.toISOString() } : p
-      ));
-      setShowExtendModal(false);
-      setSelectedPass(null);
-      alert(`通行证已延期${extendDays}天`);
-    } catch (err) {
-      alert('延期失败，请稍后重试');
-    } finally {
-      setOperationLoading(null);
-    }
-  };
-
-  const handleAbnormalProcess = (abnormalId: number, action: string) => {
-    const visitor = abnormalVisitors.find(v => v.id === abnormalId);
-    if (!visitor) return;
-    if (action === 'verify') {
-      visitor.status = 'resolved';
-      visitor.handler = user?.name || '物业管理员';
-      visitor.handleTime = new Date().toLocaleString('zh-CN');
-      visitor.handleNote = '已与业主核实身份，确认为预约家政服务人员';
-      alert('异常访客已处理完成');
-    } else if (action === 'block') {
-      visitor.status = 'resolved';
-      visitor.handler = user?.name || '物业管理员';
-      visitor.handleTime = new Date().toLocaleString('zh-CN');
-      visitor.handleNote = '已加入黑名单，禁止进入小区';
-      alert('访客已加入黑名单');
-    }
-  };
 
   useEffect(() => {
     fetchData();
@@ -548,172 +433,6 @@ const AccessPage: React.FC = () => {
         </div>
       </div>
 
-      {user?.role === 'property' && (
-        <div className="bg-gradient-to-r from-orange-50 to-red-50 rounded-xl p-5 border border-orange-200">
-          <div className="flex items-center justify-between mb-4">
-            <div className="flex items-center gap-3">
-              <div className="w-12 h-12 bg-orange-100 rounded-xl flex items-center justify-center">
-                <AlertOctagon className="w-6 h-6 text-orange-600" />
-              </div>
-              <div>
-                <h3 className="font-semibold text-gray-800">异常访客风险预警</h3>
-                <p className="text-sm text-gray-500">基于通行记录的智能聚类分析，识别高风险访客</p>
-              </div>
-            </div>
-            <button onClick={() => setShowAbnormalModal(true)} className="text-sm text-orange-600 hover:text-orange-700 font-medium">
-              查看全部 →
-            </button>
-          </div>
-          <div className="grid md:grid-cols-3 gap-4">
-            {abnormalVisitors.slice(0, 3).map((visitor) => (
-              <div key={visitor.id} className="bg-white rounded-lg p-4 shadow-sm">
-                <div className="flex items-start justify-between mb-2">
-                  <div>
-                    <p className="font-medium text-gray-800">{visitor.name}</p>
-                    <p className="text-xs text-gray-500">{visitor.phone}</p>
-                  </div>
-                  <span className={`px-2 py-0.5 rounded-full text-xs font-medium ${
-                    visitor.riskLevel === 'high' ? 'bg-red-100 text-red-600' :
-                    visitor.riskLevel === 'medium' ? 'bg-orange-100 text-orange-600' :
-                    'bg-yellow-100 text-yellow-600'
-                  }`}>
-                    {visitor.riskLevel === 'high' ? '高危' : visitor.riskLevel === 'medium' ? '中危' : '低危'}
-                  </span>
-                </div>
-                <p className="text-xs text-gray-600 mb-2">{visitor.cluster}</p>
-                <div className="flex items-center justify-between text-xs">
-                  <span className="text-gray-500">24h出入 {visitor.accessCount} 次</span>
-                  {visitor.status === 'pending' && (
-                    <div className="flex gap-1">
-                      <button 
-                        onClick={() => handleAbnormalProcess(visitor.id, 'verify')}
-                        className="px-2 py-1 bg-blue-50 text-blue-600 rounded hover:bg-blue-100"
-                      >
-                        核实
-                      </button>
-                      <button 
-                        onClick={() => handleAbnormalProcess(visitor.id, 'block')}
-                        className="px-2 py-1 bg-red-50 text-red-600 rounded hover:bg-red-100"
-                      >
-                        拉黑
-                      </button>
-                    </div>
-                  )}
-                  {visitor.status === 'processing' && (
-                    <span className="text-blue-600">处理中</span>
-                  )}
-                  {visitor.status === 'resolved' && (
-                    <span className="text-green-600">已处置</span>
-                  )}
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-      )}
-
-      {showAbnormalModal && (
-        <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">
-          <div className="bg-white rounded-2xl w-full max-w-3xl max-h-[85vh] overflow-hidden">
-            <div className="flex items-center justify-between p-6 border-b border-gray-100">
-              <h2 className="text-xl font-bold text-gray-800">异常访客分析</h2>
-              <button onClick={() => setShowAbnormalModal(false)} className="p-2 hover:bg-gray-100 rounded-lg transition-colors">
-                <X className="w-5 h-5 text-gray-500" />
-              </button>
-            </div>
-            <div className="p-6 overflow-y-auto max-h-[calc(85vh-100px)]">
-              <div className="space-y-4">
-                {abnormalVisitors.map((visitor) => (
-                  <div key={visitor.id} className="border border-gray-200 rounded-xl p-5">
-                    <div className="flex items-start justify-between mb-4">
-                      <div className="flex items-center gap-4">
-                        <div className={`w-14 h-14 rounded-xl flex items-center justify-center ${
-                          visitor.riskLevel === 'high' ? 'bg-red-100' :
-                          visitor.riskLevel === 'medium' ? 'bg-orange-100' : 'bg-yellow-100'
-                        }`}>
-                          <User className={`w-7 h-7 ${
-                            visitor.riskLevel === 'high' ? 'text-red-600' :
-                            visitor.riskLevel === 'medium' ? 'text-orange-600' : 'text-yellow-600'
-                          }`} />
-                        </div>
-                        <div>
-                          <div className="flex items-center gap-2 mb-1">
-                            <h3 className="font-semibold text-gray-800 text-lg">{visitor.name}</h3>
-                            <span className={`px-2.5 py-0.5 rounded-full text-xs font-medium ${
-                              visitor.status === 'pending' ? 'bg-orange-100 text-orange-600' :
-                              visitor.status === 'processing' ? 'bg-blue-100 text-blue-600' :
-                              'bg-green-100 text-green-600'
-                            }`}>
-                              {visitor.status === 'pending' ? '待处理' :
-                               visitor.status === 'processing' ? '处理中' : '已解决'}
-                            </span>
-                          </div>
-                          <p className="text-sm text-gray-500">{visitor.phone}</p>
-                        </div>
-                      </div>
-                      <div className="text-right">
-                        <p className="text-2xl font-bold text-gray-800">{visitor.accessCount}</p>
-                        <p className="text-xs text-gray-500">24h内出入次数</p>
-                      </div>
-                    </div>
-                    <div className="grid md:grid-cols-3 gap-4 mb-4">
-                      <div className="bg-gray-50 rounded-lg p-3">
-                        <p className="text-xs text-gray-500 mb-1">风险聚类</p>
-                        <p className="font-medium text-gray-800 text-sm">{visitor.cluster}</p>
-                      </div>
-                      <div className="bg-gray-50 rounded-lg p-3">
-                        <p className="text-xs text-gray-500 mb-1">最后出现</p>
-                        <p className="font-medium text-gray-800 text-sm">{visitor.lastAccess}</p>
-                      </div>
-                      <div className="bg-gray-50 rounded-lg p-3">
-                        <p className="text-xs text-gray-500 mb-1">风险等级</p>
-                        <p className={`font-medium text-sm ${
-                          visitor.riskLevel === 'high' ? 'text-red-600' :
-                          visitor.riskLevel === 'medium' ? 'text-orange-600' : 'text-yellow-600'
-                        }`}>
-                          {visitor.riskLevel === 'high' ? '高危' :
-                           visitor.riskLevel === 'medium' ? '中危' : '低危'}
-                        </p>
-                      </div>
-                    </div>
-                    {visitor.handleNote && (
-                      <div className="bg-blue-50 rounded-lg p-4 mb-4">
-                        <div className="flex items-start gap-3">
-                          <FileText className="w-5 h-5 text-blue-600 flex-shrink-0 mt-0.5" />
-                          <div>
-                            <p className="text-sm font-medium text-blue-800 mb-1">处置记录</p>
-                            <p className="text-xs text-blue-600 mb-1">
-                              处理人：{visitor.handler} · {visitor.handleTime}
-                            </p>
-                            <p className="text-sm text-gray-700">{visitor.handleNote}</p>
-                          </div>
-                        </div>
-                      </div>
-                    )}
-                    {visitor.status === 'pending' && (
-                      <div className="flex gap-3">
-                        <button 
-                          onClick={() => handleAbnormalProcess(visitor.id, 'verify')}
-                          className="flex-1 py-2.5 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors font-medium"
-                        >
-                          联系业主核实
-                        </button>
-                        <button 
-                          onClick={() => handleAbnormalProcess(visitor.id, 'block')}
-                          className="flex-1 py-2.5 bg-red-600 text-white rounded-lg hover:bg-red-700 transition-colors font-medium"
-                        >
-                          加入黑名单
-                        </button>
-                      </div>
-                    )}
-                  </div>
-                ))}
-              </div>
-            </div>
-          </div>
-        </div>
-      )}
-
       {filteredPasses.length === 0 ? (
         <div className="text-center py-16 bg-gray-50 rounded-xl">
           <KeyRound className="w-12 h-12 text-gray-300 mx-auto mb-3" />
@@ -773,59 +492,9 @@ const AccessPage: React.FC = () => {
                   </div>
 
                   {statusInfo.status === 'active' && (
-                    <div className="mt-4 pt-4 border-t border-gray-100">
-                      <div className="flex items-center justify-between mb-3">
-                        <span className="text-xs text-gray-500">剩余时间</span>
-                        <span className="text-sm font-semibold text-blue-600">{getRemainingTime(pass)}</span>
-                      </div>
-                      <div className="flex gap-2">
-                        <button
-                          onClick={(e) => {
-                            e.stopPropagation();
-                            setSelectedPass(pass);
-                            setShowExtendModal(true);
-                          }}
-                          disabled={operationLoading === pass.id}
-                          className="flex-1 flex items-center justify-center gap-1 px-3 py-2 text-xs bg-blue-50 text-blue-600 rounded-lg hover:bg-blue-100 transition-colors disabled:opacity-50"
-                        >
-                          <CalendarClock className="w-3.5 h-3.5" />
-                          {operationLoading === pass.id ? '处理中...' : '延期'}
-                        </button>
-                        <button
-                          onClick={(e) => {
-                            e.stopPropagation();
-                            handleRevoke(pass.id);
-                          }}
-                          disabled={operationLoading === pass.id}
-                          className="flex-1 flex items-center justify-center gap-1 px-3 py-2 text-xs bg-red-50 text-red-600 rounded-lg hover:bg-red-100 transition-colors disabled:opacity-50"
-                        >
-                          <Trash2 className="w-3.5 h-3.5" />
-                          {operationLoading === pass.id ? '处理中...' : '撤销'}
-                        </button>
-                      </div>
-                    </div>
-                  )}
-                  {statusInfo.status === 'expired' && (
-                    <div className="mt-4 pt-4 border-t border-gray-100">
-                      <div className="bg-red-50 rounded-lg p-3 mb-3">
-                        <div className="flex items-center gap-2 text-xs text-red-600">
-                          <AlertOctagon className="w-4 h-4" />
-                          <span>系统已自动失效，访客无法使用</span>
-                        </div>
-                      </div>
-                      <div className="flex gap-2">
-                        <button
-                          onClick={(e) => {
-                            e.stopPropagation();
-                            setSelectedPass(pass);
-                            setShowExtendModal(true);
-                          }}
-                          className="flex-1 flex items-center justify-center gap-1 px-3 py-2 text-xs bg-blue-50 text-blue-600 rounded-lg hover:bg-blue-100 transition-colors"
-                        >
-                          <RefreshCw className="w-3.5 h-3.5" />
-                          重新激活
-                        </button>
-                      </div>
+                    <div className="mt-4 pt-4 border-t border-gray-100 flex items-center justify-between">
+                      <span className="text-xs text-gray-500">剩余时间</span>
+                      <span className="text-sm font-semibold text-blue-600">{getRemainingTime(pass)}</span>
                     </div>
                   )}
                 </div>
@@ -1295,88 +964,6 @@ const AccessPage: React.FC = () => {
                   <span className="text-sm text-gray-500">当前状态</span>
                   <StatusBadge status={getPassStatusInfo(selectedPass).status} />
                 </div>
-                <div className="pt-4 border-t border-gray-100">
-                  <h3 className="font-semibold text-gray-800 mb-3 flex items-center gap-2">
-                    <History className="w-4 h-4 text-blue-500" />
-                    操作记录
-                  </h3>
-                  <div className="space-y-3">
-                    {operationLogs.map((log) => (
-                      <div key={log.id} className="flex items-start gap-3">
-                        <div className={`w-2 h-2 rounded-full mt-2 flex-shrink-0 ${
-                          log.type === 'create' ? 'bg-green-500' :
-                          log.type === 'use' ? 'bg-blue-500' :
-                          log.type === 'expire' ? 'bg-red-500' : 'bg-gray-400'
-                        }`} />
-                        <div className="flex-1">
-                          <p className="text-sm text-gray-800">{log.description}</p>
-                          <p className="text-xs text-gray-500">
-                            {log.operator} · {log.time}
-                          </p>
-                        </div>
-                      </div>
-                    ))}
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      )}
-
-      {showExtendModal && selectedPass && (
-        <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">
-          <div className="bg-white rounded-2xl w-full max-w-md">
-            <div className="flex items-center justify-between p-6 border-b border-gray-100">
-              <h2 className="text-xl font-bold text-gray-800">
-                {getPassStatusInfo(selectedPass).status === 'expired' ? '重新激活通行证' : '延期通行证'}
-              </h2>
-              <button
-                onClick={() => { setShowExtendModal(false); setSelectedPass(null); }}
-                className="p-2 hover:bg-gray-100 rounded-lg transition-colors"
-              >
-                <X className="w-5 h-5 text-gray-500" />
-              </button>
-            </div>
-            <div className="p-6">
-              <div className="mb-4 p-4 bg-blue-50 rounded-lg">
-                <p className="text-sm text-gray-800 font-medium mb-1">访客：{selectedPass.visitor_name}</p>
-                <p className="text-sm text-gray-500">当前有效期至：{formatDate(selectedPass.valid_to)}</p>
-              </div>
-              <div className="mb-6">
-                <label className="block text-sm font-medium text-gray-700 mb-2">
-                  延长天数
-                </label>
-                <div className="grid grid-cols-3 gap-2">
-                  {['1', '3', '7'].map((days) => (
-                    <button
-                      key={days}
-                      onClick={() => setExtendDays(days)}
-                      className={`py-3 rounded-lg text-sm font-medium transition-colors ${
-                        extendDays === days
-                          ? 'bg-blue-600 text-white'
-                          : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
-                      }`}
-                    >
-                      {days}天
-                    </button>
-                  ))}
-                </div>
-              </div>
-              <div className="flex gap-3">
-                <button
-                  onClick={() => { setShowExtendModal(false); setSelectedPass(null); }}
-                  className="flex-1 py-3 border border-gray-200 text-gray-700 rounded-lg hover:bg-gray-50 transition-colors"
-                >
-                  取消
-                </button>
-                <button
-                  onClick={handleExtend}
-                  disabled={operationLoading === -1}
-                  className="flex-1 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors disabled:opacity-50"
-                >
-                  {operationLoading === -1 ? '处理中...' : '确认延期'}
-                </button>
               </div>
             </div>
           </div>

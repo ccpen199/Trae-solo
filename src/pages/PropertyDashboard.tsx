@@ -1,79 +1,9 @@
 import React, { useState, useEffect } from 'react';
-import { TrendingUp, AlertCircle, CheckCircle, Clock, Wrench, MessageSquare, HelpCircle, MoreHorizontal, X, Eye, AlertTriangle, ShieldAlert, Flame, WifiOff, FileText, User, Calendar, CheckCircle2, XCircle, RefreshCw } from 'lucide-react';
+import { TrendingUp, AlertCircle, CheckCircle, Clock, Wrench, MessageSquare, HelpCircle, MoreHorizontal } from 'lucide-react';
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, PieChart, Pie, Cell, BarChart, Bar, Legend } from 'recharts';
 import { analyticsApi, riskApi } from '@/api';
 import type { KPIData, Alert, ApiResponse } from '@shared/types';
 import StatusBadge from '@/components/common/StatusBadge';
-
-interface AlertWithExtra extends Alert {
-  handler?: string;
-  handleTime?: string;
-  handleNote?: string;
-  handleStatus?: 'pending' | 'processing' | 'resolved' | 'recheck';
-  recheckStatus?: 'pending' | 'passed' | 'failed';
-}
-
-interface DisposalRecord {
-  id: number;
-  alertType: string;
-  alertTitle: string;
-  location: string;
-  handler: string;
-  handleTime: string;
-  handleNote: string;
-  recheckStatus: 'pending' | 'passed' | 'failed';
-  recheckTime?: string;
-  rechecker?: string;
-}
-
-const initialDisposalRecords: DisposalRecord[] = [
-  {
-    id: 1,
-    alertType: '高空抛物',
-    alertTitle: '3号楼高空抛物检测告警',
-    location: '3号楼南侧',
-    handler: '物业管理员',
-    handleTime: '2024-06-08 09:30',
-    handleNote: '已到现场查看，发现丢弃的外卖盒，已调取监控锁定责任人，已上门教育并罚款200元',
-    recheckStatus: 'passed',
-    recheckTime: '2024-06-08 14:00',
-    rechecker: '物业主管'
-  },
-  {
-    id: 2,
-    alertType: '消防通道占压',
-    alertTitle: 'B1层消防通道被占用',
-    location: 'B1层消防通道03',
-    handler: '物业管理员',
-    handleTime: '2024-06-08 08:15',
-    handleNote: '已联系车主移车，已清理通道杂物，对车主进行消防安全教育',
-    recheckStatus: 'passed',
-    recheckTime: '2024-06-08 12:00',
-    rechecker: '物业主管'
-  },
-  {
-    id: 3,
-    alertType: '设备离线',
-    alertTitle: '2号楼单元门门禁离线',
-    location: '2号楼单元门',
-    handler: '物业管理员',
-    handleTime: '2024-06-08 07:00',
-    handleNote: '已派技术人员现场排查，发现电源故障，已更换电源模块',
-    recheckStatus: 'pending',
-  },
-  {
-    id: 4,
-    alertType: '异常访客',
-    alertTitle: '同一访客24h内出入5次以上',
-    location: '小区大门',
-    handler: '物业管理员',
-    handleTime: '2024-06-07 16:30',
-    handleNote: '已联系业主核实，确认为业主预约的家政服务人员，已排除风险',
-    recheckStatus: 'passed',
-    recheckTime: '2024-06-07 18:00',
-    rechecker: '物业主管'
-  },
-];
 
 interface PropertyKPIData {
   kpi: KPIData;
@@ -137,63 +67,10 @@ const KPICard: React.FC<KPICardProps> = ({ title, value, percentage, icon, trend
 
 const PropertyDashboard: React.FC = () => {
   const [kpiData, setKpiData] = useState<PropertyKPIData | null>(null);
-  const [alerts, setAlerts] = useState<AlertWithExtra[]>([]);
+  const [alerts, setAlerts] = useState<Alert[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
   const [todayNewOrders] = useState(12);
-  const [showAlertDetail, setShowAlertDetail] = useState(false);
-  const [selectedAlert, setSelectedAlert] = useState<AlertWithExtra | null>(null);
-  const [actionLoading, setActionLoading] = useState(false);
-  const [disposalRecords, setDisposalRecords] = useState<DisposalRecord[]>(initialDisposalRecords);
-
-  const getAlertTypeIcon = (type: string) => {
-    if (type.includes('高空抛物')) return <ShieldAlert className="w-5 h-5 text-red-500" />;
-    if (type.includes('消防')) return <Flame className="w-5 h-5 text-orange-500" />;
-    if (type.includes('设备') || type.includes('离线')) return <WifiOff className="w-5 h-5 text-yellow-500" />;
-    if (type.includes('访客')) return <AlertTriangle className="w-5 h-5 text-purple-500" />;
-    return <AlertCircle className="w-5 h-5 text-blue-500" />;
-  };
-
-  const handleViewAlert = (alert: AlertWithExtra) => {
-    setSelectedAlert(alert);
-    setShowAlertDetail(true);
-  };
-
-  const handleResolveAlert = async (alertId: number, note: string) => {
-    setActionLoading(true);
-    try {
-      await new Promise(resolve => setTimeout(resolve, 800));
-      setAlerts(prev => prev.filter(a => a.id !== alertId));
-      setShowAlertDetail(false);
-      setSelectedAlert(null);
-      alert('告警已处置');
-    } catch (err) {
-      alert('操作失败');
-    } finally {
-      setActionLoading(false);
-    }
-  };
-
-  const handleRecheck = async (recordId: number) => {
-    if (!confirm('确认复查通过吗？')) return;
-    setActionLoading(true);
-    try {
-      await new Promise(resolve => setTimeout(resolve, 800));
-      setDisposalRecords(prev => prev.map(r => 
-        r.id === recordId ? { 
-          ...r, 
-          recheckStatus: 'passed', 
-          recheckTime: new Date().toLocaleString('zh-CN'),
-          rechecker: '物业管理员'
-        } : r
-      ));
-      alert('复查通过');
-    } catch (err) {
-      alert('操作失败');
-    } finally {
-      setActionLoading(false);
-    }
-  };
 
   useEffect(() => {
     const loadData = async () => {
@@ -424,11 +301,10 @@ const PropertyDashboard: React.FC = () => {
               alerts.map(alert => (
                 <div
                   key={alert.id}
-                  onClick={() => handleViewAlert(alert)}
                   className="flex items-start gap-3 p-3 bg-gray-50 rounded-lg hover:bg-gray-100 transition-colors cursor-pointer"
                 >
                   <div className="flex-shrink-0 mt-0.5">
-                    {getAlertTypeIcon(alert.title)}
+                    {getAlertIcon(alert.level)}
                   </div>
                   <div className="flex-1 min-w-0">
                     <div className="flex items-center gap-2 mb-1">
@@ -436,17 +312,11 @@ const PropertyDashboard: React.FC = () => {
                       <StatusBadge status={alert.level} />
                     </div>
                     <p className="text-gray-500 text-sm mb-1 line-clamp-1">{alert.description}</p>
-                    <div className="flex items-center justify-between">
-                      <div className="flex items-center gap-2 text-xs text-gray-400">
-                        <HelpCircle className="w-3 h-3" />
-                        <span>{alert.location}</span>
-                        <span>·</span>
-                        <span>{new Date(alert.occurred_at).toLocaleString('zh-CN')}</span>
-                      </div>
-                      <button className="text-xs text-blue-600 hover:text-blue-700 flex items-center gap-1">
-                        <Eye className="w-3 h-3" />
-                        处置
-                      </button>
+                    <div className="flex items-center gap-2 text-xs text-gray-400">
+                      <HelpCircle className="w-3 h-3" />
+                      <span>{alert.location}</span>
+                      <span>·</span>
+                      <span>{new Date(alert.occurred_at).toLocaleString('zh-CN')}</span>
                     </div>
                   </div>
                 </div>
@@ -477,170 +347,6 @@ const PropertyDashboard: React.FC = () => {
           </div>
         </div>
       </div>
-
-      <div className="bg-white rounded-xl p-5 shadow-sm border border-gray-100">
-        <div className="flex items-center justify-between mb-4">
-          <h3 className="text-lg font-semibold text-gray-800 flex items-center gap-2">
-            <FileText className="w-5 h-5 text-blue-500" />
-            风险处置记录与复查
-          </h3>
-          <div className="flex items-center gap-2 text-sm">
-            <span className="text-green-600 flex items-center gap-1">
-              <CheckCircle2 className="w-4 h-4" />
-              已复查通过 {disposalRecords.filter(r => r.recheckStatus === 'passed').length}
-            </span>
-            <span className="text-orange-600 flex items-center gap-1">
-              <Clock className="w-4 h-4" />
-              待复查 {disposalRecords.filter(r => r.recheckStatus === 'pending').length}
-            </span>
-          </div>
-        </div>
-        <div className="space-y-4">
-          {disposalRecords.map((record) => (
-            <div key={record.id} className="border border-gray-200 rounded-xl p-5">
-              <div className="flex items-start justify-between mb-3">
-                <div className="flex items-start gap-3">
-                  {getAlertTypeIcon(record.alertTitle)}
-                  <div>
-                    <div className="flex items-center gap-2 mb-1">
-                      <h4 className="font-semibold text-gray-800">{record.alertTitle}</h4>
-                      <span className={`px-2 py-0.5 rounded-full text-xs font-medium ${
-                        record.recheckStatus === 'passed' ? 'bg-green-100 text-green-600' :
-                        record.recheckStatus === 'pending' ? 'bg-orange-100 text-orange-600' :
-                        'bg-red-100 text-red-600'
-                      }`}>
-                        {record.recheckStatus === 'passed' ? '复查通过' :
-                         record.recheckStatus === 'pending' ? '待复查' : '复查未通过'}
-                      </span>
-                    </div>
-                    <p className="text-sm text-gray-500">
-                      {record.location} · 处置人：{record.handler} · {record.handleTime}
-                    </p>
-                  </div>
-                </div>
-                {record.recheckStatus === 'pending' && (
-                  <button
-                    onClick={() => handleRecheck(record.id)}
-                    disabled={actionLoading}
-                    className="px-4 py-2 bg-blue-600 text-white text-sm rounded-lg hover:bg-blue-700 transition-colors disabled:opacity-50"
-                  >
-                    去复查
-                  </button>
-                )}
-                {record.recheckStatus === 'passed' && (
-                  <div className="text-right text-xs text-gray-500">
-                    <p>复查人：{record.rechecker}</p>
-                    <p>{record.recheckTime}</p>
-                  </div>
-                )}
-              </div>
-              <div className="bg-gray-50 rounded-lg p-4 mb-3">
-                <p className="text-xs text-gray-500 mb-1">处置措施：</p>
-                <p className="text-sm text-gray-700">{record.handleNote}</p>
-              </div>
-              {record.recheckStatus === 'passed' && (
-                <div className="bg-green-50 rounded-lg p-4">
-                  <div className="flex items-center gap-2 text-green-700">
-                    <CheckCircle2 className="w-5 h-5" />
-                    <span className="font-medium text-sm">复查结论：问题已解决，无遗留风险</span>
-                  </div>
-                </div>
-              )}
-            </div>
-          ))}
-        </div>
-      </div>
-
-      {showAlertDetail && selectedAlert && (
-        <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">
-          <div className="bg-white rounded-2xl w-full max-w-2xl max-h-[85vh] overflow-y-auto">
-            <div className="flex items-center justify-between p-6 border-b border-gray-100">
-              <div className="flex items-center gap-3">
-                {getAlertTypeIcon(selectedAlert.title)}
-                <div>
-                  <h2 className="text-xl font-bold text-gray-800">{selectedAlert.title}</h2>
-                  <p className="text-sm text-gray-500">{selectedAlert.location}</p>
-                </div>
-              </div>
-              <button
-                onClick={() => { setShowAlertDetail(false); setSelectedAlert(null); }}
-                className="p-2 hover:bg-gray-100 rounded-lg transition-colors"
-              >
-                <X className="w-5 h-5 text-gray-500" />
-              </button>
-            </div>
-            <div className="p-6">
-              <div className="grid md:grid-cols-2 gap-4 mb-6">
-                <div className="bg-gray-50 rounded-lg p-4">
-                  <p className="text-xs text-gray-500 mb-1">告警级别</p>
-                  <span className={`px-2.5 py-1 rounded-full text-xs font-medium ${
-                    selectedAlert.level === 'critical' || selectedAlert.level === 'high' ? 'bg-red-100 text-red-600' :
-                    selectedAlert.level === 'medium' ? 'bg-orange-100 text-orange-600' :
-                    'bg-blue-100 text-blue-600'
-                  }`}>
-                    {selectedAlert.level === 'critical' ? '严重' :
-                     selectedAlert.level === 'high' ? '高危' :
-                     selectedAlert.level === 'medium' ? '中危' : '低危'}
-                  </span>
-                </div>
-                <div className="bg-gray-50 rounded-lg p-4">
-                  <p className="text-xs text-gray-500 mb-1">发生时间</p>
-                  <p className="font-medium text-gray-800">{new Date(selectedAlert.occurred_at).toLocaleString('zh-CN')}</p>
-                </div>
-              </div>
-
-              <div className="bg-gray-50 rounded-lg p-4 mb-6">
-                <p className="text-xs text-gray-500 mb-1">告警描述</p>
-                <p className="text-gray-700">{selectedAlert.description}</p>
-              </div>
-
-              {selectedAlert.level === 'critical' || selectedAlert.level === 'high' ? (
-                <div className="bg-red-50 rounded-lg p-4 mb-6">
-                  <div className="flex items-center gap-2 text-red-700 mb-2">
-                    <AlertTriangle className="w-5 h-5" />
-                    <span className="font-medium">紧急处置建议</span>
-                  </div>
-                  <ul className="text-sm text-red-600 space-y-1 ml-7 list-disc">
-                    <li>立即前往现场核实情况</li>
-                    <li>如需支援立即联系安防或消防部门</li>
-                    <li>留存现场照片和视频证据</li>
-                    <li>处置完成后填写处置记录并提交复查</li>
-                  </ul>
-                </div>
-              ) : (
-                <div className="bg-yellow-50 rounded-lg p-4 mb-6">
-                  <div className="flex items-center gap-2 text-yellow-700 mb-2">
-                    <AlertTriangle className="w-5 h-5" />
-                    <span className="font-medium">处置建议</span>
-                  </div>
-                  <ul className="text-sm text-yellow-600 space-y-1 ml-7 list-disc">
-                    <li>30分钟内前往现场核实</li>
-                    <li>联系相关责任人进行处理</li>
-                    <li>记录处置过程和结果</li>
-                    <li>处置完成后提交复查</li>
-                  </ul>
-                </div>
-              )}
-
-              <div className="flex gap-3">
-                <button
-                  onClick={() => { setShowAlertDetail(false); setSelectedAlert(null); }}
-                  className="flex-1 py-3 border border-gray-200 text-gray-700 rounded-lg hover:bg-gray-50 transition-colors"
-                >
-                  稍后处理
-                </button>
-                <button
-                  onClick={() => handleResolveAlert(selectedAlert.id, '已现场核实并处置')}
-                  disabled={actionLoading}
-                  className="flex-1 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors disabled:opacity-50"
-                >
-                  {actionLoading ? '处置中...' : '标记已处置'}
-                </button>
-              </div>
-            </div>
-          </div>
-        </div>
-      )}
     </div>
   );
 };

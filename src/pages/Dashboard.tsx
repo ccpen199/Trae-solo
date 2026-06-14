@@ -6,7 +6,7 @@ import {
   BarChart3, Store, AlertTriangle, TrendingUp, DollarSign, Trophy,
   Wrench, MessageSquare, HelpCircle, MapPin, Phone, Star, Tag,
   Heart, Share2, UserCheck, Package, CreditCard, Award, Zap,
-  ShoppingCart, Repeat, Building2
+  ShoppingCart, Repeat
 } from 'lucide-react';
 import { workOrderApi, socialApi, accessApi, analyticsApi, riskApi, mallApi } from '@/api';
 import { useAuthStore } from '@/store';
@@ -35,38 +35,6 @@ const priorityLabels: Record<string, string> = {
   medium: '中',
   high: '高',
   urgent: '紧急',
-};
-
-const prioritySLA: Record<string, string> = {
-  low: '24小时内响应',
-  medium: '12小时内响应',
-  high: '4小时内响应',
-  urgent: '30分钟内响应',
-};
-
-const workOrderStatusSteps = [
-  { key: 'pending', label: '待处理' },
-  { key: 'assigned', label: '已接单' },
-  { key: 'processing', label: '处理中' },
-  { key: 'completed', label: '已完成' },
-  { key: 'closed', label: '已关闭' },
-];
-
-const getSLAStatus = (order: WorkOrder) => {
-  if (order.status !== 'pending') return null;
-  const hours = (Date.now() - new Date(order.created_at).getTime()) / (1000 * 60 * 60);
-  if (order.priority === 'urgent' && hours > 0.5) return { label: '已超时', color: 'text-red-600 bg-red-50' };
-  if (order.priority === 'high' && hours > 4) return { label: '已超时', color: 'text-red-600 bg-red-50' };
-  if (order.priority === 'medium' && hours > 12) return { label: '已超时', color: 'text-red-600 bg-red-50' };
-  if (order.priority === 'low' && hours > 24) return { label: '已超时', color: 'text-red-600 bg-red-50' };
-  if (order.priority === 'urgent') return { label: '需30分钟内响应', color: 'text-orange-600 bg-orange-50' };
-  if (order.priority === 'high') return { label: '需4小时内响应', color: 'text-yellow-600 bg-yellow-50' };
-  return null;
-};
-
-const getCurrentStepIndex = (status: string) => {
-  const idx = workOrderStatusSteps.findIndex(s => s.key === status);
-  return idx >= 0 ? idx : 0;
 };
 
 const toList = <T,>(value: unknown, keys: string[] = []): T[] => {
@@ -319,122 +287,6 @@ const Dashboard: React.FC<DashboardProps> = () => {
         </div>
       </div>
 
-      <div className="grid md:grid-cols-3 gap-4">
-        <div className="bg-white rounded-xl shadow-sm border border-gray-100 p-4">
-          <div className="flex items-center justify-between mb-3">
-            <h3 className="font-semibold text-gray-800 flex items-center gap-2">
-              <Wifi className="w-4 h-4 text-green-500" />
-              门禁设备状态
-            </h3>
-            <button onClick={() => navigate('/access')} className="text-xs text-blue-600">查看详情</button>
-          </div>
-          <div className="grid grid-cols-2 gap-2">
-            <div className="text-center p-3 bg-green-50 rounded-lg">
-              <p className="text-2xl font-bold text-green-600">3</p>
-              <p className="text-xs text-gray-500">在线设备</p>
-            </div>
-            <div className="text-center p-3 bg-red-50 rounded-lg">
-              <p className="text-2xl font-bold text-red-600">1</p>
-              <p className="text-xs text-gray-500">离线设备</p>
-            </div>
-          </div>
-          <div className="mt-3 text-xs text-gray-500">
-            <p className="flex items-center gap-1">
-              <AlertCircle className="w-3 h-3 text-red-500" />
-              2号楼单元门离线2小时
-            </p>
-          </div>
-        </div>
-
-        <div className="bg-white rounded-xl shadow-sm border border-gray-100 p-4">
-          <div className="flex items-center justify-between mb-3">
-            <h3 className="font-semibold text-gray-800 flex items-center gap-2">
-              <AlertTriangle className="w-4 h-4 text-orange-500" />
-              异常访客风险
-            </h3>
-            <span className="px-2 py-0.5 rounded text-xs font-medium bg-orange-100 text-orange-600">
-              需关注
-            </span>
-          </div>
-          <p className="text-xs text-gray-600 mb-2">
-            同一访客24小时内频繁出入5次以上
-          </p>
-          <div className="flex items-center justify-between">
-            <span className="text-xs text-gray-500">
-              风险等级:
-              <span className="text-orange-600 font-medium">中危</span>
-            </span>
-            {user?.role === 'property' && (
-              <button onClick={() => navigate('/risk')} className="text-xs text-blue-600">处理</button>
-            )}
-          </div>
-        </div>
-
-        <div className="bg-white rounded-xl shadow-sm border border-gray-100 p-4">
-          <div className="flex items-center justify-between mb-3">
-            <h3 className="font-semibold text-gray-800 flex items-center gap-2">
-              <KeyRound className="w-4 h-4 text-blue-500" />
-              通行证管理
-            </h3>
-            <button onClick={() => navigate('/access')} className="text-xs text-blue-600">管理</button>
-          </div>
-          <div className="space-y-2 mb-3">
-            <div className="flex items-center justify-between text-xs">
-              <span className="text-gray-500">今日生成</span>
-              <span className="font-medium text-gray-800">2张</span>
-            </div>
-            <div className="flex items-center justify-between text-xs">
-              <span className="text-gray-500">有效中</span>
-              <span className="font-medium text-green-600">1张</span>
-            </div>
-            <div className="flex items-center justify-between text-xs">
-              <span className="text-gray-500">待生效</span>
-              <span className="font-medium text-blue-600">1张</span>
-            </div>
-            <div className="flex items-center justify-between text-xs">
-              <span className="text-gray-500">已过期</span>
-              <span className="font-medium text-red-600">1张</span>
-            </div>
-          </div>
-          <div className="space-y-2 pt-3 border-t border-gray-100">
-            <div className="p-2 bg-red-50 rounded-lg">
-              <div className="flex items-center justify-between">
-                <div className="flex items-center gap-2">
-                  <AlertCircle className="w-4 h-4 text-red-500" />
-                  <span className="text-xs text-gray-700">李访客通行证</span>
-                </div>
-                <span className="text-xs text-red-600 font-medium">已过期</span>
-              </div>
-              <div className="flex gap-2 mt-2">
-                <button onClick={() => navigate('/access')} className="flex-1 py-1 text-xs bg-red-100 text-red-600 rounded hover:bg-red-200 transition-colors">
-                  重新激活
-                </button>
-                <button onClick={() => navigate('/access')} className="flex-1 py-1 text-xs bg-gray-100 text-gray-600 rounded hover:bg-gray-200 transition-colors">
-                  删除
-                </button>
-              </div>
-            </div>
-            <div className="p-2 bg-blue-50 rounded-lg">
-              <div className="flex items-center justify-between">
-                <div className="flex items-center gap-2">
-                  <Clock className="w-4 h-4 text-blue-500" />
-                  <span className="text-xs text-gray-700">王访客通行证</span>
-                </div>
-                <span className="text-xs text-blue-600 font-medium">待生效</span>
-              </div>
-              <div className="flex gap-2 mt-2">
-                <button onClick={() => navigate('/access')} className="flex-1 py-1 text-xs bg-blue-100 text-blue-600 rounded hover:bg-blue-200 transition-colors">
-                  延期
-                </button>
-                <button onClick={() => navigate('/access')} className="flex-1 py-1 text-xs bg-red-50 text-red-600 rounded hover:bg-red-100 transition-colors">
-                  撤销
-                </button>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-
       <div className="grid md:grid-cols-3 gap-6">
         <div className="md:col-span-2 bg-white rounded-xl shadow-sm border border-gray-100">
           <div className="flex items-center justify-between p-4 border-b border-gray-100">
@@ -446,147 +298,42 @@ const Dashboard: React.FC<DashboardProps> = () => {
               查看全部 <ChevronRight className="w-4 h-4" />
             </button>
           </div>
-          
-          <div className="grid grid-cols-5 gap-2 p-4 border-b border-gray-100 bg-gray-50">
-            <div className="text-center p-2 bg-white rounded-lg border border-gray-100">
-              <p className="text-xl font-bold text-gray-800">{workOrders.length}</p>
-              <p className="text-xs text-gray-500">全部工单</p>
-            </div>
-            <div className="text-center p-2 bg-white rounded-lg border border-gray-100">
-              <p className="text-xl font-bold text-yellow-600">
-                {workOrders.filter(o => o.status === 'pending').length}
-              </p>
-              <p className="text-xs text-gray-500">待处理</p>
-            </div>
-            <div className="text-center p-2 bg-white rounded-lg border border-gray-100">
-              <p className="text-xl font-bold text-blue-600">
-                {workOrders.filter(o => o.status === 'processing' || o.status === 'assigned').length}
-              </p>
-              <p className="text-xs text-gray-500">处理中</p>
-            </div>
-            <div className="text-center p-2 bg-white rounded-lg border border-gray-100">
-              <p className="text-xl font-bold text-green-600">
-                {workOrders.filter(o => o.status === 'completed' || o.status === 'closed').length}
-              </p>
-              <p className="text-xs text-gray-500">已完成</p>
-            </div>
-            <div className="text-center p-2 bg-white rounded-lg border border-gray-100">
-              <p className="text-xl font-bold text-purple-600">85%</p>
-              <p className="text-xs text-gray-500">投诉闭环率</p>
-            </div>
-          </div>
-
           <div className="divide-y divide-gray-50 max-h-96 overflow-y-auto">
             {workOrders.length === 0 ? (
               <div className="p-8 text-center text-gray-500">暂无工单记录</div>
             ) : (
-              workOrders.map((order) => {
-                const slaStatus = getSLAStatus(order);
-                const currentStep = getCurrentStepIndex(order.status);
-                return (
-                  <div key={order.id} className="p-4 hover:bg-gray-50 transition-colors">
-                    <div className="flex items-start justify-between mb-2">
-                      <div className="flex items-center gap-2 flex-wrap">
-                        <span className={`px-2 py-0.5 rounded text-xs font-medium ${priorityColors[order.priority]}`}>
-                          {priorityLabels[order.priority]}优先级
-                        </span>
-                        <span className="px-2 py-0.5 rounded text-xs font-medium bg-blue-50 text-blue-600">
-                          {prioritySLA[order.priority]}
-                        </span>
-                        {slaStatus && (
-                          <span className={`px-2 py-0.5 rounded text-xs font-medium ${slaStatus.color}`}>
-                            {slaStatus.label}
-                          </span>
-                        )}
-                        <StatusBadge status={order.status} />
-                      </div>
-                      <span className="text-xs text-gray-400">{formatDate(order.created_at)}</span>
+              workOrders.map((order) => (
+                <div key={order.id} className="p-4 hover:bg-gray-50 transition-colors">
+                  <div className="flex items-start justify-between mb-2">
+                    <div className="flex items-center gap-2">
+                      <span className={`px-2 py-0.5 rounded text-xs font-medium ${priorityColors[order.priority]}`}>
+                        {priorityLabels[order.priority]}优先级
+                      </span>
+                      <StatusBadge status={order.status} />
                     </div>
-                    <h3 className="font-medium text-gray-800 mb-1">{order.title}</h3>
-                    <p className="text-sm text-gray-500 mb-3 line-clamp-1">{order.description}</p>
-                    
-                    <div className="mb-3">
-                      <div className="flex items-center justify-between mb-1">
-                        <span className="text-xs text-gray-500">处理进度</span>
-                        <span className="text-xs text-gray-500">{workOrderStatusSteps[currentStep]?.label}</span>
-                      </div>
-                      <div className="relative">
-                        <div className="h-1.5 bg-gray-100 rounded-full overflow-hidden">
-                          <div 
-                            className="h-full bg-gradient-to-r from-blue-500 to-green-500 rounded-full transition-all"
-                            style={{ width: `${(currentStep / (workOrderStatusSteps.length - 1)) * 100}%` }}
-                          />
-                        </div>
-                        <div className="flex justify-between mt-1">
-                          {workOrderStatusSteps.map((step, idx) => (
-                            <div key={step.key} className="flex flex-col items-center">
-                              <div className={`w-2 h-2 rounded-full ${idx <= currentStep ? 'bg-green-500' : 'bg-gray-200'}`} />
-                              <span className={`text-[10px] mt-0.5 ${idx <= currentStep ? 'text-green-600' : 'text-gray-400'}`}>
-                                {step.label}
-                              </span>
-                            </div>
-                          ))}
-                        </div>
-                      </div>
-                    </div>
-
-                    {order.status === 'processing' && (
-                      <div className="mb-3 p-2 bg-blue-50 rounded-lg">
-                        <div className="flex items-center gap-2 text-xs text-blue-700">
-                          <MessageSquare className="w-3.5 h-3.5" />
-                          <span>进度推送：维修师傅已出发，预计15分钟后到达</span>
-                        </div>
-                      </div>
-                    )}
-
-                    <div className="flex items-center justify-between">
-                      <div className="flex items-center gap-3">
-                        <span className="text-xs text-gray-400 flex items-center gap-1">
-                          <MapPin className="w-3 h-3" />
-                          {order.location}
-                        </span>
-                        <button 
-                          onClick={() => navigate('/workorder')}
-                          className="text-xs text-blue-600 hover:text-blue-700 flex items-center gap-1"
-                        >
-                          <FileText className="w-3 h-3" />
-                          房屋档案(历史工单3条)
-                        </button>
-                      </div>
-                      {order.status === 'completed' && (
-                        <button 
-                          onClick={() => navigate('/workorder')}
-                          className="text-xs text-amber-600 hover:text-amber-700 font-medium flex items-center gap-1 px-3 py-1 bg-amber-50 rounded-lg"
-                        >
-                          <Star className="w-3 h-3" />
-                          去评价
-                        </button>
-                      )}
-                      {order.status === 'closed' && (
-                        <div className="flex items-center gap-2">
-                          <div className="flex items-center gap-1 text-xs text-green-600">
-                            <Star className="w-3 h-3 fill-yellow-400 text-yellow-400" />
-                            5.0分
-                          </div>
-                          <div className="flex items-center gap-1 text-xs text-gray-500">
-                            <CheckCircle className="w-3 h-3" />
-                            已复查
-                          </div>
-                        </div>
-                      )}
-                      {order.status === 'processing' && (
-                        <button 
-                          onClick={() => navigate('/workorder')}
-                          className="text-xs text-green-600 hover:text-green-700 font-medium flex items-center gap-1 px-3 py-1 bg-green-50 rounded-lg"
-                        >
-                          <CheckCircle className="w-3 h-3" />
-                          确认完成
-                        </button>
-                      )}
-                    </div>
+                    <span className="text-xs text-gray-400">{formatDate(order.created_at)}</span>
                   </div>
-                );
-              })
+                  <h3 className="font-medium text-gray-800 mb-1">{order.title}</h3>
+                  <p className="text-sm text-gray-500 mb-2 line-clamp-1">{order.description}</p>
+                  <div className="flex items-center justify-between">
+                    <span className="text-xs text-gray-400 flex items-center gap-1">
+                      <MapPin className="w-3 h-3" />
+                      {order.location}
+                    </span>
+                    {order.status === 'completed' && !order.assignee_id && (
+                      <button className="text-xs text-blue-600 hover:text-blue-700 font-medium">
+                        去评价 →
+                      </button>
+                    )}
+                    {order.status === 'processing' && (
+                      <span className="text-xs text-green-600 flex items-center gap-1">
+                        <Clock className="w-3 h-3" />
+                        处理中，预计2小时内完成
+                      </span>
+                    )}
+                  </div>
+                </div>
+              ))
             )}
           </div>
         </div>
@@ -661,194 +408,6 @@ const Dashboard: React.FC<DashboardProps> = () => {
         </div>
       </div>
 
-      <div className="grid md:grid-cols-2 gap-6">
-        <div className="bg-white rounded-xl shadow-sm border border-gray-100">
-          <div className="flex items-center justify-between p-4 border-b border-gray-100">
-            <div className="flex items-center gap-2">
-              <ShoppingBag className="w-5 h-5 text-purple-500" />
-              <h2 className="text-lg font-semibold text-gray-800">社区商圈</h2>
-            </div>
-            <button onClick={() => navigate('/mall')} className="flex items-center text-sm text-blue-600 hover:text-blue-700">
-              查看全部 <ChevronRight className="w-4 h-4" />
-            </button>
-          </div>
-          <div className="p-4 space-y-3">
-            <div className="p-3 bg-gradient-to-r from-purple-50 to-blue-50 rounded-lg border border-purple-100">
-              <div className="flex items-center justify-between mb-2">
-                <div className="flex items-center gap-3">
-                  <div className="w-10 h-10 bg-purple-100 rounded-lg flex items-center justify-center">
-                    <Award className="w-5 h-5 text-purple-600" />
-                  </div>
-                  <div>
-                    <div className="flex items-center gap-2">
-                      <p className="font-medium text-gray-800 text-sm">我的会员</p>
-                      <span className="px-2 py-0.5 rounded text-xs bg-yellow-100 text-yellow-700 font-medium">
-                        {memberProfile?.level === 'gold' ? '金卡' : memberProfile?.level === 'silver' ? '银卡' : '普通'}
-                      </span>
-                    </div>
-                    <p className="text-xs text-gray-500 mt-0.5">
-                      积分余额: <span className="text-yellow-600 font-medium">{memberProfile?.points?.toLocaleString() || 0}</span>
-                      <span className="mx-1">·</span>
-                      可抵扣: <span className="text-green-600 font-medium">¥{(memberProfile?.points || 0) / 100}</span>
-                    </p>
-                  </div>
-                </div>
-                <button onClick={() => navigate('/mall')} className="text-xs text-purple-600 hover:text-purple-700">
-                  会员权益
-                </button>
-              </div>
-              <div className="flex items-center gap-3 text-xs text-gray-500 pt-2 border-t border-purple-100">
-                <span className="flex items-center gap-1">
-                  <Zap className="w-3 h-3 text-yellow-500" />
-                  100积分=1元
-                </span>
-                <span className="flex items-center gap-1">
-                  <TrendingUp className="w-3 h-3 text-green-500" />
-                  累计消费返积分: 1,250
-                </span>
-                <button onClick={() => navigate('/mall')} className="text-blue-600 hover:text-blue-700 ml-auto">
-                  积分通兑规则 →
-                </button>
-              </div>
-            </div>
-
-            <div className="flex items-center gap-3 p-3 bg-green-50 rounded-lg">
-              <div className="w-10 h-10 bg-green-100 rounded-lg flex items-center justify-center">
-                <Tag className="w-5 h-5 text-green-600" />
-              </div>
-              <div className="flex-1">
-                <div className="flex items-center justify-between mb-1">
-                  <p className="font-medium text-gray-800 text-sm">我的优惠券</p>
-                  <div className="flex items-center gap-2">
-                    <span className="text-xs text-green-600">2张可用</span>
-                    <span className="text-xs text-orange-500">1张即将过期</span>
-                  </div>
-                </div>
-                <div className="flex items-center gap-2">
-                  <span className="text-xs text-gray-500">累计已核销: 8张</span>
-                  <button onClick={() => navigate('/mall')} className="text-xs text-blue-600 hover:text-blue-700 ml-auto">
-                    核销流水 →
-                  </button>
-                </div>
-              </div>
-            </div>
-
-            <div className="flex items-center justify-between p-3 bg-orange-50 rounded-lg">
-              <div className="flex items-center gap-3">
-                <div className="w-10 h-10 bg-orange-100 rounded-lg flex items-center justify-center">
-                  <Store className="w-5 h-5 text-orange-600" />
-                </div>
-                <div>
-                  <div className="flex items-center gap-2">
-                    <p className="font-medium text-gray-800 text-sm">优质商户</p>
-                    <span className="px-2 py-0.5 rounded text-xs bg-green-100 text-green-600 font-medium">A级</span>
-                  </div>
-                  <div className="flex items-center gap-2 text-xs text-gray-500 mt-0.5">
-                    <span>2家已审核通过</span>
-                    <button onClick={() => navigate('/mall')} className="text-blue-600 hover:text-blue-700">
-                      经营排行 →
-                    </button>
-                  </div>
-                </div>
-              </div>
-              <div className="flex items-center gap-1 text-xs">
-                <Trophy className="w-3 h-3 text-yellow-500" />
-                <span className="text-gray-600">Top 3</span>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div className="bg-white rounded-xl shadow-sm border border-gray-100">
-          <div className="flex items-center justify-between p-4 border-b border-gray-100">
-            <div className="flex items-center gap-2">
-              <Users className="w-5 h-5 text-orange-500" />
-              <h2 className="text-lg font-semibold text-gray-800">邻里社交</h2>
-            </div>
-            <button onClick={() => navigate('/social')} className="flex items-center text-sm text-blue-600 hover:text-blue-700">
-              查看全部 <ChevronRight className="w-4 h-4" />
-            </button>
-          </div>
-          <div className="p-4 space-y-3">
-            <div className="p-3 bg-blue-50 rounded-lg">
-              <div className="flex items-center justify-between mb-2">
-                <div className="flex items-center gap-3">
-                  <div className="w-10 h-10 bg-blue-100 rounded-lg flex items-center justify-center">
-                    <Building2 className="w-5 h-5 text-blue-600" />
-                  </div>
-                  <div>
-                    <div className="flex items-center gap-2">
-                      <p className="font-medium text-gray-800 text-sm">实名楼栋群</p>
-                      <span className="px-1.5 py-0.5 rounded text-[10px] bg-blue-600 text-white font-medium">官方认证</span>
-                    </div>
-                    <p className="text-xs text-blue-600 mt-0.5">已加入 · 业主身份已验证</p>
-                  </div>
-                </div>
-                <span className="text-xs text-gray-500">156人</span>
-              </div>
-              <div className="flex gap-2">
-                <button onClick={() => navigate('/social')} className="flex-1 py-1.5 text-xs bg-white text-blue-600 rounded border border-blue-200 hover:bg-blue-50 transition-colors">
-                  进入群聊
-                </button>
-                <button onClick={() => navigate('/social')} className="flex-1 py-1.5 text-xs bg-gray-100 text-gray-600 rounded hover:bg-gray-200 transition-colors">
-                  查看公告
-                </button>
-              </div>
-            </div>
-
-            <div className="p-3 bg-pink-50 rounded-lg">
-              <div className="flex items-center justify-between mb-2">
-                <div className="flex items-center gap-3">
-                  <div className="w-10 h-10 bg-pink-100 rounded-lg flex items-center justify-center">
-                    <Users className="w-5 h-5 text-pink-600" />
-                  </div>
-                  <div>
-                    <div className="flex items-center gap-2">
-                      <p className="font-medium text-gray-800 text-sm">兴趣圈子</p>
-                      <span className="px-1.5 py-0.5 rounded text-[10px] bg-pink-100 text-pink-600">健身爱好者</span>
-                    </div>
-                    <p className="text-xs text-gray-500 mt-0.5">已加入2个 · 89人</p>
-                  </div>
-                </div>
-              </div>
-              <div className="flex gap-2">
-                <button onClick={() => navigate('/social')} className="flex-1 py-1.5 text-xs bg-white text-pink-600 rounded border border-pink-200 hover:bg-pink-50 transition-colors">
-                  查看活动
-                </button>
-                <button onClick={() => navigate('/social')} className="px-3 py-1.5 text-xs bg-gray-100 text-gray-600 rounded hover:bg-gray-200 transition-colors">
-                  退出圈子
-                </button>
-              </div>
-            </div>
-
-            <div className="p-3 bg-yellow-50 rounded-lg">
-              <div className="flex items-center justify-between mb-2">
-                <div className="flex items-center gap-3">
-                  <div className="w-10 h-10 bg-yellow-100 rounded-lg flex items-center justify-center">
-                    <Package className="w-5 h-5 text-yellow-600" />
-                  </div>
-                  <div>
-                    <div className="flex items-center gap-2">
-                      <p className="font-medium text-gray-800 text-sm">闲置流转</p>
-                      <span className="px-1.5 py-0.5 rounded text-[10px] bg-green-100 text-green-600">实名发布</span>
-                    </div>
-                    <p className="text-xs text-gray-500 mt-0.5">3件在售 · 15人浏览</p>
-                  </div>
-                </div>
-              </div>
-              <div className="flex gap-2">
-                <button onClick={() => navigate('/social')} className="flex-1 py-1.5 text-xs bg-white text-yellow-600 rounded border border-yellow-200 hover:bg-yellow-50 transition-colors">
-                  查看闲置
-                </button>
-                <button onClick={() => navigate('/social')} className="flex-1 py-1.5 text-xs bg-green-500 text-white rounded hover:bg-green-600 transition-colors">
-                  发布闲置
-                </button>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-
       <div className="bg-white rounded-xl shadow-sm border border-gray-100">
         <div className="flex items-center justify-between p-4 border-b border-gray-100">
           <div className="flex items-center gap-2">
@@ -860,30 +419,15 @@ const Dashboard: React.FC<DashboardProps> = () => {
           </button>
         </div>
         <div className="grid md:grid-cols-3 gap-4 p-4">
-          {[
-            { ...activities[0], registerStatus: 'approved', isOfficial: true },
-            { ...activities[1], registerStatus: 'pending', isOfficial: true },
-            { ...activities[2], registerStatus: 'not_registered', isOfficial: false },
-          ].map((activity, index) => (
-            <div key={activity.id ?? `activity-${index}`} className="border border-gray-200 rounded-xl overflow-hidden hover:shadow-md transition-shadow">
-              <div className={`h-32 bg-gradient-to-br ${
-                index === 0 ? 'from-blue-400 to-indigo-500' :
-                index === 1 ? 'from-green-400 to-teal-500' :
-                'from-orange-400 to-pink-500'
-              } flex items-center justify-center relative`}>
+          {activities.slice(0, 3).map((activity) => (
+            <div key={activity.id} className="border border-gray-200 rounded-xl overflow-hidden hover:shadow-md transition-shadow">
+              <div className="h-32 bg-gradient-to-br from-orange-400 to-pink-500 flex items-center justify-center">
                 <Calendar className="w-12 h-12 text-white/80" />
-                {activity.isOfficial && (
-                  <span className="absolute top-2 right-2 px-2 py-0.5 rounded text-[10px] bg-white/90 text-blue-600 font-medium">
-                    官方活动
-                  </span>
-                )}
               </div>
               <div className="p-4">
                 <div className="flex items-center justify-between mb-2">
                   <h3 className="font-semibold text-gray-800">{activity.title}</h3>
-                  <div className="flex items-center gap-1">
-                    <StatusBadge status={activity.status} />
-                  </div>
+                  <StatusBadge status={activity.status} />
                 </div>
                 <p className="text-sm text-gray-500 mb-2 line-clamp-2">{activity.description}</p>
                 <div className="flex items-center gap-2 text-xs text-gray-400">
@@ -892,28 +436,9 @@ const Dashboard: React.FC<DashboardProps> = () => {
                 </div>
                 <div className="flex items-center justify-between mt-3">
                   <span className="text-xs text-gray-500">{activity.participant_count}人已报名</span>
-                  {activity.registerStatus === 'not_registered' && (
-                    <button onClick={() => navigate('/social')} className="px-3 py-1 bg-blue-50 text-blue-600 rounded-lg text-xs font-medium hover:bg-blue-100 transition-colors">
-                      立即报名
-                    </button>
-                  )}
-                  {activity.registerStatus === 'pending' && (
-                    <span className="px-3 py-1 bg-yellow-50 text-yellow-600 rounded-lg text-xs font-medium flex items-center gap-1">
-                      <Clock className="w-3 h-3" />
-                      审核中
-                    </span>
-                  )}
-                  {activity.registerStatus === 'approved' && (
-                    <div className="flex items-center gap-2">
-                      <span className="px-2 py-1 bg-green-50 text-green-600 rounded-lg text-xs font-medium flex items-center gap-1">
-                        <CheckCircle className="w-3 h-3" />
-                        已通过
-                      </span>
-                      <button onClick={() => navigate('/social')} className="px-2 py-1 bg-red-50 text-red-500 rounded-lg text-xs hover:bg-red-100 transition-colors">
-                        退出
-                      </button>
-                    </div>
-                  )}
+                  <button className="px-3 py-1 bg-blue-50 text-blue-600 rounded-lg text-xs font-medium hover:bg-blue-100 transition-colors">
+                    立即报名
+                  </button>
                 </div>
               </div>
             </div>
@@ -1267,107 +792,6 @@ const Dashboard: React.FC<DashboardProps> = () => {
         </div>
       </div>
 
-      <div className="grid md:grid-cols-4 gap-4">
-        <div className="bg-white rounded-xl p-4 shadow-sm border border-gray-100 hover:shadow-md transition-shadow">
-          <div className="flex items-center gap-3 mb-3">
-            <div className="w-10 h-10 bg-red-100 rounded-lg flex items-center justify-center">
-              <AlertTriangle className="w-5 h-5 text-red-600" />
-            </div>
-            <div>
-              <p className="font-medium text-gray-800 text-sm">高空抛物告警</p>
-              <p className="text-xs text-red-600 font-medium">1条待处置</p>
-            </div>
-          </div>
-          <button onClick={() => navigate('/risk')} className="w-full py-2 text-xs bg-red-50 text-red-600 rounded-lg hover:bg-red-100 transition-colors">
-            去处置
-          </button>
-        </div>
-        <div className="bg-white rounded-xl p-4 shadow-sm border border-gray-100 hover:shadow-md transition-shadow">
-          <div className="flex items-center gap-3 mb-3">
-            <div className="w-10 h-10 bg-orange-100 rounded-lg flex items-center justify-center">
-              <AlertCircle className="w-5 h-5 text-orange-600" />
-            </div>
-            <div>
-              <p className="font-medium text-gray-800 text-sm">消防通道占压</p>
-              <p className="text-xs text-orange-600 font-medium">1条待复查</p>
-            </div>
-          </div>
-          <button onClick={() => navigate('/property/dashboard')} className="w-full py-2 text-xs bg-orange-50 text-orange-600 rounded-lg hover:bg-orange-100 transition-colors">
-            去复查
-          </button>
-        </div>
-        <div className="bg-white rounded-xl p-4 shadow-sm border border-gray-100 hover:shadow-md transition-shadow">
-          <div className="flex items-center gap-3 mb-3">
-            <div className="w-10 h-10 bg-yellow-100 rounded-lg flex items-center justify-center">
-              <Wifi className="w-5 h-5 text-yellow-600" />
-            </div>
-            <div>
-              <p className="font-medium text-gray-800 text-sm">设备离线</p>
-              <p className="text-xs text-yellow-600 font-medium">1台待处理</p>
-            </div>
-          </div>
-          <button onClick={() => navigate('/access')} className="w-full py-2 text-xs bg-yellow-50 text-yellow-600 rounded-lg hover:bg-yellow-100 transition-colors">
-            去处理
-          </button>
-        </div>
-        <div className="bg-white rounded-xl p-4 shadow-sm border border-gray-100 hover:shadow-md transition-shadow">
-          <div className="flex items-center gap-3 mb-3">
-            <div className="w-10 h-10 bg-purple-100 rounded-lg flex items-center justify-center">
-              <Users className="w-5 h-5 text-purple-600" />
-            </div>
-            <div>
-              <p className="font-medium text-gray-800 text-sm">异常访客聚类</p>
-              <p className="text-xs text-purple-600 font-medium">2条需关注</p>
-            </div>
-          </div>
-          <button onClick={() => navigate('/risk')} className="w-full py-2 text-xs bg-purple-50 text-purple-600 rounded-lg hover:bg-purple-100 transition-colors">
-            去核实
-          </button>
-        </div>
-      </div>
-
-      <div className="bg-gradient-to-r from-indigo-50 to-blue-50 rounded-xl p-6 border border-indigo-100">
-        <div className="flex items-center justify-between mb-4">
-          <div className="flex items-center gap-3">
-            <div className="w-12 h-12 bg-indigo-500 rounded-xl flex items-center justify-center">
-              <BarChart3 className="w-6 h-6 text-white" />
-            </div>
-            <div>
-              <h2 className="text-lg font-semibold text-gray-800">风险处置与复查</h2>
-              <p className="text-sm text-gray-500">完整链路：告警产生 → 现场处置 → 填写记录 → 主管复查</p>
-            </div>
-          </div>
-          <div className="flex gap-2">
-            <button onClick={() => navigate('/property/dashboard')} className="px-4 py-2 bg-indigo-600 text-white text-sm rounded-lg hover:bg-indigo-700 transition-colors flex items-center gap-2">
-              <BarChart3 className="w-4 h-4" />
-              查看KPI驾驶舱
-            </button>
-            <button onClick={() => navigate('/risk')} className="px-4 py-2 bg-white text-gray-700 text-sm rounded-lg border border-gray-200 hover:bg-gray-50 transition-colors flex items-center gap-2">
-              <AlertTriangle className="w-4 h-4" />
-              风险预警中心
-            </button>
-          </div>
-        </div>
-        <div className="grid md:grid-cols-4 gap-4">
-          <div className="bg-white rounded-lg p-4 text-center">
-            <p className="text-2xl font-bold text-red-600">1</p>
-            <p className="text-xs text-gray-500 mt-1">待处置</p>
-          </div>
-          <div className="bg-white rounded-lg p-4 text-center">
-            <p className="text-2xl font-bold text-yellow-600">1</p>
-            <p className="text-xs text-gray-500 mt-1">处理中</p>
-          </div>
-          <div className="bg-white rounded-lg p-4 text-center">
-            <p className="text-2xl font-bold text-orange-600">1</p>
-            <p className="text-xs text-gray-500 mt-1">待复查</p>
-          </div>
-          <div className="bg-white rounded-lg p-4 text-center">
-            <p className="text-2xl font-bold text-green-600">3</p>
-            <p className="text-xs text-gray-500 mt-1">已完成</p>
-          </div>
-        </div>
-      </div>
-
       <div className="grid md:grid-cols-2 gap-6">
         <button onClick={() => navigate('/workorder')} className="bg-white rounded-xl p-6 shadow-sm border border-gray-100 hover:shadow-md hover:border-blue-200 transition-all text-left">
           <div className="flex items-center gap-4">
@@ -1508,66 +932,6 @@ const Dashboard: React.FC<DashboardProps> = () => {
           </div>
         </div>
       </div>
-
-      <div className="bg-white rounded-xl shadow-sm border border-gray-100">
-        <div className="flex items-center justify-between p-4 border-b border-gray-100">
-          <div className="flex items-center gap-2">
-            <CreditCard className="w-5 h-5 text-green-500" />
-            <h2 className="text-lg font-semibold text-gray-800">今日核销流水</h2>
-          </div>
-          <button onClick={() => navigate('/merchant/dashboard')} className="text-xs text-green-600 hover:text-green-700">
-            查看全部 →
-          </button>
-        </div>
-        <div className="divide-y divide-gray-50">
-          {[
-            { user: '张先生', coupon: '满100减20优惠券', amount: '¥80.00', time: '10:30' },
-            { user: '王女士', coupon: '新人专享8折券', amount: '¥128.00', time: '11:15' },
-            { user: '李先生', coupon: '会员积分抵扣', amount: '¥150.00', time: '14:20' },
-          ].map((item, index) => (
-            <div key={index} className="p-4 flex items-center justify-between hover:bg-gray-50 transition-colors">
-              <div className="flex items-center gap-3">
-                <div className="w-10 h-10 bg-green-100 rounded-full flex items-center justify-center">
-                  <CheckCircle className="w-5 h-5 text-green-600" />
-                </div>
-                <div>
-                  <p className="font-medium text-gray-800 text-sm">{item.user}</p>
-                  <p className="text-xs text-gray-500">{item.coupon}</p>
-                </div>
-              </div>
-              <div className="text-right">
-                <p className="font-medium text-gray-800 text-sm">{item.amount}</p>
-                <p className="text-xs text-gray-400">{item.time}</p>
-              </div>
-            </div>
-          ))}
-        </div>
-      </div>
-
-      <div className="grid md:grid-cols-2 gap-6">
-        <button onClick={() => navigate('/merchant/dashboard')} className="bg-gradient-to-r from-blue-500 to-indigo-500 rounded-xl p-6 shadow-sm hover:shadow-md transition-all text-white text-left">
-          <div className="flex items-center gap-4">
-            <div className="w-14 h-14 bg-white/20 rounded-xl flex items-center justify-center">
-              <BarChart3 className="w-7 h-7 text-white" />
-            </div>
-            <div>
-              <h3 className="text-lg font-semibold">经营分析</h3>
-              <p className="text-sm text-white/80">销售趋势、商品排行、核销统计</p>
-            </div>
-          </div>
-        </button>
-        <button onClick={() => navigate('/mall')} className="bg-gradient-to-r from-purple-500 to-pink-500 rounded-xl p-6 shadow-sm hover:shadow-md transition-all text-white text-left">
-          <div className="flex items-center gap-4">
-            <div className="w-14 h-14 bg-white/20 rounded-xl flex items-center justify-center">
-              <Users className="w-7 h-7 text-white" />
-            </div>
-            <div>
-              <h3 className="text-lg font-semibold">会员管理</h3>
-              <p className="text-sm text-white/80">会员列表、等级权益、积分管理</p>
-            </div>
-          </div>
-        </button>
-      </div>
     </div>
   );
 
@@ -1578,72 +942,6 @@ const Dashboard: React.FC<DashboardProps> = () => {
           {error}
         </div>
       )}
-
-      <div className="bg-gradient-to-r from-indigo-50 to-purple-50 rounded-2xl p-6 mb-6 border border-indigo-100">
-        <div className="flex items-center justify-between flex-wrap gap-4">
-          <div className="flex items-center gap-4">
-            <div className={`w-16 h-16 rounded-2xl flex items-center justify-center ${
-              user?.role === 'owner' ? 'bg-blue-500' :
-              user?.role === 'tenant' ? 'bg-green-500' :
-              user?.role === 'visitor' ? 'bg-purple-500' :
-              user?.role === 'property' ? 'bg-red-500' : 'bg-orange-500'
-            }`}>
-              {user?.role === 'owner' && <UserCheck className="w-8 h-8 text-white" />}
-              {user?.role === 'tenant' && <Users className="w-8 h-8 text-white" />}
-              {user?.role === 'visitor' && <Users className="w-8 h-8 text-white" />}
-              {user?.role === 'property' && <Building2 className="w-8 h-8 text-white" />}
-              {user?.role === 'merchant' && <Store className="w-8 h-8 text-white" />}
-            </div>
-            <div>
-              <div className="flex items-center gap-2 mb-1">
-                <h2 className="text-xl font-bold text-gray-800">{user?.name}</h2>
-                <span className={`px-3 py-0.5 rounded-full text-sm font-medium ${
-                  user?.role === 'owner' ? 'bg-blue-100 text-blue-700' :
-                  user?.role === 'tenant' ? 'bg-green-100 text-green-700' :
-                  user?.role === 'visitor' ? 'bg-purple-100 text-purple-700' :
-                  user?.role === 'property' ? 'bg-red-100 text-red-700' : 'bg-orange-100 text-orange-700'
-                }`}>
-                  {roleNames[user?.role || '']}
-                </span>
-              </div>
-              <p className="text-sm text-gray-500">
-                {user?.role === 'owner' && '权限：房产管理 · 通行控制 · 工单服务 · 商圈消费 · 邻里社交 · 个人中心'}
-                {user?.role === 'tenant' && '权限：通行控制 · 工单服务 · 商圈消费 · 邻里社交 · 个人中心'}
-                {user?.role === 'visitor' && '权限：通行控制 · 商圈消费 · 个人中心'}
-                {user?.role === 'property' && '权限：工作台 · 通行管理 · 工单中心 · KPI驾驶舱 · 风险预警 · 商户审核'}
-                {user?.role === 'merchant' && '权限：工作台 · 商户后台 · 订单管理 · 经营分析 · 个人中心'}
-              </p>
-            </div>
-          </div>
-          <div className="flex items-center gap-3">
-            <span className="text-sm text-gray-500">快速切换角色：</span>
-            <div className="flex gap-2">
-              {[
-                { role: 'owner', label: '业主', color: 'bg-blue-500' },
-                { role: 'tenant', label: '租户', color: 'bg-green-500' },
-                { role: 'visitor', label: '访客', color: 'bg-purple-500' },
-                { role: 'property', label: '物业', color: 'bg-red-500' },
-                { role: 'merchant', label: '商户', color: 'bg-orange-500' },
-              ].map((item) => (
-                <button
-                  key={item.role}
-                  onClick={() => {
-                    const event = new CustomEvent('switchRole', { detail: item.role });
-                    window.dispatchEvent(event);
-                  }}
-                  className={`px-3 py-1.5 rounded-lg text-sm font-medium transition-all ${
-                    user?.role === item.role
-                      ? `${item.color} text-white shadow-md`
-                      : 'bg-white text-gray-600 hover:bg-gray-100 border border-gray-200'
-                  }`}
-                >
-                  {item.label}
-                </button>
-              ))}
-            </div>
-          </div>
-        </div>
-      </div>
 
       {user?.role === 'owner' && renderOwnerDashboard()}
       {user?.role === 'tenant' && renderTenantDashboard()}

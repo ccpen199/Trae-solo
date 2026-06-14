@@ -95,32 +95,71 @@ const SocialPage: React.FC = () => {
   const [newPost, setNewPost] = useState({ title: '', content: '', circleId: '', images: [] as string[] });
   const [joinedCircles, setJoinedCircles] = useState<Set<number>>(new Set());
   const [idleFilter, setIdleFilter] = useState<string>('all');
-  const [feedFilter, setFeedFilter] = useState<string>('all');
-  const [activitySignupStatus, setActivitySignupStatus] = useState<Record<number, 'pending' | 'approved' | 'rejected' | 'not_signup'>>({});
-  const [postPublishStatus, setPostPublishStatus] = useState<Record<number, 'pending' | 'approved' | 'rejected'>>({});
-  const [idlePublishStatus, setIdlePublishStatus] = useState<Record<number, 'pending' | 'approved' | 'rejected'>>({});
-
-  const feedFilterOptions = [
-    { value: 'all', label: '全部动态' },
-    { value: 'building', label: '楼栋动态' },
-    { value: 'interest', label: '兴趣圈' },
-    { value: 'activity', label: '活动动态' },
-    { value: 'idle', label: '闲置动态' },
-  ];
-
-  const getVisibilityLabel = (type: string, scope?: string) => {
-    if (type === 'building') return { label: `仅限${scope}可见`, color: 'bg-orange-100 text-orange-700' };
-    if (type === 'interest') return { label: '兴趣圈成员可见', color: 'bg-purple-100 text-purple-700' };
-    return { label: '全社区可见', color: 'bg-green-100 text-green-700' };
-  };
-
-  const getSignupStatusLabel = (status: string) => {
-    if (status === 'pending') return { label: '审核中', color: 'bg-yellow-100 text-yellow-700', icon: Clock };
-    if (status === 'approved') return { label: '已通过', color: 'bg-green-100 text-green-700', icon: CheckCircle };
-    if (status === 'rejected') return { label: '未通过', color: 'bg-red-100 text-red-700', icon: AlertTriangle };
-    return { label: '立即报名', color: 'bg-blue-100 text-blue-700', icon: Plus };
-  };
-
+├── api/
+│   ├── app.ts                    # 主应用，路由注册
+│   ├── index.ts                  # 服务入口
+│   ├── src/
+│   │   ├── controllers/          # 7 个控制器模块
+│   │   ├── routes/               # 7 个路由模块
+│   │   ├── middleware/auth.ts    # JWT 认证中间件
+│   │   └── database/             # SQLite 连接、初始化、种子数据
+├── src/
+│   ├── pages/                    # 10 个页面组件
+│   ├── components/layout/        # 侧边栏、顶部导航、主布局
+│   ├── components/common/        # 状态徽章等通用组件
+│   ├── api/                      # axios 请求封装、API 接口
+│   ├── store/                    # Zustand 状态管理
+│   └── App.tsx                   # 路由配置、权限守卫
+├── shared/types.ts               # 共享 TypeScript 类型定义
+└── data/app.sqlite               # SQLite 数据库（已初始化+种子数据）├── api/
+│   ├── app.ts                    # 主应用，路由注册
+│   ├── index.ts                  # 服务入口
+│   ├── src/
+│   │   ├── controllers/          # 7 个控制器模块
+│   │   ├── routes/               # 7 个路由模块
+│   │   ├── middleware/auth.ts    # JWT 认证中间件
+│   │   └── database/             # SQLite 连接、初始化、种子数据
+├── src/
+│   ├── pages/                    # 10 个页面组件
+│   ├── components/layout/        # 侧边栏、顶部导航、主布局
+│   ├── components/common/        # 状态徽章等通用组件
+│   ├── api/                      # axios 请求封装、API 接口
+│   ├── store/                    # Zustand 状态管理
+│   └── App.tsx                   # 路由配置、权限守卫
+├── shared/types.ts               # 共享 TypeScript 类型定义
+└── data/app.sqlite               # SQLite 数据库（已初始化+种子数据）├── api/
+│   ├── app.ts                    # 主应用，路由注册
+│   ├── index.ts                  # 服务入口
+│   ├── src/
+│   │   ├── controllers/          # 7 个控制器模块
+│   │   ├── routes/               # 7 个路由模块
+│   │   ├── middleware/auth.ts    # JWT 认证中间件
+│   │   └── database/             # SQLite 连接、初始化、种子数据
+├── src/
+│   ├── pages/                    # 10 个页面组件
+│   ├── components/layout/        # 侧边栏、顶部导航、主布局
+│   ├── components/common/        # 状态徽章等通用组件
+│   ├── api/                      # axios 请求封装、API 接口
+│   ├── store/                    # Zustand 状态管理
+│   └── App.tsx                   # 路由配置、权限守卫
+├── shared/types.ts               # 共享 TypeScript 类型定义
+└── data/app.sqlite               # SQLite 数据库（已初始化+种子数据）├── api/
+│   ├── app.ts                    # 主应用，路由注册
+│   ├── index.ts                  # 服务入口
+│   ├── src/
+│   │   ├── controllers/          # 7 个控制器模块
+│   │   ├── routes/               # 7 个路由模块
+│   │   ├── middleware/auth.ts    # JWT 认证中间件
+│   │   └── database/             # SQLite 连接、初始化、种子数据
+├── src/
+│   ├── pages/                    # 10 个页面组件
+│   ├── components/layout/        # 侧边栏、顶部导航、主布局
+│   ├── components/common/        # 状态徽章等通用组件
+│   ├── api/                      # axios 请求封装、API 接口
+│   ├── store/                    # Zustand 状态管理
+│   └── App.tsx                   # 路由配置、权限守卫
+├── shared/types.ts               # 共享 TypeScript 类型定义
+└── data/app.sqlite               # SQLite 数据库（已初始化+种子数据）
   const loadCircles = useCallback(async () => {
     setLoading(true);
     setError('');
@@ -420,39 +459,17 @@ const SocialPage: React.FC = () => {
                           </p>
                         </div>
                       )}
-                      <div className="mt-3 flex items-center gap-2 flex-wrap">
-                        <span className={`text-xs px-2 py-0.5 rounded-full ${
-                          getVisibilityLabel(circle.type || 'all', circle.building).color
-                        }`}>
-                          {getVisibilityLabel(circle.type || 'all', circle.building).label}
-                        </span>
-                        {circle.type === 'building' && (
-                          <span className="text-xs px-2 py-0.5 rounded-full bg-blue-50 text-blue-600">
-                            需业主身份验证
-                          </span>
-                        )}
-                      </div>
                     </div>
-                    <div className="flex flex-col items-end gap-2">
-                      <button
-                        onClick={(e) => { e.stopPropagation(); handleJoinCircle(circle.id); }}
-                        className={`px-4 py-2 rounded-xl text-sm font-medium transition-colors flex-shrink-0 ${
-                          isJoined
-                            ? 'bg-gray-100 text-gray-600 hover:bg-gray-200'
-                            : 'bg-blue-600 text-white hover:bg-blue-700'
-                        }`}
-                      >
-                        {isJoined ? '已加入' : '申请加入'}
-                      </button>
-                      {isJoined && (
-                        <button
-                          onClick={(e) => { e.stopPropagation(); handleJoinCircle(circle.id); }}
-                          className="text-xs text-gray-500 hover:text-red-500 transition-colors"
-                        >
-                          退出圈子
-                        </button>
-                      )}
-                    </div>
+                    <button
+                      onClick={(e) => { e.stopPropagation(); handleJoinCircle(circle.id); }}
+                      className={`px-4 py-2 rounded-xl text-sm font-medium transition-colors flex-shrink-0 ${
+                        isJoined
+                          ? 'bg-gray-100 text-gray-600 hover:bg-gray-200'
+                          : 'bg-blue-600 text-white hover:bg-blue-700'
+                      }`}
+                    >
+                      {isJoined ? '已加入' : '加入'}
+                    </button>
                   </div>
                 </div>
               );

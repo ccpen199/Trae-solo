@@ -18,7 +18,6 @@ interface WorkOrderWithExtra extends WorkOrder {
   house?: House;
   expected_time?: string;
   sla_warning?: boolean;
-  evaluation?: WorkOrderEvaluation | null;
 }
 
 interface WorkOrderLog {
@@ -114,32 +113,11 @@ export default function WorkOrderPage() {
   const navigate = useNavigate();
   const { user } = useAuthStore();
   const isProperty = user?.role === 'property';
-  const isTenant = user?.role === 'tenant';
-  const isOwner = user?.role === 'owner';
-  const canAcceptOrder = isProperty;
-  const canCreateOrder = isOwner || isTenant;
 
   const [activeTab, setActiveTab] = useState<string>(isProperty ? 'all' : 'my');
   const [statusFilter, setStatusFilter] = useState<string>('all');
   const [typeFilter, setTypeFilter] = useState<string>('all');
   const [searchKeyword, setSearchKeyword] = useState<string>('');
-  const [selectedAssignee, setSelectedAssignee] = useState<string>('');
-  const [showAssignModal, setShowAssignModal] = useState(false);
-  const [orderToAssign, setOrderToAssign] = useState<WorkOrderWithExtra | null>(null);
-
-  const maintenanceStaff = [
-    { id: 1, name: '张师傅', phone: '138****1234', skill: '水电维修', rating: 4.9, orderCount: 156 },
-    { id: 2, name: '李师傅', phone: '139****5678', skill: '空调维修', rating: 4.8, orderCount: 142 },
-    { id: 3, name: '王师傅', phone: '137****9012', skill: '木工维修', rating: 4.7, orderCount: 128 },
-  ];
-
-  const evaluationTemplates = [
-    { rating: 5, label: '非常满意', comment: '响应迅速，服务专业，问题解决彻底' },
-    { rating: 4, label: '满意', comment: '服务态度好，问题已解决' },
-    { rating: 3, label: '一般', comment: '解决了问题，但耗时较长' },
-    { rating: 2, label: '不满意', comment: '服务态度差，问题未解决' },
-    { rating: 1, label: '非常不满意', comment: '未按时处理，需要重新派单' },
-  ];
   const [workOrders, setWorkOrders] = useState<WorkOrderWithExtra[]>([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -332,13 +310,7 @@ export default function WorkOrderPage() {
   };
 
   const tabs = [
-    ...(isProperty ? [
-      { value: 'all', label: '全部工单' },
-      { value: 'pending', label: '待派单' },
-      { value: 'assigned', label: '处理中' },
-      { value: 'completed', label: '已完成' },
-      { value: 'review', label: '待回访' },
-    ] : []),
+    ...(isProperty ? [{ value: 'all', label: '全部工单' }] : []),
     { value: 'my', label: '我的工单' },
   ];
 
@@ -546,7 +518,7 @@ export default function WorkOrderPage() {
                   </div>
 
                   <div className="border-t border-gray-100 pt-3 mt-3">
-                    <div className="flex items-center justify-between mb-3">
+                    <div className="flex items-center justify-between">
                       <div className="flex items-center gap-1">
                         {statusSteps.map((step, idx) => (
                           <React.Fragment key={step.key}>
@@ -564,13 +536,13 @@ export default function WorkOrderPage() {
                           </React.Fragment>
                         ))}
                       </div>
-                      {order.evaluation && (
+                      {workOrderEvaluation && (
                         <div className="flex items-center gap-1">
                           {[1, 2, 3, 4, 5].map((star) => (
                             <Star
                               key={star}
                               className={`w-4 h-4 ${
-                                star <= (order.evaluation?.rating || 0)
+                                star <= (workOrderEvaluation?.rating || 0)
                                   ? 'text-yellow-400 fill-yellow-400'
                                   : 'text-gray-300'
                               }`}
@@ -578,123 +550,6 @@ export default function WorkOrderPage() {
                           ))}
                         </div>
                       )}
-                    </div>
-                    <div className="flex items-center justify-between">
-                      <div className="flex items-center gap-2 flex-wrap">
-                        {order.status === 'pending' && canAcceptOrder && (
-                          <>
-                            <button
-                              onClick={(e) => {
-                                e.stopPropagation();
-                                setOrderToAssign(order);
-                                setShowAssignModal(true);
-                              }}
-                              className="flex items-center gap-1 px-3 py-1.5 text-xs bg-blue-50 text-blue-600 rounded-lg hover:bg-blue-100 transition-colors font-medium"
-                            >
-                              <UserCheck className="w-3.5 h-3.5" />
-                              派单
-                            </button>
-                            <button
-                              onClick={(e) => {
-                                e.stopPropagation();
-                                handleUpdateStatus('assigned', '物业管理员已接单');
-                              }}
-                              className="flex items-center gap-1 px-3 py-1.5 text-xs bg-green-50 text-green-600 rounded-lg hover:bg-green-100 transition-colors font-medium"
-                            >
-                              <CheckCircle className="w-3.5 h-3.5" />
-                              快速接单
-                            </button>
-                          </>
-                        )}
-                        {order.status === 'assigned' && canAcceptOrder && (
-                          <button
-                            onClick={(e) => {
-                              e.stopPropagation();
-                              handleUpdateStatus('processing', '维修师傅已上门处理');
-                            }}
-                            className="flex items-center gap-1 px-3 py-1.5 text-xs bg-blue-50 text-blue-600 rounded-lg hover:bg-blue-100 transition-colors font-medium"
-                          >
-                            <Wrench className="w-3.5 h-3.5" />
-                            开始处理
-                          </button>
-                        )}
-                        {order.status === 'processing' && canAcceptOrder && (
-                          <button
-                            onClick={(e) => {
-                              e.stopPropagation();
-                              handleUpdateStatus('completed', '维修完成，等待业主确认');
-                            }}
-                            className="flex items-center gap-1 px-3 py-1.5 text-xs bg-green-50 text-green-600 rounded-lg hover:bg-green-100 transition-colors font-medium"
-                          >
-                            <CheckCircle className="w-3.5 h-3.5" />
-                            标记完成
-                          </button>
-                        )}
-                        {order.status === 'processing' && (isOwner || isTenant) && (
-                          <button
-                            onClick={(e) => {
-                              e.stopPropagation();
-                              handleUpdateStatus('completed', '业主确认维修完成');
-                            }}
-                            className="flex items-center gap-1 px-3 py-1.5 text-xs bg-green-50 text-green-600 rounded-lg hover:bg-green-100 transition-colors font-medium"
-                          >
-                            <CheckCircle className="w-3.5 h-3.5" />
-                            确认完成
-                          </button>
-                        )}
-                        {order.status === 'completed' && !order.evaluation && (isOwner || isTenant) && (
-                          <button
-                            onClick={(e) => {
-                              e.stopPropagation();
-                              fetchWorkOrderDetail(order.id);
-                            }}
-                            className="flex items-center gap-1 px-3 py-1.5 text-xs bg-amber-50 text-amber-600 rounded-lg hover:bg-amber-100 transition-colors font-medium"
-                          >
-                            <Star className="w-3.5 h-3.5" />
-                            去评价
-                          </button>
-                        )}
-                        {order.status === 'completed' && order.evaluation && canAcceptOrder && (
-                          <button
-                            onClick={(e) => {
-                              e.stopPropagation();
-                              handleUpdateStatus('closed', '已完成回访，工单关闭');
-                            }}
-                            className="flex items-center gap-1 px-3 py-1.5 text-xs bg-purple-50 text-purple-600 rounded-lg hover:bg-purple-100 transition-colors font-medium"
-                          >
-                            <Phone className="w-3.5 h-3.5" />
-                            回访完成
-                          </button>
-                        )}
-                        {order.status === 'completed' && order.evaluation && (
-                          <div className="flex items-center gap-1 px-3 py-1.5 text-xs bg-green-50 text-green-600 rounded-lg">
-                            <CheckCircle className="w-3.5 h-3.5" />
-                            已评价 {order.evaluation.rating}分
-                          </div>
-                        )}
-                        {order.status === 'closed' && (
-                          <div className="flex items-center gap-1 px-3 py-1.5 text-xs bg-gray-50 text-gray-600 rounded-lg">
-                            <CheckCircle className="w-3.5 h-3.5" />
-                            已复查 · 已关闭
-                          </div>
-                        )}
-                        {order.status === 'processing' && (
-                          <div className="flex items-center gap-1 text-xs text-blue-600">
-                            <MessageSquare className="w-3.5 h-3.5" />
-                            推送：{order.assignee_name || '维修师傅'}已出发，预计15分钟到达
-                          </div>
-                        )}
-                      </div>
-                      <button
-                        onClick={(e) => {
-                          e.stopPropagation();
-                          fetchWorkOrderDetail(order.id);
-                        }}
-                        className="flex items-center gap-1 text-xs text-gray-500 hover:text-blue-600 transition-colors"
-                      >
-                        <Home className="w-3 h-3" />
-                        房屋档案(3条)
-                      </button>
                     </div>
                   </div>
                 </div>
@@ -794,92 +649,18 @@ export default function WorkOrderPage() {
               </div>
 
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">关联房屋 *</label>
-                <div className="space-y-3">
-                  {[
-                    { id: 1, address: '1号楼2单元301室', area: '120㎡', owner: '张先生', phone: '138****1234', historyCount: 3, lastService: '2024-05-15' },
-                    { id: 2, address: '1号楼2单元302室', area: '95㎡', owner: '张先生', phone: '138****1234', historyCount: 1, lastService: '2024-06-01' },
-                  ].map((house) => (
-                    <div
-                      key={house.id}
-                      onClick={() => setCreateForm({ ...createForm, location: house.address })}
-                      className={`p-4 rounded-xl border-2 cursor-pointer transition-all ${
-                        createForm.location === house.address
-                          ? 'border-blue-500 bg-blue-50'
-                          : 'border-gray-200 hover:border-blue-300 bg-white'
-                      }`}
-                    >
-                      <div className="flex items-start justify-between">
-                        <div className="flex-1">
-                          <div className="flex items-center gap-2 mb-2">
-                            <Home className="w-4 h-4 text-blue-500" />
-                            <span className="font-medium text-gray-800">{house.address}</span>
-                            <span className="text-xs text-gray-500">{house.area}</span>
-                          </div>
-                          <div className="grid grid-cols-3 gap-2 text-xs text-gray-500">
-                            <div className="flex items-center gap-1">
-                              <User className="w-3 h-3" />
-                              <span>{house.owner}</span>
-                            </div>
-                            <div className="flex items-center gap-1">
-                              <History className="w-3 h-3" />
-                              <span>历史工单 {house.historyCount}条</span>
-                            </div>
-                            <div className="flex items-center gap-1">
-                              <Clock className="w-3 h-3" />
-                              <span>上次服务 {house.lastService}</span>
-                            </div>
-                          </div>
-                        </div>
-                        <div className={`w-5 h-5 rounded-full border-2 flex items-center justify-center ${
-                          createForm.location === house.address
-                            ? 'border-blue-500 bg-blue-500'
-                            : 'border-gray-300'
-                        }`}>
-                          {createForm.location === house.address && (
-                            <CheckCircle className="w-3 h-3 text-white" />
-                          )}
-                        </div>
-                      </div>
-                    </div>
-                  ))}
+                <label className="block text-sm font-medium text-gray-700 mb-1">位置 *</label>
+                <div className="relative">
+                  <Home className="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-400" />
+                  <input
+                    type="text"
+                    value={createForm.location}
+                    onChange={(e) => setCreateForm({ ...createForm, location: e.target.value })}
+                    className="w-full pl-10 pr-4 py-2.5 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                    placeholder="例如：1号楼2单元301室客厅"
+                    required
+                  />
                 </div>
-              </div>
-
-              {createForm.location && (
-                <div className="bg-blue-50 border border-blue-200 rounded-xl p-4">
-                  <div className="flex items-center gap-2 mb-2">
-                    <Home className="w-4 h-4 text-blue-500" />
-                    <span className="font-medium text-blue-700 text-sm">房屋档案已关联</span>
-                  </div>
-                  <div className="grid grid-cols-2 gap-3 text-xs">
-                    <div>
-                      <p className="text-gray-500 mb-0.5">户主</p>
-                      <p className="text-gray-800 font-medium">张先生</p>
-                    </div>
-                    <div>
-                      <p className="text-gray-500 mb-0.5">联系电话</p>
-                      <p className="text-gray-800 font-medium">138****1234</p>
-                    </div>
-                    <div>
-                      <p className="text-gray-500 mb-0.5">历史工单</p>
-                      <p className="text-blue-600 font-medium">3条可查看</p>
-                    </div>
-                    <div>
-                      <p className="text-gray-500 mb-0.5">上次维修</p>
-                      <p className="text-gray-800 font-medium">2024-05-15 灯具维修</p>
-                    </div>
-                  </div>
-                </div>
-              )}
-
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">具体位置说明</label>
-                <input
-                  type="text"
-                  className="w-full px-4 py-2.5 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                  placeholder="例如：客厅、主卧卫生间、厨房水槽下方"
-                />
               </div>
 
               <div>
@@ -1018,41 +799,15 @@ export default function WorkOrderPage() {
                     </div>
                     {relatedOrders.length > 0 && (
                       <div className="mt-4 pt-4 border-t border-gray-100">
-                        <div className="flex items-center justify-between mb-3">
-                          <p className="text-xs text-gray-500">房屋历史工单明细</p>
-                          <button className="text-xs text-blue-600 hover:text-blue-700">
-                            查看全部 {relatedOrders.length} 条 →
-                          </button>
-                        </div>
-                        <div className="space-y-3">
-                          {relatedOrders.slice(0, 5).map((order) => (
-                            <div key={order.id} className="p-3 bg-gray-50 rounded-lg">
-                              <div className="flex items-center justify-between mb-2">
-                                <span className="font-medium text-gray-800 text-sm">{order.title}</span>
-                                <div className="flex items-center gap-2">
-                                  <StatusBadge status={order.status} />
-                                  <span className={`px-2 py-0.5 rounded text-[10px] font-medium ${priorityColors[order.priority]}`}>
-                                    {priorityLabels[order.priority]}
-                                  </span>
-                                </div>
-                              </div>
-                              <p className="text-xs text-gray-500 mb-2 line-clamp-1">{order.description}</p>
+                        <p className="text-xs text-gray-500 mb-2">最近历史工单</p>
+                        <div className="space-y-2">
+                          {relatedOrders.slice(0, 3).map((order) => (
+                            <div key={order.id} className="p-2 bg-gray-50 rounded-lg text-sm">
                               <div className="flex items-center justify-between">
-                                <span className="text-xs text-gray-400">{formatDate(order.created_at)}</span>
-                                {order.status === 'completed' && (
-                                  <div className="flex items-center gap-1">
-                                    {[1, 2, 3, 4, 5].map((star) => (
-                                      <Star
-                                        key={star}
-                                        className={`w-3 h-3 ${
-                                          star <= 5 ? 'text-yellow-400 fill-yellow-400' : 'text-gray-300'
-                                        }`}
-                                      />
-                                    ))}
-                                    <span className="text-xs text-gray-500 ml-1">已评价</span>
-                                  </div>
-                                )}
+                                <span className="text-gray-700">{order.title}</span>
+                                <StatusBadge status={order.status} />
                               </div>
+                              <p className="text-xs text-gray-400 mt-1">{formatDate(order.created_at)}</p>
                             </div>
                           ))}
                         </div>
@@ -1387,130 +1142,6 @@ export default function WorkOrderPage() {
                 </div>
               </div>
             )}
-          </div>
-        </div>
-      )}
-
-      {showAssignModal && orderToAssign && (
-        <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">
-          <div className="bg-white rounded-2xl shadow-xl max-w-2xl w-full max-h-[85vh] overflow-y-auto">
-            <div className="flex items-center justify-between p-6 border-b border-gray-100">
-              <div>
-                <h2 className="text-xl font-bold text-gray-800">工单派单</h2>
-                <p className="text-sm text-gray-500 mt-1">工单编号: #{orderToAssign.id} - {orderToAssign.title}</p>
-              </div>
-              <button
-                onClick={() => { setShowAssignModal(false); setOrderToAssign(null); setSelectedAssignee(''); }}
-                className="p-2 hover:bg-gray-100 rounded-lg transition-colors"
-              >
-                <X className="w-5 h-5 text-gray-500" />
-              </button>
-            </div>
-
-            <div className="p-6">
-              <div className="bg-blue-50 border border-blue-200 rounded-xl p-4 mb-6">
-                <div className="flex items-start gap-3">
-                  <Info className="w-5 h-5 text-blue-500 flex-shrink-0 mt-0.5" />
-                  <div className="text-sm text-blue-700">
-                    <p className="font-medium mb-1">派单说明</p>
-                    <p>系统将根据工单类型和优先级自动匹配最合适的维修人员，您也可以手动选择。派单后维修人员将收到短信和APP推送通知。</p>
-                  </div>
-                </div>
-              </div>
-
-              <div className="mb-6">
-                <label className="block text-sm font-medium text-gray-700 mb-3">选择维修人员 *</label>
-                <div className="space-y-3">
-                  {maintenanceStaff.map((staff) => (
-                    <div
-                      key={staff.id}
-                      onClick={() => setSelectedAssignee(staff.id.toString())}
-                      className={`p-4 rounded-xl border-2 cursor-pointer transition-all ${
-                        selectedAssignee === staff.id.toString()
-                          ? 'border-blue-500 bg-blue-50'
-                          : 'border-gray-200 hover:border-blue-300 bg-white'
-                      }`}
-                    >
-                      <div className="flex items-center justify-between">
-                        <div className="flex items-center gap-4">
-                          <div className="w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center">
-                            <User className="w-6 h-6 text-blue-600" />
-                          </div>
-                          <div>
-                            <div className="flex items-center gap-2 mb-1">
-                              <span className="font-medium text-gray-800">{staff.name}</span>
-                              <span className="px-2 py-0.5 rounded text-xs bg-gray-100 text-gray-600">{staff.skill}</span>
-                            </div>
-                            <div className="flex items-center gap-3 text-xs text-gray-500">
-                              <span className="flex items-center gap-1">
-                                <Star className="w-3 h-3 text-yellow-400 fill-yellow-400" />
-                                {staff.rating}分
-                              </span>
-                              <span className="flex items-center gap-1">
-                                <FileText className="w-3 h-3" />
-                                已完成{staff.orderCount}单
-                              </span>
-                              <span className="flex items-center gap-1">
-                                <Phone className="w-3 h-3" />
-                                {staff.phone}
-                              </span>
-                            </div>
-                          </div>
-                        </div>
-                        <div className={`w-5 h-5 rounded-full border-2 flex items-center justify-center ${
-                          selectedAssignee === staff.id.toString()
-                            ? 'border-blue-500 bg-blue-500'
-                            : 'border-gray-300'
-                        }`}>
-                          {selectedAssignee === staff.id.toString() && (
-                            <CheckCircle className="w-3 h-3 text-white" />
-                          )}
-                        </div>
-                      </div>
-                    </div>
-                  ))}
-                </div>
-              </div>
-
-              <div className="mb-6">
-                <label className="block text-sm font-medium text-gray-700 mb-2">派单备注</label>
-                <textarea
-                  className="w-full px-4 py-2.5 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent h-24 resize-none"
-                  placeholder="请填写派单说明，如：请优先处理，业主在家时间为下午2点后"
-                />
-              </div>
-
-              <div className="flex justify-end gap-3 pt-4 border-t border-gray-100">
-                <button
-                  type="button"
-                  onClick={() => { setShowAssignModal(false); setOrderToAssign(null); setSelectedAssignee(''); }}
-                  className="px-5 py-2.5 border border-gray-300 rounded-lg text-gray-700 hover:bg-gray-50 transition-colors font-medium"
-                >
-                  取消
-                </button>
-                <button
-                  onClick={async () => {
-                    if (!selectedAssignee) {
-                      alert('请选择维修人员');
-                      return;
-                    }
-                    setActionLoading(true);
-                    try {
-                      await handleUpdateStatus('assigned', `已派单给${maintenanceStaff.find(s => s.id.toString() === selectedAssignee)?.name}`);
-                      setShowAssignModal(false);
-                      setOrderToAssign(null);
-                      setSelectedAssignee('');
-                    } finally {
-                      setActionLoading(false);
-                    }
-                  }}
-                  disabled={!selectedAssignee || actionLoading}
-                  className="px-5 py-2.5 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors font-medium disabled:opacity-50 disabled:cursor-not-allowed"
-                >
-                  {actionLoading ? '派单中...' : '确认派单'}
-                </button>
-              </div>
-            </div>
           </div>
         </div>
       )}

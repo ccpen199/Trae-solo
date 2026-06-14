@@ -24,15 +24,15 @@ interface MenuItem {
 }
 
 const menuItems: MenuItem[] = [
-  { path: '/dashboard', label: '工作台', icon: Home, roles: ['owner', 'tenant', 'visitor', 'property', 'merchant'] },
-  { path: '/access', label: '通行管理', icon: KeyRound, roles: ['owner', 'tenant', 'visitor', 'property'] },
+  { path: '/dashboard', label: '工作台', icon: Home, roles: ['owner', 'tenant', 'property', 'merchant'] },
+  { path: '/access', label: '通行管理', icon: KeyRound, roles: ['owner', 'tenant', 'property'] },
   { path: '/workorder', label: '工单中心', icon: FileText, roles: ['owner', 'tenant', 'property'] },
   { path: '/mall', label: '社区商圈', icon: ShoppingBag, roles: ['owner', 'tenant', 'visitor'] },
   { path: '/social', label: '邻里社交', icon: Users, roles: ['owner', 'tenant'] },
   { path: '/property/dashboard', label: '物业驾驶舱', icon: BarChart3, roles: ['property'] },
   { path: '/merchant/dashboard', label: '商户后台', icon: Store, roles: ['merchant'] },
   { path: '/risk', label: '风险预警', icon: AlertTriangle, roles: ['property'] },
-  { path: '/profile', label: '个人中心', icon: User, roles: ['owner', 'tenant', 'visitor', 'property', 'merchant'] },
+  { path: '/profile', label: '个人中心', icon: User, roles: ['owner', 'tenant', 'property', 'merchant'] },
 ];
 
 const roleNames: Record<UserRole, string> = {
