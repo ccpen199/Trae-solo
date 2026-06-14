@@ -1,5 +1,6 @@
 import { useState, useMemo } from 'react';
-import { Button, Space, Modal, message } from 'antd';
+import { useNavigate } from 'react-router-dom';
+import { Button, Space, message } from 'antd';
 import { Eye, Download, FileText, Shield, RefreshCw } from 'lucide-react';
 import DataTable from '@/components/DataTable';
 import PageHeader from '@/components/PageHeader';
@@ -15,12 +16,9 @@ const POLICY_STATUS_OPTIONS = Object.entries(POLICY_STATUS_MAP).map(([key, val])
 }));
 
 export default function InsuranceList() {
+  const navigate = useNavigate();
   const { policies, searchPolicies, filterPoliciesByStatus } = useGlobalStore();
   const [filteredData, setFilteredData] = useState<InsurancePolicy[]>(policies);
-  const [detailModal, setDetailModal] = useState<{
-    visible: boolean;
-    policy: InsurancePolicy | null;
-  }>({ visible: false, policy: null });
 
   const handleSearch = (keyword: string) => {
     if (!keyword.trim()) {
@@ -45,19 +43,11 @@ export default function InsuranceList() {
   };
 
   const handleViewDetail = (policy: InsurancePolicy) => {
-    setDetailModal({ visible: true, policy });
+    navigate(`/insurance/${policy.id}`);
   };
 
   const handleClaim = (policy: InsurancePolicy) => {
-    Modal.confirm({
-      title: '申请理赔',
-      content: `确定要对保单 ${policy.policyNo} 发起理赔申请吗？`,
-      okText: '确认申请',
-      cancelText: '取消',
-      onOk: () => {
-        message.success('理赔申请已提交');
-      },
-    });
+    navigate(`/insurance/${policy.id}`);
   };
 
   const columns: TableProps<InsurancePolicy>['columns'] = useMemo(
@@ -234,103 +224,6 @@ export default function InsuranceList() {
         totalLabel="共"
         scroll={{ x: 1400 }}
       />
-
-      <Modal
-        title="保单详情"
-        open={detailModal.visible}
-        onCancel={() => setDetailModal({ visible: false, policy: null })}
-        footer={[
-          <Button key="close" onClick={() => setDetailModal({ visible: false, policy: null })}>
-            关闭
-          </Button>,
-          <Button
-            key="claim"
-            type="primary"
-            disabled={detailModal.policy?.status !== 'active'}
-            onClick={() => {
-              if (detailModal.policy) handleClaim(detailModal.policy);
-              setDetailModal({ visible: false, policy: null });
-            }}
-          >
-            申请理赔
-          </Button>,
-        ]}
-        width={600}
-      >
-        {detailModal.policy && (
-          <div className="space-y-4">
-            <div className="flex items-center justify-between rounded-lg bg-slate-50 p-4">
-              <div>
-                <p className="text-sm text-slate-500">保单号</p>
-                <p className="font-mono text-lg font-semibold text-slate-800">
-                  {detailModal.policy.policyNo}
-                </p>
-              </div>
-              <StatusBadge
-                type="policy"
-                status={detailModal.policy.status}
-                className="text-sm"
-              />
-            </div>
-
-            <div className="grid grid-cols-2 gap-4">
-              <div className="space-y-1">
-                <p className="text-sm text-slate-500">关联订单</p>
-                <p className="font-medium text-slate-700">{detailModal.policy.orderNo}</p>
-              </div>
-              <div className="space-y-1">
-                <p className="text-sm text-slate-500">被保险人</p>
-                <p className="font-medium text-slate-700">{detailModal.policy.insuredName}</p>
-              </div>
-              <div className="space-y-1">
-                <p className="text-sm text-slate-500">保险公司</p>
-                <p className="font-medium text-slate-700">{detailModal.policy.insurerName}</p>
-              </div>
-              <div className="space-y-1">
-                <p className="text-sm text-slate-500">险种</p>
-                <p className="font-medium text-slate-700">{detailModal.policy.productName}</p>
-              </div>
-              <div className="space-y-1">
-                <p className="text-sm text-slate-500">保费</p>
-                <p className="font-medium text-slate-700">¥{detailModal.policy.premium.toFixed(2)}</p>
-              </div>
-              <div className="space-y-1">
-                <p className="text-sm text-slate-500">保额</p>
-                <p className="font-medium text-emerald-600">¥{detailModal.policy.coverage.toLocaleString()}</p>
-              </div>
-            </div>
-
-            <div className="rounded-lg border border-slate-200 p-4">
-              <p className="mb-2 text-sm text-slate-500">保障期限</p>
-              <div className="flex items-center gap-2">
-                <span className="font-medium text-slate-700">{detailModal.policy.period.start}</span>
-                <span className="text-slate-400">至</span>
-                <span className="font-medium text-slate-700">{detailModal.policy.period.end}</span>
-              </div>
-            </div>
-
-            <div className="space-y-1">
-              <p className="text-sm text-slate-500">服务护士</p>
-              <p className="font-medium text-slate-700">{detailModal.policy.nurseName || '-'}</p>
-            </div>
-
-            <div className="space-y-1">
-              <p className="text-sm text-slate-500">理赔状态</p>
-              <p className="font-medium text-slate-700">
-                {detailModal.policy.claimStatus === 'none'
-                  ? '未申请'
-                  : detailModal.policy.claimStatus === 'applied'
-                  ? '已申请'
-                  : detailModal.policy.claimStatus === 'processing'
-                  ? '处理中'
-                  : detailModal.policy.claimStatus === 'approved'
-                  ? '已赔付'
-                  : '已拒绝'}
-              </p>
-            </div>
-          </div>
-        )}
-      </Modal>
     </div>
   );
 }

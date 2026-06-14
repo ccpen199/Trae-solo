@@ -200,8 +200,6 @@ export const mockOrders: ServiceOrder[] = Array.from({ length: 30 }, (_, i) => {
     status === 'completed' ? (recordingStatus === 'completed' && i % 5 !== 2 ? 'fully-bound' : 'partial') :
     status === 'in-service' ? 'partial' : 'not-bound';
   const hasServiceRecord = ['in-service', 'completed'].includes(status);
-  const matchedPolicy = hasInsurance ? mockPolicies.find(p => p.orderId === `o${(i + 1).toString().padStart(4, '0')}`) : undefined;
-
   return {
     id: `o${(i + 1).toString().padStart(4, '0')}`,
     orderNo: 'SO' + dayjs(scheduledTime).format('YYYYMMDD') + (1000 + i).toString(),
@@ -231,9 +229,9 @@ export const mockOrders: ServiceOrder[] = Array.from({ length: 30 }, (_, i) => {
     status,
     auditStatus: status === 'completed' ? auditStatuses[Math.floor(Math.random() * auditStatuses.length)] : 'not-submitted',
     hasInsurance,
-    insuranceStatus: matchedPolicy?.status || 'pending',
+    insuranceStatus: hasInsurance ? (i % 8 === 0 ? 'claimed' : i % 7 === 0 ? 'expired' : 'active') : 'pending',
     policyId: hasInsurance ? `ip${(i + 1).toString().padStart(4, '0')}` : undefined,
-    policyNo: matchedPolicy?.policyNo,
+    policyNo: hasInsurance ? `POL${dayjs(scheduledTime).format('YYYYMMDD')}${(2000 + i).toString()}` : undefined,
     recordingStatus,
     recordingId: hasServiceRecord ? `rec${(i + 1).toString().padStart(4, '0')}` : undefined,
     serviceRecordId: hasServiceRecord ? `sr${(i + 1).toString().padStart(4, '0')}` : undefined,
@@ -556,4 +554,3 @@ export const mockReportStats = {
   claimApprovalRate: 87.5,
   avgPremium: 85,
 };
-

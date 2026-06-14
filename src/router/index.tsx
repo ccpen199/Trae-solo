@@ -15,6 +15,7 @@ const AuditWorkbench = lazy(() => import('@/pages/AuditWorkbench'));
 const RiskTicketList = lazy(() => import('@/pages/RiskTicketList'));
 const RiskTicketDetail = lazy(() => import('@/pages/RiskTicketDetail'));
 const InsuranceList = lazy(() => import('@/pages/InsuranceList'));
+const InsuranceDetail = lazy(() => import('@/pages/InsuranceDetail'));
 const InsuranceConfig = lazy(() => import('@/pages/InsuranceConfig'));
 const Reports = lazy(() => import('@/pages/Reports'));
 
@@ -44,6 +45,7 @@ const router = createBrowserRouter([
       { path: 'risk/tickets', element: <LazyWrapper><RiskTicketList /></LazyWrapper> },
       { path: 'risk/tickets/:id', element: <LazyWrapper><RiskTicketDetail /></LazyWrapper> },
       { path: 'insurance/policies', element: <LazyWrapper><InsuranceList /></LazyWrapper> },
+      { path: 'insurance/:id', element: <LazyWrapper><InsuranceDetail /></LazyWrapper> },
       { path: 'insurance/config', element: <LazyWrapper><InsuranceConfig /></LazyWrapper> },
       { path: 'reports/*', element: <LazyWrapper><Reports /></LazyWrapper> },
     ],

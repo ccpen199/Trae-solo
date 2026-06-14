@@ -244,6 +244,7 @@ export interface InsurancePolicy {
   insurerName: string;
   productName: string;
   insuredName: string;
+  insuredIdCard?: string;
   premium: number;
   coverage: number;
   period: { start: string; end: string };

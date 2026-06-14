@@ -253,11 +253,11 @@ export default function OrderList() {
   };
 
   const handleRiskAssessment = (order: ServiceOrder) => {
-    navigate(`/risk-assessment/${order.id}`);
+    navigate(`/orders/${order.id}/risk-assessment`);
   };
 
   const handleServiceRecord = (order: ServiceOrder) => {
-    navigate(`/orders/${order.id}?tab=record`);
+    navigate(`/service/${order.id}/record`);
   };
 
   const handleAudit = (order: ServiceOrder) => {
@@ -265,7 +265,7 @@ export default function OrderList() {
   };
 
   const handleTicket = (order: ServiceOrder) => {
-    navigate(`/tickets?orderId=${order.id}`);
+    navigate('/risk/tickets');
   };
 
   const handleViewPolicy = (order: ServiceOrder) => {
@@ -275,8 +275,8 @@ export default function OrderList() {
   };
 
   const handleViewRecording = (order: ServiceOrder) => {
-    if (order.recordingId) {
-      navigate(`/recordings/${order.recordingId}`);
+    if (order.id) {
+      navigate(`/service/${order.id}/record`);
     }
   };
 
